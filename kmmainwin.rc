@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui version="44" name="kmmainwin" >
+<kpartgui version="52" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -10,6 +10,7 @@
    <Separator/>
    <Action name="compact_all_folders" />
    <Action name="expire_all_folders" />
+   <Action name="empty_trash"/>
    <Separator/>
    <Action name="check_mail" />
    <Action name="check_mail_in" />
@@ -17,14 +18,14 @@
    <Separator/>
    <Action name="file_quit" />
   </Menu>
-  <Menu name="edit" >
+  <Menu noMerge="1" name="edit" >
    <text>&amp;Edit</text>
-   <Action name="undo" />
-   <Action name="copy" />
+   <Action name="kmail_undo" />
+   <Action name="kmail_copy" />
    <Action name="edit" />
    <Separator/>
    <Action name="move_to_trash" />
-   <Action name="delete_message" />
+   <Action name="delete" />
    <Separator/>
    <Action name="find_in_messages" />
    <Separator/>
@@ -49,17 +50,17 @@
    <Action name="toggle_fixedfont"/>
    <Action name="encoding" />
   </Menu>
-  <Menu name="go">
+  <Menu noMerge="1" name="go">
    <text>&amp;Go</text>
-   <Action name="go_next_message"/> 
-   <Action name="go_next_unread_message"/> 
-   <Action name="go_prev_message"/> 
-   <Action name="go_prev_unread_message"/> 
+   <Action name="go_next_message"/>
+   <Action name="go_next_unread_message"/>
+   <Action name="go_prev_message"/>
+   <Action name="go_prev_unread_message"/>
    <Separator/>
-   <Action name="go_next_unread_folder"/> 
-   <Action name="go_prev_unread_folder"/> 
+   <Action name="go_next_unread_folder"/>
+   <Action name="go_prev_unread_folder"/>
    <Separator/>
-   <Action name="go_next_unread_text"/> 
+   <Action name="go_next_unread_text"/>
   </Menu>
   <Menu noMerge="1" name="folder" >
    <text>F&amp;older</text>
@@ -67,6 +68,7 @@
    <Action name="mark_all_as_read" />
    <Action name="compact" />
    <Action name="expire" />
+   <Action name="remove_duplicate_messages" />
    <Separator/>
    <Action name="empty" />
    <Action name="delete_folder" />
@@ -95,8 +97,10 @@
    <Action name="thread_status" />
    <Separator/>
    <Action name="apply_filters" />
+   <Action name="apply_filter_actions" />
   </Menu>
-  <Menu name="tools">
+  <Menu noMerge="1" name="tools">
+   <text>&amp;Tools</text>
    <Action name="search_messages" />
    <Separator/>
    <Action name="addressbook"/>
@@ -104,11 +108,18 @@
    <Separator/>
    <Action name="create_filter"/>
   </Menu>
-  <Menu name="settings" >
+  <Menu noMerge="1" name="settings">
+   <text>&amp;Settings</text>
    <Action name="filter" append="save_merge"/>
    <Action name="popFilter" append="save_merge"/>
+   <Separator/>
+   <Action name="kmail_configure_shortcuts" />
+   <Action name="kmail_configure_notifications" />
+   <Action name="kmail_configure_toolbars" />
+   <Action name="kmail_configure_kmail" />
   </Menu>
   <Menu name="help">
+   <text>&amp;Help</text>
    <Action name="help_kmail_welcomepage"/>
    <Action name="help_show_tip"/>
   </Menu>
@@ -125,7 +136,7 @@
   <Action name="message_forward"/>
   <Separator/>
   <Action name="move_to_trash" />
-  <Action name="delete_message" />
+  <Action name="delete" />
   <Separator/>
   <Action name="search_messages" />
   <Action name="addressbook" />

@@ -16,7 +16,7 @@
 class KMFolder;
 class KMMessage;
 class KMMsgBase;
-class KMMainWin;
+class KMMainWidget;
 class QPalette;
 class KMHeaderItem;
 class QPixmap;
@@ -24,7 +24,9 @@ class QIconSet;
 class QDateTime;
 
 typedef QPtrList<KMMsgBase> KMMessageList;
+typedef QValueList<Q_UINT32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
+enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 
 /** The widget that shows the contents of folders */
 #define KMHeadersInherited KListView
@@ -34,7 +36,7 @@ class KMHeaders : public KListView
   friend class KMHeaderItem; // For easy access to the pixmaps
 
 public:
-  KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
+  KMHeaders(KMMainWidget *owner, QWidget *parent=0, const char *name=0);
   virtual ~KMHeaders();
 
   /** A new folder has been selected update the list of headers shown */
@@ -56,13 +58,13 @@ public:
   /** Set all messages in the current thread to status @p status */
   virtual void setThreadStatus(KMMsgStatus status);
 
-  /** The following methods process the message in the folder with
-    the given msgId, or if no msgId is given all selected
-    messages are processed. */
-  virtual void setMsgStatus(KMMsgStatus status, int msgId=-1);
-  virtual void setMsgRead(int msgId=-1);
-  virtual void deleteMsg(int msgId=-1);
-  virtual void applyFiltersOnMsg(int msgId=-1);
+  /* Set message status to read if it is new, or unread */
+  virtual void setMsgRead(int msgId);
+
+  /** The following methods processes all selected messages. */
+  virtual void setMsgStatus(KMMsgStatus status);
+  virtual void deleteMsg();
+  virtual void applyFiltersOnMsg();
   virtual void undo();
   virtual bool canUndo() const;
   virtual void resendMsg();
@@ -71,29 +73,21 @@ public:
 
   /** If destination is 0 then the messages are deleted, otherwise
     they are moved to this folder. */
-  virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
+  virtual void moveMsgToFolder(KMFolder* destination);
 
   /** Messages are duplicated and added to given folder.
       If aMsg is set this one will be written to the destination folder. */
   virtual void copyMsgToFolder(KMFolder* destination,
-                               int msgId=-1,
                                KMMessage* aMsg = 0);
 
- /** Returns list of selected messages or a list with the message with
-    the given Id if msgId >= 0. Do not delete the returned list. */
-  virtual KMMessageList* selectedMsgs(int msgId=-1);
-
-  /** Returns message with given id or current message if no
-    id is given. First call with msgId==-1 returns first
-    selected message, subsequent calls with no argument
-    return the following selected messages. */
-  KMMessage* getMsg (int msgId=-2);
+  /** Returns list of selected messages */
+  virtual KMMessageList* selectedMsgs();
 
   /** Returns index of message returned by last getMsg() call */
   int indexOfGetMsg (void) const { return getMsgIndex; }
 
   /** Returns pointer to owning main window. */
-  KMMainWin* owner(void) const { return mOwner; }
+  KMMainWidget* owner(void) const { return mOwner; }
 
   /** PaintInfo pointer */
   const KPaintInfo *paintInfo(void) const { return &mPaintInfo; }
@@ -127,7 +121,7 @@ public:
   /** Double force items to always be open */
   virtual void setOpen ( QListViewItem *, bool );
 
-  int getNestingPolicy() const { return nestingPolicy; }
+  NestingPolicy getNestingPolicy() const { return nestingPolicy; }
   /** Returns true if the current header list is threaded. */
   bool isThreaded() const {
     return mNested != mNestedOverride; // xor
@@ -284,7 +278,7 @@ private:
   /** Currently associated folder */
   KMFolder* mFolder;
   /** The KMMainWin for status bar updates */
-  KMMainWin* mOwner;
+  KMMainWidget* mOwner;
   /** Top most visible item */
   int mTopItem;
   /** Current item */
@@ -297,7 +291,7 @@ private:
   QDict< bool > mTreeSeen;
   QDict< bool > mTreeToplevel;
   bool mNested, mNestedOverride;
-  int nestingPolicy;
+  NestingPolicy nestingPolicy;
 
   /** These must replaced by something better! */
   static bool mTrue, mFalse;

@@ -5,12 +5,22 @@
 #include "kmfoldernode.h"
 
 class KMFolder;
+class KMFolderMgr;
 
 typedef enum
 {
   KMFolderTypeMbox = 0,
-  KMFolderTypeMaildir
+  KMFolderTypeMaildir,
+  KMFolderTypeSearch
 } KMFolderType;
+
+typedef enum
+{ 
+  KMStandardDir = 0, 
+  KMImapDir, 
+  KMSearchDir 
+} KMFolderDirType;
+
 
 /** KMail list that manages the contents of one directory that may
  * contain folders and/or other directories.
@@ -20,7 +30,8 @@ class KMFolderDir: public KMFolderNode, public KMFolderNodeList
   Q_OBJECT
 
 public:
-  KMFolderDir(KMFolderDir* parent=0, const QString& path=QString::null, bool imap=FALSE);
+  KMFolderDir(KMFolderDir* parent=0, const QString& path=QString::null, 
+	      KMFolderDirType = KMStandardDir );
   virtual ~KMFolderDir();
 
   virtual bool isDir() const { return TRUE; }
@@ -41,8 +52,11 @@ public:
   /** Returns folder with given name or zero if it does not exist */
   virtual KMFolderNode* hasNamedFolder(const QString& name);
 
+  /** Returns the folder manager that manages this folder */
+  virtual KMFolderMgr* manager() const;
+
 protected:
-  bool mImap;
+  KMFolderDirType mDirType;
 };
 
 
@@ -53,15 +67,21 @@ class KMFolderRootDir: public KMFolderDir
   Q_OBJECT
 
 public:
-  KMFolderRootDir(const QString& path=QString::null, bool imap=FALSE);
+  KMFolderRootDir(KMFolderMgr* manager,
+		  const QString& path=QString::null, 
+		  KMFolderDirType dirType = KMStandardDir);
   virtual ~KMFolderRootDir();
   virtual QString path() const;
 
   /** set the absolute path */
   virtual void setPath(const QString&);
 
+  virtual KMFolderMgr* manager() const;
+
 protected:
   QString mPath;
+  KMFolderMgr *mManager;
 };
 
 #endif /*kmfolderdir_h*/
+

@@ -15,6 +15,7 @@
 #include "transportmanager.h"
 
 #include "kmtransport.h"
+#include "kmkernel.h"
 
 #include <kapplication.h>
 #include <kconfig.h>
@@ -25,17 +26,17 @@ namespace KMail {
 
   QStringList TransportManager::transportNames()
   {
-    KConfigGroup general( kapp->config(), "General");
-    
+    KConfigGroup general( KMKernel::config(), "General");
+
     int numTransports = general.readNumEntry("transports", 0);
-    
+
     QStringList transportNames;
     for ( int i = 1 ; i <= numTransports ; i++ ) {
       KMTransportInfo ti;
       ti.readConfig(i);
       transportNames << ti.name;
     }
-    
+
     return transportNames;
   }
 

@@ -1,5 +1,6 @@
 // kmmainwidget.cpp
 //#define MALLOC_DEBUG 1
+#define IDENTITY_UOIDs
 
 #include <kwin.h>
 
@@ -14,7 +15,6 @@
 #include <qvaluelist.h>
 #include <qtextcodec.h>
 #include <qheader.h>
-#include <qguardedptr.h>
 
 #include <kopenwith.h>
 
@@ -66,10 +66,6 @@
 #include "kmmainwidget.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
-#include "vacation.h"
-using KMail::Vacation;
-#include "folderjob.h"
-using KMail::FolderJob;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -79,7 +75,7 @@ using KMail::FolderJob;
 #include "kmmainwidget.moc"
 
 //-----------------------------------------------------------------------------
-KMMainWin::KMMainWin(QWidget *parent, const char *name,
+KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 			   KActionCollection *actionCollection ) :
     QWidget(parent, name)
 {
@@ -137,7 +133,7 @@ KMMainWin::KMMainWin(QWidget *parent, const char *name,
 //-----------------------------------------------------------------------------
 //The kernel may have already been deleted when this method is called,
 //perform all cleanup that requires the kernel in destruct()
-KMMainWin::~KMMainWin()
+KMMainWidget::~KMMainWidget()
 {
   destruct();
 }
@@ -145,7 +141,7 @@ KMMainWin::~KMMainWin()
 
 //-----------------------------------------------------------------------------
 //This method performs all cleanup that requires the kernel to exist.
-void KMMainWin::destruct()
+void KMMainWidget::destruct()
 {
   if (mDestructed)
     return;
@@ -160,7 +156,7 @@ void KMMainWin::destruct()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readPreConfig(void)
+void KMMainWidget::readPreConfig(void)
 {
   KConfig *config = KMKernel::config();
 
@@ -177,7 +173,7 @@ void KMMainWin::readPreConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readFolderConfig(void)
+void KMMainWidget::readFolderConfig(void)
 {
   if (!mFolder)
     return;
@@ -190,7 +186,7 @@ void KMMainWin::readFolderConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::writeFolderConfig(void)
+void KMMainWidget::writeFolderConfig(void)
 {
   if (!mFolder)
     return;
@@ -203,7 +199,7 @@ void KMMainWin::writeFolderConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::readConfig(void)
+void KMMainWidget::readConfig(void)
 {
   KConfig *config = KMKernel::config();
 
@@ -400,7 +396,7 @@ void KMMainWin::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::writeConfig(void)
+void KMMainWidget::writeConfig(void)
 {
   QString s;
   KConfig *config = KMKernel::config();
@@ -473,7 +469,7 @@ void KMMainWin::writeConfig(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::createWidgets(void)
+void KMMainWidget::createWidgets(void)
 {
   QAccel *accel = new QAccel(this, "createWidgets()");
 
@@ -562,7 +558,7 @@ void KMMainWin::createWidgets(void)
   else mCodec = 0;
 
 
-  mMsgView = new KMReaderWin(messageParent, this, actionCollection(),
+  mMsgView = new KMReaderWin(messageParent, this, mActionCollection,
 			     0, &mShowMIMETreeMode );
 
   connect(mMsgView, SIGNAL(replaceMsgByUnencryptedVersion()),
@@ -587,10 +583,10 @@ void KMMainWin::createWidgets(void)
 		     mMsgView, SLOT(slotScrollNext()));
 
   new KAction( i18n("Move Message to Folder"), Key_M, this,
-               SLOT(slotMoveMsg()), actionCollection(),
+               SLOT(slotMoveMsg()), mActionCollection,
                "move_message_to_folder" );
   new KAction( i18n("Copy Message to Folder"), Key_C, this,
-               SLOT(slotCopyMsg()), actionCollection(),
+               SLOT(slotCopyMsg()), mActionCollection,
                "copy_message_to_folder" );
   accel->connectItem(accel->insertItem(Key_M),
 		     this, SLOT(slotMoveMsg()) );
@@ -616,24 +612,24 @@ void KMMainWin::createWidgets(void)
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
     i18n("Remove Duplicate Messages"), CTRL+Key_Asterisk, this,
-    SLOT(removeDuplicates()), actionCollection(), "remove_duplicate_messages");
+    SLOT(removeDuplicates()), mActionCollection, "remove_duplicate_messages");
 
   new KAction(
    i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
-   SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
+   SLOT(incCurrentFolder()), mActionCollection, "inc_current_folder");
   accel->connectItem(accel->insertItem(CTRL+Key_Right),
                      mFolderTree, SLOT(incCurrentFolder()));
 
 
   new KAction(
    i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,
-   SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
+   SLOT(decCurrentFolder()), mActionCollection, "dec_current_folder");
   accel->connectItem(accel->insertItem(CTRL+Key_Left),
                      mFolderTree, SLOT(decCurrentFolder()));
 
   new KAction(
    i18n("Select Folder with Focus"), CTRL+Key_Space, mFolderTree,
-   SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
+   SLOT(selectCurrentFolder()), mActionCollection, "select_current_folder");
   accel->connectItem(accel->insertItem(CTRL+Key_Space),
                      mFolderTree, SLOT(selectCurrentFolder()));
 
@@ -645,9 +641,9 @@ void KMMainWin::createWidgets(void)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::activatePanners(void)
+void KMMainWidget::activatePanners(void)
 {
-    QObject::disconnect( actionCollection()->action( "kmail_copy" ),
+    QObject::disconnect( mActionCollection->action( "kmail_copy" ),
 			 SIGNAL( activated() ),
 			 mMsgView, SLOT( slotCopySelectedText() ));
   // glue everything together
@@ -718,14 +714,14 @@ void KMMainWin::activatePanners(void)
     else
         mMimePartTree->hide();
 
-    QObject::connect( actionCollection()->action( "kmail_copy" ),
+    QObject::connect( mActionCollection->action( "kmail_copy" ),
 		      SIGNAL( activated() ),
 		      mMsgView, SLOT( slotCopySelectedText() ));
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetEncoding()
+void KMMainWidget::slotSetEncoding()
 {
     mEncodingStr = KGlobal::charsets()->encodingForName(mEncoding->currentText()).latin1();
     if (mEncoding->currentItem() == 0) // Auto
@@ -740,14 +736,14 @@ void KMMainWin::slotSetEncoding()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::hide()
+void KMMainWidget::hide()
 {
   QWidget::hide();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::show()
+void KMMainWidget::show()
 {
   if( mPanner1 ) mPanner1->setSizes( mPanner1Sep );
   if( mPanner2 ) mPanner2->setSizes( mPanner2Sep );
@@ -755,9 +751,10 @@ void KMMainWin::show()
   QWidget::show();
 }
 
-
+#include <kapplication.h>
+#include <dcopclient.h>
 //-------------------------------------------------------------------------
-void KMMainWin::slotSearch()
+void KMMainWidget::slotSearch()
 {
   if(!searchWin)
   {
@@ -776,14 +773,14 @@ void KMMainWin::slotSearch()
 
 
 //-------------------------------------------------------------------------
-void KMMainWin::slotSearchClosed()
+void KMMainWidget::slotSearchClosed()
 {
   searchWin = 0;
 }
 
 
 //-------------------------------------------------------------------------
-void KMMainWin::slotFind()
+void KMMainWidget::slotFind()
 {
   if( mMsgView )
     mMsgView->slotFind();
@@ -791,14 +788,14 @@ void KMMainWin::slotFind()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotHelp()
+void KMMainWidget::slotHelp()
 {
   kapp->invokeHelp();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotNewMailReader()
+void KMMainWidget::slotNewMailReader()
 {
   KMMainWin *d;
 
@@ -809,35 +806,35 @@ void KMMainWin::slotNewMailReader()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotFilter()
+void KMMainWidget::slotFilter()
 {
   kernel->filterMgr()->openDialog( this );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotPopFilter()
+void KMMainWidget::slotPopFilter()
 {
   kernel->popFilterMgr()->openDialog( this );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotAddrBook()
+void KMMainWidget::slotAddrBook()
 {
   KMAddrBookExternal::launch(this);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotImport()
+void KMMainWidget::slotImport()
 {
   KRun::runCommand("kmailcvt");
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotAddFolder()
+void KMMainWidget::slotAddFolder()
 {
   KMFolderDialog *d;
 
@@ -856,7 +853,7 @@ void KMMainWin::slotAddFolder()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCheckMail()
+void KMMainWidget::slotCheckMail()
 {
  if(kernel->checkingMail())
  {
@@ -874,7 +871,7 @@ void KMMainWin::slotCheckMail()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCheckOneAccount(int item)
+void KMMainWidget::slotCheckOneAccount(int item)
 {
   if(kernel->checkingMail())
   {
@@ -892,7 +889,7 @@ void KMMainWin::slotCheckOneAccount(int item)
   kernel->setCheckingMail(false);
 }
 
-void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
+void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
 {
   if(mSendOnCheck && sendOnCheck)
     slotSendQueued();
@@ -913,7 +910,7 @@ void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCompose()
+void KMMainWidget::slotCompose()
 {
   KMComposeWin *win;
   KMMessage* msg = new KMMessage;
@@ -932,7 +929,7 @@ void KMMainWin::slotCompose()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotPostToML()
+void KMMainWidget::slotPostToML()
 {
   KMComposeWin *win;
   KMMessage* msg = new KMMessage;
@@ -957,7 +954,7 @@ void KMMainWin::slotPostToML()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotModifyFolder()
+void KMMainWidget::slotModifyFolder()
 {
   if (!mFolderTree) return;
   KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( mFolderTree->currentItem() );
@@ -965,7 +962,7 @@ void KMMainWin::slotModifyFolder()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotExpireFolder()
+void KMMainWidget::slotExpireFolder()
 {
   QString     str;
   bool        canBeExpired = true;
@@ -998,7 +995,7 @@ void KMMainWin::slotExpireFolder()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotEmptyFolder()
+void KMMainWidget::slotEmptyFolder()
 {
   QString str;
   KMMessage* msg;
@@ -1059,7 +1056,7 @@ void KMMainWin::slotEmptyFolder()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotRemoveFolder()
+void KMMainWidget::slotRemoveFolder()
 {
   QString str;
   QDir dir;
@@ -1097,7 +1094,7 @@ void KMMainWin::slotRemoveFolder()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMarkAllAsRead()
+void KMMainWidget::slotMarkAllAsRead()
 {
   if (!mFolder)
     return;
@@ -1105,7 +1102,7 @@ void KMMainWin::slotMarkAllAsRead()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCompactFolder()
+void KMMainWidget::slotCompactFolder()
 {
   int idx = mHeaders->currentItemIndex();
   if (mFolder)
@@ -1127,7 +1124,7 @@ void KMMainWin::slotCompactFolder()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotExpireAll() {
+void KMMainWidget::slotExpireAll() {
   KConfig    *config = KMKernel::config();
   int        ret = 0;
 
@@ -1146,7 +1143,7 @@ void KMMainWin::slotExpireAll() {
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCompactAll()
+void KMMainWidget::slotCompactAll()
 {
   kernel->kbp()->busy();
   QStringList strList;
@@ -1170,7 +1167,7 @@ void KMMainWin::slotCompactAll()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotOverrideHtml()
+void KMMainWidget::slotOverrideHtml()
 {
   if( mHtmlPref == mFolderHtmlPref ) {
     int result = KMessageBox::warningContinueCancel( this,
@@ -1191,14 +1188,14 @@ void KMMainWin::slotOverrideHtml()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotOverrideThread()
+void KMMainWidget::slotOverrideThread()
 {
   mFolderThreadPref = !mFolderThreadPref;
   mHeaders->setNestedOverride(mFolderThreadPref);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMessageQueuedOrDrafted()
+void KMMainWidget::slotMessageQueuedOrDrafted()
 {
   if (!kernel->folderIsDraftOrOutbox(mFolder))
       return;
@@ -1207,7 +1204,7 @@ void KMMainWin::slotMessageQueuedOrDrafted()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotForwardMsg()
+void KMMainWidget::slotForwardMsg()
 {
   KMCommand *command =
     new KMForwardCommand( this, *mHeaders->selectedMsgs() );
@@ -1216,7 +1213,7 @@ void KMMainWin::slotForwardMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotForwardAttachedMsg()
+void KMMainWidget::slotForwardAttachedMsg()
 {
   KMCommand *command =
     new KMForwardAttachedCommand( this, *mHeaders->selectedMsgs(), mFolder->identity() );
@@ -1225,7 +1222,7 @@ void KMMainWin::slotForwardAttachedMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotEditMsg()
+void KMMainWidget::slotEditMsg()
 {
   KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
   command->start();
@@ -1233,47 +1230,47 @@ void KMMainWin::slotEditMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotResendMsg()
+void KMMainWidget::slotResendMsg()
 {
   mHeaders->resendMsg();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotTrashMsg()
+void KMMainWidget::slotTrashMsg()
 {
   mHeaders->deleteMsg();
   updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotDeleteMsg()
+void KMMainWidget::slotDeleteMsg()
 {
   mHeaders->moveMsgToFolder(0);
   updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotUndo()
+void KMMainWidget::slotUndo()
 {
     mHeaders->undo();
     updateMessageActions();
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotToggleUnreadColumn()
+void KMMainWidget::slotToggleUnreadColumn()
 {
   mFolderTree->toggleColumn(KMFolderTree::unread);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotToggleTotalColumn()
+void KMMainWidget::slotToggleTotalColumn()
 {
   mFolderTree->toggleColumn(KMFolderTree::total, true);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMoveMsg()
+void KMMainWidget::slotMoveMsg()
 {
   KMFolderSelDlg dlg(this,i18n("Move Message to Folder"));
   KMFolder* dest;
@@ -1285,45 +1282,26 @@ void KMMainWin::slotMoveMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMoveMsgToFolder( KMFolder *dest)
+void KMMainWidget::slotMoveMsgToFolder( KMFolder *dest)
 {
   mHeaders->moveMsgToFolder(dest);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCopyMsgToFolder( KMFolder *dest)
+void KMMainWidget::slotCopyMsgToFolder( KMFolder *dest)
 {
   mHeaders->copyMsgToFolder(dest);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotApplyFilters()
+void KMMainWidget::slotApplyFilters()
 {
   mHeaders->applyFiltersOnMsg();
 }
 
-//-----------------------------------------------------------------------------
-void KMMainWin::slotEditVacation() {
-    if ( mVacation )
-        return;
-
-    mVacation = new Vacation( this );
-    if ( mVacation->isUsable() )
-        connect( mVacation, SIGNAL(result(bool)), mVacation, SLOT(deleteLater()) );
-    else {
-        QString msg = i18n("KMail's Out of Office Reply functionality relies on "
-                           "server-side filtering. You have not yet configured an "
-                           "IMAP server for this.\n"
-                           "You can do this on the \"Filtering\" tab of the IMAP "
-                           "account configuration.");
-        KMessageBox::sorry( this, msg, i18n("No Server-Side Filtering Configured") );
-
-        delete mVacation; // QGuardedPtr sets itself to 0!
-    }
-}
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotCopyMsg()
+void KMMainWidget::slotCopyMsg()
 {
   KMFolderSelDlg dlg(this,i18n("Copy Message to Folder"));
   KMFolder* dest;
@@ -1336,7 +1314,7 @@ void KMMainWin::slotCopyMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSaveMsg()
+void KMMainWidget::slotSaveMsg()
 {
   KMMessage *msg = mHeaders->currentMsg();
   if (!msg)
@@ -1352,14 +1330,14 @@ void KMMainWin::slotSaveMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSendQueued()
+void KMMainWidget::slotSendQueued()
 {
   kernel->msgSender()->sendQueued();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotViewChange()
+void KMMainWidget::slotViewChange()
 {
   if(mBodyPartsMenu->isItemChecked(mBodyPartsMenu->idAt(0)))
   {
@@ -1376,27 +1354,27 @@ void KMMainWin::slotViewChange()
 }
 
 
-void KMMainWin::slotBriefHeaders() {
+void KMMainWidget::slotBriefHeaders() {
   mMsgView->setHeaderStyle( KMReaderWin::HdrBrief );
 }
 
-void KMMainWin::slotFancyHeaders() {
+void KMMainWidget::slotFancyHeaders() {
   mMsgView->setHeaderStyle( KMReaderWin::HdrFancy );
 }
 
-void KMMainWin::slotStandardHeaders() {
+void KMMainWidget::slotStandardHeaders() {
   mMsgView->setHeaderStyle( KMReaderWin::HdrStandard );
 }
 
-void KMMainWin::slotLongHeaders() {
+void KMMainWidget::slotLongHeaders() {
   mMsgView->setHeaderStyle( KMReaderWin::HdrLong );
 }
 
-void KMMainWin::slotAllHeaders() {
+void KMMainWidget::slotAllHeaders() {
   mMsgView->setHeaderStyle( KMReaderWin::HdrAll );
 }
 
-void KMMainWin::slotCycleHeaderStyles() {
+void KMMainWidget::slotCycleHeaderStyles() {
   KMReaderWin::HeaderStyle style = mMsgView->headerStyle();
   if ( style == KMReaderWin::HdrAll ) // last, go to top again:
     mMsgView->setHeaderStyle( KMReaderWin::HdrFancy );
@@ -1410,23 +1388,23 @@ void KMMainWin::slotCycleHeaderStyles() {
 }
 
 
-void KMMainWin::slotIconicAttachments() {
+void KMMainWidget::slotIconicAttachments() {
   mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
 }
 
-void KMMainWin::slotSmartAttachments() {
+void KMMainWidget::slotSmartAttachments() {
   mMsgView->setAttachmentStyle( KMReaderWin::SmartAttmnt );
 }
 
-void KMMainWin::slotInlineAttachments() {
+void KMMainWidget::slotInlineAttachments() {
   mMsgView->setAttachmentStyle( KMReaderWin::InlineAttmnt );
 }
 
-void KMMainWin::slotHideAttachments() {
+void KMMainWidget::slotHideAttachments() {
   mMsgView->setAttachmentStyle( KMReaderWin::HideAttmnt );
 }
 
-void KMMainWin::slotCycleAttachmentStyles() {
+void KMMainWidget::slotCycleAttachmentStyles() {
   KMReaderWin::AttachmentStyle style = mMsgView->attachmentStyle();
   if ( style == KMReaderWin::HideAttmnt ) // last, go to top again:
     mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
@@ -1439,12 +1417,12 @@ void KMMainWin::slotCycleAttachmentStyles() {
   action->setChecked( true );
 }
 
-void KMMainWin::folderSelected(KMFolder* aFolder)
+void KMMainWidget::folderSelected(KMFolder* aFolder)
 {
     folderSelected( aFolder, false );
 }
 
-void KMMainWin::folderSelectedUnread(KMFolder* aFolder)
+void KMMainWidget::folderSelectedUnread(KMFolder* aFolder)
 {
     mHeaders->blockSignals( true );
     folderSelected( aFolder, true );
@@ -1458,7 +1436,7 @@ void KMMainWin::folderSelectedUnread(KMFolder* aFolder)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
+void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 {
   if( aFolder && mFolder == aFolder )
     return;
@@ -1500,12 +1478,12 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMsgSelected(KMMessage *msg)
+void KMMainWidget::slotMsgSelected(KMMessage *msg)
 {
   if (msg && msg->parent() && !msg->isComplete())
   {
     mMsgView->clear();
-    FolderJob *job = msg->parent()->createJob(msg);
+    KMFolderJob *job = msg->parent()->createJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
     job->start();
@@ -1517,21 +1495,21 @@ void KMMainWin::slotMsgSelected(KMMessage *msg)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMsgChanged()
+void KMMainWidget::slotMsgChanged()
 {
   mHeaders->msgChanged();
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSelectFolder(KMFolder* folder)
+void KMMainWidget::slotSelectFolder(KMFolder* folder)
 {
   QListViewItem* item = mFolderTree->indexOfFolder(folder);
   if (item)
-    mFolderTree->setCurrentItem( item );
+    mFolderTree->doFolderSelected( item );
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSelectMessage(KMMessage* msg)
+void KMMainWidget::slotSelectMessage(KMMessage* msg)
 {
   int idx = mFolder->find(msg);
   if (idx != -1) {
@@ -1541,14 +1519,14 @@ void KMMainWin::slotSelectMessage(KMMessage* msg)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotReplaceMsgByUnencryptedVersion()
+void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 {
-  kdDebug(5006) << "KMMainWin::slotReplaceMsgByUnencryptedVersion()" << endl;
+  kdDebug(5006) << "KMMainWidget::slotReplaceMsgByUnencryptedVersion()" << endl;
   KMMessage* oldMsg = mHeaders->currentMsg();
   if( oldMsg ) {
-    kdDebug(5006) << "KMMainWin  -  old message found" << endl;
+    kdDebug(5006) << "KMMainWidget  -  old message found" << endl;
     if( oldMsg->hasUnencryptedMsg() ) {
-      kdDebug(5006) << "KMMainWin  -  extra unencrypted message found" << endl;
+      kdDebug(5006) << "KMMainWidget  -  extra unencrypted message found" << endl;
       KMMessage* newMsg = oldMsg->unencryptedMsg();
       // adjust the message id
       {
@@ -1573,12 +1551,12 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
       }
       const QString newMsgIdMD5( newMsg->msgIdMD5() );
       // insert the unencrypted message
-      kdDebug(5006) << "KMMainWin  -  copying unencrypted message to same folder" << endl;
+      kdDebug(5006) << "KMMainWidget  -  copying unencrypted message to same folder" << endl;
       mHeaders->copyMsgToFolder(mFolder, newMsg);
       // delete the encrypted message - this will also delete newMsg
-      kdDebug(5006) << "KMMainWin  -  deleting encrypted message" << endl;
+      kdDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
       mHeaders->deleteMsg();
-      kdDebug(5006) << "KMMainWin  -  updating message actions" << endl;
+      kdDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
       updateMessageActions();
 
       // find and select and show the new message
@@ -1587,20 +1565,20 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
         mHeaders->setCurrentMsg( idx );
         mMsgView->setMsg( mHeaders->currentMsg() );
       } else {
-        kdDebug(5006) << "KMMainWin  -  SORRY, could not store unencrypted message!" << endl;
+        kdDebug(5006) << "KMMainWidget  -  SORRY, could not store unencrypted message!" << endl;
       }
 
-      kdDebug(5006) << "KMMainWin  -  done." << endl;
+      kdDebug(5006) << "KMMainWidget  -  done." << endl;
     } else
-      kdDebug(5006) << "KMMainWin  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
+      kdDebug(5006) << "KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
   } else
-    kdDebug(5006) << "KMMainWin  -  PANIC: NO OLD MESSAGE FOUND" << endl;
+    kdDebug(5006) << "KMMainWidget  -  PANIC: NO OLD MESSAGE FOUND" << endl;
 }
 
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotUpdateImapMessage(KMMessage *msg)
+void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
 {
   if (msg && ((KMMsgBase*)msg)->isMessage()) {
     mMsgView->setMsg(msg, TRUE);
@@ -1609,97 +1587,97 @@ void KMMainWin::slotUpdateImapMessage(KMMessage *msg)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusNew()
+void KMMainWidget::slotSetMsgStatusNew()
 {
   mHeaders->setMsgStatus(KMMsgStatusNew);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusUnread()
+void KMMainWidget::slotSetMsgStatusUnread()
 {
   mHeaders->setMsgStatus(KMMsgStatusUnread);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusFlag()
+void KMMainWidget::slotSetMsgStatusFlag()
 {
   mHeaders->setMsgStatus(KMMsgStatusFlag);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusRead()
+void KMMainWidget::slotSetMsgStatusRead()
 {
   mHeaders->setMsgStatus(KMMsgStatusRead);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusReplied()
+void KMMainWidget::slotSetMsgStatusReplied()
 {
   mHeaders->setMsgStatus(KMMsgStatusReplied);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusForwarded()
+void KMMainWidget::slotSetMsgStatusForwarded()
 {
   mHeaders->setMsgStatus(KMMsgStatusForwarded);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusQueued()
+void KMMainWidget::slotSetMsgStatusQueued()
 {
   mHeaders->setMsgStatus(KMMsgStatusQueued);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetMsgStatusSent()
+void KMMainWidget::slotSetMsgStatusSent()
 {
   mHeaders->setMsgStatus(KMMsgStatusSent);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusNew()
+void KMMainWidget::slotSetThreadStatusNew()
 {
   mHeaders->setThreadStatus(KMMsgStatusNew);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusUnread()
+void KMMainWidget::slotSetThreadStatusUnread()
 {
   mHeaders->setThreadStatus(KMMsgStatusUnread);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusFlag()
+void KMMainWidget::slotSetThreadStatusFlag()
 {
   mHeaders->setThreadStatus(KMMsgStatusFlag);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusRead()
+void KMMainWidget::slotSetThreadStatusRead()
 {
   mHeaders->setThreadStatus(KMMsgStatusRead);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusReplied()
+void KMMainWidget::slotSetThreadStatusReplied()
 {
   mHeaders->setThreadStatus(KMMsgStatusReplied);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusForwarded()
+void KMMainWidget::slotSetThreadStatusForwarded()
 {
   mHeaders->setThreadStatus(KMMsgStatusForwarded);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusQueued()
+void KMMainWidget::slotSetThreadStatusQueued()
 {
   mHeaders->setThreadStatus(KMMsgStatusQueued);
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotSetThreadStatusSent()
+void KMMainWidget::slotSetThreadStatusSent()
 {
   mHeaders->setThreadStatus(KMMsgStatusSent);
 }
@@ -1707,24 +1685,24 @@ void KMMainWin::slotSetThreadStatusSent()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotNextMessage()       { mHeaders->nextMessage(); }
-void KMMainWin::slotNextUnreadMessage() { mHeaders->nextUnreadMessage(); }
-void KMMainWin::slotNextImportantMessage() {
+void KMMainWidget::slotNextMessage()       { mHeaders->nextMessage(); }
+void KMMainWidget::slotNextUnreadMessage() { mHeaders->nextUnreadMessage(); }
+void KMMainWidget::slotNextImportantMessage() {
   //mHeaders->nextImportantMessage();
 }
-void KMMainWin::slotPrevMessage()       { mHeaders->prevMessage(); }
-void KMMainWin::slotPrevUnreadMessage() { mHeaders->prevUnreadMessage(); }
-void KMMainWin::slotPrevImportantMessage() {
+void KMMainWidget::slotPrevMessage()       { mHeaders->prevMessage(); }
+void KMMainWidget::slotPrevUnreadMessage() { mHeaders->prevUnreadMessage(); }
+void KMMainWidget::slotPrevImportantMessage() {
   //mHeaders->prevImportantMessage();
 }
 
 //-----------------------------------------------------------------------------
 //called from headers. Message must not be deleted on close
-void KMMainWin::slotMsgActivated(KMMessage *msg)
+void KMMainWidget::slotMsgActivated(KMMessage *msg)
 {
   if (msg->parent() && !msg->isComplete())
   {
-    FolderJob *job = msg->parent()->createJob(msg);
+    KMFolderJob *job = msg->parent()->createJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotMsgActivated(KMMessage*)));
     job->start();
@@ -1748,14 +1726,14 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMarkAll()
+void KMMainWidget::slotMarkAll()
 {
   for (QListViewItemIterator it(mHeaders); it.current(); it++)
     mHeaders->setSelected( it.current(), TRUE );
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoint)
+void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoint)
 {
   KPopupMenu * menu = new KPopupMenu;
   updateMessageMenu();
@@ -1828,7 +1806,7 @@ void KMMainWin::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoint)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::getAccountMenu()
+void KMMainWidget::getAccountMenu()
 {
   QStringList actList;
 
@@ -1841,7 +1819,7 @@ void KMMainWin::getAccountMenu()
 }
 
 // little helper function
-KRadioAction * KMMainWin::actionForHeaderStyle( int style ) {
+KRadioAction * KMMainWidget::actionForHeaderStyle( int style ) {
   const char * actionName = 0;
   switch( style ) {
   case KMReaderWin::HdrFancy:
@@ -1856,12 +1834,12 @@ KRadioAction * KMMainWin::actionForHeaderStyle( int style ) {
     actionName = "view_headers_all"; break;
   }
   if ( actionName )
-    return static_cast<KRadioAction*>(actionCollection()->action(actionName));
+    return static_cast<KRadioAction*>(mActionCollection->action(actionName));
   else
     return 0;
 }
 
-KRadioAction * KMMainWin::actionForAttachmentStyle( int style ) {
+KRadioAction * KMMainWidget::actionForAttachmentStyle( int style ) {
   const char * actionName = 0;
   switch ( style ) {
   case KMReaderWin::IconicAttmnt:
@@ -1874,42 +1852,42 @@ KRadioAction * KMMainWin::actionForAttachmentStyle( int style ) {
     actionName = "view_attachments_hide"; break;
   }
   if ( actionName )
-    return static_cast<KRadioAction*>(actionCollection()->action(actionName));
+    return static_cast<KRadioAction*>(mActionCollection->action(actionName));
   else
     return 0;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::setupActions()
+void KMMainWidget::setupActions()
 {
   //----- File Menu
   (void) new KAction( i18n("New &Window..."), "window_new", 0,
 		      this, SLOT(slotNewMailReader()),
-		      actionCollection(), "new_mail_client" );
+		      mActionCollection, "new_mail_client" );
 
   saveAsAction = new KAction( i18n("Save &As..."), "filesave",
     KStdAccel::shortcut(KStdAccel::Save),
-    this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
+    this, SLOT(slotSaveMsg()), mActionCollection, "file_save_as" );
 
   (void) new KAction( i18n("&Compact All Folders"), 0,
 		      this, SLOT(slotCompactAll()),
-		      actionCollection(), "compact_all_folders" );
+		      mActionCollection, "compact_all_folders" );
 
   (void) new KAction( i18n("&Expire All Folders"), 0,
 		      this, SLOT(slotExpireAll()),
-		      actionCollection(), "expire_all_folders" );
+		      mActionCollection, "expire_all_folders" );
 
   (void) new KAction( i18n("Empty T&rash"), 0,
 		      KMKernel::self(), SLOT(slotEmptyTrash()),
-		      actionCollection(), "empty_trash" );
+		      mActionCollection, "empty_trash" );
 
   (void) new KAction( i18n("Check &Mail"), "mail_get", CTRL+Key_L,
 		      this, SLOT(slotCheckMail()),
-		      actionCollection(), "check_mail" );
+		      mActionCollection, "check_mail" );
 
   KActionMenu *actActionMenu = new
-    KActionMenu( i18n("Check Mail &In"), "mail_get", actionCollection(),
+    KActionMenu( i18n("Check Mail &In"), "mail_get", mActionCollection,
 				   	"check_mail_in" );
   actActionMenu->setDelayed(true); //needed for checking "all accounts"
 
@@ -1920,100 +1898,98 @@ void KMMainWin::setupActions()
   connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
   (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
-		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
+		     SLOT(slotSendQueued()), mActionCollection, "send_queued");
 
   //----- Tools menu
-  (void) new KAction( i18n("&Address Book..."), "contents", 0, this,
-		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
+  if (parent()->inherits("KMMainWin")) {
+    (void) new KAction( i18n("&Address Book..."), "contents", 0, this,
+			SLOT(slotAddrBook()), mActionCollection, "addressbook" );
+  }
 
   (void) new KAction( i18n("&Import..."), "fileopen", 0, this,
-		      SLOT(slotImport()), actionCollection(), "import" );
-
-   (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
-                       "configure", 0, this, SLOT(slotEditVacation()),
-                       actionCollection(), "tools_edit_vacation" );
+		      SLOT(slotImport()), mActionCollection, "import" );
 
   //----- Edit Menu
   trashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
                                        i18n("Move message to trashcan") ),
                              "D;Delete", this, SLOT(slotTrashMsg()),
-                             actionCollection(), "move_to_trash" );
+                             mActionCollection, "move_to_trash" );
 
   deleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
-                              SLOT(slotDeleteMsg()), actionCollection(), "delete" );
+                              SLOT(slotDeleteMsg()), mActionCollection, "delete" );
 
   (void) new KAction( i18n("&Find Messages..."), "mail_find", Key_S, this,
-		      SLOT(slotSearch()), actionCollection(), "search_messages" );
+		      SLOT(slotSearch()), mActionCollection, "search_messages" );
 
   (void) new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
-		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
+		      SLOT(slotFind()), mActionCollection, "find_in_messages" );
 
   (void) new KAction( i18n("Select &All Messages"), Key_K, this,
-		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
+		      SLOT(slotMarkAll()), mActionCollection, "mark_all_messages" );
 
   (void) new KAction( i18n("Select Message &Text"),
 		      KStdAccel::shortcut(KStdAccel::SelectAll), mMsgView,
-		      SLOT(selectAll()), actionCollection(), "mark_all_text" );
+		      SLOT(selectAll()), mActionCollection, "mark_all_text" );
 
   //----- Folder Menu
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, this,
-		      SLOT(slotAddFolder()), actionCollection(), "new_folder" );
+		      SLOT(slotAddFolder()), mActionCollection, "new_folder" );
 
   modifyFolderAction = new KAction( i18n("&Properties..."), "configure", 0, this,
-		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
+		      SLOT(slotModifyFolder()), mActionCollection, "modify" );
 
   markAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
-		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
+		      SLOT(slotMarkAllAsRead()), mActionCollection, "mark_all_as_read" );
 
   expireFolderAction = new KAction(i18n("&Expire"), 0, this, SLOT(slotExpireFolder()),
-				   actionCollection(), "expire");
+				   mActionCollection, "expire");
 
   compactFolderAction = new KAction( i18n("&Compact"), 0, this,
-		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
+		      SLOT(slotCompactFolder()), mActionCollection, "compact" );
 
   emptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
                                    "edittrash", 0, this,
-		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
+		      SLOT(slotEmptyFolder()), mActionCollection, "empty" );
 
   removeFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
-		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
+		      SLOT(slotRemoveFolder()), mActionCollection, "delete_folder" );
 
   preferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
-		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
+		      SLOT(slotOverrideHtml()), mActionCollection, "prefer_html" );
 
   threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
-		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
+		      SLOT(slotOverrideThread()), mActionCollection, "thread_messages" );
 
   //----- Message Menu
   (void) new KAction( i18n("&New Message..."), "mail_new", KStdAccel::shortcut(KStdAccel::New), this,
-		      SLOT(slotCompose()), actionCollection(), "new_message" );
+		      SLOT(slotCompose()), mActionCollection, "new_message" );
 
   (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to", 0, this,
-		      SLOT(slotPostToML()), actionCollection(), "post_message" );
+		      SLOT(slotPostToML()), mActionCollection, "post_message" );
 
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
-					"mail_forward", actionCollection(),
+					"mail_forward", mActionCollection,
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardMsg()) );
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				actionCollection(), "message_forward_inline" );
+				mActionCollection, "message_forward_inline" );
   mForwardActionMenu->insert( forwardAction() );
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
-					SLOT(slotForwardAttachedMsg()), actionCollection(),
+					SLOT(slotForwardAttachedMsg()), mActionCollection,
 					"message_forward_as_attachment" );
   mForwardActionMenu->insert( forwardAttachedAction() );
   mForwardActionMenu->insert( redirectAction() );
 
 
   sendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
-		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
+		      SLOT(slotResendMsg()), mActionCollection, "send_again" );
 
   //----- Message-Encoding Submenu
   mEncoding = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0, this,
-		      SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
+		      SLOT( slotSetEncoding() ), mActionCollection, "encoding" );
   QStringList encodings = KMMsgBase::supportedEncodings(FALSE);
   encodings.prepend( i18n( "Auto" ) );
   mEncoding->setItems( encodings );
@@ -2032,111 +2008,111 @@ void KMMainWin::setupActions()
   }
 
   editAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
-                            SLOT(slotEditMsg()), actionCollection(), "edit" );
+                            SLOT(slotEditMsg()), mActionCollection, "edit" );
 
   //----- "Mark Message" submenu
   statusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
-                                 actionCollection(), "set_status" );
+                                 mActionCollection, "set_status" );
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
                                           i18n("Mark selected messages as new")),
                                  0, this, SLOT(slotSetMsgStatusNew()),
-                                 actionCollection(), "status_new" ));
+                                 mActionCollection, "status_new" ));
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Unread"), "kmmsgunseen",
                                           i18n("Mark selected messages as unread")),
                                  0, this, SLOT(slotSetMsgStatusUnread()),
-                                 actionCollection(), "status_unread"));
+                                 mActionCollection, "status_unread"));
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgold",
                                           i18n("Mark selected messages as read")),
                                  0, this, SLOT(slotSetMsgStatusRead()),
-                                 actionCollection(), "status_read"));
+                                 mActionCollection, "status_read"));
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as R&eplied"), "kmmsgreplied",
                                           i18n("Mark selected messages as replied")),
                                  0, this, SLOT(slotSetMsgStatusReplied()),
-                                 actionCollection(), "status_replied"));
+                                 mActionCollection, "status_replied"));
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
                                           i18n("Mark selected messages as forwarded")),
                                  0, this, SLOT(slotSetMsgStatusForwarded()),
-                                 actionCollection(), "status_forwarded"));
+                                 mActionCollection, "status_forwarded"));
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Queued"), "kmmsgqueued",
                                           i18n("Mark selected messages as queued")),
                                  0, this, SLOT(slotSetMsgStatusQueued()),
-                                 actionCollection(), "status_queued"));
+                                 mActionCollection, "status_queued"));
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Sent"), "kmmsgsent",
                                           i18n("Mark selected messages as sent")),
                                  0, this, SLOT(slotSetMsgStatusSent()),
-                                 actionCollection(), "status_sent"));
+                                 mActionCollection, "status_sent"));
 
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Important"), "kmmsgflag",
                                           i18n("Mark selected messages as important")),
                                  0, this, SLOT(slotSetMsgStatusFlag()),
-                                 actionCollection(), "status_flag"));
+                                 mActionCollection, "status_flag"));
 
   //----- "Mark Thread" submenu
   threadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
-                                       actionCollection(), "thread_status" );
+                                       mActionCollection, "thread_status" );
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
                                                 i18n("Mark all messages in the selected thread as new")),
                                        0, this, SLOT(slotSetThreadStatusNew()),
-                                       actionCollection(), "thread_new"));
+                                       mActionCollection, "thread_new"));
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Unread"), "kmmsgunseen",
                                                 i18n("Mark all messages in the selected thread as unread")),
                                        0, this, SLOT(slotSetThreadStatusUnread()),
-                                       actionCollection(), "thread_unread"));
+                                       mActionCollection, "thread_unread"));
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgold",
                                                 i18n("Mark all messages in the selected thread as read")),
                                        0, this, SLOT(slotSetThreadStatusRead()),
-                                       actionCollection(), "thread_read"));
+                                       mActionCollection, "thread_read"));
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
                                                 i18n("Mark all messages in the selected thread as replied")),
                                        0, this, SLOT(slotSetThreadStatusReplied()),
-                                       actionCollection(), "thread_replied"));
+                                       mActionCollection, "thread_replied"));
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
                                                 i18n("Mark all messages in the selected thread as forwarded")),
                                        0, this, SLOT(slotSetThreadStatusForwarded()),
-                                       actionCollection(), "thread_forwarded"));
+                                       mActionCollection, "thread_forwarded"));
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Queued"), "kmmsgqueued",
                                                 i18n("Mark all messages in the selected thread as queued")),
                                        0, this, SLOT(slotSetThreadStatusQueued()),
-                                       actionCollection(), "thread_queued"));
+                                       mActionCollection, "thread_queued"));
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Sent"), "kmmsgsent",
                                                 i18n("Mark all messages in the selected thread as sent")),
                                        0, this, SLOT(slotSetThreadStatusSent()),
-                                       actionCollection(), "thread_sent"));
+                                       mActionCollection, "thread_sent"));
 
   threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Important"), "kmmsgflag",
                                                 i18n("Mark all messages in the selected thread as important")),
                                        0, this, SLOT(slotSetThreadStatusFlag()),
-                                       actionCollection(), "thread_flag"));
+                                       mActionCollection, "thread_flag"));
 
 
 
   moveActionMenu = new KActionMenu( i18n("&Move To" ),
-                                    actionCollection(), "move_to" );
+                                    mActionCollection, "move_to" );
 
   copyActionMenu = new KActionMenu( i18n("&Copy To" ),
-                                    actionCollection(), "copy_to" );
+                                    mActionCollection, "copy_to" );
 
   applyFiltersAction = new KAction( i18n("Appl&y Filters"), "filter",
 				    CTRL+Key_J, this,
 				    SLOT(slotApplyFilters()),
-				    actionCollection(), "apply_filters" );
+				    mActionCollection, "apply_filters" );
 
   applyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter Actions" ),
-					    actionCollection(),
+					    mActionCollection,
 					    "apply_filter_actions" );
 
   //----- View Menu
@@ -2145,42 +2121,42 @@ void KMMainWin::setupActions()
   // "Headers" submenu:
   KActionMenu * headerMenu =
     new KActionMenu( i18n("View->", "&Headers"),
-		     actionCollection(), "view_headers" );
+		     mActionCollection, "view_headers" );
   headerMenu->setToolTip( i18n("Choose display style of message headers") );
 
   connect( headerMenu, SIGNAL(activated()), SLOT(slotCycleHeaderStyles()) );
 
   raction = new KRadioAction( i18n("View->headers->", "&Fancy Headers"), 0, this,
 			      SLOT(slotFancyHeaders()),
-			      actionCollection(), "view_headers_fancy" );
+			      mActionCollection, "view_headers_fancy" );
   raction->setToolTip( i18n("Show the list of headers in a fancy format") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
   raction = new KRadioAction( i18n("View->headers->", "&Brief Headers"), 0, this,
 			      SLOT(slotBriefHeaders()),
-			      actionCollection(), "view_headers_brief" );
+			      mActionCollection, "view_headers_brief" );
   raction->setToolTip( i18n("Show brief list of message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
   raction = new KRadioAction( i18n("View->headers->", "&Standard Headers"), 0, this,
 			      SLOT(slotStandardHeaders()),
-			      actionCollection(), "view_headers_standard" );
+			      mActionCollection, "view_headers_standard" );
   raction->setToolTip( i18n("Show standard list of message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
   raction = new KRadioAction( i18n("View->headers->", "&Long Headers"), 0, this,
 			      SLOT(slotLongHeaders()),
-			      actionCollection(), "view_headers_long" );
+			      mActionCollection, "view_headers_long" );
   raction->setToolTip( i18n("Show long list of message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
 
   raction = new KRadioAction( i18n("View->headers->", "&All Headers"), 0, this,
 			      SLOT(slotAllHeaders()),
-			      actionCollection(), "view_headers_all" );
+			      mActionCollection, "view_headers_all" );
   raction->setToolTip( i18n("Show all message headers") );
   raction->setExclusiveGroup( "view_headers_group" );
   headerMenu->insert( raction );
@@ -2193,7 +2169,7 @@ void KMMainWin::setupActions()
   // "Attachments" submenu:
   KActionMenu * attachmentMenu =
     new KActionMenu( i18n("View->", "&Attachments"),
-		     actionCollection(), "view_attachments" );
+		     mActionCollection, "view_attachments" );
   connect( attachmentMenu, SIGNAL(activated()),
 	   SLOT(slotCycleAttachmentStyles()) );
 
@@ -2201,28 +2177,28 @@ void KMMainWin::setupActions()
 
   raction = new KRadioAction( i18n("View->attachments->", "&As Icons"), 0, this,
 			      SLOT(slotIconicAttachments()),
-			      actionCollection(), "view_attachments_as_icons" );
+			      mActionCollection, "view_attachments_as_icons" );
   raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
   raction = new KRadioAction( i18n("View->attachments->", "&Smart"), 0, this,
 			      SLOT(slotSmartAttachments()),
-			      actionCollection(), "view_attachments_smart" );
+			      mActionCollection, "view_attachments_smart" );
   raction->setToolTip( i18n("Show attachments as suggested by sender.") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
   raction = new KRadioAction( i18n("View->attachments->", "&Inline"), 0, this,
 			      SLOT(slotInlineAttachments()),
-			      actionCollection(), "view_attachments_inline" );
+			      mActionCollection, "view_attachments_inline" );
   raction->setToolTip( i18n("Show all attachments inline (if possible)") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
 
   raction = new KRadioAction( i18n("View->attachments->", "&Hide"), 0, this,
                               SLOT(slotHideAttachments()),
-                              actionCollection(), "view_attachments_hide" );
+                              mActionCollection, "view_attachments_hide" );
   raction->setToolTip( i18n("Don't show attachments in the message viewer") );
   raction->setExclusiveGroup( "view_attachments_group" );
   attachmentMenu->insert( raction );
@@ -2234,14 +2210,14 @@ void KMMainWin::setupActions()
 
   unreadColumnToggle = new KToggleAction( i18n("View->", "&Unread Column"), 0, this,
 			       SLOT(slotToggleUnreadColumn()),
-			       actionCollection(), "view_columns_unread" );
+			       mActionCollection, "view_columns_unread" );
   unreadColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                        "number of unread messages in folders.") );
   unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
 
   totalColumnToggle = new KToggleAction( i18n("View->", "&Total Column"), 0, this,
 			       SLOT(slotToggleTotalColumn()),
-			       actionCollection(), "view_columns_total" );
+			       mActionCollection, "view_columns_total" );
   totalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
   totalColumnToggle->setChecked( mFolderTree->isTotalActive() );
@@ -2250,70 +2226,72 @@ void KMMainWin::setupActions()
 			       i18n("Expand the current thread") ),
 		     Key_Period, this,
 		     SLOT(slotExpandThread()),
-		     actionCollection(), "expand_thread" );
+		     mActionCollection, "expand_thread" );
 
   (void)new KAction( KGuiItem( i18n("View->","&Collapse Thread"), QString::null,
 			       i18n("Collapse the current thread") ),
 		     Key_Comma, this,
 		     SLOT(slotCollapseThread()),
-		     actionCollection(), "collapse_thread" );
+		     mActionCollection, "collapse_thread" );
 
   (void)new KAction( KGuiItem( i18n("View->","Ex&pand All Threads"), QString::null,
 			       i18n("Expand all threads in the current folder") ),
 		     CTRL+Key_Period, this,
 		     SLOT(slotExpandAllThreads()),
-		     actionCollection(), "expand_all_threads" );
+		     mActionCollection, "expand_all_threads" );
 
   (void)new KAction( KGuiItem( i18n("View->","C&ollapse All Threads"), QString::null,
 			       i18n("Collapse all threads in the current folder") ),
 		     CTRL+Key_Comma, this,
 		     SLOT(slotCollapseAllThreads()),
-		     actionCollection(), "collapse_all_threads" );
+		     mActionCollection, "collapse_all_threads" );
 
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString::null,
                          i18n("Go to the next message") ),
                          "N;Right", this, SLOT(slotNextMessage()),
-                         actionCollection(), "go_next_message" );
+                         mActionCollection, "go_next_message" );
 
-  new KAction( KGuiItem( i18n("Next &Unread Message"), "next",
+  new KAction( KGuiItem( i18n("Next &Unread Message"),
+                         QApplication::reverseLayout() ? "previous" : "next",
                          i18n("Go to the next unread message") ),
                          Key_Plus, this, SLOT(slotNextUnreadMessage()),
-                         actionCollection(), "go_next_unread_message" );
+                         mActionCollection, "go_next_unread_message" );
 
   /* ### needs better support from folders:
   new KAction( KGuiItem( i18n("Next &Important Message"), QString::null,
                          i18n("Go to the next important message") ),
                          0, this, SLOT(slotNextImportantMessage()),
-                         actionCollection(), "go_next_important_message" );
+                         mActionCollection, "go_next_important_message" );
   */
 
   new KAction( KGuiItem( i18n("&Previous Message"), QString::null,
                          i18n("Go to the previous message") ),
                          "P;Left", this, SLOT(slotPrevMessage()),
-                         actionCollection(), "go_prev_message" );
+                         mActionCollection, "go_prev_message" );
 
-  new KAction( KGuiItem( i18n("Previous Unread &Message"), "previous",
+  new KAction( KGuiItem( i18n("Previous Unread &Message"),
+                         QApplication::reverseLayout() ? "next" : "previous",
                          i18n("Go to the previous unread message") ),
                          Key_Minus, this, SLOT(slotPrevUnreadMessage()),
-                         actionCollection(), "go_prev_unread_message" );
+                         mActionCollection, "go_prev_unread_message" );
 
   /* needs better support from folders:
   new KAction( KGuiItem( i18n("Previous I&mportant Message"), QString::null,
                          i18n("Go to the previous important message") ),
                          0, this, SLOT(slotPrevImportantMessage()),
-                         actionCollection(), "go_prev_important_message" );
+                         mActionCollection, "go_prev_important_message" );
   */
 
   new KAction( KGuiItem( i18n("Next Unread &Folder"), QString::null,
                          i18n("Go to the next folder with unread messages") ),
                          CTRL+Key_Plus, this, SLOT(slotNextUnreadFolder()),
-                         actionCollection(), "go_next_unread_folder" );
+                         mActionCollection, "go_next_unread_folder" );
 
   new KAction( KGuiItem( i18n("Previous Unread F&older"), QString::null,
                          i18n("Go to the previous folder with unread messages") ),
                          CTRL+Key_Minus, this, SLOT(slotPrevUnreadFolder()),
-                         actionCollection(), "go_prev_unread_folder" );
+                         mActionCollection, "go_prev_unread_folder" );
 
   new KAction( KGuiItem( i18n("Go->","Next Unread &Text"), QString::null,
                          i18n("Go to the next unread text"),
@@ -2321,51 +2299,54 @@ void KMMainWin::setupActions()
                               "If at end of current message, "
                               "go to next unread message.") ),
                          Key_Space, this, SLOT(slotReadOn()),
-                         actionCollection(), "go_next_unread_text" );
+                         mActionCollection, "go_next_unread_text" );
 
   //----- Settings Menu
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
- 		      SLOT(slotFilter()), actionCollection(), "filter" );
+ 		      SLOT(slotFilter()), mActionCollection, "filter" );
   (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
- 		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
+ 		      SLOT(slotPopFilter()), mActionCollection, "popFilter" );
 
   (void) new KAction( KGuiItem( i18n("KMail &Introduction"), 0,
 				i18n("Display KMail's Welcome Page") ),
 		      0, this, SLOT(slotIntro()),
-		      actionCollection(), "help_kmail_welcomepage" );
+		      mActionCollection, "help_kmail_welcomepage" );
 
   // ----- Standard Actions
-//  KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
-  (void) new KAction( i18n("Configure S&hortcuts..."), 0, this,
- 		      SLOT(slotEditKeys()), actionCollection(),
+//  KStdAction::keyBindings(this, SLOT(slotEditKeys()), mActionCollection);
+  (void) new KAction( i18n("Configure S&hortcuts..."),
+		      "configure_shortcuts", 0, this,
+ 		      SLOT(slotEditKeys()), mActionCollection,
 		      "kmail_configure_shortcuts" );
 
 #if KDE_VERSION >= 306
-//  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
-  (void) new KAction( i18n("Configure &Notifications..."), 0, this,
- 		      SLOT(slotEditNotifications()), actionCollection(),
+//  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), mActionCollection);
+  (void) new KAction( i18n("Configure &Notifications..."),
+		      "knotify", 0, this,
+ 		      SLOT(slotEditNotifications()), mActionCollection,
 		      "kmail_configure_notifications" );
 #endif
-//  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
-  (void) new KAction( i18n("&Configure KMail..."), 0, kernel,
-                      SLOT(slotShowConfigurationDialog()), actionCollection(),
+//  KStdAction::preferences(this, SLOT(slotSettings()), mActionCollection);
+  (void) new KAction( i18n("&Configure KMail..."),
+		      "configure", 0, kernel,
+                      SLOT(slotShowConfigurationDialog()), mActionCollection,
                       "kmail_configure_kmail" );
 
-  KStdAction::undo(this, SLOT(slotUndo()), actionCollection(), "kmail_undo");
+  KStdAction::undo(this, SLOT(slotUndo()), mActionCollection, "kmail_undo");
 //  (void) new KAction( i18n("&Undo..."), 0, this,
-// 		      SLOT(slotUndo()), actionCollection(),
+// 		      SLOT(slotUndo()), mActionCollection,
 //		      "kmail_undo" );
 
-  KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
+  KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), mActionCollection, "kmail_copy");
 //  (void) new KAction( i18n("&Copy..."), CTRL+Key_C, mMsgView,
-// 		      SLOT(slotCopySelectedText()), actionCollection(),
+// 		      SLOT(slotCopySelectedText()), mActionCollection,
 //		      "kmail_copy" );
 
-//  KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
+//  KStdAction::tipOfDay( this, SLOT( slotShowTip() ), mActionCollection );
   (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), "idea",
                                 i18n("Show \"Tip of the Day\"") ),
                       0, this, SLOT(slotShowTip()),
-                      actionCollection(), "help_show_tip" );
+                      mActionCollection, "help_show_tip" );
 
   menutimer = new QTimer( this, "menutimer" );
   connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActions() ) );
@@ -2378,16 +2359,16 @@ void KMMainWin::setupActions()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotEditNotifications()
+void KMMainWidget::slotEditNotifications()
 {
 #if KDE_VERSION >= 306
   KNotifyDialog::configure(this);
 #endif
 }
 
-void KMMainWin::slotEditKeys()
+void KMMainWidget::slotEditKeys()
 {
-  KKeyDialog::configure( actionCollection()
+  KKeyDialog::configure( mActionCollection
 #if KDE_VERSION >= 306
 			 , true /*allow on-letter shortcuts*/
 #endif
@@ -2395,7 +2376,7 @@ void KMMainWin::slotEditKeys()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotReadOn()
+void KMMainWidget::slotReadOn()
 {
     if ( !mMsgView )
         return;
@@ -2415,39 +2396,39 @@ void KMMainWin::slotReadOn()
     mFolderTree->nextUnreadFolder( true );
 }
 
-void KMMainWin::slotNextUnreadFolder() {
+void KMMainWidget::slotNextUnreadFolder() {
   if ( !mFolderTree ) return;
   mFolderTree->nextUnreadFolder();
 }
 
-void KMMainWin::slotPrevUnreadFolder() {
+void KMMainWidget::slotPrevUnreadFolder() {
   if ( !mFolderTree ) return;
   mFolderTree->prevUnreadFolder();
 }
 
-void KMMainWin::slotExpandThread()
+void KMMainWidget::slotExpandThread()
 {
   mHeaders->slotExpandOrCollapseThread( true ); // expand
 }
 
-void KMMainWin::slotCollapseThread()
+void KMMainWidget::slotCollapseThread()
 {
   mHeaders->slotExpandOrCollapseThread( false ); // collapse
 }
 
-void KMMainWin::slotExpandAllThreads()
+void KMMainWidget::slotExpandAllThreads()
 {
   mHeaders->slotExpandOrCollapseAllThreads( true ); // expand
 }
 
-void KMMainWin::slotCollapseAllThreads()
+void KMMainWidget::slotCollapseAllThreads()
 {
   mHeaders->slotExpandOrCollapseAllThreads( false ); // collapse
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::moveSelectedToFolder( int menuId )
+void KMMainWidget::moveSelectedToFolder( int menuId )
 {
   if (mMenuToFolder[menuId])
     mHeaders->moveMsgToFolder( mMenuToFolder[menuId] );
@@ -2455,7 +2436,7 @@ void KMMainWin::moveSelectedToFolder( int menuId )
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::copySelectedToFolder(int menuId )
+void KMMainWidget::copySelectedToFolder(int menuId )
 {
   if (mMenuToFolder[menuId])
     mHeaders->copyMsgToFolder( mMenuToFolder[menuId] );
@@ -2463,7 +2444,7 @@ void KMMainWin::copySelectedToFolder(int menuId )
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::updateMessageMenu()
+void KMMainWidget::updateMessageMenu()
 {
     mMenuToFolder.clear();
     KMMenuCommand::folderToPopupMenu( true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
@@ -2471,13 +2452,13 @@ void KMMainWin::updateMessageMenu()
     updateMessageActions();
 }
 
-void KMMainWin::startUpdateMessageActionsTimer()
+void KMMainWidget::startUpdateMessageActionsTimer()
 {
     menutimer->stop();
     menutimer->start( 20, true );
 }
 
-void KMMainWin::updateMessageActions()
+void KMMainWidget::updateMessageActions()
 {
     int count = 0;
     QPtrList<QListViewItem> selectedItems;
@@ -2540,11 +2521,11 @@ void KMMainWin::updateMessageActions()
     viewSourceAction()->setEnabled( single_actions );
 
     bool mails = mFolder && mFolder->count();
-    actionCollection()->action( "go_next_message" )->setEnabled( mails );
-    actionCollection()->action( "go_next_unread_message" )->setEnabled( mails );
-    actionCollection()->action( "go_prev_message" )->setEnabled( mails );
-    actionCollection()->action( "go_prev_unread_message" )->setEnabled( mails );
-    actionCollection()->action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
+    mActionCollection->action( "go_next_message" )->setEnabled( mails );
+    mActionCollection->action( "go_next_unread_message" )->setEnabled( mails );
+    mActionCollection->action( "go_prev_message" )->setEnabled( mails );
+    mActionCollection->action( "go_prev_unread_message" )->setEnabled( mails );
+    mActionCollection->action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 
@@ -2566,7 +2547,7 @@ void KMMainWin::updateMessageActions()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::statusMsg(const QString& message)
+void KMMainWidget::statusMsg(const QString& message)
 {
   KMMainWin *mainKMWin = dynamic_cast<KMMainWin*>(topLevelWidget());
   if (mainKMWin)
@@ -2579,7 +2560,7 @@ void KMMainWin::statusMsg(const QString& message)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::updateFolderMenu()
+void KMMainWidget::updateFolderMenu()
 {
   modifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   compactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
@@ -2614,7 +2595,7 @@ QString fmt(long n) {
 }
 #endif
 
-void KMMainWin::slotMemInfo() {
+void KMMainWidget::slotMemInfo() {
 #ifdef MALLOC_DEBUG
   struct mallinfo mi;
 
@@ -2633,7 +2614,7 @@ void KMMainWin::slotMemInfo() {
 
 
 //-----------------------------------------------------------------------------
-bool KMMainWin::queryClose() {
+bool KMMainWidget::queryClose() {
   int      ret = 0;
   QString  str = i18n("Expire old messages from all folders? "
 		      "Expired messages are permanently deleted.");
@@ -2646,7 +2627,7 @@ bool KMMainWin::queryClose() {
   kernel->setCanExpire(false);
   for (kmWin = KMainWindow::memberList->first(); kmWin;
        kmWin = KMainWindow::memberList->next()) {
-    if (kmWin->isA("KMMainWin")) {
+    if (kmWin->isA("KMMainWidget")) {
       num++;
     }
   }
@@ -2672,7 +2653,7 @@ bool KMMainWin::queryClose() {
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotIntro()
+void KMMainWidget::slotIntro()
 {
   if ( !mFolderTree || !mMsgView ) return;
 
@@ -2691,7 +2672,7 @@ void KMMainWin::slotIntro()
   mMsgView->displayAboutPage();
 }
 
-void KMMainWin::slotShowStartupFolder()
+void KMMainWidget::slotShowStartupFolder()
 {
   if (mFolderTree) {
       // add the folders
@@ -2724,18 +2705,18 @@ void KMMainWin::slotShowStartupFolder()
   mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(startup));
 }
 
-void KMMainWin::slotShowTipOnStart()
+void KMMainWidget::slotShowTipOnStart()
 {
   KTipDialog::showTip( this );
 }
 
-void KMMainWin::slotShowTip()
+void KMMainWidget::slotShowTip()
 {
   KTipDialog::showTip( this, QString::null, true );
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotChangeCaption(QListViewItem * i)
+void KMMainWidget::slotChangeCaption(QListViewItem * i)
 {
   // set the caption to the current full path
   QStringList names;
@@ -2745,7 +2726,7 @@ void KMMainWin::slotChangeCaption(QListViewItem * i)
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::removeDuplicates()
+void KMMainWidget::removeDuplicates(void)
 {
     KMFolder *oFolder = mFolder;
     mHeaders->setFolder(0);
@@ -2774,69 +2755,62 @@ void KMMainWin::removeDuplicates()
     }
     qHeapSort( redundantIds );
     kt = redundantIds.end();
-    int numDuplicates = 0;
     if (kt != redundantIds.begin()) do {
        mFolder->removeMsg( *(--kt) );
-       ++numDuplicates;
     }
     while (kt != redundantIds.begin());
 
     mFolder->close();
     mHeaders->setFolder(oFolder);
-    QString msg;
-    if ( numDuplicates )
-        msg = i18n("Removed %n duplicate message.",
-		   "Removed %n duplicate messages.", numDuplicates );
-    else
-        msg = i18n("No duplicate messages found.");
-    KMBroadcastStatus::instance()->setStatusMsg( msg );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotUpdateUndo()
+void KMMainWidget::slotUpdateUndo()
 {
-    if (actionCollection()->action( "edit_undo" ))
-        actionCollection()->action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
+    if (mActionCollection->action( "edit_undo" ))
+        mActionCollection->action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::initializeFilterActions()
+void KMMainWidget::initializeFilterActions()
 {
-  mFilterActions.clear();
-  mFilterCommands.clear();
+    QString filterName, normalizedName;
+    KMMetaFilterActionCommand *filterCommand;
+    KAction *filterAction;
+    mFilterActions.clear();
+    mFilterCommands.clear();
+    for ( QPtrListIterator<KMFilter> it(*kernel->filterMgr()) ;
+	  it.current() ; ++it )
+	if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
+	    filterName = QString("Filter Action %1").arg((*it)->name());
+	    normalizedName = filterName.replace(" ", "_");
+	    if (action(normalizedName.local8Bit()))
+		continue;
+	    filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
+	    mFilterCommands.append(filterCommand);
+	    QString as = i18n("Filter Action %1").arg((*it)->name());
+	    filterAction = new KAction(as, 0, filterCommand,
+				       SLOT(start()), mActionCollection,
+				       normalizedName.local8Bit());
+	    mFilterActions.append(filterAction);
+	}
 
-  for ( QPtrListIterator<KMFilter> it(*kernel->filterMgr()) ;
-	it.current() ; ++it )
-    if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
-      QCString filterName = "Filter Action " + (*it)->name().utf8();
-      if (action(filterName))
-	continue;
-      KMMetaFilterActionCommand * filterCommand =
-	new KMMetaFilterActionCommand(*it, mHeaders, this);
-      mFilterCommands.append(filterCommand);
-      QString as = i18n("Filter Action %1").arg((*it)->name());
-      mFilterActions.append( new KAction(as, 0, filterCommand,
-					 SLOT(start()), actionCollection(),
-					 filterName) );
-    }
-
-  applyFilterActionsMenu->popupMenu()->clear();
-  plugFilterActions(applyFilterActionsMenu->popupMenu());
+    applyFilterActionsMenu->popupMenu()->clear();
+    plugFilterActions(applyFilterActionsMenu->popupMenu());
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::plugFilterActions(QPopupMenu *menu)
+void KMMainWidget::plugFilterActions(QPopupMenu *menu)
 {
-  if ( !menu ) return;
-
   for (QPtrListIterator<KMFilter> it(*kernel->filterMgr()); it.current(); ++it)
-    if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
-      QCString filterName = "Filter Action " + (*it)->name().utf8();
-      KAction *filterAction = action(filterName);
-      if (filterAction)
-	filterAction->plug(menu);
-    }
+      if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
+	  QString filterName = QString("Filter Action %1").arg((*it)->name());
+	  filterName = filterName.replace(" ","_");
+	  KAction *filterAction = action(filterName.local8Bit());
+	  if (filterAction && menu)
+	      filterAction->plug(menu);
+      }
 }

@@ -23,6 +23,7 @@
 #include "kmbroadcaststatus.h"
 #include "kmaccount.h"
 #include "kmtransport.h"
+#include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kbusyptr.h"
@@ -68,7 +69,7 @@ void KMSender::setStatusMsg(const QString &msg)
 void KMSender::readConfig(void)
 {
   QString str;
-  KConfigGroup config(kapp->config(), SENDER_GROUP);
+  KConfigGroup config(KMKernel::config(), SENDER_GROUP);
 
   mSendImmediate = config.readBoolEntry("Immediate", TRUE);
   mSendQuotedPrintable = config.readBoolEntry("Quoted-Printable", TRUE);
@@ -78,7 +79,7 @@ void KMSender::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMSender::writeConfig(bool aWithSync)
 {
-  KConfigGroup config(kapp->config(), SENDER_GROUP);
+  KConfigGroup config(KMKernel::config(), SENDER_GROUP);
 
   config.writeEntry("Immediate", mSendImmediate);
   config.writeEntry("Quoted-Printable", mSendQuotedPrintable);
@@ -202,6 +203,9 @@ bool KMSender::sendQueued(void)
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
 {
+  if (!kernel)  //To handle message sending in progress when kaplan is exited
+    return;	//TODO: handle this case better
+
   KMFolder *sentFolder = 0, *imapSentFolder = 0;
   bool someSent = mCurrentMsg;
   int rc;
@@ -313,8 +317,11 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
 
   // See if there is another queued message
   mCurrentMsg = kernel->outboxFolder()->getMsg(0);
-  if (!mCurrentMsg)
+  if (!mCurrentMsg || mCurrentMsg->transferInProgress())
   {
+    // a message is locked finish the send
+    if (mCurrentMsg && mCurrentMsg->transferInProgress())
+	mCurrentMsg = 0;
     // no more message: cleanup and done
     if ( ( sentFolder != kernel->sentFolder() ) && ( sentFolder != 0 ) )
         sentFolder->close();
@@ -398,7 +405,7 @@ void KMSender::sendProcStarted(bool success)
     mSendProc = 0;
     mSendProcStarted = false;
     cleanup();
-    return;    
+    return;
   }
   doSendMsgAux();
 }
@@ -795,7 +802,7 @@ bool KMSendSendmail::finish(bool destructive)
   delete mMailerProc;
   mMailerProc = 0;
   if (destructive)
-    	deleteLater(); 
+    	deleteLater();
   return TRUE;
 }
 
@@ -818,7 +825,7 @@ bool KMSendSendmail::send(KMMessage* aMsg)
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host;
   *mMailerProc << "-i";
-  
+
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
     // extended BCC handling to prevent TOs and CCs from seeing
     // BBC information by looking at source of an OpenPGP encrypted mail

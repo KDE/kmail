@@ -28,8 +28,8 @@
 class KMFolder;
 class KMFolderMgr;
 class KMMainWin;
-class KPopupMenu;
 class QMouseEvent;
+class KPopupMenu;
 
 /** 
  * KMSystemTray extends KSystemTray and handles system
@@ -63,7 +63,6 @@ protected:
   void hideKMail();
   void switchIcon();
   void startAnimation();
-  void buildPopupMenu();
 
   QString prettyName(KMFolder *);
   KMMainWin * getKMMainWin();
@@ -78,10 +77,6 @@ private:
 
   int mMode;
   int mStep;
-
-  int mNewMessagePopupId;
-
-  KPopupMenu * mPopupMenu;
 
   QPtrVector<KMFolder> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;

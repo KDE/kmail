@@ -30,20 +30,6 @@
 #include <errno.h>
 #define KMMSGINDEX_TMP_EXT ".tmp"
 
-enum {
-    HEADER_BYTEORDER = 0,
-    HEADER_COUNT = 1,
-    HEADER_USED = 2,
-    HEADER_KNOWN = 3,
-    HEADER_end = 4,
-
-    CHUNK_HEADER_COUNT = 0,
-    CHUNK_HEADER_USED = 1,
-    CHUNK_HEADER_NEXT = 2,
-    CHUNK_HEADER_end = 3
-};
-
-
 KMMsgIndex::KMMsgIndex(QObject *o, const char *n) : 
     QObject(o, n), mIndexState(INDEX_IDLE)
 {
@@ -112,22 +98,22 @@ KMMsgIndex::allocTermChunk(int cnt)
 	mTermIndex.ref = (Q_UINT32*)mmap(0, mTermIndex.count * sizeof(Q_INT32),
 					 PROT_READ|PROT_WRITE, MAP_SHARED, 
 					 mTermIndex.fd, 0);
-	mTermIndex.ref[HEADER_COUNT] = mTermIndex.count;
+	mTermIndex.ref[1] = mTermIndex.count;
     }
-    mTermIndex.ref[HEADER_USED] = mTermIndex.used;
+    mTermIndex.ref[2] = mTermIndex.used;
     return ret;
 }
 
 bool 
-KMMsgIndex::isKillTerm(const char *term, uchar term_len)
+KMMsgIndex::isKillTerm(const char *term, int term_len)
 {
     if(!term || term_len < 1)
 	return TRUE;
-#if 1
-    if(term_len == 1) //one letter just isn't enough..
+#if 0
+    if(term_len <= 1) //one letter just isn't enough..
 	return TRUE;
 #endif
-#if 1
+#if 0
     { //no numbers!
 	int numlen = 0;
 	for(numlen = 0; numlen < term_len; numlen++) {
@@ -138,7 +124,7 @@ KMMsgIndex::isKillTerm(const char *term, uchar term_len)
 	    return TRUE;
     }
 #endif
-#if 1
+#if 0
     { //static words lists, maybe hacky
 	static QDict<void> *killDict = NULL;
 	if(!killDict) {
@@ -148,49 +134,15 @@ KMMsgIndex::isKillTerm(const char *term, uchar term_len)
 	    for(int i = 0; kills[i]; i++)
 		killDict->insert(kills[i], (void*)1);
 	}
-	if(killDict->find(term))
+	if(term_len <= 1 || killDict->find(term))
 	    return TRUE;
     }
 #endif
     return FALSE;
 }
 
-int
-KMMsgIndex::addBucket(int where, Q_UINT32 serNum)
-{
-    int ret = where;
-    if(where == -1) {
-	int first_chunk_size = 6; //just enough for the one..
-	int off = ret = allocTermChunk(first_chunk_size);
-
-	//special case to mark the tail for the first
-	mTermIndex.ref[off++] = off+1;
-	first_chunk_size--;
-
-	//now mark in index
-	mTermIndex.ref[off+CHUNK_HEADER_COUNT] = first_chunk_size;
-	mTermIndex.ref[off+CHUNK_HEADER_USED] = 4; //include the header
-	mTermIndex.ref[off+CHUNK_HEADER_end] = serNum;
-    } else {
-	uint len = mTermIndex.ref[where+CHUNK_HEADER_COUNT];
-	if(len == mTermIndex.ref[where+CHUNK_HEADER_USED]) {
-	    len *= 2; //double
-	    int blk = ret = allocTermChunk(len); 
-	    mTermIndex.ref[where+CHUNK_HEADER_NEXT] = blk;
-	    mTermIndex.ref[blk+CHUNK_HEADER_COUNT] = len;
-	    mTermIndex.ref[blk+CHUNK_HEADER_USED] = 4; //include the header
-	    mTermIndex.ref[blk+CHUNK_HEADER_end] = serNum;
-	} else {
-	    mTermIndex.ref[where+
-			   mTermIndex.ref[where+CHUNK_HEADER_USED]] = serNum;
-	    mTermIndex.ref[where+CHUNK_HEADER_USED]++;
-	}
-    }
-    return ret;
-}
-
 bool
-KMMsgIndex::addTerm(const char *term, uchar term_len, Q_UINT32 serNum)
+KMMsgIndex::addTerm(const char *term, int term_len, Q_UINT32 serNum)
 {
     if(mTermIndex.ref == MAP_FAILED)
 	return FALSE;
@@ -198,16 +150,37 @@ KMMsgIndex::addTerm(const char *term, uchar term_len, Q_UINT32 serNum)
 	return TRUE; //sorta..
 
     if(!mTermTOC.map.contains(term)) {
-	int w = addBucket(-1, serNum);
-	mTermTOC.map.insert(term, w); //mark in TOC
+	int first_chunk_size = 6; //just enough for the one..
+	int off = allocTermChunk(first_chunk_size);
+	mTermTOC.map.insert(term, off); //mark in TOC
 	write(mTermTOC.fd, &term_len, sizeof(term_len));
 	write(mTermTOC.fd, term, term_len);
-	write(mTermTOC.fd, &w, sizeof(w));
+	write(mTermTOC.fd, &off, sizeof(off));
+
+	//special case to mark the tail for the first
+	mTermIndex.ref[off++] = off+1;
+	first_chunk_size--;
+
+	//now mark in index
+	mTermIndex.ref[off++] = first_chunk_size;
+	mTermIndex.ref[off++] = 4; //include the header
+	mTermIndex.ref[off++] = 0; 
+	mTermIndex.ref[off] = serNum;
     } else {
-	int map_off = mTermTOC.map[term], 
-		  w = addBucket(mTermIndex.ref[map_off], serNum);
-	if(w != -1) 
-	    mTermIndex.ref[map_off] = w;
+	int map_off = mTermTOC.map[term], tail = mTermIndex.ref[map_off];
+	uint len = mTermIndex.ref[tail];
+	if(len == mTermIndex.ref[tail+1]) {
+	    len *= 2; //double
+	    int blk = allocTermChunk(len); 
+	    mTermIndex.ref[map_off] = mTermIndex.ref[tail+2] = blk;
+	    mTermIndex.ref[blk++] = len;
+	    mTermIndex.ref[blk++] = 4; //include the header
+	    mTermIndex.ref[blk++] = 0; 
+	    mTermIndex.ref[blk] = serNum;
+	} else {
+	    mTermIndex.ref[tail+mTermIndex.ref[tail+1]] = serNum;
+	    mTermIndex.ref[tail+1]++;
+	}
     }
     return TRUE;
 }
@@ -251,15 +224,11 @@ KMMsgIndex::processMsg(Q_UINT32 serNum)
 	body = dw_msg->Body().AsString();
     }
 
-    uchar build_i = 0;
-    char build_str[255];
+    uint build_i = 0;
+    char build_str[64]; //TODO: maybe we shouldn't hard code to 64
     const char *body_s = body.data();
     for(uint i = 0; i < body.length(); i++) {
-	if(build_i < 253 && 
-	   (isalnum(body_s[i]) || 
-	    ((body_s[i] == '.' || body_s[i] == '-' || body_s[i] == '\'') && 
-	     body_s[i+1] != '\n' && 
-	     body_s[i+1] != '\t' && body_s[i+1] != ' '))) {
+	if(isalnum(body_s[i]) && build_i < 63) {
 	    build_str[build_i++] = tolower(body_s[i]);
 	} else if(build_i) {
 	    build_str[build_i] = 0;
@@ -277,7 +246,7 @@ KMMsgIndex::processMsg(Q_UINT32 serNum)
     }
     folder->unGetMsg(idx); //I don't need it anymore.. 
 
-    mTermIndex.ref[HEADER_KNOWN] = ++mTermIndex.known; //update known count
+    mTermIndex.ref[3] = ++mTermIndex.known; //update known count
 #if 0
     msync(mTermIndex.ref, mTermIndex.count * sizeof(Q_INT32), MS_SYNC);
     sync();
@@ -367,10 +336,10 @@ KMMsgIndex::recreateIndex()
     mTermIndex.ref = (Q_UINT32*)mmap(0, mTermIndex.count * sizeof(Q_INT32), 
 				     PROT_READ|PROT_WRITE, 
 				     MAP_SHARED, mTermIndex.fd, 0);
-    mTermIndex.ref[HEADER_BYTEORDER] = byteOrder;
-    mTermIndex.ref[HEADER_COUNT] = mTermIndex.count;
-    mTermIndex.ref[HEADER_USED] = mTermIndex.used; //including this header
-    mTermIndex.ref[HEADER_KNOWN] = mTermIndex.known;
+    mTermIndex.ref[0] = byteOrder;
+    mTermIndex.ref[1] = mTermIndex.count;
+    mTermIndex.ref[2] = mTermIndex.used; //including this header
+    mTermIndex.ref[3] = mTermIndex.known;
 
     QValueStack<QGuardedPtr<KMFolderDir> > folders;
     folders.push(&(kernel->folderMgr()->dir()));
@@ -411,9 +380,9 @@ KMMsgIndex::readIndex()
 		    goto error_with_read;
 
 		//read in the TOC
-		uchar len;
-		char *in = NULL;
 		int in_len = 0;
+		char *in = NULL;
+		int len;
 		Q_UINT32 off;
 		while(1) {
 		    if(!read(mTermTOC.fd, &len, sizeof(len)))
@@ -450,111 +419,84 @@ KMMsgIndex::canHandleQuery(KMSearchPattern *pat)
 {
     if(mIndexState == INDEX_CREATE) //not while we are creating the index..
 	return FALSE;
+
     if(pat->op() != KMSearchPattern::OpAnd &&
        pat->op() != KMSearchPattern::OpOr)
 	return FALSE;
     for(QPtrListIterator<KMSearchRule> it(*pat); it.current(); ++it) {
-	if((*it)->field() == "<body>") {
-	    if((*it)->function() != KMSearchRule::FuncContains)
-		return FALSE;
-	    QString match = (*it)->contents().lower();
-	    if(match.contains(' ')) {
-		uint killed = 0;
-		QStringList sl = QStringList::split(' ', match);
-		for(QStringList::Iterator it = sl.begin(); 
-		    it != sl.end(); ++it) {
-		    QString str = (*it).lower();
-		    if(isKillTerm(str.latin1(), str.length()))
-			killed++;
-		}
-		if(killed == sl.count())
-		    return FALSE;
-	    } else if(isKillTerm(match.latin1(), match.length())) {
-		return FALSE;
-	    }
-	} else {
+	if((*it)->field() != "<body>" || 
+	   (*it)->function() != KMSearchRule::FuncContains)
 	    return FALSE;
-	}
     }
     return TRUE;
 }
 
-QValueList<Q_UINT32>
-KMMsgIndex::values(int begin_chunk, int end_chunk)
-{
-    QValueList<Q_UINT32> ret;
-    for(int off = begin_chunk; TRUE; 
-	off = mTermIndex.ref[off+CHUNK_HEADER_NEXT]) {
-	uint used = mTermIndex.ref[off+CHUNK_HEADER_USED];
-	for(uint i = CHUNK_HEADER_end; i < used; i++) 
-	    ret << mTermIndex.ref[off+i];
-	if(mTermIndex.ref[off] != used || off == end_chunk) 
-		break;
-    }
-    return ret;
-}
-
 QValueList<Q_UINT32> // Actually does the search.. 
-KMMsgIndex::query(KMSearchRule *rule, bool full_phrase_search)
+KMMsgIndex::query(KMSearchRule *rule)
 {
     QValueList<Q_UINT32> ret;
     if(rule->field() == "<body>" && 
        rule->function() == KMSearchRule::FuncContains) {
 	QString match = rule->contents().lower();
-	if(match.contains(' ')) { //phrase search..
-	    QValueList<Q_UINT32> tmp;
+	if(match.contains(' ')) {
+	    bool found_word = FALSE;
 	    QStringList sl = QStringList::split(' ', match);
 	    for(QStringList::Iterator it = sl.begin(); it != sl.end(); ++it) {
-		QString str = (*it).lower();
-		if(!isKillTerm(str.latin1(), str.length())) {
-		    int map_off = mTermTOC.map[match];
-		    if(ret.isEmpty()) {
-			ret = values(map_off+1, mTermIndex.ref[map_off]);
-		    } else {
-			tmp = values(map_off+1, mTermIndex.ref[map_off]);
-			if(tmp.count() < ret.count())
-			    ret = tmp;
-		    }
+		QString tmp = (*it).lower();
+		if(!isKillTerm(tmp.latin1(), tmp.length())) {
+		    found_word = TRUE;
+		    match = tmp;
+		    break;
 		}
 	    }
-	    if(full_phrase_search) {
-		tmp.clear();
-		for(QValueListIterator<Q_UINT32> it = ret.begin(); 
-		    it != ret.end(); ++it) {
-		    int idx = -1;
-		    KMMessage msg;
-		    KMFolder *folder = 0;
-		    kernel->msgDict()->getLocation((*it), &folder, &idx);
-		    if(!folder || (idx == -1))
-			continue;
-		    if(rule->matches(folder->getDwString(idx), msg))
-			tmp << (*it);
-		}
+	    if(!found_word) 
+		return ret;
+	} else if(isKillTerm(match.latin1(), match.length())) {
+	    match = "";
+	}
+	if(match.isEmpty() || !mTermTOC.map.contains(match))
+	    return ret;
+	int map_off = mTermTOC.map[match];
+	for(int off = map_off+1; TRUE; off = mTermIndex.ref[off+2]) {
+	    uint used = mTermIndex.ref[off+1];
+	    for(uint i = 3; i < used; i++) 
+		ret << mTermIndex.ref[off+i];
+	    if(mTermIndex.ref[off] != used || off == map_off) 
+		break;
+	}
+	if(match != rule->contents()) {
+	    KMMessage msg;
+	    QValueList<Q_UINT32> phrases;
+	    for(QValueListIterator<Q_UINT32> it = ret.begin(); 
+		it != ret.end(); ++it) {
+		int idx = -1;
+		KMFolder *folder = 0;
+		kernel->msgDict()->getLocation((*it), &folder, &idx);
+		if(!folder || (idx == -1))
+		    continue;
+		if(rule->matches(folder->getDwString(idx), msg))
+		    phrases << (*it);
 	    }
-	    ret = tmp;
-	} else if(!isKillTerm(match.latin1(), match.length()) &&
-		  mTermTOC.map.contains(match)) {
-	    int map_off = mTermTOC.map[match];
-	    ret = values(map_off+1, mTermIndex.ref[map_off]);
+	    ret = phrases;
 	}
     }
     return ret;
 }
 
 QValueList<Q_UINT32>
-KMMsgIndex::query(KMSearchPattern *pat, bool full_phrase_search)
+KMMsgIndex::query(KMSearchPattern *pat)
 {
     QValueList<Q_UINT32> ret;
     if(pat->isEmpty() || !canHandleQuery(pat))
 	return ret;
 
     if(pat->count() == 1) {
-	ret = query(pat->first(), full_phrase_search);
+	ret = query(pat->first());
     } else {
 	bool first = TRUE;
 	QIntDict<void> foundDict;
 	for(QPtrListIterator<KMSearchRule> it(*pat); it.current(); ++it) {
-	    QValueList<Q_UINT32> tmp = query((*it), full_phrase_search);
+	    QValueList<Q_UINT32> tmp = query((*it));
 	    if(first) {
 		first = FALSE;
 		for(QValueListIterator<Q_UINT32> it = tmp.begin(); 
@@ -591,21 +533,10 @@ KMIndexSearchTarget::KMIndexSearchTarget(KMSearch *s)
     mId = startTimer(0);
     {
 	QValueList<Q_UINT32> lst = kernel->msgIndex()->query(
-	    s->searchPattern(), FALSE);
+	    s->searchPattern());
 	for(QValueListConstIterator<Q_UINT32> it = lst.begin();
 	    it != lst.end(); ++it) 
 	    mSearchResult.push((*it));
-    }
-    if(s->searchPattern()->count() == 1) {
-	mVerifyResult = s->searchPattern()->first()->contents().contains(' ');
-    } else {
-	for(QPtrListIterator<KMSearchRule> it(*s->searchPattern()); 
-	    it.current(); ++it) {
-	    if((*it)->contents().contains(' ')) {
-		mVerifyResult = TRUE;
-		break;
-	    }
-	}
     }
     QObject::connect(this, SIGNAL(proxyFound(Q_UINT32)), 
 		     s, SIGNAL(found(Q_UINT32)));
@@ -620,15 +551,11 @@ KMIndexSearchTarget::timerEvent(QTimerEvent *)
     bool finished = FALSE;
     if(mSearch) {
 	KMFolder *folder;
-	const uint max_src = mVerifyResult ? 20 : 100;
-	int stop_at = QMIN(mSearchResult.count(), max_src), found = 0;
+	int stop_at = QMIN(mSearchResult.count(), 20), found = 0;
 	for(int i = 0, idx; i < stop_at; i++) {
 	    Q_UINT32 serNum = mSearchResult.pop();
 	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
 	    if (!folder || (idx == -1))
-		continue;
-	    if(mVerifyResult && //full phrase..
-	       !mSearch->searchPattern()->matches(folder->getDwString(idx)))
 		continue;
 	    if(mSearch->inScope(folder)) {
 		found++;
@@ -646,7 +573,7 @@ KMIndexSearchTarget::timerEvent(QTimerEvent *)
     if(finished) {
 	if(mSearch && mSearch->running())
 	    mSearch->setRunning(FALSE);
-	stop(TRUE);
+	stop(FALSE);
 	killTimer(mId);
 	kernel->msgIndex()->stopQuery(id());
     }
@@ -677,4 +604,8 @@ KMMsgIndex::stopQuery(KMSearch *s)
 	return FALSE;
     return stopQuery(id);
 }
-#include "kmmsgindex.moc"
+bool
+KMMsgIndex::stopQuery(int id)
+{
+    return mActiveSearches.remove(id);
+}

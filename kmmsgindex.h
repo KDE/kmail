@@ -52,23 +52,21 @@ public:
     ~KMMsgIndex();
 
     bool canHandleQuery(KMSearchPattern *);
-    QValueList<Q_UINT32> query(KMSearchRule *, bool full_phrase_search=TRUE);
-    QValueList<Q_UINT32> query(KMSearchPattern *, bool full_phras_search=TRUE);
+    QValueList<Q_UINT32> query(KMSearchRule *);
+    QValueList<Q_UINT32> query(KMSearchPattern *);
 
     //convenient..
     bool startQuery(KMSearch *);
     bool stopQuery(KMSearch *);
-    bool stopQuery(int id) { return mActiveSearches.remove(id); }
+    bool stopQuery(int);
 
     //number of items indexed
     int indexed() const { return mTermIndex.known; }
 private:
     //internal
-    int addBucket(int, Q_UINT32);
-    QValueList<Q_UINT32> values(int, int);
     int allocTermChunk(int);
-    bool isKillTerm(const char *, uchar);
-    bool addTerm(const char *, uchar, Q_UINT32);
+    bool isKillTerm(const char *, int);
+    bool addTerm(const char *, int, Q_UINT32);
     bool processMsg(Q_UINT32);
     void reset(bool =TRUE);
     bool recreateIndex();
@@ -85,7 +83,6 @@ class KMIndexSearchTarget : public QObject
 {
     Q_OBJECT
     int mId;
-    bool mVerifyResult;
     QValueStack<Q_UINT32> mSearchResult;
     QGuardedPtr<KMSearch> mSearch;
 public:

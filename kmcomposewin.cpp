@@ -27,10 +27,12 @@
 #include <kpgpblock.h>
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
+#include "kmmsgdict.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
+#include "kmcommands.h"
 
 #include <kaction.h>
 #include <kcharsets.h>
@@ -47,6 +49,7 @@
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
+#include "kmreadermainwin.h"
 
 #include <assert.h>
 #include <mimelib/mimepp.h>
@@ -55,7 +58,6 @@
 #include <klineeditdlg.h>
 #include <kmessagebox.h>
 #include <kurldrag.h>
-#include <kio/scheduler.h>
 
 #include <kspell.h>
 #include <kspelldlg.h>
@@ -87,11 +89,13 @@
 
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
+KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   : KMTopLevelWidget("kmail-composer#"), MailComposerIface(),
     mId( id )
 
 {
+  if (kernel->xmlGuiInstance())
+    setInstance( kernel->xmlGuiInstance() );
   mMainWidget = new QWidget(this);
 
   // Initialize the plugin selection according to 'active' flag that
@@ -140,6 +144,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   fixedFontAction = 0;
   mEditor = new KMEdit(mMainWidget, this);
   mEditor->setTextFormat(Qt::PlainText);
+  mEditor->setAcceptDrops( true );
   disableBreaking = false;
   QString tip = i18n("Select email address(es)");
   QToolTip::add( mBtnTo, tip );
@@ -192,7 +197,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   setupStatusBar();
   setupEditor();
   setupActions();
-  applyMainWindowSettings(kapp->config(), "Composer");
+  applyMainWindowSettings(KMKernel::config(), "Composer");
   toolbarAction->setChecked(!toolBar()->isHidden());
   statusbarAction->setChecked(!statusBar()->isHidden());
 
@@ -216,9 +221,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
   connect(mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-	connect(kernel->folderMgr(),SIGNAL(removed(KMFolder*)),
+	connect(kernel->folderMgr(),SIGNAL(folderRemoved(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
-	connect(kernel->imapFolderMgr(),SIGNAL(removed(KMFolder*)),
+	connect(kernel->imapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
 
   connect (mEditor, SIGNAL (spellcheck_done(int)),
@@ -355,7 +360,7 @@ bool KMComposeWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readColorConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   QColor c1=QColor(kapp->palette().active().text());
   QColor c4=QColor(kapp->palette().active().base());
@@ -392,7 +397,7 @@ void KMComposeWin::readColorConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   QCString str;
   //  int w, h,
   int maxTransportItems;
@@ -520,7 +525,7 @@ void KMComposeWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::writeConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   QString str;
 
   {
@@ -560,7 +565,7 @@ void KMComposeWin::deadLetter(void)
   applyChanges();
   QCString msgStr = mMsg->asString();
   QCString fname = getenv("HOME");
-  fname += "/dead.letter";
+  fname += "/dead.letter.tmp";
   // Security: the file is created in the user's home directory, which
   // might be readable by other users. So the file only gets read/write
   // permissions for the user himself. Note that we create the file with
@@ -574,9 +579,11 @@ void KMComposeWin::deadLetter(void)
     ::write(fd, msgStr, msgStr.length());
     ::write(fd, "\n", 1);
     ::close(fd);
-    fprintf(stderr,"appending message to ~/dead.letter\n");
+    fprintf(stderr,"appending message to ~/dead.letter.tmp\n");
+  } else {
+    perror("cannot open ~/dead.letter.tmp for saving the current message");
+    kernel->emergencyExit( i18n("Not enough free disk space." ));
   }
-  else perror("cannot open ~/dead.letter for saving the current message");
 }
 
 
@@ -1011,8 +1018,8 @@ void KMComposeWin::setupActions(void)
         ++it;
         ++i;
     }
-    
-    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto Module" ),
+
+    cryptoModuleAction = new KSelectAction( i18n( "Select &Crypto module" ),
                              0, // no accel
                              this, SLOT( slotSelectCryptoModule() ),
                              actionCollection(),
@@ -1178,7 +1185,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     disconnect(mIdentity,SIGNAL(identityChanged(uint)),
                this, SLOT(slotIdentityChanged(uint)));
   }
-  mIdentity->setCurrentIdentity( mId );
+   mIdentity->setCurrentIdentity( mId );
   if ( !mBtnIdentity->isChecked() ) {
     connect(mIdentity,SIGNAL(identityChanged(uint)),
             this, SLOT(slotIdentityChanged(uint)));
@@ -1200,7 +1207,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   // requested
   QString mdnAddr = newMsg->headerField("Disposition-Notification-To");
   requestMDNAction->setChecked( !mdnAddr.isEmpty() &&
-				im->thatIsMe( mdnAddr ) );
+ 				im->thatIsMe( mdnAddr ) );
 
   // check for presence of a priority header, indicating urgent mail:
   urgentAction->setChecked( newMsg->isUrgent() );
@@ -1301,8 +1308,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
   setCharset(mCharset);
 
-  if( mAutoSign && mayAutoSign )
-  {
+  if( mAutoSign && mayAutoSign ) {
     //
     // Espen 2000-05-16
     // Delay the signature appending. It may start a fileseletor.
@@ -1310,6 +1316,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     // composer.
     //
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
+  } else {
+    kernel->dumpDeadLetters();
   }
   mEditor->setModified(FALSE);
 }
@@ -1325,13 +1333,7 @@ void KMComposeWin::setFcc( const QString &idString )
   if ( folder )
     mFcc->setFolder( idString );
   else
-  {
-    KMessageBox::sorry( this,
-                        i18n("The sent-mail folder of the current identity "
-                             "doesn't exist. Therefore the default sent-mail "
-                             "folder will be used.") );
     mFcc->setFolder( kernel->sentFolder() );
-  }
 }
 
 
@@ -1766,7 +1768,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
   theMessage.setAutomaticFields(TRUE); // == multipart/mixed
-  
+
   // this is our *final* body part
   KMMessagePart newBodyPart;
 
@@ -3672,8 +3674,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const KURL aUrl)
 {
-  KIO::TransferJob *job = KIO::get(aUrl);
-  KIO::Scheduler::scheduleJob( job );
+  KIO::Job *job = KIO::get(aUrl);
   atmLoadData ld;
   ld.url = aUrl;
   ld.data = QByteArray();
@@ -3993,7 +3994,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setCharset(mCharset);
 
   // show message part dialog, if not configured away (default):
-  KConfigGroup composer(kapp->config(), "Composer");
+  KConfigGroup composer(KMKernel::config(), "Composer");
   if (!composer.hasKey("showMessagePartDialogOnAttach"))
     // make it visible in the config file:
     composer.writeEntry("showMessagePartDialogOnAttach", false);
@@ -4319,8 +4320,9 @@ void KMComposeWin::slotAttachView()
   atmTempFile->setAutoDelete( true );
   kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
-  KMReaderWin::atmView(0, msgPart, false, atmTempFile->name(), pname,
-    KMMsgBase::codecForName(mCharset));
+  KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
+    atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
+  win->show();
 }
 
 
@@ -4587,10 +4589,9 @@ void KMComposeWin::slotPrint()
                                mEdtSubject->edited() || mAtmModified ||
                                ( mTransport->lineEdit() &&
                                  mTransport->lineEdit()->edited() ) );
-  KMReaderWin rw;
   applyChanges();
-  rw.setMsg(mMsg, true);
-  rw.printMsg();
+  KMCommand *command = new KMPrintCommand( this, mMsg );
+  command->start();
   mEditor->setModified( bMessageWasModified );
 }
 
@@ -4819,6 +4820,7 @@ void KMComposeWin::slotAppendSignature()
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
   }
+  kernel->dumpDeadLetters();
 }
 
 
@@ -5037,7 +5039,7 @@ void KMComposeWin::slotToggleStatusBar()
 
 void KMComposeWin::slotEditToolbars()
 {
-  saveMainWindowSettings(kapp->config(), "Composer");
+  saveMainWindowSettings(KMKernel::config(), "Composer");
   KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -5049,7 +5051,7 @@ void KMComposeWin::slotEditToolbars()
 void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
-  applyMainWindowSettings(kapp->config(), "Composer");
+  applyMainWindowSettings(KMKernel::config(), "Composer");
   toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
@@ -5071,7 +5073,7 @@ void KMComposeWin::setReplyFocus( bool hasMessage )
 
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 {
-    KConfig *config = KGlobal::config();
+    KConfig *config = KMKernel::config();
     KConfigGroupSaver cs( config, "Composer" );
     config->writeEntry( "Completion Mode", (int) mode );
     config->sync(); // maybe not?
@@ -5105,7 +5107,53 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
     bAlwaysSend = bAlways;
 }
 
+void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
+{
+    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
+	e->accept(true);
+    else
+	return KMEditInherited::dragEnterEvent(e);
+}
 
+void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
+{
+    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
+	e->accept();
+    else
+	return KMEditInherited::dragMoveEvent(e);
+}
+
+void KMEdit::contentsDropEvent(QDropEvent *e)
+{
+    if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message"))) {
+	// Decode the list of serial numbers stored as the drag data
+	QByteArray serNums = e->encodedData("x-kmail-drag/message");
+	QBuffer serNumBuffer(serNums);
+	serNumBuffer.open(IO_ReadOnly);
+	QDataStream serNumStream(&serNumBuffer);
+	unsigned long serNum;
+	KMFolder *folder = 0;
+	int idx;
+	QPtrList<KMMsgBase> messageList;
+	while (!serNumStream.atEnd()) {
+	    KMMsgBase *msgBase = 0;
+	    serNumStream >> serNum;
+	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
+	    if (folder)
+		msgBase = folder->getMsgBase(idx);
+	    if (msgBase)
+		messageList.append( msgBase );
+	}
+	serNumBuffer.close();
+	uint identity = folder ? folder->identity() : 0;
+	KMCommand *command =
+	    new KMForwardAttachedCommand(mComposer, messageList,
+					 identity, mComposer);
+	command->start();
+    } else {
+	return KMEditInherited::dropEvent(e);
+    }
+}
 
 //=============================================================================
 //
@@ -5209,369 +5257,38 @@ bool KMAtmListViewItem::isSign()
 //
 //=============================================================================
 
-KCompletion * KMLineEdit::s_completion = 0;
-bool KMLineEdit::s_addressesDirty = false;
-
 KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
                        QWidget *parent, const char *name)
-    : KMLineEditInherited(parent,name)
+    : KMLineEditInherited(parent,useCompletion,name), mComposer(composer)
 {
-  mComposer = composer;
-  m_useCompletion = useCompletion;
-  m_smartPaste = false;
-
-  if ( !s_completion ) {
-      s_completion = new KCompletion();
-      s_completion->setOrder( KCompletion::Sorted );
-      s_completion->setIgnoreCase( true );
-  }
-
-  installEventFilter(this);
-
-  if ( m_useCompletion )
-  {
-      setCompletionObject( s_completion, false ); // we handle it ourself
-      connect( this, SIGNAL( completion(const QString&)),
-               this, SLOT(slotCompletion() ));
-
-      KCompletionBox *box = completionBox();
-      connect( box, SIGNAL( highlighted( const QString& )),
-               this, SLOT( slotPopupCompletion( const QString& ) ));
-      connect( completionBox(), SIGNAL( userCancelled( const QString& )),
-               SLOT( setText( const QString& )));
-
-
-      // Whenever a new KMLineEdit is created (== a new composer is created),
-      // we set a dirty flag to reload the addresses upon the first completion.
-      // The address completions are shared between all KMLineEdits.
-      // Is there a signal that tells us about addressbook updates?
-      s_addressesDirty = true;
-  }
 }
 
 
 //-----------------------------------------------------------------------------
-KMLineEdit::~KMLineEdit()
+void KMLineEdit::keyPressEvent(QKeyEvent *e)
 {
-  removeEventFilter(this);
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::setFont( const QFont& font )
-{
-    KMLineEditInherited::setFont( font );
-    if ( m_useCompletion )
-        completionBox()->setFont( font );
-}
-
-//-----------------------------------------------------------------------------
-bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
-{
-#ifdef KeyPress
-#undef KeyPress
-#endif
-
-  if (e->type() == QEvent::KeyPress)
-  {
-    QKeyEvent* k = (QKeyEvent*)e;
-
-    if (KStdAccel::shortcut(KStdAccel::SubstringCompletion).contains(KKey(k)))
-    {
-      doCompletion(true);
-      return TRUE;
-    }
     // ---sven's Return is same Tab and arrow key navigation start ---
-    if ((k->key() == Key_Enter || k->key() == Key_Return) &&
+    if ((e->key() == Key_Enter || e->key() == Key_Return) &&
         !completionBox()->isVisible())
     {
       mComposer->focusNextPrevEdit(this,TRUE);
-      return TRUE;
+      return;
     }
-    if (k->state()==ControlButton && k->key() == Key_Right)
-    {
-      if ((int)text().length() == cursorPosition()) // at End?
-      {
-        doCompletion(true);
-        return TRUE;
-      }
-      return FALSE;
-    }
-    if (k->state()==ControlButton && k->key() == Key_V)
-    {
-      if (m_useCompletion)
-         m_smartPaste = true;
-      paste();
-      m_smartPaste = false;
-      return TRUE;
-    }
-    if (k->key() == Key_Up)
+    if (e->key() == Key_Up)
     {
       mComposer->focusNextPrevEdit(this,FALSE); // Go up
-      return TRUE;
+      return;
     }
-    if (k->key() == Key_Down)
+    if (e->key() == Key_Down)
     {
       mComposer->focusNextPrevEdit(this,TRUE); // Go down
-      return TRUE;
+      return;
     }
     // ---sven's Return is same Tab and arrow key navigation end ---
-
-  }
-  return KMLineEditInherited::eventFilter(o, e);
+  KMLineEditInherited::keyPressEvent(e);
 }
 
-void KMLineEdit::mouseReleaseEvent( QMouseEvent * e )
-{
-   if (m_useCompletion && (e->button() == MidButton))
-   {
-      m_smartPaste = true;
-      KMLineEditInherited::mouseReleaseEvent(e);
-      m_smartPaste = false;
-      return;
-   }
-   KMLineEditInherited::mouseReleaseEvent(e);
-}
-
-void KMLineEdit::insert(const QString &t)
-{
-    if (!m_smartPaste)
-    {
-       KMLineEditInherited::insert(t);
-       return;
-    }
-    smartInsert( t, cursorPosition() );
-}
-
-void KMLineEdit::paste()
-{
-    if (m_useCompletion)
-       m_smartPaste = true;
-    KMLineEditInherited::paste();
-    m_smartPaste = false;
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::cursorAtEnd()
-{
-    setCursorPosition( text().length() );
-}
-
-
-void KMLineEdit::undo()
-{
-    QKeyEvent k(QEvent::KeyPress, 90, 26, 16 ); // Ctrl-Z
-    keyPressEvent( &k );
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::doCompletion(bool ctrlT)
-{
-    if ( !m_useCompletion )
-        return;
-
-    QString s(text());
-    QString prevAddr;
-    int n = s.findRev(',');
-    if (n>= 0)
-    {
-        prevAddr = s.left(n+1) + ' ';
-        s = s.mid(n+1,255).stripWhiteSpace();
-    }
-
-    KCompletionBox *box = completionBox();
-
-    if ( s.isEmpty() )
-    {
-        box->hide();
-        return;
-    }
-
-    KGlobalSettings::Completion  mode = completionMode();
-
-    if ( s_addressesDirty )
-        loadAddresses();
-
-    QString match;
-    int curPos = cursorPosition();
-    if ( mode != KGlobalSettings::CompletionNone )
-    {
-        match = s_completion->makeCompletion( s );
-        if (match.isNull() && mode == KGlobalSettings::CompletionPopup)
-          match = s_completion->makeCompletion( "\"" + s );
-    }
-
-    // kdDebug(5006) << "** completion for: " << s << " : " << match << endl;
-
-    if ( ctrlT )
-    {
-        QStringList addresses = s_completion->items();
-        QStringList::Iterator it = addresses.begin();
-        QStringList completions;
-        for (; it != addresses.end(); ++it)
-        {
-            if ((*it).find(s,0,false) >= 0)
-                completions.append( *it );
-        }
-
-        if (completions.count() > 1) {
-            m_previousAddresses = prevAddr;
-            box->setItems( completions );
-            box->setCancelledText( text() );
-            box->popup();
-        }
-        else if (completions.count() == 1) {
-            setText(prevAddr + completions.first());
-            setEdited( true );
-        }
-        else
-            box->hide();
-
-        cursorAtEnd();
-        return;
-    }
-
-    switch ( mode )
-    {
-        case KGlobalSettings::CompletionPopup:
-        {
-            if ( !match.isNull() )
-            {
-                m_previousAddresses = prevAddr;
-                box->setItems( s_completion->allMatches( s ));
-                box->insertItems( s_completion->allMatches( "\"" + s ));
-                box->setCancelledText( text() );
-                box->popup();
-            }
-            else
-                box->hide();
-
-            break;
-        }
-
-        case KGlobalSettings::CompletionShell:
-        {
-            if ( !match.isNull() && match != s )
-            {
-                setText( prevAddr + match );
-                setEdited( true );
-                cursorAtEnd();
-            }
-            break;
-        }
-
-        case KGlobalSettings::CompletionMan: // Short-Auto in fact
-        case KGlobalSettings::CompletionAuto:
-        {
-            if ( !match.isNull() && match != s )
-            {
-                QString adds = prevAddr + match;
-                validateAndSet( adds, curPos, curPos, adds.length() );
-            }
-            break;
-        }
-
-        default: // fall through
-        case KGlobalSettings::CompletionNone:
-            break;
-    }
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::slotPopupCompletion( const QString& completion )
-{
-    setText( m_previousAddresses + completion );
-    setEdited( true );
-    cursorAtEnd();
-}
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::loadAddresses()
-{
-    s_completion->clear();
-    s_addressesDirty = false;
-
-    QStringList recent = KMRecentAddresses::self()->addresses();
-    QStringList::Iterator it = recent.begin();
-    for ( ; it != recent.end(); ++it )
-        s_completion->addItem( *it );
-
-    QStringList addresses;
-    KabcBridge::addresses(&addresses);
-    QStringList::Iterator it2 = addresses.begin();
-    for (; it2 != addresses.end(); ++it2) {
-    	s_completion->addItem( *it2 );
-    }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
-{
-    QString newText = str.stripWhiteSpace();
-    if (newText.isEmpty())
-       return;
-
-    // remove newlines in the to-be-pasted string:
-    newText.replace( QRegExp("\r?\n"), " " );
-
-    QString contents = text();
-    // determine the position where to insert the to-be-pasted string
-    if( ( pos < 0 ) || ( pos > (int) contents.length() ) )
-      pos = contents.length();
-    int start_sel = 0;
-    int end_sel = 0;
-    if (getSelection(&start_sel, &end_sel))
-    {
-       // Cut away the selection.
-       if (pos > end_sel)
-          pos -= (end_sel - start_sel);
-       else if (pos > start_sel)
-          pos = start_sel;
-       contents = contents.left(start_sel) + contents.right(end_sel+1);
-    }
-
-    int eot = contents.length();
-    // remove trailing whitespace from the contents of the line edit
-    while ((eot > 0) && contents[eot-1].isSpace()) eot--;
-    if (eot == 0)
-    {
-       contents = QString::null;
-    }
-    else if (pos >= eot)
-    {
-       if (contents[eot-1] == ',')
-          eot--;
-       contents.truncate(eot);
-       contents += ", ";
-       pos = eot+2;
-    }
-
-    if (newText.startsWith("mailto:"))
-    {
-      kdDebug(5006) << "Pasting '" << newText << "'" << endl;
-        KURL u(newText);
-        newText = u.path();
-      kdDebug(5006) << "path of mailto URL: '" << newText << "'" << endl;
-        // Is the mailto URL RFC 2047 encoded (cf. RFC 2368)?
-        if (-1 != newText.find( QRegExp("=\\?.*\\?[bq]\\?.*\\?=") ) )
-          newText = KMMsgBase::decodeRFC2047String( newText.latin1() );
-    }
-    else if (-1 != newText.find(" at "))
-    {
-       // Anti-spam stuff
-       newText.replace( QRegExp(" at "), "@" );
-       newText.replace( QRegExp(" dot "), "." );
-    }
-    else if (newText.contains("(at)"))
-    {
-      newText.replace( QRegExp("\\s*\\(at\\)\\s*"), "@" );
-    }
-    contents = contents.left(pos)+newText+contents.mid(pos);
-    setText(contents);
-    setEdited( true );
-    setCursorPosition(pos+newText.length());
-}
-
+#if 0
 //-----------------------------------------------------------------------------
 void KMLineEdit::dropEvent(QDropEvent *e)
 {
@@ -5591,6 +5308,84 @@ void KMLineEdit::dropEvent(QDropEvent *e)
   }
 }
 
+void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
+{
+    QString newText = str.stripWhiteSpace();
+    if (newText.isEmpty())
+        return;
+
+    // remove newlines in the to-be-pasted string:
+    newText.replace( QRegExp("\r?\n"), " " );
+
+    QString contents = text();
+    // determine the position where to insert the to-be-pasted string
+    if( ( pos < 0 ) || ( pos > (int) contents.length() ) )
+        pos = contents.length();
+    int start_sel = 0;
+    int end_sel = 0;
+    if (getSelection(&start_sel, &end_sel))
+    {
+        // Cut away the selection.
+        if (pos > end_sel)
+            pos -= (end_sel - start_sel);
+        else if (pos > start_sel)
+            pos = start_sel;
+        contents = contents.left(start_sel) + contents.right(end_sel+1);
+    }
+
+    int eot = contents.length();
+    // remove trailing whitespace from the contents of the line edit
+    while ((eot > 0) && contents[eot-1].isSpace()) eot--;
+    if (eot == 0)
+     {
+         contents = QString::null;
+     }
+    else if (pos >= eot)
+    {
+        if (contents[eot-1] == ',')
+            eot--;
+        contents.truncate(eot);
+        contents += ", ";
+        pos = eot+2;
+    }
+
+    if (newText.startsWith("mailto:"))
+    {
+        kdDebug(5006) << "Pasting '" << newText << "'" << endl;
+        KURL u(newText);
+        newText = u.path();
+        kdDebug(5006) << "path of mailto URL: '" << newText << "'" << endl;
+        // Is the mailto URL RFC 2047 encoded (cf. RFC 2368)?
+        if (-1 != newText.find( QRegExp("=\\?.*\\?[bq]\\?.*\\?=") ) )
+            newText = KMMsgBase::decodeRFC2047String( newText.latin1() );
+    }
+    else if (-1 != newText.find(" at "))
+    {
+        // Anti-spam stuff
+        newText.replace( QRegExp(" at "), "@" );
+        newText.replace( QRegExp(" dot "), "." );
+    }
+    else if (newText.contains("(at)"))
+    {
+        newText.replace( QRegExp("\\s*\\(at\\)\\s*"), "@" );
+    }
+    contents = contents.left(pos)+newText+contents.mid(pos);
+    setText(contents);
+    setEdited( true );
+    setCursorPosition(pos+newText.length());
+}
+#endif
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::loadAddresses()
+{
+    KMLineEditInherited::loadAddresses();
+
+    QStringList recent = KMRecentAddresses::self()->addresses();
+    QStringList::Iterator it = recent.begin();
+    for ( ; it != recent.end(); ++it )
+        addAddress( *it );
+}
 
 //=============================================================================
 //
@@ -5622,7 +5417,7 @@ KMEdit::~KMEdit()
   removeEventFilter(this);
 
   delete mKSpell;
-  mKSpell = 0;
+
 }
 
 
@@ -5788,7 +5583,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
   if(mComposer && mComposer->msg())
   {
     // read the quote indicator from the preferences
-    KConfig *config=kapp->config();
+    KConfig *config=KMKernel::config();
     KConfigGroupSaver saver(config, "General");
 
     int languageNr = config->readNumEntry("reply-current-language",0);

@@ -38,6 +38,7 @@
 #include "kmmainwin.h"
 #include "kmailIface.h"
 #include "kmail_part.h"
+#include <klocale.h>
 #include <kglobal.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
@@ -49,6 +50,8 @@
 
 typedef KParts::GenericFactory< KMailPart > KMailFactory;
 K_EXPORT_COMPONENT_FACTORY( libkmailpart, KMailFactory );
+
+#include <qapplication.h>
 
 KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 		     QObject *parent, const char *name, const QStringList &) :
@@ -65,8 +68,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   KGlobal::locale()->insertCatalogue("libkdenetwork");
 
   // Check that all updates have been run on the config file:
-  KMail::checkConfigUpdates();
-  KMail::lockOrDie();
+  kmail::checkConfigUpdates();
+  kmail::lockOrDie();
 
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
@@ -130,11 +133,11 @@ KMailPart::~KMailPart()
   while ((window = it.current()) != 0) {
     ++it;
     if (window->inherits("KMTopLevelWidget"))
-      window->close();
+      window->close(true);
   }
   kernel->notClosedByUser();
   delete kernel;
-  KMail::cleanup();
+  kmail::cleanup();
 }
 
 KAboutData *KMailPart::createAboutData()
@@ -143,7 +146,7 @@ KAboutData *KMailPart::createAboutData()
                                      "3.1beta1", I18N_NOOP("A KDE Email Client"),
                                      KAboutData::License_GPL,
                                      I18N_NOOP("(c) 1997-2002, The KMail Team"));
-  about->addAuthor("Kermit the frog",I18N_NOOP("Original author and maintainer"));
+  about->addAuthor("The KMail Team",I18N_NOOP("Original author and maintainer"));
   return about;
 }
 

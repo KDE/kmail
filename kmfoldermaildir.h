@@ -1,13 +1,35 @@
 #ifndef kmfoldermaildir_h
 #define kmfoldermaildir_h
 
-#include "kmfolder.h"
+#include "kmfolderindex.h"
 
-#define KMFolderMaildirInherited KMFolder
+#define KMFolderMaildirInherited KMFolderIndex
 
-class KMFolderMaildir : public KMFolder
+class KMFolderMaildir;
+
+class KMMaildirJob : public KMFolderJob
 {
   Q_OBJECT
+public:
+  KMMaildirJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
+  KMMaildirJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                JobType jt = tGetMessage, KMFolder *folder = 0 );
+  ~KMMaildirJob();
+
+  void setParentFolder( KMFolderMaildir* parent );
+protected:
+  void execute();
+  void expireMessages();
+protected slots:
+  void startJob();
+private:
+  KMFolderMaildir* mParentFolder;
+};
+
+class KMFolderMaildir : public KMFolderIndex
+{
+  Q_OBJECT
+  friend class KMMaildirJob;
 public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
@@ -17,6 +39,7 @@ public:
 
   /** Read a message and return a referece to a string */
   virtual QCString& getMsgString(int idx, QCString& mDest);
+  virtual DwString getDwString(int idx);
 
   /** Detach message from this folder. Usable to call addMsg() afterwards.
     Loads the message if it is not loaded up to now. */
@@ -36,7 +59,8 @@ public:
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
   virtual void msgStatusChanged( const KMMsgStatus oldStatus,
-                                 const KMMsgStatus newStatus);
+                                 const KMMsgStatus newStatus,
+				 int idx);
 
   /** Open folder for access. Does not work if the parent is not set.
     Does nothing if the folder is already opened. To reopen a folder
@@ -68,21 +92,26 @@ public:
 
   virtual QCString protocol() const { return "maildir"; }
 
+  virtual KMFolderJob* createJob( KMMessage *msg, KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
+                                  KMFolder *folder = 0 );
+  virtual KMFolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  KMFolderJob::JobType jt = KMFolderJob::tGetMessage, KMFolder *folder = 0 );
+
 protected:
   /** Load message from file and store it at given index. Returns 0
     on failure. */
   virtual KMMessage* readMsg(int idx);
-  
+
   /** Called by KMFolder::remove() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int removeContents();
-  
+
   /** Called by KMFolder::expunge() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
-  
+
 private:
   void readFileHeaderIntern(const QString& dir, const QString& file, KMMsgStatus status);
   QString constructValidFileName(QString& file, KMMsgStatus status);

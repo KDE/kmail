@@ -29,6 +29,7 @@
 #include "kmmsgpart.h"
 #include "kpopupmenu.h"
 #include "kmreaderwin.h"
+#include "kmfolderindex.h"
 
 #include "kmreadermainwin.h"
 #include "kmreadermainwin.moc"
@@ -121,11 +122,11 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       // popup on a mailto URL
       mReaderWin->mailToComposeAction()->plug( menu );
       if ( mMsg ) {
-	mReaderWin->mailToReplyAction()->plug( menu );
-	mReaderWin->mailToForwardAction()->plug( menu );
+	mReaderWin->mailToReplyAction()->plug( menu );	
+	mReaderWin->mailToForwardAction()->plug( menu );	
         menu->insertSeparator();
       }
-      mReaderWin->addAddrBookAction()->plug( menu );
+      mReaderWin->addAddrBookAction()->plug( menu );	
       mReaderWin->openAddrBookAction()->plug( menu );
       mReaderWin->copyAction()->plug( menu );
     } else {
@@ -171,6 +172,6 @@ void KMReaderMainWin::copySelectedToFolder( int menuId )
   KMFolder *destFolder = mMenuToFolder[menuId];
   QPtrList<KMMsgBase> msgList;
   msgList.append( mMsg );
-  KMCommand *command = new KMCopyCommand( destFolder, destFolder, msgList );
+  KMCommand *command = new KMCopyCommand( destFolder, msgList );
   command->start();
 }

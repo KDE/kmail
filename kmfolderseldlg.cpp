@@ -3,7 +3,7 @@
 #include <config.h>
 #include "kmfolderseldlg.h"
 #include "kmfoldertree.h"
-#include "kmmainwin.h"
+#include "kmmainwidget.h"
 
 #include <qlistbox.h>
 #include <qlayout.h>
@@ -15,7 +15,7 @@
 QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg(KMMainWin * parent, const QString& caption)
+KMFolderSelDlg::KMFolderSelDlg(KMMainWidget * parent, const QString& caption)
     : KMFolderSelDlgInherited(parent, "folder dialog", true, caption,
                               Ok|Cancel, Ok, true) // mainwin as parent, modal
 {

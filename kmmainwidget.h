@@ -7,8 +7,6 @@
 #ifndef __KMMAINWIDGET
 #define __KMMAINWIDGET
 
-#error dont use
-
 #include <kurl.h>
 #include <qlistview.h>
 #include "kmreaderwin.h" //for inline actions
@@ -36,15 +34,10 @@ class KRadioAction;
 class KProgressDialog;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
-template <typename T> class QGuardedPtr;
 
 namespace KIO
 {
   class Job;
-}
-
-namespace KMail {
-    class Vacation;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -184,7 +177,6 @@ protected slots:
   void slotCopyMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();
-  void slotEditVacation();
   void slotApplyFilters();
   void slotExpandThread();
   void slotExpandAllThreads();
@@ -279,8 +271,6 @@ protected slots:
   void plugFilterActions(QPopupMenu*);
 
 protected:
-  KActionCollection * actionCollection() { return mActionCollection; }
-
   KRadioAction * actionForHeaderStyle(int);
   KRadioAction * actionForAttachmentStyle(int);
 
@@ -331,7 +321,6 @@ protected:
   int mCountJobs, mCountMsgs;
 
   QPtrList<KMMessage> mSelectedMsgs;
-  QGuardedPtr<KMail::Vacation> mVacation;
   KActionCollection *mActionCollection;
   QVBoxLayout *mTopLayout;
   bool mDestructed;

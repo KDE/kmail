@@ -30,12 +30,12 @@
 #include "kmmsgdict.h"
 
 //-----------------------------------------------------------------------------
-KMFolderMgr::KMFolderMgr(const QString& aBasePath, bool aImap):
-  KMFolderMgrInherited(), mDir(QString::null, aImap)
+KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
+  KMFolderMgrInherited(), mDir(this, QString::null, dirType)
 {
   mQuiet = 0;
   mChanged = FALSE;
-  setBasePath(aBasePath, aImap);
+  setBasePath(aBasePath);
 }
 
 
@@ -56,20 +56,20 @@ void KMFolderMgr::compactAll()
 
 //-----------------------------------------------------------------------------
 void KMFolderMgr::expireAll() {
-  KConfig             *config = kapp->config();
+  KConfig             *config = KMKernel::config();
   KConfigGroupSaver   saver(config, "General");
   int                 ret = KMessageBox::Continue;
 
   if (config->readBoolEntry("warn-before-expire")) {
-    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),     
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),
 			 i18n("Are you sure you want to expire old messages?"),
 			 i18n("Expire old messages?"), i18n("Expire"));
   }
-     
+
   if (ret == KMessageBox::Continue) {
     expireAllFolders(0);
   }
-    
+
 }
 
 #define DO_FOR_ALL(function, folder_code) \
@@ -120,7 +120,7 @@ void KMFolderMgr::compactAllAux(KMFolderDir* dir)
 
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::setBasePath(const QString& aBasePath, bool /*aImap*/)
+void KMFolderMgr::setBasePath(const QString& aBasePath)
 {
   QDir dir;
 
@@ -163,6 +163,7 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
   fld = fldDir->createFolder(fName, sysFldr, aFolderType);
   if (fld) {
     contentsChanged();
+    emit folderAdded(fld);
     if (kernel->filterMgr())
       kernel->filterMgr()->folderCreated(fld);
   }
@@ -218,13 +219,13 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
     if (know_type == false)
     {
       know_type = true;
-      KConfig *config = kapp->config();
+      KConfig *config = KMKernel::config();
       KConfigGroupSaver saver(config, "General");
       if (config->hasKey("default-mailbox-format"))
       {
         if (config->readNumEntry("default-mailbox-format", 1) == 0)
           type = KMFolderTypeMbox;
-          
+
       }
     }
 
@@ -243,7 +244,7 @@ void KMFolderMgr::remove(KMFolder* aFolder)
 {
   assert(aFolder != 0);
 
-  emit removed(aFolder);
+  emit folderRemoved(aFolder);
   removeFolderAux(aFolder);
 
   contentsChanged();
@@ -341,7 +342,6 @@ void KMFolderMgr::createFolderList(QStringList *str,
 void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
 {
   KMFolderDir* dir = adir ? adir : &mDir;
-
   DO_FOR_ALL(
              {
                syncAllFolders(child);
@@ -374,7 +374,19 @@ void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
                }
                emit progress();
              }
-  ) 
+  )
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::invalidateFolder(KMMsgDict *dict, KMFolder *folder)
+{
+    unlink(folder->indexLocation().local8Bit() + ".sorted");
+    unlink(folder->indexLocation().local8Bit() + ".ids");
+    if (dict) {
+	folder->fillMsgDict(dict);
+	dict->writeFolderIds(folder);
+    }
+    emit folderInvalidated(folder);
 }
 
 //-----------------------------------------------------------------------------
@@ -391,16 +403,15 @@ void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
                readMsgDict(dict, child, pass);
              },
              {
-               if (pass == 1)
+	       if (pass == 1) {
                  dict->readFolderIds(folder);
-               else if (pass == 2) {
+               } else if (pass == 2) {
                  if (!dict->hasFolderIds(folder)) {
-                   folder->fillMsgDict(dict);
-                   dict->writeFolderIds(folder);
+		   invalidateFolder(dict, folder);
                  }
                }
              }
-  ) 
+  )
 
   if (pass == 1 && atTop)
     readMsgDict(dict, dir, pass + 1);
@@ -419,7 +430,7 @@ void KMFolderMgr::writeMsgDict(KMMsgDict *dict, KMFolderDir *dir)
              {
                folder->writeMsgDict(dict);
              }
-  ) 
+  )
 }
 
 //-----------------------------------------------------------------------------

@@ -80,12 +80,20 @@ public:
 	    modifiers |= SIGNATURE_SET;
 	    signatureState = other.signatureState;
 	}
+	if(other.modifiers & ENCRYPTION_SET) {
+	    modifiers |= ENCRYPTION_SET;
+	    encryptionState = other.encryptionState;
+	}
+	if(other.modifiers & SIGNATURE_SET) {
+	    modifiers |= SIGNATURE_SET;
+	    signatureState = other.signatureState;
+	}
 	return *this;
     }
 };
 
 //-----------------------------------------------------------------------------
-KMMsgInfo::KMMsgInfo(KMFolder* p, off_t off, short len) :
+KMMsgInfo::KMMsgInfo(KMFolderIndex* p, off_t off, short len) :
     KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown),
     kd(0)
 {

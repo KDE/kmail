@@ -31,45 +31,31 @@
 #include "kio/job.h"
 #include "kio/global.h"
 
-#include <qintdict.h>
-#include <qvaluelist.h>
-
 class KMFolderTreeItem;
 class KMFolderImap;
 
-class KMImapJob : public QObject
+class KMImapJob : public KMFolderJob
 {
   Q_OBJECT
+  friend class KMAcctImap;
 
 public:
-  enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
-    tGetMessage, tPutMessage, tCopyMessage, tMoveMessage };
   KMImapJob(KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0);
-  KMImapJob(QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = 0 );
+  KMImapJob(QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = 0);
   ~KMImapJob();
   static void ignoreJobsForMessage(KMMessage *msg);
-signals:
-  void messageRetrieved(KMMessage *);
-  void messageStored(KMMessage *);
-  void messageCopied(KMMessage *);
-  void messageCopied(QPtrList<KMMessage>);
-  void finished();
+
 private slots:
   void slotGetMessageResult(KIO::Job * job);
   void slotGetNextMessage();
   /** Feeds the message in pieces to the server */
   void slotPutMessageDataReq(KIO::Job *job, QByteArray &data);
   void slotPutMessageResult(KIO::Job *job);
-  void slotPutMessageInfoData(KIO::Job *, const QString &data);
-  /** result of a copy-operation */
   void slotCopyMessageResult(KIO::Job *job);
-  void slotCopyMessageInfoData(KIO::Job *, const QString &data);
-
 private:
+  void execute();
+  void expireMessages();
   void init(JobType jt, QString sets, KMFolderImap *folder, QPtrList<KMMessage>& msgList);
-  JobType mType;
-  KMMessage *mMsg;
-  KMFolderImap *mDestFolder;
   KIO::Job *mJob;
   QByteArray mData;
   QCString mStrData;
@@ -100,7 +86,7 @@ public:
   virtual ~KMFolderImap();
 
   virtual QCString protocol() const { return "imap"; }
-
+  virtual KMMessage* getMsg(int idx);
   /** The path to the imap folder on the server */
   void setImapPath(const QString &path) { mImapPath = path; }
   QString imapPath() { return mImapPath; }
@@ -115,10 +101,12 @@ public:
   /** The imap account associated with this folder */
   void setAccount(KMAcctImap *acct);
   KMAcctImap* account() { return mAccount; }
-  
+
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
   virtual void removeMsg(QPtrList<KMMessage> msgList, bool quiet = FALSE);
+
+  virtual int rename( const QString& newName, KMFolderDir *aParent = 0 );
 
   /** Remove the IMAP folder on the server and if successful also locally */
   virtual void removeOnServer();
@@ -177,9 +165,9 @@ public:
   QStringList makeSets(QValueList<int>&, bool sort = true);
   QStringList makeSets(QStringList&, bool sort = true);
 
-  /** gets the uids of the given ids */ 
+  /** gets the uids of the given ids */
   void getUids(QValueList<int>& ids, QValueList<int>& uids);
- 
+
   /** same as above but accepts a Message-List */
   void getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent = 0);
 
@@ -223,16 +211,11 @@ public:
    */
   virtual QString fileName() const { return encodeFileName(name()); }
 
-  /**
-   * Insert a new entry into the uid <=> sernum cache
-   */ 
-  void insertUidSerNumEntry(ulong uid, const ulong * sernum) {
-    uidmap.insert(uid, sernum); }
-
-  /**
-   * Splits a uid-set into single uids
-   */
-  static QValueList<int> splitSets(QString); 
+  virtual KMFolderJob* createJob( KMMessage *msg, KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
+                                  KMFolder *folder = 0 );
+  virtual KMFolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  KMFolderJob::JobType jt = KMFolderJob::tGetMessage, KMFolder *folder = 0 );
+  virtual void ignoreJobsForMessage( KMMessage* );
 
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
@@ -314,6 +297,11 @@ protected slots:
   void slotListFolderEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
 
   /**
+   * For renaming folders
+   */
+  void slotRenameResult( KIO::Job *job );
+
+  /**
    * For retrieving a message digest
    */
   void slotGetMessagesResult(KIO::Job * job);
@@ -350,7 +338,6 @@ protected:
   bool        mCheckFlags;
   bool        mReadOnly;
   QGuardedPtr<KMAcctImap> mAccount;
-  QIntDict<ulong> uidmap;
 };
 
 #endif // kmfolderimap_h

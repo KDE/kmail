@@ -2,90 +2,74 @@
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
 #include <config.h>
-#include <qfileinfo.h>
-#include <qsortedlist.h>
-
 #include "kmmessage.h"
 #include "kmfolderdir.h"
+#include "kmfolderindex.h"
 #include "kmfolderimap.h"
+#include "kmfolderdia.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
 #include "kmkernel.h"
 #include "identitymanager.h"
 #include "kmidentity.h"
+#include "kmfoldermgr.h"
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
+#include <qtimer.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kcursor.h>
-#include <kiconloader.h>
-
-#include <stdio.h>
 #include <errno.h>
-#include <assert.h>
-#include <unistd.h>
-
-#include <config.h>
-
-#if HAVE_FCNTL_H
-#include <fcntl.h>
-#endif
-
-#if HAVE_BYTESWAP_H
-#include <byteswap.h>
-#endif
-
-// We define functions as kmail_swap_NN so that we don't get compile errors
-// on platforms where bswap_NN happens to be a function instead of a define.
-
-/* Swap bytes in 32 bit value.  */
-#ifdef bswap_32
-#define kmail_swap_32(x) bswap_32(x)
-#else
-#define kmail_swap_32(x) \
-     ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >>  8) |		      \
-      (((x) & 0x0000ff00) <<  8) | (((x) & 0x000000ff) << 24))
-#endif
-
-//#define HAVE_MMAP //need to get this into autoconf FIXME  --Sam
-#ifdef HAVE_MMAP
-#include <unistd.h>
-#include <sys/mman.h>
-#endif
-
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/file.h>
 #include <klocale.h>
 #include <kapplication.h>
 
-#ifndef MAX_LINE
-#define MAX_LINE 4096
-#endif
-#ifndef INIT_MSGS
-#define INIT_MSGS 8
-#endif
-
-// Current version of the table of contents (index) files
-#define INDEX_VERSION 1506
-
-static int _rename(const char* oldname, const char* newname)
+//----------------------------------------------------------------------------
+KMFolderJob::KMFolderJob( KMMessage *msg, JobType jt, KMFolder* folder )
+  : mType( jt ), mDestFolder( folder )
 {
-  return rename(oldname, newname);
+  if ( msg ) {
+    mMsgList.append(msg);
+    mSets = msg->headerField("X-UID");
+  }
 }
 
+//----------------------------------------------------------------------------
+KMFolderJob::KMFolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                          JobType jt, KMFolder *folder )
+  : mMsgList( msgList ),mType( jt ),
+    mSets( sets ), mDestFolder( folder )
+{
+}
+
+//----------------------------------------------------------------------------
+KMFolderJob::~KMFolderJob()
+{
+  emit finished();
+}
+
+//----------------------------------------------------------------------------
+void
+KMFolderJob::start()
+{
+  execute();
+}
+
+//----------------------------------------------------------------------------
+QPtrList<KMMessage>
+KMFolderJob::msgList() const
+{
+  return mMsgList;
+}
 
 //-----------------------------------------------------------------------------
+
 KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
-  KMFolderInherited(aParent, aName), mMsgList(INIT_MSGS)
+  KMFolderInherited(aParent, aName)
 {
-  mIndexStream    = 0;
   mOpenCount      = 0;
   mQuiet          = 0;
   mChanged        = FALSE;
-  mHeaderOffset   = 0;
   mAutoCreateIndex= TRUE;
   mIsSystemFolder = FALSE;
   mType           = "plain";
@@ -98,11 +82,6 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mChild          = 0;
   mConvertToUtf8  = FALSE;
   mMailingListEnabled = FALSE;
-  mIndexId        = -1;
-  mIndexStreamPtr = 0;
-  mIndexStreamPtrLength = 0;
-  mIndexSwapByteOrder = false;
-  mIndexSizeOfLong = sizeof(long);
   mCompactable     = TRUE;
   mNoContent      = FALSE;
   expireMessages = FALSE;
@@ -111,18 +90,27 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   readExpireAge = 14;
   readExpireUnits = expireNever;
   mRDict = 0;
-  mNormalIcon = 0;
-  mUnreadIcon = 0;
-  mUseCustomIcons = 0;
-  mNeedsRepainting = false;
+  mUseCustomIcons = false;
+  mDirtyTimer = new QTimer();
+  connect(mDirtyTimer, SIGNAL(timeout()),
+	  this, SLOT(updateIndex()));
+
+  if ( aParent ) {
+      connect(this, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
+              parent()->manager(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)));
+      connect(this, SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
+              parent()->manager(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)));
+      connect(this, SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
+              parent()->manager(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)));
+  }
+  //FIXME: Centralize all the readConfig calls somehow - Zack
+  readConfig();
 }
 
 
 //-----------------------------------------------------------------------------
 KMFolder :: ~KMFolder()
 {
-  delete mNormalIcon;
-  delete mUnreadIcon;
   delete mAcctList;
   KMMsgDict::deleteRentry(mRDict);
 }
@@ -148,18 +136,6 @@ QString KMFolder::location() const
 }
 
 
-//-----------------------------------------------------------------------------
-QString KMFolder::indexLocation() const
-{
-  QString sLocation(path());
-
-  if (!sLocation.isEmpty()) sLocation += '/';
-  sLocation += '.';
-  sLocation += dotEscape(fileName());
-  sLocation += ".index";
-
-  return sLocation;
-}
 
 //-----------------------------------------------------------------------------
 QString KMFolder::subdirLocation() const
@@ -198,7 +174,7 @@ KMFolderDir* KMFolder::createChildFolder()
   }
 
   KMFolderDir* folderDir = new KMFolderDir(parent(), childName,
-    protocol() == "imap");
+    (protocol() == "imap") ? KMImapDir : KMStandardDir);
   if (!folderDir)
     return 0;
   folderDir->reload();
@@ -208,270 +184,25 @@ KMFolderDir* KMFolder::createChildFolder()
 }
 
 //-----------------------------------------------------------------------------
-KMFolder::IndexStatus KMFolder::indexStatus()
-{
-  QFileInfo contInfo(location());
-  QFileInfo indInfo(indexLocation());
-
-  if (!contInfo.exists()) return KMFolder::IndexOk;
-  if (!indInfo.exists()) return KMFolder::IndexMissing;
-
-  return ( contInfo.lastModified() > indInfo.lastModified() )
-         ? KMFolder::IndexTooOld
-         : KMFolder::IndexOk;
-}
-
-
-//-----------------------------------------------------------------------------
-int KMFolder::writeIndex()
-{
-  QString tempName;
-  int old_umask;
-  int i=0, len;
-  const uchar *buffer = 0;
-  old_umask = umask(077);
-
-  //the sorted file must be removed, BIG kludge, don made me do it!
-  unlink(indexLocation().local8Bit() + ".sorted");
-  tempName = indexLocation() + ".temp";
-  unlink(tempName.local8Bit());
-
-  // We touch the folder, otherwise the index is regenerated, if KMail is
-  // running, while the clock switches from daylight savings time to normal time
-  KProcess p;
-  p << "touch" << location();
-  p.start(KProcess::Block);
-
-  FILE *tmpIndexStream = fopen(tempName.local8Bit(), "w");
-  umask(old_umask);
-  if (!tmpIndexStream)
-    return errno;
-
-  fprintf(tmpIndexStream, "# KMail-Index V%d\n", INDEX_VERSION);
-
-  // Header
-  Q_UINT32 byteOrder = 0x12345678;
-  Q_UINT32 sizeOfLong = sizeof(long);
-
-  Q_UINT32 header_length = sizeof(byteOrder)+sizeof(sizeOfLong);
-  char pad_char = '\0';
-  fwrite(&pad_char, sizeof(pad_char), 1, tmpIndexStream);
-  fwrite(&header_length, sizeof(header_length), 1, tmpIndexStream);
-
-  // Write header
-  fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
-  fwrite(&sizeOfLong, sizeof(sizeOfLong), 1, tmpIndexStream);
-
-  KMMsgBase* msgBase;
-  off_t nho = ftell(tmpIndexStream);
-  for (i=0; i<mMsgList.high(); i++)
-  {
-    if (!(msgBase = mMsgList[i])) continue;
-    buffer = msgBase->asIndexString(len);
-    fwrite(&len,sizeof(len), 1, tmpIndexStream);
-
-    off_t tmp = ftell(tmpIndexStream);
-    msgBase->setIndexOffset(tmp);
-    msgBase->setIndexLength(len);
-    if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
-	kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
-  }
-  if (ferror(tmpIndexStream)) return ferror(tmpIndexStream);
-  if (fflush(tmpIndexStream) != 0) return errno;
-  if (fsync(fileno(tmpIndexStream)) != 0) return errno;
-  if (fclose(tmpIndexStream) != 0) return errno;
-
-  _rename(tempName.local8Bit(), indexLocation().local8Bit());
-  if (mIndexStream)
-      fclose(mIndexStream);
-  mHeaderOffset = nho;
-
-  mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
-  updateIndexStreamPtr();
-
-  writeMsgDict();
-
-  mDirty = FALSE;
-  return 0;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMFolder::setAutoCreateIndex(bool autoIndex)
 {
   mAutoCreateIndex = autoIndex;
 }
 
+//-----------------------------------------------------------------------------
+void KMFolder::setDirty(bool f)
+{
+  mDirty = f;
+  if (mDirty  && mAutoCreateIndex)
+    mDirtyTimer->changeInterval( mDirtyTimerInterval );
+  else
+    mDirtyTimer->stop();
+}
+
+//-----------------------------------------------------------------------------
 void KMFolder::setIdentity( uint identity ) {
   mIdentity = identity;
   kernel->slotRequestConfigSync();
-}
-
-//-----------------------------------------------------------------------------
-bool KMFolder::readIndexHeader(int *gv)
-{
-  int indexVersion;
-  assert(mIndexStream != 0);
-  mIndexSwapByteOrder = false;
-  mIndexSizeOfLong = sizeof(long);
-
-  fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
-  if(gv)
-      *gv = indexVersion;
-  if (indexVersion < 1505 ) {
-      if(indexVersion == 1503) {
-	  kdDebug(5006) << "Converting old index file " << indexLocation() << " to utf-8" << endl;
-	  mConvertToUtf8 = TRUE;
-      }
-      return TRUE;
-  } else if (indexVersion == 1505) {
-  } else if (indexVersion < INDEX_VERSION) {
-      kdDebug(5006) << "Index file " << indexLocation() << " is out of date. Re-creating it." << endl;
-      createIndexFromContents();
-      return FALSE;
-  } else if(indexVersion > INDEX_VERSION) {
-      QApplication::setOverrideCursor(KCursor::arrowCursor());
-      int r = KMessageBox::questionYesNo(0,
-					 i18n(
-					    "The mail index for '%1' is from an unknown version of KMail (%2).\n"
-					    "This index can be regenerated from your mail folder, but some "
-					    "information, including status flags, may be lost. Do you wish "
-					    "to downgrade your index file?") .arg(name()) .arg(indexVersion) );
-      QApplication::restoreOverrideCursor();
-      if (r == KMessageBox::Yes)
-	  createIndexFromContents();
-      return FALSE;
-  }
-  else {
-      // Header
-      Q_UINT32 byteOrder = 0;
-      Q_UINT32 sizeOfLong = sizeof(long); // default
-
-      Q_UINT32 header_length = 0;
-      fseek(mIndexStream, sizeof(char), SEEK_CUR );
-      fread(&header_length, sizeof(header_length), 1, mIndexStream);
-      if (header_length > 0xFFFF)
-         header_length = kmail_swap_32(header_length);
-
-      off_t endOfHeader = ftell(mIndexStream) + header_length;
-
-      bool needs_update = true;
-      // Process available header parts
-      if (header_length >= sizeof(byteOrder))
-      {
-         fread(&byteOrder, sizeof(byteOrder), 1, mIndexStream);
-         mIndexSwapByteOrder = (byteOrder == 0x78563412);
-         header_length -= sizeof(byteOrder);
-
-         if (header_length >= sizeof(sizeOfLong))
-         {
-            fread(&sizeOfLong, sizeof(sizeOfLong), 1, mIndexStream);
-            if (mIndexSwapByteOrder)
-               sizeOfLong = kmail_swap_32(sizeOfLong);
-            mIndexSizeOfLong = sizeOfLong;
-            header_length -= sizeof(sizeOfLong);
-            needs_update = false;
-         }
-      }
-      if (needs_update || mIndexSwapByteOrder)
-	mDirty = true;
-      // Seek to end of header
-      fseek(mIndexStream, endOfHeader, SEEK_SET );
-
-      if (mIndexSwapByteOrder)
-         kdDebug(5006) << "Index File has byte order swapped!" << endl;
-      if (mIndexSizeOfLong != sizeof(long))
-         kdDebug(5006) << "Index File sizeOfLong is " << mIndexSizeOfLong << " while sizeof(long) is " << sizeof(long) << " !" << endl;
-
-  }
-  return TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMFolder::readIndex()
-{
-  Q_INT32 len;
-  KMMsgInfo* mi;
-
-  assert(mIndexStream != 0);
-  rewind(mIndexStream);
-
-  mMsgList.clear();
-  int version;
-
-  mDirty = false;
-
-  if (!readIndexHeader(&version)) return false;
-
-  mUnreadMsgs = 0;
-  mTotalMsgs = 0;
-  mHeaderOffset = ftell(mIndexStream);
-
-  mMsgList.clear();
-  while (!feof(mIndexStream))
-  {
-    mi = 0;
-    if(version >= 1505) {
-      if(!fread(&len, sizeof(len), 1, mIndexStream))
-        break;
-
-      if (mIndexSwapByteOrder)
-        len = kmail_swap_32(len);
-
-      off_t offs = ftell(mIndexStream);
-      if(fseek(mIndexStream, len, SEEK_CUR))
-        break;
-      mi = new KMMsgInfo(this, offs, len);
-    }
-    else
-    {
-      QCString line(MAX_LINE);
-      fgets(line.data(), MAX_LINE, mIndexStream);
-      if (feof(mIndexStream)) break;
-      if (*line.data() == '\0') {
-	  fclose(mIndexStream);
-	  mIndexStream = 0;
-	  mMsgList.clear();
-	  return false;
-      }
-      mi = new KMMsgInfo(this);
-      mi->compat_fromOldIndexString(line, mConvertToUtf8);
-    }
-    if(!mi)
-      break;
-
-    if (mi->status() == KMMsgStatusDeleted)
-    {
-      delete mi;  // skip messages that are marked as deleted
-      mDirty = TRUE;
-      needsCompact = true;  //We have deleted messages - needs to be compacted
-      continue;
-    }
-#ifdef OBSOLETE
-    else if (mi->status() == KMMsgStatusNew)
-    {
-      mi->setStatus(KMMsgStatusUnread);
-      mi->setDirty(FALSE);
-    }
-#endif
-    if ((mi->status() == KMMsgStatusNew) ||
-	(mi->status() == KMMsgStatusUnread) ||
-        (this == kernel->outboxFolder()))
-    {
-      ++mUnreadMsgs;
-      if (mUnreadMsgs == 0) ++mUnreadMsgs;
-    }
-    mMsgList.append(mi, false);
-  }
-  if( version < 1505)
-  {
-    mConvertToUtf8 = FALSE;
-    mDirty = TRUE;
-    writeIndex();
-  }
-  mTotalMsgs = mMsgList.count();
-  return true;
 }
 
 
@@ -481,9 +212,9 @@ void KMFolder::markNewAsUnread()
   KMMsgBase* msgBase;
   int i;
 
-  for (i=0; i<mMsgList.high(); i++)
+  for (i=0; i< count(); ++i)
   {
-    if (!(msgBase = mMsgList[i])) continue;
+    if (!(msgBase = getMsgBase(i))) continue;
     if (msgBase->status() == KMMsgStatusNew)
     {
       msgBase->setStatus(KMMsgStatusUnread);
@@ -545,87 +276,6 @@ int operator==( KMMsgBase & m1, KMMsgBase & m2 )
   return (m1.date() == m2.date());
 }
 
-//-----------------------------------------------------------------------------
-int KMFolder::reduceSize( int aSize )
-{
-  kdDebug(5006) << "Reducing folder to size of " << aSize << " Mo" << endl;
-  QSortedList<KMMsgBase> * slice=0;
-  QPtrList< QSortedList<KMMsgBase> > sliceArr;
-  const KMMsgBase* mb;
-  ulong folderSize, msgSize, sliceSize, firstSliceSize, lastSliceSize, size;
-  int sliceIndex;
-  int delMsg = 0;
-  int i;
-
-  sliceArr.setAutoDelete( true );
-
-  // I put each email in a slice according to its size (slices of 500Ko, 1Mo,
-  // 2Mo, ... 10 Mo). Then I delete the oldest mail until the good size is
-  // reached. 10 slices of 1Mo each is probably overkill. 500Ko, 1Mo, 5Mo
-  // and 10Mo could be enough.
-
-
-// Is it 1000 or 1024 ?
-#define KILO 	(1000)
-
-  size = KILO * KILO * aSize; // to have size in Ko;
-  sliceSize = KILO * KILO ; // slice of 1 Mo
-  lastSliceSize = 10 * sliceSize; // last slice is for item > 10 Mo
-  firstSliceSize = sliceSize / 2; // first slice is for < 500 Ko
-  folderSize = 0;
-
-  for(i=0; i<12; i++) {
-    sliceArr.append( new QSortedList<KMMsgBase> );
-    sliceArr.at(i)->setAutoDelete(false);
-  }
-
-  for (i=count()-1; i>=0; i--) {
-    mb = getMsgBase(i);
-    assert(mb);
-    msgSize = mb->msgSize();
-    folderSize += msgSize;
-
-    if (msgSize < firstSliceSize) {
-      sliceIndex = 0;
-    } else if (msgSize >= lastSliceSize) {
-      sliceIndex = 11;
-    } else {
-      sliceIndex = 1 + (int) (msgSize / sliceSize); //  1 <= n < 10
-    }
-
-    sliceArr.at(sliceIndex)->append( mb );
-  }
-
-  //kdDebug(5006) << "Folder size : " << (folderSize/KILO) << " ko" << endl;
-
-  // Ok, now we have our slices
-
-  slice = sliceArr.last();
-  while (folderSize > size) {
-    //kdDebug(5006) << "Treating slice " << sliceArr.at()-1 << " Mo : " << slice->count() << endl;
-    assert( slice );
-
-    slice->sort();
-
-    // Empty this slice taking the oldest mails first:
-    while( slice->count() > 0 && folderSize > size ) {
-      mb = slice->take(0);
-      msgSize = mb->msgSize();
-      //kdDebug(5006) << "deleting msg : " << (msgSize / KILO) << " ko - " << mb->subject() << " - " << mb->dateStr();
-      assert( folderSize >= msgSize );
-      folderSize -= msgSize;
-      delMsg++;
-      removeMsg(mb);
-    }
-
-    slice = sliceArr.prev();
-
-  }
-
-  return delMsg;
-}
-
-
 
 //-----------------------------------------------------------------------------
 int KMFolder::expungeOldMsg(int days)
@@ -681,71 +331,35 @@ KMFolder::daysToExpire(int number, ExpireUnits units) {
  * mean no-expiry. Also check the general 'expire' flag as well.
  */
 void KMFolder::expireOldMessages() {
-  int             days = 0;
-  int             maxUnreadTime = 0;
-  int             maxReadTime = 0;
-  const KMMsgBase       *mb = 0;
-  QValueList<int> rmvMsgList;
-  int             i = 0;
-  time_t          msgTime, maxTime = 0;
-
-  kdDebug(5006) << "expireOldMessages " << name() << endl;
-
-  if (protocol() == "imap") {
-    return;
-  }
-
-  days = daysToExpire(getUnreadExpireAge(), getUnreadExpireUnits());
-  if (days > 0) {
-    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
-    maxUnreadTime = time(0) - days * 3600 * 24;
-  }
-
-  days = daysToExpire(getReadExpireAge(), getReadExpireUnits());
-  if (days > 0) {
-    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
-    maxReadTime = time(0) - days * 3600 * 24;
-  }
-
-  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
-    return;
-  }
-  open();
-  for (i=mMsgList.count()-1; i>=0; i--) {
-    mb = getMsgBase(i);
-    if (mb == 0) {
-	  continue;
-    }
-    msgTime = mb->date();
-
-	if (mb->isUnread()) {
-	  maxTime = maxUnreadTime;
-	} else {
-	  maxTime = maxReadTime;
-	}
-
-    if (msgTime < maxTime) {
-      removeMsg( i );
-    }
-  }
-  close();
-
-  return;
+  KMFolderJob *job = createJob( 0, KMFolderJob::tExpireMessages );
+  job->start();
 }
 
 
-
+//-----------------------------------------------------------------------------
+void KMFolder::emitMsgAddedSignals(int idx)
+{
+  if (!mQuiet) {
+    Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+    emit msgAdded(idx);
+    emit msgAdded(this, serNum);
+  } else
+    mChanged = TRUE;
+}
 
 //-----------------------------------------------------------------------------
 bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
 {
   if (aIndex_ret) *aIndex_ret = -1;
   KMFolder *msgParent = aMsg->parent();
-  if (msgParent && msgParent->protocol() == "imap" && !aMsg->isComplete())
+  if (aMsg->transferInProgress())
+      return false;
+  if (msgParent  && !aMsg->isComplete())
   {
-    KMImapJob *imapJob = new KMImapJob(aMsg);
-    connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-      SLOT(reallyAddMsg(KMMessage*)));
+    KMFolderJob *job = msgParent->createJob(aMsg);
+    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            SLOT(reallyAddMsg(KMMessage*)));
+    job->start();
     aMsg->setTransferInProgress(TRUE);
     static_cast<KMFolderImap*>(msgParent)->account()->tempOpenFolder(this);
     return FALSE;
@@ -782,13 +396,6 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::removeMsg(const KMMsgBase* aMsg)
-{
-  int idx = find(aMsg);
-  assert( idx != -1);
-  removeMsg(idx);
-}
-
 void KMFolder::removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet)
 {
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
@@ -808,11 +415,15 @@ void KMFolder::removeMsg(int idx, bool)
     kdDebug(5006) << "KMFolder::removeMsg() : idx < 0\n" << endl;
     return;
   }
-  KMMsgBase* mb = mMsgList[idx];
-  QString msgIdMD5 = mb->msgIdMD5();
-  mb = mMsgList.take(idx);
 
-  mDirty = TRUE;
+  KMMsgBase* mb = getMsgBase(idx);
+  QString msgIdMD5 = mb->msgIdMD5();
+  Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+  if (!mQuiet)
+    emit msgRemoved(this, serNum);
+  mb = takeIndexEntry( idx );
+
+  setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
 
   if (mb->status()==KMMsgStatusUnread ||
@@ -823,10 +434,9 @@ void KMFolder::removeMsg(int idx, bool)
   }
   --mTotalMsgs;
 
-  if (!mQuiet) {
+  if (!mQuiet)
     emit msgRemoved(idx, msgIdMD5);
-    emit msgRemoved(this);
-  } else
+  else
     mChanged = TRUE;
 }
 
@@ -837,14 +447,17 @@ KMMessage* KMFolder::take(int idx)
   KMMsgBase* mb;
   KMMessage* msg;
 
-  assert(idx>=0 && idx<=mMsgList.high());
+  assert(idx>=0 && idx<=count());
 
-  mb = mMsgList[idx];
+  mb = getMsgBase(idx);
   if (!mb) return 0;
   if (!mb->isMessage()) readMsg(idx);
+  Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+  if (!mQuiet)
+    emit msgRemoved(this,serNum);
 
-  QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
-  msg = (KMMessage*)mMsgList.take(idx);
+  msg = (KMMessage*)takeIndexEntry(idx);
+  QString msgIdMD5 = msg->msgIdMD5();
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew ||
       (this == kernel->outboxFolder())) {
@@ -853,12 +466,11 @@ KMMessage* KMFolder::take(int idx)
   }
   --mTotalMsgs;
   msg->setParent(0);
-  mDirty = TRUE;
+  setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
-  if (!mQuiet) {
+  if (!mQuiet)
     emit msgRemoved(idx,msgIdMD5);
-    emit msgRemoved(this);
-  } else
+  else
     mChanged = TRUE;
 
   return msg;
@@ -883,11 +495,10 @@ KMMessage* KMFolder::getMsg(int idx)
 {
   KMMsgBase* mb;
 
-  // assert(idx>=0 && idx<=mMsgList.high());
-  if(!(idx >= 0 && idx <= mMsgList.high()))
+  if(!(idx >= 0 && idx <= count()))
     return 0;
 
-  mb = mMsgList[idx];
+  mb = getMsgBase(idx);
   if (!mb) return 0;
 
 #if 0
@@ -915,7 +526,7 @@ KMMessage* KMFolder::getMsg(int idx)
     msg->setMsgSerNum(kernel->msgDict()->insert(0, msg, idx));
     kdDebug(5006) << "Serial number generated for message in folder " << label() << endl;
   }
-
+  msg->setComplete( true );
   return msg;
 #endif
 
@@ -928,18 +539,14 @@ KMMsgInfo* KMFolder::unGetMsg(int idx)
 {
   KMMsgBase* mb;
 
-  if(!(idx >= 0 && idx <= mMsgList.high()))
+  if(!(idx >= 0 && idx <= count()))
     return 0;
 
-  mb = mMsgList[idx];
+  mb = getMsgBase(idx);
   if (!mb) return 0;
 
-  if (mb->isMessage()) {
-    KMMsgInfo *msgInfo = new KMMsgInfo( this );
-    *msgInfo = *((KMMessage*)mb);
-    mMsgList.set( idx, msgInfo );
-    return msgInfo;
-  }
+  if (mb->isMessage())
+    return setIndexEntry( idx, (KMMessage*)mb );
 
   return 0;
 }
@@ -949,8 +556,8 @@ KMMsgInfo* KMFolder::unGetMsg(int idx)
 bool KMFolder::isMessage(int idx)
 {
   KMMsgBase* mb;
-  if (!(idx >= 0 && idx <= mMsgList.high())) return FALSE;
-  mb = mMsgList[idx];
+  if (!(idx >= 0 && idx <= count())) return FALSE;
+  mb = getMsgBase(idx);
   return (mb && mb->isMessage());
 }
 
@@ -991,25 +598,13 @@ int KMFolder::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
     msgParent->open();
 
   open();
-  rc = static_cast<KMFolderImap*>(this)->addMsg(msglist, aIndex_ret);
+  rc = static_cast<KMFolderImap*>(this)->addMsg(msglist, aIndex_ret); //yuck: Don
   close();
 
   if (msgParent)
     msgParent->close();
 
   return rc;
-}
-
-
-//-----------------------------------------------------------------------------
-int KMFolder::find(const QString& msgIdMD5) const
-{
-  for (int i=0; i<mMsgList.high(); ++i)
-    if (mMsgList[i]->msgIdMD5() == msgIdMD5)
-      return i;
-
-
-  return -1;
 }
 
 
@@ -1040,14 +635,14 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   newIndexLoc = indexLocation();
   newSubDirLoc = subdirLocation();
 
-  if (_rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
+  if (::rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
     setName(oldName);
     setParent(oldParent);
     rc = errno;
   }
   else if (!oldIndexLoc.isEmpty()) {
-    _rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
-    if (!_rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
+    ::rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
+    if (!::rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
       KMFolderDir* fdir = parent();
       KMFolderNode* fN;
 
@@ -1085,7 +680,7 @@ int KMFolder::remove()
 {
   assert(name() != "");
 
-  mMsgList.clear(true, true);   // delete and remove from dict
+  clearIndex(true, true); // delete and remove from dict
   close(TRUE);
 
   if (kernel->msgDict()) kernel->msgDict()->removeFolderIds(this);
@@ -1107,11 +702,12 @@ int KMFolder::expunge()
 
   assert(name() != "");
 
-  mMsgList.clear(true, true);   // delete and remove from dict
+  clearIndex(true, true);   // delete and remove from dict
   close(TRUE);
 
   kernel->msgDict()->removeFolderIds(this);
-  if (mAutoCreateIndex) truncate(indexLocation().local8Bit(), mHeaderOffset);
+  if (mAutoCreateIndex)
+    truncateIndex();
   else unlink(indexLocation().local8Bit());
 
   int rc = expungeContents();
@@ -1151,18 +747,16 @@ const char* KMFolder::type() const
 QString KMFolder::label() const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
-  if (mIsSystemFolder) return i18n(name().utf8());
+  if (mIsSystemFolder) return i18n(name().latin1());
   return name();
 }
 
 int KMFolder::count(bool cache) const
 {
   if (cache && mTotalMsgs != -1)
-  {
     return mTotalMsgs;
-  } else {
-    return mMsgList.count();
-  }
+  else
+    return -1;
 }
 
 //-----------------------------------------------------------------------------
@@ -1204,7 +798,7 @@ int KMFolder::countUnreadRecursive()
 
 //-----------------------------------------------------------------------------
 void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
-  const KMMsgStatus newStatus)
+  const KMMsgStatus newStatus, int idx)
 {
   int oldUnread = 0;
   int newUnread = 0;
@@ -1217,10 +811,14 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
     newUnread = 1;
   int deltaUnread = newUnread - oldUnread;
 
+  mDirtyTimer->changeInterval(mDirtyTimerInterval);
   if (deltaUnread != 0) {
     if (mUnreadMsgs < 0) mUnreadMsgs = 0;
     mUnreadMsgs += deltaUnread;
     emit numUnreadMsgsChanged( this );
+
+    Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+    emit msgChanged( this, serNum, deltaUnread );
   }
 }
 
@@ -1232,14 +830,14 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
     mChanged = TRUE;
     return;
   }
+
   if (idx < 0)
-    idx = mMsgList.find((KMMsgBase*)aMsg);
+    idx = aMsg->parent()->find( aMsg );
   if (idx >= 0)
     emit msgHeaderChanged(idx);
-  else
-    mChanged = TRUE;
+   else
+     mChanged = TRUE;
 }
-
 
 //-----------------------------------------------------------------------------
 QString KMFolder::idString() const
@@ -1256,39 +854,11 @@ QString KMFolder::idString() const
   return relativePath + QString(name());
 }
 
-//---------------------------------------------------------------------------
-void KMFolder::iconsFromPath()
-{
-  KInstance *instance=KGlobal::instance();
-  KIconLoader *loader = instance->iconLoader();
-  QPixmap tmp1(loader->loadIcon(mNormalIconPath, KIcon::Small, 0, KIcon::DefaultState, 0, true));
-  QPixmap tmp2(loader->loadIcon(mUnreadIconPath, KIcon::Small, 0, KIcon::DefaultState, 0, true));
-  bool tmp1Valid, tmp2Valid;
-
-  tmp1Valid = !tmp1.isNull();
-  tmp2Valid = !tmp2.isNull();
-
-  if ( tmp1Valid || tmp2Valid) { //we have a valid pixmap
-    // NOTE: can qpixmap constructors throw/fail?
-    if ( tmp1Valid ) {
-      delete mNormalIcon;
-      mNormalIcon = new QPixmap(tmp1);
-    }
-    if ( tmp2Valid ) {
-      delete mUnreadIcon;
-      mUnreadIcon = new QPixmap(tmp2);
-    } else { //make this one,same as the other one custom one
-      delete mUnreadIcon;
-      mUnreadIconPath = mNormalIconPath;
-      mUnreadIcon = new QPixmap(tmp1);
-    }
-  }
-}
-
 //-----------------------------------------------------------------------------
 void KMFolder::readConfig()
 {
-  KConfig* config = kapp->config();
+  //kdDebug()<<"#### READING CONFIG  = "<< name() <<endl;
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
@@ -1300,25 +870,23 @@ void KMFolder::readConfig()
   mIdentity = config->readUnsignedNumEntry("Identity",0);
   mCompactable = config->readBoolEntry("Compactable", TRUE);
 
-  mUseCustomIcons = config->readBoolEntry("UseCustomIcons", FALSE );
-  mNormalIconPath = config->readEntry("NormalIconPath");
-  mUnreadIconPath = config->readEntry("UnreadIconPath");
-  if ( mUseCustomIcons )
-      mNeedsRepainting = true;
-  iconsFromPath();
-
   expireMessages = config->readBoolEntry("ExpireMessages", FALSE);
   readExpireAge = config->readNumEntry("ReadExpireAge", 3);
   readExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
   unreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
   unreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
-  setUserWhoField( config->readEntry("WhoField") );
+  setUserWhoField( config->readEntry("WhoField"), false );
+  mUseCustomIcons = config->readBoolEntry("UseCustomIcons", false );
+  mNormalIconPath = config->readEntry("NormalIconPath" );
+  mUnreadIconPath = config->readEntry("UnreadIconPath" );
+  if ( mUseCustomIcons )
+      emit iconsChanged();
 }
 
 //-----------------------------------------------------------------------------
 void KMFolder::writeConfig()
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UnreadMsgs", mUnreadMsgs);
   config->writeEntry("TotalMsgs", mTotalMsgs);
@@ -1332,10 +900,11 @@ void KMFolder::writeConfig()
   config->writeEntry("ReadExpireUnits", readExpireUnits);
   config->writeEntry("UnreadExpireAge", unreadExpireAge);
   config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
+  config->writeEntry("WhoField", mUserWhoField);
+
   config->writeEntry("UseCustomIcons", mUseCustomIcons);
   config->writeEntry("NormalIconPath", mNormalIconPath);
   config->writeEntry("UnreadIconPath", mUnreadIconPath);
-	config->writeEntry("WhoField", mUserWhoField);
 }
 
 //-----------------------------------------------------------------------------
@@ -1346,61 +915,10 @@ void KMFolder::correctUnreadMsgsCount()
   emit numUnreadMsgsChanged( this );
 }
 
-#ifdef HAVE_MMAP
-bool KMFolder::updateIndexStreamPtr(bool just_close)
-#else
-bool KMFolder::updateIndexStreamPtr(bool)
-#endif
-{
-  // We touch the folder, otherwise the index is regenerated, if KMail is
-  // running, while the clock switches from daylight savings time to normal time
-  KProcess p, q, r;
-  p << "touch" << location();
-  p.start(KProcess::Block);
-  q << "touch" << indexLocation();
-  q.start(KProcess::Block);
-  r << "touch" << kernel->msgDict()->getFolderIdsLocation( this );
-  r.start(KProcess::Block);
-
-  mIndexSwapByteOrder = false;
-#ifdef HAVE_MMAP
-    if(just_close) {
-	if(mIndexStreamPtr)
-	    munmap(mIndexStreamPtr, mIndexStreamPtrLength);
-	mIndexStreamPtr = 0;
-	mIndexStreamPtrLength = 0;
-	return TRUE;
-    }
-
-    assert(mIndexStream);
-    struct stat stat_buf;
-    if(fstat(fileno(mIndexStream), &stat_buf) == -1) {
-	if(mIndexStreamPtr)
-	    munmap(mIndexStreamPtr, mIndexStreamPtrLength);
-	mIndexStreamPtr = 0;
-	mIndexStreamPtrLength = 0;
-	return FALSE;
-    }
-    if(mIndexStreamPtr)
-	munmap(mIndexStreamPtr, mIndexStreamPtrLength);
-    mIndexStreamPtrLength = stat_buf.st_size;
-    mIndexStreamPtr = (uchar *)mmap(0, mIndexStreamPtrLength, PROT_READ, MAP_SHARED,
-				    fileno(mIndexStream), 0);
-    if(mIndexStreamPtr == MAP_FAILED) {
-	mIndexStreamPtr = 0;
-	mIndexStreamPtrLength = 0;
-	return FALSE;
-    }
-#endif
-    return TRUE;
-}
-
 //-----------------------------------------------------------------------------
 void KMFolder::fillMsgDict(KMMsgDict *dict)
 {
-  open();
-  mMsgList.fillMsgDict(dict);
-  close();
+  fillDictFromIndex(dict);
 }
 
 //-----------------------------------------------------------------------------
@@ -1458,20 +976,7 @@ void KMFolder::setStatus(QValueList<int>& ids, KMMsgStatus status)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolder::setStatus(KMMsgBase *msg, KMMsgStatus status)
-{
-  KMMsgDict *dict = kernel->msgDict();
-  if (dict) {
-    KMFolder *folder;
-    int index;
-    dict->getLocation(msg->getMsgSerNum(), &folder, &index);
-    if (folder == this && folder == msg->parent())
-      setStatus(index, status);
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMFolder::setUserWhoField(const QString &whoField)
+void KMFolder::setUserWhoField(const QString &whoField, bool aWriteConfig)
 {
   mUserWhoField = whoField;
   if ( whoField.isEmpty() )
@@ -1503,9 +1008,49 @@ void KMFolder::setUserWhoField(const QString &whoField)
     kdDebug(5006) << "Illegal setting " << whoField << " for userWhoField!" << endl;
   }
 
-  writeConfig();
+  if (aWriteConfig)
+    writeConfig();
 }
 
-//-----------------------------------------------------------------------------
+void KMFolder::ignoreJobsForMessage( KMMessage *msg )
+{
+  if ( !msg || msg->transferInProgress() )
+    return;
+
+  for( KMFolderJob *it = mJobList.first(); it; it = mJobList.next() ) {
+    //FIXME: the questions is : should we iterate through all
+    //messages in jobs? I don't think so, because it would
+    //mean canceling the jobs that work with other messages
+    if ((*it).msgList().first() == msg) {
+
+      mJobList.remove( it );
+      delete it;
+      break;
+    }
+  }
+}
+
+void KMFolder::removeJobFromList( KMFolderJob* job )
+{
+  if ( !job ) return;
+
+  for( KMFolderJob *it = mJobList.first(); it; it = mJobList.next() ) {
+    //FIXME: the questions is : should we iterate through all
+    //messages in jobs? I don't think so, because it would
+    //mean canceling the jobs that work with other messages
+    if ( it == job ) {
+      mJobList.remove( it );
+      return;
+    }
+  }
+}
+
+void KMFolder::setIconPaths(const QString &normalPath, const QString &unreadPath)
+{
+  mNormalIconPath = normalPath;
+  mUnreadIconPath = unreadPath;
+  writeConfig();
+  emit iconsChanged();
+}
 
 #include "kmfolder.moc"

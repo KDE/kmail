@@ -24,19 +24,20 @@
 #include "identitycombo.h"
 #include "kmkernel.h"
 #include "kmfolderimap.h"
-#include "kmheaders.h"
 
 #include "kmfolderdia.moc"
 
 
 //-----------------------------------------------------------------------------
-KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
-			       QWidget *aParent, const QString& aCap):
+KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
+			       QWidget *aParent, const QString& aCap,
+			       const QString& aName):
   KDialogBase( KDialogBase::Plain,
                aCap, KDialogBase::Ok|KDialogBase::Cancel,
                KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
-  folder((KMAcctFolder*)aFolder),mFolderDir( aFolderDir )
+  mFolderDir( aFolderDir )
 {
+  folder = static_cast<KMAcctFolder*>( aFolder );
   mFolder = aFolder;
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()\n";
 
@@ -60,6 +61,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   if( !folder )
     nameEdit->setFocus();
   nameEdit->setText(folder ? folder->label() : i18n("unnamed"));
+  if (!aName.isEmpty())
+      nameEdit->setText(aName);
   nameEdit->setMinimumSize(nameEdit->sizeHint());
   label->setBuddy( nameEdit );
   hl->addWidget( nameEdit );
@@ -72,8 +75,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   label2->setBuddy( fileInFolder );
 
   //start icons group
-  QString normalIcon = (folder ? folder->normalIconPath() : "");
-  QString unreadIcon = (folder ? folder->unreadIconPath() : "");
+  QString normalIcon = (mFolder ? mFolder->normalIconPath() : "");
+  QString unreadIcon = (mFolder ? mFolder->unreadIconPath() : "");
   QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), page, "iconGroup" );
   iconGroup->setColumnLayout( 0,  Qt::Vertical );
 
@@ -84,7 +87,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   QHBoxLayout *ihl = new QHBoxLayout( ivl );
   mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), iconGroup );
-  mIconsCheckBox->setChecked( folder ? folder->useCustomIcons() : false );
+  mIconsCheckBox->setChecked( mFolder ? mFolder->useCustomIcons() : false );
   ihl->addWidget( mIconsCheckBox );
 
   ihl = new QHBoxLayout( ivl );
@@ -97,12 +100,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mNormalIconButton->setIconSize( 16 );
   mNormalIconButton->setStrictIconSize( true );
   mNormalIconButton->setFixedSize( 28, 28 );
-  if ( folder ) {
-    mNormalIconButton->setIcon( (!normalIcon.isEmpty())?normalIcon:"folder" );
-  } 
+  mNormalIconButton->setIcon( (!normalIcon.isEmpty())?normalIcon:"folder" );
   ihl->addWidget( mNormalIconButton );
   ihl->addStretch( 1 );
-  
+
   QLabel *ilabel2 = new QLabel( i18n("&Unread:"), iconGroup );
   ihl->addWidget( ilabel2 );
 
@@ -112,18 +113,15 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mUnreadIconButton->setIconSize( 16 );
   mUnreadIconButton->setStrictIconSize( true );
   mUnreadIconButton->setFixedSize( 28, 28 );
-  if ( folder ) {
-    mUnreadIconButton->setIcon( (!unreadIcon.isEmpty())?unreadIcon:"folder_open" );
-  }
+  mUnreadIconButton->setIcon( (!unreadIcon.isEmpty())?unreadIcon:"folder_open" );
   ihl->addWidget( mUnreadIconButton );
   ihl->addStretch( 1 );
-  
+
   if ( !mIconsCheckBox->isChecked() ) {
     mNormalIconButton->setEnabled( false );
     mUnreadIconButton->setEnabled( false );
     ilabel->setEnabled( false );
     ilabel2->setEnabled( false );
-    
   }
 
   connect( mIconsCheckBox, SIGNAL(toggled(bool)),
@@ -136,10 +134,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 	   ilabel2, SLOT(setEnabled(bool)) );
 
   connect( mNormalIconButton, SIGNAL(iconChanged(QString)),
-	   this, SLOT(slotChangeIcon(QString)) );
+	   this, SLOT(slotChangeIcon(const QString&)) );
 
   //end icons group
-  
+
   mtGroup = new QGroupBox( i18n("Folder Type"), page, "mtGroup" );
   mtGroup->setColumnLayout( 0,  Qt::Vertical );
 
@@ -154,14 +152,15 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   label_type->setBuddy( mailboxType );
   mailboxType->insertItem("mbox", 0);
   mailboxType->insertItem("maildir", 1);
+  mailboxType->insertItem("search", 2);
   {
-    KConfig *config = kapp->config();
+    KConfig *config = KMKernel::config();
     KConfigGroupSaver saver(config, "General");
     int type = config->readNumEntry("default-mailbox-format", 1);
     if ( type < 0 || type > 1 ) type = 1;
     mailboxType->setCurrentItem( type );
   }
-  if (aFolder) mailboxType->setEnabled(false);
+  if (mFolder) mailboxType->setEnabled(false);
   ml->addWidget( mailboxType );
   ml->addStretch( 1 );
 
@@ -184,9 +183,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   // we want to know if the activated changes
   connect( fileInFolder, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
 
-  if (aFolder && (aFolder->protocol() == "imap")) {
-    label->setEnabled( false );
-    nameEdit->setEnabled( false );
+  if (mFolder && (mFolder->protocol() == "imap")) {
+    //label->setEnabled( false );
+    //nameEdit->setEnabled( false );
     label2->setEnabled( false );
     fileInFolder->setEnabled( false );
   }
@@ -313,11 +312,11 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   senderType->insertItem(i18n("Receiver"), 2);
 
   QString whoField;
-  if (aFolder) whoField = aFolder->userWhoField();
+  if (mFolder) whoField = mFolder->userWhoField();
   if (whoField.isEmpty()) senderType->setCurrentItem(0);
   if (whoField == "From") senderType->setCurrentItem(1);
   if (whoField == "To") senderType->setCurrentItem(2);
-  
+
   sl->addWidget( senderType );
   sl->addStretch( 1 );
 
@@ -326,7 +325,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     if (curFolder->child() == aFolderDir) {
       fileInFolder->setCurrentItem( i );
       slotUpdateItems( i );
-    }	
+    }
   }
 
 //   hl = new QHBoxLayout();
@@ -348,10 +347,15 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     holdsMailingList->setChecked(folder->isMailingList());
     // markAnyMessage->setChecked( folder->isAnyMessageMarked() );
 
-    if (folder->protocol() == "maildir")
+    if (folder->protocol() == "search") {
+      mailboxType->setCurrentItem(2);
+      label2->hide();
+      fileInFolder->hide();
+    } else if (folder->protocol() == "maildir") {
       mailboxType->setCurrentItem(1);
-    else
+    } else {
       mailboxType->setCurrentItem(0);
+    }
 
     identity->setCurrentIdentity( folder->identity() );
 
@@ -405,10 +409,10 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   // Make sure we don't bomb out if there isn't a folder
   // object yet (i.e. just about to create new folder).
 
-  if (aFolder && aFolder->protocol() == "imap") {
+  if (mFolder && mFolder->protocol() == "imap") {
     expGroup->hide();
     mtGroup->hide();
-		if (aFolder->isSystemFolder())
+		if (mFolder->isSystemFolder())
 			senderGroup->hide();
   }
   else if (folder && folder->isSystemFolder()) {
@@ -446,8 +450,8 @@ void KMFolderDialog::slotUpdateItems ( int current )
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotOk()
 {
-  // Renaming/moving of IMAP folders is not yet supported
-  if (!mFolder || (mFolder->protocol() != "imap" && !mFolder->isSystemFolder()))
+  // moving of IMAP folders is not yet supported
+  if (!mFolder ||  !mFolder->isSystemFolder())
   {
     QString acctName;
     QString fldName, oldFldName;
@@ -461,7 +465,11 @@ void KMFolderDialog::slotOk()
     fldName.replace(QRegExp("/"), "");
     fldName.replace(QRegExp("^\\."), "");
     if (fldName.isEmpty()) fldName = i18n("unnamed");
-    if (curFolder != 0)
+
+    if (mailboxType->currentItem() == 2) {
+      selectedFolderDir = &(kernel->searchFolderMgr()->dir());
+    }
+    else if (curFolder != 0)
     {
       selectedFolder = *mFolders.at(curFolder - 1);
       selectedFolderDir = selectedFolder->createChildFolder();
@@ -514,11 +522,13 @@ void KMFolderDialog::slotOk()
          */
         folder = (KMAcctFolder*) new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
+      } else if (mailboxType->currentItem() == 2) {
+        folder = (KMAcctFolder*)kernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kernel->searchFolderMgr()->dir() );
       } else if (mailboxType->currentItem() == 1) {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       } else {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
-      }	
+      }
     }
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
@@ -526,7 +536,6 @@ void KMFolderDialog::slotOk()
         folder->rename(fldName, selectedFolderDir );
       else
         folder->rename(fldName);
-
       kernel->folderMgr()->contentsChanged();
     }
   }
@@ -550,10 +559,11 @@ void KMFolderDialog::slotOk()
     folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
     //update the tree iff new icon paths are different and not empty
     folder->setUseCustomIcons( mIconsCheckBox->isChecked() );
-    if ( (( mNormalIconButton->icon() != folder->normalIconPath() ) && ( !mNormalIconButton->icon().isEmpty())) || 
-	 (( mUnreadIconButton->icon() != folder->unreadIconPath() ) && ( !mUnreadIconButton->icon().isEmpty())) ) {
+    if ( (( mNormalIconButton->icon() != folder->normalIconPath() ) &&
+	  ( !mNormalIconButton->icon().isEmpty())) ||
+	 (( mUnreadIconButton->icon() != folder->unreadIconPath() ) &&
+	  ( !mUnreadIconButton->icon().isEmpty())) )
       folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
-    } 
 
     // set whoField
     if (senderType->currentItem() == 1)
@@ -564,8 +574,6 @@ void KMFolderDialog::slotOk()
       folder->setUserWhoField(QString());
     if (!mFolder) folder->close();
   }
-// reload the headers to show the changes if the folder was modified
-  if (mFolder) static_cast<KMHeaders*>(this->parentWidget()->child("headers"))->setFolder(folder);
 
   KDialogBase::slotOk();
 }
@@ -615,9 +623,8 @@ KMFolderDialog::slotUnreadExpiryUnitChanged( int value )
 }
 
 
-void 
-KMFolderDialog::slotChangeIcon( QString icon )
+void
+KMFolderDialog::slotChangeIcon( const QString& icon )
 {
-  if ( mFolder && !mFolder->unreadIcon() ) 
     mUnreadIconButton->setIcon( icon );
 }

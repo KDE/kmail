@@ -33,9 +33,12 @@ class QPixmap;
 class QPainter;
 class KMFolderImap;
 class KMFolderTree;
+class KMMainWidget;
 
-class KMFolderTreeItem : public KFolderTreeItem
+class KMFolderTreeItem : public QObject, public KFolderTreeItem
+
 {
+  Q_OBJECT
 public:
   /** Construct a root item _without_ folder */
   KMFolderTreeItem( KFolderTree *parent, QString name );
@@ -47,16 +50,31 @@ public:
   /** Construct a child item */
   KMFolderTreeItem( KFolderTreeItem* parent, QString name,
                     KMFolder* folder );
+  virtual ~KMFolderTreeItem();
+
+  QPixmap* normalIcon() const
+  { if ( mFolder && mFolder->useCustomIcons() ) return mNormalIcon; else return 0; }
+  QPixmap* unreadIcon() const
+  { if ( mFolder && mFolder->useCustomIcons() ) return mUnreadIcon; else return 0; }
 
   /** associated folder */
   KMFolder* folder() { return mFolder; }
+  QListViewItem* parent() { return KFolderTreeItem::parent(); }
 
   /** dnd */
   virtual bool acceptDrag(QDropEvent* ) const;
+public slots:
+  void properties();
+  void slotRepaint() { repaint(); }
 
 protected:
   void init();
+  void iconsFromPaths();
   KMFolder* mFolder;
+private:
+  /** Custom pixmaps to display in the tree, none by default */
+  QPixmap *mNormalIcon;
+  QPixmap *mUnreadIcon;
 };
 
 //==========================================================================
@@ -66,7 +84,8 @@ class KMFolderTree : public KFolderTree
   Q_OBJECT
 
 public:
-  KMFolderTree( QWidget *parent=0, const char *name=0 );
+  KMFolderTree( KMMainWidget *mainWidget, QWidget *parent=0,
+		const char *name=0 );
 
   /** Save config options */
   void writeConfig();
@@ -160,8 +179,11 @@ protected slots:
   /** called, when a folder has been deleted */
   void slotFolderRemoved(KMFolder *);
 
+  /** Updates the folder tree (delayed), causing a "blink" */
+  void refresh();
+
   /** Updates the folder tree only if some folder lable has changed */
-  void refresh(KMFolder*);
+  void refresh(KMFolder* folder, bool doUpdate);
 
   /** Create a child folder */
   void addChildFolder();
@@ -174,6 +196,9 @@ protected slots:
 
   /** Tell the folder to refresh the contents on the next expansion */
   void slotFolderCollapsed( QListViewItem * item );
+
+  /** Check if the new name is valid and confirm the new name */
+  void slotRenameFolder( QListViewItem * item, int col, const QString& text);
 
   /** Update the total and unread columns (if available) */
   void slotUpdateCounts(KMFolder * folder);
@@ -248,6 +273,7 @@ private:
 
   /** show popup after D'n'D? */
   bool mShowPopupAfterDnD;
+  KMMainWidget *mMainWidget;
 };
 
 #endif

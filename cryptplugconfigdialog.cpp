@@ -25,6 +25,7 @@
 #include <qpushbutton.h>
 
 #include <cassert>
+#include "kmkernel.h"
 
 CryptPlugConfigDialog::CryptPlugConfigDialog( CryptPlugWrapper * wrapper,
 				       int plugno, const QString & caption,
@@ -52,7 +53,7 @@ CryptPlugConfigDialog::CryptPlugConfigDialog( CryptPlugWrapper * wrapper,
 void CryptPlugConfigDialog::slotOk() {
   assert( mWrapper );
 
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
   // Set the right config group
@@ -95,7 +96,7 @@ void CryptPlugConfigDialog::slotOk() {
   bool warnSendUnsigned = mSignatureTab->warnUnsignedCB->isChecked();
   mWrapper->setWarnSendUnsigned( warnSendUnsigned );
   config->writeEntry( "WarnSendUnsigned", warnSendUnsigned );
-    
+
   // Signature Compound Mode group box
   if( mSignatureTab->sendSigOpaqueRB->isChecked() ) {
     mWrapper->setSignatureCompoundMode( SignatureCompoundMode_Opaque );
@@ -140,27 +141,27 @@ void CryptPlugConfigDialog::slotOk() {
   int warnSigCertExpInt = mSignatureTab->warnSignatureCertificateExpiresSB->value();
   mWrapper->setSignatureCertificateExpiryNearInterval( warnSigCertExpInt );
   config->writeEntry( "SigCertWarnNearExpireInt", warnSigCertExpInt );
-    
+
   bool warnCACertExp = mSignatureTab->warnCACertificateExpiresCB->isChecked();
   mWrapper->setCACertificateExpiryNearWarning( warnCACertExp );
   config->writeEntry( "CACertWarnNearExpire", warnCACertExp );
-    
+
   int warnCACertExpInt = mSignatureTab->warnCACertificateExpiresSB->value();
   mWrapper->setCACertificateExpiryNearInterval( warnCACertExpInt );
   config->writeEntry( "CACertWarnNearExpireInt", warnCACertExpInt );
-    
+
   bool warnRootCertExp = mSignatureTab->warnRootCertificateExpiresCB->isChecked();
   mWrapper->setRootCertificateExpiryNearWarning( warnRootCertExp );
   config->writeEntry( "RootCertWarnNearExpire", warnRootCertExp );
-    
+
   int warnRootCertExpInt = mSignatureTab->warnRootCertificateExpiresSB->value();
   mWrapper->setRootCertificateExpiryNearInterval( warnRootCertExpInt );
   config->writeEntry( "RootCertWarnNearExpireInt", warnRootCertExpInt );
-    
+
   bool warnNoCertificate = mSignatureTab->warnAddressNotInCertificateCB->isChecked();
   mWrapper->setWarnNoCertificate( warnNoCertificate );
   config->writeEntry( "WarnEmailNotInCert", warnNoCertificate );
-    
+
   // PIN Entry group box
   if( mSignatureTab->pinOncePerSessionRB->isChecked() ) {
     mWrapper->setNumPINRequests( PinRequest_OncePerSession );
@@ -181,15 +182,15 @@ void CryptPlugConfigDialog::slotOk() {
   int pinInt = mSignatureTab->pinIntervalSB->value();
   mWrapper->setNumPINRequestsInterval( pinInt );
   config->writeEntry( "NumPINRequestsInt", pinInt );
-    
+
   // Save Messages group box
   bool saveSigs = mSignatureTab->saveSentSigsCB->isChecked();
   mWrapper->setSaveSentSignatures( saveSigs );
   config->writeEntry( "SaveSentSigs", saveSigs );
-    
+
   // The encryption tab - everything here needs to be written both
   // into config and into the crypt plug wrapper.
-    
+
   // Encrypt Messages group box
   if( mEncryptionTab->encryptAllPartsRB->isChecked() ) {
     mWrapper->setEncryptEmail( EncryptEmail_EncryptAll );
@@ -204,11 +205,11 @@ void CryptPlugConfigDialog::slotOk() {
   bool warnSendUnencrypted = mEncryptionTab->warnUnencryptedCB->isChecked();
   mWrapper->setWarnSendUnencrypted( warnSendUnencrypted );
   config->writeEntry( "WarnSendUnencrypted", warnSendUnencrypted );
-  
+
   bool alwaysEncryptToSelf = mEncryptionTab->alwaysEncryptToSelfCB->isChecked();
   mWrapper->setAlwaysEncryptToSelf( alwaysEncryptToSelf );
   config->writeEntry( "AlwaysEncryptToSelf", alwaysEncryptToSelf );
-    
+
   // Encryption Settings group box
   QString encAlgoStr = mEncryptionTab->encryptionAlgorithmCO->currentText();
   EncryptionAlgorithm encAlgo = EncryptAlg_RSA;
@@ -315,7 +316,7 @@ void CryptPlugConfigDialog::slotOk() {
     mWrapper->setCertificateSource( CertSrc_Server );
     config->writeEntry( "CertSource", CertSrc_Server );
   }
-  
+
   // Local/Remote CRLs group box
   if( mDirServiceTab->firstLocalThenDSCRLRB->isChecked() ) {
     mWrapper->setCRLSource( CertSrc_ServerLocal );
@@ -326,11 +327,11 @@ void CryptPlugConfigDialog::slotOk() {
   } else {
     mWrapper->setCRLSource( CertSrc_Server );
     config->writeEntry( "CRLSource", CertSrc_Server );
-  }    
-  
+  }
+
   accept();
 }
-  
+
 
 void CryptPlugConfigDialog::setPluginInformation() {
   assert( mWrapper );
@@ -340,12 +341,12 @@ void CryptPlugConfigDialog::setPluginInformation() {
   mSignatureTab->enableDisable( mWrapper );
   mEncryptionTab->enableDisable( mWrapper );
   mDirServiceTab->enableDisable( mWrapper );
-  
+
   // Fill the fields of the tab pages with the data from
   // the current plugin.
-  
+
   // Signature tab
-  
+
   // Sign Messages group box
   switch( mWrapper->signEmail() ) {
   case SignEmail_SignAll:
@@ -361,7 +362,7 @@ void CryptPlugConfigDialog::setPluginInformation() {
     kdDebug( 5006 ) << "Unknown email sign setting" << endl;
   };
   mSignatureTab->warnUnsignedCB->setChecked( mWrapper->warnSendUnsigned() );
-  
+
   // Compound Mode group box
   switch( mWrapper->signatureCompoundMode() ) {
   case SignatureCompoundMode_Opaque:
@@ -374,7 +375,7 @@ void CryptPlugConfigDialog::setPluginInformation() {
     mSignatureTab->sendSigMultiPartRB->setChecked( true );
     kdDebug( 5006 ) << "Unknown signature compound mode setting, default set to multipart/signed" << endl;
   };
-  
+
   // Sending Certificates group box
   switch( mWrapper->sendCertificates() ) {
   case SendCert_DontSend:
@@ -392,7 +393,7 @@ void CryptPlugConfigDialog::setPluginInformation() {
   default:
     kdDebug( 5006 ) << "Unknown send certificate setting" << endl;
   }
-  
+
   // Signature Settings group box
   SignatureAlgorithm sigAlgo = mWrapper->signatureAlgorithm();
   QString sigAlgoStr;
@@ -403,23 +404,23 @@ void CryptPlugConfigDialog::setPluginInformation() {
   default:
     kdDebug( 5006 ) << "Unknown signature algorithm" << endl;
   };
-  
+
   for( int i = 0; i < mSignatureTab->signatureAlgorithmCO->count(); ++i )
     if( mSignatureTab->signatureAlgorithmCO->text( i ) ==
 	sigAlgoStr ) {
       mSignatureTab->signatureAlgorithmCO->setCurrentItem( i );
       break;
     }
-  
+
   mSignatureTab->warnSignatureCertificateExpiresCB->setChecked( mWrapper->signatureCertificateExpiryNearWarning() );
   mSignatureTab->warnSignatureCertificateExpiresSB->setValue( mWrapper->signatureCertificateExpiryNearInterval() );
   mSignatureTab->warnCACertificateExpiresCB->setChecked( mWrapper->caCertificateExpiryNearWarning() );
   mSignatureTab->warnCACertificateExpiresSB->setValue( mWrapper->caCertificateExpiryNearInterval() );
   mSignatureTab->warnRootCertificateExpiresCB->setChecked( mWrapper->rootCertificateExpiryNearWarning() );
   mSignatureTab->warnRootCertificateExpiresSB->setValue( mWrapper->rootCertificateExpiryNearInterval() );
-  
+
   mSignatureTab->warnAddressNotInCertificateCB->setChecked( mWrapper->warnNoCertificate() );
-  
+
   // PIN Entry group box
   switch( mWrapper->numPINRequests() ) {
   case PinRequest_OncePerSession:
@@ -440,14 +441,14 @@ void CryptPlugConfigDialog::setPluginInformation() {
   default:
     kdDebug( 5006 ) << "Unknown pin request setting" << endl;
   };
-  
+
   mSignatureTab->pinIntervalSB->setValue( mWrapper->numPINRequestsInterval() );
-    
+
   // Save Messages group box
   mSignatureTab->saveSentSigsCB->setChecked( mWrapper->saveSentSignatures() );
-    
+
   // The Encryption tab
-    
+
   // Encrypt Messages group box
   switch( mWrapper->encryptEmail() ) {
   case EncryptEmail_EncryptAll:
@@ -480,36 +481,36 @@ void CryptPlugConfigDialog::setPluginInformation() {
   default:
     kdDebug( 5006 ) << "Unknown encryption algorithm" << endl;
   };
-    
+
   for( int i = 0; i < mEncryptionTab->encryptionAlgorithmCO->count(); ++i )
     if( mEncryptionTab->encryptionAlgorithmCO->text( i ) == encAlgoStr ) {
       mEncryptionTab->encryptionAlgorithmCO->setCurrentItem( i );
       break;
     }
-    
+
   mEncryptionTab->warnReceiverCertificateExpiresCB->setChecked( mWrapper->receiverCertificateExpiryNearWarning() );
   mEncryptionTab->warnReceiverCertificateExpiresSB->setValue( mWrapper->receiverCertificateExpiryNearWarningInterval() );
   mEncryptionTab->warnChainCertificateExpiresCB->setChecked( mWrapper->certificateInChainExpiryNearWarning() );
   mEncryptionTab->warnChainCertificateExpiresSB->setValue( mWrapper->certificateInChainExpiryNearWarningInterval() );
   mEncryptionTab->warnReceiverNotInCertificateCB->setChecked( mWrapper->receiverEmailAddressNotInCertificateWarning() );
-  
+
   // CRL group box
   mEncryptionTab->useCRLsCB->setChecked( mWrapper->encryptionUseCRLs() );
   mEncryptionTab->warnCRLExpireCB->setChecked( mWrapper->encryptionCRLExpiryNearWarning() );
   mEncryptionTab->warnCRLExpireSB->setValue( mWrapper->encryptionCRLNearExpiryInterval() );
-  
+
   // Save Messages group box
   mEncryptionTab->storeEncryptedCB->setChecked( mWrapper->saveMessagesEncrypted() );
-    
+
   // Certificate Path Check group box
   mEncryptionTab->checkCertificatePathCB->setChecked( mWrapper->checkCertificatePath() );
   if( mWrapper->checkEncryptionCertificatePathToRoot() )
     mEncryptionTab->alwaysCheckRootRB->setChecked( true );
   else
     mEncryptionTab->pathMayEndLocallyCB->setChecked( true );
-  
+
   // Directory Services tab page
-  
+
   int numServers;
   CryptPlugWrapper::DirectoryServer* servers = mWrapper->directoryServers( &numServers );
   if( servers ) {
@@ -522,7 +523,7 @@ void CryptPlugConfigDialog::setPluginInformation() {
 				    QString::fromUtf8( servers[i].description ) );
     }
   }
-    
+
   // Local/Remote Certificates group box
   switch( mWrapper->certificateSource() ) {
   case CertSrc_ServerLocal:
@@ -537,7 +538,7 @@ void CryptPlugConfigDialog::setPluginInformation() {
   default:
     kdDebug( 5006 ) << "Unknown certificate source" << endl;
   }
-  
+
   // Local/Remote CRL group box
   switch( mWrapper->crlSource() ) {
   case CertSrc_ServerLocal:
@@ -556,7 +557,7 @@ void CryptPlugConfigDialog::setPluginInformation() {
 
 void CryptPlugConfigDialog::slotStartCertManager() {
   assert( mWrapper );
-  
+
   KProcess certManagerProc; // save to create on the heap, since
                             // there is no parent
   certManagerProc << "kgpgcertmanager";

@@ -14,7 +14,7 @@
 
 #include <cryptplugwrapperlist.h>
 
-#include "kmfolder.h"
+#include "kmfolderindex.h"
 #include "kmundostack.h"
 #include "kmversion.h"
 #include "kmidentity.h"
@@ -72,14 +72,15 @@ static QStringList sPrefCharsets;
 QString KMMessage::sForwardStr = "";
 int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
 
+using namespace KMime;
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(DwMessage* aMsg)
   : mMsg(aMsg),
     mNeedsAssembly(true),
     mIsComplete(false),
-    mTransferInProgress(false),
     mDecodeHTML(false),
+    mTransferInProgress(0),
     mCodec(0),
     mUnencryptedMsg(0)
 {
@@ -95,8 +96,7 @@ KMMessage::KMMessage(const KMMessage& other) : KMMessageInherited( other ), mMsg
 void KMMessage::assign( const KMMessage& other )
 {
   delete mMsg;
-  if( mUnencryptedMsg )
-    delete mUnencryptedMsg;
+  delete mUnencryptedMsg;
 
   mNeedsAssembly = true;//other.mNeedsAssembly;
   if( other.mMsg )
@@ -161,14 +161,14 @@ void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
+KMMessage::KMMessage(KMFolderIndex* parent): KMMessageInherited(parent)
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
   mCodec = 0;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
-  mTransferInProgress = FALSE;
+  mTransferInProgress = 0;
   mMsgSize = 0;
   mMsgLength = 0;
   mFolderOffset = 0;
@@ -190,7 +190,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mCodec = 0;
   mDecodeHTML = FALSE;
   mIsComplete = FALSE;
-  mTransferInProgress = FALSE;
+  mTransferInProgress = 0;
   mMsgSize = msgInfo.msgSize();
   mMsgLength = 0;
   mFolderOffset = msgInfo.folderOffset();
@@ -208,7 +208,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
 //-----------------------------------------------------------------------------
 KMMessage::~KMMessage()
 {
-  if (mMsg) delete mMsg;
+  delete mMsg;
   kernel->undoStack()->msgDestroyed( this );
 }
 
@@ -227,8 +227,7 @@ bool KMMessage::isUrgent() const {
 //-----------------------------------------------------------------------------
 void KMMessage::setUnencryptedMsg( KMMessage* unencrypted )
 {
-  if( mUnencryptedMsg )
-    delete mUnencryptedMsg;
+  delete mUnencryptedMsg;
   mUnencryptedMsg = unencrypted;
 }
 
@@ -243,6 +242,16 @@ const DwString& KMMessage::asDwString(void)
   return mMsg->AsString();
 }
 
+//-----------------------------------------------------------------------------
+const DwMessage *KMMessage::asDwMessage(void)
+{
+  if (mNeedsAssembly)
+  {
+    mNeedsAssembly = FALSE;
+    mMsg->Assemble();
+  }
+  return mMsg;
+}
 
 //-----------------------------------------------------------------------------
 QCString KMMessage::asString(void)
@@ -291,7 +300,7 @@ void KMMessage::setStatusFields(void)
 
   str[0] = (char)signatureState();
   str[1] = '\0';
-  kdDebug() << "Setting SignatureState header field to " << str[0] << endl;
+  //kdDebug() << "Setting SignatureState header field to " << str[0] << endl;
   setHeaderField("X-KMail-SignatureState", str);
 
   // We better do the assembling ourselves now to prevent the
@@ -323,33 +332,63 @@ DwMediaType& KMMessage::dwContentType(void)
 //-----------------------------------------------------------------------------
 void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 {
-  int len;
-  const char* strPos;
-  char* resultPos;
+  DwString dwStra( aStr.data() );
+  fromDwString( dwStra, aSetStatus );
+  return;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
+{
+  const char* strPos = str.data();
   char ch;
-  QCString result;
-
-  if (mMsg) delete mMsg;
+  bool needsJpDecode = false;
+  delete mMsg;
   mMsg = new DwMessage;
+  mMsgLength = str.length();
 
-  // copy string and throw out obsolete control characters
-  len = aStr.length();
-  mMsgLength = len;
-  result.resize(len+1);
-  strPos = aStr.data();
-  resultPos = (char*)result.data();
-  if (strPos) for (; (ch=*strPos)!='\0'; strPos++)
+  if (strPos) for (; strPos < str.data() + str.length(); ++strPos)
   {
+    ch = *strPos;
+    if (!((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0' || ch == 0x1b)
+	  && !(ch=='>' && strPos > str.data()
+	       && qstrncmp(strPos-1, "\n>From", 6) == 0)))
+    {
+	needsJpDecode = true;
+	break;
+    }
+  }
+
+  if (needsJpDecode) {
+  // copy string and throw out obsolete control characters
+      char *resultPos;
+      int len = str.length();
+      char* rawData = new char[ len + 1 ];
+      QCString result;
+      result.setRawData( rawData, len + 1 );
+      strPos = str.data();
+      resultPos = (char*)result.data();
+
+      if (strPos) for (; strPos < str.data() + str.length(); ++strPos)
+      {
+	  ch = *strPos;
 //  Mail header charset(iso-2022-jp) is using all most E-mail system in Japan.
 //  ISO-2022-JP code consists of ESC(0x1b) character and 7Bit character which
 //  used from '!' character to  '~' character.  toyo
-    if ((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0' || ch == 0x1b)
-       && !(ch=='>' && strPos > aStr.data()
-            && qstrncmp(strPos-1, "\n>From", 6) == 0))
-      *resultPos++ = ch;
+	  if ((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0' || ch == 0x1b)
+	      && !(ch=='>' && strPos > str.data()
+	      && qstrncmp(strPos-1, "\n>From", 6) == 0))
+	      *resultPos++ = ch;
+      }
+      *resultPos = '\0'; // terminate zero for casting
+      DwString jpStr;
+      jpStr.TakeBuffer( result.data(), len + 1, 0, result.length() );
+      mMsg->FromString( jpStr );
+      result.resetRawData( result, len + 1);
+  } else {
+      mMsg->FromString( str );
   }
-  *resultPos = '\0'; // terminate zero for casting
-  mMsg->FromString((const char*)result);
   mMsg->Parse();
 
   if (aSetStatus) {
@@ -370,8 +409,8 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
   if (   ct.isEmpty()
       || ct == "text"
       || ct == "multipart"
-      || (    ct == "application" 
-           && (st == "pkcs7-mime" || st == "x-pkcs7-mime" || st == "pgp") ) )
+      || (    ct == "application"
+              && (st == "pkcs7-mime" || st == "x-pkcs7-mime" || st == "pgp") ) )
     return;
   KMMessagePart textPart;
   textPart.setTypeStr("text");
@@ -688,7 +727,7 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
 {
   // get a valid CryptPlugList
   CryptPlugWrapperList cryptPlugList;
-  KConfig *config = KGlobal::config();
+  KConfig *config = KMKernel::config();
   cryptPlugList.loadFromConfig( config );
 
   isHTML = false;
@@ -745,7 +784,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   int i;
   bool clearSigned = false;
 
-  QTextCodec *codec = mCodec;
+  const QTextCodec *codec = mCodec;
   if (!codec)
   {
     QCString cset = charset();
@@ -914,7 +953,7 @@ QString KMMessage::cleanSubject( const QStringList & prefixRegExps, bool replace
   // 1. is anchored to the beginning of the subject (sans whitespace)
   // 2. matches at least one of the part regexps in prefixRegExps
   QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
-    .arg( prefixRegExps.join(")|(?:") );
+                      .arg( prefixRegExps.join(")|(?:") );
   kdDebug(5006) << "KMMessage::cleanSubject(): bigRegExp = \"" << bigRegExp
 		<< "\"" << endl;
   QRegExp rx( bigRegExp, false /*case insens.*/ );
@@ -1293,14 +1332,6 @@ KMMessage* KMMessage::createForward(void)
   return msg;
 }
 
-QString KMMessage::forwardSubject() const {
-  return cleanSubject( sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
-}
-
-QString KMMessage::replySubject() const {
-  return cleanSubject( sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
-}
-
 KMMessage* KMMessage::createDeliveryReceipt() const
 {
   QString str, receiptTo;
@@ -1447,7 +1478,7 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
 //-----------------------------------------------------------------------------
 QString KMMessage::dateStr(void) const
 {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
 
@@ -1629,8 +1660,8 @@ void KMMessage::setDrafts(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::who(void) const
 {
-  if (mParent) 
-	return headerField(mParent->whoField().utf8());
+  if (mParent)
+    return headerField(mParent->whoField().utf8());
   return headerField("From");
 }
 
@@ -2140,6 +2171,9 @@ void KMMessage::setBodyAndGuessCte(const QByteArray& aBuf,
   case CharFreq::EightBitData:
     allowedCte << DwMime::kCteBase64;
     break;
+  case CharFreq::None:
+  default:
+      break;
   }
 
   kdDebug() << "CharFreq returned " << cf.type() << "/"
@@ -2190,6 +2224,9 @@ void KMMessage::setBodyAndGuessCte(const QCString& aBuf,
   case CharFreq::EightBitData:
     allowedCte << DwMime::kCteBase64;
     break;
+  case CharFreq::None:
+  default:
+    break;
   }
 
   kdDebug() << "CharFreq returned " << cf.type() << "/"
@@ -2198,7 +2235,6 @@ void KMMessage::setBodyAndGuessCte(const QCString& aBuf,
   setCte( allowedCte[0] ); // choose best fitting
   setBodyEncoded( aBuf );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMessage::setBodyEncoded(const QCString& aStr)
@@ -2359,7 +2395,6 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
   while (curpart && !part) {
     //dive into multipart messages
     while(    curpart
-           && curpart->hasHeaders()
            && curpart->Headers().HasContentType()
            && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
@@ -2386,7 +2421,8 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
+void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
+			 bool withBody)
 {
   if( aPart ) {
     if( aDwBodyPart ) {
@@ -2454,7 +2490,10 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
         aPart->setContentDisposition("");
 
       // Body
-      aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
+      if (withBody)
+	  aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
+      else
+	  aPart->setBody( "" );
     }
     // If no valid body part was not given,
     // set all MultipartBodyPart attributes to empty values.
@@ -2641,7 +2680,8 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::viewSource(const QString& aCaption, const QTextCodec *codec, bool fixedfont)
+void KMMessage::viewSource(const QString& aCaption, const QTextCodec *codec,
+			   bool fixedfont)
 {
   QString str = (codec) ? codec->toUnicode(asString()) :
     kernel->networkCodec()->toUnicode(asString());
@@ -2675,7 +2715,7 @@ QString KMMessage::generateMessageId( const QString& addr )
   msgIdStr = '<' + datetime.toString( "yyyyMMddhhmm.sszzz" );
 
   QString msgIdSuffix;
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   if( general.readBoolEntry( "useCustomMessageIdSuffix", false ) )
     msgIdSuffix = general.readEntry( "myMessageIdSuffix", "" );
@@ -3048,9 +3088,17 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
+void KMMessage::setTransferInProgress(bool value)
+{
+  value ? ++mTransferInProgress : --mTransferInProgress;
+  assert(mTransferInProgress >= 0 && mTransferInProgress <= 1);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMessage::readConfig(void)
 {
-  KConfig *config=kapp->config();
+  KConfig *config=KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
   config->setGroup("General");
@@ -3164,7 +3212,6 @@ void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
   mDirty = TRUE;
 }
 
-//-----------------------------------------------------------------------------
 void KMMessage::setEncryptionState(const KMMsgEncryptionState s, int idx)
 {
     if( mEncryptionState == s )
@@ -3174,7 +3221,6 @@ void KMMessage::setEncryptionState(const KMMsgEncryptionState s, int idx)
     KMMsgBase::setEncryptionState(s, idx);
 }
 
-//-----------------------------------------------------------------------------
 void KMMessage::setSignatureState(KMMsgSignatureState s, int idx)
 {
     if( mSignatureState == s )

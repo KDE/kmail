@@ -3,9 +3,11 @@
 
 #include <config.h>
 #include <qfileinfo.h>
+#include <qtimer.h>
 #include <qregexp.h>
 
 #include "kmfoldermbox.h"
+#include "kmfoldermgr.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
 #include "kbusyptr.h"
@@ -49,6 +51,132 @@
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
 //-----------------------------------------------------------------------------
+KMMboxJob::KMMboxJob( KMMessage *msg, JobType jt , KMFolder *folder  )
+    : KMFolderJob( msg, jt, folder )
+{
+}
+
+//-----------------------------------------------------------------------------
+KMMboxJob::KMMboxJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                      JobType jt, KMFolder *folder  )
+    : KMFolderJob( msgList, sets, jt, folder )
+{
+}
+
+//-----------------------------------------------------------------------------
+KMMboxJob::~KMMboxJob()
+{
+}
+
+//-----------------------------------------------------------------------------
+void
+KMMboxJob::execute()
+{
+  QTimer::singleShot( 0, this, SLOT(startJob()) );
+}
+
+//-----------------------------------------------------------------------------
+void
+KMMboxJob::expireMessages()
+{
+  int              days             = 0;
+  int              maxUnreadTime    = 0;
+  int              maxReadTime      = 0;
+  const KMMsgBase *mb               = 0;
+  QValueList<int>  rmvMsgList;
+  int              i                = 0;
+  time_t           msgTime, maxTime = 0;
+
+  days = mParent->daysToExpire( mParent->getUnreadExpireAge(),
+                                mParent->getUnreadExpireUnits() );
+  if (days > 0) {
+    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
+    maxUnreadTime = time(0) - days * 3600 * 24;
+  }
+
+  days = mParent->daysToExpire( mParent->getReadExpireAge(),
+                                mParent->getReadExpireUnits() );
+  if (days > 0) {
+    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
+    maxReadTime = time(0) - days * 3600 * 24;
+  }
+
+  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
+    return;
+  }
+
+  mParent->open();
+  for( i=mParent->count()-1; i>=0; i-- ) {
+    mb = mParent->getMsgBase(i);
+    if (mb == 0) {
+      continue;
+    }
+    msgTime = mb->date();
+
+    if (mb->isUnread()) {
+      maxTime = maxUnreadTime;
+    } else {
+      maxTime = maxReadTime;
+    }
+
+    if (msgTime < maxTime) {
+      mParent->removeMsg( i );
+    }
+  }
+  mParent->close();
+
+  return;
+}
+
+//-----------------------------------------------------------------------------
+void
+KMMboxJob::setParent( KMFolderMbox *parent )
+{
+  mParent = parent;
+}
+
+//-----------------------------------------------------------------------------
+void
+KMMboxJob::startJob()
+{
+  switch( mType ) {
+  case tGetMessage:
+    {
+      KMMessage* msg = mParent->getMsg( mParent->find( mMsgList.first() ) );
+      emit messageRetrieved( msg );
+    }
+    break;
+  case tDeleteMessage:
+    {
+      mParent->removeMsg( mMsgList );
+    }
+    break;
+  case tPutMessage:
+    {
+      mParent->addMsg(  mMsgList.first() );
+      emit messageStored( mMsgList.first() );
+    }
+    break;
+  case tExpireMessages:
+    {
+      expireMessages();
+    }
+    break;
+  case tCopyMessage:
+  case tCreateFolder:
+  case tGetFolder:
+  case tListDirectory:
+    kdDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
+    break;
+  default:
+    break;
+  }
+  //OK, we're done
+  mParent->removeJobFromList( this );
+  delete this;
+}
+
+//-----------------------------------------------------------------------------
 KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
   : KMFolderMboxInherited(aParent, aName)
 {
@@ -90,14 +218,13 @@ int KMFolderMbox::open()
 
   if (!path().isEmpty())
   {
-    KMFolder::IndexStatus index_status = indexStatus();
-    // test if index file exists and is up-to-date
-    if (KMFolder::IndexOk != index_status)
-    {
-      // only show a warning if the index file exists, otherwise it can be
-      // silently regenerated
-      if (KMFolder::IndexTooOld == index_status)
-      {
+     KMFolderIndex::IndexStatus index_status = indexStatus();
+     // test if index file exists and is up-to-date
+     if (KMFolderIndex::IndexOk != index_status)
+     {
+       // only show a warning if the index file exists, otherwise it can be
+       // silently regenerated
+       if (KMFolderIndex::IndexTooOld == index_status) {
         QString msg = i18n("<qt><p>The index of folder '%2' seems "
                            "to be out of date. To prevent message "
                            "corruption the index will be "
@@ -117,7 +244,7 @@ int KMFolderMbox::open()
         // message boxes don't have a "Don't ask again" checkbox.
         if (kernel->startingUp())
         {
-          KConfigGroup configGroup( kapp->config(), "Notification Messages" );
+          KConfigGroup configGroup( KMKernel::config(), "Notification Messages" );
           bool showMessage =
             configGroup.readBoolEntry( "showIndexRegenerationMessage", true );
           if (showMessage)
@@ -136,28 +263,28 @@ int KMFolderMbox::open()
         }
 // ######### FIXME-AFTER-MSG-FREEZE: Delete this after the msg freeze
         if( 0 ) {
-        KMessageBox::information( 0,
-                                  i18n("<qt><p>The index of folder '%1' seems "
-                                       "to be out of date. To prevent message "
-                                       "corruption the index will be "
-                                       "regenerated. As a result deleted "
-                                       "messages might reappear and status "
-                                       "flags might be lost.</p>"
-                                       "<p>Please read the corresponding entry "
-                                       "in the FAQ section of the manual of "
-                                       "KMail for "
-                                       "information about how to prevent this "
-                                       "problem from happening again.</p></qt>")
-                                  .arg(name()),
-                                         i18n("Index Out of Date"),
-                                         "dontshowIndexRegenerationWarning");
+            KMessageBox::information( 0,
+                                      i18n("<qt><p>The index of folder '%1' seems "
+                                           "to be out of date. To prevent message "
+                                           "corruption the index will be "
+                                           "regenerated. As a result deleted "
+                                           "messages might reappear and status "
+                                           "flags might be lost.</p>"
+                                           "<p>Please read the corresponding entry "
+                                           "in the FAQ section of the manual of "
+                                           "KMail for "
+                                           "information about how to prevent this "
+                                           "problem from happening again.</p></qt>")
+                                      .arg(name()),
+                                      i18n("Index Out of Date"),
+                                      "dontshowIndexRegenerationWarning");
         }
 // ######### end of FIXME-AFTER-MSG-FREEZE: Delete this after the msg freeze
-      }
-      QString str;
-      mIndexStream = 0;
-      str = i18n("Folder `%1' changed. Recreating index.")
-		  .arg(name());
+       }
+       QString str;
+       mIndexStream = 0;
+       str = i18n("Folder `%1' changed. Recreating index.")
+             .arg(name());
       emit statusMsg(str);
     } else {
       mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
@@ -178,8 +305,6 @@ int KMFolderMbox::open()
 
   mQuiet = 0;
   mChanged = FALSE;
-
-  readConfig();
 
   return rc;
 }
@@ -253,23 +378,16 @@ void KMFolderMbox::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-
+  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced) return;
   if (mAutoCreateIndex)
   {
-      if (KMFolder::IndexOk != indexStatus()) {
+      if (KMFolderIndex::IndexOk != indexStatus()) {
 	  kdDebug(5006) << "Critical error: " << location() <<
 	      " has been modified by an external application while KMail was running." << endl;
 	  //	  exit(1); backed out due to broken nfs
       }
 
-      bool dirty = mDirty;
-      for (int i=0; !dirty && i<mMsgList.high(); i++)
-	  if (mMsgList[i])
-	      dirty = !mMsgList[i]->syncIndexString();
-      if(dirty)
-	  writeIndex();
-      else
-          touchMsgDict();
+      updateIndex();
       writeConfig();
   }
 
@@ -493,22 +611,43 @@ int KMFolderMbox::unlock()
 
 
 //-----------------------------------------------------------------------------
-KMFolder::IndexStatus KMFolderMbox::indexStatus()
+KMFolderIndex::IndexStatus KMFolderMbox::indexStatus()
 {
   QFileInfo contInfo(location());
   QFileInfo indInfo(indexLocation());
 
-  if (!contInfo.exists()) return KMFolder::IndexOk;
-  if (!indInfo.exists()) return KMFolder::IndexMissing;
+  if (!contInfo.exists()) return KMFolderIndex::IndexOk;
+  if (!indInfo.exists()) return KMFolderIndex::IndexMissing;
 
   // Check whether the mbox file is more than 5 seconds newer than the index
   // file. The 5 seconds are added to reduce the number of false alerts due
   // to slightly out of sync clocks of the NFS server and the local machine.
   return ( contInfo.lastModified() > indInfo.lastModified().addSecs(5) )
-         ? KMFolder::IndexTooOld
-         : KMFolder::IndexOk;
+      ? KMFolderIndex::IndexTooOld
+      : KMFolderIndex::IndexOk;
 }
 
+//-------------------------------------------------------------
+KMFolderJob*
+KMFolderMbox::createJob( KMMessage *msg, KMFolderJob::JobType jt,
+                         KMFolder *folder )
+{
+  KMMboxJob *job = new KMMboxJob( msg, jt, folder );
+  job->setParent( this );
+  mJobList.append( job );
+  return job;
+}
+
+//-------------------------------------------------------------
+KMFolderJob*
+KMFolderMbox::createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                         KMFolderJob::JobType jt, KMFolder *folder )
+{
+  KMMboxJob *job = new KMMboxJob( msgList, sets, jt, folder );
+  job->setParent( this );
+  mJobList.append( job );
+  return job;
+}
 
 //-----------------------------------------------------------------------------
 int KMFolderMbox::createIndexFromContents()
@@ -546,6 +685,7 @@ int KMFolderMbox::createIndexFromContents()
   msgIdStr = "";
   needStatus = 3;
 
+
   while (!atEof)
   {
     off_t pos = ftell(mStream);
@@ -574,7 +714,7 @@ int KMFolderMbox::createIndexFromContents()
 	    replyToIdStr = referencesStr;
 	  }
 	  mi = new KMMsgInfo(this);
-	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr, 
+	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr,
 		   KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown, offs, size);
 	  mi->setStatus("RO","O");
 	  mi->setDate(dateStr);
@@ -698,6 +838,8 @@ int KMFolderMbox::createIndexFromContents()
     "most likely not created by KMail.\nPlease remove them from there, if you "
     "don't want KMail to send them."));
 
+  if ( parent() )
+      parent()->manager()->invalidateFolder(kernel->msgDict(), this);
   return 0;
 }
 
@@ -746,6 +888,19 @@ QCString& KMFolderMbox::getMsgString(int idx, QCString &mDest)
   mDest[msgSize] = '\0';
 
   return mDest;
+}
+
+
+//-----------------------------------------------------------------------------
+DwString KMFolderMbox::getDwString(int idx)
+{
+  KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
+
+  assert(mi!=0);
+  assert(mStream != 0);
+
+  fseek(mStream, mi->folderOffset(), SEEK_SET);
+  return DwString(mStream, mi->msgSize());
 }
 
 
@@ -805,16 +960,16 @@ if( fileD0.open( IO_WriteOnly ) ) {
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
-*/  
+*/
     aMsg->setStatusFields();
-/*  
+/*
 QFile fileD1( "testdat_xx-kmfoldermbox-1" );
 if( fileD1.open( IO_WriteOnly ) ) {
     QDataStream ds( &fileD1 );
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD1.close();  // If data is 0 we just create a zero length file.
 }
-*/  
+*/
     if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
@@ -962,12 +1117,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
 
   // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
-  if (!mQuiet) {
-    emit msgAdded(idx);
-    emit msgAdded(this);
-  } else
-    mChanged = TRUE;
-
+  emitMsgAddedSignals(idx);
   if (opened) close();
 
   // All streams have been flushed without errors if we arrive here
@@ -994,7 +1144,7 @@ int KMFolderMbox::compact()
   }
   kdDebug(5006) << "Compacting " << idString() << endl;
 
-  if (KMFolder::IndexOk != indexStatus()) {
+  if (KMFolderIndex::IndexOk != indexStatus()) {
       kdDebug(5006) << "Critical error: " << location() <<
 	  " has been modified by an external application while KMail was running." << endl;
       //      exit(1); backed out due to broken nfs

@@ -20,6 +20,7 @@ class QTextCodec;
 class QStrList;
 
 class KMFolder;
+class KMFolderIndex;
 class DwMessage;
 class KMMessagePart;
 class KMMsgInfo;
@@ -36,7 +37,7 @@ class KMMessage: public KMMsgBase
 
 public:
   /** Straight forward initialization. */
-  KMMessage(KMFolder* parent=0);
+  KMMessage(KMFolderIndex* parent=0);
 
   /** Constructor from a DwMessage. */
   KMMessage(DwMessage*);
@@ -75,10 +76,11 @@ public:
   virtual bool isMessage(void) const;
 
   /** @return whether the priority: or x-priority headers indicate
-      that this message should be considered urgent
-  **/
+       that this message should be considered urgent
+   **/
   bool isUrgent() const;
-  
+
+
   /** Specifies an unencrypted copy of this message to be stored
       in a separate member variable to allow saving messages in
       unencrypted form that were sent in encrypted form.
@@ -86,25 +88,25 @@ public:
             and will be deleted in the d'tor.
   */
   void setUnencryptedMsg( KMMessage* unencrypted );
-  
+
   /** Returns TRUE is the massage contains an unencrypted copy of itself. */
   virtual bool hasUnencryptedMsg() const { return 0 != mUnencryptedMsg; }
-  
+
   /** Returns an unencrypted copy of this message or 0 if none exists. */
   virtual KMMessage* unencryptedMsg() const { return mUnencryptedMsg; }
-  
+
   /** Returns an unencrypted copy of this message or 0 if none exists.
       \note This functions removed the internal unencrypted message pointer
       from the message: the process calling takeUnencryptedMsg() must
       delete the returned pointer when no longer needed.
   */
   virtual KMMessage* takeUnencryptedMsg()
-  { 
+  {
     KMMessage* ret = mUnencryptedMsg;
     mUnencryptedMsg = 0;
     return ret;
   }
-  
+
   /** Mark the message as deleted */
   void del(void) { setStatus(KMMsgStatusDeleted); }
 
@@ -150,6 +152,7 @@ public:
   virtual KMMessage* createDeliveryReceipt(void) const;
 
   /** Parse the string and create this message from it. */
+  virtual void fromDwString(const DwString& str, bool setStatus=FALSE);
   virtual void fromString(const QCString& str, bool setStatus=FALSE);
 
   /** Return the entire message contents in the DwString. This function
@@ -157,6 +160,7 @@ public:
       string copy.
   */
   virtual const DwString& asDwString(void);
+  virtual const DwMessage *asDwMessage(void);
 
   /** Return the entire message contents as a string. This function is
       slow for large message since it involves a string copy. If you
@@ -289,12 +293,6 @@ public:
   **/
   QString cleanSubject(const QStringList& prefixRegExps, bool replace,
 		       const QString& newPrefix) const;
-
-  /** Return this mails subject, formatted for "forward" mails */
-  QString forwardSubject() const;
-
-  /** Return this mails subject, formatted for "reply" mails */
-  QString replySubject() const;
 
   /** Get or set the 'X-Mark' header field */
   virtual QString xmark(void) const;
@@ -429,8 +427,11 @@ public:
       If there is no body part, return value will be zero. */
   DwBodyPart * getFirstDwBodyPart() const;
 
-  /** Fill the KMMessagePart structure for a given DwBodyPart. */
-  static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart);
+  /** Fill the KMMessagePart structure for a given DwBodyPart.
+      Iff withBody is false the body of the KMMessagePart will be left
+      empty and only the headers of the part will be filled in*/
+  static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
+		       bool withBody = true );
 
   /** Get the body part at position in aIdx.  Indexing starts at 0.
       If there is no body part at that index, aPart will have its
@@ -479,7 +480,7 @@ public:
   static QString encodeMailtoUrl( const QString& str );
 
   /** Decodes a mailto URL
-   */
+    */
   static QString decodeMailtoUrl( const QString& url );
 
   /** Strip email address from string. Examples:
@@ -526,11 +527,11 @@ public:
   virtual void setCharset(const QCString& aStr);
 
   /** Get the charset the user selected for the message to display */
-  virtual QTextCodec* codec(void) const
+  virtual const QTextCodec* codec(void) const
   { return mCodec; }
 
   /** Set the charset the user selected for the message to display */
-  virtual void setCodec(QTextCodec* aCodec)
+  virtual void setCodec(const QTextCodec* aCodec)
   { mCodec = aCodec; }
 
   /** Allow decoding of HTML for quoting */
@@ -550,8 +551,7 @@ public:
   virtual bool transferInProgress() { return mTransferInProgress; }
 
   /** Set that the message shall not be deleted because it is still required */
-  virtual void setTransferInProgress(bool value)
-  { mTransferInProgress = value; }
+  virtual void setTransferInProgress(bool value);
 
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
@@ -616,10 +616,11 @@ protected:
 
 protected:
   DwMessage* mMsg;
-  bool       mNeedsAssembly, mIsComplete, mTransferInProgress, mDecodeHTML;
+  bool       mNeedsAssembly, mIsComplete, mDecodeHTML;
+  int mTransferInProgress;
   static int sHdrStyle;
   static QString sForwardStr;
-  QTextCodec* mCodec;
+  const QTextCodec* mCodec;
 
   QString mFileName;
   off_t mFolderOffset;

@@ -16,7 +16,7 @@ class KMMessage;
 class KMMsgInfo: public KMMsgBase
 {
 public:
-  KMMsgInfo(KMFolder* parent, off_t off=0, short len=0);
+  KMMsgInfo(KMFolderIndex* parent, off_t off=0, short len=0);
   virtual ~KMMsgInfo();
 
   /** left for old style index files */
@@ -37,7 +37,7 @@ public:
                     const QCString& to, time_t date,
 		    KMMsgStatus status, const QCString& xmark,
 		    const QCString& replyToId, const QCString& msgId,
-		    const QCString& fileName, 
+		    const QCString& fileName,
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    unsigned long msgSize=0);

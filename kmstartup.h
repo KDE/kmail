@@ -12,7 +12,7 @@ void kmcrashHandler(int sigId);
 
 }
 
-namespace KMail
+namespace kmail
 {
     QString getMyHostName(void);
     void checkConfigUpdates();

@@ -11,6 +11,8 @@
 #include <qguardedptr.h>
 
 #include <kdialogbase.h>
+#include <kxmlguiclient.h>
+#include <mimelib/string.h>
 
 class QCheckBox;
 class QComboBox;
@@ -21,57 +23,66 @@ class QListView;
 class QListViewItem;
 class QPushButton;
 class QRadioButton;
-
-class KMFldSearchRule;
+class KAction;
+class KActionMenu;
 class KMFolder;
+class KMFolderSearch;
 class KMFolderComboBox;
 class KMFolderImap;
 class KMFolderMgr;
-class KMMainWin;
+class KMMainWidget;
 class KMMessage;
+class KMSearchPattern;
+class KMSearchPatternEdit;
 class KStatusBar;
+class DwBoyerMoore;
 
-typedef QPtrList<KMFldSearchRule> KMFldSearchRuleList;
-typedef QPtrListIterator<KMFldSearchRule> KMFldSearchRuleIt;
+typedef QPtrList<KMMsgBase> KMMessageList;
 
-class KMFldSearch: public KDialogBase
+class KMFldSearch: public KDialogBase, virtual public KXMLGUIClient
 {
   Q_OBJECT
 
 public:
-  KMFldSearch(KMMainWin* parent, const char* name=0,
+  KMFldSearch(KMMainWidget* parent, const char* name=0,
               KMFolder *curFolder=0, bool modal=FALSE);
   virtual ~KMFldSearch();
 
   void activateFolder(KMFolder* curFolder);
+  KMMessageList selectedMessages();
+  KMMessage* message();
 
 protected slots:
-  virtual void slotClose();
-  virtual void slotSearch();
-  virtual void slotStop();
-  virtual bool slotShowMsg(QListViewItem *);
-  virtual void slotFolderActivated(int nr);
-  virtual void slotFolderComplete(KMFolderImap *folder, bool success);
-
-protected:
-  void enableGUI();
-
-  /** Test if message matches. */
-  virtual bool searchInMessage(KMMessage*, const QCString&);
-
-  /** Search for matches in given folder. Adds matches to listbox mLbxMatches. */
-  virtual void searchInFolder(QGuardedPtr<KMFolder>, bool recursive,
-    bool fetchHeaders = true);
-
-  /** Search for matches in all folders. Calls searchInFolder() for every
-      folder. */
-  virtual void searchInAllFolders(void);
-
   /** Update status line widget. */
   virtual void updStatus(void);
 
+  virtual void slotClose();
+  virtual void slotSearch();
+  virtual void slotStop();
+  void updateCreateButton( const QString &);
+  void renameSearchFolder();
+  virtual bool slotShowMsg(QListViewItem *);
+  virtual void updateContextMenuActions();
+  virtual void slotContextMenuRequested( QListViewItem*, const QPoint &, int );
+  virtual void copySelectedToFolder( int menuId );
+  virtual void moveSelectedToFolder( int menuId );
+  virtual void slotFolderActivated(int nr);
+  void slotClearSelection();
+  void slotReplyToMsg();
+  void slotReplyAllToMsg();
+  void slotReplyListToMsg();
+  void slotForwardMsg();
+  void slotForwardAttachedMsg();
+  void slotSaveMsg();
+  void slotPrintMsg();
+
   /** GUI cleanup after search */
   virtual void searchDone();
+  virtual void slotAddMsg(int idx);
+  virtual void slotRemoveMsg(int idx);
+
+protected:
+  void enableGUI();
 
   /** Return the KMMessage corresponding to the selected listviewitem */
   KMMessage* getSelectedMsg();
@@ -83,77 +94,36 @@ protected:
   virtual void closeEvent(QCloseEvent*);
 
 protected:
-  bool mSearching;
   bool mStopped;
   bool mCloseRequested;
   int mFetchingInProgress;
-  int mNumMatches;
-  int mCount;
-  QString mSearchFolder;
-  KMFldSearchRuleList mRules;
+  QGuardedPtr<KMFolderSearch> mFolder;
+  QTimer *mTimer;
 
   // GC'd by Qt
-  QGridLayout* mGrid;
   QRadioButton *mChkbxAllFolders;
   QRadioButton *mChkbxSpecificFolders;
   KMFolderComboBox *mCbxFolders;
   QPushButton *mBtnSearch;
   QPushButton *mBtnStop;
   QCheckBox *mChkSubFolders;
-  QListView* mLbxMatches;	
+  QListView* mLbxMatches;
+  QLabel *mSearchFolderLbl;
+  QLineEdit *mSearchFolderEdt;
+  QPushButton *mSearchFolderBtn;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
+  QMap<int,KMFolder*> mMenuToFolder;
+  KAction *mReplyAction, *mReplyAllAction, *mReplyListAction, *mSaveAsAction,
+      *mForwardAction, *mForwardAttachedAction, *mPrintAction, *mClearAction;
+  KActionMenu *mForwardActionMenu;
+  QValueList<QGuardedPtr<KMFolder> > mFolders;
 
   // not owned by us
-  KMMainWin* mMainWin;
-  
+  KMMainWidget* mKMMainWidget;
+  KMSearchPatternEdit *mPatternEdit;
+  KMSearchPattern *mSearchPattern;
+
   static const int MSGID_COLUMN;
 };
-
-
-
-//-----------------------------------------------------------------------------
-class KMFldSearchRule
-{
-public:
-  KMFldSearchRule(QWidget* parent, QGridLayout* grid, int gridRow, int gridCol);
-  virtual ~KMFldSearchRule();
-
-  /** Test if message matches rules. */
-  virtual bool matches(const KMMessage*, const QCString&) const;
-
-  /** Prepare for search run. */
-  virtual void prepare(void);
-
-  /** Enable or disable all the push buttons */
-  virtual void setEnabled(bool);
-
-  /** Make this rule gain the focus **/
-  virtual void setFocus();
-
-  /** The header field to search in (or whole message) */
-  virtual bool isHeaderField() const;
-
-  /** Update the functions according to the searching capabilites in
-   * the selected folder. Disables editing if the folder doesn't
-   * support arbitrary headers */
-  virtual void updateFunctions(KMFolder* folder);
-
-  /** Fill in the header fields where to search. If @p imap == @p
-      true, shows only the IMAP-searchable fields */
-  virtual void insertFieldItems(bool imap);
-
-  enum Func { Contains=0, NotContains, Equal, NotEqual,
-              MatchesRegExp, NotMatchesRegExp };
-
-protected:
-  QComboBox *mCbxField, *mCbxFunc;
-  QLineEdit *mEdtValue;
-  QString mField, mValue;
-  QCString mHeaderField;
-  int mFieldLength;
-  bool mNonLatin;
-  int mFieldIdx, mFunc, mRow;
-};
-
 #endif /*kmfldsearch_h*/

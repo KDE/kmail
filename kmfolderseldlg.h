@@ -11,7 +11,7 @@
 
 class QListBox;
 class KMFolder;
-class KMMainWin;
+class KMMainWidget;
 
 #define KMFolderSelDlgInherited KDialogBase
 class KMFolderSelDlg: public KDialogBase
@@ -21,7 +21,7 @@ class KMFolderSelDlg: public KDialogBase
 public:
   /** Constructor. @p parent @em must be a @ref KMMainWin, because we
       need it's foldertree. */
-  KMFolderSelDlg(KMMainWin * parent, const QString& caption);
+  KMFolderSelDlg(KMMainWidget * parent, const QString& caption);
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */

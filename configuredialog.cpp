@@ -111,6 +111,7 @@ using KMime::DateFormatter;
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"
 #endif
 
+
 // little helper:
 static inline QPixmap loadIcon( const char * name ) {
   return KGlobal::instance()->iconLoader()
@@ -379,7 +380,7 @@ void IdentityPage::apply() {
   if( mOldNumberOfIdentities < 2 && mIdentityList->childCount() > 1 ) {
     // have more than one identity, so better show the combo in the
     // composer now:
-    KConfigGroup composer( kapp->config(), "Composer" );
+    KConfigGroup composer( KMKernel::config(), "Composer" );
     int showHeaders = composer.readNumEntry( "headers", HDR_STANDARD );
     showHeaders |= HDR_IDENTITY;
     composer.writeEntry( "headers", showHeaders );
@@ -976,8 +977,8 @@ void NetworkPage::SendingTab::slotTransportDown()
 }
 
 void NetworkPage::SendingTab::setup() {
-  KConfigGroup general( kapp->config(), "General");
-  KConfigGroup composer( kapp->config(), "Composer");
+  KConfigGroup general( KMKernel::config(), "General");
+  KConfigGroup composer( KMKernel::config(), "Composer");
 
   int numTransports = general.readNumEntry("transports", 0);
 
@@ -1033,8 +1034,8 @@ void NetworkPage::SendingTab::setup() {
 
 
 void NetworkPage::SendingTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
   // Save transports:
   general.writeEntry( "transports", mTransportInfoList.count() );
@@ -1132,14 +1133,34 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
   mBeepNewMailCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
                                                  QSizePolicy::Fixed ) );
+  // "Systray" notification check box
+  mSystrayCheck = new QCheckBox( i18n("S&ystem tray notification"), group );
+
+  // System tray modes
+  QButtonGroup *bgroup = new QButtonGroup(i18n("System Tray modes"), group);
+  bgroup->setColumnLayout(0, Qt::Horizontal);
+  bgroup->layout()->setSpacing( 0 );
+  bgroup->layout()->setMargin( 0 );
+  QGridLayout *bgroupLayout = new QGridLayout( bgroup->layout() );
+  bgroupLayout->setAlignment( Qt::AlignTop );
+  bgroupLayout->setSpacing( 6 );
+  bgroupLayout->setMargin( 11 );
+
+  mBlinkingSystray = new QRadioButton( i18n("Always show system tray"), bgroup);
+  bgroupLayout->addWidget(mBlinkingSystray, 0, 0);
+
+  mSystrayOnNew = new QRadioButton( i18n("Show system tray on new mail"), bgroup);
+  bgroupLayout->addWidget(mSystrayOnNew, 0, 1);
+
+  connect( mSystrayCheck, SIGNAL(toggled(bool)),
+           bgroup, SLOT(setEnabled(bool)) );
 
   // "display message box" check box:
   mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
   mOtherNewMailActionsButton->setSizePolicy( QSizePolicy( QSizePolicy::Fixed,
                                                           QSizePolicy::Fixed ) );
-
   connect( mOtherNewMailActionsButton, SIGNAL(clicked()),
-	   this, SLOT(slotEditNotifications()) );
+           this, SLOT(slotEditNotifications()) );
 }
 
 
@@ -1335,7 +1356,6 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
     mAccountList->setSelected( item, true );
 }
 
-
 void NetworkPage::ReceivingTab::slotEditNotifications()
 {
 #if KDE_VERSION >= 306
@@ -1343,9 +1363,8 @@ void NetworkPage::ReceivingTab::slotEditNotifications()
 #endif
 }
 
-
 void NetworkPage::ReceivingTab::setup() {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   mAccountList->clear();
   QListViewItem *top = 0;
@@ -1366,6 +1385,9 @@ void NetworkPage::ReceivingTab::setup() {
 
   mBeepNewMailCheck->setChecked( general.readBoolEntry("beep-on-mail", false ) );
 
+  mSystrayCheck->setChecked( general.readBoolEntry("systray-on-mail", false) );
+  mBlinkingSystray->setChecked( !general.readBoolEntry("systray-on-new", true) );
+  mSystrayOnNew->setChecked( general.readBoolEntry("systray-on-new", true) );
 }
 
 void NetworkPage::ReceivingTab::apply() {
@@ -1403,8 +1425,10 @@ void NetworkPage::ReceivingTab::apply() {
   kernel->cleanupImapFolders();
 
   // Save Mail notification settings
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
+  general.writeEntry( "systray-on-mail", mSystrayCheck->isChecked() );
+  general.writeEntry( "systray-on-new", mSystrayOnNew->isChecked() );
 }
 
 void NetworkPage::ReceivingTab::dismiss() {
@@ -1606,7 +1630,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 }
 
 void AppearancePage::FontsTab::setup() {
-  KConfigGroup fonts( kapp->config(), "Fonts" );
+  KConfigGroup fonts( KMKernel::config(), "Fonts" );
 
   mFont[0] = KGlobalSettings::generalFont();
   QFont fixedFont = KGlobalSettings::fixedFont();
@@ -1641,7 +1665,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
 }
 
 void AppearancePage::FontsTab::apply() {
-  KConfigGroup fonts( kapp->config(), "Fonts" );
+  KConfigGroup fonts( KMKernel::config(), "Fonts" );
 
   // read the current font (might have been modified)
   if ( mActiveFontIndex >= 0 )
@@ -1727,7 +1751,7 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
 }
 
 void AppearancePage::ColorsTab::setup() {
-  KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mCustomColorCheck->setChecked( !reader.readBoolEntry( "defaultColors", true ) );
   mRecycleColorCheck->setChecked( reader.readBoolEntry( "RecycleQuoteColors", false ) );
@@ -1775,7 +1799,7 @@ void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
 }
 
 void AppearancePage::ColorsTab::apply() {
-  KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
 
   bool customColors = mCustomColorCheck->isChecked();
   reader.writeEntry( "defaultColors", !customColors );
@@ -1848,13 +1872,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   // "show colorbar" check box:
   mShowColorbarCheck = new QCheckBox( i18n("Show HTML status &bar"), this );
   vlay->addWidget( mShowColorbarCheck );
-
   vlay->addWidget( new QLabel( i18n("<qt><p>Below, you can change the "
 				    "arrangement of KMail's window components "
 				    "(folder list, message list, reader pane "
 				    "and the optional MIME tree).</p></qt>"),
 			       this ) );
-
   // The window layout
   mWindowLayoutBG = new QHButtonGroup( i18n("&Window Layout"), this );
   mWindowLayoutBG->layout()->setSpacing( KDialog::spacingHint() );
@@ -1917,8 +1939,8 @@ void AppearancePage::LayoutTab::showMIMETreeClicked( int mode )
 }
 
 void AppearancePage::LayoutTab::setup() {
-  KConfigGroup reader( kapp->config(), "Reader" );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
 
@@ -1955,8 +1977,8 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
 }
 
 void AppearancePage::LayoutTab::apply() {
-  KConfigGroup reader( kapp->config(), "Reader" );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   reader.writeEntry( "showColorbar", mShowColorbarCheck->isChecked() );
 
@@ -1981,7 +2003,7 @@ static const struct {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
   { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("C&ustom (Shift+F1 for help)"), KMime::DateFormatter::Custom }
+  { I18N_NOOP("C&ustom (shift + F1 for help)"), KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
@@ -2087,8 +2109,8 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 }
 
 void AppearancePage::HeadersTab::setup() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   // "General Options":
   mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages", false ) );
@@ -2146,8 +2168,8 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
 }
 
 void AppearancePage::HeadersTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   if ( geometry.readBoolEntry( "nestedMessages", false )
        != mNestedMessagesCheck->isChecked() ) {
@@ -2158,10 +2180,10 @@ void AppearancePage::HeadersTab::apply() {
     if ( result == KMessageBox::Continue ) {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
-      QStringList groups = kapp->config()->groupList().grep( QRegExp("^Folder-") );
+      QStringList groups = KMKernel::config()->groupList().grep( QRegExp("^Folder-") );
       kdDebug() << "groups.count() == " << groups.count() << endl;
       for ( QStringList::const_iterator it = groups.begin() ; it != groups.end() ; ++it ) {
-	KConfigGroup group( kapp->config(), *it );
+	KConfigGroup group( KMKernel::config(), *it );
 	group.deleteEntry( "threadMessagesOverride" );
       }
     }
@@ -2326,7 +2348,6 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   addTab( mHeadersTab, mHeadersTab->title() );
 }
 
-
 QString ComposerPage::GeneralTab::title() {
   return i18n("&General");
 }
@@ -2404,8 +2425,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 }
 
 void ComposerPage::GeneralTab::setup() {
-  KConfigGroup composer( kapp->config(), "Composer" );
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   // various check boxes:
   bool state = ( composer.readEntry("signature").lower() != "manual" );
@@ -2442,8 +2463,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 }
 
 void ComposerPage::GeneralTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
   general.writeEntry( "use-external-editor", mExternalEditorCheck->isChecked() );
   general.writeEntry( "external-editor", mEditorRequester->url() );
@@ -2613,7 +2634,7 @@ void ComposerPage::PhrasesTab::slotLanguageChanged( const QString& )
 
 
 void ComposerPage::PhrasesTab::setup() {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   mLanguageList.clear();
   mPhraseLanguageCombo->clear();
@@ -2624,7 +2645,7 @@ void ComposerPage::PhrasesTab::setup() {
 
   // build mLanguageList and mPhraseLanguageCombo:
   for ( int i = 0 ; i < num ; i++ ) {
-    KConfigGroup config( kapp->config(),
+    KConfigGroup config( KMKernel::config(),
 			 QCString("KMMessage #") + QCString().setNum(i) );
     QString lang = config.readEntry( "language" );
     mLanguageList.append(
@@ -2649,7 +2670,7 @@ void ComposerPage::PhrasesTab::setup() {
 }
 
 void ComposerPage::PhrasesTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   general.writeEntry( "reply-languages", mLanguageList.count() );
   general.writeEntry( "reply-current-language", mPhraseLanguageCombo->currentItem() );
@@ -2657,7 +2678,7 @@ void ComposerPage::PhrasesTab::apply() {
   saveActiveLanguageItem();
   LanguageItemList::Iterator it = mLanguageList.begin();
   for ( int i = 0 ; it != mLanguageList.end() ; ++it, ++i ) {
-    KConfigGroup config( kapp->config(),
+    KConfigGroup config( KMKernel::config(),
 			 QCString("KMMessage #") + QCString().setNum(i) );
     config.writeEntry( "language", (*it).mLanguage );
     config.writeEntry( "phrase-reply", (*it).mReply );
@@ -2735,7 +2756,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 }
 
 void ComposerPage::SubjectTab::setup() {
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
   QStringList prefixList = composer.readListEntry( "reply-prefixes", ',' );
   if ( prefixList.isEmpty() )
@@ -2749,14 +2770,14 @@ void ComposerPage::SubjectTab::setup() {
   prefixList = composer.readListEntry( "forward-prefixes", ',' );
   if ( prefixList.isEmpty() )
     prefixList << QString::fromLatin1("Fwd:")
-	       << QString::fromLatin1("FW:");
+              << QString::fromLatin1("FW:");
   mForwardListEditor->setStringList( prefixList );
 
   mReplaceForwardPrefixCheck->setChecked( composer.readBoolEntry( "replace-forward-prefix", true ) );
 }
 
 void ComposerPage::SubjectTab::apply() {
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
 
   composer.writeEntry( "reply-prefixes", mReplyListEditor->stringList() );
@@ -2835,7 +2856,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 }
 
 void ComposerPage::CharsetTab::setup() {
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
   QStringList charsets = composer.readListEntry( "pref-charsets" );
   for ( QStringList::Iterator it = charsets.begin() ;
@@ -2849,7 +2870,7 @@ void ComposerPage::CharsetTab::setup() {
 }
 
 void ComposerPage::CharsetTab::apply() {
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
   QStringList charsetList = mCharsetListEditor->stringList();
   QStringList::Iterator it = charsetList.begin();
@@ -3020,7 +3041,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 }
 
 void ComposerPage::HeadersTab::setup() {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   QString suffix = general.readEntry( "myMessageIdSuffix", "" );
   mMessageIdSuffixEdit->setText( suffix );
@@ -3036,7 +3057,7 @@ void ComposerPage::HeadersTab::setup() {
 
   int count = general.readNumEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
-    KConfigGroup config( kapp->config(),
+    KConfigGroup config( KMKernel::config(),
 			 QCString("Mime #") + QCString().setNum(i) );
     QString name  = config.readEntry( "name" );
     QString value = config.readEntry( "value" );
@@ -3054,7 +3075,7 @@ void ComposerPage::HeadersTab::setup() {
 }
 
 void ComposerPage::HeadersTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   general.writeEntry( "useCustomMessageIdSuffix",
 		      mCreateOwnMessageIdCheck->isChecked() );
@@ -3065,7 +3086,7 @@ void ComposerPage::HeadersTab::apply() {
   QListViewItem * item = mTagList->firstChild();
   for ( ; item ; item = item->itemBelow() )
     if( !item->text(0).isEmpty() ) {
-      KConfigGroup config( kapp->config(), QCString("Mime #")
+      KConfigGroup config( KMKernel::config(), QCString("Mime #")
 			     + QCString().setNum( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
@@ -3234,8 +3255,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 }
 
 void SecurityPage::GeneralTab::setup() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
 
 
   mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail", false ) );
@@ -3256,8 +3277,8 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
 };
 
 void SecurityPage::GeneralTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup reader( KMKernel::config(), "Reader" );
 
   if (reader.readBoolEntry( "htmlMail", false ) != mHtmlMailCheck->isChecked())
   {
@@ -3270,14 +3291,15 @@ void SecurityPage::GeneralTab::apply() {
       QValueList<QGuardedPtr<KMFolder> > folders;
       kernel->folderMgr()->createFolderList(&names, &folders);
       kernel->imapFolderMgr()->createFolderList(&names, &folders);
+      kernel->searchFolderMgr()->createFolderList(&names, &folders);
       for (QValueList<QGuardedPtr<KMFolder> >::iterator it = folders.begin();
         it != folders.end(); ++it)
       {
         if (*it)
         {
-          KConfigGroupSaver saver(kapp->config(),
+          KConfigGroupSaver saver(KMKernel::config(),
             "Folder-" + (*it)->idString());
-          kapp->config()->writeEntry("htmlMailOverride", false);
+          KMKernel::config()->writeEntry("htmlMailOverride", false);
         }
       }
     }
@@ -3336,7 +3358,7 @@ SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * n
 }
 
 void SecurityPage::OpenPgpTab::setup() {
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mPgpConfig->setValues();
   mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign", false ) );
@@ -3353,7 +3375,7 @@ void SecurityPage::OpenPgpTab::installProfile( KConfig * profile ) {
 };
 
 void SecurityPage::OpenPgpTab::apply() {
-  KConfigGroup composer( kapp->config(), "Composer" );
+  KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mPgpConfig->applySettings();
   composer.writeEntry( "pgp-auto-sign", mPgpAutoSignatureCheck->isChecked() );
@@ -3485,8 +3507,8 @@ FolderPage::FolderPage( QWidget * parent, const char * name )
 }
 
 void FolderPage::setup() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup behaviour( kapp->config(), "Behaviour" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
 
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", false ) );
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
@@ -3505,8 +3527,8 @@ void FolderPage::setup() {
 }
 
 void FolderPage::apply() {
-  KConfigGroup general( kapp->config(), "General" );
-  KConfigGroup behaviour( kapp->config(), "Behaviour" );
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
 
   general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
   general.writeEntry( "compact-all-on-exit", mCompactOnExitCheck->isChecked() );
@@ -3524,7 +3546,6 @@ void FolderPage::apply() {
   else
     general.writeEntry( "when-to-expire", expireManual );
 }
-
 
 QString SecurityPage::CryptPlugTab::title() {
   return i18n("Crypto Plugi&ns");
@@ -3697,7 +3718,7 @@ void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() {
 }
 
 void SecurityPage::CryptPlugTab::apply() {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   CryptPlugWrapperList * cpl = kernel->cryptPlugList();
 
@@ -3705,7 +3726,7 @@ void SecurityPage::CryptPlugTab::apply() {
   for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it ) {
     if ( it.current()->text( 0 ).isEmpty() )
       continue;
-    KConfigGroup config( kapp->config(), QString("CryptPlug #%1").arg( i ) );
+    KConfigGroup config( KMKernel::config(), QString("CryptPlug #%1").arg( i ) );
     config.writeEntry( "name", it.current()->text( 0 ) );
     config.writeEntry( "location", it.current()->text( 1 ) );
     config.writeEntry( "updates", it.current()->text( 2 ) );

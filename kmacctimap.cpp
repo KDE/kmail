@@ -54,7 +54,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   mFolder = 0;
   mCountUnread = 0;
   mCountLastUnread = 0;
-  mCountRemainChecks = 0;  
+  mCountRemainChecks = 0;
   errorDialogIsActive = false;
   mOpenFolders.setAutoDelete(true);
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
@@ -237,6 +237,21 @@ void KMAcctImap::setHost(const QString& aHost)
   mHost = aHost;
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
+{
+  KMImapJob *job;
+  for (KMFolderJob *it = mJobList.first(); it;
+       it = mJobList.next()) {
+    if ((*it).msgList().first() == msg) {
+      job = dynamic_cast<KMImapJob*>(it);
+      mapJobData.remove( job->mJob );
+      mJobList.remove( job );
+      delete job;
+      break;
+    }
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::setPort(unsigned short int aPort)
@@ -254,13 +269,6 @@ void KMAcctImap::setPrefix(const QString& aPrefix)
   if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
   if (mFolder) mFolder->setImapPath(mPrefix);
 }
-
-//-----------------------------------------------------------------------------
-void KMAcctImap::setTrash(const QString& aTrash)
-{
-  mTrash = aTrash;
-}
-
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
@@ -496,9 +504,7 @@ void KMAcctImap::killAllJobs()
   }
   // remove the jobs
   mapJobData.clear();
-  mJobList.setAutoDelete(true);
-  mJobList.clear();
-  mJobList.setAutoDelete(false);
+  KMAccount::deleteFolderJobs();
   // make sure that no new-mail-check is blocked
   if (mCountRemainChecks > 0)
   {

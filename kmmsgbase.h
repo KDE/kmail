@@ -15,6 +15,7 @@ class QCString;
 class QStringList;
 class QTextCodec;
 class KMFolder;
+class KMFolderIndex;
 
 typedef enum
 {
@@ -66,17 +67,17 @@ typedef enum
 class KMMsgBase
 {
 public:
-  KMMsgBase(KMFolder* p=0);
+  KMMsgBase(KMFolderIndex* p=0);
   virtual ~KMMsgBase();
 
   /** Convert the given message status to a string. */
   static const char* statusToStr(KMMsgStatus aStatus);
 
   /** Return owning folder. */
-  KMFolder* parent(void) const { return mParent; }
+  KMFolderIndex* parent(void) const { return mParent; }
 
   /** Set owning folder. */
-  void setParent(KMFolder* p) { mParent=p; }
+  void setParent(KMFolderIndex* p) { mParent=p; }
 
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
@@ -111,11 +112,11 @@ public:
    * optimization: @p idx may specify the index of this message within
    * the parent folder. */
   virtual void setEncryptionStateChar( QChar status, int idx = -1 );
-                                     
+
   /** Set signature status of the message and mark dirty. Optional
    * optimization: @p idx may specify the index of this message within
    * the parent folder. */
-  virtual void setSignatureStateChar( QChar status, int idx = -1 );                                    
+  virtual void setSignatureStateChar( QChar status, int idx = -1 );
 
   /** Important header fields of the message that are also kept in the index. */
   virtual QString subject(void) const = 0;
@@ -235,7 +236,7 @@ public:
   virtual void setEnableUndo( bool enable ) { mEnableUndo = enable; }
 
 protected:
-  KMFolder* mParent;
+  KMFolderIndex* mParent;
   bool mDirty;
   off_t mIndexOffset;
   short mIndexLength;

@@ -5,13 +5,13 @@
 #include <config.h>
 #endif
 
-#include <limits.h>
-
 #include <qdir.h>
 #include <qregexp.h>
+#include <qtimer.h>
 
 #include "kfileio.h"
 #include "kmfoldermaildir.h"
+#include "kmfoldermgr.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
 #include "kbusyptr.h"
@@ -40,6 +40,128 @@
 #ifndef INIT_MSGS
 #define INIT_MSGS 8
 #endif
+
+//-----------------------------------------------------------------------------
+KMMaildirJob::KMMaildirJob( KMMessage *msg, JobType jt , KMFolder *folder )
+  : KMFolderJob( msg, jt, folder ), mParentFolder( 0 )
+{
+}
+
+//-----------------------------------------------------------------------------
+KMMaildirJob::KMMaildirJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                            JobType jt , KMFolder *folder )
+  : KMFolderJob( msgList, sets, jt, folder ), mParentFolder( 0 )
+{
+}
+
+//-----------------------------------------------------------------------------
+KMMaildirJob::~KMMaildirJob()
+{
+}
+
+//-----------------------------------------------------------------------------
+void KMMaildirJob::setParentFolder( KMFolderMaildir* parent )
+{
+  mParentFolder = parent;
+}
+
+//-----------------------------------------------------------------------------
+void KMMaildirJob::execute()
+{
+  QTimer::singleShot( 0, this, SLOT(startJob()) );
+}
+
+//-----------------------------------------------------------------------------
+void KMMaildirJob::startJob()
+{
+  switch( mType ) {
+  case tGetMessage:
+    {
+      KMMessage* msg = mParentFolder->getMsg( mParentFolder->find( mMsgList.first() ) );
+      emit messageRetrieved( msg );
+    }
+    break;
+  case tDeleteMessage:
+    {
+      static_cast<KMFolder*>(mParentFolder)->removeMsg( mMsgList );
+    }
+    break;
+  case tPutMessage:
+    {
+      mParentFolder->addMsg(  mMsgList.first() );
+      emit messageStored( mMsgList.first() );
+    }
+    break;
+  case tExpireMessages:
+    {
+      expireMessages();
+    }
+    break;
+  case tCopyMessage:
+  case tCreateFolder:
+  case tGetFolder:
+  case tListDirectory:
+    kdDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
+    break;
+  default:
+    break;
+  }
+  //OK, we're done
+  mParentFolder->removeJobFromList( this );
+  delete this;
+}
+
+void
+KMMaildirJob::expireMessages()
+{
+  int              days             = 0;
+  int              maxUnreadTime    = 0;
+  int              maxReadTime      = 0;
+  const KMMsgBase *mb               = 0;
+  QValueList<int>  rmvMsgList;
+  int              i                = 0;
+  time_t           msgTime, maxTime = 0;
+
+  days = mParentFolder->daysToExpire( mParentFolder->getUnreadExpireAge(),
+                                      mParentFolder->getUnreadExpireUnits() );
+  if (days > 0) {
+    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
+    maxUnreadTime = time(0) - days * 3600 * 24;
+  }
+
+  days = mParentFolder->daysToExpire( mParentFolder->getReadExpireAge(),
+                                      mParentFolder->getReadExpireUnits() );
+  if (days > 0) {
+    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
+    maxReadTime = time(0) - days * 3600 * 24;
+  }
+
+  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
+    return;
+  }
+
+  mParentFolder->open();
+  for( i=mParentFolder->count()-1; i>=0; i-- ) {
+    mb = mParentFolder->getMsgBase(i);
+    if (mb == 0) {
+      continue;
+    }
+    msgTime = mb->date();
+
+    if (mb->isUnread()) {
+      maxTime = maxUnreadTime;
+    } else {
+      maxTime = maxReadTime;
+    }
+
+    if (msgTime < maxTime) {
+      mParentFolder->removeMsg( i );
+    }
+  }
+  mParentFolder->close();
+
+  return;
+}
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolderDir* aParent, const QString& aName)
@@ -98,7 +220,7 @@ int KMFolderMaildir::open()
 
   if (!path().isEmpty())
   {
-    if (KMFolder::IndexOk != indexStatus()) // test if contents file has changed
+    if (KMFolderIndex::IndexOk != indexStatus()) // test if contents file has changed
     {
       QString str;
       mIndexStream = 0;
@@ -124,7 +246,7 @@ int KMFolderMaildir::open()
   mQuiet = 0;
   mChanged = FALSE;
 
-  readConfig();
+  //readConfig();
 
   return rc;
 }
@@ -194,17 +316,11 @@ void KMFolderMaildir::close(bool aForced)
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
+  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced) return;
 
   if (mAutoCreateIndex)
   {
-      bool dirty = mDirty;
-      for (int i=0; !dirty && i<mMsgList.high(); i++)
-	  if (mMsgList[i])
-	      dirty = !mMsgList[i]->syncIndexString();
-      if(dirty)
-	  writeIndex();
-      else
-          touchMsgDict();
+      updateIndex();
       writeConfig();
   }
 
@@ -285,14 +401,14 @@ int KMFolderMaildir::compact()
     {
       moveInternal(subdirCur + mi->fileName(), subdirCur + filename, mi);
       mi->setFileName(filename);
-      mDirty = TRUE;
+      setDirty( true );
     }
 
     // we can't have any New messages at this point
     if (mi->status() == KMMsgStatusNew)
     {
       mi->setStatus(KMMsgStatusUnread);
-      mDirty = TRUE;
+      setDirty( true );
     }
   }
   close();
@@ -302,6 +418,29 @@ int KMFolderMaildir::compact()
   return 0;
 }
 
+//-------------------------------------------------------------
+KMFolderJob*
+KMFolderMaildir::createJob( KMMessage *msg, KMFolderJob::JobType jt,
+                            KMFolder *folder )
+{
+  KMMaildirJob *job = new KMMaildirJob( msg, jt, folder );
+  job->setParentFolder( this );
+  mJobList.append( job );
+  return job;
+}
+
+//-------------------------------------------------------------
+KMFolderJob*
+KMFolderMaildir::createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                            KMFolderJob::JobType jt, KMFolder *folder )
+{
+  KMMaildirJob *job = new KMMaildirJob( msgList, sets, jt, folder );
+  job->setParentFolder( this );
+  mJobList.append( job );
+  return job;
+}
+
+//-------------------------------------------------------------
 int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 {
 /*
@@ -449,12 +588,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (index_return)
     *index_return = idx;
 
-  if (!mQuiet) {
-    emit msgAdded(idx);
-    emit msgAdded(this);
-  } else
-    mChanged = TRUE;
-
+  emitMsgAddedSignals(idx);
   needsCompact = true;
 
   if (opened) close();
@@ -472,17 +606,29 @@ if( fileD1.open( IO_WriteOnly ) ) {
 KMMessage* KMFolderMaildir::readMsg(int idx)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
-
-  QCString msgText;
-  getMsgString(idx, msgText);
-
   KMMessage *msg = new KMMessage(*mi);
-  msg->fromString(msgText);
 
+  msg->fromDwString(getDwString(idx));
   mMsgList.set(idx,msg);
-
   return msg;
 }
+
+DwString KMFolderMaildir::getDwString(int idx)
+{
+  KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
+  QString abs_file(location() + "/cur/");
+  abs_file += mi->fileName();
+
+  if (QFile::exists(abs_file))
+  {
+    FILE* stream = fopen(abs_file.local8Bit(), "r+");
+    DwString str( stream, mi->msgSize() );
+    fclose( stream );
+    return str;
+  }
+  return DwString();
+}
+
 
 QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
 {
@@ -745,22 +891,23 @@ int KMFolderMaildir::createIndexFromContents()
 
   needsCompact = true;
 
+  parent()->manager()->invalidateFolder(kernel->msgDict(), this);
   return 0;
 }
 
-KMFolder::IndexStatus KMFolderMaildir::indexStatus()
+KMFolderIndex::IndexStatus KMFolderMaildir::indexStatus()
 {
   QFileInfo new_info(location() + "/new");
   QFileInfo cur_info(location() + "/cur");
   QFileInfo index_info(indexLocation());
 
   if (!index_info.exists())
-    return KMFolder::IndexMissing;
+    return KMFolderIndex::IndexMissing;
 
   return ((new_info.lastModified() > index_info.lastModified()) ||
           (cur_info.lastModified() > index_info.lastModified()))
-         ? KMFolder::IndexTooOld
-         : KMFolder::IndexOk;
+         ? KMFolderIndex::IndexTooOld
+         : KMFolderIndex::IndexOk;
 }
 
 //-----------------------------------------------------------------------------
@@ -879,7 +1026,7 @@ QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newL
 
     QFileInfo fi(dest);
     dest = fi.dirPath(true) + "/" + aFileName;
-    mDirty = TRUE;
+    setDirty( true );
   }
 
   QDir d;
@@ -891,12 +1038,12 @@ QString KMFolderMaildir::moveInternal(const QString& oldLoc, const QString& newL
 
 //-----------------------------------------------------------------------------
 void KMFolderMaildir::msgStatusChanged(const KMMsgStatus oldStatus,
-  const KMMsgStatus newStatus)
+  const KMMsgStatus newStatus, int idx)
 {
   // if the status of any message changes, then we need to compact
   needsCompact = true;
 
-  KMFolderMaildirInherited::msgStatusChanged(oldStatus, newStatus);
+  KMFolderMaildirInherited::msgStatusChanged(oldStatus, newStatus, idx);
 }
 
 #include "kmfoldermaildir.moc"

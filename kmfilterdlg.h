@@ -89,7 +89,7 @@ signals:
   void resetWidgets();
 
 public slots:
-  /** Called when the name of a filter might have changed (e.g. 
+  /** Called when the name of a filter might have changed (e.g.
       through changing the first rule in @ref KMSearchPatternEdit).
       Updates the corresponding entry in the
       listbox and (if necessary) auto-names the filter. */
@@ -282,7 +282,7 @@ private:
     creation, move and create. The widgets that depend on the filter
     list and the filters that use folders as parameters are not
     updated as you expect. I hope this will change sometime soon.
-    
+
     KMFilterDlg supports the creation of new filters through context
     menues, dubbed "rapid filters". Call @ref KMFilterMgr::createFilter
     to use this. That call will be delivered
@@ -327,6 +327,7 @@ public slots:
 protected slots:
   void slotApplicabilityChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
+  void slotConfigureShortcutButtonToggled( bool aChecked );
   void slotReset();
   void slotSaveSize();
   /// called when the dialog is closed (finished)
@@ -347,6 +348,7 @@ protected:
       inbound/outbound messages, both, or only on explicit CTRL-J. */
   QCheckBox *mApplyOnIn, *mApplyOnOut, *mApplyOnCtrlJ;
   QCheckBox *mStopProcessingHere;
+  QCheckBox *mConfigureShortcut;
   QGroupBox *mAdvOptsGroup;
   QVGroupBox *mGlobalsBox;
   QCheckBox *mShowLaterBtn;

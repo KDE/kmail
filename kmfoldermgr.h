@@ -20,14 +20,14 @@ class KMFolderMgr: public QObject
   Q_OBJECT
 
 public:
-  KMFolderMgr(const QString& basePath, bool aImap = FALSE);
+  KMFolderMgr(const QString& basePath, KMFolderDirType dirType = KMStandardDir);
   virtual ~KMFolderMgr();
 
   /** Returns path to directory where all the folders live. */
   QString basePath() const { return mBasePath; }
 
   /** Set base path. Also calls reload() on the base directory. */
-  virtual void setBasePath(const QString&, bool);
+  virtual void setBasePath(const QString&);
 
   /** Provides access to base directory */
   KMFolderRootDir& dir();
@@ -85,7 +85,7 @@ public:
   /** Inserts messages into the message dictionary.  Called during
     kernel initialization. */
   void readMsgDict(KMMsgDict *dict, KMFolderDir *dir=0, int pass = 1);
-  
+
   /** Writes message serial on disk.  Called during kernel shutdown. */
   void writeMsgDict(KMMsgDict *dict, KMFolderDir *dir=0);
 
@@ -95,10 +95,15 @@ public:
   /** Number of folders for purpose of progres report */
   int folderCount(KMFolderDir *dir=0);
 
+  /** Called when serial numbers for a folder are invalidated,
+      invalidates/recreates data structures dependent on the
+      serial numbers for this folder */
+  void invalidateFolder(KMMsgDict *dict, KMFolder *folder);
+
 public slots:
   /** Compacts all folders (they know is it needed) */
   void compactAll();
-  void expireAll(); 
+  void expireAll();
 
 signals:
   /** Emitted when the list of folders has changed. This signal is a hook
@@ -107,12 +112,27 @@ signals:
     changed things. */
   void changed();
 
-  /** Emitted, when a folder has been deleted. */
-  void removed(KMFolder*);
+  /** Emitted, when a folder is about to be removed. */
+  void folderRemoved(KMFolder*);
+
+  /** Emitted, when a folder has been added. */
+  void folderAdded(KMFolder*);
+
+  /** Emitted, when serial numbers for a folder have been invalidated. */
+  void folderInvalidated(KMFolder*);
+
+  /** Emitted, when a message has been appended to a folder */
+  void msgAdded(KMFolder*, Q_UINT32);
+
+  /** Emitted, when a message has been removed from a folder */
+  void msgRemoved(KMFolder*, Q_UINT32);
+
+  /** Emitted, when the status of a message is changed */
+  void msgChanged(KMFolder*, Q_UINT32, int delta);
 
   /** Emitted once for each folder during compactAll() and expireAll() */
   void progress();
- 
+
 protected:
 
   /** Auxillary function to faciliate compaction of folders */

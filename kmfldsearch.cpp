@@ -5,19 +5,25 @@
 // kmfldsearch.cpp
 
 #include <config.h>
+#include <mimelib/boyermor.h>
 #include "kbusyptr.h"
+#include "kmcommands.h"
 #include "kmcomposewin.h"
 #include "kmfldsearch.h"
-#include "kmmainwin.h"
+#include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
 #include "kmfiltermgr.h"
 #include "kmfoldercombobox.h"
+#include "kmfolderdia.h"
 #include "kmfolderdir.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
+#include "kmfoldersearch.h"
 #include "kmfoldertree.h"
 #include "kmsender.h"
+#include "kmsearchpattern.h"
+#include "kmsearchpatternedit.h"
 #include "kmundostack.h"
 #include "mailinglist-magic.h"
 
@@ -28,6 +34,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlineedit.h>
+#include <qobjectlist.h>
 #include <qpopupmenu.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
@@ -35,6 +42,7 @@
 #include <qregexp.h>
 #include <qtextcodec.h>
 
+#include <kaccel.h>
 #include <kaction.h>
 #include <kapplication.h>
 #include <kcombobox.h>
@@ -54,58 +62,71 @@
 const int KMFldSearch::MSGID_COLUMN = 4;
 
 //-----------------------------------------------------------------------------
-KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
+KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
                          KMFolder *curFolder, bool modal):
   KDialogBase(0, name, modal, i18n("Search in Folders"),
               User1 | User2 | Close, User1, false,
               KGuiItem( i18n("&Search"), "find" ),
               KGuiItem( i18n("S&top"), "cancel" )),
-  mSearching(false),
   mStopped(false),
   mCloseRequested(false),
-  mNumMatches(0),
-  mCount(0),
+  mFolder(0),
+  mTimer(new QTimer(this)),
   mLastFocus(0),
-  mMainWin(w)
+  mKMMainWidget(w)
 {
-  int numRules = 2;
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 
-  KConfig* config = KGlobal::config();
+  KConfig* config = KMKernel::config();
   config->setGroup("SearchDialog");
 
   QWidget* searchWidget = new QWidget(this);
-  mGrid = new QGridLayout(searchWidget, numRules+5, 5, 0, spacingHint());
+  QVBoxLayout *vbl = new QVBoxLayout( searchWidget, 0, spacingHint(), "kmfs_vbl" );
 
   QButtonGroup * radioGroup = new QButtonGroup( searchWidget );
   radioGroup->hide();
 
   mChkbxAllFolders = new QRadioButton(i18n("Search in &all local folders"), searchWidget);
-  mGrid->addMultiCellWidget(mChkbxAllFolders, 0, 0, 0, 3);
+  vbl->addWidget( mChkbxAllFolders );
   radioGroup->insert( mChkbxAllFolders );
 
+  QHBoxLayout *hbl = new QHBoxLayout( vbl, spacingHint(), "kmfs_hbl" );
   mChkbxSpecificFolders = new QRadioButton(i18n("Search &only in:"), searchWidget);
-  mGrid->addWidget(mChkbxSpecificFolders, 1, 0);
+  hbl->addWidget(mChkbxSpecificFolders);
   mChkbxSpecificFolders->setChecked(true);
   radioGroup->insert( mChkbxSpecificFolders );
 
   mCbxFolders = new KMFolderComboBox(false, searchWidget);
   mCbxFolders->setFolder(curFolder);
-  mGrid->addMultiCellWidget(mCbxFolders, 1, 1, 1, 2);
+  hbl->addWidget(mCbxFolders);
 
   connect(mCbxFolders, SIGNAL(activated(int)),
           this, SLOT(slotFolderActivated(int)));
 
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
   mChkSubFolders->setChecked(true);
-  mGrid->addWidget(mChkSubFolders, 1, 3);
+  hbl->addWidget(mChkSubFolders);
 
-  for (int i=0; i<numRules; ++i)
-  {
-    KMFldSearchRule* rule = new KMFldSearchRule(searchWidget, mGrid, i+2, 0);
-    rule->updateFunctions(mCbxFolders->getFolder());
-    mRules.append(rule);
+  QWidget *spacer = new QWidget( searchWidget, "spacer" );
+  spacer->setMinimumHeight( 2 );
+  vbl->addWidget( spacer );
+
+  mPatternEdit = new KMSearchPatternEdit( "", searchWidget , "spe", false );
+  mPatternEdit->setFrameStyle( QFrame::NoFrame | QFrame::Plain );
+  mPatternEdit->setInsideMargin( 0 );
+  mSearchPattern = new KMSearchPattern();
+  mPatternEdit->setSearchPattern( mSearchPattern );
+  QObject *object = mPatternEdit->queryList( 0, "mRuleField" )->first();
+  if (object && object->inherits( "QComboBox" )) {
+      QComboBox *combo = (QComboBox*)object;
+      combo->setCurrentText("Subject");
   }
+  object = mPatternEdit->queryList( 0, "mRuleValue" )->first();
+  if (object && object->inherits( "QWidget" )) {
+      QWidget *widget = (QComboBox*)object;
+      widget->setFocus();
+  }
+  vbl->addWidget( mPatternEdit );
 
   // enable/disable widgets depending on radio buttons:
   connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
@@ -121,6 +142,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mLbxMatches->setSorting(2, false);
   mLbxMatches->setShowSortIndicator(true);
   mLbxMatches->setAllColumnsShowFocus(true);
+  mLbxMatches->setMultiSelection( TRUE );
   mLbxMatches->addColumn(i18n("Subject"),
                          config->readNumEntry("SubjectWidth", 150));
   mLbxMatches->addColumn(i18n("Sender/Receiver"),
@@ -137,35 +159,35 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 
   connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
           this, SLOT(slotShowMsg(QListViewItem *)));
-  mGrid->addMultiCellWidget(mLbxMatches, numRules+2, numRules+2, 0, 3);
+  connect( mLbxMatches, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int )),
+	   this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint &, int )));
+  vbl->addWidget(mLbxMatches);
 
+  QHBoxLayout *hbl2 = new QHBoxLayout( vbl, spacingHint(), "kmfs_hbl2" );
+  mSearchFolderLbl = new QLabel(i18n("Search folder name:"), searchWidget);
+  hbl2->addWidget(mSearchFolderLbl);
+  mSearchFolderEdt = new QLineEdit(searchWidget);
+  hbl2->addWidget(mSearchFolderEdt);
+  mSearchFolderBtn = new QPushButton(i18n("Create"), searchWidget);
+  mSearchFolderBtn->setEnabled(false);
+  hbl2->addWidget(mSearchFolderBtn);
+  connect( mSearchFolderEdt, SIGNAL( textChanged( const QString &)),
+	   this, SLOT( updateCreateButton( const QString & )));
+  connect( mSearchFolderBtn, SIGNAL( clicked() ),
+	   this, SLOT( renameSearchFolder() ));
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
   mStatusBar->changeItem(i18n("Ready."), 0);
   mStatusBar->setItemAlignment(0, AlignLeft | AlignVCenter);
   mStatusBar->insertItem(QString::null, 1, 1, true);
   mStatusBar->setItemAlignment(1, AlignLeft | AlignVCenter);
-  mGrid->addMultiCellWidget(mStatusBar, numRules+4, numRules+4, 0, 3);
-
-  mGrid->setColStretch(0, 0);
-  mGrid->setColStretch(1, 2);
-  mGrid->setColStretch(2, 1);
-  mGrid->setColStretch(3, 100);
-  mGrid->setColStretch(4, 0);
-
-  mGrid->setRowStretch(numRules+2, 100);
-  mGrid->setRowStretch(numRules+3, 0);
-
-  mGrid->activate();
-  mRules.at(0)->setFocus();
+  vbl->addWidget(mStatusBar);
 
   int mainWidth = config->readNumEntry("SearchWidgetWidth", 0);
   int mainHeight = config->readNumEntry("SearchWidgetHeight", 0);
 
   if (mainWidth || mainHeight)
-  {
     resize(mainWidth, mainHeight);
-  }
 
   setMainWidget(searchWidget);
   setButtonBoxOrientation(QWidget::Vertical);
@@ -177,12 +199,52 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
   connect(this, SIGNAL(user2Clicked()), SLOT(slotStop()));
   connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
+
+  //set up actions
+  KActionCollection *ac = actionCollection();
+  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", 0, this,
+			      SLOT(slotReplyToMsg()), ac, "search_reply" );
+  mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
+				 0, this, SLOT(slotReplyAllToMsg()),
+				 ac, "search_reply_all" );
+  mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
+				  "mail_replylist", 0, this,
+				  SLOT(slotReplyListToMsg()), ac,
+				  "search_reply_list" );
+  mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
+					"mail_forward", ac,
+					"search_message_forward" );
+  connect( mForwardActionMenu, SIGNAL(activated()), this,
+	   SLOT(slotForwardMsg()) );
+  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
+				0, this, SLOT(slotForwardMsg()),
+				ac, "search_message_forward_inline" );
+  mForwardActionMenu->insert( mForwardAction );
+  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+				       "mail_forward", 0, this,
+					SLOT(slotForwardAttachedMsg()), ac,
+					"search_message_forward_as_attachment" );
+  mForwardActionMenu->insert( mForwardAttachedAction );
+  mSaveAsAction = new KAction( i18n("Save &As..."), "filesave", 0,
+    this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
+  mPrintAction = new KAction( i18n( "&Print ..." ), "fileprint", 0, this,
+			      SLOT(slotPrintMsg()), ac, "search_print" );
+  mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
+			      SLOT(slotClearSelection()), ac, "search_clear_selection" );
+  connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
 }
 
 //-----------------------------------------------------------------------------
 KMFldSearch::~KMFldSearch()
 {
-  KConfig* config = KGlobal::config();
+  QValueListIterator<QGuardedPtr<KMFolder> > fit;
+  for ( fit = mFolders.begin(); fit != mFolders.end(); ++fit ) {
+    if (!(*fit))
+      continue;
+    (*fit)->close();
+  }
+
+  KConfig* config = KMKernel::config();
   config->setGroup("SearchDialog");
   config->writeEntry("SubjectWidth", mLbxMatches->columnWidth(0));
   config->writeEntry("SenderWidth", mLbxMatches->columnWidth(1));
@@ -196,592 +258,469 @@ KMFldSearch::~KMFldSearch()
 //-----------------------------------------------------------------------------
 void KMFldSearch::updStatus(void)
 {
-  QString genMsg, detailMsg;
-
-  if (!mSearching)
-  {
-    if(!mStopped)
-    {
-      genMsg = i18n("Done");
-      detailMsg = i18n("%n match (%1)", "%n matches (%1)", mNumMatches)
-                 .arg(i18n("%n message processed",
-                           "%n messages processed", mCount));
+    QString genMsg, detailMsg;
+    int numMatches = 0, count = 0;
+    KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
+    QString folderName;
+    if (search) {
+	numMatches = search->foundCount();
+	count = search->searchedCount();
+	folderName = search->currentFolder();
     }
-    else
-    {
-      genMsg = i18n("Search canceled");
-      detailMsg = i18n("%n match so far (%1)",
-                       "%n matches so far (%1)", mNumMatches)
-                 .arg(i18n("%n message processed",
-                           "%n messages processed", mCount));
-    }
-  }
-  else
-  {
-    genMsg = i18n("%n match", "%n matches", mNumMatches);
-    detailMsg = i18n("Searching in %1 (message %2)")
-               .arg(mSearchFolder)
-               .arg(mCount);
-  }
 
-  mStatusBar->changeItem(genMsg, 0);
-  mStatusBar->changeItem(detailMsg, 1);
+    if (mFolder && mFolder->search() && !mFolder->search()->running()) {
+	if(!mStopped) {
+	    genMsg = i18n("Done");
+	    detailMsg = i18n("%n match (%1)", "%n matches (%1)", numMatches)
+			.arg(i18n("%n message processed",
+				  "%n messages processed", count));
+	} else {
+	    genMsg = i18n("Search canceled");
+	    detailMsg = i18n("%n match so far (%1)",
+			     "%n matches so far (%1)", numMatches)
+			.arg(i18n("%n message processed",
+				  "%n messages processed", count));
+	}
+    } else {
+	genMsg = i18n("%n match", "%n matches", numMatches);
+	detailMsg = i18n("Searching in %1 (message %2)")
+		    .arg(folderName)
+		    .arg(count);
+    }
+
+    mStatusBar->changeItem(genMsg, 0);
+    mStatusBar->changeItem(detailMsg, 1);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::keyPressEvent(QKeyEvent *evt)
 {
-  if (evt->key() == Key_Escape && mSearching)
-  {
-    mSearching = false;
-    return;
-  }
-
-  KDialogBase::keyPressEvent(evt);
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMFldSearch::searchInMessage(KMMessage* aMsg, const QCString& aMsgStr)
-{
-  bool matches = true;
-
-  mCount++;
-  if (mCount % 100 == 0) updStatus();
-  for(KMFldSearchRuleIt it(mRules); *it && matches; ++it)
-  {
-    if (!(*it)->matches(aMsg, aMsgStr))
-      matches = false;
-  }
-
-  return matches;
-}
-
-//-----------------------------------------------------------------------------
-void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
-{
-  disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
-             this, SLOT(slotFolderComplete(KMFolderImap*, bool)));
-  mFetchingInProgress--;
-
-  if (success)
-  {
-    searchInFolder(folder, mChkSubFolders->isChecked(), FALSE);
-    if (mFetchingInProgress == 0) searchDone();
-  }
-  else
-  {
-    searchDone();
-  }
-
-  folder->close();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
-  bool fetchHeaders)
-{
-  //kdDebug(5006) << "Searching folder '" << aFld->name() << "'" << endl;
-  if (fetchHeaders && aFld->protocol() == "imap")
-  {
-    KMFolder *fld = aFld;
-    KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fld);
-    if (imap_folder &&
-        imap_folder->getContentState() == KMFolderImap::imapNoInformation)
-    {
-      mFetchingInProgress++;
-      imap_folder->open();
-      connect(imap_folder,
-              SIGNAL(folderComplete(KMFolderImap *, bool)),
-              SLOT(slotFolderComplete(KMFolderImap *, bool)));
-      imap_folder->getFolder();
-      return;
-    }
-  }
-
-  KMMessage* msg=0;
-  int i, num, upd;
-  QString str;
-  QCString cStr;
-  bool unget = false, fastMode = true, found;
-
-  assert(!aFld.isNull());
-
-  if (aFld->isSystemFolder())
-    mSearchFolder = i18n(aFld->name().utf8());
-  else
-    mSearchFolder = aFld->name();
-
-  kapp->processEvents();
-  if (aFld->open() != 0)
-  {
-    kdDebug(5006) << "Cannot open folder '" << aFld->name() << "'" << endl;
-    return;
-  }
-
-  for(KMFldSearchRuleIt it(mRules); *it; ++it)
-  {
-    if (!(*it)->isHeaderField())
-    {
-      fastMode = false;
-      break;
-    }
-  }
-
-  num = aFld->count();
-  for (i=0, upd=0; i<num && mSearching; i++, upd++)
-  {
-    if (fastMode)
-    {
-      found = searchInMessage(0, aFld->getMsgString(i, cStr));
-      if (found)
-      {
-        unget = !aFld->isMessage(i);
-        msg = aFld->getMsg(i);
-      } else unget = false;
-    }
-    else
-    {
-      unget = !aFld->isMessage(i);
-      msg = aFld->getMsg(i);
-      found = msg && searchInMessage(msg, QCString());
-    }
-    if (found)
-    {
-      QString from;
-      if(aFld->type() == KFolderTreeItem::SentMail)
-        from = msg->to();
-      else
-        from = msg->from();
-
-      (void)new QListViewItem(mLbxMatches,
-                              msg->subject(), from, msg->dateIsoStr(),
-                              mSearchFolder,
-                              QString::number(kernel->msgDict()->getMsgSerNum(aFld, i)));
-      mNumMatches++;
-    }
-    if (upd > 10)
-    {
-      kapp->processEvents();
-      upd = 0;
-      if (!aFld) // Folder deleted while searching!
-	break;
-      num = aFld->count();
-    }
-    if (unget) aFld->unGetMsg(i);
-  }
-
-  if(!mSearching)
-    // was stopped
-    mStopped = true;
-
-  updStatus();
-
-  aFld->close();
-
-  if (!recursive)
-    return;
-
-  KMFolderDir *dir = aFld->child();
-  if (dir)
-  {
-    KMFolder *folder;
-    QPtrListIterator<KMFolderNode> it(*dir);
-    for ( ; it.current(); ++it )
-    {
-      KMFolderNode *node = (*it);
-      if (!node->isDir())
-      {
-        folder = static_cast<KMFolder*>(node);
-        searchInFolder(folder, recursive);
-      }
-    }
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFldSearch::searchInAllFolders(void)
-{
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  QGuardedPtr<KMFolder> folder;
-  QStringList str;
-
-  mMainWin->folderTree()->createFolderList( &str, &folders );
-  QValueListConstIterator<QGuardedPtr<KMFolder> > it;
-  for (it = folders.begin(); it != folders.end(); ++it)
-  {
-    folder = *it;
-    // Stop pressed?
-    if(!mSearching)
-    {
-      break;
+    KMSearch const *search = (mFolder) ? mFolder->search() : 0;
+    bool searching = (search) ? search->running() : false;
+    if (evt->key() == Key_Escape && searching) {
+	mFolder->stopSearch();
+	return;
     }
 
-    if (folder && (folder->protocol() != "imap"))
-    {
-      searchInFolder(folder, false);
-    }
-  }
+    KDialogBase::keyPressEvent(evt);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotFolderActivated(int /*nr*/)
 {
-  KMFolder* folder = mCbxFolders->getFolder();
+    KMFolder* folder = mCbxFolders->getFolder();
 
-  mChkbxSpecificFolders->setChecked(true);
-  mBtnSearch->setEnabled(folder);
-
-  for(KMFldSearchRuleIt it(mRules); *it; ++it)
-  {
-    (*it)->updateFunctions(folder);
-  }
+    mChkbxSpecificFolders->setChecked(true);
+    mBtnSearch->setEnabled(folder);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::activateFolder(KMFolder *curFolder)
 {
-  mChkbxSpecificFolders->setChecked(true);
-  mCbxFolders->setFolder(curFolder);
-  mRules.at(0)->setFocus();
+    mChkbxSpecificFolders->setChecked(true);
+    mCbxFolders->setFolder(curFolder);
 }
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotSearch()
 {
-  mLastFocus = focusWidget();
-  mBtnSearch->setFocus();	// set focus so we don't miss key event
+    mLastFocus = focusWidget();
+    mBtnSearch->setFocus();	// set focus so we don't miss key event
 
-  mCount = 0;
-  mStopped = false;
-  mNumMatches = 0;
-  mSearching = true;
-  mFetchingInProgress = 0;
+    mStopped = false;
+    mFetchingInProgress = 0;
 
-  mBtnSearch->setEnabled(false);
-  mBtnStop->setEnabled(true);
+    mBtnSearch->setEnabled(false);
+    mBtnStop->setEnabled(true);
 
-  enableGUI();
-  mLbxMatches->clear();
-  kapp->processEvents();
+    mLbxMatches->clear();
 
-  for(KMFldSearchRuleIt it(mRules); *it; ++it)
-  {
-    (*it)->prepare();
-  }
-
-  if (mChkbxAllFolders->isChecked())
-  {
-    searchInAllFolders();
-  }
-  else
-  {
-    KMFolder *folder = mCbxFolders->getFolder();
-
-    if (!folder)
-    {
-      return;
+    KMFolderMgr *mgr = kernel->searchFolderMgr();
+    QString baseName = "search";
+    QString fullName = baseName;
+    int count = 0;
+    KMFolder *folder;
+    while ((folder = mgr->find(fullName))) {
+	if (folder->inherits("KMFolderSearch"))
+	    break;
+	fullName = QString("%1 %2").arg(baseName).arg(++count);
     }
 
-    searchInFolder(folder, mChkSubFolders->isChecked());
-  }
+    if (folder)
+      mgr->remove(folder);
+    folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
+			       &mgr->dir());
 
-  if (!mFetchingInProgress) searchDone();
+    mFolder = (KMFolderSearch*)folder;
+    mFolder->stopSearch();
+    disconnect(mFolder, SIGNAL(msgAdded(int)),
+	    this, SLOT(slotAddMsg(int)));
+    disconnect(mFolder, SIGNAL(msgRemoved(int, QString)),
+	    this, SLOT(slotRemoveMsg(int)));
+    connect(mFolder, SIGNAL(msgAdded(int)),
+	    this, SLOT(slotAddMsg(int)));
+    connect(mFolder, SIGNAL(msgRemoved(int, QString)),
+	    this, SLOT(slotRemoveMsg(int)));
+    KMSearch *search = new KMSearch();
+    connect(search, SIGNAL(finished(bool)),
+	    this, SLOT(searchDone()));
+    if (mChkbxAllFolders->isChecked()) {
+	search->setRecursive(true);
+    } else {
+	search->setRoot(mCbxFolders->getFolder());
+	search->setRecursive(mChkSubFolders->isChecked());
+    }
+
+    mPatternEdit->updateSearchPattern();
+    KMSearchPattern *searchPattern = new KMSearchPattern();
+    searchPattern = mSearchPattern; //deep copy
+    searchPattern->purify();
+    search->setSearchPattern(searchPattern);
+    mFolder->setSearch(search);
+    enableGUI();
+
+    if (mFolder && !mFolders.contains(mFolder.operator->())) {
+	mFolder->open();
+	mFolders.append(mFolder.operator->());
+    }
+    mTimer->start(200);
 }
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::searchDone()
 {
-  mSearching=false;
-  updStatus();
+    mTimer->stop();
+    updStatus();
 
-  mBtnSearch->setEnabled(true);
-  mBtnStop->setEnabled(false);
+    mBtnSearch->setEnabled(true);
+    mBtnStop->setEnabled(false);
 
-  enableGUI();
-  if( mLastFocus )
-    mLastFocus->setFocus();
-  if (mCloseRequested) close();
+    enableGUI();
+    if(mLastFocus)
+	mLastFocus->setFocus();
+    if (mCloseRequested)
+	close();
 }
 
+void KMFldSearch::slotAddMsg(int idx)
+{
+    if (!mFolder)
+	return;
+    bool unget = !mFolder->isMessage(idx);
+    KMMessage *msg = mFolder->getMsg(idx);
+    QString from, fName;
+    KMFolder *pFolder = msg->parent();
+    if (!mFolders.contains(pFolder)) {
+	mFolders.append(pFolder);
+	pFolder->open();
+    }
+    if(pFolder->type() == KFolderTreeItem::SentMail)
+        from = msg->to();
+    else
+        from = msg->from();
+    if (pFolder->isSystemFolder())
+	fName = i18n(pFolder->name().utf8());
+    else
+        fName = pFolder->name();
+
+    (void)new QListViewItem(mLbxMatches,
+			    msg->subject(), from, msg->dateIsoStr(),
+			    fName,
+			    QString::number(mFolder->serNum(idx)));
+    if (unget)
+	mFolder->unGetMsg(idx);
+}
+
+void KMFldSearch::slotRemoveMsg(int idx)
+{
+    if (!mFolder)
+	return;
+    Q_UINT32 serNum = mFolder->serNum(idx);
+    QListViewItemIterator it(mLbxMatches);
+    while (it.current()) {
+	QListViewItem *item = *it;
+	if (serNum == (*it)->text(MSGID_COLUMN).toUInt()) {
+	    delete item;
+	    return;
+	}
+	++it;
+    }
+}
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotStop()
 {
-  mSearching = false;
-  mBtnStop->setEnabled(false);
+    if (mFolder)
+	mFolder->stopSearch();
+    mStopped = true;
+    mBtnStop->setEnabled(false);
 }
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotClose()
 {
-  accept();
+    accept();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::closeEvent(QCloseEvent *e)
 {
-  if (mSearching)
-  {
-    mSearching = false;
-    mCloseRequested = true;
-    e->ignore();
-  }
-  else
-  {
-    KDialogBase::closeEvent(e);
-  }
+    if (mFolder && mFolder->search() && mFolder->search()->running()) {
+	mCloseRequested = true;
+	//Cancel search in progress by setting the search folder search to
+	//the null search
+	mFolder->setSearch(new KMSearch());
+    } else {
+	KDialogBase::closeEvent(e);
+    }
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::updateCreateButton( const QString &s)
+{
+    mSearchFolderBtn->setEnabled(!s.isEmpty());
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::renameSearchFolder()
+{
+    KMFolderDialog *props;
+    if (mFolder) {
+	mFolder->rename(mSearchFolderEdt->text());
+	props = new KMFolderDialog( mFolder.operator->(), mFolder->parent(), 0,
+				    i18n("Properties of Folder %1").arg( mFolder->label() ),
+				    mSearchFolderEdt->text() );
+	props->exec();
+	kernel->searchFolderMgr()->contentsChanged();
+    }
 }
 
 //-----------------------------------------------------------------------------
 bool KMFldSearch::slotShowMsg(QListViewItem *item)
 {
-  if(!item)
-  {
-    return false;
-  }
+    if(!item)
+	return false;
 
-  KMFolder* folder;
-  int msgIndex;
-  kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
-                                 &folder, &msgIndex);
+    KMFolder* folder;
+    int msgIndex;
+    kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
+				   &folder, &msgIndex);
 
-  if (!folder || msgIndex < 0)
-  {
-    return false;
-  }
+    if (!folder || msgIndex < 0)
+	return false;
 
-  mMainWin->slotSelectFolder(folder);
-  KMMessage* message = folder->getMsg(msgIndex);
-  if (!message)
-  {
-    return false;
-  }
+    mKMMainWidget->slotSelectFolder(folder);
+    KMMessage* message = folder->getMsg(msgIndex);
+    if (!message)
+	return false;
 
-  mMainWin->slotSelectMessage(message);
-  return true;
+    mKMMainWidget->slotSelectMessage(message);
+    return true;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::enableGUI()
 {
-  actionButton(KDialogBase::Close)->setEnabled(!mSearching);
-  mCbxFolders->setEnabled(!mSearching);
-  mChkSubFolders->setEnabled(!mSearching);
-  mChkbxAllFolders->setEnabled(!mSearching);
-  mChkbxSpecificFolders->setEnabled(!mSearching);
-
-  for(KMFldSearchRuleIt it(mRules); *it; ++it)
-  {
-    (*it)->setEnabled(!mSearching);
-  }
-}
-
-
-//=============================================================================
-KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
-                                 int aRow, int aCol)
-{
-  assert(aParent!=0);
-  assert(aGrid!=0);
-
-  mRow = aRow;
-  mCbxField = new KComboBox(true, aParent);
-  insertFieldItems(false);
-  mCbxField->setMinimumSize(mCbxField->sizeHint());
-  mCbxField->setMaximumSize(1024, mCbxField->sizeHint().height());
-
-  mCbxFunc = new KComboBox(false, aParent);
-  mCbxFunc->insertItem(i18n("contains"));
-  mCbxFunc->insertItem(i18n("doesn't contain"));
-  mCbxFunc->insertItem(i18n("equals"));
-  mCbxFunc->insertItem(i18n("doesn't equal"));
-  mCbxFunc->insertItem(i18n("matches regular expr."));
-  mCbxFunc->insertItem(i18n("doesn't match regular expr."));
-  mCbxFunc->setMinimumSize(mCbxFunc->sizeHint());
-  mCbxFunc->setMaximumSize(1024, mCbxFunc->sizeHint().height());
-
-  mEdtValue = new KLineEdit(aParent);
-  mEdtValue->setMinimumSize(mCbxFunc->sizeHint());
-  mEdtValue->setMaximumSize(1024, mCbxFunc->sizeHint().height());
-
-  QLabel* lbl;
-
-  if (mRow > 2)
-  {
-    lbl = new QLabel(i18n("and"), aParent);
-    lbl->setAlignment(QWidget::AlignRight|QWidget::AlignVCenter);
-  }
-  else
-  {
-    lbl = new QLabel(i18n("Show messages &where"), aParent);
-    lbl->setBuddy(mCbxField);
-    lbl->setAlignment(QWidget::AlignVCenter);
-  }
-
-  lbl->setMinimumSize(lbl->sizeHint());
-
-  aGrid->addWidget(lbl, aRow, aCol);
-  aGrid->addWidget(mCbxField, aRow, aCol + 1);
-  aGrid->addWidget(mCbxFunc,  aRow, aCol + 2);
-  aGrid->addWidget(mEdtValue, aRow, aCol + 3);
+    KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
+    bool searching = (search) ? (search->running()) : false;
+    actionButton(KDialogBase::Close)->setEnabled(!searching);
+    mCbxFolders->setEnabled(!searching);
+    mChkSubFolders->setEnabled(!searching);
+    mChkbxAllFolders->setEnabled(!searching);
+    mChkbxSpecificFolders->setEnabled(!searching);
+    mPatternEdit->setEnabled(!searching);
 }
 
 
 //-----------------------------------------------------------------------------
-KMFldSearchRule::~KMFldSearchRule()
+KMMessageList KMFldSearch::selectedMessages()
 {
+    KMMessageList msgList;
+    KMFolder* folder = 0;
+    int msgIndex = -1;
+    for (QListViewItemIterator it(mLbxMatches); it.current(); it++)
+	if (it.current()->isSelected()) {
+	    kernel->msgDict()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
+					   &folder, &msgIndex);
+
+	    if (folder && msgIndex >= 0)
+		msgList.append(folder->getMsgBase(msgIndex));
+	}
+    return msgList;
 }
 
-
 //-----------------------------------------------------------------------------
-void KMFldSearchRule::insertFieldItems(bool imap)
+KMMessage* KMFldSearch::message()
 {
-  QString last = mCbxField->currentText();
-  mCbxField->clear();
-  if (!imap)
-    if (mRow > 2) mCbxField->insertItem(QString::null);
-  mCbxField->insertItem("Subject");
-  mCbxField->insertItem("From");
-  mCbxField->insertItem("To");
-  mCbxField->insertItem("Cc");
-  if (!imap) {
-    mCbxField->insertItem("Organization");
-    mCbxField->insertItem(i18n("<complete message>"));
-  }
+    QListViewItem *item = mLbxMatches->currentItem();
+    KMFolder* folder = 0;
+    int msgIndex = -1;
+    if (!item)
+	return 0;
+    kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
+				   &folder, &msgIndex);
+    if (!folder || msgIndex < 0)
+	return 0;
 
-  if ( !last.isEmpty() ) {
-    bool found = false;
-    for ( int i = 0 ; i < mCbxField->count() ; ++ i )
-      if ( mCbxField->text(i) == last ) {
-	mCbxField->setCurrentItem(i);
-	found = true;
-      }
-    if ( !found && !imap )
-      mCbxField->setEditText( last );
-  } else {
-    mCbxField->setCurrentItem(0);
-  }
-}
+    KMMessage* message = folder->getMsg(msgIndex);
+    if (!message)
+	return 0;
 
-
-//-----------------------------------------------------------------------------
-void KMFldSearchRule::updateFunctions(KMFolder* folder)
-{
-  bool imap = folder && folder->protocol() == "imap";
-  insertFieldItems( imap );
-  mCbxField->setEditable( !imap );
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFldSearchRule::prepare(void)
-{
-  mFieldIdx = mCbxField->currentItem();
-  mField = mCbxField->currentText();
-  mHeaderField = QString('\n' + mField + ": ").latin1();
-  mFieldLength = mField.length() + 3;
-  mFunc = mCbxFunc->currentItem();
-  mValue = mEdtValue->text();
-  mNonLatin = mValue.utf8().length() != mValue.length();
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
-  const
-{
-  QString value;
-
-  if (mField.isEmpty()) return true;
-  if (aMsg)
-  {
-    if( !isHeaderField() ) {
-      value = aMsg->headerAsString();
-      QCString charset, content;
-      if (aMsg->typeStr().lower().find("multipart/") != -1)
-      {
-        KMMessagePart mp;
-        aMsg->bodyPart(0,&mp);
-        charset = mp.charset();
-        content = mp.bodyDecoded();
-      } else {
-        charset = aMsg->charset();
-        content = aMsg->bodyDecoded();
-      }
-      if (!mNonLatin || charset.isEmpty() || charset == "us-ascii"
-        || charset == "iso-8859-1")         // Speedup
-          value += content;
-      else {
-        QTextCodec *codec = KMMsgBase::codecForName(charset);
-        if (codec) value += codec->toUnicode(content);
-          else value += content;
-      }
-    } else {
-      value = aMsg->headerField(mField.latin1());
+    //TODO: Factor this codec code out of here and KMReaderWin::parseMsg
+    //and put it somewhere else.
+    int mainType = message->type();
+    bool isMultipart = ( DwMime::kTypeMultipart == mainType );
+    QTextCodec *codec = 0;
+    QCString encoding;
+    if (DwMime::kTypeText == mainType)
+	encoding = message->charset();
+    else if (isMultipart) {
+	if (message->numBodyParts() > 0) {
+	    KMMessagePart msgPart;
+	    message->bodyPart(0, &msgPart);
+	    encoding = msgPart.charset();
+	}
     }
-  } else {
-    int start, stop;
-    char ch = '\0';
-    start = aMsgStr.find(mHeaderField, 0, false /*cis*/ );
-    if (start == -1) return false;
-    int endOfHeader = aMsgStr.find("\n\n");
-    if (endOfHeader == -1) endOfHeader = aMsgStr.find("\n\r\n");
-    if (endOfHeader < start) return false;
-    start += mFieldLength;
-    stop = aMsgStr.find('\n', start);
-    while (stop != -1 && (ch = aMsgStr.at(stop + 1)) == ' ' || ch == '\t')
-      stop = aMsgStr.find('\n', stop + 1);
-    if (stop == -1) value = KMMsgBase::decodeRFC2047String(aMsgStr.mid(start));
-    else value = KMMsgBase::decodeRFC2047String(aMsgStr.mid(start,
-      stop - start));
-  }
-  // also see KMFilterRule::matches() for a similar function:
-  switch(mFunc)
-  {
-  case Equal:
-    return (value == mValue);
-  case NotEqual:
-    return (value != mValue);
-  case Contains:
-    return value.contains(mValue, FALSE);
-  case NotContains:
-    return ( ! value.contains(mValue, FALSE) );
-  case MatchesRegExp:
-    return (value.find(QRegExp(mValue, FALSE)) >= 0);
-  case NotMatchesRegExp:
-    return (value.find(QRegExp(mValue, FALSE)) < 0);
-  default:
-    kdDebug(5006) << "KMFldSearchRule::matches: wrong rule func #" << mFunc << endl;
-    return false;
-  }
+    if (encoding.isEmpty())
+	encoding = kernel->networkCodec()->name();
+    codec = KMMsgBase::codecForName(encoding);
+    if (!codec)
+	codec = QTextCodec::codecForName("iso8859-1");
+    message->setCodec(codec);
+
+    return message;
 }
 
-
 //-----------------------------------------------------------------------------
-bool KMFldSearchRule::isHeaderField() const
+void KMFldSearch::moveSelectedToFolder( int menuId )
 {
-  return mField != i18n("<complete message>");
-}
+    KMFolder *dest = mMenuToFolder[menuId];
+    if (!dest)
+	return;
 
-
-//-----------------------------------------------------------------------------
-void KMFldSearchRule::setEnabled(bool b) {
-  mCbxField->setEnabled(b);
-  mCbxFunc->setEnabled(b);
-  mEdtValue->setEnabled(b);
+    KMMessageList msgList = selectedMessages();
+    KMCommand *command = new KMMoveCommand( dest, msgList );
+    command->start();
 }
 
 //-----------------------------------------------------------------------------
-void KMFldSearchRule::setFocus() {
-  mEdtValue->setFocus();
+void KMFldSearch::copySelectedToFolder( int menuId )
+{
+    KMFolder *dest = mMenuToFolder[menuId];
+    if (!dest)
+	return;
+
+    KMMessageList msgList = selectedMessages();
+    KMCommand *command = new KMCopyCommand( dest, msgList );
+    command->start();
 }
+
 //-----------------------------------------------------------------------------
+void KMFldSearch::updateContextMenuActions()
+{
+    int count = selectedMessages().count();
+    bool single_actions = count == 1;
+    mReplyAction->setEnabled( single_actions );
+    mReplyAllAction->setEnabled( single_actions );
+    mReplyListAction->setEnabled( single_actions );
+    mPrintAction->setEnabled( single_actions );
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotContextMenuRequested( QListViewItem *lvi, const QPoint &, int )
+{
+    if (!lvi)
+	return;
+    mLbxMatches->setSelected( lvi, TRUE );
+    mLbxMatches->setCurrentItem( lvi );
+    if (!message())
+	return;
+    QPopupMenu *menu = new QPopupMenu(this);
+    updateContextMenuActions();
+
+    mMenuToFolder.clear();
+    QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
+    KMMoveCommand::folderToPopupMenu( TRUE, this, &mMenuToFolder, msgMoveMenu );
+    QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
+    KMCopyCommand::folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
+
+    // show most used actions
+    mReplyAction->plug(menu);
+    mReplyAllAction->plug(menu);
+    mReplyListAction->plug(menu);
+    mForwardActionMenu->plug(menu);
+    menu->insertSeparator();
+    menu->insertItem(i18n("&Copy To"), msgCopyMenu);
+    menu->insertItem(i18n("&Move To"), msgMoveMenu);
+    mSaveAsAction->plug(menu);
+    mPrintAction->plug(menu);
+    menu->insertSeparator();
+    mClearAction->plug(menu);
+    menu->exec (QCursor::pos(), 0);
+    delete menu;
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotClearSelection()
+{
+    mLbxMatches->clearSelection();
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotReplyToMsg()
+{
+    KMCommand *command = new KMReplyToCommand(this, message());
+    command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotReplyAllToMsg()
+{
+    KMCommand *command = new KMReplyToAllCommand(this, message());
+    command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotReplyListToMsg()
+{
+    KMCommand *command = new KMReplyListCommand(this, message());
+    command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotForwardMsg()
+{
+    KMCommand *command = new KMForwardCommand(this, selectedMessages());
+    command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotForwardAttachedMsg()
+{
+    KMCommand *command = new KMForwardAttachedCommand(this, selectedMessages());
+    command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotSaveMsg()
+{
+    KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand(this,
+							 selectedMessages());
+    if (saveCommand->url().isEmpty())
+	delete saveCommand;
+    else
+	saveCommand->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotPrintMsg()
+{
+    KMCommand *command = new KMPrintCommand(this, message());
+    command->start();
+}
+
 #include "kmfldsearch.moc"

@@ -7,9 +7,28 @@
 #ifndef kmfoldermbox_h
 #define kmfoldermbox_h
 
-#include "kmfolder.h"
+#include "kmfolderindex.h"
 
-#define KMFolderMboxInherited KMFolder
+#define KMFolderMboxInherited KMFolderIndex
+
+class KMMboxJob : public KMFolderJob
+{
+  Q_OBJECT
+  friend class KMFolderMbox;
+public:
+  KMMboxJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
+  KMMboxJob( QPtrList<KMMessage>& msgList, const QString& sets,
+             JobType jt = tGetMessage, KMFolder *folder = 0 );
+  ~KMMboxJob();
+protected:
+  void execute();
+  void expireMessages();
+  void setParent( KMFolderMbox *parent );
+protected slots:
+  void startJob();
+private:
+  KMFolderMbox *mParent;
+};
 
 /* Mail folder.
  * (description will be here).
@@ -21,9 +40,10 @@
  *   specific folder.
  */
 
-class KMFolderMbox : public KMFolder
+class KMFolderMbox : public KMFolderIndex
 {
   Q_OBJECT
+  friend class KMMboxJob;
 public:
 
 
@@ -35,6 +55,7 @@ public:
 
   /** Read a message and return a referece to a string */
   virtual QCString& getMsgString(int idx, QCString& mDest);
+  DwString getDwString(int idx);
 
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
@@ -78,6 +99,11 @@ public:
 
   virtual QCString protocol() const { return "mbox"; }
 
+  virtual KMFolderJob* createJob( KMMessage *msg, KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
+                                  KMFolder *folder = 0 );
+  virtual KMFolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  KMFolderJob::JobType jt = KMFolderJob::tGetMessage, KMFolder *folder = 0 );
+
 protected:
   /** Load message from file and store it at given index. Returns 0
     on failure. */
@@ -96,24 +122,18 @@ protected:
     and an errno error code on failure. */
   virtual int unlock();
 
-  /** Tests whether the contents of this folder is newer than the index.
-      Returns IndexTooOld if the index file is older than the mbox file.
-      Returns IndexMissing if there is an mbox file but no index file.
-      Returns IndexOk if there is no mbox file or if the index file
-      is not older than the mbox file.
-  */
   virtual IndexStatus indexStatus();
-  
+
   /** Called by KMFolder::remove() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int removeContents();
-  
+
   /** Called by KMFolder::expunge() to delete the actual contents.
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents();
-  
+
 private:
   FILE *mStream;
   bool mFilesLocked; // TRUE if the files of the folder are locked (writable)

@@ -8,34 +8,36 @@
 #include <qtimer.h>
 #include <qcolor.h>
 #include <qstringlist.h>
-#include <cryptplugwrapper.h>
+#include <kaction.h>
+#include <kurl.h>
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
+#include <cryptplugwrapper.h>
+#include <cryptplugwrapperlist.h>
 
+class QFrame;
+class QHBox;
+class QLabel;
+class QListViewItem;
+class QScrollBar;
+class QString;
+class QStringList;
+class QTabDialog;
+class QTextCodec;
+class CryptPlugWrapperList;
+class DwHeaders;
+class DwMediaType;
+class KActionCollection;
 class KHTMLPart;
+class KURL;
 class KMFolder;
 class KMMessage;
 class KMMessagePart;
-class KURL;
-class QFrame;
-class QMultiLineEdit;
-class QScrollBar;
-class QString;
-class QTabDialog;
-class QLabel;
-class QHBox;
-class QTextCodec;
-class DwMediaType;
-class CryptPlugWrapperList;
-class KMMessagePart;
-class KURL;
-class QListViewItem;
 
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
 class NewByteArray; // providing operator+ on a QByteArray (khz, 21.06.2002)
-class DwHeaders;
 
 namespace KParts
 {
@@ -52,11 +54,13 @@ class KMReaderWin: public QWidget
   friend void KMMimePartTree::slotSaveAs();
 
 public:
-  KMReaderWin( KMMimePartTree* mimePartTree=0,
+  KMReaderWin( QWidget *parent,
+	       QWidget *mainWindow,
+	       KActionCollection *actionCollection,
+	       KMMimePartTree* mimePartTree=0,
                int* showMIMETreeMode=0,
-               QWidget *parent=0,
                const char *name=0,
-               int f=0 );
+	       int f=0 );
   virtual ~KMReaderWin();
 
   /** assign a KMMimePartTree to this KMReaderWin */
@@ -93,8 +97,8 @@ public:
   virtual void setAttachmentStyle(int style);
 
   /** Get/set codec for reader win. */
-  QTextCodec *codec(void) const { return mCodec; }
-  virtual void setCodec(QTextCodec *codec);
+  const QTextCodec *codec(void) const { return mCodec; }
+  virtual void setCodec(const QTextCodec *codec);
 
   /** Set printing mode */
   virtual void setPrinting(bool enable) { mPrinting = enable; }
@@ -102,6 +106,12 @@ public:
   /** Set the message that shall be shown. If msg is 0, an empty page is
       displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
+
+  /** Instead of settings a message to be shown sets a message part
+      to be shown */
+  virtual void setMsgPart( KMMessagePart* aMsgPart,
+    bool aHTML, const QString& aFileName, const QString& pname,
+    const QTextCodec *codec );
 
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
@@ -129,9 +139,6 @@ public:
   /** Print current message. */
   virtual void printMsg(void);
 
-  /** Select message body. */
-  void selectAll();
-
   /** Return selected text */
   QString copyText();
 
@@ -140,7 +147,6 @@ public:
   void setAutoDelete(bool f) { mAutoDelete=f; }
 
   /** Override default html mail setting */
-  bool htmlOverride() const { return mHtmlOverride; }
   void setHtmlOverride( bool override );
 
   /** Is html mail to be supported? Takes into account override */
@@ -162,16 +168,37 @@ public:
   /** Queue HTML code to be sent later in chunks to khtml */
   void queueHtml(const QString &aStr);
 
+  // Action to reply to a message
+  // but action( "some_name" ) some name could be used instead.
+  KAction *replyAction() { return mReplyAction; }
+  KAction *replyAllAction() { return mReplyAllAction; }
+  KAction *replyListAction() { return mReplyListAction; }
+  KActionMenu *forwardMenu() { return mForwardActionMenu; }
+  KAction *forwardAction() { return mForwardAction; }
+  KAction *forwardAttachedAction() { return mForwardAttachedAction; }
+  KAction *redirectAction() { return mRedirectAction; }
+  KAction *noQuoteReplyAction() { return mNoQuoteReplyAction; }
 
+  KAction *bounceAction() { return mBounceAction; }
+
+  KActionMenu *filterMenu() { return mFilterMenu; }
+  KAction *subjectFilterAction() { return mSubjectFilterAction; }
+  KAction *fromFilterAction() { return mFromFilterAction; }
+  KAction *toFilterAction() { return mToFilterAction; }
+  KAction *listFilterAction() { return mListFilterAction; }
+  void updateListFilterAction();
+  KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
+  KAction *viewSourceAction() { return mViewSourceAction; }
+  KAction *printAction() { return mPrintAction; }
+  KAction *mailToComposeAction() { return mMailToComposeAction; }
+  KAction *mailToReplyAction() { return mMailToReplyAction; }
+  KAction *mailToForwardAction() { return mMailToForwardAction; }
+  KAction *addAddrBookAction() { return mAddAddrBookAction; }
+  KAction *openAddrBookAction() { return mOpenAddrBookAction; }
+  KAction *copyAction() { return mCopyAction; }
+  KAction *urlOpenAction() { return mUrlOpenAction; }
+  KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
 // static functions:
-
-    /** Display an attachment */
-    static void atmView(KMReaderWin* aReaderWin,
-                        KMMessagePart* aMsgPart,
-                        bool aHTML,
-                        const QString& aFileName,
-                        const QString& pname,
-                        QTextCodec *codec);
 
     /** find a plugin matching a given libName */
     static bool foundMatchingCryptPlug( QString libName,
@@ -247,9 +274,6 @@ public:
                                bool& passphraseError,
                                QString& aErrorText );
 
-    /** Delete all KMReaderWin's that do not have a parent. */
-    static void deleteAllStandaloneWindows();
-
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -264,13 +288,13 @@ signals:
   /** The user has clicked onto an URL that is no attachment. */
   void urlClicked(const KURL &url, int button);
 
-  /** The user wants to see the attachment which is message */
-  void showAtmMsg (KMMessage *msg);
-
   /** Pgp displays a password dialog */
   void noDrag(void);
 
 public slots:
+
+  /** Select message body. */
+  void selectAll();
 
   /** Force update even if message is the same */
   void clearCache();
@@ -303,10 +327,50 @@ public slots:
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
 
+  /** Copy the selected text to the clipboard */
+  void slotCopySelectedText();
+
   /** Starts sending the queued HTML code to khtml */
   void sendNextHtmlChunk();
 
+  /** Slot to reply to a message */
+  void slotReplyToMsg();
+  void slotReplyListToMsg();
+  void slotReplyAllToMsg();
+  void slotForward();
+  void slotForwardMsg();
+  void slotForwardAttachedMsg();
+  void slotRedirectMsg();
+  void slotBounceMsg();
+  void slotNoQuoteReplyToMsg();
+  void slotSubjectFilter();
+  void slotMailingListFilter();
+  void slotFromFilter();
+  void slotToFilter();
+  void slotUrlClicked();
+
+  /** Operations on mailto: URLs. */
+  void slotMailtoReply();
+  void slotMailtoCompose();
+  void slotMailtoForward();
+  void slotMailtoAddAddrBook();
+  void slotMailtoOpenAddrBook();
+  /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at
+      beginning of URL before copying. */
+  void slotUrlCopy();
+  /** Open URL in mUrlCurrent using Kfm. */
+  void slotUrlOpen();
+  /** Save the page to a file */
+  void slotUrlSave();
+
+  void slotShowMsgSrc();
+  void slotPrintMsg();
+  void slotSaveMsg();
+
 protected slots:
+  /** Returns the current message or 0 if none. */
+  KMMessage* message(void) const;
+
   /** Some attachment operations. */
   void slotAtmOpen();
   void slotAtmOpenWith();
@@ -317,9 +381,6 @@ protected slots:
   void slotTouchMessage();
 
 protected:
-  /** Returns the current message or 0 if none. */
-  KMMessage* message(void) const;
-
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
@@ -330,6 +391,20 @@ protected:
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
 
+  /** write all headers that are not listed in mHideExtraHeaders[mHeaderStyle-1]
+      to a string, using the formatString.
+      @param aMsg The Message from which to extract the headers
+      @param formatString Format String for a header, expected to
+        take 3 Arguments:
+        <ul>
+          <li><b>%1</b>:&nbsp;Headerfield Name</li>
+          <li><b>%2</b>:&nbsp;Translated Headerfield Name</li>
+          <li><b>%3</b>:&nbsp;Headerfield Body</li>
+        </ul>
+      @param ignoreFieldsList contains the fieldnames that should not be displayed by this method
+         (mostly used because those are displayed in the mail already)
+  */
+  QString visibleHeadersToString(KMMessage* aMsg, QString const &formatString, QStringList const &ignoreFieldsList);
 
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg(KMMessage* msg, bool onlyProcessHeaders=false);
@@ -352,7 +427,8 @@ protected:
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
-  virtual void writeBodyStr( const QCString bodyString, QTextCodec *aCodec,
+  virtual void writeBodyStr( const QCString bodyString,
+			     const QTextCodec *aCodec,
                              const QString& fromAddress,
                              bool* isSigned = 0,
                              bool* isEncrypted = 0 );
@@ -390,7 +466,6 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
-
 private:
   /** extracted parts from writeBodyStr() */
   class PartMetaData;
@@ -414,6 +489,9 @@ protected:
   QLabel *mColorBar;
   KHTMLPart *mViewer;
   HeaderStyle mHeaderStyle;
+  bool mShowAllHeaders[HdrAll];
+  QStringList mHeadersHide[HdrAll];
+  QStringList mHeadersShow[HdrAll];
   AttachmentStyle mAttachmentStyle;
   bool mAutoDelete;
   QFont mBodyFont, mFixedFont;
@@ -429,7 +507,7 @@ protected:
   QTimer mHtmlTimer;
   QTimer mDelayedMarkTimer;
   QStringList mHtmlQueue;
-  QTextCodec *mCodec;
+  const QTextCodec *mCodec;
   bool mAutoDetectEncoding;
   bool mMsgDisplay;
   bool mDelayedMarkAsRead;
@@ -442,17 +520,12 @@ protected:
   bool mIsFirstTextPart;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
-  // colors for PGP (Frame, Header, Body)
-  QColor cPgpOk1F, cPgpOk1H, cPgpOk1B,
+  QColor cPgpOk1F, cPgpOk1H, cPgpOk1B, // colors for PGP (Frame, Header, Body)
          cPgpOk0F, cPgpOk0H, cPgpOk0B,
          cPgpWarnF, cPgpWarnH, cPgpWarnB,
          cPgpErrF, cPgpErrH, cPgpErrB,
          cPgpEncrF, cPgpEncrH, cPgpEncrB;
-  // warning text preceeding HTML messages
-  QColor cHtmlWarning;
-  // colors for colorbar
-  QColor cCBnoHtmlB, cCBnoHtmlF,
-         cCBisHtmlB, cCBisHtmlF;
+  QColor cCBpgp, cCBplain, cCBhtml; // colors for colorbar
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;
   bool    mUnicodeFont;
@@ -466,8 +539,24 @@ protected:
   int* mShowMIMETreeMode;
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
-  static QPtrList<KMReaderWin> mStandaloneWindows;
-  
+  QWidget *mMainWindow;
+  KActionCollection *mActionCollection;
+  // Composition actions
+  KAction *mReplyAction, *mReplyAllAction, *mReplyListAction,
+      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
+      *mBounceAction, *mNoQuoteReplyAction;
+  KActionMenu *mForwardActionMenu;
+  // Filter actions
+  KActionMenu *mFilterMenu;
+  KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
+      *mListFilterAction, *mViewSourceAction, *mPrintAction,
+      *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+      *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction,
+      *mUrlOpenAction, *mUrlSaveAsAction;
+
+  KToggleAction *mToggleFixFontAction;
+  KURL mUrlClicked;
+
 public:
   bool mDebugReaderCrypto;
 };

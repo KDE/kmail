@@ -54,19 +54,19 @@ KMAddrBookSelDlg::~KMAddrBookSelDlg()
 
 void KMAddrBookSelDlg::readConfig()
 {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
   mCheckBox->setChecked( general.readBoolEntry("Show recent addresses in Addresses-dialog", false) );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
   if ( geometry.hasKey( "AddressBook dialog size" ) )
     resize( geometry.readSizeEntry( "AddressBook dialog size" ) );
 }
 
 void KMAddrBookSelDlg::saveConfig()
 {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
   general.writeEntry( "Show recent addresses in Addresses-dialog",
                       mCheckBox->isChecked() );
-  KConfigGroup geometry( kapp->config(), "Geometry" );
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
   geometry.writeEntry( "AddressBook dialog size", size() );
 }
 

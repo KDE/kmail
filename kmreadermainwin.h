@@ -9,6 +9,7 @@ class KMReaderWin;
 class KMMessage;
 class KMMessagePart;
 class KAction;
+class KMFolderIndex;
 template <typename T, typename S> class QMap;
 
 class KMReaderMainWin : public KMTopLevelWidget

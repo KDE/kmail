@@ -2,12 +2,12 @@
 #include "certificatewizardimpl.h"
 
 #include <qlistview.h>
+#include <qpopupmenu.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
 
-#include <kdebug.h>
 #include <klocale.h>
-
+#include <kdebug.h>
 /*
  *  Constructs a CertificateHandlingDialogImpl which is a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'
@@ -34,9 +34,7 @@ void CertificateHandlingDialogImpl::slotDeleteCertificate()
 
     QListViewItem* item = certificatesLV->selectedItem();
     Q_ASSERT( item );
-    if( item ) {
-        delete item;
-    }
+    delete item;
 }
 
 /*
@@ -45,8 +43,8 @@ void CertificateHandlingDialogImpl::slotDeleteCertificate()
 void CertificateHandlingDialogImpl::slotCertificateSelectionChanged( QListViewItem* item )
 {
     if( item ) {
-        requestExtensionPB->setEnabled( true );
-        requestChangePB->setEnabled( true );
+        requestPopup->setItemEnabled(1, true);
+        requestPopup->setItemEnabled(2, true);
         deletePB->setEnabled( true );
         if( item->text( 2 ) == i18n( "Sign/Encrypt" ) ) {
             useForSigningPB->setEnabled( true );
@@ -65,8 +63,8 @@ void CertificateHandlingDialogImpl::slotCertificateSelectionChanged( QListViewIt
     } else {
         useForSigningPB->setEnabled( false );
         useForEncryptingPB->setEnabled( false );
-        requestExtensionPB->setEnabled( false );
-        requestChangePB->setEnabled( false );
+        requestPopup->setItemEnabled(1, false);
+        requestPopup->setItemEnabled(2, true);
         deletePB->setEnabled( false );
     }
 }

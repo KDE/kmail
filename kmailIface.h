@@ -22,7 +22,6 @@ k_dcop:
   virtual QStringList accounts() = 0;
   virtual void checkAccount(const QString &account) = 0;
   virtual void openReader() = 0;
-
   virtual int openComposer(const QString &to, const QString &cc,
                            const QString &bcc, const QString &subject,
                            const QString &body, int hidden,
@@ -83,4 +82,3 @@ k_dcop:
 };
 
 #endif
-

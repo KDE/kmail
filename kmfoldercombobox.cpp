@@ -94,7 +94,7 @@ void KMFolderComboBox::refreshFolders()
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
   createFolderList( &names, &folders );
-  
+
   KMFolder *folder = getFolder();
   this->clear();
   insertStringList( names );
@@ -108,12 +108,12 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
   createFolderList( &names, &folders );
-  
+
   int idx = folders.findIndex( aFolder );
   if (idx == -1)
     idx = folders.findIndex( kernel->draftsFolder() );
   setCurrentItem( idx >= 0 ? idx : 0 );
-  
+
   mFolder = aFolder;
 }
 
@@ -128,7 +128,7 @@ void KMFolderComboBox::setFolder( const QString &idString )
      mSpecialIdx = count();
      insertItem(idString, -1);
      setCurrentItem(mSpecialIdx);
-     
+
      mFolder = 0;
      return;
   }
@@ -141,7 +141,7 @@ KMFolder *KMFolderComboBox::getFolder()
 {
   if (mFolder)
     return mFolder;
-  
+
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
   createFolderList( &names, &folders );
@@ -157,7 +157,7 @@ KMFolder *KMFolderComboBox::getFolder()
       return *folders.at( idx );
     idx++;
   }
-  
+
   return kernel->draftsFolder();
 }
 

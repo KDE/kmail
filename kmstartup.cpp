@@ -60,7 +60,7 @@ void kmsetSignalHandler(void (*handler)(int))
 }
 //-----------------------------------------------------------------------------
 
-namespace KMail
+namespace kmail
 {
 QString getMyHostName(void)
 {

@@ -6,6 +6,7 @@
 #include "kmfolderdir.h"
 #include "kmfoldermaildir.h"
 #include "kmfolderimap.h"
+#include "kmfoldersearch.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -16,10 +17,12 @@
 
 //=============================================================================
 //=============================================================================
-KMFolderRootDir::KMFolderRootDir(const QString& path, bool imap):
-  KMFolderDir(0, path, imap)
+KMFolderRootDir::KMFolderRootDir(KMFolderMgr* manager, const QString& path, 
+				 KMFolderDirType dirType):
+  KMFolderDir(0, path, dirType)
 {
   setPath(path);
+  mManager = manager;
 }
 
 //-----------------------------------------------------------------------------
@@ -45,17 +48,24 @@ QString KMFolderRootDir::path() const
 }
 
 
+//-----------------------------------------------------------------------------
+KMFolderMgr* KMFolderRootDir::manager() const
+{
+  return mManager;
+}
+
 
 //=============================================================================
 //=============================================================================
-KMFolderDir::KMFolderDir(KMFolderDir* parent, const QString& name, bool imap):
+KMFolderDir::KMFolderDir(KMFolderDir* parent, const QString& name,
+			 KMFolderDirType dirType):
   KMFolderNode(parent,name), KMFolderNodeList()
 {
 
   setAutoDelete(TRUE);
 
   mType = "dir";
-  mImap = imap;
+  mDirType = dirType;
 }
 
 
@@ -73,17 +83,19 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   int rc;
 
   assert(!aFolderName.isEmpty());
-  if (mImap)
+  if (mDirType == KMImapDir)
     fld = new KMFolderImap(this, aFolderName);
   else if (aFolderType == KMFolderTypeMaildir)
     fld = new KMFolderMaildir(this, aFolderName);
+  else if (aFolderType == KMFolderTypeSearch)
+    fld = new KMFolderSearch(this, aFolderName);
   else
     fld = new KMFolderMbox(this, aFolderName);
   assert(fld != 0);
 
   fld->setSystemFolder(aSysFldr);
 
-  rc = fld->create(mImap);
+  rc = fld->create(mDirType == KMImapDir);
   if (rc)
   {
     QString wmsg = i18n("Error while creating file `%1':\n%2").arg(aFolderName).arg(strerror(rc));
@@ -172,7 +184,7 @@ bool KMFolderDir::reload(void)
     {
       QString maildir(fname + "/new");
       // see if this is a maildir before assuming a subdir
-      if (!mImap && dir.exists(maildir))
+      if ((mDirType != KMImapDir) && dir.exists(maildir))
       {
         folder = new KMFolderMaildir(this, fname);
         append(folder);
@@ -181,7 +193,7 @@ bool KMFolderDir::reload(void)
       else
         diList.append(fname);
     }
-    else if (mImap)
+    else if (mDirType == KMImapDir)
     {
       if (KMFolderImap::encodeFileName(KMFolderImap::decodeFileName(fname))
           == fname)
@@ -190,6 +202,12 @@ bool KMFolderDir::reload(void)
         append(folder);
         folderList.append(folder);
       }
+    }
+    else if (mDirType == KMSearchDir)
+    {
+	folder = new KMFolderSearch(this, fname);
+	append(folder);
+	folderList.append(folder);
     }
     else // all other files are folders (at the moment ;-)
     {
@@ -206,7 +224,7 @@ bool KMFolderDir::reload(void)
         ++it)
       if (*it == "." + folder->fileName() + ".directory")
       {
-        KMFolderDir* folderDir = new KMFolderDir(this, *it, mImap);
+        KMFolderDir* folderDir = new KMFolderDir(this, *it, mDirType);
         folderDir->reload();
         append(folderDir);
         folder->setChild(folderDir);
@@ -217,6 +235,8 @@ bool KMFolderDir::reload(void)
   return TRUE;
 }
 
+
+//-----------------------------------------------------------------------------
 KMFolderNode* KMFolderDir::hasNamedFolder(const QString& aName)
 {
   KMFolderNode* fNode;
@@ -226,6 +246,14 @@ KMFolderNode* KMFolderDir::hasNamedFolder(const QString& aName)
   }
   return 0;
 }
+
+
+//-----------------------------------------------------------------------------
+KMFolderMgr* KMFolderDir::manager() const
+{
+  return parent()->manager();
+}
+
 
 #include "kmfolderdir.moc"
 

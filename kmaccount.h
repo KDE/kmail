@@ -50,6 +50,7 @@ class KMAccount: public QObject
 {
   Q_OBJECT
   friend class KMAcctMgr;
+  friend class KMFolderJob;
 
 public:
   virtual ~KMAccount();
@@ -88,6 +89,12 @@ public:
    * account. */
   KMFolder* folder(void) const { return ((KMFolder*)((KMAcctFolder*)mFolder)); }
   virtual void setFolder(KMFolder*, bool addAccount = false);
+  
+  /**
+   * the id of the trash folder (if any) for this account
+   */
+  const QString& trash(void) const { return mTrash; }
+  virtual void setTrash(const QString& aTrash) { mTrash = aTrash; }
 
   /**
    * Process new mail for this account if one arrived. Returns TRUE if new
@@ -121,6 +128,15 @@ public:
    */
   inline int defaultCheckInterval(void) const { return DefaultCheckInterval; }
 
+  /**
+   * Deletes the set of FolderJob associated with this folder.
+   */
+  void deleteFolderJobs();
+
+  /**
+   * delete jobs associated with this message
+   */
+  virtual void ignoreJobsForMessage( KMMessage* );
   /**
    * Set/get whether account should be part of the accounts checked
    * with "Check Mail".
@@ -187,6 +203,7 @@ protected:
 protected:
   QString       mName;
   QString       mPrecommand;
+  QString       mTrash;
   KMAcctMgr*    mOwner;
   QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer, mReceiptTimer;
@@ -195,6 +212,7 @@ protected:
   bool mCheckingMail;
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
+  QPtrList<KMFolderJob>  mJobList;
 
 private:
     /**

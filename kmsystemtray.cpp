@@ -34,7 +34,6 @@
 #include <qpixmap.h>
 #include <qpixmapcache.h>
 
-#include "kaction.h"
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "kmfolder.h"
@@ -42,6 +41,7 @@
 #include "kmkernel.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
+#include "kmmainwidget.h"
 
 /**
  * Construct a KSystemTray icon to be displayed when new mail
@@ -54,8 +54,7 @@
  * with its count of unread messages, allowing the user to jump
  * to the first unread message in each folder.
  */
-KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(parent, name),
-  mNewMessagePopupId(-1), mPopupMenu(0)
+KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(parent, name)
 {
   kdDebug(5006) << "Initting systray" << endl;
   KIconLoader *loader = KGlobal::iconLoader();
@@ -70,31 +69,14 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(pare
 
   KMFolderMgr * mgr = kernel->folderMgr();
   KMFolderMgr * imgr = kernel->imapFolderMgr();
+  KMFolderMgr * smgr = kernel->imapFolderMgr();
   connect(mgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
   connect(imgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
-}
-
-void KMSystemTray::buildPopupMenu() 
-{
-  // Delete any previously created popup menu
-  delete mPopupMenu;
-  mPopupMenu = 0;
-
-  mPopupMenu = new KPopupMenu();
-  mPopupMenu->insertTitle(*(this->pixmap()), "KMail");
-  getKMMainWin()->action("check_mail")->plug(mPopupMenu);
-  getKMMainWin()->action("check_mail_in")->plug(mPopupMenu);
-  mPopupMenu->insertSeparator();
-  getKMMainWin()->action("new_message")->plug(mPopupMenu);
-  getKMMainWin()->action("options_configure")->plug(mPopupMenu);
-  mPopupMenu->insertSeparator();
-  getKMMainWin()->action("file_quit")->plug(mPopupMenu);
+  connect(smgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
 }
 
 KMSystemTray::~KMSystemTray()
 {
-  delete mPopupMenu;
-  mPopupMenu = 0;
 }
 
 void KMSystemTray::setMode(int newMode)
@@ -176,6 +158,8 @@ void KMSystemTray::switchIcon()
     int w = mDefaultIcon.width() + (mStep * 1);
     int h = mDefaultIcon.width() + (mStep * 1);
 
+    //kdDebug(5006) << "Initting icon " << iconName << endl;
+
     // Scale icon out from default
     icon.convertFromImage(mDefaultIcon.convertToImage().smoothScale(w, h));
 
@@ -215,10 +199,10 @@ void KMSystemTray::foldersChanged()
   QValueList<QGuardedPtr<KMFolder> > folderList;
   KMFolderMgr * mgr = kernel->folderMgr();
   KMFolderMgr * imgr = kernel->imapFolderMgr();
-  //KMFolderMgr * smgr = kernel->searchFolderMgr();
+  KMFolderMgr * smgr = kernel->searchFolderMgr();
   mgr->createFolderList(&folderNames, &folderList);
   imgr->createFolderList(&folderNames, &folderList);
-  //smgr->createFolderList(&folderNames, &folderList);
+  smgr->createFolderList(&folderNames, &folderList);
 
   QStringList::iterator strIt = folderNames.begin();
 
@@ -261,40 +245,25 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
   // open popup menu on right mouse button
   if( e->button() == RightButton )
   {
+    KPopupMenu* popup = new KPopupMenu();
+    popup->insertTitle(*(this->pixmap()), "KMail");
     mPopupFolders.clear();
     mPopupFolders.resize(mFoldersWithUnread.count());
 
-    // Rebuild popup menu at click time to minimize race condition if
-    // the base KMainWidget is closed.
-    buildPopupMenu();
-
-    if(mNewMessagePopupId != -1)
+    QMap<QGuardedPtr<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
+    for(uint i=0; it != mFoldersWithUnread.end(); ++i)
     {
-      mPopupMenu->removeItem(mNewMessagePopupId);
+      kdDebug(5006) << "Adding folder" << endl;
+      if(i > mPopupFolders.size()) mPopupFolders.resize(i * 2);
+      mPopupFolders.insert(i, it.key());
+      QString item = prettyName(it.key()) + "(" + QString::number(it.data()) + ")";
+      popup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
+      ++it;
     }
 
-    if(mFoldersWithUnread.count() > 0)
-    {
-      KPopupMenu *newMessagesPopup = new KPopupMenu();
+    kdDebug(5006) << "Folders added" << endl;
 
-      QMap<QGuardedPtr<KMFolder>, int>::Iterator it = mFoldersWithUnread.begin();
-      for(uint i=0; it != mFoldersWithUnread.end(); ++i)
-      {
-        kdDebug(5006) << "Adding folder" << endl;
-        if(i > mPopupFolders.size()) mPopupFolders.resize(i * 2);
-        mPopupFolders.insert(i, it.key());
-        QString item = prettyName(it.key()) + "(" + QString::number(it.data()) + ")";
-        newMessagesPopup->insertItem(item, this, SLOT(selectedAccount(int)), 0, i);
-        ++it;
-      }
-
-      mNewMessagePopupId = mPopupMenu->insertItem(i18n("New messages in..."), 
-                                                  newMessagesPopup, mNewMessagePopupId, 3); 
-
-      kdDebug(5006) << "Folders added" << endl;
-    }
-
-    mPopupMenu->popup(e->globalPos());
+    popup->popup(e->globalPos());
   }
 
 }
@@ -370,7 +339,7 @@ KMMainWin * KMSystemTray::getKMMainWin()
     if(kmWin->isA("KMMainWin")) break;
   if(kmWin && kmWin->isA("KMMainWin"))
   {
-    return static_cast<KMMainWin *> (kmWin);
+    return dynamic_cast<KMMainWin *> (kmWin);
   }
 
   return 0;
@@ -400,7 +369,6 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   {
     /** Add folder to our internal store, or update unread count if already mapped */
     mFoldersWithUnread.insert(fldr, unread);
-    
   }
 
   /**
@@ -472,14 +440,12 @@ void KMSystemTray::selectedAccount(int id)
   /** Select folder */
   KMFolder * fldr = mPopupFolders.at(id);
   if(!fldr) return;
-  KMFolderTree * ft = mainWin->folderTree();
-  if(!ft) return;
-  QListViewItem * fldrIdx = ft->indexOfFolder(fldr);
+  QListViewItem * fldrIdx = ((KMFolderTree *) mainWin->mainKMWidget()->folderTree())->indexOfFolder(fldr);
   if(!fldrIdx) return;
 
-  ft->setCurrentItem(fldrIdx);
-  ft->selectCurrentFolder();
-  mainWin->folderSelectedUnread(fldr);
+  (dynamic_cast<KMFolderTree *> (mainWin->mainKMWidget()->folderTree()))->setCurrentItem(fldrIdx);
+  (dynamic_cast<KMFolderTree *> (mainWin->mainKMWidget()->folderTree()))->selectCurrentFolder();
+  mainWin->mainKMWidget()->folderSelectedUnread(fldr);
 }
 
 
