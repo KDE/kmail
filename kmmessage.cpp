@@ -1994,7 +1994,11 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   if (!contDisp.isEmpty())
     headers.ContentDisposition().FromString(contDisp);
 
-  part->Body().FromString(aPart->body());
+  if (!aPart->body().isNull())
+    part->Body().FromString(aPart->body());
+  else
+    part->Body().FromString("");
+
   mMsg->Body().AddBodyPart(part);
 
   mNeedsAssembly = TRUE;
