@@ -1,0 +1,29 @@
+#!/bin/bash
+
+function delete_this_key() {
+    echo "# DELETE [$GROUP]$KEY"
+}
+
+while read; do
+    # Currently unused
+    if [ "${REPLY#\[}" != "$REPLY" ] ; then # group name
+	GROUP="${REPLY:1:${#REPLY}-2}"
+	continue;
+    fi
+    # normal key=value pair:
+    KEY="${REPLY%%=*}"
+    VALUE="${REPLY#*=}"
+
+    case "$GROUP" in
+	Identity*)
+	    echo "# got Identity Key \"$KEY\""
+	    case "$KEY" in
+		"Default PGP Identity")
+		    echo "[$GROUP]PGP Signing Key=$VALUE"
+		    echo "[$GROUP]PGP Encryption Key=$VALUE"
+		    delete_this_key
+		    ;;
+	    esac
+	    ;;
+    esac
+done
