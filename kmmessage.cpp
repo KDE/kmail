@@ -4341,7 +4341,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     mMsg->Body().Parse();
   }
   mNeedsAssembly = true;
-  if (!( partSpecifier.endsWith(".HEADER") || partSpecifier.endsWith(".MIME") ))
+  if (! partSpecifier.endsWith(".HEADER") )
   {
     // notify observers
     notify();
