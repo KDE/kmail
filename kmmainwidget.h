@@ -142,6 +142,8 @@ public:
 
   KMSystemTray *systray() const;
 
+  void modifyFolder( KMFolderTreeItem* folderItem );
+
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash

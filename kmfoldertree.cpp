@@ -241,13 +241,9 @@ void KMFolderTreeItem::properties()
   if ( !mFolder )
     return;
 
-  KMFolderDialog *props;
-
-  props = new KMFolderDialog( mFolder, mFolder->parent(), static_cast<KMFolderTree *>( listView() ),
-                              i18n("Properties of Folder %1").arg( mFolder->label() ) );
-  props->exec();
-  //Nothing here the above exec() may actually delete this KMFolderTreeItem
-  return;
+  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
+  tree->mainWidget()->modifyFolder( this );
+  //Nothing here the above may actually delete this KMFolderTreeItem
 }
 
 //=============================================================================
