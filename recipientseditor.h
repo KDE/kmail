@@ -119,6 +119,8 @@ class RecipientLine : public QWidget
     void fixTabOrder( QWidget *previous );
     QWidget *tabOut() const;
 
+    void clear();
+
   signals:
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
@@ -141,6 +143,7 @@ class RecipientLine : public QWidget
   private:
     QComboBox *mCombo;
     RecipientLineEdit *mEdit;
+    QPushButton *mRemoveButton;
     bool mIsEmpty;
 };
 

@@ -32,6 +32,7 @@
 #include <kdebug.h>
 #include <kinputdialog.h>
 #include <klocale.h>
+#include <kiconloader.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -166,9 +167,17 @@ RecipientLine::RecipientLine( QWidget *parent )
   connect( mEdit, SIGNAL( leftPressed() ), mCombo, SLOT( setFocus() ) );
   connect( mCombo, SIGNAL( rightPressed() ), mEdit, SLOT( setFocus() ) );
 
-  kdDebug() << "HEIGHT: " << mEdit->minimumSizeHint().height() << endl;
+  int height = mEdit->minimumSizeHint().height();
 
-  mCombo->setFixedHeight( mEdit->minimumSizeHint().height() );
+  kdDebug() << "HEIGHT: " << height << endl;
+
+  mRemoveButton = new QPushButton( this );
+  mRemoveButton->setPixmap( SmallIcon( "clear_left" ) );
+  topLayout->addWidget( mRemoveButton );
+  connect( mRemoveButton, SIGNAL( clicked() ), SLOT( slotPropagateDeletion() ) );
+
+  mCombo->setFixedHeight( height );
+  mRemoveButton->setFixedHeight( height );
 }
 
 void RecipientLine::slotFocusUp()
@@ -259,13 +268,18 @@ void RecipientLine::fixTabOrder( QWidget *previous )
 {
   setTabOrder( previous, mCombo );
   setTabOrder( mCombo, mEdit );
+  setTabOrder( mEdit, mRemoveButton );
 }
 
 QWidget *RecipientLine::tabOut() const
 {
-  return mEdit;
+  return mRemoveButton;
 }
 
+void RecipientLine::clear()
+{
+  mEdit->clear();
+}
 
 RecipientsView::RecipientsView( QWidget *parent )
   : QScrollView( parent )
@@ -374,7 +388,9 @@ void RecipientsView::slotUpPressed( RecipientLine *line )
 
 void RecipientsView::slotDecideLineDeletion( RecipientLine *line )
 {
-  if ( mLines.first() != line ) {
+  if ( line == mLines.first() ) {
+    line->clear();
+  } else {
     mCurDelLine = line;
     QTimer::singleShot( 0, this, SLOT( slotDeleteDueLine( ) ) );
   }
