@@ -543,29 +543,42 @@ void AccountDialog::makePopAccountPage()
   QWidget *page2 = new QWidget( tabWidget );
   tabWidget->addTab( page2, i18n("S&ecurity") );
   QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
-  QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
+  mPop.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
   mPop.encryptionNone =
-    new QRadioButton( i18n("&None"), group );
+    new QRadioButton( i18n("&None"), mPop.encryptionGroup );
   mPop.encryptionSSL =
-    new QRadioButton( i18n("Use &SSL for secure mail download"), group );
+    new QRadioButton( i18n("Use &SSL for secure mail download"),
+    mPop.encryptionGroup );
   mPop.encryptionTLS =
-    new QRadioButton( i18n("Use &TLS for secure mail download"), group );
-  connect(group, SIGNAL(clicked(int)), SLOT(slotPopEncryptionChanged(int)));
-  vlay->addWidget( group );
+    new QRadioButton( i18n("Use &TLS for secure mail download"),
+    mPop.encryptionGroup );
+  connect(mPop.encryptionGroup, SIGNAL(clicked(int)),
+    SLOT(slotPopEncryptionChanged(int)));
+  vlay->addWidget( mPop.encryptionGroup );
 
-  group = new QButtonGroup( 1, Qt::Horizontal,
+  mPop.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page2 );
   mPop.authAuto = new QRadioButton( i18n("Most secure method supported"),
-    group );
-  mPop.authUser = new QRadioButton( i18n("Clear text") , group );
+    mPop.authGroup );
+  mPop.authUser = new QRadioButton( i18n("Clear text") , mPop.authGroup );
   mPop.authPlain = new QRadioButton( i18n("Please translate this "
-  "authentification method only, if you have a good reason", "PLAIN"), group );
+    "authentification method only, if you have a good reason", "PLAIN"),
+    mPop.authGroup  );
   mPop.authLogin = new QRadioButton( i18n("Please translate this "
-  "authentification method only, if you have a good reason", "LOGIN"), group );
-  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD5"), group );
-  mPop.authAPOP = new QRadioButton( i18n("APOP"), group );
-  vlay->addWidget( group );
+    "authentification method only, if you have a good reason", "LOGIN"),
+    mPop.authGroup );
+  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD5"), mPop.authGroup );
+  mPop.authAPOP = new QRadioButton( i18n("APOP"), mPop.authGroup );
+  vlay->addWidget( mPop.authGroup );
+
+  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
+  mPop.checkCapabilities =
+    new QPushButton( i18n("Check, what the server supports"), page2 );
+  connect(mPop.checkCapabilities, SIGNAL(clicked()),
+    SLOT(slotCheckPopCapabilities()));
+  buttonLay->addWidget( mPop.checkCapabilities );
+  buttonLay->addStretch();
   vlay->addStretch();
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
@@ -867,10 +880,11 @@ void AccountDialog::slotImapEncryptionChanged(int id)
 void AccountDialog::slotCheckPopCapabilities()
 {
   if (mServerTest) delete mServerTest;
-  mServerTest = new KMServerTest("pop", mPop.hostEdit->text(),
+  mServerTest = new KMServerTest("pop3", mPop.hostEdit->text(),
     mPop.portEdit->text());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
     SLOT(slotPopCapabilities(const QStringList &)));
+  mPop.checkCapabilities->setEnabled(FALSE);
 }
 
 
@@ -888,6 +902,17 @@ void AccountDialog::slotCheckImapCapabilities()
 void AccountDialog::slotPopCapabilities(const QStringList &list)
 {
   mServerTest = NULL;
+  mPop.checkCapabilities->setEnabled(TRUE);
+  mPop.usePipeliningCheck->setChecked(list.findIndex("PIPELINING") != -1);
+  mPop.encryptionNone->setEnabled(list.findIndex("NORMAL-CONNECTION") != -1);
+  mPop.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
+  mPop.encryptionTLS->setEnabled(list.findIndex("STLS") != -1);
+  mPop.authPlain->setEnabled(list.findIndex("PLAIN") != -1);
+  mPop.authLogin->setEnabled(list.findIndex("LOGIN") != -1);
+  mPop.authCRAM_MD5->setEnabled(list.findIndex("CRAM-MD5") != -1);
+  mPop.authAPOP->setEnabled(list.findIndex("APOP") != -1);
+  checkHighest(mPop.encryptionGroup);
+  checkHighest(mPop.authGroup);
 }
 
 

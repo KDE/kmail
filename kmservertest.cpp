@@ -36,6 +36,11 @@ KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   mUrl.setHost(aHost);
   if (aPort != "993" && aPort != "995") mUrl.setPort(aPort.toInt());
   mSlave = KIO::Scheduler::getConnectedSlave(mUrl, mSlaveConfig);
+  if (!mSlave)
+  {
+    slotSlaveResult(NULL, 1);
+    return;
+  }
   mJob = KIO::special(mUrl, QCString("capa"), FALSE);
   KIO::Scheduler::assignJobToSlave(mSlave, mJob);
   connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
@@ -70,13 +75,20 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   const QString &)
 {
   if (aSlave != mSlave) return;
-  if (error != KIO::ERR_SLAVE_DIED) KIO::Scheduler::disconnectSlave(mSlave);
+  if (error != KIO::ERR_SLAVE_DIED && mSlave)
+    KIO::Scheduler::disconnectSlave(mSlave);
   if (mFirstTry)
   {
     mFirstTry = FALSE;
+    if (!error) mList.append("NORMAL-CONNECTION");
     mUrl.setProtocol(mUrl.protocol() + "s");
     mUrl.setPort(0);
     mSlave = KIO::Scheduler::getConnectedSlave(mUrl, mSlaveConfig);
+    if (!mSlave)
+    {
+      slotSlaveResult(NULL, 1);
+      return;
+    }
     mJob = KIO::special(mUrl, QCString("capa"), FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, mJob);
     connect(mJob, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
@@ -84,8 +96,6 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     {
       connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
               SLOT(slotData(KIO::Job *, const QString &)));
-    } else {
-      mList.append("NORMAL-CONNECTION");
     }
   } else {
     mJob = NULL;
@@ -94,7 +104,6 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
       KMessageBox::error(0, i18n("Could not connect to server %1")
       .arg(mUrl.host()));
     emit capabilities(mList);   
-    delete this;
   }
 }
 
