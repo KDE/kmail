@@ -1329,7 +1329,7 @@ void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
   // So the idea of a DCOP signal for this wouldn't work.
   if ( ( _changes & KMailICalIface::Contents ) ||
        ( _changes & KMailICalIface::ACL ) ) {
-    if ( storageFormat( folder ) == StorageXML )
+    if ( storageFormat( folder ) == StorageXML && folder->storage()->contentsType() == KMail::ContentsTypeCalendar )
       triggerKolabFreeBusy( folderURL );
   }
 }
