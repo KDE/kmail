@@ -66,6 +66,8 @@ class KSelectAction;
 class KSpell;
 class KSpellConfig;
 class KStatusBar;
+class KAction;
+class KToggleAction;
 class KTempFile;
 class KToolBar;
 class KToggleAction;

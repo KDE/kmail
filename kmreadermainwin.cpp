@@ -13,6 +13,7 @@
 #include <klocale.h>
 #include <kstdaccel.h>
 #include <kwin.h>
+#include <kaction.h>
 
 #include "kmcommands.h"
 #include "kmenubar.h"

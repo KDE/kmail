@@ -59,6 +59,7 @@ using KRecentAddress::RecentAddresses;
 #include <klocale.h>
 #include <kapplication.h>
 #include <kstatusbar.h>
+#include <kaction.h>
 
 #include <kspell.h>
 #include <kspelldlg.h>
