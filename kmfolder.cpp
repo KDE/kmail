@@ -1084,10 +1084,11 @@ void KMFolder::ignoreJobsForMessage( KMMessage *msg )
     //FIXME: the questions is : should we iterate through all
     //messages in jobs? I don't think so, because it would
     //mean canceling the jobs that work with other messages
-    if ( it.current()->msgList().first() == msg) {
-      mJobList.remove( it.current() );
-      delete it.current();
-      break;
+    if ( it.current()->msgList().first() == msg ) 
+    {
+      FolderJob* job = it.current();
+      mJobList.remove( job );
+      delete job;
     }
   }
 }
