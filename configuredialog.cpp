@@ -2374,7 +2374,7 @@ void ConfigureDialog::slotDoApply( bool everything )
   }
   if( activePage == mMime.pageIndex || everything )
   {
-    KConfigGroupSaver(config, "General");
+    KConfigGroupSaver saver(config, "General");
     config->writeEntry( "createOwnMessageIdHeaders",
                        mMime.createOwnMessageIdCheck->isChecked() );
     config->writeEntry( "myMessageIdSuffix",
