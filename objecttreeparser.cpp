@@ -722,7 +722,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
   if( cryptPlug ) {
     QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
-    QCString cipherStr( ciphertext );
+    QCString cipherStr( ciphertext.data(), ciphertext.size() + 1 );
     bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );

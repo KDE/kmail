@@ -207,7 +207,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
       size = mMsg->headerField("X-Length").toULong();
       (*it).data.resize((*it).data.size() + 1);
       (*it).data[(*it).data.size() - 1] = '\0';
-      mMsg->fromString(QCString((*it).data));
+      mMsg->fromString(QCString((*it).data.data(), (*it).data.size() + 1));
       //int idx = mFolder->find(mMsg);
       //if( idx >= 0 ) mFolder->take(idx);
       //else kdDebug(5006) << "weird, message not in folder!?!" << endl;
