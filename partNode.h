@@ -60,15 +60,6 @@ class KMMimePartTree;
 */
 class partNode
 {
-public:
-    enum CryptoType { CryptoTypeUnknown,
-                      CryptoTypeNone,
-                      CryptoTypeInlinePGP,
-                      CryptoTypeOpenPgpMIME,
-                      CryptoTypeSMIME,
-                      CryptoType3rdParty };
-
-private:
     partNode();
 
     int calcNodeIdOrFindNode( int& curId, const partNode* calcNode,
@@ -137,18 +128,6 @@ public:
     bool hasSubType( int subType ) {
       return mSubType == subType;
     }
-
-    void setCryptoType( CryptoType cryptoType ) {
-        mCryptoType = cryptoType;
-    }
-
-    CryptoType cryptoType() const {
-        return mCryptoType;
-    }
-
-    // return first not-unknown and not-none crypto type
-    // or return none (or unknown, resp.) if no other crypto type set
-    CryptoType firstCryptoType() const ;
 
     void setEncryptionState( KMMsgEncryptionState state ) {
         mEncryptionState = state;
@@ -231,11 +210,14 @@ public:
 
     bool hasContentDispositionInline() const;
 
+    QString contentTypeParameter( const char * name ) const;
+
     const QString& trueFromAddress() const;
 
     partNode * parentNode() const { return mRoot; }
     partNode * nextSibling() const { return mNext; }
     partNode * firstChild() const { return mChild; }
+    int childCount() const;
     bool processed() const { return mWasProcessed; }
 
 private:
@@ -250,7 +232,6 @@ private:
     QString       mFromAddress;
     int           mType;
     int           mSubType;
-    CryptoType    mCryptoType;
     KMMsgEncryptionState mEncryptionState;
     KMMsgSignatureState  mSignatureState;
     mutable bool  mMsgPartOk;

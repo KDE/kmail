@@ -56,7 +56,6 @@ partNode::partNode()
     mDwPart( 0 ),
     mType( DwMime::kTypeUnknown ),
     mSubType( DwMime::kSubtypeUnknown ),
-    mCryptoType( CryptoTypeUnknown ),
     mEncryptionState( KMMsgNotEncrypted ),
     mSignatureState( KMMsgNotSigned ),
     mMsgPartOk( false ),
@@ -72,7 +71,6 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
   : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
     mWasProcessed( false ),
     mDwPart( dwPart ),
-    mCryptoType( CryptoTypeUnknown ),
     mEncryptionState( KMMsgNotEncrypted ),
     mSignatureState( KMMsgNotSigned ),
     mMsgPartOk( false ),
@@ -135,7 +133,6 @@ partNode::partNode( bool deleteDwBodyPart, DwBodyPart* dwPart )
   : mRoot( 0 ), mNext( 0 ), mChild( 0 ),
     mWasProcessed( false ),
     mDwPart( dwPart ),
-    mCryptoType( CryptoTypeUnknown ),
     mEncryptionState( KMMsgNotEncrypted ),
     mSignatureState( KMMsgNotSigned ),
     mMsgPartOk( false ),
@@ -227,18 +224,30 @@ QCString partNode::subTypeString() const {
   return s.c_str();
 }
 
-partNode::CryptoType partNode::firstCryptoType() const
-{
-    CryptoType ret = cryptoType();
-    if(    (CryptoTypeUnknown == ret || CryptoTypeNone == ret)
-        && mChild )
-        ret = mChild->firstCryptoType();
-    if(    (CryptoTypeUnknown == ret || CryptoTypeNone == ret)
-        && mNext )
-        ret = mNext->firstCryptoType();
-    return ret;
+int partNode::childCount() const {
+  int count = 0;
+  for ( partNode * child = firstChild() ; child ; child = child->nextSibling() )
+    ++ count;
+  return count;
 }
 
+QString partNode::contentTypeParameter( const char * name ) const {
+  if ( !mDwPart || !mDwPart->hasHeaders() )
+    return QString::null;
+  DwHeaders & headers = mDwPart->Headers();
+  if ( !headers.HasContentType() )
+    return QString::null;
+  DwString attr = name;
+  attr.ConvertToLowerCase();
+  for ( DwParameter * param = headers.ContentType().FirstParameter() ; param ; param = param->Next() ) {
+    DwString this_attr = param->Attribute();
+    this_attr.ConvertToLowerCase(); // what a braindead design!
+    if ( this_attr == attr )
+      return QString::fromLatin1( param->Value().data(), param->Value().size() );
+    // warning: misses rfc2231 handling!
+  }
+  return QString::null;
+}
 
 KMMsgEncryptionState partNode::overallEncryptionState() const
 {

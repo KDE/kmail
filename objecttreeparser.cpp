@@ -295,15 +295,9 @@ namespace KMail {
   void ProcessResult::adjustCryptoStatesOfNode( partNode * node ) const {
     if ( ( inlineSignatureState()  != KMMsgNotSigned ) ||
 	 ( inlineEncryptionState() != KMMsgNotEncrypted ) ) {
-      if (    partNode::CryptoTypeUnknown == node->cryptoType()
-	      || partNode::CryptoTypeNone    == node->cryptoType() ){
-	node->setCryptoType( partNode::CryptoTypeInlinePGP );
-      }
       node->setSignatureState( inlineSignatureState() );
       node->setEncryptionState( inlineEncryptionState() );
     }
-    if ( partNode::CryptoTypeUnknown == node->cryptoType() )
-      node->setCryptoType( partNode::CryptoTypeNone );
   }
 
   //////////////////
@@ -1151,7 +1145,6 @@ namespace KMail {
       data = child->findTypeNot( DwMime::kTypeApplication,
 				 DwMime::kSubtypePgpSignature, false, true );
       if ( data ) {
-	node->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
 	useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "openpgp" );
       }
     } else {
@@ -1162,7 +1155,6 @@ namespace KMail {
 	data = child->findTypeNot( DwMime::kTypeApplication,
 				   DwMime::kSubtypePkcs7Signature, false, true );
 	if ( data ) {
-	  node->setCryptoType( partNode::CryptoTypeSMIME );
 	  useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
 	}
       } else {
@@ -1227,14 +1219,12 @@ namespace KMail {
     partNode * data = child->findType( DwMime::kTypeApplication,
 				       DwMime::kSubtypeOctetStream, false, true );
     if ( data ) {
-      node->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
       useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "openpgp" );
     }
     if ( !data ) {
       data = child->findType( DwMime::kTypeApplication,
 			      DwMime::kSubtypePkcs7Mime, false, true );
       if ( data ) {
-	node->setCryptoType( partNode::CryptoTypeSMIME );
 	useThisCryptPlug = kmkernel->cryptPlugList()->findForLibName( "smime" );
       }
     }
@@ -1400,7 +1390,6 @@ namespace KMail {
 	    && DwMime::kSubtypeEncrypted == node->parentNode()->subType() ) {
       kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
       node->setEncryptionState( KMMsgFullyEncrypted );
-      node->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
       if ( keepEncryptions() ) {
 	const QCString cstr = node->msgPart().bodyDecoded();
 	if ( mReader )
@@ -1473,8 +1462,15 @@ namespace KMail {
       return true;
     }
 
+    const QString smimeType = node->contentTypeParameter("smime-type").lower();
+
+    if ( smimeType == "certs-only" ) {
+      // will become an icon:
+      result.setNeverDisplayInline( true );
+      return false;
+    }
+
     kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n" << endl;
-    node->setCryptoType( partNode::CryptoTypeSMIME );
     if ( !node->dwPart() || !node->dwPart()->hasHeaders() )
       return false;
 
@@ -1483,12 +1479,8 @@ namespace KMail {
       return false;
     CryptPlugWrapperSaver cpws( this, smimeCrypto );
 
-    DwHeaders & headers( node->dwPart()->Headers() );
-    QCString ctypStr( headers.ContentType().AsString().c_str() );
-    // ### ugh.
-    ctypStr.replace( "\"", "" );
-    bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
-    bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
+    bool isSigned      = smimeType == "signed-data";
+    bool isEncrypted   = smimeType == "enveloped-data";
 
     // Analyze "signTestNode" node to find/verify a signature.
     // If zero this verification was successfully done after
