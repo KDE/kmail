@@ -90,7 +90,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
     mFormatComboBox = new QComboBox( FALSE, privateLayoutWidget, "mFormatComboBox" );
     mMailboxFormatLabel->setBuddy( mFormatComboBox );
-    QWhatsThis::add( mFormatComboBox, i18n( "Select whether you want to store the messages in this folder as one file per  message (maildir) or as one big file (mbox). KMail uses maildir by default and this only needs to be changed in rare circumstances. If you are unsure, leave this option as is." ) );
+    QWhatsThis::add( mFormatComboBox, i18n( "Select whether you want to store the messages in this folder as one file per  message (maildir) or as one big file (mbox). KMail uses maildir by default and this only needs to be changed in rare circumstances. If you are unsure, leave this option as-is." ) );
 
     mFormatComboBox->insertItem("mbox", 0);
     mFormatComboBox->insertItem("maildir", 1);
@@ -117,7 +117,7 @@ NewFolderDialog::NewFolderDialog( QWidget* parent, KMFolder *folder )
 
     mContentsComboBox = new QComboBox( FALSE, privateLayoutWidget, "mContentsComboBox" );
     mContentsLabel->setBuddy( mContentsComboBox );
-    QWhatsThis::add( mContentsComboBox, i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as is." ) );
+    QWhatsThis::add( mContentsComboBox, i18n( "Select whether you want the new folder to be used for mail storage of for storage of groupware items such as tasks or notes. The default is mail. If you are unsure, leave this option as-is." ) );
     mContentsComboBox->insertItem( i18n( "Mail" ) );
     mContentsComboBox->insertItem( i18n( "Calendar" ) );
     mContentsComboBox->insertItem( i18n( "Contacts" ) );

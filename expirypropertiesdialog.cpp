@@ -156,7 +156,7 @@ void ExpiryPropertiesDialog::slotOk()
 {
   bool enableGlobally = expireReadMailCB->isChecked() || expireUnreadMailCB->isChecked();
   if ( enableGlobally && moveToRB->isChecked() && !folderSelector->folder() ) {
-    KMessageBox::error( this, i18n("Please select a folder to expiry messages into."),
+    KMessageBox::error( this, i18n("Please select a folder to expire messages into."),
         i18n( "No folder selected" ) );
     return;
   } 
