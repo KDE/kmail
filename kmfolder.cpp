@@ -767,17 +767,21 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   // write message to folder file
   fseek(mStream, -2, SEEK_END);
-  fread(endStr, 2, 1, mStream); // ensure separating empty line
+  fread(endStr, 1, 2, mStream); // ensure separating empty line
   if (ftell(mStream) > 0 && endStr[0]!='\n') 
   {
-    if (endStr[1]!='\n') fwrite("\n\n", 2, 1, mStream);
+    if (endStr[1]!='\n')
+    {
+      //printf ("****endStr[1]=%c\n", endStr[1]);
+      fwrite("\n\n", 1, 2, mStream);
+    }
     else fwrite("\n", 1, 1, mStream);
   }
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
   fwrite("From aaa@aaa Mon Jan 01 00:00:00 1997\n", 38, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
-  if (msgText[len-1]!='\n') fwrite("\n\n", 1, 1, mStream);
+  if (msgText[len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
   fflush(mStream);
   size = ftell(mStream) - offs;
 
