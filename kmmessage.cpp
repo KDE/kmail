@@ -324,9 +324,9 @@ QString KMMessage::headerAsString() const
 {
   DwHeaders& header = mMsg->Headers();
   header.Assemble();
-  if(header.AsString() != "")
-    return header.AsString().c_str();
-  return "";
+  if ( header.AsString().empty() )
+    return QString::null;
+  return QString::fromLatin1( header.AsString().c_str() );
 }
 
 
