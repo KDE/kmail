@@ -152,6 +152,9 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     return FALSE;
   }
 
+  //Ensure the message is correctly and fully parsed
+  kmkernel->outboxFolder()->unGetMsg( kmkernel->outboxFolder()->count() - 1 );
+
   if (sendNow && !mSendInProgress) rc = sendQueued();
   else rc = TRUE;
   kmkernel->outboxFolder()->close();
