@@ -59,6 +59,7 @@ using KMail::AttachmentStrategy;
 using KMail::HeaderStrategy;
 #include "headerstyle.h"
 using KMail::HeaderStyle;
+#include "folderjob.h"
 using KMail::FolderJob;
 
 #include <assert.h>
@@ -86,6 +87,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mTopLayout = new QVBoxLayout(this);
   mFilterActions.setAutoDelete(true);
   mFilterCommands.setAutoDelete(true);
+  mJob = 0;
 
   mPanner1Sep << 1 << 1;
   mPanner2Sep << 1 << 1;
@@ -1339,13 +1341,17 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMsgSelected(KMMessage *msg)
 {
-  if (msg && msg->parent() && !msg->isComplete())
+  if ( msg && msg->parent() && !msg->isComplete() )
   {
+    if ( msg->transferInProgress() )
+      return;
     mMsgView->clear();
-    FolderJob *job = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, "STRUCTURE");
-    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+    if ( mJob ) 
+      disconnect( mJob, 0, this, 0 );
+    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, "STRUCTURE");
+    connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
-    job->start();
+    mJob->start();
   } else {
     mMsgView->setMsg(msg);
   }

@@ -239,13 +239,13 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
+  aMsg->setTransferInProgress( false );
   if (folder) {
     kernel->undoStack()->pushSingleAction( aMsg->getMsgSerNum(), folder, this );
     int idx = folder->find( aMsg );
-    if ( idx != -1 )
-      folder->take( idx );
+    assert( idx != -1 );
+    folder->take( idx );
   }
-  aMsg->setTransferInProgress( false );
   // Remember the status, so it can be transfered to the new message.
   mMetaDataMap.insert(aMsg->msgIdMD5(), new KMMsgMetaData(aMsg->status()));
 
@@ -266,6 +266,7 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
     kernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
     // Remember the status, so it can be transfered to the new message.
     mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
+    msg->setTransferInProgress( false );
   }
   if (folder) folder->take(msgList);
   msgList.setAutoDelete(true);
@@ -890,7 +891,8 @@ QCString KMFolderImap::statusToFlags(KMMsgStatus status)
 void
 KMFolderImap::ignoreJobsForMessage( KMMessage* msg )
 {
-  if (!msg || msg->transferInProgress())
+  if ( !msg || msg->transferInProgress() || 
+       !msg->parent() || msg->parent()->folderType() != KMFolderTypeImap )
     return;
   KMAcctImap *account;
   if ( !(account = static_cast<KMFolderImap*>(msg->parent())->account()) )
@@ -930,7 +932,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       {
         // assign the sernum from the cache
         const ulong sernum = (ulong) uidmap[uid];
-        kdDebug() << "set sernum:" << sernum << " for " << uid << endl;
+//        kdDebug(5006) << "set sernum:" << sernum << " for " << uid << endl;
         msg->setMsgSerNum(sernum);
         // delete the entry
         uidmap.remove(uid);
@@ -942,7 +944,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
          messages explicitly emit the signal below on its own, so the folder
          manager realizes there is a new message. */
       emit msgAdded(this, msg->getMsgSerNum());
-      close();
       // Transfer the status, if it is cached.
       QString id = msg->msgIdMD5();
       if ( mMetaDataMap.find( id ) ) {
@@ -953,6 +954,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       }
       // Merge with the flags from the server.
       flagsToStatus((KMMsgBase*)msg, flags);
+      close();
 
       if (count() > 1) unGetMsg(count() - 1);
       mLastUid = uid;

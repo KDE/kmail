@@ -220,12 +220,12 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::slotSimpleResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
+  JobIterator it = findJob( job );
   bool quiet = FALSE;
   if (it != mapJobData.end())
   {
     quiet = (*it).quiet;
-    mapJobData.remove(it);
+    removeJob(it);
   }
   if (job->error())
   {

@@ -50,6 +50,7 @@ namespace KMail {
   class AttachmentStrategy;
   class HeaderStrategy;
   class HeaderStyle;
+  class FolderJob;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -370,6 +371,7 @@ protected:
   bool mDestructed;
   QPtrList<KAction> mFilterActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
+  QGuardedPtr <KMail::FolderJob> mJob;
 
   KMSystemTray  *mSystemTray;
 signals:

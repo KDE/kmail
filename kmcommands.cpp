@@ -195,13 +195,11 @@ void KMCommand::transferSelectedMsgs()
       thisMsg = folder->getMsg(idx);
     }
     if (!thisMsg) continue;
-    if (thisMsg->transferInProgress())
+    if ( thisMsg->transferInProgress() && 
+         thisMsg->parent()->folderType() == KMFolderTypeImap )
     {
-      // suppose that this message is currently downloading and it's therefore ok to add it
-      // otherwise we end up without a message
-      mRetrievedMsgs.append(thisMsg);
-      thisMsg->setTransferInProgress(true);
-      continue;
+      thisMsg->setTransferInProgress( false, true );
+      thisMsg->parent()->ignoreJobsForMessage( thisMsg );
     }
 
     if ( thisMsg->parent() && !thisMsg->isComplete() && !mProgressDialog->wasCancelled() )
@@ -1380,8 +1378,18 @@ void KMMoveCommand::execute()
     bool undo = msgBase->enableUndo();
     int idx = srcFolder->find(msgBase);
     assert(idx != -1);
-    msg = srcFolder->getMsg(idx);
-    if (msg->transferInProgress()) continue;
+    if ( msgBase->isMessage() )
+      msg = static_cast<KMMessage*>(msgBase);
+    else 
+      msg = srcFolder->getMsg(idx);
+
+    if ( msg->transferInProgress() &&
+         srcFolder->folderType() == KMFolderTypeImap )
+    {
+      // cancel the download
+      msg->setTransferInProgress( false, true );
+      static_cast<KMFolderImap*>(srcFolder)->ignoreJobsForMessage( msg );
+    }
 
     if (mDestFolder) {
       if (mDestFolder->folderType() == KMFolderTypeImap) {
@@ -1390,7 +1398,7 @@ void KMMoveCommand::execute()
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
-          if (undo)
+          if (undo && mb)
           {
             if ( undoId == -1 )
               undoId = kernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
@@ -1401,9 +1409,9 @@ void KMMoveCommand::execute()
     } else {
       // really delete messages that are already in the trash folder
       if (srcFolder->folderType() == KMFolderTypeImap) {
-	if (!folderDeleteList[srcFolder])
-	  folderDeleteList[srcFolder] = new QPtrList<KMMessage>;
-	folderDeleteList[srcFolder]->append( msg );
+        if (!folderDeleteList[srcFolder])
+          folderDeleteList[srcFolder] = new QPtrList<KMMessage>;
+        folderDeleteList[srcFolder]->append( msg );
       } else {
         srcFolder->removeMsg(idx);
         delete msg;

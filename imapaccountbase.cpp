@@ -326,21 +326,18 @@ namespace KMail {
     // and go
     KIO::SimpleJob *job = KIO::listDir(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
-    mapJobData.insert(job, jd);
+    insertJob(job, jd);
     connect(job, SIGNAL(result(KIO::Job *)),
         this, SLOT(slotListResult(KIO::Job *)));
     connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
         this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
-    displayProgress();
   }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
   {
-    QMap<KIO::Job *, jobData>::Iterator it =
-      mapJobData.find(job);
-    if (it == mapJobData.end()) return;
-    assert(it != mapJobData.end());
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
     QString name;
     KURL url;
     QString mimeType;
@@ -387,10 +384,8 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotListResult(KIO::Job * job)
   {
-    QMap<KIO::Job *, jobData>::Iterator it =
-      mapJobData.find(job);
-    if (it == mapJobData.end()) return;
-    assert(it != mapJobData.end());
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
     if (job->error())
     {
       slotSlaveError( mSlave, job->error(),
@@ -403,11 +398,10 @@ namespace KMail {
       emit receivedFolders(mSubfolderNames, mSubfolderPaths,
           mSubfolderMimeTypes, *it);
     }
-    if (mSlave) mapJobData.remove(it);
+    if (mSlave) removeJob(it);
     mSubfolderNames.clear();
     mSubfolderPaths.clear();
     mSubfolderMimeTypes.clear();
-    displayProgress();
   }
 
   //-----------------------------------------------------------------------------
@@ -434,21 +428,18 @@ namespace KMail {
     // a bit of a hack to save one slot
     if (subscribe) jd.onlySubscribed = true;
     else jd.onlySubscribed = false;
-    mapJobData.insert(job, jd);
+    insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
         SLOT(slotSubscriptionResult(KIO::Job *)));
-
-    displayProgress();
   }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSubscriptionResult( KIO::Job * job )
   {
     // result of a subscription-job
-    QMap<KIO::Job *, jobData>::Iterator it =
-      mapJobData.find(job);
-    if (it == mapJobData.end()) return;
+    JobIterator it = findJob( job );
+    if ( it == jobsEnd() ) return;
     if (job->error())
     {
       slotSlaveError( mSlave, job->error(),
@@ -458,8 +449,7 @@ namespace KMail {
       emit subscriptionChanged(
           static_cast<KIO::SimpleJob*>(job)->url().path(), (*it).onlySubscribed );
     }
-    if (mSlave) mapJobData.remove(it);
-    displayProgress();
+    if (mSlave) removeJob(it);
   }
 
   //-----------------------------------------------------------------------------

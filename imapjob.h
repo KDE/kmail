@@ -58,8 +58,6 @@ public:
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
 
-  static void ignoreJobsForMessage( KMMessage *msg );
-
 private slots:
   void slotGetMessageResult( KIO::Job * job );
   void slotGetBodyStructureResult( KIO::Job * job );

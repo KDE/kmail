@@ -3509,11 +3509,14 @@ bool KMMessage::addressIsInAddressList( const QString& address,
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setTransferInProgress(bool value)
+void KMMessage::setTransferInProgress( bool value, bool force )
 {
-  value ? ++mTransferInProgress : --mTransferInProgress;
-  kdDebug(5006) << "setTransferInProgress " << mTransferInProgress << " of " << subject() << endl;
-//  Q_ASSERT(mTransferInProgress >= 0 && mTransferInProgress <= 1);
+  if ( force && !value )
+    mTransferInProgress = 0;
+  else
+    value ? ++mTransferInProgress : --mTransferInProgress;
+  if ( mTransferInProgress < 0 )
+    mTransferInProgress = 0;
 }
 
 

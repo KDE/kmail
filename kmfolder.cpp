@@ -557,6 +557,7 @@ KMMsgInfo* KMFolder::unGetMsg(int idx)
     // Remove this message from all jobs' list it might still be on.
     // setIndexEntry deletes the message.
     KMMessage *msg = static_cast<KMMessage*>(mb);
+    if ( msg->transferInProgress() ) return 0;
     ignoreJobsForMessage( msg );
     return setIndexEntry( idx, msg );
   }
@@ -1080,7 +1081,9 @@ void KMFolder::ignoreJobsForMessage( KMMessage *msg )
   if ( !msg || msg->transferInProgress() )
     return;
 
-  for( QPtrListIterator<FolderJob> it( mJobList ); it.current(); ++it ) {
+  QPtrListIterator<FolderJob> it( mJobList );
+  while ( it.current() )
+  {
     //FIXME: the questions is : should we iterate through all
     //messages in jobs? I don't think so, because it would
     //mean canceling the jobs that work with other messages
@@ -1089,7 +1092,8 @@ void KMFolder::ignoreJobsForMessage( KMMessage *msg )
       FolderJob* job = it.current();
       mJobList.remove( job );
       delete job;
-    }
+    } else
+      ++it;
   }
 }
 

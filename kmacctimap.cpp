@@ -201,47 +201,55 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
 //-----------------------------------------------------------------------------
 void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 {
-  ImapJob *job;
-  for ( QPtrListIterator<ImapJob> it( mJobList ); it; ++it ) {
-    if ( it.current()->msgList().first() == msg) {
-      job = dynamic_cast<ImapJob*>( it.current() );
-      if (job)
+  if (!msg) return;
+  QPtrListIterator<ImapJob> it( mJobList );
+  while ( it.current() )
+  {
+    if ( it.current()->msgList().findRef( msg ) != -1 ) 
+    {
+      ImapJob *job = it.current();
+      if ( job->mJob )
       {
-        mapJobData.remove( job->mJob );
-        mJobList.remove( job );
-        delete job;
-        break;
+        job->mJob->disconnect();
+        removeJob( job->mJob );
       }
-    }
+      mJobList.remove( job );
+      delete job;
+    } else
+      ++it;
   }
 }
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 {
-  ImapJob *job;
-  for ( QPtrListIterator<ImapJob> it( mJobList ); it; ++it ) {
-    if ( it.current()->msgList().first()->parent() == folder) {
-      job = dynamic_cast<ImapJob*>( it.current() );
-      if (job)
+  QPtrListIterator<ImapJob> it( mJobList );
+  while ( it.current() )
+  {
+    if ( it.current()->msgList().first()->parent() == folder ) 
+    {
+      ImapJob *job = it.current();
+      if ( job->mJob )
       {
-        mapJobData.remove( job->mJob );
-        mJobList.remove( job );
-        delete job;
+        job->mJob->disconnect();
+        removeJob( job->mJob );
       }
-    }
+      mJobList.remove( job );
+      delete job;
+    } else
+      ++it;
   }
 }
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::slotSimpleResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
+  JobIterator it = findJob( job );
   bool quiet = FALSE;
   if (it != mapJobData.end())
   {
     quiet = (*it).quiet;
-    mapJobData.remove(it);
+    removeJob(it);
   }
   if (job->error())
   {

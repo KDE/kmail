@@ -725,10 +725,10 @@ public:
   { mIsComplete = value; }
 
   /** Return, if the message should not be deleted */
-  bool transferInProgress() { return mTransferInProgress; }
+  bool transferInProgress() { return ( mTransferInProgress > 0 ); }
 
   /** Set that the message shall not be deleted because it is still required */
-  void setTransferInProgress(bool value);
+  void setTransferInProgress(bool value, bool force = false);
 
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
