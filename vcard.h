@@ -44,20 +44,20 @@ class VCard {
   static QString getError(int err);
   
   // these add a new entry with a single value
-  int addLine(QString& name, QString& value);
-  int addQualifiedLine(QString& name, QString& qualifier, QString& value);
+  int addLine(const QString& name, const QString& value);
+  int addQualifiedLine(const QString& name, const QString& qualifier, const QString& value);
   // these add a new entry with multiple values (ie first;last;initial)
-  int addLine(QString& name, QValueList<QString>& value);
-  int addQualifiedLine(QString& name, QString& qualifier, QValueList<QString>& value);
+  int addLine(const QString& name, const QValueList<QString>& value);
+  int addQualifiedLine(const QString& name, const QString& qualifier, const QValueList<QString>& value);
   // these remove an entry from the vCard
-  bool removeLine(QString& name);
-  bool removeQualifiedLine(QString& name, QString& qualifier);
+  bool removeLine(const QString& name);
+  bool removeQualifiedLine(const QString& name, const QString& qualifier);
 
   // these query the card values
-  QString getValue(QString& name, QString& qualifier);
-  QString getValue(QString& name);
-  QValueList<QString> getValues(QString& name, QString& qualifier);
-  QValueList<QString> getValues(QString& name);
+  QString getValue(const QString& name, const QString& qualifier);
+  QString getValue(const QString& name);
+  QValueList<QString> getValues(const QString& name, const QString& qualifier);
+  QValueList<QString> getValues(const QString& name);
 
   // this clears all entries
   void clean();

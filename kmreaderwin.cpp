@@ -1259,8 +1259,7 @@ void KMReaderWin::slotAtmOpen()
         return;
       }
 
-      vcdlg = new KMDisplayVCard;
-      vcdlg->setVCard(vc);
+      vcdlg = new KMDisplayVCard(vc);
       vcdlg->show();
       return;
     }

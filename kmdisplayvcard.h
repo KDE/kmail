@@ -3,18 +3,25 @@
 
 #include <kapp.h>
 #include <kdialog.h>
+#include <ktabctl.h>
+#include <qwidget.h>
 
 #include "vcard.h"
 
-class KMDisplayVCard : public KDialog {
+class KMDisplayVCard : public KTabCtl {
  public:
-  KMDisplayVCard();
+  KMDisplayVCard(VCard *vc);
   virtual ~KMDisplayVCard();
 
   void setVCard(VCard *vc);
 
  private:
   VCard *_vc;
+
+  void BuildInterface();
+  QWidget *getFirstTab();
+  QWidget *getSecondTab();
+  QWidget *getThirdTab();
 
 };
 

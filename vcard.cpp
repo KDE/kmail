@@ -227,7 +227,7 @@ QValueList<QString> lines;
                                    j != lines.end(); ++j) {
     VCardLine _vcl;
 
-    // take spaces off the end
+    // take spaces off the end - ugly but necessary hack
     for (int g = (*j).length()-1; g > 0 && (*j)[g].isSpace(); g++)
       (*j)[g] = 0;
 
@@ -248,13 +248,20 @@ QValueList<QString> lines;
       }
 
       // split into two tokens
-      //QValueList<QString> linetokens = tokenizeBy(*j, ':');
-      QValueList<QString> linetokens = tokenizeBy(*j, QRegExp(":"));
-
-      if (linetokens.count() < 2) {  // invalid line - no ':'
+      // QValueList<QString> linetokens = tokenizeBy(*j, QRegExp(":"));
+      unsigned int tail = (*j).find(':', 0);
+      if (tail > (*j).length()) {  // invalid line - no ':'
         _err = VC_ERR_INVALID_LINE;
         break;
       }
+
+      QValueList<QString> linetokens;
+      QString tmplinetoken;
+      tmplinetoken = (*j);
+      tmplinetoken.truncate(tail);
+      linetokens.append(tmplinetoken);
+      tmplinetoken = &((*j).ascii()[tail+1]); 
+      linetokens.append(tmplinetoken);
 
       // check for qualifier and
       // set name, qualified, qualifier
@@ -346,7 +353,7 @@ void VCard::clean() {
 }
 
 
-bool VCard::removeLine(QString& name) {
+bool VCard::removeLine(const QString& name) {
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
@@ -359,7 +366,7 @@ return false;
 }
 
 
-bool VCard::removeQualifiedLine(QString& name, QString& qualifier) {
+bool VCard::removeQualifiedLine(const QString& name, const QString& qualifier) {
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
@@ -372,7 +379,7 @@ return false;
 }
 
 
-int VCard::addLine(QString& name, QString& value) {
+int VCard::addLine(const QString& name, const QString& value) {
 QValueList<QString> values;
 
   values.append(value);
@@ -381,7 +388,7 @@ return addLine(name, values);
 }
 
 
-int VCard::addQualifiedLine(QString& name, QString& qualifier, QString& value) {
+int VCard::addQualifiedLine(const QString& name, const QString& qualifier, const QString& value) {
 QValueList<QString> values;
 
   values.append(value);
@@ -390,7 +397,7 @@ return addQualifiedLine(name, qualifier, values);
 }
 
 
-int VCard::addLine(QString& name, QValueList<QString>& value) {
+int VCard::addLine(const QString& name, const QValueList<QString>& value) {
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
@@ -412,7 +419,7 @@ return false;
 }
 
 
-int VCard::addQualifiedLine(QString& name, QString& qualifier, QValueList<QString>& value) {
+int VCard::addQualifiedLine(const QString& name, const QString& qualifier, const QValueList<QString>& value) {
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
                                      ++i) {
@@ -436,7 +443,7 @@ return 0;
 }
 
 
-QString VCard::getValue(QString& name, QString& qualifier) {
+QString VCard::getValue(const QString& name, const QString& qualifier) {
 QString failed = "";
 
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
@@ -452,7 +459,7 @@ return failed;
 }
 
 
-QString VCard::getValue(QString& name) {
+QString VCard::getValue(const QString& name) {
 QString failed = "";
 
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
@@ -468,7 +475,7 @@ return failed;
 }
 
 
-QValueList<QString> VCard::getValues(QString& name, QString& qualifier) {
+QValueList<QString> VCard::getValues(const QString& name, const QString& qualifier) {
 QString failedstr = "";
 QValueList<QString> failed;
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
@@ -483,7 +490,7 @@ return failed;
 }
 
 
-QValueList<QString> VCard::getValues(QString& name) {
+QValueList<QString> VCard::getValues(const QString& name) {
 QString failedstr = "";
 QValueList<QString> failed;
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
