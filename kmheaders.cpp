@@ -2428,15 +2428,15 @@ void KMHeaders::slotRMB()
 {
   if (!topLevelWidget()) return; // safe bet
 
-  QPopupMenu *menu = new QPopupMenu;
+  QPopupMenu *menu = new QPopupMenu(this);
 
   mMenuToFolder.clear();
 
   mOwner->updateMessageMenu();
 
-  QPopupMenu *msgMoveMenu = new QPopupMenu();
+  QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
   mOwner->folderToPopupMenu( NULL, TRUE, this, &mMenuToFolder, msgMoveMenu );
-  QPopupMenu *msgCopyMenu = new QPopupMenu();
+  QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
   mOwner->folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, msgCopyMenu );
 
   bool out_folder = (mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder());
