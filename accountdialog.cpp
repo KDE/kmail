@@ -241,8 +241,8 @@ void AccountDialog::makePopAccountPage()
   topLayout->addWidget( label, 15, 0 );
   mPop.identityCombo = new QComboBox( false, page );
   topLayout->addWidget( mPop.identityCombo, 15, 1 );
-  */
   label->setEnabled(false);
+  */
   //  mPop.identityCombo->setEnabled(false);
 
   label = new QLabel( i18n("Precommand:"), page );
