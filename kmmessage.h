@@ -411,7 +411,7 @@ public:
   /** get the DwHeaders
       (make sure to call setNeedsAssembly() function after directly
        modyfying internal data like the headers) */
-  virtual DwHeaders& headers(void);
+  virtual DwHeaders& headers() const;
 
   /** tell the message that internal data were changed
       (must be called after directly modifying message structures

@@ -2389,7 +2389,7 @@ void KMMessage::setContentTransferEncoding(int aCte)
 
 
 //-----------------------------------------------------------------------------
-DwHeaders& KMMessage::headers(void)
+DwHeaders& KMMessage::headers() const
 {
   return mMsg->Headers();
 }
