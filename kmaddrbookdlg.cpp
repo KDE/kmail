@@ -35,7 +35,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, KMAddrBook* aAddrBook, const
   mAddress  = QString::null;
 
   mListBox->setSelectionMode(QListBox::Multi);
-  mListBox->setMinimumWidth(fontMetrics().maxWidth()*40);
+  mListBox->setMinimumWidth(fontMetrics().maxWidth()*20);
   mListBox->setMinimumHeight(fontMetrics().lineSpacing()*15);
   
   readConfig();
