@@ -338,9 +338,9 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
           if (!canAddMsgNow(msg, aIndex_ret))
             msgList.remove(msg);
           else {
-	    if (!msg->transferInProgress())
+            if (!msg->transferInProgress())
               msg->setTransferInProgress(true);
-	  }
+          }
         }
       }
     } // if imap
