@@ -2560,7 +2560,8 @@ void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 {
-  if ( mousePressed && (e->pos() - presspos).manhattanLength() > 4 ) {
+  if (mousePressed && 
+      (e->pos() - presspos).manhattanLength() > KGlobalSettings::dndEventDelay()) {
     mousePressed = FALSE;
     QListViewItem *item = itemAt( contentsToViewport(presspos) );
     if ( item ) {
