@@ -32,6 +32,8 @@ protected slots:
   virtual void slotOk( void );
   virtual void slotHoldsML( bool );
   virtual void slotExpireFolder( bool );
+  void slotReadExpiryUnitChanged( int );
+  void slotUnreadExpiryUnitChanged( int );
   virtual void slotEnableIcons( bool );
   virtual void slotChangeIcon( QString icon );
   /* 

@@ -232,7 +232,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   readExpiryUnits->insertItem(i18n("week(s)"));
   readExpiryUnits->insertItem(i18n("month(s)"));
   expLayout->addWidget(readExpiryUnits, 1, 2);
-
+  connect( readExpiryUnits, SIGNAL( activated( int ) ),
+           this, SLOT( slotReadExpiryUnitChanged( int ) ) );
 
   // Expiry time for unread documents.
   label = new QLabel(i18n("Expire &unread email after"), expGroup);
@@ -251,7 +252,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   unreadExpiryUnits->insertItem(i18n("week(s)"));
   unreadExpiryUnits->insertItem(i18n("month(s)"));
   expLayout->addWidget(unreadExpiryUnits, 2, 2);
-
+  connect( unreadExpiryUnits, SIGNAL( activated( int ) ),
+           this, SLOT( slotUnreadExpiryUnitChanged( int ) ) );
 
   expLayout->setColStretch(0, 3);
   expLayout->setColStretch(0, 100);
@@ -338,15 +340,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     identity->setCurrentIdentity( folder->identity() );
 
     // Set the status of widgets to represent the folder
-	// properties for auto expiry of old email.
+    // properties for auto expiry of old email.
     expireFolder->setChecked(folder->isAutoExpire());
-    if (!folder->isAutoExpire()) {
-      readExpiryTime->setEnabled(false);
-      readExpiryUnits->setEnabled(false);
-      unreadExpiryTime->setEnabled(false);
-      unreadExpiryUnits->setEnabled(false);
-    }
-    // Legal values for units are 1=days, 2=weeks, 3=months.
+    // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
     // Should really do something better than hardcoding this everywhere.
     if (folder->getReadExpireUnits() >= 0 && folder->getReadExpireUnits() < expireMaxUnits) {
       readExpiryUnits->setCurrentItem(folder->getReadExpireUnits());
@@ -365,8 +361,18 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       unreadExpiryTime->setValue(age);
     } else {
       unreadExpiryTime->setValue(28);
-  }
-
+    }
+    if (!folder->isAutoExpire()) {
+      readExpiryTime->setEnabled(false);
+      readExpiryUnits->setEnabled(false);
+      unreadExpiryTime->setEnabled(false);
+      unreadExpiryUnits->setEnabled(false);
+    }
+    else {
+      // disable the number fields if "Never" is selected
+      readExpiryTime->setEnabled( readExpiryUnits->currentItem() != 0 );
+      unreadExpiryTime->setEnabled( unreadExpiryUnits->currentItem() != 0 );
+    }
   } else {
     // Default values for everything if there isn't a folder
 	// object yet.
@@ -572,9 +578,11 @@ void KMFolderDialog::slotHoldsML( bool holdsML )
 void KMFolderDialog::slotExpireFolder(bool expire)
 {
   if (expire) {
-    readExpiryTime->setEnabled(true);
+    // disable the number field if "Never" is selected
+    readExpiryTime->setEnabled( readExpiryUnits->currentItem() != 0 );
     readExpiryUnits->setEnabled(true);
-    unreadExpiryTime->setEnabled(true);
+    // disable the number field if "Never" is selected
+    unreadExpiryTime->setEnabled( unreadExpiryUnits->currentItem() != 0 );
     unreadExpiryUnits->setEnabled(true);
   } else {
     readExpiryTime->setEnabled(false);
@@ -583,6 +591,29 @@ void KMFolderDialog::slotExpireFolder(bool expire)
     unreadExpiryUnits->setEnabled(false);
   }
 }
+
+
+/**
+ * Enable/disable the number field if appropriate
+ */
+void
+KMFolderDialog::slotReadExpiryUnitChanged( int value )
+{
+  // disable the number field if "Never" is selected
+  readExpiryTime->setEnabled( value != 0 );
+}
+
+
+/**
+ * Enable/disable the number field if appropriate
+ */
+void
+KMFolderDialog::slotUnreadExpiryUnitChanged( int value )
+{
+  // disable the number field if "Never" is selected
+  unreadExpiryTime->setEnabled( value != 0 );
+}
+
 
 void 
 KMFolderDialog::slotEnableIcons( bool yes)
