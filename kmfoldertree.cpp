@@ -169,6 +169,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   readConfig();
 
   addColumn( i18n("Folders"), 400 );
+  setShowSortIndicator(TRUE);
 
   if (!pixmapsLoaded)
   {
