@@ -1257,9 +1257,7 @@ void KMHeaders::updateMessageList(void)
       mItems[i]->reset( mFolder, i );
   }
 
-  //  KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
-// WABA: resort??
-//  resort();
+  sort();
 
   // Reggie: This is comment especially for you.
   //
