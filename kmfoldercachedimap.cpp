@@ -1149,8 +1149,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
          // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
          uidsForDeletionOnServer << uid;
       } else {
-         /* The message is OK, update flags */
-         KMFolderImap::flagsToStatus( existingMessage, flags );
+        /* The message is OK, update flags */
+        if (!mReadOnly)
+          KMFolderImap::flagsToStatus( existingMessage, flags );
          // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
     } else {
