@@ -394,6 +394,10 @@ namespace KMail {
 	       "  border-right: solid %3 1px ! important;\n"
 	       "}\n\n"
 
+               "div.spamheader {\n"
+               "  display:none ! important;\n"
+               "}\n\n"
+
 	       "div.htmlWarn {\n"
 	       "  border: 2px solid #ffffff ! important;\n"
 	       "}\n\n"
