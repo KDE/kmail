@@ -82,7 +82,6 @@
 #include <qtooltip.h>
 #include <qlabel.h>
 #include <qtextcodec.h>
-#include <qwidgetfactory.h>
 #include <qheader.h>
 
 // added for CRYPTPLUG
