@@ -1415,14 +1415,14 @@ void KMComposeWin::slotMenuViewActivated(int id)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotFind()
 {
-  mEditor->Search();
+  mEditor->search();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotReplace()
 {
-  mEditor->Replace();
+  mEditor->replace();
 }
 
 
