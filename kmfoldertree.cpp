@@ -1334,10 +1334,10 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
     if (fti && (fti != oldSelected) && (fti->folder()) && acceptDrag(e))
     {
-      int keybstate = kapp->keyboardModifiers();
-      if ( keybstate & KApplication::ControlModifier ) {
+      ButtonState keybstate = kapp->keyboardMouseState();
+      if ( keybstate == ControlButton ) {
         emit folderDropCopy(fti->folder());
-      } else if ( keybstate & KApplication::ShiftModifier ) {
+      } else if ( keybstate == ShiftButton ) {
         emit folderDrop(fti->folder());
       } else {
         if ( GlobalSettings::showPopupAfterDnD() ) {
