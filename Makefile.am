@@ -8,6 +8,7 @@ INCLUDES = -I$(top_srcdir)/libkmime \
 	-I$(top_srcdir)/libkdepim \
 	-I$(top_srcdir)/libkdenetwork \
 	-I$(top_srcdir)/libkpimidentities \
+	-I$(top_srcdir)/libemailfunctions \
 	-I$(top_srcdir)/libksieve \
 	-I$(top_srcdir)/mimelib \
 	-I$(top_srcdir)/certmanager/lib \

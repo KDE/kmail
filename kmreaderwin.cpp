@@ -100,6 +100,7 @@ using KMail::TeeHtmlWriter;
 #include <kaction.h>
 #include <kiconloader.h>
 #include <kmdcodec.h>
+#include <kasciistricmp.h>
 
 #include <qclipboard.h>
 #include <qhbox.h>
@@ -1860,7 +1861,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
 			      const QString& aFileName, const QString& pname )
 {
   KCursorSaver busy(KBusyPtr::busy());
-  if (qstricmp(aMsgPart->typeStr(), "message")==0) {
+  if (kasciistricmp(aMsgPart->typeStr(), "message")==0) {
       // if called from compose win
       KMMessage* msg = new KMMessage;
       assert(aMsgPart!=0);
@@ -1868,15 +1869,15 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       mMainWindow->setCaption(msg->subject());
       setMsg(msg, true);
       setAutoDelete(true);
-  } else if (qstricmp(aMsgPart->typeStr(), "text")==0) {
-      if (qstricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
+  } else if (kasciistricmp(aMsgPart->typeStr(), "text")==0) {
+      if (kasciistricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
         showVCard( aMsgPart );
 	return;
       }
       htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
       htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
 
-      if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0)) { // HTML
+      if (aHTML && (kasciistricmp(aMsgPart->subtypeStr(), "html")==0)) { // HTML
 	// ### this is broken. It doesn't stip off the HTML header and footer!
 	htmlWriter()->queue( aMsgPart->bodyToUnicode( overrideCodec() ) );
 	mColorBar->setHtmlMode();
@@ -1890,9 +1891,9 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
       mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
-  } else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
-             (qstricmp(aMsgPart->typeStr(), "application")==0 &&
-              qstricmp(aMsgPart->subtypeStr(), "postscript")==0))
+  } else if (kasciistricmp(aMsgPart->typeStr(), "image")==0 ||
+             (kasciistricmp(aMsgPart->typeStr(), "application")==0 &&
+              kasciistricmp(aMsgPart->subtypeStr(), "postscript")==0))
   {
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
@@ -1956,10 +1957,10 @@ void KMReaderWin::slotAtmView()
     if (pname.isEmpty()) pname=msgPart.contentDescription();
     if (pname.isEmpty()) pname="unnamed";
     // image Attachment is saved already
-    if (qstricmp(msgPart.typeStr(), "message")==0) {
+    if (kasciistricmp(msgPart.typeStr(), "message")==0) {
       atmViewMsg(&msgPart);
-    } else if ((qstricmp(msgPart.typeStr(), "text")==0) &&
-	       (qstricmp(msgPart.subtypeStr(), "x-vcard")==0)) {
+    } else if ((kasciistricmp(msgPart.typeStr(), "text")==0) &&
+	       (kasciistricmp(msgPart.subtypeStr(), "x-vcard")==0)) {
       setMsgPart( &msgPart, htmlMail(), mAtmCurrentName, pname );
     } else {
       KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
@@ -1989,7 +1990,7 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
   }
 
   KMMessagePart& msgPart = node->msgPart();
-  if (qstricmp(msgPart.typeStr(), "message")==0)
+  if (kasciistricmp(msgPart.typeStr(), "message")==0)
   {
     atmViewMsg(&msgPart);
     return;

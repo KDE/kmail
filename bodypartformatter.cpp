@@ -45,6 +45,7 @@
 #include <mimelib/utility.h>
 
 #include <kdebug.h>
+#include <kasciistricmp.h>
 
 namespace {
   class AnyTypeBodyPartFormatter
@@ -213,20 +214,20 @@ static const KMail::BodyPartFormatter * createForText( const char * subtype ) {
     switch ( subtype[0] ) {
     case 'h':
     case 'H':
-      if ( qstricmp( subtype, "html" ) == 0 )
+      if ( kasciistricmp( subtype, "html" ) == 0 )
 	return TextHtmlBodyPartFormatter::create();
       break;
     case 'r':
     case 'R':
-      if ( qstricmp( subtype, "rtf" ) == 0 )
+      if ( kasciistricmp( subtype, "rtf" ) == 0 )
 	return AnyTypeBodyPartFormatter::create();
       break;
     case 'x':
     case 'X':
     case 'v':
     case 'V':
-      if ( qstricmp( subtype, "x-vcard" ) == 0 ||
-	   qstricmp( subtype, "vcard" ) == 0 )
+      if ( kasciistricmp( subtype, "x-vcard" ) == 0 ||
+	   kasciistricmp( subtype, "vcard" ) == 0 )
 	return AnyTypeBodyPartFormatter::create();
       break;
     }
@@ -239,7 +240,7 @@ static const KMail::BodyPartFormatter * createForImage( const char * ) {
 }
 
 static const KMail::BodyPartFormatter * createForMessage( const char * subtype ) {
-  if ( qstricmp( subtype, "rfc822" ) == 0 )
+  if ( kasciistricmp( subtype, "rfc822" ) == 0 )
     return MessageRfc822BodyPartFormatter::create();
   return AnyTypeBodyPartFormatter::create();
 }
@@ -249,17 +250,17 @@ static const KMail::BodyPartFormatter * createForMultiPart( const char * subtype
     switch ( subtype[0] ) {
     case 'a':
     case 'A':
-      if ( qstricmp( subtype, "alternative" ) == 0 )
+      if ( kasciistricmp( subtype, "alternative" ) == 0 )
 	return MultiPartAlternativeBodyPartFormatter::create();
       break;
     case 'e':
     case 'E':
-      if ( qstricmp( subtype, "encrypted" ) == 0 )
+      if ( kasciistricmp( subtype, "encrypted" ) == 0 )
 	return MultiPartEncryptedBodyPartFormatter::create();
       break;
     case 's':
     case 'S':
-      if ( qstricmp( subtype, "signed" ) == 0 )
+      if ( kasciistricmp( subtype, "signed" ) == 0 )
 	return MultiPartSignedBodyPartFormatter::create();
       break;
     }
@@ -272,18 +273,18 @@ static const KMail::BodyPartFormatter * createForApplication( const char * subty
     switch ( subtype[0] ) {
     case 'p':
     case 'P':
-      if ( qstricmp( subtype, "pgp" ) == 0 )
+      if ( kasciistricmp( subtype, "pgp" ) == 0 )
 	return ApplicationPgpBodyPartFormatter::create();
       // fall through
     case 'x':
     case 'X':
-      if ( qstricmp( subtype, "pkcs7-mime" ) == 0 ||
-	   qstricmp( subtype, "x-pkcs7-mime" ) == 0 )
+      if ( kasciistricmp( subtype, "pkcs7-mime" ) == 0 ||
+	   kasciistricmp( subtype, "x-pkcs7-mime" ) == 0 )
 	return ApplicationPkcs7MimeBodyPartFormatter::create();
       break;
     case 'm':
     case 'M':
-      //if ( qstricmp( subtype, "ms-tnef" ) == 0 )
+      //if ( kasciistricmp( subtype, "ms-tnef" ) == 0 )
       //  return ApplicationMsTnefBodyPartFormatter::create();
       break;
     }
@@ -297,24 +298,24 @@ const KMail::BodyPartFormatter * KMail::BodyPartFormatter::createFor( const char
     switch ( type[0] ) {
     case 'a': // application
     case 'A':
-      if ( qstricmp( type, "application" ) == 0 )
+      if ( kasciistricmp( type, "application" ) == 0 )
 	return createForApplication( subtype );
       break;
     case 'i': // image
     case 'I':
-      if ( qstricmp( type, "image" ) == 0 )
+      if ( kasciistricmp( type, "image" ) == 0 )
 	return createForImage( subtype );
       break;
     case 'm': // multipart / message
     case 'M':
-      if ( qstricmp( type, "multipart" ) == 0 )
+      if ( kasciistricmp( type, "multipart" ) == 0 )
 	return createForMultiPart( subtype );
-      else if ( qstricmp( type, "message" ) == 0 )
+      else if ( kasciistricmp( type, "message" ) == 0 )
 	return createForMessage( subtype );
       break;
     case 't': // text
     case 'T':
-      if ( qstricmp( type, "text" ) == 0 )
+      if ( kasciistricmp( type, "text" ) == 0 )
 	return createForText( subtype );
       break;
     }

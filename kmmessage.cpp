@@ -39,6 +39,7 @@ using KMail::HeaderStrategy;
 #include <khtml_part.h>
 #include <kuser.h>
 #include <kidna.h>
+#include <kasciistricmp.h>
 
 #include <qcursor.h>
 #include <qtextcodec.h>
@@ -1242,7 +1243,7 @@ KMMessage* KMMessage::createForward()
       // don't add the detached signature as attachment when forwarding a
       // PGP/MIME signed message inline
       if( mimeType != "application/pgp-signature" && outsideRfc822 ) {
-        if (i > 0 || qstricmp(msgPart.typeStr(),"text") != 0)
+        if (i > 0 || kasciistricmp(msgPart.typeStr(),"text") != 0)
           msg->addBodyPart(&msgPart);
       }
       // avoid kind of recursive attaching of rfc822 parts
@@ -2360,7 +2361,7 @@ void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
   mType.Parse();
   DwParameter *param = mType.FirstParameter();
   while(param) {
-    if (!qstricmp(param->Attribute().c_str(), attr))
+    if (!kasciistricmp(param->Attribute().c_str(), attr))
       break;
     else
       param = param->Next();
@@ -2873,7 +2874,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
       DwParameter *param = ct.FirstParameter();
       while(param)
       {
-        if (!qstricmp(param->Attribute().c_str(), "charset"))
+        if (!kasciistricmp(param->Attribute().c_str(), "charset"))
           aPart->setCharset(QCString(param->Value().c_str()).lower());
         else if (param->Attribute().c_str()=="name*")
           aPart->setName(KMMsgBase::decodeRFC2231String(
@@ -4119,7 +4120,7 @@ QCString KMMessage::charset() const
   mType.Parse();
   DwParameter *param=mType.FirstParameter();
   while(param){
-    if (!qstricmp(param->Attribute().c_str(), "charset"))
+    if (!kasciistricmp(param->Attribute().c_str(), "charset"))
       return param->Value().c_str();
     else param=param->Next();
   }
@@ -4143,7 +4144,7 @@ void KMMessage::setCharset(const QCString& bStr)
   DwParameter *param=mType.FirstParameter();
   while(param)
     // FIXME use the mimelib functions here for comparison.
-    if (!qstricmp(param->Attribute().c_str(), "charset")) break;
+    if (!kasciistricmp(param->Attribute().c_str(), "charset")) break;
     else param=param->Next();
   if (!param){
     param=new DwParameter;
@@ -4344,7 +4345,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   if ( part->hasHeaders() &&
        part->Headers().HasContentDisposition() &&
        !part->Headers().ContentDisposition().Filename().empty() &&
-       0 != qstricmp(part->Headers().ContentDisposition().Filename().c_str(), cSMIMEData ))
+       0 != kasciistricmp(part->Headers().ContentDisposition().Filename().c_str(), cSMIMEData ))
   {
     setStatus( KMMsgStatusHasAttach );
     return;
