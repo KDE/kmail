@@ -65,14 +65,16 @@ KMFolder* KMFolderSelDlg::folder(void)
 void KMFolderSelDlg::slotSelect(int)
 {
   app->processEvents(200);
-  done(1);
+  accept();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotCancel()
 {
-  done(0);
+  app->processEvents(200);
+  disconnect(mListBox, SIGNAL(highlighted(int)), this, SLOT(slotSelect(int)));
+  reject();
 }
 
 

@@ -1,5 +1,7 @@
 // kmheaders.cpp
 
+#include <qfiledlg.h>
+
 #include "kmfolder.h"
 #include "kmheaders.h"
 #include "kmmessage.h"
@@ -8,6 +10,7 @@
 #include "kmglobal.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
+#include "kfileio.h"
 
 #include <drag.h>
 #include <qstrlist.h>
@@ -28,7 +31,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
   mFolder = NULL;
   getMsgIndex = -1;
 
-  //setNumCols(4);
   setColumn(0, nls->translate("F"), 16, KMHeadersInherited::PixmapColumn);
   setColumn(1, nls->translate("Sender"), 200);
   setColumn(2, nls->translate("Subject"), 270);
@@ -103,16 +105,14 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   }
 
   updateMessageList();
-  //if (mFolder) setCurrentItem(0);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
-  debug("msgChanged() called");
-
   int i = topItem();
+  if (!autoUpdate()) return;
   updateMessageList();
   setTopItem(i);
 }
@@ -122,7 +122,6 @@ void KMHeaders::msgChanged()
 void KMHeaders::msgAdded(int id)
 {
   if (!autoUpdate()) return;
-  debug("msgAdded(%d) called", id);
   insertItem("", id);
   msgHeaderChanged(id);
 }
@@ -131,14 +130,8 @@ void KMHeaders::msgAdded(int id)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgRemoved(int id)
 {
-  debug("msgRemoved(%d) called", id);
+  if (!autoUpdate()) return;
   removeItem(id);
-
-#if 0
-  int i = topItem();
-  updateMessageList();
-  setTopItem(i);
-#endif
 }
 
 
@@ -150,7 +143,6 @@ void KMHeaders::msgHeaderChanged(int msgId)
   KMMsgBase* mb;
 
   if (!autoUpdate()) return;
-  debug("msgHeaderChanged() called");
 
   mb = mFolder->getMsgBase(msgId);
   assert(mb != NULL);
@@ -202,6 +194,7 @@ void KMHeaders::deleteMsg (int msgId)
 {
   KMMessage* msg;
   KMMessageList* msgList;
+  int cur = currentItem();
 
   if (mFolder != trashFolder)
   {
@@ -220,8 +213,32 @@ void KMHeaders::deleteMsg (int msgId)
       delete msg;
     }
     setAutoUpdate(TRUE);
+    setCurrentMsg(cur);
     kbp->idle();
   }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::saveMsg (int msgId)
+{
+  KMMessage* msg;
+  QString str;
+  QString fileName = QFileDialog::getSaveFileName(".", "*");
+
+  if (fileName.isEmpty()) return;
+
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    str += "From ???@??? 00:00:00 1997 +0000\n";
+    str += msg->asString();
+    str += "\n";
+  }
+
+  if (kStringToFile(str, fileName, TRUE))
+    mOwner->statusMsg(nls->translate("Message(s) saved."));
+  else
+    mOwner->statusMsg(nls->translate("Failed to save message(s)."));
 }
 
 
@@ -276,11 +293,9 @@ void KMHeaders::replyAllToMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
-  QList<KMMessage> msgList;
+  KMMessageList* msgList;
   KMMessage* msg;
-  int rc, num, top;
-  int cur = currentItem();
-  bool curMoved = (cur>=0 ? isMarked(cur) : FALSE);
+  int rc, cur = currentItem();
 
   assert(destFolder != NULL);
 
@@ -289,29 +304,24 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   top = topItem();
 
   destFolder->open();
-  // getMsg gets confused when messages are removed while calling
-  // it repeatedly. To avoid this we create a temporary list of
-  // the messages that will be moved.
-  for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
-    msgList.append(msg);
-
-  unmarkAll();
-
-  // now it is safe to move the messages.
-  for (msg=msgList.first(); msg; msg=msgList.next())
+  msgList = selectedMsgs();
+  for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
     rc = destFolder->moveMsg(msg);
 
-  setTopItem(top);
   setAutoUpdate(TRUE);
+  setTopItem(top);
+  setCurrentMsg(cur);
 
-  // display proper message if current message was moved.
-  if (curMoved)
-  {
-    if (cur >= mFolder->count()) cur = mFolder->count() - 1;
-    setCurrentItem(cur, -1);
-  }
   destFolder->close();
   kbp->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::setCurrentMsg(int cur)
+{
+  if (cur >= mFolder->count()) cur = mFolder->count() - 1;
+  setCurrentItem(cur, -1);
 }
 
 

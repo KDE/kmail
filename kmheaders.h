@@ -27,6 +27,10 @@ public:
   /** Change part of the contents of a line */
   virtual void changeItemPart (char c, int itemIndex, int column);
 
+  /** Set current message. If id<0 then the first message is shown,
+    if id>count() the last message is shown. */
+  virtual void setCurrentMsg(int msgId);
+
   /** The following methods process the message in the folder with
     the given msgId, or if no msgId is given all selected
     messages are processed. */
@@ -36,6 +40,7 @@ public:
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
+  virtual void saveMsg(int msgId=-1);
 
   /** Returns list of selected messages. Do not delete this object. */
   virtual KMMessageList* selectedMsgs(void);

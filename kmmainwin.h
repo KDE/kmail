@@ -75,6 +75,7 @@ protected slots:
   void slotReplyAllToMsg();
   void slotForwardMsg();
   void slotDeleteMsg();
+  void slotSaveMsg();
   void slotPrintMsg();
   void slotMoveMsg();
   void slotShowMsgSrc();

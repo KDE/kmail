@@ -19,12 +19,23 @@ public:
   KBusyPtr();
   virtual ~KBusyPtr();
 
+  /** Show busy pointer. Subsequent calls increase the "busy level" */
   virtual void busy(void);
+
+  /** Hide busy pointer if the "busy level" is reduced to zero. */
   virtual void idle(void);
 
+  /** Stop pointer animation. This is necessary for some system calls. */
+  virtual void stopAnimation(void);
+
+  /** Continue pointer animation. */
+  virtual void continueAnimation(void);
+
+  /** Load cursor from given bitmap files. When the filename is relative
+    the $KDEDIR/lib/pics directory is searched. */
   virtual void loadCursor(const char* cursorName, const char* maskName);
-	// Load cursor from given bitmap files. When the filename
-	// is relative the $KDEDIR/lib/pics directory is searched
+
+
 
 protected:
   virtual void timerEvent(void);
@@ -38,6 +49,7 @@ protected:
   int numCursors;
   int frameDelay;
   int currentCursor;
+  bool animated;
   QCursor* cursorList;
   QBitmap* bitmapList;
 };

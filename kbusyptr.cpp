@@ -17,6 +17,7 @@ KBusyPtr :: KBusyPtr ()
   frameDelay = 500;
   cursorList = NULL;
   bitmapList = NULL;
+  animated   = TRUE;
 
   loadCursor("stopwatch.xbm","stopwatchMask.xbm");
 
@@ -47,7 +48,7 @@ void KBusyPtr :: busy (void)
     else
     {
       app->setOverrideCursor(cursorList[currentCursor]);
-      start(500);
+      if (animated) start(frameDelay);
     }
   }
   busyLevel++;
@@ -77,6 +78,22 @@ void KBusyPtr :: timerEvent (void)
 
   if (cursorList)
     app->setOverrideCursor(cursorList[currentCursor], TRUE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KBusyPtr :: stopAnimation (void)
+{
+  if (animated) stop();
+  animated = FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KBusyPtr :: continueAnimation (void)
+{
+  animated = TRUE;
+  start(frameDelay);
 }
 
 

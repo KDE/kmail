@@ -126,7 +126,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
     return FALSE;
   }
 
-  len = aBuffer.size();
+  len = aBuffer.size()-1;
   writeLen = file.writeBlock(aBuffer.data(), len);
 
   if (writeLen < 0) 

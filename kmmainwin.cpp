@@ -396,6 +396,13 @@ void KMMainWin::slotMoveMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotSaveMsg()
+{
+  mHeaders->saveMsg(-1);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotSendQueued()
 {
   if (msgSender->sendQueued())
@@ -525,7 +532,7 @@ void KMMainWin::setupMenuBar()
 		       SLOT(slotNewMailReader()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(nls->translate("Save As..."), this,
-		       SLOT(slotUnimplemented()), keys->save());
+		       SLOT(slotSaveMsg()), keys->save());
   fileMenu->insertItem(nls->translate("Print..."), this,
 		       SLOT(slotPrintMsg()), keys->print());
   fileMenu->insertSeparator();
@@ -593,10 +600,6 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertItem(nls->translate("&Delete"), this, 
 			  SLOT(slotDeleteMsg()), Key_D);
   messageMenu->insertSeparator();
-  messageMenu->insertItem(nls->translate("&Export..."), this, 
-			  SLOT(slotUnimplemented()), Key_E);
-  messageMenu->insertItem(nls->translate("Pr&int..."), this,
-			  SLOT(slotPrintMsg()), keys->print());
   messageMenu->insertItem(nls->translate("View Source..."), this,
 			  SLOT(slotShowMsgSrc()));
 
