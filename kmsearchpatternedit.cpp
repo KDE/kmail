@@ -79,7 +79,7 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 
   if ((currentText != "<message>") &&
       (currentText != "<body>"))
-    mRuleField->changeItem( currentText, 0 );
+    mRuleField->changeItem( QString::fromAscii( currentText ), 0 );
   else
     mRuleField->changeItem( QString::null, 0 );
 }
