@@ -7,8 +7,8 @@
 #include <kmimemagic.h>
 #include <kapp.h>
 #include <kconfig.h>
-#include <kstddirs.h>
 #include <kglobal.h>
+#include <kstddirs.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/body.h>
@@ -171,7 +171,7 @@ const QString KMMessagePart::iconName(void) const
   if (dir.exists(fileName))
   {
     KConfig config(fileName);
-    config.setGroup("KDE Desktop Entry");
+    config.setDesktopGroup();
     icon = config.readEntry("Icon");
     if(icon.isEmpty()) // If no icon specified.
       icon = "unknown.xpm";
@@ -182,7 +182,8 @@ const QString KMMessagePart::iconName(void) const
     icon = "unknown.xpm";
   }
 
-  return locate("icon", icon);
+//  return KApplication::kde_icondir() + "/" + icon;
+  return locate( "icon", icon );
 }
 
 
