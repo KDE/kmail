@@ -43,6 +43,7 @@
 #include "kmcommands.h"
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
+#include "kmfolderimap.h"
 
 #include <mimelib/enum.h>
 
@@ -610,8 +611,15 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
   KMFolder* folder = 0;
   KMFolderNode* node = mFolderParent->hasNamedFolder( folderName( itemType ) );
   if( node && !node->isDir() ) folder = static_cast<KMFolder*>(node);
-  // It should never be possible that it's not there, but better safe than sorry
-  if( !folder ) folder = mFolderParent->createFolder( folderName( itemType ), false, type );
+  if( !folder ) {
+    // The folder isn't there yet - create it
+    folder =
+      mFolderParent->createFolder( folderName( itemType ), false, type );
+    if( mFolderType == KMFolderTypeImap )
+      static_cast<KMFolderImap*>( folder->storage() )->
+        createFolder( folderName( itemType ) );
+  }
+
   if( folder->canAccess() != 0 ) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.")
                        .arg( folderName( itemType ) ) );
