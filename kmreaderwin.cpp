@@ -75,6 +75,8 @@ using KMail::PartMetaData;
 using KMail::AttachmentStrategy;
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
+#include "headerstyle.h"
+//using KMail::HeaderStyle; // conflicts with KMReaderWin's own HeaderStyle
 #include "khtmlparthtmlwriter.h"
 using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
@@ -453,6 +455,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                          const char *aName,
                          int aFlags )
   : KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose),
+    mAttachmentStrategy( 0 ),
+    mHeaderStrategy( 0 ),
+    mHeaderStyleNew( 0 ),
     mShowCompleteMessage( false ),
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
@@ -842,7 +847,8 @@ void KMReaderWin::writeConfig(bool aWithSync)
   KConfigGroupSaver saver(config, "Reader");
   config->writeEntry( "useFixedFont", mUseFixedFont );
   config->writeEntry("hdr-style", (int)mHeaderStyle);
-  config->writeEntry("attachment-strategy",attachmentStrategy()->name());
+  if ( attachmentStrategy() )
+    config->writeEntry("attachment-strategy",attachmentStrategy()->name());
   if (aWithSync) config->sync();
 }
 
@@ -961,14 +967,29 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
   if ( aHeaderStyle == mHeaderStyle ) return;
   mHeaderStyle = aHeaderStyle;
 
-  if ( aHeaderStyle == HdrBrief )
+  switch ( mHeaderStyle ) {
+  case HdrBrief:
     setHeaderStrategy( HeaderStrategy::brief() );
-  else if ( aHeaderStyle == HdrAll )
-    setHeaderStrategy( HeaderStrategy::all() );
-  else if ( aHeaderStyle == HdrLong )
-    setHeaderStrategy( HeaderStrategy::rich() );
-  else
+    setHeaderStyleNew( KMail::HeaderStyle::brief() );
+    break;
+  case HdrStandard:
     setHeaderStrategy( HeaderStrategy::standard() );
+    setHeaderStyleNew( KMail::HeaderStyle::plain() );
+    break;
+  case HdrLong:
+    setHeaderStrategy( HeaderStrategy::rich() );
+    setHeaderStyleNew( KMail::HeaderStyle::plain() );
+    break;
+  default:
+  case HdrFancy:
+    setHeaderStrategy( HeaderStrategy::rich() );
+    setHeaderStyleNew( KMail::HeaderStyle::fancy() );
+    break;
+  case HdrAll:
+    setHeaderStrategy( HeaderStrategy::all() );
+    setHeaderStyleNew( KMail::HeaderStyle::plain() );
+    break;
+  }
 
   writeConfig(true);   // added this so we can forward w/ full headers
 }
@@ -981,6 +1002,11 @@ void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
 
 void KMReaderWin::setHeaderStrategy( const HeaderStrategy * strategy ) {
   mHeaderStrategy = strategy ? strategy : HeaderStrategy::standard() ;
+  update( true );
+}
+
+void KMReaderWin::setHeaderStyleNew( const KMail::HeaderStyle * style ) {
+  mHeaderStyleNew = style ? style : KMail::HeaderStyle::fancy() ;
   update( true );
 }
 
@@ -1690,242 +1716,13 @@ QString KMReaderWin::visibleHeadersToString(KMMessage* aMsg, QString const & for
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 {
-  if( !aMsg )
-    return QString();
-
-  QString vcname;
-
-// The direction of the header is determined according to the direction
-// of the application layout.
-
-  QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-  QString headerStr = QString("<div dir=\"%1\">").arg(dir);
-
-  QStringList ignoreFieldsList;
-  if (mShowAllHeaders[mHeaderStyle - 1]) {
-    // ignore the fields which are already displayed by writeMsgHeader
-    // and thus should not be shown again by "showAllHeaders" code
-    ignoreFieldsList.append("cc");
-    ignoreFieldsList.append("bcc");
-    ignoreFieldsList.append("from");
-    ignoreFieldsList.append("subject");
-    ignoreFieldsList.append("date");
-  }
-
-// However, the direction of the message subject within the header is
-// determined according to the contents of the subject itself. Since
-// the "Re:" and "Fwd:" prefixes would always cause the subject to be
-// considered left-to-right, they are ignored when determining its
-// direction.
-
-   QString subjectDir;
-   if (!aMsg->subject().isEmpty()) {
-      subjectDir = ( aMsg->cleanSubject().isRightToLeft() ) ? "rtl" : "ltr";
-   } else
-      subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
-
-   // Prepare the date string (when printing always use the localized date)
-   QString dateString;
-   if( mPrinting ) {
-     QDateTime dateTime;
-     KLocale* locale = KGlobal::locale();
-     dateTime.setTime_t( aMsg->date() );
-     dateString = locale->formatDateTime( dateTime );
-   }
-   else {
-     dateString = aMsg->dateStr();
-   }
-
-  if (hasVCard) vcname = mTempFiles.last();
-
-  switch (mHeaderStyle)
-  {
-  case HdrBrief:
-    headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-                        strToHtml(aMsg->subject()) +
-                        "</b>&nbsp; (" +
-                        KMMessage::emailAddrAsAnchor(aMsg->from(),TRUE) + ", ")
-                        .arg(subjectDir);
-
-    if (!aMsg->cc().isEmpty())
-    {
-      headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(aMsg->cc(),TRUE) + ", ");
-    }
-
-    if (!aMsg->bcc().isEmpty())
-    {
-      headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(aMsg->bcc(),TRUE) + ", ");
-    }
-
-    headerStr.append("&nbsp;"+strToHtml(aMsg->dateShortStr()) + ")");
-    headerStr.append(visibleHeadersToString(aMsg, "<div class=\"%1\"><em>%2</em>%3</div>", ignoreFieldsList));
-
-    if (hasVCard)
-    {
-      headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
-    }
-
-    headerStr.append("</div>");
-    break;
-
-  case HdrStandard:
-    headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-                        strToHtml(aMsg->subject()) + "</b></div>")
-                        .arg(subjectDir);
-    headerStr.append(i18n("From: ") +
-                     KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE));
-    if (hasVCard)
-    {
-      headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
-    }
-    headerStr.append("<br>");
-    headerStr.append(i18n("To: ") +
-                     KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE) + "<br>");
-    if (!aMsg->cc().isEmpty())
-      headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE) + "<br>");
-
-    if (!aMsg->bcc().isEmpty())
-      headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(aMsg->bcc(),FALSE) + "<br>");
-
-    if (mShowAllHeaders[mHeaderStyle - 1]) {
-        ignoreFieldsList.append("to");
-    }
-    headerStr.append(visibleHeadersToString(aMsg, "<div class=\"%1\">%2%3</div>", ignoreFieldsList));
-    break;
-
-  case HdrFancy:
-  {
-    // the subject line and box below for details
-    headerStr += QString("<div class=\"fancyHeaderSubj\" dir=\"%1\">"
-                        "<b>%2</b></div>"
-                        "<div class=\"fancyHeaderDtls\">"
-                        "<table class=\"fancyHeaderDtls\">")
-                        .arg(subjectDir)
-		        .arg(aMsg->subject().isEmpty()?
-			     i18n("No Subject") :
-			     strToHtml(aMsg->subject()));
-
-    // from line
-    // the mailto: URLs can contain %3 etc., therefore usage of multiple
-    // QString::arg is not possible
-    headerStr += QString("<tr><th class=\"fancyHeaderDtls\">%1</th>"
-                         "<td class=\"fancyHeaderDtls\">")
-                         .arg(i18n("From: "))
-                 + KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE)
-                 + ( hasVCard ? "&nbsp;&nbsp;<a href=\""+vcname+"\">"
-                                + i18n("[vCard]") + "</a>"
-                              : QString("") )
-                 + ( aMsg->headerField("Organization").isEmpty()
-                              ? QString("")
-                              : "&nbsp;&nbsp;("
-                                + strToHtml(aMsg->headerField("Organization"))
-                                + ")")
-                 + "</td></tr>";
-    // to line
-    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
-                            .arg(i18n("To: "))
-                            .arg(KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE)));
-
-    // cc line, if any
-    if (!aMsg->cc().isEmpty())
-    {
-      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
-                              .arg(i18n("CC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE)));
-    }
-
-    // Bcc line, if any
-    if (!aMsg->bcc().isEmpty())
-    {
-      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
-                              .arg(i18n("BCC: "))
-                              .arg(KMMessage::emailAddrAsAnchor(aMsg->bcc(),FALSE)));
-    }
-
-    if (mShowAllHeaders[mHeaderStyle - 1]) {
-        ignoreFieldsList.append("to");
-    }
-    headerStr.append(visibleHeadersToString(aMsg, "<tr><th class=\"fancyHeaderDtls\">%2</th><td class=\"fancyHeaderDtls\">%3</td></tr>", ignoreFieldsList));
-
-    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td dir=\"%2\" class=\"fancyHeaderDtls\">%3</td></tr>")
-                            .arg(i18n("Date: "))
-			    .arg(aMsg->dateStr().isRightToLeft() ? "rtl" : "ltr")
-                            .arg(strToHtml(dateString)));
-    headerStr.append("</table></div>");
-    break;
-  }
-  case HdrLong:
-    headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-                        strToHtml(aMsg->subject()) + "</b></div>")
-                        .arg(subjectDir);
-
-    headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>");
-    headerStr.append(i18n("From: ") +
-                     KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE));
-    if (hasVCard)
-    {
-      headerStr.append("&nbsp;&nbsp;<a href=\"" +
-                       vcname +
-                       "\">"+i18n("[vCard]")+"</a>");
-    }
-
-    if (!aMsg->headerField("Organization").isEmpty())
-    {
-      headerStr.append("&nbsp;&nbsp;(" +
-                       strToHtml(aMsg->headerField("Organization")) + ")");
-    }
-
-    headerStr.append("<br>");
-    headerStr.append(i18n("To: ")+
-                   KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE) + "<br>");
-    if (!aMsg->cc().isEmpty())
-    {
-      headerStr.append(i18n("CC: ")+
-                       KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE) + "<br>");
-    }
-
-    if (!aMsg->bcc().isEmpty())
-    {
-      headerStr.append(i18n("BCC: ")+
-                       KMMessage::emailAddrAsAnchor(aMsg->bcc(),FALSE) + "<br>");
-    }
-
-    if (!aMsg->replyTo().isEmpty())
-    {
-      headerStr.append(i18n("Reply to: ")+
-                     KMMessage::emailAddrAsAnchor(aMsg->replyTo(),FALSE) + "<br>");
-    }
-    if (mShowAllHeaders[mHeaderStyle - 1]) {
-        ignoreFieldsList.append("to");
-        ignoreFieldsList.append("reply to");
-        ignoreFieldsList.append("organization");
-    }
-    headerStr.append(visibleHeadersToString(aMsg, "<div class=\"%1\">%2%3</div>", ignoreFieldsList));
-    break;
-
-  case HdrAll:
-      // we force the direction to ltr here, even in a arabic/hebrew UI,
-      // as the headers are almost all Latin1
-    headerStr += "<div dir=\"ltr\">";
-    headerStr.append(visibleHeadersToString(aMsg, "<div class=\"%1\">%2%3</div>", QStringList()));
-    if (hasVCard)
-    {
-      headerStr.append("<br><a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
-    }
-    headerStr += "</div>";
-    break;
-
-  default:
-    kdDebug(5006) << "Unsupported header style " << mHeaderStyle << endl;
-  }
-
-  headerStr += "</div>";
-
-  return headerStr;
+  kdFatal( !headerStyleNew(), 5006 )
+    << "trying to writeMsgHeader() without a header style set!" << endl;
+  kdFatal( !headerStrategy(), 5006 )
+    << "trying to writeMsgHeader() without a header strategy set!" << endl;
+  return headerStyleNew()->format( aMsg, headerStrategy(),
+				   hasVCard ? mTempFiles.last() : QString::null,
+				   mPrinting );
 }
 
 

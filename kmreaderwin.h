@@ -38,6 +38,7 @@ namespace KMail {
   class ObjectTreeParser;
   class AttachmentStrategy;
   class HeaderStrategy;
+  class HeaderStyle;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
 };
@@ -99,7 +100,12 @@ public:
   HeaderStyle headerStyle(void) const { return mHeaderStyle; }
   virtual void setHeaderStyle(HeaderStyle style);
 
-  /** Get/set the message attachment strategy. */
+  const KMail::HeaderStyle * headerStyleNew() const {
+    return mHeaderStyleNew;
+  }
+  void setHeaderStyleNew( const KMail::HeaderStyle * style ) ;
+
+  /** Get/set the message header strategy. */
   const KMail::HeaderStrategy * headerStrategy() const {
     return mHeaderStrategy;
   }
@@ -432,6 +438,7 @@ protected:
   QStringList mHeadersShow[HdrAll];
   const KMail::AttachmentStrategy * mAttachmentStrategy;
   const KMail::HeaderStrategy * mHeaderStrategy;
+  const KMail::HeaderStyle * mHeaderStyleNew;
   bool mAutoDelete;
   QFont mBodyFont, mFixedFont;
   bool mInlineImage;
