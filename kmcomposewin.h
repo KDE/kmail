@@ -23,6 +23,7 @@
 #include <kglobalsettings.h>
 #include <kdeversion.h>
 #include <keditcl.h>
+#include <ktempdir.h>
 
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
@@ -126,6 +127,7 @@ public:
    */
   bool checkExternalEditorFinished();
 
+  QPopupMenu* KMEdit::createPopupMenu(const QPoint&);
   void setSpellCheckingActive(bool spellCheckingActive);
 
   /** Drag and drop methods */
@@ -138,6 +140,7 @@ public:
 
 signals:
   void spellcheck_done(int result);
+  void pasteImage();
 public slots:
   void slotSpellcheck2(KSpell*);
   void slotSpellResult(const QString&);
@@ -149,6 +152,7 @@ public slots:
   virtual void cut();
   virtual void clear();
   virtual void del();
+  virtual void paste();
 protected:
   /**
    * Event filter that does Tab-key handling.
@@ -866,6 +870,9 @@ private:
 
   // Temp var for slotInsert(My)PublicKey():
   QString mFingerprint;
+
+  // Temp ptr for saving image from clipboard
+  KTempDir *mTempDir;
 };
 
 #endif

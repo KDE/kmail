@@ -85,6 +85,7 @@ using KRecentAddress::RecentAddresses;
 #include <kpushbutton.h>
 #include <kuserprofile.h>
 #include <krun.h>
+#include <ktempdir.h>
 //#include <keditlistbox.h>
 
 #include <kspell.h>
@@ -187,6 +188,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFolder = 0;
   mAutoCharset = TRUE;
   mFixedFontAction = 0;
+  mTempDir = 0;
   mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
   mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
   mSplitter->moveToFirst( mEditor );
@@ -296,6 +298,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 
   connect (mEditor, SIGNAL (spellcheck_done(int)),
     this, SLOT (slotSpellcheckDone (int)));
+  connect (mEditor, SIGNAL( pasteImage() ),
+    this, SLOT (slotPaste() ) );
+
 
   mMainWidget->resize(480,510);
   setCentralWidget(mMainWidget);
@@ -1822,6 +1827,12 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
   msgPartToItem(msgPart, lvi);
   mAtmItemList.append(lvi);
 
+  // the Attach file job has finished, so the possibly present tmp dir can be deleted now.
+  if ( mTempDir != 0 ) {
+    delete mTempDir;
+    mTempDir = 0;
+  }
+
   slotUpdateAttachActions();
 }
 
@@ -2774,12 +2785,41 @@ void KMComposeWin::slotPaste()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
+  if ( ! QApplication::clipboard()->image().isNull() )  {
+    bool ok;
+    QFile *tmpFile;
+
+    QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok );
+    if ( !ok )
+      return;
+
+    mTempDir = new KTempDir();
+    mTempDir->setAutoDelete( true );
+
+    if ( attName.lower().endsWith(".png") )
+      tmpFile = new QFile(mTempDir->name() + attName );
+    else
+      tmpFile = new QFile(mTempDir->name() + attName + ".png" );
+
+    if ( !QApplication::clipboard()->image().save( tmpFile->name(), "PNG" ) ) {
+      KMessageBox::error( this, i18n("Unknown error trying to save image"), i18n("Attaching image failed") );
+      delete mTempDir;
+      mTempDir = 0;
+      return;
+    }
+
+    addAttach( tmpFile->name() );
+  }
+  else {
+
 #ifdef KeyPress
 #undef KeyPress
 #endif
 
-  QKeyEvent k(QEvent::KeyPress, Key_V , 0 , ControlButton);
-  kapp->notify(fw, &k);
+    QKeyEvent k(QEvent::KeyPress, Key_V , 0 , ControlButton);
+    kapp->notify(fw, &k);
+  }
+
 }
 
 
@@ -4197,6 +4237,19 @@ void KMEdit::initializeAutoSpellChecking( KSpellConfig* autoSpellConfig )
 }
 
 //-----------------------------------------------------------------------------
+QPopupMenu *KMEdit::createPopupMenu( const QPoint& pos )
+{
+  enum { IdUndo, IdRedo, IdSep1, IdCut, IdCopy, IdPaste, IdClear, IdSep2, IdSelectAll };
+
+  QPopupMenu *menu = KEdit::createPopupMenu( pos );
+  if ( !QApplication::clipboard()->image().isNull() ) {
+    int id = menu->idAt(0);
+    menu->setItemEnabled( id - IdPaste, true);
+  }
+
+  return menu;
+}
+//-----------------------------------------------------------------------------
 void KMEdit::deleteAutoSpellChecking()
 { // because the highlighter doesn't support RichText, delete its instance.
   delete mSpellChecker;
@@ -4507,6 +4560,14 @@ void KMEdit::del()
     mSpellChecker->restartBackgroundSpellCheck();
 }
 
+void KMEdit::paste()
+{
+  if ( ! QApplication::clipboard()->image().isNull() )  {
+    emit pasteImage();
+  }
+  else
+    KEdit::paste();
+}
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {
