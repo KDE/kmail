@@ -383,7 +383,9 @@ void KMAccount::precommandExited(bool success)
 //-----------------------------------------------------------------------------
 void KMAccount::mailCheck()
 {
- kernel->acctMgr()->singleCheckMail(this, false);
+  if (mTimer)
+    mTimer->stop();
+  kernel->acctMgr()->singleCheckMail(this, false);
 }
 
 //-----------------------------------------------------------------------------
@@ -502,6 +504,10 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
 void KMAccount::checkDone( bool newmail, int newmailCount )
 {
   mCheckingMail = false;
+  // Reset the timeout for automatic mailchecking. The user might have
+  // triggered the check manually.
+  if (mTimer)
+    mTimer->start(mInterval*60000);
   emit newMailsProcessed(newmailCount);
   emit finishedCheck(newmail);
 }
