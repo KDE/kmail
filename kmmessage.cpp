@@ -293,6 +293,9 @@ QString KMMessage::formatString(const QString& aStr) const
     } else
       result += ch;
   }
+
+  if (aStr[0] == '%') result[0] = result[0].upper();
+
   return result;
 }
 
