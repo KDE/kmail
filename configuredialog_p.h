@@ -206,6 +206,7 @@ protected slots:
   void slotNewIdentity();
   void slotRenameIdentity();
   void slotRemoveIdentity();
+  void slotSetAsDefault();
   void slotIdentitySelectorChanged();
   void slotChangeDefaultPGPKey();
   void slotSignatureEdit();
@@ -225,6 +226,7 @@ protected: // data members
   QComboBox        *mIdentityCombo;
   QPushButton      *mRenameButton;
   QPushButton      *mRemoveButton;
+  QPushButton      *mSetAsDefaultButton;
 
   // "general" tab:
   QLineEdit        *mNameEdit;

@@ -342,25 +342,31 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   connect( mIdentityCombo, SIGNAL(activated(int)),
 	   this, SLOT(slotIdentitySelectorChanged()) );
 
-  // "new...", "rename...", "remove..." buttons:
+  // "new...", "rename...", "remove...", "set as default" buttons:
   hlay = new QHBoxLayout(); // inherits spacing from parent layout
   glay->addLayout( hlay, 1, 1 );
 
   button = new QPushButton( i18n("&New..."), this );
-  mRenameButton = new QPushButton( i18n("&Rename..."), this);
+  mRenameButton = new QPushButton( i18n("&Rename..."), this );
   mRemoveButton = new QPushButton( i18n("Re&move..."), this );
+  mSetAsDefaultButton = new QPushButton( i18n("Set as &default"), this );
   button->setAutoDefault( false );
   mRenameButton->setAutoDefault( false );
   mRemoveButton->setAutoDefault( false );
+  mSetAsDefaultButton->setAutoDefault( false );
+  mSetAsDefaultButton->setEnabled( false );
   connect( button, SIGNAL(clicked()),
 	   this, SLOT(slotNewIdentity()) );
   connect( mRenameButton, SIGNAL(clicked()),
 	   this, SLOT(slotRenameIdentity()) );
   connect( mRemoveButton, SIGNAL(clicked()),
 	   this, SLOT(slotRemoveIdentity()) );
+  connect( mSetAsDefaultButton, SIGNAL(clicked()),
+	   this, SLOT(slotSetAsDefault()) );
   hlay->addWidget( button );
   hlay->addWidget( mRenameButton );
   hlay->addWidget( mRemoveButton );
+  hlay->addWidget( mSetAsDefaultButton );
   
   //
   // Tab Widget: General
@@ -389,7 +395,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   // (row 3: spacer)
   mEmailEdit = new QLineEdit( tab );
   glay->addWidget( mEmailEdit, 2, 1 );
-  glay->addWidget( new QLabel( mEmailEdit, i18n("Email A&ddress:"), tab ),
+  glay->addWidget( new QLabel( mEmailEdit, i18n("&Email Address:"), tab ),
 		   2, 0 );
 
   //
@@ -449,7 +455,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   mDraftsCombo = new KMFolderComboBox( tab );
   mDraftsCombo->showOutboxFolder( false );
   glay->addMultiCellWidget( mDraftsCombo, 3, 3, 1, 3 );
-  glay->addWidget( new QLabel( mDraftsCombo, i18n("&Drafts Folder:"), tab ),
+  glay->addWidget( new QLabel( mDraftsCombo, i18n("Drafts Fo&lder:"), tab ),
 		   3, 0 );
 
   // row 4: "Special transport" combobox and label:
@@ -777,6 +783,12 @@ void IdentityPage::slotRemoveIdentity()
   }
 }
 
+void IdentityPage::slotSetAsDefault() {
+  IdentityManager * im = kernel->identityManager();
+  im->setAsDefault( im->shadowIdentities()[ mIdentityCombo->currentItem() ] );
+  updateCombo( 0 );
+}
+
 void IdentityPage::updateCombo( uint idx ) {
   kdDebug() << "IdentityPage::updateCombo( " << idx << " )" << endl;
   QStringList identities = kernel->identityManager()->shadowIdentities();
@@ -790,6 +802,8 @@ void IdentityPage::updateCombo( uint idx ) {
   mIdentityCombo->clear();
   mIdentityCombo->insertStringList( identities );
   mIdentityCombo->setCurrentItem( idx );
+  // disable "set as default" for default identity:
+  mSetAsDefaultButton->setEnabled( idx != 0 );
   // do the same that slotIdentitySelectorChanged would do, but more
   // effiently:
   setIdentityInformation( newIdentityName );
@@ -797,7 +811,10 @@ void IdentityPage::updateCombo( uint idx ) {
 
 void IdentityPage::slotIdentitySelectorChanged()
 {
-  setIdentityInformation( kernel->identityManager()->shadowIdentities()[ mIdentityCombo->currentItem() ] );
+  int idx = mIdentityCombo->currentItem();
+  setIdentityInformation( kernel->identityManager()->shadowIdentities()[ idx ] );
+  // disable "set as default" for default identity:
+  mSetAsDefaultButton->setEnabled( idx != 0 );
 }
 
 void IdentityPage::slotChangeDefaultPGPKey()
