@@ -1081,7 +1081,7 @@ void KMFolderTree::addChildFolder()
 
 //-----------------------------------------------------------------------------
 // Returns whether a folder directory should be open as specified in the
-// config file. The root is always open
+// config file.
 bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 {
   KConfig* config = KMKernel::config();
@@ -1090,9 +1090,14 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   if (folder)
   {
     name = "Folder-" + folder->idString();
-  } else if (fti->type() == KFolderTreeItem::Root) {
-    // local root, we don't have an idString
-    name = "Folder_local_root";
+  } else if (fti->type() == KFolderTreeItem::Root) 
+  {
+    if (fti->protocol() == KFolderTreeItem::NONE) // local root
+      name = "Folder_local_root";
+    else if (fti->protocol() == KFolderTreeItem::Search)
+      name = "Folder_search";
+    else
+      return false;
   } else {
     return false;
   }
@@ -1111,9 +1116,14 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
   if (folder)
   {
     name = "Folder-" + folder->idString();
-  } else if (fti->type() == KFolderTreeItem::Root) {
-    // local root, we don't have an idString
-    name = "Folder_local_root";
+  } else if (fti->type() == KFolderTreeItem::Root) 
+  {
+    if (fti->protocol() == KFolderTreeItem::NONE) // local root
+      name = "Folder_local_root";
+    else if (fti->protocol() == KFolderTreeItem::Search)
+      name = "Folder_search";
+    else
+      return;
   } else {
     return;
   }
