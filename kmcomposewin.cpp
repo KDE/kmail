@@ -2018,7 +2018,7 @@ void KMComposeWin::slotAppendSignature()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotHelp()
 {
-  kapp->invokeHTMLHelp("","");
+  kapp->invokeHelp();
 }
 
 //-----------------------------------------------------------------------------

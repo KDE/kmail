@@ -521,7 +521,7 @@ void KMMainWin::slotFind() {
 //-----------------------------------------------------------------------------
 void KMMainWin::slotHelp()
 {
-  kapp->invokeHTMLHelp("","");
+  kapp->invokeHelp();
 }
 
 

@@ -655,7 +655,7 @@ void KMFilterDlg::closeEvent( QCloseEvent *e )
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnHelp()
 {
-  kapp->invokeHTMLHelp( QString( kapp->name() )+"/index-3.html", "ss3.5" );
+  kapp->invokeHelp("filters");
 }
 
 //-----------------------------------------------------------------------------
