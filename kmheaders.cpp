@@ -2940,11 +2940,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
     noRepaint = true;
     clear();
     noRepaint = false;
-    mItems.resize( mFolder->count() );
-    for (int i=0; i<mFolder->count(); i++) {
-        sortCache[i] = 0;
-        mItems[i] = 0;
-    }
+    
+    mItems.fill( 0, mFolder->count() );
+    sortCache.fill( 0 );
+    
     QString sortFile = KMAIL_SORT_FILE(mFolder);
     FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
     mSortInfo.fakeSort = 0;
