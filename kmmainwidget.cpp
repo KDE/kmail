@@ -1609,8 +1609,8 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
       mMsgView->enableMsgDisplay();
       mMsgView->clear(true);
     }
-    if( mHeaders )
-      mHeaders->show();
+    if( mSearchAndHeaders && mHeaders )
+      mSearchAndHeaders->show();
   }
 
   if (mFolder && mFolder->needsCompacting() && (mFolder->folderType() == KMFolderTypeImap))
@@ -3077,8 +3077,9 @@ void KMMainWidget::slotIntro()
 
   mMsgView->clear( true );
   // hide widgets that are in the way:
-  if ( mHeaders && mLongFolderList )
-    mHeaders->hide();
+  if ( mSearchAndHeaders && mHeaders && mLongFolderList )
+    mSearchAndHeaders->hide();
+  
 
   mMsgView->displayAboutPage();
 
