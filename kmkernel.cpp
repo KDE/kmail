@@ -325,8 +325,8 @@ void KMKernel::init()
     transferMail();
   }
 
-  the_folderMgr = new KMFolderMgr(foldersPath);
   the_undoStack = new KMUndoStack(20);
+  the_folderMgr = new KMFolderMgr(foldersPath);
   the_acctMgr   = new KMAcctMgr(acctPath);
   the_filterMgr = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
