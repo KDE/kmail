@@ -141,7 +141,6 @@ class RecipientsPicker : public QWidget
     void slotToClicked();
     void slotCcClicked();
     void slotBccClicked();
-    void slotOk();
     void slotPicked( QListViewItem * );
     void setFocusList();
   

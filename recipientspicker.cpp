@@ -228,18 +228,11 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   buttonLayout->addWidget( mBccButton );
   connect( mBccButton, SIGNAL( clicked() ), SLOT( slotBccClicked() ) );
   // BCC isn't commonly used, so hide it for now
-  mBccButton->hide();
+  //mBccButton->hide();
 
-  QPushButton *okButton = new QPushButton( i18n("&OK"), this );
-  buttonLayout->addWidget( okButton );
-  connect( okButton, SIGNAL( clicked() ), SLOT( slotOk() ) );
-  // It might be confusing to have "Add As ..." in addition to "Ok", so we might
-  // want to hide this button.
-  // okButton->hide();
-
-  QPushButton *cancelButton = new QPushButton( i18n("&Cancel"), this );
-  buttonLayout->addWidget( cancelButton );
-  connect( cancelButton, SIGNAL( clicked() ), SLOT( close() ) );
+  QPushButton *closeButton = new QPushButton( i18n("&Close"), this );
+  buttonLayout->addWidget( closeButton );
+  connect( closeButton, SIGNAL( clicked() ), SLOT( close() ) );
 
   initCollections();
 
@@ -253,9 +246,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   setTabOrder( mCollectionCombo, mSearchLine );
   setTabOrder( mSearchLine, mRecipientList );
-  setTabOrder( mRecipientList, okButton );
-  setTabOrder( okButton, cancelButton );
-  setTabOrder( cancelButton, mCollectionCombo );
+  setTabOrder( closeButton, mCollectionCombo );
 }
 
 RecipientsPicker::~RecipientsPicker()
@@ -415,11 +406,6 @@ void RecipientsPicker::slotBccClicked()
   pick( Recipient::Bcc );
 }
 
-void RecipientsPicker::slotOk()
-{
-  pick( Recipient::Undefined );
-}
-
 void RecipientsPicker::slotPicked( QListViewItem *viewItem )
 {
   kdDebug() << "RecipientsPicker::slotPicked()" << endl;
@@ -429,7 +415,7 @@ void RecipientsPicker::slotPicked( QListViewItem *viewItem )
     RecipientItem *i = item->recipientItem();
     emit pickedRecipient( Recipient( i->recipient(), Recipient::Undefined ) );
   }
-  close();
+  mRecipientList->clearSelection(); 
 }
 
 void RecipientsPicker::pick( Recipient::Type type )
@@ -447,7 +433,7 @@ void RecipientsPicker::pick( Recipient::Type type )
       }
     }
   }
-  close();
+  mRecipientList->clearSelection(); 
 }
 
 void RecipientsPicker::keyPressEvent( QKeyEvent *ev )
