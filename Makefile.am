@@ -1,7 +1,9 @@
 KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS = . about pics profiles
-INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
+INCLUDES = -I$(top_srcdir)/libkdenetwork \
+	   -I$(top_srcdir)/mimelib \
+	   $(all_includes)
 LDADD = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 	../libkdenetwork/libkdenetwork.la ../mimelib/libmimelib.la
 
