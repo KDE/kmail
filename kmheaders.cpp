@@ -2771,19 +2771,19 @@ class KMSortCacheItem {
     KMSortCacheItem **mUnsortedChildren;
 
 public:
-    inline KMSortCacheItem() : mItem(NULL), mParent(NULL), mId(-1), mSortOffset(-1),
+    KMSortCacheItem() : mItem(NULL), mParent(NULL), mId(-1), mSortOffset(-1),
 	mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0) { }
-    inline KMSortCacheItem(int i, QString k, int o=-1)
+    KMSortCacheItem(int i, QString k, int o=-1)
 	: mItem(NULL), mParent(NULL), mId(i), mSortOffset(o), mKey(k),
 	  mUnsortedCount(0), mUnsortedSize(0), mUnsortedChildren(0) { }
-    inline ~KMSortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
+    ~KMSortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
 
-    inline KMSortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
-    inline bool hasChildren() const
+    KMSortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
+    bool hasChildren() const
 	{ return mSortedChildren.count() || mUnsortedCount; }
-    inline const QPtrList<KMSortCacheItem> *sortedChildren() const
+    const QPtrList<KMSortCacheItem> *sortedChildren() const
 	{ return &mSortedChildren; }
-    inline KMSortCacheItem **unsortedChildren(int &count) const
+    KMSortCacheItem **unsortedChildren(int &count) const
 	{ count = mUnsortedCount; return mUnsortedChildren; }
     void addSortedChild(KMSortCacheItem *i) {
 	i->mParent = this;
@@ -2799,17 +2799,17 @@ public:
 	mUnsortedChildren[mUnsortedCount++] = i;
     }
 
-    inline KMHeaderItem *item() const { return mItem; }
-    inline void setItem(KMHeaderItem *i) { Q_ASSERT(!mItem); mItem = i; }
+    KMHeaderItem *item() const { return mItem; }
+    void setItem(KMHeaderItem *i) { Q_ASSERT(!mItem); mItem = i; }
 
-    inline const QString &key() const { return mKey; }
-    inline void setKey(const QString &key) { mKey = key; }
+    const QString &key() const { return mKey; }
+    void setKey(const QString &key) { mKey = key; }
 
-    inline int id() const { return mId; }
-    inline void setId(int id) { mId = id; }
+    int id() const { return mId; }
+    void setId(int id) { mId = id; }
 
-    inline int offset() const { return mSortOffset; }
-    inline void setOffset(int x) { mSortOffset = x; }
+    int offset() const { return mSortOffset; }
+    void setOffset(int x) { mSortOffset = x; }
 
     void updateSortFile(FILE *, bool =FALSE);
 };
