@@ -3505,7 +3505,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
   mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
-					    "references from the net" ), group );
+					    "references from the Internet" ), group );
   label = new QLabel( i18n("<qt><b>WARNING:</b> Allowing HTML in email may "
 			   "increase the risk that your system will be "
 			   "compromised by present and anticipated security "
@@ -3550,16 +3550,16 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   QWhatsThis::add( mHtmlMailCheck, msg );
 
   msg = i18n( "<qt><p>Some mail advertisements are in HTML and contain "
-	      "references to e.g. images that the advertisers employ to "
+	      "references to, for example, images that the advertisers employ to "
 	      "find out that you have read their message (\"web bugs\").</p>"
-	      "<p>There's no valid reason to load images off the net like "
-	      "this, since the sender can always attach the needed images "
+	      "<p>There is no valid reason to load images off the Internet like "
+	      "this, since the sender can always attach the required images "
 	      "directly to the message.</p>"
 	      "<p>To guard from such a misuse of the HTML displaying feature "
 	      "of KMail, this option is <em>disabled</em> by default.</p>"
-	      "<p>If you nonetheless wish to e.g. view images in HTML messages "
-	      "that were not attached to it, you can enable this option, but "
-	      "you should be aware of the possible problem.</p></qt>" );
+	      "<p>However, if you wish to, for example, view images in HTML "
+	      "messages that were not attached to it, you can enable this "
+	      "option, but you should be aware of the possible problem.</p></qt>" );
   QWhatsThis::add( mExternalReferences, msg );
 
   msg = i18n( "<qt><p>This options enables the <em>unconditional</em> sending "
