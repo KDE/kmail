@@ -326,7 +326,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   sl->addStretch( 1 );
 
   if ( ((!mFolder) && mFolderDir->type() == KMImapDir) ||
-       (mFolder->type() == "imap") )
+       (mFolder && (mFolder->type() == "imap")) )
   {
     KMFolderImap* imapFolder = 0;
     if (mFolder) imapFolder = static_cast<KMFolderImap*>((KMFolder*)mFolder);
