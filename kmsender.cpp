@@ -205,6 +205,7 @@ bool KMSender::sendQueued(void)
   mCurrentMsg = 0;
 
   kmkernel->sentFolder()->open();
+  kmkernel->filterMgr()->ref();
 
   // start sending the messages
   doSendMsg();
@@ -483,7 +484,7 @@ void KMSender::cleanup(void)
     this, SLOT(slotAbortSend()));
   KMBroadcastStatus::instance()->setStatusProgressEnable( "Sender", false );
   KMBroadcastStatus::instance()->reset();
-  kmkernel->filterMgr()->cleanup();
+  kmkernel->filterMgr()->deref();
 }
 
 

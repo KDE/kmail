@@ -133,9 +133,9 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       // check done
       kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
       mAcctChecking.removeRef( acct );
+      kmkernel->filterMgr()->deref();
       disconnect( acct, SIGNAL(finishedCheck(bool)),
                   this, SLOT(processNextCheck(bool)) );
-      kmkernel->filterMgr()->cleanup();
       emit checkedMail(newMailArrived, interactive);
     }
   }
@@ -180,6 +180,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 
   curAccount->setCheckingMail(true);
   mAcctChecking.append(curAccount);
+  kmkernel->filterMgr()->ref();
   curAccount->processNewMail(interactive);
 }
 

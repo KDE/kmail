@@ -35,7 +35,7 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
 //-----------------------------------------------------------------------------
 KMFilterMgr::~KMFilterMgr()
 {
-  cleanup();
+  deref(true);
   writeConfig(FALSE);
 }
 
@@ -221,10 +221,21 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) const {
 }
 
 
+//-----------------------------------------------------------------------------
+void KMFilterMgr::ref(void)
+{
+  mRefCount++;
+}
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::cleanup(void)
+void KMFilterMgr::deref(bool force)
 {
+  if (!force)
+    mRefCount--;
+  if (mRefCount < 0)
+    mRefCount = 0;
+  if (mRefCount && !force)
+    return;
   QPtrListIterator<KMFolder> it(mOpenFolders);
   for ( it.toFirst() ; it.current() ; ++it )
     (*it)->close();

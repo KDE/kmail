@@ -57,11 +57,16 @@ public:
       are as with the above method. */
   int process( KMMessage * msg, const KMFilter * filter ) const;
 
-  /** Call this method after processing messages with process().
-    Shall be called after all messages are processed. This method
-    closes all folders that have been temporarily opened with
-    tempOpenFolder(). */
   void cleanup();
+  /** Increment the reference count for the filter manager.
+      Call this method before processing messages with process() */
+  void ref();
+  /** Decrement the reference count for the filter manager.
+      Call this method after processing messages with process().
+      Shall be called after all messages are processed.
+      If the reference count is zero then this method closes all folders
+      that have been temporarily opened with tempOpenFolder(). */
+  void deref(bool force = false);
 
   /** Open given folder and mark it as temporarily open. The folder
     will be closed upon next call of cleanip(). This method is
@@ -111,6 +116,7 @@ private:
   QPtrList<KMFolder> mOpenFolders;
   bool bPopFilter;
   bool mShowLater;
+  int mRefCount;
 };
 
 #endif /*kmfiltermgr_h*/

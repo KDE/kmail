@@ -148,7 +148,7 @@ void KMAcctCachedImap::displayProgress()
     mProgressEnabled = !mapJobData.isEmpty();
     KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
       mProgressEnabled );
-    if (!mProgressEnabled) kmkernel->filterMgr()->cleanup();
+    if (!mProgressEnabled) kmkernel->filterMgr()->deref(true);
   }
   mIdle = FALSE;
   if( mapJobData.isEmpty() )

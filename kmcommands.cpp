@@ -160,6 +160,7 @@ void KMCommand::slotPostTransfer(bool success)
     if (msg->parent())
       msg->setTransferInProgress(false);
   }
+  kmkernel->filterMgr()->deref();
   if ( !deletesItself() )
     delete this;
 }
@@ -1120,7 +1121,6 @@ void KMFilterActionCommand::execute()
     }
     msg->setTransferInProgress(true);
   }
-  kmkernel->filterMgr()->cleanup();
 }
 
 
