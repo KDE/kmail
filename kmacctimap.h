@@ -240,28 +240,4 @@ protected slots:
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 };
 
-
-//-----------------------------------------------------------------------------
-class KMImapPasswdDialog : public QDialog
-{
-  Q_OBJECT
- 
-public:
-  KMImapPasswdDialog(QWidget *parent = 0,const char *name= 0,
-                     KMAcctImap *act=0, const QString &caption=QString::null,
-                     const QString &login=QString::null,
-                     const QString &passwd=QString::null);
- 
-private:
-  QLineEdit *usernameLEdit;
-  QLineEdit *passwdLEdit;
-  QPushButton *ok;
-  QPushButton *cancel;
-  KMAcctImap *act;
- 
-private slots:
-  void slotOkPressed();
-  void slotCancelPressed();
- 
-};
 #endif /*KMAcctImap_h*/

@@ -246,27 +246,4 @@ protected slots:
 };
 
 
-//-----------------------------------------------------------------------------
-class KMExpPasswdDialog : public QDialog
-{
-  Q_OBJECT
-
-public:
-  KMExpPasswdDialog(QWidget *parent = 0,const char *name= 0,
-	  	    KMAcctExpPop *act=0, const QString &caption=QString::null,
-		    const QString &login=QString::null,
-                    const QString &passwd=QString::null);
-
-private:
-  QLineEdit *usernameLEdit;
-  QLineEdit *passwdLEdit;
-  QPushButton *ok;
-  QPushButton *cancel;
-  KMAcctExpPop *act;
-
-private slots:
-  void slotOkPressed();
-  void slotCancelPressed();
-
-};
 #endif /*KMAcctExpPop_h*/

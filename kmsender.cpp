@@ -5,6 +5,7 @@
 #include <kconfig.h>
 #include <kio/global.h>
 #include <kio/job.h>
+#include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kapp.h>
@@ -441,7 +442,7 @@ void KMSender::slotIdle()
   if (mSendProc)
       errString = mSendProc->message();
 
-  msg = i18n("Sending failed:\n%1\n"
+  msg = i18n("Sending failed:\n%1\n\n"
         "The message will stay in the 'outbox' folder until you either\n"
         "fix the problem (e.g. a broken address) or remove the message\n"
 	"from the 'outbox' folder.\n\n"
@@ -911,7 +912,20 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   
   if (ti->auth)
   {
-kdDebug() << "user = " << ti->user << endl;
+    if(ti->user.isEmpty() || ti->pass.isEmpty())
+    {
+      bool b = FALSE;
+      if (KIO::PasswordDialog::getNameAndPassword(ti->user, ti->pass, &b,
+        i18n("You need to supply a username and a password to use this "
+        "SMTP server."), FALSE, QString::null, ti->name, QString::null)
+        != QDialog::Accepted)
+      {
+        abort();
+        return FALSE;
+      }
+      if (int id = KMTransportInfo::findTransport(ti->name))
+        ti->writeConfig(id);
+    }
     destination.setUser(ti->user);
     destination.setPass(ti->pass);
   }

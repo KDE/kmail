@@ -34,6 +34,7 @@
 #include <kconfig.h>
 #include <kapp.h>
 #include <klocale.h>
+#include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
@@ -325,13 +326,21 @@ KURL KMAcctImap::getUrl()
 bool KMAcctImap::makeConnection()
 {
   if (mSlave) return TRUE;
+
   if(mPasswd.isEmpty() || mLogin.isEmpty())
   {
     QString passwd = decryptStr(mPasswd);
-    QString msg = i18n("Please set Password and Username");
-    KMImapPasswdDialog dlg(NULL, NULL, this, msg, mLogin, passwd);
-    if (!dlg.exec()) return FALSE;
+    bool b = FALSE;
+    if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
+      i18n("You need to supply a username and a password to access this "
+      "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
+      != QDialog::Accepted)
+    {
+      emit finishedCheck(false);
+      return FALSE;
+    } else mPasswd = encryptStr(passwd);
   }
+
   initSlaveConfig();
   mSlave = KIO::Scheduler::getConnectedSlave(getUrl(), mSlaveConfig);
   if (!mSlave)
@@ -491,109 +500,4 @@ void KMAcctImap::processNewMail(bool interactive)
     if (folder) static_cast<KMFolderImap*>(folder)->processNewMail(interactive);
   }
   emit finishedCheck(false);
-}
-
-
-//=============================================================================
-//
-//  Class  KMImapPasswdDialog
-//
-//=============================================================================
- 
-KMImapPasswdDialog::KMImapPasswdDialog(QWidget *parent, const char *name,
-                                     KMAcctImap *account,
-                                     const QString &caption,
-                                     const QString &login,
-                                     const QString &passwd)
-  :QDialog(parent,name,true)
-{
-  // This function pops up a little dialog which asks you
-  // for a new username and password if one of them was wrong or not set.
-  QLabel *l;
- 
-  kernel->kbp()->idle();
-  act = account;
-  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
-  if (!caption.isNull())
-    setCaption(caption);
- 
-  QGridLayout *gl = new QGridLayout(this, 5, 2, 10);
- 
-  QPixmap pix(locate("data", QString::fromLatin1("kdeui/pics/keys.png")));
-  if(!pix.isNull()) {
-    l = new QLabel(this);
-    l->setPixmap(pix);
-    l->setFixedSize(l->sizeHint());
-    gl->addWidget(l, 0, 0);
-  }
- 
-  l = new QLabel(i18n("You need to supply a username and a\n"
-                      "password to access this mailbox."),
-                 this);
-  l->setFixedSize(l->sizeHint());
-  gl->addWidget(l, 0, 1);
- 
-  l = new QLabel(i18n("Server:"), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 1, 0);
- 
-  l = new QLabel(act->host(), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 1, 1);
- 
-  l = new QLabel(i18n("Login Name:"), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 2, 0);
- 
-  usernameLEdit = new QLineEdit(login, this);
-  usernameLEdit->setFixedHeight(usernameLEdit->sizeHint().height());
-  usernameLEdit->setMinimumWidth(usernameLEdit->sizeHint().width());
-  gl->addWidget(usernameLEdit, 2, 1);
- 
-  l = new QLabel(i18n("Password:"), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 3, 0);
- 
-  passwdLEdit = new QLineEdit(this,"NULL");
-  passwdLEdit->setEchoMode(QLineEdit::Password);
-  passwdLEdit->setText(passwd);
-  passwdLEdit->setFixedHeight(passwdLEdit->sizeHint().height());
-  passwdLEdit->setMinimumWidth(passwdLEdit->sizeHint().width());
-  gl->addWidget(passwdLEdit, 3, 1);
-  connect(passwdLEdit, SIGNAL(returnPressed()),
-          SLOT(slotOkPressed()));
- 
-  KButtonBox *bbox = new KButtonBox(this);
-  bbox->addStretch(1);
-  ok = bbox->addButton(i18n("OK"));
-  ok->setDefault(true);
-  cancel = bbox->addButton(i18n("Cancel"));
-  bbox->layout();
-  gl->addMultiCellWidget(bbox, 4, 4, 0, 1);
- 
-  connect(ok, SIGNAL(pressed()),
-          this, SLOT(slotOkPressed()));
-  connect(cancel, SIGNAL(pressed()),
-          this, SLOT(slotCancelPressed()));
- 
-  if(!login.isEmpty())
-    passwdLEdit->setFocus();
-  else
-    usernameLEdit->setFocus();
-  gl->activate();
-}
- 
-//-----------------------------------------------------------------------------
-void KMImapPasswdDialog::slotOkPressed()
-{
-  act->setLogin(usernameLEdit->text());
-  act->setPasswd(passwdLEdit->text(), act->storePasswd());
-  done(1);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMImapPasswdDialog::slotCancelPressed()
-{
-  done(0);
 }

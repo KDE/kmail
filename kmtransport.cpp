@@ -81,7 +81,7 @@ void KMTransportInfo::writeConfig(int id)
   config->writeEntry("host", host);
   config->writeEntry("port", port);
   config->writeEntry("user", user);
-  config->writeEntry("pass", KMAccount::encryptStr(pass));
+  config->writeEntry("pass", (storePass) ? KMAccount::encryptStr(pass) : "");
   config->writeEntry("precommand", precommand);
   config->writeEntry("encryption", encryption);
   config->writeEntry("authtype", authType);

@@ -21,6 +21,7 @@
 #include <qlayout.h>
 #include <qdatastream.h>
 #include <kio/scheduler.h>
+#include <kio/passdlg.h>
 
 #include "kmacctexppop.h"
 #include "kalarmtimer.h"
@@ -155,12 +156,15 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 
     if(mPasswd.isEmpty() || mLogin.isEmpty()) {
       QString passwd = decryptStr(mPasswd);
-      QString msg = i18n("Please set Password and Username");
-      KMExpPasswdDialog dlg(NULL, NULL, this, msg, mLogin, passwd);
-      if (!dlg.exec()) {
+      bool b = FALSE;
+      if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
+        i18n("You need to supply a username and a password to access this "
+        "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
+        != QDialog::Accepted)
+      {
 	emit finishedCheck(false);
 	return;
-      }
+      } else mPasswd = encryptStr(passwd);
     }
 
     QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
@@ -317,109 +321,7 @@ bool KMAcctExpPop::setProtocol(short aProtocol)
 }
 
 
-//=============================================================================
-//
-//  Class  KMExpPasswdDialog
-//
-//=============================================================================
-
-KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
-			             KMAcctExpPop *account,
-				     const QString& caption,
-			             const QString& login,
-                                     const QString &passwd)
-  :QDialog(parent,name,true)
-{
-  // This function pops up a little dialog which asks you
-  // for a new username and password if one of them was wrong or not set.
-  QLabel *l;
-
-  kernel->kbp()->idle();
-  act = account;
-  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
-  if (!caption.isNull())
-    setCaption(caption);
-
-  QGridLayout *gl = new QGridLayout(this, 5, 2, 10);
-
-  QPixmap pix(locate("data", QString::fromLatin1("kdeui/pics/keys.png")));
-  if(!pix.isNull()) {
-    l = new QLabel(this);
-    l->setPixmap(pix);
-    l->setFixedSize(l->sizeHint());
-    gl->addWidget(l, 0, 0);
-  }
-
-  l = new QLabel(i18n("You need to supply a username and a\n"
-		      "password to access this mailbox."),
-		 this);
-  l->setFixedSize(l->sizeHint());
-  gl->addWidget(l, 0, 1);
-
-  l = new QLabel(i18n("Server:"), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 1, 0);
-
-  l = new QLabel(act->host(), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 1, 1);
-
-  l = new QLabel(i18n("Login Name:"), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 2, 0);
-
-  usernameLEdit = new QLineEdit(login, this);
-  usernameLEdit->setFixedHeight(usernameLEdit->sizeHint().height());
-  usernameLEdit->setMinimumWidth(usernameLEdit->sizeHint().width());
-  gl->addWidget(usernameLEdit, 2, 1);
-
-  l = new QLabel(i18n("Password:"), this);
-  l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 3, 0);
-
-  passwdLEdit = new QLineEdit(this,"NULL");
-  passwdLEdit->setEchoMode(QLineEdit::Password);
-  passwdLEdit->setText(passwd);
-  passwdLEdit->setFixedHeight(passwdLEdit->sizeHint().height());
-  passwdLEdit->setMinimumWidth(passwdLEdit->sizeHint().width());
-  gl->addWidget(passwdLEdit, 3, 1);
-  connect(passwdLEdit, SIGNAL(returnPressed()),
-	  SLOT(slotOkPressed()));
-
-  KButtonBox *bbox = new KButtonBox(this);
-  bbox->addStretch(1);
-  ok = bbox->addButton(i18n("OK"));
-  ok->setDefault(true);
-  cancel = bbox->addButton(i18n("Cancel"));
-  bbox->layout();
-  gl->addMultiCellWidget(bbox, 4, 4, 0, 1);
-
-  connect(ok, SIGNAL(pressed()),
-	  this, SLOT(slotOkPressed()));
-  connect(cancel, SIGNAL(pressed()),
-	  this, SLOT(slotCancelPressed()));
-
-  if(!login.isEmpty())
-    passwdLEdit->setFocus();
-  else
-    usernameLEdit->setFocus();
-  gl->activate();
-}
-
 //-----------------------------------------------------------------------------
-void KMExpPasswdDialog::slotOkPressed()
-{
-  act->setLogin(usernameLEdit->text());
-  act->setPasswd(passwdLEdit->text(), act->storePasswd());
-  done(1);
-}
-
-//-----------------------------------------------------------------------------
-void KMExpPasswdDialog::slotCancelPressed()
-{
-  done(0);
-}
-
 void KMAcctExpPop::connectJob() {
   KIO::Scheduler::assignJobToSlave(slave, job);
   if (stage != Dele)
@@ -431,6 +333,8 @@ void KMAcctExpPop::connectJob() {
           SLOT( slotMsgRetrieved(KIO::Job*, const QString &)));
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotCancel()
 {
   idsOfMsgsPendingDownload.clear();
@@ -439,6 +343,8 @@ void KMAcctExpPop::slotCancel()
   slotJobFinished();
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotProcessPendingMsgs()
 {
   if (mProcessing) // not reentrant
@@ -560,6 +466,8 @@ void KMAcctExpPop::startJob() {
   connectJob();
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg) {
   if (infoMsg != "message complete") return;
   kdDebug(5006) << "stage == Retr" << endl;
@@ -575,6 +483,8 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg) {
   slotGetNextMsg();
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
@@ -653,6 +563,8 @@ void KMAcctExpPop::slotJobFinished() {
   }
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
 {
   slotProcessPendingMsgs(); // Force processing of any messages still in the queue
@@ -669,6 +581,8 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   config.sync();
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotGetNextMsg()
 {
   QStringList::Iterator next = idsOfMsgsPendingDownload.begin();
@@ -694,6 +608,8 @@ void KMAcctExpPop::slotGetNextMsg()
   }
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
@@ -771,6 +687,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   }
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotResult( KIO::Job* )
 {
   if (!job) return;
@@ -787,6 +705,8 @@ void KMAcctExpPop::slotResult( KIO::Job* )
     slotJobFinished();
 }
 
+
+//-----------------------------------------------------------------------------
 void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   const QString &errorMsg)
 {
