@@ -743,15 +743,16 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     }
 
     // Add all attachments by reading them from their temp. files
+    QStringList::ConstIterator iturl = attachmentURLs.begin();
     QStringList::ConstIterator itmime = attachmentMimetypes.begin();
     QStringList::ConstIterator itname = attachmentNames.begin();
-    for( QStringList::ConstIterator iturl = attachmentURLs.begin();
+    for( ;
          iturl != attachmentURLs.end()
          && itmime != attachmentMimetypes.end()
-         && iturl != attachmentURLs.end();
+         && itname != attachmentNames.end();
          ++iturl, ++itname, ++itmime ){
       if( !updateAttachment( *msg, *iturl, *itname, *itmime ) ){
-        kdDebug(5006) << "Attachment error, can not add Incidence." << endl;
+        kdDebug(5006) << "Attachment error, can not update attachment " << *iturl << endl;
         break;
       }
     }
