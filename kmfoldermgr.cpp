@@ -138,6 +138,15 @@ KMFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
 
 
 //-----------------------------------------------------------------------------
+void KMFolderMgr::remove(KMFolder* aFolder)
+{
+  assert(aFolder != NULL);
+  aFolder->remove();
+  mDir.reload();
+}
+
+
+//-----------------------------------------------------------------------------
 KMFolderRootDir& KMFolderMgr::dir(void)
 {
   return mDir;

@@ -13,7 +13,7 @@
 #include <kiconloader.h>
 #include <kstdaccel.h>
 #include "knewpanner.h"
-
+#include "kmfoldermgr.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
 #include "kmaccount.h"
@@ -309,15 +309,8 @@ void KMMainWin::doRemoveFolder()
 			     (const char*)mFolder->label());
   if ((KMsgBox::yesNo(this,nls->translate("Confirmation"),str))==1)
   {
-#ifdef BROKEN
-    mHeaders->clear();
-    if ( horzPanner) messageView->clearCanvas();
-    mFolderTree->cdFolder(&dir);
-    removeDirectory(dir.path());
-    mFolderTree->getList();
-#else
-    warning("Removing of folders is\nstill under construction.");
-#endif
+    mHeaders->setFolder(NULL);
+    folderMgr->remove(mFolder);
   }
 }
 

@@ -637,9 +637,10 @@ int KMFolder::compact(void)
   QString tempName;
   int openCount = mOpenCount;
 
-  tempName = name();
+  tempName = "." + name();
   tempName.detach();
   tempName += ".compacted";
+  unlink(tempName);
   tempFolder = parent()->createFolder(tempName);
   assert(tempFolder != NULL);
 
@@ -649,7 +650,7 @@ int KMFolder::compact(void)
 
   while(count() > 0)
   {
-    msg = getMsg(1);
+    msg = getMsg(0);
     tempFolder->moveMsg(msg);
   }
   tempName = tempFolder->location();

@@ -42,6 +42,9 @@ public:
     with given name. Returns Folder on success. */
   virtual KMFolder* createFolder(const char* fName, bool sysFldr=FALSE);
 
+  /** Physically remove given folder and delete the given folder object. */
+  virtual void remove(KMFolder* obsoleteFolder);
+
   /* emits changed() signal */
   virtual void contentsChanged(void);
 
