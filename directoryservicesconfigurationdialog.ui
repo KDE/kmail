@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>416</width>
+            <width>438</width>
             <height>403</height>
         </rect>
     </property>
@@ -45,7 +45,7 @@
         <widget class="QListView">
             <column>
                 <property name="text">
-                    <string>Server name</string>
+                    <string>Server Name</string>
                 </property>
                 <property name="clickable">
                     <bool>true</bool>
@@ -106,7 +106,7 @@ If you do not use a directory service, you can still use local certificates.
                     <number>6</number>
                 </property>
                 <spacer>
-                    <property name="name" stdset="0">
+                    <property name="name">
                         <cstring>Spacer10</cstring>
                     </property>
                     <property name="orientation">
@@ -114,12 +114,6 @@ If you do not use a directory service, you can still use local certificates.
                     </property>
                     <property name="sizeType">
                         <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
                     </property>
                 </spacer>
                 <widget class="QPushButton">
@@ -140,7 +134,7 @@ By clicking this button, you can select a new directory service to be used for r
                     </property>
                 </widget>
                 <spacer>
-                    <property name="name" stdset="0">
+                    <property name="name">
                         <cstring>Spacer11</cstring>
                     </property>
                     <property name="orientation">
@@ -148,12 +142,6 @@ By clicking this button, you can select a new directory service to be used for r
                     </property>
                     <property name="sizeType">
                         <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
                     </property>
                 </spacer>
                 <widget class="QPushButton">
@@ -177,7 +165,7 @@ By clicking this button, you can remove the currently selected directory service
                     </property>
                 </widget>
                 <spacer>
-                    <property name="name" stdset="0">
+                    <property name="name">
                         <cstring>Spacer12</cstring>
                     </property>
                     <property name="orientation">
@@ -186,17 +174,11 @@ By clicking this button, you can remove the currently selected directory service
                     <property name="sizeType">
                         <enum>Expanding</enum>
                     </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
-                    </property>
                 </spacer>
             </hbox>
         </widget>
         <spacer>
-            <property name="name" stdset="0">
+            <property name="name">
                 <cstring>Spacer9</cstring>
             </property>
             <property name="orientation">
@@ -204,12 +186,6 @@ By clicking this button, you can remove the currently selected directory service
             </property>
             <property name="sizeType">
                 <enum>Expanding</enum>
-            </property>
-            <property name="sizeHint">
-                <size>
-                    <width>20</width>
-                    <height>20</height>
-                </size>
             </property>
         </spacer>
         <widget class="QButtonGroup">

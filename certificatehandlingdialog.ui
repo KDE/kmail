@@ -8,7 +8,7 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>419</width>
+            <width>494</width>
             <height>357</height>
         </rect>
     </property>
@@ -165,7 +165,7 @@
                     <number>6</number>
                 </property>
                 <spacer>
-                    <property name="name" stdset="0">
+                    <property name="name">
                         <cstring>Spacer11</cstring>
                     </property>
                     <property name="orientation">
@@ -173,12 +173,6 @@
                     </property>
                     <property name="sizeType">
                         <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
                     </property>
                 </spacer>
                 <widget class="QPushButton">
@@ -189,7 +183,7 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Use for &amp;signing</string>
+                        <string>Use for &amp;Signing</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">
@@ -200,11 +194,11 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Use for &amp;encrypting</string>
+                        <string>Use for &amp;Encrypting</string>
                     </property>
                 </widget>
                 <spacer>
-                    <property name="name" stdset="0">
+                    <property name="name">
                         <cstring>Spacer10</cstring>
                     </property>
                     <property name="orientation">
@@ -212,12 +206,6 @@
                     </property>
                     <property name="sizeType">
                         <enum>Expanding</enum>
-                    </property>
-                    <property name="sizeHint">
-                        <size>
-                            <width>20</width>
-                            <height>20</height>
-                        </size>
                     </property>
                 </spacer>
             </hbox>
@@ -244,7 +232,7 @@
                         <bool>true</bool>
                     </property>
                     <property name="text">
-                        <string>Request &amp;new...</string>
+                        <string>Request &amp;New...</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">
@@ -255,7 +243,7 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Request e&amp;xtension...</string>
+                        <string>Request E&amp;xtension...</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">
@@ -266,7 +254,7 @@
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>Request &amp;change...</string>
+                        <string>Request &amp;Change...</string>
                     </property>
                 </widget>
                 <widget class="QPushButton">

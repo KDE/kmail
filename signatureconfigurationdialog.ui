@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>816</width>
-            <height>477</height>
+            <height>479</height>
         </rect>
     </property>
     <property name="caption">
@@ -596,7 +596,7 @@ When this option is selected, both the signature and the signed data will be enc
                                 <cstring>pinEntryBG</cstring>
                             </property>
                             <property name="title">
-                                <string>Entering the PIN is Required</string>
+                                <string>Entering PIN is Required</string>
                             </property>
                             <vbox>
                                 <property name="name">
