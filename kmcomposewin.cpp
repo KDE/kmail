@@ -674,7 +674,7 @@ void KMComposeWin::setupActions(void)
     (void) new KAction (i18n("&Send"), "send", CTRL+Key_Return,
                         this, SLOT(slotSendNow()), actionCollection(),
                         "send_default");
-    (void) new KAction (i18n("&Queue"), "filemail", 0,
+    (void) new KAction (i18n("&Queue"), "queue", 0,
                         this, SLOT(slotSendLater()),
                         actionCollection(), "send_alternative");
   }
