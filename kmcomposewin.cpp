@@ -1536,6 +1536,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 
   QStringList encodings = encodingAction->items();
   int i = 0;
+  bool charsetFound = FALSE;
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
@@ -1544,9 +1545,11 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
     {
       encodingAction->setCurrentItem( i );
       slotSetCharset();
+      charsetFound = TRUE;
       break;
     }
   }
+  if (!aCharset.isEmpty() && !charsetFound) setCharset("", TRUE);
 }
 
 
