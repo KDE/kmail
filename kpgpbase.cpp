@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stdlib.h>
+#include <errno.h>
  
 KpgpBase::KpgpBase()
 {
@@ -72,9 +73,9 @@ KpgpBase::run(const char *cmd, const char *passphrase)
    */
   char str[1024] = "\0";
   int pin[2], pout[2], perr[2], ppass[2];
-  int len;
+  int len, status;
   FILE *pass;
-  pid_t child_pid;
+  pid_t child_pid, rc;
 
   if(passphrase)
   {
@@ -160,6 +161,10 @@ KpgpBase::run(const char *cmd, const char *passphrase)
      
   //printf("output = %s\n",output.data());
   //printf("info = %s\n",info.data());
+
+  // we don't want a zombie, do we?  ;-)
+  rc = waitpid(-1/*child_pid*/, &status, 0);
+  if (rc==-1) printf("waitpid: %s\n", strerror(errno));
   
   return OK;
 }

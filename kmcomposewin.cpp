@@ -191,6 +191,7 @@ KMComposeWin::~KMComposeWin()
   writeConfig();
 
   if (mAutoDeleteMsg && mMsg) delete mMsg;
+  delete mDropZone;
   delete mMenuBar;
   delete mToolBar;
 }

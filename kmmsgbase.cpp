@@ -96,11 +96,12 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
   // if not successful then use the "Status" field
   if (mStatus == KMMsgStatusUnknown)
   {
-    if ((aStatusStr[0]=='R' && aStatusStr[1]=='O') ||
-	(aStatusStr[0]=='O' && aStatusStr[1]=='R'))
+    if (aStatusStr && 
+        ((aStatusStr[0]=='R' && aStatusStr[1]=='O') ||
+	 (aStatusStr[0]=='O' && aStatusStr[1]=='R')))
 	mStatus=KMMsgStatusOld;
-    else if (aStatusStr[0]=='R') mStatus=KMMsgStatusRead;
-    else if (aStatusStr[0]=='D') mStatus=KMMsgStatusDeleted;
+    else if (aStatusStr && aStatusStr[0]=='R') mStatus=KMMsgStatusRead;
+    else if (aStatusStr && aStatusStr[0]=='D') mStatus=KMMsgStatusDeleted;
     else mStatus=KMMsgStatusNew;
   }
 
@@ -375,8 +376,11 @@ const QString KMMsgBase::decodeRFC1522String(const QString aStr)
     }
     else
     {
-      result += "=?";
-      pos = beg -1; // because pos gets increased shortly afterwards
+      //result += "=?";
+      //pos = beg -1; // because pos gets increased shortly afterwards
+      pos = beg - 2;
+      *dest++ = *pos++;
+      *dest++ = *pos;
     }
   }
   *dest = '\0';

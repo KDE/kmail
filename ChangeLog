@@ -1,3 +1,19 @@
+1999-01-01  Stefan Taferner  <taferner@kde.org> (KMail-1.0.11)
+
+	* Hopefully pgp zombies are fixed now.
+	* Applied patch for fixing problems with some inline
+	  encoding switchings.
+
+1998-12-21  Stefan Taferner  <taferner@kde.org>
+
+	Applied several patches from Lars Heete <hel@admin.de>:
+        * missing deletion of drop zone in composer destructor 
+	* handling of NULL status field in message base
+	* reading process status of finished pgp process to avoid
+	  zombies ;-)
+	* workaround for "Could not load..." warnings, that should
+	  rather be debug messages, in message handler
+
 1998-12-20  Stefan Taferner  <taferner@kde.org> (KMail-1.0.10)
 
 	* Fixed possible crash when subject is empty.
