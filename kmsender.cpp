@@ -270,11 +270,15 @@ void KMSender::doSendMsg()
       KMessageBox::information(0, i18n("Critical error: "
 				       "Unable to process sent mail (out of space?)"
 				       "Moving failing message to \"sent-mail\" folder."));
+      kernel->sentFolder()->quiet(TRUE);
       kernel->sentFolder()->moveMsg(mCurrentMsg);
       cleanup();
+      kernel->sentFolder()->quiet(FALSE);
       return;
     case 1:
+      kernel->sentFolder()->quiet(TRUE);
       kernel->sentFolder()->moveMsg(mCurrentMsg);
+      kernel->sentFolder()->quiet(FALSE);
     default:
       break;
     }
@@ -655,7 +659,7 @@ QCString KMSendProc::prepareStr(const QCString &aStr, bool toCRLF,
     while( (*s) ) {
 
       char c = *s++;
-      
+
       if ( c == '\n' ) {
 	*t++ = '\r';
 	*t++ = c;
