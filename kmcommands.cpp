@@ -1429,6 +1429,9 @@ void KMMetaFilterActionCommand::start()
   KMCommand *filterCommand = new KMFilterActionCommand( mMainWidget,
   *mHeaders->selectedMsgs(), mFilter);
   filterCommand->start();
+  int contentX, contentY;
+  KMHeaderItem *item = mHeaders->prepareMove( &contentX, &contentY );
+  mHeaders->finalizeMove( item, contentX, contentY );
 #endif
 }
 
