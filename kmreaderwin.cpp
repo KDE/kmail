@@ -914,7 +914,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Numerous search dialog improvements"),
   I18N_NOOP("SMTP pipelining (faster mail submission)."),
   I18N_NOOP("Separate reader window improvements, including new tool bar"),
-  I18N_NOOP("Configurable startup folder.")
+  I18N_NOOP("Configurable startup folder."),
   I18N_NOOP("IMAP messages are loaded progressively."),
   I18N_NOOP("IMAP attachments are loaded on demand."),
   I18N_NOOP("KMail can check your accounts for new mail on startup.")
