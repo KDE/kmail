@@ -294,8 +294,7 @@ void KMMainWin::slotCheckMail()
  
  if (!rc) statusMsg(i18n("No new mail available"));
  
- if(mSendOnCheck)
-   slotSendQueued();
+ if(mSendOnCheck) slotSendQueued();
  checkingMail = FALSE;
 
 }
@@ -834,17 +833,19 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
   }
 }
 
-void KMMainWin::getAccountMenu() {
 
+//-----------------------------------------------------------------------------
+void KMMainWin::getAccountMenu()
+{
   QStrList actList;
 
   actMenu->clear();
   actList = acctMgr->getAccounts();
   QString tmp;
-  for(tmp = actList.first(); tmp ; tmp = actList.next()) {
+  for(tmp = actList.first(); tmp ; tmp = actList.next())
     actMenu->insertItem(tmp);
-  }
 }
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::setupMenuBar()
