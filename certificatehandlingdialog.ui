@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>CertificateHandlingDialog</class>
 <widget class="QWidget">
     <property name="name">
@@ -8,14 +8,14 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>494</width>
-            <height>357</height>
+            <width>533</width>
+            <height>330</height>
         </rect>
     </property>
     <property name="caption">
         <string>Certificate Management</string>
     </property>
-    <vbox>
+    <grid>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
@@ -25,83 +25,67 @@
         <property name="spacing">
             <number>6</number>
         </property>
-        <widget class="QLayoutWidget">
+        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>Layout11</cstring>
+                <cstring>TextLabel8</cstring>
             </property>
-            <grid>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>0</number>
-                </property>
-                <property name="spacing">
-                    <number>6</number>
-                </property>
-                <widget class="QLabel" row="1" column="1">
-                    <property name="name">
-                        <cstring>encryptCertLA</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>3</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="frameShape">
-                        <enum>WinPanel</enum>
-                    </property>
-                    <property name="frameShadow">
-                        <enum>Sunken</enum>
-                    </property>
-                    <property name="text">
-                        <string>---</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>TextLabel8</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Certificate used for signing messages:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="1">
-                    <property name="name">
-                        <cstring>signCertLA</cstring>
-                    </property>
-                    <property name="sizePolicy">
-                        <sizepolicy>
-                            <hsizetype>3</hsizetype>
-                            <vsizetype>5</vsizetype>
-                            <horstretch>0</horstretch>
-                            <verstretch>0</verstretch>
-                        </sizepolicy>
-                    </property>
-                    <property name="frameShape">
-                        <enum>WinPanel</enum>
-                    </property>
-                    <property name="frameShadow">
-                        <enum>Sunken</enum>
-                    </property>
-                    <property name="text">
-                        <string>---</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>TextLabel10</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Certificate used for encrypting messages:</string>
-                    </property>
-                </widget>
-            </grid>
+            <property name="text">
+                <string>Certificate used for signing messages:</string>
+            </property>
         </widget>
-        <widget class="QListView">
+        <widget class="QLabel" row="1" column="2" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>encryptCertLA</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>3</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>WinPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="text">
+                <string>---</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="0" column="2" rowspan="1" colspan="3">
+            <property name="name">
+                <cstring>signCertLA</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>3</hsizetype>
+                    <vsizetype>5</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="frameShape">
+                <enum>WinPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Sunken</enum>
+            </property>
+            <property name="text">
+                <string>---</string>
+            </property>
+        </widget>
+        <widget class="QLabel" row="1" column="0" rowspan="1" colspan="2">
+            <property name="name">
+                <cstring>TextLabel10</cstring>
+            </property>
+            <property name="text">
+                <string>Certificate used for encrypting messages:</string>
+            </property>
+        </widget>
+        <widget class="QListView" row="2" column="0" rowspan="1" colspan="5">
             <column>
                 <property name="text">
                     <string>Certificate</string>
@@ -109,7 +93,7 @@
                 <property name="clickable">
                     <bool>true</bool>
                 </property>
-                <property name="resizeable">
+                <property name="resizable">
                     <bool>true</bool>
                 </property>
             </column>
@@ -120,7 +104,7 @@
                 <property name="clickable">
                     <bool>true</bool>
                 </property>
-                <property name="resizeable">
+                <property name="resizable">
                     <bool>true</bool>
                 </property>
             </column>
@@ -131,7 +115,7 @@
                 <property name="clickable">
                     <bool>true</bool>
                 </property>
-                <property name="resizeable">
+                <property name="resizable">
                     <bool>true</bool>
                 </property>
             </column>
@@ -142,7 +126,7 @@
                 <property name="clickable">
                     <bool>true</bool>
                 </property>
-                <property name="resizeable">
+                <property name="resizable">
                     <bool>true</bool>
                 </property>
             </column>
@@ -150,127 +134,48 @@
                 <cstring>certificatesLV</cstring>
             </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QPushButton" row="3" column="0">
             <property name="name">
-                <cstring>Layout12</cstring>
+                <cstring>useForEncryptingPB</cstring>
             </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>0</number>
-                </property>
-                <property name="spacing">
-                    <number>6</number>
-                </property>
-                <spacer>
-                    <property name="name">
-                        <cstring>Spacer11</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                </spacer>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>useForSigningPB</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Use for &amp;Signing</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>useForEncryptingPB</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Use for &amp;Encrypting</string>
-                    </property>
-                </widget>
-                <spacer>
-                    <property name="name">
-                        <cstring>Spacer10</cstring>
-                    </property>
-                    <property name="orientation">
-                        <enum>Horizontal</enum>
-                    </property>
-                    <property name="sizeType">
-                        <enum>Expanding</enum>
-                    </property>
-                </spacer>
-            </hbox>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string>Use for &amp;Encrypting</string>
+            </property>
         </widget>
-        <widget class="QLayoutWidget">
+        <widget class="QPushButton" row="3" column="1" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>Layout13</cstring>
+                <cstring>useForSigningPB</cstring>
             </property>
-            <hbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
-                </property>
-                <property name="margin">
-                    <number>0</number>
-                </property>
-                <property name="spacing">
-                    <number>6</number>
-                </property>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>requestNewPB</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>true</bool>
-                    </property>
-                    <property name="text">
-                        <string>Request &amp;New...</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>requestExtensionPB</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Request E&amp;xtension...</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>requestChangePB</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>Request &amp;Change...</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>deletePB</cstring>
-                    </property>
-                    <property name="enabled">
-                        <bool>false</bool>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Delete</string>
-                    </property>
-                </widget>
-            </hbox>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string>Use for &amp;Signing</string>
+            </property>
         </widget>
-    </vbox>
+        <widget class="QPushButton" row="3" column="3">
+            <property name="name">
+                <cstring>requestPB</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Request...</string>
+            </property>
+        </widget>
+        <widget class="QPushButton" row="3" column="4">
+            <property name="name">
+                <cstring>deletePB</cstring>
+            </property>
+            <property name="enabled">
+                <bool>false</bool>
+            </property>
+            <property name="text">
+                <string>&amp;Delete</string>
+            </property>
+        </widget>
+    </grid>
 </widget>
 <connections>
     <connection>
@@ -292,38 +197,34 @@
         <slot>slotUseForEncrypting()</slot>
     </connection>
     <connection>
-        <sender>requestNewPB</sender>
-        <signal>clicked()</signal>
-        <receiver>CertificateHandlingDialog</receiver>
-        <slot>slotRequestNewCertificate()</slot>
-    </connection>
-    <connection>
-        <sender>requestExtensionPB</sender>
-        <signal>clicked()</signal>
-        <receiver>CertificateHandlingDialog</receiver>
-        <slot>slotRequestExtendedCertificate()</slot>
-    </connection>
-    <connection>
-        <sender>requestChangePB</sender>
-        <signal>clicked()</signal>
-        <receiver>CertificateHandlingDialog</receiver>
-        <slot>slotRequestChangedCertificate()</slot>
-    </connection>
-    <connection>
         <sender>deletePB</sender>
         <signal>clicked()</signal>
         <receiver>CertificateHandlingDialog</receiver>
         <slot>slotDeleteCertificate()</slot>
     </connection>
 </connections>
+<includes>
+    <include location="global" impldecl="in implementation">qpopupmenu.h</include>
+    <include location="local" impldecl="in implementation">certificatehandlingdialog.ui.h</include>
+</includes>
+<forwards>
+    <forward>class QPopupMenu;</forward>
+</forwards>
+<variables>
+    <variable>QPopupMenu* requestPopup;</variable>
+</variables>
 <slots>
     <slot access="protected">slotDeleteCertificate()</slot>
-    <slot access="protected">slotCertificateSelectionChanged( QListViewItem* )</slot>
+    <slot access="protected">slotCertificateSelectionChanged( QListViewItem * )</slot>
     <slot access="protected">slotRequestChangedCertificate()</slot>
     <slot access="protected">slotRequestExtendedCertificate()</slot>
     <slot access="protected">slotRequestNewCertificate()</slot>
     <slot access="protected">slotUseForEncrypting()</slot>
     <slot access="protected">slotUseForSigning()</slot>
+    <slot access="private">slotRequestMenu( int id )</slot>
 </slots>
+<functions>
+    <function access="private" specifier="non virtual">init()</function>
+</functions>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

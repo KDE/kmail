@@ -11,7 +11,7 @@
 #include <qregexp.h>
 #include <qtextcodec.h>
 #include <qstringlist.h>
-#include <kmfolderindex.h>
+#include <kmfolder.h>
 #include <kmheaders.h>
 #include <kmmsgdict.h>
 #include <krfcdate.h>
@@ -126,7 +126,7 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
   if ((idx < 0) && (mParent))
     idx = mParent->find( this );
   if (mParent)
-    mParent->msgStatusChanged( status(), aStatus, idx );
+      mParent->msgStatusChanged( status(), aStatus /* , idx */);
   mDirty = TRUE;
   if (mParent)
     mParent->headerOfMsgChanged(this, idx);
