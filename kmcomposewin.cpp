@@ -4016,7 +4016,7 @@ void KMLineEdit::loadContacts()
     QString name, email;
     for ( ; it != recent.end(); ++it ) {
       KABC::Addressee addr;
-      getNameAndMail(*it, name, email);
+      KPIM::getNameAndMail(*it, name, email);
       addr.setNameFromString( name );
       addr.insertEmail( email, true );
       addContact( addr, 120 ); // more weight than kabc entries and more than ldap results
