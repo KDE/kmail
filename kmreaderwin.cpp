@@ -30,6 +30,7 @@
 #include <krun.h>
 #include <ktempfile.h>
 #include <kprocess.h>
+#include <kstdguiitem.h>
 
 // khtml headers
 #include <khtml_part.h>
@@ -4747,7 +4748,7 @@ void KMReaderWin::slotAtmOpen()
   question += i18n("\n\nNote that opening an attachment may compromise your system's security!");
   // TODO: buttons don't have the correct order, but "Save" should be default
   int choice = KMessageBox::warningYesNoCancel(this, question,
-      i18n("Open Attachment?"), i18n("&Save to Disk"), open_text);
+      i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text);
   if( choice == KMessageBox::Yes ) {		// Save
     slotAtmSave();
   } else if( choice == KMessageBox::No ) {	// Open
