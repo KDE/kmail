@@ -1319,7 +1319,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
       // out. Ingo, 2002-04-21
       //verifyWordWrapLengthIsAdequate(bodyDecoded);
 
-      QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+      const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
       if (codec)
         mEditor->setText(codec->toUnicode(bodyDecoded));
       else
@@ -1348,7 +1348,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     if( allowDecryption )
       decryptOrStripOffCleartextSignature( bodyDecoded );
 
-    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+    const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
     if (codec) {
       mEditor->setText(codec->toUnicode(bodyDecoded));
     } else
@@ -2767,7 +2767,7 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
   {
     // Provide a local scope for newText.
     QString newText;
-    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+    const QTextCodec *codec = KMMsgBase::codecForName(mCharset);
 
     if (mCharset == "us-ascii") {
       cText = KMMsgBase::toUsAscii(text);

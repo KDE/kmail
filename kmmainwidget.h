@@ -316,7 +316,7 @@ protected:
   QSplitter    *mPanner1, *mPanner2, *mPanner3;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
-  QTextCodec   *mCodec;
+  const QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   KSelectAction *mEncoding;
   KAction       *mlistFilterAction;
