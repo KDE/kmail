@@ -20,6 +20,7 @@
 #include <qtimer.h>
 
 #include <klocale.h>
+#include <kio/global.h>
 
 #include <assert.h>
 
@@ -382,7 +383,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
       // set the date
       lvi->setText(5, KMime::DateFormatter::formatDate( KMime::DateFormatter::Fancy, msg->date() ) );
       // set the size
-      lvi->setText(6, QString("%1").arg(headers->header()->msgLength()));
+      lvi->setText(6, KIO::convertSize(headers->header()->msgLength()));
       // Date for sorting
       lvi->setText(7, msg->dateIsoStr());
     }
