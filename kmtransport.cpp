@@ -257,7 +257,7 @@ void KMTransportDialog::makeSmtpPage()
   mSmtp.nameEdit = new QLineEdit( page1 );
   QWhatsThis::add(mSmtp.nameEdit,
                   i18n("The name that KMail will use when "
-                       "refering to this server."));
+                       "referring to this server."));
   label->setBuddy( mSmtp.nameEdit );
   grid->addWidget( mSmtp.nameEdit, 0, 1 );
  
@@ -284,7 +284,7 @@ void KMTransportDialog::makeSmtpPage()
   grid->addWidget( label, 5, 0 );
   mSmtp.precommand = new QLineEdit( page1 );
   QWhatsThis::add(mSmtp.precommand,
-                  i18n("A command to run locally previous, "
+                  i18n("A command to run locally, prior "
                        "to sending email. This can be used "
                        "to set up ssh tunnels, for example. "
                        "Leave it empty if no command should be run."));
