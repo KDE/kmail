@@ -230,6 +230,7 @@ namespace KMail {
     if ( mPasswordDialogIsActive ) return Connecting;
 
     if( mAskAgain || passwd().isEmpty() || login().isEmpty() ) {
+      Q_ASSERT( !mSlave ); // disconnected on 'wrong login' error already, or first try
       QString log = login();
       QString pass = passwd();
       // We init "store" to true to indicate that we want to have the
@@ -533,17 +534,12 @@ namespace KMail {
     bool jobsKilled = true;
     switch( errorCode ) {
     case KIO::ERR_SLAVE_DIED: slaveDied(); killAllJobs( true ); break;
-    case KIO::ERR_COULD_NOT_LOGIN:
-      if ( !mStorePasswd ) {
-        mAskAgain = true;
-        jobsKilled = false;
-      }
-      else
-        killAllJobs( true );
-      break;
+    case KIO::ERR_COULD_NOT_LOGIN: // bad password
+      mAskAgain = true;
+      // fallthrough intended
     case KIO::ERR_CONNECTION_BROKEN:
     case KIO::ERR_COULD_NOT_CONNECT:
-      // These mean that we'll have to reconnect on the next attempt, so set mSlave to 0.
+      // These mean that we'll have to reconnect on the next attempt, so disconnect and set mSlave to 0.
       killAllJobs( true );
       break;
     case KIO::ERR_USER_CANCELED:
