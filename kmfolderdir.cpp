@@ -11,7 +11,7 @@
 
 //-----------------------------------------------------------------------------
 KMFolderRootDir::KMFolderRootDir(const char* path):
-  KMFolderDir(NULL, ".")
+  KMFolderDir(NULL, path)
 {
   setPath(path);
 }
@@ -26,7 +26,7 @@ void KMFolderRootDir::setPath(const char* aPath)
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolderRootDir::path(void) const
+const QString& KMFolderRootDir::path(void) const
 {
   return mPath;
 }
@@ -45,6 +45,23 @@ KMFolderDir::KMFolderDir(KMFolderDir* parent, const char* name):
 KMFolderDir::~KMFolderDir()
 {
   clear();
+}
+
+
+//-----------------------------------------------------------------------------
+const QString& KMFolderDir::path(void) const
+{
+  static QString p;
+
+  if (parent())
+  {
+    p = parent()->path();
+    p.append("/");
+    p.append(name());
+  }
+  else p = "";
+
+  return p;
 }
 
 
@@ -101,3 +118,5 @@ bool KMFolderDir::reload(void)
 
   return TRUE;
 }
+
+#include "kmfolderdir.moc"

@@ -10,6 +10,8 @@
 #include <stdio.h>
 #include <qarray.h>
 
+typedef QArray<KMMessage> KMMessageList;
+
 class KMMessage;
 class BasicMessage;
 class KMFolderDir;
@@ -18,6 +20,8 @@ class KMFolderDir;
 
 class KMFolder: public KMFolderNode
 {
+  Q_OBJECT
+
 public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
@@ -25,24 +29,34 @@ public:
   KMFolder(KMFolderDir* parent=NULL, const char* name=NULL);
   virtual ~KMFolder();
 
+  /** Returns full path to folder file */
+  const QString& location(void) const;
+
   /** Read message at given index. Indexing starts at one to stay
     compatible with imap-lib */
   virtual KMMessage* getMsg(int index);
 
+  /** Detach message from this folder. Usable to call addMsg()
+    with the message for another folder. */
+  virtual void detachMsg(int index);
+
   /** Add the given message to the folder. Usually the message
     is added at the end of the folder. Returns zero on success and
     an errno error code on failure. The index of the new message
-    is optionally returned. */
-  virtual long addMsg(KMMessage* msg, int* index = NULL);
+    is optionally returned. 
+    Please note that the message is added as is to the folder and the folder
+    takes ownership of the message (deleting it in the destructor).*/
+  virtual int addMsg(KMMessage* msg, int* index = NULL);
 
-  /** number of not deleted messages */
-  virtual long numMsgs(void) const { return mActiveMsgs; }
+  /** total number of messages in this folder (may include already deleted
+   messages) */
+  virtual long numMsgs(void) const { return mMsgs; }
 
   /** number of unread messages */
   virtual int numUnreadMsgs(void) const { return mUnreadMsgs; }
 
-  /** total number of messages in folder*/
-  virtual int numTotalMsgs(void) const { return mMsgs; }
+  /** number of active (not deleted) messages in folder */
+  virtual int numActiveMsgs(void) const { return mActiveMsgs; }
 
   virtual int isValid(unsigned long);
 
@@ -68,6 +82,11 @@ public:
       c-library fopen call otherwise. */
   virtual int create(void);
 
+  /** Removes the folder physically from disk and empties the contents
+    of the folder in memory. Note that the folder is closed during this
+    process, whether there are others using it or not. */
+  virtual int remove(void);
+
   /** Returns TRUE if a table of contents file is automatically created. */
   bool autoCreateToc(void) const { return mAutoCreateToc; }
 
@@ -77,11 +96,24 @@ public:
 
 
   //---| yet not implemented are: |--------------------------------------
-  virtual int remove(void);
   virtual int rename(const char* fileName);
   virtual long status(long/* = SA_MESSAGES | SA_RECENT | SA_UNSEEN*/);
   virtual void ping();
   virtual void expunge();
+
+signals:
+  /** Emitted when the status, name, or associated accounts of this
+    folder changed. */
+  void changed();
+
+  /** Emitted when a message is removed from the folder. */
+  void msgRemoved(int id);
+
+  /** Emitted when a message is added from the folder. */
+  void msgAdded(int id);
+
+  /** Emitted when a field of the header of a specific message changed. */
+  void msgHeaderChanged(int id);
 
 protected:
   // read message from file
@@ -107,7 +139,6 @@ protected:
   FILE* mTocStream;	// table of contents file
   int mMsgs, mUnreadMsgs, mActiveMsgs;
   KMMsgInfoList mMsgInfo;
-  KMMessage** mMsgList;
   int mOpenCount;
   bool mAutoCreateToc;  // is the automatic creation of a toc file allowed ?
 };

@@ -14,6 +14,8 @@ class KMMessagePart;
 
 class KMMessage
 {
+  friend class KMFolder;
+
 protected:
   KMMessage(KMFolder*, DwMessage* = NULL);
 
@@ -35,13 +37,11 @@ public:
   /** Return the BasicMessage contents as a string */
   const char* asString(void);
 
-  /**
-   Set fields that are either automatically set (Message-id)
+  /** Set fields that are either automatically set (Message-id)
    or that do not change from one message to another (MIME-Version).
    Call this method before sending *after* all changes to the message
    are done because this method does things different if there are
-   attachments / multiple body parts.
-   */
+   attachments / multiple body parts. */
   virtual void setAutomaticFields();
     
   /** Get or set the 'Date' header field */
@@ -74,11 +74,9 @@ public:
   const char* subject(void) const;
   void setSubject(const char* aStr);
 
-  /** 
-   Get or set the 'Content-Type' header field
+  /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
-   will work only for well-known types or subtypes.
-   */
+   will work only for well-known types or subtypes. */
   const char* typeStr(void) const;
   int type(void) const;
   void setTypeStr(const char* aStr);
@@ -91,16 +89,14 @@ public:
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
-    will work only for well-known encodings.
-   */
+    will work only for well-known encodings. */
   const char* contentTransferEncodingStr(void) const;
   int  contentTransferEncoding(void) const;
   void setContentTransferEncodingStr(const char* aStr);
   void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
-      These functions are an alternative to the ones with longer names.
-   */
+      These functions are an alternative to the ones with longer names. */
   const char* cteStr(void) const { return contentTransferEncodingStr(); }
   int cte(void) const { return contentTransferEncoding(); }
   void setCteStr(const char* aStr) { setContentTransferEncodingStr(aStr); }
@@ -139,8 +135,6 @@ public:
 
 
 protected:
-  friend class KMFolder;
-
   void setOwner(KMFolder*);
   DwString& msgStr(void) { return mMsgStr; }
   virtual void takeMessage(DwMessage* aMsg);

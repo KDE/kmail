@@ -16,6 +16,8 @@ class KMFolderDir;
 
 class KMFolderNode: public QObject
 {
+  Q_OBJECT
+
 public:
   KMFolderNode(KMFolderDir* parent, const char* name);
   virtual ~KMFolderNode();
@@ -35,9 +37,9 @@ public:
    if the node has no parent. Example: if this object represents a folder
    ~joe/Mail/inbox then path() returns "/home/joe/Mail" and name() returns 
    "inbox". */
-  virtual const QString path(void) const;
+  virtual const QString& path(void) const;
 
-  // Hint: name() and setName() handle the name of the node.
+  const QString& name(void) const { return mName; }
 
 protected:
   QString mName;

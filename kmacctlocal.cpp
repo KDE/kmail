@@ -6,6 +6,7 @@
 #include "kmacctfolder.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 
 
 //-----------------------------------------------------------------------------
@@ -36,21 +37,37 @@ bool KMAcctLocal::processNewMail(void)
   KMFolder mailFolder(NULL, location());
   long num = 0;
   long i;
+  int rc;
   KMMessage* msg;
 
-  assert(mFolder != NULL);
+  if (mFolder==NULL) return FALSE;
+
+  printf("processNewMail: %s\n", (const char*)location());
 
   mailFolder.setAutoCreateToc(FALSE);
-  if (mailFolder.open()) return FALSE;
+  rc = mailFolder.open();
+  if (rc)
+  {
+    perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
+    return FALSE;
+  }
+  mFolder->open();
 
   num = mailFolder.numMsgs();
+  printf("%d messages in %s\n", num, (const char*)location());
+
   for (i=1; i<=num; i++)
   {
+    printf("processing message %d\n", i);
     msg = mailFolder.getMsg(i);
+    mailFolder.detachMsg(i);
     if (msg) mFolder->addMsg(msg);
   }
+  printf("done, closing folders\n");
 
   mailFolder.close();
+  mFolder->close();
+
   return (num > 0);
 }
 

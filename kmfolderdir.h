@@ -9,6 +9,8 @@
 
 class KMFolderDir: public KMFolderNode, public KMFolderNodeList
 {
+  Q_OBJECT
+
 public:
   KMFolderDir(KMFolderDir* parent=NULL, const char* path=NULL);
   virtual ~KMFolderDir();
@@ -17,6 +19,9 @@ public:
 
   /** Read contents of directory */
   virtual bool reload(void);
+
+  /** Return full pathname of this directory */
+  virtual const QString& path(void) const;
 };
 
 
@@ -26,7 +31,7 @@ class KMFolderRootDir: public KMFolderDir
 {
 public:
   KMFolderRootDir(const char* name=NULL);
-  virtual const QString path(void) const; // returns name() here
+  virtual const QString& path(void) const;
 
   // set the absolute path
   virtual void setPath(const char*);

@@ -3,14 +3,7 @@
 #include "kmmessage.h"
 #include "kmfolder.h"
 
-#include <mimelib/message.h>
-#include <mimelib/header.h>
-#include <mimelib/text.h>
-#include <mimelib/addrlist.h>
-#include <mimelib/mboxlist.h>
-#include <mimelib/enum.h>
-#include <mimelib/body.h>
-#include <mimelib/bodypart.h>
+#include <mimelib/mimepp.h>
 
 
 //-----------------------------------------------------------------------------
@@ -34,6 +27,13 @@ KMMessage::KMMessage(KMFolder* aOwner, DwMessage* aMsg)
 KMMessage::~KMMessage()
 {
   if (mMsg) delete mMsg;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setOwner(KMFolder* aFolder)
+{
+  mOwner = aFolder;
 }
 
 
@@ -74,7 +74,7 @@ const char* KMMessage::statusToStr(Status aSt)
 //-----------------------------------------------------------------------------
 void KMMessage::setAutomaticFields(void)
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   header.MimeVersion().FromString("1.0");
   header.MessageId().CreateDefault();
 
@@ -82,7 +82,7 @@ void KMMessage::setAutomaticFields(void)
   {
     // Set the type to 'Multipart' and the subtype to 'Mixed'
 
-    DwMediaType& contentType = mMsg->Header().ContentType();
+    DwMediaType& contentType = mMsg->Headers().ContentType();
     contentType.SetType(DwMime::kTypeMultipart);
     contentType.SetSubtype(DwMime::kSubtypeMixed);
 
@@ -98,7 +98,7 @@ const char* KMMessage::dateStr(void) const
 {
   // Access the 'Date' header field and return its contents as a string
   
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsString().c_str();
   return NULL;
 }
@@ -109,7 +109,7 @@ time_t KMMessage::date(void) const
 {
   // Access the 'Date' header field and return its contents as a string
   
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsUnixTime();
   return (time_t)-1;
 }
@@ -118,14 +118,14 @@ time_t KMMessage::date(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setDate(time_t aDate)
 {
-  mMsg->Header().Date().FromUnixTime(aDate);
+  mMsg->Headers().Date().FromUnixTime(aDate);
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::to(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasTo()) return header.To().AsString().c_str();
   else return "";
 }
@@ -134,14 +134,14 @@ const char* KMMessage::to(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setTo(const char* aStr)
 {
-  mMsg->Header().To().FromString(aStr);
+  mMsg->Headers().To().FromString(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::replyTo(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasReplyTo()) return header.ReplyTo().AsString().c_str();
   else return "";
 }
@@ -150,21 +150,21 @@ const char* KMMessage::replyTo(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setReplyTo(const char* aStr)
 {
-  mMsg->Header().ReplyTo().FromString(aStr);
+  mMsg->Headers().ReplyTo().FromString(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setReplyTo(KMMessage* aMsg)
 {
-  mMsg->Header().ReplyTo().FromString(aMsg->from());
+  mMsg->Headers().ReplyTo().FromString(aMsg->from());
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::cc(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasCc()) return header.Cc().AsString().c_str();
   else return "";
 }
@@ -173,14 +173,14 @@ const char* KMMessage::cc(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setCc(const char* aStr)
 {
-  mMsg->Header().Cc().FromString(aStr);
+  mMsg->Headers().Cc().FromString(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::bcc(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasBcc()) return header.Bcc().AsString().c_str();
   else return "";
 }
@@ -189,14 +189,14 @@ const char* KMMessage::bcc(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setBcc(const char* aStr)
 {
-  mMsg->Header().Bcc().FromString(aStr);
+  mMsg->Headers().Bcc().FromString(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::from(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
 
   if (header.HasFrom()) return header.From().AsString().c_str();
   else return "";
@@ -206,14 +206,14 @@ const char* KMMessage::from(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setFrom(const char* aStr)
 {
-  mMsg->Header().From().FromString(aStr);
+  mMsg->Headers().From().FromString(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::subject(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasSubject()) return header.Subject().AsString().c_str();
   else return "";
 }
@@ -222,14 +222,14 @@ const char* KMMessage::subject(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setSubject(const char* aStr)
 {
-  mMsg->Header().Subject().FromString(aStr);
+  mMsg->Headers().Subject().FromString(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::typeStr(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().AsString().c_str();
   else return "";
 }
@@ -238,7 +238,7 @@ const char* KMMessage::typeStr(void) const
 //-----------------------------------------------------------------------------
 int KMMessage::type(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().Type();
   else return DwMime::kTypeNull;
 }
@@ -247,14 +247,14 @@ int KMMessage::type(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setTypeStr(const char* aStr)
 {
-  mMsg->Header().ContentType().SetTypeStr(aStr);
+  mMsg->Headers().ContentType().SetTypeStr(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setType(int aType)
 {
-  mMsg->Header().ContentType().SetType(aType);
+  mMsg->Headers().ContentType().SetType(aType);
 }
 
 
@@ -262,7 +262,7 @@ void KMMessage::setType(int aType)
 //-----------------------------------------------------------------------------
 const char* KMMessage::subtypeStr(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().SubtypeStr().c_str();
   else return "";
 }
@@ -271,7 +271,7 @@ const char* KMMessage::subtypeStr(void) const
 //-----------------------------------------------------------------------------
 int KMMessage::subtype(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().Subtype();
   else return DwMime::kSubtypeNull;
 }
@@ -280,21 +280,21 @@ int KMMessage::subtype(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setSubtypeStr(const char* aStr)
 {
-  mMsg->Header().ContentType().SetSubtypeStr(aStr);
+  mMsg->Headers().ContentType().SetSubtypeStr(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setSubtype(int aSubtype)
 {
-  mMsg->Header().ContentType().SetSubtype(aSubtype);
+  mMsg->Headers().ContentType().SetSubtype(aSubtype);
 }
 
 
 //-----------------------------------------------------------------------------
 const char* KMMessage::contentTransferEncodingStr(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasContentTransferEncoding())
     return header.ContentTransferEncoding().AsString().c_str();
   else return "";
@@ -304,7 +304,7 @@ const char* KMMessage::contentTransferEncodingStr(void) const
 //-----------------------------------------------------------------------------
 int KMMessage::contentTransferEncoding(void) const
 {
-  DwHeader& header = mMsg->Header();
+  DwHeaders& header = mMsg->Headers();
   if (header.HasContentTransferEncoding())
     return header.ContentTransferEncoding().AsEnum();
   else return DwMime::kCteNull;
@@ -314,14 +314,14 @@ int KMMessage::contentTransferEncoding(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setContentTransferEncodingStr(const char* aStr)
 {
-  mMsg->Header().ContentTransferEncoding().FromString(aStr);
+  mMsg->Headers().ContentTransferEncoding().FromString(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setContentTransferEncoding(int aCte)
 {
-  mMsg->Header().ContentTransferEncoding().FromEnum(aCte);
+  mMsg->Headers().ContentTransferEncoding().FromEnum(aCte);
 }
 
 

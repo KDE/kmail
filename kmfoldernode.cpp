@@ -3,6 +3,7 @@
 #include "kmfoldernode.h"
 #include "kmfolderdir.h"
 
+static QString sEmpty("");
 
 //-----------------------------------------------------------------------------
 KMFolderNode::KMFolderNode(KMFolderDir* aParent, const char* aName):
@@ -28,17 +29,10 @@ bool KMFolderNode::isDir(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolderNode::path(void) const
+const QString& KMFolderNode::path(void) const
 {
-  static QString p;
-
-  if (parent())
-  {
-    p = parent()->path();
-    p.append("/");
-    p.append(parent()->name());
-  }
-  else p = "";
-
-  return p;
+  if (parent()) return parent()->path();
+  return sEmpty;
 }
+
+#include "kmfoldernode.moc"

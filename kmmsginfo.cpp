@@ -8,18 +8,52 @@
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::init(KMMessage::Status aStatus, unsigned long offset, 
-		     unsigned long size)
+KMMsgInfo::~KMMsgInfo()
+{
+  if (mMsg) delete mMsg;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::init(KMMessage::Status aStatus, unsigned long aOffset, 
+		     unsigned long aSize, KMMessage* aMsg)
 {
   mStatus = aStatus;
-  mOffset = offset;
-  mSize   = size;
+  mOffset = aOffset;
+  mSize   = aSize;
+  mMsg    = aMsg;
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMsgInfo::init(const char* aStatusStr, unsigned long aOffset, 
-		     unsigned long aSize)
+		     unsigned long aSize, KMMessage* aMsg)
+{
+  init(KMMessage::stUnknown, aOffset, aSize, aMsg);
+  setStatus(aStatusStr);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::deleteMsg(void)
+{
+  if (mMsg)
+  {
+    delete mMsg;
+    mMsg = NULL;
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::setStatus(KMMessage::Status aStatus)
+{
+  mStatus = aStatus;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::setStatus(const char* aStatusStr)
 {
   static KMMessage::Status stList[] = 
   {
@@ -32,7 +66,7 @@ void KMMsgInfo::init(const char* aStatusStr, unsigned long aOffset,
   for (i=0; stList[i]!=KMMessage::stUnknown; i++)
     if (strchr(aStatusStr, (char)stList[i])) break;
 
-  init(stList[i], aOffset, aSize);
+  mStatus = stList[i];
 }
 
 
@@ -45,6 +79,7 @@ void KMMsgInfo::fromString(const char* aStr)
 
   sscanf(aStr,"%c %lu %lu", &st, &mOffset, &mSize);
   mStatus = (KMMessage::Status)st;
+  mMsg = NULL;
 }
 
 
