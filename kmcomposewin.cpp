@@ -4102,7 +4102,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QPopupMenu(this);
 
-     mAttachMenu->insertItem(i18n("View"), this, SLOT(slotAttachView()));
+     mAttachMenu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
      mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
      mAttachMenu->insertItem(i18n("Save As..."), this, SLOT(slotAttachSave()));
      mAttachMenu->insertItem(i18n("Properties..."),
