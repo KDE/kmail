@@ -1126,7 +1126,7 @@ namespace KMail {
     partNode* dataPlain =
       curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
 
-    if ( !mReader || (mReader->htmlMail() && dataHtml) ||
+    if ( (mReader && mReader->htmlMail() && dataHtml) ||
          (dataHtml && dataPlain && dataPlain->msgPart().body().isEmpty()) ) {
       if ( dataPlain )
         dataPlain->mWasProcessed = true;
