@@ -21,6 +21,8 @@
 
 #include "recipientspicker.h"
 
+#include "globalsettings.h"
+
 #include <libkdepim/recentaddresses.h>
 
 #include <klistview.h>
@@ -31,6 +33,7 @@
 #include <kdialog.h>
 #include <kwin.h>
 #include <kabc/distributionlist.h>
+#include <kmessagebox.h>
 
 #include <qlayout.h>
 #include <qcombobox.h>
@@ -570,8 +573,23 @@ void RecipientsPicker::pick( Recipient::Type type )
 {
   kdDebug() << "RecipientsPicker::pick " << int( type ) << endl;
 
+  int count = 0;
   QListViewItem *viewItem;
   for( viewItem = mRecipientList->firstChild(); viewItem;
+       viewItem = viewItem->nextSibling() ) {
+    if ( viewItem->isSelected() ) {
+      ++count;
+    }
+  }
+  if ( count > GlobalSettings::maximumRecipients() ) {
+    KMessageBox::sorry( this,
+      i18n("You selected %1 recipients. The maximum supported number of "
+        "recipients is %2. Please adapt the selection.")
+      .arg( count ).arg( GlobalSettings::maximumRecipients() ) );
+    return;
+  }
+
+ for( viewItem = mRecipientList->firstChild(); viewItem;
        viewItem = viewItem->nextSibling() ) {
     if ( viewItem->isSelected() ) {
       RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );

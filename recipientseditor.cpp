@@ -27,6 +27,7 @@
 #include "recipientspicker.h"
 #include "kwindowpositioner.h"
 #include "distributionlistdialog.h"
+#include "globalsettings.h"
 
 #include <libemailfunctions/email.h>
 
@@ -35,6 +36,7 @@
 #include <kinputdialog.h>
 #include <klocale.h>
 #include <kiconloader.h>
+#include <kmessagebox.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -724,9 +726,18 @@ void RecipientsEditor::setRecipientString( const QString &str,
 {
   clear();
 
+  int count = 1;
+
   QStringList r = KPIM::splitEmailAddrList( str );
   QStringList::ConstIterator it;
   for( it = r.begin(); it != r.end(); ++it ) {
+    if ( count++ > GlobalSettings::maximumRecipients() ) {
+      KMessageBox::sorry( this,
+        i18n("Truncating recipients list to %1 of %2 entries.")
+        .arg( GlobalSettings::maximumRecipients() )
+        .arg( r.count() ) );
+      break;
+    }
     RecipientLine *line = mRecipientsView->emptyLine();
     if ( !line ) line = mRecipientsView->addLine();
     line->setRecipient( Recipient( *it, type ) );
