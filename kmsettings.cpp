@@ -20,9 +20,6 @@
 #include "kfontutils.h"
 #include "kmtopwidget.h"
 
-#include <kapp.h>
-#include <kfiledialog.h>
-#include <ktablistbox.h>
 #include <qbuttongroup.h>
 #include <qfiledialog.h>
 #include <qframe.h>
@@ -34,6 +31,10 @@
 #include <qcheckbox.h>
 #include <qvalidator.h>
 #include <qmessagebox.h>
+
+#include <kapp.h>
+#include <kfiledialog.h>
+#include <ktablistbox.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kconfig.h>
@@ -1047,16 +1048,14 @@ void KMSettings::slotSigModify()
         kl.run();
       } else {
         // message box: permission denied
-        QMessageBox::warning(this, i18n("Error Opening Signature"),
-                                   i18n("Error creating new signature."),
-                                   i18n("Ok"));
+        KMessageBox::error(this, i18n("Error creating new signature."),
+                                 i18n("Error Opening Signature"));
         return;
       }
     } else {
       // message box: file no good
-      QMessageBox::warning(this, i18n("Error Opening Signature"),
-                                 i18n("File is invalid or permission denied."),
-                                 i18n("Ok"));
+      KMessageBox::error(this, i18n("File is invalid or permission denied."),
+                                 i18n("Error Opening Signature"));
       return;
     }
   }
