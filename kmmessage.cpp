@@ -2823,7 +2823,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
     if( aDwBodyPart && aDwBodyPart->hasHeaders()  ) {
       // This must not be an empty string, because we'll get a
       // spurious empty Subject: line in some of the parts.
-      aPart->setName(" ");
+      //aPart->setName(" ");
       // partSpecifier
       QString partId( aDwBodyPart->partId() );
       aPart->setPartSpecifier( partId );
@@ -2859,12 +2859,12 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
       }
       aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
       // Modification by Markus
-      if (aPart->name().isEmpty() || aPart->name() == " ")
+      if (aPart->name().isEmpty())
       {
-	if (!headers.ContentType().Name().empty()) {
+	if (headers.HasContentType() && !headers.ContentType().Name().empty()) {
 	  aPart->setName(KMMsgBase::decodeRFC2047String(headers.
 							ContentType().Name().c_str()) );
-	} else if (!headers.Subject().AsString().empty()) {
+	} else if (headers.HasSubject() && !headers.Subject().AsString().empty()) {
 	  aPart->setName( KMMsgBase::decodeRFC2047String(headers.
 							 Subject().AsString().c_str()) );
 	}
@@ -2904,7 +2904,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
       aPart->setCteStr("");
       // This must not be an empty string, because we'll get a
       // spurious empty Subject: line in some of the parts.
-      aPart->setName(" ");
+      //aPart->setName(" ");
       aPart->setContentDescription("");
       aPart->setContentDisposition("");
       aPart->setBody("");
