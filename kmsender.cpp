@@ -17,7 +17,6 @@
 #include <assert.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
@@ -31,7 +30,7 @@
 #include "kmsender.h"
 #include "kmmessage.h"
 #include "kmidentity.h"
-#include "kmiostatusdlg.h"
+#include "kmbroadcaststatus.h"
 #include "kbusyptr.h"
 #include "kmaccount.h"
 #include "kmtransport.h"
@@ -55,11 +54,11 @@ KMSender::KMSender()
   mSendProcStarted = FALSE;
   mSendInProgress = FALSE;
   mCurrentMsg = NULL;
-  labelDialog = 0;
   mTransportInfo = new KMTransportInfo();
   readConfig();
-  quitOnDone = false;
   mSendAborted = false;
+  mSentMessages = 0;
+  mTotalMessages = 0;
 }
 
 
@@ -69,17 +68,13 @@ KMSender::~KMSender()
   writeConfig(FALSE);
   if (mSendProc) delete mSendProc;
   if (mPrecommand) delete mPrecommand;
-  delete labelDialog;
   delete mTransportInfo;
 }
 
 //-----------------------------------------------------------------------------
-void
-KMSender::setStatusMsg(const QString &msg)
+void KMSender::setStatusMsg(const QString &msg)
 {
-   if (labelDialog)
-     label->setText( msg );
-   emit statusMsg( msg);
+  KMBroadcastStatus::instance()->setStatusMsg(msg);
 }
 
 //-----------------------------------------------------------------------------
@@ -216,6 +211,7 @@ bool KMSender::sendQueued(void)
 
   // open necessary folders
   kernel->outboxFolder()->open();
+  mTotalMessages = kernel->outboxFolder()->count();
   mCurrentMsg = NULL;
 
   kernel->sentFolder()->open();
@@ -230,6 +226,10 @@ bool KMSender::sendQueued(void)
 void KMSender::doSendMsg()
 {
   bool someSent = mCurrentMsg;
+  if (someSent) mSentMessages++;
+  int percent = (mTotalMessages) ? (100 * mSentMessages / mTotalMessages) : 0;
+  if (percent > 100) percent = 100;
+  KMBroadcastStatus::instance()->setStatusProgressPercent(percent);
 
   // Post-process sent message (filtering)
   if (mCurrentMsg  && kernel->filterMgr())
@@ -284,20 +284,15 @@ void KMSender::doSendMsg()
   mCurrentMsg->setTransferInProgress( TRUE );
 
   // start the sender process or initialize communication
-  if (!mSendProcStarted)
+  if (!mSendInProgress)
   {
-    kernel->serverReady (false); //sven - stop IPC
+    KMBroadcastStatus::instance()->reset();
+    KMBroadcastStatus::instance()->setStatusProgressEnable( true );
+    connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
+      SLOT(slotAbortSend()));
+    kapp->ref();
 
-    if (!labelDialog) {
-      labelDialog = new KMainWindow(0, "sendinglabel", WStyle_Dialog | WDestructiveClose );
-      label = new QLabel(labelDialog);
-      connect(labelDialog,SIGNAL(destroyed()),this,SLOT(slotAbortSend()));
-      label->resize(400, label->sizeHint().height());
-      labelDialog->resize(400, labelDialog->sizeHint().height());
-      label->setText(i18n("Initiating sender process..."));
-      labelDialog->show();
-    }
-
+    mSendInProgress = TRUE;
     setStatusMsg(i18n("Initiating sender process..."));
   }
 
@@ -369,7 +364,6 @@ void KMSender::sendProcStarted(bool success)
 void KMSender::doSendMsgAux()
 {
   mSendProcStarted = TRUE;
-  mSendInProgress = TRUE;
 
   // remove header fields that shall not be included in sending
   mCurrentMsg->removeHeaderField("Status");
@@ -397,6 +391,7 @@ void KMSender::cleanup(void)
   if (mSendProc && mSendProcStarted) mSendProc->finish(true);
   mSendProc = NULL;
   mSendProcStarted = FALSE;
+  if (mSendInProgress) kapp->deref();
   mSendInProgress = FALSE;
   if (mCurrentMsg)
   {
@@ -409,30 +404,18 @@ void KMSender::cleanup(void)
     kernel->outboxFolder()->expunge();
   else kernel->outboxFolder()->compact();
 
-  kernel->serverReady (true); // sven - enable ipc
   mSendAborted = false;
-  if (labelDialog) {
-      disconnect(labelDialog,SIGNAL(destroyed()),this,SLOT(slotAbortSend()));
-      labelDialog->close();
-      labelDialog = 0;
-  }
-  if (quitOnDone)
-  {
-    kapp->quit();
-  }
+  mSentMessages = 0;
+  disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
+    this, SLOT(slotAbortSend()));
+  KMBroadcastStatus::instance()->setStatusProgressEnable( false );
+  KMBroadcastStatus::instance()->reset();
 }
 
-
-//-----------------------------------------------------------------------------
-void KMSender::quitWhenFinished()
-{
-  quitOnDone=true;
-}
 
 //-----------------------------------------------------------------------------
 void KMSender::slotAbortSend()
 {
-  labelDialog = 0;
   mSendAborted = true;
   if (mPrecommand) delete mPrecommand;
   mPrecommand = NULL;

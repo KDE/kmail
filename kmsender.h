@@ -8,7 +8,6 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qobject.h>
-#include <qlabel.h>
 #include "kio/global.h"
 
 class KMMessage;
@@ -19,7 +18,6 @@ class KProcess;
 class KMIOStatusDlg;
 class KMSendProc;
 class QStrList;
-class KMainWindow;
 class KMTransportInfo;
 class KMPrecommand;
 
@@ -74,11 +72,6 @@ public:
   /** Write configuration to global config with optional sync() */
   virtual void writeConfig(bool withSync=TRUE);
 
-  /**
-   * Tells sender to quit application when finished.
-   */
-  void quitWhenFinished();
-
   /** sets a status msg and emits statusMsg() */
   void setStatusMsg(const QString&);
 
@@ -131,9 +124,7 @@ private:
   bool mSendProcStarted;
   bool mSendInProgress;
   KMMessage * mCurrentMsg;
-  bool quitOnDone;
-  KMainWindow *labelDialog;
-  QLabel *label;
+  int mSentMessages, mTotalMessages;
 };
 
 

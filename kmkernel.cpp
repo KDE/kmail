@@ -324,13 +324,6 @@ void KMKernel::quit()
 {
   // Called when all windows are closed. Will take care of compacting,
   // sending... should handle session management too!!
-
-  if (msgSender() && msgSender()->sending()) // sender working?
-  {
-    kernel->msgSender()->quitWhenFinished(); // tell him to quit app when finished
-    return;                        // don't quit now
-  }
-  kapp->quit();                           // sender not working, quit
 }
   /* TODO later:
    Asuming that:
