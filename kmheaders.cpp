@@ -3070,7 +3070,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
             if ( ( mFolder->getMsgBase(new_kci->id())->isNew() &&
                    GlobalSettings::actionEnterFolder() ==
                    GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
-                 ( mFolder->getMsgBase(new_kci->id())->isUnread() &&
+                 ( ( mFolder->getMsgBase(new_kci->id())->isNew() ||
+                     mFolder->getMsgBase(new_kci->id())->isUnread() ) &&
                    jumpToUnread ) )
             {
               unread_exists = true;
@@ -3135,7 +3136,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
               if ( ( mFolder->getMsgBase(item->msgId())->isNew() &&
                      GlobalSettings::actionEnterFolder() ==
                      GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
-                   ( mFolder->getMsgBase(item->msgId())->isUnread() &&
+                   ( ( mFolder->getMsgBase(item->msgId())->isNew() ||
+                       mFolder->getMsgBase(item->msgId())->isUnread() ) &&
                      jumpToUnread ) )
               {
                 first_unread = item->msgId();
