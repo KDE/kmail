@@ -37,12 +37,14 @@ using KPIM::AddressesDialog;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 
+#include <kiconloader.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
 #include <qvbox.h>
 #include <qhbox.h>
-
+#include <qtooltip.h>
+#include <qwhatsthis.h>
 
 using namespace KMail;
 
@@ -51,26 +53,24 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name, bool modal )
                  Ok|Cancel, Ok )
 {
   QVBox *vbox = makeVBoxMainWidget();
-  mLabelTo = new QLabel( i18n( "Recipient addresses to redirect to:" ), vbox );
+  mLabelTo = new QLabel( i18n( "Select the recipient addresses "
+                               "to redirect to:" ), vbox );
   
   QHBox *hbox = new QHBox( vbox );
+  hbox->setSpacing(4);
   mEditTo = new KMLineEdit( 0, true, hbox, "toLine" );
+  mEditTo->setMinimumWidth( 300 );
 
-  mBtnTo = new QPushButton( "...", hbox, "toBtn" );
+  mBtnTo = new QPushButton( QString::null, hbox, "toBtn" );
+  mBtnTo->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );
+  mBtnTo->setMinimumSize( mBtnTo->sizeHint() * 1.2 );
+  QToolTip::add( mBtnTo, i18n("Use the Addresses Selection Dialog") );
+  QWhatsThis::add( mBtnTo, i18n("This button opens a separate dialog "
+                                 "where you can select recipients out "
+                                 "of all available addresses." ) );
+  
   mLabelTo->setBuddy( mBtnTo );
-/*
-  mBtnTo->setIconType( KIcon::NoGroup, KIcon::Any, true );
-  mBtnTo->setIconSize( 16 );
-  mBtnTo->setIcon( "gear" );
-*/  
-  mBtnTo->setEnabled( true );
   
-  //enableButtonOK( false );
-  
-/*
-  connect(mEditTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
-          SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-*/
   connect( mBtnTo, SIGNAL(clicked()), SLOT(slotAddrBook()) );
 }
 
@@ -78,15 +78,15 @@ RedirectDialog::RedirectDialog( QWidget *parent, const char *name, bool modal )
 //-----------------------------------------------------------------------------
 QString RedirectDialog::to()
 {
-  return resentTo;
+  return mResentTo;
 }
 
 
 //-----------------------------------------------------------------------------
 void RedirectDialog::accept()
 {
-  resentTo = mEditTo->text();
-  if ( resentTo.isEmpty() ) {
+  mResentTo = mEditTo->text();
+  if ( mResentTo.isEmpty() ) {
     KMessageBox::sorry( this, 
         i18n("You cannot redirect the message without an address."), 
         i18n("Empty Redirection Address") );
@@ -100,9 +100,9 @@ void RedirectDialog::slotAddrBook()
 {
   AddressesDialog dlg( this );
 
-  resentTo = mEditTo->text();
-  if ( !resentTo.isEmpty() ) {
-      QStringList lst = KPIM::splitEmailAddrList( resentTo );
+  mResentTo = mEditTo->text();
+  if ( !mResentTo.isEmpty() ) {
+      QStringList lst = KPIM::splitEmailAddrList( mResentTo );
       dlg.setSelectedTo( lst );
   }
 

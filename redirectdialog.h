@@ -53,8 +53,10 @@ namespace KMail {
     Q_OBJECT
 
     public:
+      /** Constructor */
       RedirectDialog( QWidget *parent=0, const char *name=0, bool modal=false );
       
+      /** Return the addresses for the redirection */
       QString to();
     
     protected:
@@ -69,7 +71,7 @@ namespace KMail {
       QLabel      *mLabelTo;
       KMLineEdit  *mEditTo;
       QPushButton *mBtnTo;
-      QString     resentTo;
+      QString     mResentTo;
   };
   
 } // namespace KMail
