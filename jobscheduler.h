@@ -119,8 +119,9 @@ private:
   void restartTimer();
   void interruptCurrentTask();
   void runTaskNow( ScheduledTask* task );
-private:
   typedef QValueList<ScheduledTask *> TaskList;
+  void removeTask( TaskList::Iterator& it );
+private:
   TaskList mTaskList; // FIFO of tasks to be run
 
   QTimer mTimer;

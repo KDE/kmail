@@ -61,7 +61,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
   if ( typeId ) {
     KMFolder* folder = task->folder();
     // Search for an identical task already scheduled
-    for( QValueList<ScheduledTask *>::ConstIterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+    for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       if ( (*it)->taskTypeId() == typeId && (*it)->folder() == folder ) {
 #ifdef DEBUG_SCHEDULER
         kdDebug(5006) << "JobScheduler: already having task type " << typeId << " for folder " << folder->label() << endl;
@@ -69,6 +69,7 @@ void JobScheduler::registerTask( ScheduledTask* task )
         delete task;
         if ( !mCurrentTask && immediate ) {
           ScheduledTask* task = *it;
+          removeTask( it );
           runTaskNow( task );
         }
         return;
@@ -89,6 +90,13 @@ void JobScheduler::registerTask( ScheduledTask* task )
     if ( !mCurrentTask && !mTimer.isActive() )
       restartTimer();
   }
+}
+
+void JobScheduler::removeTask( TaskList::Iterator& it )
+{
+  if ( (*it)->isImmediate() )
+    --mPendingImmediateTasks;
+  mTaskList.remove( it );
 }
 
 void JobScheduler::notifyOpeningFolder( KMFolder* folder )
@@ -129,16 +137,14 @@ void JobScheduler::slotRunNextJob()
     Q_ASSERT( mCurrentTask == 0 );
     ScheduledTask* task = 0;
     // Find a task suitable for being run
-    for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+    for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       // Remove if folder died
       KMFolder* folder = (*it)->folder();
       if ( folder == 0 ) {
 #ifdef DEBUG_SCHEDULER
         kdDebug(5006) << "   folder for task " << (*it) << " was deleted" << endl;
 #endif
-        if ( (*it)->isImmediate() )
-          --mPendingImmediateTasks;
-        mTaskList.remove( it );
+        removeTask( it );
         if ( !mTaskList.isEmpty() )
           slotRunNextJob(); // to avoid the mess with invalid iterators :)
         else
@@ -155,9 +161,7 @@ void JobScheduler::slotRunNextJob()
 #endif
       if ( !folder->isOpened() ) {
         task = *it;
-        mTaskList.remove( it );
-        if ( task->isImmediate() )
-          --mPendingImmediateTasks;
+        removeTask( it );
         break;
       }
     }
