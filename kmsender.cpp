@@ -274,8 +274,6 @@ void KMSender::doSendMsg()
   }
 
   QString tf = mCurrentMsg->headerField("To");
-  qDebug( "alphato field %s", tf.latin1() );
-  qDebug( "KMComposeWin mMsg\n%s", mCurrentMsg->asString().latin1() );  
   
   // start the sender process or initialize communication
   if (!mSendProcStarted)
@@ -890,9 +888,6 @@ bool KMSendSMTP::send(KMMessage *msg)
 bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 {
   QString tf = aMsg->headerField("To");
-  qDebug( "smtpSend to field %s", tf.latin1() );
-  qDebug( "aMsg\n%s", aMsg->asString().latin1() );  
-
   QString str, msgStr, bccStr;
   QString idStr = aMsg->headerField("X-KMail-Identity");
   aMsg->removeHeaderField("X-KMail-Identity");
@@ -914,12 +909,6 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
     aMsg->removeHeaderField("Bcc");
   }
 
-  if (recipients.isEmpty())
-      qDebug( "a recpt is empty" );
-  else
-      qDebug( "a recpt is not empty" );
-
-  
   msgStr = prepareStr(aMsg->asString(), TRUE );
   if (!smtp) {
       smtp = new Smtp( ident.emailAddr(), recipients,
