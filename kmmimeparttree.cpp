@@ -15,15 +15,16 @@
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent,
                                 const char* name )
-    : QListView(  parent, name ),
+    : KListView(  parent, name ),
       mReaderWin( readerWin )
 {
     addColumn( i18n("Description") );
     addColumn( i18n("Type") );
     addColumn( i18n("Encoding") );
     addColumn( i18n("Size") );
-    setColumnAlignment(3, Qt::AlignRight);
-    setResizeMode( QListView::AllColumns );
+    setColumnWidthMode( 0, QListView::Manual );
+    setColumnAlignment( 3, Qt::AlignRight );
+    header()->setStretchEnabled( true, 0 ); // first column gets all space
     connect( this, SIGNAL( clicked( QListViewItem* ) ),
              this, SLOT( itemClicked( QListViewItem* ) ) );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*,

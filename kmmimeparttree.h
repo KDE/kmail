@@ -1,13 +1,13 @@
 #ifndef KMMIMEPARTTREE_H
 #define KMMIMEPARTTREE_H
 
-#include <qlistview.h>
+#include <klistview.h>
 #include <qstring.h>
 class partNode;
 class KMReaderWin;
 class KMMimePartTreeItem;
 
-class KMMimePartTree :public QListView
+class KMMimePartTree : public KListView
 {
 Q_OBJECT
 public:
@@ -17,13 +17,13 @@ public:
 
 protected slots:
   void itemClicked( QListViewItem* );
-    void itemRightClicked( QListViewItem*, const QPoint& );
-    void slotSaveAs();
-    void slotSaveAsEncoded();
+  void itemRightClicked( QListViewItem*, const QPoint& );
+  void slotSaveAs();
+  void slotSaveAsEncoded();
     
 protected:
   KMReaderWin* mReaderWin;
-    KMMimePartTreeItem* mCurrentContextMenuItem;
+  KMMimePartTreeItem* mCurrentContextMenuItem;
 };
 
 class KMMimePartTreeItem :public QListViewItem
