@@ -609,6 +609,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  delete mHtmlWriter;
   if (mAutoDelete) delete message();
   delete mRootNode;
   removeTempFiles();
@@ -955,9 +956,9 @@ void KMReaderWin::initHtmlWidget(void)
   if ( !htmlWriter() )
 #ifdef KMAIL_READER_HTML_DEBUG
     mHtmlWriter = new TeeHtmlWriter( new FileHtmlWriter( QString::null ),
-				     new KHtmlPartHtmlWriter( mViewer, this ) );
+				     new KHtmlPartHtmlWriter( mViewer, 0 ) );
 #else
-    mHtmlWriter = new KHtmlPartHtmlWriter( mViewer, this );
+    mHtmlWriter = new KHtmlPartHtmlWriter( mViewer, 0 );
 #endif
 
   connect(mViewer->browserExtension(),
