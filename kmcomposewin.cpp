@@ -59,6 +59,7 @@ using KMail::AddressesDialog;
 #include <klineeditdlg.h>
 #include <kmessagebox.h>
 #include <kurldrag.h>
+#include <kio/scheduler.h>
 
 #include <kspell.h>
 #include <kspelldlg.h>
@@ -3677,7 +3678,8 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const KURL aUrl)
 {
-  KIO::Job *job = KIO::get(aUrl);
+  KIO::TransferJob *job = KIO::get(aUrl);
+  KIO::Scheduler::scheduleJob( job );
   atmLoadData ld;
   ld.url = aUrl;
   ld.data = QByteArray();
