@@ -7,7 +7,7 @@
 ** place of a destructor.
 *****************************************************************************/
 
-void KMFolderDialogUI::slotChangeIcon( QString icon )
+void KMFolderDialogUI::slotChangeIcon( QString /* icon */ )
 {
   //FIXME
   //if ( mFolder && !mFolder->unreadIcon() )
