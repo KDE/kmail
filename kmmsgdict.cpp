@@ -284,8 +284,8 @@ int KMMsgDict::readFolderIds(const KMFolder *folder)
       return -1;
     }
     
-    if (!msn)
-      kdDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;
+    //if (!msn)
+      //kdDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;
     
     KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
     dict->insert((long)msn, entry);
