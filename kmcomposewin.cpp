@@ -1537,7 +1537,7 @@ bool KMComposeWin::applyChanges(void)
       innerBodyPart.setBodyEncoded( body );
       DwBodyPart* innerDwPart = mMsg->createDWBodyPart( &innerBodyPart );
       innerDwPart->Assemble();
-      body  = "--";
+      body  = "\n--";
       body +=     boundaryCStr;
       body +=                 "\n";
       body += innerDwPart->AsString().c_str();
@@ -1723,6 +1723,10 @@ bool KMComposeWin::applyChanges(void)
 
     // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
     mMsg->cleanupHeader();
+/*
+kdDebug(5006) << "\n\n\nKMComposeWin::applyChanges():\n1.: |||" << mMsg->asString() << "|||\n\n"
+ << "\n\n\nKMComposeWin::applyChanges():\n1.: |||" << mMsg->asSendableString() << "|||\n\n" << endl;
+*/
   }
   return bOk;
 }

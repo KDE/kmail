@@ -941,7 +941,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
       if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
     }
   }
-  
+
   if(!aMsg->subject().isEmpty())
     mQuery += QString("&subject=") + KURL::encode_string(aMsg->subject());
 
