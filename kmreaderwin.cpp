@@ -1342,8 +1342,12 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   else
     updateReaderWinTimer.start( 0, TRUE );
 
-  if (mDelayedMarkAsRead)
-  mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
+  if (mDelayedMarkAsRead) {
+    if ( mDelayedMarkTimeout == 0 )
+    	slotMessageTouch();
+    else
+        mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
+  }
 }
 
 //-----------------------------------------------------------------------------
