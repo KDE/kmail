@@ -13,6 +13,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
+#ifdef __FreeBSD__
+#include <paths.h>	/* defines _PATH_MAILDIR */
+#endif
+#ifndef _PATH_MAILDIR
+#define _PATH_MAILDIR "/var/spool/mail"
+#endif
 
 
 //-----------------------------------------------------------------------------
@@ -40,8 +46,9 @@ const char* KMAcctLocal::type(void) const
 //-----------------------------------------------------------------------------
 void KMAcctLocal::init(void)
 {
-  mLocation = "/var/spool/mail/";
+  mLocation = _PATH_MAILDIR;
   mLocation.detach();
+  mLocation += "/";
   mLocation += getenv("USER");
 }
 
@@ -110,7 +117,8 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::readConfig(KConfig& config)
 {
-  QString defaultPath("/var/spool/mail/");
+  QString defaultPath(_PATH_MAILDIR);
+  defaultPath += "/";
   defaultPath += getenv("USER");
 
   KMAcctLocalInherited::readConfig(config);
