@@ -33,6 +33,8 @@
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, bool aImap):
   KMFolderMgrInherited(), mDir(QString::null, aImap)
 {
+  mQuiet = 0;
+  mChanged = FALSE;
   setBasePath(aBasePath);
 }
 
@@ -118,7 +120,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
 
   mDir.setPath(mBasePath);
   mDir.reload();
-  emit changed();
+  contentsChanged();
 }
 
 
@@ -134,7 +136,7 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
     fldDir = &mDir;
   fld = fldDir->createFolder(fName, sysFldr, aFolderType);
   if (fld) {
-    emit changed();
+    contentsChanged();
     if (kernel->filterMgr())
       kernel->filterMgr()->folderCreated(fld);
   }
@@ -233,7 +235,7 @@ void KMFolderMgr::remove(KMFolder* aFolder)
   emit removed(aFolder);
   removeFolderAux(aFolder);
 
-  emit changed();
+  contentsChanged();
 }
 
 void KMFolderMgr::removeFolderAux(KMFolder* aFolder)
@@ -277,7 +279,8 @@ KMFolderRootDir& KMFolderMgr::dir(void)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::contentsChanged(void)
 {
-  emit changed();
+  if (mQuiet) mChanged = TRUE;
+  else emit changed();
 }
 
 
@@ -415,6 +418,22 @@ void KMFolderMgr::writeMsgDict(KMMsgDict *dict, KMFolderDir *dir)
     dict->writeFolderIds(folder);
     if (folder->child())
       writeMsgDict(dict, folder->child());
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::quiet(bool beQuiet)
+{
+  if (beQuiet)
+    mQuiet++;
+  else {
+    mQuiet--;
+    if (mQuiet <= 0)
+    {
+      mQuiet = 0;
+      if (mChanged) emit changed();
+      mChanged = FALSE;
+    }
   }
 }
 

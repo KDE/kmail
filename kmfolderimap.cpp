@@ -258,6 +258,7 @@ void KMFolderImap::slotListResult(KIO::Job * job)
   mAccount->mapJobData.remove(it);
   if (!job->error())
   {
+    kernel->imapFolderMgr()->quiet(TRUE);
     if (it_inboxOnly) listDirectory(NULL, TRUE);
     else {
       if (mIsSystemFolder && mImapPath == "/INBOX/"
@@ -280,7 +281,6 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
         }
         else node = mChild->next();
       }
-      bool changed = FALSE;
       if (mHasInbox)
       {
         for (node = mChild->first(); node; node = mChild->next())
@@ -292,7 +292,7 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
         folder->setImapPath("/INBOX/");
         folder->setLabel(i18n("inbox"));
         folder->listDirectory(NULL);
-        changed = TRUE;
+        kernel->imapFolderMgr()->contentsChanged();
       }
       for (uint i = 0; i < mSubfolderNames.count(); i++)
       {
@@ -302,7 +302,7 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
         else {
           folder = static_cast<KMFolderImap*>
             (mChild->createFolder(mSubfolderNames[i]));
-          changed = TRUE;
+          kernel->imapFolderMgr()->contentsChanged();
         }
         folder->setAccount(mAccount);
         folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
@@ -311,8 +311,8 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
             mSubfolderMimeTypes[i] == "inode/directory")
           folder->listDirectory(NULL);
       }
-      if (changed) kernel->imapFolderMgr()->contentsChanged();
     }
+    kernel->imapFolderMgr()->quiet(FALSE);
   }
   mAccount->displayProgress();
 }

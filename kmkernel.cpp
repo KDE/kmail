@@ -553,6 +553,7 @@ void KMKernel::cleanupImapFolders()
   }
   KMFolderImap *fld;
   KMAcctImap *imapAcct;
+  the_imapFolderMgr->quiet(TRUE);
   for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
   {
     if (acct->type() != "imap") continue;
@@ -563,6 +564,7 @@ void KMKernel::cleanupImapFolders()
     fld->setAccount(imapAcct);
     imapAcct->setImapFolder(fld);
   }
+  the_imapFolderMgr->quiet(FALSE);
 }
 
 bool KMKernel::doSessionManagement()

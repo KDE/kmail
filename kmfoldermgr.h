@@ -89,6 +89,9 @@ public:
   /** Writes message serial on disk.  Called during kernel shutdown. */
   void writeMsgDict(KMMsgDict *dict, KMFolderDir *dir=0);
 
+  /** Enable, disable changed() signals */
+  void quiet(bool);
+
 public slots:
   /** Compacts all folders (they know is it needed) */
   void compactAll();
@@ -117,6 +120,8 @@ protected:
 
   QString mBasePath;
   KMFolderRootDir mDir;
+  int mQuiet;
+  bool mChanged;
 };
 
 #endif /*kmfoldermgr_h*/
