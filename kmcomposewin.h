@@ -112,10 +112,6 @@ public:
 
   virtual void setFont( const QFont& );
 
-signals:
-  /** Emitted when Ctrl-T is pressed. */
-  void completion();
-
 public slots:
   void undo();
   /** Set cursor to end of line. */
@@ -124,10 +120,11 @@ public slots:
 protected:
   virtual bool eventFilter(QObject*, QEvent*);
   virtual void dropEvent(QDropEvent *e);
+  void doCompletion(bool ctrlT);
   KMComposeWin* mComposer;
 
 private slots:
-  void slotCompletion();
+  void slotCompletion() { doCompletion(false); }
   void slotPopupCompletion( const QString& );
 
 private:

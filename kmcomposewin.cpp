@@ -1340,7 +1340,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
         case '\\' : // quoted character
           index++; // ignore the quoted character
           break;
-        case ',' : 
+        case ',' :
           if (!insidequote && (commentlevel == 0)) {
             recipient = _to.mid(addrstart, index-addrstart);
             kdDebug(5006) << "Found recipient: " << recipient << endl;
@@ -1362,7 +1362,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
         kdDebug(5006) << "Error in address splitting: "
                       << "Unexpected end of address list";
     }
-    
+
     if(pgp->encryptFor(recipients, pgpUserId, doSign))
       return pgp->message();
   }
@@ -2476,14 +2476,11 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
       connect( this, SIGNAL( completion(const QString&)),
                this, SLOT(slotCompletion() ));
 
-      // old-style completion via Ctrl-T
-      connect (this, SIGNAL(completion()), this, SLOT(slotCompletion()));
-
       KCompletionBox *box = completionBox();
       connect( box, SIGNAL( highlighted( const QString& )),
                this, SLOT( slotPopupCompletion( const QString& ) ));
       connect( completionBox(), SIGNAL( userCancelled( const QString& )),
-               SLOT( slotPopupCompletion( const QString& )));
+               SLOT( setText( const QString& )));
 
 
       // Whenever a new KMLineEdit is created (== a new composer is created),
@@ -2520,11 +2517,9 @@ bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
   {
     QKeyEvent* k = (QKeyEvent*)e;
 
-    if (completionMode() == KGlobalSettings::CompletionNone &&
-        k->state()==ControlButton && k->key()==Key_T)
+    if (k->state()==ControlButton && k->key() == Key_T)
     {
-      emit completion();
-      cursorAtEnd();
+      doCompletion(true);
       return TRUE;
     }
     // ---sven's Return is same Tab and arrow key navigation start ---
@@ -2538,8 +2533,7 @@ bool KMLineEdit::eventFilter(QObject *o, QEvent *e)
     {
       if ((int)text().length() == cursorPosition()) // at End?
       {
-        emit completion();
-        cursorAtEnd();
+        doCompletion(true);
         return TRUE;
       }
       return FALSE;
@@ -2575,7 +2569,7 @@ void KMLineEdit::undo()
 }
 
 //-----------------------------------------------------------------------------
-void KMLineEdit::slotCompletion()
+void KMLineEdit::doCompletion(bool ctrlT)
 {
     if ( !m_useCompletion )
         return;
@@ -2590,6 +2584,7 @@ void KMLineEdit::slotCompletion()
     }
 
     KCompletionBox *box = completionBox();
+    box->clear();
 
     if ( s.isEmpty() )
     {
@@ -2609,6 +2604,30 @@ void KMLineEdit::slotCompletion()
 
     // kdDebug(5006) << "** completion for: " << s << " : " << match << endl;
 
+    if ( ctrlT )
+    {
+        QStringList addresses = s_completion->items();
+        QStringList::Iterator it = addresses.begin();
+        for (; it != addresses.end(); ++it)
+        {
+            if ((*it).find(s,0,false) >= 0)
+                box->insertItem(*it);
+        }
+
+        if (box->count() > 1) {
+            m_previousAddresses = prevAddr;
+            box->setCancelledText( text() );
+            box->popup();
+        }
+        else if (box->count() == 1)
+            setText(prevAddr + box->text(0));
+        else
+            box->hide();
+        
+        cursorAtEnd();
+        return;
+    }
+        
     switch ( mode )
     {
         case KGlobalSettings::CompletionPopup:
@@ -2616,8 +2635,8 @@ void KMLineEdit::slotCompletion()
             if ( !match.isNull() )
             {
                 m_previousAddresses = prevAddr;
-                box->clear();
                 box->insertStringList( s_completion->allMatches( s ));
+                box->setCancelledText( text() );
                 box->popup();
             }
             else
@@ -2649,38 +2668,11 @@ void KMLineEdit::slotCompletion()
 
         default: // fall through
         case KGlobalSettings::CompletionNone:
-        {
-            QPopupMenu pop;
-
-            QStringList addresses = s_completion->items();
-            QStringList::Iterator it = addresses.begin();
-            for (; it != addresses.end(); ++it)
-            {
-                if ((*it).find(s,0,false) >= 0)
-                    pop.insertItem(*it);
-            }
-
-            if (pop.count() > 1)
-            {
-                pop.popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
-                pop.setActiveItem(0);
-                int id = pop.exec();
-
-                if (id > -1)
-                    setText(prevAddr + pop.text(id));
-            }
-            else if (pop.count() == 1)
-            {
-                setText(prevAddr + pop.text(pop.idAt(0)));
-            }
-
-            setFocus();
-            cursorAtEnd();
             break;
-        }
     }
 }
 
+//-----------------------------------------------------------------------------
 void KMLineEdit::slotPopupCompletion( const QString& completion )
 {
     setText( m_previousAddresses + completion );
