@@ -29,14 +29,14 @@ using KMail::SieveJob;
 using KMime::Types::AddrSpecList;
 
 #include <ksieve/parser.h>
+#include <ksieve/scriptbuilder.h>
+#include <ksieve/error.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
-#include <qregexp.h>
 #include <qdatetime.h>
-#include <qfile.h>
 
 #include <cassert>
 
