@@ -1037,6 +1037,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   if (!mBtnIdentity->isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
     mId = newMsg->headerField("X-KMail-Identity");
 
+  KMIdentity ident( mId );
+  ident.readConfig();
+  mOldSigText = ident.signature(false); // don't prompt
+
   for (int i=0; i < mIdentity->count(); ++i)
     if (mIdentity->text(i) == mId) {
       mIdentity->setCurrentItem(i);
@@ -1045,8 +1049,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     }
 
   // get PGP user id for the currently selected identity
-  KMIdentity ident(mIdentity->currentText());
-  ident.readConfig();
   QString pgpUserId = ident.pgpIdentity();
 
   if(Kpgp::Module::getKpgp()->usePGP()) {
