@@ -249,6 +249,33 @@ bool KMFolderTree::event(QEvent *e)
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderTree::createFolderList(QStringList *str,
+  QValueList<QGuardedPtr<KMFolder> > *folders)
+{
+  QListViewItemIterator it( this );
+  KMFolderTreeItem *fti, *fti2;
+  QString prefix;
+  while (it.current())
+  {
+    fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (fti && fti->folder)
+    {
+      fti2 = static_cast<KMFolderTreeItem*>(fti->parent());
+      prefix = "";
+      while (fti2 && fti2->parent())
+      {
+        fti2 = static_cast<KMFolderTreeItem*>(fti2->parent());
+        prefix += "  ";
+      }
+      str->append(prefix + fti->text(0));
+      if (fti->folder->isDir()) folders->append(NULL);
+      else folders->append(fti->folder);
+    }
+    ++it;
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderTree::readColorConfig (void)
 {
   KConfig* conf = kapp->config();

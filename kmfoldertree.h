@@ -3,6 +3,7 @@
 
 #include <qwidget.h>
 #include <qlistview.h>
+#include <qtimer.h>
 #include <klocale.h>
 #include "kmfolder.h"
 
@@ -10,7 +11,6 @@
 #include "kmheaders.h" // For KMHeaderToFolderDrag & KMPaintInfo
 
 class QDropEvent;
-class QTimer;
 class QPixmap;
 
 class KMFolderTreeItem : public QListViewItem
@@ -94,6 +94,10 @@ public:
 
   /** Find index of given folder. Returns -1 if not found */
   virtual QListViewItem* indexOfFolder(const KMFolder*);
+
+  /** Create a list of all folders */
+  virtual void createFolderList(QStringList * str,
+    QValueList<QGuardedPtr<KMFolder> > * folders);
 
   /** Read config options. */
   virtual void readConfig(void);

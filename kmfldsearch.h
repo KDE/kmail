@@ -20,6 +20,7 @@ class QLabel;
 class KMMainWin;
 class KMFolderMgr;
 class QListViewItem;
+class KMFolderTreeItem;
 
 #define KMFldSearchInherited QDialog
 class KMFldSearch: public QDialog
@@ -35,6 +36,8 @@ protected slots:
   virtual void slotSearch();
   virtual void slotStop();
   virtual void slotShowMsg(QListViewItem *);
+  virtual void slotFolderActivated(int nr);
+  virtual void slotFolderComplete(KMFolderTreeItem *fti, bool success);
 
 protected:
   void enableGUI();
@@ -55,6 +58,9 @@ protected:
   /** Update status line widget. */
   virtual void updStatus(void);
 
+  /** GUI cleanup after search */
+  virtual void searchDone();
+
   /** Reimplemented to react to Escape. */
   virtual void keyPressEvent(QKeyEvent*);
 
@@ -74,6 +80,8 @@ protected:
   bool mSearching, mStopped, mCloseRequested;
   KMMainWin* mMainWin;
   QWidget* mLastFocus;
+  QStringList mFolderNames;
+  QValueList<QGuardedPtr<KMFolder> > mFolders;
 };
 
 
@@ -96,6 +104,14 @@ public:
 
   /** The header field to search in (or whole message) */
   virtual bool isHeaderField() const;
+
+  /** Update the functions according to the searching capabilites in the
+   * selected folder */
+  virtual void updateFunctions(QComboBox *cbx,
+    const QValueList<QGuardedPtr<KMFolder> > &folders);
+
+  /* Fill in the header fiels where to search */
+  virtual void insertFieldItems(bool all);
 
   enum Func { Contains=0, NotContains, Equal, NotEqual, 
               MatchesRegExp, NotMatchesRegExp };

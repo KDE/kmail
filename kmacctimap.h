@@ -168,6 +168,9 @@ public:
   KIO::Slave * slave() { return mSlave; }
   void slaveDied() { mSlave = NULL; }
 
+signals:
+  void folderComplete(KMFolderTreeItem * fti, bool success);
+
 protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;

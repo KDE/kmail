@@ -8,7 +8,9 @@
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
+#include "kmfoldertree.h"
 #include "kmmainwin.h"
+#include "kmacctimap.h"
 
 #include <qmessagebox.h>
 #include <qpushbutton.h>
@@ -52,6 +54,9 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mCbxFolders->setMaximumSize(1024, mCbxFolders->sizeHint().height());
   mGrid->addMultiCellWidget(mCbxFolders, 0, 0, 1, 2);
 
+  connect(mCbxFolders, SIGNAL(activated(int)),
+    SLOT(slotFolderActivated(int)));
+
   mRules = new KMFldSearchRule*[mNumRules];
 
   for (i=0; i<mNumRules; i++)
@@ -62,6 +67,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
     mGrid->addWidget(lbl, i+1, 0);
 
     rule = new KMFldSearchRule(this, mGrid, i+1, 1);
+    rule->updateFunctions(mCbxFolders, mFolders);
     mRules[i] = rule;
   }
 
@@ -145,24 +151,21 @@ KMFldSearch::~KMFldSearch()
 //-----------------------------------------------------------------------------
 QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
 {
- QValueList<QGuardedPtr<KMFolder> > folders;
  QComboBox* cbx = new QComboBox(false, this);
- QStringList str;
 
- kernel->folderMgr()->createI18nFolderList( &str, &folders );
+ mMainWin->folderTree()->createFolderList( &mFolderNames, &mFolders );
  cbx->setFixedHeight(cbx->sizeHint().height());
 
- cbx->insertItem(i18n("<Search all folders>"));
+ cbx->insertItem(i18n("<Search all local folders>"));
  QStringList::Iterator st;
  int i = 1;
- for( st = str.begin(); st != str.end(); ++st, ++i) {
+ for( st = mFolderNames.begin(); st != mFolderNames.end(); ++st, ++i) {
    cbx->insertItem(*st);
    QString fname = *st;
    if( fname.stripWhiteSpace() == curFolder ) {		// preselect current folder
      cbx->setCurrentItem(i);
    }
  }
-
  return cbx;
 }
 
@@ -219,6 +222,18 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg, const QCString& aMsgStr)
       matches = false;
 
   return matches;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotFolderComplete(KMFolderTreeItem *fti, bool success)
+{
+  disconnect(fti->folder->account(),
+    SIGNAL(folderComplete(KMFolderTreeItem*, bool)),
+    this, SLOT(slotFolderComplete(KMFolderTreeItem*, bool)));
+  if (success) searchInFolder(fti->folder, mFolders.findIndex(fti->folder));
+  else searchDone();
+  fti->folder->close();
 }
 
 
@@ -290,6 +305,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   updStatus();
 
   aFld->close();
+  if (aFld->account()) searchDone();
 }
 
 
@@ -301,15 +317,24 @@ void KMFldSearch::searchInAllFolders(void)
   QStringList str;
   int i = 0;
 
-  kernel->folderMgr()->createFolderList( &str, &folders );
+  mMainWin->folderTree()->createFolderList( &str, &folders );
   while (folders.at(i) != folders.end()) {
     folder = *folders.at(i);
     // Stop pressed?
     if(!mSearching)
       break;
-    searchInFolder(folder,i);
+    if (folder && !folder->account()) searchInFolder(folder,i);
     ++i;
   }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotFolderActivated(int nr)
+{
+  mBtnSearch->setEnabled(nr == 0 || *mFolders.at(nr - 1));
+  for (int i = 0; i < mNumRules; i++)
+    mRules[i]->updateFunctions(mCbxFolders, mFolders);
 }
 
 
@@ -339,13 +364,31 @@ void KMFldSearch::slotSearch()
   else {
     QValueList<QGuardedPtr<KMFolder> > folders;
     QStringList str;
-    kernel->folderMgr()->createI18nFolderList( &str, &folders );
+    mMainWin->folderTree()->createFolderList( &str, &folders );
     if (str[mCbxFolders->currentItem()-1] == mCbxFolders->currentText()) {
-      searchInFolder(*folders.at(mCbxFolders->currentItem()-1),
-		     mCbxFolders->currentItem()-1);
+      KMFolder *folder = *folders.at(mCbxFolders->currentItem()-1);
+      KMFolderTreeItem *fti;
+      if (folder->account() && (fti = static_cast<KMFolderTreeItem*>
+        (mMainWin->folderTree()->indexOfFolder(folder)))
+        ->mImapState == KMFolderTreeItem::imapNoInformation)
+      {
+        folder->open();
+        connect(folder->account(),
+          SIGNAL(folderComplete(KMFolderTreeItem *, bool)),
+          SLOT(slotFolderComplete(KMFolderTreeItem *, bool)));
+        folder->account()->getFolder(fti);
+        return;
+      }
+      searchInFolder(folder, mCbxFolders->currentItem()-1);
     }
   }
+  searchDone();
+}
 
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::searchDone()
+{
   mSearching=false;
   updStatus();
 
@@ -362,6 +405,7 @@ void KMFldSearch::slotSearch()
 void KMFldSearch::slotStop()
 {
   mSearching = false;
+  mBtnStop->setEnabled(false);
 }
 
 //-----------------------------------------------------------------------------
@@ -397,7 +441,7 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
   QValueList<QGuardedPtr<KMFolder> > folders;
   QStringList str;
   int idx = item->text(FOLDERID_COLUMN).toInt();
-  kernel->folderMgr()->createFolderList( &str, &folders );
+  mMainWin->folderTree()->createFolderList( &str, &folders );
   if (folders.at(idx) == folders.end())
     return;
   fld = *folders.at(idx);
@@ -436,12 +480,7 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   if( aRow > 1 ) {
     mCbxField->insertItem("");
   }
-  mCbxField->insertItem("Subject");
-  mCbxField->insertItem("From");
-  mCbxField->insertItem("To");
-  mCbxField->insertItem("Cc");
-  mCbxField->insertItem("Organization");
-  mCbxField->insertItem(i18n("<complete message>"));
+  insertFieldItems(TRUE);
   mCbxField->setMinimumSize(mCbxField->sizeHint());
   mCbxField->setMaximumSize(1024, mCbxField->sizeHint().height());
 
@@ -470,6 +509,30 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
 //-----------------------------------------------------------------------------
 KMFldSearchRule::~KMFldSearchRule()
 {
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFldSearchRule::insertFieldItems(bool all)
+{
+  mCbxField->clear();
+  mCbxField->insertItem("Subject");
+  mCbxField->insertItem("From");
+  mCbxField->insertItem("To");
+  mCbxField->insertItem("Cc");
+  if (!all) return;
+  mCbxField->insertItem("Organization");
+  mCbxField->insertItem(i18n("<complete message>"));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFldSearchRule::updateFunctions(QComboBox *cbx,
+  const QValueList<QGuardedPtr<KMFolder> > &folders)
+{
+  int cur = cbx->currentItem();
+  insertFieldItems(!cur || (*folders.at(cur-1) &&
+    !(*folders.at(cur-1))->account()));
 }
 
 

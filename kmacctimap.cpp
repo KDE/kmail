@@ -288,6 +288,7 @@ void KMAcctImap::slotCheckValidityResult(KIO::Job * job)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    emit folderComplete((*it).parent, FALSE);
     mapJobData.remove(it);
     displayProgress();
   } else {
@@ -368,6 +369,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    emit folderComplete((*it).parent, FALSE);
     mapJobData.remove(it);
     return;
   }
@@ -405,6 +407,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   {
     (*it).parent->folder->quiet(FALSE);
     (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+    emit folderComplete((*it).parent, TRUE);
     mapJobData.remove(it);
     displayProgress();
     return;
@@ -507,11 +510,14 @@ void KMAcctImap::slotGetMessagesResult(KIO::Job * job)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
-  }
-  (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+    (*it).parent->mImapState = KMFolderTreeItem::imapNoInformation;
+    emit folderComplete((*it).parent, FALSE);
+  } else (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
   (*it).parent->folder->quiet(FALSE);
+  KMFolderTreeItem *fti = (*it).parent;
   mapJobData.remove(it);
   displayProgress();
+  if (!job->error()) emit folderComplete(fti, TRUE);
 }
 
 
@@ -731,6 +737,7 @@ void KMAcctImap::killAllJobs()
     if ((*it).parent)
     {
       (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+      emit folderComplete((*it).parent, FALSE);
       (*it).parent->folder->quiet(FALSE);
     }
   if (mapJobData.begin() != mapJobData.end())
