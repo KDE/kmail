@@ -370,6 +370,11 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         else
           msg->setReadyToShow( false );
 
+        // Convert CR/LF to LF.
+        size_t dataSize = (*it).data.size();
+        dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
+        (*it).data.resize( dataSize );
+
         msg->fromByteArray( (*it).data );
         // reconstruct as it may be overwritten above
         msg->setUID(uid);

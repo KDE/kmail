@@ -242,6 +242,12 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
     if ((*it).data.size() > 0) {
       ulong uid = mMsg->UID();
       size = mMsg->msgSizeServer();
+
+      // Convert CR/LF to LF.
+      size_t dataSize = (*it).data.size();
+      dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
+      (*it).data.resize( dataSize );
+
       mMsg->setComplete( true );
       mMsg->fromByteArray( (*it).data );
       mMsg->setUID(uid);
