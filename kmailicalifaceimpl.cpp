@@ -71,15 +71,16 @@ static void reloadFolderTree();
 KMailICalIfaceImpl::KMailICalIfaceImpl()
   : DCOPObject( "KMailICalIface" ), QObject( 0, "KMailICalIfaceImpl" ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
-    mFolderLanguage( 0 ), mUseResourceIMAP( false ), mResourceQuiet( false )
+    mFolderLanguage( 0 ), mUseResourceIMAP( false ), mResourceQuiet( false ),
+    mHideFolders( true )
 {
   // Listen to config changes
   connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
 }
 
 // Receive an iCal or vCard from the resource
-bool KMailICalIfaceImpl::addIncidence( const QString& type, 
-                                       const QString& uid, 
+bool KMailICalIfaceImpl::addIncidence( const QString& type,
+                                       const QString& uid,
                                        const QString& ical )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << type << ", "
@@ -113,7 +114,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
     // Mark the message as read and store it in the folder
     msg->touch();
-    folder->addMsg( msg );  
+    folder->addMsg( msg );
 
     rc = true;
   } else
@@ -353,6 +354,10 @@ bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
       folder == mNotes || folder == mContacts );
 }
 
+bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
+{
+  return mHideFolders && isResourceImapFolder( folder );
+}
 
 KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
 {
@@ -491,6 +496,7 @@ void KMailICalIfaceImpl::readConfig()
   }
 
   // Read remaining options
+  const bool hideFolders = options.readBoolEntry( "HideGroupwareFolders", true );
   unsigned int folderLanguage = options.readNumEntry( "Folder Language", 0 );
   if( folderLanguage > 3 ) folderLanguage = 0;
   QString parentName = options.readEntry("Folder Parent");
@@ -554,15 +560,23 @@ void KMailICalIfaceImpl::readConfig()
   }
 
   // Check if something changed
-  if( mUseResourceIMAP && !makeSubFolders && mFolderParent == folderParentDir && mFolderType == folderType )
+  if( mUseResourceIMAP && !makeSubFolders && mFolderParent == folderParentDir
+      && mFolderType == folderType ) {
     // Nothing changed
+    if ( hideFolders != mHideFolders ) {
+      // Well, the folder hiding has changed
+      mHideFolders = hideFolders;
+      reloadFolderTree();
+    }
     return;
+  }
 
   // Make the new settings work
   mUseResourceIMAP = true;
   mFolderLanguage = folderLanguage;
   mFolderParent = folderParentDir;
   mFolderType = folderType;
+  mHideFolders = hideFolders;
 
   // Close the previous folders
   cleanup();

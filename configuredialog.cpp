@@ -3678,24 +3678,27 @@ QString MiscPage::GroupwareTab::helpAnchor() const {
   return QString::fromLatin1("configure-misc-groupware");
 }
 
-MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name )
+MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   : ConfigModuleTab( parent, name )
 {
-  QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+  QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(),
+                                      KDialog::spacingHint() );
   vlay->setAutoAdd( true );
 
   // IMAP resource setup
-  QVGroupBox* b1 = new QVGroupBox( i18n("&IMAP Resource Folder Options"), this );
+  QVGroupBox* b1 = new QVGroupBox( i18n("&IMAP Resource Folder Options"),
+                                   this );
 
-  mEnableImapResCB = new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
+  mEnableImapResCB =
+    new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
   connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mBox = new QVBox( b1 );
   mBox->setSpacing( KDialog::spacingHint() );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
 	   mBox, SLOT( setEnabled(bool) ) );
-  QLabel* languageLA = new QLabel( i18n("&Language for groupware folders:"), mBox );
-
+  QLabel* languageLA = new QLabel( i18n("&Language for groupware folders:"),
+                                   mBox );
   mLanguageCombo = new QComboBox( false, mBox );
   languageLA->setBuddy( mLanguageCombo );
   QStringList lst;
@@ -3704,12 +3707,18 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   connect( mLanguageCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  QLabel* subfolderLA = new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
-
+  QLabel* subfolderLA =
+    new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
   mFolderCombo = new KMFolderComboBox( mBox );
   subfolderLA->setBuddy( mFolderCombo );
   connect( mFolderCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
+
+  mHideGroupwareFolders = new QCheckBox( i18n( "&Hide Groupware Folders" ),
+                                         mBox, "HideGroupwareFoldersBox" );
+  QToolTip::add( mHideGroupwareFolders, i18n( "When this is true, you will not see the IMAP resource folders in the folder tree" ) );
+  connect( mHideGroupwareFolders, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // Groupware functionality setup
   b1 = new QVGroupBox( i18n("Groupware Options"), this );
@@ -3757,6 +3766,7 @@ void MiscPage::GroupwareTab::load() {
   mEnableImapResCB->setChecked( irOptions.readBoolEntry( "Enabled", false ) );
   mBox->setEnabled( mEnableImapResCB->isChecked() );
 
+  mHideGroupwareFolders->setChecked( irOptions.readBoolEntry( "HideGroupwareFolders",  true ) );
   int i = irOptions.readNumEntry( "Folder Language", 0 );
   mLanguageCombo->setCurrentItem(i);
 
@@ -3778,6 +3788,7 @@ void MiscPage::GroupwareTab::save() {
 
   // Write the IMAP resource config
   KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
+  irOptions.writeEntry( "HideGroupwareFolders", mHideGroupwareFolders->isChecked() );
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled

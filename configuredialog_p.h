@@ -161,7 +161,7 @@ public:
   virtual void load() = 0;
   virtual void save() = 0;
   virtual void defaults() {};
-  
+
   /** Should return the help anchor for this page or tab */
   virtual QString helpAnchor() const = 0;
 
@@ -181,13 +181,13 @@ class ConfigModuleTab : public QWidget {
   Q_OBJECT
 public:
    ConfigModuleTab( QWidget *parent=0, const char* name=0 )
-      :QWidget( parent, name ) 
+      :QWidget( parent, name )
       {};
    ~ConfigModuleTab() {};
   virtual void load() = 0;
   virtual void save() = 0;
   // the below are optional
-  virtual void defaults() {}; 
+  virtual void defaults() {};
   virtual void installProfile(){};
 signals:
    // forwarded to the ConfigModule
@@ -747,7 +747,7 @@ class MiscPageFolderTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   MiscPageFolderTab( QWidget * parent=0, const char * name=0 );
- 
+
   void load();
   void save();
   void defaults() {};
@@ -786,7 +786,7 @@ private:
 
   QComboBox* mLanguageCombo;
   KMFolderComboBox* mFolderCombo;
-
+  QCheckBox* mHideGroupwareFolders;
   QCheckBox* mAutoResCB;
   QCheckBox* mAutoDeclConflCB;
   QCheckBox* mAutoDeclRecurCB;

@@ -544,6 +544,11 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       fti = new KMFolderTreeItem( this, folder->label(), folder );
       fti->setExpandable( true );
     } else {
+      // Check if this is an IMAP resource folder
+      if ( kmkernel->iCalIface().hideResourceImapFolder( folder ) )
+        // It is
+        continue;
+
       // create new child
       fti = new KMFolderTreeItem( parent, folder->label(), folder );
       connect (fti, SIGNAL(iconChanged(KMFolderTreeItem*)),

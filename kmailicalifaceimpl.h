@@ -51,7 +51,7 @@ class KMailICalIfaceImpl : public QObject, virtual public KMailICalIface {
 public:
   KMailICalIfaceImpl();
 
-  virtual bool addIncidence( const QString& folder, const QString& uid, 
+  virtual bool addIncidence( const QString& folder, const QString& uid,
 			     const QString& ical );
   virtual bool deleteIncidence( const QString& folder, const QString& uid );
   virtual QStringList incidences( const QString& folder );
@@ -78,6 +78,12 @@ public:
    * resource folders.
    */
   bool isResourceImapFolder( KMFolder* folder ) const;
+
+  /**
+   * Returns true if isResourceImapFolder( folder ) returns true, and
+   * imap folders should be hidden.
+   */
+  bool hideResourceImapFolder( KMFolder* folder ) const;
 
   /**
    * Returns the resource folder type. Other is returned if resource
@@ -146,6 +152,7 @@ private:
 
   bool mUseResourceIMAP;
   bool mResourceQuiet;
+  bool mHideFolders;
 };
 
 #endif // KMAILICALIFACEIMPL_H
