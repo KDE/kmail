@@ -1282,6 +1282,8 @@ void KMHeaders::updateMessageList(void)
 
   setUpdatesEnabled(autoUpd);
   if (autoUpd) repaint();
+  // WABA: The following line is somehow necassery
+  highlightMessage(currentItem()); 
 }
 
 
