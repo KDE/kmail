@@ -39,6 +39,7 @@
 #include "kmacctcachedimap.h"
 #include "kmcommands.h"
 #include "kmmsgbase.h"
+#include "undostack.h"
 
 #include <kdebug.h>
 #include <kurl.h>
@@ -211,6 +212,7 @@ void RenameJob::slotMoveMessages()
   kdDebug(5006) << k_funcinfo << endl;
   disconnect( kmkernel->imapFolderMgr(), SIGNAL( changed() ),
       this, SLOT( slotMoveMessages() ) );
+  mStorage->blockSignals( true );
   // move all messages to the new folder
   QPtrList<KMMsgBase> msgList;
   for ( int i = 0; i < mStorage->count(); i++ )
@@ -234,6 +236,8 @@ void RenameJob::slotMoveMessages()
 void RenameJob::slotMoveCompleted( KMCommand* command )
 {
   kdDebug(5006) << k_funcinfo << (command?command->result():0) << endl;
+  disconnect( command, SIGNAL( completed( KMCommand * ) ),
+      this, SLOT( slotMoveCompleted( KMCommand * ) ) );
   if ( !command || command->result() == KMCommand::OK ) 
   {
     kdDebug(5006) << "deleting old folder" << endl;
@@ -276,7 +280,9 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
   } else 
   {
     kdDebug(5006) << "rollback - deleting folder" << endl;
-    // move failed - rollback and delete the new folder
+    // move failed - rollback the last transaction
+    kmkernel->undoStack()->undo();
+    // .. and delete the new folder
     if ( mNewFolder->folderType() == KMFolderTypeImap )
     {
       kmkernel->imapFolderMgr()->remove( mNewFolder );
