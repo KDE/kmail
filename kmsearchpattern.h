@@ -233,8 +233,8 @@ namespace KMail {
     { I18N_NOOP( "Ignored" ),          "kmmsgignored"   },
     { I18N_NOOP( "Spam" ),             "mark_as_spam"   },
     { I18N_NOOP( "Ham" ),              "mark_as_ham"    },
-    { I18N_NOOP( "Has Attachment"),    "attach"         },
-    { I18N_NOOP( "To Do" ),            "kontact_todo"   }
+    { I18N_NOOP( "To Do" ),            "kontact_todo"   },
+    { I18N_NOOP( "Has Attachment"),    "attach"         }
   };
 
   static const int StatusValueCount =
@@ -242,8 +242,7 @@ namespace KMail {
   // we want to show all status entries in the quick search bar, but only the
   // ones up to attachment in the search/filter dialog, because there the
   // attachment case is handled separately.
-  // Todo is hidden for both because it can currently not be set anywhere
-  static const int StatusValueCountWithoutHidden = StatusValueCount - 2;
+  static const int StatusValueCountWithoutHidden = StatusValueCount - 1;
 }
 
 class KMSearchRuleStatus : public KMSearchRule
