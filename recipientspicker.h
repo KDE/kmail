@@ -111,7 +111,7 @@ class SearchLine : public KListViewSearchLine
     void keyPressEvent( QKeyEvent * );
 };
 
-class RecipientsPicker : public QWidget 
+class RecipientsPicker : public QDialog
 {
     Q_OBJECT
   public:
@@ -120,6 +120,8 @@ class RecipientsPicker : public QWidget
 
     void setRecipients( const Recipient::List & );
     void updateRecipient( const Recipient & );
+
+    void setDefaultType( Recipient::Type );
 
   signals:
     void pickedRecipient( const Recipient & );
@@ -136,6 +138,8 @@ class RecipientsPicker : public QWidget
     void writeConfig();
 
     void pick( Recipient::Type );
+
+    void setDefaultButton( QPushButton *button );
 
   protected slots:
     void updateList();
@@ -158,6 +162,8 @@ class RecipientsPicker : public QWidget
     RecipientsCollection *mAllRecipients;
 
     KABC::DistributionListManager *mDistributionListManager;
+    
+    Recipient::Type mDefaultType;
 };
 
 #endif

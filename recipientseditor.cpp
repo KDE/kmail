@@ -634,6 +634,7 @@ void SideWidget::pickRecipient()
     "Email address of recipient" );
   if ( !rec.isEmpty() ) emit pickedRecipient( rec );
 #else
+  mRecipientPicker->setDefaultType( mView->activeLine()->recipientType() );
   mRecipientPicker->setRecipients( mView->recipients() );
   mRecipientPicker->show();
   mPickerPositioner->reposition();

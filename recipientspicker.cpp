@@ -167,7 +167,7 @@ void SearchLine::keyPressEvent( QKeyEvent *ev )
 
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
-  : QWidget( parent, "RecipientsPicker", WType_Dialog ),
+  : QDialog( parent, "RecipientsPicker" ),
   mDistributionListManager( 0 )
 {
 //  KWin::setType( winId(), NET::Dock );
@@ -230,7 +230,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   // BCC isn't commonly used, so hide it for now
   //mBccButton->hide();
 
-  QPushButton *closeButton = new QPushButton( i18n("&Close"), this );
+  QPushButton *closeButton = new QPushButton( i18n("&Cancel"), this );
   buttonLayout->addWidget( closeButton );
   connect( closeButton, SIGNAL( clicked() ), SLOT( close() ) );
 
@@ -386,6 +386,25 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
   }
 
   updateList();
+}
+
+void RecipientsPicker::setDefaultButton( QPushButton *button )
+{
+//  button->setText( "<qt><b>" + button->text() + "</b></qt>" );
+  button->setDefault( true );
+}
+
+void RecipientsPicker::setDefaultType( Recipient::Type type )
+{
+  mDefaultType = type;
+  
+  if ( type == Recipient::To ) {
+    setDefaultButton( mToButton );
+  } else if ( type == Recipient::Cc ) {
+    setDefaultButton( mCcButton );
+  } else if ( type == Recipient::Bcc ) {
+    setDefaultButton( mBccButton );
+  }
 }
 
 void RecipientsPicker::updateList()
