@@ -1005,10 +1005,10 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
 void KMMainWin::slotAtmMsg(KMMessage *msg)
 {
   KMReaderWin *win;
-
   assert(msg != NULL);
-
   win = new KMReaderWin;
+  connect(win, SIGNAL(showAtmMsg(KMMessage *)),
+	  this, SLOT(slotAtmMsg(KMMessage *)));
   win->setAutoDelete(true); //delete on end
   showMsg(win, msg);
 }
