@@ -280,10 +280,12 @@ void KMSearch::slotProcessNextBatch()
     if (mFolders.count() != 0) {
 	--mRemainingFolders;
 	KMFolder *folder = *(mFolders.begin());
-	if (folder->isSystemFolder())
-	    mLastFolder = i18n(folder->name().utf8());
-	else
-	    mLastFolder = folder->name();
+	if (folder) {
+	    if (folder->isSystemFolder())
+		mLastFolder = i18n(folder->name().utf8());
+	    else
+		mLastFolder = folder->name();
+	}
 	mFolders.erase(mFolders.begin());
 	if (folder) {
 	    folder->open();
