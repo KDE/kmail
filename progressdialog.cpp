@@ -51,6 +51,7 @@
 
 #include "progressdialog.h"
 #include "progressmanager.h"
+#include <qapplication.h>
 
 using KMail::ProgressItem;
 using KMail::ProgressManager;
@@ -81,9 +82,19 @@ void TransactionItemView::resizeContents( int w, int h )
 {
   //kdDebug(5006) << k_funcinfo << w << "," << h << endl;
   QScrollView::resizeContents( w, h );
-  // Tell the parent (progressdialog) to adapt itself to our new size
+  // Tell the layout in the parent (progressdialog) that our size changed
   updateGeometry();
-  parentWidget()->adjustSize();
+  // Resize the parent (progressdialog) - this works but resize horizontally too often
+  //parentWidget()->adjustSize();
+
+  QApplication::sendPostedEvents( 0, QEvent::ChildInserted );
+  QApplication::sendPostedEvents( 0, QEvent::LayoutHint );
+  QSize sz = parentWidget()->sizeHint();
+  int currentWidth = parentWidget()->width();
+  // Don't resize to sz.width() every time, but only if it's much smaller than currentWidth
+  if ( currentWidth < sz.width() || currentWidth > sz.width() + 100 )
+    currentWidth = sz.width();
+  parentWidget()->resize( currentWidth, sz.height() );
 }
 
 QSize TransactionItemView::sizeHint() const
@@ -94,10 +105,12 @@ QSize TransactionItemView::sizeHint() const
 QSize TransactionItemView::minimumSizeHint() const
 {
   int f = 2 * frameWidth();
+  // Make room for a vertical scrollbar in all cases, to avoid a horizontal one
+  int vsbExt = verticalScrollBar()->sizeHint().width();
   int minw = topLevelWidget()->width() / 3;
   int maxh = topLevelWidget()->height() / 2;
   QSize sz( mBigBox->minimumSizeHint() );
-  sz.setWidth( QMAX( sz.width(), minw ) + f );
+  sz.setWidth( QMAX( sz.width(), minw ) + f + vsbExt );
   sz.setHeight( QMIN( sz.height(), maxh ) + f );
   return sz;
 }
@@ -140,7 +153,6 @@ TransactionItem::TransactionItem( QWidget* parent,
 
 TransactionItem::~TransactionItem()
 {
-
 }
 
 void TransactionItem::setProgress( int progress )
