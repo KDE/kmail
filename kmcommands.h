@@ -112,7 +112,7 @@ class KMMailtoForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMMailtoForwardCommand( QWidget *parent, const KURL &url, 
+  KMMailtoForwardCommand( QWidget *parent, const KURL &url,
 			  KMMsgBase *msgBase );
 
 private:
@@ -210,7 +210,7 @@ class KMShowMsgSrcCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMShowMsgSrcCommand( QWidget *parent, KMMsgBase *msgBase, 
+  KMShowMsgSrcCommand( QWidget *parent, KMMsgBase *msgBase,
 		       const QTextCodec *codec, bool fixedFont );
   virtual void execute();
 
@@ -240,8 +240,8 @@ class KMReplyToCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToCommand( QWidget *parent, KMMsgBase *msgBase, 
-		    const QString &selection );
+  KMReplyToCommand( QWidget *parent, KMMsgBase *msgBase,
+		    const QString &selection = QString::null );
 
 private:
   virtual void execute();
@@ -266,8 +266,8 @@ class KMReplyListCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyListCommand( QWidget *parent, KMMsgBase *msgBase, 
-		      const QString &selection );
+  KMReplyListCommand( QWidget *parent, KMMsgBase *msgBase,
+		      const QString &selection = QString::null );
 
 private:
   virtual void execute();
@@ -281,8 +281,8 @@ class KMReplyToAllCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMReplyToAllCommand( QWidget *parent, KMMsgBase *msgBase, 
-		       const QString &selection );
+  KMReplyToAllCommand( QWidget *parent, KMMsgBase *msgBase,
+		       const QString &selection = QString::null );
 
 private:
   virtual void execute();
@@ -466,9 +466,9 @@ class KMDeleteMsgCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList, 
+  KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList,
 		      KMHeaders* headers = 0 );
-		      
+		
   virtual void execute();
 };
 
