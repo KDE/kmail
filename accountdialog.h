@@ -30,6 +30,7 @@ class QLineEdit;
 class QRadioButton;
 class KIntNumInput;
 class KMAccount;
+class KMFolder;
 
 class AccountDialog : public KDialogBase
 {
@@ -121,6 +122,8 @@ class AccountDialog : public KDialogBase
     ImapWidgets  mImap;
     KMAccount    *mAccount;
     QStringList  mIdentityList;
+    QValueList<QGuardedPtr<KMFolder> > mFolderList;
+    QStringList mFolderNames;
 };
 
 

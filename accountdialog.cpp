@@ -645,24 +645,26 @@ void AccountDialog::setupSettings()
   }
   else
   {
-    uint i=0;
-    for( KMFolder *folder = (KMFolder*)fdir->first(); folder != 0;
-	 folder = (KMFolder*)fdir->next() )
+    uint i = 0;
+    int curIndex = -1;
+    kernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
+    while (i < mFolderNames.count())
     {
-      if( folder->isDir() ||
-	  (folder->isSystemFolder() && (folder->name() != "inbox" )))
+      QValueList<QGuardedPtr<KMFolder> >::Iterator it = mFolderList.at(i);
+      KMFolder *folder = *it;
+      if (folder->isSystemFolder())
       {
-	continue;
+        mFolderList.remove(it);
+        mFolderNames.remove(mFolderNames.at(i));
+      } else {
+        if (folder == acctFolder) curIndex = i;
+        i++;
       }
-      if (folder->name() == "inbox")
-        folderCombo->insertItem( i18n("inbox") );
-      else folderCombo->insertItem( folder->name() );
-      if( folder == acctFolder )
-      {
-	folderCombo->setCurrentItem(i);
-      }
-      i++;
     }
+    mFolderNames.prepend(i18n("inbox"));
+    mFolderList.prepend(kernel->inboxFolder());
+    folderCombo->insertStringList(mFolderNames);
+    folderCombo->setCurrentItem(curIndex + 1);
 
     // -sanders hack for startup users. Must investigate this properly
     if (folderCombo->count() == 0)
@@ -755,12 +757,7 @@ void AccountDialog::saveSettings()
 
     mAccount->setPrecommand( mLocal.precommand->text() );
 
-    KMFolder *folder;
-    if (mLocal.folderCombo->currentText() == i18n("inbox"))
-      folder = kernel->folderMgr()->find("inbox");
-    else
-      folder = kernel->folderMgr()->find( mLocal.folderCombo->currentText() );
-    mAccount->setFolder( folder );
+    mAccount->setFolder( *mFolderList.at(mLocal.folderCombo->currentItem()) );
 
   }
   else if( accountType == "pop" )
@@ -770,12 +767,7 @@ void AccountDialog::saveSettings()
 			     mPop.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mPop.excludeCheck->isChecked() );
 
-    KMFolder *folder;
-    if (mPop.folderCombo->currentText() == i18n("inbox"))
-      folder = kernel->folderMgr()->find("inbox");
-    else
-      folder = kernel->folderMgr()->find( mPop.folderCombo->currentText() );
-    mAccount->setFolder( folder );
+    mAccount->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()) );
 
     KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
     epa.setHost( mPop.hostEdit->text() );

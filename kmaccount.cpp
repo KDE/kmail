@@ -96,7 +96,7 @@ void KMAccount::readConfig(KConfig& config)
 
   if (!folderName.isEmpty())
   {
-    folder = (KMAcctFolder*)kernel->folderMgr()->find(folderName);
+    folder = (KMAcctFolder*)kernel->folderMgr()->findIdString(folderName);
     if (folder)
     {
       mFolder = folder;
@@ -112,7 +112,7 @@ void KMAccount::writeConfig(KConfig& config)
 {
   config.writeEntry("Type", type());
   config.writeEntry("Name", mName);
-  config.writeEntry("Folder", mFolder ? mFolder->name() : QString::null);
+  config.writeEntry("Folder", mFolder ? mFolder->idString() : QString::null);
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
   config.writeEntry("precommand", mPrecommand);
