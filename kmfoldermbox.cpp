@@ -885,7 +885,7 @@ DwString KMFolderMbox::getDwString(int idx)
 
 
 //-----------------------------------------------------------------------------
-int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
+int KMFolderMbox::addMsg( KMMessage* aMsg, int* aIndex_ret )
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
   bool opened = false;
@@ -1034,7 +1034,8 @@ if( fileD1.open( IO_WriteOnly ) ) {
       (folder() == kmkernel->outboxFolder())) {
     if (mUnreadMsgs == -1) mUnreadMsgs = 1;
     else ++mUnreadMsgs;
-    emit numUnreadMsgsChanged( folder() );
+    if ( !mQuiet )
+      emit numUnreadMsgsChanged( folder() );
   }
   ++mTotalMsgs;
 
