@@ -170,6 +170,8 @@ void KMFolderMaildir::close(bool aForced)
 	      dirty = !mMsgList[i]->syncIndexString();
       if(dirty)
 	  writeIndex();
+      else
+          touchMsgDict();
       writeConfig();
   }
 
@@ -402,6 +404,9 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
+    
+    error |= appendtoMsgDict(idx);
+    
     if (error) {
       kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {

@@ -12,6 +12,7 @@
 class KMFolder;
 class KMMsgBase;
 class KMMsgDictEntry;
+class KMMsgDictREntry;
 
 
 class KMMsgDict
@@ -44,26 +45,40 @@ public:
     if no such message. */
   unsigned long getMsgSerNum(KMFolder *folder, int index);
   
+  /** Returns the name of the .folder.index.ids file. */
+  QString getFolderIdsLocation(const KMFolder *folder) const;
+  
+  /** Returns TRUE if the .folder.index.ids file should not be read. */
+  bool isFolderIdsOutdated(const KMFolder *folder);
+  
   /** Reads the .folder.index.ids file.  Returns 0 on success. */
-  int readFolderIds(KMFolder *folder);
+  int readFolderIds(const KMFolder *folder);
   
   /** Writes the .folder.index.ids file.  Returns 0 on success. */
-  int writeFolderIds(KMFolder *folder);
+  int writeFolderIds(const KMFolder *folder);
+  
+  /** Touches the .folder.index.ids file.  Returns 0 on success. */
+  int touchFolderIds(const KMFolder *folder, int index = -1);
+  
+  /** Appends the message to the .folder.index.ids file.
+   * Returns 0 on success. */
+  int appendtoFolderIds(const KMFolder *folder, int index);
   
   /** Returns true if the folder has a .folder.index.ids file.  */
-  bool hasFolderIds(KMFolder *folder);
+  bool hasFolderIds(const KMFolder *folder);
   
 protected:
-  /** Initialize (to zero) messages in a folder array. */
-  void initArray(QMemArray<unsigned long> *array, int start = 0);
-  
   /** Returns the next message serial number for use. */
   unsigned long getNextMsgSerNum();
+  
+  /** Opens the .folder.index.ids file, and writes the header
+   * information at the beginning of the file. */
+  KMMsgDictREntry *openFolderIds(const KMFolder *folder);
   
   /** The dictionary. */
   QIntDict<KMMsgDictEntry> *dict;
   /** The reverse-dictionary. */
-  QPtrDict<QMemArray<unsigned long> > *rdict;
+  QPtrDict<KMMsgDictREntry> *rdict;
 
   /** Highest message serial number we know of. */
   unsigned long nextMsgSerNum;

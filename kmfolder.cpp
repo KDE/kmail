@@ -8,6 +8,7 @@
 #include "kmfolderdir.h"
 #include "kmfolderimap.h"
 #include "kmundostack.h"
+#include "kmmsgdict.h"
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
@@ -238,6 +239,8 @@ int KMFolder::writeIndex()
   mHeaderOffset = nho;
   mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
   updateIndexStreamPtr();
+
+  writeMsgDict();
 
   mDirty = FALSE;
   return 0;
@@ -750,6 +753,12 @@ KMMessage* KMFolder::getMsg(int idx)
 	  writeConfig();
       }
   }
+  
+  if (msg->getMsgSerNum() == 0) {
+    msg->setMsgSerNum(kernel->msgDict()->insert(0, msg, idx));
+    kdDebug(5006) << "Serial number generated for message in folder " << label() << endl;
+  }
+  
   return msg;
 #endif
 
@@ -817,17 +826,6 @@ int KMFolder::find(const QString& msgIdMD5) const
 {
   for (int i=0; i<mMsgList.high(); ++i)
     if (mMsgList[i]->msgIdMD5() == msgIdMD5)
-      return i;
-
-  return -1;
-}
-
-
-//-----------------------------------------------------------------------------
-int KMFolder::find(unsigned long msgSerNum) const
-{
-  for (int i=0; i<mMsgList.high(); ++i)
-    if (mMsgList[i]->getMsgSerNum() == msgSerNum)
       return i;
 
   return -1;
@@ -1164,6 +1162,37 @@ void KMFolder::fillMsgDict(KMMsgDict *dict)
   open();
   mMsgList.fillMsgDict(dict);
   close();
+}
+
+//-----------------------------------------------------------------------------
+int KMFolder::writeMsgDict(KMMsgDict *dict)
+{
+  int ret = 0;
+  if (!dict)
+    dict = kernel->msgDict();
+  if (dict)
+    ret = dict->writeFolderIds(this);
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+int KMFolder::touchMsgDict()
+{
+  int ret = 0;
+  KMMsgDict *dict = kernel->msgDict();
+  if (dict)
+    ret = dict->touchFolderIds(this);
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+int KMFolder::appendtoMsgDict(int idx)
+{
+  int ret = 0;
+  KMMsgDict *dict = kernel->msgDict();
+  if (dict)
+    ret = dict->appendtoFolderIds(this, idx);
+  return ret;
 }
 
 //-----------------------------------------------------------------------------

@@ -151,9 +151,6 @@ public:
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const QString& msgIdMD5) const;
 
-  /** Returns the index of the given message or -1 if not found. */
-  virtual int find(unsigned long msgSerNum) const;
-  
   /** Number of messages in this folder. */
   virtual int count() const { return mMsgList.count(); }
 
@@ -390,6 +387,15 @@ public:
   /** Inserts messages into the message dictionary.  Might be called
     during kernel initialization. */
   void fillMsgDict(KMMsgDict *dict);
+  
+  /** Writes the message serial number file. */
+  int writeMsgDict(KMMsgDict *dict = 0);
+  
+  /** Touches the message serial number file. */
+  int touchMsgDict();
+  
+  /** Append message to end of message serial number file. */
+  int appendtoMsgDict(int idx = -1);
 
 signals:
   /** Emitted when the status, name, or associated accounts of this

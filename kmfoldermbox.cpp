@@ -195,6 +195,8 @@ void KMFolderMbox::close(bool aForced)
 	      dirty = !mMsgList[i]->syncIndexString();
       if(dirty)
 	  writeIndex();
+      else
+          touchMsgDict();
       writeConfig();
   }
 
@@ -842,6 +844,9 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
     fflush(mIndexStream);
     error = ferror(mIndexStream);
+    
+    error |= appendtoMsgDict(idx);
+    
     if (error) {
       kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
@@ -863,7 +868,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
       return error;
     }
   }
-
+  
   // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
   if (!mQuiet)

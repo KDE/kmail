@@ -380,8 +380,10 @@ void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
     if (pass == 1)
       dict->readFolderIds(folder);
     else if (pass == 2) {
-      if (!dict->hasFolderIds(folder))
+      if (!dict->hasFolderIds(folder)) {
         folder->fillMsgDict(dict);
+        dict->writeFolderIds(folder);
+      }
     }
     
     if (folder->child())
@@ -403,7 +405,7 @@ void KMFolderMgr::writeMsgDict(KMMsgDict *dict, KMFolderDir *dir)
     if (cur->isDir())
       continue;
     KMFolder *folder = static_cast<KMFolder*>(cur);
-    dict->writeFolderIds(folder);
+    folder->writeMsgDict(dict);
     if (folder->child())
       writeMsgDict(dict, folder->child());
   }
