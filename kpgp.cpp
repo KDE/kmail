@@ -94,7 +94,7 @@ Kpgp::getMessage()
 }
 
 bool 
-Kpgp::decrypt(QString *pass = 0)
+Kpgp::decrypt(QString *pass)
 {
   bool retval;
 
@@ -127,7 +127,7 @@ Kpgp::decrypt(QString *pass = 0)
 }
 
 bool 
-Kpgp::encryptTo(QStrList *pers, bool sign = TRUE, QString *pass = 0)
+Kpgp::encryptTo(QStrList *pers, bool sign, QString *pass)
 {
   int action = ENCRYPT;
 
@@ -154,7 +154,7 @@ Kpgp::encryptTo(QStrList *pers, bool sign = TRUE, QString *pass = 0)
 }
 
 bool 
-Kpgp::sign(QString *pass = 0)
+Kpgp::sign(QString *pass)
 {
   setPassPhrase(pass);
   return runPGP(passPhrase, SIGN);
@@ -264,7 +264,7 @@ Kpgp::secretKey(void)
 }
 
 void 
-Kpgp::clear(bool erasePassPhrase = FALSE)
+Kpgp::clear(bool erasePassPhrase)
 {
   if(erasePassPhrase && havePassPhrase && passPhrase != 0) {
     CHECK_PTR(passPhrase);
@@ -326,7 +326,7 @@ Kpgp::askForPass()
 }
 
 QString 
-Kpgp::decode(const QString text, bool returnHTML=FALSE)
+Kpgp::decode(const QString text, bool returnHTML)
 {
   QString deciphered;
   int pos;
@@ -459,8 +459,8 @@ Kpgp::checkForPGP()
 
 
 bool 
-Kpgp::runPGP(const QString *pass = 0, 
-	     int action = TEST, QStrList *args = 0)
+Kpgp::runPGP(const QString *pass, 
+	     int action, QStrList *args)
 {
   KProcess proc;
   proc.setExecutable("pgp");

@@ -137,7 +137,8 @@ void KBusyPtr :: loadCursor (const char* cursorName,const char* maskName)
   numCursors = numX * numY;
 
   if (bitmapList) delete[] bitmapList;
-  bitmapList = new QBitmap[numCursors](16,16);
+  QSize size(16,16);
+  bitmapList = new QBitmap[numCursors](size);
   if (cursorList) delete[] cursorList;
   cursorList = new QCursor[numCursors];
 

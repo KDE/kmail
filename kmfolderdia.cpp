@@ -41,7 +41,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
   nameEdit = new QLineEdit(this);
   nameEdit->setGeometry(70,20,340,25);
   nameEdit->setFocus();
-  nameEdit->setText(folder ? folder->name() : nls->translate("unnamed"));
+  nameEdit->setText(folder ? folder->name().data() : nls->translate("unnamed"));
 
   label = new QLabel(this);
   label->setText(nls->translate("Associated with"));
