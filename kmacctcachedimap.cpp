@@ -253,6 +253,10 @@ void KMAcctCachedImap::slotCheckQueuedFolders()
 
 void KMAcctCachedImap::processNewMail( bool interactive )
 {
+  if ( !mFolder ) { // happens if this is a pseudo-account (from configuredialog)
+    checkDone(false, 0);
+    return;
+  }
   if ( mMailCheckFolders.isEmpty() )
    processNewMail( mFolder, interactive, true );
   else {
