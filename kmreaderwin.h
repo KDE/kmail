@@ -268,9 +268,11 @@ protected:
   bool mUseFixedFont;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
-  QColor cPgpOkF, cPgpOkH, cPgpOkB, // colors for PGP (Frame, Header, Body)
+  QColor cPgpOk1F, cPgpOk1H, cPgpOk1B, // colors for PGP (Frame, Header, Body)
+         cPgpOk0F, cPgpOk0H, cPgpOk0B,
          cPgpWarnF, cPgpWarnH, cPgpWarnB,
-         cPgpErrF, cPgpErrH, cPgpErrB;
+         cPgpErrF, cPgpErrH, cPgpErrB,
+         cPgpEncrF, cPgpEncrH, cPgpEncrB;
   QColor cCBpgp, cCBplain, cCBhtml; // colors for colorbar
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;

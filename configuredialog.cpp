@@ -820,8 +820,12 @@ void IdentityPage::slotChangeDefaultPGPKey()
   
   if ( !pgp ) return;
 
-  QCString keyID = pgp->selectDefaultKey();
-
+  QCString keyID = mPgpIdentityLabel->text().local8Bit();
+  keyID = pgp->selectSecretKey( i18n("Your OpenPGP Key"),
+                                i18n("Select the OpenPGP key which should be "
+                                     "used to sign your messages and when "
+                                     "encrypting to yourself."),
+                                keyID );
   if ( !keyID.isEmpty() )
     mPgpIdentityLabel->setText( keyID ); 
 }
@@ -2005,9 +2009,11 @@ static const struct {
   { "NewMessage", I18N_NOOP("New message") },
   { "UnreadMessage", I18N_NOOP("Unread message") },
   { "FlagMessage", I18N_NOOP("Important message") },
-  { "PGPMessageOK", I18N_NOOP("PGP message's border - good signature") },
-  { "PGPMessageWarn", I18N_NOOP("PGP message's border - unchecked signature") },
-  { "PGPMessageErr", I18N_NOOP("PGP message's border - bad signature") },
+  { "PGPMessageEncr", I18N_NOOP("PGP message's header - encrypted") },
+  { "PGPMessageOkKeyOk", I18N_NOOP("PGP message's header - valid signature with trusted key") },
+  { "PGPMessageOkKeyBad", I18N_NOOP("PGP message's header - valid signature with untrusted key") },
+  { "PGPMessageWarn", I18N_NOOP("PGP message's header - unchecked signature") },
+  { "PGPMessageErr", I18N_NOOP("PGP message's header - bad signature") },
   { "ColorbarPGP", I18N_NOOP("Colorbar - PGP message") },
   { "ColorbarPlain", I18N_NOOP("Colorbar - plain text message") },
   { "ColorbarHTML", I18N_NOOP("Colorbar - HTML message") },
@@ -2063,7 +2069,9 @@ void AppearancePage::ColorsTab::setup() {
     QColor("red"), // new msg
     QColor("blue"), // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
-    QColor( 0x40, 0xFF, 0x40 ), // light green // pgp ok
+    QColor( 0x00, 0x80, 0xFF ), // light blue // pgp encrypted
+    QColor( 0x40, 0xFF, 0x40 ), // light green // pgp ok, trusted key
+    QColor( 0xA0, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp unchk
     QColor( 0xFF, 0x00, 0x00 ), // red // pgp bad
     QColor( 0x80, 0xFF, 0x80 ), // very light green // colorbar pgp

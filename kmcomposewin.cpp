@@ -1822,8 +1822,9 @@ void KMComposeWin::slotInsertPublicKey()
   if ( !(pgp = Kpgp::Module::getKpgp()) )
     return;
 
-  keyID = pgp->selectPublicKey(i18n("Please select the public key which "
-                                    "should be attached."));
+  keyID = pgp->selectPublicKey( i18n("Attach Public OpenPGP Key"),
+                                i18n("Select the public key which should "
+                                     "be attached.") );
 
   if (keyID.isEmpty())
     return;

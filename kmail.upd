@@ -34,3 +34,14 @@ Group=Reader,Reader
 Key=QuoutedText1,QuotedText1
 Key=QuoutedText2,QuotedText2
 Key=QuoutedText3,QuotedText3
+# Remove obsolete PGP config entries
+Id=5
+File=kmailrc
+Group=Reader
+Key=PGPMessageOK,PGPMessageOkKeyOk
+Options=copy
+Key=PGPMessageWarn,PGPMessageOkKeyBad
+RemoveGroup=Kpgp
+File=kpgprc
+Group=<default>
+RemoveKey=user
