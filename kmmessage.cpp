@@ -2653,6 +2653,12 @@ void KMMessage::setBody(const QCString& aStr)
   mNeedsAssembly = TRUE;
 }
 
+void KMMessage::setMultiPartBody( const QCString & aStr ) {
+  setBody( aStr );
+  mMsg->Body().Parse();
+  mNeedsAssembly = true;
+}
+
 
 // Patched by Daniel Moisset <dmoisset@grulic.org.ar>
 // modified numbodyparts, bodypart to take nested body parts as

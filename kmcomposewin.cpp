@@ -2324,7 +2324,8 @@ kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type fr
 kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body adjusted" << endl;
 
       // set body content
-      msg->setBody( ourFineBodyPart.body() );
+      // msg->setBody( ourFineBodyPart.body() );
+      msg->setMultiPartBody( ourFineBodyPart.body() );
       //kdDebug(5006) << "\n\n\n\n\n\n\nKMComposeWin::composeMessage():\n      99.:\n\n\n\n|||" << msg->asString() << "|||\n\n\n\n\n\n" << endl;
       //msg->headers().Assemble();
       //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      Z.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;

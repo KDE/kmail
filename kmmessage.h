@@ -460,6 +460,9 @@ public:
   /** Set the message body. Does not encode the body. */
   virtual void setBody(const QCString& aStr);
 
+  /** Hack to enable structured body parts to be set as flat text... */
+  void setMultiPartBody( const QCString & aStr );
+
   /** Set the message body, encoding it according to the current content
       transfer encoding. The first method for null terminated strings,
       the second for binary data */
