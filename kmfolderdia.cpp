@@ -45,6 +45,8 @@
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"
 #include "kmailicalifaceimpl.h"
+#include "kmmainwidget.h"
+#include "globalsettings.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -433,7 +435,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mContentsComboBox->insertItem( i18n( "Tasks" ) );
     mContentsComboBox->insertItem( i18n( "Journal" ) );
     if ( mDlg->folder() )
-      mContentsComboBox->setCurrentItem( mDlg->folder()->contentsType() );
+      mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
+    connect ( mContentsComboBox, SIGNAL ( activated( int ) ),
+              this, SLOT( slotFolderContentsSelectionChanged( int ) ) );
   } else
     mContentsComboBox = 0;
 
@@ -444,12 +448,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   QHBoxLayout *nml = new QHBoxLayout( newmailGroup->layout() );
   nml->setSpacing( 6 );
-  QLabel *newmailLabel = new QLabel( i18n("Include in check:" ), newmailGroup );
-  nml->addWidget( newmailLabel );
-  mNewMailCheckBox = new QCheckBox(newmailGroup);
+  mNewMailCheckBox = new QCheckBox( i18n("Include in check" ), newmailGroup );
   // default is on
   mNewMailCheckBox->setChecked(true);
-  newmailLabel->setBuddy(mNewMailCheckBox);
   nml->addWidget( mNewMailCheckBox );
   nml->addStretch( 1 );
 
@@ -636,6 +637,21 @@ void FolderDiaGeneralTab::slotUpdateItems ( int current )
 }
 
 //-----------------------------------------------------------------------------
+void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
+{
+  KMail::FolderContentsType type =
+    static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+  if( type != KMail::ContentsTypeMail && GlobalSettings::hideGroupwareFolders() ) {
+    QString message = i18n("You have configured this folder to contain groupware information "
+        "and the general configuration option to hide groupware folders is "
+        "set. That means that this folder will disappear once the configuration "
+        "dialog is closed. If you want to remove the folder again, you will need "
+        "to temporarily disable hiding of groupware folders to be able to see it.");
+    KMessageBox::information( this, message );
+  }
+}
+
+//-----------------------------------------------------------------------------
 bool FolderDiaGeneralTab::save()
 {
   // moving of IMAP folders is not yet supported
@@ -650,7 +666,10 @@ bool FolderDiaGeneralTab::save()
     if( !mDlg->isNewFolder() ) oldFldName = mDlg->folder()->name();
     if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
     else fldName = oldFldName;
-    fldName.remove('/');
+    if ( mDlg->parentFolder() &&
+         mDlg->parentFolder()->folderType() != KMFolderTypeImap &&
+         mDlg->parentFolder()->folderType() != KMFolderTypeCachedImap )
+      fldName.remove('/');
     fldName.remove(QRegExp("^\\.*"));
     if (fldName.isEmpty()) fldName = i18n("unnamed");
 
@@ -767,10 +786,17 @@ bool FolderDiaGeneralTab::save()
       folder->setUserWhoField(QString::null);
 
     // Set type field
-    if ( mContentsComboBox )
-      mDlg->folder()->setContentsType( mContentsComboBox->currentItem() );
+    if ( mContentsComboBox ) {
+      KMail::FolderContentsType type =
+        static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() );
+      folder->storage()->setContentsType( type );
+      // make sure everything is on disk, connected slots will call readConfig()
+      // when creating a new folder.
+      folder->storage()->writeConfig();
+    }
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
+    kmkernel->folderMgr()->contentsChanged();
 
     folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
 
@@ -1041,7 +1067,7 @@ FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
 
   QHBoxLayout *handlerLayout = new QHBoxLayout( groupLayout );
   //FIXME: add QWhatsThis
-  label = new QLabel( i18n("Preferred handler : "), mlGroup );
+  label = new QLabel( i18n("Preferred handler: "), mlGroup );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
   handlerLayout->addWidget( label, 0, Qt::AlignCenter );
@@ -1057,7 +1083,7 @@ FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
   //groupLayout->addSpacing( 10 );
 
   QVBoxLayout *idLayout = new QVBoxLayout( groupLayout );
-  label = new QLabel( i18n("<b>Mailing list description : </b>"), mlGroup );
+  label = new QLabel( i18n("<b>Mailing list description: </b>"), mlGroup );
   label->setEnabled( false );
   QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
@@ -1086,10 +1112,13 @@ FolderDiaMailingListTab::FolderDiaMailingListTab( KMFolderDialog* dlg,
   //       here
   QPushButton *handleButton = new QPushButton( i18n( "Invoke Handler" ), mlGroup );
   handleButton->setEnabled( false );
-  QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
-		    handleButton, SLOT(setEnabled(bool)) );
-  QObject::connect( handleButton, SIGNAL(clicked()),
-                    SLOT(slotInvokeHandler()) );
+  if( mDlg->folder())
+  {
+  	QObject::connect( mHoldsMailingList, SIGNAL(toggled(bool)),
+			    handleButton, SLOT(setEnabled(bool)) );
+	  QObject::connect( handleButton, SIGNAL(clicked()),
+    	                SLOT(slotInvokeHandler()) );
+  }
   mlLayout->addWidget( handleButton, 0, 2, Qt::AlignTop );
 
   mEditList = new KEditListBox( mlGroup );
@@ -1151,17 +1180,29 @@ void FolderDiaMailingListTab::slotDetectMailingList()
 {
   if ( !mDlg->folder() ) return; // in case the folder was just created
   int num = mDlg->folder()->count();
-  const int checks = 5;
 
   kdDebug(5006)<<k_funcinfo<<" Detecting mailing list"<<endl;
 
-  for( int i = --num; i > num-checks; --i ) {
-    KMMessage *mes = mDlg->folder()->getMsg( i );
-    if ( !mes )
-      continue;
-    mMailingList = MailingList::detect( mes );
-    if ( mMailingList.features() & MailingList::Post )
-      break;
+  // first try the currently selected message
+  KMFolderTree *folderTree = static_cast<KMFolderTree *>( mDlg->parent() );
+  int curMsgIdx = folderTree->mainWidget()->headers()->currentItemIndex();
+  if ( curMsgIdx > 0 ) {
+    KMMessage *mes = mDlg->folder()->getMsg( curMsgIdx );
+    if ( mes )
+      mMailingList = MailingList::detect( mes );
+  }
+
+  // next try the 5 most recently added messages
+  if ( !( mMailingList.features() & MailingList::Post ) ) {
+    const int maxchecks = 5;
+    for( int i = --num; i > num-maxchecks; --i ) {
+      KMMessage *mes = mDlg->folder()->getMsg( i );
+      if ( !mes )
+        continue;
+      mMailingList = MailingList::detect( mes );
+      if ( mMailingList.features() & MailingList::Post )
+        break;
+    }
   }
   if ( !(mMailingList.features() & MailingList::Post) ) {
     KMessageBox::error( this,
@@ -1192,6 +1233,26 @@ void FolderDiaMailingListTab::fillMLFromWidgets()
 {
   if ( !mHoldsMailingList->isChecked() )
     return;
+
+  // make sure that email addresses are prepended by "mailto:"
+  bool changed = false;
+  QStringList oldList = mEditList->items();
+  QStringList newList; // the correct string list
+  for ( QStringList::ConstIterator it = oldList.begin();
+        it != oldList.end(); ++it ) {
+    if ( !(*it).startsWith("http:") && !(*it).startsWith("https:") &&
+         !(*it).startsWith("mailto:") && ( (*it).find('@') != -1 ) ) {
+      changed = true;
+      newList << "mailto:" + *it;
+    }
+    else {
+      newList << *it;
+    }
+  }
+  if ( changed ) {
+    mEditList->clear();
+    mEditList->insertStringList( newList );
+  }
 
   //mMailingList.setHandler( static_cast<MailingList::Handler>( mMLHandlerCombo->currentItem() ) );
   switch ( mLastItem ) {

@@ -1,7 +1,6 @@
 [KMail Profile]
 Name=HTML
 Name[bg]=Поддръжка на HTML
-Name[xx]=xxHTMLxx
 Comment=Standard profile with HTML preview enabled - less secure!
 Comment[ar]=تشكيل قياسي مع تمكين استعراض HTML - أقل أمانا!
 Comment[az]=HTML nümayişli standard - ən az etibarlı!
@@ -19,6 +18,7 @@ Comment[et]=Standardprofiil HTML eelvaatlusega - pole nii turvaline!
 Comment[fi]=Normaali profiili HTML esikatselua käyttäville - vähemmän turvallinen!
 Comment[fr]=Profil standard avec l'aperçu HTML activé - Moins sécurisé !
 Comment[gl]=Perfil estándar con previsualización HTML activada - menos seguro!
+Comment[he]=פרופיל ברירת מחדל עם תצוגה מקדימה של HTML - פחות מאובטח!
 Comment[hi]=एचटीएमएल पूर्वावलोकन के साथ मानक प्रोफ़ाइल सक्षम है - कम सुरक्षित!
 Comment[hr]=Standardni profil sa uključenim pregledom HTML sadržaja - manje sigurno!
 Comment[hu]=Standard profil, HTML-előnézettel (kevésbé biztonságos)
@@ -41,13 +41,13 @@ Comment[sr]=Стандардни профил са омогућеним прег
 Comment[sr@Latn]=Standardni profil sa omogućenim pregledom HTML-a — manje bezbedno!
 Comment[sv]=Standardprofil med HTML-förhandsgranskning aktiverad - mindre säker!
 Comment[ta]= சரியான பயனர் விவரங்களுடன் HTML முன்காட்சி செயலாக்கப்பட்டது - குறைந்த பாதுகாப்பு!
+Comment[tg]=Профили оддӣ бо намоиши HTML - каме бехатарнок аст!
 Comment[th]=โปรไฟล์มาตรฐานพร้อมกับแสดงตัวอย่าง HTML - ความปลอดภัยน้อย !
 Comment[tr]=HTML ön izleme aktif standart profil - daha az güvenli!
 Comment[uk]=Окремий профіль з ввімкненим переглядом HTML - менш безпечний!
 Comment[ven]=Profile yo doweleaho irena HTML ya mbonelaphanda yo itwaho - a i ngo tsireledzea!
 Comment[vi]=Hồ sơ chuẩn cho phép xem trước HTML - I't bảo mật hơn !
 Comment[xh]=Imboniselo yabucala esezantsi nge HTML imboniso yenziwe - ukhuseleko oluncinane!
-Comment[xx]=xxStandard profile with HTML preview enabled - less secure!xx
 Comment[zh_CN]=启用 HTML 预览的标准配置文件 - 更不安全！
 Comment[zu]=Yenza ngokulingeneyo iprofayela nge HTML okokukhombisa ngaphambili kwenzeliwe - okuncane ukuvikeleka!
 
