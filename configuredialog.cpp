@@ -685,7 +685,16 @@ void IdentityPage::setIdentityInformation( const QString &identity )
   if ( ident.fcc().isEmpty() )
     mFccCombo->setFolder( kernel->sentFolder() );
   else
-    mFccCombo->setFolder( ident.fcc() );
+  {
+    // check if the sent-folder still exists
+    KMFolder *folder = kernel->folderMgr()->findIdString( ident.fcc() );
+    if ( !folder )
+      folder = kernel->imapFolderMgr()->findIdString( ident.fcc() );
+    if ( folder )
+      mFccCombo->setFolder( ident.fcc() );
+    else
+      mFccCombo->setFolder( kernel->sentFolder() );
+  }
   if ( ident.drafts().isEmpty() )
     mDraftsCombo->setFolder( kernel->draftsFolder() );
   else
