@@ -118,7 +118,7 @@ public:
    * Returns true if resource mode is enabled and folder is one of the
    * default four resource folders.
    */
-  bool isDefaultResourceFolder( KMFolder* folder ) const;
+  bool isStandardResourceFolder( KMFolder* folder ) const;
 
   /**
    * Returns true if isResourceImapFolder( folder ) returns true, and

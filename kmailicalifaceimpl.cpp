@@ -1043,15 +1043,14 @@ KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type,
 // this always returns false
 bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
 {
-  return isDefaultResourceFolder( folder ) ||
-    ( mUseResourceIMAP && folder && mExtraFolders.find( folder->location() )!=0 );
+  return mUseResourceIMAP && folder &&
+    ( isStandardResourceFolder( folder ) || mExtraFolders.find( folder->location() )!=0 );
 }
 
-bool KMailICalIfaceImpl::isDefaultResourceFolder( KMFolder* folder ) const
+bool KMailICalIfaceImpl::isStandardResourceFolder( KMFolder* folder ) const
 {
-  return mUseResourceIMAP && folder &&
-    ( folder == mCalendar || folder == mTasks || folder == mJournals ||
-      folder == mNotes || folder == mContacts );
+  return ( folder == mCalendar || folder == mTasks || folder == mJournals ||
+           folder == mNotes || folder == mContacts );
 }
 
 bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const

@@ -1735,7 +1735,7 @@ void KMFolderCachedImap::setContentsType( KMail::FolderContentsType type )
   if ( kmkernel->iCalIface().storageFormat( folder() ) == KMailICalIfaceImpl::StorageXML ) {
     mAnnotationFolderType = s_contentsType2Annotation[mContentsType];
     // The subtype is needed for outlook compatibility (https://intevation.de/roundup/kolab/issue406)
-    if ( kmkernel->iCalIface().isDefaultResourceFolder( folder() ) )
+    if ( kmkernel->iCalIface().isStandardResourceFolder( folder() ) )
       mAnnotationFolderType += ".default";
   }
   else
