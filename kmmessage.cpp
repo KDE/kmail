@@ -854,13 +854,13 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
   msg->initFromMessage(this);
 
-  KMMLInfo::name(this, headerName, mailingListStr);
+  MailingList::name(this, headerName, mailingListStr);
   replyToStr = replyTo();
 
   msg->setCharset("utf-8");
 
   // determine the mailing list posting address
-  if ( parent() && parent()->isMailingList() &&
+  if ( parent() && parent()->isMailingListEnabled() &&
        !parent()->mailingListPostAddress().isEmpty() ) {
     mailingListAddresses << parent()->mailingListPostAddress();
   }

@@ -1091,7 +1091,7 @@ void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
     return;
   }
 
-  if (!fti->folder()->isMailingList()) {
+  if (!fti->folder()->isMailingListEnabled()) {
     KFolderTree::contentsMouseReleaseEvent(me);
     return;
   }

@@ -473,7 +473,7 @@ KMUrlOpenCommand::KMUrlOpenCommand( const KURL &url, KMReaderWin *readerWin )
 
 void KMUrlOpenCommand::execute()
 {
-  if (mUrl.isEmpty()) return;
+  if ( mUrl.isEmpty() ) return;
   mReaderWin->slotUrlOpen( mUrl, KParts::URLArgs() );
 }
 
@@ -1235,7 +1235,7 @@ void KMMailingListFilterCommand::execute()
   if (!msg)
     return;
 
-  if (!KMMLInfo::name( msg, name, value ).isNull())
+  if (!MailingList::name( msg, name, value ).isNull())
     kmkernel->filterMgr()->createFilter( name, value );
 }
 
@@ -1972,3 +1972,71 @@ void KMResendMessageCommand::execute()
   win->show();
 }
 
+KMMailingListCommand::KMMailingListCommand( QWidget *parent, KMFolder *folder )
+  : KMCommand( parent ), mFolder( folder )
+{
+}
+
+void KMMailingListCommand::execute()
+{
+  KURL::List lst = urls();
+  QString handler = ( mFolder->mailingList().handler() == MailingList::KMail )
+    ? "mailto" : "https";
+
+  for ( KURL::List::Iterator itr = lst.begin(); itr != lst.end(); ++itr ) {
+    if ( handler == (*itr).protocol() ) {
+      KMCommand *command = new KMUrlClickedCommand( *itr, mFolder->identity(), 0, false );
+      command->start();
+      return;
+    }
+  }
+  if ( !lst.empty() ) {
+    KMCommand *command = new KMUrlClickedCommand( lst.first(), mFolder->identity(), 0, false );
+    command->start();
+  }
+}
+
+KMMailingListPostCommand::KMMailingListPostCommand( QWidget *parent, KMFolder *folder )
+  : KMMailingListCommand( parent, folder )
+{
+}
+KURL::List KMMailingListPostCommand::urls() const
+{
+  return mFolder->mailingList().postURLS();
+}
+
+KMMailingListSubscribeCommand::KMMailingListSubscribeCommand( QWidget *parent, KMFolder *folder )
+  : KMMailingListCommand( parent, folder )
+{
+}
+KURL::List KMMailingListSubscribeCommand::urls() const
+{
+  return mFolder->mailingList().subscribeURLS();
+}
+
+KMMailingListUnsubscribeCommand::KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *folder )
+  : KMMailingListCommand( parent, folder )
+{
+}
+KURL::List KMMailingListUnsubscribeCommand::urls() const
+{
+  return mFolder->mailingList().unsubscribeURLS();
+}
+
+KMMailingListArchivesCommand::KMMailingListArchivesCommand( QWidget *parent, KMFolder *folder )
+  : KMMailingListCommand( parent, folder )
+{
+}
+KURL::List KMMailingListArchivesCommand::urls() const
+{
+  return mFolder->mailingList().archiveURLS();
+}
+
+KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, KMFolder *folder )
+  : KMMailingListCommand( parent, folder )
+{
+}
+KURL::List KMMailingListHelpCommand::urls() const
+{
+  return mFolder->mailingList().helpURLS();
+}

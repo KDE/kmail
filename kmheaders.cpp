@@ -934,7 +934,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     mFolder = aFolder;
     mSortInfo.dirty = true;
     mOwner->editAction()->setEnabled(mFolder ?  (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
-    mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingList() :
+    mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingListEnabled() :
       false);
     if (mFolder)
     {

@@ -284,7 +284,7 @@ class KMSaveAttachmentsCommand : public KMCommand
 public:
   KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg  );
   KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs );
-  KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode> &attachments, 
+  KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode> &attachments,
       KMMessage *msg, bool encoded = false  );
 
 protected slots:
@@ -576,7 +576,7 @@ private:
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
   // List of serial numbers that have to be transferred to a host.
-  // Ticked off as they come in via msgAdded signals. 
+  // Ticked off as they come in via msgAdded signals.
   QValueList<Q_UINT32> mLostBoys;
 };
 
@@ -621,7 +621,7 @@ public:
 public slots:
   // Retrieve parts then calls execute
   void start();
-  void slotPartRetrieved( KMMessage* msg, QString partSpecifier );  
+  void slotPartRetrieved( KMMessage* msg, QString partSpecifier );
 
 signals:
   void partsRetrieved();
@@ -643,6 +643,64 @@ public:
 
 private:
   virtual void execute();
+};
+
+class KMMailingListCommand : public KMCommand
+{
+    Q_OBJECT
+public:
+    KMMailingListCommand( QWidget *parent, KMFolder *parent );
+private:
+    virtual void execute();
+protected:
+    virtual KURL::List urls() const =0;
+protected:
+    KMFolder *mFolder;
+};
+
+class KMMailingListPostCommand : public KMMailingListCommand
+{
+  Q_OBJECT
+public:
+  KMMailingListPostCommand( QWidget *parent, KMFolder *parent );
+protected:
+  virtual KURL::List urls() const;
+};
+
+class KMMailingListSubscribeCommand : public KMMailingListCommand
+{
+  Q_OBJECT
+public:
+  KMMailingListSubscribeCommand( QWidget *parent, KMFolder *parent );
+protected:
+  virtual KURL::List urls() const;
+};
+
+class KMMailingListUnsubscribeCommand : public KMMailingListCommand
+{
+  Q_OBJECT
+public:
+  KMMailingListUnsubscribeCommand( QWidget *parent, KMFolder *parent );
+protected:
+  virtual KURL::List urls() const;
+};
+
+class KMMailingListArchivesCommand : public KMMailingListCommand
+{
+  Q_OBJECT
+public:
+  KMMailingListArchivesCommand( QWidget *parent, KMFolder *parent );
+protected:
+  virtual KURL::List urls() const;
+};
+
+class KMMailingListHelpCommand : public KMMailingListCommand
+{
+  Q_OBJECT
+public:
+  KMMailingListHelpCommand( QWidget *parent, KMFolder *parent );
+protected:
+  virtual KURL::List urls() const;
 };
 
 #endif /*KMCommands_h*/

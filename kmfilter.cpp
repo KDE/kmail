@@ -23,7 +23,7 @@ using KMail::FilterLog;
 KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
   : bPopFilter(popFilter)
 {
- if (!bPopFilter)
+  if (!bPopFilter)
     mActions.setAutoDelete( true );
 
   if ( aConfig )

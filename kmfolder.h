@@ -16,6 +16,8 @@
 #include "kmglobal.h"
 #include "folderjob.h"
 using KMail::FolderJob;
+#include "mailinglist-magic.h"
+using KMail::MailingList;
 
 #include "mimelib/string.h"
 
@@ -128,7 +130,7 @@ public:
    * for each derived KMFolder).
    */
   FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
-                        KMFolder *folder = 0, QString partSpecifier = QString::null, 
+                        KMFolder *folder = 0, QString partSpecifier = QString::null,
                         const AttachmentStrategy *as = 0 ) const;
   FolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
                         FolderJob::JobType jt = FolderJob::tGetMessage,
@@ -313,14 +315,13 @@ public:
   bool hasAccounts() const;
 
   /** Returns TRUE if this folder is associated with a mailing-list. */
-  void setMailingList(bool enabled);
-  bool isMailingList() const { return mMailingListEnabled; }
+  void setMailingListEnabled( bool enabled );
+  bool isMailingListEnabled() const { return mMailingListEnabled; }
 
-  void setMailingListPostAddress(const QString &address);
-  QString mailingListPostAddress() const { return mMailingListPostingAddress; }
-
-  void setMailingListAdminAddress(const QString &address);
-  QString mailingListAdminAddress() const { return mMailingListAdminAddress; }
+  void setMailingList( const MailingList& mlist );
+  MailingList mailingList() const
+  { return mMailingList; }
+  QString mailingListPostAddress() const;
 
   void setIdentity(uint identity);
   uint identity() const { return mIdentity; }
@@ -528,9 +529,8 @@ private:
   QString mUnreadIconPath;
 
   /** Mailing list attributes */
-  bool mMailingListEnabled;
-  QString mMailingListPostingAddress;
-  QString mMailingListAdminAddress;
+  bool                mMailingListEnabled;
+  MailingList         mMailingList;
 
   uint mIdentity;
 

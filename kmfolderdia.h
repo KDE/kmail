@@ -2,6 +2,9 @@
 #ifndef __KMFOLDERDIA
 #define __KMFOLDERDIA
 
+#include "mailinglist-magic.h"
+using KMail::MailingList;
+
 #include <kdialogbase.h>
 
 class QCheckBox;
@@ -15,6 +18,7 @@ class KMFolderTreeItem;
 class KMFolderDir;
 class KIntNumInput;
 class KIconButton;
+class KEditListBox;
 class IdentityCombo;
 template <typename T> class QGuardedPtr;
 
@@ -41,9 +45,21 @@ protected slots:
    */
   void slotUpdateItems( int );
   void slotFolderNameChanged( const QString& );
+  /*
+   * Detects mailing-list related stuff
+   */
+  void slotDetectMailingList();
+  void slotInvokeHandler();
+  void slotMLHandling( int element );
+  void slotHoldsML( bool holdsML );
+  void slotAddressChanged( int addr );
 
 private:
   void initializeWithValuesFromFolder( KMFolder* folder );
+  void createGeneralTab( const QString& aName );
+  void createMLTab();
+  void fillMLFromWidgets();
+  void fillEditBox();
 
 protected:
   QComboBox *mBelongsToComboBox;
@@ -61,9 +77,7 @@ protected:
 
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 
-  QCheckBox *mHoldsMailingListCheckBox;
   QCheckBox *mExpireFolderCheckBox;
-  QLineEdit *mMailingListPostAddressEdit;
   IdentityCombo *mIdentityComboBox;
   QGroupBox *mExpireGroupBox;
   QGroupBox *mMailboxTypeGroupBox;
@@ -71,6 +85,18 @@ protected:
 
   KIntNumInput *mReadExpiryTimeNumInput, *mUnreadExpiryTimeNumInput;
   QComboBox    *mReadExpiryUnitsComboBox, *mUnreadExpiryUnitsComboBox;
+
+
+  //Mailing-list tab Gui
+  bool          mMLInfoChanged;
+  QCheckBox    *mHoldsMailingList;
+  QComboBox    *mMLHandlerCombo;
+  QPushButton  *mDetectButton;
+  QComboBox    *mAddressCombo;
+  int           mLastItem;
+  KEditListBox *mEditList;
+  QLabel       *mMLId;
+  MailingList   mMailingList;
 };
 
 #endif /*__KMFOLDERDIA*/

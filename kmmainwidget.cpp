@@ -471,13 +471,14 @@ void KMMainWidget::createWidgets(void)
   searchToolBar->boxLayout()->setSpacing(5);
   new QLabel(i18n("Quick Search:"), searchToolBar, "kde toolbar widget");
   mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
-  KPIM::KListViewSearchLine *quickSearchLine = 
+  KPIM::KListViewSearchLine *quickSearchLine =
     new KPIM::KListViewSearchLine(searchToolBar, mHeaders, "headers quick search line");
   searchToolBar->setStretchableWidget(quickSearchLine);
   connect( mHeaders, SIGNAL( messageListUpdated() ),
            quickSearchLine, SLOT( updateSearch() ) );
- 
+
   new QLabel(i18n("Show only mail with status:"), searchToolBar, "kde toolbar widget");
+
   // FIXME hook up to real status widget once that is back in
   QComboBox *cb = new QComboBox(searchToolBar, "quick search status combo box");
   cb->insertItem(i18n("any status"));
@@ -782,11 +783,11 @@ void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
 
   if(kmkernel->xmlGuiInstance()) {
     KNotifyClient::Instance instance(kmkernel->xmlGuiInstance());
-    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived", 
+    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived",
       i18n("New mail arrived"));
   }
   else
-    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived", 
+    KNotifyClient::event(topLevelWidget()->winId(), "new-mail-arrived",
       i18n("New mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
@@ -828,8 +829,8 @@ void KMMainWidget::slotPostToML()
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
 
-      if (mFolder->isMailingList()) {
-          kdDebug(5006)<<QString("mFolder->isMailingList() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;
+      if (mFolder->isMailingListEnabled()) {
+          kdDebug(5006)<<QString("mFolder->isMailingListEnabled() %1").arg( mFolder->mailingListPostAddress().latin1())<<endl;
 
           msg->setTo(mFolder->mailingListPostAddress());
       }
@@ -1314,7 +1315,7 @@ void KMMainWidget::updateListFilterAction()
   //Proxy the mListFilterAction to update the action text
   QCString name;
   QString value;
-  QString lname = KMMLInfo::name( mHeaders->currentMsg(), name, value );
+  QString lname = MailingList::name( mHeaders->currentMsg(), name, value );
   mListFilterAction->setText( i18n("Filter on Mailing-List...") );
   if ( lname.isNull() )
     mListFilterAction->setEnabled( false );
@@ -2969,7 +2970,7 @@ void KMMainWidget::updateMessageActions()
              );
     mSaveAsAction->setEnabled( mass_actions );
     bool mails = mFolder && mFolder->count();
-    bool enable_goto_unread = mails 
+    bool enable_goto_unread = mails
        || (GlobalSettings::loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders);
     actionCollection()->action( "go_next_message" )->setEnabled( mails );
     actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
@@ -3086,7 +3087,7 @@ void KMMainWidget::slotIntro()
   // hide widgets that are in the way:
   if ( mSearchAndHeaders && mHeaders && mLongFolderList )
     mSearchAndHeaders->hide();
-  
+
 
   mMsgView->displayAboutPage();
 

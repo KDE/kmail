@@ -25,7 +25,7 @@
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                     KMFolderType aFolderType )
-  : KMFolderNode( aParent, aFolderName ), mStorage(0), 
+  : KMFolderNode( aParent, aFolderName ), mStorage(0),
     mParent( aParent ), mChild( 0 ),
     mIsSystemFolder( false ),
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
@@ -102,8 +102,7 @@ void KMFolder::readConfig( KConfig* config )
   mUnreadIconPath = config->readEntry("UnreadIconPath" );
 
   mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
-  mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
-  mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
+  mMailingList.readConfig( config );
 
   mIdentity = config->readUnsignedNumEntry("Identity",0);
 
@@ -127,8 +126,7 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry("UnreadIconPath", mUnreadIconPath);
 
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
-  config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
-  config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
+  mMailingList.writeConfig( config );
 
   config->writeEntry("Identity", mIdentity);
 
@@ -234,7 +232,7 @@ void KMFolder::ignoreJobsForMessage( KMMessage* m )
 }
 
 FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
-                                KMFolder *folder, QString partSpecifier, 
+                                KMFolder *folder, QString partSpecifier,
                                 const AttachmentStrategy *as ) const
 {
   return mStorage->createJob( msg, jt, folder, partSpecifier, as );
@@ -471,6 +469,20 @@ QString KMFolder::label() const
   return mStorage->label();
 }
 
+//--------------------------------------------------------------------------
+QString KMFolder::mailingListPostAddress() const
+{
+  if ( mMailingList.features() & MailingList::Post ) {
+    KURL::List::const_iterator it;
+    KURL::List post = mMailingList.postURLS();
+    for( it = post.begin(); it != post.end(); ++it ) {
+      if ( (*it).protocol() == "mailto" )
+        return (*it).path();
+    }
+  }
+  return QString::null;
+}
+
 void KMFolder::setLabel( const QString& lbl )
 {
   mStorage->setLabel( lbl );
@@ -496,21 +508,15 @@ bool KMFolder::hasAccounts() const
   return mStorage->hasAccounts();
 }
 
-void KMFolder::setMailingList( bool enabled )
+void KMFolder::setMailingListEnabled( bool enabled )
 {
   mMailingListEnabled = enabled;
   mStorage->writeConfig();
 }
 
-void KMFolder::setMailingListPostAddress( const QString& address )
+void KMFolder::setMailingList( const MailingList& mlist )
 {
-  mMailingListPostingAddress = address;
-  mStorage->writeConfig();
-}
-
-void KMFolder::setMailingListAdminAddress( const QString& address )
-{
-  mMailingListAdminAddress = address;
+  mMailingList = mlist;
   mStorage->writeConfig();
 }
 
