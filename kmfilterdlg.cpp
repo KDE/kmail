@@ -208,7 +208,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 
   // destruct the dialog on OK, close and Cancel
   connect( this, SIGNAL(finished()),
-	   this, SLOT(slotDelayedDestruct()) );
+	   this, SLOT(slotFinished()) );
 
   KConfigGroup geometry( kapp->config(), "Geometry");
   const char * configKey
@@ -220,6 +220,10 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 
   // load the filter list (emits filterSelected())
   mFilterList->loadFilterList();
+}
+
+void KMFilterDlg::slotFinished() {
+	delayedDestruct();
 }
 
 void KMFilterDlg::slotSaveSize() {

@@ -329,6 +329,8 @@ protected slots:
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotReset();
   void slotSaveSize();
+  /// called when the dialog is closed (finished)
+  void slotFinished();
 
 protected:
   /** The widget that contains the ListBox showing the filters, and
