@@ -13,8 +13,8 @@
 
 #include <kmime_mdn.h>
 
-template <typename T>
-class QValueList;
+template <typename T> class QValueList;
+template <typename T> class QGuardedPtr;
 
 class QStringList;
 class QString;
@@ -22,6 +22,7 @@ class QTextCodec;
 class QStrList;
 
 class KMFolder;
+class KMFolderIndex;
 class DwMessage;
 class KMMessagePart;
 class KMMsgInfo;
@@ -30,6 +31,11 @@ class KMHeaders;
 class DwBodyPart;
 class DwMediaType;
 class DwHeaders;
+
+namespace KMail {
+    class Vacation;
+};
+
 
 #define KMMessageInherited KMMsgBase
 class KMMessage: public KMMsgBase
@@ -80,7 +86,7 @@ public:
       that this message should be considered urgent
   **/
   bool isUrgent() const;
-  
+
   /** Specifies an unencrypted copy of this message to be stored
       in a separate member variable to allow saving messages in
       unencrypted form that were sent in encrypted form.
@@ -88,25 +94,25 @@ public:
             and will be deleted in the d'tor.
   */
   void setUnencryptedMsg( KMMessage* unencrypted );
-  
+
   /** Returns TRUE is the massage contains an unencrypted copy of itself. */
   virtual bool hasUnencryptedMsg() const { return 0 != mUnencryptedMsg; }
-  
+
   /** Returns an unencrypted copy of this message or 0 if none exists. */
   virtual KMMessage* unencryptedMsg() const { return mUnencryptedMsg; }
-  
+
   /** Returns an unencrypted copy of this message or 0 if none exists.
       \note This functions removed the internal unencrypted message pointer
       from the message: the process calling takeUnencryptedMsg() must
       delete the returned pointer when no longer needed.
   */
   virtual KMMessage* takeUnencryptedMsg()
-  { 
+  {
     KMMessage* ret = mUnencryptedMsg;
     mUnencryptedMsg = 0;
     return ret;
   }
-  
+
   /** Mark the message as deleted */
   void del(void) { setStatus(KMMsgStatusDeleted); }
 
@@ -178,6 +184,7 @@ public:
       string copy.
   */
   virtual const DwString& asDwString() const;
+  virtual const DwMessage *asDwMessage();
 
   /** Return the entire message contents as a string. This function is
       slow for large message since it involves a string copy. If you
@@ -476,8 +483,11 @@ public:
       If there is no body part, return value will be zero. */
   DwBodyPart * getFirstDwBodyPart() const;
 
-  /** Fill the KMMessagePart structure for a given DwBodyPart. */
-  static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart);
+  /** Fill the KMMessagePart structure for a given DwBodyPart.
+      Iff withBody is false the body of the KMMessagePart will be left
+      empty and only the headers of the part will be filled in*/
+  static void bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
+                       bool withBody = true );
 
   /** Get the body part at position in aIdx.  Indexing starts at 0.
       If there is no body part at that index, aPart will have its
@@ -577,11 +587,11 @@ public:
   virtual void setCharset(const QCString& aStr);
 
   /** Get the charset the user selected for the message to display */
-  virtual QTextCodec* codec(void) const
+  virtual const QTextCodec* codec(void) const
   { return mCodec; }
 
   /** Set the charset the user selected for the message to display */
-  virtual void setCodec(QTextCodec* aCodec)
+  virtual void setCodec(const QTextCodec* aCodec)
   { mCodec = aCodec; }
 
   /** Allow decoding of HTML for quoting */
@@ -601,8 +611,7 @@ public:
   virtual bool transferInProgress() { return mTransferInProgress; }
 
   /** Set that the message shall not be deleted because it is still required */
-  virtual void setTransferInProgress(bool value)
-  { mTransferInProgress = value; }
+  virtual void setTransferInProgress(bool value);
 
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
@@ -641,7 +650,7 @@ public:
 
   /** Set encryption status of the message. */
   virtual void setEncryptionState(const KMMsgEncryptionState, int idx = -1);
-    
+
   /** Set signature status of the message. */
   virtual void setSignatureState(const KMMsgSignatureState, int idx = -1);
 
@@ -671,11 +680,12 @@ protected:
 
 protected:
   mutable DwMessage* mMsg;
-  mutable bool       mNeedsAssembly;
-  bool mIsComplete, mTransferInProgress, mDecodeHTML;
+  mutable bool mNeedsAssembly;
+  bool mIsComplete, mDecodeHTML;
+  int mTransferInProgress;
   static int sHdrStyle;
   static QString sForwardStr;
-  QTextCodec* mCodec;
+  const QTextCodec* mCodec;
 
   QString mFileName;
   off_t mFolderOffset;
