@@ -27,6 +27,7 @@
  */
 
 #include "listjob.h"
+#include "kmessagebox.h"
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctimap.h"
@@ -160,6 +161,9 @@ void ListJob::slotListResult( KIO::Job* job )
         true );
   } else
   {
+    if ((*it).path == "/" && mSubfolderNames.isEmpty()) {
+      ::exit(-1);
+    }
     // temporary debug output to trace the dimap cache eater, remove when fixed!
     kdDebug() << "Listing folder: " << ( *it ).path << endl;
     kdDebug() << "\tSubfolderNames: " << mSubfolderNames << endl;
@@ -188,6 +192,7 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
   KURL url;
   QString mimeType;
   QString attributes;
+  kdDebug() << "slotListEntries called.  uds is empty? " << (uds.isEmpty() ? "YES" : "NO") << endl;
   for ( KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
         udsIt != uds.end(); udsIt++ )
   {
@@ -224,10 +229,13 @@ void ListJob::slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds )
       if ( mSubfolderPaths.count() > 100 ||
            mSubfolderPaths.findIndex(url.path()) == -1 )
       {
+        kdDebug() << "APPENDING in slotListEntries: " << name << " " << url.path() << " " << mimeType << " " << attributes << endl;
         mSubfolderNames.append( name );
         mSubfolderPaths.append( url.path() );
         mSubfolderMimeTypes.append( mimeType );
         mSubfolderAttributes.append( attributes );
+      } else {
+        kdDebug() << "NOT APPENDING in slotListEntries.  count = " << mSubfolderPaths.count() << " url.path() = " << url.path() << endl;
       }
     }
   }
