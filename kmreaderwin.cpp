@@ -95,6 +95,7 @@ public:
     QCString keyId;
     Kpgp::Validity keyTrust;
     QString status;
+    tm creationTime;
     bool isEncrypted;
     bool isDecryptable;
     QString decryptionError;
@@ -532,13 +533,12 @@ if(data){
                     myBody->Parse();
                     partNode myBodyNode( true, myBody );
                     myBodyNode.buildObjectTree( false );
-		    
 		    // paint the frame
 		    PartMetaData messagePart;
 		    messagePart.isDecryptable = true;
 		    messagePart.isEncrypted = true;
 		    messagePart.isSigned = false;
-		    
+
 		    queueHtml( writeSigstatHeader( messagePart ) );
                     parseObjectTree( &myBodyNode, showOneMimePart,
                                                   keepEncryptions,
@@ -1138,7 +1138,7 @@ void KMReaderWin::readConfig(void)
 
   {
     KConfigGroupSaver saver(config, "Behaviour");
-    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", true);
+    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", false);
       mDelayedMarkTimeout = config->readNumEntry( "DelayedMarkTime", 0 );
   }
 
@@ -1343,12 +1343,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     updateReaderWinTimer.start( 0, TRUE );
 
   if (mDelayedMarkAsRead)
-  {
-    if (mDelayedMarkTimeout == 0)
-      slotTouchMessage();
-    else
-      mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
-  }
+  mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
 }
 
 //-----------------------------------------------------------------------------
@@ -1812,20 +1807,50 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
 
     // only one signature supported
     if (sigMeta.extended_info_count != 0) {
-	messagePart.keyId = sigMeta.extended_info[0].keyid;
-	messagePart.keyTrust = sigMeta.extended_info[0].validity;
-	messagePart.signer = sigMeta.extended_info[0].userid;
-	//blockMeta.signer = sigMeta.extended_info[0].name;
-	//blockMeta.signer += " <";
-	//blockMeta.signer += sigMeta.extended_info[0].email;
-	//blockMeta.signer += ">";
+
+        kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
+
+        CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
+        messagePart.keyId = ext.keyid;
+        if( messagePart.keyId.isEmpty() )
+            messagePart.keyId = ext.fingerprint; // take fingerprint if no id found (e.g. for S/MIME)
+        messagePart.keyTrust = ext.validity;
+        messagePart.signer = ext.userid;
+        if( ext.creation_time )
+            messagePart.creationTime = *ext.creation_time;
+        if(     70 > messagePart.creationTime.tm_year
+            || 200 < messagePart.creationTime.tm_year
+            ||   1 > messagePart.creationTime.tm_mon
+            ||  12 < messagePart.creationTime.tm_mon
+            ||   1 > messagePart.creationTime.tm_mday
+            ||  31 < messagePart.creationTime.tm_mday ) {
+            messagePart.creationTime.tm_year = 0;
+            messagePart.creationTime.tm_mon  = 1;
+            messagePart.creationTime.tm_mday = 1;
+        }
+        if( messagePart.signer.isEmpty() ) {
+            messagePart.signer = ext.name;
+            if( ext.email && ext.email[0] ) {
+                if( !messagePart.signer.isEmpty() )
+                    messagePart.signer += " ";
+                messagePart.signer += "<";
+                messagePart.signer += ext.email;
+                messagePart.signer += ">";
+            }
+        }
+
+        kdDebug(5006) << "\n  key id: " << messagePart.keyId << "\n  key trust: " << messagePart.keyTrust << "\n  signer: " << messagePart.signer << endl;
+
+    } else {
+        messagePart.creationTime.tm_year = 0;
+        messagePart.creationTime.tm_mon  = 1;
+        messagePart.creationTime.tm_mday = 1;
     }
 
     QString unknown( i18n("(unknown)") );
     if( !data ){
       if( new_cleartext ) {
-	  
-	queueHtml( writeSigstatHeader( messagePart ) );
+        queueHtml( writeSigstatHeader( messagePart ) );
 
         bIsOpaqueSigned = true;
         deb = "\n\nN E W    C O N T E N T = \"";
@@ -1837,10 +1862,10 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
                                     "opaqued signed data" );
         delete new_cleartext;
 
-	queueHtml( writeSigstatFooter( messagePart ) );
+        queueHtml( writeSigstatFooter( messagePart ) );
 
-      } 
-      else 
+      }
+      else
       {
         txt = "<hr><b><h2>";
         txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
@@ -1856,16 +1881,89 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
           txt.append( unknown );
         queueHtml(txt);
       }
-    } 
-    else 
+    }
+    else
     {
-	queueHtml( writeSigstatHeader( messagePart ) );
-	parseObjectTree( data );
-	queueHtml( writeSigstatFooter( messagePart ) );
+      queueHtml( writeSigstatHeader( messagePart ) );
+      parseObjectTree( data );
+      queueHtml( writeSigstatFooter( messagePart ) );
     }
 
+    if (bSignatureOk)
+        cryptPlug->freeSignatureMetaData( &sigMeta );
+
+/*
+    if( bSignatureOk ) {
+      txt = "<hr><b>";
+      txt.append( i18n( "Signature is OK." ).local8Bit() );
+      txt.append( "</b><br>&nbsp;<br>" );
+      txt.append( i18n( "Status: " ).local8Bit() );
+      if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
+        txt.append( "<i>" );
+        txt.append( sigMeta.status );
+        txt.append( "</i>" );
+      }
+      else
+        txt.append( unknown );
+      txt.append( "<br>&nbsp;<br>" );
+      txt.append( i18n( "Signature key information:" ).local8Bit() );
+      txt.append( "<br>" );
+      if( 0 < sigMeta.extended_info_count ) {
+        txt.append( "<table border=1><tr><td>" );
+        txt.append( i18n( "<u>created</u>" ).local8Bit() );
+        txt.append( "</td><td>" );
+        txt.append( i18n( "<u>status</u>" ).local8Bit() );
+        txt.append( "</td><td>" );
+        txt.append( i18n( "<u>fingerprint</u>" ).local8Bit() );
+        txt.append( "</td></tr>" );
+        for( int i=0; i<sigMeta.extended_info_count; ++i ) {
+          CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[i];
+          // soll:
+          // txt.append( QString("<tr><td>%1<td/><td>").arg( ext.creation_time ).latin1() );
+          // ist:
+             txt.append( "<tr><td><i>?</i></td>" );
+
+<<<<<<< kmreaderwin.cpp
+          txt.append( QString(    "<td><i>%1</i></td>").arg( ext.status_text ).latin1() );
+          txt.append( QString(    "<td><i>%1</i></td></tr>").arg( ext.fingerprint ).latin1() );
+        }
+        txt.append( "</table>" );
+      }
+      else
+        txt.append( unknown );
+      txt.append( "<br><u>Notation (XML):</u><br>" );
+      if( sigMeta.nota_xml && 0 < sigMeta.nota_xml ) {
+        txt.append( "<i><pre>" );
+        txt.append( sigMeta.nota_xml );
+        txt.append( "</pre></i>" );
+      }
+      else
+        txt.append( unknown );
+      cryptPlug->freeSignatureMetaData( &sigMeta );
+=======
     //if (bSignatureOk)
 	cryptPlug->freeSignatureMetaData( &sigMeta );
+>>>>>>> 1.459
+
+<<<<<<< kmreaderwin.cpp
+      queueHtml(txt);
+    }
+    else {
+      txt = "<hr><b><h2>";
+      txt.append( i18n( "Signature could <em>not</em> be verified!" ) );
+      txt.append( "</h2></b>" );
+      txt.append( "<br>&nbsp;<br>" );
+      txt.append( i18n( "Status: " ).local8Bit() );
+      if( sigMeta.status && 0 < strlen(sigMeta.status) ) {
+        txt.append( "<i>" );
+        txt.append( sigMeta.status );
+        txt.append( "</i>" );
+      }
+      else
+        txt.append( unknown );
+      queueHtml(txt);
+    }
+*/
 
   } else {
     KMessageBox::information(this,
@@ -2410,7 +2508,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
 
     QString htmlStr;
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-    
+
     if( block.isEncrypted )
     {
 	htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
@@ -2423,23 +2521,41 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
 		.arg(block.decryptionError);
 	htmlStr += "</td></tr><tr class=\"encrB\"><td>";
     }
-    
+
     if (block.isSigned) {
 
-	if (block.signer.isEmpty()) {
-	    block.signClass = "signWarn";
-	    htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
-		"class=\"" + block.signClass + "\">"
-		"<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
-	    htmlStr += i18n( "Message was signed with unknown key 0x%1." )
-		.arg( block.keyId );
-	    htmlStr += "<br />";
-	    htmlStr += i18n( "The validity of the signature can't be "
-			     "verified." );
-	    htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
-
-	} 
-	else 
+        if (block.signer.isEmpty()) {
+            block.signClass = "signWarn";
+            htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
+                "class=\"" + block.signClass + "\">"
+                "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
+            if( !block.keyId.isEmpty() ) {
+                bool dateOK = (0 < block.creationTime.tm_year);
+                QDate created( 1900 + block.creationTime.tm_year,
+                               block.creationTime.tm_mon,
+                               block.creationTime.tm_mday );
+                if( dateOK && created.isValid() )
+                    htmlStr += i18n( "Message was signed with unknown key 0x%1, created %2." )
+                            .arg( block.keyId ).arg( created.toString( Qt::LocalDate ) );
+                else
+                    htmlStr += i18n( "Message was signed with unknown key 0x%1." )
+                            .arg( block.keyId );
+            }
+            else
+                htmlStr += i18n( "Message was signed with unknown key." );
+            htmlStr += "<br />";
+            htmlStr += i18n( "The validity of the signature cannot be "
+                    "verified." );
+            if( !block.status.isEmpty() ) {
+                htmlStr += "<br />";
+                htmlStr += i18n( "Status: " );
+                htmlStr += "<i>";
+                htmlStr += block.status;
+                htmlStr += "</i>";
+            }
+        htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
+    }
+	else
 	{
 	    // HTMLize the signer's user id and create mailto: link
 	    signer.replace( QRegExp("&"), "&amp;" );
@@ -2447,7 +2563,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
 	    signer.replace( QRegExp(">"), "&gt;" );
 	    signer.replace( QRegExp("\""), "&quot;" );
 	    signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
-	    
+
 	    if (block.isGoodSignature) {
 		if( block.keyTrust < Kpgp::KPGP_VALIDITY_MARGINAL )
 		    block.signClass = "signOkKeyBad";
@@ -2508,12 +2624,12 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
 	    }
 	}
     }
-	
+
     return htmlStr;
 }
 
 QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
-{    
+{
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
 
     QString htmlStr;
@@ -2524,13 +2640,13 @@ QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
 	    i18n( "End of signed message" ) +
 	    "</td></tr></table>";
     }
-    
+
     if (block.isEncrypted) {
 	htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
 		i18n( "End of encrypted message" ) +
 	    "</td></tr></table>";
     }
-    
+
     return htmlStr;
 }
 
