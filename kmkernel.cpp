@@ -111,6 +111,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mXmlGuiInstance = 0;
   mDeadLetterTimer = 0;
   mDeadLetterInterval = 1000*120; // 2 minutes
+  allowedToExpire = false;
 
   new Kpgp::Module();
 
