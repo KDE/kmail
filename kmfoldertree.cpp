@@ -19,15 +19,6 @@
 #include "kmmainwin.h"
 #include <X11/Xlib.h>
 
-QPixmap* KMFolderTree::pixPlain = 0;
-QPixmap* KMFolderTree::pixFull = 0;
-QPixmap* KMFolderTree::pixIn = 0;
-QPixmap* KMFolderTree::pixOut = 0;
-QPixmap* KMFolderTree::pixTr = 0;
-QPixmap* KMFolderTree::pixSent = 0;
-QPixmap* KMFolderTree::pixCopy = 0;
-QPixmap* KMFolderTree::pixCancel = 0;
-
 //=============================================================================
 
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, QString name )
@@ -100,7 +91,6 @@ KMFolderTree::KMFolderTree( QWidget *parent,
                             const char *name )
   : KFolderTree( parent, name )
 {
-  static bool pixmapsLoaded = FALSE;
   oldSelected = 0;
   oldCurrent = 0;
   mLastItem = NULL;
@@ -110,26 +100,13 @@ KMFolderTree::KMFolderTree( QWidget *parent,
   int namecol = addColumn( i18n("Folder"), 160 );
   header()->setStretchEnabled( true, namecol );
 
-  if (!pixmapsLoaded)
-  {
-    pixmapsLoaded = true;
-
-    pixPlain = new QPixmap( SmallIcon("folder"));
-    pixFull  = new QPixmap( SmallIcon("folder_open"));
-    pixIn    = new QPixmap( SmallIcon("folder_inbox"));
-    pixOut   = new QPixmap( SmallIcon("folder_outbox"));
-    pixSent  = new QPixmap( SmallIcon("folder_sent_mail"));
-    pixTr    = new QPixmap( SmallIcon("trashcan_empty"));
-    pixCopy  = new QPixmap( SmallIcon("editcopy"));
-    pixCancel= new QPixmap( SmallIcon("cancel"));
-  }
   // connect
   connectSignals();
 
   // popup to switch columns
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
-  mPopup = new KPopupMenu;
+  mPopup = new KPopupMenu(this);
   mPopup->insertTitle(i18n("View columns"));
   mPopup->setCheckable(true);
   mUnreadPop = mPopup->insertItem(i18n("Unread Column"), this, SLOT(slotToggleUnreadColumn()));
@@ -511,16 +488,16 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       if (folder->isSystemFolder())
       {
         if (folder->label() == i18n("inbox"))
-          fti->setPixmap( 0, *pixIn );
+          fti->setPixmap( 0, SmallIcon("folder_inbox") );
         else if (folder->label() == i18n("outbox"))
-          fti->setPixmap( 0, *pixOut );
+          fti->setPixmap( 0, SmallIcon("folder_outbox") );
         else if (folder->label() == i18n("sent-mail"))
-          fti->setPixmap( 0, *pixSent );
+          fti->setPixmap( 0, SmallIcon("folder_sent_mail") );
         else if (folder->label() == i18n("trash"))
-          fti->setPixmap( 0, *pixTr );
+          fti->setPixmap( 0, SmallIcon("trashcan_empty") );
         else
-          fti->setPixmap( 0, *pixPlain );
-      } else fti->setPixmap( 0, (folder->normalIcon()) ? *(folder->normalIcon()) : (*pixPlain) );
+          fti->setPixmap( 0, SmallIcon("folder") );
+      } else fti->setPixmap( 0, (folder->normalIcon()) ? *(folder->normalIcon()) : SmallIcon("folder") );
 
       // add child-folders
       if (folder && folder->child())
@@ -566,11 +543,11 @@ void KMFolderTree::delayedUpdate()
     fti->setUnreadCount(count);
     if (count > 0) {
       if (!fti->folder()->isSystemFolder())
-        fti->setPixmap( 0, ((fti->folder()->unreadIcon()) ? *(fti->folder()->unreadIcon()) : (*pixFull)) );
+        fti->setPixmap( 0, ((fti->folder()->unreadIcon()) ? *(fti->folder()->unreadIcon()) : SmallIcon("folder_open")) );
     }
     else {
       if (!fti->folder()->isSystemFolder())
-        fti->setPixmap( 0, ((fti->folder()->normalIcon()) ? *(fti->folder()->normalIcon()) : (*pixPlain)) );
+        fti->setPixmap( 0, ((fti->folder()->normalIcon()) ? *(fti->folder()->normalIcon()) : SmallIcon("folder")) );
     }
 
     if ( fti->folder()->needsRepainting() ) {
@@ -1237,9 +1214,9 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         if ( mShowPopupAfterDnD ) {
           KPopupMenu *menu = new KPopupMenu( this );
           menu->insertItem( i18n("Move"), DRAG_MOVE, 0 );
-          menu->insertItem( *pixCopy, i18n("Copy"), DRAG_COPY, 1 );
+          menu->insertItem( SmallIcon("editcopy"), i18n("Copy"), DRAG_COPY, 1 );
           menu->insertSeparator();
-          menu->insertItem( *pixCancel, i18n("Cancel"), DRAG_CANCEL, 3 );
+          menu->insertItem( SmallIcon("cancel"), i18n("Cancel"), DRAG_CANCEL, 3 );
           int id = menu->exec( QCursor::pos(), 0 );
           switch(id) {
             case DRAG_COPY:
