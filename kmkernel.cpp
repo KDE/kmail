@@ -695,8 +695,13 @@ void KMKernel::init()
   mGroupware->readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
-#if 0 //disabled for now..
   the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
+#if 0 //disabled for now..
+  the_msgIndex->init();
+#else
+  the_msgIndex->remove();
+  delete the_msgIndex;
+  the_msgIndex = 0;
 #endif
 }
 

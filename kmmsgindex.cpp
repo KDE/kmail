@@ -209,17 +209,28 @@ static int kmindex_grow_increment = 40960; //grow this many buckets at a time
 KMMsgIndex::KMMsgIndex(QObject *o, const char *n) :
     QObject(o, n), mIndexState(INDEX_IDLE), delay_cnt(0), mLastSearch()
 {
-    mActiveSearches.setAutoDelete(TRUE);
-    reset(FALSE);
     mTermIndex.loc = kernel->folderMgr()->basePath() + "/.kmmsgindex_search";
     mTermTOC.loc = kernel->folderMgr()->basePath() + "/.kmmsgindex_toc";
     mTermProcessed.loc = kernel->folderMgr()->basePath() +
 			 "/.kmmsgindex_processed";
+}
+
+void KMMsgIndex::init()
+{
+    mActiveSearches.setAutoDelete(TRUE);
+    reset(FALSE);
     readIndex();
     connect(kernel->folderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
 	    this, SLOT(slotRemoveMsg(KMFolder*, Q_UINT32)));
     connect(kernel->folderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
 	    this, SLOT(slotAddMsg(KMFolder*, Q_UINT32)));
+}
+
+void KMMsgIndex::remove()
+{
+    unlink(mTermIndex.loc.latin1());
+    unlink(mTermTOC.loc.latin1());
+    unlink(mTermProcessed.loc.latin1());
 }
 
 // resets the state of the indexer to nothing (if clean it is assumed
@@ -596,9 +607,7 @@ KMMsgIndex::cleanUp()
     if(mIndexState != INDEX_IDLE)
 	return;
     reset(TRUE);
-    unlink(mTermIndex.loc.latin1());
-    unlink(mTermTOC.loc.latin1());
-    unlink(mTermProcessed.loc.latin1());
+    remove();
     recreateIndex();
 }
 
@@ -865,9 +874,7 @@ error_with_read:
     if(!read_success) {
 	mIndexState = INDEX_IDLE;
 	reset();
-	unlink(mTermProcessed.loc.latin1());
-	unlink(mTermIndex.loc.latin1());
-	unlink(mTermTOC.loc.latin1());
+	remove();
 	recreateIndex();
     }
 }
