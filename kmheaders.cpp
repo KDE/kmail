@@ -1159,7 +1159,8 @@ void KMHeaders::msgAdded(int id)
     mItems.resize( mFolder->count() );
     mItems[id] = hi;
 
-    mSortCacheItems.replace(msgId, sci);
+    if ( !msgId.isEmpty() )
+      mSortCacheItems.replace(msgId, sci);
     /* Add to the list of potential parents for subject threading. But only if
      * we are top level. */
     if (mSubjThreading && parent) {
@@ -1185,48 +1186,50 @@ void KMHeaders::msgAdded(int id)
     }
     // The message we just added might be a better parent for one of the as of
     // yet imperfectly threaded messages. Let's find out.
-    QPtrListIterator<KMHeaderItem> it(mImperfectlyThreadedList);
-    KMHeaderItem *cur;
-    while ( (cur = it.current()) ) {
-      ++it;
-      int tryMe = cur->msgId();
-      // Check, whether our message is the replyToId or replyToAuxId of
-      // this one. If so, thread it below our message, unless it is already
-      // correctly threaded by replyToId.
-      bool perfectParent = true;
-      QString otherId = mFolder->getMsgBase(tryMe)->replyToIdMD5();
-      if (msgId != otherId) {
-        if (msgId != mFolder->getMsgBase(tryMe)->replyToAuxIdMD5())
-          continue;
-        else {
-          if (!otherId.isEmpty() && mSortCacheItems.find(otherId))
+    if ( !msgId.isEmpty() ) {
+      QPtrListIterator<KMHeaderItem> it(mImperfectlyThreadedList);
+      KMHeaderItem *cur;
+      while ( (cur = it.current()) ) {
+        ++it;
+        int tryMe = cur->msgId();
+        // Check, whether our message is the replyToId or replyToAuxId of
+        // this one. If so, thread it below our message, unless it is already
+        // correctly threaded by replyToId.
+        bool perfectParent = true;
+        QString otherId = mFolder->getMsgBase(tryMe)->replyToIdMD5();
+        if (msgId != otherId) {
+          if (msgId != mFolder->getMsgBase(tryMe)->replyToAuxIdMD5())
             continue;
-          else
-            // Thread below us by aux id, but keep on the list of
-            // imperfectly threaded messages.
-            perfectParent = false;
+          else {
+            if (!otherId.isEmpty() && mSortCacheItems.find(otherId))
+              continue;
+            else
+              // Thread below us by aux id, but keep on the list of
+              // imperfectly threaded messages.
+              perfectParent = false;
+          }
         }
-      }
-      QListViewItem *newParent = mItems[id];
-      QListViewItem *msg = mItems[tryMe];
+        QListViewItem *newParent = mItems[id];
+        QListViewItem *msg = mItems[tryMe];
 
-      if (msg->parent())
-        msg->parent()->takeItem(msg);
-      else
-        takeItem(msg);
-      newParent->insertItem(msg);
+        if (msg->parent())
+          msg->parent()->takeItem(msg);
+        else
+          takeItem(msg);
+        newParent->insertItem(msg);
 
-      makeHeaderVisible();
+        makeHeaderVisible();
 
-      if (perfectParent) {
-        mImperfectlyThreadedList.removeRef (mItems[tryMe]);
-        // The item was imperfectly thread before, now it's parent
-        // is there. Update the .sorted file accordingly.
-        QString sortFile = KMAIL_SORT_FILE(mFolder);
-        FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
-        if (sortStream) {
-          mItems[tryMe]->sortCacheItem()->updateSortFile( sortStream, mFolder );
-          fclose (sortStream);
+        if (perfectParent) {
+          mImperfectlyThreadedList.removeRef (mItems[tryMe]);
+          // The item was imperfectly thread before, now it's parent
+          // is there. Update the .sorted file accordingly.
+          QString sortFile = KMAIL_SORT_FILE(mFolder);
+          FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
+          if (sortStream) {
+            mItems[tryMe]->sortCacheItem()->updateSortFile( sortStream, mFolder );
+            fclose (sortStream);
+          }
         }
       }
     }
