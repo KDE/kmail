@@ -546,21 +546,21 @@ void KMMessage::setTo(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::replyTo(void) const
 {
-  return headerField("ReplyTo");
+  return headerField("Reply-To");
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setReplyTo(const QString aStr)
 {
-  setHeaderField("Cc", aStr);
+  setHeaderField("Reply-To", aStr);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMessage::setReplyTo(KMMessage* aMsg)
 {
-  setHeaderField("Cc", aMsg->from());
+  setHeaderField("Reply-To", aMsg->from());
 }
 
 
