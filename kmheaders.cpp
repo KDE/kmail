@@ -836,7 +836,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 		 this, SLOT(folderCleared()));
       disconnect(mFolder, SIGNAL(statusMsg(const QString&)),
 		 mOwner, SLOT(statusMsg(const QString&)));
-	    writeSortOrder();
+      writeSortOrder();
       mFolder->close();
       // System folders remain open but we also should write the index from
       // time to time

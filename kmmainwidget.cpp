@@ -1993,14 +1993,21 @@ void KMMainWidget::setupActions()
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardMsg()) );
-  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+  
+  mForwardAttachedAction = actionCollection()->action ( "message_forward_as_attachment" );
+  if (!mForwardAttachedAction) {
+    mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
 					SLOT(slotForwardAttachedMsg()), actionCollection(),
 					"message_forward_as_attachment" );
+  }
   mForwardActionMenu->insert( forwardAttachedAction() );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
+  mForwardAction = actionCollection()->action ( "message_forward_inline" );
+  if (!mForwardAction) {
+    mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
 				actionCollection(), "message_forward_inline" );
+  }
   mForwardActionMenu->insert( forwardAction() );
   mForwardActionMenu->insert( redirectAction() );
 

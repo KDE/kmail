@@ -550,15 +550,24 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardMsg()) );
-  mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-				ac, "message_forward_inline" );
+
+  mForwardAction = ac->action( "message_forward_inline" );
+  if (!mForwardAction) {
+    mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
+                                  SHIFT+Key_F, this, SLOT(slotForwardMsg()),
+                                  ac, "message_forward_inline" );
+  }
   mForwardActionMenu->insert( mForwardAction );
-  mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
+  
+  mForwardAttachedAction = ac->action( "message_forward_as_attachment" );
+  if (!mForwardAttachedAction) {
+    mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
 					SLOT(slotForwardAttachedMsg()), ac,
 					"message_forward_as_attachment" );
+  }
   mForwardActionMenu->insert( mForwardAttachedAction );
+
   mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
 				 Key_E, this, SLOT(slotRedirectMsg()),
 				 ac, "message_forward_redirect" );
