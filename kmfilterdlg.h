@@ -33,6 +33,9 @@ public:
   /** Show details of given filter. */
   virtual void showFilter(KMFilter* filter);
 
+  /** Translates the field for the filter rule back to english */
+  virtual QString ruleFieldToEnglish(const QString & i18nVal);
+
   /** Apply changes in the edit fields to the current filter. */
   virtual void applyFilterChanges(void);
 

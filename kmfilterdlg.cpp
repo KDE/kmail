@@ -343,6 +343,16 @@ void KMFilterDlg::resizeEvent(QResizeEvent *qre)
 }
 
 //-----------------------------------------------------------------------------
+QString KMFilterDlg::ruleFieldToEnglish(const QString & i18nVal)
+{
+  if (i18nVal == i18n("<message>")) return QString("<message>");
+  if (i18nVal == i18n("<body>")) return QString("<body>");
+  if (i18nVal == i18n("<any header>")) return QString("<any header>");
+  if (i18nVal == i18n("<To or Cc>")) return QString("<To or Cc>");
+  return i18nVal;
+}
+
+//-----------------------------------------------------------------------------
 void KMFilterDlg::applyFilterChanges(void)
 {
   KMFilterAction* action;
@@ -350,10 +360,10 @@ void KMFilterDlg::applyFilterChanges(void)
 
   if (!mFilter || !updown_move_semaphore) return;
 
-  mFilter->ruleA().init(mRuleFieldA->currentText(), 
+  mFilter->ruleA().init(ruleFieldToEnglish(mRuleFieldA->currentText()),
 			(KMFilterRule::Function)mRuleFuncA->currentItem(),
 			mRuleValueA->text());
-  mFilter->ruleB().init(mRuleFieldB->currentText(), 
+  mFilter->ruleB().init(ruleFieldToEnglish(mRuleFieldB->currentText()), 
 			(KMFilterRule::Function)mRuleFuncB->currentItem(),
 			mRuleValueB->text());
   mFilter->setOper((KMFilter::Operator)mRuleOp->currentItem());
@@ -656,7 +666,7 @@ int KMFilterDlg::indexOfRuleField(const QString aName) const
 
   for (i=sFilterFieldList.count()-1; i>=0; i--)
   {
-    if (*(sFilterFieldList.at(i))==aName) break;
+    if (*(sFilterFieldList.at(i))==i18n(aName)) break;
   }
   return i;
 }
@@ -700,7 +710,8 @@ void KMFilterDlg::initLists()
   if (sFilterFieldList.count() <= 0)
   {
     sFilterFieldList.append(" ");
-    // also see KMFilterRule::matches() if you change the following strings!
+    // also see KMFilterRule::matches() and KMFilterDlg::ruleFieldToEnglish() 
+    // if you change the following strings!
     sFilterFieldList.append(i18n("<message>"));
     sFilterFieldList.append(i18n("<body>"));
     sFilterFieldList.append(i18n("<any header>"));
