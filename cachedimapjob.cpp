@@ -162,7 +162,7 @@ void CachedImapJob::execute()
 void CachedImapJob::listMessages()
 {
   KURL url = mAccount->getUrl();
-  url.setPath( mFolder->imapPath() + ";UID=1:*;SECTION=ENVELOPE");
+  url.setPath( mFolder->imapPath() + ";UID=1:*;SECTION=FLAGS RFC822.SIZE");
 
   KIO::SimpleJob *job = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
