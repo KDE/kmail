@@ -22,6 +22,7 @@ using KMail::ObjectTreeParser;
 #include <libemailfunctions/email.h>
 #include "kmkernel.h"
 #include "headerstrategy.h"
+#include "globalsettings.h"
 using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
@@ -4071,9 +4072,9 @@ void KMMessage::readConfig()
 
   { // area for config group "Composer"
     KConfigGroupSaver saver(config, "Composer");
-    sSmartQuote = config->readBoolEntry("smart-quote", true);
-    sWordWrap = config->readBoolEntry( "word-wrap", true );
-    sWrapCol = config->readNumEntry("break-at", 78);
+    sSmartQuote = GlobalSettings::smartQuote();
+    sWordWrap = GlobalSettings::wordWrap();
+    sWrapCol = GlobalSettings::lineWrapWidth();
     if ((sWrapCol == 0) || (sWrapCol > 78))
       sWrapCol = 78;
     if (sWrapCol < 30)

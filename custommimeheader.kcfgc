@@ -1,0 +1,5 @@
+File=custommimeheader.kcfg
+ClassName=CustomMimeHeader
+Mutators=true
+ItemAccessors=true
+SetUserTexts=true

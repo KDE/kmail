@@ -3,6 +3,7 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
       http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <include>kmglobal.h</include>
   <kcfgfile name="kmailrc"/>
     <group name="Behaviour">
       <entry name="DelayedMarkAsRead"  type="Bool">
@@ -84,7 +85,26 @@
         <label>Verbose new mail notification</label>
         <whatsthis>If this option is enabled then for each folder the number of newly arrived messages is shown in the new mail notification; otherwise, you will only get a simple 'New mail arrived' message.</whatsthis>
       </entry>
+      <entry name="ExternalEditor" type="String" key="external-editor">
+        <label>Specify e&amp;ditor:</label>
+        <default>kate %f</default>
+      </entry>
+      <entry name="UseExternalEditor" type="Bool" key="use-external-editor">
+        <label>Use e&amp;xternal editor instead of composer</label>
+        <default>false</default>
+      </entry>
+      <entry name="CustHeaderCount" type="Int" key="mime-header-count" />
+      <entry name="ReplyCurrentLanguage" type="Int" key="reply-current-language">
+        <default>0</default>
+      </entry>
+      <entry name="ReplyLanguagesCount" type="Int" key="reply-languages" >
+        <default>0</default>
+	<min>0</min>
+      </entry>
+   
+
     </group>
+<!-- General -->
 
     <group name="Groupware">
       <entry name="GroupwareEnabled" type="Bool">
@@ -178,6 +198,153 @@
         <whatsthis>This option enables or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
         <default>true</default>
       </entry>
+
+    </group>
+
+    <group name="Composer">
+      <entry name="ForceReplyCharset" type="Bool" key="force-reply-charset">
+        <label>Keep original charset when replying or forwarding if possible</label>
+        <default>false</default>
+      </entry>
+      <entry name="AutoTextSignature" type="String" key="signature">
+        <label>A&amp;utomatically append signature</label>
+        <default>auto</default>
+      </entry>
+      <entry name="StickyIdentity" type="Bool" key="sticky-identity">
+        <whatsthis>Remember this identity, so that it will be used in future composer windows as well.
+        </whatsthis>
+        <default>false</default>
+      </entry>
+      <entry name="StickyFcc" type="Bool" key="sticky-fcc">
+        <whatsthis>Remember this folder for sent items, so that it will be used in future composer windows as well.</whatsthis>
+        <default>false</default>
+      </entry>
+      <entry name="StickyTransport" type="Bool" key="sticky-transport">
+        <whatsthis>Remember this mail transport, so that it will be used in future composer windows as well.</whatsthis>
+        <default>false</default>
+      </entry>
+      <entry name="WordWrap" type="Bool" key="word-wrap">
+        <label>Word &amp;wrap at column:</label>
+        <default>true</default>
+      </entry>
+      <entry name="UseFixedFont" type="Bool" key="use-fixed-font">
+        <label>Use Fi&amp;xed Font</label>
+        <default>false</default>
+      </entry>
+      <entry name="LineWrapWidth" type="Int" key="break-at">
+        <label></label>
+        <default>78</default>
+        <min>30</min>
+        <max>78</max>
+      </entry>
+      <entry name="PreviousIdentity" type="UInt" key="previous-identity" />
+      <entry name="PreviousFcc" type="String" key="previous-fcc" />
+      <entry name="TransportHistory" type="StringList" key="transport-history" />
+      <entry name="CurrentTransport" type="String" key="current-transport" />
+      <entry name="MaxTransportEntries" type="Int" key="max-transport-items">
+        <default>10</default>
+      </entry>
+      <entry name="OutlookCompatibleAttachments" type="Bool" key="outlook-compatible-attachments">
+        <label>Outlook-compatible attachment naming</label>
+        <default>false</default>
+        <whatsthis>Turn this option on to make Outlook &#8482; understand attachment names containing non-English characters</whatsthis>
+      </entry>
+      <entry name="UseHtmlMarkup" type="Bool" key="html-markup">
+        <default>false</default>
+      </entry>
+      <entry name="PgpAutoSign" type="Bool" key="pgp-auto-sign">
+        <default>false</default>
+      </entry>
+      <entry name="PgpAutoEncrypt" type="Bool" key="pgp-auto-encrypt">
+        <default>false</default>
+      </entry>
+      <entry name="NeverEncryptDrafts" type="Bool" key="never-encrypt-drafts">
+        <default>true</default>
+      </entry>
+      <entry name="ConfirmBeforeSend" type="Bool" key="confirm-before-send">
+        <label>Confirm &amp;before send</label>
+        <default>false</default>
+      </entry>
+      <entry name="RequestMDN" type="Bool" key="request-mdn">
+        <label>Automatically request &amp;message disposition notifications</label>
+        <whatsthis><qt><p>Enable this option if you want KMail to request Message Disposition Notifications (MDNs) for each of your outgoing messages.</p> <p>This option only affects the default; you can still enable or disable MDN requesting on a per-message basis in the composer, menu item<em>Options</em>->&gt;<em>Request Disposition Notification</em>.</p></qt></whatsthis>
+        <default>false</default>
+      </entry>
+      <entry name="Headers" type="Int" key="headers">
+			  <default>HDR_STANDARD</default>
+      </entry>
+      <entry name="CompletionMode" type="Int" key="Completion Mode">
+        <default code="true">KGlobalSettings::completionMode()</default>
+      </entry>
+      <entry name="AutoSpellChecking" type="Bool" key="autoSpellChecking">
+        <default>true</default>
+      </entry>
+      <entry name="ShowForgottenAttachmentWarning" type="Bool" key="showForgottenAttachmentWarning">
+        <default>true</default>
+      </entry>
+      <entry name="AttachmentKeywords" type="StringList" key="attachment-keywords">
+      </entry>
+      <entry name="ShowMessagePartDialogOnAttach" type="Bool" key="showMessagePartDialogOnAttach">
+        <default>false</default>
+      </entry>
+      <entry name="AutosaveInterval" type="Int" key="autosave">
+        <label>Autosave interval:</label>
+        <whatsthis>A backup copy of the text in the composer window can be created regularly. The interval used to create the backups is set here. You can disable autosaving by setting it to the value 0.</whatsthis>
+        <default>2</default>
+      </entry>
+      <entry name="ReplyPrefixes" type="StringList" key="reply-prefixes">
+        <default>Re\\s*:,Re\\[\\d+\\]:,Re\\d+:</default>
+      </entry>
+      <entry name="ReplaceReplyPrefix" type="Bool" key="replace-reply-prefix">
+        <label>Replace recognized prefi&amp;x with "Re:"</label>
+	<default>true</default>
+      </entry>
+      <entry name="ForwardPrefixes" type="StringList" key="forward-prefixes">
+        <default>Fwd:,FW:</default>
+      </entry>
+      <entry name="ReplaceForwardPrefix" type="Bool" key="replace-forward-prefix">
+        <label>Replace recognized prefix with "&amp;Fwd:"</label>
+        <default>true</default>
+      </entry>
+      <entry name="SmartQuote" type="Bool" key="smart-quote">
+        <label>Use smart &amp;quoting</label>
+        <default>true</default>
+      </entry>
+      
+    </group>
+<!-- Composer -->
+
+    <group name="Fonts">
+      <entry name="UseDefaultFonts" type="Bool" key="defaultFonts">
+        <default>true</default>
+      </entry>
+      <entry name="ComposerFont" type="Font" key="composer-font">
+        <default code="true">KGlobalSettings::generalFont()</default>
+      </entry>
+      <entry name="FixedFont" type="Font" key="fixed-font">
+        <default code="true">KGlobalSettings::fixedFont()</default>
+      </entry>
+
+    </group>
+
+    <group name="Geometry">
+      <entry name="ComposerSize" type="Size" key="composer">
+        <default>QSize(480,510)</default>
+      </entry>
+
+    </group>
+
+    <group name="Reader">
+     <entry name="UseDefaultColors" type="Bool" key="defaultColors">
+       <default>true</default>
+     </entry>
+     <entry name="ForegroundColor" type="Color" key="ForegroundColor">
+       <default code="true">kapp->palette().active().text()</default>
+     </entry>
+     <entry name="BackgroundColor" type="Color" key="BackgroundColor">
+       <default code="true">kapp->palette().active().base()</default>
+     </entry>
+
     </group>
 
 </kcfg>

@@ -28,6 +28,7 @@
 #include "configuredialog_p.h"
 
 #include "globalsettings.h"
+#include "replyphrases.h"
 
 // other KMail headers:
 #include "simplestringlisteditor.h"
@@ -2199,6 +2200,7 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   //
   mGeneralTab = new GeneralTab();
   addTab( mGeneralTab, i18n("&General") );
+  addConfig( GlobalSettings::self(), mGeneralTab );
 
   //
   // "Phrases" tab:
@@ -2211,6 +2213,7 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   //
   mSubjectTab = new SubjectTab();
   addTab( mSubjectTab, i18n("&Subject") );
+  addConfig( GlobalSettings::self(), mSubjectTab );
 
   //
   // "Charset" tab:
@@ -2250,18 +2253,23 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // some check buttons...
-  mAutoAppSignFileCheck =
-    new QCheckBox( i18n("A&utomatically append signature"), this );
+  mAutoAppSignFileCheck = new QCheckBox(
+           GlobalSettings::self()->autoTextSignatureItem()->label(),
+           this );
   vlay->addWidget( mAutoAppSignFileCheck );
   connect( mAutoAppSignFileCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
+  mSmartQuoteCheck = new QCheckBox(
+           GlobalSettings::self()->smartQuoteItem()->label(),
+           this, "kcfg_SmartQuote" );
   vlay->addWidget( mSmartQuoteCheck );
   connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mAutoRequestMDNCheck = new QCheckBox( i18n("Automatically request &message disposition notifications"), this );
+  mAutoRequestMDNCheck = new QCheckBox(
+           GlobalSettings::self()->requestMDNItem()->label(),
+           this, "kcfg_RequestMDN" );
   vlay->addWidget( mAutoRequestMDNCheck );
   connect( mAutoRequestMDNCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2269,13 +2277,15 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   // a checkbox for "word wrap" and a spinbox for the column in
   // which to wrap:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mWordWrapCheck = new QCheckBox( i18n("Word &wrap at column:"), this );
+  mWordWrapCheck = new QCheckBox(
+           GlobalSettings::self()->wordWrapItem()->label(),
+           this, "kcfg_WordWrap" );
   hlay->addWidget( mWordWrapCheck );
   connect( mWordWrapCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 78/*max*/, 1/*step*/,
-				     78/*init*/, 10 /*base*/, this );
+           78/*init*/, 10 /*base*/, this, "kcfg_LineWrapWidth" );
   mWrapColumnSpin->setEnabled( false ); // since !mWordWrapCheck->isChecked()
   connect( mWrapColumnSpin, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -2287,8 +2297,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 	   mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this );
-  label = new QLabel( mAutoSave, i18n("Autosave interval:"), this );
+  mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this, "kcfg_AutosaveInterval" );
+  label = new QLabel( mAutoSave, 
+           GlobalSettings::self()->autosaveIntervalItem()->label(), this );
   hlay->addWidget( label );
   hlay->addWidget( mAutoSave );
   mAutoSave->setSpecialValueText( i18n("No autosave") );
@@ -2297,24 +2308,20 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mAutoSave, SIGNAL( valueChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  msg = i18n("A backup copy of the text in the composer window can be created "
-	     "regularly. The interval used to create the backups is set here. "
-	     "You can disable autosaving by setting it to the value 0.");
-  QWhatsThis::add( mAutoSave, msg );
-  QWhatsThis::add( label, msg );
-
   // The "external editor" group:
   group = new QVGroupBox( i18n("External Editor"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
-  mExternalEditorCheck =
-    new QCheckBox( i18n("Use e&xternal editor instead of composer"), group );
+  mExternalEditorCheck = new QCheckBox(
+           GlobalSettings::self()->useExternalEditorItem()->label(),
+           group, "kcfg_UseExternalEditor" );
   connect( mExternalEditorCheck, SIGNAL( toggled( bool ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   hbox = new QHBox( group );
-  label = new QLabel( i18n("Specify e&ditor:"), hbox );
-  mEditorRequester = new KURLRequester( hbox );
+  label = new QLabel( GlobalSettings::self()->externalEditorItem()->label(),
+                   hbox );
+  mEditorRequester = new KURLRequester( hbox, "kcfg_ExternalEditor" );
   connect( mEditorRequester, SIGNAL( urlSelected(const QString&) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2339,49 +2346,28 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   vlay->addWidget( group );
   vlay->addStretch( 100 );
-
-  msg = i18n("<qt><p>Enable this option if you want KMail to request "
-	     "Message Disposition Notifications (MDNs) for each of your "
-	     "outgoing messages.</p>"
-	     "<p>This option only affects the default; "
-	     "you can still enable or disable MDN requesting on a "
-	     "per-message basis in the composer, menu item "
-	     "<em>Options</em>->&gt;"
-	     "<em>Request Disposition Notification</em>.</p></qt>");
-  QWhatsThis::add( mAutoRequestMDNCheck, msg );
 }
 
 void ComposerPage::GeneralTab::load() {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
-  KConfigGroup general( KMKernel::config(), "General" );
-
   // various check boxes:
-  bool state = ( composer.readEntry("signature").lower() != "manual" );
-  mAutoAppSignFileCheck->setChecked( state );
-  mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote", true ) );
-  mAutoRequestMDNCheck->setChecked( composer.readBoolEntry( "request-mdn", false ) );
-  mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap", true ) );
 
-  mWrapColumnSpin->setValue( composer.readNumEntry( "break-at", 78 ) );
-  mAutoSave->setValue( composer.readNumEntry( "autosave", 2 ) );
+  mAutoAppSignFileCheck->setChecked(
+           GlobalSettings::autoTextSignature()=="auto" );
+  mSmartQuoteCheck->setChecked( GlobalSettings::smartQuote() );
+  mAutoRequestMDNCheck->setChecked( GlobalSettings::requestMDN() );
+  mWordWrapCheck->setChecked( GlobalSettings::wordWrap() );
+
+  mWrapColumnSpin->setValue( GlobalSettings::lineWrapWidth() );
+  mAutoSave->setValue( GlobalSettings::autosaveInterval() );
 
   // editor group:
-  mExternalEditorCheck->setChecked( general.readBoolEntry( "use-external-editor", false ) );
-  mEditorRequester->setURL( general.readPathEntry( "external-editor" ) );
+  mExternalEditorCheck->setChecked( GlobalSettings::useExternalEditor() );
+  mEditorRequester->setURL( GlobalSettings::externalEditor() );
 }
 
 void ComposerPageGeneralTab::defaults()
 {
   mAutoAppSignFileCheck->setChecked( true );
-  mSmartQuoteCheck->setChecked( true );
-  mAutoRequestMDNCheck->setChecked( false );
-  mWordWrapCheck->setChecked( true );
-
-  mWrapColumnSpin->setValue( 78 );
-  mAutoSave->setValue( 2 );
-
-  mExternalEditorCheck->setChecked( false );
-  mEditorRequester->clear();
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -2389,7 +2375,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   KConfigGroup general( profile, "General" );
 
   if ( composer.hasKey( "signature" ) ) {
-    bool state = ( composer.readEntry("signature").lower() == "auto" );
+    bool state = composer.readBoolEntry("signature");
     mAutoAppSignFileCheck->setChecked( state );
   }
   if ( composer.hasKey( "smart-quote" ) )
@@ -2411,20 +2397,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 }
 
 void ComposerPage::GeneralTab::save() {
-  KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup composer( KMKernel::config(), "Composer" );
-
-  general.writeEntry( "use-external-editor", mExternalEditorCheck->isChecked()
-		                         && !mEditorRequester->url().isEmpty() );
-  general.writePathEntry( "external-editor", mEditorRequester->url() );
-
-  bool autoSignature = mAutoAppSignFileCheck->isChecked();
-  composer.writeEntry( "signature", autoSignature ? "auto" : "manual" );
-  composer.writeEntry( "smart-quote", mSmartQuoteCheck->isChecked() );
-  composer.writeEntry( "request-mdn", mAutoRequestMDNCheck->isChecked() );
-  composer.writeEntry( "word-wrap", mWordWrapCheck->isChecked() );
-  composer.writeEntry( "break-at", mWrapColumnSpin->value() );
-  composer.writeEntry( "autosave", mAutoSave->value() );
+  GlobalSettings::setAutoTextSignature( 
+         mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
 }
 
 QString ComposerPage::PhrasesTab::helpAnchor() const {
@@ -2588,34 +2562,33 @@ void ComposerPage::PhrasesTab::slotLanguageChanged( const QString& )
 
 
 void ComposerPage::PhrasesTab::load() {
-  KConfigGroup general( KMKernel::config(), "General" );
-
   mLanguageList.clear();
   mPhraseLanguageCombo->clear();
   mActiveLanguageItem = -1;
 
-  int num = general.readNumEntry( "reply-languages", 0 );
-  int currentNr = general.readNumEntry( "reply-current-language" ,0 );
+  int numLang = GlobalSettings::replyLanguagesCount();
+  int currentNr = GlobalSettings::replyCurrentLanguage();
 
   // build mLanguageList and mPhraseLanguageCombo:
-  for ( int i = 0 ; i < num ; i++ ) {
-    KConfigGroup config( KMKernel::config(),
-			 QCString("KMMessage #") + QCString().setNum(i) );
-    QString lang = config.readEntry( "language" );
+  for ( int i = 0 ; i < numLang ; i++ ) {
+    ReplyPhrases replyPhrases( QString::number(i) );
+    replyPhrases.readConfig();
+    QString lang = replyPhrases.language();
     mLanguageList.append(
          LanguageItem( lang,
-		       config.readEntry( "phrase-reply" ),
-		       config.readEntry( "phrase-reply-all" ),
-		       config.readEntry( "phrase-forward" ),
-		       config.readEntry( "indent-prefix" ) ) );
+		       replyPhrases.phraseReplySender(),
+		       replyPhrases.phraseReplyAll(),
+		       replyPhrases.phraseForward(),
+		       replyPhrases.indentPrefix() ) );
     mPhraseLanguageCombo->insertLanguage( lang );
   }
 
-  if ( num == 0 )
-    slotAddNewLanguage( KGlobal::locale()->language() );
-
-  if ( currentNr >= num || currentNr < 0 )
+  if ( currentNr >= numLang || currentNr < 0 )
     currentNr = 0;
+
+  if ( numLang == 0 ) { 
+    slotAddNewLanguage( KGlobal::locale()->language() );
+  }
 
   mPhraseLanguageCombo->setCurrentItem( currentNr );
   mActiveLanguageItem = currentNr;
@@ -2624,21 +2597,19 @@ void ComposerPage::PhrasesTab::load() {
 }
 
 void ComposerPage::PhrasesTab::save() {
-  KConfigGroup general( KMKernel::config(), "General" );
-
-  general.writeEntry( "reply-languages", mLanguageList.count() );
-  general.writeEntry( "reply-current-language", mPhraseLanguageCombo->currentItem() );
+  GlobalSettings::setReplyLanguagesCount( mLanguageList.count() );
+  GlobalSettings::setReplyCurrentLanguage( mPhraseLanguageCombo->currentItem() );
 
   saveActiveLanguageItem();
   LanguageItemList::Iterator it = mLanguageList.begin();
   for ( int i = 0 ; it != mLanguageList.end() ; ++it, ++i ) {
-    KConfigGroup config( KMKernel::config(),
-			 QCString("KMMessage #") + QCString().setNum(i) );
-    config.writeEntry( "language", (*it).mLanguage );
-    config.writeEntry( "phrase-reply", (*it).mReply );
-    config.writeEntry( "phrase-reply-all", (*it).mReplyAll );
-    config.writeEntry( "phrase-forward", (*it).mForward );
-    config.writeEntry( "indent-prefix", (*it).mIndentPrefix );
+    ReplyPhrases replyPhrases( QString::number(i) );
+    replyPhrases.setLanguage( (*it).mLanguage );
+    replyPhrases.setPhraseReplySender( (*it).mReply );
+    replyPhrases.setPhraseReplyAll( (*it).mReplyAll );
+    replyPhrases.setPhraseForward( (*it).mForward );
+    replyPhrases.setIndentPrefix( (*it).mIndentPrefix );
+    replyPhrases.writeConfig();
   }
 }
 
@@ -2677,8 +2648,9 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
            this, SLOT( slotEmitChanged( void ) ) );
 
   // row 2: "replace [...]" check box:
-  mReplaceReplyPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefi&x with \"Re:\""), group );
+  mReplaceReplyPrefixCheck = new QCheckBox(
+     GlobalSettings::self()->replaceReplyPrefixItem()->label(),
+     group, "kcfg_ReplaceReplyPrefix" );
   connect( mReplaceReplyPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2704,8 +2676,9 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
            this, SLOT( slotEmitChanged( void ) ) );
 
   // row 3: "replace [...]" check box:
-  mReplaceForwardPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefix with \"&Fwd:\""), group );
+  mReplaceForwardPrefixCheck = new QCheckBox(
+       GlobalSettings::self()->replaceForwardPrefixItem()->label(),
+       group, "kcfg_ReplaceForwardPrefix" );
   connect( mReplaceForwardPrefixCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2713,36 +2686,15 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 }
 
 void ComposerPage::SubjectTab::load() {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
-
-  QStringList prefixList = composer.readListEntry( "reply-prefixes", ',' );
-  if ( prefixList.isEmpty() )
-    prefixList << QString::fromLatin1("Re\\s*:")
-	       << QString::fromLatin1("Re\\[\\d+\\]:")
-	       << QString::fromLatin1("Re\\d+:");
-  mReplyListEditor->setStringList( prefixList );
-
-  mReplaceReplyPrefixCheck->setChecked( composer.readBoolEntry("replace-reply-prefix", true ) );
-
-  prefixList = composer.readListEntry( "forward-prefixes", ',' );
-  if ( prefixList.isEmpty() )
-    prefixList << QString::fromLatin1("Fwd:")
-              << QString::fromLatin1("FW:");
-  mForwardListEditor->setStringList( prefixList );
-
-  mReplaceForwardPrefixCheck->setChecked( composer.readBoolEntry( "replace-forward-prefix", true ) );
+  mReplyListEditor->setStringList( GlobalSettings::replyPrefixes() );
+  mReplaceReplyPrefixCheck->setChecked( GlobalSettings::replaceReplyPrefix() );
+  mForwardListEditor->setStringList( GlobalSettings::forwardPrefixes() );
+  mReplaceForwardPrefixCheck->setChecked( GlobalSettings::replaceForwardPrefix() );
 }
 
 void ComposerPage::SubjectTab::save() {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
-
-
-  composer.writeEntry( "reply-prefixes", mReplyListEditor->stringList() );
-  composer.writeEntry( "forward-prefixes", mForwardListEditor->stringList() );
-  composer.writeEntry( "replace-reply-prefix",
-		       mReplaceReplyPrefixCheck->isChecked() );
-  composer.writeEntry( "replace-forward-prefix",
-		       mReplaceForwardPrefixCheck->isChecked() );
+  GlobalSettings::setReplyPrefixes( mReplyListEditor->stringList() );
+  GlobalSettings::setForwardPrefixes( mForwardListEditor->stringList() );
 }
 
 QString ComposerPage::CharsetTab::helpAnchor() const {

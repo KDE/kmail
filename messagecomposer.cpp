@@ -44,6 +44,9 @@
 #include "kmfoldercombobox.h"
 #include "keyresolver.h"
 #include "kleo_util.h"
+#include "globalsettings.h"
+#include "custommimeheader.h"
+
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
@@ -349,7 +352,7 @@ void MessageComposer::readFromComposeWin()
   mAutoCharset = mComposeWin->mAutoCharset;
   mCharset = mComposeWin->mCharset;
   mReferenceMessage = mComposeWin->mMsg;
-  mUseOpportunisticEncryption = mComposeWin->mAutoPgpEncrypt;
+  mUseOpportunisticEncryption = GlobalSettings::pgpAutoEncrypt();
   mAllowedCryptoMessageFormats = mComposeWin->cryptoMessageFormat();
 
   if( mAutoCharset ) {
@@ -409,12 +412,15 @@ void MessageComposer::readFromComposeWin()
     mReferenceMessage->removeHeaderField("Priority");
   }
 
-  _StringPair *pCH;
-  for (pCH  = mComposeWin->mCustHeaders.first();
-       pCH != 0;
-       pCH  = mComposeWin->mCustHeaders.next()) {
-    mReferenceMessage->setHeaderField(KMMsgBase::toUsAscii(pCH->name), pCH->value);
+  int num = GlobalSettings::custHeaderCount();
+  for(int ix=0; ix<num; ix++) {
+    CustomMimeHeader customMimeHeader( QString::number(ix) );
+    customMimeHeader.readConfig();
+    mReferenceMessage->setHeaderField(
+        KMMsgBase::toUsAscii( customMimeHeader.custHeaderName() ),
+        customMimeHeader.custHeaderValue() );
   }
+
 
   // we have to remember the Bcc because it might have been overwritten
   // by a custom header (therefore we can't use bcc() later) and because

@@ -34,12 +34,6 @@
 
 #include <kleo/enum.h>
 
-class _StringPair {
- public:
-   QString name;
-   QString value;
-};
-
 class QCloseEvent;
 class QComboBox;
 class QFrame;
@@ -766,33 +760,23 @@ protected:
   QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
   int mOpenId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
-  bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
-  bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
+  bool mAutoDeleteMsg;
   bool mSigningAndEncryptionExplicitlyDisabled;
-  bool mAutoRequestMDN;
   bool mLastSignActionState, mLastEncryptActionState;
   bool mLastIdentityHasSigningKey, mLastIdentityHasEncryptionKey;
   KMFolder *mFolder;
   long mShowHeaders;
-  QString mExtEditor;
-  bool mUseExtEditor;
-  QPtrList<_StringPair> mCustHeaders;
   bool mConfirmSend;
   bool mDisableBreaking; // Move
   int mNumHeaders;
-  int mLineBreak;
-  int mWordWrap;
-  bool mUseFixedFont;
   bool mUseHTMLEditor;
   bool mHtmlMarkup;
   QFont mBodyFont, mFixedFont;
-  //  QList<QLineEdit> mEdtList;
   QPtrList<QWidget> mEdtList;
   QPtrList<KTempFile> mAtmTempList;
   QPalette mPalette;
   uint mId;
   QString mOldSigText;
-  QStringList mTransportHistory;
 
   KAction *mAttachPK, *mAttachMPK,
           *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction;
@@ -823,7 +807,6 @@ protected:
   bool mAutoCharset;
 
   bool mAlwaysSend;
-  bool mOutlookCompatible;
 
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;
@@ -870,7 +853,6 @@ private:
     QCString encoding;
   };
   QMap<KIO::Job *, atmLoadData> mMapAtmLoadData;
-  bool mForceReplyCharset;
 
   // These are for passing on methods over the applyChanges calls
   int mSendNow;

@@ -107,7 +107,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		listjob.cpp \
 		composercryptoconfiguration.ui \
 		warningconfiguration.ui smimeconfiguration.ui annotationjobs.cpp \
-		accountcombobox.cpp redirectdialog.cpp foldershortcutdialog.cpp
+		accountcombobox.cpp redirectdialog.cpp foldershortcutdialog.cpp \
+                replyphrases.kcfgc custommimeheader.kcfgc
 
 kmail_SOURCES = main.cpp
 
@@ -173,6 +174,6 @@ messages: rc.cpp
 	$(XGETTEXT) -ktranslate *.cpp *.h -o $(podir)/kmail.pot
 	rm -f tips.cpp
 
-kde_kcfg_DATA = kmail.kcfg
+kde_kcfg_DATA = kmail.kcfg replyphrases.kcfg custommimeheader.kcfg
 
 include ../admin/Doxyfile.am

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0
+      http://www.kde.org/standards/kcfg/1.0/kcfg.xsd" >
+  <kcfgfile name="kmailrc">
+    <parameter name="langId" />
+  </kcfgfile>
+
+  <group name="KMMessage #$(langId)">
+    <entry name="IndentPrefix" type="String" key="indent-prefix">
+      <label></label>
+      <whatsthis></whatsthis>
+      <default>>%_</default>
+    </entry>
+    <entry name="Language" type="String" key="language">
+      <label></label>
+      <whatsthis></whatsthis>
+    </entry>
+    <entry name="PhraseForward" type="String" key="phrase-forward">
+      <label></label>
+      <whatsthis></whatsthis>
+      <default>Forwarded Message</default>
+    </entry>
+    <entry name="PhraseReplySender" type="String" key="phrase-reply">
+      <label></label>
+      <whatsthis></whatsthis>
+      <default>On %D, you wrote:</default>
+    </entry>
+    <entry name="PhraseReplyAll" type="String" key="phrase-reply-all">
+      <label></label>
+      <whatsthis></whatsthis>
+      <default>On %D, %F wrote:</default>
+    </entry>
+
+  </group>
+
+</kcfg>

@@ -87,6 +87,8 @@ using KRecentAddress::RecentAddresses;
 #include <krun.h>
 #include <ktempdir.h>
 //#include <keditlistbox.h>
+#include "globalsettings.h"
+#include "replyphrases.h"
 
 #include <kspell.h>
 #include <kspelldlg.h>
@@ -126,7 +128,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mMsg( 0 ),
     mAttachMenu( 0 ),
     mSigningAndEncryptionExplicitlyDisabled( false ),
-    mAutoRequestMDN( false ),
     mFolder( 0 ),
     mUseHTMLEditor( false ),
     mId( id ),
@@ -179,6 +180,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mBtnReplyTo = new QPushButton("...",mMainWidget);
 
   //setWFlags( WType_TopLevel | WStyle_Dialog );
+  mHtmlMarkup = GlobalSettings::useHtmlMarkup();
+  mShowHeaders = GlobalSettings::headers();
   mDone = false;
   mGrid = 0;
   mAtmListView = 0;
@@ -204,12 +207,12 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   QToolTip::add( mBtnBcc, tip );
   QToolTip::add( mBtnReplyTo, tip );
 
-  QWhatsThis::add( mBtnIdentity, i18n("Remember this identity, so that it "
-    "will be used in future composer windows as well."));
-  QWhatsThis::add( mBtnFcc, i18n("Remember this folder for sent items, so "
-    "that it will be used in future composer windows as well."));
-  QWhatsThis::add( mBtnTransport, i18n("Remember this mail transport, so "
-    "that it will be used in future composer windows as well."));
+  QWhatsThis::add( mBtnIdentity, 
+    GlobalSettings::self()->stickyIdentityItem()->whatsThis() );
+  QWhatsThis::add( mBtnFcc, 
+    GlobalSettings::self()->stickyFccItem()->whatsThis() );
+  QWhatsThis::add( mBtnTransport,
+    GlobalSettings::self()->stickyTransportItem()->whatsThis() );
 
   mSpellCheckInProgress=FALSE;
 
@@ -260,8 +263,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 
   readConfig();
   setupStatusBar();
-  setupEditor();
   setupActions();
+  setupEditor();
 
   applyMainWindowSettings(KMKernel::config(), "Composer");
 
@@ -308,9 +311,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setCentralWidget(mMainWidget);
   rethinkFields();
 
-  if (mUseExtEditor) {
+  if ( GlobalSettings::useExternalEditor() ) {
     mEditor->setUseExternalEditor(true);
-    mEditor->setExternalEditorPath(mExtEditor);
+    mEditor->setExternalEditorPath( GlobalSettings::externalEditor() );
   }
 
   mMsg = 0;
@@ -448,18 +451,12 @@ bool KMComposeWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readColorConfig(void)
 {
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Reader");
-  QColor c1=QColor(kapp->palette().active().text());
-  QColor c4=QColor(kapp->palette().active().base());
-
-  if (!config->readBoolEntry("defaultColors",TRUE)) {
-    mForeColor = config->readColorEntry("ForegroundColor",&c1);
-    mBackColor = config->readColorEntry("BackgroundColor",&c4);
-  }
-  else {
-    mForeColor = c1;
-    mBackColor = c4;
+  if ( GlobalSettings::useDefaultColors() ) {
+    mForeColor = QColor(kapp->palette().active().text());
+    mBackColor = QColor(kapp->palette().active().base());
+  } else {
+    mForeColor = GlobalSettings::foregroundColor();
+    mBackColor = GlobalSettings::backgroundColor();
   }
 
   // Color setup
@@ -485,103 +482,48 @@ void KMComposeWin::readColorConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig(void)
 {
-  KConfig *config = KMKernel::config();
   QCString str;
-  //  int w, h,
-  int maxTransportItems;
 
-  KConfigGroupSaver saver(config, "Composer");
-
+  GlobalSettings::self()->readConfig(); //TODO until configure* used kconfigXT
   mDefCharset = KMMessage::defaultCharset();
-  mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
-  mAutoSign = config->readEntry("signature","auto") == "auto";
-  mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
-  mWordWrap = config->readBoolEntry("word-wrap", true);
-  mUseFixedFont = config->readBoolEntry("use-fixed-font", false);
-  mLineBreak = config->readNumEntry("break-at", 78);
-  mBtnIdentity->setChecked(config->readBoolEntry("sticky-identity", false));
-  if (mBtnIdentity->isChecked())
-    mId = config->readUnsignedNumEntry("previous-identity", mId );
-  mBtnFcc->setChecked(config->readBoolEntry("sticky-fcc", false));
-  QString previousFcc = kmkernel->sentFolder()->idString();
-  if (mBtnFcc->isChecked())
-    previousFcc = config->readEntry("previous-fcc", previousFcc );
-  mBtnTransport->setChecked(config->readBoolEntry("sticky-transport", false));
-  mTransportHistory = config->readListEntry("transport-history");
-  QString currentTransport = config->readEntry("current-transport");
-  maxTransportItems = config->readNumEntry("max-transport-items",10);
+  mBtnIdentity->setChecked( GlobalSettings::stickyIdentity() );
+  if (mBtnIdentity->isChecked()) {
+    mId = (GlobalSettings::previousIdentity()!=0) ?
+           GlobalSettings::previousIdentity() : mId; 
+  }
+  mBtnFcc->setChecked( GlobalSettings::stickyFcc() );
+  mBtnTransport->setChecked( GlobalSettings::stickyTransport() );
+  QStringList transportHistory = GlobalSettings::transportHistory();
+  QString currentTransport = GlobalSettings::currentTransport();
 
-  if ((mLineBreak == 0) || (mLineBreak > 78))
-    mLineBreak = 78;
-  if (mLineBreak < 30)
-    mLineBreak = 30;
-  mOutlookCompatible = config->readBoolEntry( "outlook-compatible-attachments", false );
-  mAutoPgpSign = config->readBoolEntry("pgp-auto-sign", false);
-  mAutoPgpEncrypt = config->readBoolEntry("pgp-auto-encrypt", false);
-  mNeverEncryptWhenSavingInDrafts = config->readBoolEntry("never-encrypt-drafts", true);
-  mConfirmSend = config->readBoolEntry("confirm-before-send", false);
-  mAutoRequestMDN = config->readBoolEntry("request-mdn", false);
-
-  int mode = config->readNumEntry("Completion Mode",
-                                  KGlobalSettings::completionMode() );
-  mEdtFrom->setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtTo->setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtCc->setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtBcc->setCompletionMode( (KGlobalSettings::Completion) mode );
-  mHtmlMarkup = config->readBoolEntry("html-markup", false);
+  mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
+  mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
+  mEdtTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
+  mEdtCc->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
+  mEdtBcc->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
 
   readColorConfig();
 
-  { // area for config group "General"
-    KConfigGroupSaver saver(config, "General");
-    mExtEditor = config->readPathEntry("external-editor", DEFAULT_EDITOR_STR);
-    mUseExtEditor = config->readBoolEntry("use-external-editor", FALSE);
-
-    int headerCount = config->readNumEntry("mime-header-count", 0);
-    mCustHeaders.clear();
-    mCustHeaders.setAutoDelete(true);
-    for (int i = 0; i < headerCount; i++) {
-      QString thisGroup;
-      _StringPair *thisItem = new _StringPair;
-      thisGroup.sprintf("Mime #%d", i);
-      KConfigGroupSaver saver(config, thisGroup);
-      thisItem->name = config->readEntry("name");
-      if ((thisItem->name).length() > 0) {
-        thisItem->value = config->readEntry("value");
-        mCustHeaders.append(thisItem);
-      } else {
-        delete thisItem;
-        thisItem = 0;
-      }
-    }
-  }
-
-  { // area fo config group "Fonts"
-    KConfigGroupSaver saver(config, "Fonts");
+  if ( GlobalSettings::useDefaultFonts() ) {
     mBodyFont = KGlobalSettings::generalFont();
     mFixedFont = KGlobalSettings::fixedFont();
-    if (!config->readBoolEntry("defaultFonts",TRUE)) {
-      mBodyFont = config->readFontEntry("composer-font", &mBodyFont);
-      mFixedFont = config->readFontEntry("fixed-font", &mFixedFont);
-    }
-    slotUpdateFont();
-    mEdtFrom->setFont(mBodyFont);
-    mEdtReplyTo->setFont(mBodyFont);
-    mEdtTo->setFont(mBodyFont);
-    mEdtCc->setFont(mBodyFont);
-    mEdtBcc->setFont(mBodyFont);
-    mEdtSubject->setFont(mBodyFont);
+  } else {
+    mBodyFont = GlobalSettings::composerFont();
+    mFixedFont = GlobalSettings::fixedFont();
   }
 
-  { // area fo config group "Fonts"
-    KConfigGroupSaver saver(config, "Geometry");
-    QSize defaultSize(480,510);
-    QSize siz = config->readSizeEntry("composer", &defaultSize);
-    if (siz.width() < 200) siz.setWidth(200);
-    if (siz.height() < 200) siz.setHeight(200);
-    resize(siz);
-  }
+  slotUpdateFont();
+  mEdtFrom->setFont(mBodyFont);
+  mEdtReplyTo->setFont(mBodyFont);
+  mEdtTo->setFont(mBodyFont);
+  mEdtCc->setFont(mBodyFont);
+  mEdtBcc->setFont(mBodyFont);
+  mEdtSubject->setFont(mBodyFont);
+
+  QSize siz = GlobalSettings::composerSize();
+  if (siz.width() < 200) siz.setWidth(200);
+  if (siz.height() < 200) siz.setHeight(200);
+  resize(siz);
 
   mIdentity->setCurrentIdentity( mId );
 
@@ -593,9 +535,9 @@ void KMComposeWin::readConfig(void)
 
   mTransport->clear();
   mTransport->insertStringList( KMTransportInfo::availableTransports() );
-  while (mTransportHistory.count() > (uint)maxTransportItems)
-    mTransportHistory.remove( mTransportHistory.last() );
-  mTransport->insertStringList( mTransportHistory );
+  while ( transportHistory.count() > (uint)GlobalSettings::maxTransportEntries() )
+    transportHistory.remove( transportHistory.last() );
+  mTransport->insertStringList( transportHistory );
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
   {
     for (int i = 0; i < mTransport->count(); i++)
@@ -604,19 +546,14 @@ void KMComposeWin::readConfig(void)
     mTransport->setEditText( currentTransport );
   }
 
-  if ( !mBtnFcc->isChecked() )
-  {
-      kdDebug(5006) << "KMComposeWin::readConfig: identity.fcc()='"
-                    << ident.fcc() << "'" << endl;
-      if ( ident.fcc().isEmpty() )
-        previousFcc = kmkernel->sentFolder()->idString();
-      else
-        previousFcc = ident.fcc();
-      kdDebug(5006) << "KMComposeWin::readConfig: previousFcc="
-                << previousFcc <<  endl;
+  QString fccName = "";
+  if ( mBtnFcc->isChecked() ) {
+    fccName = GlobalSettings::previousFcc();
+  } else if ( !ident.fcc().isEmpty() ) {
+      fccName = ident.fcc();
   }
 
-  setFcc( previousFcc );
+  setFcc( fccName );
 }
 
 //-----------------------------------------------------------------------------
@@ -625,31 +562,30 @@ void KMComposeWin::writeConfig(void)
   KConfig *config = KMKernel::config();
   QString str;
 
-  {
     KConfigGroupSaver saver(config, "Composer");
-    config->writeEntry("signature", mAutoSign?"auto":"manual");
-    config->writeEntry("headers", mShowHeaders);
-    config->writeEntry("sticky-transport", mBtnTransport->isChecked());
-    config->writeEntry("sticky-identity", mBtnIdentity->isChecked());
-    config->writeEntry("sticky-fcc", mBtnFcc->isChecked());
-    config->writeEntry("previous-identity", mIdentity->currentIdentity() );
-    config->writeEntry("current-transport", mTransport->currentText());
-    config->writeEntry("previous-fcc", mFcc->getFolder()->idString() );
-    config->writeEntry( "autoSpellChecking",
+  GlobalSettings::setHeaders( mShowHeaders );
+  GlobalSettings::setStickyTransport( mBtnTransport->isChecked() );
+  GlobalSettings::setStickyIdentity( mBtnIdentity->isChecked() );
+  GlobalSettings::setStickyFcc( mBtnFcc->isChecked() );
+  GlobalSettings::setPreviousIdentity( mIdentity->currentIdentity() );
+  GlobalSettings::setCurrentTransport( mTransport->currentText() );
+  GlobalSettings::setPreviousFcc( mFcc->getFolder()->idString() );
+  GlobalSettings::setAutoSpellChecking(
                         mAutoSpellCheckingAction->isChecked() );
-    mTransportHistory.remove(mTransport->currentText());
+  QStringList transportHistory = GlobalSettings::transportHistory();
+  transportHistory.remove(mTransport->currentText());
     if (KMTransportInfo::availableTransports().findIndex(mTransport
-      ->currentText()) == -1)
-        mTransportHistory.prepend(mTransport->currentText());
-    config->writeEntry("transport-history", mTransportHistory );
-    config->writeEntry("use-fixed-font", mUseFixedFont );
-    config->writeEntry("html-markup", mHtmlMarkup);
+    ->currentText()) == -1) {
+      transportHistory.prepend(mTransport->currentText());
   }
+  GlobalSettings::setTransportHistory( transportHistory );
+  GlobalSettings::setUseFixedFont( mFixedFontAction->isChecked() );
+  GlobalSettings::setUseHtmlMarkup( mHtmlMarkup );
+  GlobalSettings::writeConfig();
 
+  GlobalSettings::setComposerSize( size() );
   {
     KConfigGroupSaver saver(config, "Geometry");
-    config->writeEntry("composer", size());
-
     saveMainWindowSettings(config, "Composer");
     config->sync();
   }
@@ -1027,7 +963,7 @@ void KMComposeWin::setupActions(void)
 
   mFixedFontAction = new KToggleAction( i18n("Use Fi&xed Font"), 0, this,
                       SLOT(slotUpdateFont()), actionCollection(), "toggle_fixedfont" );
-  mFixedFontAction->setChecked(mUseFixedFont);
+  mFixedFontAction->setChecked( GlobalSettings::useFixedFont() );
 
   //these are checkable!!!
   mUrgentAction = new KToggleAction (i18n("&Urgent"), 0,
@@ -1036,25 +972,23 @@ void KMComposeWin::setupActions(void)
   mRequestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
                                          actionCollection(),
                                          "options_request_mdn");
-  mRequestMDNAction->setChecked(mAutoRequestMDN);
+  mRequestMDNAction->setChecked(GlobalSettings::requestMDN());
   //----- Message-Encoding Submenu
   mEncodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
                                       0, this, SLOT(slotSetCharset() ),
                                       actionCollection(), "charsets" );
   mWordWrapAction = new KToggleAction (i18n("&Wordwrap"), 0,
                       actionCollection(), "wordwrap");
-  mWordWrapAction->setChecked(mWordWrap);
+  mWordWrapAction->setChecked(GlobalSettings::wordWrap());
   connect(mWordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   mAutoSpellCheckingAction =
     new KToggleAction( i18n( "&Automatic Spellchecking" ), "spellcheck", 0,
                        actionCollection(), "options_auto_spellchecking" );
-  KConfigGroup composerConfig( KMKernel::config(), "Composer" );
-  const bool spellChecking =
-    composerConfig.readBoolEntry( "autoSpellChecking", true );
-  mAutoSpellCheckingAction->setEnabled( !mUseExtEditor );
-  mAutoSpellCheckingAction->setChecked( !mUseExtEditor && spellChecking );
-  slotAutoSpellCheckingToggled( !mUseExtEditor && spellChecking );
+  const bool spellChecking = GlobalSettings::autoSpellChecking();
+  mAutoSpellCheckingAction->setEnabled( !GlobalSettings::useExternalEditor() );
+  mAutoSpellCheckingAction->setChecked( !GlobalSettings::useExternalEditor() && spellChecking );
+  slotAutoSpellCheckingToggled( !GlobalSettings::useExternalEditor() && spellChecking );
   connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
            this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
 
@@ -1149,7 +1083,7 @@ void KMComposeWin::setupActions(void)
   mLastIdentityHasEncryptionKey = !ident.pgpEncryptionKey().isEmpty() || !ident.smimeEncryptionKey().isEmpty();
 
   mLastEncryptActionState = false;
-  mLastSignActionState = mAutoPgpSign;
+  mLastSignActionState = GlobalSettings::pgpAutoSign();
 
   // "Attach public key" is only possible if OpenPGP support is available:
   mAttachPK->setEnabled( Kleo::CryptoBackendFactory::instance()->openpgp() );
@@ -1172,7 +1106,7 @@ void KMComposeWin::setupActions(void)
       && !ident.smimeSigningKey().isEmpty();
 
     setEncryption( false );
-    setSigning( ( canOpenPGPSign || canSMIMESign ) && mAutoPgpSign );
+    setSigning( ( canOpenPGPSign || canSMIMESign ) && GlobalSettings::pgpAutoSign() );
   }
 
   connect(mEncryptAction, SIGNAL(toggled(bool)),
@@ -1277,10 +1211,10 @@ void KMComposeWin::setupEditor(void)
   mEditor->setTabStopWidth(fm.width(QChar(' ')) * 8);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
-  if (mWordWrap)
+  if (GlobalSettings::wordWrap())
   {
     mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
-    mEditor->setWrapColumnOrWidth(mLineBreak);
+    mEditor->setWrapColumnOrWidth( GlobalSettings::lineWrapWidth() );
   }
   else
   {
@@ -1472,7 +1406,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   // requested
   QString mdnAddr = newMsg->headerField("Disposition-Notification-To");
   mRequestMDNAction->setChecked( ( !mdnAddr.isEmpty() &&
-                                  im->thatIsMe( mdnAddr ) ) || mAutoRequestMDN );
+                                  im->thatIsMe( mdnAddr ) ) ||
+                                  GlobalSettings::requestMDN() );
 
   // check for presence of a priority header, indicating urgent mail:
   mUrgentAction->setChecked( newMsg->isUrgent() );
@@ -1630,7 +1565,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   setCharset(mCharset);
 
-  if( mAutoSign && mayAutoSign ) {
+  if( (GlobalSettings::autoTextSignature()=="auto") && mayAutoSign ) {
     //
     // Espen 2000-05-16
     // Delay the signature appending. It may start a fileseletor.
@@ -1647,11 +1582,11 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 void KMComposeWin::setFcc( const QString &idString )
 {
   // check if the sent-mail folder still exists
-  KMFolder *folder = kmkernel->findFolderById( idString );
-  if ( folder )
+  if ( ! idString.isEmpty() && kmkernel->findFolderById( idString ) ) {
     mFcc->setFolder( idString );
-  else
+  } else {
     mFcc->setFolder( kmkernel->sentFolder() );
+}
 }
 
 
@@ -1690,15 +1625,13 @@ bool KMComposeWin::queryClose ()
 bool KMComposeWin::userForgotAttachment()
 {
   KConfigGroup composer( KMKernel::config(), "Composer" );
-  bool checkForForgottenAttachments =
-    composer.readBoolEntry( "showForgottenAttachmentWarning", true );
+  bool checkForForgottenAttachments = GlobalSettings::showForgottenAttachmentWarning();
 
   if ( !checkForForgottenAttachments || ( mAtmList.count() > 0 ) )
     return false;
 
 
-  QStringList attachWordsList =
-    composer.readListEntry( "attachment-keywords" );
+  QStringList attachWordsList = GlobalSettings::attachmentKeywords();
 
   if ( attachWordsList.isEmpty() ) {
     // default value (FIXME: this is duplicated in configuredialog.cpp)
@@ -2015,7 +1948,7 @@ void KMComposeWin::addrBookSelInto()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 {
-  if ((forceDefault && mForceReplyCharset) || aCharset.isEmpty())
+  if ((forceDefault && GlobalSettings::forceReplyCharset()) || aCharset.isEmpty())
     mCharset = mDefCharset;
   else
     mCharset = aCharset.lower();
@@ -2176,12 +2109,12 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   if (encoding.isEmpty()) encoding = "utf-8";
 
   QCString encName;
-  if ( mOutlookCompatible )
+  if ( GlobalSettings::outlookCompatibleAttachments() )
     encName = KMMsgBase::encodeRFC2047String( name, encoding );
   else
     encName = KMMsgBase::encodeRFC2231String( name, encoding );
   bool RFC2231encoded = false;
-  if ( !mOutlookCompatible )
+  if ( !GlobalSettings::outlookCompatibleAttachments() )
     RFC2231encoded = name != QString( encName );
 
   // create message part
@@ -2205,10 +2138,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   // show message part dialog, if not configured away (default):
   KConfigGroup composer(KMKernel::config(), "Composer");
-  if (!composer.hasKey("showMessagePartDialogOnAttach"))
-    // make it visible in the config file:
-    composer.writeEntry("showMessagePartDialogOnAttach", false);
-  if (composer.readBoolEntry("showMessagePartDialogOnAttach", false)) {
+  if ( GlobalSettings::showMessagePartDialogOnAttach() ) {
     const KCursorSaver saver( QCursor::ArrowCursor );
     KMMsgPartDialogCompat dlg;
     int encodings = 0;
@@ -2677,10 +2607,11 @@ void KMComposeWin::slotReplace()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdateFont()
 {
-  if ( mFixedFontAction ) {
-    mUseFixedFont = mFixedFontAction->isChecked();
+  kdDebug() << "KMComposeWin::slotUpdateFont " << endl;
+  if ( ! mFixedFontAction ) {
+    return;
   }
-  mEditor->setFont( mUseFixedFont ? mFixedFont : mBodyFont );
+  mEditor->setFont( mFixedFontAction->isChecked() ? mFixedFont : mBodyFont );
 }
 
 QString KMComposeWin::quotePrefixName() const
@@ -2688,13 +2619,12 @@ QString KMComposeWin::quotePrefixName() const
     if ( !msg() )
         return QString::null;
 
-    KConfig *config=KMKernel::config();
-    KConfigGroupSaver saver(config, "General");
+    int languageNr = GlobalSettings::replyCurrentLanguage();
+    ReplyPhrases replyPhrases( QString::number(languageNr) );
+    replyPhrases.readConfig();
+    QString quotePrefix = msg()->formatString(
+                 replyPhrases.indentPrefix() );
 
-    int languageNr = config->readNumEntry("reply-current-language",0);
-    config->setGroup( QString("KMMessage #%1").arg(languageNr) );
-
-    QString quotePrefix = config->readEntry("indent-prefix", ">%_");
     quotePrefix = msg()->formatString(quotePrefix);
     return quotePrefix;
 }
@@ -3005,7 +2935,7 @@ void KMComposeWin::slotWordWrapToggled(bool on)
   if (on)
   {
     mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
-    mEditor->setWrapColumnOrWidth(mLineBreak);
+    mEditor->setWrapColumnOrWidth( GlobalSettings::lineWrapWidth() );
   }
   else
   {
@@ -3111,7 +3041,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   mDisableBreaking = saveInDrafts;
 
-  const bool neverEncrypt = ( saveInDrafts && mNeverEncryptWhenSavingInDrafts ) 
+  const bool neverEncrypt = ( saveInDrafts && GlobalSettings::neverEncryptDrafts() )
                            || mSigningAndEncryptionExplicitlyDisabled;
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
@@ -3277,7 +3207,7 @@ void KMComposeWin::slotSaveDraft() {
 void KMComposeWin::slotSendNow() {
   if ( !mEditor->checkExternalEditorFinished() )
     return;
-  if (mConfirmSend) {
+  if ( GlobalSettings::confirmBeforeSend() ) {
     switch(KMessageBox::warningYesNoCancel(mMainWidget,
                                     i18n("About to send email..."),
                                     i18n("Send &Confirmation"),
@@ -3568,11 +3498,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
-  if ( !mBtnFcc->isChecked() )
-  {
-    if ( ident.fcc().isEmpty() )
-      mFcc->setFolder( kmkernel->sentFolder() );
-    else
+  if ( !mBtnFcc->isChecked() ) {
       setFcc( ident.fcc() );
   }
 
@@ -3590,7 +3516,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   mOldSigText = ident.signatureText();
   if( appendNewSig )
   {
-    if( !mOldSigText.isEmpty() && mAutoSign )
+    if( (!mOldSigText.isEmpty()) && 
+                   (GlobalSettings::autoTextSignature()=="auto") )
       edtText.append( mOldSigText );
     mEditor->setText( edtText );
   }
@@ -3688,10 +3615,7 @@ void KMComposeWin::setFocusToSubject()
 
 void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 {
-    KConfig *config = KMKernel::config();
-    KConfigGroupSaver cs( config, "Composer" );
-    config->writeEntry( "Completion Mode", (int) mode );
-    config->sync(); // maybe not?
+    GlobalSettings::setCompletionMode( (int) mode );
 
     // sync all the lineedits to the same completion mode
     mEdtFrom->setCompletionMode( mode );
@@ -3704,6 +3628,7 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 void KMComposeWin::slotConfigChanged()
 {
     readConfig();
+    rethinkFields();
 }
 
 /*
@@ -4661,15 +4586,12 @@ void KMEdit::slotSpellcheck2(KSpell*)
         QString quotePrefix;
         if(mComposer && mComposer->msg())
         {
-            // read the quote indicator from the preferences
-            KConfig *config=KMKernel::config();
-            KConfigGroupSaver saver(config, "General");
+            int languageNr = GlobalSettings::replyCurrentLanguage();
+            ReplyPhrases replyPhrases( QString::number(languageNr) );
+            replyPhrases.readConfig();
 
-            int languageNr = config->readNumEntry("reply-current-language",0);
-            config->setGroup( QString("KMMessage #%1").arg(languageNr) );
-
-            quotePrefix = config->readEntry("indent-prefix", ">%_");
-            quotePrefix = mComposer->msg()->formatString(quotePrefix);
+            quotePrefix = mComposer->msg()->formatString(
+                 replyPhrases.indentPrefix() );
         }
 
         kdDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;

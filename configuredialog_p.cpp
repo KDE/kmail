@@ -384,9 +384,11 @@ void ConfigModuleWithTabs::load() {
     if ( tab )
       tab->load();
   }
+  KCModule::load();
 }
 
 void ConfigModuleWithTabs::save() {
+  KCModule::save();
    for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
     ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
     if ( tab )
@@ -400,6 +402,7 @@ void ConfigModuleWithTabs::defaults() {
     if ( tab )
       tab->defaults();
   }
+  KCModule::defaults();
 }
 
 void ConfigModuleWithTabs::installProfile(KConfig * /* profile */ ) {
