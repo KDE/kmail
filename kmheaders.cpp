@@ -1299,7 +1299,7 @@ void KMHeaders::saveMsg (int msgId)
   if (msgList->count() == 1) subject = msgList->first()->subject();
   while (subject.find(':') != -1)
     subject = subject.mid(subject.find(':') + 1).stripWhiteSpace();
-  subject.replace(QRegExp("/"), "_");
+  subject.replace(QRegExp(QDir::separator()), "_");
   KURL url = KFileDialog::getSaveURL(subject, QString::null);
 
   if( url.isEmpty() )
