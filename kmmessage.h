@@ -30,6 +30,12 @@ class KMHeaders;
 
 namespace KMime {
   class CharFreq;
+  namespace Types {
+    class AddrSpec;
+    class Address;
+    typedef QValueList<Address> AddressList;
+    typedef QValueList<AddrSpec> AddrSpecList;
+  };
 };
 
 namespace KMail {
@@ -431,11 +437,11 @@ public:
   /** Get a raw header field */
   QCString rawHeaderField( const QCString & name ) const;
 
-  /** Returns header address list as string list. Warning: returns
-      a temporary object !
+  /** Returns header address list as string list.
       Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
       ResentCc, ResentReplyTo, ResentTo */
-  virtual QStrList headerAddrField(const QCString& name) const;
+  KMime::Types::AddressList headerAddrField(const QCString& name) const;
+  KMime::Types::AddrSpecList extractAddrSpecs( const QCString & headerNames ) const;
 
   /** Remove header field with given name */
   virtual void removeHeaderField(const QCString& name);

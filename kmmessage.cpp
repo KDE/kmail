@@ -34,6 +34,10 @@ using KMail::HeaderStrategy;
 
 #include <kmime_util.h>
 #include <kmime_charfreq.h>
+#include <kmime_header_parsing.h>
+using KMime::HeaderParsing::parseAddressList;
+using namespace KMime::Types;
+
 #include <mimelib/mimepp.h>
 #include <mimelib/string.h>
 #include <assert.h>
@@ -1488,8 +1492,9 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // in the Return-Path header. [...] Confirmation from the user
   // SHOULD be obtained (or no MDN sent) if there is no Return-Path
   // header in the message [...]
-  QStrList returnPathList = headerAddrField("Return-Path");
-  QString returnPath = returnPathList.isEmpty() ? 0 : returnPathList.first() ;
+  AddrSpecList returnPathList = extractAddrSpecs("Return-Path");
+  QString returnPath = returnPathList.isEmpty() ? 0
+    : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
   kdDebug(5006) << "clean return path: " << returnPath << endl;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, false ) ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
@@ -2188,33 +2193,27 @@ void KMMessage::setMsgId(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QStrList KMMessage::headerAddrField(const QCString& aName) const
-{
-  QString header = headerField(aName);
-  QStringList list = splitEmailAddrList(header);
-  QStrList resultList;
-  int i,j;
-  for (QStringList::Iterator it = list.begin(); it != list.end(); it++)
-  {
-    i = (*it).find('<');
-    if (i >= 0)
-    {
-      j = (*it).find('>', i+1);
-      if (j > i) (*it) = (*it).mid(i+1, j-i-1);
-    }
-    else // if it's "radej@kde.org (Sven Radej)"
-    {
-      i = (*it).find('(');
-      if (i > 0)
-        (*it).truncate(i);  // "radej@kde.org "
-    }
-    (*it) = (*it).stripWhiteSpace();
-    if (!(*it).isEmpty())
-      resultList.append((*it).latin1());
-  }
-  return resultList;
+AddressList KMMessage::headerAddrField( const QCString & aName ) const {
+  const QCString header = rawHeaderField( aName );
+  AddressList result;
+  const char * scursor = header.begin();
+  if ( !scursor )
+    return AddressList();
+  const char * const send = header.end();
+  if ( !parseAddressList( scursor, send, result ) )
+    kdDebug(5006) << "Error in address splitting: parseAddressList returned false!"
+                  << endl;
+  return result;
 }
 
+AddrSpecList KMMessage::extractAddrSpecs( const QCString & header ) const {
+  AddressList al = headerAddrField( header );
+  AddrSpecList result;
+  for ( AddressList::const_iterator ait = al.begin() ; ait != al.end() ; ++ait )
+    for ( MailboxList::const_iterator mit = (*ait).mailboxList.begin() ; mit != (*ait).mailboxList.end() ; ++mit )
+      result.push_back( (*mit).addrSpec );
+  return result;
+}
 
 QCString KMMessage::rawHeaderField( const QCString & name ) const {
   if ( name.isEmpty() ) return QCString();

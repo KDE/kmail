@@ -8,7 +8,8 @@
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qobject.h>
-#include "kio/global.h"
+#include <kio/global.h>
+#include <kdeversion.h>
 
 class KMMessage;
 class KMFolder;
@@ -21,12 +22,18 @@ class QStrList;
 class KMTransportInfo;
 class KMPrecommand;
 
-namespace KIO
-{
+namespace KIO {
   class Job;
   class TransferJob;
   class Slave;
-}
+};
+
+namespace KMime {
+  namespace Types {
+    class AddrSpec;
+    typedef QValueList<AddrSpec> AddrSpecList;
+  };
+};
 
 class KMSender: public QObject
 {
@@ -187,9 +194,12 @@ protected:
     Sets mSending to FALSE. */
   virtual void failed(const QString &msg);
 
+#if !KDE_IS_VERSION( 3, 1, 90 ) // dotstuffing and LF->CRLF is now
+				// done by the SMTP kioslave
   /** Prepare message for sending. */
   virtual QCString prepareStr(const QCString &str, bool toCRLF=FALSE,
    bool noSingleDot=TRUE);
+#endif
 
   /** Informs the user about what is going on. */
   virtual void statusMsg(const QString&);
@@ -198,7 +208,7 @@ protected:
     Returns TRUE on success and FALSE on failure.
     Calls addOneRecipient() for each recipient in the list. Aborts and
     returns FALSE if addOneRecipient() returns FALSE. */
-  virtual bool addRecipients(const QStrList& aRecpList);
+  virtual bool addRecipients(const KMime::Types::AddrSpecList & aRecpList);
 
   /** Called from within addRecipients() once for each recipient in
     the list after all surplus characters have been stripped. E.g.
