@@ -97,6 +97,7 @@ using KMail::TeeHtmlWriter;
 #include <kdialog.h>
 #include <kaction.h>
 #include <kiconloader.h>
+#include <kmdcodec.h>
 
 #include <qclipboard.h>
 #include <qhbox.h>
@@ -909,6 +910,19 @@ static const char * const kmailNewFeatures[] = {
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
 
+
+//-----------------------------------------------------------------------------
+//static
+QString KMReaderWin::newFeaturesMD5()
+{
+  QCString str;
+  for ( int i = 0 ; i < numKMailChanges ; ++i )
+    str += kmailChanges[i];
+  for ( int i = 0 ; i < numKMailNewFeatures ; ++i )
+    str += kmailNewFeatures[i];
+  KMD5 md5( str );
+  return md5.base64Digest();
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::displayAboutPage()

@@ -170,6 +170,9 @@ public:
   /** Is html mail to be supported? Takes into account override */
   bool htmlMail();
 
+  /** Returns the MD5 hash for the list of new features */
+  static QString newFeaturesMD5();
+
   /** Display the about page instead of a message */
   void displayAboutPage();
 
@@ -318,7 +321,7 @@ public slots:
   void slotShowMsgSrc();
   void slotSaveMsg();
   void slotSaveAttachments();
-  
+
   void slotMessageArrived( KMMessage *msg );
 
 protected slots:

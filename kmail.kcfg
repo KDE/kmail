@@ -48,12 +48,6 @@
       </entry>
     </group>
 
-    <group name="General">
-      <entry name="MsgDictSizeHint" type="Int">
-        <default>9973</default>
-      </entry>
-    </group>
-
     <group name="Groupware">
       <entry name="GroupwareEnabled" type="Bool">
         <label>Enable groupware functionality</label>
@@ -107,6 +101,17 @@
           "is considered a bad idea to set this, since it "
           "makes changing languages impossible. &lt;/p&gt;&lt;p&gt;So "
           "do not set this unless you have to.&lt;/p&gt;</whatsthis>
+      </entry>
+    </group>
+
+    <group name="Internal">
+      <entry name="MsgDictSizeHint" type="Int">
+        <default>9973</default>
+      </entry>
+      <entry name="PreviousNewFeaturesMD5" type="String">
+        <default></default>
+        <whatsthis>This value is used to decide whether the KMail "
+          "Introduction should be displayed.</whatsthis>
       </entry>
     </group>
 

@@ -3111,7 +3111,10 @@ void KMMainWidget::slotShowStartupFolder()
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
 	   this, SLOT( initializeFilterActions() ));
 
-  if (kmkernel->firstStart() || kmkernel->previousVersion() != KMAIL_VERSION) {
+  QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
+  if ( kmkernel->firstStart() ||
+       GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
+    GlobalSettings::setPreviousNewFeaturesMD5( newFeaturesMD5 );
     slotIntro();
     return;
   }
