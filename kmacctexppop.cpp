@@ -170,6 +170,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
       mUidsOfSeenMsgsDict.insert( *it, (const int *)idx );
     }
     mTimeOfSeenMsgsVector.clear();
+    mTimeOfSeenMsgsVector.reserve( timeOfSeenMsgs.size() );
     for ( QValueList<int>::ConstIterator it = timeOfSeenMsgs.begin();
           it != timeOfSeenMsgs.end(); ++it) {
       mTimeOfSeenMsgsVector.append( *it );
