@@ -586,6 +586,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
         //               << "!" << endl;
         mFolder->expunge();
         mFolder->setLastUid( 0 );
+        mFolder->clearUidMap();
       }
     } else
       kdDebug(5006) << "No uidvalidity available for folder "
