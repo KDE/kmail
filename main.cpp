@@ -55,10 +55,10 @@ bool checkNewMail = FALSE;
 bool firstStart = TRUE;
 bool shuttingDown = FALSE;
 bool checkingMail = FALSE;
-const char* aboutText = 
+const char* aboutText =
     "KMail [" KMAIL_VERSION "] by\n\n"
     "Stefan Taferner <taferner@kde.org>,\n"
-    "Markus Wübben <markus.wuebben@kde.org>\n\n" 
+    "Markus Wübben <markus.wuebben@kde.org>\n\n"
     "based on the work of:\n"
     "Lynx <lynx@topaz.hknet.com>,\n"
     "Stephan Meyer <Stephan.Meyer@pobox.com>,\n"
@@ -96,11 +96,11 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
   case QtWarningMsg:
     fprintf(stderr, "%s: %s\n", (const char*)app->appName(), msg.data());
     if (strncmp(aMsg,"KCharset:",9) != 0 &&
-	strncmp(aMsg,"QGManager:",10) != 0 && 
+	strncmp(aMsg,"QGManager:",10) != 0 &&
 	strncmp(aMsg,"QPainter:",9) != 0 &&
 	strncmp(aMsg,"QPixmap:",8) != 0)
     {
-      KMsgBox::message(NULL, appName+" "+i18n("warning"), msg.data(), 
+      KMsgBox::message(NULL, appName+" "+i18n("warning"), msg.data(),
 		       KMsgBox::EXCLAMATION);
     }
     else kdebug(KDEBUG_INFO, 0, msg);
@@ -156,13 +156,13 @@ static void testDir(const char *_name)
 {
   DIR *dp;
   QString c = getenv("HOME");
-  if(c.isEmpty()) 
+  if(c.isEmpty())
     {
       KMsgBox::message(0,i18n("KMail notification"),
 		       i18n("$HOME is not set!\nKMail cannot start without it.\n"));
       exit(-1);
     }
-		       
+		
   c += _name;
   dp = opendir(c.data());
   if (dp == NULL) ::mkdir(c.data(), S_IRWXU);
@@ -254,7 +254,7 @@ static void initFolders(KConfig* cfg)
   //if (name.isEmpty()) name = getenv("MAIL");
 
   if (name.isEmpty()) name = "inbox";
-  
+
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(name);
   // inboxFolder->open();
 
@@ -288,7 +288,7 @@ static void init(int& argc, char *argv[])
 
   testDir("/.kde");
   testDir("/.kde/share");
-  testDir("/.kde/share/config");  
+  testDir("/.kde/share/config");
   testDir("/.kde/share/apps");
   testDir("/.kde/share/apps/kmail");
 
@@ -430,15 +430,29 @@ main(int argc, char *argv[])
   if (!mailto)
   {
 
-    if(kapp->isRestored())
-      RESTORE(KMMainWin)
-	else 
-	  {
-	  mainWin = new KMMainWin;
-	  assert( mainWin != NULL);
-	  mainWin->show();  
+      if (kapp->isRestored()){
+	  int n = 1;
+	  while (KTMainWindow::canBeRestored(n)){
+	      //only restore main windows! (Matthias);
+	      if (KTMainWindow::classNameOfToplevel(n) == "KMMainWin")
+		  (new KMMainWin)->restore(n);
+	      n++;
 	  }
+      } else {
+ 	  mainWin = new KMMainWin;
+ 	  assert( mainWin != NULL);
+ 	  mainWin->show();
+      }
   }
+//   if(kapp->isRestored())
+//       RESTORE(KMMainWin)
+// 	else
+// 	  {
+// 	  mainWin = new KMMainWin;
+// 	  assert( mainWin != NULL);
+// 	  mainWin->show();
+// 	  }
+//   }
 
   if (checkNewMail) acctMgr->checkMail();
   recoverDeadLetters();
