@@ -863,7 +863,7 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 {
   if (idx < 0)
     idx = aMsg->parent()->find( aMsg );
-  if (idx >= 0)
+  if (idx >= 0 && !mQuiet)
     emit msgHeaderChanged(this, idx);
    else
      mChanged = TRUE;
