@@ -1181,8 +1181,7 @@ void NetworkPage::ReceivingTab::slotAddAccount() {
   }
 
   KMAccount *account
-    = kmkernel->acctMgr()->create( QString::fromLatin1( accountType ),
-				 i18n("Unnamed") );
+    = kmkernel->acctMgr()->create( QString::fromLatin1( accountType ) );
   if ( !account ) {
     // ### FIXME: Give the user more information. Is this error
     // recoverable?

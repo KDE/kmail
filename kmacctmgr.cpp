@@ -241,19 +241,19 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id
     id = createId();
 
   if (aType == "local")
-    act = new KMAcctLocal(this, aName, id);
+    act = new KMAcctLocal(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
 
   if (aType == "maildir")
-    act = new KMAcctMaildir(this, aName, id);
+    act = new KMAcctMaildir(this, aName.isEmpty() ? i18n("Local Account") : aName, id);
 
   else if (aType == "pop")
-    act = new KMAcctExpPop(this, aName, id);
+    act = new KMAcctExpPop(this, aName.isEmpty() ? i18n("POP Account") : aName, id);
 
   else if (aType == "imap")
-    act = new KMAcctImap(this, aName, id);
+    act = new KMAcctImap(this, aName.isEmpty() ? i18n("IMAP Account") : aName, id);
 
   else if (aType == "cachedimap")
-    act = new KMAcctCachedImap(this, aName, id);
+    act = new KMAcctCachedImap(this, aName.isEmpty() ? i18n("Disconnected IMAP") : aName, id);
 
   if (act)
   {
