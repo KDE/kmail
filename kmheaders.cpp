@@ -1848,12 +1848,12 @@ void KMHeaders::applyFiltersOnMsg()
 #else
   int contentX, contentY;
   KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
- 
+
   KMMessageList* msgList = selectedMsgs();
   if (msgList->isEmpty())
     return;
   finalizeMove( nextItem, contentX, contentY );
-  
+
   CREATE_TIMER(filter);
   START_TIMER(filter);
 
@@ -2788,12 +2788,11 @@ void KMHeaders::slotRMB()
     mOwner->watchThreadAction()->plug(menu);
     mOwner->ignoreThreadAction()->plug(menu);
   }
-  
+
 
 
   if ( !out_folder ) {
     menu->insertSeparator();
-    //mOwner->action("apply_filters")->plug(menu);  //this is now a submenu in apply_filter_actions
     mOwner->filterMenu()->plug( menu ); // Create Filter menu
     mOwner->action("apply_filter_actions")->plug(menu);
   }
@@ -3324,7 +3323,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
     Q_INT32 deleted_count = 0;
     bool unread_exists = false;
-    bool jumpToUnread = (GlobalSettings::actionEnterFolder() == 
+    bool jumpToUnread = (GlobalSettings::actionEnterFolder() ==
                          GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew) ||
                         forceJumpToUnread;
     QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
@@ -3622,8 +3621,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 s.enqueue(new_kci);
             // we always jump to new messages, but we only jump to
             // unread messages if we are told to do so
-            if ( ( mFolder->getMsgBase(new_kci->id())->isNew() && 
-                   GlobalSettings::actionEnterFolder() == 
+            if ( ( mFolder->getMsgBase(new_kci->id())->isNew() &&
+                   GlobalSettings::actionEnterFolder() ==
                    GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
                  ( mFolder->getMsgBase(new_kci->id())->isUnread() &&
                    jumpToUnread ) )
@@ -3687,8 +3686,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         if (unread_exists) {
             KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
             while (item) {
-              if ( ( mFolder->getMsgBase(item->msgId())->isNew() && 
-                     GlobalSettings::actionEnterFolder() == 
+              if ( ( mFolder->getMsgBase(item->msgId())->isNew() &&
+                     GlobalSettings::actionEnterFolder() ==
                      GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
                    ( mFolder->getMsgBase(item->msgId())->isUnread() &&
                      jumpToUnread ) )

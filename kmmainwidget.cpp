@@ -2192,11 +2192,6 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
 
-  //select all now in KMReaderWin::selectAllAction()
-  //(void) new KAction( i18n("Select Message &Text"),
-  //	      CTRL+SHIFT+Key_A, mMsgView,
-  //	      SLOT(selectAll()), actionCollection(), "mark_all_text" );
-
   //----- Folder Menu
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, this,
 		      SLOT(slotAddFolder()), actionCollection(), "new_folder" );
@@ -2665,15 +2660,6 @@ void KMMainWidget::setupActions()
                       "kmail_configure_kmail" );
 
   KStdAction::undo(this, SLOT(slotUndo()), actionCollection(), "kmail_undo");
-//  (void) new KAction( i18n("&Undo"), 0, this,
-// 		      SLOT(slotUndo()), actionCollection(),
-//		      "kmail_undo" );
-
-  //copy now defined in KMReaderWin::copyAction()
-  //KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
-//  (void) new KAction( i18n("&Copy"), CTRL+Key_C, mMsgView,
-// 		      SLOT(slotCopySelectedText()), actionCollection(),
-//		      "kmail_copy" );
 
   KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 
@@ -2917,7 +2903,7 @@ void KMMainWidget::updateMessageActions()
     }
 
     mApplyAllFiltersAction->setEnabled(count);
-    mApplyFilterActionsMenu->setEnabled(count/* && (mApplyFilterActionsMenu->popupMenu()->count()>1)*/);
+    mApplyFilterActionsMenu->setEnabled(count);
 }
 
 // This needs to be updated more often, so it is in its method.
