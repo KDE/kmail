@@ -2481,7 +2481,8 @@ void KMMainWidget::updateMessageActions()
     replyAllAction()->setEnabled( single_actions );
     replyListAction()->setEnabled( single_actions );
     redirectAction()->setEnabled( single_actions );
-    sendAgainAction->setEnabled( single_actions );
+    sendAgainAction->setEnabled( single_actions &&
+                                 mHeaders->currentMsg()->isSent() );
     printAction()->setEnabled( single_actions );
     saveAsAction->setEnabled( mass_actions );
     viewSourceAction()->setEnabled( single_actions );
