@@ -1479,7 +1479,7 @@ bool KMComposeWin::applyChanges(void)
             + "</b></qt>" ),
           i18n("Signature Warning"),
           KGuiItem( i18n("&Sign All Parts") ),
-          KGuiItem( i18n("Send &as is") ) );
+          KGuiItem( i18n("Send &as Is") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1541,7 +1541,7 @@ bool KMComposeWin::applyChanges(void)
                              "<p>Should this message also be "
                              "encrypted?</p></qt>"),
                         i18n("Encrypt Message?"),
-                        KGuiItem( i18n("Sign and &Encrypt") ),
+                        KGuiItem( i18n("Sign && &Encrypt") ),
                         KGuiItem( i18n("&Sign Only") ) );
         else
           ret = KMessageBox::questionYesNoCancel( this,
@@ -1592,7 +1592,7 @@ bool KMComposeWin::applyChanges(void)
             + "</b></qt>" ),
           i18n("Encryption Warning"),
           KGuiItem( i18n("&Encrypt All Parts") ),
-          KGuiItem( i18n("Send &as is") ) );
+          KGuiItem( i18n("Send &as Is") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
