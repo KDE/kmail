@@ -11,6 +11,7 @@
 #include <config.h>
 #include <sys/types.h>
 #include "kmfoldernode.h"
+#include "kmfoldertype.h"
 #include "kmmsginfo.h"
 #include "kmmsglist.h"
 #include "kmglobal.h"
