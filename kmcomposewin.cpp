@@ -1365,11 +1365,13 @@ QCString KMComposeWin::pgpProcessedMsg(void)
     }
     else if( status == -1 )
     { // warn the user that there are conflicting encryption preferences
+      kernel->kbp()->idle();
       int ret =
         KMessageBox::warningYesNoCancel( this,
                                          "There are conflicting encryption "
                                          "preferences!\n\n"
                                          "Should this message be encrypted?" );
+      kernel->kbp()->busy();
       if( ret == KMessageBox::Cancel )
         return QCString();
       doEncrypt = ( ret == KMessageBox::Yes );
@@ -2283,7 +2285,8 @@ void KMComposeWin::slotAppendSignature()
     /* actually "\n-- \n" (note the space) is a convention for attaching
     signatures and we should respect it, unless the user has already done so. */
     mEditor->sync();
-    if (!sigText.startsWith("-- \n")) mEditor->append("-- ");
+    if (!sigText.startsWith("-- \n") && (sigText.find("\n-- \n") == -1))
+      mEditor->append("-- ");
     mEditor->append(sigText);
     mEditor->update();
     mEditor->setModified(mod);
