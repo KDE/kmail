@@ -461,7 +461,7 @@ static void init(int& argc, char *argv[])
   identity = new KMIdentity;
 
   cfg->setGroup("General");
-  firstStart = cfg->readBoolEntry("first-start", TRUE);
+  firstStart = cfg->readBoolEntry("first-start", true);
   foldersPath = cfg->readEntry("folders", "");
   acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
 

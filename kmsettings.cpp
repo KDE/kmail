@@ -501,10 +501,10 @@ void KMSettings::createTabComposer(QWidget *parent)
   // set values
   config->setGroup("Composer");
   autoAppSignFile->setChecked(stricmp(config->readEntry("signature"),"auto")==0);
-  wordWrap->setChecked(config->readNumEntry("word-wrap",1));
+  wordWrap->setChecked(config->readBoolEntry("word-wrap",true));
   wrapColumnEdit->setText(config->readEntry("break-at","80"));
   monospFont->setChecked(stricmp(config->readEntry("font","variable"),"fixed")==0);
-  pgpAutoSign->setChecked(config->readNumEntry("pgp-auto-sign",0));
+  pgpAutoSign->setChecked(config->readBoolEntry("pgp-auto-sign",false));
 
   i = msgSender->sendImmediate();
   sendNow->setChecked(i);
@@ -551,7 +551,7 @@ void KMSettings::createTabMisc(QWidget *parent)
 
   //---------- set values
   config->setGroup("General");
-  emptyTrashOnExit->setChecked(config->readNumEntry("empty-trash-on-exit",0));
+  emptyTrashOnExit->setChecked(config->readBoolEntry("empty-trash-on-exit",false));
   sendOnCheck->setChecked(config->readBoolEntry("sendOnCheck",false));
 
   //---------- here we go
@@ -830,7 +830,7 @@ void KMSettings::doApply()
   //----- misc
   config->setGroup("General");
   config->writeEntry("empty-trash-on-exit", emptyTrashOnExit->isChecked());
-  config->writeEntry("first-start", FALSE);
+  config->writeEntry("first-start", false);
   config->writeEntry("sendOnCheck",sendOnCheck->isChecked());
 
   //-----
