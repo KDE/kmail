@@ -197,7 +197,7 @@ signals:
    * from the ctor of the item, at which point the building of the item
    * is not yet far enough along to update the quick search, which is 
    * what is connected to this signal. */
-  virtual void msgAddedToListView( KMail::HeaderItem* );
+  virtual void msgAddedToListView( QListViewItem* );
 
 public slots:
   /** For when a list view item has been double clicked */
