@@ -18,6 +18,7 @@
 
 #include <kapp.h>
 #include <kconfig.h>
+#include <khtml_part.h>
 
 // we need access to the protected member DwBody::DeleteBodyParts()...
 #define protected public
@@ -577,6 +578,15 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
                + codec->toUnicode(pgp->backmatter());
       } else {
         result = codec->toUnicode(cStr);
+      }
+      if (qstrnicmp(typeStr(),"text/html",9) == 0)
+      {
+        KHTMLPart htmlPart;
+        htmlPart.begin();
+        htmlPart.write(result);
+        htmlPart.end();
+        htmlPart.selectAll();
+        result = htmlPart.selectedText();
       }
     }
 
