@@ -1003,7 +1003,9 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
       debug ("new message should be current!");
       setCurrentMsg( mFolder->find( curMsg ) );
       setSelected( currentItem(), TRUE );
-    }
+      // sanders QListView isn't emitting a currentChanged signal?
+       highlightMessage( currentItem() );
+     }
     else
       emit selected( 0 );
     setContentsPos( contentX, contentY );
@@ -1229,7 +1231,6 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
   int unread = mFolder->countUnread();
   if (((unread == 0) && foundUnreadMessage) ||
       ((unread > 0) && !foundUnreadMessage)) {
-    //  if (mFolder.countUnread() > 0!onlyNew)
     mFolder->correctUnreadMsgsCount();
     debug( "count corrupted" );
   }
