@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="23" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="24" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -10,6 +10,7 @@
    <Action name="save_in_drafts" />
    <Separator/>
    <Action name="insert_file" />
+   <Action name="insert_file_recent" />
    <Action name="file_print" />
    <Separator/>
    <Action name="file_close" />

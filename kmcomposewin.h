@@ -64,6 +64,7 @@ class KToolBar;
 class KToggleAction;
 class KSelectColorAction;
 class KURL;
+class KRecentFilesAction;
 class SpellingFilter;
 class MessageComposer;
 
@@ -405,6 +406,7 @@ public slots:
    */
   void slotPrint();
   void slotAttachFile();
+  void slotInsertRecentFile(const KURL&);
   void slotSendNow();
   void slotSendLater();
   /**
@@ -823,6 +825,7 @@ protected:
 
   KAction *mAttachPK, *mAttachMPK,
           *mAttachRemoveAction, *mAttachSaveAction, *mAttachPropertiesAction;
+  KRecentFilesAction *mRecentAction;
 
   KToggleAction *mSignAction, *mEncryptAction, *mRequestMDNAction;
   KToggleAction *mUrgentAction, *mAllFieldsAction, *mFromAction;

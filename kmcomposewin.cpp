@@ -90,6 +90,7 @@ using KRecentAddress::RecentAddresses;
 #include <kapplication.h>
 #include <kstatusbar.h>
 #include <kaction.h>
+#include <kstdaction.h>
 #include <kdirwatch.h>
 #include <kstdguiitem.h>
 #include <kiconloader.h>
@@ -933,6 +934,13 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
+  mRecentAction = new KRecentFilesAction (i18n("&Insert File Recent"),
+		      "fileopen", 0,
+		      this,  SLOT(slotInsertRecentFile(const KURL&)),
+		      actionCollection(), "insert_file_recent");
+					
+  mRecentAction->loadEntries( KMKernel::config() );
+
   (void) new KAction (i18n("&Address Book"), "contents",0,
                       this, SLOT(slotAddrBook()),
                       actionCollection(), "addressbook");
@@ -2365,7 +2373,39 @@ void KMComposeWin::slotInsertFile()
   if (!fdlg.exec()) return;
 
   KURL u = fdlg.selectedURL();
+  mRecentAction->addURL(u);
+  // Prevent race condition updating list when multiple composers are open
+  {
+    KConfig *config = KMKernel::config();
+    KConfigGroupSaver saver( config, "Composer" );
+    QString encoding = KGlobal::charsets()->encodingForName(combo->currentText()).latin1();
+    QStringList urls = config->readListEntry( "recent-urls" );
+    QStringList encodings = config->readListEntry( "recent-encodings" );
+    // Prevent config file from growing without bound
+    // Would be nicer to get this constant from KRecentFilesAction
+    uint mMaxRecentFiles = 30;
+    while (urls.count() > mMaxRecentFiles)
+      urls.erase( urls.fromLast() );
+    while (encodings.count() > mMaxRecentFiles)
+      urls.erase( encodings.fromLast() );
+    // sanity check
+    if (urls.count() != encodings.count()) {
+      urls.clear();
+      encodings.clear();
+    }
+    urls.prepend( u.prettyURL() );
+    encodings.prepend( encoding );
+    config->writeEntry( "recent-urls", urls );
+    config->writeEntry( "recent-encodings", encodings );
+    mRecentAction->saveEntries( config );
+  }
+  slotInsertRecentFile(u);
+}
 
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotInsertRecentFile(const KURL& u)
+{
   if (u.fileName().isEmpty()) return;
 
   KIO::Job *job = KIO::get(u);
@@ -2373,8 +2413,18 @@ void KMComposeWin::slotInsertFile()
   ld.url = u;
   ld.data = QByteArray();
   ld.insert = true;
-  ld.encoding = KGlobal::charsets()->encodingForName(
-    combo->currentText()).latin1();
+  // Get the encoding previously used when inserting this file
+  {
+    KConfig *config = KMKernel::config();
+    KConfigGroupSaver saver( config, "Composer" );
+    QStringList urls = config->readListEntry( "recent-urls" );
+    QStringList encodings = config->readListEntry( "recent-encodings" );
+    int index = urls.findIndex( u.prettyURL() );
+    if (index != -1) {
+      QString encoding = encodings[ index ];
+      ld.encoding = encoding.latin1();
+    }
+  }
   mMapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
