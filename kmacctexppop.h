@@ -102,15 +102,16 @@ protected:
   unsigned int mFilterOnServerCheckSize;
 
   KIO::SimpleJob *job;
-  QStringList idsOfMsgsPendingDownload; //ID of messages which should be downloaded
-  QValueList<int> lensOfMsgsPendingDownload; //length of messages which should be downloaded
+  //Map of ID's vs. sizes of messages which should be downloaded
+  QMap<QString, int> mMsgsPendingDownload;
 
   QPtrList<KMPopHeaders> headersOnServer;
   QPtrListIterator<KMPopHeaders> headerIt;
   bool headers;
-  QStringList headerDeleteUids;
-  QStringList headerDownUids;
-  QStringList headerLaterUids;
+
+  QMap<QString, bool> mHeaderDeleteUids;
+  QMap<QString, bool> mHeaderDownUids;
+  QMap<QString, bool> mHeaderLaterUids;
 
 
   QStringList idsOfMsgs; //used for ids and for count

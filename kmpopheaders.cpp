@@ -27,7 +27,7 @@ KMPopHeaders::~KMPopHeaders(){
 }
 
 /** No descriptions */
-KMPopHeaders::KMPopHeaders(QString aId, QString aUid, KMPopFilterAction aAction)
+KMPopHeaders::KMPopHeaders(const QString& aId, const QString& aUid, KMPopFilterAction aAction)
   : mAction(aAction),
     mId(aId),
     mUid(aUid),

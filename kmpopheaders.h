@@ -24,7 +24,7 @@ public:
   KMPopHeaders();
   ~KMPopHeaders();
   /** constructor */
-  KMPopHeaders(QString aId, QString aUid, KMPopFilterAction aAction);
+  KMPopHeaders(const QString& aId, const QString& aUid, KMPopFilterAction aAction);
 
   /** returns the id of the message */
   QString id() const;
