@@ -1465,6 +1465,9 @@ void KMMoveCommand::execute()
              this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
 
   }
+   for ( msgBase=mMsgList.first(); msgBase; msgBase=mMsgList.next() ) {
+     mLostBoys.append( msgBase->getMsgSerNum() );
+   }
 
   for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next()) {
     KMFolder *srcFolder = msgBase->parent();
@@ -1487,7 +1490,6 @@ void KMMoveCommand::execute()
     }
 
     if (mDestFolder) {
-      mLostBoys.append(msg->getMsgSerNum());
       if (mDestFolder->folderType() == KMFolderTypeImap) {
         /* If we are moving to an imap folder, connect to it's completed
          * signal so we notice when all the mails should have showed up in it
