@@ -113,11 +113,6 @@ int HeaderItem::msgId() const
 }
 
 // Update this item to summarise a new folder and message
-void HeaderItem::reset( int aMsgId )
-{
-  mMsgId = aMsgId;
-  irefresh();
-}
 
 //Opens all children in the thread
 void HeaderItem::setOpenRecursive( bool open )

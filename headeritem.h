@@ -151,9 +151,6 @@ public:
   // Return the msgId of the message associated with this item
   int msgId() const;
 
-  // Update this item to summarise a new folder and message
-  void reset( int aMsgId );
-
   //Opens all children in the thread
   void setOpenRecursive( bool open );
 

@@ -44,7 +44,6 @@
 class KMHeaders;
 
 /* A class for asynchronous filtering of messages */
-
 namespace KMail {
 
 class ActionScheduler : public QObject
