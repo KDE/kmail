@@ -66,9 +66,11 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   if ( registeredTools < 1 )
     toolList.append( SpamToolConfig( "&SpamAssassin", "spamassassin -V",
                       "http://spamassassin.org", "SpamAssassin Check",
-                      "spamassassin -L", "sa-learn --spam --single",
-                      "sa-learn --ham --single", "X-Spam-Flag", "yes",
-                      false, false ) );
+                      "spamassassin -L", 
+                      "sa-learn -L --spam --no-rebuild --single",
+                      "sa-learn -L --ham --no-rebuild --single", 
+                      "X-Spam-Flag", "yes",
+                      false, true ) );
   // read the configuration from the file
   for (int i = 1; i <= registeredTools; i++)
   {
@@ -79,8 +81,8 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
     QString url = toolConfig.readEntry( "URL" );
     QString filterName = toolConfig.readEntry( "PipeFilterName" );
     QString detectCmd = toolConfig.readEntry( "PipeCmdDetect" );
-    QString spamCmd = toolConfig.readEntry( "PipeCmdSpam" );
-    QString hamCmd = toolConfig.readEntry( "PipeCmdHam" );
+    QString spamCmd = toolConfig.readEntry( "ExecCmdSpam" );
+    QString hamCmd = toolConfig.readEntry( "ExecCmdHam" );
     QString header = toolConfig.readEntry( "DetectionHeader" );
     QString pattern = toolConfig.readEntry( "DetectionPattern" );
     bool useRegExp  = toolConfig.readBoolEntry( "UseRegExp" );
@@ -227,7 +229,7 @@ void AntiSpamWizard::accept()
       if ( programsPage->isProgramSelected( (*it).getVisibleName() )
           && (*it).useBayesFilter() )
       {
-        KMFilterAction* classSpamFilterAction = dict["filter app"]->create();
+        KMFilterAction* classSpamFilterAction = dict["execute"]->create();
         classSpamFilterAction->argsFromString( (*it).getSpamCmd() );
         classSpamFilterActions->append( classSpamFilterAction );
       }
@@ -260,7 +262,7 @@ void AntiSpamWizard::accept()
       if ( programsPage->isProgramSelected( (*it).getVisibleName() )
           && (*it).useBayesFilter() )
       {
-        KMFilterAction* classHamFilterAction = dict["filter app"]->create();
+        KMFilterAction* classHamFilterAction = dict["execute"]->create();
         classHamFilterAction->argsFromString( (*it).getHamCmd() );
         classHamFilterActions->append( classHamFilterAction );
       }

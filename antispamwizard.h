@@ -73,12 +73,12 @@ namespace KMail {
     URL=http://spamassassin.org
     PipeFilterName=SpamAssassin Check
     PipeCmdDetect=spamassassin -L
-    PipeCmdSpam=sa-learn --spam --single
-    PipeCmdHam=sa-learn --ham --single
+    ExecCmdSpam=sa-learn --spam --no-rebuild --single
+    ExecCmdHam=sa-learn --ham --no-rebuild --single
     DetectionHeader=X-Spam-Flag
     DetectionPattern=yes
     UseRegExp=0
-    SupportsBayes=0
+    SupportsBayes=1
     </pre>
     The name of the config file is kmail.antispamrc
     and it's expected in the config dir of KDE.

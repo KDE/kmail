@@ -7,12 +7,12 @@ Executable=spamassassin -V
 URL=http://spamassassin.org
 PipeFilterName=SpamAssassin Check
 PipeCmdDetect=spamassassin -L
-PipeCmdSpam=sa-learn --spam --single
-PipeCmdHam=sa-learn --ham --single
+ExecCmdSpam=sa-learn -L --spam --no-rebuild --single
+ExecCmdHam=sa-learn -L --ham --no-rebuild --single
 DetectionHeader=X-Spam-Flag
 DetectionPattern=yes
 UseRegExp=0
-SupportsBayes=0
+SupportsBayes=1
 
 [Spamtool #2]
 VisibleName=&Bogofilter
@@ -20,8 +20,8 @@ Executable=bogofilter -V
 URL=http://bogofilter.sourceforge.net
 PipeFilterName=Bogofilter Check
 PipeCmdDetect=bogofilter -p -e
-PipeCmdSpam=bogofilter -S
-PipeCmdHam=bogofilter -N
+ExecCmdSpam=bogofilter -S
+ExecCmdHam=bogofilter -N
 DetectionHeader=X-Bogosity
 DetectionPattern=yes
 UseRegExp=0
