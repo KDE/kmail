@@ -2600,12 +2600,12 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
   assert( cssHelper() );
 
   QString htmlStr;
-  const QString normalStartTag = cssHelper()->nonQuotedFontTag() +'\n';
+  const QString normalStartTag = cssHelper()->nonQuotedFontTag();
   QString quoteFontTag[3];
   for ( int i = 0 ; i < 3 ; ++i )
-    quoteFontTag[i] = cssHelper()->quoteFontTag( i ) + '\n';
-  const QString normalEndTag = "</div>\n";
-  const QString quoteEnd = "</div>\n";
+    quoteFontTag[i] = cssHelper()->quoteFontTag( i );
+  const QString normalEndTag = "</div>";
+  const QString quoteEnd = "</div>";
 
   unsigned int pos, beg;
   const unsigned int length = s.length();
@@ -2671,10 +2671,10 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
       else
         htmlStr += QString( "<div dir=\"ltr\">" );
       htmlStr += LinkLocator::convertToHtml( line, true /* preserve blanks */);
-      htmlStr += QString( "</div>\n" );
+      htmlStr += QString( "</div>" );
     }
     else
-      htmlStr += "<br>\n";
+      htmlStr += "<br>";
   } /* while() */
 
   /* really finish the last quotelevel */
