@@ -219,7 +219,7 @@ public:
     if( column == mPaintInfo->dateCol ) {
       QFont f = p->font();
       f.setFamily("Courier");
-      f.setPointSize( f.pointSize() + 4 );
+      f.setPointSize( f.pointSize() + 2 );
       p->setFont(f);
     }
 #endif
@@ -281,6 +281,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.sizeCol = mPaintInfo.dateCol + 1;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
+  setShowSortIndicator(true);
+
   addColumn( i18n("Subject"), 310 );
   addColumn( i18n("Sender"), 170 );
   addColumn( i18n("Date"), 170 );
@@ -636,11 +638,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       showingSize = false;
     }
   }
-
-  if (!mSortDescending)
-    setColumnText( mSortCol, *up, columnText( mSortCol ));
-  else
-    setColumnText( mSortCol, *down, columnText( mSortCol ));
 
   setUpdatesEnabled(autoUpd);
   viewport()->setUpdatesEnabled(autoUpd);
@@ -2102,11 +2099,6 @@ void KMHeaders::setSorting( int column, bool ascending )
     if (mPaintInfo.status)
       colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.subCol, colText);
-    
-    if (ascending)
-      setColumnText( column, *up, columnText(column));
-    else
-      setColumnText( column, *down, columnText( column ));
   }
   KMHeadersInherited::setSorting( column, ascending );
 }
