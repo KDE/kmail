@@ -180,7 +180,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 
   connect(this, SIGNAL(user1Clicked()), SLOT(slotSearch()));
   connect(this, SIGNAL(user2Clicked()), SLOT(slotStop()));
-  connect(this, SIGNAL(finished()), this, SLOT(slotDelayedDestruct()));
+  connect(this, SIGNAL(finished()), this, SLOT(deleteLater()));
 }
 
 //-----------------------------------------------------------------------------
