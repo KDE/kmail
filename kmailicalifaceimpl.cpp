@@ -345,11 +345,11 @@ QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& conten
   QMap<QString, bool> map;
   
   // Add the default one
-  KMFolder* f = folderFromType( type, QString::null );
+  KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f )
     map.insert( f->location(), !f->isReadOnly() );
 
-  // get ehe extra ones
+  // get the extra ones
   const KMail::FolderContentsType t = folderContentsType( contentsType );
   QDictIterator<ExtraFolder> it( mExtraFolders );
   for ( ; it.current(); ++it ){
