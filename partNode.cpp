@@ -240,12 +240,15 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
                                  QString labelDescr,
                                  QString labelCntType,
                                  QString labelEncoding,
-                                 KIO::filesize_t size )
+                                 KIO::filesize_t size,
+                                 bool revertOrder )
 {
   if( parentItem || mimePartTree ) {
 
     if( mNext )
-        mNext->fillMimePartTree( parentItem, mimePartTree );
+        mNext->fillMimePartTree( parentItem, mimePartTree,
+                                 QString::null, QString::null, QString::null, 0,
+                                 revertOrder );
 
     QString cntDesc, cntType, cntEnc;
     KIO::filesize_t cntSize = 0;
@@ -321,7 +324,8 @@ kdDebug(5006) << "                Content-Type: " << cntType << endl;
                                                   cntDesc,
                                                   cntType,
                                                   cntEnc,
-                                                  cntSize );
+                                                  cntSize,
+                                                  revertOrder );
     else if( mimePartTree )
       mMimePartTreeItem = new KMMimePartTreeItem( *mimePartTree,
                                                   this,
@@ -331,7 +335,9 @@ kdDebug(5006) << "                Content-Type: " << cntType << endl;
                                                   cntSize );
     mMimePartTreeItem->setOpen( true );
     if( mChild )
-        mChild->fillMimePartTree( mMimePartTreeItem, 0 );
+        mChild->fillMimePartTree( mMimePartTreeItem, 0,
+                                  QString::null, QString::null, QString::null, 0,
+                                  revertOrder );
 
   }
 }

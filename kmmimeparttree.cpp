@@ -243,13 +243,20 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem& parent,
                                         const QString & description,
                                         const QString & mimetype,
                                         const QString & encoding,
-                                        KIO::filesize_t size )
+                                        KIO::filesize_t size,
+                                        bool revertOrder )
   : QListViewItem( &parent, description,
 		   QString::null, // set by setIconAndTextForType()
 		   encoding,
 		   KIO::convertSize( size ) ),
     mPartNode( node )
 {
+  if( revertOrder && nextSibling() ){
+    QListViewItem* sib = nextSibling();
+    while( sib->nextSibling() )
+      sib = sib->nextSibling();
+    moveItem( sib );
+  }     
   if( node )
     node->setMimePartTreeItem( this );
   setIconAndTextForType( mimetype );

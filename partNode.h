@@ -232,7 +232,8 @@ public:
                            QString labelDescr    = QString::null,
                            QString labelCntType  = QString::null,
                            QString labelEncoding = QString::null,
-                           KIO::filesize_t size=0 );
+                           KIO::filesize_t size=0,
+                           bool revertOrder = false );
 
     void adjustDefaultType( partNode* node );
 

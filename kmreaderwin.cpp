@@ -229,9 +229,10 @@ bool KMReaderWin::foundMatchingCryptPlug( QString libName,
 void KMReaderWin::insertAndParseNewChildNode( KMReaderWin* reader,
                                               QCString* resultStringPtr,
                                               CryptPlugWrapper*     useThisCryptPlug,
-                                              partNode& node,
+                                              partNode& startNode,
                                               const char* content,
-                                              const char* cntDesc )
+                                              const char* cntDesc,
+                                              bool append )
 {
 //  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
   DwString cntStr( content );
@@ -247,14 +248,22 @@ void KMReaderWin::insertAndParseNewChildNode( KMReaderWin* reader,
     myBody->Headers().Parse();
   }
 
-//  node.setFirstChild(new partNode(false, myBody))->buildObjectTree( false );
+  partNode* parentNode = &startNode;
   partNode* newNode = new partNode(false, myBody);
-  newNode = node.setFirstChild( newNode );
+  if( append && parentNode->mChild ){
+    parentNode = parentNode->mChild;
+    while( parentNode->mNext )
+      parentNode = parentNode->mNext;
+    newNode = parentNode->setNext( newNode );
+  }else
+    newNode = parentNode->setFirstChild( newNode );
   newNode->buildObjectTree( false );
 
-  if( node.mimePartTreeItem() ) {
+  if( startNode.mimePartTreeItem() ) {
 kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
-    node.mChild->fillMimePartTree( node.mimePartTreeItem(), 0 );
+    newNode->fillMimePartTree( startNode.mimePartTreeItem(), 0,
+                               QString::null, QString::null, QString::null, 0,
+                               append );
 kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
   } else {
 kdDebug(5006) << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
@@ -264,7 +273,7 @@ kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
   parseObjectTree( reader,
                    resultStringPtr,
                    useThisCryptPlug,
-                   node.mChild );// showOneMimePart, keepEncryptions, includeSignatures );
+                   newNode );// showOneMimePart, keepEncryptions, includeSignatures );
 kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
 }
 
@@ -498,16 +507,118 @@ kdDebug(5006) << "default " << endl;
                  (reader->mAttachmentStyle == SmartAttmnt &&
                   !curNode->isAttachment()) ||
                   (reader->mAttachmentStyle == IconicAttmnt &&
-                   reader->mIsFirstTextPart) || showOneMimePart )
+                   reader->mIsFirstTextPart) ||
+                   showOneMimePart )
               {
                 if (reader) reader->mIsFirstTextPart = false;
                 if( reader && curNode->isAttachment() && !showOneMimePart )
                   reader->queueHtml("<br><hr><br>");
-                if( reader )
-                  reader->writeBodyStr( cstr.data(),
-                                        reader->mCodec,
-                                        curNode->trueFromAddress(),
-                                        &isInlineSigned, &isInlineEncrypted);
+                if( reader ){
+                  // process old style not-multipart Mailman messages to
+                  // enable verification of the embedded messages' signatures
+                  if( DwMime::kSubtypePlain == curNode_replacedSubType &&
+                      curNode->dwPart() &&
+                      curNode->dwPart()->hasHeaders() ) {
+                    DwHeaders& headers( curNode->dwPart()->Headers() );
+                    bool bIsMailman = headers.HasField("X-Mailman-Version");
+                    if( !bIsMailman ){
+                      if( headers.HasField("X-Mailer") )
+                        bIsMailman = 
+                          ( 0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
+                                   .find("MAILMAN", 0, false) );
+                    }
+                    if( bIsMailman ){
+                      const QCString delim1( "--__--__--\n\nMessage:");
+                      const QCString delim2( "--__--__--\r\n\r\nMessage:");
+                      const QCString delimZ2("--__--__--\n\n_____________");
+                      const QCString delimZ1("--__--__--\r\n\r\n_____________");
+                      QCString partStr, digestHeaderStr;
+                      int thisDelim = cstr.find(delim1, 0, false);
+                      if( -1 == thisDelim )
+                        thisDelim = cstr.find(delim2, 0, false);
+                      if( -1 == thisDelim ){
+kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter found." << endl;
+                      }else{
+                        int nextDelim = cstr.find(delim1, thisDelim, false);
+                        if( -1 == nextDelim )
+                          nextDelim = cstr.find(delim2, thisDelim, false);
+                        if( -1 == nextDelim )
+                          nextDelim = cstr.find(delimZ1, thisDelim, false);
+                        if( -1 == nextDelim )
+                          nextDelim = cstr.find(delimZ2, thisDelim, false);
+                        if( -1 < nextDelim ){
+kdDebug(5006) << "        processing old style Mailman digest" << endl;
+                          // at least one message found: build a mime tree
+                          digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
+                          digestHeaderStr += cstr.mid( 0, thisDelim );
+                          insertAndParseNewChildNode( reader,
+                                                      &resultString,
+                                                      useThisCryptPlug,
+                                                      *curNode,
+                                                      &*digestHeaderStr,
+                                                      "Digest Header", true );
+                          while( -1 < nextDelim ){
+kdDebug(5006) << "        embedded message found" << endl;
+                            int thisEoL = cstr.find("\nMessage:", thisDelim, false);
+                            if( -1 < thisEoL )
+                              thisDelim = thisEoL+1;
+                            else{
+                              thisEoL = cstr.find("\n_____________", thisDelim, false);
+                              if( -1 < thisEoL )
+                                thisDelim = thisEoL+1;
+                            }
+                            thisEoL = cstr.find('\n', thisDelim);
+                            if( -1 < thisEoL )
+                              thisDelim = thisEoL+1;
+                            else  
+                              thisDelim = thisDelim+1;
+                            //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
+                            //  ++thisDelim;
+                            partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
+                            partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
+                            insertAndParseNewChildNode( reader,
+                                                        &resultString,
+                                                        useThisCryptPlug,
+                                                        *curNode,
+                                                        &*partStr,
+                                                        "embedded message", true );
+                            thisDelim = nextDelim+1;
+                            nextDelim = cstr.find(delim1, thisDelim, false);
+                            if( -1 == nextDelim )
+                              nextDelim = cstr.find(delim2, thisDelim, false);
+                            if( -1 == nextDelim )
+                              nextDelim = cstr.find(delimZ1, thisDelim, false);
+                            if( -1 == nextDelim )
+                              nextDelim = cstr.find(delimZ2, thisDelim, false);
+                          }
+                          int thisEoL = cstr.find("_____________", thisDelim);
+                          if( -1 < thisEoL ){
+                            thisDelim = thisEoL;
+                            thisEoL = cstr.find('\n', thisDelim);
+                            if( -1 < thisEoL )
+                              thisDelim = thisEoL+1;
+                          }
+                          else
+                            thisDelim = thisDelim+1;
+                          partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
+                          partStr += cstr.mid( thisDelim );
+                          insertAndParseNewChildNode( reader,
+                                                      &resultString,
+                                                      useThisCryptPlug,
+                                                      *curNode,
+                                                      &*partStr,
+                                                      "Digest Footer", true );
+                          bDone = true;
+                        }
+                      }
+                    }
+                  }
+                  if( !bDone )
+                    reader->writeBodyStr( cstr.data(),
+                                          reader->mCodec,
+                                          curNode->trueFromAddress(),
+                                          &isInlineSigned, &isInlineEncrypted);
+                }
                 resultString = cstr;
                 bDone = true;
               }

@@ -189,7 +189,8 @@ public:
                                             CryptPlugWrapper*     useThisCryptPlug,
                                             partNode& node,
                                             const char* content,
-                                            const char* cntDesc );
+                                            const char* cntDesc,
+                                            bool append = false );
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
     //  Function is called internally by "parseMsg(KMMessage* msg)"

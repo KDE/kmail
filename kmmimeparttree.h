@@ -48,7 +48,8 @@ public:
                       const QString & labelDescr,
                       const QString & labelCntType  = QString::null,
                       const QString & labelEncoding = QString::null,
-                      KIO::filesize_t size=0  );
+                      KIO::filesize_t size=0,
+                      bool revertOrder = false );
   partNode* node() const { return mPartNode; }
 
 private:
