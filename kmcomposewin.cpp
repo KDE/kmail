@@ -680,7 +680,6 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aEdt->setBackgroundColor( backColor );
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
-    aEdt->setMaximumSize(1000, aLbl->height()+2);
     mEdtList.append(aEdt);
 
     mGrid->addWidget(aEdt, aRow, 1);
@@ -718,7 +717,6 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     //    aCbx->setBackgroundColor( backColor );
     aCbx->show();
     aCbx->setMinimumSize(100, aLbl->height()+2);
-    aCbx->setMaximumSize(1000, aLbl->height()+2);
 
     mGrid->addWidget(aCbx, aRow, 1);
     mGrid->addWidget(aChk, aRow, 2);
