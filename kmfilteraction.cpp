@@ -710,7 +710,6 @@ public:
 };
 
 
-// if you change this list, also update StatiCount
 static const KMMsgStatus stati[] =
 {
   KMMsgStatusFlag,
@@ -721,7 +720,7 @@ static const KMMsgStatus stati[] =
   KMMsgStatusOld,
   KMMsgStatusNew
 };
-static const int StatiCount = 7;
+static const int StatiCount = sizeof( stati ) / sizeof( KMMsgStatus );
 
 KMFilterAction* KMFilterActionSetStatus::newAction()
 {
