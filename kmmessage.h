@@ -306,6 +306,7 @@ public:
   /** Get or set the 'Cc' header field */
   virtual QString cc(void) const;
   virtual void setCc(const QString& aStr);
+  virtual QString ccStrip(void) const;
 
   /** Get or set the 'Bcc' header field */
   virtual QString bcc(void) const;

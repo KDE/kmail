@@ -501,6 +501,12 @@ QString KMMessage::formatString(const QString& aStr) const
       case 't':
         result += to();
         break;
+      case 'C':
+        result += stripEmailAddr(cc());
+        break;
+      case 'c':
+        result += cc();
+        break;
       case 'S':
         result += subject();
         break;
@@ -1937,6 +1943,13 @@ QString KMMessage::cc(void) const
 void KMMessage::setCc(const QString& aStr)
 {
   setHeaderField("Cc",aStr);
+}
+
+
+//-----------------------------------------------------------------------------
+QString KMMessage::ccStrip(void) const
+{
+  return stripEmailAddr(headerField("Cc"));
 }
 
 

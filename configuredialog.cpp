@@ -2531,6 +2531,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
 					     "%D=date, %S=subject, \n"
                                              "%e=sender's address, %F=sender's name, %f=sender's initials,\n"
                                              "%T=recipient's name, %t=recipient's name and address\n"
+                                             "%C=carbon copy names, %c=carbon copy names and addresses\n"
 					     "%%=percent sign, %_=space, "
 					     "%L=linebreak"), this ),
 			    0, 0, 0, 2 ); // row 0; cols 0..2
