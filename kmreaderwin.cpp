@@ -787,6 +787,18 @@ void KMReaderWin::parseMsg(void)
          .arg(cg.foreground().name())
          .arg(cg.foreground().name())
          .arg(cg.foreground().name()) + 
+         QString( "table.fancyHeaderDtls { width: 100%; "
+                                          "border-width: 0px; "
+                                          "align: left }\n"
+                  "th.fancyHeaderDtls { padding: 0px; "
+                                       "border-spacing: 0px; "
+                                       "text-align: left; "
+                                       "vertical-align: top; }\n"
+                  "td.fancyHeaderDtls { padding: 0px; "
+                                       "border-spacing: 0px; "
+                                       "text-align: left; "
+                                       "text-valign: top; "
+                                       "width: 100%; }\n" ) +
          "</style></head>" +
 		 // TODO: move these to stylesheet, too:
     ((mPrinting) ? QString("<body>") : QString("<body ") + bkgrdStr + ">" ));
@@ -1016,13 +1028,13 @@ QString KMReaderWin::writeMsgHeader()
     headerStr = QString("<div class=\"fancyHeaderSubj\">"
                         "<b>%5</b></div>"
                         "<div class=\"fancyHeaderDtls\">"
-                        "<table cellspacing=\"0\" cellpadding=\"4\">")
+                        "<table class=\"fancyHeaderDtls\">")
                        .arg(mMsg->subject().isEmpty()?
                             i18n("No Subject") :
                             strToHtml(mMsg->subject()));
 
     // from line
-    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2%3%4</td></tr>")
+    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2%3%4</td></tr>")
                             .arg(i18n("From: "))
                             .arg(KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE))
                             .arg((mVcnum < 0) ?
@@ -1035,20 +1047,20 @@ QString KMReaderWin::writeMsgHeader()
                                    ")"));
 
     // to line
-    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td></tr>")
+    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
                             .arg(i18n("To: "))
                             .arg(KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE)));
 
     // cc line, if any
     if (!mMsg->cc().isEmpty())
     {
-      headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td></tr>")
+      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
                               .arg(i18n("Cc: "))
                               .arg(KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE)));
     }
 
     // the date
-    headerStr.append(QString("<tr><th valign=\"top\" align=\"left\">%1</th><td valign=\"top\">%2</td></tr>")
+    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
                             .arg(i18n("Date: "))
                             .arg(strToHtml(mMsg->dateStr())));
     headerStr.append("</table></div>");
