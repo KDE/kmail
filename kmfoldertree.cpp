@@ -1274,8 +1274,8 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
                 emit folderDrop(fti->folder);
             } else {
                   KPopupMenu *menu = new KPopupMenu( this );
-                  menu->insertItem( i18n("Copy"), DRAG_COPY, 0 );
-                  menu->insertItem( i18n("Move"), DRAG_MOVE, 1 );
+                  menu->insertItem( i18n("Move"), DRAG_MOVE, 0 );
+                  menu->insertItem( i18n("Copy"), DRAG_COPY, 1 );
                   menu->insertSeparator();
                   menu->insertItem( i18n("Cancel"), DRAG_CANCEL, 3 );
                   int id = menu->exec( QCursor::pos(), 0 );
