@@ -1969,9 +1969,9 @@ void AppearancePage::LayoutTab::setup() {
 
   mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
 
-  int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
+  int windowLayout = geometry.readNumEntry( "windowLayout", 1 );
   if( windowLayout < 0 || windowLayout > 4 )
-      windowLayout = 0;
+      windowLayout = 1;
   mWindowLayoutBG->setButton( windowLayout );
 
   int num = geometry.readNumEntry( "showMIME", 1 );
