@@ -39,7 +39,8 @@
 // yes, this is this very header - but it tells dcopidl to include it
 // in _stub.cpp and _skel.cpp files, to get the definition of the structs.
 // ### dcopidlng bug: "" is copied verbatim...
-#include <kmailicalIface.h>
+// The kmail/ is so that it can be found by the resources easily
+#include <kmail/kmailicalIface.h>
 
 class KMailICalIface : virtual public DCOPObject
 {
