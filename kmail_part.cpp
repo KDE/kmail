@@ -44,6 +44,7 @@
 using KRecentAddress::RecentAddresses;
 
 #include <kapplication.h>
+#include <kparts/mainwindow.h>
 #include <kparts/genericfactory.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
@@ -201,15 +202,39 @@ void KMailPart::slotNameChanged( KMFolderTreeItem *fti )
   emit textChanged( fti->folder()->label() );
 }
 
+//-----------------------------------------------------------------------------
+
+// The sole purpose of the following class is to publicize the protected
+// method KParts::MainWindow::createGUI() since we need to call it so that
+// the toolbar is redrawn when necessary.
+// It can be removed once createGUI() has been made public _and_ we don't
+// longer rely on kdelibs 3.2.
+class KPartsMainWindowWithPublicizedCreateGUI : public KParts::MainWindow
+{
+public:
+  void createGUIPublic( KParts::Part *part ) {
+    createGUI( part );
+  }
+};
+
 void KMailPart::slotToolbarChanged()
 {
   kdDebug(5006) << "KMailPart - need to reload the toolbar" << endl;
-//FIXME
-  // Don't do the next statement -> crash!!!
-  //mStatusBar->mainWindow()->createGUI("kmmainwin.rc");
   reloadXML();
+  KParts::MainWindow *win =
+    dynamic_cast<KParts::MainWindow*>( mainWidget->topLevelWidget() );
+  if ( win ) {
+    ( static_cast<KPartsMainWindowWithPublicizedCreateGUI*>( win ) )
+      ->createGUIPublic( this );
+  }
+  else {
+    kdDebug(5006) << "KMailPart::slotToolbarChanged() - "
+                  << "dynamic_cast<KPart::MainWindow*>( toplevelWidget() ) "
+                  << "failed" << endl;
+  }
 }
 
+//-----------------------------------------------------------------------------
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
 {
