@@ -481,7 +481,7 @@ void KMail::FolderDiaACLTab::startListing()
 
 void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& aclList )
 {
-  if ( folder == mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) {
+  if ( folder == ( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) ) {
     disconnect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
                 this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 
