@@ -593,7 +593,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_trashFolder->setSystemFolder(TRUE);
   the_trashFolder->open();
 
-  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", "drafts"));
+  the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", I18N_NOOP("drafts")));
   if (the_draftsFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your drafts folder.") );
     exit(1);
