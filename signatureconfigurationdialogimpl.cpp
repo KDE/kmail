@@ -70,11 +70,6 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
         sendChainWithoutRootRB       ->hide(); // Will implement that later.
         sendChainWithRootRB          ->hide(); // Will implement that later.
         
-        warnCACertificateExpiresCB   ->hide(); // Will implement that later.
-        warnCACertificateExpiresSB   ->hide(); // Will implement that later.
-        warnRootCertificateExpiresCB ->hide(); // Will implement that later.
-        warnRootCertificateExpiresSB ->hide(); // Will implement that later.
-        
         pinOncePerSessionRB          ->hide(); // Will implement that later.
         pinAddCertificatesRB         ->hide(); // Will implement that later.
         pinAlwaysWhenSigningRB       ->hide(); // Will implement that later.
