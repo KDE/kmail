@@ -98,29 +98,11 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   dir.setPath(mBasePath);
   if (!dir.exists())
   {
-    KMFolder fld(&mDir);
-
     KMessageBox::information(0, i18n("Directory\n%1\ndoes not exist.\n\n"
 				  "KMail will create it now.").arg(mBasePath));
     // dir.mkdir(mBasePath, TRUE);
     mkdir(mBasePath.data(), 0700);
     mDir.setPath(mBasePath.local8Bit());
-
-    fld.setName("inbox");
-    fld.create();
-    fld.close();
-
-    fld.setName("outbox");
-    fld.create();
-    fld.close();
-
-    fld.setName("sent-mail");
-    fld.create();
-    fld.close();
-
-    fld.setName("trash");
-    fld.create();
-    fld.close();
   }
 
   mDir.setPath(mBasePath.local8Bit());
