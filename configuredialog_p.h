@@ -624,7 +624,11 @@ public:
   void save();
   void defaults() {}
 
+protected slots:
+  void slotOutlookCompatibleChanged( int );
+    
 protected:
+  QCheckBox   *mOutlookCompatibleCheck;
   QCheckBox   *mMissingAttachmentDetectionCheck;
   SimpleStringListEditor *mAttachWordsListEditor;
 };

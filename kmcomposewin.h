@@ -786,6 +786,7 @@ protected:
   bool mAutoCharset;
 
   bool mAlwaysSend;
+  bool mOutlookCompatible;
 
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;

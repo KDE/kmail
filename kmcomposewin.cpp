@@ -451,6 +451,7 @@ void KMComposeWin::readConfig(void)
     mLineBreak = 78;
   if (mLineBreak < 30)
     mLineBreak = 30;
+  mOutlookCompatible = config->readBoolEntry( "outlook-compatible-attachments", false );
   mAutoPgpSign = config->readBoolEntry("pgp-auto-sign", false);
   mAutoPgpEncrypt = config->readBoolEntry("pgp-auto-encrypt", false);
   mNeverSignWhenSavingInDrafts = config->readBoolEntry("never-sign-drafts", true);
@@ -2043,8 +2044,15 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   QCString encoding = KMMsgBase::autoDetectCharset(mCharset,
     KMMessage::preferredCharsets(), name);
   if (encoding.isEmpty()) encoding = "utf-8";
-  QCString encName = KMMsgBase::encodeRFC2231String(name, encoding);
-  bool RFC2231encoded = name != QString(encName);
+
+  QCString encName;
+  if ( mOutlookCompatible )
+    encName = KMMsgBase::encodeRFC2047String( name, encoding );
+  else
+    encName = KMMsgBase::encodeRFC2231String( name, encoding );
+  bool RFC2231encoded = false;
+  if ( !mOutlookCompatible )
+    RFC2231encoded = name != QString( encName );
 
   // create message part
   msgPart = new KMMessagePart;

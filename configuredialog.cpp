@@ -2968,6 +2968,20 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
+  // "Outlook compatible attachment naming" check box
+  mOutlookCompatibleCheck =
+    new QCheckBox( i18n( "Outlook compatible attachment naming" ), this );
+  mOutlookCompatibleCheck->setChecked( false );
+  QToolTip::add( mOutlookCompatibleCheck, i18n(
+    "Turn this option on to make Outlook(tm) understand attachment names "
+    "containing non-English characters" ) );
+  connect( mOutlookCompatibleCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mOutlookCompatibleCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotOutlookCompatibleChanged( int ) ) );
+  vlay->addWidget( mOutlookCompatibleCheck );
+  vlay->addSpacing( 5 );
+
   // "Enable detection of missing attachments" check box
   mMissingAttachmentDetectionCheck =
     new QCheckBox( i18n("E&nable detection of missing attachments"), this );
@@ -3002,6 +3016,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
 void ComposerPage::AttachmentsTab::load() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
+  mOutlookCompatibleCheck->setChecked(
+    composer.readBoolEntry( "outlook-compatible-attachments", false ) );
   mMissingAttachmentDetectionCheck->setChecked(
     composer.readBoolEntry( "showForgottenAttachmentWarning", true ) );
   QStringList attachWordsList =
@@ -3021,10 +3037,26 @@ void ComposerPage::AttachmentsTab::load() {
 
 void ComposerPage::AttachmentsTab::save() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
+  composer.writeEntry( "outlook-compatible-attachments",
+                       mOutlookCompatibleCheck->isChecked() );
   composer.writeEntry( "showForgottenAttachmentWarning",
                        mMissingAttachmentDetectionCheck->isChecked() );
   composer.writeEntry( "attachment-keywords",
                        mAttachWordsListEditor->stringList() );
+}
+
+void ComposerPageAttachmentsTab::slotOutlookCompatibleChanged( int state )
+{
+  if (state == QButton::On) {
+    KMessageBox::information(0,i18n("You have choosen to "
+    "encode attachment names containing non-English characters in a way that "
+    "is understood by Outlook(tm) and other mail clients that do not "
+    "support standard-compliant encoded attachment names.\n" 
+    "Note that KMail may create non-standard compliant messages, "
+    "and consequently it's possible that your messages will not be "
+    "understood by standard compliant mail clients. So, unless you have no "
+    "other choice, you should not enable this option." ) );
+  }
 }
 
 // *************************************************************
