@@ -163,6 +163,8 @@ void KMFolder::writeConfig( KConfig* config ) const
   config->writeEntry( "IgnoreNewMail", mIgnoreNewMail );
   if ( !mShortcut.isNull() ) 
     config->writeEntry( "Shortcut", mShortcut.toString() );
+  else
+    config->deleteEntry( "Shortcut" );
 }
 
 KMFolderType KMFolder::folderType() const
