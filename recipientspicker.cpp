@@ -7,12 +7,12 @@
     modify it under the terms of the GNU Library General Public
     License as published by the Free Software Foundation; either
     version 2 of the License, or (at your option) any later version.
-    
+
     This library is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
     Library General Public License for more details.
-    
+
     You should have received a copy of the GNU Library General Public License
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
@@ -179,22 +179,22 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   topLayout->setMargin( KDialog::marginHint() );
 
   QBoxLayout *resLayout = new QHBoxLayout( topLayout );
-  
+
   QLabel *label = new QLabel( i18n("AddressBook:"), this );
   resLayout->addWidget( label );
-  
+
   mCollectionCombo = new QComboBox( this );
   resLayout->addWidget( mCollectionCombo );
   connect( mCollectionCombo, SIGNAL( highlighted( int ) ),
     SLOT( updateList() ) );
   connect( mCollectionCombo, SIGNAL( activated( int ) ),
     SLOT( updateList() ) );
-  
+
   QBoxLayout *searchLayout = new QHBoxLayout( topLayout );
-  
+
   label = new QLabel( i18n("&Search:"), this );
   searchLayout->addWidget( label );
-  
+
   mRecipientList = new KListView( this );
   mRecipientList->setSelectionMode( QListView::Multi );
   mRecipientList->setAllColumnsShowFocus( true );
@@ -230,7 +230,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   // BCC isn't commonly used, so hide it for now
   mBccButton->hide();
 
-  QPushButton *okButton = new QPushButton( i18n("&Ok"), this );
+  QPushButton *okButton = new QPushButton( i18n("&OK"), this );
   buttonLayout->addWidget( okButton );
   connect( okButton, SIGNAL( clicked() ), SLOT( slotOk() ) );
   // It might be confusing to have "Add As ..." in addition to "Ok", so we might
@@ -268,7 +268,7 @@ RecipientsPicker::~RecipientsPicker()
 void RecipientsPicker::initCollections()
 {
   KABC::StdAddressBook *addressbook = KABC::StdAddressBook::self();
-  
+
   QMap<KABC::Resource *,RecipientsCollection *> collectionMap;
 
   QPtrList<KABC::Resource> resources = addressbook->resources();
@@ -278,10 +278,10 @@ void RecipientsPicker::initCollections()
     collectionMap.insert( res, collection );
     collection->setTitle( res->resourceName() );
   }
-  
+
   mAllRecipients = new RecipientsCollection;
   mAllRecipients->setTitle( i18n("All") );
-  
+
   KABC::AddressBook::Iterator it;
   for( it = addressbook->begin(); it != addressbook->end(); ++it ) {
     RecipientItem *item = new RecipientItem;
@@ -296,14 +296,14 @@ void RecipientsPicker::initCollections()
   }
 
   insertCollection( mAllRecipients );
-  
+
   QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator it2;
   for( it2 = collectionMap.begin(); it2 != collectionMap.end(); ++it2 ) {
     insertCollection( *it2 );
   }
-  
+
   insertDistributionLists();
-  
+
   insertRecentAddresses();
 }
 
@@ -350,7 +350,7 @@ void RecipientsPicker::insertRecentAddresses()
     }
     collection->addItem( item );
   }
-  
+
   insertCollection( collection );
 }
 
@@ -388,9 +388,9 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
 void RecipientsPicker::updateList()
 {
   mRecipientList->clear();
-  
+
   RecipientsCollection *coll = mCollectionMap[ mCollectionCombo->currentItem() ];
-  
+
   RecipientItem::List items = coll->items();
   RecipientItem::List::ConstIterator it;
   for( it = items.begin(); it != items.end(); ++it ) {
