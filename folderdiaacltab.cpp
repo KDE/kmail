@@ -676,11 +676,13 @@ bool KMail::FolderDiaACLTab::save()
 
 void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
 {
-  if ( f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) )
+  if ( !f || f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) )
     return;
 
   // When creating a new folder with online imap, update mImapPath
   KMFolderImap* folderImap = static_cast<KMFolderImap*>( mDlg->folder()->storage() );
+  if ( !folderImap || folderImap->imapPath().isEmpty() )
+    return;
   mImapPath = folderImap->imapPath();
 
   KIO::Job* job = ACLJobs::multiSetACL( mImapAccount->slave(), imapURL(), mACLList );
