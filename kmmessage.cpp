@@ -3426,11 +3426,11 @@ void KMMessage::readConfig(void)
     KConfigGroupSaver saver(config, "Composer");
     sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
     if (sReplySubjPrefixes.count() == 0)
-      sReplySubjPrefixes.append("Re:");
+      sReplySubjPrefixes << "Re\\s*:" << "Re\\[\\d+\\]:" << "Re\\d+:";
     sReplaceSubjPrefix = config->readBoolEntry("replace-reply-prefix", true);
     sForwardSubjPrefixes = config->readListEntry("forward-prefixes", ',');
     if (sForwardSubjPrefixes.count() == 0)
-      sForwardSubjPrefixes.append("Fwd:");
+      sForwardSubjPrefixes << "Fwd:" << "FW:";
     sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
 
     sSmartQuote = config->readBoolEntry("smart-quote", true);

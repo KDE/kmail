@@ -2748,7 +2748,8 @@ void ComposerPage::SubjectTab::setup() {
 
   prefixList = composer.readListEntry( "forward-prefixes", ',' );
   if ( prefixList.isEmpty() )
-    prefixList << QString::fromLatin1("Fwd:");
+    prefixList << QString::fromLatin1("Fwd:")
+	       << QString::fromLatin1("FW:");
   mForwardListEditor->setStringList( prefixList );
 
   mReplaceForwardPrefixCheck->setChecked( composer.readBoolEntry( "replace-forward-prefix", true ) );
