@@ -415,6 +415,8 @@ int IdentityManager::newUoid()
   do {
     uoid = kapp->random();
   } while ( usedUOIDs.find( uoid ) != usedUOIDs.end() );
+
+  return uoid;
 }
 
 #include "identitymanager.moc"
