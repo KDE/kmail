@@ -108,7 +108,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mAtmTempList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
   mFolder = NULL;
-  mEditor = NULL;
+  mEditor = new KMEdit(&mMainWidget, this);
   disableBreaking = false;
 
   mSpellCheckInProgress=FALSE;
@@ -259,7 +259,14 @@ void KMComposeWin::readColorConfig(void)
   mPalette.setActive(cgrp);
   mPalette.setInactive(cgrp);
 
-  setPalette(mPalette);
+  mEdtTo.setPalette(mPalette);
+  mEdtFrom.setPalette(mPalette);
+  mEdtCc.setPalette(mPalette);
+  mEdtSubject.setPalette(mPalette);
+  mEdtReplyTo.setPalette(mPalette);
+  mEdtBcc.setPalette(mPalette);
+  mTransport.setPalette(mPalette);
+  mEditor->setPalette(mPalette);
 }
 
 //-----------------------------------------------------------------------------
@@ -827,7 +834,6 @@ void KMComposeWin::updateCursorPosition()
 void KMComposeWin::setupEditor(void)
 {
   QPopupMenu* menu;
-  mEditor = new KMEdit(&mMainWidget, this);
   mEditor->setModified(FALSE);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
