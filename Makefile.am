@@ -25,6 +25,15 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
+appsdir = $(prefix)/share/applnk/Utilities/
+
+install-data-local:
+	$(mkinstalldirs) $(appsdir)
+	$(INSTALL_DATA) KMail.kdelnk $(appsdir)
+
+uninstall-local:
+	rm -f $(appsdir)/KMail.kdelnk
+	
 kmfolderdia.cpp:kmfolderdia.moc
 kmfolderdia.moc: kmfolderdia.h
 	$(MOC) kmfolderdia.h -o kmfolderdia.moc

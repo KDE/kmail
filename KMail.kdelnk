@@ -1,8 +1,11 @@
+# KDE Config File
 [KDE Desktop Entry]
+Name=Mail client
+Name[de]=Email Programm
 Type=Application
 Exec=kmail
 Icon=kmail.xpm
 DocPath=kmail.html
 Info=Mail Client
-Info[de]=Email Programm
+Info[de]=Programm zum Lesen und Verschicken von Emails
 Terminal=0
