@@ -1249,6 +1249,7 @@ void KMFolderCachedImap::slotListResult( QStringList folderNames,
                                          QStringList folderMimeTypes,
                                          const ImapAccountBase::jobData & jobData )
 {
+  //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" << folderPaths << " mimeTypes=" << folderMimeTypes << endl;
   mSubfolderNames = folderNames;
   mSubfolderPaths = folderPaths;
   mSubfolderMimeTypes = folderMimeTypes;
@@ -1396,9 +1397,9 @@ void KMFolderCachedImap::listDirectory2() {
         f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
     }
 
-    if( f && f->imapPath().isEmpty() ) {
+    if( f ) {
       // kdDebug(5006) << "folder("<<f->name()<<")->imapPath()=" << f->imapPath()
-      //               << "\nAssigning new imapPath " << mSubfolderPaths[i] << endl;
+      //               << "\nSetting imapPath " << mSubfolderPaths[i] << endl;
       // Write folder settings
       f->setAccount(mAccount);
       f->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
