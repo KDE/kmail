@@ -142,7 +142,7 @@ public:
   inline int defaultCheckInterval(void) const { return DefaultCheckInterval; }
 
   /**
-   * Deletes the set of FolderJob associated with this folder.
+   * Deletes the set of FolderJob associated with this account.
    */
   void deleteFolderJobs();
 
