@@ -1,9 +1,8 @@
 /**
  * kmacctcachedimap.h
  *
- * Copyright (c) 2000-2002 Michael Haeckel <haeckel@kde.org>
- *
- * This file is based on kmacctexppop.h by Don Sanders
+ * Copyright (c) 2002-2003 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+ * Copyright (c) 2002-2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by

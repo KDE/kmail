@@ -1,3 +1,23 @@
+/**
+ * kmfoldercachedimap.cpp
+ *
+ * Copyright (c) 2002-2003 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+ * Copyright (c) 2002-2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; version 2 of the License
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -949,7 +969,7 @@ bool KMFolderCachedImap::listDirectory()
   mSubfolderPaths.clear();
   mSubfolderMimeTypes.clear();
 
-  kdDebug(5006) << "listDirectory(): listing url " << url.url() << endl;
+  // kdDebug(5006) << "listDirectory(): listing url " << url.url() << endl;
   if (!mAccount->makeConnection())
     return FALSE;
 

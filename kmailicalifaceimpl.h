@@ -1,6 +1,8 @@
 /*
     This file is part of KMail.
+
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public

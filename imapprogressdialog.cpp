@@ -1,7 +1,7 @@
 /** -*- c++ -*-
  * imapprogressdialog.cpp
  *
- * Copyright (c) 2002 Klarälvdalens Datakonsult AB
+ * Copyright (c) 2002-2003 Klarälvdalens Datakonsult AB
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
