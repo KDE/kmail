@@ -252,8 +252,10 @@ int main(int argc, char *argv[])
   int oldPid = config.readNumEntry("pid", -1);
   if (oldPid != -1 && kill(oldPid, 0) != -1)
   {
-    QString msg = i18n("KMail can only run once at the same time. "
-      "It is already running on a different display with PID %1.").arg(oldPid);
+    QString msg = i18n("Only one instance of KMail can be run at "
+      "any one time. It is already running on a different display "
+      "with PID %1.").arg(oldPid);
+
     KNotifyClient::userEvent( msg,  KNotifyClient::Messagebox,
       KNotifyClient::Error );
     fprintf(stderr, "*** KMail is already running with PID %d\n", oldPid);
