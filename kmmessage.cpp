@@ -146,6 +146,19 @@ QCString KMMessage::asString(void)
 
 
 //-----------------------------------------------------------------------------
+QCString KMMessage::asSendableString()
+{
+  KMMessage msg;
+  msg.fromString(asString());
+  msg.removeHeaderField("Status");
+  msg.removeHeaderField("X-Status");
+  msg.removeHeaderField("X-KMail-Transport");
+  msg.removeHeaderField("X-KMail-Identity");
+  msg.removeHeaderField("Bcc");
+  return msg.asString();
+}
+
+//-----------------------------------------------------------------------------
 void KMMessage::setStatusFields(void)
 {
   char str[3];

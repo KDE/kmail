@@ -340,12 +340,6 @@ void KMSender::doSendMsgAux()
 {
   mSendProcStarted = TRUE;
 
-  // remove header fields that shall not be included in sending
-  mCurrentMsg->removeHeaderField("Status");
-  mCurrentMsg->removeHeaderField("X-Status");
-  mCurrentMsg->removeHeaderField("X-KMail-Transport");
-  mCurrentMsg->removeHeaderField("X-KMail-Identity");
-
   // start sending the current message
 
   mSendProc->preSendInit();
@@ -746,19 +740,11 @@ bool KMSendSendmail::send(KMMessage* aMsg)
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host;
   *mMailerProc << "-i";
-  aMsg->removeHeaderField("X-KMail-Identity");
   addRecipients(aMsg->headerAddrField("To"));
   if (!aMsg->cc().isEmpty()) addRecipients(aMsg->headerAddrField("Cc"));
+  if (!aMsg->bcc().isEmpty()) addRecipients(aMsg->headerAddrField("Bcc"));
 
-  bccStr = aMsg->bcc();
-  if (!bccStr.isEmpty())
-  {
-    addRecipients(aMsg->headerAddrField("Bcc"));
-    aMsg->removeHeaderField("Bcc");
-  }
-
-  mMsgStr = aMsg->asString();
-  if (!bccStr.isEmpty()) aMsg->setBcc(bccStr);
+  mMsgStr = aMsg->asSendableString();
 
   if (!mMailerProc->start(KProcess::NotifyOnExit,KProcess::All))
   {
@@ -874,7 +860,6 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   {
     mQueryField = "&bcc=";
     if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
-    aMsg->removeHeaderField("Bcc");
   }
 
   if(!aMsg->subject().isEmpty())
@@ -925,8 +910,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   mQuery = "";
 
-  mMessage = prepareStr(aMsg->asString(), TRUE);
-  if (!bccStr.isEmpty()) aMsg->setBcc(bccStr);
+  mMessage = prepareStr(aMsg->asSendableString(), TRUE);
   
   if ((mJob = KIO::put(destination, -1, false, false, false)))
   {

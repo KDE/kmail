@@ -92,6 +92,11 @@ public:
   */
   virtual QCString asString(void);
 
+  /**
+   * Return the message contents besides the headers that should not be sent.
+   */
+  virtual QCString asSendableString();
+
   /** Return header as string. */
   virtual QString headerAsString(void) const;
 
