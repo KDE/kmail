@@ -153,6 +153,13 @@ void NewFolderDialog::slotOk()
   if ( fldName.startsWith( "." ) ) {
     KMessageBox::error( this, i18n( "Folder names cannot start with a . (dot) character; please choose another folder name." ) );
     return;
+  } else if ( fldName.find( '.' ) != -1 &&
+    ( !mFolder 
+      || mFolder->folderType() == KMFolderTypeImap 
+      || mFolder->folderType() == KMFolderTypeCachedImap ) ) {
+    if ( KMessageBox::warningContinueCancel( this, i18n( "Some mailservers do not support folder names which contain a . (dot) character; do you want to continue?" ), QString::null, KStdGuiItem::cont(), "warn_create_folders_with_dot_in_middle" ) == KMessageBox::Cancel ) {
+      return;
+    }
   }
 
   KMFolderDir *selectedFolderDir = mFolder->createChildFolder();
@@ -211,7 +218,7 @@ void NewFolderDialog::slotOk()
     newFolder->storage()->setContentsType( type );
     newFolder->storage()->writeConfig(); // connected slots will read it
   }
-  close();
+  KDialogBase::slotOk();
 }
 
 #include "newfolderdialog.moc"
