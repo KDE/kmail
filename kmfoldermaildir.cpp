@@ -762,9 +762,9 @@ int KMFolderMaildir::removeContents()
 {
   // it would be nice if QDir could delete recursively.. but since it
   // doesn't, we have to do this hack
-  QString cmd;
+  QCString cmd;
   cmd.sprintf("rm -rf '%s'", QFile::encodeName(location()).data());
-  system(cmd.ascii());
+  system(cmd.data());
   
   return 0;
 }
