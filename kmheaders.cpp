@@ -1690,12 +1690,14 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
 {
+  KMMessageList msgList = *selectedMsgs(true);
   if ( !destFolder &&     // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
-         i18n("<qt>Do you really want to delete the selected message?<br>"
-              "Once deleted, it cannot be restored!</qt>",
-              "<qt>Do you really want to delete the selected messages?<br>"
-              "Once deleted, they cannot be restored!</qt>"),
+         ( msgList.count() == 1 )
+         ? i18n("<qt>Do you really want to delete the selected message?<br>"
+                "Once deleted, it cannot be restored!</qt>")
+         : i18n("<qt>Do you really want to delete the selected messages?<br>"
+                "Once deleted, they cannot be restored!</qt>"),
          i18n("Delete Messages"), i18n("De&lete"), "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 
@@ -1703,7 +1705,6 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
   int contentX, contentY;
   KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
 
-  KMMessageList msgList = *selectedMsgs(true);
   KMCommand *command = new KMMoveCommand( destFolder, msgList );
   command->start();
 
