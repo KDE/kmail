@@ -4057,10 +4057,13 @@ GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), this );
   vlay->addWidget( mEnableGwCB );
 
-  mBox = new QVGroupBox( i18n("Groupware &Folder Options"), this );
+  mEnableImapResCB = new QCheckBox( i18n("&Enable IMAP Resource functionality"), this );
+  vlay->addWidget( mEnableImapResCB );
+
+  mBox = new QVGroupBox( i18n("&IMAP Resource Folder Options"), this );
   vlay->addWidget(mBox);
 
-  connect( mEnableGwCB, SIGNAL( toggled(bool) ),
+  connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
 	   mBox, SLOT( setEnabled(bool) ) );
 
   QLabel* languageLA = new QLabel( i18n("&Language for groupware folders:"), mBox );
@@ -4069,15 +4072,15 @@ GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
   languageLA->setBuddy( mLanguageCombo );
 
   QStringList lst;
-  lst << i18n("English") << i18n("German");
+  lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
   mLanguageCombo->insertStringList( lst );
 
-  QLabel* subfolderLA = new QLabel( i18n("Groupware folders are &subfolders of:"), mBox );
+  QLabel* subfolderLA = new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
 
   mFolderCombo = new KMFolderComboBox( mBox );
   subfolderLA->setBuddy( mFolderCombo );
 
-  QVGroupBox* resourceVGB = new QVGroupBox( i18n( "&Resource Management" ), this );
+  QVGroupBox* resourceVGB = new QVGroupBox( i18n( "Automatic &Resource Management" ), this );
   vlay->addWidget( resourceVGB );
   resourceVGB->setEnabled( false ); // since !mEnableGwCB->isChecked()
   connect( mEnableGwCB, SIGNAL( toggled(bool) ),
@@ -4098,23 +4101,25 @@ GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
 
 void GroupwarePage::setup()
 {
+  // Read the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
-
   mEnableGwCB->setChecked( options.readBoolEntry( "Enabled", true ) );
-  mBox->setEnabled( mEnableGwCB->isChecked() );
+  mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
+  mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
+  mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
 
-  int i = options.readNumEntry( "FolderLanguage", 0 );
+  // Read the IMAP resource config
+  KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
+  mEnableImapResCB->setChecked( irOptions.readBoolEntry( "Enabled", false ) );
+  mBox->setEnabled( mEnableImapResCB->isChecked() );
+
+  int i = irOptions.readNumEntry( "Folder Language", 0 );
   mLanguageCombo->setCurrentItem(i);
 
-  QString folderId = options.readEntry( "GroupwareFolder" );
+  QString folderId = irOptions.readEntry( "Folder Parent" );
   if( !folderId.isNull() ) {
     mFolderCombo->setFolder( folderId );
   }
-
-  mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
-  mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
-
-  mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
 }
 
 void GroupwarePage::installProfile( KConfig * /*profile*/ )
@@ -4124,17 +4129,24 @@ void GroupwarePage::installProfile( KConfig * /*profile*/ )
 
 void GroupwarePage::apply()
 {
+  // Write the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
-
   options.writeEntry( "Enabled", mEnableGwCB->isChecked() );
   if ( mEnableGwCB->isChecked() ) {
-    options.writeEntry( "FolderLanguage", mLanguageCombo->currentItem() );
-    options.writeEntry( "GroupwareFolder", mFolderCombo->getFolder()->idString() );
     options.writeEntry( "AutoAccept", mAutoResCB->isChecked() );
     options.writeEntry( "AutoDeclConflict", mAutoDeclConflCB->isChecked() );
     options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
   }
 
+  // Write the IMAP resource config
+  KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
+  irOptions.writeEntry( "Enabled", mEnableImapResCB->isChecked() );
+  if ( mEnableImapResCB->isChecked() ) {
+    options.writeEntry( "Folder Language", mLanguageCombo->currentItem() );
+    options.writeEntry( "Folder Parent", mFolderCombo->getFolder()->idString() );
+  }
+
+  // Make the groupware options read the config settings
   kernel->groupware().readConfig();
 }
 

@@ -932,6 +932,7 @@ public:
   virtual void apply();
 private:
   QCheckBox* mEnableGwCB;
+  QCheckBox* mEnableImapResCB;
 
   QVGroupBox* mBox;
 
