@@ -44,7 +44,7 @@
         <whatsthis>&lt;qt&gt;&lt;p&gt;Select whether you want KMail to send "
         "all messages in the outbox on manual or all mail checks, "
         "or whether you do not want messages to be sent automatically "
-        "at all. &lt;/qt&gt;&lt;/p&gt;</whatsthis>
+        "at all. &lt;/p&gt;&lt;/qt&gt;</whatsthis>
         <choices>
           <choice name="DontSendOnCheck"/>
           <choice name="SendOnManualChecks"/>
