@@ -44,6 +44,7 @@
 #include <kaddrbook.h>
 #include <kpushbutton.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
