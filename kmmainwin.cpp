@@ -3678,11 +3678,11 @@ void KMMainWin::slotIntro() {
 }
 
 void KMMainWin::slotShowTipOnStart() {
-  KTipDialog::showTip(0);
+  KTipDialog::showTip( this );
 }
 
 void KMMainWin::slotShowTip() {
-  KTipDialog::showTip( 0, QString::null, true );
+  KTipDialog::showTip( this, QString::null, true );
 }
 
 //-----------------------------------------------------------------------------
