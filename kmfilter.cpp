@@ -130,12 +130,12 @@ KMPopFilterAction KMFilter::action()
 // only for !bPopFilter
 bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
 {
-  bool rem = FALSE;
+  bool rem = false;
 
   QPtrListIterator<KMFilterAction> it( mActions );
   for ( it.toFirst() ; it.current() ; ++it )
     if ( (*it)->folderRemoved( aFolder, aNewFolder ) )
-      rem = TRUE;
+      rem = true;
 
   return rem;
 }
