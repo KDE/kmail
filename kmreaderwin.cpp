@@ -692,10 +692,8 @@ kdDebug(5006) << "basic" << endl;
             break;
           }
           // We allways show audio as icon.
-          /*
-          writePartIcon(&curNode->msgPart(), aMsg->partNumber( curNode->dwPart() ));
+          writePartIcon(&curNode->msgPart(), curNode->nodeId());
           bDone = true;
-          */
         }
         break;
       case DwMime::kTypeVideo: {
@@ -715,7 +713,6 @@ kdDebug(5006) << "* model *" << endl;
         break;
       }
       if( !bDone ) {
-      /*
         bool asIcon = true;
         switch (mAttachmentStyle)
         {
@@ -731,10 +728,10 @@ kdDebug(5006) << "* model *" << endl;
         if( asIcon ) {
           if( isImage )
             inlineImage = true;
-          writePartIcon(&curNode->msgPart(), 1);//aMsg->partNumber( curNode->dwPart() ));
+          writePartIcon(&curNode->msgPart(), curNode->nodeId());
           if( isImage )
             inlineImage = false;
-        } else */{
+        } else {
           QCString cstr( curNode->msgPart().bodyDecoded() );
           writeBodyStr(cstr, mCodec);
         }
@@ -904,7 +901,7 @@ void KMReaderWin::readColorConfig(void)
     cCBplain = config->readColorEntry( "ColorbarPlain", &cCBplain );
     cCBhtml  = config->readColorEntry( "ColorbarHTML", &cCBhtml );
   }
-  
+
   // determine the frame and body color for PGP messages from the header color
   // if the header color equals the background color then the other colors are
   // also set to the background color (-> old style PGP message viewing)
@@ -2716,21 +2713,26 @@ void KMReaderWin::closeEvent(QCloseEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
-  KURL url(aUrl);
+  bool bOk = false;
 
+  KURL url(aUrl);
   int id = msgPartFromUrl(url);
-  if (id < 0)
+
+  if (id > 0)
   {
+    // KMMessagePart msgPart;
+    // mMsg->bodyPart(id, &msgPart);
+    partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
+    if( node ) {
+      KMMessagePart& msgPart = node->msgPart();
+      QString str = msgPart.fileName();
+      if (str.isEmpty()) str = msgPart.name();
+      emit statusMsg(i18n("Attachment: ") + str);
+      bOk = true;
+    }
+  }
+  if( !bOk )
     emit statusMsg(aUrl);
-  }
-  else
-  {
-    KMMessagePart msgPart;
-    mMsg->bodyPart(id, &msgPart);
-    QString str = msgPart.fileName();
-    if (str.isEmpty()) str = msgPart.name();
-    emit statusMsg(i18n("Attachment: ") + str);
-  }
 }
 
 
@@ -2744,7 +2746,7 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
     return;
   }
   int id = msgPartFromUrl(aUrl);
-  if (id >= 0)
+  if (id > 0)
   {
     // clicked onto an attachment
     mAtmCurrent = id;
@@ -2766,7 +2768,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   KURL url( aUrl );
 
   int id = msgPartFromUrl(url);
-  if (id < 0)
+  if (id <= 0)
   {
     emit popupMenu(*mMsg, url, aPos);
   }
@@ -2786,7 +2788,6 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     delete menu;
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFind()
@@ -2937,17 +2938,21 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmView()
 {
-  KMMessagePart msgPart;
-  mMsg->bodyPart(mAtmCurrent, &msgPart);
-  QString pname = msgPart.fileName();
-  if (pname.isEmpty()) pname=msgPart.name();
-  if (pname.isEmpty()) pname=msgPart.contentDescription();
-  if (pname.isEmpty()) pname="unnamed";
-  // image Attachment is saved already
-  QTextCodec *atmCodec = (mAutoDetectEncoding) ?
-    KMMsgBase::codecForName(msgPart.charset()) : mCodec;
-  if (!atmCodec) atmCodec = mCodec;
-  atmView(this, &msgPart, htmlMail(), mAtmCurrentName, pname, atmCodec);
+//  KMMessagePart msgPart;
+//  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if( node ) {
+    KMMessagePart& msgPart = node->msgPart();
+    QString pname = msgPart.fileName();
+    if (pname.isEmpty()) pname=msgPart.name();
+    if (pname.isEmpty()) pname=msgPart.contentDescription();
+    if (pname.isEmpty()) pname="unnamed";
+    // image Attachment is saved already
+    QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+      KMMsgBase::codecForName(msgPart.charset()) : mCodec;
+    if (!atmCodec) atmCodec = mCodec;
+    atmView(this, &msgPart, htmlMail(), mAtmCurrentName, pname, atmCodec);
+  }
 }
 
 
@@ -2955,9 +2960,15 @@ void KMReaderWin::slotAtmView()
 void KMReaderWin::slotAtmOpen()
 {
   QString str, pname, cmd, fileName;
-  KMMessagePart msgPart;
 
-  mMsg->bodyPart(mAtmCurrent, &msgPart);
+//  KMMessagePart msgPart;
+//  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if( !node )
+    return;
+
+  KMMessagePart& msgPart = node->msgPart();
+
   if (qstricmp(msgPart.typeStr(), "message")==0)
   {
     atmViewMsg(&msgPart);
@@ -3039,54 +3050,71 @@ void KMReaderWin::slotAtmOpenWith()
   // It makes sense to have an extra "Open with..." entry in the menu
   // so the user can change filetype associations.
 
-  KMMessagePart msgPart;
+//  KMMessagePart msgPart;
+//  mMsg->bodyPart(mAtmCurrent, &msgPart);
 
-  mMsg->bodyPart(mAtmCurrent, &msgPart);
 
-  KURL::List lst;
-  KURL url;
-  url.setPath(mAtmCurrentName);
-  lst.append(url);
-  KRun::displayOpenWithDialog(lst);
+/*
+  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if( node ) {
+    KMMessagePart& msgPart = node->msgPart();
+*/
+    KURL::List lst;
+    KURL url;
+    url.setPath(mAtmCurrentName);
+    lst.append(url);
+    KRun::displayOpenWithDialog(lst);
+/*  }*/
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmSave()
 {
-  KMMessagePart msgPart;
   QString fileName;
   fileName = mSaveAttachDir;
 
-  mMsg->bodyPart(mAtmCurrent, &msgPart);
-  if (!msgPart.fileName().isEmpty())
-    fileName.append(msgPart.fileName());
-  else
-    fileName.append(msgPart.name());
+//  KMMessagePart msgPart;
+//  mMsg->bodyPart(mAtmCurrent, &msgPart);
 
-  KURL url = KFileDialog::getSaveURL( fileName, QString::null, this );
+  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if( node ) {
+    KMMessagePart& msgPart = node->msgPart();
 
-  if( url.isEmpty() )
-    return;
+    if (!msgPart.fileName().isEmpty())
+      fileName.append(msgPart.fileName());
+    else
+      fileName.append(msgPart.name());
 
-  mSaveAttachDir = url.directory() + "/";
+    KURL url = KFileDialog::getSaveURL( fileName, QString::null, this );
 
-  kernel->byteArrayToRemoteFile(msgPart.bodyDecodedBinary(), url);
+    if( url.isEmpty() )
+      return;
+
+    mSaveAttachDir = url.directory() + "/";
+
+    kernel->byteArrayToRemoteFile(msgPart.bodyDecodedBinary(), url);
+  }
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmProperties()
 {
-  KMMessagePart msgPart;
   KMMsgPartDialogCompat dlg(0,TRUE);
 
   kernel->kbp()->busy();
-  mMsg->bodyPart(mAtmCurrent, &msgPart);
-  dlg.setMsgPart(&msgPart);
-  kernel->kbp()->idle();
+//  KMMessagePart msgPart;
+//  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  if( node ) {
+    KMMessagePart& msgPart = node->msgPart();
 
-  dlg.exec();
+    dlg.setMsgPart(&msgPart);
+    kernel->kbp()->idle();
+
+    dlg.exec();
+  }
 }
 
 

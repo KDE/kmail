@@ -53,6 +53,51 @@ void partNode::buildObjectTree( bool processSiblings )
     }
 }
 
+
+int partNode::nodeId()
+{
+    partNode* rootNode = this;
+    while( rootNode->mRoot )
+        rootNode = rootNode->mRoot;
+    return rootNode->calcNodeIdOrFindNode( 0, this, 0, 0 );
+}
+
+
+partNode* partNode::findId( int id )
+{
+    partNode* rootNode = this;
+    while( rootNode->mRoot )
+        rootNode = rootNode->mRoot;
+    partNode* foundNode;
+    rootNode->calcNodeIdOrFindNode( 0, 0, id, &foundNode );
+    return foundNode;
+}
+
+
+int partNode::calcNodeIdOrFindNode( int oldId, const partNode* findNode, int findId, partNode** foundNode )
+{
+    // We use the same algorithm to determine the id of a node and
+    //                           to find the node when id is known.
+    int myId = oldId+1;
+    // check for node ?
+    if( findNode && this == findNode )
+        return myId;
+    // check for id ?
+    if(  foundNode && myId == findId ) {
+        *foundNode = this;
+        return myId;
+    }
+    if( mChild )
+        return mChild->calcNodeIdOrFindNode( myId, findNode, findId, foundNode );
+    if( mNext )
+        return mNext->calcNodeIdOrFindNode(  myId, findNode, findId, foundNode );
+
+    if(  foundNode )
+        *foundNode = 0;
+    return -1;
+}
+
+
 partNode* partNode::findType( int type, int subType, bool deep, bool wide )
 {
     if(    (mType != DwMime::kTypeUnknown)

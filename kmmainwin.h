@@ -42,6 +42,21 @@ namespace KIO
 #define KMMainWinInherited KMTopLevelWidget
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
+typedef enum
+{
+    KMWidgetLayoutLongFolderListMimeRightMiddle =0x0122,
+    KMWidgetLayoutLongFolderListMimeRightBottom =0x0124,
+    KMWidgetLayoutShortFolderListMimeLeftMiddle =0x0212,
+    KMWidgetLayoutShortFolderListMimeRightMiddle=0x0222,
+    KMWidgetLayoutShortFolderListMimeLeftBottom =0x0214,
+    KMWidgetLayoutShortFolderListMimeRightBottom=0x0224,
+    KMWidgetLayoutShortFolderListMimeAllMiddle  =0x0232,
+    KMWidgetLayoutShortFolderListMimeAllBottom  =0x0234,
+    KMWidgetLayoutMaxWidthForAllWidgets         =0x1000,
+    KMWidgetLayoutMaxHeightForAllWidgets        =0x2000
+} KMWidgetLayout;
+
+
 class KMMainWin : public KMTopLevelWidget
 {
   Q_OBJECT
@@ -305,7 +320,20 @@ protected:
   KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
-  bool		mLongFolderList;
+  KMWidgetLayout mWidgetLayout;
+  
+  
+  
+  
+  
+  // FIXME khz : REMOVE THIS!!!  (khz, 22.04.2002)
+  bool mLongFolderList;
+
+
+
+
+
+
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;
   int copyId, moveId, htmlId, threadId;
