@@ -260,10 +260,17 @@ namespace KMail {
 
     // ### workaround for broken Wallet::keyDoesNotExist() which returns wrong
     // results for new entries without closing and reopening the wallet
-    if ( Wallet::isOpen( Wallet::NetworkWallet() ) ?
-         !kmkernel->wallet()->hasEntry( "account-" + QString::number(mId) ) :
-         Wallet::keyDoesNotExist( Wallet::NetworkWallet(), "kmail", "account-" + QString::number(mId) ) )
-      return;
+    if ( Wallet::isOpen( Wallet::NetworkWallet() ) )
+    {
+       Wallet *wallet = kmkernel->wallet();
+       if (!wallet || !wallet->hasEntry( "account-" + QString::number(mId) ) )
+         return;
+    }
+    else
+    {
+       if (Wallet::keyDoesNotExist( Wallet::NetworkWallet(), "kmail", "account-" + QString::number(mId) ) )
+         return;
+    }
 
     if ( kmkernel->wallet() ) {
       QString passwd;
