@@ -129,7 +129,7 @@ KMFolderTree::KMFolderTree( QWidget *parent,
     pixFull  = new QPixmap( SmallIcon("folder_open"));
     pixIn    = new QPixmap( SmallIcon("folder_inbox"));
     pixOut   = new QPixmap( SmallIcon("folder_outbox"));
-    pixSent  = new QPixmap( SmallIcon("folder_sent-mail"));
+    pixSent  = new QPixmap( SmallIcon("folder_sent_mail"));
     pixTr    = new QPixmap( SmallIcon("trashcan_empty"));
     pixCopy  = new QPixmap( SmallIcon("editcopy"));
     pixCancel= new QPixmap( SmallIcon("cancel"));
