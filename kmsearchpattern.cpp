@@ -555,10 +555,11 @@ KMSearchPattern::~KMSearchPattern()
 {
 }
 
-bool KMSearchPattern::matches( const KMMessage * msg ) const {
-
+bool KMSearchPattern::matches( const KMMessage * msg ) const
+{
   if ( isEmpty() )
-    return false;
+    return true;
+
   QPtrListIterator<KMSearchRule> it( *this );
   switch ( mOperator ) {
   case OpAnd: // all rules must match
@@ -579,7 +580,8 @@ bool KMSearchPattern::matches( const KMMessage * msg ) const {
 bool KMSearchPattern::matches( const DwString & aStr ) const
 {
   if ( isEmpty() )
-    return false;
+    return true;
+
   KMMessage msg;
   QPtrListIterator<KMSearchRule> it( *this );
   switch ( mOperator ) {
@@ -600,6 +602,9 @@ bool KMSearchPattern::matches( const DwString & aStr ) const
 
 bool KMSearchPattern::matches( Q_UINT32 serNum ) const
 {
+  if ( isEmpty() )
+    return true;
+
   bool res;
   int idx = -1;
   KMFolder *folder = 0;
