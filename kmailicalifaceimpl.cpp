@@ -1297,11 +1297,11 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     FolderInfo info( format, NoChange );
     mFolderInfoMap.insert( folder, info );
 
-    // Adjust the folder names of all foo.default folders, since if a german 
-    // user exports her calendar, known to her as Kalender, it's strange if it
-    // shows up as /user/Louise/Calendar for other people. That way japanese users
-    // will also get japanse shared folder names at least for standard resouce folders
-    // which are shared.
+    // Adjust the folder names of all foo.default folders.
+    // German users will get Kalender as the name of all default Calendar folders, 
+    // including their own, so that the default calendar folder of their Japanese
+    // coworker appears as /user/hirohito/Kalender, although Hirohito sees his folder
+    // in Japanese. On the server the folders are always in English.
     if ( folder->folderType() == KMFolderTypeCachedImap ) {
       QString annotation = static_cast<KMFolderCachedImap*>( folder->storage() )->annotationFolderType();
       kdDebug(5006) << "folderContentsTypeChanged: " << folder->name() << " has annotation " << annotation << endl;
