@@ -1242,7 +1242,8 @@ void KMHeaders::replyAllToMsg (QString selection)
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection));
+  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection),
+			 msg->headerField( "X-KMail-Identity" ));
   win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();
@@ -1257,7 +1258,8 @@ void KMHeaders::replyListToMsg (QString selection)
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createReply(true, true, selection));
+  win = new KMComposeWin(msg->createReply(true, true, selection),
+			 msg->headerField( "X-KMail-Identity" ));
   win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();

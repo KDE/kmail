@@ -1562,10 +1562,9 @@ void KMFolder::readConfig()
 //-----------------------------------------------------------------------------
 void KMFolder::writeConfig()
 {
-  if (mAccount) return;  // Don't store information about IMAP Folders
   KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
-  config->writeEntry("UnreadMsgs", mUnreadMsgs);
+  if (!mAccount) config->writeEntry("UnreadMsgs", mUnreadMsgs);
   config->writeEntry("MailingListEnabled", mMailingListEnabled);
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);

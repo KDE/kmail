@@ -184,6 +184,7 @@ void KMAcctImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
           this, SLOT(slotListResult(KIO::Job *)));
   connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
           this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
+  displayProgress();
 }
 
 
@@ -195,6 +196,7 @@ void KMAcctImap::slotListResult(KIO::Job * job)
   if (job->error()) job->showErrorDialog();
   if ((*it).inboxOnly) listDirectory((*it).parent, TRUE);
   mapJobData.remove(it);
+  displayProgress();
 }
 
 
