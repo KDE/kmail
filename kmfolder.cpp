@@ -755,6 +755,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     if (endStr[1]!='\n') fwrite("\n\n", 2, 1, mStream);
     else fwrite("\n", 1, 1, mStream);
   }
+  fseek(mStream,0,SEEK_END); // this is needed on solaris and others
   fwrite("From aaa@aaa Mon Jan 01 00:00:00 1997\n", 38, 1, mStream);
   offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);

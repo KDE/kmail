@@ -117,7 +117,13 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   }
 
   client.SetReceiveTimeout(20);
-  passwd = decryptStr(mPasswd);
+
+
+
+
+  cout << "MPassw0: " << mPasswd << endl;
+  passwd = decryptStr(mPasswd); // passwd encrypted
+  cout << "en0: " << passwd << endl;
 
   if(passwd.isEmpty() || mLogin.isEmpty())
   {
@@ -128,12 +134,14 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
       return FALSE;
     else
     {
-      mPasswd = encryptStr(mPasswd);
-      passwd = decryptStr(mPasswd);
-      passwd = decryptStr(passwd);
+      //mPasswd = encryptStr(mPasswd); 
+      passwd = decryptStr(mPasswd); // encrypted
+      cout << "encr: " << passwd << endl;
+      //passwd = decryptStr(passwd);
     }
   }
- 
+  cout << "1: " << passwd << endl;
+  
   // Now, we got to do something here. If you can resolve to the address
   // but cannot connect to the server like on some of our uni-machines
   // we end up with a lock up! Certainly not desirable!
@@ -155,14 +163,18 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 	return FALSE;
       else
       {
-	mPasswd = encryptStr(mPasswd);
+	//mPasswd = encryptStr(mPasswd);
 	passwd = decryptStr(mPasswd);
-	passwd = decryptStr(passwd);
+	//passwd = decryptStr(passwd);
       }
     }
     else
       return popError("USER", client);
   }
+
+
+  cout << "here: " << passwd << endl;
+  cout << "here2: " << decryptStr(passwd) << endl;
 
   while((replyCode =client.Pass(decryptStr(passwd))) != '+')
   {
@@ -174,15 +186,16 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
       if(!d->exec())
 	return FALSE;
       else {
-	mPasswd = encryptStr(mPasswd);
+	//mPasswd = encryptStr(mPasswd);
 	passwd = decryptStr(mPasswd);
-	passwd = decryptStr(passwd);
+	//passwd = decryptStr(passwd);
       }
     }
     else
       return popError("PASS", client);
   }
-  
+  cout << "after pass\n";
+
   if (client.Stat() != '+') return popError("STAT", client);
   response = client.SingleLineResponse().c_str();
   sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
@@ -299,7 +312,8 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
   }
 
   QString tmp;
-  tmp.sprintf(i18n("Account: %s\nIn %s:\n%s"), name().data(), aStage.data(),msg.data());
+  tmp.sprintf(i18n("Account: %s\nIn %s:\n%s"), name().data(), 
+	      aStage.data(),msg.data());
   KMsgBox::message(0, caption, tmp);
   //kbp->busy();
   aClient.Quit();
@@ -311,6 +325,7 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 void KMAcctPop::readConfig(KConfig& config)
 {
   KMAcctPopInherited::readConfig(config);
+
 
   mLogin = config.readEntry("login", "");
   mStorePasswd = config.readNumEntry("store-passwd", TRUE);

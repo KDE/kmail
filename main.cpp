@@ -429,9 +429,15 @@ main(int argc, char *argv[])
 
   if (!mailto)
   {
-    mainWin = new KMMainWin;
-    assert( mainWin != NULL);
-    mainWin->show();
+
+    if(kapp->isRestored())
+      RESTORE(KMMainWin)
+	else 
+	  {
+	  mainWin = new KMMainWin;
+	  assert( mainWin != NULL);
+	  mainWin->show();  
+	  }
   }
 
   if (checkNewMail) acctMgr->checkMail();

@@ -1,3 +1,8 @@
+1998-07-22  Markus Wuebben  <markus@kde.org>
+
+	* main.cpp Applied session management patch.
+ 	* kmfolder.cpp Applied fseek patch for solaris
+
 1998-07-03  Stefan Taferner  <taferner@kde.org>
 
 	* PGP: fixed crash when no ~/.pgp/pubring.pgp is installed
