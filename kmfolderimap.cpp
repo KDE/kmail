@@ -482,7 +482,7 @@ QPtrList<KMMessage> KMFolderImap::splitMessageList(const QString& set,
     {
       // append the msg to the new list and delete it from the old
       temp_msgs.append(msg);
-      uid = msg->UID();
+      uid.setNum( msg->UID() );
       // remove modifies the current
       msgList.remove(msg);
       if (uid == last_uid) break;
