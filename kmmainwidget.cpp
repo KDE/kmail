@@ -15,6 +15,7 @@
 
 #include <kmessagebox.h>
 
+#include <kaccelmanager.h>
 #include <kglobalsettings.h>
 #include <kstdaccel.h>
 #include <kkeydialog.h>
@@ -1972,6 +1973,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     mTrashAction->plug( menu );
     mDeleteAction->plug( menu );
   }
+  KAcceleratorManager::manage(menu);
   menu->exec(aPoint, 0);
   delete menu;
 }

@@ -22,6 +22,7 @@ using KMail::ActionScheduler;
 using namespace KPIM;
 
 #include <kapplication.h>
+#include <kaccelmanager.h>
 #include <kglobalsettings.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
@@ -2454,7 +2455,8 @@ void KMHeaders::slotRMB()
 
   mOwner->action("apply_filter_actions")->plug(menu);
 
-  menu->exec (QCursor::pos(), 0);
+  KAcceleratorManager::manage(menu);
+  menu->exec(QCursor::pos(), 0);
   delete menu;
 }
 
