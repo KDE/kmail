@@ -219,7 +219,12 @@ kdDebug(5006) << "html" << endl;
                 if( 0 <= i ) cstr.truncate(i);
               }
               // ---Sven's strip </BODY> and </HTML> from end of attachment end-
+              
+              if( !htmlMail() )
+                writeHTMLStr( "<pre>" );
               writeHTMLStr(mCodec->toUnicode( cstr ));
+              if( !htmlMail() )
+                writeHTMLStr( "</pre>" );
               bDone = true;
             }
             break;
