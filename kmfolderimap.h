@@ -267,9 +267,10 @@ public:
 
   /**
    * Mark the folder as already removed from the server
-   * If the folder is removed the server will not be queried anymore
+   * If set to true the folder will only be deleted locally
+   * This will recursively be applied to all children
    */
-  void setAlreadyRemoved(bool removed) { mAlreadyRemoved = removed; }
+  void setAlreadyRemoved(bool removed);
 
   /// Is the folder readonly?
   bool isReadOnly() const { return KMFolderMbox::isReadOnly() || mReadOnly; }

@@ -185,7 +185,8 @@ void KMFolderImap::writeConfig()
 //-----------------------------------------------------------------------------
 void KMFolderImap::remove()
 {
-  if (mAlreadyRemoved || !mAccount) {
+  if ( mAlreadyRemoved || !mAccount ) 
+  {
     // override
     FolderStorage::remove();
     return;
@@ -608,7 +609,7 @@ void KMFolderImap::slotListResult( const QStringList& subfolderNames_,
       if (!node->isDir() && (node->name().upper() != "INBOX" || !createInbox)
           && subfolderNames.findIndex(node->name()) == -1)
       {
-        kdDebug(5006) << node->name() << " disappeared." << endl;
+        kdDebug(5006) << node->name() << " disappeared" << endl;
         // remove the folder without server round trip
         KMFolder* fld = static_cast<KMFolder*>(node);
         static_cast<KMFolderImap*>(fld->storage())->setAlreadyRemoved(true);
@@ -1775,6 +1776,25 @@ void KMFolderImap::setIncludeInMailCheck( bool check )
   mCheckMail = check;
   if ( changed )
     account()->slotUpdateFolderList();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::setAlreadyRemoved( bool removed )
+{
+  mAlreadyRemoved = removed;
+  if ( folder()->child() )
+  {
+    // pass through to childs
+    KMFolderNode* node;
+    QPtrListIterator<KMFolderNode> it( *folder()->child() );
+    for ( ; (node = it.current()); )
+    {
+      ++it;
+      if (node->isDir()) continue;
+      KMFolder *folder = static_cast<KMFolder*>(node);
+      static_cast<KMFolderImap*>(folder->storage())->setAlreadyRemoved( removed );
+    }
+  }
 }
 
 #include "kmfolderimap.moc"
