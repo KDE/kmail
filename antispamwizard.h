@@ -106,12 +106,16 @@ namespace KMail {
     protected:
       /** Evaluate the settings made and create the appropriate filter rules. */
       void accept();
+      /** Check for the availability of an executible along the PATH */
+      int checkForProgram( QString executable );
 
     protected slots:
       /** Modify the status of the wizard to reflect the selection of spam tools. */
       void checkProgramsSelections();
       /** Modify the status of the wizard to reflect the selected functionality. */
       void checkRulesSelections();
+      /** Check if the spam tools are available via the PATH */
+      void checkToolAvailability();
 
     private:
       /* The pages in the wizard */
@@ -199,6 +203,7 @@ namespace KMail {
                          SpamToolConfigList &toolList );
 
       bool isProgramSelected( const QString &visibleName );
+      void setProgramAsFound( const QString &visibleName, bool found );
 
     private slots:
       void processSelectionChange();

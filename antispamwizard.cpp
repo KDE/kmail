@@ -102,7 +102,7 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
     kdDebug(5006) << "Learn ham command: " << (*it).getHamCmd() << endl;
     kdDebug(5006) << "Detection header: " << (*it).getDetectionHeader() << endl;
     kdDebug(5006) << "Detection pattern: " << (*it).getDetectionPattern() << endl;
-    kdDebug(5006) << "Use as RegExp: " << (*it).isUseRegExp() << endl << endl;
+    kdDebug(5006) << "Use as RegExp: " << (*it).isUseRegExp() << endl;
     kdDebug(5006) << "Supports Bayes Filter: " << (*it).useBayesFilter() << endl << endl;
     it++;
   }
@@ -125,6 +125,8 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
 
   setNextEnabled( programsPage, false );
   setNextEnabled( rulesPage, false );
+  
+  QTimer::singleShot( 1000, this, SLOT( checkToolAvailability( void ) ) );
 }
 
 
@@ -412,15 +414,26 @@ void AntiSpamWizard::checkRulesSelections()
 }
 
 
-//---------------------------------------------------------------------------
-int checkForProgram( const char *program )
+void AntiSpamWizard::checkToolAvailability()
 {
-  QString executable( program );
-  QString result;
+  KCursorSaver busy(KBusyPtr::busy()); // this can take some time to find the tools
 
+  // checkboxes for the tools
+  QValueListIterator<SpamToolConfig> it = toolList.begin();
+  while ( it != toolList.end() )
+  {
+    int rc = checkForProgram( (*it).getExecutable() );
+    programsPage->setProgramAsFound( (*it).getVisibleName(), !rc );
+    it++;
+  }
+}
+
+
+int AntiSpamWizard::checkForProgram( QString executable )
+{
+  kdDebug(5006) << "Testing for executable:" << executable << endl;
   KProcess process;
   process << executable;
-  process << "-V";
   process.setUseShell( true );
   process.start( KProcess::Block );
   return process.exitStatus();
@@ -466,24 +479,12 @@ ASWizProgramsPage::ASWizProgramsPage( QWidget * parent, const char * name,
 {
   QGridLayout *grid = new QGridLayout( this, 3, 1, KDialog::marginHint(),
                                         KDialog::spacingHint() );
-  QString foundText( i18n("(found on this system)") );
-  QString notFoundText( i18n("(not found on this system)") );
-  int row = 0;
-
-  KCursorSaver busy(KBusyPtr::busy()); // this can take some time to find the tools
-
   // checkboxes for the tools
+  int row = 0;
   QValueListIterator<SpamToolConfig> it = toolList.begin();
   while ( it != toolList.end() )
   {
-    int rc = checkForProgram( (*it).getExecutable().ascii() );
-    QString labelText = (*it).getVisibleName();
-    labelText += " ";
-    if ( !rc )
-      labelText += foundText;
-    else
-      labelText += notFoundText;
-    QCheckBox *box = new QCheckBox( labelText, this );
+    QCheckBox *box = new QCheckBox( (*it).getVisibleName(), this );
     QWhatsThis::add( box, (*it).getWhatsThisText() );
     grid->addWidget( box, row++, 0 );
     connect( box, SIGNAL(clicked()),
@@ -510,6 +511,24 @@ bool ASWizProgramsPage::isProgramSelected( const QString &visibleName )
     return programDict[visibleName]->isChecked();
   else
     return false;
+}
+
+
+void ASWizProgramsPage::setProgramAsFound( const QString &visibleName, bool found )
+{
+  QCheckBox * box = programDict[visibleName];
+  if ( box )
+  {
+    QString foundText( i18n("(found on this system)") );
+    QString notFoundText( i18n("(not found on this system)") );
+    QString labelText = visibleName;
+    labelText += " ";
+    if ( found )
+      labelText += foundText;
+    else
+      labelText += notFoundText;
+    box->setText( labelText );
+  }
 }
 
 
