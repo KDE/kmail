@@ -40,7 +40,7 @@ namespace KMail {
 FolderIface::FolderIface( const QString& vpath )
   : DCOPObject( "FolderIface" ), mPath( vpath )
 {
-    kdDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
+    //kdDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
     mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
     if ( !mFolder )
       mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
