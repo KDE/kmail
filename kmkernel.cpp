@@ -422,6 +422,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !body.isEmpty() ) msg->setBody(body.utf8());
 
   bool iCalAutoSend = false;
+  bool noWordWrap = false;
   KConfigGroup options( config(), "Groupware" );
   if (  !attachData.isEmpty() ) {
     if ( attachName == "cal.ics" && attachType == "text" &&
@@ -436,6 +437,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
       // Don't show the composer window, if the automatic sending is checked
       iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
+      noWordWrap = true; // we shant word wrap inline invitations
     } else {
       // Just do what we're told to do
       msgPart = new KMMessagePart;
@@ -456,7 +458,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   KMComposeWin *cWin = new KMComposeWin( msg );
   cWin->setAutoDelete( true );
-  if( iCalAutoSend )
+  if( noWordWrap )
     cWin->slotWordWrapToggled( false );
   else
     cWin->setCharset( "", true );
