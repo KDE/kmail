@@ -556,7 +556,7 @@ AccountsPage::AccountsPage( QWidget * parent, const char * name )
 }
 
 QString AccountsPage::SendingTab::helpAnchor() const {
-  return QString::fromLatin1("configure-network-sending");
+  return QString::fromLatin1("configure-accounts-sending");
 }
 
 AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * name )
@@ -799,7 +799,7 @@ void AccountsPage::SendingTab::slotAddTransport()
     typeDisplayName = transportInfo->type;
   else
     typeDisplayName = i18n("%1: type of transport. Result used in "
-			   "Configure->Network->Sending listview, \"type\" "
+			   "Configure->Accounts->Sending listview, \"type\" "
 			   "column, first row, to indicate that this is the "
 			   "default transport", "%1 (Default)")
       .arg( transportInfo->type );
@@ -906,7 +906,7 @@ void AccountsPage::SendingTab::slotTransportUp()
   else
     // first:
     above->setText( 1, i18n("%1: type of transport. Result used in "
-			    "Configure->Network->Sending listview, \"type\" "
+			    "Configure->Accounts->Sending listview, \"type\" "
 			    "column, first row, to indicate that this is the "
 			    "default transport", "%1 (Default)")
 		    .arg( ti->type ) );
@@ -941,7 +941,7 @@ void AccountsPage::SendingTab::slotTransportDown()
     item->setText( 1, ti2->type );
   else
     item->setText( 1, i18n("%1: type of transport. Result used in "
-			   "Configure->Network->Sending listview, \"type\" "
+			   "Configure->Accounts->Sending listview, \"type\" "
 			   "column, first row, to indicate that this is the "
 			   "default transport", "%1 (Default)")
 		   .arg( ti2->type ) );
@@ -974,7 +974,7 @@ void AccountsPage::SendingTab::load() {
   QListViewItem *listItem = mTransportList->firstChild();
   if ( listItem ) {
     listItem->setText( 1, i18n("%1: type of transport. Result used in "
-			       "Configure->Network->Sending listview, "
+			       "Configure->Accounts->Sending listview, "
 			       "\"type\" column, first row, to indicate "
 			       "that this is the default transport",
 			       "%1 (Default)").arg( listItem->text(1) ) );
@@ -1030,7 +1030,7 @@ void AccountsPage::SendingTab::save() {
 }
 
 QString AccountsPage::ReceivingTab::helpAnchor() const {
-  return QString::fromLatin1("configure-network-receiving");
+  return QString::fromLatin1("configure-accounts-receiving");
 }
 
 AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char * name )
