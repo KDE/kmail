@@ -678,7 +678,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
     kdDebug() << "Data: <End>" << endl;
-    if (numMsgBytesRead < curMsgLen)
+    if ((stage == Retr) && (numMsgBytesRead < curMsgLen))
       numBytesRead += curMsgLen - numMsgBytesRead;
     return;
   }
