@@ -195,6 +195,14 @@ void KMSearch::stop()
         QValueListConstIterator<QGuardedPtr<KMFolder> > jt;
         for ( jt = mOpenedFolders.begin(); jt != mOpenedFolders.end(); ++jt ) {
             KMFolder *folder = *jt;
+            // explicitely stop jobs for this folder as it will not be closed below
+            // when the folder is currently selected
+            if ( folder && folder->folderType() == KMFolderTypeImap ) {
+                KMAcctImap *account =
+                    static_cast<KMFolderImap*>( folder->storage() )->account();
+                if( account )
+                    account->ignoreJobsForFolder( folder );
+            }
             if (folder)
                 folder->close();
         }
@@ -235,8 +243,13 @@ void KMSearch::slotProcessNextBatch()
 
 void KMSearch::slotSearchFolderDone( KMFolder* folder, QValueList<Q_UINT32> serNums )
 {
+    disconnect( folder->storage(), 
+            SIGNAL( searchDone( KMFolder*, QValueList<Q_UINT32> ) ),
+            this,
+            SLOT( slotSearchFolderDone( KMFolder*, QValueList<Q_UINT32> ) ) );
     kdDebug(5006) << k_funcinfo << folder->label() << " found " << serNums.count() << endl;
     --mRemainingFolders;
+    mLastFolder = folder->label();
     mSearchedCount += folder->count();
     folder->close();
     mOpenedFolders.remove( folder );
@@ -404,7 +417,7 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
     }
     mSerNums.append(serNum);
     KMMsgBase *mb = aFolder->getMsgBase(idx);
-    if (mb->isUnread() || mb->isNew()) {
+    if (mb && (mb->isUnread() || mb->isNew())) {
        if (mUnreadMsgs == -1)
            mUnreadMsgs = 0;
        ++mUnreadMsgs;
@@ -950,7 +963,7 @@ void KMFolderSearch::examineRemovedMessage(KMFolder *folder, Q_UINT32 serNum)
     }
 
     if (mSearch->running()) {
-        mSearch->stop();
+//        mSearch->stop();
         mExecuteSearchTimer->start(0, true);
     } else {
         removeSerNum(serNum);

@@ -441,6 +441,11 @@ protected slots:
    */ 
   void slotSearchData( KIO::Job * job, const QString& data );
   void slotSearchResult( KIO::Job * job );
+
+  /**
+   * Called when a msg was downloaded for local search
+   */
+  void slotSearchMessageArrived( KMMessage* msg );
   
 protected:
   QString     mImapPath;
@@ -464,6 +469,14 @@ private:
   QStringList mFoldersPendingCreation;
   // remember the SearchPattern
   KMSearchPattern* mLastSearchPattern;
+  // saves the patterns that are used for local search
+  KMSearchPattern* mLocalSearchPattern;
+  // saves the results of the imap search
+  QString mImapSearchData;
+  // collects the serial numbers from imap and local search
+  QValueList<Q_UINT32> mSearchSerNums;
+  // the remaining messages that have to be downloaded for local search
+  uint mRemainingMsgs;
 };
 
 #endif // kmfolderimap_h
