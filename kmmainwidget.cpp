@@ -361,7 +361,7 @@ void KMMainWidget::readConfig(void)
       KMSystemTray::AlwaysOn;
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
     // startup-Folder, defaults to system-inbox
-    mStartupFolder = config->readEntry("startupFolder", kernel->inboxFolder()->idString());
+	mStartupFolder = config->readEntry("startupFolder", kernel->inboxFolder()->idString());
   }
 
   // Re-activate panners
@@ -473,8 +473,6 @@ void KMMainWidget::writeConfig(void)
 
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("encoding", QString(mEncodingStr));
-  // TODO: change that via GUI in 3.2 (cb)
-  config->writeEntry("startupFolder", mStartupFolder);
 }
 
 
@@ -2746,6 +2744,7 @@ void KMMainWidget::slotShowStartupFolder()
     startup = kernel->inboxFolder();
   }
   mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(startup));
+  mFolderTree->ensureItemVisible(mFolderTree->indexOfFolder(startup));
 }
 
 void KMMainWidget::slotShowTipOnStart()

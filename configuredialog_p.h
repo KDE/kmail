@@ -865,6 +865,7 @@ protected:
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
+  KMFolderComboBox *mOnStartupOpenFolder;
 };
 
 //
