@@ -485,7 +485,7 @@ namespace KMail {
         messagePart.creationTime = *ext.creation_time;
       if (     70 > messagePart.creationTime.tm_year
           || 200 < messagePart.creationTime.tm_year
-          ||   1 > messagePart.creationTime.tm_mon
+          ||   0 > messagePart.creationTime.tm_mon
           ||  12 < messagePart.creationTime.tm_mon
           ||   1 > messagePart.creationTime.tm_mday
           ||  31 < messagePart.creationTime.tm_mday ) {
