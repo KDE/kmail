@@ -4445,10 +4445,17 @@ void KMComposeWin::slotWordWrapToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
+  bool bMessageWasModified = ( mEditor->isModified() || mEdtFrom->edited() ||
+                               mEdtReplyTo->edited() || mEdtTo->edited() ||
+                               mEdtCc->edited() || mEdtBcc->edited() ||
+                               mEdtSubject->edited() || mAtmModified ||
+                               ( mTransport->lineEdit() &&
+                                 mTransport->lineEdit()->edited() ) );
   KMReaderWin rw;
   applyChanges();
   rw.setMsg(mMsg, true);
   rw.printMsg();
+  mEditor->setModified( bMessageWasModified );
 }
 
 
