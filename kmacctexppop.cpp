@@ -657,12 +657,10 @@ void KMAcctExpPop::saveUidList()
   // a new list from the server
   if (!mUidlFinished) return;
 
-  QString uidsOfNextSeenMsgs;
+  QStringList uidsOfNextSeenMsgs;
   QDictIterator<int> it( mUidsOfNextSeenMsgsDict );
   for( ; it.current(); ++it )
-    uidsOfNextSeenMsgs += it.currentKey() + ",";
-  // cut off the last ','
-  uidsOfNextSeenMsgs.truncate( uidsOfNextSeenMsgs.length() - 1 );
+    uidsOfNextSeenMsgs.append( it.currentKey() );
   QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
 				     mHost + ":" + QString("%1").arg(mPort) );
   KConfig config( seenUidList );
