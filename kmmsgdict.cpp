@@ -167,9 +167,9 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
                                 const KMMsgBase *msg, int index)
 {
   unsigned long msn = msgSerNum;
-  if (!msn)
+  if (!msn) {
     msn = getNextMsgSerNum();
-  else {
+  } else {
     if (msn >= nextMsgSerNum)
       nextMsgSerNum = msn + 1;
   }
@@ -177,6 +177,12 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
   KMFolder *folder = msg->parent();
   if (folder && index == -1)
     index = folder->find(msg);
+  
+  // Should not happen, indicates id file corruption
+  while (dict->find((long)msn)) {
+    msn = getNextMsgSerNum();
+    folder->setDirty( true ); // rewrite id file
+  }
   
   KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
   dict->replace((long)msn, entry);
@@ -333,7 +339,11 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
   for (unsigned int index = 0; index < count; index++) {
     Q_UINT32 msn;
 
-    if (!fread(&msn, sizeof(msn), 1, fp)) {
+    bool readOk = fread(&msn, sizeof(msn), 1, fp);
+    if (swapByteOrder)
+       msn = kmail_swap_32(msn);
+    
+    if (!readOk || dict->find(msn)) {
       for (unsigned int i = 0; i < index; i++) {
         msn = rentry->getMsn(i);
         dict->remove((long)msn);
@@ -342,8 +352,6 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
       fclose(fp);
       return -1;
     }
-    if (swapByteOrder)
-       msn = kmail_swap_32(msn);
 
     //if (!msn)
       //kdDebug(5006) << "Dict found zero serial number in folder " << folder->label() << endl;

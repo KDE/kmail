@@ -1344,11 +1344,13 @@ bool KMFolder::updateIndexStreamPtr(bool)
 {
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
-  KProcess p, q;
+  KProcess p, q, r;
   p << "touch" << location();
   p.start(KProcess::Block);
   q << "touch" << indexLocation();
   q.start(KProcess::Block);
+  r << "touch" << kernel->msgDict()->getFolderIdsLocation( this );
+  r.start(KProcess::Block);
 
   mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP
