@@ -25,8 +25,7 @@
 #include <assert.h>
 
 #include <X11/Xlib.h>
-#undef KeyPress
-#undef None
+#include <fixx11h.h>
 
 //=============================================================================
 
@@ -110,7 +109,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
 
   if ( icon.isEmpty() )
     icon = "folder";
-    
+
   if (mFolder && mFolder->useCustomIcons() ) {
     icon = mFolder->normalIconPath();
   }
@@ -982,7 +981,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
       itemId = folderMenu->insertItem(i18n("&Expire"), mMainWidget,
                                       SLOT(slotExpireFolder()));
       folderMenu->setItemEnabled( itemId, fti->folder()->isAutoExpire() );
-        
+
 
       folderMenu->insertSeparator();
 
