@@ -930,6 +930,7 @@ void KMHeaders::resendMsg ()
   kernel->kbp()->busy();
   newMsg = new KMMessage;
   newMsg->fromString(msg->asString());
+  newMsg->removeHeaderField("Message-Id");
   newMsg->initHeader();
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
@@ -1338,7 +1339,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessageList* msgList;
   KMMsgBase *msgBase;
   KMMessage *msg, *newMsg;
-  int top, rc, idx;
+  int top, rc, idx = -1;
   bool isMessage;
 
   if (!destFolder) return;
@@ -1365,7 +1366,11 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 
     rc = destFolder->addMsg(newMsg);
     destFolder->unGetMsg( destFolder->count() - 1 );
-    if (!isMessage) mFolder->unGetMsg( idx );
+    if (!isMessage)
+    {
+      assert(idx != -1);
+      mFolder->unGetMsg( idx );
+    }
   }
   destFolder->close();
   kernel->kbp()->idle();
