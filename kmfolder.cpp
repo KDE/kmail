@@ -37,7 +37,7 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
     mReadExpireUnits( expireNever ),
     mExpireAction( ExpireDelete ),
     mUseCustomIcons( false ), mMailingListEnabled( false ),
-    mContentsType( 0 )
+    mContentsType( KMail::ContentsTypeMail )
 {
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
@@ -124,7 +124,9 @@ void KMFolder::readConfig( KConfig* config )
   mPutRepliesInSameFolder = config->readBoolEntry( "PutRepliesInSameFolder", false );
   mIgnoreNewMail = config->readBoolEntry( "IgnoreNewMail", false );
 
-  setContentsType( config->readNumEntry( "ContentsType", 0 ) );
+  int type = config->readNumEntry( "ContentsType", 0 );
+  if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
+  setContentsType( static_cast<KMail::FolderContentsType>( type ) );
 
   if ( mUseCustomIcons )
     emit iconsChanged();
@@ -731,10 +733,8 @@ KMFolder* KMFolder::trashFolder() const
   return mStorage ? mStorage->trashFolder() : 0;
 }
 
-void KMFolder::setContentsType( int type )
+void KMFolder::setContentsType( KMail::FolderContentsType type )
 {
-  // Damage control. Shouldn't happen to be used, but resort to mail anyway
-  if ( type < 0 || type > 5 ) type = 0;
   if ( type != mContentsType ) {
     mContentsType = type;
     kmkernel->iCalIface().folderContentsTypeChanged( this, type );

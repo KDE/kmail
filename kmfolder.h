@@ -499,8 +499,8 @@ public:
   bool ignoreNewMail() const { return mIgnoreNewMail; }
   void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
 
-  void setContentsType( int type );
-  int contentsType() const { return mContentsType; }
+  void setContentsType( KMail::FolderContentsType type );
+  KMail::FolderContentsType contentsType() const { return mContentsType; }
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -599,8 +599,7 @@ private:
   bool mIgnoreNewMail;
 
   /** Type of contents in this folder. */
-  // TODO: Make this an enum
-  int mContentsType;
+  KMail::FolderContentsType mContentsType;
 };
 
 #endif /*kmfolder_h*/

@@ -19,4 +19,19 @@ typedef enum
    KMSearchDir
 } KMFolderDirType;
 
+namespace KMail {
+
+typedef enum
+{
+  ContentsTypeMail = 0,
+  ContentsTypeCalendar,
+  ContentsTypeContact,
+  ContentsTypeNote,
+  ContentsTypeTask,
+  ContentsTypeJournal,
+  ContentsTypeLast = ContentsTypeJournal
+} FolderContentsType;
+
+}
+
 #endif // KMFOLDERTYPE_H

@@ -768,7 +768,7 @@ bool FolderDiaGeneralTab::save()
 
     // Set type field
     if ( mContentsComboBox )
-      mDlg->folder()->setContentsType( mContentsComboBox->currentItem() );
+      mDlg->folder()->setContentsType( static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() ) );
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
 
