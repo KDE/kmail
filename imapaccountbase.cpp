@@ -317,7 +317,8 @@ namespace KMail {
     // reset for a new listing
     if (reset)
       mHasInbox = false;
-    // this inboxonly switch is only needed when you set the INBOX as prefix
+    // this is needed if you have a prefix
+    // as the INBOX is located in your root ("/") and needs a special listing
     jd.inboxOnly = !secondStep && prefix() != "/"
       && path == prefix() && !mHasInbox;
     jd.onlySubscribed = onlySubscribed;
