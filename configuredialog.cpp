@@ -1027,6 +1027,10 @@ void ConfigureDialog::makeComposerPage( void )
     new QCheckBox( i18n("Automatically &sign messages using PGP"), page );
   topLevel->addWidget( mComposer.pgpAutoSignatureCheck );
 
+  mComposer.pgpAutoEncryptCheck =
+    new QCheckBox( i18n("Automatically &encrypt messages using PGP"), page );
+  topLevel->addWidget( mComposer.pgpAutoEncryptCheck );
+
   QHBoxLayout *hlay = new QHBoxLayout( topLevel );
   mComposer.wordWrapCheck =
     new QCheckBox( i18n("&Word wrap at column:"), page );
@@ -1859,6 +1863,9 @@ void ConfigureDialog::setupComposerPage( void )
     state = config->readBoolEntry( "pgp-auto-sign", false );
     mComposer.pgpAutoSignatureCheck->setChecked(state);
 
+    state = config->readBoolEntry( "pgp-auto-encrypt", false );
+    mComposer.pgpAutoEncryptCheck->setChecked(state);
+
     state = config->readBoolEntry( "word-wrap", true );
     mComposer.wordWrapCheck->setChecked( state );
 
@@ -2360,6 +2367,8 @@ void ConfigureDialog::slotDoApply( bool everything )
       config->writeEntry("smart-quote", mComposer.smartQuoteCheck->isChecked() );
       config->writeEntry("pgp-auto-sign",
 			 mComposer.pgpAutoSignatureCheck->isChecked() );
+      config->writeEntry("pgp-auto-encrypt",
+			 mComposer.pgpAutoEncryptCheck->isChecked() );
       config->writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
       config->writeEntry("break-at", mComposer.wrapColumnSpin->value() );
 

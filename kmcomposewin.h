@@ -494,7 +494,7 @@ protected:
   QListView *mAtmListBox;
   QPtrList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
-  bool mAutoSign, mAutoPgpSign, mAutoDeleteMsg;
+  bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;

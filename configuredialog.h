@@ -346,6 +346,7 @@ private:
       QCheckBox    *autoAppSignFileCheck;
       QCheckBox    *smartQuoteCheck;
       QCheckBox    *pgpAutoSignatureCheck;
+      QCheckBox    *pgpAutoEncryptCheck;
       QCheckBox    *wordWrapCheck;
       KIntNumInput *wrapColumnSpin;
       QCheckBox   *externalEditorCheck;

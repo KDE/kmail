@@ -339,6 +339,7 @@ void KMComposeWin::readConfig(void)
   if (mLineBreak < 60)
     mLineBreak = 60;
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
+  mAutoPgpEncrypt = config->readNumEntry("pgp-auto-encrypt", 0);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
 
   int mode = config->readNumEntry("Completion Mode",
@@ -892,7 +893,10 @@ void KMComposeWin::setupActions(void)
     signAction->setChecked(false);
   }
   else
+	{
+    encryptAction->setChecked(mAutoPgpEncrypt);
     signAction->setChecked(mAutoPgpSign);
+	}
 
   createGUI("kmcomposerui.rc");
 
@@ -1030,7 +1034,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     }
     else {
       attachMPK->setEnabled(true);
-      signAction->setEnabled(true);
+      signAction->setEnabled(mAutoPgpEncrypt);
       signAction->setChecked(mAutoPgpSign);
     }
   }
@@ -2390,11 +2394,15 @@ void KMComposeWin::slotIdentityActivated(int)
   }
   else {
     attachMPK->setEnabled(true);
-    // don't change the state of the sign button if the button
-    // was already enabled for the former identity
+    // don't change the state of the sign & encrypt buttons if they
+    // were already enabled for the former identity
     if (!signAction->isEnabled()) {
       signAction->setEnabled(true);
       signAction->setChecked(mAutoPgpSign);
+    }
+    if (!encryptAction->isEnabled()) {
+      encryptAction->setEnabled(true);
+      encryptAction->setChecked(mAutoPgpEncrypt);
     }
   }
 
