@@ -1,3 +1,8 @@
+1999-02-10  Stefan Taferner  <taferner@kde.org>
+
+	* Bugfix: filter-dialog: up/down moving (esp. of last entry)
+	now works properly
+
 1999-02-06  Stefan Taferner  <taferner@kde.org> (KMail-1.1.0)
 
 	* Added missing parts of documentation for proper install.
