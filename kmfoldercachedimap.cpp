@@ -54,7 +54,6 @@ using KMail::CachedImapJob;
 #include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 #include "listjob.h"
-using KMail::ListJob;
 
 #include <kapplication.h>
 #include <kmessagebox.h>
@@ -1405,7 +1404,7 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  ListJob* job = new ListJob( this, mAccount, type, secondStep,
+  KMail::ListJob* job = new KMail::ListJob( this, mAccount, type, secondStep,
       false, mAccount->hasInbox() );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),

@@ -41,7 +41,6 @@ using KMail::AttachmentStrategy;
 using KPIM::ProgressItem;
 using KPIM::ProgressManager;
 #include "listjob.h"
-using KMail::ListJob;
 #include "kmsearchpattern.h"
 #include "searchjob.h"
 using KMail::SearchJob;
@@ -583,7 +582,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  ListJob* job = new ListJob( this, mAccount, type, secondStep,
+  KMail::ListJob* job = new KMail::ListJob( this, mAccount, type, secondStep,
       false, mAccount->hasInbox(), QString::null, account()->listDirProgressItem() );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
