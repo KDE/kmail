@@ -75,6 +75,10 @@ protected:
       ComboBox. Returns the index if found or -1 if the search failed, */
   int indexOfRuleField(const QString aName) const;
 
+protected slots:
+  void editRegExp();
+  void functionChanged( int which );
+
 private:
   void initWidget();
   void initLists(bool headersOnly) const;
@@ -82,6 +86,8 @@ private:
   QComboBox* mRuleField;
   QComboBox* mRuleFunc;
   QLineEdit* mRuleValue;
+  QPushButton* mRuleEditBut;
+  QDialog* mRegExpEditDialog;
 };
 
 

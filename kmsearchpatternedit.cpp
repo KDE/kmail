@@ -14,6 +14,10 @@
 #include <qstringlist.h>
 
 #include <assert.h>
+#include <kparts/componentfactory.h>
+#include <kregexpeditorinterface.h>
+#include <qpushbutton.h>
+#include <qdialog.h>
 
 static QStringList sFilterFieldList, sFilterFuncList;
 
@@ -43,6 +47,15 @@ void KMSearchRuleWidget::initWidget()
   mRuleFunc = new QComboBox( false, this, "mRuleFunc" );
   mRuleValue = new QLineEdit( this, "mRuleValue" );
 
+	mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>("KRegExpEditor/KRegExpEditor", QString::null, this );
+	if( mRegExpEditDialog )
+	{
+    mRuleEditBut = new QPushButton( i18n("Edit"), this, "mRuleEditBut" );
+    connect( mRuleEditBut, SIGNAL( clicked() ), this, SLOT( editRegExp()));
+    connect( mRuleFunc, SIGNAL( activated(int) ), this, SLOT( functionChanged(int) ) );
+    functionChanged( mRuleFunc->currentItem() );
+	}
+
   mRuleFunc->insertStringList(sFilterFuncList);
   mRuleFunc->adjustSize();
 
@@ -56,6 +69,22 @@ void KMSearchRuleWidget::initWidget()
   connect( mRuleValue, SIGNAL(textChanged(const QString &)),
 	   this, SIGNAL(contentsChanged(const QString &)) );
 }
+
+void KMSearchRuleWidget::editRegExp()
+{
+  KRegExpEditorInterface *iface = dynamic_cast<KRegExpEditorInterface *>( mRegExpEditDialog );
+  if( iface ) {
+    iface->setRegExp( mRuleValue->text() );
+    if( mRegExpEditDialog->exec() == QDialog::Accepted )
+	    mRuleValue->setText( iface->regExp() );
+  }  
+}
+
+void KMSearchRuleWidget::functionChanged( int which ) 
+{
+  mRuleEditBut->setEnabled( which == 4 || which == 5 );
+}
+
 
 void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
 {
