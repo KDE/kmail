@@ -2326,12 +2326,12 @@ kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type to
            attachPart = mAtmList.next(), ++idx ) {
 kdDebug(5006) << "                                 processing " << idx << ". attachment" << endl;
 
-        bool cryptFlagsDifferent = mSelectedCryptPlug
+        const bool cryptFlagsDifferent = mSelectedCryptPlug
                         ? (    (encryptFlagOfAttachment( idx ) != doEncrypt)
                             || (signFlagOfAttachment(    idx ) != doSign) )
                         : false;
-        bool encryptThisNow = cryptFlagsDifferent ? encryptFlagOfAttachment( idx ) : false;
-        bool signThisNow    = cryptFlagsDifferent ? signFlagOfAttachment(    idx ) : false;
+        const bool encryptThisNow = !mNeverEncrypt && ( cryptFlagsDifferent ? encryptFlagOfAttachment( idx ) : false );
+        const bool signThisNow    = !mNeverSign && ( cryptFlagsDifferent ? signFlagOfAttachment(    idx ) : false );
 
         if( cryptFlagsDifferent || !earlyAddAttachments ) {
 
