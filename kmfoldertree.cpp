@@ -104,17 +104,20 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       default:
         icon = "folder";break;
     }
-  } else if ( mFolder->isSystemFolder() ) {
+  } else {
+    // special folders
     switch ( type() ) {
       case Inbox: icon = "folder_inbox"; break;
       case Outbox: icon = "folder_outbox"; break;
       case SentMail: icon = "folder_sent_mail"; break;
       case Trash: icon = "trashcan_empty"; break;
-      default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
       case Drafts: icon = "edit";break;
+      default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
     }
-  } else if ( protocol() == KMFolderTreeItem::Search) {
-    icon = "mail_find";
+    // non-root search folders
+    if ( protocol() == KMFolderTreeItem::Search) {
+      icon = "mail_find";
+    }
   }
 
   if ( icon.isEmpty() )
@@ -138,7 +141,9 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
 {
   QPixmap pm;
 
-  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder() )
+  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder()
+    || kmkernel->folderIsTrash( mFolder )
+    || kmkernel->folderIsDraftOrOutbox( mFolder ) )
     pm = normalIcon( size );
 
   KIconLoader * il = KGlobal::instance()->iconLoader();
@@ -165,23 +170,31 @@ void KMFolderTreeItem::init()
 
   if ( depth() == 0 )
     setType(Root);
-  else if (mFolder->isSystemFolder()) {
-    if (mFolder == kmkernel->inboxFolder()
-        || mFolder->folderType() == KMFolderTypeImap
-        || mFolder->folderType() == KMFolderTypeCachedImap)
-      setType(Inbox);
-    else if (mFolder == kmkernel->outboxFolder())
-      setType(Outbox);
-    else if (mFolder == kmkernel->sentFolder())
-      setType(SentMail);
-    else if (mFolder == kmkernel->draftsFolder())
-      setType(Drafts);
-    else if (mFolder == kmkernel->trashFolder())
-      setType(Trash);
-    else if(kmkernel->iCalIface().isResourceImapFolder(mFolder))
-      setType(kmkernel->iCalIface().folderType(mFolder));
-  } else
-    setRenameEnabled(0, false);
+  else {
+    if ( mFolder == kmkernel->inboxFolder() )
+      setType( Inbox );
+    else if ( kmkernel->folderIsDraftOrOutbox( mFolder ) ) {
+      if ( mFolder == kmkernel->outboxFolder() )
+        setType( Outbox );
+      else
+        setType( Drafts );
+    }
+    else if ( kmkernel->folderIsSentMailFolder( mFolder ) )
+      setType( SentMail );
+    else if ( kmkernel->folderIsTrash( mFolder ) )
+      setType( Trash );
+    else if( kmkernel->iCalIface().isResourceImapFolder(mFolder) )
+      setType( kmkernel->iCalIface().folderType(mFolder) );
+    // System folders on dimap or imap which are not resource folders are
+    // inboxes. Urgs.
+    if ( mFolder->isSystemFolder() &&
+        !kmkernel->iCalIface().isResourceImapFolder( mFolder) &&
+         ( mFolder->folderType() == KMFolderTypeImap
+        || mFolder->folderType() == KMFolderTypeCachedImap ) )
+      setType( Inbox );
+  }
+  if ( !mFolder->isSystemFolder() )
+    setRenameEnabled( 0, false );
 }
 
 void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
