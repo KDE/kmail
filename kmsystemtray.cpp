@@ -310,11 +310,13 @@ void KMSystemTray::showKMail()
   {
     /** Force window to grab focus */
     mainWin->show();
+    KWin::deIconifyWindow( mainWin->winId() );
     mainWin->raise();
     mParentVisible = true;
     /** Switch to appropriate desktop */
-    int desk = KWin::info(mainWin->winId()).desktop;
-    KWin::setCurrentDesktop(desk);
+    int desk = KWin::windowInfo( mainWin->winId(), NET::WMDesktop ).desktop();
+    if ( desk != NET::OnAllDesktops )
+      KWin::setCurrentDesktop(desk);
   }
 }
 
@@ -326,7 +328,7 @@ void KMSystemTray::hideKMail()
   assert(mainWin);
   if(mainWin)
   {
-    mainWin->hide();
+    KWin::iconifyWindow( mainWin->winId() );
     mParentVisible = false;
   }
 }
