@@ -5730,7 +5730,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
 
       mTempFile->setAutoDelete(true);
 
-      fprintf(mTempFile->fstream(), "%s", (const char *)text().local8Bit());
+      (*mTempFile->textStream()) << text();
 
       mTempFile->close();
       // replace %f in the system line
