@@ -104,7 +104,7 @@ public:
   //FIXME: wtf? member variables in the public interface:
   KAction *trashAction, *deleteAction, *saveAsAction, *editAction,
     *sendAgainAction, *mForwardAction, *mForwardAttachedAction,
-    *applyFiltersAction;
+    *applyFiltersAction, *findInMessageAction;
   KActionMenu *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu, *mForwardActionMenu,
     *applyFilterActionsMenu;
@@ -337,7 +337,7 @@ protected:
   KMFldSearch *searchWin;
 
   KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
-      *compactFolderAction, *refreshFolderAction, *emptyFolderAction, 
+      *compactFolderAction, *refreshFolderAction, *emptyFolderAction,
       *markAllAsReadAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *folderAction, *headerAction, *mimeAction;

@@ -1959,7 +1959,7 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&Find Messages..."), "mail_find", Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
 
-  (void) new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
+  findInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
 
   (void) new KAction( i18n("Select &All Messages"), Key_K, this,
@@ -2555,6 +2555,7 @@ void KMMainWidget::updateMessageActions()
     copyActionMenu->setEnabled( mass_actions );
     trashAction->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
+    findInMessageAction->setEnabled( mass_actions );
     forwardAction()->setEnabled( mass_actions );
     forwardAttachedAction()->setEnabled( mass_actions );
 
