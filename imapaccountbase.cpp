@@ -250,8 +250,8 @@ namespace KMail {
 
   void ImapAccountBase::postProcessNewMail( KMFolder * folder ) {
 
-    disconnect( folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-		this, SLOT(postProcessNewMail(KMFolder*)) );
+    disconnect( folder->storage(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+                this, SLOT(postProcessNewMail(KMFolder*)) );
 
     mCountRemainChecks--;
 
