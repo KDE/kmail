@@ -63,7 +63,7 @@ namespace KMail {
     void readColorConfig();
 
     // returns CSS rules specific to the print media type
-    QString printCssDefinitions() const;
+    QString printCssDefinitions( bool fixed ) const;
 
     // returns CSS rules specific to the screen media type
     QString screenCssDefinitions( const CSSHelper * helper, bool fixed ) const;
@@ -72,7 +72,8 @@ namespace KMail {
     QString commonCssDefinitions() const;
 
     QFont bodyFont( bool fixed, bool print=false ) const {
-      return fixed ? mFixedFont : print ? mPrintFont : mBodyFont ;
+      return fixed ? ( print ? mFixedPrintFont : mFixedFont )
+                   : ( print ? mPrintFont : mBodyFont );
     }
     int fontSize( bool fixed, bool print=false ) const {
       return bodyFont( fixed, print ).pointSize();
@@ -81,7 +82,7 @@ namespace KMail {
     QString quoteFontTag( int level ) const;
 
   private:
-    QFont mBodyFont, mPrintFont, mFixedFont;
+    QFont mBodyFont, mPrintFont, mFixedFont, mFixedPrintFont;
     QFont mQuoteFont[3];
     QColor mQuoteColor[3];
     bool mRecycleQuoteColors;
@@ -107,6 +108,7 @@ namespace KMail {
       mBodyFont == other.mBodyFont &&
       mPrintFont == other.mPrintFont &&
       mFixedFont == other.mFixedFont &&
+      mFixedPrintFont == other.mFixedPrintFont &&
       mRecycleQuoteColors == other.mRecycleQuoteColors &&
       mBackingPixmapOn == other.mBackingPixmapOn &&
       mBackingPixmapStr == other.mBackingPixmapStr &&
@@ -237,16 +239,18 @@ namespace KMail {
     }
 
     QFont defaultFont = KGlobalSettings::generalFont();
+    QFont defaultFixedFont = KGlobalSettings::fixedFont();
     if ( fonts.readBoolEntry( "defaultFonts", true ) ) {
       mBodyFont = mPrintFont = defaultFont;
-      mFixedFont = KGlobalSettings::fixedFont();
+      mFixedFont = mFixedPrintFont = defaultFixedFont;
       defaultFont.setItalic( true );
       for ( int i = 0 ; i < 3 ; ++i )
         mQuoteFont[i] = defaultFont;
     } else {
       mBodyFont = fonts.readFontEntry(  "body-font",  &defaultFont);
       mPrintFont = fonts.readFontEntry( "print-font", &defaultFont);
-      mFixedFont = fonts.readFontEntry( "fixed-font", &defaultFont);
+      mFixedFont = fonts.readFontEntry( "fixed-font", &defaultFixedFont);
+      mFixedPrintFont = mFixedFont; // FIXME when we have a separate fixed print font
       defaultFont.setItalic( true );
       for ( int i = 0 ; i < 3 ; ++i ) {
         const QString key = QString( "quote%1-font" ).arg( i+1 );
@@ -298,7 +302,7 @@ namespace KMail {
       "}\n"
       "@media print {\n\n"
       +
-      d->printCssDefinitions()
+      d->printCssDefinitions( fixed )
       +
       "}\n";
   }
@@ -307,8 +311,7 @@ namespace KMail {
     return
       "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
       "<html><head><title></title></head>\n"
-      +
-      QString( fixed ? "<body class\"fixedfont\">\n" : "<body>\n" );
+      "<body>\n";
   }
 
   QString CSSHelper::Private::quoteFontTag( int level ) const {
@@ -341,17 +344,18 @@ namespace KMail {
     }
   }
 
-  QString CSSHelper::Private::printCssDefinitions() const {
+  QString CSSHelper::Private::printCssDefinitions( bool fixed ) const {
     const QString headerFont = QString( "  font-family: \"%1\" ! important;\n"
                                         "  font-size: %2pt ! important;\n" )
                            .arg( mPrintFont.family() )
                            .arg( mPrintFont.pointSize() );
     const QColorGroup & cg = QApplication::palette().active();
 
+    const QFont printFont = bodyFont( fixed, true /* print */ );
     QString quoteCSS;
-    if ( mPrintFont.italic() )
+    if ( printFont.italic() )
       quoteCSS += "  font-style: italic ! important;\n";
-    if ( mPrintFont.bold() )
+    if ( printFont.bold() )
       quoteCSS += "  font-weight: bold ! important;\n";
     if ( !quoteCSS.isEmpty() )
       quoteCSS = "div.noquote {\n" + quoteCSS + "}\n\n";
@@ -363,8 +367,8 @@ namespace KMail {
                "  color: #000000 ! important;\n"
                "  background-color: #ffffff ! important\n"
                "}\n\n" )
-      .arg( mPrintFont.family(),
-            QString::number( mPrintFont.pointSize() ) )
+      .arg( printFont.family(),
+            QString::number( printFont.pointSize() ) )
       +
       QString( "tr.textAtmH,\n"
                "tr.rfc822H,\n"
