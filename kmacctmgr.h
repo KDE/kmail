@@ -91,6 +91,8 @@ signals:
                     const QMap<QString, int> & newInFolder );
   /** emitted when an account is removed */
   void accountRemoved( KMAccount* account );
+  /** emitted when an account is added */
+  void accountAdded( KMAccount* account );
 
 private:
   KMAcctList   mAcctList;

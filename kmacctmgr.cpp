@@ -234,8 +234,10 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName, uint id
 //-----------------------------------------------------------------------------
 void KMAcctMgr::add(KMAccount *account)
 {
-  if (account)
-    mAcctList.append(account);
+  if (account) {
+    mAcctList.append( account );
+    emit accountAdded( account );
+  }
 }
 
 
