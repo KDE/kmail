@@ -227,7 +227,10 @@ int KMFolder::create()
   assert(name() != "");
   assert(mOpenCount == 0);
 
-  if (access(location(), F_OK) == 0) return EEXIST;
+  if (access(location(), F_OK) == 0) {
+    debug("KMFolder::create call to access function failed.");
+    return EEXIST;
+  }
 
   old_umask = umask(077);
   mStream = fopen(location(), "w+"); //sven; open RW

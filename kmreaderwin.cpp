@@ -126,34 +126,39 @@ void KMReaderWin::readConfig(void)
 #ifdef KRN
   config->setGroup("ArticleListOptions");
 #endif
-  QColor c1=QColor(app->palette().normal().text());
-  QColor c2=QColor("blue");
-  QColor c3=QColor("red");
-  QColor c4=QColor(app->palette().normal().base());
+  c1 = QColor(app->palette().normal().text());
+  c2 = QColor("blue");
+  c3 = QColor("red");
+  c4 = QColor(app->palette().normal().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
-   mViewer->setDefaultBGColor(config->readColorEntry("BackgroundColor",&c4));
-   mViewer->setDefaultTextColors(config->readColorEntry("ForegroundColor",&c1),
-				 config->readColorEntry("LinkColor",&c2),
-				 config->readColorEntry("FollowedColor",&c3));
+    c4 = config->readColorEntry("BackgroundColor",&c4);
+    c1 = config->readColorEntry("ForegroundColor",&c1);
+    c2 = config->readColorEntry("LinkColor",&c2);
+    c3 = config->readColorEntry("FollowedColor",&c3);
+    mViewer->setDefaultBGColor(c4);
+    mViewer->setDefaultTextColors(c1,c2,c3);
   }
   else {
-   mViewer->setDefaultBGColor(c4);
-   mViewer->setDefaultTextColors(c1,c2,c3);
+    mViewer->setDefaultBGColor(c4);
+    mViewer->setDefaultTextColors(c1,c2,c3);
   }
-   
+  
 #ifndef KRN
-  int i, fntSize=0, diff;
+  int i, diff;
+  fntSize = 0;
   // --- sven's get them font sizes right! start ---
   config->setGroup("Fonts");
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
     mViewer->setStandardFont(kstrToFont(mBodyFont).family());
     fntSize = kstrToFont(mBodyFont).pointSize();
+    mBodyFamily = kstrToFont(mBodyFont).family();
   }
   else {
     setFont(KGlobal::generalFont());
     fntSize = KGlobal::generalFont().pointSize();
+    mBodyFamily = KGlobal::generalFont().family();
   }
 
   int fontsizes[7];
@@ -276,21 +281,6 @@ void KMReaderWin::updateReaderWin()
   if (mMsgBuf == mMsg)
     return;
 
-  // FIXME: PLaying around with autodetecting and displaying
-  // html text here. -sanders
-  /*
-  const int html = 1;
-  if (html && mHeaderStyle == HdrBrief) {
-    if ((mMsg->bodyDecoded().find("<html>") > 0) ||
-	(mMsg->bodyDecoded().find("<HTML>") > 0)) {
-      mViewer->begin();
-      mViewer->write(mMsg->bodyDecoded());
-      mViewer->end();
-      return;
-    }
-  }
-  */
-
   if (mMsg) parseMsg();
   else
   {
@@ -302,19 +292,32 @@ void KMReaderWin::updateReaderWin()
   mMsgBuf = mMsg;
 }
 
+QString KMReaderWin::colorToString(const QColor& c)
+{
+  return QString::number(0x1000000 + 
+			 (c.red() << 16) + 
+			 (c.green() << 8) + 
+			 c.blue(), 16 ).mid(1);
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
-  //assert(mMsg!=NULL);
   if(mMsg == NULL)
     return;
 
   mViewer->begin();
-  mViewer->write("<HTML><BODY");
+  mViewer->write("<HTML><BODY" +
+		 QString(" TEXT=#%1").arg(colorToString(c1)) +
+		 QString(" LINK=#%1").arg(colorToString(c2)) +
+		 QString(" VLINK=#%1").arg(colorToString(c3)) +
+		 QString(" BGCOLOR=#%1").arg(colorToString(c4)));
+
   if (mBackingPixmapOn)
     mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
-  mViewer->write(">");
+  mViewer->write("><FONT FACE=\"" + mBodyFont + 
+		 //		 QString(" SIZE=\"%1\"").arg(fntSize) + 
+		 "\">");
 
 #if defined CHARSETS  
   printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
@@ -323,7 +326,7 @@ void KMReaderWin::parseMsg(void)
 
   parseMsg(mMsg);
 
-  mViewer->write("</BODY></HTML>");
+  mViewer->write("</FONT></BODY></HTML>");
   mViewer->end();
 }
 
@@ -335,20 +338,19 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   int i, numParts;
   QString type, subtype, str, contDisp;
   bool asIcon = false;
-
-  inlineImage=false;
+  inlineImage = false;
   
   assert(aMsg!=NULL);
-  writeMsgHeader();
-
+  type = aMsg->typeStr();
   numParts = aMsg->numBodyParts();
+
+  writeMsgHeader();
   if (numParts > 0)
   {
     // ---sven: handle multipart/alternative start ---
     // This is for multipart/alternative messages WITHOUT attachments
     // main header has type=multipart/alternative and one attachment is
     // text/html
-    type = aMsg->typeStr();
     if (type.find("multipart/alternative") != -1 && numParts == 2)
     {
       debug("Alternative message, type: %s",type.data());
@@ -396,7 +398,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
       if (!asIcon)
       {
-	if (i<=0 || stricmp(type, "text")==0)//||stricmp(type, "message")==0)
+//	if (i<=0 || stricmp(type, "text")==0)//||stricmp(type, "message")==0)
+	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
 	{
 	  str = QCString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<BR><HR><BR>");
@@ -438,7 +441,10 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   }
   else // if numBodyParts <= 0
   {
-    writeBodyStr(aMsg->bodyDecoded());
+    if (type.find("text/html;") != -1)
+      mViewer->write(aMsg->bodyDecoded());
+    else
+      writeBodyStr(aMsg->bodyDecoded());
   }
 }
 
@@ -546,7 +552,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   QString line, sig, htmlStr = "";
   Kpgp* pgp = Kpgp::getKpgp();
   assert(pgp != NULL);
-  assert(!aStr.isNull());
+  //  assert(!aStr.isNull());
   bool pgpMessage = false;
 
   if (pgp->setMessage(aStr))
