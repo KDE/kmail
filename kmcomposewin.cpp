@@ -1375,8 +1375,6 @@ bool KMComposeWin::applyChanges(void)
 
   bool bOk = true;
 
-  bool isQP = kernel->msgSender()->sendQuotedPrintable();
-
   bool doSign    = signAction->isChecked();
   bool doEncrypt = encryptAction->isChecked();
 
@@ -1388,15 +1386,6 @@ bool KMComposeWin::applyChanges(void)
   CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
 
   Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-
-  // determine the list of recipients
-  QString _to = to().simplifyWhiteSpace();
-  if( !cc().isEmpty() ) {
-    if( !_to.endsWith(",") )
-      _to += ",";
-    _to += cc().simplifyWhiteSpace();
-  }
-  QStringList recipientsWithoutBcc = KMMessage::splitEmailAddrList(_to);
 
   if( !doEncrypt ) {
     if( cryptPlug ) {
@@ -1428,14 +1417,21 @@ bool KMComposeWin::applyChanges(void)
         break;
       }
     } else if( mAutoPgpEncrypt && !pgpUserId.isEmpty() ) {
-      // check if the message should be encrypted via old build-in pgp code
+      // determine the complete list of recipients
+      QString _to = to().simplifyWhiteSpace();
+      if( !cc().isEmpty() ) {
+        if( !_to.endsWith(",") )
+          _to += ",";
+        _to += cc().simplifyWhiteSpace();
+      }
       if( !mMsg->bcc().isEmpty() ) {
         if( !_to.endsWith(",") )
           _to += ",";
         _to += mMsg->bcc().simplifyWhiteSpace();
       }
-      QStringList recipientsIncludingBcc = KMMessage::splitEmailAddrList(_to);
-      int status = pgp->encryptionPossible( recipientsIncludingBcc );
+      // check if the message should be encrypted via old build-in pgp code
+      QStringList allRecipients = KMMessage::splitEmailAddrList(_to);
+      int status = pgp->encryptionPossible( allRecipients );
       if( status == 1 )
         doEncrypt = true;
       else if( status == 2 )
@@ -1459,337 +1455,79 @@ bool KMComposeWin::applyChanges(void)
       }
     }
   }
-
-
-  // create informative header for those that have no mime-capable
-  // email client
-  mMsg->setBody( "This message is in MIME format." );
-
-  if( bOk ) {
-
-    // preprocess the body text
-    QCString body = breakLinesAndApplyCodec();
-
-    qDebug( "***body = %s", body.data() );
-
-    if (body.isNull()) return FALSE;
-
-    if (body.isEmpty()) body = "\n"; // don't crash
-
-    // set the main headers
-    mMsg->deleteBodyParts();
-    mMsg->removeHeaderField("Content-Type");
-    mMsg->removeHeaderField("Content-Transfer-Encoding");
-    mMsg->setAutomaticFields(TRUE); // == multipart/mixed
-
-    // this is our *final* body part
-    KMMessagePart newBodyPart;
-
-
-    // this is the boundary depth of the surrounding MIME part
-    int previousBoundaryLevel = 0;
-
-
-    // create temporary bodyPart for editor text
-    // (and for all attachments, if mail is to be singed and/or encrypted)
-    bool earlyAddAttachments =
-      cryptPlug && (0 < mAtmList.count()) && (doSign || doEncrypt);
-
-    bool allAttachmentsAreInBody = earlyAddAttachments ? true : false;
-
-    // test whether there ARE attachments that can be included into the body
-    if( earlyAddAttachments ) {
-      bool someOk = false;
-      int idx;
-      KMMessagePart *attachPart;
-      for( idx=0, attachPart = mAtmList.first();
-          attachPart;
-          attachPart=mAtmList.next(),
-          ++idx )
-        if(    doEncrypt == encryptFlagOfAttachment( idx )
-            && doSign    == signFlagOfAttachment(    idx ) )
-          someOk = true;
-        else
-          allAttachmentsAreInBody = false;
-      if( !allAttachmentsAreInBody && !someOk )
-        earlyAddAttachments = false;
-    }
-
-    KMMessagePart oldBodyPart;
-    oldBodyPart.setTypeStr(   earlyAddAttachments ? "multipart" : "text" );
-    oldBodyPart.setSubtypeStr(earlyAddAttachments ? "mixed"     : "plain");
-    // NOTE: Here *signing* has higher priority than encrypting
-    //       since when signing the oldBodyPart's contents are
-    //       used for signing *first*.
-    if( doSign || doEncrypt )
-      oldBodyPart.setContentDescription( doSign
-                                        ? (cryptPlug ? "signed data" : "clearsigned data")
-                                        : "encrypted data" );
-    oldBodyPart.setContentDisposition( "inline" );
-
-    QCString boundaryCStr;
-
-    if( earlyAddAttachments ) {
-      // calculate a boundary string
-      ++previousBoundaryLevel;
-      DwMediaType tmpCT;
-      tmpCT.CreateBoundary( previousBoundaryLevel );
-      boundaryCStr = tmpCT.Boundary().c_str();
-      // add the normal body text
-      KMMessagePart innerBodyPart;
-      innerBodyPart.setTypeStr(   "text" );
-      innerBodyPart.setSubtypeStr("plain");
-      innerBodyPart.setContentDescription( "body text" );
-      innerBodyPart.setContentDisposition( "inline" );
-      innerBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
-      innerBodyPart.setCharset(mCharset);
-      innerBodyPart.setBodyEncoded( body );
-      DwBodyPart* innerDwPart = mMsg->createDWBodyPart( &innerBodyPart );
-      innerDwPart->Assemble();
-      body  = "--";
-      body +=     boundaryCStr;
-      body +=                 "\n";
-      body += innerDwPart->AsString().c_str();
-      delete innerDwPart;
-      // add all matching Attachments
-      // NOTE: This code will be changed when KMime is complete.
-      int idx;
-      KMMessagePart *attachPart;
-      for( idx=0, attachPart = mAtmList.first();
-           attachPart;
-           attachPart=mAtmList.next(),
-           ++idx ) {
-        if( !cryptPlug
-            || (    doEncrypt == encryptFlagOfAttachment( idx )
-                 && doSign    == signFlagOfAttachment(    idx ) ) ){
-          innerDwPart = mMsg->createDWBodyPart( attachPart );
-          innerDwPart->Assemble();
-          body += "\n--";
-          body +=       boundaryCStr;
-          body +=                   "\n";
-          body += innerDwPart->AsString().c_str();
-          delete innerDwPart;
-        }
-      }
-      body += "\n--";
-      body +=       boundaryCStr;
-      body +=                   "--\n";
-    }
-    else
-    {
-      oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
-      oldBodyPart.setCharset(mCharset);
-    }
-    // create S/MIME body part for signing and/or encrypting
-    oldBodyPart.setBodyEncoded( body );
-
-    QCString encodedBody; // only needed if signing and/or encrypting
-
-    if( doSign || doEncrypt ) {
-      if( cryptPlug ) {
-        // get string representation of body part (including the attachments)
-        DwBodyPart* dwPart = mMsg->createDWBodyPart( &oldBodyPart );
-        dwPart->Assemble();
-        encodedBody = dwPart->AsString().c_str();
-        delete dwPart;
-
-        // manually add a boundary definition to the Content-Type header
-        if( !boundaryCStr.isEmpty() ) {
-          int boundPos = encodedBody.find( '\n' );
-          if( -1 < boundPos ) {
-            // insert new "boundary" parameter
-            QCString bStr( ";\n  boundary=\"" );
-            bStr += boundaryCStr;
-            bStr += "\"";
-            encodedBody.insert( boundPos, bStr );
-          }
-        }
-
-        // kdDebug(5006) << "\n\n\n******* a) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
-
-        if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
-            (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
-          // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
-          // according to RfC 2633, 3.1.1 Canonicalization
-          kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-          encodedBody = KMMessage::lf2crlf( encodedBody );
-          kdDebug(5006) << "                                                       done." << endl;
-          // kdDebug(5006) << "\n\n\n******* b) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
-        }
-      } else {
-        encodedBody = body;
-      }
-    }
-
-    if( doSign ) {
-      if( cryptPlug ) {
-        StructuringInfoWrapper structuring( cryptPlug );
-
-        // kdDebug(5006) << "\n\n\n******* c) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
-
-        QByteArray signature = pgpSignedMsg( encodedBody, structuring );
-        kdDebug(5006) << "                           size of signature: " << signature.count() << "\n" << endl;
-        bOk = !signature.isEmpty();
-        if( bOk ) {
-          bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
-                                        previousBoundaryLevel + doEncrypt ? 3 : 2,
-                                        oldBodyPart.contentDescription(),
-                                        oldBodyPart.typeStr(),
-                                        oldBodyPart.subtypeStr(),
-                                        oldBodyPart.contentDisposition(),
-                                        oldBodyPart.contentTransferEncodingStr(),
-                                        encodedBody,
-                                        "signature",
-                                        signature,
-                                        structuring,
-                                        newBodyPart );
-          if( bOk ) {
-            if( newBodyPart.name().isEmpty() )
-              newBodyPart.setName("signed message part");
-            newBodyPart.setCharset( oldBodyPart.charset() );
-          } else
-            KMessageBox::sorry(this, mErrorProcessingStructuringInfo );
-        }
-      }
-      else if ( !doEncrypt ) {
-        // we try calling the *old* build-in code for OpenPGP clearsigning
-        Kpgp::Block block;
-        block.setText( encodedBody );
-
-        // clearsign the message
-        bOk = block.clearsign( pgpUserId, mCharset );
-
-        if( bOk ) {
-          newBodyPart.setType(                       oldBodyPart.type() );
-          newBodyPart.setSubtype(                    oldBodyPart.subtype() );
-          newBodyPart.setCharset(                    oldBodyPart.charset() );
-          newBodyPart.setContentTransferEncodingStr( oldBodyPart.contentTransferEncodingStr() );
-          newBodyPart.setContentDescription(         oldBodyPart.contentDescription() );
-          newBodyPart.setContentDisposition(         oldBodyPart.contentDisposition() );
-          newBodyPart.setBodyEncoded( block.text() );
-        }
-        else
-          KMessageBox::sorry(this,
-            i18n("Signing not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
-      }
-    }
-
-    if( bOk ) {
-      if( !mMsg->bcc().isEmpty() && doEncrypt ) {
-        QStringList bccRecips = KMMessage::splitEmailAddrList( mMsg->bcc() );
-        for( QStringList::ConstIterator it = bccRecips.begin();
-            it != bccRecips.end();
-            ++it ) {
-          QStringList tmpRecips( recipientsWithoutBcc );
-          tmpRecips << *it;
-          //kdDebug() << "###BEFORE \"" << mMsg->asString() << "\""<< endl;
-          KMMessage* yetAnotherMessageForBCC = new KMMessage( *mMsg );
-          KMMessagePart tmpNewBodyPart = newBodyPart;
-          bOk = encryptMessage( yetAnotherMessageForBCC,
-                                tmpRecips,
-                                doSign, doEncrypt, cryptPlug, encodedBody,
-                                previousBoundaryLevel,
-                                oldBodyPart,
-                                earlyAddAttachments, allAttachmentsAreInBody,
-                                tmpNewBodyPart );
-          yetAnotherMessageForBCC->setHeaderField( "X-KMail-Recipients", *it );
-          bccMsgList.append( yetAnotherMessageForBCC );
-          //kdDebug() << "###BCC AFTER \"" << mMsg->asString() << "\""<<endl;
-
-        }
-        mMsg->setHeaderField( "X-KMail-Recipients", recipientsWithoutBcc.join(",") );
-      }
-
-      // must use tmp since original newBodyPart may still be needed below...
-      KMMessagePart tmpNewBodyPart = newBodyPart;
-      bOk = encryptMessage( mMsg,
-                            recipientsWithoutBcc,
-                            doSign, doEncrypt, cryptPlug, encodedBody,
-                            previousBoundaryLevel,
-                            oldBodyPart,
-                            earlyAddAttachments, allAttachmentsAreInBody,
-                            tmpNewBodyPart );
-      //        kdDebug() << "###AFTER ENCRYPTION\"" << mMsg->asString() << "\""<<endl;
+  
+  // note: Must create extra message *before* calling compose on mMsg.
+  KMMessage* extraMessage = new KMMessage( *mMsg );
+  
+  if( bOk )
+    bOk = composeMessage( cryptPlug, pgpUserId,
+                          *mMsg, doSign, doEncrypt, false );
     
+  if( bOk ) {
+    bool saveSentSignatures = cryptPlug ? cryptPlug->saveSentSignatures()
+                                        : true;
+    bool saveMessagesEncrypted = cryptPlug ? cryptPlug->saveMessagesEncrypted()
+                                        : true;
 
-      bool saveSentSignatures = cryptPlug ? cryptPlug->saveSentSignatures()
-                                          : true;
-      bool saveMessagesEncrypted = cryptPlug ? cryptPlug->saveMessagesEncrypted()
-                                             : true;
-                                             
+    kdDebug(5006) << "\n\n" << endl;
+    kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Send encrypted=" << doEncrypt << "  Store encrypted=" << saveMessagesEncrypted << endl;
 // note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
 #ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_01  
-      if( bOk ){  
-        // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
-        // of german government:
-        // --> Encrypted messages *must* be stored in unencrypted form after sending.
-        //     ( "Abspeichern ausgegangener Nachrichten in entschluesselter Form" )
-        // --> Signed messages *must* be stored including the signature after sending.
-        //     ( "Aufpraegen der Signatur" )
-        // So we provide the user with a non-deactivateble warning and let her/him
-        // choose to obey the rules or to ignore them explicitely.
-        if(    cryptPlug 
-            && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
-            && (    ( doEncrypt && saveMessagesEncrypted )
-                 || ( doSign    && ! saveSentSignatures    ) ) ){
-        
-          QString headTxt =
-            i18n("Warning: Your S/MIME Plug-in configuration is unsafe.");
-          QString sigTxt =
-            i18n("Signatures should be stored with the message, leaving them out is not allowed.");
-          QString encrTxt =
-            i18n("Encrypted messages should be stored in *unencrypted* form, local saving in encrypted form is not allowed.");
-          QString footTxt =
-            i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
-          QString question =
-            i18n("Store message in the recommended way?");
-          if( (doSign && !saveSentSignatures) && (doEncrypt && saveMessagesEncrypted) ) {
-            if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt + "<br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
-                saveSentSignatures    = true;
-                saveMessagesEncrypted = false;
-            }
-          } else if( doSign && !saveSentSignatures ) {
-            if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt  + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
-                saveSentSignatures = true;
-            }
-          } else if( doEncrypt && saveMessagesEncrypted ) {
-            if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
-                saveMessagesEncrypted = false;
-            }
-          }
+    // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
+    // of german government:
+    // --> Encrypted messages *must* be stored in unencrypted form after sending.
+    //     ( "Abspeichern ausgegangener Nachrichten in entschluesselter Form" )
+    // --> Signed messages *must* be stored including the signature after sending.
+    //     ( "Aufpraegen der Signatur" )
+    // So we provide the user with a non-deactivateble warning and let her/him
+    // choose to obey the rules or to ignore them explicitely.
+    if(    cryptPlug 
+        && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
+        && (    ( doEncrypt && saveMessagesEncrypted )
+            || ( doSign    && ! saveSentSignatures    ) ) ){
+
+      QString headTxt =
+        i18n("Warning: Your S/MIME Plug-in configuration is unsafe.");
+      QString sigTxt =
+        i18n("Signatures should be stored with the message, leaving them out is not allowed.");
+      QString encrTxt =
+        i18n("Encrypted messages should be stored in *unencrypted* form, local saving in encrypted form is not allowed.");
+      QString footTxt =
+        i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
+      QString question =
+        i18n("Store message in the recommended way?");
+      if( (doSign && !saveSentSignatures) && (doEncrypt && saveMessagesEncrypted) ) {
+        if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt + "<br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
+            saveSentSignatures    = true;
+            saveMessagesEncrypted = false;
+        }
+      } else if( doSign && !saveSentSignatures ) {
+        if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + sigTxt  + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
+            saveSentSignatures = true;
+        }
+      } else if( doEncrypt && saveMessagesEncrypted ) {
+        if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
+            saveMessagesEncrypted = false;
         }
       }
+    }
+    kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Send encrypted=" << doEncrypt << "  Store encrypted=" << saveMessagesEncrypted << endl;
 #endif
 
-      if( bOk &&
-          (    ( doEncrypt && ! saveMessagesEncrypted )
-            || ( doSign    && ! saveSentSignatures    ) ) ) {
+    if(    ( doEncrypt && ! saveMessagesEncrypted )
+        || ( doSign    && ! saveSentSignatures    ) ){
+      bOk = composeMessage( cryptPlug, pgpUserId,
+                            *extraMessage,
+                            doSign    && saveSentSignatures,
+                            doEncrypt && saveMessagesEncrypted,
+                            true );
 kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
-        doSign    = doSign    && saveSentSignatures;
-        doEncrypt = doEncrypt && saveMessagesEncrypted;
-        oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
-        oldBodyPart.setCharset(mCharset);
-        oldBodyPart.setContentDisposition( "inline" );
-        KMMessage* unencryptedMessage = new KMMessage( *mMsg );
-        if( encryptMessage( unencryptedMessage,
-                            recipientsWithoutBcc,
-                            doSign, 
-                            doEncrypt,
-                            cryptPlug,
-                            encodedBody,
-                            previousBoundaryLevel,
-                            oldBodyPart,
-                            earlyAddAttachments,
-                            allAttachmentsAreInBody,
-                            newBodyPart ) ) {
-          unencryptedMessage->cleanupHeader();
-          mMsg->setUnencryptedMsg( unencryptedMessage );
-        }
-      }
-
-    }
+      extraMessage->cleanupHeader();
+      mMsg->setUnencryptedMsg( extraMessage );
+    }  
   }
+      
   if( bOk ) {
     if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
     mEdtFrom->setEdited(FALSE);
@@ -1808,6 +1546,279 @@ kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypte
 kdDebug(5006) << "\n\n\nKMComposeWin::applyChanges():\n1.: |||" << mMsg->asString() << "|||\n\n"
  << "\n\n\nKMComposeWin::applyChanges():\n1.: |||" << mMsg->asSendableString() << "|||\n\n" << endl;
 */
+  }
+  return bOk;
+}
+
+
+bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
+                                   QCString pgpUserId,
+                                   KMMessage& theMessage,
+                                   bool doSign,
+                                   bool doEncrypt,
+                                   bool ignoreBcc )
+{
+  bool bOk = true;
+  // create informative header for those that have no mime-capable
+  // email client
+  theMessage.setBody( "This message is in MIME format." );
+
+  // preprocess the body text
+  QCString body = breakLinesAndApplyCodec();
+
+  qDebug( "***body = %s", body.data() );
+
+  if (body.isNull()) return FALSE;
+
+  if (body.isEmpty()) body = "\n"; // don't crash
+
+  // set the main headers
+  theMessage.deleteBodyParts();
+  theMessage.removeHeaderField("Content-Type");
+  theMessage.removeHeaderField("Content-Transfer-Encoding");
+  theMessage.setAutomaticFields(TRUE); // == multipart/mixed
+
+  // this is our *final* body part
+  KMMessagePart newBodyPart;
+
+
+  // this is the boundary depth of the surrounding MIME part
+  int previousBoundaryLevel = 0;
+
+
+  // create temporary bodyPart for editor text
+  // (and for all attachments, if mail is to be singed and/or encrypted)
+  bool earlyAddAttachments =
+    cryptPlug && (0 < mAtmList.count()) && (doSign || doEncrypt);
+
+  bool allAttachmentsAreInBody = earlyAddAttachments ? true : false;
+
+  // test whether there ARE attachments that can be included into the body
+  if( earlyAddAttachments ) {
+    bool someOk = false;
+    int idx;
+    KMMessagePart *attachPart;
+    for( idx=0, attachPart = mAtmList.first();
+        attachPart;
+        attachPart=mAtmList.next(),
+        ++idx )
+      if(    doEncrypt == encryptFlagOfAttachment( idx )
+          && doSign    == signFlagOfAttachment(    idx ) )
+        someOk = true;
+      else
+        allAttachmentsAreInBody = false;
+    if( !allAttachmentsAreInBody && !someOk )
+      earlyAddAttachments = false;
+  }
+
+  KMMessagePart oldBodyPart;
+  oldBodyPart.setTypeStr(   earlyAddAttachments ? "multipart" : "text" );
+  oldBodyPart.setSubtypeStr(earlyAddAttachments ? "mixed"     : "plain");
+  // NOTE: Here *signing* has higher priority than encrypting
+  //       since when signing the oldBodyPart's contents are
+  //       used for signing *first*.
+  if( doSign || doEncrypt )
+    oldBodyPart.setContentDescription( doSign
+                                      ? (cryptPlug ? "signed data" : "clearsigned data")
+                                      : "encrypted data" );
+  oldBodyPart.setContentDisposition( "inline" );
+
+  QCString boundaryCStr;
+
+  bool isQP = kernel->msgSender()->sendQuotedPrintable();
+
+  if( earlyAddAttachments ) {
+    // calculate a boundary string
+    ++previousBoundaryLevel;
+    DwMediaType tmpCT;
+    tmpCT.CreateBoundary( previousBoundaryLevel );
+    boundaryCStr = tmpCT.Boundary().c_str();
+    // add the normal body text
+    KMMessagePart innerBodyPart;
+    innerBodyPart.setTypeStr(   "text" );
+    innerBodyPart.setSubtypeStr("plain");
+    innerBodyPart.setContentDescription( "body text" );
+    innerBodyPart.setContentDisposition( "inline" );
+    innerBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
+    innerBodyPart.setCharset(mCharset);
+    innerBodyPart.setBodyEncoded( body );
+    DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
+    innerDwPart->Assemble();
+    body  = "--";
+    body +=     boundaryCStr;
+    body +=                 "\n";
+    body += innerDwPart->AsString().c_str();
+    delete innerDwPart;
+    // add all matching Attachments
+    // NOTE: This code will be changed when KMime is complete.
+    int idx;
+    KMMessagePart *attachPart;
+    for( idx=0, attachPart = mAtmList.first();
+        attachPart;
+        attachPart=mAtmList.next(),
+        ++idx ) {
+      if( !cryptPlug
+          || (    doEncrypt == encryptFlagOfAttachment( idx )
+              && doSign    == signFlagOfAttachment(    idx ) ) ){
+        innerDwPart = theMessage.createDWBodyPart( attachPart );
+        innerDwPart->Assemble();
+        body += "\n--";
+        body +=       boundaryCStr;
+        body +=                   "\n";
+        body += innerDwPart->AsString().c_str();
+        delete innerDwPart;
+      }
+    }
+    body += "\n--";
+    body +=       boundaryCStr;
+    body +=                   "--\n";
+  }
+  else
+  {
+    oldBodyPart.setContentTransferEncodingStr( isQP ? "quoted-printable" : "8bit" );
+    oldBodyPart.setCharset(mCharset);
+  }
+  // create S/MIME body part for signing and/or encrypting
+  oldBodyPart.setBodyEncoded( body );
+
+  QCString encodedBody; // only needed if signing and/or encrypting
+
+  if( doSign || doEncrypt ) {
+    if( cryptPlug ) {
+      // get string representation of body part (including the attachments)
+      DwBodyPart* dwPart = theMessage.createDWBodyPart( &oldBodyPart );
+      dwPart->Assemble();
+      encodedBody = dwPart->AsString().c_str();
+      delete dwPart;
+
+      // manually add a boundary definition to the Content-Type header
+      if( !boundaryCStr.isEmpty() ) {
+        int boundPos = encodedBody.find( '\n' );
+        if( -1 < boundPos ) {
+          // insert new "boundary" parameter
+          QCString bStr( ";\n  boundary=\"" );
+          bStr += boundaryCStr;
+          bStr += "\"";
+          encodedBody.insert( boundPos, bStr );
+        }
+      }
+
+      // kdDebug(5006) << "\n\n\n******* a) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
+
+      if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
+          (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
+        // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
+        // according to RfC 2633, 3.1.1 Canonicalization
+        kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+        encodedBody = KMMessage::lf2crlf( encodedBody );
+        kdDebug(5006) << "                                                       done." << endl;
+        // kdDebug(5006) << "\n\n\n******* b) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
+      }
+    } else {
+      encodedBody = body;
+    }
+  }
+
+  if( doSign ) {
+    if( cryptPlug ) {
+      StructuringInfoWrapper structuring( cryptPlug );
+
+      // kdDebug(5006) << "\n\n\n******* c) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
+
+      QByteArray signature = pgpSignedMsg( encodedBody, structuring );
+      kdDebug(5006) << "                           size of signature: " << signature.count() << "\n" << endl;
+      bOk = !signature.isEmpty();
+      if( bOk ) {
+        bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
+                                      previousBoundaryLevel + doEncrypt ? 3 : 2,
+                                      oldBodyPart.contentDescription(),
+                                      oldBodyPart.typeStr(),
+                                      oldBodyPart.subtypeStr(),
+                                      oldBodyPart.contentDisposition(),
+                                      oldBodyPart.contentTransferEncodingStr(),
+                                      encodedBody,
+                                      "signature",
+                                      signature,
+                                      structuring,
+                                      newBodyPart );
+        if( bOk ) {
+          if( newBodyPart.name().isEmpty() )
+            newBodyPart.setName("signed message part");
+          newBodyPart.setCharset( oldBodyPart.charset() );
+        } else
+          KMessageBox::sorry(this, mErrorProcessingStructuringInfo );
+      }
+    }
+    else if ( !doEncrypt ) {
+      // we try calling the *old* build-in code for OpenPGP clearsigning
+      Kpgp::Block block;
+      block.setText( encodedBody );
+
+      // clearsign the message
+      bOk = block.clearsign( pgpUserId, mCharset );
+
+      if( bOk ) {
+        newBodyPart.setType(                       oldBodyPart.type() );
+        newBodyPart.setSubtype(                    oldBodyPart.subtype() );
+        newBodyPart.setCharset(                    oldBodyPart.charset() );
+        newBodyPart.setContentTransferEncodingStr( oldBodyPart.contentTransferEncodingStr() );
+        newBodyPart.setContentDescription(         oldBodyPart.contentDescription() );
+        newBodyPart.setContentDisposition(         oldBodyPart.contentDisposition() );
+        newBodyPart.setBodyEncoded( block.text() );
+      }
+      else
+        KMessageBox::sorry(this,
+          i18n("Signing not done: %1").arg( mErrorNoCryptPlugAndNoBuildIn ));
+    }
+  }
+
+  if( bOk ) {
+    // determine the list of public recipients
+    QString _to = to().simplifyWhiteSpace();
+    if( !cc().isEmpty() ) {
+      if( !_to.endsWith(",") )
+        _to += ",";
+      _to += cc().simplifyWhiteSpace();
+    }
+    QStringList recipientsWithoutBcc = KMMessage::splitEmailAddrList(_to);
+    
+    // run encrypting(s) for Bcc recipient(s)
+    if( doEncrypt && !ignoreBcc && !theMessage.bcc().isEmpty() ) {
+      QStringList bccRecips = KMMessage::splitEmailAddrList( theMessage.bcc() );
+      for( QStringList::ConstIterator it = bccRecips.begin();
+          it != bccRecips.end();
+          ++it ) {
+        QStringList tmpRecips( recipientsWithoutBcc );
+        tmpRecips << *it;
+        //kdDebug() << "###BEFORE \"" << theMessage.asString() << "\""<< endl;
+        KMMessage* yetAnotherMessageForBCC = new KMMessage( theMessage );
+        KMMessagePart tmpNewBodyPart = newBodyPart;
+        bOk = encryptMessage( yetAnotherMessageForBCC,
+                              tmpRecips,
+                              doSign, doEncrypt, cryptPlug, encodedBody,
+                              previousBoundaryLevel,
+                              oldBodyPart,
+                              earlyAddAttachments, allAttachmentsAreInBody,
+                              tmpNewBodyPart );
+        if( bOk ){
+          yetAnotherMessageForBCC->setHeaderField( "X-KMail-Recipients", *it );
+          bccMsgList.append( yetAnotherMessageForBCC );
+          //kdDebug() << "###BCC AFTER \"" << theMessage.asString() << "\""<<endl;
+        }
+      }
+      theMessage.setHeaderField( "X-KMail-Recipients", recipientsWithoutBcc.join(",") );
+    }
+
+    // run encrypting for public recipient(s)
+    if( bOk )
+      bOk = encryptMessage( &theMessage,
+                            recipientsWithoutBcc,
+                            doSign, doEncrypt, cryptPlug, encodedBody,
+                            previousBoundaryLevel,
+                            oldBodyPart,
+                            earlyAddAttachments, allAttachmentsAreInBody,
+                            newBodyPart );
+    //        kdDebug() << "###AFTER ENCRYPTION\"" << theMessage.asString() << "\""<<endl;
   }
   return bOk;
 }
@@ -1957,7 +1968,7 @@ kdDebug(5006) << "                                 processing " << idx << ". att
             KMMessagePart& rEncryptMessagePart( *attachPart );
 
             // prepare the attachment's content
-            DwBodyPart* innerDwPart = mMsg->createDWBodyPart( attachPart );
+            DwBodyPart* innerDwPart = msg->createDWBodyPart( attachPart );
             innerDwPart->Assemble();
             QCString encodedAttachment = innerDwPart->AsString().c_str();
             delete innerDwPart;

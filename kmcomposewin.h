@@ -256,6 +256,20 @@ public:
    bool applyChanges(void);
 
   /**
+   * Internal helper function called from applyChanges(void) to allow
+   * processing several messages (encrypted or unencrypted) based on
+   * the same composer content.
+   * That's usefull for storing decrypted versions of messages which
+   * were sent in encrypted form.                  (khz, 2002/06/24)
+   */
+   bool composeMessage( CryptPlugWrapper* cryptPlug,
+                        QCString pgpUserId,
+                        KMMessage& theMessage,
+                        bool doSign,
+                        bool doEncrypt,
+                        bool ignoreBcc );
+
+  /**
    * If this flag is set the message of the composer is deleted when
    * the composer is closed and the message was not sent. Default: FALSE
    */

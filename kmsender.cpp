@@ -27,6 +27,8 @@
 #include "kmmsgdict.h"
 #include "kbusyptr.h"
 #include "kmmessage.h"
+#include "kmmsgpart.h"
+#include <mimelib/mediatyp.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -231,16 +233,25 @@ void KMSender::doSendMsg()
     mCurrentMsg->setTransferInProgress( FALSE );
     if( mCurrentMsg->hasUnencryptedMsg() ) {
 kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
+      // delete all current body parts
+      mCurrentMsg->deleteBodyParts();
+      // copy Content-[..] headers from unencrypted message to current one
       KMMessage & newMsg( *mCurrentMsg->unencryptedMsg() );
-      mCurrentMsg->setTypeStr( newMsg.typeStr() );
-      mCurrentMsg->setSubtypeStr( newMsg.subtypeStr() );
-      QCString newDispo = newMsg.headerField("Content-Disposition").latin1();
+      mCurrentMsg->dwContentType() = newMsg.dwContentType();
       mCurrentMsg->setContentTransferEncodingStr( newMsg.contentTransferEncodingStr() );
+      QCString newDispo = newMsg.headerField("Content-Disposition").latin1();
       if( newDispo.isEmpty() )
         mCurrentMsg->removeHeaderField( "Content-Disposition" );
       else
         mCurrentMsg->setHeaderField( "Content-Disposition", newDispo );
+      // copy the body
       mCurrentMsg->setBody( newMsg.body() );
+      // copy all the body parts
+      KMMessagePart msgPart;
+      for( int i = 0; i < newMsg.numBodyParts(); ++i ) {
+        newMsg.bodyPart( i, &msgPart );
+        mCurrentMsg->addBodyPart( &msgPart );
+      }
     }
     mCurrentMsg->setStatus(KMMsgStatusSent);
 
