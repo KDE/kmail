@@ -342,11 +342,19 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
 
 QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
-  // TODO: khz
-  QMap<QString, bool> aMap;
-  KMail::FolderContentsType cntType = folderContentsType( contentsType );
+  QMap<QString, bool> map;
+  const KMail::FolderContentsType t = folderContentsType( contentsType );
+
+  QDictIterator<ExtraFolder> it( mExtraFolders );
+  for ( ; it.current(); ++it ){
+    const KMFolder* f = it.current()->folder;
+    if ( it.current()->type == t 
+         // && f->isXMLFolder()
+         )
+      map.insert( f->location(), !f->isReadOnly() );
+  }
   
-  return aMap;
+  return map;
 }
 
 bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
@@ -693,18 +701,18 @@ KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* f
 {
   if( !folder ) return 0;
 
-  KMFolder* aFolder = 0;
   KMMessage *message = 0;
+  KMFolder* aFolder = 0;
   int index;
   kmkernel->msgDict()->getLocation( serNum, &aFolder, &index );
-  if( aFolder ){
-      message = aFolder->getMsg( index );
-  }
-  if( aFolder != folder )
+  if( aFolder != folder ){
     kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) folder not matching\n" << endl;
-  else
+  }else{
+    if( aFolder )
+      message = aFolder->getMsg( index );
     if (!message)
       kdWarning(5006) << "findMessageBySerNum( " << serNum << " ) invalid serial number\n" << endl;
+  }
   return message;
 }
 
