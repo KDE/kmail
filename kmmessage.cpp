@@ -1849,7 +1849,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec) const
 {
   QString str = ((KMMessage*)this)->asString();
-  str=codec->toUnicode(str);
+  if (codec) str=codec->toUnicode(str);
 
 #if ALLOW_GUI
   QMultiLineEdit* edt;
