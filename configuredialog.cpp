@@ -2030,12 +2030,12 @@ void ConfigureDialog::installProfile( void )
 
   if( item == mAppearance.mListItemDefault )
   {
-    mAppearance.fontString[0] = "adobe-normal-r-12";
-    mAppearance.fontString[1] = "adobe-normal-r-12";
-    mAppearance.fontString[2] = "adobe-normal-r-12";
-    mAppearance.fontString[3] = "adobe-normal-i-12";
-    mAppearance.fontString[4] = "adobe-normal-i-12";
-    mAppearance.fontString[5] = "adobe-normal-i-12";
+    mAppearance.fontString[0] = "helvetica-medium-r-12";
+    mAppearance.fontString[1] = "helvetica-medium-r-12";
+    mAppearance.fontString[2] = "helvetica-medium-r-12";
+    mAppearance.fontString[3] = "helvetica-medium-i-12";
+    mAppearance.fontString[4] = "helvetica-medium-i-12";
+    mAppearance.fontString[5] = "helvetica-medium-i-12";
     mAppearance.customFontCheck->setChecked( true );
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
@@ -2055,12 +2055,12 @@ void ConfigureDialog::installProfile( void )
   }
   else if( item == mAppearance.mListItemNewFeature )
   {
-    mAppearance.fontString[0] = "adobe-normal-r-12";
-    mAppearance.fontString[1] = "adobe-normal-r-12";
-    mAppearance.fontString[2] = "adobe-normal-r-12";
-    mAppearance.fontString[3] = "adobe-normal-r-12";
-    mAppearance.fontString[4] = "adobe-normal-r-12";
-    mAppearance.fontString[5] = "adobe-normal-r-12";
+    mAppearance.fontString[0] = "helvetica-medium-r-12";
+    mAppearance.fontString[1] = "helvetica-medium-r-12";
+    mAppearance.fontString[2] = "helvetica-medium-r-12";
+    mAppearance.fontString[3] = "helvetica-medium-r-12";
+    mAppearance.fontString[4] = "helvetica-medium-r-12";
+    mAppearance.fontString[5] = "helvetica-medium-r-12";
     mAppearance.customFontCheck->setChecked( true );
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
@@ -2080,12 +2080,12 @@ void ConfigureDialog::installProfile( void )
   }
   else if( item == mAppearance.mListItemContrast )
   {
-    mAppearance.fontString[0] = "adobe-bold-r-14";
-    mAppearance.fontString[1] = "adobe-bold-r-14";
-    mAppearance.fontString[2] = "adobe-bold-r-14";
-    mAppearance.fontString[3] = "adobe-bold-r-14";
-    mAppearance.fontString[4] = "adobe-bold-r-14";
-    mAppearance.fontString[5] = "adobe-bold-r-14";
+    mAppearance.fontString[0] = "helvetica-bold-r-14";
+    mAppearance.fontString[1] = "helvetica-bold-r-14";
+    mAppearance.fontString[2] = "helvetica-bold-r-14";
+    mAppearance.fontString[3] = "helvetica-bold-r-14";
+    mAppearance.fontString[4] = "helvetica-bold-r-14";
+    mAppearance.fontString[5] = "helvetica-bold-r-14";
     mAppearance.customFontCheck->setChecked( true );
     mAppearance.colorList->setColor( 0, QColor("#FAEBD7") );
     mAppearance.colorList->setColor( 1, black );

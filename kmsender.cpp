@@ -832,7 +832,7 @@ bool KMSendSMTP::start(void)
   mClient = new DwSmtpClient;
   assert(mClient != NULL);
 
-  smtpInCmd(i18n("connecting to server"));
+  statusMsg(i18n("connecting to server"));
   mClient->Open(mSender->smtpHost(), mSender->smtpPort()); // Open connection
   if(!mClient->IsOpen()) // Check if connection succeded
   {
@@ -919,7 +919,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
   if(replyCode != 354) 
     return smtpFailed("DATA", replyCode);
 
-  smtpInCmd(i18n("transmitting message"));
+  statusMsg(i18n("transmitting message"));
   msgStr = prepareStr(aMsg->asString(), TRUE);
   replyCode = mClient->SendData((const char*)msgStr);
   if (!bccStr.isEmpty()) aMsg->setBcc(bccStr);
