@@ -187,6 +187,7 @@ signals:
   void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
   void modifiedToolBarConfig( void );
+  void progressDialogToggled( void );
 
 protected:
   void setupActions();

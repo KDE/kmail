@@ -245,6 +245,9 @@ KMLittleProgressDlg::KMLittleProgressDlg( KMMainWidget* mainWidget, QWidget* par
             this, SLOT( slotProgressItemAdded( ProgressItem * ) ) );
   connect ( ProgressManager::instance(), SIGNAL( progressItemCompleted( ProgressItem * ) ),
             this, SLOT( slotProgressItemCompleted( ProgressItem * ) ) );
+
+  connect ( mainWidget, SIGNAL( progressDialogToggled()),
+            this, SLOT( slotProgressDialogToggled() ) );
 }
 
 void KMLittleProgressDlg::slotProgressItemAdded( ProgressItem *item )
@@ -360,15 +363,6 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
     QMouseEvent *e = (QMouseEvent*)ev;
 
     if ( e->button() == LeftButton && mode != Clean ) {    // toggle view on left mouse button
-
-      // Hide the progress bar when the detailed one is showing
-      if ( mode == Label ) {
-        mode = Progress;
-      } else if ( mode == Progress ) {
-        mode = Label;
-      }
-      setMode();
-
       // Consensus seems to be that we should show/hide the fancy dialog when the user
       // clicks anywhere in the small one.
       m_mainWidget->slotToggleProgressDialog();
@@ -376,4 +370,15 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
     }
   }
   return false;
+}
+
+void KMLittleProgressDlg::slotProgressDialogToggled()
+{
+      // Hide the progress bar when the detailed one is showing
+      if ( mode == Label ) {
+        mode = Progress;
+      } else if ( mode == Progress ) {
+        mode = Label;
+      }
+      setMode();
 }

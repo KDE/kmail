@@ -125,6 +125,9 @@ public slots:
   virtual void slotProgressItemCompleted( ProgressItem *i );
   virtual void slotProgressItemProgress( ProgressItem *i, unsigned int value );
 
+protected slots:
+  void slotProgressDialogToggled();
+
 protected:
   KMMainWidget* m_mainWidget;
   KProgress* m_pProgressBar;
@@ -138,6 +141,7 @@ protected:
   bool m_bShowButton;
 
   void setMode();
+
 
   virtual bool eventFilter( QObject *, QEvent * );
   QBoxLayout *box;
