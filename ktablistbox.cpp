@@ -114,10 +114,12 @@ void KTabListBoxColumn :: paintCell (QPainter* paint, const QString& string)
     /*else output as string*/
 
   case KTabListBox::TextColumn:
-    paint->drawText (3, fm->ascent() + (fm->leading()), 
+    paint->drawText (1, fm->ascent() + (fm->leading()), 
 		     (const char*)string); 
     break;
   }
+
+  paint->eraseRect(iwidth-6,0,iwidth,1024);
 }
 
 
@@ -157,9 +159,9 @@ KTabListBox :: KTabListBox (QWidget *parent, const char *name, int columns,
   sepChar  = '\t';
   labelHeight = fm->height() + 4;
   
-  if (columns > 0) lbox.setNumCols(columns);
-
   lbox.setGeometry(0, labelHeight, width(), height()-labelHeight);
+
+  if (columns > 0) setNumCols(columns);
 }
 
 
@@ -201,12 +203,20 @@ void KTabListBox :: setNumCols (int aCols)
 
 
 //-----------------------------------------------------------------------------
+void KTabListBox :: setColumnWidth (int col, int aWidth)
+{
+  if (col<0 || col>=numCols()) return;
+  colList[col].setWidth(aWidth);
+}
+
+
+//-----------------------------------------------------------------------------
 void KTabListBox :: setColumn (int col, const char* aName, int aWidth,
 			       ColumnType aType)
 {
   if (col<0 || col>=numCols()) return;
 
-  colList[col].setWidth(aWidth);
+  setColumnWidth(col,aWidth);
   colList[col].setName(aName);
   colList[col].setType(aType);
   update();
@@ -421,11 +431,22 @@ void KTabListBox :: resizeList (int newNumItems)
 //-----------------------------------------------------------------------------
 void KTabListBox :: resizeEvent (QResizeEvent* e)
 {
+  int i, w;
+
   KTabListBoxInherited::resizeEvent(e);
+
+  for (i=numCols()-2, w=0; i>=0; i--)
+    w += cellWidth(i);
+
+  if (w + cellWidth(numCols()-1) < e->size().width())
+  {
+    setColumnWidth (numCols()-1, e->size().width() - w);
+  }
 
   lbox.setGeometry (0, labelHeight, e->size().width(), 
 		    e->size().height()-labelHeight);
   lbox.reconnectSBSignals();
+
   repaint();
 }
 

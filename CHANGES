@@ -1,3 +1,8 @@
+<<<<<<< CHANGES
+Changes for Version 970607:
+
+* implemented selection of multiple messages (shift + left mouse).
+=======
 970615: - cvs test ! :)
 
 970525:	- updated Stefan's kmheaders
@@ -54,7 +59,21 @@
 	  (each object should have its own files)
 	- added CHANGES, TODO, COPYING and README
 	- optimized Makefile
+>>>>>>> 1.2
 
-0.0.1:
-	first release
+* drag&drop: the file kmdragdata.h describes the structure that
+  is used for dragging.
+  Dragging messages to anywhere outside kmail is not possible (at the moment).
 
+* the delete button works, others will follow.
+
+* alarm timer class: a timer that works also when the application is
+  busy (Qt's implementation does not).
+
+* animated busy pointer :-)))
+  I have perverted the "forward message" button: press to toggle
+  the busy pointer.
+  This is code I have written some time ago and converted now for Kde.
+  Tell me if you like it.
+
+Send comments/suggestions/wishes to taferner@alpin.or.at

@@ -1,13 +1,12 @@
-This is kmail, the K Desktop Environment's email application.
+These files contain my latest work. They are a drop-in replacement
+for the files of kmail-970606 from the kmail homepage.
 
-This code is very ALPHA.
+How to apply these patches:
 
-It's being developed by
-Stephan Meyer <Stephan.Meyer@munich.netsurf.de> and
-Yat-Nam Lo    <lynx@topaz.hknet.com>
+Copy the files into the kmail-970606 directory. Take a look at the
+Makefile, it has changed.
 
-For more information, see the WWW page:
-http://fatman.mathematik.tu-muenchen.de/~meyer/kmail.html
-
-This package is placed under the GPL.
-Please have a look in "COPYING".
+Execute:
+	make depend
+	make
+done.

@@ -14,12 +14,12 @@
 extern KBusyPtr* kbp;
 
 //-----------------------------------------------------------------------------
-KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent, name)
+KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent, name, 4)
 {
   folder = NULL;
   getMsgIndex = -1;
 
-  setNumCols(4);
+  //setNumCols(4);
   setColumn(0, "F", 16, KTabListBox::PixmapColumn);
   setColumn(1, "Sender", 100);
   setColumn(2, "Subject", 200);

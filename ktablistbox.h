@@ -103,13 +103,27 @@ public:
   virtual void setNumCols (int);
 	// Set number of columns. Warning: this *deletes* the contents
 	// of the listbox.
+
   virtual void setNumRows (int);
   int numRows (void) const { return lbox.numRows(); }
   int numCols (void) const { return lbox.numCols(); }
+  int cellWidth (int col) { return lbox.cellWidth(col); }
+  int totalWidth (void) { return lbox.totalWidth(); }
+  int cellHeight (int row) { return lbox.cellHeight(row); }
+  int totalHeight (void) { return lbox.totalHeight(); }
+  int topCell (void) const { return lbox.topCell(); }
+  int leftCell (void) const { return lbox.leftCell(); }
+  int lastColVisible (void) const { return lbox.lastColVisible(); }
+  int lastRowVisible (void) const { return lbox.lastRowVisible(); }
+  bool autoUpdate (void) const { return lbox.autoUpdate(); }
+  void setAutoUpdate (bool upd) { lbox.setAutoUpdate(upd); }
 
   virtual void setColumn (int col, const char* caption, 
 			  int width=0, ColumnType type=TextColumn);
 	// set column caption and width
+
+  virtual void setColumnWidth (int col, int width=0);
+  int columnWidth (int col) { return lbox.cellWidth(col); }
 
   virtual void setSeparator (char sep);
 	// set separator characters (maximum: 16 characters)
@@ -118,9 +132,6 @@ public:
 	// returns string of separator characters
 
   KTabListBoxDict& dict (void) { return pixDict; }
-
-  bool autoUpdate (void) const { return lbox.autoUpdate(); }
-  void setAutoUpdate (bool aa) { lbox.setAutoUpdate(aa); }
 
   void repaint (void) { QWidget::repaint(); lbox.repaint(); }
 
