@@ -614,7 +614,8 @@ void IdentityPage::setIdentityInformation( const QString &identity )
       KMessageBox::sorry( this, i18n("The custom sent-mail folder for identity "
 				     "\"%1\" doesn't exist (anymore). "
 				     "Therefore the default sent-mail folder "
-				     "will be used.") );
+				     "will be used.")
+                                .arg( ident.identityName() ) );
       mFccCombo->setFolder( kernel->sentFolder() );
     }
   }
@@ -631,7 +632,8 @@ void IdentityPage::setIdentityInformation( const QString &identity )
       KMessageBox::sorry( this, i18n("The custom drafts folder for identity "
 				     "\"%1\" doesn't exist (anymore). "
 				     "Therefore the default drafts folder "
-				     "will be used.") );
+				     "will be used.")
+                                .arg( ident.identityName() ) );
       mDraftsCombo->setFolder( kernel->draftsFolder() );
     }
   }
