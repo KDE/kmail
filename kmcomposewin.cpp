@@ -4314,6 +4314,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
       // replace %f in the system line
       sysLine.replace( "%f", mExtEditorTempFile->name() );
       mExtEditorProcess = new KProcess();
+      mExtEditorProcess->setUseShell( true );
       sysLine += " ";
       while (!sysLine.isEmpty())
       {
