@@ -1441,10 +1441,9 @@ void KMHeaders::undo()
       msg->setEnableUndo(false);
       mSelMsgBaseList.clear();
       mSelMsgBaseList.append(msg);
-      KMCommand *command = new KMMoveCommand( curFolder, folder, mSelMsgBaseList, this );
+      KMCommand *command = new KMMoveCommand( curFolder, folder, mSelMsgBaseList );
       command->start();
     }
-    updateMessageList();
     // do _not_ close the folder as the message might be transferred
   }
   else
