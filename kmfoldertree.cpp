@@ -436,13 +436,13 @@ void KMFolderTree::delayedUpdate()
 	num.setNum(fti->folder->countUnread());
       extendedName = " (" + num + ")";
       if (!fti->folder->isSystemFolder() &&
-	  !(fti->folder->label() == "inbox"))
+	  !(fti->folder->label() == i18n("inbox")))
 	fti->setPixmap( 0, *pixFull );
     }
     else {
       extendedName = "";
       if (!fti->folder->isSystemFolder() &&
-	  !(fti->folder->label() == "inbox"))
+	  !(fti->folder->label() == i18n("inbox")))
 	fti->setPixmap( 0, *pixPlain );
     }
 
