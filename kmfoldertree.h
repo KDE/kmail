@@ -230,9 +230,8 @@ protected slots:
 
   void autoScroll();
 
-  /** right and middle mouse button */
+  /** right mouse button */
   void rightButtonPressed( QListViewItem *, const QPoint &, int);
-  void mouseButtonPressed( int btn, QListViewItem *, const QPoint &, int);
 
   /** Fires a new-mail-check of the account that is accociated with currentItem */
   void slotCheckMail();
@@ -240,6 +239,8 @@ protected slots:
 protected:
   /** Catch palette changes */
   virtual bool event(QEvent *e);
+
+  virtual void contentsMouseReleaseEvent(QMouseEvent* me);
 
   virtual void paintEmptyArea( QPainter * p, const QRect & rect );
 

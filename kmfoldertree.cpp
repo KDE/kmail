@@ -299,9 +299,6 @@ void KMFolderTree::connectSignals()
   connect( this, SIGNAL( rightButtonPressed( QListViewItem*, const QPoint &, int)),
 	   this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int)));
 
-  connect( this, SIGNAL( mouseButtonPressed( int, QListViewItem*, const QPoint &, int)),
-	   this, SLOT( mouseButtonPressed( int, QListViewItem*, const QPoint &, int)));
-
   connect( this, SIGNAL( expanded( QListViewItem* ) ),
            this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
 
@@ -322,14 +319,9 @@ bool KMFolderTree::event(QEvent *e)
   }
   bool result = KListView::event(e);
 
-  if ( e->type() == QEvent::MouseButtonRelease && mLastItem )
-  {
-    clearSelection();
-    setCurrentItem( mLastItem );
-    setSelected( mLastItem, TRUE );
-  }
   if ( e->type() == QEvent::KeyPress && currentItem() != mLastItem )
     doFolderSelected( currentItem() );
+
   return result;
 }
 
@@ -1059,9 +1051,10 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 
 //-----------------------------------------------------------------------------
 // If middle button and folder holds mailing-list, create a message to that list
-void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint &, int)
+void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
 {
-  lvi = currentItem(); // Needed for when branches are clicked on
+  QListViewItem *lvi = currentItem(); // Needed for when branches are clicked on
+  ButtonState btn = me->button();
   doFolderSelected(lvi);
 
   // get underlying folder
@@ -1082,6 +1075,7 @@ void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint 
   KMComposeWin *win = new KMComposeWin(msg, fti->folder()->identity());
   win->show();
 
+  KFolderTree::contentsMouseReleaseEvent(me);
 }
 
 //-----------------------------------------------------------------------------
