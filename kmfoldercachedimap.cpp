@@ -1006,7 +1006,7 @@ bool KMFolderCachedImap::listDirectory()
   mSubfolderPaths.clear();
   mSubfolderMimeTypes.clear();
 
-  // kdDebug(5006) << "listDirectory(): listing url " << url.url() << endl;
+  // kdDebug(5006) << "listDirectory(): listing url " << url.prettyURL() << endl;
   if (!mAccount->makeConnection())
     return FALSE;
 

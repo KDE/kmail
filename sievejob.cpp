@@ -52,33 +52,33 @@ namespace KMail {
   void SieveJob::schedule( Command command ) {
     switch ( command ) {
     case Get:
-      kdDebug(5006) << "SieveJob::schedule: get( " << mUrl.url() << " )" << endl;
+      kdDebug(5006) << "SieveJob::schedule: get( " << mUrl.prettyURL() << " )" << endl;
       mJob = KIO::get( mUrl );
       connect( mJob, SIGNAL(data(KIO::Job*,const QByteArray&)),
 	       SLOT(slotData(KIO::Job*,const QByteArray&)) );
       break;
     case Put:
-      kdDebug(5006) << "SieveJob::schedule: put( " << mUrl.url() << " )" << endl;
+      kdDebug(5006) << "SieveJob::schedule: put( " << mUrl.prettyURL() << " )" << endl;
       mJob = KIO::put( mUrl, 0600, true /*overwrite*/, false /*resume*/ );
       connect( mJob, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
 	       SLOT(slotDataReq(KIO::Job*,QByteArray&)) );
       break;
     case Activate:
-      kdDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.url() << ", 0700 )"
+      kdDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.prettyURL() << ", 0700 )"
 		<< endl;
       mJob = KIO::chmod( mUrl, 0700 );
       break;
     case Deactivate:
-      kdDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.url() << ", 0600 )"
+      kdDebug(5006) << "SieveJob::schedule: chmod( " << mUrl.prettyURL() << ", 0600 )"
 		<< endl;
       mJob = KIO::chmod( mUrl, 0600 );
       break;
     case SearchActive:
-      kdDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.url() << " )" << endl;
+      kdDebug(5006) << "SieveJob::schedule: listDir( " << mUrl.prettyURL() << " )" << endl;
       {
 	KURL url = mUrl;
 	url.cd("..");
-	kdDebug(5006) << "SieveJob::schedule: listDir's real URL: " << url.url()
+	kdDebug(5006) << "SieveJob::schedule: listDir's real URL: " << url.prettyURL()
 		  << endl;
 	mJob = KIO::listDir( url );
 	connect( mJob, SIGNAL(entries(KIO::Job*,const KIO::UDSEntryList&)),

@@ -161,7 +161,7 @@ namespace KMail {
     : QObject( parent, name ), mSieveJob( 0 ), mDialog( 0 ), mWasActive( false )
   {
     mUrl = findURL();
-    kdDebug(5006) << "Vacation: found url \"" << mUrl.url() << "\"" << endl;
+    kdDebug(5006) << "Vacation: found url \"" << mUrl.prettyURL() << "\"" << endl;
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
     mUrl.setFileName( "kmail-vacation.siv" );
