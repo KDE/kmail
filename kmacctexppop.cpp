@@ -279,7 +279,7 @@ bool KMAcctExpPop::setProtocol(short aProtocol)
 
 KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name, 
 			             KMAcctExpPop *account , 
-				     const char *caption,
+				     const QString caption,
 			             const char *login, QString passwd)
   :QDialog(parent,name,true)
 {
@@ -290,7 +290,8 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   kernel->kbp()->idle();
   act = account;
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
-  setCaption(caption);  
+  if (!caption.isNull())
+    setCaption(caption);  
 
   QGridLayout *gl = new QGridLayout(this, 5, 2, 10);
 

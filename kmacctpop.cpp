@@ -108,7 +108,7 @@ void KMAcctPop::processNewMail(bool interactive)
 bool KMAcctPop::authenticate(DwPopClient& client)
 {
   QString passwd;
-  const char* msg=0;
+  QString msg = QString::null;
   KMPasswdDialog* dlg;
   bool opened = FALSE;
   int replyCode;
@@ -122,13 +122,13 @@ bool KMAcctPop::authenticate(DwPopClient& client)
 
   while (1)
   {
-    if (msg)
+    if (!msg.isNull())
     {
       dlg = new KMPasswdDialog(NULL, NULL, this, msg,
 			       mLogin, passwd);
       if (!dlg->exec()) return FALSE;
       delete dlg;
-      msg = 0;
+      msg = QString::null;
     }
 
     // Some POP servers close the connection upon failed
@@ -519,7 +519,7 @@ void KMAcctPop::setPrecommand(const QString& cmd)
 //=============================================================================
 
 KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name, 
-			       KMAcctPop *account , const char *caption,
+			       KMAcctPop *account , const QString caption,
 			       const char *login, QString passwd)
   :QDialog(parent,name,true)
 {
@@ -530,7 +530,8 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
   kernel->kbp()->idle();
   act = account;
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
-  setCaption(caption);
+  if (!caption.isNull())
+    setCaption(caption);
 
   QGridLayout *gl = new QGridLayout(this, 4, 2, 10);
 

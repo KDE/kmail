@@ -169,7 +169,7 @@ class KMExpPasswdDialog : public QDialog
 
 public:
   KMExpPasswdDialog(QWidget *parent = 0,const char *name= 0,
-	  	    KMAcctExpPop *act=0, const char *caption=0,
+	  	    KMAcctExpPop *act=0, const QString caption=QString::null,
 		    const char *login=0, QString passwd=QString::null);
 
 private:
