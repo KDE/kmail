@@ -148,13 +148,66 @@ void KMReaderWin::readColorConfig(void)
   c3 = KGlobalSettings::visitedLinkColor();
   c4 = QColor(kapp->palette().active().base());
 
+  // The default colors are also defined in configuredialog.cpp
+  cPgpOkH   = QColor( 0x40, 0xFF, 0x40 ); // light green
+  cPgpWarnH = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
+  cPgpErrH  = QColor( 0xFF, 0x00, 0x00 ); // red
+  cCBpgp   = QColor( 0x80, 0xFF, 0x80 ); // very light green
+  cCBplain = QColor( 0xFF, 0xFF, 0x80 ); // very light yellow
+  cCBhtml  = QColor( 0xFF, 0x40, 0x40 ); // light red
+
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     c1 = config->readColorEntry("ForegroundColor",&c1);
     c2 = config->readColorEntry("LinkColor",&c2);
     c3 = config->readColorEntry("FollowedColor",&c3);
     c4 = config->readColorEntry("BackgroundColor",&c4);
+    cPgpOkH   = config->readColorEntry( "PGPMessageOK", &cPgpOkH );
+    cPgpWarnH = config->readColorEntry( "PGPMessageWarn", &cPgpWarnH );
+    cPgpErrH  = config->readColorEntry( "PGPMessageErr", &cPgpErrH );
+    cCBpgp   = config->readColorEntry( "ColorbarPGP", &cCBpgp );
+    cCBplain = config->readColorEntry( "ColorbarPlain", &cCBplain );
+    cCBhtml  = config->readColorEntry( "ColorbarHTML", &cCBhtml );
   }
-  else {
+  
+  // determine the frame and body color for PGP messages from the header color
+  // if the header color equals the background color then the other colors are
+  // also set to the background color (-> old style PGP message viewing)
+  // else
+  // the brightness of the frame is set to 4/5 of the brightness of the header
+  // the saturation of the body is set to 1/8 of the saturation of the header
+  int h,s,v;
+  if ( cPgpOkH == c4 )
+  { // header color == background color?
+    cPgpOkF = c4;
+    cPgpOkB = c4;
+  }
+  else
+  {
+    cPgpOkH.hsv( &h, &s, &v );
+    cPgpOkF.setHsv( h, s, v*4/5 );
+    cPgpOkB.setHsv( h, s/8, v );
+  }
+  if ( cPgpWarnH == c4 )
+  { // header color == background color?
+    cPgpWarnF = c4;
+    cPgpWarnB = c4;
+  }
+  else
+  {
+    cPgpWarnH.hsv( &h, &s, &v );
+    cPgpWarnF.setHsv( h, s, v*4/5 );
+    cPgpWarnB.setHsv( h, s/8, v );
+  }
+  if ( cPgpErrH == c4 )
+  { // header color == background color?
+    cPgpErrF = c4;
+    cPgpErrB = c4;
+  }
+  else
+  {
+    cPgpErrH.hsv( &h, &s, &v );
+    cPgpErrF.setHsv( h, s, v*4/5 );
+    cPgpErrB.setHsv( h, s/8, v );
   }
 
   mRecyleQouteColors = config->readBoolEntry( "RecycleQuoteColors", false );
@@ -190,6 +243,7 @@ void KMReaderWin::readConfig(void)
 							   SmartAttmnt);
   mLoadExternal = config->readBoolEntry( "htmlLoadExternal", false );
   mViewer->setOnlyLocalReferences( !mLoadExternal );
+  mShowColorbar = config->readBoolEntry( "showColorbar", false );
   }
 
   {
@@ -294,11 +348,14 @@ void KMReaderWin::initHtmlWidget(void)
 {
   mBox = new QHBox(this);
 
-#ifdef COLORBAR
-  // Removed the colorbar until it's configurable.
-  mColorBar = new QLabel(" ", mBox);
-  mColorBar->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-#endif
+  //if ( mShowColorbar )
+  {
+    mColorBar = new QLabel(" ", mBox);
+    mColorBar->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    mColorBar->setEraseColor( c4 );
+  }
+  if ( !mShowColorbar )
+    mColorBar->hide();
 
   mViewer = new KHTMLPart(mBox, "khtml");
   mViewer->widget()->setFocusPolicy(WheelFocus);
@@ -485,6 +542,10 @@ void KMReaderWin::updateReaderWin()
   mViewer->view()->setUpdatesEnabled( false );
   mViewer->view()->viewport()->setUpdatesEnabled( false );
   static_cast<QScrollView *>(mViewer->widget())->ensureVisible(0,0);
+  if ( mShowColorbar )
+    mColorBar->show();
+  else
+    mColorBar->hide();
   if (mMsg) parseMsg();
   else
   {
@@ -554,6 +615,38 @@ void KMReaderWin::parseMsg(void)
                  .arg( mBodyFamily ).arg( fntSize ).arg(colorToString(c1)).arg(colorToString(c4)) +
 		 QString("a { color: #%1; ").arg(colorToString(c2)) +
 		 "text-decoration: none; }" + // just playing
+                 QString( "table.encr { background-color: #%1; "
+                          "border-width: 0px; }\n" )
+                 .arg( colorToString( cPgpOkF ) ) +
+                 QString( "tr.encrH { background-color: #%1; "
+                          "font-weight: bold; }\n" )
+                 .arg( colorToString( cPgpOkH ) ) +
+                 QString( "tr.encrB { background-color: #%1; }\n" )
+                 .arg( colorToString( cPgpOkB ) ) +
+                 QString( "table.signOk { background-color: #%1; "
+                          "border-width: 0px; }\n" )
+                 .arg( colorToString( cPgpOkF ) ) +
+                 QString( "tr.signOkH { background-color: #%1; "
+                          "font-weight: bold; }\n" )
+                 .arg( colorToString( cPgpOkH ) ) +
+                 QString( "tr.signOkB { background-color: #%1; }\n" )
+                 .arg( colorToString( cPgpOkB ) ) +
+                 QString( "table.signWarn { background-color: #%1; "
+                          "border-width: 0px; }\n" )
+                 .arg( colorToString( cPgpWarnF ) ) +
+                 QString( "tr.signWarnH { background-color: #%1; "
+                          "font-weight: bold; }\n" )
+                 .arg( colorToString( cPgpWarnH ) ) +
+                 QString( "tr.signWarnB { background-color: #%1; }\n" )
+                 .arg( colorToString( cPgpWarnB ) ) +
+                 QString( "table.signErr { background-color: #%1; "
+                          "border-width: 0px; }\n" )
+                 .arg( colorToString( cPgpErrF ) ) +
+                 QString( "tr.signErrH { background-color: #%1; "
+                          "font-weight: bold; }\n" )
+                 .arg( colorToString( cPgpErrH ) ) +
+                 QString( "tr.signErrB { background-color: #%1; }\n" )
+                 .arg( colorToString( cPgpErrB ) ) +
 		 "</style></head><body " +
 		 // TODO: move these to stylesheet, too:
                  bkgrdStr + ">" );
@@ -848,6 +941,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 
   if (pgp->setMessage(aStr))
   {
+    QString signer;
     QCString str = pgp->frontmatter();
     if(!str.isEmpty()) htmlStr += quotedHTML(aCodec->toUnicode(str));
     //htmlStr += "<br>";
@@ -855,31 +949,36 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
     if (isEncrypted)
     {
       emit noDrag();
-      htmlStr += "<table border=\"0\" bgcolor=\"00ff00\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"00ff00\"><td>\n";
+      htmlStr += "<table cellspacing=\"1\" cellpading=\"0\" class=\"encr\">\n"
+                 "<tr class=\"encrH\"><td>\n";
       if(pgp->decrypt())
       {
-	htmlStr += QString("<b>%1</b>").arg(i18n("Encrypted message"));
+	htmlStr += i18n("Encrypted message");
       }
       else
       {
-	htmlStr += QString("<b>%1</b><br>%2")
+	htmlStr += QString("%1<br />%2")
                     .arg(i18n("Cannot decrypt message:"))
                     .arg(pgp->lastErrorMsg());
       }
-      htmlStr += "</td></tr>\n<tr bgcolor=\"ddffdd\"><td>\n";
+      htmlStr += "</td></tr>\n<tr class=\"encrB\"><td>\n";
     }
     // check for PGP signing
     isSigned = pgp->isSigned();
     if (isSigned)
     {
-      QString signer = pgp->signedBy();
+      signer = pgp->signedBy();
       if (signer.isEmpty())
       {
-        htmlStr += "<table border=\"0\" bgcolor=\"ffff00\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"ffff00\"><td>\n<b>";
-        htmlStr += i18n("Message was signed with unknown key %1.").arg(pgp->signedByKey());
-        htmlStr += "<br>";
+        htmlStr += "<table cellspacing=\"1\" cellpading=\"0\" "
+                   "class=\"signWarn\">\n"
+                   "<tr class=\"signWarnH\"><td>\n";
+        htmlStr += i18n("Message was signed with unknown key %1.")
+                   .arg(pgp->signedByKey());
+        htmlStr += "<br />";
         htmlStr += i18n("The validity of the signature can't be checked.");
-        htmlStr += "</b>\n</td></tr>\n<tr bgcolor=\"ffffdd\"><td>\n";
+        htmlStr += "\n</td></tr>\n<tr class=\"signWarnB\"><td>\n";
+;
       }
       else
       {
@@ -892,19 +991,23 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 
         if (pgp->goodSignature())
         {
-          htmlStr += "<table border=\"0\" bgcolor=\"00ff00\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"00ff00\"><td>\n<b>";
+          htmlStr += "<table cellspacing=\"1\" cellpading=\"0\" "
+                     "class=\"signOk\">\n"
+                     "<tr class=\"signOkH\"><td>\n";
           htmlStr += i18n("Message was signed by %1.").arg(signer);
-          htmlStr += "<br>";
+          htmlStr += "<br />";
           htmlStr += i18n("The signature is good.");
-          htmlStr += "</b>\n</td></tr>\n<tr bgcolor=\"ddffdd\"><td>\n";
+          htmlStr += "\n</td></tr>\n<tr class=\"signOkB\"><td>\n";
         }
         else
         {
-          htmlStr += "<table border=\"0\" bgcolor=\"ff0000\" cellspacing=\"1\" cellpading=\"0\">\n<tr bgcolor=\"ff0000\"><td>\n<b>";
+          htmlStr += "<table cellspacing=\"1\" cellpading=\"0\" "
+                     "class=\"signErr\">\n"
+                     "<tr class=\"signErrH\"><td>\n";
           htmlStr += i18n("Message was signed by %1.").arg(signer);
-          htmlStr += "<br>";
-          htmlStr += i18n("Warning: The signature is bad.");
-          htmlStr += "</b>\n</td></tr>\n<tr bgcolor=\"ffdddd\"><td>\n";
+          htmlStr += "<br />";
+          htmlStr += i18n("Error: The signature is bad.");
+          htmlStr += "\n</td></tr>\n<tr class=\"signErrB\"><td>\n";
         }
       }
     }
@@ -912,31 +1015,39 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
     {
       htmlStr += quotedHTML(aCodec->toUnicode(pgp->message()));
       if (isSigned) {
-        htmlStr += "</td></tr></table>";
+        htmlStr += "</td></tr>\n<tr class=\"";
+        if (signer.isEmpty())
+          htmlStr += "signWarnH";
+        else
+          if (pgp->goodSignature())
+            htmlStr += "signOkH";
+          else
+            htmlStr += "signErrH";
+        htmlStr += "\"><td>" + 
+                   i18n("End of signed message") + 
+                   "</td></tr></table>";
       }
       if (isEncrypted) {
-        htmlStr += "</td></tr></table>";
+        htmlStr += "</td></tr>\n<tr class=\"encrH\"><td>" +
+                   i18n("End of encrypted message") +
+                   "</td></tr></table>";
       }
-      //htmlStr += QString("<br><b>%1</b><br><br>")
-      //  .arg(i18n("End of pgp message"));
       str = pgp->backmatter();
       if(!str.isEmpty()) htmlStr += quotedHTML(aCodec->toUnicode(str));
     } // if (!pgpMessage) then the message only looked similar to a pgp message
     else htmlStr = quotedHTML(aCodec->toUnicode(aStr));
   }
   else htmlStr = quotedHTML(aCodec->toUnicode(aStr));
-#ifdef COLORBAR
   if (isEncrypted || isSigned)
   {
-    mColorBar->setEraseColor("green");
-    mColorBar->setText(i18n("\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne\n"));
+    mColorBar->setEraseColor( cCBpgp );
+    mColorBar->setText(i18n("\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne"));
   }
   else
   {
-    mColorBar->setEraseColor("yellow");
-    mColorBar->setText(i18n("\nN\no\n\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne\n"));
+    mColorBar->setEraseColor( cCBplain );
+    mColorBar->setText(i18n("\nN\no\n\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne"));
   }
-#endif
   mViewer->write(htmlStr);
 }
 
@@ -944,10 +1055,8 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeHTMLStr(const QString& aStr)
 {
-#ifdef COLORBAR
-  mColorBar->setEraseColor("red");
-  mColorBar->setText(i18n("\nH\nT\nM\nL\n\nM\ne\ns\ns\na\ng\ne\n"));
-#endif
+  mColorBar->setEraseColor( cCBhtml );
+  mColorBar->setText(i18n("\nH\nT\nM\nL\n\nM\ne\ns\ns\na\ng\ne"));
   mViewer->write(aStr);
 }
 
@@ -986,7 +1095,8 @@ QString KMReaderWin::quotedHTML(const QString& s)
     beg = pos+1;
 
     /* calculate line's current quoting depth */
-    int p, actQuoteLevel = -1;
+    unsigned int p;
+    int actQuoteLevel = -1;
     bool finish = FALSE;
     for (p=0; p<line.length() && !finish; p++) {
 	switch (line[p].latin1()) {

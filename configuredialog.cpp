@@ -1007,6 +1007,12 @@ void ConfigureDialog::makeAppearancePage( void )
   modeList.append( i18n("New Message") );
   modeList.append( i18n("Unread Message") );
   modeList.append( i18n("Flagged Message") );
+  modeList.append( i18n("PGP Message - OK") );
+  modeList.append( i18n("PGP Message - Warning") );
+  modeList.append( i18n("PGP Message - Error") );
+  modeList.append( i18n("Colorbar - PGP Message") );
+  modeList.append( i18n("Colorbar - Plain Text Message") );
+  modeList.append( i18n("Colorbar - HTML Message") );
 
   mAppearance.colorList = new ColorListBox( page2 );
   vlay->addWidget( mAppearance.colorList, 10 );
@@ -1028,6 +1034,10 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.longFolderCheck =
     new QCheckBox( i18n("&Show long folder list"), page3 );
   vlay->addWidget( mAppearance.longFolderCheck );
+
+  mAppearance.showColorbarCheck =
+    new QCheckBox( i18n("Show color &bar"), page3 );
+  vlay->addWidget( mAppearance.showColorbarCheck );
 
   mAppearance.messageSizeCheck =
     new QCheckBox( i18n("&Display message sizes"), page3 );
@@ -1208,6 +1218,10 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.pgpAutoSignatureCheck =
     new QCheckBox( i18n("Automatically &sign messages using PGP"), page );
   topLevel->addWidget( mComposer.pgpAutoSignatureCheck );
+
+  mComposer.pgpAutoEncryptCheck =
+    new QCheckBox( i18n("Automatically encrypt messages if possible"), page );
+  topLevel->addWidget( mComposer.pgpAutoEncryptCheck );
 
   QHBoxLayout *hlay = new QHBoxLayout( topLevel );
   mComposer.wordWrapCheck =
@@ -1832,6 +1846,9 @@ void ConfigureDialog::setupAppearancePage( void )
   {
     KConfigGroupSaver saver(config, "Reader");
 
+    mAppearance.showColorbarCheck->setChecked(
+      config->readBoolEntry( "showColorbar", false ) );
+
     QColor defaultColor = QColor(kapp->palette().active().base());
     mAppearance.colorList->setColor(
       0, config->readColorEntry("BackgroundColor",&defaultColor ) );
@@ -1871,6 +1888,30 @@ void ConfigureDialog::setupAppearancePage( void )
     defaultColor = QColor(0,0x7F,0);
     mAppearance.colorList->setColor(
       9, config->readColorEntry("FlagMessage",&defaultColor ) );
+
+    defaultColor = QColor( 0x40, 0xFF, 0x40 ); // light green
+    mAppearance.colorList->setColor(
+      10, config->readColorEntry( "PGPMessageOK",&defaultColor ) );
+
+    defaultColor = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
+    mAppearance.colorList->setColor(
+      11, config->readColorEntry( "PGPMessageWarn",&defaultColor ) );
+
+    defaultColor = QColor( 0xFF, 0x00, 0x00 ); // red
+    mAppearance.colorList->setColor(
+      12, config->readColorEntry( "PGPMessageErr",&defaultColor ) );
+
+    defaultColor = QColor( 0x80, 0xFF, 0x80 ); // very light green
+    mAppearance.colorList->setColor(
+      13, config->readColorEntry( "ColorbarPGP",&defaultColor ) );
+
+    defaultColor = QColor( 0xFF, 0xFF, 0x80 ); // very light yellow
+    mAppearance.colorList->setColor(
+      14, config->readColorEntry( "ColorbarPlain",&defaultColor ) );
+
+    defaultColor = QColor( 0xFF, 0x40, 0x40 ); // light red
+    mAppearance.colorList->setColor(
+      15, config->readColorEntry( "ColorbarHTML",&defaultColor ) );
 
     state = config->readBoolEntry("defaultColors", true );
     mAppearance.customColorCheck->setChecked( state == false ? true : false );
@@ -2000,6 +2041,9 @@ void ConfigureDialog::setupComposerPage( void )
 
     state = config->readBoolEntry( "pgp-auto-sign", false );
     mComposer.pgpAutoSignatureCheck->setChecked(state);
+
+    state = config->readBoolEntry( "pgp-auto-encrypt", false );
+    mComposer.pgpAutoEncryptCheck->setChecked(state);
 
     state = config->readBoolEntry( "word-wrap", true );
     mComposer.wordWrapCheck->setChecked( state );
@@ -2145,6 +2189,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
 
     mAppearance.longFolderCheck->setChecked( true );
+    mAppearance.showColorbarCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2172,6 +2217,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
 
     mAppearance.longFolderCheck->setChecked( true );
+    mAppearance.showColorbarCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2198,6 +2244,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
 
     mAppearance.longFolderCheck->setChecked( true );
+    mAppearance.showColorbarCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateLocalized->setChecked( true );
@@ -2210,6 +2257,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( false );
 
     mAppearance.longFolderCheck->setChecked( true );
+    mAppearance.showColorbarCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
     mAppearance.rdDateCtime->setChecked( true );
@@ -2390,10 +2438,12 @@ void ConfigureDialog::slotDoApply( bool everything )
 
     {
       KConfigGroupSaver saver(config, "Reader");
+      config->writeEntry( "showColorbar",
+                          mAppearance.showColorbarCheck->isChecked() );
       bool defaultColors = !mAppearance.customColorCheck->isChecked();
       config->writeEntry("defaultColors", defaultColors );
-      if (!defaultColors)
-      {
+      //if (!defaultColors)
+      //{
 	// Don't write color info when we use default colors.
 	config->writeEntry("BackgroundColor", mAppearance.colorList->color(0) );
 	config->writeEntry("ForegroundColor", mAppearance.colorList->color(1) );
@@ -2405,7 +2455,13 @@ void ConfigureDialog::slotDoApply( bool everything )
 	config->writeEntry("NewMessage",      mAppearance.colorList->color(7) );
 	config->writeEntry("UnreadMessage",   mAppearance.colorList->color(8) );
 	config->writeEntry("FlagMessage",     mAppearance.colorList->color(9) );
-      }
+	config->writeEntry("PGPMessageOK",    mAppearance.colorList->color(10) );
+	config->writeEntry("PGPMessageWarn",  mAppearance.colorList->color(11) );
+	config->writeEntry("PGPMessageErr",   mAppearance.colorList->color(12) );
+	config->writeEntry("ColorbarPGP",     mAppearance.colorList->color(13) );
+	config->writeEntry("ColorbarPlain",   mAppearance.colorList->color(14) );
+	config->writeEntry("ColorbarHTML",    mAppearance.colorList->color(15) );
+      //}
       bool recycleColors = mAppearance.recycleColorCheck->isChecked();
       config->writeEntry("RecycleQuoteColors", recycleColors );
     }
@@ -2507,6 +2563,8 @@ void ConfigureDialog::slotDoApply( bool everything )
       config->writeEntry("smart-quote", mComposer.smartQuoteCheck->isChecked() );
       config->writeEntry("pgp-auto-sign",
 			 mComposer.pgpAutoSignatureCheck->isChecked() );
+      config->writeEntry("pgp-auto-encrypt",
+			 mComposer.pgpAutoEncryptCheck->isChecked() );
       config->writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
       config->writeEntry("break-at", mComposer.wrapColumnSpin->value() );
 

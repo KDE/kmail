@@ -338,7 +338,8 @@ void KMComposeWin::readConfig(void)
     mLineBreak = 78;
   if (mLineBreak < 60)
     mLineBreak = 60;
-  mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
+  mAutoPgpSign = config->readBoolEntry("pgp-auto-sign", false);
+  mAutoPgpEncrypt = config->readBoolEntry("pgp-auto-encrypt", false);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
 
   int mode = config->readNumEntry("Completion Mode",
@@ -1336,6 +1337,40 @@ QCString KMComposeWin::pgpProcessedMsg(void)
     }
   }
 
+  // determine the list of recipients
+  QString _to = to();
+  if(!cc().isEmpty()) _to += "," + cc();
+  if(!bcc().isEmpty()) _to += "," + bcc();
+
+  QStringList recipients = KMMessage::splitEmailAddrList(_to);
+
+  if( mAutoPgpEncrypt && !doEncrypt )
+  { // check if the message should be encrypted
+    int status = pgp->encryptionPossible( recipients );
+    if( status == 1 )
+      doEncrypt = true;
+    else if( status == 2 )
+    { // the user wants to be asked or has to be asked
+      kernel->kbp()->idle();
+      int ret =
+        KMessageBox::questionYesNo( this, 
+                                    "Should this message be encrypted?" );
+      kernel->kbp()->busy();
+      doEncrypt = ( ret == KMessageBox::Yes );
+    }
+    else if( status == -1 )
+    { // warn the user that there are conflicting encryption preferences
+      int ret =
+        KMessageBox::warningYesNoCancel( this,
+                                         "There are conflicting encryption "
+                                         "preferences!\n\n"
+                                         "Should this message be encrypted?" );
+      if( ret == KMessageBox::Cancel )
+        return QCString();
+      doEncrypt = ( ret == KMessageBox::Yes );
+    }
+  }
+
   if (!doSign && !doEncrypt) return cText;
 
   pgp->setMessage(cText, mCharset);
@@ -1351,19 +1386,11 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   pgpUserId = ident.pgpIdentity();
 
   if (!doEncrypt)
-  {
+  { // clearsign the message
     if(pgp->sign(pgpUserId)) return pgp->message();
   }
   else
-  {
-    // encrypting
-
-    QString _to = to();
-    if(!cc().isEmpty()) _to += "," + cc();
-    if(!bcc().isEmpty()) _to += "," + bcc();
-
-    QStringList recipients = KMMessage::splitEmailAddrList(_to);
-
+  { // encrypt the message
     if(pgp->encryptFor(recipients, pgpUserId, doSign))
       return pgp->message();
   }

@@ -325,6 +325,7 @@ private:
       ColorListBox  *colorList;
       QCheckBox     *recycleColorCheck;
       QCheckBox     *longFolderCheck;
+      QCheckBox     *showColorbarCheck;
       QCheckBox     *messageSizeCheck;
       QCheckBox     *nestedMessagesCheck;
       QRadioButton  *rdAlwaysOpen;
@@ -358,6 +359,7 @@ private:
       QCheckBox    *autoAppSignFileCheck;
       QCheckBox    *smartQuoteCheck;
       QCheckBox    *pgpAutoSignatureCheck;
+      QCheckBox    *pgpAutoEncryptCheck;
       QCheckBox    *wordWrapCheck;
       KIntNumInput *wrapColumnSpin;
       QCheckBox   *externalEditorCheck;

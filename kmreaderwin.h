@@ -266,10 +266,15 @@ protected:
   bool mUseFixedFont;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
+  QColor cPgpOkF, cPgpOkH, cPgpOkB, // colors for PGP (Frame, Header, Body)
+         cPgpWarnF, cPgpWarnH, cPgpWarnB,
+         cPgpErrF, cPgpErrH, cPgpErrB;
+  QColor cCBpgp, cCBplain, cCBhtml; // colors for colorbar
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;
   bool    mUnicodeFont;
   bool    mLoadExternal;
+  bool mShowColorbar;
   QStringList mTempFiles;
   QStringList mTempDirs;
 };
