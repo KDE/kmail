@@ -958,9 +958,11 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     QString createChild = i18n("&New Subfolder...");
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
-    folderMenu->insertItem(SmallIcon("folder_new"),
-                           createChild, this,
-                           SLOT(addChildFolder()));
+    if (fti->folder() || (fti->text(0) != i18n("Searches")))
+	folderMenu->insertItem(SmallIcon("folder_new"),
+			       createChild, this,
+			       SLOT(addChildFolder()));
+
     if (!fti->folder()) {
       folderMenu->insertItem(i18n("&Compact All Folders"),
                      kmkernel->folderMgr(), SLOT(compactAll()));
@@ -976,7 +978,9 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         folderMenu->insertItem(SmallIcon("mail_send"),
                                i18n("&Send Queued Messages"), mMainWidget,
                                SLOT(slotSendQueued()));
-    if (!fti->folder()->isSystemFolder() || fti->folder()->folderType() == KMFolderTypeImap)
+    if ((!fti->folder()->isSystemFolder() && 
+	 (fti->folder()->folderType() != KMFolderTypeSearch)) ||
+	fti->folder()->folderType() == KMFolderTypeImap)
     {
       folderMenu->insertItem(SmallIcon("folder_new"),
                              i18n("&New Subfolder..."), this,
