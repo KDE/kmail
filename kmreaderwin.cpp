@@ -503,7 +503,7 @@ void KMReaderWin::displayAboutPage()
     "</ul>\n");
   if( kernel->firstStart() ) {
     info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
-    "Settings-&gt;Configuration.\n"
+    "Settings-&gt;Configure KMail.\n"
     "You need to at least create a primary identity and a mail "
     "account.</p>\n");
   }
