@@ -519,14 +519,6 @@ void KMComposeWin::applyChanges(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::show()
-{
-  KMComposeWinInherited::show();
-  // resize(size());
-}
-
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent* e)
 {
   writeConfig();

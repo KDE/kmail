@@ -2092,8 +2092,8 @@ KMimeMagic::findBufferType(const char * buffer, int nbytes)
 
 	resultBuf.resize(0);
 	if (magicResult) {
-		magicResult->setContent(QString(NULL));
-		magicResult->setEncoding(QString(NULL));
+		magicResult->setContent(QString(0));
+		magicResult->setEncoding(QString(0));
 	} else
 	  magicResult = new KMimeMagicResult();
 	accuracy = 100;
@@ -2148,8 +2148,8 @@ KMimeMagic::findFileType(const char *fn)
 {
         resultBuf.resize(0);
         if (magicResult) {
-                magicResult->setContent(QString(NULL));
-                magicResult->setEncoding(QString(NULL));
+                magicResult->setContent(QString(0));
+                magicResult->setEncoding(QString(0));
         } else
                 magicResult = new KMimeMagicResult();
 	accuracy = 100;

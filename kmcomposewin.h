@@ -53,9 +53,6 @@ public:
   /** Applies the user changes to the message object of the composer. */
   virtual void applyChanges(void);
 
-  virtual void show();
-
-
 public slots:
   void slotPrint();
   void slotAttachFile();

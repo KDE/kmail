@@ -10,6 +10,7 @@
 #include <qlabel.h>
 #include <qlined.h>
 #include <qlayout.h>
+#include <unistd.h>
 #include <assert.h>
 
 

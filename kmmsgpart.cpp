@@ -290,7 +290,6 @@ const QString KMMessagePart::body(void) const
 void KMMessagePart::setBody(const QString aStr)
 {
   mBody = aStr.copy();
-  debug("body part: %s\n", (const char*)mBody);
 }
 
 

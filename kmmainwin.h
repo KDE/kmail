@@ -10,7 +10,7 @@
 class KMFolder;
 class KMFolderTree;
 class KMHeaders;
-class KMReaderView;
+class KMReaderWin;
 class KNewPanner;
 class KMenuBar;
 class KToolBar;
@@ -38,9 +38,9 @@ public:
   virtual void statusBarChangeItem(int id, const char* text);
 
   /** Easy access to main components of the window. */
-  KMReaderView* messageView(void) const { return mMsgView; }
-  KToolBar*     toolBar(void) const     { return mToolBar; }
-  KStatusBar*   statusBar(void) const   { return mStatusBar; }
+  KMReaderWin* messageView(void) const { return mMsgView; }
+  KToolBar* toolBar(void) const     { return mToolBar; }
+  KStatusBar* statusBar(void) const   { return mStatusBar; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
 public slots:
@@ -90,10 +90,10 @@ protected:
   KToolBar     *mToolBar;
   KStatusBar   *mStatusBar;
   KMFolderTree *mFolderTree;
-  KMReaderView *mMsgView;
+  KMReaderWin  *mMsgView;
   KNewPanner   *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
-  KMFolder *mFolder;
+  KMFolder     *mFolder;
   bool		mIntegrated;
   int		mMessageStatusId;
   int		mHorizPannerSep, mVertPannerSep;

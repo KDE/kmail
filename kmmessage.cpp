@@ -97,7 +97,7 @@ const QString KMMessage::asString(void)
     break;
   }
 
-  resultStr = str.replace(QRegExp("\\r"),"");
+  resultStr = str;//.replace(QRegExp("\\r"),"");
   return resultStr;
 }
 
@@ -292,6 +292,18 @@ const QString KMMessage::dateStr(void) const
   DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsString().c_str();
   return "";
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMessage::dateShortStr(void) const
+{
+  DwHeaders& header = mMsg->Headers();
+  time_t unixTime;
+
+  if (!header.HasDate()) return "";
+  unixTime = header.Date().AsUnixTime();
+  return ctime(&unixTime);
 }
 
 

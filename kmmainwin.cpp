@@ -61,7 +61,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   connect(mHeaders, SIGNAL(messageSelected(KMMessage*)),
 	  this, SLOT(messageSelected(KMMessage*)));
 
-  mMsgView = new KMReaderView(mVertPanner);
+  mMsgView = new KMReaderWin(mVertPanner);
+  connect(mMsgView, SIGNAL(statusMsg(const char*)),
+	  this, SLOT(statusMsg(const char*)));
 
   parseConfiguration();
 
@@ -109,10 +111,6 @@ void KMMainWin::parseConfiguration()
     sscanf(str,"%d,%d",&mVertPannerSep,&mHorizPannerSep);
   else
     mHorizPannerSep = mVertPannerSep = 100;
-
-  config->setGroup("Settings");
-  str = config->readEntry("Inline");
-  mMsgView->setInline((str.find("false",0,FALSE) == 0));
 }
 
 
@@ -164,9 +162,6 @@ void KMMainWin::closeEvent(QCloseEvent *e)
   s.sprintf("%i,%i", mVertPanner->seperatorPos(), 
 	    mHorizPanner->seperatorPos());
   config->writeEntry("Panners", s);
-
-  config->setGroup("Settings");
-  config->writeEntry("Inline", mMsgView->isInline() ? "true" : "false");
 
   config->sync();
   e->accept();
@@ -316,7 +311,7 @@ void KMMainWin::doCompactFolder()
 void KMMainWin::doPrintMsg()
 { 
   if(mHeaders->currentItem() >= 0)
-    mMsgView->printMail();
+    mMsgView->printMsg();
 }
 
 
@@ -383,9 +378,7 @@ void KMMainWin::doViewChange()
     bodyParts->setItemChecked(bodyParts->idAt(0),TRUE);
   }
 
-  // from KMMainView::slotViewChange():
-  mMsgView->setInline(!mMsgView->isInline());
-  mMsgView->updateDisplay();  
+  //mMsgView->setInline(!mMsgView->isInline());
 }
 
 
@@ -396,7 +389,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 
   mFolder = (KMFolder*)aFolder;
   mHeaders->setFolder(mFolder);
-  mMsgView->clearCanvas();
+  mMsgView->clear();
 
   kbp->idle();
 }
@@ -407,10 +400,11 @@ void KMMainWin::messageSelected(KMMessage *msg)
 {
   KMReaderWin *win;
 
-  if(mIntegrated) mMsgView->parseMessage(msg);
+  if(mIntegrated) mMsgView->setMsg(msg);
   else
   {
-    win = new KMReaderWin(0,0,mHeaders->currentItem(),mFolder);
+    win = new KMReaderWin;
+    win->setCaption(msg->subject());
     win->show();
   }
 }
