@@ -199,7 +199,8 @@ bool KMailICalIfaceImpl::updateAttachment( KMMessage& msg,
         QValueList<int> allowedCTEs;
         msgPart->setBodyAndGuessCte( rawData, allowedCTEs );
       }else{
-        msgPart->setContentTransferEncodingStr( url.fileEncoding().latin1() );
+        msgPart->setContentTransferEncodingStr( "8bit" );
+        msgPart->setCharset( url.fileEncoding().latin1() );
         msgPart->setBodyEncodedBinary( rawData );
       }
       msgPart->setType(DwMime::kTypeApplication);
