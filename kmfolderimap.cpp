@@ -101,7 +101,7 @@ void KMFolderImap::removeOnServer()
   KURL url = mAccount->getUrl();
   url.setPath(imapPath());
   if (!mAccount->makeConnection()) return;
-  KIO::SimpleJob *job = KIO::file_delete(url);
+  KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
   KMAcctImap::initJobData(jd);
