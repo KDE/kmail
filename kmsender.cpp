@@ -228,8 +228,10 @@ void KMSender::doSendMsg()
   // Post-process sent message (filtering)
   if (mCurrentMsg  && kernel->filterMgr())
   {
-    if( mCurrentMsg->hasUnencryptedMsg() )
-      *mCurrentMsg = *mCurrentMsg->unencryptedMsg();
+    if( mCurrentMsg->hasUnencryptedMsg() ) {
+kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg  by mCurrentMsg->unencryptedMsg()" << endl;
+      mCurrentMsg = mCurrentMsg->unencryptedMsg();
+    }
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg->setStatus(KMMsgStatusSent);
 

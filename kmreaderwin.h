@@ -33,6 +33,9 @@ class QListViewItem;
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
+class NewByteArray; // providing operator+ on a QByteArray (khz, 21.06.2002)
+class DwHeaders;
+
 namespace KParts
 {
   struct URLArgs;
@@ -193,6 +196,15 @@ public:
                                  bool showOneMimePart=false,
                                  bool keepEncryptions=false,
                                  bool includeSignatures=true );
+
+    // This function returns the complete data that were in this
+    // message parts - *after* all encryption has been removed that
+    // could be removed.
+    // - This is used to store the message in decrypted form.
+    void objectTreeToDecryptedMsg( partNode* node,
+                                   NewByteArray& resultingData,
+                                   DwHeaders& topHeaders,
+                                   int recCount = 0 );
 
     /** if data is 0:
             Feeds the HTML widget with the contents of the opaque signed

@@ -1753,21 +1753,27 @@ bool KMComposeWin::applyChanges(void)
 
       if(    ( doEncrypt && ! saveMessagesEncrypted )
           || ( doSign    && ! saveSentSignatures    ) ) {
+kdDebug(5006) << "\n     1. This message is going to be stored in decrypted form." << endl;
         KMMessage* unencryptedMessage = new KMMessage( *mMsg );
-        bOk = encryptMessage( unencryptedMessage,
-                              recipientsWithoutBcc,
-                              doSign    && saveSentSignatures, 
-                              doEncrypt && saveMessagesEncrypted,
-                              cryptPlug,
-                              encodedBody,
-                              previousBoundaryLevel,
-                              oldBodyPart,
-                              earlyAddAttachments,
-                              allAttachmentsAreInBody,
-                              newBodyPart );
-        if( bOk ) {
+kdDebug(5006) << "\n     2. This message is going to be stored in decrypted form." << endl;
+        bool bOk2 = encryptMessage( unencryptedMessage,
+                                    recipientsWithoutBcc,
+                                    doSign    && saveSentSignatures, 
+                                    doEncrypt && saveMessagesEncrypted,
+                                    cryptPlug,
+                                    encodedBody,
+                                    previousBoundaryLevel,
+                                    oldBodyPart,
+                                    earlyAddAttachments,
+                                    allAttachmentsAreInBody,
+                                    newBodyPart );
+kdDebug(5006) << "\n     3. This message is going to be stored in decrypted form." << endl;
+        if( bOk2 ) {
+kdDebug(5006) << "\n     4. This message is going to be stored in decrypted form." << endl;
           unencryptedMessage->cleanupHeader();
+kdDebug(5006) << "\n     5. This message is going to be stored in decrypted form." << endl;
           mMsg->setUnencryptedMsg( unencryptedMessage );
+kdDebug(5006) << "\n     6. This message is going to be stored in decrypted form." << endl;
         }
       }
 

@@ -1815,19 +1815,33 @@ void KMMainWin::slotSelectMessage(KMMessage* msg)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplaceMsgByUnencryptedVersion()
 {
+  kdDebug(5006) << "KMMainWin::slotReplaceMsgByUnencryptedVersion()" << endl;
   KMMessage* oldMsg = mHeaders->getMsg(-1);
-  if( oldMsg && oldMsg->hasUnencryptedMsg() ) {
-    // insert the unencrypted message
-    KMMessage* newMsg = oldMsg->unencryptedMsg();
-    mHeaders->copyMsgToFolder(mFolder, -1, newMsg);
-    // delete the encrypted message (this will delete newMsg too)
-    mHeaders->deleteMsg();
-    updateMessageActions();
-    //
-    // sorry, no idea how we can select the freshly added message now.  :-(
-    //
-    //     slotSelectMessage( ?? but what param to give it ?? );
-  }
+  if( oldMsg ) {
+    kdDebug(5006) << "KMMainWin  -  old message found" << endl;
+    if( oldMsg->hasUnencryptedMsg() ) {
+      // insert the unencrypted message
+      kdDebug(5006) << "KMMainWin  -  extra unencrypted message found" << endl;
+      KMMessage* newMsg = oldMsg->unencryptedMsg();
+      kdDebug(5006) << "KMMainWin  -  copying unencrypted message to same folder" << endl;
+      mHeaders->copyMsgToFolder(mFolder, -1, newMsg);
+      // delete the encrypted message (this will delete newMsg too)
+      kdDebug(5006) << "KMMainWin  -  deleting encrypted message" << endl;
+      mHeaders->deleteMsg();
+      kdDebug(5006) << "KMMainWin  -  updating message actions" << endl;
+      updateMessageActions();
+      
+      // Sorry, no idea how to *select* the freshly added message now.  :-(
+      //
+      //     slotSelectMessage( ?? but what param to give it ?? );
+      //
+      // (khz, 2002/06/21)
+      
+      kdDebug(5006) << "KMMainWin  -  done." << endl;
+    } else
+      kdDebug(5006) << "KMMainWin  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
+  } else
+    kdDebug(5006) << "KMMainWin  -  NO OLD MESSAGE FOUND" << endl;
 }
 
 

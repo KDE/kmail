@@ -96,7 +96,8 @@ void KMMessage::assign( const KMMessage& other )
     delete mUnencryptedMsg;
 
   mNeedsAssembly = true;//other.mNeedsAssembly;
-  mMsg = new DwMessage( *(other.mMsg) );
+  if( other.mMsg )
+    mMsg = new DwMessage( *(other.mMsg) );
   mCodec = other.mCodec;
   mDecodeHTML = other.mDecodeHTML;
   mIsComplete = false;//other.mIsComplete;

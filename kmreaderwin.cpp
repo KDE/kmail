@@ -123,6 +123,68 @@ KMReaderWin::PartMetaData::PartMetaData()
 
 
 
+class NewByteArray : public QByteArray
+{
+public:
+    NewByteArray &appendNULL();
+    NewByteArray &operator+=( const char * );
+    NewByteArray &operator+=( const QByteArray & );
+    NewByteArray &operator+=( const QCString & );
+    QByteArray& qByteArray();
+};
+
+NewByteArray& NewByteArray::appendNULL()
+{
+    QByteArray::detach();
+    uint len1 = size();
+    if ( !QByteArray::resize( len1 + 1 ) )
+        return *this;
+    *(data() + len1) = '\0';
+    return *this;
+}
+NewByteArray& NewByteArray::operator+=( const char * newData )
+{
+    if ( !newData )
+        return *this;
+    QByteArray::detach();
+    uint len1 = size();
+    uint len2 = qstrlen( newData );
+    if ( !QByteArray::resize( len1 + len2 ) )
+        return *this;
+    memcpy( data() + len1, newData, len2 );
+    return *this;
+}
+NewByteArray& NewByteArray::operator+=( const QByteArray & newData )
+{
+    if ( newData.isNull() )
+        return *this;
+    QByteArray::detach();
+    uint len1 = size();
+    uint len2 = newData.size();
+    if ( !QByteArray::resize( len1 + len2 ) )
+        return *this;
+    memcpy( data() + len1, newData.data(), len2 );
+    return *this;
+}                                             
+NewByteArray& NewByteArray::operator+=( const QCString & newData )
+{
+    if ( newData.isEmpty() )
+        return *this;
+    QByteArray::detach();
+    uint len1 = size();
+    uint len2 = newData.length(); // forget about the trailing 0x00 !
+    if ( !QByteArray::resize( len1 + len2 ) )
+        return *this;
+    memcpy( data() + len1, newData.data(), len2 );
+    return *this;
+}
+QByteArray& NewByteArray::qByteArray()
+{
+    return *((QByteArray*)this);
+}
+
+    
+    
 //
 // THIS IS AN INTERIM SOLUTION
 // TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
@@ -156,7 +218,6 @@ bool KMReaderWin::foundMatchingCryptPlug( CryptPlugWrapperList* plugins,
            "cryptoPluginBox");
   return false;
 }
-
 
 
 // this STATIC function will be replaced once KMime is alive (khz, 04.05.2001)
@@ -210,7 +271,6 @@ kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndP
 }
 
 
-
 // this STATIC function will be replaced once KMime is alive (khz, 29.11.2001)
 void KMReaderWin::parseObjectTree( KMReaderWin* reader,
                                    QCString* resultStringPtr,
@@ -219,17 +279,27 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
                                    partNode* node,
                                    bool showOneMimePart,
                                    bool keepEncryptions,
-                                   bool includeSignatures )
+                                   bool includeSignatures/*,
+                                   NewByteArray* resultingRawDataPtr*/ )
 {
   kdDebug(5006) << "\n**\n** KMReaderWin::parseObjectTree( "
                 << (node ? "node OK, " : "no node, ")
                 << "showOneMimePart: " << (showOneMimePart ? "TRUE" : "FALSE")
                 << " ) **\n**" << endl;
 
-  // use this string for returning the result if param reader is invalid
+  // Use this string to return the first readable part's content.
+  // - This is used to retrieve the quotable text for reply-to...
   QCString dummyStr;
   QCString& resultString( resultStringPtr ? *resultStringPtr : dummyStr);
-
+/*
+  // Use this array to return the complete data that were in this
+  // message parts - *after* all encryption has been removed that
+  // could be removed.
+  // - This is used to store the message in decrypted form.
+  NewByteArray dummyData;
+  NewByteArray& resultingRawData( resultingRawDataPtr ? *resultingRawDataPtr 
+                                                      : dummyData );
+*/
 
   // make sure we have a valid CryptPlugList
   bool tmpPlugList = !cryptPlugList;
@@ -346,8 +416,9 @@ kdDebug(5006) << "* text *" << endl;
             else
               kdDebug(5006) << "html" << endl;
             QCString cstr( curNode->msgPart().bodyDecoded() );
+//            resultingRawData += cstr;
+            resultString = cstr;
             if( !reader ) {
-              resultString = cstr;
               bDone = true;
             } else if( ( reader->mAttachmentStyle != IconicAttmnt &&
                          reader->mAttachmentStyle != HideAttmnt ) ||
@@ -404,6 +475,8 @@ kdDebug(5006) << "enriched " << endl;
 kdDebug(5006) << "plain " << endl;
           default: {
 kdDebug(5006) << "default " << endl;
+              QCString cstr( curNode->msgPart().bodyDecoded() );
+//              resultingRawData += cstr;
               if( !reader ||
                   ( ( reader->mAttachmentStyle != IconicAttmnt &&
                       reader->mAttachmentStyle != HideAttmnt ) ||
@@ -411,11 +484,10 @@ kdDebug(5006) << "default " << endl;
                 if( reader && curNode->isAttachment() && !showOneMimePart )
                   reader->queueHtml("<br><hr><br>");
                 if( reader )
-                  reader->writeBodyStr( curNode->msgPart().bodyDecoded().data(),
+                  reader->writeBodyStr( cstr.data(),
                                         reader->mCodec,
                                         &isInlineSigned, &isInlineEncrypted);
-                else
-                  resultString += curNode->msgPart().bodyDecoded();
+                resultString = cstr;
                 bDone = true;
               }
             }
@@ -551,8 +623,7 @@ kdDebug(5006) << "       signed has data + signature" << endl;
                   QCString cstr( data->msgPart().bodyDecoded() );
                   if( reader )
                     reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
-                  else
-                    resultString += cstr;
+                  resultString += cstr;
                   bDone = true;
                 } else if( sign && data && plugFound ) {
                   // Set the signature node to done to prevent it from being processed
@@ -577,23 +648,22 @@ kdDebug(5006) << "encrypted" << endl;
                 curNode->setEncrypted( true );
                 QCString cstr( curNode->msgPart().bodyDecoded() );
                 if( reader )
-                    reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
-                else
-                    resultString += cstr;
+                  reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
+                resultString += cstr;
                 bDone = true;
               } else if( curNode->mChild ) {
 
-                bool plugFound = false;
+                  bool plugFound = false;
 
-                /*
-                  ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
-                */
-                partNode* data =
-                  curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
-                if( data )
-                  plugFound = foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
-                if( !data ) {
-                  data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
+                  /*
+                    ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
+                  */
+                  partNode* data =
+                    curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
+                  if( data )
+                    plugFound = foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
+                  if( !data ) {
+                    data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
                   if( data )
                     plugFound = foundMatchingCryptPlug( cryptPlugList, "smime", &useThisCryptPlug, reader, "S/MIME" );
                 }
@@ -601,42 +671,57 @@ kdDebug(5006) << "encrypted" << endl;
                   ---------------------------------------------------------------------------------------------------------------
                 */
 
-                if( data && plugFound ) {
-                  curNode->setEncrypted( true );
-                  QCString decryptedData;
-                  if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *data, decryptedData ) ) {
-                    DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), data->dwPart());
-                    myBody->Parse();
-                    partNode myBodyNode( true, myBody );
-                    myBodyNode.buildObjectTree( false );
-
-                    // paint the frame
-                    PartMetaData messagePart;
-                    if( reader ) {
-                      messagePart.isDecryptable = true;
-                      messagePart.isEncrypted = true;
-                      messagePart.isSigned = false;
-                      reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                if( data ) {
+                  if( data->mChild ) {
+kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+                    parseObjectTree( reader,
+                                     &resultString,
+                                     cryptPlugList,
+                                     useThisCryptPlug,
+                                     data->mChild,
+                                     false,
+                                     keepEncryptions,
+                                     includeSignatures );
+                    bDone = true;
+kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+                  }
+                  else if( plugFound ) {
+kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
+                    curNode->setEncrypted( true );
+                    QCString decryptedData;
+                    if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *data, decryptedData ) ) {
+                      DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), data->dwPart());
+                      myBody->Parse();
+                      partNode myBodyNode( true, myBody );
+                      myBodyNode.buildObjectTree( false );
+  
+                      // paint the frame
+                      PartMetaData messagePart;
+                      if( reader ) {
+                        messagePart.isDecryptable = true;
+                        messagePart.isEncrypted = true;
+                        messagePart.isSigned = false;
+                        reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                      }
+                      insertAndParseNewChildNode( reader,
+                                                  &resultString,
+                                                  cryptPlugList,
+                                                  useThisCryptPlug,
+                                                  *curNode,
+                                                  &*decryptedData,
+                                                  "encrypted data" );
+                      if( reader )
+                        reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                     }
-                    insertAndParseNewChildNode( reader,
-                                                &resultString,
-                                                cryptPlugList,
-                                                useThisCryptPlug,
-                                                *curNode,
-                                                &*decryptedData,
-                                                "encrypted data" );
-                    if( reader )
-                      reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
-                  }
-                  else
-                  {
-                    if( reader )
-                      reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                     else
+                    {
+                      if( reader )
+                        reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                       resultString += decryptedData;
+                    }
+                    data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
+                    bDone = true;
                   }
-                  data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
-                  bDone = true;
                 }
               }
               useThisCryptPlug = oldUseThisCryptPlug;
@@ -678,7 +763,7 @@ kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << end
                 bDone = true;
 kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
               } else {
-
+kdDebug(5006) << "\n----->  Initially processing data of embedded RfC 822 message\n" << endl;
                 // paint the frame
                 PartMetaData messagePart;
                 if( reader ) {
@@ -744,6 +829,7 @@ kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << end
                 bDone = true;
 kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
               } else {
+kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                 CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
                 if(    curNode->mRoot
                     && DwMime::kTypeMultipart    == curNode->mRoot->type()
@@ -753,24 +839,23 @@ kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n"
                     QCString cstr( curNode->msgPart().bodyDecoded() );
                     if( reader )
                         reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
-                    else
-                        resultString += cstr;
+                    resultString += cstr;
                     bDone = true;
                     } else {
                     /*
                         ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
                     */
                     if( foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
-                        QCString decryptedData;
-                        if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *curNode, decryptedData ) ) {
+                      QCString decryptedData;
+                      if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *curNode, decryptedData ) ) {
 
                         // paint the frame
                         PartMetaData messagePart;
                         if( reader ) {
-                            messagePart.isDecryptable = true;
-                            messagePart.isEncrypted = true;
-                            messagePart.isSigned = false;
-                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                          messagePart.isDecryptable = true;
+                          messagePart.isEncrypted = true;
+                          messagePart.isSigned = false;
+                          reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
                         }
                         // fixing the missing attachments bug #1090-b
                         insertAndParseNewChildNode( reader,
@@ -781,15 +866,14 @@ kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n"
                                                     &*decryptedData,
                                                     "encrypted data" );
                         if( reader )
-                            reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
-                        }
-                        else
-                        {
+                          reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
+                      }
+                      else
+                      {
                         if( reader )
-                            reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
-                        else
-                            resultString += decryptedData;
-                        }
+                          reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
+                        resultString += decryptedData;
+                      }
                     }
                     bDone = true;
                   }
@@ -819,9 +903,6 @@ kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << end
 kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
               } else {
 kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n" << endl;
-
-
-
                 if( curNode->dwPart() && curNode->dwPart()->hasHeaders() ) {
                   CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
 
@@ -1039,6 +1120,227 @@ kdDebug(5006) << "* model *" << endl;
   // remove temp. CryptPlugList
   if( tmpPlugList )
     delete cryptPlugList;
+}
+
+
+// This function returns the complete data that were in this
+// message parts - *after* all encryption has been removed that
+// could be removed.
+// - This is used to store the message in decrypted form.
+void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
+                                            NewByteArray& resultingData,
+                                            DwHeaders& topHeaders,
+                                            int recCount )
+{
+  kdDebug(5006) << QString("\nKMReaderWin::objectTreeToDecryptedMsg( %1 )  START").arg( recCount ) << endl;
+  if( node ) {
+    partNode* curNode = node;
+    partNode* dataNode = curNode;
+    bool bIsMultipart = false;
+      
+    switch( curNode->type() ){
+      case DwMime::kTypeText: {
+kdDebug(5006) << "* text *" << endl;
+          switch( curNode->subType() ){
+          case DwMime::kSubtypeHtml:
+kdDebug(5006) << "html" << endl;
+            break;
+          case DwMime::kSubtypeXVCard:
+kdDebug(5006) << "v-card" << endl;
+            break;
+          case DwMime::kSubtypeRichtext:
+kdDebug(5006) << "rich text" << endl;
+            break;
+          case DwMime::kSubtypeEnriched:
+kdDebug(5006) << "enriched " << endl;
+            break;
+          case DwMime::kSubtypePlain:
+kdDebug(5006) << "plain " << endl;
+            break;
+          default:
+kdDebug(5006) << "default " << endl;
+            break;
+          }
+        }  
+        break;
+      case DwMime::kTypeMultipart: {
+kdDebug(5006) << "* multipart *" << endl;
+          bIsMultipart = true;
+          switch( curNode->subType() ){
+          case DwMime::kSubtypeMixed:
+kdDebug(5006) << "mixed" << endl;
+            break;
+          case DwMime::kSubtypeAlternative:
+kdDebug(5006) << "alternative" << endl;
+            break;
+          case DwMime::kSubtypeDigest:
+kdDebug(5006) << "digest" << endl;
+            break;
+          case DwMime::kSubtypeParallel:
+kdDebug(5006) << "parallel" << endl;
+            break;
+          case DwMime::kSubtypeSigned:
+kdDebug(5006) << "signed" << endl;
+            break;
+          case DwMime::kSubtypeEncrypted: {
+kdDebug(5006) << "encrypted" << endl;
+              if( curNode->mChild ) {
+                /*
+                    ATTENTION: This code is to be replaced by the new 'auto-detect' feature. --------------------------------------
+                */
+                partNode* data =
+                  curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
+                if( !data ) {
+                  data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
+                }
+                if( data && data->mChild )
+                  dataNode = data;
+              }
+            }
+            break;
+          default :
+kdDebug(5006) << "(  unknown subtype  )" << endl;
+            break;
+          }
+        }
+        break;
+      case DwMime::kTypeMessage: {
+kdDebug(5006) << "* message *" << endl;
+          switch( curNode->subType() ){
+          case DwMime::kSubtypeRfc822: {
+kdDebug(5006) << "RfC 822" << endl;
+              if( curNode->mChild )
+                dataNode = curNode->mChild;
+            }  
+            break;
+          }
+        }
+        break;
+      case DwMime::kTypeApplication: {
+kdDebug(5006) << "* application *" << endl;
+          switch( curNode->subType() ){
+          case DwMime::kSubtypePostscript:
+kdDebug(5006) << "postscript" << endl;
+            break;
+          case DwMime::kSubtypeOctetStream: {
+kdDebug(5006) << "octet stream" << endl;
+              if( curNode->mChild )
+                dataNode = curNode->mChild;
+            }
+            break;
+          case DwMime::kSubtypePgpEncrypted:
+kdDebug(5006) << "pgp encrypted" << endl;
+            break;
+          case DwMime::kSubtypePgpSignature:
+kdDebug(5006) << "pgp signed" << endl;
+            break;
+          case DwMime::kSubtypePkcs7Mime: {
+kdDebug(5006) << "pkcs7 mime" << endl;
+              if( curNode->mChild )
+                dataNode = curNode->mChild;
+            }
+            break;
+          }
+        }
+        break;
+      case DwMime::kTypeImage: {
+kdDebug(5006) << "* image *" << endl;
+          switch( curNode->subType() ){
+          case DwMime::kSubtypeJpeg:
+kdDebug(5006) << "JPEG" << endl;
+            break;
+          case DwMime::kSubtypeGif:
+kdDebug(5006) << "GIF" << endl;
+            break;
+          }
+        }
+        break;
+      case DwMime::kTypeAudio: {
+kdDebug(5006) << "* audio *" << endl;
+          switch( curNode->subType() ){
+          case DwMime::kSubtypeBasic:
+kdDebug(5006) << "basic" << endl;
+            break;
+          }
+        }
+        break;
+      case DwMime::kTypeVideo: {
+kdDebug(5006) << "* video *" << endl;
+          switch( curNode->subType() ){
+          case DwMime::kSubtypeMpeg:
+kdDebug(5006) << "mpeg" << endl;
+            break;
+          }
+        }
+        break;
+      case DwMime::kTypeModel:
+kdDebug(5006) << "* model *" << endl;
+        break;
+    }
+    
+    DwBodyPart * part = dataNode->dwPart() ? dataNode->dwPart() : 0;
+    DwHeaders * headers(   (part && part->hasHeaders()) 
+                         ? &part->Headers()
+                         : dataNode->mRoot ? 0 : &topHeaders );
+    if( dataNode == curNode ) {     
+kdDebug(5006) << "dataNode == curNode" << endl;
+      if( bIsMultipart && curNode->mChild )  {
+kdDebug(5006) << "is valid Multipart, processing children:" << endl;
+        if( headers ) {
+          // store headers of multipart if curNode is not the root node
+          if( curNode->mRoot )
+            resultingData += headers->AsString().c_str();
+          QCString boundary = headers->ContentType().Boundary().c_str();
+          curNode = curNode->mChild;
+          // store children of multipart
+          while( curNode ) {
+kdDebug(5006) << "*" << endl;
+            resultingData += QCString( "\n\n" );
+            resultingData += "--";
+            resultingData += boundary;
+            resultingData += "\n";
+            objectTreeToDecryptedMsg( curNode,
+                                      resultingData,
+                                      topHeaders,
+                                      recCount + 1 );
+            curNode = curNode->mNext;
+          }
+kdDebug(5006) << "Multipart processing children - DONE" << endl;
+          resultingData += "\n--";
+          resultingData += boundary;
+          resultingData += "--\n\n";
+        }
+      } else if( part ){
+        // store simple part
+kdDebug(5006) << "is NOT a Multipart, adding data" << endl;
+        if( curNode->mRoot )
+          resultingData += part->AsString().c_str();
+        else {
+          // if we are the root node we should not store the headers
+          // since they are copied into the new mail by c'tor
+          resultingData += part->Body().AsString().c_str();
+        }
+      }
+    } else {
+kdDebug(5006) << "dataNode != curNode" << endl;
+      // store special data to replace the current part
+      // (e.g. decrypted data or embedded RfC 822 data)
+      objectTreeToDecryptedMsg( dataNode,
+                                resultingData,
+                                topHeaders,
+                                recCount + 1 );
+      // if we are the root node and have been decrypted
+      // then we adjust the main header entries
+      if( headers && !curNode->mRoot ) {
+        DwHeaders& newHeaders( part->Headers() );
+        topHeaders.ContentType()             = newHeaders.ContentType();
+        topHeaders.ContentTransferEncoding() = newHeaders.ContentTransferEncoding();
+        topHeaders.ContentDescription()      = newHeaders.ContentDescription();
+        topHeaders.ContentDisposition()      = newHeaders.ContentDisposition();
+      }
+    }
+  }
+  kdDebug(5006) << QString("\nKMReaderWin::objectTreeToDecryptedMsg( %1 )  END").arg( recCount ) << endl;
 }
 
 /*
@@ -2377,6 +2679,7 @@ kdDebug(5006) << s << endl;
     mainBody = new DwBodyPart(aMsg->asDwString(), 0);
     mainBody->Parse();
   }
+  
   if( mRootNode ) {
     if( onlyProcessHeaders )
       savedRootNode = mRootNode;
@@ -2476,18 +2779,26 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
       && ( 0 <= cryptPlug->libName().find( "smime",   0, false ) )
       && (    (KMMsgFullyEncrypted == encryptionState)
            || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
-kdDebug(5006) << "\n     1. This message was decrypted sucessfully." << endl;
+kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
+kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
+    NewByteArray decryptedData;
+    // note: The following call may change the message's headers.
+    objectTreeToDecryptedMsg( mRootNode, decryptedData, mMsg->headers() );
+    // add a NULL to the data
+    decryptedData.appendNULL();
+    QCString resultString( decryptedData.data() );
+kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
     KMMessage* unencryptedMessage = new KMMessage( *mMsg );
-kdDebug(5006) << "\n     2. This message was decrypted sucessfully." << endl;
-    mViewer->selectAll();
-kdDebug(5006) << "\n     3. This message was decrypted sucessfully." << endl;
-    QCString unencryptedBody = mViewer->selectedText().local8Bit();
-kdDebug(5006) << "\n     4. This message was decrypted sucessfully." << endl;
-    if( !unencryptedBody.isEmpty() ) {
-kdDebug(5006) << "\n     5. This message was decrypted sucessfully." << endl;
-      unencryptedMessage->setBody( unencryptedBody );
+kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
+    if( !resultString.isEmpty() ) {
+      unencryptedMessage->setBody( resultString );
+kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
+kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to mMsg" << endl;
+      mMsg->setUnencryptedMsg( unencryptedMessage );
+kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form" << endl;
       emit replaceMsgByUnencryptedVersion();
-    }
+    }  
+kdDebug(5006) << "KMReaderWin  -  done." << endl;
   }
 #endif
   
