@@ -345,11 +345,11 @@ int KMFolderMbox::lock()
     case procmail_lockfile:
       cmd_str = "lockfile -l20 -r5 ";
       if (!mProcmailLockFileName.isEmpty())
-	cmd_str += mProcmailLockFileName;
+	cmd_str += QFile::encodeName(KProcess::quote(mProcmailLockFileName));
       else
-        cmd_str += location() + ".lock";
+        cmd_str += QFile::encodeName(KProcess::quote(location() + ".lock"));
 
-      rc = system( cmd_str.local8Bit() );
+      rc = system( cmd_str.data() );
       if( rc != 0 )
       {
 	kdDebug(5006) << "Cannot lock folder `" << location() << "': "
@@ -358,8 +358,8 @@ int KMFolderMbox::lock()
       }
       if( mIndexStream )
       {
-        cmd_str = "lockfile -l20 -r5 " + indexLocation() + ".lock";
-        rc = system( cmd_str.local8Bit() );
+        cmd_str = "lockfile -l20 -r5 " + QFile::encodeName(KProcess::quote(indexLocation() + ".lock"));
+        rc = system( cmd_str.data() );
         if( rc != 0 )
         {
           kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
@@ -370,8 +370,8 @@ int KMFolderMbox::lock()
       break;
 
     case mutt_dotlock:
-      cmd_str = "mutt_dotlock " + location();
-      rc = system( cmd_str.local8Bit() );
+      cmd_str = "mutt_dotlock " + QFile::encodeName(KProcess::quote(location()));
+      rc = system( cmd_str.data() );
       if( rc != 0 )
       {
         kdDebug(5006) << "Cannot lock folder `" << location() << "': "
@@ -380,8 +380,8 @@ int KMFolderMbox::lock()
       }
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock " + indexLocation();
-        rc = system( cmd_str.local8Bit() );
+        cmd_str = "mutt_dotlock " + QFile::encodeName(KProcess::quote(indexLocation()));
+        rc = system( cmd_str.data() );
         if( rc != 0 )
         {
           kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
@@ -392,8 +392,8 @@ int KMFolderMbox::lock()
       break;
 
     case mutt_dotlock_privileged:
-      cmd_str = "mutt_dotlock -p " + location();
-      rc = system( cmd_str.local8Bit() );
+      cmd_str = "mutt_dotlock -p " + QFile::encodeName(KProcess::quote(location()));
+      rc = system( cmd_str.data() );
       if( rc != 0 )
       {
         kdDebug(5006) << "Cannot lock folder `" << location() << "': "
@@ -402,8 +402,8 @@ int KMFolderMbox::lock()
       }
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock -p " + indexLocation();
-        rc = system( cmd_str.local8Bit() );
+        cmd_str = "mutt_dotlock -p " + QFile::encodeName(KProcess::quote(indexLocation()));
+        rc = system( cmd_str.data() );
         if( rc != 0 )
         {
           kdDebug(5006) << "Cannot lock index of folder `" << location() << "': "
@@ -433,7 +433,7 @@ int KMFolderMbox::unlock()
   fl.l_whence=0;
   fl.l_start=0;
   fl.l_len=0;
-  QString cmd_str;
+  QCString cmd_str;
 
   assert(mStream != 0);
   mFilesLocked = FALSE;
@@ -449,35 +449,35 @@ int KMFolderMbox::unlock()
     case procmail_lockfile:
       cmd_str = "rm -f ";
       if (!mProcmailLockFileName.isEmpty())
-        cmd_str += mProcmailLockFileName;
+        cmd_str += QFile::encodeName(KProcess::quote(mProcmailLockFileName));
       else
-        cmd_str += location() + ".lock";
+        cmd_str += QFile::encodeName(KProcess::quote(location() + ".lock"));
 
-      rc = system( cmd_str.latin1() );
+      rc = system( cmd_str.data() );
       if( mIndexStream )
       {
-        cmd_str = "rm -f " + indexLocation() + ".lock";
-        rc = system( cmd_str.latin1() );
+        cmd_str = "rm -f " + QFile::encodeName(KProcess::quote(indexLocation() + ".lock"));
+        rc = system( cmd_str.data() );
       }
       break;
 
     case mutt_dotlock:
-      cmd_str = "mutt_dotlock -u " + location();
-      rc = system( cmd_str.latin1() );
+      cmd_str = "mutt_dotlock -u " + QFile::encodeName(KProcess::quote(location()));
+      rc = system( cmd_str.data() );
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock -u " + indexLocation();
-        rc = system( cmd_str.latin1() );
+        cmd_str = "mutt_dotlock -u " + QFile::encodeName(KProcess::quote(indexLocation()));
+        rc = system( cmd_str.data() );
       }
       break;
 
     case mutt_dotlock_privileged:
-      cmd_str = "mutt_dotlock -p -u " + location();
-      rc = system( cmd_str.latin1() );
+      cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(KProcess::quote(location()));
+      rc = system( cmd_str.data() );
       if( mIndexStream )
       {
-        cmd_str = "mutt_dotlock -p -u " + indexLocation();
-        rc = system( cmd_str.latin1() );
+        cmd_str = "mutt_dotlock -p -u " + QFile::encodeName(KProcess::quote(indexLocation()));
+        rc = system( cmd_str.data() );
       }
       break;
 
