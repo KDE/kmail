@@ -835,7 +835,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if ((fti->folder == kernel->outboxFolder()) && (fti->folder->count()) )
       folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(),
                                    SLOT(slotSendQueued()));
-  if (!fti->folder->isSystemFolder())
+  if (!fti->folder->isSystemFolder() || fti->folder->account())
      {
      if (!fti->folder->account())  // protect from imap folders
          folderMenu->insertItem(i18n("&Create Child Folder..."), this,
