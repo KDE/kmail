@@ -415,6 +415,7 @@ void KMSender::cleanup(void)
     this, SLOT(slotAbortSend()));
   KMBroadcastStatus::instance()->setStatusProgressEnable( false );
   KMBroadcastStatus::instance()->reset();
+  kernel->filterMgr()->cleanup();
 }
 
 

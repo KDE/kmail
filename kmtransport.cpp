@@ -92,7 +92,7 @@ int KMTransportInfo::findTransport(const QString &name)
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
-  int numTransports = config->readNumEntry("transports", 1);
+  int numTransports = config->readNumEntry("transports", 0);
   for (int i = 1; i <= numTransports; i++)
   {
     KConfigGroupSaver saver(config, "Transport " + QString::number(i));
@@ -107,7 +107,7 @@ QStringList KMTransportInfo::availableTransports()
   QStringList result;
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
-  int numTransports = config->readNumEntry("transports", 1);
+  int numTransports = config->readNumEntry("transports", 0);
   for (int i = 1; i <= numTransports; i++)
   {
     KConfigGroupSaver saver(config, "Transport " + QString::number(i));

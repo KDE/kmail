@@ -1312,7 +1312,7 @@ void NetworkPage::SendingTab::setup() {
   KConfigGroup general( kapp->config(), "General");
   KConfigGroup composer( kapp->config(), "Composer");
 
-  int numTransports = general.readNumEntry("transports", 1);
+  int numTransports = general.readNumEntry("transports", 0);
 
   QListViewItem *top = 0;
   mTransportInfoList.clear();
