@@ -190,7 +190,7 @@ void KMFolderMaildir::close(bool aForced)
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced) 
+  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced)
   {
      mOpenCount = 1;
      return;
@@ -493,14 +493,16 @@ DwString KMFolderMaildir::getDwString(int idx)
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
   QString abs_file(location() + "/cur/");
   abs_file += mi->fileName();
+  QFileInfo fi( abs_file );
 
-  if (QFile::exists(abs_file))
+  if (fi.exists() && fi.isFile() && fi.isWritable())
   {
     FILE* stream = fopen(abs_file.local8Bit(), "r+");
     DwString str( stream, mi->msgSize() );
     fclose( stream );
     return str;
-  }
+  } 
+  kdDebug(5006) << "Could not open file r+" << abs_file << endl;   
   return DwString();
 }
 
