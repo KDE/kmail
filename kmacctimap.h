@@ -48,6 +48,7 @@ class KMImapJob : public QObject
 
 public:
   KMImapJob(KMMessage *msg, bool put = false, KMFolder *folder = NULL);
+  ~KMImapJob();
   static void ignoreJobsForMessage(KMMessage *msg);
 signals:
   void messageRetrieved(KMMessage *);

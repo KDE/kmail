@@ -1212,6 +1212,7 @@ void KMFolder::addMsgQuiet(KMMessage* aMsg)
 {
   open();
   KMFolder *folder = aMsg->parent();
+  aMsg->setTransferInProgress( FALSE );
   addMsg( aMsg, NULL, TRUE );
   KMMsgBase *mb = unGetMsg(count() - 1);
   kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
@@ -1261,6 +1262,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
       KMImapJob *imapJob = new KMImapJob(aMsg);
       connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
         SLOT(reallyAddMsg(KMMessage*)));
+      aMsg->setTransferInProgress(TRUE);
       if (aIndex_ret) *aIndex_ret = -1;
       return 0;
     }

@@ -897,6 +897,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
     msg = mFolder->getMsg(idx);
     if (mFolder->account() && !msg->isComplete())
     {
+      if (msg->transferInProgress()) continue;
       msg->setTransferInProgress(TRUE);
       KMImapJob *imapJob = new KMImapJob(msg);
       connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
@@ -1366,6 +1367,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     int idx = mFolder->find(msgBase);
     assert(idx != -1);
     msg = mFolder->getMsg(idx);
+    if (msg->transferInProgress()) continue;
 
     if (destFolder) {
       rc = destFolder->moveMsg(msg, &index);
@@ -1780,6 +1782,13 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
   }
 
   int idx = item->msgId();
+  KMMessage *msg = mFolder->getMsg(idx);
+  if (!msg || msg->transferInProgress())
+  {
+    emit selected( NULL );
+    mPrevCurrent = NULL;
+    return;
+  }
   mOwner->statusMsg("");
   if (idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
@@ -1797,8 +1806,12 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
     return;
 
   int idx = item->msgId();
-  emit activated(mFolder->getMsg(idx));
-  if (idx >= 0) setMsgRead(idx);
+  KMMessage *msg = mFolder->getMsg(idx);
+  if (!msg->transferInProgress())
+  {
+    emit activated(mFolder->getMsg(idx));
+    if (idx >= 0) setMsgRead(idx);
+  }
 
   if (mFolder != kernel->outboxFolder() && mFolder != kernel->draftsFolder())
     setOpen(lvi, !lvi->isOpen());

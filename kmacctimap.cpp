@@ -605,6 +605,13 @@ KMImapJob::KMImapJob(KMMessage *msg, bool put, KMFolder* folder)
 
 
 //-----------------------------------------------------------------------------
+KMImapJob::~KMImapJob()
+{
+  if (mMsg) mMsg->setTransferInProgress( FALSE );
+}
+
+
+//-----------------------------------------------------------------------------
 void KMImapJob::slotGetNextMessage()
 {
   if (mMsg->headerField("X-UID").isEmpty())
@@ -650,6 +657,7 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
     mMsg->setHeaderField("X-UID",uid);
     mMsg->setComplete( TRUE );
     emit messageRetrieved(mMsg);
+    mMsg = NULL;
   }
   account->mapJobData.remove(it);
   account->displayProgress();
@@ -688,6 +696,7 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
     if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
   } else {
     emit messageStored(mMsg);
+    mMsg = NULL;
   }
   account->mapJobData.remove(it);
   account->displayProgress();
