@@ -2107,7 +2107,7 @@ void KMMainWidget::setupActions()
   mCompactFolderAction = new KAction( i18n("&Compact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
-  mRefreshFolderAction = new KAction( i18n("Ch&eck Mail in this Folder"), "reload", Key_F5 , this,
+  mRefreshFolderAction = new KAction( i18n("Check Mail &in this Folder"), "reload", Key_F5 , this,
                      SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
 
   mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
