@@ -101,6 +101,10 @@ public:
   void compactAllFolders();
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
+  void requestAddresses( QString filename );
+  bool lockContactsFolder();
+  bool unlockContactsFolder();
+  bool storeAddresses( QString addresses, QStringList delUIDs );
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }

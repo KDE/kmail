@@ -451,6 +451,26 @@ bool readFolderMsgIds=false;
   }
 }
 
+void KMKernel::requestAddresses( QString filename )
+{
+  mGroupware->requestAddresses( filename );
+}
+
+bool KMKernel::lockContactsFolder()
+{
+  return mGroupware->lockContactsFolder();
+}
+
+bool KMKernel::unlockContactsFolder()
+{
+  return mGroupware->unlockContactsFolder();
+}
+
+bool KMKernel::storeAddresses( QString addresses, QStringList delUIDs )
+{
+  return mGroupware->storeAddresses( addresses, delUIDs );
+}
+
 /********************************************************************/
 /*                        Kernel methods                            */
 /********************************************************************/
