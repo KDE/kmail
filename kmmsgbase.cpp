@@ -580,6 +580,18 @@ QCString KMMsgBase::encodeBase64(const QCString& aStr)
 }
 
 //-----------------------------------------------------------------------------
+void swapEndian(QString &str)
+{
+  ushort us;
+  uint len = str.length();
+  for (uint i = 0; i < len; i++)
+  {
+    us = str[i].unicode();
+    str[i] = QChar(((us & 0xFF) << 8) + ((us & 0xFF00) >> 8));
+  }
+}
+
+//-----------------------------------------------------------------------------
 static int g_chunk_length = 0, g_chunk_offset=0;
 static uchar *g_chunk = NULL;
 
@@ -638,6 +650,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
       g_chunk_length = 0;
       g_chunk = NULL;
   }
+  swapEndian(ret);
   return ret;
 }
 
@@ -713,22 +726,29 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 
   //these is at the beginning because it is queried quite often
   tmp_str = msgIdMD5().stripWhiteSpace();
+  swapEndian(tmp_str);
   STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
   tmp = status();
   STORE_DATA(MsgStatusPart, tmp);
 
   //these are completely arbitrary order
   tmp_str = fromStrip().stripWhiteSpace();
+  swapEndian(tmp_str);
   STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = subject().stripWhiteSpace();
+  swapEndian(tmp_str);
   STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = toStrip().stripWhiteSpace();
+  swapEndian(tmp_str);
   STORE_DATA_LEN(MsgToPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = replyToIdMD5().stripWhiteSpace();
+  swapEndian(tmp_str);
   STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = xmark().stripWhiteSpace();
+  swapEndian(tmp_str);
   STORE_DATA_LEN(MsgXMarkPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = fileName().stripWhiteSpace();
+  swapEndian(tmp_str);
   STORE_DATA_LEN(MsgFilePart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp = msgSize();
   STORE_DATA(MsgSizePart, tmp);

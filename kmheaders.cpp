@@ -2559,7 +2559,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 }
 
 //Flatten the list and write it to disk
-#define KMAIL_SORT_VERSION 1005
+#define KMAIL_SORT_VERSION 1006
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
 #define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
