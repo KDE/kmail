@@ -109,6 +109,27 @@ static QString check_list_id(const KMMessage  *message,
     return header;
 }
 
+
+/* List-Post: <mailto:[^< ]*>) */
+static QString check_list_post(const KMMessage  *message,
+			     QCString &header_name,
+			     QString &header_value )
+{
+    QString header = message->headerField( "List-Post" );
+    if ( header.isEmpty() )
+        return QString::null;
+
+    int lAnglePos = header.find( "<mailto:" );
+    if ( lAnglePos < 0 )
+        return QString::null;
+
+    header_name = "List-Post";
+    header_value = header;
+    header = header.mid( lAnglePos + 8, header.length());
+    header = header.left( header.find("@") );
+    return header;
+}
+
 /* Mailing-List: list ([^@]+) */
 static QString check_mailing_list(const KMMessage  *message,
                                     QCString &header_name,
@@ -148,6 +169,7 @@ static QString check_x_loop(const KMMessage  *message,
 MagicDetectorFunc magic_detector[] =
 {
     check_list_id,
+    check_list_post,
     check_sender,
     check_x_mailing_list,
     check_mailing_list,
