@@ -317,7 +317,7 @@ void AccountDialog::makeLocalAccountPage()
   topLayout->setRowStretch( 11, 10 );
   topLayout->setColStretch( 1, 10 );
 
-  mLocal.titleLabel = new QLabel( i18n("Account type: Local account"), page );
+  mLocal.titleLabel = new QLabel( i18n("Account Type: Local Account"), page );
   topLayout->addMultiCellWidget( mLocal.titleLabel, 0, 0, 0, 2 );
   QFont titleFont( mLocal.titleLabel->font() );
   titleFont.setBold( true );
@@ -462,7 +462,7 @@ void AccountDialog::makeMaildirAccountPage()
   topLayout->setRowStretch( 11, 10 );
   topLayout->setColStretch( 1, 10 );
 
-  mMaildir.titleLabel = new QLabel( i18n("Account type: Maildir account"), page );
+  mMaildir.titleLabel = new QLabel( i18n("Account Type: Maildir Account"), page );
   topLayout->addMultiCellWidget( mMaildir.titleLabel, 0, 0, 0, 2 );
   QFont titleFont( mMaildir.titleLabel->font() );
   titleFont.setBold( true );
@@ -552,7 +552,7 @@ void AccountDialog::makePopAccountPage()
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
 
   mPop.titleLabel = new QLabel( page );
-  mPop.titleLabel->setText( i18n("Account type: POP Account") );
+  mPop.titleLabel->setText( i18n("Account Type: POP Account") );
   QFont titleFont( mPop.titleLabel->font() );
   titleFont.setBold( true );
   mPop.titleLabel->setFont( titleFont );
@@ -754,9 +754,9 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   mImap.titleLabel = new QLabel( page );
   if( connected )
-    mImap.titleLabel->setText( i18n("Account type: Disconnected IMAP Account") );
+    mImap.titleLabel->setText( i18n("Account Type: Disconnected IMAP Account") );
   else
-    mImap.titleLabel->setText( i18n("Account type: IMAP Account") );
+    mImap.titleLabel->setText( i18n("Account Type: IMAP Account") );
   QFont titleFont( mImap.titleLabel->font() );
   titleFont.setBold( true );
   mImap.titleLabel->setFont( titleFont );

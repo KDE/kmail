@@ -655,9 +655,9 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   // "send on check" combo:
   mSendOnCheckCombo = new QComboBox( false, group );
   mSendOnCheckCombo->insertStringList( QStringList()
-				      << i18n("never automatically")
-				      << i18n("on manual mail checks")
-                                      << i18n("on all mail checks") );
+				      << i18n("Never Automatically")
+				      << i18n("On Manual Mail Checks")
+                                      << i18n("On All Mail Checks") );
   glay->addWidget( mSendOnCheckCombo, 1, 1 );
   connect( mSendOnCheckCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1222,7 +1222,7 @@ void NetworkPage::ReceivingTab::slotAddAccount() {
 
   account->init(); // fill the account fields with good default values
 
-  AccountDialog dialog( i18n("Add account"), account, this );
+  AccountDialog dialog( i18n("Add Account"), account, this );
 
   QStringList accountNames = occupiedNames();
 
@@ -1661,28 +1661,28 @@ static const struct {
   const char * configName;
   const char * displayName;
 } colorNames[] = { // adjust setup() if you change this:
-  { "BackgroundColor", I18N_NOOP("Composer background") },
-  { "AltBackgroundColor", I18N_NOOP("Alternative background color") },
-  { "ForegroundColor", I18N_NOOP("Normal text") },
-  { "QuotedText1", I18N_NOOP("Quoted text - first level") },
-  { "QuotedText2", I18N_NOOP("Quoted text - second level") },
-  { "QuotedText3", I18N_NOOP("Quoted text - third level") },
+  { "BackgroundColor", I18N_NOOP("Composer Background") },
+  { "AltBackgroundColor", I18N_NOOP("Alternative Background Color") },
+  { "ForegroundColor", I18N_NOOP("Normal Text") },
+  { "QuotedText1", I18N_NOOP("Quoted Text - First Level") },
+  { "QuotedText2", I18N_NOOP("Quoted Text - Second Level") },
+  { "QuotedText3", I18N_NOOP("Quoted Text - Third Level") },
   { "LinkColor", I18N_NOOP("Link") },
-  { "FollowedColor", I18N_NOOP("Followed link") },
-  { "MisspelledColor", I18N_NOOP("Misspelled words") },
-  { "NewMessage", I18N_NOOP("New message") },
-  { "UnreadMessage", I18N_NOOP("Unread message") },
-  { "FlagMessage", I18N_NOOP("Important message") },
-  { "PGPMessageEncr", I18N_NOOP("OpenPGP message - encrypted") },
-  { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP message - valid signature with trusted key") },
-  { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP message - valid signature with untrusted key") },
-  { "PGPMessageWarn", I18N_NOOP("OpenPGP message - unchecked signature") },
-  { "PGPMessageErr", I18N_NOOP("OpenPGP message - bad signature") },
-  { "HTMLWarningColor", I18N_NOOP("Border around warning prepending HTML messages") },
-  { "ColorbarBackgroundPlain", I18N_NOOP("HTML status bar background - No HTML message") },
-  { "ColorbarForegroundPlain", I18N_NOOP("HTML status bar foreground - No HTML message") },
-  { "ColorbarBackgroundHTML",  I18N_NOOP("HTML status bar background - HTML message") },
-  { "ColorbarForegroundHTML",  I18N_NOOP("HTML status bar foreground - HTML message") },
+  { "FollowedColor", I18N_NOOP("Followed Link") },
+  { "MisspelledColor", I18N_NOOP("Misspelled Words") },
+  { "NewMessage", I18N_NOOP("New Message") },
+  { "UnreadMessage", I18N_NOOP("Unread Message") },
+  { "FlagMessage", I18N_NOOP("Important Message") },
+  { "PGPMessageEncr", I18N_NOOP("OpenPGP Message - ncrypted") },
+  { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP Message - Valid Signature with Trusted Key") },
+  { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP Message - Valid Signature with Untrusted Key") },
+  { "PGPMessageWarn", I18N_NOOP("OpenPGP Message - Unchecked Signature") },
+  { "PGPMessageErr", I18N_NOOP("OpenPGP Message - Bad Signature") },
+  { "HTMLWarningColor", I18N_NOOP("Border Around Warning Prepending HTML Messages") },
+  { "ColorbarBackgroundPlain", I18N_NOOP("HTML Status Bar Background - No HTML Message") },
+  { "ColorbarForegroundPlain", I18N_NOOP("HTML Status Bar Foreground - No HTML Message") },
+  { "ColorbarBackgroundHTML",  I18N_NOOP("HTML Status Bar Background - HTML Message") },
+  { "ColorbarForegroundHTML",  I18N_NOOP("HTML Status Bar Foreground - HTML Message") },
 };
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
@@ -2733,7 +2733,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
   mCharsetListEditor =
     new SimpleStringListEditor( this, 0, SimpleStringListEditor::All,
 				i18n("A&dd..."), i18n("Remo&ve"),
-				i18n("&Modify"), i18n("Enter charset:") );
+				i18n("&Modify..."), i18n("Enter charset:") );
   connect( mCharsetListEditor, SIGNAL( changed( void ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -4032,7 +4032,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged() ) );
 
   // Groupware functionality compatibility setup
-  b1 = new QVGroupBox( i18n("Groupware Compatibility & Legacy Options"), this );
+  b1 = new QVGroupBox( i18n("Groupware Compatibility && Legacy Options"), this );
 
   gBox = new QVBox( b1 );
 #if 0
