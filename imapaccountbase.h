@@ -87,6 +87,7 @@ class AttachmentStrategy;
     virtual void writeConfig( KConfig& config );
 
     enum ConnectionState { Error = 0, Connected, Connecting };
+    enum ListType { List, ListSubscribed, ListSubscribedNoCheck };
     /**
      * Connect to the server, if no connection is active
      * Returns Connected (ok), Error (ko) or Connecting - which means
@@ -155,8 +156,9 @@ class AttachmentStrategy;
      * in the jobData
      * connects to slotListResult and slotListEntries
      */
-    void listDirectory(QString path, bool onlySubscribed,
-        bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false);
+    void listDirectory(QString path, ListType subscription,
+        bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false,
+        bool complete = false);
 
     /**
      * Starts the folderlisting for the root folder

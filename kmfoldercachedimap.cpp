@@ -1132,7 +1132,9 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
                 !secondStep && !folder()->isSystemFolder() ) ? true : false;
 
   // get the folders
-  mAccount->listDirectory(mImapPath, mAccount->onlySubscribedFolders(),
+  ImapAccountBase::ListType type = 
+    (mAccount->onlySubscribedFolders() ? ImapAccountBase::ListSubscribed : ImapAccountBase::List);
+  mAccount->listDirectory(mImapPath, type,
                           secondStep, folder(), reset);
 
   return true;

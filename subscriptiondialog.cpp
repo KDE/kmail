@@ -74,72 +74,146 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
                                             const ImapAccountBase::jobData & jobData )
 {
   bool onlySubscribed = jobData.onlySubscribed;
-  GroupItem *parent = 0;
+  ImapAccountBase::ListType type = onlySubscribed ? 
+    ImapAccountBase::ListSubscribedNoCheck : ImapAccountBase::List;
   mLoading = true;
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
-
-  if (!onlySubscribed && mSubfolderPaths.size() > 0)
-  {
-    /* we need to find our root-item
-       remove the name (and the separator) from the path */
-    int start = mSubfolderPaths[0].length() - (mSubfolderNames[0].length()+2);
-    int length = mSubfolderNames[0].length()+1;
-    if (start < 0) start = 0;
-    QString compare = mSubfolderPaths[0];
-    compare.remove(start, length);
-
-    QListViewItemIterator it( groupView );
-    GroupItem *tmp;
-    while ( it.current() != 0 )
-    {
-      // compare it with each item to find the current root
-      tmp = static_cast<GroupItem*>(it.current());
-      if (tmp->info().path == compare) {
-        parent = tmp;
-        break;
-      }
-      ++it;
-    }
-  }
-  GroupItem *item = 0;
   QString text;
   for (uint i = 0; i < mSubfolderNames.count(); i++)
   {
-    if (!onlySubscribed)
+    GroupItem *item = 0;
+    if (!onlySubscribed && mSubfolderPaths.size() > 0)
     {
-      bool create = true;
-      QListViewItem *start = folderTree()->firstChild();
-      if ( parent )
-        start = parent->firstChild();
-      if ( start )
-      {
-        for ( QListViewItem *it = start; it; it = it->nextSibling() )
-        {
-          // check if this item already exists in this hierarchy
-          item = static_cast<GroupItem*>(it);
-          if ( item->info().path == mSubfolderPaths[i] )
-            create = false;
-        }
-      }
-      if ( create )
-      {
-        KGroupInfo info(mSubfolderNames[i]);
-        if (mSubfolderNames[i].upper() == "INBOX")
-          info.name = i18n("inbox");
-        info.subscribed = false;
-        info.path = mSubfolderPaths[i];
-        // create a new item
-        // only checkable when the folder is selectable
-        bool checkable = ( mSubfolderMimeTypes[i] == "inode/directory" ) ? false : true;
-        if (parent)
-          item = new GroupItem(parent, info, this, checkable);
-        else
-          item = new GroupItem(folderTree(), info, this, checkable);
-      }
-      if ( item ) // reset
-        item->setOn(false);
+      GroupItem *parent = 0;
+      // we need to find our root-item
+      // remove the name (and the separator) from the path 
+      int start = mSubfolderPaths[i].length() - (mSubfolderNames[i].length()+2);
+      int length = mSubfolderNames[i].length()+1;
+      if (start < 0) start = 0;
+      QString compare = mSubfolderPaths[i];
+      compare.remove(start, length);
 
-    } else 
+      QListViewItemIterator it( groupView );
+      GroupItem *tmp = 0;
+      GroupItem *oldItem = 0;
+      bool create = true;
+      while ( it.current() != 0 )
+      {
+        // compare it with each item to find the current root
+        tmp = static_cast<GroupItem*>(it.current());
+        if (tmp->info().path == mSubfolderPaths[i]) {
+          // this item already exists
+          create = false;
+          oldItem = tmp;
+        }
+        if (tmp->info().path == compare) {
+          parent = tmp;
+        }
+        ++it;
+      }
+      if (!parent && compare != "/")
+      {
+        // the parent is not available
+        // this happens when the folders do not arrive in hierarchical order
+
+        // the account does not know the delimiter so we have to reconstruct it
+        // we assume that is has length 1
+        int start = mSubfolderPaths[i].findRev(mSubfolderNames[i]);
+        QString delimiter = mSubfolderPaths[i].mid(start-1, 1);
+        // create each parent in advance
+        QStringList folders = QStringList::split(delimiter, compare);
+        uint i = 0;
+        for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it ) 
+        {
+          QString name = *it;
+          if (name.startsWith("/"))
+            name = name.right(name.length()-1);
+          if (name.endsWith("/"))
+            name.truncate(name.length()-1);
+          KGroupInfo info(name);
+          if (("/"+name+"/") == ai->prefix()) 
+          {
+            ++i;
+            continue;
+          }
+          info.subscribed = false;
+
+          QStringList tmpPath;
+          for ( uint j = 0; j <= i; ++j )
+            tmpPath << folders[j];
+          QString path = tmpPath.join(delimiter);
+          if (!path.startsWith("/"))
+            path = "/" + path;
+          if (!path.endsWith("/"))
+            path = path + "/";
+          info.path = path;
+          item = 0;
+          if (folders.count() > 1)
+          {
+            // we have to create more then one level, so better check if this
+            // folder already exists somewhere
+            QListViewItemIterator it( groupView );
+            while ( it.current() != 0 )
+            {
+              tmp = static_cast<GroupItem*>(it.current());
+              if (tmp->info().path == path) {
+                item = tmp;
+                break;
+              }
+              ++it;
+            }
+          }
+          // as these items are "dummies" we create them non-checkable
+          if (!item)
+          {
+            if (parent)
+              item = new GroupItem(parent, info, this, false);
+            else
+              item = new GroupItem(folderTree(), info, this, false);
+          }
+
+          parent = item;
+          ++i;
+        } // folders
+      } // parent
+    
+      KGroupInfo info(mSubfolderNames[i]);
+      if (mSubfolderNames[i].upper() == "INBOX" &&
+          mSubfolderPaths[i] == "/INBOX/")
+        info.name = i18n("inbox");
+      info.subscribed = false;
+      info.path = mSubfolderPaths[i];
+      // only checkable when the folder is selectable
+      bool checkable = ( mSubfolderMimeTypes[i] == "inode/directory" ) ? false : true;
+      // create a new item
+      if (parent)
+        item = new GroupItem(parent, info, this, checkable);
+      else
+        item = new GroupItem(folderTree(), info, this, checkable);
+
+      if (!create && oldItem)
+      {
+        // move the old childs to the new item
+        QPtrList<QListViewItem> itemsToMove;
+        QListViewItem * myChild = oldItem->firstChild();
+        while (myChild)
+        {
+          itemsToMove.append(myChild);
+          myChild = myChild->nextSibling();
+        }
+        QPtrListIterator<QListViewItem> it( itemsToMove );
+        QListViewItem *cur;
+        while ((cur = it.current()))
+        {
+          oldItem->takeItem(cur);
+          item->insertItem(cur);
+          ++it;
+        }
+        delete oldItem;
+        itemsToMove.clear();
+      }
+
+    } else if (onlySubscribed)
     {
       // find the item
       QListViewItemIterator it( groupView );
@@ -154,19 +228,14 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
         ++it;
       }
     }
-    if ( mSubfolderMimeTypes[i] == "message/directory" ||
-         mSubfolderMimeTypes[i] == "inode/directory" )
-    {
-      // descend
-      bool secondStep = (mSubfolderPaths[i] == ai->prefix()) ? true : false;
-      ai->listDirectory( mSubfolderPaths[i], onlySubscribed, secondStep );
-    }
   }
-  if ( jobData.inboxOnly )
-    ai->listDirectory( ai->prefix(), onlySubscribed, true );
-  
-  // activate buttons and stuff
-  slotLoadingComplete();
+  if ( jobData.inboxOnly ) {
+    // list again with prefix
+    ai->listDirectory( ai->prefix(), type, true, 0, false, true );
+  } else if (onlySubscribed) {
+    // activate buttons and stuff
+    slotLoadingComplete();
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -201,9 +270,15 @@ void SubscriptionDialog::slotLoadFolders()
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
   if ( ai->prefix().isEmpty() )
     return;
-  // get folders
-  ai->listDirectory( ai->prefix(), false, false, 0, true );
-  ai->listDirectory( ai->prefix(), true );
+  // only do a complete listing (*) when the user did not enter a prefix
+  // otherwise the complete listing will be done in second step
+  bool complete = (ai->prefix() == "/") ? true : false;
+  // get all folders
+  ai->listDirectory( ai->prefix(), ImapAccountBase::List, 
+      false, 0, true, complete );
+  // get subscribed folders
+  ai->listDirectory( ai->prefix(), ImapAccountBase::ListSubscribedNoCheck, 
+      false, 0, false, complete );
 }
 
 //------------------------------------------------------------------------------

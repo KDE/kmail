@@ -82,7 +82,7 @@ public:
    * in the jobData
    * connects to slotListResult and slotListEntries
    */
-  void listDirectory(QString path, bool onlySubscribed,
+  void listDirectory(QString path, ListType subscription,
       bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false);
 
   /** 

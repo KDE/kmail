@@ -309,8 +309,8 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::listDirectory(QString path, bool onlySubscribed,
-      bool secondStep, KMFolder* parent, bool reset)
+  void ImapAccountBase::listDirectory(QString path, ListType subscription,
+      bool secondStep, KMFolder* parent, bool reset, bool complete)
   {
     if (makeConnection() == Error)
       return;
@@ -324,13 +324,19 @@ namespace KMail {
     // as the INBOX is located in your root ("/") and needs a special listing
     jd.inboxOnly = !secondStep && prefix() != "/"
       && path == prefix() && !mHasInbox;
-    jd.onlySubscribed = onlySubscribed;
+    jd.onlySubscribed = (subscription != List);
     if (parent) jd.parent = parent;
     if (!secondStep) mCreateInbox = FALSE;
     // make the URL
+    QString type = "LIST";
+    if (subscription == ListSubscribed)
+      type = "LSUB";
+    else if (subscription == ListSubscribedNoCheck)
+      type = "LSUBNOCHECK";
     KURL url = getUrl();
     url.setPath(((jd.inboxOnly) ? QString("/") : path)
-        + ";TYPE=" + ((onlySubscribed) ? "LSUB" : "LIST"));
+        + ";TYPE=" + type
+        + ((complete) ? ";SECTION=COMPLETE" : QString::null));
     mSubfolderNames.clear();
     mSubfolderPaths.clear();
     mSubfolderMimeTypes.clear();
