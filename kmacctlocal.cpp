@@ -12,6 +12,7 @@
 #include "kmacctfolder.h"
 #include "kmglobal.h"
 #include "kmbroadcaststatus.h"
+#include "kmfoldermgr.h"
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -173,6 +174,13 @@ void KMAcctLocal::processNewMail(bool)
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
       addedOk = processNewMsg(msg);
+      /*
+      if (msg->parent()) {
+	  int count = msg->parent()->count();
+	  if (count != 1 && msg->parent()->operator[](count - 1) == msg)
+	      msg->parent()->unGetMsg(count - 1);
+      }
+      */
       if (addedOk)
 	hasNewMail = true;
     }
@@ -188,9 +196,10 @@ void KMAcctLocal::processNewMail(bool)
 
   if (addedOk)
   {
-  rc = mailFolder.expunge();
-  if (rc)
-    KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
+    kernel->folderMgr()->syncAllFolders();
+    rc = mailFolder.expunge();
+    if (rc)
+      KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
   }
   // else warning is written already

@@ -167,7 +167,7 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
-  /* sync buffers to disk */
+  /* fsync buffers to disk */
   virtual void sync();
 
   /** Test if folder is opened. */

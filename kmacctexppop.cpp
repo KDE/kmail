@@ -33,6 +33,7 @@
 #include <kmessagebox.h>
 #include <qtooltip.h>
 #include "kmbroadcaststatus.h"
+#include "kmfoldermgr.h"
 
 #include <kwin.h>
 #include <kbuttonbox.h>
@@ -666,7 +667,7 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
 				       ":" + QString("%1").arg(mPort) );
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
-  config.sync(); 
+  config.sync();
 }
 
 void KMAcctExpPop::slotGetNextMsg()
@@ -683,7 +684,7 @@ void KMAcctExpPop::slotGetNextMsg()
 
   if (next == idsOfMsgsPendingDownload.end()) {
     processRemainingQueuedMessagesAndSaveUidList();
-
+    kernel->folderMgr()->syncAllFolders();
 
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
       KURL url = getUrl();

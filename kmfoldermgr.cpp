@@ -88,7 +88,7 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   }
   else
     mBasePath = aBasePath;
-  
+
 
   dir.setPath(mBasePath);
   if (!dir.exists())
@@ -111,8 +111,8 @@ KMFolder* KMFolderMgr::createFolder(const QString& fName, bool sysFldr,
 				    KMFolderDir *aFolderDir)
 {
   KMFolder* fld;
-  KMFolderDir *fldDir = aFolderDir;  
- 
+  KMFolderDir *fldDir = aFolderDir;
+
   if (!aFolderDir)
     fldDir = &mDir;
   fld = fldDir->createFolder(fName, sysFldr);
@@ -156,9 +156,9 @@ KMFolder* KMFolderMgr::findIdString(const QString& folderId, KMFolderDir *dir)
     }
     else {
       folder = static_cast<KMFolder*>(node);
-      if (folder->idString()==folderId) 
+      if (folder->idString()==folderId)
 	return folder;
-    } 
+    }
   }
   return 0;
 }
@@ -242,23 +242,23 @@ void KMFolderMgr::reload(void)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::createFolderList(QStringList *str, 
+void KMFolderMgr::createFolderList(QStringList *str,
 				   QValueList<QGuardedPtr<KMFolder> > *folders)
 {
   createFolderList( str, folders, 0, "" );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::createI18nFolderList(QStringList *str, 
+void KMFolderMgr::createI18nFolderList(QStringList *str,
 				   QValueList<QGuardedPtr<KMFolder> > *folders)
 {
   createFolderList( str, folders, 0, QString::null, true );
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderMgr::createFolderList(QStringList *str, 
+void KMFolderMgr::createFolderList(QStringList *str,
 				   QValueList<QGuardedPtr<KMFolder> > *folders,
-				   KMFolderDir *adir, 
+				   KMFolderDir *adir,
 				   const QString& prefix,
 				   bool i18nized)
 {
@@ -277,6 +277,24 @@ void KMFolderMgr::createFolderList(QStringList *str,
     folders->append( folder );
     if (folder->child())
       createFolderList( str, folders, folder->child(), "  " + prefix );
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
+{
+  KMFolderNode* cur;
+  KMFolderDir* fdir = adir ? adir : &mDir;
+
+  for (cur=fdir->first(); cur; cur=fdir->next()) {
+    if (cur->isDir())
+      continue;
+
+    KMFolder *folder = static_cast<KMFolder*>(cur);  
+    if (folder->isOpened())
+	folder->sync();
+    if (folder->child())
+      syncAllFolders( folder->child() );
   }
 }
 

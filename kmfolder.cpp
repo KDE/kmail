@@ -337,8 +337,8 @@ void KMFolder::close(bool aForced)
 void KMFolder::sync()
 {
   if (mOpenCount > 0)
-    if (!mStream || !fsync(fileno(mStream)) ||
-	!mIndexStream || !fsync(fileno(mIndexStream))) {
+    if (!mStream || fsync(fileno(mStream)) ||
+	!mIndexStream || fsync(fileno(mIndexStream))) {
 	kdDebug(5006) << "Error: Could not sync folder" << endl;
 	kdDebug(5006) << "Abnormally terminating to prevent data loss, now." << endl;
 	exit(1);
@@ -1462,7 +1462,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   size = ftell(mStream) - offs;
 
   error = ferror(mStream);
-  if (error || fsync( fileno( mStream ))) {
+  if (error) {
     kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
     if (ftell(mStream) > revert) {
       kdDebug(5006) << "Undoing changes" << endl;
@@ -1527,7 +1527,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 
     fflush(mIndexStream);
     error = ferror(mIndexStream);
-    if (error || fsync( fileno( mIndexStream ))) {
+    if (error) {
       kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
 	kdDebug(5006) << "Undoing changes" << endl;

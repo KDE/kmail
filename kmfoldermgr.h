@@ -66,6 +66,9 @@ public:
   virtual void createI18nFolderList( QStringList *str,
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
+  /* fsync all open folders to disk */
+  virtual void syncAllFolders( KMFolderDir *adir = 0 );
+
 public slots:
   /** Compacts all folders (they know is it needed) */
   void compactAll();
