@@ -196,6 +196,10 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal 
   addModule ( "kmail_config_security", false );
   addModule ( "kmail_config_misc", false );
 
+  // We store the size of the dialog on hide, because otherwise
+  // the KCMultiDialog starts with the size of the first kcm, not
+  // the largest one. This way at least after the first showing of
+  // the largest kcm the size is kept.
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
   int width = geometry.readNumEntry( "ConfigureDialogWidth" );
   int height = geometry.readNumEntry( "ConfigureDialogHeight" );
