@@ -314,7 +314,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::changeSubscription( bool subscribe, QString imapPath )
+  void ImapAccountBase::changeSubscription( bool subscribe, const QString& imapPath )
   {
     // change the subscription of the folder
     KURL url = getUrl();

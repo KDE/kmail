@@ -165,7 +165,7 @@ namespace KMail {
      * identified by @p imapPath.
      * Emits subscriptionChanged signal on success.
      */
-    void changeSubscription(bool subscribe, QString imapPath);
+    void changeSubscription(bool subscribe, const QString& imapPath);
 
     /**
      * Retrieve the users' right on the folder
