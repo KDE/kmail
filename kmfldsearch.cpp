@@ -182,7 +182,7 @@ void KMFldSearch::updStatus(void)
 		.arg(mNumMatches)
 		.arg(mSearchFolder)
 		.arg(mCount);
-  mLblStatus->setText(str);
+  if (!mSearching || mCount % 100 == 0) mLblStatus->setText(str);
 }
 
 
@@ -207,17 +207,15 @@ void KMFldSearch::keyPressEvent(QKeyEvent *evt)
 }
 
 //-----------------------------------------------------------------------------
-bool KMFldSearch::searchInMessage(KMMessage* aMsg)
+bool KMFldSearch::searchInMessage(KMMessage* aMsg, const QCString& aMsgStr)
 {
   int i;
   bool matches = true;
 
-  assert(aMsg!=NULL);
-
   mCount++;
   updStatus();
   for(i=0; matches && i<mNumRules; i++)
-    if (!mRules[i]->matches(aMsg))
+    if (!mRules[i]->matches(aMsg, aMsgStr))
       matches = false;
 
   return matches;
@@ -230,7 +228,8 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   KMMessage* msg;
   int i, num, upd;
   QString str;
-  bool unget;
+  QCString cStr;
+  bool unget = false, fastMode = true, found;
 
   assert(!aFld.isNull());
 
@@ -243,12 +242,26 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
     return;
   }
 
+  for(i=0; i<mNumRules; i++)
+    if (!mRules[i]->isHeaderField()) fastMode = false;
+
   num = aFld->count();
   for (i=0, upd=0; i<num && mSearching; i++, upd++)
   {
-    unget = !aFld->isMessage(i);
-    msg = aFld->getMsg(i);
-    if (msg && searchInMessage(msg))
+    if (fastMode)
+    {
+      found = searchInMessage(NULL, aFld->getMsgString(i, cStr));
+      if (found)
+      {
+        unget = !aFld->isMessage(i);
+        msg = aFld->getMsg(i);
+      } else unget = false;
+    } else {
+      unget = !aFld->isMessage(i);
+      msg = aFld->getMsg(i);
+      found = msg && searchInMessage(msg, QCString());
+    }
+    if (found)
     {
       (void)new QListViewItem(mLbxMatches,
 			      msg->subject(),
@@ -473,35 +486,51 @@ void KMFldSearchRule::prepare(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMFldSearchRule::matches(const KMMessage* aMsg) const
+bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
+  const
 {
   QString value;
 
-  if (mField.isEmpty() || !aMsg) return true;
-  if( mField == i18n("<complete message>") ) {
-    value = aMsg->headerAsString();
-    QString charset;
-    QCString content;
-    if (aMsg->typeStr().lower().find("multipart/") != -1)
-    {
-      KMMessagePart mp;
-      aMsg->bodyPart(0,&mp);
-      charset = mp.charset();
-      content = mp.bodyDecoded();
+  if (mField.isEmpty()) return true;
+  if (aMsg)
+  {
+    if( !isHeaderField() ) {
+      value = aMsg->headerAsString();
+      QString charset;
+      QCString content;
+      if (aMsg->typeStr().lower().find("multipart/") != -1)
+      {
+        KMMessagePart mp;
+        aMsg->bodyPart(0,&mp);
+        charset = mp.charset();
+        content = mp.bodyDecoded();
+      } else {
+        charset = aMsg->charset();
+        content = aMsg->bodyDecoded();
+      }
+      if (!mNonLatin || charset.isEmpty() || charset == "us-ascii"
+        || charset == "iso-8859-1")         // Speedup
+          value += content;  
+      else {
+        QTextCodec *codec = KMMsgBase::codecForName(charset);
+        if (codec) value += codec->toUnicode(content);
+          else value += content;
+      }
     } else {
-      charset = aMsg->charset();
-      content = aMsg->bodyDecoded();
-    }
-    if (!mNonLatin || charset.isEmpty() || charset == "us-ascii"
-      || charset == "iso-8859-1")         // Speedup
-        value += content;  
-    else {
-      QTextCodec *codec = KMMsgBase::codecForName(charset);
-      if (codec) value += codec->toUnicode(content);
-        else value += content;
+      value = aMsg->headerField(mField);
     }
   } else {
-    value = aMsg->headerField(mField);
+    int start, stop;
+    char ch;
+    start = aMsgStr.find(QCString("\n" + mField + ": "));
+    if (start == -1) return false;
+    start += mField.length() + 3;
+    stop = aMsgStr.find("\n", start);
+    while (stop != -1 && (ch = aMsgStr.at(stop + 1)) == ' ' || ch == '\t')
+      stop = aMsgStr.find("\n", stop + 1);
+    if (stop == -1) value = KMMsgBase::decodeRFC2047String(aMsgStr.mid(start));
+    else value = KMMsgBase::decodeRFC2047String(aMsgStr.mid(start,
+      stop - start));
   }
   // also see KMFilterRule::matches() for a similar function:
   switch(mFunc)
@@ -522,6 +551,13 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
     kdDebug() << "KMFldSearchRule::matches: wrong rule func #" << mFunc << endl;
     return false;
   }
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMFldSearchRule::isHeaderField() const
+{
+  return mField != i18n("<complete message>");
 }
 
 

@@ -43,7 +43,7 @@ protected:
   virtual QComboBox* createFolderCombo(const QString curFolder=0);
 
   /** Test if message matches. */
-  virtual bool searchInMessage(KMMessage*);
+  virtual bool searchInMessage(KMMessage*, const QCString&);
 
   /** Search for matches in given folder. Adds matches to listbox mLbxMatches. */
   virtual void searchInFolder(QGuardedPtr<KMFolder>, int);
@@ -86,13 +86,16 @@ public:
   virtual ~KMFldSearchRule();
 
   /** Test if message matches rules. */
-  virtual bool matches(const KMMessage*) const;
+  virtual bool matches(const KMMessage*, const QCString&) const;
 
   /** Prepare for search run. */
   virtual void prepare(void);
 
   /** Enable or disable all the push buttons */
   virtual void setEnabled(bool);
+
+  /** The header field to search in (or whole message) */
+  virtual bool isHeaderField() const;
 
   enum Func { Contains=0, NotContains, Equal, NotEqual, 
               MatchesRegExp, NotMatchesRegExp };

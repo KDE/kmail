@@ -1134,6 +1134,26 @@ KMMessage* KMFolder::readMsg(int idx)
 
 
 //-----------------------------------------------------------------------------
+QCString& KMFolder::getMsgString(int idx, QCString &mDest)
+{
+  unsigned long msgSize;
+  KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
+
+  assert(mi!=NULL);
+  assert(mStream != NULL);
+
+  msgSize = mi->msgSize();
+  mDest.resize(msgSize+2);
+
+  fseek(mStream, mi->folderOffset(), SEEK_SET);
+  fread(mDest.data(), msgSize, 1, mStream);
+  mDest[msgSize] = '\0';
+ 
+  return mDest;
+}
+
+
+//-----------------------------------------------------------------------------
 int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   KMFolder* msgParent;
