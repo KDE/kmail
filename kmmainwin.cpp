@@ -1291,6 +1291,7 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
 
   win = new KMReaderWin;
   win->setAutoDelete(true);
+  win->setHtmlOverride(mFolderHtmlPref);
   KMMessage *newMessage = new KMMessage();
   newMessage->fromString(msg->asString());
   showMsg(win, newMessage);
