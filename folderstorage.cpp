@@ -433,10 +433,10 @@ KMMessage* FolderStorage::getMsg(int idx)
       msg = readMsg(idx);
       // sanity check
       if (mCompactable && (!msg || (msg->subject().isEmpty() != mbSubject.isEmpty()))) {
-	  kdDebug(5006) << "Error: " << location() <<
-	  " Index file is inconsistent with folder file. This should never happen." << endl;
-	  mCompactable = FALSE; // Don't compact
-	  writeConfig();
+        kdDebug(5006) << "Error: " << location() <<
+          " Index file is inconsistent with folder file. This should never happen." << endl;
+        mCompactable = FALSE; // Don't compact
+        writeConfig();
       }
 
   }
@@ -470,14 +470,15 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
     // the caller will delete it, so we must make a copy it
     msg = new KMMessage(*(KMMessage*)mb);
     msg->setMsgSerNum(sernum);
+    msg->setComplete( true );
   } else {
     // ## Those two lines need to be moved to a virtual method for KMFolderSearch, like readMsg
     msg = new KMMessage(*(KMMsgInfo*)mb);
     msg->setMsgSerNum(sernum); // before fromDwString so that readyToShow uses the right sernum
+    msg->setComplete( true );
     msg->fromDwString(getDwString(idx));
   }
   msg->setEnableUndo(undo);
-  msg->setComplete( true );
   return msg;
 }
 
