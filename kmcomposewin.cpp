@@ -4764,7 +4764,10 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom->setText(ident.fullEmailAddr());
   mEdtReplyTo->setText(ident.replyToAddr());
-  mEdtBcc->setText(ident.bcc());
+  // don't overwrite the BCC field when the user has edited it and the
+  // BCC field of the new identity is empty
+  if( !mEdtBcc->edited() || !ident.bcc().isEmpty() )
+    mEdtBcc->setText(ident.bcc());
   // make sure the BCC field is shown because else it's ignored
   if (! ident.bcc().isEmpty()) {
     mShowHeaders |= HDR_BCC;
