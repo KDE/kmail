@@ -1221,11 +1221,11 @@ void AccountDialog::slotLeaveOnServerClicked()
 {
   if ( !( mCurCapa & UIDL ) && mPop.leaveOnServerCheck->isChecked() ) {
     KMessageBox::information( topLevelWidget(),
-                              i18n("The server doesn't seem to support unique "
+                              i18n("The server does not seem to support unique "
                                    "message numbers, but this is a "
                                    "requirement for leaving messages on the "
                                    "server.\n"
-                                   "Since some servers don't correctly "
+                                   "Since some servers do not correctly "
                                    "announce their capabilities you still "
                                    "have the possibility to turn leaving "
                                    "fetched messages on the server on.") );
@@ -1236,11 +1236,11 @@ void AccountDialog::slotFilterOnServerClicked()
 {
   if ( !( mCurCapa & TOP ) && mPop.filterOnServerCheck->isChecked() ) {
     KMessageBox::information( topLevelWidget(),
-                              i18n("The server doesn't seem to support "
+                              i18n("The server does not seem to support "
                                    "fetching message headers, but this is a "
                                    "requirement for filtering messages on the "
                                    "server.\n"
-                                   "Since some servers don't correctly "
+                                   "Since some servers do not correctly "
                                    "announce their capabilities you still "
                                    "have the possibility to turn filtering "
                                    "messages on the server on.") );
@@ -1398,10 +1398,10 @@ void AccountDialog::enablePopFeatures( unsigned int capa )
   if ( !( capa & Pipelining ) && mPop.usePipeliningCheck->isChecked() ) {
     mPop.usePipeliningCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
-                              i18n("The server doesn't seem to support "
-                                   "pipelining. Therefore this option has "
+                              i18n("The server does not seem to support "
+                                   "pipelining; therefore, this option has "
                                    "been disabled.\n"
-                                   "Since some servers don't correctly "
+                                   "Since some servers do not correctly "
                                    "announce their capabilities you still "
                                    "have the possibility to turn pipelining "
                                    "on. But please note that this feature can "
@@ -1417,12 +1417,12 @@ void AccountDialog::enablePopFeatures( unsigned int capa )
   if ( !( capa & UIDL ) && mPop.leaveOnServerCheck->isChecked() ) {
     mPop.leaveOnServerCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
-                              i18n("The server doesn't seem to support unique "
+                              i18n("The server does not seem to support unique "
                                    "message numbers, but this is a "
                                    "requirement for leaving messages on the "
-                                   "server. Therefore this option has been "
+                                   "server; therefore, this option has been "
                                    "disabled.\n"
-                                   "Since some servers don't correctly "
+                                   "Since some servers do not correctly "
                                    "announce their capabilities you still "
                                    "have the possibility to turn leaving "
                                    "fetched messages on the server on.") );
@@ -1430,12 +1430,12 @@ void AccountDialog::enablePopFeatures( unsigned int capa )
   if ( !( capa & TOP ) && mPop.filterOnServerCheck->isChecked() ) {
     mPop.filterOnServerCheck->setChecked( false );
     KMessageBox::information( topLevelWidget(),
-                              i18n("The server doesn't seem to support "
+                              i18n("The server does not seem to support "
                                    "fetching message headers, but this is a "
                                    "requirement for filtering messages on the "
-                                   "server. Therefore this option has been "
+                                   "server; therefore, this option has been "
                                    "disabled.\n"
-                                   "Since some servers don't correctly "
+                                   "Since some servers do not correctly "
                                    "announce their capabilities you still "
                                    "have the possibility to turn filtering "
                                    "messages on the server on.") );

@@ -457,7 +457,7 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString&
 void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
 {
   if ( !mImapAccount->hasACLSupport() ) {
-    mLabel->setText( i18n( "This IMAP server doesn't have support for access control lists (ACL)" ) );
+    mLabel->setText( i18n( "This IMAP server does not have support for access control lists (ACL)" ) );
     return;
   }
 

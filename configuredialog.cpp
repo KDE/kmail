@@ -2970,7 +2970,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
 
   // "Outlook compatible attachment naming" check box
   mOutlookCompatibleCheck =
-    new QCheckBox( i18n( "Outlook compatible attachment naming" ), this );
+    new QCheckBox( i18n( "Outlook-compatible attachment naming" ), this );
   mOutlookCompatibleCheck->setChecked( false );
   QToolTip::add( mOutlookCompatibleCheck, i18n(
     "Turn this option on to make Outlook(tm) understand attachment names "
@@ -3053,8 +3053,8 @@ void ComposerPageAttachmentsTab::slotOutlookCompatibleChanged( int state )
     "is understood by Outlook(tm) and other mail clients that do not "
     "support standard-compliant encoded attachment names.\n"
     "Note that KMail may create non-standard compliant messages, "
-    "and consequently it's possible that your messages will not be "
-    "understood by standard compliant mail clients. So, unless you have no "
+    "and consequently it is possible that your messages will not be "
+    "understood by standard-compliant mail clients; so, unless you have no "
     "other choice, you should not enable this option." ) );
   }
 }
