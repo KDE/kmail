@@ -1947,7 +1947,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   mAttachmentCheck = new QCheckBox( i18n("Show attachment icon"), group );
 
   mNestedMessagesCheck =
-    new QCheckBox( i18n("&Thread list of message headers"), group );
+    new QCheckBox( i18n("&Threaded message list"), group );
 
   connect( mMessageSizeCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -1963,7 +1963,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 
   // "Message Header Threading Options" group:
   mNestingPolicy =
-    new QVButtonGroup( i18n("Message Header Threading Options"), this );
+    new QVButtonGroup( i18n("Threaded Message List Options"), this );
   mNestingPolicy->layout()->setSpacing( KDialog::spacingHint() );
 
   mNestingPolicy->insert(
@@ -2246,7 +2246,7 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, i18n("H&eaders") );
+  addTab( mHeadersTab, i18n("M&essage List") );
 
   //
   // "Attachments" tab:
