@@ -172,8 +172,8 @@ public:
     mSortDate = cDate;
 
     mSortArrival = QString( "%1" ).arg( mMsgId, 8, 36 );
-    mSortSender = text(1).lower() + " " + mSortDate;
-    mSortSubject = KMMsgBase::skipKeyword( text(2).lower() ) + " " + mSortDate;
+    mSortSender = text(mPaintInfo->senderCol).lower() + " " + mSortDate;
+    mSortSubject = KMMsgBase::skipKeyword( text(mPaintInfo->subCol).lower() ) + " " + mSortDate;
   }
 
   // Retrun the msgId of the message associated with this item
