@@ -126,12 +126,11 @@ void KMAccount::clearPasswd()
 //-----------------------------------------------------------------------------
 void KMAccount::setFolder(KMFolder* aFolder, bool addAccount)
 {
-  if(!aFolder)
-    {
-    kdDebug(5006) << "KMAccount::setFolder() : aFolder == 0" << endl;
+  if(!aFolder) {
+    //kdDebug(5006) << "KMAccount::setFolder() : aFolder == 0" << endl;
     mFolder = 0;
     return;
-    }
+  }
   mFolder = (KMAcctFolder*)aFolder;
   if (addAccount) mFolder->addAccount(this);
 }

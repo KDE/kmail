@@ -854,7 +854,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     aMsg->attach( this );
   mAtmUpdate = false;
 
-  kdDebug(5006) << "set Msg, force = " << force << endl;
+  //kdDebug(5006) << "set Msg, force = " << force << endl;
 
   // connect to the updates if we have hancy headers
 

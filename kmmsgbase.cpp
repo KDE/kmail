@@ -296,9 +296,9 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 }
 
 
-void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status, int idx )
+void KMMsgBase::setEncryptionState( const KMMsgEncryptionState /*status*/, int idx )
 {
-    kdDebug(5006) << "***setEncryptionState1( " << status << " )" << endl;
+    //kdDebug(5006) << "***setEncryptionState1( " << status << " )" << endl;
     mDirty = TRUE;
     if (storage())
         storage()->headerOfMsgChanged(this, idx);
@@ -306,7 +306,7 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status, int idx )
 
 void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 {
-    kdDebug(5006) << "***setEncryptionState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
+    //kdDebug(5006) << "***setEncryptionState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
 
     if( status.latin1() == (char)KMMsgEncryptionStateUnknown )
         setEncryptionState( KMMsgEncryptionStateUnknown, idx );
@@ -321,9 +321,9 @@ void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 }
 
 
-void KMMsgBase::setSignatureState( const KMMsgSignatureState status, int idx )
+void KMMsgBase::setSignatureState( const KMMsgSignatureState /*status*/, int idx )
 {
-    kdDebug(5006) << "***setSignatureState1( " << status << " )" << endl;
+    //kdDebug(5006) << "***setSignatureState1( " << status << " )" << endl;
     mDirty = TRUE;
     if (storage())
          storage()->headerOfMsgChanged(this, idx);
@@ -337,7 +337,7 @@ void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
-    kdDebug(5006) << "***setSignatureState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
+    //kdDebug(5006) << "***setSignatureState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
 
     if( status.latin1() == (char)KMMsgSignatureStateUnknown )
         setSignatureState( KMMsgSignatureStateUnknown, idx );
@@ -1067,7 +1067,7 @@ namespace {
 		      << __FILE__ << ":" << __LINE__ << endl;
       x = 0;
     } else {
-      // the memcpy is optimized out by the compiler for the values 
+      // the memcpy is optimized out by the compiler for the values
       // of sizeof(T) that is called with
       memcpy( &x, g_chunk + g_chunk_offset, sizeof(T) );
       g_chunk_offset += sizeof(T);
