@@ -54,8 +54,11 @@ KpgpBase::setMessage(const QString mess)
 {
   clear();
   input = mess;
-  if(input.find("-----BEGIN PGP") != -1)
+  if(input.find("-----BEGIN PGP") != -1) {
     decrypt();
+    return true;
+  }
+  return false;
 }
 
 QString

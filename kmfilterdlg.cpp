@@ -190,7 +190,8 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
     mFilterList->setCurrentItem(0);
 
   enableControls();
-  resize(buttonBox->sizeHint().width()*1.2, sizeHint().height());
+  resize(static_cast<int>(buttonBox->sizeHint().width()*1.2),
+	 sizeHint().height());
   show();
 
 }
