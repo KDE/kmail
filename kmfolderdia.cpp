@@ -87,9 +87,7 @@ void KMFolderDialog::slotOk()
   if (curFolder != 0)
     selectedFolderDir = mFolders.at(curFolder - 1)->createChildFolder();
 
-  QString message = i18n( "Failed to create folder '" ) + 
-    (const char*)fldName + 
-    i18n( "', folder already exists." );
+  QString message = i18n( "Failed to create folder '%1', folder already exists." ).arg(fldName);
   if ((selectedFolderDir->hasNamedFolder(fldName)) &&
       (!((folder) && 
 	 (selectedFolderDir == folder->parent()) &&
