@@ -32,7 +32,7 @@
 using namespace KMail;
 
 OverlayWidget::OverlayWidget( QWidget* alignWidget, QWidget* parent, const char* name )
-  : QWidget( parent, name ), mAlignWidget( 0 )
+  : QHBox( parent, name ), mAlignWidget( 0 )
 {
   setAlignWidget( alignWidget );
 }
@@ -80,13 +80,13 @@ bool OverlayWidget::eventFilter( QObject* o, QEvent* e)
        ( e->type() == QEvent::Move || e->type() == QEvent::Resize ) ) {
     reposition();
   }
-  return QWidget::eventFilter(o,e);
+  return QFrame::eventFilter(o,e);
 }
 
 void OverlayWidget::resizeEvent( QResizeEvent* ev )
 {
   reposition();
-  QWidget::resizeEvent( ev );
+  QFrame::resizeEvent( ev );
 }
 
 #include "overlaywidget.moc"

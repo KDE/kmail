@@ -39,8 +39,9 @@
 #include <qtimer.h>
 #include <qheader.h>
 #include <qobject.h>
+#include <qtoolbutton.h>
+#include <qpushbutton.h>
 
-#include <kpushbutton.h>
 #include <klocale.h>
 #include <kdialog.h>
 #include <kstdguiitem.h>
@@ -49,6 +50,7 @@
 
 #include "progressdialog.h"
 #include "progressmanager.h"
+#include <qvbox.h>
 using KMail::ProgressItem;
 using KMail::ProgressManager;
 
@@ -170,12 +172,8 @@ void TransactionItem::slotItemCanceled()
 ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const char* name )
     : OverlayWidget( alignWidget, parent, name )
 {
-    setCaption( i18n("Progress") );
-    resize( 600, 400 );
-
-
-    QBoxLayout* topLayout = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint(),
-                                             "topLayout");
+  setFrameStyle( StyledPanel ); // QFrame
+  setSpacing( KDialog::spacingHint() ); // QHBox
 
     mListView = new TransactionItemListView( this, "SyncEditorListView" );
     mListView->addColumn( i18n( "Transaction" ) );
@@ -192,15 +190,14 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const cha
 
     mListView->setRootIsDecorated( true );
 
-    topLayout->addWidget( mListView );
-
-    QBoxLayout* bottomLayout = new QHBoxLayout( topLayout, KDialog::spacingHint(), "bottomLayout");
-    bottomLayout->addStretch();
-
-    KPushButton* pbClose = new KPushButton( KStdGuiItem::close(), this );
-    bottomLayout->addWidget( pbClose );
-
-    connect(pbClose, SIGNAL(clicked()), this, SLOT(close())  );
+    QVBox* rightBox = new QVBox( this, 0 );
+    QToolButton* pbClose = new QToolButton( rightBox );
+    pbClose->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
+    // like knotebutton
+    pbClose->setIconSet( KGlobal::iconLoader()->loadIconSet( "knotes_close", KIcon::Small, 10 ) );
+    connect(pbClose, SIGNAL(clicked()), this, SLOT(close()));
+    QWidget* spacer = new QWidget( rightBox ); // don't let the close button take up all the height
+    rightBox->setStretchFactor( spacer, 100 );
 
     /*
      * Get the singleton ProgressManager item which will inform us of

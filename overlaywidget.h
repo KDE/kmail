@@ -30,7 +30,7 @@
 #ifndef OVERLAYWIDGET_H
 #define OVERLAYWIDGET_H
 
-#include <qwidget.h>
+#include <qhbox.h>
 
 namespace KMail {
 
@@ -38,8 +38,10 @@ namespace KMail {
  * This is a widget that can align itself with another one, without using a layout,
  * so that it can actually be on top of other widgets.
  * Currently the only supported type of alignment is "right aligned, on top of the other widget".
+ *
+ * OverlayWidget inherits QHBox for convenience purposes (layout, and frame)
  */
-class OverlayWidget : public QWidget
+class OverlayWidget : public QHBox
 {
   Q_OBJECT
 
