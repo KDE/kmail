@@ -134,6 +134,15 @@ void KMAcctCachedImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN) mAskAgain = TRUE;
 
+
+  if (errorCode == KIO::ERR_CONNECTION_BROKEN ) {
+    if ( slave() ) {
+      KIO::Scheduler::disconnectSlave( slave() );
+      mSlave = 0;
+      // TODO reset all syncs, killall jobs?
+    }
+  }
+
   // Note: HEAD has a killAllJobs() call here
 
   // check if we still display an error
@@ -188,7 +197,7 @@ void KMAcctCachedImap::displayProgress()
   //if (total > mTotal) mTotal = total;
   //done += mTotal - total;
 
-  KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName, 
+  KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
                                                            done / total );
 
   //100*done / mTotal );
