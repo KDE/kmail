@@ -1,28 +1,34 @@
-#include <config.h>
-#include <sys/types.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
+ *
+ *  This file is part of KMail, the KDE mail client.
+ *  Copyright (c) 2003 KMail Developers
+ *
+ *  KMail is free software; you can redistribute it and/or modify it
+ *  under the terms of the GNU General Public License, version 2, as
+ *  published by the Free Software Foundation.
+ *
+ *  KMail is distributed in the hope that it will be useful, but
+ *  WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ *  General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ *  In addition, as a special exception, the copyright holders give
+ *  permission to link the code of this program with any edition of
+ *  the Qt library by Trolltech AS, Norway (or with modified versions
+ *  of Qt that use the same license as Qt), and distribute linked
+ *  combinations including the two.  You must obey the GNU General
+ *  Public License in all respects for all of the code used other than
+ *  Qt.  If you modify this file, you may extend this exception to
+ *  your version of the file, but you are not obligated to do so.  If
+ *  you do not wish to do so, delete this exception statement from
+ *  your version.
+ */
+#include "config.h"
 #include "kmkernel.h"
-
-#include <dcopclient.h>
-
-#include <qvbox.h>
-
-#include <kaboutdata.h>
-#include <kdebug.h>
-#include <kmessagebox.h>
-#include <knotifyclient.h>
-#include <kstaticdeleter.h>
-#include <kstandarddirs.h>
-#include <kconfig.h>
-#include <qutf7codec.h>
-#include <kprogress.h>
-#include <kpassivepopup.h>
 
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
@@ -52,16 +58,36 @@ using KRecentAddress::RecentAddresses;
 #include "mailserviceimpl.h"
 using KMail::MailServiceImpl;
 #include "folderIface.h"
+using KMail::FolderIface;
 #include "cryptplugwrapperlist.h"
 
-using KMail::FolderIface;
+#include <kapplication.h>
+#include <kaboutdata.h>
+#include <kmessagebox.h>
+#include <knotifyclient.h>
+#include <kstaticdeleter.h>
+#include <kstandarddirs.h>
+#include <kconfig.h>
+#include <kprogress.h>
+#include <kpassivepopup.h>
+#include <dcopclient.h>
+
+#include <kdebug.h>
+
+#include <qutf7codec.h>
+#include <qvbox.h>
+#include <qdir.h>
+
+#include <sys/types.h>
+#include <dirent.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 
 #include <X11/Xlib.h>
-#undef Unsorted
-#undef None
-#include <kapplication.h>
-
-#include <qdir.h>
+#include <fixx11h.h>
 
 KMKernel *KMKernel::mySelf = 0;
 
@@ -801,7 +827,7 @@ void KMKernel::notClosedByUser()
   closed_by_user = false;
   the_shuttingDown = true;
   closeAllKMTopLevelWidgets();
- 
+
   delete the_acctMgr;
   the_acctMgr = 0;
   delete the_filterMgr;
@@ -1388,16 +1414,16 @@ KMReaderWin* KMKernel::activeReaderWin()
   KMainWindow *window = 0;
   bool startupMode = false;
   QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
-  while ( (window = it.current()) != 0 ) 
+  while ( (window = it.current()) != 0 )
   {
     ++it;
     // this is probably only a temporary solution to get the active reader
     if ( window->inherits("KMTopLevelWidget") &&
-         window->isA("KMMainWin") && 
+         window->isA("KMMainWin") &&
          window->isActiveWindow() )
     {
       return static_cast<KMMainWin*>(window)->mainKMWidget()->messageView();
-    } 
+    }
     else if ( window->inherits("KMTopLevelWidget") &&
               window->isA("KMMainWin") )
     {
