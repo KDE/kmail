@@ -1,4 +1,5 @@
 
+SUBDIRS = pics
 INCLUDES=	-I.. @all_includes@
 LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lmimelib
 MOC	=	@MOC@
@@ -6,14 +7,14 @@ MOC	=	@MOC@
 bin_PROGRAMS = kmail
 
 kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
-		kmsettings.cpp util.cpp kmaccount.cpp kmheaders.cpp \
+		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
 		ktablistbox.cpp kmcomposewin.cpp kmfolder.cpp \
 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp main.cpp kmmainview.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
-		kmacctseldlg.cpp
+		kmacctseldlg.cpp kshortcut.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
