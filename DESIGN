@@ -13,6 +13,7 @@ Contents:
 - ConfigureDialog
 - MDNs
 - Folders
+- Index
 
 TODO: reader, composer, messages, accounts, ...
 
@@ -295,3 +296,216 @@ FolderJob *job = folderParent->createJob( aMsg, tGetMessage );
 connect( job, SIGNAL(messageRetrieved(KMMessage*)),
          SLOT(msgWasRetrieved(KMMessage*)) );
 job->start();
+
+
+Index (old)
+===========
+
+Files: kmfolderindex.{h,cpp} and kmmsg{base,info}.{h,cpp}
+
+Contact Marc Mutz <mutz@kde.org> or
+	Till Adam <till@adam-lilienthal.de> or
+	Don Sanders <sanders@kde.org>
+with questions...
+
+   index := header *entry
+
+
+   header := magic LF NUL header-length byte-order-marker sizeof-long
+
+   magic := "# KMail-Index V" 1*DIGITS
+
+   header-length := Q_UINT32
+
+   byte-order-marker := Q_UINT32( 0x12345678 )
+
+   sizeof-long := Q_UINT32( 4 / 8 )
+
+
+   entry := tag length value
+
+   tag := Q_UINT32 ; little endian (native?)
+
+   length := Q_UINT16 ; little endian (native?)
+
+   value := unicode-string-value / ulong-value
+
+   unicode-string-value := 0*256QChar ; network-byte-order
+
+   ulong-value := unsigned_long ; little endian
+
+Currently defined tag values are:
+
+   Msg*Part      num. val  type obtained by:
+
+   No		 0	   u	-
+   From		 1	   u	fromStrip().stripWhitespace()
+   Subject	 2	   u	subject().stripWhitespace()
+   To		 3	   u	toStrip().stripWhiteSpace()
+   ReplyToIdMD5	 4	   u	replyToIdMD5().stripWhiteSpace()
+   IdMD5	 5	   u	msgIdMD5().stripWhiteSpace()
+   XMark	 6	   u	xmark().stripWhiteSpace()
+   Offset	 7	   l	folderOffset() (not only mbox!)
+   LegacyStatus	 8	   l	mLegacyStatus
+   Size		 9	   l	msgSize()
+   Date		 10	   l	date()
+   File		 11	   u	fileName() (not only maildir!)
+   CryptoState	 12	   l	(signatureState() << 16) | encryptionState())
+   MDNSent	 13	   l	mdnSentState()
+   ReplyToAuxIdMD5 14	   u	replyToAuxIdMD5()
+   StrippedSubject 15	   u	strippedSubjectMD5().stripWhiteSpace()
+   Status	   16	   l	status()
+
+   u: unicode-string-value; l: ulong-value
+
+Proposed new (KDE 3.2 / KMail 1.6) entry format:
+
+   index := header *entry
+
+   entry := sync 1*( tag type content ) crc-tag crc-value
+
+   sync := Q_UINT16 (32?) ; resync mark, some magic bit pattern
+			  ; (together with preceding crc-tag provides
+			  ;  24(40)bits to resync on in case of index
+			  ;  corruption)
+
+   tag := Q_UINT8
+
+   type := Q_UINT8
+
+   content := variable-length-content / fixed-length-content
+
+   crc-tag := tag type   ; tag=CRC16, type=CRC16
+
+   crc-value := Q_UINT16 ; the CRC16 sum is calculated over all of
+			 ; 1*( tag type content )
+
+   variable-length-content := length *512byte padding
+
+   padding := *3NUL ; make the string a multiple of 4 octets in length
+
+   fixed-length-content := 1*byte
+
+   length := Q_UINT16 (Q_UINT8?)
+
+   byte := Q_UINT8
+
+The type field is pseudo-structured:
+
+bit: 7     6     5     4     3     2     1     0
+  +-----+-----+-----+-----+-----+-----+-----+-----+
+  |      uniq       |   chunk   |       len       |
+  +-----+-----+-----+-----+-----+-----+-----+-----+
+
+uniq: 3 bits = max. 8 different types with same chunk size:
+
+      for chunk = (0)00 (LSB(base)=0: octets):
+	00(0) Utf8String
+	01(0) BitField
+	10(0) reserved
+	11(0) Extend
+
+      for chunk = (1)00 (LSB(base)=1: 16-octet blocks):
+	00(1) MD5(Hash/List)
+	01(1) reserved
+	10(1) reserved
+	11(1) Extend
+
+      for chunk = 01 (shorts):
+	000 Utf16String
+	001-110 reserved
+	111 Extend
+
+      for chunk = 10 (int32):
+	000 Utf32String (4; not to be used yet)
+	001 Size32
+	010 Offset32
+        011 SerNum/UOID
+	100 DateTime
+	101 Color (QRgb: (a,r,g,b))
+	110 reserved
+	111 Extend
+
+      for chunk = 11 (int64):
+        000 reserved
+        001 Size64
+        010 Offset64
+	011-110 reserved
+	111 Extend
+
+len: length in chunks
+     000 (variable width -> Q_UINT16 with the real width follows)
+     001..111: fixed-width data of length 2^len (2^1=2..2^6=128)
+
+You find all defined values for the type field in indexentrybase.cpp
+
+Currently defined tags are:
+
+   tag               type       content
+
+   DateSent	     DateTime   Date:
+   DateReceived	     DateTime   last Received:'s date-time
+   FromDisplayName   String     decoded display-name of first From: addr
+   ToDisplayName     String	dto. for To:
+   CcDisplayName     String	dto. for Cc:
+   FromAddrSpecs     String	possibly IMAA-encoded, comma-separated addr-spec's of From:
+   ToAddrSpecs	     String	dto. for To:
+   CcAddrSpecs	     String	dto. for Cc:
+   Subject	     String	decoded Subject:
+   BaseSubjectMD5    String	md5(utf8(stripOffPrefixes(subject())))
+   BodyPeek	     String	body preview
+   MaildirFile	     String	Filename of maildir file for this messagea
+   MBoxOffset	     Offset(64) Offset in mbox file (pointing to From_)
+   MBoxLength        Size(64)   Length of message in mbox file (incl. From_)
+   Size		     Size(64)	rfc2822-size of message (in mbox: excl. From_)
+   Status	     BitField	(see below)
+   MessageIdMD5	     MD5Hash	MD5Hash of _normalized_ Message-Id:
+   MDNLink	     SerialNumber SerNum of MDN received for this message
+   DNSLink	     SerialNumber SerNUm of DSN received for this message
+   ThreadHeads	     SerialNumberList	MD5Hash's of all (so far discovered)
+					_top-level thread parents_
+   ThreadParents     SerialNumberList	MD5Hash's of all (so far discovered)
+					thread parents
+
+
+   "String" is either Utf8String or (Utf16String or Latin1String),
+	    depending on content
+
+Currently allocated bits for the Status BitField are:
+
+    Bit              Value: on(/off) (\imapflag)
+
+    # "std stati":
+    0		     New  (\Recent)
+    1		     Read (\Seen)
+    2		     Answered (\Answered)
+    3		     Deleted (\Deleted)
+    4		     Flagged (\Flagged)
+    5		     Draft (\Draft)
+    6		     Forwarded
+    7		     reserved
+
+    # message properties:
+    8		     HasAttachments
+    9		     MDNSent ($MDNSent)
+    10..11	     00: unspecified, 01: Low, 10: Normal, 11: High Priority
+    12..15	     0001: Queued, 0010: Sent, 0011: DeliveryDelayed,
+		     0100: Delivered, 0101: DeliveryFailed,
+		     0110: DisplayedToReceiver, 0111: DeletedByReceiver,
+		     1001: ProcessedByReceiver, 1010: ForwardedByReceiver,
+		     1011-1110: reserved
+		     1111: AnswerReceived
+
+    # signature / encryption state:
+    16..19	     0001: FullyEncrypted, 0010: PartiallyEncrypted, 1xxx: Problem
+    20..23	     0001: FullySigned, 0010: PartiallySigned, 1xxx: Problem
+
+    # "workflow stati":
+    24..25	     01: Important, 10: ToDo, 11: Later (from Moz/Evo)
+    26..27	     01: Work, 10: Personal, 11: reserved (dto.)
+    28..29	     01: ThreadWatched, 10: ThreadIgnored, 11: reserved
+    30..31	     reserved
+
+All bits and combinations marked as reserved MUST NOT be altered if
+set and MUST be set to zero (0) when creating the bitfield.
+
