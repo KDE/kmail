@@ -1684,11 +1684,8 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
   } else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
              (qstricmp(aMsgPart->typeStr(), "application")==0 &&
-              qstricmp(aMsgPart->subtypeStr(), "postscript")))
+              qstricmp(aMsgPart->subtypeStr(), "postscript")==0))
   {
-      if (aFileName.isEmpty())
-	  return;  // prevent crash
-
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
       QImageIO *iio = new QImageIO();
