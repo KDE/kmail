@@ -128,7 +128,7 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
 {
   mDirty = true;
   KMMsgStatus oldStatus = status();
-    if ( status() & aStatus ) {
+  if ( status() & aStatus ) {
     mStatus &= ~aStatus;
   } else {
     mStatus |= aStatus;
@@ -253,7 +253,7 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       break;
   }
 
-  if (storage()) {
+  if ( oldStatus != mStatus && storage() ) {
     if (idx < 0)
       idx = storage()->find( this );
     storage()->msgStatusChanged( oldStatus, status(), idx );
