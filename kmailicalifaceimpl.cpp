@@ -1314,6 +1314,11 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( location, ef );
 
+    StorageFormat format= GlobalSettings::theIMAPResourceStorageFormat() 
+      == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
+    FolderInfo info( format, NoChange );
+    mFolderInfoMap.insert( folder, info );
+
     // avoid multiple connections
     disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
                 this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
@@ -1727,6 +1732,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
     QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "icalvcard" );
     FolderInfo info;
     info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
+    info.mChanges = (FolderChanges) configGroup.readNumEntry(  folder->idString() + "-changes" );
     mFolderInfoMap.insert( folder, info );
 
     //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
