@@ -363,14 +363,17 @@ class KMForwardCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList );
-  KMForwardCommand( QWidget *parent, KMMessage * msg );
+  KMForwardCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList,
+                    uint identity = 0 );
+  KMForwardCommand( QWidget *parent, KMMessage * msg,
+                    uint identity = 0 );
 
 private:
   virtual void execute();
 
 private:
   QWidget *mParent;
+  uint mIdentity;
 };
 
 class KMForwardAttachedCommand : public KMCommand

@@ -807,15 +807,18 @@ void KMReplyToAllCommand::execute()
 
 
 KMForwardCommand::KMForwardCommand( QWidget *parent,
-  const QPtrList<KMMsgBase> &msgList )
+  const QPtrList<KMMsgBase> &msgList, uint identity )
   : KMCommand( parent, msgList ),
-    mParent( parent )
+    mParent( parent ),
+    mIdentity( identity )
 {
 }
 
-KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg )
+KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg,
+                                    uint identity )
   : KMCommand( parent, msg ),
-    mParent( parent )
+    mParent( parent ),
+    mIdentity( identity )
 {
 }
 
@@ -830,14 +833,14 @@ void KMForwardCommand::execute()
     if (KMessageBox::questionYesNo(mParent, i18n("Forward selected messages as"
                                                  " a MIME digest?"))
         == KMessageBox::Yes) {
-      // we default to the first identity to save prompting the user
-      // (the messages could have different identities)
       uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
       KMMessagePart *msgPart = new KMMessagePart;
       QString msgPartText;
       int msgCnt = 0; // incase there are some we can't forward for some reason
 
+      // dummy header initialization; initialization with the correct identity
+      // is done below
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
@@ -870,6 +873,9 @@ void KMForwardCommand::execute()
         msgCnt++;
         fwdMsg->link(msg, KMMsgStatusForwarded);
       }
+      if ( id == 0 )
+        id = mIdentity; // use folder identity if no message had an id set
+      fwdMsg->initHeader(id);
       msgPartText += "--";
       msgPartText += QString::fromLatin1( boundary );
       msgPartText += "--\n";
@@ -899,7 +905,8 @@ void KMForwardCommand::execute()
         msgText += msg->createForwardBody();
         linklist.append(msg);
       }
-
+      if ( id == 0 )
+        id = mIdentity; // use folder identity if no message had an id set
       KMMessage *fwdMsg = new KMMessage;
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
