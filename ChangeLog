@@ -1,5 +1,8 @@
 1998-06-23  Stefan Taferner  <taferner@kde.org> (KMail-0.7.7)
 
+	* Finetuning: added missing pixmaps to makefile and
+	repainted pixmap for queued and sent messages.
+
 	* Composer: changed behaviour of email completion a bit.
 	Now it is possible to add multiple recipients with comma
 	separated and complete also those after the first one.

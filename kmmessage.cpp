@@ -86,6 +86,7 @@ const QString KMMessage::groups(void) const
   else
       return "";
 }
+
 //-----------------------------------------------------------------------------
 void KMMessage::setGroups(const QString aStr)
 {
@@ -100,9 +101,9 @@ const QString KMMessage::references(void) const
   DwHeaders& header = mMsg->Headers();
   if (header.HasReferences())
       return header.References().AsString().c_str();
-  else
-      return "";
+  else return "";
 }
+
 //-----------------------------------------------------------------------------
 void KMMessage::setReferences(const QString aStr)
 {
@@ -110,6 +111,7 @@ void KMMessage::setReferences(const QString aStr)
   mMsg->Headers().References().FromString(aStr);
   mNeedsAssembly = TRUE;
 }
+
 //-----------------------------------------------------------------------------
 const QString KMMessage::id(void) const
 {
@@ -241,7 +243,6 @@ void KMMessage::fromString(const QString aStr)
   mMsg->FromString((const char*)aStr);
   mMsg->Parse();
 
-  DwHeaders& header = mMsg->Headers();
   setStatus(headerField("Status"), headerField("X-Status"));
 
   mNeedsAssembly = FALSE;
@@ -377,6 +378,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   if (replyToAll || !loopToStr.isEmpty()) replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
 
+  debug("msg-id: %s", headerField("Message-Id").data());
+  msg->setReferences(headerField("Message-Id"));
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr));
 
   if (strnicmp(subject(), "Re:", 3)!=0)

@@ -36,7 +36,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
 
-  setColumn(0, i18n("F"), 17, KTabListBox::PixmapColumn);
+  setColumn(0, i18n("F"), 18, KTabListBox::PixmapColumn);
   setColumn(1, i18n("Sender"), 200, KTabListBox::TextColumn);
   setColumn(2, i18n("Subject"), 270, KTabListBox::TextColumn);
   setColumn(3, i18n("Date"), 300, KTabListBox::TextColumn);

@@ -1,20 +1,22 @@
 /* XPM */
 static char * kmmsgqueued_xpm[] = {
 /* width height num_colors chars_per_pixel */
-"12 12 2 1",
+"12 12 4 1",
 /* colors */
 " 	s None	c None",
-".	c green4",
+".	c grey65",
+"X	c white",
+"o	c black",
 /* pixels */
 "            ",
 "            ",
 "            ",
-"       ..   ",
-"       ..   ",
-"      ..    ",
-"      ..    ",
-" ..  ..     ",
-" ......     ",
-"   ...      ",
-"    .       ",
+" .......... ",
+" .XXXXXXXX. ",
+" .XXXX.o.X. ",
+" .XXXXo..X. ",
+" .XXXXXXXX. ",
+" .XXXXXXXX. ",
+" .......... ",
+"            ",
 "            "};

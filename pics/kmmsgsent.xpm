@@ -1,21 +1,22 @@
 /* XPM */
-static char * kmmsgold_xpm[] = {
+static char * kmmsgsent_xpm[] = {
 /* width height num_colors chars_per_pixel */
-"12 12 3 1",
+"12 12 4 1",
 /* colors */
 " 	s None	c None",
-".	c white",
+".	c black",
 "X	c grey65",
+"o	c white",
 /* pixels */
 "            ",
 "            ",
 "            ",
-"            ",
-"            ",
-"            ",
-"    ....    ",
-"     XXXX   ",
-"            ",
-"            ",
+". . XXXXXXXX",
+"   XoooooooX",
+". .oooo.XXoX",
+"  XoooX.XooX",
+". XoooooooX ",
+" XooooooooX ",
+". XXXXXXXX  ",
 "            ",
 "            "};
