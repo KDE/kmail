@@ -681,17 +681,6 @@ void KMKernel::cleanup(void)
   //qInstallMsgHandler(oldMsgHandler);
   KMRecentAddresses::self()->save( KGlobal::config() );
   kapp->config()->sync();
-  //--- Sven's save attachments to /tmp start ---
-  //kdDebug(5006) << "cleaned" << endl;
-  QCString cmd;
-  // This is a dir with attachments and it is not critical if they are
-  // left behind. FIXME: use Qt/KIO.
-  if (!KMReaderWin::attachDir().isEmpty())
-  {
-    cmd.sprintf("rm -rf '%s'", QFile::encodeName(KMReaderWin::attachDir()).data() );
-    system (cmd); // delete your owns only
-  }
-  //--- Sven's save attachments to /tmp end ---
 }
 
 //Isn´t this obsolete? (sven)

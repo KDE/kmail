@@ -97,10 +97,6 @@ public:
   virtual void setBodyFont(const QFont);
   const QFont& bodyFont(void) const { return mBodyFont; }
 
-  /** Returns path where attachments are kept. Gets set with first
-  KMReaderWin that is created. */
-  static QString attachDir(void) { return mAttachDir; }
-
   /** Override default html mail setting */
   void setHtmlOverride( bool override );
 
@@ -199,7 +195,8 @@ protected:
   /** Create a nice icon with comment and name for the given
     body part, appended to the HTML view. Content type and subtype
     are set afterwards if they were not before. */
-  virtual void writePartIcon(KMMessagePart* msgPart, int partNumber);
+  virtual void writePartIcon(KMMessagePart* msgPart, int partNumber,
+    bool quiet = FALSE);
 
   /** Convert given string to HTML. Converts blanks and tabs at
     beginning of line to non-breakable spaces if preserveLeadingBlanks
@@ -221,16 +218,16 @@ protected:
   /** Returns id of message part from given URL or -1 if invalid. */
   virtual int msgPartFromUrl(const KURL &url);
 
-  /** Create directory for attachments */
-  virtual void makeAttachDir(void);
+  /** Cleanup the attachment temp files */
+  virtual void removeTempFiles();
 
 protected:
   QString colorToString(const QColor&);
-  QString getAtmFilename(QString pname, QString msgpartname);
 
   bool mHtmlMail, mHtmlOverride;
   int mAtmInline;
   int mAtmCurrent;
+  QString mAtmCurrentName;
   KMMessage *mMsg, *mMsgBuf;
   int mMsgBufSize;
   QString mMsgBufMD5;
@@ -258,7 +255,9 @@ protected:
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;
   bool    mUnicodeFont;
-    bool mLoadExternal;
+  bool    mLoadExternal;
+  QStringList mTempFiles;
+  QStringList mTempDirs;
 };
 
 

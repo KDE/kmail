@@ -31,6 +31,7 @@
 #include <kopenwith.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <ktempfile.h>
 
 #include <mimelib/mimepp.h>
 
@@ -77,7 +78,6 @@
 #include <paths.h>
 #endif
 
-QString KMReaderWin::mAttachDir;
 const int KMReaderWin::delay = 150;
 
 //-----------------------------------------------------------------------------
@@ -96,11 +96,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   readConfig();
   mHtmlOverride = false;
 
-  if (mAttachDir.isNull())
-  {
-    makeAttachDir();
-  }
-
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
@@ -116,22 +111,29 @@ KMReaderWin::~KMReaderWin()
 {
   delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete mMsg;
+  removeTempFiles();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::makeAttachDir(void)
+void KMReaderWin::removeTempFiles()
 {
-  QString directory;
-  directory.sprintf("kmail%d/", getpid());
-  mAttachDir = locateLocal( "tmp", directory );
-
-  if (mAttachDir.isNull()) KMessageBox::error(NULL,
-    i18n("Failed to create temporary attachment directory '%2': %1")
-    .arg(strerror(errno)).arg(directory));
+  for (QStringList::Iterator it = mTempFiles.begin(); it != mTempFiles.end();
+    it++)
+  {
+    QFile::remove(*it);
+  }
+  mTempFiles.clear();
+  for (QStringList::Iterator it = mTempDirs.begin(); it != mTempDirs.end();
+    it++)
+  {
+    QDir(*it).rmdir(*it);
+  }
+  mTempDirs.clear();
 }
 
 
+//-----------------------------------------------------------------------------
 bool KMReaderWin::event(QEvent *e)
 {
   if (e->type() == QEvent::ApplicationPaletteChange)
@@ -377,6 +379,7 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
+  removeTempFiles();
   if (aMsg)
       kdDebug(5006) << aMsg->subject() << " " << aMsg->fromStrip() << endl;
 
@@ -605,6 +608,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
           delete vc;
           kdDebug(5006) << "FOUND A VALID VCARD" << endl;
           vcnum = j;
+          writePartIcon(&msgPart, j, TRUE);
           break;
         }
     }
@@ -734,26 +738,8 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 {
   QString str;
   QString vcname;
-  KMMessagePart aMsgPart;
-  QString vcFileName;
 
-  if (vcpartnum >= 0) {
-    mMsg->bodyPart(vcpartnum, &aMsgPart);
-    vcFileName = aMsgPart.fileName();
-    if (vcFileName.isEmpty()) {
-      vcFileName = "/unnamed";
-    } else {
-      // remove quotes from the filename so that the shell does not get confused
-      int c = 0;
-      while ((c = vcFileName.find('"', c)) >= 0)
-        vcFileName.remove(c, 1);
-
-      c = 0;
-      while ((c = vcFileName.find('\'', c)) >= 0)
-        vcFileName.remove(c, 1);
-    }
-    vcname = QString("%1part%2/%3").arg(mAttachDir).arg(vcpartnum+1).arg(vcFileName);
-  }
+  if (vcpartnum >= 0) vcname = mTempFiles.last();
 
   switch (mHeaderStyle)
   {
@@ -1016,7 +1002,8 @@ QString KMReaderWin::quotedHTML(const QString& s)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
+void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
+  bool quiet)
 {
   QString iconName, href, label, comment, contDisp;
   QString fileName;
@@ -1042,9 +1029,14 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   label.replace(QRegExp(">"), "&gt;");
 
 //--- Sven's save attachments to /tmp start ---
+  KTempFile *tempFile = new KTempFile(QString::null,
+    "." + QString::number(aPartNum));
+  tempFile->setAutoDelete(true);
+  QString fname = tempFile->name();
+  delete tempFile;
+
   bool ok = true;
 
-  QString fname = QString("%1part%2").arg(mAttachDir).arg(aPartNum+1);
   if (access(QFile::encodeName(fname), W_OK) != 0) // Not there or not writable
     if (mkdir(QFile::encodeName(fname), 0) != 0
       || chmod (QFile::encodeName(fname), S_IRWXU) != 0)
@@ -1052,24 +1044,14 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
   if (ok)
   {
-    if (fileName.isEmpty())
-      fname += "/unnamed";
-    else
-    {
-      fname = fname + "/" + fileName.replace(QRegExp("/"),"");
-      // remove quotes from the filename so that the shell does not get confused
-      int c = 0;
-      while ((c = fname.find('"', c)) >= 0)
-	fname.remove(c, 1);
+    mTempDirs.append(fname);
+    fileName.replace(QRegExp("[/\"\']"),"");
+    if (fileName.isEmpty()) fileName = "unnamed";
+    fname += "/" + fileName;
 
-      c = 0;
-      while ((c = fname.find('\'', c)) >= 0)
-	fname.remove(c, 1);
-    }
-
-    // fixme: use KTempFile!
     if (!kByteArrayToFile(aMsgPart->bodyDecodedBinary(), fname, false, false, false))
       ok = false;
+    mTempFiles.append(fname);
   }
   if (ok)
   {
@@ -1091,9 +1073,10 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
     aMsgPart->magicSetType();
     iconName = aMsgPart->iconName();
   }
-  mViewer->write("<table><tr><td><a href=\"" + href + "\"><img src=\"" +
-		 iconName + "\" border=\"0\">" + label +
-		 "</a></td></tr></table>" + comment + "<br>");
+  if (!quiet)
+    mViewer->write("<table><tr><td><a href=\"" + href + "\"><img src=\"" +
+                   iconName + "\" border=\"0\">" + label +
+                   "</a></td></tr></table>" + comment + "<br>");
 }
 
 
@@ -1157,7 +1140,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 	     (ch=='h' && aStr.mid(pos, 8) == "https://") ||
 	     (ch=='f' && aStr.mid(pos, 6) == "ftp://") ||
 	     (ch=='m' && aStr.mid(pos, 7) == "mailto:"
-              && aStr.length() > pos+7 && aStr[pos+7] != ' '))
+              && (int)aStr.length() > pos+7 && aStr[pos+7] != ' '))
 	     // note: no "file:" for security reasons
     {
       for (i=0; aStr[pos] && aStr[pos] > ' ' && aStr[pos] != '\"' &&
@@ -1240,18 +1223,13 @@ int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 
   if (!aUrl.isLocalFile()) return -1;
 
-  QString prefix = mAttachDir + "part";
+  QString path = aUrl.path();
+  uint right = path.findRev('/');
+  uint left = path.findRev('.', right);
 
-  if (aUrl.path().left(prefix.length()) == prefix)
-  {
-    QString num = aUrl.path().mid(prefix.length());
-    int i = num.find('/');
-    if (i > 0)
-       num = num.left(i);
-
-    return num.toInt();
-  }
-  return -1;
+  bool ok;
+  int res = path.mid(left + 1, right - left - 1).toInt(&ok);
+  return (ok) ? res : -1;
 }
 
 
@@ -1297,7 +1275,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
   else
   {
     KMMessagePart msgPart;
-    mMsg->bodyPart(id-1, &msgPart);
+    mMsg->bodyPart(id, &msgPart);
     QString str = msgPart.fileName();
     if (str.isEmpty()) str = msgPart.name();
     emit statusMsg(i18n("Attachment: ") + str);
@@ -1318,8 +1296,8 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
   if (id > 0)
   {
     // clicked onto an attachment
-    mAtmCurrent = id-1;
-
+    mAtmCurrent = id;
+    mAtmCurrentName = aUrl.path();
     slotAtmOpen();
   }
   else {
@@ -1343,7 +1321,8 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
   else
   {
     // Attachment popup
-    mAtmCurrent = id-1;
+    mAtmCurrent = id;
+    mAtmCurrentName = url.path();
     KPopupMenu *menu = new KPopupMenu();
     menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
     menu->insertItem(i18n("Open with..."), this, SLOT(slotAtmOpenWith()));
@@ -1499,8 +1478,7 @@ void KMReaderWin::slotAtmView()
   QTextCodec *atmCodec = (mAutoDetectEncoding) ?
     KMMsgBase::codecForName(msgPart.charset()) : mCodec;
   if (!atmCodec) atmCodec = mCodec;
-  atmView(this, &msgPart, htmlMail(), QString("%1part%2/%3").arg(mAttachDir).
-    arg(mAtmCurrent+1).arg(pname), pname, atmCodec);
+  atmView(this, &msgPart, htmlMail(), mAtmCurrentName, pname, atmCodec);
 }
 
 
@@ -1541,11 +1519,9 @@ void KMReaderWin::slotAtmOpen()
     }
   }
 
-  fileName = getAtmFilename(msgPart.fileName(), msgPart.name());
-
   // What to do when user clicks on an attachment --dnaber, 2000-06-01
   // TODO: show full path for Service, not only name
-  QString mimetype = KMimeType::findByURL(KURL(fileName))->name();
+  QString mimetype = KMimeType::findByURL(KURL(mAtmCurrentName))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, true);
   QString question;
   QString open_text = i18n("Open");
@@ -1569,7 +1545,7 @@ void KMReaderWin::slotAtmOpen()
       // There's a default service for this kind of file - use it
       KURL::List lst;
       KURL url;
-      url.setPath(fileName);
+      url.setPath(mAtmCurrentName);
       lst.append(url);
       KRun::run(*offer, lst);
     } else {
@@ -1578,7 +1554,7 @@ void KMReaderWin::slotAtmOpen()
       KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
       KURL::List lst;
       KURL url;
-      url.setPath(fileName);
+      url.setPath(mAtmCurrentName);
       lst.append(url);
       openhandler->displayOpenWithDialog(lst);
     }
@@ -1598,35 +1574,13 @@ void KMReaderWin::slotAtmOpenWith()
   KMMessagePart msgPart;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
-  QString fileName = getAtmFilename(msgPart.fileName(), msgPart.name());
 
   KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
   KURL::List lst;
   KURL url;
-  url.setPath(fileName);
+  url.setPath(mAtmCurrentName);
   lst.append(url);
   openhandler->displayOpenWithDialog(lst);
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMReaderWin::getAtmFilename(QString pname, QString msgpartname) {
-  if (pname.isEmpty()) pname=msgpartname;
-  pname.replace(QRegExp("/"),"");
-  if (pname.isEmpty()) pname="unnamed";
-  QString fileName = QString("%1part%2/%3")
-             .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
-
-  // remove quotes from the filename so that the shell does not get confused
-  int c = 0;
-  while ((c = fileName.find('"', c)) >= 0)
-    fileName.remove(c, 1);
-
-  c = 0;
-  while ((c = fileName.find('\'', c)) >= 0)
-    fileName.remove(c, 1);
-
-  return fileName;
 }
 
 
