@@ -449,9 +449,10 @@ namespace KMail {
           userHTML = "&nbsp;";
         }
       }
-      else
-        if ( imProxy->imAppsAvailable() )
-          presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
+// Disabled 'Launch IM' link in headers - Will
+//      else
+//        if ( imProxy->imAppsAvailable() )
+//          presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
     }
     // do nothing - no im apps available, leave presence empty
     //presence = i18n( "DCOP/InstantMessenger not installed" );

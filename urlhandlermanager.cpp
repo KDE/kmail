@@ -353,12 +353,12 @@ namespace {
         }
         return true;
       }
-      if ( url.path() == "startIMApp" )
-      {
-        kmkernel->imProxy()->startPreferredApp();
-        return true;
-      }
-      //FIXME: handle startIMApp urls in their own handler, or rename this one
+//       if ( url.path() == "startIMApp" )
+//       {
+//         kmkernel->imProxy()->startPreferredApp();
+//         return true;
+//       }
+//       //FIXME: handle startIMApp urls in their own handler, or rename this one
     }
     return false;
   }
