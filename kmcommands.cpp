@@ -66,23 +66,23 @@ using KMail::MailSourceViewer;
 #include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
-  :mDeletesItself( false ), mParent( parent )
+  : mProgressDialog( 0 ), mDeletesItself( false ), mParent( parent )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList )
-  :mDeletesItself( false ), mParent( parent ), mMsgList( msgList )
+  : mProgressDialog( 0 ), mDeletesItself( false ), mParent( parent ), mMsgList( msgList )
 {
 }
 
 KMCommand::KMCommand( QWidget *parent, KMMsgBase *msgBase )
-  :mDeletesItself( false ), mParent( parent )
+  : mProgressDialog( 0 ), mDeletesItself( false ), mParent( parent )
 {
   mMsgList.append( msgBase );
 }
 
 KMCommand::KMCommand( QWidget *parent, KMMessage *msg )
-  :mDeletesItself( false ), mParent( parent )
+  : mProgressDialog( 0 ), mDeletesItself( false ), mParent( parent )
 {
   mMsgList.append( &msg->toMsgBase() );
 }
@@ -181,13 +181,18 @@ void KMCommand::transferSelectedMsgs()
   mCountMsgs = 0;
   mRetrievedMsgs.clear();
   mCountMsgs = mMsgList.count();
-  // the KProgressDialog for the user-feedback
-  mProgressDialog = new KProgressDialog(mParent, "transferProgress",
+  // the KProgressDialog for the user-feedback. Only enable it if it's needed.
+  // For some commands like KMSetStatusCommand it's not needed. Note, that
+  // for some reason the KProgressDialog eats the MouseReleaseEvent (if a
+  // command is executed after the MousePressEvent), cf. bug #71761.
+  if ( mCountMsgs > 0 ) {
+    mProgressDialog = new KProgressDialog(mParent, "transferProgress",
       i18n("Please wait"),
       i18n("Please wait while the message is transferred",
         "Please wait while the %n messages are transferred", mMsgList.count()),
       true);
-  mProgressDialog->setMinimumDuration(1000);
+    mProgressDialog->setMinimumDuration(1000);
+  }
   for (KMMsgBase *mb = mMsgList.first(); mb; mb = mMsgList.next())
   {
     // check if all messages are complete
@@ -209,7 +214,8 @@ void KMCommand::transferSelectedMsgs()
       thisMsg->parent()->ignoreJobsForMessage( thisMsg );
     }
 
-    if ( thisMsg->parent() && !thisMsg->isComplete() && !mProgressDialog->wasCancelled() )
+    if ( thisMsg->parent() && !thisMsg->isComplete() &&
+         ( !mProgressDialog || !mProgressDialog->wasCancelled() ) )
     {
       kdDebug(5006)<<"### INCOMPLETE with protocol = "<<thisMsg->parent()->protocol() <<endl;
       // the message needs to be transferred first
@@ -237,15 +243,17 @@ void KMCommand::transferSelectedMsgs()
     emit messagesTransfered(true);
   } else {
     // wait for the transfer and tell the progressBar the necessary steps
-    connect(mProgressDialog, SIGNAL(cancelClicked()),
-        this, SLOT(slotTransferCancelled()));
-    mProgressDialog->progressBar()->setTotalSteps(KMCommand::mCountJobs);
+    if ( mProgressDialog ) {
+      connect(mProgressDialog, SIGNAL(cancelClicked()),
+              this, SLOT(slotTransferCancelled()));
+      mProgressDialog->progressBar()->setTotalSteps(KMCommand::mCountJobs);
+    }
   }
 }
 
 void KMCommand::slotMsgTransfered(KMMessage* msg)
 {
-  if (mProgressDialog->wasCancelled()) {
+  if ( mProgressDialog && mProgressDialog->wasCancelled() ) {
     emit messagesTransfered(false);
     return;
   }
@@ -259,19 +267,22 @@ void KMCommand::slotJobFinished()
   // the job is finished (with / without error)
   KMCommand::mCountJobs--;
 
-  if (mProgressDialog->wasCancelled()) return;
+  if ( mProgressDialog && mProgressDialog->wasCancelled() ) return;
 
   if ( (mCountMsgs - static_cast<int>(mRetrievedMsgs.count())) > KMCommand::mCountJobs )
   {
     // the message wasn't retrieved before => error
-    mProgressDialog->hide();
+    if ( mProgressDialog )
+      mProgressDialog->hide();
     slotTransferCancelled();
     return;
   }
   // update the progressbar
-  mProgressDialog->progressBar()->advance(1);
-  mProgressDialog->setLabel(i18n("Please wait while the message is transferred",
+  if ( mProgressDialog ) {
+    mProgressDialog->progressBar()->advance(1);
+    mProgressDialog->setLabel(i18n("Please wait while the message is transferred",
           "Please wait while the %n messages are transferred", KMCommand::mCountJobs));
+  }
   if (KMCommand::mCountJobs == 0)
   {
     // all done
