@@ -1514,6 +1514,7 @@ void KMailICalIfaceImpl::readConfig()
     }
     return;
   }
+  mUseResourceIMAP = enabled;
 
   // Read remaining options
   const bool hideFolders = GlobalSettings::hideGroupwareFolders();
