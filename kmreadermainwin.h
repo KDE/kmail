@@ -48,6 +48,7 @@ private slots:
   void slotConfigChanged();
 
 private:
+  void initKMReaderMainWin();
   void setupAccel();
 
   KMReaderWin *mReaderWin;

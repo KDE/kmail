@@ -29,59 +29,62 @@
 #include "kmfoldertree.h"
 
 #include "kmreadermainwin.h"
-#include "kmreadermainwin.moc"
 
 KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
-  : KMail::SecondaryWindow( name ), mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
+    mMsg( 0 )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   //mReaderWin->setShowCompleteMessage( true );
   mReaderWin->setAutoDelete( true );
   mReaderWin->setHtmlOverride( htmlOverride );
-  setCentralWidget( mReaderWin );
-  setupAccel();
-
-  connect( kmkernel, SIGNAL( configChanged() ),
-           this, SLOT( slotConfigChanged() ) );
+  initKMReaderMainWin();
 }
 
 
+//-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin( char *name )
-  : KMail::SecondaryWindow( name ), mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
+    mMsg( 0 )
 {
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setAutoDelete( true );
-  setCentralWidget( mReaderWin );
-  setupAccel();
-
-  connect( kmkernel, SIGNAL( configChanged() ),
-           this, SLOT( slotConfigChanged() ) );
+  initKMReaderMainWin();
 }
 
 
+//-----------------------------------------------------------------------------
 KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QTextCodec *codec, char *name )
-  : KMail::SecondaryWindow( name ), mMsg( 0 )
+  : KMail::SecondaryWindow( name ? name : "readerwindow#" ),
+    mMsg( 0 )
 {
-  resize( 550, 600 );
-  mReaderWin = new KMReaderWin( this, this, actionCollection() ); //new reader
+  mReaderWin = new KMReaderWin( this, this, actionCollection() );
   mReaderWin->setOverrideCodec( codec );
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
+  initKMReaderMainWin();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::initKMReaderMainWin() {
   setCentralWidget( mReaderWin );
   setupAccel();
+  setupGUI( ToolBar | Keys | StatusBar | Create, "kmreadermainwin.rc" );
+  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
 }
 
-
+//-----------------------------------------------------------------------------
 KMReaderMainWin::~KMReaderMainWin()
 {
-  saveMainWindowSettings(KMKernel::config(), "Separate Reader Window");
+  saveMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 }
 
-
+//-----------------------------------------------------------------------------
 void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
 {
   mReaderWin->setOverrideCodec( codec );
@@ -184,25 +187,28 @@ void KMReaderMainWin::slotConfigChanged()
 
 void KMReaderMainWin::setupAccel()
 {
-  if (kmkernel->xmlGuiInstance())
+  if ( kmkernel->xmlGuiInstance() )
     setInstance( kmkernel->xmlGuiInstance() );
+
+  //----- File Menu
+  //mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
+  //                                actionCollection() );
+
+  //mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
+  //                             KStdAccel::shortcut( KStdAccel::Save ),
+  //                             this, SLOT( slotSaveMsg() ),
+  //                             actionCollection(), "file_save_as" );
+
+  mPrintAction = KStdAction::print( this, SLOT( slotPrintMsg() ),
+                                    actionCollection() );
+
   KStdAction::close( this, SLOT( close() ), actionCollection() );
-  applyMainWindowSettings(KMKernel::config(), "Separate Reader Window");
-  QAccel *accel = new QAccel(mReaderWin, "showMsg()");
-  accel->connectItem(accel->insertItem(Key_Up),
-                     mReaderWin, SLOT(slotScrollUp()));
-  accel->connectItem(accel->insertItem(Key_Down),
-                     mReaderWin, SLOT(slotScrollDown()));
-  accel->connectItem(accel->insertItem(Key_Prior),
-                     mReaderWin, SLOT(slotScrollPrior()));
-  accel->connectItem(accel->insertItem(Key_Next),
-                     mReaderWin, SLOT(slotScrollNext()));
-  accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy)),
-                     mReaderWin, SLOT(slotCopySelectedText()));
-  connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
-	  this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
-  connect(mReaderWin, SIGNAL(urlClicked(const KURL&,int)),
-	  mReaderWin, SLOT(slotUrlClicked()));
+
+  //----- View Menu
+  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
+                                   SLOT(slotShowMsgSrc()), actionCollection(),
+                                   "view_source" );
+
 
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
 					"mail_forward", actionCollection(),
@@ -253,15 +259,24 @@ void KMReaderMainWin::setupAccel()
 				  "reply_list" );
   mReplyActionMenu->insert( mReplyListAction );
 
-  mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
-  mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
-                                   SLOT(slotShowMsgSrc()), actionCollection(),
-                                   "view_source" );
 
-  createGUI( "kmreadermainwin.rc" );
-  menuBar()->hide();
-  toolBar( "mainToolBar" )->hide();
+  QAccel *accel = new QAccel(mReaderWin, "showMsg()");
+  accel->connectItem(accel->insertItem(Key_Up),
+                     mReaderWin, SLOT(slotScrollUp()));
+  accel->connectItem(accel->insertItem(Key_Down),
+                     mReaderWin, SLOT(slotScrollDown()));
+  accel->connectItem(accel->insertItem(Key_Prior),
+                     mReaderWin, SLOT(slotScrollPrior()));
+  accel->connectItem(accel->insertItem(Key_Next),
+                     mReaderWin, SLOT(slotScrollNext()));
+  accel->connectItem(accel->insertItem(KStdAccel::shortcut(KStdAccel::Copy)),
+                     mReaderWin, SLOT(slotCopySelectedText()));
+  connect( mReaderWin, SIGNAL(popupMenu(KMMessage&,const KURL&,const QPoint&)),
+	  this, SLOT(slotMsgPopup(KMMessage&,const KURL&,const QPoint&)));
+  connect(mReaderWin, SIGNAL(urlClicked(const KURL&,int)),
+	  mReaderWin, SLOT(slotUrlClicked()));
+
 }
 
 
@@ -332,3 +347,5 @@ void KMReaderMainWin::copySelectedToFolder( int menuId )
   KMCommand *command = new KMCopyCommand( mMenuToFolder[menuId], mMsg );
   command->start();
 }
+
+#include "kmreadermainwin.moc"
