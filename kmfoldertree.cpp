@@ -5,10 +5,6 @@
 #include <unistd.h>
 #include <assert.h>
 
-#if QT_VERSION < 300
-#  define Q_ASSERT ASSERT
-#endif
-
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>

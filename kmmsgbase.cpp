@@ -14,12 +14,8 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#if QT_VERSION < 300
-#  define Q_ASSERT ASSERT
-#endif
 
-#define NUM_STATUSLIST 10
-static KMMsgStatus sStatusList[NUM_STATUSLIST] =
+static KMMsgStatus sStatusList[] =
 {
   KMMsgStatusDeleted, KMMsgStatusNew,
   KMMsgStatusUnread,  KMMsgStatusOld,
@@ -28,6 +24,7 @@ static KMMsgStatus sStatusList[NUM_STATUSLIST] =
   KMMsgStatusFlag,
   KMMsgStatusUnknown /* "Unknown" must be at the *end* of the list */
 };
+static const int NUM_STATUSLIST = sizeof sStatusList / sizeof *sStatusList;
 
 
 //-----------------------------------------------------------------------------

@@ -10,16 +10,8 @@
 #include <kdebug.h>
 #include <kconfig.h>
 
-
-
-#if QT_VERSION > 290
-// new regexp
 #include <qregexp.h>
-#define QRegExp3 QRegExp
-#else
-// old regexp
-#include <qregexp3.h>
-#endif
+
 
 static const char* funcConfigNames[] =
   { "contains", "contains-not", "equals", "not-equal", "regexp",
@@ -161,13 +153,13 @@ bool KMSearchRule::matches( bool numerical, unsigned long numericalValue, unsign
 
   case KMSearchRule::FuncRegExp:
     {
-      QRegExp3 regexp(mContents, FALSE);
+      QRegExp regexp(mContents, FALSE);
       return (regexp.search( msgContents ) >= 0);
     }
 
   case KMSearchRule::FuncNotRegExp:
     {
-      QRegExp3 regexp(mContents, FALSE);
+      QRegExp regexp(mContents, FALSE);
       return (regexp.search( msgContents ) < 0);
     }
 
@@ -207,7 +199,7 @@ void KMSearchRule::readConfig( KConfig *config, int aIdx )
   static const QString& contents = KGlobal::staticQString( "contents" );
 
   QString requestedField = config->readEntry( field + cIdx );
-  if ( requestedField == "<To or Cc>" )
+  if ( requestedField == "<To or Cc>" ) // backwards compat
     init( "<recipients>",
 	  config->readEntry( func + cIdx ).latin1(),
 	  config->readEntry( contents + cIdx ) );

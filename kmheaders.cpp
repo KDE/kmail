@@ -10,10 +10,6 @@
 #include <qptrqueue.h>
 #include <qpainter.h>
 
-#if QT_VERSION < 300
-#  define Q_ASSERT ASSERT
-#endif
-
 #include <kaction.h>
 #include <kapplication.h>
 #include <klocale.h>
