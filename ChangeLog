@@ -1,5 +1,13 @@
 1998-06-16  Stefan Taferner  <taferner@kde.org> (KMail-0.7.3)
 
+	* Composer (email-address-completion)
+	Changed email-address completion to be case insensitive.
+	I think this is more useful in the general case.
+
+	* Composer: fixed broken Tab handling. Replaced
+	Tab-completion in the email-address header lines 
+	(To, From, Cc, etc.) with Ctrl-. completion.
+
 	* Filters: removed some debug statements that slowed
 	down filtering a lot.
 

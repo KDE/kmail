@@ -142,7 +142,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   setupMenuBar();
   setupToolBar();
 
-
   if(!mShowToolBar) enableToolBar(KToolBar::Hide);	
 
   connect(&mEdtSubject,SIGNAL(textChanged(const char *)),
@@ -414,7 +413,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     mMnuView->setItemChecked(aMask, FALSE);
     aLbl->hide();
     aEdt->hide();
-    aEdt->setFocusPolicy(QWidget::NoFocus);
+    // aEdt->setFocusPolicy(QWidget::NoFocus);
     if (aBtn) aBtn->hide();
   }
 
@@ -756,7 +755,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   if (mAutoSign && mayAutoSign) slotAppendSignature();
   mEditor->toggleModified(FALSE);
  
- #ifdef CHARSETS 
+#ifdef CHARSETS 
   setEditCharset();
 #endif  
 }
@@ -1341,11 +1340,6 @@ void KMComposeWin::slotCut()
   else if (fw->inherits("KMLineEdit"))
     ((KMLineEdit*)fw)->cut();
   else debug("wrong focus widget");
-
-#ifdef BROKEN
-  QKeyEvent k(Event_KeyPress, Key_X , 0 , ControlButton);
-  app->notify(fw, &k);
-#endif
 }
 
 
@@ -1857,42 +1851,67 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent,
 		       const char *name): KMLineEditInherited(parent,name)
 {
   mComposer = composer;
+
+  installEventFilter(this);
   
-  connect (this, SIGNAL(completion()), this, SLOT(complete()));
+  connect (this, SIGNAL(completion()), this, SLOT(slotCompletion()));
 }
 
-//-----------------------------------------------------------------------------
-void KMLineEdit::mousePressEvent(QMouseEvent *e)
-{
-  if(e->button() == MidButton)
-  {
-    setFocus();
-    QKeyEvent k( Event_KeyPress, Key_V, 0 , ControlButton);
-    keyPressEvent(&k);
-    return;
-  }
-  else if(e->button() == RightButton)
-  {
-    QPopupMenu *p = new QPopupMenu;
-    p->insertItem(i18n("Cut"),this,SLOT(cut()));
-    p->insertItem(i18n("Copy"),this,SLOT(copy()));
-    p->insertItem(i18n("Paste"),this,SLOT(paste()));
-    p->insertItem(i18n("Mark all"),this,SLOT(markAll()));
-    setFocus();
-    p->popup(QCursor::pos());
-  }
-  else QLineEdit::mousePressEvent(e);
-}
 
 //-----------------------------------------------------------------------------
-void KMLineEdit::keyPressEvent(QKeyEvent* e)
+KMLineEdit::~KMLineEdit()
 {
-  if (e->key()==Key_Backtab && mComposer)
-    mComposer->focusNextPrevEdit(this,FALSE);
-  else if ((/* e->key()==Key_Tab ||*/ e->key()==Key_Return) && mComposer)
-    mComposer->focusNextPrevEdit(this,TRUE);
-  else KMLineEditInherited::keyPressEvent(e);
+  removeEventFilter(this);
 }
+
+
+//-----------------------------------------------------------------------------
+bool KMLineEdit::eventFilter(QObject*, QEvent* e)
+{
+  if (e->type() == Event_KeyPress)
+  {
+    QKeyEvent* k = (QKeyEvent*)e;
+
+    if (k->state()==ControlButton && k->key()==Key_Period)
+    {
+      emit completion();
+      cursorAtEnd();
+      return TRUE;
+    }
+  }
+  else if (e->type() == Event_MouseButtonPress)
+  {
+    QMouseEvent* me = (QMouseEvent*)e;
+    if (me->button() == MidButton)
+    {
+      setFocus();
+      QKeyEvent ev(Event_KeyPress, Key_V, 0 , ControlButton);
+      keyPressEvent(&ev);
+      return TRUE;
+    }
+    else if (me->button() == RightButton)
+    {
+      QPopupMenu* p = new QPopupMenu;
+      p->insertItem(i18n("Cut"),this,SLOT(cut()));
+      p->insertItem(i18n("Copy"),this,SLOT(copy()));
+      p->insertItem(i18n("Paste"),this,SLOT(paste()));
+      p->insertItem(i18n("Mark all"),this,SLOT(markAll()));
+      setFocus();
+      p->popup(QCursor::pos());
+      return TRUE;
+    }
+  }
+  return FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::cursorAtEnd()
+{
+  QKeyEvent ev( Event_KeyPress, Key_End, 0, 0 );
+  QLineEdit::keyPressEvent( &ev );
+}
+
 
 //-----------------------------------------------------------------------------
 void KMLineEdit::copy()
@@ -1927,7 +1946,7 @@ void KMLineEdit::markAll()
 }
 
 //-----------------------------------------------------------------------------
-void KMLineEdit::complete()
+void KMLineEdit::slotCompletion()
 {
   QString t;
   QString Name(name());
@@ -1941,17 +1960,17 @@ void KMLineEdit::complete()
   QPopupMenu *pop = new QPopupMenu;
   int n;
   
-  KMAddrBook *adb = new KMAddrBook();
-  adb->readConfig();
-  adb->load();
+  KMAddrBook adb;
+  adb.readConfig();
+  adb.load();
 
   QString s(text());
   s.append("*");
-  QRegExp regexp(s.data(), true, true);
+  QRegExp regexp(s.data(), FALSE, TRUE);
   
   n=0;
   
-  for (const char *a=adb->first(); a; a=adb->next())
+  for (const char *a=adb.first(); a; a=adb.next())
   {
     t.setStr(a);
     if (t.contains(regexp))
@@ -2002,12 +2021,31 @@ KMEdit::KMEdit(KApplication *a,QWidget *parent, KMComposeWin* composer,
 {
   initMetaObject();
   mComposer = composer;
+  installEventFilter(this);
 }
 
+
 //-----------------------------------------------------------------------------
-void KMEdit::keyPressEvent(QKeyEvent* e)
+KMEdit::~KMEdit()
 {
-  if (e->key()==Key_Backtab && mComposer)
-    mComposer->focusNextPrevEdit(NULL,FALSE);
-  else KMEditInherited::keyPressEvent(e);
+  removeEventFilter(this);
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMEdit::eventFilter(QObject*, QEvent* e)
+{
+  if (e->type() == Event_KeyPress)
+  {
+    QKeyEvent *k = (QKeyEvent*)e;
+
+    if (k->key()==Key_Tab)
+    {
+      int col, row;
+      getCursorPosition(&row, &col);
+      insertAt("	", row, col); // insert tab character '\t'
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
