@@ -2623,9 +2623,12 @@ QCString KMMessage::lf2crlf( const QCString & src )
 
   QCString::ConstIterator s = src.begin();
   QCString::Iterator d = result.begin();
+  // we use cPrev to make sure we insert '\r' only there where it is missing
+  char cPrev = '?';
   while ( *s ) {
-    if ( '\n' == *s )
+    if ( ('\n' == *s) && ('\r' != cPrev) )
       *d++ = '\r';
+    cPrev = *s;
     *d++ = *s++;
   }
   result.truncate( d - result.begin() ); // adds trailing NUL

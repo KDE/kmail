@@ -1600,18 +1600,12 @@ bool KMComposeWin::applyChanges(void)
 
         if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
             (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
-          // replace simple LFs by CRLSs
+          // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
           // according to RfC 2633, 3.1.1 Canonicalization
-          int posLF = encodedBody.find( '\n' );
-          if(    ( 0 < posLF )
-              && ( '\r'  != encodedBody[posLF - 1] ) ) {
-            kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-            encodedBody = KMMessage::lf2crlf( encodedBody );
-            kdDebug(5006) << "                                                       done." << endl;
-
-            // kdDebug(5006) << "\n\n\n******* b) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
-
-          }
+          kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+          encodedBody = KMMessage::lf2crlf( encodedBody );
+          kdDebug(5006) << "                                                       done." << endl;
+          // kdDebug(5006) << "\n\n\n******* b) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
         }
       } else {
         encodedBody = body;
@@ -1758,6 +1752,16 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
 
     if( cryptPlug ) {
       StructuringInfoWrapper structuring( cryptPlug );
+
+      if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
+          (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
+        // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
+        // according to RfC 2633, 3.1.1 Canonicalization
+        kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+        innerContent = KMMessage::lf2crlf( innerContent );
+        kdDebug(5006) << "                                                       done." << endl;
+      }
+
       QByteArray encryptedBody = pgpEncryptedMsg( innerContent,
                                                   recipients,
                                                   structuring );
@@ -1859,15 +1863,11 @@ kdDebug(5006) << "                                 processing " << idx << ". att
 
             if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
                 (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
-              // replace simple LFs by CRLSs
+              // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
               // according to RfC 2633, 3.1.1 Canonicalization
-              int posLF = encodedAttachment.find( '\n' );
-              if(    ( 0 < posLF )
-                  && ( '\r'  != encodedAttachment[posLF - 1] ) ) {
-                kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-                encodedAttachment = KMMessage::lf2crlf( encodedAttachment );
-                kdDebug(5006) << "                                                       done." << endl;
-              }
+              kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+              encodedAttachment = KMMessage::lf2crlf( encodedAttachment );
+              kdDebug(5006) << "                                                       done." << endl;
             }
 
             // sign this attachment
