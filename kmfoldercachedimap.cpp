@@ -1351,10 +1351,14 @@ void KMFolderCachedImap::listDirectory2() {
       QString uidCacheFile = part1 + ".uidcache";
       if( QFile::exists(uidCacheFile) ) {
         // This is an old folder that is deleted locally - delete it on the server
-        unlink( QFile::encodeName( uidCacheFile ) );
-        foldersForDeletionOnServer << mSubfolderPaths[i];
-        // Make sure all trace of the dir is gone
-        KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
+        kdDebug(5006) << uidCacheFile << "exists, so it looks like an old folder deleted locally." << endl;
+        int ret = KMessageBox::warningYesNo( 0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ) );
+        if ( ret == KMessageBox::Yes ) {
+          unlink( QFile::encodeName( uidCacheFile ) );
+          foldersForDeletionOnServer << mSubfolderPaths[i];
+          // Make sure all trace of the dir is gone
+          KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
+        }
       } else {
         // This is a new folder, create the local cache
         f = static_cast<KMFolderCachedImap*>
