@@ -102,6 +102,7 @@ protected slots:
   void slotOldSettings(); // To be removed
   void slotFilter();
   void slotAddrBook();
+  void slotUseKab();
   void slotUnimplemented();
   void slotViewChange();
   void slotAddFolder();
@@ -192,6 +193,8 @@ protected:
   QPopupMenu *messageMenu;
   KMLittleProgressDlg *littleProgress;
   KMFldSearch *searchWin;
+  bool mUseKab;
+  int mUseKabId;
 };
 
 #endif

@@ -221,6 +221,7 @@ void KMMainWin::readConfig(void)
   mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
   mExecOnNew = config->readBoolEntry("exec-on-mail", false);
   mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
+  mUseKab = config->readBoolEntry("use-kab", false);
 
   // Re-activate panners
   if (mStartupDone)
@@ -265,6 +266,9 @@ void KMMainWin::writeConfig(void)
 	    (mVertPanner->sizes()[0] + mVertPanner->sizes()[1])
 	    );
   config->writeEntry("Panners", s);
+
+  config->setGroup("General");
+  config->writeEntry("use-kab", mUseKab);
 }
 
 
@@ -497,6 +501,14 @@ void KMMainWin::slotAddrBook()
 {
   KMAddrBookEditDlg dlg( kernel->addrBook(), this );
   dlg.exec();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUseKab()
+{
+  mUseKab = !mUseKab;
+  fileMenu->setItemChecked( mUseKabId, mUseKab );
 }
 
 
@@ -1242,6 +1254,9 @@ void KMMainWin::setupMenuBar()
   //		       SLOT(slotOldSettings()));
   fileMenu->insertItem(i18n("&Addressbook..."), this,
 		       SLOT(slotAddrBook()));
+  mUseKabId = fileMenu->insertItem(i18n("Use KAB"), this,
+				   SLOT(slotUseKab()));
+  fileMenu->setItemChecked( mUseKabId, mUseKab );
   fileMenu->insertItem(i18n("F&ilter..."), this,
 		       SLOT(slotFilter()));
   fileMenu->insertSeparator();
@@ -1564,6 +1579,19 @@ void KMMainWin::updateFolderMenu()
   mFolderMenu->setItemEnabled(htmlId, mFolder ? true : false);
   mFolderMenu->setItemEnabled(threadId, mFolder ? true : false);
 
+  if (mHtmlPref)
+    mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text" ));
+  else
+    mFolderMenu->changeItem(htmlId, i18n( "Prefer plain text to HTML" ));
+  mFolderMenu->setItemChecked(htmlId, !mFolderHtmlPref);
+  
+  if (mThreadPref)
+    mFolderMenu->changeItem(threadId, i18n( "Thread messages" ));
+  else
+    mFolderMenu->changeItem(threadId, i18n( "Don't thread messages" ));
+  mFolderMenu->setItemChecked(threadId, !mFolderThreadPref);
+
+  /*
   if (mHtmlPref && mFolderHtmlPref)
     mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text (default)" ));
   else if (mHtmlPref && !mFolderHtmlPref)
@@ -1581,6 +1609,7 @@ void KMMainWin::updateFolderMenu()
     mFolderMenu->changeItem(threadId, i18n( "Don't thread messages (default)" ));
   else if (!mThreadPref && !mFolderThreadPref)
     mFolderMenu->changeItem(threadId, i18n( "Thread messages (override default)" ));
+  */
 }
 
 #ifdef MALLOC_DEBUG
