@@ -8,6 +8,7 @@
 #undef GrayScale
 #undef Color
 #include <qtooltip.h>
+#include <qtextcodec.h>
 
 #include "kmmessage.h"
 #include "kmsender.h"
@@ -27,6 +28,7 @@
 #include <kcharsets.h>
 #include <kcompletionbox.h>
 #include <kcursor.h>
+#include <kcombobox.h>
 #include <kstdaccel.h>
 #include <kstdaction.h>
 #include <kedittoolbar.h>
@@ -245,7 +247,7 @@ void KMComposeWin::addAttachment(KURL url,QString /*comment*/)
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttachment(const QString &name,
-                                 const QCString &cte,
+                                 const QCString &/*cte*/,
                                  const QByteArray &data,
                                  const QCString &type,
                                  const QCString &subType,
@@ -256,8 +258,9 @@ void KMComposeWin::addAttachment(const QString &name,
   if (!data.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
     msgPart->setName(name);
-    msgPart->setCteStr(cte);
-    msgPart->setBodyEncodedBinary(data);
+    QValueList<int> dummy;
+    msgPart->setBodyAndGuessCte(data, dummy,
+				kernel->msgSender()->sendQuotedPrintable());
     msgPart->setTypeStr(type);
     msgPart->setSubtypeStr(subType);
     msgPart->setParameter(paramAttr,paramValue);
@@ -1235,6 +1238,7 @@ bool KMComposeWin::applyChanges(void)
 
     mMsg->setCharset(mCharset);
 
+    // ### FIXME: (implement and) use setBodyAndGuessCte!
     QCString body = pgpProcessedMsg();
     if (body.isNull()) return FALSE;
     if (body.isEmpty()) body = "\n";     // don't crash
@@ -1264,6 +1268,7 @@ bool KMComposeWin::applyChanges(void)
     bodyPart.setCteStr(isQP ? "quoted-printable": "8bit");
 
     bodyPart.setCharset(mCharset);
+    // ### FIXME: use setBodyAndGuessCte!
     QCString body = pgpProcessedMsg();
     if (body.isNull()) return FALSE;
     if (body.isEmpty()) body = "\n";     // don't crash
@@ -1701,8 +1706,10 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   // create message part
   msgPart = new KMMessagePart;
   msgPart->setName(name);
-  msgPart->setCteStr("base64");
-  msgPart->setBodyEncodedBinary((*it).data);
+  QValueList<int> allowedCTEs;
+  msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
+			      !kernel->msgSender()->sendQuotedPrintable());
+  kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
   int slash = (*it).mimeType.find("/");
   if (slash == -1) slash = (*it).mimeType.length();
   msgPart->setTypeStr((*it).mimeType.left(slash));
@@ -1714,6 +1721,31 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   kernel->kbp()->idle();
   msgPart->setCharset(mCharset);
+
+  // show message part dialog, if not configured away (default):
+  KConfigGroup composer(kapp->config(), "Composer");
+  if (!composer.hasKey("showMessagePartDialogOnAttach"))
+    // make it visible in the config file:
+    composer.writeEntry("showMessagePartDialogOnAttach", false); 
+  if (composer.readBoolEntry("showMessagePartDialogOnAttach", false)) {
+    KMMsgPartDialogCompat dlg;
+    int encodings = 0;
+    for ( QValueListConstIterator<int> it = allowedCTEs.begin() ;
+	  it != allowedCTEs.end() ; ++it )
+      switch ( *it ) {
+      case DwMime::kCteBase64: encodings |= KMMsgPartDialog::Base64; break;
+      case DwMime::kCteQp: encodings |= KMMsgPartDialog::QuotedPrintable; break;
+      case DwMime::kCte7bit: encodings |= KMMsgPartDialog::SevenBit; break;
+      case DwMime::kCte8bit: encodings |= KMMsgPartDialog::EightBit; break;
+      default: ;
+      }
+    dlg.setShownEncodings( encodings );
+    dlg.setMsgPart(msgPart);
+    if (!dlg.exec()) {
+      delete msgPart;
+      return;
+    }
+  }
   mAtmModified = TRUE;
   if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 
@@ -1773,7 +1805,6 @@ void KMComposeWin::slotSetCharset()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertMyPublicKey()
 {
-  QString str, name;
   KMMessagePart* msgPart;
 
   kernel->kbp()->busy();
@@ -1788,8 +1819,8 @@ void KMComposeWin::slotInsertMyPublicKey()
   ident.readConfig();
   pgpUserId = ident.pgpIdentity();
 
-  str=Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
-  if (str.isEmpty())
+  QCString armoredKey = Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
+  if (armoredKey.isEmpty())
   {
     kernel->kbp()->idle();
     KMessageBox::sorry( 0L, i18n("Couldn't get your public key for\n%1.")
@@ -1800,10 +1831,10 @@ void KMComposeWin::slotInsertMyPublicKey()
   // create message part
   msgPart = new KMMessagePart;
   msgPart->setName(i18n("my pgp key"));
-  msgPart->setCteStr("base64");
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
-  msgPart->setBodyEncoded(QCString(str.ascii()));
+  QValueList<int> dummy;
+  msgPart->setBodyAndGuessCte(armoredKey, dummy, false);
   msgPart->setContentDisposition("attachment; filename=public_key.asc");
 
   // add the new attachment to the list
@@ -1816,7 +1847,6 @@ void KMComposeWin::slotInsertMyPublicKey()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertPublicKey()
 {
-  QString str;
   QCString keyID;
   KMMessagePart* msgPart;
   Kpgp::Module *pgp;
@@ -1831,15 +1861,15 @@ void KMComposeWin::slotInsertPublicKey()
   if (keyID.isEmpty())
     return;
 
-  str = pgp->getAsciiPublicKey(keyID);
-  if (!str.isEmpty()) {
+  QCString armoredKey = pgp->getAsciiPublicKey(keyID);
+  if (!armoredKey.isEmpty()) {
     // create message part
     msgPart = new KMMessagePart;
     msgPart->setName(i18n("PGP key 0x%1").arg(keyID));
-    msgPart->setCteStr("base64");
     msgPart->setTypeStr("application");
     msgPart->setSubtypeStr("pgp-keys");
-    msgPart->setBodyEncoded(QCString(str.ascii()));
+    QValueList<int> dummy;
+    msgPart->setBodyAndGuessCte(armoredKey, dummy, false);
     msgPart->setContentDisposition("attachment; filename=0x" + keyID + ".asc");
 
     // add the new attachment to the list
@@ -1887,14 +1917,14 @@ int KMComposeWin::currentAttachmentNum()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachProperties()
 {
-  KMMsgPartDlg dlg;
-  KMMessagePart* msgPart;
   int idx = currentAttachmentNum();
 
   if (idx < 0) return;
 
-  msgPart = mAtmList.at(idx);
+  KMMessagePart* msgPart = mAtmList.at(idx);
   msgPart->setCharset(mCharset);
+
+  KMMsgPartDialogCompat dlg;
   dlg.setMsgPart(msgPart);
   if (dlg.exec())
   {
