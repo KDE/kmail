@@ -67,6 +67,7 @@ using KRecentAddress::RecentAddresses;
 #include <kstatusbar.h>
 #include <kaction.h>
 #include <kdirwatch.h>
+#include <kstdguiitem.h>
 
 #include <kspell.h>
 #include <kspelldlg.h>
@@ -1422,7 +1423,7 @@ bool KMComposeWin::queryClose ()
            i18n("Do you want to discard the message or save it for later?"),
            i18n("Discard or Save Message"),
            i18n("&Save as Draft"),
-	   i18n("discard message", "&Discard") );
+	   KStdGuiItem::discard() );
     if (rc == KMessageBox::Cancel)
       return false;
     else if (rc == KMessageBox::Yes)
