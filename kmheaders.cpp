@@ -1413,7 +1413,7 @@ void KMHeaders::resendMsg ()
   newMsg->setSubject(msg->subject());
 
   win = new KMComposeWin();
-  win->setMsg(newMsg, FALSE);
+  win->setMsg(newMsg, FALSE, true);
   win->show();
   kernel->kbp()->idle();
 }
