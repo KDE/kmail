@@ -234,7 +234,38 @@ QString KabcBridge::expandDistributionLists(QString recipients)
 	break;
       }
     if ( jt == names.end() )
-      expRecipients += receiver;
+    {
+      if (receiver.find('@') == -1)
+      {
+        char hostname[100];
+        gethostname(hostname, 100);
+        QString username = receiver;
+        receiver += "@";
+        receiver += QCString(hostname, 100);
+
+        QFile f("/etc/passwd");
+        if (f.open(IO_ReadOnly))
+        {
+          QTextStream t( &f );
+          QString s;
+          QStringList sl;
+          while ( !t.eof() )
+          {
+            s = t.readLine();
+            sl = QStringList::split(':', s);
+            if (sl[0] == username)
+            {
+              receiver = sl[4] + " <" + receiver + ">";
+              break;
+            }
+          }
+          f.close();
+        }
+        expRecipients += receiver;
+      } else {
+        expRecipients += receiver;
+      }
+    }
   }
   return expRecipients;
 }
