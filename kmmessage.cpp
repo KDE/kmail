@@ -776,7 +776,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   if (!refStr.isEmpty())
     msg->setReferences(refStr);
   //In-Reply-To = original msg-id
-  msg->setHeaderField("In-Reply-To", headerField("Message-Id"));
+  msg->setReplyToId(msgId());
 
   if (replyToAll || replyToList || !mailingListStr.isEmpty())
     replyStr = sReplyAllStr;
