@@ -438,11 +438,9 @@ public:
       if (paintInfo->orderOfArrival)
         return ret + sortArrival;
       else {
-        static const int dateLength = 30;
-        char cDate[dateLength + 1];
-        const time_t date = msg->date();
-        strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &date ));
-        return ret + cDate + sortArrival;
+        QString d = QString::number(msg->date());
+        while (d.length() <= 10) d = '0' + d;
+        return ret + d + sortArrival;
       }
     } else if (column == paintInfo->senderCol) {
       QString tmp;
@@ -469,7 +467,7 @@ public:
         len = QString( "%1" ).arg( msg->msgSize() );
       }
       while (len.length() < 9) len = '0' + len;
-      return ret + len;
+      return ret + len + sortArrival;
     }
     return ret + "missing key"; //you forgot something!!
   }
@@ -495,6 +493,23 @@ public:
 
   void setTempKey( QString key ) {
     mKey = key;
+  }
+  
+  int compare( QListViewItem *i, int col, bool ascending ) const
+  {
+    int res = 0;
+    KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    if ( col == headers->paintInfo()->sizeCol ) {
+        res = key( col, ascending ).compare( i->key( col, ascending ) );
+    } else if ( col == headers->paintInfo()->dateCol ) {
+        res = key( col, ascending ).compare( i->key( col, ascending ) );
+        if (i->parent() && !ascending)
+          res = -res;
+    } else if ( col == headers->paintInfo()->subCol 
+      || col ==headers->paintInfo()->senderCol) {
+        res = key( col, ascending ).localeAwareCompare( i->key( col, ascending ) );
+    }        
+    return res;
   }
 
   QListViewItem* firstChildNonConst() /* Non const! */ {
@@ -2735,6 +2750,7 @@ void KMSortCacheItem::updateSortFile( FILE *sortStream, KMFolder *folder,
 }
 
 static bool compare_ascending = FALSE;
+static bool compare_toplevel = true;
 static int compare_KMSortCacheItem(const void *s1, const void *s2)
 {
     if ( !s1 || !s2 )
@@ -2742,10 +2758,11 @@ static int compare_KMSortCacheItem(const void *s1, const void *s2)
     KMSortCacheItem **b1 = (KMSortCacheItem **)s1;
     KMSortCacheItem **b2 = (KMSortCacheItem **)s2;
     int ret = (*b1)->key().compare((*b2)->key());
-    if(compare_ascending)
+    if(compare_ascending && compare_toplevel)
 	ret = -ret;
     return ret;
 }
+
 
 void KMHeaders::buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache )
 {
@@ -3114,6 +3131,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     KMSortCacheItem *i, *new_kci;
     QPtrQueue<KMSortCacheItem> s;
     s.enqueue(&root);
+    compare_toplevel = true;
     do {
 	i = s.dequeue();
 	const QPtrList<KMSortCacheItem> *sorted = i->sortedChildren();
@@ -3157,6 +3175,11 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		set_selection && mFolder->getMsgBase(new_kci->id())->isUnread() )
 		unread_exists = true;
 	}
+        // If we are sorting by date and ascending the top level items are sorted 
+        // ascending and the threads themselves are sorted descending. One wants
+        // to have new threads on top but the threads themselves top down.
+        if (mSortCol == paintInfo()->dateCol)
+          compare_toplevel = false;
     } while(!s.isEmpty());
 
     for(int x = 0; x < mFolder->count(); x++) {	    //cleanup
