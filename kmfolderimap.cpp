@@ -854,7 +854,6 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMFolderImap::getAndCheckFolder(bool force)
 {
-  open();
   if (mNoContent)
     return getFolder(force);
 

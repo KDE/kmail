@@ -1624,11 +1624,10 @@ void KMMainWidget::folderSelectedUnread( KMFolder* aFolder )
 //-----------------------------------------------------------------------------
 void KMMainWidget::folderSelected()
 {
-  // opencount--
+  folderSelected( mFolder );
+  // opened() before the getAndCheckFolder() in folderSelected
   if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
     mFolder->close();
-  
-  folderSelected( mFolder );
 }
 
 //-----------------------------------------------------------------------------
@@ -1675,6 +1674,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
     KMFolderImap *imap = static_cast<KMFolderImap*>(aFolder->storage());
     if ( newFolder )
     {
+      imap->open(); // will be closed in the folderSelected slot
       // first get new headers before we select the folder
       imap->setSelected( true );
       connect( imap, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
