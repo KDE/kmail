@@ -908,7 +908,7 @@ int KMFolder::remove()
   mMsgList.clear(true, true);   // delete and remove from dict
   close(TRUE);
 
-  kernel->msgDict()->removeFolderIds(this);
+  if (kernel->msgDict()) kernel->msgDict()->removeFolderIds(this);
   unlink(indexLocation().local8Bit() + ".sorted");
   unlink(indexLocation().local8Bit());
   

@@ -54,6 +54,16 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     kdDebug(5006) << "No Qt-native utf-7 codec found; registering QUtf7Codec from libkdenetwork" << endl;
     (void) new QUtf7Codec();
   }
+
+  // In the case of Japan. Japanese locale name is "eucjp" but
+  // The Japanese mail systems normally used "iso-2022-jp" of locale name.
+  // We want to change locale name from eucjp to iso-2022-jp at KMail only.
+  if ( QCString(QTextCodec::codecForLocale()->name()).lower() == "eucjp" )
+  {
+    QTextCodec *cdc = QTextCodec::codecForName("jis7");
+    QTextCodec::setCodecForLocale(cdc);
+    KGlobal::locale()->setEncoding(cdc->mibEnum());
+  }
 }
 
 KMKernel::~KMKernel ()
