@@ -95,7 +95,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mCbxFolders->setMustBeReadWrite( false );
   mCbxFolders->setFolder(curFolder);
   hbl->addWidget(mCbxFolders);
-    
+
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
   mChkSubFolders->setChecked(true);
   hbl->addWidget(mChkSubFolders);
@@ -481,7 +481,7 @@ void KMFldSearch::slotAddMsg(int idx)
         fName = pFolder->name();
 
     (void)new KListViewItem(mLbxMatches, mLbxMatches->lastItem(),
-			    msg->subject(), from, msg->dateIsoStr(),
+			    msg->subject(), from, msg->dateStr(),
 			    fName,
 			    QString::number(mFolder->serNum(idx)));
     if (unget)
