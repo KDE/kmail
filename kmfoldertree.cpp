@@ -752,24 +752,23 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
 {
   if (fti && fti->folder()  &&
       (fti->folder()->countUnread() > 0)) {
-    if ( confirm ) {
-      // If confirm is true then we are doing "ReadOn" and we want to miss
-      // Out the trash folder
-      if (fti->type() == KFolderTreeItem::Trash)
-	return false;
-      else {
+
+    // Don't change into the trash folder.
+    if (fti->type() == KFolderTreeItem::Trash)
+      return false;
+
+    if (confirm) {
       //  warn user that going to next folder - but keep track of
       //  whether he wishes to be notified again in "AskNextFolder"
       //  parameter (kept in the config file for kmail)
-	if ( KMessageBox::questionYesNo( this,
-	   i18n( "<qt>Go to the next unread message in folder <b>%1</b>?</qt>" )
-                                    .arg( fti->folder()->label() ),
-	   i18n( "Go to the Next Unread Message" ),
-	   KStdGuiItem::yes(), KStdGuiItem::no(), // defaults
-           "AskNextFolder",
-           false)
-           == KMessageBox::No ) return true;
-      }
+      if ( KMessageBox::questionYesNo( this,
+            i18n( "<qt>Go to the next unread message in folder <b>%1</b>?</qt>" ) 
+            .arg( fti->folder()->label() ),
+            i18n( "Go to the Next Unread Message" ),
+            KStdGuiItem::yes(), KStdGuiItem::no(), // defaults
+            "AskNextFolder",
+            false)
+          == KMessageBox::No ) return true;
     }
     prepareItem( fti );
     blockSignals( true );
