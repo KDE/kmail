@@ -1210,7 +1210,7 @@ KMCommand::Result KMForwardCommand::execute()
   // Only replace the body if this is a multipart mail or if the main part is only
   // the text part. This avoids scrambling top level text/calendar mails, for example.
   if ( fwdMsg->typeStr().lower() == "multipart" ||
-     ( fwdMsg->typeStr().lower() == "text" && fwdMsg->subtypeStr().lower() == "plain") ) {
+     ( fwdMsg->typeStr().lower() == "text" && fwdMsg->subtypeStr().lower() == "plain" ) ) {
     win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
   }
   win->show();
