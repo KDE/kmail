@@ -151,7 +151,7 @@ void KMReaderWin::readConfig(void)
 #ifndef KRN
   int i, diff;
   fntSize = 0;
-  // --- sven's get them font sizes right! start ---
+  
   config->setGroup("Fonts");
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
@@ -165,31 +165,15 @@ void KMReaderWin::readConfig(void)
     mBodyFamily = KGlobal::generalFont().family();
   }
 
-  //This doesn´t compile (sven)
-  int fontsizes[7]; //QValueList<int> fontsizes;
+  QValueList<int> fontsizes;
   mViewer->resetFontSizes();
   diff = fntSize - mViewer->fontSizes()[3];
   if (mViewer->fontSizes()[0]+diff > 0) {
     for (i=0;i<7; i++)
-      fontsizes[i] = mViewer->fontSizes()[i] + diff; //fontsizes << mViewer->fontSizes()[i] + diff;
-    //mViewer->setFontSizes(fontsizes);
+      fontsizes << mViewer->fontSizes()[i] + diff;
+    mViewer->setFontSizes(fontsizes);
   }
 
-
-  /* ### FIXME
-  int fontsizes[7];
-  int fixedFontSizes[7];
-  mViewer->resetFontSizes();
-  mViewer->fontSizes(&fontsizes,&fixedFontSizes);
-  diff= fntSize - fontsizes[3];
-  if (fontsizes[0]+diff > 0)
-    for (i=0;i<7; i++)
-      fontsizes[i]+=diff;
-
-  mViewer->setFontSizes(fontsizes);
-  */
-  // --- sven's get them font sizes right! end ---
-  //mViewer->setFixedFont(mFixedFont);
 #else
   mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
   mViewer->setStandardFont(config->readEntry("StandardFont","helvetica"));
