@@ -90,6 +90,9 @@ void KMSearchRuleWidget::initWidget()
                                                        mValueStack,
                                                        this );
 
+  // redirect focus to the header field combo box
+  setFocusProxy( mRuleField );
+
   connect( mRuleField, SIGNAL( activated( const QString & ) ),
 	   this, SLOT( slotRuleFieldChanged( const QString & ) ) );
   connect( mRuleField, SIGNAL( textChanged( const QString & ) ),
