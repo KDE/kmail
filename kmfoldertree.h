@@ -261,13 +261,18 @@ private:
     bool unreadIsActive;
     bool totalIsActive;
     QListViewItemIterator mUpdateIterator;
-    int unreadIndex; 
+    int unreadIndex;
     int totalIndex;
 
     /** popup for unread/total */
     KPopupMenu* mPopup;
     int mUnreadPop;
     int mTotalPop;
+    
+    // actions for D'n'D from Headers to Folder
+    int mActionWhenDnD;
+    int mActionWhenShiftDnD;
+    int mActionWhenCtrlDnD;
 
 public slots:
     void startAutoScroll();

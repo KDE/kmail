@@ -51,6 +51,14 @@ typedef enum
     KMMsgSignatureProblematic='X'
 } KMMsgSignatureState;
 
+/** Flags for the signature state. */
+typedef enum
+{
+    KMMsgDnDActionMOVE=0,
+    KMMsgDnDActionCOPY=1,
+    KMMsgDnDActionASK=2
+} KMMsgDnDAction;
+
 
 
 class KMMsgBase

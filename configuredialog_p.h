@@ -775,13 +775,16 @@ public:
   void apply();
 
 protected:
-  QCheckBox  *mEmptyFolderConfirmCheck;
-  QCheckBox  *mWarnBeforeExpire;
-  QCheckBox  *mLoopOnGotoUnread;
-  QComboBox  *mMailboxPrefCombo;
-  QCheckBox  *mCompactOnExitCheck;
-  QCheckBox  *mEmptyTrashCheck;
-  QCheckBox  *mExpireAtExit;
+  QCheckBox    *mEmptyFolderConfirmCheck;
+  QCheckBox    *mWarnBeforeExpire;
+  QCheckBox    *mLoopOnGotoUnread;
+  QComboBox    *mMailboxPrefCombo;
+  QCheckBox    *mCompactOnExitCheck;
+  QCheckBox    *mEmptyTrashCheck;
+  QCheckBox    *mExpireAtExit;
+  QButtonGroup *mActionWhenDnD;
+  QButtonGroup *mActionWhenShiftDnD;
+  QButtonGroup *mActionWhenCtrlDnD;
 };
 
 class MiscPageAddressbookTab : public ConfigurationPage {
