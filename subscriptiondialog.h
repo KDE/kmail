@@ -64,6 +64,11 @@ namespace KMail {
        */ 
       void slotLoadFolders();
 
+      /**
+       * Reimplemented to cancel remaining jobs
+       */ 
+      virtual void slotCancel();    
+
   };
 
 } // namespace KMail

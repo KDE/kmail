@@ -206,6 +206,17 @@ void SubscriptionDialog::slotLoadFolders()
   ai->listDirectory( ai->prefix(), true );
 }
 
+//------------------------------------------------------------------------------
+void SubscriptionDialog::slotCancel()
+{
+  if ( account() )
+  {
+    ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
+    ai->killAllJobs();
+  }
+  KSubscription::slotCancel();
 }
+
+} // namespace
 
 #include "subscriptiondialog.moc"
