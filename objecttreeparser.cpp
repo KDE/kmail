@@ -617,6 +617,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       QString& aErrorText )
 {
   passphraseError = false;
+  wrongKeyUsage = false;
   aErrorText = QString::null;
   bool bDecryptionOk = false;
   enum { NO_PLUGIN, NOT_INITIALIZED, CANT_DECRYPT }
@@ -686,7 +687,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                                        &errTxt );
     kdDebug(5006) << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG"
                   << endl;
-    if ( bDecryptionOk && errId != 0 ){
+    if ( bDecryptionOk && errId == CRYPTPLUG_ERR_WRONG_KEY_USAGE ){
       errId = 0;
       wrongKeyUsage = true;
     }
