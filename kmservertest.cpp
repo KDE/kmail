@@ -54,27 +54,11 @@ KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   mUrl.setHost(aHost);
   if (aPort != "993" && aPort != "995" && aPort != "465")
     mUrl.setPort(aPort.toInt());
-  mSlave = KIO::Scheduler::getConnectedSlave(mUrl, slaveConfig());
-  if (!mSlave)
-  {
-    slotSlaveResult(0, 1);
-    return;
-  }
-  connect( mSlave, SIGNAL(metaData(const KIO::MetaData&)),
-	   SLOT(slotMetaData(const KIO::MetaData&)) );
-  
-  QByteArray packedArgs;
-  QDataStream stream( packedArgs, IO_WriteOnly);
-    
-  stream << (int) 'c';
 
-  mJob = KIO::special(mUrl, packedArgs, FALSE);
-  KIO::Scheduler::assignJobToSlave(mSlave, mJob);
-  connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
-          SLOT(slotData(KIO::Job *, const QString &)));
-  connect(mJob, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
+  startOffSlave();
+  connect( mJob, SIGNAL(infoMessage(KIO::Job*,const QString&)),
+	   SLOT(slotData(KIO::Job*,const QString&)) );
 }
-
 
 //-----------------------------------------------------------------------------
 KMServerTest::~KMServerTest()
@@ -88,6 +72,26 @@ KIO::MetaData KMServerTest::slaveConfig() const {
   md.insert( "nologin", "on" );
   return md;
 }
+
+void KMServerTest::startOffSlave() {
+  mSlave = KIO::Scheduler::getConnectedSlave( mUrl, slaveConfig() );
+  if ( !mSlave ) {
+    slotSlaveResult( 0, 1 );
+    return;
+  }
+  connect( mSlave, SIGNAL(metaData(const KIO::MetaData&)),
+	   SLOT(slotMetaData(const KIO::MetaData&)) );
+
+  QByteArray packedArgs;
+  QDataStream stream( packedArgs, IO_WriteOnly );
+
+  stream << (int) 'c';
+
+  mJob = KIO::special( mUrl, packedArgs, false );
+  KIO::Scheduler::assignJobToSlave( mSlave, mJob );
+  connect( mJob, SIGNAL(result(KIO::Job*)), SLOT(slotResult(KIO::Job*)) );
+}
+
 
 //-----------------------------------------------------------------------------
 void KMServerTest::slotData(KIO::Job *, const QString &data)
@@ -126,34 +130,15 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
   }
-  if (!mSSL)
-  {
+  if (!mSSL) {
     mSSL = true;
     if (!error) mList.append("NORMAL-CONNECTION");
     mUrl.setProtocol(mUrl.protocol() + 's');
     mUrl.setPort(0);
-    mSlave = KIO::Scheduler::getConnectedSlave(mUrl, slaveConfig());
-    if (!mSlave)
-    {
-      slotSlaveResult(0, 1);
-      return;
-    }
-    connect( mSlave, SIGNAL(metaData(const KIO::MetaData&)),
-	     SLOT(slotMetaData(const KIO::MetaData&)) );
-
-    QByteArray packedArgs;
-    QDataStream stream( packedArgs, IO_WriteOnly);
-    
-    stream << (int) 'c';
-
-    mJob = KIO::special(mUrl, packedArgs, FALSE);
-    KIO::Scheduler::assignJobToSlave(mSlave, mJob);
-    connect(mJob, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
-    if (error)
-    {
-      connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
-              SLOT(slotData(KIO::Job *, const QString &)));
-    }
+    startOffSlave();
+    if ( error )
+      connect( mJob, SIGNAL(infoMessage(KIO::Job*,const QString&)),
+	       SLOT(slotData(KIO::Job*,const QString&)) );
   } else {
     mJob = 0;
     if (!error) mList.append("SSL");

@@ -69,6 +69,7 @@ protected slots:
 
 protected:
   KIO::MetaData slaveConfig() const;
+  void startOffSlave();
 
 protected:
   bool           mSSL;
