@@ -23,7 +23,7 @@ I18N_NOOP(
 "You can access this documentation under the Help->Contents menu.\n"
 "\n"
 "* You can find news and updates at the KMail homepage: "
-"http://devel-home.kde.org/~kmail/\n"
+"http://kmail.kde.org\n"
 "\n"
 "* You can report bugs with the Help->Report Bug menu\n"
 "\n"
