@@ -289,8 +289,8 @@ public:
     the folders 'outbox', 'sent', 'trash'. The name of these
     folders is nationalized in the folder display and they cannot have
     accounts associated. Deletion is also forbidden. Etc. */
-  bool isSystemFolder() const;
-  void setSystemFolder(bool itIs);
+  bool isSystemFolder() const { return mIsSystemFolder; }
+  void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
 
   /** Returns the label of the folder for visualization. */
   QString label() const;
@@ -497,6 +497,7 @@ private:
   FolderStorage* mStorage;
   KMFolderDir* mParent;
   KMFolderDir* mChild;
+  bool mIsSystemFolder;
 };
 
 #endif /*kmfolder_h*/

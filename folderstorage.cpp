@@ -65,7 +65,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mQuiet	  = 0;
   mChanged        = FALSE;
   mAutoCreateIndex= TRUE;
-  mIsSystemFolder = FALSE;
   folder->setType( "plain" );
   mAcctList       = 0;
   mDirty          = FALSE;
@@ -755,8 +754,10 @@ const char* FolderStorage::type() const
 //-----------------------------------------------------------------------------
 QString FolderStorage::label() const
 {
-  if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
-  if (mIsSystemFolder) return i18n(folder()->name().latin1());
+  if ( folder() && folder()->isSystemFolder() && !mLabel.isEmpty() ) 
+     return mLabel;
+  if ( folder() && folder()->isSystemFolder() ) 
+     return i18n( folder()->name().latin1() );
   return name();
 }
 
@@ -985,7 +986,8 @@ void FolderStorage::setUserWhoField(const QString &whoField, bool aWriteConfig)
     const KMIdentity & identity =
       kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
-    if ( mIsSystemFolder && folderType() != KMFolderTypeImap )
+    if ( folder() && folder()->isSystemFolder() 
+          && folderType() != KMFolderTypeImap )
     {
       // local system folders
       if ( folder() == kmkernel->inboxFolder() ||

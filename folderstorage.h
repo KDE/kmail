@@ -298,13 +298,7 @@ public:
   /** Is the folder read-only? */
   virtual bool isReadOnly() const = 0;
 
-  /** Returns TRUE if the folder is a kmail system folder. These are
-    the folders 'outbox', 'sent', 'trash'. The name of these
-    folders is nationalized in the folder display and they cannot have
-    accounts associated. Deletion is also forbidden. Etc. */
-  bool isSystemFolder() const { return mIsSystemFolder; }
-  void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
-
+  
   /** Returns the label of the folder for visualization. */
   virtual QString label() const;
   void setLabel(const QString& lbl) { mLabel = lbl; }
@@ -602,7 +596,6 @@ protected:
   QString mLabel;
   /** name of the field that is used for "From" in listbox */
   QString mWhoField, mUserWhoField;
-  bool mIsSystemFolder;
   KMAcctList* mAcctList;
 
   bool    mMailingListEnabled;

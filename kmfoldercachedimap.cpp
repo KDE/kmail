@@ -127,7 +127,6 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
   {
     //mLabel = i18n("inbox");
   }
-  mIsSystemFolder = false;
   mNoContent = config->readBoolEntry("NoContent", FALSE);
   mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
 

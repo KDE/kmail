@@ -199,7 +199,8 @@ void KMFolderMaildir::close(bool aForced)
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((folder() != kmkernel->inboxFolder()) && isSystemFolder() && !aForced)
+  if ( (folder() != kmkernel->inboxFolder()) 
+       && folder()->isSystemFolder() && !aForced)
   {
      mOpenCount = 1;
      return;

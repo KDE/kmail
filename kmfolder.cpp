@@ -20,8 +20,10 @@
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                     KMFolderType aFolderType )
-  : KMFolderNode( aParent, aFolderName ), mParent( aParent ), mChild( 0 )
+  : KMFolderNode( aParent, aFolderName ), mParent( aParent ), mChild( 0 ),
+                  mIsSystemFolder( false )
 {
+
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
   else if( aFolderType == KMFolderTypeImap )
@@ -404,16 +406,6 @@ void KMFolder::quiet( bool beQuiet )
 bool KMFolder::isReadOnly() const
 {
   return mStorage->isReadOnly();
-}
-
-bool KMFolder::isSystemFolder() const
-{
-  return mStorage->isSystemFolder();
-}
-
-void KMFolder::setSystemFolder( bool itIs )
-{
-  mStorage->setSystemFolder( itIs );
 }
 
 QString KMFolder::label() const

@@ -61,7 +61,7 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
   if (aName == "INBOX" && mImapPath == "/INBOX/")
   {
-    mIsSystemFolder = TRUE;
+    folder->setSystemFolder( true );
     mLabel = i18n("inbox");
   }
   mNoContent = config->readBoolEntry("NoContent", FALSE);
@@ -515,8 +515,8 @@ bool KMFolderImap::listDirectory(bool secondStep)
           QStringList, const ImapAccountBase::jobData &)));
 
   // start a new listing for the root-folder
-  bool reset = (mImapPath == mAccount->prefix() && 
-                !secondStep && !mIsSystemFolder) ? true : false;
+  bool reset = ( mImapPath == mAccount->prefix() && 
+                !secondStep && !folder()->isSystemFolder() ) ? true : false;
 
   // get the folders
   mAccount->listDirectory(mImapPath, mAccount->onlySubscribedFolders(),
@@ -553,8 +553,8 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     // list again only for the INBOX
     listDirectory(TRUE);
   } else {
-    if (mIsSystemFolder && mImapPath == "/INBOX/"
-        && mAccount->prefix() == "/INBOX/")
+    if ( folder()->isSystemFolder() && mImapPath == "/INBOX/"
+        && mAccount->prefix() == "/INBOX/" )
     {
       // do not create folders under INBOX
       mAccount->setCreateInbox(FALSE);
