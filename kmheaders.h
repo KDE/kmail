@@ -289,8 +289,7 @@ private:
   QDict< KMHeaderItem > mIdTree;
   QDict< KMHeaderItem> mMsgSubjects;
 
-  /** Build the tree if necessary */
-  void buildIdTrees (int count);
+  void buildIdTrees ();
   QDict< KMHeaderItem > mPhantomIdTree;
   QDict< QValueList< int > > mTree;
   QDict< bool > mTreeSeen;

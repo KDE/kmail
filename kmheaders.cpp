@@ -474,6 +474,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mNested = false;
   nestingPolicy = OpenUnread;
   mNestedOverride = false;
+  mSubjThreading = true;
   mousePressed = FALSE;
   mSortInfo.dirty = TRUE;
   mSortInfo.fakeSort = 0;
@@ -768,6 +769,7 @@ void KMHeaders::readFolderConfig (void)
   }
 
   setRootIsDecorated( nestingPolicy != AlwaysOpen && mNested != mNestedOverride );
+  mSubjThreading = config->readBoolEntry( "threadMessagesBySubject", true );
 }
 
 
@@ -1045,14 +1047,17 @@ void KMHeaders::msgAdded(int id)
   assert(mb != 0); // otherwise using count() above is wrong
 
   if (mNested != mNestedOverride) {
+    // make sure the id and subject dicts grow, if necessary
+    if (mIdTree.count() <= (uint)mFolder->count()) {
+      kdDebug (5006) << "KMHeaders::msgAdded: Resizing id and subject trees." << endl;
+      mIdTree.resize(mFolder->count()*2);
+      mMsgSubjects.resize(mFolder->count()*2);
+    }
     QString msgId = mFolder->getMsgBase(id)->msgIdMD5();
     if (msgId.isNull())
       msgId = "";
     QString replyToId = mFolder->getMsgBase(id)->replyToIdMD5();
 
-    if(mIdTree.isEmpty()) {
-      buildIdTrees(mFolder->count()-1);
-    } 
     bool perfectParent = false;
     KMHeaderItem *parent = findParent(id, &perfectParent);
     if (parent && !perfectParent) {
@@ -1073,11 +1078,9 @@ void KMHeaders::msgAdded(int id)
     mItems.resize( mFolder->count() );
     mItems[id] = hi;
 
-    mIdTree.resize(mFolder->count());
     mIdTree.replace( msgId, hi );
 
     if (mSubjThreading) {
-      mMsgSubjects.resize(mFolder->count());
       QString subjMD5 = mFolder->getMsgBase(id)->strippedSubjectMD5();
       if (subjMD5.isEmpty()) {
         mFolder->getMsgBase(id)->initStrippedSubjectMD5();
@@ -1171,7 +1174,6 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
 
   if ((id < 0) || (id >= (int)mItems.size()))
     return;
-
   CREATE_TIMER(msgRemoved);
   START_TIMER(msgRemoved);
 
@@ -1182,24 +1184,29 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     mItems[i]->setMsgId( i );
   }
   mItems.resize( mItems.size() - 1 );
-
   if (mNested != mNestedOverride && mFolder->count()) {
-    if (mIdTree.isEmpty())
-      buildIdTrees(mFolder->count());
-    else {
+    if (mIdTree[msgId] == removedItem)
       mIdTree.remove(msgId);
-      mIdTree.resize(mFolder->count());
-      if (mSubjThreading) {
-        // Remove the message from the list of potential parents for threading by
-        // subject. If we have a child, that one is the next best parent for
-        // threading by subject, so replace with that.
-        if (mMsgSubjects[strippedSubjMD5] == removedItem) {
-          mMsgSubjects.remove(strippedSubjMD5);
-          if (removedItem->firstChild())
-            mMsgSubjects.replace(strippedSubjMD5,
-                static_cast<KMHeaderItem*> (removedItem->firstChild()));
+    if (mSubjThreading) {
+      // Remove the message from the list of potential parents for threading by
+      // subject. If we have a child, that one is the next best parent for
+      // threading by subject, so replace with that. Since the subjects can
+      // differ, check for that.
+      if (mMsgSubjects[strippedSubjMD5] == removedItem) {
+        mMsgSubjects.remove(strippedSubjMD5);
+        if (removedItem->firstChild()) {
+          KMHeaderItem *kiddo = 
+            static_cast<KMHeaderItem*> (removedItem->firstChild());
+
+          int id = kiddo->msgId();
+          QString newSubj = mFolder->getMsgBase(id)->strippedSubjectMD5();
+          if (newSubj.isEmpty()) {
+            mFolder->getMsgBase(id)->initStrippedSubjectMD5();
+            newSubj = mFolder->getMsgBase(id)->strippedSubjectMD5();
+          }
+          if( !newSubj.isEmpty() && (newSubj == strippedSubjMD5))
+            mMsgSubjects.replace(newSubj, kiddo);
         }
-        mMsgSubjects.resize(mFolder->count());
       }
     }
     // Reparent children of item.
@@ -1210,23 +1217,29 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       threadRoot = threadRoot->parent();
     QString key = static_cast<KMHeaderItem*>(threadRoot)->key(mSortCol, !mSortDescending);
 
+    QPtrList<QListViewItem> childList;
     while (myChild) {
-      QListViewItem *lastChild = myChild;
       KMHeaderItem *item = static_cast<KMHeaderItem*>(myChild);
+      childList.append(myChild);
       item->setTempKey( key + item->key( mSortCol, !mSortDescending ));
       myChild = myChild->nextSibling();
-      myParent->takeItem(lastChild);
       if (mSortInfo.fakeSort) {
         QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
         KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
         mSortInfo.fakeSort = 0;
       }
+    }
+    for (QPtrListIterator<QListViewItem> it(childList); it.current() ; ++it ) {
+      QListViewItem *lvi = *it;
+      KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
       bool perfectParent = false;
-      KMHeaderItem *parent = findParent(item->msgId(), &perfectParent);
+      KMHeaderItem *parent = NULL;
+      parent = findParent(item->msgId(), &perfectParent);
+      myParent->takeItem(lvi);
       if (parent && parent != item)
-        parent->insertItem(lastChild);
-      else
-        insertItem(lastChild);
+          parent->insertItem(lvi);
+      else 
+        insertItem(lvi);
 
       if (!parent || (!perfectParent && !mImperfectlyThreadedList.containsRef(item)))
         mImperfectlyThreadedList.append(item);
@@ -1674,8 +1687,6 @@ KMMessageList* KMHeaders::selectedMsgs()
   return &mSelMsgBaseList;
 }
 
-
-
 //-----------------------------------------------------------------------------
 int KMHeaders::firstSelectedMsg() const
 {
@@ -1996,11 +2007,11 @@ void KMHeaders::updateMessageList(bool set_selection)
     repaint();
     return;
   }
-  if (mNested != mNestedOverride) {
-      // reset the folder specific data structures
-      folderCleared();
-  }
   readSortOrder(set_selection);
+  if (mNested != mNestedOverride) {
+    buildIdTrees();
+    mImperfectlyThreadedList.clear();
+  }
 }
 
 
@@ -2461,15 +2472,19 @@ void KMHeaders::folderCleared()
     mImperfectlyThreadedList.clear();
 }
 
-void KMHeaders::buildIdTrees (int count)
+void KMHeaders::buildIdTrees ()
 {
+    int count = mFolder->count();
     if (!count) return;
     CREATE_TIMER(buildIdTrees);
     START_TIMER(buildIdTrees);
 
-    mIdTree.resize(count);
-    if (mSubjThreading)
-        mMsgSubjects.resize(count);
+    mIdTree.resize(count * 2);
+    mIdTree.clear();
+    if (mSubjThreading) {
+        mMsgSubjects.resize(count * 2);
+        mMsgSubjects.clear();
+    }
 
     for(int x = 0; x < count; x++) {
         QString md5;
@@ -2556,9 +2571,6 @@ bool KMHeaders::writeSortOrder()
 	}
       }
     }
-
-    if(mIdTree.isEmpty())
-        buildIdTrees(mFolder->count());
 
     KMMsgBase *kmb;
     while(KMHeaderItem *i = items.pop()) {
