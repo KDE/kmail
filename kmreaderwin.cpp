@@ -1078,6 +1078,9 @@ kdDebug(5006) << "* model *" << endl;
               break;
             case SmartAttmnt:
               asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+            case HideAttmnt: {
+              // NOOP
+            }
           }
         }
         if( asIcon ) {

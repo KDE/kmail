@@ -2521,7 +2521,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
     signer.replace(QRegExp("\\x0001"), " ");
 
     kdDebug(5006) << "\n\nRetrieving keys for: " << from() << endl;
-    bool findCertsOk = cryptPlug->findCertificates( &(*signer), &certificate );
+    bool findCertsOk = cryptPlug->findCertificates( &(*signer), &certificate, false );
     kdDebug(5006) << "keys retrieved ok: " << findCertsOk << endl;
 
     bool bSign = true;
@@ -2804,7 +2804,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
       addressee.replace(QRegExp("\\x0001"), " ");
       certificates[0] = '\0';
       kdDebug() << "\n\n1st try: Retrieving keys for: " << *it << endl;
-      bool findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates )
+      bool findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates, true )
                          && strlen( certificates );
       kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
       qDebug( "findCertificates() 1st try returned %s", certificates );
@@ -2815,7 +2815,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                         addressee, &bOk, this ).stripWhiteSpace().utf8();
         if( bOk ) {
           kdDebug() << "\n\n2nd try: Retrieving *all* keys" << endl;
-          findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates )
+          findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates, true )
                         && strlen( certificates );
           kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
           qDebug( "findCertificates() 2nd try returned %s", certificates );
