@@ -1097,7 +1097,7 @@ void KMImapJob::init(JobType jt, QString sets, KMFolderImap* folder,
     int a = cstr.find("\nX-UID: ");
     int b = cstr.find("\n", a);
     if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-    mData.resize(cstr.length() + cstr.contains("\n"));
+    mData.resize(cstr.length() + cstr.contains('\n'));
     unsigned int i = 0;
     for (char *ch = cstr.data(); *ch; ch++)
     {
