@@ -38,6 +38,7 @@ class KIntSpinBox;
 class SimpleStringListEditor;
 class KConfig;
 class QPoint;
+class CryptPlugWrapperList;
 namespace Kpgp {
   class Config;
 };
@@ -732,10 +733,55 @@ protected:
   QCheckBox *mSendReceiptCheck;
 };
 
+
+class SecurityPageCryptPlugTab : public ConfigurationPage
+{
+  Q_OBJECT
+public:
+  SecurityPageCryptPlugTab( QWidget * parent = 0, const char* name = 0 );
+
+  // no icons:
+  static QString iconLabel() { return QString::null; }
+  static const char * iconName() { return 0; }
+
+  static QString title();
+  static QString helpAnchor();
+
+  void setup();
+  void apply();
+  //void savePluginsConfig( bool silent );
+
+public slots:
+  void slotNewPlugIn();
+  void slotDeletePlugIn();
+  void slotActivatePlugIn();
+  void slotConfigurePlugIn();
+  void slotPlugNameChanged( const QString& );
+  void slotPlugLocationChanged( const QString& );
+  void slotPlugUpdateURLChanged( const QString& );
+
+protected slots:
+  void slotPlugSelectionChanged();
+
+private:
+  QListView* plugList;
+
+  QPushButton* addCryptPlugButton;
+  QPushButton* removeCryptPlugButton;
+  QPushButton* activateCryptPlugButton;
+  QPushButton* configureCryptPlugButton;
+
+  QLineEdit* plugNameEdit;
+  KURLRequester* plugLocationRequester;
+  QLineEdit* plugUpdateURLEdit;
+
+  CryptPlugWrapperList* mCryptPlugList;
+};
+
 class SecurityPage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
-  SecurityPage( QWidget * parent=0, const char * name=0 );
+  SecurityPage(	QWidget * parent=0, const char * name=0 );
 
   static QString iconLabel();
   static const char * iconName();
@@ -747,10 +793,12 @@ public:
   void installProfile( KConfig * profile );
 
   typedef SecurityPageGeneralTab GeneralTab;
+  typedef SecurityPageCryptPlugTab CryptPlugTab;
 
 protected:
   GeneralTab   *mGeneralTab;
   Kpgp::Config *mPgpTab;
+  CryptPlugTab  *mCryptPlugTab;
 };
 
 
@@ -785,146 +833,6 @@ protected:
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
-};
-
-//
-//
-// PluginPage
-//
-//
-
-class PluginPage;
-class EncryptionConfigurationDialogImpl;
-class SignatureConfigurationDialogImpl;
-class DirectoryServicesConfigurationDialogImpl;
-class CertificateHandlingDialogImpl;
-class CryptPlugWrapperList;
-
-class CertificatesPage : public ConfigurationPage
-{
-    Q_OBJECT
-public:
-    CertificatesPage( PluginPage* parent = 0, const char* name = 0 );
-    void setup();
-    void apply();
-    void installProfile( KConfig* profile );
-
-private slots:
-    void slotStartCertManager();
-private:
-    PluginPage* _pluginPage;
-    QComboBox* plugListBoxCertConf;
-    CertificateHandlingDialogImpl* certDialog;
-    QPushButton* startCertManagerPB;
-};
-
-class EncryptionPage : public ConfigurationPage
-{
-    Q_OBJECT
-public:
-    EncryptionPage( PluginPage* parent = 0, const char* name = 0 );
-    void setup();
-    void apply();
-    void installProfile( KConfig* profile );
-
-private:
-    PluginPage* _pluginPage;
-    QComboBox* plugListBoxEncryptConf;
-    EncryptionConfigurationDialogImpl* encDialog;
-};
-
-class SignaturePage : public ConfigurationPage
-{
-    Q_OBJECT
-public:
-    SignaturePage( PluginPage* parent = 0, const char* name = 0 );
-    void setup();
-    void apply();
-    void installProfile( KConfig* profile );
-
-private:
-    PluginPage* _pluginPage;
-    QComboBox* plugListBoxSignConf;
-    SignatureConfigurationDialogImpl* sigDialog;
-};
-
-class DirServicesPage : public ConfigurationPage
-{
-    Q_OBJECT
-public:
-    DirServicesPage( PluginPage* parent = 0, const char* name = 0 );
-    void setup();
-    void apply();
-    void installProfile( KConfig* profile );
-
-private:
-    PluginPage* _pluginPage;
-    QComboBox* plugListBoxDirServConf;
-    DirectoryServicesConfigurationDialogImpl* dirservDialog;
-};
-
-
-class GeneralPage : public ConfigurationPage
-{
-   Q_OBJECT
-public:
-    GeneralPage( PluginPage* parent = 0, const char* name = 0 );
-    void setup();
-    void apply();
-    void savePluginsConfig( bool silent );
-    void installProfile( KConfig* profile );
-
-public slots:
-    void slotNewPlugIn();
-    void slotDeletePlugIn();
-    void slotActivatePlugIn();
-    void slotPlugNameChanged( const QString& );
-    void slotPlugLocationChanged( const QString& );
-    void slotPlugUpdateURLChanged( const QString& );
-    void dismiss();
-
-private:
-    PluginPage* _pluginPage;
-    QListView* plugList;
-    QPushButton* addCryptPlugButton;
-    QPushButton* removeCryptPlugButton;
-    QPushButton* activateCryptPlugButton;
-    QLineEdit* plugNameEdit;
-    KURLRequester* plugLocationRequester;
-    QLineEdit* plugUpdateURLEdit;
-    QListViewItem* currentPlugItem;
-};
-
-
-class PluginPage : public TabbedConfigurationPage {
-  Q_OBJECT
-public:
-  PluginPage( QWidget * parent=0, const char * name=0 );
-
-  static QString iconLabel();
-  static const char * iconName();
-  static QString title();
-  static QString helpAnchor();
-
-  void setup();
-  void apply();
-  void installProfile( KConfig * profile );
-
-  void savePluginConfig( int pluginno );
-  bool isPluginConfigEqual( int pluginno ) const;
-
-public slots:
-  void slotPlugListBoxConfigurationChanged( int );
-  void slotPlugSelectionChanged();
-  void slotCurrentPlugInTabPageChanged( QWidget * );
-  void dismiss();
-private:
-  GeneralPage* _generalPage;
-  CertificatesPage* _certificatesPage;
-  SignaturePage* _signaturePage;
-  EncryptionPage* _encryptionPage;
-  DirServicesPage* _dirservicesPage;
-  CryptPlugWrapperList* mCryptPlugList;
 };
 
 //

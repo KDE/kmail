@@ -33,10 +33,6 @@ class AppearancePage;
 class ComposerPage;
 class SecurityPage;
 class FolderPage;
-class PluginPage;
-class SignatureConfigurationDialogImpl;
-class EncryptionConfigurationDialogImpl;
-class DirectoryServicesConfigurationDialogImpl;
 
 class ConfigureDialog : public KDialogBase
 {
@@ -75,7 +71,6 @@ class ConfigureDialog : public KDialogBase
     ComposerPage   *mComposerPage;
     SecurityPage   *mSecurityPage;
     FolderPage     *mFolderPage;
-    PluginPage     *mPluginPage;
 };
 
 #endif

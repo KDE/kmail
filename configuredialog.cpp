@@ -1,7 +1,7 @@
 /*
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
- *              Copyright (C) 2001 Marc Mutz, mutz@kde.org
+ *              Copyright (C) 2001-2002 Marc Mutz, mutz@kde.org
  *   Contains code segments and ideas from earlier kmail dialog code.
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -27,9 +27,7 @@
 
 // my headers:
 #include "configuredialog.h"
-#define private public
 #include "configuredialog_p.h"
-#undef private
 
 // other KMail headers:
 #include "simplestringlisteditor.h"
@@ -48,6 +46,7 @@
 #include "certificatehandlingdialogimpl.h"
 #include "cryptplugwrapperlist.h"
 #include "cryptplugwrapper.h"
+#include "cryptplugconfigdialog.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "identitylistview.h"
@@ -187,15 +186,6 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   mFolderPage = new FolderPage( page );
   vlay->addWidget( mFolderPage );
   mFolderPage->setPageIndex( pageIndex( page ) );
-
-  // Plugin Page:
-
-  page = addPage( PluginPage::iconLabel(), PluginPage::title(),
-		  loadIcon( PluginPage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mPluginPage = new PluginPage( page );
-  vlay->addWidget( mPluginPage );
-  mPluginPage->setPageIndex( pageIndex( page ) );
 }
 
 
@@ -220,7 +210,6 @@ void ConfigureDialog::slotCancelOrClose()
   mComposerPage->dismiss();
   mSecurityPage->dismiss();
   mFolderPage->dismiss();
-  mPluginPage->dismiss();
 }
 
 void ConfigureDialog::slotOk()
@@ -249,8 +238,6 @@ void ConfigureDialog::slotHelp() {
     kapp->invokeHelp( mSecurityPage->helpAnchor() );
   else if ( activePage == mFolderPage->pageIndex() )
     kapp->invokeHelp( mFolderPage->helpAnchor() );
-  else if ( activePage == mPluginPage->pageIndex() )
-    kapp->invokeHelp( mPluginPage->helpAnchor() );
   else
     kdDebug(5006) << "ConfigureDialog::slotHelp(): no page selected???"
 		  << endl;
@@ -264,7 +251,6 @@ void ConfigureDialog::setup()
   mComposerPage->setup();
   mSecurityPage->setup();
   mFolderPage->setup();
-  mPluginPage->setup();
 }
 
 void ConfigureDialog::slotInstallProfile( KConfig * profile ) {
@@ -274,7 +260,6 @@ void ConfigureDialog::slotInstallProfile( KConfig * profile ) {
   mComposerPage->installProfile( profile );
   mSecurityPage->installProfile( profile );
   mFolderPage->installProfile( profile );
-  mPluginPage->installProfile( profile );
 }
 
 void ConfigureDialog::apply( bool everything ) {
@@ -297,9 +282,6 @@ void ConfigureDialog::apply( bool everything ) {
 
   if ( everything || activePage == mFolderPage->pageIndex() )
     mFolderPage->apply();
-
-  if ( everything || activePage == mPluginPage->pageIndex() )
-    mPluginPage->apply();
 
   //
   // Make other components read the new settings
@@ -3160,11 +3142,18 @@ SecurityPage::SecurityPage( QWidget * parent, const char * name )
     mPgpTab->layout()->setMargin( KDialog::marginHint() );
   }
   addTab( mPgpTab, i18n("Open&PGP") );
+
+  //
+  // "CryptPlug" tab:
+  //
+  mCryptPlugTab = new CryptPlugTab();
+  addTab( mCryptPlugTab, mCryptPlugTab->title() );
 }
 
 void SecurityPage::setup() {
   mGeneralTab->setup();
   mPgpTab->setValues();
+  mCryptPlugTab->setup();
 }
 
 void SecurityPage::installProfile( KConfig * profile ) {
@@ -3174,6 +3163,7 @@ void SecurityPage::installProfile( KConfig * profile ) {
 void SecurityPage::apply() {
   mGeneralTab->apply();
   mPgpTab->applySettings();
+  mCryptPlugTab->apply();
 }
 
 QString SecurityPage::GeneralTab::title() {
@@ -3489,1030 +3479,17 @@ void FolderPage::apply() {
 }
 
 
-
-// *************************************************************
-// *                                                           *
-// *                       PluginPage                          *
-// *                                                           *
-// *************************************************************
-
-
-
-QString pluginNameToNumberedItem( QString name, int number )
-{
-    QString item = QString("   %1. ").arg( number );
-    item += name;
-    item += "    ";
-    return item;
+QString SecurityPage::CryptPlugTab::title() {
+  return i18n("Crypto Plugins");
 }
 
-QString PluginPage::iconLabel() {
-  return i18n("Plugins");
+QString SecurityPage::CryptPlugTab::helpAnchor() {
+  return QString::null;
 }
 
-const char * PluginPage::iconName() {
-  return "connect_established";
-}
-
-QString PluginPage::title() {
-  return i18n("Load & Configure KMail Plugins");
-}
-
-QString PluginPage::helpAnchor() {
-  return QString::fromLatin1("configure-plugins");
-}
-
-PluginPage::PluginPage( QWidget * parent, const char * name )
-    : TabbedConfigurationPage( parent, name ),
-      mCryptPlugList( kernel->cryptPlugList() )
-{
-    _generalPage = new GeneralPage( this );
-    addTab( _generalPage, i18n( "&General") );
-
-    _certificatesPage = new CertificatesPage( this );
-    addTab( _certificatesPage, i18n( "Cert&ificates" ) );
-
-    _signaturePage = new SignaturePage( this );
-    addTab( _signaturePage, i18n("Signature Configuration") );
-
-    _encryptionPage = new EncryptionPage( this );
-    addTab( _encryptionPage, i18n("&Encryption Configuration") );
-
-// KHZ NO FULLTEST  _dirservicesPage = new DirServicesPage( this );
-// KHZ NO FULLTEST  addTab( _dirservicesPage, i18n("&Directory Services") );
-_dirservicesPage = new DirServicesPage( 0 );
-_dirservicesPage->hide();
-
-
-    connect( mTabWidget, SIGNAL(currentChanged( QWidget * )),
-             this, SLOT(slotCurrentPlugInTabPageChanged( QWidget * )) );
-
-    //slotPlugSelectionChanged();
-}
-
-void PluginPage::dismiss()
-{
-    _generalPage->dismiss();
-}
-
-
-void PluginPage::setup()
-{
-    _generalPage->setup();
-    _certificatesPage->setup();
-    _signaturePage->setup();
-    _encryptionPage->setup();
-    _dirservicesPage->setup();
-}
-
-
-void PluginPage::installProfile( KConfig * profile )
-{
-    _generalPage->installProfile( profile );
-    _certificatesPage->installProfile( profile );
-    _signaturePage->installProfile( profile );
-    _encryptionPage->installProfile( profile );
-    _dirservicesPage->installProfile( profile );
-}
-
-
-// PENDING(kalle) Consider splitting savePluginConfig() as well
-void PluginPage::apply()
-{
-    _generalPage->apply(); // also saves the other pages
-}
-
-
-void PluginPage::slotCurrentPlugInTabPageChanged( QWidget * page )
-{
-    // Find the combo box of the tab page we are going to enter
-    QComboBox* pCBox = 0;
-    if( _certificatesPage == page )
-        pCBox = _certificatesPage->plugListBoxCertConf;
-    else if( _signaturePage == page )
-        pCBox = _signaturePage->plugListBoxSignConf;
-    else if( _encryptionPage == page )
-        pCBox = _encryptionPage->plugListBoxEncryptConf;
-    else if( _dirservicesPage == page )
-        pCBox = _dirservicesPage->plugListBoxDirServConf;
-    // adjust or insert the plug in names in this tab page's combo box
-    if( pCBox ) {
-        pCBox->clear();
-        if( _generalPage->currentPlugItem ) {
-            // adjust or insert the plug in names in this tab page's combo box
-            int numEntry = _generalPage->plugList->childCount();
-            QListViewItem *item = _generalPage->plugList->firstChild();
-            int i = 0;
-            int curI = -1;
-            for (i = 0; i < numEntry; ++i) {
-                QString itemTxt( pluginNameToNumberedItem( item->text(0), 1+i ) );
-                if( i < pCBox->count() )
-                    pCBox->changeItem( itemTxt, i );
-                else
-                    pCBox->insertItem( itemTxt );
-                if( item == _generalPage->currentPlugItem )
-                    curI = i;
-                item = item->nextSibling();
-            }
-            if( -1 < curI ) {
-                pCBox->setCurrentItem( curI );
-                // Changes made?
-                CryptPlugWrapper* wrapper = mCryptPlugList->at( curI );
-                if( ! ( wrapper &&
-                        (wrapper->displayName() == _generalPage->currentPlugItem->text(0)) &&
-                        (wrapper->libName()     == _generalPage->currentPlugItem->text(1)) &&
-                        (wrapper->updateURL()   == _generalPage->currentPlugItem->text(2)) &&
-                        isPluginConfigEqual( curI ) ) ) {
-                    if( KMessageBox::questionYesNo( this, i18n( "Do you want to save\nany changes you might have made\nto the previous plugin configuration?" ),
-                                                    i18n( "Save Plugin Configuration" ) ) == KMessageBox::Yes ) {
-                        _generalPage->savePluginsConfig( false );
-                        savePluginConfig( curI );
-                        // Enable/disable the fields in the dialog pages
-                        // according to the plugin capabilities.
-                        if( _signaturePage && _signaturePage->sigDialog )
-                            _signaturePage->sigDialog->enableDisable( wrapper );
-                        if( _encryptionPage && _encryptionPage->encDialog )
-                            _encryptionPage->encDialog->enableDisable( wrapper );
-                        if( _dirservicesPage && _dirservicesPage->dirservDialog )
-                            _dirservicesPage->dirservDialog->enableDisable( wrapper );
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-void PluginPage::slotPlugSelectionChanged()
-{
-    if( _generalPage->plugList->selectedItem() != _generalPage->currentPlugItem ) {
-
-        // If there already was a current plugin and there were
-        // changes made, ask user to save the changes.
-        if( _generalPage->currentPlugItem ) {
-            // Find the number of the current plugin
-            int pos = 0;
-            QListViewItemIterator lvit( _generalPage->plugList );
-            QListViewItem* current;
-            while( ( current = lvit.current() ) ) {
-                ++lvit;
-                if( current == _generalPage->currentPlugItem )
-                    break;
-                ++pos;
-            }
-
-            // Changes made?
-            CryptPlugWrapper* wrapper = mCryptPlugList->at( pos );
-            if( ! ( wrapper &&
-                    (wrapper->displayName() == _generalPage->currentPlugItem->text(0)) &&
-                    (wrapper->libName()     == _generalPage->currentPlugItem->text(1)) &&
-                    (wrapper->updateURL()   == _generalPage->currentPlugItem->text(2)) &&
-                    isPluginConfigEqual( pos ) ) ) {
-                if( KMessageBox::questionYesNo( this, i18n( "Do you want to save\nany changes you might have made\nto the previous plugin configuration?" ),
-                                                i18n( "Save Plugin Configuration" ) ) == KMessageBox::Yes ) {
-                    _generalPage->savePluginsConfig( false );
-                    savePluginConfig( pos );
-                }
-            } else
-                ;
-        }
-
-        _generalPage->currentPlugItem = _generalPage->plugList->selectedItem();
-        if( _generalPage->currentPlugItem != 0 ) {
-            // (De)activate Activate button
-            if( _generalPage->currentPlugItem->text( 3 ) == "" )
-                _generalPage->activateCryptPlugButton->setText( i18n("Ac&tivate")  );
-            else
-                _generalPage->activateCryptPlugButton->setText( i18n("Deac&tivate") );
-
-            _generalPage->plugNameEdit->setText( _generalPage->currentPlugItem->text(0) );
-            _generalPage->plugLocationRequester->setURL( _generalPage->currentPlugItem->text(1) );
-            _generalPage->plugUpdateURLEdit->setText( _generalPage->currentPlugItem->text(2) );
-            _generalPage->plugNameEdit->setEnabled( true );
-            _generalPage->plugLocationRequester->setEnabled( true );
-            _generalPage->plugUpdateURLEdit->setEnabled( true );
-            // synchronize configuration list boxes
-            int numEntry = _generalPage->plugList->childCount();
-            QListViewItem *item = _generalPage->plugList->firstChild();
-            int i = 0;
-            for (i = 0; i < numEntry; ++i) {
-                if( item == _generalPage->currentPlugItem ) {
-                    if( _certificatesPage->plugListBoxCertConf && i < _certificatesPage->plugListBoxCertConf->count() ) {
-                        _certificatesPage->plugListBoxCertConf->setCurrentItem( i );
-                    }
-                    if( _signaturePage->plugListBoxSignConf    && i < _signaturePage->plugListBoxSignConf->count() ) {
-                        _signaturePage->plugListBoxSignConf->setCurrentItem( i );
-                    }
-                    if( _encryptionPage->plugListBoxEncryptConf && i < _encryptionPage->plugListBoxEncryptConf->count() ) {
-                        _encryptionPage->plugListBoxEncryptConf->setCurrentItem( i );
-                    }
-                    if( _dirservicesPage->plugListBoxDirServConf && i < _dirservicesPage->plugListBoxDirServConf->count() ) {
-                        _dirservicesPage->plugListBoxDirServConf->setCurrentItem( i );
-                    }
-
-                    break;
-                }
-                item = item->nextSibling();
-            }
-
-            if( i < numEntry ) {
-                // i contains the position of the plugin
-                CryptPlugWrapper* wrapper = mCryptPlugList->at( i );
-                Q_ASSERT( wrapper );
-                if( !wrapper ) return;
-
-
-                // Enable/disable the fields in the dialog pages
-                // according to the plugin capabilities.
-                _signaturePage->sigDialog->enableDisable( wrapper );
-                _encryptionPage->encDialog->enableDisable( wrapper );
-                _dirservicesPage->dirservDialog->enableDisable( wrapper );
-
-                // Fill the fields of the tab pages with the data from
-                // the current plugin.
-
-                // Signature tab
-
-                // Sign Messages group box
-                switch( wrapper->signEmail() ) {
-                case SignEmail_SignAll:
-                    _signaturePage->sigDialog->signAllPartsRB->setChecked( true );
-                    break;
-                case SignEmail_Ask:
-                    _signaturePage->sigDialog->askEachPartRB->setChecked( true );
-                    break;
-                case SignEmail_DontSign:
-                    _signaturePage->sigDialog->dontSignRB->setChecked( true );
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown email sign setting" << endl;
-                };
-                _signaturePage->sigDialog->warnUnsignedCB->setChecked( wrapper->warnSendUnsigned() );
-
-                // Compound Mode group box
-                switch( wrapper->signatureCompoundMode() ) {
-                case SignatureCompoundMode_Opaque:
-                    _signaturePage->sigDialog->sendSigOpaqueRB->setChecked( true );
-                    break;
-                case SignatureCompoundMode_Detached:
-                    _signaturePage->sigDialog->sendSigMultiPartRB->setChecked( true );
-                    break;
-                default:
-                    _signaturePage->sigDialog->sendSigMultiPartRB->setChecked( true );
-                    kdDebug( 5006 ) << "Unknown signature compound mode setting, default set to multipart/signed" << endl;
-                };
-
-                // Sending Certificates group box
-                switch( wrapper->sendCertificates() ) {
-                case SendCert_DontSend:
-                    _signaturePage->sigDialog->dontSendCertificatesRB->setChecked( true );
-                    break;
-                case SendCert_SendOwn:
-                    _signaturePage->sigDialog->sendYourOwnCertificateRB->setChecked( true );
-                    break;
-                case SendCert_SendChainWithoutRoot:
-                    _signaturePage->sigDialog->sendChainWithoutRootRB->setChecked( true );
-                    break;
-                case SendCert_SendChainWithRoot:
-                    _signaturePage->sigDialog->sendChainWithRootRB->setChecked( true );
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown send certificate setting" << endl;                }
-
-                // Signature Settings group box
-                SignatureAlgorithm sigAlgo = wrapper->signatureAlgorithm();
-                QString sigAlgoStr;
-                switch( sigAlgo ) {
-                case SignAlg_SHA1:
-                    sigAlgoStr = "SHA1";
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown signature algorithm" << endl;
-                };
-
-                for( int i = 0;
-                     i < _signaturePage->sigDialog->signatureAlgorithmCO->count(); ++i )
-                    if( _signaturePage->sigDialog->signatureAlgorithmCO->text( i ) ==
-                        sigAlgoStr ) {
-                        _signaturePage->sigDialog->signatureAlgorithmCO->setCurrentItem( i );
-                        break;
-                    }
-
-                _signaturePage->sigDialog->warnSignatureCertificateExpiresCB->setChecked( wrapper->signatureCertificateExpiryNearWarning() );
-                _signaturePage->sigDialog->warnSignatureCertificateExpiresSB->setValue( wrapper->signatureCertificateExpiryNearInterval() );
-                _signaturePage->sigDialog->warnCACertificateExpiresCB->setChecked( wrapper->caCertificateExpiryNearWarning() );
-                _signaturePage->sigDialog->warnCACertificateExpiresSB->setValue( wrapper->caCertificateExpiryNearInterval() );
-                _signaturePage->sigDialog->warnRootCertificateExpiresCB->setChecked( wrapper->rootCertificateExpiryNearWarning() );
-                _signaturePage->sigDialog->warnRootCertificateExpiresSB->setValue( wrapper->rootCertificateExpiryNearInterval() );
-
-                _signaturePage->sigDialog->warnAddressNotInCertificateCB->setChecked( wrapper->warnNoCertificate() );
-
-                // PIN Entry group box
-                switch( wrapper->numPINRequests() ) {
-                case PinRequest_OncePerSession:
-                    _signaturePage->sigDialog->pinOncePerSessionRB->setChecked( true );
-                    break;
-                case PinRequest_Always:
-                    _signaturePage->sigDialog->pinAlwaysRB->setChecked( true );
-                    break;
-                case PinRequest_WhenAddingCerts:
-                    _signaturePage->sigDialog->pinAddCertificatesRB->setChecked( true );
-                    break;
-                case PinRequest_AlwaysWhenSigning:
-                    _signaturePage->sigDialog->pinAlwaysWhenSigningRB->setChecked( true );
-                    break;
-                case PinRequest_AfterMinutes:
-                    _signaturePage->sigDialog->pinIntervalRB->setChecked( true );
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown pin request setting" << endl;
-                };
-
-                _signaturePage->sigDialog->pinIntervalSB->setValue( wrapper->numPINRequestsInterval() );
-
-                // Save Messages group box
-                _signaturePage->sigDialog->saveSentSigsCB->setChecked( wrapper->saveSentSignatures() );
-
-                // The Encryption tab
-
-                // Encrypt Messages group box
-                switch( wrapper->encryptEmail() ) {
-                case EncryptEmail_EncryptAll:
-                    _encryptionPage->encDialog->encryptAllPartsRB->setChecked( true );
-                    break;
-                case EncryptEmail_Ask:
-                    _encryptionPage->encDialog->askEachPartRB->setChecked( true );
-                    break;
-                case EncryptEmail_DontEncrypt:
-                    _encryptionPage->encDialog->dontEncryptRB->setChecked( true );
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown email encryption setting" << endl;
-                };
-                _encryptionPage->encDialog->warnUnencryptedCB->setChecked( wrapper->warnSendUnencrypted() );
-
-                // Encryption Settings group box
-                QString encAlgoStr;
-                switch( wrapper->encryptionAlgorithm() ) {
-                case EncryptAlg_RSA:
-                    encAlgoStr = "RSA";
-                    break;
-                case EncryptAlg_TripleDES:
-                    encAlgoStr = "Triple-DES";
-                    break;
-                case EncryptAlg_SHA1:
-                    encAlgoStr = "SHA-1";
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown encryption algorithm" << endl;
-                };
-
-                for( int i = 0;
-                     i < _encryptionPage->encDialog->encryptionAlgorithmCO->count(); ++i )
-                    if( _encryptionPage->encDialog->encryptionAlgorithmCO->text( i ) ==
-                        encAlgoStr ) {
-                        _encryptionPage->encDialog->encryptionAlgorithmCO->setCurrentItem( i );
-                        break;
-                    }
-
-                _encryptionPage->encDialog->warnReceiverCertificateExpiresCB->setChecked( wrapper->receiverCertificateExpiryNearWarning() );
-                _encryptionPage->encDialog->warnReceiverCertificateExpiresSB->setValue( wrapper->receiverCertificateExpiryNearWarningInterval() );
-                _encryptionPage->encDialog->warnChainCertificateExpiresCB->setChecked( wrapper->certificateInChainExpiryNearWarning() );
-                _encryptionPage->encDialog->warnChainCertificateExpiresSB->setValue( wrapper->certificateInChainExpiryNearWarningInterval() );
-                _encryptionPage->encDialog->warnReceiverNotInCertificateCB->setChecked( wrapper->receiverEmailAddressNotInCertificateWarning() );
-
-                // CRL group box
-                _encryptionPage->encDialog->useCRLsCB->setChecked( wrapper->encryptionUseCRLs() );
-                _encryptionPage->encDialog->warnCRLExpireCB->setChecked( wrapper->encryptionCRLExpiryNearWarning() );
-                _encryptionPage->encDialog->warnCRLExpireSB->setValue( wrapper->encryptionCRLNearExpiryInterval() );
-
-                // Save Messages group box
-                _encryptionPage->encDialog->storeEncryptedCB->setChecked( wrapper->saveMessagesEncrypted() );
-
-                // Certificate Path Check group box
-                _encryptionPage->encDialog->checkCertificatePathCB->setChecked( wrapper->checkCertificatePath() );
-                if( wrapper->checkEncryptionCertificatePathToRoot() )
-                    _encryptionPage->encDialog->alwaysCheckRootRB->setChecked( true );
-                else
-                    _encryptionPage->encDialog->pathMayEndLocallyCB->setChecked( true );
-
-                // Directory Services tab page
-
-                int numServers;
-                CryptPlugWrapper::DirectoryServer* servers = wrapper->directoryServers( &numServers );
-                if( servers ) {
-                    QListViewItem* previous = 0;
-                    for( int i = 0; i < numServers; i++ ) {
-                        previous = new QListViewItem( _dirservicesPage->dirservDialog->x500LV,
-                                                      previous,
-                                                      QString::fromUtf8( servers[i].servername ),
-                                                      QString::number( servers[i].port ),
-                                                      QString::fromUtf8( servers[i].description ) );
-                    }
-                }
-
-                // Local/Remote Certificates group box
-                switch( wrapper->certificateSource() ) {
-                case CertSrc_ServerLocal:
-                    _dirservicesPage->dirservDialog->firstLocalThenDSCertRB->setChecked( true );
-                    break;
-                case CertSrc_Local:
-                    _dirservicesPage->dirservDialog->localOnlyCertRB->setChecked( true );
-                    break;
-                case CertSrc_Server:
-                    _dirservicesPage->dirservDialog->dsOnlyCertRB->setChecked( true );
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown certificate source" << endl;
-                }
-
-                // Local/Remote CRL group box
-                switch( wrapper->crlSource() ) {
-                case CertSrc_ServerLocal:
-                    _dirservicesPage->dirservDialog->firstLocalThenDSCRLRB->setChecked( true );
-                    break;
-                case CertSrc_Local:
-                    _dirservicesPage->dirservDialog->localOnlyCRLRB->setChecked( true );
-                    break;
-                case CertSrc_Server:
-                    _dirservicesPage->dirservDialog->dsOnlyCRLRB->setChecked( true );
-                    break;
-                default:
-                    kdDebug( 5006 ) << "Unknown certificate source" << endl;
-                }
-            }
-        }
-    }
-}
-
-
-bool PluginPage::isPluginConfigEqual( int pluginno ) const
-{
-    if ( mCryptPlugList->isEmpty() ) // happens initially
-        return true;
-    CryptPlugWrapper* wrapper = mCryptPlugList->at( pluginno );
-    Q_ASSERT( wrapper );
-    if( !wrapper ) {
-      // No wrapper? Better not annoy the user...
-      return true;
-    }
-
-    // if the wrapper is not initialized, it does not return
-    // reasonable values, and saving them won't help either - just
-    // return true
-    if( wrapper->initStatus( 0 ) != CryptPlugWrapper::InitStatus_Ok )
-        return true;
-
-    bool ret = true;
-    ret &= ( ( ( wrapper->signEmail() == SignEmail_SignAll ) &&
-               _signaturePage->sigDialog->signAllPartsRB->isChecked() ) ||
-             ( ( wrapper->signEmail() == SignEmail_Ask ) &&
-               _signaturePage->sigDialog->askEachPartRB->isChecked() ) ||
-             ( ( wrapper->signEmail() == SignEmail_DontSign ) &&
-               _signaturePage->sigDialog->dontSignRB->isChecked() ) );
-    kdDebug(5006) << "1) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->warnSendUnsigned() ==
-             _signaturePage->sigDialog->warnUnsignedCB->isChecked() );
-    kdDebug(5006) << "2) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( ( ( wrapper->signatureCompoundMode() == SignatureCompoundMode_Opaque ) &&
-               _signaturePage->sigDialog->sendSigOpaqueRB->isChecked() ) ||
-             ( ( wrapper->signatureCompoundMode() == SignatureCompoundMode_Detached ) &&
-               _signaturePage->sigDialog->sendSigMultiPartRB->isChecked() ) ||
-             ( ( wrapper->signatureCompoundMode() == SignatureCompoundMode_undef ) &&
-               !_signaturePage->sigDialog->sendSigOpaqueRB->isChecked() &&
-               !_signaturePage->sigDialog->sendSigMultiPartRB->isChecked() ) );
-    kdDebug(5006) << "2b) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( ( ( wrapper->sendCertificates() == SendCert_DontSend ) &&
-               _signaturePage->sigDialog->dontSendCertificatesRB->isChecked() ) ||
-             ( ( wrapper->sendCertificates() == SendCert_SendOwn ) &&
-               _signaturePage->sigDialog->sendYourOwnCertificateRB->isChecked() ) ||
-             ( ( wrapper->sendCertificates() == SendCert_SendChainWithoutRoot ) &&
-               _signaturePage->sigDialog->sendChainWithoutRootRB->isChecked() ) ||
-             ( ( wrapper->sendCertificates() == SendCert_SendChainWithRoot ) ||
-               _signaturePage->sigDialog->sendChainWithRootRB->isChecked() ) );
-    kdDebug(5006) << "3) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    if( !_signaturePage ||
-        !_signaturePage->sigDialog ||
-        !_signaturePage->sigDialog->signatureAlgorithmCO )
-        return true;
-    kdDebug(5006) << "4) RET = " << ret << endl;
-
-    ret &= ( ( ( wrapper->signatureAlgorithm() == SignAlg_SHA1 ) &&
-               _signaturePage &&
-               _signaturePage->sigDialog &&
-               _signaturePage->sigDialog->signatureAlgorithmCO &&
-               ( _signaturePage->sigDialog->signatureAlgorithmCO->currentText() ==
-                 "RSA + SHA-1" ) ) );
-    kdDebug(5006) << "5) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->signatureCertificateExpiryNearWarning() ==
-             _signaturePage->sigDialog->warnSignatureCertificateExpiresCB->isChecked() );
-    kdDebug(5006) << "6) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->signatureCertificateExpiryNearInterval() ==
-             _signaturePage->sigDialog->warnSignatureCertificateExpiresSB->value() );
-    kdDebug(5006) << "7) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->caCertificateExpiryNearWarning() ==
-             _signaturePage->sigDialog->warnCACertificateExpiresCB->isChecked() );
-    kdDebug(5006) << "8) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->caCertificateExpiryNearInterval() ==
-             _signaturePage->sigDialog->warnCACertificateExpiresSB->value() );
-    kdDebug(5006) << "9) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->rootCertificateExpiryNearWarning() ==
-             _signaturePage->sigDialog->warnRootCertificateExpiresCB->isChecked() );
-    kdDebug(5006) << "10) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->rootCertificateExpiryNearInterval() ==
-             _signaturePage->sigDialog->warnRootCertificateExpiresSB->value() );
-    kdDebug(5006) << "11) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->warnNoCertificate() ==
-             _signaturePage->sigDialog->warnAddressNotInCertificateCB->isChecked() );
-
-    kdDebug(5006) << "12) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-
-    ret &= ( ( ( wrapper->numPINRequests() == PinRequest_OncePerSession ) &&
-               _signaturePage->sigDialog->pinOncePerSessionRB->isChecked() ) ||
-             ( ( wrapper->numPINRequests() == PinRequest_Always ) &&
-               _signaturePage->sigDialog->pinAlwaysRB->isChecked() ) ||
-             ( ( wrapper->numPINRequests() == PinRequest_WhenAddingCerts ) &&
-               _signaturePage->sigDialog->pinAddCertificatesRB->isChecked() ) ||
-             ( ( wrapper->numPINRequests() == PinRequest_AlwaysWhenSigning ) &&
-               _signaturePage->sigDialog->pinAlwaysWhenSigningRB->isChecked() ) ||
-             ( ( wrapper->numPINRequests() == PinRequest_AfterMinutes ) ) );
-    kdDebug(5006) << "13) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->numPINRequestsInterval() ==
-             _signaturePage->sigDialog->pinIntervalSB->value() );
-    kdDebug(5006) << "14) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->saveSentSignatures() ==
-             _signaturePage->sigDialog->saveSentSigsCB->isChecked() );
-    kdDebug(5006) << "15) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( ( ( wrapper->encryptEmail() == EncryptEmail_EncryptAll ) &&
-               _encryptionPage->encDialog->encryptAllPartsRB->isChecked() ) ||
-             ( ( wrapper->encryptEmail() == EncryptEmail_Ask ) &&
-               _encryptionPage->encDialog->askEachPartRB->isChecked() ) ||
-             ( ( wrapper->encryptEmail() == EncryptEmail_DontEncrypt ) &&
-               _encryptionPage->encDialog->dontEncryptRB->isChecked() ) );
-    kdDebug(5006) << "16) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->warnSendUnencrypted() ==
-             _encryptionPage->encDialog->warnUnencryptedCB->isChecked() );
-    kdDebug(5006) << "17) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( ( ( wrapper->encryptionAlgorithm() == EncryptAlg_SHA1 ) &&
-               ( _encryptionPage->encDialog->encryptionAlgorithmCO->currentText() ==
-                 "SHA-1" ) ) ||
-             ( ( wrapper->encryptionAlgorithm() == EncryptAlg_TripleDES ) &&
-               ( _encryptionPage->encDialog->encryptionAlgorithmCO->currentText() ==
-                 "Triple-DES" ) ) ||
-             ( ( wrapper->encryptionAlgorithm() == EncryptAlg_RSA ) &&
-               ( _encryptionPage->encDialog->encryptionAlgorithmCO->currentText() ==
-                 "RSA" ) ) );
-    kdDebug(5006) << "18) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->receiverCertificateExpiryNearWarning() ==
-             _encryptionPage->encDialog->warnReceiverCertificateExpiresCB->isChecked() );
-    kdDebug(5006) << "19) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->receiverCertificateExpiryNearWarningInterval() ==
-             _encryptionPage->encDialog->warnReceiverCertificateExpiresSB->value() );
-    kdDebug(5006) << "20) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->certificateInChainExpiryNearWarning() ==
-             _encryptionPage->encDialog->warnChainCertificateExpiresCB->isChecked() );
-    kdDebug(5006) << "21) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->certificateInChainExpiryNearWarningInterval() ==
-             _encryptionPage->encDialog->warnChainCertificateExpiresSB->value() );
-    kdDebug(5006) << "22) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->saveMessagesEncrypted() ==
-             _encryptionPage->encDialog->storeEncryptedCB->isChecked() );
-    kdDebug(5006) << "23) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->checkCertificatePath() ==
-             _encryptionPage->encDialog->checkCertificatePathCB->isChecked() );
-    kdDebug(5006) << "24) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( wrapper->checkEncryptionCertificatePathToRoot() ==
-             _encryptionPage->encDialog->alwaysCheckRootRB->isChecked() );
-    kdDebug(5006) << "25) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    bool dirServersEqual = true;
-    int numDirServers;
-    CryptPlugWrapper::DirectoryServer* servers =
-        wrapper->directoryServers( &numDirServers );
-    dirServersEqual &= ( numDirServers == _dirservicesPage->dirservDialog->x500LV->childCount() );
-    kdDebug(5006) << "25.5) dirServersEqual = " << dirServersEqual << endl;
-    if( dirServersEqual ) {
-        // same number of entries in plugin and dialog
-        QListViewItemIterator lvit( _dirservicesPage->dirservDialog->x500LV );
-        QListViewItem* current;
-        int pos = 0;
-        while( ( current = lvit.current() ) && dirServersEqual ) {
-            ++lvit;
-            dirServersEqual &= ( current->text( 0 ) ==
-                                 QString::fromUtf8( servers[pos].servername ) );
-            dirServersEqual &= ( current->text( 1 ).toInt() ==
-                                 servers[pos].port );
-            dirServersEqual &= ( current->text( 2 ) ==
-                                 QString::fromUtf8( servers[pos].description ) );
-
-            pos++;
-        }
-    }
-    ret &= dirServersEqual;
-    kdDebug(5006) << "26) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( ( ( wrapper->certificateSource() == CertSrc_ServerLocal ) &&
-               _dirservicesPage->dirservDialog->firstLocalThenDSCertRB->isChecked() ) ||
-             ( ( wrapper->certificateSource() == CertSrc_Local ) &&
-               _dirservicesPage->dirservDialog->localOnlyCertRB->isChecked() ) ||
-             ( ( wrapper->certificateSource() == CertSrc_Server ) &&
-               _dirservicesPage->dirservDialog->dsOnlyCertRB->isChecked() ) );
-    kdDebug(5006) << "27) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    ret &= ( ( ( wrapper->crlSource() == CertSrc_ServerLocal ) &&
-               _dirservicesPage->dirservDialog->firstLocalThenDSCRLRB->isChecked() ) ||
-             ( ( wrapper->crlSource() == CertSrc_Local ) &&
-               _dirservicesPage->dirservDialog->localOnlyCRLRB->isChecked() ) ||
-             ( ( wrapper->crlSource() == CertSrc_Server ) &&
-               _dirservicesPage->dirservDialog->dsOnlyCRLRB->isChecked() ) );
-    kdDebug(5006) << "28) RET = " << ret << endl;
-    if( !ret )
-        return false;
-
-    kdDebug(5006) << "29) RET = " << ret << endl;
-    return ret;
-}
-
-
-void PluginPage::savePluginConfig( int pluginno )
-{
-    if ( mCryptPlugList->isEmpty() )
-        return;
-    CryptPlugWrapper* wrapper = mCryptPlugList->at( pluginno );
-    Q_ASSERT( wrapper );
-    if( !wrapper )
-        return;
-
-    KConfig* config = kapp->config();
-    KConfigGroupSaver saver(config, "General");
-
-    // Set the right config group
-    config->setGroup( QString( "CryptPlug #%1" ).arg( pluginno ) );
-
-
-/*
-            int numEntry = _generalPage->plugList->childCount();
-            QListViewItem *item = _generalPage->plugList->firstChild();
-            int i = 0;
-            int curI = -1;
-            for (i = 0; i < numEntry; ++i) {
-                QString itemTxt( pluginNameToNumberedItem( item->text(0), 1+i ) );
-         wrapper = _pluginPage->mCryptPlugList->next(), ++i ) {
-        if( ! wrapper->displayName().isEmpty() ) {
-            QString item = pluginNameToNumberedItem( wrapper->displayName(), 1+i );
-            _pluginPage->_certificatesPage->plugListBoxCertConf->insertItem( item );
-            _pluginPage->_signaturePage->plugListBoxSignConf->insertItem(    item );
-            _pluginPage->_encryptionPage->plugListBoxEncryptConf->insertItem( item );
-            _pluginPage->_dirservicesPage->plugListBoxDirServConf->insertItem( item );
-
-*/
-
-
-
-    // The signature tab - everything here needs to be written both
-    // into config and into the crypt plug wrapper.
-
-    // Sign Messages group box
-    if( _signaturePage->sigDialog->signAllPartsRB->isChecked() ) {
-        wrapper->setSignEmail( SignEmail_SignAll );
-        config->writeEntry( "SignEmail", SignEmail_SignAll );
-    } else if( _signaturePage->sigDialog->askEachPartRB->isChecked() ) {
-        wrapper->setSignEmail( SignEmail_Ask );
-        config->writeEntry( "SignEmail", SignEmail_Ask );
-    } else {
-        wrapper->setSignEmail( SignEmail_DontSign );
-        config->writeEntry( "SignEmail", SignEmail_DontSign );
-    }
-    bool warnSendUnsigned = _signaturePage->sigDialog->warnUnsignedCB->isChecked();
-    wrapper->setWarnSendUnsigned( warnSendUnsigned );
-    config->writeEntry( "WarnSendUnsigned", warnSendUnsigned );
-
-    // Signature Compound Mode group box
-    if( _signaturePage->sigDialog->sendSigOpaqueRB->isChecked() ) {
-        wrapper->setSignatureCompoundMode( SignatureCompoundMode_Opaque );
-        config->writeEntry( "SignatureCompoundMode", SignatureCompoundMode_Opaque );
-    } else if( _signaturePage->sigDialog->sendSigMultiPartRB->isChecked() ) {
-        wrapper->setSignatureCompoundMode( SignatureCompoundMode_Detached);
-        config->writeEntry( "SignatureCompoundMode", SignatureCompoundMode_Detached );
-    } else {
-        wrapper->setSignatureCompoundMode( SignatureCompoundMode_undef );
-        config->writeEntry( "SignatureCompoundMode", SignatureCompoundMode_undef );
-    }
-
-    // Sending Certificates group box
-    if( _signaturePage->sigDialog->dontSendCertificatesRB->isChecked() ) {
-        wrapper->setSendCertificates( SendCert_DontSend );
-        config->writeEntry( "SendCerts", SendCert_DontSend );
-    } else if( _signaturePage->sigDialog->sendYourOwnCertificateRB->isChecked() ) {
-        wrapper->setSendCertificates( SendCert_SendOwn );
-        config->writeEntry( "SendCerts", SendCert_SendOwn );
-    } else if( _signaturePage->sigDialog->sendChainWithoutRootRB->isChecked() ) {
-        wrapper->setSendCertificates( SendCert_SendChainWithoutRoot );
-        config->writeEntry( "SendCerts", SendCert_SendChainWithoutRoot );
-    } else {
-        wrapper->setSendCertificates( SendCert_SendChainWithRoot );
-        config->writeEntry( "SendCerts", SendCert_SendChainWithRoot );
-    }
-
-    // Signature Settings group box
-    QString sigAlgoStr = _signaturePage->sigDialog->signatureAlgorithmCO->currentText();
-    SignatureAlgorithm sigAlgo = SignAlg_SHA1;
-    if( sigAlgoStr == "RSA + SHA-1" )
-        sigAlgo = SignAlg_SHA1;
-    else
-        kdDebug(5006) << "Unknown signature algorithm " << sigAlgoStr << endl;
-    wrapper->setSignatureAlgorithm( sigAlgo );
-    config->writeEntry( "SigAlgo", sigAlgo );
-
-    bool warnSigCertExp = _signaturePage->sigDialog->warnSignatureCertificateExpiresCB->isChecked();
-    wrapper->setSignatureCertificateExpiryNearWarning( warnSigCertExp );
-    config->writeEntry( "SigCertWarnNearExpire", warnSigCertExp );
-
-    int warnSigCertExpInt = _signaturePage->sigDialog->warnSignatureCertificateExpiresSB->value();
-    wrapper->setSignatureCertificateExpiryNearInterval( warnSigCertExpInt );
-    config->writeEntry( "SigCertWarnNearExpireInt", warnSigCertExpInt );
-
-    bool warnCACertExp = _signaturePage->sigDialog->warnCACertificateExpiresCB->isChecked();
-    wrapper->setCACertificateExpiryNearWarning( warnCACertExp );
-    config->writeEntry( "CACertWarnNearExpire", warnCACertExp );
-
-    int warnCACertExpInt = _signaturePage->sigDialog->warnCACertificateExpiresSB->value();
-    wrapper->setCACertificateExpiryNearInterval( warnCACertExpInt );
-    config->writeEntry( "CACertWarnNearExpireInt", warnCACertExpInt );
-
-    bool warnRootCertExp = _signaturePage->sigDialog->warnRootCertificateExpiresCB->isChecked();
-    wrapper->setRootCertificateExpiryNearWarning( warnRootCertExp );
-    config->writeEntry( "RootCertWarnNearExpire", warnRootCertExp );
-
-    int warnRootCertExpInt = _signaturePage->sigDialog->warnRootCertificateExpiresSB->value();
-    wrapper->setRootCertificateExpiryNearInterval( warnRootCertExpInt );
-    config->writeEntry( "RootCertWarnNearExpireInt", warnRootCertExpInt );
-
-    bool warnNoCertificate = _signaturePage->sigDialog->warnAddressNotInCertificateCB->isChecked();
-    wrapper->setWarnNoCertificate( warnNoCertificate );
-    config->writeEntry( "WarnEmailNotInCert", warnNoCertificate );
-
-    // PIN Entry group box
-    if( _signaturePage->sigDialog->pinOncePerSessionRB->isChecked() ) {
-        wrapper->setNumPINRequests( PinRequest_OncePerSession );
-        config->writeEntry( "NumPINRequests", PinRequest_OncePerSession );
-    } else if( _signaturePage->sigDialog->pinAlwaysRB->isChecked() ) {
-        wrapper->setNumPINRequests( PinRequest_Always );
-        config->writeEntry( "NumPINRequests", PinRequest_Always );
-    } else if( _signaturePage->sigDialog->pinAddCertificatesRB->isChecked() ) {
-        wrapper->setNumPINRequests( PinRequest_WhenAddingCerts );
-        config->writeEntry( "NumPINRequests", PinRequest_WhenAddingCerts );
-    } else if( _signaturePage->sigDialog->pinAlwaysWhenSigningRB->isChecked() ) {
-        wrapper->setNumPINRequests( PinRequest_AlwaysWhenSigning );
-        config->writeEntry( "NumPINRequests", PinRequest_AlwaysWhenSigning );
-    } else {
-        wrapper->setNumPINRequests( PinRequest_AfterMinutes );
-        config->writeEntry( "NumPINRequests", PinRequest_AfterMinutes );
-    }
-    int pinInt = _signaturePage->sigDialog->pinIntervalSB->value();
-    wrapper->setNumPINRequestsInterval( pinInt );
-    config->writeEntry( "NumPINRequestsInt", pinInt );
-
-    // Save Messages group box
-    bool saveSigs = _signaturePage->sigDialog->saveSentSigsCB->isChecked();
-    wrapper->setSaveSentSignatures( saveSigs );
-    config->writeEntry( "SaveSentSigs", saveSigs );
-
-    // The encryption tab - everything here needs to be written both
-    // into config and into the crypt plug wrapper.
-
-    // Encrypt Messages group box
-    if( _encryptionPage->encDialog->encryptAllPartsRB->isChecked() ) {
-        wrapper->setEncryptEmail( EncryptEmail_EncryptAll );
-        config->writeEntry( "EncryptEmail", EncryptEmail_EncryptAll );
-    } else if( _encryptionPage->encDialog->askEachPartRB->isChecked() ) {
-        wrapper->setEncryptEmail( EncryptEmail_Ask );
-        config->writeEntry( "EncryptEmail", EncryptEmail_Ask );
-    } else {
-        wrapper->setEncryptEmail( EncryptEmail_DontEncrypt );
-        config->writeEntry( "EncryptEmail", EncryptEmail_DontEncrypt );
-    }
-    bool warnSendUnencrypted = _encryptionPage->encDialog->warnUnencryptedCB->isChecked();
-    wrapper->setWarnSendUnencrypted( warnSendUnencrypted );
-    config->writeEntry( "WarnSendUnencrypted", warnSendUnencrypted );
-
-    // Encryption Settings group box
-    QString encAlgoStr = _encryptionPage->encDialog->encryptionAlgorithmCO->currentText();
-    EncryptionAlgorithm encAlgo = EncryptAlg_RSA;
-    if( encAlgoStr == "RSA" )
-        encAlgo = EncryptAlg_RSA;
-    else if( encAlgoStr == "Triple-DES" )
-        encAlgo = EncryptAlg_TripleDES;
-    else if( encAlgoStr == "SHA-1" )
-        encAlgo = EncryptAlg_SHA1;
-    else
-        kdDebug(5006) << "Unknown encryption algorithm " << encAlgoStr << endl;
-    wrapper->setEncryptionAlgorithm( encAlgo );
-    config->writeEntry( "EncryptAlgo", encAlgo );
-
-    bool recvCertExp = _encryptionPage->encDialog->warnReceiverCertificateExpiresCB->isChecked();
-    wrapper->setReceiverCertificateExpiryNearWarning( recvCertExp );
-   config->writeEntry( "WarnRecvCertNearExpire", recvCertExp );
-
-    int recvCertExpInt = _encryptionPage->encDialog->warnReceiverCertificateExpiresSB->value();
-    wrapper->setReceiverCertificateExpiryNearWarningInterval( recvCertExpInt );
-    config->writeEntry( "WarnRecvCertNearExpireInt", recvCertExpInt );
-
-    bool certChainExp = _encryptionPage->encDialog->warnChainCertificateExpiresCB->isChecked();
-   wrapper->setCertificateInChainExpiryNearWarning( certChainExp );
-    config->writeEntry( "WarnCertInChainNearExpire", certChainExp );
-
-   int certChainExpInt = _encryptionPage->encDialog->warnChainCertificateExpiresSB->value();
-    wrapper->setCertificateInChainExpiryNearWarningInterval( certChainExpInt );
-    config->writeEntry( "WarnCertInChainNearExpireInt", certChainExpInt );
-
-    bool recvNotInCert = _encryptionPage->encDialog->warnReceiverNotInCertificateCB->isChecked();
-    wrapper->setReceiverEmailAddressNotInCertificateWarning( recvNotInCert );
-   config->writeEntry( "WarnRecvAddrNotInCert", recvNotInCert );
-
-    // CRL group box
-    bool useCRL = _encryptionPage->encDialog->useCRLsCB->isChecked();
-    wrapper->setEncryptionUseCRLs( useCRL );
-    config->writeEntry( "EncryptUseCRLs", useCRL );
-
-    bool warnCRLExp = _encryptionPage->encDialog->warnCRLExpireCB->isChecked();
-    wrapper->setEncryptionCRLExpiryNearWarning( warnCRLExp );
-    config->writeEntry( "EncryptCRLWarnNearExpire", warnCRLExp );
-
-    int warnCRLExpInt = _encryptionPage->encDialog->warnCRLExpireSB->value();
-    wrapper->setEncryptionCRLNearExpiryInterval( warnCRLExpInt );
-    config->writeEntry( "EncryptCRLWarnNearExpireInt", warnCRLExpInt );
-
-    // Save Messages group box
-    bool saveEnc = _encryptionPage->encDialog->storeEncryptedCB->isChecked();
-    wrapper->setSaveMessagesEncrypted( saveEnc );
-    config->writeEntry( "SaveMsgsEncrypted", saveEnc );
-
-    // Certificate Path Check group box
-    bool checkPath = _encryptionPage->encDialog->checkCertificatePathCB->isChecked();
-    wrapper->setCheckCertificatePath( checkPath );
-    config->writeEntry( "CheckCertPath", checkPath );
-
-    bool checkToRoot = _encryptionPage->encDialog->alwaysCheckRootRB->isChecked();
-    wrapper->setCheckEncryptionCertificatePathToRoot( checkToRoot );
-    config->writeEntry( "CheckEncryptCertToRoot", checkToRoot );
-
-    // The directory services tab - everything here needs to be written both
-    // into config and into the crypt plug wrapper.
-
-    uint numDirServers = _dirservicesPage->dirservDialog->x500LV->childCount();
-    CryptPlugWrapper::DirectoryServer* servers = new CryptPlugWrapper::DirectoryServer[numDirServers];
-    config->writeEntry( "NumDirServers", numDirServers );
-    QListViewItemIterator lvit( _dirservicesPage->dirservDialog->x500LV );
-    QListViewItem* current;
-    int pos = 0;
-    while( ( current = lvit.current() ) ) {
-        ++lvit;
-        const char* servername = current->text( 0 ).utf8();
-        int port = current->text( 1 ).toInt();
-        const char* description = current->text( 2 ).utf8();
-        servers[pos].servername = new char[strlen( servername )+1];
-        strcpy( servers[pos].servername, servername );
-        servers[pos].port = port;
-        servers[pos].description = new char[strlen( description)+1];
-        strcpy( servers[pos].description, description );
-        config->writeEntry( QString( "DirServer%1Name" ).arg( pos ),
-                            current->text( 0 ) );
-        config->writeEntry( QString( "DirServer%1Port" ).arg( pos ),
-                            port );
-        config->writeEntry( QString( "DirServer%1Descr" ).arg( pos ),
-                            current->text( 2 ) );
-        pos++;
-    }
-    wrapper->setDirectoryServers( servers, numDirServers );
-    for( uint i = 0; i < numDirServers; i++ ) {
-        delete[] servers[i].servername;
-        delete[] servers[i].description;
-    }
-    delete[] servers;
-
-    // Local/Remote Certificates group box
-    if( _dirservicesPage->dirservDialog->firstLocalThenDSCertRB->isChecked() ) {
-        wrapper->setCertificateSource( CertSrc_ServerLocal );
-        config->writeEntry( "CertSource", CertSrc_ServerLocal );
-    } else if( _dirservicesPage->dirservDialog->localOnlyCertRB->isChecked() ) {
-        wrapper->setCertificateSource( CertSrc_Local );
-        config->writeEntry( "CertSource", CertSrc_Local );
-    } else {
-        wrapper->setCertificateSource( CertSrc_Server );
-        config->writeEntry( "CertSource", CertSrc_Server );
-    }
-
-    // Local/Remote CRLs group box
-    if( _dirservicesPage->dirservDialog->firstLocalThenDSCRLRB->isChecked() ) {
-        wrapper->setCRLSource( CertSrc_ServerLocal );
-        config->writeEntry( "CRLSource", CertSrc_ServerLocal );
-    } else if( _dirservicesPage->dirservDialog->localOnlyCRLRB->isChecked() ) {
-        wrapper->setCRLSource( CertSrc_Local );
-        config->writeEntry( "CRLSource", CertSrc_Local );
-    } else {
-        wrapper->setCRLSource( CertSrc_Server );
-        config->writeEntry( "CRLSource", CertSrc_Server );
-    }
-}
-
-
-void PluginPage::slotPlugListBoxConfigurationChanged( int item )
-{
-    if( -1 < item ) {
-        QListViewItem* lvi = _generalPage->plugList->firstChild();
-        for (int i = 0; i < item; ++i)
-            lvi = lvi->nextSibling();
-        _generalPage->plugList->setCurrentItem( lvi );
-        _generalPage->plugList->setSelected( lvi, true );
-    }
-}
-
-
-
-
-GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
-    ConfigurationPage( parent, name ),
-    _pluginPage( parent ),
-    currentPlugItem(0)
+SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char * name )
+  : ConfigurationPage( parent, name ),
+    mCryptPlugList( kernel->cryptPlugList() )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this, KDialog::marginHint(),
                                        KDialog::spacingHint() );
@@ -4533,25 +3510,29 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
   plugList->setSorting( -1 );
   plugList->header()->setClickEnabled( false );
   connect( plugList, SIGNAL(selectionChanged()),
-           _pluginPage, SLOT(  slotPlugSelectionChanged()) );
+           SLOT(  slotPlugSelectionChanged()) );
   glay->addMultiCellWidget( plugList, 0, 5, 0, 1 );
 
   addCryptPlugButton       = new QPushButton( i18n("Add &New Plugin"), this );
   removeCryptPlugButton    = new QPushButton( i18n("&Remove Current"), this );
   activateCryptPlugButton  = new QPushButton( i18n("Ac&tivate"),       this );
-  connect( addCryptPlugButton,       SIGNAL(clicked()),
-                                          this, SLOT(  slotNewPlugIn()) );
-  addCryptPlugButton->setEnabled( false );
-  connect( removeCryptPlugButton,    SIGNAL(clicked()),
-                                          this, SLOT(  slotDeletePlugIn()) );
-  connect( activateCryptPlugButton,  SIGNAL(clicked()),
-                                          this, SLOT(  slotActivatePlugIn()) );
-  addCryptPlugButton->setAutoDefault(       false );
-  removeCryptPlugButton->setAutoDefault(    false );
-  activateCryptPlugButton->setAutoDefault(  false );
+  configureCryptPlugButton = new QPushButton( i18n("Confi&gure..."),   this );
+  connect( addCryptPlugButton, SIGNAL(clicked()),
+	   SLOT(slotNewPlugIn()) );
+  connect( removeCryptPlugButton, SIGNAL(clicked()),
+	   SLOT(slotDeletePlugIn()) );
+  connect( activateCryptPlugButton, SIGNAL(clicked()),
+	   SLOT(slotActivatePlugIn()) );
+  connect( configureCryptPlugButton, SIGNAL(clicked()),
+	   SLOT(slotConfigurePlugIn()) );
+  addCryptPlugButton->setAutoDefault( false );
+  removeCryptPlugButton->setAutoDefault( false );
+  activateCryptPlugButton->setAutoDefault( false );
+  configureCryptPlugButton->setAutoDefault( false );
   glay->addWidget( addCryptPlugButton,       0, 2 );
   glay->addWidget( removeCryptPlugButton,    1, 2 );
-  glay->addWidget( activateCryptPlugButton,  3, 2 );
+  glay->addWidget( activateCryptPlugButton,  2, 2 );
+  glay->addWidget( configureCryptPlugButton, 3, 2 );
 
   // "name" and "location" and "Update URL" line edits and labels:
   plugNameEdit = new QLineEdit( this );
@@ -4569,7 +3550,7 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
   plugLocationRequester->setEnabled( false );
   glay->addWidget( plugLocationRequester, 7, 1 );
   connect( plugLocationRequester, SIGNAL(textChanged(const QString&)),
-    this, SLOT(slotPlugLocationChanged(const QString&)) );
+	   SLOT(slotPlugLocationChanged(const QString&)) );
 
   plugUpdateURLEdit = new QLineEdit( this );
   plugUpdateURLEdit->setEnabled( false );
@@ -4577,464 +3558,197 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
   glay->addWidget( plugUpdateURLLabel, 8, 0 );
   glay->addWidget( plugUpdateURLEdit,  8, 1 );
   connect( plugUpdateURLEdit, SIGNAL(textChanged(const QString&)),
-    this, SLOT(slotPlugUpdateURLChanged(const QString&)) );
+	   SLOT(slotPlugUpdateURLChanged(const QString&)) );
 }
 
-void GeneralPage::dismiss()
+void SecurityPage::CryptPlugTab::setup()
 {
-    QListViewItem *tmp;
-    while ( currentPlugItem &&
-            currentPlugItem->text(0).isEmpty() &&
-            currentPlugItem->text(1).isEmpty() &&
-            currentPlugItem->text(2).isEmpty() ) {
-        tmp = currentPlugItem;
-        if ( currentPlugItem->itemBelow() )
-            currentPlugItem = currentPlugItem->itemBelow();
-        else if ( currentPlugItem->itemAbove() )
-            currentPlugItem = currentPlugItem->itemAbove();
-        else
-            currentPlugItem = 0;
-        delete tmp;
+  kdDebug() << "CryptPlugTab::setup(): found " << mCryptPlugList->count()
+	    << " CryptPlugWrappers." << endl;
+  plugList->clear();
+
+  // populate the plugin list:
+  int i = 0;
+  QListViewItem * top = 0;
+  for ( CryptPlugWrapperListIterator it( *mCryptPlugList ) ; it.current() ; ++it, ++i ) {
+    kdDebug() << "processing { \"" << (*it)->displayName()
+	      << "\", \"" << (*it)->libName()
+	      << "\", " << (*it)->active() << " }" << endl;
+    if( !(*it)->displayName().isEmpty() ) {
+      top = new QListViewItem( plugList, top,
+			       (*it)->displayName(),
+			       (*it)->libName(),
+			       (*it)->updateURL(),
+			       (*it)->active() ? "*" : "",
+			       ( (*it)->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) ? "*" : "" );
     }
-    if ( currentPlugItem == 0 ) {
-        plugNameEdit->setEnabled( false );
-        plugLocationRequester->setEnabled( false );
-        plugUpdateURLEdit->setEnabled( false );
-    }
+  }
+
+  if( plugList->childCount() > 0 ) {
+    plugList->setCurrentItem( plugList->firstChild() );
+    plugList->setSelected( plugList->firstChild(), true );
+  }
+
+  slotPlugSelectionChanged();
 }
 
-void GeneralPage::setup()
-{
-    KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config, "General");
-    QListViewItem *top = 0;
-    plugList->clear();
-    _pluginPage->_certificatesPage->plugListBoxCertConf->clear();
-    _pluginPage->_signaturePage->plugListBoxSignConf->clear();
-    _pluginPage->_encryptionPage->plugListBoxEncryptConf->clear();
-    _pluginPage->_dirservicesPage->plugListBoxDirServConf->clear();
+void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() { 
+  QListViewItem * item = plugList->selectedItem();
 
-    int i = 0;
-    for( CryptPlugWrapper* wrapper = _pluginPage->mCryptPlugList->first(); wrapper;
-         wrapper = _pluginPage->mCryptPlugList->next(), ++i ) {
-        if( ! wrapper->displayName().isEmpty() ) {
-            QString item = pluginNameToNumberedItem( wrapper->displayName(), 1+i );
-            _pluginPage->_certificatesPage->plugListBoxCertConf->insertItem( item );
-            _pluginPage->_signaturePage->plugListBoxSignConf->insertItem(    item );
-            _pluginPage->_encryptionPage->plugListBoxEncryptConf->insertItem( item );
-            _pluginPage->_dirservicesPage->plugListBoxDirServConf->insertItem( item );
-            top = new QListViewItem( plugList, top,
-                                     wrapper->displayName(),
-                                     wrapper->libName(),
-                                     wrapper->updateURL(),
-                                     wrapper->active() ? "*" : "",
-                                     ( wrapper->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) ? "*" : "" );
-        }
-    }
+  // enable/disable action buttons...
+  removeCryptPlugButton->setEnabled( item );
+  activateCryptPlugButton->setEnabled( item );
+  configureCryptPlugButton->setEnabled( item );
+  // ...and line edits:
+  plugNameEdit->setEnabled( item );
+  plugLocationRequester->setEnabled( item );
+  plugUpdateURLEdit->setEnabled( item );
 
-    if( _pluginPage->mCryptPlugList->count() )
-        _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( true );
-    else
-        _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( false );
+  // set text of activate button:
+  activateCryptPlugButton->setText( item && item->text( 3 ).isEmpty() ?
+				    i18n("Ac&tivate") : i18n("Deac&tivate") );
 
-    if( 0 < plugList->childCount() ) {
-        plugList->setCurrentItem( plugList->firstChild());
-        plugList->setSelected(   plugList->firstChild(), TRUE);
-    }
-
-    _pluginPage->slotPlugSelectionChanged();
-}
-
-
-void GeneralPage::apply()
-{
-    // Save the "General" tab
-    savePluginsConfig( true );
-
-    // Find the number of the current plugin.
-    int currentPlugin = _pluginPage->_signaturePage->plugListBoxSignConf->currentItem();
-    Q_ASSERT( currentPlugin == _pluginPage->_certificatesPage->plugListBoxCertConf->currentItem() );
-    Q_ASSERT( currentPlugin == _pluginPage->_encryptionPage->plugListBoxEncryptConf->currentItem() );
-    Q_ASSERT( currentPlugin == _pluginPage->_dirservicesPage->plugListBoxDirServConf->currentItem() );
-
-    _pluginPage->savePluginConfig( currentPlugin );
-}
-
-
-void GeneralPage::savePluginsConfig( bool silent )
-{
-    // The "General" tab (lists the plugins)
-    int numValidEntry = 0;
-    int numEntry = plugList->childCount();
-    QListViewItem *item = plugList->firstChild();
-    KConfig* config = kapp->config();
-    for (int i = 0; i < numEntry; ++i) {
-        KConfigGroupSaver saver(config,
-                                QString("CryptPlug #%1").arg( numValidEntry ));
-        if( ! item->text(0).isEmpty() ) {
-            bool isActive = 0 < item->text(3).length();
-            config->writeEntry( "name",     item->text(0) );
-            config->writeEntry( "location", item->text(1) );
-            config->writeEntry( "updates",  item->text(2) );
-            config->writeEntry( "active",   isActive ? "1" : "0" );
-            if( _pluginPage && _pluginPage->mCryptPlugList ) {
-                CryptPlugWrapper* wrapper = _pluginPage->mCryptPlugList->at( numValidEntry );
-                if( wrapper ) {
-                    wrapper->setDisplayName( item->text(0) );
-                    if( wrapper->libName() != item->text(1) ) {
-                        wrapper->deinitialize();
-                        wrapper->setLibName( item->text(1) );
-                        CryptPlugWrapper::InitStatus status;
-                        QString errorMsg;
-                        wrapper->initialize(&status, &errorMsg);
-                        if( CryptPlugWrapper::InitStatus_Ok != status ) {
-                            if( !silent )
-                                _pluginPage->mCryptPlugList->showPluginInitError( wrapper, status, errorMsg );
-                            currentPlugItem->setText(4, "");
-                        } else {
-                            currentPlugItem->setText(4, "*");
-                        }
-                    }
-                    wrapper->setUpdateURL( item->text(2) );
-                    wrapper->setActive( isActive ? true : false );
-                }
-            }
-            numValidEntry++;
-        }
-        item = item->nextSibling();
-    }
-    config->setGroup( "General" );
-    config->writeEntry("crypt-plug-count", numValidEntry );
-}
-
-
-void GeneralPage::installProfile( KConfig* /*profile*/ )
-{
-    // PENDING(kalle) Implement this
-    qDebug( "GeneralPage::installProfile() not implemented" );
-}
-
-
-void GeneralPage::slotPlugNameChanged( const QString &text )
-{
-  if( !currentPlugItem )
-    currentPlugItem = plugList->lastItem();
-  if( currentPlugItem )
-    currentPlugItem->setText(0, text );
-
-  addCryptPlugButton->setEnabled( !text.isEmpty() );
-}
-
-void GeneralPage::slotPlugLocationChanged( const QString &text )
-{
-  if( !currentPlugItem )
-    currentPlugItem = plugList->lastItem();
-  if( currentPlugItem )
-    currentPlugItem->setText(1, text );
-
-  addCryptPlugButton->setEnabled( !text.isEmpty() );
-}
-
-void GeneralPage::slotPlugUpdateURLChanged( const QString &text )
-{
-  if( !currentPlugItem )
-    currentPlugItem = plugList->lastItem();
-  if( currentPlugItem )
-    currentPlugItem->setText(2, text );
-}
-
-void GeneralPage::slotNewPlugIn( void )
-{
-    CryptPlugWrapper* newWrapper = new CryptPlugWrapper( this, "", "", "" );
-    _pluginPage->mCryptPlugList->append( newWrapper );
-
-    QListViewItem *listItem = new QListViewItem( plugList,
-                                                 plugList->lastItem(),
-                                                 "", "", "", "" );
-    plugList->setCurrentItem( listItem );
-    plugList->setSelected( listItem, true );
-    currentPlugItem = plugList->selectedItem();
-
-    if( currentPlugItem != 0 ) {
-        plugNameEdit->setEnabled( true);
-        plugLocationRequester->setEnabled(  true);
-        plugUpdateURLEdit->setEnabled( true);
-        plugNameEdit->setFocus();
-    }
-}
-
-void GeneralPage::slotDeletePlugIn( void )
-{
-    // PENDING(kalle) Delete from mCryptPlugList as well.
-    if( currentPlugItem != 0 )
-  {
-    QListViewItem *next = currentPlugItem->itemAbove();
-    if( next == 0 )
-    {
-      next = currentPlugItem->itemBelow();
-    }
-
+  // fill/clear edit fields
+  if ( item ) { // fill
+    plugNameEdit->setText( item->text( 0 ) );
+    plugLocationRequester->setURL( item->text( 1 ) );
+    plugUpdateURLEdit->setText( item->text( 2 ) );
+  } else { // clear
     plugNameEdit->clear();
     plugLocationRequester->clear();
     plugUpdateURLEdit->clear();
-    plugNameEdit->setEnabled(      false);
-    plugLocationRequester->setEnabled(  false);
-    plugUpdateURLEdit->setEnabled( false);
-
-    plugList->takeItem( currentPlugItem );
-    currentPlugItem = 0;
-
-    if( next != 0 )
-    {
-     plugList->setSelected( next, true );
-    }
   }
 }
 
-void GeneralPage::slotActivatePlugIn( void )
-{
-    if ( !currentPlugItem)
-        return;
-    // find out whether the plug-in is to be activated or de-activated
-    bool activate = (currentPlugItem->text( 3 ) == "");
-    // (De)activate this plug-in
-    // and deactivate all other plugins if necessarry
-    QListViewItemIterator lvit( plugList );
-    QListViewItem* current;
-    int pos = 0;
-    while( ( current = lvit.current() ) )
-    {
-        CryptPlugWrapper* plug = _pluginPage->mCryptPlugList->at( pos );
-        if( plug ) {
-            if(  current == currentPlugItem )
-            {
-                // This is the one the user wants to (de)activate
-                plug->setActive( activate );
-                current->setText( 3, activate ? "*" : "" );
-            }
-            else
-            {
-                // This is one of the other entries
-                plug->setActive( false );
-                current->setText( 3, "" );
-            }
-        }
-        ++lvit;
-        ++pos;
-    }
-    if( activate )
-        activateCryptPlugButton->setText( i18n("Deac&tivate")  );
-    else
-        activateCryptPlugButton->setText( i18n("Ac&tivate") );
-}
-
-
-CertificatesPage::CertificatesPage( PluginPage* parent,
-                                    const char* name ) :
-    ConfigurationPage( parent, name ),
-    _pluginPage( parent )
-{
-  QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
-  QHBoxLayout *hlay = new QHBoxLayout( vlay );
-  plugListBoxCertConf = new QComboBox( this, "plugListBoxCertConf" );
-  hlay->addWidget( new QLabel( plugListBoxCertConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
-  hlay->addWidget( plugListBoxCertConf, 2 );
-  KSeparator *hline = new KSeparator( KSeparator::HLine, this);
-  vlay->addWidget( hline );
-
-
-#ifdef CERTIFICATE_HANDLING_IN_KMAIL
-  certDialog = new CertificateHandlingDialogImpl( this, "CertificateHandlingDialogImpl" );
-  if ( certDialog ) {
-    vlay->addWidget( certDialog );
-    vlay->addStretch(10);
-  }
-#else
-  certDialog = 0;
-
-  startCertManagerPB = new QPushButton( i18n( "&Start Certificate Manager" ), this, "startcertmanagerpb" );
-  connect( startCertManagerPB, SIGNAL( clicked() ),
-           this, SLOT( slotStartCertManager() ) );
-  startCertManagerPB->setFixedSize( startCertManagerPB->sizeHint() );
-  vlay->addWidget( startCertManagerPB, 0, AlignCenter | AlignVCenter );
-#endif
-}
-
-
-void CertificatesPage::slotStartCertManager()
-{
-	if ( plugListBoxCertConf->count() && (0 <= plugListBoxCertConf->currentItem()) )
-	{
-	    KProcess certManagerProc; // save to create on the heap, since
-                              // there is no parent
-    	certManagerProc << "kgpgcertmanager";
-    	certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->displayName();
-    	certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->libName();
-
-	    if( !certManagerProc.start( KProcess::DontCare ) )
-    	    KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
-        	                    i18n( "KMail Error" ) );
-        else
-            kdDebug(5006) << "\nCertificatesPage::slotStartCertManager(): certificate manager started.\n" << endl;
+void SecurityPage::CryptPlugTab::apply() { 
+  int i = 0;
+  QListViewItemIterator it( plugList );
+  for ( ; it.current() ; ++it ) {
+    if ( it.current()->text( 0 ).isEmpty() )
+      continue;
+    KConfigGroup config( kapp->config(), QString("CryptPlug #%1").arg( i ) );
+    config.writeEntry( "name", it.current()->text( 0 ) );
+    config.writeEntry( "location", it.current()->text( 1 ) );
+    config.writeEntry( "updates", it.current()->text( 2 ) );
+    config.writeEntry( "active", !it.current()->text( 3 ).isEmpty() );
+    if ( mCryptPlugList ) {
+      CryptPlugWrapper * wrapper = mCryptPlugList->at( i );
+      if ( wrapper ) {
+	wrapper->setDisplayName( it.current()->text( 0 ) );
+	if ( wrapper->libName() != it.current()->text( 1 ) ) {
+	  wrapper->deinitialize();
+	  wrapper->setLibName( it.current()->text( 1 ) );
+	  CryptPlugWrapper::InitStatus status;
+	  QString errorMsg;
+	  wrapper->initialize( &status, &errorMsg );
+	  if( CryptPlugWrapper::InitStatus_Ok != status )
+	    it.current()->setText( 4, QString::null );
+	  else
+	    it.current()->setText( 4, "*" );
 	}
-    // process continues to run even after the KProcess object goes
-    // out of scope here, since it is started in DontCare run mode.
+	wrapper->setUpdateURL( it.current()->text( 2 ) );
+	wrapper->setActive( !it.current()->text( 3 ).isEmpty() );
+      }
+    }
+    ++i;
+  }
+  kdDebug() << "######### found " << i << " cryptplugwrappers." << endl;
+  KConfigGroup general( kapp->config(), "General" );
+  general.writeEntry("crypt-plug-count", i );
 }
 
-
-void CertificatesPage::setup()
+void SecurityPage::CryptPlugTab::slotPlugNameChanged( const QString & text ) 
 {
-    // no need to call anything here; the CryptPlugWrapperList is
-    // always uptodate
+  QListViewItem * item = plugList->selectedItem();
+  if ( !item ) return;
+
+  item->setText( 0, text );
 }
 
-
-void CertificatesPage::apply()
+void SecurityPage::CryptPlugTab::slotPlugLocationChanged( const QString & text ) 
 {
-    // nothing to do here, GeneralPage::apply() has already called
-    // savePluginConfig()
+  QListViewItem * item = plugList->selectedItem();
+  if ( !item ) return;
+
+  item->setText( 1, text );
 }
 
-
-void CertificatesPage::installProfile( KConfig* /*profile*/ )
+void SecurityPage::CryptPlugTab::slotPlugUpdateURLChanged( const QString & text )
 {
-    // PENDING(kalle) Implement this
-    qDebug( "PluginPage::CertificatesPage::installProfile() not implemented" );
+  QListViewItem * item = plugList->selectedItem();
+  if ( !item ) return;
+
+  item->setText( 2, text );
 }
 
-
-
-
-SignaturePage::SignaturePage( PluginPage* parent,
-                                          const char* name ) :
-    ConfigurationPage( parent, name ),
-    _pluginPage( parent )
+void SecurityPage::CryptPlugTab::slotNewPlugIn()
 {
-  QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
-  QHBoxLayout *hlay = new QHBoxLayout( vlay );
-  plugListBoxSignConf = new QComboBox( this, "plugListBoxSignConf" );
-  hlay->addWidget( new QLabel( plugListBoxSignConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
-  hlay->addWidget( plugListBoxSignConf, 2 );
-  connect( plugListBoxSignConf, SIGNAL( activated( int ) ),
-    _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
-  KSeparator *hline = new KSeparator( KSeparator::HLine, this);
-  vlay->addWidget( hline );
-  sigDialog = new SignatureConfigurationDialogImpl( this, "SignatureConfigurationDialogLayout" );
-  if ( sigDialog ) {
-    vlay->addWidget( sigDialog );
-    vlay->addStretch(10);
+  CryptPlugWrapper * newWrapper = new CryptPlugWrapper( this, "", "", "" );
+  mCryptPlugList->append( newWrapper );
+
+  QListViewItem * item = new QListViewItem( plugList, plugList->lastItem() );
+  plugList->setCurrentItem( item );
+  plugList->setSelected( item, true );
+
+  //slotPlugSelectionChanged();// ### ???
+}
+
+void SecurityPage::CryptPlugTab::slotDeletePlugIn()
+{
+  // PENDING(kalle) Delete from mCryptPlugList as well.
+  QListViewItem * item = plugList->selectedItem();
+  if ( !item ) return;
+
+  delete item;
+  plugList->setSelected( plugList->currentItem(), true );
+}
+
+void SecurityPage::CryptPlugTab::slotConfigurePlugIn() {
+  int i = 0;
+  for ( QListViewItemIterator it( plugList ) ; it.current() ; ++it, ++i ) {
+    if ( it.current()->isSelected() ) {
+      CryptPlugWrapper * wrapper = mCryptPlugList->at( i );
+      if ( wrapper ) {
+	CryptPlugConfigDialog dialog( wrapper, i, i18n("Configure %1 Plugin").arg( it.current()->text( 0 ) ) );
+	dialog.exec();
+      }
+      break;
+    }
   }
 }
 
-
-void SignaturePage::setup()
+void SecurityPage::CryptPlugTab::slotActivatePlugIn()
 {
-    // no need to call anything here; the CryptPlugWrapperList is
-    // always uptodate
-}
+  QListViewItem * item = plugList->selectedItem();
+  if ( !item ) return;
 
-
-void SignaturePage::apply()
-{
-    // nothing to do here, GeneralPage::apply() has already called
-    // savePluginConfig()
-}
-
-
-void SignaturePage::installProfile( KConfig* /*profile*/ )
-{
-    // PENDING(kalle) Implement this
-    qDebug( "PluginPage::SignaturePage::installProfile() not implemented" );
-}
-
-
-EncryptionPage::EncryptionPage( PluginPage* parent,
-                                            const char* name ) :
-    ConfigurationPage( parent, name ),
-    _pluginPage( parent )
-{
-  QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
-  QHBoxLayout* hlay = new QHBoxLayout( vlay );
-  plugListBoxEncryptConf = new QComboBox( this, "plugListBoxEncryptConf" );
-  hlay->addWidget( new QLabel( plugListBoxEncryptConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
-  hlay->addWidget( plugListBoxEncryptConf, 2 );
-  connect( plugListBoxEncryptConf, SIGNAL( activated( int ) ),
-    _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
-  KSeparator* hline = new KSeparator( KSeparator::HLine, this);
-  vlay->addWidget( hline );
-  encDialog = new EncryptionConfigurationDialogImpl( this, "EncryptionConfigurationDialog" );
-  if ( encDialog ) {
-    vlay->addWidget( encDialog );
-    vlay->addStretch(10);
+  // find out whether the plug-in is to be activated or de-activated
+  bool activate = ( item->text( 3 ).isEmpty() );
+  // (De)activate this plug-in
+  // and deactivate all other plugins if necessarry
+  int pos = 0;
+  for ( QListViewItemIterator it( plugList ) ; it.current() ; ++it, ++pos ) {
+    CryptPlugWrapper * plug = mCryptPlugList->at( pos );
+    if( plug ) {
+      if( it.current()->isSelected() ) {
+	// This is the one the user wants to (de)activate
+	plug->setActive( activate );
+	it.current()->setText( 3, activate ? "*" : "" );
+      } else {
+	// This is one of the other entries
+	plug->setActive( false );
+	it.current()->setText( 3, QString::null );
+      }
+    }
   }
-}
-
-
-void EncryptionPage::setup()
-{
-    // no need to call anything here; the CryptPlugWrapperList is
-    // always uptodate
-}
-
-
-void EncryptionPage::apply()
-{
-    // nothing to do here, GeneralPage::apply() has already called
-    // savePluginConfig()
+  if( activate )
+    activateCryptPlugButton->setText( i18n("Deac&tivate")  );
+  else
+    activateCryptPlugButton->setText( i18n("Ac&tivate") );
 }
 
 
 
-void EncryptionPage::installProfile( KConfig* /*profile*/ )
-{
-    // PENDING(kalle) Implement this
-    qDebug( "EncryptionPage::installProfile() not implemented" );
-}
 
-
-DirServicesPage::DirServicesPage( PluginPage* parent,
-                                              const char* name ) :
-    ConfigurationPage( parent, name ),
-    _pluginPage( parent )
-{
-  QVBoxLayout* vlay = new QVBoxLayout( this, KDialog::spacingHint() );
-  QHBoxLayout* hlay = new QHBoxLayout( vlay );
-  plugListBoxDirServConf = new QComboBox( this, "plugListBoxDirServConf" );
-  hlay->addWidget( new QLabel( plugListBoxDirServConf, i18n("Select &plugin:"), this ), 0, AlignVCenter );
-  hlay->addWidget( plugListBoxDirServConf, 2 );
-  connect( plugListBoxDirServConf, SIGNAL( activated( int ) ),
-    _pluginPage, SLOT( slotPlugListBoxConfigurationChanged( int ) ) );
-  KSeparator* hline = new KSeparator( KSeparator::HLine, this);
-  vlay->addWidget( hline );
-  dirservDialog = new DirectoryServicesConfigurationDialogImpl( this, "DirectoryServicesConfigurationDialog" );
-  if ( dirservDialog ) {
-    vlay->addWidget( dirservDialog );
-    vlay->addStretch(10);
-  }
-}
-
-
-void DirServicesPage::setup()
-{
-    // no need to call anything here; the CryptPlugWrapperList is
-    // always uptodate
-}
-
-
-void DirServicesPage::apply()
-{
-    // nothing to do here, GeneralPage::apply() has already called
-    // savePluginConfig()
-}
-
-
-
-void DirServicesPage::installProfile( KConfig* /*profile*/ )
-{
-    // PENDING(kalle) Implement this
-    qDebug( "DirServicesPage::installProfile() not implemented" );
-}
-
-
-//------------
+//----------------------------
 #include "configuredialog.moc"
