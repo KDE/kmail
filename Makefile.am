@@ -1,8 +1,8 @@
 KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS = . about pics
-INCLUDES = -I$(top_srcdir)/libkdenetwork $(all_includes)
-LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell -lmimelib $(LIB_KAB)
+INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib $(all_includes)
+LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell ../mimelib/libmimelib.la $(LIB_KAB)
 
 bin_PROGRAMS = kmail
 
