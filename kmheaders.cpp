@@ -1903,7 +1903,7 @@ kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
       if (*mTreeToplevel[msgId] && !mItems[i]) {
 	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
 	mItems[i] = hi;
-	recursivelyAddChildren( i, hi );
+	if (!msgId.isEmpty()) recursivelyAddChildren( i, hi );
       }
     }
 
