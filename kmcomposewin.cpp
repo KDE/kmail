@@ -276,6 +276,7 @@ void KMComposeWin::readConfig(void)
 
   kdDebug() << "Default charset: " << (const char*)mDefCharset << endl;
 
+  mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
@@ -957,7 +958,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     bodyDecoded = bodyPart.bodyDecoded();
 
     verifyWordWrapLengthIsAdequate(bodyDecoded);
-    mEditor->setText(bodyDecoded);
+
+    QTextCodec *codec = KGlobal::charsets()->codecForName(mCharset);
+    mEditor->setText(codec->toUnicode(bodyDecoded));
     mEditor->insertLine("\n", -1);
 
     for(i=1; i<num; i++)
@@ -977,19 +980,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     mEditor->setText(codec->toUnicode(mMsg->bodyDecoded()));
   }
 
-  setEditCharset();
-
-  QStringList encodings = encodingAction->items();
-  i = 0;
-  for ( QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it, i++ )
-  // it's safer to compare QFont::CharSet rather that strings directly
-    if (KGlobal::charsets()->nameToID(*it) == KGlobal::charsets()->nameToID(mCharset))
-    {
-      encodingAction->setCurrentItem( i );
-      slotSetCharset();
-      break;
-    }
-
+  setCharset(mCharset);
 
   if( mAutoSign && mayAutoSign )
   {
@@ -1339,6 +1330,28 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::setCharset(const QString& aCharset, bool forceDefault)
+{
+  if (forceDefault && mForceReplyCharset) mCharset = mDefCharset;
+    else mCharset = aCharset;
+  mMsg->setCharset(mCharset);
+
+  QStringList encodings = encodingAction->items();
+  int i = 0;
+  for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
+     ++it, i++ )
+  {
+    if (QTextCodec::codecForName(*it) == QTextCodec::codecForName(mCharset))
+    {
+      encodingAction->setCurrentItem( i );
+      slotSetCharset();
+      break;
+    }
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
   KMAddrBookExternal::launch(this);
@@ -1381,23 +1394,21 @@ void KMComposeWin::slotAddrBookBcc()
 
 
 //-----------------------------------------------------------------------------
-  //-----------------------------------------------------------------------------
-  void KMComposeWin::slotAttachFile()
-  {
-    // Create File Dialog and return selected file(s)
-    // We will not care about any permissions, existence or whatsoever in
-    // this function.
+void KMComposeWin::slotAttachFile()
+{
+  // Create File Dialog and return selected file(s)
+  // We will not care about any permissions, existence or whatsoever in
+  // this function.
 
-    KURL::List files = KFileDialog::getOpenURLs(QString::null, "*", this, i18n("Attach File"));
-    QStringList list = files.toStringList();
-    for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
-      QString name = *it;
-      if(!name.isEmpty()) {
-        addAttach(name);
-      }
+  KURL::List files = KFileDialog::getOpenURLs(QString::null, "*", this, i18n("Attach File"));
+  QStringList list = files.toStringList();
+  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+    QString name = *it;
+    if(!name.isEmpty()) {
+      addAttach(name);
     }
-
   }
+}
 
 
 //-----------------------------------------------------------------------------
@@ -1427,7 +1438,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   {
     int col, line;
     mEditor->getCursorPosition(&line, &col);
-    mEditor->insertAt((*it).data, line, col);
+    mEditor->insertAt(QString::fromLocal8Bit((*it).data), line, col);
     mapAtmLoadData.remove(it);
     return;
   }
@@ -1498,8 +1509,7 @@ void KMComposeWin::slotInsertFile()
 void KMComposeWin::slotSetCharset()
 {
   mCharset = encodingAction->currentText();
-  if (mAtmList.count() <= 0)
-    mMsg->setCharset(mCharset);
+  mMsg->setCharset(mCharset);
   setEditCharset();
 }
 

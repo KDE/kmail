@@ -450,7 +450,7 @@ void KMFldSearchRule::prepare(void)
   mField = mCbxField->currentText();
   mFunc = mCbxFunc->currentItem();
   mValue = mEdtValue->text();
-  mNonLatin = QCString(mValue.latin1()).length() != mValue.length();
+  mNonLatin = mValue.utf8().length() != mValue.length();
 }
 
 

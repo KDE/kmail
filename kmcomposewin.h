@@ -175,6 +175,9 @@ public:
     the composer is closed and the message was not sent. Default: FALSE */
    inline void setAutoDelete(bool f) { mAutoDeleteMsg = f; }
 
+  /** Recode to the specified charset */
+   void setCharset(const QString& aCharset, bool forceDefault = FALSE);
+
 public slots:
  //Actions:
   void slotPrint();
@@ -417,6 +420,7 @@ private:
   };
   QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
   bool mUnicodeFont;
+  bool mForceReplyCharset;
 };
 #endif
 

@@ -1137,6 +1137,7 @@ void KMHeaders::forwardMsg ()
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createForward(),
                          msg->headerField( "X-KMail-Identity" ));
+  win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();
 }
@@ -1152,6 +1153,7 @@ void KMHeaders::redirectMsg()
 
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createRedirect());
+  win->setCharset(msg->codec()->name());
   win->show();
   kernel->kbp()->idle();
 }
@@ -1169,6 +1171,7 @@ void KMHeaders::replyToMsg ()
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createReply(FALSE),
 			 msg->headerField( "X-KMail-Identity" ));
+  win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();
 }
@@ -1184,6 +1187,7 @@ void KMHeaders::replyAllToMsg ()
 
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createReply(TRUE));
+  win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();
 }
@@ -1198,6 +1202,7 @@ void KMHeaders::replyListToMsg ()
 
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createReply(true, true));
+  win->setCharset(msg->codec()->name(), TRUE);
   win->show();
   kernel->kbp()->idle();
 }

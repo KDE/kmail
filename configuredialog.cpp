@@ -1158,7 +1158,7 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.defaultCharsetCombo = new QComboBox( defaultCharsetGroup );
   charsetVLay->addWidget( mComposer.defaultCharsetCombo );
   mComposer.forceReplyCharsetCheck =
-    new QCheckBox( i18n("Use own default charset when replying"),
+    new QCheckBox( i18n("Use own default charset when replying or forwarding"),
     defaultCharsetGroup );
   charsetVLay->addWidget( mComposer.forceReplyCharsetCheck );
   topLevel3->addWidget( defaultCharsetGroup );

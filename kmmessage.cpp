@@ -49,8 +49,7 @@ static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix,
-               sForceReplyCharset;;
+static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix;
 static int sWrapCol;
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 
@@ -578,12 +577,14 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   bool isInline;
   int i;
 
-  QString cset = charset();
-  QTextCodec* codec;
-  if (!cset.isEmpty() && !cset.isNull())
-    codec = KGlobal::charsets()->codecForName(charset());
-  else
-    codec = QTextCodec::codecForLocale();
+  QTextCodec *codec = mCodec;
+  if (!codec)
+  {
+    QString cset = charset();
+    if (!cset.isEmpty())
+      codec = QTextCodec::codecForName(cset);
+    if (!codec) codec = QTextCodec::codecForLocale();
+  }
 
   indentStr = formatString(aIndentStr);
   headerStr = formatString(aHeaderStr);
@@ -619,13 +620,6 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         isInline = (stricmp(msgPart.contentDisposition(), "inline") == 0);
 
       if (isInline) {
-        if (cset.isEmpty()) {
-          cset = msgPart.charset();
-          if (!cset.isEmpty())
-            codec = KGlobal::charsets()->codecForName(charset());
-          else
-            codec = QTextCodec::codecForLocale();
-        }
         if (stricmp(msgPart.typeStr(),"text") == 0 ||
             stricmp(msgPart.typeStr(),"message") == 0) {
           Kpgp* pgp = Kpgp::getKpgp();
@@ -664,7 +658,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     }
   }
 
-  QCString c = codec->fromUnicode(headerStr + "\n" + result);
+  QCString c = QString(headerStr + "\n" + result).utf8();
 
   return c;
 }
@@ -683,7 +677,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList)
   mailingListStr = headerField("X-Mailing-List");
   replyToStr = replyTo();
 
-  msg->setCharset(charset());
+  msg->setCharset("utf-8");
 
   if (replyToList && parent()->isMailingList())
   {
@@ -811,8 +805,6 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList)
   if (!recognized)
     msg->setSubject("Re: " + subject());
 
-  if ( sForceReplyCharset )
-    msg->setCharset("");
   setStatus(KMMsgStatusReplied);
 
   return msg;
@@ -852,17 +844,19 @@ KMMessage* KMMessage::createRedirect(void)
 {
   KMMessage* msg = new KMMessage;
   KMMessagePart msgPart;
-  QString str = "";
+  QCString str = "";
   int i;
 
   str = asQuotedString(str, "", FALSE, false);
 
-  msg->setBody(str.latin1());
+  msg->setHeaderField("Content-Type","text/plain; charset=\"utf-8\"");
+  msg->setBody(str);
   if (numBodyParts() > 0)
   {
-    msgPart.setBody(str.latin1());
+    msgPart.setBody(str);
     msgPart.setTypeStr("text");
     msgPart.setSubtypeStr("plain");
+    msgPart.setCharset("utf-8");
     msg->addBodyPart(&msgPart);
 
     for (i = 1; i < numBodyParts(); i++)
@@ -881,7 +875,6 @@ KMMessage* KMMessage::createRedirect(void)
   msg->setHeaderField("X-KMail-Redirect-From", from());
   msg->setSubject(subject());
   msg->setFrom(from());
-  msg->setCharset(charset());
   setStatus(KMMsgStatusForwarded);
 
   return msg;
@@ -915,14 +908,15 @@ KMMessage* KMMessage::createForward(void)
     str += "\n-------------------------------------------------------\n";
   }
 
-  if (!charset().isEmpty()) msg->setCharset(charset());
+  msg->setCharset("utf-8");
   msg->setBody(str);
 
   if (numBodyParts() > 0)
   {
-    msgPart.setBody(str);
     msgPart.setTypeStr("text");
     msgPart.setSubtypeStr("plain");
+    msgPart.setCharset("utf-8");
+    msgPart.setBody(str);
     msg->addBodyPart(&msgPart);
 
     for (i = 1; i < numBodyParts(); i++)
@@ -2096,7 +2090,6 @@ void KMMessage::readConfig(void)
   if (sForwardSubjPrefixes.count() == 0)
     sForwardSubjPrefixes.append("Fwd:");
   sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
-  sForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
 
   config->setGroup("Reader");
   sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);

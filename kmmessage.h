@@ -294,6 +294,13 @@ public:
   /** Set the message charset. */
   virtual void setCharset(const QString& aStr);
 
+  /** Get the charset the user selected for the message to display */
+  virtual QTextCodec* codec(void) const
+  { return mCodec; }
+
+  /** Set the charset the user selected for the message to display */
+  virtual void setCodec(QTextCodec* aCodec)
+  { mCodec = aCodec; }
    				       
 #ifdef KRN
   /** Convert a normal References: header into a list of anchors
@@ -319,6 +326,7 @@ protected:
   bool       mNeedsAssembly;
   static int sHdrStyle;
   static QString sForwardStr;
+  QTextCodec* mCodec;
 };
 
 typedef KMMessage* KMMessagePtr;

@@ -515,6 +515,8 @@ void KMReaderWin::parseMsg(void)
 
   if (!mCodec)
     mCodec = QTextCodec::codecForName("iso8859-1");
+  mMsg->setCodec(mCodec);
+
   if (mViewer)
     if (mUnicodeFont)
       mViewer->setCharset("iso10646-1", true);

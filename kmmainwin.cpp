@@ -1243,13 +1243,14 @@ void KMMainWin::slotMailtoCompose()
 void KMMainWin::slotMailtoReply()
 {
   KMComposeWin *win;
-  KMMessage *msg;
+  KMMessage *msg, *rmsg;
 
   if (!(msg = mHeaders->getMsg(-1))) return;
-  msg = msg->createReply(FALSE);
-  msg->setTo(mUrlCurrent.path());
+  rmsg = msg->createReply(FALSE);
+  rmsg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(msg);
+  win = new KMComposeWin(rmsg);
+  win->setCharset(msg->codec()->name(), TRUE);
   win->show();
 }
 
@@ -1258,13 +1259,14 @@ void KMMainWin::slotMailtoReply()
 void KMMainWin::slotMailtoForward()
 {
   KMComposeWin *win;
-  KMMessage *msg;
+  KMMessage *msg, *fmsg;
 
   if (!(msg = mHeaders->getMsg(-1))) return;
-  msg = msg->createForward();
-  msg->setTo(mUrlCurrent.path());
+  fmsg = msg->createForward();
+  fmsg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(msg);
+  win = new KMComposeWin(fmsg);
+  win->setCharset(msg->codec()->name(), TRUE);
   win->show();
 }
 
