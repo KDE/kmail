@@ -451,8 +451,11 @@ public:
   */
   QString headerField(const QCString& name) const;
 
+  enum HeaderFieldType { Unstructured, Structured, Address };
+
   /** Set the header field with the given name to the given value. */
-  void setHeaderField(const QCString& name, const QString& value);
+  void setHeaderField( const QCString& name, const QString& value,
+                       HeaderFieldType type = Unstructured );
 
   /** Returns a list of the values of all header fields with the given name. */
   QStringList headerFields( const QCString& name ) const;
@@ -466,7 +469,10 @@ public:
   /** Returns a list of the raw values of all header fields with the given
       name.
   */
-  QValueList<QCString> rawHeaderFields( const QCString & name ) const;
+  QValueList<QCString> rawHeaderFields( const QCString & field ) const;
+
+  /** Splits the given address list into separate addresses. */
+  static KMime::Types::AddressList splitAddrField( const QCString & str );
 
   /** Returns header address list as string list.
       Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
@@ -646,6 +652,35 @@ public:
    */
   static QCString lf2crlf( const QCString & src );
 
+  /** Returns a normalized address built from the given parts. The normalized
+      address is of one the following forms:
+      - displayName (comment) <addrSpec>
+      - displayName <addrSpec>
+      - comment <addrSpec>
+      - addrSpec
+   */
+  static QString normalizedAddress( const QString & displayName,
+                                    const QString & addrSpec,
+                                    const QString & comment );
+
+  /** Decodes the punycode domain part of the given addr-spec if it's an IDN.
+   */
+  static QString decodeIDN( const QString & addrSpec );
+
+  /** Encodes the domain part of the given addr-spec in punycode if it's an
+      IDN.
+   */
+  static QString encodeIDN( const QString & addrSpec );
+
+  /** Normalizes all email addresses in the given list and decodes all IDNs.
+   */
+  static QString normalizeAddressesAndDecodeIDNs( const QString & str );
+
+  /** Normalizes all email addresses in the given list and encodes all IDNs
+      in punycode.
+   */
+  static QString normalizeAddressesAndEncodeIDNs( const QString & str );
+
   /** Encodes an email address as mailto URL
    */
   static QString encodeMailtoUrl( const QString& str );
@@ -653,6 +688,21 @@ public:
   /** Decodes a mailto URL
     */
   static QString decodeMailtoUrl( const QString& url );
+
+  enum AddressParseResult { AddressOk, AddressEmpty, NoAddressSpec,
+                            UnbalancedQuote, UnbalancedParens,
+                            UnclosedAngleAddr, UnexpectedComma,
+                            UnexpectedEnd };
+  /** Splits the given address into display name, email address and comment.
+      Returns AddressOk if no error was encountered. Otherwise an appropriate
+      error code is returned. In case of an error the values of displayName,
+      addrSpec and comment are undefined.
+
+   */
+  static AddressParseResult splitAddress( const QCString& address,
+                                          QCString & displayName,
+                                          QCString & addrSpec,
+                                          QCString & comment );
 
   /** This function generates a displayable string from a list of email
       addresses.
