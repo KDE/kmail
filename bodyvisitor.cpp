@@ -184,6 +184,8 @@ namespace KMail {
       return true;
     else if ( part->typeStr() == "IMAGE" ) // images
       return true;
+    else if ( part->typeStr() == "TEXT" ) // text, diff and stuff
+      return true;
 
     return false;
   }
