@@ -2741,7 +2741,7 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
 
   mKeepReplyCharsetCheck = new QCheckBox( i18n("&Keep original charset when "
 						"replying or forwarding (if "
-						"possible)."), this );
+						"possible)"), this );
   connect( mKeepReplyCharsetCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   vlay->addWidget( mKeepReplyCharsetCheck );
