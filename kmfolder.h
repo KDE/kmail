@@ -325,7 +325,7 @@ public:
   /**
    * Does this folder automatically expire old messages?
    */
-  bool    isAutoExpire() { return expireMessages; }
+  bool    isAutoExpire() const { return expireMessages; }
 
   /**
    * Set the maximum age for unread messages in this folder.
@@ -379,25 +379,25 @@ public:
    * Get the age at which unread messages are expired.
    * Units are determined by getUnreadExpireUnits().
    */
-  int getUnreadExpireAge() { return unreadExpireAge; }
+  int getUnreadExpireAge() const { return unreadExpireAge; }
 
   /**
    * Get the age at which read messages are expired.
    * Units are determined by getReadExpireUnits().
    */
-  int getReadExpireAge() { return readExpireAge; }
+  int getReadExpireAge() const { return readExpireAge; }
 
   /**
    * Units getUnreadExpireAge() is returned in.
    * 1 = days, 2 = weeks, 3 = months.
    */
-  ExpireUnits getUnreadExpireUnits() { return unreadExpireUnits; }
+  ExpireUnits getUnreadExpireUnits() const { return unreadExpireUnits; }
 
   /**
    * Units getReadExpireAge() is returned in.
    * 1 = days, 2 = weeks, 3 = months.
    */
-  ExpireUnits getReadExpireUnits() { return readExpireUnits; }
+  ExpireUnits getReadExpireUnits() const { return readExpireUnits; }
 
   void expireOldMessages();
 
@@ -431,10 +431,10 @@ public:
   virtual void setStatus(QValueList<int>& ids, KMMsgStatus status);
 
   /** Icon related methods */
-  virtual bool useCustomIcons() { return mUseCustomIcons; }
+  virtual bool useCustomIcons() const { return mUseCustomIcons; }
   virtual void setUseCustomIcons(bool useCustomIcons) { mUseCustomIcons = useCustomIcons; }
-  virtual QString normalIconPath() { return mNormalIconPath; }
-  virtual QString unreadIconPath() { return mUnreadIconPath; }
+  virtual QString normalIconPath() const { return mNormalIconPath; }
+  virtual QString unreadIconPath() const { return mUnreadIconPath; }
   virtual void setIconPaths(const QString &normalPath, const QString &unreadPath);
 
 signals:
