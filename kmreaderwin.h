@@ -461,7 +461,6 @@ protected:
   QColor cCBnoHtmlB, cCBnoHtmlF,
          cCBisHtmlB, cCBisHtmlF;
   QString mQuoteFontTag[3];
-  bool    mRecyleQouteColors;
   bool    mLoadExternal;
   bool mShowColorbar;
   bool mShowCompleteMessage;

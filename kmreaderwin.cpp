@@ -749,8 +749,6 @@ void KMReaderWin::readColorConfig(void)
     cPgpEncrB.setHsv( h, s/8, v );
   }
 
-  mRecyleQouteColors = config->readBoolEntry( "RecycleQuoteColors", false );
-
   //
   // Prepare the quoted fonts
   //
