@@ -851,8 +851,11 @@ KMMessage* KMMessage::createRedirect(void)
   QCString str = "";
   int i;
 
-  str = asQuotedString(str, "", QString::null, FALSE, false);
+  str = asQuotedString(str, "", QString::null, FALSE, false, false);
 
+  /// ### FIXME: The message should be redirected with the same Content-Type
+  /// ###        as the original message
+  /// ### FIXME: ??Add some Resent-* headers?? (c.f. RFC2822 3.6.6)
   msg->setHeaderField("Content-Type","text/plain; charset=\"utf-8\"");
   msg->setBody(str);
   if (numBodyParts() > 0)
