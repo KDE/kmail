@@ -287,7 +287,10 @@ public slots:
   void slotAttachFile();
   void slotSendNow();
   void slotSendLater();
-  void slotSaveDraft();
+  /**
+   * Returns true when saving was successful.
+   */
+  bool slotSaveDraft();
   void slotNewComposer();
   void slotNewMailReader();
   void slotClose();
@@ -615,9 +618,9 @@ private:
   QCString pgpProcessedMsg(void);
 
   /**
-   * Send the message
+   * Send the message. Returns true if the message was sent successfully.
    */
-  void doSend(int sendNow=-1, bool saveInDrafts = false);
+  bool doSend(int sendNow=-1, bool saveInDrafts = false);
 
 protected:
   QWidget   *mMainWidget;

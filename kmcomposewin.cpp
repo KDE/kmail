@@ -1299,7 +1299,7 @@ bool KMComposeWin::queryClose ()
     if (rc == KMessageBox::Cancel)
       return false;
     else if (rc == KMessageBox::Yes)
-      slotSaveDraft();
+      return slotSaveDraft();
   }
   return true;
 }
@@ -3760,7 +3760,7 @@ void KMComposeWin::slotPrint()
 
 
 //----------------------------------------------------------------------------
-void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
+bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 {
   if (!saveInDrafts)
   {
@@ -3768,7 +3768,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
      {
         mEdtTo->setFocus();
         KMessageBox::information(0,i18n("You must specify at least one receiver in the To: field."));
-        return;
+        return false;
      }
 
      if (subject().isEmpty())
@@ -3778,7 +3778,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     		i18n("No Subject Specified"), i18n("Yes"), i18n("No, Let Me Specify the Subject"), "no_subject_specified" );
         if( rc == KMessageBox::No )
         {
-           return;
+           return false;
         }
      }
   }
@@ -3806,7 +3806,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (!sentOk)
   {
      kernel->kbp()->idle();
-     return;
+     return false;
   }
 
   if (saveInDrafts)
@@ -3869,7 +3869,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   kernel->kbp()->idle();
 
   if (!sentOk)
-     return;
+     return false;
 
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
@@ -3893,9 +3893,9 @@ void KMComposeWin::slotSendLater()
 
 
 //----------------------------------------------------------------------------
-void KMComposeWin::slotSaveDraft()
+bool KMComposeWin::slotSaveDraft()
 {
-  doSend(FALSE, TRUE);
+  return doSend(FALSE, TRUE);
 }
 
 
