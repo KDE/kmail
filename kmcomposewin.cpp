@@ -5059,10 +5059,8 @@ void KMComposeWin::slotUpdateToolbars()
 
 void KMComposeWin::slotEditKeys()
 {
-  KKeyDialog::configure( actionCollection()
-#if KDE_VERSION >= 306
-			 , false /*don't allow one-letter shortcuts*/
-#endif
+  KKeyDialog::configure( actionCollection(),
+			 false /*don't allow one-letter shortcuts*/
 			 );
 }
 

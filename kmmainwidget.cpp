@@ -37,9 +37,7 @@
 #include <kio/job.h>
 #include <ktip.h>
 #include <kdeversion.h>
-#if KDE_VERSION >= 306
 #include <knotifydialog.h>
-#endif
 
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
@@ -2345,13 +2343,11 @@ void KMMainWidget::setupActions()
  		      SLOT(slotEditKeys()), mActionCollection,
 		      "kmail_configure_shortcuts" );
 
-#if KDE_VERSION >= 306
 //  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), mActionCollection);
   (void) new KAction( i18n("Configure &Notifications..."),
 		      "knotify", 0, this,
  		      SLOT(slotEditNotifications()), mActionCollection,
 		      "kmail_configure_notifications" );
-#endif
 //  KStdAction::preferences(this, SLOT(slotSettings()), mActionCollection);
   (void) new KAction( i18n("&Configure KMail..."),
 		      "configure", 0, kernel,
@@ -2387,17 +2383,13 @@ void KMMainWidget::setupActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotEditNotifications()
 {
-#if KDE_VERSION >= 306
   KNotifyDialog::configure(this);
-#endif
 }
 
 void KMMainWidget::slotEditKeys()
 {
-  KKeyDialog::configure( mActionCollection
-#if KDE_VERSION >= 306
-			 , true /*allow on-letter shortcuts*/
-#endif
+  KKeyDialog::configure( mActionCollection,
+			 true /*allow one-letter shortcuts*/
 			 );
 }
 

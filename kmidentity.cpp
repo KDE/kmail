@@ -86,12 +86,8 @@ QString Signature::textFromCommand( bool * ok ) const
   }
 
   // create a shell process:
-#if KDE_VERSION >= 305
   KProcess proc;
   proc.setUseShell(true);
-#else
-  KShellProcess proc;
-#endif
   proc << mUrl;
 
   // let the kernel collect the output for us:

@@ -462,12 +462,8 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   kCStringToFile( aMsg->asString(), tempFileName, //###
 		  false, false, false );
 
-#if KDE_VERSION >= 305
   KProcess shProc;
   shProc.setUseShell(true);
-#else
-  KShellProcess shProc;
-#endif
   shProc << commandLine;
 
   // let the kernel collect the output for us:

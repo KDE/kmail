@@ -179,11 +179,7 @@ void KMAddrBookExternal::addEmail( const QString &addr, QWidget *parent) {
   QString email;
   QString name;
 
-#if KDE_VERSION >= 305
   KABC::Addressee::parseEmailAddress( addr, name, email );
-#else
-  parseEmailAddress( addr, name, email );
-#endif
 
   KABC::AddressBook *ab = KABC::StdAddressBook::self();
 
@@ -258,64 +254,4 @@ bool KMAddrBookExternal::checkForAddressBook()
     return true;
   }
 }
-
-#if KDE_VERSION < 305
-// FIXME: This function is duplicated from kdelibs/kabc. Remove it, when KMail
-// depends on the 3.1 libs.
-void KMAddrBookExternal::parseEmailAddress( const QString &rawEmail,
-                                            QString &fullName,
-                                            QString &email)
-{
-  int startPos, endPos, len;
-  QString partA, partB, result;
-  char endCh = '>';
-
-  startPos = rawEmail.find('<');
-  if (startPos < 0)
-  {
-    startPos = rawEmail.find('(');
-    endCh = ')';
-  }
-  if (startPos < 0)
-  {
-    // We couldn't find any separators, so we assume the whole string
-    // is the email address
-    email = rawEmail;
-    fullName = "";
-  }
-  else
-  {
-    // We have a start position, try to find an end
-    endPos = rawEmail.find(endCh, startPos+1);
-
-    if (endPos < 0)
-    {
-      // We couldn't find the end of the email address. We can only
-      // assume the entire string is the email address.
-      email = rawEmail;
-      fullName = "";
-    }
-    else
-    {
-      // We have a start and end to the email address
-
-      // Grab the name part
-      fullName = rawEmail.left(startPos).stripWhiteSpace();
-
-      // grab the email part
-      email = rawEmail.mid(startPos+1, endPos-startPos-1).stripWhiteSpace();
-
-      // Check that we do not have any extra characters on the end of the
-      // strings
-      len = fullName.length();
-      if (fullName[0]=='"' && fullName[len-1]=='"')
-        fullName = fullName.mid(1, len-2);
-      else if (fullName[0]=='<' && fullName[len-1]=='>')
-        fullName = fullName.mid(1, len-2);
-      else if (fullName[0]=='(' && fullName[len-1]==')')
-        fullName = fullName.mid(1, len-2);
-    }
-  }
-}
-#endif
 

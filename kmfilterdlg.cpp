@@ -499,18 +499,11 @@ void KMFilterListBox::slotApplyFilterChanges()
 
   // report on invalid filters:
   if ( !emptyFilters.empty() ) {
-#if KDE_VERSION < 306
-    QString msg = i18n("Some filters have not been saved because they were "
-		       "invalid (e.g. containing no actions or no search "
-		       "rules).");
-    KMessageBox::information( 0, msg, QString::null, "ShowInvalidFilterWarning" );
-#else
     QString msg = i18n("The following filters have not been saved because they "
 		       "were invalid (e.g. containing no actions or no search "
 		       "rules).");
     KMessageBox::informationList( 0, msg, emptyFilters, QString::null,
 				  "ShowInvalidFilterWarning" );
-#endif
   }
 
   if ( oIdxSelItem >= 0 ) {

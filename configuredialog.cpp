@@ -79,9 +79,7 @@ using KMime::DateFormatter;
 #include <kiconloader.h>
 #include <kstandarddirs.h>
 #include <kwin.h>
-#if KDE_VERSION >= 306
 #include <knotifydialog.h>
-#endif
 
 // Qt headers:
 #include <qvalidator.h>
@@ -1369,9 +1367,7 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
 
 void NetworkPage::ReceivingTab::slotEditNotifications()
 {
-#if KDE_VERSION >= 306
   KNotifyDialog::configure(this);
-#endif
 }
 
 void NetworkPage::ReceivingTab::setup() {

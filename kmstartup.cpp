@@ -75,7 +75,6 @@ QString getMyHostName(void)
 
 
 void checkConfigUpdates() {
-#if KDE_VERSION >= 306
   //Please update the currentUpdateLevel when new updates are created.
   const int currentUpdateLevel = 100;
   KConfig * config = KMKernel::config();
@@ -92,7 +91,6 @@ void checkConfigUpdates() {
   for ( QStringList::const_iterator it = updates.begin() ; it != updates.end() ; ++it )
     config->checkUpdate( *it, updateFile );
   startup.writeEntry( "update-level", currentUpdateLevel );
-#endif
 }
 
 void lockOrDie() {

@@ -37,11 +37,7 @@ signals:
   void finished(bool);
 
 protected:
-#if KDE_VERSION >= 305
   KProcess mPrecommandProcess;
-#else
-  KShellProcess mPrecommandProcess;
-#endif
   QString mPrecommand;
 };
 
