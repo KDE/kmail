@@ -28,6 +28,7 @@
 
 #include <kabapi.h>
 #include <kaction.h>
+#include <kapp.h>
 #include <kcharsets.h>
 #include <kcompletion.h>
 #include <kcompletionbox.h>
@@ -2529,6 +2530,9 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
   if ( !s_completion ) {
       s_completion = new KCompletion();
       s_completion->setOrder( KCompletion::Sorted );
+#if KDE_VERSION >= 290
+      s_completion->setIgnoreCase( true );
+#endif
   }
 
   installEventFilter(this);
