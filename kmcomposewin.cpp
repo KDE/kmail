@@ -1518,7 +1518,7 @@ void KMComposeWin::removeAttach(int idx)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 {
-  KMAddrBookSelDlg dlg(this, kernel->addrBook());
+  KMAddrBookSelDlg dlg(this);
   QString txt;
 
   //assert(aLineEdit!=NULL);
@@ -2893,11 +2893,6 @@ void KMLineEdit::loadAddresses()
     for ( ; it != recent.end(); ++it )
         s_completion->addItem( *it );
 
-    KMAddrBook adb;
-    adb.readConfig();
-
-    if(adb.load() == IO_FatalError)
-        return;
     if (KMAddrBookExternal::useKABC()) {
         QStringList addresses;
         KabcBridge::addresses(&addresses);
@@ -2910,11 +2905,6 @@ void KMLineEdit::loadAddresses()
         KabBridge::addresses(&addresses);
         QStringList::Iterator it = addresses.begin();
         for (; it != addresses.end(); ++it)
-            s_completion->addItem( *it );
-    }
-    else {
-        QStringList::ConstIterator it = adb.begin();
-        for ( ; it != adb.end(); ++it )
             s_completion->addItem( *it );
     }
 }

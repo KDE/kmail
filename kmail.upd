@@ -45,3 +45,9 @@ RemoveGroup=Kpgp
 File=kpgprc
 Group=<default>
 RemoveKey=user
+# Default to KAddressbook
+Id=6
+File=kmailrc
+Group=General
+RemoveKey=addressbook
+RemoveGroup=Addressbook

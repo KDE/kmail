@@ -518,7 +518,6 @@ void KMKernel::init()
   the_filterMgr     = new KMFilterMgr();
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
-  the_addrBook      = new KMAddrBook;
   the_KAB_addrBook  = 0;
 
   initFolders(cfg);
@@ -527,11 +526,6 @@ void KMKernel::init()
   the_popFilterMgr->readConfig();
   cleanupImapFolders();
 
-  the_addrBook->readConfig();
-  if(the_addrBook->load() == IO_FatalError)
-  {
-      KMessageBox::sorry(0, i18n("The addressbook could not be loaded."));
-  }
   KMMessage::readConfig();
   the_msgSender = new KMSender;
 
@@ -611,8 +605,6 @@ void KMKernel::cleanup(void)
   the_filterMgr = 0;
   if (the_msgSender) delete the_msgSender;
   the_msgSender = 0;
-  if (the_addrBook) delete the_addrBook;
-  the_addrBook = 0;
 
   if (!closed_by_user) {
       if (the_trashFolder)

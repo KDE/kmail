@@ -36,7 +36,7 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
 
 void KMFilterActionWithAddressWidget::slotAddrBook()
 {
-  KMAddrBookSelDlg dlg( this, kernel->addrBook() );
+  KMAddrBookSelDlg dlg( this );
   QString txt;
 
   if ( dlg.exec() == QDialog::Rejected ) return;

@@ -23,186 +23,6 @@
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 
-//-----------------------------------------------------------------------------
-KMAddrBook::KMAddrBook(): KMAddrBookInherited()
-{
-  mModified = FALSE;
-  
-  if (!QFile::exists(locateLocal("data", "kabc/std.vcf") )) {
-    KProcess proc;
-    proc << "kab2kabc";
-    proc.start( KProcess::Block );
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-KMAddrBook::~KMAddrBook()
-{
-  if (mModified)
-  {
-    if(store() == IO_FatalError)
-    {
-      KMessageBox::sorry(0, i18n("The addressbook could not be stored!\n"));
-    }
-  }
-  writeConfig(FALSE);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBook::insert(const QString &aAddress)
-{
-  QStringList::ConstIterator it = find(aAddress);
-  if (it == end())
-  {
-    inSort(aAddress);
-    mModified=TRUE;
-  }
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBook::inSort(const QString& entry)
-{
-  QStringList::Iterator it = KMAddrBookInherited::begin();
-  QStringList::Iterator itEnd = KMAddrBookInherited::end();
-  QString address = entry.lower();
-  for ( ; it != itEnd; ++it) {
-    if ((*it).lower() < address)
-      break;
-  }
-  if ( it == KMAddrBookInherited::begin() )
-    append( entry );
-  else
-    KMAddrBookInherited::insert( it, entry );
-}
-
-//-----------------------------------------------------------------------------
-void KMAddrBook::remove(const QString &aAddress)
-{
-  remove(aAddress);
-  mModified=TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBook::clear(void)
-{
-  KMAddrBookInherited::clear();
-  mModified=TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBook::writeConfig(bool aWithSync)
-{
-  KConfig* config = kapp->config();
-
-  KConfigGroupSaver saver(config, "Addressbook");
-  config->writeEntry("default", mDefaultFileName);
-
-  if (aWithSync) config->sync();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAddrBook::readConfig(void)
-{
-  KConfig* config = kapp->config();
-  KConfigGroupSaver saver(config, "Addressbook");
-
-  mDefaultFileName = config->readEntry("default");
-  if (mDefaultFileName.isEmpty())
-    mDefaultFileName = locateLocal("appdata", "addressbook");
-}
-
-
-//-----------------------------------------------------------------------------
-int KMAddrBook::load(const QString &aFileName)
-{
-  QString line;
-  QString fname = aFileName.isNull() ? mDefaultFileName : aFileName;
-  QFile file(fname);
-  int rc;
-
-  if(fname.isNull())
-    return IO_FatalError;
-
-  if (!file.open(IO_ReadOnly)) return file.status();
-  clear();
-
-  QTextStream t( &file );
-  t.setEncoding(QTextStream::Locale);
-
-  while ( !t.eof() )
-  {
-    line = t.readLine();
-    if (!line.isNull() && line[0]!='#')
-      insert(line);
-  }
-
-  rc = file.status();
-  file.close();
-
-  mModified = FALSE;
-  return rc;
-}
-
-
-//-----------------------------------------------------------------------------
-int KMAddrBook::store(const QString &aFileName)
-{
-  QString fname = aFileName.isNull() ? mDefaultFileName : aFileName;
-  QFile file(fname);
-
-  if(fname.isNull())
-    return IO_FatalError;
-
-  if (!file.open(IO_ReadWrite|IO_Truncate)) return fileError(file.status());
-  file.resetStatus(); // Work around suspected QT pre 2.2 snapshot bug
-  QTextStream ts( &file );
-  ts.setEncoding(QTextStream::Locale);
-
-  ts << QString::fromLatin1( "# kmail addressbook file\n" );
-  if (file.status() != IO_Ok) return fileError(file.status());
-
-  QStringList::ConstIterator it = begin();
-  for ( ; it != end(); ++it )
-  {
-    ts << *it << "\n";
-    if (file.status() != IO_Ok) return fileError(file.status());
-  }
-  file.close();
-
-  mModified = FALSE;
-  return IO_Ok;
-}
-
-
-//-----------------------------------------------------------------------------
-int KMAddrBook::fileError(int status) const
-{
-  QString msg;
-
-  switch(status)
-  {
-  case IO_ReadError:
-    msg = i18n("Could not read file:\n%1");
-    break;
-  case IO_OpenError:
-    msg = i18n("Could not open file:\n%1");
-    break;
-  default:
-    msg = i18n("Error while writing file:\n%1");
-  }
-
-  QString str = msg.arg(mDefaultFileName);
-  KMessageBox::sorry(0, str, i18n("File I/O Error"));
-
-  return status;
-}
-
 
 //-----------------------------------------------------------------------------
 void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
@@ -429,39 +249,21 @@ void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
       + "\"" );
     return;
   }
-  if (!KMAddrBookExternal::useKAB()) {
-    if (addr.isEmpty()) return;
-    kernel->addrBook()->insert(addr);
-    //    statusMsg(i18n("Address added to addressbook."));
-  }
-  else {
-    AddToKabDialog dialog(addr, kernel->KABaddrBook(), parent);
-    dialog.exec();
-  }
+  AddToKabDialog dialog(addr, kernel->KABaddrBook(), parent);
+  dialog.exec();
 }
 
-void KMAddrBookExternal::launch(QWidget *parent) {
+void KMAddrBookExternal::launch(QWidget *) {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 3);
   switch (ab)
   {
-  case -1:
   case 0:
-  case 1:
-    {
-    KMAddrBookEditDlg dlg( kernel->addrBook(), parent );
-    dlg.exec();
-    break;
-    }
-  case 2:
     KRun::runCommand("kab");
     break;
-  case 3:
-    KRun::runCommand("kaddressbook");
-    break;
   default:
-    kdDebug(5006) << "Unknown address book type" << endl;
+    KRun::runCommand("kaddressbook");
   }
 }
 
@@ -469,22 +271,16 @@ bool KMAddrBookExternal::useKAB()
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 3);
-  if (ab <= 0)
-    return false;
-  if (ab == 3)
-    return false;
-  return true;
+  int ab = config->readNumEntry("addressbook", 1);
+  return (ab == 0);
 }
 
 bool KMAddrBookExternal::useKABC()
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 3);
-  if (ab == 3) // or 1?
-    return true;
-  return false;
+  int ab = config->readNumEntry("addressbook", 1);
+  return (ab == 1);
 }
 
 

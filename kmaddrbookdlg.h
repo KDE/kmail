@@ -23,7 +23,7 @@ class KMAddrBookSelDlg: public KDialogBase
 public:
   enum { AddressBookAddresses = 1, RecentAddresses };
 
-  KMAddrBookSelDlg(QWidget *parent, KMAddrBook* addrBook, const QString& caption=QString::null);
+  KMAddrBookSelDlg(QWidget *parent, const QString& caption=QString::null);
   virtual ~KMAddrBookSelDlg();
 
   /** returns selected address(es) or NULL if none was selected or the cancel
@@ -43,43 +43,9 @@ protected slots:
 protected:
   void showAddresses( int addressTypes );
 
-  KMAddrBook *mAddrBook;
   QListBox   *mListBox;
   QCheckBox  *mCheckBox;
   QString     mAddress;
-};
-
-
-//-----------------------------------------------------------------------------
-
-
-class KMAddrBookEditDlg: public KDialogBase
-{
-  Q_OBJECT
-
-public:
-  KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent=0,
-		     const char *name=0, bool modal=true );
-
-  virtual ~KMAddrBookEditDlg();
-
-protected slots:
-  void slotOk();
-  void slotCancel();
-  void slotEnableAdd();
-  void slotAdd();
-  void slotEnableRemove();
-  void slotRemove();
-  void slotLbxHighlighted(const QString& item);
-
-protected:
-  KMAddrBook* mAddrBook;
-  QListBox* mListBox;
-  KLineEdit* mEdtAddress;
-  int mIndex;
-
-  /** kab specific */
-  QValueList<KabKey> *mKeys;
 };
 
 

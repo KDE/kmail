@@ -3607,12 +3607,6 @@ static const struct {
   const char * label;
   const char * description;
 } addressBooks[] = {
-  { I18N_NOOP("Traditional KMail"),
-    I18N_NOOP("The traditional KMail graphical interface using the "
-	      "traditional KMail specific address book database.") },
-  { I18N_NOOP("Traditional KMail interface using KAB database"),
-    I18N_NOOP("The traditional KMail graphical interface using the "
-	      "standard KDE Address Book (KAB) database.") },
   { I18N_NOOP("KAB"),
     I18N_NOOP("The KDE Address Book graphical interface (KAB) using the "
 	      "standard KDE Address Book (KAB) database. Requires the "
