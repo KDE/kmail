@@ -37,7 +37,7 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
 
   // ok-button
   connect(this, SIGNAL(okClicked()), SLOT(slotSave()));
-  
+
   // reload-list button
   connect(this, SIGNAL(user1Clicked()), SLOT(slotLoadFolders()));
 
@@ -46,8 +46,8 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
 }
 
 //------------------------------------------------------------------------------
-void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames, 
-                                            QStringList mSubfolderPaths, 
+void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
+                                            QStringList mSubfolderPaths,
                                             QStringList mSubfolderMimeTypes,
                                             const ImapAccountBase::jobData & jobData )
 {
@@ -68,7 +68,7 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
 
     QListViewItemIterator it( groupView );
     GroupItem *tmp;
-    while ( it.current() != 0 ) 
+    while ( it.current() != 0 )
     {
       // compare it with each item to find the current root
       tmp = static_cast<GroupItem*>(it.current());
@@ -89,7 +89,7 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
       if (parent)
       {
         for ( QListViewItem *it = parent->firstChild() ;
-            it ; it = it->nextSibling() ) 
+            it ; it = it->nextSibling() )
         {
           // check if this item already exists in this hierarchy
           item = static_cast<GroupItem*>(it);
@@ -97,20 +97,20 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
             create = false;
         }
       }
-      if (create) 
+      if (create)
       {
         KGroupInfo info(mSubfolderNames[i]);
-        if (mSubfolderNames[i].upper() == "INBOX") 
+        if (mSubfolderNames[i].upper() == "INBOX")
           info.name = i18n("inbox");
         info.subscribed = false;
         info.path = mSubfolderPaths[i];
         // create a new checkable item
         if (parent)
-          item = new GroupItem(parent, info, this, true); 
+          item = new GroupItem(parent, info, this, true);
         else
-          item = new GroupItem(folderTree(), info, this, true); 
+          item = new GroupItem(folderTree(), info, this, true);
       }
-      if (item) 
+      if (item)
       {
         // reset
         item->setOn(false);
@@ -118,10 +118,10 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
     } else {
       // find the item
       QListViewItemIterator it( groupView );
-      while ( it.current() != 0 ) 
+      while ( it.current() != 0 )
       {
         item = static_cast<GroupItem*>(it.current());
-        if (item->info().path == mSubfolderPaths[i]) 
+        if (item->info().path == mSubfolderPaths[i])
         {
           // subscribed
           item->setOn(true);
@@ -133,7 +133,7 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
         mSubfolderMimeTypes[i] == "inode/directory")
     {
       // descend
-      static_cast<ImapAccountBase*>(mAcct)->listDirectory(mSubfolderPaths[i], 
+      static_cast<ImapAccountBase*>(mAcct)->listDirectory(mSubfolderPaths[i],
           onlySubscribed);
     }
   }
@@ -149,11 +149,13 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotSave()
 {
-  // subscribe
+    if (!account())
+        return;
+    // subscribe
   QListViewItemIterator it(subView);
   for ( ; it.current(); ++it)
   {
-    static_cast<ImapAccountBase*>(account())->changeSubscription(true, 
+    static_cast<ImapAccountBase*>(account())->changeSubscription(true,
         static_cast<GroupItem*>(it.current())->info().path);
   }
 
@@ -161,7 +163,7 @@ void SubscriptionDialog::slotSave()
   QListViewItemIterator it2(unsubView);
   for ( ; it2.current(); ++it2)
   {
-    static_cast<ImapAccountBase*>(account())->changeSubscription(false, 
+    static_cast<ImapAccountBase*>(account())->changeSubscription(false,
         static_cast<GroupItem*>(it2.current())->info().path);
   }
 }
@@ -170,6 +172,8 @@ void SubscriptionDialog::slotSave()
 void SubscriptionDialog::slotLoadFolders()
 {
   KSubscription::slotLoadFolders();
+  if ( !account())
+      return;
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
   // get folders
   ai->listDirectory(ai->prefix(), false);
