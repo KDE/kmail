@@ -28,6 +28,7 @@ KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
   mAcctList.setAutoDelete(TRUE);
   checking = false;
+  moreThanOneAccount = false;
   lastAccountChecked = 0;
   mTotalNewMailsArrived=0;
 }
@@ -109,6 +110,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
   if (!mAcctChecking.contains(account)) mAcctChecking.append(account);
 
   if (checking) {
+    if (mAcctChecking.count() > 1) moreThanOneAccount = true;
     return;
   }
 
@@ -147,11 +149,13 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     kdDebug(5006) << "checked mail, server ready" << endl;
     kernel->serverReady (true);
     checking = false;
-    if (mTotalNewMailsArrived != -1)
+    if (mTotalNewMailsArrived > 0 && moreThanOneAccount)
       KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Transmission completed, %n new message.",
            "Transmission completed, %n new messages.", mTotalNewMailsArrived));
     emit checkedMail(newMailArrived, interactive);
+    moreThanOneAccount = false;
+    mTotalNewMailsArrived = 0;
     return;
   }
 

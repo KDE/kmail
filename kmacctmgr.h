@@ -81,6 +81,7 @@ private:
   bool checking;
   bool newMailArrived;
   bool interactive;
+  bool moreThanOneAccount;
   int  mTotalNewMailsArrived;
 };
 
