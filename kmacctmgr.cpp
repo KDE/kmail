@@ -246,8 +246,7 @@ void KMAcctMgr::processNextAccount(bool _newMail)
     debug ("checked mail, server ready");
     kernel->serverReady (true);
     checking = false;
-    if (newMailArrived)
-      emit newMail();
+    emit checkedMail(newMailArrived);
     return;
   }
   

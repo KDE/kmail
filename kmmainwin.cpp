@@ -101,8 +101,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
-  connect(kernel->acctMgr(), SIGNAL( newMail()),
-          SLOT( slotNewMail()));
+  connect(kernel->acctMgr(), SIGNAL( checkedMail(bool)),
+          SLOT( slotMailChecked(bool)));
 
   setCaption( i18n("KDE Mail Client") );
 
@@ -558,8 +558,6 @@ void KMMainWin::slotCheckMail()
 
  kernel->acctMgr()->checkMail(true);
 
- if(mSendOnCheck)
-   slotSendQueued();
  kernel->setCheckingMail(false);
 }
 
@@ -588,13 +586,15 @@ void KMMainWin::slotCheckOneAccount(int item)
   kernel->acctMgr()->intCheckMail(item);
   // kbp->idle();
 
-  if(mSendOnCheck)
-    slotSendQueued();
-
   kernel->setCheckingMail(false);
 }
 
-void KMMainWin::slotNewMail() {
+void KMMainWin::slotMailChecked(bool newMail) {
+  if(mSendOnCheck)
+    slotSendQueued();
+
+  if (!newMail)
+    return;
 
   if (mBeepOnNew) {
     KApplication::beep();
@@ -898,10 +898,7 @@ void KMMainWin::slotSaveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSendQueued()
 {
-  if (kernel->msgSender()->sendQueued())
-    statusMsg(i18n("Queued messages successfully sent."));
-  else
-    statusMsg(i18n("Failed to send (some) queued messages."));
+  kernel->msgSender()->sendQueued();
 }
 
 

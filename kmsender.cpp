@@ -262,6 +262,7 @@ void KMSender::doSendMsg()
 {
 #ifndef KRN
   assert(mSendProc != NULL);
+  bool someSent = mCurrentMsg;
 
   // Move previously sent message to folder "sent"
   if (mCurrentMsg)
@@ -276,6 +277,9 @@ void KMSender::doSendMsg()
   mCurrentMsg = kernel->outboxFolder()->getMsg(0);
   if (!mCurrentMsg)
   {
+    if (someSent)
+      setStatusMsg(i18n("Queued messages successfully sent."));
+      
     // no more message: cleanup and done
     cleanup();
     return;
@@ -319,6 +323,7 @@ void KMSender::doSendMsg()
   setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
   if (!mSendProc->send(mCurrentMsg))
   {
+    setStatusMsg(i18n("Failed to send (some) queued messages."));
     cleanup();
     return;
   }

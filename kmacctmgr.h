@@ -71,7 +71,7 @@ public slots:
 
 signals:
   /** emitted if new mail has been collected */
-  void newMail();
+  void checkedMail(bool);
 
 private:
   QString      mBasePath;

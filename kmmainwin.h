@@ -97,7 +97,7 @@ protected:
 
 protected slots:
   void slotCheckOneAccount(int);
-  void slotNewMail();
+  void slotMailChecked(bool newMail);
   void getAccountMenu(); 
   void slotMenuActivated();
   void slotClose();
