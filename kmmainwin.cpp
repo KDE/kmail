@@ -41,7 +41,6 @@
 #include <knotifydialog.h>
 #endif
 
-#include "configuredialog.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
@@ -90,8 +89,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
 
   setMinimumSize(400, 300);
-
-  mConfigureDialog = 0;
 
   readPreConfig();
   createWidgets();
@@ -794,17 +791,6 @@ void KMMainWin::slotNewMailReader()
   d = new KMMainWin(NULL);
   d->show();
   d->resize(d->size());
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotSettings()
-{
-  if( mConfigureDialog == 0 )
-  {
-      mConfigureDialog = new ConfigureDialog( this, "configure", false );
-  }
-  mConfigureDialog->show();
 }
 
 
@@ -2685,7 +2671,7 @@ void KMMainWin::setupMenuBar()
 #if KDE_VERSION >= 306
   KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
 #endif
-  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
+  KStdAction::preferences(kernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 #if KDE_VERSION >= 305 // KDE 3.1
   KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 #else

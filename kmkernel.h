@@ -32,6 +32,7 @@ class KMMsgDict;
 class IdentityManager;
 class KProcess;
 class KProgressDialog;
+class ConfigureDialog;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -180,6 +181,8 @@ public slots:
       sync, which is more efficient. */
   void slotRequestConfigSync();
 
+  void slotShowConfigurationDialog();
+
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
@@ -230,6 +233,7 @@ private:
   static KMKernel *mySelf;
   QTextCodec *netCodec;
   KProgressDialog *mProgress;
+  ConfigureDialog *mConfigureDialog;
 
   CryptPlugWrapperList mCryptPlugList;
 };

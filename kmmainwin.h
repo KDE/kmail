@@ -10,7 +10,6 @@
 #include <kdockwidget.h>
 #include <qlistview.h>
 
-class ConfigureDialog;
 class KMFolder;
 class KMFolderDir;
 class KMFolderTree;
@@ -148,7 +147,6 @@ protected slots:
   void slotQuit();
   void slotHelp();
   void slotNewMailReader();
-  void slotSettings();
   void slotFilter();
   void slotPopFilter();
   void slotAddrBook();
@@ -360,7 +358,6 @@ protected:
   QPopupMenu *messageMenu;
   KMLittleProgressDlg *littleProgress;
   KMFldSearch *searchWin;
-  ConfigureDialog *mConfigureDialog;
   bool mbNewMBVisible;
 
   KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,

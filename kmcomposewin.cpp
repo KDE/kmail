@@ -923,6 +923,7 @@ void KMComposeWin::setupActions(void)
     actionCollection());
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  KStdAction::preferences(kernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");

@@ -39,6 +39,7 @@
 #include "kmmessage.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
+#include "configuredialog.h"
 #include <kwin.h>
 #include <ktip.h>
 
@@ -53,7 +54,7 @@ KMKernel *KMKernel::mySelf = 0;
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent, name),  DCOPObject("KMailIface"),
-  mIdentityManager(0), mProgress(0)
+  mIdentityManager(0), mProgress(0), mConfigureDialog(0)
 {
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
@@ -110,6 +111,8 @@ KMKernel::~KMKernel ()
     job->kill();
     it = mPutJobs.begin();
   }
+  delete mConfigureDialog;
+  mConfigureDialog = 0;
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
@@ -1060,6 +1063,17 @@ QByteArray KMKernel::getCollectedStdErr( KProcess * proc )
 void KMKernel::slotRequestConfigSync() {
   // ### FIXME: delay as promised in the kdoc of this function ;-)
   kapp->config()->sync();
+}
+
+void KMKernel::slotShowConfigurationDialog()
+{
+  if( !mConfigureDialog )
+    mConfigureDialog = new ConfigureDialog( 0, "configure", false );
+
+  if( mConfigureDialog->isHidden() )
+    mConfigureDialog->show();
+  else
+    mConfigureDialog->raise();
 }
 
 void KMKernel::notClosedByUser()
