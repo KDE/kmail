@@ -9,6 +9,7 @@
 #include <qwidget.h>
 
 #include <kdeversion.h>
+#include <kabc/addressee.h>
 
 class KabcBridge {
 public:
@@ -22,10 +23,11 @@ public:
   static void addEmail( const QString &addr, QWidget *parent );
   static void addNewAddressee( QWidget* );
   static void openEmail( const QString &addr, QWidget *parent );
-  static void launch(QWidget *parent);
+  static void launch( QWidget *parent );
   static bool useKab();
   static bool useKAddressbook();
   static bool checkForAddressBook();
+  static bool addVCard( KABC::Addressee addressee, QWidget *parent );
 };
 
 #endif /*KMAddrBook_h*/

@@ -19,6 +19,7 @@
 #include <kprocess.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
+#include <kabc/vcardconverter.h>
 
 void KabcBridge::addresses(QStringList* result) // includes lists
 {
@@ -273,3 +274,34 @@ void KMAddrBookExternal::addNewAddressee( QWidget* )
   // silently to kabc.
 }
 
+bool KMAddrBookExternal::addVCard( KABC::Addressee addressee, QWidget *parent )
+{
+  KABC::AddressBook *ab = KABC::StdAddressBook::self();
+  bool inserted = false;
+
+  KABC::Addressee::List addressees =
+      ab->findByEmail( addressee.preferredEmail() );
+
+  if ( addressees.isEmpty() ) {
+    ab->insertAddressee( addressee );
+    if ( !KABC::StdAddressBook::save() ) {
+      KMessageBox::error( parent, i18n("Can't save to addressbook.") );
+      inserted = false;
+    } else {
+      QString text = i18n("The VCard was added to your addressbook. "
+                          "You can add more information to this "
+                          "entry by opening the addressbook.");
+      KMessageBox::information( parent, text, QString::null, "addedtokabc" );
+      inserted = true;
+    }
+  } else {
+    QString text = i18n("The VCard's primary email address is already in "
+                        "your addressbook. However you may save the VCard "
+                        "into a file and import it into the addressbook "
+                        "manually.");
+    KMessageBox::information( parent, text );
+    inserted = true;
+  }
+
+  return inserted;
+}

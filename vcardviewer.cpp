@@ -19,8 +19,10 @@
 
 #include <kmessagebox.h>
 #include <klocale.h>
+#include <kdebug.h>
 
 #include "vcardviewer.h"
+#include "kmaddrbook.h"
 
 #include "addresseeview.h"
 using KPIM::AddresseeView;
@@ -32,19 +34,22 @@ using namespace KABC;
 using namespace KMail;
 
 VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const char* name)
-:KDialogBase(parent, name, true, i18n("VCard viewer"), User1|Close, Close, 
+:KDialogBase(parent, name, true, i18n("VCard viewer"), User1|Close, Close,
              true, KGuiItem(i18n("&Import")))
 {
-
   AddresseeView *av = new AddresseeView(this);
   av->setVScrollBarMode(QScrollView::Auto);
   setMainWidget(av);
 
   bool ok;
-  VCardConverter vc;
-  ok = vc.vCardToAddressee(vCard, mAddressee, VCardConverter::v3_0);
-  if (!ok)
-    ok = vc.vCardToAddressee(vCard, mAddressee, VCardConverter::v2_1);
+  VCardConverter vcc;
+
+  // FIXME This is not really a good solution. Would be fine
+  // if the VCardConverter could handle this internally.
+  if (vCard.contains("VERSION:3.0"))
+    ok = vcc.vCardToAddressee(vCard, mAddressee, VCardConverter::v3_0);
+  else
+    ok = vcc.vCardToAddressee(vCard, mAddressee, VCardConverter::v2_1);
 
   if (ok)
     av->setAddressee(mAddressee);
@@ -62,10 +67,8 @@ VCardViewer::~VCardViewer()
 
 void VCardViewer::slotUser1()
 {
-  StdAddressBook::self()->insertAddressee(mAddressee);
-  KMessageBox::information(this, i18n("Successfully added vCard to contacts!"), 
-                           i18n("Imported vCard"));
-  showButton(User1, false);
+  if (KMAddrBookExternal::addVCard(mAddressee, this))
+    showButton(User1, false);
 }
 
 #include "vcardviewer.moc"
