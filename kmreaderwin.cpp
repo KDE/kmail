@@ -1238,7 +1238,14 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 void KMReaderWin::printMsg(void)
 {
   if (!mMsg) return;
+  if (c4 == QColor(255,255,255)) { mViewer->view()->print(); return; }
+
+  QColor hold = c4;
+  c4 = QColor(255,255,255);
+  update(true);
   mViewer->view()->print();
+  c4 = hold;
+  update(true);
 }
 
 
