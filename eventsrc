@@ -6,6 +6,8 @@ Comment[sv]=Kmail
 [new-mail-arrived]
 Name= New Mail arrived
 Comment=New Mail arrived
+Comment[es]=Tiene correo nuevo
+Comment[pt_BR]=Chegou novo E-mail
 Comment[sv]=Ny post har anlänt
 default_sound=
 default_presentation=0
