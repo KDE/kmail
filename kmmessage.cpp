@@ -2239,7 +2239,7 @@ void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
 QCString KMMessage::typeStr() const
 {
   DwHeaders& header = mMsg->Headers();
-  if (header.HasContentType()) return header.ContentType().AsString().c_str();
+  if (header.HasContentType()) return header.ContentType().TypeStr().c_str();
   else return "";
 }
 
