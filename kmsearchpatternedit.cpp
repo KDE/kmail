@@ -189,7 +189,7 @@ void KMSearchRuleWidget::initLists() const
 //=============================================================================
 
 KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name )
-  : KWidgetLister( 2, FILTER_MAX_RULES, parent, name )
+  : KWidgetLister( 1, FILTER_MAX_RULES, parent, name )
 {
   kdDebug() << "KMSearchRuleWidgetLister::KMSearchRuleWidgetLister" << endl;
   mRuleList = 0;
