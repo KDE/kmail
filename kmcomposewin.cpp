@@ -2506,11 +2506,8 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                   
     const char* cleartext   = cText;
     char* ciphertext  = 0;
-    char* certificate = 0;
-
-    const int certSiz = 64000;
-    certificate = new char[certSiz];
-    certificate[0] = 0;
+    int certSize = 0;
+    QByteArray certificate;
 
     QCString certFingerprints;
     QString selectedCert;
@@ -2521,21 +2518,27 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
     signer.replace(QRegExp("\\x0001"), " ");
 
     kdDebug(5006) << "\n\nRetrieving keys for: " << from() << endl;
-    bool findCertsOk = cryptPlug->findCertificates( &(*signer), &certificate, true );
+    char* certificatePtr = 0;
+    bool findCertsOk = cryptPlug->findCertificates( 
+                                        &(*signer),
+                                        &certificatePtr,
+                                        &certSize,
+                                        true )
+                       && (0 < certSize);
     kdDebug(5006) << "keys retrieved ok: " << findCertsOk << endl;
 
     bool bSign = true;
     bool useDialog = false;
     QCString certFingerprint;
-    if (findCertsOk && strlen( certificate ) ) {
-	kdDebug(5006) << "findCertificates() returned " << certificate << endl;
+    if( findCertsOk ) {
+	kdDebug(5006) << "findCertificates() returned " << certificatePtr << endl;
+        certificate.assign( certificatePtr, certSize );
 
 	// fill selection dialog listbox
         dialog.entriesLB->clear();
         int iA = 0;
         int iZ = 0;
-        int len = strlen( certificate );
-        while( iZ <= len ) {
+        while( iZ < certSize ) {
 	    if( (certificate[iZ] == '\1') || (certificate[iZ] == '\0') ) {
 		char c = certificate[iZ];
 		if( (c == '\1') && !useDialog ) {
@@ -2559,6 +2562,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 	    }
 	    ++iZ;
         }
+        
         // run selection dialog and retrieve user choice
         // OR take the single entry (if only one was found)
         if( useDialog ) {
@@ -2576,7 +2580,6 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 	}
     }
 
-    delete[] certificate;
 	
 /* ----------------------------- */
 #ifdef DEBUG
@@ -2796,18 +2799,26 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
     KListBoxDialog dialog( selectedCert, "", i18n( "&Select certificate:" ) );
     dialog.resize( 700, 200 );
     bool useDialog;
+    int certSize = 0;
+    QByteArray certificateList;
 
-    const int certSiz = 64000;
-    char* certificates = (char*)malloc( certSiz );
     for( QStringList::ConstIterator it = recipients.begin(); it != recipients.end(); ++it ) {
       QCString addressee = (*it).utf8();
       addressee.replace(QRegExp("\\x0001"), " ");
-      certificates[0] = '\0';
       kdDebug() << "\n\n1st try: Retrieving keys for: " << *it << endl;
-      bool findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates, false )
-                         && strlen( certificates );
+      certSize = 0;
+      char* certificatePtr = 0;
+      bool findCertsOk = cryptPlug->findCertificates( 
+                                        &(*addressee),
+                                        &certificatePtr,
+                                        &certSize,
+                                        false )
+                         && (0 < certSize);
       kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-      qDebug( "findCertificates() 1st try returned %s", certificates );
+      qDebug( "findCertificates() 1st try returned %s", certificatePtr );
+      if( findCertsOk )
+        certificateList.assign( certificatePtr, certSize );
+        
       while( !findCertsOk ) {
         bool bOk = false;
         addressee = KLineEditDlg::getText( i18n("No certificate found"),
@@ -2815,10 +2826,18 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                         addressee, &bOk, this ).stripWhiteSpace().utf8();
         if( bOk ) {
           kdDebug() << "\n\n2nd try: Retrieving *all* keys" << endl;
-          findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates, false )
-                        && strlen( certificates );
+          certSize = 0;
+          char* certificatePtr = 0;
+          findCertsOk = cryptPlug->findCertificates( 
+                                        &(*addressee),
+                                        &certificatePtr,
+                                        &certSize,
+                                        false )
+                        && (0 < certSize);
           kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-          qDebug( "findCertificates() 2nd try returned %s", certificates );
+          qDebug( "findCertificates() 2nd try returned %s", certificatePtr );
+          if( findCertsOk )
+            certificateList.assign( certificatePtr, certSize );
         } else {
           bEncrypt = false;
           break;
@@ -2830,10 +2849,10 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         dialog.entriesLB->clear();
         int iA = 0;
         int iZ = 0;
-        int len = strlen( certificates );
-        while( iZ <= len ) {
-          if( (certificates[iZ] == '\1') || (certificates[iZ] == '\0') ) {
-            char c = certificates[iZ];
+        while( iZ < certSize ) {
+          if( (certificateList.at(iZ) == '\1') || (certificateList.at(iZ) == '\0') ) {
+            kdDebug() << "iA=" << iA << " iZ=" << iZ << endl;
+            char c = certificateList.at(iZ);
             if( (c == '\1') && !useDialog ) {
               // set up selection dialog
               useDialog = true;
@@ -2843,9 +2862,9 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
               caption += "]";
               dialog.setCaption( caption );
             }
-            certificates[iZ] = '\0';
-            QString s = QString::fromUtf8( &certificates[iA] );
-            certificates[iZ] = c;
+            certificateList.at(iZ) = '\0';
+            QString s = QString::fromUtf8( &certificateList.at(iA) );
+            certificateList.at(iZ) = c;
             if( useDialog )
               dialog.entriesLB->insertItem( s );
             else
@@ -2934,8 +2953,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
 
       }
     }
-    free( certificates );
-
+      
     // Actually do the encryption, if the plugin supports this
     size_t cipherLen;
     if ( bEncrypt ) {
