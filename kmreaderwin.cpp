@@ -1683,8 +1683,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     else
       new_cleartext = 0;
 
-    // the following code runs only for S/MIME
-    if( data && (0 <= cryptPlug->libName().find( "smime", 0, false )) ) {
+    if( data &&
+        ( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
+          (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) ) {
       // replace simple LFs by CRLSs
       // according to RfC 2633, 3.1.1 Canonicalization
       int posLF = cleartext.find( '\n' );

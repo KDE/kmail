@@ -1598,9 +1598,8 @@ bool KMComposeWin::applyChanges(void)
 
         // kdDebug(5006) << "\n\n\n******* a) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
 
-        // NOTE: the following code runs only for S/MIME
-        //
-        if( 0 <= cryptPlug->libName().find( "smime", 0, false ) ) {
+        if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
+            (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
           // replace simple LFs by CRLSs
           // according to RfC 2633, 3.1.1 Canonicalization
           int posLF = encodedBody.find( '\n' );
@@ -1858,9 +1857,8 @@ kdDebug(5006) << "                                 processing " << idx << ". att
             QCString encodedAttachment = innerDwPart->AsString().c_str();
             delete innerDwPart;
 
-            // NOTE: the following code runs only for S/MIME
-            //
-            if( 0 <= cryptPlug->libName().find( "smime", 0, false ) ) {
+            if( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
+                (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) {
               // replace simple LFs by CRLSs
               // according to RfC 2633, 3.1.1 Canonicalization
               int posLF = encodedAttachment.find( '\n' );
