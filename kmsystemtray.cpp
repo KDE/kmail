@@ -56,6 +56,7 @@
  */
 KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(parent, name)
 {
+  setAlignment( AlignCenter );
   kdDebug(5006) << "Initting systray" << endl;
   KIconLoader *loader = KGlobal::iconLoader();
 
