@@ -5907,8 +5907,11 @@ void KMEdit::slotSpellResult(const QString &s)
       {
           //stop spell check
           spellLineEdit = false;
-          if( s != mComposer->sujectLineWidget()->text() )
-              mComposer->sujectLineWidget()->setText( s );
+          QString tmpText( s );
+          tmpText =  tmpText.remove('\n');
+
+          if( tmpText != mComposer->sujectLineWidget()->text() )
+              mComposer->sujectLineWidget()->setText( tmpText );
       }
       else
       {
