@@ -778,7 +778,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   //In-Reply-To = original msg-id
   msg->setReplyToId(msgId());
 
-  if (replyToAll || replyToList || !mailingListStr.isEmpty())
+  if (replyToAll || replyToList || !mailingListStr.isEmpty()
+      || parent()->isMailingList())
     replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
   replyStr += "\n";
