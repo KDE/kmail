@@ -182,6 +182,27 @@ static inline int signingChainCertNearExpiryWarningThresholdInDays() {
   calling mComposer->doNextJob().
 */
 
+/*
+ Test plan:
+
+ For each message format (e.g. openPGP/MIME)
+ 1. Body signed
+ 2. Body encrypted
+ 3. Body signed and encrypted
+ 4. Body encrypted, attachments encrypted  (they must be encrypted together, mEarlyAddAttachments)
+ 5. Body encrypted, attachments not encrypted
+ 6. Body encrypted, attachment encrypted and signed (separately)
+ 7. Body not encrypted, one attachment encrypted+signed, one attachment encrypted only, one attachment signed only
+       (https://intevation.de/roundup/aegypten/issue295)
+       (this is the reason attachments can't be encrypted together)
+ 8. Body and attachments encrypted+signed (they must be encrypted+signed together, mEarlyAddAttachments)
+ 9. Body encrypted+signed, attachments encrypted
+ 10. Body encrypted+signed, one attachment signed, one attachment not encrypted nor signed
+ ...
+
+ I recorded a KDExecutor script sending all of the above (David)
+*/
+
 static QString mErrorProcessingStructuringInfo =
 i18n("<qt><p>Structuring information returned by the Crypto plug-in "
      "could not be processed correctly; the plug-in might be damaged.</p>"
@@ -343,8 +364,10 @@ void MessageComposer::readFromComposeWin()
   // Copy necessary attributes over
   mDisableBreaking = false;
 
-  mSigningRequested = mComposeWin->mSignAction->isChecked();
-  mEncryptionRequested = mComposeWin->mEncryptAction->isChecked();
+  mSignBody = mComposeWin->mSignAction->isChecked();
+  mSigningRequested = mSignBody; // for now; will be adjusted depending on attachments
+  mEncryptBody = mComposeWin->mEncryptAction->isChecked();
+  mEncryptionRequested = mEncryptBody; // for now; will be adjusted depending on attachments
 
   mAutoCharset = mComposeWin->mAutoCharset;
   mCharset = mComposeWin->mCharset;
@@ -1133,9 +1156,13 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   // this is the boundary depth of the surrounding MIME part
   mPreviousBoundaryLevel = 0;
 
+  // whether the body must be signed/encrypted
+  const bool doEncryptBody = doEncrypt && mEncryptBody;
+  const bool doSignBody = doSign && mSignBody;
+
   // create temporary bodyPart for editor text
   // (and for all attachments, if mail is to be signed and/or encrypted)
-  mEarlyAddAttachments = !mAttachments.empty() && ( doSign || doEncrypt );
+  mEarlyAddAttachments = !mAttachments.empty() && ( doSignBody || doEncryptBody );
 
   mAllAttachmentsAreInBody = mEarlyAddAttachments;
 
@@ -1143,7 +1170,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   if( mEarlyAddAttachments ) {
     bool someOk = false;
     for ( QValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
-      if ( it->encrypt == doEncrypt && it->sign == doSign )
+      if ( it->encrypt == doEncryptBody && it->sign == doSignBody )
         someOk = true;
       else
         mAllAttachmentsAreInBody = false;
@@ -1151,6 +1178,8 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     if( !mAllAttachmentsAreInBody && !someOk )
       mEarlyAddAttachments = false;
   }
+
+  kdDebug(5006) << "mEarlyAddAttachments=" << mEarlyAddAttachments << " mAllAttachmentsAreInBody=" << mAllAttachmentsAreInBody << endl;
 
   // if an html message is to be generated, make a text/plain and text/html part
   if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) {
@@ -1224,6 +1253,29 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     mSaveBoundary = tmpCT.Boundary();
   }
 
+  // Prepare attachments that will be signed/encrypted
+  for ( QValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
+    // signed/encrypted body parts must be either QP or base64 encoded
+    // Why not 7 bit? Because the LF->CRLF canonicalization would render
+    // e.g. 7 bit encoded shell scripts unusable because of the CRs.
+    //
+    // (marc) this is a workaround for the KMail bug that doesn't
+    // respect the CRLF->LF de-canonicalisation. We should
+    // eventually get rid of this:
+    if( it->sign || it->encrypt ) {
+      QCString cte = it->part->cteStr().lower();
+      if( ( "8bit" == cte )
+          || ( ( it->part->type() == DwMime::kTypeText )
+               && ( "7bit" == cte ) ) ) {
+        const QByteArray body = it->part->bodyDecodedBinary();
+        QValueList<int> dummy;
+        it->part->setBodyAndGuessCte(body, dummy, false, it->sign);
+        kdDebug(5006) << "Changed encoding of message part from "
+                      << cte << " to " << it->part->cteStr() << endl;
+      }
+    }
+  }
+
   if( mEarlyAddAttachments ) {
     // calculate a boundary string
     ++mPreviousBoundaryLevel;
@@ -1269,26 +1321,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // add all matching Attachments
     // NOTE: This code will be changed when KMime is complete.
     for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
-      if ( it->encrypt == doEncrypt && it->sign == doSign ) {
-        // signed/encrypted body parts must be either QP or base64 encoded
-        // Why not 7 bit? Because the LF->CRLF canonicalization would render
-        // e.g. 7 bit encoded shell scripts unusable because of the CRs.
-	//
-	// (marc) this is a workaround for the KMail bug that doesn't
-	// respect the CRLF->LF de-canonicalisation. We should
-	// eventually get rid of this:
-        if( it->sign || it->encrypt ) {
-          QCString cte = it->part->cteStr().lower();
-          if( ( "8bit" == cte )
-              || ( ( it->part->type() == DwMime::kTypeText )
-                   && ( "7bit" == cte ) ) ) {
-            const QByteArray body = it->part->bodyDecodedBinary();
-            QValueList<int> dummy;
-            it->part->setBodyAndGuessCte(body, dummy, false, it->sign);
-            kdDebug(5006) << "Changed encoding of message part from "
-                          << cte << " to " << it->part->cteStr() << endl;
-          }
-        }
+      if ( it->encrypt == doEncryptBody && it->sign == doSignBody ) {
         innerDwPart = theMessage.createDWBodyPart( it->part );
         innerDwPart->Assemble();
         body += "\n--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
@@ -1308,7 +1341,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   // create S/MIME body part for signing and/or encrypting
   mOldBodyPart.setBodyEncoded( body );
 
-  if( doSign || doEncrypt ) {
+  if( doSignBody || doEncryptBody ) {
     // get string representation of body part (including the attachments)
 
     DwBodyPart* dwPart;
@@ -1344,11 +1377,11 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
 
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
-    kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+    //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
     mEncodedBody = KMMessage::lf2crlf( mEncodedBody );
   }
 
-  if ( doSign ) {
+  if ( doSignBody ) {
     pgpSignedMsg( mEncodedBody, format );
 
     if ( mSignature.isEmpty() ) {
@@ -1422,10 +1455,13 @@ void MessageComposer::encryptMessage( KMMessage* msg,
     doEncrypt = false;
   }
 
-  // encrypt message
-  if ( doEncrypt ) {
+  const bool doEncryptBody = doEncrypt && mEncryptBody;
+  const bool doSignBody = doSign && mSignBody;
+
+  if ( doEncryptBody ) {
     QCString innerContent;
-    if ( doSign ) {
+    if ( doSignBody ) {
+      // extract signed body from newBodyPart
       DwBodyPart* dwPart = msg->createDWBodyPart( &newBodyPart );
       dwPart->Assemble();
       innerContent = dwPart->AsString().c_str();
@@ -1437,13 +1473,13 @@ void MessageComposer::encryptMessage( KMMessage* msg,
     // now do the encrypting:
     // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
     // according to RfC 2633, 3.1.1 Canonicalization
-    kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+    //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
     innerContent = KMMessage::lf2crlf( innerContent );
-    kdDebug(5006) << "                                                       done." << endl;
+    //kdDebug(5006) << "                                                       done." << endl;
 
     QByteArray encryptedBody;
     Kpgp::Result result = pgpEncryptedMsg( encryptedBody, innerContent,
-					   splitInfo.keys, format );
+                                           splitInfo.keys, format );
     if ( result != Kpgp::Ok ) {
       mRc = false;
       return;
@@ -1464,8 +1500,9 @@ void MessageComposer::encryptMessage( KMMessage* msg,
 
   // process the attachments that are not included into the body
   if( mRc ) {
+    const bool useNewBodyPart = doSignBody || doEncryptBody;
     addBodyAndAttachments( msg, splitInfo, doSign, doEncrypt,
-      (doSign || doEncrypt) ? newBodyPart : mOldBodyPart, format );
+      useNewBodyPart ? newBodyPart : mOldBodyPart, format );
   }
 }
 
@@ -1475,6 +1512,9 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
                                              const KMMessagePart& ourFineBodyPart,
                                              Kleo::CryptoMessageFormat format )
 {
+  const bool doEncryptBody = doEncrypt && mEncryptBody;
+  const bool doSignBody = doSign && mSignBody;
+
   if( !mAttachments.empty()
       && ( !mEarlyAddAttachments || !mAllAttachmentsAreInBody ) ) {
     // set the content type header
@@ -1482,9 +1522,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     msg->headers().ContentType().SetSubtype( DwMime::kSubtypeMixed );
     msg->headers().ContentType().CreateBoundary( 0 );
     kdDebug(5006) << "MessageComposer::addBodyAndAttachments() : set top level Content-Type to Multipart/Mixed" << endl;
-    //      msg->setBody( "This message is in MIME format.\n"
-    //                    "Since your mail reader does not understand this format,\n"
-    //                    "some or all parts of this message may not be legible." );
+
     // add our Body Part
     DwBodyPart* tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
     DwHeaders& headers = tmpDwPart->Headers();
@@ -1502,37 +1540,23 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     KMMessagePart newAttachPart;
     for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
 
-      const bool cryptFlagsDifferent = format != Kleo::InlineOpenPGPFormat
-                                       && ( it->encrypt != doEncrypt || it->sign != doSign ) ;
-
-      // CONTROVERSIAL
-      const bool encryptThisNow = doEncrypt && cryptFlagsDifferent && it->encrypt ;
-      const bool signThisNow = doSign && cryptFlagsDifferent && it->sign ;
+      const bool cryptFlagsDifferent = ( it->encrypt != doEncryptBody || it->sign != doSignBody ) ;
 
       if ( !cryptFlagsDifferent && mEarlyAddAttachments )
         continue;
 
+      const bool encryptThisNow = doEncrypt && cryptFlagsDifferent && it->encrypt ;
+      const bool signThisNow = doSign && cryptFlagsDifferent && it->sign ;
+
       if ( !encryptThisNow && !signThisNow ) {
         msg->addBodyPart( it->part );
         // I DON'T KNOW WHY, BUT THIS FIXES THE VANISHING BOUNDARY PARAMTER
-        (void)msg->asString();
+        msg->getTopLevelPart()->Assemble();
         continue;
       }
 
       KMMessagePart& rEncryptMessagePart( *it->part );
 
-      // prepare the attachment's content
-      // signed/encrypted body parts must be either QP or base64 encoded
-      QCString cte = it->part->cteStr().lower();
-      if( ( "8bit" == cte )
-          || ( ( it->part->type() == DwMime::kTypeText )
-               && ( "7bit" == cte ) ) ) {
-        QByteArray body = it->part->bodyDecodedBinary();
-        QValueList<int> dummy;
-        it->part->setBodyAndGuessCte(body, dummy, false, true);
-        kdDebug(5006) << "Changed encoding of message part from "
-                      << cte << " to " << it->part->cteStr() << endl;
-      }
       DwBodyPart* innerDwPart = msg->createDWBodyPart( it->part );
       innerDwPart->Assemble();
       QCString encodedAttachment = innerDwPart->AsString().c_str();
@@ -1541,7 +1565,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
 
       // replace simple LFs by CRLFs for all MIME supporting CryptPlugs
       // according to RfC 2633, 3.1.1 Canonicalization
-      kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+      //kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
       encodedAttachment = KMMessage::lf2crlf( encodedAttachment );
 
       // sign this attachment
@@ -1601,6 +1625,7 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
           mRc = false;
       }
       msg->addBodyPart( &newAttachPart );
+      msg->getTopLevelPart()->Assemble(); // see above comment about vanishing boundary parameter...
     }
   } else { // no attachments in the final message
     if( ourFineBodyPart.originalContentTypeStr() ) {
@@ -1630,16 +1655,16 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
     }
     if ( !ourFineBodyPart.body().isNull() )
       msg->setBody(ourFineBodyPart.body() );
-
-    if ( mDebugComposerCrypto ) {
-      kdDebug(5006) << "MessageComposer::addBodyAndAttachments():\n      Final message:\n|||" << msg->asString() << "|||\n\n" << endl;
-      msg->headers().Assemble();
-      kdDebug(5006) << "\n\n\nMessageComposer::addBodyAndAttachments():\n      Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
-    }
   }
 
   msg->setHeaderField( "X-KMail-Recipients",
                        splitInfo.recipients.join(", ") );
+
+  if ( mDebugComposerCrypto ) {
+    kdDebug(5006) << "MessageComposer::addBodyAndAttachments():\n      Final message:\n|||" << msg->asString() << "|||\n\n" << endl;
+    msg->headers().Assemble();
+    kdDebug(5006) << "\n\n\nMessageComposer::addBodyAndAttachments():\n      Final headers:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1694,6 +1719,8 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       }
     }
 
+    //kdDebug(5006) << "processStructuringInfo: mainHeader=" << mainHeader << endl;
+
     DwString mainDwStr;
     mainDwStr = mainHeader + "\n\n";
     DwBodyPart mainDwPa( mainDwStr, 0 );
@@ -1707,7 +1734,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
         resultingPart.setBodyEncoded( bodyText );
       } else
         resultingPart.setBodyEncodedBinary( ciphertext );
-    } else { //  OF  if( !makeMultiMime )
+    } else {
       // Build the encapsulated MIME parts.
       // Build a MIME part holding the version information
       // taking the body contents returned in
@@ -1749,11 +1776,12 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
         mainStr += "\n" + codeCStr + "\n--" + boundaryCStr;
       mainStr += "--\n";
 
+      //kdDebug(5006) << "processStructuringInfo: mainStr=" << mainStr << endl;
       resultingPart.setBodyEncoded( mainStr );
     } //  OF  if( !makeMultiMime ) .. else
-  } else { //  OF  makeMimeObject
-    // Build a plain message body
-    // based on the values returned in structInf.
+
+  } else { //  not making a mime object
+    // Build a plain message body based on the values returned in structInf.
     // Note: We do _not_ insert line breaks between the parts since
     //       it is the plugin job to provide us with ready-to-use
     //       texts containing all necessary line breaks.
@@ -1795,7 +1823,7 @@ bool MessageComposer::processStructuringInfo( const QString bugURL,
       resultingBody += structuring.data.flatTextPostfix;
 #endif
     resultingPart.setBodyEncoded( resultingBody );
-  } //  OF  if( structuring.data.makeMimeObject ) .. else
+  }
 
   // No need to free the memory that was allocated for the ciphertext
   // since this memory is freed by it's QCString destructor.
