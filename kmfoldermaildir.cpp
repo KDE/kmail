@@ -501,8 +501,8 @@ DwString KMFolderMaildir::getDwString(int idx)
     DwString str( stream, mi->msgSize() );
     fclose( stream );
     return str;
-  } 
-  kdDebug(5006) << "Could not open file r+" << abs_file << endl;   
+  }
+  kdDebug(5006) << "Could not open file r+" << abs_file << endl;
   return DwString();
 }
 
@@ -853,31 +853,30 @@ bool KMFolderMaildir::removeFile(const QString& filename)
   // delete a message before the folder is compacted.  since the file
   // naming and moving is done in ::compact, we can't assume any
   // location at this point
-  QString abs_file(location() + "/cur/");
-  abs_file += filename;
+  QCString abs_file(QFile::encodeName(location() + "/cur/"));
+  abs_file += QFile::encodeName(filename);
 
-  if (QFile::exists(abs_file) == false)
-  {
-    abs_file = location() + "/new/";
-    abs_file += filename;
+  if (::unlink( abs_file ) == 0)
+      return true;
 
-    if (QFile::exists(abs_file) == false)
-    {
-      kdDebug(5006) << "Can't delete " << abs_file << " if it doesn't exist!" << endl;
-      return false;
-    }
+  if (errno == ENOENT)  {// doesn't exist
+
+    abs_file = QFile::encodeName(location() + "/new/");
+    abs_file += QFile::encodeName(filename);
+
+    if (::unlink( abs_file ) == 0)
+        return true;
+
   }
 
-  if(QFile::remove(abs_file) == false)
-    return false;
-
-  return true;
+  kdDebug(5006) << "Can't delete " << abs_file << " " << perror << endl;
+  return false;
 }
 
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::removeContents()
 {
-    if (KIO::NetAccess::del(KURL::fromPathOrURL(location())))
+    if (KIO::NetAccess::del(KURL::fromPathOrURL(location()), 0))
         return 0;
     return 1;
 }
@@ -895,7 +894,7 @@ QString KMFolderMaildir::constructValidFileName(QString& aFileName, KMMsgStatus 
   }
 
   if (!suffix_regex)
-      suffix_regex = suffix_regex_sd.setObject(new QRegExp(":2,?R?S?$"));
+      suffix_regex_sd.setObject(suffix_regex, new QRegExp(":2,?R?S?$"));
 
   aFileName.truncate(aFileName.findRev(*suffix_regex));
 
