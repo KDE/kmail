@@ -94,7 +94,7 @@ DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
   topLayout->addWidget( new QLabel( txt, page ) );
   enableButtonSeparator( true );
 
-  setButtonText( User1, i18n( "Refresh &Cache" ) );
+  setButtonText( User1, i18n( "&Refresh Cache" ) );
   setButtonText( User2, i18n( "Rebuild &Index" ) );
 
   connect( this, SIGNAL( user1Clicked () ), this, SLOT( slotRebuildCache() ) );
