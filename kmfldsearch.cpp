@@ -594,7 +594,9 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
     char ch = '\0';
     start = aMsgStr.find(mHeaderField);
     if (start == -1) return false;
-    if (aMsgStr.find("\n\n") < start) return false;
+    int endOfHeader = aMsgStr.find("\n\n");
+    if (endOfHeader == -1) endOfHeader = aMsgStr.find("\n\r\n");
+    if (endOfHeader < start) return false;
     start += mFieldLength;
     stop = aMsgStr.find("\n", start);
     while (stop != -1 && (ch = aMsgStr.at(stop + 1)) == ' ' || ch == '\t')
