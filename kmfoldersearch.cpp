@@ -453,11 +453,11 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
     mSerNums.append(serNum);
     KMMsgBase *mb = folder->getMsgBase(idx);
     if (mb->status() == KMMsgStatusUnread ||
-	mb->status() == KMMsgStatusNew) {
-	if (mUnreadMsgs == -1)
-	    mUnreadMsgs = 0;
-	++mUnreadMsgs;
-	emit numUnreadMsgsChanged( this );
+       mb->status() == KMMsgStatusNew) {
+       if (mUnreadMsgs == -1)
+           mUnreadMsgs = 0;
+       ++mUnreadMsgs;
+       emit numUnreadMsgsChanged( this );
     }
     emitMsgAddedSignals(mSerNums.count()-1);
 }
@@ -682,13 +682,13 @@ KMFolderSearch::ignoreJobsForMessage( KMMessage* msg )
      their account manage them. Therefor first clear the jobs managed by
      this folder via the inherited method, then clear the imap ones. */
   KMFolderSearchInherited::ignoreJobsForMessage( msg );
-  if (!msg || msg->transferInProgress())
-    return;
-  KMAcctImap *account;
-  if ( !(account = static_cast<KMFolderImap*>(msg->parent())->account()) )
-    return;
 
-  account->ignoreJobsForMessage( msg );
+  if (msg->parent()->folderType() == KMFolderTypeImap) {
+    KMAcctImap *account;
+    if ( !(account = static_cast<KMFolderImap*>(msg->parent())->account()) )
+      return;
+    account->ignoreJobsForMessage( msg );
+  }
 }
 
 
