@@ -712,7 +712,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
 		    mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
   if (!fromSlot) toAction->setChecked(abs(mShowHeaders)&HDR_TO);
-  rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("&To:"),
+  rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("To:"),
 		    mLblTo, mEdtTo, mBtnTo);
   if (!fromSlot) ccAction->setChecked(abs(mShowHeaders)&HDR_CC);
   rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&CC:"),
