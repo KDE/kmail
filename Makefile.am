@@ -30,7 +30,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
 		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc \
 		kmaddrbookdlg.moc kmiostatusdlg.moc \
-		kmnewiostatus.cpp kmnewiostatuswdg.cpp
+		kmnewiostatus.moc kmnewiostatuswdg.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -161,9 +161,9 @@ kmiostatusdlg.moc: kmiostatusdlg.h
 	$(MOC) kmiostatusdlg.h -o kmiostatusdlg.moc
 
 kmnewiostatuswdg.cpp: kmnewiostatuswdg.moc
-kmnewiostatuswdg.cpp: kmnewiostatuswdg.h
+kmnewiostatuswdg.moc: kmnewiostatuswdg.h
 	$(MOC) kmnewiostatuswdg.h -o kmnewiostatuswdg.moc
 
 kmnewiostatus.cpp: kmnewiostatus.moc
-kmnewiostatus.cpp: kmnewiostatus.h
+kmnewiostatus.moc: kmnewiostatus.h
 	$(MOC) kmnewiostatus.h -o kmnewiostatus.moc

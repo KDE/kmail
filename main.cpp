@@ -68,7 +68,7 @@ static void signalHandler(int sigId);
 static void testDir(const char *_name);
 static void transferMail(void);
 static void initFolders(KConfig* cfg);
-static void init(int argc, char *argv[]);
+static void init(int& argc, char *argv[]);
 static void cleanup(void);
 static void setSignalHandler(void (*handler)(int));
 static void recoverDeadLetters(void);
@@ -114,8 +114,7 @@ static void signalHandler(int sigId)
 {
   QWidget* win;
 
-  fprintf(stderr, "*** KMail got signal %d: %s\n", sigId,
-	  strsignal(sigId));
+  fprintf(stderr, "*** KMail got signal %d\n", sigId);
 
   // try to cleanup all windows
   while (windowList->first() != NULL)
@@ -262,7 +261,7 @@ static void initFolders(KConfig* cfg)
 
 
 //-----------------------------------------------------------------------------
-static void init(int argc, char *argv[])
+static void init(int& argc, char *argv[])
 {
   QString  acctPath, foldersPath;
   KConfig* cfg;

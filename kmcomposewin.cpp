@@ -506,12 +506,12 @@ void KMComposeWin::setupToolBar(void)
 			SIGNAL(clicked()),this,
 			SLOT(slotCopyText()),TRUE,"Undo last change");
 #endif
-  mToolBar->insertButton(loader->loadIcon("editcopy.xpm"),3,
-			SIGNAL(clicked()),this,
-			SLOT(slotCopy()),TRUE,i18n("Copy selection"));
   mToolBar->insertButton(loader->loadIcon("editcut.xpm"),4,
 			SIGNAL(clicked()),this,
 			SLOT(slotCut()),TRUE,i18n("Cut selection"));
+  mToolBar->insertButton(loader->loadIcon("editcopy.xpm"),3,
+			SIGNAL(clicked()),this,
+			SLOT(slotCopy()),TRUE,i18n("Copy selection"));
   mToolBar->insertButton(loader->loadIcon("editpaste.xpm"),5,
 			SIGNAL(clicked()),this,
 			SLOT(slotPaste()),TRUE,i18n("Paste clipboard contents"));
@@ -549,9 +549,9 @@ void KMComposeWin::setupStatusBar(void)
 {
   mStatusBar = new KStatusBar(this);
   mStatusBar->setInsertOrder(KStatusBar::RightToLeft);
-  mStatusBar->insertItem("Column:     ",2);
-  mStatusBar->insertItem("Line:     ",1);
-  mStatusBar->insertItem("Status:",0);
+  mStatusBar->insertItem(QString(i18n("Column"))+":     ",2);
+  mStatusBar->insertItem(QString(i18n("Line"))+":     ",1);
+  mStatusBar->insertItem("  ",0);
   setStatusBar(mStatusBar);
 }
 
@@ -561,9 +561,9 @@ void KMComposeWin::updateCursorPosition() {
   QString temp;
   line = mEditor->currentLine();
   col = mEditor->currentColumn();
-  temp.sprintf("Line: %i",(line+1));
+  temp.sprintf("%s: %i", i18n("Line"), (line+1));
   mStatusBar->changeItem(temp,1);
-  temp.sprintf("Column: %i",(col+1));
+  temp.sprintf("%s: %i", i18n("Column"), (col+1));
   mStatusBar->changeItem(temp,2);
 
 }
