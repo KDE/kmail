@@ -179,7 +179,7 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
   mEdtMimetype->insertItem(mimeType, 0);
   mimetypeChanged(mimeType);
 
-  len = mMsgPart->size();
+  len = mMsgPart->decodedSize();
   if (len > 9999) lenStr.sprintf("%u KB", (len>>10));
   else lenStr.sprintf("%u bytes", len);
   mLblSize->setText(lenStr);
@@ -191,7 +191,6 @@ void KMMsgPartDlg::applyChanges(void)
 {
   QString str;
   QCString type, subtype, cte;
-  QCString body;
   int idx;
 
   if (!mMsgPart) return;
@@ -236,9 +235,9 @@ void KMMsgPartDlg::applyChanges(void)
   }
   if (cte != mMsgPart->cteStr())
   {
-    body.duplicate( mMsgPart->bodyDecoded() );
+    QByteArray body = mMsgPart->bodyDecodedBinary();
     mMsgPart->setCteStr(cte);
-    mMsgPart->setBodyEncoded(body);
+    mMsgPart->setBodyEncodedBinary(body);
   }
   kernel->kbp()->idle();
 }

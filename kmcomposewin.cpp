@@ -1485,20 +1485,13 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
 				 QListViewItem *lvi)
 {
-  unsigned int len;
-  QString lenStr;
-
   assert(msgPart != NULL);
-
-  len = msgPart->size();
-  if (len > 9999) lenStr.sprintf("%uK", (len>>10));
-  else lenStr.sprintf("%u", len);
 
   if (!msgPart->fileName().isEmpty())
     lvi->setText(0, msgPart->fileName());
   else
     lvi->setText(0, msgPart->name());
-  lvi->setText(1, lenStr);
+  lvi->setText(1, KIO::convertSize( msgPart->decodedSize()));
   lvi->setText(2, msgPart->contentTransferEncodingStr());
   lvi->setText(3, msgPart->typeStr() + "/" + msgPart->subtypeStr());
 }

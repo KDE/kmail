@@ -18,7 +18,7 @@ public:
 
   /** Get or set the message body */
   QCString body(void) const;
-  void setBody(const QString &aStr);
+  void setBody(const QCString &aStr);
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
     contains the correct encoding. This routine is meant for binary data.
@@ -26,8 +26,7 @@ public:
   virtual QByteArray bodyDecodedBinary(void) const;
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
-    contains the correct encoding. This routine is meant for binary data.
-    No trailing 0 is appended. */
+      contains the correct encoding. This routine is meant for text strings! */
   virtual QCString bodyDecoded(void) const;
 
   /** Sets body, encoded according to the content-transfer-encoding.
@@ -39,7 +38,7 @@ public:
   virtual void setBodyEncoded(const QCString& aStr);
 
   /** Returns decoded length of body. */
-  virtual int size(void) const;
+  virtual int decodedSize(void) const;
 
   /** Get or set name parameter */
   QString name(void) const;
@@ -115,16 +114,12 @@ protected:
   QCString mCte;
   QCString mContentDescription;
   QCString mContentDisposition;
-  /** keep it null terminated since some callers
-      misuse it as a QCString. Really the callers
-      should be fixed like in kmreaderwin.cpp.
-      mBody should not be QCString since it can be binary. */
   QByteArray mBody;
   QString mName;
   QCString mParameterAttribute;
   QString mParameterValue;
   QCString mCharset;
-  int mBodySize;
+  mutable int mBodyDecodedSize;
 };
 
 

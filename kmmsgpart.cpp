@@ -16,11 +16,9 @@
 #include <kiconloader.h>
 
 //-----------------------------------------------------------------------------
-KMMessagePart::KMMessagePart() :
-  mType("text"), mSubtype("plain"), mCte("7bit"), mContentDescription(),
-  mContentDisposition(), mBody(), mName()
+KMMessagePart::KMMessagePart()
+  : mType("text"), mSubtype("plain"), mCte("7bit"), mBodyDecodedSize(0)
 {
-  mBodySize = 0;
 }
 
 
@@ -31,35 +29,23 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
-int KMMessagePart::size(void) const
+int KMMessagePart::decodedSize(void) const
 {
-  if (mBodySize < 0)
-  {
-    ((KMMessagePart*)this)->mBodySize =
-      bodyDecodedBinary().size();
-  }
-  return mBodySize;
+  if (mBodyDecodedSize < 0)
+    mBodyDecodedSize = bodyDecodedBinary().size();
+  return mBodyDecodedSize;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setBody(const QString &aStr)
-// aStr may contain binary data ! See KMMessage::BodyPart()
-// However here we assume aStr is not binary and append hex 00. FIXME
+void KMMessagePart::setBody(const QCString &aStr)
 {
-  int encoding = contentTransferEncoding();
-  int len = aStr.length();
+  mBody.duplicate( aStr.data(), aStr.length() );
 
-  mBody.resize(len+1);
-  memcpy(mBody.data(), aStr.latin1(), len);
-  mBody[len] = 0;
-
-  if (encoding!=DwMime::kCteQuotedPrintable &&
-      encoding!=DwMime::kCteBase64)
-  {
-    mBodySize = mBody.size() - 1;
-  }
-  else mBodySize = -1;
+  if (cte() == DwMime::kCteQuotedPrintable || cte() == DwMime::kCteBase64)
+    mBodyDecodedSize = -1; // Can't know the decoded size
+  else
+    mBodyDecodedSize = mBody.size();
 }
 
 //-----------------------------------------------------------------------------
@@ -86,40 +72,55 @@ QString KMMessagePart::encodeBase64(const QString& aStr)
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncoded(const QCString& aStr)
 {
-  QByteArray bBody(aStr);
-  if (aStr.length()+1==aStr.size()) {
-    // if this really is a text string:
-    bBody.resize(bBody.size() - 1);
-  } else {
-    kdDebug(5006) << "WARNING -- body is binary instead of text" << endl;
+  mBodyDecodedSize = aStr.length();
+
+  switch (cte())
+  {
+  case DwMime::kCteQuotedPrintable:
+  case DwMime::kCteBase64:
+    {
+      DwString dwSrc(aStr.data(), mBodyDecodedSize);
+      DwString dwResult;
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwEncodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwEncodeBase64(dwSrc, dwResult);
+      mBody.duplicate(dwResult.data(), dwResult.size());
+      break;
+    }
+  default:
+    kdWarning(5006) << "unknown encoding '" << cteStr()
+		    << "'. Assuming binary." << endl;
+  case DwMime::kCte7bit:
+  case DwMime::kCte8bit:
+  case DwMime::kCteBinary:
+    mBody.duplicate( aStr.data(), mBodyDecodedSize );
+    break;
   }
-  setBodyEncodedBinary(bBody);
 }
 
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
 {
-  DwString dwResult, dwSrc;
-  int encoding = contentTransferEncoding();
-  int len;
+  mBodyDecodedSize = aStr.size();
 
-  mBodySize = aStr.size();
-
-  switch (encoding)
+  switch (cte())
   {
   case DwMime::kCteQuotedPrintable:
   case DwMime::kCteBase64:
-    dwSrc = DwString(aStr.data(), aStr.size());
-    if (encoding == DwMime::kCteQuotedPrintable)
-      DwEncodeQuotedPrintable(dwSrc, dwResult);
-    else
-      DwEncodeBase64(dwSrc, dwResult);
-    len = dwResult.size();
-    mBody.truncate(len);
-    memcpy(mBody.data(), dwResult.data(), len);
-    break;
+    {
+      DwString dwSrc(aStr.data(), aStr.size());
+      DwString dwResult;
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwEncodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwEncodeBase64(dwSrc, dwResult);
+      mBody.duplicate(dwResult.data(), dwResult.size());
+      break;
+    }
   default:
-    kdDebug(5006) << "WARNING -- unknown encoding `" << (const char*)cteStr() << "'. Assuming 8bit." << endl;
+    kdWarning(5006) << "unknown encoding '" << cteStr()
+		    << "'. Assuming binary." << endl;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
@@ -132,53 +133,72 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
 //-----------------------------------------------------------------------------
 QByteArray KMMessagePart::bodyDecodedBinary(void) const
 {
-  DwString dwResult, dwSrc;
   QByteArray result;
-  int encoding = contentTransferEncoding();
-  int len;
 
-  switch (encoding)
+  switch (cte())
   {
   case DwMime::kCteQuotedPrintable:
   case DwMime::kCteBase64:
-    dwSrc = DwString(mBody.data(), mBody.size());
-    if (encoding == DwMime::kCteQuotedPrintable)
-      DwDecodeQuotedPrintable(dwSrc, dwResult);
-    else
-      DwDecodeBase64(dwSrc, dwResult);
-    len = dwResult.size();
-    result.resize(len);
-    memcpy(result.data(), dwResult.c_str(), len);
-    break;
+    {
+      DwString dwSrc(mBody.data(), mBody.size());
+      DwString dwResult;
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwDecodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwDecodeBase64(dwSrc, dwResult);
+      result.duplicate( dwResult.data(), dwResult.size() );
+      break;
+    }
   default:
-    kdDebug(5006) << "WARNING -- unknown encoding `" << (const char*)cteStr() << "'. Assuming 8bit." << endl;
+    kdWarning(5006) << "unknown encoding '" << cteStr()
+		    << "'. Assuming binary." << endl;
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    len = mBody.size() - 1;
-    result.resize(len);
-    if (len) memcpy(result.data(), mBody.data(), len);
+    result.duplicate(mBody);
     break;
   }
-// do this for cases where bodyDecoded instead of bodyDecodedText
-// is called. This does not warrant a trailing 0 - realloc might
-// change the address. Maybe this is not really needed.
-  result.resize(len+1);
-  result[len] = 0;
-  result.resize(len);
 
   return result;
 }
 
 QCString KMMessagePart::bodyDecoded(void) const
 {
-    QByteArray b(bodyDecodedBinary());
-    QCString result(b.size()+1); // with additional trailing 0
-    memcpy(result.data(),b.data(),b.size());
-    result.truncate(result.length());
-    if (result.length()<(b.size()-1))
-      kdDebug(5006) << "WARNING -- body is binary but used as text" << endl;
-    return result;
+  QCString result;
+  int len;
+
+  switch (cte())
+  {
+  case DwMime::kCteQuotedPrintable:
+  case DwMime::kCteBase64:
+    {
+      DwString dwSrc(mBody.data(), mBody.size());
+      DwString dwResult;
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwDecodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwDecodeBase64(dwSrc, dwResult);
+      len = dwResult.size();
+      result.resize( len+1 /* trailing NUL */ );
+      memcpy(result.data(), dwResult.data(), len);
+      break;
+    }
+  default:
+    kdWarning(5006) << "unknown encoding '" << cteStr()
+		    << "'. Assuming binary." << endl;
+  case DwMime::kCte7bit:
+  case DwMime::kCte8bit:
+  case DwMime::kCteBinary:
+    {
+      len = mBody.size();
+      result.resize( len+1 /* trailing NUL */ );
+      memcpy(result.data(), mBody.data(), len);
+      break;
+    }
+  }
+  result[len] = 0;
+
+  return result;
 }
 
 
@@ -397,7 +417,11 @@ void KMMessagePart::setContentDisposition(const QCString &aStr)
 //-----------------------------------------------------------------------------
 QCString KMMessagePart::body(void) const
 {
-  return QCString(mBody, mBody.size() + 1);
+  int len = mBody.size();
+  QCString result(len+1); // space for trailing NUL
+  memcpy(result.data(), mBody.data(), len);
+  result[len] = 0;
+  return result;
 }
 
 

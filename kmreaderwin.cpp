@@ -1815,7 +1815,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       QString str = aMsgPart->bodyDecoded();
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
-      if( str.length() < (unsigned) aMsgPart->size() ) {
+      if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
         str += i18n("\n[KMail: Attachment contains binary data. Trying to show first %1 characters.]").arg(str.length());
       }
       medit->setText(str);
