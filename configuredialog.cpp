@@ -1630,16 +1630,10 @@ void ConfigureDialog::setupMiscPage( void )
 }
 
 
-void ConfigureDialog::setIdentityInformation( const QString &identityName )
-{
-  if( mIdentity.mActiveIdentity == identityName )
-  {
-    return;
-  }
 
-  //
-  // 1. Save current settings to the list
-  //
+
+void ConfigureDialog::saveActiveIdentity( void )
+{
   IdentityEntry *entry = mIdentityList.get(mIdentity.mActiveIdentity);
   if( entry != 0 )
   {
@@ -1653,14 +1647,28 @@ void ConfigureDialog::setIdentityInformation( const QString &identityName )
       mIdentity.signatureFileRadio->isChecked() );
     entry->setUseSignatureFile( mIdentity.signatureFileRadio->isChecked() );
   }
+}
 
-  mIdentity.mActiveIdentity = identityName;
+
+void ConfigureDialog::setIdentityInformation( const QString &identity )
+{
+  if( mIdentity.mActiveIdentity == identity )
+  {
+    return;
+  }
+
+  //
+  // 1. Save current settings to the list
+  //
+  saveActiveIdentity();
+
+  mIdentity.mActiveIdentity = identity;
 
   //
   // 2. Display the new settings
   //
   bool useSignatureFile;
-  entry = mIdentityList.get(identityName);
+  IdentityEntry *entry = mIdentityList.get( mIdentity.mActiveIdentity );
   if( entry == 0 )
   {
     mIdentity.nameEdit->setText("");
@@ -1697,8 +1705,19 @@ void ConfigureDialog::setIdentityInformation( const QString &identityName )
 }
 
 
+
+
 void ConfigureDialog::slotNewIdentity( void )
 {
+  //
+  // First. Save current setting to the list. In the dialog box we 
+  // can choose to copy from the list so it must be synced.
+  //
+  saveActiveIdentity();
+
+  //
+  // Make and open the dialog 
+  //
   NewIdentityDialog *dialog = new NewIdentityDialog( this, "new", true );
 
   QStringList list;
@@ -1723,6 +1742,7 @@ void ConfigureDialog::slotNewIdentity( void )
       mIdentity.identityCombo->clear();
       mIdentity.identityCombo->insertStringList(list);
       mIdentity.identityCombo->setCurrentItem( list.findIndex(identityText) );
+
       mIdentityList.add( identityText, dialog->duplicateText() );
       slotIdentitySelectorChanged();
     }

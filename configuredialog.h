@@ -274,7 +274,8 @@ class ConfigureDialog : public KDialogBase
     void setupMimePage( void );
     void setupSecurityPage( void );
     void setupMiscPage( void );
-
+    
+    void saveActiveIdentity( void );
     void setIdentityInformation( const QString &identityName );
 
   private slots:
