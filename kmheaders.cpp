@@ -817,6 +817,7 @@ void KMHeaders::reset(void)
   setCurrentMsg(id);
   setTopItemByIndex(top);
   ensureCurrentItemVisible();
+  setSelectionAnchor( currentItem() );
 }
 
 //-----------------------------------------------------------------------------
@@ -908,6 +909,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     updateMessageList();
     setCurrentMsg(id);
     setTopItemByIndex(top);
+    setSelectionAnchor( currentItem() );
   } else {
     if (mFolder) {
     // WABA: Make sure that no KMReaderWin is still using a msg
@@ -994,6 +996,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
   END_TIMER(updateMsg);
   SHOW_TIMER(updateMsg);
   makeHeaderVisible();
+  setSelectionAnchor( currentItem() );
 
   if (mFolder)
     setFolderInfoStatus();
@@ -1074,6 +1077,7 @@ void KMHeaders::msgChanged()
   setTopItemByIndex( i );
   setCurrentMsg(cur);
   setSelected( currentItem(), true );
+  setSelectionAnchor( currentItem() );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
           this,SLOT(highlightMessage(QListViewItem*)));
 
