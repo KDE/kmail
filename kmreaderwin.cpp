@@ -1989,6 +1989,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Custom date format"),
   I18N_NOOP("Reorganized menu bar looks more like other KDE applications"),
   I18N_NOOP("Default identity can now be renamed"),
+  I18N_NOOP("Multiple OpenPGP keys per email address (useful for distribution lists)"),
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
