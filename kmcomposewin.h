@@ -162,6 +162,8 @@ public slots:
   /** Append current message to ~/dead.letter */
   virtual void deadLetter(void);
 
+   void updateCursorPosition();
+
 protected:
   /** Install grid management and header fields. If fields exist that
     should not be there they are removed. Those that are needed are

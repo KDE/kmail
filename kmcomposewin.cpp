@@ -1,5 +1,6 @@
 // kmcomposewin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
+// This code is published under the GPL.
 
 #include <keditcl.h>
 #include "kmcomposewin.h"
@@ -124,10 +125,11 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 
   readConfig();
 
+  setupStatusBar();
   setupEditor();
   setupMenuBar();
   setupToolBar();
-  setupStatusBar();
+
 
   if(!mShowToolBar) enableToolBar(KToolBar::Hide);	
 
@@ -545,10 +547,25 @@ void KMComposeWin::setupToolBar(void)
 void KMComposeWin::setupStatusBar(void)
 {
   mStatusBar = new KStatusBar(this);
+  mStatusBar->setInsertOrder(KStatusBar::RightToLeft);
+  mStatusBar->insertItem("Column:     ",2);
+  mStatusBar->insertItem("Line:     ",1);
   mStatusBar->insertItem("Status:",0);
   setStatusBar(mStatusBar);
 }
 
+void KMComposeWin::updateCursorPosition() {
+
+  int col,line;
+  QString temp;
+  line = mEditor->currentLine();
+  col = mEditor->currentColumn();
+  temp.sprintf("Line: %i",(line+1));
+  mStatusBar->changeItem(temp,1);
+  temp.sprintf("Column: %i",(col+1));
+  mStatusBar->changeItem(temp,2);
+
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupEditor(void)
@@ -608,6 +625,8 @@ void KMComposeWin::setupEditor(void)
   menu->insertItem(i18n("Find..."), this, SLOT(slotFind()));
   menu->insertItem(i18n("Replace..."), this, SLOT(slotReplace()));
   mEditor->installRBPopup(menu);
+  connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
+  updateCursorPosition();
 }
 
 
