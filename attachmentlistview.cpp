@@ -125,6 +125,16 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
   }
 }
 
+//-----------------------------------------------------------------------------
+
+void AttachmentListView::keyPressEvent( QKeyEvent * e )
+{
+  if ( e->key() == Key_Delete ) {
+    emit attachmentDeleted();
+  }
+}
+
 
 } // namespace KMail
 
+#include "attachmentlistview.moc"

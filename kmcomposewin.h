@@ -17,6 +17,7 @@
 #include <qfont.h>
 #include <qptrlist.h>
 #include <qvaluevector.h>
+#include <qsplitter.h>
 
 #include <kio/job.h>
 #include <kglobalsettings.h>
@@ -829,6 +830,7 @@ private slots:
 private:
   QColor mForeColor,mBackColor;
   QFont mSaveFont;
+  QSplitter *mSplitter;
   struct atmLoadData
   {
     KURL url;

@@ -27,6 +27,7 @@ namespace KMail {
 
 class AttachmentListView : public KListView
 {
+  Q_OBJECT
 public:
   AttachmentListView( KMComposeWin* composer = 0, QWidget* parent = 0,
                       const char* name = 0 );
@@ -37,8 +38,15 @@ public:
   void contentsDragMoveEvent( QDragMoveEvent* );
   void contentsDropEvent( QDropEvent* );
 
+protected:
+  virtual void keyPressEvent( QKeyEvent * e );
+
 private:
   KMComposeWin* mComposer;
+
+signals:
+  void attachmentDeleted();
+
 };
 
 } // namespace KMail

@@ -203,7 +203,11 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFolder = 0;
   mAutoCharset = TRUE;
   mFixedFontAction = 0;
-  mEditor = new KMEdit( mMainWidget, this, mDictionaryCombo->spellConfig() );
+  mSplitter = new QSplitter( Qt::Vertical, mMainWidget, "mSplitter" );
+  mEditor = new KMEdit( mSplitter, this, mDictionaryCombo->spellConfig() );
+  mSplitter->moveToFirst( mEditor );
+  mSplitter->setOpaqueResize( true );
+  
   mEditor->setTextFormat(Qt::PlainText);
   mEditor->setAcceptDrops( true );
 
@@ -233,10 +237,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   //mBtnFrom->setFocusPolicy(QWidget::NoFocus);
   mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
 
-  mAtmListView = new AttachmentListView( this, mMainWidget,
+  mAtmListView = new AttachmentListView( this, mSplitter,
                                          "attachment list view" );
   mAtmListView->setSelectionMode( QListView::Extended );
-  mAtmListView->setFocusPolicy( QWidget::NoFocus );
   mAtmListView->addColumn( i18n("Name"), 200 );
   mAtmListView->addColumn( i18n("Size"), 80 );
   mAtmListView->addColumn( i18n("Encoding"), 120 );
@@ -262,6 +265,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   connect( mAtmListView,
            SIGNAL( selectionChanged() ),
            SLOT( slotUpdateAttachActions() ) );
+  connect( mAtmListView,
+           SIGNAL( attachmentDeleted() ),
+           SLOT( slotAttachRemove() ) );
   mAttachMenu = 0;
 
   readConfig();
@@ -760,7 +766,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   for (mask=1,mNumHeaders=0; mask<=showHeaders; mask<<=1)
     if ((showHeaders&mask) != 0) mNumHeaders++;
 
-  numRows = mNumHeaders + 2;
+  numRows = mNumHeaders + 1;
 
   delete mGrid;
   mGrid = new QGridLayout(mMainWidget, numRows, 3, 4, 4);
@@ -822,8 +828,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
                     mLblSubject, mEdtSubject);
   assert(row<=mNumHeaders);
 
-  mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
-  mGrid->addMultiCellWidget(mAtmListView, mNumHeaders+1, mNumHeaders+1, 0, 2);
+  mGrid->addMultiCellWidget(mSplitter, row, mNumHeaders, 0, 2);
 
   if( !mAtmList.isEmpty() )
     mAtmListView->show();
@@ -1822,9 +1827,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
   // show the attachment listbox if it does not up to now
   if (mAtmList.count()==1)
   {
-    mGrid->setRowStretch(mNumHeaders+1, 50);
-    mAtmListView->setMinimumSize(100, 80);
-    mAtmListView->setMaximumHeight( 100 );
+    mAtmListView->resize(mAtmListView->width(), 50);
     mAtmListView->show();
     resize(size());
   }
@@ -1910,7 +1913,6 @@ void KMComposeWin::removeAttach(int idx)
   if( mAtmList.isEmpty() )
   {
     mAtmListView->hide();
-    mGrid->setRowStretch(mNumHeaders+1, 0);
     mAtmListView->setMinimumSize(0, 0);
     resize(size());
   }
@@ -3244,7 +3246,12 @@ void KMComposeWin::toggleMarkup(bool markup)
     int paraFrom, indexFrom, paraTo, indexTo;
     mEditor->getSelection ( &paraFrom, &indexFrom, &paraTo, &indexTo);
     mEditor->selectAll();
+    // save the buttonstates because setColor calls fontChanged
+    bool _bold = textBoldAction->isChecked();
+    bool _italic = textItalicAction->isChecked();
     mEditor->setColor(QColor(0,0,0));
+    textBoldAction->setChecked(_bold);
+    textItalicAction->setChecked(_italic);
     mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo);
 
     mEditor->setTextFormat(Qt::RichText);
@@ -3693,7 +3700,7 @@ void KMComposeWin::fontChanged( const QFont &f )
   QFontDatabase *fontdb = new QFontDatabase();
 
   if ( fontdb->bold(f.family(), "Bold") ) {
-    textBoldAction->setChecked( f.bold() );
+    textBoldAction->setChecked( f.bold() ); // if the user has the default font with bold, then show it in the buttonstate
     textBoldAction->setEnabled(true);
   }
   else
