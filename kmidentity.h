@@ -13,6 +13,7 @@
 class KMIdentity;
 class KConfigBase;
 class IdentityList;
+class QDataStream;
 namespace KMail {
   class SignatureConfigurator;
 }
@@ -24,6 +25,10 @@ namespace KMail {
 class Signature {
   friend class KMIdentity;
   friend class KMail::SignatureConfigurator;
+
+  friend QDataStream & operator<<( QDataStream & stream, const Signature & sig );
+  friend QDataStream & operator>>( QDataStream & stream, Signature & sig );
+
 public:
   /** Type of signature (ie. way to obtain the signature text) */
   enum Type { Disabled = 0, Inlined = 1, FromFile = 2, FromCommand = 3 };
@@ -79,7 +84,12 @@ class KMIdentity
   // QValueList<KMIdentity> and especially qHeapSort().
   friend class IdentityManager;
 
+  friend QDataStream & operator<<( QDataStream & stream, const KMIdentity & ident );
+  friend QDataStream & operator>>( QDataStream & stream, KMIdentity & ident );
+
 public:
+  typedef QValueList<KMIdentity> List;
+
   /** used for comparison */
   bool operator==( const KMIdentity & other ) const;
 
@@ -228,9 +238,10 @@ public:
   static KMIdentity null;
   bool isNull() const;
 protected:
-  // if you add new members, make sure they have an operator= (or
-  // the compiler can synthesize one) and amend KMIdentity::operator==,
-  // isNull(), readConfig() and writeConfig() accordingly:
+  // if you add new members, make sure they have an operator= (or the
+  // compiler can synthesize one) and amend KMIdentity::operator==,
+  // isNull(), readConfig() and writeConfig() as well as operator<<
+  // and operator>> accordingly:
   uint mUoid;
   QString mIdentity, mFullName, mEmailAddr, mOrganization;
   QString mReplyToAddr;
@@ -241,5 +252,12 @@ protected:
   Signature mSignature;
   bool      mIsDefault;
 };
+
+QDataStream & operator<<( QDataStream & stream, const Signature & sig );
+QDataStream & operator>>( QDataStream & stream, Signature & sig );
+
+QDataStream & operator<<( QDataStream & stream, const KMIdentity & ident );
+QDataStream & operator>>( QDataStream & stream, KMIdentity & ident );
+
 
 #endif /*kmidentity_h*/

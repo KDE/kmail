@@ -17,6 +17,7 @@
 
 #include <qstringlist.h>
 #include <qfileinfo.h>
+#include <qdatastream.h>
 
 #include <pwd.h>
 #include <sys/types.h>
@@ -212,6 +213,17 @@ void Signature::writeConfig( KConfigBase * config ) const
   }
 }
 
+QDataStream & operator<<( QDataStream & stream, const Signature & sig ) {
+  return stream << static_cast<Q_UINT8>(sig.mType)
+		<< sig.mUrl
+		<< sig.mText;
+}
+
+QDataStream & operator>>( QDataStream & stream, Signature & sig ) {
+  return stream >> static_cast<Q_UINT8>(sig.mType)
+		>> sig.mUrl
+		>> sig.mText;
+}
 
 KMIdentity KMIdentity::null;
 
@@ -290,6 +302,44 @@ void KMIdentity::writeConfig( KConfigBase * config ) const
   mSignature.writeConfig( config );
 }
 
+QDataStream & operator<<( QDataStream & stream, const KMIdentity & i ) {
+  return stream << static_cast<Q_UINT32>(i.uoid())
+		<< i.identityName()
+		<< i.fullName()
+		<< i.organization()
+		<< i.pgpIdentity()
+		<< i.emailAddr()
+		<< i.replyToAddr()
+		<< i.bcc()
+		<< i.vCardFile()
+		<< i.transport()
+		<< i.fcc()
+		<< i.drafts()
+		<< i.mSignature;
+}
+
+QDataStream & operator>>( QDataStream & stream, KMIdentity & i ) {
+#if 1 // why doesn't it work like for Q_UINT8 above???
+  Q_UINT32 uoid;
+  stream >> uoid;
+  i.mUoid = uoid;
+  return stream
+#else
+  return stream >> (Q_UINT32)i.mUoid
+#endif
+		>> i.mIdentity
+		>> i.mFullName
+		>> i.mOrganization
+		>> i.mPgpIdentity
+		>> i.mEmailAddr
+		>> i.mReplyToAddr
+		>> i.mBcc
+		>> i.mVCardFile
+		>> i.mTransport
+		>> i.mFcc
+		>> i.mDrafts
+		>> i.mSignature;
+}
 
 //-----------------------------------------------------------------------------
 bool KMIdentity::mailingAllowed(void) const
