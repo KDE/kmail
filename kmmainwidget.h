@@ -173,8 +173,9 @@ public slots:
   void slotFolderTreeColumnsChanged();
 
 signals:
-  void messagesTransfered(bool);
+  void messagesTransfered( bool );
   void captionChangeRequest( const QString & caption );
+  void modifiedToolBarConfig( void );
 
 protected:
   void setupActions();

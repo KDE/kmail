@@ -65,6 +65,8 @@ KMMainWin::KMMainWin(QWidget *)
 	  this, SLOT(htmlStatusMsg(const QString&)));
   connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
 	  SLOT(setCaption(const QString&)) );
+  connect(mKMMainWidget, SIGNAL(modifiedToolBarConfig()),
+	   SLOT(slotUpdateToolbars()) );
 }
 
 KMMainWin::~KMMainWin()

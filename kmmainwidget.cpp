@@ -3257,4 +3257,5 @@ void KMMainWidget::slotAntiSpamWizard()
 {
   AntiSpamWizard wiz( this, folderTree(), actionCollection() );
   wiz.exec();
+  emit modifiedToolBarConfig();
 }
