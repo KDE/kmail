@@ -200,7 +200,7 @@ private:
   KMFolderType mFolderType;
 
   // groupware folder icons:
-  static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks;
+  static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks, *pixJournals;
 
   bool mUseResourceIMAP;
   bool mHideFolders;
