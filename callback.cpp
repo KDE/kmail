@@ -65,6 +65,9 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   msg->setTo( to );
   msg->setBody( iCal.utf8() );
   msg->setFrom( receiver() );
+  /* We want the triggering mail to be moved to the trash once this one
+   * has been sent successfully. Set a link header which accomplishes that. */
+  msg->link( mMsg, KMMsgStatusDeleted );
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   // cWin->setCharset( "", true );
