@@ -438,42 +438,42 @@ KMMsgStatus KMMsgInfo::status(void) const
     if (mStatus == KMMsgStatusUnknown) {
         KMMsgStatus st = (KMMsgStatus)getLongPart(MsgStatusPart);
         if (!st) {
-            // We are opening an old index for the first time, get the legacy 
-            // status and merge it in. 
-            mLegacyStatus = (KMLegacyMsgStatus)getLongPart(MsgLegacyStatusPart); 
+            // We are opening an old index for the first time, get the legacy
+            // status and merge it in.
+            mLegacyStatus = (KMLegacyMsgStatus)getLongPart(MsgLegacyStatusPart);
             st = KMMsgStatusRead;
             switch (mLegacyStatus) {
                 case KMLegacyMsgStatusUnknown:
                     st = KMMsgStatusUnknown;
                     break;
-                case KMLegacyMsgStatusNew: 
+                case KMLegacyMsgStatusNew:
                     st = KMMsgStatusNew;
                     break;
-                case KMLegacyMsgStatusUnread: 
+                case KMLegacyMsgStatusUnread:
                     st = KMMsgStatusUnread;
                     break;
-                case KMLegacyMsgStatusRead: 
+                case KMLegacyMsgStatusRead:
                     st = KMMsgStatusRead;
                     break;
-                case KMLegacyMsgStatusOld: 
+                case KMLegacyMsgStatusOld:
                     st = KMMsgStatusOld;
                     break;
-                case KMLegacyMsgStatusDeleted: 
+                case KMLegacyMsgStatusDeleted:
                     st |= KMMsgStatusDeleted;
                     break;
-                case KMLegacyMsgStatusReplied: 
+                case KMLegacyMsgStatusReplied:
                     st |= KMMsgStatusReplied;
                     break;
-                case KMLegacyMsgStatusForwarded: 
+                case KMLegacyMsgStatusForwarded:
                     st |= KMMsgStatusForwarded;
                     break;
-                case KMLegacyMsgStatusQueued: 
+                case KMLegacyMsgStatusQueued:
                     st |= KMMsgStatusQueued;
                     break;
-                case KMLegacyMsgStatusSent: 
+                case KMLegacyMsgStatusSent:
                     st |= KMMsgStatusSent;
                     break;
-                case KMLegacyMsgStatusFlag:                              
+                case KMLegacyMsgStatusFlag:
                     st |= KMMsgStatusFlag;
                     break;
                 default:
