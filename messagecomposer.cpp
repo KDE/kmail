@@ -1680,7 +1680,7 @@ QCString MessageComposer::breakLinesAndApplyCodec()
                                                i18n("<qt>Not all characters fit into the chosen"
                                                     " encoding.<br><br>Send the message anyway?</qt>"),
                                                i18n("Some characters will be lost"),
-                                               i18n("Loose Characters"), i18n("Change Encoding") ) == KMessageBox::Yes );
+                                               i18n("Lose Characters"), i18n("Change Encoding") ) == KMessageBox::Yes );
     if( !anyway ) {
       mComposeWin->mEditor->setText(oldText);
       return QCString();
