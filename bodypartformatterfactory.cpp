@@ -56,7 +56,7 @@ namespace {
   KPIM_DEFINE_PLUGIN_LOADER( BodyPartFormatterPluginLoader,
 			     KMail::Interface::BodyPartFormatterPlugin,
 			     "create_bodypart_formatter_plugin",
-			     "kmail/plugins/bodypartformatter/*.desktop" );
+			     "kmail/plugins/bodypartformatter/*.desktop" )
 
 }
 

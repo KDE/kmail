@@ -375,7 +375,7 @@ namespace {
     CASE(SMIME);
     CASE(SMIMEOpaque);
     ++mTotal;
-  };
+  }
 #undef CASE
 
 } // anon namespace
