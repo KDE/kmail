@@ -16,6 +16,7 @@
 #include "kmkernel.h"
 #include "globalsettings.h"
 #include "kmcommands.h"
+#include "acljobs.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -71,7 +72,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
   setPixmap( 0, normalIcon() );
 }
 
-KMFolderTreeItem::~KMFolderTreeItem() 
+KMFolderTreeItem::~KMFolderTreeItem()
 {
 }
 
@@ -440,7 +441,7 @@ void KMFolderTree::reload(bool openFolders)
     return;
   }
   mReloading = true;
-  
+
   int top = contentsY();
   mLastItem = 0;
   // invalidate selected drop item
@@ -448,7 +449,7 @@ void KMFolderTree::reload(bool openFolders)
   // remember last
   KMFolder* last = currentFolder();
   KMFolder* selected = 0;
-  KMFolder* oldCurrentFolder = 
+  KMFolder* oldCurrentFolder =
     ( oldCurrent ? static_cast<KMFolderTreeItem*>(oldCurrent)->folder(): 0 );
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
@@ -536,24 +537,24 @@ void KMFolderTree::reload(bool openFolders)
   // if current and selected folder did not change set it again
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
   {
-    if ( last && 
+    if ( last &&
         static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
     {
       mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
       setCurrentItem( it.current() );
     }
-    if ( selected && 
+    if ( selected &&
         static_cast<KMFolderTreeItem*>( it.current() )->folder() == selected )
     {
       setSelected( it.current(), true );
     }
-    if ( oldCurrentFolder && 
+    if ( oldCurrentFolder &&
         static_cast<KMFolderTreeItem*>( it.current() )->folder() == oldCurrentFolder )
     {
       oldCurrent = it.current();
     }
   }
-  refresh();  
+  refresh();
   mReloading = false;
 }
 
@@ -1041,6 +1042,22 @@ void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
   KFolderTree::contentsMouseReleaseEvent(me);
 }
 
+// little static helper
+static bool folderHasCreateRights( const KMFolder *folder )
+{
+  bool createRights = true; // we don't have acls for local folders yet
+  if ( folder && folder->folderType() == KMFolderTypeImap ) {
+    const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
+    createRights =
+      imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create );
+  } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
+    const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
+    createRights =
+      dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create );
+  }
+  return createRights;
+}
+
 //-----------------------------------------------------------------------------
 // Create a subfolder.
 // Requires creating the appropriate subdirectory and show a dialog
@@ -1050,13 +1067,22 @@ void KMFolderTree::addChildFolder()
   if (!fti)
     return;
   KMFolder *aFolder = fti->folder();
-  if (fti->folder())
-    if (!fti->folder()->createChildFolder())
+  if (aFolder) {
+    if (!aFolder->createChildFolder())
       return;
+    if ( !folderHasCreateRights( aFolder ) ) {
+      const QString message = i18n( "<qt>Cannot create folder <b>%1</b> because of insufficient "
+                                    "permissions on the server. If you think you should be able to create "
+                                    "subfolders here, ask your administrator to grant you rights to do so."
+                                    "</qt> " ).arg(aFolder->name());
+      KMessageBox::error( this, message );
+      return;
+    }
+  }
 
   KMFolderDir *dir = &(kmkernel->folderMgr()->dir());
-  if (fti->folder())
-    dir = fti->folder()->child();
+  if (aFolder)
+    dir = aFolder->child();
 
   KMFolderDialog *d =
     new KMFolderDialog(0, dir, this, i18n("Create Subfolder") );

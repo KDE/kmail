@@ -44,7 +44,6 @@
 #include "mailinglist-magic.h"
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"
-#include "acljobs.h"
 #include "kmailicalifaceimpl.h"
 #include "kmmainwidget.h"
 #include "globalsettings.h"
@@ -719,22 +718,6 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
                                      type == KMail::ContentsTypeTask );
 }
 
-
-// little static helper
-static bool folderHasCreateRights( const KMFolder *folder )
-{
-  bool createRights = true; // we don't have acls for local folders yet
-  if ( folder && folder->folderType() == KMFolderTypeImap ) {
-    const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
-    createRights =
-      imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create );
-  } else if ( folder && folder->folderType() == KMFolderTypeCachedImap ) {
-    const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
-    createRights =
-      dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create );
-  }
-  return createRights;
-}
 //-----------------------------------------------------------------------------
 bool FolderDiaGeneralTab::save()
 {
@@ -808,14 +791,6 @@ bool FolderDiaGeneralTab::save()
 
     if( mDlg->isNewFolder() ) {
 
-      if ( !folderHasCreateRights( mDlg->parentFolder() ) ) {
-        message = i18n( "<qt>Cannot create folder <b>%1</b> because of insufficient "
-            "permissions on the server. If you think you should be able to create "
-            "subfolders here, ask your administrator to grant you rights to do so."
-            "</qt> " ).arg(fldName);
-        KMessageBox::error( this, message );
-        return false;
-      }
       if ( fldName.find( '/' ) != -1 ) {
         KMessageBox::error( this, i18n( "Folder names can't contain the / (slash) character, please choose another folder name" ) );
         return false;
