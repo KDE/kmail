@@ -806,11 +806,13 @@ bool MessageComposer::determineWhetherToEncrypt( bool doEncryptCompletely ) {
 }
 
 void MessageComposer::markAllAttachmentsForSigning( bool sign ) {
+  mSignBody = sign;
   for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
     it->sign = sign;
 }
 
 void MessageComposer::markAllAttachmentsForEncryption( bool enc ) {
+  mEncryptBody = enc;
   for ( QValueVector<Attachment>::iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
     it->encrypt = enc;
 }
