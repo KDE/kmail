@@ -125,8 +125,11 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) const {
 
   // remove msg from parent in case we want to move it:
   KMFolder * parent = msg->parent();
-  if ( parent )
+  if ( parent ) {
+    parent->open();
     parent->removeMsg( parent->find( msg ) );
+    parent->close();
+  }
   msg->setParent( 0 );
 
   bool stopIt = false;
@@ -143,8 +146,12 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) const {
   }
 
   // readd message if it wasn't moved:
-  if ( parent && !msg->parent() && parent->addMsg( msg ) != 0 )
-    kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
+  if ( parent && !msg->parent() ) {
+    parent->open();
+    if ( parent->addMsg( msg ) != 0 )
+      kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
+    parent->close();
+  }
 
   return result;
 }

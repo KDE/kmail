@@ -1359,7 +1359,9 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
     kernel->msgDict()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
+    p->close();
   }
+  
   return filterResult;
 }
 
@@ -1445,6 +1447,7 @@ void KMHeaders::applyFiltersOnMsg()
     KMMessage * msg = mFolder->getMsg(idx);
     if (msg->transferInProgress()) continue;
     msg->setTransferInProgress(true);
+    mFolder->open();
     if ( !msg->isComplete() )
     {
       FolderJob *job = mFolder->createJob(msg);
