@@ -324,12 +324,7 @@ bool KMFolderTree::event(QEvent *e)
      readColorConfig();
      return true;
   }
-  bool result = KListView::event(e);
-
-  if ( e->type() == QEvent::KeyPress && currentItem() != mLastItem )
-    doFolderSelected( currentItem() );
-
-  return result;
+  return KListView::event(e);
 }
 
 //-----------------------------------------------------------------------------
@@ -561,7 +556,7 @@ void KMFolderTree::reload(bool openFolders)
       if (fti->folder()->folderType() == KMFolderTypeImap)
       {
         // imap-only
-        KMFolderImap *imapFolder = 
+        KMFolderImap *imapFolder =
            dynamic_cast<KMFolderImap*> ( fti->folder()->storage() );
         disconnect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
                     this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
@@ -793,7 +788,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
     if (confirm) {
       // Skip drafts and sent mail as well, when reading mail with the space bar
       // but not when changing into the next folder with unread mail via ctrl+ or
-      // ctrl- so we do this only if (confirm == true), which means we are doing 
+      // ctrl- so we do this only if (confirm == true), which means we are doing
       // readOn.
       if ( fti->type() == KFolderTreeItem::Drafts ||
            fti->type() == KFolderTreeItem::SentMail )
@@ -996,7 +991,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         folderMenu->insertItem(SmallIcon("mail_send"),
                                i18n("&Send Queued Messages"), mMainWidget,
                                SLOT(slotSendQueued()));
-    if ((!fti->folder()->isSystemFolder() && 
+    if ((!fti->folder()->isSystemFolder() &&
          (fti->folder()->folderType() != KMFolderTypeSearch)) ||
         fti->folder()->folderType() == KMFolderTypeImap)
     {
