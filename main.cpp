@@ -4,33 +4,20 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#include <errno.h>
-#include <sys/types.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-
-#include <qtimer.h>
-
 #include <kuniqueapplication.h>
 #include <klocale.h>
 #include <kglobal.h>
-#include <ksimpleconfig.h>
-#include <kstandarddirs.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
-#include <kcrash.h>
-
 #include "kmkernel.h" //control center
 
 #undef Status // stupid X headers
-#include "kmailIface_stub.h" // to call control center of master kmail
+#include "kmailIface.h" // to call control center of master kmail
 
 #include <kaboutdata.h>
 
 #include "kmversion.h"
-
+#include "kmstartup.h"
 
 // OLD about text.  This is horrbly outdated.
 /*const char* aboutText =
@@ -65,43 +52,6 @@ static KCmdLineOptions kmoptions[] =
   { 0, 0, 0}
 };
 
-//-----------------------------------------------------------------------------
-
-extern "C" {
-
-static void setSignalHandler(void (*handler)(int));
-
-// Crash recovery signal handler
-static void signalHandler(int sigId)
-{
-  setSignalHandler(SIG_DFL);
-  fprintf(stderr, "*** KMail got signal %d (Exiting)\n", sigId);
-  // try to cleanup all windows
-  kernel->dumpDeadLetters();
-  ::exit(-1); //
-}
-
-// Crash recovery signal handler
-static void crashHandler(int sigId)
-{
-  setSignalHandler(SIG_DFL);
-  fprintf(stderr, "*** KMail got signal %d (Crashing)\n", sigId);
-  // try to cleanup all windows
-  kernel->dumpDeadLetters();
-  // Return to DrKonqi.
-}
-//-----------------------------------------------------------------------------
-
-
-static void setSignalHandler(void (*handler)(int))
-{
-  signal(SIGKILL, handler);
-  signal(SIGTERM, handler);
-  signal(SIGHUP,  handler);
-  KCrash::setEmergencySaveFunction(crashHandler);
-}
-
-}
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KUniqueApplication
@@ -192,34 +142,6 @@ int KMailApplication::newInstance()
   return 0;
 }
 
-namespace
-{
-QString getMyHostName(void)
-{
-  char hostNameC[256];
-  // null terminate this C string
-  hostNameC[255] = 0;
-  // set the string to 0 length if gethostname fails
-  if(gethostname(hostNameC, 255))
-    hostNameC[0] = 0;
-  return QString::fromLocal8Bit(hostNameC);
-}
-}
-
-static void checkConfigUpdates() {
-#if KDE_VERSION >= 306
-  KConfig * config = KMKernel::config();
-  const QString updateFile = QString::fromLatin1("kmail.upd");
-  QStringList updates;
-  updates << "9"
-	  << "3.1-update-identities"
-	  << "3.1-use-identity-uoids"
-          << "3.1-new-mail-notification";
-  for ( QStringList::const_iterator it = updates.begin() ; it != updates.end() ; ++it )
-    config->checkUpdate( *it, updateFile );
-#endif
-}
-
 int main(int argc, char *argv[])
 {
   // WABA: KMail is a KUniqueApplication. Unfortunately this makes debugging
@@ -297,36 +219,8 @@ int main(int argc, char *argv[])
   KGlobal::locale()->insertCatalogue("libkdenetwork");
 
   // Check that all updates have been run on the config file:
-  checkConfigUpdates();
-
-  // Check and create a lock file to prevent concurrent access to kmail files
-  const QString lockLocation = locateLocal("appdata", "lock");
-  KSimpleConfig config(lockLocation);
-  int oldPid = config.readNumEntry("pid", -1);
-  const QString oldHostName = config.readEntry("hostname");
-  const QString hostName = getMyHostName();
-  // proceed if there is no lock at present
-  if (oldPid != -1 &&
-  // proceed if the lock is our pid, or if the lock is from the same host
-      oldPid != getpid() && hostName != oldHostName &&
-  // proceed if the pid doesn't exist
-      (kill(oldPid, 0) != -1 || errno != ESRCH))
-  {
-    QString msg = i18n("Only one instance of KMail can be run at "
-      "any one time. It is already running on a different display "
-      "with PID %1 on host %2 according to the lock file located "
-      "at %3.").arg(oldPid).arg(oldHostName).arg(lockLocation);
-
-    KNotifyClient::userEvent( msg,  KNotifyClient::Messagebox,
-      KNotifyClient::Error );
-    fprintf(stderr, "*** KMail is already running with PID %d on host %s\n",
-            oldPid, oldHostName.local8Bit().data());
-    return 1;
-  }
-
-  config.writeEntry("pid", getpid());
-  config.writeEntry("hostname", hostName);
-  config.sync();
+  KMail::checkConfigUpdates();
+  KMail::lockOrDie();
 
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
@@ -341,7 +235,7 @@ int main(int argc, char *argv[])
   // any dead letters?
   kmailKernel.recoverDeadLetters();
 
-  setSignalHandler(signalHandler);
+  kmsetSignalHandler(kmsignalHandler);
 
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
   kernel->setStartingUp( false ); // Starting up is finished
@@ -350,8 +244,6 @@ int main(int argc, char *argv[])
 
   // clean up
   kmailKernel.cleanup();
-  config.writeEntry("pid", -1);
-  config.sync();
+  KMail::cleanup();
   return ret;
 }
-
