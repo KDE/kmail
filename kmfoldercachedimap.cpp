@@ -658,6 +658,9 @@ void KMFolderCachedImap::serverSyncInternal()
         break;
       } else {
         emit newState( name(), mProgress, i18n("No new messages from server"));
+        if( mLastUid == 0 && uidWriteTimer == -1 )
+          // This is probably a new and empty folder. Write the UID cache
+          writeUidCache();
       }
     }
     // Else carry on
@@ -854,10 +857,9 @@ QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
     KMFolderNode *node = folder()->child()->first();
     while( node ) {
       if( !node->isDir() ) {
-        if( !static_cast<KMFolder*>(node)->storage()->isA("KMFolderCachedImap") ) {
-          kdDebug(5006) << "KMFolderCachedImap::findNewFolders(): ARGH!!! "
-                        << node->name() << " is not an IMAP folder. It is a "
-                        << node->className() << endl;
+        if( static_cast<KMFolder*>(node)->folderType() != KMFolderTypeCachedImap ) {
+          kdError(5006) << "KMFolderCachedImap::findNewFolders(): ARGH!!! "
+                        << node->name() << " is not an IMAP folder\n";
           node = folder()->child()->next();
           assert(0);
         }
