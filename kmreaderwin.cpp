@@ -893,17 +893,21 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                       else
                         kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 
-                      if(    writeOpaqueOrMultipartSignedData( reader,
-                                                               &resultString,
-                                                               cryptPlugList,
-                                                               useThisCryptPlug,
-                                                               0,
-                                                               *signTestNode,
-                                                               isEncrypted )
-                          && !isSigned ) {
-                        kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
-                        isSigned = true;
+                      bool sigFound = writeOpaqueOrMultipartSignedData( reader,
+                                        &resultString,
+                                        cryptPlugList,
+                                        useThisCryptPlug,
+                                        0,
+                                        *signTestNode,
+                                        isEncrypted );
+                      if( sigFound ) {
+                        if( !isSigned ) {
+                          kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
+                          isSigned = true;
+                        }
                         signTestNode->setSigned( true );
+                        if( signTestNode != curNode )
+                          curNode->setSigned( true );
                       } else {
                         kdDebug(5006) << "pkcs7 mime  -  NO signature found   :-(" << endl;
                       }
@@ -1316,8 +1320,8 @@ void KMReaderWin::readConfig(void)
 
   {
     KConfigGroupSaver saver(config, "Behaviour");
-    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", true);
-    mDelayedMarkTimeout = config->readNumEntry( "DelayedMarkTime", 0 );
+    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", false);
+      mDelayedMarkTimeout = config->readNumEntry( "DelayedMarkTime", 0 );
   }
 
   readColorConfig();
