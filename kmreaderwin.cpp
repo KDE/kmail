@@ -488,6 +488,8 @@ void KMReaderWin::updateReaderWin()
 
   if (!mMsgDisplay) return;
 
+  mViewer->view()->setUpdatesEnabled( false );
+  mViewer->view()->viewport()->setUpdatesEnabled( false );
   if (mMsg) parseMsg();
   else
   {
@@ -501,7 +503,9 @@ void KMReaderWin::updateReaderWin()
     mViewer->write("></body></html>");
     mViewer->end();
   }
-
+  mViewer->view()->viewport()->setUpdatesEnabled( true );
+  mViewer->view()->setUpdatesEnabled( true );
+  mViewer->view()->viewport()->repaint( false );
 }
 
 
