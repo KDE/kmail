@@ -394,6 +394,7 @@ void KMExpPasswdDialog::slotCancelPressed()
 }
 
 void KMAcctExpPop::connectJob() {
+  if (stage != Dele)
   connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
 	  SLOT( slotData( KIO::Job*, const QByteArray &)));
   connect( job, SIGNAL( result( KIO::Job * ) ),
