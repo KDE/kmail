@@ -73,6 +73,27 @@ KMFolderImap::~KMFolderImap()
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderImap::close(bool aForced)
+{
+  if (mOpenCount <= 0 ) return;
+  if (mOpenCount > 0) mOpenCount--;
+  if (mOpenCount > 0 && !aForced) return;
+  if (mAccount) 
+    mAccount->ignoreJobsForFolder( this );
+  int idx = count();
+  while (--idx >= 0) {
+    if ( mMsgList[idx]->isMessage() ) {
+      KMMessage *msg = static_cast<KMMessage*>(mMsgList[idx]);
+      if (msg->transferInProgress())
+          msg->setTransferInProgress( false );
+    }
+  }
+  // The inherited close will decrement again, so we have to adjust.
+  mOpenCount++;
+  KMFolderImapInherited::close(aForced);
+}
+
+//-----------------------------------------------------------------------------
 KMMessage* KMFolderImap::getMsg(int idx)
 {
     KMMessage* msg = KMFolder::getMsg( idx );

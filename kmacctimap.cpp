@@ -215,20 +215,18 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
+void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 {
-  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
-  while (it != mapJobData.end())
-  {
-    if (it.data().parent == fti->folder())
-    {
-      killAllJobs();
-      break;
+  ImapJob *job;
+  for ( QPtrListIterator<ImapJob> it( mJobList ); it; ++it ) {
+    if ( it.current()->msgList().first()->parent() == folder) {
+      job = dynamic_cast<ImapJob*>( it.current() );
+      mapJobData.remove( job->mJob );
+      mJobList.remove( job );
+      delete job;
     }
-    else ++it;
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::slotSimpleResult(KIO::Job * job)

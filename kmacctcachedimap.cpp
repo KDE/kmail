@@ -226,23 +226,6 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   }
 }
 
-
-//-----------------------------------------------------------------------------
-void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
-{
-  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
-  while (it != mapJobData.end())
-  {
-    if (it.data().parent == fti->folder())
-    {
-      killAllJobs();
-      break;
-    }
-    else ++it;
-  }
-}
-
-
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::slotSimpleResult(KIO::Job * job)
 {

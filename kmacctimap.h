@@ -57,11 +57,10 @@ public:
   virtual void processNewMail(bool);
 
   /**
-   * Kill all jobs related the the specified folder
+   * Kill all jobs related the the specified folder/msg
    */
-  void killJobsForItem(KMFolderTreeItem * fti);
-
   virtual void ignoreJobsForMessage( KMMessage * msg );
+  virtual void ignoreJobsForFolder( KMFolder * folder );
 
   /**
    * Kill the slave if any jobs are active
