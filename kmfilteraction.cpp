@@ -361,14 +361,14 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
 {
   QString result = mParameter;
   QValueList<int> argList;
-  QRegExp r( "%[\\-0-9]+" );
-  int start=-1, len=0;
-  bool OK = FALSE;
+  QRegExp r( "%[0-9-]+" );
 
   // search for '%n'
+  int start = -1;
   while ( ( start = r.search( result, start + 1 ) ) > 0 ) {
-    len = r.matchedLength();
+    int len = r.matchedLength();
     // and save the encountered 'n' in a list.
+    bool OK = false;
     int n = result.mid( start + 1, len - 1 ).toInt( &OK );
     if ( OK )
       argList.append( n );
@@ -380,9 +380,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   // and use QString::arg to substitute filenames for the %n's.
   int lastSeen = -2;
   QString tempFileName;
-  KMMessagePart msgPart;
-  QValueList<int>::Iterator it;
-  for ( it = argList.begin() ; it != argList.end() ; ++it ) {
+  for ( QValueList<int>::Iterator it = argList.begin() ; it != argList.end() ; ++it ) {
     // setup temp files with check for duplicate %n's
     if ( (*it) != lastSeen ) {
       KTempFile *tf = new KTempFile();
@@ -402,6 +400,7 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
         kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
                           false, false, false );
       else {
+	KMMessagePart msgPart;
         aMsg->bodyPart( (*it), &msgPart );
         kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
                           false, false, false );
@@ -413,6 +412,16 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
     // many times as there are %n's, regardless of their multiplicity.
     if ((*it) == -1) result.replace( QRegExp("%-1"), tempFileName );
     else result = result.arg( tempFileName );
+  }
+
+  // And finally, replace the %{foo} with the content of the foo
+  // header field:
+  QRegExp header_rx( "%\\{([a-z0-9-]+)\\}", false );
+  int idx = 0;
+  while ( ( idx = header_rx.search( result, idx ) ) != -1 ) {
+    QString replacement = KProcess::quote( aMsg->headerField( header_rx.cap(1).latin1() ) );
+    result.replace( idx, header_rx.matchedLength(), replacement );
+    idx += replacement.length();
   }
 
   return result;
