@@ -1728,12 +1728,8 @@ public:
 bool ObjectTreeParser::foundMatchingCryptPlug( const QString & libName,
 					       const QString & verboseName )
 {
-  CryptPlugWrapperList *plugins = kernel->cryptPlugList();
-  CryptPlugWrapper * cryptPlug = 0;
-  if ( plugins ) cryptPlug = plugins->findForLibName( libName );
-  // ### What's the semantics of kernel->cryptPlugList() == 0??
-  // This would lead to a better error message... (mm)
-  if( mReader && !cryptPlug )
+  setCryptPlugWrapper( kernel->cryptPlugList()->findForLibName( libName ) );
+  if( mReader && !cryptPlugWrapper() )
     KMessageBox::information(mReader,
       i18n("Problem: %1 plug-in was not specified.\n"
            "Use the 'Settings->Configure KMail->Security' dialog to specify the "
@@ -1741,8 +1737,7 @@ bool ObjectTreeParser::foundMatchingCryptPlug( const QString & libName,
            .arg(verboseName),
            QString::null,
            "cryptoPluginBox");
-  setCryptPlugWrapper( cryptPlug );
-  return cryptPlug != 0;
+  return cryptPlugWrapper() != 0;
 }
 
 bool ObjectTreeParser::okDecryptMIME( partNode& data,
