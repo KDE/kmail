@@ -1841,7 +1841,7 @@ const QString KMMessage::getEmailAddr(const QString& aStr)
   // Reset found for next loop.
   found = 0;
   // Loop forwards until we find '>', ')', ' ', or end of string.
-  for (j = a + 1; j < aStr.length(); j++) {
+  for (j = a + 1; j < (int)aStr.length(); j++) {
     c = aStr[j];
     if (c == '>' || c == ')' || c == ' ') found = 1;
     if (found) break;
