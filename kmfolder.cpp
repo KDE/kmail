@@ -22,6 +22,14 @@ extern "C"
 #include <regex.h>
 }
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#ifdef HAVE_RE_COMP_H
+#include <re_comp.h>
+#endif
+
 #define MAX_LINE 4096
 #define INIT_MSGS 32
 
@@ -98,7 +106,7 @@ int KMFolder::open(void)
   mStream = fopen(location(), "r+"); // messages file
   if (!mStream) 
   {
-    debug("Cannot open folder `%s': %s", (const char*)location(), sys_errlist[errno]);
+    debug("Cannot open folder `%s': %s", (const char*)location(), strerror(errno));
     return errno;
   }
 
