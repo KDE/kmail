@@ -409,10 +409,11 @@ private:
     };
     struct SecurityWidget
     {
-        int        pageIndex;
-        KpgpConfig *pgpConfig;
-        QCheckBox  *htmlMailCheck;
-        QCheckBox  *externalReferences;
+      int        pageIndex;
+      KpgpConfig *pgpConfig;
+      QCheckBox  *htmlMailCheck;
+      QCheckBox  *externalReferences;
+      QCheckBox  *sendReceiptCheck;
     };
     struct MiscWidget
     {
@@ -424,7 +425,6 @@ private:
       KIntNumInput *oldMailAgeSpin;
       QComboBox   *timeUnitCombo;
       QCheckBox   *sendOutboxCheck;
-      QCheckBox   *sendReceiptCheck;
       QCheckBox   *compactOnExitCheck;
       QCheckBox   *emptyFolderConfirmCheck;
       QCheckBox   *beepNewMailCheck;

@@ -1403,7 +1403,7 @@ void ConfigureDialog::makeMimePage( void )
 void ConfigureDialog::makeSecurityPage( void )
 {
     QVBox *vbox = addVBoxPage( i18n("Security"),
-                               i18n("Security Settings"),
+                               i18n("Security and Privacy Settings"),
                                KGlobal::instance()->iconLoader()->
                                loadIcon( "encrypted", KIcon::NoGroup,
                                          KIcon::SizeMedium ));
@@ -1411,54 +1411,98 @@ void ConfigureDialog::makeSecurityPage( void )
 
     QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
     QWidget *page = new QWidget( tabWidget );
-    tabWidget->addTab( page, i18n("&PGP") );
+
+    tabWidget->addTab( page, i18n("&General") );
     QVBoxLayout *vlay = new QVBoxLayout( page, spacingHint() );
 
-    mSecurity.pgpConfig = new KpgpConfig(page);
-    vlay->addWidget( mSecurity.pgpConfig );
-    vlay->addStretch(10);
-
-    page = new QWidget( tabWidget );
-    tabWidget->addTab( page, i18n("&HTML") );
-    vlay = new QVBoxLayout( page, spacingHint() );
-
-    QButtonGroup *group = new QButtonGroup( i18n("HTML"), page );
-    vlay->addWidget( group );
-    QVBoxLayout *vlay2 = new QVBoxLayout( group, spacingHint() );
-    vlay2->addSpacing( fontMetrics().lineSpacing() );
-    mSecurity.htmlMailCheck =
-      new QCheckBox( i18n("&Prefer HTML to plain text"), group );
-    vlay2->addWidget( mSecurity.htmlMailCheck );
-    QLabel *label = new QLabel( group );
-    label->setAlignment( WordBreak);
-    label->setTextFormat( RichText );
-    label->setText(i18n(
-      "<b>WARNING:</b> Use of HTML in mail will make you more vulnerable to "
-      "\"spam\" and may increase the likelihood that your system will be "
-      "compromised by other present and anticipated security exploits.") );
-    vlay2->addWidget( label );
-
-    QGroupBox *gb = new QGroupBox( i18n( "HTML Security" ), page );
+    QGroupBox *gb = new QGroupBox( i18n( "HTML Mails" ), page );
     vlay->addWidget( gb );
     QVBoxLayout *glay = new QVBoxLayout( gb, KDialog::spacingHint() );
     glay->addSpacing( fontMetrics().lineSpacing() );
 
-    mSecurity.externalReferences = new QCheckBox( i18n( "&Load external references from the net" ), gb );
+    mSecurity.htmlMailCheck =
+      new QCheckBox( i18n("&Prefer HTML to plain text"), gb );
+    glay->addWidget( mSecurity.htmlMailCheck );
+    mSecurity.externalReferences =
+      new QCheckBox( i18n( "&Load external references from the net" ), gb );
     glay->addWidget( mSecurity.externalReferences );
+
+    QLabel *label = new QLabel( gb );
+    label->setAlignment( WordBreak);
+    label->setTextFormat( RichText );
+    label->setText(i18n(
+      "<b>WARNING:</b> Allowing HTML in EMail may increase the risk "
+      "that your system will be compromised by present and anticipated "
+      "security exploits. Use \"What's this\" help (Shift-F1) for detailed "
+      "information on each option.") );
+    glay->addWidget( label );
+
+    gb = new QGroupBox( i18n( "Delivery and Read Confirmations" ), page );
+    vlay->addWidget( gb );
+    glay = new QVBoxLayout( gb, KDialog::spacingHint() );
+    glay->addSpacing( fontMetrics().lineSpacing() );
+
+    mSecurity.sendReceiptCheck = new QCheckBox(
+	   i18n("&Automatically send receive- and read confirmations"), gb );
+    glay->addWidget( mSecurity.sendReceiptCheck );
+    label = new QLabel( gb );
+    label->setAlignment( WordBreak);
+    label->setTextFormat( RichText );
+    label->setText( i18n(
+      "<p><b>WARNING:</b> Unconditionally returning receipts undermines your privacy. "
+      "See \"What's this\" help (Shift-F1) for more." ) );
+    glay->addWidget( label );
 
     vlay->addStretch(10);
 
+    QWhatsThis::add( mSecurity.htmlMailCheck,
+		     i18n( "<qt><p>EMails sometimes come in both formats. This options "
+			   "controls whether you want the HTML part or the plain text "
+			   "part to be displayed.</p>"
+			   "<p>Displaying the HTML part makes the message look better, "
+			   "but at the same time increases the risk of security holes "
+			   "being exploited.</p>"
+			   "<p>Displaying the plain text part loses much of the message's "
+			   "formatting, but makes it <em>impossible</em> "
+			   "to expolit security holes in the HTML renderer (Konqueror).</p>"
+			   "<p>The option below guards against one common misuse of HTML "
+			   "mails. But it cannot guard against security issues that were not "
+			   "known at the time this version of KMail was written.</p>"
+			   "<p>It is therefore advisable to <em>not</em> prefer HTML to "
+			   "plain text.</p></qt>" ) );
     QWhatsThis::add( mSecurity.externalReferences,
-                     i18n( "<qt>Some mail advertisements are in HTML\n"
-                           "and contain references to images that these\n"
-                           "advertisements use to find out you've read\n"
-                           "their mail.<br/>\n"
-                           "To protect you from such a misuse of the HTML\n"
-                           "displaying feature of kmail, this option is\n"
-                           "<em>disabled</em> by default.<br/>\n"
-                           "If you wish to view images in HTML, you can\n"
-                           "enable this option, but be aware of the possible\n"
-                           "problem.</qt>" ) );
+                     i18n( "<qt><p>Some mail advertisements are in HTML "
+                           "and contain references to images that these "
+                           "advertisements use to find out you've read "
+                           "their mail (\"web bugs\").</p>"
+			   "<p>There's no valid reason to load images off "
+			   "the net like this, since the sender can always "
+			   "attach the needed images directly.</p>"
+                           "<p>To guard from such a misuse of the HTML "
+                           "displaying feature of kmail, this option is "
+                           "<em>disabled</em> by default.</p>"
+                           "<p>If you nonetheless wish to e.g. view images in "
+			   "HTML mails that were not attached to it, you can "
+			   "enable this option, but you should be aware of the "
+			   "possible problem.</p></qt>" ) );
+    QWhatsThis::add( mSecurity.sendReceiptCheck, i18n(
+		     "<qt><p>This options enables the <em>unconditional</em> sending "
+		     "of delivery- and read confirmations (\"receipts\").</p>"
+		     "<p>Returning receipts makes it easy for the sender to track "
+		     "whether and - more importantly - <em>when</em> you read his/her "
+		     "mail.</p>"
+		     "<p>You can return <em>delivery</em> receipts in a fine-grained "
+		     "way using the \"confirm delivery\" filter action. We advise "
+		     "against issuing <em>read</em> confirmations at all.</p></qt>") );
+
+    // ---------- PGP tab
+    page = new QWidget( tabWidget );
+    tabWidget->addTab( page, i18n("&PGP") );
+    vlay = new QVBoxLayout( page, spacingHint() );
+    
+    mSecurity.pgpConfig = new KpgpConfig(page);
+    vlay->addWidget( mSecurity.pgpConfig );
+    vlay->addStretch(10);
 }
 
 #include <kinstance.h>
@@ -1526,9 +1570,6 @@ void ConfigureDialog::makeMiscPage( void )
   mMisc.sendOutboxCheck =
     new QCheckBox(i18n("&Send Mail in outbox Folder on Check"), group );
   vlay->addWidget( mMisc.sendOutboxCheck );
-  mMisc.sendReceiptCheck = new QCheckBox(
-    i18n("&Automatically send receive- and read confirmations"), group );
-  vlay->addWidget( mMisc.sendReceiptCheck );
   mMisc.compactOnExitCheck =
     new QCheckBox(i18n("C&ompact all folders on exit"), group );
   vlay->addWidget( mMisc.compactOnExitCheck );
@@ -1935,15 +1976,21 @@ void ConfigureDialog::setupMimePage( void )
 
 void ConfigureDialog::setupSecurityPage( void )
 {
+  bool state;
+
   mSecurity.pgpConfig->setValues();
+
+  KConfig *config = kapp->config();
+  KConfigGroupSaver saver(config, "General");
   {
-    KConfig *config = kapp->config();
     KConfigGroupSaver saver(config, "Reader");
-    bool state = config->readBoolEntry( "htmlMail", false );
+    state = config->readBoolEntry( "htmlMail", false );
     mSecurity.htmlMailCheck->setChecked( state );
     state = config->readBoolEntry( "htmlLoadExternal", false );
     mSecurity.externalReferences->setChecked( state );
   }
+  state = config->readBoolEntry("send-receipts", false );
+  mSecurity.sendReceiptCheck->setChecked( state );
 }
 
 
@@ -1966,8 +2013,6 @@ void ConfigureDialog::setupMiscPage( void )
   mMisc.timeUnitCombo->setCurrentItem( num );
   state = config->readBoolEntry("sendOnCheck", false);
   mMisc.sendOutboxCheck->setChecked( state );
-  state = config->readBoolEntry("send-receipts", false );
-  mMisc.sendReceiptCheck->setChecked( state );
   state = config->readBoolEntry("compact-all-on-exit", true );
   mMisc.compactOnExitCheck->setChecked( state );
   state = config->readBoolEntry("confirm-before-empty", true );
@@ -2409,6 +2454,9 @@ void ConfigureDialog::slotDoApply( bool everything )
       config->writeEntry( "htmlLoadExternal", mSecurity.
                           externalReferences->isChecked() );
     }
+    KConfigGroupSaver saver(config, "General");
+    config->writeEntry( "send-receipts",
+			mSecurity.sendReceiptCheck->isChecked() );
   }
   if( activePage == mMisc.pageIndex || everything )
   {
@@ -2427,8 +2475,6 @@ void ConfigureDialog::slotDoApply( bool everything )
 			mMisc.timeUnitCombo->currentItem() );
     config->writeEntry( "sendOnCheck",
 			mMisc.sendOutboxCheck->isChecked() );
-    config->writeEntry( "send-receipts",
-			mMisc.sendReceiptCheck->isChecked() );
     config->writeEntry( "compact-all-on-exit",
 			mMisc.compactOnExitCheck->isChecked() );
     config->writeEntry( "confirm-before-empty",
