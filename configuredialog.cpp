@@ -2305,7 +2305,7 @@ AppearancePageProfileTab::AppearancePageProfileTab( QWidget * parent, const char
 
   vlay->addWidget( new QLabel( mListView,
 			       i18n("&Select a profile and hit apply to take "
-				    "over it's settings:"), this ) );
+				    "over its settings:"), this ) );
   vlay->addWidget( mListView, 1 );
 
   /* not implemented (yet?)
@@ -3029,7 +3029,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
 			"consist of only latin letters, arabic numbers, \"-\" "
 			"and \".\".</p>"
 			"<p>Recommended values include the hostname of your "
-			"mail server or a domainname you control.</p></qt>") );
+			"mail server or a domain name you control.</p></qt>") );
 
   // "msg-id suffix" line edit and label:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
