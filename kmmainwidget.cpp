@@ -2074,7 +2074,7 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusUnread()),
                                  actionCollection(), "status_unread"));
 
-  statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgold",
+  statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
                                           i18n("Mark selected messages as read")),
                                  0, this, SLOT(slotSetMsgStatusRead()),
                                  actionCollection(), "status_read"));
@@ -2118,7 +2118,7 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotSetThreadStatusUnread()),
                                        actionCollection(), "thread_unread"));
 
-  threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgold",
+  threadStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
                                                 i18n("Mark all messages in the selected thread as read")),
                                        0, this, SLOT(slotSetThreadStatusRead()),
                                        actionCollection(), "thread_read"));

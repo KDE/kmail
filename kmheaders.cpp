@@ -497,7 +497,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixNew   = new QPixmap( UserIcon("kmmsgnew") );
     pixUns   = new QPixmap( UserIcon("kmmsgunseen") );
     pixDel   = new QPixmap( UserIcon("kmmsgdel") );
-    pixOld   = new QPixmap( UserIcon("kmmsgold") );
+    pixOld   = new QPixmap( UserIcon("kmmsgread") );
     pixRep   = new QPixmap( UserIcon("kmmsgreplied") );
     pixQueued= new QPixmap( UserIcon("kmmsgqueued") );
     pixSent  = new QPixmap( UserIcon("kmmsgsent") );
