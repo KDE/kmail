@@ -48,6 +48,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   nameEdit->setFocus();
   nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
   nameEdit->setMinimumSize(nameEdit->sizeHint());
+  nameEdit->selectAll();
   hl->addWidget( nameEdit );
 
   hl->addSpacing( spacingHint() );
