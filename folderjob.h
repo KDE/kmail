@@ -51,7 +51,7 @@ public:
    * set @sets, JobType @p jt and with the parent folder @p folder.
    *
    */
-  FolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
+  FolderJob( const QPtrList<KMMessage>& msgList, const QString& sets,
 	     JobType jt = tGetMessage, KMFolder *folder = 0 );
   /**
    * This one should ONLY be used in derived folders, when a job

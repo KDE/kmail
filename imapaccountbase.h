@@ -110,13 +110,33 @@ namespace KMail {
       int total, done, offset;
       bool inboxOnly, quiet, onlySubscribed;
     };
-    QMap<KIO::Job *, jobData> mapJobData;
 
+    typedef QMap<KIO::Job *, jobData>::Iterator JobIterator;
     /**
-     * Initialize a jobData structure
+     * Call this when starting a new job
      */
-    static void initJobData(jobData &jd);
-
+    void insertJob( KIO::Job* job, const jobData& data ) {
+      mapJobData.insert( job, data );
+      displayProgress();
+    }
+    /**
+     * Look for the jobData related to a given job. Compare with end()
+     */
+    JobIterator findJob( KIO::Job* job ) { return mapJobData.find( job ); }
+    JobIterator jobsEnd() { return mapJobData.end(); }
+    /**
+     * Call this when a job is finished.
+     * Don't use @p *it afterwards!
+     */
+    void removeJob( JobIterator& it ) {
+      mapJobData.remove( it );
+      displayProgress();
+    }
+    // for KMImapJob::ignoreJobsForMessage...
+    void removeJob( KIO::Job* job ) {
+      mapJobData.remove( job );
+      displayProgress();
+    }
 
     /**
      * Lists the directory starting from @p path
@@ -165,7 +185,7 @@ namespace KMail {
     /**
      * Update the progress bar
      */
-    void displayProgress();
+    virtual void displayProgress();
 
     /**
      * Display an error message
@@ -190,6 +210,7 @@ namespace KMail {
         mSubfolderMimeTypes;
 
   protected:
+    QMap<KIO::Job *, jobData> mapJobData;
     QTimer mIdleTimer;
     QString mPrefix;
     int mTotal, mCountUnread, mCountLastUnread, mCountRemainChecks;

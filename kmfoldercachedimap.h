@@ -12,6 +12,7 @@
 #include "kmacctimap.h"
 #include "kmfoldertype.h"
 #include "folderjob.h"
+#include "cachedimapjob.h"
 
 using KMail::FolderJob;
 class KMAcctCachedImap;
@@ -134,6 +135,7 @@ protected slots:
   void getMessagesResult(KIO::Job * job, bool lastSet);
   void slotGetMessagesResult(KIO::Job * job);
   void slotGetLastMessagesResult(KIO::Job * job);
+  void slotProgress(unsigned long done, unsigned long total);
 
   //virtual void slotCheckValidityResult(KIO::Job * job);
   virtual void listMessages();
@@ -225,8 +227,7 @@ private:
 
   QValueList<ulong> uidsOnServer;
   QValueList<ulong> uidsForDeletionOnServer;
-  QValueList<ulong> uidsForDownload;
-  QValueList<int>   flagsForDownload;
+  QValueList<KMail::CachedImapJob::MsgForDownload> mMsgsForDownload;
   QStringList       foldersForDeletionOnServer;
 
   QValueList<KMFolderCachedImap*> mSubfoldersForSync;

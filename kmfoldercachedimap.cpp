@@ -355,7 +355,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
-  //kdDebug(5006) << "KMFolderCachedImap::serverSyncInternal(), " << name()
+  // kdDebug(5006) << "KMFolderCachedImap::serverSyncInternal(), " << name()
   // 	    << " state = " << state2String(mSyncState) << endl;
 
   // Don't let the states continue into the next one.
@@ -404,7 +404,6 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_DELETE_SUBFOLDERS:
     mSyncState = SYNC_STATE_LIST_MESSAGES;
     emit syncState( SYNC_STATE_DELETE_SUBFOLDERS, foldersForDeletionOnServer.count() );
-    mProgress += 10;
     if( !foldersForDeletionOnServer.isEmpty() ) {
       emit statusMsg( i18n("%1: Deleting folders %2 from server").arg(name())
 		      .arg( foldersForDeletionOnServer.join(", ") ) );
@@ -433,7 +432,6 @@ void KMFolderCachedImap::serverSyncInternal()
     // Fine, we will continue with the next state
     } else {
       // No messages to delete, skip to GET_MESSAGES
-      mProgress += 10;
       emit newState( name(), mProgress, i18n("No messages to delete..."));
       mSyncState = SYNC_STATE_GET_MESSAGES;
       serverSyncInternal();
@@ -454,18 +452,18 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_GET_MESSAGES:
     mSyncState = SYNC_STATE_HANDLE_INBOX;
     {
-      mProgress += 10;
-      //emit syncState( SYNC_STATE_GET_MESSAGES, uidsForDownload.count() );
-      if( !uidsForDownload.isEmpty() ) {
+      //emit syncState( SYNC_STATE_GET_MESSAGES, mMsgsForDownload.count() );
+      if( !mMsgsForDownload.isEmpty() ) {
 	emit statusMsg( i18n("%1: Retrieving new messages").arg(name()) );
 	emit newState( name(), mProgress, i18n("Retrieving new messages"));
-	CachedImapJob *job = new CachedImapJob( uidsForDownload,
-						    CachedImapJob::tGetMessage,
-						    this, flagsForDownload );
+	CachedImapJob *job = new CachedImapJob( mMsgsForDownload,
+                                                CachedImapJob::tGetMessage,
+                                                this );
+	connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
+                 this, SLOT( slotProgress(unsigned long, unsigned long) ) );
 	connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
         job->start();
-	uidsForDownload.clear();
-	flagsForDownload.clear();
+	mMsgsForDownload.clear();
       } else {
 	// kdDebug(5006) << "No new messages from server(" << imapPath() << "):" << endl;
 	emit newState( name(), mProgress, i18n("No new messages from server"));
@@ -474,6 +472,10 @@ void KMFolderCachedImap::serverSyncInternal()
     }
     break;
   case SYNC_STATE_HANDLE_INBOX:
+    // Wrap up the 'download emails' stage (which has a 20% span)
+    mProgress += 20;
+    //kdDebug() << name() << ": +20 -> " << mProgress << "%" << endl;
+
     mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 #if 0
     if( imapPath() == "/INBOX/" && kernel->groupware().isEnabled() ) {
@@ -526,6 +528,12 @@ void KMFolderCachedImap::serverSyncInternal()
 	}
       }
     }
+
+    // All done for this folder.
+    mProgress = 100; // all done
+    emit newState( name(), mProgress, i18n("Synchronization done"));
+    mAccount->displayProgress();
+
     serverSyncInternal();
     break;
 
@@ -536,11 +544,6 @@ void KMFolderCachedImap::serverSyncInternal()
 		    this, SLOT( serverSyncInternal() ) );
 	mCurrentSubfolder = 0;
       }
-
-      mProgress += 10;
-      //emit syncState( SYNC_STATE_SYNC_SUBFOLDERS, mSubfoldersForSync.count() );
-      emit newState( name(), mProgress, i18n("Synchronization done"));
-      mAccount->displayProgress();
 
       if( mSubfoldersForSync.isEmpty() ) {
 	mSyncState = SYNC_STATE_INITIAL;
@@ -553,6 +556,7 @@ void KMFolderCachedImap::serverSyncInternal()
 	connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
 		 this, SLOT( serverSyncInternal() ) );
 
+	// kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
 	assert( mCurrentSubfolder->imapPath() != "" );
 	mCurrentSubfolder->setAccount( account() );
 	mCurrentSubfolder->serverSync();
@@ -591,6 +595,7 @@ void KMFolderCachedImap::uploadNewMessages()
   QPtrList<KMMessage> newMsgs = findNewMessages();
   emit syncState( SYNC_STATE_PUT_MESSAGES, newMsgs.count() );
   mProgress += 10;
+  //kdDebug() << name() << ": +10 (uploadNewMessages) -> " << mProgress << "%" << endl;
   if( !newMsgs.isEmpty() ) {
     emit statusMsg( i18n("%1: Uploading messages to server").arg(name()) );
 
@@ -611,6 +616,7 @@ void KMFolderCachedImap::createNewFolders()
   QValueList<KMFolderCachedImap*> newFolders = findNewFolders();
   //emit syncState( SYNC_STATE_CREATE_SUBFOLDERS, newFolders.count() );
   mProgress += 10;
+  //kdDebug() << name() << ": +10 (createNewFolders) -> " << mProgress << "%" << endl;
   if( !newFolders.isEmpty() ) {
     emit statusMsg( i18n("%1: Creating subfolders on server").arg(name()) );
     emit newState( name(), mProgress, i18n("Creating subfolders on server"));
@@ -678,6 +684,7 @@ bool KMFolderCachedImap::deleteMessages()
   //emit syncState( SYNC_STATE_DELETE_MESSAGES, uidsForDeletionOnServer.count() );
 
   mProgress += 10;
+  //kdDebug() << name() << ": +10 (deleteMessages) -> " << mProgress << "%" << endl;
   emit newState( name(), mProgress, i18n("Deleting removed messages from server"));
 
   /* Delete messages from the server that we dont have anymore */
@@ -707,6 +714,7 @@ void KMFolderCachedImap::checkUidValidity() {
     serverSyncInternal();
   else {
     mProgress += 10;
+    //kdDebug() << name() << ": +10 (checkUidValidity) -> " << mProgress << "%" << endl;
     emit newState( name(), mProgress, i18n("Checking folder validity"));
     emit statusMsg( i18n("%1: Checking folder validity").arg(name()) );
     CachedImapJob *job = new CachedImapJob( FolderJob::tCheckUidValidity, this );
@@ -731,21 +739,19 @@ void KMFolderCachedImap::listMessages() {
   }
   uidsOnServer.clear();
   uidsForDeletionOnServer.clear();
-  uidsForDownload.clear();
-  flagsForDownload.clear();
+  mMsgsForDownload.clear();
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=1:*;SECTION=ENVELOPE");
   ImapAccountBase::jobData jd( url.url(), this );
 
   KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
-  mAccount->mapJobData.insert(newJob, jd);
+  mAccount->insertJob(newJob, jd);
 
   connect( newJob, SIGNAL( result( KIO::Job* ) ),
 	   this, SLOT( slotGetLastMessagesResult( KIO::Job* ) ) );
   connect( newJob, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
 	   this, SLOT( slotGetMessagesData( KIO::Job* , const QByteArray& ) ) );
-  mAccount->displayProgress();
 }
 
 void KMFolderCachedImap::slotGetLastMessagesResult(KIO::Job * job)
@@ -760,13 +766,15 @@ void KMFolderCachedImap::slotGetMessagesResult(KIO::Job * job)
   getMessagesResult(job, false);
 }
 
-
+// All this should be moved to CachedImapJob obviously...
 void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 {
-  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
-  if (it == mAccount->mapJobData.end())
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
+    kdDebug(5006) << "could not find job!?!?!" << endl;
+    serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
     return;
-
+  }
   (*it).cdata += QCString(data, data.size() + 1);
   int pos = (*it).cdata.find("\r\n--IMAPDIGEST");
   if (pos > 0) {
@@ -801,8 +809,8 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       }
       delete msg;
     } else {
-      uidsForDownload << uid;
-      flagsForDownload << flags;
+      ulong size = msg->headerField("X-Length").toULong();
+      mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
 #if 0
       msg->setStatus(flagsToStatus(flags));
       open();
@@ -835,10 +843,12 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
 
 void KMFolderCachedImap::getMessagesResult(KIO::Job * job, bool lastSet)
 {
-  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
-    mAccount->mapJobData.find(job);
-  if (it == mAccount->mapJobData.end()) return;
-  assert(it != mAccount->mapJobData.end());
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
+    kdDebug(5006) << "could not find job!?!?!" << endl;
+    serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
+    return;
+  }
   if (job->error())
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
@@ -847,12 +857,19 @@ void KMFolderCachedImap::getMessagesResult(KIO::Job * job, bool lastSet)
     emit folderComplete(this, FALSE);
   } else if (lastSet) mContentState = imapFinished;
   if (lastSet) quiet(FALSE);
-  if (mAccount->slave()) mAccount->mapJobData.remove(it);
-  mAccount->displayProgress();
+  mAccount->removeJob(it);
   if (!job->error() && lastSet) {
     emit listMessagesComplete();
     //emit folderComplete(this, TRUE);
   }
+}
+
+void KMFolderCachedImap::slotProgress(unsigned long done, unsigned long total)
+{
+  //kdDebug() << "KMFolderCachedImap::slotProgress done=" << done << " total=" << total << "=> progress=" << mProgress + ( 20 * done ) / total << endl;
+  // Progress info while retrieving new emails
+  // (going from mProgress to mProgress+20)
+  emit newState( name(), mProgress + (20 * done) / total, QString::null);
 }
 
 KMMsgStatus KMFolderCachedImap::flagsToStatus(int flags, bool newMsg)
@@ -922,26 +939,25 @@ bool KMFolderCachedImap::listDirectory()
   mSubfolderPaths.clear();
   mSubfolderMimeTypes.clear();
 
-  // kdDebug(5006) << "listDirectory(): listing url " << url.url() << endl;
+  kdDebug(5006) << "listDirectory(): listing url " << url.url() << endl;
   if (!mAccount->makeConnection())
     return FALSE;
 
   KIO::SimpleJob *job = KIO::listDir(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  mAccount->mapJobData.insert(job, jd);
+  mAccount->insertJob(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotListResult(KIO::Job *)));
   connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
           this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
-  mAccount->displayProgress();
 
   return TRUE;
 }
 
 void KMFolderCachedImap::slotListResult(KIO::Job * job)
 {
-  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
-  if (it == mAccount->mapJobData.end()) {
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
     kdDebug(5006) << "could not find job!?!?!" << endl;
     serverSyncInternal(); /* HACK^W Fix: we should at least try to keep going */
     return;
@@ -951,7 +967,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
     mAccount->slotSlaveError( mAccount->slave(), job->error(), job->errorText() );
 
   mSubfolderState = imapFinished;
-  if (mAccount->slave()) mAccount->mapJobData.remove(it);
+  mAccount->removeJob(it);
 
   if (!job->error()) {
     kernel->imapFolderMgr()->quiet(TRUE);
@@ -1057,9 +1073,8 @@ void KMFolderCachedImap::listDirectory2() {
 void KMFolderCachedImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
 {
   // kdDebug(5006) << "KMFolderCachedImap::slotListEntries("<<name()<<")" << endl;
-  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
-    mAccount->mapJobData.find(job);
-  if (it == mAccount->mapJobData.end()) return;
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if (it == mAccount->jobsEnd()) return;
 
   QString name;
   KURL url;
@@ -1103,8 +1118,8 @@ void KMFolderCachedImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList
 
 void KMFolderCachedImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 {
-  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it = mAccount->mapJobData.find(job);
-  if (it == mAccount->mapJobData.end()) return;
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if (it == mAccount->jobsEnd()) return;
   QBuffer buff((*it).data);
   buff.open(IO_WriteOnly | IO_Append);
   buff.writeBlock(data.data(), data.size());

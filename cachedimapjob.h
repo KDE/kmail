@@ -40,17 +40,26 @@ namespace KMail {
 class CachedImapJob : public FolderJob {
   Q_OBJECT
 public:
+  /** Information about a message to be downloaded (from the 'IMAP envelope') */
+  struct MsgForDownload {
+    MsgForDownload() : uid(0),flags(0),size(0) {} // for QValueList only
+    MsgForDownload( ulong _uid, int _flags, ulong _size )
+      : uid(_uid), flags(_flags), size(_size) {}
+    ulong uid;
+    int flags;
+    ulong size;
+  };
+
+  // Get messages
+  CachedImapJob( const QValueList<MsgForDownload>& msgs,
+		   JobType type = tGetMessage, KMFolderCachedImap* folder = 0 );
   // Put messages
-  CachedImapJob( QPtrList<KMMessage>& msgs,
+  CachedImapJob( const QPtrList<KMMessage>& msgs,
                  JobType type, KMFolderCachedImap* folder=0 );
   // Add sub folders
   CachedImapJob( const QValueList<KMFolderCachedImap*>& folders,
                  JobType type = tAddSubfolders,
                  KMFolderCachedImap* folder = 0 );
-  // Get messages
-  CachedImapJob( const QValueList<ulong>& uids,
-                 JobType type = tGetMessage, KMFolderCachedImap* folder = 0,
-                 const QValueList<int>& flags = QValueList<int>() );
   // Delete message ; Rename folder
   CachedImapJob( const QString& string1, JobType type,
                  KMFolderCachedImap* folder );
@@ -63,6 +72,15 @@ public:
 
   void setPassiveDestructor( bool passive ) { mPassiveDestructor = passive; }
   bool passiveDestructor() { return mPassiveDestructor; }
+
+signals:
+  /**
+   * This progress signal contains the "done" and the "total" numbers so
+   * that the caller can either make a % out of it, or combine it into
+   * a higher-level progress info.
+   * ### maybe move to FolderJob
+   */
+  void progress( unsigned long bytesDownloaded, unsigned long bytesTotal );
 
 protected:
   virtual void execute();
@@ -82,6 +100,7 @@ protected slots:
   virtual void slotDeleteNextFolder( KIO::Job *job = 0 );
   virtual void slotCheckUidValidityResult( KIO::Job *job );
   virtual void slotRenameFolderResult( KIO::Job *job );
+  void slotProcessedSize(KIO::Job *, KIO::filesize_t processed);
 
 private:
   void init();
@@ -89,14 +108,12 @@ private:
   KMFolderCachedImap *mFolder;
   KMAcctCachedImap   *mAccount;
   QValueList<KMFolderCachedImap*> mFolderList;
-  QValueList<ulong> mUidList;
-  QValueList<int> mFlags;
+  QValueList<MsgForDownload> mMsgsForDownload;
+  ulong mSentBytes; // previous messages
+  ulong mTotalBytes;
   QStringList mFolderPathList; // Used only for folder deletion
-  ulong mUid;
-  int mFlag;
   KMMessage* mMsg;
   QString mString; // Used as uids and as rename target
-  KIO::Job *mJob;
   QByteArray mData;
 };
 

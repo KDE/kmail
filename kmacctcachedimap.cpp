@@ -127,31 +127,34 @@ void KMAcctCachedImap::displayProgress()
     if (!mProgressEnabled) kernel->filterMgr()->cleanup();
   }
   mIdle = FALSE;
-  if (mapJobData.isEmpty())
+  if (mapJobData.isEmpty())  {
     //mIdleTimer.start(15000);
     mIdleTimer.start(0);
+    kdDebug(5006) << "KMAcctCachedImap::displayProgress no more jobs, disconnecting slave" << endl;
+  }
   else
     mIdleTimer.stop();
-  //int total = 0, done = 0;
+  int total = 0, done = 0;
   // This is a loop, but it seems that we can currently have only one job at a time in this map.
-  //for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-  //  it != mapJobData.end(); ++it)
-  //{
-  //  total += (*it).total; // always ==1 (in kmfoldercachedimap.cpp)
-  //  done += (*it).done;
-  //}
-  //if (total == 0)
-  //{
-  //  mTotal = 0;
-  //  return;
-  //}
+  for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+    it != mapJobData.end(); ++it)
+  {
+    total += (*it).total; // always ==1 (in kmfoldercachedimap.cpp)
+    //done += (*it).done;
+    Q_ASSERT( (*it).parent );
+    if( (*it).parent )  {
+      done += static_cast<KMFolderCachedImap*>((*it).parent)->progress();
+    }
+  }
+  if (total == 0) // can't happen
+  {
+    mTotal = 0;
+    return;
+  }
   //if (total > mTotal) mTotal = total;
   //done += mTotal - total;
-
-  // We display the same progress information as the one calculated in the IMAP folder
-  int done = mFolder->progress();
   KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
-     done );
+     done / total );
      //  100*done / mTotal );
 }
 

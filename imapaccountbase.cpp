@@ -149,10 +149,10 @@ namespace KMail {
     setHiddenFolders( config.readBoolEntry( "hidden-folders", false ) );
     setOnlySubscribedFolders( config.readBoolEntry( "subscribed-folders", false ) );
   }
-  
+
   void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
     base::writeConfig( config );
-    
+
     config.writeEntry( "prefix", prefix() );
     config.writeEntry( "auto-expunge", autoExpunge() );
     config.writeEntry( "hidden-folders", hiddenFolders() );
@@ -237,16 +237,6 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::initJobData(jobData &jd)
-  {
-    jd.total = 1;
-    jd.done = 0;
-    jd.parent = 0;
-    jd.quiet = FALSE;
-    jd.inboxOnly = FALSE;
-  }
-
-  //-----------------------------------------------------------------------------
   void ImapAccountBase::displayProgress()
   {
     if (mProgressEnabled == mapJobData.isEmpty())
@@ -313,8 +303,8 @@ namespace KMail {
         this, SLOT(slotListResult(KIO::Job *)));
     connect(job, SIGNAL(entries(KIO::Job *, const KIO::UDSEntryList &)),
         this, SLOT(slotListEntries(KIO::Job *, const KIO::UDSEntryList &)));
-    displayProgress();  
-  }  
+    displayProgress();
+  }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
@@ -346,7 +336,7 @@ namespace KMail {
           && name != ".." && (hiddenFolders() || name.at(0) != '.')
           && (!(*it).inboxOnly || name == "INBOX"))
       {
-        if (((*it).inboxOnly || 
+        if (((*it).inboxOnly ||
               url.path() == "/INBOX/") && name == "INBOX")
           mHasInbox = TRUE; // INBOX-only
 
@@ -377,7 +367,7 @@ namespace KMail {
     if (!job->error())
     {
       // transport the information, include the jobData
-      emit receivedFolders(mSubfolderNames, mSubfolderPaths, 
+      emit receivedFolders(mSubfolderNames, mSubfolderPaths,
           mSubfolderMimeTypes, *it);
     }
     if (mSlave) mapJobData.remove(it);

@@ -18,7 +18,7 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder )
 }
 
 //----------------------------------------------------------------------------
-FolderJob::FolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
+FolderJob::FolderJob( const QPtrList<KMMessage>& msgList, const QString& sets,
                           JobType jt, KMFolder *folder )
   : mMsgList( msgList ),mType( jt ),
     mSets( sets ), mDestFolder( folder ), mPassiveDestructor( false )

@@ -73,7 +73,7 @@ public:
   /**
    * Update the progress bar
    */
-  void displayProgress();
+  virtual void displayProgress();
 
   /**
    * Kill all jobs related the the specified folder
