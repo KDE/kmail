@@ -2,7 +2,7 @@ SUBDIRS = icons
 
 pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmmsgreplied.png kmmsgforwarded.png kmmsgqueued.png kmmsgflag.png \
-	kmmsgsent.png kmmsgwatched.png kmmsgignored.png \
+	kmmsgsent.png kmmsgwatched.png kmmsgignored.png kmmsgtodo.png \
 	kmmsgread_fwd.png kmmsgread_replied.png kmmsgread_fwd_replied.png \
 	pgp-keys.png \
 	kmmsgpartiallyencrypted.png \
