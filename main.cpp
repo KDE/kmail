@@ -4,6 +4,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#include <errno.h>
 #include <sys/types.h>
 #include <signal.h>
 #include <stdio.h>
@@ -189,6 +190,20 @@ int KMailApplication::newInstance()
   return 0;
 }
 
+namespace
+{
+QString getMyHostName(void)
+{
+  char hostNameC[256];
+  // null terminate this C string
+  hostNameC[255] = 0;
+  // set the string to 0 length if gethostname fails
+  if(gethostname(hostNameC, 255))
+    hostNameC[0] = 0;
+  return QString::fromLocal8Bit(hostNameC);
+}
+}
+
 int main(int argc, char *argv[])
 {
   // WABA: KMail is a KUniqueApplication. Unfortunately this makes debugging
@@ -258,21 +273,33 @@ int main(int argc, char *argv[])
   KMailApplication app;
   KGlobal::locale()->insertCatalogue("libkdenetwork");
 
-  KSimpleConfig config(locateLocal("appdata", "lock"));
+  // Check and create a lock file to prevent concurrent access to kmail files
+  const QString lockLocation = locateLocal("appdata", "lock");
+  KSimpleConfig config(lockLocation);
   int oldPid = config.readNumEntry("pid", -1);
-  if (oldPid != -1 && kill(oldPid, 0) != -1)
+  const QString oldHostName = config.readEntry("hostname");
+  const QString hostName = getMyHostName();
+  // proceed if there is no lock at present
+  if (oldPid != -1 &&
+  // proceed if the lock is our pid, or if the lock is from the same host
+      oldPid != getpid() && hostName != oldHostName &&
+  // proceed if the pid doesn't exist
+      (kill(oldPid, 0) != -1 || errno != ESRCH))
   {
     QString msg = i18n("Only one instance of KMail can be run at "
       "any one time. It is already running on a different display "
-      "with PID %1.").arg(oldPid);
+      "with PID %1 on host %2 according to the lock file located "
+      "at %3").arg(oldPid).arg(oldHostName).arg(lockLocation);
 
     KNotifyClient::userEvent( msg,  KNotifyClient::Messagebox,
       KNotifyClient::Error );
-    fprintf(stderr, "*** KMail is already running with PID %d\n", oldPid);
+    fprintf(stderr, "*** KMail is already running with PID %d on host %s\n",
+            oldPid, oldHostName.local8Bit().data());
     return 1;
   }
 
   config.writeEntry("pid", getpid());
+  config.writeEntry("hostname", hostName);
   config.sync();
 
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
