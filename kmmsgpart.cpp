@@ -80,7 +80,7 @@ void KMMessagePart::clear()
 
 
 //-----------------------------------------------------------------------------
-KMMessagePart & KMMessagePart::duplicate( const KMMessagePart & msgPart )
+void KMMessagePart::duplicate( const KMMessagePart & msgPart )
 {
   // copy the data of msgPart
   *this = msgPart;
@@ -272,21 +272,21 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
   if (mBody.isEmpty()) return QByteArray();
   QByteArray result;
 
-  if ( const Codec * codec = Codec::codecForName( cteStr() ) )
-    // Nice: we can use the convenience function :-)
-    result = codec->decode( mBody );
-  else
-    switch (cte())
-    {
-    default:
-      kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
-		      << "'. Assuming binary." << endl;
+  switch (cte())
+  {
     case DwMime::kCte7bit:
     case DwMime::kCte8bit:
     case DwMime::kCteBinary:
       result.duplicate(mBody);
       break;
-    }
+    default:
+      if ( const Codec * codec = Codec::codecForName( cteStr() ) )
+        // Nice: we can use the convenience function :-)
+        result = codec->decode( mBody );
+      else
+        kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
+                        << "'. Assuming binary." << endl;
+  }
 
   assert( mBodyDecodedSize < 0
 	  || (unsigned int)mBodyDecodedSize == result.size() );
@@ -299,40 +299,48 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
 QCString KMMessagePart::bodyDecoded(void) const
 {
   if (mBody.isEmpty()) return QCString("");
+  bool decodeBinary = false;
   QCString result;
   int len;
 
-  if ( const Codec * codec = Codec::codecForName( cteStr() ) ) {
-    // We can't use the codec convenience functions, since we must
-    // return a QCString, not a QByteArray:
-    int bufSize = codec->maxDecodedSizeFor( mBody.size() ) + 1; // trailing NUL
-    result.resize( bufSize );
-    QByteArray::ConstIterator iit = mBody.begin();
-    QCString::Iterator oit = result.begin();
-    QCString::ConstIterator oend = result.begin() + bufSize;
-    if ( !codec->decode( iit, mBody.end(), oit, oend ) )
-      kdWarning(5006) << codec->name()
-		      << " lies about it's maxDecodedSizeFor( "
-		      << mBody.size() << " ). Result truncated!" << endl;
-    len = oit - result.begin();
-    result.truncate( len ); // adds trailing NUL
-  } else
-    switch (cte())
-    {
-    default:
-      kdWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
-		      << "'. Assuming binary." << endl;
+  switch (cte())
+  {
     case DwMime::kCte7bit:
     case DwMime::kCte8bit:
     case DwMime::kCteBinary:
     {
-      len = mBody.size();
-      result.resize( len+1 /* trailing NUL */ );
-      memcpy(result.data(), mBody.data(), len);
-      result[len] = 0;
+      decodeBinary = true;
       break;
     }
+    default:
+      if ( const Codec * codec = Codec::codecForName( cteStr() ) ) {
+        // We can't use the codec convenience functions, since we must
+        // return a QCString, not a QByteArray:
+        int bufSize = codec->maxDecodedSizeFor( mBody.size() ) + 1; // trailing NUL
+        result.resize( bufSize );
+        QByteArray::ConstIterator iit = mBody.begin();
+        QCString::Iterator oit = result.begin();
+        QCString::ConstIterator oend = result.begin() + bufSize;
+        if ( !codec->decode( iit, mBody.end(), oit, oend ) )
+          kdWarning(5006) << codec->name()
+                          << " lies about it's maxDecodedSizeFor( "
+                          << mBody.size() << " ). Result truncated!" << endl;
+        len = oit - result.begin();
+        result.truncate( len ); // adds trailing NUL
+      } else {
+        kdWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
+                        << "'. Assuming binary." << endl;
+        decodeBinary = true;
+      }
   }
+
+  if ( decodeBinary ) {
+    len = mBody.size();
+    result.resize( len+1 /* trailing NUL */ );
+    memcpy(result.data(), mBody.data(), len);
+    result[len] = 0;
+  }
+
   kdWarning( result.length() != (unsigned int)len, 5006 )
     << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
 

@@ -24,7 +24,7 @@ public:
 
   /** Obtains an independant copy (i.e. without explicitely shared data) of the
       data contained in msgPart. Returns a reference to this message part. */
-  KMMessagePart & duplicate( const KMMessagePart & msgPart );
+  void duplicate( const KMMessagePart & msgPart );
 
   /** Get or set the message body */
   QCString body(void) const;
@@ -51,7 +51,7 @@ public:
   /** Sets body, encoded in the best fitting
       content-transfer-encoding, which is determined by character
       frequency count.
-      
+
       @param aBuf       input buffer
       @param allowedCte return: list of allowed cte's
       @param allow8Bit  whether "8bit" is allowed as cte.
