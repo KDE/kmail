@@ -2723,7 +2723,7 @@ kdDebug(5006) << "***************************************" << endl;
   // but the convenient CryptPlugWrapper's StructuringInfoWrapper class.
 
 #ifdef DEBUG
-  kdDebug(5006) << "||| leaving KMComposeWin::processStructuringInfo()\n||| returning: " << bOK << endl << endl;
+  kdDebug(5006) << "||| leaving KMComposeWin::processStructuringInfo()\n||| returning: " << bOk << endl;
 #endif
 
   return bOk;
