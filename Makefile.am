@@ -1,7 +1,7 @@
 KDE_OPTIONS = nofinal
 KDE_CXXFLAGS = $(USE_RTTI)
 
-SUBDIRS =  . about pics profiles avscripts
+SUBDIRS = . about pics profiles avscripts
 
 INCLUDES = -I$(top_srcdir)/libkdenetwork \
 	-I$(top_srcdir)/libkdepim \
@@ -95,13 +95,15 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
 		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
 		korganizeriface.stub messagecomposer.cpp \
-		globalsettings.kcfgc \
+		keyresolver.cpp globalsettings.kcfgc \
 		regexplineedit.cpp rulewidgethandlermanager.cpp \
 		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
 		pluginloaderbase.cpp partnodebodypart.cpp \
 		expirejob.cpp compactionjob.cpp jobscheduler.cpp callback.cpp \
 		overlaywidget.cpp progressmanager.cpp progressdialog.cpp \
-		statusbarprogresswidget.cpp listjob.cpp
+		statusbarprogresswidget.cpp listjob.cpp \
+		composercryptoconfiguration.ui \
+		warningconfiguration.ui smimeconfiguration.ui
 
 kmail_SOURCES = main.cpp
 
@@ -122,7 +124,7 @@ include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 xdg_apps_DATA = KMail.desktop kmail_view.desktop
 
 # why?
-EXTRA_DIST = KMail.desktop
+EXTRA_DIST = KMail.desktop $(link_DATA)
 
 KDE_ICON = AUTO
 
@@ -139,7 +141,7 @@ update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
 		kmail-3.2-update-loop-on-goto-unread-settings.sh \
 		kmail-3.2-misc.sh \
 		kmail-3.3-use-ID-for-accounts.pl \
-                kmail-3.3-move-identities.pl
+		kmail-3.3-move-identities.pl
 
 confdir = $(kde_confdir)
 conf_DATA = kmail.antispamrc
