@@ -48,6 +48,9 @@
 
 #include <stdlib.h>
 
+const int KMFldSearch::FOLDER_COLUMN = 3;
+const int KMFldSearch::MSGID_COLUMN = 4;
+
 //-----------------------------------------------------------------------------
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
                          KMFolder *curFolder, bool modal):

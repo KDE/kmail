@@ -109,8 +109,8 @@ protected:
   // not owned by us
   KMMainWin* mMainWin;
   
-  static const int FOLDER_COLUMN = 3;
-  static const int MSGID_COLUMN = 4;
+  static const int FOLDER_COLUMN;
+  static const int MSGID_COLUMN;
 };
 
 

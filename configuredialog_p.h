@@ -576,7 +576,7 @@ protected:
   QButtonGroup *mNestingPolicy;
   QButtonGroup *mDateDisplay;
   
-  static const int numDateDisplayConfig = 3;
+  enum { numDateDisplayConfig = 3 };
   static const struct dateDisplayConfigType {
     const char *  configName;
     const char *  displayName;
