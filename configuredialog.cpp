@@ -3045,11 +3045,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   mMessageIdSuffixEdit = new QLineEdit( this );
   // only ASCII letters, digits, plus, minus and dots are allowed
   mMessageIdSuffixValidator =
-    // #### with the following validator it's not possible to enter a '.' at
-    // #### the end (as intermediate value) (Qt 3.0.1)
-    //new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), 0 );
-    // #### therefore we use this as work around
-    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*\\.?" ), 0 );
+    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), 0 );
   mMessageIdSuffixEdit->setValidator( mMessageIdSuffixValidator );
   label = new QLabel( mMessageIdSuffixEdit,
 		      i18n("Custom Message-&Id suffix:"), this );
