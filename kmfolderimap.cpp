@@ -31,6 +31,8 @@
 #include "kmfoldermgr.h"
 #include "imapjob.h"
 using KMail::ImapJob;
+#include "attachmentstrategy.h"
+using KMail::AttachmentStrategy;
 
 #include <kdebug.h>
 #include <kio/scheduler.h>
@@ -1036,6 +1038,7 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
   if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
        mAccount && mAccount->loadOnDemand() &&
+       as != AttachmentStrategy::inlined() &&
        ( msg->signatureState() == KMMsgNotSigned || 
          msg->signatureState() == KMMsgSignatureStateUnknown ) )
   {
