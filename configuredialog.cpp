@@ -1906,7 +1906,8 @@ void ConfigureDialog::setupAppearancePage( void )
   config.setGroup("General");
   state = config.readBoolEntry( "showMessageSize", false );
   mAppearance.messageSizeCheck->setChecked( state );
-
+  
+  mAppearance.addressbookCombo->setCurrentItem( config.readNumEntry( "addressbook", 0 )) ;
 }
 
 
