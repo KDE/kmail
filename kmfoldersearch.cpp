@@ -65,6 +65,7 @@ KMSearch::KMSearch(QObject * parent, const char * name)
 
 KMSearch::~KMSearch()
 {
+  delete mSearchPattern;
 }
 
 bool KMSearch::write(QString location) const
