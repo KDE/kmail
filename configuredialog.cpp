@@ -4227,62 +4227,6 @@ void MiscPage::GroupwareTab::save() {
 
 #undef DIM
 
-//----------------------------
-// KCM stuff
-//----------------------------
-extern "C"
-{
-  KCModule *create_kmail_config_misc( QWidget *parent, const char * )
-  {
-    MiscPage *page = new MiscPage( parent, "kcmkmail_config_misc" );
-    return page;
-  }
-}
 
-extern "C"
-{
-  KCModule *create_kmail_config_appearance( QWidget *parent, const char * )
-  {
-    AppearancePage *page =
-       new AppearancePage( parent, "kcmkmail_config_appearance" );
-    return page;
-  }
-}
-
-extern "C"
-{
-  KCModule *create_kmail_config_composer( QWidget *parent, const char * )
-  {
-    ComposerPage *page = new ComposerPage( parent, "kcmkmail_config_composer" );
-    return page;
-  }
-}
-
-extern "C"
-{
-  KCModule *create_kmail_config_identity( QWidget *parent, const char * )
-  {
-    IdentityPage *page = new IdentityPage( parent, "kcmkmail_config_identity" );
-    return page;
-  }
-}
-
-extern "C"
-{
-  KCModule *create_kmail_config_network( QWidget *parent, const char * )
-  {
-    NetworkPage *page = new NetworkPage( parent, "kcmkmail_config_network" );
-    return page;
-  }
-}
-
-extern "C"
-{
-  KCModule *create_kmail_config_security( QWidget *parent, const char * )
-  {
-    SecurityPage *page = new SecurityPage( parent, "kcmkmail_config_security" );
-    return page;
-  }
-}
 //----------------------------
 #include "configuredialog.moc"

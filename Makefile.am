@@ -25,7 +25,7 @@ kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
 libkmailpart_la_LIBADD	= libkmailprivate.la
 
-kcm_kmail_la_SOURCES = dummy.cpp
+kcm_kmail_la_SOURCES = kcm_kmail.cpp
 kcm_kmail_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
 kcm_kmail_la_LIBADD = libkmailprivate.la $(LIB_KDECORE)
 
