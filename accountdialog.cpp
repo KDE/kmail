@@ -534,7 +534,7 @@ void AccountDialog::makeImapAccountPage()
   topLayout->addMultiCellWidget( mImap.storePasswordCheck, 10, 10, 0, 1 );
 
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
-    i18n("Authentification method"), page );
+    i18n("Authentication method"), page );
   mImap.authAuto = new QRadioButton( i18n("Clear text"), group );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
   "authentification method only, if you have a good reason", "LOGIN"), group );
