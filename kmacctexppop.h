@@ -117,7 +117,7 @@ protected:
 
   QStringList idsOfMsgs; //used for ids and for count
   QValueList<int> lensOfMsgs;
-  QStringList uidsOfMsgs;
+  QMap<QString, QString> mUidForIdMap; // maps message ID (i.e. index on the server) to UID
   QStringList mUidsOfSeenMsgs; // list of UIDs of previously seen messages (read from config)
   QDict<int> mUidsOfSeenMsgsDict; // set of UIDs of previously seen messages (for fast lookup)
   QStringList uidsOfNextSeenMsgs; // list of UIDs of new seen messages, for writing in the config file

@@ -312,7 +312,7 @@ void KMAcctExpPop::startJob() {
 
   mMsgsPendingDownload.clear();
   idsOfMsgs.clear();
-  uidsOfMsgs.clear();
+  mUidForIdMap.clear();
   idsOfMsgsToDelete.clear();
   //delete any headers if there are some this have to be done because of check again
   headersOnServer.clear();
@@ -383,7 +383,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
     msg->setMsgLength( curMsgData.size() );
     msgsAwaitingProcessing.append(msg);
     msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
-    msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
+    msgUidsAwaitingProcessing.append( mUidForIdMap[idsOfMsgs[indexOfCurrentMsg]] );
     slotGetNextMsg();
   }
 }
@@ -405,9 +405,8 @@ void KMAcctExpPop::slotJobFinished() {
     kdDebug(5006) << "stage == Uidl" << endl;
     mUidlFinished = TRUE;
 
-    if (mLeaveOnServer && uidsOfMsgs.isEmpty() && uidsOfNextSeenMsgs.isEmpty()
-      && !idsOfMsgs.isEmpty())
-    {
+    if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
+         uidsOfNextSeenMsgs.isEmpty() && !idsOfMsgs.isEmpty() ) {
       KMessageBox::sorry(0, i18n("Your POP3 server does not support the UIDL "
       "command: this command is required to determine, in a reliable way, "
       "which of the mails on the server KMail has already seen before;\n"
@@ -428,8 +427,8 @@ void KMAcctExpPop::slotJobFinished() {
           if ( (unsigned int)hids.data() >= mFilterOnServerCheckSize ) {
             kdDebug(5006) << "bigger than " << mFilterOnServerCheckSize << endl;
               headersOnServer.append(new KMPopHeaders( hids.key(),
-                                                       *uidsOfMsgs.at( idsOfMsgs.findIndex( hids.key() )),
-                                                    Later));//TODO
+                                                       mUidForIdMap[hids.key()],
+                                                       Later));//TODO
             //set Action if already known
             if( mHeaderDeleteUids.contains( headersOnServer.current()->uid() ) ) {
               headersOnServer.current()->setAction(Delete);
@@ -544,7 +543,7 @@ void KMAcctExpPop::slotJobFinished() {
           int idx = idsOfMsgs.findIndex( headersOnServer.current()->id() );
           mMsgsPendingDownload.remove( headersOnServer.current()->id() );
           idsOfMsgs.remove(idsOfMsgs.at( idx ));
-          uidsOfMsgs.remove(uidsOfMsgs.at( idx ));
+          mUidForIdMap.remove( headersOnServer.current()->id() );
         }
         if (headersOnServer.current()->action() == Delete) {
           mHeaderDeleteUids.insert(headersOnServer.current()->uid(), true);
@@ -741,10 +740,10 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       mMsgsPendingDownload.insert( id, len );
     }
     else { // stage == Uidl
-      QString uid = qdata.mid(spc + 1);
+      const QString id = qdata.left(spc);
+      const QString uid = qdata.mid(spc + 1);
       bool bAppendUid = true;
       if ( mUidsOfSeenMsgsDict.find( uid ) != 0 ) {
-        QString id = qdata.left(spc);
         if ( mMsgsPendingDownload.contains( id ) ) {
           mMsgsPendingDownload.remove( id );
           idsOfMsgs.remove( id );
@@ -756,7 +755,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
         uidsOfNextSeenMsgs.append( uid );
       }
       if ( bAppendUid )
-        uidsOfMsgs.append( uid );
+        mUidForIdMap.insert( id, uid );
     }
   }
   else {
