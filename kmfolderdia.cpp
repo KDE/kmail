@@ -813,15 +813,13 @@ KMail::FolderDiaExpiryTab::FolderDiaExpiryTab( KMFolderDialog* dlg,
 
   // Expiry time for read documents.
   label = new QLabel( i18n("Expire &read email after:"), this );
-  //label->setEnabled( false );
+  label->setEnabled( false );
   QObject::connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
 		    label, SLOT( setEnabled( bool ) ) );
   expLayout->addWidget( label, 1, 0 );
 
   mReadExpiryTimeNumInput = new KIntNumInput( this );
   mReadExpiryTimeNumInput->setRange( 1, 500, 1, false );
-  //mReadExpiryTimeNumInput->setEnabled( false );
-  //mReadExpiryTimeNumInput->setValue( 7 );
   label->setBuddy( mReadExpiryTimeNumInput );
   expLayout->addWidget( mReadExpiryTimeNumInput, 1, 1 );
 
@@ -830,22 +828,19 @@ KMail::FolderDiaExpiryTab::FolderDiaExpiryTab( KMFolderDialog* dlg,
   mReadExpiryUnitsComboBox->insertItem( i18n("Day(s)") );
   mReadExpiryUnitsComboBox->insertItem( i18n("Week(s)") );
   mReadExpiryUnitsComboBox->insertItem( i18n("Month(s)") );
-  //mReadExpiryUnitsComboBox->setEnabled(false);
   expLayout->addWidget( mReadExpiryUnitsComboBox, 1, 2 );
   connect( mReadExpiryUnitsComboBox, SIGNAL( activated( int ) ),
            this, SLOT( slotReadExpiryUnitChanged( int ) ) );
 
   // Expiry time for unread documents.
   label = new QLabel( i18n("Expire unr&ead email after:"), this );
-  //label->setEnabled(false);
+  label->setEnabled(false);
   QObject::connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
 		    label, SLOT( setEnabled( bool ) ) );
   expLayout->addWidget( label, 2, 0 );
 
   mUnreadExpiryTimeNumInput = new KIntNumInput( this );
   mUnreadExpiryTimeNumInput->setRange( 1, 500, 1, false );
-  //mUnreadExpiryTimeNumInput->setEnabled(false);
-  //mUnreadExpiryTimeNumInput->setValue(28);
   label->setBuddy( mUnreadExpiryTimeNumInput );
   expLayout->addWidget( mUnreadExpiryTimeNumInput, 2, 1 );
 
@@ -854,7 +849,6 @@ KMail::FolderDiaExpiryTab::FolderDiaExpiryTab( KMFolderDialog* dlg,
   mUnreadExpiryUnitsComboBox->insertItem( i18n("Day(s)") );
   mUnreadExpiryUnitsComboBox->insertItem( i18n("Week(s)") );
   mUnreadExpiryUnitsComboBox->insertItem( i18n("Month(s)") );
-  //mUnreadExpiryUnitsComboBox->setEnabled(false);
   expLayout->addWidget( mUnreadExpiryUnitsComboBox, 2, 2 );
   connect( mUnreadExpiryUnitsComboBox, SIGNAL( activated( int ) ),
            this, SLOT( slotUnreadExpiryUnitChanged( int ) ) );
@@ -874,7 +868,6 @@ KMail::FolderDiaExpiryTab::FolderDiaExpiryTab( KMFolderDialog* dlg,
                                         this );
   radioBG->insert( mExpireActionMove );
   hbl->addWidget( mExpireActionMove );
-  //mExpireActionDelete->setChecked( true );
   mExpireToFolderComboBox = new QComboBox( this );
   hbl->addWidget( mExpireToFolderComboBox );
   mExpireToFolderComboBox->insertStringList( mDlg->moveToFolderNameList() );
@@ -893,46 +886,48 @@ KMail::FolderDiaExpiryTab::FolderDiaExpiryTab( KMFolderDialog* dlg,
 void FolderDiaExpiryTab::load()
 {
   KMFolder* folder = mDlg->folder();
-  if( !folder )
-    return;
-
-  // settings for automatic deletion of old messages
-  mExpireFolderCheckBox->setChecked( folder->isAutoExpire() );
-  // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
-  if( folder->getReadExpireUnits() >= 0
-      && folder->getReadExpireUnits() < expireMaxUnits ) {
-    mReadExpiryUnitsComboBox->setCurrentItem( folder->getReadExpireUnits() );
-  }
-  if( folder->getUnreadExpireUnits() >= 0
-      && folder->getUnreadExpireUnits() < expireMaxUnits ) {
-    mUnreadExpiryUnitsComboBox->setCurrentItem( folder->getUnreadExpireUnits() );
-  }
-  int age = folder->getReadExpireAge();
-  if ( age >= 1 && age <= 500 ) {
-    mReadExpiryTimeNumInput->setValue( age );
-  } else {
+  if( folder ) {
+    // settings for automatic deletion of old messages
+    mExpireFolderCheckBox->setChecked( folder->isAutoExpire() );
+    // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
+    if( folder->getReadExpireUnits() >= 0
+        && folder->getReadExpireUnits() < expireMaxUnits ) {
+      mReadExpiryUnitsComboBox->setCurrentItem( folder->getReadExpireUnits() );
+    }
+    if( folder->getUnreadExpireUnits() >= 0
+        && folder->getUnreadExpireUnits() < expireMaxUnits ) {
+      mUnreadExpiryUnitsComboBox->setCurrentItem( folder->getUnreadExpireUnits() );
+    }
+    int age = folder->getReadExpireAge();
+    if ( age >= 1 && age <= 500 ) {
+      mReadExpiryTimeNumInput->setValue( age );
+    } else {
+      mReadExpiryTimeNumInput->setValue( 7 );
+    }
+    age = folder->getUnreadExpireAge();
+    if ( age >= 1 && age <= 500 ) {
+      mUnreadExpiryTimeNumInput->setValue( age );
+    } else {
+      mUnreadExpiryTimeNumInput->setValue( 28 );
+    }
+    if ( folder->expireAction() == KMFolder::ExpireDelete )
+      mExpireActionDelete->setChecked( true );
+    else
+      mExpireActionMove->setChecked( true );
+    QString destFolderID = folder->expireToFolderId();
+    if ( !destFolderID.isEmpty() ) {
+      KMFolderDialog::FolderList moveToFolderList = mDlg->moveToFolderList();
+      KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
+      int pos = moveToFolderList.findIndex( QGuardedPtr<KMFolder>( destFolder ) );
+      if ( pos > -1 )
+        mExpireToFolderComboBox->setCurrentItem( pos );
+    }
+  } else { // new folder, use default values
     mReadExpiryTimeNumInput->setValue( 7 );
-  }
-  age = folder->getUnreadExpireAge();
-  if ( age >= 1 && age <= 500 ) {
-    mUnreadExpiryTimeNumInput->setValue( age );
-  } else {
-    mUnreadExpiryTimeNumInput->setValue( 28 );
-  }
-  if ( folder->expireAction() == KMFolder::ExpireDelete )
+    mUnreadExpiryTimeNumInput->setValue(28);
     mExpireActionDelete->setChecked( true );
-  else
-    mExpireActionMove->setChecked( true );
-  QString destFolderID = folder->expireToFolderId();
-  if ( !destFolderID.isEmpty() ) {
-    KMFolderDialog::FolderList moveToFolderList = mDlg->moveToFolderList();
-    KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
-    int pos = moveToFolderList.findIndex( QGuardedPtr<KMFolder>( destFolder ) );
-    if ( pos > -1 )
-      mExpireToFolderComboBox->setCurrentItem( pos );
   }
-
-  if( !folder->isAutoExpire() ) {
+  if( !folder || !folder->isAutoExpire() ) {
     mReadExpiryTimeNumInput->setEnabled( false );
     mReadExpiryUnitsComboBox->setEnabled( false );
     mUnreadExpiryTimeNumInput->setEnabled( false );
