@@ -105,12 +105,13 @@ void lockOrDie() {
   int oldPid = config.readNumEntry("pid", -1);
   const QString oldHostName = config.readEntry("hostname");
   const QString hostName = getMyHostName();
-  // proceed if there is no lock at present
-  if (oldPid != -1 &&
-  // proceed if the lock is our pid, or if the lock is from the same host
-      oldPid != getpid() &&
-  // proceed if the pid doesn't exist
-      (kill(oldPid, 0) != -1 || errno != ESRCH))
+  bool first_instance = (oldPid == -1);
+  if (hostName == oldHostName && oldPid != getpid()) {
+      if ( kill(oldPid, 0) == -1 )
+          first_instance |= ( errno == ESRCH );
+  }
+
+  if ( !first_instance )
   {
     QString msg = i18n("Only one instance of KMail can be run at "
       "any one time. It is already running "
