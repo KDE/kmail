@@ -10,7 +10,7 @@
 #include <qstring.h>
 #include <qdir.h>
 #include <qfile.h>
-#include <qstrlist.h>
+#include <qstringlist.h>
 #include "kmnewiostatuswdg.h"
 #include "kmaccount.h"
 
@@ -61,7 +61,7 @@ public:
   /** Processes all accounts looking for new mail */
   virtual void checkMail(bool _interactive = true);
 
-  QStrList getAccounts();
+  QStringList getAccounts();
 
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);

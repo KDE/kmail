@@ -1238,14 +1238,14 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 //-----------------------------------------------------------------------------
 void KMMainWin::getAccountMenu()
 {
-  QStrList actList;
+  QStringList actList;
 
   actMenu->clear();
   actList = kernel->acctMgr()->getAccounts();
-  QString tmp;
+  QStringList::Iterator it;
   int id = 0;
-  for(tmp = actList.first(); tmp ; tmp = actList.next(), id++)
-    actMenu->insertItem(tmp, id);
+  for(it = actList.begin(); it != actList.end() ; ++it, id++)
+    actMenu->insertItem(*it, id);
 }
 
 

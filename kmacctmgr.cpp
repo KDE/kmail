@@ -277,10 +277,10 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 
 
 //-----------------------------------------------------------------------------
-QStrList  KMAcctMgr::getAccounts() {
+QStringList  KMAcctMgr::getAccounts() {
   
   KMAccount *cur;
-  QStrList strList;
+  QStringList strList;
   for (cur=mAcctList.first(); cur; cur=mAcctList.next()) {
     strList.append(cur->name());
   }
