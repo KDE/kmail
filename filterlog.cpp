@@ -106,7 +106,7 @@ void FilterLog::dump()
 
 void FilterLog::checkLogSize()
 {
-  if ( currentLogSize > maxLogSize && maxLogSize >= -1 )
+  if ( currentLogSize > maxLogSize && maxLogSize > -1 )
   {
     kdDebug(5006) << "Filter log: memory limit reached, starting to discard old items, size = "
                   << QString::number( currentLogSize ) << endl;
