@@ -38,6 +38,9 @@ public:
   /** Write settings to app's config file. Calls sync() if withSync is TRUE. */
   virtual void writeConfig(bool withSync=TRUE);
 
+  /** Builds the font tag that will be used for quouted lines */
+  QString quoteFontTag( int quoteLevel );
+
   /** Get/set maximum lines of text for inline attachments. */
   int inlineAttach(void) const { return mAtmInline; }
   virtual void setInlineAttach(int maxLines);
@@ -200,7 +203,7 @@ protected:
   int fntSize;
   QString mBodyFamily;
   QColor c1, c2, c3, c4;
-
+  QString mQuoteFontTag[3];
 };
 
 

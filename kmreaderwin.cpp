@@ -111,6 +111,7 @@ void KMReaderWin::makeAttachDir(void)
 }
 
 
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
@@ -136,10 +137,10 @@ void KMReaderWin::readConfig(void)
   c4 = QColor(kapp->palette().normal().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
-    c4 = config->readColorEntry("BackgroundColor",&c4);
     c1 = config->readColorEntry("ForegroundColor",&c1);
     c2 = config->readColorEntry("LinkColor",&c2);
     c3 = config->readColorEntry("FollowedColor",&c3);
+    c4 = config->readColorEntry("BackgroundColor",&c4);
     // ### FIXME: stylesheet
     //        mViewer->setDefaultBGColor(c4);
     //        mViewer->setDefaultTextColors(c1,c2,c3);
@@ -181,9 +182,19 @@ void KMReaderWin::readConfig(void)
   mViewer->setStandardFont(config->readEntry("StandardFont","helvetica"));
   mViewer->setFixedFont(config->readEntry("FixedFont","courier"));
 #endif
+
+  //
+  // Prepare the quoted fonts
+  //
+  mQuoteFontTag[0] = quoteFontTag(0);
+  mQuoteFontTag[1] = quoteFontTag(1);
+  mQuoteFontTag[2] = quoteFontTag(2);
+
+
   if (mMsg)
     update();
 }
+
 
 
 //-----------------------------------------------------------------------------
@@ -198,6 +209,67 @@ void KMReaderWin::writeConfig(bool aWithSync)
 
   if (aWithSync) config->sync();
 }
+
+
+
+
+QString KMReaderWin::quoteFontTag( int quoteLevel )
+{
+  KConfig &config = *kapp->config();
+ 
+  QColor color;
+  config.setGroup("Reader");
+  if( config.readBoolEntry( "defaultColors", true ) == true )
+  {
+    color = QColor(kapp->palette().normal().text());
+  }
+  else
+  {
+    QColor defaultColor = QColor(kapp->palette().normal().text());
+    if( quoteLevel == 0 )
+      color = config.readColorEntry( "QuoutedText1", &defaultColor );
+    else if( quoteLevel == 1 )
+      color = config.readColorEntry( "QuoutedText2", &defaultColor );
+    else if( quoteLevel == 2 )
+      color = config.readColorEntry( "QuoutedText3", &defaultColor );
+    else
+      color = QColor(kapp->palette().normal().base());
+  }
+
+  QFont font;
+  config.setGroup("Fonts");
+  if( config.readBoolEntry( "defaultFonts", true ) == true )
+  {
+    font = KGlobal::generalFont();
+    font.setItalic(true);
+  }
+  else
+  {
+    const char *defaultFont = "helvetica-medium-r-12";
+    if( quoteLevel == 0 )
+      font  = kstrToFont(config.readEntry( "quote1-font", defaultFont ) );
+    else if( quoteLevel == 1 )
+      font  = kstrToFont(config.readEntry( "quote2-font", defaultFont ) );
+    else if( quoteLevel == 2 )
+      font  = kstrToFont(config.readEntry( "quote3-font", defaultFont ) );    
+    else
+    {
+      font = KGlobal::generalFont();
+      font.setItalic(true);
+    }
+  }
+
+  QString str = QString("<font color=%1>").arg( color.name() );
+  if( font.italic() ) { str += "<i>"; }
+  if( font.bold() ) { str += "<b>"; }
+  return( str );
+}
+
+
+
+
+
+
 
 
 //-----------------------------------------------------------------------------
@@ -619,55 +691,85 @@ void KMReaderWin::writeBodyStr(const QString aStr)
 }
 
 
+
+
 //-----------------------------------------------------------------------------
+
 QString KMReaderWin::quotedHTML(const QString& s)
 {
-  int pos = 0, beg = 0;
-  QString htmlStr, line;
+  QString htmlStr, line, tmpStr;
   QChar ch;
-  bool quoted = FALSE;
-  bool lastQuoted = FALSE;
-  bool atStart = TRUE;
 
-  htmlStr = "";
+  bool atStartOfLine;
+  int pos, beg;
+
+  int currQuoteLevel = -1;
+  int prevQuoteLevel = -1;
+  int newlineCount = 0;
+
 
   // skip leading empty lines
-  while ( pos < (int)s.length() && s[pos] <= ' ' )
-    pos++;
-
+  for( pos = 0; pos < (int)s.length() && s[pos] <= ' '; pos++ );
   beg = pos;
-  int tcnt = 0;
-  QString tmpStr;
 
-  while (pos < (int)s.length())
+  atStartOfLine = TRUE;
+  while( pos < (int)s.length() )
   {
     ch = s[pos];
-    if (ch=='\n')
+    if( ch == '\n' )
     {
-      tcnt ++;
+      newlineCount ++;
       line = strToHtml(s.mid(beg,pos-beg),TRUE,TRUE);
-      if (quoted && !lastQuoted) line.prepend("<I>");
-      else if (!quoted && lastQuoted) line.prepend("</I>");
+      if( currQuoteLevel >= 0 )
+      {
+	if( currQuoteLevel != prevQuoteLevel )
+	{
+	  line.prepend( mQuoteFontTag[currQuoteLevel] );
+	  if( prevQuoteLevel >= 0 )
+	  {
+	    line.prepend( "</font>" );
+	  }
+	}
+	prevQuoteLevel = currQuoteLevel;
+      }
+      else if( prevQuoteLevel >= 0 )
+      {
+	line.prepend( "</font>" );
+	prevQuoteLevel = -1;
+      }
+
       tmpStr += line + "<BR>\n";
-      if (!(tcnt % 100)) {
+      if( (newlineCount % 100) == 0 ) 
+      {
 	htmlStr += tmpStr;
 	tmpStr.truncate(0);
       }
-      beg = pos+1;
-      atStart = TRUE;
-      lastQuoted = quoted;
-      quoted = FALSE;
+
+      beg = pos + 1;
+      atStartOfLine = TRUE;
+      currQuoteLevel = -1;
+
     }
-    else if (ch > ' ' && atStart)
+    else if( ch > ' ' )
     {
-      if (ch=='>' || /*ch==':' ||*/ ch=='|') quoted = TRUE;
-      atStart = FALSE;
+      if( atStartOfLine == TRUE && (ch=='>' || /*ch==':' ||*/ ch=='|') )
+      {
+	if( currQuoteLevel < 2 ) { currQuoteLevel += 1; }
+      } 
+      else
+      {
+	atStartOfLine = FALSE;
+      }
     }
+    
     pos++;
   }
+
   htmlStr += tmpStr;
   return htmlStr;
 }
+
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)

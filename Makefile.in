@@ -125,6 +125,7 @@ LIB_KIO = @LIB_KIO@
 LIB_KPARTS = @LIB_KPARTS@
 LIB_KSPELL = @LIB_KSPELL@
 LIB_KSYCOCA = @LIB_KSYCOCA@
+LIB_KWRITE = @LIB_KWRITE@
 LIB_QT = @LIB_QT@
 LIB_SMB = @LIB_SMB@
 LIB_X11 = @LIB_X11@
@@ -756,8 +757,8 @@ distclean-generic clean-generic maintainer-clean-generic clean \
 mostlyclean distclean maintainer-clean
 
 
-messages:
-	$(XGETTEXT) rc.cpp $(kmail_SOURCES) -o $(podir)/kmail.pot
+messages: rc.cpp
+	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
@@ -952,7 +953,7 @@ kmfoldernode.moc: $(srcdir)/kmfoldernode.h
 clean-metasources:
 	-rm -f  kmfldsearch.moc colorlistbox.moc kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc accountdialog.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmtopwidget.moc kmacctexppop.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kalarmtimer.moc kmkernel.moc kmreaderwin.moc kmsender.moc kmfoldermgr.moc kmfoldernode.moc
 
-#>+ 9
+#>+ 10
 kmailIface.kidl: $(srcdir)/kmailIface.h $(DCOPIDL_DEPENDENCIES)
 	$(DCOPIDL) $(srcdir)/kmailIface.h > kmailIface.kidl || rm -f kmailIface.kidl
 kmailIface_skel.cpp: kmailIface.kidl
@@ -960,6 +961,7 @@ kmailIface_skel.cpp: kmailIface.kidl
 kmailIface_stub.cpp: kmailIface_stub.h
 kmailIface_stub.h: kmailIface.kidl
 	$(DCOPIDL2CPP) --c++-suffix cpp --no-skel kmailIface.kidl
+$(srcdir)/kmailIface_stub.cpp: kmailIface_stub.h
 $(srcdir)/main.cpp: kmailIface_stub.h
 
 #>+ 5
@@ -995,7 +997,7 @@ force-reedit:
 
 
 #>+ 11
-kmail.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kmmainwin.cpp $(srcdir)/kmfolderdia.cpp $(srcdir)/kmfoldertree.cpp $(srcdir)/kmsettings.cpp $(srcdir)/kmaccount.cpp $(srcdir)/kmheaders.cpp $(srcdir)/kmcomposewin.cpp $(srcdir)/kmfolder.cpp $(srcdir)/kmmsgpartdlg.cpp $(srcdir)/kmmessage.cpp $(srcdir)/kmreaderwin.cpp $(srcdir)/kbusyptr.cpp $(srcdir)/kalarmtimer.cpp $(srcdir)/kmmsgpart.cpp $(srcdir)/kmmsginfo.cpp $(srcdir)/kmacctmgr.cpp $(srcdir)/kmacctfolder.cpp $(srcdir)/kmacctlocal.cpp $(srcdir)/kmacctpop.cpp $(srcdir)/kmfolderdir.cpp $(srcdir)/kmfoldermgr.cpp $(srcdir)/kmfoldernode.cpp $(srcdir)/kmsender.cpp $(srcdir)/kmacctseldlg.cpp $(srcdir)/kmfiltermgr.cpp $(srcdir)/kmfilteraction.cpp $(srcdir)/kmidentity.cpp $(srcdir)/kmfolderseldlg.cpp $(srcdir)/kmfilter.cpp $(srcdir)/kmfilterdlg.cpp $(srcdir)/kmmsgbase.cpp $(srcdir)/kmmsglist.cpp $(srcdir)/kpgp.cpp $(srcdir)/kpgpbase.cpp $(srcdir)/kfileio.cpp $(srcdir)/kmaddrbook.cpp $(srcdir)/kmaddrbookdlg.cpp $(srcdir)/kmiostatusdlg.cpp $(srcdir)/kmnewiostatus.cpp $(srcdir)/kmnewiostatuswdg.cpp $(srcdir)/charsetsDlg.cpp $(srcdir)/kfontutils.cpp $(srcdir)/kmtopwidget.cpp $(srcdir)/kmundostack.cpp $(srcdir)/ktablistbox.cpp $(srcdir)/kmbroadcaststatus.cpp $(srcdir)/kmacctexppop.cpp $(srcdir)/configuredialog.cpp $(srcdir)/colorlistbox.cpp $(srcdir)/kmkernel.cpp $(srcdir)/main.cpp $(srcdir)/accountdialog.cpp kmailIface_skel.cpp kmailIface_stub.cpp   kmfldsearch.moc colorlistbox.moc kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc accountdialog.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmtopwidget.moc kmacctexppop.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kalarmtimer.moc kmkernel.moc kmreaderwin.moc kmsender.moc kmfoldermgr.moc kmfoldernode.moc 
+kmail.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kmmainwin.cpp $(srcdir)/kmfolderdia.cpp $(srcdir)/kmfoldertree.cpp $(srcdir)/kmsettings.cpp $(srcdir)/kmaccount.cpp $(srcdir)/kmheaders.cpp $(srcdir)/kmcomposewin.cpp $(srcdir)/kmfolder.cpp $(srcdir)/kmmsgpartdlg.cpp $(srcdir)/kmmessage.cpp $(srcdir)/kmreaderwin.cpp $(srcdir)/kbusyptr.cpp $(srcdir)/kalarmtimer.cpp $(srcdir)/kmmsgpart.cpp $(srcdir)/kmmsginfo.cpp $(srcdir)/kmacctmgr.cpp $(srcdir)/kmacctfolder.cpp $(srcdir)/kmacctlocal.cpp $(srcdir)/kmacctpop.cpp $(srcdir)/kmfolderdir.cpp $(srcdir)/kmfoldermgr.cpp $(srcdir)/kmfoldernode.cpp $(srcdir)/kmsender.cpp $(srcdir)/kmacctseldlg.cpp $(srcdir)/kmfiltermgr.cpp $(srcdir)/kmfilteraction.cpp $(srcdir)/kmidentity.cpp $(srcdir)/kmfolderseldlg.cpp $(srcdir)/kmfilter.cpp $(srcdir)/kmfilterdlg.cpp $(srcdir)/kmmsgbase.cpp $(srcdir)/kmmsglist.cpp $(srcdir)/kpgp.cpp $(srcdir)/kpgpbase.cpp $(srcdir)/kfileio.cpp $(srcdir)/kmaddrbook.cpp $(srcdir)/kmaddrbookdlg.cpp $(srcdir)/kmiostatusdlg.cpp $(srcdir)/kmnewiostatus.cpp $(srcdir)/kmnewiostatuswdg.cpp $(srcdir)/charsetsDlg.cpp $(srcdir)/kfontutils.cpp $(srcdir)/kmtopwidget.cpp $(srcdir)/kmundostack.cpp $(srcdir)/ktablistbox.cpp $(srcdir)/kmbroadcaststatus.cpp $(srcdir)/kmacctexppop.cpp $(srcdir)/configuredialog.cpp $(srcdir)/colorlistbox.cpp $(srcdir)/kmkernel.cpp $(srcdir)/main.cpp $(srcdir)/accountdialog.cpp $(srcdir)/kmailIface_skel.cpp $(srcdir)/kmailIface_stub.cpp   kmfldsearch.moc colorlistbox.moc kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc accountdialog.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmtopwidget.moc kmacctexppop.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kalarmtimer.moc kmkernel.moc kmreaderwin.moc kmsender.moc kmfoldermgr.moc kmfoldernode.moc 
 	@echo 'creating kmail.all_cpp.cpp ...'; \
 	rm -f kmail.all_cpp.files kmail.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kmail.all_cpp.final; \

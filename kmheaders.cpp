@@ -370,8 +370,8 @@ void KMHeaders::readConfig (void)
     QPalette newPal = palette();
     newPal.setColor( QColorGroup::Base, mPaintInfo.colBack );
     setPalette( newPal );
-    mPaintInfo.colNew = config->readColorEntry("LinkColor",&c3);
-    mPaintInfo.colUnread = config->readColorEntry("FollowedColor",&c2);
+    mPaintInfo.colNew = config->readColorEntry("LinkColor",&c2);
+    mPaintInfo.colUnread = config->readColorEntry("FollowedColor",&c3);
   }
   else {
     mPaintInfo.colFore = c1;
@@ -379,8 +379,8 @@ void KMHeaders::readConfig (void)
     QPalette newPal = palette();
     newPal.setColor( QColorGroup::Base, c4 );
     setPalette( newPal );
-    mPaintInfo.colNew = c3;
-    mPaintInfo.colUnread = c2;
+    mPaintInfo.colNew = c2;
+    mPaintInfo.colUnread = c3;
   }
 
   // Custom/System fonts
