@@ -333,7 +333,7 @@ QString IdentityPage::iconLabel() {
 }
 
 QString IdentityPage::title() {
-  return i18n("Personal information");
+  return i18n("Personal Information");
 }
 
 const char * IdentityPage::iconName() {
@@ -955,7 +955,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 
   // "send messages in outbox on check" check box:
   mSendOutboxCheck =
-    new QCheckBox(i18n("Send messages in Outbox &folder on check"), group );
+    new QCheckBox(i18n("Send messages in outbox &folder on check"), group );
   glay->addMultiCellWidget( mSendOutboxCheck, 1, 1, 0, 1 );
 
   // "default send method" combo:
@@ -1699,7 +1699,7 @@ QString AppearancePage::iconLabel() {
 }
 
 QString AppearancePage::title() {
-  return i18n("Customize visual appearance");
+  return i18n("Customize Visual Appearance");
 }
 
 const char * AppearancePage::iconName() {
@@ -2145,7 +2145,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
 
   // the MIME Tree Viewer
   mShowMIMETreeMode =
-    new QVButtonGroup( i18n("Show &MIME tree"), this );
+    new QVButtonGroup( i18n("Show &MIME Tree"), this );
   hlayWindowLayoutAndMIMETree->addWidget( mShowMIMETreeMode );
   mShowMIMETreeMode->layout()->setSpacing( KDialog::spacingHint() );
 
@@ -2503,7 +2503,7 @@ const char * ComposerPage::iconName() {
 }
 
 QString ComposerPage::title() {
-  return i18n("Phrases and general behavior");
+  return i18n("Phrases & General Behavior");
 }
 
 QString ComposerPage::helpAnchor() {
@@ -3334,7 +3334,7 @@ const char * SecurityPage::iconName() {
 }
 
 QString SecurityPage::title() {
-  return i18n("Security and Privacy Settings");
+  return i18n("Security & Privacy Settings");
 }
 
 QString SecurityPage::helpAnchor() {
@@ -3411,7 +3411,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   vlay->addWidget( group );
 
-  group = new QVGroupBox( i18n( "Delivery and Read Confirmations" ), this );
+  group = new QVGroupBox( i18n( "Delivery && Read Confirmations" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mSendReceiptCheck = new QCheckBox( i18n("Automatically &send receive- and "
@@ -3648,7 +3648,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   label = new QLabel( mMailboxPrefCombo,
 		      i18n("to be continued with \"flat files\" and "
 			   "\"directories\", resp.",
-			   "By default, &message folders on disk are"), this );
+			   "By default, &message folders on disk are:"), this );
   mMailboxPrefCombo->insertStringList( QStringList()
 	  << i18n("continuation of \"By default, &message folders on disk are\"",
 		  "flat files (\"mbox\" format)")
@@ -3841,7 +3841,7 @@ const char * PluginPage::iconName() {
 }
 
 QString PluginPage::title() {
-  return i18n("Load and configure KMail plugins");
+  return i18n("Load & Configure KMail Plugins");
 }
 
 QString PluginPage::helpAnchor() {
@@ -5174,7 +5174,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
 #else
   certDialog = 0;
 
-  startCertManagerPB = new QPushButton( i18n( " &Start Certificate Manager " ), this, "startcertmanagerpb" );
+  startCertManagerPB = new QPushButton( i18n( "&Start Certificate Manager" ), this, "startcertmanagerpb" );
   connect( startCertManagerPB, SIGNAL( clicked() ),
            this, SLOT( slotStartCertManager() ) );
   startCertManagerPB->setFixedSize( startCertManagerPB->sizeHint() );

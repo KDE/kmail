@@ -68,7 +68,7 @@ namespace KMail {
 		   << i18n("continuation of \"obtain signature text from\"",
 			   "input field below") );
     label = new QLabel( mSourceCombo,
-			i18n("Obtain signature &text from"), this );
+			i18n("Obtain signature &text from:"), this );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
     hlay->addWidget( label );
     hlay->addWidget( mSourceCombo, 1 );
