@@ -294,7 +294,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     msgContents = msg->asString();
     logContents = false;
   } else if ( field() == "<body>" ) {
-    msgContents = msg->bodyDecoded();
+    msgContents = msg->bodyToUnicode();
     logContents = false;
   } else if ( field() == "<any header>" ) {
     msgContents = msg->headerAsString();
