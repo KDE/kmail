@@ -3,6 +3,7 @@ IconName=kmail
 Comment=KMail
 Comment[be]=K Пошта
 Comment[sv]=Kmail
+Comment[xx]=xxKMailxx
 
 [new-mail-arrived]
 Name= New Mail arrived
@@ -19,6 +20,7 @@ Comment[ru]=Получена новая почта
 Comment[sk]=Prišla nová pošta
 Comment[sv]=Ny post har anlänt
 Comment[tr]=Yeni İleti Geldi
+Comment[xx]=xxNew Mail arrivedxx
 Comment[zh_CN]=新邮件到达
 default_sound=
 default_presentation=0
