@@ -404,9 +404,11 @@ void KMail::FolderDiaACLTab::load()
     KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
     if ( mUserRights == -1 ) { // error
       mLabel->setText( i18n( "Error retrieving user permissions." ) );
-    } else if ( mUserRights == 0 ) { // not listed yet
+    } else if ( mUserRights == 0 /* can't happen anymore*/ || folderImap->aclList().isEmpty() ) {
+      /* We either synced, or we read user rights from the config, so we can
+         assume the server supports acls and an empty list means we haven't
+         synced yet. */
       mLabel->setText( i18n( "Information not retrieved from server yet, please use \"Check Mail\"." ) );
-      // TODO: save mUserRights and mACLList into a config file so that this almost never happens
     } else {
       loadFinished( folderImap->aclList() );
     }
