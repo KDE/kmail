@@ -4716,9 +4716,10 @@ void KMLineEdit::editRecentAddresses()
 //-----------------------------------------------------------------------------
 void KMLineEdit::loadContacts()
 {
-    // was: KABC::AddressLineEdit::loadAddresses()
-    AddresseeLineEdit::loadContacts();
+  // was: KABC::AddressLineEdit::loadAddresses()
+  AddresseeLineEdit::loadContacts();
 
+  if ( KMKernel::self() ) {
     QStringList recent =
       RecentAddresses::self( KMKernel::config() )->addresses();
     QStringList::Iterator it = recent.begin();
@@ -4730,6 +4731,7 @@ void KMLineEdit::loadContacts()
       addr.insertEmail( email, true );
       addContact( addr, 120 ); // more weight than kabc entries and more than ldap results
     }
+  }
 }
 
 
