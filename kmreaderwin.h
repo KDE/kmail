@@ -213,6 +213,7 @@ protected slots:
   void slotAtmSave();
   void slotAtmProperties();
   void slotDelayedResize();
+  void slotTouchMessage();
 
 protected:
   /** Watch for palette changes */
@@ -350,6 +351,7 @@ protected:
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
   QTimer mHtmlTimer;
+  QTimer mDelayedMarkTimer;
   QStringList mHtmlQueue;
   QTextCodec *mCodec;
   bool mAutoDetectEncoding;
@@ -373,6 +375,7 @@ protected:
   bool    mLoadExternal;
   bool mShowColorbar;
   bool mShowCompleteMessage;
+  uint mDelayedMarkTimeout;
   QStringList mTempFiles;
   QStringList mTempDirs;
   KMMimePartTree* mMimePartTree;

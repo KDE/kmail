@@ -3755,6 +3755,22 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
     new QCheckBox( i18n("&Loop in the current folder when trying to find "
 			"unread messages"), this );
   vlay->addWidget( mLoopOnGotoUnread );
+  mJumpToUnread =
+    new QCheckBox( i18n("&Jump to first unread message when entering a "
+			"folder"), this );
+  vlay->addWidget( mJumpToUnread );
+
+  mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
+  mDelayedMarkTime = new KIntSpinBox( 0, 9999, 1, 0, 10, this);
+  mDelayedMarkTime->setSuffix( i18n(" sec") );
+  mDelayedMarkTime->setEnabled( false );
+
+  connect(mDelayedMarkAsRead, SIGNAL(toggled(bool)), mDelayedMarkTime,
+  	SLOT(setEnabled(bool)));
+
+  hlay = new QHBoxLayout( vlay );
+  hlay->addWidget( mDelayedMarkAsRead );
+  hlay->addWidget( mDelayedMarkTime );
 
   // "default mailbox format" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -3847,6 +3863,9 @@ void MiscPage::FoldersTab::setup() {
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   mLoopOnGotoUnread->setChecked( behaviour.readBoolEntry( "LoopOnGotoUnread", true ) );
+  mJumpToUnread->setChecked( behaviour.readBoolEntry( "JumpToUnread", false ) );
+  mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", false ) );
+  mDelayedMarkTime->setValue( behaviour.readNumEntry( "DelayedMarkTime", 0 ) );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
@@ -3873,6 +3892,10 @@ void MiscPage::FoldersTab::apply() {
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
   general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
   behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->isChecked() );
+  behaviour.writeEntry( "JumpToUnread", mJumpToUnread->isChecked() );
+  behaviour.writeEntry( "DelayedMarkAsRead", mDelayedMarkAsRead->isChecked() );
+  behaviour.writeEntry( "DelayedMarkTime", mDelayedMarkTime->value() );
+
   if ( mExpireAtExit->isChecked() )
     general.writeEntry( "when-to-expire", expireAtExit );
   else

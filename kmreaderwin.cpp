@@ -683,9 +683,16 @@ while( ( current = it.current() ) ) {
 
                   DwHeaders& headers( curNode->dwPart()->Headers() );
                   QCString ctypStr( headers.ContentType().AsString().c_str() );
-
                   bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
                   bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
+                  // we call signature verification
+                  // if we either *know* that it is signed mail or
+                  // if there is *neither* signed *nor* encrypted parameter
+                  if( !isEncrypted ) {
+                    if( isSigned )
+                      kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: opaque signed data" << endl;
+                    else
+                      kdDebug(5006) << "pkcs7 mime  -  type unknown  -  opaque signed data ?" << endl;
 
 
                   // Analyze "signTestNode" node to find/verify a signature.
@@ -896,6 +903,8 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
   	   this, SLOT(slotDelayedResize()) );
   connect( &mHtmlTimer, SIGNAL(timeout()),
            this, SLOT(sendNextHtmlChunk()) );
+  connect( &mDelayedMarkTimer, SIGNAL(timeout()),
+           this, SLOT(slotTouchMessage()) );
 
   mCodec = 0;
   mAutoDetectEncoding = true;
@@ -1085,6 +1094,7 @@ void KMReaderWin::readConfig(void)
 							   SmartAttmnt);
   mLoadExternal = config->readBoolEntry( "htmlLoadExternal", false );
   mViewer->setOnlyLocalReferences( !mLoadExternal );
+
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
   if( Kpgp::Module::getKpgp()->usePGP() )
@@ -1116,6 +1126,13 @@ void KMReaderWin::readConfig(void)
     mBodyFamily = KGlobalSettings::generalFont().family();
   }
   mViewer->setStandardFont(mBodyFamily);
+  }
+
+  {
+    KConfigGroupSaver saver(config, "Behaviour");
+    mDelayedMarkTimeout = 0;
+    if (config->readBoolEntry("DelayedMarkAsRead", false))
+      mDelayedMarkTimeout = config->readNumEntry( "DelayedMarkTime", 0 );
   }
 
   readColorConfig();
@@ -1296,6 +1313,8 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   // connect to the updates if we have hancy headers
 
+  mDelayedMarkTimer.stop();
+
   mMsg = aMsg;
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
   if (mMsg)
@@ -1315,12 +1334,15 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     updateReaderWinTimer.changeInterval( delay );
   else
     updateReaderWinTimer.start( 0, TRUE );
+
+  mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
   updateReaderWinTimer.stop();
+  mDelayedMarkTimer.stop();
   mMsg = 0;
 }
 
@@ -2865,6 +2887,15 @@ void KMReaderWin::slotDelayedResize()
 {
   //mViewer->widget()->setGeometry(0, 0, width(), height());
   mBox->setGeometry(0, 0, width(), height());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotTouchMessage()
+{
+  // mark message as read
+  if (mMsg)
+    mMsg->touch();
 }
 
 

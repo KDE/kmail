@@ -394,7 +394,7 @@ private:
   int mActionWhenDnD;
   int mActionWhenShiftDnD;
   int mActionWhenCtrlDnD;
-
+  bool mJumpToUnread;
 };
 
 #endif

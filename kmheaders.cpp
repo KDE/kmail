@@ -504,6 +504,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortInfo.dirty = TRUE;
   mSortInfo.fakeSort = 0;
   mSortInfo.removed = 0;
+  mJumpToUnread = false;
   setLineWidth(0);
 
 #ifdef SCORING
@@ -702,6 +703,7 @@ void KMHeaders::readConfig (void)
   {
     KConfigGroupSaver saver(config, "Behaviour");
     mLoopOnGotoUnread = config->readBoolEntry( "LoopOnGotoUnread", true );
+    mJumpToUnread = config->readBoolEntry( "JumpToUnread", false );
     // read D'n'D behavior settings
     mActionWhenDnD = config->readNumEntry("DnD_action_normal", KMMsgDnDActionASK );
     if ( mActionWhenDnD < 0 || mActionWhenDnD > 2 )
@@ -1813,7 +1815,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     kdDebug(5006) << "new message should be current!" << endl;
     setSelected( currentItem(), TRUE );
     setCurrentMsg( mFolder->find( curMsg ) );
-    highlightMessage( currentItem(), true);
+    highlightMessage( currentItem(), false);
   }
   else
     emit selected( 0 );
@@ -2317,7 +2319,6 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
   if (!msg->transferInProgress())
   {
     emit activated(mFolder->getMsg(idx));
-    if (idx >= 0) setMsgRead(idx);
   }
 
 //  if (kernel->folderIsDraftOrOutbox(mFolder))
@@ -2455,7 +2456,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
     // Handle space key press
     if (cur->isSelectable() && e->ascii() == ' ' ) {
 	setSelected( cur, !cur->isSelected() );
-	highlightMessage( cur, true);
+	highlightMessage( cur, false);
 	return;
     }
 
@@ -2593,7 +2594,7 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 
 void KMHeaders::highlightMessage(QListViewItem* i)
 {
-    highlightMessage( i, true );
+    highlightMessage( i, false );
 }
 
 //-----------------------------------------------------------------------------
@@ -2706,7 +2707,7 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
     setCurrentItem( mItems[msgIdx] );
     setSelected( mItems[msgIdx], TRUE );
     if (unchanged)
-       highlightMessage( mItems[msgIdx], true);
+       highlightMessage( mItems[msgIdx], false);
   }
 }
 
@@ -3315,7 +3316,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    new_kci->setItem(mItems[new_kci->id()] = khi);
 	    if(new_kci->hasChildren())
 		s.enqueue(new_kci);
-	    if(set_selection && mFolder->getMsgBase(new_kci->id())->status() == KMMsgStatusNew)
+	    if(set_selection && mFolder->getMsgBase(new_kci->id())->status() == KMMsgStatusNew ||
+		set_selection && mFolder->getMsgBase(new_kci->id())->status() == KMMsgStatusUnread)
 		unread_exists = true;
 	}
     } while(!s.isEmpty());
@@ -3343,6 +3345,18 @@ bool KMHeaders::readSortOrder(bool set_selection)
     START_TIMER(selection);
     if(set_selection) {
 	if (unread_exists) {
+	    if (mJumpToUnread) { // search unread messages
+		KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
+		while (item) {
+		    if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusUnread) {
+			first_unread = item->msgId();
+			break;
+		    }
+		    item = static_cast<KMHeaderItem*>(item->itemBelow());
+		}
+	    }
+
+	    // search new messages
 	    KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
 	    while (item) {
 		if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusNew) {
@@ -3354,11 +3368,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	}
 
 	if(first_unread == -1 ) {
-	    setMsgRead(mCurrentItem);
 	    setTopItemByIndex(mTopItem);
 	    setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
 	} else {
-	    setMsgRead(first_unread);
 	    setCurrentItemByIndex(first_unread);
 	    makeHeaderVisible();
 	    center( contentsX(), itemPos(mItems[first_unread]), 0, 9.0 );

@@ -786,10 +786,13 @@ protected:
   QCheckBox    *mEmptyFolderConfirmCheck;
   QCheckBox    *mWarnBeforeExpire;
   QCheckBox    *mLoopOnGotoUnread;
+  QCheckBox    *mJumpToUnread;
   QComboBox    *mMailboxPrefCombo;
   QCheckBox    *mCompactOnExitCheck;
   QCheckBox    *mEmptyTrashCheck;
   QCheckBox    *mExpireAtExit;
+  QCheckBox    *mDelayedMarkAsRead;
+  KIntSpinBox  *mDelayedMarkTime;
   QButtonGroup *mActionWhenDnD;
   QButtonGroup *mActionWhenShiftDnD;
   QButtonGroup *mActionWhenCtrlDnD;
