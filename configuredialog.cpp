@@ -1093,9 +1093,9 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   mConfirmSendCheck = new QCheckBox( i18n("Confirm &before send"), group );
   glay->addMultiCellWidget( mConfirmSendCheck, 0, 0, 0, 1 );
 
-  // "send mail in outbox on check" check box:
+  // "send messages in outbox on check" check box:
   mSendOutboxCheck =
-    new QCheckBox(i18n("Send mail in Outbox &folder on check"), group );
+    new QCheckBox(i18n("Send messages in Outbox &folder on check"), group );
   glay->addMultiCellWidget( mSendOutboxCheck, 1, 1, 0, 1 );
 
   // "default send method" combo:
@@ -3148,9 +3148,9 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  label = new QLabel( i18n("This list is checked for every outgoing mail from "
-			   "the top to the bottom for a charset that contains "
-			   "all required characters."), this );
+  label = new QLabel( i18n("This list is checked for every outgoing message "
+                           "from the top to the bottom for a charset that "
+                           "contains all required characters."), this );
   label->setAlignment( WordBreak);
   vlay->addWidget( label );
 
@@ -3499,12 +3499,12 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  // "HTML Mails" group box:
-  group = new QVGroupBox( i18n( "HTML Mails" ), this );
+  // "HTML Messages" group box:
+  group = new QVGroupBox( i18n( "HTML Messages" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
-  mExternalReferences = new QCheckBox( i18n("Allow mails to load e&xternal "
+  mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
 					    "references from the net" ), group );
   label = new QLabel( i18n("<qt><b>WARNING:</b> Allowing HTML in email may "
 			   "increase the risk that your system will be "
@@ -3531,7 +3531,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   vlay->addStretch( 10 ); // spacer
 
   // and now: adding QWhat'sThis all over the place:
-  msg = i18n( "<qt><p>Emails sometimes come in both formats. This option "
+  msg = i18n( "<qt><p>Messages sometimes come in both formats. This option "
 	      "controls whether you want the HTML part or the plain text "
 	      "part to be displayed.</p>"
 	      "<p>Displaying the HTML part makes the message look better, "
@@ -3541,7 +3541,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "formatting, but makes it almost <em>impossible</em> "
 	      "to exploit security holes in the HTML renderer (Konqueror).</p>"
 	      "<p>The option below guards against one common misuse of HTML "
-	      "mails, but it cannot guard against security issues that were "
+	      "messages, but it cannot guard against security issues that were "
 	      "not known at the time this version of KMail was written.</p>"
 	      "<p>It is therefore advisable to <em>not</em> prefer HTML to "
 	      "plain text.</p>"
@@ -3550,14 +3550,14 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   QWhatsThis::add( mHtmlMailCheck, msg );
 
   msg = i18n( "<qt><p>Some mail advertisements are in HTML and contain "
-	      "references to e.g. images that these advertisements employ to "
-	      "find out that you have read their mail (\"web bugs\").</p>"
+	      "references to e.g. images that the advertisers employ to "
+	      "find out that you have read their message (\"web bugs\").</p>"
 	      "<p>There's no valid reason to load images off the net like "
 	      "this, since the sender can always attach the needed images "
-	      "directly to the mail.</p>"
+	      "directly to the message.</p>"
 	      "<p>To guard from such a misuse of the HTML displaying feature "
-	      "of kmail, this option is <em>disabled</em> by default.</p>"
-	      "<p>If you nonetheless wish to e.g. view images in HTML mails "
+	      "of KMail, this option is <em>disabled</em> by default.</p>"
+	      "<p>If you nonetheless wish to e.g. view images in HTML messages "
 	      "that were not attached to it, you can enable this option, but "
 	      "you should be aware of the possible problem.</p></qt>" );
   QWhatsThis::add( mExternalReferences, msg );
@@ -3566,7 +3566,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "of delivery- and read confirmations (\"receipts\").</p>"
 	      "<p>Returning these confirmations (so-called <em>receipts</em>) "
 	      "makes it easy for the sender to track whether and - more "
-	      "importantly - <em>when</em> you read his/her mail.</p>"
+	      "importantly - <em>when</em> you read his/her message.</p>"
 	      "<p>You can return <em>delivery</em> confirmations in a "
 	      "fine-grained manner using the \"confirm delivery\" filter "
 	      "action. We advise against issuing <em>read</em> confirmations "
@@ -3722,7 +3722,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   vlay->addWidget( mWarnBeforeExpire );
   mLoopOnGotoUnread =
     new QCheckBox( i18n("&Loop in the current folder when trying to find "
-			"unread mail"), this );
+			"unread messages"), this );
   vlay->addWidget( mLoopOnGotoUnread );
 
   // "default mailbox format" combo + label: stretch 0
@@ -3783,15 +3783,15 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 		      "the default for local folders:</p>"
 		      "<p><b>mbox:</b> KMail's mail "
 		      "folders are represented by a single file each. "
-		      "Individual mails are separated from each other by a "
+		      "Individual messages are separated from each other by a "
 		      "line starting with \"From \". This saves space on "
-		      "disk, but may be less robust, e.g. when moving mails "
+		      "disk, but may be less robust, e.g. when moving messages "
 		      "between folders.</p>"
 		      "<p><b>maildir:</b> KMail's mail folders are "
-		      "represented by real folders on disk. Individual mails "
+		      "represented by real folders on disk. Individual messages "
 		      "are separate files. This may waste a bit of space on "
 		      "disk, but should be more robust, e.g. when moving "
-		      "mails between folders.</p></qt>");
+		      "messages between folders.</p></qt>");
   QWhatsThis::add( mMailboxPrefCombo, msg );
   QWhatsThis::add( label, msg );
 
