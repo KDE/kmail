@@ -430,7 +430,7 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
         folder->setAccount(mAccount);
         folder->setImapPath("/INBOX/");
         folder->setLabel(i18n("inbox"));
-        folder->close();
+        if (!node) folder->close();
         folder->listDirectory(NULL);
         kernel->imapFolderMgr()->contentsChanged();
       }
