@@ -48,7 +48,7 @@ public:
 		    KMPaintInfo *aPaintInfo )
     : QListViewItem( parent, i18n("Mail") ),
       folder( 0 ),
-      unread( 0 ),
+      unread( QString::null ),
       mPaintInfo( aPaintInfo )
     {}
 
@@ -58,7 +58,7 @@ public:
 		    KMPaintInfo *aPaintInfo )
     : QListViewItem( parent, folder->label() ),
       folder( folder ),
-      unread( 0 ),
+      unread( QString::null ),
       mPaintInfo( aPaintInfo )
     {}
 
@@ -104,7 +104,7 @@ void paintCell( QPainter * p, const QColorGroup & cg,
 
   QString t = text( column );
   if ( !t.isEmpty() ) {
-    if( folder && folder->countUnread() > 0 ) {
+    if( folder && (folder->countUnread() > 0) ) {
       QFont f = p->font();
       f.setWeight(QFont::Bold);
       p->setFont(f);
@@ -116,7 +116,7 @@ void paintCell( QPainter * p, const QColorGroup & cg,
       p->setPen( mPaintInfo->colUnread );
     if (column == 0)
       p->drawText( br.right(), 0, width-marg-br.right(), height(),
-		   align | AlignVCenter, unread);
+		   align | AlignVCenter, unread );
 
   }
 }
@@ -157,7 +157,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 
   initMetaObject();
 
-  // Espen 2000-05-14: Getting rid of thick ugly frames 
+  // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
 
   mUpdateTimer = NULL;
@@ -253,7 +253,7 @@ void KMFolderTree::readConfig (void)
     mPaintInfo.pixmapOn = TRUE;
     mPaintInfo.pixmap = QPixmap( pixmapFile );
   }
- 
+
   readColorConfig();
 
   // Custom/Ssystem font support
@@ -498,7 +498,19 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   if (!folder || folder->isDir()) {
     emit folderSelected(0); // Root has been selected
   }
-  else emit folderSelected(folder);
+  else {
+      QString extendedName;
+      emit folderSelected(folder);
+      if (folder && (folder->countUnread() > 0) ) {
+	  QString num;
+	  num.setNum(folder->countUnread());
+	  extendedName = " (" + num + ")";
+      }
+      if (extendedName != fti->unread) {
+	  fti->unread = extendedName;
+	  fti->repaint();
+      }	
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -581,7 +593,7 @@ void KMFolderTree::addChildFolder()
   if (fti->folder)
     dir = fti->folder->child();
 
-  KMFolderDialog *d = 
+  KMFolderDialog *d =
     new KMFolderDialog(0, dir, topLevelWidget(), i18n("Create Child Folder") );
 
   if (d->exec()) {
@@ -828,7 +840,7 @@ void KMFolderTree::keyPressEvent( QKeyEvent * e )
     }
 
     //Seems to behave sensibly even if ShiftButton is down, suprising
-    if (cntrl) {  
+    if (cntrl) {
       disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 		 this,SLOT(doFolderSelected(QListViewItem*)));
       switch (e->key()) {

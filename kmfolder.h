@@ -6,7 +6,7 @@
  * Major changes:
  *
  * 23-10-97:  Stefan Taferner <taferner@kde.org>
- *   Source incompatible change! Index of messages now starts at zero 
+ *   Source incompatible change! Index of messages now starts at zero
  *   instead of one.
  *   msgSubject(), msgFrom(), msgDate(), and msgStatus() are gone. Use
  *   getMsgBase()->subject() etc. instead.
@@ -124,7 +124,7 @@ public:
   /** Number of messages in this folder. */
   virtual int count() const { return mMsgList.count(); }
 
-  /** Number of new or unread messages in this folder. 
+  /** Number of new or unread messages in this folder.
     Rather slow (count loop) */
   virtual int countUnread();
 
@@ -151,7 +151,7 @@ public:
   virtual void markNewAsUnread();
 
   /** Create a new folder with the name of this object and open it.
-      Returns zero on success and an error code equal to the 
+      Returns zero on success and an error code equal to the
       c-library fopen call otherwise. */
   virtual int create();
 
@@ -161,7 +161,7 @@ public:
   virtual int remove();
 
   /** Delete contents of folder. Forces a close *but* opens the
-    folder again afterwards. Returns errno(3) error code or zero on 
+    folder again afterwards. Returns errno(3) error code or zero on
     success. */
   virtual int expunge();
 
@@ -173,7 +173,7 @@ public:
     and an errno on failure. */
   virtual int compact();
 
-  /** Physically rename the folder. Returns zero on success and an errno 
+  /** Physically rename the folder. Returns zero on success and an errno
     on failure. */
   virtual int rename(const QString& newName, KMFolderDir *aParent = 0);
 
@@ -213,7 +213,7 @@ public:
   bool hasAccounts() const { return (mAcctList != NULL); }
 
   /** Tell the folder that a header field that is usually used for
-    the index (subject, from, ...) has changed of given message. 
+    the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
   virtual void headerOfMsgChanged(const KMMsgBase*);
 
@@ -261,8 +261,8 @@ protected:
   /** Read index header. Called from within readIndex(). */
   virtual bool readIndexHeader();
 
-  /** Create index file from messages file and fill the message-info list 
-      mMsgList. Returns 0 on success and an errno value (see fopen) on 
+  /** Create index file from messages file and fill the message-info list
+      mMsgList. Returns 0 on success and an errno value (see fopen) on
       failure. */
   virtual int createIndexFromContents();
 
@@ -289,10 +289,10 @@ protected:
 
   /* Write the config file */
   virtual void writeConfig();
-  
+
   /* Read the config file */
   virtual void readConfig();
-      
+
   FILE* mStream; // file with the messages
   FILE* mIndexStream; // table of contents file
   KMMsgList mMsgList; // list of index entries or messages
@@ -306,7 +306,7 @@ protected:
   QString mWhoField; // name of the field that is used for "From" in listbox
   bool mIsSystemFolder;
   KMAcctList* mAcctList;
-  long unreadMsgs; // number of unread messages, -1 if not yet set
+  int mUnreadMsgs; // number of unread messages, -1 if not yet set
   bool needsCompact; //sven: true if on destruct folder needs to be compacted.
   KMFolderDir* mChild;
 };

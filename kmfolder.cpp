@@ -60,7 +60,7 @@ static int _rename(const char* oldname, const char* newname)
 
 
 //-----------------------------------------------------------------------------
-KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) : 
+KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   KMFolderInherited(aParent, aName), mMsgList(INIT_MSGS)
 {
   //-- in case that the compiler has problems with the static version above:
@@ -80,7 +80,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mType           = "plain";
   mAcctList       = NULL;
   mDirty          = FALSE;
-  unreadMsgs      = -1;
+  mUnreadMsgs      = -1;
   needsCompact    = FALSE;
   mChild          = 0;
 }
@@ -137,7 +137,7 @@ const QString KMFolder::subdirLocation() const
   sLocation += name();
   sLocation += ".directory";
 
-  return sLocation;  
+  return sLocation;
 }
 
 //-----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ KMFolderDir* KMFolder::createChildFolder()
   }
 
   if (!ok) {
-    QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno)); 
+    QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno));
     KMessageBox::information(0,i18n("Failed to create directory") + wmsg);
     return 0;
   }
@@ -183,7 +183,7 @@ int KMFolder::open()
 
   mFilesLocked = FALSE;
   mStream = fopen(location(), "r+"); // messages file
-  if (!mStream) 
+  if (!mStream)
   {
     kdDebug() << "Cannot open folder `" << (const char*)location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
@@ -196,7 +196,7 @@ int KMFolder::open()
     {
       QString str;
       mIndexStream = NULL;
-      str = i18n("Folder `%1' changed. Recreating index.") 
+      str = i18n("Folder `%1' changed. Recreating index.")
 		  .arg(name());
       emit statusMsg(str);
     }
@@ -272,7 +272,7 @@ void KMFolder::close(bool aForced)
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
 
-  if (mAutoCreateIndex) 
+  if (mAutoCreateIndex)
   {
     if (mDirty) writeIndex();
     else sync();
@@ -289,6 +289,7 @@ void KMFolder::close(bool aForced)
   mStream      = NULL;
   mIndexStream = NULL;
   mFilesLocked = FALSE;
+  mUnreadMsgs  = -1;
 
   mMsgList.reset(INIT_MSGS);
 }
@@ -319,7 +320,7 @@ int KMFolder::lock()
   {
     rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
 
-    if (rc < 0) 
+    if (rc < 0)
     {
       kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': " << strerror(errno) << endl;
       rc = errno;
@@ -414,7 +415,7 @@ int KMFolder::createIndexFromContents()
     if (!fgets(line, MAX_LINE, mStream)) atEof = TRUE;
 
     if (atEof ||
-	(strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 && 
+	(strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 &&
 	 regexp.match(line) >= 0))
     {
       size = pos - offs;
@@ -469,7 +470,7 @@ int KMFolder::createIndexFromContents()
       while (line [i]=='\t' || line [i]==' ') i++;
       if (line [i] < ' ' && line [i]>0) inHeader = FALSE;
       else if (lastStr) *lastStr += line + i;
-    } 
+    }
     else lastStr = NULL;
 
     if (inHeader && (line [0]=='\n' || line [0]=='\r'))
@@ -477,8 +478,8 @@ int KMFolder::createIndexFromContents()
     if (!inHeader) continue;
 
     /* -sanders Make all messages read when auto-recreating index
-    if ((needStatus & 1) && strncasecmp(line, "Status:", 7) == 0 && 
-	isblank(line[7])) 
+    if ((needStatus & 1) && strncasecmp(line, "Status:", 7) == 0 &&
+	isblank(line[7]))
     {
       for(i=0; i<4 && line[i+8] > ' '; i++)
 	status[i] = line[i+8];
@@ -630,7 +631,7 @@ void KMFolder::readIndex()
   mMsgList.clear();
   if (!readIndexHeader()) return;
 
-  unreadMsgs = 0;
+  mUnreadMsgs = 0;
   mDirty = FALSE;
   mHeaderOffset = ftell(mIndexStream);
 
@@ -642,7 +643,7 @@ void KMFolder::readIndex()
 
     mi = new KMMsgInfo(this);
     mi->fromIndexString(line);
-    if (mi->status() == KMMsgStatusDeleted) 
+    if (mi->status() == KMMsgStatusDeleted)
     {
       delete mi;  // skip messages that are marked as deleted
       mDirty = TRUE;
@@ -658,7 +659,7 @@ void KMFolder::readIndex()
 #endif
     if ((mi->status() == KMMsgStatusNew) ||
 	(mi->status() == KMMsgStatusUnread))
-      ++unreadMsgs;
+      ++mUnreadMsgs;
     mMsgList.append(mi);
   }
 }
@@ -725,11 +726,11 @@ void KMFolder::removeMsg(int idx)
 
   if (mb->status()==KMMsgStatusUnread ||
       mb->status()==KMMsgStatusNew) {
-    --unreadMsgs;
+    --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
 
-  if (!mQuiet) 
+  if (!mQuiet)
     emit msgRemoved(idx, msgIdMD5);
   else
     mChanged = TRUE;
@@ -753,7 +754,7 @@ KMMessage* KMFolder::take(int idx)
   msg = (KMMessage*)mMsgList.take(idx);
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew) {
-    --unreadMsgs;
+    --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
   msg->setParent(NULL);
@@ -792,7 +793,7 @@ KMMsgInfo* KMFolder::unGetMsg(int idx)
 
   if(!(idx >= 0 && idx <= mMsgList.high()))
     return 0L;
-  
+
   mb = mMsgList[idx];
   if (!mb) return NULL;
 
@@ -895,7 +896,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     if (msgParent==this)
       {
 	if (name() == "outbox") //special case for Edit message.
-	  {    
+	  {
 	    // debug ("Editing message in outbox");
 	    editing = true;
 	  }
@@ -928,7 +929,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
       // write message to folder file
       fseek(mStream, -2, SEEK_END);
       fread(endStr, 1, 2, mStream); // ensure separating empty line
-      if (ftell(mStream) > 0 && endStr[0]!='\n') 
+      if (ftell(mStream) > 0 && endStr[0]!='\n')
 	{
 	  if (endStr[1]!='\n')
 	    {
@@ -941,12 +942,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   fseek(mStream,0,SEEK_END); // this is needed on solaris and others
   revert = ftell(mStream);
   int error = ferror(mStream);
-  if (error) 
+  if (error)
     {
       if (opened) close();
       return error;
     }
-      
+
   fprintf(mStream, "From %s %s\n", (const char *)aMsg->fromEmail(),
           (const char *)aMsg->dateShortStr());
   offs = ftell(mStream);
@@ -978,7 +979,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   if (aMsg->status()==KMMsgStatusUnread ||
       aMsg->status()==KMMsgStatusNew) {
-    ++unreadMsgs;
+    ++mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
 
@@ -995,7 +996,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
     revert = ftell(mIndexStream);
-    fprintf(mIndexStream, "%s\n", (const char*)aMsg->asIndexString()); 
+    fprintf(mIndexStream, "%s\n", (const char*)aMsg->asIndexString());
     fflush(mIndexStream);
     error = ferror(mIndexStream);
     if (error) {
@@ -1017,7 +1018,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
-  if (!mQuiet) 
+  if (!mQuiet)
     emit msgAdded(idx);
   else
     mChanged = TRUE;
@@ -1028,7 +1029,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   // Return success!
   // (Don't return status of stream, it may have been closed already.)
   return 0;
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -1050,7 +1051,7 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   oldName = name();
   oldParent = parent();
   if (aParent)
-    setParent( aParent );    
+    setParent( aParent );
 
   setName(aName);
   newLoc = location();
@@ -1075,7 +1076,7 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 	}
     }
   }
-  
+
   if (aParent) {
     if (oldParent->findRef( this ) != -1)
       oldParent->take();
@@ -1086,7 +1087,7 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
       aParent->inSort( mChild );
     }
   }
-  
+
   if (openCount > 0)
   {
     open();
@@ -1139,11 +1140,11 @@ int KMFolder::expunge()
     mOpenCount = openCount;
   }
 
-  unreadMsgs = 0;
+  mUnreadMsgs = 0;
   emit numUnreadMsgsChanged( this );
-  if (mAutoCreateIndex) 
+  if (mAutoCreateIndex)
     writeConfig();
-  if (!mQuiet) 
+  if (!mQuiet)
     emit changed();
   else
     mChanged = TRUE;
@@ -1166,7 +1167,7 @@ int KMFolder::compact()
     return 0;
   kdDebug() << "Compacting " << endl;
   tempName = "." + name();
-  
+
   tempName += ".compacted";
   unlink(path() + "/" + tempName);
   tempFolder = new KMFolder(parent(), tempName);   //sven: we create it
@@ -1201,7 +1202,7 @@ int KMFolder::compact()
   close(TRUE);
   mMsgList.clear(TRUE);
 
-  if (!rc) { 
+  if (!rc) {
     _rename(tempName, location());
     _rename(tempFolder->indexLocation(), indexLocation());
   }
@@ -1221,7 +1222,7 @@ int KMFolder::compact()
   }
   quiet(FALSE);
 
-  if (!mQuiet) 
+  if (!mQuiet)
     emit changed();
   else
     mChanged = TRUE;
@@ -1281,26 +1282,17 @@ const QString KMFolder::label() const
 //-----------------------------------------------------------------------------
 int KMFolder::countUnread()
 {
-  register int  i;
-
-  if (unreadMsgs > -1)
-    return unreadMsgs;
+  if (mUnreadMsgs > -1)
+    return mUnreadMsgs;
 
   readConfig();
 
-  if (unreadMsgs > -1)
-    return unreadMsgs;
+  if (mUnreadMsgs > -1)
+    return mUnreadMsgs;
 
-  open();
-  for (i=0, unreadMsgs=0; i<mMsgList.high(); i++)
-  {
-    if (mMsgList[i]->status()==KMMsgStatusUnread ||
-	mMsgList[i]->status()==KMMsgStatusNew)
-      unreadMsgs++;
-  }
+  open(); // will update unreadMsgs
   close();
-
-  return unreadMsgs;
+  return mUnreadMsgs;
 }
 
 //-----------------------------------------------------------------------------
@@ -1318,7 +1310,7 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 
   if (deltaUnread != 0) {
     mDirty = TRUE;
-    unreadMsgs += deltaUnread;
+    mUnreadMsgs += deltaUnread;
     emit numUnreadMsgsChanged( this );
   }
 }
@@ -1328,7 +1320,7 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg)
 {
   int idx = mMsgList.find((KMMsgBasePtr)aMsg);
-  if (idx >= 0 && !mQuiet) 
+  if (idx >= 0 && !mQuiet)
     emit msgHeaderChanged(idx);
   else
     mChanged = TRUE;
@@ -1368,7 +1360,8 @@ void KMFolder::readConfig()
 {
   KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
-  unreadMsgs = config->readNumEntry("UnreadMsgs", -1);
+  if (mUnreadMsgs == -1)
+    mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
 }
 
 //-----------------------------------------------------------------------------
@@ -1385,12 +1378,6 @@ void KMFolder::correctUnreadMsgsCount()
   int i;
 
   open();
-  for (i=0, unreadMsgs=0; i<mMsgList.high(); i++)
-  {
-    if (mMsgList[i]->status()==KMMsgStatusUnread ||
-	mMsgList[i]->status()==KMMsgStatusNew)
-      unreadMsgs++;
-  }
   close();
   emit numUnreadMsgsChanged( this );
 }
