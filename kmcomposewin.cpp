@@ -167,7 +167,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
   mEdtFrom = new KMLineEdit(this,false,mMainWidget, "fromLine");
-  mEdtReplyTo = new KMLineEdit(this,false,mMainWidget, "replyToLine");
+  mEdtReplyTo = new KMLineEdit(this,true,mMainWidget, "replyToLine");
   mEdtTo = new KMLineEdit(this,true,mMainWidget, "toLine");
   mEdtCc = new KMLineEdit(this,true,mMainWidget, "ccLine");
   mEdtBcc = new KMLineEdit(this,true,mMainWidget, "bccLine");
