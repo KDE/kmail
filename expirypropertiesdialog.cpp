@@ -117,7 +117,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   // Load the values from the folder
   bool expiryGloballyOn = mFolder->isAutoExpire();
   int daysToExpireRead, daysToExpireUnread;
-  mFolder->daysToExpire( daysToExpireRead, daysToExpireUnread );
+  mFolder->daysToExpire( daysToExpireUnread, daysToExpireRead);
 
   if ( expiryGloballyOn 
       && mFolder->getReadExpireUnits() != expireNever 
