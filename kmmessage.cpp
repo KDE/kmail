@@ -4351,7 +4351,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 //-----------------------------------------------------------------------------
 void KMMessage::updateAttachmentState( DwBodyPart* part )
 {
-  static const QCString sSMIMEData("smime.p7s");
+  static const char cSMIMEData[] = "smime.p7s";
   
   if ( !part )
     part = getFirstDwBodyPart();
@@ -4364,7 +4364,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
   if ( part->hasHeaders() &&
        part->Headers().HasContentDisposition() &&
        !part->Headers().ContentDisposition().Filename().empty() &&
-       sSMIMEData != QCString(part->Headers().ContentDisposition().Filename().c_str()).lower() )
+       QCString(part->Headers().ContentDisposition().Filename().c_str()).lower() != cSMIMEData )
   {
     setStatus( KMMsgStatusHasAttach );
     return;
