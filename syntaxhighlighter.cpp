@@ -61,7 +61,7 @@ MessageHighlighter::~MessageHighlighter()
 int MessageHighlighter::highlightParagraph( const QString &text, int )
 {
     QString simplified = text;
-    simplified = simplified.replace( "\s", QString::null ).replace( "|", ">" );
+    simplified = simplified.replace( QRegExp( "\\s" ), "" ).replace( "|", ">" );
     while ( simplified.startsWith( ">>>>" ) )
 	simplified = simplified.mid(3);
     if	( simplified.startsWith( ">>>" ) || simplified.startsWith( "> >	>" ) )
