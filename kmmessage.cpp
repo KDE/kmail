@@ -1310,6 +1310,14 @@ KMMessage* KMMessage::createForward(void)
   return msg;
 }
 
+QString KMMessage::forwardSubject() const {
+  return cleanSubject( sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
+}
+
+QString KMMessage::replySubject() const {
+  return cleanSubject( sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
+}
+
 static const struct {
   const char * dontAskAgainID;
   bool         canDeny;

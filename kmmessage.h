@@ -329,6 +329,12 @@ public:
   QString cleanSubject(const QStringList& prefixRegExps, bool replace,
 		       const QString& newPrefix) const;
 
+  /** Return this mails subject, formatted for "forward" mails */
+  QString forwardSubject() const;
+
+  /** Return this mails subject, formatted for "reply" mails */
+  QString replySubject() const;
+
   /** Get or set the 'X-Mark' header field */
   virtual QString xmark(void) const;
   virtual void setXMark(const QString& aStr);
