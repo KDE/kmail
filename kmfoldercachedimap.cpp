@@ -69,6 +69,7 @@ using KMail::ListJob;
 #include <qvaluelist.h>
 #include "annotationjobs.h"
 using namespace KMail;
+#include <globalsettings.h>
 
 #define UIDCACHE_VERSION 1
 
@@ -1747,8 +1748,13 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
   if ( (*it).parent != folder() ) return; // Shouldn't happen
   AnnotationJobs::GetAnnotationJob* annjob = static_cast<AnnotationJobs::GetAnnotationJob *>( job );
   if ( annjob->error() ) {
-    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) // that's when the imap server doesn't support annotations
+    if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION ) {
+      // that's when the imap server doesn't support annotations
+      if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML
+           && GlobalSettings::theIMAPResourceAccount() == mAccount->id() )
+        KMessageBox::error( 0, i18n( "The IMAP server %1 doesn't have support for imap annotations. The XML storage cannot be used on this server, please re-configure KMail differently" ).arg( mAccount->host() ) );
       mAccount->setHasNoAnnotationSupport();
+    }
     else
       kdWarning(5006) << "slotGetAnnotationResult: " << job->errorString() << endl;
   } else {
