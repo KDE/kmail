@@ -642,9 +642,11 @@ void KMailICalIfaceImpl::readConfig()
   KMFolderType folderType;
   KMFolder* folderParent = kmkernel->findFolderById( parentName );
   if( folderParent == 0 ) {
-    // Maybe nothing was configured?
-    folderParentDir = &(kmkernel->folderMgr()->dir());
-    folderType = KMFolderTypeMaildir;
+    // Parent folder not found. It was probably deleted. The user will have to
+    // configure things again.
+    kdWarning(5006) << "Groupware folder " << parentName << " not found. Groupware functionality disabled" << endl;
+    mUseResourceIMAP = false;
+    return;
   } else {
     folderParentDir = folderParent->createChildFolder();
     folderType = folderParent->folderType();
