@@ -4,6 +4,7 @@
 #include "kmfiltermgr.h"
 
 // other kmail headers
+#include "kmfilter.h"
 #include "kmfilterdlg.h"
 
 // other KDE headers

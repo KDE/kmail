@@ -15,6 +15,7 @@ class KMFolder;
 class KMFolderDir;
 class KIntNumInput;
 class KIconButton;
+class IdentityCombo;
 template <typename T> class QGuardedPtr;
 
 /** Dialog for handling the properties of a mail folder
@@ -61,7 +62,7 @@ protected:
 
   QCheckBox *holdsMailingList, *markAnyMessage, *expireFolder;
   QLineEdit *mailingListPostAddress;
-  QComboBox *identity;
+  IdentityCombo *identity;
   QGroupBox *expGroup, *mtGroup;
 //   QLineEdit *mailingListAdminAddress;
 

@@ -323,7 +323,7 @@ public:
   virtual void correctUnreadMsgsCount();
 
   /** Returns a string that can be used to identify this folder */
-  virtual QString idString();
+  virtual QString idString() const;
 
   uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
   

@@ -13,6 +13,7 @@
 #include <kstandarddirs.h>
 #include <qutf7codec.h>
 #include <kio/job.h>
+#include <kprocess.h>
 
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
@@ -30,7 +31,9 @@
 #include "kmversion.h"
 #include "kmrecentaddr.h"
 #include "kmmsgdict.h"
+#include "kmmessage.h"
 #include "kmidentity.h"
+#include "identitymanager.h"
 #include <kwin.h>
 
 #include <X11/Xlib.h>
@@ -43,7 +46,8 @@ KMKernel *KMKernel::mySelf = 0;
 /*                     Constructor and destructor                   */
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
-  QObject(parent, name),  DCOPObject("KMailIface")
+  QObject(parent, name),  DCOPObject("KMailIface"),
+  mIdentityManager(0)
 {
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
@@ -840,6 +844,43 @@ void KMKernel::slotResult(KIO::Job *job)
   mPutJobs.remove(it);
 }
 
+void KMKernel::slotCollectStdOut( KProcess * proc, char * buffer, int len )
+{
+  QByteArray & ba = mStdOutCollection[proc];
+  // append data to ba:
+  int oldsize = ba.size();
+  ba.resize( oldsize + len );
+  qmemmove( ba.begin() + oldsize, buffer, len );
+}
+
+void KMKernel::slotCollectStdErr( KProcess * proc, char * buffer, int len )
+{
+  QByteArray & ba = mStdErrCollection[proc];
+  // append data to ba:
+  int oldsize = ba.size();
+  ba.resize( oldsize + len );
+  qmemmove( ba.begin() + oldsize, buffer, len );
+}
+
+QByteArray KMKernel::getCollectedStdOut( KProcess * proc )
+{
+  QByteArray result = mStdOutCollection[proc];
+  mStdOutCollection.remove(proc);
+  return result;
+}
+
+QByteArray KMKernel::getCollectedStdErr( KProcess * proc )
+{
+  QByteArray result = mStdErrCollection[proc];
+  mStdErrCollection.remove(proc);
+  return result;
+}
+
+void KMKernel::slotRequestConfigSync() {
+  // ### FIXME: delay as promised in the kdoc of this function ;-)
+  kapp->config()->sync();
+}
+
 void KMKernel::notClosedByUser()
 {
   closed_by_user = false;
@@ -891,28 +932,29 @@ KMKernel::canExpire() {
 /**
  * Returns true if the folder is either the outbox or one of the drafts-folders
  */
-bool KMKernel::folderIsDraftOrOutbox(KMFolder * folder)
+bool KMKernel::folderIsDraftOrOutbox(const KMFolder * folder)
 {
-	bool test = false;
-	
-	if (folder == the_outboxFolder || folder == the_draftsFolder)
-	{
-		test = true;
-		return test;
-	}	
+  assert( folder );
+  if ( folder == the_outboxFolder || folder == the_draftsFolder )
+    return true;
 
-	// search the identities if the folder matches the drafts-folder
-	QStringList identities = KMIdentity::identities();
-	QStringList::Iterator it = identities.begin();
-	for( ; it != identities.end(); ++it )
-	{
-		KMIdentity ident( *it );
-		ident.readConfig();
-		if (!ident.drafts().isEmpty() &&
-			ident.drafts() == folder->idString()) test = true;
-	}
+  QString idString = folder->idString();
+  if ( idString.isEmpty() ) return false;
 
-	return test;
+  // search the identities if the folder matches the drafts-folder
+  const IdentityManager * im = identityManager();
+  for( IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+    if ( (*it).drafts() == idString ) return true;
+  return false;
 }
+
+IdentityManager * KMKernel::identityManager() {
+  if ( !mIdentityManager ) {
+    kdDebug(5006) << "instantating IdentityManager" << endl;
+    mIdentityManager = new IdentityManager( this, "mIdentityManager" );
+  }
+  return mIdentityManager;
+}
+
 
 #include "kmkernel.moc"

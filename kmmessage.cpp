@@ -14,6 +14,8 @@
 #include "kmundostack.h"
 #include "kmversion.h"
 #include "kmidentity.h"
+#include "kmkernel.h"
+#include "identitymanager.h"
 
 #include <kapplication.h>
 #include <kglobalsettings.h>
@@ -1158,12 +1160,9 @@ KMMessage* KMMessage::createDeliveryReceipt() const
 //-----------------------------------------------------------------------------
 void KMMessage::initHeader( const QString & id )
 {
-  QString identStr = i18n( "Default" );
-  if (!id.isEmpty() && KMIdentity::identities().contains(id))
-    identStr = id;
+  const KMIdentity & ident =
+    kernel->identityManager()->identityForNameOrDefault( id );
 
-  KMIdentity ident( identStr );
-  ident.readConfig();
   if(ident.fullEmailAddr().isEmpty())
     setFrom("");
   else
@@ -1179,10 +1178,10 @@ void KMMessage::initHeader( const QString & id )
   else
     setHeaderField("Organization", ident.organization());
 
-  if (identStr == i18n("Default"))
+  if (ident.isDefault())
     removeHeaderField("X-KMail-Identity");
   else
-    setHeaderField("X-KMail-Identity", identStr);
+    setHeaderField("X-KMail-Identity", ident.identityName());
 
   if (ident.transport().isEmpty())
     removeHeaderField("X-KMail-Transport");
@@ -1204,7 +1203,7 @@ void KMMessage::initHeader( const QString & id )
   setDateToday();
 
   setHeaderField("User-Agent", "KMail/" KMAIL_VERSION );
-// This will allow to change Content-Type:
+  // This will allow to change Content-Type:
   setHeaderField("Content-Type","text/plain");
 }
 
@@ -1214,10 +1213,11 @@ void KMMessage::initFromMessage(const KMMessage *msg, bool idHeaders)
 {
   QString id = msg->headerField("X-KMail-Identity");
   if ( id.isEmpty() )
-    id = KMIdentity::matchIdentity(msg->to() + " " + msg->cc());
+    id = kernel->identityManager()->identityForAddress( msg->to() + msg->cc() )
+      .identityName();
   if ( id.isEmpty() && msg->parent() )
     id = msg->parent()->identity();
-  if (idHeaders) initHeader(id);
+  if ( idHeaders ) initHeader(id);
   else setHeaderField("X-KMail-Identity", id);
   if (!msg->headerField("X-KMail-Transport").isEmpty())
     setHeaderField("X-KMail-Transport", msg->headerField("X-KMail-Transport"));

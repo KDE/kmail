@@ -12,6 +12,9 @@
 
 #include "kmmessage.h"
 #include "kmsender.h"
+#include "kmkernel.h"
+#include "identitymanager.h"
+#include "identitycombo.h"
 #include "kmidentity.h"
 #include "kfileio.h"
 #include "kbusyptr.h"
@@ -77,7 +80,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
 {
   mMainWidget = new QWidget(this);
 
-  mIdentity = new QComboBox(mMainWidget);
+  mIdentity = new IdentityCombo(mMainWidget);
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
@@ -169,7 +172,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
   connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
-  connect(mIdentity,SIGNAL(activated(int)),SLOT(slotIdentityActivated(int)));
+  connect(mIdentity,SIGNAL(identityChanged(const QString &)),
+	  SLOT(slotIdentityChanged(const QString &)));
 
   connect(mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
@@ -424,13 +428,7 @@ void KMComposeWin::readConfig(void)
     resize(siz);
   }
 
-  mIdentity->clear();
-  mIdentity->insertStringList( KMIdentity::identities() );
-  for (int i=0; i < mIdentity->count(); ++i)
-    if (mIdentity->text(i) == mId) {
-      mIdentity->setCurrentItem(i);
-      break;
-    }
+  mIdentity->setCurrentIdentity( mId );
 
   mTransport->insertStringList( KMTransportInfo::availableTransports() );
   while (mTransportHistory.count() > (uint)maxTransportItems)
@@ -446,14 +444,17 @@ void KMComposeWin::readConfig(void)
 
   if ( !mBtnFcc->isChecked() )
   {
-      kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentText() << endl;
-      KMIdentity i( mIdentity->currentText() );
-      kdDebug(5006) << "KMComposeWin::readConfig: identity.fcc()='" << i.fcc() << "'" << endl;
-      i.readConfig();
-      if ( i.fcc().isEmpty() )
-          i.setFcc( kernel->sentFolder()->idString() );
-      previousFcc = i.fcc();
-      kdDebug() << "KMComposeWin::readConfig: previousFcc=" << previousFcc <<  endl;
+      kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentity() << endl;
+      const KMIdentity & ident =
+	kernel->identityManager()->identityForName( mIdentity->currentIdentity() );
+      kdDebug(5006) << "KMComposeWin::readConfig: identity.fcc()='"
+		    << ident.fcc() << "'" << endl;
+      if ( ident.fcc().isEmpty() )
+	previousFcc = kernel->sentFolder()->idString();
+      else
+	previousFcc = ident.fcc();
+      kdDebug() << "KMComposeWin::readConfig: previousFcc="
+		<< previousFcc <<  endl;
   }
 
   mFcc->setFolder( previousFcc );
@@ -472,7 +473,7 @@ void KMComposeWin::writeConfig(void)
     config->writeEntry("sticky-transport", mBtnTransport->isChecked());
     config->writeEntry("sticky-identity", mBtnIdentity->isChecked());
     config->writeEntry("sticky-fcc", mBtnFcc->isChecked());
-    config->writeEntry("previous-identity", mIdentity->currentText() );
+    config->writeEntry("previous-identity", mIdentity->currentIdentity() );
     config->writeEntry("current-transport", mTransport->currentText());
     config->writeEntry("previous-fcc", mFcc->getFolder()->idString() );
     mTransportHistory.remove(mTransport->currentText());
@@ -888,14 +889,9 @@ void KMComposeWin::setupActions(void)
                                   actionCollection(), "sign_message");
 
   // get PGP user id for the chosen identity
-  QString pgpUserId;
-  QString identStr = i18n( "Default" );
-  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
-    identStr = mId;
-  }
-  KMIdentity ident(identStr);
-  ident.readConfig();
-  pgpUserId = ident.pgpIdentity();
+  const KMIdentity & ident =
+    kernel->identityManager()->identityForNameOrDefault( mId );
+  QString pgpUserId = ident.pgpIdentity();
 
   mLastEncryptActionState = false;
   mLastSignActionState = mAutoPgpSign;
@@ -1043,16 +1039,18 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   if (!mBtnIdentity->isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
     mId = newMsg->headerField("X-KMail-Identity");
 
-  for (int i=0; i < mIdentity->count(); ++i)
-    if (mIdentity->text(i) == mId) {
-      mIdentity->setCurrentItem(i);
-      if (mBtnIdentity->isChecked()) slotIdentityActivated(i);
-      break;
-    }
+  // anyone knows why slotIdentityChanged() is only to be called on
+  // mBtnIdentity->isChecked()?
+  if ( !mBtnIdentity->isChecked() )
+    mIdentity->blockSignals( true );
+  mIdentity->setCurrentIdentity( mId );
+  if ( !mBtnIdentity->isChecked() )
+    mIdentity->blockSignals( false );
 
-  KMIdentity ident( mIdentity->currentText() );
-  ident.readConfig();
-  mOldSigText = ident.signature(false); // don't prompt
+  const KMIdentity & ident =
+    kernel->identityManager()->identityForName( mIdentity->currentIdentity() );
+
+  mOldSigText = ident.signatureText();
 
   // get PGP user id for the currently selected identity
   QString pgpUserId = ident.pgpIdentity();
@@ -1178,13 +1176,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
   }
   mEditor->setModified(FALSE);
-
-
-  //put font charset as default charset: jstolarz@kde.org
-//  QString defCharset = mMsg->charset();
-//  if ((mAtmList.count() <= 0) && defCharset.isEmpty() &&
-//        KGlobal::charsets()->isAvailable(mBodyFont.charSet()))
-//      mMsg->setCharset(KGlobal::charsets()->name(mBodyFont.charSet()));
 }
 
 //-----------------------------------------------------------------------------
@@ -1220,8 +1211,8 @@ bool KMComposeWin::applyChanges(void)
   mMsg->setReplyTo(replyTo());
   mMsg->setBcc(bcc());
 
-  KMIdentity id( mIdentity->currentText() );
-  id.readConfig();
+  const KMIdentity & id
+    = kernel->identityManager()->identityForName( mIdentity->currentIdentity() );
   kdDebug() << "KMComposeWin::applyChanges: " << mFcc->currentText() << "==" << id.fcc() << "?" << endl;
 
   KMFolder *f = mFcc->getFolder();
@@ -1230,12 +1221,12 @@ bool KMComposeWin::applyChanges(void)
   else
     mMsg->setFcc( f->idString() );
 
-	// set the correct drafts folder
-	mMsg->setDrafts( id.drafts() );	
+  // set the correct drafts folder
+  mMsg->setDrafts( id.drafts() );	
 
-  if (mIdentity->currentText() == i18n("Default"))
+  if (id.isDefault())
     mMsg->removeHeaderField("X-KMail-Identity");
-  else mMsg->setHeaderField("X-KMail-Identity", mIdentity->currentText());
+  else mMsg->setHeaderField("X-KMail-Identity", id.identityName() );
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
@@ -1453,14 +1444,8 @@ QCString KMComposeWin::pgpProcessedMsg(void)
   block.setText( cText );
 
   // get PGP user id for the chosen identity
-  QCString pgpUserId;
-  QString identStr = i18n( "Default" );
-  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
-    identStr = mId;
-  }
-  KMIdentity ident(identStr);
-  ident.readConfig();
-  pgpUserId = ident.pgpIdentity();
+  QCString pgpUserId =
+    kernel->identityManager()->identityForNameOrDefault( mId ).pgpIdentity();
 
   if (!doEncrypt)
   { // clearsign the message
@@ -1844,14 +1829,8 @@ void KMComposeWin::slotInsertMyPublicKey()
   kernel->kbp()->busy();
 
   // get PGP user id for the chosen identity
-  QCString pgpUserId;
-  QString identStr = i18n( "Default" );
-  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) ) {
-    identStr = mId;
-  }
-  KMIdentity ident(identStr);
-  ident.readConfig();
-  pgpUserId = ident.pgpIdentity();
+  QCString pgpUserId =
+    kernel->identityManager()->identityForNameOrDefault( mId ).pgpIdentity();
 
   QCString armoredKey = Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
   if (armoredKey.isEmpty())
@@ -2347,17 +2326,12 @@ void KMComposeWin::slotSendNow()
 
 void KMComposeWin::slotAppendSignature()
 {
-  QString identStr = i18n( "Default" );
-  if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) )
-  {
-    identStr = mId;
-  }
-
   bool mod = mEditor->isModified();
 
-  KMIdentity ident( identStr );
-  ident.readConfig();
-  QString sigText = ident.signature();
+  const KMIdentity & ident =
+    kernel->identityManager()->identityForNameOrDefault( mId );
+  QString sigText = ident.signatureText();
+#if 0 // will be moved to identitymanager
   if( sigText.isNull() && ident.useSignatureFile() )
   {
     // open a file dialog and let the user choose manually
@@ -2393,16 +2367,12 @@ void KMComposeWin::slotAppendSignature()
     ident.writeConfig(true);
     sigText = ident.signature(false); // try again, but don't prompt
   }
-
+#endif
   mOldSigText = sigText;
   if( !sigText.isEmpty() )
   {
-    /* actually "\n-- \n" (note the space) is a convention for attaching
-    signatures and we should respect it, unless the user has already done so. */
     mEditor->sync();
     mEditor->append("\n");
-    if (!sigText.startsWith("-- \n") && (sigText.find("\n-- \n") == -1))
-      mEditor->append("-- \n");
     mEditor->append(sigText);
     mEditor->update();
     mEditor->setModified(mod);
@@ -2487,20 +2457,16 @@ void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotIdentityActivated(int)
+void KMComposeWin::slotIdentityChanged(const QString & identStr)
 {
-  QString identStr = mIdentity->currentText();
-  if (!KMIdentity::identities().contains(identStr))
+  if (!kernel->identityManager()->identities().contains(identStr))
     return;
-  KMIdentity ident(identStr);
-  ident.readConfig();
+  const KMIdentity & ident =
+    kernel->identityManager()->identityForName( identStr );
 
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom->setText(ident.fullEmailAddr());
-  if(!ident.replyToAddr().isNull())
-    mEdtReplyTo->setText(ident.replyToAddr());
-  else
-    mEdtReplyTo->setText("");
+  mEdtReplyTo->setText(ident.replyToAddr());
   if (ident.organization().isEmpty())
     mMsg->removeHeaderField("Organization");
   else
@@ -2531,9 +2497,9 @@ void KMComposeWin::slotIdentityActivated(int)
 
   if ( !mBtnFcc->isChecked() )
   {
-      if ( ident.fcc().isEmpty() )
-          ident.setFcc( kernel->sentFolder()->idString() );
-
+    if ( ident.fcc().isEmpty() )
+      mFcc->setFolder( kernel->sentFolder() );
+    else
       mFcc->setFolder( ident.fcc() );
   }
 
@@ -2542,34 +2508,17 @@ void KMComposeWin::slotIdentityActivated(int)
   // try to truncate the old sig
   if( !mOldSigText.isEmpty() )
   {
-    if( mOldSigText.startsWith( "-- \n" ) || 
-        ( mOldSigText.find( "\n-- \n" ) != -1 ) )
-    { // the old sig contains the sig marker
-      if( edtText.endsWith( "\n" + mOldSigText ) )
-        edtText.truncate( edtText.length() - mOldSigText.length() - 1 );
-      else
-        appendNewSig = false;
-    }
+    if( edtText.endsWith( "\n" + mOldSigText ) )
+      edtText.truncate( edtText.length() - mOldSigText.length() - 1 );
     else
-    { // the old sig doesn't contain the sig marker
-      if( edtText.endsWith( "\n-- \n" + mOldSigText ) )
-        edtText.truncate( edtText.length() - mOldSigText.length() - 5 );
-      else
-        appendNewSig = false;
-    }
+      appendNewSig = false;
   }
   // now append the new sig
-  mOldSigText = ident.signature();
+  mOldSigText = ident.signatureText();
   if( appendNewSig )
   {
     if( !mOldSigText.isEmpty() && mAutoSign )
-    {
-      edtText.append( "\n" );
-      if( !mOldSigText.startsWith( "-- \n" )  &&
-          ( mOldSigText.find( "\n-- \n" ) == -1 ) )
-        edtText.append( "-- \n" );
-      edtText.append( mOldSigText );
-    }
+      edtText.append( "\n" + mOldSigText );
     mEditor->setText( edtText );
   }
 

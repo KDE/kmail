@@ -13,9 +13,12 @@
 #include "kmfoldermgr.h"
 #include "kmsender.h"
 #include "kmidentity.h"
+#include "identitymanager.h"
+#include "identitycombo.h"
 #include "kfileio.h"
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
+#include "kmmessage.h"
 
 #include <kregexp3.h>
 #include <ktempfile.h>
@@ -26,16 +29,11 @@
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
 #include <qlabel.h>
 #include <qlayout.h>
+#include <qcombobox.h>
+#include <qlineedit.h>
 
-// Remove this stuff once Qt3.x becomes required.
-#ifndef Q_ASSERT
-#ifdef ASSERT
-#define Q_ASSERT ASSERT
-#else
 #include <assert.h>
-#define Q_ASSERT assert
-#endif
-#endif
+
 
 //=============================================================================
 //
@@ -78,6 +76,10 @@ void KMFilterAction::clearParamWidget( QWidget * ) const
 bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
 {
   return FALSE;
+}
+
+bool KMFilterAction::identityRenamed( const QString & , const QString & ) {
+  return false;
 }
 
 int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
@@ -387,6 +389,69 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
   return result;
 }
 
+KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* aMsg, bool withOutput) const
+{
+  Q_ASSERT( aMsg );
+
+  if ( mParameter.isEmpty() )
+    return ErrorButGoOn;
+
+  // KShellProcess doesn't support a QProcess::launch() equivalent, so
+  // we must use a temp file :-(
+  KTempFile * inFile = new KTempFile;
+  inFile->setAutoDelete(TRUE);
+  inFile->close();
+
+  QPtrList<KTempFile> atmList;
+  atmList.setAutoDelete(TRUE);
+  atmList.append( inFile );
+
+  QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
+  if ( commandLine.isEmpty() )
+    return ErrorButGoOn;
+
+  // The parentheses force the creation of a subshell
+  // in which the user-specifed command is executed.
+  // This is to really catch all output of the command as well
+  // as to avoid clashes of our redirection with the ones
+  // the user may have specified. In the long run, we
+  // shouldn't be using tempfiles at all for this class, due
+  // to security aspects. (mmutz)
+  commandLine = QString( "(%1) <%2" ).arg( commandLine ).arg( inFile->name() );
+
+  // write message to file
+  QString tempFileName = inFile->name();
+  kCStringToFile( aMsg->asString(), tempFileName, //###
+		  false, false, false );
+
+  KShellProcess shProc;
+  shProc << commandLine;
+
+  // let the kernel collect the output for us:
+  if ( withOutput )
+    QObject::connect( &shProc, SIGNAL(receivedStdout(KProcess*,char*,int)),
+		      kernel, SLOT(slotCollectStdOut(KProcess*,char*,int)) );
+
+  // run process:
+  if ( !shProc.start( KProcess::Block,
+		      withOutput ? KProcess::Stdout : KProcess::NoCommunication ) )
+    return ErrorButGoOn;
+
+  if ( !shProc.normalExit() || shProc.exitStatus() != 0 )
+    return ErrorButGoOn;
+
+  if ( withOutput ) {
+    // read altered message:
+    QByteArray msgText = kernel->getCollectedStdOut( &shProc );
+
+    if ( !msgText.isEmpty() )
+      aMsg->fromString( QCString( msgText.data(), msgText.size() ) );
+    else
+      return ErrorButGoOn;
+  }
+  return GoOn;
+}
+
 
 //=============================================================================
 //
@@ -531,12 +596,20 @@ KMFilterAction::ReturnCode KMFilterActionReplyTo::process(KMMessage* msg) const
 // KMFilterActionIdentity - set identity to
 // Specify Identity to be used when replying to a message
 //=============================================================================
-class KMFilterActionIdentity: public KMFilterActionWithStringList
+class KMFilterActionIdentity: public KMFilterActionWithString
 {
 public:
   KMFilterActionIdentity();
   virtual ReturnCode process(KMMessage* msg) const;
   static KMFilterAction* newAction();
+
+  QWidget * createParamWidget( QWidget * parent ) const;
+  void applyParamWidgetValue( QWidget * parent );
+  void setParamWidgetValue( QWidget * parent ) const;
+  void clearParamWidget( QWidget * param ) const;
+
+  bool identityRenamed( const QString & oldName,
+			const QString & newName=QString::null );
 };
 
 KMFilterAction* KMFilterActionIdentity::newAction()
@@ -545,16 +618,57 @@ KMFilterAction* KMFilterActionIdentity::newAction()
 }
 
 KMFilterActionIdentity::KMFilterActionIdentity()
-  : KMFilterActionWithStringList( "set identity", i18n("set identity to") )
+  : KMFilterActionWithString( "set identity", i18n("set identity to") )
 {
-  mParameterList = KMIdentity::identities();
-  mParameter = *mParameterList.at(0);
+  mParameter = kernel->identityManager()->defaultIdentity().identityName();
 }
 
 KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 {
   msg->setHeaderField( "X-KMail-Identity", mParameter );
   return GoOn;
+}
+
+QWidget * KMFilterActionIdentity::createParamWidget( QWidget * parent ) const
+{
+  IdentityCombo * ic = new IdentityCombo( parent );
+  ic->setCurrentIdentity( mParameter );
+  return ic;
+}
+
+void KMFilterActionIdentity::applyParamWidgetValue( QWidget * paramWidget )
+{
+  IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
+  assert( ic );
+  mParameter = ic->currentIdentity();
+}
+
+void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
+{
+  IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
+  assert( ic );
+  ic->setCurrentItem( 0 );
+  //ic->setCurrentIdentity( kernel->identityManager()->defaultIdentity() );
+}
+
+void KMFilterActionIdentity::setParamWidgetValue( QWidget * paramWidget ) const
+{
+  IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
+  assert( ic );
+  ic->setCurrentIdentity( mParameter );
+}
+
+bool KMFilterActionIdentity::identityRenamed( const QString & oldName,
+					      const QString & newName )
+{
+  if ( mParameter == oldName ) {
+    if ( newName.isEmpty() )
+      mParameter = kernel->identityManager()->defaultIdentity().identityName();
+    else
+      mParameter = newName;
+    return true;
+  } else
+    return false;
 }
 
 //=============================================================================
@@ -1145,29 +1259,7 @@ KMFilterActionExec::KMFilterActionExec()
 
 KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
 {
-  if ( mParameter.isEmpty() )
-    return ErrorButGoOn;
-
-  QPtrList<KTempFile> atmList;
-  atmList.setAutoDelete(TRUE);
-
-  Q_ASSERT( aMsg );
-
-  QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
-
-  if ( commandLine.isEmpty() )
-    return ErrorButGoOn;
-
-  KShellProcess shProc;
-  shProc << commandLine;
-
-  if ( !shProc.start( KProcess::Block, KProcess::NoCommunication ) )
-    return ErrorButGoOn;
-
-  if ( shProc.normalExit() && shProc.exitStatus() == 0 )
-    return GoOn;
-  else
-    return ErrorButGoOn;
+  return KMFilterActionWithCommand::genericProcess( aMsg, false ); // ignore output
 }
 
 //=============================================================================
@@ -1195,65 +1287,7 @@ KMFilterActionExtFilter::KMFilterActionExtFilter()
 
 KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) const
 {
-  if ( mParameter.isEmpty() )
-    return ErrorButGoOn;
-
-  ///////////////
-  KTempFile * inFile = new KTempFile;
-  KTempFile * outFile = new KTempFile;
-  inFile->setAutoDelete(TRUE);
-  outFile->setAutoDelete(TRUE);
-  outFile->close();
-
-  QPtrList<KTempFile> atmList;
-  atmList.setAutoDelete(TRUE);
-  atmList.append( inFile );
-  atmList.append( outFile );
-
-  Q_ASSERT( aMsg );
-
-  QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
-  if ( commandLine.isEmpty() )
-    return ErrorButGoOn;
-
-  // The parentheses force the creation of a subshell
-  // in which the user-specifed command is executed.
-  // This is to really catch all output of the command as well
-  // as to avoid clashes of our redirection with the ones
-  // the user may have specified. In the long run, we
-  // shouldn't be using tempfiles at all for this class, due
-  // to security aspects. (mmutz)
-  commandLine = QString( "(%1) <%2 >%3" ).arg( commandLine ).arg( inFile->name() ).arg( outFile->name() );
-
-  // write message to file
-  QString tempFileName;
-  QCString msgText;
-
-  tempFileName = inFile->name();
-  kCStringToFile( aMsg->asString(), tempFileName, //###
-		  false, false, false );
-  inFile->close();
-
-  // run process
-  KShellProcess shProc;
-  shProc << commandLine;
-
-  if ( !shProc.start( KProcess::Block, KProcess::NoCommunication ) )
-    return ErrorButGoOn;
-
-  if ( !shProc.normalExit() || shProc.exitStatus() != 0 )
-    return ErrorButGoOn;
-
-  // read altered message
-  msgText = kFileToString( outFile->name(), false, false );
-
-  if ( !msgText.isEmpty() )
-    aMsg->fromString( msgText );
-  else
-    return ErrorButGoOn;
-  outFile->close();
-
-  return GoOn;
+  return KMFilterActionWithCommand::genericProcess( aMsg, true ); // use output
 }
 
 

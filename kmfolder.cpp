@@ -9,6 +9,8 @@
 #include "kmfolderimap.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
+#include "kmkernel.h"
+#include "identitymanager.h"
 #include "kmidentity.h"
 #include "kmfiltermgr.h"
 
@@ -1213,7 +1215,7 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 
 
 //-----------------------------------------------------------------------------
-QString KMFolder::idString()
+QString KMFolder::idString() const
 {
   KMFolderNode* folderNode = parent();
   if (!folderNode)
@@ -1441,9 +1443,8 @@ void KMFolder::setUserWhoField(const QString &whoField)
   if ( whoField.isEmpty() )
   {
     // default setting
-    QString ident = mIdentity; if (ident.isEmpty()) ident = i18n("Default");
-    KMIdentity identity (ident);
-    identity.readConfig();
+    const KMIdentity & identity =
+      kernel->identityManager()->identityForNameOrDefault( mIdentity );
 
     if ( mIsSystemFolder && protocol() != "imap" ) 
     {	

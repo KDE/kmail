@@ -1,3 +1,5 @@
+// -*- c++ -*-
+
 #ifndef _KMCONTROL
 #define _KMCONTROL
 
@@ -25,6 +27,8 @@ class KMSender;
 class KMIdentity;
 class KMKernel;
 class KMMsgDict;
+class IdentityManager;
+class KProcess;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -96,11 +100,11 @@ public:
   bool firstInstance() { return the_firstInstance; }
   void setFirstInstance(bool value) { the_firstInstance = value; }
   void action (bool mailto, bool check, const QString &to, const QString &cc,
-               const QString &bcc, const QString &subj, const QString &body, const KURL &messageFile,
-               const KURL::List &attach);
+               const QString &bcc, const QString &subj, const QString &body,
+	       const KURL &messageFile, const KURL::List &attach);
   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
-    bool overwrite = FALSE);
-	bool folderIsDraftOrOutbox(KMFolder *);	
+			     bool overwrite = FALSE);
+  bool folderIsDraftOrOutbox(const KMFolder *);
 
   inline KMFolder *inboxFolder() { return the_inboxFolder; }
   inline KMFolder *outboxFolder() { return the_outboxFolder; }
@@ -119,6 +123,9 @@ public:
   inline KMSender *msgSender() { return the_msgSender; }
   inline KMMsgDict *msgDict() { return the_msgDict; }
 
+  /** return the pointer to the identity manager */
+  IdentityManager *identityManager();
+
   inline bool firstStart() { return the_firstStart; }
   inline QString previousVersion() { return the_previousVersion; }
   inline bool shuttingDown() { return the_shuttingDown; }
@@ -132,6 +139,36 @@ public:
   /** Returns a message serial number that hasn't been used yet. */
   unsigned long getNextMsgSerNum();
   QTextCodec *networkCodec() { return netCodec; }
+
+  /** See @ref slotCollectStdOut */
+  QByteArray getCollectedStdOut(KProcess*);
+  /** See @ref slotCollectStdErr */
+  QByteArray getCollectedStdErr(KProcess*);
+
+public slots:
+  /** Connect the received* signals of K(Shell)Process to these slots
+      to let the kernel collect the output for you.
+
+      Works by keeping a map of QByteArrays, indexed by the KProcess
+      pointers.
+
+      After the command finished, you can then get a QByteArray with
+      the data by calling @ref getCollectedStdOut with the same
+      KProcess* pointer as when calling these slots.
+
+      See KMFilterActionWithCommand and derived classes for example
+      usages.
+  */
+  void slotCollectStdOut(KProcess*,char*,int);
+  /** Same as @ref slotCollectStdOut, but for stderr. */
+  void slotCollectStdErr(KProcess*,char*,int);
+
+  /** Call this slot instead of directly @ref KConfig::sync() to
+      minimize the overall config writes. Calling this slot will
+      schedule a sync of the application config file using a timer, so
+      that many consecutive calls can be condensed into a single
+      sync, which is more efficient. */
+  void slotRequestConfigSync();
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
@@ -150,6 +187,7 @@ private:
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
+  mutable IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
   KMMsgDict *the_msgDict;
   struct putData
@@ -159,6 +197,8 @@ private:
     int offset;
   };
   QMap<KIO::Job *, putData> mPutJobs;
+  QMap<KProcess*,QByteArray> mStdOutCollection;
+  QMap<KProcess*,QByteArray> mStdErrCollection;
   /** previous KMail version. If different from current,
       the user has just updated. read from config */
   QString the_previousVersion;

@@ -20,7 +20,8 @@
 #include "kmmainwin.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
-#include "kmidentity.h"
+#include "identitycombo.h"
+#include "kmkernel.h"
 #include "kmfolderimap.h"
 #include "kmheaders.h"
 
@@ -270,8 +271,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   label = new QLabel( i18n("&Sender:"), idGroup );
   idLayout->addWidget( label );
-  identity = new QComboBox( idGroup );
-  identity->insertStringList( KMIdentity::identities() );
+  identity = new IdentityCombo( idGroup );
   label->setBuddy( identity );
   idLayout->addWidget( identity, 3 );
 
@@ -341,11 +341,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     else
       mailboxType->setCurrentItem(0);
 
-    for (int i=0; i < identity->count(); ++i)
-      if (identity->text(i) == folder->identity()) {
-         identity->setCurrentItem(i);
-         break;
-      }
+    identity->setCurrentIdentity( folder->identity() );
 
     // Set the status of widgets to represent the folder
 	// properties for auto expiry of old email.
@@ -527,7 +523,7 @@ void KMFolderDialog::slotOk()
 //   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
     folder->setMailingListAdminAddress( QString::null );
 
-    folder->setIdentity( identity->currentText() );
+    folder->setIdentity( identity->currentIdentity() );
 // folder->setMarkAnyMessage( markAnyMessage->isChecked() );
 
     // Settings for auto expiry of old email messages.

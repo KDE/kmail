@@ -17,12 +17,15 @@
 
 #include "kmsender.h"
 #include "kmidentity.h"
+#include "kmkernel.h"
+#include "identitymanager.h"
 #include "kmbroadcaststatus.h"
 #include "kmaccount.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kbusyptr.h"
+#include "kmmessage.h"
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -92,8 +95,6 @@ void KMSender::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 bool KMSender::settingsOk(void) const
 {
-  KMIdentity ident( i18n( "Default" ));
-  ident.readConfig();
   if (KMTransportInfo::availableTransports().isEmpty())
   {
     KMessageBox::information(0,i18n("Please specify a send "
@@ -101,7 +102,7 @@ bool KMSender::settingsOk(void) const
 				    "and try again."));
     return FALSE;
   }
-  if (!ident.mailingAllowed())
+  if (!kernel->identityManager()->defaultIdentity().mailingAllowed())
   {
     KMessageBox::information(0,i18n("Please set the required fields in the "
 				    "identity settings:\n"
@@ -149,13 +150,12 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   // Handle redirections
   QString f = aMsg->headerField("X-KMail-Redirect-From");
-  if(f.length() > 0) {
+  if(!f.isEmpty()) {
     QString idStr = aMsg->headerField("X-KMail-Identity");
-    KMIdentity ident( idStr.isEmpty() ? i18n( "Default" ) : idStr );
-    ident.readConfig();
-
-    aMsg->setFrom(f + QString(" (by way of %1 <%2>)").
-		  arg(ident.fullName()).arg(ident.emailAddr()));
+    const KMIdentity & ident =
+      kernel->identityManager()->identityForNameOrDefault( idStr );
+    aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
+		  .arg(ident.fullName()).arg(ident.emailAddr()));
   }
 
   rc = kernel->outboxFolder()->addMsg(aMsg);
@@ -221,11 +221,8 @@ void KMSender::doSendMsg()
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg->setStatus(KMMsgStatusSent);
 
-    QString msgIdentity = mCurrentMsg->headerField( "X-KMail-Identity" );
-		if (msgIdentity.isEmpty()) msgIdentity = i18n("Default");
-    kdDebug(5006) << "KMSender::doSendMsg: msgIdentity = " << msgIdentity << endl;
-    KMIdentity id( msgIdentity );
-    id.readConfig();
+    const KMIdentity & id = kernel->identityManager()
+      ->identityForNameOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ) );
     if ( !mCurrentMsg->fcc().isEmpty() )
     {
       sentFolder = kernel->folderMgr()->findIdString( mCurrentMsg->fcc() );

@@ -53,6 +53,7 @@ class KTempFile;
 class KToolBar;
 class KToggleAction;
 class KURL;
+class IdentityCombo;
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
@@ -385,7 +386,7 @@ public slots:
   /**
    * Update composer field to reflect new identity
    */
-  void slotIdentityActivated(int idx);
+  void slotIdentityChanged(const QString &);
 
   /**
    * KIO slots for attachment insertion
@@ -483,7 +484,8 @@ private:
 
 protected:
   QWidget   *mMainWidget;
-  QComboBox *mIdentity, *mTransport;
+  QComboBox *mTransport;
+  IdentityCombo    *mIdentity;
   KMFolderComboBox *mFcc;
   KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc, *mEdtSubject;
   QLabel    *mLblIdentity, *mLblTransport, *mLblFcc;

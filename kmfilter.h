@@ -149,6 +149,15 @@ public:
    */
   virtual bool folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder );
 
+  /** 
+   * Called from the filter manager when an identity is renamed.
+   * Tests if identity @p oldName is used in any action. Changes it
+   * to @p newName in this case.
+   * @return TRUE if a change in some action occured,
+   * FALSE if no action was affected.
+   */
+  virtual bool identityRenamed( const QString & oldName, const QString & newName );
+
   /** Returns the filter in a human-readable form. useful for
       debugging but not much else. Don't use, as it may well go away
       in the future... */

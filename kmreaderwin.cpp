@@ -529,6 +529,7 @@ void KMReaderWin::clearCache()
 static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Custom folder icons"),
   I18N_NOOP("Custom date format"),
+  I18N_NOOP("Default identity can now be renamed"),
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;

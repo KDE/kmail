@@ -13,12 +13,11 @@
 #include "configuredialog_p.h"
 
 // other KMail headers:
-#include "kmidentity.h" // for IdentityList::{export,import}Data
+#include "identitymanager.h"
 
 // other kdenetwork headers: (none)
 
 // other KDE headers:
-#include <kemailsettings.h> // for IdentityEntry::fromControlCenter()
 #include <kmtransport.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
@@ -38,131 +37,6 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
-
-// used in IdentityList::{import,export}Data
-static QString pipeSymbol = QString::fromLatin1("|");
-
-//********************************************************
-// Identity handling
-//********************************************************
-
-IdentityEntry IdentityEntry::fromControlCenter()
-{
-  KEMailSettings emailSettings;
-  emailSettings.setProfile( emailSettings.defaultProfileName() );
-
-  return // use return optimization (saves a copy)
-    IdentityEntry( emailSettings.getSetting( KEMailSettings::RealName ),
-		   emailSettings.getSetting( KEMailSettings::EmailAddress ),
-		   emailSettings.getSetting( KEMailSettings::Organization ),
-		   emailSettings.getSetting( KEMailSettings::ReplyToAddress ) );
-}
-
-
-
-QStringList IdentityList::names() const
-{
-  QStringList list;
-  QValueListConstIterator<IdentityEntry> it = begin();
-  for( ; it != end() ; ++it )
-    list << (*it).identityName();
-  return list;
-}
-
-
-IdentityEntry & IdentityList::getByName( const QString & i )
-{
-  QValueListIterator<IdentityEntry> it = begin();
-  for( ; it != end() ; ++it )
-    if( i == (*it).identityName() )
-      return (*it);
-  assert( 0 ); // one should throw an exception instead, but well...
-}
-
-void IdentityList::importData()
-{
-  clear();
-  bool defaultIdentity = true;
-
-  QStringList identities = KMIdentity::identities();
-  QStringList::Iterator it = identities.begin();
-  for( ; it != identities.end(); ++it )
-  {
-    KMIdentity ident( *it );
-    ident.readConfig();
-
-    IdentityEntry entry;
-    entry.setIsDefault( defaultIdentity );
-    // only the first entry is the default one:
-    defaultIdentity = false;
-
-    entry.setIdentityName( ident.identity() );
-    entry.setFullName( ident.fullName() );
-    entry.setOrganization( ident.organization() );
-    entry.setPgpIdentity( ident.pgpIdentity() );
-    entry.setEmailAddress( ident.emailAddr() );
-    entry.setReplyToAddress( ident.replyToAddr() );
-
-    // We encode the "use output of command" case with a trailing pipe
-    // symbol to distinguish it from the case of a normal data file.
-    QString signatureFileName = ident.signatureFile();
-    if( signatureFileName.endsWith( pipeSymbol ) ) {
-      // it's a command: chop off the "|".
-      entry.setSignatureFileName( signatureFileName
-			    .left( signatureFileName.length() - 1 ) );
-      entry.setSignatureFileIsAProgram( true );
-    } else {
-      // it's an ordinary file:
-      entry.setSignatureFileName( signatureFileName );
-      entry.setSignatureFileIsAProgram( false );
-    }
-    
-    entry.setSignatureInlineText( ident.signatureInlineText() );
-    entry.setUseSignatureFile( ident.useSignatureFile() );
-    entry.setTransport( ident.transport() );
-    entry.setFcc( ident.fcc() );
-    entry.setDrafts( ident.drafts() );
-
-    append( entry );
-  }
-}
-
-
-void IdentityList::exportData() const
-{
-  QStringList identityNames;
-  QValueListConstIterator<IdentityEntry> it = begin();
-  for( ; it != end() ; ++it )
-  {
-    KMIdentity ident( (*it).identityName() );
-    ident.setFullName( (*it).fullName() );
-    ident.setOrganization( (*it).organization() );
-    ident.setPgpIdentity( (*it).pgpIdentity().local8Bit() );
-    ident.setEmailAddr( (*it).emailAddress() );
-    ident.setReplyToAddr( (*it).replyToAddress() );
-    ident.setUseSignatureFile( (*it).useSignatureFile() );
-    
-    // We encode the "use output of command" case with a trailing pipe
-    // symbol to distinguish it from the case of a normal data file.
-    QString signatureFileName = (*it).signatureFileName();
-    if ( (*it).signatureFileIsAProgram() ) 
-      signatureFileName += pipeSymbol;
-    ident.setSignatureFile( signatureFileName );
-
-    ident.setSignatureInlineText( (*it).signatureInlineText() );
-    ident.setTransport( (*it).transport() );
-    ident.setFcc( (*it).fcc() );
-    ident.setDrafts( (*it).drafts() );
-
-    ident.writeConfig( false ); // saves the identity data
-
-    identityNames << (*it).identityName();
-  }
-
-  KMIdentity::saveIdentities( identityNames, false ); // writes a list of names
-}
-
-
 
 
 NewIdentityDialog::NewIdentityDialog( const QStringList & identities,

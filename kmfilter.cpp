@@ -140,6 +140,17 @@ bool KMFilter::folderRemoved( KMFolder* aFolder, KMFolder* aNewFolder )
   return rem;
 }
 
+bool KMFilter::identityRenamed( const QString & oldName, const QString & newName )
+{
+  bool mod = false;
+
+  QPtrListIterator<KMFilterAction> it( mActions );
+  for ( it.toFirst() ; it.current() ; ++it )
+    if ( (*it)->identityRenamed( oldName, newName ) )
+      mod = true;
+
+  return mod;
+}
 
 //-----------------------------------------------------------------------------
 void KMFilter::readConfig(KConfig* config)

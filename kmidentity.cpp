@@ -4,9 +4,16 @@
 #include "kfileio.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
-#include <kdebug.h>
+#include "kmkernel.h"
 
+#include <kdebug.h>
 #include <kapplication.h>
+#include <kurl.h>
+#include <klocale.h>
+#include <ktempfile.h>
+#include <kmessagebox.h>
+#include <kprocess.h>
+#include <kconfig.h>
 
 #include <qstringlist.h>
 
@@ -16,13 +23,208 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
-#include <klocale.h>
-#include <ktempfile.h>
-#include <kmessagebox.h>
-#include <kprocess.h>
+#include <assert.h>
+
+Signature::Signature()
+  : mType( Disabled )
+{
+
+}
+
+Signature::Signature( const QString & text )
+  : mText( text ),
+    mType( Inlined )
+{
+
+}
+
+Signature::Signature( const QString & url, bool isExecutable )
+  : mUrl( url ),
+    mType( isExecutable ? FromCommand : FromFile )
+{
+}
+
+bool Signature::operator==( const Signature & other ) const {
+  if ( mType != other.mType ) return false;
+  switch ( mType ) {
+  case Inlined: return mText == other.mText;
+  case FromFile:
+  case FromCommand: return mUrl == other.mUrl;
+  default:
+  case Disabled: return true;
+  }
+}
+
+QString Signature::rawText( bool * ok ) const
+{
+  switch ( mType ) {
+  case Disabled:
+    if ( ok ) *ok = true;
+    return QString::null;
+  case Inlined:
+    if ( ok ) *ok = true;
+    return mText;
+  case FromFile:
+    return textFromFile( ok );
+  case FromCommand:
+    return textFromCommand( ok );
+  };
+  kdFatal( 5006 ) << "Signature::type() returned unknown value!" << endl;
+  return QString::null; // make compiler happy
+}
+
+QString Signature::textFromCommand( bool * ok ) const
+{
+  assert( mType == FromCommand );
+
+  // handle pathological cases:
+  if ( mUrl.isEmpty() ) {
+    if ( ok ) *ok = true;
+    return QString::null;
+  }
+
+  // create a shell process:
+  KShellProcess proc;
+  proc << mUrl;
+
+  // let the kernel collect the output for us:
+  QObject::connect( &proc, SIGNAL(receivedStdout(KProcess*,char*,int)),
+		    kernel, SLOT(slotCollectStdOut(KProcess*,char*,int)) );
+
+  // run the process:
+  int rc = 0;
+  if ( !proc.start( KProcess::Block, KProcess::Stdout ) )
+    rc = -1;
+  else
+    rc = ( proc.normalExit() ) ? proc.exitStatus() : -1 ;
+
+  // get output:
+  QByteArray output = kernel->getCollectedStdOut( &proc );
+
+  // handle errors, if any:
+  if ( rc != 0 ) {
+    if ( ok ) *ok = false;
+    QString wmsg = i18n("Failed to execute signature script\n%1:\n%2")
+      .arg( mUrl ).arg( strerror(rc) );
+    KMessageBox::error(0, wmsg);
+    return QString::null;
+  }
+
+  // no errors:
+  if ( ok ) *ok = true;
+  // ### hmm, should we allow other encodings, too?
+  return QString::fromLocal8Bit( output.data(), output.size() );
+}
+
+QString Signature::textFromFile( bool * ok ) const
+{
+  assert( mType == FromFile );
+
+  // ### FIXME: Use KIO::NetAccess to download non-local files!
+  if ( !KURL(mUrl).isLocalFile() ) {
+    kdDebug( 5006 ) << "Signature::textFromFile: non-local URLs are unsupported" << endl;
+    if ( ok ) *ok = false;
+    return QString::null;
+  }
+  if ( ok ) *ok = true;
+  // ### hmm, should we allow other encodings, too?
+  return QString::fromLocal8Bit( kFileToString( mUrl ) );
+}
+
+QString Signature::withSeparator( bool * ok ) const
+{
+  bool internalOK = false;
+  QString signature = rawText( &internalOK );
+  if ( !internalOK ) {
+    if ( ok ) *ok = false;
+    return QString::null;
+  }
+  if ( ok ) *ok = true;
+  if ( signature.isEmpty() ) return signature; // don't add a separator in this case
+  if ( signature.startsWith( QString::fromLatin1("-- \n") ) ||
+       signature.find( QString::fromLatin1("\n-- \n") ) != -1 )
+    // already have signature separator:
+    return signature;
+  else
+    // need to prepend one:
+    return QString::fromLatin1("-- \n") + signature;
+}
 
 
-//-----------------------------------------------------------------------------
+void Signature::setUrl( const QString & url, bool isExecutable )
+{
+  mUrl = url;
+  mType = isExecutable ? FromCommand : FromFile ;
+}
+
+// config keys and values:
+static const char * sigTypeKey = "Signature Type";
+static const char * sigTypeInlineValue = "inline";
+static const char * sigTypeFileValue = "file";
+static const char * sigTypeCommandValue = "command";
+static const char * sigTypeDisabledValue = "disabled";
+static const char * sigTextKey = "Inline Signature";
+static const char * sigFileKey = "Signature File";
+static const char * sigCommandKey = "Signature Command";
+
+void Signature::readConfig( const KConfigBase * config )
+{
+  QString sigType = config->readEntry( sigTypeKey );
+  if ( sigType == sigTypeInlineValue ) {
+    mType = Inlined;
+    mText = config->readEntry( sigTextKey );
+  } else if ( sigType == sigTypeFileValue ) {
+    mType = FromFile;
+    mUrl = config->readEntry( sigFileKey );
+  } else if ( sigType == sigTypeCommandValue ) {
+    mType = FromCommand;
+    mUrl = config->readEntry( sigCommandKey );
+  } else {
+    mType = Disabled;
+  }
+}
+
+void Signature::writeConfig( KConfigBase * config ) const
+{
+  switch ( mType ) {
+  case Inlined:
+    config->writeEntry( sigTypeKey, sigTypeInlineValue );
+    config->writeEntry( sigTextKey, mText );
+    break;
+  case FromFile:
+    config->writeEntry( sigTypeKey, sigTypeFileValue );
+    config->writeEntry( sigFileKey, mUrl );
+    break;
+  case FromCommand:
+    config->writeEntry( sigTypeKey, sigTypeCommandValue );
+    config->writeEntry( sigCommandKey, mUrl );
+    break;
+  case Disabled:
+    config->writeEntry( sigTypeKey, sigTypeDisabledValue );
+  default: ;
+  }
+}
+
+
+KMIdentity KMIdentity::null;
+
+bool KMIdentity::isNull() const {
+  return mIdentity.isNull() && mFullName.isNull() && mEmailAddr.isNull() &&
+    mOrganization.isNull() && mReplyToAddr.isNull() && mVCardFile.isNull() &&
+    mPgpIdentity.isNull() && mFcc.isNull() && mDrafts.isNull() &&
+    mTransport.isNull() && mSignature.type() == Signature::Disabled;
+}
+
+bool KMIdentity::operator==( const KMIdentity & other ) const {
+    return mIdentity == other.mIdentity && mFullName == other.mFullName &&
+      mEmailAddr == other.mEmailAddr && mOrganization == other.mOrganization &&
+      mReplyToAddr == other.mReplyToAddr && mVCardFile == other.mVCardFile &&
+      mPgpIdentity == other.mPgpIdentity && mFcc == other.mFcc &&
+      mDrafts == other.mDrafts && mTransport == other.mTransport &&
+      mSignature == other.mSignature;
+  }
+
+#if 0
 QStringList KMIdentity::identities()
 {
   KConfig* config = kapp->config();
@@ -68,102 +270,56 @@ QString KMIdentity::matchIdentity( const QString &addressList )
   }
   return QString::null;
 }
+#endif
 
 
-
-//-----------------------------------------------------------------------------
-KMIdentity::KMIdentity( const QString & id )
+KMIdentity::KMIdentity( const QString & id, const QString & fullName,
+			const QString & emailAddr, const QString & organization,
+			const QString & replyToAddr )
+  : mIdentity( id ), mFullName( fullName ), mEmailAddr( emailAddr ),
+    mOrganization( organization ), mReplyToAddr( replyToAddr ),
+    mIsDefault( false )
 {
-  mIdentity = id;
+
 }
 
 
-//-----------------------------------------------------------------------------
 KMIdentity::~KMIdentity()
 {
 }
 
 
-//-----------------------------------------------------------------------------
-void KMIdentity::readConfig(void)
+void KMIdentity::readConfig( const KConfigBase * config )
 {
-  KConfig* config = kapp->config();
-  struct passwd* pw;
-  char str[80];
-  int i;
-
-  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ?
-		     QString("Identity") : "Identity-" + mIdentity );
-
+  mIdentity = config->readEntry("Identity");
   mFullName = config->readEntry("Name");
-  if (mFullName.isEmpty())
-  {
-    pw = getpwuid(getuid());
-    if (pw)
-    {
-      mFullName = pw->pw_gecos;
-
-      i = mFullName.find(',');
-      if (i>0) mFullName.truncate(i);
-    }
-  }
-
-
   mEmailAddr = config->readEntry("Email Address");
-  if (mEmailAddr.isEmpty())
-  {
-    pw = getpwuid(getuid());
-    if (pw)
-    {
-      gethostname(str, 79);
-      mEmailAddr = QString(pw->pw_name) + "@" + str;
-
-    }
-  }
-
   mVCardFile = config->readEntry("VCardFile");
   mOrganization = config->readEntry("Organization");
   mPgpIdentity = config->readEntry("Default PGP Key").local8Bit();
   mReplyToAddr = config->readEntry("Reply-To Address");
-  mSignatureFile = config->readEntry("Signature File");
-  mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
-  mSignatureInlineText = config->readEntry("Inline Signature");
-
   mFcc = config->readEntry("Fcc");
-	KMFolder* folder = kernel->folderMgr()->findIdString(mFcc);
-	if (!folder) folder = kernel->imapFolderMgr()->findIdString(mFcc);
-
   mDrafts = config->readEntry("Drafts");
-	folder = kernel->folderMgr()->findIdString(mDrafts);
-	if (!folder) folder = kernel->imapFolderMgr()->findIdString(mDrafts);
-
   mTransport = config->readEntry("Transport");
+
+  mSignature.readConfig( config );
 }
 
 
-//-----------------------------------------------------------------------------
-void KMIdentity::writeConfig(bool aWithSync) const
+void KMIdentity::writeConfig( KConfigBase * config ) const
 {
-  KConfig* config = kapp->config();
-
-  KConfigGroupSaver saver( config, (mIdentity == i18n( "Default" )) ?
-		     QString("Identity") : "Identity-" + mIdentity );
-
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Name", mFullName);
   config->writeEntry("Organization", mOrganization);
   config->writeEntry("Default PGP Key", mPgpIdentity.data());
   config->writeEntry("Email Address", mEmailAddr);
   config->writeEntry("Reply-To Address", mReplyToAddr);
-  config->writeEntry("Signature File", mSignatureFile);
-  config->writeEntry("Inline Signature", mSignatureInlineText );
-  config->writeEntry("UseSignatureFile", mUseSignatureFile );
   config->writeEntry("VCardFile", mVCardFile);
   config->writeEntry("Transport", mTransport);
   config->writeEntry("Fcc", mFcc);
   config->writeEntry("Drafts", mDrafts);
 
-  if (aWithSync) config->sync();
+  mSignature.writeConfig( config );
 }
 
 
@@ -174,7 +330,14 @@ bool KMIdentity::mailingAllowed(void) const
 }
 
 
-//-----------------------------------------------------------------------------
+void KMIdentity::setIsDefault( bool flag ) {
+  mIsDefault = flag;
+}
+
+void KMIdentity::setIdentityName( const QString & name ) {
+  mIdentity = name;
+}
+
 void KMIdentity::setFullName(const QString &str)
 {
   mFullName = str;
@@ -250,24 +413,14 @@ void KMIdentity::setReplyToAddr(const QString& str)
 //-----------------------------------------------------------------------------
 void KMIdentity::setSignatureFile(const QString &str)
 {
-  if ( signatureIsCommand() )
-    mSignatureFile = str + '|';
-  else
-    mSignatureFile = str;
+  mSignature.setUrl( str, signatureIsCommand() );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMIdentity::setSignatureInlineText(const QString &str )
 {
-    mSignatureInlineText = str;
-}
-
-
-//-----------------------------------------------------------------------------
-void KMIdentity::setUseSignatureFile( bool flag )
-{
-  mUseSignatureFile = flag;
+  mSignature.setText( str );
 }
 
 
@@ -291,52 +444,29 @@ void KMIdentity::setDrafts(const QString &str)
 
 
 //-----------------------------------------------------------------------------
-QString KMIdentity::signature(bool prompt) const
+QString KMIdentity::signatureText( bool * ok ) const
 {
-  QString result, sigcmd;
+  bool internalOK = false;
+  QString signatureText = mSignature.withSeparator( &internalOK );
+  if ( internalOK ) {
+    if ( ok ) *ok=true;
+    return signatureText;
+  }
 
-  if (!mUseSignatureFile ) return mSignatureInlineText;
+  // OK, here comes the funny part. The call to
+  // Signature::withSeparator() failed, so we should probably fix the
+  // cause:
+  if ( ok ) *ok = false;
+  return QString::null;
 
-  if (mSignatureFile.isEmpty()) return QString::null;
-
+#if 0 // ### FIXME: error handling
   if (mSignatureFile.endsWith("|"))
   {
-    KTempFile tmpf;
-    int rc;
-
-    tmpf.setAutoDelete(true);
-    // signature file is a shell script that returns the signature
-    if (tmpf.status() != 0) {
-      if ( prompt ) {
-	QString wmsg = i18n("Failed to create temporary file\n%1:\n%2").arg(tmpf.name()).arg(strerror(errno));
-	KMessageBox::information(0, wmsg);
-      }
-      return QString::null;
-    }
-    tmpf.close();
-
-    sigcmd = mSignatureFile.left(mSignatureFile.length()-1);
-    sigcmd += " > ";
-    sigcmd += tmpf.name();
-    KShellProcess proc;
-    proc << sigcmd;
-    proc.start(KProcess::Block);
-    rc = (proc.normalExit()) ? proc.exitStatus() : -1;
-
-    if (rc != 0)
-    {
-      if ( prompt ) {
-	QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd).arg(strerror(rc));
-	KMessageBox::information(0, wmsg);
-      }
-      return QString::null;
-    }
-    result = QString::fromLocal8Bit(kFileToString(tmpf.name(), TRUE, FALSE));
   }
   else
   {
-    result = QString::fromLocal8Bit(kFileToString(mSignatureFile));
   }
+#endif
 
-  return result;
+  return QString::null;
 }

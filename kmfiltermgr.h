@@ -7,12 +7,12 @@
 #define kmfiltermgr_h
 
 #include "kmfolder.h"
-#include "kmfilter.h"
 
 #include <qptrlist.h>
 #include <qguardedptr.h>
 
 class KMFilterDlg;
+class KMFilter;
 
 #define KMFilterMgrInherited QPtrList<KMFilter>
 class KMFilterMgr: public QPtrList<KMFilter>

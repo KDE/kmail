@@ -110,6 +110,13 @@ public:
       case. Returns TRUE if a change was made.  */
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
 
+  /** Called from the filter when an identity is renames. Tests if
+      identity @p oldName is used and changes to @p newName (or to the
+      default identity if @p newName is empty) in this case.
+      @return TRUE if a change was made.  */
+  virtual bool identityRenamed( const QString & oldName,
+				const QString & newName=QString::null );
+
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction();
 
@@ -446,6 +453,7 @@ public:
       meaning the body of the message. */
   virtual QString substituteCommandLineArgsFor( KMMessage *aMsg, QPtrList<KTempFile> & aTempFileList  ) const;
 
+  virtual ReturnCode genericProcess( KMMessage * aMsg, bool filtering ) const;
 };
 
 

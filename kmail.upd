@@ -36,3 +36,14 @@ Key=createOwnMessageIdHeaders,useCustomMessageIdSuffix
 Id=8
 File=kmailrc
 Script=kmail-pgpidentity.pl,perl
+# Uppgrade the signature config options (where a trailing pipe (|) meant
+# to interpret the filename as a command (KDE 3.0 -> KDE 3.1)
+Id=9
+File=kmailrc
+Script=upgrade-signature.pl,perl
+# rename the config groups associated with identities.
+# get rid of Identity/IdentityList and addd group [IdentityManager] with
+# keys Idenities (number of identities) and "Default Identity" (3.0->3.1):
+Id=3.1-update-identities
+File=kmailrc
+Script=kmail-upd-identities.pl,perl
