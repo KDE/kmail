@@ -184,6 +184,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 //-----------------------------------------------------------------------------
 KMComposeWin::~KMComposeWin()
 {
+  writeConfig();
+
   if (mAutoDeleteMsg && mMsg) delete mMsg;
 #ifdef HAS_KSPELL
   if (mKSpellConfig) delete KSpellConfig;
@@ -202,8 +204,7 @@ void KMComposeWin::readConfig(void)
   int w, h;
 
   config->setGroup("Composer");
-  mAutoSign = (stricmp(config->readEntry("signature"),"auto")==0);
-  cout << "auto:" << mAutoSign << endl;
+  mAutoSign = (stricmp(config->readEntry("signature","manual"),"auto")==0);
   mShowToolBar = config->readNumEntry("show-toolbar", 1);
   mSendImmediate = config->readNumEntry("send-immediate", -1);
   mDefEncoding = config->readEntry("encoding", "base64");
@@ -228,7 +229,7 @@ void KMComposeWin::readConfig(void)
   else
       mDefaultCharset=str;
       
-  cout << "Default charset: "<<mDefaultCharset<<"\n";    
+  debug("Default charset: %s", (const char*)mDefaultCharset);
       
   str = config->readEntry("composer-charset", "");
   if (str.isNull() || str=="default" || !KCharset(str).isDisplayable())
@@ -236,7 +237,7 @@ void KMComposeWin::readConfig(void)
   else
       mDefComposeCharset=str;
       
-  cout << "Default composer charset: "<<mDefComposeCharset<<"\n";    
+  debug("Default composer charset: %s", (const char*)mDefComposeCharset);
 #endif
 
   config->setGroup("Geometry");
@@ -776,11 +777,10 @@ bool KMComposeWin::applyChanges(void)
 
   //assert(mMsg!=NULL);
   if(!mMsg)
-    {
-      debug("KMComposeWin::applyChanges() : mMsg == NULL!\n");
-      return false;
-    }
-	    
+  {
+    debug("KMComposeWin::applyChanges() : mMsg == NULL!\n");
+    return FALSE;
+  }
 
   mMsg->setTo(to());
   mMsg->setFrom(from());

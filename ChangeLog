@@ -1,3 +1,8 @@
+1998-06-29  Stefan Taferner  <taferner@kde.org>
+
+	* Config: writeConfig() was not called when windows
+	got closed. Now it is.
+
 1998-06-27  Markus Wuebben <markus@kde.org>
 
 	* kmcomposewin.cpp (applyChanges): add false to applyChanges to

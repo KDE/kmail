@@ -118,6 +118,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 //-----------------------------------------------------------------------------
 KMMainWin::~KMMainWin()
 {
+  writeConfig();
+
   if (mHeaders)   delete mHeaders;
   if (mToolBar)   delete mToolBar;
   if (mMenuBar)   delete mMenuBar;
@@ -321,8 +323,10 @@ void KMMainWin::slotCompose()
   KMMessage* msg = new KMMessage;
   msg->initHeader();
 
+  kbp->busy();
   win = new KMComposeWin(msg);
   win->show();
+  kbp->idle();
 }
 
 

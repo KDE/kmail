@@ -51,6 +51,7 @@ void KBusyPtr :: busy (void)
       app->setOverrideCursor(cursorList[currentCursor]);
       if (animated) start(frameDelay);
     }
+    app->processEvents(200);
   }
   busyLevel++;
 }
@@ -66,6 +67,7 @@ void KBusyPtr :: idle (void)
   {
     stop();
     app->restoreOverrideCursor();
+    app->processEvents(200);
   }
 }
 
