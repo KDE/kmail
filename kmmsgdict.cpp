@@ -387,7 +387,7 @@ int KMMsgDict::appendtoFolderIds(const KMFolder *folder, int index)
     return 0;
   FILE *fp = rentry->fp;
   
-  kdDebug(5006) << "Dict appending for folder " << folder->label() << endl;
+//  kdDebug(5006) << "Dict appending for folder " << folder->label() << endl;
   
   int count;
   if (!fread(&count, sizeof(count), 1, fp)) {
@@ -404,7 +404,7 @@ int KMMsgDict::appendtoFolderIds(const KMFolder *folder, int index)
   }
   
   long ofs = (count - 1) * sizeof(ulong);
-  printf("*** offset is +%ld\n", ofs);
+//  printf("*** offset is +%ld\n", ofs);
   if (ofs > 0)
     fseek(rentry->fp, ofs, SEEK_CUR);
 
