@@ -198,9 +198,9 @@ if( fileD0.open( IO_WriteOnly ) ) {
 */
       msg->setStatus(msg->headerField("Status").latin1(),
         msg->headerField("X-Status").latin1());
-      msg->setEncryptionState( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
-      msg->setSignatureState( msg->headerField( "X-KMail-SignatureState" ).at(0));
-      
+      msg->setEncryptionStateChar( msg->headerField( "X-KMail-EncryptionState" ).at(0) );
+      msg->setSignatureStateChar( msg->headerField( "X-KMail-SignatureState" ).at(0));
+
       addedOk = processNewMsg(msg);
 
       if (addedOk)

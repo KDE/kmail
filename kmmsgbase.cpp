@@ -160,9 +160,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
   }
 }
 
-
-void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status,
-                                    int idx )
+void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status, int idx )
 {
     kdDebug() << "***setEncryptionState1( " << status << " )" << endl;
     mDirty = TRUE;
@@ -170,7 +168,7 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status,
         mParent->headerOfMsgChanged(this, idx);
 }
 
-void KMMsgBase::setEncryptionState( QChar status, int idx )
+void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
 {
     kdDebug() << "***setEncryptionState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
     
@@ -187,9 +185,8 @@ void KMMsgBase::setEncryptionState( QChar status, int idx )
 }
 
 
-void KMMsgBase::setSignatureState( const KMMsgSignatureState status,
-                                   int idx ) 
-{ 
+void KMMsgBase::setSignatureState( const KMMsgSignatureState status, int idx )
+{
     kdDebug() << "***setSignatureState1( " << status << " )" << endl;
     mDirty = TRUE;
     if (mParent)
@@ -198,7 +195,7 @@ void KMMsgBase::setSignatureState( const KMMsgSignatureState status,
 
 
 
-void KMMsgBase::setSignatureState( QChar status, int idx )
+void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
     kdDebug() << "***setSignatureState2( " << (status.isNull() ? '?' : status.latin1()) << " )" << endl;
     
@@ -213,7 +210,6 @@ void KMMsgBase::setSignatureState( QChar status, int idx )
     else
         setSignatureState( KMMsgSignatureStateUnknown, idx );
 }
-
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isUnread(void) const

@@ -95,29 +95,27 @@ public:
   virtual void setStatus(const KMMsgStatus status, int idx = -1);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);
 
-
   /** Encryption status of the message. */
   virtual KMMsgEncryptionState encryptionState() const = 0;
 
   /** Signature status of the message. */
   virtual KMMsgSignatureState signatureState() const = 0;
 
+  /** Set encryption status of the message. */
+  virtual void setEncryptionState(const KMMsgEncryptionState, int idx = -1);
+
+  /** Set signature status of the message. */
+  virtual void setSignatureState(const KMMsgSignatureState, int idx = -1);
+
   /** Set encryption status of the message and mark dirty. Optional
    * optimization: @p idx may specify the index of this message within
    * the parent folder. */
-  virtual void setEncryptionState(const KMMsgEncryptionState status, 
-                                  int idx = -1 );
-    virtual void setEncryptionState( QChar status,
-                                     int idx = -1 );
-    
+  virtual void setEncryptionStateChar( QChar status, int idx = -1 );
+                                     
   /** Set signature status of the message and mark dirty. Optional
    * optimization: @p idx may specify the index of this message within
    * the parent folder. */
-  virtual void setSignatureState(const KMMsgSignatureState status,
-                                 int idx = -1 );
-    virtual void setSignatureState( QChar status,
-                                    int idx = -1 );
-    
+  virtual void setSignatureStateChar( QChar status, int idx = -1 );                                    
 
   /** Important header fields of the message that are also kept in the index. */
   virtual QString subject(void) const = 0;

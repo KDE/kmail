@@ -582,21 +582,11 @@ public:
   virtual void setStatus(const KMMsgStatus status, int idx = -1);
   virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
 
-    /** Set encryption status of the message and mark dirty. Optional
-   * optimization: @p idx may specify the index of this message within
-   * the parent folder. */
-  virtual void setEncryptionState(const KMMsgEncryptionState status, 
-                                  int idx = -1 );
-  virtual void setEncryptionState( QChar status,
-        int idx = -1 ) { KMMsgBase::setEncryptionState( status, idx ); }
-    
-  /** Set signature status of the message and mark dirty. Optional
-   * optimization: @p idx may specify the index of this message within
-   * the parent folder. */
-  virtual void setSignatureState(const KMMsgSignatureState status,
-                                 int idx = -1 );
-  virtual void setSignatureState( QChar status,
-                                    int idx = -1 ) { KMMsgBase::setSignatureState( status, idx ); }
+  /** Set encryption status of the message. */
+  virtual void setEncryptionState(const KMMsgEncryptionState, int idx = -1);
+
+  /** Set signature status of the message. */
+  virtual void setSignatureState(const KMMsgSignatureState, int idx = -1);
 
   /** Encryption status of the message. */
   virtual KMMsgEncryptionState encryptionState() const { return mEncryptionState; }

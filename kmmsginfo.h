@@ -28,6 +28,8 @@ public:
                     const QCString& to, time_t date,
 		    KMMsgStatus status, const QCString& xmark,
 		    const QCString& replyToId, const QCString& msgId,
+		    KMMsgEncryptionState encryptionState,
+		    KMMsgSignatureState signatureState,
 		    off_t folderOffset=0, size_t msgSize=0);
 
   /** Initialize with given values and set dirty flag to FALSE. */
@@ -35,7 +37,10 @@ public:
                     const QCString& to, time_t date,
 		    KMMsgStatus status, const QCString& xmark,
 		    const QCString& replyToId, const QCString& msgId,
-		    const QCString& fileName, unsigned long msgSize=0);
+		    const QCString& fileName, 
+		    KMMsgEncryptionState encryptionState,
+		    KMMsgSignatureState signatureState,
+		    unsigned long msgSize=0);
 
   /** Inherited methods (see @ref KMMsgBase for description): */
   virtual QString subject(void) const;
@@ -60,6 +65,8 @@ public:
   virtual void setXMark(const QString&);
   virtual void setReplyToIdMD5(const QString&);
   virtual void setMsgIdMD5(const QString&);
+  virtual void setEncryptionState( const KMMsgEncryptionState, int idx = -1 );
+  virtual void setSignatureState( const KMMsgSignatureState, int idx = -1 );
 
   /** Grr.. c++! */
   virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }
@@ -73,9 +80,8 @@ public:
 
 
 private:
+  // WARNING: Do not add new member variables to the class. Add them to kd
   KMMsgStatus mStatus;
-  KMMsgEncryptionState mEncryptionState;
-  KMMsgSignatureState mSignatureState;
   class KMMsgInfoPrivate;
   KMMsgInfoPrivate *kd;
 };

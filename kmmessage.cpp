@@ -354,8 +354,8 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 
   if (aSetStatus) {
     setStatus(headerField("Status").latin1(), headerField("X-Status").latin1());
-    setEncryptionState( headerField("X-KMail-EncryptionState").at(0) );
-    setSignatureState(  headerField("X-KMail-SignatureState").at(0) );
+    setEncryptionStateChar( headerField("X-KMail-EncryptionState").at(0) );
+    setSignatureStateChar(  headerField("X-KMail-SignatureState").at(0) );
   }
 
   mNeedsAssembly = FALSE;
@@ -3136,30 +3136,25 @@ void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
   mDirty = TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
-void KMMessage::setEncryptionState( const KMMsgEncryptionState aStatus,
-                                    int idx )
+void KMMessage::setEncryptionState(const KMMsgEncryptionState s, int idx)
 {
-    if( mEncryptionState == aStatus )
+    if( mEncryptionState == s )
         return;
-    KMMsgBase::setEncryptionState( aStatus, idx );
-    mEncryptionState = aStatus;
+    mEncryptionState = s;
     mDirty = true;
+    KMMsgBase::setEncryptionState(s, idx);
 }
 
-
 //-----------------------------------------------------------------------------
-void KMMessage::setSignatureState( const KMMsgSignatureState aStatus,
-                                   int idx )
+void KMMessage::setSignatureState(KMMsgSignatureState s, int idx)
 {
-    if( mSignatureState == aStatus )
+    if( mSignatureState == s )
         return;
-    KMMsgBase::setSignatureState( aStatus, idx );
-    mSignatureState = aStatus;
+    mSignatureState = s;
     mDirty = true;
+    KMMsgBase::setSignatureState(s, idx);
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)

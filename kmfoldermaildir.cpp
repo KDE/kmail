@@ -568,7 +568,9 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       }
 
       KMMsgInfo *mi = new KMMsgInfo(this);
-      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr, msgIdStr, file.local8Bit(), f.size());
+      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr, 
+	       msgIdStr, file.local8Bit(), KMMsgEncryptionStateUnknown, 
+	       KMMsgSignatureStateUnknown, f.size());
       if (!dateStr.isEmpty())
         mi->setDate(dateStr);
       mi->setDirty(false);
