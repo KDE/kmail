@@ -72,6 +72,9 @@ class KMMsgIndex : public QObject
 public:
     KMMsgIndex(QObject *parent=NULL, const char *name=NULL);
     ~KMMsgIndex() { reset(); }
+    
+    void init();
+    void remove();
 
     bool canHandleQuery(KMSearchRule *);
     bool canHandleQuery(KMSearchPattern *);
