@@ -564,6 +564,7 @@ public:
 protected:
   QCheckBox     *mAutoAppSignFileCheck;
   QCheckBox     *mSmartQuoteCheck;
+  QCheckBox     *mAutoRequestMDNCheck;
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
   QCheckBox     *mExternalEditorCheck;

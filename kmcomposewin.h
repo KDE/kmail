@@ -725,6 +725,7 @@ protected:
   KMMsgPartList mAtmList;
   QPopupMenu *mAttachMenu;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
+  bool mAutoRequestMDN;
   bool mLastSignActionState, mLastEncryptActionState;
   bool mLastIdentityHasOpenPgpKey;
   KMFolder *mFolder;

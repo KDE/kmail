@@ -89,6 +89,7 @@ using Syntaxhighlighter::SpellChecker;
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   : MailComposerIface(), KMTopLevelWidget("kmail-composer#"),
+    mAutoRequestMDN( false ),
     mId( id ), mNeverSign( false ), mNeverEncrypt( false )
 {
   if (kernel->xmlGuiInstance())
@@ -433,6 +434,7 @@ void KMComposeWin::readConfig(void)
   mAutoPgpSign = config->readBoolEntry("pgp-auto-sign", false);
   mAutoPgpEncrypt = config->readBoolEntry("pgp-auto-encrypt", false);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
+  mAutoRequestMDN = config->readBoolEntry("request-mdn", false);
 
   int mode = config->readNumEntry("Completion Mode",
                                   KGlobalSettings::completionMode() );
@@ -891,6 +893,7 @@ void KMComposeWin::setupActions(void)
   requestMDNAction = new KToggleAction ( i18n("&Request Disposition Notification"), 0,
 					 actionCollection(),
 					 "options_request_mdn");
+  requestMDNAction->setChecked(mAutoRequestMDN);
   //----- Message-Encoding Submenu
   encodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
 				      0, this, SLOT(slotSetCharset() ),
@@ -1231,8 +1234,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   // check for the presence of a DNT header, indicating that MDN's were
   // requested
   QString mdnAddr = newMsg->headerField("Disposition-Notification-To");
-  requestMDNAction->setChecked( !mdnAddr.isEmpty() &&
- 				im->thatIsMe( mdnAddr ) );
+  requestMDNAction->setChecked( ( !mdnAddr.isEmpty() &&
+				  im->thatIsMe( mdnAddr ) ) || mAutoRequestMDN );
 
   // check for presence of a priority header, indicating urgent mail:
   urgentAction->setChecked( newMsg->isUrgent() );

@@ -2383,6 +2383,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
   vlay->addWidget( mSmartQuoteCheck );
 
+  mAutoRequestMDNCheck = new QCheckBox( i18n("Automatically request Message Disposition Notifications"), this );
+  vlay->addWidget( mAutoRequestMDNCheck );
+
   // a checkbutton for "word wrap" and a spinbox for the column in
   // which to wrap:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -2428,6 +2431,16 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
 
   vlay->addWidget( group );
   vlay->addStretch( 100 );
+
+  QString msg = i18n("<qt><p>Enable this option if you want KMail to request "
+		     "Message Disposition Notifications (MDNs) for each of your "
+		     "outgoing messages.</p>"
+		     "<p>This option only affects the default; "
+		     "you can still enable or disable MDN requesting on a "
+		     "per-message basis in the composer, menu item "
+		     "<em>Options</em>->&gt;"
+		     "<em>Request Disposition Notification</em>.</p></qt>");
+  QWhatsThis::add( mAutoRequestMDNCheck, msg );
 }
 
 void ComposerPage::GeneralTab::setup() {
@@ -2438,6 +2451,7 @@ void ComposerPage::GeneralTab::setup() {
   bool state = ( composer.readEntry("signature").lower() != "manual" );
   mAutoAppSignFileCheck->setChecked( state );
   mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote", true ) );
+  mAutoRequestMDNCheck->setChecked( composer.readBoolEntry( "request-mdn", false ) );
   mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap", true ) );
   mWrapColumnSpin->setValue( composer.readNumEntry( "break-at", 78 ) );
 
@@ -2456,6 +2470,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   }
   if ( composer.hasKey( "smart-quote" ) )
     mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote" ) );
+  if ( composer.hasKey( "request-mdn" ) )
+    mAutoRequestMDNCheck->setChecked( composer.readBoolEntry( "request-mdn" ) );
   if ( composer.hasKey( "word-wrap" ) )
     mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap" ) );
   if ( composer.hasKey( "break-at" ) )
@@ -2479,6 +2495,7 @@ void ComposerPage::GeneralTab::apply() {
   bool autoSignature = mAutoAppSignFileCheck->isChecked();
   composer.writeEntry( "signature", autoSignature ? "auto" : "manual" );
   composer.writeEntry( "smart-quote", mSmartQuoteCheck->isChecked() );
+  composer.writeEntry( "request-mdn", mAutoRequestMDNCheck->isChecked() );
   composer.writeEntry( "word-wrap", mWordWrapCheck->isChecked() );
   composer.writeEntry( "break-at", mWrapColumnSpin->value() );
 }
