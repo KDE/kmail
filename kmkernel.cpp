@@ -788,7 +788,7 @@ void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KURL &aURL,
   bool overwrite)
 {
   KIO::Job *job = KIO::put(aURL, -1, overwrite, FALSE);
-  putData pd; pd.url = aURL; pd.data = aData;
+  putData pd; pd.url = aURL; pd.data = aData; pd.offset = 0;
   mPutJobs.insert(job, pd);
   connect(job, SIGNAL(dataReq(KIO::Job*,QByteArray&)),
     SLOT(slotDataReq(KIO::Job*,QByteArray&)));
@@ -798,10 +798,27 @@ void KMKernel::byteArrayToRemoteFile(const QByteArray &aData, const KURL &aURL,
 
 void KMKernel::slotDataReq(KIO::Job *job, QByteArray &data)
 {
+  // send the data in 64 KB chunks
+  const int MAX_CHUNK_SIZE = 64*1024;
   QMap<KIO::Job*, putData>::Iterator it = mPutJobs.find(job);
   assert(it != mPutJobs.end());
-  data = (*it).data;
-  (*it).data = QByteArray();
+  int remainingBytes = (*it).data.size() - (*it).offset;
+  if( remainingBytes > MAX_CHUNK_SIZE )
+  {
+    // send MAX_CHUNK_SIZE bytes to the receiver (deep copy)
+    data.duplicate( (*it).data.data() + (*it).offset, MAX_CHUNK_SIZE );
+    (*it).offset += MAX_CHUNK_SIZE;
+    kdDebug( 5006 ) << "Sending " << MAX_CHUNK_SIZE << " bytes ("
+                    << remainingBytes - MAX_CHUNK_SIZE << " bytes remain)\n";
+  }
+  else
+  {
+    // send the remaining bytes to the receiver (deep copy)
+    data.duplicate( (*it).data.data() + (*it).offset, remainingBytes );
+    (*it).data = QByteArray();
+    (*it).offset = 0;
+    kdDebug( 5006 ) << "Sending " << remainingBytes << " bytes\n";
+  }
 }
 
 void KMKernel::slotResult(KIO::Job *job)

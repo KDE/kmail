@@ -156,6 +156,7 @@ private:
   {
     KURL url;
     QByteArray data;
+    int offset;
   };
   QMap<KIO::Job *, putData> mPutJobs;
   /** previous KMail version. If different from current,
