@@ -615,7 +615,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
       remainingBytes = MAX_CHUNK_SIZE;
 
     QByteArray data;
-    data.duplicate( mData + mOffset, remainingBytes );
+    data.duplicate( mData.data() + mOffset, remainingBytes );
     mJob->sendAsyncData( mData );
     mOffset += remainingBytes;
     return;
