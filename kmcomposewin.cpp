@@ -221,6 +221,34 @@ KMComposeWin::~KMComposeWin()
   }
 }
 
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::makeDescriptiveNames(QStringList &encodings)
+{
+  QStringList encodingNames = KGlobal::charsets()->availableEncodingNames();
+  QMap<QTextCodec*, QString> encodingMap;
+  for (QStringList::Iterator it = encodingNames.begin();
+    it != encodingNames.end(); it++)
+  {
+    QTextCodec *codec = KMMsgBase::codecForName(*it);
+    if (codec) encodingMap.insert(codec, *it);
+  }
+  for (QStringList::Iterator it = encodings.begin();
+    it != encodings.end(); it++)
+  {
+    QTextCodec *codec = KMMsgBase::codecForName(*it);
+    QMap<QTextCodec*, QString>::Iterator it2 = encodingMap.find(codec);
+    if (it2 == encodingMap.end()) 
+      (*it) = KGlobal::charsets()->languageForEncoding(*it)
+      + " ( " + *it + " )";
+    else
+      (*it) = KGlobal::charsets()->languageForEncoding(*it2)
+      + " ( " + *it + " )";
+  }
+}  
+
+
+//-----------------------------------------------------------------------------
 bool KMComposeWin::event(QEvent *e)
 {
   if (e->type() == QEvent::ApplicationPaletteChange)
@@ -730,6 +758,8 @@ void KMComposeWin::setupActions(void)
   KConfig *config = kapp->config();
   config->setGroup("Composer");
   QStringList encodings = config->readListEntry("charsets");
+  makeDescriptiveNames( encodings );
+
   encodingAction->setItems( encodings );
   encodingAction->setCurrentItem( -1 );
 
@@ -1376,7 +1406,8 @@ void KMComposeWin::setCharset(const QString& aCharset, bool forceDefault)
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
-    if (KMMsgBase::codecForName(*it) == KMMsgBase::codecForName(mCharset))
+    if (KMMsgBase::codecForName(KGlobal::charsets()->encodingForName(*it))
+      == KMMsgBase::codecForName(mCharset))
     {
       encodingAction->setCurrentItem( i );
       slotSetCharset();
@@ -1543,7 +1574,8 @@ void KMComposeWin::slotInsertFile()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSetCharset()
 {
-  mCharset = encodingAction->currentText();
+  mCharset = KGlobal::charsets()->encodingForName( encodingAction->
+    currentText() );
   mMsg->setCharset(mCharset);
   setEditCharset();
 }

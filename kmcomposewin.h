@@ -147,6 +147,9 @@ public:
   KMComposeWin(KMMessage* msg=NULL, QString id = "unknown" );
   ~KMComposeWin();
 
+  /** Add descriptions to the encodings in the list */
+  static void makeDescriptiveNames(QStringList &encodings);
+
   /** To catch palette changes */
   virtual bool event(QEvent *e);
 
