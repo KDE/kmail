@@ -65,14 +65,12 @@ GLLIB = @GLLIB@
 GMSGFMT = @GMSGFMT@
 KDE_INCLUDES = @KDE_INCLUDES@
 KDE_LDFLAGS = @KDE_LDFLAGS@
-LD = @LD@
 LDFLAGS = @LDFLAGS@
 LIBCOMPAT = @LIBCOMPAT@
 LIBCRYPT = @LIBCRYPT@
 LIBJPEG = @LIBJPEG@
 LIBOBJS = @LIBOBJS@
 LIBSOCKET = @LIBSOCKET@
-LIBTOOL = @LIBTOOL@
 LN_S = @LN_S@
 MAKEINFO = @MAKEINFO@
 MSGFMT = @MSGFMT@
@@ -97,6 +95,7 @@ qt_includes = @qt_includes@
 qt_libraries = @qt_libraries@
 topdir = @topdir@
 
+SUBDIRS = pics
 INCLUDES=	-I.. @all_includes@
 LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lmimelib
 MOC	=	@MOC@
@@ -156,7 +155,7 @@ DEP_FILES =  .deps/KEdit.P .deps/kalarmtimer.P .deps/kbusyptr.P \
 .deps/kmfoldertree.P .deps/kmheaders.P .deps/kmmainview.P \
 .deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsginfo.P .deps/kmmsgpart.P \
 .deps/kmreaderwin.P .deps/kmsender.P .deps/kmsettings.P \
-.deps/ktablistbox.P .deps/main.P
+.deps/kshortcut.P .deps/ktablistbox.P .deps/main.P
 CXXMKDEP = $(CXX) -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)
 SOURCES = $(kmail_SOURCES)
 OBJECTS = $(kmail_OBJECTS)
@@ -187,8 +186,8 @@ install-binPROGRAMS: $(bin_PROGRAMS)
 	$(mkinstalldirs) $(bindir)
 	@list='$(bin_PROGRAMS)'; for p in $$list; do \
 	  if test -f $$p; then \
-	    echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`"; \
-	    $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`; \
+	    echo "  $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`"; \
+	     $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`; \
 	  else :; fi; \
 	done
 
@@ -217,14 +216,52 @@ kmail: $(kmail_OBJECTS) $(kmail_DEPENDENCIES)
 .cpp.o:
 	$(CXXCOMPILE) -c $<
 
+# This directory's subdirectories are mostly independent; you can cd
+# into them and run `make' without going through this Makefile.
+# To change the values of `make' variables: instead of editing Makefiles,
+# (1) if the variable is set in `config.status', edit `config.status'
+#     (which will cause the Makefiles to be regenerated when you run `make');
+# (2) otherwise, pass the desired values on the `make' command line.
+
+@SET_MAKE@
+
+all-recursive install-data-recursive install-exec-recursive \
+installdirs-recursive install-recursive uninstall-recursive  \
+check-recursive installcheck-recursive info-recursive dvi-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	for subdir in $(SUBDIRS); do \
+	  target=`echo $@ | sed s/-recursive//`; \
+	  echo "Making $$target in $$subdir"; \
+	  (cd $$subdir && $(MAKE) $$target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+mostlyclean-recursive clean-recursive distclean-recursive \
+maintainer-clean-recursive:
+	@set fnord $(MAKEFLAGS); amf=$$2; \
+	rev=''; for subdir in $(SUBDIRS); do rev="$$rev $$subdir"; done; \
+	for subdir in $$rev; do \
+	  target=`echo $@ | sed s/-recursive//`; \
+	  echo "Making $$target in $$subdir"; \
+	  (cd $$subdir && $(MAKE) $$target) \
+	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+tags-recursive:
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  (cd $$subdir && $(MAKE) tags); \
+	done
+
 tags: TAGS
 
 ID: $(HEADERS) $(SOURCES)
 	here=`pwd` && cd $(srcdir) && mkid -f$$here/ID $(SOURCES) $(HEADERS)
 
-TAGS:  $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES)
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES)
 	tags=; \
 	here=`pwd`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
+	  test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+	done; \
 	test -z "$(ETAGS_ARGS)$(SOURCES)$(HEADERS)$$tags" \
 	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $(SOURCES) $(HEADERS) -o $$here/TAGS)
 
@@ -251,6 +288,14 @@ distdir: $(DISTFILES)
 	  test -f $(distdir)/$$file \
 	  || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
 	  || cp -p $$d/$$file $(distdir)/$$file; \
+	done
+	for subdir in $(SUBDIRS); do		\
+	  test -d $(distdir)/$$subdir		\
+	  || mkdir $(distdir)/$$subdir		\
+	  || exit 1;				\
+	  chmod 777 $(distdir)/$$subdir;	\
+	  (cd $$subdir && $(MAKE) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	    || exit 1; \
 	done
 
 MKDEP = gcc -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
@@ -285,27 +330,33 @@ maintainer-clean-depend:
 	$(CXXMKDEP) $< >$@.tmp \
 	  && sed "s,^\(.*\)\.o:,\1.$$o \1.l$$o $@:," < $@.tmp > $@ \
 	  && rm -f $@.tmp
-info:
-dvi:
-check: all
-	$(MAKE)
-installcheck:
-install-exec: install-binPROGRAMS
+info: info-recursive
+dvi: dvi-recursive
+check: all-am
+	$(MAKE) check-recursive
+installcheck: installcheck-recursive
+all-am: Makefile $(PROGRAMS)
+
+install-exec-am: install-binPROGRAMS
+
+uninstall-am: uninstall-binPROGRAMS
+
+install-exec: install-exec-recursive install-exec-am
 	@$(NORMAL_INSTALL)
 
-install-data: 
+install-data: install-data-recursive
 	@$(NORMAL_INSTALL)
 
-install: install-exec install-data all
+install: install-recursive install-exec-am
 	@:
 
-uninstall: uninstall-binPROGRAMS
+uninstall: uninstall-recursive uninstall-am
 
-all: Makefile $(PROGRAMS)
+all: all-recursive all-am
 
 install-strip:
 	$(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' INSTALL_SCRIPT='$(INSTALL_PROGRAM)' install
-installdirs:
+installdirs: installdirs-recursive
 	$(mkinstalldirs)  $(bindir)
 
 
@@ -323,29 +374,44 @@ distclean-generic:
 maintainer-clean-generic:
 	test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
 	test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
-mostlyclean:  mostlyclean-binPROGRAMS mostlyclean-compile \
+mostlyclean-am:  mostlyclean-binPROGRAMS mostlyclean-compile \
 		mostlyclean-tags mostlyclean-depend mostlyclean-generic
 
-clean:  clean-binPROGRAMS clean-compile clean-tags clean-depend \
-		clean-generic mostlyclean
+clean-am:  clean-binPROGRAMS clean-compile clean-tags clean-depend \
+		clean-generic mostlyclean-am
 
-distclean:  distclean-binPROGRAMS distclean-compile distclean-tags \
-		distclean-depend distclean-generic clean
+distclean-am:  distclean-binPROGRAMS distclean-compile distclean-tags \
+		distclean-depend distclean-generic clean-am
+
+maintainer-clean-am:  maintainer-clean-binPROGRAMS \
+		maintainer-clean-compile maintainer-clean-tags \
+		maintainer-clean-depend maintainer-clean-generic \
+		distclean-am
+
+mostlyclean:  mostlyclean-recursive mostlyclean-am
+
+clean:  clean-recursive clean-am
+
+distclean:  distclean-recursive distclean-am
 	rm -f config.status
 
-maintainer-clean:  maintainer-clean-binPROGRAMS maintainer-clean-compile \
-		maintainer-clean-tags maintainer-clean-depend \
-		maintainer-clean-generic distclean
+maintainer-clean:  maintainer-clean-recursive maintainer-clean-am
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
 
 .PHONY: default mostlyclean-binPROGRAMS distclean-binPROGRAMS \
 clean-binPROGRAMS maintainer-clean-binPROGRAMS uninstall-binPROGRAMS \
 install-binPROGRAMS mostlyclean-compile distclean-compile clean-compile \
-maintainer-clean-compile tags mostlyclean-tags distclean-tags \
-clean-tags maintainer-clean-tags distdir mostlyclean-depend \
-distclean-depend clean-depend maintainer-clean-depend info dvi \
-installcheck install-exec install-data install uninstall all \
+maintainer-clean-compile install-data-recursive \
+uninstall-data-recursive install-exec-recursive \
+uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
+all-recursive check-recursive installcheck-recursive info-recursive \
+dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
+distclean-tags clean-tags maintainer-clean-tags distdir \
+mostlyclean-depend distclean-depend clean-depend \
+maintainer-clean-depend info dvi installcheck all-am install-exec-am \
+uninstall-am install-exec install-data install uninstall all \
 installdirs mostlyclean-generic distclean-generic clean-generic \
 maintainer-clean-generic clean mostlyclean distclean maintainer-clean
 

@@ -113,7 +113,7 @@ bool KMSender::sendMail(KMMessage* aMsg)
     return FALSE;
   }
 
-  sendCmd = mMailer;
+  sendCmd = mMailer.copy();
   sendCmd += " \"";
   sendCmd += aMsg->to();
   sendCmd += "\" < ";

@@ -31,9 +31,9 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount() 
 {
-  if (mCFile)   delete mCFile;
-  if (mCStream) delete mCStream;
   if (mConfig)  delete mConfig;
+  if (mCStream) delete mCStream;
+  if (mCFile)   delete mCFile;
   if (mFolder) mFolder->removeAccount(this);
 }
 

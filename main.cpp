@@ -108,16 +108,15 @@ static void init(int argc, char *argv[])
 //-----------------------------------------------------------------------------
 static void cleanup(void)
 {
-  app->getConfig()->sync();
-
   trashFolder->close();
 
-  qInstallMsgHandler(oldMsgHandler);
-
   if (msgSender) delete msgSender;
-  if (folderMgr) delete folderMgr;
   if (acctMgr) delete acctMgr;
+  if (folderMgr) delete folderMgr;
   if (kbp) delete kbp;
+
+  qInstallMsgHandler(oldMsgHandler);
+  app->getConfig()->sync();
 }
 
 

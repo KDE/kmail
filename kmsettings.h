@@ -79,6 +79,7 @@ private slots:
 private:
   QLineEdit *mEdtName, *mEdtLocation, *mEdtLogin, *mEdtPasswd, *mEdtHost;
   QLineEdit *mEdtPort;
+  QComboBox *mFolders;
   KMAccount *mAcct;
 };
 

@@ -139,8 +139,6 @@ void KMAcctFolder::readTocHeader(void)
 
     act = acctMgr->find(line);
     if (act) addAccount(act);
-    else warning("cannot find account '" + QString(line) + "' for folder '" +
-		 name() + "'.");
   }
 }
 

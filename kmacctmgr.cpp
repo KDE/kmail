@@ -76,23 +76,31 @@ bool KMAcctMgr::reload(void)
   dir.setPath(mBasePath);
   if (!dir.exists())
   {
+<<<<<<< kmacctmgr.cpp
+    warning(nls->translate("Directory\n%s\ndoes not exist.\n\n"
+	    "KMail will create it now."), (const char*)mBasePath);
+    dir.mkdir(mBasePath, TRUE);
+=======
     warning("Directory\n"+mBasePath+"\ndoes not exist.\n\n"
 	    "KMail will create it now.");
     // dir.mkdir(mBasePath, TRUE);
     // Stephan: mkdir without right permissions is dangerous
     // and is for sure a port from Windows ;)
     mkdir(mBasePath.data(), 0700);
+>>>>>>> 1.4
   }
 
   if (!dir.cd(mBasePath, TRUE))
   {
-    warning("Cannot enter directory '" + mBasePath + "'.\n");
+    warning(nls->translate("Cannot enter directory:\n%s"), 
+	    (const char*)mBasePath);
     return FALSE;
   }
 
   if (!(list=(QStrList*)dir.entryList()))
   {
-    warning("Directory '"+mBasePath+"' is unreadable.\n");
+    warning(nls->translate("Directory is unreadable:\n%s"), 
+	    (const char*)mBasePath);
     return FALSE;
   }
 
@@ -105,7 +113,18 @@ bool KMAcctMgr::reload(void)
     config  = new KConfig(cStream);
 
     act = create(config->readEntry("type"), acctName);
-    act->takeConfig(config, cFile, cStream);
+    if (act) act->takeConfig(config, cFile, cStream);
+    else
+    {
+      warning(nls->translate("Cannot read configuration of account '%s'\n"
+			     "from broken file %s\nAccount type: %s\n"),
+	      (const char*)acctName, (const char*)(mBasePath+"/"+acctName), 
+	      (const char*)config->readEntry("type"));
+
+      delete config;
+      delete cStream;
+      delete cFile;
+    }
   }
 
   return TRUE;
@@ -123,10 +142,6 @@ KMAccount* KMAcctMgr::create(const QString& aType, const QString& aName)
   else if (aType == "pop") 
     act = new KMAcctPop(this, aName);
 
-  else
-    warning("cannot access account '" + aName + 
-	    "' which is of unknown type '" + aType + "'.");
-
   if (act) 
   {
     act->openConfig();
@@ -141,7 +156,7 @@ KMAccount* KMAcctMgr::find(const QString& aName)
 {
   KMAccount* cur;
 
-  assert(!aName.isEmpty());
+  if (aName.isEmpty()) return NULL;
 
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {
@@ -176,14 +191,15 @@ bool KMAcctMgr::rename(const KMAccount* acct, const char* newName)
 
   if (!dir.cd(mBasePath))
   {
-    warning("Cannot enter directory\n" + mBasePath);
+    warning(nls->translate("Cannot enter directory:\n%s"), 
+	    (const char*)mBasePath);
     return FALSE;
   }
 
   if (!dir.rename(acct->name(), newName, FALSE))
   {
-    warning("Cannot rename\n" + mBasePath + "/" + acct->name() +
-	    "\nto\n" + mBasePath + "/" + newName + "'.\n");
+    warning(nls->translate("Cannot rename account file\n%s to %s\nin directory %s"),
+	    (const char*)acct->name(), newName, (const char*)mBasePath);
     return FALSE;
   }
 
@@ -195,20 +211,20 @@ bool KMAcctMgr::rename(const KMAccount* acct, const char* newName)
 bool KMAcctMgr::remove(KMAccount* acct)
 {
   QDir dir;
-  QString acctName = acct->name();
+  QString acctName;
 
   assert(acct != NULL);
 
+  acctName = acct->name();
+
   if (!dir.cd(mBasePath))
   {
-    warning(QString(nls->translate("Cannot enter directory")) + QString("\n")
-	                   + mBasePath);
+    warning(nls->translate("Cannot enter directory:\n%s"), (const char*)mBasePath);
     return FALSE;
   }
 
   mAcctList.remove(acct);
-  delete acct;
-  dir.remove(acctName);
+   dir.remove(acctName);
 
   return TRUE;
 }

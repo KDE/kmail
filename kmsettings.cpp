@@ -17,6 +17,8 @@
 #include <qradiobt.h>
 #include <klocale.h>
 #include <qlayout.h>
+#include <kmfoldermgr.h>
+#include <kmacctfolder.h>
 
 #include "kmmainwin.h"
 #include "kmacctlocal.h"
@@ -353,6 +355,7 @@ void KMSettings::modifyAccount(int index,int)
 
   accountList->removeItem(index);
   tabNetworkAddAcct(accountList, acct, index);
+  accountList->setCurrentItem(-1);
 }
 
 //-----------------------------------------------------------------------------
@@ -364,16 +367,22 @@ void KMSettings::modifyAccount2()
 //-----------------------------------------------------------------------------
 void KMSettings::removeAccount()
 {
-  QString s,t;
-  s=accountList->text(accountList->currentItem());
-  t = nls->translate("Are you sure you want to remove the account");
-  t.detach();
-  t += '\n';
-  t += s;
+  QString acctName, txt;
+  KMAccount* acct;
 
-  if ((KMsgBox::yesNo(this,nls->translate("Confirmation"),t))==1)
+  acctName = accountList->text(accountList->currentItem(),0).copy();
+
+  txt = nls->translate("Are you sure you want to remove the account");
+  txt.detach();
+  txt += '\n';
+  txt += acctName;
+
+  if ((KMsgBox::yesNo(this,nls->translate("Confirmation"), txt))==1)
   {
-    acctMgr->remove(acctMgr->find(s));
+    acct = acctMgr->find(acctName);
+    assert(acct != NULL);
+    acct->writeConfig();
+    acctMgr->remove(acct);
     accountList->removeItem(accountList->currentItem());
     if (!accountList->count())
     {
@@ -381,6 +390,7 @@ void KMSettings::removeAccount()
       removeButton->setEnabled(FALSE);
     }
   }
+  accountList->setCurrentItem(-1);
 }
 
 //-----------------------------------------------------------------------------
@@ -430,6 +440,9 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   QString acctType;
   QWidget *btnBox;
   QLabel *lbl;
+  KMFolder *folder, *acctFolder;
+  KMFolderDir* fdir = (KMFolderDir*)&folderMgr->dir();
+  int i;
 
   initMetaObject();
 
@@ -440,7 +453,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   acctType = mAcct->type();
 
-  grid = new QGridLayout(this, 8, 3, 8, 4);
+  grid = new QGridLayout(this, 10, 3, 8, 4);
   grid->setColStretch(1, 5);
 
   lbl = new QLabel(nls->translate("Type:"), this);
@@ -463,7 +476,6 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 				      2, 0, &btnDetail);
     connect(btnDetail,SIGNAL(clicked()), SLOT(chooseLocation()));
   }
-
   else if (acctType == "pop")
   {
     lbl->setText(nls->translate("Pop Account"));
@@ -480,15 +492,31 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     QString tmpStr(10);
     tmpStr = ((KMAcctPop*)mAcct)->port();
     mEdtPort = createLabeledEntry(this, grid, nls->translate("Port:"),
-				  tmpStr, 3, 0);
+				  tmpStr, 5, 0);
 
   }
-
   else fatal("KMAccountSettings: unsupported account type");
 
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
 
+  lbl = new QLabel(nls->translate("Store new mail in account:"), this);
+  grid->addMultiCellWidget(lbl, 6, 6, 0, 2);
+
+  // combo box of all folders with current account folder selected
+  acctFolder = mAcct->folder();
+  mFolders = new QComboBox(this);
+  mFolders->insertItem(nls->translate("<none>"));
+  for (i=1, folder=(KMFolder*)fdir->first(); folder; folder=(KMFolder*)fdir->next())
+  {
+    if (folder->isDir()) continue;
+    mFolders->insertItem(folder->name());
+    if (folder == acctFolder) mFolders->setCurrentItem(i);
+    i++;
+  }
+  grid->addWidget(mFolders, 7, 1);
+
+  // buttons at bottom
   btnBox = new QWidget(this);
   ok = new QPushButton(nls->translate("Ok"), btnBox);
   ok->adjustSize();
@@ -506,7 +534,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   btnBox->setMinimumSize(230, ok->size().height()+10);
   btnBox->setMaximumSize(2048, ok->size().height()+10);
-  grid->addMultiCellWidget(btnBox, 7, 7, 0, 2);
+  grid->addMultiCellWidget(btnBox, 9, 9, 0, 2);
 
   resize(350,300);
   grid->activate();
@@ -530,11 +558,18 @@ void KMAccountSettings::chooseLocation()
 void KMAccountSettings::accept()
 {
   QString acctType = mAcct->type();
+  KMFolder* fld;
+  int id;
 
   if (mEdtName->text() != mAcct->name())
   {
     mAcct->setName(mEdtName->text());
   }
+
+  id = mFolders->currentItem();
+  if (id > 0) fld = folderMgr->find(mFolders->currentText());
+  else fld = NULL;
+  mAcct->setFolder((KMAcctFolder*)fld);
 
   if (acctType == "local")
   {
