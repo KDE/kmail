@@ -605,8 +605,8 @@ void KMAcctExpPop::slotJobFinished() {
     else {
       stage = Dele;
       mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from %1. Deleting messages...",
-              "Fetched %n messages from %1. Deleting messages...",
+        i18n( "Fetched 1 message from %1. Deleting messages from server...",
+              "Fetched %n messages from %1. Deleting messages from server...",
               numMsgs )
         .arg( mHost ) );
       url.setPath("/remove/" + idsOfMsgsToDelete.join(","));
