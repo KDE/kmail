@@ -1059,6 +1059,8 @@ void KMComposeWin::setupActions(void)
     //default = send now, alternative = queue
     ( void )  new KAction( i18n("&Send Mail"), "mail_send", CTRL+Key_Return,
                         this, SLOT(slotSendNow()), actionCollection(),"send_default");
+
+    // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu =  new KActionMenu (i18n("&Send Mail Via"), "mail_send",
 		    actionCollection(), "send_default_via" );
 
@@ -1080,6 +1082,7 @@ void KMComposeWin::setupActions(void)
    ( void )  new KAction( i18n("&Send Mail"), "mail_send", 0,
                         this, SLOT(slotSendNow()), actionCollection(),"send_alternative");
 
+    // FIXME: change to mail_send_via icon when this exits.
     actActionNowMenu =  new KActionMenu (i18n("&Send Mail Via"), "mail_send",
 		    actionCollection(), "send_alternative_via" );
 
