@@ -300,7 +300,20 @@ namespace KMail {
     // "General" tab:
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );
-    ident.setEmailAddr( mEmailEdit->text() );
+	QString email = mEmailEdit->text();
+	if ( email.isEmpty() || email.contains('@') == 0)
+	  KMessageBox::sorry(this,
+						 i18n("You didn't specify a valid email address."
+							  "You won't create valid emails without such an address."),
+						 i18n("No Email Adress"));
+	if (email.contains('@') > 1) {
+	  KMessageBox::sorry(this,
+						 i18n("Your email address contains two @ characters,"
+							  "which most email servers do not accept."
+							  "You won't create valid emails without changing your address."),
+						 i18n("No Email Adress"));
+	}
+    ident.setEmailAddr( email );
     // "Advanced" tab:
     ident.setPgpIdentity( mPgpKeyRequester->keyIDs().first() );
     ident.setReplyToAddr( mReplyToEdit->text() );
