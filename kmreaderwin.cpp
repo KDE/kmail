@@ -1627,7 +1627,6 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
   win->showMsg( overrideCodec(), msg );
-  win->resize(550,600);
   win->show();
 }
 
