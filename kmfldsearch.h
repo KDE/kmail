@@ -123,7 +123,7 @@ protected:
   QCString mHeaderField;
   int mFieldLength;
   bool mNonLatin;
-  int mFieldIdx, mFunc;
+  int mFieldIdx, mFunc, mRow;
 };
 
 #endif /*kmfldsearch_h*/

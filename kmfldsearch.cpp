@@ -476,10 +476,8 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   assert(aParent!=NULL);
   assert(aGrid!=NULL);
 
+  mRow = aRow;
   mCbxField = new QComboBox(true, aParent);
-  if( aRow > 1 ) {
-    mCbxField->insertItem("");
-  }
   insertFieldItems(TRUE);
   mCbxField->setMinimumSize(mCbxField->sizeHint());
   mCbxField->setMaximumSize(1024, mCbxField->sizeHint().height());
@@ -516,6 +514,7 @@ KMFldSearchRule::~KMFldSearchRule()
 void KMFldSearchRule::insertFieldItems(bool all)
 {
   mCbxField->clear();
+  if (mRow > 1) mCbxField->insertItem("");
   mCbxField->insertItem("Subject");
   mCbxField->insertItem("From");
   mCbxField->insertItem("To");
