@@ -91,7 +91,7 @@ namespace KMail {
     mEnableCheck = new QCheckBox( i18n("&Send picture with every message"), this );
     QWhatsThis::add( mEnableCheck,
         i18n( "Check this box if you want KMail to add a so-called X-Face header to messages "
-            "written with this identity. A X-Face is a small (48x48 pixels) black and "
+            "written with this identity. An X-Face is a small (48x48 pixels) black and "
             "white image that some mail clients are able to display." ) );
     hlay->addWidget( mEnableCheck, Qt::AlignLeft | Qt::AlignVCenter );
 
