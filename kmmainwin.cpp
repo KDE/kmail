@@ -361,7 +361,7 @@ void KMMainWin::createWidgets(void)
   accel->connectItem(accel->insertItem(Key_Left),
 		     mHeaders, SLOT(prevMessage()));
   accel->connectItem(accel->insertItem(Key_Right),
-		     mHeaders, SLOT(nextMessage()));
+  		     mHeaders, SLOT(nextMessage()));
 
   if (!mEncodingStr.isEmpty())
     mCodec = KMMsgBase::codecForName(mEncodingStr);
@@ -394,7 +394,7 @@ void KMMainWin::createWidgets(void)
   accel->connectItem(accel->insertItem(Key_C),
                      this, SLOT(slotCopyMsg()));
   accel->connectItem(accel->insertItem(Key_Delete),
-		     this, SLOT(slotDeleteMsg()));
+		     this, SLOT(slotDeleteMsg()));  
 
   // create list of folders
   mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
@@ -406,6 +406,16 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
+
+  // GRMBL.. work around brokenness in KAction
+  accel->connectItem(accel->insertItem(Key_Plus),
+  		     this, SLOT(slotNextUnreadMessage()) );
+  accel->connectItem(accel->insertItem(Key_Minus),
+  		     this, SLOT(slotPrevUnreadMessage()) );
+  accel->connectItem(accel->insertItem(CTRL+Key_Plus),
+  		     mFolderTree, SLOT(nextUnreadFolder()) );
+  accel->connectItem(accel->insertItem(CTRL+Key_Minus),
+  		     mFolderTree, SLOT(prevUnreadFolder()) );
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
   KAction *nextUnreadFolderAction = new KAction(
@@ -2108,7 +2118,7 @@ void KMMainWin::updateMessageMenu()
 
     bool single_actions = count == 1;
     filterMenu->setEnabled( single_actions );
-    editAction->setEnabled( single_actions && 
+    editAction->setEnabled( single_actions &&
       (mFolder == kernel->outboxFolder() || mFolder == kernel->draftsFolder()));
     bounceAction->setEnabled( single_actions );
     replyAction->setEnabled( single_actions );
