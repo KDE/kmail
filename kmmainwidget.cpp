@@ -1443,6 +1443,7 @@ void KMMainWidget::folderSelectedUnread(KMFolder* aFolder)
     mHeaders->nextUnreadMessage(true);
     mHeaders->blockSignals( false );
     mHeaders->highlightMessage( mHeaders->currentItem() );
+    slotChangeCaption(mFolderTree->currentItem());
 }
 
 //-----------------------------------------------------------------------------
