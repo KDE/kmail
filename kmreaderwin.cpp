@@ -518,7 +518,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Expiry of old messages"),
   I18N_NOOP("Hotkey to temporary switch to fixed width fonts"),
   I18N_NOOP("UTF-7 support"),
-  I18N_NOOP("Opportunistic encryption using OpenPGP"),
+  I18N_NOOP("Automatic encryption using OpenPGP"),
   I18N_NOOP("Enhanced status reports for encrypted/signed messages"),
 };
 static const int numKMailNewFeatures =
