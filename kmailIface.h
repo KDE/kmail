@@ -101,6 +101,7 @@ k_dcop:
   virtual QStringList folderList() const =0;
   virtual DCOPRef getFolder( const QString& vpath ) =0;
   virtual void selectFolder( QString folder ) =0;
+  virtual bool canQueryClose() =0;
 
   virtual int timeOfLastMessageCountChange() const =0;
 

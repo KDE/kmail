@@ -26,6 +26,7 @@
 #include "kmacctmgr.h"
 
 #include <kapplication.h>
+#include <kmainwindow.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
@@ -122,8 +123,11 @@ void KMSystemTray::buildPopupMenu()
   if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
     action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
-  if ( ( action = mainWidget->action("file_quit") ) )
-    action->plug( mPopupMenu );
+  
+  KMainWindow *mainWin = ::qt_cast<KMainWindow*>(getKMMainWidget()->topLevelWidget());
+  if(mainWin)
+    if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
+      action->plug( mPopupMenu );
 }
 
 KMSystemTray::~KMSystemTray()
