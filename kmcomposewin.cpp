@@ -2713,9 +2713,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     if( 0 < rootDaysLeft )
                         txt1 = i18n( "The root certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( rootDaysLeft );
                     else if( 0 > rootDaysLeft )
-                        txt1 = i18n( "The root certificate of the certificate you want to use for signing has expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( rootDaysLeft );
+                        txt1 = i18n( "The root certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( rootDaysLeft );
                     else
-                        txt1 = i18n( "The root certificate of the certificate you want to use for signing expires right today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
+                        txt1 = i18n( "The root certificate of the certificate you want to use for signing expires today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
                     int ret = KMessageBox::warningYesNo( this,
                                                         i18n( "<qt>%1<br>Do you still want to use this signature?</qt>" ).arg( txt1 ),
                                                         i18n( "Certificate Warning" ) );
@@ -2734,9 +2734,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     if( 0 < caDaysLeft )
                         txt1 = i18n( "The CA certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( caDaysLeft );
                     else if( 0 > caDaysLeft )
-                        txt1 = i18n( "The CA certificate of the certificate you want to use for signing has expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( caDaysLeft );
+                        txt1 = i18n( "The CA certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( caDaysLeft );
                     else
-                        txt1 = i18n( "The CA certificate of the certificate you want to use for signing expires right today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
+                        txt1 = i18n( "The CA certificate of the certificate you want to use for signing expires today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
                     int ret = KMessageBox::warningYesNo( this,
                                                         i18n( "<qt>%1<br>Do you still want to use this signature?</qt>" ).arg( txt1 ),
                                                         i18n( "Certificate Warning" ) );
@@ -3048,9 +3048,9 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                       if( 0 < encRecvDaysLeft )
                           txt1 = i18n( "The certificate of the recipient you want to send this message to expires in %1 days.<br>This means that after this period, the recipient will not be able to read your message any longer." ).arg( encRecvDaysLeft );
                       else if( 0 > encRecvDaysLeft )
-                          txt1 = i18n( "The certificate of the recipient you want to send this message to has expired %1 days ago.<br>This means that the recipient will not be able to read your message." ).arg( encRecvDaysLeft );
+                          txt1 = i18n( "The certificate of the recipient you want to send this message to expired %1 days ago.<br>This means that the recipient will not be able to read your message." ).arg( encRecvDaysLeft );
                       else
-                          txt1 = i18n( "The certificate of the recipient you want to send this message to expires right today.<br>This means that beginning from tomorrow, the recipient will not be able to read your message any longer." );
+                          txt1 = i18n( "The certificate of the recipient you want to send this message to expires today.<br>This means that beginning from tomorrow, the recipient will not be able to read your message any longer." );
                       int ret = KMessageBox::warningYesNo( this,
                                                           i18n( "<qt>%1<br>\n\nDo you still want to use this certificate?</qt>" ).arg( txt1 ),
                                                           captionWarn );
@@ -3068,9 +3068,9 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                       if( 0 < certInChainDaysLeft )
                           txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expires in %1 days.<br>This means that after this period, the recipient might not be able to read your message any longer." ).arg( certInChainDaysLeft );
                       else if( 0 > certInChainDaysLeft )
-                          txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to has expired %1 days ago.<br>This means that the recipient might not be able to read your message." ).arg( certInChainDaysLeft );
+                          txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expired %1 days ago.<br>This means that the recipient might not be able to read your message." ).arg( certInChainDaysLeft );
                       else
-                          txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expires right today.<br>This means that beginning from tomorrow, the recipient might not be able to read your message any longer." );
+                          txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expires today.<br>This means that beginning from tomorrow, the recipient might not be able to read your message any longer." );
                       int ret = KMessageBox::warningYesNo( this,
                                                           i18n( "<qt>%1<br>\n\nDo you still want to use this certificate?</qt>" ).arg( txt1 ),
                                                           captionWarn );
