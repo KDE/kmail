@@ -498,6 +498,7 @@ public slots:
   /**
    * Attachment operations.
    */
+  void slotAttachOpen();
   void slotAttachView();
   void slotAttachRemove();
   void slotAttachSave();
@@ -646,6 +647,11 @@ protected:
   virtual bool queryExit ();
 
   /**
+   * Open the attachment with the given index.
+   */
+  void openAttach( int index );
+
+  /**
    * View the attachment with the given index.
    */
   void viewAttach( int index );
@@ -741,7 +747,7 @@ protected:
   QPtrList<QListViewItem> mAtmItemList;
   QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
-  int mViewId, mRemoveId, mSaveAsId, mPropertiesId;
+  int mOpenId, mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
   bool mAutoRequestMDN;
