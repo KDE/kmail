@@ -131,7 +131,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     }
 
     QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
-				       mHost + ":" + QString("%1").arg(mPort) );
+                                       mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     mUidsOfSeenMsgs = config.readListEntry( "seenUidList" );
     mUidsOfSeenMsgsDict.clear();
@@ -287,8 +287,8 @@ void KMAcctExpPop::slotAbortRequested()
 
 
 //-----------------------------------------------------------------------------
-void KMAcctExpPop::startJob() {
-
+void KMAcctExpPop::startJob()
+{
   // Run the precommand
   if (!runPrecommand(precommand()))
     {
@@ -380,7 +380,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
     ++headerIt;
     slotGetNextHdr();
   } else {
-    kdDebug(5006) << "stage == Retr" << endl;
+    kdDebug(5006) << k_funcinfo << "stage == Retr" << endl;
     kdDebug(5006) << QString( "curMsgData.size() %1" ).arg( curMsgData.size() ) << endl;
     msg->setMsgLength( curMsgData.size() );
     msgsAwaitingProcessing.append(msg);
@@ -396,7 +396,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
 void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
-    kdDebug(5006) << "stage == List" << endl;
+    kdDebug(5006) << k_funcinfo << "stage == List" << endl;
     KURL url = getUrl();
     url.setPath(QString("/uidl"));
     job = KIO::get( url, false, false );
@@ -404,7 +404,7 @@ void KMAcctExpPop::slotJobFinished() {
     stage = Uidl;
   }
   else if (stage == Uidl) {
-    kdDebug(5006) << "stage == Uidl" << endl;
+    kdDebug(5006) << k_funcinfo << "stage == Uidl" << endl;
     mUidlFinished = TRUE;
 
     if ( mLeaveOnServer && mUidForIdMap.isEmpty() &&
@@ -416,8 +416,8 @@ void KMAcctExpPop::slotJobFinished() {
       "work properly."));
     }
     // An attempt to work around buggy pop servers, these seem to be popular.
-    if (uidsOfNextSeenMsgs.isEmpty())
-	uidsOfNextSeenMsgs = mUidsOfSeenMsgs;
+    if ( mLeaveOnServer && uidsOfNextSeenMsgs.isEmpty() )
+      uidsOfNextSeenMsgs = mUidsOfSeenMsgs;
 
     //check if filter on server
     if (mFilterOnServer == true) {
@@ -485,7 +485,7 @@ void KMAcctExpPop::slotJobFinished() {
     }
   }
   else if (stage == Head) {
-    kdDebug(5006) << "stage == Head" << endl;
+    kdDebug(5006) << k_funcinfo << "stage == Head" << endl;
 
     // All headers have been downloaded, check which mail you want to get
     // data is in list headersOnServer
@@ -599,7 +599,7 @@ void KMAcctExpPop::slotJobFinished() {
     connectJob();
   }
   else if (stage == Dele) {
-    kdDebug(5006) << "stage == Dele" << endl;
+    kdDebug(5006) << k_funcinfo << "stage == Dele" << endl;
     KURL url = getUrl();
     url.setPath(QString("/commit"));
     job = KIO::get( url, false, false );
@@ -607,7 +607,7 @@ void KMAcctExpPop::slotJobFinished() {
     connectJob();
   }
   else if (stage == Quit) {
-    kdDebug(5006) << "stage == Quit" << endl;
+    kdDebug(5006) << k_funcinfo << "stage == Quit" << endl;
     job = 0;
     if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
@@ -628,7 +628,7 @@ void KMAcctExpPop::slotJobFinished() {
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
 {
-  kdDebug(5006) << "processRemainingQueuedMessagesAndSaveUidList" << endl;
+  kdDebug(5006) << k_funcinfo << endl;
   slotProcessPendingMsgs(); // Force processing of any messages still in the queue
   processMsgsTimer.stop();
 
