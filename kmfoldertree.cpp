@@ -33,7 +33,7 @@ QPixmap* KMFolderTree::pixSent = 0;
 //=============================================================================
 
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, QString name )
-    : KFolderTreeItem( parent, name ), mFolder( 0 )
+    : KFolderTreeItem( parent, name, NONE, Root ), mFolder( 0 )
 {
 }
 
@@ -64,6 +64,23 @@ void KMFolderTreeItem::init()
     setProtocol(Local);
   else
     setProtocol(NONE);
+
+  if (!parent())
+    setType(Root);
+  else if (mFolder->isSystemFolder()) 
+  {
+    if (mFolder == kernel->inboxFolder()
+        || mFolder->protocol() == "imap")
+      setType(Inbox);
+    else if (mFolder == kernel->outboxFolder())
+      setType(Outbox);
+    else if (mFolder == kernel->sentFolder())
+      setType(SentMail);
+    else if (mFolder == kernel->draftsFolder())
+      setType(Drafts);
+    else if (mFolder == kernel->trashFolder())
+      setType(Trash);
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -382,6 +399,7 @@ void KMFolderTree::reload(bool openFolders)
     if (fti && fti->folder())
       disconnect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 		 this,SLOT(refresh(KMFolder*)));
+    writeIsListViewItemOpen( fti );
     ++it;
   }
   clear();
@@ -1267,12 +1285,12 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder() && fti->folder()->protocol() == "imap")
+  if (fti && fti->folder() && !fti->folder()->parent() 
+      && fti->folder()->protocol() == "imap")
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
     if (folder->getSubfolderState() == KMFolderImap::imapNoInformation)
     {
-      writeIsListViewItemOpen( fti );
       // the tree will be reloaded after that
       folder->listDirectory( fti );
     }
