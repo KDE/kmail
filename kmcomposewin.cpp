@@ -51,6 +51,7 @@
 #include <mimelib/mimepp.h>
 #include <kfiledialog.h>
 #include <kwin.h>
+#include <klineeditdlg.h>
 #include <kmessagebox.h>
 #include <kurldrag.h>
 
@@ -2796,15 +2797,23 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                          && strlen( certificates );
       kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
       qDebug( "findCertificates() 1st try returned %s", certificates );
-      if( !findCertsOk ) {
-        kdDebug() << "\n\n2nd try: Retrieving *all* keys" << endl;
-        addressee = "*";
-        findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates )
-                      && strlen( certificates );
-        kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-        qDebug( "findCertificates() 2nd try returned %s", certificates );
+      while( !findCertsOk ) {
+        bool bOk = false;
+        addressee = KLineEditDlg::getText( i18n("No certificate found"),
+		                i18n("Enter other name for recipient %1:").arg(*it),
+                        addressee, &bOk, this ).stripWhiteSpace().utf8();
+        if( bOk ) {
+          kdDebug() << "\n\n2nd try: Retrieving *all* keys" << endl;
+          findCertsOk = cryptPlug->findCertificates( &(*addressee), &certificates )
+                        && strlen( certificates );
+          kdDebug() << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
+          qDebug( "findCertificates() 2nd try returned %s", certificates );
+        } else {
+          bEncrypt = false;
+          break;
+        }
       }
-      if( findCertsOk ) {
+      if( bEncrypt && findCertsOk ) {
           // fill selection dialog listbox
         useDialog = false;
         dialog.entriesLB->clear();
@@ -2912,13 +2921,6 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
 
         if( !bEncrypt )  break;
 
-      } else {
-        QString sorryText( i18n( "No certificate found!\n\nRecipient: " ) );
-        sorryText += *it;        sorryText += "\n\nPlug-in: ";
-        sorryText += cryptPlug->displayName();
-        KMessageBox::sorry( this, sorryText );
-        bEncrypt = false;
-        break;
       }
     }
     free( certificates );
