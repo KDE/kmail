@@ -1,10 +1,14 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -w
+
+use strict;
 
 # this script goes through all the config keys that deal with
 # identities and replaces identies referenced by name to be referenced
 # by UOIDs. To this end, adds uoid keys to the identity groups.
 
 # read the whole config file:
+my $currentGroup = "";
+my %configFile;
 while ( <> ) {
     chomp;
     next if ( /^$/ ); # skip empty lines
@@ -12,20 +16,20 @@ while ( <> ) {
     if ( /^\[/ ) { # group begin
 	$currentGroup = $_;
 	next;
-    } elsif ( defined($currentGroup) ) { # normal entry
-	local ($key,$value) = split /=/;
+    } elsif ( $currentGroup ne "" ) { # normal entry
+	my ($key,$value) = split /=/;
 	$configFile{$currentGroup}{$key}=$value;
     }
 }
 
 # filter out identity groups:
-@identityGroups = grep { /^\[Identity \#\d+\]/ } keys %configFile;
+my @identityGroups = grep { /^\[Identity \#\d+\]/ } keys %configFile;
 
 # create UOIDs for each identity:
 my %nameToUOID;
-foreach $identityGroup (@identityGroups) {
-    local $uoid = int(rand 0x7fFFffFF);
-    local $name = $configFile{$identityGroup}{'Identity'};
+foreach my $identityGroup (@identityGroups) {
+    my $uoid = int(rand 0x7fFFffFF);
+    my $name = $configFile{$identityGroup}{'Identity'};
     $nameToUOID{$name} = $uoid;
     # create the uoid entries of [Identity #n] groups:
     print "${identityGroup}\nuoid=$uoid\n";
@@ -41,10 +45,10 @@ print "# DELETE [Composer]previous-identity\n[Composer]\nprevious-identity="
 
 # Now, go through all [Folder-*] groups and replace the Identity value
 # with the UOID. Also, move MailingListIdentity entries to Identity entries:
-@folderGroups = grep { /^\[Folder-.*\]/ } keys %configFile;
+my @folderGroups = grep { /^\[Folder-.*\]/ } keys %configFile;
 
-foreach $folderGroup ( @folderGroups ) {
-    local $identity = "";
+foreach my $folderGroup ( @folderGroups ) {
+    my $identity = "";
     # delete the (MailingList)Identity keys:
     print "# DELETE ${folderGroup}MailingListIdentity\n";
     print "# DELETE ${folderGroup}Identity\n";
@@ -65,14 +69,14 @@ foreach $folderGroup ( @folderGroups ) {
 # Now, go through all [Filter #n] groups and change arguments to the
 # 'set identity' filter action to use UOIDs:
 
-@filterGroups = grep { /^\[Filter \#\d+\]/ } keys %configFile;
+my @filterGroups = grep { /^\[Filter \#\d+\]/ } keys %configFile;
 
-foreach $filterGroup (@filterGroups) {
-    local $numActions = +$configFile{$filterGroup}{'actions'};
+foreach my $filterGroup (@filterGroups) {
+    my $numActions = +$configFile{$filterGroup}{'actions'};
     # go through all actions in search for "set identity":
-    for ( $i = 0 ; $i < $numActions ; ++$i ) {
-	local $actionName = "action-name-$i";
-	local $actionArgs = "action-args-$i";
+    for ( my $i = 0 ; $i < $numActions ; ++$i ) {
+	my $actionName = "action-name-$i";
+	my $actionArgs = "action-args-$i";
 	if ( $configFile{$filterGroup}{$actionName} eq "set identity" ) {
 	    # found one: replace it's argument with the UOID:
 	    print "# DELETE $filterGroup$actionArgs\n$filterGroup\n$actionArgs="
