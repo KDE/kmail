@@ -43,8 +43,6 @@
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 
-#define NEW_MESSAGE_POPUP_ID 999
-
 /**
  * Construct a KSystemTray icon to be displayed when new mail
  * has arrived in a non-system folder.  The KMSystemTray listens
@@ -56,7 +54,8 @@
  * with its count of unread messages, allowing the user to jump
  * to the first unread message in each folder.
  */
-KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(parent, name)
+KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(parent, name),
+  mNewMessagePopupId(-1), mPopupMenu(0)
 {
   kdDebug(5006) << "Initting systray" << endl;
   KIconLoader *loader = KGlobal::iconLoader();
@@ -73,24 +72,29 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(pare
   KMFolderMgr * imgr = kernel->imapFolderMgr();
   connect(mgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
   connect(imgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
-
-  buildPopupMenu();
 }
 
 void KMSystemTray::buildPopupMenu() 
 {
-  mPopupMenu.insertTitle(*(this->pixmap()), "KMail");
-  getKMMainWin()->action("check_mail")->plug(&mPopupMenu);
-  getKMMainWin()->action("check_mail_in")->plug(&mPopupMenu);
-  mPopupMenu.insertSeparator();
-  getKMMainWin()->action("new_message")->plug(&mPopupMenu);
-  getKMMainWin()->action("options_configure")->plug(&mPopupMenu);
-  mPopupMenu.insertSeparator();
-  getKMMainWin()->action("file_quit")->plug(&mPopupMenu);
+  // Delete any previously created popup menu
+  delete mPopupMenu;
+  mPopupMenu = 0;
+
+  mPopupMenu = new KPopupMenu();
+  mPopupMenu->insertTitle(*(this->pixmap()), "KMail");
+  getKMMainWin()->action("check_mail")->plug(mPopupMenu);
+  getKMMainWin()->action("check_mail_in")->plug(mPopupMenu);
+  mPopupMenu->insertSeparator();
+  getKMMainWin()->action("new_message")->plug(mPopupMenu);
+  getKMMainWin()->action("options_configure")->plug(mPopupMenu);
+  mPopupMenu->insertSeparator();
+  getKMMainWin()->action("file_quit")->plug(mPopupMenu);
 }
 
 KMSystemTray::~KMSystemTray()
 {
+  delete mPopupMenu;
+  mPopupMenu = 0;
 }
 
 void KMSystemTray::setMode(int newMode)
@@ -260,7 +264,14 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
     mPopupFolders.clear();
     mPopupFolders.resize(mFoldersWithUnread.count());
 
-    mPopupMenu.removeItem(NEW_MESSAGE_POPUP_ID);
+    // Rebuild popup menu at click time to minimize race condition if
+    // the base KMainWidget is closed.
+    buildPopupMenu();
+
+    if(mNewMessagePopupId != -1)
+    {
+      mPopupMenu->removeItem(mNewMessagePopupId);
+    }
 
     if(mFoldersWithUnread.count() > 0)
     {
@@ -277,12 +288,13 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
         ++it;
       }
 
-      mPopupMenu.insertItem(i18n("New messages in..."), newMessagesPopup, NEW_MESSAGE_POPUP_ID, 3); 
+      mNewMessagePopupId = mPopupMenu->insertItem(i18n("New messages in..."), 
+                                                  newMessagesPopup, mNewMessagePopupId, 3); 
+
+      kdDebug(5006) << "Folders added" << endl;
     }
 
-    kdDebug(5006) << "Folders added" << endl;
-
-    mPopupMenu.popup(e->globalPos());
+    mPopupMenu->popup(e->globalPos());
   }
 
 }
