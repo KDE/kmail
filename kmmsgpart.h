@@ -6,6 +6,7 @@
 
 #include <qstring.h>
 #include <qcstring.h>
+#include <qdict.h>
 
 template <typename T>
 class QValueList;
@@ -15,6 +16,7 @@ class KMMessagePart
 {
 public:
   KMMessagePart();
+  KMMessagePart( QDataStream & stream );
   virtual ~KMMessagePart();
 
   /** Get or set the message body */
@@ -154,6 +156,33 @@ public:
       if present. */
   QString fileName(void) const;
 
+  /** Returns the part number */
+  QString partSpecifier() const { return mPartSpecifier; }
+
+  /** Sets the part number */
+  void setPartSpecifier( const QString & part ) { mPartSpecifier = part; }
+
+  /** If this part is complete (contains a body) */
+  bool isComplete() { return (!mBody.isNull()); }
+
+  /** Returns the parent part */
+  KMMessagePart* parent() { return mParent; }
+
+  /** Set the parent of this part */
+  void setParent( KMMessagePart* part ) { mParent = part; }
+
+  /** Returns true if the headers should be loaded */
+  bool loadHeaders() { return mLoadHeaders; }
+
+  /** Set to true if the headers should be loaded */
+  void setLoadHeaders( bool load ) { mLoadHeaders = load; }
+
+  /** Returns true if the part itself (as returned by kioslave) should be loaded */
+  bool loadPart() { return mLoadPart; }
+
+  /** Set to true if the part itself should be loaded */
+  void setLoadPart( bool load ) { mLoadPart = load; }
+
 protected:
   QCString mOriginalContentTypeStr;
   QCString mType;
@@ -167,7 +196,11 @@ protected:
   QCString mParameterAttribute;
   QString mParameterValue;
   QCString mCharset;
+  QString mPartSpecifier;
   mutable int mBodyDecodedSize;
+  KMMessagePart* mParent;
+  bool mLoadHeaders;
+  bool mLoadPart;
 };
 
 

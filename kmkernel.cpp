@@ -37,6 +37,8 @@
 #include "kmacctmgr.h"
 #include "kfileio.h"
 #include "kmversion.h"
+#include "kmreaderwin.h"
+#include "kmmainwidget.h"
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 #include "kmmsgdict.h"
@@ -1360,6 +1362,34 @@ KMainWindow* KMKernel::mainWin()
     mWin = new KMMainWin;
     return mWin;
   }
+}
+
+KMReaderWin* KMKernel::activeReaderWin()
+{
+  KMainWindow *window = 0;
+  bool startupMode = false;
+  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+  while ( (window = it.current()) != 0 ) 
+  {
+    ++it;
+    // this is probably only a temporary solution to get the active reader
+    if ( window->inherits("KMTopLevelWidget") &&
+         window->isA("KMMainWin") && 
+         window->isActiveWindow() )
+    {
+      return static_cast<KMMainWin*>(window)->mainKMWidget()->messageView();
+    } 
+    else if ( window->inherits("KMTopLevelWidget") &&
+              window->isA("KMMainWin") )
+    {
+      // this window would be ok but has no focus yet
+      startupMode = true;
+    }
+  }
+  if ( startupMode ) // return the first window which will probably get focus shortly
+    return static_cast<KMMainWin*>(KMainWindow::memberList->first())->mainKMWidget()->messageView();
+
+  return 0;
 }
 
 /**

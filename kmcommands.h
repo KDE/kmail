@@ -280,6 +280,11 @@ class KMSaveAttachmentsCommand : public KMCommand
 public:
   KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg  );
   KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs );
+  KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode> &attachments, 
+      KMMessage *msg, bool encoded = false  );
+
+protected slots:
+  void slotSaveAll();
 
 private:
   virtual void execute();
@@ -289,6 +294,8 @@ private:
   void saveItem( partNode *node, const QString& filename );
 private:
   QWidget *mParent;
+  QPtrList<partNode> mAttachments;
+  bool mEncoded;
 };
 
 class KMReplyToCommand : public KMCommand
@@ -578,6 +585,30 @@ private:
   KMReaderWin *mReaderWin;
   bool mHtmlPref;
   KMMainWidget *mMainWidget;
+};
+
+class KMLoadPartsCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMLoadPartsCommand( QPtrList<partNode>& parts, KMMessage* msg );
+  KMLoadPartsCommand( partNode* node, KMMessage* msg );
+
+public slots:
+  // Retrieve parts then calls execute
+  void start();
+  void slotPartRetrieved( KMMessage* msg, QString partSpecifier );  
+
+signals:
+  void partsRetrieved();
+
+private:
+  virtual void execute();
+
+  QPtrList<partNode> mParts;
+  int mNeedsRetrieval;
+  KMMessage *mMsg;
 };
 
 #endif /*KMCommands_h*/

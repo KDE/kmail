@@ -576,9 +576,9 @@ bool KMFolder::isMessage(int idx)
 
 //-----------------------------------------------------------------------------
 FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
-                                KMFolder *folder ) const
+                                KMFolder *folder, QString partSpecifier ) const
 {
-  FolderJob * job = doCreateJob( msg, jt, folder );
+  FolderJob * job = doCreateJob( msg, jt, folder, partSpecifier );
   if ( job )
     addJob( job );
   return job;
@@ -593,7 +593,6 @@ FolderJob* KMFolder::createJob( QPtrList<KMMessage>& msgList, const QString& set
     addJob( job );
   return job;
 }
-
 
 //-----------------------------------------------------------------------------
 int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)

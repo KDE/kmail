@@ -127,7 +127,6 @@ namespace KMail {
     //  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
     DwString cntStr( content );
     DwBodyPart* myBody = new DwBodyPart( cntStr, 0 );
-
     myBody->Parse();
 
     if ( myBody->hasHeaders() ) {
@@ -138,15 +137,30 @@ namespace KMail {
       myBody->Headers().Parse();
     }
 
+    if ( ( !myBody->Body().FirstBodyPart() || 
+           myBody->Body().AsString().length() == 0 ) &&
+         startNode.dwPart()->Body().Message() &&
+         startNode.dwPart()->Body().Message()->Body().FirstBodyPart() ) 
+    {
+      // if encapsulated imap messages are loaded the content-string is not complete
+      // so we need to keep the child dwparts by copying them to the new dwpart
+      kdDebug(5006) << "copy parts" << endl;
+      myBody->Body().AddBodyPart( 
+          startNode.dwPart()->Body().Message()->Body().FirstBodyPart() );
+      myBody->Body().FromString( 
+          startNode.dwPart()->Body().Message()->Body().FirstBodyPart()->Body().AsString() );
+    }
+
     partNode* parentNode = &startNode;
     partNode* newNode = new partNode(false, myBody);
-    if ( append && parentNode->mChild ){
+    if ( append && parentNode->mChild ) {
       parentNode = parentNode->mChild;
       while( parentNode->mNext )
-	parentNode = parentNode->mNext;
+        parentNode = parentNode->mNext;
       newNode = parentNode->setNext( newNode );
-    }else
+    } else
       newNode = parentNode->setFirstChild( newNode );
+
     newNode->buildObjectTree( false );
 
     if ( startNode.mimePartTreeItem() ) {
@@ -377,12 +391,12 @@ namespace KMail {
                     ( cryptPlugDisplayName == "S/MIME" ) ) ) {
         // replace simple LFs by CRLSs
         // according to RfC 2633, 3.1.1 Canonicalization
-        int posLF = cleartext.find( '\n' );
-        if ( ( 0 < posLF ) && ( '\r' != cleartext[posLF - 1] ) ) {
+//        int posLF = cleartext.find( '\n' );
+//        if ( ( 0 < posLF ) && ( '\r' != cleartext[posLF - 1] ) ) {
           kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
           cleartext = KMMessage::lf2crlf( cleartext );
           kdDebug(5006) << "                                                       done." << endl;
-        }
+//        }
       }
 
       dumpToFile( "dat_02_reader_signedtext_after_canonicalization",
@@ -1418,7 +1432,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       }
     }
     setCryptPlugWrapper( oldUseThisCryptPlug );
-    return bDone;
+    return bDone;    
   }
 
   bool ObjectTreeParser::processMessageType( int subtype, partNode * curNode,
@@ -1460,9 +1474,15 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     }
     QCString rfc822messageStr( curNode->msgPart().bodyDecoded() );
     // display the headers of the encapsulated message
-    DwMessage* rfc822DwMessage = new DwMessage(); // will be deleted by c'tor of rfc822headers
-    rfc822DwMessage->FromString( rfc822messageStr );
-    rfc822DwMessage->Parse();
+    DwMessage* rfc822DwMessage = 0; // will be deleted by c'tor of rfc822headers
+    if ( curNode->dwPart()->Body().Message() )
+      rfc822DwMessage = new DwMessage( *(curNode->dwPart()->Body().Message()) );
+    else
+    {
+      rfc822DwMessage = new DwMessage();
+      rfc822DwMessage->FromString( rfc822messageStr );
+      rfc822DwMessage->Parse();
+    }
     KMMessage rfc822message( rfc822DwMessage );
     curNode->setFromAddress( rfc822message.from() );
     kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822message.from() << "\"\n" << endl;
@@ -2643,7 +2663,8 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
     }
 
     // don't write empty <div ...></div> blocks (they have zero height)
-    if( !line.isEmpty() )
+    // ignore ^M DOS linebreaks
+    if( !line.replace('\015', "").isEmpty() )
     {
       if( line.isRightToLeft() )
         htmlStr += QString( "<div dir=\"rtl\">" );

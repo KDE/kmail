@@ -117,7 +117,7 @@ public:
    * for each derived KMFolder).
    */
   virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
-                                KMFolder *folder = 0 ) const;
+                                KMFolder *folder = 0, QString partSpecifier = QString::null ) const;
   virtual FolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                 FolderJob::JobType jt = FolderJob::tGetMessage,
                                 KMFolder *folder = 0 ) const;
@@ -505,7 +505,8 @@ protected:
    * in all folders.
    * @see createJob
    */
-  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const = 0;
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder,
+                                  QString partSpecifier ) const = 0;
   virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const = 0;
 

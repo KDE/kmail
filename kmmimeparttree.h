@@ -32,7 +32,6 @@ protected slots:
 protected:
   void saveOneFile( QListViewItem* item, bool encoded );
   void saveMultipleFiles( const QPtrList<QListViewItem>& selected, bool encoded );
-  void saveItem( KMMimePartTreeItem* item, const QString& filename, bool encoded );
   void restoreLayoutIfPresent();
 
 protected:

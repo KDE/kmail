@@ -175,6 +175,11 @@ public:
         return mDwPart;
     }
 
+    void setDwPart( DwBodyPart* part ) {
+        mDwPart = part;
+        mMsgPartOk = false;
+    }
+
     KMMessagePart& msgPart() {
         if( !mMsgPartOk ) {
             KMMessage::bodyPart(mDwPart, &mMsgPart);

@@ -10,6 +10,7 @@
 
 #include <mimelib/string.h>
 #include "kmmsgbase.h"
+#include "isubject.h"
 
 #include <kmime_mdn.h>
 
@@ -47,7 +48,7 @@ class DwMediaType;
 class DwHeaders;
 
 #define KMMessageInherited KMMsgBase
-class KMMessage: public KMMsgBase
+class KMMessage: public KMMsgBase, public KMail::ISubject
 {
   friend class KMForwardCommand;    // needed for MIME Digest forward
 
@@ -578,6 +579,10 @@ public:
       or zero, if no found. */
   DwBodyPart * findDwBodyPart( int type, int subtype ) const;
 
+  /** Return the first DwBodyPart matching a given partSpecifier
+      or zero, if no found. */
+  DwBodyPart* findDwBodyPart( const QString & partSpecifier );
+
   /** Get the DwBodyPart at position in aIdx.  Indexing starts at 0.
       If there is no body part at that index, return value will be zero. */
   DwBodyPart * dwBodyPart( int aIdx ) const;
@@ -785,6 +790,12 @@ public:
   /** Convert wildcards into normal string */
   QString formatString(const QString&) const;
 
+  /** Sets the body of the specified part */
+  void updateBodyPart(const QString partSpecifier, const QByteArray & data);
+
+  /** Returns the last DwBodyPart that was updated */
+  DwBodyPart* lastUpdatedPart() { return mLastUpdated; }
+
 private:
   void assign( const KMMessage& other );
 
@@ -806,6 +817,7 @@ private:
   KMMsgSignatureState mSignatureState;
   KMMsgMDNSentState mMDNSentState;
   KMMessage* mUnencryptedMsg;
+  DwBodyPart* mLastUpdated;
 };
 
 

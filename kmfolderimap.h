@@ -286,7 +286,7 @@ public slots:
 
 protected:
   virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                                  KMFolder *folder ) const;
+                                  KMFolder *folder, QString partSpecifier ) const;
   virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
                                   FolderJob::JobType jt, KMFolder *folder ) const;
   /**

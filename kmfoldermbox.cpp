@@ -397,7 +397,7 @@ int KMFolderMbox::lock()
 //-------------------------------------------------------------
 FolderJob*
 KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                           KMFolder *folder ) const
+                           KMFolder *folder, QString ) const
 {
   MboxJob *job = new MboxJob( msg, jt, folder );
   job->setParent( this );

@@ -76,6 +76,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
     mDecodeHTML(false),
     mTransferInProgress(0),
     mOverrideCodec(0),
+    mMsgSize(0),
     mUnencryptedMsg(0)
 {
   mEncryptionState = KMMsgEncryptionStateUnknown;
@@ -83,7 +84,10 @@ KMMessage::KMMessage(DwMessage* aMsg)
 }
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(const KMMessage& other) : KMMessageInherited( other ), mMsg(0)
+KMMessage::KMMessage(const KMMessage& other) : 
+    KMMessageInherited( other ), 
+    ISubject(), 
+    mMsg(0)
 {
   mUnencryptedMsg = 0;
   assign( other );
@@ -2640,7 +2644,6 @@ int KMMessage::numBodyParts(void) const
   int count = 0;
   DwBodyPart* part = getFirstDwBodyPart();
   QPtrList< DwBodyPart > parts;
-  QString mp = "multipart";
 
   while (part)
   {
@@ -2648,7 +2651,8 @@ int KMMessage::numBodyParts(void) const
     while (    part
             && part->hasHeaders()
             && part->Headers().HasContentType()
-            && (mp == part->Headers().ContentType().TypeStr().c_str()) )
+            && part->Body().FirstBodyPart()
+            && (DwMime::kTypeMultipart == part->Headers().ContentType().Type()) )
     {
       parts.append( part );
       part = part->Body().FirstBodyPart();
@@ -2661,10 +2665,15 @@ int KMMessage::numBodyParts(void) const
     {
       part = parts.getLast();
       parts.removeLast();
-    };
+    }
 
-    if (part)
+    if (part->Body().Message() &&
+        part->Body().Message()->Body().FirstBodyPart())
+    {
+      part = part->Body().Message()->Body().FirstBodyPart();
+    } else if (part) {
       part = part->Next();
+    }
   }
 
   return count;
@@ -2694,6 +2703,7 @@ int KMMessage::partNumber( DwBodyPart * aDwBodyPart ) const
     while(    curpart
            && curpart->hasHeaders()
            && curpart->Headers().HasContentType()
+           && curpart->Body().FirstBodyPart()
            && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
       parts.append( curpart );
@@ -2733,6 +2743,7 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
     while(    curpart
            && curpart->hasHeaders()
            && curpart->Headers().HasContentType()
+           && curpart->Body().FirstBodyPart()
            && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
       parts.append( curpart );
@@ -2748,7 +2759,7 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
     {
       curpart = parts.getLast();
       parts.removeLast();
-    } ;
+    } 
     if (curpart)
       curpart = curpart->Next();
   }
@@ -2771,6 +2782,7 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
     while(curpart
 	  && curpart->hasHeaders()
 	  && curpart->Headers().HasContentType()
+      && curpart->Body().FirstBodyPart()
 	  && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) ) {
 	parts.append( curpart );
 	curpart = curpart->Body().FirstBodyPart();
@@ -2813,6 +2825,10 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
       // This must not be an empty string, because we'll get a
       // spurious empty Subject: line in some of the parts.
       aPart->setName(" ");
+      // partSpecifier
+      QString partId( aDwBodyPart->partId() );
+      aPart->setPartSpecifier( partId );
+
       DwHeaders& headers = aDwBodyPart->Headers();
       // Content-type
       QCString additionalCTypeParams;
@@ -2875,11 +2891,12 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
 
       // Body
       if (withBody)
-	  aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
+        aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
       else
-	  aPart->setBody( "" );
+        aPart->setBody( "" );
+
     }
-    // If no valid body part was not given,
+    // If no valid body part was given,
     // set all MultipartBodyPart attributes to empty values.
     else
     {
@@ -3043,6 +3060,12 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
   else
     part->Body().FromString("");
 
+  if (!aPart->partSpecifier().isNull())
+    part->SetPartId( aPart->partSpecifier().latin1() );
+
+  if (aPart->decodedSize() > 0)
+    part->SetBodySize( aPart->decodedSize() );
+  
   return part;
 }
 
@@ -3491,7 +3514,8 @@ bool KMMessage::addressIsInAddressList( const QString& address,
 void KMMessage::setTransferInProgress(bool value)
 {
   value ? ++mTransferInProgress : --mTransferInProgress;
-  Q_ASSERT(mTransferInProgress >= 0 && mTransferInProgress <= 1);
+  kdDebug(5006) << "setTransferInProgress " << mTransferInProgress << " of " << subject() << endl;
+//  Q_ASSERT(mTransferInProgress >= 0 && mTransferInProgress <= 1);
 }
 
 
@@ -3679,6 +3703,128 @@ void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) cons
   }
 }
 
+//-----------------------------------------------------------------------------
+DwBodyPart* KMMessage::findDwBodyPart( const QString & partSpecifier )
+{
+  DwBodyPart *part, *curpart;
+  QPtrList< DwBodyPart > parts;
+
+  curpart = getFirstDwBodyPart();
+  part = 0;
+
+  while (curpart && !part) {
+    //dive into multipart messages
+    while (   curpart
+           && curpart->hasHeaders()
+           && curpart->Headers().HasContentType()
+           && curpart->Body().FirstBodyPart()
+           && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
+    {
+      parts.append( curpart );
+      curpart = curpart->Body().FirstBodyPart();
+    }
+    if ( curpart->Body().Message() &&
+         curpart->Body().Message()->Body().FirstBodyPart() )
+    {
+      // dive into encapsulated message
+      parts.append( curpart->Body().Message()->Body().FirstBodyPart() );
+    }
+
+    // this is where currPart->msgPart contains a leaf message part
+    if (curpart->partId() == partSpecifier)
+        part = curpart;
+    // go up in the tree until reaching a node with next
+    // (or the last top-level node)
+    while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
+    {
+      curpart = parts.getLast();
+      parts.removeLast();
+    }
+    // re-check
+    if (curpart->partId() == partSpecifier)
+        part = curpart;
+
+    if (curpart) {
+      curpart = curpart->Next();
+    }
+  }
+  return part;
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & data)
+{
+  DwString content( data.data(), data.size() );
+  if (numBodyParts() > 0 && partSpecifier != "0")
+  {
+    QString specifier = partSpecifier;
+    if ( partSpecifier.endsWith(".HEADER") || 
+         partSpecifier.endsWith(".MIME") ) {
+      // get the parent bodypart
+      specifier = partSpecifier.section( '.', 0, -2 );
+    }
+    kdDebug(5006) << "KMMessage::updateBodyPart " << specifier << endl;
+    
+    // search for the bodypart
+    mLastUpdated = findDwBodyPart( specifier );
+    if (!mLastUpdated) 
+    { 
+      kdWarning(5006) << "KMMessage::updateBodyPart - can not find part " 
+        << partSpecifier << endl;
+      return;
+    }
+    if ( partSpecifier.endsWith(".MIME") )
+    {
+      // update headers
+      // get rid of EOL
+      content.resize( content.length()-2 );
+      // we have to delete the fields first as they might by created by an earlier
+      // call to DwHeaders::FieldBody
+      mLastUpdated->Headers().DeleteAllFields();
+      mLastUpdated->Headers().FromString( content );
+      mLastUpdated->Headers().Parse();
+    } else {
+      // update body
+      mLastUpdated->Body().FromString( content );
+      mLastUpdated->Body().Parse();
+    }
+
+    if ( mSignatureState != KMMsgNotSigned )
+    {
+      // we need to get a valid DwBodyPart->AsString() to check the signature
+      // so we better make sure that all signed parts are assembled
+      mLastUpdated->Assemble( mLastUpdated->Headers(), mLastUpdated->Body() );
+      DwMessageComponent *part = mLastUpdated;
+      while ( part )
+      {
+        if ( part->ClassId() == DwMessageComponent::kCidBodyPart ||
+             part->ClassId() == DwMessageComponent::kCidMessage )
+        {
+          DwEntity* entity = static_cast<DwEntity*>(part);
+          int type = entity->Headers().ContentType().Type();
+          int subtype = entity->Headers().ContentType().Subtype();
+          if ( type == DwMime::kTypeMultipart && subtype == DwMime::kSubtypeSigned )
+          {
+            part->SetModified();
+            part->Assemble();
+            break;
+          }
+        }
+        part = part->Parent();
+      }
+    }
+    
+  } else
+  {
+    // update text-only messages
+    mMsg->Body().FromString( content );
+    mMsg->Body().Parse();
+  }
+  mNeedsAssembly = true;
+  // notify observers
+  notify();
+}
+
 void KMMessage::setBodyFromUnicode( const QString & str ) {
   QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
   if ( encoding.isEmpty() )
@@ -3711,3 +3857,4 @@ QString KMMessage::bodyToUnicode(const QTextCodec* codec) const {
 
   return codec->toUnicode( bodyDecoded() );
 }
+

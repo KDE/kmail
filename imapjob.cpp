@@ -31,16 +31,21 @@
 
 #include "imapjob.h"
 #include "kmfolderimap.h"
+#include "kmmsgpart.h"
 
 #include <kio/scheduler.h>
 #include <kdebug.h>
+#include <mimelib/body.h>
+#include <mimelib/bodypart.h>
+#include <mimelib/string.h>
 
 
 namespace KMail {
 
 //-----------------------------------------------------------------------------
-ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder )
-  : FolderJob( msg, jt, folder )
+ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
+    QString partSpecifier )
+  : FolderJob( msg, jt, folder, partSpecifier )
 {
 }
 
@@ -172,8 +177,18 @@ void ImapJob::slotGetNextMessage()
     return;
   }
   KURL url = account->getUrl();
-  url.setPath(msgParent->imapPath() + ";UID="
-    + msg->headerField("X-UID"));
+  QString path = msgParent->imapPath() + ";UID=" + msg->headerField("X-UID");
+  if (!mPartSpecifier.isEmpty())
+  {
+    if (mPartSpecifier.find ("STRUCTURE", 0, false) != -1) {
+      path += ";SECTION=STRUCTURE";
+    } else if (mPartSpecifier == "HEADER") {
+      path += ";SECTION=HEADER";
+    } else {
+      path += ";SECTION=" + mPartSpecifier;
+    }
+  }
+  url.setPath(path);
   ImapAccountBase::jobData jd;
   jd.parent = 0;
   jd.total = 1; jd.done = 0;
@@ -183,12 +198,20 @@ void ImapJob::slotGetNextMessage()
     deleteLater();
     return;
   }
+  // protect the message, otherwise we'll get crashes afterwards
+  msg->setTransferInProgress( true );
   KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
   mJob = simpleJob;
   account->mapJobData.insert(mJob, jd);
-  connect(mJob, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotGetMessageResult(KIO::Job *)));
+  if (mPartSpecifier.find ("STRUCTURE", 0, false) != -1)
+  {
+    connect(mJob, SIGNAL(result(KIO::Job *)),
+        this, SLOT(slotGetBodyStructureResult(KIO::Job *)));
+  } else {
+    connect(mJob, SIGNAL(result(KIO::Job *)),
+        this, SLOT(slotGetMessageResult(KIO::Job *)));
+  }
   connect(mJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
           msgParent, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
   account->displayProgress();
@@ -203,7 +226,9 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     deleteLater();
     return;
   }
-  KMAcctImap *account = static_cast<KMFolderImap*>(msg->parent())->account();
+  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent());
+  msg->setTransferInProgress( false );
+  KMAcctImap *account = parent->account();
   if ( !account ) {
     deleteLater();
     return;
@@ -219,10 +244,19 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   } else {
     if ((*it).data.size() > 0)
     {
-      QString uid = msg->headerField("X-UID");
-      msg->fromByteArray( (*it).data );
-      msg->setHeaderField("X-UID",uid);
-      msg->setComplete( TRUE );
+      kdDebug(5006) << "ImapJob::slotGetMessageResult - retrieved part " << mPartSpecifier << endl;
+      if ( mPartSpecifier.isEmpty() || 
+           mPartSpecifier == "HEADER" )
+      {
+        QString uid = msg->headerField("X-UID");
+        msg->fromByteArray( (*it).data );
+        msg->setHeaderField("X-UID",uid);
+        // it's not really complete but at least is has been transferred
+        msg->setComplete( TRUE );
+      } else {
+        // Update the body of the retrieved part (the message notifies all observers)
+        msg->updateBodyPart( mPartSpecifier, (*it).data );
+      }
     } else {
       msg = 0;
     }
@@ -234,10 +268,51 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   account->displayProgress();
   /* This needs to be emitted last, so the slots that are hooked to it
    * don't unGetMsg the msg before we have finished. */
-  emit messageRetrieved(msg);
+  if ( mPartSpecifier.isEmpty() || 
+       mPartSpecifier == "HEADER" )
+  {
+    emit messageRetrieved(msg);
+  } else {
+    emit messageUpdated(msg, mPartSpecifier);
+  }
   deleteLater();
 }
 
+//-----------------------------------------------------------------------------
+void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
+{
+  KMMessage *msg = mMsgList.first();
+  if (!msg || !msg->parent()) {
+    deleteLater();
+    return;
+  }
+  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent());
+  msg->setTransferInProgress( false );
+  KMAcctImap *account = parent->account();
+  if ( !account ) {
+    deleteLater();
+    return;
+  }
+  QMap<KIO::Job *, ImapAccountBase::jobData>::Iterator it =
+    account->mapJobData.find(job);
+  if (it == account->mapJobData.end()) return;
+  if (job->error())
+  {
+    account->slotSlaveError( account->slave(), job->error(),
+        job->errorText() );
+    return;
+  } else {
+    if ((*it).data.size() > 0)
+    {
+      QDataStream stream( (*it).data, IO_ReadOnly );
+      account->handleBodyStructure(stream, msg);
+    }
+  }
+  if (account->slave()) account->mapJobData.remove(it);
+  account->displayProgress();
+  if (account->slave()) account->mJobList.remove(this);
+  deleteLater();
+}
 
 //-----------------------------------------------------------------------------
 void ImapJob::slotPutMessageDataReq( KIO::Job *job, QByteArray &data )

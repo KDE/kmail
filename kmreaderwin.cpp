@@ -45,8 +45,12 @@ using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
 #include "htmlstatusbar.h"
 using KMail::HtmlStatusBar;
+#include "folderjob.h"
+using KMail::FolderJob;
 #include "csshelper.h"
 using KMail::CSSHelper;
+#include "isubject.h"
+using KMail::ISubject;
 
 #ifdef KMAIL_READER_HTML_DEBUG
 #include "filehtmlwriter.h"
@@ -479,6 +483,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mMsgDisplay = true;
   mPrinting = false;
   mShowColorbar = false;
+  mAtmUpdate = false;
 
   initHtmlWidget();
   readConfig();
@@ -618,6 +623,33 @@ KMReaderWin::~KMReaderWin()
   removeTempFiles();
 }
 
+//-----------------------------------------------------------------------------
+bool KMReaderWin::update( KMail::ISubject * subject )
+{
+  if ( static_cast<KMMessage*>(subject) != message() ) 
+  {
+    kdDebug(5006) << "KMReaderWin::update - ignoring update" << endl;
+    return false;
+  }
+  if ( mAtmUpdate )
+  {
+    partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+    if ( node )
+    {
+      // replace the dwpart of the node
+      node->setDwPart( static_cast<KMMessage*>(subject)->lastUpdatedPart() );
+      // update the tmp file
+      kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName, 
+          false, false, false );
+    }
+  } else {
+    updateReaderWin();
+  }
+//  mAtmUpdate = false;
+
+  return true;
+}
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMimePartTree( KMMimePartTree* mimePartTree )
@@ -754,14 +786,14 @@ void KMReaderWin::initHtmlWidget(void)
 
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
+          SLOT(slotPreUrlOpen()));
   connect(mViewer->browserExtension(),
           SIGNAL(createNewWindow(const KURL &, const KParts::URLArgs &)),this,
-          SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
+          SLOT(slotPreUrlOpen()));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
-          SLOT(slotUrlPopup(const QString &, const QPoint &)));
+          SLOT(slotPreUrlPopup(const QString &, const QPoint &)));
 }
 
 
@@ -794,6 +826,13 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   if (!force && aMsg && mLastSerNum != 0 && aMsg->getMsgSerNum() == mLastSerNum)
     return;
+  
+  // (de)register as observer
+  if (mMessage) 
+    mMessage->detach( this );
+  if (aMsg) 
+    aMsg->attach( this );
+  mAtmUpdate = false;
 
   kdDebug(5006) << "set Msg, force = " << force << endl;
 
@@ -884,7 +923,10 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("Switching between folders is faster."),
   I18N_NOOP("The contents of all composer windows are saved to disk periodically saved to prevent mail loss in the result of a system crash."),
   I18N_NOOP("The state of KMail folders is saved to disk periodically to prevent status information loss in the result of a system crash."),
-  I18N_NOOP("Configurable startup folder.")
+  I18N_NOOP("Configurable startup folder."),
+  I18N_NOOP("IMAP messages are loaded progressively."),
+  I18N_NOOP("IMAP attachments are loaded on demand."),
+  I18N_NOOP("KMail can check your accounts for new mail on startup.")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -1563,6 +1605,11 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotUrlPopup()
+{
+  slotUrlPopup( mUrlClicked.path(), mPos );
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
@@ -1763,7 +1810,6 @@ void KMReaderWin::slotAtmOpen()
     return;
 
   KMMessagePart& msgPart = node->msgPart();
-
   if (qstricmp(msgPart.typeStr(), "message")==0)
   {
     atmViewMsg(&msgPart);
@@ -1978,7 +2024,7 @@ bool KMReaderWin::htmlMail()
 //-----------------------------------------------------------------------------
 void KMReaderWin::update( bool force )
 {
-    setMsg( message(), force );
+  setMsg( message(), force );
 }
 
 
@@ -1997,7 +2043,7 @@ KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
     if (folder )
       message = folder->getMsg( index );
     if (!message)
-      kdDebug(5006) << "Attempt to reference invalid serial number " << mLastSerNum << "\n" << endl;
+      kdWarning(5006) << "Attempt to reference invalid serial number " << mLastSerNum << "\n" << endl;
     return message;
   }
   return 0;
@@ -2195,6 +2241,47 @@ void KMReaderWin::slotUrlCopy()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::slotPreUrlOpen()
+{
+  mAtmCurrent = msgPartFromUrl( mUrlClicked );
+  if ( mAtmCurrent > 0 )
+  {
+    // these are needed for update( KMail::ISubject * )
+    mAtmUpdate = true;
+    mAtmCurrentName = mUrlClicked.path();
+
+    partNode* node = partNodeFromUrl( mUrlClicked );
+    KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
+    connect( command, SIGNAL( partsRetrieved() ),
+        this, SLOT( slotUrlOpen() ) );
+    command->start();
+  } else
+    slotUrlOpen( mUrlClicked, KParts::URLArgs() );
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotPreUrlPopup( const QString &aUrl, const QPoint &pos )
+{
+  KURL url( aUrl );
+  mAtmCurrent = msgPartFromUrl( url );
+  mUrlClicked = url;
+  mPos = pos;
+  if ( mAtmCurrent > 0 )
+  {
+    // these are needed for update( KMail::ISubject * )
+    mAtmUpdate = true;
+    mAtmCurrentName = url.path();
+
+    partNode* node = partNodeFromUrl( aUrl );
+    KMLoadPartsCommand *command = new KMLoadPartsCommand( node, message() );
+    connect( command, SIGNAL( partsRetrieved() ),
+        this, SLOT( slotUrlPopup() ) );
+    command->start();
+  } else
+    slotUrlPopup( aUrl, pos );
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen()
 {
   KMCommand *command = new KMUrlOpenCommand( mUrlClicked, this );
@@ -2226,9 +2313,13 @@ void KMReaderWin::slotMailtoReply()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotShowMsgSrc()
 {
-  KMCommand *command = new KMShowMsgSrcCommand( mMainWindow, message(),
+  KMMessage *msg = message();
+  bool oldStatus = msg->isComplete();
+  msg->setComplete( true ); // otherwise imap messages are completely downloaded
+  KMCommand *command = new KMShowMsgSrcCommand( mMainWindow, msg,
                                                 isFixedFont() );
   command->start();
+  msg->setComplete( oldStatus );
 }
 
 //-----------------------------------------------------------------------------
@@ -2250,11 +2341,20 @@ void KMReaderWin::slotSaveMsg()
 }
 
 //-----------------------------------------------------------------------------
+partNode* KMReaderWin::partNodeFromUrl( const KURL &url )
+{
+  int id = msgPartFromUrl(url);
+  partNode* node = mRootNode ? mRootNode->findId(id) : 0;
+
+  return node;
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveAttachments()
 {
+  mAtmUpdate = true;
   KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand( mMainWindow,
                                                                         message() );
-  kdDebug()<<"Starting saving"<<endl;
   saveCommand->start();
 }
 

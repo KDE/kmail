@@ -9,6 +9,7 @@
 #include "partNode.h"
 #include "kmmsgpart.h"
 #include "kmkernel.h"
+#include "kmcommands.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 
@@ -162,111 +163,27 @@ void KMMimePartTree::slotSaveAll()
 
 void KMMimePartTree::saveOneFile( QListViewItem* item, bool encoded )
 {
-    QString s = item->text(0);
-    if( s.startsWith( "file: " ) )
-        s = s.mid(6).stripWhiteSpace();
-    else
-        s = s.stripWhiteSpace();
-    QString filename = KFileDialog::getSaveFileName( s,
-                                                     QString::null,
-                                                     this, QString::null );
-    if( !filename.isEmpty() ) {
-        if( QFile::exists( filename ) ) {
-            if( KMessageBox::warningYesNo( this,
-                                           i18n( "A file with this name already exists. Do you want to overwrite it?" ),
-                                           i18n( "KMail Warning" ) ) ==
-                KMessageBox::No )
-                return;
-        }
-        saveItem( static_cast<KMMimePartTreeItem *>(item), filename, encoded );
-    }
+    QPtrList<partNode> parts;
+    parts.append( static_cast<KMMimePartTreeItem *>(item)->node() );
+    mReaderWin->setUpdateAttachment();
+    KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts, 
+            mReaderWin->message(), encoded );
+    command->start();
 }
 
 void KMMimePartTree::saveMultipleFiles( const QPtrList<QListViewItem>& selected, bool encoded )
 {
     QPtrListIterator<QListViewItem> it( selected );
-    // Let the user choose a *directory*.
-    // This is why this method is totally different from saveOneFile
-    KFileDialog fdlg( QString::null, QString::null, this, 0, TRUE );
-    fdlg.setMode( KFile::Directory );
-    if (!fdlg.exec()) return;
-    QString dir = fdlg.selectedURL().path();
-
-    while ( it.current() ) {
-        KMMimePartTreeItem *item = static_cast<KMMimePartTreeItem*>( it.current() );
-        QString s = item->text(0);
-        if( s.startsWith( "file: " ) )
-            s = s.mid(6).stripWhiteSpace();
-        else
-            s = s.stripWhiteSpace();
-
-        QString filename = dir + "/" + s;
-
-        if( !filename.isEmpty() ) {
-            if( QFile::exists( filename ) ) {
-                // Unlike slotSaveAs, we're saving multiple files, so show which one creates trouble
-                if( KMessageBox::warningYesNo( this,
-                                               i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s ),
-                                               i18n( "KMail Warning" ) ) ==
-                    KMessageBox::No ) {
-                    ++it;
-                    continue;
-                }
-            }
-            saveItem( item, filename, encoded );
-        }
+    QPtrList<partNode> parts;
+    while ( it.current() )
+    {
+        parts.append( static_cast<KMMimePartTreeItem *>(it.current())->node() );
         ++it;
     }
-}
-
-void KMMimePartTree::saveItem( KMMimePartTreeItem* item, const QString& filename, bool encoded )
-{
-    if ( item && !filename.isEmpty() ) {
-        bool bSaveEncrypted = false;
-        bool bEncryptedParts = item->node()->encryptionState() != KMMsgNotEncrypted;
-        if( bEncryptedParts )
-            if( KMessageBox::questionYesNo( this,
-                                            i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
-                                            i18n( "KMail Question" ) ) ==
-                KMessageBox::Yes )
-                bSaveEncrypted = true;
-
-        bool bSaveWithSig = true;
-        if( item->node()->signatureState() != KMMsgNotSigned )
-            if( KMessageBox::questionYesNo( this,
-                                            i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
-                                            i18n( "KMail Question" ) ) !=
-                KMessageBox::Yes )
-                bSaveWithSig = false;
-
-        QFile file( filename );
-        if( file.open( IO_WriteOnly ) ) {
-            if ( encoded )
-            {
-                // Note:   SaveAsEncoded *always* stores the ENCRYPTED content with SIGNATURES.
-                // reason: SaveAsEncoded does not decode the Message Content-Transfer-Encoding
-                //         but saves the _original_ content of the message (or the message part, resp.)
-                QDataStream ds( &file );
-                QCString cstr( item->node()->msgPart().body() );
-                ds.writeRawBytes( cstr, cstr.length() );
-            }
-            else
-            {
-                QDataStream ds( &file );
-                if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
-                    QByteArray cstr = item->node()->msgPart().bodyDecodedBinary();
-                    ds.writeRawBytes( cstr, cstr.size() );
-                } else {
-                    ObjectTreeParser otp( mReaderWin, 0, true,
-                                          bSaveEncrypted, bSaveWithSig );
-                    otp.parseObjectTree( item->node() );
-                }
-            }
-            file.close();
-        } else
-            KMessageBox::error( this, i18n( "Could not write the file" ),
-                                i18n( "KMail Error" ) );
-    }
+    mReaderWin->setUpdateAttachment();
+    KMSaveAttachmentsCommand *command = new KMSaveAttachmentsCommand( this, parts, 
+            mReaderWin->message(), encoded );
+    command->start();
 }
 
 

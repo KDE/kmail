@@ -52,6 +52,7 @@
 #include "undostack.h"
 #include "partNode.h"
 #include "kcursorsaver.h"
+#include "partNode.h"
 using KMail::FolderJob;
 #include "mailsourceviewer.h"
 using KMail::MailSourceViewer;
@@ -183,17 +184,29 @@ void KMCommand::transferSelectedMsgs()
   for (KMMsgBase *mb = mMsgList.first(); mb; mb = mMsgList.next())
   {
     // check if all messages are complete
-    KMFolder *folder = mb->parent();
-    int idx = folder->find(mb);
-    if (idx < 0) continue;
-    KMMessage *thisMsg = folder->getMsg(idx);
+    KMMessage *thisMsg = 0;
+    if ( mb->isMessage() )
+      thisMsg = static_cast<KMMessage*>(mb);
+    else
+    {
+      KMFolder *folder = mb->parent();
+      int idx = folder->find(mb);
+      if (idx < 0) continue;
+      thisMsg = folder->getMsg(idx);
+    }
     if (!thisMsg) continue;
-    if (thisMsg->transferInProgress()) continue;
+    if (thisMsg->transferInProgress())
+    {
+      // suppose that this message is currently downloading and it's therefore ok to add it
+      // otherwise we end up without a message
+      mRetrievedMsgs.append(thisMsg);
+      thisMsg->setTransferInProgress(true);
+      continue;
+    }
 
     if ( thisMsg->parent() && !thisMsg->isComplete() && !mProgressDialog->wasCancelled() )
-        kdDebug(5006)<<"### INCOMPLETE with protocol = "<<thisMsg->parent()->protocol() <<endl;
-    if (thisMsg->parent()  && !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
     {
+      kdDebug(5006)<<"### INCOMPLETE with protocol = "<<thisMsg->parent()->protocol() <<endl;
       // the message needs to be transferred first
       complete = false;
       KMCommand::mCountJobs++;
@@ -1026,7 +1039,7 @@ void KMSetStatusCommand::execute()
   QValueListIterator<Q_UINT32> it;
   int idx = -1;
   KMFolder *folder = 0;
-  bool parentStatus;
+  bool parentStatus = false;
 
   // Toggle actions on threads toggle the whole thread
   // depending on the state of the parent.
@@ -1528,17 +1541,31 @@ void KMUrlClickedCommand::execute()
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg )
-  : KMCommand( parent, msg ), mParent( parent )
+  : KMCommand( parent, msg ), mParent( parent ), mEncoded( false )
 {
 }
 
 KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs )
-  : KMCommand( parent, msgs ), mParent( parent )
+  : KMCommand( parent, msgs ), mParent( parent ), mEncoded( false )
 {
+}
+
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode>& attachments, 
+                                                    KMMessage *msg, bool encoded )
+  : KMCommand( parent, msg ), mParent( parent ), mAttachments( attachments ), mEncoded( encoded )
+{
+  // do not load the complete message but only parts
+  msg->setComplete( true );
+  setDeletesItself( true );
 }
 
 void KMSaveAttachmentsCommand::execute()
 {
+  if ( mAttachments.count() > 0 )
+  {
+    saveAll( mAttachments );
+    return;
+  }
   KMMessage *msg = 0;
   QPtrList<KMMessage> lst = retrievedMsgs();
   QPtrListIterator<KMMessage> itr( lst );
@@ -1597,17 +1624,40 @@ void KMSaveAttachmentsCommand::saveAll( const QPtrList<partNode>& attachments )
   if ( attachments.isEmpty() ) {
     return;
   }
-  QPtrListIterator<partNode> itr( attachments );
+  mAttachments = attachments;
+  KMLoadPartsCommand *command = new KMLoadPartsCommand( mAttachments, retrievedMessage() );
+  connect( command, SIGNAL( partsRetrieved() ),
+      this, SLOT( slotSaveAll() ) );
+  command->start();
+}
 
-  KFileDialog fdlg( QString::null, QString::null, mParent, 0, true );
-  fdlg.setMode( KFile::Directory );
-  if ( !fdlg.exec() ) return;
-  QString dir = fdlg.selectedURL().path();
+void KMSaveAttachmentsCommand::slotSaveAll()
+{
+  QPtrListIterator<partNode> itr( mAttachments );
+
+  QString dir, file;
+  if ( mAttachments.count() > 1 )
+  {
+    // get the dir
+    KFileDialog fdlg( QString::null, QString::null, mParent, 0, true );
+    fdlg.setMode( KFile::Directory );
+    if ( !fdlg.exec() ) return;
+    dir = fdlg.selectedURL().path();
+  } else
+  {
+    // only one item, get the desired filename
+    const QString s = itr.current()->msgPart().fileName();
+    file = KFileDialog::getSaveFileName( s, QString::null, mParent, QString::null );
+  }
 
   while ( itr.current() ) {
     QString s = itr.current()->msgPart().fileName();
 
-    QString filename = dir + "/" + s;
+    QString filename;
+    if ( !dir.isEmpty() )
+      filename = dir + "/" + s;
+    else
+      filename = file;
 
     if( !filename.isEmpty() ) {
       if( QFile::exists( filename ) ) {
@@ -1648,10 +1698,21 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
 
     QFile file( filename );
     if( file.open( IO_WriteOnly ) ) {
-      QDataStream ds( &file );
-      if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
-        QByteArray cstr = node->msgPart().bodyDecodedBinary();
+      if ( mEncoded )
+      {
+        // This does not decode the Message Content-Transfer-Encoding
+        // but saves the _original_ content of the message part
+        QDataStream ds( &file );
+        QCString cstr( node->msgPart().body() );
         ds.writeRawBytes( cstr, cstr.size() );
+      }
+      else
+      {
+        QDataStream ds( &file );
+        if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
+          QByteArray cstr = node->msgPart().bodyDecodedBinary();
+          ds.writeRawBytes( cstr, cstr.size() );
+        }
       }
       file.close();
     } else
@@ -1659,3 +1720,65 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
                           i18n( "KMail Error" ) );
   }
 }
+
+KMLoadPartsCommand::KMLoadPartsCommand( QPtrList<partNode>& parts, KMMessage *msg )
+    : mParts( parts ), mNeedsRetrieval( 0 ), mMsg( msg )
+{
+}
+
+KMLoadPartsCommand::KMLoadPartsCommand( partNode* node, KMMessage *msg )
+    : mNeedsRetrieval( 0 ), mMsg( msg )
+{
+  mParts.append( node );
+}
+
+void KMLoadPartsCommand::start()
+{
+  QPtrListIterator<partNode> it( mParts );
+  while ( it.current() )
+  {
+    if ( !it.current()->msgPart().isComplete() )
+    {
+      // incomplete part so retrieve it first
+      ++mNeedsRetrieval;
+      KMFolder* curFolder = mMsg->parent();
+      if ( curFolder )
+      {
+        FolderJob *job = curFolder->createJob( mMsg, FolderJob::tGetMessage, 
+            0, it.current()->msgPart().partSpecifier() );
+        connect( job, SIGNAL(messageUpdated(KMMessage*, QString)),
+            this, SLOT(slotPartRetrieved(KMMessage*, QString)) );
+        job->start();
+      }
+    }
+    ++it;
+  }
+  if ( mNeedsRetrieval == 0)
+    execute();
+}
+
+void KMLoadPartsCommand::slotPartRetrieved( KMMessage* msg, QString partSpecifier )
+{
+  DwBodyPart* part = msg->findDwBodyPart( partSpecifier );
+  if ( part )
+  {
+    // update the DwBodyPart in the partNode
+    QPtrListIterator<partNode> it( mParts );
+    while ( it.current() )
+    {
+      if ( it.current()->dwPart() == part )
+        it.current()->setDwPart( part );
+      ++it;
+    }
+  }
+  --mNeedsRetrieval;
+  if ( mNeedsRetrieval == 0 )
+    execute();
+}
+
+void KMLoadPartsCommand::execute()
+{
+  emit partsRetrieved();
+  delete this;
+}
+

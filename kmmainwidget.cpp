@@ -1507,7 +1507,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
   if (msg && msg->parent() && !msg->isComplete())
   {
     mMsgView->clear();
-    FolderJob *job = msg->parent()->createJob(msg);
+    FolderJob *job = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, "STRUCTURE");
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
     job->start();
@@ -1604,7 +1604,7 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
 {
-  if (msg && ((KMMsgBase*)msg)->isMessage() && msg->isComplete()) {
+  if (msg && ((KMMsgBase*)msg)->isMessage()) {
     mMsgView->setMsg(msg, TRUE);
   }  else // force an update of the folder
     static_cast<KMFolderImap*>(mFolder)->getFolder(true);

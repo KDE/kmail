@@ -150,6 +150,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
       .arg(ident.fullName()).arg(ident.emailAddr()));
   }
+  aMsg->setComplete( true );
 
   rc = kernel->outboxFolder()->addMsg(aMsg);
   if (rc)

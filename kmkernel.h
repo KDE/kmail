@@ -45,6 +45,7 @@ class KMMainWin;
 class KMainWindow;
 class KMGroupware;
 class KMailICalIfaceImpl;
+class KMReaderWin;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -181,6 +182,9 @@ public:
 
   /** returns a reference to the first Mainwin or a temporary Mainwin */
   KMainWindow* mainWin();
+
+  /** returns the currently active message window */
+  KMReaderWin* activeReaderWin();
 
 public slots:
   //Save contents of all open composer widnows to ~/dead.letter

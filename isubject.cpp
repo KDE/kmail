@@ -32,7 +32,9 @@ namespace KMail {
     while ( (observer = it.current()) != 0 ) 
     {
       ++it;
-      observer->update( this );
+      bool success = observer->update( this );
+      if ( !success )
+        kdWarning(5006) << "ISubject::notify returned false for observer " << observer << endl;
     }
   }
 

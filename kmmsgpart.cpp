@@ -25,8 +25,28 @@ using namespace KMime;
 
 //-----------------------------------------------------------------------------
 KMMessagePart::KMMessagePart()
-  : mType("text"), mSubtype("plain"), mCte("7bit"), mBodyDecodedSize(0)
+  : mType("text"), mSubtype("plain"), mCte("7bit"), mBodyDecodedSize(0), 
+    mParent(0), mLoadHeaders(false), mLoadPart(false)
 {
+}
+
+//-----------------------------------------------------------------------------
+KMMessagePart::KMMessagePart( QDataStream & stream )
+  : mParent(0), mLoadHeaders(false), mLoadPart(false)
+{
+  unsigned long size;
+  stream >> mOriginalContentTypeStr >> mName >> mContentDescription 
+    >> mContentDisposition >> mCte >> size >> mPartSpecifier;
+  
+  mContentDisposition = mContentDisposition.lower();
+  mOriginalContentTypeStr = mOriginalContentTypeStr.upper();
+ 
+  // set the type 
+  int sep = mOriginalContentTypeStr.find('/');
+  mType = mOriginalContentTypeStr.left(sep);
+  mSubtype = mOriginalContentTypeStr.mid(sep+1);
+   
+  mBodyDecodedSize = size;
 }
 
 

@@ -54,7 +54,8 @@ public:
    * Constructs a new job, operating on the message msg, of type
    * @p jt and with a parent folder @p folder.
    */
-  FolderJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0  );
+  FolderJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0,
+        QString partSpecifier = QString::null );
 
   /**
    * Constructs a new job, operating on a message list @p msgList,
@@ -80,6 +81,11 @@ signals:
    * retrieved from the server/folder.
    */
   void messageRetrieved( KMMessage * );
+
+  /**
+   * Emitted whenever a KMMessage was updated
+   */
+  void messageUpdated( KMMessage *, QString ); 
 
   /**
    * Emitted whenever a message has been stored in
@@ -129,9 +135,11 @@ protected:
   JobType             mType;
   QString             mSets;
   KMFolder*           mDestFolder;
+  QString             mPartSpecifier;
 
   //finished() won't be emitted when this is set
   bool                mPassiveDestructor;
+  bool                mStarted;
 };
 
 }

@@ -969,11 +969,21 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 //-------------------------------------------------------------
 FolderJob*
 KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
-                           KMFolder *folder ) const
+                           KMFolder *folder, QString partSpecifier ) const
 {
   KMFolderImap* kmfi = dynamic_cast<KMFolderImap*>(folder);
-  ImapJob *job = new ImapJob( msg, jt, kmfi );
-  return job;
+  if (jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE")
+  {
+    // retrieve the BODYSTRUCTURE and to speed things up also the headers
+    ImapJob *job = new ImapJob( msg, jt, kmfi, "HEADER" );
+    job->start();
+    ImapJob *job2 = new ImapJob( msg, jt, kmfi, "STRUCTURE" );
+    job2->start();
+    return job;
+  } else {
+    ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
+    return job;
+  }
 }
 
 //-------------------------------------------------------------
@@ -985,8 +995,6 @@ KMFolderImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
   ImapJob *job = new ImapJob( msgList, sets, jt, kmfi );
   return job;
 }
-
-
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)

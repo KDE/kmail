@@ -52,7 +52,8 @@ class ImapJob : public FolderJob
   friend class KMAcctImap;
 
 public:
-  ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0 );
+  ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0,
+           QString partSpecifier = QString::null );
   ImapJob( QPtrList<KMMessage>& msgList, QString sets,
            JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
@@ -61,6 +62,7 @@ public:
 
 private slots:
   void slotGetMessageResult( KIO::Job * job );
+  void slotGetBodyStructureResult( KIO::Job * job );
   void slotGetNextMessage();
   /** Feeds the message in pieces to the server */
   void slotPutMessageDataReq( KIO::Job *job, QByteArray &data );

@@ -28,6 +28,14 @@ using KMail::SieveConfig;
 #include "kmfolder.h"
 #include "kmbroadcaststatus.h"
 #include "kmmainwin.h"
+#include "kmfolderimap.h"
+#include "kmmainwidget.h"
+#include "kmmainwin.h"
+#include "kmmsgpart.h"
+#include "bodyvisitor.h"
+using KMail::BodyVisitor;
+#include "imapjob.h"
+using KMail::ImapJob;
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -37,6 +45,11 @@ using KIO::MetaData;
 #include <kio/passdlg.h>
 using KIO::PasswordDialog;
 #include <kio/scheduler.h>
+#include <mimelib/bodypart.h>
+#include <mimelib/body.h>
+#include <mimelib/headers.h>
+#include <mimelib/message.h>
+//using KIO::Scheduler; // use FQN below
 
 #include <qregexp.h>
 
@@ -66,6 +79,7 @@ namespace KMail {
       mCreateInbox( false )
   {
     mPort = imapDefaultPort;
+    mBodyPartList.setAutoDelete(true);
     KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
                             this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
     KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave *)),
@@ -508,6 +522,107 @@ namespace KMail {
     kernel->acctMgr()->singleCheckMail(this, true);
     mMailCheckFolders = mSaveList;
     mFoldersQueuedForChecking.clear();
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg ) 
+  {
+    mBodyPartList.clear();
+    mCurrentMsg = msg;
+    // make the parts and fill the mBodyPartList
+    constructParts( stream, 1, 0, 0, msg->asDwMessage() );
+    if ( mBodyPartList.count() == 1 ) // we directly set the body later
+      msg->deleteBodyParts();
+
+    // get the currently active reader window
+    if ( !kernel->activeReaderWin() ) 
+    {
+      kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no readerwin!" << endl;
+      return;
+    }
+
+    // download parts according to attachmentstrategy
+    BodyVisitor *visitor = BodyVisitorFactory::getVisitor( 
+        kernel->activeReaderWin()->attachmentStrategy() );
+    visitor->visit( mBodyPartList );
+    QPtrList<KMMessagePart> parts = visitor->partsToLoad();
+    QPtrListIterator<KMMessagePart> it( parts );
+    KMMessagePart *part;
+    while ( (part = it.current()) != 0 )
+    {
+      ++it;
+      kdDebug(5006) << "ImapAccountBase::handleBodyStructure - load " << part->partSpecifier() 
+        << " (" << part->originalContentTypeStr() << ")" << endl;
+      if ( part->loadHeaders() )
+      {
+        kdDebug(5006) << "load HEADER" << endl;
+        FolderJob *job = msg->parent()->createJob(
+            msg, FolderJob::tGetMessage, 0, part->partSpecifier()+".MIME" );
+        job->start();
+      }
+      if ( part->loadPart() )
+      {
+        kdDebug(5006) << "load Part" << endl;
+        FolderJob *job = msg->parent()->createJob(
+            msg, FolderJob::tGetMessage, 0, part->partSpecifier() );
+        job->start();
+      }
+    }
+    delete visitor;
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::constructParts( QDataStream & stream, int count, KMMessagePart* parentKMPart,
+                                        DwBodyPart * parent, const DwMessage * dwmsg )
+  {
+    int children;
+    for (int i = 0; i < count; i++)
+    {
+      stream >> children;
+      KMMessagePart* part = new KMMessagePart( stream );
+      part->setParent( parentKMPart );
+      mBodyPartList.append( part );
+      kdDebug(5006) << "ImapAccountBase::constructParts - created id " << part->partSpecifier() 
+        << " of type " << part->originalContentTypeStr() << endl;
+      DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
+      dwpart->Parse(); // also creates an encapsulated DwMessage if necessary
+
+//      kdDebug(5006) << "constructed dwpart " << dwpart << ",dwmsg " << dwmsg << ",parent " << parent
+//       << ",dwparts msg " << dwpart->Body().Message() << endl;
+
+      if ( parent )
+      {
+        // add to parent body
+        parent->Body().AddBodyPart( dwpart );
+      } else if ( part->partSpecifier() != "0" && 
+                  !part->partSpecifier().endsWith(".HEADER") ) 
+      {
+        // add to message
+        dwmsg->Body().AddBodyPart( dwpart );
+      } else
+        dwpart = 0;
+      
+      if ( !parentKMPart )
+        parentKMPart = part;
+
+      if (children > 0)
+      {
+        DwBodyPart* newparent = dwpart;
+        const DwMessage* newmsg = dwmsg;
+        if ( part->originalContentTypeStr() == "MESSAGE/RFC822" && 
+             dwpart->Body().Message() )
+        {
+          // set the encapsulated message as new parent message
+          newparent = 0;
+          newmsg = dwpart->Body().Message();
+        }
+        KMMessagePart* newParentKMPart = part;
+        if ( part->partSpecifier().endsWith(".HEADER") ) // we don't want headers as parent
+          newParentKMPart = parentKMPart;
+
+        constructParts( stream, children, newParentKMPart, newparent, newmsg );
+      }
+    }
   }
 
 } // namespace KMail

@@ -12,6 +12,7 @@
 #include <kurl.h>
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
+#include "iobserver.h"
 #include <cryptplugwrapper.h>
 #include <cryptplugwrapperlist.h>
 
@@ -40,7 +41,9 @@ namespace KMail {
   class HeaderStyle;
   class HtmlWriter;
   class KHtmlPartHtmlWriter;
+  class ISubject;
   class HtmlStatusBar;
+  class FolderJob;
   class CSSHelper;
 }
 
@@ -54,7 +57,7 @@ namespace KParts {
 }
 
 #define KMReaderWinInherited QWidget
-class KMReaderWin: public QWidget
+class KMReaderWin: public QWidget, public KMail::IObserver
 {
   Q_OBJECT
 
@@ -74,6 +77,8 @@ public:
                const char *name=0,
 	       int f=0 );
   virtual ~KMReaderWin();
+
+  virtual bool update( KMail::ISubject * );
 
   /** assign a KMMimePartTree to this KMReaderWin */
   virtual void setMimePartTree( KMMimePartTree* mimePartTree );
@@ -209,16 +214,21 @@ public:
   KAction *copyURLAction() { return mCopyURLAction; }
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
-    KAction *addBookmarksAction() { return mAddBookmarksAction;}
-    // This function returns the complete data that were in this
-    // message parts - *after* all encryption has been removed that
-    // could be removed.
-    // - This is used to store the message in decrypted form.
-    void objectTreeToDecryptedMsg( partNode* node,
-                                   NewByteArray& resultingData,
-                                   KMMessage& theMessage,
-                                   bool weAreReplacingTheRootNode = false,
-                                   int recCount = 0 );
+  KAction *addBookmarksAction() { return mAddBookmarksAction;}
+  // This function returns the complete data that were in this
+  // message parts - *after* all encryption has been removed that
+  // could be removed.
+  // - This is used to store the message in decrypted form.
+  void objectTreeToDecryptedMsg( partNode* node,
+                                 NewByteArray& resultingData,
+                                 KMMessage& theMessage,
+                                 bool weAreReplacingTheRootNode = false,
+                                 int recCount = 0 );
+
+  /** Returns message part from given URL or null if invalid. */
+  partNode* partNodeFromUrl(const KURL &url);
+
+  void setUpdateAttachment() { mAtmUpdate = true; }
 
 signals:
   /** Emitted after parsing of a message to have it stored
@@ -269,6 +279,8 @@ public slots:
 
   /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const QString &, const QPoint& mousePos);
+  void slotUrlPopup();
+  void slotPreUrlPopup(const QString &, const QPoint& mousePos);
 
   /** The user selected "Find" from the menu. */
   void slotFind();
@@ -306,6 +318,7 @@ public slots:
   void slotUrlCopy();
   /** Open URL in mUrlCurrent using Kfm. */
   void slotUrlOpen();
+  void slotPreUrlOpen();
   /** Save the page to a file */
   void slotUrlSave();
     void slotAddBookmarks();
@@ -314,10 +327,10 @@ public slots:
   void slotSaveMsg();
   void slotSaveAttachments();
 
-protected slots:
   /** Returns the current message or 0 if none. */
   KMMessage* message(KMFolder** folder=0) const;
 
+protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
   void slotAtmOpenWith();
@@ -421,6 +434,9 @@ protected:
   KToggleAction *mToggleFixFontAction;
   KURL mUrlClicked;
   KMail::HtmlWriter * mHtmlWriter;
+  // an attachment should be updated
+  bool mAtmUpdate;
+  QPoint mPos;
 
 public:
   bool mDebugReaderCrypto;

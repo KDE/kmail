@@ -33,6 +33,9 @@ class KMAcctMgr;
 class KMFolder;
 class KConfig/*Base*/;
 class KMessage;
+class KMMessagePart;
+class DwBodyPart;
+class DwMessage;
 
 namespace KIO {
   class Job;
@@ -178,6 +181,11 @@ namespace KMail {
     bool createInbox() { return mCreateInbox; }
     void setCreateInbox( bool create ) { mCreateInbox = create; }
 
+    /**
+     * Handles the result from a BODYSTRUCTURE fetch
+     */ 
+    void handleBodyStructure( QDataStream & stream, KMMessage * msg );
+
   public slots:
     /**
      * gets the results of listDirectory
@@ -223,11 +231,17 @@ namespace KMail {
     virtual unsigned short int defaultPort() const;
     // ### Hacks
     virtual void setPrefixHook() = 0;
+
+    /**
+     * Build KMMessageParts and DwBodyParts from the bodystructure-stream
+     */ 
+    void constructParts( QDataStream & stream, int count, KMMessagePart* parentKMPart,
+       DwBodyPart * parent, const DwMessage * dwmsg );
+
+  protected:
     QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
     QStringList mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes;
-
-  protected:
     QMap<KIO::Job *, jobData> mapJobData;
     QTimer mIdleTimer;
     QString mPrefix;
@@ -244,6 +258,10 @@ namespace KMail {
         // folders that should be checked after the current check is done
 	QValueList<QGuardedPtr<KMFolder> > mFoldersQueuedForChecking;
     bool mCreateInbox;
+    // holds messageparts from the bodystructure
+    QPtrList<KMMessagePart> mBodyPartList;
+    // the current message for the bodystructure
+    KMMessage* mCurrentMsg;
 
   signals:
     /**

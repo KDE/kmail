@@ -336,7 +336,7 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         else
             cntEnc = "7bit";
         if( mDwPart )
-            cntSize = mDwPart->Body().AsString().length();
+            cntSize = mDwPart->BodySize();
     } else {
         cntDesc = labelDescr;
         cntType = labelCntType;
