@@ -278,6 +278,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Robert D. Williams", 0, "rwilliams@kde.org" );
   about.addAuthor( "Markus Wuebben", 0, "markus.wuebben@kde.org" );
   about.addAuthor( "Thorsten Zachmann", 0, "t.zachmann@zagge.de" );
+  about.addAuthor( "Zack Rusin", 0, "<zack@kde.org>" );
   about.addAuthor( "Karl-Heinz Zimmer", 0, "khz@kde.org" );
 
   KCmdLineArgs::init(argc, argv, &about);
