@@ -537,7 +537,7 @@ bool KMFolderImap::listDirectory(bool secondStep)
   if ( !mAccount ||
        ( mAccount && mAccount->makeConnection() == ImapAccountBase::Error ) )
   {
-    kdWarning(5006) << "KMFolderImap::listDirectory - got no connection" << endl;
+    kdDebug(5006) << "KMFolderImap::listDirectory - got no connection" << endl;
     return false;
   }
 
@@ -710,7 +710,7 @@ void KMFolderImap::checkValidity()
   kdDebug(5006) << "KMFolderImap::checkValidity of: " << imapPath() << endl;
   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
   {
-    kdWarning(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
+    kdDebug(5006) << "KMFolderImap::checkValidity - got no connection" << endl;
     emit folderComplete(this, FALSE);
     return;
   }
@@ -1540,17 +1540,17 @@ bool KMFolderImap::processNewMail(bool)
 {
    // a little safety
   if ( !mAccount ) {
-    kdWarning(5006) << "KMFolderImap::processNewMail - account is null!" << endl;
+    kdDebug(5006) << "KMFolderImap::processNewMail - account is null!" << endl;
     return false;
   }
   if (imapPath().isEmpty()) {
-    kdWarning(5006) << "KMFolderImap::processNewMail - imapPath of " << name() << " is empty!" << endl;
+    kdDebug(5006) << "KMFolderImap::processNewMail - imapPath of " << name() << " is empty!" << endl;
     kmkernel->imapFolderMgr()->remove( folder() );
     return false;
   }
   // check the connection
   if ( mAccount->makeConnection() == ImapAccountBase::Error ) {
-    kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
+    kdDebug(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
     return false;
   } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
   {
