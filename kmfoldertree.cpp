@@ -15,6 +15,7 @@
 #include "kmacctmgr.h"
 #include "kmkernel.h"
 #include "globalsettings.h"
+#include "kmcommands.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -956,8 +957,8 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
   if ( fti->folder() && fti->folder()->isMailingListEnabled() ) {
     folderMenu->insertSeparator();
     folderMenu->insertItem( i18n("New Message to Mailing-List..."),
-                            mMainWidget,
-                            SLOT( slotPostToML() ) );
+                            this,
+                            SLOT( slotNewMessageToMailingList() ) );
   }
 
   if (fti->folder() && fti->parent())
@@ -1000,16 +1001,10 @@ void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* me)
     return;
   }
 
-  if (!fti->folder()->isMailingListEnabled()) {
-    KFolderTree::contentsMouseReleaseEvent(me);
-    return;
+  if ( fti->folder()->isMailingListEnabled() ) {
+    KMCommand *command = new KMMailingListPostCommand( this, fti->folder() );
+    command->start();
   }
-
-  KMMessage *msg = new KMMessage;
-  msg->initHeader(fti->folder()->identity());
-  msg->setTo(fti->folder()->mailingListPostAddress());
-  KMComposeWin *win = new KMComposeWin(msg, fti->folder()->identity());
-  win->show();
 
   KFolderTree::contentsMouseReleaseEvent(me);
 }
@@ -1553,6 +1548,16 @@ void KMFolderTree::slotCheckMail()
     KMAccount* acct = static_cast<KMFolderImap*>(folder->storage())->account();
     kmkernel->acctMgr()->singleCheckMail(acct, true);
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotNewMessageToMailingList()
+{
+  KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>( currentItem() );
+  if ( !fti || !fti->folder() )
+    return;
+  KMCommand *command = new KMMailingListPostCommand( this, fti->folder() );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
