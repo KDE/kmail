@@ -4,6 +4,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#include <sys/types.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -249,7 +250,7 @@ int main(int argc, char *argv[])
 
   KSimpleConfig config(locateLocal("appdata", "lock"));
   int oldPid = config.readNumEntry("pid", -1);
-  if (oldPid != -1 && getsid(oldPid) != -1)
+  if (oldPid != -1 && kill(oldPid, 0) != -1)
   {
     QString msg = i18n("KMail can only run once at the same time. "
       "It is already running on a different display with PID %1.").arg(oldPid);
