@@ -69,12 +69,14 @@ public slots:
   the total (for example, to show an error in the status bar) by
   calling it with numNewMails = -1  */
   virtual void addToTotalNewMailCount(int numNewMails);
-  
+
 signals:
   /** emitted if new mail has been collected */
   void checkedMail(bool, bool);
 
 private:
+  void sorryCheckAlreadyInProgress(bool aInteractive);
+
   KMAcctList   mAcctList;
   KMAcctList   mAcctChecking;
   KMAccount *lastAccountChecked;

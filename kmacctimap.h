@@ -80,6 +80,7 @@ public:
    */
   const QString& host(void) const { return mHost; }
   virtual void setHost(const QString&);
+  virtual void ignoreJobsForMessage( KMMessage* msg );
 
   /**
    * Port on Imap host
@@ -92,9 +93,6 @@ public:
    */
   const QString& prefix(void) const { return mPrefix; }
   virtual void setPrefix(const QString&);
-
-  const QString& trash(void) const { return mTrash; }
-  virtual void setTrash(const QString&);
 
   /**
    * Automatically expunge deleted messages when leaving the folder
@@ -151,7 +149,7 @@ public:
     QPtrList<KMMessage> msgList;
   };
   QMap<KIO::Job *, jobData> mapJobData;
- 
+
   /**
    * Get the URL for the account
    */
@@ -166,7 +164,7 @@ public:
    * Update the progress bar
    */
   void displayProgress();
- 
+
   /**
    * Kill all jobs related the the specified folder
    */
@@ -225,7 +223,6 @@ protected:
   QString mLogin, mPasswd;
   QString mHost, mAuth;
   QString mPrefix;
-  QString mTrash;
   unsigned short int mPort;
   bool    mStorePasswd;
   bool    mAskAgain;
@@ -252,7 +249,7 @@ protected slots:
    * Send a NOOP command or log out when idle
    */
   void slotIdleTimeout();
- 
+
   /**
    * Kills all jobs
    */

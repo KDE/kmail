@@ -71,11 +71,43 @@
 // Current version of the table of contents (index) files
 #define INDEX_VERSION 1506
 
-static int _rename(const char* oldname, const char* newname)
+//----------------------------------------------------------------------------
+KMFolderJob::KMFolderJob( KMMessage *msg, JobType jt, KMFolder* folder )
+  : mType( jt ), mDestFolder( folder )
 {
-  return rename(oldname, newname);
+  if ( msg ) {
+    mMsgList.append(msg);
+    mSets = msg->headerField("X-UID");
+  }
 }
 
+//----------------------------------------------------------------------------
+KMFolderJob::KMFolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                          JobType jt, KMFolder *folder )
+  : mMsgList( msgList ),mType( jt ),
+    mSets( sets ), mDestFolder( folder )
+{
+}
+
+//----------------------------------------------------------------------------
+KMFolderJob::~KMFolderJob()
+{
+  emit finished();
+}
+
+//----------------------------------------------------------------------------
+void
+KMFolderJob::start()
+{
+  execute();
+}
+
+//----------------------------------------------------------------------------
+QPtrList<KMMessage>
+KMFolderJob::msgList() const
+{
+  return mMsgList;
+}
 
 //-----------------------------------------------------------------------------
 KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
@@ -281,7 +313,7 @@ int KMFolder::writeIndex()
   if (fsync(fileno(tmpIndexStream)) != 0) return errno;
   if (fclose(tmpIndexStream) != 0) return errno;
 
-  _rename(tempName.local8Bit(), indexLocation().local8Bit());
+  ::rename(tempName.local8Bit(), indexLocation().local8Bit());
   if (mIndexStream)
       fclose(mIndexStream);
   mHeaderOffset = nho;
@@ -1040,14 +1072,14 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
   newIndexLoc = indexLocation();
   newSubDirLoc = subdirLocation();
 
-  if (_rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
+  if (::rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
     setName(oldName);
     setParent(oldParent);
     rc = errno;
   }
   else if (!oldIndexLoc.isEmpty()) {
-    _rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
-    if (!_rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
+    ::rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
+    if (!::rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
       KMFolderDir* fdir = parent();
       KMFolderNode* fN;
 

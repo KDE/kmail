@@ -111,6 +111,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
   if (checking) {
     if (mAcctChecking.count() > 1) moreThanOneAccount = true;
+//    sorryCheckAlreadyInProgress(_interactive);
     return;
   }
 
@@ -136,14 +137,14 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
 void KMAcctMgr::processNextCheck(bool _newMail)
 {
-  KMAccount *curAccount = 0; 
+  KMAccount *curAccount = 0;
   newMailArrived |= _newMail;
 
   if (lastAccountChecked)
     disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
 		this, SLOT(processNextCheck(bool)) );
 
-  if (mAcctChecking.isEmpty() || 
+  if (mAcctChecking.isEmpty() ||
       (((curAccount = mAcctChecking.take(0)) == lastAccountChecked))) {
     kernel->filterMgr()->cleanup();
     kdDebug(5006) << "checked mail, server ready" << endl;
@@ -261,8 +262,17 @@ void KMAcctMgr::checkMail(bool _interactive)
 {
   newMailArrived = false;
 
-  if (checking)
-    return;
+  if (checking) {
+      kdDebug(5006) << "already checking mail" << endl;
+      if (lastAccountChecked)
+	  kdDebug(5006) << "currently checking " << lastAccountChecked->name() << endl;
+
+      KMAccount* cur;
+      for (cur=mAcctList.first(); cur; cur=mAcctList.next())
+	  kdDebug(5006) << "queued " << cur->name() << endl;
+//      sorryCheckAlreadyInProgress(_interactive);
+      return;
+  }
 
   if (mAcctList.isEmpty())
   {
@@ -275,7 +285,7 @@ void KMAcctMgr::checkMail(bool _interactive)
   mTotalNewMailsArrived=0;
 
   for ( QPtrListIterator<KMAccount> it(mAcctList) ;
-	it.current() ; ++it ) 
+	it.current() ; ++it )
   {
     if (!it.current()->checkExclude())
       singleCheckMail(it.current(), _interactive);
@@ -344,5 +354,17 @@ void KMAcctMgr::addToTotalNewMailCount(int newmails)
   if ( mTotalNewMailsArrived==-1 ) return;
   mTotalNewMailsArrived+=newmails;
 }
+
+
+//-----------------------------------------------------------------------------
+void KMAcctMgr::sorryCheckAlreadyInProgress(bool aInteractive)
+{
+  if (aInteractive && lastAccountChecked)
+    KMessageBox::sorry(
+      0,
+      i18n( "Mail checking of the %1 account is already in progress."
+	  ).arg( lastAccountChecked->name() ));
+}
+
 //-----------------------------------------------------------------------------
 #include "kmacctmgr.moc"

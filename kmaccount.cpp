@@ -69,6 +69,7 @@ void KMPrecommand::precommandExited(KProcess *p)
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
   : mName(aName),
+    mTrash(KMKernel::self()->trashFolder()->idString()),
     mOwner(aOwner),
     mFolder(0),
     mTimer(0),
@@ -238,6 +239,27 @@ void KMAccount::setCheckInterval(int aInterval)
   {
     mInterval = aInterval;
     installTimer();
+  }
+}
+
+//----------------------------------------------------------------------------
+void KMAccount::deleteFolderJobs()
+{
+  mJobList.setAutoDelete(true);
+  mJobList.clear();
+  mJobList.setAutoDelete(false);
+}
+
+//----------------------------------------------------------------------------
+void KMAccount::ignoreJobsForMessage( KMMessage* msg )
+{
+  for( KMFolderJob *it = mJobList.first(); it;
+       it = mJobList.next() ) {
+    if ((*it).msgList().first() == msg) {
+      mJobList.remove( it );
+      delete it;
+      break;
+    }
   }
 }
 

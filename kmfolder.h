@@ -1,19 +1,8 @@
-/* Local Mail folder
+/* Virtual base class for mail folder
  *
  * Author: Stefan Taferner <taferner@kde.org>
  * This code is under GPL
  *
- * Major changes:
- *
- * 23-10-97:  Stefan Taferner <taferner@kde.org>
- *   Source incompatible change! Index of messages now starts at zero
- *   instead of one.
- *   msgSubject(), msgFrom(), msgDate(), and msgStatus() are gone. Use
- *   getMsgBase()->subject() etc. instead.
- *   Use find() instead of indexOfMsg().
- *   Use count() instead of numMsgs().
- *   Use take(int) instead of detachMsg(int).
- *   Use take(find(KMMessage*)) instead of detachMsg(KMMessage*).
  */
 #ifndef kmfolder_h
 #define kmfolder_h
@@ -25,6 +14,7 @@
 #include "kmmsginfo.h"
 #include "kmmsglist.h"
 #include "kmglobal.h"
+#include "mimelib/string.h"
 
 #include <stdio.h>
 #include <qptrvector.h>
@@ -36,6 +26,40 @@ class KMMsgDict;
 class KMMsgDictREntry;
 
 #define KMFolderInherited KMFolderNode
+
+
+class KMFolderJob : public QObject
+{
+  Q_OBJECT
+
+public:
+  enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
+                 tGetMessage, tPutMessage, tCopyMessage, tExpireMessages };
+  KMFolderJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0  );
+  KMFolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
+               JobType jt = tGetMessage, KMFolder *folder = 0 );
+  virtual ~KMFolderJob();
+
+  QPtrList<KMMessage> msgList() const;
+  void start();
+  //void KMFolder* srcFolder() const;
+  //void KMFolder* destFolder() const;
+
+signals:
+  void messageRetrieved(KMMessage *);
+  void messageStored(KMMessage *);
+  void messageCopied(KMMessage *);
+  void messageCopied(QPtrList<KMMessage>);
+  void finished();
+protected:
+  virtual void execute()=0;
+  virtual void expireMessages()=0;
+
+  QPtrList<KMMessage> mMsgList;
+  JobType             mType;
+  QString             mSets;
+  KMFolder*           mDestFolder;
+};
 
 /** Mail folder.
  * (description will be here).
