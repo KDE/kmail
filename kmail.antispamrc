@@ -1,5 +1,5 @@
 [General]
-tools=5
+tools=6
 
 [Spamtool #1]
 Ident=spamassassin
@@ -18,6 +18,11 @@ DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
 SupportsUnsure=0
+ScoreName=Spamassassin
+ScoreHeader=X-Spam-Status
+ScoreType=Adjusted
+ScoreValueRegexp=(?:hits|score)=([\d\.-]+)\s
+ScoreThresholdRegexp=required=([\d\.-]+)\s
 
 [Spamtool #2]
 Ident=bogofilter
@@ -36,6 +41,11 @@ DetectionOnly=0
 UseRegExp=1
 SupportsBayes=1
 SupportsUnsure=0
+ScoreName=Bogofilter
+ScoreHeader=X-Bogosity
+ScoreType=Decimal
+ScoreValueRegexp=spamicity=([\\d\\.]+),
+ScoreThresholdRegexp=
 
 [Spamtool #3]
 Ident=annoyance-filter
@@ -90,3 +100,11 @@ DetectionOnly=0
 UseRegExp=0
 SupportsBayes=1
 SupportsUnsure=1
+
+[Spamtool #6]
+HeadersOnly=yes
+ScoreName=Razor
+ScoreHeader=X-Razor-Spam
+ScoreType=Bool
+ScoreValueRegexp=SPAM
+ScoreThresholdRegexp=

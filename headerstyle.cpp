@@ -39,6 +39,7 @@
 #include "linklocator.h"
 #include "kmmessage.h"
 #include "kmkernel.h"
+#include "spamheaderanalyzer.h"
 
 #include <libemailfunctions/email.h>
 #include <libkdepim/kxface.h>
@@ -342,10 +343,61 @@ namespace KMail {
     const HeaderStyle * prev() const { return plain(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-            const QString & vCardName, bool printing ) const;
-    static QString imgToDataUrl( const QImage &image );
+                    const QString & vCardName, bool printing ) const;
+    static QString imgToDataUrl( const QImage & image,
+                                 const char *fmt = "PNG" );
+
+  private:
+    static QString drawSpamMeter( double percent, const QString & filterHeader );
 
   };
+
+  QString FancyHeaderStyle::drawSpamMeter( double percent,
+                                           const QString & filterHeader )
+  {
+    QImage meterBar( 20, 1, 8, 24 );
+    const unsigned short gradient[20][3] = {
+      {   0, 255,   0 },
+      {  27, 254,   0 },
+      {  54, 252,   0 },
+      {  80, 250,   0 },
+      { 107, 249,   0 },
+      { 135, 247,   0 },
+      { 161, 246,   0 },
+      { 187, 244,   0 },
+      { 214, 242,   0 },
+      { 241, 241,   0 },
+      { 255, 228,   0 },
+      { 255, 202,   0 },
+      { 255, 177,   0 },
+      { 255, 151,   0 },
+      { 255, 126,   0 },
+      { 255, 101,   0 },
+      { 255,  76,   0 },
+      { 255,  51,   0 },
+      { 255,  25,   0 },
+      { 255,   0,   0 }
+    };
+    meterBar.setColor( 21, qRgb( 255, 255, 255 ) );
+    meterBar.setColor( 22, qRgb( 170, 170, 170 ) );
+    if ( percent < 0 ) // grey is for errors
+      meterBar.fill( 22 );
+    else {
+      meterBar.fill( 21 );
+      int max = QMIN( 20, static_cast<int>( percent ) / 5 );
+      for ( int i = 0; i < max; ++i ) {
+        meterBar.setColor( i+1, qRgb( gradient[i][0], gradient[i][1],
+                                      gradient[i][2] ) );
+        meterBar.setPixel( i, 0, i+1 );
+      }
+    }
+    QString altTag = i18n("%1% probability of being spam.<br><br>Full report:<br>%2")
+                     .arg( QString::number( percent ), filterHeader );
+    return QString("<img src=\"%1\" width=\"%2\" height=\"%3\" style=\"border: 1px solid black;\" alt=\"%4\"> &nbsp;")
+      .arg( imgToDataUrl( meterBar, "PPM" ), QString::number( 20 ),
+            QString::number( 5 ), altTag );
+  }
+
 
   QString FancyHeaderStyle::format( const KMMessage * message,
 				    const HeaderStrategy * strategy,
@@ -353,6 +405,8 @@ namespace KMail {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
+
+    KConfigGroup configReader( KMKernel::config(), "Reader" );
 
     // ### from kmreaderwin begin
     // The direction of the header is determined according to the direction
@@ -383,6 +437,20 @@ namespace KMail {
     }
     else {
       dateString = message->dateStr();
+    }
+
+    // Spam header display.
+    // If the spamSpamStatus config value is true then we look for headers
+    // from a few spam filters and try to create visually meaningful graphics
+    // out of the spam scores.
+
+    QString spamHTML;
+
+    if ( configReader.readBoolEntry( "showSpamStatus", true ) ) {
+      SpamScores scores = SpamHeaderAnalyzer::getSpamScores( message );
+      for ( SpamScoresIterator it = scores.begin(); it != scores.end(); ++it )
+        spamHTML += (*it).agent() + " " +
+                    drawSpamMeter( (*it).score(), (*it).spamHeader() );
     }
 
     QString userHTML;
@@ -569,18 +637,24 @@ namespace KMail {
     headerStr.append(
           QString( "</table></td><td align=\"center\">%1</td></tr></table>\n" ).arg(userHTML) );
 
+    if ( !spamHTML.isEmpty() )
+      headerStr.append( QString( "<div class=\"spamheader\" dir=\"%1\"><b>%2</b>&nbsp;<span style=\"padding-left: 20px;\">%3</span></div>\n")
+			.arg( subjectDir, i18n("Spam Status:"), spamHTML ) );
+
     headerStr += "</div>\n\n";
     return headerStr;
   }
 
-QString FancyHeaderStyle::imgToDataUrl( const QImage &image )
-{
-  QByteArray ba;
-  QBuffer buffer( ba );
-  buffer.open( IO_WriteOnly );
-  image.save( &buffer, "PNG" );
-  return QString::fromLatin1("data:image/png;base64,%1").arg( KCodecs::base64Encode( ba ) );
-}
+  QString FancyHeaderStyle::imgToDataUrl( const QImage &image, const char* fmt  )
+  {
+    QByteArray ba;
+    QBuffer buffer( ba );
+    buffer.open( IO_WriteOnly );
+    image.save( &buffer, fmt );
+    return QString::fromLatin1("data:image/%1;base64,%2")
+           .arg( fmt, KCodecs::base64Encode( ba ) );
+  }
+
   //
   // HeaderStyle abstract base:
   //

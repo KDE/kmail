@@ -1819,6 +1819,10 @@ static const BoolConfigEntry showColorbarMode = {
   "Reader", "showColorbar", I18N_NOOP("Show HTML stat&us bar"), false
 };
 
+static const BoolConfigEntry showSpamStatusMode = {
+  "Reader", "showSpamStatus", I18N_NOOP("Show S&pam status in fancy headers"), true
+};
+
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
   : ConfigModuleTab( parent, name )
 {
@@ -1831,6 +1835,12 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
   vlay->addWidget( mShowColorbarCheck );
   connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  // "show spam status" check box;
+  populateCheckBox( mShowSpamStatusCheck = new QCheckBox( this ), showSpamStatusMode );
+  vlay->addWidget( mShowSpamStatusCheck );
+  connect( mShowSpamStatusCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "folder list" radio buttons:
@@ -1865,6 +1875,7 @@ void AppearancePage::LayoutTab::load() {
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   loadWidget( mShowColorbarCheck, reader, showColorbarMode );
+  loadWidget( mShowSpamStatusCheck, reader, showSpamStatusMode );
   loadWidget( mFolderListGroup, geometry, folderListMode );
   loadWidget( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadWidget( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1876,6 +1887,7 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   const KConfigGroup geometry( profile, "Geometry" );
 
   loadProfile( mShowColorbarCheck, reader, showColorbarMode );
+  loadProfile( mShowSpamStatusCheck, reader, showSpamStatusMode );
   loadProfile( mFolderListGroup, geometry, folderListMode );
   loadProfile( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadProfile( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1887,6 +1899,7 @@ void AppearancePage::LayoutTab::save() {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
   saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
+  saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
   saveButtonGroup( mFolderListGroup, geometry, folderListMode );
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );

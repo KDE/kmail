@@ -580,6 +580,15 @@ namespace KMail {
 
 	       "div.fancy.header > div a[href]:hover { text-decoration: underline ! important; }\n\n"
 
+               "div.fancy.header > div.spamheader {\n"
+               "  background-color: #cdcdcd ! important;\n"
+               "  border-top: 0px ! important;\n"
+               "  padding: 3px ! important;\n"
+               "  color: black ! important;\n"
+               "  font-weight: bold ! important;\n"
+               "  font-size: smaller ! important;\n"
+               "}\n\n"
+
 	       "div.fancy.header > table.outer {\n"
 	       "  background-color: %5 ! important;\n"
 	       "  color: %4 ! important;\n"

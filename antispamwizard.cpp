@@ -403,7 +403,7 @@ void AntiSpamWizard::accept()
 
     /* Now that all the filters have been added to the list, tell
      * the filter manager about it. That will emit filterListUpdate
-     * which will result in the filter list in kmmainwidget being 
+     * which will result in the filter list in kmmainwidget being
      * initialized. This should happend only once. */
     KMKernel::self()->filterMgr()->appendFilters( filterList );
   }
@@ -417,7 +417,7 @@ void AntiSpamWizard::checkProgramsSelections()
   bool status = false;
   bool canClassify = false;
   bool supportUnsure = false;
-  
+
   mSpamToolsUsed = false;
   mVirusToolsUsed = false;
   for ( QValueListIterator<SpamToolConfig> it = mToolList.begin();
@@ -444,7 +444,7 @@ void AntiSpamWizard::checkProgramsSelections()
 
   if ( ( mMode == AntiSpam ) && mSpamToolsUsed )
     checkSpamRulesSelections();
-  
+
   if ( ( mMode == AntiVirus ) && mVirusToolsUsed )
     checkVirusRulesSelections();
 
@@ -527,14 +527,14 @@ const QString AntiSpamWizard::uniqueNameFor( const QString & name )
 AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString toolId,
       int configVersion,QString name, QString exec,
       QString url, QString filter, QString detection, QString spam, QString ham,
-      QString header, QString pattern, QString pattern2,bool detectionOnly, 
+      QString header, QString pattern, QString pattern2,bool detectionOnly,
       bool regExp, bool bayesFilter, bool tristateDetection, WizardMode type)
   : mId( toolId ), mVersion( configVersion ),
     mVisibleName( name ), mExecutable( exec ), mWhatsThisText( url ),
     mFilterName( filter ), mDetectCmd( detection ), mSpamCmd( spam ),
     mHamCmd( ham ), mDetectionHeader( header ), mDetectionPattern( pattern ),
-    mDetectionPattern2( pattern2 ),mDetectionOnly( detectionOnly ), 
-    mUseRegExp( regExp ), mSupportsBayesFilter( bayesFilter ), 
+    mDetectionPattern2( pattern2 ),mDetectionOnly( detectionOnly ),
+    mUseRegExp( regExp ), mSupportsBayesFilter( bayesFilter ),
     mSupportsUnsure( tristateDetection ), mType( type )
 {
 }
@@ -570,7 +570,8 @@ void AntiSpamWizard::ConfigReader::readAndMergeConfig()
   for (int i = 1; i <= registeredTools; i++)
   {
     KConfigGroup toolConfig( mConfig, groupName.arg( i ) );
-    mToolList.append( readToolConfig( toolConfig ) );
+    if( !toolConfig.readBoolEntry( "HeadersOnly", false ) )
+      mToolList.append( readToolConfig( toolConfig ) );
   }
 
   // read the configuration from the user config file
@@ -618,7 +619,7 @@ AntiSpamWizard::SpamToolConfig
   bool supportsUnsure = configGroup.readBoolEntry( "SupportsUnsure", false );
   return SpamToolConfig( id, version, name, executable, url,
                          filterName, detectCmd, spamCmd, hamCmd,
-                         header, pattern, pattern2, detectionOnly, useRegExp, 
+                         header, pattern, pattern2, detectionOnly, useRegExp,
                          supportsBayes, supportsUnsure, mMode );
 }
 
@@ -841,14 +842,14 @@ ASWizSpamRulesPage::ASWizSpamRulesPage( QWidget * parent, const char * name,
   QString s = "trash";
   mFolderTreeForSpamFolder = new SimpleFolderTree( this, mainFolderTree, s, true );
   grid->addWidget( mFolderTreeForSpamFolder, 5, 0 );
-  QLabel *spamFolderLabel = new QLabel( mFolderTreeForSpamFolder, 
+  QLabel *spamFolderLabel = new QLabel( mFolderTreeForSpamFolder,
       i18n( "Target folder for spam:" ), this, "spamFolderLabel" );
   grid->addWidget( spamFolderLabel, 4, 0 );
 
   s = "inbox";
   mFolderTreeForUnsureFolder = new SimpleFolderTree( this, mainFolderTree, s, true );
   grid->addWidget( mFolderTreeForUnsureFolder, 5, 2 );
-  QLabel *unsureFolderLabel = new QLabel( mFolderTreeForUnsureFolder, 
+  QLabel *unsureFolderLabel = new QLabel( mFolderTreeForUnsureFolder,
       i18n( "Target folder for unsure:" ), this, "unsureFolderLabel" );
   grid->addWidget( unsureFolderLabel, 4, 2 );
 

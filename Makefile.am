@@ -112,6 +112,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		warningconfiguration.ui smimeconfiguration.ui annotationjobs.cpp \
 		accountcombobox.cpp redirectdialog.cpp foldershortcutdialog.cpp \
         folderrequester.cpp \
+		spamheaderanalyzer.cpp antispamconfig.cpp \
                 replyphrases.kcfgc custommimeheader.kcfgc
 
 kmail_SOURCES = main.cpp

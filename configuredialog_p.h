@@ -443,6 +443,7 @@ public:
 
 protected: // data
   QCheckBox    *mShowColorbarCheck;
+  QCheckBox    *mShowSpamStatusCheck;
   QButtonGroup *mFolderListGroup;
   QButtonGroup *mMIMETreeLocationGroup;
   QButtonGroup *mMIMETreeModeGroup;
