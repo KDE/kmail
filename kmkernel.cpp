@@ -806,7 +806,7 @@ void KMKernel::cleanupLoop()
     {
       if (mProgress)
       {
-        mProgress->setLabel(i18n("Emptying Trash"));
+        mProgress->setLabel(i18n("Emptying trash..."));
         kapp->processEvents();
       }
       the_trashFolder->expunge();
@@ -819,7 +819,7 @@ void KMKernel::cleanupLoop()
   if (expire) {
     if (mProgress)
     {
-       mProgress->setLabel(i18n("Expiring Old Messages"));
+       mProgress->setLabel(i18n("Expiring old messages..."));
        kapp->processEvents();
     }
     the_folderMgr->expireAllFolders(NULL);
@@ -833,7 +833,7 @@ void KMKernel::cleanupLoop()
     {
       if (mProgress)
       {
-        mProgress->setLabel(i18n("Compacting Folders"));
+        mProgress->setLabel(i18n("Compacting folders..."));
         kapp->processEvents();
       }
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
