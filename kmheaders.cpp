@@ -2833,6 +2833,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     bool unread_exists = false;
     QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
     KMSortCacheItem root;
+    QString replyToIdMD5;
     root.setId(-666); //mark of the root!
 
     //threaded cases
@@ -3023,8 +3024,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    msgs.insert(md5, sortCache[x]);
 	}
 	for(QPtrListIterator<KMSortCacheItem> it(unparented); it.current(); ++it) {
-	    i = msgs[mFolder->getMsgBase((*it)->id())->replyToIdMD5()];
-	    if(i) {
+	    replyToIdMD5 = mFolder->getMsgBase((*it)->id())->replyToIdMD5(); 
+	    if(!replyToIdMD5.isEmpty() && (i = msgs[replyToIdMD5])) {
 		i->addUnsortedChild((*it));
 		if(sortStream)
 		    (*it)->updateSortFile(sortStream);

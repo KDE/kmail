@@ -685,11 +685,12 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   bool editing = false;
   int growth = 0;
 
+/* Then we can also disable it completely, this wastes time, at least for IMAP
   if (isIndexOutdated()) {
       kdDebug(5006) << "Critical error: " << location() <<
 	  " has been modified by an external application while KMail was running." << endl;
       //      exit(1); backed out due to broken nfs
-  }
+  } */
 
   if (!mStream)
   {
@@ -719,9 +720,12 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
     msgParent->getMsg( idx );
   }
 
-  aMsg->setStatusFields();
-  if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
-    aMsg->removeHeaderField("Content-Type");        // the line above
+  if (protocol() != "imap")
+  {
+    aMsg->setStatusFields();
+    if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
+      aMsg->removeHeaderField("Content-Type");        // the line above
+  }
   msgText = aMsg->asString();
   msgText.replace(QRegExp("\nFrom "),"\n>From ");
   len = msgText.length();

@@ -30,7 +30,6 @@
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
-#include <kdebug.h>
 
 #include <qregexp.h>
 
@@ -353,7 +352,6 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
 //-----------------------------------------------------------------------------
 void KMAcctImap::displayProgress()
 {
-  kdDebug(5006) << "KMAcctImap::displayProgress" << endl;
   if (mProgressEnabled == mapJobData.isEmpty())
   {
     mProgressEnabled = !mapJobData.isEmpty();
