@@ -965,13 +965,14 @@ static const int autoopenTime = 750;
 
 void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
 {
+  oldCurrent = 0;
+  oldSelected = 0;
   if ( !KMHeaderToFolderDrag::canDecode(e) ) {
         e->ignore();
         return;
   }
 
   oldCurrent = currentItem();
-  oldSelected = 0;
   QListViewItemIterator it( this );
   while (it.current()) {
     if (it.current()->isSelected())
@@ -1083,6 +1084,8 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
 
 void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
 {
+    if (!oldCurrent) return;
+
     autoopen_timer.stop();
     stopAutoScroll();
     dropItem = 0L;
