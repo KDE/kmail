@@ -1941,6 +1941,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QCString contDisp = aPart->contentDisposition();
   QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), charset);
   bool RFC2231encoded = aPart->name() != QString(name);
+  QCString paramAttr  = aPart->parameterAttribute();
 
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
@@ -1966,6 +1967,22 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   } else {
     if(!name.isEmpty())
       headers.ContentType().SetName(name.data());
+  }
+
+  if (!paramAttr.isEmpty())
+  {
+    QCString paramValue;
+    paramValue = KMMsgBase::encodeRFC2231String(aPart->parameterValue(),
+                                                charset);
+    DwParameter *param = new DwParameter;
+    if (aPart->parameterValue() != QString(paramValue))
+    {
+      param->SetAttribute((paramAttr + '*').data());
+    } else {
+      param->SetAttribute(paramAttr.data());
+    }
+    param->SetValue(paramValue.data());
+    headers.ContentType().AddParameter(param);
   }
 
   if (!cte.isEmpty())

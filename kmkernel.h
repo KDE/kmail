@@ -48,11 +48,21 @@ public:
     return openComposer(to, cc, bcc, subject, body, hidden, messageFile,
     KURL());
   }
+  int openComposer (const QString &to, const QString &cc,
+                    const QString &bcc, const QString &subject,
+                    const QString &body, int hidden,
+                    const QString &attachName,
+                    const QCString &attachCte,
+                    const QCString &attachData,
+                    const QCString &attachType,
+                    const QCString &attachSubType,
+                    const QCString &attachParamAttr,
+                    const QString &attachParamValue,
+                    const QCString &attachContDisp);
+  DCOPRef openComposer(const QString &to, const QString &cc,
+                       const QString &bcc, const QString &subject,
+                       const QString &body,bool hidden);
   void openReader();
-  int ready();
-  int send(int composerId, int how); //0=now, 1=later
-  int addAttachment(int composerId, KURL url, QString comment);
-  int setBody (int composerId, QString body);
   void compactAllFolders();
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);

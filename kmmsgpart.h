@@ -63,6 +63,12 @@ public:
     determination (this does not change the body itself). */
   void magicSetType(bool autoDecode=TRUE);
 
+  /** Get or set a custom content type parameter, consisting of an attribute
+    name and a corresponding value. */
+  QCString parameterAttribute(void) const;
+  QString parameterValue(void) const;
+  void setParameter(const QCString &attribute, const QString &value);
+
   /** Tries to find a good icon for the 'Content-Type' by scanning
     the installed mimelnk files. Returns the found icon. If no matching
     icon is found, the one for application/octet-stream is returned. */
@@ -114,6 +120,8 @@ protected:
                      // should be fixed like in kmreaderwin.cpp.
                      // mBody should not be QCString since it can be binary.
   QString mName;
+  QCString mParameterAttribute;
+  QString mParameterValue;
   QCString mCharset;
   int mBodySize;
 };

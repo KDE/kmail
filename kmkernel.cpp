@@ -123,6 +123,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   KMMessage *msg = new KMMessage;
   msg->initHeader();
+  msg->setCharset("utf-8");
   if (!cc.isEmpty()) msg->setCc(cc);
   if (!bcc.isEmpty()) msg->setBcc(bcc);
   if (!subject.isEmpty()) msg->setSubject(subject);
@@ -131,7 +132,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!messageFile.isEmpty() && messageFile.isLocalFile())
     msg->setBody( kFileToString( messageFile.path(), true, false ) );
 
-  if (!body.isEmpty()) msg->setBody(body.local8Bit() );
+  if (!body.isEmpty()) msg->setBody(body.utf8());
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   if (cWin && !attachURL.isEmpty() && attachURL.isValid())
@@ -141,29 +142,64 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   return 1;
 }
 
-int KMKernel::setBody (int /*composerId*/, QString /*body*/)
+int KMKernel::openComposer (const QString &to, const QString &cc,
+                            const QString &bcc, const QString &subject,
+                            const QString &body, int hidden,
+                            const QString &attachName,
+                            const QCString &attachCte,
+                            const QCString &attachData,
+                            const QCString &attachType,
+                            const QCString &attachSubType,
+                            const QCString &attachParamAttr,
+                            const QString &attachParamValue,
+                            const QCString &attachContDisp)
 {
-  kdDebug(5006) << "KMKernel::setBody called" << endl;
+  kdDebug(5006) << "KMKernel::openComposer called" << endl;
+
+  KMMessage *msg = new KMMessage;
+  msg->initHeader();
+  msg->setCharset("utf-8");
+  if (!cc.isEmpty()) msg->setCc(cc);
+  if (!bcc.isEmpty()) msg->setBcc(bcc);
+  if (!subject.isEmpty()) msg->setSubject(subject);
+  if (!to.isEmpty()) msg->setTo(to);
+  if (!body.isEmpty()) msg->setBody(body.utf8());
+
+  KMComposeWin *cWin = new KMComposeWin(msg);
+  if (!attachData.isEmpty()) {
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setName(attachName);
+    msgPart->setCteStr(attachCte);
+    msgPart->setBodyEncoded(attachData);
+    msgPart->setTypeStr(attachType);
+    msgPart->setSubtypeStr(attachSubType);
+    msgPart->setParameter(attachParamAttr,attachParamValue);
+    msgPart->setContentDisposition(attachContDisp);
+    cWin->addAttach(msgPart);
+  }
+
+  if (hidden == 0)
+    cWin->show();
   return 1;
 }
 
-int KMKernel::addAttachment(int /*composerId*/, KURL /*url*/,
-                            QString /*comment*/)
+DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
+                               const QString &bcc, const QString &subject,
+                               const QString &body,bool hidden)
 {
-  kdDebug(5006) << "KMKernel::addAttachment called" << endl;
-  return 1;
-}
+  KMMessage *msg = new KMMessage;
+  msg->initHeader();
+  msg->setCharset("utf-8");
+  if (!cc.isEmpty()) msg->setCc(cc);
+  if (!bcc.isEmpty()) msg->setBcc(bcc);
+  if (!subject.isEmpty()) msg->setSubject(subject);
+  if (!to.isEmpty()) msg->setTo(to);
+  if (!body.isEmpty()) msg->setBody(body.utf8());
 
-int KMKernel::send(int /*composerId*/, int /*when*/)
-{
-  kdDebug(5006) << "KMKernel::send called" << endl;
-  return 1;
-}
+  KMComposeWin *cWin = new KMComposeWin(msg);
+  if (!hidden) cWin->show();
 
-int KMKernel::ready()
-{
-  kdDebug(5006) << "KMKernel::ready called" << endl;
-  return 1;
+  return DCOPRef(cWin);
 }
 
 void KMKernel::compactAllFolders ()

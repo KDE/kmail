@@ -20,6 +20,7 @@
 
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
+#include "mailcomposerIface.h"
 
 class _StringPair {
  public:
@@ -144,7 +145,7 @@ private:
 class KMHeaders;
 
 //-----------------------------------------------------------------------------
-class KMComposeWin : public KMTopLevelWidget
+class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
 {
   Q_OBJECT
   friend class KMHeaders;         // needed for the digest forward
@@ -152,6 +153,19 @@ class KMComposeWin : public KMTopLevelWidget
 public:
   KMComposeWin(KMMessage* msg=0L, QString id = "unknown" );
   ~KMComposeWin();
+
+  /* From MailComposerIface */
+  void send(int how);
+  void addAttachment(KURL url,QString comment);
+  void addAttachment(const QString &name,
+                    const QCString &cte,
+                    const QByteArray &data,
+                    const QCString &type,
+                    const QCString &subType,
+                    const QCString &paramAttr,
+                    const QString &paramValue,
+                    const QCString &contDisp);
+  void setBody (QString body);
 
   /** Add descriptions to the encodings in the list */
   static void makeDescriptiveNames(QStringList &encodings);
@@ -299,6 +313,9 @@ public slots:
 
   void addAttach(const KURL url);
 
+  /** Add an attachment to the list. */
+   void addAttach(const KMMessagePart* msgPart);
+
 signals:
   /** A message has been queued or saved in the drafts folder */
   void messageQueuedOrDrafted();
@@ -337,9 +354,6 @@ protected:
   virtual bool queryClose ();
   /** prevent kmail from exiting when last window is deleted (kernel rules)*/
   virtual bool queryExit ();
-
-  /** Add an attachment to the list. */
-   void addAttach(const KMMessagePart* msgPart);
 
   /** Remove an attachment from the list. */
    void removeAttach(const QString &url);

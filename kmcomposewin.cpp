@@ -85,7 +85,7 @@
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
-  : KMTopLevelWidget (),
+  : KMTopLevelWidget (), MailComposerIface(),
   mMainWidget(this),
   mIdentity(&mMainWidget), mTransport(true, &mMainWidget),
   mEdtFrom(this,false,&mMainWidget), mEdtReplyTo(this,false,&mMainWidget),
@@ -207,6 +207,57 @@ KMComposeWin::~KMComposeWin()
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::send(int how)
+{
+  switch (how) {
+    case 1:
+      slotSendNow();
+      break;
+    default:
+    case 0:
+      // TODO: find out, what the default send method is and send it this way
+    case 2:
+      slotSendLater();
+      break;
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::addAttachment(KURL url,QString /*comment*/)
+{
+  addAttach(url);
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::addAttachment(const QString &name,
+                                 const QCString &cte,
+                                 const QByteArray &data,
+                                 const QCString &type,
+                                 const QCString &subType,
+                                 const QCString &paramAttr,
+                                 const QString &paramValue,
+                                 const QCString &contDisp)
+{
+  if (!data.isEmpty()) {
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setName(name);
+    msgPart->setCteStr(cte);
+    msgPart->setBodyEncodedBinary(data);
+    msgPart->setTypeStr(type);
+    msgPart->setSubtypeStr(subType);
+    msgPart->setParameter(paramAttr,paramValue);
+    msgPart->setContentDisposition(contDisp);
+    addAttach(msgPart);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setBody(QString body)
+{
+  // TODO: implement KMComposeWin::setBody().
+  kdDebug() << "KMComposeWin::setBody() isn't implemented yet." << endl;
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::makeDescriptiveNames(QStringList &encodings)

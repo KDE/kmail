@@ -285,6 +285,25 @@ void KMMessagePart::setSubtype(int aSubtype)
 
 }
 
+//-----------------------------------------------------------------------------
+QCString KMMessagePart::parameterAttribute(void) const
+{
+  return mParameterAttribute;
+}
+
+//-----------------------------------------------------------------------------
+QString KMMessagePart::parameterValue(void) const
+{
+  return mParameterValue;
+}
+
+//-----------------------------------------------------------------------------
+void KMMessagePart::setParameter(const QCString &attribute,
+                                 const QString &value)
+{
+  mParameterAttribute = attribute;
+  mParameterValue = value;
+}
 
 //-----------------------------------------------------------------------------
 QCString KMMessagePart::contentTransferEncodingStr(void) const
