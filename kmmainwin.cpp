@@ -1984,7 +1984,7 @@ void KMMainWin::setupMenuBar()
                                    actionCollection(), "status_sent");
   statusMenu->insert( sentAction );
 
-  KAction *flagAction=new KAction( i18n("&Flagged"), "kmmsgflag", 0, this,
+  KAction *flagAction=new KAction( i18n("&Important"), "kmmsgflag", 0, this,
                                    SLOT(slotSetMsgStatusFlag()),
                                    actionCollection(), "status_flag");
   statusMenu->insert( flagAction );
