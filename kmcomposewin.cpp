@@ -102,7 +102,11 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   rethinkFields();
 
   mMsg = NULL;
-  if (aMsg) setMsg(aMsg);
+  if (aMsg) { 
+    setMsg(aMsg);
+    if(mEditor->text().isEmpty())
+      mEditor->toggleModified(FALSE);
+  }
 }
 
 
@@ -423,6 +427,7 @@ void KMComposeWin::setupEditor(void)
 {
   //QPopupMenu* popup;
   mEditor = new KEdit(kapp, &mMainWidget);
+  mEditor->toggleModified(FALSE);
 
 #ifdef BROKEN
   popup = new QPopupMenu();
@@ -531,6 +536,11 @@ void KMComposeWin::applyChanges(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent* e)
 {
+  printf("Entering closeEvent!\n");
+  printf("Editor modified: %i\n",mEditor->isModified());
+  if(mEditor->isModified())
+    if((KMsgBox::yesNo(0,"KMail Confirm","Close unsend message?") == 2))
+      return;
   writeConfig();
   KMComposeWinInherited::closeEvent(e);
 }
@@ -901,6 +911,7 @@ void KMComposeWin::slotAppendSignature()
 
   sigText = kFileToString(sigFileName);
   mEditor->insertLine(sigText, -1);
+  mEditor->toggleModified(TRUE); // KEdit does not do it manually
 }
 
 
