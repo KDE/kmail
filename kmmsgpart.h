@@ -143,7 +143,7 @@ public:
   QCString charset() const { return mCharset; }
 
   /** Set the message part charset. */
-  void setCharset( const QCString & c ) { mCharset = c; }
+  void setCharset( const QCString & c );
 
   /** Get a @ref QTextCodec suitable for this message part */
   const QTextCodec * codec() const;

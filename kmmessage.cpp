@@ -4168,6 +4168,12 @@ QCString KMMessage::charset() const
 //-----------------------------------------------------------------------------
 void KMMessage::setCharset(const QCString& bStr)
 {
+  kdWarning( type() != DwMime::kTypeText )
+    << "KMMessage::setCharset(): trying to set a charset for a non-textual mimetype." << endl
+    << "Fix this caller:" << endl
+    << "====================================================================" << endl
+    << kdBacktrace( 5 ) << endl
+    << "====================================================================" << endl;
   QCString aStr = bStr.lower();
   if (aStr.isNull())
     aStr = "";
