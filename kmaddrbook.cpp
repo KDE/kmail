@@ -103,7 +103,7 @@ int KMAddrBook::load(const char* aFileName)
 //-----------------------------------------------------------------------------
 int KMAddrBook::store(const char* aFileName)
 {
-  char* addr;
+  const char* addr;
   const char* fname = (aFileName ? aFileName : (const char*)mDefaultFileName);
   QFile file(fname);
 

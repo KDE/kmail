@@ -12,7 +12,8 @@ static KMMsgList* sortList;
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize): KMMsgListInherited(initSize)
 {
-  mHigh = size();
+  mHigh  = size();
+  mCount = 0;
   clear(FALSE);
 }
 

@@ -93,12 +93,12 @@ void KMAccount::installTimer()
     connect(mTimer,SIGNAL(timeout()),SLOT(mailCheck()));
     connect(this,SIGNAL(requestCheck(KMAccount *)),
 	      acctMgr,SLOT(singleCheckMail(KMAccount *)));
-    printf("Starting new Timer with interval: %ld\n",mInterval*1000*60);
+    printf("Starting new Timer with interval: %d\n",mInterval*1000*60);
     mTimer->start(mInterval*1000*60);
   }
   else {
     mTimer->stop();
-    printf("Starting old Timer with interval: %ld\n",mInterval*1000*60);
+    printf("Starting old Timer with interval: %d\n",mInterval*1000*60);
     mTimer->start(mInterval*1000*60);
   }   
       

@@ -1,0 +1,26 @@
+/* XPM */
+static char *pub_key_red[] = {
+/* width height num_colors chars_per_pixel */
+"    20    14        5            1",
+/* colors */
+"  s none c none",
+"# c #f80000",
+"a c #f8bcb8",
+"b c #980c18",
+"c c #c00c18",
+/* pixels */
+"                    ",
+"                    ",
+"                    ",
+"   ####             ",
+"  #abb##            ",
+"  #b  bb##########  ",
+"  #b  bbbbbbbbbbbb  ",
+"  #b  bbbbbbbcccbb  ",
+"  #bbbbb     c# b#  ",
+"   bbbb      c# b#  ",
+"             c# b#  ",
+"                    ",
+"                    ",
+"                    "
+};

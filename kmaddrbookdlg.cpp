@@ -93,6 +93,7 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;
+  mIndex = -1;
 
   mEdtAddress.adjustSize();
   mEdtAddress.setMinimumSize(mEdtAddress.size());
@@ -144,7 +145,10 @@ KMAddrBookEditDlg::~KMAddrBookEditDlg()
 //-----------------------------------------------------------------------------
 void KMAddrBookEditDlg::slotLbxHighlighted(const char* aItem)
 {
+  if (mIndex>=0)
+    mListBox.changeItem(mEdtAddress.text(), mIndex);
   mEdtAddress.setText(aItem);
+  mIndex = mListBox.currentItem();
 }
 
 
@@ -180,6 +184,7 @@ void KMAddrBookEditDlg::slotAdd()
   const char* addr = mEdtAddress.text();
 
   if (!addr || !*addr) return;
+  mIndex = -1;
   mListBox.insertItem(addr, mListBox.currentItem());
 }
 
@@ -188,6 +193,7 @@ void KMAddrBookEditDlg::slotAdd()
 void KMAddrBookEditDlg::slotRemove()
 {
   int idx = mListBox.currentItem();
+  mIndex = -1;
   if (idx >= 0) mListBox.removeItem(idx);
 }
 

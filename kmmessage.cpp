@@ -242,6 +242,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   char   cstr[64];
   char ch;
   int i;
+  bool isInline;
   time_t tm;
 
   nlIndentStr = "\n" + aIndentStr;
@@ -283,25 +284,42 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   // type than "text".
   if (numBodyParts() == 0)
   {
-    resultStr = QString(bodyDecoded()).stripWhiteSpace().replace(reNL,nlIndentStr) +
-                aIndentStr;
+    resultStr = QString(bodyDecoded()).stripWhiteSpace()
+                .replace(reNL,nlIndentStr) + '\n';
   }
   else
   {
     resultStr = "";
-    for (i=0; i<numBodyParts(); i++)
+    for (i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      if (msgPart.typeStr()=="text")
+
+      if (i==0) isInline = TRUE;
+      else isInline = (stricmp(msgPart.contentDisposition(),"inline")==0);
+
+      if (isInline)
       {
-	resultStr += aIndentStr;
-	resultStr += QString(msgPart.bodyDecoded()).replace(reNL,(const char*)nlIndentStr);
-	resultStr += aIndentStr;
+	if (stricmp(msgPart.typeStr(),"text")==0 || 
+	    stricmp(msgPart.typeStr(),"message")==0)
+	{
+	  resultStr += aIndentStr;
+	  resultStr += QString(msgPart.bodyDecoded())
+	    .replace(reNL,(const char*)nlIndentStr);
+	  resultStr += '\n';
+	}
+	else isInline = FALSE;
       }
-      else
+      if (!isInline)
       {
-	resultStr += "\n"+aIndentStr+"["+msgPart.name()+"] "+
-	             msgPart.contentDescription()+nlIndentStr+"\n";
+	resultStr += QString("\n----------------------------------------") +
+	  "\nContent-Type: " + msgPart.typeStr() + "/" + msgPart.subtypeStr();
+	if (!msgPart.name().isEmpty())
+	  resultStr += "; name=\"" + msgPart.name() + '"';
+
+	resultStr += QString("\nContent-Transfer-Encoding: ")+ 
+	  msgPart.cteStr() + "\nContent-Description: " + 
+	  msgPart.contentDescription() +
+	  "\n----------------------------------------\n";
       }
     }
   }
@@ -765,13 +783,16 @@ const QString KMMessage::body(void) const
 const QString KMMessage::bodyDecoded(void) const
 {
   DwString dwsrc, dwstr;
+  int len;
 
   dwsrc = mMsg->Body().AsString().c_str();
   switch (cte())
   {
   case DwMime::kCteBase64:
     DwDecodeBase64(dwsrc, dwstr);
-    resultStr = dwstr.c_str();
+    len = dwstr.size();
+    resultStr.resize(len+1);
+    memcpy((void*)resultStr.data(), (void*)dwstr.c_str(), len);
     break;
   case DwMime::kCteQuotedPrintable:
     DwDecodeQuotedPrintable(dwsrc, dwstr);

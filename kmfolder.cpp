@@ -189,7 +189,7 @@ int KMFolder::create(void)
 //-----------------------------------------------------------------------------
 void KMFolder::close(bool aForced)
 {
-  if (mOpenCount <= 0) return;
+  if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
   if (mAutoCreateIndex) 
@@ -217,6 +217,7 @@ int KMFolder::lock(void)
 {
   int rc;
 
+  assert(mStream != NULL);
   mFilesLocked = FALSE;
 
   rc = fcntl(fileno(mStream), F_SETLK, F_WRLCK);
@@ -244,6 +245,7 @@ int KMFolder::unlock(void)
 {
   int rc;
 
+  assert(mStream != NULL);
   mFilesLocked = FALSE;
   debug("Unlocking folder `%s'.", (const char*)location());
 

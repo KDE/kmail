@@ -61,6 +61,7 @@ protected:
   QListBox mListBox;
   QLineEdit mEdtAddress;
   QPushButton mBtnOk, mBtnCancel, mBtnAdd, mBtnRemove;
+  int mIndex;
 };
 
 

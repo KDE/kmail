@@ -16,6 +16,7 @@ class QRadioButton;
 class QPushButton;
 class QComboBox;
 class QFileDialog;
+class Kpgp;
 
 class KMSettings : public QTabDialog
 {
@@ -57,12 +58,13 @@ private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
-  QLineEdit *indentPrefixEdit, *wrapColumnEdit;
-  QCheckBox *autoSign, *wordWrap, *monospFont;
+  QLineEdit *indentPrefixEdit, *wrapColumnEdit, *pgpUserEdit;
+  QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign;
   QRadioButton *smtpRadio,*sendmailRadio;
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;
   QPushButton *addButton,*modifyButton,*removeButton;
+  Kpgp* pgp;
 };
 
 

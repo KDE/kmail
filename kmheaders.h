@@ -86,7 +86,7 @@ protected:
     where the message with the given id is in. This for finding the correct
     message that shall be the current message after move/delete of multiple
     messages. */
-  virtual int firstSelectedMsg(int id);
+  virtual int firstSelectedMsg(int id) const;
 
 private:
   virtual void updateMessageList(void);

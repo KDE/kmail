@@ -13,6 +13,7 @@
 #include "kmmainwin.h"
 #include "kmsender.h"
 #include "kmmessage.h"
+#include "kpgp.h"
 
 #include <kapp.h>
 #include <klocale.h>
@@ -37,6 +38,8 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   QTabDialog(parent, name, TRUE)
 {
   initMetaObject();
+
+  pgp = Kpgp::getKpgp();
 
   setCaption(nls->translate("Settings"));
   resize(500,500);
@@ -117,7 +120,7 @@ QPushButton* KMSettings::createPushButton(QWidget* parent, QGridLayout* grid,
 void KMSettings::createTabIdentity(QWidget* parent)
 {
   QWidget* tab = new QWidget(parent);
-  QGridLayout* grid = new QGridLayout(tab, 8, 3, 20, 6);
+  QGridLayout* grid = new QGridLayout(tab, 6, 3, 20, 6);
   QPushButton* button;
 
   nameEdit = createLabeledEntry(tab, grid, nls->translate("Name:"), 
@@ -131,6 +134,9 @@ void KMSettings::createTabIdentity(QWidget* parent)
 				   identity->replyToAddr(), 3, 0);
   sigEdit = createLabeledEntry(tab, grid, nls->translate("Signature File:"),
 			       identity->signatureFile(), 4, 0, &button);
+  pgpUserEdit = createLabeledEntry(tab, grid, 
+				   nls->translate("PGP User Identity:"),
+				   pgp->user(), 5, 0);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
 
   grid->setColStretch(0,0);
@@ -315,28 +321,34 @@ void KMSettings::createTabComposer(QWidget *parent)
   //---------- group appearance
   grp = new QGroupBox(nls->translate("Appearance"), tab);
   box->addWidget(grp);
-  grid = new QGridLayout(grp, 7, 3, 20, 4);
+  grid = new QGridLayout(grp, 8, 3, 20, 4);
 
-  autoSign = new QCheckBox(nls->translate("Automatically append signature"),
-			   grp);
-  autoSign->adjustSize();
-  autoSign->setMinimumSize(autoSign->sizeHint());
-  grid->addMultiCellWidget(autoSign, 0, 0, 0, 1);
+  autoAppSignFile=new QCheckBox(
+	      nls->translate("Automatically append signature"), grp);
+  autoAppSignFile->adjustSize();
+  autoAppSignFile->setMinimumSize(autoAppSignFile->sizeHint());
+  grid->addMultiCellWidget(autoAppSignFile, 0, 0, 0, 1);
+
+  pgpAutoSign=new QCheckBox(
+	      nls->translate("Automatically sign messages using PGP"), grp);
+  pgpAutoSign->adjustSize();
+  pgpAutoSign->setMinimumSize(pgpAutoSign->sizeHint());
+  grid->addMultiCellWidget(pgpAutoSign, 1, 1, 0, 1);
 
   wordWrap = new QCheckBox(nls->translate("Word wrap at column:"), grp);
   wordWrap->adjustSize();
-  wordWrap->setMinimumSize(autoSign->sizeHint());
-  grid->addWidget(wordWrap, 1, 0);
+  wordWrap->setMinimumSize(autoAppSignFile->sizeHint());
+  grid->addWidget(wordWrap, 2, 0);
 
   wrapColumnEdit = new QLineEdit(grp);
   wrapColumnEdit->adjustSize();
   wrapColumnEdit->setMinimumSize(50, wrapColumnEdit->sizeHint().height());
-  grid->addWidget(wrapColumnEdit, 1, 1);
+  grid->addWidget(wrapColumnEdit, 2, 1);
 
   monospFont = new QCheckBox(nls->translate("Use monospaced font"), grp);
   monospFont->adjustSize();
   monospFont->setMinimumSize(monospFont->sizeHint());
-  grid->addMultiCellWidget(monospFont, 2, 2, 0, 1);
+  grid->addMultiCellWidget(monospFont, 3, 3, 0, 1);
 
   grid->setColStretch(0,1);
   grid->setColStretch(1,1);
@@ -344,10 +356,11 @@ void KMSettings::createTabComposer(QWidget *parent)
   grid->activate();
 
   config->setGroup("Composer");
-  autoSign->setChecked(stricmp(config->readEntry("signature"),"auto")==0);
+  autoAppSignFile->setChecked(stricmp(config->readEntry("signature"),"auto")==0);
   wordWrap->setChecked(config->readNumEntry("word-wrap",1));
   wrapColumnEdit->setText(config->readEntry("break-at","80"));
   monospFont->setChecked(stricmp(config->readEntry("font","variable"),"fixed")==0);
+  pgpAutoSign->setChecked(config->readNumEntry("pgp-auto-sign",0));
 
   //---------- ére we gø
   box->addStretch(10);
@@ -515,6 +528,7 @@ void KMSettings::doApply()
   identity->setReplyToAddr(replytoEdit->text());
   identity->setSignatureFile(sigEdit->text());
   identity->writeConfig(FALSE);
+  pgp->setUser(pgpUserEdit->text());
   
   //----- sending mail
   if (sendmailRadio->isChecked())
@@ -539,13 +553,15 @@ void KMSettings::doApply()
 
   //----- composer appearance
   config->setGroup("Composer");
-  config->writeEntry("signature", autoSign->isChecked()?"auto":"manual");
-  config->writeEntry("word-wrap", wordWrap->isChecked());
+  config->writeEntry("signature",autoAppSignFile->isChecked()?"auto":"manual");
+  config->writeEntry("word-wrap",wordWrap->isChecked());
   config->writeEntry("break-at", atoi(wrapColumnEdit->text()));
   config->writeEntry("font", monospFont->isChecked()?"fixed":"variable");
+  config->writeEntry("pgp-auto-sign",pgpAutoSign->isChecked());
 
   //-----
-  app->getConfig()->sync();
+  config->sync();
+  pgp->writeConfig(TRUE);
 
   folderMgr->contentsChanged();
   KMMessage::readConfig();

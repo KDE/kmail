@@ -350,10 +350,10 @@ KMMessageList* KMHeaders::selectedMsgs(int idx)
 
 
 //-----------------------------------------------------------------------------
-int KMHeaders::firstSelectedMsg (int msgId)
+int KMHeaders::firstSelectedMsg (int msgId) const
 {
   if (msgId<0 || msgId>=numRows()) return 0;
-  while (msgId>0 && itemList[msgId]->isMarked())
+  while (msgId>=0 && itemList[msgId]->isMarked())
     msgId--;
   return (msgId+1);
 }

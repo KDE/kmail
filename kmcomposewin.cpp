@@ -10,6 +10,7 @@
 #include "kfileio.h"
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
+#include "kpgp.h"
 
 #include <assert.h>
 #include <drag.h>
@@ -54,7 +55,6 @@ extern KMIdentity *identity;
 #include "kmglobal.h"
 #include "kmmainwin.h"
 #endif
-
 
 #include "kmcomposewin.moc"
 
@@ -163,7 +163,7 @@ void KMComposeWin::readConfig(void)
   mLineBreak = config->readNumEntry("break-at", 80);
   mBackColor = config->readEntry( "Back-Color","#ffffff");
   mForeColor = config->readEntry( "Fore-Color","#000000");
-
+  mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
 
   config->setGroup("Geometry");
   str = config->readEntry("composer", "480 510");
@@ -452,6 +452,16 @@ void KMComposeWin::setupToolBar(void)
   mToolBar->insertButton(loader->loadIcon("openbook.xpm"),7,
 			SIGNAL(clicked()),this,
 			SLOT(slotToDo()),TRUE,"Open addressbook");
+  mToolBar->insertSeparator();
+  mBtnIdSign = 9;
+  mToolBar->insertButton(loader->loadIcon("feather_white.xpm"), mBtnIdSign,
+			 TRUE, nls->translate("sign message"));
+  mToolBar->setToggle(mBtnIdSign);
+  mToolBar->setButton(mBtnIdSign,mShowToolBar);
+  mBtnIdEncrypt = 10;
+  mToolBar->insertButton(loader->loadIcon("pub_key_red.xpm"), mBtnIdEncrypt,
+			 TRUE, nls->translate("encrypt message"));
+  mToolBar->setToggle(mBtnIdEncrypt);
 
   addToolBar(mToolBar);
 }
@@ -577,6 +587,8 @@ void KMComposeWin::applyChanges(void)
   QString temp;
   KMMessagePart bodyPart, *msgPart;
 
+  assert(mMsg!=NULL);
+
   if (!to().isEmpty()) mMsg->setTo(to());
   if (!from().isEmpty()) mMsg->setFrom(from());
   if (!cc().isEmpty()) mMsg->setCc(cc());
@@ -586,14 +598,11 @@ void KMComposeWin::applyChanges(void)
   if (!followupTo().isEmpty()) mMsg->setFollowup(followupTo());
   if (!newsgroups().isEmpty()) mMsg->setGroups(newsgroups());
 
-  // we should do some multipart work here (attachments)
-  mMsg->setBody(mEditor->text());
-
   if(mAtmList.count() <= 0)
   {
     // If there are no attachments in the list waiting it is a simple 
     // text message.
-    mMsg->setBody(mEditor->text());
+    mMsg->setBody(pgpProcessedMsg());
   }
   else 
   { 
@@ -607,7 +616,7 @@ void KMComposeWin::applyChanges(void)
     bodyPart.setCteStr("7bit"); 
     bodyPart.setTypeStr("text");
     bodyPart.setSubtypeStr("plain");
-    bodyPart.setBody(mEditor->text());
+    bodyPart.setBody(pgpProcessedMsg());
     mMsg->addBodyPart(&bodyPart);
 
     // Since there is at least one more attachment create another bodypart
@@ -632,6 +641,69 @@ void KMComposeWin::closeEvent(QCloseEvent* e)
 }
 
 
+//-----------------------------------------------------------------------------
+const QString KMComposeWin::pgpProcessedMsg(void)
+{
+  Kpgp *pgp = Kpgp::getKpgp();
+  bool doSign = mToolBar->isButtonOn(mBtnIdSign);
+  bool doEncrypt = mToolBar->isButtonOn(mBtnIdEncrypt);
+  QString _to, receiver;
+  int index, lastindex;
+  QStrList persons;
+  
+  if (!doSign && !doEncrypt) return mEditor->text();
+
+  pgp->setMessage(mEditor->text());
+
+  if (!doEncrypt)
+  {
+    if(pgp->sign()) return pgp->message();
+  } 
+  else
+  { 
+    // encrypting
+    _to = to().copy();
+    if(!cc().isEmpty()) _to += "," + cc();
+    if(!bcc().isEmpty()) _to += "," + bcc();
+    lastindex = -1;
+    do
+    {
+      index = _to.find(",",lastindex+1);
+      receiver = _to.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
+      if (!receiver.isEmpty())
+      {
+	// check if we have a public key for the receiver
+	if(!pgp->havePublicKey(receiver))
+	{
+	  kbp->idle();
+	  warning(nls->translate("public key for %s not found.\n"
+				 "This person will not be able to " 
+				 "decrypt the message."),
+		  (const char *)receiver);
+	  kbp->busy();
+	} 
+	else 
+	{
+	  debug("encrypting for %s",(const char *)receiver);
+	  persons.append(receiver);
+	}
+      }
+      lastindex = index;
+    }
+    while (lastindex > 0);
+
+    if(pgp->encryptFor(persons, doSign))
+      return pgp->message();
+  }
+
+  // in case of an error we end up here
+  warning(nls->translate("Error during PGP:") + QString("\n") + 
+	  pgp->lastErrorMsg());
+
+  return mEditor->text();
+}
+
+ 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const QString aUrl)
 {

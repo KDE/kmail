@@ -20,6 +20,8 @@ KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctLocalInherited(aOwner, aAccountName)
 {
   initMetaObject();
+  mRTimer = FALSE;
+  mInterval = 0;
 }
 
 

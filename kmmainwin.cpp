@@ -111,6 +111,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   // set active folder to `inbox' folder
   idx = mFolderTree->indexOfFolder(inboxFolder);
   if (idx>=0) mFolderTree->setCurrentItem(idx);
+
+  connect(sender, SIGNAL(statusMsg(const char*)),
+	  this, SLOT(statusMsg(const char*)));
 }
 
 

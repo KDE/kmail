@@ -22,6 +22,7 @@ class KMSendProc;
 class KMSender: public QObject
 {
   Q_OBJECT
+  friend class KMSendProc;
 
 public:
   enum Method { smUnknown=0, smSMTP=1, smMail=2 };
@@ -40,6 +41,9 @@ public:
 
   /** Start sending all queued messages. Returns TRUE on success. */
   virtual bool sendQueued(void);
+
+  /** Returns TRUE if sending is in progress. */
+  bool sending(void) const { return mSendInProgress; }
 
   /** Method the sender shall use: either SMTP or local mail program */
   Method method(void) const { return mMethod; }
@@ -70,6 +74,10 @@ public:
   /** Write configuration to global config with optional sync() */
   virtual void writeConfig(bool withSync=TRUE);
 
+signals:
+  /** Emitted regularly to inform the user of what is going on */
+  void statusMsg(const char*);
+
 protected slots:
   virtual void slotIdle();
 
@@ -97,6 +105,7 @@ private:
   KMIOStatusDlg* mSendDlg;
   KMSendProc* mSendProc;
   bool mSendProcStarted;
+  bool mSendInProgress;
   KMMessage * mCurrentMsg;
 };
 
@@ -136,9 +145,6 @@ signals:
   // Emitted when the current message is sent or an error occured.
   void idle();
 
-  // Emitted to inform the user of what is going on.
-  void status(const QString);
-
 protected:
   // Called to signal a transmission error. The sender then
   // calls finish() and terminates sending of messages. Sets mSending to FALSE.
@@ -146,6 +152,9 @@ protected:
 
   // Prepare message for sending.
   virtual const QString prepareStr(const QString str, bool toCRLF=FALSE);
+
+  // Informs the user
+  virtual void statusMsg(const char* msg);
 
   bool mSendOk, mSending;
   QString mMsg;
@@ -188,6 +197,7 @@ protected:
   virtual bool smtpSend(KMMessage* msg);
   virtual bool smtpFailed(const char* inCommand, int replyCode);
   virtual void smtpDebug(const char* inCommand);
+  virtual void smtpInCmd(const char* inCommand);
 
   void (*mOldHandler)(int);
   DwSmtpClient* mClient;

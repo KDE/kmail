@@ -1,5 +1,7 @@
-/* KPGP: Pretty good privacy en-/decryption class
- * This code is under GPL V2.0
+/** KPGP: Pretty good privacy en-/decryption class
+ *        This code is under GPL V2.0
+ *
+ * @author Lars Knoll <knoll@mpi-hd.mpg.de>
  */
 #ifndef KPGP_H
 #define KPGP_H
@@ -7,22 +9,23 @@
 #include <stdio.h>
 #include <qstring.h>
 #include <qstrlist.h>
-#include <qobject.h>
-#include <qlabel.h>
 #include <qlined.h>
+#include <qdialog.h>
+#include <qcursor.h>
 
-#include <kprocess.h>
-#include <kapp.h>
-
-#define ENCRYPT 1
-#define SIGN    2
-#define ENCSIGN 3
-#define DECRYPT 4
-#define TEST    0
-
-class Kpgp : public QObject
+class Kpgp: public QObject
 {
   Q_OBJECT
+
+  enum Action {
+    TEST    = 0,
+    ENCRYPT = 1,
+    SIGN    = 2,
+    ENCSIGN = 3,
+    DECRYPT = 4,
+    PUBKEYS = 5,
+    SIGNKEY = 6
+  };
      
 public:
   Kpgp();
@@ -32,69 +35,86 @@ public:
   void writeConfig(bool sync);
 
   /** sets the message to en- or decrypt 
-      returns TRUE if the message contains any pgp encoded or signed
-      parts */
+    returns TRUE if the message contains any pgp encoded or signed
+    parts 
+    The format is then:
+    frontmatter()
+    ----- BEGIN PGP ...
+    message()
+    ----- END PGP ...
+    backmatter()
+    */
   bool setMessage(const QString mess);
-  /** gets the de (or en)crypted message */
-  QString getMessage();
+  /** gets the de- (or en)crypted message */
+  const QString message(void) const;
+  /** gets the part before the decrypted message */
+  const QString frontmatter(void) const;
+  /** gets the part after the decrypted message */
+  const QString backmatter(void) const;
 
   /** decrypts the message if the passphrase is good.
-      returns false otherwise */
-  bool decrypt(QString *passphrase = 0);
-  /** encrypt message to a list of persons */
-  bool encryptTo(QStrList *pers, bool sign = TRUE, QString *pass = 0);
-  /** sign a message */
-  bool sign(QString *pass = 0);
-
-  /** is the message encrypted ? */
-  bool isEncrypted();
-  /** the persons who can decrypt the message */
-  QStrList isEncryptedFor();
-  /** shows the secret key which is needed
-      to decrypt the message */
-  QString KeyToDecrypt();
+    returns false otherwise */
+  bool decrypt(void);
+  /** encrypt the message for a list of persons. */
+  bool encryptFor(const QStrList& receivers, bool sign = TRUE);
+  /** sign the message. */
+  bool sign(void);
+  /** sign a key in the keyring with users signature. */
+  bool signKey(QString _key);
+  /** get the known public keys. */
+  const QStrList* keys(void);
+  /** check if we have a public key for given person. */
+  bool havePublicKey(QString person);
      
+  /** is the message encrypted ? */
+  bool isEncrypted(void) const;
+  /** the persons who can decrypt the message */
+  const QStrList* receivers(void) const;
+  /** shows the secret key which is needed
+    to decrypt the message */
+  const QString KeyToDecrypt(void) const;
+
   /** is the message signed by someone */
-  bool isSigned();
+  bool isSigned(void) const;
   /** it is signed by ... */
-  QString signedBy();
+  QString signedBy(void) const;
   /** keyID of signer */
-  QString signedByKey();
+  QString signedByKey(void) const;
   /** is the signature good ? */
-  bool goodSignature();
+  bool goodSignature(void) const;
 
   /** always encrypt message to oneself? */
   void setEncryptToSelf(bool flag);
-  bool encryptToSelf();
-
+  bool encryptToSelf(void) const;
 
   /** store passphrase in pgp object
-      Problem: passphrase bleibt im Speicher, macht das ganze also
-      etwas unsicherer (evtl kodieren????). en-/decrypt() kann dann
-      ohne passphrase aufgerufen werden. */
-  bool storePassPhrase(void);
+    Problem: passphrase stays in memory. 
+    Advantage: you can call en-/decrypt without always passing the
+    passphrase */
+  bool storePassPhrase(void) const;
   void setStorePassPhrase(bool);
 
-  void setPassPhrase(QString *pass);
+  /** Set pass phrase */
+  void setPassPhrase(const QString pass);
 
-  /** changing the passphrase of the actual secret key */
-  bool changePassPhrase(QString *oldPassPhrase, QString
-			*newPassPhrase);
-  /** set a secret key to use (if you have more than one...)
-    * defaultmaessig wird von pgp immer der zuletzt generierte
-    * key benutzt. Muss also nicht unbedingt gesetzt werden */
-  void setSecretKey(const QString secKey);
-  /** returns the keyId of the actual secret key*/
-  const QString secretKey(void);
+  /** change the passphrase of the actual secret key */
+  bool changePassPhrase(const QString oldPass, const QString newPass);
+
+  /** set a user identity to use (if you have more than one...)
+   * by default, pgp uses the identity which was generated last. */
+  void setUser(const QString user);
+
+  /** Returns the actual user identity. */
+  const QString user(void) const { return pgpUser; }
 
   /** clears everything from memory */
   void clear(bool erasePassPhrase = FALSE);
 
   /** returns the last error that occured */
-  const QString lastErrorMsg();
+  const QString lastErrorMsg(void) const;
 
-  /// could we find a pgp executable?
-  bool havePGP();
+  /// did we find a pgp executable?
+  bool havePGP(void) const;
 
   // FIXME: key management
 
@@ -103,36 +123,41 @@ public:
   /** return the actual pgp object */
   static Kpgp *getKpgp();
 
-  /** pops up a window which asks for the passphrase */
-  static QString *askForPass();
+  /** pops up a modal window which asks for the passphrase 
+   puts the window on top of the parent, or in the middle of the screen,
+   if parent = 0 */
+  static const QString askForPass(QWidget *parent = 0);
 
   /** does the whole decryption in one step. Pops up a message box
-      if it needs to ask for a passphrase */ 
-  static QString decode(const QString text, bool returnHTML=FALSE);
-
-public slots:
-  void runPGPInfo(KProcess *, char *buf, int buflen);
-  void runPGPOut(KProcess *, char *buf, int buflen);
-  void runPGPfinished(KProcess *);
-  void runPGPcloseStdin(KProcess *);
+    if it needs to ask for a passphrase */ 
+  static const QString decode(const QString text, bool returnHTML = FALSE);
 
 private:
-  bool checkForPGP();
-  bool runPGP(const QString *pass = 0, int action = TEST, 
-	      QStrList *args = 0);
+  // test if the PGP executable is found and if there is a passphrase
+  // set or given. Returns TRUE if everything is ok, and FALSE (together
+  // with some warning message) if something is missing.
+  bool prepare(bool needPassPhrase=FALSE);
+
+  // cleanup passphrase if it should not be stored.
+  void cleanupPass(void);
+
+  bool checkForPGP(void);
+  bool runPGP(int action = TEST, const char *args = 0);
   bool parseInfo(int action);
 
-  KConfig *config;
   static Kpgp *kpgpObject;
 
-  QString message;
+  QString input;
   QString signature;
   QString signatureID;
   QString keyNeeded;
-  QString secKey;
-  QStrList *persons;
+  QString pgpUser; // was: secKey
+  QStrList persons;
+  QStrList publicKeys;
   QString info;
   QString output;
+  QString front;
+  QString back;
   QString errMsg;
 
   bool flagNoPGP;
@@ -141,31 +166,27 @@ private:
   bool flagSigIsGood;
   bool flagEncryptToSelf;
   bool havePassPhrase;
-  bool pgpNotFinished;
+  bool pgpRunning;
 
   bool storePass;
-  QString *passPhrase;
+  QString passPhrase;
 };
 
-class KpgpPass : public QWidget
+class KpgpPass : public QDialog
 {
   Q_OBJECT
 
 public:
-  KpgpPass();
+  KpgpPass(QWidget *parent = 0, const char *name = 0);
   ~KpgpPass();
 
-  static QString *getPassphrase();
-
-public slots:
-  void passphraseEntered();
+  static QString getPassphrase(QWidget *parent = 0);
 
 private:
-  QString pass;
+  QString getPhrase();
 
-  QLabel *text;
-  QLineEdit *lineedit;
-  bool gotPassphrase;
+  QLineEdit *lineedit; 
+  QCursor *cursor;
 };
 
 #endif

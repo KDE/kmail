@@ -202,7 +202,6 @@ void KMReaderWin::parseMsg(void)
       type = msgPart.typeStr();
       subtype = msgPart.subtypeStr();
       contDisp = msgPart.contentDisposition();
-      debug("content disposition: \"%s\"", contDisp.data());
       
       if (i <= 0) asIcon = FALSE;
       else asIcon = (stricmp(contDisp,"inline")!=0);
@@ -307,25 +306,32 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   bool atStart = TRUE;
   bool quoted = FALSE;
   bool lastQuoted = FALSE;
-  QString line, sig;
+  QString line(256), sig;
   Kpgp* pgp = Kpgp::getKpgp();
-
-  assert(!aStr.isNull());
   assert(pgp != NULL);
+  assert(!aStr.isNull());
 
-#ifdef PGP
   if (pgp->setMessage(aStr))
   {
     if (pgp->isEncrypted())
     {
-      if(!pgp->decrypt()) pgp->decrypt(pgp->askForPass());
+      if(pgp->decrypt())
+      {
+	line.sprintf("<B>%s</B><BR>",
+		     (const char*)nls->translate("Encrypted message"));
+	mViewer->write(line);
+      }
+      else
+      {
+	line.sprintf("<B>%s</B><BR>%s<BR><BR>",
+		     (const char*)nls->translate("Cannot decrypt message:"),
+		     (const char*)pgp->lastErrorMsg());
+	mViewer->write(line);
+      }
     }
-    pos = pgp->getMessage().data();
+    pos = pgp->message().data();
   }
   else pos = aStr.data();
-#else
-  pos = aStr.data();
-#endif
 
   // skip leading empty lines
   for (beg=pos; *pos && *pos<=' '; pos++)
@@ -335,13 +341,12 @@ void KMReaderWin::writeBodyStr(const QString aStr)
 
   if (pgp->isSigned())
   {
-#ifdef PGP
     if (pgp->goodSignature()) sig = nls->translate("Message was signed by");
     else sig = nls->translate("Warning: Bad signature from");
-
-    line.sprintf("<B>%s %s</B><BR><BR>", sig, (const char*)pgp->signedBy());
+    
+    line.sprintf("<B>%s %s</B><BR>", sig.data(), 
+		 pgp->signedBy().data());
     mViewer->write(line);
-#endif
   }
 
   pos = beg;

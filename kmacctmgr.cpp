@@ -117,14 +117,14 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account)
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::create(const QString& aType, const QString& aName) 
+KMAccount* KMAcctMgr::create(const QString aType, const QString aName) 
 {
   KMAccount* act = NULL;
 
-  if (aType == "local") 
+  if (stricmp(aType,"local")==0) 
     act = new KMAcctLocal(this, aName);
 
-  else if (aType == "pop") 
+  else if (stricmp(aType,"pop")==0) 
     act = new KMAcctPop(this, aName);
 
   if (act) 
@@ -138,7 +138,7 @@ KMAccount* KMAcctMgr::create(const QString& aType, const QString& aName)
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::find(const QString& aName) 
+KMAccount* KMAcctMgr::find(const QString aName) 
 {
   KMAccount* cur;
 

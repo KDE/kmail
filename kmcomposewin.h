@@ -74,7 +74,8 @@ public:
     message, call applyChanges() first. */
   virtual KMMessage* msg(void) const { return mMsg; }
 
-  /** Applies the user changes to the message object of the composer. */
+  /** Applies the user changes to the message object of the composer
+    and signs/encrypts the message if activated. */
   virtual void applyChanges(void);
 
   /** If this flag is set the message of the composer is deleted when
@@ -165,6 +166,10 @@ protected:
     the given message part. */
   virtual const QString msgPartLbxString(KMMessagePart* msgPart) const;
 
+private:
+  /** Get message including signing and encrypting it */
+  virtual const QString pgpProcessedMsg(void);
+
 protected:
   QWidget   mMainWidget;
   KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
@@ -184,13 +189,14 @@ protected:
   KStatusBar *mStatusBar;
   KTabListBox *mAtmListBox;
   KMMsgPartList mAtmList;
-  bool mAutoSign, mShowToolBar, mAutoDeleteMsg;
+  bool mAutoSign, mAutoPgpSign, mShowToolBar, mAutoDeleteMsg;
   int  mSendImmediate;
   long mShowHeaders;
   QString mDefEncoding;
   int mNumHeaders;
   int mLineBreak;
   int mWordWrap;
+  int mBtnIdSign, mBtnIdEncrypt;
   QString mForeColor, mBackColor;
 
 private:
