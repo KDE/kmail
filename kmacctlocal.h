@@ -25,6 +25,10 @@ public:
   const QString& location(void) const { return mLocation; }
   virtual void setLocation(const QString&);
 
+  /** Acceso to Locking method */
+  LockType lockType(void) { return mLock; }
+  virtual void setLockType(LockType lt) { mLock = lt; }
+
   virtual const char* type(void) const;
   virtual void processNewMail(bool);
   virtual void readConfig(KConfig&);

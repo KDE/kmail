@@ -75,6 +75,7 @@ void KMAcctLocal::pseudoAssign(KMAccount *account)
   setLocation(acct->location());
   setCheckInterval(acct->checkInterval());
   setCheckExclude(acct->checkExclude());
+  setLockType(acct->lockType());
   setFolder(acct->folder());
   setPrecommand(acct->precommand());
 }
