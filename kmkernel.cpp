@@ -189,6 +189,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
   bool mailto = false;
   bool checkMail = false;
   bool viewOnly = false;
+  bool calledWithSession = false; // for ignoring '-session foo'
 
   // process args:
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
@@ -202,8 +203,10 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
      // via dcop which apparently executes the application with the original
      // command line arguments and those include "-session ..." if
      // kmail/kontact was restored by session management
-     if ( subj == "ession" )
+     if ( subj == "ession" ) {
        subj = QString::null;
+       calledWithSession = true;
+     }
      else
        mailto = true;
   }
@@ -258,26 +261,31 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
     }
   }
 
-  for(int i= 0; i < args->count(); i++)
-  {
-    if (strncasecmp(args->arg(i),"mailto:",7)==0)
-      to += args->url(i).path() + ", ";
-    else {
-      QString tmpArg = QString::fromLocal8Bit( args->arg(i) );
-      KURL url( tmpArg );
-      if ( url.isValid() )
-        attachURLs += url;
-      else
-        to += tmpArg + ", ";
+  if ( !calledWithSession ) {
+    // only read additional command line arguments if kmail/kontact is
+    // not called with "-session foo"
+    for(int i= 0; i < args->count(); i++)
+    {
+      if (strncasecmp(args->arg(i),"mailto:",7)==0)
+        to += args->url(i).path() + ", ";
+      else {
+        QString tmpArg = QString::fromLocal8Bit( args->arg(i) );
+        KURL url( tmpArg );
+        if ( url.isValid() )
+          attachURLs += url;
+        else
+          to += tmpArg + ", ";
+      }
+      mailto = true;
     }
-    mailto = true;
-  }
-  if ( !to.isEmpty() ) {
-    // cut off the superfluous trailing ", "
-    to.truncate( to.length() - 2 );
+    if ( !to.isEmpty() ) {
+      // cut off the superfluous trailing ", "
+      to.truncate( to.length() - 2 );
+    }
   }
 
-  args->clear();
+  if ( !calledWithSession )
+    args->clear();
 
   if ( !noArgsOpensReader && !mailto && !checkMail && !viewOnly )
     return false;
