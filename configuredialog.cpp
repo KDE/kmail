@@ -1369,12 +1369,12 @@ void AccountsPage::ReceivingTab::load() {
   QTimer::singleShot( 0, this, SLOT( slotTweakAccountList() ) );
 }
 
-void AccountsPage::ReceivingTab::slotTweakAccountList() 
+void AccountsPage::ReceivingTab::slotTweakAccountList()
 {
   // Force the contentsWidth of mAccountList to be recalculated so that items can be
   // selected in the normal way. It would be best if this were not necessary.
   mAccountList->resizeContents( mAccountList->visibleWidth(), mAccountList->contentsHeight() );
-}  
+}
 
 void AccountsPage::ReceivingTab::save() {
   // Add accounts marked as new
@@ -2533,7 +2533,26 @@ void ComposerPage::GeneralTab::load() {
 
 void ComposerPageGeneralTab::defaults()
 {
-  mAutoAppSignFileCheck->setChecked( true );
+  // first swap default value and current value of all settings
+  GlobalSettings::self()->autoTextSignatureItem()->swapDefault();
+  GlobalSettings::self()->smartQuoteItem()->swapDefault();
+  GlobalSettings::self()->requestMDNItem()->swapDefault();
+  GlobalSettings::self()->wordWrapItem()->swapDefault();
+  GlobalSettings::self()->lineWrapWidthItem()->swapDefault();
+  GlobalSettings::self()->autosaveIntervalItem()->swapDefault();
+  GlobalSettings::self()->useExternalEditorItem()->swapDefault();
+  GlobalSettings::self()->externalEditorItem()->swapDefault();
+  // then load the default values
+  load();
+  // and finally restore the current values by swapping again
+  GlobalSettings::self()->autoTextSignatureItem()->swapDefault();
+  GlobalSettings::self()->smartQuoteItem()->swapDefault();
+  GlobalSettings::self()->requestMDNItem()->swapDefault();
+  GlobalSettings::self()->wordWrapItem()->swapDefault();
+  GlobalSettings::self()->lineWrapWidthItem()->swapDefault();
+  GlobalSettings::self()->autosaveIntervalItem()->swapDefault();
+  GlobalSettings::self()->useExternalEditorItem()->swapDefault();
+  GlobalSettings::self()->externalEditorItem()->swapDefault();
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -2565,6 +2584,16 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
 void ComposerPage::GeneralTab::save() {
   GlobalSettings::setAutoTextSignature(
          mAutoAppSignFileCheck->isChecked() ? "auto" : "manual" );
+  GlobalSettings::setSmartQuote( mSmartQuoteCheck->isChecked() );
+  GlobalSettings::setRequestMDN( mAutoRequestMDNCheck->isChecked() );
+  GlobalSettings::setWordWrap( mWordWrapCheck->isChecked() );
+
+  GlobalSettings::setLineWrapWidth( mWrapColumnSpin->value() );
+  GlobalSettings::setAutosaveInterval( mAutoSave->value() );
+
+  // editor group:
+  GlobalSettings::setUseExternalEditor( mExternalEditorCheck->isChecked() );
+  GlobalSettings::setExternalEditor( mEditorRequester->url() );
 }
 
 QString ComposerPage::PhrasesTab::helpAnchor() const {
