@@ -586,7 +586,9 @@ void KMComposeWin::deadLetter()
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            this, SLOT( slotContinueDeadLetter( bool ) ) );
   // This method is called when KMail crashed, so don't try signing/encryption
-  applyChanges( true, true );
+  // and don't disable controls because it is also called from a timer and
+  // then the disabling is distracting.
+  applyChanges( true, true, true );
 
   // Don't continue before the applyChanges is done!
   qApp->enter_loop();
@@ -1550,7 +1552,9 @@ bool KMComposeWin::userForgotAttachment()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::applyChanges( bool dontSign, bool dontEncrypt )
+void KMComposeWin::applyChanges( bool dontSign,
+                                 bool dontEncrypt,
+                                 bool dontDisable )
 {
   if(!mMsg) {
     kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == 0!\n" << endl;
@@ -1570,8 +1574,8 @@ void KMComposeWin::applyChanges( bool dontSign, bool dontEncrypt )
            this, SLOT( slotComposerDone( bool ) ) );
 
   // TODO: Add a cancel button for this operation
-  // TODO: Not always do this?
-  setEnabled( false );
+  if ( !dontDisable )
+    setEnabled( false );
 
   mComposer->setDisableBreaking( mDisableBreaking );
   mComposer->applyChanges( dontSign, dontEncrypt );

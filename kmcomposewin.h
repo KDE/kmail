@@ -541,10 +541,11 @@ protected:
    * Applies the user changes to the message object of the composer
    * and signs/encrypts the message if activated. Returns FALSE in
    * case of an error (e.g. if PGP encryption fails).
-   * If backgroundMode is true then no functions which might require
-   * user interaction (like signing/encrypting) are performed
+   * Disables the controls of the composer window unless @dontDisable
+   * is true.
    */
-   void applyChanges( bool dontSign, bool dontEncrypt );
+   void applyChanges( bool dontSign, bool dontEncrypt, 
+                      bool dontDisable = false );
 
   /**
    * Install grid management and header fields. If fields exist that
