@@ -1141,11 +1141,7 @@ bool KMComposeWin::applyChanges(void)
 
     // Since there is at least one more attachment create another bodypart
     for (msgPart=mAtmList.first(); msgPart; msgPart=mAtmList.next())
-    {
-      if (msgPart->typeStr().lower() == "text")
-        msgPart->setCharset(mCharset);
       mMsg->addBodyPart(msgPart);
-    }
   }
   if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
   mEdtFrom.setEdited(FALSE);
@@ -1528,12 +1524,14 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   // show properties dialog
   kernel->kbp()->idle();
+  msgPart->setCharset(mCharset);
   dlg.setMsgPart(msgPart);
   if (!dlg.exec())
   {
     delete msgPart;
     return;
   }
+  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -1679,12 +1677,14 @@ void KMComposeWin::slotAttachProperties()
   if (idx < 0) return;
 
   msgPart = mAtmList.at(idx);
+  msgPart->setCharset(mCharset);
   dlg.setMsgPart(msgPart);
   if (dlg.exec())
   {
     // values may have changed, so recreate the listbox line
     msgPartToItem(msgPart, mAtmItemList.at(idx));
   }
+  if (msgPart->typeStr().lower() != "text") msgPart->setCharset(QCString());
 }
 
 

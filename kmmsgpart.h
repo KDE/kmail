@@ -86,6 +86,7 @@ public:
 
   // Get or set the 'Content-Description' header field
   QString contentDescription() const;
+  QCString contentDescriptionEncoded() const { return mContentDescription; }
   void setContentDescription(const QString &aStr);
 
   // Get or set the 'Content-Disposition' header field

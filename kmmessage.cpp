@@ -1937,8 +1937,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QCString type     = aPart->typeStr();
   QCString subtype  = aPart->subtypeStr();
   QCString cte      = aPart->cteStr();
-  QCString contDesc = KMMsgBase::encodeRFC2047String(aPart->
-    contentDescription(), charset);
+  QCString contDesc = aPart->contentDescriptionEncoded();
   QCString contDisp = aPart->contentDisposition();
   QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), charset);
   bool RFC2231encoded = aPart->name() != QString(name);
