@@ -297,10 +297,16 @@ void KMMainWin::hide()
 //-----------------------------------------------------------------------------
 void KMMainWin::show()
 {
-  //KMMainWinInherited::show();
-  //mVertPanner->setAbsSeparatorPos(mVertPannerSep);
-  mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
-  mVertPanner->setAbsSeparatorPos(mVertPannerSep);
+  if (!mLongFolderList)
+  {
+    mVertPanner->setAbsSeparatorPos(mVertPannerSep);
+    mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
+  }
+  else
+  {
+    mHorizPanner->setAbsSeparatorPos(mHorizPannerSep);
+    mVertPanner->setAbsSeparatorPos(mVertPannerSep);
+  }
   KMMainWinInherited::show();
 }
 
