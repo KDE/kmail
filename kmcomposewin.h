@@ -615,6 +615,7 @@ public slots:
 
 public:
   const KPIM::Identity & identity() const;
+  uint identityUid() const;
   Kleo::CryptoMessageFormat cryptoMessageFormat() const;
   bool encryptToSelf() const;
 

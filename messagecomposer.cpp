@@ -243,7 +243,7 @@ public:
 
 MessageComposer::MessageComposer( KMComposeWin* win, const char* name )
   : QObject( win, name ), mComposeWin( win ), mCurrentJob( 0 ),
-    mKeyResolver( 0 ), mIdentity( KPIM::Identity::null )
+    mKeyResolver( 0 ), mIdentityUid( 0 )
 {
 }
 
@@ -434,7 +434,7 @@ void MessageComposer::readFromComposeWin()
 					mComposeWin->encryptFlagOfAttachment( i ) ) );
 
   mIsRichText = mComposeWin->mEditor->textFormat() == Qt::RichText;
-  mIdentity = mComposeWin->identity();
+  mIdentityUid = mComposeWin->identityUid();
   mText = breakLinesAndApplyCodec();
   // Hopefully we can get rid of this eventually, it's needed to be able
   // to break the plain/text version of a multipart/alternative (html) mail
@@ -497,7 +497,8 @@ void MessageComposer::adjustCryptFlags()
 			   signingChainCertNearExpiryWarningThresholdInDays() );
 
   if ( !mDisableCrypto ) {
-    const KPIM::Identity & id = mIdentity; 
+    const KPIM::Identity & id = 
+      kmkernel->identityManager()->identityForUoidOrDefault( mIdentityUid );
 
     QStringList encryptToSelfKeys;
     if ( !id.pgpEncryptionKey().isEmpty() )

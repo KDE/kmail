@@ -1959,6 +1959,10 @@ const KPIM::Identity & KMComposeWin::identity() const {
   return kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
 }
 
+uint KMComposeWin::identityUid() const {
+  return mIdentity->currentIdentity();
+}
+
 Kleo::CryptoMessageFormat KMComposeWin::cryptoMessageFormat() const {
   if ( !mCryptoModuleAction )
     return Kleo::AutoFormat;

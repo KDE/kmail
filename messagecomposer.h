@@ -242,7 +242,7 @@ private:
   bool mAutoCharset;
   QCString mCharset;
   bool mIsRichText;
-  KPIM::Identity &mIdentity;
+  uint mIdentityUid;
   bool mRc; // Set this to false, if something fails during the processes
   bool mHoldJobs; // Don't run the next job yet
 
