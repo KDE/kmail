@@ -1931,9 +1931,10 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       iio->setFileName(aFileName);
       if( iio->read() ) {
         QImage img = iio->image();
+        int scnum = QApplication::desktop()->screenNumber(win);
 	if( img.width() > 50 && img.width() > 50	// avoid super small windows
-	    && img.width() < KApplication::desktop()->width()	// avoid super large windows
-	    && img.height() < KApplication::desktop()->height() ) {
+	    && img.width() < QApplication::desktop()->screen(scnum)->width()	// avoid super large windows
+	    && img.height() < QApplication::desktop()->screen(scnum)->height() ) {
 	  win->resize(img.width()+10, img.height()+10);
 	}
       }

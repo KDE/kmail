@@ -18,6 +18,7 @@
 #include <kapplication.h>
 #include <kglobalsettings.h>
 #include <khtml_part.h>
+#include <qcursor.h>
 
 // we need access to the protected member DwBody::DeleteBodyParts()...
 #define protected public
@@ -2189,8 +2190,10 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixe
     edt->setFont(KGlobalSettings::fixedFont());
   edt->setReadOnly(TRUE);
 
-  edt->resize(KApplication::desktop()->width()/2,
-	      2*KApplication::desktop()->height()/3);
+  // Well, there is no widget to be seen here, so we have to use QCursor::pos()
+  int scnum = QApplication::desktop()->screenNumber(QCursor::pos());
+  edt->resize(QApplication::desktop()->screenGeometry(scnum).width()/2,
+	      2*QApplication::desktop()->screenGeometry(scnum).height()/3);
   edt->setCursorPosition(0, 0);  edt->show();
 
 #else //not ALLOW_GUI
