@@ -45,6 +45,7 @@
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"
 #include "kmailicalifaceimpl.h"
+#include "kmmainwidget.h"
 
 #include <keditlistbox.h>
 #include <klineedit.h>
@@ -1151,17 +1152,32 @@ void FolderDiaMailingListTab::slotDetectMailingList()
 {
   if ( !mDlg->folder() ) return; // in case the folder was just created
   int num = mDlg->folder()->count();
-  const int checks = 5;
 
   kdDebug(5006)<<k_funcinfo<<" Detecting mailing list"<<endl;
 
-  for( int i = --num; i > num-checks; --i ) {
-    KMMessage *mes = mDlg->folder()->getMsg( i );
-    if ( !mes )
-      continue;
-    mMailingList = MailingList::detect( mes );
-    if ( mMailingList.features() & MailingList::Post )
-      break;
+  // first try the currently selected message
+  KMFolderTree *folderTree = dynamic_cast<KMFolderTree *>( mDlg->parent() );
+  assert( folderTree );
+  assert( folderTree->mainWidget() );
+  assert( folderTree->mainWidget()->headers() );
+  int curMsgIdx = folderTree->mainWidget()->headers()->currentItemIndex();
+  if ( curMsgIdx > 0 ) {
+    KMMessage *mes = mDlg->folder()->getMsg( curMsgIdx );
+    if ( mes )
+      mMailingList = MailingList::detect( mes );
+  }
+
+  // next try the 5 most recently added messages
+  if ( !( mMailingList.features() & MailingList::Post ) ) {
+    const int maxchecks = 5;
+    for( int i = --num; i > num-maxchecks; --i ) {
+      KMMessage *mes = mDlg->folder()->getMsg( i );
+      if ( !mes )
+        continue;
+      mMailingList = MailingList::detect( mes );
+      if ( mMailingList.features() & MailingList::Post )
+        break;
+    }
   }
   if ( !(mMailingList.features() & MailingList::Post) ) {
     KMessageBox::error( this,

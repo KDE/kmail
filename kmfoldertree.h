@@ -1,4 +1,5 @@
-/* This file is part of the KDE libraries
+/* -*- mode: C++ -*-
+   This file is part of the KDE libraries
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Library General Public
@@ -150,6 +151,9 @@ public:
    *  in the popup correctly */
   virtual void updatePopup() const;
 
+  /** Returns the main widget that this widget is a child of. */
+  KMMainWidget * mainWidget() const { return mMainWidget; }
+
 signals:
   /** The selected folder has changed */
   void folderSelected(KMFolder*);
@@ -201,8 +205,8 @@ public slots:
   void startAutoScroll();
   void stopAutoScroll();
 
-  /** 
-   * Reset current folder and all childs 
+  /**
+   * Reset current folder and all childs
    * If no item is given we take the current one
    * If startListing is true a folder listing is started
    */
