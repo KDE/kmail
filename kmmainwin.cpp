@@ -379,6 +379,8 @@ void KMMainWin::createWidgets(void)
   mFolderTree  = new KMFolderTree(pnrFldList, "folderTree");
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
+  connect(mFolderTree, SIGNAL(folderSelectedUnread(KMFolder*)),
+	  this, SLOT(folderSelectedUnread(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDrop(KMFolder*)),
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
@@ -409,6 +411,12 @@ void KMMainWin::createWidgets(void)
    i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,  
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
   selectCurrentFolderAction->plugAccel( this->accel() );
+
+  KAction *readOnAction = new KAction( i18n( "Move to the next unread text" ),
+                                       Key_Space, this,  SLOT( slotReadOn() ),
+                                       actionCollection(), "read_on" );
+  readOnAction->plugAccel( this->accel() );
+
 }
 
 
@@ -913,7 +921,7 @@ void KMMainWin::slotEditMsg()
     return;
   mFolder->removeMsg(msg);
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
-  mHeaders->highlightMessage(mHeaders->currentItem());
+  mHeaders->highlightMessage(mHeaders->currentItem(), true);
 
   KMComposeWin *win = new KMComposeWin;
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
@@ -1058,8 +1066,26 @@ void KMMainWin::slotSetHeaderStyle(int id)
   readConfig(); // added this so _all_ the other widgets get this information
 }
 
-//-----------------------------------------------------------------------------
 void KMMainWin::folderSelected(KMFolder* aFolder)
+{
+    folderSelected( aFolder, false );
+}
+
+void KMMainWin::folderSelectedUnread(KMFolder* aFolder)
+{
+    mHeaders->blockSignals( true );
+    folderSelected( aFolder, true );
+    QListViewItem *item = mHeaders->firstChild();
+    while (item && item->itemAbove())
+	item = item->itemAbove();
+    mHeaders->setCurrentItem( item );
+    mHeaders->nextUnreadMessage();
+    mHeaders->blockSignals( false );
+    mHeaders->highlightMessage( mHeaders->currentItem() );
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 {
   if (mFolder == aFolder && aFolder)
     return;
@@ -1084,7 +1110,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
   mFolder = (KMFolder*)aFolder;
   readFolderConfig();
   mMsgView->setHtmlOverride(mFolderHtmlPref);
-  mHeaders->setFolder(mFolder);
+  mHeaders->setFolder( mFolder, jumpToUnread );
   kernel->kbp()->idle();
 }
 
@@ -1771,6 +1797,26 @@ void KMMainWin::quit()
   qApp->quit();
 }
 
+void KMMainWin::slotReadOn()
+{
+    if ( !mMsgView )
+        return;
+
+    if ( !mMsgView->atBottom() ) {
+        mMsgView->slotJumpDown();
+        return;
+    }
+    int i = mHeaders->findUnread(TRUE);
+    if ( i >= 0 ) {
+        mHeaders->nextUnreadMessage();
+        return;
+    }
+
+    KMFolder *before = mFolderTree->currentFolder();
+    mFolderTree->nextUnreadFolder( true );
+    if ( before ==  mFolderTree->currentFolder() )
+        mFolderTree->firstUnreadFolder( true );
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::moveSelectedToFolder( int menuId )

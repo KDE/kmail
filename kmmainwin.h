@@ -82,6 +82,8 @@ public:
     *newAction, *unreadAction, *readAction, *repliedAction, *queueAction,
     *sentAction, *flagAction, *printAction;
 
+  void folderSelected(KMFolder*, bool jumpToUnread);
+
 public slots:
   virtual void show();
   virtual void hide();
@@ -91,6 +93,8 @@ public slots:
   /** Output given message in the statusbar message field. */
   void statusMsg(const QString& text);
   void folderSelected(KMFolder*);
+  void folderSelectedUnread( KMFolder* );
+
   void slotMsgSelected(KMMessage*);
 
   /** Change the current folder, select a message in the current folder */
@@ -101,8 +105,7 @@ protected:
   void setupMenuBar();
   void setupStatusBar();
   void createWidgets();
-  void activatePanners();
-  void showMsg(KMReaderWin *win, KMMessage *msg);
+  void activatePanners();  void showMsg(KMReaderWin *win, KMMessage *msg);
 
 protected slots:
   void slotCheckOneAccount(int);
@@ -136,6 +139,7 @@ protected slots:
   void slotEditMsg();
   void slotDeleteMsg();
   void slotUndo();
+  void slotReadOn();
   void slotSaveMsg();
   void slotPrintMsg();
   void slotMoveMsg();

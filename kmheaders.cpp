@@ -570,7 +570,7 @@ void KMHeaders::writeFolderConfig (void)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setFolder (KMFolder *aFolder)
+void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 {
    qDebug("start %d %s:%d", (QTime::currentTime().second()*1000)+QTime::currentTime().msec(), __FILE__,__LINE__);
 
@@ -596,7 +596,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       if (mPrevCurrent)
       {
       }
-      highlightMessage(0);
+      highlightMessage(0, false);
       mFolder->markNewAsUnread();
       writeFolderConfig();
       disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
@@ -651,13 +651,13 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
     updateMessageList();
 
-    if (mFolder)
+    if (mFolder && !jumpToFirst)
     {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
       while (item && item->itemAbove())
 	item = static_cast<KMHeaderItem*>(item->itemAbove());
       if (item)
-	id = findUnread(TRUE, item->msgId(), TRUE);
+	id = findUnread(TRUE, item->msgId(), jumpToFirst);
       else
 	id = -1;
 
@@ -932,11 +932,11 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   if (next) {
     setCurrentItem( next );
     setSelected( next, TRUE );
-    highlightMessage( next );
+    highlightMessage( next, false);
   }
   else if (currentItem()) {
     setSelected( currentItem(), TRUE );
-    highlightMessage( currentItem() );
+    highlightMessage( currentItem(), false);
   }
   else
     emit selected( 0 );
@@ -1410,7 +1410,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     setSelected( currentItem(), TRUE );
     setCurrentMsg( mFolder->find( curMsg ) );
     // sanders QListView isn't emitting a currentChanged signal?
-    highlightMessage( currentItem() );
+    highlightMessage( currentItem(), true);
   }
   else
     emit selected( 0 );
@@ -1698,10 +1698,12 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
     if (!item)
       return -1;
 
+    /* coolo - I don't know why this is here as it prevents the current item to be accepted
     if (aDirNext)
       item = static_cast<KMHeaderItem*>(item->itemBelow());
     else
       item = static_cast<KMHeaderItem*>(item->itemAbove());
+    */
   }
 
   pitem =  item;
@@ -1754,20 +1756,26 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
 //-----------------------------------------------------------------------------
 void KMHeaders::nextUnreadMessage()
 {
+    KMMessage *msg = currentMsg();
+
   int i = findUnread(TRUE);
   setCurrentMsg(i);
+    ensureCurrentItemVisible();
+}
+
+void KMHeaders::ensureCurrentItemVisible()
+{
+    int i = currentItemIndex();
   if ((i >= 0) && (i < (int)mItems.size()))
     center( contentsX(), itemPos(mItems[i]), 0, 9.0 );
 }
-
 
 //-----------------------------------------------------------------------------
 void KMHeaders::prevUnreadMessage()
 {
   int i = findUnread(FALSE);
   setCurrentMsg(i);
-  if ((i >= 0) && (i < (int)mItems.size()))
-    center( contentsX(), itemPos(mItems[i]), 0, 9.0 );
+  ensureCurrentItemVisible();
 }
 
 
@@ -1786,7 +1794,7 @@ void KMHeaders::makeHeaderVisible()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::highlightMessage(QListViewItem* lvi)
+void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
 {
   KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
   if (lvi != mPrevCurrent) {
@@ -1816,7 +1824,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
     return;
   }
   mOwner->statusMsg("");
-  if (idx >= 0) setMsgRead(idx);
+  if (markitread && idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
   emit selected(mFolder->getMsg(idx));
@@ -2083,7 +2091,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
     // Handle space key press
     if (cur->isSelectable() && e->ascii() == ' ' ) {
 	setSelected( cur, !cur->isSelected() );
-	highlightMessage( cur );
+	highlightMessage( cur, true);
 	return;
     }
 
@@ -2184,6 +2192,11 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
       d->drag();
     }
   }
+}
+
+void KMHeaders::highlightMessage(QListViewItem* i)
+{
+    highlightMessage( i, true );
 }
 
 //-----------------------------------------------------------------------------
@@ -2294,7 +2307,7 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
     setCurrentItem( mItems[msgIdx] );
     setSelected( mItems[msgIdx], TRUE );
     if (unchanged)
-       highlightMessage( mItems[msgIdx] );
+       highlightMessage( mItems[msgIdx], true);
   }
 }
 

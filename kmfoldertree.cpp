@@ -15,6 +15,7 @@
 #include <kglobal.h>
 #include <kstddirs.h>
 #include <kglobalsettings.h>
+#include <kmessagebox.h>
 
 #include <kdebug.h>
 
@@ -606,17 +607,57 @@ void KMFolderTree::prepareItem( KMFolderTreeItem* fti )
 
 void KMFolderTree::nextUnreadFolder()
 {
+    nextUnreadFolder( false );
+}
+
+void KMFolderTree::nextUnreadFolder(bool confirm)
+{
   QListViewItemIterator it( currentItem() );
 
   while (it.current()) {
     ++it;
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
+        if ( confirm ) {
+            if ( KMessageBox::questionYesNo( this,
+                  i18n( "Go to the next unread message in folder %1?" ).
+                                             arg( fti->folder->label() ) ,
+                                             i18n( "Go to the next unread message" ) )
+                 == KMessageBox::No ) return;
+        }
 	prepareItem( fti );
+        blockSignals( true );
 	doFolderSelected( fti );    
+        blockSignals( false );
+        emit folderSelectedUnread( fti->folder );
 	return;
     }
   }
+}
+
+void KMFolderTree::firstUnreadFolder(bool confirm)
+{
+    QListViewItemIterator it( firstChild() );
+    while (it.current())
+    {
+        ++it;
+        KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+        if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
+            if ( confirm ) {
+                if ( KMessageBox::questionYesNo( this,
+                                                 i18n( "Go to the next unread message in folder %1?" ).
+                                                 arg( fti->folder->label() ) ,
+                                                 i18n( "Go to the next unread message" ) )
+                     == KMessageBox::No ) return;
+            }
+            prepareItem( fti );
+            blockSignals( true );
+            doFolderSelected( fti );
+            blockSignals( false );
+            emit folderSelectedUnread( fti->folder );
+            return;
+        }
+    }
 }
 
 void KMFolderTree::prevUnreadFolder()
@@ -673,6 +714,15 @@ void KMFolderTree::selectCurrentFolder()
       prepareItem( fti );
       doFolderSelected( fti );
   }
+}
+
+KMFolder *KMFolderTree::currentFolder() const
+{
+    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( currentItem() );
+    if (fti )
+        return fti->folder;
+    else
+        return 0;
 }
 
 //-----------------------------------------------------------------------------

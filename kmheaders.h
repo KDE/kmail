@@ -62,7 +62,7 @@ public:
   virtual ~KMHeaders();
 
   // A new folder has been selected update the list of headers shown
-  virtual void setFolder(KMFolder *);
+  virtual void setFolder(KMFolder *, bool jumpToFirst = false);
 
   // Return the folder whose message headers are being displayed
   KMFolder* folder(void) { return mFolder; }
@@ -151,6 +151,15 @@ public:
   virtual void setOpen ( QListViewItem *, bool );
 
   int getNestingPolicy(){ return nestingPolicy; }
+
+  /** Find next/prev unread message. Starts at currentItem() if startAt
+    is unset. */
+  virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = FALSE);
+
+  virtual void ensureCurrentItemVisible();
+
+  void highlightMessage(QListViewItem*, bool markitread);
+
 signals:
   // emitted when the list view item corresponding to this message
   // has been selected
@@ -206,10 +215,6 @@ protected:
 
   /** Auxillary method to findUnread */
   void findUnreadAux( KMHeaderItem*&, bool &, bool, bool );
-
-  /** Find next/prev unread message. Starts at currentItem() if startAt
-    is unset. */
-  virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = FALSE);
 
   /** Returns message index of first selected message of the messages
     where the message with the given id is in. This for finding the correct

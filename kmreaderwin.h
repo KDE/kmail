@@ -123,6 +123,8 @@ public:
   static void atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname, QTextCodec *codec);
 
+  bool atBottom() const;
+
 signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const QString& text);
@@ -152,6 +154,7 @@ public slots:
   void slotScrollDown();
   void slotScrollPrior();
   void slotScrollNext();
+  void slotJumpDown();
   void slotDocumentChanged();
   void slotDocumentDone();
   void slotTextSelected(bool);

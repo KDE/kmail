@@ -115,9 +115,20 @@ public:
   /** Remove information about not existing folders from the config file */
   void cleanupConfigFile();
 
+  /* Select the next folder with unread messages */
+  void nextUnreadFolder(bool confirm);
+
+  /* Select the first folder with unread messages */
+  void firstUnreadFolder(bool confirm);
+
+  KMFolder *currentFolder() const;
+
 signals:
   /* The selected folder has changed */
   void folderSelected(KMFolder*);
+
+  /* The selected folder has changed to go to an unread message */
+  void folderSelectedUnread( KMFolder * );
 
   /* Messages have been dropped onto a folder */
   void folderDrop(KMFolder*);

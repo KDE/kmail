@@ -1731,6 +1731,19 @@ void KMReaderWin::slotScrollDown()
   static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, 10);
 }
 
+bool KMReaderWin::atBottom() const
+{
+    const QScrollView *view = static_cast<const QScrollView *>(mViewer->widget());
+    return view->contentsY() + view->visibleHeight() >= view->contentsHeight();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotJumpDown()
+{
+    QScrollView *view = static_cast<QScrollView *>(mViewer->widget());
+    int offs = (view->clipper()->height() < 30) ? view->clipper()->height() : 30;
+    view->scrollBy( 0, view->clipper()->height() - offs );
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollPrior()
@@ -1744,7 +1757,6 @@ void KMReaderWin::slotScrollNext()
 {
   static_cast<QScrollView *>(mViewer->widget())->scrollBy(0, (int)(height()*0.8));
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDocumentChanged()
