@@ -227,7 +227,7 @@ void KMAcctCachedImap::processNewMail( bool interactive )
 }
 
 void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
-				       bool interactive,
+				       bool /* interactive */,
                                        bool recurse )
 {
   // This should never be set for a cached IMAP account
