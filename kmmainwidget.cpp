@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmmainwidget.cpp
 //#define MALLOC_DEBUG 1
 
@@ -209,7 +210,7 @@ void KMMainWidget::readConfig(void)
   bool oldLongFolderList =  mLongFolderList;
   bool oldReaderWindowActive = mReaderWindowActive;
   bool oldReaderWindowBelow = mReaderWindowBelow;
- 
+
   QString str;
   QSize siz;
 
@@ -220,10 +221,10 @@ void KMMainWidget::readConfig(void)
     readPreConfig();
     mHeaders->refreshNestedState();
 
-    bool layoutChanged = ( oldLongFolderList != mLongFolderList ) 
-                    || ( oldReaderWindowActive != mReaderWindowActive ) 
+    bool layoutChanged = ( oldLongFolderList != mLongFolderList )
+                    || ( oldReaderWindowActive != mReaderWindowActive )
                     || ( oldReaderWindowBelow != mReaderWindowBelow );
- 
+
 
     if( layoutChanged ) {
       hide();
@@ -269,10 +270,10 @@ void KMMainWidget::readConfig(void)
     widths << folderW << headerW;
     heights << headerH << readerH;
 
-    bool layoutChanged = ( oldLongFolderList != mLongFolderList ) 
-                    || ( oldReaderWindowActive != mReaderWindowActive ) 
+    bool layoutChanged = ( oldLongFolderList != mLongFolderList )
+                    || ( oldReaderWindowActive != mReaderWindowActive )
                     || ( oldReaderWindowBelow != mReaderWindowBelow );
- 
+
     if (!mStartupDone || layoutChanged )
     {
       /** unread / total columns
@@ -329,8 +330,8 @@ void KMMainWidget::readConfig(void)
     // Update systray
     toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
-    bool layoutChanged = ( oldLongFolderList != mLongFolderList ) 
-                    || ( oldReaderWindowActive != mReaderWindowActive ) 
+    bool layoutChanged = ( oldLongFolderList != mLongFolderList )
+                    || ( oldReaderWindowActive != mReaderWindowActive )
                     || ( oldReaderWindowBelow != mReaderWindowBelow );
     if ( layoutChanged ) {
       activatePanners();
@@ -600,7 +601,7 @@ void KMMainWidget::slotSetEncoding()
     }
     else
       mCodec = KMMsgBase::codecForName( mEncodingStr );
-    if (mMsgView) 
+    if (mMsgView)
       mMsgView->setOverrideCodec(mCodec);
     return;
 }
@@ -859,7 +860,7 @@ void KMMainWidget::slotEmptyFolder()
       != KMessageBox::Continue) return;
   }
 
-  if (mFolder->folderType() == KMFolderTypeImap 
+  if (mFolder->folderType() == KMFolderTypeImap
       || mFolder->folderType() == KMFolderTypeSearch)
   {
     slotMarkAll();
@@ -917,18 +918,35 @@ void KMMainWidget::slotRemoveFolder()
      str = i18n("<qt>Are you sure you want to delete the search folder "
                 "<b>%1</b>? The messages displayed in it will not be deleted "
                 "if you do so, as they are stored in a different folder.</qt>")
-			     .arg(mFolder->label());
+
+           .arg(mFolder->label());
   } else {
-      if (mFolder->count() == 0) {
-          str = i18n("<qt>Are you sure you want to delete the empty folder "
-                     "<b>%1</b> and all its subfolders? Those subfolders "
-                     "might not be empty and their  contents will be "
-                     "discarded as well.</qt>") .arg(mFolder->label());
-      } else {
-          str = i18n("<qt>Are you sure you want to delete the folder "
-                     "<b>%1</b> and all its subfolders, discarding their "
-                     "contents?</qt>") .arg(mFolder->label());
+    if ( mFolder->count() == 0 ) {
+      if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
+        str = i18n("<qt>Are you sure you want to delete the empty folder "
+                   "<b>%1</b>?</qt>")
+              .arg(mFolder->label());
       }
+      else {
+        str = i18n("<qt>Are you sure you want to delete the empty folder "
+                   "<b>%1</b> and all its subfolders? Those subfolders "
+                   "might not be empty and their  contents will be "
+                   "discarded as well.</qt>")
+              .arg(mFolder->label());
+      }
+    } else {
+      if ( !mFolder->child() || mFolder->child()->isEmpty() ) {
+        str = i18n("<qt>Are you sure you want to delete the folder "
+                 "<b>%1</b>, discarding its contents?</qt>")
+              .arg(mFolder->label());
+      }
+      else {
+        str = i18n("<qt>Are you sure you want to delete the folder "
+                 "<b>%1</b> and all its subfolders, discarding their "
+                 "contents?</qt>")
+            .arg(mFolder->label());
+      }
+    }
   }
 
   if (KMessageBox::warningContinueCancel(this, str, i18n("Delete Folder"),
@@ -1163,7 +1181,7 @@ void KMMainWidget::slotBounceMsg()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplyListToMsg()
 {
-  
+
   QString text = mMsgView? mMsgView->copyText() : "";
   KMCommand *command = new KMReplyListCommand( this, mHeaders->currentMsg(),
 					       text );
@@ -1327,7 +1345,7 @@ void KMMainWidget::slotCopyMsg()
 void KMMainWidget::slotPrintMsg()
 {
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
-  KMCommand *command = new KMPrintCommand( this, mHeaders->currentMsg(), 
+  KMCommand *command = new KMPrintCommand( this, mHeaders->currentMsg(),
       htmlOverride );
   command->start();
 }
@@ -1494,7 +1512,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 
   KCursorSaver busy(KBusyPtr::busy());
 
-  if (mMsgView) 
+  if (mMsgView)
     mMsgView->clear(true);
 
   if( !mFolder ) {
@@ -1515,7 +1533,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   writeFolderConfig();
   mFolder = (KMFolder*)aFolder;
   readFolderConfig();
-  if (mMsgView) 
+  if (mMsgView)
     mMsgView->setHtmlOverride(mFolderHtmlPref);
   mHeaders->setFolder( mFolder, jumpToUnread );
   updateMessageActions();
@@ -1634,13 +1652,13 @@ void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
 {
   if (msg && ((KMMsgBase*)msg)->isMessage()) {
     // don't update if we have since left the folder
-    if ( mFolder && 
-       ( mFolder == msg->parent()  
+    if ( mFolder &&
+       ( mFolder == msg->parent()
       || mFolder->folderType() == KMFolderTypeSearch ) )
       mMsgView->setMsg(msg, TRUE);
     else
       kdDebug( 5006 ) <<  "KMMainWidget::slotUpdateImapMessage - ignoring update for already left folder" << endl;
-  }  else { 
+  }  else {
     // force an update of the folder
     if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
       static_cast<KMFolderImap*>(mFolder)->getFolder(true);
@@ -2091,12 +2109,12 @@ void KMMainWidget::setupActions()
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),
 				actionCollection(), "message_forward_inline" );
-  
+
   mForwardActionMenu->insert( forwardAction() );
 
   mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
- 
+
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 			      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
   mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
@@ -2111,7 +2129,7 @@ void KMMainWidget::setupActions()
 				 Key_E, this, SLOT(slotRedirectMsg()),
 				 actionCollection(), "message_forward_redirect" );
   mForwardActionMenu->insert( redirectAction() );
-  
+
   mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
     this, SLOT(slotNoQuoteReplyToMsg()), actionCollection(), "noquotereply" );
 
@@ -2143,7 +2161,7 @@ void KMMainWidget::setupActions()
   mFilterMenu->insert( mListFilterAction );
 
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
- 
+
   //----- Message-Encoding Submenu
   mEncoding = new KSelectAction( i18n( "&Set Encoding" ), "charset", 0, this,
 		      SLOT( slotSetEncoding() ), actionCollection(), "encoding" );
@@ -2429,7 +2447,7 @@ void KMMainWidget::setupActions()
 		     SLOT(slotCollapseAllThreads()),
 		     actionCollection(), "collapse_all_threads" );
 
- 
+
   //----- Go Menu
   new KAction( KGuiItem( i18n("&Next Message"), QString::null,
                          i18n("Go to the next message") ),
@@ -2687,7 +2705,7 @@ void KMMainWidget::updateMessageActions()
            mHeaders->isThreaded();
     mStatusMenu->setEnabled( mass_actions );
     mThreadStatusMenu->setEnabled( thread_actions );
-    // these need to be handled individually, the user might have them 
+    // these need to be handled individually, the user might have them
     // in the toolbar
     mWatchThreadAction->setEnabled( thread_actions );
     mIgnoreThreadAction->setEnabled( thread_actions );
@@ -2730,7 +2748,7 @@ void KMMainWidget::updateMessageActions()
     bool single_actions = count == 1;
     mEditAction->setEnabled( single_actions &&
     kmkernel->folderIsDraftOrOutbox(mFolder));
-   
+
     filterMenu()->setEnabled( single_actions );
     bounceAction()->setEnabled( single_actions );
     replyAction()->setEnabled( single_actions );
@@ -2742,7 +2760,7 @@ void KMMainWidget::updateMessageActions()
     if (mMsgView) {
       viewSourceAction()->setEnabled( single_actions );
     }
-      
+
     mSendAgainAction->setEnabled( single_actions &&
           mHeaders->currentMsg() &&
           mHeaders->currentMsg()->isSent() );
