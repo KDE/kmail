@@ -11,7 +11,7 @@
 #include "kfileio.h"
 #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "maildirjob.h"
 #include "kcursorsaver.h"
 using KMail::MaildirJob;

@@ -18,7 +18,7 @@
     Boston, MA 02111-1307, USA.
 */
 
-#include "kmundostack.h"
+#include "undostack.h"
 
 #include "kmmainwin.h"
 #include "kmkernel.h"
@@ -150,4 +150,4 @@ KMUndoStack::folderDestroyed( KMFolder *folder)
 }
 
 
-#include "kmundostack.moc"
+#include "undostack.moc"

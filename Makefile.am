@@ -45,7 +45,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		signatureconfigurator.cpp \
 		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
 		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \
-		kmundostack.cpp kmbroadcaststatus.cpp \
+		undostack.cpp kmbroadcaststatus.cpp \
 		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
 		kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
@@ -65,7 +65,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		filehtmlwriter.cpp teehtmlwriter.cpp \
                 mailcomposerIface.skel objecttreeparser.cpp \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
-		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
+		encryptionconfigurationdialogimpl.cpp mailsourceviewer.cpp \
 		kmcommands.cpp kmreadermainwin.cpp \
 		kmstartup.cpp kmmainwidget.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \

@@ -25,7 +25,7 @@
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmmsgdict.h"
 
 //-----------------------------------------------------------------------------

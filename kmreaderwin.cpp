@@ -20,7 +20,7 @@
 #include "kmfolderindex.h"
 #include "kmcommands.h"
 #include "kmmsgpartdlg.h"
-#include "kmtextbrowser.h"
+#include "mailsourceviewer.h"
 #include "partNode.h"
 #include "linklocator.h"
 #include "kmmsgdict.h"

@@ -43,7 +43,7 @@
 #include "kmversion.h"
 #include "kmfldsearch.h"
 #include "kmacctfolder.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
 #include "kmmainwin.h"

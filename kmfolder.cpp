@@ -6,7 +6,7 @@
 #include "kmfolder.h"
 
 #include "kmfolderimap.h" //for the nasty imap hacks, FIXME
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmmsgdict.h"
 #include "identitymanager.h"
 #include "kmidentity.h"

@@ -29,8 +29,8 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#ifndef KMTEXTBROWSER_H
-#define KMTEXTBROWSER_H
+#ifndef MAILSOURCEVIEWER_H
+#define MAILSOURCEVIEWER_H
 
 #include <ktextbrowser.h>
 
@@ -48,4 +48,4 @@ public:
     KMTextBrowser( QWidget *parent = 0, const char *name = 0 );
 };
 
-#endif // KMTEXTBROWSER_H
+#endif // MAILSOURCEVIEWER_H

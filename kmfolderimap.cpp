@@ -26,7 +26,7 @@
 
 #include "kmfolderimap.h"
 #include "kmfoldertree.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmfoldermgr.h"
 #include "imapjob.h"
 using KMail::ImapJob;

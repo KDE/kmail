@@ -10,7 +10,7 @@
 #include "kmmainwidget.h"
 #include "kmcomposewin.h"
 #include "kmfiltermgr.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmmsgdict.h"
 #include "kmkernel.h"
 using KMail::FolderJob;

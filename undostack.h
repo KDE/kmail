@@ -18,8 +18,8 @@
     Boston, MA 02111-1307, USA.
 */
 
-#ifndef _KMUNDOSTACK_H_
-#define _KMUNDOSTACK_H_
+#ifndef UNDOSTACK_H
+#define UNDOSTACK_H
 
 #include <qptrlist.h>
 #include <qstring.h>

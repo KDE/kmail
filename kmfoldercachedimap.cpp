@@ -25,7 +25,7 @@
 #include <errno.h>
 
 #include "kmfoldercachedimap.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmgr.h"

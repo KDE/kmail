@@ -7,7 +7,7 @@
 
 #include "kmfoldermbox.h"
 #include "kmfoldermgr.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kcursorsaver.h"
 
 #include <kdebug.h>

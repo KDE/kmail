@@ -49,7 +49,7 @@
 #include "kmmainwidget.h"
 #include "kmmsgdict.h"
 #include "kmsender.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kcursorsaver.h"
 using KMail::FolderJob;
 

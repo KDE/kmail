@@ -29,7 +29,7 @@
  *  you do not wish to do so, delete this exception statement from
  *  your version.
  */
-#include "kmtextbrowser.h"
+#include "mailsourceviewer.h"
 
 #include <kapplication.h>
 #include <kwin.h>

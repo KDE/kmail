@@ -33,7 +33,7 @@
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #include "kmsender.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmacctmgr.h"
 #include "kfileio.h"
 #include "kmversion.h"

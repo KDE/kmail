@@ -9,7 +9,7 @@
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
-#include "kmundostack.h"
+#include "undostack.h"
 #include "kmversion.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
@@ -49,7 +49,7 @@ using namespace KMime::Types;
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
-#include "kmtextbrowser.h"
+#include "mailsourceviewer.h"
 #endif
 
 // needed temporarily until KMime is replacing the partNode helper class:
