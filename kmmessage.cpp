@@ -830,20 +830,22 @@ KMMessage* KMMessage::createForward(void)
 //-----------------------------------------------------------------------------
 void KMMessage::initHeader(void)
 {
-  if(kernel->identity()->fullEmailAddr().isEmpty())
+  KMIdentity ident( "unknown" );
+  ident.readConfig();
+  if(ident.fullEmailAddr().isEmpty())
     setFrom("");
   else
-    setFrom(kernel->identity()->fullEmailAddr());
+    setFrom(ident.fullEmailAddr());
 
-  if(kernel->identity()->replyToAddr().isEmpty()) 
+  if(ident.replyToAddr().isEmpty()) 
     setReplyTo("");
   else
-    setReplyTo(kernel->identity()->replyToAddr());
+    setReplyTo(ident.replyToAddr());
 
-  if (kernel->identity()->organization().isEmpty())
+  if (ident.organization().isEmpty())
     removeHeaderField("Organization");
   else
-    setHeaderField("Organization", kernel->identity()->organization());
+    setHeaderField("Organization", ident.organization());
 
   setTo("");
   setSubject("");

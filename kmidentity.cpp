@@ -18,16 +18,42 @@
 
 
 //-----------------------------------------------------------------------------
-KMIdentity::KMIdentity()
+QStringList KMIdentity::identities()
 {
-  readConfig();
+  KConfig* config = kapp->config();
+  config->setGroup( "Identity" );
+
+  QStringList result = config->readListEntry( "IdentityList" );
+  if (!result.contains( "unknown" ))
+    result.prepend( "unknown" );
+  return result;
+} 
+
+
+//-----------------------------------------------------------------------------
+void KMIdentity::saveIdentities( QStringList ids, bool aWithSync )
+{
+  KConfig* config = kapp->config();
+  config->setGroup( "Identity" );
+
+  if (!ids.contains( "unknown" ))
+    ids.prepend( "unknown" );
+  config->writeEntry( "IdentityList", ids );
+
+  if (aWithSync) config->sync();
+} 
+
+
+//-----------------------------------------------------------------------------
+KMIdentity::KMIdentity( QString id )
+{
+  mIdentity = id;
 }
 
 
 //-----------------------------------------------------------------------------
 KMIdentity::~KMIdentity()
 {
-  writeConfig();
 }
 
 
@@ -39,9 +65,10 @@ void KMIdentity::readConfig(void)
   char str[80];
   int i;
 
-  config->setGroup("Identity");
-
-  mIdentity = config->readEntry( "Identity", "unknown" );
+  if (mIdentity == "unknown")
+    config->setGroup( "Identity" );
+  else
+    config->setGroup( "Identity-" + mIdentity );
 
   mFullName = config->readEntry("Name");
   if (mFullName.isEmpty())
@@ -81,7 +108,11 @@ void KMIdentity::readConfig(void)
 void KMIdentity::writeConfig(bool aWithSync)
 {
   KConfig* config = kapp->config();
-  config->setGroup("Identity");
+
+  if (mIdentity == "unknown")
+    config->setGroup( "Identity" );
+  else
+    config->setGroup( "Identity-" + mIdentity );
 
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Name", mFullName);
@@ -100,13 +131,6 @@ void KMIdentity::writeConfig(bool aWithSync)
 bool KMIdentity::mailingAllowed(void) const
 {
   return (!mFullName.isEmpty() && !mEmailAddr.isEmpty());
-}
-
-
-//-----------------------------------------------------------------------------
-void KMIdentity::setIdentity(const QString str)
-{
-  mIdentity = str.copy();
 }
 
 

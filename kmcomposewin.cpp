@@ -1718,7 +1718,9 @@ void KMComposeWin::slotSendNow()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  QString sigFileName = kernel->identity()->signatureFile();
+  KMIdentity ident( "unknown" );
+  ident.readConfig();
+  QString sigFileName = ident.signatureFile();
   QString sigText;
   bool mod = mEditor->isModified();
 
@@ -1747,10 +1749,10 @@ void KMComposeWin::slotAppendSignature()
 
     sigFileName = url.path();
     sigText = kFileToString(sigFileName, TRUE);
-    kernel->identity()->setSignatureFile(sigFileName);
-    kernel->identity()->writeConfig(true);
+    ident.setSignatureFile(sigFileName);
+    ident.writeConfig(true);
   }
-  else sigText = kernel->identity()->signature();
+  else sigText = ident.signature();
 
   if (!sigText.isEmpty())
   {

@@ -121,6 +121,8 @@ void KMSender::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 bool KMSender::settingsOk(void) const
 {
+  KMIdentity ident( "unknown" );
+  ident.readConfig();
   if (mMethod!=smSMTP && mMethod!=smMail)
   {
     KMessageBox::information(0,i18n("Please specify a send\n"
@@ -128,7 +130,7 @@ bool KMSender::settingsOk(void) const
 				    "and try again."));
     return FALSE;
   }
-  if (!kernel->identity()->mailingAllowed())
+  if (!ident.mailingAllowed())
   {
     KMessageBox::information(0,i18n("Please set the required fields in the\n"
 				    "identity settings:\n"
@@ -720,11 +722,13 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 {
   QString str, msgStr, bccStr;
   int replyCode;
+  KMIdentity ident( "unknown" );
+  ident.readConfig();
 
   assert(aMsg != NULL);
 
   smtpInCmd("MAIL");
-  replyCode = mClient->Mail(kernel->identity()->emailAddr());
+  replyCode = mClient->Mail(ident.emailAddr());
   smtpDebug("MAIL");
   if(replyCode != 250) return smtpFailed("MAIL", replyCode);
 

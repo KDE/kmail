@@ -73,7 +73,6 @@ public:
   inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   inline KMAddrBook *addrBook() { return the_addrBook; }
   inline KMSender *msgSender() { return the_msgSender; }
-  inline KMIdentity *identity() { return the_identity; }
 
   inline bool firstStart() { return the_firstStart; }
   inline bool shuttingDown() { return the_shuttingDown; }
@@ -94,7 +93,6 @@ private:
   KMFilterActionDict *the_filterActionDict;
   KMAddrBook *the_addrBook;
   KMSender *the_msgSender;
-  KMIdentity *the_identity;
 
   bool the_firstStart;          // is this the first start?  read from config
   bool the_shuttingDown;        // are we going down? set from here

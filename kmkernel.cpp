@@ -314,8 +314,6 @@ void KMKernel::init()
   QDir dir;
   QString d = locateLocal("data", "kmail/");
 
-  the_identity = new KMIdentity;
-
   cfg->setGroup("General");
   the_firstStart = cfg->readBoolEntry("first-start", true);
   foldersPath = cfg->readEntry("folders", "");

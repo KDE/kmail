@@ -7,12 +7,19 @@
 #define kmidentity_h
 
 #include <qstring.h>
+#include <qstringlist.h>
 
 class KMIdentity
 {
 public:
+  /** Returns list of identity ids written to the config file */
+  static QStringList identities(); 
+
+  /** Save a list of identity ids in the config file */
+  static void saveIdentities( QStringList ids, bool aWithSync = TRUE ); 
+
   /** Constructor loads config file */
-  KMIdentity();
+  KMIdentity( QString id );
 
   /** Destructor saves config file */
   virtual ~KMIdentity();
@@ -28,7 +35,6 @@ public:
 
   /** Identity/nickname fot this collection */
   const QString identity(void) const { return mIdentity; }
-  virtual void setIdentity(const QString);
 
   /** Full name of the user */
   const QString fullName(void) const { return mFullName; }

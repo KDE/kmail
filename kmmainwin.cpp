@@ -381,9 +381,9 @@ void KMMainWin::slotOldSettings()
   // Problem arises when we change the geometry during the
   // session are press the OK button in the settings. Then we
   // lose the current geometry! Not anymore ;-)
-  writeConfig();
-  KMSettings dlg(this);
-  dlg.exec();
+  //  writeConfig();
+  //  KMSettings dlg(this);
+  //  dlg.exec();
 }
 
 

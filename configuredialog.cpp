@@ -1825,6 +1825,103 @@ void ConfigureDialog::setupMiscPage( void )
 }
 
 
+<<<<<<< configuredialog.cpp
+
+void ConfigureDialog::installProfile( void )
+{
+  QListViewItem *item = mAppearance.profileList->selectedItem();
+  if( item == 0 )
+  {
+    return;
+  }
+
+  if( item == mAppearance.mListItemDefault )
+  {
+    mAppearance.fontString[0] = "adobe-normal-r-12";
+    mAppearance.fontString[1] = "adobe-normal-r-12";
+    mAppearance.fontString[2] = "adobe-normal-r-12";
+    mAppearance.fontString[3] = "adobe-normal-i-12"; 
+    mAppearance.fontString[4] = "adobe-normal-i-12";
+    mAppearance.fontString[5] = "adobe-normal-i-12"; 
+    mAppearance.customFontCheck->setChecked( true );
+    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
+    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 2, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 3, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 4, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 5, blue );
+    mAppearance.colorList->setColor( 6, red );
+    mAppearance.customColorCheck->setChecked( true );
+    
+    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.nestedMessagesCheck->setChecked( false );
+  }
+  else if( item == mAppearance.mListItemNewFeature )
+  {
+    mAppearance.fontString[0] = "adobe-normal-r-12";
+    mAppearance.fontString[1] = "adobe-normal-r-12";
+    mAppearance.fontString[2] = "adobe-normal-r-12";
+    mAppearance.fontString[3] = "adobe-normal-r-12";
+    mAppearance.fontString[4] = "adobe-normal-r-12";
+    mAppearance.fontString[5] = "adobe-normal-r-12";
+    mAppearance.customFontCheck->setChecked( true );
+    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
+    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
+    mAppearance.colorList->setColor( 2, red );
+    mAppearance.colorList->setColor( 3, QColor("#006400") );
+    mAppearance.colorList->setColor( 4, QColor("#832B8B") );
+    mAppearance.colorList->setColor( 5, blue );
+    mAppearance.colorList->setColor( 6, red );
+    mAppearance.customColorCheck->setChecked( true );
+    
+    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.nestedMessagesCheck->setChecked( true );
+  }
+  else if( item == mAppearance.mListItemContrast )
+  {
+    mAppearance.fontString[0] = "adobe-bold-r-14";
+    mAppearance.fontString[1] = "adobe-bold-r-14";
+    mAppearance.fontString[2] = "adobe-bold-r-14";
+    mAppearance.fontString[3] = "adobe-bold-r-14"; 
+    mAppearance.fontString[4] = "adobe-bold-r-14";
+    mAppearance.fontString[5] = "adobe-bold-r-14";
+    mAppearance.customFontCheck->setChecked( true );
+    mAppearance.colorList->setColor( 0, QColor("#FAEBD7") );
+    mAppearance.colorList->setColor( 1, black );
+    mAppearance.colorList->setColor( 2, red );
+    mAppearance.colorList->setColor( 3, QColor("#006400") );
+    mAppearance.colorList->setColor( 4, QColor("#832B8B") );
+    mAppearance.colorList->setColor( 5, blue );
+    mAppearance.colorList->setColor( 6, red );
+    mAppearance.customColorCheck->setChecked( true );
+    
+    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.nestedMessagesCheck->setChecked( true );
+  }
+  else
+  {
+  }
+
+  slotCustomFontSelectionChanged();
+  // A little trick to get a proper update
+  int index = mAppearance.activeFontIndex;
+  mAppearance.activeFontIndex = -1;
+  slotFontSelectorChanged( index );
+  slotCustomColorSelectionChanged();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+=======
 
 void ConfigureDialog::installProfile( void )
 {
@@ -2941,41 +3038,42 @@ void IdentityList::importData()
   // Pretty easy for now.
   //
   IdentityEntry entry;
-  entry.setIdentity( kernel->identity()->identity() );
-  entry.setFullName( kernel->identity()->fullName() );
-  entry.setOrganization( kernel->identity()->organization() );
-  entry.setEmailAddress( kernel->identity()->emailAddr() );
-  entry.setReplyToAddress( kernel->identity()->replyToAddr() );
-  entry.setSignatureFileName( kernel->identity()->signatureFile(), true );
-  entry.setSignatureInlineText( kernel->identity()->signatureInlineText() );
-  entry.setUseSignatureFile( kernel->identity()->useSignatureFile() );
-  add( entry );
+  QStringList identities = KMIdentity::identities();
+  QStringList::Iterator it;
+
+  for( it = identities.begin(); it != identities.end(); ++it ) {
+    KMIdentity ident( *it );
+    ident.readConfig();
+    entry.setIdentity( ident.identity() );
+    entry.setFullName( ident.fullName() );
+    entry.setOrganization( ident.organization() );
+    entry.setEmailAddress( ident.emailAddr() );
+    entry.setReplyToAddress( ident.replyToAddr() );
+    entry.setSignatureFileName( ident.signatureFile(), true );
+    entry.setSignatureInlineText( ident.signatureInlineText() );
+    entry.setUseSignatureFile( ident.useSignatureFile() );
+    add( entry );    
+  } 
 }
 
 
 void IdentityList::exportData()
 {
-  int i=0;
-  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
-  {
-    if( i == 1 )
-    {
-      QString msg = "Can only store one identity\n"
-	            "KMIdentity must be improved first";
-      KMessageBox::sorry( 0, msg );
-      break;
-    }
-    kernel->identity()->setIdentity( e->identity() );
-    kernel->identity()->setFullName( e->fullName() );
-    kernel->identity()->setOrganization( e->organization() );
-    kernel->identity()->setEmailAddr( e->emailAddress() );
-    kernel->identity()->setReplyToAddr( e->replyToAddress() );
-    kernel->identity()->setUseSignatureFile( e->useSignatureFile() );
-    kernel->identity()->setSignatureFile( e->signatureFileName(true) );
-    kernel->identity()->setSignatureInlineText( e->signatureInlineText() );
-    i++;
+  QStringList ids;
+  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() ) {
+    ids.append( e->identity() );
+    KMIdentity ident( e->identity() );
+    ident.setFullName( e->fullName() );
+    ident.setOrganization( e->organization() );
+    ident.setEmailAddr( e->emailAddress() );
+    ident.setReplyToAddr( e->replyToAddress() );
+    ident.setUseSignatureFile( e->useSignatureFile() );
+    ident.setSignatureFile( e->signatureFileName(true) );
+    ident.setSignatureInlineText( e->signatureInlineText() );
+    ident.writeConfig();
   }
-  kernel->identity()->writeConfig(true);
+
+  KMIdentity::saveIdentities( ids, true );
 }
 
 
