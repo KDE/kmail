@@ -1469,7 +1469,11 @@ void AccountDialog::saveSettings()
     epa.setOnlySubscribedFolders( mImap.subscribedFoldersCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
-    epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+    KMFolder *t = mImap.trashCombo->getFolder();
+    if ( t )
+      epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+    else
+      epa.setTrash( kmkernel->trashFolder()->idString() );
 #if 0
     epa.setResource( mImap.resourceCheck->isChecked() );
 #endif
