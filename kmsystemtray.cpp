@@ -69,7 +69,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(pare
 
   KMFolderMgr * mgr = kernel->folderMgr();
   KMFolderMgr * imgr = kernel->imapFolderMgr();
-  KMFolderMgr * smgr = kernel->imapFolderMgr();
+  KMFolderMgr * smgr = kernel->searchFolderMgr();
   connect(mgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
   connect(imgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
   connect(smgr, SIGNAL(changed()), this, SLOT(foldersChanged()));
