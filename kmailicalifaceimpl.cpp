@@ -391,7 +391,6 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   firstPart.setBodyFromUnicode( firstPartText );
   msg->addBodyPart( &firstPart );
 
-
   Q_ASSERT( attachmentMimetypes.count() == attachmentURLs.count() );
   Q_ASSERT( attachmentNames.count() == attachmentURLs.count() );
   // Add all attachments by reading them from their temp. files
@@ -402,12 +401,14 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
        && itmime != attachmentMimetypes.end()
        && iturl != attachmentURLs.end();
        ++itname, ++iturl, ++itmime ){
-    bool bymimetype = (*itname).startsWith( "application/x-vnd.kolab." );
+    bool bymimetype = (*itmime).startsWith( "application/x-vnd.kolab." );
     if( !updateAttachment( *msg, *iturl, *itname, *itmime, !bymimetype ) ){
       kdWarning(5006) << "Attachment error, can not add Incidence." << endl;
       bAttachOK = false;
       break;
     }
+    if ( bymimetype )
+      msg->setHeaderField( "X-Kolab-Type", *itmime );
   }
 
   if( bAttachOK ){
