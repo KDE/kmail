@@ -3142,7 +3142,6 @@ void KMMainWidget::slotShowStartupFolder()
        GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
     GlobalSettings::setPreviousNewFeaturesMD5( newFeaturesMD5 );
     slotIntro();
-    return;
   }
 
   KMFolder* startup = 0;
