@@ -1,21 +1,21 @@
 // kmheaders.cpp
 
-
 #include <qstrlist.h>
-#include "kmcomposewin.h"
-#include <kfiledialog.h>
 #include <qpalette.h>
 #include <qcolor.h>
 #include <qdatetime.h>
 #include <qheader.h>
 #include <qdragobject.h>
-#include <kimgio.h>
-#include <kmessagebox.h>
 
 #include <kapp.h>
 #include <kglobal.h>
 #include <klocale.h>
+#include <kconfig.h>
 #include <kiconloader.h>
+
+#include <kimgio.h>
+#include <kmessagebox.h>
+#include <kfiledialog.h>
 
 #include "kmfolder.h"
 #include "kmheaders.h"
@@ -24,6 +24,7 @@
 #include "kmdragdata.h"
 #include "kmglobal.h"
 #include "kmmainwin.h"
+#include "kmcomposewin.h"
 #include "kfileio.h"
 #include "kmfiltermgr.h"
 #include "kfontutils.h"

@@ -1,6 +1,26 @@
 // kmmainwin.cpp
 
 #include <qdir.h>
+#include <qclipboard.h>
+#include <qaccel.h>
+#include <qstring.h>
+#include <qpixmap.h>
+#include <qfile.h>
+#include <qtextstream.h>
+#include <qsplitter.h>
+#include <qtimer.h>
+
+#include <kconfig.h>
+#include <kapp.h>
+#include <kglobal.h>
+#include <kiconloader.h>
+#include <kstdaccel.h>
+
+#include <krun.h>
+
+#include <kmenubar.h>
+#include <kmessagebox.h>
+
 
 #include "kmfoldermgr.h"
 #include "kmsettings.h"
@@ -21,23 +41,6 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kwm.h"
-
-#include <qclipboard.h>
-#include <qaccel.h>
-#include <qstring.h>
-#include <qpixmap.h>
-#include <qfile.h>
-#include <qtextstream.h>
-#include <kmessagebox.h>
-#include <kconfig.h>
-#include <kapp.h>
-#include <kglobal.h>
-#include <kiconloader.h>
-#include <kstdaccel.h>
-#include <qsplitter.h>
-#include <krun.h>
-#include <kmenubar.h>
-#include <qtimer.h>
 
 #include <errno.h>
 #include <stdlib.h>

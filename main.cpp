@@ -1,9 +1,36 @@
 // KMail startup and initialize code
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
+#include <dirent.h>
+#include <sys/stat.h>
+#include <kdebug.h>
+#include <signal.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef HAVE_PATHS_H
+#include <paths.h>
+#endif
+
+#ifndef _PATH_TMP
+#define _PATH_TMP "/tmp/"
+#endif
+
 #include <qstring.h>
 #include <qcstring.h>
 #include <qdir.h>
+
+#include <kapp.h>
+#include <kconfig.h>
+#include <klocale.h>
+#include <kglobal.h>
+#include <kstddirs.h>
+#include <kstdaccel.h>
+
+#include <kmessagebox.h>
+
 #include "kmglobal.h"
 #include "kmmainwin.h"
 #include "kmacctmgr.h"
@@ -20,35 +47,11 @@
 #include "kcharsets.h"
 #include "kmsettings.h"
 #include "kmreaderwin.h"
+#include "kmidentity.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <kapp.h>
-#include <kstdaccel.h>
-#include <kmidentity.h>
-#include <dirent.h>
-#include <sys/stat.h>
-#include <kdebug.h>
-#include <signal.h>
-#include <string.h>
-#include <unistd.h>
-//--- Sven's pseudo IPC&locking start ---
 #include "kfileio.h"
 #include "kwm.h"
-#include <klocale.h>
-#include <kglobal.h>
-#include <kstddirs.h>
-#include <kmessagebox.h>
-//--- Sven's pseudo IPC&locking end ---
- // Do the tmp stuff correctly - thanks to Harri Porten for
-// reminding me (sven)
-#ifdef HAVE_PATHS_H
-#include <paths.h>
-#endif
 
-#ifndef _PATH_TMP
-#define _PATH_TMP "/tmp/"
-#endif
 
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
