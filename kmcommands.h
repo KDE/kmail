@@ -646,11 +646,15 @@ public:
 		 const QPtrList<KMMsgBase> &msgList );
   KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
 
+protected slots:
+  void slotMsgAdded();
+
 private:
   virtual Result execute();
 
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
+  int mWaitingForMsgs;
 };
 
 namespace KPIM {

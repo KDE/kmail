@@ -1614,11 +1614,13 @@ KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
                               const QPtrList<KMMsgBase> &msgList )
 :mDestFolder( destFolder ), mMsgList( msgList )
 {
+  setDeletesItself( true );
 }
 
 KMCopyCommand::KMCopyCommand( KMFolder* destFolder, KMMessage * msg )
   :mDestFolder( destFolder )
 {
+  setDeletesItself( true );
   mMsgList.append( &msg->toMsgBase() );
 }
 
@@ -1631,10 +1633,16 @@ KMCommand::Result KMCopyCommand::execute()
   QPtrList<KMMessage> list;
 
   if (mDestFolder && mDestFolder->open() != 0)
+  {
+    deleteLater();
     return Failed;
+  }
 
   KCursorSaver busy(KBusyPtr::busy());
 
+  mWaitingForMsgs = 0;
+  connect(mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
+      this, SLOT(slotMsgAdded()));
   for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
   {
     KMFolder *srcFolder = msgBase->parent();
@@ -1665,6 +1673,7 @@ KMCommand::Result KMCopyCommand::execute()
 
       if (srcFolder && !newMsg->isComplete())
       {
+        ++mWaitingForMsgs;
         newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
         job->setCancellable( false );
@@ -1688,7 +1697,13 @@ KMCommand::Result KMCopyCommand::execute()
     }
 
   } // end for
-  mDestFolder->close();
+  // only close the folder if we're done
+  if ( mWaitingForMsgs == 0 )
+  {
+    mDestFolder->close();
+    disconnect(mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
+        this, SLOT(slotMsgAdded()));
+  }
 
 //TODO: Get rid of the other cases just use this one for all types of folder
 //TODO: requires adding copyMsg and getFolder methods to KMFolder.h
@@ -1701,7 +1716,19 @@ KMCommand::Result KMCopyCommand::execute()
     imapDestFolder->getFolder();
   }
 
+  if ( mWaitingForMsgs == 0 )
+    deleteLater();
   return OK;
+}
+
+void KMCopyCommand::slotMsgAdded()
+{
+  --mWaitingForMsgs;
+  if ( mWaitingForMsgs <= 0 )
+  {
+    mDestFolder->close();
+    deleteLater();
+  }
 }
 
 
