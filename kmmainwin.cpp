@@ -304,28 +304,15 @@ void KMMainWin::activatePanners(void)
 
 
 //-----------------------------------------------------------------------------
-int KMMainWin::statusBarAddItem(const char* aText)
-{
-  return mStatusBar->insertItem(aText, -1);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::statusBarChangeItem(int aId, const char* aText)
-{
-  mStatusBar->changeItem(aText, aId);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::statusMsg(const QString& aText)
-{
-  mStatusBar->changeItem(aText, mMessageStatusId);
+//void KMMainWin::statusMsg(const QString& aText)
+//{
+  //mStatusBar->message(aText);
+  //mStatusBar->changeItem(aText, mMessageStatusId);
   /* Just causes to much trouble with event driven repainting.
   kapp->flushX();
   kapp->processEvents(100);
   */
-}
+//}
 
 
 //-----------------------------------------------------------------------------
@@ -1323,11 +1310,13 @@ void KMMainWin::setupStatusBar()
   mStatusBar = new KStatusBar(this);
 
   littleProgress = new KMLittleProgressDlg( mStatusBar );
-#warning rwilliams:  fix status bar
-//  mStatusBar->insertWidget( littleProgress, littleProgress->width()+20 , 0 );
-  mMessageStatusId = statusBarAddItem(i18n("Initializing..."));
-//  mStatusBar->enable(KStatusBar::Show);
+  littleProgress->setFixedWidth(littleProgress->width());
+  mStatusBar->addWidget( littleProgress,0, true );
+  
+  statusMsg(i18n("Initializing..."));
+  
   littleProgress->show();
+  
   connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
 	   littleProgress, SLOT(slotEnable( bool )));
   connect( KMBroadcastStatus::instance(),
@@ -1339,6 +1328,7 @@ void KMMainWin::setupStatusBar()
   connect( KMBroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
 	   this, SLOT(statusMsg( const QString& )));
   setStatusBar(mStatusBar);
+  mStatusBar->message(i18n("Initializing..."));
 }
 
 void KMMainWin::quit()
