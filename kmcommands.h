@@ -317,7 +317,7 @@ private:
 private:
   void parse( partNode *rootNode );
   void saveAll( const QPtrList<partNode>& attachments );
-  void saveItem( partNode *node, const QString& filename );
+  void saveItem( partNode *node, const KURL& url );
 private:
   QPtrList<partNode> mAttachments;
   bool mEncoded;
