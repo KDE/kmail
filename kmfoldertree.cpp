@@ -970,17 +970,19 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     // -- smp.
     if (!fti->folder()->noContent())
     {
-      if (fti->folder()->countUnread() > 0)
-        folderMenu->insertItem(SmallIcon("goto"),
-                               i18n("Mark All Messages as &Read"), mMainWidget,
-                               SLOT(slotMarkAllAsRead()));
+      int itemId = folderMenu->insertItem( SmallIcon("goto"),
+                                           i18n("Mark All Messages as &Read"),
+                                           mMainWidget,
+                                           SLOT( slotMarkAllAsRead() ) );
+      folderMenu->setItemEnabled( itemId, fti->folder()->countUnread() > 0 );
 
       folderMenu->insertItem(i18n("&Compact"), mMainWidget,
                              SLOT(slotCompactFolder()));
 
-      if (fti->folder()->isAutoExpire())
-        folderMenu->insertItem(i18n("&Expire"), mMainWidget,
-                               SLOT(slotExpireFolder()));
+      itemId = folderMenu->insertItem(i18n("&Expire"), mMainWidget,
+                                      SLOT(slotExpireFolder()));
+      folderMenu->setItemEnabled( itemId, fti->folder()->isAutoExpire() );
+        
 
       folderMenu->insertSeparator();
 
