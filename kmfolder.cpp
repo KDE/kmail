@@ -787,7 +787,10 @@ void KMFolder::readIndex()
 #endif
     if ((mi->status() == KMMsgStatusNew) ||
 	(mi->status() == KMMsgStatusUnread))
-      ++mUnreadMsgs;
+    {
+      ++mUnreadMsgs; 
+      if (mUnreadMsgs == 0) ++mUnreadMsgs;
+    }
     mMsgList.append(mi);
   }
   if (mConvertToUtf8)
@@ -1463,7 +1466,7 @@ int KMFolder::countUnread()
 
   open(); // will update unreadMsgs
   close();
-  return mUnreadMsgs;
+  return (mUnreadMsgs > 0) ? mUnreadMsgs : 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -1500,6 +1503,7 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 
   if (deltaUnread != 0) {
     mDirty = TRUE;
+    if (mUnreadMsgs < 0) mUnreadMsgs = 0;
     mUnreadMsgs += deltaUnread;
     emit numUnreadMsgsChanged( this );
   }
