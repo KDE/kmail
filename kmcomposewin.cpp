@@ -1730,25 +1730,6 @@ kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypte
       mMsg->setUnencryptedMsg( extraMessage );
     }
   }
-  if( bOk ) {
-    if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
-    mEdtFrom->setEdited(FALSE);
-    mEdtReplyTo->setEdited(FALSE);
-    mEdtTo->setEdited(FALSE);
-    mEdtCc->setEdited(FALSE);
-    mEdtBcc->setEdited(FALSE);
-    mEdtSubject->setEdited(FALSE);
-    if (mTransport->lineEdit())
-      mTransport->lineEdit()->setEdited(FALSE);
-    mAtmModified = FALSE;
-
-    // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
-    mMsg->cleanupHeader();
-/*
-kdDebug(5006) << "\n\n\nKMComposeWin::applyChanges():\n1.: |||" << mMsg->asString() << "|||\n\n"
- << "\n\n\nKMComposeWin::applyChanges():\n1.: |||" << mMsg->asSendableString() << "|||\n\n" << endl;
-*/
-  }
   return bOk;
 }
 
@@ -4625,6 +4606,21 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   bccMsgList.clear();
   bool sentOk = applyChanges();
+  if( sentOk ) {
+    if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
+    mEdtFrom->setEdited(FALSE);
+    mEdtReplyTo->setEdited(FALSE);
+    mEdtTo->setEdited(FALSE);
+    mEdtCc->setEdited(FALSE);
+    mEdtBcc->setEdited(FALSE);
+    mEdtSubject->setEdited(FALSE);
+    if (mTransport->lineEdit())
+      mTransport->lineEdit()->setEdited(FALSE);
+    mAtmModified = FALSE;
+
+    // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
+    mMsg->cleanupHeader();
+  }
 
   disableBreaking = false;
 
