@@ -1,4 +1,3 @@
-#include <config.h>
 
 #include "kpgpbase.h"
 #include "kpgp.h"
@@ -16,6 +15,8 @@
 #include <errno.h>
 #include <klocale.h>
  
+#include <config.h>
+
 KpgpBase::KpgpBase()
 {
   readConfig();
