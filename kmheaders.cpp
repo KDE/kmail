@@ -60,6 +60,7 @@ QPixmap* KMHeaders::pixDel = 0;
 QPixmap* KMHeaders::pixRead = 0;
 QPixmap* KMHeaders::pixRep = 0;
 QPixmap* KMHeaders::pixQueued = 0;
+QPixmap* KMHeaders::pixTodo = 0;
 QPixmap* KMHeaders::pixSent = 0;
 QPixmap* KMHeaders::pixFwd = 0;
 QPixmap* KMHeaders::pixFlag = 0;
@@ -375,6 +376,7 @@ public:
 
     // a queued or sent mail is usually also read
     if ( msgBase->isQueued() ) return KMHeaders::pixQueued;
+    if ( msgBase->isTodo()   ) return KMHeaders::pixTodo;
     if ( msgBase->isSent()   ) return KMHeaders::pixSent;
 
     if ( msgBase->isNew()                      ) return KMHeaders::pixNew;
@@ -723,6 +725,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixRead                  = new QPixmap( UserIcon( "kmmsgread"                  ) );
     pixRep                   = new QPixmap( UserIcon( "kmmsgreplied"               ) );
     pixQueued                = new QPixmap( UserIcon( "kmmsgqueued"                ) );
+    pixTodo                  = new QPixmap( UserIcon( "kontact_todo"               ) );
     pixSent                  = new QPixmap( UserIcon( "kmmsgsent"                  ) );
     pixFwd                   = new QPixmap( UserIcon( "kmmsgforwarded"             ) );
     pixFlag                  = new QPixmap( UserIcon( "kmmsgflag"                  ) );

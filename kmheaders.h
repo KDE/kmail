@@ -252,7 +252,7 @@ protected:
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
     *pixFiller, *pixEncryptionProblematic,
     *pixSignatureProblematic, *pixAttachment,
-    *pixReadFwd, *pixReadReplied, *pixReadFwdReplied;
+    *pixReadFwd, *pixReadReplied, *pixReadFwdReplied,*pixTodo;
 
   /** Look for color changes */
   virtual bool event(QEvent *e);

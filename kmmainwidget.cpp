@@ -1913,6 +1913,12 @@ void KMMainWidget::slotSetMsgStatusQueued()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotSetMsgStatusTodo()
+{
+  mHeaders->setMsgStatus(KMMsgStatusTodo, true);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusSent()
 {
   mHeaders->setMsgStatus(KMMsgStatusSent, true);
@@ -1958,6 +1964,12 @@ void KMMainWidget::slotSetThreadStatusForwarded()
 void KMMainWidget::slotSetThreadStatusQueued()
 {
   mHeaders->setThreadStatus(KMMsgStatusQueued, true);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSetThreadStatusTodo()
+{
+  mHeaders->setThreadStatus(KMMsgStatusTodo, true);
 }
 
 //-----------------------------------------------------------------------------
@@ -2508,6 +2520,12 @@ void KMMainWidget::setupActions()
   mToggleQueuedAction->setCheckedState( i18n("Mark Message as Not &Queued") );
   mStatusMenu->insert( mToggleQueuedAction );
 
+  mToggleTodoAction = new KToggleAction(i18n("Mark Message as &Todo"), "kontact_todo",
+                                 0, this, SLOT(slotSetMsgStatusTodo()),
+                                 actionCollection(), "status_todo");
+  mToggleTodoAction->setCheckedState( i18n("Mark Message as Not &Todo") );
+  mStatusMenu->insert( mToggleTodoAction );
+
   mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
                                  0, this, SLOT(slotSetMsgStatusSent()),
                                  actionCollection(), "status_sent");
@@ -2575,6 +2593,12 @@ void KMMainWidget::setupActions()
   mToggleThreadQueuedAction->setCheckedState( i18n("Mark Thread as Not &Queued") );
   mThreadStatusMenu->insert( mToggleThreadQueuedAction );
 
+  mToggleThreadTodoAction = new KToggleAction(i18n("Mark Thread as &todo"), "kontact_todo",
+                                       0, this, SLOT(slotSetThreadStatusTodo()),
+                                       actionCollection(), "thread_todo");
+  mToggleThreadTodoAction->setCheckedState( i18n("Mark Thread as Not &Todo") );
+  mThreadStatusMenu->insert( mToggleThreadTodoAction );
+  
   mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
                                        0, this, SLOT(slotSetThreadStatusSent()),
                                        actionCollection(), "thread_sent");
@@ -3025,6 +3049,7 @@ void KMMainWidget::updateMessageActions()
     mToggleThreadRepliedAction->setEnabled( thread_actions );
     mToggleThreadForwardedAction->setEnabled( thread_actions );
     mToggleThreadQueuedAction->setEnabled( thread_actions );
+    mToggleThreadTodoAction->setEnabled( thread_actions );
     mToggleThreadSentAction->setEnabled( thread_actions );
     mToggleThreadFlagAction->setEnabled( thread_actions );
 
@@ -3032,12 +3057,14 @@ void KMMainWidget::updateMessageActions()
       mToggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
       mToggleForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
       mToggleQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
+      mToggleTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
       mToggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
       mToggleFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
       if (thread_actions) {
         mToggleThreadRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
         mToggleThreadForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
         mToggleThreadQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
+        mToggleThreadTodoAction->setChecked(mHeaders->currentMsg()->isTodo());
         mToggleThreadSentAction->setChecked(mHeaders->currentMsg()->isSent());
         mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isImportant());
         mWatchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());

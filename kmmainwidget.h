@@ -280,6 +280,7 @@ protected slots:
   void slotSetMsgStatusReplied();
   void slotSetMsgStatusForwarded();
   void slotSetMsgStatusQueued();
+  void slotSetMsgStatusTodo();
   void slotSetMsgStatusSent();
   void slotSetMsgStatusFlag();
   void slotSetMsgStatusSpam();
@@ -290,6 +291,7 @@ protected slots:
   void slotSetThreadStatusReplied();
   void slotSetThreadStatusForwarded();
   void slotSetThreadStatusQueued();
+  void slotSetThreadStatusTodo();
   void slotSetThreadStatusSent();
   void slotSetThreadStatusFlag();
   void slotSetThreadStatusSpam();
@@ -409,6 +411,7 @@ private:
   KToggleAction *mToggleThreadRepliedAction;
   KToggleAction *mToggleThreadForwardedAction;
   KToggleAction *mToggleThreadQueuedAction;
+  KToggleAction *mToggleThreadTodoAction;
   KToggleAction *mToggleThreadSentAction;
   KToggleAction *mToggleThreadFlagAction;
   KAction *mMarkThreadAsSpamAction;
@@ -416,6 +419,7 @@ private:
   KToggleAction *mToggleRepliedAction;
   KToggleAction *mToggleForwardedAction;
   KToggleAction *mToggleQueuedAction;
+  KToggleAction *mToggleTodoAction;
   KToggleAction *mToggleSentAction;
   KToggleAction *mToggleFlagAction;
   KAction *mMarkAsSpamAction;

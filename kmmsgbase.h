@@ -30,7 +30,7 @@ enum MsgStatus
     KMMsgStatusForwarded =         0x00000040,
     KMMsgStatusQueued =            0x00000080,
     KMMsgStatusSent =              0x00000100,
-    KMMsgStatusFlag =              0x00000200, // important
+    KMMsgStatusFlag =              0x00000200, // flag means important
     KMMsgStatusWatched =           0x00000400,
     KMMsgStatusIgnored =           0x00000800,
     KMMsgStatusTodo =              0x00001000,
@@ -163,6 +163,9 @@ public:
 
   /** Returns TRUE if status is queued. */
   virtual bool isQueued(void) const;
+
+  /** Returns TRUE if status is todo flaged. */
+  virtual bool isTodo(void) const;
 
   /** Returns TRUE if status is sent. */
   virtual bool isSent(void) const;

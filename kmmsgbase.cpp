@@ -210,6 +210,10 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus |= KMMsgStatusQueued;
       break;
 
+    case KMMsgStatusTodo:
+      mStatus |= KMMsgStatusTodo;
+      break;
+
     case KMMsgStatusSent:
       mStatus &= ~KMMsgStatusQueued;
       mStatus &= ~KMMsgStatusUnread;
@@ -276,6 +280,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
     if (strchr(aXStatusStr, 'A')) setStatus(KMMsgStatusReplied);
     if (strchr(aXStatusStr, 'F')) setStatus(KMMsgStatusForwarded);
     if (strchr(aXStatusStr, 'Q')) setStatus(KMMsgStatusQueued);
+    if (strchr(aXStatusStr, 'K')) setStatus(KMMsgStatusTodo);
     if (strchr(aXStatusStr, 'S')) setStatus(KMMsgStatusSent);
     if (strchr(aXStatusStr, 'G')) setStatus(KMMsgStatusFlag);
     if (strchr(aXStatusStr, 'P')) setStatus(KMMsgStatusSpam);
@@ -420,6 +425,13 @@ bool KMMsgBase::isQueued(void) const
 }
 
 //-----------------------------------------------------------------------------
+bool KMMsgBase::isTodo(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusTodo);
+}
+
+//-----------------------------------------------------------------------------
 bool KMMsgBase::isSent(void) const
 {
   KMMsgStatus st = status();
@@ -473,6 +485,7 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
   if (status & KMMsgStatusReplied) sstr += 'A';
   if (status & KMMsgStatusForwarded) sstr += 'F';
   if (status & KMMsgStatusQueued) sstr += 'Q';
+  if (status & KMMsgStatusTodo) sstr += 'K';
   if (status & KMMsgStatusSent) sstr += 'S';
   if (status & KMMsgStatusFlag) sstr += 'G';
   if (status & KMMsgStatusWatched) sstr += 'W';
@@ -488,7 +501,7 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
 //-----------------------------------------------------------------------------
 QString KMMsgBase::statusToSortRank()
 {
-  QString sstr = "bcbbbbbbb";
+  QString sstr = "bcbbbbbbbb";
 
   // put watched ones first, then normal ones, ignored ones last
   if (status() & KMMsgStatusWatched) sstr[0] = 'a';
@@ -509,6 +522,7 @@ QString KMMsgBase::statusToSortRank()
   if (status() & KMMsgStatusSent) sstr[7] = 'a';
   if (status() & KMMsgStatusHam) sstr[8] = 'a';
   if (status() & KMMsgStatusSpam) sstr[8] = 'c';
+  if (status() & KMMsgStatusTodo) sstr[9] = 'a';
 
   return sstr;
 }
