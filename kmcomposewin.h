@@ -365,6 +365,7 @@ public slots:
    */
   void slotToggleToolBar();
   void slotToggleStatusBar();
+  void slotStatusMessage(const QString &message);
   void slotEditToolbars();
   void slotUpdateToolbars();
   void slotEditKeys();

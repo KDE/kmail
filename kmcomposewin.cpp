@@ -5040,6 +5040,11 @@ void KMComposeWin::slotToggleStatusBar()
     statusBar()->show();
 }
 
+void KMComposeWin::slotStatusMessage(const QString &message)
+{
+    statusBar()->changeItem( message, 0 );
+}
+
 void KMComposeWin::slotEditToolbars()
 {
   saveMainWindowSettings(KMKernel::config(), "Composer");
@@ -5409,6 +5414,8 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   mExtEditorProcess = 0;
   mWasModifiedBeforeSpellCheck = false;
   mSpellChecker = new DictSpellChecker( this );
+  connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
+	   composer, SLOT(slotStatusMessage(const QString &)));
 }
 
 //-----------------------------------------------------------------------------

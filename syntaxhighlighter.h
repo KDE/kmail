@@ -83,7 +83,7 @@ public:
     static void dictionaryChanged();
 
 signals:
-    void activeChanged(bool);
+    void activeChanged(const QString &);
 
 protected:
     QString spellKey();

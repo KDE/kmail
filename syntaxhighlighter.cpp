@@ -290,9 +290,6 @@ void DictSpellChecker::slotDictionaryChanged()
 
 QString DictSpellChecker::spellKey()
 {
-    //Note: Yes polling with timerEvent and reading directly from kglobals
-    //Note: is evil. It would be nice if there was some kind of inter-process
-    //Note: signal emitted when spelling configuration options are changed.
     KConfig *config = KGlobal::config();
     KConfigGroupSaver cs(config,"KSpell");
     config->reparseConfiguration();
@@ -330,7 +327,12 @@ void DictSpellChecker::slotAutoDetection()
 	    mActive = true;
     }
     if (mActive != savedActive) {
-	emit activeChanged( mActive );
+	if (mWordCount > 1)
+	    if (mActive)
+		emit activeChanged( "Automatic spell checking enabled." );
+	    else
+		emit activeChanged( "To many misspelled words: automatic "
+				"spell checking disabled." );
 	rehighlightRequest->start(100, true);
     }
 }
