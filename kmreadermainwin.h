@@ -61,7 +61,7 @@ private:
 
   KMReaderWin *mReaderWin;
   KMMessage *mMsg;
-  QTextCodec *mCodec;
+  const QTextCodec *mCodec;
   KURL mUrl;
   QMap<int,KMFolder*> mMenuToFolder;
 };
