@@ -446,7 +446,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // the user may have specified. In the long run, we
   // shouldn't be using tempfiles at all for this class, due
   // to security aspects. (mmutz)
-  commandLine = QString( "(%1) <%2" ).arg( commandLine ).arg( inFile->name() );
+  commandLine =  "(" + commandLine + ") <" + inFile->name();
 
   // write message to file
   QString tempFileName = inFile->name();
