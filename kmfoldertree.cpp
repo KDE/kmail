@@ -570,10 +570,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 }
 
 //-----------------------------------------------------------------------------
-// Initiate a delayed refresh of the count of unread messages
-// Not really need anymore as count is cached in config file. But causes
-// a nice blink in the foldertree, that indicates kmail did something
-// when the user manually checks for mail and none was found.
+// Initiate a delayed refresh of the tree
 void KMFolderTree::refresh()
 {
   mUpdateTimer.changeInterval(200);
