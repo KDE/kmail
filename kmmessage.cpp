@@ -92,6 +92,8 @@ void KMMessage::assign( const KMMessage& other )
   mMsgLength = other.mMsgLength;
   mFolderOffset = other.mFolderOffset;
   mStatus  = other.mStatus;
+  mEncryptionState = other.mEncryptionState;
+  mSignatureState = other.mSignatureState;
   mDate    = other.mDate;
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //mMsgSerNum = other.mMsgSerNum; // what about serial number ?
@@ -150,6 +152,8 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mMsgLength = 0;
   mFolderOffset = 0;
   mStatus  = KMMsgStatusNew;
+  mEncryptionState = KMMsgEncryptionStateUnknown;
+  mSignatureState = KMMsgSignatureStateUnknown;
   mDate    = 0;
   mFileName = "";
   mMsgSerNum = 0;
@@ -169,6 +173,8 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mMsgLength = 0;
   mFolderOffset = msgInfo.folderOffset();
   mStatus = msgInfo.status();
+  mEncryptionState = msgInfo.encryptionState();
+  mSignatureState = msgInfo.signatureState();
   mDate = msgInfo.date();
   mFileName = msgInfo.fileName();
   mMsgSerNum = msgInfo.getMsgSerNum();
