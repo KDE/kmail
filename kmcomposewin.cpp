@@ -5,6 +5,8 @@
 #include "kmcomposewin.moc"
 #include "kmmainwin.h"
 #include "kmmessage.h"
+#include "kmglobal.h"
+#include "kmsender.h"
 #include <iostream.h>
 #include <qwidget.h>
 #include <sys/stat.h>
@@ -53,6 +55,11 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAdd
 	editor = new KEdit(0,this);
 	grid->addMultiCellWidget(editor,3,9,0,1);
 	grid->setRowStretch(3,100);
+	
+	zone = new KDNDDropZone(editor,DndURL);
+	connect(zone,SIGNAL(dropAction(KDNDDropZone *)),SLOT(getDNDAttachment()));
+	 
+	urlList = new QStrList;
 
 	grid->setColStretch(1,100);
 
@@ -77,6 +84,18 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAdd
 
 	printf("Leaving constructor\n");		
 
+}
+
+void KMComposeView::getDNDAttachment()
+{
+	const char *element;
+	printf("Attachment droped\n");
+	*urlList = zone->getURLList();
+	element = urlList->first();
+	cout << element << "\n";
+	cout << "Elements in the list: " << urlList->count() << "\n";
+	while(urlList->next() != 0)
+		cout << element << "\n";
 }
 
 KMComposeView::~KMComposeView()
@@ -198,54 +217,22 @@ void KMComposeView::attachFile()
 
 void KMComposeView::sendIt()
 {
-	KConfig *config;
 	QString option;
 
 	// Now, what are we going to do: sendNow() or sendLater()?
 
-	config = KApplication::getKApplication()->getConfig();
-	config->setGroup("Settings");
-	option = config->readEntry("Send Button");
-	if(!strcmp(option,"now"))
-		sendNow();
-	else
-		toDo();
-
-
-}
-
-void KMComposeView::sendNow()
-{
 	KMMessage *msg = new KMMessage();
 	msg = currentMessage;
 
 	// Now all items in the attachment queue are being displayed.
 
-	KMAttachmentItem *itm;
+/*	KMAttachmentItem *itm;
  	printf("About to display list (sendNow()):\n\n");
  	for ( itm=attachmentList.first(); itm != 0; itm = attachmentList.next())
 	 	cout <<  "FileName: " << itm->fileName << "\tIndex: " <<  itm->index << "\n";
-	printf("\nDone displaying list\n");
-
+*/
 	// All attachments in the queue are being attached here.
-#if 0
-	if(indexAttachment !=0)
-	        {int x;
-		QList<KMAttachmentItem> tempList;
-		tempList = attachmentList;
-		tempList.first();
-        	for(x=1; x <= indexAttachment; x++)
-                	{printf("Attaching No.%i\n",x);
-			Attachment *a = new Attachment();
-			if(!a->guess(tempList.current()->fileName))
-				printf("Error\n");
-			msg->attach(a);
-			tempList.next();
-			delete a;
-			}
-		printf("Attached files\n");
-		}
-#endif
+
 	QString temp=toLEdit->text();
 	if (temp.isEmpty()) {
 		KMsgBox::message(0,"Ouch","No recipients defined. aborting ....");
@@ -266,9 +253,14 @@ void KMComposeView::sendNow()
 	msg->setCc(ccLEdit->text());
 	msg->setSubject(subjLEdit->text());
 	msg->setBody(temp);
-	//msg->sentSMTP();
+	if(msgSender->send(msg) != TRUE)
+		{KMsgBox::message(0,"Ouuch!","Error occurred while sending mail!");
+		delete msg;
+		return;}
 	delete msg;
+
 	((KMComposeWin *)parentWidget())->close();
+
 }
 
 // ********************* Private slots ****************
@@ -492,106 +484,6 @@ void KMComposeView::newComposer()
 
 }
 
-
-
-
-/*void KMComposeWin::setSettings()
-{
-   setWidget = new QWidget(0,NULL);
-   setWidget->setMinimumSize(400,320);
-   setWidget->setMaximumSize(400,320);
-   setWidget->setCaption("Settings");
- 
-   QPushButton *ok_bt = new QPushButton("OK",setWidget,NULL);
-   ok_bt->setGeometry(220,260,70,30);
-   connect(ok_bt,SIGNAL(clicked()),this,SLOT(applySettings()));
-
-   QPushButton *cancel_bt = new QPushButton("Cancel",setWidget,NULL);
-   cancel_bt->setGeometry(310,260,70,30);
-   connect(cancel_bt,SIGNAL(clicked()),this,SLOT(cancelSettings()));			
-
-   QButtonGroup *btGrp = new QButtonGroup(setWidget,NULL);
-   btGrp->setGeometry(20,20,360,110);   
-  
-   QButtonGroup *btGrpII = new QButtonGroup(setWidget,NULL);	
-   btGrpII->setGeometry(20,140,360,110); 
- 
-   QLabel *sendLabel = new QLabel("Send button in the toolbar is a",btGrp,NULL);
-   sendLabel->setGeometry(20,10,200,30);
-
-   QRadioButton *isNow = new QRadioButton("'send now' Button",btGrp,NULL);
-   isNow->setGeometry(30,40,150,20);
-
-   isLater = new QRadioButton("'send later' Button",btGrp,NULL); 
-   isLater->setGeometry(30,70,150,20); 
-
-   QLabel *sigLabel = new QLabel("Signature is appended",btGrpII,NULL);
-   sigLabel->setGeometry(20,10,150,20);
-
-   QRadioButton *autoSig = new QRadioButton("'automatically'",btGrpII,NULL);
-   autoSig->setGeometry(30,40,150,20);
-
-   manualSig = new QRadioButton("'manually'",btGrpII,NULL);
-   manualSig->setGeometry(30,70,150,20);
-
-   if(sendButton == false)
-	isLater->setChecked(true);
-   else
-	isNow->setChecked(true);
-
-   if(sigStatus == true)
-	manualSig->setChecked(true);
-   else
-	autoSig->setChecked(true);
-
-   setWidget->show();
-
-}
-
-void KMComposeWin::applySettings()
-{
-  KConfig *config;
-
-  if(isLater->isChecked())
-	sendButton=false;
-  else
-	sendButton=true;
-
-  if(manualSig->isChecked())
-	sigStatus=true;
-  else
-	sigStatus=false;
-
-
-  config = KApplication::getKApplication()->getConfig();
-  config->setGroup("Settings");
-  
-  if(isLater->isChecked())
-	{sendButton=false;
-	config->writeEntry("Send Button","later");
-	}
-  else
-	{sendButton=true;
-	config->writeEntry("Send Button","now");
-	}
-
-  if(manualSig->isChecked())
-	config->writeEntry("Signature","manual");
-  else
-	config->writeEntry("Signature","auto");
-
-  config->sync();
-
-  delete setWidget;
-}
-
-void KMComposeWin::cancelSettings()
-{
-  delete setWidget;
-}
-
-*/
-
 KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress, KMMessage
 *message, int action) : KTopLevelWidget(name)
 {
@@ -662,7 +554,7 @@ void KMComposeWin::setupMenuBar()
   menuBar = new KMenuBar(this);
 
   QPopupMenu *fmenu = new QPopupMenu();
-  fmenu->insertItem("Send",composeView,SLOT(sendNow()), ALT+Key_X);
+  fmenu->insertItem("Send",composeView,SLOT(sendIt()), ALT+Key_X);
   fmenu->insertItem("Send &later",composeView,SLOT(toDo()),ALT+Key_L);
   fmenu->insertSeparator();
   fmenu->insertItem("Address &Book...",composeView,SLOT(toDo()),ALT+Key_B);
@@ -774,10 +666,13 @@ void KMComposeWin::doNewMailReader()
 void KMComposeWin::toggleToolBar()
 {
   enableToolBar(KToolBar::Toggle);
+  printf("before tool : %i\n",toolBarStatus);
   if(toolBarStatus==false)
 	toolBarStatus=true;
   else
 	toolBarStatus=false;
+
+   printf("after tool : %i\n",toolBarStatus);
   
   repaint();
 }
@@ -820,8 +715,6 @@ void KMComposeWin::invokeHelp()
 
 void KMComposeWin::toDo()
 {
-	//  KMMainWin::doUnimplemented(); //is private :-(
-
    KMsgBox::message(this,"Ouch",
 			 "Not yet implemented!\n"
 			 "We are sorry for the inconvenience :-)",1);
@@ -841,16 +734,17 @@ void KMComposeWin::about()
 void KMComposeWin::closeEvent(QCloseEvent *e)
 {
 	KTopLevelWidget::closeEvent(e);
-	delete this;
 	KConfig *config = new KConfig();
  	config = KApplication::getKApplication()->getConfig();
 	config->setGroup("Settings");
-	if(toolBarStatus)
+	printf("Toolbar Status: %i", toolBarStatus);
+	fflush(stdout);
+	if(toolBarStatus == true)
 		config->writeEntry("ShowToolBar","yes");
 	else
 		config->writeEntry("ShowToolBar","no");
 	config->sync();
-
+	delete this;
 }
 
 KMAttachmentItem::KMAttachmentItem(QString _name, int _index)

@@ -114,10 +114,9 @@ void KMReaderView::parseMessage(KMMessage *message)
 	QString ccStr;
 	long length;
 	int pos=0;
+
 	int numParts = message->numBodyParts();
-
 	currentMessage = message; // To make sure currentMessage is set.
-
 	printf("Debug numBodyparts=%i\n", numParts);
 
 	text = message->body(&length);
@@ -151,6 +150,7 @@ void KMReaderView::parseMessage(KMMessage *message)
 
 	// Init messageCanvas
         messageCanvas->begin(picsDir);
+
 	// header
 	messageCanvas->write("<TABLE><TR><TD><IMG SRC=\"" + picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
 	messageCanvas->write(subjStr);
@@ -167,29 +167,34 @@ void KMReaderView::parseMessage(KMMessage *message)
 
 
 //  ****** 2. Check if message body is html. Search for <html> tag ********//
-
+/*
 	if((text.find(QRegExp("<html>",0,0)) != -1) && (text.find(QRegExp("</html>",0,0)) != -1)) // we found the tags
 		printf("Found html tags!\n");
 
 	else
-	        {// First of all convert escape sequences etc to html
+	        {// First of all convert escape sequences etc to html*/
 		text.replace(QRegExp("\n"),"<BR>");
 		text.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
 		
 		messageCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
 		messageCanvas->write("<BODY BGCOLOR=WHITE>");
-		}
+		//}
 
 	// Okay! Let's write it to the canvas
+
 	 messageCanvas->write(text);
-		
-	int x=0;
-	for(x=0;x == noAttach;noAttach++)
-		{KMMessagePart *part = new KMMessagePart;
-		 currentMessage->bodyPart(x,part);
+
+	printf("before part\n");
+
+/*	int x=0;
+	for(x=1;x <= numParts;x++)
+		{printf("x : %i\n",x);
+		KMMessagePart *part = new KMMessagePart;
+		currentMessage->bodyPart(x,part);
 		cout << part->typeStr();
 		cout << part->subtypeStr();
-		}
+		delete part;
+		}*/
 
 	messageCanvas->write("</BODY></HTML>");
 	messageCanvas->end();

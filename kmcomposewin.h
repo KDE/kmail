@@ -24,6 +24,7 @@
 #include <kmsgbox.h>
 #include "ktablistbox.h"
 #include <qpainter.h>
+#include <drag.h>
 #define FORWARD 0
 #define REPLY 1
 #define REPLYALL 2
@@ -46,6 +47,7 @@ public:
 	KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0, KMMessage *message=0, int action =0);
 	~KMComposeView();
 	KEdit *editor;
+	KDNDDropZone *zone;
 private:
 	QLineEdit *fromLEdit;
 	QLineEdit *toLEdit;
@@ -57,10 +59,10 @@ private:
 	QString EMailAddress;
 	QList<KMAttachmentItem> attachmentList;
 	int indexAttachment;
+	QStrList *urlList;
 
 public slots:
 	void sendIt();
-	void sendNow();
 	void printIt();
 	void find();
 	void attachFile();
@@ -80,6 +82,7 @@ private slots:
 	void replyAll();
 	void detachFile(int,int);
 	void insertFile();
+	void getDNDAttachment();
 protected:
 	virtual void resizeEvent(QResizeEvent *);
 	QGridLayout* grid;
