@@ -1353,6 +1353,7 @@ kdDebug(5006) << "* model *" << endl;
               break;
             case SmartAttmnt:
               asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+              break;
             case HideAttmnt: {
               // the node is the message! show it!
               asIcon = false;
