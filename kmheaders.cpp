@@ -189,7 +189,8 @@ void KMHeaders::msgHeaderChanged(int msgId)
 
   flag = mb->status();
   hdr.sprintf("%c\n%.100s\n %.100s\n%.40s", (char)flag, 
-	      (const char*)mb->from(), (const char*)mb->subject(),
+	      (const char*)KMMessage::stripEmailAddr(mb->from()),
+	      (const char*)mb->subject(),
 	      (const char*)mb->dateStr());
   changeItem(hdr, msgId);
 

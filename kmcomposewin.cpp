@@ -89,8 +89,9 @@ WindowList* windowList=new WindowList;
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mMainWidget(this), 
-  mEdtFrom(&mMainWidget), mEdtReplyTo(&mMainWidget), mEdtTo(&mMainWidget),
-  mEdtCc(&mMainWidget), mEdtBcc(&mMainWidget), mEdtSubject(&mMainWidget),
+  mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget), 
+  mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget), 
+  mEdtBcc(this,&mMainWidget), mEdtSubject(this,&mMainWidget),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
   mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget), 
@@ -98,7 +99,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mBtnReplyTo("...",&mMainWidget)
 #ifdef KRN
   /* start added for KRN */
-  ,mEdtNewsgroups(&mMainWidget),mEdtFollowupTo(&mMainWidget),
+  ,mEdtNewsgroups(this,&mMainWidget),mEdtFollowupTo(this,&mMainWidget),
   mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
   /* end added for KRN */
 #endif
@@ -598,8 +599,10 @@ void KMComposeWin::setupStatusBar(void)
   setStatusBar(mStatusBar);
 }
 
-void KMComposeWin::updateCursorPosition() {
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::updateCursorPosition()
+{
   int col,line;
   QString temp;
   line = mEditor->currentLine();
@@ -608,14 +611,14 @@ void KMComposeWin::updateCursorPosition() {
   mStatusBar->changeItem(temp,1);
   temp.sprintf("%s: %i", i18n("Column"), (col+1));
   mStatusBar->changeItem(temp,2);
-
 }
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupEditor(void)
 {
   QPopupMenu* menu;
-  mEditor = new KMEdit(kapp, &mMainWidget);
+  mEditor = new KMEdit(kapp, &mMainWidget, this);
   mEditor->toggleModified(FALSE);
   mEditor->setFocusPolicy(QWidget::ClickFocus);
 
@@ -955,6 +958,7 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart->setCteStr(mDefEncoding);
   msgPart->setBodyEncoded(str);
   msgPart->magicSetType();
+  msgPart->setContentDisposition("attachment; filename=\""+name+"\"");
 
   // show properties dialog
   kbp->idle();
@@ -1632,6 +1636,7 @@ void KMComposeWin::slotConfigureCharsets()
 #endif
 }
 
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
                                    bool ascii,bool quote,bool def)
@@ -1652,6 +1657,7 @@ void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
 #endif
 }
 
+
 #ifdef CHARSETS
 //-----------------------------------------------------------------------------
 bool KMComposeWin::is8Bit(const QString str)
@@ -1669,6 +1675,7 @@ bool KMComposeWin::is8Bit(const QString str)
   }   
   return FALSE;
 }
+
 
 //-----------------------------------------------------------------------------
 QString KMComposeWin::convertToLocal(const QString str)
@@ -1738,8 +1745,10 @@ void KMComposeWin::transcodeMessageTo(const QString charset)
   mEditor->setText(result.copy());			  
 }
 
-void KMComposeWin::setEditCharset(){
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::setEditCharset()
+{
   QFont fnt=mSavedEditorFont;
   KCharset kcharset;
   if (mComposeCharset=="default") kcharset=klocale->charset();
@@ -1755,7 +1764,10 @@ void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
 {
   QLineEdit* cur;
 
-  if (!aCur) cur=mEdtList.last();
+  if (!aCur)
+  {
+    cur=mEdtList.last();
+  }
   else
   {
     for (cur=mEdtList.first(); aCur!=cur && cur; cur=mEdtList.next())
@@ -1764,8 +1776,8 @@ void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
     if (aNext) cur = mEdtList.next();
     else cur = mEdtList.prev();
   }
-  if (!cur) return;
-  cur->setFocus();
+  if (cur) cur->setFocus();
+  else mEditor->setFocus();
 }
 
 
@@ -1775,13 +1787,13 @@ void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
 //   Class  KMLineEdit
 //
 //=============================================================================
-KMLineEdit::KMLineEdit(QWidget *parent, const char *name)
-  :QLineEdit(parent,name)
+KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent, 
+		       const char *name): KMLineEditInherited(parent,name)
 {
+  mComposer = composer;
 }
 
 //-----------------------------------------------------------------------------
-
 void KMLineEdit::mousePressEvent(QMouseEvent *e)
 {
   if(e->button() == MidButton)
@@ -1802,6 +1814,16 @@ void KMLineEdit::mousePressEvent(QMouseEvent *e)
     p->popup(QCursor::pos());
   }
   else QLineEdit::mousePressEvent(e);
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::keyPressEvent(QKeyEvent* e)
+{
+  if (e->key()==Key_Backtab && mComposer)
+    mComposer->focusNextPrevEdit(this,FALSE);
+  else if ((e->key()==Key_Tab || e->key()==Key_Return) && mComposer)
+    mComposer->focusNextPrevEdit(this,TRUE);
+  else KMLineEditInherited::keyPressEvent(e);
 }
 
 //-----------------------------------------------------------------------------
@@ -1843,21 +1865,18 @@ void KMLineEdit::markAll()
 //   Class  KMEdit
 //
 //=============================================================================
-KMEdit::KMEdit(KApplication *a,QWidget *parent, const char *name, 
-	       const char *filename):
+KMEdit::KMEdit(KApplication *a,QWidget *parent, KMComposeWin* composer,
+	       const char *name, const char *filename):
   KMEditInherited(a, parent, name, filename)
 {
   initMetaObject();
+  mComposer = composer;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMEdit::keyPressEvent(QKeyEvent* e)
 {
-  if (e->key()==Key_Tab && (e->state() & ShiftButton))
-  {
-    printf("shift-tab\n");
-    parent()->focusNextPrevEdit(NULL,FALSE);
-  }
+  if (e->key()==Key_Backtab && mComposer)
+    mComposer->focusNextPrevEdit(NULL,FALSE);
   else KMEditInherited::keyPressEvent(e);
 }

@@ -59,6 +59,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   initMetaObject();
 
   mPicsDir = app->kde_datadir()+"/kmail/pics/";
+  mAutoDelete = FALSE;
   mMsg = NULL;
 
   initHtmlWidget();
@@ -69,6 +70,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  if (mAutoDelete) delete mMsg;
 }
 
 
@@ -203,10 +205,6 @@ void KMReaderWin::setMsg(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
-  KMMessagePart msgPart;
-  int i, numParts;
-  QString type, subtype, str, contDisp;
-  bool asIcon;
   assert(mMsg!=NULL);
 
   mViewer->begin(mPicsDir);
@@ -216,14 +214,31 @@ void KMReaderWin::parseMsg(void)
   mViewer->setCharset(mMsg->charset());
 #endif  
 
+  parseMsg(mMsg);
+
+  mViewer->write("<BR></BODY></HTML>");
+  mViewer->end();
+  mViewer->parse();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::parseMsg(KMMessage* aMsg)
+{
+  KMMessagePart msgPart;
+  int i, numParts;
+  QString type, subtype, str, contDisp;
+  bool asIcon;
+
+  assert(aMsg!=NULL);
   writeMsgHeader();
 
-  numParts = mMsg->numBodyParts();
+  numParts = aMsg->numBodyParts();
   if (numParts > 0)
   {
     for (i=0; i<numParts; i++)
     {
-      mMsg->bodyPart(i, &msgPart);
+      aMsg->bodyPart(i, &msgPart);
       type = msgPart.typeStr();
       subtype = msgPart.subtypeStr();
       contDisp = msgPart.contentDisposition();
@@ -241,7 +256,7 @@ void KMReaderWin::parseMsg(void)
 
       if (!asIcon)
       {
-	if (i<=0 || stricmp(type, "text")==0 || stricmp(type, "message")==0)
+	if (i<=0 || stricmp(type, "text")==0)//||stricmp(type, "message")==0)
 	{
 	  str = msgPart.bodyDecoded();
 	  if (i>0) mViewer->write("<BR><HR><BR>");
@@ -259,12 +274,8 @@ void KMReaderWin::parseMsg(void)
   }
   else
   {
-    writeBodyStr(mMsg->bodyDecoded());
+    writeBodyStr(aMsg->bodyDecoded());
   }
-
-  mViewer->write("<BR></BODY></HTML>");
-  mViewer->end();
-  mViewer->parse();
 }
 
 
@@ -515,13 +526,13 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     else if (ch=='@')
       {
 	for (i=0; *pos && (isalnum(*pos) || *pos=='@' || *pos=='.' ||
-			   *pos=='-') && i<255; i++, pos--)
+			   *pos=='_'||*pos=='-') && i<255; i++, pos--)
 	{
 	}
 	i1 = i;
 	pos++; 
-	for (i=0; *pos && (isalnum(*pos)||*pos=='@' || *pos=='.' ||
-			   *pos=='-') && i<255; i++, pos++)
+	for (i=0; *pos && (isalnum(*pos)||*pos=='@'||*pos=='.'||
+			   *pos=='_'||*pos=='-') && i<255; i++, pos++)
 	{
 	  iStr += *pos;
 	}
@@ -635,6 +646,20 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
 
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
+{
+  KMMessage* msg = new KMMessage;
+  KMReaderWin* win = new KMReaderWin;
+  assert(aMsgPart!=NULL);
+
+  msg->fromString(aMsgPart->bodyDecoded());
+  win->setMsg(msg);
+  win->setAutoDelete(TRUE);
+  win->show();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmView()
 {
   QString str, pname;
@@ -645,6 +670,12 @@ void KMReaderWin::slotAtmView()
   pname = msgPart.name();
   if (pname.isEmpty()) pname=msgPart.contentDescription();
   if (pname.isEmpty()) pname="unnamed";
+
+  if (stricmp(msgPart.typeStr(), "message")==0)
+  {
+    atmViewMsg(&msgPart);
+    return;
+  }
 
   kbp->busy();
   str = msgPart.bodyDecoded();
@@ -667,6 +698,12 @@ void KMReaderWin::slotAtmOpen()
   int c;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
+
+  if (stricmp(msgPart.typeStr(), "message")==0)
+  {
+    atmViewMsg(&msgPart);
+    return;
+  }
 
   pname = msgPart.name();
   if (pname.isEmpty()) pname="unnamed";

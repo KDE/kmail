@@ -223,10 +223,20 @@ const QString KMMessage::headerAsString(void)
 //-----------------------------------------------------------------------------
 void KMMessage::fromString(const QString aStr)
 {
+  int i, j, len;
+
   if (mMsg) delete mMsg;
   mMsg = new DwMessage;
 
-  result = aStr;
+  // copy string and throw out obsolete control characters
+  len = aStr.length();
+  result.resize(len);
+  for (i=0,j=0; i<len; i++)
+  {
+    if (aStr[i]>=' ' || aStr[i]=='\t' || aStr[i]=='\n')
+      result[j++] = aStr[i];
+  }
+
   mMsg->FromString((const char*)aStr);
   mMsg->Parse();
   mNeedsAssembly = FALSE;
@@ -1146,7 +1156,7 @@ void KMMessage::viewSource(const QString aCaption) const
 const QString KMMessage::stripEmailAddr(const QString aStr)
 {
   int i, j;
-  QString partA, partB;
+  QString partA, partB, result;
   char endCh = '>';
 
   i = aStr.find('<');
@@ -1161,8 +1171,13 @@ const QString KMMessage::stripEmailAddr(const QString aStr)
   if (j<0) return aStr;
   partB = aStr.mid(i+1, j-i-1);
 
-  if (partA.find('@') >= 0) return partB.stripWhiteSpace();
-  return partA.stripWhiteSpace();
+  if (partA.find('@') >= 0) 
+    result = partB.stripWhiteSpace();
+  else result = partA.stripWhiteSpace();
+
+  if (result[0]=='"' && result[result.length()-1]=='"')
+    result = result.mid(1, result.length()-2);
+  return result;
 }
 
 

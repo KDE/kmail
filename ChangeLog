@@ -1,4 +1,18 @@
-Sat Feb 14 10:03:09 1998  Stefan Taferner  <stefan@idefix.home.org>
+1998-03-09  Stefan Taferner  <taferner@kde.org>
+
+	* Reader: "_" was not considered part of a smart-detected email
+	address (auto detection of @).
+
+	* Reader: attachments of type message/rfc822 are now shown
+	in an external reader window if open or view from the attachment
+	popup menu is chosen.
+
+	* Composer: finally got insertion of tabs into message
+	working.
+
+(some changes are missing here)
+	
+1998-02-14  Stefan Taferner  <taferner@kde.org>
 
 	* Startup: when recovering dead letters the auto signature was 
 	appended twice. Fixed now.

@@ -68,6 +68,10 @@ public:
   /** Return selected text */
   QString copyText();
 
+  /** Get/set auto-delete msg flag. */
+  bool autoDelete(void) const { return mAutoDelete; }
+  void setAutoDelete(bool f) { mAutoDelete=f; }
+
 signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const char* text);
@@ -107,8 +111,12 @@ protected slots:
   void slotAtmProperties();
 
 protected:
-  /** Feeds the HTML viewer with the contents of the current message. */
+  /** Feeds the HTML viewer with the contents of the given message. 
+    HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
+
+  /** Parse given message and add it's contents to the reader window. */
+  virtual void parseMsg(KMMessage* msg);
 
   /** Creates a nice mail header depending on the current selected
     header style. */
@@ -139,6 +147,9 @@ protected:
   /** Returns id of message part from given URL or -1 if invalid. */
   virtual int msgPartFromUrl(const char* url);
 
+  /** View message part of type message/RFC822 in extra viewer window. */
+  virtual void atmViewMsg(KMMessagePart* msgPart);
+
 protected:
   int mAtmInline;
   int mAtmCurrent;
@@ -148,6 +159,7 @@ protected:
   QString mPicsDir;
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;
+  bool mAutoDelete;
 };
 
 

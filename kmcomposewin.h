@@ -46,22 +46,23 @@ class KMEdit: public KEdit
 {
   Q_OBJECT
 public:
-  KMEdit(KApplication *a=NULL,QWidget *parent=NULL, const char *name=NULL, 
-	 const char *filename=NULL);
-  KMComposeWin* parent(void) const
-    { return (KMComposeWin*)KMEditInherited::parent(); }
+  KMEdit(KApplication *a=NULL,QWidget *parent=NULL,KMComposeWin* composer=NULL,
+	 const char *name=NULL, const char *filename=NULL);
 protected:
   virtual void keyPressEvent(QKeyEvent*);
+  KMComposeWin* mComposer;
 };
 
 
 //-----------------------------------------------------------------------------
+#define KMLineEditInherited QLineEdit
 class KMLineEdit : public QLineEdit
 {
   Q_OBJECT
 
 public:
-  KMLineEdit(QWidget *parent = NULL, const char *name = NULL);
+  KMLineEdit(KMComposeWin* composer = NULL, QWidget *parent = NULL, 
+	     const char *name = NULL);
 
 public slots:
   void copy();
@@ -71,6 +72,8 @@ public slots:
 
 protected:
   virtual void mousePressEvent(QMouseEvent *);
+  virtual void keyPressEvent(QKeyEvent*);
+  KMComposeWin* mComposer;
 };
 
 
