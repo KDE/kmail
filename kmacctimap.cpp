@@ -689,6 +689,39 @@ void KMAcctImap::slotStatusResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctImap::expungeFolder(KMFolder * aFolder)
+{
+  KURL url = getUrl();
+  url.setPath(aFolder->imapPath() + ";UID=*");
+  makeConnection();
+  KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
+  jobData jd;
+  jd.parent = NULL;
+  jd.total = 1; jd.done = 0;
+  mapJobData.insert(job, jd);
+  connect(job, SIGNAL(result(KIO::Job *)),
+          this, SLOT(slotExpungeResult(KIO::Job *)));
+  displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotExpungeResult(KIO::Job * job)
+{
+  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
+  if (it == mapJobData.end()) return;
+  mapJobData.remove(it);
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+  }
+  displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::slotAbortRequested()
 {
   killAllJobs();

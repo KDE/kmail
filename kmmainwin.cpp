@@ -788,9 +788,14 @@ void KMMainWin::slotCompactFolder()
   int idx = mHeaders->currentItemIndex();
   if (mFolder)
   {
-    kernel->kbp()->busy();
-    mFolder->compact();
-    kernel->kbp()->idle();
+    if (mFolder->account())
+      mFolder->account()->expungeFolder(mFolder);
+    else
+    {
+      kernel->kbp()->busy();
+      mFolder->compact();
+      kernel->kbp()->idle();
+    }
   }
   mHeaders->setCurrentItemByIndex(idx);
 }

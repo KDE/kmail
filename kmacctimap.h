@@ -136,6 +136,9 @@ public:
   /** Delete a message */
   void deleteMessage(KMMessage * msg);
 
+  /** Expunge deleted messages from the folder */
+  void expungeFolder(KMFolder * aFolder);
+
   /** Inherited methods. */
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
@@ -261,6 +264,9 @@ protected slots:
   /** For deleting messages and changing the status */
   void nextStatusAction();
   void slotStatusResult(KIO::Job * job);
+
+  /** Expunge has finished */
+  void slotExpungeResult(KIO::Job * job);
 
   /** Display an error message, that connecting failed */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
