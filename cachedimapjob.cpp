@@ -412,8 +412,13 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   }
 
   if ( job->error() ) {
-    mAccount->handlePutError( job, *it, mFolder->folder() );
-    delete this;
+    bool cont = mAccount->handlePutError( job, *it, mFolder->folder() );
+    if ( !cont ) {
+      delete this;
+    } else {
+      mMsg = 0;
+      slotPutNextMessage();
+    }
     return;
   }
 
