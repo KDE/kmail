@@ -608,12 +608,12 @@ public slots:
   /**
    * Add an attachment to the list.
    */
-   void addAttach(const KMMessagePart* msgPart);
+  void addAttach(const KMMessagePart* msgPart);
 
   /**
    * Add an image from the clipboard as attachment
    */
-   void addImageFromClipboard();
+  void addImageFromClipboard();
 
 public:
   const KPIM::Identity & identity() const;

@@ -176,15 +176,22 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
   mEdtFrom = new KMLineEdit(false,mMainWidget, "fromLine");
+
+  mEdtReplyTo = new KMLineEdit(true,mMainWidget, "replyToLine");
+  mLblReplyTo = new QLabel(mMainWidget);
+  mBtnReplyTo = new QPushButton("...",mMainWidget);
+  mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
+  connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
+  connect(mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+          SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
+
   if ( mClassicalRecipients ) {
     mRecipientsEditor = 0;
 
-    mEdtReplyTo = new KMLineEdit(true,mMainWidget, "replyToLine");
     mEdtTo = new KMLineEdit(true,mMainWidget, "toLine");
     mEdtCc = new KMLineEdit(true,mMainWidget, "ccLine");
     mEdtBcc = new KMLineEdit(true,mMainWidget, "bccLine");
 
-    mLblReplyTo = new QLabel(mMainWidget);
     mLblTo = new QLabel(mMainWidget);
     mLblCc = new QLabel(mMainWidget);
     mLblBcc = new QLabel(mMainWidget);
@@ -193,7 +200,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mBtnCc = new QPushButton("...",mMainWidget);
     mBtnBcc = new QPushButton("...",mMainWidget);
     //mBtnFrom = new QPushButton("...",mMainWidget);
-    mBtnReplyTo = new QPushButton("...",mMainWidget);
 
     QString tip = i18n("Select email address(es)");
     QToolTip::add( mBtnTo, tip );
@@ -205,12 +211,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mBtnCc->setFocusPolicy(QWidget::NoFocus);
     mBtnBcc->setFocusPolicy(QWidget::NoFocus);
     //mBtnFrom->setFocusPolicy(QWidget::NoFocus);
-    mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
 
     connect(mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
     connect(mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
     connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
-    connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
     //connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
 
     connect(mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
@@ -219,17 +223,13 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
             SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
     connect(mEdtBcc,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
             SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-    connect(mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
-            SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
 
     mEdtTo->setFocus();
   } else {
-    mEdtReplyTo = 0;
     mEdtTo = 0;
     mEdtCc = 0;
     mEdtBcc = 0;
 
-    mLblReplyTo = 0;
     mLblTo = 0;
     mLblCc = 0;
     mLblBcc = 0;
@@ -238,7 +238,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mBtnCc = 0;
     mBtnBcc = 0;
     //mBtnFrom = 0;
-    mBtnReplyTo = 0;
 
     mRecipientsEditor = new RecipientsEditor( mMainWidget );
 
@@ -531,10 +530,10 @@ void KMComposeWin::readColorConfig(void)
   mPalette.setInactive(cgrp);
 
   mEdtFrom->setPalette(mPalette);
+  mEdtReplyTo->setPalette(mPalette);
   if ( mClassicalRecipients ) {
     mEdtTo->setPalette(mPalette);
     mEdtCc->setPalette(mPalette);
-    mEdtReplyTo->setPalette(mPalette);
     mEdtBcc->setPalette(mPalette);
   }
   mEdtSubject->setPalette(mPalette);
@@ -561,8 +560,8 @@ void KMComposeWin::readConfig(void)
   QString currentTransport = GlobalSettings::currentTransport();
 
   mEdtFrom->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
+  mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
   if ( mClassicalRecipients ) {
-    mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
     mEdtTo->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
     mEdtCc->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
     mEdtBcc->setCompletionMode( (KGlobalSettings::Completion)GlobalSettings::completionMode() );
@@ -580,8 +579,8 @@ void KMComposeWin::readConfig(void)
 
   slotUpdateFont();
   mEdtFrom->setFont(mBodyFont);
+  mEdtReplyTo->setFont(mBodyFont);
   if ( mClassicalRecipients ) {
-    mEdtReplyTo->setFont(mBodyFont);
     mEdtTo->setFont(mBodyFont);
     mEdtCc->setFont(mBodyFont);
     mEdtBcc->setFont(mBodyFont);
@@ -824,26 +823,33 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) mIdentityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
                     mLblIdentity, mIdentity, mBtnIdentity);
+
   if (!fromSlot) mDictionaryAction->setChecked(abs(mShowHeaders)&HDR_DICTIONARY);
   rethinkHeaderLine(showHeaders,HDR_DICTIONARY, row, i18n("&Dictionary:"),
                     mDictionaryLabel, mDictionaryCombo, 0 );
+
   if (!fromSlot) mFccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
   rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("&Sent-Mail folder:"),
                     mLblFcc, mFcc, mBtnFcc);
+
   if (!fromSlot) mTransportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("&Mail transport:"),
                     mLblTransport, mTransport, mBtnTransport);
+
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("sender address field", "&From:"),
                     mLblFrom, mEdtFrom /*, mBtnFrom */ );
+
   QWidget *prevFocus = mEdtFrom;
+
+  if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
+  rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
+                  mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
+  if ( showHeaders & HDR_REPLY_TO ) {
+    prevFocus = connectFocusMoving( prevFocus, mEdtReplyTo );
+  }
+
   if ( mClassicalRecipients ) {
-    if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
-    rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
-                    mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
-    if ( showHeaders & HDR_REPLY_TO ) {
-      prevFocus = connectFocusMoving( prevFocus, mEdtReplyTo );
-    }
     if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
     rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("recipient address field", "&To:"),
                     mLblTo, mEdtTo, mBtnTo,
@@ -853,6 +859,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     if ( showHeaders & HDR_TO ) {
       prevFocus = connectFocusMoving( prevFocus, mEdtTo );
     }
+
     if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
     rethinkHeaderLine(showHeaders, HDR_CC, row, i18n("&Copy to (CC):"),
                     mLblCc, mEdtCc, mBtnCc,
@@ -867,6 +874,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     if ( showHeaders & HDR_CC ) {
       prevFocus = connectFocusMoving( prevFocus, mEdtCc );
     }
+
     if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
     rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Blind copy to (BCC):"),
                     mLblBcc, mEdtBcc, mBtnBcc,
@@ -882,9 +890,18 @@ void KMComposeWin::rethinkFields(bool fromSlot)
     mGrid->addMultiCellWidget( mRecipientsEditor, row, row, 0, 2 );
     ++row;
 
+    if ( showHeaders & HDR_REPLY_TO ) {
+      connect( mEdtReplyTo, SIGNAL( focusDown() ), mRecipientsEditor,
+        SLOT( setFocusTop() ) );
+    } else {
     connect( mEdtFrom, SIGNAL( focusDown() ), mRecipientsEditor,
       SLOT( setFocusTop() ) );
-    connect( mRecipientsEditor, SIGNAL( focusUp() ), mEdtFrom, SLOT( setFocus() ) );
+    }
+    if ( showHeaders & HDR_REPLY_TO ) {
+      connect( mRecipientsEditor, SIGNAL( focusUp() ), mEdtReplyTo, SLOT( setFocus() ) );
+    } else {
+      connect( mRecipientsEditor, SIGNAL( focusUp() ), mEdtFrom, SLOT( setFocus() ) );
+    }
 
     connect( mRecipientsEditor, SIGNAL( focusDown() ), mEdtSubject,
       SLOT( setFocus() ) );
@@ -1062,6 +1079,13 @@ void KMComposeWin::setupActions(void)
                       this, SLOT(slotNewMailReader()),
                       actionCollection(), "open_mailreader");
 
+  if ( !mClassicalRecipients ) {
+    new KAction( i18n("Select &Recipients..."), CTRL + Key_L, mRecipientsEditor,
+      SLOT( selectRecipients() ), actionCollection(), "select_recipients" );
+    new KAction( i18n("Save &Distribution List..."), 0, mRecipientsEditor,
+      SLOT( saveDistributionList() ), actionCollection(),
+      "save_distribution_list" );
+  }
 
   //KStdAction::save(this, SLOT(), actionCollection(), "save_message");
   KStdAction::print (this, SLOT(slotPrint()), actionCollection());
@@ -1155,10 +1179,10 @@ void KMComposeWin::setupActions(void)
   mFromAction = new KToggleAction (i18n("&From"), 0, this,
                                   SLOT(slotView()),
                                   actionCollection(), "show_from");
-  if ( mClassicalRecipients ) {
-    mReplyToAction = new KToggleAction (i18n("&Reply To"), 0, this,
+  mReplyToAction = new KToggleAction (i18n("&Reply To"), 0, this,
                                        SLOT(slotView()),
                                        actionCollection(), "show_reply_to");
+  if ( mClassicalRecipients ) {
     mToAction = new KToggleAction (i18n("&To"), 0, this,
                                   SLOT(slotView()),
                                   actionCollection(), "show_to");
@@ -1455,8 +1479,6 @@ QString KMComposeWin::replyTo() const
 {
   if ( mEdtReplyTo ) {
     return cleanedUpHeaderString( mEdtReplyTo->text() );
-  } else if ( mRecipientsEditor ) {
-    return mRecipientsEditor->recipientString( Recipient::ReplyTo );
   } else {
     return QString::null;
   }
@@ -1526,16 +1548,15 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   mMsg = newMsg;
 
   mEdtFrom->setText(mMsg->from());
+  mEdtReplyTo->setText(mMsg->replyTo());
   if ( mClassicalRecipients ) {
     mEdtTo->setText(mMsg->to());
     mEdtCc->setText(mMsg->cc());
-    mEdtReplyTo->setText(mMsg->replyTo());
     mEdtBcc->setText(mMsg->bcc());
   } else {
     mRecipientsEditor->setRecipientString( mMsg->to(), Recipient::To );
     mRecipientsEditor->setRecipientString( mMsg->cc(), Recipient::Cc );
     mRecipientsEditor->setRecipientString( mMsg->bcc(), Recipient::Bcc );
-    mRecipientsEditor->setRecipientString( mMsg->replyTo(), Recipient::ReplyTo );
   }
   mEdtSubject->setText(mMsg->subject());
 
@@ -2176,11 +2197,15 @@ bool KMComposeWin::signFlagOfAttachment(int idx)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addrBookSelInto()
 {
-  if ( GlobalSettings::addresseeSelectorType() ==
-       GlobalSettings::EnumAddresseeSelectorType::New ) {
-    addrBookSelIntoNew();
+  if ( mClassicalRecipients ) {
+    if ( GlobalSettings::addresseeSelectorType() ==
+         GlobalSettings::EnumAddresseeSelectorType::New ) {
+      addrBookSelIntoNew();
+    } else {
+      addrBookSelIntoOld();
+    }
   } else {
-    addrBookSelIntoOld();
+    kdWarning() << "To be implemented: call recipients picker." << endl;
   }
 }
 
@@ -4186,8 +4211,8 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
 
   // sync all the lineedits to the same completion mode
   mEdtFrom->setCompletionMode( mode );
+  mEdtReplyTo->setCompletionMode( mode );
   if ( mClassicalRecipients ) {
-    mEdtReplyTo->setCompletionMode( mode );
     mEdtTo->setCompletionMode( mode );
     mEdtCc->setCompletionMode( mode );
     mEdtBcc->setCompletionMode( mode );
@@ -4339,7 +4364,6 @@ void KMComposeWin::alignmentChanged( int a )
     alignCenterAction->setChecked( ( a & AlignHCenter ) );
     alignRightAction->setChecked( ( a & AlignRight ) );
 }
-
 
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {

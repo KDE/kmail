@@ -35,14 +35,32 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 
-class NewStyleRecipientItem : public QCheckListItem
+class DistributionListItem : public QCheckListItem
 {
   public:
-    NewStyleRecipientItem( QListView *list, const KABC::Addressee &addressee )
-      : QCheckListItem( list, addressee.realName(), CheckBox ),
-        mAddressee( addressee )
+    DistributionListItem( QListView *list )
+      : QCheckListItem( list, QString::null, CheckBox )
     {
-      setText( 1, addressee.preferredEmail() );
+    }
+
+    void setAddressee( const KABC::Addressee &a, const QString &email )
+    {
+      mIsTransient = false;
+      init( a, email );
+    }
+
+    void setTransientAddressee( const KABC::Addressee &a, const QString &email )
+    {
+      mIsTransient = true;
+      init( a, email );
+    }
+
+    void init( const KABC::Addressee &a, const QString &email )
+    {
+      mAddressee = a;
+      mEmail = email;
+      setText( 1, mAddressee.realName() );
+      setText( 2, mEmail );
     }
 
     KABC::Addressee addressee() const
@@ -50,14 +68,26 @@ class NewStyleRecipientItem : public QCheckListItem
       return mAddressee;
     }
     
+    QString email() const
+    {
+      return mEmail;
+    }
+    
+    bool isTransient() const
+    {
+      return mIsTransient;
+    }
+    
   private:
     KABC::Addressee mAddressee;
+    QString mEmail;
+    bool mIsTransient;
 };
 
 
 DistributionListDialog::DistributionListDialog( QWidget *parent )
-  : KDialogBase( Plain, i18n("Create Distribution List"), User1 | Cancel,
-                 Cancel, parent, 0, false, false, i18n("Create List") )
+  : KDialogBase( Plain, i18n("Save Distribution List"), User1 | Cancel,
+                 User1, parent, 0, false, false, i18n("Save List") )
 {
   QFrame *topFrame = plainPage();
   
@@ -71,9 +101,12 @@ DistributionListDialog::DistributionListDialog( QWidget *parent )
   
   mTitleEdit = new QLineEdit( topFrame );
   titleLayout->addWidget( mTitleEdit );
+  mTitleEdit->setFocus();
   
   mRecipientsList = new KListView( topFrame );
-  mRecipientsList->addColumn( i18n("Recipients") );
+  mRecipientsList->addColumn( QString::null );
+  mRecipientsList->addColumn( i18n("Name") );
+  mRecipientsList->addColumn( i18n("Email") );
   topLayout->addWidget( mRecipientsList );
 }
 
@@ -84,14 +117,25 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
     QStringList emails = KPIM::splitEmailAddrList( (*it).email() );
     QStringList::ConstIterator it2;
     for( it2 = emails.begin(); it2 != emails.end(); ++it2 ) {
-      QString email = KPIM::getEmailAddress( *it2 );
+      QString name;
+      QString email;
+      KABC::Addressee::parseEmailAddress( *it2, name, email );
       if ( !email.isEmpty() ) {
+        DistributionListItem *item = new DistributionListItem( mRecipientsList );
         KABC::Addressee::List addressees =
           KABC::StdAddressBook::self( true )->findByEmail( email );
-        KABC::Addressee::List::ConstIterator it3;
-        for( it3 = addressees.begin(); it3 != addressees.end(); ++it3 ) {
-          NewStyleRecipientItem *item = new NewStyleRecipientItem( mRecipientsList, *it3 );
-          if ( it3 == addressees.begin() ) item->setOn( true );
+        if ( addressees.isEmpty() ) {
+          KABC::Addressee a;
+          a.setNameFromString( name );
+          a.insertEmail( name );
+          item->setTransientAddressee( a, email );
+          item->setOn( true );
+        } else {
+          KABC::Addressee::List::ConstIterator it3;
+          for( it3 = addressees.begin(); it3 != addressees.end(); ++it3 ) {
+            item->setAddressee( *it3, email );
+            if ( it3 == addressees.begin() ) item->setOn( true );
+          }
         }
       }
     }
@@ -100,24 +144,21 @@ void DistributionListDialog::setRecipients( const Recipient::List &recipients )
 
 void DistributionListDialog::slotUser1()
 {
-  kdDebug() << "Create Distribution List '" << mTitleEdit->text() << "':"
-    << endl;
-
-  KABC::Addressee::List addressees;
+  bool isEmpty = true;
 
   KABC::StdAddressBook *ab = KABC::StdAddressBook::self( true );
 
   QListViewItem *i = mRecipientsList->firstChild();
   while( i ) {
-    NewStyleRecipientItem *item = static_cast<NewStyleRecipientItem *>( i );
+    DistributionListItem *item = static_cast<DistributionListItem *>( i );
     if ( item->isOn() ) {
-      kdDebug() << "  " << item->addressee().fullEmail() << endl;
-      addressees.append( item->addressee() );
+      isEmpty = false;
+      break;
     }
     i = i->nextSibling();
   }
 
-  if ( addressees.isEmpty() ) {
+  if ( isEmpty ) {
     KMessageBox::information( this,
                               i18n("There are no recipients in your list. "
                                    "First select some recipients, "
@@ -146,10 +187,25 @@ void DistributionListDialog::slotUser1()
   }
 
   KABC::DistributionList *dlist = new KABC::DistributionList( &manager, name );
-  for ( KABC::Addressee::List::iterator itr = addressees.begin();
-        itr != addressees.end(); ++itr ) {
-    dlist->insertEntry( *itr );
+  i = mRecipientsList->firstChild();
+  while( i ) {
+    DistributionListItem *item = static_cast<DistributionListItem *>( i );
+    if ( item->isOn() ) {
+      kdDebug() << "  " << item->addressee().fullEmail() << endl;
+      if ( item->isTransient() ) {
+        // FIXME: Adding to the address book doesn't seem to work.
+        ab->insertAddressee( item->addressee() );
+      }
+      if ( item->email() == item->addressee().preferredEmail() ) {
+        dlist->insertEntry( item->addressee() );
+      } else {
+        dlist->insertEntry( item->addressee(), item->email() );
+      }
+    }
+    i = i->nextSibling();
   }
 
   manager.save();
+
+  close();
 }

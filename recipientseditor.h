@@ -45,7 +45,7 @@ class Recipient
   public:
     typedef QValueList<Recipient> List;
 
-    enum Type { To, Cc, Bcc, ReplyTo, Undefined };
+    enum Type { To, Cc, Bcc, Undefined };
 
     Recipient( const QString &email = QString::null, Type type = To );
 
@@ -123,21 +123,22 @@ class RecipientLine : public QWidget
 
     void clear();
 
+    int recipientsCount();
+
   signals:
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
     void upPressed( RecipientLine * );
     void rightPressed();
     void deleteLine(  RecipientLine * );
-    void emptyChanged();
-
+    void countChanged();
 
   protected:
     void keyPressEvent( QKeyEvent * );
 
   protected slots:
     void slotReturnPressed();
-    void checkEmptyState( const QString & );
+    void analyzeLine( const QString & );
     void slotFocusUp();
     void slotFocusDown();
     void slotPropagateDeletion();
@@ -146,7 +147,7 @@ class RecipientLine : public QWidget
     QComboBox *mCombo;
     RecipientLineEdit *mEdit;
     QPushButton *mRemoveButton;
-    bool mIsEmpty;
+    int mRecipientsCount;
 };
 
 class RecipientsView : public QScrollView
@@ -190,7 +191,7 @@ class RecipientsView : public QScrollView
     void slotDownPressed( RecipientLine * );
     void slotUpPressed( RecipientLine * );
     void slotDecideLineDeletion(  RecipientLine * );
-    void slotDeleteDueLine();
+    void slotDeleteLine();
     void calculateTotal();
 
   private:
@@ -227,15 +228,14 @@ class SideWidget : public QWidget
     void setTotal( int recipients, int lines );
     void setFocus();
 
+    void pickRecipient();
+
   signals:
     void pickedRecipient( const Recipient & );
-    void createDistributionList();
+    void saveDistributionList();
 
   protected:
     void initRecipientPicker();
-    
-  protected slots:
-    void pickRecipient();
 
   private:
     RecipientsView *mView;
@@ -268,13 +268,15 @@ class RecipientsEditor : public QWidget
     void setFocusTop();
     void setFocusBottom();
 
+    void selectRecipients();
+    void saveDistributionList();
+
   signals:
     void focusUp();
     void focusDown();
 
   protected slots:
     void slotPickedRecipient( const Recipient & );
-    void createDistributionList();
 
   private:
     RecipientsView *mRecipientsView;

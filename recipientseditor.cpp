@@ -97,8 +97,6 @@ QString Recipient::typeLabel( Recipient::Type type )
       return i18n("CC");
     case Bcc:
       return i18n("BCC");
-    case ReplyTo:
-      return i18n("Reply To");
     case Undefined:
       break;
   }
@@ -112,7 +110,6 @@ QStringList Recipient::allTypeLabels()
   types.append( typeLabel( To ) );
   types.append( typeLabel( Cc ) );
   types.append( typeLabel( Bcc ) );
-  types.append( typeLabel( ReplyTo ) );
   return types;
 }
 
@@ -144,7 +141,7 @@ void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 }
 
 RecipientLine::RecipientLine( QWidget *parent )
-  : QWidget( parent ), mIsEmpty( true )
+  : QWidget( parent ), mRecipientsCount( 0 )
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
@@ -160,7 +157,7 @@ RecipientLine::RecipientLine( QWidget *parent )
   connect( mEdit, SIGNAL( returnPressed() ), SLOT( slotReturnPressed() ) );
   connect( mEdit, SIGNAL( deleteMe() ), SLOT( slotPropagateDeletion() ) );
   connect( mEdit, SIGNAL( textChanged( const QString & ) ),
-    SLOT( checkEmptyState( const QString & ) ) );
+    SLOT( analyzeLine( const QString & ) ) );
   connect( mEdit, SIGNAL( focusUp() ), SLOT( slotFocusUp() ) );
   connect( mEdit, SIGNAL( focusDown() ), SLOT( slotFocusDown() ) );
   connect( mEdit, SIGNAL( rightPressed() ), SIGNAL( rightPressed() ) );
@@ -191,12 +188,18 @@ void RecipientLine::slotFocusDown()
   emit downPressed( this );
 }
 
-void RecipientLine::checkEmptyState( const QString &text )
+void RecipientLine::analyzeLine( const QString &text )
 {
-  if ( text.isEmpty() != mIsEmpty ) {
-    mIsEmpty = text.isEmpty();
-    emit emptyChanged();
+  QStringList r = KPIM::splitEmailAddrList( text );
+  if ( int( r.count() ) != mRecipientsCount ) {
+    mRecipientsCount = r.count();
+    emit countChanged();
   }
+}
+
+int RecipientLine::recipientsCount()
+{
+  return mRecipientsCount;
 }
 
 void RecipientLine::setRecipient( const Recipient &rec )
@@ -322,7 +325,7 @@ RecipientLine *RecipientsView::addLine()
   connect( line, SIGNAL( rightPressed() ), SIGNAL( focusRight() ) );
   connect( line, SIGNAL( deleteLine( RecipientLine * ) ),
     SLOT( slotDecideLineDeletion( RecipientLine * ) ) );
-  connect( line, SIGNAL( emptyChanged() ), SLOT( calculateTotal() ) );
+  connect( line, SIGNAL( countChanged() ), SLOT( calculateTotal() ) );
 
   if ( mLines.last() ) {
     line->setRecipientType( mLines.last()->recipientType() );
@@ -349,12 +352,16 @@ RecipientLine *RecipientsView::addLine()
 void RecipientsView::calculateTotal()
 {
   int count = 0;
+  int empty = 0;
 
   RecipientLine *line;
   for( line = mLines.first(); line; line = mLines.next() ) {
-    if ( !line->isEmpty() ) ++count;
+    if ( line->isEmpty() ) ++empty;
+    else count += line->recipientsCount();
   }
 
+  if ( empty == 0 ) addLine();
+  
   emit totalChanged( count, mLines.count() );
 }
 
@@ -389,32 +396,36 @@ void RecipientsView::slotUpPressed( RecipientLine *line )
 
 void RecipientsView::slotDecideLineDeletion( RecipientLine *line )
 {
-  if ( line == mLines.first() ) {
+  if ( mLines.count() == 1 ) {
     line->clear();
   } else {
     mCurDelLine = line;
-    QTimer::singleShot( 0, this, SLOT( slotDeleteDueLine( ) ) );
+    QTimer::singleShot( 0, this, SLOT( slotDeleteLine( ) ) );
   }
 }
 
-void RecipientsView::slotDeleteDueLine()
+void RecipientsView::slotDeleteLine()
 {
-   RecipientLine *line = mCurDelLine;
-   int pos = mLines.find( line );
+  RecipientLine *line = mCurDelLine;
+  int pos = mLines.find( line );
 
-   mLines.at( pos-1 )->activate();
-   mLines.remove( line );
-   removeChild( line );
-   delete line;
+  int newPos;
+  if ( pos == 0 ) newPos = pos + 1;
+  else newPos = pos - 1;
+  mLines.at( newPos )->activate();
 
-   for( uint i = pos; i < mLines.count(); ++i ) {
-     RecipientLine *line = mLines.at( i );
-     moveChild( line, childX( line ), childY( line ) - mLineHeight );
-   }
+  mLines.remove( line );
+  removeChild( line );
+  delete line;
 
-   calculateTotal();
-
-   resizeView();
+  for( uint i = pos; i < mLines.count(); ++i ) {
+    RecipientLine *line = mLines.at( i );
+    moveChild( line, childX( line ), childY( line ) - mLineHeight );
+  }
+  
+  calculateTotal();
+  
+  resizeView();
 }
 
 void RecipientsView::resizeView()
@@ -565,20 +576,24 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
+  topLayout->addStretch( 1 );
+
   mTotalLabel = new QLabel( this );
   mTotalLabel->setAlignment( AlignCenter );
-  topLayout->addWidget( mTotalLabel, 1 );
+  topLayout->addWidget( mTotalLabel );
   mTotalLabel->hide();
+
+  topLayout->addStretch( 1 );
 
   new RecipientsToolTip( view, mTotalLabel );
 
-  mDistributionListButton = new QPushButton( "List...", this );
+  mDistributionListButton = new QPushButton( "Save List...", this );
   topLayout->addWidget( mDistributionListButton );
   mDistributionListButton->hide();
   connect( mDistributionListButton, SIGNAL( clicked() ),
-    SIGNAL( createDistributionList() ) );
+    SIGNAL( saveDistributionList() ) );
 
-  mSelectButton = new QPushButton( "&Select...", this );
+  mSelectButton = new QPushButton( "Se&lect...", this );
   topLayout->addWidget( mSelectButton );
   connect( mSelectButton, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
 
@@ -617,13 +632,15 @@ void SideWidget::setTotal( int recipients, int lines )
     "  lines: " << lines << endl;
 #endif
 
-  mTotalLabel->setText( ( recipients == 0 )
-                        ? i18n("No recipient")
-                        : i18n("1 recipient", "%n recipients", recipients ) );
-  if ( lines > 1 ) mTotalLabel->show();
+  QString labelText;
+  if ( recipients == 0 ) labelText = i18n("No recipients");
+  else labelText = i18n("1 recipient","%n recipients", recipients );
+  mTotalLabel->setText( labelText );
+
+  if ( lines > 3 ) mTotalLabel->show();
   else mTotalLabel->hide();
 
-  if ( lines > 3 ) mDistributionListButton->show();
+  if ( lines > 2 ) mDistributionListButton->show();
   else mDistributionListButton->hide();
 }
 
@@ -658,8 +675,8 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
   topLayout->addWidget( mSideWidget );
   connect( mSideWidget, SIGNAL( pickedRecipient( const Recipient & ) ),
     SLOT( slotPickedRecipient( const Recipient & ) ) );
-  connect( mSideWidget, SIGNAL( createDistributionList() ),
-    SLOT( createDistributionList() ) );
+  connect( mSideWidget, SIGNAL( saveDistributionList() ),
+    SLOT( saveDistributionList() ) );
 
   connect( mRecipientsView, SIGNAL( totalChanged( int, int ) ),
     mSideWidget, SLOT( setTotal( int, int ) ) );
@@ -687,11 +704,9 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
   }
 
   line->setRecipient( r );
-
-  mRecipientsView->addLine()->activate();
 }
 
-void RecipientsEditor::createDistributionList()
+void RecipientsEditor::saveDistributionList()
 {
   DistributionListDialog *dlg = new DistributionListDialog( this );
   dlg->setRecipients( mRecipientsView->recipients() );
@@ -757,6 +772,11 @@ void RecipientsEditor::setFocusBottom()
 void RecipientsEditor::setFirstColumnWidth( int w )
 {
   mRecipientsView->setFirstColumnWidth( w );
+}
+
+void RecipientsEditor::selectRecipients()
+{
+  mSideWidget->pickRecipient();
 }
 
 #include "recipientseditor.moc"

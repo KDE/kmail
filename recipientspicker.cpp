@@ -51,9 +51,11 @@ void RecipientItem::setDistributionList( KABC::DistributionList *list )
   mKey = "D" + list->name();
 }
 
-void RecipientItem::setAddressee( const KABC::Addressee &a )
+void RecipientItem::setAddressee( const KABC::Addressee &a,
+  const QString &email )
 {
   mAddressee = a;
+  mEmail = email;
 
   QImage img = a.photo().data();
   if ( !img.isNull() )
@@ -78,7 +80,7 @@ QString RecipientItem::name() const
 
 QString RecipientItem::email() const
 {
-  if ( !mAddressee.isEmpty() ) return mAddressee.preferredEmail();
+  if ( !mAddressee.isEmpty() ) return mEmail;
   else if ( mDistributionList ) {
     int count = mDistributionList->entries().count();
     return i18n( "1 email address", "%n email addresses", count );
@@ -89,9 +91,39 @@ QString RecipientItem::email() const
 QString RecipientItem::recipient() const
 {
   QString r;
-  if ( !mAddressee.isEmpty() ) r = mAddressee.fullEmail();
+  if ( !mAddressee.isEmpty() ) r = mAddressee.fullEmail( mEmail );
   else if ( mDistributionList ) r = mDistributionList->name();
   return r;
+}
+
+QString RecipientItem::toolTip() const
+{
+  QString txt = "<qt>";
+
+  if ( !mAddressee.isEmpty() ) {
+    if ( !mAddressee.realName().isEmpty() ) {
+      txt += mAddressee.realName() + "<br/>";
+    }
+    txt += "<b>" + mEmail + "</b>";
+  } else if ( mDistributionList ) {
+    txt += "<b>" + i18n("Distribution List %1")
+      .arg( mDistributionList->name() ) + "</b>";
+    txt += "<ul>";
+    KABC::DistributionList::Entry::List entries = mDistributionList->entries();
+    KABC::DistributionList::Entry::List::ConstIterator it;
+    for( it = entries.begin(); it != entries.end(); ++it ) {
+      txt += "<li>";
+      txt += (*it).addressee.realName() + " ";
+      txt += "<em>";
+      if ( (*it).email.isEmpty() ) txt += (*it).addressee.preferredEmail();
+      else txt += (*it).email;
+      txt += "</em>";
+      txt += "<li/>";
+    }
+    txt += "</ul>";
+  }
+  
+  return txt;
 }
 
 void RecipientItem::setRecipientType( const QString &type )
@@ -121,8 +153,36 @@ RecipientItem *RecipientViewItem::recipientItem() const
 }
 
 
+RecipientsListToolTip::RecipientsListToolTip( QWidget *parent,
+  KListView *listView )
+  : QToolTip( parent )
+{
+  mListView = listView;
+}
+
+void RecipientsListToolTip::maybeTip( const QPoint & pos )
+{
+  QRect r;
+  QListViewItem *item = mListView->itemAt( pos );
+  RecipientViewItem *i = static_cast<RecipientViewItem *>( item );
+
+  if( item ) {
+    r = mListView->itemRect( item );
+    QString tipText( i->recipientItem()->toolTip() );
+    if ( !tipText.isEmpty() ) {
+      tip( r, tipText );
+    }
+  }
+}
+
+
 RecipientsCollection::RecipientsCollection()
 {
+}
+
+RecipientsCollection::~RecipientsCollection()
+{
+  clear();
 }
 
 void RecipientsCollection::setTitle( const QString &title )
@@ -150,6 +210,20 @@ RecipientItem::List RecipientsCollection::items() const
 bool RecipientsCollection::hasEquivalentItem( RecipientItem *item ) const
 {
   return mKeyMap.find( item->key() ) != mKeyMap.end();
+}
+
+void RecipientsCollection::clear()
+{
+  mKeyMap.clear();
+}
+
+void RecipientsCollection::deleteAll()
+{
+  QMap<QString, RecipientItem *>::ConstIterator it;
+  for( it = mKeyMap.begin(); it != mKeyMap.end(); ++it ) {
+    delete *it;
+  }
+  clear();
 }
 
 
@@ -192,6 +266,11 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   QBoxLayout *searchLayout = new QHBoxLayout( topLayout );
 
+  QPushButton *button = new QPushButton( this );
+  button->setPixmap( SmallIcon( "locationbar_erase" ) );
+  searchLayout->addWidget( button );
+  connect( button, SIGNAL( clicked() ), SLOT( resetSearch() ) );
+
   label = new QLabel( i18n("&Search:"), this );
   searchLayout->addWidget( label );
 
@@ -203,9 +282,11 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   mRecipientList->addColumn( i18n("Name") );
   mRecipientList->addColumn( i18n("Email") );
   connect( mRecipientList, SIGNAL( doubleClicked( QListViewItem *,
-    const QPoint &, int ) ), SLOT( slotPicked( QListViewItem * ) ) );
+    const QPoint &, int ) ), SLOT( slotPicked() ) );
   connect( mRecipientList, SIGNAL( returnPressed( QListViewItem * ) ),
-    SLOT( slotPicked( QListViewItem * ) ) );
+    SLOT( slotPicked() ) );
+
+  new RecipientsListToolTip( mRecipientList->viewport(), mRecipientList );
 
   mSearchLine = new SearchLine( this, mRecipientList );
   searchLayout->addWidget( mSearchLine );
@@ -254,6 +335,13 @@ RecipientsPicker::~RecipientsPicker()
   writeConfig();
 
   delete mDistributionListManager;
+
+  mAllRecipients->deleteAll();
+
+  QMap<int,RecipientsCollection *>::ConstIterator it;
+  for( it = mCollectionMap.begin(); it != mCollectionMap.end(); ++it ) {
+    delete *it;
+  }
 }
 
 void RecipientsPicker::initCollections()
@@ -275,14 +363,18 @@ void RecipientsPicker::initCollections()
 
   KABC::AddressBook::Iterator it;
   for( it = addressbook->begin(); it != addressbook->end(); ++it ) {
-    RecipientItem *item = new RecipientItem;
-    item->setAddressee( *it );
-    mAllRecipients->addItem( item );
+    QStringList emails = (*it).emails();
+    QStringList::ConstIterator it3;
+    for( it3 = emails.begin(); it3 != emails.end(); ++it3 ) {
+      RecipientItem *item = new RecipientItem;
+      item->setAddressee( *it, *it3 );
+      mAllRecipients->addItem( item );
 
-    QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator collIt;
-    collIt = collectionMap.find( it->resource() );
-    if ( collIt != collectionMap.end() ) {
-      (*collIt)->addItem( item );
+      QMap<KABC::Resource *,RecipientsCollection *>::ConstIterator collIt;
+      collIt = collectionMap.find( it->resource() );
+      if ( collIt != collectionMap.end() ) {
+        (*collIt)->addItem( item );
+      }
     }
   }
 
@@ -296,6 +388,10 @@ void RecipientsPicker::initCollections()
   insertDistributionLists();
 
   insertRecentAddresses();
+
+  mSelectedRecipients = new RecipientsCollection;
+  mSelectedRecipients->setTitle( i18n("Selected Recipients") );
+  insertCollection( mSelectedRecipients );
 }
 
 void RecipientsPicker::insertDistributionLists()
@@ -335,7 +431,7 @@ void RecipientsPicker::insertRecentAddresses()
   KABC::Addressee::List::ConstIterator it;
   for( it = recents.begin(); it != recents.end(); ++it ) {
     RecipientItem *item = new RecipientItem;
-    item->setAddressee( *it );
+    item->setAddressee( *it, (*it).preferredEmail() );
     if ( !mAllRecipients->hasEquivalentItem( item ) ) {
       mAllRecipients->addItem( item );
     }
@@ -376,13 +472,31 @@ void RecipientsPicker::setRecipients( const Recipient::List &recipients )
     (*itAll)->setRecipientType( QString::null );
   }
 
+  mSelectedRecipients->clear();
+
   Recipient::List::ConstIterator it;
   for( it = recipients.begin(); it != recipients.end(); ++it ) {
+    RecipientItem *item = 0;
     for( itAll = allRecipients.begin(); itAll != allRecipients.end(); ++itAll ) {
       if ( (*itAll)->recipient() == (*it).email() ) {
         (*itAll)->setRecipientType( (*it).typeLabel() );
+        item = *itAll;
       }
     }
+    if ( !item ) {
+      KABC::Addressee a;
+      QString name;
+      QString email;
+      KABC::Addressee::parseEmailAddress( (*it).email(), name, email );
+      a.setNameFromString( name );
+      a.insertEmail( email );
+
+      item = new RecipientItem;
+      item->setAddressee( a, a.preferredEmail() );
+      item->setRecipientType( (*it).typeLabel() );
+      mAllRecipients->addItem( item );
+    }
+    mSelectedRecipients->addItem( item );
   }
 
   updateList();
@@ -439,8 +553,6 @@ void RecipientsPicker::slotBccClicked()
 
 void RecipientsPicker::slotPicked( QListViewItem *viewItem )
 {
-  kdDebug() << "RecipientsPicker::slotPicked()" << endl;
-
   RecipientViewItem *item = static_cast<RecipientViewItem *>( viewItem );
   if ( item ) {
     RecipientItem *i = item->recipientItem();
@@ -449,8 +561,15 @@ void RecipientsPicker::slotPicked( QListViewItem *viewItem )
   close();
 }
 
+void RecipientsPicker::slotPicked()
+{
+  pick( mDefaultType );
+}
+
 void RecipientsPicker::pick( Recipient::Type type )
 {
+  kdDebug() << "RecipientsPicker::pick " << int( type ) << endl;
+
   QListViewItem *viewItem;
   for( viewItem = mRecipientList->firstChild(); viewItem;
        viewItem = viewItem->nextSibling() ) {
@@ -500,6 +619,11 @@ void RecipientsPicker::writeConfig()
 void RecipientsPicker::setFocusList()
 {
   mRecipientList->setFocus();
+}
+
+void RecipientsPicker::resetSearch()
+{
+  mSearchLine->setText( QString::null );
 }
 
 #include "recipientspicker.moc"

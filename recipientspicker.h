@@ -44,7 +44,7 @@ class RecipientItem
     RecipientItem();
 
     void setDistributionList( KABC::DistributionList * );
-    void setAddressee( const KABC::Addressee & );
+    void setAddressee( const KABC::Addressee &, const QString &email );
 
     void setRecipientType( const QString &type );
     QString recipientType() const;
@@ -56,9 +56,12 @@ class RecipientItem
     QString email() const;
     
     QString key() const { return mKey; }
+
+    QString toolTip() const;
     
   private:
     KABC::Addressee mAddressee;
+    QString mEmail;
     KABC::DistributionList *mDistributionList;
     QString mType;
     
@@ -78,10 +81,23 @@ class RecipientViewItem : public KListViewItem
     RecipientItem *mRecipientItem;
 };
 
+class RecipientsListToolTip : public QToolTip
+{
+  public:
+    RecipientsListToolTip( QWidget *parent, KListView * );
+
+  protected:
+    void maybeTip( const QPoint &pos );
+
+  private:
+    KListView *mListView;
+};
+
 class RecipientsCollection
 {
   public:
     RecipientsCollection();
+    ~RecipientsCollection();
     
     void setTitle( const QString & );
     QString title() const;
@@ -91,6 +107,10 @@ class RecipientsCollection
     RecipientItem::List items() const;
 
     bool hasEquivalentItem( RecipientItem * ) const;
+
+    void clear();
+
+    void deleteAll();
 
   private:
     QString mTitle;
@@ -147,7 +167,9 @@ class RecipientsPicker : public QDialog
     void slotCcClicked();
     void slotBccClicked();
     void slotPicked( QListViewItem * );
+    void slotPicked();
     void setFocusList();
+    void resetSearch();
   
   private:
     QComboBox *mCollectionCombo;
@@ -160,6 +182,7 @@ class RecipientsPicker : public QDialog
   
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
+    RecipientsCollection *mSelectedRecipients;
 
     KABC::DistributionListManager *mDistributionListManager;
     
