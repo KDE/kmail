@@ -6,6 +6,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
+#include "mailinglist-magic.h"
 #include <kpgp.h>
 #include <kpgpblock.h>
 #include <kdebug.h>
@@ -734,11 +735,11 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
-  QCString refStr;
+  QCString refStr, headerName;
 
   msg->initFromMessage(this);
 
-  mailingListStr = headerField("X-Mailing-List");
+  detect_list(this, headerName, mailingListStr);
   replyToStr = replyTo();
 
   msg->setCharset("utf-8");
