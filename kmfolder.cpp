@@ -434,10 +434,12 @@ void KMFolder::removeMsg(int idx, bool)
   }
   --mTotalMsgs;
 
-  if (!mQuiet)
+  if (!mQuiet) {
     emit msgRemoved(idx, msgIdMD5);
-  else
+    emit msgRemoved(this);
+  } else {
     mChanged = TRUE;
+  }
 }
 
 
@@ -468,10 +470,12 @@ KMMessage* KMFolder::take(int idx)
   msg->setParent(0);
   setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
-  if (!mQuiet)
-    emit msgRemoved(idx,msgIdMD5);
-  else
+  if (!mQuiet) {
+    emit msgRemoved(idx, msgIdMD5);
+    emit msgRemoved(this);
+  } else {
     mChanged = TRUE;
+  }
 
   return msg;
 }

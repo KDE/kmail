@@ -502,9 +502,9 @@ void KMFolderTree::reload(bool openFolders)
           connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
               this,SLOT(slotUpdateCounts(KMFolder*)));
         }
-        disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*,Q_UINT32)),
+        disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
             this,SLOT(slotUpdateCounts(KMFolder*)));
-        connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*,Q_UINT32)),
+        connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
             this,SLOT(slotUpdateCounts(KMFolder*)));
       }
       if (!openFolders)
