@@ -646,9 +646,10 @@ void KMReaderWin::parseMsg(void)
   mMsg->setCodec(mCodec);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("body { font-family: \"%1\"; font-size: %2pt; "
-                         "color: #%3; background-color: #%4; }\n")
+		 QString("@media screen { body { font-family: \"%1\"; font-size: %2pt; "
+                         "color: #%3; background-color: #%4; } }\n")
                  .arg( mBodyFamily ).arg( fntSize ).arg(colorToString(c1)).arg(colorToString(c4)) +
+                 QString("@media print { body { font-family: \"%1\"; font-size: 6pt } }\n") +
 		 QString("a { color: #%1; ").arg(colorToString(c2)) +
 		 "text-decoration: none; }" + // just playing
                  QString( "table.encr { background-color: #%1; "
