@@ -90,7 +90,7 @@ const int KMReaderWin::delay = 150;
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
-  :KMReaderWinInherited(aParent, aName, aFlags)
+  :KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose)
 {
   initMetaObject();
 
@@ -1630,21 +1630,16 @@ void KMReaderWin::slotDocumentChanged()
 void KMReaderWin::slotTextSelected(bool)
 {
 
-/*  ### FIXME
   QString temp = mViewer->selectedText();
   kapp->clipboard()->setText(temp);
-*/
 }
 
 
 //-----------------------------------------------------------------------------
 QString KMReaderWin::copyText()
 {
-/* ### FIXME
   QString temp = mViewer->selectedText();
   return temp;
-*/
-  return QString();
 }
 
 
