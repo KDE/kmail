@@ -144,7 +144,7 @@ namespace KMail {
     widgetStack->addWidget( page, pageno ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
-    mFromFileBtn = new QPushButton( "Select File", page );
+    mFromFileBtn = new QPushButton( i18n("Select File"), page );
     QWhatsThis::add( mFromFileBtn,
                      i18n("Use this to select an image file to create the picture from. "
                          "The image should be of high contrast and nearly quadratic shape. "
@@ -153,7 +153,7 @@ namespace KMail {
     page_vlay->addWidget( mFromFileBtn, 1 );
     connect( mFromFileBtn, SIGNAL(released()),
              this, SLOT(slotSelectFile()) );
-    mFromAddrbkBtn = new QPushButton( "Set from Addressbook", page );
+    mFromAddrbkBtn = new QPushButton( i18n("Set from Addressbook"), page );
     QWhatsThis::add( mFromAddrbkBtn,
                      i18n( "You can use a scaled-down version of the picture "
                          "you have set in your address book entry." ) );
