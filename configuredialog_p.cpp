@@ -14,13 +14,14 @@
 
 // other KMail headers:
 #include "identitymanager.h"
+#include "kmtransport.h"
 
 // other kdenetwork headers: (none)
 
 // other KDE headers:
-#include <kmtransport.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
+#include <klocale.h>
 
 // Qt headers:
 #include <qheader.h>

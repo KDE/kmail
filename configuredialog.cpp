@@ -46,6 +46,8 @@
 #include "encryptionconfigurationdialogimpl.h"
 #include "directoryservicesconfigurationdialogimpl.h"
 #include "certificatehandlingdialogimpl.h"
+#include "cryptplugwrapperlist.h"
+#include "cryptplugwrapper.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "identitylistview.h"
@@ -54,15 +56,13 @@ using KMail::IdentityListViewItem;
 #include "identitydialog.h"
 using KMail::IdentityDialog;
 #include "kmkernel.h"
-#include "signatureconfigurator.h"
-using KMail::SignatureConfigurator;
 
 // other kdenetwork headers:
-#include <kpgp.h>
 #include <kpgpui.h>
 
 
 // other KDE headers:
+#include <klocale.h>
 #include <kapplication.h>
 #include <kcharsets.h>
 #include <kdebug.h>
@@ -75,10 +75,10 @@ using KMail::SignatureConfigurator;
 #include <kseparator.h>
 #include <kiconloader.h>
 #include <kstandarddirs.h>
-#include <kstringvalidator.h>
 #include <kwin.h>
 
 // Qt headers:
+#include <qvalidator.h>
 #include <qregexp.h>
 #include <qtabwidget.h>
 #include <qwhatsthis.h>
@@ -94,23 +94,10 @@ using KMail::SignatureConfigurator;
 #include <qlineedit.h>
 #include <qobjectlist.h>
 #include <qpopupmenu.h>
-
-// added for CRYPTPLUG
-#include <qvariant.h>   // first for gcc 2.7.2
-#include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qgroupbox.h>
-#include <qlabel.h>
 #include <qpushbutton.h>
 #include <qradiobutton.h>
-#include <qspinbox.h>
-#include <qlayout.h>
-#include "cryptplugwrapperlist.h"
-#include "cryptplugwrapper.h"
-#include "signatureconfigurationdialog.h"
-#include "encryptionconfigurationdialog.h"
-#include "directoryservicesconfigurationdialogimpl.h"
 
 // other headers:
 #include <assert.h>

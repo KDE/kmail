@@ -5,16 +5,12 @@
 #ifndef _CONFIGURE_DIALOG_PRIVATE_H_
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
-#define DEFAULT_EDITOR_STR "kate %f"
-
-
 #include "kmheaders.h"
 #include "kmime_util.h"
 
 #include <qlineedit.h>
 #include <qcombobox.h>
 #include <qguardedptr.h>
-#include <qwidget.h>
 #include <qptrlist.h>
 #include <qstring.h>
 #include <qvaluelist.h>
@@ -22,13 +18,11 @@
 
 #include <kdialogbase.h>
 #include <klistview.h>
-#include <klocale.h> // for i18n
 
 class QPushButton;
 class QLabel;
 class QCheckBox;
 class KURLRequester;
-class QMultiLineEdit;
 class KFontChooser;
 class QRadioButton;
 class ColorListBox;
@@ -49,10 +43,8 @@ class KConfig;
 class QPoint;
 namespace Kpgp {
   class Config;
-  class SecretKeyRequester;
 };
 namespace KMail {
-  class SignatureConfigurator;
   class IdentityDialog;
   class IdentityListView;
 };
