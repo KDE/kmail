@@ -199,9 +199,8 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
-  KMFolderComboBox *cb = new KMFolderComboBox( FALSE, parent );
+  KMFolderComboBox *cb = new KMFolderComboBox( parent );
   setParamWidgetValue( cb );
-  QObject::connect( kernel->folderMgr(), SIGNAL(changed()), cb, SLOT(refreshFolders()) );
   return cb;
 }
 

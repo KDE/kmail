@@ -17,6 +17,7 @@
 #include "kmaddrbook.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
+#include "kmfoldercombobox.h"
 #include "kmtransport.h"
 
 #include <kaction.h>
@@ -71,7 +72,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   mMainWidget = new QWidget(this);
 
   mIdentity = new QComboBox(mMainWidget);
-  mFcc = new QComboBox(mMainWidget);
+  mFcc = new KMFolderComboBox(mMainWidget);
+  mFcc->showOutboxFolder( FALSE );
   mTransport = new QComboBox(true, mMainWidget);
   mEdtFrom = new KMLineEdit(this,false,mMainWidget);
   mEdtReplyTo = new KMLineEdit(this,false,mMainWidget);
@@ -426,18 +428,6 @@ void KMComposeWin::readConfig(void)
   if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
     mTransport->setEditText( currentTransport );
 
-  kernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
-  for ( unsigned int i = 0; i < mFolderList.count(); i++ )
-  {
-      KMFolder *cur = *mFolderList.at( i );
-      if ( cur == kernel->outboxFolder() )
-      {
-          mFolderList.remove( mFolderList.at( i ) );
-          mFolderNames.remove( mFolderNames.at( i ) );
-      }
-  }
-  mFcc->insertStringList( mFolderNames );
-
   if ( !mBtnFcc->isChecked() )
   {
       kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentText() << endl;
@@ -450,12 +440,7 @@ void KMComposeWin::readConfig(void)
       kdDebug() << "KMComposeWin::readConfig: previousFcc=" << previousFcc <<  endl;
   }
 
-  for (int i=0; i < mFcc->count(); ++i)
-      if ( ( *mFolderList.at( i ) )->idString() == previousFcc)
-      {
-          mFcc->setCurrentItem(i);
-          break;
-      }
+  mFcc->setFolder( previousFcc );
 }
 
 //-----------------------------------------------------------------------------
@@ -473,7 +458,7 @@ void KMComposeWin::writeConfig(void)
     config->writeEntry("sticky-fcc", mBtnFcc->isChecked());
     config->writeEntry("previous-identity", mIdentity->currentText() );
     config->writeEntry("current-transport", mTransport->currentText());
-    config->writeEntry("previous-fcc", (*mFolderList.at(mFcc->currentItem()))->idString());
+    config->writeEntry("previous-fcc", mFcc->getFolder()->idString() );
     mTransportHistory.remove(mTransport->currentText());
     if (KMTransportInfo::availableTransports().findIndex(mTransport
       ->currentText()) == -1)
@@ -1174,7 +1159,7 @@ bool KMComposeWin::applyChanges(void)
   id.readConfig();
   kdDebug() << "KMComposeWin::applyChanges: " << mFcc->currentText() << "==" << id.fcc() << "?" << endl;
 
-  KMFolder *f = *mFolderList.at( mFcc->currentItem() );
+  KMFolder *f = mFcc->getFolder();
 
   if ( f->idString() == id.fcc() )
       mMsg->setFcc( QString::null );
@@ -2409,14 +2394,8 @@ void KMComposeWin::slotIdentityActivated(int)
 
       kdDebug(5006) << "KMComposeWin::slotIdentityActivated: mFcc->count() = " << mFcc->count() << endl;
 
-      for ( int i = 0; i < mFcc->count(); ++i )
-      {
-          if ( ( *mFolderList.at( i ) )->idString() == ident.fcc() )
-          {
-              mFcc->setCurrentItem( i );
-              break;
-          }
-      }
+      QString theFcc = ident.fcc();
+      mFcc->setFolder( theFcc );
   }
 
   if (((pos >= 0) && (pos + mOldSigText.length() + 5 == edtText.length())) ||

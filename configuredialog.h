@@ -38,6 +38,8 @@ class ColorListBox;
 class KMAccount;
 class KMTransportInfo;
 class KMFolder;
+class KMFolderComboBox;
+
 namespace Kpgp {
   class Config;
 };
@@ -268,7 +270,7 @@ private:
       QLabel         *pgpIdentityLabel;
       QCheckBox      *transportCheck;
       QComboBox      *transportCombo;
-      QComboBox      *fccCombo;
+      KMFolderComboBox  *fccCombo;
       KURLRequester  *signatureFileEdit;
       QLabel         *signatureFileLabel;
       QCheckBox      *signatureExecCheck;
@@ -277,8 +279,6 @@ private:
       QRadioButton   *signatureTextRadio;
       QMultiLineEdit *signatureTextEdit;
       QString        mActiveIdentity;
-      QStringList    mFolderNames;
-      QValueList<QGuardedPtr<KMFolder> > mFolderList;	  
     };
     struct NetworkWidget
     {

@@ -64,6 +64,7 @@
 #include "kmsender.h"
 #include "kmtopwidget.h"
 #include "kmtransport.h"
+#include "kmfoldercombobox.h"
 #ifdef SCORING
 #include "kmscoring.h"
 #endif
@@ -562,8 +563,8 @@ void ConfigureDialog::makeIdentityPage( void )
 
   label = new QLabel( i18n("Sen&t-mail Folder:"), page );
   glay->addWidget( label, 6, 0 );
-  mIdentity.fccCombo = new QComboBox( page );
-  mIdentity.fccCombo->setEditable( FALSE );
+  mIdentity.fccCombo = new KMFolderComboBox( page );
+  mIdentity.fccCombo->showOutboxFolder( FALSE );
   label->setBuddy(mIdentity.fccCombo);
   glay->addMultiCellWidget( mIdentity.fccCombo, 6, 6, 1, 2 );
 
@@ -1620,22 +1621,6 @@ void ConfigureDialog::setupIdentityPage( void )
   mIdentity.identityCombo->clear();
   mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
   mIdentity.mActiveIdentity = "";
-  // populate fcc folder list
-  mIdentity.mFolderNames.clear();
-  mIdentity.mFolderList.clear();
-  kernel->folderMgr()->createI18nFolderList(&mIdentity.mFolderNames, &mIdentity.mFolderList);
-  for ( unsigned int i = 0; i < mIdentity.mFolderList.count(); i++ )
-  {
-      KMFolder *cur = *mIdentity.mFolderList.at( i );
-      if ( cur == kernel->outboxFolder() )
-      {
-          mIdentity.mFolderList.remove( mIdentity.mFolderList.at( i ) );
-          mIdentity.mFolderNames.remove( mIdentity.mFolderNames.at( i ) );
-      }
-  }
-
-  mIdentity.fccCombo->insertStringList(mIdentity.mFolderNames);
-
   slotIdentitySelectorChanged(); // This will trigger an update
 }
 
@@ -2545,7 +2530,7 @@ void ConfigureDialog::saveActiveIdentity( void )
     entry->setUseSignatureFile( mIdentity.signatureFileRadio->isChecked() );
     entry->setTransport( (mIdentity.transportCheck->isChecked()) ?
       mIdentity.transportCombo->currentText() : QString::null );
-    entry->setFcc( ( *mIdentity.mFolderList.at( mIdentity.fccCombo->currentItem() ) )->idString() );
+    entry->setFcc( mIdentity.fccCombo->getFolder()->idString() );
   }
 }
 
@@ -2583,12 +2568,7 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     useSignatureFile = true;
     mIdentity.transportCheck->setChecked( false );
     mIdentity.transportCombo->setEditText( QString::null );
-    for (int i=0; i < mIdentity.fccCombo->count(); ++i)
-      if ( ( *mIdentity.mFolderList.at( i ) )->idString() == kernel->sentFolder()->idString())
-      {
-          mIdentity.fccCombo->setCurrentItem(i);
-          break;
-      }
+    mIdentity.fccCombo->setFolder( kernel->sentFolder() );
   }
   else
   {
@@ -2606,12 +2586,8 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.transportCombo->setEnabled(!entry->transport().isEmpty());
     if ( entry->fcc().isEmpty() )
         entry->setFcc( kernel->sentFolder()->idString() );
-    for (int i=0; i < mIdentity.fccCombo->count(); ++i)
-      if ( ( *mIdentity.mFolderList.at( i ) )->idString() == entry->fcc() )
-      {
-          mIdentity.fccCombo->setCurrentItem(i);
-          break;
-      }
+    QString theFcc = entry->fcc();
+    mIdentity.fccCombo->setFolder( theFcc );
   }
 
   if( useSignatureFile == true )
