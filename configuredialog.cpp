@@ -4176,6 +4176,23 @@ void MiscPage::GroupwareTab::save() {
   GlobalSettings::setTheIMAPResourceEnabled( enabled );
   GlobalSettings::setTheIMAPResourceFolderLanguage( mLanguageCombo->currentItem() );
   GlobalSettings::setTheIMAPResourceFolderParent( folder? folder->idString(): "" );
+
+  KMAccount* account = 0;
+  // Didn't find an easy way to find the account for a given folder...
+  // Fallback: iterate over accounts to select folderId if found (as an inbox folder)
+  for( KMAccount *a = kmkernel->acctMgr()->first();
+       a && !account; // stop when found
+       a = kmkernel->acctMgr()->next() ) {
+    if( a->folder() && a->folder()->child() ) {
+      KMFolderNode *node;
+      for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
+        if ( node && static_cast<KMFolder*>(node) == folder ) {
+          account = a;
+          break;
+        }
+    }
+  }
+  GlobalSettings::setTheIMAPResourceAccount( account ? account->id() : 0 );
 }
 
 

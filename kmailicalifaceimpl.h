@@ -141,6 +141,8 @@ private slots:
   void slotRefreshContacts();
   void slotRefreshNotes();
 
+  void slotCheckDone();
+
 private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString );
