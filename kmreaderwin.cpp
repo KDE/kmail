@@ -1160,7 +1160,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     else if (ch=='\n') {
       HTML_ADD("<br>", 4);
       startOfLine = true;
-      x = 0;
+      x = -1;
     }
     else if (ch=='&') HTML_ADD("&amp;", 5);
     else if ((ch=='h' && strncmp(pos,"http:", 5)==0) ||
