@@ -3794,9 +3794,9 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   // Groupware functionality compatibility setup
   b1 = new QVGroupBox( i18n("Groupware Compatibility and Legacy Options"), this );
 
+  gBox = new QVBox( b1 );
   /* // Currently believed to be disused.
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
-  gBox = new QVBox( b1 );
   gBox->setSpacing( KDialog::spacingHint() );
   connect( mEnableGwCB, SIGNAL( toggled(bool) ),
 	   gBox, SLOT( setEnabled(bool) ) );
