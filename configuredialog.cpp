@@ -4073,8 +4073,11 @@ void MiscPage::GroupwareTab::load() {
   mLanguageCombo->setCurrentItem(i);
 
   QString folderId( GlobalSettings::theIMAPResourceFolderParent() );
-  if( !folderId.isNull() ) {
+  if( !folderId.isNull() && kmkernel->findFolderById( folderId ) ) {
     mFolderCombo->setFolder( folderId );
+  } else {
+    // Folder was deleted, we have to choose a new one
+    mFolderCombo->setFolder( i18n( "<Choose a Folder>" ) );
   }
 }
 
