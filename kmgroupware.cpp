@@ -992,6 +992,9 @@ QStringList KMGroupware::incidences( const QString& type )
     folder = mNotes;
   } else if( type == "Task" ) {
     folder = mTasks;
+  } else if( type == "Journal" ) {
+    // TODO: Make journals work
+    return QStringList();
   } else {
     assert(0);
   }
