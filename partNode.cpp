@@ -334,6 +334,8 @@ void partNode::adjustDefaultType( partNode* node )
 
 bool partNode::isAttachment() const
 {
+  if (!dwPart())
+	  return false;
   DwHeaders& headers = dwPart()->Headers();
   if( headers.HasContentDisposition() ) 
     return (headers.ContentDisposition().DispositionType() == DwMime::kDispTypeAttachment);
