@@ -350,7 +350,7 @@ kdDebug(5006) << "* model *" << endl;
 kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << endl;
 
       // A) Store the headers of this part IF curNode is not the root node
-      //    AND we are not replacing a node that allready *has* replaced
+      //    AND we are not replacing a node that already *has* replaced
       //    the root node in previous recursion steps of this function...
       if( headers ) {
         if( dataNode->mRoot && !weAreReplacingTheRootNode ) {

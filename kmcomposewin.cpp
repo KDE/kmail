@@ -2327,7 +2327,7 @@ kdDebug(5006) << "                                 encrypt " << idx << ". attach
 
 kdDebug(5006) << "                                 added " << idx << ". attachment to this Multipart/Mixed" << endl;
         } else {
-kdDebug(5006) << "                                 " << idx << ". attachment was part of the BODY allready" << endl;
+kdDebug(5006) << "                                 " << idx << ". attachment was part of the BODY already" << endl;
         }
       }
     } else {

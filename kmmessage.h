@@ -156,7 +156,7 @@ public:
     is not stored in any folder. Marks this message as replied.
     Redirects differ from forwards so they are forwarded to some other
     user, mail is not changed and the reply-to field is set to
-    the email adress of the original sender
+    the email address of the original sender
    */
   KMMessage* createRedirect();
 
