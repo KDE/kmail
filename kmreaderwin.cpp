@@ -936,20 +936,8 @@ static const int numKMailChanges =
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  I18N_NOOP( "Antispam wizard" ),
-  I18N_NOOP( "Filter log" ),
-  I18N_NOOP( "Quick search" ),
-  I18N_NOOP( "Automatic mailing-list detection" ),
-  I18N_NOOP( "View/open message files" ),
-  I18N_NOOP( "HTML message composing" ),
-  I18N_NOOP( "New filter criteria: in address book, in category, has attachment" ),
-  I18N_NOOP("Cryptographic backend auto-configuration"),
-  I18N_NOOP("Sign/encrypt key separation"),
-  I18N_NOOP("Per-identity S/MIME key preselection"),
-  I18N_NOOP("Per-identity cryptographic message format preselection"),
-  I18N_NOOP("Per-contact crypto preferences"),
-  I18N_NOOP("List only opened IMAP folders"),
   I18N_NOOP("Searching in IMAP messages fully supported"),
+  I18N_NOOP("Optional columns in the message list: status, attachment, important, etc.")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -1006,7 +994,7 @@ void KMReaderWin::displayAboutPage()
     .arg(KMAIL_VERSION) // KMail version
     .arg("help:/kmail/index.html") // KMail help:// URL
     .arg("http://kmail.kde.org/") // KMail homepage URL
-    .arg("1.6").arg("3.2"); // prior KMail and KDE version
+    .arg("1.7").arg("3.3"); // prior KMail and KDE version
 
   QString featureItems;
   for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
