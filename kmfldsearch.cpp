@@ -96,16 +96,16 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   connect(mCbxFolders, SIGNAL(activated(int)),
           this, SLOT(slotFolderActivated(int)));
 
+  mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
+  mChkSubFolders->setChecked(true);
+  mGrid->addWidget(mChkSubFolders, 1, 3);
+
   for (int i=0; i<numRules; ++i)
   {
     KMFldSearchRule* rule = new KMFldSearchRule(searchWidget, mGrid, i+2, 0);
     rule->updateFunctions(mCbxFolders->getFolder());
     mRules.append(rule);
   }
-
-  mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
-  mChkSubFolders->setChecked(true);
-  mGrid->addWidget(mChkSubFolders, 1, 3);
 
   // enable/disable widgets depending on radio buttons:
   connect( mChkbxSpecificFolders, SIGNAL(toggled(bool)),
