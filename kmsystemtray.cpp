@@ -19,8 +19,8 @@
   #include <config.h>
 #endif
 
+#include <kapp.h>
 #include <kpopupmenu.h>
-
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kwin.h>
@@ -31,6 +31,7 @@
 #include <qstring.h>
 #include <qtooltip.h>
 #include <qlabel.h>
+#include <qwidgetlist.h>
 
 #include <kglobalsettings.h>
 #include <kiconeffect.h>
@@ -39,7 +40,7 @@
 #include <math.h>
 
 #include "kaction.h"
-#include "kmmainwin.h"
+#include "kmmainwidget.h"
 #include "kmsystemtray.h"
 #include "kmfolder.h"
 #include "kmfoldertree.h"
@@ -81,21 +82,24 @@ mNewMessagePopupId(-1), mPopupMenu(0)
   connect( kernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 }
 
-void KMSystemTray::buildPopupMenu() 
+void KMSystemTray::buildPopupMenu()
 {
   // Delete any previously created popup menu
   delete mPopupMenu;
   mPopupMenu = 0;
-
+  
   mPopupMenu = new KPopupMenu();
+  if (!getKMMainWidget())
+    return;
+
   mPopupMenu->insertTitle(*(this->pixmap()), "KMail");
-  getKMMainWin()->action("check_mail")->plug(mPopupMenu);
-  getKMMainWin()->action("check_mail_in")->plug(mPopupMenu);
+  getKMMainWidget()->action("check_mail")->plug(mPopupMenu);
+  getKMMainWidget()->action("check_mail_in")->plug(mPopupMenu);
   mPopupMenu->insertSeparator();
-  getKMMainWin()->action("new_message")->plug(mPopupMenu);
-  getKMMainWin()->action("kmail_configure_kmail")->plug(mPopupMenu);
+  getKMMainWidget()->action("new_message")->plug(mPopupMenu);
+  getKMMainWidget()->action("kmail_configure_kmail")->plug(mPopupMenu);
   mPopupMenu->insertSeparator();
-  getKMMainWin()->action("file_quit")->plug(mPopupMenu);
+  getKMMainWidget()->action("file_quit")->plug(mPopupMenu);
 }
 
 KMSystemTray::~KMSystemTray()
@@ -130,7 +134,7 @@ void KMSystemTray::setMode(int newMode)
  * overlay the count on top of a transparent version of the KMail icon.
  * If there is no unread mail, restore the normal KMail icon.
  */
-void KMSystemTray::updateCount() 
+void KMSystemTray::updateCount()
 {
   if(mCount != 0)
   {
@@ -222,8 +226,8 @@ void KMSystemTray::foldersChanged()
 }
 
 /**
- * On left mouse click, switch focus to the first KMMainWin.  On right click,
- * bring up a list of all folders with a count of unread messages.
+ * On left mouse click, switch focus to the first KMMainWidget.  On right 
+ * click, bring up a list of all folders with a count of unread messages.
  */
 void KMSystemTray::mousePressEvent(QMouseEvent *e)
 {
@@ -266,8 +270,8 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
         ++it;
       }
 
-      mNewMessagePopupId = mPopupMenu->insertItem(i18n("New messages in..."), 
-                                                  newMessagesPopup, mNewMessagePopupId, 3); 
+      mNewMessagePopupId = mPopupMenu->insertItem(i18n("New messages in..."),
+                                                  newMessagesPopup, mNewMessagePopupId, 3);
 
       kdDebug(5006) << "Folders added" << endl;
     }
@@ -303,12 +307,14 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
 }
 
 /**
- * Shows and raises the first KMMainWin in the KMainWindow memberlist and
+ * Shows and raises the first KMMainWidget and
  * switches to the appropriate virtual desktop.
  */
 void KMSystemTray::showKMail()
 {
-  KMMainWin * mainWin = getKMMainWin();
+  if (!getKMMainWidget())
+    return;
+  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
   assert(mainWin);
   if(mainWin)
   {
@@ -324,8 +330,9 @@ void KMSystemTray::showKMail()
 
 void KMSystemTray::hideKMail()
 {
-
-  KMMainWin * mainWin = getKMMainWin();
+  if (!getKMMainWidget())
+    return;
+  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
   assert(mainWin);
   if(mainWin)
   {
@@ -335,23 +342,20 @@ void KMSystemTray::hideKMail()
 }
 
 /**
- * Grab a pointer to the first KMMainWin in the KMainWindow memberlist.  Note
- * that this code may not necessarily be safe from race conditions since the
- * returned KMMainWin may have been closed by other events between the time that
- * this pointer is retrieved and used.
+ * Grab a pointer to the first KMMainWidget.
  */
-KMMainWin * KMSystemTray::getKMMainWin()
+KMMainWidget * KMSystemTray::getKMMainWidget()
 {
-  KMainWindow *kmWin = 0;
+  QWidgetList *l = kapp->topLevelWidgets();
+  QWidgetListIt it( *l );
+  QWidget *wid;
 
-  for(kmWin = KMainWindow::memberList->first(); kmWin;
-     kmWin = KMainWindow::memberList->next())
-    if(kmWin->isA("KMMainWin")) break;
-  if(kmWin && kmWin->isA("KMMainWin"))
-  {
-    return static_cast<KMMainWin *> (kmWin);
-  }
-
+  while ( (wid = it.current()) != 0 ) {
+    ++it;
+    QObjectList *l2 = wid->topLevelWidget()->queryList("KMMainWidget");
+    if (l2->first())
+      return dynamic_cast<KMMainWidget *>(l2->first());
+  }	
   return 0;
 }
 
@@ -373,7 +377,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   /** The number of unread messages in that folder */
   int unread = fldr->countUnread();
 
-  QMap<QGuardedPtr<KMFolder>, int>::Iterator it = 
+  QMap<QGuardedPtr<KMFolder>, int>::Iterator it =
   mFoldersWithUnread.find(fldr);
   bool unmapped = (it == mFoldersWithUnread.end());
 
@@ -452,20 +456,20 @@ void KMSystemTray::selectedAccount(int id)
 {
   showKMail();
 
-  KMMainWin * mainWin = getKMMainWin();
-  assert(mainWin);
+  KMMainWidget * mainWidget = getKMMainWidget();
+  assert(mainWidget);
 
   /** Select folder */
   KMFolder * fldr = mPopupFolders.at(id);
   if(!fldr) return;
-  KMFolderTree * ft = mainWin->mainKMWidget()->folderTree();
+  KMFolderTree * ft = mainWidget->folderTree();
   if(!ft) return;
   QListViewItem * fldrIdx = ft->indexOfFolder(fldr);
   if(!fldrIdx) return;
 
   ft->setCurrentItem(fldrIdx);
   ft->selectCurrentFolder();
-  mainWin->mainKMWidget()->folderSelectedUnread(fldr);
+  mainWidget->folderSelectedUnread(fldr);
 }
 
 

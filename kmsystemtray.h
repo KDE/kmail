@@ -26,17 +26,17 @@
 #include <qpixmap.h>
 
 class KMFolder;
-class KMMainWin;
+class KMMainWidget;
 class QMouseEvent;
 class KPopupMenu;
 
-/** 
+/**
  * KMSystemTray extends KSystemTray and handles system
- * tray notification for KMail 
+ * tray notification for KMail
  */
 class KMSystemTray : public KSystemTray
 {
-  Q_OBJECT 
+  Q_OBJECT
   public:
   /** construtor */
   KMSystemTray(QWidget* parent=0, const char *name=0);
@@ -63,10 +63,10 @@ protected:
   void updateCount();
 
   QString prettyName(KMFolder *);
-  KMMainWin * getKMMainWin();
+  KMMainWidget * getKMMainWidget();
 
 private:
-  
+
   bool mInverted;
   bool mParentVisible;
 
@@ -75,7 +75,7 @@ private:
   int mNewMessagePopupId;
 
   KPopupMenu * mPopupMenu;
-  QPixmap mDefaultIcon; 
+  QPixmap mDefaultIcon;
   QPixmap mTransparentIcon;
 
   QPtrVector<KMFolder> mPopupFolders;
