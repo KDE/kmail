@@ -426,7 +426,9 @@ void KMAddBookmarksCommand::execute()
                                                                     false );
   KBookmarkGroup group = bookManager->root();
   group.addBookmark( bookManager, mUrl.path(), KURL( mUrl ) );
-  bookManager->save();
+  if( bookManager->save() ) {
+    bookManager->emitChanged( group );
+  }
 }
 
 KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KURL &url,
