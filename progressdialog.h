@@ -49,6 +49,7 @@ using KMail::OverlayWidget;
 
 class QProgressBar;
 class QScrollView;
+class QFrame;
 
 namespace KMail {
 class TransactionItem;
@@ -67,6 +68,8 @@ public:
 
   QSize sizeHint() const;
   QSize minimumSizeHint() const;
+public slots:
+  void slotLayoutFirstItem();
 
 protected:
   virtual void resizeContents ( int w, int h );
@@ -84,6 +87,8 @@ public:
                    ProgressItem* item, bool first );
 
   ~TransactionItem();
+
+  void hideHLine();
 
   void setProgress( int progress );
   void setLabel( const QString& );
@@ -105,6 +110,7 @@ protected:
   QPushButton*  mCancelButton;
   QLabel*       mItemLabel;
   QLabel*       mItemStatus;
+  QFrame*       mFrame;
   ProgressItem* mItem;
 };
 
@@ -126,6 +132,7 @@ protected slots:
   void slotTransactionLabel( ProgressItem *item, const QString& );
 
   void slotHide();
+
 protected:
   virtual void closeEvent( QCloseEvent* );
 

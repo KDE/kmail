@@ -115,23 +115,43 @@ QSize TransactionItemView::minimumSizeHint() const
   return sz;
 }
 
+
+void TransactionItemView::slotLayoutFirstItem()
+{
+  /*
+     The below relies on some details in Qt's behaviour regarding deleting
+     objects. This slot is called from the destroyed signal of an item just
+     going away. That item is at that point still in the  list of chilren, but
+     since the vtable is already gone, it will have type QObject. The first
+     one with both the right name and the right class therefor is what will
+     be the first item very shortly. That's the one we want to remove the
+     hline for.
+  */
+  QObject *o = mBigBox->child( "TransactionItem", "KMail::TransactionItem" );
+  TransactionItem *ti = dynamic_cast<TransactionItem*>( o );
+  if ( ti ) {
+    ti->hideHLine();
+  }
+}
+
+
 // ----------------------------------------------------------------------------
 
 TransactionItem::TransactionItem( QWidget* parent,
                                   ProgressItem *item, bool first )
-  : QVBox( parent ), mCancelButton( 0 ), mItem( item )
+  : QVBox( parent, "TransactionItem" ), mCancelButton( 0 ), mItem( item )
 
 {
   setSpacing( 2 );
   setMargin( 2 );
   setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
-  if ( !first ) {
-    QFrame *f = new QFrame( this );
-    f->setFrameShape( QFrame::HLine );
-    f->setFrameShadow( QFrame::Raised );
-    f->show();
-    setStretchFactor( f, 3 );
-  }
+
+  mFrame = new QFrame( this );
+  mFrame->setFrameShape( QFrame::HLine );
+  mFrame->setFrameShadow( QFrame::Raised );
+  mFrame->show();
+  setStretchFactor( mFrame, 3 );
+
 
   QHBox *h = new QHBox( this );
   h->setSpacing( 5 );
@@ -146,13 +166,17 @@ TransactionItem::TransactionItem( QWidget* parent,
     connect ( mCancelButton, SIGNAL( clicked() ),
               this, SLOT( slotItemCanceled() ));
   }
-
-
   mItemStatus =  new QLabel( item->status(), this );
+  if( first ) hideHLine();
 }
 
 TransactionItem::~TransactionItem()
 {
+}
+
+void TransactionItem::hideHLine()
+{
+    mFrame->hide();
 }
 
 void TransactionItem::setProgress( int progress )
@@ -259,6 +283,9 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
      mTransactionsToListviewItems.remove( item );
      ti->setItemComplete();
      QTimer::singleShot( 5000, ti, SLOT( deleteLater() ) );
+     // see the slot for comments as to why that works
+     connect ( ti, SIGNAL( destroyed() ),
+               mScrollView, SLOT( slotLayoutFirstItem() ) );
    }
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.empty() )
@@ -302,6 +329,7 @@ void ProgressDialog::slotHide()
   if ( mTransactionsToListviewItems.isEmpty() )
     hide();
 }
+
 
 }
 
