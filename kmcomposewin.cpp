@@ -427,7 +427,7 @@ void KMComposeWin::deadLetter(void)
   int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
   if (fd != -1)
   {
-    QString startStr = "From " + mMsg->from() + " " + mMsg->dateShortStr() + "\n";
+    QString startStr = "From " + mMsg->fromEmail() + " " + mMsg->dateShortStr() + "\n";
     ::write(fd, startStr.latin1(), startStr.length());
     ::write(fd, msgStr.latin1(), msgStr.length()); // TODO?: not unicode aware :-(
     ::write(fd, "\n", 1);
