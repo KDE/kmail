@@ -3513,7 +3513,7 @@ void SecurityPage::ComposerCryptoTab::save() {
 }
 
 QString SecurityPage::WarningTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-pgp"); // to be updated
+  return QString::fromLatin1("configure-security-warnings");
 }
 
 SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * name )
@@ -3613,7 +3613,7 @@ void SecurityPage::WarningTab::slotReenableAllWarningsClicked() {
 ////
 
 QString SecurityPage::SMimeTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-pgp"); // to be updated
+  return QString::fromLatin1("configure-security-smime-validation");
 }
 
 SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name )
@@ -3744,7 +3744,7 @@ Kleo::CryptoConfigEntry* SecurityPage::SMimeTab::configEntry( const char* compon
 }
 
 QString SecurityPage::CryptPlugTab::helpAnchor() const {
-  return QString::null;
+  return QString::fromLatin1("configure-security-crypto-backends");
 }
 
 SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char * name )
