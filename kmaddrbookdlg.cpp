@@ -15,7 +15,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   mBtnOk(i18n("OK"),this), 
   mBtnCancel(i18n("Cancel"),this)
 {
-  const char* addr;
+  QString addr;
 
   initMetaObject();
   setCaption(aCap ? QString(aCap) : i18n("Addressbook"));
@@ -90,7 +90,7 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   mBtnAdd(i18n("Add"),this), 
   mBtnRemove(i18n("Remove"),this)
 {
-  const char* addr;
+  QString addr;
 
   initMetaObject();
   setCaption(aCap ? QString(aCap) : i18n("Addressbook Manager"));
