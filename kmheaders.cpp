@@ -1735,7 +1735,7 @@ void KMHeaders::slotMoveAborted( )
 {
   /* The user cancelled the move, reset the state of all messages involved and
    * repaint. */
-  KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages cancelled."));
+  KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages canceled."));
   disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
              this, SLOT(slotMoveAborted()));
 
