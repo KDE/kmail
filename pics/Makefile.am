@@ -1,6 +1,4 @@
 
-SUBDIRS = toolbar
-
 data_DATA = green-bullet.png kmfldin.png kmfldout.png kmfolder.png \
 	kminsorgmsg.png kmmsgdel.png kmmsgnew.png kmmsgunseen.png \
 	kmmsgold.png kmmsgreplied.png kmtrash.png red-bullet.png \
