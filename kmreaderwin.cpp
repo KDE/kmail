@@ -2035,12 +2035,9 @@ void KMReaderWin::slotMailtoOpenAddrBook()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlCopy()
 {
-  KMMainWidget *mainWidget = dynamic_cast<KMMainWidget*>(mMainWindow);
-  if (mainWidget)
-  {
-    KMCommand *command = new KMUrlCopyCommand( mUrlClicked, mainWidget );
-    command->start();
-  }
+  KMCommand *command = new KMUrlCopyCommand( mUrlClicked, 
+		  dynamic_cast<KMMainWidget*>( mMainWindow ) );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
