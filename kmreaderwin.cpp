@@ -196,8 +196,8 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setDefaultTextColor(app->textColor, app->);
   */
   // ### FIXME
-  //connect(mViewer,SIGNAL(URLSelected(QString ,int)),this,
-  //	  SLOT(slotUrlOpen(QString ,int)));
+  connect(mViewer,SIGNAL(urlClicked(const QString& , const QString &, int)),this,
+  	  SLOT(slotUrlOpen(const QString &, const QString &, int)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
 	  SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
@@ -866,7 +866,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::slotUrlOpen(QString aUrl, int aButton)
+void KMReaderWin::slotUrlOpen(const QString &aUrl, const QString &, int aButton)
 {
   int id;
 

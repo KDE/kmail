@@ -101,7 +101,7 @@ public slots:
   void slotTextSelected(bool);
 
   /** An URL has been activate with a click. */
-  void slotUrlOpen(QString , int button);
+  void slotUrlOpen(const QString &, const QString &, int button);
 
   /** The mouse has moved on or off an URL. */
   void slotUrlOn(const QString &url);
