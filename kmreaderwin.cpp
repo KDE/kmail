@@ -2933,9 +2933,10 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
 
     if( reader && ! cryptPlug->hasFeature( Feature_DecryptMessages ) ) {
       reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
-        i18n("Crypto Plug-In %1 can not decrypt any messages.").arg(cryptPlug->libName()),
-        i18n("Please specify a *matching* Plug-In by invoking"),
-        i18n("the 'Settings/Configure KMail / Plug-In' dialog!"),
+        i18n("Crypto plug-in %1 can not decrypt any messages.").arg(cryptPlug->libName()),
+        i18n("Please split translation across this and the next message",
+	     "Please specify a matching plug-in from the"),
+        i18n("'Settings->Configure KMail->Security' dialog."),
         decryptedData );
     } else {
       kdDebug() << "\nKMReaderWin::decryptMIME: going to call CRYPTPLUG "
