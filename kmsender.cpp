@@ -888,7 +888,8 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   assert(aMsg != NULL);
 
   // email this is from
-  mQuery = QString("headers=0&from=%1").arg(KMMessage::getEmailAddr(aMsg->from()));
+  mQuery = QString("headers=0&from=%1")
+                  .arg(KURL::encode_string(KMMessage::getEmailAddr(aMsg->from())));
 
   // recipients
   mQueryField = "&to=";
@@ -911,7 +912,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   }
 
   if(!aMsg->subject().isEmpty())
-    mQuery += QString("&subject=") + aMsg->subject();
+    mQuery += QString("&subject=") + KURL::encode_string(aMsg->subject());
 
   KURL destination;
 
@@ -960,7 +961,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   }
 
   destination.setPath("/send");
-  destination.setQuery(KURL::encode_string(mQuery));
+  destination.setQuery(mQuery);
 
   mQuery = "";
 
@@ -1011,7 +1012,7 @@ bool KMSendSMTP::finish(bool b)
 bool KMSendSMTP::addOneRecipient(const QString& _addr)
 {
   if(!_addr.isEmpty())
-    mQuery += mQueryField + _addr;
+    mQuery += mQueryField + KURL::encode_string(_addr);
 
   return true;
 }
