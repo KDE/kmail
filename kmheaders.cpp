@@ -134,11 +134,11 @@ public:
         threadingPolicy = 1;
     }
     if (threadingPolicy < 2) {
-    KMHeaderItem * topOfThread = this;
-    while(topOfThread->parent())
+      KMHeaderItem * topOfThread = this;
+      while(topOfThread->parent())
     	topOfThread = (KMHeaderItem*)topOfThread->parent();
-       topOfThread->setOpen( true );
-  }
+      topOfThread->setOpen( true );
+    }
   }
 
   // Return the msgId of the message associated with this item
