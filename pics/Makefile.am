@@ -1,5 +1,5 @@
 
-data_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
+pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
 	kmmsgreplied.png kmmsgforwarded.png kmmsgqueued.png kmmsgflag.png \
 	kmmsgsent.png stopwatch.xbm stopwatchMask.xbm kdelogo.png \
 	pub_key_red.png pgp-keys.png \
@@ -18,7 +18,7 @@ data_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
 	kmgroupware_folder_tasks.png
 
 
-datadir = $(kde_datadir)/kmail/pics
+picsdir = $(kde_datadir)/kmail/pics
 
 EXTRA_DIST = $(data_DATA)
 
