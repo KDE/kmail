@@ -109,8 +109,6 @@ void KMFilterMgr::cleanup(void)
 {
   KMFolder* fld;
 
-  kernel->folderMgr()->contentsChanged();
-
   for (fld=mOpenFolders.first(); fld; fld=mOpenFolders.next())
     if (fld) fld->close();
 
@@ -144,7 +142,7 @@ void KMFilterMgr::openDialog( QWidget *parent )
   if( !mEditDialog )
   {
     //
-    // We can't use the parent as long as the dialog is modeless 
+    // We can't use the parent as long as the dialog is modeless
     // and there is one shared dialog for all top level windows.
     //
     (void)parent;
