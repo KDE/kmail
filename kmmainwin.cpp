@@ -903,7 +903,7 @@ void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
   if (!newMail)
     return;
 
-  KNotifyClient::event("new-mail-arrived", i18n("New Mail arrived"));
+  KNotifyClient::event("new-mail-arrived", i18n("New mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
