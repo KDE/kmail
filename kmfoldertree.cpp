@@ -804,7 +804,7 @@ void KMFolderTree::incCurrentFolder()
   QListViewItemIterator it( currentItem() );
   ++it;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-  if (fti && fti->folder()) {
+  if (fti) {
       prepareItem( fti );
       setFocus();
       setCurrentItem( fti );
@@ -817,7 +817,7 @@ void KMFolderTree::decCurrentFolder()
   QListViewItemIterator it( currentItem() );
   --it;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-  if (fti && fti->folder()) {
+  if (fti) {
       prepareItem( fti );
       setFocus();
       setCurrentItem( fti );
@@ -828,7 +828,7 @@ void KMFolderTree::decCurrentFolder()
 void KMFolderTree::selectCurrentFolder()
 {
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( currentItem() );
-  if (fti && fti->folder()) {
+  if (fti) {
       prepareItem( fti );
       doFolderSelected( fti );
   }
