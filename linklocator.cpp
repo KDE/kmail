@@ -90,23 +90,24 @@ QString LinkLocator::getUrl()
 // keep this in sync with KMMainWin::slotUrlClicked()
 bool LinkLocator::atUrl() const
 {
-    // the following characters are allowed in a dot-atom (RFC 2822):
-    // a-z A-Z 0-9 . ! # $ % & ' * + - / = ? ^ _ ` { | } ~
-    const QString allowedSpecialChars = QString(".!#$%&'*+-/=?^_`{|}~");
+  // the following characters are allowed in a dot-atom (RFC 2822):
+  // a-z A-Z 0-9 . ! # $ % & ' * + - / = ? ^ _ ` { | } ~
+  const QString allowedSpecialChars = QString(".!#$%&'*+-/=?^_`{|}~");
 
-  // the character directly before the URL must not be a letter, a number or any
-  // other character allowed in a dot-atom (RFC 2822).
-  if( ( mPos > 0 )
-      && ( mText[mPos-1].isLetterOrNumber() || ( allowedSpecialChars.find(mText[mPos-1]) != -1 ) ) )
+  // the character directly before the URL must not be a letter, a number or
+  // any other character allowed in a dot-atom (RFC 2822).
+  if( ( mPos > 0 ) && ( mText[mPos-1].isLetterOrNumber() ||
+                        ( allowedSpecialChars.find( mText[mPos-1] ) != -1 ) ) )
     return false;
 
   QChar ch = mText[mPos];
-  return (ch=='h' && mText.mid(mPos, 7) == "http://") ||
-         (ch=='h' && mText.mid(mPos, 8) == "https://") ||
+  return (ch=='h' && ( mText.mid(mPos, 7) == "http://" ||
+                       mText.mid(mPos, 8) == "https://") ) ||
          (ch=='v' && mText.mid(mPos, 6) == "vnc://") ||
-         (ch=='f' && ( mText.mid(mPos, 6) == "ftp://" || mText.mid(mPos, 7) == "ftps://") ) ||
-         (ch=='s' && mText.mid(mPos, 7) == "sftp://") ||
-         (ch=='s' && mText.mid(mPos, 6) == "smb://") ||
+         (ch=='f' && ( mText.mid(mPos, 6) == "ftp://" || 
+                       mText.mid(mPos, 7) == "ftps://") ) ||
+         (ch=='s' && ( mText.mid(mPos, 7) == "sftp://" ||
+                       mText.mid(mPos, 6) == "smb://") ) ||
          (ch=='m' && mText.mid(mPos, 7) == "mailto:") ||
          (ch=='w' && mText.mid(mPos, 4) == "www.") ||
          (ch=='f' && mText.mid(mPos, 4) == "ftp.");
