@@ -136,7 +136,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
       gl->addWidget( mApplyOnIn, 0, 1 );
       mApplyOnOut = new QCheckBox( i18n("to &sent messages"), adv_w );
       gl->addWidget( mApplyOnOut, 0, 2 );
-      mApplyOnCtrlJ = new QCheckBox( i18n("on &explicit \"Apply Filters\""), adv_w );
+      mApplyOnCtrlJ = new QCheckBox( i18n("on manual &filtering"), adv_w );
       gl->addWidget( mApplyOnCtrlJ, 0, 3 );
       mStopProcessingHere = new QCheckBox( i18n("If this filter &matches, stop processing here"), adv_w );
       gl->addMultiCellWidget( mStopProcessingHere, //1, 0, Qt::AlignLeft );
