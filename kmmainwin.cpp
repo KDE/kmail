@@ -1961,7 +1961,7 @@ void KMMainWin::setupMenuBar()
   
   mViewMenu->insertSeparator();
   toggleFixFontAction = new KToggleAction( i18n("Fixed font widths"), 
-			DEFAULT_FIXEDFONTS_KEY, this, SLOT(slotToggleFixedFont()),
+			0, this, SLOT(slotToggleFixedFont()),
 			actionCollection(), "toggle_fixedfont" );
   viewMenuAction->insert( toggleFixFontAction );
 
