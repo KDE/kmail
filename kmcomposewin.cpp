@@ -112,6 +112,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mAtmListBox = NULL;
   mAtmList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
+  mPathAttach = 0;
 
   setCaption(i18n("KMail Composer"));
   setMinimumSize(200,200);
@@ -1152,17 +1153,21 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in 
   // this function.
   QString fileName;
-  QString path = QDir::currentDirPath();
+
+  if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
   
-  KFileDialog fdlg(path.data(),"*",this,NULL,TRUE);
+  KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
 
   fdlg.setCaption(i18n("Attach File"));
   if (!fdlg.exec()) return;
 
-  fileName = fdlg.selectedFile();		
+  mPathAttach = fdlg.dirPath().copy();
+
+  fileName = fdlg.selectedFile();
   if(fileName.isEmpty()) return;
 
   addAttach(fileName);
+  mEditor->toggleModified(TRUE);
 }
 
 
@@ -1171,11 +1176,14 @@ void KMComposeWin::slotInsertFile()
 {
   QString fileName, str;
   int col, line;
-  QString path = QDir::currentDirPath();
   
-  KFileDialog fdlg(path.data(), "*", this, NULL, TRUE);
+  if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
+
+  KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
   fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
+
+  mPathAttach = fdlg.dirPath().copy();
 
   fileName = fdlg.selectedFile();
   if (fileName.isEmpty()) return;
@@ -1257,7 +1265,6 @@ void KMComposeWin::slotAttachSave()
 {
   KMMessagePart* msgPart;
   QString fileName, pname;
-  QString path = QDir::currentDirPath();
   
   int idx = mAtmListBox->currentItem();
   if (idx < 0) return;
@@ -1266,8 +1273,11 @@ void KMComposeWin::slotAttachSave()
   pname = msgPart->name();
   if (pname.isEmpty()) pname="unnamed";
 
-  fileName = KFileDialog::getSaveFileName(path.data(), "*", NULL, pname);
+  if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
+
+  fileName = KFileDialog::getSaveFileName(mPathAttach, "*", NULL, pname);
   if (fileName.isEmpty()) return;
+
   kStringToFile(msgPart->bodyDecoded(), fileName, TRUE);
 }
 
@@ -1276,7 +1286,11 @@ void KMComposeWin::slotAttachSave()
 void KMComposeWin::slotAttachRemove()
 {
   int idx = mAtmListBox->currentItem();
-  if (idx >= 0) removeAttach(idx);
+  if (idx >= 0)
+  {
+    removeAttach(idx);
+    mEditor->toggleModified(TRUE);
+  }
 }
 
 

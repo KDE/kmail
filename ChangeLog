@@ -1,5 +1,12 @@
 1998-06-12  Stefan Taferner  <taferner@kde.org>
 
+	* Folder loading: moved status message in index
+	creation to a more suitable place. Should be lots
+	faster now.
+
+	* Composer: Now path of last filedialog for attachments
+	is stored.
+
 	* Fonts: improved font settings. The HTML widget
 	unfortunately only honors the font family. Added new
 	functions (kfontutils.h) for easy font to/from string

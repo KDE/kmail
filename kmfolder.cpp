@@ -347,13 +347,6 @@ int KMFolder::createIndexFromContents(void)
 
   while (!atEof)
   {
-    if ((num & 127) == 0)
-    {
-      msgStr.sprintf(i18n("Creating index file: %d messages done"), 
-		     num);
-      emit statusMsg(msgStr);
-    }
-
     pos = ftell(mStream);
     if (!fgets(line, MAX_LINE, mStream)) atEof = TRUE;
 
@@ -366,6 +359,12 @@ int KMFolder::createIndexFromContents(void)
 
       if (num >= 0)
       {
+	if ((num & 127) == 0)
+	{
+	  msgStr.sprintf(i18n("Creating index file: %d messages done"), num);
+	  emit statusMsg(msgStr);
+	}
+
 	if (size > 0)
 	{
 	  mi = new KMMsgInfo(this);
@@ -833,7 +832,7 @@ int KMFolder::compact(void)
   tempName += ".compacted";
   unlink(tempName);
   tempFolder = parent()->createFolder(tempName);
-  assert(tempFolder != "");
+  assert(tempFolder!=NULL);
 
   quiet(TRUE);
   tempFolder->open();
