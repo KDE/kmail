@@ -720,7 +720,7 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
 }
 
 
-// little static helper 
+// little static helper
 static bool folderHasCreateRights( const KMFolder *folder )
 {
   bool createRights = true; // we don't have acls for local folders yet
@@ -816,9 +816,13 @@ bool FolderDiaGeneralTab::save()
         KMessageBox::error( this, message );
         return false;
       }
+      if ( fldName.find( '/' ) != -1 ) {
+        KMessageBox::error( this, i18n( "Folder names can't contain the / (slash) character, please choose another folder name" ) );
+        return false;
+      }
       message = i18n( "<qt>Failed to create folder <b>%1</b>."
             "</qt> " ).arg(fldName);
- 
+
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
         KMFolder *newFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
