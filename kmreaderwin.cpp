@@ -131,12 +131,16 @@ void KMReaderWin::parseObjectTree( partNode* node, bool showOneMimePart,
     mViewer->write("<html><body" +
       QString(" bgcolor=\"%1\"").arg(c4.name()));
 
-    // set all children and their children to 'not yet processed'
-    if( node  ) {
-      node->setProcessed( false );
+  }
+  if(node && (showOneMimePart || (mShowCompleteMessage && !node->mRoot ))) {
+    if( showOneMimePart ) {
+      // set this node and all it's children and their children to 'not yet processed'
+      node->mWasProcessed = false;
       if( node->mChild )
         node->mChild->setProcessed( false );
-    }
+    } else
+      // set this node and all it's siblings and all it's childrens to 'not yet processed'
+      node->setProcessed( false );
   }
 
   bool isImage = false;
@@ -827,7 +831,8 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
     mCryptPlugList( cryptPlugList ),
-    mRootNode( 0 )
+    mRootNode( 0 ),
+    mShowCompleteMessage( false )
 {
   mAutoDelete = false;
   mLastSerNum = 0;
@@ -2035,10 +2040,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
 
 
   // show message content
-  // (force displaying if no mMimePartTree because this is true when we
-  //  are called by double-click on message list entry for displaying
-  //  the mail content in a separate mail viewer window)
-  parseObjectTree( mRootNode, !mMimePartTree );
+  parseObjectTree( mRootNode );
 
   // store encrypted/signed status information in the KMMessage
   //  - this can only be done *after* calling parseObjectTree()

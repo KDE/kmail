@@ -96,8 +96,14 @@ public:
   virtual void setPrinting(bool enable) { mPrinting = enable; }
 
   /** Set the message that shall be shown. If NULL, an empty page is
-    displayed. */
+      displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
+
+  /** Specify whether message is to be shown completely or not.
+      This is used to make sure message contains it's headers
+      when displayed in separate Viewer window after double-click */
+  void setShowCompleteMessage( bool showCompleteMessage )
+    { mShowCompleteMessage = showCompleteMessage; }
 
   /** Returns the current message or NULL if none. */
   KMMessage* msg(void) const { return mMsg; }
@@ -349,6 +355,7 @@ protected:
   bool    mUnicodeFont;
   bool    mLoadExternal;
   bool mShowColorbar;
+  bool mShowCompleteMessage;
   QStringList mTempFiles;
   QStringList mTempDirs;
   KMMimePartTree* mMimePartTree;
