@@ -1804,7 +1804,9 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       setCaption( i18n("View Attachment: %1").arg( pname ) );
       show();
   } else {
-      MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself
+    htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
+    htmlWriter()->queue( mCSSHelper->htmlHead( isFixedFont() ) );
+
       QString str = aMsgPart->bodyDecoded();
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
@@ -1813,9 +1815,10 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
                     "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
                     str.length());
       }
-      viewer->setText(str);
-      viewer->resize(500, 550);
-      viewer->show();
+    htmlWriter()->write( QStyleSheet::escape( str ) );
+    htmlWriter()->queue("</body></html>");
+    htmlWriter()->flush();
+    mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
   }
   // ---Sven's view text, html and image attachments in html widget end ---
 }
