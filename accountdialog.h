@@ -31,6 +31,7 @@ class QRadioButton;
 class KIntNumInput;
 class KMAccount;
 class KMFolder;
+class KMServerTest;
 
 class AccountDialog : public KDialogBase
 {
@@ -83,15 +84,18 @@ class AccountDialog : public KDialogBase
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *precommand;
+      QButtonGroup *encryptionGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
+      QButtonGroup *authGroup;
       QRadioButton *authAuto;
       QRadioButton *authUser;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
       QRadioButton *authCRAM_MD5;
       QRadioButton *authAPOP;
+      QPushButton  *checkCapabilities;
       QCheckBox    *usePipeliningCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *deleteMailCheck;
@@ -116,14 +120,17 @@ class AccountDialog : public KDialogBase
       QCheckBox    *autoExpungeCheck;
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *storePasswordCheck;
+      QButtonGroup *encryptionGroup;
       QRadioButton *encryptionNone;
       QRadioButton *encryptionSSL;
       QRadioButton *encryptionTLS;
+      QButtonGroup *authGroup;
       QRadioButton *authAuto;
       QRadioButton *authPlain;
       QRadioButton *authLogin;
       QRadioButton *authCramMd5;
       QRadioButton *authAnonymous;
+      QPushButton  *checkCapabilities;
     };
 
   private slots:
@@ -136,6 +143,10 @@ class AccountDialog : public KDialogBase
     void slotFontChanged();
     void slotPopEncryptionChanged(int);
     void slotImapEncryptionChanged(int);
+    void slotCheckPopCapabilities();
+    void slotCheckImapCapabilities();
+    void slotPopCapabilities(const QStringList &);
+    void slotImapCapabilities(const QStringList &);
     
   private:
     void makeLocalAccountPage();
@@ -144,6 +155,7 @@ class AccountDialog : public KDialogBase
     void makeImapAccountPage();
     void setupSettings();
     void saveSettings();
+    void checkHighest(QButtonGroup *);
 
   private:
     LocalWidgets mLocal;
@@ -153,7 +165,8 @@ class AccountDialog : public KDialogBase
     KMAccount    *mAccount;
     QStringList  mIdentityList;
     QValueList<QGuardedPtr<KMFolder> > mFolderList;
-    QStringList mFolderNames;
+    QStringList  mFolderNames;
+    KMServerTest *mServerTest;
 };
 
 

@@ -23,7 +23,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kfileio.cpp kmaddrbook.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
-		kmtopwidget.cpp kmacctimap.cpp \
+		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
 		kmscoring.cpp kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \

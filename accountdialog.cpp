@@ -49,6 +49,7 @@
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
+#include "kmservertest.h"
 
 #include "accountdialog.moc"
 #undef None
@@ -230,6 +231,7 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
 		Ok|Cancel|Help, Ok, true ), mAccount(account),
   mIdentityList( identity )
 {
+  mServerTest = NULL;
   setHelp("receiving-mail");
 
   QString accountType = mAccount->type();
@@ -648,27 +650,40 @@ void AccountDialog::makeImapAccountPage()
   tabWidget->addTab( page2, i18n("S&ecurity") );
   QVBoxLayout *vlay = new QVBoxLayout( page2, spacingHint() );
 
-  QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
+  mImap.encryptionGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Encryption"), page2 );
   mImap.encryptionNone =
-    new QRadioButton( i18n("&None"), group );
+    new QRadioButton( i18n("&None"), mImap.encryptionGroup );
   mImap.encryptionSSL =
-    new QRadioButton( i18n("Use &SSL for secure mail download"), group );
+    new QRadioButton( i18n("Use &SSL for secure mail download"),
+    mImap.encryptionGroup );
   mImap.encryptionTLS =
-    new QRadioButton( i18n("Use &TLS for secure mail download"), group );
-  connect(group, SIGNAL(clicked(int)), SLOT(slotImapEncryptionChanged(int)));
-  vlay->addWidget( group );
+    new QRadioButton( i18n("Use &TLS for secure mail download"),
+    mImap.encryptionGroup );
+  connect(mImap.encryptionGroup, SIGNAL(clicked(int)),
+    SLOT(slotImapEncryptionChanged(int)));
+  vlay->addWidget( mImap.encryptionGroup );
 
-  group = new QButtonGroup( 1, Qt::Horizontal,
+  mImap.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page2 );
-  mImap.authAuto = new QRadioButton( i18n("Clear text"), group );
+  mImap.authAuto = new QRadioButton( i18n("Clear text"), mImap.authGroup );
   mImap.authPlain = new QRadioButton( i18n("Please translate this "
-  "authentification method only, if you have a good reason", "PLAIN"), group );
+    "authentification method only, if you have a good reason", "PLAIN"),
+     mImap.authGroup );
   mImap.authLogin = new QRadioButton( i18n("Please translate this "
-  "authentification method only, if you have a good reason", "LOGIN"), group );
-  mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), group );
-  mImap.authAnonymous = new QRadioButton( i18n("Anonymous"), group );
-  vlay->addWidget( group );
+    "authentification method only, if you have a good reason", "LOGIN"),
+    mImap.authGroup );
+  mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), mImap.authGroup );
+  mImap.authAnonymous = new QRadioButton( i18n("Anonymous"), mImap.authGroup );
+  vlay->addWidget( mImap.authGroup );
+
+  QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
+  mImap.checkCapabilities =
+    new QPushButton( i18n("Check, what the server supports"), page2 );
+  connect(mImap.checkCapabilities, SIGNAL(clicked()),
+    SLOT(slotCheckImapCapabilities()));
+  buttonLay->addWidget( mImap.checkCapabilities );
+  buttonLay->addStretch();
   vlay->addStretch();
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
@@ -837,13 +852,73 @@ void AccountDialog::setupSettings()
 
 void AccountDialog::slotPopEncryptionChanged(int id)
 {
-  mPop.portEdit->setText((id == 1) ? "995" : "110");
+  if (id == 1 || mPop.portEdit->text() == "995")
+    mPop.portEdit->setText((id == 1) ? "995" : "110");
 }
 
 
 void AccountDialog::slotImapEncryptionChanged(int id)
 {
-  mImap.portEdit->setText((id == 1) ? "993" : "143");
+  if (id == 1 || mImap.portEdit->text() == "993")
+    mImap.portEdit->setText((id == 1) ? "993" : "143");
+}
+
+
+void AccountDialog::slotCheckPopCapabilities()
+{
+  if (mServerTest) delete mServerTest;
+  mServerTest = new KMServerTest("pop", mPop.hostEdit->text(),
+    mPop.portEdit->text());
+  connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
+    SLOT(slotPopCapabilities(const QStringList &)));
+}
+
+
+void AccountDialog::slotCheckImapCapabilities()
+{
+  if (mServerTest) delete mServerTest;
+  mServerTest = new KMServerTest("imap", mImap.hostEdit->text(),
+    mImap.portEdit->text());
+  connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
+    SLOT(slotImapCapabilities(const QStringList &)));
+  mImap.checkCapabilities->setEnabled(FALSE);
+}
+
+
+void AccountDialog::slotPopCapabilities(const QStringList &list)
+{
+  mServerTest = NULL;
+}
+
+
+void AccountDialog::slotImapCapabilities(const QStringList &list)
+{
+  mServerTest = NULL;
+  mImap.checkCapabilities->setEnabled(TRUE);
+  mImap.encryptionNone->setEnabled(list.findIndex("NORMAL-CONNECTION") != -1);
+  mImap.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
+  mImap.encryptionTLS->setEnabled(list.findIndex("STARTTLS") != -1);
+  mImap.authPlain->setEnabled(list.findIndex("AUTH=PLAIN") != -1);
+  mImap.authLogin->setEnabled(list.findIndex("AUTH=LOGIN") != -1);
+  mImap.authCramMd5->setEnabled(list.findIndex("AUTH=CRAM-MD5") != -1);
+  mImap.authAnonymous->setEnabled(list.findIndex("AUTH=ANONYMOUS") != -1);
+  checkHighest(mImap.encryptionGroup);
+  checkHighest(mImap.authGroup);
+}
+
+
+void AccountDialog::checkHighest(QButtonGroup *btnGroup)
+{
+  QButton *btn;
+  for (int i = btnGroup->count() - 1; i > 0; i--)
+  {
+    btn = btnGroup->find(i);
+    if (btn && btn->isEnabled())
+    {
+      btn->animateClick();
+      break;
+    }
+  }
 }
 
 
