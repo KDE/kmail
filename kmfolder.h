@@ -120,6 +120,9 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
+  /** Test if folder is opened. */
+  bool isOpened(void) const { return (mOpenCount>0); }
+
   /** Mark all new messages as unread. */
   virtual void markNewAsUnread(void);
 

@@ -173,6 +173,9 @@ void KMFolderTree::inSort(KMFolder* aFolder)
   str = QString("{") + aFolder->type() + "} " + aFolder->label();
   insertItem(str, i);
   mList.insert(i, aFolder);
+
+  if (aFolder->isOpened() && aFolder->countUnread()>0)
+     changeItemColor(darkBlue, i);
 }
 
 

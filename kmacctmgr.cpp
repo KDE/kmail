@@ -54,7 +54,6 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::writeConfig(bool withSync)
 {
-  debug("writing config");
   KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName(256);
@@ -76,7 +75,6 @@ void KMAcctMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readConfig(void)
 {
-  debug("Read config called");
   KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName(256), acctType, acctName;
@@ -104,7 +102,6 @@ void KMAcctMgr::readConfig(void)
 bool KMAcctMgr::singleCheckMail(KMAccount *account)
 {
   bool hasNewMail = FALSE;
-  debug("singleCheckMail called!");
   //kbp->busy();
   KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
   wid->show();
@@ -245,13 +242,10 @@ bool KMAcctMgr::intCheckMail(int item) {
   KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
   wid->show();
   
-  printf("Item: %i\n" ,item);
   int x = 0;
   cur = mAcctList.first();
   for(x=0; x < item; x++)
     cur=mAcctList.next();
-
-  debug(cur->name());
 
   if (cur->processNewMail(wid))
     {

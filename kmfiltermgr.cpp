@@ -5,6 +5,7 @@
 
 #include "kmglobal.h"
 #include "kmfiltermgr.h"
+#include "kmfoldermgr.h"
 #include "kmfilter.h"
 #include "kmfilterdlg.h"
 #include "kmmessage.h"
@@ -95,7 +96,7 @@ void KMFilterMgr::cleanup(void)
 {
   KMFolder* fld;
 
-  debug("closing temporary opened folders");
+  folderMgr->contentsChanged();
 
   for (fld=mOpenFolders.first(); fld; fld=mOpenFolders.next())
     if (fld) fld->close();

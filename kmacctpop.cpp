@@ -96,12 +96,13 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   QString passwd;
   QString response, status;
   int num, size;	// number of all msgs / size of all msgs
-  int id;		// id of message to read
+  int id, i;		// id of message to read
   int dummy;
   char dummyStr[32];
   int replyCode; // ReplyCode need from User & Passwd call.
   KMMessage* msg;
   gotMsgs = FALSE;
+  bool doFetchMsg;
 
   wid->prepareTransmission(host(), KMIOStatus::RETRIEVE);
 
@@ -191,7 +192,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 #ifdef DWPOPCLIENT_HAS_NO_LAST
   if (client.Last() != '+') return popError("LAST", client);
   response = client.SingleLineResponse().c_str();
-  response >> status >> id;
+  sscanf(response.data(), "%3s %d", dummyStr, &id);
   id++;
 #else
   id = 1;
@@ -212,28 +213,55 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     if (client.List(id) != '+')
       return popError("LIST", client);
     response = client.SingleLineResponse().c_str();
-    sscanf(response.data(), "%3s %d %o", dummyStr, &dummy, &size);
+    sscanf(response.data(), "%3s %d %d", dummyStr, &dummy, &size);
 
-    if (client.Retr(id) != '+')
-      return popError("RETR", client);
-    response = client.MultiLineResponse().c_str();
+    debug("msg %d: size=%d %d", id, size, dummy);
 
-    msg = new KMMessage;
-    msg->fromString(response);
-    if (mRetrieveAll || msg->status()!=KMMsgStatusOld)
-      processNewMsg(msg);
-    else delete msg;
+    doFetchMsg = TRUE;
+    if (size > 4500 && !mRetrieveAll)
+    {
+      // If the message is large it is cheaper to first load
+      // the header to check the status of the message.
+      // We will have to load the entire message with the RETR
+      // command below, so we will not fetch the header for
+      // small messages.
+      if (client.Top(id,1) != '+')
+	return popError("TOP", client);
+      response = client.MultiLineResponse().c_str();
+      i = response.find("\nStatus:");
+      if (i<0) i = response.find("\rStatus:");
+      if (i>=0)
+      {
+	status = response.mid(i+8,32).stripWhiteSpace();
+	if (strnicmp(status,"RO",2)==0 ||
+	    strnicmp(status,"OR",2)==0)
+	{
+	  doFetchMsg=FALSE;
+	  debug("no need to download msg %d", id);
+	}
+      }
+    }
+
+    if (doFetchMsg)
+    {
+      if (client.Retr(id) != '+')
+	return popError("RETR", client);
+      response = client.MultiLineResponse().c_str();
+
+      msg = new KMMessage;
+      msg->fromString(response);
+      if (mRetrieveAll || msg->status()!=KMMsgStatusOld)
+	processNewMsg(msg);
+      else delete msg;
+    }
 
     if(!mLeaveOnServer)
     {
-      debug("Deleting mail: %i",id);
       if(client.Dele(id) != '+')
 	return popError("DELE",client);
       else 
 	cout << client.SingleLineResponse().c_str();
     }
-    else
-      debug("Leaving mail on server\n");
 
     gotMsgs = TRUE;
     id++;
@@ -299,7 +327,10 @@ void KMAcctPop::readConfig(KConfig& config)
   mPort = config.readNumEntry("port");
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
-  mRetrieveAll = config.readNumEntry("retrieve-all", TRUE);
+  mRetrieveAll = config.readNumEntry("retrieve-all", !mLeaveOnServer);
+
+  // quick fix for Kde-1.0 by Stefan:
+  mRetrieveAll = !mLeaveOnServer;
 }
 
 

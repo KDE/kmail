@@ -220,6 +220,7 @@ const QString KMMessage::headerAsString(void)
     return header.AsString().c_str();
   return "";
 }
+
 //-----------------------------------------------------------------------------
 void KMMessage::fromString(const QString aStr)
 {
@@ -239,6 +240,10 @@ void KMMessage::fromString(const QString aStr)
 
   mMsg->FromString((const char*)aStr);
   mMsg->Parse();
+
+  DwHeaders& header = mMsg->Headers();
+  setStatus(headerField("Status"), headerField("X-Status"));
+
   mNeedsAssembly = FALSE;
 }
 

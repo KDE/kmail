@@ -51,6 +51,7 @@ KMAddrBook* addrBook = NULL;
 
 
 bool mailto = FALSE;
+bool checkNewMail = FALSE;
 bool firstStart = TRUE;
 bool shuttingDown = FALSE;
 bool checkingMail = FALSE;
@@ -355,7 +356,6 @@ static void processArgs(int argc, char *argv[])
   KMComposeWin* win;
   KMMessage* msg = new KMMessage;
   QString to, cc, bcc, subj;
-  bool checkNewMail = FALSE;
   int i;
 
   for (i=0; i<argc; i++)
@@ -391,8 +391,6 @@ static void processArgs(int argc, char *argv[])
     }
   }
 
-  if (checkNewMail) acctMgr->checkMail();
-
   if (mailto)
   {
     msg->initHeader();
@@ -424,6 +422,7 @@ main(int argc, char *argv[])
     mainWin->show();
   }
 
+  if (checkNewMail) acctMgr->checkMail();
   recoverDeadLetters();
 
   if (firstStart)

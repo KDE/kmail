@@ -96,7 +96,9 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
   // if not successful then use the "Status" field
   if (mStatus == KMMsgStatusUnknown)
   {
-    if (aStatusStr[0]=='R' && aStatusStr[1]=='O') mStatus=KMMsgStatusOld;
+    if ((aStatusStr[0]=='R' && aStatusStr[1]=='O') ||
+	(aStatusStr[0]=='O' && aStatusStr[1]=='R'))
+	mStatus=KMMsgStatusOld;
     else if (aStatusStr[0]=='R') mStatus=KMMsgStatusUnread;
     else if (aStatusStr[0]=='D') mStatus=KMMsgStatusDeleted;
     else mStatus=KMMsgStatusNew;
