@@ -17,7 +17,6 @@ public:
   static QStringList addresses();
   static void addresses(QStringList& result);
   static QString expandNickName( const QString& nickName );
-  static QString expandDistributionList( const QString& listName );
    /**
     	Returns all categories found in the addressbook.
 	@return A list of the categories

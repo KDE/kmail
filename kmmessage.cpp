@@ -23,6 +23,7 @@ using KMail::HeaderStrategy;
 
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
+#include <kaddrbook.h>
 
 #include <kapplication.h>
 #include <kglobalsettings.h>
@@ -1661,7 +1662,7 @@ void KMMessage::initHeader( uint id )
     setFcc( QString::null );
   else
     setFcc( ident.fcc() );
-  
+
   if (ident.drafts().isEmpty())
     setDrafts( QString::null );
   else
@@ -3828,7 +3829,7 @@ QString KMMessage::expandAliases( const QString& recipients )
     QString receiver = (*it).stripWhiteSpace();
 
     // try to expand distribution list
-    QString expandedList = KabcBridge::expandDistributionList( receiver );
+    QString expandedList = KAddrBookExternal::expandDistributionList( receiver );
     if ( !expandedList.isEmpty() ) {
       expandedRecipients += expandedList;
       continue;

@@ -105,26 +105,6 @@ QString KabcBridge::expandNickName( const QString& nickName )
 
 
 //-----------------------------------------------------------------------------
-QString KabcBridge::expandDistributionList( const QString& listName )
-{
-  if ( listName.isEmpty() )
-    return QString();
-
-  QString lowerListName = listName.lower();
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-  KABC::DistributionListManager manager( addressBook );
-  manager.load();
-  QStringList listNames = manager.listNames();
-
-  for ( QStringList::Iterator it = listNames.begin();
-        it != listNames.end(); ++it) {
-    if ( (*it).lower() == lowerListName ) {
-      QStringList addressList = manager.list( *it )->emails();
-      return addressList.join( ", " );
-    }
-  }
-  return QString();
-}
 
 QStringList KabcBridge::categories()
 {
