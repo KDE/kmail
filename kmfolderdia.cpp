@@ -146,6 +146,7 @@ void KMFolderDialog::slotOk()
   if (folder) oldFldName = folder->name();
   if (!nameEdit->text().isEmpty()) fldName = nameEdit->text();
   else fldName = oldFldName;
+  fldName.replace(QRegExp("/"), "");
   if (fldName.isEmpty()) fldName = i18n("unnamed");
   if (curFolder != 0)
     selectedFolderDir = (*mFolders.at(curFolder - 1))->createChildFolder();
