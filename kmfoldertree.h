@@ -32,9 +32,6 @@ public:
   KMFolderTreeItem( KFolderTreeItem* parent, QString name,
                     KMFolder* folder );
 
-  /** gets the recursive unread-count */
-  virtual int countUnreadRecursive();
-
   /** associated folder */
   KMFolder* folder() { return mFolder; }
 

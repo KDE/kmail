@@ -82,15 +82,6 @@ void KMFolderTreeItem::init()
 }
 
 //-----------------------------------------------------------------------------
-int KMFolderTreeItem::countUnreadRecursive()
-{
-  if (mFolder)
-    return mFolder->countUnreadRecursive();
-  else
-    return 0;
-}
-
-//-----------------------------------------------------------------------------
 bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
 {
   if ( !mFolder ||
