@@ -61,6 +61,9 @@ public:
    is new mail in at least one account. */
   virtual bool checkMail(void);
 
+public slots:
+  virtual bool singleCheckMail(KMAccount *);
+
 signals:
   /** emitted if new mail arrived in the account */
   void newMail(KMAccount* inAccount);

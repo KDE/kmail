@@ -4,6 +4,7 @@
 #include "kmacctlocal.h"
 #include "kmacctpop.h"
 #include "kmglobal.h"
+#include "kbusyptr.h"
 
 #include <assert.h>
 #include <kconfig.h>
@@ -14,6 +15,7 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
+extern KBusyPtr *kbp;
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
 {
@@ -51,6 +53,7 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::writeConfig(bool withSync)
 {
+  printf("writing config\n");
   KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName(256);
@@ -72,6 +75,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readConfig(void)
 {
+  printf("Read config called\n");
   KConfig* config = app->getConfig();
   KMAccount* acct;
   QString groupName(256), acctType, acctName;
@@ -91,9 +95,26 @@ void KMAcctMgr::readConfig(void)
     acct = create(acctType, acctName);
     if (!acct) continue;
     acct->readConfig(*config);
+    if(acct->timerRequested()) 
+      acct->installTimer();
+    else 
+      acct->deinstallTimer();
   }
 }
 
+bool KMAcctMgr::singleCheckMail(KMAccount *account)
+{
+  bool hasNewMail = FALSE;
+  printf("singleCheckMail called!\n");
+  kbp->busy();
+  if (account->processNewMail())
+    {
+      hasNewMail = TRUE;
+      emit newMail(account);
+    }
+  kbp->idle();
+  return hasNewMail;
+}
 
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctMgr::create(const QString& aType, const QString& aName) 

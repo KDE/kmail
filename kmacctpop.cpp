@@ -87,7 +87,6 @@ bool KMAcctPop::processNewMail(void)
   result = doProcessNewMail();
   signal(SIGALRM, oldHandler);
   signal(SIGPIPE, pipeHandler);
-
   return result;
 }
 
@@ -288,6 +287,8 @@ void KMAcctPop::readConfig(KConfig& config)
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
   mRetrieveAll = config.readNumEntry("retrieve-all", TRUE);
+  mRTimer = config.readNumEntry("timer",FALSE);
+  mInterval = config.readNumEntry("interval",0);
 }
 
 
@@ -310,6 +311,8 @@ void KMAcctPop::writeConfig(KConfig& config)
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server",mLeaveOnServer);
   config.writeEntry("retrieve-all",mRetrieveAll);
+  config.writeEntry("timer",mRTimer);
+  config.writeEntry("interval",mInterval);
 }
 
 

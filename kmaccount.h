@@ -7,6 +7,8 @@
 
 #include <qstring.h>
 #include <qlist.h>
+#include <qtimer.h>
+#include <qsignal.h>
 #include <kmsgbox.h>
 
 class KMAcctMgr;
@@ -50,6 +52,14 @@ public:
       is already properly set by the caller. */
   virtual void writeConfig(KConfig& config);
 
+  virtual bool timerRequested() {return mRTimer;}
+  virtual void setTimerRequested(bool _timer) { mRTimer = _timer;}
+
+  virtual void installTimer();
+  
+  virtual void deinstallTimer();
+
+  virtual void stateChanged();
 
 protected:
   KMAccount(KMAcctMgr* owner, const char* accountName);
@@ -57,6 +67,18 @@ protected:
   QString       mName;
   KMAcctMgr*    mOwner;
   KMAcctFolder* mFolder;
+  QTimer *mTimer;
+  bool mRTimer;
+  int mInterval;
+
+
+
+private slots:
+  void mailCheck();
+
+signals:
+  void requestCheck(KMAccount *); 
+
 };
 
 

@@ -29,6 +29,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
   mOwner   = aOwner;
   mName    = aName;
   mFolder  = NULL;
+
 }
 
 
@@ -85,3 +86,47 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
 }
 
+void KMAccount::installTimer()
+{
+  if(!mTimer) {
+    mTimer = new QTimer();
+    connect(mTimer,SIGNAL(timeout()),SLOT(mailCheck()));
+    connect(this,SIGNAL(requestCheck(KMAccount *)),
+	      acctMgr,SLOT(singleCheckMail(KMAccount *)));
+    printf("Starting new Timer with interval: %ld\n",mInterval*1000*60);
+    mTimer->start(mInterval*1000*60);
+  }
+  else {
+    mTimer->stop();
+    printf("Starting old Timer with interval: %ld\n",mInterval*1000*60);
+    mTimer->start(mInterval*1000*60);
+  }   
+      
+}
+
+void KMAccount::deinstallTimer()
+{
+  printf("Calling deinstallTimer()\n");
+  if(mTimer) {
+    mTimer->stop();
+    disconnect(mTimer);
+    disconnect(this);
+    delete mTimer;
+    mTimer = 0L;
+  }
+}
+
+void KMAccount::mailCheck()
+{
+  printf("Emitting signal\n");
+  emit requestCheck(this);
+}
+
+void KMAccount::stateChanged()
+{
+  printf("stateChanged called\n");
+  if(timerRequested())
+    installTimer();
+  else
+    deinstallTimer();
+}
