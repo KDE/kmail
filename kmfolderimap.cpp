@@ -123,6 +123,7 @@ void KMFolderImap::readConfig()
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   mCheckMail = config->readBoolEntry("checkmail", true);
+  KMFolderImapInherited::readConfig();
 }
 
 //-----------------------------------------------------------------------------
