@@ -205,6 +205,7 @@ void KMSearchRuleWidget::initLists(bool headersOnly, bool absoluteDates)
     mFilterFieldList.append("Resent-From");
     mFilterFieldList.append("X-Loop");
     mFilterFieldList.append("X-Mailing-List");
+    mFilterFieldList.append("X-Spam-Flag");
   }
 }
 
