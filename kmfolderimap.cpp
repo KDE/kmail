@@ -871,13 +871,14 @@ QCString KMFolderImap::statusToFlags(KMMsgStatus status)
   if (status & KMMsgStatusNew || status & KMMsgStatusUnread) 
     return flags;
   if (status & KMMsgStatusDeleted) 
-    flags += "\\DELETED";
-  if (status & KMMsgStatusRead) 
-    flags += "\\SEEN";
-  if (status & KMMsgStatusReplied) 
-    flags += "\\ANSWERED";
-  if (status & KMMsgStatusFlag) 
-    flags += "\\FLAGGED";
+    flags = "\\DELETED";
+  else {
+    flags = "\\SEEN";
+    if (status & KMMsgStatusReplied) 
+      flags += " \\ANSWERED";
+    if (status & KMMsgStatusFlag) 
+      flags += " \\FLAGGED";
+  }
   return flags;
 }
 
@@ -1152,20 +1153,18 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
 {
   KMFolder::setStatus(ids, status, toggle);
   if (mReadOnly) return;
-
-  // get the uids
-  QValueList<int> uids;
-  getUids(ids, uids);
-
-  // get the flags
-  QCString flags = statusToFlags(status);
-
-  // get the sets of ranges..
-  QStringList sets = makeSets(uids);
-  // ..and pass them to the server
-  for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
+  
+  /* The status has been already set in the local index. Update the flags on
+   * the server. Needs to be done for each message individually. */
+  for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
   {
-    setImapStatus(imapPath() + ";UID=" + *it, flags);
+    KMMessage *msg = 0;
+    bool unget = !isMessage(*it);
+    msg = getMsg(*it);
+    if (!msg) continue;
+    QCString flags = statusToFlags(msg->status());
+    setImapStatus(imapPath() + ";UID=" + msg->headerField("X-UID"), flags);
+    if (unget) unGetMsg(*it);
   }
   mAccount->displayProgress();
 }
