@@ -124,15 +124,6 @@ void KMAcctMaildir::processNewMail(bool)
     return;
   }
 
-  if (mailFolder.isReadOnly()) { // mailFolder is locked
-    mailFolder.close();
-    checkDone( hasNewMail, CheckError );
-    QString errMsg = i18n( "Transmission failed: Could not lock %1." )
-      .arg( mailFolder.location() );
-    KMBroadcastStatus::instance()->setStatusMsg( errMsg );
-    return;
-  }
-
   mFolder->open();
 
 
