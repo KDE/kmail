@@ -277,6 +277,7 @@ namespace KMail {
       if ( showOnlyOneMimePart() )
         break;
     }
+    kdDebug(5006) << "parsing of ObjectTree - DONE" << endl;
   }
 
   void ObjectTreeParser::defaultHandling( partNode * node, ProcessResult & result ) {
@@ -612,6 +613,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                       CryptPlug::SignatureMetaData& sigMeta,
                                       bool showWarning,
                                       bool& passphraseError,
+                                      bool& wrongKeyUsage,
                                       QString& aErrorText )
 {
   passphraseError = false;
@@ -684,6 +686,10 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                                        &errTxt );
     kdDebug(5006) << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG"
                   << endl;
+    if ( bDecryptionOk && errId != 0 ){
+      errId = 0;
+      wrongKeyUsage = true;
+    }
     aErrorText = CryptPlugWrapper::errorIdToText( errId, passphraseError );
     if ( bDecryptionOk )
       decryptedData = cleartext;
@@ -1143,6 +1149,7 @@ namespace KMail {
     sigMeta.extended_info       = 0;
     sigMeta.extended_info_count = 0;
     bool passphraseError;
+    bool wrongKeyUsage;
 
     bool bOkDecrypt = okDecryptMIME( *data,
                                      decryptedData,
@@ -1150,6 +1157,7 @@ namespace KMail {
                                      sigMeta,
                                      true,
                                      passphraseError,
+                                     wrongKeyUsage,
                                      messagePart.errorText );
 
     // paint the frame
@@ -1157,6 +1165,7 @@ namespace KMail {
       messagePart.isDecryptable = bOkDecrypt;
       messagePart.isEncrypted = true;
       messagePart.isSigned = false;
+      messagePart.isWrongKeyUsage = wrongKeyUsage;
       htmlWriter()->queue( writeSigstatHeader( messagePart,
                                                cryptPlugWrapper(),
                                                node->trueFromAddress() ) );
@@ -1301,6 +1310,7 @@ namespace KMail {
         sigMeta.extended_info       = 0;
         sigMeta.extended_info_count = 0;
         bool passphraseError;
+        bool wrongKeyUsage;
 
         bool bOkDecrypt = okDecryptMIME( *node,
                                          decryptedData,
@@ -1308,6 +1318,7 @@ namespace KMail {
                                          sigMeta,
                                          true,
                                          passphraseError,
+                                         wrongKeyUsage,
                                          messagePart.errorText );
 
         // paint the frame
@@ -1315,6 +1326,7 @@ namespace KMail {
           messagePart.isDecryptable = bOkDecrypt;
           messagePart.isEncrypted = true;
           messagePart.isSigned = false;
+          messagePart.isWrongKeyUsage = wrongKeyUsage;
           htmlWriter()->queue( writeSigstatHeader( messagePart,
                                                    cryptPlugWrapper(),
                                                    node->trueFromAddress() ) );
@@ -1463,6 +1475,7 @@ namespace KMail {
       sigMeta.extended_info       = 0;
       sigMeta.extended_info_count = 0;
       bool passphraseError;
+      bool wrongKeyUsage;
 
       if ( okDecryptMIME( *node,
                           decryptedData,
@@ -1470,6 +1483,7 @@ namespace KMail {
                           sigMeta,
                           false,
                           passphraseError,
+                          wrongKeyUsage,
                           messagePart.errorText ) ) {
         kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
         isEncrypted = true;
@@ -1477,6 +1491,7 @@ namespace KMail {
         signTestNode = 0;
         // paint the frame
         messagePart.isDecryptable = true;
+        messagePart.isWrongKeyUsage = wrongKeyUsage;
         if ( mReader )
           htmlWriter()->queue( writeSigstatHeader( messagePart,
                                                    cryptPlugWrapper(),
@@ -1810,7 +1825,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
             htmlStr += i18n("Encapsulated message");
         htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
     }
-
+block.isWrongKeyUsage=true;
     if( block.isEncrypted )
     {
         htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"encr\">"
@@ -1822,6 +1837,10 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
             if( !block.errorText.isEmpty() )
                 htmlStr += "<br />" + i18n("Reason: %1").arg( block.errorText );
         }
+        if( block.isWrongKeyUsage )
+          htmlStr += "<br /><br /><b>"
+                  + i18n("Warning: Message was encrypted with an only-for-signing key.")
+                  + "</b>";
         htmlStr += "</td></tr><tr class=\"encrB\"><td>";
     }
 
