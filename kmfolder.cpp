@@ -98,7 +98,13 @@ QString KMFolder::indexLocation() const
 
 QString KMFolder::subdirLocation() const
 {
-  return mStorage->subdirLocation();
+  QString sLocation( path() );
+
+  if( !sLocation.isEmpty() )
+    sLocation += '/';
+  sLocation += '.' + FolderStorage::dotEscape( fileName() ) + ".directory";
+
+  return sLocation;
 }
 
 KMFolderDir* KMFolder::createChildFolder()

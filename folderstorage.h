@@ -105,12 +105,8 @@ public:
   /** Returns full path to index file */
   virtual QString indexLocation() const = 0;
 
-  /** Returns full path to sub directory file */
-  QString subdirLocation() const;
-
   /** Returns, if the folder can't contain mails, but only subfolder */
-  virtual bool noContent() const
-    { return mNoContent; }
+  virtual bool noContent() const { return mNoContent; }
 
   /** Specify, that the folder can't contain mails. */
   virtual void setNoContent(bool aNoContent)
@@ -484,6 +480,9 @@ public:
   */
   static size_t crlf2lf( char* str, const size_t strLen );
 
+  /** Escape a leading dot */
+  static QString dotEscape(const QString&);
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -543,6 +542,7 @@ public slots:
 
 protected slots:
   virtual void removeJob( QObject* );
+
 protected:
   virtual void addJob( FolderJob* ) const;
   /**
@@ -559,9 +559,6 @@ protected:
     the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
   void headerOfMsgChanged(const KMMsgBase*, int idx);
-
-  /** Escape a leading dot */
-  virtual QString dotEscape(const QString&) const;
 
   /** Load message from file and store it at given index. Returns 0
     on failure. */

@@ -105,7 +105,7 @@ FolderStorage :: ~FolderStorage()
 
 
 //-----------------------------------------------------------------------------
-QString FolderStorage::dotEscape(const QString& aStr) const
+QString FolderStorage::dotEscape(const QString& aStr)
 {
   if (aStr[0] != '.') return aStr;
   return aStr.left(aStr.find(QRegExp("[^\\.]"))) + aStr;
@@ -136,19 +136,6 @@ QString FolderStorage::location() const
 }
 
 
-
-//-----------------------------------------------------------------------------
-QString FolderStorage::subdirLocation() const
-{
-  QString sLocation(folder()->path());
-
-  if (!sLocation.isEmpty()) sLocation += '/';
-  sLocation += '.';
-  sLocation += dotEscape(fileName());
-  sLocation += ".directory";
-
-  return sLocation;
-}
 
 //-----------------------------------------------------------------------------
 void FolderStorage::setAutoCreateIndex(bool autoIndex)
@@ -623,7 +610,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
 
   oldLoc = location();
   oldIndexLoc = indexLocation();
-  oldSubDirLoc = subdirLocation();
+  oldSubDirLoc = folder()->subdirLocation();
   if (kmkernel->msgDict())
     oldIdsLoc = kmkernel->msgDict()->getFolderIdsLocation( folder() );
 
@@ -637,7 +624,7 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
   folder()->setName(newName);
   newLoc = location();
   newIndexLoc = indexLocation();
-  newSubDirLoc = subdirLocation();
+  newSubDirLoc = folder()->subdirLocation();
   if (kmkernel->msgDict())
     newIdsLoc = kmkernel->msgDict()->getFolderIdsLocation( folder() );
 
