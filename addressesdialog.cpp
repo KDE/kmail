@@ -51,8 +51,8 @@ namespace KMail {
 
 // private start :
 struct AddresseeViewItemPrivate {
-  KABC::Addressee address;
-  AddresseeViewItem::Category         category;
+  KABC::Addressee               address;
+  AddresseeViewItem::Category   category;
 };
 
 struct AddressesDialogPrivate {
@@ -72,7 +72,7 @@ struct AddressesDialogPrivate {
 };
 // privates end
 
-  AddresseeViewItem::AddresseeViewItem( AddresseeViewItem *parent, const KABC::Addressee& addr )
+AddresseeViewItem::AddresseeViewItem( AddresseeViewItem *parent, const KABC::Addressee& addr )
   : KListViewItem( parent, addr.realName(), addr.preferredEmail() )
 {
   d = new AddresseeViewItemPrivate;
@@ -458,14 +458,20 @@ AddressesDialog::filterChanged( const QString& txt )
     ++it;
     if ( showAll ) {
       item->setVisible( true );
+      if ( item->category() == AddresseeViewItem::Group )
+        item->setOpen( false );//close to not have too manu entries
       continue;
     }
     if ( item->category() == AddresseeViewItem::Entry ) {
       QString name  = item->addressee().fullEmail();
       if ( !name.contains(txt) )
         item->setVisible( false );
-      else
+      else {
+        if ( item->category() != AddresseeViewItem::Group ) {
+          item->parent()->setOpen( true );//open the parents with found entries
+        }
         item->setVisible( true );
+      }
     }
   }
 }
