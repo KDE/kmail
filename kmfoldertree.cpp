@@ -1,7 +1,11 @@
+// kmfoldertree.cpp
+
 #include <stdlib.h>
 #include <qfileinf.h>
 #include <qpixmap.h>
 #include <kapp.h>
+#include <kiconloader.h>
+
 #include "kmglobal.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
@@ -16,6 +20,8 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 {
   KConfig* conf = app->getConfig();
   QString  kdir = app->kdedir();
+  KIconLoader* loader = app->getIconLoader();
+  static QPixmap pixDir, pixNode, pixPlain, pixFld, pixIn, pixOut, pixTr;
   int width;
 
   initMetaObject();
@@ -32,13 +38,21 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   setColumn(0, "Folders", 400, KTabListBox::MixedColumn);
 
-  dict().insert("dir", new QPixmap(kdir+"/lib/pics/closed.xpm"));
-  dict().insert("node", new QPixmap(kdir+"/lib/pics/green-bullet.xpm"));
-  dict().insert("plain", new QPixmap(kdir+"/lib/pics/kmfolder.xpm"));
-  dict().insert("fld", new QPixmap(kdir+"/lib/pics/kmfolder.xpm"));
-  dict().insert("in", new QPixmap(kdir+"/lib/pics/kmfldin.xpm"));
-  dict().insert("out", new QPixmap(kdir+"/lib/pics/kmfldout.xpm"));
-  dict().insert("tr", new QPixmap(kdir+"/lib/pics/kmtrash.xpm"));
+  pixDir   = loader->loadIcon("closed.xpm");
+  pixNode  = loader->loadIcon("green-bullet.xp");
+  pixPlain = loader->loadIcon("kmfolder.xpm");
+  pixFld   = loader->loadIcon("kmfolder.xpm");
+  pixIn    = loader->loadIcon("kmfldin.xpm");
+  pixOut   = loader->loadIcon("kmfldout.xpm");
+  pixTr    = loader->loadIcon("kmtrash.xpm");
+
+  dict().insert("dir", &pixDir);
+  dict().insert("node", &pixNode);
+  dict().insert("plain", &pixPlain);
+  dict().insert("fld", &pixFld);
+  dict().insert("in", &pixIn);
+  dict().insert("out", &pixOut);
+  dict().insert("tr", &pixTr);
 
   setAutoUpdate(TRUE);
   reload();

@@ -22,6 +22,19 @@ void KMMsgInfo::init(KMMessage::Status aStatus, unsigned long aOffset,
   mOffset = aOffset;
   mSize   = aSize;
   mMsg    = aMsg;
+
+  if (mMsg)
+  {
+    setSubject(mMsg->subject());
+    setDate(mMsg->dateStr());
+    setFrom(mMsg->from());
+  }
+  else
+  {
+    mSubject[0] = '\0';
+    mDate[0]    = '\0';
+    mFrom[0]    = '\0';
+  }
 }
 
 
@@ -31,10 +44,6 @@ void KMMsgInfo::init(const char* aStatusStr, unsigned long aOffset,
 {
   init(KMMessage::stUnknown, aOffset, aSize, aMsg);
   setStatus(aStatusStr);
-
-  mSubject[0] = '\0';
-  mDate[0]    = '\0';
-  mFrom[0]    = '\0';
 }
 
 
