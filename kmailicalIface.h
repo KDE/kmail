@@ -91,6 +91,8 @@ k_dcop:
   virtual Q_UINT32 update( const QString& resource,
                            Q_UINT32 sernum,
                            const QString& subject,
+                           const QString& plainTextBody,
+                           const QMap<QCString, QString>& customHeaders,
                            const QStringList& attachmentURLs,
                            const QStringList& attachmentMimetypes,
                            const QStringList& attachmentNames,
@@ -136,7 +138,7 @@ k_dcop_signals:
   void signalRefresh( const QString& type, const QString& folder );
   void subresourceAdded( const QString& type, const QString& resource );
   void subresourceAdded( const QString& type, const QString& resource,
-                         const QString& label, bool writable, 
+                         const QString& label, bool writable,
                          bool alarmRelevant );
   void subresourceDeleted( const QString& type, const QString& resource );
 };

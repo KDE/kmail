@@ -362,6 +362,8 @@ bool KMailICalIfaceImpl::deleteAttachment( KMMessage& msg,
 // Store a new entry that was received from the resource
 Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
                                                 const QString& subject,
+                                                const QString& plainTextBody,
+                                                const QMap<QCString, QString>& customHeaders,
                                                 const QStringList& attachmentURLs,
                                                 const QStringList& attachmentNames,
                                                 const QStringList& attachmentMimetypes )
@@ -380,23 +382,20 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->headers().ContentType().Assemble();
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
+
+  QMap<QCString, QString>::ConstIterator ith = customHeaders.begin();
+  const QMap<QCString, QString>::ConstIterator ithEnd = customHeaders.end();
+  for ( ; ith != ithEnd ; ++ith ) {
+    msg->setHeaderField( ith.key(), ith.data() );
+  }
+
   // add a first body part to be displayed by all mailer
   // than can NOT display Kolab data: no matter if these
   // mailers are MIME compliant or not
   KMMessagePart firstPart;
   firstPart.setType(    DwMime::kTypeText     );
   firstPart.setSubtype( DwMime::kSubtypePlain );
-  const char * firstPartTextUntranslated = I18N_NOOP(
-    "This is a Kolab Groupware object.\nTo view this object you"
-    " will need an email client that can understand the Kolab"
-    " Groupware format.\nFor a list of such email clients please"
-    " visit\nhttp://www.kolab.org/kolab2-clients.html");
-  QString firstPartText = i18n( firstPartTextUntranslated );
-  if ( firstPartText != firstPartTextUntranslated ) {
-    firstPartText.append("\n\n-----------------------------------------------------\n\n");
-    firstPartText.append( firstPartTextUntranslated );
-  }
-  firstPart.setBodyFromUnicode( firstPartText );
+  firstPart.setBodyFromUnicode( plainTextBody );
   msg->addBodyPart( &firstPart );
 
   Q_ASSERT( attachmentMimetypes.count() == attachmentURLs.count() );
@@ -415,8 +414,6 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
       bAttachOK = false;
       break;
     }
-    if ( bymimetype )
-      msg->setHeaderField( "X-Kolab-Type", *itmime );
   }
 
   if( bAttachOK ){
@@ -626,7 +623,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   // Add the default one
   KMFolder* f = folderFromType( contentsType, QString::null );
   if ( f && storageFormat( f ) == StorageXML ) {
-    subResources.append( SubResource( f->location(),  f->prettyURL(), 
+    subResources.append( SubResource( f->location(),  f->prettyURL(),
                                      !f->isReadOnly(), folderIsAlarmRelevant( f ) ) );
     kdDebug(5006) << "Adding(1) folder " << f->location() << "    " <<
       ( f->isReadOnly() ? "readonly" : "" ) << endl;
@@ -639,8 +636,8 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
     f = it.current()->folder;
     if ( f && f->storage()->contentsType() == t
          && storageFormat( f ) == StorageXML ) {
-      subResources.append( SubResource( f->location(), f->prettyURL(), 
-                                        !f->isReadOnly(), 
+      subResources.append( SubResource( f->location(), f->prettyURL(),
+                                        !f->isReadOnly(),
                                         folderIsAlarmRelevant( f ) ) );
       kdDebug(5006) << "Adding(2) folder " << f->location() << "     " <<
               ( f->isReadOnly() ? "readonly" : "" ) << endl;
@@ -734,6 +731,8 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
                                      const QString& subject,
+                                     const QString& plainTextBody,
+                                     const QMap<QCString, QString>& customHeaders,
                                      const QStringList& attachmentURLs,
                                      const QStringList& attachmentMimetypes,
                                      const QStringList& attachmentNames,
@@ -785,7 +784,12 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
+    QMap<QCString, QString>::ConstIterator ith = customHeaders.begin();
+    const QMap<QCString, QString>::ConstIterator ithEnd = customHeaders.begin();
+    for ( ; ith != ithEnd ; ++ith )
+      newMsg->setHeaderField( ith.key(), ith.data() );
     newMsg->setParent( 0 ); // workaround strange line in KMMsgBase::assign. newMsg is not in any folder yet.
+    // Note that plainTextBody isn't used in this branch. We assume it's still valid from when the mail was created.
 
     // Delete some attachments according to list
     for( QStringList::ConstIterator it = deletedAttachments.begin();
@@ -828,7 +832,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 
   } else {
     // Message not found - store it newly
-    rc = addIncidenceKolab( *f, subject,
+    rc = addIncidenceKolab( *f, subject, plainTextBody, customHeaders,
                             attachmentURLs,
                             attachmentNames,
                             attachmentMimetypes );
@@ -1584,19 +1588,19 @@ void KMailICalIfaceImpl::readConfig()
   slotRefresh( "Contact" );
   slotRefresh( "Notes" );
 #else
-  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(), 
+  subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(),
                     mCalendar->label(), true, true );
   subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(), 
+  subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location(),
                     mTasks->label(), true, true );
   subresourceAdded( folderContentsType( KMail::ContentsTypeTask ), mTasks->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(), 
+  subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location(),
                     mJournals->label(), true, false );
   subresourceAdded( folderContentsType( KMail::ContentsTypeJournal ), mJournals->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(), 
+  subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location(),
                     mContacts->label(), true, false );
   subresourceAdded( folderContentsType( KMail::ContentsTypeContact ), mContacts->location() );
-  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(), 
+  subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(),
                     mNotes->label(), true, false );
   subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location() );
   // This also shows that we might even get rid of the mCalendar etc. special
@@ -1834,12 +1838,12 @@ bool KMailICalIfaceImpl::folderIsAlarmRelevant( const KMFolder *folder )
   bool relevantForEveryone = false;
   if ( folder->folderType() == KMFolderTypeImap ) {
     const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
-    administerRights = 
+    administerRights =
       imapFolder->userRights() <= 0 || imapFolder->userRights() & KMail::ACLJobs::Administer;
   }
   if ( folder->folderType() == KMFolderTypeCachedImap ) {
     const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
-    administerRights = 
+    administerRights =
       dimapFolder->userRights() <= 0 || dimapFolder->userRights() & KMail::ACLJobs::Administer;
     relevantForOwner = dimapFolder->incidencesFor () == KMFolderCachedImap::IncForAdmins;
     relevantForEveryone = ( dimapFolder->incidencesFor() == KMFolderCachedImap::IncForReaders );
