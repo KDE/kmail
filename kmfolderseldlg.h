@@ -5,22 +5,23 @@
 #ifndef kmfolderseldlg_h
 #define kmfolderseldlg_h
 
-#include <qdialog.h>
+#include <kdialogbase.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
 
 class QListBox;
 class KMFolder;
+class KMMainWin;
 
-#define KMFolderSelDlgInherited QDialog
-class KMFolderSelDlg: public QDialog
+#define KMFolderSelDlgInherited KDialogBase
+class KMFolderSelDlg: public KDialogBase
 {
   Q_OBJECT
 
 public:
   /** Constructor. @p parent @em must be a @ref KMMainWin, because we
       need it's foldertree. */
-  KMFolderSelDlg(QWidget * parent, QString caption);
+  KMFolderSelDlg(KMMainWin * parent, const QString& caption);
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */
@@ -28,7 +29,7 @@ public:
 
 protected slots:
   void slotSelect(int);
-  void slotCancel();
+  virtual void slotCancel();
 
 protected:
   QListBox* mListBox;

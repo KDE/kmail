@@ -6,8 +6,7 @@
 
 #include <qlistbox.h>
 #include <qlayout.h>
-#include <qaccel.h>
-#include <kbuttonbox.h>
+#include <qvbox.h>
 
 #include <assert.h>
 #include <qpushbutton.h>
@@ -15,43 +14,19 @@
 QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg(QWidget * parent, QString caption):
-  KMFolderSelDlgInherited(parent, 0, TRUE) // mainwin as parent, no name, but modal
+KMFolderSelDlg::KMFolderSelDlg(KMMainWin * parent, const QString& caption)
+    : KMFolderSelDlgInherited(parent, "folder dialog", true, caption, 
+                              Ok|Cancel, Ok, true) // mainwin as parent, modal
 {
-  QPushButton *btnCancel, *btnOk;
-  QBoxLayout* box = new QVBoxLayout(this, 2, 0);
-  QBoxLayout* bbox = new QHBoxLayout(0);
   QGuardedPtr<KMFolder> cur;
 
-
-  setCaption(caption);
-
-  mListBox = new QListBox(this);
-  box->addWidget(mListBox, 100);
+  mListBox = new QListBox(makeVBoxMainWidget());
   connect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));
 
-  box->addLayout(bbox, 1);
-
-  KButtonBox *butbox = new KButtonBox(this);
-  btnOk = butbox->addButton(i18n("OK"));
-  btnOk->setDefault(TRUE);
-  connect(btnOk, SIGNAL(clicked()), this, SLOT(accept()));
-
-  btnCancel = butbox->addButton(i18n("Cancel"));
-  connect(btnCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
-  butbox->layout();
-  box->addWidget(butbox);
-
-  QAccel *acc = new QAccel(this);
-  acc->connectItem(acc->insertItem(Key_Escape), this, SLOT(slotCancel()));
-
   resize(220, 300);
-  box->activate();
 
   QStringList str;
-  KMMainWin * mw = dynamic_cast<KMMainWin*>( parent );
-  assert( mw );
-  KMFolderTree * ft = mw->folderTree();
+  KMFolderTree * ft = parent->folderTree();
   assert( ft );
   ft->createFolderList( &str, &mFolder  );
   mListBox->insertStringList( str );
