@@ -1228,7 +1228,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 
   if (!doSign && !doEncrypt) return cText;
 
-  pgp->setMessage(cText);
+  pgp->setMessage(cText, mCharset);
 
   // get PGP user id for the chosen identity
   QString pgpUserId;
