@@ -3149,7 +3149,10 @@ void KMComposeWin::toggleMarkup(bool markup)
     mEditor->initializeAutoSpellChecking( mDictionaryCombo->spellConfig());
     slotAutoSpellCheckingToggled(true);
   }
-
+  else if ( !markup && !mUseHTMLEditor )
+    {
+      toolBar("htmlToolBar")->hide();
+    }
 }
 
 //-----------------------------------------------------------------------------
