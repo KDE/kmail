@@ -604,7 +604,7 @@ static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
 //printf("Smart Quoting.\n");
 
 
-  QStringList lines = QStringList::split('\n', msg);
+  QStringList lines = QStringList::split('\n', msg, true);
 
   msg = QString::null;
   for(QStringList::Iterator it = lines.begin();
@@ -827,6 +827,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
     if (sSmartQuote)
       smartQuote(result, indentStr, sWrapCol);
+
   } else {
     result = "";
 
