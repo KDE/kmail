@@ -44,7 +44,7 @@
         <whatsthis>&lt;qt&gt;&lt;p&gt;Select whether you want KMail to send "
         "all messages in the outbox on manual or all mail checks, "
         "or whether you do not want messages to be sent automatically "
-        "at all. &lt;/qt&gt;&lt;/p&gt;</whatsthis>
+        "at all. &lt;/p&gt;&lt;/qt&gt;</whatsthis>
         <choices>
           <choice name="DontSendOnCheck"/>
           <choice name="SendOnManualChecks"/>
@@ -174,13 +174,24 @@
     </group>
 
     <group name="Internal">
-      <entry name="MsgDictSizeHint" type="Int">
+      <entry name="MsgDictSizeHint" type="Int" hidden="true">
         <default>9973</default>
       </entry>
-      <entry name="PreviousNewFeaturesMD5" type="String">
+      <entry name="PreviousNewFeaturesMD5" type="String" hidden="true">
         <default></default>
         <whatsthis>This value is used to decide whether the KMail "
           "Introduction should be displayed.</whatsthis>
+      </entry>
+    </group>
+
+    <group name="Network">
+      <entry name="MaxConnectionsPerHost" type="Int">
+        <default>0</default>
+        <min>0</min>
+        <label>Maximal number of connections per host</label>
+        <whatsthis>This can be used to restrict the number of connections "
+          "per host while checking for new mail. By default the number of "
+          "connections is unlimited (0).</whatsthis>
       </entry>
     </group>
 
