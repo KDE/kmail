@@ -224,10 +224,13 @@ public:
         find out if opaque data is signed or not. */
     static bool writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                   QCString* resultString,
-                                                  CryptPlugWrapper*     useThisCryptPlug,
+                                                  CryptPlugWrapper* useThisCryptPlug,
                                                   partNode* data,
                                                   partNode& sign,
                                                   const QString& fromAddress,
+                                                  bool doCheck = true,
+                                                  QCString* cleartextData = 0,
+                                                  struct CryptPlugWrapper::SignatureMetaData* paramSigMeta = 0,
                                                   bool hideErrors = false );
 
     /** Returns the contents of the given multipart/encrypted
@@ -236,6 +239,8 @@ public:
                                CryptPlugWrapper*     useThisCryptPlug,
                                partNode& data,
                                QCString& decryptedData,
+                               bool& signatureFound,
+                               struct CryptPlugWrapper::SignatureMetaData& sigMeta,
                                bool showWarning,
                                bool& passphraseError,
                                QString& aErrorText );

@@ -365,9 +365,17 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
       if( plugForDecrypting ) {
 
         QCString decryptedData;
+        bool signatureFound;
+        struct CryptPlugWrapper::SignatureMetaData sigMeta;
+        sigMeta.status              = 0;
+        sigMeta.extended_info       = 0;
+        sigMeta.extended_info_count = 0;
+        sigMeta.nota_xml            = 0;
         if( okDecryptMIME( *plugForDecrypting,
                            versionPart,
                            *encryptedDataPart,
+                           signatureFound,
+                           sigMeta,
                            decryptedData,
                            true,
                            bool& isEncrypted,
@@ -669,6 +677,7 @@ kdDebug(5006) << "encrypted" << endl;
                 bDone = true;
               } else if( curNode->mChild ) {
 
+                  bool isOpenPGP = false;
                   bool plugFound = false;
 
                   /*
@@ -677,6 +686,7 @@ kdDebug(5006) << "encrypted" << endl;
                   partNode* data =
                     curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
                   if( data ){
+                    isOpenPGP = true;
                     curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
                     plugFound = foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
                   }
@@ -709,18 +719,24 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     PartMetaData messagePart;
                     curNode->setEncrypted( true );
                     QCString decryptedData;
+                    bool signatureFound;
+                    struct CryptPlugWrapper::SignatureMetaData sigMeta;
+                    sigMeta.status              = 0;
+                    sigMeta.extended_info       = 0;
+                    sigMeta.extended_info_count = 0;
+                    sigMeta.nota_xml            = 0;
                     bool passphraseError;
-                    if( okDecryptMIME( reader, useThisCryptPlug,
+                    
+                    bool bOkDecrypt = okDecryptMIME( reader, useThisCryptPlug,
                                        *data,
                                        decryptedData,
+                                       signatureFound,
+                                       sigMeta,
                                        true,
                                        passphraseError,
-                                       messagePart.errorText ) ) {
-                      DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), data->dwPart());
-                      myBody->Parse();
-                      partNode myBodyNode( true, myBody );
-                      myBodyNode.buildObjectTree( false );
-
+                                       messagePart.errorText );
+                                       
+                    if( bOkDecrypt ){
                       // paint the frame
                       if( reader ) {
                         messagePart.isDecryptable = true;
@@ -730,12 +746,39 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                                                                        useThisCryptPlug,
                                                                        curNode->trueFromAddress() ) );
                       }
-                      insertAndParseNewChildNode( reader,
-                                                  &resultString,
-                                                  useThisCryptPlug,
-                                                  *curNode,
-                                                  &*decryptedData,
-                                                  "encrypted data" );
+                      
+                      // Note: Multipart/Encrypted might also be signed
+                      //       without encapsulating a nicely formatted
+                      //       ~~~~~~~                 Multipart/Signed part.
+                      //                               (see RFC 3156 --> 6.2)
+                      // In this case we paint a _2nd_ frame inside the
+                      // encryption frame, but we do _not_ show a respective
+                      // encapsulated MIME part in the Mime Tree Viewer
+                      // since we do want to show the _true_ structure of the
+                      // message there - not the structure that the sender's
+                      // MUA 'should' have sent.  :-D       (khz, 12.09.2002)
+                      //
+                      if( signatureFound ){
+                        writeOpaqueOrMultipartSignedData( reader,
+                                                          &resultString,
+                                                          useThisCryptPlug,
+                                                          0,
+                                                          *curNode,
+                                                          curNode->trueFromAddress(),
+                                                          false,
+                                                          &decryptedData,
+                                                          &sigMeta,
+                                                          false );
+                        curNode->setSigned( true );
+                      }else{
+                        insertAndParseNewChildNode( reader,
+                                                    &resultString,
+                                                    useThisCryptPlug,
+                                                    *curNode,
+                                                    &*decryptedData,
+                                                    "encrypted data" );
+                      }
+                      
                       if( reader )
                         reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                     }
@@ -895,10 +938,18 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     PartMetaData messagePart;
                     if( foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
                       QCString decryptedData;
+                      bool signatureFound;
+                      struct CryptPlugWrapper::SignatureMetaData sigMeta;
+                      sigMeta.status              = 0;
+                      sigMeta.extended_info       = 0;
+                      sigMeta.extended_info_count = 0;
+                      sigMeta.nota_xml            = 0;
                       bool passphraseError;
                       if( okDecryptMIME( reader, useThisCryptPlug,
                                          *curNode,
                                          decryptedData,
+                                         signatureFound,
+                                         sigMeta,
                                          true,
                                          passphraseError,
                                          messagePart.errorText ) ) {
@@ -998,10 +1049,18 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                       PartMetaData messagePart;
                       messagePart.isEncrypted = true;
                       messagePart.isSigned = false;
+                      bool signatureFound;
+                      struct CryptPlugWrapper::SignatureMetaData sigMeta;
+                      sigMeta.status              = 0;
+                      sigMeta.extended_info       = 0;
+                      sigMeta.extended_info_count = 0;
+                      sigMeta.nota_xml            = 0;
                       bool passphraseError;
                       if( okDecryptMIME( reader, useThisCryptPlug,
                                          *curNode,
                                          decryptedData,
+                                         signatureFound,
+                                         sigMeta,
                                          false,
                                          passphraseError,
                                          messagePart.errorText ) ) {
@@ -1062,6 +1121,9 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                                         0,
                                         *signTestNode,
                                         curNode->trueFromAddress(),
+                                        true,
+                                        0,
+                                        0,
                                         isEncrypted );
                       if( sigFound ) {
                         if( !isSigned ) {
@@ -2381,10 +2443,13 @@ void KMReaderWin::showMessageAndSetData( const QString& txt0,
 
 bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                     QCString* resultString,
-                                                    CryptPlugWrapper*     useThisCryptPlug,
+                                                    CryptPlugWrapper* useThisCryptPlug,
                                                     partNode* data,
                                                     partNode& sign,
                                                     const QString& fromAddress,
+                                                    bool doCheck,
+                                                    QCString* cleartextData,
+                                                    struct CryptPlugWrapper::SignatureMetaData* paramSigMeta,
                                                     bool hideErrors )
 {
   bool bIsOpaqueSigned = false;
@@ -2392,99 +2457,109 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
   CryptPlugWrapperList *cryptPlugList = kernel->cryptPlugList();
   CryptPlugWrapper* cryptPlug = useThisCryptPlug ? useThisCryptPlug : cryptPlugList->active();
   if( cryptPlug ) {
+    if( !doCheck )
+      kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: showing OpenPGP (Encrypted+Signed) data" << endl;
+    else
     if( data )
       kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: processing SMIME Signed data" << endl;
     else
       kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: processing Opaque Signed data" << endl;
 
-    kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: going to call CRYPTPLUG "
-                  << cryptPlug->libName() << endl;
+    if( doCheck ){
+        kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: going to call CRYPTPLUG "
+                    << cryptPlug->libName() << endl;
 
-    if( !cryptPlug->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) {
-        if( reader && !hideErrors )
-          KMessageBox::sorry(reader, i18n("Crypto Plug-In \"%1\" is not initialized.\n"
-            "Please specify the Plug-In using the 'Settings/Configure KMail / Plug-In' dialog.").arg(cryptPlug->libName()));
-        return false;
+        if( !cryptPlug->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) {
+            if( reader && !hideErrors )
+            KMessageBox::sorry(reader, i18n("Crypto Plug-In \"%1\" is not initialized.\n"
+                "Please specify the Plug-In using the 'Settings/Configure KMail / Plug-In' dialog.").arg(cryptPlug->libName()));
+            return false;
+        }
     }
-
     QCString cleartext;
-    char* new_cleartext;
-    if( data )
-      cleartext = data->dwPart()->AsString().c_str();
-    else
-      new_cleartext = 0;
-
-    if( reader && reader->mDebugReaderCrypto ){
-      QFile fileD0( "dat_01_reader_signedtext_before_canonicalization" );
-      if( fileD0.open( IO_WriteOnly ) ) {
-        if( data ) {
-        QDataStream ds( &fileD0 );
-        ds.writeRawBytes( cleartext, cleartext.length() );
-        }
-        fileD0.close();  // If data is 0 we just create a zero length file.
-      }
-    }
-
-    if( data &&
-        ( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
-          (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) ) {
-      // replace simple LFs by CRLSs
-      // according to RfC 2633, 3.1.1 Canonicalization
-      int posLF = cleartext.find( '\n' );
-      if(    ( 0 < posLF )
-          && ( '\r'  != cleartext[posLF - 1] ) ) {
-        kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-        cleartext = KMMessage::lf2crlf( cleartext );
-        kdDebug(5006) << "                                                       done." << endl;
-      }
-    }
-    if( reader && reader->mDebugReaderCrypto ){
-      QFile fileD( "dat_02_reader_signedtext_after_canonicalization" );
-      if( fileD.open( IO_WriteOnly ) ) {
-        if( data ) {
-          QDataStream ds( &fileD );
-          ds.writeRawBytes( cleartext, cleartext.length() );
-        }
-        fileD.close();  // If data is 0 we just create a zero length file.
-      }
-    }
-
-    QByteArray signaturetext( sign.msgPart().bodyDecodedBinary() );
-    QCString signatureStr( signaturetext );
-    bool signatureIsBinary = (-1 == signatureStr.find("BEGIN SIGNED MESSAGE", 0, false) ) &&
-                             (-1 == signatureStr.find("BEGIN PGP SIGNED MESSAGE", 0, false) ) &&
-                             (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
-    int signatureLen = signaturetext.size();
+    char* new_cleartext = 0;
+    QByteArray signaturetext;
+    bool signatureIsBinary = false;
+    int signatureLen = 0;
     
-    if( reader && reader->mDebugReaderCrypto ){
-      QFile fileS( "dat_03_reader.sig" );
-      if( fileS.open( IO_WriteOnly ) ) {
-        QDataStream ds( &fileS );
-        ds.writeRawBytes( signaturetext, signaturetext.size() );
-        fileS.close();
+    if( doCheck ){
+      if( data )
+        cleartext = data->dwPart()->AsString().c_str();
+
+      if( reader && reader->mDebugReaderCrypto ){
+        QFile fileD0( "dat_01_reader_signedtext_before_canonicalization" );
+        if( fileD0.open( IO_WriteOnly ) ) {
+            if( data ) {
+            QDataStream ds( &fileD0 );
+            ds.writeRawBytes( cleartext, cleartext.length() );
+            }
+            fileD0.close();  // If data is 0 we just create a zero length file.
+        }
       }
+
+      if( data &&
+          ( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
+          (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) ) {
+        // replace simple LFs by CRLSs
+        // according to RfC 2633, 3.1.1 Canonicalization
+        int posLF = cleartext.find( '\n' );
+        if(    ( 0 < posLF )
+            && ( '\r'  != cleartext[posLF - 1] ) ) {
+            kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+            cleartext = KMMessage::lf2crlf( cleartext );
+            kdDebug(5006) << "                                                       done." << endl;
+        }
+      }
+      if( reader && reader->mDebugReaderCrypto ){
+        QFile fileD( "dat_02_reader_signedtext_after_canonicalization" );
+        if( fileD.open( IO_WriteOnly ) ) {
+            if( data ) {
+            QDataStream ds( &fileD );
+            ds.writeRawBytes( cleartext, cleartext.length() );
+            }
+            fileD.close();  // If data is 0 we just create a zero length file.
+        }
+      }
+
+      signaturetext = sign.msgPart().bodyDecodedBinary();
+      QCString signatureStr( signaturetext );
+      signatureIsBinary = (-1 == signatureStr.find("BEGIN SIGNED MESSAGE", 0, false) ) &&
+                          (-1 == signatureStr.find("BEGIN PGP SIGNED MESSAGE", 0, false) ) &&
+                          (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
+      signatureLen = signaturetext.size();
+
+      if( reader && reader->mDebugReaderCrypto ){
+        QFile fileS( "dat_03_reader.sig" );
+        if( fileS.open( IO_WriteOnly ) ) {
+            QDataStream ds( &fileS );
+            ds.writeRawBytes( signaturetext, signaturetext.size() );
+            fileS.close();
+        }
+      }
+
+      QCString deb;
+      deb =  "\n\nS I G N A T U R E = ";
+      if( signatureIsBinary )
+        deb += "[binary data]";
+      else {
+        deb += "\"";
+        deb += signaturetext;
+        deb += "\"";
+      }
+      deb += "\n\nC O N T E N T = \"";
+      deb += cleartext;
+      deb += "\"  <--  E N D    O F    C O N T E N T\n\n";
+      kdDebug(5006) << deb << endl;
     }
 
-    QCString deb;
-    deb =  "\n\nS I G N A T U R E = ";
-    if( signatureIsBinary )
-      deb += "[binary data]";
-    else {
-      deb += "\"";
-      deb += signaturetext;
-      deb += "\"";
+    struct CryptPlugWrapper::SignatureMetaData localSigMeta;
+    if( doCheck ){
+      localSigMeta.status              = 0;
+      localSigMeta.extended_info       = 0;
+      localSigMeta.extended_info_count = 0;
+      localSigMeta.nota_xml            = 0;
     }
-    deb += "\n\nC O N T E N T = \"";
-    deb += cleartext;
-    deb += "\"  <--  E N D    O F    C O N T E N T\n\n";
-    kdDebug(5006) << deb << endl;
-
-
-    struct CryptPlugWrapper::SignatureMetaData sigMeta;
-    sigMeta.status              = 0;
-    sigMeta.extended_info       = 0;
-    sigMeta.extended_info_count = 0;
-    sigMeta.nota_xml            = 0;
+    struct CryptPlugWrapper::SignatureMetaData* sigMeta = doCheck ? &localSigMeta : paramSigMeta;
 
     const char* cleartextP = cleartext;
     PartMetaData messagePart;
@@ -2495,30 +2570,37 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
     messagePart.keyTrust = Kpgp::KPGP_VALIDITY_UNKNOWN;
     messagePart.status = i18n("Wrong Crypto Plug-In!");
 
-    if( cryptPlug->hasFeature( Feature_VerifySignatures ) ) {
-
-      if( cryptPlug->checkMessageSignature(
+    if( doCheck && !cryptPlug->hasFeature( Feature_VerifySignatures ) ) {
+      KMessageBox::information(reader,
+          i18n("Problem: This Crypto Plug-In cannot verify message signatures.\n"
+               "Please specify an appropriate Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
+               QString::null,
+               "cryptoPluginBox");
+    } else {
+      if( !doCheck ||
+          cryptPlug->checkMessageSignature(
                                 data ? const_cast<char**>(&cleartextP)
                                     : &new_cleartext,
                                 signaturetext,
                                 signatureIsBinary,
                                 signatureLen,
-                                &sigMeta ) ) {
+                                sigMeta ) ) {
         messagePart.isGoodSignature = true;
       }
 
-      kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
+      if( doCheck )
+        kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
 
-      if( sigMeta.status && *sigMeta.status )
-        messagePart.status = QString::fromUtf8( sigMeta.status );
-      messagePart.status_code = sigMeta.status_code;
+      if( sigMeta->status && *sigMeta->status )
+        messagePart.status = QString::fromUtf8( sigMeta->status );
+      messagePart.status_code = sigMeta->status_code;
 
       // only one signature supported
-      if( sigMeta.extended_info_count != 0 ) {
+      if( sigMeta->extended_info_count != 0 ) {
 
         kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
 
-        CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
+        CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta->extended_info[0];
 
         // save extended signature status flags
         messagePart.sigStatusFlags = ext.sigStatusFlags;
@@ -2571,33 +2653,33 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         messagePart.creationTime.tm_mon  = 1;
         messagePart.creationTime.tm_mday = 1;
       }
-    } else {
-      KMessageBox::information(reader,
-          i18n("Problem: This Crypto Plug-In cannot verify message signatures.\n"
-               "Please specify an appropriate Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
-               QString::null,
-               "cryptoPluginBox");
     }
 
     QString unknown( i18n("(unknown)") );
-    if( !data ){
-      if( new_cleartext ) {
+    if( !doCheck || !data ){
+      if( cleartextData || new_cleartext ) {
         if( reader )
             reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                            useThisCryptPlug,
                                                            fromAddress ) );
         bIsOpaqueSigned = true;
-        deb = "\n\nN E W    C O N T E N T = \"";
-        deb += new_cleartext;
-        deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
-        kdDebug(5006) << deb << endl;
+        
+        if( doCheck ){
+          QCString deb;
+          deb = "\n\nN E W    C O N T E N T = \"";
+          deb += new_cleartext;
+          deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
+          kdDebug(5006) << deb << endl;
+        }
+        
         insertAndParseNewChildNode( reader,
                                     resultString,
                                     useThisCryptPlug,
                                     sign,
-                                    new_cleartext,
+                                    doCheck ? new_cleartext : cleartextData->data(),
                                     "opaqued signed data" );
-        delete new_cleartext;
+        if( doCheck )
+          delete new_cleartext;
 
         if( reader )
           reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
@@ -2611,9 +2693,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         txt.append( "</h2></b>" );
         txt.append( "<br>&nbsp;<br>" );
         txt.append( i18n( "Status: " ) );
-        if( sigMeta.status && *sigMeta.status ) {
+        if( sigMeta->status && *sigMeta->status ) {
           txt.append( "<i>" );
-          txt.append( sigMeta.status );
+          txt.append( sigMeta->status );
           txt.append( "</i>" );
         }
         else
@@ -2636,7 +2718,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
     }
 
-    cryptPlug->freeSignatureMetaData( &sigMeta );
+    cryptPlug->freeSignatureMetaData( sigMeta );
 
   } else {
     if( reader && !hideErrors ) {
@@ -2790,6 +2872,8 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                                  CryptPlugWrapper*     useThisCryptPlug,
                                  partNode& data,
                                  QCString& decryptedData,
+                                 bool& signatureFound,
+                                 struct CryptPlugWrapper::SignatureMetaData& sigMeta,
                                  bool showWarning,
                                  bool& passphraseError,
                                  QString& aErrorText )
@@ -2847,13 +2931,24 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                 << cryptPlug->libName() << endl;
       int errId = 0;
       char* errTxt = 0;
+      /*
       bDecryptionOk = cryptPlug->decryptMessage( ciphertext,
-                                                 cipherIsBinary,
-                                                 cipherLen,
-                                                 &cleartext,
-                                                 certificate,
-                                                 &errId,
-                                                 &errTxt );
+                                                         cipherIsBinary,
+                                                         cipherLen,
+                                                         &cleartext,
+                                                         certificate,
+                                                         &errId,
+                                                         &errTxt );
+      */
+      bDecryptionOk = cryptPlug->decryptAndCheckMessage( ciphertext,
+                                                         cipherIsBinary,
+                                                         cipherLen,
+                                                         &cleartext,
+                                                         certificate,
+                                                         &signatureFound,
+                                                         &sigMeta,
+                                                         &errId,
+                                                         &errTxt );
       kdDebug() << "\nKMReaderWin::decryptMIME: returned from CRYPTPLUG" << endl;
       aErrorText = tmpHelper::pluginErrorIdToErrorText( errId, passphraseError );
       if( bDecryptionOk )
