@@ -2526,7 +2526,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 }
 
 //Flatten the list and write it to disk
-#define KMAIL_SORT_VERSION 1004
+#define KMAIL_SORT_VERSION 1005
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
 #define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
@@ -2943,8 +2943,13 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	KMMsgBase *msg = NULL;
 	for(int x = 0; x < mFolder->count(); x++) {
 	    if(!sortCache[x] && (msg=mFolder->getMsgBase(x))) {
+		int sortOrder = column;
+		if (mPaintInfo.orderOfArrival)
+		    sortOrder |= (1 << 6);
+		if (mPaintInfo.status)
+		    sortOrder |= (1 << 5);
 		sortCache[x] = new KMSortCacheItem(
-		    x, KMHeaderItem::generate_key(x, msg, &mPaintInfo, column));
+		    x, KMHeaderItem::generate_key(x, msg, &mPaintInfo, sortOrder));
 		if(threaded)
 		    unparented.append(sortCache[x]);
 		else
@@ -3002,7 +3007,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		  compare_KMSortCacheItem);
 	//merge two sorted lists of siblings
 	for(QListIterator<KMSortCacheItem> it(*sorted);
-	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {
+	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {	    
 	    if(it.current() &&
 	       (!unsorted || unsorted_off >= unsorted_count ||
 		(ascending && (*it)->key() >= unsorted[unsorted_off]->key()) ||
