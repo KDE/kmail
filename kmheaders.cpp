@@ -986,13 +986,28 @@ void KMHeaders::bounceMsg ()
 void KMHeaders::forwardMsg ()
 {
   KMComposeWin *win;
-  KMMessage *msg = currentMsg();
+  KMMessage *msg;
+  KMMessageList* msgList = selectedMsgs();
 
+  if (msgList->count() >= 2) {
+    // ask if they want a mime digest forward
+
+    if (KMessageBox::questionYesNo(this, i18n("Forward selected messages as"
+                                              " a mime digest?")) 
+                                  == KMessageBox::Yes) {
+      KMessageBox::error(this, "FINISH ME");
+      return;
+    }
+  }
+
+  // forward a single message at most.
+
+  msg = currentMsg();
   if (!msg) return;
 
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createForward(),
-			 msg->headerField( "X-KMail-Identity" ));
+                         msg->headerField( "X-KMail-Identity" ));
   win->show();
   kernel->kbp()->idle();
 }
