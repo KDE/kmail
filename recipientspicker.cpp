@@ -196,7 +196,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( label );
 
   mRecipientList = new KListView( this );
-  mRecipientList->setSelectionMode( QListView::Extended );
+  mRecipientList->setSelectionMode( QListView::Multi );
   mRecipientList->setAllColumnsShowFocus( true );
   topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
@@ -427,6 +427,7 @@ void RecipientsPicker::slotPicked( QListViewItem *viewItem )
     RecipientItem *i = item->recipientItem();
     emit pickedRecipient( Recipient( i->recipient(), Recipient::Undefined ) );
   }
+  close();
 }
 
 void RecipientsPicker::pick( Recipient::Type type )
@@ -444,6 +445,7 @@ void RecipientsPicker::pick( Recipient::Type type )
       }
     }
   }
+  close();
 }
 
 void RecipientsPicker::keyPressEvent( QKeyEvent *ev )

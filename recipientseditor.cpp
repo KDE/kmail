@@ -687,9 +687,6 @@ void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
 
   line->setRecipient( r );
 
-  if ( picker() )
-    picker()->updateRecipient( r );
-
   mRecipientsView->addLine()->activate();
 }
 
