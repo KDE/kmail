@@ -1053,7 +1053,8 @@ int KMFolderMbox::compact()
     if(!(msgs++ % 10)) {
       msgStr = i18n("Compacting folder: one message done",
       				"Compacting folder: %n messages done", msgs);
-      emit statusMsg(msgStr);
+      if (!kernel->shuttingDown())
+	  emit statusMsg(msgStr);
     }
     mi = (KMMsgInfo*)mMsgList[idx];
     msize = mi->msgSize();

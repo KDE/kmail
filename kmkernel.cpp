@@ -783,11 +783,81 @@ bool KMKernel::doSessionManagement()
   return false;  // no, we were not restored
 }
 
+void KMKernel::closeAllKMTopLevelWidgets()
+{
+  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+  KMainWindow *window = 0;
+  while ((window = it.current()) != 0) {
+    ++it;
+    if (window->inherits("KMTopLevelWidget"))
+      window->close(TRUE);
+  }
+}
+
+void KMKernel::notClosedByUser()
+{
+  if (!closed_by_user) // already closed
+    return;
+  closed_by_user = false;
+  the_shuttingDown = true;
+  closeAllKMTopLevelWidgets();
+ 
+  delete the_acctMgr;
+  the_acctMgr = 0;
+  delete the_filterMgr;
+  the_filterMgr = 0;
+  delete the_msgSender;
+  the_msgSender = 0;
+  delete the_filterActionDict;
+  the_filterActionDict = 0;
+  delete the_undoStack;
+  the_undoStack = 0;
+  delete the_popFilterMgr;
+  the_popFilterMgr = 0;
+
+  QStringList strList;
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  KMFolder *folder;
+  the_folderMgr->createFolderList(&strList, &folders);
+  for (int i = 0; folders.at(i) != folders.end(); i++)
+  {
+    folder = *folders.at(i);
+    if (!folder || folder->isDir()) continue;
+    folder->close(TRUE);
+  }
+  strList.clear();
+  folders.clear();
+  the_searchFolderMgr->createFolderList(&strList, &folders);
+  for (int i = 0; folders.at(i) != folders.end(); i++)
+  {
+    folder = *folders.at(i);
+    if (!folder || folder->isDir()) continue;
+    folder->close(TRUE);
+  }
+  folderMgr()->writeMsgDict(msgDict());
+  imapFolderMgr()->writeMsgDict(msgDict());
+  delete the_msgIndex;
+  the_msgIndex = 0;
+  delete the_folderMgr;
+  the_folderMgr = 0;
+  delete the_imapFolderMgr;
+  the_imapFolderMgr = 0;
+  delete the_searchFolderMgr;
+  the_searchFolderMgr = 0;
+  delete the_msgDict;
+  the_msgDict = 0;
+  delete mConfigureDialog;
+  mConfigureDialog = 0;
+  delete mWin;
+  mWin = 0;
+}
+
 void KMKernel::cleanup(void)
 {
   dumpDeadLetters();
   mDeadLetterTimer->stop();
   the_shuttingDown = TRUE;
+  closeAllKMTopLevelWidgets();
 
   delete the_acctMgr;
   the_acctMgr = 0;
@@ -1206,70 +1276,6 @@ void KMKernel::slotShowConfigurationDialog()
     mConfigureDialog->show();
   else
     mConfigureDialog->raise();
-}
-
-void KMKernel::notClosedByUser()
-{
-  if (!closed_by_user) // already closed
-    return;
-  closed_by_user = false;
-  the_shuttingDown = true;
-  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
-  KMainWindow *window = 0;
-  while ((window = it.current()) != 0) {
-    ++it;
-    if (window->inherits("KMTopLevelWidget"))
-      window->close(TRUE);
-  }
- 
-  delete the_acctMgr;
-  the_acctMgr = 0;
-  delete the_filterMgr;
-  the_filterMgr = 0;
-  delete the_msgSender;
-  the_msgSender = 0;
-  delete the_filterActionDict;
-  the_filterActionDict = 0;
-  delete the_undoStack;
-  the_undoStack = 0;
-  delete the_popFilterMgr;
-  the_popFilterMgr = 0;
-
-  QStringList strList;
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  KMFolder *folder;
-  the_folderMgr->createFolderList(&strList, &folders);
-  for (int i = 0; folders.at(i) != folders.end(); i++)
-  {
-    folder = *folders.at(i);
-    if (!folder || folder->isDir()) continue;
-    folder->close(TRUE);
-  }
-  strList.clear();
-  folders.clear();
-  the_searchFolderMgr->createFolderList(&strList, &folders);
-  for (int i = 0; folders.at(i) != folders.end(); i++)
-  {
-    folder = *folders.at(i);
-    if (!folder || folder->isDir()) continue;
-    folder->close(TRUE);
-  }
-  folderMgr()->writeMsgDict(msgDict());
-  imapFolderMgr()->writeMsgDict(msgDict());
-  delete the_msgIndex;
-  the_msgIndex = 0;
-  delete the_folderMgr;
-  the_folderMgr = 0;
-  delete the_imapFolderMgr;
-  the_imapFolderMgr = 0;
-  delete the_searchFolderMgr;
-  the_searchFolderMgr = 0;
-  delete the_msgDict;
-  the_msgDict = 0;
-  delete mConfigureDialog;
-  mConfigureDialog = 0;
-  delete mWin;
-  mWin = 0;
 }
 
 void KMKernel::emergencyExit( const QString& reason )

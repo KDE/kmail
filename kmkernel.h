@@ -117,6 +117,8 @@ public:
   void testDir(const char *_name);
   void recoverDeadLetters(void);
   void initFolders(KConfig* cfg);
+  void closeAllKMTopLevelWidgets();
+  void notClosedByUser();
   void cleanup(void);
   void quit();
   void transferMail(void);
@@ -168,7 +170,6 @@ public:
   bool shuttingDown() { return the_shuttingDown; }
   void setShuttingDown(bool flag) { the_shuttingDown = flag; }
   void serverReady (bool flag) { the_server_is_ready = flag; }
-  void notClosedByUser();
 
   void emergencyExit( const QString& reason );
 
