@@ -577,7 +577,8 @@ while( ( current = it.current() ) ) {
                   else
                   {
                     writeHTMLStr(mCodec->toUnicode( decryptedData ));
-                  }                  bDone = true;
+                  }
+                  bDone = true;
                 }
               }
               useThisCryptPlug = oldUseThisCryptPlug;
