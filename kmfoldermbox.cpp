@@ -242,15 +242,16 @@ void KMFolderMbox::close(bool aForced)
       writeConfig();
   }
 
-  unlock();
-  mMsgList.clear(TRUE);
+  if (!noContent()) {
+    unlock();
+    mMsgList.clear(TRUE);
 
-  if (mStream) fclose(mStream);
+    if (mStream) fclose(mStream);
     if (mIndexStream) {
-	fclose(mIndexStream);
-	updateIndexStreamPtr(TRUE);
+      fclose(mIndexStream);
+      updateIndexStreamPtr(TRUE);
     }
-
+  }
   mOpenCount   = 0;
   mStream      = 0;
   mIndexStream = 0;
