@@ -25,6 +25,7 @@
 #include <qtimer.h>
 #include <kconfig.h>
 #include <kdebug.h>
+#include <kglobal.h>
 #include <kspell.h>
 #include <kmkernel.h>
 #include <kapplication.h>
@@ -175,9 +176,11 @@ DictSpellChecker::DictSpellChecker( QTextEdit *textEdit )
 {
     mRehighlightRequested = false;
     mSpell = 0;
+    mSpellKey = spellKey();
     if (!sDictionaryMonitor)
 	sDictionaryMonitor = new QObject();
     slotDictionaryChanged();
+    startTimer(2*1000);
 }
 
 DictSpellChecker::~DictSpellChecker()
@@ -254,6 +257,34 @@ void DictSpellChecker::slotDictionaryChanged()
     mSpell = 0;
     new KSpell(0, i18n("Incremental Spellcheck - KMail"), this,
 			 SLOT(slotSpellReady(KSpell*)));
+}
+
+QString DictSpellChecker::spellKey()
+{
+    KConfig *config = KGlobal::config();
+    KConfigGroupSaver cs(config,"KSpell");
+    config->reparseConfiguration();
+    QString key;
+    key += QString::number(config->readNumEntry("KSpell_NoRootAffix", 0));
+    key += '/';
+    key += QString::number(config->readNumEntry("KSpell_RunTogether", 0));
+    key += '/';
+    key += config->readEntry("KSpell_Dictionary", "");
+    key += '/';
+    key += QString::number(config->readNumEntry("KSpell_DictFromList", FALSE));
+    key += '/';
+    key += QString::number(config->readNumEntry ("KSpell_Encoding", KS_E_ASCII));
+    key += '/';
+    key += QString::number(config->readNumEntry ("KSpell_Client", KS_CLIENT_ISPELL));
+    return key;
+}       
+
+void DictSpellChecker::timerEvent(QTimerEvent *e)
+{
+    if (mSpell && mSpellKey != spellKey()) {
+	mSpellKey = spellKey();
+	DictSpellChecker::dictionaryChanged();
+    }
 }
 
 } //namespace KMail

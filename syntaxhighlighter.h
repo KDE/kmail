@@ -78,6 +78,10 @@ public:
     virtual bool isMisspelled( const QString& word );
     static void dictionaryChanged();
 
+protected:
+    void timerEvent(QTimerEvent *);
+    QString spellKey();
+
 protected slots:
     void slotMisspelling (const QString & originalword, const QStringList & suggestions, unsigned int pos);
     void slotRehighlight();
@@ -89,6 +93,7 @@ private:
     static QObject *sDictionaryMonitor;
     KSpell *mSpell;
     bool mRehighlightRequested;
+    QString mSpellKey;
 };
 
 }; //namespace KMail
