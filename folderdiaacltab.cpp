@@ -676,8 +676,13 @@ bool KMail::FolderDiaACLTab::save()
 
 void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
 {
-  if ( !f || f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) )
+  if ( !f || 
+       f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) ||
+       !mDlg->folder() ||
+       !mDlg->folder()->storage() ) {
+    emit readyForAccept();
     return;
+  }
 
   // When creating a new folder with online imap, update mImapPath
   KMFolderImap* folderImap = static_cast<KMFolderImap*>( mDlg->folder()->storage() );

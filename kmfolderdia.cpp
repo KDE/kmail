@@ -647,7 +647,9 @@ bool FolderDiaGeneralTab::save()
     if( !mDlg->isNewFolder() ) oldFldName = mDlg->folder()->name();
     if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
     else fldName = oldFldName;
-    fldName.remove('/');
+    if ( mDlg->parentFolder()->folderType() != KMFolderTypeImap &&
+         mDlg->parentFolder()->folderType() != KMFolderTypeCachedImap )
+      fldName.remove('/');
     fldName.remove(QRegExp("^\\.*"));
     if (fldName.isEmpty()) fldName = i18n("unnamed");
 
