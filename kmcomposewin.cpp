@@ -4063,15 +4063,12 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   }
   if ((*it).insert)
   {
-    int col, line;
-    mEditor->getCursorPosition(&line, &col);
     (*it).data.resize((*it).data.size() + 1);
     (*it).data[(*it).data.size() - 1] = '\0';
-    QTextCodec *codec = KGlobal::charsets()->codecForName((*it).encoding);
-    if (codec)
-      mEditor->insertAt(codec->toUnicode((*it).data), line, col);
+    if ( const QTextCodec * codec = KGlobal::charsets()->codecForName((*it).encoding) )
+      mEditor->insert( codec->toUnicode( (*it).data ) );
     else
-      mEditor->insertAt(QString::fromLocal8Bit((*it).data), line, col);
+      mEditor->insert( QString::fromLocal8Bit( (*it).data ) );
     mapAtmLoadData.remove(it);
     return;
   }
