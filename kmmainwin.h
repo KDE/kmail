@@ -79,8 +79,8 @@ public:
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
     *forwardAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
-    *newAction, *unreadAction, *readAction, *repliedAction, *queueAction,
-    *sentAction, *flagAction, *printAction;
+    *printAction, *sendAgainAction;
+  KActionMenu *filterMenu, *statusMenu, *moveActionMenu, *copyActionMenu;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
 
@@ -100,6 +100,9 @@ public slots:
   /** Change the current folder, select a message in the current folder */
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
+
+  // Update the "Move to" and "Copy to" popoutmenus in the Messages menu.
+  virtual void updateMessageMenu();
 
 protected:
   void setupMenuBar();
@@ -148,6 +151,10 @@ protected slots:
   void slotCopyMsg();
   void slotResendMsg();
   void slotApplyFilters();
+  void slotSubjectFilter();
+  void slotMailingListFilter();
+  void slotFromFilter();
+  void slotToFilter();
   void slotSetMsgStatusNew();
   void slotSetMsgStatusUnread();
   void slotSetMsgStatusRead();
@@ -191,8 +198,6 @@ protected slots:
   virtual void moveSelectedToFolder( int menuId );
   // Copy selected messages to folder with corresponding to given menuid
   virtual void copySelectedToFolder( int menuId );
-  // Update the "Move to" and "Copy to" popoutmenus in the Messages menu.
-  virtual void updateMessageMenu();
   // Update html and threaded messages preferences in Folder menu.
   virtual void updateFolderMenu();
 
@@ -212,6 +217,7 @@ protected:
   QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   KSelectAction *mEncoding;
+  KAction       *mlistFilterAction;
   QString	mEncodingStr;
   bool		mIntegrated;
   bool          mSendOnCheck;
@@ -237,7 +243,6 @@ protected:
   KAction *modifyFolderAction, *removeFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *toolbarAction, *statusbarAction;
-  QPopupMenu *copyMenu, *moveMenu;
 };
 
 #endif

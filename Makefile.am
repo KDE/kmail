@@ -1,12 +1,12 @@
 KDE_CXXFLAGS = $(USE_RTTI) -UQT_NO_ASCII_CAST -UQT_NO_COMPAT
 
-SUBDIRS = about pics
+SUBDIRS = . about pics
 INCLUDES = -I$(top_srcdir)/libkdenetwork $(all_includes)
-LDADD	= $(LIB_KHTML) -lkdenetwork -lkspell -lmimelib -lkab $(LIB_KFILE)
+LDADD	= $(LIB_KHTML) ../libkdenetwork/libkdenetwork.la -lkspell -lmimelib $(LIB_KAB)
 
 bin_PROGRAMS = kmail
 
-kmail_LDFLAGS = -L../libkdenetwork $(all_libraries) $(KDE_RPATH)
+kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp \
 		kmaccount.cpp kmheaders.cpp \
@@ -29,7 +29,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
 		kmdisplayvcard.cpp vcard.cpp md5.c \
-		smtp.cpp smtp.h
+		smtp.cpp mailinglist-magic.cpp
 
 
 include_HEADERS = kmailIface.h

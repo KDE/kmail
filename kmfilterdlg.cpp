@@ -755,5 +755,31 @@ void KMFilterDlg::enableControls()
   mRuleValueB->setEnabled( deleteEnabled );
   mRuleOp->setEnabled( deleteEnabled );
 }
+
+
+//-----------------------------------------------------------------------------
+void KMFilterDlg::createFilter(const QString field, const QString value)
+{
+  int idx;
+  KMFilter* filter = new KMFilter;
+  filter->setName(i18n("Unnamed"));
+  filter->ruleA().init( field, KMFilterRule::FuncEquals, value );
+  applyFilterChanges();
+  mCurFilterIdx = -1;
+
+  idx = mFilterList->currentItem();
+  if (idx >= 0) kernel->filterMgr()->insert(idx, filter);
+  else kernel->filterMgr()->append(filter);
+  idx = kernel->filterMgr()->find(filter);
+  mFilterList->insertItem(filter->name(), idx);
+  mFilterList->setCurrentItem(idx);
+  slotFilterSelected(idx);
+  updateCurFilterName( "" );
+  mFaType[0]->setCurrentItem( 1 ); //transfer type
+  slotActionTypeSelected( mFaType[0], 1 );
+  enableControls();
+}
+
+
 //-----------------------------------------------------------------------------
 #include "kmfilterdlg.moc"

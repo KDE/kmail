@@ -153,6 +153,14 @@ void KMFilterMgr::openDialog( QWidget *parent )
 
 
 //-----------------------------------------------------------------------------
+void KMFilterMgr::createFilter( const QString field, const QString value )
+{
+  openDialog( 0 );
+  mEditDialog->createFilter( field, value );
+}
+
+
+//-----------------------------------------------------------------------------
 bool KMFilterMgr::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 {
   KMFilter* filter;

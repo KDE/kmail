@@ -18,6 +18,7 @@
 #include <qtextstream.h>
 #include <qsplitter.h>
 #include <qtimer.h>
+#include "mailinglist-magic.h"
 
 #include <kconfig.h>
 #include <kapp.h>
@@ -255,6 +256,7 @@ void KMMainWin::readConfig(void)
       mMsgView->setMsg( mFolder->getMsg(aIdx), true );
     else
       mMsgView->setMsg( 0, true );
+    updateMessageMenu();
     show();
     // sanders - Maybe this fixes a bug?
 
@@ -333,6 +335,8 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
 	  this, SLOT(slotMsgActivated(KMMessage*)));
+  connect( mHeaders, SIGNAL( selectionChanged() ),
+           SLOT( updateMessageMenu() ) );
   accel->connectItem(accel->insertItem(Key_Left),
 		     mHeaders, SLOT(prevMessage()));
   accel->connectItem(accel->insertItem(Key_Right),
@@ -750,6 +754,7 @@ void KMMainWin::slotEmptyFolder()
 
   mHeaders->setFolder(mFolder);
   kernel->kbp()->idle();
+  updateMessageMenu();
 }
 
 
@@ -1152,6 +1157,39 @@ void KMMainWin::slotUpdateImapMessage(KMMessage *msg)
   if (((KMMsgBase*)msg)->isMessage()) mMsgView->setMsg(msg, TRUE);
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSubjectFilter()
+{
+  KMMessage* msg = mHeaders->getMsg(-1);
+  if (msg)
+    kernel->filterMgr()->createFilter( "Subject", msg->headerField( "Subject" ));
+}
+
+void KMMainWin::slotMailingListFilter()
+{
+    KMMessage* msg = mHeaders->getMsg(-1);
+    if (msg) {
+        QString name, value;
+        if ( !detect_list( msg, name, value ).isNull() )
+            kernel->filterMgr()->createFilter( name, value );
+    }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotFromFilter()
+{
+  KMMessage* msg = mHeaders->getMsg(-1);
+  if (msg)
+    kernel->filterMgr()->createFilter( "From", msg->headerField( "From" ));
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotToFilter()
+{
+  KMMessage* msg = mHeaders->getMsg(-1);
+  if (msg)
+    kernel->filterMgr()->createFilter( "To", msg->headerField( "To" ));
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetMsgStatusNew()
@@ -1414,11 +1452,8 @@ void KMMainWin::slotUrlOpen()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 {
-
   KPopupMenu* menu = new KPopupMenu;
-  KPopupMenu *setStatusMenu = new KPopupMenu();
-  (void) KMMainWin::updateMessageMenu();
-
+  updateMessageMenu();
 
   mUrlCurrent = aUrl;
 
@@ -1460,8 +1495,9 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
      }
      else  {
 
-           if ((mFolder == kernel->outboxFolder()) ||
-               (mFolder == kernel->draftsFolder()))
+         bool out_folder = (mFolder == kernel->outboxFolder()) ||
+                (mFolder == kernel->draftsFolder());
+           if ( out_folder )
                   editAction->plug(menu);
            else {
                 replyAction->plug(menu);
@@ -1471,20 +1507,14 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
                 bounceAction->plug(menu);
            }
            menu->insertSeparator();
-           menu->insertItem(i18n("&Move to"), moveMenu);
-           menu->insertItem(i18n("&Copy to"), copyMenu);
-           if ((mFolder != kernel->outboxFolder()) &&
-               (mFolder != kernel->draftsFolder()))
-           {
-           menu->insertItem(i18n("&Set Status"), setStatusMenu);
-           newAction->plug(setStatusMenu);
-           unreadAction->plug(setStatusMenu);
-           readAction->plug(setStatusMenu);
-           repliedAction->plug(setStatusMenu);
-           queueAction->plug(setStatusMenu);
-           sentAction->plug(setStatusMenu);
-           flagAction->plug(setStatusMenu);
+           if ( !out_folder ) {
+               filterMenu->plug( menu );
+               statusMenu->plug( menu );
            }
+
+           moveActionMenu->plug( menu );
+           copyActionMenu->plug( menu );
+
            menu->insertSeparator();
            printAction->plug(menu);
            saveAsAction->plug(menu);
@@ -1630,7 +1660,7 @@ void KMMainWin::setupMenuBar()
   bounceAction = new KAction( i18n("&Bounce..."), 0, this,
 		      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
-  (void) new KAction( i18n("Send again..."), 0, this,
+  sendAgainAction = new KAction( i18n("Send again..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
 
   //----- Message-Encoding Submenu
@@ -1652,30 +1682,72 @@ void KMMainWin::setupMenuBar()
   editAction = new KAction( i18n("Edi&t"), Key_T, this,
 		      SLOT(slotEditMsg()), actionCollection(), "edit" );
 
+  //----- Create filter submenu
+  filterMenu = new KActionMenu( i18n("&Create Filter"), actionCollection(), "create_filter" );
+
+  KAction *subjectFilterAction = new KAction( i18n("Filter on Subject..."), 0, this,
+                                              SLOT(slotSubjectFilter()),
+                                              actionCollection(), "subject_filter");
+  filterMenu->insert( subjectFilterAction );
+
+  KAction *fromFilterAction = new KAction( i18n("Filter on From..."), 0, this,
+                                           SLOT(slotFromFilter()),
+                                           actionCollection(), "from_filter");
+  filterMenu->insert( fromFilterAction );
+
+  KAction *toFilterAction = new KAction( i18n("Filter on To..."), 0, this,
+                                         SLOT(slotToFilter()),
+                                         actionCollection(), "to_filter");
+  filterMenu->insert( toFilterAction );
+
+  mlistFilterAction = new KAction( i18n("Filter on Mailing-List..."), 0, this,
+                                   SLOT(slotMailingListFilter()), actionCollection(),
+                                   "mlist_filter");
+  filterMenu->insert( mlistFilterAction );
+
+  statusMenu = new KActionMenu ( i18n( "Set Status" ), actionCollection(), "set_status" );
+
   //----- Set status submenu
-  newAction= new KAction( i18n("&New"), "kmmsgnew", 0, this,
-    SLOT(slotSetMsgStatusNew()), actionCollection(), "status_new");
-  unreadAction=new KAction( i18n("&Unread"), "kmmsgunseen", 0, this,
-    SLOT(slotSetMsgStatusUnread()), actionCollection(), "status_unread");
-  readAction=new KAction( i18n("&Read"), "kmmsgold", 0, this,
-    SLOT(slotSetMsgStatusRead()), actionCollection(), "status_read");
-  repliedAction= new KAction( i18n("R&eplied"), "kmmsgreplied", 0, this,
-    SLOT(slotSetMsgStatusReplied()), actionCollection(), "status_replied");
-  queueAction=new KAction( i18n("&Queued"), "kmmsgqueued", 0, this,
-    SLOT(slotSetMsgStatusQueued()), actionCollection(), "status_queued");
-  sentAction=new KAction( i18n("&Sent"), "kmmsgsent", 0, this,
-    SLOT(slotSetMsgStatusSent()), actionCollection(), "status_sent");
-  flagAction=new KAction( i18n("&Flagged"), "kmmsgflag", 0, this,
-    SLOT(slotSetMsgStatusFlag()), actionCollection(), "status_flag");
+  KAction *newAction= new KAction( i18n("&New"), "kmmsgnew", 0, this,
+                                   SLOT(slotSetMsgStatusNew()),
+                                   actionCollection(), "status_new");
+  statusMenu->insert( newAction );
 
+  KAction *unreadAction=new KAction( i18n("&Unread"), "kmmsgunseen", 0, this,
+                                     SLOT(slotSetMsgStatusUnread()),
+                                     actionCollection(), "status_unread");
+  statusMenu->insert( unreadAction );
 
-  KActionMenu *moveActionMenu = new KActionMenu( i18n("&Move to" ),
+  KAction *readAction=new KAction( i18n("&Read"), "kmmsgold", 0, this,
+                                   SLOT(slotSetMsgStatusRead()), actionCollection(),
+                                   "status_read");
+  statusMenu->insert( readAction );
+
+  KAction *repliedAction= new KAction( i18n("R&eplied"), "kmmsgreplied", 0, this,
+                              SLOT(slotSetMsgStatusReplied()),
+                              actionCollection(), "status_replied");
+  statusMenu->insert( repliedAction );
+
+  KAction *queueAction=new KAction( i18n("&Queued"), "kmmsgqueued", 0, this,
+                                    SLOT(slotSetMsgStatusQueued()),
+                                    actionCollection(), "status_queued");
+  statusMenu->insert( queueAction );
+
+  KAction *sentAction=new KAction( i18n("&Sent"), "kmmsgsent", 0, this,
+                                   SLOT(slotSetMsgStatusSent()),
+                                   actionCollection(), "status_sent");
+  statusMenu->insert( sentAction );
+
+  KAction *flagAction=new KAction( i18n("&Flagged"), "kmmsgflag", 0, this,
+                                   SLOT(slotSetMsgStatusFlag()),
+                                   actionCollection(), "status_flag");
+  statusMenu->insert( flagAction );
+
+  moveActionMenu = new KActionMenu( i18n("&Move to" ),
 					     actionCollection(), "move_to" );
-  moveMenu = moveActionMenu->popupMenu();
 
-  KActionMenu *copyActionMenu = new KActionMenu( i18n("&Copy to" ),
+  copyActionMenu = new KActionMenu( i18n("&Copy to" ),
 					     actionCollection(), "copy_to" );
-  copyMenu = copyActionMenu->popupMenu();
 
   (void) new KAction( i18n("Apply filters"), CTRL+Key_J, this,
 		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
@@ -1729,6 +1801,8 @@ void KMMainWin::setupMenuBar()
 		    SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
 
   conserveMemory();
+  updateMessageMenu();
+
 }
 
 
@@ -1765,7 +1839,6 @@ void KMMainWin::slotEditKeys()
 {
   KKeyDialog::configureKeys(actionCollection(), xmlFile(), true, this);
 }
-
 
 //-----------------------------------------------------------------------------
 void KMMainWin::setupStatusBar()
@@ -1843,6 +1916,8 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 {
   int menuId;
   QString label;
+  menu->clear();
+
   if (!fti) fti = static_cast<KMFolderTreeItem*>(mFolderTree->firstChild());
   if (move)
   {
@@ -1893,10 +1968,63 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
 void KMMainWin::updateMessageMenu()
 {
   mMenuToFolder.clear();
-  moveMenu->clear();
-  folderToPopupMenu( NULL, TRUE, this, &mMenuToFolder, moveMenu );
-  copyMenu->clear();
-  folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, copyMenu );
+    folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
+    folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
+
+    int count = 0;
+
+    if ( mFolder ) {
+        for (QListViewItem *item = mHeaders->firstChild(); item; item = item->itemBelow())
+            if (item->isSelected() )
+                count++;
+        if ( !count && mFolder->count() ) // there will always be one in mMsgView
+            count = 1;
+    }
+
+    mlistFilterAction->setText( i18n("Filter on Mailing-List...") );
+
+    bool mass_actions = count >= 1;
+    statusMenu->setEnabled( mass_actions );
+    moveActionMenu->setEnabled( mass_actions );
+    copyActionMenu->setEnabled( mass_actions );
+    deleteAction->setEnabled( mass_actions );
+    action( "apply_filters" )->setEnabled( mass_actions );
+
+    bool single_actions = count == 1;
+    filterMenu->setEnabled( single_actions );
+    editAction->setEnabled( single_actions );
+    bounceAction->setEnabled( single_actions );
+    replyAction->setEnabled( single_actions );
+    noQuoteReplyAction->setEnabled( single_actions );
+    replyAllAction->setEnabled( single_actions );
+    replyListAction->setEnabled( single_actions );
+    forwardAction->setEnabled( single_actions );
+    redirectAction->setEnabled( single_actions );
+    sendAgainAction->setEnabled( single_actions );
+    printAction->setEnabled( single_actions );
+    saveAsAction->setEnabled( single_actions );
+    action( "view_source" )->setEnabled( single_actions );
+
+    if ( count == 1 ) {
+        KMMessage* msg = mMsgView->msg();
+        if ( !msg )
+            return;
+
+        QString name, value;
+        QString lname = detect_list( msg, name, value );
+        if ( lname.isNull() )
+            mlistFilterAction->setEnabled( false );
+        else {
+            mlistFilterAction->setEnabled( true );
+            mlistFilterAction->setText( i18n( "Filter on Mailing-List %1..." ).arg( lname ) );
+        }
+    }
+
+    bool mails = mFolder && mFolder->count();
+    action( "next" )->setEnabled( mails );
+    action( "next_unread" )->setEnabled( mails );
+    action( "previous" )->setEnabled( mails );
+    action( "previous_unread" )->setEnabled( mails );
 }
 
 

@@ -55,6 +55,8 @@ public:
 
   virtual QLineEdit* createEdit(const QString txt=0);
 
+  virtual void createFilter( const QString field, const QString value );
+
 protected slots:
   void updateCurFilterName(const QString &text);
   void slotBtnUp();

@@ -37,6 +37,7 @@
 #include "kmundostack.h"
 #include "kmreaderwin.h"
 #include "kmacctimap.h"
+#include "mailinglist-magic.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -2232,13 +2233,15 @@ void KMHeaders::slotRMB()
 
   mMenuToFolder.clear();
 
+  mOwner->updateMessageMenu();
+
   QPopupMenu *msgMoveMenu = new QPopupMenu();
   mOwner->folderToPopupMenu( NULL, TRUE, this, &mMenuToFolder, msgMoveMenu );
   QPopupMenu *msgCopyMenu = new QPopupMenu();
   mOwner->folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, msgCopyMenu );
-  QPopupMenu *setStatusMenu = new QPopupMenu();
 
-  if ((mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder()))
+  bool out_folder = (mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder());
+  if ( out_folder )
      mOwner->editAction->plug(menu);
   else {
      mOwner->replyAction->plug(menu);
@@ -2248,19 +2251,15 @@ void KMHeaders::slotRMB()
      mOwner->bounceAction->plug(menu);
        }
   menu->insertSeparator();
+
+  if ( !out_folder )
+      mOwner->filterMenu->plug( menu );
+
   menu->insertItem(i18n("&Move to"), msgMoveMenu);
   menu->insertItem(i18n("&Copy to"), msgCopyMenu);
-  if ((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
-       {
-  menu->insertItem(i18n("&Set Status"), setStatusMenu);
-  mOwner->newAction->plug(setStatusMenu);
-  mOwner->unreadAction->plug(setStatusMenu);
-  mOwner->readAction->plug(setStatusMenu);
-  mOwner->repliedAction->plug(setStatusMenu);
-  mOwner->queueAction->plug(setStatusMenu);
-  mOwner->sentAction->plug(setStatusMenu);
-  mOwner->flagAction->plug(setStatusMenu);
-       }
+  if ( !out_folder )
+      mOwner->statusMenu->plug( menu );
+
   menu->insertSeparator();
   mOwner->printAction->plug(menu);
   mOwner->saveAsAction->plug(menu);

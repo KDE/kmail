@@ -27,6 +27,7 @@ public:
 
   /** Open an edit dialog. */
   virtual void openDialog( QWidget *parent );
+  virtual void createFilter( const QString field, const QString value );
 
   /** Process given message by applying the filter rules one by one.
     Returns 2 if a critical error occurred (eg out of disk space) 
