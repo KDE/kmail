@@ -6,13 +6,27 @@
 #define kmfolderseldlg_h
 
 #include <kdialogbase.h>
+#include <klistview.h>
 #include <qvaluelist.h>
 #include <qguardedptr.h>
 
-class QListBox;
 class KMFolder;
+class KMFolderTree;
 class KMMainWidget;
 
+namespace KMail {
+
+  class SimpleFolderTree : public KListView
+  {
+    public:
+      SimpleFolderTree( QWidget * parent, KMFolderTree * folderTree, QString & preSelection );
+      
+      const KMFolder * folder() const;
+  };
+
+}
+
+//-----------------------------------------------------------------------------
 class KMFolderSelDlg: public KDialogBase
 {
   Q_OBJECT
@@ -24,15 +38,14 @@ public:
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */
-  virtual KMFolder* folder(void);
+  virtual KMFolder* folder( void );
 
 protected slots:
   void slotSelect(int);
   virtual void slotCancel();
 
 protected:
-  QListBox* mListBox;
-  QValueList<QGuardedPtr<KMFolder> > mFolder;
+  KMail::SimpleFolderTree * mTreeView;
 
   static QString oldSelection;
 };
