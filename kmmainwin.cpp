@@ -1533,23 +1533,28 @@ void KMMainWin::folderSelectedUnread(KMFolder* aFolder)
 //-----------------------------------------------------------------------------
 void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 {
-  if (mFolder == aFolder && aFolder)
+  if( aFolder && mFolder == aFolder )
     return;
 
   kernel->kbp()->busy();
-  if (!aFolder && mFolderTree->currentItem() == mFolderTree->firstChild())
-  {
-    mMsgView->setMsg(0,TRUE);
-    //    if (mLongFolderList) mHeaders->hide();
+
+  if( !aFolder && mFolderTree->currentItem() == mFolderTree->firstChild() ) {
+    mMsgView->setMsg( 0, TRUE );
+    if( mHeaders )
+      mHeaders->hide();
+    if( mShowMIME && mMimePartTree )
+        mMimePartTree->hide();
     mMsgView->displayAboutPage();
-  }
-  else if (!mFolder)
-  {
+  } else if( !mFolder ) {
     mMsgView->enableMsgDisplay();
-    mMsgView->setMsg(0,TRUE);
-    mHeaders->show();
-  }
-  else mMsgView->setMsg(0,FALSE);
+    mMsgView->setMsg( 0, TRUE );
+    if( mHeaders )
+      mHeaders->show();
+    if( mShowMIME && mMimePartTree )
+      mMimePartTree->show();
+  } else
+    mMsgView->setMsg( 0, FALSE );
+
   if (mFolder && mFolder->needsCompacting() && (mFolder->protocol() == "imap"))
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
