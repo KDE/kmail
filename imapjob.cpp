@@ -237,6 +237,7 @@ void ImapJob::slotGetNextMessage()
     }
   }
   url.setPath( path );
+//  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   ImapAccountBase::jobData jd;
   jd.parent = 0;
   jd.total = 1; jd.done = 0;
@@ -303,8 +304,10 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     } else {
       kdWarning(5006) << "ImapJob::slotGetMessageResult - got no data for " << mPartSpecifier << endl;
       gotData = false;
-      // just for the case we got an empty message
       msg->setComplete( TRUE );
+      // in case we got an empty message with attachment we have to update anyway
+      if ( mPartSpecifier == "1" )
+        msg->notify();
     }
   }
   if (account->slave()) {
