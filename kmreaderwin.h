@@ -356,6 +356,7 @@ protected:
   QTextCodec *mCodec;
   bool mAutoDetectEncoding;
   bool mMsgDisplay;
+  bool mDelayedMarkAsRead;
   unsigned long mLastSerNum;
 
   int fntSize;

@@ -3345,21 +3345,14 @@ bool KMHeaders::readSortOrder(bool set_selection)
     START_TIMER(selection);
     if(set_selection) {
 	if (unread_exists) {
-	    if (mJumpToUnread) { // search unread messages
-		KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
-		while (item) {
-		    if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusUnread) {
-			first_unread = item->msgId();
-			break;
-		    }
-		    item = static_cast<KMHeaderItem*>(item->itemBelow());
-		}
-	    }
-
-	    // search new messages
 	    KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
 	    while (item) {
-		if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusNew) {
+		bool isUnread = false;
+		if (mJumpToUnread) // search unread messages
+		    if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusUnread)
+			isUnread = true;
+		
+		if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusNew || isUnread) {
 		    first_unread = item->msgId();
 		    break;
 		}

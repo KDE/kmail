@@ -1123,8 +1123,7 @@ void KMReaderWin::readConfig(void)
 
   {
     KConfigGroupSaver saver(config, "Behaviour");
-    mDelayedMarkTimeout = 0;
-    if (config->readBoolEntry("DelayedMarkAsRead", false))
+    mDelayedMarkAsRead = config->readBoolEntry("DelayedMarkAsRead", false);
       mDelayedMarkTimeout = config->readNumEntry( "DelayedMarkTime", 0 );
   }
 
@@ -1328,6 +1327,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   else
     updateReaderWinTimer.start( 0, TRUE );
 
+  if (mDelayedMarkAsRead)
   mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
 }
 
