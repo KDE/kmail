@@ -292,7 +292,8 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
     return;
   }
   KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent());
-  msg->setTransferInProgress( false );
+  if (msg->transferInProgress())
+    msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
   if ( !account ) {
     deleteLater();
