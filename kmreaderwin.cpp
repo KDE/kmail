@@ -1754,9 +1754,10 @@ void KMReaderWin::writeSignedMIME( partNode& data, partNode& sign )
     }
     cryptPlug->setActive( oldCryptPlugActiveFlag );
   } else {
-    KMessageBox::sorry(this,
-        i18n("problem: No Crypto Plug-Ins found.\n"
-              "Please specify a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."));
+    KMessageBox::information(this,
+			     i18n("problem: No Crypto Plug-Ins found.\n"
+				  "Please specify a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
+			     QString::null, "cryptoPluginBox");
     queueHtml(i18n("<hr><b><h2>Signature could *not* be verified !</h2></b><br>"
                    "reason:<br><i>&nbsp; &nbsp; No Crypto Plug-Ins found.</i><br>"
                    "proposal:<br><i>&nbsp; &nbsp; Please specify a Plug-In by invoking<br>&nbsp; &nbsp; the "
