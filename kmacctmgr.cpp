@@ -75,6 +75,7 @@ void KMAcctMgr::readConfig(void)
   int i, num;
 
   mAcctList.clear();
+  *mAccountIt = mAcctList;
 
   KConfigGroupSaver saver(config, "General");
   num = config->readNumEntry("accounts", 0);

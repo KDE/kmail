@@ -4,7 +4,7 @@
 #include <qwidget.h>
 #include <qstrlist.h>
 #define private public
-#include <qlistview.h>
+#include <klistview.h>
 #include <qarray.h>
 #include <qmap.h>
 #include <qdragobject.h>
@@ -62,8 +62,8 @@ struct KMPaintInfo {
 };
 
 /** The widget that shows the contents of folders */
-#define KMHeadersInherited QListView
-class KMHeaders : public QListView
+#define KMHeadersInherited KListView
+class KMHeaders : public KListView
 {
   Q_OBJECT
   friend class KMHeaderItem; // For easy access to the pixmaps

@@ -97,7 +97,7 @@ bool KMHeaderToFolderDrag::canDecode( QDropEvent* e )
 //-----------------------------------------------------------------------------
 // KMHeaderItem method definitions
 
-class KMHeaderItem : public QListViewItem
+class KMHeaderItem : public KListViewItem
 {
 
 public:
@@ -107,7 +107,7 @@ public:
 
   // Constuction a new list view item with the given colors and pixmap
     KMHeaderItem( QListView* parent, int msgId, QString key = QString::null )
-    : QListViewItem( parent ),
+    : KListViewItem( parent ),
 	  mMsgId( msgId ),
 	  mKey(key)
   {
@@ -116,7 +116,7 @@ public:
 
   // Constuction a new list view item with the given parent, colors, & pixmap
     KMHeaderItem( QListViewItem* parent, int msgId, QString key = QString::null )
-    : QListViewItem( parent ),
+    : KListViewItem( parent ),
 	  mMsgId( msgId ),
 	  mKey(key)
   {
@@ -173,9 +173,9 @@ public:
 	lvchild->setOpen( true );
 	lvchild = lvchild->nextSibling();
       }
-      QListViewItem::setOpen( true );
+      KListViewItem::setOpen( true );
     } else
-	QListViewItem::setOpen( false );
+	KListViewItem::setOpen( false );
   }
 
   QString text( int col) const
@@ -319,7 +319,7 @@ public:
       }
     }
 
-    QListViewItem::paintCell( p, _cg, column, width, align );
+    KListViewItem::paintCell( p, _cg, column, width, align );
 
     _cg.setColor( QColorGroup::Text, c );
   }
@@ -2683,7 +2683,7 @@ bool KMHeaders::writeSortOrder()
 	exit(1);
     }
     fclose(sortStream);
-    rename(tempName.local8Bit(), sortFile.local8Bit());
+    ::rename(tempName.local8Bit(), sortFile.local8Bit());
   }
 
   return TRUE;
