@@ -79,13 +79,12 @@ class KMHeaderItem : public QListViewItem
 
 public:
   int mMsgId;
-  QColor *mColor;
+  // WARNING: Do not add new member variables to the class
 
   // Constuction a new list view item with the given colors and pixmap
     KMHeaderItem( QListView* parent, int msgId )
     : QListViewItem( parent ),
-      mMsgId( msgId ),
-      mColor(NULL)
+      mMsgId( msgId )
   {
     irefresh();
   }
@@ -93,8 +92,7 @@ public:
   // Constuction a new list view item with the given parent, colors, & pixmap
     KMHeaderItem( QListViewItem* parent, int msgId )
     : QListViewItem( parent ),
-      mMsgId( msgId ),
-      mColor(NULL)
+      mMsgId( msgId )
   {
     irefresh();
   }
@@ -108,7 +106,6 @@ public:
   void irefresh()
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
-    mColor = NULL;
     int threadingPolicy = headers->getNestingPolicy();
     if(threadingPolicy == 3) {
       KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
@@ -137,12 +134,6 @@ public:
     irefresh();
   }
 
-  // Change color (new/unread/read status has changed)
-  void setColor( QColor *c )
-  {
-    mColor = c;
-    repaint();
-  }
   //Opens all children in the thread
   void setOpen( bool open )
   {
@@ -241,27 +232,26 @@ public:
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
     QColorGroup _cg( cg );
     QColor c = _cg.text();
+    QColor *color;
 
-    if(!mColor) {
-      KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
-      switch (mMsgBase->status())
-      {
-        case KMMsgStatusNew:
-		    mColor = (QColor*)(&headers->paintInfo()->colNew);
-	  break;
-        case KMMsgStatusUnread:
-		    mColor = (QColor*)(&headers->paintInfo()->colUnread);
-	  break;
-        case KMMsgStatusFlag:
-		    mColor = (QColor *)(&headers->paintInfo()->colFlag);
-	  break;
-        default:
-		    mColor = (QColor *)(&headers->paintInfo()->colFore);
-	  break;
-      }
+    KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
+    switch (mMsgBase->status())
+    {
+      case KMMsgStatusNew:
+	color = (QColor*)(&headers->paintInfo()->colNew);
+	break;
+      case KMMsgStatusUnread:
+	color = (QColor*)(&headers->paintInfo()->colUnread);
+	break;
+      case KMMsgStatusFlag:
+	color = (QColor *)(&headers->paintInfo()->colFlag);
+	break;
+      default:
+	color = (QColor *)(&headers->paintInfo()->colFore);
+	break;
     }
 
-    _cg.setColor( QColorGroup::Text, *mColor );
+    _cg.setColor( QColorGroup::Text, *color );
 
     KConfig *conf = kapp->config();
     conf->setGroup("Fonts");
@@ -886,13 +876,11 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {
-    /*
   QString str;
   str = i18n("%n message, %1.", "%n messages, %1.", mFolder->count())
     .arg(i18n("%n unread", "%n unread", mFolder->countUnread()));
   if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
   mOwner->statusMsg(str);
-    */
 }
 
 //-----------------------------------------------------------------------------
