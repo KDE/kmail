@@ -203,6 +203,8 @@ int KMFolderMbox::create(bool imap)
   int rc;
   int old_umask;
 
+  Q_UNUSED(imap);
+
   assert(name() != "");
   assert(mOpenCount == 0);
 
