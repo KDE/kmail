@@ -27,9 +27,9 @@ void KabcBridge::addresses(QStringList& result) // includes lists
   KCursorSaver busy(KBusyPtr::busy()); // loading might take a while
 
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-  KABC::AddressBook::Iterator it;
+  KABC::AddressBook::ConstIterator it;
   for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
-    QStringList emails = (*it).emails();
+    const QStringList emails = (*it).emails();
     QString n = (*it).prefix() + " " +
 		(*it).givenName() + " " +
 		(*it).additionalName() + " " +
@@ -67,11 +67,8 @@ void KabcBridge::addresses(QStringList& result) // includes lists
   }
   KABC::DistributionListManager manager( addressBook );
   manager.load();
+  result += manager.listNames();
 
-  QStringList names = manager.listNames();
-  QStringList::Iterator jt;
-  for ( jt = names.begin(); jt != names.end(); ++jt)
-    result.append( *jt );
   result.sort();
 }
 
@@ -80,7 +77,7 @@ QStringList KabcBridge::addresses()
     QStringList entries;
     KABC::AddressBook::ConstIterator it;
 
-    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+    const KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
     for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
         entries += (*it).fullEmail();
     }
@@ -91,16 +88,16 @@ QStringList KabcBridge::addresses()
 QString KabcBridge::expandNickName( const QString& nickName )
 {
   if ( nickName.isEmpty() )
-    return QString();
+    return QString::null;
 
-  QString lowerNickName = nickName.lower();
-  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  const QString lowerNickName = nickName.lower();
+  const KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   for( KABC::AddressBook::ConstIterator it = addressBook->begin();
        it != addressBook->end(); ++it ) {
     if ( (*it).nickName().lower() == lowerNickName )
       return (*it).fullEmail();
   }
-  return QString();
+  return QString::null;
 }
 
 
