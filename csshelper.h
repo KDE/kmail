@@ -71,9 +71,10 @@ namespace KMail {
 
   private:
     class Private;
+    friend class Private; // This should not be necessary, should it?
     Private * d;
     Private * s;
-  public:
+
     const QPaintDeviceMetrics mMetrics;
   };
 
