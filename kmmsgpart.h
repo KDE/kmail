@@ -23,7 +23,7 @@ public:
   void clear();
 
   /** Obtains an independant copy (i.e. without explicitely shared data) of the
-      data contained in msgPart. Returns a reference to this message part. */
+      data contained in msgPart. */
   void duplicate( const KMMessagePart & msgPart );
 
   /** Get or set the message body */
