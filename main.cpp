@@ -99,7 +99,7 @@ int KMailApplication::newInstance()
   if (args->getOption("msg"))
   {
      mailto = true;
-     messageFile = QString::fromLocal8Bit(args->getOption("msg"));
+     messageFile.setPath( QString::fromLocal8Bit(args->getOption("msg")) );
   }
 
   if (args->getOption("body"))

@@ -214,8 +214,11 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!subject.isEmpty()) msg->setSubject(subject);
   if (!to.isEmpty()) msg->setTo(to);
 
-  if (!messageFile.isEmpty() && messageFile.isLocalFile())
-    msg->setBody( kFileToString( messageFile.path(), true, false ) );
+  if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
+    QCString str = kFileToString( messageFile.path(), true, false );
+    if( !str.isEmpty() )
+      msg->setBody( str );
+  }
 
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
