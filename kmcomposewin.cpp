@@ -19,7 +19,6 @@ using KPIM::AddressesDialog;
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmkernel.h"
-#include "kcursorsaver.h"
 #include "identitymanager.h"
 #include "identitycombo.h"
 #include "kmidentity.h"

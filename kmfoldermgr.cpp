@@ -20,9 +20,9 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kmmainwin.h>
 #include <kapplication.h>
 
+#include "kmmainwin.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmundostack.h"
