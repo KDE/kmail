@@ -8,6 +8,7 @@ Name[sl]=Programski Octetstream
 Name[sv]=Program-oktettström
 Name[ta]=பயன்பாட்டு எண்மம்
 Name[xx]=xxApplication Octetstreamxx
+Name[zh_CN]=应用程序 Octetstream
 Comment=A bodypart formatter plugin for application/octet-stream
 Comment[da]=Et bodypart formateringsplugin for application/octet-stream
 Comment[es]=Un accesorio de formato para el cuerpo de application/octet-stream
@@ -18,6 +19,7 @@ Comment[sl]=Oblikovni vstavek za application/octet-stream
 Comment[sv]=Ett insticksprogram för brevtextformatering av application/octet-stream
 Comment[ta]=பயன்பாடு அல்லது எண்மத்திற்கான அங்க அமைப்பு சொருகி
 Comment[xx]=xxA bodypart formatter plugin for application/octet-streamxx
+Comment[zh_CN]=application/octet-stream 的格式化插件
 
 [Plugin]
 Type=application/octet-stream
