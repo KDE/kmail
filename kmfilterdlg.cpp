@@ -754,16 +754,14 @@ void KMFilterListBox::loadFilterList()
   blockSignals(FALSE);
   setEnabled(TRUE);
 
-  // select topmost item
-  if ( mListBox->count() )
-	{
-    mListBox->setSelected( 0, TRUE );
-	}
-  else
-	{
-    emit resetWidgets();
-    mIdxSelItem = -1;
-  }
+  // create an empty filter when there's none, to avoid a completely
+  // disabled dialog (usability tests indicated that the new-filter
+  // button is too hard to find that way):
+  if ( !mListBox->count() )
+    slotNew();
+
+  assert( mListBox->count() > 0 );
+  mListBox->setSelected( 0, true );
 
   enableControls();
 }
