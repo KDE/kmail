@@ -1184,6 +1184,7 @@ void KMFolderCachedImap::listDirectory2() {
   foldersForDeletionOnServer.clear();
   QString path = folder()->path();
   KMFolderCachedImap *f = 0;
+  kmkernel->dimapFolderMgr()->quiet(true);
 
   if (mAccount->createInbox())
   {
@@ -1197,12 +1198,13 @@ void KMFolderCachedImap::listDirectory2() {
     f->setAccount(mAccount);
     f->setImapPath("/INBOX/");
     f->setLabel(i18n("inbox"));
-    if (!node) f->close();
+    if (!node) {
+      f->close();
+      kmkernel->dimapFolderMgr()->contentsChanged();
+    }
     // so we have an INBOX
     mAccount->setCreateInbox( false );
     mAccount->setHasInbox( true );
-//    f->listDirectory();
-    kmkernel->dimapFolderMgr()->contentsChanged();
   }
 
   // Find all subfolders present on server but not on disk
@@ -1257,6 +1259,7 @@ void KMFolderCachedImap::listDirectory2() {
     }
   }
 
+  kmkernel->dimapFolderMgr()->quiet(false);
   emit listComplete(this);
   serverSyncInternal();
 }
