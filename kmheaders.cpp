@@ -722,7 +722,7 @@ void KMHeaders::msgAdded(int id)
 
   if ((childCount() == 1) && hi) {
     setSelected( hi, true );
-    highlightMessage( hi );
+    setCurrentItem( firstChild() );
   }
 }
 
