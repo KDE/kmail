@@ -727,7 +727,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
                         << endl;
         }
       }
-    }    
+    }
 
     // strip my own address from the list of recipients
     QString myAddr = getEmailAddr(msg->from());
@@ -762,7 +762,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
 
       msg->setCc(recipients.join(", "));
     }
-    
+
   }
   else
   {
@@ -1428,7 +1428,6 @@ QString KMMessage::replyToId(void) const
   leftAngle = replyTo.findRev( '<' );
   if (leftAngle != -1)
     replyTo = replyTo.mid( leftAngle );
-  kdDebug(5006) << "KMMessage::replyToId(): In-Reply-To=_" << replyTo << "_" << endl;
 
   // if we have found a good message id we can return immediately
   if (!replyTo.isEmpty() && (replyTo[0] == '<'))
@@ -1482,7 +1481,6 @@ QString KMMessage::msgId(void) const
   leftAngle = msgId.findRev( '<' );
   if (leftAngle != -1)
     msgId = msgId.mid( leftAngle );
-  kdDebug(5006) << "KMMessage::msgId(): Message-Id=_" << msgId << "_" << endl;
   return msgId;
 }
 
@@ -2183,7 +2181,7 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
   int addrstart = 0;
   int commentlevel = 0;
   bool insidequote = false;
-  
+
   for (int index=0; index<aStr.length(); index++) {
     // the following conversion to latin1 is o.k. because
     // we can safely ignore all non-latin1 characters
@@ -2210,7 +2208,7 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
     case '\\' : // quoted character
       index++; // ignore the quoted character
       break;
-    case ',' : 
+    case ',' :
       if (!insidequote && (commentlevel == 0)) {
         addr = aStr.mid(addrstart, index-addrstart);
         kdDebug(5006) << "Found address: " << addr << endl;
