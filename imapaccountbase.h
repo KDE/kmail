@@ -209,6 +209,7 @@ namespace KMail {
      * numUnreadMsgsChanged)
      */
     virtual void postProcessNewMail( KMFolder * );
+    void slotCheckQueuedFolders();
 
 
   protected:
@@ -234,6 +235,8 @@ namespace KMail {
     bool mErrorDialogIsActive : 1;
 	// folders that should be checked for new mails
 	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
+        // folders that should be checked after the current check is done
+	QValueList<QGuardedPtr<KMFolder> > mFoldersQueuedForChecking;
     bool mCreateInbox;
 
   signals:

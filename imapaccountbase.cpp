@@ -467,14 +467,30 @@ namespace KMail {
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
-  {
-	QValueList<QGuardedPtr<KMFolder> > mSaveList = mMailCheckFolders;
-	mMailCheckFolders.clear();
-	mMailCheckFolders.append(folder);
+  {  
+    mFoldersQueuedForChecking.append(folder);
+    if (checkingMail()) 
+    {
+      disconnect (this, SIGNAL(finishedCheck(bool)),
+          this, SLOT(slotCheckQueuedFolders()));
+      connect (this, SIGNAL(finishedCheck(bool)),
+          this, SLOT(slotCheckQueuedFolders()));
+    } else {
+      slotCheckQueuedFolders();
+    }
+  }
 
-	kernel->acctMgr()->singleCheckMail(this, true);
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotCheckQueuedFolders()
+  {   
+    disconnect (this, SIGNAL(finishedCheck(bool)),
+          this, SLOT(slotCheckQueuedFolders()));
 
-	mMailCheckFolders = mSaveList;
+    QValueList<QGuardedPtr<KMFolder> > mSaveList = mMailCheckFolders;
+    mMailCheckFolders = mFoldersQueuedForChecking;
+    kernel->acctMgr()->singleCheckMail(this, true);
+    mMailCheckFolders = mSaveList;
+    mFoldersQueuedForChecking.clear();
   }
 
 }; // namespace KMail
