@@ -324,7 +324,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum, bool re
       if (!node->isDir())
       {
         folder = static_cast<KMFolder*>(node);
-        searchInFolder(folder, fldNum++, recursive);
+        searchInFolder(folder, mFolders.findIndex(folder), recursive);
       }
     }
   }
