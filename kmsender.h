@@ -34,6 +34,10 @@ namespace KMime {
   }
 }
 
+namespace KMail {
+  class ProgressItem;
+}
+
 class KMSender: public QObject
 {
   Q_OBJECT
@@ -137,6 +141,7 @@ private:
   bool mSendProcStarted;
   bool mSendInProgress;
   KMMessage * mCurrentMsg;
+  KMail::ProgressItem* mProgressItem;
   int mSentMessages, mTotalMessages;
   int mSentBytes, mTotalBytes;
   int mFailedMessages;

@@ -27,7 +27,7 @@ using namespace KMime::Types;
 #include "kcursorsaver.h"
 #include <libkdepim/identity.h>
 #include <libkdepim/identitymanager.h>
-#include "kmbroadcaststatus.h"
+#include "progressmanager.h"
 #include "kmaccount.h"
 #include "kmtransport.h"
 #include "kmfolderindex.h"
@@ -55,6 +55,7 @@ KMSender::KMSender()
   mFailedMessages = 0;
   mSentBytes = 0;
   mTotalBytes = 0;
+  mProgressItem = 0;
 }
 
 
@@ -70,7 +71,8 @@ KMSender::~KMSender()
 //-----------------------------------------------------------------------------
 void KMSender::setStatusMsg(const QString &msg)
 {
-  KMBroadcastStatus::instance()->setStatusMsg(msg);
+  if ( mProgressItem )
+    mProgressItem->setStatus(msg);
 }
 
 //-----------------------------------------------------------------------------
@@ -234,7 +236,7 @@ void KMSender::emitProgressInfo( int currentFileProgress )
 {
   int percent = (mTotalBytes) ? ( 100 * (mSentBytes+currentFileProgress) / mTotalBytes ) : 0;
   if (percent > 100) percent = 100;
-  KMBroadcastStatus::instance()->setStatusProgressPercent("Sender", percent);
+  mProgressItem->setProgress(percent);
 }
 
 //-----------------------------------------------------------------------------
@@ -250,14 +252,13 @@ void KMSender::doSendMsg()
       mSentMessages++;
       mSentBytes += mCurrentMsg->msgSize();
   }
-  emitProgressInfo( 0 );
 
   // Post-process sent message (filtering)
   if (mCurrentMsg  && kmkernel->filterMgr())
   {
     mCurrentMsg->setTransferInProgress( FALSE );
     if( mCurrentMsg->hasUnencryptedMsg() ) {
-kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
+      kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg body by unencryptedMsg data" << endl;
       // delete all current body parts
       mCurrentMsg->deleteBodyParts();
       // copy Content-[..] headers from unencrypted message to current one
@@ -415,14 +416,15 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
   // start the sender process or initialize communication
   if (!mSendInProgress)
   {
-    KMBroadcastStatus::instance()->reset();
-    KMBroadcastStatus::instance()->setStatusProgressEnable( "Sender", true );
-    connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-      SLOT(slotAbortSend()));
+    mProgressItem = KMail::ProgressManager::createProgressItem(
+      "Sender",
+      i18n( "Sending messages" ),
+      i18n("Initiating sender process..."),
+      true );
+    connect( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+             this, SLOT( slotAbortSend() ) );
     kapp->ref();
-
     mSendInProgress = TRUE;
-    setStatusMsg(i18n("Initiating sender process..."));
   }
 
   QString msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
@@ -536,10 +538,8 @@ void KMSender::cleanup(void)
   mSentMessages = 0;
   mFailedMessages = 0;
   mSentBytes = 0;
-  disconnect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
-    this, SLOT(slotAbortSend()));
-  KMBroadcastStatus::instance()->setStatusProgressEnable( "Sender", false );
-  KMBroadcastStatus::instance()->reset();
+  mProgressItem->setComplete();
+  mProgressItem = 0;
   kmkernel->filterMgr()->deref();
 }
 
