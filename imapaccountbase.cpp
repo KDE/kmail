@@ -248,7 +248,6 @@ namespace KMail {
 					       QString::null, name(),
 					       i18n("Account:") )
           != QDialog::Accepted ) {
-        checkDone( false, CheckCanceled );
         mPasswordDialogIsActive = false;
         mAskAgain = false;
         return Error;
