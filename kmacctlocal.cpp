@@ -100,7 +100,7 @@ void KMAcctLocal::readConfig(void)
 
   defaultPath += getenv("USER");
 
-  mLocation = mConfig->readEntry("location", &defaultPath);
+  mLocation = mConfig->readEntry("location", defaultPath);
 }
 
 

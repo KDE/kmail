@@ -27,8 +27,8 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
   mCfg->setGroup(SENDER_GROUP);
   mMethod = (enum KMSender::Method)mCfg->readNumEntry("method", 2);
   mSendImmediate = (bool)mCfg->readNumEntry("immediate", TRUE);
-  mMailer = mCfg->readEntry("mailer", &QString("/usr/sbin/sendmail"));
-  mSmtpHost = mCfg->readEntry("smtphost", &QString("localhost"));
+  mMailer = mCfg->readEntry("mailer", QString("/usr/sbin/sendmail"));
+  mSmtpHost = mCfg->readEntry("smtphost", QString("localhost"));
   mSmtpPort = mCfg->readNumEntry("smtpport", 110);
 
   mQueue = mFolderMgr->find("outbox");

@@ -71,14 +71,14 @@ static void init(int argc, char *argv[])
   cfg->setGroup("General");
 
   fname = QDir::homeDirPath() + 
-    cfg->readEntry("accounts", &QString("/.kde/mail-accounts"));
+    cfg->readEntry("accounts", QString("/.kde/mail-accounts"));
   acctMgr = new KMAcctMgr(fname);
 
   fname = QDir::homeDirPath() + 
-    cfg->readEntry("folders", &QString("/.kde/mail-folders"));
+    cfg->readEntry("folders", QString("/.kde/mail-folders"));
   folderMgr = new KMFolderMgr(fname);
 
-  trashName   = cfg->readEntry("trashFolder", &QString("trash"));
+  trashName   = cfg->readEntry("trashFolder", QString("trash"));
   fld = folderMgr->find(trashName);
 
   if (!fld)
