@@ -67,6 +67,7 @@
 #include <qregexp.h>
 #include <qcursor.h>
 #include <qmessagebox.h>
+#include <qbuffer.h>
 
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -222,6 +223,14 @@ KMComposeWin::~KMComposeWin()
 {
   writeConfig();
   if (mAutoDeleteMsg && mMsg) delete mMsg;
+  QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.begin();
+  while ( it != mapAtmLoadData.end() )
+  {
+    KIO::Job *job = it.key();
+    mapAtmLoadData.remove( it );
+    job->kill();
+    it = mapAtmLoadData.begin();
+  } 
 }
 
 bool KMComposeWin::event(QEvent *e)
@@ -1229,47 +1238,16 @@ const QString KMComposeWin::pgpProcessedMsg(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const QString aUrl)
 {
-  QString name;
-  QByteArray str;
-  KMMessagePart* msgPart;
-  KMMsgPartDlg dlg;
-  int i;
-
-  // load the file
-  kernel->kbp()->busy();
-  str = kFileToBytes(aUrl,FALSE);
-  if (str.isNull())
-  {
-    kernel->kbp()->idle();
-    return;
-  }
-
-  i = aUrl.findRev('/');
-  name = (i>=0 ? aUrl.mid(i+1, 256) : aUrl);
-  QString encName = KMMsgBase::encodeRFC2231String(name);
-  bool RFC2231encoded = name != encName;
-
-  // create message part
-  msgPart = new KMMessagePart;
-  msgPart->setName(name);
-  msgPart->setCteStr(mDefEncoding);
-  msgPart->setBodyEncoded(str);
-  msgPart->magicSetType();
-  msgPart->setContentDisposition(QString("attachment; filename")
-    + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
-
-  // show properties dialog
-  kernel->kbp()->idle();
-  dlg.setMsgPart(msgPart);
-  if (!dlg.exec())
-  {
-    delete msgPart;
-    return;
-  }
-
-  // add the new attachment to the list
-  addAttach(msgPart);
-  rethinkFields(); //work around initial-size bug in Qt-1.32
+  KIO::Job *job = KIO::get(aUrl, false, false);
+  atmLoadData ld;
+  ld.url = aUrl;
+  ld.data = QByteArray();
+  ld.insert = false;
+  mapAtmLoadData.insert(job, ld);
+  connect(job, SIGNAL(result(KIO::Job *)),
+          this, SLOT(slotAttachFileResult(KIO::Job *)));
+  connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
+          this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));
 }
 
 
@@ -1428,18 +1406,84 @@ void KMComposeWin::slotAttachFile()
 
   mPathAttach = u.directory();
 
-  if(u.filename().isEmpty()) return;
-  addAttach(u.path());
+  if(u.fileName().isEmpty()) return;
+  addAttach(u.prettyURL());
   mEditor->setModified(TRUE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAttachFileData(KIO::Job *job, const QByteArray &data)
+{
+  QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.find(job);
+  assert(it != mapAtmLoadData.end());
+  QBuffer buff((*it).data);
+  buff.open(IO_WriteOnly | IO_Append);
+  buff.writeBlock(data.data(), data.size());
+  buff.close();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAttachFileResult(KIO::Job *job)
+{
+  QMap<KIO::Job*, atmLoadData>::Iterator it = mapAtmLoadData.find(job);
+  assert(it != mapAtmLoadData.end());
+  if (job->error())
+  {
+    mapAtmLoadData.remove(it);
+    job->showErrorDialog(); 
+    return;
+  }
+  if ((*it).insert)
+  {
+    int col, line;
+    mEditor->getCursorPosition(&line, &col);
+    mEditor->insertAt((*it).data, line, col);
+    mapAtmLoadData.remove(it);
+    return;
+  } 
+  QString name;
+  QString urlStr = (*it).url.prettyURL();
+  KMMessagePart* msgPart;
+  KMMsgPartDlg dlg;
+  int i;
+
+  kernel->kbp()->busy();
+  i = urlStr.findRev('/');
+  name = (i>=0 ? urlStr.mid(i+1, 256) : urlStr);
+  QString encName = KMMsgBase::encodeRFC2231String(name);
+  bool RFC2231encoded = name != encName;
+
+  // create message part
+  msgPart = new KMMessagePart;
+  msgPart->setName(name);
+  msgPart->setCteStr(mDefEncoding);
+  msgPart->setBodyEncoded((*it).data);
+  msgPart->magicSetType();
+  msgPart->setContentDisposition(QString("attachment; filename")
+    + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
+
+  mapAtmLoadData.remove(it);
+
+  // show properties dialog
+  kernel->kbp()->idle();
+  dlg.setMsgPart(msgPart);
+  if (!dlg.exec())
+  {
+    delete msgPart;
+    return;
+  }
+ 
+  // add the new attachment to the list
+  addAttach(msgPart);
+  rethinkFields(); //work around initial-size bug in Qt-1.32
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  QString str;
-  int col, line;
-
   if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
 
   KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
@@ -1450,19 +1494,18 @@ void KMComposeWin::slotInsertFile()
 
   mPathAttach = u.directory();
 
-  if (u.filename().isEmpty()) return;
+  if (u.fileName().isEmpty()) return;
 
-  if( !u.isLocalFile() )
-  {
-    KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
-    return;
-  }
-
-  str = kFileToString(u.path(), TRUE, TRUE);
-  if (str.isEmpty()) return;
-
-  mEditor->getCursorPosition(&line, &col);
-  mEditor->insertAt(QCString(str), line, col);
+  KIO::Job *job = KIO::get(u);
+  atmLoadData ld;
+  ld.url = u;
+  ld.data = QByteArray();
+  ld.insert = true;
+  mapAtmLoadData.insert(job, ld);
+  connect(job, SIGNAL(result(KIO::Job *)),
+          this, SLOT(slotAttachFileResult(KIO::Job *)));
+  connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
+          this, SLOT(slotAttachFileData(KIO::Job *, const QByteArray &)));      
 }
 
 //-----------------------------------------------------------------------------
@@ -1794,13 +1837,12 @@ void KMComposeWin::slotPrint()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotDropAction(QDropEvent *e)
 {
-  QString  file;
-  QStringList fileList;
+  QStrList fileStrList;
   QStringList::Iterator it;
-  if(QUriDrag::canDecode(e) && QUriDrag::decodeLocalFiles( e, fileList )) {
+  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, fileStrList )) {
+    QStringList fileList = QStringList::fromStrList(fileStrList);
     for (it = fileList.begin(); it != fileList.end(); ++it) {
-      (*it).replace(QRegExp("file:"),"");
-      addAttach(*it);
+      addAttach(QString::fromLocal8Bit(*it));
     }
   }
   else

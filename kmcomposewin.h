@@ -21,6 +21,8 @@
 #include <keditcl.h>
 #include <qlineedit.h>
 #include <ktempfile.h>
+#include <kio/job.h>
+#include <kurl.h>
 
 
 #include "kmmsgpart.h"
@@ -273,6 +275,10 @@ public slots:
   /** Update composer field to reflect new identity  */
   void slotIdentityActivated(int idx);
 
+  /** KIO slots for attachment insertion */
+  void slotAttachFileData(KIO::Job *, const QByteArray &);
+  void slotAttachFileResult(KIO::Job *);
+
 protected:
   /** Install grid management and header fields. If fields exist that
     should not be there they are removed. Those that are needed are
@@ -405,6 +411,13 @@ protected:
 
 private:
   QColor foreColor,backColor;
+  struct atmLoadData
+  {
+    KURL url;
+    QByteArray data;
+    bool insert;
+  };
+  QMap<KIO::Job *, atmLoadData> mapAtmLoadData;
 };
 #endif
 
