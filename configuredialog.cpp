@@ -1818,7 +1818,7 @@ void ConfigureDialog::setupMiscPage( void )
   mMisc.emptyTrashCheck->setChecked( state );
   state = config.readBoolEntry("sendOnCheck", false);
   mMisc.sendOutboxCheck->setChecked( state );
-  state = config.readBoolEntry("send-receipts", true );
+  state = config.readBoolEntry("send-receipts", false );
   mMisc.sendReceiptCheck->setChecked( state );
   state = config.readNumEntry("compact-all-on-exit", 0 ) ? true : false;
   mMisc.compactOnExitCheck->setChecked( state );
