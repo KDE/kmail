@@ -17,6 +17,7 @@
 #include "kmfoldersearch.h"
 #include "kmfoldertree.h"
 #include "kmsearchpatternedit.h"
+#include "kmsearchpattern.h"
 
 #include <kapplication.h>
 #include <kdebug.h>

@@ -52,11 +52,11 @@ public:
       0 otherwise. If the caller does not any longer own the message
       he *must* not delete the message or do similar stupid things. ;-)
   */
-  int process( KMMessage* msg, FilterSet aSet=Inbound );
+  int process( KMMessage * msg, FilterSet aSet=Inbound ) const;
 
   /** For ad-hoc filters. Applies @p filter to @p msg. Return codes
       are as with the above method. */
-  int process( KMMessage * msg, KMFilter * filter );
+  int process( KMMessage * msg, const KMFilter * filter ) const;
 
   /** Call this method after processing messages with process().
     Shall be called after all messages are processed. This method
@@ -106,7 +106,7 @@ signals:
   void filterListUpdated();
 
 private:
-  int processPop( KMMessage * msg );
+  int processPop( KMMessage * msg ) const;
 
   QGuardedPtr<KMFilterDlg> mEditDialog;
   QPtrList<KMFolder> mOpenFolders;

@@ -41,30 +41,15 @@ public:
 		  FuncIsLess, FuncIsGreaterOrEqual };
 
   /** Constructor. Initializes the field and the value to the empty
-      string and the function to @p FuncEquals. Use @ref init to set
+      string and the function to @p FuncContains. Use @ref init to set
       other data.*/
-  KMSearchRule();
+  KMSearchRule( const QCString & field=0, Function function=FuncContains,
+		const QString & contents=QString::null );
+  KMSearchRule( const QCString & field, const char * function, const QString & contents );
+  KMSearchRule( const KMSearchRule & other );
+  const KMSearchRule & operator=( const KMSearchRule & other );
+
   ~KMSearchRule();
-
-  /** Initialize the rule.
-      @param field
-      The header field to search or one of the pseudo-headers, see @ref field.
-      @param function
-      The function/operator to use, see @ref function.
-      @param contents
-      The value to use, see @ref value.
-  */
-  void init( const QCString & aField, Function aFunction, const QString & aContents );
-
-  /** This is an overloaded member funcion, provided for convenience.
-      It differs from the above only in what arguments it takes. */
-  void init( const KMSearchRule * aRule=0 );
-
-  /** This is an overloaded member funcion, provided for convenience.
-      It differs from the above only in what arguments it takes,
-      namely the stringified version of the function, as used in the
-      config file. */
-  void init( const QCString & aField, const char * aStrFunction, const QString & aContents );
 
   /** Tries to match the rule against the given @ref KMMessage.
       @return TRUE if the rule matched, FALSE otherwise.
@@ -74,7 +59,7 @@ public:
   /** Optimized version tries to match the rule against the given @ref DwString.
       @return TRUE if the rule matched, FALSE otherwise.
   */
-  bool matches( const DwString & str, KMMessage & msg, DwBoyerMoore * headerField=0, int headerLen=-1 ) const;
+  bool matches( const DwString & str, KMMessage & msg, const DwBoyerMoore * headerField=0, int headerLen=-1 ) const;
 
   /** Initialize the object from a given config file. The group must
       be preset. @p aIdx is an identifier that is used to distinguish
@@ -114,7 +99,7 @@ public:
   QCString field() const { return mField; }
   /** Set message header field name (make sure there's no trailing
       colon ':') */
-  void setField( const QCString & aField ) { mField = aField; }
+  void setField( const QCString & field ) { mField = field; init( field ); }
 
   /** Returns true if the rule only depends on fields stored in
       a KMFolder index, otherwise returns false. */
@@ -135,10 +120,12 @@ private:
   /** Helper for the main matches() method */
   bool matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, const QString & msgContents ) const;
   static Function configValueToFunc( const char * str );
+  void init( const QCString & aField );
+
   QCString  mField;
   Function mFunction;
   QString  mContents;
-  DwBoyerMoore *mBmHeaderField, *mBmEndHeaders1, *mBmEndHeaders2, *mBmEndHeader;
+  const DwBoyerMoore *mBmHeaderField;
 };
 
 

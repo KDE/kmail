@@ -112,14 +112,14 @@ void KMFilterMgr::writeConfig(bool withSync)
 }
 
 
-int KMFilterMgr::processPop( KMMessage * msg ) {
+int KMFilterMgr::processPop( KMMessage * msg ) const {
   for ( QPtrListIterator<KMFilter> it( *this ) ; it.current() ; ++it )
     if ( (*it)->pattern()->matches( msg ) )
       return (*it)->action();
   return NoAction;
 }
 
-int KMFilterMgr::process( KMMessage * msg, KMFilter * filter ) {
+int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) const {
   if ( !msg || !filter )
     return 1;
 
@@ -149,7 +149,7 @@ int KMFilterMgr::process( KMMessage * msg, KMFilter * filter ) {
   return result;
 }
 
-int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
+int KMFilterMgr::process( KMMessage * msg, FilterSet set ) const {
   if ( bPopFilter )
     return processPop( msg );
 

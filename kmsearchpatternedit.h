@@ -5,24 +5,23 @@
 #ifndef KMFILTERRULESEDIT_H
 #define KMFILTERRULESEDIT_H
 
-#include "kmsearchpattern.h"
 #include "kwidgetlister.h"
 
 #include <qhbox.h>
 #include <qgroupbox.h>
-#include <qptrlist.h>
 #include <qstringlist.h>
 
-class QPushButton;
-class QVBoxLayout;
 class KMSearchRule;
+class KMSearchPattern;
+
+class QPushButton;
+class QDialog;
+template <typename T> class QPtrList;
 class QString;
 class QComboBox;
 class QLineEdit;
 class QRadioButton;
 class QPushButton;
-class KButtonBox;
-class QVBoxLayout;
 
 /** A widget to edit a single KMSearchRule.
     It consists of an editable @ref QComboBox for the field,
@@ -71,10 +70,10 @@ signals:
 protected:
   /** Used internally to translate i18n-ized pseudo-headers back to
       english */
-  QString ruleFieldToEnglish(const QString & i18nVal) const;
+  static QCString ruleFieldToEnglish(const QString & i18nVal);
   /** Used internally to find the corresponding index into the field
       ComboBox. Returns the index if found or -1 if the search failed, */
-  int indexOfRuleField(const QString aName) const;
+  int indexOfRuleField(const QString & aName) const;
 
 protected slots:
   void editRegExp();

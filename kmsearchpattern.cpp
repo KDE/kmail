@@ -31,47 +31,59 @@ static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfi
 //
 //==================================================
 
-KMSearchRule::KMSearchRule() {
-  init();
+KMSearchRule::KMSearchRule( const QCString & field, Function func, const QString & contents )
+  : mField( field ),
+    mFunction( func ),
+    mContents( contents ),
+    mBmHeaderField( 0 )
+{
+  init( field );
 }
 
+KMSearchRule::KMSearchRule( const QCString & field, const char * func, const QString & contents )
+  : mField( field ),
+    mFunction( configValueToFunc( func ) ),
+    mContents( contents ),
+    mBmHeaderField( 0 )
+{
+  init( field );
+}
+
+KMSearchRule::KMSearchRule( const KMSearchRule & other )
+  : mField( other.mField ),
+    mFunction( other.mFunction ),
+    mContents( other.mContents ),
+    mBmHeaderField( 0 )
+{
+  if ( other.mBmHeaderField )
+    mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
+}
+
+const KMSearchRule & KMSearchRule::operator=( const KMSearchRule & other ) {
+  if ( this == &other )
+    return *this;
+
+  mField = other.mField;
+  mFunction = other.mFunction;
+  mContents = other.mContents;
+  delete mBmHeaderField; mBmHeaderField = 0;
+  if ( other.mBmHeaderField ) 
+    mBmHeaderField = new DwBoyerMoore( *other.mBmHeaderField );
+
+  return *this;
+}
 
 KMSearchRule::~KMSearchRule() {
-  delete mBmHeaderField;
-  delete mBmEndHeader;
-  delete mBmEndHeaders2;
-  delete mBmEndHeaders1;
+  delete mBmHeaderField; mBmHeaderField = 0;
 }
 
 
-void KMSearchRule::init( const QCString & aField, Function aFunction,
-			 const QString & aContents )
-{
-  mField    = aField;
-  mFunction = aFunction;
-  mContents = aContents;
-  if ( mField.isEmpty() )
+void KMSearchRule::init( const QCString & field ) {
+  delete mBmHeaderField;
+  if ( field.isEmpty() || field[0] == '<' )
       mBmHeaderField = 0;
   else //TODO handle the unrealistic case of the message starting with mField
-      mBmHeaderField = new DwBoyerMoore(("\n" + mField + ": ").data()); 	
-  mBmEndHeaders1 = new DwBoyerMoore("\n\n");
-  mBmEndHeaders2 = new DwBoyerMoore("\n\r\n");
-  mBmEndHeader = new DwBoyerMoore("\n");
-}
-
-
-void KMSearchRule::init( const KMSearchRule * aRule ) {
-  if ( aRule )
-    init( aRule->field(), aRule->function(), aRule->contents() );
-  else
-    init ( 0, FuncContains, 0 );
-}
-
-
-void KMSearchRule::init( const QCString & aField, const char * aStrFunction,
-			 const QString & aContents )
-{
-  init ( aField, configValueToFunc( aStrFunction ), aContents );
+      mBmHeaderField = new DwBoyerMoore(("\n" + field + ": ").data()); 	
 }
 
 
@@ -86,36 +98,38 @@ KMSearchRule::Function KMSearchRule::configValueToFunc( const char * str ) {
 
 
 bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
-			    DwBoyerMoore * aHeaderField, int aHeaderLen ) const
+			    const DwBoyerMoore * aHeaderField, int aHeaderLen ) const
 {
-  DwBoyerMoore * headerField = aHeaderField ? aHeaderField : mBmHeaderField ;
-  if ( !headerField )
-    return false;
+  const DwBoyerMoore * headerField = aHeaderField ? aHeaderField : mBmHeaderField ;
 
   const int headerLen = ( aHeaderLen > -1 ? aHeaderLen : mField.length() ) + 2 ; // +1 for ': '
 
-  if ( aHeaderField || ( mField.length() && mField[0] != '<' ) ) {
-    size_t endOfHeader = mBmEndHeaders1->FindIn( aStr, 0 );
+  if ( headerField ) {
+    static const DwBoyerMoore lf( "\n" );
+    static const DwBoyerMoore lflf( "\n\n" );
+    static const DwBoyerMoore lfcrlf( "\n\r\n" );
+
+    size_t endOfHeader = lflf.FindIn( aStr, 0 );
     if ( endOfHeader == DwString::npos )
-      endOfHeader = mBmEndHeaders2->FindIn( aStr, 0 );
+      endOfHeader = lfcrlf.FindIn( aStr, 0 );
     const DwString headers = ( endOfHeader == DwString::npos ) ? aStr : aStr.substr( 0, endOfHeader );
     size_t start = headerField->FindIn( headers, 0 );
     if ( start == DwString::npos )
       return false;
     start += headerLen;
-    size_t stop = mBmEndHeader->FindIn( aStr, start );
+    size_t stop = lf.FindIn( aStr, start );
     char ch = '\0';
     while ( stop != DwString::npos && ( ch = aStr.at( stop + 1 ) ) == ' ' || ch == '\t' )
-      stop = mBmEndHeader->FindIn( aStr, stop + 1 );
+      stop = lf.FindIn( aStr, stop + 1 );
     const int len = stop == DwString::npos ? aStr.length() - start : stop - start ;
     const QCString codedValue( aStr.data() + start, len + 1 );
     const QString msgContents = KMMsgBase::decodeRFC2047String( codedValue ).stripWhiteSpace();
     return matches( false, 0, 0, msgContents );
   } else if ( mField == "<recipients>" ) {
-    DwBoyerMoore to("\nTo: ");
+    static const DwBoyerMoore to("\nTo: ");
     bool res = matches( aStr, msg, &to, 2 );
     if ( !res ) {
-      DwBoyerMoore cc("\nCc: ");
+      static const DwBoyerMoore cc("\nCc: ");
       res = matches( aStr, msg, &cc, 2 );
     }
     return res;
@@ -147,13 +161,12 @@ bool KMSearchRule::matches( const KMMessage * msg ) const {
     // (mmutz 2001-11-05) hack to fix "<recipients> !contains foo" to
     // meet user's expectations. See FAQ entry in KDE 2.2.2's KMail
     // handbook
-    if ( mFunction == KMSearchRule::FuncEquals
-	 || mFunction == KMSearchRule::FuncNotEqual )
+    if ( mFunction == FuncEquals || mFunction == FuncNotEqual )
       // do we need to treat this case specially? Ie.: What shall
       // "equality" mean for recipients.
       return matches( false, 0, 0, msg->headerField("To") )
-        || matches( false, 0, 0, msg->headerField("Cc") );
-    //
+          || matches( false, 0, 0, msg->headerField("Cc") );
+
     msgContents = msg->headerField("To") + msg->headerField("Cc");
   } else if ( mField == "<size>" ) {
     numerical = true;
@@ -244,15 +257,12 @@ void KMSearchRule::readConfig( const KConfig * config, int aIdx ) {
   static const QString & func = KGlobal::staticQString( "func" );
   static const QString & contents = KGlobal::staticQString( "contents" );
 
-  const QString requestedField = config->readEntry( field + cIdx );
-  if ( requestedField == "<To or Cc>" ) // backwards compat
-    init( "<recipients>",
-	  config->readEntry( func + cIdx ).latin1(),
-	  config->readEntry( contents + cIdx ) );
-  else
-    init( config->readEntry( field + cIdx  ).latin1(),
-	  config->readEntry( func + cIdx ).latin1(),
-	  config->readEntry( contents + cIdx ) );
+  mField = config->readEntry( field + cIdx ).latin1();
+  if ( mField == "<To or Cc>" ) // backwards compat
+    mField = "<recipients>";
+  init( mField );
+  mFunction = configValueToFunc( config->readEntry( func + cIdx ).latin1() );
+  mContents = config->readEntry( contents + cIdx );
 }
 
 
@@ -387,10 +397,9 @@ void KMSearchPattern::readConfig( const KConfig * config ) {
 }
 
 void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
-  KMSearchRule * rule = new KMSearchRule();
-  rule->init( config->readEntry("fieldA").latin1(),
-	      config->readEntry("funcA").latin1(),
-	      config->readEntry("contentsA") );
+  KMSearchRule * rule = new KMSearchRule( config->readEntry("fieldA").latin1(),
+					  config->readEntry("funcA").latin1(),
+					  config->readEntry("contentsA") );
   if ( rule->isEmpty() ) {
     // if the first rule is invalid,
     // we really can't do much heuristics...
@@ -402,10 +411,9 @@ void KMSearchPattern::importLegacyConfig( const KConfig * config ) {
   const QString sOperator = config->readEntry("operator");
   if ( sOperator == "ignore" ) return;
 
-  rule = new KMSearchRule();
-  rule->init( config->readEntry("fieldB").latin1(),
-	      config->readEntry("funcB").latin1(),
-	      config->readEntry("contentsB") );
+  rule = new KMSearchRule( config->readEntry("fieldB").latin1(),
+			   config->readEntry("funcB").latin1(),
+			   config->readEntry("contentsB") );
   if ( rule->isEmpty() ) {
     delete rule;
     return;
@@ -464,15 +472,16 @@ QString KMSearchPattern::asString() const {
 }
 #endif
 
-const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & aPattern )
-{
-  setOp( aPattern.op() );
-  setName( aPattern.name() );
+const KMSearchPattern & KMSearchPattern::operator=( const KMSearchPattern & other ) {
+  if ( this == &other )
+    return *this;
 
-  for ( QPtrListIterator<KMSearchRule> it( aPattern ) ; it.current() ; ++it ) {
-    KMSearchRule * r = new KMSearchRule;
-    r->init( *it ); // deep copy
-    append( r );
-  }
+  setOp( other.op() );
+  setName( other.name() );
+
+  clear(); // ###
+  for ( QPtrListIterator<KMSearchRule> it( other ) ; it.current() ; ++it )
+    append( new KMSearchRule( **it ) ); // deep copy
+
   return *this;
 }

@@ -5,19 +5,21 @@
 #include <config.h>
 #include "kmsearchpatternedit.h"
 
+#include "kmsearchpattern.h"
+
 #include <klocale.h>
 #include <kdebug.h>
-
-#include <qradiobutton.h>
 #include <klineedit.h>
+#include <kparts/componentfactory.h>
+#include <kregexpeditorinterface.h>
+
+#include <qpushbutton.h>
+#include <qdialog.h>
+#include <qradiobutton.h>
 #include <qcombobox.h>
 #include <qbuttongroup.h>
 
 #include <assert.h>
-#include <kparts/componentfactory.h>
-#include <kregexpeditorinterface.h>
-#include <qpushbutton.h>
-#include <qdialog.h>
 
 //=============================================================================
 //
@@ -113,15 +115,10 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
   blockSignals(FALSE);
 }
 
-KMSearchRule* KMSearchRuleWidget::rule() const
-{
-  KMSearchRule *r = new KMSearchRule;
-
-  r->init( ruleFieldToEnglish( mRuleField->currentText() ).latin1(),
-	   (KMSearchRule::Function)mRuleFunc->currentItem(),
-	   mRuleValue->text() );
-
-  return r;
+KMSearchRule* KMSearchRuleWidget::rule() const {
+  return new KMSearchRule( ruleFieldToEnglish( mRuleField->currentText() ),
+			   (KMSearchRule::Function)mRuleFunc->currentItem(),
+			   mRuleValue->text() );
 }
 
 void KMSearchRuleWidget::reset()
@@ -139,19 +136,17 @@ void KMSearchRuleWidget::reset()
   blockSignals(FALSE);
 }
 
-QString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) const
-{
-  if (i18nVal == i18n("<recipients>")) return QString::fromLatin1("<recipients>");
-  if (i18nVal == i18n("<body>")) return QString::fromLatin1("<body>");
-  if (i18nVal == i18n("<message>")) return QString::fromLatin1("<message>");
-  if (i18nVal == i18n("<any header>")) return QString::fromLatin1("<any header>");
-  if (i18nVal == i18n("<size in bytes>")) return QString::fromLatin1("<size>");
-  if (i18nVal == i18n("<age in days>")) return QString::fromLatin1("<age in days>");
-  return i18nVal;
+QCString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) {
+  if (i18nVal == i18n("<recipients>")) return "<recipients>";
+  if (i18nVal == i18n("<body>")) return "<body>";
+  if (i18nVal == i18n("<message>")) return "<message>";
+  if (i18nVal == i18n("<any header>")) return "<any header>";
+  if (i18nVal == i18n("<size in bytes>")) return "<size>";
+  if (i18nVal == i18n("<age in days>")) return "<age in days>";
+  return i18nVal.latin1();
 }
 
-int KMSearchRuleWidget::indexOfRuleField(const QString aName) const
-{
+int KMSearchRuleWidget::indexOfRuleField( const QString & aName ) const {
   int i;
 
   if ( aName.isEmpty() ) return -1;
