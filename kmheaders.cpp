@@ -1229,9 +1229,10 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   }
   mItems.resize( mItems.size() - 1 );
   if (threaded && mFolder->count()) {
-    if (mSortCacheItems[msgId] == removedItem->sortCacheItem())
-      mSortCacheItems.remove(msgId);
-
+    if (mSortCacheItems[msgId]) {
+      if (mSortCacheItems[msgId] == removedItem->sortCacheItem()) 
+        mSortCacheItems.remove(msgId);
+    }
     // Remove the message from the list of potential parents for threading by
     // subject. 
     if (mSubjThreading && mSubjectLists[strippedSubjMD5])
@@ -2735,7 +2736,7 @@ void KMHeaders::buildThreadingTree( QMemArray<KMSortCacheItem *> sortCache )
         KMMsgBase *mi = mFolder->getMsgBase(x);
         QString md5 = mi->msgIdMD5();
         if(!md5.isEmpty())
-            mSortCacheItems.insert(md5, sortCache[x]);
+            mSortCacheItems.replace(md5, sortCache[x]);
     }
 }
 
