@@ -115,7 +115,7 @@ public:
 
   /** The path to the imap folder on the server */
   void setImapPath(const QString &path) { mImapPath = path; }
-  QString imapPath() { return mImapPath; }
+  QString imapPath() const { return mImapPath; }
 
   /** The highest UID in the folder */
   void setLastUid( ulong uid );
