@@ -221,16 +221,16 @@ namespace KMail {
       passwords.writeEntry( "Keep", storePasswd() );
       QString msg = i18n("You need to supply a username and a password to "
 			 "access this mailbox.");
-      mPasswordDialogIsActive = true; 
+      mPasswordDialogIsActive = true;
       if ( PasswordDialog::getNameAndPassword( log, pass, &store, msg, false,
 					       QString::null, name(),
 					       i18n("Account:") )
           != QDialog::Accepted ) {
         checkDone(false, 0);
-        mPasswordDialogIsActive = false; 
+        mPasswordDialogIsActive = false;
         return Error;
       }
-      mPasswordDialogIsActive = false; 
+      mPasswordDialogIsActive = false;
       // The user has been given the chance to change login and
       // password, so copy both from the dialog:
       setPasswd( pass, store );
@@ -309,14 +309,14 @@ namespace KMail {
   void ImapAccountBase::listDirectory(QString path, bool onlySubscribed,
       bool secondStep, KMFolder* parent, bool reset)
   {
-    if (makeConnection() == Error) 
+    if (makeConnection() == Error)
       return;
     // create jobData
     jobData jd;
     jd.total = 1; jd.done = 0;
     // reset for a new listing
     if (reset)
-      mHasInbox = false; 
+      mHasInbox = false;
     // this inboxonly switch is only needed when you set the INBOX as prefix
     jd.inboxOnly = !secondStep && prefix() != "/"
       && path == prefix() && !mHasInbox;
@@ -395,7 +395,7 @@ namespace KMail {
     if (job->error())
     {
       slotSlaveError( mSlave, job->error(),
-          job->errorString() );
+          job->errorText() );
     }
     if (!job->error())
     {
@@ -425,7 +425,7 @@ namespace KMail {
       stream << (int) 'U' << url;
 
     // create the KIO-job
-    if (makeConnection() != Connected) 
+    if (makeConnection() != Connected)
       return;
     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, job);
@@ -449,7 +449,7 @@ namespace KMail {
     if (job->error())
     {
       slotSlaveError( mSlave, job->error(),
-          job->errorString() );
+          job->errorText() );
     } else {
       emit subscriptionChanged(
           static_cast<KIO::SimpleJob*>(job)->url().path(), (*it).onlySubscribed );
@@ -529,7 +529,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg, 
+  void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg,
                                              const AttachmentStrategy *as )
   {
     mBodyPartList.clear();
