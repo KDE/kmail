@@ -53,7 +53,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   QHBoxLayout * hlay = new QHBoxLayout( vlay ); // inherits spacing
   mLineEdit = new QLineEdit( page );
   mLineEdit->setFocus();
-  hlay->addWidget( new QLabel( mLineEdit, i18n("&New Identity:"), page ) );
+  hlay->addWidget( new QLabel( mLineEdit, i18n("&New identity:"), page ) );
   hlay->addWidget( mLineEdit, 1 );
   connect( mLineEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotEnableOK(const QString&)) );
@@ -68,7 +68,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   vlay->addWidget( radio );
 
   // row 2: radio button
-  radio = new QRadioButton( i18n("&Use Control Center settings"), page );
+  radio = new QRadioButton( i18n("&Use control center settings"), page );
   mButtonGroup->insert( radio, ControlCenter );
   vlay->addWidget( radio );
 

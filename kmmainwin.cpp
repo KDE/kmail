@@ -585,15 +585,15 @@ void KMMainWin::createWidgets(void)
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
-   i18n("Focus on next folder"), CTRL+Key_Right, mFolderTree,
+   i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
 
   new KAction(
-   i18n("Focus on previous folder"), CTRL+Key_Left, mFolderTree,
+   i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,
    SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
 
   new KAction(
-   i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,
+   i18n("Select Folder with Focus"), CTRL+Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
 
   connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
@@ -2535,10 +2535,10 @@ void KMMainWin::setupMenuBar()
   compactFolderAction = new KAction( i18n("C&ompact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
-  emptyFolderAction = new KAction( i18n("&Empty"), 0, this,
+  emptyFolderAction = new KAction( i18n("&Empty..."), 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
-  removeFolderAction = new KAction( i18n("&Remove"), 0, this,
+  removeFolderAction = new KAction( i18n("&Remove..."), 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "remove" );
 
   preferHtmlAction = new KToggleAction( i18n("Pre&fer HTML to Plain Text"), 0, this,
@@ -2885,13 +2885,13 @@ void KMMainWin::setupMenuBar()
 		     SLOT(slotCollapseThread()),
 		     actionCollection(), "collapse_thread" );
 
-  (void)new KAction( KGuiItem( i18n("View->","Expand all Threads"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","Expand All Threads"), QString::null,
 			       i18n("Expand all threads in the current folder") ),
 		     CTRL+Key_Period, this,
 		     SLOT(slotExpandAllThreads()),
 		     actionCollection(), "expand_all_threads" );
 
-  (void)new KAction( KGuiItem( i18n("View->","Collapse all Threads"), QString::null,
+  (void)new KAction( KGuiItem( i18n("View->","Collapse All Threads"), QString::null,
 			       i18n("Collapse all threads in the current folder") ),
 		     CTRL+Key_Comma, this,
 		     SLOT(slotCollapseAllThreads()),
@@ -2901,7 +2901,7 @@ void KMMainWin::setupMenuBar()
 			0, this, SLOT(slotToggleFixedFont()),
 			actionCollection(), "toggle_fixedfont" );
 
-  viewSourceAction = new KAction( i18n("&View Source..."), Key_V, this,
+  viewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
 		      SLOT(slotShowMsgSrc()), actionCollection(), "view_source" );
 
 

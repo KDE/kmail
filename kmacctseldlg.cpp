@@ -41,13 +41,13 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
   QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint()*2, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
   
-  QRadioButton *radioButton1 = new QRadioButton( i18n("&Local Mailbox"), group );
+  QRadioButton *radioButton1 = new QRadioButton( i18n("&Local mailbox"), group );
   vlay->addWidget( radioButton1 );
   QRadioButton *radioButton2 = new QRadioButton( i18n("&Pop3"), group );
   vlay->addWidget( radioButton2 );
   QRadioButton *radioButton3 = new QRadioButton( i18n("&IMAP"), group );
   vlay->addWidget( radioButton3 );
-  QRadioButton *radioButton4 = new QRadioButton( i18n("Maildir Mailbox"), group );
+  QRadioButton *radioButton4 = new QRadioButton( i18n("Maildir mailbox"), group );
   vlay->addWidget( radioButton4 );
 
   vlay->addStretch( 10 );

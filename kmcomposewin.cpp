@@ -655,10 +655,10 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    mLblIdentity, mIdentity, mBtnIdentity);
   if (!fromSlot) fccAction->setChecked(abs(mShowHeaders)&HDR_FCC);
-  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sent-Mail Fol&der:"),
+  rethinkHeaderLine(showHeaders,HDR_FCC, row, i18n("Sent-Mail fol&der:"),
 		    mLblFcc, mFcc, mBtnFcc);
   if (!fromSlot) transportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
-  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l Transport:"),
+  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l transport:"),
 		    mLblTransport, mTransport, mBtnTransport);
   if (!fromSlot) fromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
@@ -929,7 +929,7 @@ void KMComposeWin::setupActions(void)
                                   "signature", 0,
                                   actionCollection(), "sign_message");
 
-  selectCryptoAction = new KAction (i18n("&Select Crypto"),
+  selectCryptoAction = new KAction (i18n("&Select Crypto..."),
                                     0, //KStdAccel::shortcut( .. ),
                                     this,
                                     SLOT(slotSelectCrypto()),
@@ -4129,7 +4129,7 @@ void KMComposeWin::slotSendNow()
 void KMComposeWin::slotSelectCrypto()
 {
   QString dummy;
-  KListBoxDialog dialog( dummy, "", i18n( "&Select Crypto Module:" ) );
+  KListBoxDialog dialog( dummy, "", i18n( "&Select crypto module:" ) );
   dialog.resize( 350, 200 );
   dialog.entriesLB->clear();
 

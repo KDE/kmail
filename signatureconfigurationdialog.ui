@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>766</width>
-            <height>396</height>
+            <width>816</width>
+            <height>477</height>
         </rect>
     </property>
     <property name="caption">
@@ -317,7 +317,7 @@ This setting is a default, you can override it for each individual message.
                             </grid>
                         </widget>
                         <spacer>
-                            <property name="name" stdset="0">
+                            <property name="name">
                                 <cstring>Spacer3</cstring>
                             </property>
                             <property name="orientation">
@@ -325,12 +325,6 @@ This setting is a default, you can override it for each individual message.
                             </property>
                             <property name="sizeType">
                                 <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </size>
                             </property>
                         </spacer>
                         <widget class="QLayoutWidget">
@@ -482,7 +476,7 @@ The recommended SPHINX setting is 14 days.
                             </grid>
                         </widget>
                         <spacer>
-                            <property name="name" stdset="0">
+                            <property name="name">
                                 <cstring>Spacer2</cstring>
                             </property>
                             <property name="orientation">
@@ -490,12 +484,6 @@ The recommended SPHINX setting is 14 days.
                             </property>
                             <property name="sizeType">
                                 <enum>Expanding</enum>
-                            </property>
-                            <property name="sizeHint">
-                                <size>
-                                    <width>20</width>
-                                    <height>20</height>
-                                </size>
                             </property>
                         </spacer>
                         <widget class="QCheckBox">
@@ -536,22 +524,29 @@ It is recommended to leave this option turned on for maximum integrity.
                         <property name="spacing">
                             <number>6</number>
                         </property>
-
-
                         <widget class="QButtonGroup">
                             <property name="name">
                                 <cstring>sigCompoundModeBG</cstring>
                             </property>
                             <property name="title">
-                                <string>Signature compound mode:</string>
+                                <string>Signature Compound Mode</string>
                             </property>
                             <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <property name="margin">
+                                    <number>11</number>
+                                </property>
+                                <property name="spacing">
+                                    <number>6</number>
+                                </property>
                                 <widget class="QRadioButton">
                                     <property name="name">
                                         <cstring>sendSigOpaqueRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>opaque</string>
+                                        <string>Opaque</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Signature and signed data encoded in one ASN.1 block.</string>
@@ -568,7 +563,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <cstring>sendSigMultiPartRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>detached</string>
+                                        <string>Detached</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>A Multipart/Signed holding Signature and signed data.</string>
@@ -582,8 +577,6 @@ When this option is selected, the signature and the signed data will be separate
                                 </widget>
                             </hbox>
                         </widget>
-
-
                         <widget class="QButtonGroup">
                             <property name="name">
                                 <cstring>pinEntryBG</cstring>

@@ -426,7 +426,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   // (row 3: spacer)
   mEmailEdit = new QLineEdit( tab );
   glay->addWidget( mEmailEdit, 2, 1 );
-  glay->addWidget( new QLabel( mEmailEdit, i18n("&Email Address:"), tab ),
+  glay->addWidget( new QLabel( mEmailEdit, i18n("&Email address:"), tab ),
 		   2, 0 );
 
   //
@@ -443,11 +443,11 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   mReplyToEdit = new QLineEdit( tab );
   glay->addMultiCellWidget( mReplyToEdit, 0, 0, 1, 3 );
   glay->addWidget( new QLabel( mReplyToEdit,
-			       i18n("Re&ply-To Address:"), tab ), 0, 0 );
+			       i18n("Re&ply-To address:"), tab ), 0, 0 );
 
   // row 1: "OpenPGP Key" requester and label:
   // the label
-  glay->addWidget( new QLabel( button, i18n("OpenPGP &Key:"), tab ), 1, 0 );
+  glay->addWidget( new QLabel( button, i18n("OpenPGP &key:"), tab ), 1, 0 );
   // the Key Id label
   mPgpIdentityLabel = new QLabel( tab );
   mPgpIdentityLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
@@ -479,14 +479,14 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   mFccCombo = new KMFolderComboBox( tab );
   mFccCombo->showOutboxFolder( false );
   glay->addMultiCellWidget( mFccCombo, 2, 2, 1, 3 );
-  glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &Folder:"), tab ),
+  glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &folder:"), tab ),
 		   2, 0 );
 
   // row 3: "Drafts Folder" combo box and label:
   mDraftsCombo = new KMFolderComboBox( tab );
   mDraftsCombo->showOutboxFolder( false );
   glay->addMultiCellWidget( mDraftsCombo, 3, 3, 1, 3 );
-  glay->addWidget( new QLabel( mDraftsCombo, i18n("Drafts Fo&lder:"), tab ),
+  glay->addWidget( new QLabel( mDraftsCombo, i18n("Drafts fo&lder:"), tab ),
 		   3, 0 );
 
   // row 4: "Special transport" combobox and label:
@@ -774,10 +774,10 @@ void IdentityPage::slotRenameIdentity()
   QStringList identities = im->shadowIdentities();
 
   QString oldName = identities[ mIdentityCombo->currentItem() ];
-  QString message = i18n("Rename identity \"%1\" to").arg( oldName );
+  QString message = i18n("Rename identity \"%1\" to:").arg( oldName );
 
   KStringListValidator validator( identities, true /*rejecting*/ );
-  QString newName = KLineEditDlg::getText( i18n("Rename identity"),
+  QString newName = KLineEditDlg::getText( i18n("Rename Identity"),
 		 message, oldName, &ok, this, &validator ).stripWhiteSpace();
 
   if ( ok ) {
@@ -1918,16 +1918,16 @@ static const struct {
   bool   enableFamilyAndSize;
   bool   onlyFixed;
 } fontNames[] = {
-  { "body-font", I18N_NOOP("Message body"), true, false },
-  { "list-font", I18N_NOOP("Message list"), true, false },
-  { "list-date-font", I18N_NOOP("Message list - date field"), true, false },
-  { "folder-font", I18N_NOOP("Folder list"), true, false },
-  { "quote1-font", I18N_NOOP("Quoted text - first level"), false, false },
-  { "quote2-font", I18N_NOOP("Quoted text - second level"), false, false },
-  { "quote3-font", I18N_NOOP("Quoted text - third level"), false, false },
-  { "fixed-font", I18N_NOOP("Fixed width font"), true, true },
+  { "body-font", I18N_NOOP("Message Body"), true, false },
+  { "list-font", I18N_NOOP("Message List"), true, false },
+  { "list-date-font", I18N_NOOP("Message List - Date Field"), true, false },
+  { "folder-font", I18N_NOOP("Folder List"), true, false },
+  { "quote1-font", I18N_NOOP("Quoted Text - First Level"), false, false },
+  { "quote2-font", I18N_NOOP("Quoted Text - Second Level"), false, false },
+  { "quote3-font", I18N_NOOP("Quoted Text - Third Level"), false, false },
+  { "fixed-font", I18N_NOOP("Fixed Width Font"), true, true },
   { "composer-font", I18N_NOOP("Composer"), true, false },
-  { "print-font",  I18N_NOOP("Printing output"), true, false },
+  { "print-font",  I18N_NOOP("Printing Output"), true, false },
 };
 static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
@@ -2555,7 +2555,7 @@ AppearancePageProfileTab::AppearancePageProfileTab( QWidget * parent, const char
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   mListView = new KListView( this, "mListView" );
-  mListView->addColumn( i18n("Available profiles") );
+  mListView->addColumn( i18n("Available Profiles") );
   mListView->addColumn( i18n("Description") );
   mListView->setFullWidth();
   mListView->setAllColumnsShowFocus( true );
@@ -3284,7 +3284,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
     new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), 0 );
   mMessageIdSuffixEdit->setValidator( mMessageIdSuffixValidator );
   label = new QLabel( mMessageIdSuffixEdit,
-		      i18n("Custom Message-&Id suffix:"), this );
+		      i18n("Custom message-&id suffix:"), this );
   label->setEnabled( false ); // since !mCreateOwnMessageIdCheck->isChecked()
   mMessageIdSuffixEdit->setEnabled( false );
   hlay->addWidget( label );
@@ -3798,7 +3798,7 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 
   // "On exit..." groupbox:
   group = new QVGroupBox( i18n("On Program Exit, "
-			       "Perform the Following Tasks"), this );
+			       "Perform Following Tasks"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
   mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
   mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
@@ -3924,7 +3924,7 @@ MiscPageAddressbookTab::MiscPageAddressbookTab( QWidget * parent, const char * n
     mAddressbookCombo->insertItem( i18n( addressBooks[i].label ) );
 
   hlay->addWidget( new QLabel( mAddressbookCombo,
-			       i18n("Choose A&ddressbook:"), this ) );
+			       i18n("Choose a&ddressbook:"), this ) );
   hlay->addWidget( mAddressbookCombo, 1 );
 
   group = new QVGroupBox( i18n("Description"), this );
@@ -4987,8 +4987,8 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
   plugList->addColumn( i18n("Name") );
   plugList->addColumn( i18n("Location") );
   plugList->addColumn( i18n("Update URL") );
-  plugList->addColumn( i18n("active") );
-  plugList->addColumn( i18n("initialized" ) );
+  plugList->addColumn( i18n("Active") );
+  plugList->addColumn( i18n("Initialized" ) );
   plugList->setAllColumnsShowFocus( true );
   plugList->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
   plugList->setSorting( -1 );
@@ -4997,8 +4997,8 @@ GeneralPage::GeneralPage( PluginPage* parent, const char* name ) :
            _pluginPage, SLOT(  slotPlugSelectionChanged()) );
   glay->addMultiCellWidget( plugList, 0, 5, 0, 1 );
 
-  addCryptPlugButton       = new QPushButton( i18n("Add &new plugin"), this );
-  removeCryptPlugButton    = new QPushButton( i18n("&Remove current"), this );
+  addCryptPlugButton       = new QPushButton( i18n("Add &New Plugin"), this );
+  removeCryptPlugButton    = new QPushButton( i18n("&Remove Current"), this );
   activateCryptPlugButton  = new QPushButton( i18n("Ac&tivate"),       this );
   connect( addCryptPlugButton,       SIGNAL(clicked()),
                                           this, SLOT(  slotNewPlugIn()) );
