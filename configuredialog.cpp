@@ -1,4 +1,4 @@
-/*
+/*   -*- mode: C++; c-file-style: "gnu" -*-
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
  *              Copyright (C) 2001-2003 Marc Mutz, mutz@kde.org
@@ -1890,7 +1890,7 @@ void AppearancePage::ColorsTab::apply() {
 }
 
 QString AppearancePage::LayoutTab::title() {
-  return i18n("&Layout");
+  return i18n("La&yout");
 }
 
 QString AppearancePage::LayoutTab::helpAnchor() const {
@@ -1898,8 +1898,8 @@ QString AppearancePage::LayoutTab::helpAnchor() const {
 }
 
 static const EnumConfigEntryItem folderListModes[] = {
-  { "long", I18N_NOOP("&Long folder list") },
-  { "short", I18N_NOOP("&Short folder list" ) }
+  { "long", I18N_NOOP("Lon&g folder list") },
+  { "short", I18N_NOOP("Shor&t folder list" ) }
 };
 static const EnumConfigEntry folderListMode = {
   "Geometry", "FolderList", I18N_NOOP("Folder List"),
@@ -1908,37 +1908,37 @@ static const EnumConfigEntry folderListMode = {
 
 
 static const EnumConfigEntryItem mimeTreeLocations[] = {
-  { "top", I18N_NOOP("At &top") },
-  { "bottom", I18N_NOOP("At &bottom") }
+  { "top", I18N_NOOP("Abo&ve the message pane") },
+  { "bottom", I18N_NOOP("&Below the message pane") }
 };
 static const EnumConfigEntry mimeTreeLocation = {
-  "Reader", "MimeTreeLocation", I18N_NOOP("MIME Tree Location"),
+  "Reader", "MimeTreeLocation", I18N_NOOP("Message Structure Viewer Placement"),
   mimeTreeLocations, DIM(mimeTreeLocations), 1
 };
 
 static const EnumConfigEntryItem mimeTreeModes[] = {
-  { "never", I18N_NOOP("&Never show") },
+  { "never", I18N_NOOP("Show &never") },
   { "smart", I18N_NOOP("Show only for non-plaintext &messages") },
-  { "always", I18N_NOOP("Alwa&ys show") }
+  { "always", I18N_NOOP("Show alway&s") }
 };
 static const EnumConfigEntry mimeTreeMode = {
-  "Reader", "MimeTreeMode", I18N_NOOP("MIME Tree Display"),
+  "Reader", "MimeTreeMode", I18N_NOOP("Message Structure Viewer"),
   mimeTreeModes, DIM(mimeTreeModes), 1
 };
 
 
 static const EnumConfigEntryItem readerWindowModes[] = {
   { "hide", I18N_NOOP("&Don't show a message preview pane") },
-  { "below", I18N_NOOP("Show a message preview pane &below the message list") },
-  { "right", I18N_NOOP("Show a message preview pane to the &right of the message list") }
+  { "below", I18N_NOOP("Show the message preview pane belo&w the message list") },
+  { "right", I18N_NOOP("Show the message preview pane ne&xt to the message list") }
 };
 static const EnumConfigEntry readerWindowMode = {
-  "Geometry", "readerWindowMode", I18N_NOOP("Message Preview Pane Display"),
+  "Geometry", "readerWindowMode", I18N_NOOP("Message Preview Pane"),
   readerWindowModes, DIM(readerWindowModes), 1
 };
 
 static const BoolConfigEntry showColorbarMode = {
-  "Reader", "showColorbar", I18N_NOOP("Sho&w HTML status bar"), false
+  "Reader", "showColorbar", I18N_NOOP("Show HTML stat&us bar"), false
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
@@ -1957,17 +1957,17 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   populate( mFolderListGroup = new QHButtonGroup( this ), folderListMode );
   vlay->addWidget( mFolderListGroup );
 
-  // "MIME Tree Location" radio buttons:
-  populate( mMIMETreeLocationGroup = new QHButtonGroup( this ), mimeTreeLocation );
-  vlay->addWidget( mMIMETreeLocationGroup );
+  // "show reader window" radio buttons:
+  populate( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
+  vlay->addWidget( mReaderWindowModeGroup );
 
   // "Show MIME Tree" radio buttons:
   populate( mMIMETreeModeGroup = new QVButtonGroup( this ), mimeTreeMode );
   vlay->addWidget( mMIMETreeModeGroup );
 
-  // "show reader window" radio buttons:
-  populate( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
-  vlay->addWidget( mReaderWindowModeGroup );
+  // "MIME Tree Location" radio buttons:
+  populate( mMIMETreeLocationGroup = new QHButtonGroup( this ), mimeTreeLocation );
+  vlay->addWidget( mMIMETreeLocationGroup );
 
   vlay->addStretch( 10 ); // spacer
 }
@@ -2019,8 +2019,9 @@ static const struct {
 } dateDisplayConfig[] = {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
-  { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("C&ustom (Shift+F1 for help)"), KMime::DateFormatter::Custom }
+  { I18N_NOOP("Fancy for&mat (%1)"), KMime::DateFormatter::Fancy },
+  { I18N_NOOP("C&ustom format (Shift+F1 for help)"),
+    KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
@@ -2032,7 +2033,6 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   // tmp. vars:
   QButtonGroup * group;
   QRadioButton * radio;
-  QString msg;
 
   QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
@@ -2058,14 +2058,14 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
     new QRadioButton( i18n("Always &keep threads open"),
 		      mNestingPolicy ), 0 );
   mNestingPolicy->insert(
-    new QRadioButton( i18n("Threads default to op&en"),
+    new QRadioButton( i18n("Threads default to o&pen"),
 		      mNestingPolicy ), 1 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Threads default to clo&sed"),
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
-    new QRadioButton( i18n("Open threads that contain new, unread "
-			   "or important &messages and open watched threads."),
+    new QRadioButton( i18n("Open threads that contain ne&w, unread "
+			   "or important messages and open watched threads."),
                       mNestingPolicy ), 3 );
 
   vlay->addWidget( mNestingPolicy );
@@ -2085,39 +2085,40 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
       mCustomDateFormatEdit->setEnabled( false );
       connect( radio, SIGNAL(toggled(bool)),
 	       mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
-      msg = i18n( "<qt><p><strong>These expressions may be used for the date:"
-		  "</strong></p>"
-		  "<ul>"
-		  "<li>d - the day as a number without a leading zero (1-31)</li>"
-		  "<li>dd - the day as a number with a leading zero (01-31)</li>"
-		  "<li>ddd - the abbreviated day name (Mon - Sun)</li>"
-		  "<li>dddd - the long day name (Monday - Sunday)</li>"
-		  "<li>M - the month as a number without a leading zero (1-12)</li>"
-		  "<li>MM - the month as a number with a leading zero (01-12)</li>"
-		  "<li>MMM - the abbreviated month name (Jan - Dec)</li>"
-		  "<li>MMMM - the long month name (January - December)</li>"
-		  "<li>yy - the year as a two digit number (00-99)</li>"
-		  "<li>yyyy - the year as a four digit number (0000-9999)</li>"
-		  "</ul>"
-		  "<p><strong>These expressions may be used for the time:"
-		  "</string></p> "
-		  "<ul>"
-		  "<li>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display)</li>"
-		  "<li>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display)</li>"
-		  "<li>m - the minutes without a leading zero (0-59)</li>"
-		  "<li>mm - the minutes with a leading zero (00-59)</li>"
-		  "<li>s - the seconds without a leading zero (0-59)</li>"
-		  "<li>ss - the seconds with a leading zero (00-59)</li>"
-		  "<li>z - the milliseconds without leading zeroes (0-999)</li>"
-		  "<li>zzz - the milliseconds with leading zeroes (000-999)</li>"
-		  "<li>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\".</li>"
-		  "<li>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\".</li>"
-		  "<li>Z - time zone in numeric form (-0500)</li>"
-		  "</ul>"
-		  "<p><strong>All other input characters will be ignored."
-		  "</strong></p></qt>");
-      QWhatsThis::add( mCustomDateFormatEdit, msg );
-      QWhatsThis::add( radio, msg );
+      QString customDateWhatsThis =
+        i18n("<qt><p><strong>These expressions may be used for the date:"
+             "</strong></p>"
+             "<ul>"
+             "<li>d - the day as a number without a leading zero (1-31)</li>"
+             "<li>dd - the day as a number with a leading zero (01-31)</li>"
+             "<li>ddd - the abbreviated day name (Mon - Sun)</li>"
+             "<li>dddd - the long day name (Monday - Sunday)</li>"
+             "<li>M - the month as a number without a leading zero (1-12)</li>"
+             "<li>MM - the month as a number with a leading zero (01-12)</li>"
+             "<li>MMM - the abbreviated month name (Jan - Dec)</li>"
+             "<li>MMMM - the long month name (January - December)</li>"
+             "<li>yy - the year as a two digit number (00-99)</li>"
+             "<li>yyyy - the year as a four digit number (0000-9999)</li>"
+             "</ul>"
+             "<p><strong>These expressions may be used for the time:"
+             "</string></p> "
+             "<ul>"
+             "<li>h - the hour without a leading zero (0-23 or 1-12 if AM/PM display)</li>"
+             "<li>hh - the hour with a leading zero (00-23 or 01-12 if AM/PM display)</li>"
+             "<li>m - the minutes without a leading zero (0-59)</li>"
+             "<li>mm - the minutes with a leading zero (00-59)</li>"
+             "<li>s - the seconds without a leading zero (0-59)</li>"
+             "<li>ss - the seconds with a leading zero (00-59)</li>"
+             "<li>z - the milliseconds without leading zeroes (0-999)</li>"
+             "<li>zzz - the milliseconds with leading zeroes (000-999)</li>"
+             "<li>AP - switch to AM/PM display. AP will be replaced by either \"AM\" or \"PM\".</li>"
+             "<li>ap - switch to AM/PM display. ap will be replaced by either \"am\" or \"pm\".</li>"
+             "<li>Z - time zone in numeric form (-0500)</li>"
+             "</ul>"
+             "<p><strong>All other input characters will be ignored."
+             "</strong></p></qt>");
+      QWhatsThis::add( mCustomDateFormatEdit, customDateWhatsThis );
+      QWhatsThis::add( radio, customDateWhatsThis );
     }
   } // end for loop populating mDateDisplay
 
