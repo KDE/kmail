@@ -2417,7 +2417,7 @@ void KMComposeWin::slotIdentityActivated(int)
     mEditor->setText( edtText );
   }
   mOldSigText = ident.signature();
-
+  
   // disable certain actions if there is no PGP user identity set
   // for this profile
   if (ident.pgpIdentity().isEmpty()) {
@@ -2686,11 +2686,11 @@ void KMLineEdit::doCompletion(bool ctrlT)
             setText(prevAddr + box->text(0));
         else
             box->hide();
-
+        
         cursorAtEnd();
         return;
     }
-
+        
     switch ( mode )
     {
         case KGlobalSettings::CompletionPopup:
@@ -2900,7 +2900,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     }
     // ---sven's Arrow key navigation start ---
     // Key Up in first line takes you to Subject line.
-    if (k->key() == Key_Up && currentLine() == 0 &&markedText().isEmpty() )
+    if (k->key() == Key_Up && currentLine() == 0)
     {
       mComposer->focusNextPrevEdit(0, false); //take me up
       return TRUE;
