@@ -192,14 +192,25 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
     if (know_type == false)
     {
       know_type = true;
-      QCString MAIL(getenv("MAIL"));
-      if (!MAIL.isEmpty() && !MAIL.isNull())
+      KConfig *config = kapp->config();
+      KConfigGroupSaver saver(config, "General");
+      if (config->hasKey("default-mailbox-format"))
       {
-        // if the contents of $MAIL is a directory, then we likely want
-        // Maildir as our default
-        QFileInfo info(MAIL);
-        if (info.isDir())
+        if (config->readNumEntry("default-mailbox-format", 0) == 1)
           type = KMFolderTypeMaildir;
+          
+      }
+      else
+      {
+        QCString MAIL(getenv("MAIL"));
+        if (!MAIL.isEmpty() && !MAIL.isNull())
+        {
+          // if the contents of $MAIL is a directory, then we likely want
+          // Maildir as our default
+          QFileInfo info(MAIL);
+          if (info.isDir())
+            type = KMFolderTypeMaildir;
+        }
       }
     }
 
