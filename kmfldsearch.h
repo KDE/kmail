@@ -81,12 +81,9 @@ protected slots:
   virtual void searchDone();
   virtual void slotAddMsg(int idx);
   virtual void slotRemoveMsg(int idx);
-
-protected:
   void enableGUI();
 
-  /** Return the KMMessage corresponding to the selected listviewitem */
-  KMMessage* getSelectedMsg();
+protected:
 
   /** Reimplemented to react to Escape. */
   virtual void keyPressEvent(QKeyEvent*);

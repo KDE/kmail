@@ -397,10 +397,7 @@ void KMFldSearch::searchDone()
     mTimer->stop();
     updStatus();
 
-    mBtnSearch->setEnabled(true);
-    mBtnStop->setEnabled(false);
-
-    enableGUI();
+    QTimer::singleShot(0, this, SLOT(enableGUI()));
     if(mLastFocus)
 	mLastFocus->setFocus();
     if (mCloseRequested)
@@ -547,6 +544,8 @@ void KMFldSearch::enableGUI()
     mChkbxAllFolders->setEnabled(!searching);
     mChkbxSpecificFolders->setEnabled(!searching);
     mPatternEdit->setEnabled(!searching);
+    mBtnSearch->setEnabled(!searching);
+    mBtnStop->setEnabled(searching);
 }
 
 
