@@ -37,6 +37,7 @@
 
 #include "kmservertest.h"
 #include "kmtransport.h"
+#include "kmaccount.h"
 
 
 KMTransportInfo::KMTransportInfo()
@@ -62,7 +63,7 @@ void KMTransportInfo::readConfig(int id)
   host = config->readEntry("host", "localhost");
   port = config->readEntry("port", "25");
   user = config->readEntry("user");
-  pass = config->readEntry("pass");
+  pass = KMAccount::decryptStr(config->readEntry("pass"));
   precommand = config->readEntry("precommand");
   encryption = config->readEntry("encryption");
   authType = config->readEntry("authtype");
@@ -80,7 +81,7 @@ void KMTransportInfo::writeConfig(int id)
   config->writeEntry("host", host);
   config->writeEntry("port", port);
   config->writeEntry("user", user);
-  config->writeEntry("pass", pass);
+  config->writeEntry("pass", KMAccount::encryptStr(pass));
   config->writeEntry("precommand", precommand);
   config->writeEntry("encryption", encryption);
   config->writeEntry("authtype", authType);

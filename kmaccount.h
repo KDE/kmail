@@ -137,6 +137,13 @@ public:
    */
   static bool runPrecommand(const QString &precommand);
 
+  /**
+   * Very primitive en/de-cryption so that the password is not
+   * readable in the config file. But still very easy breakable.
+   */
+  static QString encryptStr(const QString& inStr);
+  static QString decryptStr(const QString& inStr) { return  encryptStr(inStr); }
+
 signals:
   virtual void finishedCheck(bool newMail);
 

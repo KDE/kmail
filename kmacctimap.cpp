@@ -185,33 +185,6 @@ void KMAcctImap::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-QString KMAcctImap::encryptStr(const QString &aStr) const
-{
-  unsigned int i, val;
-  unsigned int len = aStr.length();
-  QCString result;
-  result.resize(len+1);
-
-  for (i=0; i<len; i++)
-  {
-    val = aStr[i] - ' ';
-    val = (255-' ') - val;
-    result[i] = (char)(val + ' ');
-  }
-  result[i] = '\0';
-
-  return result;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMAcctImap::decryptStr(const QString &aStr) const
-{
-  return encryptStr(aStr);
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctImap::setStorePasswd(bool b)
 {
   mStorePasswd = b;

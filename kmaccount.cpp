@@ -347,3 +347,12 @@ void KMAccount::sendReceipts()
     kernel->msgSender()->send(*it);  //might process events
 }
 
+//-----------------------------------------------------------------------------
+QString KMAccount::encryptStr(const QString &aStr)
+{
+  QString result;
+  for (uint i = 0; i < aStr.length(); i++)
+    result += (aStr[i].unicode() < 0x20) ? aStr[i] :
+      QChar(0x1001F - aStr[i].unicode());
+  return result;
+}

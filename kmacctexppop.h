@@ -122,13 +122,6 @@ protected:
   KMAcctExpPop(KMAcctMgr* owner, const QString& accountName);
 
   /**
-   * Very primitive en/de-cryption so that the password is not
-   * readable in the config file. But still very easy breakable.
-   */
-  QString encryptStr(const QString& inStr) const;
-  QString decryptStr(const QString& inStr) const;
-
-  /**
    * Start a KIO Job to get a list of messages on the pop server
    */
   void startJob();

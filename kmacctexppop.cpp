@@ -223,33 +223,6 @@ void KMAcctExpPop::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-QString KMAcctExpPop::encryptStr(const QString &aStr) const
-{
-  unsigned int i, val;
-  unsigned int len = aStr.length();
-  QCString result;
-  result.resize(len+1);
-
-  for (i=0; i<len; i++)
-  {
-    val = aStr[i] - ' ';
-    val = (255-' ') - val;
-    result[i] = (char)(val + ' ');
-  }
-  result[i] = '\0';
-
-  return result;
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMAcctExpPop::decryptStr(const QString &aStr) const
-{
-  return encryptStr(aStr);
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctExpPop::setUseSSL(bool b)
 {
   mUseSSL = b;
