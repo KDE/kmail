@@ -3282,7 +3282,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
 
   // "Use custom Message-Id suffix" checkbox:
   mCreateOwnMessageIdCheck =
-    new QCheckBox( i18n("&Use custom Message-Id suffix"), this );
+    new QCheckBox( i18n("&Use custom message-id suffix"), this );
   vlay->addWidget( mCreateOwnMessageIdCheck );
 
   // "Message-Id suffix" line edit and label:
