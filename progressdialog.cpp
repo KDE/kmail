@@ -1,9 +1,8 @@
 /** -*- c++ -*-
  * progressdialog.cpp
  *
- *  Copyright (c) 2004 Till Adam <adam@kde.org>
- *  based on imapprogressdialog.cpp ,which is
- *  Copyright (c) 2002-2003 Klaralvdalens Datakonsult AB
+ *  Copyright (c) 2004 Till Adam <adam@kde.org>,
+ *                     David Faure <faure@kde.org>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -39,8 +38,10 @@
 #include <qtimer.h>
 #include <qheader.h>
 #include <qobject.h>
+#include <qscrollview.h>
 #include <qtoolbutton.h>
 #include <qpushbutton.h>
+#include <qvbox.h>
 
 #include <klocale.h>
 #include <kdialog.h>
@@ -50,85 +51,67 @@
 
 #include "progressdialog.h"
 #include "progressmanager.h"
-#include <qvbox.h>
+
 using KMail::ProgressItem;
 using KMail::ProgressManager;
 
 namespace KMail {
 
-TransactionItemListView::TransactionItemListView( QWidget * parent,
-                                                  const char * name,
-                                                  WFlags f )
-    : QListView( parent, name, f ) {
+class TransactionItem;
 
-    connect ( header(),SIGNAL( sizeChange ( int, int, int ) ),
-              this, SLOT( slotAdjustGeometry() ) );
-    connect ( header(),SIGNAL( indexChange ( int, int, int ) ),
-              this, SLOT( slotAdjustGeometry() ) );
-    connect ( this, SIGNAL( expanded( QListViewItem * ) ),
-              this, SLOT( slotAdjustGeometry() ) );
-    connect ( this, SIGNAL( collapsed( QListViewItem * ) ),
-              this, SLOT( slotAdjustGeometry() ) );
-
+TransactionItemView::TransactionItemView( QWidget * parent,
+                                          const char * name,
+                                          WFlags f )
+    : QScrollView( parent, name, f ) {
+    mBigBox = new QVBox( viewport() );
+    mBigBox->setSpacing(2);
+    addChild( mBigBox );
+    setResizePolicy( QScrollView::AutoOneFit );
 }
 
-void TransactionItemListView::resizeEvent( QResizeEvent* e )
+TransactionItem* TransactionItemView::addTransactionItem( ProgressItem* item, bool first )
 {
-  slotAdjustGeometry();
-  QListView::resizeEvent( e );
+   TransactionItem *ti = new TransactionItem( mBigBox, item, first );
+   ti->show();
+
+   return ti;
 }
 
-void TransactionItemListView::slotAdjustGeometry() {
-  for (QListViewItemIterator it( this ); it.current(); it++) {
-    TransactionItem *i = static_cast<TransactionItem*>( it.current() );
-    i->adjustGeometry();
-  }
-}
 
 // ----------------------------------------------------------------------------
 
-TransactionItem::TransactionItem ( QListViewItem* parent,
-                                   ProgressItem *i )
-  : QListViewItem( parent ), mCancelButton( 0 )
-{
-  init( i);
-}
+TransactionItem::TransactionItem( QWidget* parent,
+                                  ProgressItem *item, bool first )
+  : QVBox( parent ), mCancelButton( 0 )
 
-TransactionItem::TransactionItem( QListView* parent,
-                                  QListViewItem* lastItem,
-                                  ProgressItem *i )
-  : QListViewItem( parent, lastItem ), mCancelButton( 0 )
 {
-  init( i );
-}
+  setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding ) );
+  if ( !first ) {
+    QFrame *f = new QFrame( this );
+    f->setFrameShape( QFrame::HLine );
+    f->setFrameShadow( QFrame::Raised );
+    f->show();
+    setStretchFactor( f, 3 );
+  }
 
-void TransactionItem::init ( ProgressItem *item )
-{
-  mItem = item;
-  mProgress = new QProgressBar( 100, listView()->viewport() );
+  QHBox *h = new QHBox( this );
+  h->setSpacing( 5 );
+  h->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding ) );
+  mProgress = new QProgressBar( 100, h );
   mProgress->setProgress( item->progress() );
-  mProgress->show();
   if ( item->canBeCanceled() ) {
-    mCancelButton = new QPushButton( SmallIcon( "cancel" ), QString::null,
-                                     listView()->viewport() );
-    mCancelButton->setSizePolicy( QSizePolicy( QSizePolicy::Minimum,
-                                               QSizePolicy::Minimum ) );
-
-    mCancelButton->show();
+    mCancelButton = new QPushButton( SmallIcon( "cancel" ), QString::null, h );
     connect ( mCancelButton, SIGNAL( clicked() ),
               this, SLOT( slotItemCanceled() ));
-
   }
-  adjustGeometry();
-  setText( 0, item->label() );
-  setText( 3, item->status() );
-  setSelectable( false );
+  mItemLabel = new QLabel( item->label(), h );
+
+  mItemStatus =  new QLabel( item->status(), this );
 }
 
 TransactionItem::~TransactionItem()
 {
-  delete mCancelButton;
-  delete mProgress;
+
 }
 
 void TransactionItem::setProgress( int progress )
@@ -138,26 +121,12 @@ void TransactionItem::setProgress( int progress )
 
 void TransactionItem::setLabel( const QString& label )
 {
-  setText( 0, label );
+  mItemLabel->setText( label );
 }
 
 void TransactionItem::setStatus( const QString& status )
 {
-  setText( 3, status );
-}
-
-void TransactionItem::adjustGeometry()
-{
-  QRect r = listView()->itemRect( this );
-  QHeader *h = listView()->header();
-  if ( mCancelButton ) {
-    r.setLeft( h->sectionPos( 1 ) - h->offset() );
-    r.setWidth( h->sectionSize( 1 ));
-    mCancelButton->setGeometry( r );
-  }
-  r.setLeft( h->sectionPos( 2 ) - h->offset() );
-  r.setWidth( h->sectionSize( 2 ));
-  mProgress->setGeometry( r );
+  mItemStatus->setText( status );
 }
 
 void TransactionItem::slotItemCanceled()
@@ -167,29 +136,22 @@ void TransactionItem::slotItemCanceled()
 }
 
 
+void TransactionItem::addSubTransaction( ProgressItem* /*item*/ )
+{
 
+}
+
+
+// ---------------------------------------------------------------------------
 
 ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const char* name )
     : OverlayWidget( alignWidget, parent, name )
 {
-  setFrameStyle( QFrame::Panel | QFrame::Sunken ); // QFrame
-  setSpacing( 0 ); // QHBox
-  setMargin( 1 );
+    setFrameStyle( QFrame::Panel | QFrame::Sunken ); // QFrame
+    setSpacing( 0 ); // QHBox
+    setMargin( 1 );
 
-    mListView = new TransactionItemListView( this, "SyncEditorListView" );
-    mListView->addColumn( i18n( "Transaction" ) );
-    mListView->setColumnWidth( 0, 100 );
-    mListView->setColumnWidthMode(0, QListView::Maximum);
-    mListView->addColumn( QString::null );
-    mListView->setColumnWidth( 1, 25 );
-    mListView->addColumn( i18n( "Progress" ) );
-    mListView->setColumnWidth( 2, 180 );
-    mListView->addColumn( i18n( "Status" ) );
-    mListView->setColumnWidth( 3, 100 );
-    mListView->setColumnWidthMode(3, QListView::Maximum);
-    mListView->setSorting( -1, false );
-
-    mListView->setRootIsDecorated( true );
+    mScrollView = new TransactionItemView( this, "ProgressScrollView" );
 
     QVBox* rightBox = new QVBox( this );
     QToolButton* pbClose = new QToolButton( rightBox );
@@ -200,6 +162,7 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const cha
     connect(pbClose, SIGNAL(clicked()), this, SLOT(close()));
     QWidget* spacer = new QWidget( rightBox ); // don't let the close button take up all the height
     rightBox->setStretchFactor( spacer, 100 );
+
 
     /*
      * Get the singleton ProgressManager item which will inform us of
@@ -220,9 +183,7 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const cha
 
 void ProgressDialog::clear()
 {
-   QListViewItem* item;
-   while( ( item = mListView->firstChild() ) != 0 ) delete item;
-   mPreviousItem = 0;
+
 }
 
 
@@ -235,7 +196,6 @@ void ProgressDialog::closeEvent( QCloseEvent* e )
 
 void ProgressDialog::showEvent( QShowEvent* e )
 {
-  mListView->slotAdjustGeometry();
   resize( sizeHint() );
   OverlayWidget::showEvent( e );
 }
@@ -255,16 +215,12 @@ void ProgressDialog::slotTransactionAdded( ProgressItem *item )
    TransactionItem *ti = 0;
    if ( item->parent() ) {
      parent = mTransactionsToListviewItems[ item->parent() ];
-     ti = new TransactionItem( parent, item );
+     parent->addSubTransaction( item );
    } else {
-     ti = new TransactionItem( mListView, mListView->lastItem(), item );
+     ti = mScrollView->addTransactionItem( item, mTransactionsToListviewItems.empty() );
    }
-   mTransactionsToListviewItems.replace( item, ti );
-   // First item to appear, show.
-   // FIXME Maybe it's better to only auto show if the dialog was timed out
-   // and not closed by the user. dunno
-   // if ( mTransactionsToListviewItems.size() == 1 ) show();
-  resize( sizeHint() );
+   if ( ti )
+     mTransactionsToListviewItems.replace( item, ti );
 }
 
 void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
@@ -275,9 +231,8 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
      mTransactionsToListviewItems.remove( item );
      QTimer::singleShot( 5000, ti, SLOT( deleteLater() ) );
    }
-   mListView->slotAdjustGeometry();
    // This was the last item, hide.
-   if ( mTransactionsToListviewItems.size() == 0 )
+   if ( mTransactionsToListviewItems.empty() )
      QTimer::singleShot( 5000, this, SLOT( slotHide() ) );
    else
      resize( sizeHint() );

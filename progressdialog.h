@@ -35,7 +35,10 @@
 
 #include <qdialog.h>
 #include <qlistview.h>
+#include <qlabel.h>
+#include <qvbox.h>
 #include "overlaywidget.h"
+
 namespace KMail {
   class ProgressItem;
   class TransactionItemListView;
@@ -45,55 +48,53 @@ using KMail::ProgressItem;
 using KMail::OverlayWidget;
 
 class QProgressBar;
+class QScrollView;
 
 namespace KMail {
+class TransactionItem;
 
-class TransactionItemListView : public QListView {
+class TransactionItemView : public QScrollView {
   Q_OBJECT
 public:
-  TransactionItemListView( QWidget * parent = 0,
-                           const char * name = 0,
-                           WFlags f = 0 );
+  TransactionItemView( QWidget * parent = 0,
+                       const char * name = 0,
+                       WFlags f = 0 );
 
-  virtual ~TransactionItemListView()
+  virtual ~TransactionItemView()
   {}
+  TransactionItem* addTransactionItem( ProgressItem *item, bool first );
 
-  void resizeEvent( QResizeEvent* e );
-public slots:
-  void slotAdjustGeometry();
+private:
+  QVBox *                  mBigBox;
 };
 
-class TransactionItem : public QObject, public QListViewItem {
+class TransactionItem : public QVBox {
 
   Q_OBJECT;
 
 public:
+  TransactionItem( QWidget * parent,
+                   ProgressItem* item, bool first );
 
-  TransactionItem(  QListView * parent,
-                    QListViewItem *lastItem,
-                    ProgressItem* item );
-  TransactionItem(  QListViewItem * parent,
-                    ProgressItem* item );
   ~TransactionItem();
 
   void setProgress( int progress );
   void setLabel( const QString& );
   void setStatus( const QString& );
 
-  void adjustGeometry();
   ProgressItem* item() const { return mItem; }
+
+  void addSubTransaction( ProgressItem *item);
 
 public slots:
   void slotItemCanceled();
 
 protected:
   QProgressBar* mProgress;
-  QPushButton* mCancelButton;
-  ProgressItem *mItem;
-
-private:
-  void init( ProgressItem* item );
-
+  QPushButton*  mCancelButton;
+  QLabel*       mItemLabel;
+  QLabel*       mItemStatus;
+  ProgressItem* mItem;
 };
 
 class ProgressDialog : public OverlayWidget
@@ -120,7 +121,7 @@ protected:
   virtual void closeEvent( QCloseEvent* );
   virtual void showEvent( QShowEvent* );
 
-  TransactionItemListView* mListView;
+  TransactionItemView* mScrollView;
   TransactionItem* mPreviousItem;
   QMap< const ProgressItem*, TransactionItem* > mTransactionsToListviewItems;
 };
