@@ -162,8 +162,9 @@ KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
   mAtmListBox->addColumn(i18n("Size"), 80);
   mAtmListBox->addColumn(i18n("Encoding"), 120);
   mAtmListBox->addColumn(i18n("Type"), 120);
-  mAtmListBox->addColumn(i18n("encrypt"), -1);
-  mAtmListBox->addColumn(i18n("sign"), -1);
+  mAtmCryptoColWidth = 80;
+  mAtmColEncrypt= mAtmListBox->addColumn(i18n("encrypt"),mAtmCryptoColWidth);
+  mAtmColSign   = mAtmListBox->addColumn(i18n("sign"),   mAtmCryptoColWidth);
   mAtmListBox->setAllColumnsShowFocus(true);
 
   connect(mAtmListBox,
@@ -1595,6 +1596,8 @@ bool KMComposeWin::applyChanges(void)
           }
         }
 
+        // kdDebug(5006) << "\n\n\n******* a) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
+
         // NOTE: the following code runs only for S/MIME
         //
         if( 0 <= cryptPlug->libName().find( "smime", 0, false ) ) {
@@ -1606,6 +1609,9 @@ bool KMComposeWin::applyChanges(void)
             kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
             encodedBody = KMMessage::lf2crlf( encodedBody );
             kdDebug(5006) << "                                                       done." << endl;
+
+            // kdDebug(5006) << "\n\n\n******* b) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
+
           }
         }
       } else {
@@ -1613,13 +1619,11 @@ bool KMComposeWin::applyChanges(void)
       }
     }
 
-    // S/MIME multi part parts
-    //   - original content is in KMMessagePart bodyPart, see above -
-    //KMMessagePart signKmPa, encrKmPa;
-    // S/MIME signature part for storing or encrypting
     if( doSign ) {
       if( cryptPlug ) {
         StructuringInfoWrapper structuring( cryptPlug );
+
+        // kdDebug(5006) << "\n\n\n******* c) encodedBody = \"" << encodedBody << "\"******\n\n" << endl;
 
         QByteArray signature = pgpSignedMsg( encodedBody, structuring );
         kdDebug(5006) << "                           size of signature: " << signature.count() << "\n" << endl;
@@ -2225,7 +2229,7 @@ qDebug("***************************************");
 
       QCString mainStr;
 
-      mainStr  = "\n--";
+      mainStr  = "--";
       mainStr +=       boundaryCStr;
 
       if( structuring.data.includeCleartext && (0 < clearCStr.length()) ) {
@@ -3032,9 +3036,14 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
   lvi->setText(2, msgPart->contentTransferEncodingStr());
   lvi->setText(3, msgPart->typeStr() + "/" + msgPart->subtypeStr());
   if( mCryptPlugList && mCryptPlugList->active() ) {
+    mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmCryptoColWidth );
+    mAtmListBox->setColumnWidth( mAtmColSign,    mAtmCryptoColWidth );
+    lvi->enableCryptoCBs( true );
     lvi->setEncrypt( encryptAction->isChecked() );
     lvi->setSign(    signAction->isChecked() );
   } else {
+    mAtmListBox->setColumnWidth( mAtmColEncrypt, 0 );
+    mAtmListBox->setColumnWidth( mAtmColSign,    0 );
     lvi->enableCryptoCBs( false );
   }
 }
@@ -4312,7 +4321,7 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
     r.setWidth(  r.height() - 2 );
     r.setHeight( r.height() - 2 );
     r = QRect( mListview->viewportToContents( r.topLeft() ), r.size() );
-    QCheckBox* cb = 4 == column ? mCBEncrypt : mCBSign;
+    QCheckBox* cb = (4 == column) ? mCBEncrypt : mCBSign;
     cb->resize( r.size() );
     mListview->moveChild( cb, r.x(), r.y() );
   } else
@@ -4321,10 +4330,20 @@ void KMAtmListViewItem::paintCell( QPainter * p, const QColorGroup & cg,
 
 void KMAtmListViewItem::enableCryptoCBs(bool on)
 {
-  if( mCBEncrypt )
+  if( mCBEncrypt ) {
     mCBEncrypt->setEnabled( on );
-  if( mCBSign )
+    if( on )
+      mCBEncrypt->show();
+    else
+      mCBEncrypt->hide();
+  }
+  if( mCBSign ) {
     mCBSign->setEnabled( on );
+    if( on )
+      mCBSign->show();
+    else
+      mCBSign->hide();
+  }
 };
 
 void KMAtmListViewItem::setEncrypt(bool on)

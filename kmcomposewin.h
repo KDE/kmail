@@ -639,6 +639,9 @@ protected:
   KMMessage *mMsg;
   QPtrList<KMMessage> bccMsgList;
   QListView *mAtmListBox;
+  int mAtmColEncrypt;
+  int mAtmColSign;
+  int mAtmCryptoColWidth;
   QPtrList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
   QPopupMenu *mAttachMenu;
