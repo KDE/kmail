@@ -49,7 +49,7 @@ I18N_NOOP( "<qt><p>Click this button to create a new filter.</p>"
 const char * _wt_filterlist_delete =
 I18N_NOOP( "<qt><p>Click this button to <em>delete</em> the currently "
 	   "selected filter from the list above.</p>"
-	   "<p>There's no way to get the filter back once "
+	   "<p>There is no way to get the filter back once "
 	   "it is deleted, but you can always leave the "
 	   "dialog by clicking <em>Cancel</em> to discard the "
 	   "changes made.</p></qt>" );
