@@ -873,7 +873,7 @@ void KMComposeWin::setupActions(void)
   KStdAction::redo (this, SLOT(slotRedo()), actionCollection());
   KStdAction::cut (this, SLOT(slotCut()), actionCollection());
   KStdAction::copy (this, SLOT(slotCopy()), actionCollection());
-  KStdAction::paste (this, SLOT(slotPaste()), actionCollection());
+  KStdAction::pasteText (this, SLOT(slotPaste()), actionCollection());
   KStdAction::selectAll (this, SLOT(slotMarkAll()), actionCollection());
 
   KStdAction::find (this, SLOT(slotFind()), actionCollection());
