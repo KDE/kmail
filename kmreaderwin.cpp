@@ -388,7 +388,10 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-  if (mMsgBuf && mMsg && !mMsg->msgIdMD5().isEmpty() && (mMsgBufMD5 == mMsg->msgIdMD5()) && (mMsgBufSize == mMsg->msgSize()))
+  if (mMsgBuf && mMsg && 
+      !mMsg->msgIdMD5().isEmpty() && 
+      (mMsgBufMD5 == mMsg->msgIdMD5()) && 
+      ((unsigned)mMsgBufSize == mMsg->msgSize()))
     return;
 
   mMsgBuf = mMsg;
@@ -832,7 +835,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
   while( pos < (int)s.length() )
   {
     ch = s[pos];
-    if(( ch == '\n' ) || (pos == s.length() - 1))
+    if(( ch == '\n' ) || ((unsigned)pos == s.length() - 1))
     {
       int adj = (ch == '\n') ? 0 : 1;
       newlineCount ++;
@@ -1138,9 +1141,6 @@ int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::resizeEvent(QResizeEvent *)
 {
-  #warning Espen 2000-05-07. Using a delayed resize. Use direct resize
-  #warning from time to time to see how the html widget and kwin behave.
-
   if( !mResizeTimer.isActive() )
   {
     //
@@ -1149,11 +1149,6 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
     //
     mResizeTimer.start( 100, true );
   }
-
-  //
-  // Orig
-  //
-  //mViewer->widget()->setGeometry(0, 0, width(), height());
 }
 
 

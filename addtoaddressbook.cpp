@@ -85,15 +85,6 @@ AddToKabDialog::~AddToKabDialog()
 {
 }
 
-#warning mario: had to remove this to be able to compile
-#if 0
-void KMMainWin::slotMailtoAddAddrBook()
-{
-  AddToKabDialog dialog(mUrlCurrent, kernel->addrBook(), this);
-  dialog.exec();
-}
-#endif
-
 void AddToKabDialog::addToEntry()
 {
   KabKey key;

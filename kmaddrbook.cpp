@@ -197,7 +197,6 @@ void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
 	kernel->KABaddrBook()->addressbook()->getEntry( key, entry ))
       continue;
     if ((entry.emails.count() > 0) && !entry.emails[0].isEmpty()) {
-      int bob = entry.emails[0].find( "<" );
       if (entry.fn.isEmpty() || (entry.emails[0].find( "<" ) != -1))
 	addr = "";
       else

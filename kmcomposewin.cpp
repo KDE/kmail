@@ -1944,7 +1944,6 @@ void KMComposeWin::slotAppendSignature()
   if( sigText.isEmpty() && ident.useSignatureFile() )
   {
     // open a file dialog and let the user choose manually
-#warning KFileDialog misses localfiles only flag.
     KFileDialog dlg( QDir::homeDirPath(), QString::null, this, 0, TRUE );
     dlg.setCaption(i18n("Choose Signature File"));
     if( !dlg.exec() )

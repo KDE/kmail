@@ -234,9 +234,8 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     close(perr[0]);
     dup2(perr[1], 2);
     close(perr[1]);
-	
 
-#warning FIXME: there has to be a better way to do this
+    //#warning FIXME: there has to be a better way to do this
      /* this is nasty nasty nasty (but it works) */
     if(passphrase) {
       snprintf(gpgcmd, 1023, "gpg --passphrase-fd %d %s",ppass[0],cmd);
