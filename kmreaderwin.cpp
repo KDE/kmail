@@ -25,6 +25,7 @@
 #include <qregexp.h>
 #include <qstring.h>
 #include <qtabdlg.h>
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
 
@@ -206,13 +207,10 @@ void KMReaderView::parseMessage(KMMessage *message)
   messageCanvas->write(dateStr);
   messageCanvas->write("</B></TD></TR></TABLE><br><br>");	
 
-  // Prepare text
-  if((numParts = message->numBodyParts()) == 0)
-    {text = message->body(&length);
-    text.truncate(length);
-    }
-  //text = scanURL(text);}
-  else
+  numParts = message->numBodyParts();
+  text = message->body(&length);
+  text += "\n";
+  if (numParts > 0)
     {KMMessagePart *part = new KMMessagePart();
     for(multi=0;multi < numParts;multi++)
       {printf("in body part loop\n");

@@ -111,9 +111,13 @@ public:
     success. */
   virtual int expunge(void);
 
-  /** Sync all TOC-changes to file. Returns zero on success and an errno
+  /** Sync all Index-changes to file. Returns zero on success and an errno
     on failure. */
   virtual int sync(void);
+
+  /** Remove deleted messages from the folder. Returns zero on success
+    and an errno on failure. */
+  virtual int compact(void);
 
   /** Returns TRUE if a table of contents file is automatically created. */
   bool autoCreateIndex(void) const { return mAutoCreateIndex; }

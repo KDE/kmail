@@ -70,12 +70,14 @@ protected slots:
   void doModifyFolder();
   void doRemoveFolder();
   void doEmptyFolder();
+  void doCompactFolder();
   void doReplyToMsg();
   void doReplyAllToMsg();
   void doForwardMsg();
   void doDeleteMsg();
   void doPrintMsg();
   void doMoveMsg();
+  void doShowMsgSrc();
 
   void folderSelected(KMFolder*);
   void messageSelected(KMMessage*);

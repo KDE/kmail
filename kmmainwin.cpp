@@ -322,6 +322,13 @@ void KMMainWin::doRemoveFolder()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::doCompactFolder()
+{
+  if (mFolder) mFolder->compact();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::doPrintMsg()
 { 
   if(mHeaders->currentItem() >= 0)
@@ -354,6 +361,14 @@ void KMMainWin::doForwardMsg()
 void KMMainWin::doDeleteMsg()
 { 
   mHeaders->deleteMsg();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::doShowMsgSrc()
+{ 
+  KMMessage* msg = mHeaders->getMsg(-1);
+  if (msg) msg->viewSource(nls->translate("Message as Plain Text"));
 }
 
 
@@ -502,6 +517,8 @@ void KMMainWin::setupMenuBar()
 			  SLOT(doUnimplemented()), Key_E);
   messageMenu->insertItem(nls->translate("Pr&int..."), this,
 			  SLOT(doPrintMsg()), keys->print());
+  messageMenu->insertItem(nls->translate("View Source..."), this,
+			  SLOT(doShowMsgSrc()));
 
   //----- Folder Menu
   QPopupMenu *folderMenu = new QPopupMenu();
@@ -513,6 +530,8 @@ void KMMainWin::setupMenuBar()
 			 SLOT(doRemoveFolder()));
   folderMenu->insertItem(nls->translate("&Empty"), this, 
 			 SLOT(doEmptyFolder()));
+  folderMenu->insertItem(nls->translate("C&ompact"), this, 
+			 SLOT(doCompactFolder()));
 
   //----- Help Menu
   QPopupMenu *helpMenu = new QPopupMenu();

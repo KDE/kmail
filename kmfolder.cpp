@@ -4,6 +4,7 @@
 #include "kmglobal.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
+#include "kmfolderdir.h"
 
 #include <klocale.h>
 #include <mimelib/mimepp.h>
@@ -725,6 +726,44 @@ int KMFolder::expunge(void)
 
   if (!mQuiet) emit changed();
 
+  return 0;
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFolder::compact(void)
+{
+  KMFolder* tempFolder;
+  KMMessage* msg;
+  int i, num;
+  QString tempName = tempnam(NULL, "kmail");
+  int openCount = mOpenCount;
+
+  tempFolder = parent()->createFolder(tempName);
+  assert(tempFolder != NULL);
+
+  tempFolder->setAutoCreateIndex(FALSE);
+  tempFolder->open();
+
+  num = numMsgs();
+  for(i=1; i<=num; i++)
+  {
+    if(!(msg = getMsg(i))) continue;
+    tempFolder->moveMsg(msg);
+  }
+  tempName = tempFolder->location();
+  tempFolder->close(TRUE);
+  close(TRUE);
+
+  rename((const char*)tempName, (const char*)location());
+
+  if (openCount > 0)
+  {
+    open();
+    mOpenCount = openCount;
+  }
+
+  if (!mQuiet) emit changed();
   return 0;
 }
 

@@ -1,6 +1,3 @@
-CXXFLAGS = -g
-LDFLAGS =
-
 SUBDIRS = pics doc
 INCLUDES = $(all_includes)
 LDADD	= $(all_libraries) -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib

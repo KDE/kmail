@@ -408,7 +408,7 @@ void KMHeaders::highlightMessage(int idx, int/*colId*/)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::selectMessage(int idx, int/*colId*/)
+void KMHeaders::selectMessage(int/*idx*/, int/*colId*/)
 {
 }
 
