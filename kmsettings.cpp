@@ -35,6 +35,7 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kcolorbtn.h>
+#include <kmessagebox.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -1191,7 +1192,21 @@ void KMSettings::chooseSendmailLocation()
   KFileDialog dlg("/", "*", this, NULL, TRUE);
   dlg.setCaption(i18n("Choose Sendmail Location"));
 
-  if (dlg.exec()) sendmailLocationEdit->setText(dlg.selectedFile());
+  if( dlg.exec() )
+  {
+    KURL url = dlg.selectedURL();
+
+    if( url.isEmpty() )
+      return;
+    
+    if( !url.isLocalFile() )
+    {
+      KMessageBox::sorry( 0L, i18n( "Only local files allowed." ) );
+      return;
+    }
+    
+    sendmailLocationEdit->setText( url.path() );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1199,7 +1214,22 @@ void KMSettings::chooseSigFile()
 {
   KFileDialog *d=new KFileDialog(QDir::homeDirPath(),"*",this,NULL,TRUE);
   d->setCaption(i18n("Choose Signature File"));
-  if (d->exec()) sigEdit->setText(d->selectedFile());
+  
+  if( d->exec() )
+  {
+    KURL url = d->selectedURL();
+
+    if( url.isEmpty() )
+      return;
+
+    if( !url.isLocalFile() )
+    {
+      KMessageBox::sorry( 0L, i18n( "Only local files sipported yet." ) );
+      return;
+    }
+    
+    sigEdit->setText(url.path());
+  }
   delete d;
 }
 
@@ -1562,12 +1592,28 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 //-----------------------------------------------------------------------------
 void KMAccountSettings::chooseLocation()
 {
-  static QString sSelLocation("/");
-  KFileDialog fdlg(sSelLocation,"*",this,NULL,TRUE);
+  static QString sSelLocation( "/" );
+  
+  KFileDialog fdlg( sSelLocation, "*", this, NULL, TRUE );
   fdlg.setCaption(i18n("Choose Location"));
 
-  if (fdlg.exec()) mEdtLocation->setText(fdlg.selectedFile());
-  sSelLocation = fdlg.selectedFile().copy();
+  bool result = fdlg.exec();
+
+  KURL url = fdlg.selectedURL();
+  
+  if( url.isEmpty() )
+    return;
+  
+  if( !url.isLocalFile() )
+  {
+    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
+    return;
+  }
+  
+  if( result )
+    mEdtLocation->setText( url.path() );
+  
+  sSelLocation = url.directory();
 }
 
 //-----------------------------------------------------------------------------

@@ -27,6 +27,7 @@
 #include <kconfig.h>
 #include <kcursor.h>
 #include <krun.h>
+#include <kmessagebox.h>
 #include <mimelib/mimepp.h>
 #include <qstring.h>
 #include <errno.h>
@@ -1128,8 +1129,18 @@ void KMReaderWin::slotAtmSave()
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   fileName.append(msgPart.name());
   
-  fileName = KFileDialog::getSaveFileName(fileName.data(), "*", this);
-  if(fileName.isEmpty()) return;
+  KURL url = KFileDialog::getSaveURL( fileName, "*", this );
+  
+  if( url.isEmpty() )
+    return;
+
+  if( !url.isLocalFile() )
+  {
+    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
+    return;
+  }
+
+  fileName = url.path();
 
   kbp->busy();
   if (!kByteArrayToFile(msgPart.bodyDecoded(), fileName, TRUE))

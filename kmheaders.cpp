@@ -772,9 +772,18 @@ void KMHeaders::saveMsg (int msgId)
 {
   KMMessage* msg;
   QCString str;
-  QString fileName = KFileDialog::getSaveFileName(".", "*");
+  KURL url = KFileDialog::getSaveURL(".", "*");
 
-  if (fileName.isEmpty()) return;
+  if( url.isEmpty() )
+    return;
+
+  if( !url.isLocalFile() )
+  {
+    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
+    return;
+  }
+
+  QString fileName = url.path();
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {

@@ -1477,8 +1477,18 @@ void KMComposeWin::slotAttachSave()
 
   if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
 
-  fileName = KFileDialog::getSaveFileName(mPathAttach, "*", NULL, pname);
-  if (fileName.isEmpty()) return;
+  KURL url = KFileDialog::getSaveURL(mPathAttach, "*", NULL, pname);
+  
+  if( url.isEmpty() )
+    return;
+  
+  if( !url.isLocalFile() )
+  {
+    KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
+    return;
+  }
+
+  fileName = url.path();
 
   kByteArrayToFile(msgPart->bodyDecoded(), fileName, TRUE);
 }
@@ -1771,9 +1781,22 @@ void KMComposeWin::slotAppendSignature()
     KFileDialog dlg(getenv("HOME"),QString::null,this,0, TRUE);
 
     dlg.setCaption(i18n("Choose Signature File"));
-    if (!dlg.exec()) return;
-    sigFileName = dlg.selectedFile();
-    if (sigFileName.isEmpty()) return;
+    
+    if( !dlg.exec() )
+      return;
+    
+    KURL url = dlg.selectedURL();
+    
+    if( url.isEmpty() )
+      return;
+
+    if( !url.isLocalFile() )
+    {
+      KMessageBox::sorry( 0L, i18n( "Only local files supported yet." ) );
+      return;
+    }
+    
+    sigFileName = url.path();
     sigText = kFileToString(sigFileName, TRUE);
     identity->setSignatureFile(sigFileName);
     identity->writeConfig(true);
