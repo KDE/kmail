@@ -364,50 +364,6 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg,
 }
 
 
-void KMGroupware::slotCalendarFolderChanged()
-{
-  QStringList lEvents;
-  QString s;
-  int iDummy;
-  if( mCalendar )
-    for( int i=0; i<mCalendar->count(); ++i ){
-      bool unget = !mCalendar->isMessage(i);
-      if( KMGroupware::vPartFoundAndDecoded( mCalendar->getMsg( i ), iDummy, s ) )
-        lEvents << s;
-      if( unget ) mCalendar->unGetMsg(i);
-    }
-
-  ignore_GroupwareDataChangeSlots = true;
-  emit signalRefreshEvents( lEvents );
-  ignore_GroupwareDataChangeSlots = false;
-}
-
-
-void KMGroupware::slotContactsFolderChanged()
-{
-  //pending(khz): remove this methode if it is no longer needed
-}
-
-
-void KMGroupware::slotTasksFolderChanged()
-{
-  QStringList lTasks;
-  QString s;
-  int iDummy;
-  if( mTasks )
-    for( int i=0; i<mTasks->count(); ++i ){
-      bool unget = !mTasks->isMessage(i);
-      if( vPartFoundAndDecoded( mTasks->getMsg( i ), iDummy, s ) )
-        lTasks << s;
-      if( unget ) mTasks->unGetMsg(i);
-    }
-
-  ignore_GroupwareDataChangeSlots = true;
-  emit signalRefreshTasks( lTasks );
-  ignore_GroupwareDataChangeSlots = false;
-}
-
-
 void KMGroupware::slotNotesFolderChanged()
 {
   QStringList lNotes;
@@ -551,12 +507,8 @@ void KMGroupware::internalCreateKOrgPart()
 
   connect( this, SIGNAL( signalCalendarUpdateView( const QDateTime&, const QDateTime& ) ),
 	   mKOrgPart, SLOT( slotUpdateView( const QDateTime&, const QDateTime& ) ) );
-  connect( this, SIGNAL( signalRefreshEvents( const QStringList& ) ),
-	   mKOrgPart, SLOT( slotRefreshEvents( const QStringList& ) ) );
   connect( this, SIGNAL( signalRefreshNotes( const QStringList& ) ),
 	   mKOrgPart, SLOT( slotRefreshNotes( const QStringList& ) ) );
-  connect( this, SIGNAL( signalRefreshTasks( const QStringList& ) ),
-	   mKOrgPart, SLOT( slotRefreshTasks( const QStringList& ) ) );
 
   connect( this, SIGNAL( signalEventRequest( const QCString&, const QString&, bool&,
 					     QString&, QString&, bool& ) ),
@@ -598,12 +550,10 @@ void KMGroupware::internalCreateKOrgPart()
 
   // initialize Groupware using data stored in our folders
   // ignore_GroupwareDataChangeSlots = true;
-  // Calendar
-  slotCalendarFolderChanged();
+  emit signalRefresh( "Calendar" );
+  emit signalRefresh( "Task" );
   // Notes
   slotNotesFolderChanged();
-  // Tasks
-  slotTasksFolderChanged();
   // ignore_GroupwareDataChangeSlots = false;
 }
 

@@ -52,6 +52,9 @@ signals:
   void incidenceAdded( const QString& type, const QString& ical );
   void incidenceDeleted( const QString& type, const QString& uid );
 
+  /** Make the IMAP resource re-read all of the given type */
+  void signalRefresh( const QString& type);
+
 private slots:
   // internal slots for new interface
   void slotIncidenceAdded( KMFolder*, Q_UINT32 );
@@ -167,9 +170,6 @@ public slots:
 			     const QString& text );
   void slotDeleteNote( const QString& id );
 
-  void slotCalendarFolderChanged();
-  void slotContactsFolderChanged();
-  void slotTasksFolderChanged();
   void slotNotesFolderChanged();
 
   /** Delete and sync the local IMAP cache  */
@@ -200,14 +200,8 @@ signals:
   // Make KOrganizer read everything from scratch
   void signalRefreshAll();
 
-  /** Initialize Groupware with a list of Calendar events */
-  void signalRefreshEvents( const QStringList& );
-
   /** Initialize Groupware with a list of Notes entries */
   void signalRefreshNotes( const QStringList& );
-
-  /** Initialize Groupware with a list of Tasks entries */
-  void signalRefreshTasks( const QStringList& );
 
   /** Make sure a given time span is visible in the Calendar */
   void signalCalendarUpdateView( const QDateTime&, const QDateTime& );
