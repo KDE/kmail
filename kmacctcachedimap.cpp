@@ -69,7 +69,7 @@ KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
 //-----------------------------------------------------------------------------
 KMAcctCachedImap::~KMAcctCachedImap()
 {
-  killAllJobs( true );
+  killAllJobsInternal( true );
 }
 
 
@@ -123,6 +123,20 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
 {
   //kdDebug(5006) << "killAllJobs: disconnectSlave=" << disconnectSlave << "  " << mapJobData.count() << " jobs in map." << endl;
+  QValueList<KMFolderCachedImap*> folderList = killAllJobsInternal( disconnectSlave );
+  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+    KMFolderCachedImap *fld = *it;
+    fld->resetSyncState();
+    fld->setContentState(KMFolderCachedImap::imapNoInformation);
+    fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
+    fld->sendFolderComplete(FALSE);
+  }
+}
+
+//-----------------------------------------------------------------------------
+// Common between killAllJobs and the destructor - which shouldn't call sendFolderComplete
+QValueList<KMFolderCachedImap*> KMAcctCachedImap::killAllJobsInternal( bool disconnectSlave )
+{
   // Make list of folders to reset. This must be done last, since folderComplete
   // can trigger the next queued mail check already.
   QValueList<KMFolderCachedImap*> folderList;
@@ -147,13 +161,7 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     KIO::Scheduler::disconnectSlave( slave() );
     mSlave = 0;
   }
-  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
-    KMFolderCachedImap *fld = *it;
-    fld->resetSyncState();
-    fld->setContentState(KMFolderCachedImap::imapNoInformation);
-    fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
-    fld->sendFolderComplete(FALSE);
-  }
+  return folderList;
 }
 
 //-----------------------------------------------------------------------------
