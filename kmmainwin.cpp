@@ -252,7 +252,7 @@ void KMMainWin::readConfig(void)
     }
 
     // sanders - New code
-    mHeaders->setFolder(mFolder);
+    mHeaders->setFolder(mFolder, true);
     int aIdx = mHeaders->currentItemIndex();
     if (aIdx != -1)
       mMsgView->setMsg( mFolder->getMsg(aIdx), true );

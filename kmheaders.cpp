@@ -3122,6 +3122,9 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    makeHeaderVisible();
 	    center( contentsX(), itemPos(mItems[first_unread]), 0, 9.0 );
 	}
+    } else {
+        setTopItemByIndex(mTopItem);
+        setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
     }
     END_TIMER(selection);
     SHOW_TIMER(selection);
