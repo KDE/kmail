@@ -68,7 +68,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
   vlay->addWidget( radio );
 
   // row 2: radio button
-  radio = new QRadioButton( i18n("&Use control center settings"), page );
+  radio = new QRadioButton( i18n("&Use Control Center settings"), page );
   mButtonGroup->insert( radio, ControlCenter );
   vlay->addWidget( radio );
 
