@@ -4114,6 +4114,16 @@ void KMComposeWin::slotSelectCryptoModule()
   if( mSelectedCryptPlug ) {
     // if the encrypt/sign columns are hidden then show them
     if( 0 == mAtmListView->columnWidth( mAtmColEncrypt ) ) {
+      // set/unset signing/encryption for all attachments according to the
+      // state of the global sign/encrypt action
+      if( 0 < mAtmList.count() ) {
+        for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
+             lvi;
+             lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
+          lvi->setSign( signAction->isChecked() );
+          lvi->setEncrypt( encryptAction->isChecked() );
+        }
+      }
       int totalWidth = 0;
       // determine the total width of the columns
       for( int col=0; col < mAtmColEncrypt; col++ )
