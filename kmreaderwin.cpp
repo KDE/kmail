@@ -1321,8 +1321,8 @@ void KMReaderWin::parseMsg(void)
       : QString("body { font-family: \"%1\"; font-size: %2px; "
         "color: %3; background-color: %4; }\n")
         .arg( mBodyFamily ).arg( pointsToPixel(fntSize) )
-        .arg( mPrinting ? "#000000" : c1.name() )
-        .arg( mPrinting ? "#FFFFFF" : c4.name() ) ) +
+        .arg( mPrinting ? QString("#000000") : c1.name() )
+        .arg( mPrinting ? QString("#FFFFFF") : c4.name() ) ) +
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
       : QString("a { color: %1; ").arg(c2.name()) +
         "text-decoration: none; }" + // just playing
@@ -1842,9 +1842,9 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
                  + KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE)
                  + ( hasVCard ? "&nbsp;&nbsp;<a href=\""+vcname+"\">"
                                 + i18n("[vCard]") + "</a>"
-                              : "" )
+                              : QString("") )
                  + ( aMsg->headerField("Organization").isEmpty()
-                              ? ""
+                              ? QString("")
                               : "&nbsp;&nbsp;("
                                 + strToHtml(aMsg->headerField("Organization"))
                                 + ")")
@@ -2185,7 +2185,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
             htmlStr +=
                 QString("%1<br />%2 <i>%3</i>")
                 .arg( i18n("Cannot decrypt message.") )
-                .arg( block.errorText.isEmpty() ? "" : i18n("Error: ") )
+                .arg( block.errorText.isEmpty() ? QString("") : i18n("Error: ") )
                 .arg( block.errorText );
         }
         htmlStr += "</td></tr><tr class=\"encrB\"><td>";
@@ -3226,7 +3226,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       else // plain text
 	  writeBodyStr( str,
 		    codec(),
-		    message() ? message()->from() : "" );
+		    message() ? message()->from() : QString("") );
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
       // ##### FIXME-AFTER-MSG-FREEZE: Use this

@@ -75,8 +75,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   label2->setBuddy( fileInFolder );
 
   //start icons group
-  QString normalIcon = (mFolder ? mFolder->normalIconPath() : "");
-  QString unreadIcon = (mFolder ? mFolder->unreadIconPath() : "");
+  QString normalIcon = (mFolder ? mFolder->normalIconPath() : QString("") );
+  QString unreadIcon = (mFolder ? mFolder->unreadIconPath() : QString("") );
   QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), page, "iconGroup" );
   iconGroup->setColumnLayout( 0,  Qt::Vertical );
 
@@ -100,7 +100,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mNormalIconButton->setIconSize( 16 );
   mNormalIconButton->setStrictIconSize( true );
   mNormalIconButton->setFixedSize( 28, 28 );
-  mNormalIconButton->setIcon( (!normalIcon.isEmpty())?normalIcon:"folder" );
+  mNormalIconButton->setIcon( (!normalIcon.isEmpty()) ? normalIcon : 
+                                                        QString("folder") );
   ihl->addWidget( mNormalIconButton );
   ihl->addStretch( 1 );
 
@@ -113,7 +114,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mUnreadIconButton->setIconSize( 16 );
   mUnreadIconButton->setStrictIconSize( true );
   mUnreadIconButton->setFixedSize( 28, 28 );
-  mUnreadIconButton->setIcon( (!unreadIcon.isEmpty())?unreadIcon:"folder_open" );
+  mUnreadIconButton->setIcon( (!unreadIcon.isEmpty()) ? unreadIcon :
+                                                        QString("folder_open") );
   ihl->addWidget( mUnreadIconButton );
   ihl->addStretch( 1 );
 

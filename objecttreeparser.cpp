@@ -308,7 +308,7 @@ public:
       // start the new viewer content
       htmlWriter()->begin();
       htmlWriter()->write("<html><body" +
-      (mReader->mPrinting ? " bgcolor=\"#FFFFFF\""
+      (mReader->mPrinting ? QString(" bgcolor=\"#FFFFFF\"")
                          : QString(" bgcolor=\"%1\"").arg(mReader->c4.name())));
       if (mReader->mBackingPixmapOn && !mReader->mPrinting )
 	htmlWriter()->write(" background=\"file://" + mReader->mBackingPixmapStr + "\"");
@@ -896,7 +896,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
           i18n("Error: %1")
             .arg( aErrorText ),
           passphraseError
-          ? ""
+          ? QString("")
           : i18n("Make sure the plug-in is installed properly and check "
                  "your specifications made in the "
                  "'Settings->Configure KMail->Security' dialog."),
