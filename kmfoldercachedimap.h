@@ -216,8 +216,8 @@ protected slots:
    * Connected to ListJob::receivedFolders
    * creates/removes folders
    */
-  void slotListResult(QStringList&, QStringList&,
-      QStringList&, QStringList&, const ImapAccountBase::jobData& );
+  void slotListResult(const QStringList&, const QStringList&,
+      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
 
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
   void getMessagesResult(KMail::FolderJob *, bool lastSet);
@@ -327,7 +327,7 @@ private:
   QString mUidValidity;
   QString     mImapPath;
   imapState   mContentState, mSubfolderState;
-  QStringList mSubfolderNames, mSubfolderPaths, 
+  QStringList mSubfolderNames, mSubfolderPaths,
               mSubfolderMimeTypes, mSubfolderAttributes;
 
   bool        mHasInbox;

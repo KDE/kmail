@@ -166,16 +166,6 @@ namespace KMail {
     }
 
     /**
-     * Lists the directory starting from @p path
-     * All parameters (onlySubscribed, secondStep, parent) are included
-     * in the jobData
-     * connects to slotListResult and slotListEntries
-     */
-    void listDirectory(QString path, ListType subscription,
-        bool secondStep = FALSE, KMFolder* parent = NULL, bool reset = false,
-        bool complete = false);
-
-    /**
      * Starts the folderlisting for the root folder
      */
     virtual void listDirectory() = 0;
@@ -259,28 +249,16 @@ namespace KMail {
 
     /**
      * React to an error from the job. Uses job->error and job->errorString and calls
-     * the protected virtual handleJobError with them. See below for details.
+     * the protected virtual handleJobError with them. See handleError below for details.
      */
     bool handleJobError( KIO::Job* job, const QString& context, bool abortSync = false );
 
     /**
      * Returns the root folder of this account
-     */ 
+     */
     virtual FolderStorage* rootFolder() = 0;
 
   private slots:
-    /**
-     * gets the results of listDirectory
-     * it includes the folder-information in mSubfolderNames, -Paths and -MIMETypes
-     */
-    void slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
-
-    /**
-     * is called when listDirectory has finished
-     * emits receivedFolders
-     */
-    void slotListResult(KIO::Job * job);
-
     /**
      * is called when the changeSubscription has finished
      * emits subscriptionChanged
@@ -394,12 +372,6 @@ namespace KMail {
      * @param errorMsg if errorCode is != 0, this goes with errorCode to call KIO::buildErrorString
      */
     void connectionResult( int errorCode, const QString& errorMsg );
-
-    /**
-     * Emitted when new folders have been received
-     */
-    void receivedFolders(QStringList, QStringList,
-        QStringList, QStringList, const ImapAccountBase::jobData &);
 
     /**
      * Emitted when the subscription has changed,

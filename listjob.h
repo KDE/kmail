@@ -60,11 +60,11 @@ public:
    * @param hasInbox if you already have an inbox
    * @param path the listing path;
    *             if empty the path of the folder will be taken
-   */ 
+   */
   ListJob( FolderStorage* storage, ImapAccountBase* account,
            ImapAccountBase::ListType type,
            bool secondStep = false, bool complete = false, 
-           bool hasInbox = false, QString path = QString::null );
+           bool hasInbox = false, const QString& path = QString::null );
 
   virtual ~ListJob();
 
@@ -73,27 +73,27 @@ public:
 protected:
   /**
    * Does the actual KIO::listDir
-   */ 
+   */
   void doListing( const KURL& url, const ImapAccountBase::jobData& jd );
 
 protected slots:
   /**
    * Is called when the listing is done
    * Passes the folders and the jobData to the responding folder
-   */ 
+   */
   void slotListResult( KIO::Job* job );
 
   /**
    * Collects the folder information
-   */ 
+   */
   void slotListEntries( KIO::Job* job, const KIO::UDSEntryList& uds );
 
 signals:
   /**
    * Emitted when new folders have been received
    */
-  void receivedFolders( QStringList&, QStringList&,
-      QStringList&, QStringList&, const ImapAccountBase::jobData& );
+  void receivedFolders( const QStringList&, const QStringList&,
+      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
 
 protected:
   FolderStorage* mStorage;

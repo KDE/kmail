@@ -43,11 +43,11 @@
 using namespace KMail;
 
 ListJob::ListJob( FolderStorage* storage, ImapAccountBase* account,
-    ImapAccountBase::ListType type, 
-    bool secondStep, bool complete, bool hasInbox, QString path )
- : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ), 
-   mStorage( storage ), mAccount( account ), mType( type ),  
-   mHasInbox( hasInbox ), mSecondStep( secondStep ), mComplete( complete ), 
+    ImapAccountBase::ListType type,
+    bool secondStep, bool complete, bool hasInbox, const QString& path )
+ : FolderJob( 0, tOther, (storage ? storage->folder() : 0) ),
+   mStorage( storage ), mAccount( account ), mType( type ),
+   mHasInbox( hasInbox ), mSecondStep( secondStep ), mComplete( complete ),
    mPath( path )
 {
 }
@@ -118,16 +118,16 @@ void ListJob::slotListResult( KIO::Job* job )
   }
   if ( job->error() )
   {
-    mAccount->handleJobError( job, 
+    mAccount->handleJobError( job,
         i18n( "Error while listing folder %1: " ).arg((*it).path),
-        true ); 
+        true );
   } else
   {
     // transport the information, include the jobData
-    emit receivedFolders( mSubfolderNames, mSubfolderPaths, 
+    emit receivedFolders( mSubfolderNames, mSubfolderPaths,
         mSubfolderMimeTypes, mSubfolderAttributes, *it );
+    mAccount->removeJob( it );
   }
-  mAccount->removeJob( it );
   delete this;
 }
 

@@ -1210,19 +1210,19 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
     type = ImapAccountBase::ListSubscribed;
   ListJob* job = new ListJob( this, mAccount, type, secondStep, 
       false, mAccount->hasInbox() );
-  connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
-          QStringList&, QStringList&, const ImapAccountBase::jobData&)),
-      this, SLOT(slotListResult(QStringList&, QStringList&,
-          QStringList&, QStringList&, const ImapAccountBase::jobData&)));  
+  connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+          const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+      this, SLOT(slotListResult(const QStringList&, const QStringList&,
+          const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
   job->start();
 
   return true;
 }
 
-void KMFolderCachedImap::slotListResult( QStringList& folderNames,
-                                         QStringList& folderPaths,
-                                         QStringList& folderMimeTypes,
-                                         QStringList& folderAttributes,
+void KMFolderCachedImap::slotListResult( const QStringList& folderNames,
+                                         const QStringList& folderPaths,
+                                         const QStringList& folderMimeTypes,
+                                         const QStringList& folderAttributes,
                                          const ImapAccountBase::jobData& jobData )
 {
   //kdDebug(5006) << label() << ": folderNames=" << folderNames << " folderPaths=" << folderPaths << " mimeTypes=" << folderMimeTypes << endl;
@@ -1230,7 +1230,7 @@ void KMFolderCachedImap::slotListResult( QStringList& folderNames,
   mSubfolderPaths = folderPaths;
   mSubfolderMimeTypes = folderMimeTypes;
   mSubfolderAttributes = folderAttributes;
-  
+
   mSubfolderState = imapFinished;
   bool it_inboxOnly = jobData.inboxOnly;
   // pass it to listDirectory2

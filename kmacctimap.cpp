@@ -371,13 +371,6 @@ void KMAcctImap::slotUpdateFolderList()
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctImap::listDirectory(QString path, ListType subscription,
-    bool secondStep, KMFolder* parent, bool reset)
-{
-  ImapAccountBase::listDirectory( path, subscription, secondStep, parent, reset );
-}
-
-//-----------------------------------------------------------------------------
 void KMAcctImap::listDirectory()
 {
   mFolder->listDirectory();

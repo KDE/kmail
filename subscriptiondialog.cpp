@@ -65,10 +65,10 @@ SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
 }
 
 //------------------------------------------------------------------------------
-void SubscriptionDialog::slotListDirectory( QStringList& subfolderNames,
-                                            QStringList& subfolderPaths,
-                                            QStringList& subfolderMimeTypes,
-                                            QStringList& subfolderAttributes,
+void SubscriptionDialog::slotListDirectory( const QStringList& subfolderNames,
+                                            const QStringList& subfolderPaths,
+                                            const QStringList& subfolderMimeTypes,
+                                            const QStringList& subfolderAttributes,
                                             const ImapAccountBase::jobData& jobData )
 {
   mFolderNames = subfolderNames;
@@ -236,10 +236,10 @@ void SubscriptionDialog::createItems()
       type = ImapAccountBase::ListSubscribedNoCheck;
     ListJob* job = new ListJob( 0, ai, type, true, true,
         false, ai->prefix() );
-    connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
-            QStringList&, QStringList&, const ImapAccountBase::jobData&)),
-        this, SLOT(slotListDirectory(QStringList&, QStringList&,
-            QStringList&, QStringList&, const ImapAccountBase::jobData&)));
+    connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+        this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
     job->start();
   } else if (!onlySubscribed) 
   {
@@ -251,12 +251,12 @@ void SubscriptionDialog::createItems()
     bool complete = (ai->prefix() == "/") ? true : false;
     ListJob* job = new ListJob( 0, ai, ImapAccountBase::ListSubscribedNoCheck,
         false, complete, false, ai->prefix() );
-    connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
-            QStringList&, QStringList&, const ImapAccountBase::jobData&)),
-        this, SLOT(slotListDirectory(QStringList&, QStringList&,
-            QStringList&, QStringList&, const ImapAccountBase::jobData&)));
+    connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+        this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
+            const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
     job->start();
-  } else if (onlySubscribed) 
+  } else if (onlySubscribed)
   {
     // activate buttons and stuff
     slotLoadingComplete();
@@ -324,10 +324,10 @@ void SubscriptionDialog::slotLoadFolders()
   // get all folders
   ListJob* job = new ListJob( 0, ai, ImapAccountBase::List, false,
       complete, false, ai->prefix() );
-  connect( job, SIGNAL(receivedFolders(QStringList&, QStringList&,
-          QStringList&, QStringList&, const ImapAccountBase::jobData&)),
-      this, SLOT(slotListDirectory(QStringList&, QStringList&,
-          QStringList&, QStringList&, const ImapAccountBase::jobData&)));
+  connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
+          const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
+      this, SLOT(slotListDirectory(const QStringList&, const QStringList&,
+          const QStringList&, const QStringList&, const ImapAccountBase::jobData&)));
   job->start();
 }
 

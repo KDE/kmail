@@ -57,8 +57,8 @@ namespace KMail {
       /**
        * get the listing from the imap-server
        */ 
-      void slotListDirectory(QStringList&, QStringList&,
-          QStringList&, QStringList&, const ImapAccountBase::jobData &);
+      void slotListDirectory(const QStringList&, const QStringList&,
+          const QStringList&, const QStringList&, const ImapAccountBase::jobData &);
 
       /** 
        * called by Ok-button, saves the changes

@@ -350,8 +350,8 @@ protected slots:
    * Connected to ListJob::receivedFolders
    * creates/removes folders
    */
-  void slotListResult(QStringList&, QStringList&,
-      QStringList&, QStringList&, const ImapAccountBase::jobData& );
+  void slotListResult(const QStringList&, const QStringList&,
+      const QStringList&, const QStringList&, const ImapAccountBase::jobData& );
 
   /**
    * Retrieve the whole folder or only the changes
@@ -407,11 +407,10 @@ protected:
   QString     mImapPath;
   ulong       mLastUid;
   imapState   mContentState, mSubfolderState;
-  QStringList mSubfolderNames, mSubfolderPaths, mSubfolderMimeTypes;
   bool        mIsSelected;
   bool        mCheckFlags;
   bool        mReadOnly;
-  bool	      mCheckMail : 1;
+  bool        mCheckMail;
   QGuardedPtr<KMAcctImap> mAccount;
   QIntDict<ulong> uidmap;
   QString mUidValidity;
