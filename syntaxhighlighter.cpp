@@ -27,7 +27,6 @@
 #include <kdebug.h>
 #include <kglobal.h>
 #include <kspell.h>
-#include "kmkernel.h"
 #include <kapplication.h>
 
 static int dummy, dummy2, dummy3;
@@ -38,7 +37,7 @@ static int *Ignore = &dummy3;
 namespace KMail {
 
 MessageHighlighter::MessageHighlighter( QTextEdit *textEdit,
-					bool colorQuoting, 
+					bool colorQuoting,
 					QColor depth0,
 					QColor depth1,
 					QColor depth2,
@@ -78,8 +77,8 @@ int MessageHighlighter::highlightParagraph( const QString &text, int )
 }
 
 SpellChecker::SpellChecker( QTextEdit *textEdit,
-			    QColor spellColor, 
-			    bool colorQuoting, 
+			    QColor spellColor,
+			    bool colorQuoting,
 			    QColor depth0,
 			    QColor depth1,
 			    QColor depth2,
@@ -182,10 +181,10 @@ QDict<int> DictSpellChecker::dict( 50021 );
 QObject *DictSpellChecker::sDictionaryMonitor = 0;
 
 DictSpellChecker::DictSpellChecker( QTextEdit *textEdit,
-				    bool spellCheckingActive , 
-				    bool autoEnable, 
-				    QColor spellColor, 
-				    bool colorQuoting, 
+				    bool spellCheckingActive ,
+				    bool autoEnable,
+				    QColor spellColor,
+				    bool colorQuoting,
 				    QColor depth0,
 				    QColor depth1,
 				    QColor depth2,
