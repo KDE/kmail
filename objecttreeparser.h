@@ -69,6 +69,8 @@ namespace KMail {
     void setIsImage( bool image ) {
       mIsImage = image;
     }
+
+    void adjustCryptoStatesOfNode( partNode * node ) const;
     
   private:
     KMMsgSignatureState mInlineSignatureState;

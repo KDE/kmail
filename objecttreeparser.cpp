@@ -211,10 +211,10 @@ namespace KMail {
 
       const BodyPartFormatter * bpf
 	= BodyPartFormatter::createFor( node->type(), node->subType() );
-	kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
-			      << node->typeString() << '/' << node->subTypeString()
-			      << ')' << endl;
-      bool bDone = bpf->process( this, node, processResult );
+      kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
+			    << node->typeString() << '/' << node->subTypeString()
+			    << ')' << endl;
+      const bool bDone = bpf->process( this, node, processResult );
 
       // ### (mmutz) default handling should go into the respective
       // ### bodypartformatters.
@@ -253,7 +253,7 @@ namespace KMail {
     }
     // parse the siblings (children are parsed in the 'multipart' case terms)
     // ### FIXME (mmutz): use iteration instead of recursion!
-    if ( !showOnlyOneMimePart() && node && node->mNext )
+    if ( !showOnlyOneMimePart() && node->mNext )
       parseObjectTree( node->mNext );
 
     // adjust signed/encrypted flags if inline PGP was found
@@ -262,21 +262,24 @@ namespace KMail {
     // true from the beginning (_can_ it?), then any crypto state is
     // reset. I therefore believe that this code should be inside the
     // corresponding conditional above:
-    if ( ( processResult.inlineSignatureState()  != KMMsgNotSigned ) ||
-	 ( processResult.inlineEncryptionState() != KMMsgNotEncrypted ) ) {
-      if (    partNode::CryptoTypeUnknown == node->cryptoType()
-	      || partNode::CryptoTypeNone    == node->cryptoType() ){
-	node->setCryptoType( partNode::CryptoTypeInlinePGP );
-      }
-      node->setSignatureState( processResult.inlineSignatureState() );
-      node->setEncryptionState( processResult.inlineEncryptionState() );
-    }
-    if ( partNode::CryptoTypeUnknown == node->cryptoType() )
-      node->setCryptoType( partNode::CryptoTypeNone );
+    processResult.adjustCryptoStatesOfNode( node );
     // end of ###
 
   }
 
+  void ProcessResult::adjustCryptoStatesOfNode( partNode * node ) const {
+    if ( ( inlineSignatureState()  != KMMsgNotSigned ) ||
+	 ( inlineEncryptionState() != KMMsgNotEncrypted ) ) {
+      if (    partNode::CryptoTypeUnknown == node->cryptoType()
+	      || partNode::CryptoTypeNone    == node->cryptoType() ){
+	node->setCryptoType( partNode::CryptoTypeInlinePGP );
+      }
+      node->setSignatureState( inlineSignatureState() );
+      node->setEncryptionState( inlineEncryptionState() );
+    }
+    if ( partNode::CryptoTypeUnknown == node->cryptoType() )
+      node->setCryptoType( partNode::CryptoTypeNone );
+  }
 
   //////////////////
   //////////////////
