@@ -859,10 +859,8 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
 void KMHeaders::setFolderInfoStatus ()
 {
   QString str;
-  str = i18n("%1 message, %2.", "%1 messages, %2.", mFolder->count())
-    .arg(mFolder->count())
-    .arg(i18n("%1 unread", "%1 unread", mFolder->countUnread())
-    .arg(mFolder->countUnread()));
+  str = i18n("%n message, %1.", "%n messages, %1.", mFolder->count())
+    .arg(i18n("%n unread", "%n unread", mFolder->countUnread()));
   if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
   mOwner->statusMsg(str);
 }
