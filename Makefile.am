@@ -61,7 +61,7 @@ dcoptest_SOURCES = dcoptest.cpp kmailIface.stub mailcomposerIface.stub
 
 include_HEADERS = kmailIface.h
 
-METASOURCES = AUTO
+kmail_METASOURCES = AUTO
 
 appsdir = $(kde_appsdir)/Internet
 apps_DATA = KMail.desktop
