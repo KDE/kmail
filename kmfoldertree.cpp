@@ -586,19 +586,21 @@ void KMFolderTree::refresh()
 void KMFolderTree::delayedUpdate()
 {
   bool upd = isUpdatesEnabled();
-  setUpdatesEnabled(FALSE);
+  if ( upd ) {
+    setUpdatesEnabled(FALSE);
 
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
-    KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
-    if (!fti || !fti->folder())
-      continue;
+    for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
+      KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+      if (!fti || !fti->folder())
+        continue;
 
-    if ( upd && fti->needsRepaint() ) {
-      fti->repaint();
-      fti->setNeedsRepaint( false );
+      if ( fti->needsRepaint() ) {
+        fti->repaint();
+        fti->setNeedsRepaint( false );
+      }
     }
+    setUpdatesEnabled(upd);
   }
-  setUpdatesEnabled(upd);
   mUpdateTimer.stop();
 }
 

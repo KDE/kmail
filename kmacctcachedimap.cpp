@@ -269,13 +269,15 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
   mMailCheckProgressItem->setComplete();
   mMailCheckProgressItem = 0;
 
-  // We remove everything from the deleted folders list after a sync, unconditionally.
-  // Even if it fails (no permission), because on the next sync we want the folder to reappear,
-  //  instead of the user being stuck with "can't delete" every time.
-  // And we do it for _all_ deleted folders, even those that were deleted on the server in the first place (slotListResult).
-  //  Otherwise this might have side effects much later (e.g. when regaining permissions to a folder we could see before)
-  mDeletedFolders.clear();
-  mPreviouslyDeletedFolders.clear();
+  if ( folder == mFolder ) {
+    // We remove everything from the deleted folders list after a full sync.
+    // Even if it fails (no permission), because on the next sync we want the folder to reappear,
+    //  instead of the user being stuck with "can't delete" every time.
+    // And we do it for _all_ deleted folders, even those that were deleted on the server in the first place (slotListResult).
+    //  Otherwise this might have side effects much later (e.g. when regaining permissions to a folder we could see before)
+    mDeletedFolders.clear();
+    mPreviouslyDeletedFolders.clear();
+  }
 
   KMail::ImapAccountBase::postProcessNewMail();
 }
@@ -315,12 +317,26 @@ void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
   // Apparently this method is only ever called once (from KMKernel::init) so this is ok
   mPreviouslyDeletedFolders = config.readListEntry( "deleted-folders" );
   mDeletedFolders.clear(); // but just in case...
+  const QStringList oldPaths = config.readListEntry( "renamed-folders-paths" );
+  const QStringList newNames = config.readListEntry( "renamed-folders-names" );
+  QStringList::const_iterator it = oldPaths.begin();
+  QStringList::const_iterator nameit = newNames.begin();
+  for( ; it != oldPaths.end() && nameit != newNames.end(); ++it, ++nameit ) {
+    addRenamedFolder( *it, QString::null, *nameit );
+  }
 }
 
 void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
   ImapAccountBase::writeConfig( config );
   config.writeEntry( "progressdialog", isProgressDialogEnabled() );
   config.writeEntry( "deleted-folders", mDeletedFolders + mPreviouslyDeletedFolders );
+  config.writeEntry( "renamed-folders-paths", mRenamedFolders.keys() );
+  const QValueList<RenamedFolder> values = mRenamedFolders.values();
+  QStringList lstNames;
+  QValueList<RenamedFolder>::const_iterator it = values.begin();
+  for ( ; it != values.end() ; ++it )
+    lstNames.append( (*it).mNewName );
+  config.writeEntry( "renamed-folders-names", lstNames );
 }
 
 void KMAcctCachedImap::invalidateIMAPFolders()
@@ -382,6 +398,16 @@ void KMAcctCachedImap::removeDeletedFolder( const QString& subFolderPath )
   mPreviouslyDeletedFolders.remove( subFolderPath );
 }
 
+void KMAcctCachedImap::addRenamedFolder( const QString& subFolderPath, const QString& oldLabel, const QString& newName )
+{
+  mRenamedFolders.insert( subFolderPath, RenamedFolder( oldLabel, newName ) );
+}
+
+void KMAcctCachedImap::removeRenamedFolder( const QString& subFolderPath )
+{
+  mRenamedFolders.remove( subFolderPath );
+}
+
 void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
 {
   killAllJobs( false );
@@ -390,6 +416,15 @@ void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
 FolderStorage* KMAcctCachedImap::rootFolder()
 {
   return mFolder;
+}
+
+
+QString KMAcctCachedImap::renamedFolder( const QString& imapPath ) const
+{
+  QMap<QString, RenamedFolder>::ConstIterator renit = mRenamedFolders.find( imapPath );
+  if ( renit != mRenamedFolders.end() )
+    return (*renit).mNewName;
+  return QString::null;
 }
 
 #include "kmacctcachedimap.moc"

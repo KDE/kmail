@@ -83,8 +83,6 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
            SIGNAL( statusMsg( const QString& ) ) );
   connect( mStorage, SIGNAL( numUnreadMsgsChanged( KMFolder* ) ),
            SIGNAL( numUnreadMsgsChanged( KMFolder* ) ) );
-  connect( mStorage, SIGNAL( syncRunning( KMFolder*, bool ) ),
-           SIGNAL( syncRunning( KMFolder*, bool ) ) );
   connect( mStorage, SIGNAL( removed( KMFolder*, bool ) ),
            SIGNAL( removed( KMFolder*, bool ) ) );
 

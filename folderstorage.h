@@ -439,9 +439,6 @@ signals:
   /** Emitted when number of unread messages has changed. */
   void numUnreadMsgsChanged( KMFolder* );
 
-  /** Emitted by KMFolderCachedIMAP to signal syncing */
-  void syncRunning( KMFolder*, bool );
-
   /** Emitted when a folder was removed */
   void removed(KMFolder*, bool);
 

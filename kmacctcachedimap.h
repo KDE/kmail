@@ -131,6 +131,35 @@ public:
   void removeDeletedFolder( const QString& subFolderPath );
 
   /**
+   * Remember that a folder was renamed
+   */
+  void addRenamedFolder( const QString& subFolderPath,
+                         const QString& oldLabel, const QString& newName );
+
+  /**
+   * Remove folder from "renamed folders" list
+   * Warning: @p subFolderPath is the OLD path
+   */
+  void removeRenamedFolder( const QString& subFolderPath );
+
+  struct RenamedFolder {
+    RenamedFolder() {} // for QMap
+    RenamedFolder( const QString& oldLabel, const QString& newName )
+      : mOldLabel( oldLabel ), mNewName( newName ) {}
+    QString mOldLabel;
+    QString mNewName;
+  };
+
+  /**
+   * Returns new name for folder if it was renamed
+   */
+  QString renamedFolder( const QString& imapPath ) const;
+  /**
+   * Returns the list of folders that were renamed
+   */
+  const QMap<QString, RenamedFolder>& renamedFolders() const { return mRenamedFolders; }
+
+  /**
    * Add a folder's unread count to the new "unread messages count", done during a sync after getting new mail
    */
   void addUnreadMsgCount( const KMFolderCachedImap *folder, int countUnread );
@@ -167,6 +196,7 @@ private:
   bool mProgressDialogEnabled;
   QStringList mDeletedFolders; // folders deleted in this session
   QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session
+  QMap<QString, RenamedFolder> mRenamedFolders;
 };
 
 #endif /*KMAcctCachedImap_h*/

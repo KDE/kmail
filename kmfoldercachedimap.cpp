@@ -334,19 +334,17 @@ int KMFolderCachedImap::rename( const QString& aName,
     // Stupid user trying to rename it to it's old name :)
     return 0;
 
-  if( mSyncState != SYNC_STATE_INITIAL ) {
-    KMessageBox::error( 0, i18n("You cannot rename a folder whilst a sync is in progress") );
-    return -1;
-  }
-
-  if( account() == 0 ) {
+  if( account() == 0 || imapPath().isEmpty() ) { // I don't think any of this can happen anymore
     QString err = i18n("You must synchronize with the server before renaming IMAP folders.");
     KMessageBox::error( 0, err );
     return -1;
   }
 
-  CachedImapJob *job = new CachedImapJob( aName, CachedImapJob::tRenameFolder, this );
-  job->start();
+  // Make the change appear to the user with setLabel, but we'll do the change
+  // on the server during the next sync.
+  mAccount->addRenamedFolder( imapPath(), folder()->label(), aName );
+  folder()->setLabel( aName );
+
   return 0;
 }
 
@@ -496,6 +494,7 @@ QString KMFolderCachedImap::state2String( int state ) const
   case SYNC_STATE_FIND_SUBFOLDERS:   return "SYNC_STATE_FIND_SUBFOLDERS";
   case SYNC_STATE_SYNC_SUBFOLDERS:   return "SYNC_STATE_SYNC_SUBFOLDERS";
   case SYNC_STATE_CHECK_UIDVALIDITY: return "SYNC_STATE_CHECK_UIDVALIDITY";
+  case SYNC_STATE_RENAME_FOLDER:     return "SYNC_STATE_RENAME_FOLDER";
   default:                           return "Unknown state";
   }
 }
@@ -506,6 +505,7 @@ QString KMFolderCachedImap::state2String( int state ) const
   This leaves more room for the step a with variable size (get_messages)
    connecting 5
    getuserrights 5
+   rename 5
    check_uidvalidity 5
    create_subfolders 5
    put_messages 10 (but it can take a very long time, with many messages....)
@@ -516,7 +516,7 @@ QString KMFolderCachedImap::state2String( int state ) const
    list_messages 10
    delete_messages 10
    expunge_messages 5
-   get_messages variable (remaining-5) i.e. minimum 20.
+   get_messages variable (remaining-5) i.e. minimum 15.
    set_acls 0 (rare)
    get_acls 5
 
@@ -575,7 +575,7 @@ void KMFolderCachedImap::serverSyncInternal()
   }
 
   case SYNC_STATE_GET_USERRIGHTS:
-    mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+    mSyncState = SYNC_STATE_RENAME_FOLDER;
 
     if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
@@ -586,8 +586,22 @@ void KMFolderCachedImap::serverSyncInternal()
       break;
     }
 
+  case SYNC_STATE_RENAME_FOLDER:
+  {
+    mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+    // Returns the new name if the folder was renamed, empty otherwise.
+    QString newName = mAccount->renamedFolder( imapPath() );
+    if ( !newName.isEmpty() ) {
+      newState( mProgress, i18n("Renaming folder") );
+      CachedImapJob *job = new CachedImapJob( newName, CachedImapJob::tRenameFolder, this );
+      connect( job, SIGNAL( result(KMail::FolderJob *) ), this, SLOT( slotIncreaseProgress() ) );
+      connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+      job->start();
+      break;
+    }
+  }
+
   case SYNC_STATE_CHECK_UIDVALIDITY:
-    emit syncRunning( folder(), true );
     mSyncState = SYNC_STATE_CREATE_SUBFOLDERS;
     if( !noContent() ) {
       checkUidValidity();
@@ -782,7 +796,6 @@ void KMFolderCachedImap::serverSyncInternal()
     // All done for this folder.
     mProgress = 100; // all done
     newState( mProgress, i18n("Synchronization done"));
-    emit syncRunning( folder(), false );
 
     if ( !mRecurse ) // "check mail for this folder" only
       mSubfoldersForSync.clear();
@@ -1182,6 +1195,11 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
   mAccount = aAccount;
   if( imapPath()=="/" ) aAccount->setFolder( folder() );
 
+  // Folder was renamed in a previous session, and the user didn't sync yet
+  QString newName = mAccount->renamedFolder( imapPath() );
+  if ( !newName.isEmpty() )
+    folder()->setLabel( newName );
+
   if( !folder() || !folder()->child() || !folder()->child()->count() ) return;
   for( KMFolderNode* node = folder()->child()->first(); node;
        node = folder()->child()->next() )
@@ -1203,12 +1221,12 @@ bool KMFolderCachedImap::listDirectory(bool secondStep)
   // reset
   if ( this == mAccount->rootFolder() )
     mAccount->setHasInbox( false );
-    
+
   // get the folders
   ImapAccountBase::ListType type = ImapAccountBase::List;
   if ( mAccount->onlySubscribedFolders() )
     type = ImapAccountBase::ListSubscribed;
-  ListJob* job = new ListJob( this, mAccount, type, secondStep, 
+  ListJob* job = new ListJob( this, mAccount, type, secondStep,
       false, mAccount->hasInbox() );
   connect( job, SIGNAL(receivedFolders(const QStringList&, const QStringList&,
           const QStringList&, const QStringList&, const ImapAccountBase::jobData&)),
@@ -1549,13 +1567,13 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
   if ( state == imapNoInformation && folder()->child() )
   {
     // pass through to childs
-    KMFolderNode* node; 
-    QPtrListIterator<KMFolderNode> it( *folder()->child() ); 
-    for ( ; (node = it.current()); ) 
-    { 
-      ++it; 
-      if (node->isDir()) continue; 
-      KMFolder *folder = static_cast<KMFolder*>(node); 
+    KMFolderNode* node;
+    QPtrListIterator<KMFolderNode> it( *folder()->child() );
+    for ( ; (node = it.current()); )
+    {
+      ++it;
+      if (node->isDir()) continue;
+      KMFolder *folder = static_cast<KMFolder*>(node);
       static_cast<KMFolderCachedImap*>(folder->storage())->setSubfolderState( state );
     }
   }

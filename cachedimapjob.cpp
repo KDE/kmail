@@ -652,13 +652,22 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
     return;
   }
 
+
   if( job->error() ) {
+    // Error, revert label change
+    QMap<QString, KMAcctCachedImap::RenamedFolder>::ConstIterator renit = mAccount->renamedFolders().find( mFolder->imapPath() );
+    Q_ASSERT( renit != mAccount->renamedFolders().end() );
+    if ( renit != mAccount->renamedFolders().end() ) {
+      mFolder->folder()->setLabel( (*renit).mOldLabel );
+      mAccount->removeRenamedFolder( mFolder->imapPath() );
+    }
     mAccount->handleJobError( job, i18n( "Error while trying to rename folder %1" ).arg( mFolder->label() ) + '\n' );
   } else {
     // Okay, the folder seems to be renamed on the server,
     // now rename it on disk
     QString oldName = mFolder->name();
     QString oldPath = mFolder->imapPath();
+    mAccount->removeRenamedFolder( oldPath );
     mFolder->setImapPath( (*it).path );
     mFolder->FolderStorage::rename( (*it).url );
 
