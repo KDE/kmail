@@ -88,23 +88,23 @@ void KMSender::writeConfig(bool aWithSync)
 
 
 //-----------------------------------------------------------------------------
-bool KMSender::settingsOk(void) const
+bool KMSender::settingsOk() const
 {
   if (KMTransportInfo::availableTransports().isEmpty())
   {
     KMessageBox::information(0,i18n("Please specify a send "
 				    "method in the settings "
 				    "and try again."));
-    return FALSE;
+    return false;
   }
   if (!kernel->identityManager()->defaultIdentity().mailingAllowed())
   {
-    KMessageBox::information(0,i18n("Please set the required fields in the "
-				    "identity settings:\n"
-				    "user-name and email-address"));
-    return FALSE;
+    KMessageBox::information(0,i18n("Please set the email address of the "
+				    "default identity. KMail does not work "
+				    "without it."));
+    return false;
   }
-  return TRUE;
+  return true;
 }
 
 
