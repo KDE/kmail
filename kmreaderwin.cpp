@@ -196,6 +196,8 @@ void KMReaderWin::readConfig(void)
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
 							   SmartAttmnt);
+  mLoadExternal = config->readBoolEntry( "htmlLoadExternal", false );
+  mViewer->setOnlyLocalReferences( !mLoadExternal );
   fntSize = 0;
 
   config->setGroup("Fonts");
@@ -319,8 +321,8 @@ void KMReaderWin::initHtmlWidget(void)
   	  SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
 	  SLOT(slotUrlOn(const QString &)));
-    connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
-	    SLOT(slotUrlPopup(const QString &, const QPoint &)));
+  connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
+          SLOT(slotUrlPopup(const QString &, const QPoint &)));
 }
 
 

@@ -410,8 +410,9 @@ private:
     };
     struct SecurityWidget
     {
-      int        pageIndex;
-      KpgpConfig *pgpConfig;
+        int        pageIndex;
+        KpgpConfig *pgpConfig;
+        QCheckBox  *externalReferences;
     };
     struct MiscWidget
     {

@@ -45,6 +45,7 @@
 #include <qtabwidget.h>
 #include <qvalidator.h>
 #include <qvbox.h>
+#include <qwhatsthis.h>
 
 #include <kapp.h>
 #include <kcharsets.h>
@@ -1302,7 +1303,7 @@ void ConfigureDialog::makeMimePage( void )
   mMime.createOwnMessageIdCheck =
     new QCheckBox( i18n("Create own Message-Id headers"), page );
   topLevel->addWidget( mMime.createOwnMessageIdCheck );
- 
+
   QGridLayout *glay0 = new QGridLayout( topLevel, 1, 2 );
   glay0->setColStretch( 1, 10 );
 
@@ -1328,7 +1329,7 @@ void ConfigureDialog::makeMimePage( void )
   QFrame *hline = new QFrame( page );
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   topLevel->addWidget( hline );
-  
+
   QLabel *label = new QLabel( page );
   label->setText(i18n("Define custom mime header tags:"));
   topLevel->addWidget( label );
@@ -1383,20 +1384,48 @@ void ConfigureDialog::makeMimePage( void )
 
 void ConfigureDialog::makeSecurityPage( void )
 {
-  QVBox *vbox = addVBoxPage( i18n("Security"),
-			     i18n("Security Settings"),
-    KGlobal::instance()->iconLoader()->loadIcon( "encrypted", KIcon::NoGroup,
-    KIcon::SizeMedium ));
-  mSecurity.pageIndex = pageIndex(vbox);
+    QVBox *vbox = addVBoxPage( i18n("Security"),
+                               i18n("Security Settings"),
+                               KGlobal::instance()->iconLoader()->
+                               loadIcon( "encrypted", KIcon::NoGroup,
+                                         KIcon::SizeMedium ));
+    mSecurity.pageIndex = pageIndex(vbox);
 
-  QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
-  QWidget *page1 = new QWidget( tabWidget );
-  tabWidget->addTab( page1, i18n("PGP") );
-  QVBoxLayout *vlay = new QVBoxLayout( page1, spacingHint() );
+    QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
+    QWidget *page = new QWidget( tabWidget );
+    tabWidget->addTab( page, i18n("PGP") );
+    QVBoxLayout *vlay = new QVBoxLayout( page, spacingHint() );
 
-  mSecurity.pgpConfig = new KpgpConfig(page1);
-  vlay->addWidget( mSecurity.pgpConfig );
-  vlay->addStretch(10);
+    mSecurity.pgpConfig = new KpgpConfig(page);
+    vlay->addWidget( mSecurity.pgpConfig );
+    vlay->addStretch(10);
+
+    page = new QWidget( tabWidget );
+    tabWidget->addTab( page, i18n("HTML") );
+    vlay = new QVBoxLayout( page, spacingHint() );
+
+    QGroupBox *gb = new QGroupBox( i18n( "HTML Security" ), page );
+    vlay->addWidget( gb );
+    QVBoxLayout *glay = new QVBoxLayout( gb, KDialog::spacingHint() );
+    glay->addSpacing( fontMetrics().lineSpacing() );
+
+    mSecurity.externalReferences = new QCheckBox( i18n( "Load external references from the net" ), gb );
+    glay->addWidget( mSecurity.externalReferences );
+
+    vlay->addStretch(10);
+
+    QWhatsThis::add( mSecurity.externalReferences,
+                     i18n( "<qt>Some mail advertisements are in HTML\n"
+                           "and contain references to images that these\n"
+                           "advertisements use to find out you've read\n"
+                           "their mail.<br/>\n"
+                           "To protect you from such a misuse of the HTML\n"
+                           "displaying feature of kmail, this option is\n"
+                           "<em>disabled</em> by default.<br/>\n"
+                           "If you wish to view images in HTML, you can\n"
+                           "enable this option, but be aware of the possible\n"
+                           "problem.</qt>" ) );
+
 }
 
 #include <kinstance.h>
@@ -1687,6 +1716,8 @@ void ConfigureDialog::setupAppearancePage( void )
   config.setGroup("Reader");
   state = config.readBoolEntry( "htmlMail", false );
   mAppearance.htmlMailCheck->setChecked( state );
+  state = config.readBoolEntry( "htmlLoadExternal", false );
+  mSecurity.externalReferences->setChecked( state );
 
   config.setGroup("General");
   state = config.readBoolEntry( "showMessageSize", false );
@@ -2210,6 +2241,8 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.setGroup("Reader");
     bool htmlMail = mAppearance.htmlMailCheck->isChecked();
     config.writeEntry( "htmlMail", htmlMail );
+    config.writeEntry( "htmlLoadExternal", mSecurity.
+                       externalReferences->isChecked() );
 
     config.setGroup("General");
     bool messageSize = mAppearance.messageSizeCheck->isChecked();

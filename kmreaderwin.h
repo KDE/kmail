@@ -261,6 +261,7 @@ protected:
   QString mQuoteFontTag[3];
   bool    mRecyleQouteColors;
   bool    mUnicodeFont;
+    bool mLoadExternal;
 };
 
 
