@@ -232,7 +232,7 @@ void KMComposeWin::readConfig(void)
   int w, h, maxTransportItems;
 
   config->setGroup("Composer");
-  mAutoSign = config->readEntry("signature","manual") == "auto";
+  mAutoSign = config->readEntry("signature","auto") == "auto";
   mShowToolBar = config->readNumEntry("show-toolbar", 1);
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);

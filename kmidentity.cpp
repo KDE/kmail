@@ -99,7 +99,7 @@ void KMIdentity::readConfig(void)
   mOrganization = config->readEntry("Organization");
   mReplyToAddr = config->readEntry("Reply-To Address");
   mSignatureFile = config->readEntry("Signature File");
-  mUseSignatureFile = config->readBoolEntry("UseSignatureFile", true );
+  mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
   mSignatureInlineText = config->readEntry("Inline Signature");
 }
 
