@@ -1211,13 +1211,10 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 void KMFolder::addMsgQuiet(KMMessage* aMsg)
 {
-  open();
   KMFolder *folder = aMsg->parent();
-  aMsg->setTransferInProgress( FALSE );
-  addMsg( aMsg, NULL, TRUE );
-  KMMsgBase *mb = unGetMsg(count() - 1);
-  kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
-  close();
+  kernel->undoStack()->pushAction( aMsg->msgIdMD5(), folder, this );
+  if (folder) folder->take(folder->find(aMsg));
+  delete aMsg;
 }
 
 
