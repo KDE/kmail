@@ -40,7 +40,7 @@ public:
 
   /** Uses find() to find given folder. If not found the folder is
     created. Directories are skipped. */
-  virtual KMFolder* findOrCreate(const QString& folderName);
+  virtual KMFolder* findOrCreate(const QString& folderName, bool sysFldr=TRUE);
 
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */

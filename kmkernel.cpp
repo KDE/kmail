@@ -210,7 +210,7 @@ bool readFolderMsgIds=false;
     KMMessage *M=new KMMessage();
     M->fromString(bericht);
 
-    KMFolder  *F=the_folderMgr->findOrCreate(foldername);
+    KMFolder  *F=the_folderMgr->findOrCreate(foldername, FALSE);
 
     if (F==NULL) { retval=-1; }
     else {

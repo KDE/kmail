@@ -165,13 +165,13 @@ KMFolder* KMFolderMgr::findIdString(const QString& folderId, KMFolderDir *dir)
 
 
 //-----------------------------------------------------------------------------
-KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
+KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName, bool sysFldr)
 {
   KMFolder* folder = find(aFolderName);
 
   if (!folder)
   {
-    folder = createFolder(aFolderName, TRUE);
+    folder = createFolder(aFolderName, sysFldr);
     if (!folder) {
       KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(aFolderName).arg(mBasePath)));
       exit(-1);
