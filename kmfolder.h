@@ -54,7 +54,7 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  KMFolder(KMFolderDir* parent=NULL, const QString& name=NULL);
+  KMFolder(KMFolderDir* parent=0, const QString& name=QString::null);
   virtual ~KMFolder();
 
   /** Returns full path to folder file */
