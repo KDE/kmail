@@ -563,6 +563,11 @@ void KMMainWidget::createWidgets(void)
   accel->connectItem(accel->insertItem(CTRL+Key_Right),
                      mFolderTree, SLOT(incCurrentFolder()));
 
+  new KAction(
+    i18n("Abort current operation"), Key_Escape, KMBroadcastStatus::instance(),
+    SLOT(requestAbort()), actionCollection(), "cancel" );
+  accel->connectItem(accel->insertItem(Key_Escape),
+                     KMBroadcastStatus::instance(), SLOT(requestAbort()));
 
   new KAction(
    i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,
