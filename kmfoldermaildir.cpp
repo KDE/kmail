@@ -579,7 +579,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 
   QCString dateStr, fromStr, toStr, subjStr;
   QCString xmarkStr, replyToIdStr, msgIdStr, referencesStr;
-  QCString statusStr, replyToAuxIdStr;
+  QCString statusStr, replyToAuxIdStr, uidStr;
 
   // iterate through this file until done
   while (!atEof)
@@ -666,6 +666,8 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       dateStr = dateStr.stripWhiteSpace();
       if (!dateStr.isEmpty())
         mi->setDate(dateStr);
+      if ( !uidStr.isEmpty() )
+         mi->setUID( uidStr.toULong() );
       mi->setDirty(false);
       mMsgList.append(mi);
 
@@ -743,6 +745,12 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       replyToIdStr = QCString(line+12);
       lastStr = &replyToIdStr;
     }
+    else if (strncasecmp(line, "X-UID:", 5) == 0)
+    {
+      uidStr = QCString(line+5);
+      lastStr = &uidStr;
+    }
+
   }
 
   if (status & KMMsgStatusNew || status & KMMsgStatusUnread ||
