@@ -672,7 +672,8 @@ int KMFolderMbox::createIndexFromContents()
   correctUnreadMsgsCount();
 
   if (kernel->outboxFolder() == this && count() > 0)
-    KMessageBox::information(0, i18n("Your outbox contains messages which were "
+    KMessageBox::queuedMessageBox(0, KMessageBox::Information,
+                                  i18n("Your outbox contains messages which were "
     "most likely not created by KMail.\nPlease remove them from there, if you "
     "don't want KMail to send them."));
 
