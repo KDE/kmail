@@ -252,6 +252,9 @@ void DictSpellChecker::slotDictionaryChanged()
 
 QString DictSpellChecker::spellKey()
 {
+    //Note: Yes polling with timerEvent and reading directly from kglobals
+    //Note: is evil. It would be nice if there was some kind of inter-process
+    //Note: signal emitted when spelling configuration options are changed.
     KConfig *config = KGlobal::config();
     KConfigGroupSaver cs(config,"KSpell");
     config->reparseConfiguration();
