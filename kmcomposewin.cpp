@@ -2201,11 +2201,6 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
 
   text.truncate(text.length()); // to ensure text.size()==text.length()+1
 
-  if(mEditor->isModified() || mEdtFrom->edited() || mEdtReplyTo->edited() ||
-     mEdtTo->edited() || mEdtCc->edited() || mEdtBcc->edited() ||
-     mEdtSubject->edited() || mAtmModified ||
-     (mTransport->lineEdit() && mTransport->lineEdit()->edited()) ||
-     bAlwaysSend )
   {
     // Provide a local scope for newText.
     QString newText;
