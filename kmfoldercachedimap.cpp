@@ -790,9 +790,12 @@ void KMFolderCachedImap::serverSyncInternal()
         KMFolderNode *node = folder()->child()->first();
         while( node ) {
           if( !node->isDir() ) {
-            if ( !static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->imapPath().isEmpty() )
-              // Only sync folders that have been accepted by the server
-              mSubfoldersForSync << static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+            KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+            // Only sync folders that have been accepted by the server
+            if ( !storage->imapPath().isEmpty()
+                 // and that were not just deleted from it
+                 && !foldersForDeletionOnServer.contains( storage->imapPath() ) )
+              mSubfoldersForSync << storage;
           }
           node = folder()->child()->next();
         }
