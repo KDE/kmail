@@ -213,7 +213,7 @@ bool KMReaderWin::foundMatchingCryptPlug( CryptPlugWrapperList* plugins,
   }
   if( parent )
     KMessageBox::information(parent,
-      i18n("problem: %1 Plug-In was not specified.\n"
+      i18n("Problem: %1 Plug-In was not specified.\n"
            "Use the 'Settings/Configure KMail / Plugins' dialog to specify the"
            " Plug-In or ask your system administrator to do that for you.")
            .arg(verboseName),
@@ -2532,7 +2532,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
       }
     } else {
       KMessageBox::information(reader,
-          i18n("problem: This Crypto Plug-Ins cannot verify message signatures.\n"
+          i18n("Problem: This Crypto Plug-In cannot verify message signatures.\n"
                "Please specify an appropriate Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
                QString::null,
                "cryptoPluginBox");
@@ -3346,7 +3346,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
             // GNU Privacy Guard CVS repository /gpgme/gpgme/gpgme.h
             switch( status_code ) {
             case 0: // GPGME_SIG_STAT_NONE
-                result = i18n("Oops: Signature not verified");
+                result = i18n("Error: Signature not verified");
                 break;
             case 1: // GPGME_SIG_STAT_GOOD
                 result = i18n("Good signature");
@@ -3384,7 +3384,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
             // definitions in kdenetwork/libkdenetwork/cryptplug.h
 
             if( CryptPlugWrapper::SigStatus_UNKNOWN == statusFlags ) {
-                result = i18n("Sorry, no status information available.");
+                result = i18n("No status information available.");
                 frameColor = SIG_FRAME_COL_YELLOW;
                 showKeyInfos = false;
                 return result;
@@ -3421,7 +3421,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
 
             // test for yellow:
             if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
-                result2 += i18n("Can't verify: key missing.");
+                result2 += i18n("Unable to verify: key missing.");
                 // if the signature certificate is missing
                 // we cannot show infos on it
                 showKeyInfos = false;
@@ -3440,7 +3440,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ){
-                result2 += i18n("A system error occured.");
+                result2 += i18n("A system error occurred.");
                 // if a system error occured
                 // we cannot trust any information
                 // that was given back by the plug-in
@@ -3448,7 +3448,7 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 frameColor = SIG_FRAME_COL_YELLOW;
             }
             if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
-                result2 += i18n("Internal system error #%1 occured.")
+                result2 += i18n("Internal system error #%1 occurred.")
                         .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
                 // if an unsupported internal error occured
                 // we cannot trust any information
@@ -3673,7 +3673,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                                 i18n("Warning:") +
                                 "</u> " +
                                 i18n("No mail address is stored in the %1 used for signing, "
-                                     "so we cannot compare it to sender's address &lt;%2&gt;.")
+                                     "so we cannot compare it to the sender's address &lt;%2&gt;.")
                                 .arg(certificate)
                                 .arg(msgFrom);
                         }

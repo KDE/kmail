@@ -3009,7 +3009,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
             if( useDialog ) {
               dialog.setCommentBelow(
                 i18n("(Certificates matching address \"%1\", "
-                    " press [Cancel] to use different address for recipient %2.)")
+                     "press [Cancel] to use different address for recipient %2.)")
                 .arg(addressee)
                 .arg(*it) );
               dialog.entriesLB->setFocus();

@@ -192,7 +192,7 @@ void KMAcctMaildir::processNewMail(bool)
     rc = mailFolder.expunge();
     if (rc)
       KMessageBox::information( 0,
-                              i18n("Cannot remove mail from mailbox `%1':\n%2")
+                              i18n("Cannot remove mail from mailbox '%1':\n%2")
                                 .arg(mailFolder.location()).arg(strerror(rc)));
     QString statusMsg;
     if ( num )
