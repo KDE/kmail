@@ -666,7 +666,12 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       msg->setStatus(flagsToStatus(flags));
       KMFolderImapInherited::addMsg(msg, NULL);
       if (count() > 1) unGetMsg(count() - 1);
-      if (count() % 100 == 0) { quiet(FALSE); quiet(TRUE); }
+      if ((*it).total > 20 &&
+        ((*it).done + 1) * 5 / (*it).total > (*it).done * 5 / (*it).total)
+      {
+        quiet(FALSE);
+        quiet(TRUE);
+      }
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
