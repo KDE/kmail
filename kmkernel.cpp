@@ -12,6 +12,7 @@
 #include <klocale.h>
 #include <kstandarddirs.h>
 #include <qutf7codec.h>
+#include <kio/job.h>
 
 #include "kmmainwin.h"
 #include "kmcomposewin.h"

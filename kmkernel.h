@@ -5,12 +5,14 @@
 #include <qstring.h>
 
 #include <kconfig.h>
-#include <kio/job.h>
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
 
 #define kernel KMKernel::self()
 
+namespace KIO {
+  class Job;
+}
 class KMFolder;
 class KBusyPtr;
 class KBusyPtr;
