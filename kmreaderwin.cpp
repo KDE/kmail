@@ -539,7 +539,8 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
 				SLOT(slotUrlCopy()), ac, "copy_url" );
   mUrlOpenAction = new KAction( i18n("Open URL"), 0, this,
 			     SLOT(slotUrlOpen()), ac, "open_url" );
-  mAddBookmarksAction = new KAction( i18n("Add to Bookmarks"), "bookmark_add",
+  mAddBookmarksAction = new KAction( i18n("Bookmark This Link"),
+                                     "bookmark_add",
                                      0, this, SLOT(slotAddBookmarks()),
                                      ac, "add_bookmarks" );
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
