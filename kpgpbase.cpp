@@ -646,8 +646,9 @@ KpgpBaseG::signKey(const char *key, const char *passphrase)
 }
 
 
-QString KpgpBaseG::getAsciiPublicKey(QString _person) {
-
+QString KpgpBaseG::getAsciiPublicKey(QString _person)
+{
+  if (_person.isEmpty()) return _person;
   QString toexec;
   toexec.sprintf("--batch --armor --export \"%s\"", _person.data());
 
@@ -1008,8 +1009,9 @@ KpgpBase2::signKey(const char *key, const char *passphrase)
 }
 
 
-QString KpgpBase2::getAsciiPublicKey(QString _person) {
-
+QString KpgpBase2::getAsciiPublicKey(QString _person)
+{
+  if (_person.isEmpty()) return _person;
   QString toexec;
   toexec.sprintf("pgp +language=C -kxaf \"%s\"", _person.data());
 
@@ -1304,7 +1306,9 @@ KpgpBase5::pubKeys()
   return publicKeys;
 }     
 
-QString KpgpBase5::getAsciiPublicKey(QString _person) {
+QString KpgpBase5::getAsciiPublicKey(QString _person)
+{
+  if (_person.isEmpty()) return _person;
   QString toexec;
   toexec.sprintf("pgpk -xa \"%s\"", _person.data());
 

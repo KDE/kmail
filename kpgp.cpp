@@ -823,8 +823,7 @@ KpgpPass::getPhrase()
 
 KpgpKey::KpgpKey( QStrList *keys, QWidget *parent, const char *name, 
 		  bool modal ) 
-  :KDialogBase( i18n("Select key"), Yes, Yes, Yes, parent, name, modal, 
-		true, i18n("&Insert") )
+  :KDialogBase( parent, name, modal, i18n("Select key"), Ok|Cancel, Ok, true )
 {
   QHBox *hbox = new QHBox( this );
   setMainWidget( hbox );
@@ -868,8 +867,10 @@ QString
 KpgpKey::getKeyName(QWidget *parent, const QStrList *keys)
 {
   KpgpKey pgpkey( (QStrList*)keys, parent );
-  pgpkey.exec();
-  return pgpkey.getKey().copy();
+  if (pgpkey.exec() == QDialog::Accepted)
+    return pgpkey.getKey().copy();
+  else
+    return QString();
 }
 
 
