@@ -68,6 +68,7 @@ using KMime::DateFormatter;
 #include <kstandarddirs.h>
 #include <kwin.h>
 #include <knotifydialog.h>
+#include <kconfig.h>
 
 // Qt headers:
 #include <qvalidator.h>

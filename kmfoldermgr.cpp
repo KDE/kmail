@@ -20,6 +20,7 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kconfig.h>
 
 #include "kmmainwin.h"
 #include "kmfiltermgr.h"

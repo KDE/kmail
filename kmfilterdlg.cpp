@@ -18,6 +18,7 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <kwin.h>
+#include <kconfig.h>
 
 // other Qt headers:
 #include <qlayout.h>

@@ -33,7 +33,7 @@
 #include <kdebug.h>
 #include <kstatusbar.h>
 #include <kwin.h>
-
+#include <kconfig.h>
 #include <mimelib/enum.h>
 
 #include <stdlib.h>

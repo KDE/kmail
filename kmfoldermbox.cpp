@@ -15,6 +15,7 @@
 #include <kmessagebox.h>
 #include <knotifyclient.h>
 #include <kprocess.h>
+#include <kconfig.h>
 
 #include <stdio.h>
 #include <errno.h>

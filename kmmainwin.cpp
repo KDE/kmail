@@ -4,8 +4,9 @@
 #include "kmkernel.h"
 #include "kmsender.h"
 #include "kmbroadcaststatus.h"
-#include "klocale.h"
+#include <klocale.h>
 #include <kedittoolbar.h>
+#include <kconfig.h>
 
 #include "kmmainwin.moc"
 
@@ -21,7 +22,7 @@ KMMainWin::KMMainWin(QWidget *)
   createStandardStatusBarAction();
   setStandardToolBarMenuEnabled(true);
 #endif
-    
+
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()),
 				actionCollection(), "kmail_configure_toolbars" );
 
@@ -33,7 +34,7 @@ KMMainWin::KMMainWin(QWidget *)
 					       SLOT(slotToggleStatusBar()),
 					       actionCollection());
 #endif
-  
+
   KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
   createGUI( "kmmainwin.rc", false );
 #if !KDE_IS_VERSION( 3, 1, 90 )

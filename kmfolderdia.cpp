@@ -15,6 +15,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kicondialog.h>
+#include <kconfig.h>
 
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"

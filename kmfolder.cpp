@@ -15,6 +15,7 @@
 #include <kdebug.h>
 #include <errno.h>
 #include <klocale.h>
+#include <kconfig.h>
 
 //-----------------------------------------------------------------------------
 

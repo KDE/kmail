@@ -14,6 +14,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kconfig.h>
 
 #include <stdlib.h>
 #include <stdio.h>

@@ -10,6 +10,7 @@
 using KMail::ObjectTreeParser;
 #include <kpgpblock.h>
 #include <kdebug.h>
+#include <kconfig.h>
 
 #include <cryptplugwrapperlist.h>
 

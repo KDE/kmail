@@ -38,6 +38,7 @@ using KMail::ImapAccountBase;
 #include <klocale.h>
 #include <kdebug.h>
 #include <kio/scheduler.h>
+#include <kconfig.h>
 #include <qbuffer.h>
 #include <qfile.h>
 

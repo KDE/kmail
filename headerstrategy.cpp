@@ -34,7 +34,7 @@
 #include "kmkernel.h"
 
 #include <kdebug.h>
-
+#include <kconfig.h>
 
 namespace KMail {
 
@@ -81,7 +81,7 @@ namespace KMail {
   protected:
     AllHeaderStrategy() : HeaderStrategy() {}
     virtual ~AllHeaderStrategy() {}
-    
+
   public:
     const char * name() const { return "all"; }
     const HeaderStrategy * next() const { return rich(); }
@@ -106,7 +106,7 @@ namespace KMail {
       : HeaderStrategy(),
 	mHeadersToDisplay( stringList( richHeaders, numRichHeaders ) ) {}
     virtual ~RichHeaderStrategy() {}
-    
+
   public:
     const char * name() const { return "rich"; }
     const HeaderStrategy * next() const { return standard(); }
@@ -131,7 +131,7 @@ namespace KMail {
       : HeaderStrategy(),
 	mHeadersToDisplay( stringList( standardHeaders, numStandardHeaders) ) {}
     virtual ~StandardHeaderStrategy() {}
-    
+
   public:
     const char * name() const { return "standard"; }
     const HeaderStrategy * next() const { return brief(); }
@@ -156,7 +156,7 @@ namespace KMail {
       : HeaderStrategy(),
 	mHeadersToDisplay( stringList( briefHeaders, numBriefHeaders ) ) {}
     virtual ~BriefHeaderStrategy() {}
-    
+
   public:
     const char * name() const { return "brief"; }
     const HeaderStrategy * next() const { return custom(); }
@@ -180,7 +180,7 @@ namespace KMail {
   protected:
     CustomHeaderStrategy();
     virtual ~CustomHeaderStrategy() {}
-    
+
   public:
     const char * name() const { return "custom"; }
     const HeaderStrategy * next() const { return all(); }

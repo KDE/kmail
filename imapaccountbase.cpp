@@ -30,6 +30,7 @@ using KMail::SieveConfig;
 #include "kmmainwin.h"
 
 #include <kdebug.h>
+#include <kconfig.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 using KIO::MetaData;
@@ -221,7 +222,7 @@ namespace KMail {
 
     // count the unread messages
     mCountUnread += folder->countUnread();
-    if (mCountRemainChecks == 0) 
+    if (mCountRemainChecks == 0)
     {
       // all checks are done
       KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
@@ -338,7 +339,7 @@ namespace KMail {
           && (!(*it).inboxOnly || name.upper() == "INBOX"))
       {
         if (((*it).inboxOnly ||
-              url.path() == "/INBOX/") && name.upper() == "INBOX" && 
+              url.path() == "/INBOX/") && name.upper() == "INBOX" &&
             !mHasInbox)
         {
           // our INBOX

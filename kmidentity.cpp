@@ -8,6 +8,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
+#include <kconfig.h>
 
 #include <qfileinfo.h>
 

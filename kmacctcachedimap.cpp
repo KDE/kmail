@@ -36,7 +36,7 @@ using KMail::IMAPProgressDialog;
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kdebug.h>
-
+#include <kconfig.h>
 
 KMAcctCachedImap::KMAcctCachedImap(KMAcctMgr* aOwner, const QString& aAccountName):
   KMail::ImapAccountBase(aOwner, aAccountName), mFolder(0),

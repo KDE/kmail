@@ -30,6 +30,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kapplication.h>
+#include <kconfig.h>
 
 #include "kmfoldercombobox.h"
 #include "configuredialog_p.h"

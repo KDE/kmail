@@ -29,6 +29,7 @@
 #include <kiconloader.h>
 #include <dcopclient.h>
 #include <kparts/part.h>
+#include <kconfig.h>
 
 #include "kmgroupware.h"
 #include "kfileio.h"
@@ -905,8 +906,8 @@ void internal_directlySendMessage(KMMessage* msg)
   //mMainWin->slotCompose( msgNew, 0 );
 }
 
-bool KMGroupware::addIncidence( const QString& type, 
-				const QString& uid, 
+bool KMGroupware::addIncidence( const QString& type,
+				const QString& uid,
 				const QString& ical )
 {
   KMFolder* folder = 0;
@@ -936,7 +937,7 @@ bool KMGroupware::addIncidence( const QString& type,
   msg->setBodyEncoded( ical.utf8() );
 
   msg->touch();
-  folder->addMsg( msg );  
+  folder->addMsg( msg );
   return true;
 }
 
@@ -959,7 +960,7 @@ bool KMGroupware::deleteIncidence( const QString& type, const QString& uid )
 
   KMMessage* msg = findMessageByUID( uid, folder );
   if( !msg ) return false;
-  
+
   deleteMsg( msg );
   return true;
 }
@@ -985,7 +986,7 @@ QStringList KMGroupware::incidences( const QString& type )
 
   QStringList ilist;
   QString s;
-  int iDummy;  
+  int iDummy;
   for( int i=0; i<folder->count(); ++i ){
     bool unget = !folder->isMessage(i);
     if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, s ) )
@@ -1112,7 +1113,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
           // in the toAddresses list.
           for( QStringList::Iterator sit = toAddresses.begin();
                sit != toAddresses.end(); ++sit ) {
-              if( KMMessage::getEmailAddr( *sit ) == 
+              if( KMMessage::getEmailAddr( *sit ) ==
                   kernel->identityManager()->defaultIdentity().emailAddr().local8Bit() ) {
                   // our default identity was contained in the To: list,
                   // copy that from To: to From:
@@ -1120,7 +1121,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
                   break; // We are done
               }
           }
-          
+
           // If we still haven't found anything, we have to ask the user
           // what to do.
           if( fromAddress.isEmpty() ) {
@@ -1261,7 +1262,7 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
   } else if( "cancel" == choice ) {
     QString uid( "UID" );
     QString descr("DESCRIPTION");
-    QString summary("SUMMARY"); 
+    QString summary("SUMMARY");
 
     vPartMicroParser( vCalIn.utf8(), uid, descr, summary );
     if( type == vCalEvent ) {
@@ -2042,10 +2043,10 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
     } else {
       QStringList addrs = KMMessage::splitEmailAddrList( msg->to() );
       bool ok;
-      receiver = QInputDialog::getItem( i18n("Select Address"), 
+      receiver = QInputDialog::getItem( i18n("Select Address"),
 					i18n("None of your identities match the receiver "
 					     "of this message,<br> please choose which of "
-					     "the following addresses is yours:"), 
+					     "the following addresses is yours:"),
 					addrs, 0, FALSE, &ok, mMainWin );
       if( !ok ) return false;
     }

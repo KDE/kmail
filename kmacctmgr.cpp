@@ -17,6 +17,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kconfig.h>
 
 #include <qregexp.h>
 
@@ -24,8 +25,8 @@
 KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
   mAcctList.setAutoDelete(TRUE);
-  mAcctChecking.clear();  
-  mAcctTodo.clear();  
+  mAcctChecking.clear();
+  mAcctTodo.clear();
   mTotalNewMailsArrived=0;
 }
 
@@ -106,7 +107,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
   // queue the account
   mAcctTodo.append(account);
 
-  if (account->checkingMail()) 
+  if (account->checkingMail())
   {
     kdDebug() << "account " << account->name() << " busy, queuing" << endl;
     return;
@@ -139,14 +140,14 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   if (mAcctChecking.isEmpty())
   {
     // all checks finished, display summary
-    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 
+    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
         mTotalNewMailsArrived );
     mTotalNewMailsArrived = 0;
   }
   if (mAcctTodo.isEmpty()) return;
   curAccount = mAcctTodo.take(0);
 
-  if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" && 
+  if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" &&
       curAccount->folder() == 0)
   {
     QString tmp = i18n("Account %1 has no mailbox defined!\n"
@@ -308,7 +309,7 @@ QStringList  KMAcctMgr::getAccounts(bool noImap) {
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctMgr::intCheckMail(int item, bool _interactive) 
+void KMAcctMgr::intCheckMail(int item, bool _interactive)
 {
   KMAccount* cur;
   newMailArrived = false;

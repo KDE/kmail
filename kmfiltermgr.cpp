@@ -10,6 +10,7 @@
 // other KDE headers
 #include <kdebug.h>
 #include <klocale.h>
+#include <kconfig.h>
 
 // other Qt headers
 #include <qregexp.h>

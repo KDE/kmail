@@ -33,6 +33,7 @@ using KMail::ImapJob;
 
 #include <kdebug.h>
 #include <kio/scheduler.h>
+#include <kconfig.h>
 
 #include <qbuffer.h>
 #include <qtextcodec.h>

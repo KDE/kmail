@@ -43,6 +43,7 @@ static const char * configKeyDefaultIdentity = "Default Identity";
 #include <kapplication.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kconfig.h>
 
 #include <qregexp.h>
 

@@ -5,12 +5,10 @@
 
 #include <qobject.h>
 #include <qstring.h>
-
-#include <kconfig.h>
-#include <kcmdlineargs.h>
-#include <kmailIface.h>
+#include <kurl.h>
 
 #include <cryptplugwrapperlist.h>
+#include "kmailIface.h"
 
 #define kernel KMKernel::self()
 #define kmconfig KMKernel::config()
@@ -18,6 +16,7 @@
 namespace KIO {
   class Job;
 }
+class KConfig;
 class KMMsgIndex;
 class QLabel;
 class KMFolder;

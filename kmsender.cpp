@@ -12,6 +12,7 @@ using namespace KMime::Types;
 #include <kdeversion.h>
 #include <klocale.h>
 #include <kdebug.h>
+#include <kconfig.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -347,7 +348,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
 			  mSentMessages));
       } else {
         setStatusMsg(i18n("%1 of %2 queued messages successfully sent.")
-            .arg(mSentMessages).arg( mTotalMessages )); 
+            .arg(mSentMessages).arg( mTotalMessages ));
       }
     }
     cleanup();
@@ -507,7 +508,7 @@ void KMSender::slotIdle()
       errString = mSendProc->message();
 
   if (mSendAborted) {
-    // sending of message aborted 
+    // sending of message aborted
     msg = i18n("Sending aborted:\n%1\n"
         "The message will stay in the 'outbox' folder until you either "
         "fix the problem (e.g. a broken address) or remove the message "
@@ -535,10 +536,10 @@ void KMSender::slotIdle()
             .arg(errString)
             .arg(mMethodStr);
           res = KMessageBox::warningYesNo( 0 , msg ,
-                  i18n( "Continue sending" ), i18n( "&Continue sending" ), 
+                  i18n( "Continue sending" ), i18n( "&Continue sending" ),
                   i18n("&Abort sending") );
         } else {
-          msg = i18n("Sending failed:\n%1\n"  
+          msg = i18n("Sending failed:\n%1\n"
             "The message will stay in the 'outbox' folder until you either "
             "fix the problem (e.g. a broken address) or remove the message "
             "from the 'outbox' folder.\n"
@@ -552,7 +553,7 @@ void KMSender::slotIdle()
           doSendMsg();
           return;
         } else {
-          setStatusMsg( i18n( "Sending aborted." ) ); 
+          setStatusMsg( i18n( "Sending aborted." ) );
         }
       }
     } else {

@@ -16,8 +16,7 @@
 
 #include "kmtransport.h"
 #include "kmkernel.h"
-
-
+#include <kconfig.h>
 
 namespace KMail {
 

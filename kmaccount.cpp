@@ -12,6 +12,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kconfig.h>
 
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
@@ -168,7 +169,7 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("check-exclude", mExclude);
   config.writeEntry("precommand", mPrecommand);
   config.writeEntry("trash", mTrash);
-  
+
   // Write the resource management data
   if( mResource ) {
       config.writeEntry("numResourceEntries", mIntervals.count() );
@@ -239,7 +240,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
           aMsg->setStatus( KMMsgStatusReplied );
 #endif
   }
-  
+
   processResult = kernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
@@ -450,7 +451,7 @@ QValueList<QPair<QDateTime, QDateTime> > KMAccount::intervals() const
 }
 
 
-/*!     
+/*!
   Resets all intervals in which this resource is busy.
 */
 

@@ -45,6 +45,7 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kconfig.h>
 
 // Qt headers:
 #include <qtabwidget.h>

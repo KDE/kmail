@@ -10,6 +10,7 @@
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kconfig.h>
 
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"

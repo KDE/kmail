@@ -19,6 +19,7 @@
 #include <kmessagebox.h>
 #include <kio/scheduler.h>
 #include <kio/passdlg.h>
+#include <kconfig.h>
 using KIO::MetaData;
 
 static const unsigned short int pop3DefaultPort = 110;
@@ -630,7 +631,7 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   if (!mUidlFinished) return;
   QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
 				     mHost + ":" + QString("%1").arg(mPort) );
-				
+
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
   config.writeEntry( "downloadLater", headerLaterUids );

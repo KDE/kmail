@@ -11,6 +11,7 @@
 
 #include <kdebug.h>
 #include <klocale.h>
+#include <kconfig.h>
 #include "kmmsgdict.h"
 #include "kmmsgindex.h"
 

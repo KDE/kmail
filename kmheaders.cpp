@@ -16,6 +16,7 @@
 #include <kdebug.h>
 #include <kimageio.h>
 #include <kmessagebox.h>
+#include <kconfig.h>
 
 #include "kcursorsaver.h"
 #include "kmcommands.h"
@@ -1369,13 +1370,13 @@ void KMHeaders::slotExpandOrCollapseThread( bool expand )
 void KMHeaders::slotExpandOrCollapseAllThreads( bool expand )
 {
   if ( !isThreaded() ) return;
-  
+
   QListViewItem * item = currentItem();
   if( item ) {
     clearSelection();
     item->setSelected( true );
   }
-  
+
   for ( QListViewItem *item = firstChild() ;
 	item ; item = item->nextSibling() )
     static_cast<KMHeaderItem*>(item)->setOpenRecursive( expand );
@@ -2121,12 +2122,12 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     KMHeadersInherited::contentsMousePressEvent(e);
     return;
   }
-  // Check if our item is the parent of a closed thread and if so, if the root 
+  // Check if our item is the parent of a closed thread and if so, if the root
   // decoration of the item was clicked (i.e. the +/- sign) which would expand
-  // the thread. In that case, deselect all children, so opening the thread 
+  // the thread. In that case, deselect all children, so opening the thread
   // doesn't cause a flicker.
   if (e->button() == LeftButton && !lvi->isOpen()) {
-    bool rootDecoClicked = 
+    bool rootDecoClicked =
          ( presspos.x() <= header()->cellPos( header()->mapToActual( 0 ) ) +
           treeStepSize() * ( lvi->depth() + ( rootIsDecorated() ? 1 : 0) ) + itemMargin() )
       && ( presspos.x() >= header()->cellPos( header()->mapToActual( 0 ) ) );

@@ -19,6 +19,7 @@
 #include <knotifyclient.h>
 #include <kstaticdeleter.h>
 #include <kstandarddirs.h>
+#include <kconfig.h>
 #include <qutf7codec.h>
 #include <kprogress.h>
 #include <kpassivepopup.h>

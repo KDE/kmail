@@ -1,14 +1,14 @@
 // KMail startup and initialize code
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
+
 #include <kuniqueapplication.h>
 #include <kglobal.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
 #include "kmkernel.h" //control center
+#include <kcmdlineargs.h>
 
 #undef Status // stupid X headers
 
