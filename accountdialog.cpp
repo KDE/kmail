@@ -213,15 +213,14 @@ ProcmailRCParser::processVariableSetting(const QString &s, int eqPos)
 QString
 ProcmailRCParser::expandVars(const QString &s)
 {
-  if( !s || s.isEmpty()) return s;
-
   QString expS = s;
+
+  if( !expS || expS.isEmpty()) return expS;
 
   QAsciiDictIterator<QString> it( mVars ); // iterator for dict
 
   while ( it.current() ) {
-    expS.replace(QString::fromLatin1("$")+it.currentKey(), *it.current());
-
+    expS.replace(QString::fromLatin1("$")+=it.currentKey(), *it.current());
     ++it;
   }
 
