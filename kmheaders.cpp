@@ -454,6 +454,10 @@ public:
     enforceSortOrder(); // Try not to rely on QListView implementation details
     return firstChild();
   }
+
+  void setTempKey( QString key ) {
+    mKey = key;
+  }
 };
 
 //-----------------------------------------------------------------------------
@@ -1059,8 +1063,16 @@ void KMHeaders::msgRemoved(int id, QString msgId)
   // Reparent children of item into top level
   QListViewItem *myParent = mItems[id];
   QListViewItem *myChild = myParent->firstChild();
+  QListViewItem *threadRoot = myParent;
+  while (threadRoot->parent())
+      threadRoot = threadRoot->parent();
+	
+  QString key = static_cast<KMHeaderItem*>(threadRoot)->key(mSortCol, !mSortDescending);
+
   while (myChild) {
     QListViewItem *lastChild = myChild;
+    KMHeaderItem *item = static_cast<KMHeaderItem*>(myChild);
+    item->setTempKey( key + item->key( mSortCol, !mSortDescending ));
     myChild = myChild->nextSibling();
     myParent->takeItem(lastChild);
     insertItem(lastChild);
@@ -1074,6 +1086,11 @@ void KMHeaders::msgRemoved(int id, QString msgId)
     mItems[i]->setMsgId( i );
   }
   mItems.resize( mItems.size() - 1 );
+  QListViewItem *next = removedItem->itemBelow();
+  if (next) {
+    setCurrentItem( next );
+    setSelected( next, TRUE );
+  }
   delete removedItem;
 }
 
@@ -2823,6 +2840,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
     } while(!s.isEmpty());
 
     for(int x = 0; x < mFolder->count(); x++) {	    //cleanup
+	if (!sortCache[x]->item()) { // we missed a message, how did that happen ?
+	    new KMHeaderItem(this, sortCache[x]->id(), sortCache[x]->key());
+	    sortCache[x]->setItem(mItems[sortCache[x]->id()] = khi);
+	}
 	delete sortCache[x];
 	sortCache[x] = NULL;
     }
