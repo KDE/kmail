@@ -653,8 +653,8 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString selection,
-                                                                                bool noQuote, bool allowDecryption)
+KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
+  QString selection, bool noQuote, bool allowDecryption)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr, refStr;
@@ -768,7 +768,8 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString sel
   //In-Reply-To = original msg-id
   msg->setHeaderField("In-Reply-To", headerField("Message-Id"));
 
-  if (replyToAll || !mailingListStr.isEmpty()) replyStr = sReplyAllStr;
+  if (replyToAll || replyToList || !mailingListStr.isEmpty())
+    replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
 
   if (!noQuote)
