@@ -2280,31 +2280,18 @@ void KMHeaders::slotRMB()
 
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
   menu->insertItem(i18n("&Move To"), msgMoveMenu);
+
   if ( !out_folder ) {
     mOwner->statusMenu->plug( menu ); // Mark Message menu
-    mOwner->toggleRepliedAction->setChecked(currentMsg()->isReplied());
-    mOwner->toggleForwardedAction->setChecked(currentMsg()->isForwarded());
-    mOwner->toggleQueuedAction->setChecked(currentMsg()->isQueued());
-    mOwner->toggleSentAction->setChecked(currentMsg()->isSent());
-    mOwner->toggleFlagAction->setChecked(currentMsg()->isFlag());
     if ( mOwner->threadStatusMenu->isEnabled() ) {
       mOwner->threadStatusMenu->plug( menu ); // Mark Thread menu
-
-      mOwner->toggleThreadRepliedAction->setChecked(currentMsg()->isReplied());
-      mOwner->toggleThreadForwardedAction->setChecked(currentMsg()->isForwarded());
-      mOwner->toggleThreadQueuedAction->setChecked(currentMsg()->isQueued());
-      mOwner->toggleThreadSentAction->setChecked(currentMsg()->isSent());
-      mOwner->toggleThreadFlagAction->setChecked(currentMsg()->isFlag());
-
     }
   }
 
   if (mOwner->watchThreadAction->isEnabled() ) {
     menu->insertSeparator();
     mOwner->watchThreadAction->plug(menu);
-    mOwner->watchThreadAction->setChecked(currentMsg()->isWatched());
     mOwner->ignoreThreadAction->plug(menu);
-    mOwner->ignoreThreadAction->setChecked(currentMsg()->isIgnored());
   }
   menu->insertSeparator();
   mOwner->trashAction->plug(menu);

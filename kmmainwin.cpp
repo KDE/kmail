@@ -42,24 +42,6 @@ KMMainWin::KMMainWin(QWidget *)
   mStatusbarAction->setChecked(!statusBar()->isHidden());
 #endif
 
-  connect( guiFactory()->container("folder", this),
-	   SIGNAL( aboutToShow() ), mKMMainWidget,
-	   SLOT( updateFolderMenu() ));
-
-  connect( guiFactory()->container("message", this),
-	   SIGNAL( aboutToShow() ), mKMMainWidget,
-	   SLOT( updateMessageMenu() ));
-
-  // contains "Create Filter" actions.
-  connect( guiFactory()->container("tools", this),
-	   SIGNAL( aboutToShow() ), mKMMainWidget,
-	   SLOT( updateMessageMenu() ));
-
-  // contains "View source" action.
-  connect( guiFactory()->container("view", this),
-	   SIGNAL( aboutToShow() ), mKMMainWidget,
-	   SLOT( updateMessageMenu() ));
-
   conserveMemory();
   applyMainWindowSettings(KMKernel::config(), "Main Window");
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),

@@ -1157,6 +1157,7 @@ void KMMainWidget::slotOverrideThread()
 {
   mFolderThreadPref = !mFolderThreadPref;
   mHeaders->setNestedOverride(mFolderThreadPref);
+  threadBySubjectAction->setEnabled(!mFolderThreadPref); 
 }
 
 //-----------------------------------------------------------------------------
@@ -1495,6 +1496,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   mMsgView->setHtmlOverride(mFolderHtmlPref);
   mHeaders->setFolder( mFolder, jumpToUnread );
   updateMessageActions();
+  updateFolderMenu();
   if (!aFolder)
     slotIntro();
 }
@@ -2594,15 +2596,25 @@ void KMMainWidget::updateMessageActions()
     statusMenu->setEnabled( mass_actions );
     threadStatusMenu->setEnabled( thread_actions );
     watchThreadAction->setEnabled( thread_actions );
-    if (mFolder && mHeaders &&
-        watchThreadAction->isEnabled() &&
-        mHeaders->currentMsg()->isWatched())
-      watchThreadAction->setChecked(true);
     ignoreThreadAction->setEnabled( thread_actions );
-    if (mFolder && mHeaders &&
-        ignoreThreadAction->isEnabled() &&
-        mHeaders->currentMsg()->isIgnored())
-      ignoreThreadAction->setChecked(true);
+    
+    if (mFolder && mHeaders && mHeaders->currentMsg()) {
+      toggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
+      toggleForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
+      toggleQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
+      toggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
+      toggleFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
+      if (thread_actions) {
+        toggleThreadRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
+        toggleThreadForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
+        toggleThreadQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
+        toggleThreadSentAction->setChecked(mHeaders->currentMsg()->isSent());
+        toggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
+        watchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());
+        ignoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
+      }
+    }
+ 
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     trashAction->setEnabled( mass_actions );
@@ -2682,10 +2694,12 @@ void KMMainWidget::updateFolderMenu()
   markAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( mFolder ? true : false );
-  threadBySubjectAction->setEnabled( mFolder && mThreadPref ? !mFolderThreadPref : mFolderThreadPref ?  true : false );
 
   preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
-  threadMessagesAction->setChecked( mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
+  threadMessagesAction->setChecked( 
+      mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
+  threadBySubjectAction->setEnabled(  
+      mFolder ? (mThreadPref ? !mFolderThreadPref : mFolderThreadPref) : false );
   threadBySubjectAction->setChecked( mFolderThreadSubjPref );
 }
 
