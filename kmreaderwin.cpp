@@ -905,7 +905,8 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP( "Antispam wizard" ),
   I18N_NOOP( "Filter log" ),
   I18N_NOOP( "Quick search" ),
-  I18N_NOOP( "Automatic mailing-list detection" )
+  I18N_NOOP( "Automatic mailing-list detection" ),
+  I18N_NOOP( "View/open message files" )
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
