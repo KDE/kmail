@@ -226,6 +226,8 @@ protected:
   KIO::MetaData mSlaveConfig;
   QPtrList<KMImapJob> mJobList;
   KMFolderImap *mFolder;
+  int mCountUnread, mCountLastUnread;
+  int mCountRemainChecks;
 
 protected slots:
   /**
@@ -247,6 +249,12 @@ protected slots:
    * Display an error message, that connecting failed
    */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
+
+  /** new-mail-notification for the current folder (is called via folderComplete) */
+  void postProcessNewMail(KMFolderImap*, bool);
+
+  /** new-mail-notification for not-selected folders (is called via numUnreadMsgsChanged) */
+  void postProcessNewMail(KMFolder*);
 };
 
 #endif /*KMAcctImap_h*/

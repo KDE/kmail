@@ -50,6 +50,8 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   mSlave = NULL;
   mTotal = 0;
   mFolder = 0;
+  mCountUnread = 0;
+  mCountLastUnread = 0;
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
@@ -502,6 +504,18 @@ void KMAcctImap::processNewMail(bool interactive)
   kernel->imapFolderMgr()->createFolderList(&strList, &folderList,
     mFolder->child(), QString::null, false);
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
+  // first get the current count of unread-messages
+  mCountRemainChecks = 0;
+  mCountLastUnread = 0;
+  for (it = folderList.begin(); it != folderList.end(); it++)
+  {
+    KMFolder *folder = *it;
+    if (folder && !folder->noContent())
+    {
+      mCountLastUnread += folder->countUnread();
+    }
+  }
+  // then check for new mails
   for (it = folderList.begin(); it != folderList.end(); it++)
   {
     KMFolder *folder = *it;
@@ -510,11 +524,49 @@ void KMAcctImap::processNewMail(bool interactive)
       KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder);
       if (imapFolder->getContentState() != KMFolderImap::imapInProgress)
       {
-        if (imapFolder->isSelected())
+        // connect the result-signals for new-mail-notification
+        mCountRemainChecks++;
+        if (imapFolder->isSelected()) {
+          connect(imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+              this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
           imapFolder->getFolder();
-        else imapFolder->processNewMail(interactive);
+        }
+        else {
+          connect(imapFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+              this, SLOT(postProcessNewMail(KMFolder*)));
+          imapFolder->processNewMail(interactive);
+        }
       }
     }
   }
-  emit finishedCheck(false);
+}
+
+void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
+{
+  disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+      this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
+  postProcessNewMail(static_cast<KMFolder*>(folder));
+}
+
+void KMAcctImap::postProcessNewMail(KMFolder* folder)
+{
+  disconnect(folder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+      this, SLOT(postProcessNewMail(KMFolder*)));
+
+  mCountRemainChecks--;
+
+  // count the unread messages
+  mCountUnread += folder->countUnread();
+  if (mCountRemainChecks == 0)
+  {
+    // all checks are done
+    if (mCountUnread > 0 && mCountUnread > mCountLastUnread)
+    {
+      emit finishedCheck(true);
+      mCountLastUnread = mCountUnread;
+    } else {
+      emit finishedCheck(false);
+    } 
+    mCountUnread = 0;
+  }
 }
