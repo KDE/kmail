@@ -87,7 +87,7 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
           mReaderWin->update( true ); // Force update
         else {
           ObjectTreeParser otp( mReaderWin );
-	  otp.parseObjectTree( 0, i->node(), true );
+	  otp.parseObjectTree( i->node(), true );
 	}
     }
 }
