@@ -730,7 +730,7 @@ protected:
   QPtrList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
   QPopupMenu *mAttachMenu;
-  int mSaveAsId, mPropertiesId;
+  int mViewId, mRemoveId, mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
   bool mAutoRequestMDN;

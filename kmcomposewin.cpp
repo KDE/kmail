@@ -2316,9 +2316,9 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QPopupMenu(this);
 
-     mAttachMenu->insertItem(i18n("to view", "View"), this,
+     mViewId = mAttachMenu->insertItem(i18n("to view", "View"), this,
                              SLOT(slotAttachView()));
-     mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
+     mRemoveId = mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
      mSaveAsId = mAttachMenu->insertItem( SmallIcon("filesaveas"), i18n("Save As..."), this,
                                           SLOT( slotAttachSave() ) );
      mPropertiesId = mAttachMenu->insertItem( i18n("Properties"), this,
@@ -2333,9 +2333,11 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
       ++selectedCount;
     }
   }
-  bool multiSelection = ( selectedCount > 1 );
-  mAttachMenu->setItemEnabled( mSaveAsId, !multiSelection );
-  mAttachMenu->setItemEnabled( mPropertiesId, !multiSelection );
+
+  mAttachMenu->setItemEnabled( mViewId, selectedCount > 0 );
+  mAttachMenu->setItemEnabled( mRemoveId, selectedCount > 0 );
+  mAttachMenu->setItemEnabled( mSaveAsId, selectedCount == 1 );
+  mAttachMenu->setItemEnabled( mPropertiesId, selectedCount == 1 );
 
   mAttachMenu->popup(QCursor::pos());
 }
