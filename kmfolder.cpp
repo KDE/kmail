@@ -1292,7 +1292,11 @@ int KMFolder::countUnread()
 
   open(); // will update unreadMsgs
   close();
-  return mUnreadMsgs;
+  // George Staikos <staikos@kde.org> 9/8/2000 - hack added here
+  //                           to make it stop displaying -1 unread
+  //                           messages when there are really none.
+  //               (no time to track down the cause)
+  return (mUnreadMsgs > 0 ? mUnreadMsgs : 0);
 }
 
 //-----------------------------------------------------------------------------
