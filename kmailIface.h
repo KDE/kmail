@@ -83,6 +83,7 @@ k_dcop:
 
   virtual QStringList folderList() const =0;
   virtual DCOPRef getFolder( const QString& vpath ) =0;
+  virtual void selectFolder( QString folder ) =0;
 
 k_dcop_signals:
   void unreadCountChanged();

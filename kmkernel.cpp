@@ -26,6 +26,7 @@
 #include "kmversion.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
+#include "kmfoldertree.h"
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 #include "kmmsgdict.h"
@@ -60,6 +61,7 @@ using KMail::FolderIface;
 #include <qutf7codec.h>
 #include <qvbox.h>
 #include <qdir.h>
+#include <qwidgetlist.h>
 #include <qobjectlist.h>
 
 #include <sys/types.h>
@@ -143,6 +145,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
     netCodec = QTextCodec::codecForLocale();
   }
   mMailService =  new MailServiceImpl();
+
+  connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
+                     "selectFolder(QString)", false );
 }
 
 KMKernel::~KMKernel ()
@@ -970,7 +975,7 @@ void KMKernel::cleanupImapFolders()
       cfld = static_cast<KMFolderCachedImap*>( fld->storage() );
     if (cfld == 0) {
       // Folder doesn't exist yet
-      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(QString::number(acct->id()), 
+      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(QString::number(acct->id()),
             false, KMFolderTypeCachedImap)->storage());
       if (!cfld) {
         KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_dimapFolderMgr->basePath())));
@@ -1736,5 +1741,50 @@ KMailICalIfaceImpl& KMKernel::iCalIface()
   return *mICalIface;
 }
 
+void KMKernel::selectFolder( QString folderPath )
+{
+  kdDebug()<<"Selecting a folder "<<folderPath<<endl;
+  const QString localPrefix = i18n( "/Local" );
+  KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
+  if ( !folder && folderPath.startsWith( localPrefix ) )
+    folder = the_folderMgr->getFolderByURL( folderPath.mid( localPrefix.length() ) );
+  if ( !folder )
+    folder = kmkernel->imapFolderMgr()->getFolderByURL( folderPath );
+  if ( !folder )
+    folder = kmkernel->dimapFolderMgr()->getFolderByURL( folderPath );
+  Q_ASSERT( folder );
+
+  KMMainWidget *widget = getKMMainWidget();
+  Q_ASSERT( widget );
+  if ( !widget )
+    return;
+
+  KMFolderTree *tree = widget->folderTree();
+  tree->doFolderSelected( tree->indexOfFolder( folder ) );
+  tree->ensureItemVisible( tree->indexOfFolder( folder ) );
+}
+
+KMMainWidget *KMKernel::getKMMainWidget()
+{
+  //This could definitely use a speadup
+  QWidgetList *l = kapp->topLevelWidgets();
+  QWidgetListIt it( *l );
+  QWidget *wid;
+
+  while ( ( wid = it.current() ) != 0 ) {
+    ++it;
+    QObjectList *l2 = wid->topLevelWidget()->queryList( "KMMainWidget" );
+    if (l2 && l2->first()) {
+      KMMainWidget* kmmw = dynamic_cast<KMMainWidget *>( l2->first() );
+      Q_ASSERT( kmmw );
+      delete l2;
+      delete l;
+      return kmmw;
+    }
+    delete l2;
+  }
+  delete l;
+  return 0;
+}
 
 #include "kmkernel.moc"

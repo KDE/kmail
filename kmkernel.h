@@ -50,6 +50,7 @@ class KMGroupware;
 class KMailICalIfaceImpl;
 class KMReaderWin;
 class KSystemTray;
+class KMMainWidget;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -109,6 +110,7 @@ public:
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
+  void selectFolder( QString folder );
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId );
   /** normal control stuff */
 
@@ -212,6 +214,7 @@ public:
   bool contextMenuShown() const { return mContextMenuShown; }
 
 public slots:
+
   //Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
 
@@ -255,6 +258,7 @@ signals:
 
 private:
   void openReader( bool onlyCheck );
+  KMMainWidget *getKMMainWidget();
 
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
