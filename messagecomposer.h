@@ -231,6 +231,7 @@ private:
 
   QString mPGPSigningKey, mSMIMESigningKey;
   bool mUseOpportunisticEncryption;
+  bool mSignBody, mEncryptBody;
   bool mSigningRequested, mEncryptionRequested;
   bool mDoSign, mDoEncrypt;
   unsigned int mAllowedCryptoMessageFormats;
