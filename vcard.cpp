@@ -17,88 +17,7 @@
 //
 
 // FIXME: do proper CRLF/CR handling
-
-// required
-#define VCARD_BEGIN          "begin:vcard"
-#define VCARD_END            "end:vcard"
-#define VCARD_BEGIN_N        "begin"
-#define VCARD_END_N          "end"
-#define VCARD_VERSION        "version"
-// one of the following two??
-#define VCARD_FN             "fn"
-#define VCARD_N              "n"
-
-// optional
-#define VCARD_NAME           "name"
-#define VCARD_NICKNAME       "nickname"
-#define VCARD_PHOTO          "photo"
-#define VCARD_BDAY           "bday"
-#define VCARD_ADR            "adr"
-  // types
-  #define VCARD_ADR_DOM      "dom"
-  #define VCARD_ADR_INTL     "intl"
-  #define VCARD_ADR_POSTAL   "postal"
-  #define VCARD_ADR_HOME     "home"
-  #define VCARD_ADR_WORK     "work"
-  #define VCARD_ADR_PREF     "pref"
-  // values
-  #define VCARD_ADR_POBOX    "PO Box"
-  #define VCARD_ADR_EXTADR   "Extended Address"
-  #define VCARD_ADR_STREET   "Street"
-  #define VCARD_ADR_LOCALITY "Locality"
-  #define VCARD_ADR_REGION   "Region"
-  #define VCARD_ADR_POSTCODE "Postal Code"
-  #define VCARD_ADR_COUNTRY  "Country Name"
-#define VCARD_LABEL          "label"
-#define VCARD_PROFILE        "profile"
-#define VCARD_SOURCE         "source"
-#define VCARD_TEL            "tel"
-  // types
-  #define VCARD_TEL_HOME     "home"
-  #define VCARD_TEL_WORK     "work"
-  #define VCARD_TEL_PREF     "pref"
-  #define VCARD_TEL_VOICE    "voice"
-  #define VCARD_TEL_FAX      "fax"
-  #define VCARD_TEL_MSG      "msg"
-  #define VCARD_TEL_CELL     "cell"
-  #define VCARD_TEL_PAGER    "pager"
-  #define VCARD_TEL_BBS      "bbs"
-  #define VCARD_TEL_MODEM    "modem"
-  #define VCARD_TEL_CAR      "car"
-  #define VCARD_TEL_ISDN     "isdn"
-  #define VCARD_TEL_VIDEO    "video"
-  #define VCARD_TEL_PCS      "pcs"
-#define VCARD_EMAIL          "email"
-  // types
-  #define VCARD_EMAIL_INTERNET "internet"
-  #define VCARD_EMAIL_X400   "x400"
-#define VCARD_TZ             "tz"
-#define VCARD_GEO            "geo"
-#define VCARD_MAILER         "mailer"
-#define VCARD_TITLE          "title"
-#define VCARD_ROLE           "role"
-#define VCARD_LOGO           "logo"
-#define VCARD_AGENT          "agent"
-#define VCARD_ORG            "org"
-#define VCARD_CATEGORIES     "categories"
-#define VCARD_NOTE           "note"
-#define VCARD_PRODID         "prodid"
-#define VCARD_REV            "rev"
-#define VCARD_SOUND          "sound"
-#define VCARD_UID            "uid"
-#define VCARD_URL            "url"
-#define VCARD_CLASS          "class"
-  #define VCARD_CLASS_PUBLIC "public"
-  #define VCARD_CLASS_PRIVATE "private"
-  #define VCARD_CLASS_CONFIDENTIAL "confidential"
-#define VCARD_KEY            "key"
-  // types
-  #define VCARD_KEY_X509     "x509"
-  #define VCARD_KEY_PGP      "pgp"
-
-#define VCARD_QUOTED_PRINTABLE "quoted-printable"
-
-/* X-xxxxx also usable */
+// FIXME: handle TYPE=x,y,z qualifiers
 
 /*
 
@@ -117,9 +36,8 @@ value :=
 
 
 // This code is screaming "come do me in PERL!"
-// This STRIPS OUT EMPTY TOKENS
 //static QValueList<QString> tokenizeBy(const QString& str, char tok) {
-static QValueList<QString> tokenizeBy(const QString& str, const QRegExp& tok) {
+static QValueList<QString> tokenizeBy(const QString& str, const QRegExp& tok, bool keepEmpties = false) {
 QValueList<QString> tokens;
 unsigned int head, tail;
 const char *chstr = str.ascii();
@@ -140,7 +58,7 @@ unsigned int length = str.length();
     if (tail > length)           // last token - none at end
       tail = length;
 
-    if (tail-head > 0) {    // it has to be at least 1 long!
+    if (tail-head > 0 || keepEmpties) {    // it has to be at least 1 long!
       thisline = &(chstr[head]);
       thisline.truncate(tail-head);
       tokens.append(thisline);
@@ -299,7 +217,7 @@ QValueList<QString> lines;
       //    split into tokens by ;
       //    add to parameters vector
       //_vcl.parameters = tokenizeBy(linetokens[1], ';');
-      _vcl.parameters = tokenizeBy(linetokens[1], QRegExp(";"));
+      _vcl.parameters = tokenizeBy(linetokens[1], QRegExp(";"), true);
       if (qp) {
         for (QValueListIterator<QString> z = _vcl.parameters.begin();
                                          z != _vcl.parameters.end();
@@ -476,7 +394,7 @@ return failed;
 
 
 QValueList<QString> VCard::getValues(const QString& name, const QString& qualifier) {
-QString failedstr = "";
+//QString failedstr = "";
 QValueList<QString> failed;
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
@@ -485,13 +403,13 @@ QValueList<QString> failed;
       return (*i).parameters;
     }
   }
-failed.append(failedstr);
+//failed.append(failedstr);
 return failed;
 }
 
 
 QValueList<QString> VCard::getValues(const QString& name) {
-QString failedstr = "";
+//QString failedstr = "";
 QValueList<QString> failed;
   for (QValueListIterator<VCardLine> i = _vcdata->begin();
                                      i != _vcdata->end();
@@ -500,7 +418,7 @@ QValueList<QString> failed;
       return (*i).parameters;
     }
   }
-failed.append(failedstr);
+//failed.append(failedstr);
 return failed;
 }
 
