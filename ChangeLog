@@ -1,4 +1,8 @@
-1998-12-03  Stefan Taferner  <stefan@idefix> (KMail-1.0.8)
+1998-12-06  Stefan Taferner  <taferner@kde.org>
+
+	* Added i18n() around label in folder list.
+
+1998-12-03  Stefan Taferner  <taferner@kde.org> (KMail-1.0.8)
 
 	* New messages: added organization to message header
 	if given.
@@ -12,7 +16,7 @@
 
 	* Composer: attachments are now included in forwards.
 
-1998-11-24  Stefan Taferner  <stefan@idefix>
+1998-11-24  Stefan Taferner  <taferner@kde.org>
 
 	* Pop: does not stop pop retrieval now when pop server does
 	not understand LAST command.

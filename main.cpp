@@ -63,7 +63,8 @@ const char* aboutText =
     "Lynx <lynx@topaz.hknet.com>,\n"
     "Stephan Meyer <Stephan.Meyer@pobox.com>,\n"
     "and the above authors.\n\n"
-    "This program is covered by the GPL.";
+    "This program is covered by the GPL.\n\n"
+    "Please send bugreports to taferner@kde.org";
 
 static msg_handler oldMsgHandler = NULL;
 
