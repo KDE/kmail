@@ -345,7 +345,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   connect( mBelongsTo, SIGNAL(folderChanged(KMFolder*)),
       SLOT(slotUpdateItems(KMFolder*)) );
 
-  QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), this );
+  QGroupBox *idGroup = new QGroupBox(  i18n("Sender Identity" ), this );
   idGroup->setColumnLayout( 0, Qt::Vertical );
   QHBoxLayout *idLayout = new QHBoxLayout(idGroup->layout());
   idLayout->setSpacing( 6 );
@@ -356,6 +356,13 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), idGroup );
   label->setBuddy( mIdentityComboBox );
   idLayout->addWidget( mIdentityComboBox, 3 );
+  QWhatsThis::add( mIdentityComboBox,
+                   i18n( "Select the sender identity to be used when writing new mail "
+                     "or replying to mail in this folder. This means that if you are in "
+                     "one of your work folders, you can make KMail use the corresponding "
+                     "sender email address, signature and signing or encryption keys "
+                     "automatically. Identities can be set up in the main configuration "
+                     "dialog. (Settings -> Configure KMail)") );
 
   QGroupBox* senderGroup = new QGroupBox( i18n("Show Sender/Receiver"), this, "senderGroup" );
   senderGroup->setColumnLayout( 0,  Qt::Vertical );
@@ -470,7 +477,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   QHBoxLayout *nml = new QHBoxLayout( newmailGroup->layout() );
   nml->setSpacing( 6 );
-  mNewMailCheckBox = new QCheckBox( i18n("Include in check" ), newmailGroup );
+  mNewMailCheckBox = new QCheckBox( i18n("Include this folder in mail checks" ), newmailGroup );
   // default is on
   mNewMailCheckBox->setChecked(true);
   nml->addWidget( mNewMailCheckBox );
@@ -484,13 +491,13 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   QHBoxLayout *hbl = new QHBoxLayout( notifyGroup->layout() );
   hbl->setSpacing( KDialog::spacingHint() );
-  mIgnoreNewMailCheckBox =
-    new QCheckBox( i18n("Ignore new mail in this folder" ), notifyGroup );
-  QWhatsThis::add( mIgnoreNewMailCheckBox,
-                   i18n( "Check this option if you do not want to be notified "
-                         "about new mail that is moved to this folder; this "
-                         "is useful, for example, for ignoring spam." ) );
-  hbl->addWidget( mIgnoreNewMailCheckBox );
+  mNotifyOnNewMailCheckBox =
+    new QCheckBox( i18n("Notify on new mail in this folder" ), notifyGroup );
+  QWhatsThis::add( mNotifyOnNewMailCheckBox,
+                   i18n( "Check this option if you want to be notified "
+                         "about new mail that is moved to this folder; unchecking this "
+                         "is useful, for example, for ignoring spam folders." ) );
+  hbl->addWidget( mNotifyOnNewMailCheckBox );
   hbl->addStretch( 1 );
 
   // should replies to mails in this folder be kept in this same folder?
@@ -636,7 +643,7 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   mIdentityComboBox->setCurrentIdentity( folder->identity() );
 
   // ignore new mail
-  mIgnoreNewMailCheckBox->setChecked( folder->ignoreNewMail() );
+  mNotifyOnNewMailCheckBox->setChecked( !folder->ignoreNewMail() );
 
   mKeepRepliesInSameFolderCheckBox->setChecked( folder->putRepliesInSameFolder() );
 
@@ -878,7 +885,7 @@ bool FolderDiaGeneralTab::save()
       }
     }
 
-    folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
+    folder->setIgnoreNewMail( !mNotifyOnNewMailCheckBox->isChecked() );
     folder->setPutRepliesInSameFolder( mKeepRepliesInSameFolderCheckBox->isChecked() );
 
     if( folder->folderType() == KMFolderTypeImap )
