@@ -55,7 +55,7 @@ void KBusyPtr :: busy (void)
       kapp->setOverrideCursor(cursorList[currentCursor]);
       if (animated) start(frameDelay);
     }
-    kapp->processEvents(200);
+    //    kapp->processEvents(200);
   }
   busyLevel++;
 }
@@ -71,7 +71,7 @@ void KBusyPtr :: idle (void)
   {
     stop();
     kapp->restoreOverrideCursor();
-    kapp->processEvents(200);
+    //    kapp->processEvents(200);
   }
 }
 
