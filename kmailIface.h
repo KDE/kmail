@@ -4,6 +4,7 @@
 #include <dcopobject.h>
 #include <dcopref.h>
 #include <kurl.h>
+#include <qstringlist.h>
 
 /** checkMail won´t show reader but will check mail. use openReader to
     show if you give a filename to openReader it will show mbox or
@@ -18,6 +19,8 @@ class KMailIface : virtual public DCOPObject
 
 k_dcop:
   virtual void checkMail() = 0;
+  virtual QStringList accounts() = 0;
+  virtual void checkAccount(const QString &account) = 0;
   virtual void openReader() = 0;
 
   virtual int openComposer(const QString &to, const QString &cc,

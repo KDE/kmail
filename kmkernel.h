@@ -46,6 +46,8 @@ public:
   /** dcop calable stuff */
 
   void checkMail ();
+  QStringList accounts();
+  void checkAccount (const QString &account);
   /** returns id of composer if more are opened */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,

@@ -137,6 +137,44 @@ void KMKernel::checkMail () //might create a new reader but won´t show!!
   }
 }
 
+QStringList KMKernel::accounts()
+{
+  return kernel->acctMgr()->getAccounts();      
+}
+
+void KMKernel::checkAccount (const QString &account) //might create a new reader but won´t show!!
+{
+  kdDebug(5006) << "KMKernel::checkMail called" << endl;
+  KMMainWin *mWin = 0;
+  KMainWindow *kmWin = 0;
+
+  for (kmWin = KMainWindow::memberList->first(); kmWin;
+    kmWin = KMainWindow::memberList->next())
+      if (kmWin->isA("KMMainWin")) break;
+      
+  bool deleteWin = false;
+  if (kmWin && kmWin->isA("KMMainWin")) {
+    mWin = (KMMainWin *) kmWin;
+  } else {
+    mWin = new KMMainWin;
+    deleteWin = true;
+  }
+
+  if (!checkingMail())
+  {
+    setCheckingMail(true);
+    
+    KMAccount* acct = kernel->acctMgr()->find(account);
+    if (acct)
+       kernel->acctMgr()->singleCheckMail(acct, false);
+          
+    setCheckingMail(false);
+  }
+            
+  if (deleteWin)
+    delete mWin;
+}
+
 void KMKernel::openReader()
 {
   KMMainWin *mWin = 0;
