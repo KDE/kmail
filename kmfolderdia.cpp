@@ -44,6 +44,7 @@
 #include "mailinglist-magic.h"
 #include "kmfoldertree.h"
 #include "folderdiaacltab.h"
+#include "acljobs.h"
 #include "kmailicalifaceimpl.h"
 #include "kmmainwidget.h"
 #include "globalsettings.h"
@@ -718,6 +719,22 @@ void FolderDiaGeneralTab::slotFolderContentsSelectionChanged( int )
                                      type == KMail::ContentsTypeTask );
 }
 
+
+// little static helper 
+static bool folderHasCreateRights( const KMFolder *folder )
+{
+  bool createRights = true; // we don't have acls for local folders yet
+  if ( folder->folderType() == KMFolderTypeImap ) {
+    const KMFolderImap *imapFolder = static_cast<const KMFolderImap*>( folder->storage() );
+    createRights =
+      imapFolder->userRights() > 0 && ( imapFolder->userRights() & KMail::ACLJobs::Create );
+  } else if ( folder->folderType() == KMFolderTypeCachedImap ) {
+    const KMFolderCachedImap *dimapFolder = static_cast<const KMFolderCachedImap*>( folder->storage() );
+    createRights =
+      dimapFolder->userRights() > 0 && ( dimapFolder->userRights() & KMail::ACLJobs::Create );
+  }
+  return createRights;
+}
 //-----------------------------------------------------------------------------
 bool FolderDiaGeneralTab::save()
 {
@@ -764,7 +781,7 @@ bool FolderDiaGeneralTab::save()
 
 
     // Buggy?
-    if( mDlg->folder() && mDlg->folder()->child() )
+    if( mDlg->folder() && mDlg->folder()->child() ) {
       while( ( folderDir != &kmkernel->folderMgr()->dir() )
              && ( folderDir != mDlg->folder()->parent() ) ) {
         if( folderDir->findRef( mDlg->folder() ) != -1 ) {
@@ -773,6 +790,7 @@ bool FolderDiaGeneralTab::save()
         }
         folderDir = folderDir->parent();
       }
+    }
     // End buggy?
 
 
@@ -789,6 +807,15 @@ bool FolderDiaGeneralTab::save()
     }
 
     if( mDlg->isNewFolder() ) {
+
+      if ( !folderHasCreateRights( mDlg->parentFolder() ) ) {
+        message = i18n( "<qt>Cannot create folder <b>%1</b> because of insufficient "
+            "permissions on the server. If you think you should be able to create "
+            "subfolders here, ask your administrator to grant you rights to do so."
+            "</qt> " ).arg(fldName);
+        KMessageBox::error( this, message );
+        return false;
+      }
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
         mDlg->setFolder( kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir ) );
@@ -1403,3 +1430,5 @@ void FolderDiaMailingListTab::slotInvokeHandler()
   }
   if ( command ) command->start();
 }
+
+
