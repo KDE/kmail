@@ -578,7 +578,7 @@ void KMMainWin::createWidgets(void)
   // create a mime part tree and store it's pointer in the reader win
   mMimePartTree = new KMMimePartTree( mMsgView, mimeParent, "mMimePartTree" );
   mMsgView->setMimePartTree( mMimePartTree );
-  
+
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
    i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
@@ -2023,9 +2023,6 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
   KMMessage *newMessage = new KMMessage();
   newMessage->fromString(msg->asString());
   newMessage->setStatus(msg->status());
-  // the following line makes sure the message has a unique serial number
-  // and that it is in the message dictionary
-  newMessage->setMsgSerNum(msg->getMsgSerNum());
   showMsg(win, newMessage);
 }
 
