@@ -106,7 +106,7 @@ QSize TransactionItemView::minimumSizeHint() const
 
 TransactionItem::TransactionItem( QWidget* parent,
                                   ProgressItem *item, bool first )
-  : QVBox( parent ), mCancelButton( 0 )
+  : QVBox( parent ), mCancelButton( 0 ), mItem( item )
 
 {
   setSpacing( 2 );
