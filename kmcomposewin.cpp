@@ -3237,8 +3237,8 @@ void KMComposeWin::toggleMarkup(bool markup)
   if ( markup ) {
     if ( !mUseHTMLEditor ) {
     kdDebug(5006) << "setting RichText editor" << endl;
-    mUseHTMLEditor = true;
-    mHtmlMarkup = true; // set it directly to true. setColor hits another toggleMarkup
+    mUseHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+    mHtmlMarkup = true;
 
     // set all highlighted text caused by spelling back to black
     int paraFrom, indexFrom, paraTo, indexTo;
