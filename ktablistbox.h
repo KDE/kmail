@@ -200,8 +200,11 @@ signals:
   /** emitted when the user double-clicks into a line. */
   void selected (int Index, int column);
 
-  /** emitted when the user presses the right mouse button over a line */
+  /** emitted when the user presses the right mouse button over a line. */
   void popupMenu (int Index, int column);
+
+  /** emitted when the user clicks on a column header. */
+  void headerClicked (int column);
 
 protected slots:
   void horSbValue(int val);

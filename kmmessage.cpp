@@ -115,7 +115,7 @@ const char* KMMessage::dateStr(void) const
   
   DwHeaders& header = mMsg->Headers();
   if (header.HasDate()) return header.Date().AsString().c_str();
-  return NULL;
+  return "";
 }
 
 

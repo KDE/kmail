@@ -714,6 +714,12 @@ void KTabListBox::mouseReleaseEvent(QMouseEvent* e)
 {
   if (e->button() == LeftButton)
   {
+    if (!mMouseAction)
+    {
+      // user wants to select the column rather than drag or move it
+      if (mMouseCol >= 0) emit headerClicked(mMouseCol);
+    }
+
     mMouseCol = -1;
     mMouseAction = FALSE;
     repaint();

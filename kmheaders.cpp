@@ -48,6 +48,8 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) :
 	  this,SLOT(selectMessage(int,int)));
   connect(this,SIGNAL(highlighted(int,int)),
 	  this,SLOT(highlightMessage(int,int)));
+  connect(this,SIGNAL(headerClicked(int)),
+	  this,SLOT(headerClicked(int)));
 }
 
 
@@ -119,6 +121,22 @@ void KMHeaders::msgHeaderChanged(int msgId)
 
   if (flag==KMMessage::stNew) changeItemColor(darkRed, msgId-1);
   else if(flag==KMMessage::stUnread) changeItemColor(darkBlue, msgId-1);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::headerClicked(int column)
+{
+  KMFolder::SortField sortField;
+
+  if (column==1)      sortField = KMFolder::sfFrom;
+  else if (column==2) sortField = KMFolder::sfSubject;
+  else if (column==3) sortField = KMFolder::sfDate;
+  else return;
+
+  kbp->busy();
+  folder->sort(sortField);
+  kbp->idle();
 }
 
 

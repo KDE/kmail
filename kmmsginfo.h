@@ -62,6 +62,15 @@ public:
   const char* from(void) const { return mFrom; }
   const char* date(void) const { return mDate; }
 
+  /** Compare with other message info by subject. Returns -1/0/1 like strcmp.*/
+  int compareBySubject(const KMMsgInfo* other) const;
+
+  /** Compare with other message info by date. Returns -1/0/1 like strcmp.*/
+  int compareByDate(const KMMsgInfo* other) const;
+
+  /** Compare with other message info by from. Returns -1/0/1 like strcmp.*/
+  int compareByFrom(const KMMsgInfo* other) const;
+
   /** Returns TRUE if message info changed since last folder-sync. */
   bool dirty(void) const { return mDirty; }
 
@@ -74,8 +83,15 @@ protected:
   void setSubject(const char*);
   void setFrom(const char*);
   void setDate(const char*);
-  
-  void stripBlanks(char*,int);
+
+  // strip all trailing blanks from given string starting from given max size
+  void stripBlanks(char*,int) const;
+
+  // skip leading keyword if keyword has given character at it's end 
+  // (e.g. ':' or ',') and skip the then following blanks (if any) too
+  const char* skipKeyword(const char* str, char sepChar) const;
+
+  // set msg-info dirty flag (need write to disk)
   void setDirty(bool df) { mDirty = df; }
 
   // Size of the toc line in bytes.

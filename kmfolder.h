@@ -147,6 +147,12 @@ public:
   /** Return "Status:" of given message without reading the message.*/
   virtual KMMessage::Status msgStatus(int msgId) const;
 
+  /** Valid parameters for sort() */
+  typedef enum { sfSubject=1, sfFrom=2, sfDate=3 } SortField;
+
+  /** Sort folder by given field. Actually sorts the index. */
+  virtual void sort(KMFolder::SortField field=KMFolder::sfSubject);
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -163,6 +169,7 @@ signals:
 
 protected:
   friend class KMMessage;
+  friend int msgSortCompFunc(const void* a, const void* b);
 
   /** Called from KMMessage::setStatus(). Do not use directly. */
   virtual void setMsgStatus(KMMessage*, KMMessage::Status);

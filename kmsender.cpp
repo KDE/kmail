@@ -19,6 +19,8 @@
 //-----------------------------------------------------------------------------
 KMSender::KMSender(KMFolderMgr* aFolderMgr)
 {
+  QString outboxName;
+
   mFolderMgr = aFolderMgr;
   mCfg = KApplication::getKApplication()->getConfig();
 
@@ -31,16 +33,21 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
   mSmtpHost = mCfg->readEntry("smtphost", QString("localhost"));
   mSmtpPort = mCfg->readNumEntry("smtpport", 110);
 
-  mQueue = mFolderMgr->find("outbox");
+  mCfg->setGroup("General");
+  outboxName = mCfg->readEntry("outbox", QString("outbox"));
+
+  mQueue = mFolderMgr->find(outboxName);
   if (!mQueue) 
   {
-    warning("The folder `outbox' does not exist in the\n"
-	    "mail folder directory. The mail sender depends\n"
-	    "on this folder and will not work without it.\n"
-	    "Therefore the folder will now be created.");
+    warning(nls->translate("The folder `%s' does not exist in the\n"
+			   "mail folder directory. The mail sender depends\n"
+			   "on this folder and will not work without it.\n"
+			   "Therefore the folder will now be created."),
+	    (const char*)outboxName);
 
-    mQueue = mFolderMgr->createFolder("outbox", TRUE);
-    if (!mQueue) fatal("Cannot create the folder `outbox'.");
+    mQueue = mFolderMgr->createFolder(outboxName, TRUE);
+    if (!mQueue) fatal(nls->translate("Cannot create the folder `%s'."),
+		       (const char*)outboxName);
   }
 
   mQueue->setType("out");
@@ -73,8 +80,8 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (mMethod == smSMTP) return sendSMTP(aMsg);
   else if (mMethod == smMail) return sendMail(aMsg);
-  else warning("Please specify a send\nmethod in the settings\n"
-	       "and try again.");
+  else warning(nls->translate("Please specify a send\nmethod in the settings\n"
+			      "and try again."));
 
   return FALSE;
 }
@@ -83,8 +90,8 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 //-----------------------------------------------------------------------------
 bool KMSender::sendSMTP(KMMessage*)
 {
-  warning("Sending via SMTP is not\nimplemented at the moment.\n"
-	  "Please stay tuned.");
+  warning(nls->translate("Sending via SMTP is not\nimplemented at the moment.\n"
+			 "Please stay tuned."));
 
   return FALSE;
 }
@@ -109,7 +116,7 @@ bool KMSender::sendMail(KMMessage* aMsg)
 
   if (mMailer.isEmpty())
   {
-    warning("Please specify a mailer program\nin the settings.");
+    warning(nls->translate("Please specify a mailer program\nin the settings."));
     return FALSE;
   }
 

@@ -39,7 +39,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   setColumn(0, "Folders", 400, KTabListBox::MixedColumn);
 
   pixDir   = loader->loadIcon("closed.xpm");
-  pixNode  = loader->loadIcon("green-bullet.xp");
+  pixNode  = loader->loadIcon("green-bullet.xpm");
   pixPlain = loader->loadIcon("kmfolder.xpm");
   pixFld   = loader->loadIcon("kmfolder.xpm");
   pixIn    = loader->loadIcon("kmfldin.xpm");

@@ -54,6 +54,7 @@ protected slots:
   void msgChanged();
   void msgAdded(int);
   void msgRemoved(int);
+  void headerClicked(int);
 
 protected:
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 

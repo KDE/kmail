@@ -15,6 +15,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 extern "C" 
 {
@@ -288,7 +289,7 @@ int KMFolder::createTocFromContents(void)
 int KMFolder::writeToc(void)
 {
   int rc, i;
-  int tocRecSize = KMMsgInfo::recSize();
+  //  int tocRecSize = KMMsgInfo::recSize();
 
   if (mTocStream) fclose(mTocStream);
   mTocStream = fopen(tocLocation(), "w");
@@ -742,6 +743,54 @@ KMMessage::Status KMFolder::msgStatus(int msgId) const
 {
   assert(msgId>0);
   return mMsgInfo[msgId-1].status();
+}
+
+
+//-----------------------------------------------------------------------------
+static KMMsgInfoList* sortMsgInfoList;
+static KMFolder::SortField sortCriteria;
+
+int msgSortCompFunc(const void* a, const void* b)
+{
+  KMMsgInfo  *miA = &sortMsgInfoList->at(*(int*)a);
+  KMMsgInfo  *miB = &sortMsgInfoList->at(*(int*)b);
+  int        res = 0;
+
+  if (sortCriteria==KMFolder::sfSubject)
+    res = miA->compareBySubject(miB);
+
+  else if (sortCriteria==KMFolder::sfFrom)
+    res = miA->compareByFrom(miB);
+
+  if (res==0 || sortCriteria==KMFolder::sfDate)
+    res = miA->compareByDate(miB);
+
+  return res;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolder::sort(KMFolder::SortField aField)
+{
+  int sortIndex[mMsgs];
+  int i;
+  KMMsgInfoList newList(mMsgs);
+
+  for (i=0; i<mMsgs; i++)
+    sortIndex[i] = i;
+
+  sortMsgInfoList = &mMsgInfo;
+  sortCriteria = aField;
+
+  qsort(sortIndex, mMsgs, sizeof(int), msgSortCompFunc);
+
+  for (i=0; i<mMsgs; i++)
+    newList[i] = mMsgInfo[sortIndex[i]];
+
+  mMsgInfo  = newList;
+  mTocDirty = TRUE;
+
+  if (!mQuiet) emit changed();
 }
 
 

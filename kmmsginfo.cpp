@@ -57,9 +57,56 @@ void KMMsgInfo::deleteMsg(void)
   }
 }
 
+//-----------------------------------------------------------------------------
+int KMMsgInfo::compareBySubject(const KMMsgInfo* other) const
+{
+  return (strcmp(skipKeyword(mSubject, ':'), 
+		 skipKeyword(other->mSubject, ':')));
+}
+
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::stripBlanks(char* str, int pos)
+int KMMsgInfo::compareByDate(const KMMsgInfo* other) const
+{
+  return (strcmp(skipKeyword(mDate, ','), 
+		 skipKeyword(other->mDate, ',')));
+}
+
+
+//-----------------------------------------------------------------------------
+int KMMsgInfo::compareByFrom(const KMMsgInfo* other) const
+{
+  return (strcmp(skipKeyword(mFrom, '"'), 
+		 skipKeyword(other->mFrom, '"')));
+}
+
+
+//-----------------------------------------------------------------------------
+const char* KMMsgInfo::skipKeyword(const char* aStr, char aKeyWord) const
+{
+  const char* str = aStr;
+  int maxChars=4;
+
+  while(*str >= 'A' && maxChars > 0)
+  {
+    str++;
+    maxChars--;
+  }
+
+  if (*str != aKeyWord) return aStr;
+
+  do
+  {
+    str++;
+  }
+  while(*str <= ' ' && *str != '\0');
+
+  return str;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::stripBlanks(char* str, int pos) const
 {
   while (str[pos] <= ' ' && pos >= 0)
     pos--;
