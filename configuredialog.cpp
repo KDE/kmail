@@ -1742,7 +1742,11 @@ void ConfigureDialog::setupMimePage( void )
       top = listItem;
     }
   }
-
+  if (mMime.tagList->childCount() > 0)
+  {
+    mMime.tagList->setCurrentItem(mMime.tagList->firstChild());
+    mMime.tagList->setSelected(mMime.tagList->firstChild(), TRUE);
+  }
 }
 
 void ConfigureDialog::setupSecurityPage( void )
