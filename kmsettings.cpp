@@ -52,7 +52,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
   initMetaObject();
 
   setCaption(i18n("Settings"));
-  resize(500,500);
+  resize(500,600);
   setOKButton(i18n("OK"));
   setCancelButton(i18n("Cancel"));
 
