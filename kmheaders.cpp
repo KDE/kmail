@@ -42,6 +42,8 @@ QPixmap* KMHeaders::pixSent = 0;
 QPixmap* KMHeaders::pixFwd = 0;
 QIconSet* KMHeaders::up = 0;
 QIconSet* KMHeaders::down = 0;
+bool KMHeaders::mTrue = true;
+bool KMHeaders::mFalse = false;
 
 //-----------------------------------------------------------------------------
 // KMHeaderToFolderDrag method definitions
@@ -79,6 +81,17 @@ public:
     irefresh();
   }
 
+  // Constuction a new list view item with the given parent, colors, & pixmap
+  KMHeaderItem( QListViewItem* parent, KMFolder* folder, int msgId, 
+		KMPaintInfo *aPaintInfo )
+    : QListViewItem( parent ), 
+      mFolder( folder ),
+      mMsgId( msgId ),
+      mPaintInfo( aPaintInfo )
+  {
+    irefresh();
+  }
+
   // Update the msgId this item corresponds to.
   void setMsgId( int aMsgId )
   {
@@ -98,10 +111,11 @@ public:
        return;
 
     flag = mMsgBase->status();
-    setText( 0, " " + QString( QChar( (char)flag )));
+    if (mPaintInfo->flagCol >= 0)
+      setText( mPaintInfo->flagCol, " " + QString( QChar( (char)flag )));
 
     if (mFolder == kernel->outboxFolder() || mFolder == kernel->sentFolder())
-       fromStr = KMMessage::stripEmailAddr(mMsgBase->to());
+      fromStr = KMMessage::stripEmailAddr(mMsgBase->to());
     else
       fromStr = KMMessage::stripEmailAddr(mMsgBase->from());
     if (fromStr.isEmpty()) fromStr = i18n("Unknown");
@@ -111,15 +125,15 @@ public:
     if (fromStr == i18n("Unknown")) {
       debug( QString("Null messagex %1").arg( mMsgId ) );
     }
-    setText( 1, fromStr.simplifyWhiteSpace() );
+    setText( mPaintInfo->senderCol, fromStr.simplifyWhiteSpace() );
 
     subjStr = mMsgBase->subject();
 
     if (subjStr.isEmpty()) subjStr = i18n("No Subject");
-    setText( 2, subjStr.simplifyWhiteSpace() );
+    setText( mPaintInfo->subCol, subjStr.simplifyWhiteSpace() );
 
     time_t mDate = mMsgBase->date();
-    setText( 3, QString( ctime( &mDate )).simplifyWhiteSpace() );
+    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).simplifyWhiteSpace() );
 
     mColor = &mPaintInfo->colFore;
     switch (flag)
@@ -233,15 +247,15 @@ public:
   // End this code may be relicensed by Troll Tech  
 
   virtual QString key( int column, bool /*ascending*/ ) const {
-    if (column == 3) {
+    if (column == mPaintInfo->dateCol) {
       if (mPaintInfo->orderOfArrival)
 	return mSortArrival;
       else
 	return mSortDate;
     }
-    else if (column == 2)
+    else if (column == mPaintInfo->subCol)
       return mSortSubject;
-    else if (column == 1)
+    else if (column == mPaintInfo->senderCol)
       return mSortSender;
     else
       return text(column);
@@ -267,9 +281,13 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mTopItem = 0;
   setMultiSelection( TRUE );
   setAllColumnsShowFocus( TRUE );
+  mNested = false;
 
   readConfig();
-  addColumn( i18n("F"), 18 );
+  mPaintInfo.flagCol = -1;
+  mPaintInfo.senderCol = mPaintInfo.flagCol + 1;
+  mPaintInfo.subCol = mPaintInfo.senderCol + 1;
+  mPaintInfo.dateCol = mPaintInfo.subCol + 1;
   addColumn( i18n("Sender"), 200 );
   addColumn( i18n("Subject"), 270 );
   addColumn( i18n("Date"), 300 );
@@ -388,6 +406,16 @@ void KMHeaders::reset(void)
   setTopItemByIndex(top);
 }
 
+//-----------------------------------------------------------------------------
+void KMHeaders::refreshNestedState(void)
+{
+  bool oldState = mNested;
+  KConfig* config = kapp->config();
+  config->setGroup("Geometry");
+  mNested = config->readBoolEntry( "nestedMessages", FALSE );
+  if (oldState != mNested)
+    reset();
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::readFolderConfig (void)
@@ -400,11 +428,12 @@ void KMHeaders::readFolderConfig (void)
   if (!path.isEmpty())
     path = path.right( path.length() - 1 ) + "/";
   config->setGroup("Folder-" + path + mFolder->name());
-  setColumnWidth(1, config->readNumEntry("SenderWidth", 200));
-  setColumnWidth(2, config->readNumEntry("SubjectWidth", 270));
-  setColumnWidth(3, config->readNumEntry("DateWidth", 300));
+  setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 200));
+  setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 270));
+  setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 300));
 
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
+  mSortCol += mPaintInfo.flagCol;
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol);
 
@@ -412,6 +441,9 @@ void KMHeaders::readFolderConfig (void)
   mCurrentItem = config->readNumEntry("Current", 0);
 
   mPaintInfo.orderOfArrival = config->readBoolEntry( "OrderOfArrival", TRUE );
+
+  config->setGroup("Geometry");
+  mNested = config->readBoolEntry( "nestedMessages", FALSE );
 }
 
 
@@ -419,6 +451,7 @@ void KMHeaders::readFolderConfig (void)
 void KMHeaders::writeFolderConfig (void)
 {
   KConfig* config = kapp->config();
+  int mSortColAdj = mSortCol - mPaintInfo.flagCol;
   assert(mFolder!=NULL);
   int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
   QString path = mFolder->path().right( pathLen );
@@ -426,10 +459,10 @@ void KMHeaders::writeFolderConfig (void)
   if (!path.isEmpty())
     path = path.right( path.length() - 1 ) + "/";
   config->setGroup("Folder-" + path + mFolder->name());
-  config->writeEntry("SenderWidth", columnWidth(1));
-  config->writeEntry("SubjectWidth", columnWidth(2));
-  config->writeEntry("DateWidth", columnWidth(3));
-  config->writeEntry("SortColumn", (mSortDescending ? -mSortCol : mSortCol));
+  config->writeEntry("SenderWidth", columnWidth(mPaintInfo.senderCol));
+  config->writeEntry("SubjectWidth", columnWidth(mPaintInfo.subCol));
+  config->writeEntry("DateWidth", columnWidth(mPaintInfo.dateCol));
+  config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
   config->writeEntry("OrderOfArrival", mPaintInfo.orderOfArrival);
@@ -491,6 +524,15 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	      this, SLOT(msgChanged()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
 	      mOwner, SLOT(statusMsg(const QString&)));
+
+      // Not very nice, but if we go from nested to non-nested
+      // in the folderConfig below then we need to do this otherwise
+      // updateMessageList would do something unspeakable
+      if (mNested) {
+	clear();
+	mItems.resize( 0 );
+      }
+
       readFolderConfig();
       mFolder->open();
     }
@@ -528,9 +570,9 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   if (mFolder)
   {
     if (stricmp(mFolder->whoField(), "To")==0)
-      setColumnText( 1, i18n("Receiver") );
+      setColumnText( mPaintInfo.senderCol, i18n("Receiver") );
     else
-      setColumnText( 1, i18n("Sender") );
+      setColumnText( mPaintInfo.senderCol, i18n("Sender") );
 
     str = i18n("%1 Messages, %2 unread.")
       .arg(mFolder->count())
@@ -542,7 +584,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   QString colText = i18n( "Date" );
   if (mPaintInfo.orderOfArrival)
     colText = i18n( "Date (Order of Arrival)" );
-  setColumnText( 3, colText);
+  setColumnText( mPaintInfo.dateCol, colText);
   if (!mSortDescending)
     setColumnText( mSortCol, *up, columnText( mSortCol ));
   else
@@ -581,14 +623,33 @@ void KMHeaders::msgChanged()
 //-----------------------------------------------------------------------------
 void KMHeaders::msgAdded(int id)
 {
+  KMHeaderItem* hi = 0;
   if (!isUpdatesEnabled()) return;
   mItems.resize( mFolder->count() );
   KMMsgBase* mb = mFolder->getMsgBase( id );
   assert(mb != NULL); // otherwise using count() above is wrong
 
-  KMHeaderItem* hi = new KMHeaderItem( this, mFolder, id, &mPaintInfo );
-  mItems[id] = hi;
+  if (mNested) {
+    QString msgId = mb->msgId();
+    if (msgId.isNull())
+      msgId = "";
+    QString replyToId = mb->replyToId();
 
+    if (replyToId.isEmpty() || !mIdTree[replyToId])
+      hi = new KMHeaderItem( this, mFolder, id, &mPaintInfo );
+    else {
+      KMHeaderItem *parent = mIdTree[replyToId];
+      assert(parent);
+      hi = new KMHeaderItem( parent, mFolder, id, &mPaintInfo );
+      setOpen( parent, true );
+    }
+    if (!mIdTree[msgId])
+      mIdTree.replace( msgId, hi );
+  }
+  else
+    hi = new KMHeaderItem( this, mFolder, id, &mPaintInfo );
+
+  mItems[id] = hi;
   msgHeaderChanged(id);
 }
 
@@ -620,67 +681,6 @@ void KMHeaders::msgHeaderChanged(int msgId)
   mItems[msgId]->repaint();
 }
 
-/*
-// Fixme! Delete this
-//-----------------------------------------------------------------------------
-void KMHeaders::headerClicked(int column)
-{
-  int idx = currentItemIndex();
-  KMMsgBasePtr cur;
-  QString sortStr = "(unknown)";
-  QString msg;
-  static bool working = FALSE;
-
-  if (working) return;
-  working = TRUE;
-
-  kbp->busy();
-
-  if (idx >= 0) cur = (*mFolder)[idx];
-  else cur = NULL;
-
-  if (mSortCol == column)
-  {
-    if (!mSortDescending) mSortDescending = TRUE;
-    else
-    {
-      mSortCol = (int)KMMsgList::sfNone;
-      mSortDescending = FALSE;
-      sortStr = i18n("order of arrival");
-    }
-  }
-  else
-  {
-    mSortCol = column;
-    mSortDescending = FALSE;
-  }
-
-  if (mSortCol==(int)KMMsgList::sfSubject) sortStr = i18n("subject");
-  else if (mSortCol==(int)KMMsgList::sfDate) sortStr = i18n("date");
-  else if (mSortCol==(int)KMMsgList::sfFrom) sortStr = i18n("sender");
-  else if (mSortCol==(int)KMMsgList::sfStatus) sortStr = i18n("status");
-
-  if (mSortDescending) msg = i18n("Sorting messages descending by %1")
-				   .arg(sortStr);
-  else msg = i18n("Sorting messages ascending by %1").arg(sortStr);
-  mOwner->statusMsg(msg);
-
-  sort();
-
-  if (cur) idx = mFolder->find(cur);
-  else idx = 0;
-
-  setCurrentMsg(idx);
-  idx -= 3;
-  if (idx < 0) idx = 0;
-  setTopItemByIndex(idx);
-
-  mOwner->statusMsg(msg);
-  kapp->processEvents(200);
-  working = FALSE;
-  kbp->idle();
-}
-*/
                                                              
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
@@ -1325,6 +1325,46 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
+{
+  KMMsgBase* mb;
+  mb = mFolder->getMsgBase( i );
+  assert( mb );
+  QString msgId = mb->msgId();
+  if (msgId.isNull())
+    msgId = "";
+  mIdTree.replace( msgId, parent );
+
+  assert( mTreeSeen[msgId] ); 
+  if (*(mTreeSeen[msgId])) // this can happen in the pathological case of 
+    // multiple messages having the same id. This case, even the extra
+    // pathological version where messages have the same id and different
+    // reply-To-Ids, should be handled ok. Later messages with duplicate
+    // ids will be shown as children of the first one in the bunch.
+    return;
+  mTreeSeen.replace( msgId, &mTrue );
+  
+  // iterator over items in children list (exclude parent)
+  // recusively add them as children of parent 
+  QValueList<int> *messageList = mTree[msgId];
+  assert(messageList);
+
+  QValueList<int>::Iterator it;
+  for (it = messageList->begin(); it != messageList->end(); ++it) {
+    if (*it == i)
+      continue;
+    
+    KMHeaderItem* hi = new KMHeaderItem( parent, mFolder, *it, &mPaintInfo );
+    assert(mItems[*it] == 0);
+    mItems.operator[](*it) = hi;
+    recursivelyAddChildren( *it, hi );
+  }
+
+  setOpen( parent, true );
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::updateMessageList(void)
 {
   long i;
@@ -1332,8 +1372,6 @@ void KMHeaders::updateMessageList(void)
   bool autoUpd;
 
   KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
-  //    clear();
-  //    mItems.resize(0);
   if (!mFolder)
   {
     clear();
@@ -1352,31 +1390,129 @@ void KMHeaders::updateMessageList(void)
   autoUpd = isUpdatesEnabled();
   setUpdatesEnabled(FALSE);
 
-  int oldSize = mItems.size();
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
 
-  for (int temp = oldSize; temp > mFolder->count(); --temp)
-    if (mItems[temp-1])
-      delete mItems[temp-1];
-  connect(this,SIGNAL(currentChanged(QListViewItem*)),
-	  this,SLOT(highlightMessage(QListViewItem*)));
-  
-  mItems.resize( mFolder->count() );
-  for (i=0; i<mFolder->count(); i++)
-  {
-    mb = mFolder->getMsgBase(i);
-    assert(mb != NULL); // otherwise using count() above is wrong
+  int oldSize = mItems.size();
+  if (!mNested) {
+    // We can gain some speed by reusing QListViewItems hence
+    // avoiding expensive calls to operator new and the QListViewItem
+    // constructor
+    //
+    // We should really do this by takeItems out of the QListView and
+    // store them in a list, and then resuse them from that list as
+    // needed
+    //
+    // The following is a bit of a cludge to achieve a similar end
+    // (when moving a folder to another folder with around the same
+    // number of items) but it does unspeakable things if nested
+    // messages is turned on.
+    for (int temp = oldSize; temp > mFolder->count(); --temp)
+      if (mItems[temp-1])
+	delete mItems[temp-1];
+  }
 
-    if (i >= oldSize) {
-      KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
-      mItems.operator[](i) = hi;
+  mItems.resize( mFolder->count() );  
+
+  if (mNested) {
+    for (i=0; i<mFolder->count(); i++)
+      mItems[i] = 0;
+
+    clear();
+    mTree.setAutoDelete( true );
+
+    // Create an entry in mTree (the msgId -> list of children map)
+    // for each message
+    // To begin with each entry in mTree is a list of messages with
+    // a certain msgId. (Normally there's just one message in each list as
+    // it should be unusual to get duplicate msgIds)
+    for (i=0; i<mFolder->count(); i++) {
+      mb = mFolder->getMsgBase(i);
+      assert(mb);
+      QString msgId = mb->msgId();
+      if (msgId.isEmpty()) {
+	// pathological case, message with no id
+	debug( "Message without id detected" );
+	msgId = "";
+      }
+      if (mTree[msgId])
+	// pathological case, duplicate ids
+	; //debug( "duplicate msgIds detected: Id " + msgId );
+      else
+	mTree.replace( msgId, new QValueList< int > );
+      mTree[msgId]->append( i ); // head of list is parent, rest children
+      mTreeSeen.replace(msgId, &mFalse);
+      mTreeToplevel.replace(msgId, &mTrue);
     }
-    else
-      mItems.operator[](i)->reset( mFolder, i );
+
+    // For each message if the parent message exists add the message
+    // to the list of messages owned by the parent and remove the list
+    // of msgs with a given msgId
+    for (i=0; i<mFolder->count(); i++) {
+      mb = mFolder->getMsgBase(i);
+      assert(mb);
+      QString msgId = mb->msgId();
+      QString replyToId = mb->replyToId();
+      if (replyToId.isEmpty())
+	continue;
+      
+      QValueList< int > *parentList = mTree[replyToId];
+      if (parentList)
+	parentList->append( i );
+      else
+	continue;
+      
+      if (msgId.isNull())
+	msgId = "";
+      QValueList< int > *thisList = mTree[msgId];
+      assert( thisList );
+      thisList->remove( i );
+      mTreeToplevel.replace( msgId, &mFalse );
+    }
+    
+    // Create new list view items for each top level message (one 
+    // with no parent) and recusively create list view items for
+    // each of its children
+    for (i=0; i<mFolder->count(); i++) {
+      mb = mFolder->getMsgBase(i);
+      assert(mb != NULL); // otherwise using count() above is wrong
+      QString msgId = mb->msgId();
+      if (msgId.isNull())
+	msgId = "";
+      assert(mTreeToplevel[msgId]);
+      if (*mTreeToplevel[msgId]) {
+	KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
+	mItems.operator[](i) = hi;
+	recursivelyAddChildren( i, hi );
+      }
+    }
+
+    for (i=0; i<mFolder->count(); i++)
+      assert(mItems[i] != 0);
+
+    mTree.clear();
+    mTreeSeen.clear();
+    mTreeToplevel.clear();
+  }
+  else { // mNested == false
+    for (i=0; i<mFolder->count(); i++)
+      {
+	mb = mFolder->getMsgBase(i);
+	assert(mb != NULL); // otherwise using count() above is wrong
+	
+	if (i >= oldSize) {
+	  KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
+	  mItems.operator[](i) = hi;
+	}
+	else
+	  mItems.operator[](i)->reset( mFolder, i );
+      }
   }
 
   sort();
+
+  connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	  this,SLOT(highlightMessage(QListViewItem*)));
 
   // Reggie: This is comment especially for you.
   //
@@ -1405,7 +1541,7 @@ void KMHeaders::updateMessageList(void)
   if (autoUpd) repaint();
   // WABA: The following line is somehow necassery
   // SANDERS: It shouldn't be necessary in a recent QT snapshot (Nov-26+) 
-  //  highlightMessage(currentItem());
+  // highlightMessage(currentItem());
 }
 
 //-----------------------------------------------------------------------------
@@ -1656,7 +1792,7 @@ int KMHeaders::topItemIndex()
 // arrives to show it, but don't scroll current item out of view.
 void KMHeaders::showNewMail()
 {
-  if (mSortCol != 3)
+  if (mSortCol != mPaintInfo.dateCol)
     return;
  for( int i = 0; i < (int)mItems.size(); ++i)
    if (mFolder->getMsgBase(i)->isNew()) {
@@ -1687,13 +1823,13 @@ void KMHeaders::setSorting( int column, bool ascending )
     mSortCol = column;
     mSortDescending = !ascending;
 
-    if (!ascending && (column == 3))
+    if (!ascending && (column == mPaintInfo.dateCol))
       mPaintInfo.orderOfArrival = !mPaintInfo.orderOfArrival;
 
     QString colText = i18n( "Date" );
     if (mPaintInfo.orderOfArrival)
       colText = i18n( "Date (Order of Arrival)" );
-    setColumnText( 3, colText);
+    setColumnText( mPaintInfo.dateCol, colText);
     
     if (ascending)
       setColumnText( column, *up, columnText(column));

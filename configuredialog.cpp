@@ -1287,6 +1287,11 @@ void ConfigureDialog::makeApperancePage( void )
   vlay->addWidget( mAppearance.longFolderCheck );
   vlay->addStretch(10);
 
+  mAppearance.nestedMessagesCheck = 
+    new QCheckBox( i18n("Nested Messages"), page3 );
+  vlay->addWidget( mAppearance.nestedMessagesCheck );
+  vlay->addStretch(10);
+
 }
 
 
@@ -1663,6 +1668,9 @@ void ConfigureDialog::setupApperancePage( void )
   config.setGroup("Geometry");
   state = config.readBoolEntry( "longFolderList", false );
   mAppearance.longFolderCheck->setChecked( state );
+
+  state = config.readBoolEntry( "nestedMessages", false );
+  mAppearance.nestedMessagesCheck->setChecked( state );
 }
 
 
@@ -1843,6 +1851,9 @@ void ConfigureDialog::slotApply( void )
     config.setGroup("Geometry");
     bool longFolderList = mAppearance.longFolderCheck->isChecked();
     config.writeEntry( "longFolderList", longFolderList );
+
+    bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
+    config.writeEntry( "nestedMessages", nestedMessages );
   }
   else if( activePage == mComposer.pageIndex )
   {

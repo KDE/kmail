@@ -48,7 +48,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1300
+#define INDEX_VERSION 1400
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
@@ -400,6 +400,7 @@ int KMFolder::createIndexFromContents()
   char line[MAX_LINE];
   char status[8], xstatus[8];
   QString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
+  QString replyToIdStr, msgIdStr;
   QString whoFieldName;
   unsigned long offs, size, pos;
   bool atEof = FALSE;
@@ -426,6 +427,8 @@ int KMFolder::createIndexFromContents()
   *status = '\0';
   *xstatus = '\0';
   xmarkStr = "";
+  replyToIdStr = "";
+  msgIdStr = "";
   needStatus = 3;
   whoFieldName = QString(whoField()) + ':'; //unused (sven)
   whoFieldLen = whoFieldName.length();      //unused (sven)
@@ -457,7 +460,7 @@ int KMFolder::createIndexFromContents()
 	if (size > 0)
 	{
 	  mi = new KMMsgInfo(this);
-	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, offs, size);
+	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr, offs, size);
 	  mi->setStatus(status,xstatus);
 	  mi->setDate(dateStr);
 	  mi->setDirty(FALSE);
@@ -467,6 +470,8 @@ int KMFolder::createIndexFromContents()
 	  *xstatus = '\0';
 	  needStatus = 3;
 	  xmarkStr = "";
+	  replyToIdStr = "";
+	  msgIdStr = "";
 	  dateStr = "";
 	  fromStr = "";
 	  subjStr = "";
@@ -512,6 +517,28 @@ int KMFolder::createIndexFromContents()
     }
     else if (strncasecmp(line,"X-KMail-Mark:",13)==0 && isblank(line[13]))
       xmarkStr = QString(line+14).copy();
+    else if (strncasecmp(line,"In-Reply-To:",12)==0 && isblank(line[12])) {
+      int rightAngle;
+      replyToIdStr = QString(line+13).copy();
+      rightAngle = replyToIdStr.find( '>' );
+      if (rightAngle != -1)
+	replyToIdStr.truncate( rightAngle + 1 );
+    }
+    else if ((strncasecmp(line,"References:",11)==0 && isblank(line[11])) &&
+	     replyToIdStr.isEmpty()) {
+      int rightAngle;
+      replyToIdStr = QString(line+12).copy();
+      rightAngle = replyToIdStr.find( '>' );
+      if (rightAngle != -1)
+	replyToIdStr.truncate( rightAngle + 1 );
+    }
+    else if (strncasecmp(line,"Message-Id:",11)==0 && isblank(line[11])) {
+      int rightAngle;
+      msgIdStr = QString(line+12).copy();
+      rightAngle = msgIdStr.find( '>' );
+      if (rightAngle != -1)
+	msgIdStr.truncate( rightAngle + 1 );
+    }
     else if (strncasecmp(line,"Date:",5)==0 && isblank(line[5]))
     {
       dateStr = QString(line+6).copy();

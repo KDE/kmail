@@ -134,6 +134,7 @@ void KMMainWin::readConfig(void)
     writeConfig();
     oldLongFolderList = mLongFolderList;
     readPreConfig();
+    mHeaders->refreshNestedState();
     if (oldLongFolderList != mLongFolderList)
     {
       hide();

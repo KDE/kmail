@@ -191,13 +191,17 @@ const QString KMMsgBase::asIndexString(void) const
 //  This is nonsense because 10000000000 is bigger than the highest unsigned
 //  long. (Or is there any compiler that defines unsigned long as something
 //  really huge??)
-  
+
   QString a((const char*)decodeQuotedPrintableString(subject()));
   a.truncate(100);
   QString b((const char*)decodeQuotedPrintableString(from()));
   b.truncate(100);
   QString c((const char*)decodeQuotedPrintableString(to()));
   c.truncate(100);
+  QString d((const char*)decodeQuotedPrintableString(replyToId()));
+  d.truncate(100);
+  QString e((const char*)decodeQuotedPrintableString(msgId()));
+  e.truncate(100);
 
   // don't forget to change indexStringLength() below !!
   str.sprintf("%c %-.9lu %-.9lu %-.10lu %-3.3s ",
@@ -210,13 +214,17 @@ const QString KMMsgBase::asIndexString(void) const
   str += b.rightJustify( 100, ' ' );
   str += " ";
   str += c.rightJustify( 100, ' ' );
+  str += " ";
+  str += d.rightJustify( 100, ' ' );
+  str += " ";
+  str += e.rightJustify( 100, ' ' );
 
   len = str.length();
   for (i=0; i<len; i++)
     if (str[i] < ' ' && str[i] >= 0)
       str[i] = ' ';
 
-  if (str.length() != 339) {
+  if (str.length() != 541) {
     debug( QString( "Error invalid index entry %1").arg(str.length()) );
     debug( str );
   }
@@ -229,7 +237,8 @@ int KMMsgBase::indexStringLength(void)
 {
   //return 237;
   //  return 338; //sven (+ 100 chars to + one space, right?
-  return 339; //sanders (use 10 digits for the date we need this in 2001!)
+  //  return 339; //sanders (use 10 digits for the date we need this in 2001!)
+  return 541; //sanders include Reply-To and Message-Id for threading
 }
 
 

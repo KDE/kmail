@@ -24,6 +24,7 @@ public:
   virtual void init(const QString subject, const QString from,
                     const QString to, time_t date,
 		    KMMsgStatus status, const QString xmark,
+		    const QString replyToId, const QString msgId,
 		    unsigned long folderOffset=0, unsigned long msgSize=0);
 
   /** Inherited methods (see KMMsgBase for description): */
@@ -31,16 +32,20 @@ public:
   virtual const QString from(void) const;
   virtual const QString to(void) const;
   virtual const QString xmark(void) const;
+  virtual const QString replyToId(void) const;
+  virtual const QString msgId(void) const;
   virtual void setSubject(const QString);
   virtual void setFrom(const QString);
   virtual void setXMark(const QString);
+  virtual void setReplyToId(const QString);
+  virtual void setMsgId(const QString);
 
   /** Copy operators. */
   KMMsgInfo& operator=(const KMMessage&);
   KMMsgInfo& operator=(const KMMsgInfo&);
 
 protected:
-  QString mSubject, mFrom, mTo, mXMark;
+  QString mSubject, mFrom, mTo, mXMark, mReplyToId, mMsgId;
 };
 
 typedef KMMsgInfo* KMMsgInfoPtr;

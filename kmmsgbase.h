@@ -60,6 +60,8 @@ public:
   virtual const QString subject(void) const = 0;
   virtual const QString from(void) const = 0;
   virtual const QString to(void) const = 0;
+  virtual const QString replyToId(void) const = 0;
+  virtual const QString msgId(void) const = 0;
   virtual time_t date(void) const;
   virtual const QString dateStr(void) const;
   virtual const QString xmark(void) const = 0;
@@ -78,6 +80,8 @@ public:
   virtual void setSubject(const QString) = 0;
   virtual void setFrom(const QString) = 0;
   virtual void setXMark(const QString) = 0;
+  virtual void setReplyToId(const QString) = 0;
+  virtual void setMsgId(const QString) = 0;
 
   /** Return contents as index string. This string is of fixed size
     that can be read with indexStringLength(). */

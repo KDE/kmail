@@ -223,6 +223,7 @@ class ConfigureDialog : public KDialogBase
       QCheckBox    *customColorCheck;
       ColorListBox *colorList;
       QCheckBox    *longFolderCheck;
+      QCheckBox    *nestedMessagesCheck;
       int          activeFontIndex;
       QString      fontString[6];
     };

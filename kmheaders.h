@@ -8,10 +8,12 @@
 #include <qarray.h>
 #include <qmap.h>
 #include <qdragobject.h>
+#include <qdict.h>
 #include "kmmessage.h"
 
 class KMFolder;
 class KMMessage;
+class KMMsgBase;
 class KMMainWin;
 class QPalette;
 class KMHeaderItem;
@@ -39,6 +41,10 @@ struct KMPaintInfo {
   QColor colNew;
   QColor colUnread;
   bool orderOfArrival;
+  int flagCol;
+  int senderCol;
+  int subCol;
+  int dateCol;
 };
 
 #define KMHeadersInherited QListView
@@ -56,6 +62,9 @@ public:
 
   // Return the folder whose message headers are being displayed
   KMFolder* folder(void) { return mFolder; }
+
+  // read the config file and update nested state if necessary
+  void refreshNestedState(void);
 
   /** Set current message. If id<0 then the first message is shown,
     if id>count() the last message is shown. */
@@ -133,6 +142,8 @@ public slots:
 
   // For when a list view item has been double clicked
   void selectMessage(QListViewItem*);
+  // For nested message view, recusively add all children of a message
+  void recursivelyAddChildren( int i, KMHeaderItem *parent );
   // For when a list view item has been selected 
   void highlightMessage(QListViewItem*);
   // For when righ mouse button is pressed
@@ -216,6 +227,14 @@ private:
   int mTopItem;                 // Top most visible item
   int mCurrentItem;             // Current item
   QArray<KMHeaderItem*> mItems; // Map messages ids into KMHeaderItems
+  QDict< KMHeaderItem > mIdTree;
+  QDict< KMHeaderItem > mPhantomIdTree;
+  QDict< QValueList< int > > mTree;
+  QDict< bool > mTreeSeen;
+  QDict< bool > mTreeToplevel;
+  bool mNested;
+
+  static bool mTrue, mFalse;    // These must replaced by something better!
 
   int getMsgIndex;              // Updated as side effect of KMHeaders::getMsg
   bool getMsgMulti;             // ditto
@@ -236,10 +255,3 @@ private:
 };
 
 #endif
-
-
-
-
-
-
-

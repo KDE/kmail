@@ -138,6 +138,14 @@ public:
   virtual const QString xmark(void) const;
   virtual void setXMark(const QString aStr);
 
+  /** Get or set the 'In-Reply-To' header field */
+  virtual const QString replyToId(void) const;
+  virtual void setReplyToId(const QString aStr);
+
+  /** Get or set the 'Message-Id' header field */
+  virtual const QString msgId(void) const;
+  virtual void setMsgId(const QString aStr);
+
   /** Get the groups it should be posted to (Added for krn)*/
   virtual const QString groups(void) const;
 
