@@ -185,13 +185,8 @@ void KMailPart::exportFolder( KMFolder *folder )
   if ( folder != 0 )
     emit textChanged( folder->label() );
 
-  QPixmap pix;
-  if ( fti->normalIcon() != 0 )
-    pix = *fti->normalIcon();
-  else
-    pix = QPixmap();
-
-  emit iconChanged( pix );
+  if ( fti )
+    emit iconChanged( fti->normalIcon() );
 }
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)

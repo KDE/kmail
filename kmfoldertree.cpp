@@ -33,9 +33,10 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
 				    KFolderTreeItem::Protocol protocol )
   : QObject( parent, name.latin1() ),
     KFolderTreeItem( parent, name, protocol, Root ),
-    mFolder( 0 ), mNormalIcon( 0 ), mUnreadIcon( 0 )
+    mFolder( 0 )
 {
   init();
+  setPixmap( 0, normalIcon() );
 }
 
 //-----------------------------------------------------------------------------
@@ -43,9 +44,10 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                     KMFolder* folder )
   : QObject( parent, name.latin1() ),
     KFolderTreeItem( parent, name ),
-    mFolder( folder ), mNormalIcon( 0 ), mUnreadIcon( 0 )
+    mFolder( folder )
 {
   init();
+  setPixmap( 0, normalIcon() );
 }
 
 //-----------------------------------------------------------------------------
@@ -53,15 +55,13 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
                     KMFolder* folder )
   : QObject( 0, name.latin1() ),
     KFolderTreeItem( parent, name ),
-    mFolder( folder ), mNormalIcon( 0 ), mUnreadIcon( 0 )
+    mFolder( folder )
 {
   init();
+  setPixmap( 0, normalIcon() );
 }
 
-KMFolderTreeItem::~KMFolderTreeItem()
-{
-  delete mNormalIcon; mNormalIcon = 0;
-  delete mUnreadIcon; mUnreadIcon = 0;
+KMFolderTreeItem::~KMFolderTreeItem() {
 }
 
 static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
@@ -94,64 +94,98 @@ static QPixmap pixmapForRootOfProtocol( KFolderTreeItem::Protocol p ) {
   }
 }
 
+QPixmap KMFolderTreeItem::normalIcon() const {
+  if ( !mFolder )
+    if ( type() == Root )
+      return pixmapForRootOfProtocol( protocol() );
+    else
+      return SmallIcon( "folder" );
+
+  if ( depth() == 0 )
+    return pixmapForRootOfProtocol( protocol() );
+
+  if ( mFolder->isSystemFolder() )
+    switch ( type() ) {
+    case Inbox: return SmallIcon( "folder_inbox" );
+    case Outbox: return SmallIcon( "folder_outbox" );
+    case SentMail: return SmallIcon( "folder_sent_mail" );
+    case Trash: return SmallIcon( "trashcan_empty" );
+    default:
+    case Drafts: return SmallIcon( "folder" );
+    }
+
+  if ( mFolder->useCustomIcons() ) {
+    QPixmap pm = KGlobal::instance()->iconLoader()
+      ->loadIcon( mFolder->normalIconPath(), KIcon::Small, 0, KIcon::DefaultState, 0, true );
+    return pm.isNull() ? SmallIcon( "folder" ) : pm ;
+  }
+
+  return SmallIcon( "folder" );
+}
+
+QPixmap KMFolderTreeItem::unreadIcon() const {
+  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder() )
+    return normalIcon();
+
+  if ( mFolder->useCustomIcons() ) {
+    KIconLoader * il = KGlobal::instance()->iconLoader();
+    QPixmap pm = il->loadIcon( mFolder->unreadIconPath(), KIcon::Small, 0, KIcon::DefaultState, 0, true );
+    if ( pm.isNull() )
+      pm = il->loadIcon(  mFolder->normalIconPath(), KIcon::Small, 0, KIcon::DefaultState, 0, true );
+    return pm.isNull() ? SmallIcon( "folder_open" ) : pm ;
+  }
+
+  return SmallIcon( "folder_open" );
+}
+
 void KMFolderTreeItem::init()
 {
-  if ( !mFolder ) {
-    if ( type() == Root )
-      setPixmap( 0, pixmapForRootOfProtocol( protocol() ) );
+  if ( !mFolder )
     return;
-  }
 
   setProtocol( protocolFor( mFolder->folderType() ) );
-  iconsFromPaths();
 
-  if ( depth() == 0 ) {
+  if ( depth() == 0 )
     setType(Root);
-    setPixmap( 0, pixmapForRootOfProtocol( protocol() ) );
-  } else if (mFolder->isSystemFolder()) {
+  else if (mFolder->isSystemFolder()) {
     if (mFolder == kernel->inboxFolder()
-	|| mFolder->folderType() == KMFolderTypeImap) {
+	|| mFolder->folderType() == KMFolderTypeImap)
       setType(Inbox);
-      setPixmap( 0, SmallIcon("folder_inbox") );
-    } else if (mFolder == kernel->outboxFolder()) {
+    else if (mFolder == kernel->outboxFolder())
       setType(Outbox);
-      setPixmap( 0, SmallIcon("folder_outbox") );
-    } else if (mFolder == kernel->sentFolder()) {
+    else if (mFolder == kernel->sentFolder())
       setType(SentMail);
-      setPixmap( 0, SmallIcon("folder_sent_mail") );
-    } else if (mFolder == kernel->draftsFolder()) {
+    else if (mFolder == kernel->draftsFolder())
       setType(Drafts);
-      setPixmap( 0, SmallIcon("folder") );
-    } else if (mFolder == kernel->trashFolder()) {
+    else if (mFolder == kernel->trashFolder())
       setType(Trash);
-      setPixmap( 0, SmallIcon("trashcan_empty") );
-    } else if(kernel->iCalIface().isResourceImapFolder(mFolder)) {
+    else if(kernel->iCalIface().isResourceImapFolder(mFolder))
       setType(kernel->iCalIface().folderType(mFolder));
-      setPixmap( 0, SmallIcon("folder") );
-    } else {
-      setPixmap( 0, SmallIcon("folder") );
-    }
-  } else {
+  } else
     setRenameEnabled(0, false);
-    setPixmap( 0, normalIcon() ? *normalIcon() : SmallIcon("folder" ) );
-  }
 }
 
 bool KMFolderTreeItem::adjustUnreadCount() {
   if ( !folder() )
     return false;
   const int count = folder()->countUnread();
-  if ( count == unreadCount() )
-    return false;
+  //if ( count == unreadCount() )
+  //return false;
   setUnreadCount( count );
-  if ( count > 0 ) {
-    if ( !folder()->isSystemFolder() && depth() > 0 )
-      setPixmap( 0, unreadIcon() ? *unreadIcon() : SmallIcon("folder_open") );
-  } else {
-    if ( !folder()->isSystemFolder() && depth() > 0 )
-      setPixmap( 0, normalIcon() ? *normalIcon() : SmallIcon("folder") );
-  }
+  if ( count > 0 )
+    setPixmap( 0, unreadIcon() );
+  else
+    setPixmap( 0, normalIcon() );
+
   return true;
+}
+
+void KMFolderTreeItem::slotRepaint() {
+  if ( unreadCount() > 0 )
+    setPixmap( 0, unreadIcon() );
+  else
+    setPixmap( 0, normalIcon() );
+  repaint();
 }
 
 //-----------------------------------------------------------------------------
@@ -178,32 +212,6 @@ void KMFolderTreeItem::properties()
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTreeItem::iconsFromPaths()
-{
-  if (!mFolder)
-    return;
-
-  KIconLoader *loader = KGlobal::instance()->iconLoader();
-
-  const QString normalIconPath = mFolder->normalIconPath();
-  const QString unreadIconPath = mFolder->unreadIconPath();
-
-  QPixmap tmp1( loader->loadIcon(normalIconPath, KIcon::Small, 0, KIcon::DefaultState, 0, true) );
-  QPixmap tmp2( loader->loadIcon(unreadIconPath, KIcon::Small, 0, KIcon::DefaultState, 0, true) );
-
-  const bool tmp1Valid = !tmp1.isNull();
-  const bool tmp2Valid = !tmp2.isNull();
-
-  if ( tmp1Valid || tmp2Valid ) { //we have a valid pixmap
-    if ( tmp1Valid ) {
-      delete mNormalIcon;
-      mNormalIcon = new QPixmap( tmp1 );
-    }
-    delete mUnreadIcon;
-    mUnreadIcon = new QPixmap( tmp2Valid ? tmp2 : tmp1 );
-  }
-}
-
 //=============================================================================
 
 

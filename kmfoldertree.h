@@ -54,10 +54,8 @@ public:
                     KMFolder* folder );
   virtual ~KMFolderTreeItem();
 
-  QPixmap* normalIcon() const
-  { if ( mFolder && mFolder->useCustomIcons() ) return mNormalIcon; else return 0; }
-  QPixmap* unreadIcon() const
-  { if ( mFolder && mFolder->useCustomIcons() ) return mUnreadIcon; else return 0; }
+  QPixmap normalIcon() const;
+  QPixmap unreadIcon() const;
 
   /** associated folder */
   KMFolder* folder() { return mFolder; }
@@ -71,16 +69,11 @@ public:
   virtual bool acceptDrag(QDropEvent* ) const;
 public slots:
   void properties();
-  void slotRepaint() { repaint(); }
+  void slotRepaint();
 
 protected:
   void init();
-  void iconsFromPaths();
   KMFolder* mFolder;
-private:
-  /** Custom pixmaps to display in the tree, none by default */
-  QPixmap *mNormalIcon;
-  QPixmap *mUnreadIcon;
 };
 
 //==========================================================================
