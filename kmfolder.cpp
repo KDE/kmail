@@ -373,7 +373,7 @@ int KMFolder::createIndexFromContents()
   char line[MAX_LINE];
   char status[8], xstatus[8];
   QString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
-  QString replyToIdStr, msgIdStr;
+  QString replyToIdStr, referencesStr, msgIdStr;
   QString whoFieldName;
   unsigned long offs, size, pos;
   bool atEof = FALSE;
@@ -431,6 +431,10 @@ int KMFolder::createIndexFromContents()
 
 	if (size > 0)
 	{
+	  if ((replyToIdStr.isEmpty() || (replyToIdStr[0] != '<'))  &&
+	      !referencesStr.isEmpty() && referencesStr[0] == '<') {
+	    replyToIdStr = referencesStr;
+	  }
 	  mi = new KMMsgInfo(this);
 	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr, offs, size);
 	  mi->setStatus("RO","O");
@@ -443,6 +447,7 @@ int KMFolder::createIndexFromContents()
 	  needStatus = 3;
 	  xmarkStr = "";
 	  replyToIdStr = "";
+	  referencesStr = "";
 	  msgIdStr = "";
 	  dateStr = "";
 	  fromStr = "";
@@ -497,13 +502,15 @@ int KMFolder::createIndexFromContents()
       if (rightAngle != -1)
 	replyToIdStr.truncate( rightAngle + 1 );
     }
-    else if ((strncasecmp(line,"References:",11)==0 && isblank(line[11])) &&
-	     replyToIdStr.isEmpty()) {
-      int rightAngle;
-      replyToIdStr = QString(line+12).copy();
-      rightAngle = replyToIdStr.find( '>' );
+    else if (strncasecmp(line,"References:",11)==0 && isblank(line[11])) {
+      int leftAngle, rightAngle;
+      referencesStr = QString(line+12).copy();
+      leftAngle = referencesStr.findRev( '<' );
+      if (leftAngle != -1)
+	referencesStr = referencesStr.mid( leftAngle );
+      rightAngle = referencesStr.find( '>' );
       if (rightAngle != -1)
-	replyToIdStr.truncate( rightAngle + 1 );
+	referencesStr.truncate( rightAngle + 1 );
     }
     else if (strncasecmp(line,"Message-Id:",11)==0 && isblank(line[11])) {
       int rightAngle;

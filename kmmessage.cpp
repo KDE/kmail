@@ -1219,14 +1219,26 @@ void KMMessage::setXMark(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::replyToId(void) const
 {
-  int rightAngle;
-  QString replyTo = headerField("In-Reply-To");
-  if (replyTo.isEmpty())
-    replyTo = headerField("References");
+  int leftAngle, rightAngle;
+  QString replyTo, references;
 
+  replyTo = headerField("In-Reply-To");
   rightAngle = replyTo.find( '>' );
   if (rightAngle != -1)
     replyTo.truncate( rightAngle + 1 );
+
+  references = headerField("References");
+  leftAngle = references.findRev( '<' );
+  if (leftAngle != -1)
+    references = references.mid( leftAngle );
+  rightAngle = references.find( '>' );
+  if (rightAngle != -1)
+    references.truncate( rightAngle + 1 );
+
+  if ((replyTo.isEmpty() || replyTo[0] != '<') && 
+      !references.isEmpty() && references[0] == '<')
+    replyTo = references;
+
   return replyTo;
 }
 
