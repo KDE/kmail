@@ -1,4 +1,4 @@
-[KDE Desktop Entry]
+[Desktop Entry]
 Encoding=UTF-8
 Name=KMail
 Name[af]=kpos
@@ -9,7 +9,6 @@ Name[ko]=KDE용 편지
 Name[lv]=KPasts
 Name[sv]=Kmail
 Name[th]=จัดการจดหมาย - K
-Name[ven]=Meili wa K
 Name[xx]=xx
 Type=Application
 Exec=kmail -caption "%c" %i %m
@@ -19,7 +18,7 @@ GenericName=Mail Client
 GenericName[af]=pos kliënt
 GenericName[ar]=البريد الألكتروني
 GenericName[az]=Poçt Alıcısı
-GenericName[be]=Кліент электроннай пошты
+GenericName[be]=Паштовы кліент
 GenericName[bg]=Пощенски клиент
 GenericName[br]=Arval postel
 GenericName[bs]=Program za čitanje elektronske pošte
@@ -27,7 +26,7 @@ GenericName[ca]=Programari de correu electrònic
 GenericName[cs]=Klient pro čtení elektronické pošty
 GenericName[da]=Program til at læse og sende e-mail
 GenericName[de]=E-Mail-Programm
-GenericName[el]=πελάτης ηλ. ταχυδρομείου (email)
+GenericName[el]=Πελάτης Mail
 GenericName[eo]=Legi kaj sendi retpoŝton
 GenericName[es]=Cliente de correo electrónico
 GenericName[et]=Meiliklient
