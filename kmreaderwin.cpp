@@ -501,6 +501,33 @@ void KMReaderWin::clearCache()
   mMsg = 0;
 }
 
+// enter items for the "new features" list here, so the main body of
+// the welcome page can be left untouched (probably much easier for
+// the translators). Note that the <li>...</li> tags are added
+// automatically below:
+static const char * const kmailNewFeatures[] = {
+  I18N_NOOP("Maildir support"),
+  I18N_NOOP("Distribution lists"),
+  I18N_NOOP("SMTP authentication"),
+  I18N_NOOP("SMTP over SSL/TLS"),
+  I18N_NOOP("Pipelining for POP3 "
+	    "(faster mail download on slow responding networks)"),
+  I18N_NOOP("Various improvements for IMAP"),
+  I18N_NOOP("On-demand downloading or deleting without downloading "
+	    "of big mails on a POP3 server"),
+  I18N_NOOP("Automatic configuration of POP3/IMAP/SMTP security features"),
+  I18N_NOOP("Automatic encoding selection for outgoing mails"),
+  I18N_NOOP("DIGEST-MD5 authentication"),
+  I18N_NOOP("Per-identity sent-mail and drafts folders"),
+  I18N_NOOP("Expiry of old messages"),
+  I18N_NOOP("Hotkey to temporary switch to fixed width fonts"),
+  I18N_NOOP("UTF-7 support"),
+  I18N_NOOP("Opportunistic encryption using OpenPGP"),
+  I18N_NOOP("Enhanced status reports for encrypted/signed messages"),
+};
+static const int numKMailNewFeatures =
+  sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::displayAboutPage()
@@ -510,42 +537,46 @@ void KMReaderWin::displayAboutPage()
   QString content = kFileToString(location);
   mViewer->begin(location);
   QString info =
-    i18n("<h2>Welcome to KMail %1</h2><p>KMail is an email client for the K "
-    "Desktop Environment. It is designed to be fully compatible with Internet "
-    "mailing standards including MIME, SMTP, POP3 and IMAP.</p>\n"
-    "<ul><li>KMail has many powerful features which are described in the "
-    "<A HREF=\"%2\">documentation</A></li>\n"
-    "<li>The <A HREF=\"%3\">KMail homepage</A> offers information about "
-    "new versions of KMail</li></ul>\n").arg(KMAIL_VERSION)
-    .arg("help:/kmail")
-    .arg("http://kmail.kde.org/") +
-    i18n("<p>Some of the new features in this release of KMail include "
-    "(compared to KMail 1.3, which is part of KDE 2.2):</p>\n"
-    "<ul>\n"
-    "<li>Maildir support</li>\n"
-    "<li>Distribution lists</li>\n"
-    "<li>SMTP authentication</li>\n"
-    "<li>SMTP over SSL/TLS</li>\n"
-    "<li>Pipelining for POP3 (faster mail download on slow responding networks)</li>\n"
-    "<li>Various improvements for IMAP</li>\n"
-    "<li>On demand downloading or deleting without downloading of big mails on "
-    "a POP3 server</li>\n"
-    "<li>Automatic configuration of the POP3/IMAP/SMTP security features</li>\n"
-    "<li>Automatic encoding selection for outgoing mails.</li>\n"
-    "<li>DIGEST-MD5 authentication</li>\n"
-    "<li>Identity based sent-mail and drafts folders</li>\n"
-    "<li>Expiry of old messages</li>\n"
-    "<li>Hotkey to temporary switch to fixed width fonts</li>\n"
-    "</ul>\n");
+    i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
+	 "%4: prior KMail version; %5: prior KDE version; "
+	 "%6: generated list of new features; "
+	 "%7: First-time user text (only shown on first start)",
+	 "<h2>Welcome to KMail %1</h2><p>KMail is the email client for the K "
+	 "Desktop Environment. It is designed to be fully compatible with "
+	 "Internet mailing standards including MIME, SMTP, POP3 and IMAP."
+	 "</p>\n"
+	 "<ul><li>KMail has many powerful features which are described in the "
+	 "<a href=\"%2\">documentation</a></li>\n"
+	 "<li>The <a href=\"%3\">KMail homepage</A> offers information about "
+	 "new versions of KMail</li></ul>\n"
+	 "<p>Some of the new features in this release of KMail include "
+	 "(compared to KMail %4, which is part of KDE %5):</p>\n"
+	 "<ul>\n%6</ul>\n"
+	 "%7\n"
+	 "<p>We hope that you will enjoy KMail.</p>\n"
+	 "<p>Thank you,</p>\n"
+	 "<p>&nbsp; &nbsp; The KMail Team</p>")
+    .arg(KMAIL_VERSION) // KMail version
+    .arg("help:/kmail") // KKmail help:// URL
+    .arg("http://kmail.kde.org/") // KMail homepage URL
+    .arg("1.3").arg("2.2"); // prior KMail and KDE version
+
+  QString featureItems;
+  for ( int i = 0 ; i < numKMailNewFeatures ; i++ )
+    featureItems += i18n("<li>%1</li>\n").arg( i18n( kmailNewFeatures[i] ) );
+
+  info = info.arg( featureItems );
+
   if( kernel->firstStart() ) {
-    info += i18n("<p>Please take a moment to fill in the KMail configuration panel at "
-    "Settings-&gt;Configure KMail.\n"
-    "You need to at least create a primary identity and a mail "
-    "account.</p>\n");
+    info = info.arg( i18n("<p>Please take a moment to fill in the KMail "
+			  "configuration panel at Settings-&gt;Configure "
+			  "KMail.\n"
+			  "You need to create at least a default identity and "
+			  "an incoming as well as outgoing mail account."
+			  "</p>\n") );
+  } else {
+    info = info.arg( QString::null );
   }
-  info += i18n("<p>We hope that you will enjoy KMail.</p>\n"
-    "<p>Thank you,</p>\n"
-    "<p>&nbsp; &nbsp; The KMail Team</p>");
   mViewer->write(content.arg(fntSize).arg(info));
   mViewer->end();
 }
