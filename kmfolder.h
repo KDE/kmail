@@ -499,9 +499,6 @@ public:
   bool ignoreNewMail() const { return mIgnoreNewMail; }
   void setIgnoreNewMail( bool b ) { mIgnoreNewMail = b; }
 
-  void setContentsType( KMail::FolderContentsType type );
-  KMail::FolderContentsType contentsType() const { return mContentsType; }
-
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -597,9 +594,6 @@ private:
 
   /** Should new mail in this folder be ignored? */
   bool mIgnoreNewMail;
-
-  /** Type of contents in this folder. */
-  KMail::FolderContentsType mContentsType;
 };
 
 #endif /*kmfolder_h*/

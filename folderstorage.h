@@ -400,6 +400,11 @@ public:
   /** false if index file is out of sync with mbox file */
   bool compactable() const { return mCompactable; }
 
+  /// Set the type of contents held in this folder (mail, calendar, etc.)
+  virtual void setContentsType( KMail::FolderContentsType type );
+  /// @return the type of contents held in this folder (mail, calendar, etc.)
+  KMail::FolderContentsType contentsType() const { return mContentsType; }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -518,6 +523,7 @@ protected:
   bool mNoContent;
   bool mNoChildren;
   bool mConvertToUtf8;
+  bool mContentsTypeChanged;
 
   /** Points at the reverse dictionary for this folder. */
   KMMsgDictREntry *mRDict;
@@ -528,6 +534,9 @@ protected:
   enum { mDirtyTimerInterval = 600000 }; // 10 minutes
 
   ChildrenState mHasChildren;
+
+  /** Type of contents in this folder. */
+  KMail::FolderContentsType mContentsType;
 
   KMFolder* mFolder;
 };

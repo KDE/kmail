@@ -211,6 +211,9 @@ public:
   /// Set the list of ACL for this folder (for FolderDiaACLTab)
   void setACLList( const ACLList& arr );
 
+  /// Reimplemented from FolderStorage
+  void setContentsType( KMail::FolderContentsType type );
+
 protected slots:
   /**
    * Connected to ListJob::receivedFolders
@@ -363,6 +366,7 @@ private:
   //bool mHoldSyncs;
   bool mRecurse;
   bool mCreateInbox;
+  bool mContentsTypeChanged;
 };
 
 #endif /*kmfoldercachedimap_h*/

@@ -433,7 +433,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mContentsComboBox->insertItem( i18n( "Tasks" ) );
     mContentsComboBox->insertItem( i18n( "Journal" ) );
     if ( mDlg->folder() )
-      mContentsComboBox->setCurrentItem( mDlg->folder()->contentsType() );
+      mContentsComboBox->setCurrentItem( mDlg->folder()->storage()->contentsType() );
   } else
     mContentsComboBox = 0;
 
@@ -768,7 +768,7 @@ bool FolderDiaGeneralTab::save()
 
     // Set type field
     if ( mContentsComboBox )
-      mDlg->folder()->setContentsType( static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() ) );
+      folder->storage()->setContentsType( static_cast<KMail::FolderContentsType>( mContentsComboBox->currentItem() ) );
 
     folder->setIgnoreNewMail( mIgnoreNewMailCheckBox->isChecked() );
 

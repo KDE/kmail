@@ -123,7 +123,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
     mFolderRemoved( false ), mResync( false ),
-    /*mHoldSyncs( false ),*/ mRecurse( true )
+    /*mHoldSyncs( false ),*/ mRecurse( true ),
+    mContentsTypeChanged( false )
 {
   setUidValidity("");
   mLastUid=0;
@@ -172,6 +173,7 @@ void KMFolderCachedImap::readConfig()
   mReadOnly = config->readBoolEntry( "ReadOnly", false );
 
   KMFolderMaildir::readConfig();
+  mContentsTypeChanged = false;
 }
 
 void KMFolderCachedImap::remove()
@@ -1587,7 +1589,15 @@ void KMFolderCachedImap::setSubfolderState( imapState state )
 
 void KMFolderCachedImap::setImapPath(const QString &path)
 {
-   mImapPath = path;
+  mImapPath = path;
+}
+
+void KMFolderCachedImap::setContentsType( KMail::FolderContentsType type )
+{
+  if ( type != mContentsType ) {
+    FolderStorage::setContentsType( type );
+    mContentsTypeChanged = true;
+  }
 }
 
 #include "kmfoldercachedimap.moc"

@@ -45,6 +45,7 @@
 #include "kmcommands.h"
 #include "listjob.h"
 using KMail::ListJob;
+#include "kmailicalifaceimpl.h"
 
 #include <klocale.h>
 #include <kconfig.h>
@@ -81,8 +82,8 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
   mHasChildren = HasNoChildren;
+  mContentsType = KMail::ContentsTypeMail;
 }
-
 
 //-----------------------------------------------------------------------------
 FolderStorage::~FolderStorage()
@@ -802,6 +803,11 @@ void FolderStorage::readConfig()
     mTotalMsgs = config->readNumEntry("TotalMsgs", -1);
   mCompactable = config->readBoolEntry("Compactable", TRUE);
 
+  int type = config->readNumEntry( "ContentsType", 0 );
+  if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
+  setContentsType( static_cast<KMail::FolderContentsType>( type ) );
+  mContentsTypeChanged = false;
+
   if( folder() ) folder()->readConfig( config );
 }
 
@@ -813,6 +819,7 @@ void FolderStorage::writeConfig()
   config->writeEntry("UnreadMsgs", mGuessedUnreadMsgs == -1 ? mUnreadMsgs : -1);
   config->writeEntry("TotalMsgs", mTotalMsgs);
   config->writeEntry("Compactable", mCompactable);
+  config->writeEntry("ContentsType", mContentsType);
 
   // Write the KMFolder parts
   if( folder() ) folder()->writeConfig( config );
@@ -973,6 +980,15 @@ void FolderStorage::setNoChildren( bool aNoChildren )
   mNoChildren = aNoChildren;
   if ( aNoChildren )
     setHasChildren( HasNoChildren );
+}
+
+//-----------------------------------------------------------------------------
+void FolderStorage::setContentsType( KMail::FolderContentsType type )
+{
+  if ( type != mContentsType ) {
+    mContentsType = type;
+    kmkernel->iCalIface().folderContentsTypeChanged( folder(), type );
+  }
 }
 
 #include "folderstorage.moc"
