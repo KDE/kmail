@@ -107,6 +107,7 @@ void KMAcctLocal::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::writeConfig(void)
 {
+  mConfig->setGroup("Account");
   mConfig->writeEntry("type", "local");
   mConfig->writeEntry("location", mLocation);
   mConfig->sync();

@@ -13,7 +13,8 @@
 #include <klocale.h>
 #include <sys/types.h>
 #include <fcntl.h>
-#include <unistd.h>  
+#include <unistd.h>
+#include <sys/stat.h>
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
@@ -76,8 +77,8 @@ bool KMAcctMgr::reload(void)
   dir.setPath(mBasePath);
   if (!dir.exists())
   {
-    warning("Directory\n"+mBasePath+"\ndoes not exist.\n\n"
-	    "KMail will create it now.");
+    warning(nls->translate("Directory\n%s\ndoes not exist.\n\n"
+	    "KMail will create it now."), (const char*)mBasePath);
     // dir.mkdir(mBasePath, TRUE);
     // Stephan: mkdir without right permissions is dangerous
     // and is for sure a port from Windows ;)
@@ -106,13 +107,14 @@ bool KMAcctMgr::reload(void)
     cStream = new QTextStream(cFile);
     config  = new KConfig(cStream);
 
+    config->setGroup("Account");
     act = create(config->readEntry("type"), acctName);
     if (act) act->takeConfig(config, cFile, cStream);
     else
     {
       warning(nls->translate("Cannot read configuration of account '%s'\n"
 			     "from broken file %s\nAccount type: %s\n"),
-	      (const char*)acctName, (const char*)(mBasePath+"/"+acctName), 
+	      (const char*)acctName, acctPath.data(), 
 	      (const char*)config->readEntry("type"));
 
       delete config;

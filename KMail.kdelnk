@@ -1,0 +1,8 @@
+[KDE Desktop Entry]
+Type=Application
+Exec=kmail
+Icon=kmail.xpm
+DocPath=kmail.html
+Info=Mail Client
+Info[de]=Email Programm
+Terminal=0

@@ -3,7 +3,8 @@
 #include "kmacctpop.h"
 #include <assert.h>
 #include <stdlib.h>
-
+#include <mimelib/mimepp.h>
+#include <kmfolder.h>
 
 //-----------------------------------------------------------------------------
 KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
@@ -47,17 +48,49 @@ void KMAcctPop::init(void)
 //-----------------------------------------------------------------------------
 bool KMAcctPop::processNewMail(void)
 {
-  return FALSE;
+  debug("processNewMail");
+  DwPopClient client;
+  client.Open(mHost, mPort);
+  client.User(mLogin);
+  client.Pass(mPasswd);
+  client.Stat();
+  int num, size;
+  QString status, response = client.SingleLineResponse().c_str();
+  QTextStream str(response, IO_ReadOnly);
+  str >> status >> num >> size;
+  debug("GOT POP %s %d %d",status.data(), num, size);
+  for (int i=1; i<=num; i++)
+  {
+    debug("processing message %d", i);
+    
+    client.Retr(i);
+    char buffer[300];
+    strncpy(buffer, client.MultiLineResponse().c_str(), 299);
+    
+    buffer[299]=0;
+    debug("GOT %s", buffer);
+    DwMessage *dmsg = new DwMessage(client.MultiLineResponse());
+    dmsg->Parse();
+    /*
+      KMMessage *msg = new KMMessage((KMFolder*)mFolder, dmsg);
+      mFolder->addMsg(msg);
+      Stephan: Und nun?
+    */
+  }
+  return (num > 0);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMAcctPop::readConfig(void)
 {
+  mConfig->setGroup("Account");
   mLogin = mConfig->readEntry("login");
   mStorePasswd = mConfig->readNumEntry("store-passwd");
-  if (mStorePasswd) mPasswd = mConfig->readEntry("passwd");
-  else mPasswd="?";
+  if (mStorePasswd) 
+    mPasswd = mConfig->readEntry("passwd");
+  else 
+    mPasswd="?";
   mHost = mConfig->readEntry("host");
   mPort = mConfig->readNumEntry("port");
   mProtocol = mConfig->readNumEntry("protocol");
@@ -67,10 +100,13 @@ void KMAcctPop::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMAcctPop::writeConfig(void)
 {
+  mConfig->setGroup("Account");
   mConfig->writeEntry("type", "pop");
   mConfig->writeEntry("login", mLogin);
-  if (mStorePasswd) mConfig->writeEntry("password", mPasswd);
-  else mConfig->writeEntry("passwd", "");
+  if (mStorePasswd) 
+    mConfig->writeEntry("password", mPasswd);
+  else 
+    mConfig->writeEntry("passwd", "");
   mConfig->writeEntry("store-passwd", mStorePasswd);
   mConfig->writeEntry("host", mHost);
   mConfig->writeEntry("port", mPort);

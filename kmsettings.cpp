@@ -487,13 +487,11 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 				    ((KMAcctPop*)mAcct)->passwd(), 3, 0);
     // markus: added this for security reasons.
     mEdtPasswd->setEchoMode(QLineEdit::Password);
-
-
     mEdtHost = createLabeledEntry(this, grid, nls->translate("Host:"),
 				  ((KMAcctPop*)mAcct)->host(), 4, 0);
 
     QString tmpStr(10);
-    tmpStr = ((KMAcctPop*)mAcct)->port();
+    tmpStr.sprintf("%d",((KMAcctPop*)mAcct)->port());
     mEdtPort = createLabeledEntry(this, grid, nls->translate("Port:"),
 				  tmpStr, 5, 0);
 
@@ -582,9 +580,9 @@ void KMAccountSettings::accept()
   else if (acctType == "pop")
   {
     ((KMAcctPop*)mAcct)->setHost(mEdtHost->text());
-    ((KMAcctPop*)mAcct)->setPort(atoi(mEdtHost->text()));
+    ((KMAcctPop*)mAcct)->setPort(atoi(mEdtPort->text()));
     ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
-    ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text());
+    ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
   }
 
   mAcct->writeConfig();
