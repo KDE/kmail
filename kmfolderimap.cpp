@@ -102,10 +102,20 @@ void KMFolderImap::close(bool aForced)
 //-----------------------------------------------------------------------------
 KMMessage* KMFolderImap::getMsg(int idx)
 {
-  KMMessage* msg = KMFolder::getMsg( idx );
-  if ( msg )
-    msg->setComplete( false );
-  return msg;
+  if(!(idx >= 0 && idx <= count()))
+    return 0;
+
+  KMMsgBase* mb = getMsgBase(idx);
+  if (!mb) return 0;
+  if (mb->isMessage()) 
+  {
+    return ((KMMessage*)mb);
+  } else {
+    KMMessage* msg = KMFolder::getMsg( idx );
+    if ( msg ) // set it incomplete as the msg was not transferred from the server
+      msg->setComplete( false );
+    return msg;
+  }
 }
 
 //-----------------------------------------------------------------------------
