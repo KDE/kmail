@@ -278,7 +278,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 
   QVBoxLayout * vlay = new QVBoxLayout( hlay ); // inherits spacing
 
-  QPushButton * button = new QPushButton( i18n("&New..."), this );
+  QPushButton * button = new QPushButton( i18n("&Add..."), this );
   mModifyButton = new QPushButton( i18n("&Modify..."), this );
   mRenameButton = new QPushButton( i18n("&Rename"), this );
   mRemoveButton = new QPushButton( i18n("Remo&ve"), this );
@@ -466,7 +466,7 @@ void IdentityPage::slotContextMenu( KListView *, QListViewItem * i,
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 
   QPopupMenu * menu = new QPopupMenu( this );
-  menu->insertItem( i18n("New..."), this, SLOT(slotNewIdentity()) );
+  menu->insertItem( i18n("Add..."), this, SLOT(slotNewIdentity()) );
   if ( item ) {
     menu->insertItem( i18n("Modify..."), this, SLOT(slotModifyIdentity()) );
     if ( mIdentityList->childCount() > 1 )
