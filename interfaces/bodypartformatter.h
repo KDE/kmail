@@ -74,7 +74,7 @@ namespace KMail {
        Subtype alone or both type and subtype may be "*", which is
        taken as a wildcard, so that e.g. type=text subtype=* matches
        any text subtype, but with lesser specificity than a concrete
-       mimetype such as test/plain. type=* is only allowed when
+       mimetype such as text/plain. type=* is only allowed when
        subtype=*, too.
     */
     class BodyPartFormatterPlugin {
