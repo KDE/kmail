@@ -118,7 +118,10 @@ void KMFolder::readConfig( KConfig* config )
   mIdentity = config->readUnsignedNumEntry("Identity",0);
 
   setUserWhoField( config->readEntry("WhoField"), false );
-  mId = config->readUnsignedNumEntry("Id", 0);
+  uint savedId = config->readUnsignedNumEntry("Id", 0); 
+  // make sure that we don't overwrite a valid id
+  if ( savedId != 0 && mId == 0 )
+    mId = savedId;
   mPutRepliesInSameFolder = config->readBoolEntry( "PutRepliesInSameFolder", false );
   mIgnoreNewMail = config->readBoolEntry( "IgnoreNewMail", false );
 
