@@ -336,6 +336,9 @@ private:
       QRadioButton  *rdDefaultOpen;
       QRadioButton  *rdDefaultClosed;
       QRadioButton  *rdUnreadOpen;
+      QRadioButton *rdDateCtime;
+      QRadioButton *rdDateLocalized;
+      QRadioButton *rdDateFancy;
       QCheckBox     *htmlMailCheck;
       int           activeFontIndex;
       QFont         font[7];

@@ -33,6 +33,12 @@ public:
     static bool canDecode( QDragMoveEvent* e );
 };
 
+typedef enum  {
+      CTime,
+      Localized,
+      FancyDate
+} KMDateDisplay;
+
 // Information shared by all items in a list view
 struct KMPaintInfo {
   bool pixmapOn;
@@ -52,6 +58,7 @@ struct KMPaintInfo {
   int dateCol;
   int scoreCol;
   int sizeCol;
+  KMDateDisplay dateDisplay;
 };
 
 #define KMHeadersInherited QListView
@@ -165,6 +172,8 @@ public:
 
   // return a string relativ to the current time
   static QString fancyDate( time_t otime );
+
+  static QString formatDate( time_t otime, KMDateDisplay date );
 
 signals:
   // emitted when the list view item corresponding to this message

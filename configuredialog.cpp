@@ -78,6 +78,7 @@
 #include "kmacctseldlg.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
+#include "kmheaders.h"
 #include "kmidentity.h"
 #include "kmmessage.h"
 #include "kmsender.h"
@@ -904,6 +905,29 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.rdUnreadOpen = new QRadioButton( i18n("Open threads that contain new or unread messages"), threadGroup );
   vthread->addWidget( mAppearance.rdUnreadOpen );
 
+  QButtonGroup *dateGroup = new QButtonGroup( i18n( "Display of Date" ), page3 );
+  vlay->addWidget( dateGroup );
+  vthread = new QVBoxLayout( dateGroup, spacingHint() );
+  vthread->addSpacing( fontMetrics().lineSpacing() );
+  time_t currentTime;
+  time( &currentTime );
+  mAppearance.rdDateCtime = new QRadioButton( i18n("untranslated format",
+                                                   "Standard C-Format (%1)").arg(
+                                                       KMHeaders::formatDate( currentTime,
+                                                                              CTime ) ),
+                                              dateGroup );
+  vthread->addWidget( mAppearance.rdDateCtime );
+  mAppearance.rdDateLocalized = new QRadioButton( i18n("Localized Format (%1)")
+                                                  .arg( KMHeaders::formatDate( currentTime,
+                                                                               Localized ) ),
+                                                  dateGroup );
+  vthread->addWidget( mAppearance.rdDateLocalized );
+  mAppearance.rdDateFancy = new QRadioButton( i18n("Fancy Format (%1)")
+                                              .arg( KMHeaders::formatDate( currentTime,
+                                                                           FancyDate ) ),
+                                              dateGroup );
+  vthread->addWidget( mAppearance.rdDateFancy );
+
   QButtonGroup *group = new QButtonGroup( i18n("HTML"), page3 );
   vlay->addWidget( group );
   QVBoxLayout *vlay2 = new QVBoxLayout( group, spacingHint() );
@@ -1640,6 +1664,14 @@ void ConfigureDialog::setupAppearancePage( void )
 
   mAppearance.addressbookCombo->setCurrentItem( config.readNumEntry( "addressbook", 1 )) ;
   mAppearance.addressbookLabel->setText( *mAppearance.addressbookStrings.at( config.readNumEntry( "addressbook", 1 )) );
+
+  QString dateDisplay = config.readEntry( "dateDisplay", "fancyDate" );
+  if ( dateDisplay == "ctime" )
+      mAppearance.rdDateCtime->setChecked( true );
+  else if ( dateDisplay == "localized" )
+      mAppearance.rdDateLocalized->setChecked( true );
+  else
+      mAppearance.rdDateFancy->setChecked( true );
 }
 
 
@@ -1868,6 +1900,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.htmlMailCheck->setChecked( false );
+    mAppearance.rdDateFancy->setChecked( true );
   }
   else if( item == mAppearance.mListItemDefaultHtml )
   {
@@ -1894,6 +1927,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.htmlMailCheck->setChecked( true );
+    mAppearance.rdDateFancy->setChecked( true );
   }
   else if( item == mAppearance.mListItemContrast )
   {
@@ -1919,6 +1953,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.htmlMailCheck->setChecked( false );
+    mAppearance.rdDateLocalized->setChecked( true );
   }
   else if( item == mAppearance.mListItemPurist)
   {
@@ -1930,6 +1965,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
     mAppearance.htmlMailCheck->setChecked( false );
+    mAppearance.rdDateCtime->setChecked( true );
   }
   else
   {
@@ -2138,6 +2174,13 @@ void ConfigureDialog::slotDoApply( bool everything )
     bool messageSize = mAppearance.messageSizeCheck->isChecked();
     config.writeEntry( "showMessageSize", messageSize );
     config.writeEntry( "addressbook", mAppearance.addressbookCombo->currentItem() );
+
+    if ( mAppearance.rdDateCtime->isChecked() )
+        config.writeEntry( "dateDisplay", "ctime" );
+    else if ( mAppearance.rdDateLocalized->isChecked() )
+        config.writeEntry( "dateDisplay", "localized" );
+    else if ( mAppearance.rdDateFancy->isChecked() )
+        config.writeEntry( "dateDisplay", "fancyDate" );
   }
   if( activePage == mComposer.pageIndex || everything )
   {

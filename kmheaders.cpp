@@ -184,7 +184,7 @@ public:
 	tmp = tmp.simplifyWhiteSpace();
 
     } else if(col == headers->paintInfo()->dateCol) {
-        tmp = KMHeaders::fancyDate( mMsgBase->date() );
+        tmp = KMHeaders::formatDate(mMsgBase->date(), headers->paintInfo()->dateDisplay );
     } else if(col == headers->paintInfo()->sizeCol
       && headers->paintInfo()->showSize) {
         tmp.setNum(mMsgBase->msgSize());
@@ -286,16 +286,16 @@ public:
     const KMPaintInfo *paintInfo = headers->paintInfo();
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
     QString sortArrival = QString( "%1" ).arg( mMsgId, 8, 36 );
-    time_t mDate = mMsgBase->date();
-    const int dateLength = 30;
-    char cDate[dateLength + 1];
-    strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &mDate ));
-    QString sortDate = cDate + sortArrival;
     if (column == paintInfo->dateCol) {
-      if (paintInfo->orderOfArrival)
-	return sortArrival;
-      else
-	return sortDate;
+        time_t mDate = mMsgBase->date();
+        const int dateLength = 30;
+        char cDate[dateLength + 1];
+        strftime( cDate, dateLength, "%Y:%j:%H:%M:%S", gmtime( &mDate ));
+        QString sortDate = cDate + sortArrival;
+        if (paintInfo->orderOfArrival)
+            return sortArrival;
+        else
+            return sortDate;
     }
     else if (column == paintInfo->senderCol)
       return text(paintInfo->senderCol).lower() + " " + sortArrival;
@@ -493,6 +493,13 @@ void KMHeaders::readConfig (void)
 
   config->setGroup("General");
   mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
+  mPaintInfo.dateDisplay = FancyDate;
+  QString dateDisplay = config->readEntry( "dateDisplay", "fancyDate" );
+  kdDebug() << "datedisplay " << dateDisplay << endl;
+  if ( dateDisplay == "ctime" )
+      mPaintInfo.dateDisplay = CTime;
+  else if ( dateDisplay == "localized" )
+      mPaintInfo.dateDisplay = Localized;
 
   readColorConfig();
 
@@ -504,6 +511,7 @@ void KMHeaders::readConfig (void)
   }
   else
     setFont(KGlobalSettings::generalFont());
+
 }
 
 
@@ -1913,12 +1921,30 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   setFolderInfoStatus();
 }
 
+QString KMHeaders::formatDate( time_t time, KMDateDisplay option)
+{
+    switch ( option )
+    {
+    case FancyDate:
+        return KMHeaders::fancyDate( time );
+    case CTime:
+        return QString::fromLatin1( ctime(  &time ) ).stripWhiteSpace() ;
+    case Localized:
+    {
+        QDateTime tmp;
+        tmp.setTime_t( time );
+        return KGlobal::locale()->formatDateTime( tmp );
+    }
+    }
+    return QString::null;
+}
+
 QDateTime *KMHeaders::now = 0;
 time_t KMHeaders::now_time = 0;
 
 QString KMHeaders::fancyDate( time_t otime )
 {
-   if ( otime <= 0 )
+    if ( otime <= 0 )
         return i18n( "unknown" );
 
     if ( !now ) {
