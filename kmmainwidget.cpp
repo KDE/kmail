@@ -3292,6 +3292,7 @@ void KMMainWidget::initializeFilterActions()
   QString filterName, normalizedName;
   KMMetaFilterActionCommand *filterCommand;
   KAction *filterAction;
+  mApplyFilterActionsMenu->popupMenu()->clear();
   mFilterActions.clear();
   mFilterCommands.clear();
   for ( QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()) ;
@@ -3313,7 +3314,6 @@ void KMMainWidget::initializeFilterActions()
       mFilterActions.append(filterAction);
     }
 
-  mApplyFilterActionsMenu->popupMenu()->clear();
   plugFilterActions(mApplyFilterActionsMenu->popupMenu());
 }
 
