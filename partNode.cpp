@@ -548,6 +548,31 @@ bool partNode::isHeuristicalAttachment() const {
   return !p.fileName().isEmpty() || !p.name().isEmpty() ;
 }
 
+partNode * partNode::next( bool allowChildren ) const {
+  if ( allowChildren )
+    if ( partNode * c = firstChild() )
+      return c;
+  if ( partNode * s = nextSibling() )
+    return s;
+  for ( partNode * p = parentNode() ; p ; p = p->parentNode() )
+    if ( partNode * s = p->nextSibling() )
+      return s;
+  return 0;
+}
+
+bool partNode::isFirstTextPart() const {
+  if ( type() != DwMime::kTypeText )
+    return false;
+  const partNode * root = this;
+  while ( const partNode * p = root->parentNode() )
+    root = p;
+  for ( const partNode * n = root ; n ; n = n->next() )
+    if ( n->type() == DwMime::kTypeText )
+      return n == this;
+  kdFatal() << "partNode::isFirstTextPart(): Didn't expect to end up here..." << endl;
+  return false; // make comiler happy
+}
+
 bool partNode::hasContentDispositionInline() const
 {
   if( !dwPart() )

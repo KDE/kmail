@@ -210,6 +210,7 @@ public:
 
     bool isAttachment() const;
     bool isHeuristicalAttachment() const;
+    bool isFirstTextPart() const;
 
     bool hasContentDispositionInline() const;
 
@@ -220,6 +221,7 @@ public:
     partNode * parentNode() const { return mRoot; }
     partNode * nextSibling() const { return mNext; }
     partNode * firstChild() const { return mChild; }
+    partNode * next( bool allowChildren=true ) const;
     int childCount() const;
     bool processed() const { return mWasProcessed; }
 

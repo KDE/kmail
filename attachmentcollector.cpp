@@ -33,24 +33,6 @@
 
 #include "partNode.h"
 
-static partNode * next( partNode * n, bool allowChildren=true ) {
-  if ( !n )
-    return 0;
-  if ( allowChildren )
-    if ( partNode * c = n->firstChild() )
-      return c;
-  if ( partNode * s = n->nextSibling() )
-    return s;
-  for ( partNode * p = n->parentNode() ; p ; p = p->parentNode() )
-    if ( partNode * s = p->nextSibling() )
-      return s;
-  return 0;
-}
-
-static inline partNode * nextNonChild( partNode * node ) {
-  return next( node, false );
-}
-
 static bool isInSkipList( partNode * ) {
   return false;
 }
@@ -78,22 +60,26 @@ static bool isInExclusionList( const partNode * node ) {
 
 void KMail::AttachmentCollector::collectAttachmentsFrom( partNode * node ) {
   while ( node ) {
+    if ( node->isFirstTextPart() ) {
+      node = node->next();
+      continue;
+    }
     if ( isInSkipList( node ) ) {
-      node = nextNonChild( node ); // skip even the children
+      node = node->next( false ); // skip even the children
       continue;
     }
     if ( isInExclusionList( node ) ) {
-      node = next( node );
+      node = node->next();
       continue;
     }
 
     if ( node->isHeuristicalAttachment() ) {
       mAttachments.push_back( node );
-      node = nextNonChild( node ); // just make double sure
+      node = node->next( false ); // just make double sure
       continue;
     }
 
-    node = next( node );
+    node = node->next();
   }
 }
 

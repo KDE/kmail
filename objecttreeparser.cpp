@@ -120,7 +120,6 @@ namespace KMail {
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
       mKeepEncryptions( keepEncryptions ),
       mIncludeSignatures( includeSignatures ),
-      mIsFirstTextPart( true ),
       mAttachmentStrategy( strategy ),
       mHtmlWriter( htmlWriter ),
       mCSSHelper( cssHelper )
@@ -140,7 +139,6 @@ namespace KMail {
       mShowOnlyOneMimePart( other.showOnlyOneMimePart() ),
       mKeepEncryptions( other.keepEncryptions() ),
       mIncludeSignatures( other.includeSignatures() ),
-      mIsFirstTextPart( other.mIsFirstTextPart ),
       mAttachmentStrategy( other.attachmentStrategy() ),
       mHtmlWriter( other.htmlWriter() ),
       mCSSHelper( other.cssHelper() )
@@ -206,7 +204,6 @@ namespace KMail {
     }
     kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
     ObjectTreeParser otp( mReader, cryptPlugWrapper() );
-    otp.setIsFirstTextPart( mIsFirstTextPart );
     otp.parseObjectTree( newNode );
     mRawReplyString += otp.rawReplyString();
     mTextualContent += otp.textualContent();
@@ -591,7 +588,6 @@ namespace KMail {
       }
 
       ObjectTreeParser otp( mReader, cryptPlug, true );
-      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( data );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
@@ -790,8 +786,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     QCString cstr( curNode->msgPart().bodyDecoded() );
 
     mRawReplyString = cstr;
-    if ( mIsFirstTextPart ) {
-      mIsFirstTextPart = false;
+    if ( curNode->isFirstTextPart() ) {
       mTextualContent += curNode->msgPart().bodyToUnicode();
       mTextualContentCharset = curNode->msgPart().charset();
     }
@@ -799,11 +794,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if ( !mReader )
       return true;
 
-    if ( mIsFirstTextPart ||
+    if ( curNode->isFirstTextPart() ||
          attachmentStrategy()->defaultDisplay( curNode ) == AttachmentStrategy::Inline ||
          showOnlyOneMimePart() )
     {
-      mIsFirstTextPart = false;
       if ( mReader->htmlMail() ) {
         // ---Sven's strip </BODY> and </HTML> from end of attachment start-
         // We must fo this, or else we will see only 1st inlined html
@@ -978,8 +972,7 @@ namespace KMail {
     const QCString cstr = curNode->msgPart().bodyDecoded();
     if ( !mReader ) {
       mRawReplyString = cstr;
-      if ( mIsFirstTextPart ) {
-	mIsFirstTextPart = false;
+      if ( curNode->isFirstTextPart() ) {
 	mTextualContent += curNode->msgPart().bodyToUnicode();
 	mTextualContentCharset = curNode->msgPart().charset();
       }
@@ -987,13 +980,13 @@ namespace KMail {
     }
 
     //resultingRawData += cstr;
-    if ( !mIsFirstTextPart &&
+    if ( !curNode->isFirstTextPart() &&
          attachmentStrategy()->defaultDisplay( curNode ) != AttachmentStrategy::Inline &&
          !showOnlyOneMimePart() )
       return false;
 
     mRawReplyString = cstr;
-    if ( mIsFirstTextPart ) {
+    if ( curNode->isFirstTextPart() ) {
       mTextualContent += curNode->msgPart().bodyToUnicode();
       mTextualContentCharset = curNode->msgPart().charset();
     }
@@ -1002,7 +995,7 @@ namespace KMail {
     if ( label.isEmpty() )
       label = curNode->msgPart().name().stripWhiteSpace();
 
-    const bool bDrawFrame = !mIsFirstTextPart
+    const bool bDrawFrame = !curNode->isFirstTextPart()
                           && !showOnlyOneMimePart()
                           && !label.isEmpty();
     if ( bDrawFrame ) {
@@ -1039,8 +1032,6 @@ namespace KMail {
                        codecFor( curNode ), result );
     if ( bDrawFrame )
       htmlWriter()->queue( "</td></tr></table>" );
-
-    mIsFirstTextPart = false;
 
     return true;
   }
@@ -1315,7 +1306,6 @@ namespace KMail {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
-      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
@@ -1370,7 +1360,6 @@ namespace KMail {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
-      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
@@ -1451,7 +1440,6 @@ namespace KMail {
     if ( partNode * child = node->firstChild() ) {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
-      otp.setIsFirstTextPart( mIsFirstTextPart );
       otp.parseObjectTree( child );
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();

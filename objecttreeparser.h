@@ -100,10 +100,6 @@ namespace KMail {
     /** Internal. Copies the context of @p other, but not it's @ref
 	rawReplyString() */
     ObjectTreeParser( const ObjectTreeParser & other );
-
-    void setIsFirstTextPart( bool isFirst ) {
-      mIsFirstTextPart = isFirst;
-    }
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
 		      bool showOneMimePart=false, bool keepEncryptions=false,
@@ -285,7 +281,6 @@ namespace KMail {
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;
     bool mIncludeSignatures;
-    bool mIsFirstTextPart;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
     KMail::CSSHelper * mCSSHelper;
