@@ -251,6 +251,7 @@ void KMComposeWin::readConfig(void)
   mPalette.setNormal(ncgrp);
   mPalette.setDisabled(ncgrp);
   mPalette.setActive(ncgrp);
+  mPalette.setInactive(ncgrp);
 
   mEdtFrom.setPalette(mPalette);
   mEdtReplyTo.setPalette(mPalette);
