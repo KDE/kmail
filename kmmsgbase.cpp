@@ -549,14 +549,8 @@ QStringList KMMsgBase::supportedEncodings(bool usAscii)
 //-----------------------------------------------------------------------------
 QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 {
-  QString result;
-  QCString charset;
-  char *pos, *beg, *end, *mid=0;
-  QCString str, LWSP_buffer;
-  char encoding[2] = "Q";
-  bool valid, lastWasEncodedWord=FALSE;
-  const int maxLen=200;
-  int i;
+  if ( aStr.isEmpty() )
+    return QString::null;
 
   if (aStr.find("=?") < 0)
   {
@@ -578,8 +572,12 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
     return str2;
   }
 
-  for (pos=aStr.data(); *pos; pos++)
-  {
+  QString result;
+  QCString LWSP_buffer;
+  bool lastWasEncodedWord = false;
+  static const int maxLen = 200;
+
+  for ( const char * pos= aStr.data() ; *pos ; ++pos ) {
     // line unfolding
     if ( pos[0] == '\r' && pos[1] == '\n' ) {
       pos++;
@@ -595,72 +593,63 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
       continue;
     }
     // verbatimly copy normal text
-    if (pos[0]!='=' || pos[1]!='?')
-    {
+    if (pos[0]!='=' || pos[1]!='?') {
       result += LWSP_buffer + pos[0];
       LWSP_buffer = 0;
       lastWasEncodedWord = FALSE;
       continue;
     }
     // found possible encoded-word
-    beg = pos+2;
-    end = beg;
-    valid = TRUE;
-    // parse charset name
-    charset = "";
-    for (i=2,pos+=2; i<maxLen && (*pos!='?'&&(*pos==' '||ispunct(*pos)||isalnum(*pos))); i++)
+    const char * const beg = pos;
     {
-      charset += *pos;
-      pos++;
-    }
-    if (*pos!='?' || i<4 || i>=maxLen) valid = FALSE;
-    else
-    {
+      // parse charset name
+      QCString charset;
+      int i = 2;
+      for (pos+=2; i<maxLen && (*pos!='?'&&(*pos==' '||ispunct(*pos)||isalnum(*pos))); ++i) {
+	charset += *pos;
+	pos++;
+      }
+      if (*pos!='?' || i<4 || i>=maxLen)
+	goto invalid_encoded_word;
+
       // get encoding and check delimiting question marks
-      encoding[0] = pos[1];
+      const char encoding[2] = { pos[1], '\0' };
       if (pos[2]!='?' || (encoding[0]!='Q' && encoding[0]!='q' &&
 			  encoding[0]!='B' && encoding[0]!='b'))
-	valid = FALSE;
-      pos+=3;
-      i+=3;
-    }
-    if (valid)
-    {
-      mid = pos;
+	goto invalid_encoded_word;
+      pos+=3; i+=3; // skip ?x?
+      const char * enc_start = pos;
       // search for end of encoded part
-      while (i<maxLen && *pos && !(*pos=='?' && *(pos+1)=='='))
-      {
+      while (i<maxLen && *pos && !(*pos=='?' && *(pos+1)=='=')) {
 	i++;
 	pos++;
       }
-      end = pos+2;//end now points to the first char after the encoded string
-      if (i>=maxLen || !*pos) valid = FALSE;
-    }
-    if (valid)
-    {
+      if (i>=maxLen || !*pos)
+	goto invalid_encoded_word;
+
       // valid encoding: decode and throw away separating LWSP
       const KMime::Codec * c = KMime::Codec::codecForName( encoding );
       kdFatal( !c, 5006 ) << "No \"" << encoding << "\" codec!?" << endl;
-      QByteArray in; in.duplicate( mid, pos - mid );
+
+      QByteArray in; in.setRawData( enc_start, pos - enc_start );
       const QByteArray enc = c->decode( in );
+      in.resetRawData( enc_start, pos - enc_start );
+
       const QTextCodec * codec = codecForName(charset);
       if (!codec) codec = kernel->networkCodec();
       result += codec->toUnicode(enc);
-      lastWasEncodedWord = TRUE;
+      lastWasEncodedWord = true;
 
-      pos = end -1;
+      ++pos; // eat '?' (for loop eats '=')
+      LWSP_buffer = 0;
     }
-    else
-    {
-      // invalid encoding, keep separating LWSP.
-      //result += "=?";
-      //pos = beg -1; // because pos gets increased shortly afterwards
-      pos = beg - 2;
-      result += LWSP_buffer;
-      result += *pos++;
-      result += *pos;
-      lastWasEncodedWord = FALSE;
-    }
+    continue;
+  invalid_encoded_word:
+    // invalid encoding, keep separating LWSP.
+    pos = beg;
+    result += LWSP_buffer;
+    result += "=?";
+    lastWasEncodedWord = false;
     LWSP_buffer = 0;
   }
   return result;
