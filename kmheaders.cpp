@@ -1440,7 +1440,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
     }
 
     if (cntrl) {
-      if (shft)
+      if (!shft)
 	disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 		   this,SLOT(highlightMessage(QListViewItem*)));
       switch (e->key()) {
@@ -1453,7 +1453,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
       case Key_Escape:
 	KMHeadersInherited::keyPressEvent( e );
       }
-      if (shft)
+      if (!shft)
 	connect(this,SIGNAL(currentChanged(QListViewItem*)),
 		this,SLOT(highlightMessage(QListViewItem*)));
     }
