@@ -150,8 +150,8 @@ void KMAcctExpPop::processNewMail(bool _interactive)
       }
     }
 
-    QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
-				       ":" + QString("%1").arg(mPort) );
+    QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" + 
+				       mHost + ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
     uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
     headerLaterUids = config.readListEntry( "downloadLater" );
@@ -773,8 +773,9 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   // Don't update the seen uid list unless we successfully got
   // a new list from the server
   if (!mUidlFinished) return;
-  QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
-				       ":" + QString("%1").arg(mPort) );
+  QString seenUidList = locateLocal( "data", "kmail/" + mLogin + ":" + "@" +
+				     mHost + ":" + QString("%1").arg(mPort) );
+				     
   KConfig config( seenUidList );
   config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
   config.writeEntry( "downloadLater", headerLaterUids );
@@ -963,8 +964,7 @@ void KMAcctExpPop::slotGetNextHdr(){
   kdDebug(5006) << "slotGetNextHeader" << endl;
 
   curMsgData.resize(0);
-  if (curMsgStrm)
-    delete curMsgStrm;
+  delete curMsgStrm;
   curMsgStrm = 0;
 
   curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );

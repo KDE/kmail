@@ -34,9 +34,7 @@ void CertificateHandlingDialogImpl::slotDeleteCertificate()
 
     QListViewItem* item = certificatesLV->selectedItem();
     Q_ASSERT( item );
-    if( item ) {
-        delete item;
-    }
+    delete item;
 }
 
 /*
