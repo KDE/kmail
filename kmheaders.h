@@ -67,6 +67,9 @@ public:
   /** Returns pointer to owning main window. */
   KMMainWin* owner(void) const { return mOwner; }
 
+  /** Read config options. */
+  virtual void readConfig(void);
+
 signals:
   virtual void selected(KMMessage *);
   virtual void activated(KMMessage *);
@@ -98,9 +101,6 @@ protected:
     message that shall be the current message after move/delete of multiple
     messages. */
   virtual int firstSelectedMsg(int id) const;
-
-  /** Read config options. */
-  virtual void readConfig(void);
 
   /** Read per-folder config options and apply them. */
   virtual void readFolderConfig(void);

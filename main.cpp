@@ -48,9 +48,9 @@ KStdAccel* keys = NULL;
 KMIdentity* identity = NULL;
 KMFilterActionDict* filterActionDict = NULL;
 KMAddrBook* addrBook = NULL;
-WindowList* windowList = NULL;
 
 
+bool mailto = FALSE;
 bool firstStart = TRUE;
 bool shuttingDown = FALSE;
 bool checkingMail = FALSE;
@@ -120,9 +120,9 @@ static void signalHandler(int sigId)
   fprintf(stderr, "*** KMail got signal %d\n", sigId);
 
   // try to cleanup all windows
-  while (windowList->first() != NULL)
+  while (KTopLevelWidget::memberList->first() != NULL)
   {
-    win = windowList->take();
+    win = KTopLevelWidget::memberList->take();
     if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
     delete win;
   }
@@ -270,8 +270,6 @@ static void init(int& argc, char *argv[])
   KConfig* cfg;
 
   app = new KApplication(argc, argv, "kmail");
-  windowList = new WindowList;
-
   kbp = new KBusyPtr;
   cfg = app->getConfig();
 
@@ -356,7 +354,6 @@ static void processArgs(int argc, char *argv[])
   KMMessage* msg = new KMMessage;
   QString to, cc, bcc, subj;
   bool checkNewMail = FALSE;
-  bool mailto = FALSE;
   int i;
 
   for (i=0; i<argc; i++)
@@ -416,11 +413,14 @@ main(int argc, char *argv[])
   init(argc, argv);
   // filterMgr->dump();
 
-  mainWin = new KMMainWin;
-  mainWin->show();
-
   if (argc > 1)
     processArgs(argc-1, argv+1);
+
+  if (!mailto)
+  {
+    mainWin = new KMMainWin;
+    mainWin->show();
+  }
 
   recoverDeadLetters();
 
@@ -431,10 +431,6 @@ main(int argc, char *argv[])
   }
 
   app->exec();
-
-  mainWin->writeConfig(FALSE);
-  delete mainWin;
-
   cleanup();
 }
 

@@ -21,7 +21,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kfileio.cpp kmaddrbook.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
-		charsetsDlg.cpp kfontutils.cpp
+		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -33,7 +33,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc \
 		kmaddrbookdlg.moc kmiostatusdlg.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
-		charsetsDlg.moc
+		charsetsDlg.moc kmtopwidget.moc
 
 DISTCLEANFILES = $(BUILT_SOURCES)
 
@@ -174,3 +174,7 @@ kmnewiostatus.moc: kmnewiostatus.h
 charsetsDlg.cpp: charsetsDlg.moc
 charsetsDlg.moc: charsetsDlg.h
 	$(MOC) charsetsDlg.h -o charsetsDlg.moc
+
+kmtopwidget.cpp: kmtopwidget.moc
+kmtopwidget.moc: kmtopwidget.h
+	$(MOC) kmtopwidget.h -o kmtopwidget.moc

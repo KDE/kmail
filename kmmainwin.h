@@ -5,7 +5,7 @@
 #ifndef __KMMAINWIN
 #define __KMMAINWIN
 
-#include <ktopwidget.h>
+#include "kmtopwidget.h"
 
 class KMFolder;
 class KMFolderTree;
@@ -18,8 +18,8 @@ class KStatusBar;
 class KMMessage;
 class KMFolder;
 
-#define KMMainWinInherited KTopLevelWidget
-class KMMainWin : public KTopLevelWidget
+#define KMMainWinInherited KMTopLevelWidget
+class KMMainWin : public KMTopLevelWidget
 {
   Q_OBJECT
 
@@ -50,8 +50,6 @@ public slots:
   void statusMsg(const char* text);
 
 protected:
-  virtual void closeEvent(QCloseEvent *);
-
   void setupMenuBar();
   void setupToolBar();
   void setupStatusBar();

@@ -1,3 +1,16 @@
+1998-06-15  Stefan Taferner  <taferner@kde.org>
+
+	* kmfilteraction.cpp (process): Removed patch for kmfilter
+	action "Move" of 1998-06-14.
+	Fixed bug in kmfilteraction "Move" action.
+
+	* Fonts: reader- and composer-window now change
+	their font when the settings are changed.
+
+	* Shutdown: improved handling of window-close and
+	KMail shutdown- and crash-handling.
+	
+
 1998-06-14  Markus Wuebben  <markus@kde.org>
 
 	* kmfilteraction.cpp (process): Applied patch for kmfilter

@@ -2,6 +2,7 @@
 
 #include "kmmessage.h"
 #include "kmfilteraction.h"
+#include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
@@ -39,6 +40,11 @@ void KMFilterAction::applyParamWidgetValue(QWidget*)
 bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
 {
   return FALSE;
+}
+
+int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
+{
+  return filterMgr->tempOpenFolder(aFolder);
 }
 
 
@@ -95,8 +101,9 @@ KMFilterActionMove::KMFilterActionMove(): KMFilterAction("transfer")
 bool KMFilterActionMove::process(KMMessage* msg, bool&stop)
 {
   if (!mDest) return TRUE;
+  KMFilterAction::tempOpenFolder(mDest);
   mDest->moveMsg(msg);
-  stop = TRUE;
+  //stop = TRUE;  //Stefan: no, we do not want to stop here!
 
   return FALSE;
 }

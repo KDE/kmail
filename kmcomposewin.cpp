@@ -15,6 +15,7 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kfontutils.h"
+#include "kmmainwin.h"
 
 #include <assert.h>
 #include <drag.h>
@@ -113,6 +114,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mAtmList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
   mPathAttach = 0;
+  mEditor = NULL;
 
   setCaption(i18n("KMail Composer"));
   setMinimumSize(200,200);
@@ -159,8 +161,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   setView(&mMainWidget, FALSE);
   rethinkFields();
 
-  windowList->append(this);
-
 #ifdef CHARSETS  
   // As family may change with charset, we must save original settings
   mSavedEditorFont=mEditor->font();
@@ -183,7 +183,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 KMComposeWin::~KMComposeWin()
 {
   printf("~KMComposeWin\n");
-  windowList->remove(this);
 
   if (mAutoDeleteMsg && mMsg) delete mMsg;
 #ifdef HAS_KSPELL
@@ -217,6 +216,7 @@ void KMComposeWin::readConfig(void)
 
   config->setGroup("Fonts");
   mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
+  if (mEditor) mEditor->setFont(kstrToFont(mBodyFont));
 
 #ifdef CHARSETS  
   m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
@@ -448,6 +448,8 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertSeparator();
   menu->insertItem(i18n("&New Composer..."),this,
 		   SLOT(slotNewComposer()), keys->openNew());
+  menu->insertItem(i18n("New Mailreader"), this, 
+		   SLOT(slotNewMailReader()));
   menu->insertSeparator();
   menu->insertItem(i18n("&Close"),this,
 		   SLOT(slotClose()), keys->close());
@@ -637,25 +639,17 @@ void KMComposeWin::setupEditor(void)
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
   // Word wrapping setup
-  if(mWordWrap) 
-    mEditor->setWordWrap(TRUE);
-  else {
-    mEditor->setWordWrap(FALSE);
-    mEditor->setFillColumnMode(0,FALSE);    
-  }
-  if(mWordWrap && (mLineBreak > 0)) 
+  mEditor->setWordWrap(mWordWrap);
+  if (mWordWrap && (mLineBreak > 0)) 
     mEditor->setFillColumnMode(mLineBreak,TRUE);
-
+  else mEditor->setFillColumnMode(0,FALSE);
 
   // Font setup
   mEditor->setFont(kstrToFont(mBodyFont));
 
   // Color setup
-  if( mForeColor.isEmpty())
-    mForeColor = "black";
-
-  if( mBackColor.isEmpty())
-    mBackColor = "white";
+  if (mForeColor.isEmpty()) mForeColor = "black";
+  if (mBackColor.isEmpty()) mBackColor = "white";
 
   foreColor.setNamedColor(mForeColor);
   backColor.setNamedColor(mBackColor);
@@ -1394,7 +1388,7 @@ void KMComposeWin::slotMarkAll()
 void KMComposeWin::slotClose()
 {
   // we should check here if there were any changes...
-  close();
+  close(TRUE);
 }
 
 
@@ -1407,6 +1401,17 @@ void KMComposeWin::slotNewComposer()
   msg->initHeader();
   win = new KMComposeWin(msg);
   win->show();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotNewMailReader()
+{
+  KMMainWin *d;
+
+  d = new KMMainWin(NULL);
+  d->show();
+  d->resize(d->size());
 }
 
 

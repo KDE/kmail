@@ -8,6 +8,7 @@
 #include "kmfilter.h"
 #include "kmfilterdlg.h"
 #include "kmmessage.h"
+#include "kmfolder.h"
 
 
 //-----------------------------------------------------------------------------
@@ -85,6 +86,37 @@ bool KMFilterMgr::process(KMMessage* msg)
     if (!filter->execActions(msg, stopIt)) stillOwner = FALSE;
   }
   return stillOwner;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFilterMgr::cleanup(void)
+{
+  KMFolder* fld;
+
+  debug("closing temp. opened folders:");
+
+  for (fld=mOpenFolders.first(); fld; fld=mOpenFolders.next())
+    if (fld) 
+    {
+      debug(" ... %s", (const char*)fld->name());
+      fld->close();
+    }
+
+  mOpenFolders.clear();
+}
+
+
+//-----------------------------------------------------------------------------
+int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
+{
+  assert(aFolder!=NULL);
+
+  int rc = aFolder->open();
+  if (rc) return rc;
+
+  mOpenFolders.append(aFolder);
+  return rc;
 }
 
 

@@ -20,7 +20,7 @@
 #include "kmmsgpart.h"
 
 #include <klined.h>
-#include <ktopwidget.h>
+#include "kmtopwidget.h"
 #ifdef HAS_KSPELL
 #include <kspell.h>
 #endif
@@ -84,8 +84,8 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-#define KMComposeWinInherited KTopLevelWidget
-class KMComposeWin : public KTopLevelWidget
+#define KMComposeWinInherited KMTopLevelWidget
+class KMComposeWin : public KMTopLevelWidget
 {
   Q_OBJECT
 
@@ -123,6 +123,7 @@ public slots:
   void slotSendLater();
   void slotDropAction();
   void slotNewComposer();
+  void slotNewMailReader();
   void slotClose();
   void slotHelp();
 
@@ -224,8 +225,8 @@ protected:
   virtual const QString newsgroups(void) const { return mEdtNewsgroups.text(); }
   virtual const QString followupTo(void) const { return mEdtFollowupTo.text(); }
 
-  
-  /** Save settings upon close. */
+  /** Ask for confirmation if the message was changed.
+    Save settings upon close. */
   virtual void closeEvent(QCloseEvent*);
 
   /** Add an attachment to the list. */

@@ -5,6 +5,7 @@
 #include "kmacctpop.h"
 #include "kmglobal.h"
 #include "kbusyptr.h"
+#include "kmfiltermgr.h"
 
 #include <assert.h>
 #include <kconfig.h>
@@ -114,7 +115,9 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account)
     emit newMail(account);
   }
   delete wid;
+  filterMgr->cleanup();
   kbp->idle();
+
   return hasNewMail;
 }
 
@@ -206,10 +209,13 @@ bool KMAcctMgr::checkMail(void)
     }
   }
   delete wid;
+  filterMgr->cleanup();
+
   return hasNewMail;
 }
 
 
+//-----------------------------------------------------------------------------
 QStrList  KMAcctMgr::getAccounts() {
   
   KMAccount *cur;
@@ -222,6 +228,7 @@ QStrList  KMAcctMgr::getAccounts() {
 
 }
 
+//-----------------------------------------------------------------------------
 bool KMAcctMgr::intCheckMail(int item) {
 
   KMAccount* cur;

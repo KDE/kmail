@@ -68,10 +68,6 @@ extern KMFolder* outboxFolder;
 extern KMFolder* sentFolder;
 extern KMFolder* trashFolder;
 
-/** Global list of top level windows. */
-typedef QList<QWidget> WindowList;
-extern WindowList* windowList;
-
 /** The "about KMail" text. */
 extern const char* aboutText;
 

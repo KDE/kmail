@@ -43,8 +43,6 @@
 #include "kmmainwin.moc"
 
 
-static int windowCount = 0;
-
 //-----------------------------------------------------------------------------
 KMMainWin::KMMainWin(QWidget *, char *name) :
   KMMainWinInherited(name)
@@ -108,9 +106,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setupToolBar();
   setupStatusBar();
 
-  windowCount++;
-  windowList->append(this);
-
   // set active folder to `inbox' folder
   idx = mFolderTree->indexOfFolder(inboxFolder);
   if (idx>=0) mFolderTree->setCurrentItem(idx);
@@ -123,9 +118,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 //-----------------------------------------------------------------------------
 KMMainWin::~KMMainWin()
 {
-  printf("KMMainWin::~KMMainWin()\n");
-
-  windowList->remove(this);
+  debug("~KMMainWin");
   if (mHeaders)   delete mHeaders;
   if (mToolBar)   delete mToolBar;
   if (mMenuBar)   delete mMenuBar;
@@ -154,6 +147,7 @@ void KMMainWin::readConfig()
     mHorizPannerSep = mVertPannerSep = 100;
 
   mMsgView->readConfig();
+  mHeaders->readConfig();
 }
 
 
@@ -203,20 +197,9 @@ void KMMainWin::statusMsg(const char* aText)
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::closeEvent(QCloseEvent *e)
-{
-  KMMainWinInherited::closeEvent(e);
-  writeConfig(FALSE);
-
-  e->accept();
-  if (!(--windowCount)) qApp->quit();
-}
-
-
-//-----------------------------------------------------------------------------
 void KMMainWin::slotClose() 
 {
-  close();
+  close(TRUE);
 }
 
 

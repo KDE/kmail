@@ -64,6 +64,12 @@ public:
 
   /** Static function that creates a filter action of this type. */
   static KMFilterAction* newAction(void);
+
+  /**
+   * Temporarily open folder. Will be closed by the next 
+   * KMFilterMgr::cleanup() call.
+   */
+  static int tempOpenFolder(KMFolder* aFolder);
 };
 
 typedef KMFilterAction* (*KMFilterActionNewFunc)(void);

@@ -16,6 +16,7 @@
 #include "kpgp.h"
 #include "kfontdialog.h"
 #include "kfontutils.h"
+#include "kmtopwidget.h"
 
 #include <kapp.h>
 #include <kapp.h>
@@ -63,6 +64,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 //-----------------------------------------------------------------------------
 KMSettings::~KMSettings()
 {
+  debug("~KMSettings");
   accountList->clear();
 }
 
@@ -804,6 +806,7 @@ void KMSettings::doApply()
 
   folderMgr->contentsChanged();
   KMMessage::readConfig();
+  KMTopLevelWidget::forEvery(&KMTopLevelWidget::readConfig);
 }
 
 
