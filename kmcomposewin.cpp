@@ -2194,8 +2194,6 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
 
         if( Kpgp::Ok == result ) {
           newBodyPart.setBodyEncodedBinary( block.text() );
-          if( newBodyPart.name().isEmpty() )
-            newBodyPart.setName("encrypted message part");
           newBodyPart.setCharset( oldBodyPart.charset() );
         }
         else if( Kpgp::Failure == result ) {
