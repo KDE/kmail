@@ -33,7 +33,7 @@ if [ $? ] ; then
 fi 
 export TEMPFILE
 cat > $TEMPFILE
-if antivir --scan-in-mbox $TEMPFILE | grep -q ALERT; then
+if antivir --scan-in-archive --scan-in-mbox $TEMPFILE | grep -q ALERT; then
 echo "X-Virus-Flag: yes"
 else
 echo "X-Virus-Flag: no"
