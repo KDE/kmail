@@ -1258,7 +1258,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("Configuration..."), 0, this, 
 		      SLOT(slotSettings()), actionCollection(), "settings" );
 
-  (void) new KAction( i18n("&AddressBook..."), "contents", 0, this, 
+  (void) new KAction( i18n("Address &Book..."), "contents", 0, this, 
 		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
 
   (void) new KAction( i18n("F&ilter Rules..."), 0, this, 

@@ -13,6 +13,8 @@
 <Action name="check_mail_in" />
 <Action name="send_queued" />
 <Separator />
+<Action name="addressbook" />
+<Separator />
 <Action name="file_close" />
 <Action name="file_quit" />
 </Menu>
@@ -68,7 +70,6 @@
 <Menu name="settings" >
 <Action name="settings" />
 <Action name="filter" />
-<Action name="addressbook" />
 <Action name="config_toolbars" />
 </Menu>
 </MenuBar>
