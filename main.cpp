@@ -211,7 +211,6 @@ int main(int argc, char *argv[])
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
-
   if (!KMailApplication::start())
      return 0;
 
@@ -219,8 +218,8 @@ int main(int argc, char *argv[])
   KGlobal::locale()->insertCatalogue("libkdenetwork");
 
   // Check that all updates have been run on the config file:
-  kmail::checkConfigUpdates();
-  kmail::lockOrDie();
+  KMail::checkConfigUpdates();
+  KMail::lockOrDie();
 
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
 
@@ -244,6 +243,6 @@ int main(int argc, char *argv[])
 
   // clean up
   kmailKernel.cleanup();
-  kmail::cleanup();
+  KMail::cleanup();
   return ret;
 }
