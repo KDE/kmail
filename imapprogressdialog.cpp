@@ -82,6 +82,7 @@ ProgressListViewItem::~ProgressListViewItem()
 void ProgressListViewItem::setProgress( int progress )
 {
   mProgress->setProgress( progress );
+  repaint();
 }
 
 void ProgressListViewItem::paintCell( QPainter *p, const QColorGroup &cg,
