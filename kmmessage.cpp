@@ -172,6 +172,7 @@ void KMMessage::assign( const KMMessage& other )
     mUnencryptedMsg = new KMMessage( *other.unencryptedMsg() );
   else
     mUnencryptedMsg = 0;
+  setDrafts( other.drafts() );
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //KMMsgBase::assign( &other );
 }
