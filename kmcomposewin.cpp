@@ -1958,8 +1958,13 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KURL::List files = KFileDialog::getOpenURLs(QString::null, QString::null,
-        this, i18n("Attach File"));
+  KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
+  fdlg.setOperationMode( KFileDialog::Other );
+  fdlg.setCaption(i18n("Attach File"));
+  fdlg.setMode(KFile::Files);
+  fdlg.exec();
+  KURL::List files = fdlg.selectedURLs();
+
   for (KURL::List::Iterator it = files.begin(); it != files.end(); ++it)
     addAttach(*it);
 }
@@ -2097,6 +2102,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 void KMComposeWin::slotInsertFile()
 {
   KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
+  fdlg.setOperationMode( KFileDialog::Opening );
   fdlg.setCaption(i18n("Insert File"));
   fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(FALSE), 4711,
     false, 0, 0, 0);
