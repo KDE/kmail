@@ -30,6 +30,7 @@
 #include "kmkernel.h"
 #include "partNode.h"
 #include "attachmentlistview.h"
+#include "transportmanager.h"
 using KMail::AttachmentListView;
 #include "dictionarycombobox.h"
 using KMail::DictionaryComboBox;
@@ -1031,29 +1032,84 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 }
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::getTransportMenu()
+{
+  QStringList availTransports;
+
+  mActNowMenu->clear();
+  mActLaterMenu->clear();
+  availTransports = KMail::TransportManager::transportNames();
+  QStringList::Iterator it;
+  int id = 0;
+  for(it = availTransports.begin(); it != availTransports.end() ; ++it, id++) 
+  {
+    mActNowMenu->insertItem((*it).replace("&", "&&"), id);
+    mActLaterMenu->insertItem((*it).replace("&", "&&"), id);
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::setupActions(void)
 {
+  KActionMenu *actActionNowMenu, *actActionLaterMenu;
+
   if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    (void) new KAction (i18n("&Send Now"), "mail_send", CTRL+Key_Return,
-                        this, SLOT(slotSendNow()), actionCollection(),
-                        "send_default");
-    (void) new KAction (i18n("Send &Later"), "queue", 0,
-                        this, SLOT(slotSendLater()),
-                        actionCollection(), "send_alternative");
+    ( void )  new KAction( i18n("&Send Mail"), "mail_send", CTRL+Key_Return,
+                        this, SLOT(slotSendNow()), actionCollection(),"send_default");
+    actActionNowMenu =  new KActionMenu (i18n("&Send Mail Via"), "mail_send",
+		    actionCollection(), "send_default_via" );
+
+    (void) new KAction (i18n("Send &Later"), "queue", 0, this, 
+			SLOT(slotSendLater()), actionCollection(),"send_alternative");
+    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue", 
+		    actionCollection(), "send_alternative_via" );
+  
   }
   else //no, default = send later
   {
     //default = queue, alternative = send now
     (void) new KAction (i18n("Send &Later"), "queue",
                         CTRL+Key_Return,
-                        this, SLOT(slotSendLater()), actionCollection(),
-                        "send_default");
-    (void) new KAction (i18n("&Send Now"), "mail_send", 0,
-                        this, SLOT(slotSendNow()),
-                        actionCollection(), "send_alternative");
+                        this, SLOT(slotSendLater()), actionCollection(),"send_default");
+    actActionLaterMenu = new KActionMenu (i18n("Send &Later Via"), "queue", 
+		    actionCollection(), "send_default_via" );
+    
+   ( void )  new KAction( i18n("&Send Mail"), "mail_send", 0,
+                        this, SLOT(slotSendNow()), actionCollection(),"send_alternative");
+
+    actActionNowMenu =  new KActionMenu (i18n("&Send Mail Via"), "mail_send",
+		    actionCollection(), "send_alternative_via" );
+
   }
+
+  // needed for sending "default transport"
+  actActionNowMenu->setDelayed(true);
+  actActionLaterMenu->setDelayed(true);
+
+  connect(  actActionNowMenu, SIGNAL(  activated() ), this, 
+		    SLOT( slotSendNow() ) );
+  connect(  actActionLaterMenu, SIGNAL(  activated() ), this, 
+		    SLOT( slotSendLater() ) );
+
+
+  mActNowMenu = actActionNowMenu->popupMenu();
+  mActLaterMenu = actActionLaterMenu->popupMenu();
+
+  connect(  mActNowMenu, SIGNAL(  activated( int ) ), this, 
+		    SLOT( slotSendNowVia( int ) ) );
+  connect(  mActNowMenu, SIGNAL(  aboutToShow() ), this, 
+		    SLOT( getTransportMenu() ) );
+
+  connect(  mActLaterMenu, SIGNAL(  activated( int ) ), this, 
+		  SLOT( slotSendLaterVia( int ) ) );
+  connect(  mActLaterMenu, SIGNAL(  aboutToShow() ), this, 
+		  SLOT( getTransportMenu() ) );
+
+
+
 
   (void) new KAction (i18n("Save in &Drafts Folder"), "filesave", 0,
                       this, SLOT(slotSaveDraft()),
@@ -3784,6 +3840,27 @@ void KMComposeWin::slotSendLater()
 void KMComposeWin::slotSaveDraft() {
   if ( mEditor->checkExternalEditorFinished() )
     doSend( false, true );
+}
+
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotSendNowVia( int item )
+{
+  QStringList availTransports= KMail::TransportManager::transportNames();
+  QString customTransport = availTransports[ item ];
+
+  mTransport->setCurrentText( customTransport );
+  slotSendNow();
+}
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotSendLaterVia( int item )
+{
+  QStringList availTransports= KMail::TransportManager::transportNames();
+  QString customTransport = availTransports[ item ];
+
+  mTransport->setCurrentText( customTransport );
+  slotSendLater();
 }
 
 

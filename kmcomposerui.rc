@@ -1,4 +1,4 @@
-<!DOCTYPE kpartgui ><kpartgui version="25" name="kmcomposer" >
+<!DOCTYPE kpartgui ><kpartgui version="26" name="kmcomposer" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;Message</text>
@@ -6,7 +6,9 @@
    <Action name="open_mailreader" />
    <Separator/>
    <Action name="send_default" />
+   <Action name="send_default_via" />
    <Action name="send_alternative" />
+   <Action name="send_alternative_via" />
    <Action name="save_in_drafts" />
    <Separator/>
    <Action name="insert_file" />
@@ -79,8 +81,8 @@
   </Menu>
  </MenuBar>
  <ToolBar noMerge="1" name="mainToolBar" fullWidth="true" ><text>Main Toolbar</text>
-  <Action name="send_default" />
-  <Action name="send_alternative" />
+  <Action name="send_default_via" />
+  <Action name="send_alternative_via" />
   <Separator/>
   <Action name="attach" />
   <Separator/>

@@ -419,7 +419,12 @@ public slots:
   void slotAttachFile();
   void slotInsertRecentFile(const KURL&);
   void slotSendNow();
+  void slotSendNowVia( int item );
   void slotSendLater();
+  void slotSendLaterVia( int item );
+
+  void getTransportMenu();
+
   /**
    * Returns true when saving was successful.
    */
@@ -954,6 +959,9 @@ private:
   QTimer *mAutoSaveTimer;
   QString mAutoSaveFilename;
   int mLastAutoSaveErrno; // holds the errno of the last try to autosave
+
+  QPopupMenu *mActNowMenu;
+  QPopupMenu *mActLaterMenu;
 };
 
 #endif
