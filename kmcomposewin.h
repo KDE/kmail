@@ -13,6 +13,7 @@
 //#include <qevent.h>
 //#include <qwidget.h>
 
+#include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qclipboard.h>
 #include <qpalette.h>
@@ -266,7 +267,7 @@ protected:
 				 QLineEdit* edt, QPushButton* btn=NULL);
   void rethinkHeaderLine(int value, int mask, int& row,
 				 const QString labelStr, QLabel* lbl,
-				 QComboBox* cbx);
+				 QComboBox* cbx, QCheckBox *chk);
   
   /** Initialization methods */
   void setupActions();
@@ -330,6 +331,7 @@ protected:
   KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
   QLabel    mLblIdentity, mLblTransport;
   QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
+  QCheckBox mBtnIdentity, mBtnTransport;
   QPushButton mBtnTo, mBtnCc, mBtnBcc, mBtnFrom, mBtnReplyTo;
   bool mSpellCheckInProgress;
   bool mDone;
@@ -365,6 +367,7 @@ protected:
   static QString mPathAttach;
   QPalette mPalette;
   QString mId;
+  QStringList mTransportHistory;
 
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;

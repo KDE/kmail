@@ -117,13 +117,15 @@ QString KMComposeWin::mPathAttach = QString::null;
 KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   : KMTopLevelWidget (),
   mMainWidget(this),
-  mIdentity(&mMainWidget), mTransport(&mMainWidget),
+  mIdentity(&mMainWidget), mTransport(true, &mMainWidget),
   mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget),
   mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget),
   mEdtBcc(this,&mMainWidget), mEdtSubject(this,&mMainWidget, "subjectLine"),
   mLblIdentity(&mMainWidget), mLblTransport(&mMainWidget),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
+  mBtnIdentity(i18n("Sticky"),&mMainWidget),
+  mBtnTransport(i18n("Sticky"),&mMainWidget),
   mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget),
   mBtnBcc("...",&mMainWidget),  mBtnFrom("...",&mMainWidget),
   mBtnReplyTo("...",&mMainWidget),
@@ -174,7 +176,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   else
     toolBar()->hide();
 
-  mIdentity.insertStringList( KMIdentity::identities() );
   connect(&mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
   connect(&mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
@@ -221,7 +222,7 @@ void KMComposeWin::readConfig(void)
 {
   KConfig *config = kapp->config();
   QString str;
-  int w, h;
+  int w, h, maxTransportItems;
 
   config->setGroup("Composer");
   mAutoSign = config->readEntry("signature","manual") == "auto";
@@ -230,6 +231,13 @@ void KMComposeWin::readConfig(void)
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
   mLineBreak = config->readNumEntry("break-at", 78);
+  mBtnIdentity.setChecked(config->readBoolEntry("sticky-identity", false));
+  if (mBtnIdentity.isChecked())
+    mId = config->readEntry("previous-identity", mId );
+  mBtnTransport.setChecked(config->readBoolEntry("sticky-transport", false));
+  mTransportHistory = config->readListEntry("transport-history");
+  maxTransportItems = config->readNumEntry("max-transport-items",10);
+
   if ((mLineBreak == 0) || (mLineBreak > 78))
     mLineBreak = 78;
   if (mLineBreak < 60)
@@ -263,6 +271,8 @@ void KMComposeWin::readConfig(void)
   mPalette.setActive(ncgrp);
   mPalette.setInactive(ncgrp);
 
+  //  mIdentity.setPalette(mPalette);
+  mTransport.setPalette(mPalette);
   mEdtFrom.setPalette(mPalette);
   mEdtReplyTo.setPalette(mPalette);
   mEdtTo.setPalette(mPalette);
@@ -331,7 +341,29 @@ void KMComposeWin::readConfig(void)
   if (w<200) w=200;
   if (h<200) h=200;
   resize(w, h);
-}	
+
+  mIdentity.insertStringList( KMIdentity::identities() );
+  for (int i=0; i < mIdentity.count(); ++i)
+    if (mIdentity.text(i) == mId) {
+      mIdentity.setCurrentItem(i);
+      break;
+    }
+
+  if (!mBtnTransport.isChecked() || mTransportHistory.isEmpty()) {
+    QString curTransport;
+    config->setGroup("sending mail");
+    if (config->readEntry("Method") == "mail")
+      curTransport = "file://" + config->readEntry("Mailer");
+    else
+      curTransport = "smtp://" + config->readEntry("Smtp Host") + ":" +
+	config->readEntry("Smtp Port");
+    mTransportHistory.remove( curTransport );
+    mTransportHistory.prepend( curTransport );
+  }
+  while (mTransportHistory.count() > (uint)maxTransportItems)
+    mTransportHistory.remove( mTransportHistory.last());
+  mTransport.insertStringList( mTransportHistory );
+}
 
 
 //-----------------------------------------------------------------------------
@@ -345,6 +377,12 @@ void KMComposeWin::writeConfig(void)
   config->writeEntry("show-toolbar", mShowToolBar);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
+  config->writeEntry("sticky-transport", mBtnTransport.isChecked());
+  config->writeEntry("sticky-identity", mBtnIdentity.isChecked());
+  config->writeEntry("previous-identity", mIdentity.currentText() );
+  mTransportHistory.remove(mTransport.currentText());
+  mTransportHistory.prepend(mTransport.currentText());
+  config->writeEntry("transport-history", mTransportHistory );
 #if defined CHARSETS
   config->writeEntry("7bit-is-ascii",m7BitAscii);
   config->writeEntry("quote-unknown",mQuoteUnknownCharacters);
@@ -481,12 +519,12 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   debug( "KMComposeWin::rethinkFields" );
   if (!fromSlot) identityAction->setChecked(showHeaders&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
-		    &mLblIdentity, &mIdentity);
+		    &mLblIdentity, &mIdentity, &mBtnIdentity);
   if (!fromSlot) transportAction->setChecked(showHeaders&HDR_TRANSPORT);
-  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("&Mail Transport:"),
-		    &mLblTransport, &mTransport);
+  rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l Transport:"),
+		    &mLblTransport, &mTransport, &mBtnTransport);
   if (!fromSlot) fromAction->setChecked(showHeaders&HDR_FROM);
-  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
+  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("Fro&m:"),
 		    &mLblFrom, &mEdtFrom, &mBtnFrom);
   if (!fromSlot) replyToAction->setChecked(showHeaders&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
@@ -501,7 +539,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Bcc:"),
 		    &mLblBcc, &mEdtBcc, &mBtnBcc);
   if (!fromSlot) subjectAction->setChecked(showHeaders&HDR_SUBJECT);
-  rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("&Subject:"),
+  rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
 		    &mLblSubject, &mEdtSubject);
 #ifdef KRN
   if (!fromSlot) newsgroupsAction->setChecked(showHeaders&HDR_NEWSGROUPS);
@@ -543,10 +581,8 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 				     const QString aLabelStr, QLabel* aLbl,
 				     QLineEdit* aEdt, QPushButton* aBtn)
 {
-  debug( "rethinkHeaderLine" );
   if (aValue & aMask)
   {
-    //mMnuView->setItemChecked(aMask, TRUE);
     aLbl->setText(aLabelStr);
     aLbl->adjustSize();
     aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
@@ -559,8 +595,6 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
     aEdt->setMaximumSize(1000, aLbl->height()+2);
-    //aEdt->setFocusPolicy(QWidget::ClickFocus);
-    //aEdt->setFocusPolicy(QWidget::StrongFocus);
     mEdtList.append(aEdt);
 
     if (aBtn)
@@ -577,7 +611,6 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
   {
     aLbl->hide();
     aEdt->hide();
-    // aEdt->setFocusPolicy(QWidget::NoFocus);
     if (aBtn) aBtn->hide();
   }
 }
@@ -585,7 +618,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 				     const QString aLabelStr, QLabel* aLbl,
-				     QComboBox* aCbx)
+				     QComboBox* aCbx, QCheckBox* aChk)
 {
   if (aValue & aMask)
   {
@@ -603,13 +636,16 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aCbx->setMaximumSize(1000, aLbl->height()+2);
     mEdtList.append(aCbx);
 
-    mGrid->addMultiCellWidget(aCbx, aRow, aRow, 1, 2);
+    mGrid->addWidget(aCbx, aRow, 1);
+    mGrid->addWidget(aChk, aRow, 2);
+    aChk->setFixedSize(aChk->sizeHint().width(), aLbl->height());
     aRow++;
   }
   else
   {
     aLbl->hide();
     aCbx->hide();
+    aChk->hide();
   }
 }
 
