@@ -129,7 +129,7 @@ void KMFolderTree::connectSignals()
   connect(&mUpdateTimer, SIGNAL(timeout()),
           this, SLOT(delayedUpdate()));
 
-  connect(this, SIGNAL(clicked(QListViewItem*)),
+  connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	  this, SLOT(doFolderSelected(QListViewItem*)));
 
   connect(kernel->folderMgr(), SIGNAL(changed()),
@@ -701,8 +701,12 @@ void KMFolderTree::incCurrentFolder()
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
   if (fti && fti->folder()) {
       prepareItem( fti );
+      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+		 this,SLOT(doFolderSelected(QListViewItem*)));
       setFocus();
       setCurrentItem( fti );
+      connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	      this,SLOT(doFolderSelected(QListViewItem*)));
   }
 }
 
@@ -714,8 +718,12 @@ void KMFolderTree::decCurrentFolder()
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
   if (fti && fti->folder()) {
       prepareItem( fti );
+      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+		 this,SLOT(doFolderSelected(QListViewItem*)));
       setFocus();
       setCurrentItem( fti );
+      connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	      this,SLOT(doFolderSelected(QListViewItem*)));
   }
 }
 
@@ -1061,6 +1069,8 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
     dropItem = i;
     autoopen_timer.start( autoopenTime );
   }
+  disconnect(this, SIGNAL(currentChanged(QListViewItem*)),
+	     this, SLOT(doFolderSelected(QListViewItem*)));
 
   if ( !acceptDrag(e) ) {
     e->ignore();
@@ -1182,6 +1192,8 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
     setCurrentItem( oldCurrent );
     if (oldSelected)
       setSelected( oldSelected, TRUE );
+    connect(this, SIGNAL(currentChanged(QListViewItem*)),
+	    this, SLOT(doFolderSelected(QListViewItem*)));
 }
 
 //-----------------------------------------------------------------------------
@@ -1241,6 +1253,8 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     setCurrentItem( oldCurrent );
     if ( oldSelected )
       setSelected( oldSelected, TRUE );
+    connect(this, SIGNAL(currentChanged(QListViewItem*)),
+	    this, SLOT(doFolderSelected(QListViewItem*)));
 }
 
 //-----------------------------------------------------------------------------
