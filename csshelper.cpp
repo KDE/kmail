@@ -386,7 +386,7 @@ namespace KMail {
 
 	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
 
-	       "div.fancy.header table {\n"
+	       "div.fancy.header > table.outer{\n"
 	       "  background-color: %2 ! important;\n"
 	       "  color: %3 ! important;\n"
 	       "  border-bottom: solid %3 1px ! important;\n"
@@ -394,9 +394,22 @@ namespace KMail {
 	       "  border-right: solid %3 1px ! important;\n"
 	       "}\n\n"
 
+		   "div.fancy.header > div.sender-pic{\n"
+		   "  font-size:0.8em;\n"
+		   "  border:1px solid black;\n"
+		   "  background-color:InfoBackground;\n"
+		   "}\n\n"
+
+		   "div.fancy.header > div.sender-status{\n"
+		   "  text-align:center;\n"
+		   "}\n\n"
+
 	       "div.htmlWarn {\n"
 	       "  border: 2px solid #ffffff ! important;\n"
-	       "}\n\n" )
+	       "}\n\n"
+           "div.senderStatus {\n"
+            
+            )
       .arg( headerFont,
 	    cg.background().name(),
 	    cg.foreground().name() )
@@ -569,13 +582,26 @@ namespace KMail {
 
 	       "div.fancy.header > div a[href]:hover { text-decoration: underline ! important; }\n\n"
 
-	       "div.fancy.header table {\n"
+	       "div.fancy.header > table.outer {\n"
 	       "  background-color: %5 ! important;\n"
 	       "  color: %4 ! important;\n"
 	       "  border-bottom: solid %4 1px ! important;\n"
 	       "  border-left: solid %4 1px ! important;\n"
 	       "  border-right: solid %4 1px ! important;\n"
-	       "}\n\n" )
+	       "}\n\n"
+
+		   "div.senderpic{\n"
+		   "  font-size:0.8em;\n"
+		   "  border:1px solid black;\n"
+		   // FIXME: InfoBackground crashes KHTML
+		   //"  background-color:InfoBackground;\n"
+		   "  background-color:yellow;\n"
+		   "}\n\n"
+
+		   "div.senderstatus{\n"
+		   "  text-align:center;\n"
+		   "}\n\n" )
+
       .arg( headerFont )
       .arg( cg.highlight().name(),
 	    cg.highlightedText().name(),

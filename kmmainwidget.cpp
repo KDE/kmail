@@ -1990,6 +1990,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mMsgView->addAddrBookAction()->plug( menu );
       mMsgView->openAddrBookAction()->plug( menu );
       mMsgView->copyAction()->plug( menu );
+      mMsgView->startImChatAction()->plug( menu );
     } else {
       // popup on a not-mailto URL
       mMsgView->urlOpenAction()->plug( menu );
@@ -1997,6 +1998,12 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mMsgView->copyURLAction()->plug( menu );
       mMsgView->addBookmarksAction()->plug( menu );
     }
+    if ( aUrl.protocol() == "im" )
+    {
+      // popup on an IM address
+      mMsgView->startImChatAction()->plug( menu );
+    }
+    kdDebug( 0 ) << k_funcinfo << " URL is: " << aUrl << endl;
   }
   else
   {

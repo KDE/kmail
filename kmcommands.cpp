@@ -46,6 +46,8 @@
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
+#include <kabc/stdaddressbook.h>
+#include <kabc/addresseelist.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kparts/browserextension.h>
@@ -78,6 +80,7 @@ using KMail::MailSourceViewer;
 #include "kmreadermainwin.h"
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
+#include "kimproxy.h"
 
 #include "progressmanager.h"
 using KMail::ProgressManager;
@@ -1819,6 +1822,10 @@ void KMUrlClickedCommand::execute()
     win->setCharset("", TRUE);
     win->show();
   }
+  else if ( mUrl.protocol() == "im" )
+  {
+    kmkernel->imProxy()->chatWithContact( mUrl.path() );
+  }
   else if ((mUrl.protocol() == "http") || (mUrl.protocol() == "https") ||
            (mUrl.protocol() == "ftp") || (mUrl.protocol() == "file") ||
            (mUrl.protocol() == "ftps") || (mUrl.protocol() == "sftp" ) ||
@@ -2226,4 +2233,25 @@ KMMailingListHelpCommand::KMMailingListHelpCommand( QWidget *parent, KMFolder *f
 KURL::List KMMailingListHelpCommand::urls() const
 {
   return mFolder->mailingList().helpURLS();
+}
+
+KMIMChatCommand::KMIMChatCommand( const KURL &url, KMMessage *msg )
+  :mUrl( url ), mMessage( msg )
+{
+}
+
+void KMIMChatCommand::execute()
+{
+  kdDebug( 5006 ) << k_funcinfo << " URL is: " << mUrl << endl;
+  // find UID for mail address
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( mUrl.path() ) ) ;
+
+  // start chat
+  if( addresses.count() == 1 )
+      kmkernel->imProxy()->chatWithContact( addresses[0].uid() );
+  else
+  {
+    kdDebug( 5006 ) << "Didn't find exactly one addressee, couldn't tell who to chat to for that email address.  Count = " << addresses.count() << endl;
+  }
 }

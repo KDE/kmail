@@ -10,6 +10,7 @@
 
 #include <kconfig.h>
 #include <kdeversion.h>
+#include "kimproxy.h"
 
 #include "kmailIface.h"
 
@@ -219,6 +220,12 @@ public:
   // ### again.
   void setContextMenuShown( bool flag ) { mContextMenuShown = flag; }
   bool contextMenuShown() const { return mContextMenuShown; }
+  
+  /**
+   * Get a reference to KMail's KIMProxy instance
+   * @return a pointer to a valid KIMProxy 
+   */
+  ::KIMProxy* imProxy();
 
 public slots:
 
@@ -309,7 +316,9 @@ private:
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
-
+  
+  // KIMProxy provides access to up to date instant messaging presence data
+  ::KIMProxy *mKIMProxy;
   // true if the context menu of KMFolderTree or KMHeaders is shown
   // this is necessary to know in order to prevent a dead lock between the
   // context menus and the pinentry program

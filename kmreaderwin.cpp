@@ -555,6 +555,8 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
  			Key_X, this, SLOT(slotToggleFixedFont()),
  			ac, "toggle_fixedfont" );
 
+  mStartIMChatAction = new KAction( i18n("Chat &With..."), 0, this,
+				    SLOT(slotIMChat()), ac, "start_im_chat" );
 }
 
 
@@ -2238,6 +2240,12 @@ void KMReaderWin::slotSaveMsg()
     delete saveCommand;
   else
     saveCommand->start();
+}
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotIMChat()
+{
+  KMCommand *command = new KMIMChatCommand( mUrlClicked, message() );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------

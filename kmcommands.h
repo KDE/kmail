@@ -728,4 +728,19 @@ protected:
   virtual KURL::List urls() const;
 };
 
+class KMIMChatCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMIMChatCommand( const KURL &url, KMMessage *msg=0 );
+
+private:
+  virtual void execute();
+
+  KURL mUrl;
+  KMMessage *mMessage;
+};
+
+
 #endif /*KMCommands_h*/
