@@ -5715,6 +5715,8 @@ void KMEdit::spellcheck()
 
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {
+    kdDebug()<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) : "<<text <<endl;
+
      if( spellLineEdit )
          mComposer->sujectLineWidget()->spellCheckerMisspelling( text, lst, pos);
      else
@@ -5724,6 +5726,7 @@ void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsign
 
 void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos)
 {
+    kdDebug()<<"slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos) : "<<oldWord<<endl;
     if( spellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerCorrected( oldWord, newWord, pos);
      else
@@ -5815,5 +5818,7 @@ void KMEdit::slotSpellDone()
   {
       if( spellLineEdit )
           spellcheck();
+      else if( status == KSpell::FinishedNoMisspellingsEncountered )
+          KMessageBox::information( this, i18n("No misspellings encountered"));
   }
 }
