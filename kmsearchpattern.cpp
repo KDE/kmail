@@ -135,6 +135,10 @@ bool KMSearchRule::matches( const DwString & aStr, KMMessage & msg,
       static const DwBoyerMoore cc("\nCc: ");
       res = matches( aStr, msg, &cc, 2 );
     }
+    if ( !res ) {
+      static const DwBoyerMoore bcc("\nBcc: ");
+      res = matches( aStr, msg, &bcc, 2 );
+    }
     return res;
   } else {
     if ( !msg.isComplete() ) {
@@ -171,9 +175,11 @@ bool KMSearchRule::matches( const KMMessage * msg ) const {
       // do we need to treat this case specially? Ie.: What shall
       // "equality" mean for recipients.
       return matches( false, 0, 0, msg->headerField("To") )
-          || matches( false, 0, 0, msg->headerField("Cc") );
+          || matches( false, 0, 0, msg->headerField("Cc") )
+          || matches( false, 0, 0, msg->headerField("Bcc") );
 
-    msgContents = msg->headerField("To") + msg->headerField("Cc");
+    msgContents = msg->headerField("To") + msg->headerField("Cc")
+                + msg->headerField("Bcc");
   } else if ( mField == "<size>" ) {
     numerical = true;
     numericalMsgContents = int( msg->msgLength() );
