@@ -109,12 +109,10 @@ class ProgressDialog : public OverlayWidget
     Q_OBJECT
 
 public:
-    ProgressDialog( QWidget* alignWidget, QWidget* parent = 0, const char* name = 0 );
-    ~ProgressDialog();
+  ProgressDialog( QWidget* alignWidget, QWidget* parent = 0, const char* name = 0 );
+  ~ProgressDialog();
 
 protected slots:
-
-  void clear();
 
   void slotTransactionAdded( ProgressItem *item );
   void slotTransactionCompleted( ProgressItem *item );
@@ -126,7 +124,6 @@ protected slots:
   void slotHide();
 protected:
   virtual void closeEvent( QCloseEvent* );
-  virtual void showEvent( QShowEvent* );
 
   TransactionItemView* mScrollView;
   TransactionItem* mPreviousItem;

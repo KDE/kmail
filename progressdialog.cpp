@@ -67,7 +67,6 @@ TransactionItemView::TransactionItemView( QWidget * parent,
     mBigBox->setSpacing(2);
     addChild( mBigBox );
     setResizePolicy( QScrollView::AutoOneFit ); // Fit so that the box expands horizontally
-    setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Preferred ) );
 }
 
 TransactionItem* TransactionItemView::addTransactionItem( ProgressItem* item, bool first )
@@ -83,6 +82,7 @@ void TransactionItemView::resizeContents( int w, int h )
   QScrollView::resizeContents( w, h );
   // Tell the parent (progressdialog) to adapt itself to our new size
   updateGeometry();
+  parentWidget()->adjustSize();
 }
 
 QSize TransactionItemView::sizeHint() const
@@ -108,7 +108,7 @@ TransactionItem::TransactionItem( QWidget* parent,
   : QVBox( parent ), mCancelButton( 0 )
 
 {
-  setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding ) );
+  setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
   if ( !first ) {
     QFrame *f = new QFrame( this );
     f->setFrameShape( QFrame::HLine );
@@ -119,7 +119,7 @@ TransactionItem::TransactionItem( QWidget* parent,
 
   QHBox *h = new QHBox( this );
   h->setSpacing( 5 );
-  h->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding ) );
+  h->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
   mProgress = new QProgressBar( 100, h );
   mProgress->setProgress( item->progress() );
   if ( item->canBeCanceled() ) {
@@ -202,26 +202,12 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const cha
               this, SLOT( slotTransactionStatus( ProgressItem*, const QString& ) ) );
     connect ( pm, SIGNAL( progressItemLabel( ProgressItem*, const QString& ) ),
               this, SLOT( slotTransactionLabel( ProgressItem*, const QString& ) ) );
-   adjustSize();
 }
-
-void ProgressDialog::clear()
-{
-
-}
-
 
 void ProgressDialog::closeEvent( QCloseEvent* e )
 {
   e->accept();
   hide();
-}
-
-
-void ProgressDialog::showEvent( QShowEvent* e )
-{
-  adjustSize();
-  OverlayWidget::showEvent( e );
 }
 
 
@@ -243,7 +229,6 @@ void ProgressDialog::slotTransactionAdded( ProgressItem *item )
    } else {
      ti = mScrollView->addTransactionItem( item, mTransactionsToListviewItems.empty() );
    }
-   adjustSize();
    if ( ti )
      mTransactionsToListviewItems.replace( item, ti );
 }
