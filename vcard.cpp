@@ -1,6 +1,7 @@
 #include "vcard.h"
 #include <stdlib.h>
 #include <ctype.h>
+#include <klocale.h>
 
 //
 // VCard class to handle creation and parsing of Netscape
@@ -116,8 +117,8 @@ value :=
 
 // This code is screaming "come do me in PERL!"
 // This STRIPS OUT EMPTY TOKENS
-static vector<QString> tokenizeBy(const QString& str, char tok) {
-vector<QString> tokens;
+static QValueList<QString> tokenizeBy(const QString& str, char tok) {
+QValueList<QString> tokens;
 unsigned int head, tail;
 const char *chstr = str.ascii();
 unsigned int length = str.length();
@@ -125,7 +126,7 @@ unsigned int length = str.length();
   if (length < 1) return tokens;
 
   if (length == 1) {
-    tokens.push_back(str);
+    tokens.append(str);
     return tokens;
   }
 
@@ -134,13 +135,13 @@ unsigned int length = str.length();
 
     tail = str.find(tok, head);
 
-    if (tail < 0)           // last token - none at end
+    if (tail > length)           // last token - none at end
       tail = length;
 
     if (tail-head > 0) {    // it has to be at least 1 long!
       thisline = &(chstr[head]);
       thisline.truncate(tail-head);
-      tokens.push_back(thisline);
+      tokens.append(thisline);
     }
   }
 return tokens;
@@ -148,7 +149,7 @@ return tokens;
 
 
 VCard::VCard() {
-  _vcdata = new vector<VCardLine>;
+  _vcdata = new QValueList<VCardLine>;
 }
 
 
@@ -157,7 +158,7 @@ VCard::~VCard() {
 }
 
 
-VCard::VCard(vector<VCardLine> *_vcd) : _vcdata(_vcd) {
+VCard::VCard(QValueList<VCardLine> *_vcd) : _vcdata(_vcd) {
 
 }
 
@@ -171,24 +172,24 @@ VCard::VCard(vector<VCardLine> *_vcd) : _vcdata(_vcd) {
 
 // static
 QString VCard::getError(int err) {
-//    switch(err) {
-//    case VC_ERR_INVALID_LINE:
-//      return i18n("The vCard line was invalid.");
-//    case VC_ERR_INTERNAL:
-//      return i18n("An unknown internal error occurred.  Please report to kmail@kde.org");
-//    case VC_ERR_INVALID_NAME:
-//      return i18n("The vCard contained an invalid field.");
-//    case VC_ERR_MISSING_MANDATORY:
-//      return i18n("The vCard is missing a mandatory field.");
-//    case VC_ERR_NO_BEGIN:
-//      return i18n("No beginning was found.");
-//    case VC_ERR_NO_END:
-//      return i18n("No end was found.");
-//    case 0:
-//      return i18n("No error.");
-//    default:
-//      return i18n("Invalid error number.");
-//    }
+    switch(err) {
+    case VC_ERR_INVALID_LINE:
+      return i18n("The vCard line was invalid.");
+    case VC_ERR_INTERNAL:
+      return i18n("An unknown internal error occurred.  Please report to kmail@kde.org");
+    case VC_ERR_INVALID_NAME:
+      return i18n("The vCard contained an invalid field.");
+    case VC_ERR_MISSING_MANDATORY:
+      return i18n("The vCard is missing a mandatory field.");
+    case VC_ERR_NO_BEGIN:
+      return i18n("No beginning was found.");
+    case VC_ERR_NO_END:
+      return i18n("No end was found.");
+    case 0:
+      return i18n("No error.");
+    default:
+      return i18n("Invalid error number.");
+    }
 }
 
 
@@ -211,16 +212,16 @@ QString VCard::getError(int err) {
 VCard *VCard::parseVCard(const QString& vc, int *err) {
 int _err = 0;
 int _state = VC_STATE_BEGIN;
-vector<VCardLine> *_vcdata;
-vector<QString> lines;
+QValueList<VCardLine> *_vcdata;
+QValueList<QString> lines;
 
-  _vcdata = new vector<VCardLine>;
+  _vcdata = new QValueList<VCardLine>;
 
   lines = tokenizeBy(vc, '\n');
 
   // for each line in the vCard
-  for (vector<QString>::iterator j = lines.begin();
-       j != lines.end(); ++j) {
+  for (QValueListIterator<QString> j = lines.begin();
+                                   j != lines.end(); ++j) {
     VCardLine _vcl;
 
     //        first token:
@@ -240,24 +241,24 @@ vector<QString> lines;
       }
 
       // split into two tokens
-      vector<QString> linetokens = tokenizeBy(*j, ':');
+      QValueList<QString> linetokens = tokenizeBy(*j, ':');
 
-      if (linetokens.size() < 2) {  // invalid line - no ':'
+      if (linetokens.count() < 2) {  // invalid line - no ':'
         _err = VC_ERR_INVALID_LINE;
         break;
       }
 
       // check for qualifier and
       // set name, qualified, qualifier
-      vector<QString> nametokens = tokenizeBy(linetokens[0], ';');
+      QValueList<QString> nametokens = tokenizeBy(linetokens[0], ';');
       bool qp = false, first_pass = true;
 
-      if (nametokens.size() > 0) {
+      if (nametokens.count() > 0) {
         _vcl.qualified = false;
         _vcl.name = nametokens[0];
-        for (vector<QString>::iterator z = nametokens.begin();
-                                       z != nametokens.end();
-                                       ++z) {
+        for (QValueListIterator<QString> z = nametokens.begin();
+                                         z != nametokens.end();
+                                         ++z) {
           if (*z == VCARD_QUOTED_PRINTABLE) {
             qp = true;
 	  } else if (!first_pass && !_vcl.qualified) {
@@ -283,9 +284,9 @@ vector<QString> lines;
       //    add to parameters vector
       _vcl.parameters = tokenizeBy(linetokens[1], ';');
       if (qp) {
-        for (vector<QString>::iterator z = _vcl.parameters.begin();
-                                       z != _vcl.parameters.end();
-	                               ++z) {
+        for (QValueListIterator<QString> z = _vcl.parameters.begin();
+                                         z != _vcl.parameters.end();
+	                                 ++z) {
           _vcl.qpDecode(*z);
 	}
       }
@@ -301,7 +302,7 @@ vector<QString> lines;
     }
 
     // add to vector
-    _vcdata->push_back(_vcl);
+    _vcdata->append(_vcl);
   }
 
   // errors to check at the last minute (exit state related)
@@ -336,11 +337,11 @@ void VCard::clean() {
 
 
 bool VCard::removeLine(QString& name) {
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name  &&  !(*i).qualified) {
-      _vcdata->erase(i);
+      _vcdata->remove(i);
       return true;
     }
   }
@@ -349,11 +350,11 @@ return false;
 
 
 bool VCard::removeQualifiedLine(QString& name, QString& qualifier) {
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name && (*i).qualifier == qualifier) {
-      _vcdata->erase(i);
+      _vcdata->remove(i);
       return true;
     }
   }
@@ -362,33 +363,33 @@ return false;
 
 
 int VCard::addLine(QString& name, QString& value) {
-vector<QString> values;
+QValueList<QString> values;
 
-  values.push_back(value);
+  values.append(value);
 
 return addLine(name, values);
 }
 
 
 int VCard::addQualifiedLine(QString& name, QString& qualifier, QString& value) {
-vector<QString> values;
+QValueList<QString> values;
 
-  values.push_back(value);
+  values.append(value);
 
 return addQualifiedLine(name, qualifier, values);
 }
 
 
-int VCard::addLine(QString& name, vector<QString>& value) {
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+int VCard::addLine(QString& name, QValueList<QString>& value) {
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name && !(*i).qualified) {
       (*i).parameters = value;
       if ((*i).isValid()) {
         return 0;
       }
-      _vcdata->erase(i);
+      _vcdata->remove(i);
       return VC_ERR_INVALID_LINE;
     }
   }
@@ -396,21 +397,21 @@ VCardLine vcl;
   vcl.name = name;
   vcl.qualified = false;
   vcl.parameters = value;
-  _vcdata->push_back(vcl);
+  _vcdata->append(vcl);
 return false;
 }
 
 
-int VCard::addQualifiedLine(QString& name, QString& qualifier, vector<QString>& value) {
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+int VCard::addQualifiedLine(QString& name, QString& qualifier, QValueList<QString>& value) {
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name && (*i).qualified && (*i).qualifier == qualifier) {
       (*i).parameters = value;
       if ((*i).isValid()) {
         return 0;
       }
-      _vcdata->erase(i);
+      _vcdata->remove(i);
       return VC_ERR_INVALID_LINE;
     }
   }
@@ -420,7 +421,7 @@ VCardLine vcl;
   vcl.qualifier = qualifier;
   vcl.qualified = true;
   vcl.parameters = value;
-  _vcdata->push_back(vcl);
+  _vcdata->append(vcl);
 return 0;
 }
 
@@ -428,11 +429,11 @@ return 0;
 QString VCard::getValue(QString& name, QString& qualifier) {
 QString failed = "";
 
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name && (*i).qualified && (*i).qualifier == qualifier) {
-      if ((*i).parameters.size() > 0)
+      if ((*i).parameters.count() > 0)
         return (*i).parameters[0];
       else return failed;
     }
@@ -444,11 +445,11 @@ return failed;
 QString VCard::getValue(QString& name) {
 QString failed = "";
 
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name && !(*i).qualified) {
-      if ((*i).parameters.size() > 0)
+      if ((*i).parameters.count() > 0)
         return (*i).parameters[0];
       else return failed;
     }
@@ -457,32 +458,32 @@ return failed;
 }
 
 
-vector<QString> VCard::getValues(QString& name, QString& qualifier) {
+QValueList<QString> VCard::getValues(QString& name, QString& qualifier) {
 QString failedstr = "";
-vector <QString> failed;
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+QValueList<QString> failed;
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name && (*i).qualified && (*i).qualifier == qualifier) {
       return (*i).parameters;
     }
   }
-failed.push_back(failedstr);
+failed.append(failedstr);
 return failed;
 }
 
 
-vector<QString> VCard::getValues(QString& name) {
+QValueList<QString> VCard::getValues(QString& name) {
 QString failedstr = "";
-vector <QString> failed;
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+QValueList<QString> failed;
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     if ((*i).name == name && !(*i).qualified) {
       return (*i).parameters;
     }
   }
-failed.push_back(failedstr);
+failed.append(failedstr);
 return failed;
 }
 
@@ -494,20 +495,20 @@ int cnt, cur;
 
   vct += "\n";
 
-  for (vector<VCardLine>::iterator i = _vcdata->begin();
-                                   i != _vcdata->end();
-                                   ++i) {
+  for (QValueListIterator<VCardLine> i = _vcdata->begin();
+                                     i != _vcdata->end();
+                                     ++i) {
     QString parms = "";
     vct += (*i).name;
     if ((*i).qualified) {
       vct += ";";
       vct += (*i).qualifier;
     }
-    cnt = (*i).parameters.size();
+    cnt = (*i).parameters.count();
     cur = 0;
-    for (vector<QString>::iterator j = (*i).parameters.begin();
-                                   j != (*i).parameters.end();
-	                           ++j) {
+    for (QValueListIterator<QString> j = (*i).parameters.begin();
+                                     j != (*i).parameters.end();
+	                             ++j) {
       QString qpj = *j;
       (*i).qpEncode(qpj);
       if (qpj != *j) {
@@ -593,14 +594,16 @@ bool VCardLine::isValid() const {
   // a trie which is probably the ideal situation, but a bit memory heavy)
   switch(name[0]) {
   case 'a':
-    if (name == VCARD_ADR && qualified &&
-                            (qualifier == VCARD_ADR_DOM    ||
-                             qualifier == VCARD_ADR_INTL   ||
-                             qualifier == VCARD_ADR_POSTAL ||
-                             qualifier == VCARD_ADR_HOME   ||
-                             qualifier == VCARD_ADR_WORK   ||
-                             qualifier == VCARD_ADR_PREF
-                            ))
+    // GS - this seems to not be necessary? - netscape doesn't do it
+//     if (name == VCARD_ADR && qualified &&
+//                             (qualifier == VCARD_ADR_DOM    ||
+//                              qualifier == VCARD_ADR_INTL   ||
+//                              qualifier == VCARD_ADR_POSTAL ||
+//                              qualifier == VCARD_ADR_HOME   ||
+//                              qualifier == VCARD_ADR_WORK   ||
+//                              qualifier == VCARD_ADR_PREF
+//                             ))
+    if (name == VCARD_ADR)
       return true;
     if (name == VCARD_AGENT)
       return true;

@@ -15,8 +15,7 @@
 //
 
 #include <qstring.h>
-#include <vector>
-
+#include <qvaluelist.h>
 
 class VCardLine {
  friend class VCard;
@@ -24,7 +23,7 @@ class VCardLine {
   QString         name;
   bool            qualified;
   QString         qualifier;
-  vector<QString> parameters;
+  QValueList<QString> parameters;
   bool isValid() const;
   void qpEncode(QString& x);
   void qpDecode(QString& x);
@@ -48,8 +47,8 @@ class VCard {
   int addLine(QString& name, QString& value);
   int addQualifiedLine(QString& name, QString& qualifier, QString& value);
   // these add a new entry with multiple values (ie first;last;initial)
-  int addLine(QString& name, vector<QString>& value);
-  int addQualifiedLine(QString& name, QString& qualifier, vector<QString>& value);
+  int addLine(QString& name, QValueList<QString>& value);
+  int addQualifiedLine(QString& name, QString& qualifier, QValueList<QString>& value);
   // these remove an entry from the vCard
   bool removeLine(QString& name);
   bool removeQualifiedLine(QString& name, QString& qualifier);
@@ -57,8 +56,8 @@ class VCard {
   // these query the card values
   QString getValue(QString& name, QString& qualifier);
   QString getValue(QString& name);
-  vector<QString> getValues(QString& name, QString& qualifier);
-  vector<QString> getValues(QString& name);
+  QValueList<QString> getValues(QString& name, QString& qualifier);
+  QValueList<QString> getValues(QString& name);
 
   // this clears all entries
   void clean();
@@ -68,10 +67,10 @@ class VCard {
   inline QString operator()() const { return getVCard(); }
 
  private:
-  VCard(vector<VCardLine> *_vcd);
+  VCard(QValueList<VCardLine> *_vcd);
 
  protected:
-  vector<VCardLine> *_vcdata;
+  QValueList<VCardLine> *_vcdata;
 };
 
 
