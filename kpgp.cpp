@@ -21,7 +21,6 @@
 #include <qlined.h>
 
 #include <kapp.h>
-#include <kapp.h>
 #include <kiconloader.h>
 
 
@@ -572,7 +571,7 @@ Kpgp::runPGP(int action, const char* args)
   // add passphrase
   if(havePassPhrase)
   {
-    sprintf(str," \"-z%s\"",(const char *)passPhrase);
+    sprintf(str," '-z%s'",(const char *)passPhrase);
     cmd += str;
   }
   cmd += " -f";
