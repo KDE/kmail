@@ -150,10 +150,19 @@ int KMFolderIndex::writeIndex()
     if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
 	kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
   }
-  if (ferror(tmpIndexStream)) return ferror(tmpIndexStream);
-  if (fflush(tmpIndexStream) != 0) return errno;
-  if (fsync(fileno(tmpIndexStream)) != 0) return errno;
-  if (fclose(tmpIndexStream) != 0) return errno;
+  int fError = ferror( tmpIndexStream );
+  if( fError != 0 ) {
+    fclose( tmpIndexStream );
+    return fError;
+  }
+  if(    ( fflush( tmpIndexStream ) != 0 )
+      || ( fsync( fileno( tmpIndexStream ) ) != 0 ) ) {
+    int errNo = errno;
+    fclose( tmpIndexStream );
+    return errNo;
+  }
+  if( fclose( tmpIndexStream ) != 0 )
+    return errno;
 
   ::rename(tempName.local8Bit(), indexLocation().local8Bit());
   if (mIndexStream)
