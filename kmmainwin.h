@@ -101,7 +101,6 @@ protected slots:
   void slotCheckOneAccount(int);
   void slotMailChecked(bool newMail);
   void getAccountMenu(); 
-  void slotMenuActivated();
   void slotClose();
   void slotHelp();
   void slotNewMailReader();
