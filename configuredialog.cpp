@@ -4057,6 +4057,7 @@ GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
 
   QVGroupBox* resourceVGB = new QVGroupBox( i18n( "&Resource Management" ), this );
   vlay->addWidget( resourceVGB );
+  resourceVGB->setEnabled( false ); // since !mEnableGwCB->isChecked()
   connect( mEnableGwCB, SIGNAL( toggled(bool) ),
            resourceVGB, SLOT( setEnabled(bool) ) );
 
