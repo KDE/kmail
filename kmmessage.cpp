@@ -572,14 +572,14 @@ static bool flushPart(QString &msg, QStringList &part,
       {
          if (!text.isEmpty())
             msg += flowText(text, indent, maxLength);
-         msg += indent + "\n";
+         msg += indent + '\n';
       }
       else
       {
          if (text.isEmpty())
             text = line;
          else
-            text += " "+line.stripWhiteSpace();
+            text += ' '+line.stripWhiteSpace();
 
          if (((int) text.length() < maxLength) || ((int) line.length() < (maxLength-10)))
             msg += flowText(text, indent, maxLength);
@@ -653,18 +653,18 @@ static void smartQuote( QString &msg, int maxLength )
            while( (it2 != part.end()) && (*it2).isEmpty())
              it2--;
 
-           if ((it2 != part.end()) && ((*it2).right(1) == ":"))
+           if ((it2 != part.end()) && ((*it2).endsWith(":")))
            {
-              fromLine = oldIndent + (*it2) + "\n";
+              fromLine = oldIndent + (*it2) + '\n';
               part.remove(it2);
            }
         }
         if (flushPart( msg, part, oldIndent, maxLength))
         {
            if (oldIndent.length() > indent.length())
-              msg += indent + "\n";
+              msg += indent + '\n';
            else
-              msg += oldIndent + "\n";
+              msg += oldIndent + '\n';
         }
         if (!fromLine.isEmpty())
         {
@@ -960,7 +960,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
     QString listPost = headerField("List-Post");
     QRegExp rx( "<mailto:([^@>]+)@([^>]+)>", false );
     if ( rx.search( listPost, 0 ) != -1 ) // matched
-      toStr = rx.cap(1) + "@" + rx.cap(2);
+      toStr = rx.cap(1) + '@' + rx.cap(2);
   }
   else if (replyToAll)
   {
@@ -1068,18 +1068,18 @@ QCString KMMessage::getRefStr() const
   if (refStr.isEmpty())
     return headerField("Message-Id").latin1();
 
-  i = refStr.find("<");
-  j = refStr.find(">");
+  i = refStr.find('<');
+  j = refStr.find('>');
   firstRef = refStr.mid(i, j-i+1);
   if (!firstRef.isEmpty())
-    retRefStr = firstRef + " ";
+    retRefStr = firstRef + ' ';
 
-  i = refStr.findRev("<");
-  j = refStr.findRev(">");
+  i = refStr.findRev('<');
+  j = refStr.findRev('>');
 
   lastRef = refStr.mid(i, j-i+1);
   if (!lastRef.isEmpty() && lastRef != firstRef)
-    retRefStr += lastRef + " ";
+    retRefStr += lastRef + ' ';
 
   retRefStr += headerField("Message-Id").latin1();
   return retRefStr;
@@ -1853,9 +1853,9 @@ void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
   }
   str = aName;
   if (str[str.length()-1] != ':') str += ": ";
-  else str += " ";
+  else str += ' ';
   str += aValue;
-  if (aValue.right(1)!="\n") str += "\n";
+  if (!aValue[aValue.length()-1] != '\n') str += '\n';
 
   field = new DwField(str, mMsg);
   field->Parse();
@@ -2397,7 +2397,7 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
             aPart->setName(KMMsgBase::decodeRFC2231String(
               param->Value().c_str()));
           else {
-            additionalCTypeParams += ";";
+            additionalCTypeParams += ';';
             additionalCTypeParams += param->AsString().c_str();
           }
           param=param->Next();
@@ -2658,7 +2658,7 @@ QString KMMessage::generateMessageId( const QString& addr )
   QDateTime datetime = QDateTime::currentDateTime();
   QString msgIdStr;
 
-  msgIdStr = "<" + datetime.toString( "yyyyMMddhhmm.sszzz" );
+  msgIdStr = '<' + datetime.toString( "yyyyMMddhhmm.sszzz" );
 
   QString msgIdSuffix;
   KConfigGroup general( kapp->config(), "General" );
@@ -2667,11 +2667,11 @@ QString KMMessage::generateMessageId( const QString& addr )
     msgIdSuffix = general.readEntry( "myMessageIdSuffix", "" );
 
   if( !msgIdSuffix.isEmpty() )
-    msgIdStr += "@" + msgIdSuffix;
+    msgIdStr += '@' + msgIdSuffix;
   else
-    msgIdStr += "." + addr;
+    msgIdStr += '.' + addr;
 
-  msgIdStr += ">";
+  msgIdStr += '>';
 
   return msgIdStr;
 }
@@ -3163,10 +3163,10 @@ void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)
 
   QString message = headerField("X-KMail-Link-Message");
   if (!message.isEmpty())
-    message += ",";
+    message += ',';
   QString type = headerField("X-KMail-Link-Type");
   if (!type.isEmpty())
-    type += ",";
+    type += ',';
 
   message += QString::number(aMsg->getMsgSerNum());
   if (aStatus == KMMsgStatusReplied)

@@ -351,7 +351,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
     {
       if (str[i] == '\n')
       {
-        str2 += " ";
+        str2 += ' ';
         i += 2;
       } else {
         str2 += str[i];
@@ -476,7 +476,7 @@ QCString KMMsgBase::encodeRFC2047Quoted(const QCString& aStr, bool base64)
     ch = aStr.at(i);
     if (ch >= 128 || ch == '_' || especials.find(aStr.at(i)) != -1)
     {
-      result += "=";
+      result += '=';
       hex = ((ch & 0xF0) >> 4) + 48;
       if (hex >= 58) hex += 7;
       result += hex;
@@ -606,7 +606,7 @@ QCString KMMsgBase::encodeRFC2231String(const QString& _str,
     for (i = 0; i < 17; i++) if (*l == especials[i]) quote = true;
     if (quote)
     {
-      result += "%";
+      result += '%';
       hexcode = ((*l & 0xF0) >> 4) + 48;
       if (hexcode >= 58) hexcode += 7;
       result += hexcode;
@@ -625,12 +625,12 @@ QCString KMMsgBase::encodeRFC2231String(const QString& _str,
 //-----------------------------------------------------------------------------
 QString KMMsgBase::decodeRFC2231String(const QCString& _str)
 {
-  int p = _str.find("'");
+  int p = _str.find('\'');
   if (p < 0) return kernel->networkCodec()->toUnicode(_str);
 
   QCString charset = _str.left(p);
 
-  QCString st = _str.mid(_str.findRev("'") + 1);
+  QCString st = _str.mid(_str.findRev('\'') + 1);
   char ch, ch2;
   p = 0;
   while (p < (int)st.length())
@@ -734,7 +734,7 @@ QCString KMMsgBase::decodeBase64(const QCString& aStr)
   QCString bStr = aStr;
   if (aStr.isNull())
     bStr = "";
-  while (bStr.length() < 16) bStr += "=";
+  while (bStr.length() < 16) bStr += '=';
 
   DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;

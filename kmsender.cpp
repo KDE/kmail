@@ -546,20 +546,20 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
   {
     mTransportInfo->readConfig(nr);
   } else {
-    if (transport.left(7) == "smtp://")
+    if (transport.startsWith("smtp://"))
     {
       mTransportInfo->type = "smtp";
       mTransportInfo->auth = FALSE;
       QString serverport = transport.mid(7);
       mTransportInfo->host = serverport;
       mTransportInfo->port = "25";
-      int colon = serverport.find(":");
+      int colon = serverport.find(':');
       if (colon != -1) {
         mTransportInfo->host = serverport.left(colon);
         mTransportInfo->port = serverport.mid(colon + 1);
       }
     }
-    else if (transport.left(7) == "file://")
+    else if (transport.startsWith("file://"))
     {
       mTransportInfo->type = "sendmail";
       mTransportInfo->host = transport.mid(7);

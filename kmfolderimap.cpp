@@ -321,8 +321,8 @@ void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
 //-----------------------------------------------------------------------------
 QPtrList<KMMessage> KMFolderImap::splitMessageList(QString set, QPtrList<KMMessage>& msgList)
 {
-  int lastcomma = set.findRev(",");
-  int lastdub = set.findRev(":");
+  int lastcomma = set.findRev(',');
+  int lastdub = set.findRev(':');
   int last = 0;
   if (lastdub > lastcomma) last = lastdub;
   else last = lastcomma;
@@ -723,10 +723,10 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     {
       getMsgString(idx, cstr);
       a = cstr.find("X-UID: ");
-      b = cstr.find("\n", a);
+      b = cstr.find('\n', a);
       if (a == -1 || b == -1) mailUid = -1;
       else mailUid = cstr.mid(a + 7, b - a - 7).toLong();
-      c = (*uid).find(",");
+      c = (*uid).find(',');
       serverUid = (*uid).left(c).toLong();
       serverFlags = (*uid).mid(c+1).toInt();
       if (mailUid < serverUid) removeMsg(idx, TRUE);
@@ -742,7 +742,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     while (idx < count()) removeMsg(idx, TRUE);
   }
   for (uid = (*it).items.begin(); uid != (*it).items.end(); uid++)
-    (*uid).truncate((*uid).find(","));
+    (*uid).truncate((*uid).find(','));
 //jd.items = (*it).items;
   jd.total = (*it).items.count();
   uid = (*it).items.begin();
@@ -757,7 +757,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   }
 
   QStringList sets;
-  if (jd.total == 1) sets.append(*uid + ":" + *uid);
+  if (jd.total == 1) sets.append(*uid + ':' + *uid);
   else sets = makeSets( (*it).items );
 
   for (QStringList::Iterator i = sets.begin(); i != sets.end(); ++i)
@@ -808,7 +808,7 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
         flags = (*eIt).m_long;
     }
     if (mimeType == "message/rfc822-imap" && !(flags & 8))
-      (*it).items.append(name + "," + QString::number(flags));
+      (*it).items.append(name + ',' + QString::number(flags));
   }
 }
 
@@ -1016,7 +1016,7 @@ QValueList<int> KMFolderImap::splitSets(QString uids)
   for (uint i = 0; i < uids.length(); i++)
   {
     QChar chr = uids[i];
-    if (chr == ",")
+    if (chr == ',')
     {
       if (setstart > -1)
       {
@@ -1031,7 +1031,7 @@ QValueList<int> KMFolderImap::splitSets(QString uids)
         uidlist.append(buffer.toInt());
       }
       buffer = "";
-    } else if (chr == ":") {
+    } else if (chr == ':') {
       // remember the start of the range
       setstart = buffer.toInt();
       buffer = "";
@@ -1095,7 +1095,7 @@ void KMImapJob::init(JobType jt, QString sets, KMFolderImap* folder,
     jd.msgList.append(msg);
     QCString cstr(msg->asString());
     int a = cstr.find("\nX-UID: ");
-    int b = cstr.find("\n", a);
+    int b = cstr.find('\n', a);
     if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
     mData.resize(cstr.length() + cstr.contains('\n'));
     unsigned int i = 0;
@@ -1368,8 +1368,8 @@ void KMImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
   if (data.find("UID") != -1)
   {
     // split
-    QString oldUid = data.section(" ", 1, 1);
-    QString newUid = data.section(" ", 2, 2);
+    QString oldUid = data.section(' ', 1, 1);
+    QString newUid = data.section(' ', 2, 2);
 
     // get lists of uids
     QValueList<int> olduids = KMFolderImap::splitSets(oldUid);
@@ -1545,9 +1545,9 @@ QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
       {
         // end this range
         if (inserted)
-          set += "," + QString::number(*it);
+          set += ',' + QString::number(*it);
         else
-          set += ":" + QString::number(last) + "," + QString::number(*it);
+          set += ':' + QString::number(last) + ',' + QString::number(*it);
         inserted = true;
         if (set.length() > 100)
         {
@@ -1563,7 +1563,7 @@ QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
   }
   // last element
   if (!inserted)
-    set += ":" + QString::number(uids.last());
+    set += ':' + QString::number(uids.last());
 
   if (!set.isEmpty()) sets.append(set);
 

@@ -202,7 +202,7 @@ public:
           headers->folder()->getMsgString(mMsgId, cstr);
           int a = cstr.find("\nX-Length: ");
 	  if(a != -1) {
-	      int b = cstr.find("\n", a+11);
+	      int b = cstr.find('\n', a+11);
 	      tmp = KIO::convertSize(cstr.mid(a+11, b-a-11).toULong());
 	  }
         } else tmp = KIO::convertSize(mMsgBase->msgSize());
@@ -369,7 +369,7 @@ public:
     QString ret = QChar( (char)sortOrder );
     QString sortArrival = QString( "%1" )
       .arg( kernel->msgDict()->getMsgSerNum(headers->folder(), id), 0, 36 );
-    while (sortArrival.length() < 7) sortArrival = "0" + sortArrival;
+    while (sortArrival.length() < 7) sortArrival = '0' + sortArrival;
 
     if (column == paintInfo->dateCol) {
       if (paintInfo->orderOfArrival)
@@ -387,11 +387,11 @@ public:
         tmp = msg->toStrip();
       else
         tmp = msg->fromStrip();
-      return ret + tmp.lower() + " " + sortArrival;
+      return ret + tmp.lower() + ' ' + sortArrival;
     } else if (column == paintInfo->subCol) {
       if (paintInfo->status)
         return ret + QString( QChar( (uint)msg->status() )) + sortArrival;
-      return ret + KMMsgBase::skipKeyword( msg->subject().lower() ) + " " + sortArrival;
+      return ret + KMMsgBase::skipKeyword( msg->subject().lower() ) + ' ' + sortArrival;
     }
     else if (column == paintInfo->sizeCol) {
       QString len;
@@ -400,12 +400,12 @@ public:
         QCString cstr;
         headers->folder()->getMsgString(id, cstr);
         int a = cstr.find("\nX-Length: ");
-        int b = cstr.find("\n", a+1);
+        int b = cstr.find('\n', a+1);
         len = QString( "%1" ).arg( cstr.mid(a+11, b-a-11) );
       } else {
         len = QString( "%1" ).arg( msg->msgSize() );
       }
-      while (len.length() < 9) len = "0" + len;
+      while (len.length() < 9) len = '0' + len;
       return ret + len;
     }
     return ret + "missing key"; //you forgot something!!

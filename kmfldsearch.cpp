@@ -686,7 +686,7 @@ void KMFldSearchRule::prepare(void)
 {
   mFieldIdx = mCbxField->currentItem();
   mField = mCbxField->currentText();
-  mHeaderField = QString("\n" + mField + ": ").latin1();
+  mHeaderField = QString('\n' + mField + ": ").latin1();
   mFieldLength = mField.length() + 3;
   mFunc = mCbxFunc->currentItem();
   mValue = mEdtValue->text();
@@ -736,9 +736,9 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
     if (endOfHeader == -1) endOfHeader = aMsgStr.find("\n\r\n");
     if (endOfHeader < start) return false;
     start += mFieldLength;
-    stop = aMsgStr.find("\n", start);
+    stop = aMsgStr.find('\n', start);
     while (stop != -1 && (ch = aMsgStr.at(stop + 1)) == ' ' || ch == '\t')
-      stop = aMsgStr.find("\n", stop + 1);
+      stop = aMsgStr.find('\n', stop + 1);
     if (stop == -1) value = KMMsgBase::decodeRFC2047String(aMsgStr.mid(start));
     else value = KMMsgBase::decodeRFC2047String(aMsgStr.mid(start,
       stop - start));
