@@ -1,5 +1,9 @@
 // kmacctlocal.cpp
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include "kmacctlocal.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
@@ -14,9 +18,11 @@
 #include <stdio.h>
 #include <errno.h>
 #include <klocale.h>
-#ifdef __FreeBSD__
+
+#ifdef HAVE_PATHS_H
 #include <paths.h>	/* defines _PATH_MAILDIR */
 #endif
+
 #ifndef _PATH_MAILDIR
 #define _PATH_MAILDIR "/var/spool/mail"
 #endif
