@@ -464,9 +464,6 @@ public:
 KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 		     const char *name) :
   KMHeadersInherited(parent, name)
-#ifdef SCORING
-  , mScoringManager(KMScoringManager::globalScoringManager())
-#endif
 {
     static bool pixmapsLoaded = FALSE;
   //qInitImageIO();
@@ -496,13 +493,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPopup->insertTitle(i18n("View columns"));
   mPopup->setCheckable(true);
   mSizeColumn = mPopup->insertItem(i18n("Size Column"), this, SLOT(slotToggleSizeColumn()));
-
-#ifdef SCORING
-  if (!mScoringManager) {
-    kdDebug(5006) << "KMHeaders::KMHeaders() : no globalScoringManager"
-              << endl;
-  }
-#endif
 
   mPaintInfo.flagCol = -1;
   mPaintInfo.subCol    = mPaintInfo.flagCol   + 1;
@@ -880,12 +870,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 	mItems.resize( 0 );
       }
 
-#ifdef SCORING
-      if (mScoringManager)
-        mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
-
-      mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
-#endif
       readFolderConfig();
 
       CREATE_TIMER(kmfolder_open);
@@ -901,11 +885,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 	mItems.resize( 0 );
       }
     }
-
-#ifdef SCORING
-    if (mScoringManager)
-      mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
-#endif
   }
 
   CREATE_TIMER(updateMsg);
