@@ -400,7 +400,7 @@ KMAcctCachedImap *KMFolderCachedImap::account()
 
 void KMFolderCachedImap::slotTroubleshoot()
 {
-  int rc = DImapTroubleShootDialog::run();
+  const int rc = DImapTroubleShootDialog::run();
 
   if( rc == KDialogBase::User1 ) {
     // Refresh cache
@@ -421,7 +421,7 @@ void KMFolderCachedImap::slotTroubleshoot()
   } else if( rc == KDialogBase::User2 ) {
     // Rebuild index file
     createIndexFromContents();
-    KMessageBox::information( 0, i18n( "The index of this folder have been "
+    KMessageBox::information( 0, i18n( "The index of this folder has been "
 				       "recreated." ) );
   }
 }
