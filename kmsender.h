@@ -4,25 +4,30 @@
  */
 #ifndef kmsender_h
 #define kmsender_h
-#include <mimelib/smtp.h>
-#include <mimelib/string.h>
-#include <mimelib/utility.h>
+#include <qcstring.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qobject.h>
 #include <qlabel.h>
+#include "kio/global.h"
 
 class KMMessage;
 class KMFolder;
 class KMFolderMgr;
 class KConfig;
 class KProcess;
-class DwSmtpClient;
 class KMIOStatusDlg;
 class KMSendProc;
 class QStrList;
 class KMainWindow;
 class Smtp;
+
+namespace KIO
+{
+  class Job;
+  class TransferJob;
+  class Slave;
+}
 
 class KMSender: public QObject
 {
@@ -78,6 +83,14 @@ public:
   /** Port of the SMTP host, usually 110. */
   unsigned short int smtpPort(void) const { return mSmtpPort; }
   virtual void setSmtpPort(unsigned short int);
+
+  /** Username to use for loging in if appropriate */
+  QString username(void) const { return mUsername; }
+  virtual void setUsername(const QString&);
+
+  /** Password to use for loging in if appropriate */
+  QString password(void) const { return mPassword; }
+  virtual void setPassword(const QString&);
 
   /** Precommand - command run before sending */
   const QString& precommand(void) const { return mPrecommand; }
@@ -135,13 +148,18 @@ protected:
 
 private:
   Method mMethod;
-  bool mSendImmediate, mSendQuotedPrintable;
+  bool mSendImmediate;
+  bool mSendQuotedPrintable;
+  bool mUseSSL;
   QString mMailer;
   QString mSmtpHost;
+  QString mUsername;
+  QString mPassword;
   unsigned short int mSmtpPort;
   QString mPrecommand;
 
   bool mSentOk, mSendAborted;
+  bool mSendInfoChanged;
   QString mErrorMsg;
   KMIOStatusDlg* mSendDlg;
   KMSendProc *mSendProc, *mMsgSendProc;
@@ -163,7 +181,8 @@ class KMSendProc: public QObject
 
 public:
   KMSendProc(KMSender*);
-
+  virtual ~KMSendProc() {}
+  
   /** Initialize sending of one or more messages. */
   virtual void start(void);
 
@@ -179,6 +198,9 @@ public:
   /** Abort sending the current message. Sets mSending to false */
   virtual void abort() = 0;
 
+  /** Return the type so we can identify it at run time **/
+  virtual KMSender::Method sendType() { return KMSender::smUnknown; }
+  
   /** Returns TRUE if send was successful, and FALSE otherwise.
       Returns FALSE if sending is still in progress. */
   bool sendOk(void) const { return mSendOk; }
@@ -242,6 +264,7 @@ public:
   virtual bool send(KMMessage* msg);
   virtual bool finish(bool destructive);
   virtual void abort();
+  KMSender::Method sendType() { return KMSender::smMail; }
 
 protected slots:
   void receivedStderr(KProcess*,char*,int);
@@ -259,30 +282,40 @@ protected:
 };
 
 //-----------------------------------------------------------------------------
-#define KMSendSMTPInherited KMSendProc
-class KMSendSMTP: public KMSendProc
+class KMSendSMTP : public KMSendProc
 {
-  Q_OBJECT
+Q_OBJECT
 public:
-  KMSendSMTP(KMSender*,QString,unsigned short int);
-  virtual ~KMSendSMTP();
-  virtual void start(void);
-  virtual bool send(KMMessage* msg);
-  virtual bool finish(bool destructive);
+  KMSendSMTP(KMSender *_sender, QString server, unsigned short int port);
+  ~KMSendSMTP();
+  
+  virtual bool send(KMMessage *);
   virtual void abort();
-
-public slots:
-  virtual void smtpFailed(const QString&, const QString &);
+  virtual bool finish(bool);
+  KMSender::Method sendType() { return KMSender::smSMTP; }
 
 protected:
-  virtual bool smtpSend(KMMessage* msg);
-  virtual void smtpInCmd(const char* inCommand);
   virtual bool addOneRecipient(const QString& aRecipient);
 
-  Smtp *smtp;
-  QStringList recipients;
-  QString mSmtpHost;
-  unsigned short int mSmtpPort;
+private slots:
+  void dataReq(KIO::Job *, QByteArray &);
+  void result(KIO::Job *);
+  void slaveError(KIO::Slave *, int, const QString &);
+
+private:
+  QString mServer;
+  unsigned short int mPort;
+  QString mQuery;
+  QString mQueryField;
+  QCString mMessage;
+
+  bool mUseSSL;
+  bool mUseTLS;
+  bool mInProcess;
+  
+  KIO::TransferJob *mJob;
+  KIO::Slave *mSlave;
+  KIO::MetaData mSlaveConfig;
 };
 
 #endif /*kmsender_h*/

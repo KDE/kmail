@@ -12,10 +12,13 @@
 #include "kmiostatusdlg.h"
 #include "kbusyptr.h"
 #include "kmaccount.h"
-#include "smtp.h"
 
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kio/global.h>
+#include <kio/job.h>
+#include <kio/scheduler.h>
+#include <kio/slave.h>
 #include <kprocess.h>
 #include <kapp.h>
 #include <kmessagebox.h>
@@ -51,7 +54,9 @@ KMSender::KMSender()
   mMsgSendProc = NULL;
   mSendProcStarted = FALSE;
   mSendInProgress = FALSE;
+  mUseSSL = FALSE;
   mCurrentMsg = NULL;
+  mSendInfoChanged = FALSE;
   labelDialog = 0;
   readConfig();
   quitOnDone = false;
@@ -63,7 +68,8 @@ KMSender::KMSender()
 KMSender::~KMSender()
 {
   writeConfig(FALSE);
-  if (mSendProc) delete mSendProc;
+  delete mSendProc;
+  delete labelDialog;
 }
 
 //-----------------------------------------------------------------------------
@@ -89,11 +95,16 @@ void KMSender::readConfig(void)
   mSmtpHost = config->readEntry("Smtp Host", "localhost");
   mSmtpPort = config->readNumEntry("Smtp Port", 25);
   mPrecommand = config->readEntry("Precommand", "");
-
+  mUsername = config->readEntry("Smtp Username", "");
+  mPassword = config->readEntry("Smtp Password", "");
+  mUseSSL = (bool) config->readNumEntry("SSL", FALSE);
+  
   str = config->readEntry("Method");
   if (str=="mail") mMethod = smMail;
   else if (str=="smtp") mMethod = smSMTP;
   else mMethod = smUnknown;
+  
+  mSendInfoChanged = true;
 }
 
 
@@ -108,7 +119,20 @@ void KMSender::writeConfig(bool aWithSync)
   config->writeEntry("Mailer", mMailer);
   config->writeEntry("Smtp Host", mSmtpHost);
   config->writeEntry("Smtp Port", (int)mSmtpPort);
-  config->writeEntry("Method", (mMethod==smSMTP) ? "smtp" : "mail");
+  config->writeEntry("Smtp Username", mUsername);
+  config->writeEntry("Smtp Password", mPassword);
+  switch(mMethod)
+  {
+  case smMail:
+    config->writeEntry("Method", "mail");
+    break;
+  case smSMTP:
+    config->writeEntry("Method", "smtp");
+    break;
+  case smUnknown:
+    config->writeEntry("Method", "unknown");
+    break;
+  }  
   config->writeEntry("Precommand", mPrecommand);
 
   if (aWithSync) config->sync();
@@ -229,15 +253,21 @@ bool KMSender::sendQueued(void)
   kernel->sentFolder()->open();
 
 
-  // create a sender
-  if (mSendProc) delete mSendProc;
-  if (mMethod == smMail) mSendProc = new KMSendSendmail(this,mMailer);
-  else if (mMethod == smSMTP) mSendProc = new KMSendSMTP(this,mSmtpHost,mSmtpPort);
-  else mSendProc = NULL;
-  assert(mSendProc != NULL);
-  connect(mSendProc,SIGNAL(idle()),SLOT(slotIdle()));
-  connect(mSendProc,SIGNAL(started(bool)),this,SLOT(sendProcStarted(bool)));
-
+  // create a sender, but only if it isn't already created
+  if (mSendInfoChanged == true || !mSendProc || mSendProc->sendType() != mMethod) 
+  {
+    mSendInfoChanged = false;
+    delete mSendProc;
+    
+    if (mMethod == smMail) mSendProc = new KMSendSendmail(this,mMailer);
+    else if (mMethod == smSMTP) mSendProc = new KMSendSMTP(this, mSmtpHost, mSmtpPort);
+    else mSendProc = NULL;
+    
+    assert(mSendProc != NULL);
+    connect(mSendProc,SIGNAL(idle()),SLOT(slotIdle()));
+    connect(mSendProc,SIGNAL(started(bool)),this,SLOT(sendProcStarted(bool)));
+  }
+  
   // start sending the messages
   doSendMsg();
   return TRUE;
@@ -508,7 +538,7 @@ void KMSender::slotIdle()
 	"The following transport protocol was used:\n  %2")
     .arg(errString)
     .arg(mMethodStr);
-  KMessageBox::error(0,msg);
+  if (!errString.isEmpty()) KMessageBox::error(0,msg);
 
   if (mMsgSendProc) {
     mMsgSendProc->finish(true);
@@ -522,6 +552,7 @@ void KMSender::slotIdle()
 void KMSender::setMethod(Method aMethod)
 {
   mMethod = aMethod;
+  mSendInfoChanged = true;
 }
 
 
@@ -543,6 +574,7 @@ void KMSender::setSendQuotedPrintable(bool aSendQuotedPrintable)
 void KMSender::setMailer(const QString& aMailer)
 {
   mMailer = aMailer;
+  mSendInfoChanged = true;
 }
 
 
@@ -550,6 +582,7 @@ void KMSender::setMailer(const QString& aMailer)
 void KMSender::setSmtpHost(const QString& aSmtpHost)
 {
   mSmtpHost = aSmtpHost;
+  mSendInfoChanged = true;
 }
 
 
@@ -557,6 +590,21 @@ void KMSender::setSmtpHost(const QString& aSmtpHost)
 void KMSender::setSmtpPort(unsigned short int aSmtpPort)
 {
   mSmtpPort = aSmtpPort;
+  mSendInfoChanged = true;
+}
+
+//-----------------------------------------------------------------------------
+void KMSender::setUsername(const QString& aUsername)
+{
+  mUsername = aUsername;
+  mSendInfoChanged = true;
+}
+
+//-----------------------------------------------------------------------------
+void KMSender::setPassword(const QString& aPassword)
+{
+  mPassword = aPassword;
+  mSendInfoChanged = true;
 }
 
 
@@ -572,7 +620,7 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
       server = serverport.left(colon);
       port = serverport.mid(colon + 1);
     }
-    return new KMSendSMTP(this,server,port.toInt());
+    return new KMSendSMTP(this, server, port.toUInt());
   }
   else if (transport.left(7) == "file://") {
     return new KMSendSendmail(this,transport.mid(7));
@@ -601,7 +649,6 @@ KMSendProc::KMSendProc(KMSender* aSender): QObject()
 {
   mSender = aSender;
   preSendInit();
-  mMsg = i18n("operation aborted by user.");
 }
 
 //-----------------------------------------------------------------------------
@@ -912,13 +959,14 @@ void KMSendSendmail::sendmailExited(KProcess *proc)
 {
   assert(proc!=NULL);
   mSendOk = (proc->normalExit() && proc->exitStatus()==0);
+  if (!mSendOk) failed(i18n("Sendmail exited abnormally."));
   mMsgStr = 0;
   emit idle();
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMSendSendmail::addOneRecipient(const QString &aRcpt)
+bool KMSendSendmail::addOneRecipient(const QString& aRcpt)
 {
   assert(mMailerProc!=NULL);
   if (!aRcpt.isEmpty()) *mMailerProc << aRcpt;
@@ -926,143 +974,181 @@ bool KMSendSendmail::addOneRecipient(const QString &aRcpt)
 }
 
 
-//=============================================================================
-//=============================================================================
-KMSendSMTP::KMSendSMTP(KMSender* aSender, QString smtpHost,
-		       unsigned short int smtpPort ):
-    KMSendSMTPInherited(aSender), mSmtpHost(smtpHost), mSmtpPort(smtpPort)
-{
-  smtp = 0;
-}
 
 //-----------------------------------------------------------------------------
+//=============================================================================
+//=============================================================================
+KMSendSMTP::KMSendSMTP(KMSender *_sender, QString server, unsigned short int port)
+  : KMSendProc(_sender), 
+    mServer(server),
+    mPort(port),
+    mUseSSL(false),
+    mUseTLS(false),
+    mInProcess(false),
+    mJob(0),
+    mSlave(0)
+{
+  if (mPort == 0) { mPort = 25; }
+  KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
+                          this, SLOT(slaveError(KIO::Slave *, int, const QString &)));
+}
+
 KMSendSMTP::~KMSendSMTP()
 {
+    if (mJob) mJob->kill();
 }
 
-//-----------------------------------------------------------------------------
-void KMSendSMTP::start(void)
+bool KMSendSMTP::send(KMMessage *aMsg)
 {
-  statusMsg(i18n("connecting to server"));
-  emit started(true);
-}
-
-//-----------------------------------------------------------------------------
-bool KMSendSMTP::finish(bool destructive)
-{
-  if (smtp) {
-    disconnect( smtp, SIGNAL(error(const QString&, const QString&)),
-	        this, SLOT(smtpFailed(const QString&, const QString& )) );
-    disconnect( smtp, SIGNAL(success()),
-		this, SIGNAL(idle()) );
-    smtp->quit();
-  }
-  smtp = 0;
-  if (destructive)
-      delete this;
-  return TRUE;
-}
-
-//-----------------------------------------------------------------------------
-void KMSendSMTP::abort()
-{
-  if (smtp) {
-    disconnect( smtp, SIGNAL(error(const QString&, const QString&)),
-	        this, SLOT(smtpFailed(const QString&, const QString& )) );
-    disconnect( smtp, SIGNAL(success()),
-		this, SIGNAL(idle()) );
-    smtp->quit();
-  }
-  smtp = 0;
-  idle();
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMSendSMTP::send(KMMessage *msg)
-{
-  mSendOk = smtpSend(msg);
-  return mSendOk;
-}
-
-
-//-----------------------------------------------------------------------------
-bool KMSendSMTP::smtpSend(KMMessage* aMsg)
-{
-  QString str, msgStr, bccStr;
-  QString idStr = aMsg->headerField("X-KMail-Identity");
-  aMsg->removeHeaderField("X-KMail-Identity");
-  KMIdentity ident( idStr.isEmpty() ? i18n( "Default" ) : idStr );
-  ident.readConfig();
-
   assert(aMsg != NULL);
-  recipients.clear();
 
-  if (!addRecipients(aMsg->headerAddrField("To"))) return FALSE;
+  // email this is from
+  mQuery = QString("headers=0&from=%1").arg(KMMessage::getEmailAddr(aMsg->from()));
 
-  if (!aMsg->cc().isEmpty())
-    if (!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
-
-  bccStr = aMsg->bcc();
-  if (!bccStr.isEmpty())
+  // recipients
+  mQueryField = "&to=";
+  if(!addRecipients(aMsg->headerAddrField("To"))) 
   {
+    return FALSE;
+  }
+
+  if(!aMsg->cc().isEmpty())
+  {
+    mQueryField = "&cc=";
+    if(!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
+  }
+
+  if(!aMsg->bcc().isEmpty())
+  {
+    mQueryField = "&bcc=";
     if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
     aMsg->removeHeaderField("Bcc");
   }
 
-  msgStr = prepareStr(aMsg->asString(), TRUE );
-  if (!smtp) {
-      smtp = new Smtp( ident.emailAddr(), recipients,
-		       msgStr,
-		       mSmtpHost,
-		       mSmtpPort );
-      connect( smtp, SIGNAL(error(const QString&, const QString&)),
-	       this, SLOT(smtpFailed(const QString&, const QString& )) );
-      connect( smtp, SIGNAL(success()),
-	       this, SIGNAL(idle()) );
-  } else {
-      smtp->send( ident.emailAddr(), recipients, msgStr );
+  if(!aMsg->subject().isEmpty())
+    mQuery += QString("&subject=") + aMsg->subject();
+  
+  KURL destination;
+ 
+  if (mUseSSL)
+  {
+     destination.setProtocol("smtps");
+  }
+  else
+  {
+    destination.setProtocol("smtp");
+  }
+    
+  destination.setHost(mServer);
+  destination.setPort(mPort);
+  
+  if (!mSender->username().isEmpty())
+      destination.setUser(mSender->username());
+  if (!mSender->password().isEmpty())
+      destination.setPass(mSender->password());
+  
+
+  if (!mSlave || !mInProcess)
+  {
+    mSlave = KIO::Scheduler::getConnectedSlave(destination.url(), mSlaveConfig);
   }
 
-  if (!bccStr.isEmpty()) aMsg->setBcc(bccStr);
-  return TRUE;
+  if (!mSlave)
+  {
+    abort();
+    return false;
+  }
+  
+  destination.setPath("/send");
+  destination.setQuery(mQuery);
+
+  mQuery = "";
+
+  mMessage = prepareStr(aMsg->asString(), TRUE);
+  
+  if ((mJob = KIO::put(destination, -1, false, false, false)))
+  {
+      KIO::Scheduler::assignJobToSlave(mSlave, mJob);
+      connect(mJob, SIGNAL(result(KIO::Job *)), this, SLOT(result(KIO::Job *)));
+      connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)), 
+              this, SLOT(dataReq(KIO::Job *, QByteArray &)));
+      mSendOk = true;
+      mInProcess = true;
+      return mSendOk;
+  }
+  else 
+  {
+    abort();
+    return false;
+  }
 }
 
-
-//-----------------------------------------------------------------------------
-bool KMSendSMTP::addOneRecipient(const QString &aRcpt)
+void KMSendSMTP::abort()
 {
-  if (aRcpt.isEmpty()) return TRUE;
-
-  recipients.append( aRcpt );
-  return TRUE;
+  finish(false);
+  emit idle();
 }
 
-
-//-----------------------------------------------------------------------------
-void KMSendSMTP::smtpFailed(const QString &command,
-			    const QString &response)
+bool KMSendSMTP::finish(bool b)
 {
-  failed( i18n("a SMTP error occured.\n"
-	     "Command: %1\n"
-	     "Response: %2")
-	  .arg(command)
-	  .arg(response) );
-  if (smtp)
-      delete smtp;
-  smtp = 0;
-  idle();
+  if(mJob)
+  {
+    mJob->kill(TRUE);
+    mJob = 0;
+    mSlave = 0;
+  }
+  
+  if (mSlave)
+  {
+    KIO::Scheduler::disconnectSlave(mSlave);
+    mSlave = 0;
+  }
+  
+  mInProcess = false;
+  return KMSendProc::finish(b);
 }
 
-
-//-----------------------------------------------------------------------------
-void KMSendSMTP::smtpInCmd(const char* inCommand)
+bool KMSendSMTP::addOneRecipient(const QString& _addr)
 {
-  QString str;
-  str = i18n("Sending SMTP command: %1").arg(inCommand);
-  statusMsg(str);
+  if(!_addr.isEmpty())
+    mQuery += mQueryField + _addr;
+
+  return true;
 }
 
+void KMSendSMTP::dataReq(KIO::Job *, QByteArray &array)
+{
+  if(mMessage.length())
+  {
+    array.duplicate(mMessage);
+    mMessage = "";
+  }
+}
 
-//-----------------------------------------------------------------------------
+void KMSendSMTP::result(KIO::Job *_job)
+{
+  mJob = 0;
+
+  if(_job->error())
+  {
+    mSendOk = false;
+    if (_job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    failed(_job->errorString());
+  }
+
+  emit idle();
+}
+
+void KMSendSMTP::slaveError(KIO::Slave *aSlave, int error, const QString &errorMsg)
+{
+  if (aSlave == mSlave)
+  {
+    if (error == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+    mSendOk = false;
+    mJob = NULL;
+    failed(KIO::buildErrorString(error, errorMsg));
+    abort();
+  }
+}
+
 #include "kmsender.moc"
