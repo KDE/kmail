@@ -25,9 +25,8 @@ using KMail::RuleWidgetHandlerManager;
 // Definition of special rule field strings
 // Note: Also see KMSearchRule::matches() and ruleFieldToEnglish() if
 //       you change the following i18n-ized strings!
-enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status };
 // Note: The index of the values in the following array has to correspond to
-//       the value of the entries in the previous enum.
+//       the value of the entries in the enum in KMSearchRuleWidget.
 static const struct {
   const char *internalName;
   const char *displayName;
@@ -79,7 +78,7 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
 
   if ((currentText != "<message>") &&
       (currentText != "<body>"))
-    mRuleField->changeItem( currentText, 0 );
+    mRuleField->changeItem( QString( currentText ), 0 );
   else
     mRuleField->changeItem( QString::null, 0 );
 }

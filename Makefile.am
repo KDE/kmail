@@ -1,4 +1,4 @@
-KDE_OPTIONS = nofinal
+#KDE_OPTIONS = nofinal
 KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS = interfaces . about pics profiles avscripts

@@ -43,6 +43,7 @@
 #include "kmreaderwin.h"
 #include "callback.h"
 #include "kimproxy.h"
+#include "stl_util.h"
 
 #include <kurl.h>
 
@@ -127,12 +128,6 @@ namespace {
 } // anon namespace
 
 
-namespace {
-  template <typename T> struct Delete {
-    void operator()( const T * x ) { delete x; x = 0; }
-  };
-}
-
 //
 //
 // BodyPartURLHandlerManager
@@ -158,7 +153,7 @@ private:
 
 KMail::URLHandlerManager::BodyPartURLHandlerManager::~BodyPartURLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    Delete<Interface::BodyPartURLHandler>() );
+	    DeleteAndSetToZero<Interface::BodyPartURLHandler> );
 }
 
 void KMail::URLHandlerManager::BodyPartURLHandlerManager::registerHandler( const Interface::BodyPartURLHandler * handler ) {
@@ -258,7 +253,7 @@ KMail::URLHandlerManager::URLHandlerManager() {
 
 KMail::URLHandlerManager::~URLHandlerManager() {
   for_each( mHandlers.begin(), mHandlers.end(),
-	    Delete<URLHandler>() );
+	    DeleteAndSetToZero<URLHandler> );
 }
 
 void KMail::URLHandlerManager::registerHandler( const URLHandler * handler ) {

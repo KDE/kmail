@@ -37,6 +37,7 @@
 #include "rulewidgethandlermanager.h"
 
 #include "interfaces/rulewidgethandler.h"
+#include "stl_util.h"
 
 #include <kdebug.h>
 
@@ -205,15 +206,9 @@ KMail::RuleWidgetHandlerManager::RuleWidgetHandlerManager()
   registerHandler( new TextRuleWidgetHandler() );
 }
 
-namespace {
-  template <typename T> struct Delete {
-    void operator()( const T * x ) { delete x; x = 0; }
-  };
-}
-
 KMail::RuleWidgetHandlerManager::~RuleWidgetHandlerManager()
 {
-  for_each( mHandlers.begin(), mHandlers.end(), Delete<RuleWidgetHandler>() );
+  for_each( mHandlers.begin(), mHandlers.end(), DeleteAndSetToZero<RuleWidgetHandler> );
 }
 
 void KMail::RuleWidgetHandlerManager::registerHandler( const RuleWidgetHandler * handler )

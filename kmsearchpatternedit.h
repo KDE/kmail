@@ -44,6 +44,8 @@ public:
       be used to initialize the widget. */
   KMSearchRuleWidget( QWidget* parent=0, KMSearchRule* aRule=0, const char* name=0, bool headersOnly = false, bool absoluteDates = false );
 
+  enum { Message, Body, AnyHeader, Recipients, Size, AgeInDays, Status };
+
   /** Set whether only header fields can be searched. If @p is true only
       header fields can be searched otherwise <message> and <body> searches
       are available also. */
