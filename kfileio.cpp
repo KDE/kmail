@@ -220,14 +220,16 @@ bool kBytesToFile(const char* aBuffer, int len,
 
   if (writeLen < 0)
   {
-    msgDialog(i18n("Could not write to file:\n%1").arg(aFileName));
+    if (aVerbose)
+      msgDialog(i18n("Could not write to file:\n%1").arg(aFileName));
     return FALSE;
   }
   else if (writeLen < len)
   {
     QString msg = i18n("Could only write %1 bytes of %2.")
 		.arg(writeLen).arg(len);
-    msgDialog(msg);
+    if (aVerbose)
+      msgDialog(msg);
     return FALSE;
   }
 
