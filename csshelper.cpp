@@ -595,7 +595,7 @@ namespace KMail {
 		   "  border:1px solid black;\n"
 		   // FIXME: InfoBackground crashes KHTML
 		   //"  background-color:InfoBackground;\n"
-		   "  background-color:yellow;\n"
+		   "  background-color:%5;\n"
 		   "}\n\n"
 
 		   "div.senderstatus{\n"

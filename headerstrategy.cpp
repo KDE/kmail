@@ -60,7 +60,7 @@ namespace KMail {
 
   static const char * richHeaders[] = {
     "subject", "date", "from", "cc", "bcc", "to",
-    "organization", "organisation", "reply-to", "status" /*, "statuspic" */
+    "organization", "organisation", "reply-to", /* "status" ,*/ "statuspic"
   };
   static const int numRichHeaders = sizeof richHeaders / sizeof *richHeaders;
 

@@ -436,10 +436,13 @@ namespace KMail {
               }
               else
                 userHTML = QString( "<div class=\"senderpic\">"
-                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
+                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\">"
+                                      "<span name=\"presence-%3\">%4</span></div></a>"
                                       "</div>" ).arg( kabcUid )
                                                 .arg( userHTML )
+                                                .arg( kabcUid )
                                                 .arg( presence );
+              kdDebug() << endl << userHTML << endl;
             }
           }
         }
