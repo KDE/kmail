@@ -46,8 +46,8 @@ FilterLog * FilterLog::mSelf = NULL;
 FilterLog::FilterLog()
 { 
   mSelf = this;
-  // start with logging enabled by default
-  mLogging = true;
+  // start with logging disabled by default
+  mLogging = false;
   // better limit the log to 512 KByte to avoid out of memory situations
   // when the log i sgoing to become very long
   mMaxLogSize = 512 * 1024;
