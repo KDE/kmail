@@ -1,5 +1,6 @@
 // kmfolderseldlg.cpp
 
+#include <config.h>
 #include "kmfolderseldlg.h"
 #include "kmfoldertree.h"
 #include "kmmainwin.h"
@@ -15,7 +16,7 @@ QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg(KMMainWin * parent, const QString& caption)
-    : KMFolderSelDlgInherited(parent, "folder dialog", true, caption, 
+    : KMFolderSelDlgInherited(parent, "folder dialog", true, caption,
                               Ok|Cancel, Ok, true) // mainwin as parent, modal
 {
   QGuardedPtr<KMFolder> cur;

@@ -397,7 +397,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
     assert(mIndexStream != NULL);
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
-    long revert = ftell(mIndexStream);
+    off_t revert = ftell(mIndexStream);
 	
     int len;
     const uchar *buffer = aMsg->asIndexString(len);

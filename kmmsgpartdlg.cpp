@@ -2,6 +2,7 @@
 
 
 // my includes:
+#include <config.h>
 #include "kmmsgpartdlg.h"
 
 // other KMail includes:

@@ -1,5 +1,6 @@
 // kmmsgbase.cpp
 
+#include <config.h>
 #include <kdebug.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -76,7 +77,8 @@ KMMsgBase::KMMsgBase(KMFolder* aParent)
 {
   mParent  = aParent;
   mDirty   = FALSE;
-  mIndexOffset = mIndexLength = 0;
+  mIndexOffset = 0;
+  mIndexLength = 0;
 }
 
 
@@ -818,7 +820,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
       return ret;
     if (g_chunk_length < mIndexLength)
 	g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
-    int first_off=ftell(mParent->mIndexStream);
+    off_t first_off=ftell(mParent->mIndexStream);
     fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, mParent->mIndexStream);
     fseek(mParent->mIndexStream, first_off, SEEK_SET);
@@ -869,9 +871,9 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
 }
 
 //-----------------------------------------------------------------------------
-unsigned long KMMsgBase::getLongPart(MsgPartType t) const
+off_t KMMsgBase::getLongPart(MsgPartType t) const
 {
-  unsigned long ret = 0;
+  off_t ret = 0;
 
   g_chunk_offset = 0;
   bool using_mmap = FALSE;
@@ -889,7 +891,7 @@ unsigned long KMMsgBase::getLongPart(MsgPartType t) const
     assert(mIndexLength >= 0);
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
-    int first_off=ftell(mParent->mIndexStream);
+    off_t first_off=ftell(mParent->mIndexStream);
     fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
     fread( g_chunk, mIndexLength, 1, mParent->mIndexStream);
     fseek(mParent->mIndexStream, first_off, SEEK_SET);

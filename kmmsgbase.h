@@ -5,6 +5,9 @@
 #ifndef kmmsgbase_h
 #define kmmsgbase_h
 
+// for large file support flags
+#include <config.h>
+#include <sys/types.h>
 #include <qstring.h>
 #include <time.h>
 
@@ -12,7 +15,6 @@ class QCString;
 class QStringList;
 class QTextCodec;
 class KMFolder;
-
 
 typedef enum
 {
@@ -145,20 +147,20 @@ public:
   const uchar *asIndexString(int &len) const;
 
   /** Get/set offset in mail folder. */
-  virtual unsigned long folderOffset(void) const = 0;
-  virtual void setFolderOffset(unsigned long offs) = 0;
+  virtual off_t folderOffset(void) const = 0;
+  virtual void setFolderOffset(off_t offs) = 0;
 
   /** Get/set msg filename */
   virtual QString fileName(void) const = 0;
   virtual void setFileName(const QString& filename) = 0;
 
   /** Get/set size of message including the whole header in bytes. */
-  virtual unsigned long msgSize(void) const = 0;
-  virtual void setMsgSize(unsigned long sz) = 0;
+  virtual size_t msgSize(void) const = 0;
+  virtual void setMsgSize(size_t sz) = 0;
 
   /** offset into index file */
-  virtual void setIndexOffset(long off) { mIndexOffset = off; }
-  virtual long indexOffset() const { return mIndexOffset; }
+  virtual void setIndexOffset(off_t off) { mIndexOffset = off; }
+  virtual off_t indexOffset() const { return mIndexOffset; }
 
   /** size in index file */
   virtual void setIndexLength(short len) { mIndexLength = len; }
@@ -233,7 +235,7 @@ public:
 protected:
   KMFolder* mParent;
   bool mDirty;
-  long mIndexOffset;
+  off_t mIndexOffset;
   short mIndexLength;
 
 public:
@@ -256,7 +258,7 @@ public:
     MsgCryptoStatePart = 12
   };
   /** access to long msgparts */
-  unsigned long getLongPart(MsgPartType) const;
+  off_t getLongPart(MsgPartType) const;
   /** access to string msgparts */
   QString getStringPart(MsgPartType) const;
   /** sync'ing just one KMMsgBase */

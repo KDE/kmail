@@ -4,6 +4,10 @@
 #ifndef kmmessage_h
 #define kmmessage_h
 
+// for large file support
+#include <config.h>
+#include <sys/types.h>
+
 #include <mimelib/string.h>
 #include "kmmsgbase.h"
 
@@ -449,8 +453,8 @@ public:
   QCString getRefStr();
 
   /** Get/set offset in mail folder. */
-  virtual unsigned long folderOffset(void) const { return mFolderOffset; }
-  void setFolderOffset(unsigned long offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
+  virtual off_t folderOffset(void) const { return mFolderOffset; }
+  void setFolderOffset(off_t offs) { if(mFolderOffset != offs) { mFolderOffset=offs; setDirty(TRUE); } }
 
   /** Get/set filename in mail folder. */
   virtual QString fileName(void) const { return mFileName; }
@@ -459,14 +463,14 @@ public:
   /** Get/set size of message in the folder including the whole header in
       bytes. Can be 0, if the message is not is a folder
       the setting of mMsgSize = mMsgLength = sz is needed for popFilter*/
-  virtual unsigned long msgSize(void) const { return mMsgSize; }
-  void setMsgSize(unsigned long sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
+  virtual size_t msgSize(void) const { return mMsgSize; }
+  void setMsgSize(size_t sz) { if(mMsgSize != sz) { mMsgSize = sz; setDirty(TRUE); } }
 
   /** Unlike the above funtion this works also, if the message is not in a
       folder */
-  virtual unsigned long msgLength(void) const
+  virtual size_t msgLength(void) const
     { return (mMsgLength) ? mMsgLength : mMsgSize; }
-  void setMsgLength(unsigned long sz) { mMsgLength = sz; }
+  void setMsgLength(size_t sz) { mMsgLength = sz; }
 
   /** Status of the message. */
   virtual KMMsgStatus status(void) const { return mStatus; }
@@ -518,7 +522,8 @@ protected:
   QTextCodec* mCodec;
 
   QString mFileName;
-  unsigned long mFolderOffset, mMsgSize, mMsgLength;
+  off_t mFolderOffset;
+  size_t mMsgSize, mMsgLength;
   time_t mDate;
   KMMsgStatus mStatus;
   unsigned long mMsgSerNum;

@@ -1,5 +1,6 @@
 // kmheaders.cpp
 
+#include <config.h>
 #include <stdlib.h>
 #include <kiconloader.h>
 #include <qpopupmenu.h>
@@ -3121,9 +3122,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		mSortInfo.column = (short)column;
 		mSortInfo.ascending = (compare_ascending = ascending);
 
-
 		KMSortCacheItem *item;
-		int id, len, parent, offset, x;
+		int id, len, parent, x;
 		QChar *tmp_qchar = NULL;
 		int tmp_qchar_len = 0;
 		const int mFolderCount = mFolder->count();
@@ -3133,7 +3133,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		CREATE_TIMER(parse);
 		START_TIMER(parse);
 		for(x = 0; !feof(sortStream) && !error; x++) {
-		    offset = ftell(sortStream);
+		    off_t offset = ftell(sortStream);
 		    //parse
 		    if(!fread(&id, sizeof(id), 1, sortStream) || //short read means to end
 		       !fread(&parent, sizeof(parent), 1, sortStream) ||

@@ -2,6 +2,7 @@
 // Author: Marc Mutz <Marc@Mutz.com>
 // This code is under GPL!
 
+#include <config.h>
 #include "kmsearchpattern.h"
 #include "kmmessage.h"
 
@@ -65,7 +66,7 @@ void KMSearchRule::init(const QCString aField, Function aFunction,
 //-----------------------------------------------------------------------------
 void KMSearchRule::init(const KMSearchRule* aRule)
 {
-  if (aRule) 
+  if (aRule)
     init( aRule->field(), aRule->function(), aRule->contents() );
   else
     init ( "", FuncContains, "" );
@@ -108,7 +109,7 @@ bool KMSearchRule::matches(const KMMessage* msg) const
       // "equality" mean for recipients.
       return matches( false, 0, 0, msg->headerField("To") )
         || matches( false, 0, 0, msg->headerField("Cc") );
-    // 
+    //
     msgContents = msg->headerField("To") + msg->headerField("Cc");
   } else if( mField == "<size>" ) {
     numerical = TRUE;
@@ -353,7 +354,7 @@ void KMSearchPattern::importLegacyConfig( KConfig *config )
     return;
   }
   append( rule );
-  
+
   if ( sOperator == "or"  ) {
     mOperator = OpOr;
     return;
@@ -400,7 +401,7 @@ void KMSearchPattern::init()
 const QString KMSearchPattern::asString() const
 {
   QString result;
-  
+
   result += "Match ";
   result += ( mOperator == OpOr ) ? "any" : "all";
   result += " of the following:\n";
@@ -416,7 +417,7 @@ KMSearchPattern& KMSearchPattern::operator=( const KMSearchPattern & aPattern )
 {
   setOp( aPattern.op() );
   setName( aPattern.name() );
-  
+
   QPtrListIterator<KMSearchRule> it( aPattern );
   for ( it.toFirst() ; it.current() ; ++it ) {
     KMSearchRule *r = new KMSearchRule;

@@ -1,5 +1,6 @@
 // kmsender.cpp
 
+#include <config.h>
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kapplication.h>

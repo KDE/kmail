@@ -1,6 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
+#include <config.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <errno.h>

@@ -1,5 +1,6 @@
 // kmfolderdia.cpp
 
+#include <config.h>
 #include <assert.h>
 
 #include <qcheckbox.h>

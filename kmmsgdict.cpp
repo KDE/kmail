@@ -125,7 +125,7 @@ public:
   QMemArray<KMMsgDictEntry *> array;
   FILE *fp;
   bool swapByteOrder;
-  int baseOffset;
+  off_t baseOffset;
 };
 
 //-----------------------------------------------------------------------------
@@ -441,7 +441,7 @@ int KMMsgDict::writeFolderIds(KMFolder *folder)
   
   rentry->sync();
 
-  long eof = ftell(fp);
+  off_t eof = ftell(fp);
   QString filename = getFolderIdsLocation(folder);
   truncate(filename.local8Bit(), eof);
   

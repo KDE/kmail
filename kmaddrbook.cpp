@@ -2,8 +2,8 @@
 // Author: Stefan Taferner <taferner@kde.org>
 // This code is under GPL
 
-#include <pwd.h>
 #include <config.h>
+#include <pwd.h>
 #include "kmaddrbook.h"
 #include <kapplication.h>
 #include <kdebug.h>
@@ -27,7 +27,7 @@
 void KabcBridge::addresses(QStringList* result) // includes lists
 {
   kernel->kbp()->busy(); // loading might take a while
-    
+
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   KABC::AddressBook::Iterator it;
   for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
@@ -38,13 +38,13 @@ void KabcBridge::addresses(QStringList* result) // includes lists
 	        (*it).familyName() + " " +
 		(*it).suffix();
     n = n.simplifyWhiteSpace();
-    
+
     QRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
     QString endQuote = "\" ";
     QString empty = "";
     QStringList::ConstIterator mit;
     QString addr, email;
-    
+
     for ( mit = emails.begin(); mit != emails.end(); ++mit ) {
       email = *mit;
       if (!email.isEmpty()) {
@@ -76,7 +76,7 @@ void KabcBridge::addresses(QStringList* result) // includes lists
   for ( jt = names.begin(); jt != names.end(); ++jt)
     result->append( *jt );
   result->sort();
-  
+
   kernel->kbp()->idle();
 }
 
@@ -193,9 +193,9 @@ void KMAddrBookExternal::addEmail( const QString &addr, QWidget *parent) {
     KABC::Addressee a;
     a.setNameFromString( name );
     a.insertEmail( email, true );
-    
+
     ab->insertAddressee(a);
-    
+
     if ( !KABC::StdAddressBook::save() ) {
       KMessageBox::error( parent, i18n("Can't save to addressbook.") );
     } else {
@@ -249,13 +249,13 @@ bool KMAddrBookExternal::useKAddressbook()
 // FIXME: This function is duplicated from kdelibs/kabc. Remove it, when KMail
 // depends on the 3.1 libs.
 void KMAddrBookExternal::parseEmailAddress( const QString &rawEmail,
-                                            QString &fullName, 
+                                            QString &fullName,
                                             QString &email)
 {
   int startPos, endPos, len;
   QString partA, partB, result;
   char endCh = '>';
-  
+
   startPos = rawEmail.find('<');
   if (startPos < 0)
   {
@@ -269,12 +269,12 @@ void KMAddrBookExternal::parseEmailAddress( const QString &rawEmail,
     email = rawEmail;
     fullName = "";
   }
-  else 
+  else
   {
     // We have a start position, try to find an end
     endPos = rawEmail.find(endCh, startPos+1);
-    
-    if (endPos < 0) 
+
+    if (endPos < 0)
     {
       // We couldn't find the end of the email address. We can only
       // assume the entire string is the email address.
@@ -284,10 +284,10 @@ void KMAddrBookExternal::parseEmailAddress( const QString &rawEmail,
     else
     {
       // We have a start and end to the email address
-      
+
       // Grab the name part
       fullName = rawEmail.left(startPos).stripWhiteSpace();
-      
+
       // grab the email part
       email = rawEmail.mid(startPos+1, endPos-startPos-1).stripWhiteSpace();
 

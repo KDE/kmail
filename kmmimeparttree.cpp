@@ -1,3 +1,4 @@
+#include <config.h>
 #include "kmmimeparttree.h"
 #include "kmreaderwin.h"
 #include "partNode.h"

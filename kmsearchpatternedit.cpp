@@ -2,6 +2,7 @@
 // Author: Marc Mutz <Marc@Mutz.com>
 // This code is under GPL
 
+#include <config.h>
 #include "kmsearchpatternedit.h"
 
 #include <klocale.h>
@@ -28,7 +29,7 @@ static QStringList sFilterFieldList, sFilterFuncList;
 //=============================================================================
 
 KMSearchRuleWidget::KMSearchRuleWidget(QWidget *parent, KMSearchRule *aRule, const char *name, bool headersOnly)
-  : QHBox(parent,name), 
+  : QHBox(parent,name),
     mRuleEditBut(0),
     mRegExpEditDialog(0)
 {

@@ -7,6 +7,7 @@
 
 #undef GrayScale
 #undef Color
+#include <config.h>
 #include <qtooltip.h>
 #include <qtextcodec.h>
 #include <qheader.h>

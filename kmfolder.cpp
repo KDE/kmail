@@ -1,6 +1,7 @@
 // kmfolder.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
+#include <config.h>
 #include <qfileinfo.h>
 #include <qsortedlist.h>
 
@@ -26,9 +27,7 @@
 #include <assert.h>
 #include <unistd.h>
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
 
 #if HAVE_FCNTL_H
 #include <fcntl.h>
@@ -226,10 +225,8 @@ bool KMFolder::isIndexOutdated()
 int KMFolder::writeIndex()
 {
   QString tempName;
-  KMMsgBase* msgBase;
   int old_umask;
   int i=0, len;
-  long tmp;
   const uchar *buffer = NULL;
   old_umask = umask(077);
 
@@ -264,14 +261,15 @@ int KMFolder::writeIndex()
   fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
   fwrite(&sizeOfLong, sizeof(sizeOfLong), 1, tmpIndexStream);
 
-  long nho = ftell(tmpIndexStream);
+  KMMsgBase* msgBase;
+  off_t nho = ftell(tmpIndexStream);
   for (i=0; i<mMsgList.high(); i++)
   {
     if (!(msgBase = mMsgList[i])) continue;
     buffer = msgBase->asIndexString(len);
     fwrite(&len,sizeof(len), 1, tmpIndexStream);
 	
-    tmp = ftell(tmpIndexStream);
+    off_t tmp = ftell(tmpIndexStream);
     msgBase->setIndexOffset(tmp);
     msgBase->setIndexLength(len);
     if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
@@ -354,7 +352,7 @@ bool KMFolder::readIndexHeader(int *gv)
       if (header_length > 0xFFFF)
          header_length = kmail_swap_32(header_length);
       
-      long endOfHeader = ftell(mIndexStream) + header_length;
+      off_t endOfHeader = ftell(mIndexStream) + header_length;
 
       bool needs_update = true;
       // Process available header parts
@@ -393,7 +391,6 @@ bool KMFolder::readIndexHeader(int *gv)
 bool KMFolder::readIndex()
 {
   Q_INT32 len;
-  int offs;
   KMMsgInfo* mi;
 
   assert(mIndexStream != NULL);
@@ -421,7 +418,7 @@ bool KMFolder::readIndex()
       if (mIndexSwapByteOrder)
         len = kmail_swap_32(len);
 
-      offs = ftell(mIndexStream);
+      off_t offs = ftell(mIndexStream);
       if(fseek(mIndexStream, len, SEEK_CUR))
         break;
       mi = new KMMsgInfo(this, offs, len);

@@ -1,5 +1,6 @@
 // KMail Account Manager
 
+#include <config.h>
 #include "kmacctmgr.h"
 #include "kmacctmaildir.h"
 #include "kmacctlocal.h"

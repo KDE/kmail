@@ -18,6 +18,9 @@
 #ifndef kmfolder_h
 #define kmfolder_h
 
+// for large file support
+#include <config.h>
+#include <sys/types.h>
 #include "kmfoldernode.h"
 #include "kmmsginfo.h"
 #include "kmmsglist.h"
@@ -540,7 +543,7 @@ protected:
   int mOpenCount, mQuiet;
   bool mChanged;
   /** offset of header of index file */
-  unsigned long mHeaderOffset;
+  off_t mHeaderOffset;
   /** is the automatic creation of a index file allowed ? */
   bool mAutoCreateIndex;
   /** if the index is dirty it will be recreated upon close() */

@@ -1,5 +1,5 @@
 /*
- *   kmail: KDE mail client  
+ *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -18,6 +18,7 @@
  *
  */
 
+#include <config.h>
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qlineedit.h>
@@ -853,7 +854,7 @@ void AccountDialog::setupSettings()
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
       trashfolder = kernel->trashFolder()->idString();
-    mImap.trashCombo->setFolder( trashfolder );	
+    mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
       mImap.encryptionSSL->setChecked( TRUE );
@@ -936,7 +937,7 @@ void AccountDialog::setupSettings()
 void AccountDialog::slotPipeliningClicked()
 {
   if (mPop.usePipeliningCheck->isChecked())
-    KMessageBox::information(0, 
+    KMessageBox::information(0,
       i18n("Please note that this feature can cause some POP3 servers "
       "that don't support pipelining to send corrupted mails.\n"
       "This is configurable, because some servers support pipelining "
@@ -1171,7 +1172,7 @@ void AccountDialog::saveSettings()
   }
 
   kernel->acctMgr()->writeConfig(TRUE);
-  
+
   // get the new account and register the new destination folder
   KMAccount* newAcct = kernel->acctMgr()->find(mAccount->name());
   if (newAcct)

@@ -2,8 +2,8 @@
 // Authors: Don Sanders, (based on kmacctpop by)
 //          Stefan Taferner and Markus Wuebben
 
-#include "kmacctexppop.moc"
-
+#include <config.h>
+#include "kmacctexppop.h"
 #include <netdb.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -634,7 +634,7 @@ void KMAcctExpPop::slotJobFinished() {
           dlgPopup = true;
           break;
         case Later:
-          if (kernel->popFilterMgr()->showLaterMsgs()) 
+          if (kernel->popFilterMgr()->showLaterMsgs())
             dlgPopup = true;
         default:
           headersOnServer.current()->setAction(action);
@@ -650,7 +650,7 @@ void KMAcctExpPop::slotJobFinished() {
       KMPopFilterCnfrmDlg dlg(&headersOnServer, this->name(), kernel->popFilterMgr()->showLaterMsgs());
       dlg.exec();
     }
-	
+
     for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
       if (headersOnServer.current()->action() == Delete ||
           headersOnServer.current()->action() == Later) {
@@ -922,7 +922,7 @@ void KMAcctExpPop::slotResult( KIO::Job* )
       {
         KMessageBox::error(0, i18n("Your server does not support the "
           "TOP command. Therefore it is not possible to fetch the headers "
-	  "of large emails first, before downloading them.")); 
+	  "of large emails first, before downloading them."));
         slotCancel();
         return;
       }
@@ -968,3 +968,5 @@ void KMAcctExpPop::slotGetNextHdr(){
 
   curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
 }
+
+#include "kmacctexppop.moc"

@@ -19,6 +19,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <config.h>
 #include "kmacctimap.moc"
 
 #include "kmbroadcaststatus.h"
@@ -324,8 +325,8 @@ KURL KMAcctImap::getUrl()
   url.setPort(mPort);
   return url;
 }
- 
- 
+
+
 //-----------------------------------------------------------------------------
 bool KMAcctImap::makeConnection()
 {
@@ -355,8 +356,8 @@ bool KMAcctImap::makeConnection()
   }
   return TRUE;
 }
- 
- 
+
+
 //-----------------------------------------------------------------------------
 void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   const QString &errorMsg)
@@ -568,7 +569,7 @@ void KMAcctImap::postProcessNewMail(KMFolder* folder)
       mCountLastUnread = mCountUnread;
     } else {
       emit finishedCheck(false);
-    } 
+    }
     mCountUnread = 0;
   }
 }

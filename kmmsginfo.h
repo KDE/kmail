@@ -5,6 +5,8 @@
 #ifndef kmmsginfo_h
 #define kmmsginfo_h
 
+#include <config.h>
+#include <sys/types.h>
 #include "kmmsgbase.h"
 
 class KMMessage;
@@ -14,7 +16,7 @@ class KMMessage;
 class KMMsgInfo: public KMMsgBase
 {
 public:
-  KMMsgInfo(KMFolder* parent, long off=0, short len=0);
+  KMMsgInfo(KMFolder* parent, off_t off=0, short len=0);
   virtual ~KMMsgInfo();
 
   /** left for old style index files */
@@ -26,7 +28,7 @@ public:
                     const QCString& to, time_t date,
 		    KMMsgStatus status, const QCString& xmark,
 		    const QCString& replyToId, const QCString& msgId,
-		    unsigned long folderOffset=0, unsigned long msgSize=0);
+		    off_t folderOffset=0, size_t msgSize=0);
 
   /** Initialize with given values and set dirty flag to FALSE. */
   virtual void init(const QCString& subject, const QCString& from,
@@ -46,11 +48,11 @@ public:
   virtual KMMsgStatus status(void) const;
   virtual KMMsgEncryptionState encryptionState() const;
   virtual KMMsgSignatureState signatureState() const;
-  virtual unsigned long folderOffset(void) const;
-  virtual unsigned long msgSize(void) const;
+  virtual off_t folderOffset(void) const;
+  virtual size_t msgSize(void) const;
   virtual time_t date(void) const;
-  void setMsgSize(unsigned long sz);
-  void setFolderOffset(unsigned long offs);
+  void setMsgSize(size_t sz);
+  void setFolderOffset(off_t offs);
   void setFileName(const QString& file);
   virtual void setStatus(const KMMsgStatus status, int idx = -1);
   virtual void setDate(time_t aUnixTime);

@@ -1,3 +1,4 @@
+#include <config.h>
 #include "directoryservicesconfigurationdialogimpl.h"
 #include "adddirectoryservicedialogimpl.h"
 #include "cryptplugwrapper.h"

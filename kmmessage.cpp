@@ -1,6 +1,8 @@
 // kmmessage.cpp
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
+#include <config.h>
+
 #define ALLOW_GUI 1
 #include "kmmessage.h"
 #include "kmmsgpart.h"
@@ -81,7 +83,7 @@ KMMessage::KMMessage(const KMMessage& other) : KMMessageInherited( other ), mMsg
 
 void KMMessage::assign( const KMMessage& other )
 {
-  if( mMsg ) delete mMsg;
+  delete mMsg;
 
   mNeedsAssembly = true;//other.mNeedsAssembly;
   mMsg = new DwMessage( *(other.mMsg) );

@@ -22,7 +22,8 @@ public:
     };
     ushort modifiers;
     QString subject, from, to, replyToIdMD5, msgIdMD5, xmark, file;
-    unsigned long folderOffset, msgSize;
+    off_t folderOffset;
+    size_t msgSize;
     time_t date;
 
     KMMsgInfoPrivate() : modifiers(NONE_SET) { }
@@ -73,7 +74,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-KMMsgInfo::KMMsgInfo(KMFolder* p, long off, short len) :
+KMMsgInfo::KMMsgInfo(KMFolder* p, off_t off, short len) :
     KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown),
     mEncryptionState( KMMsgEncryptionStateUnknown ),
     mSignatureState( KMMsgSignatureStateUnknown ), kd(NULL)
@@ -138,7 +139,7 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
                      const QCString& aTo, time_t aDate,
 		     KMMsgStatus aStatus, const QCString& aXMark,
 		     const QCString& replyToId, const QCString& msgId,
-		     unsigned long aFolderOffset, unsigned long aMsgSize)
+                     off_t aFolderOffset, size_t aMsgSize)
 {
     mIndexOffset = 0;
     mIndexLength = 0;
@@ -326,7 +327,7 @@ KMMsgSignatureState KMMsgInfo::signatureState() const
 
 
 //-----------------------------------------------------------------------------
-unsigned long KMMsgInfo::folderOffset(void) const
+off_t KMMsgInfo::folderOffset(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::OFFSET_SET)
 	return kd->folderOffset;
@@ -334,7 +335,7 @@ unsigned long KMMsgInfo::folderOffset(void) const
 }
 
 //-----------------------------------------------------------------------------
-unsigned long KMMsgInfo::msgSize(void) const
+size_t KMMsgInfo::msgSize(void) const
 {
     if (kd && kd->modifiers & KMMsgInfoPrivate::SIZE_SET)
 	return kd->msgSize;
@@ -350,7 +351,7 @@ time_t KMMsgInfo::date(void) const
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setMsgSize(unsigned long sz)
+void KMMsgInfo::setMsgSize(size_t sz)
 {
     if (sz == msgSize())
 	return;
@@ -363,7 +364,7 @@ void KMMsgInfo::setMsgSize(unsigned long sz)
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::setFolderOffset(unsigned long offs)
+void KMMsgInfo::setFolderOffset(off_t offs)
 {
     if (folderOffset() == offs)
 	return;

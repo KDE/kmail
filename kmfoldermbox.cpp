@@ -1,10 +1,7 @@
 // kmfoldermbox.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
-
 #include <qfileinfo.h>
 #include <qregexp.h>
 
@@ -79,7 +76,7 @@ int KMFolderMbox::open()
   mStream = fopen(location().local8Bit(), "r+"); // messages file
   if (!mStream)
   {
-    KNotifyClient::event("warning", 
+    KNotifyClient::event("warning",
     i18n("Cannot open file \"%1\":\n%2").arg(location()).arg(strerror(errno)));
     kdDebug(5006) << "Cannot open folder `" << location() << "': " << strerror(errno) << endl;
     mOpenCount = 0;
@@ -100,7 +97,7 @@ int KMFolderMbox::open()
     } else {
       mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
       updateIndexStreamPtr();
-    }	
+    }
 
     if (!mIndexStream)
       rc = createIndexFromContents();
@@ -134,7 +131,7 @@ int KMFolderMbox::canAccess()
       return 1;
   }
   return 0;
-} 
+}
 
 //-----------------------------------------------------------------------------
 int KMFolderMbox::create(bool imap)
@@ -453,7 +450,6 @@ int KMFolderMbox::createIndexFromContents()
   QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
   QCString replyToIdStr, referencesStr, msgIdStr;
   QString whoFieldName;
-  unsigned long offs, size, pos;
   bool atEof = FALSE;
   bool inHeader = TRUE;
   KMMsgInfo* mi;
@@ -470,8 +466,8 @@ int KMFolderMbox::createIndexFromContents()
 
   num     = -1;
   numStatus= 11;
-  offs    = 0;
-  size    = 0;
+  off_t offs = 0;
+  size_t size = 0;
   dateStr = "";
   fromStr = "";
   toStr = "";
@@ -489,7 +485,7 @@ int KMFolderMbox::createIndexFromContents()
 
   while (!atEof)
   {
-    pos = ftell(mStream);
+    off_t pos = ftell(mStream);
     if (!fgets(line, MAX_LINE, mStream)) atEof = TRUE;
 
     if (atEof ||
@@ -693,7 +689,6 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   if (!canAddMsgNow(aMsg, aIndex_ret)) return 0;
 
-  long offs, size, len, revert;
   bool opened = FALSE;
   QCString msgText;
   char endStr[3];
@@ -745,7 +740,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   }
   msgText = aMsg->asString();
   msgText.replace(QRegExp("\nFrom "),"\n>From ");
-  len = msgText.length();
+  size_t len = msgText.length();
 
   assert(mStream != NULL);
   clearerr(mStream);
@@ -759,7 +754,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   // Make sure the file is large enough to check for an end
   // character
   fseek(mStream, 0, SEEK_END);
-  revert = ftell(mStream);
+  off_t revert = ftell(mStream);
   if (ftell(mStream) >= 2) {
       // write message to folder file
       fseek(mStream, -2, SEEK_END);
@@ -784,11 +779,11 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
   fprintf(mStream, "From %s %s\n", (const char *)aMsg->fromEmail(),
           (const char *)aMsg->dateShortStr());
-  offs = ftell(mStream);
+  off_t offs = ftell(mStream);
   fwrite(msgText, len, 1, mStream);
   if (msgText[(int)len-1]!='\n') fwrite("\n\n", 1, 2, mStream);
   fflush(mStream);
-  size = ftell(mStream) - offs;
+  size_t size = ftell(mStream) - offs;
 
   error = ferror(mStream);
   if (error) {
@@ -848,7 +843,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
     revert = ftell(mIndexStream);
-	
+
 	int len;
 	const uchar *buffer = aMsg->asIndexString(len);
 	fwrite(&len,sizeof(len), 1, mIndexStream);
@@ -859,9 +854,9 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
     fflush(mIndexStream);
     error = ferror(mIndexStream);
-    
+
     error |= appendtoMsgDict(idx);
-    
+
     if (error) {
       kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
@@ -883,7 +878,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
       return error;
     }
   }
-  
+
   // some "paper work"
   if (aIndex_ret) *aIndex_ret = idx;
   if (!mQuiet) {
@@ -933,8 +928,10 @@ int KMFolderMbox::compact()
   open();
 
   KMMsgInfo* mi;
-  uint msize, folder_offset;
-  int offs=0, msgs=0;
+  size_t msize;
+  off_t folder_offset;
+  off_t offs=0;
+  size_t msgs=0;
   QCString mtext;
   for(int idx = 0; idx < mMsgList.count(); idx++) {
     if(!(msgs++ % 10)) {
@@ -948,8 +945,8 @@ int KMFolderMbox::compact()
     folder_offset = mi->folderOffset();
 
     //now we need to find the separator! grr...
-    for(int i = folder_offset-25; TRUE; i -= 20) {
-      int chunk_offset = i <= 0 ? 0 : i;
+    for(off_t i = folder_offset-25; TRUE; i -= 20) {
+      off_t chunk_offset = i <= 0 ? 0 : i;
       if(fseek(mStream, chunk_offset, SEEK_SET) == -1) {
         rc = errno;
 	break;
@@ -995,7 +992,7 @@ int KMFolderMbox::compact()
     }
     if (rc)
       break;
-	
+
     //now actually write the message
     if(fseek(mStream, folder_offset, SEEK_SET) == -1 ||
        !fread(mtext.data(), msize, 1, mStream) || !fwrite(mtext.data(), msize, 1, tmpfile)) {

@@ -3,7 +3,7 @@
 // based on work by Stefan Taferner <taferner@kde.org>
 // This code is under the GPL
 
-// own header:
+#include <config.h>
 #include "kmfilterdlg.h"
 
 // other KMail headers:
@@ -155,11 +155,11 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
   }
   // spacer:
   vbl->addStretch( 1 );
-  
+
   // load the filter parts into the edit widgets
   connect( mFilterList, SIGNAL(filterSelected(KMFilter*)),
 	   this, SLOT(slotFilterSelected(KMFilter*)) );
-  
+
   if (bPopFilter){
     // set the state of the global setting 'show later msgs'
     connect( mShowLaterBtn, SIGNAL(toggled(bool)),
@@ -183,11 +183,11 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
     connect( mStopProcessingHere, SIGNAL(toggled(bool)),
 	     this, SLOT(slotStopProcessingButtonToggled(bool)) );
   }
-	
+
   // reset all widgets here
   connect( mFilterList, SIGNAL(resetWidgets()),
 	   this, SLOT(slotReset()) );
-  
+
   // support auto-naming the filter
   connect( mPatternEdit, SIGNAL(maybeNameChanged()),
 	   mFilterList, SLOT(slotUpdateFilterName()) );
@@ -234,7 +234,7 @@ void KMFilterDlg::slotActionChanged(const KMPopFilterAction aAction)
 void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
 {
   assert( aFilter );
-  
+
   if (bPopFilter){
     mActionGroup->setAction( aFilter->action() );
     mGlobalsBox->setEnabled(true);
@@ -263,7 +263,7 @@ void KMFilterDlg::slotFilterSelected( KMFilter* aFilter )
     bool applyOnOut = aFilter->applyOnOutbound();
     bool applyOnExplicit = aFilter->applyOnExplicit();
     bool stopHere = aFilter->stopProcessingHere();
-    
+
     mApplyOnIn->setChecked( applyOnIn );
     mApplyOnOut->setChecked( applyOnOut );
     mApplyOnCtrlJ->setChecked( applyOnExplicit );
@@ -275,7 +275,7 @@ void KMFilterDlg::slotReset()
 {
   mFilter = 0;
   mPatternEdit->reset();
-  
+
   if(bPopFilter) {
     mActionGroup->reset();
     mGlobalsBox->setEnabled( false );
@@ -325,7 +325,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mListBox = new QListBox(this);
   mListBox->setMinimumWidth(150);
   QWhatsThis::add( mListBox, i18n(_wt_filterlist) );
-  
+
   //----------- the first row of buttons
   QHBox *hb = new QHBox(this);
   hb->setSpacing(4);
@@ -382,11 +382,11 @@ void KMFilterListBox::createFilter( const QCString & field,
 {
   KMSearchRule *newRule = new KMSearchRule();
   newRule->init( field, KMSearchRule::FuncContains, value );
-  
+
   KMFilter *newFilter = new KMFilter(0, bPopFilter);
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( field ).arg( value) );
-  
+
   KMFilterActionDesc *desc = (*kernel->filterActionDict())["transfer"];
   if ( desc )
     newFilter->actions()->append( desc->create() );
@@ -407,7 +407,7 @@ void KMFilterListBox::slotUpdateFilterName()
 
   QString shouldBeName = p->name();
   QString displayedName = mListBox->text( mIdxSelItem );
-  
+
   if ( shouldBeName.stripWhiteSpace().isEmpty() || shouldBeName[0] == '<' ) {
     // auto-naming of patterns
     if ( p->first() && !p->first()->field().stripWhiteSpace().isEmpty() )
@@ -466,7 +466,7 @@ void KMFilterListBox::slotApplyFilterChanges()
   }
   if (bPopFilter)
     fm->setShowLaterMsgs(mShowLater);
-  
+
   // allow usage of the filters again.
   fm->endUpdate();
   fm->writeConfig();
@@ -503,7 +503,7 @@ void KMFilterListBox::slotDelete()
     kdDebug(5006) << "KMFilterListBox::slotDelete called while no filter is selected, ignoring." << endl;
     return;
   }
-  
+
   int oIdxSelItem = mIdxSelItem;
   mIdxSelItem = -1;
   // unselect all
@@ -556,7 +556,7 @@ void KMFilterListBox::slotDown()
     kdDebug(5006) << "KMFilterListBox::slotDown called while the _last_ filter is selected, ignoring." << endl;
     return;
   }
-  
+
   swapNeighbouringFilters( mIdxSelItem, mIdxSelItem + 1);
   enableControls();
 }
@@ -714,7 +714,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   assert( mWidgetStack );
 
   setSpacing( 4 );
-  
+
   QPtrListIterator<KMFilterActionDesc> it ( kernel->filterActionDict()->list() );
   for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
     //create an instance:
@@ -729,7 +729,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   // widget for the case where no action is selected.
   mWidgetStack->addWidget( new QLabel( i18n("Please select an action."), mWidgetStack ), i );
   mWidgetStack->raiseWidget(i);
-  mComboBox->insertItem( " " ); 
+  mComboBox->insertItem( " " );
   mComboBox->setCurrentItem(i);
 
   // don't show scroll bars.
@@ -757,7 +757,7 @@ void KMFilterActionWidget::setAction( const KMFilterAction* aAction )
 
   // find the index of typeOf(aAction) in mComboBox
   // and clear the other widgets on the way.
-  for ( ; i < count ; i++ ) 
+  for ( ; i < count ; i++ )
     if ( aAction && mComboBox->text(i) == label ) {
       //...set the parameter widget to the settings
       // of aAction...
@@ -790,7 +790,7 @@ KMFilterAction * KMFilterActionWidget::action()
       return fa;
     }
   }
-  
+
   return 0;
 }
 
@@ -879,7 +879,7 @@ void KMFilterActionWidgetLister::regenerateActionListFromWidgets()
     if ( a )
       mActionList->append( a );
   }
-    
+
 }
 
 //=============================================================================

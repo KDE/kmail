@@ -8,7 +8,8 @@
                            T.Zachmann@zagge.de
  ***************************************************************************/
 
-#include "kmpopfiltercnfrmdlg.moc"
+#include <config.h>
+#include "kmpopfiltercnfrmdlg.h"
 #include "kmheaders.h"
 
 #include <qlayout.h>
@@ -489,3 +490,5 @@ void KMPopFilterCnfrmDlg::slotUpdateMinimumSize()
 {
   mainWidget()->setMinimumSize(mainWidget()->sizeHint());
 }
+
+#include "kmpopfiltercnfrmdlg.moc"

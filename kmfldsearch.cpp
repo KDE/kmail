@@ -4,6 +4,7 @@
  */
 // kmfldsearch.cpp
 
+#include <config.h>
 #include "kbusyptr.h"
 #include "kmcomposewin.h"
 #include "kmfldsearch.h"
@@ -57,8 +58,8 @@ const int KMFldSearch::MSGID_COLUMN = 4;
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
                          KMFolder *curFolder, bool modal):
   KDialogBase(NULL, name, modal, i18n("Search in Folders"),
-              User1 | User2 | Close, User1, false, 
-              KGuiItem( i18n("&Search"), "find" ), 
+              User1 | User2 | Close, User1, false,
+              KGuiItem( i18n("&Search"), "find" ),
               KGuiItem( i18n("S&top"), "cancel" )),
   mSearching(false),
   mStopped(false),
@@ -70,7 +71,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mMainWin(w)
 {
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
-  
+
   KConfig* config = KGlobal::config();
   config->setGroup("SearchDialog");
 
@@ -124,13 +125,13 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mLbxMatches->setSorting(2, false);
   mLbxMatches->setShowSortIndicator(true);
   mLbxMatches->setAllColumnsShowFocus(true);
-  mLbxMatches->addColumn(i18n("Subject"), 
+  mLbxMatches->addColumn(i18n("Subject"),
                          config->readNumEntry("SubjectWidth", 150));
-  mLbxMatches->addColumn(i18n("Sender/Receiver"), 
+  mLbxMatches->addColumn(i18n("Sender/Receiver"),
                          config->readNumEntry("SenderWidth", 120));
-  mLbxMatches->addColumn(i18n("Date"), 
+  mLbxMatches->addColumn(i18n("Date"),
                          config->readNumEntry("DateWidth", 120));
-  mLbxMatches->addColumn(i18n("Folder"), 
+  mLbxMatches->addColumn(i18n("Folder"),
                          config->readNumEntry("FolderWidth", 100));
 
   mLbxMatches->addColumn(""); // should be hidden
@@ -161,15 +162,15 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 
   mGrid->activate();
   mRules[0]->setFocus();
-  
+
   int mainWidth = config->readNumEntry("SearchWidgetWidth", 0);
   int mainHeight = config->readNumEntry("SearchWidgetHeight", 0);
-  
+
   if (mainWidth || mainHeight)
   {
     resize(mainWidth, mainHeight);
   }
-  
+
   setMainWidget(searchWidget);
   setButtonBoxOrientation(QWidget::Vertical);
 
@@ -202,18 +203,18 @@ void KMFldSearch::updStatus(void)
 {
   QString genMsg, detailMsg;
 
-  if (!mSearching) 
+  if (!mSearching)
   {
     if(!mStopped)
     {
-      genMsg = i18n("Done"); 
+      genMsg = i18n("Done");
       detailMsg = i18n("%n match (%1)", "%n matches (%1)", mNumMatches)
                  .arg(i18n("%n message processed",
                            "%n messages processed", mCount));
     }
     else
     {
-      genMsg = i18n("Search canceled"); 
+      genMsg = i18n("Search canceled");
       detailMsg = i18n("%n match so far (%1)",
                        "%n matches so far (%1)", mNumMatches)
                  .arg(i18n("%n message processed",
@@ -267,13 +268,13 @@ void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
   disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
              this, SLOT(slotFolderComplete(KMFolderImap*, bool)));
   mFetchingInProgress--;
-  
+
   if (success)
   {
     searchInFolder(folder, mChkSubFolders->isChecked(), FALSE);
     if (mFetchingInProgress == 0) searchDone();
   }
-  else 
+  else
   {
     searchDone();
   }
@@ -337,8 +338,8 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
         unget = !aFld->isMessage(i);
         msg = aFld->getMsg(i);
       } else unget = false;
-    } 
-    else 
+    }
+    else
     {
       unget = !aFld->isMessage(i);
       msg = aFld->getMsg(i);
@@ -351,7 +352,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
         from = msg->to();
       else
         from = msg->from();
-      
+
       (void)new QListViewItem(mLbxMatches,
                               msg->subject(), from, msg->dateIsoStr(),
                               mSearchFolder,
@@ -428,7 +429,7 @@ void KMFldSearch::searchInAllFolders(void)
 void KMFldSearch::slotFolderActivated(int /*nr*/)
 {
   KMFolder* folder = mCbxFolders->getFolder();
-  
+
   mChkbxSpecificFolders->setChecked(true);
   mBtnSearch->setEnabled(folder);
 
@@ -527,7 +528,7 @@ void KMFldSearch::closeEvent(QCloseEvent *e)
     mCloseRequested = true;
     e->ignore();
   }
-  else 
+  else
   {
     KDialogBase::closeEvent(e);
   }
@@ -543,7 +544,7 @@ bool KMFldSearch::slotShowMsg(QListViewItem *item)
 
   KMFolder* folder;
   int msgIndex;
-  kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(), 
+  kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
                                  &folder, &msgIndex);
 
   if (!folder || msgIndex < 0)
@@ -564,7 +565,7 @@ bool KMFldSearch::slotShowMsg(QListViewItem *item)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::enableGUI() 
+void KMFldSearch::enableGUI()
 {
   actionButton(KDialogBase::Close)->setEnabled(!mSearching);
   mCbxFolders->setEnabled(!mSearching);
@@ -603,7 +604,7 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   mEdtValue = new KLineEdit(aParent);
   mEdtValue->setMinimumSize(mCbxFunc->sizeHint());
   mEdtValue->setMaximumSize(1024, mCbxFunc->sizeHint().height());
-  
+
   QLabel* lbl;
 
   if (mRow > 2)
@@ -619,7 +620,7 @@ KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
   }
 
   lbl->setMinimumSize(lbl->sizeHint());
-  
+
   aGrid->addWidget(lbl, aRow, aCol);
   aGrid->addWidget(mCbxField, aRow, aCol + 1);
   aGrid->addWidget(mCbxFunc,  aRow, aCol + 2);

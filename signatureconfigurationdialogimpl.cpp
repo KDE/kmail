@@ -1,3 +1,4 @@
+#include <config.h>
 #include "signatureconfigurationdialogimpl.h"
 #include "cryptplugwrapper.h"
 
@@ -33,7 +34,7 @@ void SignatureConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPlu
     // disable the whole page if the plugin does not support
     // signatures (e.g. encryption only)
     setEnabled( cryptPlug->hasFeature( Feature_SignMessages ) );
-    
+
     // enable and disable the various components depending on the
     // availability of a feature in the crypto plugin
     sendCertificatesBG->setEnabled( cryptPlug->hasFeature( Feature_SendCertificates ) );

@@ -8,6 +8,7 @@
                            T.Zachmann@zagge.de
  ***************************************************************************/
 
+#include <config.h>
 #include "kmpopheaders.h"
 #include <kdebug.h>
 

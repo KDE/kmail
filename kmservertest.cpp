@@ -17,6 +17,7 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+#include <config.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kio/scheduler.h>
@@ -99,7 +100,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     mJob = KIO::special(mUrl, QCString("capa"), FALSE);
     KIO::Scheduler::assignJobToSlave(mSlave, mJob);
     connect(mJob, SIGNAL(result(KIO::Job *)), SLOT(slotResult(KIO::Job *)));
-    if (error) 
+    if (error)
     {
       connect(mJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
               SLOT(slotData(KIO::Job *, const QString &)));
@@ -110,7 +111,7 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     if (mList.isEmpty())
       KMessageBox::error(0, i18n("Could not connect to server %1")
       .arg(mUrl.host()));
-    emit capabilities(mList);   
+    emit capabilities(mList);
   }
 }
 

@@ -8,6 +8,7 @@
   This code is licensed under the GPL, blah, blah, blah...
 */
 
+#include <config.h>
 #include "partNode.h"
 #include <klocale.h>
 #include <kdebug.h>
@@ -223,7 +224,7 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
                                  QString labelSize )
 {
   if( parentItem || mimePartTree ) {
-    
+
     if( mNext )
         mNext->fillMimePartTree( parentItem, mimePartTree );
 
@@ -348,8 +349,8 @@ bool partNode::isAttachment() const
   if (!dwPart())
 	  return false;
   DwHeaders& headers = dwPart()->Headers();
-  if( headers.HasContentDisposition() ) 
+  if( headers.HasContentDisposition() )
     return (headers.ContentDisposition().DispositionType() == DwMime::kDispTypeAttachment);
-  else 
+  else
     return false;
 }
