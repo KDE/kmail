@@ -5558,7 +5558,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
   {
     KURL::List urlList;
     QDropEvent *de = static_cast<QDropEvent*>(e);
-    if(QUriDrag::canDecode(de) && KURLDrag::decode( de, urlList ))
+    if(KURLDrag::canDecode(de) && KURLDrag::decode( de, urlList ))
     {
       for (KURL::List::Iterator it = urlList.begin(); it != urlList.end(); ++it)
         mComposer->addAttach(*it);
