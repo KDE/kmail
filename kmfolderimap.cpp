@@ -482,7 +482,7 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
 bool KMFolderImap::listDirectory(bool secondStep)
 {
   mSubfolderState = imapInProgress;
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
+  if ( mAccount->makeConnection() == ImapAccountBase::Error )
     return FALSE;
 
   // connect to folderlisting
