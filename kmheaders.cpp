@@ -913,7 +913,7 @@ void KMHeaders::saveMsg (int msgId)
     str += "\n";
   }
 
-  if (kCStringToFile(str.local8Bit(), fileName, TRUE))
+  if (kCStringToFile(str.latin1(), fileName, TRUE))
     mOwner->statusMsg(i18n("Message(s) saved."));
   else
     mOwner->statusMsg(i18n("Failed to save message(s)."));
