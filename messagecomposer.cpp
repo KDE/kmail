@@ -777,6 +777,10 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
                                       bool doSign, bool doEncrypt,
                                       bool ignoreBcc )
 {
+#ifdef DEBUG
+  kdDebug(5006) << "entering KMComposeWin::composeMessage" << endl;
+#endif
+
   // create informative header for those that have no mime-capable
   // email client
   theMessage.setBody( "This message is in MIME format." );
@@ -842,11 +846,70 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       mEarlyAddAttachments = false;
   }
 
-  mOldBodyPart.setTypeStr( mEarlyAddAttachments ? "multipart" : "text" );
-  mOldBodyPart.setSubtypeStr( mEarlyAddAttachments ? "mixed" : "plain" );
+  // if an html message is to be generated, make a text/plain and text/html part
+  if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) {
+    mOldBodyPart.setTypeStr(   "multipart");
+    mOldBodyPart.setSubtypeStr(mEarlyAddAttachments ? "mixed"     : "alternative");
+  }
+  else {
+    mOldBodyPart.setTypeStr(   mEarlyAddAttachments ? "multipart" : "text" );
+    mOldBodyPart.setSubtypeStr(mEarlyAddAttachments ? "mixed"     : "plain");
+  }
+
   mOldBodyPart.setContentDisposition( "inline" );
 
   QCString boundaryCStr;
+  if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) { // create a multipart body
+    // calculate a boundary string
+    QCString boundaryCStr;  // storing boundary string data
+    QCString newbody="";
+    DwMediaType tmpCT;
+    tmpCT.CreateBoundary( mPreviousBoundaryLevel++ ); // was 0
+    boundaryCStr = tmpCT.Boundary().c_str();
+    QValueList<int> allowedCTEs;
+
+    KMMessagePart textBodyPart;
+    textBodyPart.setTypeStr("text");
+    textBodyPart.setSubtypeStr("plain");
+    mComposeWin->mEditor->setTextFormat(Qt::PlainText);
+    QCString textbody = breakLinesAndApplyCodec();
+    mComposeWin->mEditor->setTextFormat(Qt::RichText);
+    textBodyPart.setBodyAndGuessCte(textbody, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
+                                     doSign);
+    DwBodyPart* textDwPart = theMessage.createDWBodyPart( &textBodyPart );
+    textDwPart->Assemble();
+    newbody += "--";
+    newbody +=     boundaryCStr;
+    newbody +=                 "\n";
+    newbody += textDwPart->AsString().c_str();
+    delete textDwPart;
+    textDwPart = 0;
+
+    KMMessagePart htmlBodyPart;
+    htmlBodyPart.setTypeStr("text");
+    htmlBodyPart.setSubtypeStr("html");
+    // the signed body must not be 8bit encoded
+    QCString htmlbody = breakLinesAndApplyCodec();
+    htmlBodyPart.setBodyAndGuessCte(htmlbody, allowedCTEs, !!kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
+                                     doSign);
+    DwBodyPart* htmlDwPart = theMessage.createDWBodyPart( &htmlBodyPart );
+    htmlDwPart->Assemble();
+    newbody += "\n--";
+    newbody +=     boundaryCStr;
+    newbody +=                 "\n";
+    newbody += htmlDwPart->AsString().c_str();
+    delete htmlDwPart;
+    htmlDwPart = 0;
+
+    newbody += "--";
+    newbody +=     boundaryCStr;
+    newbody +=                 "--\n";
+    body = newbody;
+    mOldBodyPart.setBodyEncoded( newbody );
+
+    mSaveBoundary = tmpCT.Boundary();
+  }
+
 
   if( mEarlyAddAttachments ) {
     // calculate a boundary string
@@ -856,8 +919,14 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     boundaryCStr = tmpCT.Boundary().c_str();
     // add the normal body text
     KMMessagePart innerBodyPart;
-    innerBodyPart.setTypeStr( "text" );
-    innerBodyPart.setSubtypeStr( "plain" );
+    if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) {
+      innerBodyPart.setTypeStr(   "multipart");//text" );
+      innerBodyPart.setSubtypeStr("alternative");//html");
+    }
+    else {
+      innerBodyPart.setTypeStr(   "text" );
+      innerBodyPart.setSubtypeStr("plain");
+    }
     innerBodyPart.setContentDisposition( "inline" );
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
@@ -865,10 +934,23 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
                                       !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
                                       doSign );
     innerBodyPart.setCharset( mCharset );
-    innerBodyPart.setBodyEncoded( body );
+    innerBodyPart.setBodyEncoded( body ); // do we need this, since setBodyAndGuessCte does this already?
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
     innerDwPart->Assemble();
-    body = "--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
+    if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) { // and add our mp/a boundary
+        QCString tmpbody = innerDwPart->AsString().c_str();
+        int boundPos = tmpbody.find( '\n' );
+        if( -1 < boundPos ) {
+          QCString bStr( ";\n  boundary=\"" );
+          bStr += mSaveBoundary.c_str();
+          bStr += "\"";
+          body = innerDwPart->AsString().c_str();
+          body.insert( boundPos, bStr );
+          body = "--" + boundaryCStr + "\n" + body;
+        }
+    }
+    else
+      body = "--" + boundaryCStr + "\n" + innerDwPart->AsString().c_str();
     delete innerDwPart;
     innerDwPart = 0;
     // add all matching Attachments
@@ -903,7 +985,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       }
     }
     body += "\n--" + boundaryCStr + "--\n";
-  } else {
+  } else { // !earlyAddAttachments
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
     mOldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
@@ -916,9 +998,23 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   if( doSign || doEncrypt ) {
     if( mSelectedCryptPlug ) {
       // get string representation of body part (including the attachments)
-      DwBodyPart* dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
-      dwPart->Assemble();
-      mEncodedBody = dwPart->AsString().c_str();
+
+      DwBodyPart* dwPart;
+      if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !mEarlyAddAttachments ) {
+        // if we are using richtext and not already have a mp/a body
+        // make the body a mp/a body
+        dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
+        DwHeaders& headers = dwPart->Headers();
+        DwMediaType& ct = headers.ContentType();
+        ct.SetBoundary(mSaveBoundary);
+        dwPart->Assemble();
+        mEncodedBody = dwPart->AsString().c_str();
+      }
+      else {
+        dwPart = theMessage.createDWBodyPart( &mOldBodyPart );
+        dwPart->Assemble();
+        mEncodedBody = dwPart->AsString().c_str();
+      }
       delete dwPart;
       dwPart = 0;
 
@@ -1115,6 +1211,10 @@ void MessageComposer::encryptMessage( KMMessage* msg,
                                       int previousBoundaryLevel,
                                       KMMessagePart newBodyPart )
 {
+#ifdef DEBUG
+  kdDebug(5006) << "entering KMComposeWin::encryptMessage" << endl;
+#endif
+
   // This c-string (init empty here) is set by *first* testing of expiring
   // encryption certificate: stops us from repeatedly asking same questions.
   QCString encryptCertFingerprints;
@@ -1237,7 +1337,15 @@ void MessageComposer::encryptMessage( KMMessage* msg,
       //                    "Since your mail reader does not understand this format,\n"
       //                    "some or all parts of this message may not be legible." );
       // add our Body Part
-      msg->addBodyPart( &ourFineBodyPart );
+      DwBodyPart* tmpDwPart = msg->createDWBodyPart( &ourFineBodyPart );
+      DwHeaders& headers = tmpDwPart->Headers();
+      DwMediaType& ct = headers.ContentType();
+      ct.SetBoundary(mSaveBoundary);
+      tmpDwPart->Assemble();
+
+      KMMessagePart newPart;
+      newPart.setBody(tmpDwPart->AsString().c_str());
+      msg->addDwBodyPart(tmpDwPart); // only this method doesn't add it as text/plain
 
       // add Attachments
       // create additional bodyparts for the attachments (if any)
@@ -1394,8 +1502,16 @@ void MessageComposer::encryptMessage( KMMessage* msg,
 
       // set body content
       // msg->setBody( ourFineBodyPart.body() );
-      msg->setMultiPartBody( ourFineBodyPart.body() );
-      //kdDebug(5006) << "\n\n\n\n\n\n\nMessageComposer::messagecomposer():\n      99.:\n\n\n\n|||" << msg->asString() << "|||\n\n\n\n\n\n" << endl;
+      // msg->setMultiPartBody( ourFineBodyPart.body() );
+      //kdDebug(5006) << "MessageComposer::encryptMessage():\n      98.:\n|||" << msg->asString() << "|||\n\n" << endl;
+      //kdDebug(5006) << "MessageComposer::encryptMessage():\n      98a.:\n|||" << ourFineBodyPart.body() << "|||\n\n" << endl;
+      if ( mComposeWin->mEditor->textFormat() == Qt::RichText && !(doSign || doEncrypt) ) { // add the boundary to the header
+        DwMediaType & contentType = msg->dwContentType();
+        contentType.SetBoundary(mSaveBoundary);
+      }
+      msg->setBody(ourFineBodyPart.body() );
+
+      //kdDebug(5006) << "MessageComposer::encryptMessage():\n      99.:\n|||" << msg->asString() << "|||\n\n" << endl;
       //msg->headers().Assemble();
       //kdDebug(5006) << "\n\n\nMessageComposer::messagecomposer():\n      Z.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
     }
@@ -1650,7 +1766,7 @@ QCString MessageComposer::breakLinesAndApplyCodec()
   QString text;
   QCString cText;
 
-  if( mDisableBreaking )
+  if( mDisableBreaking || mComposeWin->mEditor->textFormat() == Qt::RichText)
     text = mComposeWin->mEditor->text();
   else
     text = mComposeWin->mEditor->brokenText();

@@ -525,11 +525,6 @@ void KMEditMsgCommand::execute()
   KMFolder *parent = msg->parent();
   if ( parent )
     parent->take( parent->find( msg ) );
-#if 0
-  // Useful?
-  mHeaders->setSelected(mHeaders->currentItem(), TRUE);
-  mHeaders->highlightMessage(mHeaders->currentItem(), true);
-#endif
 
   KMComposeWin *win = new KMComposeWin();
   msg->setTransferInProgress(false); // From here on on, the composer owns the message.

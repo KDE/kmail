@@ -3148,7 +3148,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
 
   // "HTML Messages" group box:
-  group = new QVGroupBox( i18n( "HTML Messages" ), this );
+  group = new QVGroupBox( i18n( "Reading HTML messages" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );

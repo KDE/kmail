@@ -35,6 +35,7 @@
 
 #include <qobject.h>
 
+#include <mimelib/mediatyp.h>
 #include <kpgp.h>
 
 class KMMessage;
@@ -134,7 +135,7 @@ private:
    *       flat text, resp.) is returned in resultingData, so just
    *       use this string as body text of the surrounding MIME object.
    *       This string *is* encoded according to contentTEncClear
-   *       and thus should be ready for neing sended via SMTP.
+   *       and thus should be ready for being sended via SMTP.
    */
   bool processStructuringInfo( const QString bugURL, uint boundaryLevel,
                                const QString contentDescriptionClear,
@@ -189,6 +190,9 @@ private:
   bool mEarlyAddAttachments, mAllAttachmentsAreInBody;
   KMMessagePart mOldBodyPart;
   int mPreviousBoundaryLevel;
+
+  // The boundary is saved for later addition into mp/a body
+  DwString  mSaveBoundary;
 
   QValueList<MessageComposerJob*> mJobs;
 };

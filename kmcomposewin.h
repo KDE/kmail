@@ -29,6 +29,7 @@
 
 #include "cryptplugwrapper.h"
 #include <kabc/addresslineedit.h>
+#include <mimelib/mediatyp.h>
 
 class _StringPair {
  public:
@@ -53,6 +54,9 @@ class KMMessage;
 class KProcess;
 class KDirWatch;
 class KSelectAction;
+class KFontAction;
+class KFontSizeAction;
+class KSelectAction;
 class KSpell;
 class KSpellConfig;
 class KDictSpellingHighlighter;
@@ -62,6 +66,7 @@ class KToggleAction;
 class KTempFile;
 class KToolBar;
 class KToggleAction;
+class KSelectColorAction;
 class KURL;
 class IdentityCombo;
 class SpellingFilter;
@@ -96,6 +101,11 @@ public:
    */
   QString brokenText();
 
+   /**
+   * Toggle automatic spellchecking
+   */
+  int autoSpellChecking( bool );
+
   /**
    * For the external editor
    */
@@ -110,16 +120,19 @@ public:
    */
   bool checkExternalEditorFinished();
 
+  void setSpellCheckingActive(bool spellCheckingActive);
 
   /** Drag and drop methods */
   void contentsDragEnterEvent(QDragEnterEvent *e);
   void contentsDragMoveEvent(QDragMoveEvent *e);
   void contentsDropEvent(QDropEvent *e);
 
+  void initializeAutoSpellChecking( KSpellConfig* autoSpellConfig );
+  void deleteAutoSpellChecking();
+
 signals:
   void spellcheck_done(int result);
 public slots:
-  void slotAutoSpellCheckingToggled( bool );
   void slotSpellcheck2(KSpell*);
   void slotSpellResult(const QString&);
   void slotSpellDone();
@@ -144,7 +157,6 @@ private slots:
 
 private:
   void killExternalEditor();
-  void initializeAutoSpellChecking( KSpellConfig* autoSpellConfig );
 
 private:
   KSpell *mKSpell;
@@ -330,6 +342,10 @@ public:
    */
    void setFocusToSubject();
 
+  /**
+   * determines whether inline signing/encryption is selected
+   */
+   bool inlineSigningEncryptionSelected();
 
    /**
     * Tries to find the given mimetype @p type in the KDE Mimetype registry.
@@ -489,6 +505,8 @@ public slots:
 
   void slotCleanSpace();
 
+  void slotToggleMarkup();
+  void toggleMarkup(bool markup);
 
 //  void slotSpellConfigure();
   void slotSpellcheckDone(int result);
@@ -518,6 +536,20 @@ public slots:
    */
   void slotAttachFileData(KIO::Job *, const QByteArray &);
   void slotAttachFileResult(KIO::Job *);
+
+  void slotListAction(const QString &);
+  void slotFontAction(const QString &);
+  void slotSizeAction(int);
+  void slotAlignLeft();
+  void slotAlignCenter();
+  void slotAlignRight();
+  void slotAlignJustify();
+  void slotTextBold();
+  void slotTextItalic();
+  void slotTextUnder();
+  void slotTextColor();
+  void fontChanged( const QFont & );
+  void alignmentChanged( int );
 
   void addAttach(const KURL url);
 
@@ -706,6 +738,7 @@ protected:
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;
+  bool useHTMLEditor;
   bool mUseExtEditor;
   QPtrList<_StringPair> mCustHeaders;
   bool mConfirmSend;
@@ -734,6 +767,16 @@ protected:
   KToggleAction *mWordWrapAction, *mFixedFontAction, *mAutoSpellCheckingAction;
   KToggleAction *mDictionaryAction;
 
+  KSelectAction *listAction;
+  KFontAction *fontAction;
+  KFontSizeAction *fontSizeAction;
+  KToggleAction *alignLeftAction, *alignCenterAction, *alignRightAction,
+      *alignJustifyAction;
+  KToggleAction *textBoldAction, *textItalicAction, *textUnderAction;
+  KToggleAction *plainTextAction, *markupAction;
+  KAction *actionFormatColor;
+  KAction *mHtmlToolbar;
+
   KSelectAction *mEncodingAction;
   KSelectAction *mCryptoModuleAction;
 
@@ -756,6 +799,12 @@ private slots:
   void slotContinueDoSend( bool );
   void slotContinuePrint( bool );
   void slotContinueDeadLetter( bool );
+
+  /**
+   *  toggle automatic spellchecking
+   */
+  void slotAutoSpellCheckingToggled(bool);
+
 
 private:
   QColor mForeColor,mBackColor;

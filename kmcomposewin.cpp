@@ -79,6 +79,7 @@ using KRecentAddress::RecentAddresses;
 #include <kspelldlg.h>
 #include <spellingfilter.h>
 #include <ksyntaxhighlighter.h>
+#include <kcolordialog.h>
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -224,11 +225,33 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
            SLOT( slotUpdateAttachActions() ) );
   mAttachMenu = 0;
 
+  useHTMLEditor = false;
   readConfig();
   setupStatusBar();
   setupEditor();
   setupActions();
+
+  // configuration is read now
+  if ( useHTMLEditor )
+    toggleMarkup(true);
+  else {
+    if ( aMsg ) {
+      if ( aMsg->typeStr()=="multipart" && aMsg->subtypeStr()=="alternative" ) {
+        toggleMarkup(true);
+      }
+      else {
+        toggleMarkup(false);
+      }
+    }
+    else
+      toggleMarkup(false);
+  }
+
+
   applyMainWindowSettings(KMKernel::config(), "Composer");
+  // html-toolbar always default off
+  toolBar("htmlToolBar")->hide();
+
 
   connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
           SLOT(slotUpdWinTitle(const QString&)));
@@ -960,9 +983,9 @@ void KMComposeWin::setupActions(void)
     composerConfig.readBoolEntry( "autoSpellChecking", true );
   mAutoSpellCheckingAction->setEnabled( !mUseExtEditor );
   mAutoSpellCheckingAction->setChecked( !mUseExtEditor && spellChecking );
-  mEditor->slotAutoSpellCheckingToggled( !mUseExtEditor && spellChecking );
+  slotAutoSpellCheckingToggled( !mUseExtEditor && spellChecking );
   connect( mAutoSpellCheckingAction, SIGNAL( toggled( bool ) ),
-           mEditor, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
+           this, SLOT( slotAutoSpellCheckingToggled( bool ) ) );
 
   QStringList encodings = KMMsgBase::supportedEncodings(TRUE);
   encodings.prepend( i18n("Auto-Detect"));
@@ -970,6 +993,10 @@ void KMComposeWin::setupActions(void)
   mEncodingAction->setCurrentItem( -1 );
 
   //these are checkable!!!
+  markupAction = new KToggleAction (i18n("Formatting (HTML)"), 0, this, SLOT(slotToggleMarkup()),
+                      actionCollection(), "html");
+  markupAction->setChecked(useHTMLEditor);
+
   mAllFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
                                        SLOT(slotView()),
                                        actionCollection(), "show_all_fields");
@@ -1108,6 +1135,57 @@ void KMComposeWin::setupActions(void)
     mCryptoModuleAction->setCurrentItem( idx );
   }
 
+  QStringList styleItems;
+  styleItems << i18n( "Standard" );
+  styleItems << i18n( "Bullet List (Disc)" );
+  styleItems << i18n( "Bullet List (Circle)" );
+  styleItems << i18n( "Bullet List (Square)" );
+  styleItems << i18n( "Ordered List (Decimal)" );
+  styleItems << i18n( "Ordered List (Alpha lower)" );
+  styleItems << i18n( "Ordered List (Alpha upper)" );
+
+  listAction = new KSelectAction( i18n( "Select Style" ), 0, actionCollection(),
+                                 "text_list" );
+  listAction->setItems( styleItems );
+  connect( listAction, SIGNAL( activated( const QString& ) ),
+           SLOT( slotListAction( const QString& ) ) );
+  fontAction = new KFontAction( "Select Font", 0, actionCollection(),
+                               "text_font" );
+  connect( fontAction, SIGNAL( activated( const QString& ) ),
+           SLOT( slotFontAction( const QString& ) ) );
+  fontSizeAction = new KFontSizeAction( "Select Size", 0, actionCollection(),
+                                       "text_size" );
+  connect( fontSizeAction, SIGNAL( fontSizeChanged( int ) ),
+           SLOT( slotSizeAction( int ) ) );
+
+  alignLeftAction = new KToggleAction (i18n("Align Left"), "text_left", 0,
+                      this, SLOT(slotAlignLeft()), actionCollection(),
+                      "align_left");
+  alignLeftAction->setChecked( TRUE );
+  alignRightAction = new KToggleAction (i18n("Align Right"), "text_right", 0,
+                      this, SLOT(slotAlignRight()), actionCollection(),
+                      "align_right");
+  alignCenterAction = new KToggleAction (i18n("Align Center"), "text_center", 0,
+                       this, SLOT(slotAlignCenter()), actionCollection(),
+                       "align_center");
+  alignJustifyAction = new KToggleAction (i18n("Align Justify"), "kmtextjustify", 0,
+                        this, SLOT(slotAlignJustify()),
+                        actionCollection(),
+                        "align_justify");
+  textBoldAction = new KToggleAction (i18n("&Bold"), "text_bold", 0,
+                                     this, SLOT(slotTextBold()),
+                                     actionCollection(), "text_bold");
+  textItalicAction = new KToggleAction (i18n("&Italic"), "text_italic", 0,
+                                       this, SLOT(slotTextItalic()),
+                                       actionCollection(), "text_italic");
+  textUnderAction = new KToggleAction (i18n("&Under"), "text_under", 0,
+                                      this, SLOT(slotTextUnder()),
+                                      actionCollection(), "text_under");
+  actionFormatColor = new KAction( i18n( "Text Color..." ), "colorize", 0,
+                                     this, SLOT( slotTextColor() ),
+                                     actionCollection(), "format_color");
+
+
   createGUI("kmcomposerui.rc");
 }
 
@@ -1181,6 +1259,11 @@ void KMComposeWin::setupEditor(void)
   */
   updateCursorPosition();
   connect(mEditor,SIGNAL(CursorPositionChanged()),SLOT(updateCursorPosition()));
+  connect( mEditor, SIGNAL( currentFontChanged( const QFont & ) ),
+          this, SLOT( fontChanged( const QFont & ) ) );
+  connect( mEditor, SIGNAL( currentAlignmentChanged( int ) ),
+          this, SLOT( alignmentChanged( int ) ) );
+
 }
 
 
@@ -1239,8 +1322,12 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
 void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
                           bool allowDecryption, bool isModified)
 {
+#ifdef DEBUG
+  kdDebug(5006) << "entering KMComposeWin::setMsg()" << endl;
+#endif
   KMMessagePart bodyPart, *msgPart;
   int i, num;
+
 
   //assert(newMsg!=0);
   if(!newMsg)
@@ -1358,15 +1445,40 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
 
+  kdDebug(5006) << "KMComposeWin::setMsg() mMsg=" << mMsg->asString() << endl;
   num = mMsg->numBodyParts();
+  kdDebug(5006) << "KMComposeWin::setMsg() mMsg->numBodyParts=" << mMsg->numBodyParts() << endl;
 
   if (num > 0)
   {
     QCString bodyDecoded;
-    mMsg->bodyPart(0, &bodyPart);
+    int firstAttachment=0;
 
-    int firstAttachment = (bodyPart.typeStr().lower() == "text") ? 1 : 0;
-    if (firstAttachment)
+    mMsg->bodyPart(1, &bodyPart);
+    if ( bodyPart.typeStr().lower() == "text" && bodyPart.subtypeStr().lower() == "html" ) {
+      // we have a mp/al header with a text and an html body
+      kdDebug(5006) << "KMComposeWin::setMsg() : text/html found" << endl;
+      firstAttachment = 2;
+      toggleMarkup(true);
+    } else {
+      mMsg->bodyPart(0, &bodyPart);
+      if ( bodyPart.typeStr().lower() == "multipart" && bodyPart.subtypeStr().lower() == "alternative" ) {
+       // we have a mp/mx header with a mp/al, text and an html body
+        kdDebug(5006) << "KMComposeWin::setMsg() : text/html found" << endl;
+        firstAttachment = 1;
+        toggleMarkup(true);
+      }
+      else {
+        mMsg->bodyPart(0, &bodyPart);
+        if ( bodyPart.typeStr().lower() == "text" ) {
+          // we have a mp/mx body with a text body
+          kdDebug(5006) << "KMComposeWin::setMsg() : text/ found" << endl;
+          firstAttachment = 1;
+        }
+      }
+     }
+
+    if ( firstAttachment != 0 ) // there's text to show
     {
       mCharset = bodyPart.charset();
       if ( mCharset.isEmpty() || mCharset == "default" )
@@ -1388,7 +1500,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
         mEditor->setText(codec->toUnicode(bodyDecoded));
       else
         mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
-      mEditor->insertLine("\n", -1);
+      //mEditor->insertLine("\n", -1); <-- why ?
     } else mEditor->setText("");
     for(i=firstAttachment; i<num; i++)
     {
@@ -1556,6 +1668,10 @@ void KMComposeWin::applyChanges( bool dontSign,
                                  bool dontEncrypt,
                                  bool dontDisable )
 {
+#ifdef DEBUG
+  kdDebug(5006) << "entering KMComposeWin::applyChanges" << endl;
+#endif
+
   if(!mMsg) {
     kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == 0!\n" << endl;
     emit applyChangesDone( false );
@@ -2128,7 +2244,14 @@ void KMComposeWin::slotSelectCryptoModule()
     }
   }
 }
-
+//-----------------------------------------------------------------------------
+bool KMComposeWin::inlineSigningEncryptionSelected()
+{
+  if ( !mSelectedCryptPlug &&  (mSignAction->isChecked() ||  mEncryptAction->isChecked()) )
+    return true;
+  else
+    return false;
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertMyPublicKey()
@@ -2780,6 +2903,25 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   const bool neverEncrypt = saveInDrafts && mNeverEncryptWhenSavingInDrafts;
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
+
+  if ( mEditor->textFormat() == Qt::RichText && inlineSigningEncryptionSelected() ) {
+    int ret = KMessageBox::warningYesNoCancel(this,
+                                      i18n("<qt><p>Inline signing/encrypting HTML messages is not possible.</p>"
+                                           "<p>Do you want to delete your markup ?</p></qt>"),
+                                           i18n("Sign/Encrypt Message?"),
+                                           KGuiItem( i18n("&Delete markup") ),
+                                           KGuiItem( i18n("&Keep markup") ) );
+    if ( KMessageBox::Cancel == ret )
+      return;
+    if ( KMessageBox::No == ret ) {
+      mEncryptAction->setChecked(false);
+      mSignAction->setChecked(false);
+    }
+    else {
+      toggleMarkup(false);
+    }
+  }
+
   applyChanges( neverSign, neverEncrypt );
 }
 
@@ -2840,6 +2982,11 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
         << imapDraftsFolder->name() << endl;
 
     sentOk = !(draftsFolder->addMsg(mMsg));
+
+    //Ensure the drafts message is correctly and fully parsed
+    draftsFolder->unGetMsg(draftsFolder->count() - 1);
+    mMsg = draftsFolder->getMsg(draftsFolder->count() - 1);
+
     if (imapDraftsFolder)
     {
       // move the message to the imap-folder and highlight it
@@ -2962,7 +3109,60 @@ void KMComposeWin::slotCleanSpace()
   mEditor->cleanWhiteSpace();
 }
 
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotToggleMarkup()
+{
+ if ( markupAction->isChecked() ) {
+    toolBar("htmlToolBar")->show();
+   //toggleMarkup(true);
+ }
+ else
+   toggleMarkup(false);
 
+}
+//-----------------------------------------------------------------------------
+void KMComposeWin::toggleMarkup(bool markup)
+{
+  if ( markup ) {
+    if ( !useHTMLEditor ) {
+    kdDebug(5006) << "setting RichText editor" << endl;
+    useHTMLEditor = true; // set it directly to true. setColor hits another toggleMarkup
+
+    // set all highlighted text caused by spelling back to black
+    int paraFrom, indexFrom, paraTo, indexTo;
+    mEditor->getSelection ( &paraFrom, &indexFrom, &paraTo, &indexTo);
+    mEditor->selectAll();
+    mEditor->setColor(QColor(0,0,0));
+    mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo);
+
+    mEditor->setTextFormat(Qt::RichText);
+    mEditor->setModified(true);
+    //markupAction->setChecked(true);
+    mEditor->deleteAutoSpellChecking();
+    mAutoSpellCheckingAction->setChecked(false);
+    slotAutoSpellCheckingToggled(false);
+   }
+  }
+  else {
+    kdDebug(5006) << "setting PlainText editor" << endl;
+    useHTMLEditor = false;
+    mEditor->setTextFormat(Qt::PlainText);
+    QString text = mEditor->text();
+    mEditor->setText(text); // otherwise the text still looks formatted
+    mEditor->setModified(true);
+    toolBar("htmlToolBar")->hide();
+    mEditor->initializeAutoSpellChecking( mDictionaryCombo->spellConfig());
+    slotAutoSpellCheckingToggled(true);
+  }
+
+}
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAutoSpellCheckingToggled( bool on )
+{
+  if ( mEditor->autoSpellChecking(on) == -1 )
+    mAutoSpellCheckingAction->setChecked(false); // set it to false again
+}
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheck()
 {
@@ -3235,6 +3435,109 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 {
     mAlwaysSend = bAlways;
 }
+
+void KMComposeWin::slotListAction( const QString& style )
+{
+    if ( style == i18n( "Standard" ) )
+       mEditor->setParagType( QStyleSheetItem::DisplayBlock, QStyleSheetItem::ListDisc );
+    else if ( style == i18n( "Bullet List (Disc)" ) )
+       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListDisc );
+    else if ( style == i18n( "Bullet List (Circle)" ) )
+       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListCircle );
+    else if ( style == i18n( "Bullet List (Square)" ) )
+       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListSquare );
+    else if ( style == i18n( "Ordered List (Decimal)" ))
+       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListDecimal );
+    else if ( style == i18n( "Ordered List (Alpha lower)" ) )
+       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListLowerAlpha );
+    else if ( style == i18n( "Ordered List (Alpha upper)" ) )
+       mEditor->setParagType( QStyleSheetItem::DisplayListItem, QStyleSheetItem::ListUpperAlpha );
+    mEditor->viewport()->setFocus();
+}
+
+void KMComposeWin::slotFontAction( const QString& font)
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setFamily( font );
+    mEditor->viewport()->setFocus();
+}
+
+void KMComposeWin::slotSizeAction( int size )
+{
+    toggleMarkup(true);
+    mEditor->setPointSize( size );
+    mEditor->viewport()->setFocus();
+}
+
+void KMComposeWin::slotAlignLeft()
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setAlignment( AlignLeft );
+}
+
+void KMComposeWin::slotAlignCenter()
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setAlignment( AlignHCenter );
+}
+
+void KMComposeWin::slotAlignRight()
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setAlignment( AlignRight );
+}
+
+void KMComposeWin::slotAlignJustify()
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setAlignment( AlignJustify );
+}
+
+void KMComposeWin::slotTextBold()
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setBold( textBoldAction->isChecked() );
+}
+
+void KMComposeWin::slotTextItalic()
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setItalic( textItalicAction->isChecked() );
+}
+
+void KMComposeWin::slotTextUnder()
+{
+    toggleMarkup(true);
+    mEditor->QTextEdit::setUnderline( textUnderAction->isChecked() );
+}
+
+void KMComposeWin::slotTextColor()
+{
+  QColor color = mEditor->color();
+  if ( KColorDialog::getColor( color ) ) {
+    toggleMarkup(true);
+    mEditor->setColor( color );
+  }
+}
+
+void KMComposeWin::fontChanged( const QFont &f )
+{
+    fontAction->setFont( f.family() );
+    fontSizeAction->setFontSize( f.pointSize() );
+    textBoldAction->setChecked( f.bold() );
+    textItalicAction->setChecked( f.italic() );
+    textUnderAction->setChecked( f.underline() );
+}
+
+void KMComposeWin::alignmentChanged( int a )
+{
+    //toggleMarkup();
+    alignLeftAction->setChecked( ( a == AlignAuto ) || ( a & AlignLeft ) );
+    alignCenterAction->setChecked( ( a & AlignHCenter ) );
+    alignRightAction->setChecked( ( a & AlignRight ) );
+    alignJustifyAction->setChecked( ( a & AlignJustify ) );
+}
+
 
 void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
 {
@@ -3713,9 +4016,22 @@ void KMEdit::initializeAutoSpellChecking( KSpellConfig* autoSpellConfig )
 }
 
 //-----------------------------------------------------------------------------
+void KMEdit::deleteAutoSpellChecking()
+{ // because the highlighter doesn't support RichText, delete its instance.
+  delete mSpellChecker;
+  mSpellChecker =0;
+}
+//-----------------------------------------------------------------------------
 void KMEdit::addSuggestion(const QString& text, const QStringList& lst, unsigned int )
 {
   mReplacements[text] = lst;
+}
+
+void KMEdit::setSpellCheckingActive(bool spellCheckingActive)
+{
+  if ( mSpellChecker ) {
+    mSpellChecker->setActive(spellCheckingActive);
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -3724,7 +4040,11 @@ KMEdit::~KMEdit()
   removeEventFilter(this);
 
   delete mKSpell;
-  delete mSpellChecker;
+  if ( textFormat() != Qt::RichText ) {
+    delete mSpellChecker;
+    mSpellChecker = 0;
+  }
+
 }
 
 
@@ -3892,11 +4212,19 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
 
 
 //-----------------------------------------------------------------------------
-void KMEdit::slotAutoSpellCheckingToggled( bool on )
+int KMEdit::autoSpellChecking( bool on )
 {
+  if ( textFormat() == Qt::RichText ) {
+     // syntax highlighter doesn't support extended text properties
+     if ( on )
+       KMessageBox::sorry(this, i18n("Automatic spellchecking is not possible on text with markup."));
+     return -1;
+  }
+
   // don't autoEnable spell checking if the user turned spell checking off
   mSpellChecker->setAutomatic( on );
   mSpellChecker->setActive( on );
+  return 1;
 }
 
 
@@ -3954,8 +4282,17 @@ void KMEdit::spellcheck()
     return;
   mWasModifiedBeforeSpellCheck = isModified();
   mSpellLineEdit = !mSpellLineEdit;
-  mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
-                       SLOT(slotSpellcheck2(KSpell*)));
+//  maybe for later, for now plaintext is given to KSpell
+//  if (textFormat() == Qt::RichText ) {
+//    kdDebug(5006) << "KMEdit::spellcheck, spellchecking for RichText" << endl;
+//    mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
+//                    SLOT(slotSpellcheck2(KSpell*)),0,true,false,KSpell::HTML);
+//  }
+//  else {
+    mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
+                      SLOT(slotSpellcheck2(KSpell*)));
+//  }
+
   QStringList l = KSpellingHighlighter::personalWords();
   for ( QStringList::Iterator it = l.begin(); it != l.end(); ++it ) {
       mKSpell->addPersonal( *it );
@@ -3973,19 +4310,22 @@ void KMEdit::spellcheck()
 #if KDE_IS_VERSION( 3, 1, 92 )
 void KMEdit::cut()
 {
-    KEdit::cut();
+  KEdit::cut();
+  if ( textFormat() != Qt::RichText )
     mSpellChecker->restartBackgroundSpellCheck();
 }
 
 void KMEdit::clear()
 {
-    KEdit::clear();
+  KEdit::clear();
+  if ( textFormat() != Qt::RichText )
     mSpellChecker->restartBackgroundSpellCheck();
 }
 
 void KMEdit::del()
 {
-    KEdit::del();
+  KEdit::del();
+  if ( textFormat() != Qt::RichText )
     mSpellChecker->restartBackgroundSpellCheck();
 }
 #else
@@ -4010,8 +4350,28 @@ void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsi
     kdDebug(5006)<<"slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos) : "<<oldWord<<endl;
     if( mSpellLineEdit )
         mComposer->sujectLineWidget()->spellCheckerCorrected( oldWord, newWord, pos);
-     else
-         corrected(oldWord, newWord, pos);
+    else {
+        unsigned int l = 0;
+        unsigned int cnt = 0;
+        bool _bold,_underline,_italic;
+        QColor _color;
+        QFont _font;
+        posToRowCol (pos, l, cnt);
+        setCursorPosition(l, cnt+1); // the new word will get the same markup now as the first character of the word
+        _bold = bold();
+        _underline = underline();
+        _italic = italic();
+        _color = color();
+        _font = currentFont();
+        corrected(oldWord, newWord, pos);
+        setSelection (l, cnt, l, cnt+newWord.length());
+        setBold(_bold);
+        setItalic(_italic);
+        setUnderline(_underline);
+        setColor(_color);
+        setCurrentFont(_font);
+    }
+
 }
 
 //-----------------------------------------------------------------------------
@@ -4036,7 +4396,10 @@ void KMEdit::slotSpellcheck2(KSpell*)
         }
 
         kdDebug(5006) << "spelling: new SpellingFilter with prefix=\"" << quotePrefix << "\"" << endl;
-        mSpellingFilter = new SpellingFilter(text(), quotePrefix, SpellingFilter::FilterUrls,
+        QTextEdit plaintext;
+        plaintext.setText(text());
+        plaintext.setTextFormat(Qt::PlainText);
+        mSpellingFilter = new SpellingFilter(plaintext.text(), quotePrefix, SpellingFilter::FilterUrls,
                                              SpellingFilter::FilterEmailAddresses);
 
         mKSpell->check(mSpellingFilter->filteredText());
@@ -4066,9 +4429,7 @@ void KMEdit::slotSpellResult(const QString &s)
       }
       else
       {
-          kdDebug(5006) << "spelling: canceled - restoring text from SpellingFilter" << endl;
-          setText(mSpellingFilter->originalText());
-          setModified(mWasModifiedBeforeSpellCheck);
+          setModified(true);
       }
   }
   mKSpell->cleanUp();
