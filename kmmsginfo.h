@@ -93,10 +93,12 @@ public:
 
   /** Copy operators. */
   KMMsgInfo& operator=(const KMMessage&);
-  KMMsgInfo& operator=(const KMMsgInfo&);
-
 
 private:
+  // Currently unused
+  KMMsgInfo& operator=(const KMMsgInfo&);
+  KMMsgInfo(const KMMsgInfo&);
+
   // WARNING: Do not add new member variables to the class. Add them to kd
   class KMMsgInfoPrivate;
   KMMsgInfoPrivate *kd;

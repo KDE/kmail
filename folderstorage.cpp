@@ -479,13 +479,14 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
   if (mb->isMessage()) {
     // the caller will delete it, so we must make a copy it
     msg = new KMMessage(*(KMMessage*)mb);
+    msg->setMsgSerNum(sernum);
   } else {
     // ## Those two lines need to be moved to a virtual method for KMFolderSearch, like readMsg
     msg = new KMMessage(*(KMMsgInfo*)mb);
+    msg->setMsgSerNum(sernum); // before fromDwString so that readyToShow uses the right sernum
     msg->fromDwString(getDwString(idx));
   }
   msg->setEnableUndo(undo);
-  msg->setMsgSerNum(sernum);
   msg->setComplete( true );
   return msg;
 }

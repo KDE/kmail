@@ -160,8 +160,6 @@ void KMMessage::assign( const KMMessage& other )
     mMsg = new DwMessage( *(other.mMsg) );
   mOverrideCodec = other.mOverrideCodec;
   mDecodeHTML = other.mDecodeHTML;
-  Q_UINT32 otherTransfer = MessageProperty::transferInProgress( &other );
-  MessageProperty::setTransferInProgress( this, otherTransfer );
   mMsgSize = other.mMsgSize;
   mMsgLength = other.mMsgLength;
   mFolderOffset = other.mFolderOffset;

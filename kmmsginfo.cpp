@@ -131,6 +131,7 @@ KMMsgInfo::~KMMsgInfo()
 }
 
 
+#if 0 // currently unused
 //-----------------------------------------------------------------------------
 KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 {
@@ -146,7 +147,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
     mStatus = other.status();
     return *this;
 }
-
+#endif
 
 //-----------------------------------------------------------------------------
 KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
@@ -554,8 +555,8 @@ time_t KMMsgInfo::date(void) const
 //-----------------------------------------------------------------------------
 size_t KMMsgInfo::msgSizeServer(void) const
 {
-    if (kd && kd->modifiers & KMMsgInfoPrivate::SIZESERVER_SET) 
-      return kd->msgSizeServer; 
+    if (kd && kd->modifiers & KMMsgInfoPrivate::SIZESERVER_SET)
+      return kd->msgSizeServer;
     return getLongPart(MsgSizeServerPart);
 }
 

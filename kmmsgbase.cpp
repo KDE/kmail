@@ -97,11 +97,7 @@ void KMMsgBase::assign(const KMMsgBase* other)
   mDirty  = other->mDirty;
   mIndexOffset = other->mIndexOffset;
   mIndexLength = other->mIndexLength;
-  MessageProperty::forget( this );
-  bool otherTransfer = MessageProperty::transferInProgress( other );
-  MessageProperty::setTransferInProgress( this, otherTransfer );
 }
-
 
 //-----------------------------------------------------------------------------
 KMMsgBase& KMMsgBase::operator=(const KMMsgBase& other)
@@ -116,7 +112,6 @@ KMMsgBase::KMMsgBase( const KMMsgBase& other )
 {
     assign( &other );
 }
-
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isMessage(void) const
