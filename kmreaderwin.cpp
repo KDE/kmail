@@ -1146,12 +1146,12 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
               && (int)aStr.length() > pos+7 && aStr[pos+7] != ' '))
 	     // note: no "file:" for security reasons
     {
-      for (i=0; aStr[pos] && aStr[pos] > ' ' && aStr[pos] != '\"' &&
+      for (i=0; pos < (int)aStr.length() && aStr[pos] > ' ' && aStr[pos] != '\"' &&
                 QString("<>()[]").find(aStr[pos]) == -1 &&		// handle cases like this: <link>http://foobar.org/</link>
 		i < 255; i++, pos++)
 	str[i] = aStr[pos];
       pos--;
-      while (i>0 && str[i].isPunct() && str[i-1]!='/')
+      while (i>0 && str[i-1].isPunct() && str[i-1]!='/')
       {
 	i--;
 	pos--;
