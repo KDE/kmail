@@ -275,7 +275,6 @@ KMAccount* KMAcctMgr::next(void)
 //-----------------------------------------------------------------------------
 bool KMAcctMgr::remove( KMAccount* acct )
 {
-  //assert(acct != 0);
   if( !acct )
     return false;
   mAcctList.removeRef( acct );

@@ -1381,10 +1381,6 @@ void NetworkPage::ReceivingTab::save() {
   // Delete accounts marked for deletion
   for ( it = mAccountsToDelete.begin() ;
 	it != mAccountsToDelete.end() ; ++it ) {
-    // ### FIXME: KConfig has now deleteGroup()!
-    // The old entries will never really disappear, so better at least
-    // clear the password:
-    (*it)->clearPasswd();
     kmkernel->acctMgr()->writeConfig( true );
     if ( !(*it) || !kmkernel->acctMgr()->remove(*it) )
       KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")

@@ -346,6 +346,8 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         // Update the body of the retrieved part (the message notifies all observers)
         msg->updateBodyPart( mPartSpecifier, (*it).data );
         msg->setReadyToShow( true );
+        // Update the attachment state, we have to do this for every part as we actually
+        // do not know if the message has no attachment or we simply did not load the header
         if (msg->attachmentState() != KMMsgHasAttachment)
           msg->updateAttachmentState();
       }
