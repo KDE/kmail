@@ -814,7 +814,8 @@ void KMMainWidget::slotModifyFolder()
 {
   if (!mFolderTree) return;
   KMFolderTreeItem *item = static_cast<KMFolderTreeItem*>( mFolderTree->currentItem() );
-  item->properties();
+  if ( item )
+    item->properties();
 }
 
 //-----------------------------------------------------------------------------
@@ -1584,7 +1585,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
     mMsgView->clear();
     if ( mJob )
       disconnect( mJob, 0, this, 0 );
-    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0, 
+    mJob = msg->parent()->createJob( msg, FolderJob::tGetMessage, 0,
           "STRUCTURE", mMsgView->attachmentStrategy() );
     connect(mJob, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
@@ -3044,14 +3045,14 @@ void KMMainWidget::removeDuplicates()
     if ( !id.isEmpty() ) {
       QString subjMD5 = (*mFolder)[i]->strippedSubjectMD5();
       int other = -1;
-      if ( idMD5s.contains(id) ) 
+      if ( idMD5s.contains(id) )
         other = idMD5s[id].first();
       else
         idMD5s[id].append( i );
       if ( other != -1 ) {
         QString otherSubjMD5 = (*mFolder)[other]->strippedSubjectMD5();
         if (otherSubjMD5 == subjMD5)
-          idMD5s[id].append( i );  
+          idMD5s[id].append( i );
       }
     }
   }
