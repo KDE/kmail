@@ -575,7 +575,7 @@ void KMTransportDialog::slotCheckSmtpCapabilities()
 {
   delete mServerTest;
   mServerTest = new KMServerTest("smtp", mSmtp.hostEdit->text(),
-    mSmtp.portEdit->text());
+    mSmtp.portEdit->text().toInt());
   connect(mServerTest, SIGNAL(capabilities(const QStringList&,const QString&,const QString&,const QString&)),
     SLOT(slotSmtpCapabilities(const QStringList&,const QString&,const QString&, const QString&)));
   mSmtp.checkCapabilities->setEnabled(FALSE);

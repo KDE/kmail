@@ -49,9 +49,8 @@ class KMServerTest : public QObject
   Q_OBJECT
   
 public:
-  KMServerTest(const QString &aProtocol, const QString &aHost,
-    const QString &aPort);
-  ~KMServerTest();
+  KMServerTest( const QString & protocol, const QString & host, int port );
+  virtual ~KMServerTest();
 
 signals:
   void capabilities(const QStringList &);

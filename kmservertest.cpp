@@ -44,19 +44,17 @@
 #include <kio/global.h>
 
 //-----------------------------------------------------------------------------
-KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
-  const QString &aPort)
+KMServerTest::KMServerTest( const QString & protocol, const QString & host, int port )
   : QObject(),
-    mProtocol( aProtocol ), mHost( aHost ),
+    mProtocol( protocol ), mHost( host ),
     mSSL( false ), mJob( 0 ), mSlave( 0 )
 {
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveResult(KIO::Slave *, int, const QString &)));
 
-  int port = 0;
-  if (aPort != "993" && aPort != "995" && aPort != "465")
-    port = aPort.toInt();
+  if ( port == 993 || port == 995 || port == 465 )
+    port = 0;
 
   startOffSlave( port );
 }
@@ -78,7 +76,8 @@ void KMServerTest::startOffSlave( int port ) {
   KURL url;
   url.setProtocol( mSSL ? mProtocol + 's' : mProtocol );
   url.setHost( mHost );
-  url.setPort( port );
+  if ( port )
+    url.setPort( port );
 
   mSlave = KIO::Scheduler::getConnectedSlave( url, slaveConfig() );
   if ( !mSlave ) {

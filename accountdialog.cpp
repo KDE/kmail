@@ -1177,7 +1177,7 @@ void AccountDialog::slotCheckPopCapabilities()
 {
   delete mServerTest;
   mServerTest = new KMServerTest("pop3", mPop.hostEdit->text(),
-    mPop.portEdit->text());
+    mPop.portEdit->text().toInt());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
     SLOT(slotPopCapabilities(const QStringList &)));
   mPop.checkCapabilities->setEnabled(FALSE);
@@ -1188,7 +1188,7 @@ void AccountDialog::slotCheckImapCapabilities()
 {
   delete mServerTest;
   mServerTest = new KMServerTest("imap", mImap.hostEdit->text(),
-    mImap.portEdit->text());
+    mImap.portEdit->text().toInt());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
     SLOT(slotImapCapabilities(const QStringList &)));
   mImap.checkCapabilities->setEnabled(FALSE);
