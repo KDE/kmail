@@ -117,8 +117,9 @@ korganizeriface_DIR = $(top_srcdir)/korganizer
 
 include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 
-xdg_apps_DATA = KMail.desktop
+xdg_apps_DATA = KMail.desktop kmail_view.desktop
 
+# why?
 EXTRA_DIST = KMail.desktop
 
 KDE_ICON = AUTO
