@@ -20,13 +20,14 @@
 
 #include "kmdisplayvcard.moc"
 
-
 #include <qlayout.h>
-#include <klocale.h>
 #include <qmultilineedit.h>
-#include <kurllabel.h>
 
-KMDisplayVCard::KMDisplayVCard(VCard *vc, QWidget *parent, const char *name) : KTabCtl(parent, name) {
+#include <klocale.h>
+#include <kurllabel.h>
+#include <kdialog.h>
+
+KMDisplayVCard::KMDisplayVCard(VCard *vc, QWidget *parent, const char *name) : QTabDialog(parent, name) {
   _vc = vc;
   BuildInterface();
 }
@@ -44,21 +45,24 @@ void KMDisplayVCard::setVCard(VCard *vc) {
   
 
 void KMDisplayVCard::BuildInterface() {
-  addTab(getFirstTab(), i18n("Name"));
-  addTab(getSecondTab(), i18n("Address"));
-  addTab(getThirdTab(), i18n("Misc"));
+
+  setOkButton(i18n("&Close"));
+  setCaption(i18n("VCard Viewer"));
+
+  addTab(getFirstTab(), i18n("&Name"));
+  addTab(getSecondTab(), i18n("&Address"));
+  addTab(getThirdTab(), i18n("&Misc"));
   // now add a button bar for the following:
   // [Save to Disk]     [Import to Address Book]         [Close]
   // QButton *save = new QButton(mainWidget, i18n("&Save"));
   // QButton *import = new QButton(mainWidget, i18n("&Import"));
   // QButton *close = new QButton(mainWidget, i18n("&Close"));
-  
 }
 
 
 QWidget *KMDisplayVCard::getFirstTab() {
 QFrame *page = new QFrame(this);
-QGridLayout *grid = new QGridLayout(page, 7, 2);
+QGridLayout *grid = new QGridLayout(page, 7, 2, KDialog::marginHint(), KDialog::spacingHint());
 QLabel *name;
 QLabel *value;
 KURLLabel *urlvalue;
@@ -143,6 +147,9 @@ QValueList<QString> values;
   grid->addWidget(name, 5, 0);
   grid->addWidget(value, 5, 1);
 
+  QSpacerItem *spacer = new QSpacerItem(1,1,QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
+  grid->addItem(spacer, 6, 1);
+
 return page;
 }
 
@@ -158,7 +165,7 @@ return page;
 
 QWidget *KMDisplayVCard::getSecondTab() {
 QFrame *page = new QFrame(this);
-QGridLayout *grid = new QGridLayout(page, 5, 2);
+QGridLayout *grid = new QGridLayout(page, 5, 2, KDialog::marginHint(), KDialog::spacingHint());
 QLabel *name;
 QLabel *value;
 QString tmpstr;
@@ -166,13 +173,14 @@ QValueList<QString> values;
 
   //
   // Add the Address[es]
-  name = new QLabel(i18n("Address:"), page);
+  name = new QLabel(i18n("A&ddress:"), page);
   grid->addWidget(name, 0, 0);
   mAddrList = new QListBox(page);
+  name->setBuddy(mAddrList);
   mAddrList->setSelectionMode(QListBox::Single);
   grid->addWidget(mAddrList, 0, 1);
   QFrame *addrPage = new QFrame(page);
-  QGridLayout *addrGrid = new QGridLayout(addrPage, 5, 4);
+  QGridLayout *addrGrid = new QGridLayout(addrPage, 5, 4,KDialog::marginHint(), KDialog::spacingHint());
   name = new QLabel(i18n("PO BOX:"), addrPage); 
   addrGrid->addWidget(name, 0, 0);
   mAddr_PO = new QLabel("", addrPage); 
@@ -238,7 +246,7 @@ QValueList<QString> values;
   slotChangeAddress();   // set the first one
 
   grid->addWidget(addrPage, 1, 1);
-  name = new QLabel(i18n("Phone Numbers"), page);
+  name = new QLabel(i18n("Phone Numbers:"), page);
   grid->addWidget(name, 2, 0);
   // try to add each type of phone number if we have them
   QString thisnum;
@@ -274,7 +282,7 @@ return page;
 
 QWidget *KMDisplayVCard::getThirdTab() {
 QFrame *page = new QFrame(this);
-QGridLayout *grid = new QGridLayout(page, 9, 2);
+QGridLayout *grid = new QGridLayout(page, 9, 2, KDialog::marginHint(), KDialog::spacingHint());
 QLabel *name;
 QLabel *value;
 QString tmpstr;
@@ -320,8 +328,9 @@ int row = 0;
     grid->addWidget(value, row++, 1);
   }
 
-  name = new QLabel(i18n("Note:"), page);
+  name = new QLabel(i18n("&Notes:"), page);
   QMultiLineEdit *qtb = new QMultiLineEdit(page);
+  name->setBuddy(qtb);
   qtb->setReadOnly(true);
   qtb->setText(_vc->getValue(VCARD_NOTE));
   qtb->resize(qtb->minimumSizeHint());

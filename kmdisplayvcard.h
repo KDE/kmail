@@ -23,10 +23,10 @@
 
 #include <kapp.h>
 #include <kdialog.h>
-#include <ktabctl.h>
 #include <qwidget.h>
 #include <qlistbox.h>
 #include <qlabel.h>
+#include <qtabdialog.h>
 
 #include "vcard.h"
 
@@ -34,7 +34,7 @@
     and pass it the VCard to display.  Pretty simple? <grin> */
 
 
-class KMDisplayVCard : public KTabCtl {
+class KMDisplayVCard : public QTabDialog {
 Q_OBJECT
 
  public:
