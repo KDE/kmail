@@ -74,7 +74,7 @@
 
 //-----------------------------------------------------------------------------
 KMMainWin::KMMainWin(QWidget *, char *name) :
-  KMMainWinInherited(name)
+    KMMainWinInherited(name)
 {
   // must be the first line of the constructor:
   searchWin = 0;
@@ -383,16 +383,32 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
-  accel->connectItem(accel->insertItem(CTRL+Key_Plus),
-		     mFolderTree, SLOT(nextUnreadFolder()));
-  accel->connectItem(accel->insertItem(CTRL+Key_Minus),
-		     mFolderTree, SLOT(prevUnreadFolder()));
-  accel->connectItem(accel->insertItem(CTRL+Key_Right),
-		     mFolderTree, SLOT(incCurrentFolder()));
-  accel->connectItem(accel->insertItem(CTRL+Key_Left),
-		     mFolderTree, SLOT(decCurrentFolder()));
-  accel->connectItem(accel->insertItem(CTRL+Key_Space),
-		     mFolderTree, SLOT(selectCurrentFolder()));
+
+  //Commands not worthy of menu items, but that deserve configurable keybindings
+  KAction *nextUnreadFolderAction = new KAction( 
+    i18n("Next folder with unread messages"), CTRL+Key_Plus, mFolderTree,  
+    SLOT(nextUnreadFolder()), actionCollection(), "next_unread_folder");
+  nextUnreadFolderAction->plugAccel( this->accel() );
+
+  KAction *prevUnreadFolderAction = new KAction( 
+   i18n("Previous folder with unread messages"), CTRL+Key_Minus, mFolderTree,  
+   SLOT(prevUnreadFolder()), actionCollection(), "prev_unread_folder");
+  prevUnreadFolderAction->plugAccel( this->accel() );
+
+  KAction *nextFolderAction = new KAction( 
+   i18n("Focus on next folder"), CTRL+Key_Right, mFolderTree,  
+   SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
+  nextFolderAction->plugAccel( this->accel() );
+
+  KAction *prevFolderAction = new KAction( 
+   i18n("Focus on previous folder"), CTRL+Key_Left, mFolderTree,  
+   SLOT(decCurrentFolder()), actionCollection(), "dec_current_folder");
+  prevFolderAction->plugAccel( this->accel() );
+  
+  KAction *selectCurrentFolderAction = new KAction( 
+   i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,  
+   SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
+  selectCurrentFolderAction->plugAccel( this->accel() );
 }
 
 
@@ -433,7 +449,7 @@ void KMMainWin::activatePanners(void)
 void KMMainWin::slotSetEncoding()
 {
     mEncodingStr = KGlobal::charsets()->encodingForName(mEncoding->currentText());
-     if (mEncoding->currentItem() == 0) // Auto
+    if (mEncoding->currentItem() == 0) // Auto
        mCodec = 0;
      else
        mCodec = KMMsgBase::codecForName( mEncodingStr );
@@ -528,7 +544,7 @@ void KMMainWin::slotSettings()
 {
   if( mConfigureDialog == 0 )
   {
-    mConfigureDialog = new ConfigureDialog( this, "configure", false );
+      mConfigureDialog = new ConfigureDialog( this, "configure", false );
   }
   mConfigureDialog->show();
 }
@@ -1640,7 +1656,6 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("View Source..."), 0, this,
 		      SLOT(slotShowMsgSrc()), actionCollection(), "view_source" );
-
 
   //----- View Menu
   KActionMenu *viewMenuAction = new
