@@ -11,8 +11,9 @@ Contents:
 - Filters
 - ConfigureDialog
 - MDNs
+- folder
 
-TODO: reader, composer, messages, folder, accounts, ...
+TODO: reader, composer, messages, accounts, ...
 
 IDENTITY
 ========
@@ -193,3 +194,50 @@ on display of a message and sends a "displayed" MDN back (if so
 configured), whereas the KMFilterAction method is a convenience helper
 for the various filter actions that can provoke a MDN (move to trash,
 redirect, forward, ...).
+
+
+Folders
+=======
+
+Files: kmfolder*.{h,cpp} and *job.{h,cpp}
+
+Contact Zack Rusin <zack@kde.org> with questions...
+
+The inheritance hierarchy among KMail folder structure looks
+as follows :
+               
+                     KMFolderNode
+                     /          \
+                    /            \
+               KMFolderDir        \
+                                  KMFolder
+                                    |
+                                KMFolderIndex
+                                    |
+                                    |
+        ---< actual folder types: KMFolderImap, KMFolderMbox... >--
+
+Besides the above mentioned classes one more relevant to our
+discussion is KMFolderMgr which as the name suggest serves as the
+folder manager.
+
+At the base KMail's folder design starts with KMFolderNode which
+inherits QObject. KMFolderNode is the base class encapsulating such
+common folder properties as the name, boolean saying whether the
+given folder is a directory storing the folders with mail or whether
+the folder is a folder holding mail directly and finally a
+KMFolderDir.
+
+KMFolderDir is, as one might say, a directory abstration which manages
+purely abstract KMFolder's. KMFolder's often don't have a disk based
+image, they are entities existing only withing KMail's design. To
+manage the contents of one directory that may contain folders and/or
+other directories KMFolderDir was created.
+It inherits KMFolderNode and KMFolderNodeList. Yes, the inheritance is rather
+bogus and has to be fixed especially if you'll notice that
+KMFolderNode holds a pointer to the derived from it KMFolderDir. 
+KMFolderDir also inherits KMFolderNodeList which is a
+QPtrList<KMFolderNode>.  A special case of a KMFolderDir is known as
+KMFolderRootDir and is supposed to represent the toplevel KMFolderDir
+in the KMail's folder hierarchy. 
+
