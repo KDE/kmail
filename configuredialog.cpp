@@ -465,7 +465,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   vlay = new QVBoxLayout( tab, KDialog::marginHint(), KDialog::spacingHint() );
 
   // "enable signatue" checkbox:
-  mSignatureEnabled = new QCheckBox( i18n("&Enable Signature"), tab );
+  mSignatureEnabled = new QCheckBox( i18n("&Enable signature"), tab );
   vlay->addWidget( mSignatureEnabled );
 
   // "obtain signature text from" combo and label:
@@ -749,8 +749,16 @@ void IdentityPage::slotNewIdentity()
     // identity combo and make the new identity the current item.
     //
     mIdentityCombo->clear();
-    mIdentityCombo->insertStringList( mIdentities.names() );
-    mIdentityCombo->setCurrentItem( mIdentities.names().findIndex( identityName ) );
+
+    //
+    // Default -must- be the top entry
+    //
+    QStringList identitiesNameList = mIdentities.names();
+    identitiesNameList.remove(i18n("Default"));
+    identitiesNameList.prepend(i18n("Default"));
+
+    mIdentityCombo->insertStringList( identitiesNameList );
+    mIdentityCombo->setCurrentItem( identitiesNameList.findIndex( identityName ) );
     
     slotIdentitySelectorChanged();
   }
