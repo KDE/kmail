@@ -303,7 +303,7 @@ ConfigurationPage * TabbedConfigurationPage::configTab( int i, const char * func
 		    << "\" is not a ConfigurationPage." << endl
 		    << "Better overload " << func << "() in this page!"
 		    << endl;
-  if ( tab ) return tab;
+  return tab;
 }
 
 void TabbedConfigurationPage::setup() {
