@@ -502,7 +502,7 @@ void KMFolderDialog::slotOk()
       selectedFolderDir = selectedFolder->createChildFolder();
     }
 
-    QString message = i18n( "Failed to create folder '%1', folder already exists." ).arg(fldName);
+    QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" ).arg(fldName);
     if ((selectedFolderDir->hasNamedFolder(fldName)) &&
       (!((folder) &&
       (selectedFolderDir == folder->parent()) &&
@@ -512,7 +512,7 @@ void KMFolderDialog::slotOk()
       return;
     }
 
-    message = i18n( "Cannot move folder \"%1\" into a subfolder below itself." ).arg(fldName);
+    message = i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).arg(fldName);
     KMFolderDir* folderDir = selectedFolderDir;
 
 

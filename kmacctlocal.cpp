@@ -215,7 +215,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     kernel->folderMgr()->syncAllFolders();
     rc = mailFolder.expunge();
     if (rc)
-      KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location()).arg(strerror(rc)));
+      KMessageBox::information( 0, i18n("<qt>Cannot remove mail from mailbox <b>%1</b>:<br>%2</qt>").arg(mailFolder.location()).arg(strerror(rc)));
     QString statusMsg;
     if ( num )
       statusMsg = i18n("Transmission complete. %n new message.",

@@ -756,7 +756,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
       //  whether he wishes to be notified again in "AskNextFolder"
       //  parameter (kept in the config file for kmail)
 	if ( KMessageBox::questionYesNo( this,
-	   i18n( "Go to the next unread message in folder %1?" )
+	   i18n( "<qt>Go to the next unread message in folder <b>%1</b>?</qt>" )
                                     .arg( fti->folder()->label() ),
 	   i18n( "Go to the Next Unread Message" ),
 	   KStdGuiItem::yes(), KStdGuiItem::no(), // defaults

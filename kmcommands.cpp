@@ -441,7 +441,7 @@ void KMUrlSaveCommand::execute()
   if (KIO::NetAccess::exists(saveUrl))
   {
     if (KMessageBox::warningContinueCancel(0,
-        i18n("File %1 exists.\nDo you want to replace it?")
+        i18n("<qt>File <b>%1</b> exists.<br>Do you want to replace it?</qt>")
         .arg(saveUrl.prettyURL()), i18n("Save to File"), i18n("&Replace"))
         != KMessageBox::Continue)
       return;
@@ -1294,8 +1294,8 @@ void KMUrlClickedCommand::execute()
         mime->name() == "application/x-msdos-program" ||
         mime->name() == "application/x-shellscript" )
     {
-      if (KMessageBox::warningYesNo( 0, i18n( "Do you really want to execute"
-        " '%1'? " ).arg( mUrl.prettyURL() ) ) != KMessageBox::Yes) return;
+      if (KMessageBox::warningYesNo( 0, i18n( "<qt>Do you really want to execute <b>%1</b>?</qt>" )
+        .arg( mUrl.prettyURL() ) ) != KMessageBox::Yes) return;
     }
     (void) new KRun( mUrl );
   }

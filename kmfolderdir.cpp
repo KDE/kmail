@@ -102,8 +102,8 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   rc = fld->create(mDirType == KMImapDir);
   if (rc)
   {
-    QString wmsg = i18n("Error while creating file `%1':\n%2").arg(aFolderName).arg(strerror(rc));
-    KMessageBox::information(0,wmsg );
+    QString msg = i18n("<qt>Error while creating file <b>%1</b>:<br>%2</qt>").arg(aFolderName).arg(strerror(rc));
+    KMessageBox::information(0, msg);
     delete fld;
     fld = 0;
     return 0;
@@ -164,15 +164,15 @@ bool KMFolderDir::reload(void)
 
   if (!dir.cd(fldPath, TRUE))
   {
-    QString msg = i18n("Cannot enter directory '%1'.\n").arg(fldPath);
-    KMessageBox::information(0, msg );
+    QString msg = i18n("<qt>Cannot enter directory <b>%1</b>.</qt>").arg(fldPath);
+    KMessageBox::information(0, msg);
     return FALSE;
   }
 
   if (!(fiList=(QFileInfoList*)dir.entryInfoList()))
   {
-    QString msg = i18n("Directory '%1' is unreadable.\n").arg(fldPath);
-    KMessageBox::information(0,msg);
+    QString msg = i18n("<qt>Directory <b>%1</b> is unreadable.</qt>").arg(fldPath);
+    KMessageBox::information(0, msg);
     return FALSE;
   }
 

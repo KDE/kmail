@@ -164,7 +164,7 @@ void KMFilter::readConfig(KConfig* config)
     numActions = config->readNumEntry("actions",0);
     if (numActions > FILTER_MAX_ACTIONS) {
       numActions = FILTER_MAX_ACTIONS ;
-      KMessageBox::information( 0, i18n("Too many filter actions in filter rule `%1'").arg( mPattern.name() ) );
+      KMessageBox::information( 0, i18n("<qt>Too many filter actions in filter rule <b>%1</b>.</qt>").arg( mPattern.name() ) );
     }
 
     for ( i=0 ; i < numActions ; i++ ) {
@@ -188,8 +188,8 @@ void KMFilter::readConfig(KConfig* config)
         }
       } else
         KMessageBox::information( 0 /* app-global modal dialog box */,
-				  i18n("Unknown filter action `%1'\n in filter rule `%2'."
-				       "\nIgnoring it.").arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
+				  i18n("<qt>Unknown filter action <b>%1</b><br>in filter rule <b>%2</b>.<br>Ignoring it.</qt>")
+				       .arg( config->readEntry( actName ) ).arg( mPattern.name() ) );
     }
   }
 }
