@@ -23,6 +23,7 @@ public:
   static void launch(QWidget *parent);
   static bool useKab();
   static bool useKAddressbook();
+  static bool checkForAddressBook();
 
 #if KDE_VERSION < 305
 private:

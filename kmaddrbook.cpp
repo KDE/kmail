@@ -166,7 +166,9 @@ void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
   QString address = addr;
   address.replace( QRegExp("\""), "" );
   if (useKAddressbook()) {
-    KRun::runCommand( "kaddressbook -a \"" + address + "\"" );
+    if ( checkForAddressBook() ) {
+      KRun::runCommand( "kaddressbook -a \"" + address + "\"" );
+    }
     return;
   }
 
@@ -217,7 +219,9 @@ void KMAddrBookExternal::launch(QWidget *) {
 // file directly, as they aren't used anywhere else.
 // It might also be better to write a string for identifying the addressbook
 // instead of a number as it is done now.
+  if ( checkForAddressBook() ) {
     KRun::runCommand("kaddressbook");
+  }
 #if 0
   if ( useKab() ) {
     KRun::runCommand("kab");
@@ -243,6 +247,18 @@ bool KMAddrBookExternal::useKAddressbook()
   KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   return (ab == 1);
+}
+
+bool KMAddrBookExternal::checkForAddressBook()
+{
+  if ( KStandardDirs::findExe( "kaddressbook" ).isEmpty() ) {
+    KMessageBox::information( 0,
+        i18n("No external address book application found. You might want to "
+             "install KAddressBook from the kdepim module.") );
+    return false;
+  } else {
+    return true;
+  }
 }
 
 #if KDE_VERSION < 305
