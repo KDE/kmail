@@ -6,6 +6,7 @@
 #endif
 #include <signal.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <kuniqueapp.h>
 #include <klocale.h>
