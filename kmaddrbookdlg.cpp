@@ -49,7 +49,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   {
     mListBox.insertItem(addr);
   }
-  resize(300, 450);
+  resize(350, 450);
 }
 
 
@@ -118,8 +118,10 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   mBtnCancel.setMinimumSize(mBtnCancel.size());
   mBtnAdd.adjustSize();
   mBtnAdd.setMinimumSize(mBtnAdd.size());
+  mBtnAdd.setEnabled(false);
   mBtnRemove.adjustSize();
   mBtnRemove.setMinimumSize(mBtnRemove.size());
+  mBtnRemove.setEnabled(false);
 
   mGrid.addMultiCellWidget(&mListBox, 0, 0, 0, 3);
   mGrid.addMultiCellWidget(&mEdtAddress, 1, 1, 0, 3);
@@ -143,11 +145,14 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
   connect(&mBtnAdd, SIGNAL(clicked()), SLOT(slotAdd()));
   connect(&mBtnRemove, SIGNAL(clicked()), SLOT(slotRemove()));
+  connect(&mEdtAddress, SIGNAL(textChanged(const QString&)), SLOT(slotEnableAdd()));
+  connect(&mListBox, SIGNAL(selectionChanged()), SLOT(slotEnableRemove()));
 
   for (addr=mAddrBook->first(); addr; addr=mAddrBook->next())
   {
     mListBox.insertItem(addr);
   }
+  resize(350, 450);
 }
 
 
@@ -160,6 +165,9 @@ KMAddrBookEditDlg::~KMAddrBookEditDlg()
 //-----------------------------------------------------------------------------
 void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
 {
+
+  mBtnRemove.setEnabled(true);
+  
   int oldIndex = mIndex;
   disconnect(&mListBox, SIGNAL(highlighted(const QString&)), 
 	  this, SLOT(slotLbxHighlighted(const QString&)));
@@ -212,6 +220,13 @@ void KMAddrBookEditDlg::slotCancel()
 
 
 //-----------------------------------------------------------------------------
+void KMAddrBookEditDlg::slotEnableAdd()
+{
+  mBtnAdd.setEnabled(true);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAddrBookEditDlg::slotAdd()
 {
   const char* addr = mEdtAddress.text();
@@ -223,6 +238,13 @@ void KMAddrBookEditDlg::slotAdd()
 
 
 //-----------------------------------------------------------------------------
+void KMAddrBookEditDlg::slotEnableRemove()
+{
+  mBtnRemove.setEnabled(true);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAddrBookEditDlg::slotRemove()
 {
   int idx = mListBox.currentItem();
@@ -230,6 +252,9 @@ void KMAddrBookEditDlg::slotRemove()
   if (idx >= 0) mListBox.removeItem(idx);
   if (idx >= (int)mListBox.count()) idx--;
   mListBox.setCurrentItem(idx);
+  if( mListBox.count() == 0 ) {
+    mBtnRemove.setEnabled(false);
+  }
 }
 
 

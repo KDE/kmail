@@ -52,7 +52,9 @@ public:
 protected slots:
   void slotOk();
   void slotCancel();
+  void slotEnableAdd();
   void slotAdd();
+  void slotEnableRemove();
   void slotRemove();
   void slotLbxHighlighted(const QString& item);
 
