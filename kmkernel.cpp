@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include <kdebug.h>
 #include <kmessagebox.h>
