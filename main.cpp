@@ -26,7 +26,8 @@
 #include "kmversion.h"
 
 
-const char* aboutText =
+// OLD about text.  This is horrbly outdated.
+/*const char* aboutText =
     "KMail [" KMAIL_VERSION "] by\n\n"
     "Stefan Taferner <taferner@kde.org>,\n"
     "Markus Wübben <markus.wuebben@kde.org>\n\n"
@@ -36,6 +37,22 @@ const char* aboutText =
     "and the above authors.\n\n"
     "This program is covered by the GPL.\n\n"
     "Please send bugreports to taferner@kde.org";
+*/
+const char *aboutText = 
+  "KMail [" KMAIL_VERSION "] by\n\n"
+  "Stefan Taferner <taferner@kde.org>,\n"
+  "Don Sanders <don@sanders.org>,\n"
+  "Andreas Gungl <Andreas.Gungle@osp-dd.de>,\n"
+  "George Staikos <staikos@kde.org>,\n"
+  "Espen Sand <espensa@online.no>,\n"
+  "Daniel Naber <dnaber@mini.gt.owl.de>,\n"
+  "Mario Weilguni <mweilguni@sime.com>\n\n"
+  "based on the work of:\n"
+  "Lynx <lynx@topaz.hknet.com>,\n"
+  "Stephan Meyer <Stephan.Meyer@pobox.com>\n"
+  "and the above authors.\n\n"
+  "This program is covered by the GPL.\n\n"
+  "Please send bugreports to kmail@kde.org";
 
 static const char *description = I18N_NOOP("A KDE E-Mail client."); 
 

@@ -1,3 +1,8 @@
+2000-05-17  George Staikos <staikos@kde.org>
+        * Updated the authors list
+        * Added Stefan's external filter code and modified it somewhat
+        * bugfixes on size parameter again.
+
 2000-05-14  George Staikos <staikos@0wned.org>
 
         * Forward now forwards ALL headers if ALL headers are set
