@@ -124,7 +124,7 @@ QString FolderStorage::location() const
 
 QString FolderStorage::fileName() const
 {
-  return mFolder->name(); 
+  return mFolder->name();
 }
 
 
@@ -488,7 +488,7 @@ bool FolderStorage::isMessage(int idx)
 
 //-----------------------------------------------------------------------------
 FolderJob* FolderStorage::createJob( KMMessage *msg, FolderJob::JobType jt,
-                                KMFolder *folder, QString partSpecifier, 
+                                KMFolder *folder, QString partSpecifier,
                                 const AttachmentStrategy *as ) const
 {
   FolderJob * job = doCreateJob( msg, jt, folder, partSpecifier, as );
@@ -706,9 +706,9 @@ const char* FolderStorage::type() const
 //-----------------------------------------------------------------------------
 QString FolderStorage::label() const
 {
-  if ( folder() && folder()->isSystemFolder() && !mLabel.isEmpty() ) 
+  if ( folder() && folder()->isSystemFolder() && !mLabel.isEmpty() )
      return mLabel;
-  if ( folder() && folder()->isSystemFolder() ) 
+  if ( folder() && folder()->isSystemFolder() )
      return i18n( folder()->name().latin1() );
   return mFolder->name();
 }
@@ -789,7 +789,7 @@ QString FolderStorage::idString() const
   QString relativePath = folder()->path().right( pathLen );
   if (!relativePath.isEmpty())
     relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
-  QString escapedName = QString( name() );
+  QString escapedName = QString( folder()->name() );
   /* Escape [ and ] as they are disallowed for kconfig sections and that is
      what the idString is primarily used for. */
   escapedName.replace( "[", "%(" );
@@ -936,7 +936,7 @@ void FolderStorage::removeJobs()
 size_t FolderStorage::crlf2lf( char* str, const size_t strLen )
 {
   if ( !str || strLen == 0 ) return 0;
-  
+
   const char* source = str;
   const char* sourceEnd = source + strLen;
 
