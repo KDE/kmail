@@ -18,7 +18,7 @@
 #include "kfileio.h"
 #include "kmfawidgets.h"
 
-#include <kregexp3.h>
+#include <qregexp.h>
 #include <kstddirs.h>
 #include <kconfig.h>
 #include <ktempfile.h>
@@ -857,7 +857,7 @@ public:
     return (new KMFilterActionRewriteHeader);
   }
 private:
-  KRegExp3 mRegExp;
+  QRegExp mRegExp;
   QString mReplacementString;
 };
 
@@ -879,10 +879,8 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
   if ( mParameter.isEmpty() || !mRegExp.isValid() )
     return ErrorButGoOn;
 
-  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
-
-  QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
-				     mReplacementString );
+  QString newValue = msg->headerField( mParameter.latin1() );
+  newValue.replace( mRegExp, mReplacementString );
 
   msg->setHeaderField( mParameter.latin1(), newValue );
   return GoOn;
