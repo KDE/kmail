@@ -243,7 +243,8 @@ int KMFolder::lock(void)
     return errno;
   }
 
-  if (!mIndexStream)
+// JACEK: was (!mIndexStream) - nonsense which crashed fileno
+  if (mIndexStream)
   {
 #if HAVE_FLOCK
     rc = flock(fileno(mIndexStream), LOCK_UN);

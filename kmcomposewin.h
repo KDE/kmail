@@ -167,6 +167,12 @@ public slots:
 
    void updateCursorPosition();
 
+#ifdef CHARSETS
+   void slotConfigureCharsets();
+   void slotSetCharsets(const char *message,const char *composer
+                        ,bool ascii,bool quote,bool def);
+#endif
+
 protected:
   /** Install grid management and header fields. If fields exist that
     should not be there they are removed. Those that are needed are
@@ -216,6 +222,18 @@ protected:
 private:
   /** Get message including signing and encrypting it */
   virtual const QString pgpProcessedMsg(void);
+  
+#ifdef CHARSETS  
+  /** Convert message text for editing.
+      Converts message to mComposeCharset charset (if neccessary).*/
+  QString convertToLocal(const QString str);
+  
+  /** Converts message text for sending. */
+  QString convertToSend(const QString str);
+ 
+  /** Test if string has any 8-bit characters */
+  bool is8Bit(const QString str);
+#endif  
 
 protected:
   QWidget   mMainWidget;
@@ -251,6 +269,14 @@ protected:
   KSpell* mKSpell;
   KSpellConfig* mKSpellConfig;
 #endif
+#ifdef CHARSETS
+  int m7BitAscii;
+  QString mDefaultCharset;
+  QString mCharset;
+  QString mDefComposeCharset; 
+  QString mComposeCharset; 
+  int mQuoteUnknownCharacters;
+#endif  
 
 private:
   QColor foreColor,backColor;

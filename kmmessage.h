@@ -243,7 +243,14 @@ public:
    * only the name part and not the given emailAddr. */
   static const QString emailAddrAsAnchor(const QString emailAddr, 
 					 bool stripped=TRUE);
-
+#ifdef CHARSETS   
+  /** Get the message charset.*/
+  virtual const QString charset(void) const;
+  
+  /** Set the message charset. */
+  virtual void setCharset(const QString aStr);
+#endif
+   				       
 #ifdef KRN
   /** Convert a normal References: header into a list of anchors
    to news URLs for the referred articles. Right now, only for KRN. */

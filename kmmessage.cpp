@@ -367,7 +367,10 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   if (strnicmp(subject(), "Re:", 3)!=0)
     msg->setSubject("Re: " + subject());
   else msg->setSubject(subject());
-
+#ifdef CHARSETS
+  printf("Setting reply charset: %s\n",(const char *)charset());
+  msg->setCharset(charset());
+#endif
   setStatus(KMMsgStatusReplied);
 
   return msg;
@@ -392,7 +395,9 @@ KMMessage* KMMessage::createForward(void)
   if (strnicmp(subject(), "Fwd:", 4)!=0)
     msg->setSubject("Fwd: " + subject());
   else msg->setSubject(subject());
-
+#ifdef CHARSETS
+  msg->setCharset(charset());
+#endif
   setStatus(KMMsgStatusForwarded);
 
   return msg;
@@ -414,6 +419,8 @@ void KMMessage::initHeader(void)
 #else
   setHeaderField("X-Mailer", "KMail [version " KMAIL_VERSION "]");
 #endif
+// This will allow to change Content-Type:
+  setHeaderField("Content-Type","text/plain");
 }
 
 
@@ -927,6 +934,13 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     {
       aPart->setTypeStr(headers->ContentType().TypeStr().c_str());
       aPart->setSubtypeStr(headers->ContentType().SubtypeStr().c_str());
+#ifdef CHARSETS
+      DwParameter *param=headers->ContentType().FirstParameter();
+      while(param)
+          if (param->Attribute()=="charset") break;
+          else param=param->Next(); 
+      if (param) aPart->setCharset(param->Value().c_str());
+#endif       
     }
     else
     {
@@ -1011,12 +1025,28 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
   const DwString contDesc = (const char*)aPart->contentDescription();
   const DwString contDisp = (const char*)aPart->contentDisposition();
   const DwString bodyStr  = (const char*)aPart->body();
-
+#ifdef CHARSETS
+  const DwString charset  = (const char*)aPart->charset();
+#endif
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
   {
     headers.ContentType().SetTypeStr(type);
     headers.ContentType().SetSubtypeStr(subtype);
+#ifdef CHARSETS
+    if (charset!=""){
+         DwParameter *param=headers.ContentType().FirstParameter();
+	 while(param)
+	    if (param->Attribute()=="charset") break;
+	    else param=param->Next();
+	 if (!param){   
+            param=new DwParameter;
+            param->SetAttribute("charset");
+            headers.ContentType().AddParameter(param);
+	 }   
+         param->SetValue(charset);
+    }
+#endif
   }
   if (cte != "")
     headers.Cte().FromString(cte);
@@ -1050,12 +1080,24 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QString contDesc = aPart->contentDescription();
   QString contDisp = aPart->contentDisposition();
   QString name     = aPart->name();
+#ifdef CHARSETS
+   QString charset  = aPart->charset();
+#endif
 
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
   {
     headers.ContentType().SetTypeStr((const char*)type);
     headers.ContentType().SetSubtypeStr((const char*)subtype);
+#ifdef CHARSETS
+    if (charset != ""){
+         DwParameter *param;
+         param=new DwParameter;
+         param->SetAttribute("charset");
+         param->SetValue((const char *)charset);
+         headers.ContentType().AddParameter(param);
+    }
+#endif
   }
 
   if(!name.isEmpty())
@@ -1178,3 +1220,42 @@ void KMMessage::readConfig(void)
   sForwardStr = config->readEntry("phrase-forward",i18n("Forwarded Message"));
   sIndentPrefixStr = config->readEntry("indent-prefix",">");
 }
+
+#ifdef CHARSETS
+//-----------------------------------------------------------------------------
+const QString KMMessage::charset(void) const
+{
+   printf("Checking charset...\n");
+   DwMediaType &mType=mMsg->Headers().ContentType();
+   mType.Parse();
+   DwParameter *param=mType.FirstParameter();
+   while(param){
+      printf("%s=%s\n",param->Attribute().c_str(),param->Value().c_str());
+      if (param->Attribute()=="charset")
+        return QString(param->Value().c_str());
+      else param=param->Next(); 
+   }   
+   return ""; // us-ascii, but we don't have to specify it
+}
+
+//-----------------------------------------------------------------------------
+void KMMessage::setCharset(const QString aStr)
+{
+   printf("Setting charset to: %s\n",(const char *)aStr);
+   DwMediaType &mType=mMsg->Headers().ContentType();
+   mType.Parse();
+   printf("mType: %s\n",mType.AsString().c_str());
+   DwParameter *param=mType.FirstParameter();
+   while(param)
+      if (param->Attribute()=="charset") break;
+      else param=param->Next(); 
+   if (!param){
+      param=new DwParameter;
+      param->SetAttribute("charset");
+      mType.AddParameter(param);
+   }
+   param->SetValue((const char *)aStr);
+   mType.Assemble();
+   printf("mType: %s\n",mType.AsString().c_str());
+}		
+#endif

@@ -211,6 +211,9 @@ void KMReaderWin::parseMsg(void)
 
   mViewer->begin(mPicsDir);
   mViewer->write("<HTML><BODY>");
+#ifdef CHARSETS  
+  mViewer->setCharset(mMsg->charset());
+#endif  
 
   writeMsgHeader();
 
