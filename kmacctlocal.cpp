@@ -5,6 +5,7 @@
 #endif
 
 #include <qdatetime.h>
+#include <qfileinfo.h>
 #include "kmacctlocal.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
@@ -86,6 +87,14 @@ void KMAcctLocal::pseudoAssign(KMAccount *account)
 void KMAcctLocal::processNewMail(bool)
 {
   QTime t;
+  hasNewMail = false;
+
+  QFileInfo fi( location() );
+  if ( fi.size() == 0 ) {
+    emit finishedCheck(hasNewMail);
+    return;
+  }
+
   KMFolder mailFolder(NULL, location());
   mailFolder.setLockType( mLock );
   if ( mLock == procmail_lockfile)
@@ -97,7 +106,6 @@ void KMAcctLocal::processNewMail(bool)
   KMMessage* msg;
   bool addedOk;
 
-  hasNewMail = false;
   if (!mFolder) {
     emit finishedCheck(hasNewMail);
     return;
