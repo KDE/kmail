@@ -18,7 +18,7 @@ class KMFolderSelDlg: public QDialog
   Q_OBJECT
 
 public:
-  KMFolderSelDlg(const char* caption);
+  KMFolderSelDlg(QString caption);
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */

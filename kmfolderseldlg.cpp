@@ -18,7 +18,7 @@
 QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg(const char* caption): 
+KMFolderSelDlg::KMFolderSelDlg(QString caption): 
   KMFolderSelDlgInherited(NULL, caption, TRUE)
 {
   QPushButton *btnCancel, *btnOk;
@@ -28,7 +28,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
 
   initMetaObject();
 
-  setCaption(i18n("Select folder"));
+  setCaption(caption);
 
   mListBox = new QListBox(this);
   box->addWidget(mListBox, 100);
@@ -49,7 +49,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   QAccel *acc = new QAccel(this);
   acc->connectItem(acc->insertItem(Key_Escape), this, SLOT(slotCancel()));
 
-  resize(100, 300);
+  resize(220, 300);
   box->activate();
 
   QStringList str;

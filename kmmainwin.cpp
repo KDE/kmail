@@ -949,7 +949,7 @@ void KMMainWin::slotShowMsgSrc()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMoveMsg()
 {
-  KMFolderSelDlg dlg(i18n("Move Message - Select Folder"));
+  KMFolderSelDlg dlg(i18n("Move Message to Folder"));
   KMFolder* dest;
 
   if (!dlg.exec()) return;
@@ -980,7 +980,7 @@ void KMMainWin::slotApplyFilters()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCopyMsg()
 {
-  KMFolderSelDlg dlg(i18n("Copy Message - Select Folder"));
+  KMFolderSelDlg dlg(i18n("Copy Message to Folder"));
   KMFolder* dest;
 
   if (!dlg.exec()) return;
