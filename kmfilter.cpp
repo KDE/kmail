@@ -66,7 +66,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
   ReturnCode status = NoResult;
 
   QPtrListIterator<KMFilterAction> it( mActions );
-  for ( it.toFirst() ; !stopIt && it.current() ; ++it ) {
+  for ( it.toFirst() ; it.current() ; ++it ) {
 
     kdDebug(5006) << "####### KMFilter::process: going to apply action "
 	      << (*it)->label() << " \"" << (*it)->argsAsString()
@@ -76,15 +76,13 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
 
     switch ( result ) {
     case KMFilterAction::CriticalError:
+      // in case it's a critical error: return immediately!
       return CriticalError;
-    case KMFilterAction::ErrorButGoOn:
-      // Small problem, keep a copy
-      status = GoOn;
-      break;
-    case KMFilterAction::Finished:
+    case KMFilterAction::Moved:
       // Message saved in a folder
-      kdDebug(5006) << "got result Finished" << endl;
+      kdDebug(5006) << "got result Moved" << endl;
       status = MsgExpropriated;
+    case KMFilterAction::ErrorButGoOn:
     default:
       break;
     }

@@ -41,8 +41,7 @@ class KMFilterAction
 public:
   /** Possible return codes of @ref process:
 
-      @li @p Finshed: No additional filter action should be run after
-      this one.
+      @li @p Moved: The message we re-parented.
 
       @li @p GoOn: Go on with applying filter actions.
 
@@ -54,7 +53,8 @@ public:
       processing (e.g. "disk full").
 
   */
-  enum ReturnCode { Finished, GoOn, ErrorButGoOn, CriticalError };
+  enum ReturnCode { Moved = 0x1, GoOn = 0x2, ErrorButGoOn = 0x4,
+		    CriticalError = 0x8 };
   /** Initialize filter action with (english) name @p aName and
       (internationalized) label @p aLabel. */
   KMFilterAction(const char* aName, const QString aLabel);

@@ -1010,9 +1010,9 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
   KMFilterAction::tempOpenFolder( mFolder );
 
   if ( msg->parent() )
-    return Finished; // the message already has a parent??? so what?
+    return Moved; // the message already has a parent??? so what?
   if ( mFolder->moveMsg(msg) == 0 )
-    return Finished; // ok, added
+    return Moved; // ok, added
   else {
     kdDebug(5006) << "KMfilterAction - couldn't move msg" << endl;
     return CriticalError; // critical error: couldn't add
