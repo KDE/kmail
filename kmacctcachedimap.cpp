@@ -48,8 +48,6 @@ KMAcctCachedImap::KMAcctCachedImap(KMAcctMgr* aOwner, const QString& aAccountNam
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
-  KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
-			  this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
 }
 
 

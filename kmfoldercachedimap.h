@@ -165,6 +165,9 @@ protected slots:
   virtual bool deleteMessages();
   virtual void createNewFolders();
 
+  // Connected to the imap account
+  void slotConnectionResult( int errorCode );
+
 protected:
   /**
    * List a directory and add the contents to kmfoldermgr

@@ -37,7 +37,6 @@ using KIO::MetaData;
 #include <kio/passdlg.h>
 using KIO::PasswordDialog;
 #include <kio/scheduler.h>
-//using KIO::Scheduler; // use FQN below
 
 #include <qregexp.h>
 
@@ -67,6 +66,10 @@ namespace KMail {
       mCreateInbox( false )
   {
     mPort = imapDefaultPort;
+    KIO::Scheduler::connect(SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
+                            this, SLOT(slotSchedulerSlaveError(KIO::Slave *, int, const QString &)));
+    KIO::Scheduler::connect(SIGNAL(slaveConnected(KIO::Slave *)),
+                            this, SLOT(slotSchedulerSlaveConnected(KIO::Slave *)));
   }
 
   ImapAccountBase::~ImapAccountBase() {
@@ -174,8 +177,8 @@ namespace KMail {
     return m;
   }
 
-  bool ImapAccountBase::makeConnection() {
-    if ( mSlave ) return true;
+  ImapAccountBase::ConnectionState ImapAccountBase::makeConnection() {
+    if ( mSlave ) return Connected;
 
     if( mAskAgain || passwd().isEmpty() || login().isEmpty() ) {
       QString log = login();
@@ -194,7 +197,7 @@ namespace KMail {
 					       i18n("Account:") )
           != QDialog::Accepted ) {
         checkDone(false, 0);
-        return false;
+        return Error;
       }
       // The user has been given the chance to change login and
       // password, so copy both from the dialog:
@@ -207,10 +210,10 @@ namespace KMail {
     if ( !mSlave ) {
       KMessageBox::error(0, i18n("Could not start process for %1.")
 			 .arg( getUrl().protocol() ) );
-      return false;
+      return Error;
     }
 
-    return true;
+    return Connecting;
   }
 
   void ImapAccountBase::postProcessNewMail( KMFolder * folder ) {
@@ -437,23 +440,37 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotSchedulerSlaveError(KIO::Slave *aSlave, int errorCode,
+      const QString &errorMsg)
+  {
+      if (aSlave != mSlave) return;
+      slotSlaveError( aSlave, errorCode, errorMsg );
+      emit connectionResult( errorCode );
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
+  {
+      if (aSlave != mSlave) return;
+      emit connectionResult( 0 ); // success
+  }
+
+  //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSlaveError(KIO::Slave *aSlave, int errorCode,
       const QString &errorMsg)
   {
     if (aSlave != mSlave) return;
     if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
     if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
-    // check if we still display an error
     killAllJobs();
+    // check if we still display an error
     if ( !mErrorDialogIsActive )
     {
       mErrorDialogIsActive = true;
-      if ( KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
+      KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
             KIO::buildErrorString(errorCode, errorMsg),
-            i18n("Error")) == KMessageBox::Ok )
-      {
-        mErrorDialogIsActive = false;
-      }
+            i18n("Error"));
+      mErrorDialogIsActive = false;
     } else
       kdDebug(5006) << "suppressing error:" << errorMsg << endl;
   }
@@ -467,9 +484,9 @@ namespace KMail {
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
-  {  
+  {
     mFoldersQueuedForChecking.append(folder);
-    if (checkingMail()) 
+    if (checkingMail())
     {
       disconnect (this, SIGNAL(finishedCheck(bool)),
           this, SLOT(slotCheckQueuedFolders()));
@@ -482,7 +499,7 @@ namespace KMail {
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotCheckQueuedFolders()
-  {   
+  {
     disconnect (this, SIGNAL(finishedCheck(bool)),
           this, SLOT(slotCheckQueuedFolders()));
 

@@ -327,8 +327,8 @@ void KMFolderCachedImap::serverSync()
   assert( account() );
 
   reloadUidMap();
-  //kdDebug(5006) << "KMFolderCachedImap::serverSync(), imapPath()=" << imapPath() << ", path()="
-  //          << path() << " name()="<< name() << endl;
+  kdDebug(5006) << "KMFolderCachedImap::serverSync(), imapPath()=" << imapPath() << ", path()="
+            << path() << " name()="<< name() << endl;
 
   // Connect to the imap progress dialog
   if( mIsConnected != mAccount->isProgressDialogEnabled() ) {
@@ -374,14 +374,35 @@ void KMFolderCachedImap::serverSyncInternal()
 {
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
+  {
     mProgress = 0;
     emit statusMsg( i18n("%1: Synchronizing").arg(name()) );
     emit newState( name(), mProgress, i18n("Syncronizing"));
 
-    mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
     open();
-    // Carry on into the next one
 
+    // Connect to the server (i.e. prepare the slave)
+    ImapAccountBase::ConnectionState cs = mAccount->makeConnection();
+    if ( cs == ImapAccountBase::Error ) // cancelled by user, or slave can't start
+    {
+        kdDebug(5006) << "makeConnection said Error, aborting." << endl;
+        // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
+        emit folderComplete(this, FALSE);
+        break;
+    } else if ( cs == ImapAccountBase::Connecting )
+    {
+        kdDebug(5006) << "makeConnection said Connecting, waiting for signal." << endl;
+        // We'll wait for the connectionResult signal from the account.
+        connect( mAccount, SIGNAL( connectionResult(int) ),
+                 this, SLOT( slotConnectionResult(int) ) );
+        break;
+    } else // Connected
+    {
+        kdDebug(5006) << "makeConnection said Connected, proceeding." << endl;
+        mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+        // Fall through to next state
+    }
+  }
   case SYNC_STATE_CHECK_UIDVALIDITY:
     mSyncState = SYNC_STATE_CREATE_SUBFOLDERS;
     if( !noContent() ) {
@@ -596,6 +617,24 @@ void KMFolderCachedImap::serverSyncInternal()
     kdDebug(5006) << "KMFolderCachedImap::serverSyncInternal() WARNING: no such state "
 	      << mSyncState << endl;
   }
+}
+
+/* Connected to the imap account's connectionResult signal.
+   Emitted when the slave connected or failed to connect.
+*/
+void KMFolderCachedImap::slotConnectionResult( int errorCode )
+{
+    disconnect( mAccount, SIGNAL( connectionResult(int) ),
+                this, SLOT( slotConnectionResult(int) ) );
+    if ( !errorCode ) // success
+    {
+        mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
+        serverSyncInternal();
+    }
+    else // error (error message already shown by the account)
+    {
+        emit folderComplete(this, FALSE);
+    }
 }
 
 /* find new messages (messages without a UID) */
@@ -953,8 +992,8 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 // This synchronizes the subfolders with the server
 bool KMFolderCachedImap::listDirectory()
 {
-  //kdDebug(5006) << "KMFolderCachedImap::listDirectory " << "imapPath() = "
-  //            << imapPath() << " mAccount->prefix() = " << mAccount->prefix() << endl;
+  kdDebug(5006) << "KMFolderCachedImap::listDirectory " << "imapPath() = "
+              << imapPath() << " mAccount->prefix() = " << mAccount->prefix() << kdBacktrace(10);
   reloadUidMap();
 
   mSubfolderState = imapInProgress;

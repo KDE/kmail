@@ -79,10 +79,14 @@ namespace KMail {
     virtual void readConfig( /*const*/ KConfig/*Base*/ & config );
     virtual void writeConfig( KConfig/*Base*/ & config ) /*const*/;
 
+    enum ConnectionState { Error = 0, Connected, Connecting };
     /**
      * Connect to the server, if no connection is active
+     * Returns Connected (ok), Error (ko) or Connecting - which means
+     * that one should wait for the slaveConnected signal from KIO::Scheduler
+     * before proceeding.
      */
-    virtual bool makeConnection();
+    ConnectionState makeConnection();
 
     /**
      * Info Data for the Job
@@ -166,11 +170,11 @@ namespace KMail {
 	/**
 	 * Init a new-mail-check for a single folder
 	 */
-	void processNewMailSingleFolder(KMFolder* folder); 
+	void processNewMailSingleFolder(KMFolder* folder);
 
     /**
      * Set whether the current listDirectory should create an INBOX
-     */ 
+     */
     bool createInbox() { return mCreateInbox; }
     void setCreateInbox( bool create ) { mCreateInbox = create; }
 
@@ -211,6 +215,8 @@ namespace KMail {
     virtual void postProcessNewMail( KMFolder * );
     void slotCheckQueuedFolders();
 
+    void slotSchedulerSlaveConnected(KIO::Slave *aSlave);
+    void slotSchedulerSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
   protected:
     virtual QString protocol() const;
@@ -240,6 +246,13 @@ namespace KMail {
     bool mCreateInbox;
 
   signals:
+    /**
+     * Emitted when the slave managed or failed to connect
+     * This is always emitted at some point after makeConnection returned Connecting.
+     * @param errorCode 0 for success, != 0 in case of error
+     */
+    void connectionResult( int errorCode );
+
     /**
      * Emitted when new folders have been received
      */
