@@ -1258,21 +1258,33 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 
     idx = msgParent->find(aMsg);
     msgParent->getMsg( idx );
-    if (msgParent->account() && !aMsg->isComplete())
+    if (!imapQuiet && msgParent->account())
     {
-      KMImapJob *imapJob = new KMImapJob(aMsg);
-      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
-        SLOT(reallyAddMsg(KMMessage*)));
-      aMsg->setTransferInProgress(TRUE);
-      if (aIndex_ret) *aIndex_ret = -1;
-      return 0;
+      if (account() && msgParent->account() == account())
+      {
+        KMImapJob *imapJob = new KMImapJob(aMsg, KMImapJob::tCopyMessage, this);
+        connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
+          SLOT(addMsgQuiet(KMMessage*)));
+        aMsg->setTransferInProgress(TRUE);
+        if (aIndex_ret) *aIndex_ret = -1;
+        return 0;
+      }
+      else if (!aMsg->isComplete())
+      {
+        KMImapJob *imapJob = new KMImapJob(aMsg);
+        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+          SLOT(addMsgQuiet(KMMessage*)));
+        aMsg->setTransferInProgress(TRUE);
+        if (aIndex_ret) *aIndex_ret = -1;
+        return 0;
+      }
     }
   }
 
   if (mAccount && !imapQuiet)
   {
     aMsg->setTransferInProgress(TRUE);
-    KMImapJob *imapJob = new KMImapJob(aMsg, TRUE, this);
+    KMImapJob *imapJob = new KMImapJob(aMsg, KMImapJob::tPutMessage, this);
     connect(imapJob, SIGNAL(messageStored(KMMessage*)),
       SLOT(addMsgQuiet(KMMessage*)));
     if (aIndex_ret) *aIndex_ret = -1;

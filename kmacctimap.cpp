@@ -573,15 +573,15 @@ void KMAcctImap::slotCreateFolderResult(KIO::Job * job)
 
 
 //-----------------------------------------------------------------------------
-KMImapJob::KMImapJob(KMMessage *msg, bool put, KMFolder* folder)
+KMImapJob::KMImapJob(KMMessage *msg, JobType jt, KMFolder* folder)
 {
-  assert(!put || folder);
-  mType = (put) ? tPutMessage : tGetMessage;
+  assert(jt == tGetMessage || folder);
+  mType = jt;
   mDestFolder = folder;
   mMsg = msg;
   KMAcctImap *account = (folder) ? folder->account() : msg->parent()->account();
   account->mJobList.append(this);
-  if (put)
+  if (jt == tPutMessage)
   {
     KURL url = account->getUrl();
     url.setPath(folder->imapPath());
@@ -602,6 +602,33 @@ KMImapJob::KMImapJob(KMMessage *msg, bool put, KMFolder* folder)
             SLOT(slotPutMessageResult(KIO::Job *)));
     connect(mJob, SIGNAL(dataReq(KIO::Job *, QByteArray &)),
             SLOT(slotPutMessageDataReq(KIO::Job *, QByteArray &)));
+    account->displayProgress();
+  }
+  else if (jt == tCopyMessage)
+  {
+    KURL url = account->getUrl();
+    url.setPath(msg->parent()->imapPath() + ";UID="
+      + msg->headerField("X-UID"));
+    KURL destUrl = account->getUrl();
+    destUrl.setPath(folder->imapPath());
+    KMAcctImap::jobData jd;
+    jd.parent = NULL; mOffset = 0;
+    jd.total = 1; jd.done = 0;
+    QCString urlStr("C" + url.url());
+    QByteArray data;
+    QBuffer buff(data);
+    buff.open(IO_WriteOnly | IO_Append);
+    buff.writeBlock(urlStr.data(), urlStr.size());
+    urlStr = destUrl.url();
+    buff.writeBlock(urlStr.data(), urlStr.size());
+    buff.close();
+    account->makeConnection();
+    KIO::SimpleJob *simpleJob = KIO::special(url, data, FALSE);
+    KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
+    mJob = simpleJob;
+    account->mapJobData.insert(mJob, jd);
+    connect(mJob, SIGNAL(result(KIO::Job *)),
+            SLOT(slotCopyMessageResult(KIO::Job *)));
     account->displayProgress();
   } else {
     slotGetNextMessage();
@@ -701,6 +728,28 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
     if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
   } else {
     emit messageStored(mMsg);
+    mMsg = NULL;
+  }
+  account->mapJobData.remove(it);
+  account->displayProgress();
+  account->mJobList.remove(this);
+  delete this;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMImapJob::slotCopyMessageResult(KIO::Job *job)
+{
+  KMAcctImap *account = mDestFolder->account();
+  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+    account->mapJobData.find(job);
+  if (it == account->mapJobData.end()) return;
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) account->slaveDied();
+  } else {
+    emit messageCopied(mMsg);
     mMsg = NULL;
   }
   account->mapJobData.remove(it);
@@ -820,7 +869,7 @@ void KMAcctImap::setStatus(KMMessage * msg, KMMsgStatus status)
   KURL url = getUrl();
   if (!msg || !msg->parent()) return;
   url.setPath(msg->parent()->imapPath() + ";UID=" + msg->headerField("X-UID"));
-  QCString urlStr(url.url());
+  QCString urlStr("S" + url.url());
   QByteArray data;
   QBuffer buff(data);
   buff.open(IO_WriteOnly | IO_Append);
