@@ -239,7 +239,10 @@ protected slots:
   void slotFind();
   void slotUpdateImapMessage(KMMessage *msg);
   void slotIntro();
-
+  /** Show tip-of-the-day on startup */
+  void slotShowTipOnStart();
+  /** Show tip-of-the-day, forced */
+  void slotShowTip();
 
   // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
   /*

@@ -1010,13 +1010,4 @@ IdentityManager * KMKernel::identityManager() {
   return mIdentityManager;
 }
 
-void KMKernel::slotShowTipOnStart() {
-  KTipDialog::showTip(0);
-}
-
-void KMKernel::slotShowTip() {
-  KTipDialog::showTip( 0, QString::null, true );
-}
-
-
 #include "kmkernel.moc"

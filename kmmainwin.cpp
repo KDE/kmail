@@ -34,6 +34,7 @@
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
 #include <kio/job.h>
+#include <ktip.h>
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
@@ -115,6 +116,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
           SLOT( slotMailChecked(bool, bool)));
 
   setCaption( i18n("KDE Mail Client") );
+
+  if ( kernel->firstInstance() )
+    QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
 
   // must be the last line of the constructor:
   mStartupDone = TRUE;
@@ -2791,7 +2795,7 @@ void KMMainWin::setupMenuBar()
 		      actionCollection(), "help_kmail_welcomepage" );
   (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), 0,
 				i18n("Show \"Tip of the Day\"") ),
-		      0, kernel, SLOT(slotShowTip()),
+		      0, this, SLOT(slotShowTip()),
 		      actionCollection(), "help_show_tip" );
 
   createGUI( "kmmainwin.rc", false );
@@ -3245,3 +3249,13 @@ void KMMainWin::slotIntro() {
 
   mMsgView->displayAboutPage();
 }
+
+void KMMainWin::slotShowTipOnStart() {
+  KTipDialog::showTip(0);
+}
+
+void KMMainWin::slotShowTip() {
+  KTipDialog::showTip( 0, QString::null, true );
+}
+
+

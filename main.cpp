@@ -317,9 +317,6 @@ int main(int argc, char *argv[])
   // any dead letters?
   kmailKernel.recoverDeadLetters();
 
-  // show tip-of-the-day:
-  QTimer::singleShot( 5000, &kmailKernel, SLOT(slotShowTipOnStart()) );
-
   setSignalHandler(signalHandler);
 
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
