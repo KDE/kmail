@@ -96,6 +96,7 @@ protected slots: // Protected slots
 */
   void slotPressed(QListViewItem *aItem, const QPoint &aPnt, int aColumn);
   void slotToggled(bool aOn);
+  void slotUpdateMinimumSize();
 };
 
 #endif

@@ -20,6 +20,7 @@
 #include <qheader.h>
 #include <qcheckbox.h>
 #include <qvgroupbox.h>
+#include <qtimer.h>
 
 #include <klistview.h>
 #include <klocale.h>
@@ -396,6 +397,7 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QList<KMPopHeaders> *aHeaders, const QS
   connect(cb, SIGNAL(toggled(bool)),
       this, SLOT(slotToggled(bool)));
 
+  w->setMinimumSize(w->sizeHint());
   adjustSize();
 }
 
@@ -477,4 +479,10 @@ void KMPopFilterCnfrmDlg::slotToggled(bool aOn)
       mFilteredHeaders->hide();
     }
   }
+  QTimer::singleShot(0, this, SLOT(slotUpdateMinimumSize()));
+}
+
+void KMPopFilterCnfrmDlg::slotUpdateMinimumSize()
+{
+  mainWidget()->setMinimumSize(mainWidget()->sizeHint());
 }
