@@ -41,7 +41,6 @@ kmail_LDADD   = libkmailprivate.la
 libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
 		simplestringlisteditor.cpp kmmsgindex.cpp \
-		configmanager.cpp identitymanager.cpp identitycombo.cpp \
 		identitydrag.cpp identitylistview.cpp identitydialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
@@ -57,9 +56,9 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmsystemtray.cpp kmacctlocal.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
 		kmacctseldlg.cpp kmfiltermgr.cpp kmsearchpatternedit.cpp \
-		kmfilteraction.cpp kmsearchpattern.cpp kmidentity.cpp \
+		kmfilteraction.cpp kmsearchpattern.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
-		kmmsgbase.cpp kmmsglist.cpp kfileio.cpp kmaddrbook.cpp  \
+		kmmsgbase.cpp kmmsglist.cpp kmaddrbook.cpp  \
 		signatureconfigurator.cpp \
 		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
 		kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \
@@ -137,7 +136,8 @@ update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
                 kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl \
 		kmail-3.2-update-loop-on-goto-unread-settings.sh \
 		kmail-3.2-misc.sh \
-		kmail-3.3-use-ID-for-accounts.pl
+		kmail-3.3-use-ID-for-accounts.pl \
+                kmail-3.3-move-identities.pl
 
 confdir = $(kde_confdir)
 conf_DATA = kmail.antispamrc
@@ -152,7 +152,6 @@ kde_services_DATA = kmail_config_misc.desktop kmail_config_appearance.desktop \
    kmail_config_identity.desktop kmail_config_network.desktop kmail_config_composer.desktop \
    kmail_config_security.desktop
 
- 
 messages: rc.cpp
 	rm -f tips.cpp
 	$(PREPARETIPS) > tips.cpp
@@ -160,5 +159,5 @@ messages: rc.cpp
 	rm -f tips.cpp
 
 kde_kcfg_DATA = kmail.kcfg
-   
+
 include ../admin/Doxyfile.am

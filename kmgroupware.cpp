@@ -40,8 +40,9 @@
 #include "kmmainwidget.h"
 #include "kmfoldertree.h"
 #include "kmcomposewin.h"
-#include "kmidentity.h"
-#include "identitymanager.h"
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
+#include <libkdepim/email.h>
 #include "kmkernel.h"
 
 #include <kurl.h>
@@ -198,7 +199,7 @@ static void iCalRequest( const QString& receiver, const QString& iCal,
   KConfigGroup options( KMKernel::config(), "Groupware" );
   QString fromAddress; // this variable is only used in legacy mode
   if( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) ) {
-      QStringList toAddresses = KMMessage::splitEmailAddrList( msgOld->to() );
+      QStringList toAddresses = KPIM::splitEmailAddrList( msgOld->to() );
       if( toAddresses.count() <= 1 )
           // only one address: no problem, we can spare the user the dialog
           // and just take the from address
@@ -209,7 +210,7 @@ static void iCalRequest( const QString& receiver, const QString& iCal,
           // in the toAddresses list.
           for( QStringList::Iterator sit = toAddresses.begin();
                sit != toAddresses.end(); ++sit ) {
-              if( KMMessage::getEmailAddr( *sit ) ==
+              if( KPIM::getEmailAddr( *sit ) ==
                   kmkernel->identityManager()->defaultIdentity().emailAddr().local8Bit() ) {
                   // our default identity was contained in the To: list,
                   // copy that from To: to From:
@@ -331,12 +332,12 @@ bool KMGroupware::handleLink( const KURL &url, KMMessage* msg )
     // Find the receiver if we can
     QString receiver;
     if( msg ) {
-      KMIdentity ident =
+      KPIM::Identity ident =
         kmkernel->identityManager()->identityForAddress( msg->to() );
-      if( ident != KMIdentity::null ) {
+      if( ident != KPIM::Identity::null ) {
         receiver = ident.emailAddr();
       } else {
-        QStringList addrs = KMMessage::splitEmailAddrList( msg->to() );
+        QStringList addrs = KPIM::splitEmailAddrList( msg->to() );
         if( addrs.count() == 1 )
           // Don't ask the user to choose between 1 items
           receiver = addrs[0];

@@ -40,7 +40,7 @@ class KMFolder;
 class KMFolderComboBox;
 class KMAcctCachedImap;
 class NetworkPage;
-class KMIdentity;
+namespace KPIM { class Identity; }
 class KMTransportInfo;
 
 class QLabel;
@@ -58,7 +58,7 @@ public:
 
   void apply() const;
 
-  KMIdentity &identity() const;
+  KPIM::Identity &identity() const;
 
 private:
   int mIdentity;
@@ -134,8 +134,8 @@ private:
   // Write the KAddressbook settings
   static void writeKAddressbookConfig( const StartupWizard& );
 
-  KMIdentity& userIdentity();
-  const KMIdentity& userIdentity() const;
+  KPIM::Identity& userIdentity();
+  const KPIM::Identity& userIdentity() const;
 
   QWidget* createIntroPage();
   QWidget* createIdentityPage();
@@ -146,7 +146,7 @@ private:
   QWidget* createFolderCreationPage();
   QWidget* createOutroPage();
 
-  QWidget *mIntroPage, *mIdentityPage, *mKolabPage, *mAccountPage, *mLanguagePage, 
+  QWidget *mIntroPage, *mIdentityPage, *mKolabPage, *mAccountPage, *mLanguagePage,
     *mFolderSelectionPage, *mFolderCreationPage, *mOutroPage;
 
   QComboBox* mLanguageCombo;

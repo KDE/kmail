@@ -22,7 +22,7 @@
 #include "kmsender.h"
 #include "undostack.h"
 #include "kmacctmgr.h"
-#include "kfileio.h"
+#include <libkdepim/kfileio.h>
 #include "kmversion.h"
 #include "kmreaderwin.h"
 #include "kmmainwidget.h"
@@ -30,8 +30,8 @@
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 #include "kmmsgdict.h"
-#include "kmidentity.h"
-#include "identitymanager.h"
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
 #include "configuredialog.h"
 #include "kmcommands.h"
 // #### disabled for now #include "startupwizard.h"
@@ -344,7 +344,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
 
   if (!messageFile.isEmpty() && messageFile.isLocalFile()) {
-    QCString str = kFileToString( messageFile.path(), true, false );
+    QCString str = KPIM::kFileToString( messageFile.path(), true, false );
     if( !str.isEmpty() )
       msg->setBody( QString::fromLocal8Bit( str ).utf8() );
   }
@@ -519,12 +519,12 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 
     // This is a proposed change by Daniel Andor.
     // He proposed to change from the fopen(blah)
-    // to a kFileToString(blah).
+    // to a KPIM::kFileToString(blah).
     // Although it assigns a QString to a QString,
     // because of the implicit sharing this poses
     // no memory or performance penalty.
 
-    messageText = kFileToString( msgUrl.path(), true, false);
+    messageText = KPIM::kFileToString( msgUrl.path(), true, false);
     if ( messageText.isNull() )
       return -2;
 
@@ -1494,6 +1494,7 @@ void KMKernel::slotResult(KIO::Job *job)
   mPutJobs.remove(it);
 }
 
+// ### consider using KPIM::ProcessCollector instead
 void KMKernel::slotCollectStdOut( KProcess * proc, char * buffer, int len )
 {
   QByteArray & ba = mStdOutCollection[proc];
@@ -1602,8 +1603,8 @@ bool KMKernel::folderIsDraftOrOutbox(const KMFolder * folder)
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the drafts-folder
-  const IdentityManager * im = identityManager();
-  for( IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+  const KPIM::IdentityManager * im = identityManager();
+  for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
     if ( (*it).drafts() == idString ) return true;
   return false;
 }
@@ -1629,16 +1630,16 @@ bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
   if ( idString.isEmpty() ) return false;
 
   // search the identities if the folder matches the sent-folder
-  const IdentityManager * im = identityManager();
-  for( IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+  const KPIM::IdentityManager * im = identityManager();
+  for( KPIM::IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
     if ( (*it).fcc() == idString ) return true;
   return false;
 }
 
-IdentityManager * KMKernel::identityManager() {
+KPIM::IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
-    kdDebug(5006) << "instantating IdentityManager" << endl;
-    mIdentityManager = new IdentityManager( this, "mIdentityManager" );
+    kdDebug(5006) << "instantating KPIM::IdentityManager" << endl;
+    mIdentityManager = new KPIM::IdentityManager( this, "mIdentityManager" );
   }
   return mIdentityManager;
 }

@@ -34,7 +34,7 @@
 
 #include <kdialogbase.h>
 
-class KMIdentity;
+namespace KPIM { class Identity; }
 class QLineEdit;
 class KMFolderComboBox;
 class QCheckBox;
@@ -57,9 +57,9 @@ namespace KMail {
     IdentityDialog( QWidget * parent=0, const char * name = 0 );
     virtual ~IdentityDialog();
 
-    void setIdentity( /*_not_ const*/ KMIdentity & ident );
+    void setIdentity( /*_not_ const*/ KPIM::Identity & ident );
 
-    void updateIdentity( KMIdentity & ident );
+    void updateIdentity( KPIM::Identity & ident );
 
   public slots:
     void slotUpdateTransportCombo( const QStringList & sl );

@@ -9,7 +9,7 @@
 #include <qdir.h>
 #include <qregexp.h>
 
-#include "kfileio.h"
+#include <libkdepim/kfileio.h>
 #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
@@ -392,8 +392,8 @@ if( fileD0.open( IO_WriteOnly ) ) {
   QString tmp_file(location() + "/tmp/");
   tmp_file += filename;
 
-  if (!kCStringToFile(msgText, tmp_file, false, false, false))
-    kmkernel->emergencyExit( "" ); // kCStringToFile already showed an errormessage
+  if (!KPIM::kCStringToFile(msgText, tmp_file, false, false, false))
+    kmkernel->emergencyExit( "" ); // KPIM::kCStringToFile already showed an errormessage
 
   QFile file(tmp_file);
   size = msgText.length();
@@ -558,7 +558,7 @@ QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
 
   QFileInfo fi( abs_file );
   mDest.resize(fi.size()+2);
-  mDest = kFileToString(abs_file, false, false);
+  mDest = KPIM::kFileToString(abs_file, false, false);
   size_t newMsgSize = crlf2lf( mDest.data(), fi.size() );
   mDest[newMsgSize] = '\0';
   return mDest;

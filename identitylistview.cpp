@@ -36,7 +36,7 @@
 #include "identitylistview.h"
 
 #include "identitydrag.h"
-#include "identitymanager.h"
+#include <libkdepim/identitymanager.h>
 #include "kmkernel.h"
 
 #include <klocale.h> // i18n
@@ -52,23 +52,23 @@ namespace KMail {
   //
   //
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, const KMIdentity & ident )
+  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, const KPIM::Identity & ident )
     : KListViewItem( parent ), mUOID( ident.uoid() ) {
     init( ident );
   }
 
-  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, QListViewItem * after, const KMIdentity & ident )
+  IdentityListViewItem::IdentityListViewItem( IdentityListView * parent, QListViewItem * after, const KPIM::Identity & ident )
     : KListViewItem( parent, after ), mUOID( ident.uoid() ) {
     init( ident );
   }
 
-  KMIdentity & IdentityListViewItem::identity() const {
-    IdentityManager * im = kmkernel->identityManager();
+  KPIM::Identity & IdentityListViewItem::identity() const {
+    KPIM::IdentityManager * im = kmkernel->identityManager();
     assert( im );
     return im->identityForUoid( uoid() );
   }
 
-  void IdentityListViewItem::setIdentity( const KMIdentity & ident ) {
+  void IdentityListViewItem::setIdentity( const KPIM::Identity & ident ) {
     mUOID = ident.uoid();
     init( ident );
   }
@@ -77,7 +77,7 @@ namespace KMail {
     init( identity() );
   }
 
-  void IdentityListViewItem::init( const KMIdentity & ident ) {
+  void IdentityListViewItem::init( const KPIM::Identity & ident ) {
     if ( ident.isDefault() )
       // Add "(Default)" to the end of the default identity's name:
       setText( 0, i18n("%1: identity name. Used in the config "
@@ -118,7 +118,7 @@ namespace KMail {
     if ( col == 0 && isRenameable( col ) ) {
       IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
       if ( item ) {
-	KMIdentity & ident = item->identity();
+	KPIM::Identity & ident = item->identity();
 	if ( ident.isDefault() )
 	  item->setText( 0, ident.identityName() );
       }

@@ -25,8 +25,8 @@ using namespace KMime::Types;
 #include "kmfiltermgr.h"
 
 #include "kcursorsaver.h"
-#include "kmidentity.h"
-#include "identitymanager.h"
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
 #include "kmbroadcaststatus.h"
 #include "kmaccount.h"
 #include "kmtransport.h"
@@ -159,7 +159,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   QString f = aMsg->headerField("X-KMail-Redirect-From");
   if(!f.isEmpty()) {
     uint id = aMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
-    const KMIdentity & ident =
+    const KPIM::Identity & ident =
       kmkernel->identityManager()->identityForUoidOrDefault( id );
     aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
       .arg(ident.fullName()).arg(ident.emailAddr()));
@@ -281,7 +281,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
     mCurrentMsg->setStatus(KMMsgStatusSent);
     mCurrentMsg->setStatus(KMMsgStatusRead); // otherwise it defaults to new on imap
 
-    const KMIdentity & id = kmkernel->identityManager()
+    const KPIM::Identity & id = kmkernel->identityManager()
       ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
     if ( !mCurrentMsg->fcc().isEmpty() )
     {

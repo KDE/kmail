@@ -51,7 +51,7 @@ class KMFolderDir;
 class KIntNumInput;
 class KIconButton;
 class KEditListBox;
-class IdentityCombo;
+namespace KPIM { class IdentityCombo; }
 class KMFolderDialog;
 class KMFolderTree;
 template <typename T> class QGuardedPtr;
@@ -151,7 +151,7 @@ private:
   QCheckBox   *mNewMailCheckBox;
 
   QCheckBox *mExpireFolderCheckBox;
-  IdentityCombo *mIdentityComboBox;
+  KPIM::IdentityCombo *mIdentityComboBox;
   QGroupBox *mExpireGroupBox;
   QGroupBox *mMailboxTypeGroupBox;
 //   QLineEdit *mailingListAdminAddress;

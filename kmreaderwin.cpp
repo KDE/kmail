@@ -17,7 +17,7 @@
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kmailicalifaceimpl.h"
-#include "kfileio.h"
+#include <libkdepim/kfileio.h>
 #include "kmfolderindex.h"
 #include "kmcommands.h"
 #include "kmmsgpartdlg.h"
@@ -607,7 +607,7 @@ void KMReaderWin::update( KMail::Interface::Observable * observable ) {
   // update the tmp file
   // we have to set it writeable temporarily
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRWXU );
-  kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
+  KPIM::kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
 		    false, false, true );
   ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
 
@@ -940,7 +940,7 @@ void KMReaderWin::displayAboutPage()
   adjustLayout();
 
   QString location = locate("data", "kmail/about/main.html");
-  QString content = kFileToString(location);
+  QString content = KPIM::kFileToString(location);
   mViewer->begin(KURL( location ));
   QString info =
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
@@ -1295,7 +1295,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     // convert CRLF to LF before writing text attachments to disk
     size = KMFolder::crlf2lf( data.data(), size );
   }
-  if( !kBytesToFile( data.data(), size, fname, false, false, false ) )
+  if( !KPIM::kBytesToFile( data.data(), size, fname, false, false, false ) )
     return QString::null;
 
   mTempFiles.append( fname );

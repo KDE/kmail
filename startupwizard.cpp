@@ -44,8 +44,8 @@
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "kmfoldercachedimap.h"
-#include "kmidentity.h"
-#include "identitymanager.h"
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
 #include "kmtransport.h"
 #include "kmsender.h"
 #include "kmgroupware.h"
@@ -69,7 +69,7 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
   : QWidget( parent, name )
 {
   // First either get the default identity or make a new one
-  IdentityManager *im = kmkernel->identityManager();
+  KPIM::IdentityManager *im = kmkernel->identityManager();
   if( im->identities().count() > 0 )
     mIdentity = im->defaultIdentity().uoid();
   else {
@@ -77,7 +77,7 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
     im->setAsDefault( mIdentity );
   }
 
-  KMIdentity & ident = im->identityForUoid( mIdentity );
+  KPIM::Identity & ident = im->identityForUoid( mIdentity );
 
   QGridLayout *grid = new QGridLayout( this, 3, 2, KDialog::marginHint(),
 				       KDialog::spacingHint() );
@@ -109,7 +109,7 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
 
 void WizardIdentityPage::apply() const {
   // Save the identity settings
-  KMIdentity & ident = identity();
+  KPIM::Identity & ident = identity();
   ident.setFullName( nameEdit->text().stripWhiteSpace() );
   ident.setOrganization( orgEdit->text().stripWhiteSpace() );
   ident.setEmailAddr( emailEdit->text().stripWhiteSpace() );
@@ -117,7 +117,7 @@ void WizardIdentityPage::apply() const {
   kmkernel->identityManager()->commit();
 }
 
-KMIdentity & WizardIdentityPage::identity() const {
+KPIM::Identity & WizardIdentityPage::identity() const {
   return kmkernel->identityManager()->identityForUoid( mIdentity );
 }
 
@@ -553,12 +553,12 @@ void StartupWizard::guessExistingFolderLanguage()
   }
 }
 
-KMIdentity &StartupWizard::userIdentity()
+KPIM::Identity &StartupWizard::userIdentity()
 {
   return mIdentityWidget->identity();
 }
 
-const KMIdentity &StartupWizard::userIdentity() const
+const KPIM::Identity &StartupWizard::userIdentity() const
 {
   return mIdentityWidget->identity();
 }

@@ -88,9 +88,11 @@ void checkConfigUpdates() {
     "3.2-misc",
     "3.2-moves",
     "3.3-use-ID-for-accounts",
-    "3.3-update-filter-rules"
+    "3.3-update-filter-rules",
+    "3.3-move-identities-to-own-file"
   };
   static const int numUpdates = sizeof updates / sizeof *updates;
+  // Warning: do not remove entries in the above array, or the update-level check below will break
 
   KConfig * config = KMKernel::config();
   KConfigGroup startup( config, "Startup" );
@@ -137,7 +139,7 @@ void lockOrDie() {
   if ( !first_instance ) {
     QString msg;
     if ( oldHostName == hostName ) {
-      // this can only happen if the user is running this application on 
+      // this can only happen if the user is running this application on
       // different displays on the same machine. All other cases will be
       // taken care of by KUniqueApplication()
       if ( oldAppName == appName )

@@ -14,8 +14,9 @@ using KMail::ObjectTreeParser;
 #include "kmfolderindex.h"
 #include "undostack.h"
 #include "kmversion.h"
-#include "kmidentity.h"
-#include "identitymanager.h"
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
+#include <libkdepim/email.h>
 #include "kmkernel.h"
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
@@ -890,7 +891,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       replyStr = sReplyStr; // reply to author, so use "On ... you wrote:"
     }
     // strip all my addresses from the list of recipients
-    QStringList recipients = splitEmailAddrList( toStr );
+    QStringList recipients = KPIM::splitEmailAddrList( toStr );
     toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
     // ... unless the list contains only my addresses (reply to self)
     if ( toStr.isEmpty() && !recipients.isEmpty() )
@@ -910,7 +911,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       toStr = replyToStr;
     }
     // strip all my addresses from the list of recipients
-    QStringList recipients = splitEmailAddrList( toStr );
+    QStringList recipients = KPIM::splitEmailAddrList( toStr );
     toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
 
     break;
@@ -921,7 +922,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
 
     // add addresses from the Reply-To header to the list of recipients
     if( !replyToStr.isEmpty() ) {
-      recipients += splitEmailAddrList( replyToStr );
+      recipients += KPIM::splitEmailAddrList( replyToStr );
       // strip all possible mailing list addresses from the list of Reply-To
       // addresses
       for ( QStringList::const_iterator it = mailingListAddresses.begin();
@@ -961,9 +962,9 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     if( !cc().isEmpty() || !to().isEmpty() ) {
       QStringList list;
       if (!to().isEmpty())
-        list += splitEmailAddrList(to());
+        list += KPIM::splitEmailAddrList(to());
       if (!cc().isEmpty())
-        list += splitEmailAddrList(cc());
+        list += KPIM::splitEmailAddrList(cc());
       for( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
         if(    !addressIsInAddressList( *it, recipients )
             && !addressIsInAddressList( *it, ccRecipients ) ) {
@@ -996,7 +997,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   }
   case KMail::ReplyAuthor : {
     if ( !replyToStr.isEmpty() ) {
-      QStringList recipients = splitEmailAddrList( replyToStr );
+      QStringList recipients = KPIM::splitEmailAddrList( replyToStr );
       // strip the mailing list post address from the list of Reply-To
       // addresses since we want to reply in private
       for ( QStringList::const_iterator it = mailingListAddresses.begin();
@@ -1178,7 +1179,7 @@ KMMessage* KMMessage::createBounce( bool )
   if (a != -1) a = receiver.find('<', a);
   if (a != -1) b = receiver.find('>', a);
   if (a != -1 && b != -1) receiver = receiver.mid(a+1, b-a-1);
-  else receiver = getEmailAddr(to());
+  else receiver = KPIM::getEmailAddr(to());
 
 #if ALLOW_GUI
   if ( withUI )
@@ -1432,9 +1433,9 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // RFC 2298: [ Confirmation from the user SHOULD be obtained (or no
   // MDN sent) ] if there is more than one distinct address in the
   // Disposition-Notification-To header.
-  kdDebug(5006) << "splitEmailAddrList(receiptTo): "
-	    << splitEmailAddrList(receiptTo).join("\n") << endl;
-  if ( splitEmailAddrList(receiptTo).count() > 1 ) {
+  kdDebug(5006) << "KPIM::splitEmailAddrList(receiptTo): "
+	    << KPIM::splitEmailAddrList(receiptTo).join("\n") << endl;
+  if ( KPIM::splitEmailAddrList(receiptTo).count() > 1 ) {
     if ( !allowGUI ) return 0; // don't setMDNSentState here!
     mode = requestAdviceOnMDN( "mdnMultipleAddressesInReceiptTo" );
     s = MDN::SentManually;
@@ -1625,7 +1626,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
 //-----------------------------------------------------------------------------
 void KMMessage::initHeader( uint id )
 {
-  const KMIdentity & ident =
+  const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( id );
 
   if(ident.fullEmailAddr().isEmpty())
@@ -1975,7 +1976,7 @@ QString KMMessage::fromStrip() const
 //-----------------------------------------------------------------------------
 QCString KMMessage::fromEmail() const
 {
-  return getEmailAddr(headerField("From"));
+  return KPIM::getEmailAddr(headerField("From"));
 }
 
 //-----------------------------------------------------------------------------
@@ -3589,33 +3590,6 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
 }
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::getEmailAddr(const QString& aStr)
-{
-  int a, i, j, len, found = 0;
-  QChar c;
-  // Find the '@' in the email address:
-  a = aStr.find('@');
-  if (a<0) return aStr.latin1();
-  // Loop backwards until we find '<', '(', ' ', or beginning of string.
-  for (i = a - 1; i >= 0; i--) {
-    c = aStr[i];
-    if (c == '<' || c == '(' || c == ' ') found = 1;
-    if (found) break;
-  }
-  // Reset found for next loop.
-  found = 0;
-  // Loop forwards until we find '>', ')', ' ', or end of string.
-  for (j = a + 1; j < (int)aStr.length(); j++) {
-    c = aStr[j];
-    if (c == '>' || c == ')' || c == ' ') found = 1;
-    if (found) break;
-  }
-  // Calculate the length and return the result.
-  len = j - (i + 1);
-  return aStr.mid(i+1,len).latin1();
-}
-
-//-----------------------------------------------------------------------------
 QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
 {
   QString result;
@@ -3656,7 +3630,7 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
   if( aEmail.isEmpty() )
     return aEmail;
 
-  QStringList addressList = KMMessage::splitEmailAddrList( aEmail );
+  QStringList addressList = KPIM::splitEmailAddrList( aEmail );
 
   QString result;
 
@@ -3684,87 +3658,15 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 
 
 //-----------------------------------------------------------------------------
-QStringList KMMessage::splitEmailAddrList(const QString& aStr)
-{
-  // Features:
-  // - always ignores quoted characters
-  // - ignores everything (including parentheses and commas)
-  //   inside quoted strings
-  // - supports nested comments
-  // - ignores everything (including double quotes and commas)
-  //   inside comments
-
-  QStringList list;
-
-  if (aStr.isEmpty())
-    return list;
-
-  QString addr;
-  uint addrstart = 0;
-  int commentlevel = 0;
-  bool insidequote = false;
-
-  for (uint index=0; index<aStr.length(); index++) {
-    // the following conversion to latin1 is o.k. because
-    // we can safely ignore all non-latin1 characters
-    switch (aStr[index].latin1()) {
-    case '"' : // start or end of quoted string
-      if (commentlevel == 0)
-        insidequote = !insidequote;
-      break;
-    case '(' : // start of comment
-      if (!insidequote)
-        commentlevel++;
-      break;
-    case ')' : // end of comment
-      if (!insidequote) {
-        if (commentlevel > 0)
-          commentlevel--;
-        else {
-          kdDebug(5006) << "Error in address splitting: Unmatched ')'"
-                        << endl;
-          return list;
-        }
-      }
-      break;
-    case '\\' : // quoted character
-      index++; // ignore the quoted character
-      break;
-    case ',' :
-      if (!insidequote && (commentlevel == 0)) {
-        addr = aStr.mid(addrstart, index-addrstart);
-        if (!addr.isEmpty())
-          list += addr.simplifyWhiteSpace();
-        addrstart = index+1;
-      }
-      break;
-    }
-  }
-  // append the last address to the list
-  if (!insidequote && (commentlevel == 0)) {
-    addr = aStr.mid(addrstart, aStr.length()-addrstart);
-    if (!addr.isEmpty())
-      list += addr.simplifyWhiteSpace();
-  }
-  else
-    kdDebug(5006) << "Error in address splitting: "
-                  << "Unexpected end of address list"
-                  << endl;
-
-  return list;
-}
-
-
-//-----------------------------------------------------------------------------
 //static
 QStringList KMMessage::stripAddressFromAddressList( const QString& address,
                                                     const QStringList& list )
 {
   QStringList addresses = list;
-  QCString addrSpec = getEmailAddr( address ).lower();
+  QCString addrSpec = KPIM::getEmailAddr( address ).lower();
   for( QStringList::Iterator it = addresses.begin();
        it != addresses.end(); ) {
-    if( addrSpec == getEmailAddr( *it ).lower() ) {
+    if( addrSpec == KPIM::getEmailAddr( *it ).lower() ) {
       kdDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
@@ -3785,7 +3687,7 @@ QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list 
        it != addresses.end(); ) {
     kdDebug(5006) << "Check whether " << *it << " is one of my addresses"
                   << endl;
-    if( kmkernel->identityManager()->thatIsMe( getEmailAddr( *it ).lower() ) ) {
+    if( kmkernel->identityManager()->thatIsMe( KPIM::getEmailAddr( *it ).lower() ) ) {
       kdDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
@@ -3802,10 +3704,10 @@ QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list 
 bool KMMessage::addressIsInAddressList( const QString& address,
                                         const QStringList& addresses )
 {
-  QCString addrSpec = getEmailAddr( address ).lower();
+  QCString addrSpec = KPIM::getEmailAddr( address ).lower();
   for( QStringList::ConstIterator it = addresses.begin();
        it != addresses.end(); ++it ) {
-    if( addrSpec == getEmailAddr( *it ).lower() )
+    if( addrSpec == KPIM::getEmailAddr( *it ).lower() )
       return true;
   }
   return false;
@@ -3819,7 +3721,7 @@ QString KMMessage::expandAliases( const QString& recipients )
   if ( recipients.isEmpty() )
     return QString();
 
-  QStringList recipientList = KMMessage::splitEmailAddrList( recipients );
+  QStringList recipientList = KPIM::splitEmailAddrList( recipients );
 
   QString expandedRecipients;
   for ( QStringList::Iterator it = recipientList.begin();

@@ -38,8 +38,7 @@
 #include "kmsender.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
-#include "kmidentity.h"
-#include "identitymanager.h"
+#include <libkdepim/identitymanager.h>
 #include "identitylistview.h"
 #include "kcursorsaver.h"
 #include "kmkernel.h"
@@ -50,6 +49,7 @@ using KMail::IdentityListViewItem;
 using KMail::IdentityDialog;
 
 // other kdenetwork headers:
+#include <libkdepim/identity.h>
 #include <kpgpui.h>
 #include <kmime_util.h>
 using KMime::DateFormatter;
@@ -305,13 +305,13 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 
 void IdentityPage::load()
 {
-  IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager * im = kmkernel->identityManager();
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
   mIdentityList->clear();
   // Don't use ConstIterator here - it iterates over the wrong list!
   QListViewItem * item = 0;
-  for ( IdentityManager::Iterator it = im->begin() ; it != im->end() ; ++it )
+  for ( KPIM::IdentityManager::Iterator it = im->begin() ; it != im->end() ; ++it )
     item = new IdentityListViewItem( mIdentityList, item, *it  );
   mIdentityList->setSelected( mIdentityList->currentItem(), true );
 }
@@ -344,7 +344,7 @@ void IdentityPage::slotNewIdentity()
 {
   assert( !mIdentityDialog );
 
-  IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager * im = kmkernel->identityManager();
   NewIdentityDialog dialog( im->shadowIdentities(), this, "new", true );
 
   if( dialog.exec() == QDialog::Accepted ) {
@@ -357,7 +357,7 @@ void IdentityPage::slotNewIdentity()
     switch ( dialog.duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-	KMIdentity & dupThis = im->identityForName( dialog.duplicateIdentity() );
+	KPIM::Identity & dupThis = im->identityForName( dialog.duplicateIdentity() );
 	im->newFromExisting( dupThis, identityName );
 	break;
       }
@@ -372,7 +372,7 @@ void IdentityPage::slotNewIdentity()
     //
     // Insert into listview:
     //
-    KMIdentity & newIdent = im->identityForName( identityName );
+    KPIM::Identity & newIdent = im->identityForName( identityName );
     QListViewItem * item = mIdentityList->selectedItem();
     if ( item )
       item = item->itemAbove();
@@ -408,7 +408,7 @@ void IdentityPage::slotRemoveIdentity()
 {
   assert( !mIdentityDialog );
 
-  IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager * im = kmkernel->identityManager();
   kdFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
 
@@ -446,7 +446,7 @@ void IdentityPage::slotRenameIdentity( QListViewItem * i,
   QString newName = s.stripWhiteSpace();
   if ( !newName.isEmpty() &&
        !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
-    KMIdentity & ident = item->identity();
+    KPIM::Identity & ident = item->identity();
     ident.setIdentityName( newName );
     emit changed(true);
   }
@@ -478,7 +478,7 @@ void IdentityPage::slotSetAsDefault() {
     dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
   if ( !item ) return;
 
-  IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager * im = kmkernel->identityManager();
   im->setAsDefault( item->identity().identityName() );
   refreshList();
 }

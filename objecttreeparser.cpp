@@ -40,7 +40,8 @@
 #include "partNode.h"
 #include "kmgroupware.h"
 #include "kmkernel.h"
-#include "kfileio.h"
+#include <libkdepim/kfileio.h>
+#include <libkdepim/email.h>
 #include "partmetadata.h"
 #include "attachmentstrategy.h"
 #include "interfaces/htmlwriter.h"
@@ -339,7 +340,7 @@ namespace KMail {
       cryptPlugError = NO_PLUGIN;
 
     CryptPlugWrapper* cryptPlug = cryptPlugWrapper();
-    if ( !cryptPlug ) 
+    if ( !cryptPlug )
       cryptPlug = CryptPlugFactory::instance()->active();
 
     QString cryptPlugLibName;
@@ -793,7 +794,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if (fileName.isEmpty()) fileName = "unnamed";
     fname += "/" + fileName;
 
-    if (!kByteArrayToFile(theBody, fname, false, false, false))
+    if (!KPIM::kByteArrayToFile(theBody, fname, false, false, false))
       bOk = false;
     if ( reader )
       reader->mTempFiles.append(fname);
@@ -1151,9 +1152,9 @@ namespace KMail {
 
     partNode * signature = signedData->nextSibling();
     assert( signature );
-  
+
     signature->setProcessed( true, true );
-  
+
     if ( !includeSignatures() ) {
       stdChildHandling( signedData );
       return true;
@@ -1163,7 +1164,7 @@ namespace KMail {
     // mimetype of "signature" (not required by the RFC, but practised
     // by all implementaions of security multiparts
 
-    CryptPlugWrapper * cpw = 
+    CryptPlugWrapper * cpw =
       CryptPlugFactory::instance()->createForProtocol( node->contentTypeParameter( "protocol" ) );
 
     if ( !cpw ) {
@@ -1449,7 +1450,7 @@ namespace KMail {
       return false;
 
     CryptPlugWrapper * smimeCrypto = CryptPlugFactory::instance()->smime();
-    
+
     const QString smimeType = node->contentTypeParameter("smime-type").lower();
 
     if ( smimeType == "certs-only" ) {
@@ -2012,7 +2013,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                     // extra hint for green case
                     // that email addresses in DN do not match fromAddress
                     QString greenCaseWarning;
-                    QString msgFrom( KMMessage::getEmailAddr(fromAddress) );
+                    QString msgFrom( KPIM::getEmailAddr(fromAddress) );
                     QString certificate;
                     if( block.keyId.isEmpty() )
                         certificate = "certificate";
@@ -2045,7 +2046,7 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
                                 if( !bStart )
                                     greenCaseWarning.append(", <br />&nbsp; &nbsp;");
                                 bStart = false;
-                                greenCaseWarning.append( KMMessage::getEmailAddr(*it) );
+                                greenCaseWarning.append( KPIM::getEmailAddr(*it) );
                             }
                         }
                     } else {

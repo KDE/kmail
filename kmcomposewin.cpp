@@ -18,10 +18,6 @@
 #include "kmreaderwin.h"
 #include "kmreadermainwin.h"
 #include "kmsender.h"
-#include "identitymanager.h"
-#include "identitycombo.h"
-#include "kmidentity.h"
-#include "kfileio.h"
 #include "kmmsgpartdlg.h"
 #include <kpgpblock.h>
 #include <kaddrbook.h>
@@ -45,6 +41,12 @@ using KPIM::AddressesDialog;
 using KPIM::MailListDrag;
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
+
+#include <libkdepim/identitymanager.h>
+#include <libkdepim/identitycombo.h>
+#include <libkdepim/identity.h>
+#include <libkdepim/kfileio.h>
+#include <libkdepim/email.h>
 
 #include <cryptplugwrapperlist.h>
 #include <cryptplugfactory.h>
@@ -121,7 +123,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   // was set via the global configuration dialog.
   mSelectedCryptPlug = KMail::CryptPlugFactory::instance()->active();
 
-  mIdentity = new IdentityCombo(mMainWidget);
+  mIdentity = new KPIM::IdentityCombo(kmkernel->identityManager(), mMainWidget);
   mDictionaryCombo = new DictionaryComboBox( mMainWidget );
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( FALSE );
@@ -522,7 +524,7 @@ void KMComposeWin::readConfig(void)
   mIdentity->setCurrentIdentity( mId );
 
   kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentityName() << endl;
-  const KMIdentity & ident =
+  const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
   mDictionaryCombo->setCurrentByDictionary( ident.dictionary() );
@@ -1063,7 +1065,7 @@ void KMComposeWin::setupActions(void)
                                   "signature", 0,
                                   actionCollection(), "sign_message");
   // get PGP user id for the chosen identity
-  const KMIdentity & ident =
+  const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QCString pgpUserId = ident.pgpIdentity();
   mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
@@ -1349,9 +1351,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     slotIdentityChanged( mId );
   }
 
-  IdentityManager * im = kmkernel->identityManager();
+  KPIM::IdentityManager * im = kmkernel->identityManager();
 
-  const KMIdentity & ident = im->identityForUoid( mIdentity->currentIdentity() );
+  const KPIM::Identity & ident = im->identityForUoid( mIdentity->currentIdentity() );
 
   mOldSigText = ident.signatureText();
 
@@ -1689,7 +1691,7 @@ void KMComposeWin::slotComposerDone( bool rc )
 QCString KMComposeWin::pgpIdentity() const
 {
   // get PGP user id for the chosen identity
-  const KMIdentity & ident =
+  const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   return ident.pgpIdentity();
 }
@@ -1852,19 +1854,19 @@ void KMComposeWin::addrBookSelInto()
 
   txt = mEdtTo->text().stripWhiteSpace();
   if ( !txt.isEmpty() ) {
-      lst = KMMessage::splitEmailAddrList( txt );
+      lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedTo( lst );
   }
 
   txt = mEdtCc->text().stripWhiteSpace();
   if ( !txt.isEmpty() ) {
-      lst = KMMessage::splitEmailAddrList( txt );
+      lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedCC( lst );
   }
 
   txt = mEdtBcc->text().stripWhiteSpace();
   if ( !txt.isEmpty() ) {
-      lst = KMMessage::splitEmailAddrList( txt );
+      lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedBCC( lst );
   }
 
@@ -2425,7 +2427,7 @@ void KMComposeWin::viewAttach( int index )
   KTempFile* atmTempFile = new KTempFile();
   mAtmTempList.append( atmTempFile );
   atmTempFile->setAutoDelete( true );
-  kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
+  KPIM::kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
   KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
     atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
@@ -3091,7 +3093,7 @@ void KMComposeWin::slotAppendSignature()
 {
   bool mod = mEditor->isModified();
 
-  const KMIdentity & ident =
+  const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   mOldSigText = ident.signatureText();
   if( !mOldSigText.isEmpty() )
@@ -3246,7 +3248,7 @@ void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotIdentityChanged(uint uoid)
 {
-  const KMIdentity & ident =
+  const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() ) return;
 
@@ -4270,7 +4272,7 @@ void KMEdit::slotExternalEditorTempFileChanged( const QString & fileName ) {
   setAutoUpdate(false);
   clear();
 
-  insertLine(QString::fromLocal8Bit(kFileToString( fileName, true, false )), -1);
+  insertLine(QString::fromLocal8Bit(KPIM::kFileToString( fileName, true, false )), -1);
   setAutoUpdate(true);
   repaint();
 }

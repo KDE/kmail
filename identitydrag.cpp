@@ -40,7 +40,7 @@ namespace KMail {
 
   static const char kmailIdentityMimeType[] = "application/x-kmail-identity-drag";
 
-  IdentityDrag::IdentityDrag( const KMIdentity & ident,
+  IdentityDrag::IdentityDrag( const KPIM::Identity & ident,
 			      QWidget * dragSource, const char * name )
     : QDragObject( dragSource, name ), mIdent( ident )
   {
@@ -70,7 +70,7 @@ namespace KMail {
     return e->provides( kmailIdentityMimeType );
   }
 
-  bool IdentityDrag::decode( const QMimeSource * e, KMIdentity & i ) {
+  bool IdentityDrag::decode( const QMimeSource * e, KPIM::Identity & i ) {
 
     if ( e->provides( kmailIdentityMimeType ) ) {
       QDataStream s( e->encodedData( kmailIdentityMimeType ), IO_ReadOnly );

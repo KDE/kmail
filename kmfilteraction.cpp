@@ -15,10 +15,10 @@
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmsender.h"
-#include "kmidentity.h"
-#include "identitymanager.h"
-#include "identitycombo.h"
-#include "kfileio.h"
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
+#include <libkdepim/identitycombo.h>
+#include <libkdepim/kfileio.h>
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
 #include "kmmsgbase.h"
@@ -417,15 +417,15 @@ QString KMFilterActionWithCommand::substituteCommandLineArgsFor( KMMessage *aMsg
       aTempFileList.append( tf );
       tempFileName = tf->name();
       if ((*it) == -1)
-        kCStringToFile( aMsg->asString(), tempFileName, //###
+        KPIM::kCStringToFile( aMsg->asString(), tempFileName, //###
                           false, false, false );
       else if (aMsg->numBodyParts() == 0)
-        kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
+        KPIM::kByteArrayToFile( aMsg->bodyDecodedBinary(), tempFileName,
                           false, false, false );
       else {
 	KMMessagePart msgPart;
         aMsg->bodyPart( (*it), &msgPart );
-        kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
+        KPIM::kByteArrayToFile( msgPart.bodyDecodedBinary(), tempFileName,
                           false, false, false );
       }
       tf->close();
@@ -482,7 +482,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   // write message to file
   QString tempFileName = inFile->name();
-  kCStringToFile( aMsg->asString(), tempFileName, //###
+  KPIM::kCStringToFile( aMsg->asString(), tempFileName, //###
 		  false, false, false );
   inFile->close();
 
@@ -502,7 +502,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   if ( !shProc.normalExit() || shProc.exitStatus() != 0 ) {
     // eat the output to avoid acummulation for following processes
-    if ( withOutput ) 
+    if ( withOutput )
       kmkernel->getCollectedStdOut( &shProc );
     return ErrorButGoOn;
   }
@@ -512,7 +512,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
     QByteArray msgText = kmkernel->getCollectedStdOut( &shProc );
 
     if ( !msgText.isEmpty() ) {
-    /* If the pipe through alters the message, it could very well 
+    /* If the pipe through alters the message, it could very well
        happen that it no longer has a X-UID header afterwards. That is
        unfortunate, as we need to removed the original from the folder
        using that, and look it up in the message. When the (new) message
@@ -703,21 +703,21 @@ KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 
 QWidget * KMFilterActionIdentity::createParamWidget( QWidget * parent ) const
 {
-  IdentityCombo * ic = new IdentityCombo( parent );
+  KPIM::IdentityCombo * ic = new KPIM::IdentityCombo( kmkernel->identityManager(), parent );
   ic->setCurrentIdentity( mParameter );
   return ic;
 }
 
 void KMFilterActionIdentity::applyParamWidgetValue( QWidget * paramWidget )
 {
-  IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
+  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
   assert( ic );
   mParameter = ic->currentIdentity();
 }
 
 void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
 {
-  IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
+  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
   assert( ic );
   ic->setCurrentItem( 0 );
   //ic->setCurrentIdentity( kmkernel->identityManager()->defaultIdentity() );
@@ -725,7 +725,7 @@ void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
 
 void KMFilterActionIdentity::setParamWidgetValue( QWidget * paramWidget ) const
 {
-  IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
+  KPIM::IdentityCombo * ic = dynamic_cast<KPIM::IdentityCombo*>( paramWidget );
   assert( ic );
   ic->setCurrentIdentity( mParameter );
 }
@@ -1592,7 +1592,7 @@ void KMFilterActionExtFilter::processAsync(KMMessage* aMsg) const
 
   // write message to file
   QString tempFileName = inFile->name();
-  kCStringToFile( aMsg->asString(), tempFileName, //###
+  KPIM::kCStringToFile( aMsg->asString(), tempFileName, //###
       false, false, false );
   inFile->close();
 

@@ -34,7 +34,7 @@
 
 #include <klistview.h>
 
-class KMIdentity;
+namespace KPIM { class Identity; }
 class QDropEvent;
 class QDragEvent;
 
@@ -48,22 +48,22 @@ namespace KMail {
   class IdentityListViewItem : public KListViewItem {
   public:
     IdentityListViewItem( IdentityListView * parent,
-			  const KMIdentity & ident );
+			  const KPIM::Identity & ident );
     IdentityListViewItem( IdentityListView * parent, QListViewItem * after,
-			  const KMIdentity & ident );
+			  const KPIM::Identity & ident );
 
     uint uoid() const { return mUOID; }
-    KMIdentity & identity() const;
-    virtual void setIdentity( const KMIdentity & ident );
+    KPIM::Identity & identity() const;
+    virtual void setIdentity( const KPIM::Identity & ident );
     void redisplay();
   private:
-    void init( const KMIdentity & ident );
+    void init( const KPIM::Identity & ident );
 
   protected:
     uint mUOID;
   };
 
-  /** @short A listview for @ref KMIdentity
+  /** @short A listview for @ref KPIM::Identity
       @author Marc Mutz <mutz@kde.org>
   **/
   class IdentityListView : public KListView {

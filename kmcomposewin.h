@@ -68,7 +68,7 @@ class KToolBar;
 class KToggleAction;
 class KSelectColorAction;
 class KURL;
-class IdentityCombo;
+namespace KPIM { class IdentityCombo; }
 class SpellingFilter;
 class  CryptPlugWrapperList;
 class MessageComposer;
@@ -705,7 +705,7 @@ protected:
   QWidget   *mMainWidget;
   QComboBox *mTransport;
   KMail::DictionaryComboBox *mDictionaryCombo;
-  IdentityCombo    *mIdentity;
+  KPIM::IdentityCombo    *mIdentity;
   KMFolderComboBox *mFcc;
   KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc;
   KMLineEditSpell *mEdtSubject;

@@ -13,12 +13,15 @@
 #include "filterlog.h"
 using KMail::FilterLog;
 
+#include <libkdepim/email.h>
+
 #include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
 
 #include <kabc/stdaddressbook.h>
+
 #include <qregexp.h>
 
 #include <mimelib/string.h>
@@ -383,11 +386,11 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
   case FuncIsInAddressbook: {
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
     QStringList addressList =
-      KMMessage::splitEmailAddrList( msgContents.lower() );
+      KPIM::splitEmailAddrList( msgContents.lower() );
     for( QStringList::ConstIterator it = addressList.begin();
          ( it != addressList.end() );
          ++it ) {
-      if ( !stdAb->findByEmail( KMMessage::getEmailAddr( *it ) ).isEmpty() )
+      if ( !stdAb->findByEmail( KPIM::getEmailAddr( *it ) ).isEmpty() )
         return true;
     }
     return false;
@@ -396,11 +399,11 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
   case FuncIsNotInAddressbook: {
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
     QStringList addressList =
-      KMMessage::splitEmailAddrList( msgContents.lower() );
+      KPIM::splitEmailAddrList( msgContents.lower() );
     for( QStringList::ConstIterator it = addressList.begin();
          ( it != addressList.end() );
          ++it ) {
-      if ( stdAb->findByEmail( KMMessage::getEmailAddr( *it ) ).isEmpty() )
+      if ( stdAb->findByEmail( KPIM::getEmailAddr( *it ) ).isEmpty() )
         return true;
     }
     return false;
@@ -408,12 +411,12 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
   case FuncIsInCategory: {
     QString category = contents();
-    QStringList addressList =  KMMessage::splitEmailAddrList( msgContents.lower() );
+    QStringList addressList =  KPIM::splitEmailAddrList( msgContents.lower() );
     KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
 
     for( QStringList::ConstIterator it = addressList.begin();
       it != addressList.end(); ++it ) {
-        KABC::Addressee::List addresses = stdAb->findByEmail( KMMessage::getEmailAddr( *it ) );
+        KABC::Addressee::List addresses = stdAb->findByEmail( KPIM::getEmailAddr( *it ) );
 
           for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )
               if ( (*itAd).hasCategory(category) )
@@ -425,12 +428,12 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
 
     case FuncIsNotInCategory: {
       QString category = contents();
-      QStringList addressList =  KMMessage::splitEmailAddrList( msgContents.lower() );
+      QStringList addressList =  KPIM::splitEmailAddrList( msgContents.lower() );
       KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
 
       for( QStringList::ConstIterator it = addressList.begin();
         it != addressList.end(); ++it ) {
-          KABC::Addressee::List addresses = stdAb->findByEmail( KMMessage::getEmailAddr( *it ) );
+          KABC::Addressee::List addresses = stdAb->findByEmail( KPIM::getEmailAddr( *it ) );
 
             for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )
                 if ( (*itAd).hasCategory(category) )

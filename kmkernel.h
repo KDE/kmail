@@ -35,10 +35,12 @@ class KMAcctMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
 class KMSender;
-class KMIdentity;
+namespace KPIM {
+  class Identity;
+  class KPIM::IdentityManager;
+}
 class KMKernel;
 class KMMsgDict;
-class IdentityManager;
 class KProcess;
 class KProgressDialog;
 class ConfigureDialog;
@@ -171,7 +173,7 @@ public:
 
   KPIM::ThreadWeaver::Weaver *weaver() { return the_weaver; }
   /** return the pointer to the identity manager */
-  IdentityManager *identityManager();
+  KPIM::IdentityManager *identityManager();
 
   JobScheduler* jobScheduler() { return mJobScheduler; }
 
@@ -238,6 +240,7 @@ public slots:
 
       See KMFilterActionWithCommand and derived classes for example
       usages.
+      ### consider using KPIM::ProcessCollector instead
   */
   void slotCollectStdOut(KProcess*,char*,int);
   /** Same as @ref slotCollectStdOut, but for stderr. */
@@ -285,7 +288,7 @@ private:
   KMFilterMgr *the_filterMgr;
   KMFilterMgr *the_popFilterMgr;
   KMFilterActionDict *the_filterActionDict;
-  mutable IdentityManager *mIdentityManager;
+  mutable KPIM::IdentityManager *mIdentityManager;
   KMSender *the_msgSender;
   KMMsgDict *the_msgDict;
   KMMsgIndex *the_msgIndex;

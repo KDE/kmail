@@ -279,7 +279,7 @@ public:
 
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
-      searches with @ref IdentityManager::identityForAddress()
+      searches with @ref KPIM::IdentityManager::identityForAddress()
       and if that fails queries the @ref #parent() folder for a default.
    **/
   uint identityUoid() const;
@@ -666,12 +666,6 @@ public:
    */
   static QString stripEmailAddr(const QString& emailAddr);
 
-  /** Return email address from string. Examples:
-   * "Stefan Taferner <taferner@kde.org>" returns "taferner@kde.org"
-   * "joe@nowhere.com" returns "joe@nowhere.com". Note that this only
-   * returns the first address. */
-  static QCString getEmailAddr(const QString& emailAddr);
-
   /** Quotes the following characters which have a special meaning in HTML:
    * '<'  '>'  '&'  '"'. Additionally '\n' is converted to "<br />" if
    * @p removeLineBreaks is false. If @p removeLineBreaks is true, then
@@ -686,9 +680,6 @@ public:
    */
   static QString emailAddrAsAnchor(const QString& emailAddr,
 					 bool stripped=TRUE);
-
-  /** Split a comma separated list of email addresses. */
-  static QStringList splitEmailAddrList(const QString&);
 
   /** Strips an address from an address list. This is for example used
       when replying to all.

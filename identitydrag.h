@@ -32,19 +32,19 @@
 #ifndef __KMAIL_IDENTITYDRAG_H__
 #define __KMAIL_IDENTITYDRAG_H__
 
-#include "kmidentity.h"
+#include <libkdepim/identity.h>
 
 #include <qdragobject.h> // is a qobject and a qmimesource
 
 namespace KMail {
 
-  /** @short A @ref QDragObject for @ref KMIdentity
+  /** @short A @ref QDragObject for @ref KPIM::Identity
       @author Marc Mutz <mutz@kde.org>
   **/
   class IdentityDrag : public QDragObject {
     Q_OBJECT
   public:
-    IdentityDrag( const KMIdentity & ident,
+    IdentityDrag( const KPIM::Identity & ident,
 		  QWidget * dragSource=0, const char * name=0 );
 
   public:
@@ -54,10 +54,10 @@ namespace KMail {
     QByteArray encodedData( const char * mimetype ) const; // dto.
 
     static bool canDecode( const QMimeSource * e );
-    static bool decode( const QMimeSource * e, KMIdentity & ident );
+    static bool decode( const QMimeSource * e, KPIM::Identity & ident );
 
   protected:
-    KMIdentity mIdent;
+    KPIM::Identity mIdent;
   };
 
 } // namespace KMail

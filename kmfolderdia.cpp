@@ -35,7 +35,7 @@
 #include "kmfolderdia.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
-#include "identitycombo.h"
+#include <libkdepim/identitycombo.h>
 #include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmfolder.h"
@@ -453,7 +453,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
 
   label = new QLabel( i18n("&Sender:"), idGroup );
   idLayout->addWidget( label );
-  mIdentityComboBox = new IdentityCombo( idGroup );
+  mIdentityComboBox = new KPIM::IdentityCombo( kmkernel->identityManager(), idGroup );
   label->setBuddy( mIdentityComboBox );
   idLayout->addWidget( mIdentityComboBox, 3 );
 

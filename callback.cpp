@@ -31,10 +31,11 @@
 */
 
 #include "callback.h"
-#include "kmidentity.h"
 #include "kmkernel.h"
 #include "kmmessage.h"
-#include "identitymanager.h"
+#include <libkdepim/email.h>
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 
@@ -98,14 +99,14 @@ QString Callback::receiver() const
 
   mReceiverSet = true;
 
-  KMIdentity ident =
+  KPIM::Identity ident =
     kmkernel->identityManager()->identityForAddress( mMsg->to() );
 
-  if( ident != KMIdentity::null ) {
+  if( ident != KPIM::Identity::null ) {
     // That was easy
     mReceiver = ident.emailAddr();
   } else {
-    QStringList addrs = KMMessage::splitEmailAddrList( mMsg->to() );
+    QStringList addrs = KPIM::splitEmailAddrList( mMsg->to() );
     if( addrs.count() == 1 )
       // Don't ask the user to choose between 1 items
       mReceiver = addrs[0];

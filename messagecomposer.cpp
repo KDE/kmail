@@ -40,11 +40,12 @@
 #include "kcursorsaver.h"
 #include "kmkernel.h"
 #include "kmsender.h"
-#include "kmidentity.h"
 #include "kmfolder.h"
-#include "identitymanager.h"
-#include "identitycombo.h"
 #include "kmfoldercombobox.h"
+#include <libkdepim/identity.h>
+#include <libkdepim/identitymanager.h>
+#include <libkdepim/identitycombo.h>
+#include <libkdepim/email.h>
 
 #include <kpgpblock.h>
 #include <mimelib/mimepp.h>
@@ -328,7 +329,7 @@ void MessageComposer::readFromComposeWin()
   mMsg->setReplyTo(mComposeWin->replyTo());
   mMsg->setBcc(mComposeWin->bcc());
 
-  const KMIdentity & id
+  const KPIM::Identity & id
     = kmkernel->identityManager()->identityForUoid( mComposeWin->mIdentity->currentIdentity() );
 
   KMFolder *f = mComposeWin->mFcc->getFolder();
@@ -469,7 +470,7 @@ void MessageComposer::adjustCryptFlags()
           _to += ",";
         _to += mBcc.simplifyWhiteSpace();
       }
-      QStringList allRecipients = KMMessage::splitEmailAddrList(_to);
+      QStringList allRecipients = KPIM::splitEmailAddrList(_to);
       // now check if encrypting to these recipients is possible and desired
       Kpgp::Module *pgp = Kpgp::Module::getKpgp();
       int status = pgp->encryptionPossible( allRecipients );
@@ -1098,11 +1099,11 @@ void MessageComposer::continueComposeMessage( KMMessage& theMessage,
       _to += ",";
     _to += mComposeWin->cc().simplifyWhiteSpace();
   }
-  QStringList recipientsWithoutBcc = KMMessage::splitEmailAddrList(_to);
+  QStringList recipientsWithoutBcc = KPIM::splitEmailAddrList(_to);
 
   // run encrypting(s) for Bcc recipient(s)
   if( doEncrypt && !ignoreBcc && !theMessage.bcc().isEmpty() ) {
-    QStringList bccRecips = KMMessage::splitEmailAddrList( theMessage.bcc() );
+    QStringList bccRecips = KPIM::splitEmailAddrList( theMessage.bcc() );
     for( QStringList::ConstIterator it = bccRecips.begin();
          it != bccRecips.end(); ++it ) {
       QStringList tmpRecips( recipientsWithoutBcc );
@@ -2047,7 +2048,7 @@ void MessageComposer::pgpSignedMsg( QCString cText,
       // TODO: ASync calls?
 
       if( bSign && mSelectedCryptPlug->warnNoCertificate() &&
-          !mSelectedCryptPlug->isEmailInCertificate( QString( KMMessage::getEmailAddr( mComposeWin->from() ) ).utf8(), mSignCertFingerprint ) )  {
+          !mSelectedCryptPlug->isEmailInCertificate( QString( KPIM::getEmailAddr( mComposeWin->from() ) ).utf8(), mSignCertFingerprint ) )  {
         QString txt1 = i18n( "The certificate you want to use for signing does not contain your sender email address.<br>This means that it is not possible for the recipients to check whether the email really came from you." );
         int ret = KMessageBox::warningYesNo( mComposeWin,
                                              i18n( "<qt><p>%1</p>"

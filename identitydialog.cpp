@@ -263,7 +263,7 @@ namespace KMail {
     return true;
   }
 
-  void IdentityDialog::setIdentity( KMIdentity & ident ) {
+  void IdentityDialog::setIdentity( KPIM::Identity & ident ) {
 
     setCaption( i18n("Edit Identity \"%1\"").arg( ident.identityName() ) );
 
@@ -307,7 +307,7 @@ namespace KMail {
     mSignatureConfigurator->setSignature( ident.signature() );
   }
 
-  void IdentityDialog::updateIdentity( KMIdentity & ident ) {
+  void IdentityDialog::updateIdentity( KPIM::Identity & ident ) {
     // "General" tab:
     ident.setFullName( mNameEdit->text() );
     ident.setOrganization( mOrganizationEdit->text() );

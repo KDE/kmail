@@ -32,7 +32,8 @@
 #ifndef __KMAIL_CSSHELPER_H__
 #define __KMAIL_CSSHELPER_H__
 
-#include "configmanager.h"
+#include <libkdepim/configmanager.h>
+using KPIM::ConfigManager;
 
 #include <qpaintdevicemetrics.h>
 

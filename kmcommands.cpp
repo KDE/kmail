@@ -42,6 +42,7 @@
 
 #include <qtextcodec.h>
 
+#include <libkdepim/email.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
@@ -450,7 +451,7 @@ KMMailtoOpenAddrBookCommand::KMMailtoOpenAddrBookCommand( const KURL &url,
 void KMMailtoOpenAddrBookCommand::execute()
 {
   QString addr = KMMessage::decodeMailtoUrl( mUrl.path() );
-  KAddrBookExternal::openEmail( KMMessage::getEmailAddr(addr), addr ,
+  KAddrBookExternal::openEmail( KPIM::getEmailAddr(addr), addr ,
                                  parentWidget() );
 }
 
@@ -1914,10 +1915,10 @@ void KMSaveAttachmentsCommand::slotSaveAll()
         continue;
       }
       curUrl.setFileName( s );
-    } else 
+    } else
       curUrl = url;
 
-    if ( !curUrl.isEmpty() ) 
+    if ( !curUrl.isEmpty() )
     {
       if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) )
       {
@@ -2012,7 +2013,7 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const KURL& url )
   {
     // save directly
     file.setName( url.path() );
-    if ( !file.open( IO_WriteOnly ) ) 
+    if ( !file.open( IO_WriteOnly ) )
     {
       KMessageBox::error( parentWidget(),
           i18n( "%2 is detailed error description",
@@ -2029,7 +2030,7 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const KURL& url )
     // tmp file for upload
     ds.setDevice( tf.file() );
   }
-  
+
   ds.writeRawBytes( data.data(), data.size() );
   if ( !url.isLocalFile() )
   {
