@@ -183,10 +183,11 @@ void SearchJob::slotSearchFolderComplete()
     // search for the serial number of the UIDs
     // data contains all found uids separated by blank
     QValueList<Q_UINT32> serNums;
+    QStringList searchHits = QStringList::split( " ", mImapSearchData );
     for ( int i = 0; i < mFolder->count(); ++i )
     {
       KMMsgBase * base = mFolder->getMsgBase( i );
-      if ( mImapSearchData.contains( QString::number(base->UID()) ) )
+      if ( searchHits.contains( QString::number( base->UID() ) ) )
       {
         Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum( mFolder->folder(), i );
         serNums.append( serNum );
