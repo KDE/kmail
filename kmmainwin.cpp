@@ -633,22 +633,6 @@ void KMMainWin::createWidgets(void)
    i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
 
-  new KAction( i18n("Expand Thread"), Key_Period, this,
-		   SLOT(slotExpandThread()),
-		   actionCollection(), "expand_thread" );
-
-  new KAction( i18n("Collapse Thread"), Key_Comma, this,
-		   SLOT(slotCollapseThread()),
-		   actionCollection(), "collapse_thread" );
-
-  new KAction( i18n("Expand All Threads"), CTRL+Key_Period, this,
-		   SLOT(slotExpandAllThreads()),
-		   actionCollection(), "expand_all_threads" );
-
-  new KAction( i18n("Collapse All Threads"), CTRL+Key_Comma, this,
-		   SLOT(slotCollapseAllThreads()),
-		   actionCollection(), "collapse_all_threads" );
-
   new KAction( i18n( "Move to the Next Unread Text" ),
                Key_Space, this,  SLOT( slotReadOn() ),
                actionCollection(), "read_on" );
@@ -2680,6 +2664,30 @@ void KMMainWin::setupMenuBar()
 	     "total number of messages in folders.");
   totalColumnToggle->setToolTip( msg );
   totalColumnToggle->setChecked( mFolderTree->isTotalActive() );
+
+  (void)new KAction( KGuiItem( i18n("View->","Expand Thread"), QString::null,
+			       i18n("Expand the current thread") ),
+		     Key_Period, this,
+		     SLOT(slotExpandThread()),
+		     actionCollection(), "expand_thread" );
+
+  (void)new KAction( KGuiItem( i18n("View->","Collapse Thread"), QString::null,
+			       i18n("Collapse the current thread") ),
+		     Key_Comma, this,
+		     SLOT(slotCollapseThread()),
+		     actionCollection(), "collapse_thread" );
+
+  (void)new KAction( KGuiItem( i18n("View->","Expand all Threads"), QString::null,
+			       i18n("Expand all threads in the current folder") ),
+		     CTRL+Key_Period, this,
+		     SLOT(slotExpandAllThreads()),
+		     actionCollection(), "expand_all_threads" );
+
+  (void)new KAction( KGuiItem( i18n("View->","Collapse all Threads"), QString::null,
+			       i18n("Collapse all threads in the current folder") ),
+		     CTRL+Key_Comma, this,
+		     SLOT(slotCollapseAllThreads()),
+		     actionCollection(), "collapse_all_threads" );
 
   toggleFixFontAction = new KToggleAction( i18n("Fixed Font &Widths"),
 			0, this, SLOT(slotToggleFixedFont()),
