@@ -52,7 +52,7 @@
       <entry name="VerboseNewMailNotification" type="Bool">
         <default>true</default>
         <label>Verbose new mail notification</label>
-        <whatsthis>If this option is enabled then for each folder the number "
+        <whatsthis>"If this option is enabled then for each folder the number "
           "of newly arrived messages is shown in the new mail notification; "
           "otherwise, you will only get a simple 'New mail arrived' message."
           "</whatsthis>
@@ -98,7 +98,7 @@
       <entry name="TheIMAPResourceFolderParent" type="String">
         <default>inbox</default>
         <whatsthis>&lt;p&gt;This chooses the parent of the IMAP resource "
-          "folders.&lt;p&gt;&lt;/p&gt;By default, the Kolab server sets "
+          "folders.&lt;/p&gt;&lt;p&gt;By default, the Kolab server sets "
           "the IMAP inbox to be the parent.&lt;/p&gt;</whatsthis>
       </entry>
 
