@@ -639,6 +639,11 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
       mTransportInfo->host = transport.mid(7);
     }
   }
+  // strip off a trailing "/"
+  int len = mTransportInfo->host.length();
+  if (len != 0 && mTransportInfo->host[len-1] == '/')
+    mTransportInfo->host.truncate(len-1);
+
 
   if (mTransportInfo->type == "sendmail")
     return new KMSendSendmail(this);
