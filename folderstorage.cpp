@@ -434,10 +434,6 @@ KMMessage* FolderStorage::getMsg(int idx)
   KMMsgBase* mb = getMsgBase(idx);
   if (!mb) return 0;
 
-#if 0
-  if (mb->isMessage()) return ((KMMessage*)mb);
-  return readMsg(idx);
-#else
   KMMessage *msg = 0;
   bool undo = mb->enableUndo();
   if (mb->isMessage()) {
@@ -452,9 +448,12 @@ KMMessage* FolderStorage::getMsg(int idx)
 	  mCompactable = FALSE; // Don't compact
 	  writeConfig();
       }
+
   }
   msg->setEnableUndo(undo);
 
+  // Can't happen. Either isMessage and we had a sernum, or readMsg gives us one
+  // (via insertion into mMsgList).
   if (msg->getMsgSerNum() == 0) {
     msg->setMsgSerNum(kmkernel->msgDict()->insert(0, msg, idx));
     kdDebug(5006) << "Serial number generated for message in folder "
@@ -462,7 +461,6 @@ KMMessage* FolderStorage::getMsg(int idx)
   }
   msg->setComplete( true );
   return msg;
-#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -473,6 +471,8 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
 
   KMMsgBase* mb = getMsgBase(idx);
   if (!mb) return 0;
+
+  unsigned long sernum = mb->getMsgSerNum();
 
   KMMessage *msg = 0;
   bool undo = mb->enableUndo();
@@ -485,9 +485,7 @@ KMMessage* FolderStorage::readTemporaryMsg(int idx)
     msg->fromDwString(getDwString(idx));
   }
   msg->setEnableUndo(undo);
-  if (msg->getMsgSerNum() == 0) {
-    msg->setMsgSerNum(kmkernel->msgDict()->insert(0, msg, idx));
-  }
+  msg->setMsgSerNum(sernum);
   msg->setComplete( true );
   return msg;
 }
