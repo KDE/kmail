@@ -230,8 +230,7 @@ protected slots:
 
   void autoScroll();
 
-  /** right mouse button */
-  void rightButtonPressed( QListViewItem *, const QPoint &, int);
+  void slotContextMenuRequested( QListViewItem *, const QPoint & );
 
   /** Fires a new-mail-check of the account that is accociated with currentItem */
   void slotCheckMail();

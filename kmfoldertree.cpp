@@ -296,8 +296,8 @@ void KMFolderTree::connectSignals()
   connect( &autoscroll_timer, SIGNAL( timeout() ),
 	   this, SLOT( autoScroll() ) );
 
-  connect( this, SIGNAL( rightButtonPressed( QListViewItem*, const QPoint &, int)),
-	   this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int)));
+  connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
+	   this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
 
   connect( this, SIGNAL( expanded( QListViewItem* ) ),
            this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
@@ -931,8 +931,9 @@ QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
 }
 
 //-----------------------------------------------------------------------------
-// Handle RMB press, show pop up menu
-void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
+// show context menu
+void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
+                                             const QPoint &p )
 {
   if (!lvi)
     return;
@@ -942,6 +943,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if (!mMainWidget) return; // safe bet
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(lvi);
+  if ( fti != mLastItem )
+    doFolderSelected( fti );
 
   if (!fti )
     return;
@@ -1047,6 +1050,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   folderMenu->exec (p, 0);
   triggerUpdate();
   delete folderMenu;
+  folderMenu = 0;
 }
 
 //-----------------------------------------------------------------------------
