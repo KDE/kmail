@@ -229,26 +229,21 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
   if (mBody.isEmpty()) return QByteArray();
   QByteArray result;
 
-  switch (cte())
-  {
-  case DwMime::kCteQuotedPrintable:
-  case DwMime::kCteBase64:
+  if ( const Codec * codec = Codec::codecForName( cteStr() ) )
+    // Nice: we can use the convenience function :-)
+    result = codec->decode( mBody );
+  else
+    switch (cte())
     {
-      Codec * codec = Codec::codecForName( cteStr() );
-      assert( codec );
-      // Nice: we can use the convenience function :-)
-      result = codec->decode( mBody );
+    default:
+      kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
+		      << "'. Assuming binary." << endl;
+    case DwMime::kCte7bit:
+    case DwMime::kCte8bit:
+    case DwMime::kCteBinary:
+      result.duplicate(mBody);
       break;
     }
-  default:
-    kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
-		    << "'. Assuming binary." << endl;
-  case DwMime::kCte7bit:
-  case DwMime::kCte8bit:
-  case DwMime::kCteBinary:
-    result.duplicate(mBody);
-    break;
-  }
 
   assert( mBodyDecodedSize < 0
 	  || (unsigned int)mBodyDecodedSize == result.size() );
@@ -264,35 +259,30 @@ QCString KMMessagePart::bodyDecoded(void) const
   QCString result;
   int len;
 
-  switch (cte())
-  {
-  case DwMime::kCteQuotedPrintable:
-  case DwMime::kCteBase64:
+  if ( const Codec * codec = Codec::codecForName( cteStr() ) ) {
+    // We can't use the codec convenience functions, since we must
+    // return a QCString, not a QByteArray:
+    int bufSize = codec->maxDecodedSizeFor( mBody.size() ) + 1; // trailing NUL
+    result.resize( bufSize );
+    QByteArray::ConstIterator iit = mBody.begin();
+    QCString::Iterator oit = result.begin();
+    QCString::ConstIterator oend = result.begin() + bufSize;
+    if ( !codec->decode( iit, mBody.end(), oit, oend ) )
+      kdWarning(5006) << codec->name()
+		      << " lies about it's maxDecodedSizeFor( "
+		      << mBody.size() << " ). Result truncated!" << endl;
+    len = oit - result.begin();
+    result.truncate( len ); // adds trailing NUL
+    result = result.replace( "\r\n", "\n" );
+  } else
+    switch (cte())
     {
-      Codec * codec = Codec::codecForName( cteStr() );
-      assert( codec );
-      // We can't use the codec convenience functions, since we must
-      // return a QCString, not a QByteArray:
-      int bufSize = codec->maxDecodedSizeFor( mBody.size() ) + 1; // trailing NUL
-      result.resize( bufSize );
-      QByteArray::ConstIterator iit = mBody.begin();
-      QCString::Iterator oit = result.begin();
-      QCString::ConstIterator oend = result.begin() + bufSize;
-      if ( !codec->decode( iit, mBody.end(), oit, oend ) )
-	kdWarning(5006) << codec->name()
-			<< " lies about it's maxDecodedSizeFor( "
-			<< mBody.size() << " ). Result truncated!" << endl;
-      len = oit - result.begin();
-      result.truncate( len ); // adds trailing NUL
-      result = result.replace( "\r\n", "\n" );
-      break;
-    }
-  default:
-    kdWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
-		    << "'. Assuming binary." << endl;
-  case DwMime::kCte7bit:
-  case DwMime::kCte8bit:
-  case DwMime::kCteBinary:
+    default:
+      kdWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
+		      << "'. Assuming binary." << endl;
+    case DwMime::kCte7bit:
+    case DwMime::kCte8bit:
+    case DwMime::kCteBinary:
     {
       len = mBody.size();
       result.resize( len+1 /* trailing NUL */ );
