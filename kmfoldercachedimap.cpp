@@ -1524,7 +1524,8 @@ void KMFolderCachedImap::resetSyncState()
   // Don't use newState here, it would revert to mProgress (which is < current value when listing messages)
   ProgressItem *progressItem = mAccount->mailCheckProgressItem();
   QString str = i18n("Aborted");
-  progressItem->setStatus( str );
+  if (progressItem)
+     progressItem->setStatus( str );
   emit statusMsg( str );
 }
 
