@@ -37,6 +37,7 @@ KMFilter::KMFilter( KConfig* aConfig, bool popFilter )
     bStopProcessingHere = true;
     bConfigureShortcut = false;
     bConfigureToolbar = false;
+    bAutoNaming = true;
   }
 }
 
@@ -185,6 +186,7 @@ void KMFilter::readConfig(KConfig* config)
     bConfigureToolbar = config->readBoolEntry("ConfigureToolbar", false);
     bConfigureToolbar = bConfigureToolbar && bConfigureShortcut;
     mIcon = config->readEntry( "Icon", "gear" );
+    bAutoNaming = config->readBoolEntry("AutomaticName", true);
 
     int i, numActions;
     QString actName, argsName;
@@ -257,6 +259,7 @@ void KMFilter::writeConfig(KConfig* config) const
     config->writeEntry( "ConfigureShortcut", bConfigureShortcut );
     config->writeEntry( "ConfigureToolbar", bConfigureToolbar );
     config->writeEntry( "Icon", mIcon );
+    config->writeEntry( "AutomaticName", bAutoNaming );
 
     QString key;
     int i;

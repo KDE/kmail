@@ -32,6 +32,7 @@
 #include <qcheckbox.h>
 #include <qpushbutton.h>
 #include <qhbox.h>
+#include <qvalidator.h>
 
 // other headers:
 #include <assert.h>
@@ -502,7 +503,11 @@ void KMFilterListBox::slotUpdateFilterName()
   QString shouldBeName = p->name();
   QString displayedName = mListBox->text( mIdxSelItem );
 
-  if ( shouldBeName.stripWhiteSpace().isEmpty() || shouldBeName[0] == '<' ) {
+  if ( shouldBeName.stripWhiteSpace().isEmpty() ) {
+    mFilterList.at(mIdxSelItem)->setAutoNaming( true );
+  }
+  
+  if ( mFilterList.at(mIdxSelItem)->isAutoNaming() ) {
     // auto-naming of patterns
     if ( p->first() && !p->first()->field().stripWhiteSpace().isEmpty() )
       shouldBeName = QString( "<%1>: %2" ).arg( p->first()->field() ).arg( p->first()->contents() );
@@ -702,22 +707,29 @@ void KMFilterListBox::slotRename()
   // never called when no filter is selected.
   assert( filter );
 
+  // allow empty names - those will turn auto-naming on again
+  QValidator *validator = new QRegExpValidator( QRegExp( ".*" ), 0 );
   QString newName = KInputDialog::getText
     (
      i18n("Rename Filter"),
-     i18n("Rename filter \"%1\" to:").arg( filter->pattern()->name() ) /*label*/,
+     i18n("Rename filter \"%1\" to:\n(leave the field empty for automatic naming)")
+        .arg( filter->pattern()->name() ) /*label*/,
      filter->pattern()->name() /* initial value */,
-     &okPressed, topLevelWidget()
+     &okPressed, topLevelWidget(), 0, validator
      );
+  delete validator;
 
   if ( !okPressed ) return;
 
-  if ( newName.isEmpty() )
+  if ( newName.isEmpty() ) {
     // bait for slotUpdateFilterName to
     // use automatic naming again.
     filter->pattern()->setName( "<>" );
-  else
+    filter->setAutoNaming( true );
+  } else {
     filter->pattern()->setName( newName );
+    filter->setAutoNaming( false );
+  }
 
   slotUpdateFilterName();
 }

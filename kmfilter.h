@@ -207,10 +207,23 @@ public:
 #ifndef NDEBUG
   const QString asString() const;
 #endif
+
   /** No descriptions */
   bool isPopFilter() const {
     return bPopFilter;
   }
+
+  /** Set the mode for using automatic naming for the filter.
+      If the feature is enabled, the name is derived from the 
+      first filter rule.
+  */
+  void setAutoNaming( bool useAutomaticNames ) { 
+    bAutoNaming = useAutomaticNames;
+  }
+
+  /** @return Tells, if an automatic name is used for the filter
+  */
+  bool isAutoNaming() const { return bAutoNaming; }
 
 private:
   KMSearchPattern mPattern;
@@ -224,6 +237,7 @@ private:
   bool bStopProcessingHere : 1;
   bool bConfigureShortcut : 1;
   bool bConfigureToolbar : 1;
+  bool bAutoNaming : 1;
 };
 
 #endif /*kmfilter_h*/
