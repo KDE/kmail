@@ -793,9 +793,6 @@ KMMessage* KMMessage::createRedirect(void)
   QString str = "";
   int i;
 
-  msg->setReplyTo(replyTo());
-  msg->setFrom(replyTo());
-
   str = asQuotedString(str, "", FALSE, false);
   msg->setBody(str);
   if (numBodyParts() > 0)
@@ -815,12 +812,12 @@ KMMessage* KMMessage::createRedirect(void)
 	msg->addBodyPart(&msgPart);
       }
     }
-  }
+  }    
 
 #warning TODO: insert sender here
-  QString s_ad = " (redirected)";
-  QString subj = subject() + s_ad;
-  msg->setSubject(subj);
+  msg->setHeaderField("X-KMail-Redirect-From", from());
+  msg->setSubject(subject());
+  msg->setFrom(from());
 #if defined CHARSETS
   msg->setCharset(charset());
 #endif

@@ -169,6 +169,17 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   kernel->outboxFolder()->open();
   aMsg->setStatus(KMMsgStatusQueued);
+
+  // Handle redirections
+  QString f = aMsg->headerField("X-KMail-Redirect-From");
+  if(f.length() > 0) {
+    KMIdentity ident( "unknown" );
+    ident.readConfig();
+
+    aMsg->setFrom(f + QString(" (by way of %1 <%2>)").
+		  arg(ident.fullName()).arg(ident.emailAddr()));
+  }
+
   rc = kernel->outboxFolder()->addMsg(aMsg);
   if (rc)
   {
