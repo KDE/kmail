@@ -20,6 +20,7 @@ using KMail::MessageProperty;
 #include <kmime_codecs.h>
 
 #include <qtextcodec.h>
+#include <qdeepcopy.h>
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -1004,11 +1005,10 @@ void KMMsgBase::setTransferInProgress(bool value, bool force)
 static void swapEndian(QString &str)
 {
   uint len = str.length();
+  str = QDeepCopy<QString>(str);
   QChar *unicode = const_cast<QChar*>( str.unicode() );
-  str.setLength( len ); // detach
-  for (uint i = 0; i < len; i++) {
+  for (uint i = 0; i < len; i++)
     unicode[i] = kmail_swap_16(unicode[i].unicode());
-  }
 }
 
 //-----------------------------------------------------------------------------
