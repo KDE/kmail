@@ -368,10 +368,16 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-  if (mMsgBuf == mMsg)
+  if ((mMsgBuf == mMsg) && // caution mMsgBuf could be a dangling pointer
+      (!mMsgBuf || !mMsg || (mMsgBufMD5 == mMsg->msgIdMD5())))
     return;
 
   mMsgBuf = mMsg;
+  if (mMsgBuf)
+    mMsgBufMD5 = mMsgBuf->msgIdMD5();
+  else
+    mMsgBufMD5 = "";
+
   updateReaderWinTimer.start( delay, TRUE );
 
   if (mMsg) parseMsg();
