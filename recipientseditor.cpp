@@ -169,18 +169,11 @@ RecipientLine::RecipientLine( QWidget *parent )
   connect( mEdit, SIGNAL( leftPressed() ), mCombo, SLOT( setFocus() ) );
   connect( mCombo, SIGNAL( rightPressed() ), mEdit, SLOT( setFocus() ) );
 
-  int height = mEdit->minimumSizeHint().height();
-
-  kdDebug() << "HEIGHT: " << height << endl;
-
   mRemoveButton = new QPushButton( this );
   mRemoveButton->setIconSet( KApplication::reverseLayout() ? SmallIconSet("locationbar_erase") : SmallIconSet( "clear_left" ) );
   topLayout->addWidget( mRemoveButton );
   connect( mRemoveButton, SIGNAL( clicked() ), SLOT( slotPropagateDeletion() ) );
   QToolTip::add( mRemoveButton, i18n("Remove recipient line") );
-
-  mCombo->setFixedHeight( height );
-  mRemoveButton->setFixedHeight( height );
 }
 
 void RecipientLine::slotFocusUp()
