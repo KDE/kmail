@@ -22,7 +22,7 @@
 
 
 //-----------------------------------------------------------------------------
-KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent, 
+KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 		     const char *name) :
   KMHeadersInherited(parent, name, 4)
 {
@@ -148,7 +148,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   }
   else
   {
-    if (mFolder) 
+    if (mFolder)
     {
       mFolder->markNewAsUnread();
       writeFolderConfig();
@@ -160,7 +160,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 		 this, SLOT(msgRemoved(int)));
       disconnect(mFolder, SIGNAL(changed()),
 		 this, SLOT(msgChanged()));
-      disconnect(mFolder, SIGNAL(statusMsg(const char*)), 
+      disconnect(mFolder, SIGNAL(statusMsg(const char*)),
 		 mOwner, SLOT(statusMsg(const char*)));
       mFolder->close();
     }
@@ -169,7 +169,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
     if (mFolder)
     {
-      connect(mFolder, SIGNAL(msgHeaderChanged(int)), 
+      connect(mFolder, SIGNAL(msgHeaderChanged(int)),
 	      this, SLOT(msgHeaderChanged(int)));
       connect(mFolder, SIGNAL(msgAdded(int)),
 	      this, SLOT(msgAdded(int)));
@@ -189,13 +189,13 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     if (mFolder)
     {
       id = findUnread(TRUE, 0, TRUE);
-      if (id >= 0) 
+      if (id >= 0)
       {
 	setCurrentItem(id);
 	msgHeaderChanged(id);
 	makeHeaderVisible();
       }
-      else { 
+      else {
 	  setTopItem(mTopItem);
 	  setCurrentItem(mCurrentItem);
       }
@@ -262,7 +262,7 @@ QString KMHeaders::msgAsLbxString(KMMsgBase* aMsg) const
   subjStr = aMsg->subject();
   if (subjStr.isEmpty()) subjStr = i18n("No Subject");
 
-  result.sprintf("%c\n%.100s\n%.100s\n%.40s", (char)flag, 
+  result.sprintf("%c\n%.100s\n%.100s\n%.40s", (char)flag,
 		 (const char*)fromStr, (const char*)subjStr,
 		 (const char*)aMsg->dateStr());
   return result;
@@ -313,7 +313,7 @@ void KMHeaders::headerClicked(int column)
   if (idx >= 0) cur = (*mFolder)[idx];
   else cur = NULL;
 
-  if (mSortCol == column) 
+  if (mSortCol == column)
   {
     if (!mSortDescending) mSortDescending = TRUE;
     else
@@ -323,7 +323,7 @@ void KMHeaders::headerClicked(int column)
       sortStr = i18n("order of arrival");
     }
   }
-  else 
+  else
   {
     mSortCol = column;
     mSortDescending = FALSE;
@@ -457,7 +457,7 @@ void KMHeaders::resendMsg (int msgId)
   win = new KMComposeWin;
   win->setMsg(newMsg, FALSE);
   win->show();
-  kbp->idle(); 
+  kbp->idle();
 }
 
 
@@ -473,7 +473,7 @@ void KMHeaders::forwardMsg (int msgId)
   kbp->busy();
   win = new KMComposeWin(msg->createForward());
   win->show();
-  kbp->idle(); 
+  kbp->idle();
 }
 
 
@@ -485,11 +485,11 @@ void KMHeaders::replyToMsg (int msgId)
 
   msg = getMsg(msgId);
   if (!msg) return;
-  
+
   kbp->busy();
   win = new KMComposeWin(msg->createReply(FALSE));
   win->show();
-  kbp->idle(); 
+  kbp->idle();
 }
 
 
@@ -505,7 +505,7 @@ void KMHeaders::replyAllToMsg (int msgId)
   kbp->busy();
   win = new KMComposeWin(msg->createReply(TRUE));
   win->show();
-  kbp->idle(); 
+  kbp->idle();
 }
 
 
@@ -624,7 +624,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
     getMsgIndex = -1;
     return NULL;
   }
-  if (msgId >= 0) 
+  if (msgId >= 0)
   {
     getMsgIndex = msgId;
     getMsgMulti = FALSE;
@@ -643,7 +643,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
 	break;
       }
     }
- 
+
     return (getMsgIndex>=0 ? mFolder->getMsg(getMsgIndex) : (KMMessage*)NULL);
   }
 
@@ -653,7 +653,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
   {
     for (getMsgIndex++; getMsgIndex<numRows(); getMsgIndex++)
     {
-      if (itemList[getMsgIndex]->isMarked()) 
+      if (itemList[getMsgIndex]->isMarked())
 	return mFolder->getMsg(getMsgIndex);
     }
   }
@@ -677,8 +677,8 @@ void KMHeaders::prevMessage()
 {
   int idx = currentItem();
 
-  if (idx > 0) setCurrentMsg(idx-1); 
-}  
+  if (idx > 0) setCurrentMsg(idx-1);
+}
 
 
 //-----------------------------------------------------------------------------
@@ -691,7 +691,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
   if (!(cnt=mFolder->count()) > 0) return -1;
 
   if (aStartAt >= 0) idx = aStartAt;
-  else 
+  else
   {
     idx = currentItem();
     if (aDirNext) idx++;
@@ -734,7 +734,7 @@ void KMHeaders::prevUnreadMessage()
 {
   int i = findUnread(FALSE);
   setCurrentMsg(i);
-}  
+}
 
 
 //-----------------------------------------------------------------------------
@@ -773,6 +773,7 @@ void KMHeaders::highlightMessage(int idx, int/*colId*/)
   mOwner->statusMsg("");
   emit selected(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
+  updateItem(idx, FALSE);
   kbp->idle();
 }
 
@@ -786,6 +787,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
   mOwner->statusMsg("");
   emit activated(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
+  updateItem(idx, FALSE);
   kbp->idle();
 }
 
@@ -799,7 +801,7 @@ void KMHeaders::updateMessageList(void)
   bool autoUpd;
 
   clear();
-  if (!mFolder) 
+  if (!mFolder)
   {
     repaint();
     return;
@@ -840,9 +842,9 @@ void KMHeaders::mouseReleaseEvent(QMouseEvent* e)
 {
   if (e->button() == RightButton)
   {
-    if (mMouseCol >= 0) 
+    if (mMouseCol >= 0)
     {
-      
+
     }
   }
   KMHeadersInherited::mouseReleaseEvent(e);
@@ -850,7 +852,7 @@ void KMHeaders::mouseReleaseEvent(QMouseEvent* e)
 
 
 //-----------------------------------------------------------------------------
-bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data, 
+bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
 				  int* size, int* type)
 {
   static KMDragData dd;
