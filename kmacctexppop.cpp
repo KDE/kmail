@@ -48,7 +48,6 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName):
   headerDeleteUids.clear();
   headerDownUids.clear();
   headerLaterUids.clear();
-
 }
 
 
@@ -898,6 +897,14 @@ void KMAcctExpPop::slotResult( KIO::Job* )
     if (interactive) {
       if (headers) { // nothing to be done for headers
         idsOfMsgs.clear();
+      }
+      if (stage = Head && job->error() == KIO::ERR_COULD_NOT_READ)
+      {
+        KMessageBox::error(0, i18n("Sorry, your server doesn't support the "
+          "TOP command. Therefore it is not possible to fetch from big "
+          "mails only the headers first.")); 
+        slotCancel();
+        return;
       }
       // force the dialog to be shown next time the account is checked
       if (!mStorePasswd) mPasswd = "";
