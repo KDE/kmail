@@ -1542,7 +1542,7 @@ bool KMComposeWin::applyChanges(void)
         QString headTxt =
           i18n("Warning: Your S/MIME Plug-in configuration is unsafe.");
         QString encrTxt =
-          i18n("Encrypted messages should be stored in unencrypted form, local saving in encrypted form is not allowed.");
+          i18n("Encrypted messages should be stored in unencrypted form; saving locally in encrypted form is not allowed.");
         QString footTxt =
           i18n("Please correct the wrong settings in KMail's Plug-in configuration pages as soon as possible.");
         QString question =
