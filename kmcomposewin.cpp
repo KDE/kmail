@@ -747,13 +747,13 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("&Mail transport:"),
                     mLblTransport, mTransport, mBtnTransport);
   if (!fromSlot) mFromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
-  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
+  rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("sender address field", "&From:"),
                     mLblFrom, mEdtFrom /*, mBtnFrom */ );
   if (!fromSlot) mReplyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
                     mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
   if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
-  rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("&To:"),
+  rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("recipient address field", "&To:"),
                     mLblTo, mEdtTo, mBtnTo,
                     i18n("Primary Recipients"),
                     i18n("<qt>The email addresses you put "
