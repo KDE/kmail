@@ -89,23 +89,35 @@
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   : KMTopLevelWidget (), MailComposerIface(),
-  mMainWidget(this),
-  mIdentity(&mMainWidget), mTransport(true, &mMainWidget),
-  mEdtFrom(this,false,&mMainWidget), mEdtReplyTo(this,false,&mMainWidget),
-  mEdtTo(this,true,&mMainWidget),  mEdtCc(this,true,&mMainWidget),
-  mEdtBcc(this,true,&mMainWidget),
-  mEdtSubject(this,false,&mMainWidget, "subjectLine"),
-  mLblIdentity(&mMainWidget), mLblTransport(&mMainWidget),
-  mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
-  mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
-  mBtnIdentity(i18n("Sticky"),&mMainWidget),
-  mBtnTransport(i18n("Sticky"),&mMainWidget),
-  mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget),
-  mBtnBcc("...",&mMainWidget),  mBtnFrom("...",&mMainWidget),
-  mBtnReplyTo("...",&mMainWidget),
   mId( id )
 
 {
+  mMainWidget = new QWidget(this);
+  
+  mIdentity = new QComboBox(mMainWidget);
+  mTransport = new QComboBox(true, mMainWidget);
+  mEdtFrom = new KMLineEdit(this,false,mMainWidget);
+  mEdtReplyTo = new KMLineEdit(this,false,mMainWidget);
+  mEdtTo = new KMLineEdit(this,true,mMainWidget);
+  mEdtCc = new KMLineEdit(this,true,mMainWidget);
+  mEdtBcc = new KMLineEdit(this,true,mMainWidget);
+  mEdtSubject = new KMLineEdit(this,false,mMainWidget, "subjectLine");
+  mLblIdentity = new QLabel(mMainWidget); 
+  mLblTransport = new QLabel(mMainWidget);
+  mLblFrom = new QLabel(mMainWidget);
+  mLblReplyTo = new QLabel(mMainWidget);
+  mLblTo = new QLabel(mMainWidget);
+  mLblCc = new QLabel(mMainWidget);
+  mLblBcc = new QLabel(mMainWidget);
+  mLblSubject = new QLabel(mMainWidget);
+  mBtnIdentity = new QCheckBox(i18n("Sticky"),mMainWidget);
+  mBtnTransport = new QCheckBox(i18n("Sticky"),mMainWidget);
+  mBtnTo = new QPushButton("...",mMainWidget); 
+  mBtnCc = new QPushButton("...",mMainWidget);
+  mBtnBcc = new QPushButton("...",mMainWidget);
+  mBtnFrom = new QPushButton("...",mMainWidget);
+  mBtnReplyTo = new QPushButton("...",mMainWidget);
+
   //setWFlags( WType_TopLevel | WStyle_Dialog );
   mDone = false;
   mGrid = NULL;
@@ -114,27 +126,27 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mAtmTempList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
   mFolder = NULL;
-  mEditor = new KMEdit(&mMainWidget, this);
+  mEditor = new KMEdit(mMainWidget, this);
   disableBreaking = false;
   QString tip = i18n("Select email address(es)");
-  QToolTip::add( &mBtnTo, tip );
-  QToolTip::add( &mBtnCc, tip );
-  QToolTip::add( &mBtnReplyTo, tip );
+  QToolTip::add( mBtnTo, tip );
+  QToolTip::add( mBtnCc, tip );
+  QToolTip::add( mBtnReplyTo, tip );
 
   mSpellCheckInProgress=FALSE;
 
   setCaption( i18n("Composer") );
   setMinimumSize(200,200);
 
-  mBtnIdentity.setFocusPolicy(QWidget::NoFocus);
-  mBtnTransport.setFocusPolicy(QWidget::NoFocus);
-  mBtnTo.setFocusPolicy(QWidget::NoFocus);
-  mBtnCc.setFocusPolicy(QWidget::NoFocus);
-  mBtnBcc.setFocusPolicy(QWidget::NoFocus);
-  mBtnFrom.setFocusPolicy(QWidget::NoFocus);
-  mBtnReplyTo.setFocusPolicy(QWidget::NoFocus);
+  mBtnIdentity->setFocusPolicy(QWidget::NoFocus);
+  mBtnTransport->setFocusPolicy(QWidget::NoFocus);
+  mBtnTo->setFocusPolicy(QWidget::NoFocus);
+  mBtnCc->setFocusPolicy(QWidget::NoFocus);
+  mBtnBcc->setFocusPolicy(QWidget::NoFocus);
+  mBtnFrom->setFocusPolicy(QWidget::NoFocus);
+  mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
 
-  mAtmListBox = new QListView(&mMainWidget, "mAtmListBox");
+  mAtmListBox = new QListView(mMainWidget, "mAtmListBox");
   mAtmListBox->setFocusPolicy(QWidget::NoFocus);
   mAtmListBox->addColumn(i18n("Name"), 200);
   mAtmListBox->addColumn(i18n("Size"), 80);
@@ -152,28 +164,28 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   toolbarAction->setChecked(!toolBar()->isHidden());
   statusbarAction->setChecked(!statusBar()->isHidden());
 
-  connect(&mEdtSubject,SIGNAL(textChanged(const QString&)),
+  connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
-  connect(&mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
-  connect(&mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookCc()));
-  connect(&mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
-  connect(&mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
-  connect(&mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
-  connect(&mIdentity,SIGNAL(activated(int)),SLOT(slotIdentityActivated(int)));
+  connect(mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
+  connect(mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookCc()));
+  connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
+  connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
+  connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
+  connect(mIdentity,SIGNAL(activated(int)),SLOT(slotIdentityActivated(int)));
 
-  connect(&mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+  connect(mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-  connect(&mEdtCc,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+  connect(mEdtCc,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-  connect(&mEdtBcc,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+  connect(mEdtBcc,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-  connect(&mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+  connect(mEdtReplyTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-  connect(&mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
+  connect(mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
 
-  mMainWidget.resize(480,510);
-  setCentralWidget(&mMainWidget);
+  mMainWidget->resize(480,510);
+  setCentralWidget(mMainWidget);
   rethinkFields();
 
   if (useExtEditor) {
@@ -188,7 +200,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   if (aMsg)
     setMsg(aMsg);
 
-  mEdtTo.setFocus();
+  mEdtTo->setFocus();
   mDone = true;
 }
 
@@ -331,13 +343,13 @@ void KMComposeWin::readColorConfig(void)
   mPalette.setActive(cgrp);
   mPalette.setInactive(cgrp);
 
-  mEdtTo.setPalette(mPalette);
-  mEdtFrom.setPalette(mPalette);
-  mEdtCc.setPalette(mPalette);
-  mEdtSubject.setPalette(mPalette);
-  mEdtReplyTo.setPalette(mPalette);
-  mEdtBcc.setPalette(mPalette);
-  mTransport.setPalette(mPalette);
+  mEdtTo->setPalette(mPalette);
+  mEdtFrom->setPalette(mPalette);
+  mEdtCc->setPalette(mPalette);
+  mEdtSubject->setPalette(mPalette);
+  mEdtReplyTo->setPalette(mPalette);
+  mEdtBcc->setPalette(mPalette);
+  mTransport->setPalette(mPalette);
   mEditor->setPalette(mPalette);
 }
 
@@ -369,10 +381,10 @@ void KMComposeWin::readConfig(void)
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
   mLineBreak = config->readNumEntry("break-at", 78);
-  mBtnIdentity.setChecked(config->readBoolEntry("sticky-identity", false));
-  if (mBtnIdentity.isChecked())
+  mBtnIdentity->setChecked(config->readBoolEntry("sticky-identity", false));
+  if (mBtnIdentity->isChecked())
     mId = config->readEntry("previous-identity", mId );
-  mBtnTransport.setChecked(config->readBoolEntry("sticky-transport", false));
+  mBtnTransport->setChecked(config->readBoolEntry("sticky-transport", false));
   mTransportHistory = config->readListEntry("transport-history");
   QString currentTransport = config->readEntry("current-transport");
   maxTransportItems = config->readNumEntry("max-transport-items",10);
@@ -386,11 +398,11 @@ void KMComposeWin::readConfig(void)
 
   int mode = config->readNumEntry("Completion Mode",
                                   KGlobalSettings::completionMode() );
-  mEdtFrom.setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtReplyTo.setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtTo.setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtCc.setCompletionMode( (KGlobalSettings::Completion) mode );
-  mEdtBcc.setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtFrom->setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtReplyTo->setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtTo->setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtCc->setCompletionMode( (KGlobalSettings::Completion) mode );
+  mEdtBcc->setCompletionMode( (KGlobalSettings::Completion) mode );
 
   readColorConfig();
 
@@ -427,12 +439,12 @@ void KMComposeWin::readConfig(void)
     else
       mBodyFont = KGlobalSettings::generalFont();
     if (mEditor) mEditor->setFont(mBodyFont);
-    mEdtFrom.setFont(mBodyFont);
-    mEdtReplyTo.setFont(mBodyFont);
-    mEdtTo.setFont(mBodyFont);
-    mEdtCc.setFont(mBodyFont);
-    mEdtBcc.setFont(mBodyFont);
-    mEdtSubject.setFont(mBodyFont);
+    mEdtFrom->setFont(mBodyFont);
+    mEdtReplyTo->setFont(mBodyFont);
+    mEdtTo->setFont(mBodyFont);
+    mEdtCc->setFont(mBodyFont);
+    mEdtBcc->setFont(mBodyFont);
+    mEdtSubject->setFont(mBodyFont);
   }
 
   { // area fo config group "Fonts"
@@ -444,20 +456,20 @@ void KMComposeWin::readConfig(void)
     resize(siz);
   }
 
-  mIdentity.clear();
-  mIdentity.insertStringList( KMIdentity::identities() );
-  for (int i=0; i < mIdentity.count(); ++i)
-    if (mIdentity.text(i) == mId) {
-      mIdentity.setCurrentItem(i);
+  mIdentity->clear();
+  mIdentity->insertStringList( KMIdentity::identities() );
+  for (int i=0; i < mIdentity->count(); ++i)
+    if (mIdentity->text(i) == mId) {
+      mIdentity->setCurrentItem(i);
       break;
     }
 
-  mTransport.insertStringList( KMTransportInfo::availableTransports() );
+  mTransport->insertStringList( KMTransportInfo::availableTransports() );
   while (mTransportHistory.count() > (uint)maxTransportItems)
     mTransportHistory.remove( mTransportHistory.last() );
-  mTransport.insertStringList( mTransportHistory );
-  if (mBtnTransport.isChecked() && !currentTransport.isEmpty())
-    mTransport.setEditText( currentTransport );
+  mTransport->insertStringList( mTransportHistory );
+  if (mBtnTransport->isChecked() && !currentTransport.isEmpty())
+    mTransport->setEditText( currentTransport );
 }
 
 
@@ -471,14 +483,14 @@ void KMComposeWin::writeConfig(void)
     KConfigGroupSaver saver(config, "Composer");
     config->writeEntry("signature", mAutoSign?"auto":"manual");
     config->writeEntry("headers", mShowHeaders);
-    config->writeEntry("sticky-transport", mBtnTransport.isChecked());
-    config->writeEntry("sticky-identity", mBtnIdentity.isChecked());
-    config->writeEntry("previous-identity", mIdentity.currentText() );
-    config->writeEntry("current-transport", mTransport.currentText());
-    mTransportHistory.remove(mTransport.currentText());
+    config->writeEntry("sticky-transport", mBtnTransport->isChecked());
+    config->writeEntry("sticky-identity", mBtnIdentity->isChecked());
+    config->writeEntry("previous-identity", mIdentity->currentText() );
+    config->writeEntry("current-transport", mTransport->currentText());
+    mTransportHistory.remove(mTransport->currentText());
     if (KMTransportInfo::availableTransports().findIndex(mTransport
-      .currentText()) == -1)
-        mTransportHistory.prepend(mTransport.currentText());
+      ->currentText()) == -1)
+        mTransportHistory.prepend(mTransport->currentText());
     config->writeEntry("transport-history", mTransportHistory );
   }
 
@@ -598,7 +610,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   numRows = mNumHeaders + 2;
 
   if (mGrid) delete mGrid;
-  mGrid = new QGridLayout(&mMainWidget, numRows, 3, 4, 4);
+  mGrid = new QGridLayout(mMainWidget, numRows, 3, 4, 4);
   mGrid->setColStretch(0, 1);
   mGrid->setColStretch(1, 100);
   mGrid->setColStretch(2, 1);
@@ -611,28 +623,28 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
   if (!fromSlot) identityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
-		    &mLblIdentity, &mIdentity, &mBtnIdentity);
+		    mLblIdentity, mIdentity, mBtnIdentity);
   if (!fromSlot) transportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l Transport:"),
-		    &mLblTransport, &mTransport, &mBtnTransport);
+		    mLblTransport, mTransport, mBtnTransport);
   if (!fromSlot) fromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("Fro&m:"),
-		    &mLblFrom, &mEdtFrom, &mBtnFrom);
+		    mLblFrom, mEdtFrom, mBtnFrom);
   if (!fromSlot) replyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
-		    &mLblReplyTo, &mEdtReplyTo, &mBtnReplyTo);
+		    mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
   if (!fromSlot) toAction->setChecked(abs(mShowHeaders)&HDR_TO);
   rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("&To:"),
-		    &mLblTo, &mEdtTo, &mBtnTo);
+		    mLblTo, mEdtTo, mBtnTo);
   if (!fromSlot) ccAction->setChecked(abs(mShowHeaders)&HDR_CC);
   rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&Cc:"),
-		    &mLblCc, &mEdtCc, &mBtnCc);
+		    mLblCc, mEdtCc, mBtnCc);
   if (!fromSlot) bccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Bcc:"),
-		    &mLblBcc, &mEdtBcc, &mBtnBcc);
+		    mLblBcc, mEdtBcc, mBtnBcc);
   if (!fromSlot) subjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
-		    &mLblSubject, &mEdtSubject);
+		    mLblSubject, mEdtSubject);
   assert(row<=mNumHeaders);
 
   mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
@@ -1016,25 +1028,25 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     }
   mMsg = newMsg;
 
-  mEdtTo.setText(mMsg->to());
-  mEdtFrom.setText(mMsg->from());
-  mEdtCc.setText(mMsg->cc());
-  mEdtSubject.setText(mMsg->subject());
-  mEdtReplyTo.setText(mMsg->replyTo());
-  mEdtBcc.setText(mMsg->bcc());
+  mEdtTo->setText(mMsg->to());
+  mEdtFrom->setText(mMsg->from());
+  mEdtCc->setText(mMsg->cc());
+  mEdtSubject->setText(mMsg->subject());
+  mEdtReplyTo->setText(mMsg->replyTo());
+  mEdtBcc->setText(mMsg->bcc());
 
-  if (!mBtnIdentity.isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
+  if (!mBtnIdentity->isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
     mId = newMsg->headerField("X-KMail-Identity");
 
-  for (int i=0; i < mIdentity.count(); ++i)
-    if (mIdentity.text(i) == mId) {
-      mIdentity.setCurrentItem(i);
-      if (mBtnIdentity.isChecked()) slotIdentityActivated(i);
+  for (int i=0; i < mIdentity->count(); ++i)
+    if (mIdentity->text(i) == mId) {
+      mIdentity->setCurrentItem(i);
+      if (mBtnIdentity->isChecked()) slotIdentityActivated(i);
       break;
     }
 
   // get PGP user id for the currently selected identity
-  KMIdentity ident(mIdentity.currentText());
+  KMIdentity ident(mIdentity->currentText());
   ident.readConfig();
   QString pgpUserId = ident.pgpIdentity();
 
@@ -1052,8 +1064,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   }
 
   QString transport = newMsg->headerField("X-KMail-Transport");
-  if (!mBtnTransport.isChecked() && !transport.isEmpty())
-    mTransport.setEditText( transport );
+  if (!mBtnTransport->isChecked() && !transport.isEmpty())
+    mTransport->setEditText( transport );
 
   num = mMsg->numBodyParts();
 
@@ -1160,9 +1172,9 @@ bool KMComposeWin::applyChanges(void)
   mMsg->setReplyTo(replyTo());
   mMsg->setBcc(bcc());
 
-  if (mIdentity.currentText() == i18n("Default"))
+  if (mIdentity->currentText() == i18n("Default"))
     mMsg->removeHeaderField("X-KMail-Identity");
-  else mMsg->setHeaderField("X-KMail-Identity", mIdentity.currentText());
+  else mMsg->setHeaderField("X-KMail-Identity", mIdentity->currentText());
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
@@ -1241,14 +1253,14 @@ bool KMComposeWin::applyChanges(void)
       mMsg->addBodyPart(msgPart);
   }
   if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
-  mEdtFrom.setEdited(FALSE);
-  mEdtReplyTo.setEdited(FALSE);
-  mEdtTo.setEdited(FALSE);
-  mEdtCc.setEdited(FALSE);
-  mEdtBcc.setEdited(FALSE);
-  mEdtSubject.setEdited(FALSE);
-  if (mTransport.lineEdit())
-    mTransport.lineEdit()->setEdited(FALSE);
+  mEdtFrom->setEdited(FALSE);
+  mEdtReplyTo->setEdited(FALSE);
+  mEdtTo->setEdited(FALSE);
+  mEdtCc->setEdited(FALSE);
+  mEdtBcc->setEdited(FALSE);
+  mEdtSubject->setEdited(FALSE);
+  if (mTransport->lineEdit())
+    mTransport->lineEdit()->setEdited(FALSE);
 
   // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
   mMsg->cleanupHeader();
@@ -1261,10 +1273,10 @@ bool KMComposeWin::queryClose ()
 {
   int rc;
 
-  if(mEditor->isModified() || mEdtFrom.edited() || mEdtReplyTo.edited() ||
-     mEdtTo.edited() || mEdtCc.edited() || mEdtBcc.edited() ||
-     mEdtSubject.edited() ||
-     (mTransport.lineEdit() && mTransport.lineEdit()->edited()))
+  if(mEditor->isModified() || mEdtFrom->edited() || mEdtReplyTo->edited() ||
+     mEdtTo->edited() || mEdtCc->edited() || mEdtBcc->edited() ||
+     mEdtSubject->edited() ||
+     (mTransport->lineEdit() && mTransport->lineEdit()->edited()))
   {
     rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to discard the message or save it for later?"),
@@ -1575,35 +1587,35 @@ void KMComposeWin::slotAddrBook()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookFrom()
 {
-  addrBookSelInto(&mEdtFrom);
+  addrBookSelInto(mEdtFrom);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookReplyTo()
 {
-  addrBookSelInto(&mEdtReplyTo);
+  addrBookSelInto(mEdtReplyTo);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookTo()
 {
-  addrBookSelInto(&mEdtTo);
+  addrBookSelInto(mEdtTo);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookCc()
 {
-  addrBookSelInto(&mEdtCc);
+  addrBookSelInto(mEdtCc);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBookBcc()
 {
-  addrBookSelInto(&mEdtBcc);
+  addrBookSelInto(mEdtBcc);
 }
 
 
@@ -2114,9 +2126,9 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   // rectify the problem by editing their outgoing preferences and
   // resending.
   // Hence this following conditional
-  if ((mTransport.currentText() != mTransport.text(0)) ||
-      (!hf.isEmpty() && (hf != mTransport.text(0))))
-    mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
+  if ((mTransport->currentText() != mTransport->text(0)) ||
+      (!hf.isEmpty() && (hf != mTransport->text(0))))
+    mMsg->setHeaderField("X-KMail-Transport", mTransport->currentText());
 
   disableBreaking = saveInDrafts;
   if (saveInDrafts)
@@ -2134,10 +2146,10 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   // with minimal code changes.  If you want to add more warning boxes
   // (say if the From: field is empty), then you will need to modify this.
   if (!editSubject) {
-    if (mEdtTo.text().stripWhiteSpace().isEmpty())
-      mEdtTo.setFocus();
+    if (mEdtTo->text().stripWhiteSpace().isEmpty())
+      mEdtTo->setFocus();
     else
-      mEdtSubject.setFocus();
+      mEdtSubject->setFocus();
   }
 
   if (sentOk)
@@ -2175,7 +2187,7 @@ void KMComposeWin::slotSaveDraft()
 void KMComposeWin::slotSendNow()
 {
   if (mConfirmSend) {
-    switch(KMessageBox::warningYesNoCancel(&mMainWidget,
+    switch(KMessageBox::warningYesNoCancel(mMainWidget,
                                     i18n("About to send email..."),
                                     i18n("Send Confirmation"),
                                     i18n("Send &Now"),
@@ -2362,18 +2374,18 @@ void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotIdentityActivated(int)
 {
-  QString identStr = mIdentity.currentText();
+  QString identStr = mIdentity->currentText();
   if (!KMIdentity::identities().contains(identStr))
     return;
   KMIdentity ident(identStr);
   ident.readConfig();
 
   if(!ident.fullEmailAddr().isNull())
-    mEdtFrom.setText(ident.fullEmailAddr());
+    mEdtFrom->setText(ident.fullEmailAddr());
   if(!ident.replyToAddr().isNull())
-    mEdtReplyTo.setText(ident.replyToAddr());
+    mEdtReplyTo->setText(ident.replyToAddr());
   else
-    mEdtReplyTo.setText("");
+    mEdtReplyTo->setText("");
   if (ident.organization().isEmpty())
     mMsg->removeHeaderField("Organization");
   else
@@ -2382,26 +2394,26 @@ void KMComposeWin::slotIdentityActivated(int)
   QString edtText = mEditor->text();
   int pos = edtText.findRev( "\n-- \n" + mOldSigText);
 
-  if (!mBtnTransport.isChecked()) {
+  if (!mBtnTransport->isChecked()) {
     if (ident.transport().isEmpty())
       mMsg->removeHeaderField("X-KMail-Transport");
     else
       mMsg->setHeaderField("X-KMail-Transport", ident.transport());
     QString transp = ident.transport();
-    if (transp.isEmpty()) transp = mTransport.text(0);
+    if (transp.isEmpty()) transp = mTransport->text(0);
     bool found = false;
     int i;
-    for (i = 0; i < mTransport.count(); i++) {
-      if (mTransport.text(i) == transp) {
+    for (i = 0; i < mTransport->count(); i++) {
+      if (mTransport->text(i) == transp) {
         found = true;
-        mTransport.setCurrentItem(i);
+        mTransport->setCurrentItem(i);
         break;
       }
     }
     if (found == false) {
-      if (i == mTransport.maxCount()) mTransport.setMaxCount(i + 1);
-      mTransport.insertItem(transp,i);
-      mTransport.setCurrentItem(i);
+      if (i == mTransport->maxCount()) mTransport->setMaxCount(i + 1);
+      mTransport->insertItem(transp,i);
+      mTransport->setCurrentItem(i);
     }
   }
 
@@ -2503,11 +2515,11 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
     config->sync(); // maybe not?
 
     // sync all the lineedits to the same completion mode
-    mEdtFrom.setCompletionMode( mode );
-    mEdtReplyTo.setCompletionMode( mode );
-    mEdtTo.setCompletionMode( mode );
-    mEdtCc.setCompletionMode( mode );
-    mEdtBcc.setCompletionMode( mode );
+    mEdtFrom->setCompletionMode( mode );
+    mEdtReplyTo->setCompletionMode( mode );
+    mEdtTo->setCompletionMode( mode );
+    mEdtCc->setCompletionMode( mode );
+    mEdtBcc->setCompletionMode( mode );
 }
 
 //=============================================================================

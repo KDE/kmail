@@ -427,14 +427,14 @@ protected:
   /**
    * Header fields.
    */
-    QString subject(void) const { return mEdtSubject.text(); }
-    QString to(void) const { return mEdtTo.text(); }
+    QString subject(void) const { return mEdtSubject->text(); }
+    QString to(void) const { return mEdtTo->text(); }
     QString cc(void) const
-   { return (mEdtCc.isHidden()) ? QString() : mEdtCc.text(); }
+   { return (mEdtCc->isHidden()) ? QString() : mEdtCc->text(); }
     QString bcc(void) const
-   { return (mEdtBcc.isHidden()) ? QString() : mEdtBcc.text(); }
-    QString from(void) const { return mEdtFrom.text(); }
-    QString replyTo(void) const { return mEdtReplyTo.text(); }
+   { return (mEdtBcc->isHidden()) ? QString() : mEdtBcc->text(); }
+    QString from(void) const { return mEdtFrom->text(); }
+    QString replyTo(void) const { return mEdtReplyTo->text(); }
 
   /**
    * Ask for confirmation if the message was changed before close.
@@ -484,13 +484,13 @@ private:
   QCString defaultCharset(void) const;
 
 protected:
-  QWidget   mMainWidget;
-  QComboBox mIdentity, mTransport;
-  KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
-  QLabel    mLblIdentity, mLblTransport;
-  QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
-  QCheckBox mBtnIdentity, mBtnTransport;
-  QPushButton mBtnTo, mBtnCc, mBtnBcc, mBtnFrom, mBtnReplyTo;
+  QWidget   *mMainWidget;
+  QComboBox *mIdentity, *mTransport;
+  KMLineEdit *mEdtFrom, *mEdtReplyTo, *mEdtTo, *mEdtCc, *mEdtBcc, *mEdtSubject;
+  QLabel    *mLblIdentity, *mLblTransport;
+  QLabel    *mLblFrom, *mLblReplyTo, *mLblTo, *mLblCc, *mLblBcc, *mLblSubject;
+  QCheckBox *mBtnIdentity, *mBtnTransport;
+  QPushButton *mBtnTo, *mBtnCc, *mBtnBcc, *mBtnFrom, *mBtnReplyTo;
   bool mSpellCheckInProgress;
   bool mDone;
 
