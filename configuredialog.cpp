@@ -451,6 +451,14 @@ void IdentityPage::apply() {
     showHeaders |= HDR_IDENTITY;
     composer.writeEntry( "headers", showHeaders );
   }
+  // and now the reverse
+  if( mOldNumberOfIdentities > 1 && mIdentityList->childCount() < 2 ) {
+    // have only one identity, so remove the combo in the composer:
+    KConfigGroup composer( KMKernel::config(), "Composer" );
+    int showHeaders = composer.readNumEntry( "headers", HDR_STANDARD );
+    showHeaders &= ~HDR_IDENTITY;
+    composer.writeEntry( "headers", showHeaders );
+  }
 }
 
 void IdentityPage::dismiss() {
