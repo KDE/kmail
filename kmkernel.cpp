@@ -128,7 +128,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mJobScheduler = new JobScheduler( this );
 
   mXmlGuiInstance = 0;
-  mDeadLetterTimer = 0;
+  mDeadLetterTimer = new QTimer( this );
+  connect( mDeadLetterTimer, SIGNAL(timeout()), SLOT(dumpDeadLetters()) );
   mDeadLetterInterval = 1000*120; // 2 minutes
 
   new Kpgp::Module();
@@ -765,12 +766,9 @@ void KMKernel::recoverDeadLetters(void)
   QDir dir = QDir::home();
   QString fname = dir.path();
   int i, rc, num;
-  mDeadLetterTimer = new QTimer(this);
-  connect(mDeadLetterTimer, SIGNAL(timeout()), this, SLOT(dumpDeadLetters()));
 
   if (!dir.exists("dead.letter")) {
-      mDeadLetterTimer->start(mDeadLetterInterval);
-      return;
+    return;
   }
 
   fname += "/dead.letter";
@@ -781,11 +779,10 @@ void KMKernel::recoverDeadLetters(void)
   if (rc)
   {
     perror(QString("cannot open file "+fname).latin1());
-    mDeadLetterTimer->start(mDeadLetterInterval);
     return;
   }
 
-  folder.open();
+  //folder.open(); //again?
 
   num = folder.count();
   for (i=0; i<num; i++)
@@ -800,7 +797,6 @@ void KMKernel::recoverDeadLetters(void)
   }
   folder.close();
   QFile::remove(fname);
-  mDeadLetterTimer->start(mDeadLetterInterval);
 }
 
 void KMKernel::initFolders(KConfig* cfg)
@@ -936,6 +932,7 @@ void KMKernel::init()
       cfg->writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }
   }
+  readConfig();
   mGroupware->readConfig();
   mICalIface->readConfig();
   // filterMgr->dump();
@@ -969,6 +966,18 @@ void KMKernel::init()
 #else
   mBackgroundTasksTimer->start( 5 * 60000, true ); // 5 minutes, singleshot
 #endif
+}
+
+void KMKernel::readConfig()
+{
+  KConfigGroup composer( config(), "Composer" );
+  // default to 2 minutes, convert to ms
+  mDeadLetterInterval = 1000 * 60 * composer.readNumEntry( "autosave", 2 );
+  kdDebug() << k_funcinfo << mDeadLetterInterval << endl;
+  if ( mDeadLetterInterval )
+    mDeadLetterTimer->start( mDeadLetterInterval );
+  else
+    mDeadLetterTimer->stop();
 }
 
 void KMKernel::cleanupImapFolders()
@@ -1399,7 +1408,8 @@ void KMKernel::dumpDeadLetters()
   }
   QFile::remove(fname + "/dead.letter");
   dir.rename("dead.letter.tmp","dead.letter");
-  mDeadLetterTimer->start(mDeadLetterInterval);
+  if ( mDeadLetterInterval )
+    mDeadLetterTimer->start(mDeadLetterInterval);
 }
 
 
@@ -1492,13 +1502,19 @@ void KMKernel::slotShowConfigurationDialog()
   if( !mConfigureDialog ) {
     mConfigureDialog = new ConfigureDialog( 0, "configure", false );
     connect( mConfigureDialog, SIGNAL( configCommitted() ),
-             this, SIGNAL( configChanged() ) );
+             this, SLOT( slotConfigChanged() ) );
   }
 
   if( mConfigureDialog->isHidden() )
     mConfigureDialog->show();
   else
     mConfigureDialog->raise();
+}
+
+void KMKernel::slotConfigChanged()
+{
+  readConfig();
+  emit configChanged();
 }
 
 bool KMKernel::haveSystemTrayApplet()

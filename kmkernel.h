@@ -120,7 +120,8 @@ public:
   static KMKernel *self() { return mySelf; }
   static KConfig *config();
 
-  void init ();
+  void init();
+  void readConfig();
   void cleanupImapFolders();
   void testDir(const char *_name);
   void recoverDeadLetters(void);
@@ -267,6 +268,7 @@ protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
   void cleanupLoop();
+  void slotConfigChanged();
   void slotFolderRemoved(KMFolder*);
   void slotRunBackgroundTasks();
 

@@ -2204,6 +2204,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   QGroupBox   *group;
   QLabel      *label;
   QHBox       *hbox;
+  QString      msg;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
@@ -2224,7 +2225,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mAutoRequestMDNCheck, SIGNAL( stateChanged(int) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  // a checkbutton for "word wrap" and a spinbox for the column in
+  // a checkbox for "word wrap" and a spinbox for the column in
   // which to wrap:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mWordWrapCheck = new QCheckBox( i18n("Word &wrap at column:"), this );
@@ -2244,7 +2245,22 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
 	   mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
-  // The "exteral editor" group:
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this );
+  label = new QLabel( mAutoSave, i18n("Autosave every:"), this );
+  hlay->addWidget( label );
+  hlay->addWidget( mAutoSave );
+  mAutoSave->setSpecialValueText( i18n("No autosave") );
+  mAutoSave->setSuffix( i18n(" min") );
+  hlay->addStretch( 1 );
+
+  msg = i18n("A backup copy of the text in the composer window can be created "
+	     "regularly. The interval used to create the backups is set here. "
+	     "You can disable autosaving by setting it to the value 0.");
+  QWhatsThis::add( mAutoSave, msg );
+  QWhatsThis::add( label, msg );
+
+  // The "external editor" group:
   group = new QVGroupBox( i18n("External Editor"), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
@@ -2279,14 +2295,14 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   vlay->addWidget( group );
   vlay->addStretch( 100 );
 
-  QString msg = i18n("<qt><p>Enable this option if you want KMail to request "
-		     "Message Disposition Notifications (MDNs) for each of your "
-		     "outgoing messages.</p>"
-		     "<p>This option only affects the default; "
-		     "you can still enable or disable MDN requesting on a "
-		     "per-message basis in the composer, menu item "
-		     "<em>Options</em>->&gt;"
-		     "<em>Request Disposition Notification</em>.</p></qt>");
+  msg = i18n("<qt><p>Enable this option if you want KMail to request "
+	     "Message Disposition Notifications (MDNs) for each of your "
+	     "outgoing messages.</p>"
+	     "<p>This option only affects the default; "
+	     "you can still enable or disable MDN requesting on a "
+	     "per-message basis in the composer, menu item "
+	     "<em>Options</em>->&gt;"
+	     "<em>Request Disposition Notification</em>.</p></qt>");
   QWhatsThis::add( mAutoRequestMDNCheck, msg );
 }
 
@@ -2300,11 +2316,27 @@ void ComposerPage::GeneralTab::load() {
   mSmartQuoteCheck->setChecked( composer.readBoolEntry( "smart-quote", true ) );
   mAutoRequestMDNCheck->setChecked( composer.readBoolEntry( "request-mdn", false ) );
   mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap", true ) );
+
   mWrapColumnSpin->setValue( composer.readNumEntry( "break-at", 78 ) );
+  mAutoSave->setValue( composer.readNumEntry( "autosave", 2 ) );
 
   // editor group:
   mExternalEditorCheck->setChecked( general.readBoolEntry( "use-external-editor", false ) );
   mEditorRequester->setURL( general.readPathEntry( "external-editor" ) );
+}
+
+void ComposerPageGeneralTab::defaults()
+{
+  mAutoAppSignFileCheck->setChecked( true );
+  mSmartQuoteCheck->setChecked( true );
+  mAutoRequestMDNCheck->setChecked( false );
+  mWordWrapCheck->setChecked( true );
+
+  mWrapColumnSpin->setValue( 78 );
+  mAutoSave->setValue( 2 );
+
+  mExternalEditorCheck->setChecked( false );
+  mEditorRequester->clear();
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -2323,6 +2355,8 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
     mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap" ) );
   if ( composer.hasKey( "break-at" ) )
     mWrapColumnSpin->setValue( composer.readNumEntry( "break-at" ) );
+  if ( composer.hasKey( "autosave" ) )
+    mAutoSave->setValue( composer.readNumEntry( "autosave" ) );
 
   if ( general.hasKey( "use-external-editor" )
        && general.hasKey( "external-editor" ) ) {
@@ -2345,8 +2379,8 @@ void ComposerPage::GeneralTab::save() {
   composer.writeEntry( "request-mdn", mAutoRequestMDNCheck->isChecked() );
   composer.writeEntry( "word-wrap", mWordWrapCheck->isChecked() );
   composer.writeEntry( "break-at", mWrapColumnSpin->value() );
+  composer.writeEntry( "autosave", mAutoSave->value() );
 }
-
 
 QString ComposerPage::PhrasesTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-phrases");

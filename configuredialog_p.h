@@ -510,7 +510,7 @@ public:
 
   void load();
   void save();
-  void defaults() {}
+  void defaults();
   void installProfile( KConfig * profile );
 
 protected:
@@ -519,6 +519,7 @@ protected:
   QCheckBox     *mAutoRequestMDNCheck;
   QCheckBox     *mWordWrapCheck;
   KIntSpinBox   *mWrapColumnSpin;
+  KIntSpinBox   *mAutoSave;
   QCheckBox     *mExternalEditorCheck;
   KURLRequester *mEditorRequester;
 };

@@ -1551,8 +1551,6 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     // composer.
     //
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
-  } else {
-    kmkernel->dumpDeadLetters();
   }
   mEditor->setModified(isModified);
 }
@@ -3130,7 +3128,6 @@ void KMComposeWin::slotAppendSignature()
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
   }
-  kmkernel->dumpDeadLetters();
 }
 
 
