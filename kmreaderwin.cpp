@@ -184,8 +184,8 @@ void KMReaderWin::parseMsg(void)
 {
   KMMessagePart msgPart;
   int i, numParts;
-  QString type, subtype, str;
-
+  QString type, subtype, str, contDisp;
+  bool asIcon;
   assert(mMsg!=NULL);
 
   mViewer->begin(mPicsDir);
@@ -201,19 +201,25 @@ void KMReaderWin::parseMsg(void)
       mMsg->bodyPart(i, &msgPart);
       type = msgPart.typeStr();
       subtype = msgPart.subtypeStr();
-      if (stricmp(type, "text")==0)
+      contDisp = msgPart.contentDisposition();
+      debug("content disposition: \"%s\"", contDisp.data());
+      
+      if (i <= 0) asIcon = FALSE;
+      else asIcon = (stricmp(contDisp,"inline")!=0);
+
+      if (!asIcon)
       {
-	str = msgPart.bodyDecoded();
-	if (str.size() > 100 && i>0) writePartIcon(&msgPart, i);
-	else
+	if (stricmp(type, "text")==0 || stricmp(type, "message")==0)
 	{
+	  str = msgPart.bodyDecoded();
 	  if (i>0) mViewer->write("<BR><HR><BR>");
 
 	  if (stricmp(subtype, "html")==0) mViewer->write(str);
 	  else writeBodyStr(str);
 	}
+	else asIcon = TRUE;
       }
-      else
+      if (asIcon)
       {
 	writePartIcon(&msgPart, i);
       }
