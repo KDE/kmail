@@ -245,9 +245,18 @@ protected:
                                       const QString& txt2b,
                                       QCString& data );
 
-  /** Feeds the HTML widget with the contents of the given multipart/signed
-    object. Signature is tested.  May contain body parts. */
-  virtual void writeSignedMIME( partNode& data, partNode& sign );
+  /** if data is 0:
+          Feeds the HTML widget with the contents of the opaque signed
+          data found in partNode 'sign'.
+      if data is set:
+          Feeds the HTML widget with the contents of the given
+          multipart/signed object.
+      Signature is tested.  May contain body parts.
+      
+      Returns whether a signature was found or not: use this to
+      find out if opaque data is signed or not. */
+  virtual bool writeOpaqueOrMultipartSignedData( partNode* data,
+                                                 partNode& sign );
 
   /** Returns the contents of the given multipart/encrypted
     object. Data is decypted.  May contain body parts. */
