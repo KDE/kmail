@@ -820,7 +820,6 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
                      KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
-    mViewer->write("<br>");
     break;
 
   case HdrFancy:
@@ -841,7 +840,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
                      KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>\n");
     mViewer->write(i18n("Date: ")+
                    strToHtml(mMsg->dateStr()) + "<br>\n");
-    mViewer->write("</b></td></tr></table><br>\n");
+    mViewer->write("</b></td></tr></table>");
     break;
 
   case HdrLong:
@@ -865,17 +864,15 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     if (!mMsg->replyTo().isEmpty())
       mViewer->write(i18n("Reply to: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->replyTo(),FALSE) + "<br>");
-    mViewer->write("<br>\n");
     break;
 
   case HdrAll:
     str = strToHtml(mMsg->headerAsString(), false, true);
     mViewer->write(str);
-    mViewer->write("\n<br>\n");
+    mViewer->write("\n");
     if (vcpartnum >= 0) {
-      mViewer->write("<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+      mViewer->write("\n<br>\n<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
-    mViewer->write("\n<br>\n");
     break;
 
   default:
