@@ -146,7 +146,10 @@ Kpgp::setMessage(const QString mess)
 
   if(havePgp)
     retval = pgp->setMessage(mess);
-  if((index = mess.find("-----BEGIN PGP")) != -1)
+
+  // "-----BEGIN PGP" must be at the beginning of a line
+  if (((index = mess.find("-----BEGIN PGP")) != -1) && 
+       ((index == 0) || (mess[index-1] == '\n')))
   {
     if(!havePgp)
     {
@@ -154,13 +157,25 @@ Kpgp::setMessage(const QString mess)
 			 "Please check your PATH is set correctly.");
       return FALSE;
     }
-    if(retval != 0)
+
+    // The following if-condition is always true!
+    // Proof:
+    // If (havePgp) and (mess contains "-----BEGIN PGP")
+    //   then retval is true, i.e. != 0.
+    // If (!havePgp) and (mess contains "-----BEGIN PGP")
+    //   then the previous if-branch is executed and this method is left.
+    // If (mess doesn't contain "-----BEGIN PGP")
+    //   then this if-branch is never reached.
+    // Therefore the test for (retval != 0) can be omitted.
+    // if(retval != 0)
       errMsg = pgp->lastErrorMessage();
 
     // front and backmatter...
     front = mess.left(index);
-    index = mess.find("-----END PGP",index);
-    index = mess.find("\n",index+1);
+    // "-----END PGP" must be at the beginning of a line
+    index = mess.find("\n-----END PGP",index);
+    // begin the search for the next '\n' after "-----END PGP"
+    index = mess.find("\n",index+13);
     back  = mess.right(mess.length() - index);
 
     return TRUE;
