@@ -725,7 +725,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     {
       KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fti->folder);
       if (imap_folder->getImapState() != KMFolderImap::imapInProgress)
-        imap_folder->getFolder(fti);
+        imap_folder->getFolder();
     }
     if (folder && (folder->countUnread() > 0) ) {
       QString num;

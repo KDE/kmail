@@ -37,6 +37,7 @@
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 #include "kmacctimap.h"
 #include "kmglobal.h"
@@ -276,6 +277,17 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctImap::initJobData(jobData &jd)
+{
+  jd.total = 1;
+  jd.done = 0;
+  jd.parent = NULL;
+  jd.quiet = FALSE;
+  jd.inboxOnly = FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::setAutoExpunge(bool aAutoExpunge)
 {
   mAutoExpunge = aAutoExpunge;
@@ -355,6 +367,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
 //-----------------------------------------------------------------------------
 void KMAcctImap::displayProgress()
 {
+  kdDebug(5006) << "KMAcctImap::displayProgress" << endl;
   if (mProgressEnabled == mapJobData.isEmpty())
   {
     mProgressEnabled = !mapJobData.isEmpty();
@@ -418,11 +431,11 @@ void KMAcctImap::killAllJobs()
   for (it = mapJobData.begin(); it != mapJobData.end(); it++)
     if ((*it).parent)
     {
-      KMFolderImap *fld = static_cast<KMFolderImap*>((*it).parent->folder);
+      KMFolderImap *fld = (*it).parent;
       fld->setImapState(KMFolderImap::imapFinished);
       fld->setUidNext("");
-      fld->sendFolderComplete((*it).parent, FALSE);
-      (*it).parent->folder->quiet(FALSE);
+      fld->sendFolderComplete(FALSE);
+      fld->quiet(FALSE);
     }
   if (mapJobData.begin() != mapJobData.end())
   {
@@ -443,7 +456,7 @@ void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
   while (it != mapJobData.end())
   {
-    if (it.data().parent == fti)
+    if (it.data().parent == fti->folder)
     {
       killAllJobs();
       break;
@@ -457,10 +470,15 @@ void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
 void KMAcctImap::slotSimpleResult(KIO::Job * job)
 {
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
-  if (it != mapJobData.end()) mapJobData.remove(it);
+  bool quiet = FALSE;
+  if (it != mapJobData.end())
+  {
+    quiet = (*it).quiet;
+    mapJobData.remove(it);
+  }
   if (job->error())
   {
-    job->showErrorDialog();
+    if (!quiet) job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
   }
   displayProgress();

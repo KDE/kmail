@@ -130,9 +130,9 @@ public:
     QByteArray data;
     QCString cdata;
     QStringList items;
-    KMFolderTreeItem *parent;
+    KMFolderImap *parent;
     int total, done;
-    bool inboxOnly;
+    bool inboxOnly, quiet;
   };
   QMap<KIO::Job *, jobData> mapJobData;
  
@@ -176,6 +176,11 @@ public:
    * Set the top level pseudo folder
    */
   virtual void setImapFolder(KMFolderImap *);
+
+  /**
+   * Initialize a jobData structure
+   */
+  static void initJobData(jobData &jd);
 
 signals:
   /**

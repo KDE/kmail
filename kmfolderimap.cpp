@@ -204,9 +204,11 @@ KMMessage* KMFolderImap::take(int idx)
 //-----------------------------------------------------------------------------
 void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
 {
+  kdDebug(5006) << "KMFolderImap::listDirectory " << label() << ", "
+    << secondStep << endl;
   mImapState = imapInProgress;
   KMAcctImap::jobData jd;
-  jd.parent = fti;
+  jd.parent = this;
   jd.total = 1; jd.done = 0;
   jd.inboxOnly = !secondStep && mAccount->prefix() != "/"
     && imapPath() == mAccount->prefix();
@@ -349,15 +351,14 @@ void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::checkValidity(KMFolderTreeItem * fti)
+void KMFolderImap::checkValidity()
 {
 kdDebug(5006) << "KMFolderImap::checkValidity" << endl;
-  KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
   KMAcctImap::jobData jd;
-  jd.parent = fti;
+  jd.parent = this;
   jd.total = 1; jd.done = 0;
   KURL url = mAccount->getUrl();
-  url.setPath(folder->imapPath() + ";UID=0:0");
+  url.setPath(imapPath() + ";UID=0:0");
   mAccount->makeConnection();
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -381,31 +382,28 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
-    emit folderComplete((*it).parent, FALSE);
+    emit folderComplete(this, FALSE);
     mAccount->mapJobData.remove(it);
     mAccount->displayProgress();
   } else {
-    KMFolderImap *it_parent_folder = static_cast<KMFolderImap*>((*it).parent->folder);
-    QString startUid = it_parent_folder->uidNext();
-    it_parent_folder->setUidNext("");
+    QString startUid = uidNext();
+    setUidNext("");
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
     int  b = cstr.find("\r\n", a);
-    if (it_parent_folder->uidValidity() !=
-      QString(cstr.mid(a + 15, b - a - 15)))
+    if (uidValidity() != QString(cstr.mid(a + 15, b - a - 15)))
     {
-      it_parent_folder->expunge();
+      expunge();
       startUid = "";
     } else {
       int p = cstr.find("\r\nX-UidNext:");
-      if (p != -1) it_parent_folder->setUidNext(cstr
+      if (p != -1) setUidNext(cstr
         .mid(p + 13, cstr.find("\r\n", p+1) - p - 13));
-kdDebug(5006) << "uidnext = " << it_parent_folder->uidNext() << endl;
+kdDebug(5006) << "uidnext = " << uidNext() << endl;
     }
-    KMFolderTreeItem *fti = (*it).parent;
     mAccount->mapJobData.remove(it);
-    if (startUid.isEmpty() || startUid != it_parent_folder->uidNext())
-      reallyGetFolder(fti, startUid);
+    if (startUid.isEmpty() || startUid != uidNext())
+      reallyGetFolder(startUid);
     else {
       mImapState = imapFinished;
       mAccount->displayProgress();
@@ -415,27 +413,24 @@ kdDebug(5006) << "uidnext = " << it_parent_folder->uidNext() << endl;
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::getFolder(KMFolderTreeItem * fti)
+void KMFolderImap::getFolder()
 {
-  KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
   mImapState = imapInProgress;
-  if (!folder->uidValidity().isEmpty()) checkValidity(fti);
-  else reallyGetFolder(fti);
+  if (!uidValidity().isEmpty()) checkValidity();
+  else reallyGetFolder();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::reallyGetFolder(KMFolderTreeItem * fti,
-  const QString &startUid)
+void KMFolderImap::reallyGetFolder(const QString &startUid)
 {
   KMAcctImap::jobData jd;
-  jd.parent = fti;
+  jd.parent = this;
   jd.total = 1; jd.done = 0;
   KURL url = mAccount->getUrl();
-  KMFolderImap *fti_folder = static_cast<KMFolderImap*>(fti->folder);
   if (startUid.isEmpty())
   {
-    url.setPath(fti_folder->imapPath() + ";SECTION=UID FLAGS");
+    url.setPath(imapPath() + ";SECTION=UID FLAGS");
     mAccount->makeConnection();
     KIO::SimpleJob *job = KIO::listDir(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -446,7 +441,7 @@ void KMFolderImap::reallyGetFolder(KMFolderTreeItem * fti,
             this, SLOT(slotListFolderEntries(KIO::Job *,
             const KIO::UDSEntryList &)));
   } else {
-    url.setPath(fti_folder->imapPath() + ";UID=" + startUid
+    url.setPath(imapPath() + ";UID=" + startUid
       + ":*;SECTION=ENVELOPE");
     mAccount->makeConnection();
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
@@ -470,8 +465,7 @@ void KMFolderImap::getNextMessage(KMAcctImap::jobData & jd)
     return;
   }
   KURL url = mAccount->getUrl();
-  KMFolderImap *folder = static_cast<KMFolderImap*>(jd.parent->folder);
-  url.setPath(folder->imapPath() + ";UID=" + *jd.items.begin() +
+  url.setPath(imapPath() + ";UID=" + *jd.items.begin() +
     ";SECTION=ENVELOPE");
   jd.items.remove(jd.items.begin());
   mAccount->makeConnection();
@@ -500,23 +494,22 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
-    emit folderComplete((*it).parent, FALSE);
+    emit folderComplete(this, FALSE);
     mAccount->mapJobData.remove(it);
     return;
   }
   QStringList::Iterator uid;
-  (*it).parent->folder->quiet(TRUE);
+  quiet(TRUE);
   // Check for already retrieved headers
-  if ((*it).parent->folder->count())
+  if (count())
   {
     QCString cstr;
-    KMFolder *folder = (*it).parent->folder;
     int idx = 0, a, b, c, serverFlags;
     long int mailUid, serverUid;
     uid = (*it).items.begin();
-    while (idx < folder->count() && uid != (*it).items.end())
+    while (idx < count() && uid != (*it).items.end())
     {
-      folder->getMsgString(idx, cstr);
+      getMsgString(idx, cstr);
       a = cstr.find("X-UID: ");
       b = cstr.find("\n", a);
       if (a == -1 || b == -1) mailUid = -1;
@@ -524,16 +517,16 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
       c = (*uid).find(",");
       serverUid = (*uid).left(c).toLong();
       serverFlags = (*uid).mid(c+1).toInt();
-      if (mailUid < serverUid) folder->removeMsg(idx, TRUE);
+      if (mailUid < serverUid) removeMsg(idx, TRUE);
       else if (mailUid == serverUid)
       {
-        folder->getMsgBase(idx)->setStatus(flagsToStatus(serverFlags, false));
+        getMsgBase(idx)->setStatus(flagsToStatus(serverFlags, false));
         idx++;
         uid = (*it).items.remove(uid);
       }
       else break;  // happens only, if deleted mails reappear on the server
     }
-    while (idx < folder->count()) folder->removeMsg(idx, TRUE);
+    while (idx < count()) removeMsg(idx, TRUE);
   }
   for (uid = (*it).items.begin(); uid != (*it).items.end(); uid++)
     (*uid).truncate((*uid).find(","));
@@ -544,12 +537,11 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     quiet(FALSE);
     mImapState = imapFinished;
-    emit folderComplete((*it).parent, TRUE);
+    emit folderComplete(this, TRUE);
     mAccount->mapJobData.remove(it);
     mAccount->displayProgress();
     return;
   }
-  KMFolderImap *it_parent_folder = static_cast<KMFolderImap*>((*it).parent->folder);
   // Force digest mode, even if there is only one message in the folder
   if (jd.total == 1) uids = *uid + ":" + *uid;
   else while (uid != (*it).items.end())
@@ -571,13 +563,13 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     if (uids.length() > 100 && uid != (*it).items.end())
     {
       KURL url = mAccount->getUrl();
-      url.setPath(it_parent_folder->imapPath() + ";UID=" + uids
-        + ";SECTION=ENVELOPE");
+      url.setPath(imapPath() + ";UID=" + uids + ";SECTION=ENVELOPE");
       mAccount->makeConnection();
       KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
       KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
       KMAcctImap::jobData jd2 = jd;
       jd2.total = 0;
+      jd2.quiet = FALSE;
       mAccount->mapJobData.insert(newJob, jd2);
       connect(newJob, SIGNAL(result(KIO::Job *)),
           mAccount, SLOT(slotSimpleResult(KIO::Job *)));
@@ -588,8 +580,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     /* end workaround */
   }
   KURL url = mAccount->getUrl();
-  url.setPath(it_parent_folder->imapPath() + ";UID=" + uids
-    + ";SECTION=ENVELOPE");
+  url.setPath(imapPath() + ";UID=" + uids + ";SECTION=ENVELOPE");
   mAccount->makeConnection();
   KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
@@ -653,11 +644,10 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   if (pos > 0)
   {
     int p = (*it).cdata.find("\r\nX-uidValidity:");
-    KMFolderImap *it_folder = static_cast<KMFolderImap*>((*it).parent->folder);
-    if (p != -1) it_folder->setUidValidity((*it).cdata
+    if (p != -1) setUidValidity((*it).cdata
       .mid(p + 17, (*it).cdata.find("\r\n", p+1) - p - 17));
     p = (*it).cdata.find("\r\nX-UidNext:");
-    if (p != -1) it_folder->setUidNext((*it).cdata
+    if (p != -1) setUidNext((*it).cdata
       .mid(p + 13, (*it).cdata.find("\r\n", p+1) - p - 13));
     (*it).cdata.remove(0, pos);
   }
@@ -679,8 +669,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     (*it).cdata.remove(0, pos);
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
+    mAccount->displayProgress();
   }
-  mAccount->displayProgress();
 }
 
 
@@ -696,27 +686,25 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     mImapState = imapNoInformation;
-    emit folderComplete((*it).parent, FALSE);
+    emit folderComplete(this, FALSE);
   } else mImapState = imapFinished;
   quiet(FALSE);
-  KMFolderTreeItem *fti = (*it).parent;
   mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
-  if (!job->error()) emit folderComplete(fti, TRUE);
+  if (!job->error()) emit folderComplete(this, TRUE);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::createFolder(KMFolderTreeItem * fti, const QString &name)
+void KMFolderImap::createFolder(const QString &name)
 {
-  KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
   KURL url = mAccount->getUrl();
-  url.setPath(folder->imapPath() + name);
+  url.setPath(imapPath() + name);
   mAccount->makeConnection();
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
-  jd.parent = fti;
+  jd.parent = this;
   jd.items = name;
   jd.total = 1; jd.done = 0;
   mAccount->mapJobData.insert(job, jd);
@@ -729,6 +717,7 @@ void KMFolderImap::createFolder(KMFolderTreeItem * fti, const QString &name)
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
 {
+/*
   QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
     mAccount->mapJobData.find(job);
   assert(it != mAccount->mapJobData.end());
@@ -753,6 +742,7 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
   }
   mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
+*/
 }
 
 
@@ -1000,7 +990,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
-  jd.total = 1; jd.done = 0; jd.parent = NULL;
+  jd.total = 1; jd.done = 0; jd.parent = NULL; jd.quiet = FALSE;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           mAccount, SLOT(slotSimpleResult(KIO::Job *)));
@@ -1047,13 +1037,13 @@ void KMFolderImap::setStatus(KMMessage * msg, KMMsgStatus status)
   jd.total = 1; jd.done = 0; jd.parent = NULL;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
-          mAccount, SLOT(slotSimpleResult(KIO::Job *)));
+          SLOT(slotSetStatusResult(KIO::Job *)));
   mAccount->displayProgress();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::expungeFolder(KMFolderImap * aFolder)
+void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
 {
   aFolder->setNeedsCompacting(FALSE);
   KURL url = mAccount->getUrl();
@@ -1063,6 +1053,7 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder)
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
   jd.parent = NULL;
+  jd.quiet = quiet;
   jd.total = 1; jd.done = 0;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),

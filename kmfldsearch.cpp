@@ -8,8 +8,9 @@
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "kmfoldertree.h"
 #include "kmmainwin.h"
+#include "kmfoldertree.h"
+#include "kmfolderimap.h"
 
 #include <qmessagebox.h>
 #include <qpushbutton.h>
@@ -226,15 +227,14 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg, const QCString& aMsgStr)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::slotFolderComplete(KMFolderTreeItem *fti, bool success)
+void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
 {
-  KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
   disconnect(folder,
-    SIGNAL(folderComplete(KMFolderTreeItem*, bool)),
-    this, SLOT(slotFolderComplete(KMFolderTreeItem*, bool)));
-  if (success) searchInFolder(fti->folder, mFolders.findIndex(fti->folder));
+    SIGNAL(folderComplete(KMFolderImap*, bool)),
+    this, SLOT(slotFolderComplete(KMFolderImap*, bool)));
+  if (success) searchInFolder(folder, mFolders.findIndex(folder));
   else searchDone();
-  fti->folder->close();
+  folder->close();
 }
 
 
@@ -374,21 +374,17 @@ void KMFldSearch::slotSearch()
     mMainWin->folderTree()->createFolderList( &str, &folders );
     if (str[mCbxFolders->currentItem()-1] == mCbxFolders->currentText()) {
       KMFolder *folder = *folders.at(mCbxFolders->currentItem()-1);
-      KMFolderTreeItem *fti;
       if (folder->protocol() == "imap")
       {
-        fti = static_cast<KMFolderTreeItem*>(mMainWin->folderTree()
-          ->indexOfFolder(folder));
         KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
-        if (fti && imap_folder && imap_folder->getImapState()
+        if (imap_folder && imap_folder->getImapState()
           == KMFolderImap::imapNoInformation)
         {
-          KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
           imap_folder->open();
           connect(imap_folder,
-            SIGNAL(folderComplete(KMFolderTreeItem *, bool)),
-            SLOT(slotFolderComplete(KMFolderTreeItem *, bool)));
-          imap_folder->getFolder(fti);
+            SIGNAL(folderComplete(KMFolderImap *, bool)),
+            SLOT(slotFolderComplete(KMFolderImap *, bool)));
+          imap_folder->getFolder();
           return;
         }
       }

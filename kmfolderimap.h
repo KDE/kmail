@@ -121,7 +121,7 @@ public:
   /**
    * Retrieve all mails in a folder
    */
-  void getFolder(KMFolderTreeItem * fti);
+  void getFolder();
 
   /**
    * Get the whole message
@@ -131,7 +131,7 @@ public:
   /**
    * Create a new subfolder
    */
-  void createFolder(KMFolderTreeItem * fti, const QString &name);
+  void createFolder(const QString &name);
 
   /**
    * Delete a message
@@ -146,16 +146,16 @@ public:
   /**
    * Expunge deleted messages from the folder
    */
-  void expungeFolder(KMFolderImap * aFolder);
+  void expungeFolder(KMFolderImap * aFolder, bool quiet);
 
   /**
    * Emit the folderComplete signal
    */
-  void sendFolderComplete(KMFolderTreeItem * fti, bool success)
-  { emit folderComplete(fti, success); }
+  void sendFolderComplete(bool success)
+  { emit folderComplete(this, success); }
 
 signals:
-  void folderComplete(KMFolderTreeItem * fti, bool success);
+  void folderComplete(KMFolderImap *folder, bool success);
 
   /**
    * Emitted, when the account is deleted
@@ -217,14 +217,13 @@ protected slots:
   /**
    * Retrieve the whole folder or only the changes
    */
-  void checkValidity(KMFolderTreeItem * fti);
+  void checkValidity();
   void slotCheckValidityResult(KIO::Job * job);
 
   /**
    * Get the folder now (internal)
    */
-  void reallyGetFolder(KMFolderTreeItem * fti,
-                       const QString &startUid = QString::null);
+  void reallyGetFolder(const QString &startUid = QString::null);
 
   /**
    * Retrieve the next message

@@ -5,13 +5,15 @@
 #include <qlistview.h>
 #include <qtimer.h>
 #include <klocale.h>
-#include "kmfolderimap.h"
 
 // Fixme! A temporary dependency
 #include "kmheaders.h" // For KMHeaderToFolderDrag & KMPaintInfo
 
+#include "kmfolder.h"
+
 class QDropEvent;
 class QPixmap;
+class KMFolderImap;
 
 class KMFolderTreeItem : public QListViewItem
 {

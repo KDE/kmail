@@ -20,7 +20,7 @@ class QLabel;
 class KMMainWin;
 class KMFolderMgr;
 class QListViewItem;
-class KMFolderTreeItem;
+class KMFolderImap;
 
 #define KMFldSearchInherited QDialog
 class KMFldSearch: public QDialog
@@ -37,7 +37,7 @@ protected slots:
   virtual void slotStop();
   virtual void slotShowMsg(QListViewItem *);
   virtual void slotFolderActivated(int nr);
-  virtual void slotFolderComplete(KMFolderTreeItem *fti, bool success);
+  virtual void slotFolderComplete(KMFolderImap *folder, bool success);
 
 protected:
   void enableGUI();

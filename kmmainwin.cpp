@@ -852,7 +852,7 @@ void KMMainWin::slotCompactFolder()
     if (mFolder->protocol() == "imap")
     {
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
-      imap->expungeFolder(imap);
+      imap->expungeFolder(imap, FALSE);
     }
     else
     {
@@ -880,7 +880,7 @@ void KMMainWin::slotCompactAll()
     if (folder->protocol() == "imap")
     {
       KMFolderImap *imap = static_cast<KMFolderImap*>(folder);
-      imap->expungeFolder(imap);
+      imap->expungeFolder(imap, TRUE);
     }
     else
       folder->compact();
@@ -1189,7 +1189,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
     if (imap->autoExpunge())
-      imap->expungeFolder(imap);
+      imap->expungeFolder(imap, TRUE);
   }
   writeFolderConfig();
   mFolder = (KMFolder*)aFolder;
