@@ -101,6 +101,8 @@ KMail::ACLEntryDialog::ACLEntryDialog( const QString& caption, QWidget* parent, 
   connect( mUserIdLineEdit, SIGNAL( textChanged( const QString& ) ), SLOT( slotChanged() ) );
   connect( mButtonGroup, SIGNAL( clicked( int ) ), SLOT( slotChanged() ) );
   enableButtonOK( false );
+
+  mUserIdLineEdit->setFocus();
 }
 
 void KMail::ACLEntryDialog::slotChanged()
@@ -189,7 +191,9 @@ void KMail::FolderDiaACLTab::ListViewItem::load( const ACLJobs::ACLListEntry& en
 ////
 
 KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, const char* name )
-  : FolderDiaTab( parent, name ), mDlg( dlg ),
+  : FolderDiaTab( parent, name ),
+    mImapAccount( 0 ),
+    mDlg( dlg ),
     mJobCounter( 0 ),
     mChanged( false ), mAccepting( false )
 {
@@ -233,64 +237,53 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   connect( this, SIGNAL( changed(bool) ), SLOT( slotChanged(bool) ) );
 }
 
-// This can probably be removed once KMFolderImap and KMFolderCachedImap have a common base class
-KMail::ImapAccountBase* KMail::FolderDiaACLTab::imapAccount() const
-{
-  KMFolder* folder = mDlg->folder();
-  if ( folder->folderType() == KMFolderTypeImap )
-    return static_cast<KMFolderImap*>( folder->storage() )->account();
-  else if ( folder->folderType() == KMFolderTypeCachedImap )
-    return static_cast<KMFolderCachedImap*>( folder->storage() )->account();
-  else
-    assert( 0 ); // see KMFolderDialog constructor
-  return 0;
-}
-
-#if 0 // not needed right now
-// This can probably be removed once KMFolderImap and KMFolderCachedImap have a common base class
-QString KMail::FolderDiaACLTab::imapPath() const
-{
-  KMFolder* folder = mDlg->folder();
-  if ( folder->folderType() == KMFolderTypeImap )
-    return static_cast<KMFolderImap*>( folder->storage() )->imapPath();
-  else if ( folder->folderType() == KMFolderTypeCachedImap )
-    return static_cast<KMFolderCachedImap*>( folder->storage() )->imapPath();
-  else
-    assert( 0 ); // see KMFolderDialog constructor
-  return 0;
-}
-#endif
-
-// This can probably be removed once KMFolderImap and KMFolderCachedImap have a common base class
+// Warning before save() this will return the url of the _parent_ folder, when creating a new one
 KURL KMail::FolderDiaACLTab::imapURL() const
 {
-  ImapAccountBase* account = imapAccount();
-  KURL url = account->getUrl();
-  KMFolder* folder = mDlg->folder();
-  if ( folder->folderType() == KMFolderTypeImap )
-    url.setPath( static_cast<KMFolderImap*>( folder->storage() )->imapPath() );
-  else if ( folder->folderType() == KMFolderTypeCachedImap )
-    url.setPath( static_cast<KMFolderCachedImap*>( folder->storage() )->imapPath() );
+  KURL url = mImapAccount->getUrl();
+  url.setPath( mImapPath );
+  return url;
+}
+
+void KMail::FolderDiaACLTab::initializeWithValuesFromFolder( KMFolder* folder )
+{
+  // This can be simplified once KMFolderImap and KMFolderCachedImap have a common base class
+  if ( folder->folderType() == KMFolderTypeImap ) {
+    KMFolderImap* folderImap = static_cast<KMFolderImap*>( folder->storage() );
+    mImapPath = folderImap->imapPath();
+    mImapAccount = folderImap->account();
+  }
+  else if ( folder->folderType() == KMFolderTypeCachedImap ) {
+    KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
+    mImapPath = folderImap->imapPath();
+    mImapAccount = folderImap->account();
+  }
   else
     assert( 0 ); // see KMFolderDialog constructor
-  return url;
 }
 
 void KMail::FolderDiaACLTab::load()
 {
+  if ( mDlg->folder() ) {
+    // existing folder
+    initializeWithValuesFromFolder( mDlg->folder() );
+  } else if ( mDlg->parentFolder() ) {
+    // new folder
+    initializeWithValuesFromFolder( mDlg->parentFolder() );
+  }
+
   // First ensure we are connected
-  ImapAccountBase* account = imapAccount();
   mStack->raiseWidget( mLabel );
-  if ( !account ) { // hmmm?
+  if ( !mImapAccount ) { // hmmm?
     mLabel->setText( i18n( "Error: no IMAP account defined for this folder" ) );
     return;
   }
-  mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( account->host() ) );
-  ImapAccountBase::ConnectionState state = account->makeConnection();
+  mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( mImapAccount->host() ) );
+  ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
     slotConnectionResult( 1 ); // any error code != 0
   } else if ( state == ImapAccountBase::Connecting ) {
-    connect( account, SIGNAL( connectionResult(int) ),
+    connect( mImapAccount, SIGNAL( connectionResult(int) ),
              this, SLOT( slotConnectionResult(int) ) );
   } else { // Connected
     slotConnectionResult( 0 );
@@ -299,20 +292,22 @@ void KMail::FolderDiaACLTab::load()
 
 void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode )
 {
-  ImapAccountBase* account = imapAccount();
-  disconnect( account, SIGNAL( connectionResult(int) ),
+  disconnect( mImapAccount, SIGNAL( connectionResult(int) ),
               this, SLOT( slotConnectionResult(int) ) );
   if ( errorCode ) {
     // Error (error message already shown by the account)
-    mLabel->setText( i18n( "Error connecting to server %1" ).arg( account->host() ) );
+    mLabel->setText( i18n( "Error connecting to server %1" ).arg( mImapAccount->host() ) );
     return;
   }
 
-  ACLJobs::GetACLJob* job = ACLJobs::getACL( account->slave(), imapURL() );
+  // TODO check if the capabilities of the IMAP server include "acl"
+
+  // List ACLs of folder (or its parent, if creating a new folder)
+  ACLJobs::GetACLJob* job = ACLJobs::getACL( mImapAccount->slave(), imapURL() );
 
   ImapAccountBase::jobData jd;
   jd.total = 1; jd.done = 0; jd.parent = NULL;
-  account->insertJob(job, jd);
+  mImapAccount->insertJob(job, jd);
 
   connect(job, SIGNAL(result(KIO::Job *)),
           SLOT(slotGetACLResult(KIO::Job *)));
@@ -320,10 +315,9 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode )
 
 void KMail::FolderDiaACLTab::slotGetACLResult(KIO::Job *job)
 {
-  ImapAccountBase* account = imapAccount();
-  ImapAccountBase::JobIterator it = account->findJob( job );
-  if ( it == account->jobsEnd() ) return;
-  account->removeJob( it );
+  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
+  if ( it == mImapAccount->jobsEnd() ) return;
+  mImapAccount->removeJob( it );
   if ( job->error() ) {
     mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
     return;
@@ -336,6 +330,11 @@ void KMail::FolderDiaACLTab::slotGetACLResult(KIO::Job *job)
     ListViewItem* item = new ListViewItem( mListView );
     item->load( *it );
   }
+  loadFinished();
+}
+
+void KMail::FolderDiaACLTab::loadFinished()
+{
   mStack->raiseWidget( mACLWidget );
   slotSelectionChanged( mListView->selectedItem() );
 }
@@ -396,6 +395,10 @@ void KMail::FolderDiaACLTab::ACLJobDone(KIO::Job* job)
 // Called by 'add' and 'edit' jobs fired from save()
 void KMail::FolderDiaACLTab::slotSetACLResult(KIO::Job* job)
 {
+  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
+  if ( it == mImapAccount->jobsEnd() ) return;
+  mImapAccount->removeJob( it );
+
   bool ok = false;
   for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
@@ -416,6 +419,10 @@ void KMail::FolderDiaACLTab::slotSetACLResult(KIO::Job* job)
 
 void KMail::FolderDiaACLTab::slotDeleteACLResult(KIO::Job* job)
 {
+  ImapAccountBase::JobIterator it = mImapAccount->findJob( job );
+  if ( it == mImapAccount->jobsEnd() ) return;
+  mImapAccount->removeJob( it );
+
   if ( !job->error() ) {
     // Success -> remove from list
     ACLJobs::DeleteACLJob* delJob = static_cast<ACLJobs::DeleteACLJob *>( job );
@@ -435,34 +442,39 @@ void KMail::FolderDiaACLTab::slotRemoveACL()
   emit changed(true);
 }
 
-bool KMail::FolderDiaACLTab::accept()
+KMail::FolderDiaTab::AcceptStatus KMail::FolderDiaACLTab::accept()
 {
-  if ( !mChanged || !imapAccount() )
-    return true; // no change, ok for accepting the dialog immediately
+  if ( !mChanged || !mImapAccount )
+    return Accepted; // (no change made), ok for accepting the dialog immediately
   // If there were changes, we need to apply them first (which is async)
-  mAccepting = true;
   save();
-  return false; // i.e. don't close yet
+  mAccepting = true;
+  return Delayed;
 }
 
-void KMail::FolderDiaACLTab::save()
+bool KMail::FolderDiaACLTab::save()
 {
-  if ( !mChanged )
-    return;
+  if ( !mChanged || !mImapAccount ) // no changes
+    return true;
   mJobCounter = 0;
-  ImapAccountBase* account = imapAccount();
-  if ( !account )
-      return;
+  assert( mDlg->folder() ); // should have been created already
+
+  // When creating a new folder with online imap, update mImapPath
+  // For disconnected imap, we shouldn't even be here
+  if ( mDlg->isNewFolder() ) {
+    mImapPath += mDlg->folder()->name();
+  }
+
   for ( QListViewItem* item = mListView->firstChild(); item; item = item->nextSibling() ) {
     ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
     if ( ACLitem->isModified() ) {
       kdDebug(5006) << "Modified item: " << ACLitem->userId() << endl;
 
-      KIO::Job* job = ACLJobs::setACL( account->slave(), imapURL(), ACLitem->userId(), ACLitem->permissions() );
+      KIO::Job* job = ACLJobs::setACL( mImapAccount->slave(), imapURL(), ACLitem->userId(), ACLitem->permissions() );
       ACLitem->setJob( job );
       ImapAccountBase::jobData jd;
       jd.total = 1; jd.done = 0; jd.parent = NULL;
-      account->insertJob(job, jd);
+      mImapAccount->insertJob(job, jd);
 
       connect(job, SIGNAL(result(KIO::Job *)),
               SLOT(slotSetACLResult(KIO::Job *)));
@@ -471,15 +483,16 @@ void KMail::FolderDiaACLTab::save()
   }
   for( QStringList::Iterator rit = mRemovedACLs.begin(); rit != mRemovedACLs.end(); ++rit ) {
     kdDebug(5006) << "Removed item: " << (*rit) << endl;
-    KIO::Job* job = ACLJobs::deleteACL( account->slave(), imapURL(), (*rit) );
+    KIO::Job* job = ACLJobs::deleteACL( mImapAccount->slave(), imapURL(), (*rit) );
     ImapAccountBase::jobData jd;
     jd.total = 1; jd.done = 0; jd.parent = NULL;
-    account->insertJob(job, jd);
+    mImapAccount->insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
             SLOT(slotDeleteACLResult(KIO::Job *)));
     ++mJobCounter;
   }
+  return true;
 }
 
 void KMail::FolderDiaACLTab::slotChanged( bool b )

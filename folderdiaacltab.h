@@ -80,8 +80,8 @@ public:
   FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, const char* name = 0 );
 
   virtual void load();
-  virtual void save();
-  virtual bool accept();
+  virtual bool save();
+  virtual AcceptStatus accept();
 
 private slots:
   // Network (KIO) slots
@@ -103,8 +103,9 @@ private slots:
 
 private:
   void ACLJobDone(KIO::Job* job);
-  KMail::ImapAccountBase* imapAccount() const;
   KURL imapURL() const;
+  void initializeWithValuesFromFolder( KMFolder* folder );
+  void loadFinished();
 
 private:
   // The widget containing the ACL widgets (listview and buttons)
@@ -117,6 +118,8 @@ private:
   KPushButton* mRemoveACL;
 
   QStringList mRemovedACLs;
+  QString mImapPath;
+  ImapAccountBase* mImapAccount;
 
   QLabel* mLabel;
   QWidgetStack* mStack;

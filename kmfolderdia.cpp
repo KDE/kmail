@@ -77,7 +77,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   mFolder( aFolder ),
   mFolderDir( aFolderDir ),
   mParentFolder( 0 ),
-  mPositionInParentFolder( 0 )
+  mPositionInParentFolder( 0 ),
+  mIsNewFolder( aFolder == 0 )
 {
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
@@ -132,11 +133,9 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     addTab( tab );
   }
 
-  if ( mFolder && ( mFolder->folderType() == KMFolderTypeImap || mFolder->folderType() == KMFolderTypeCachedImap ) )
+  KMFolderType folderType = mFolder ? mFolder->folderType() : mParentFolder ? mParentFolder->folderType() : KMFolderTypeUnknown;
+  if ( folderType == KMFolderTypeImap || folderType == KMFolderTypeCachedImap )
   {
-    //KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
-    // TODO check if the capabilities of the IMAP server include "acl"
-
     box = addVBoxPage( i18n("Access Control") );
     tab = new FolderDiaACLTab( this, box );
     addTab( tab );
@@ -160,8 +159,14 @@ void KMFolderDialog::addTab( FolderDiaTab* tab )
 // Not used yet (no button), but ready to be used :)
 void KMFolderDialog::slotApply()
 {
+  if ( mFolder.isNull() && !mIsNewFolder ) { // deleted meanwhile?
+    KDialogBase::slotApply();
+    return;
+  }
   for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
     mTabs[i]->save();
+  if ( !mFolder.isNull() && mIsNewFolder ) // we just created it
+    mIsNewFolder = false; // so it's new anymore :)
   KDialogBase::slotApply();
 }
 
@@ -170,10 +175,21 @@ void KMFolderDialog::slotApply()
 // in case of errors during the upload.
 void KMFolderDialog::slotOk()
 {
+  if ( mFolder.isNull() && !mIsNewFolder ) { // deleted meanwhile?
+    KDialogBase::slotOk();
+    return;
+  }
+
   mDelayedSavingTabs = 0; // number of tabs which need delayed saving
-  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i )
-    if ( !mTabs[i]->accept() )
+  for ( unsigned int i = 0 ; i < mTabs.count() ; ++i ) {
+    FolderDiaTab::AcceptStatus s = mTabs[i]->accept();
+    if ( s == FolderDiaTab::Canceled ) {
+      slotCancelAccept();
+      return;
+    }
+    else if ( s == FolderDiaTab::Delayed )
       ++mDelayedSavingTabs;
+  }
 
   if ( mDelayedSavingTabs )
     enableButtonOK( false );
@@ -630,11 +646,10 @@ void FolderDiaGeneralTab::slotUpdateItems ( int current )
 }
 
 //-----------------------------------------------------------------------------
-void FolderDiaGeneralTab::save()
+bool FolderDiaGeneralTab::save()
 {
   // moving of IMAP folders is not yet supported
-  bool bIsNewFolder = ( !mDlg->folder() );
-  if ( bIsNewFolder || !mDlg->folder()->isSystemFolder() )
+  if ( mDlg->isNewFolder() || !mDlg->folder()->isSystemFolder() )
   {
     QString acctName;
     QString fldName, oldFldName;
@@ -642,7 +657,7 @@ void FolderDiaGeneralTab::save()
     KMFolder *selectedFolder = 0;
     int curFolder = mBelongsToComboBox->currentItem();
 
-    if( !bIsNewFolder ) oldFldName = mDlg->folder()->name();
+    if( !mDlg->isNewFolder() ) oldFldName = mDlg->folder()->name();
     if (!mNameEdit->text().isEmpty()) fldName = mNameEdit->text();
     else fldName = oldFldName;
     fldName.remove('/');
@@ -665,7 +680,7 @@ void FolderDiaGeneralTab::save()
                 && ( mDlg->folder()->name() == fldName ) ) ) )
     {
       KMessageBox::error( this, message );
-      return;
+      return false;
     }
 
     message = i18n( "<qt>Cannot move folder <b>%1</b> into a subfolder below itself.</qt>" ).arg(fldName);
@@ -678,7 +693,7 @@ void FolderDiaGeneralTab::save()
              && ( folderDir != mDlg->folder()->parent() ) ) {
         if( folderDir->findRef( mDlg->folder() ) != -1 ) {
           KMessageBox::error( this, message );
-          return;
+          return false;
         }
         folderDir = folderDir->parent();
       }
@@ -688,16 +703,16 @@ void FolderDiaGeneralTab::save()
     if( mDlg->folder() && mDlg->folder()->child() && selectedFolderDir &&
         ( selectedFolderDir->path().find( mDlg->folder()->child()->path() + "/" ) == 0 ) ) {
       KMessageBox::error( this, message );
-      return;
+      return false;
     }
 
     if( mDlg->folder() && mDlg->folder()->child()
         && ( selectedFolderDir == mDlg->folder()->child() ) ) {
       KMessageBox::error( this, message );
-      return;
+      return false;
     }
 
-    if( bIsNewFolder ) {
+    if( mDlg->isNewFolder() ) {
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
         mDlg->setFolder( kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir ) );
@@ -761,7 +776,7 @@ void FolderDiaGeneralTab::save()
     else
       folder->setUserWhoField(QString::null);
 
-    if( bIsNewFolder )
+    if( mDlg->isNewFolder() )
       folder->close();
 
     if( folder->folderType() == KMFolderTypeImap )
@@ -771,6 +786,7 @@ void FolderDiaGeneralTab::save()
           mNewMailCheckBox->isChecked() );
     }
   }
+  return true;
 }
 
 /**
@@ -932,7 +948,7 @@ void FolderDiaMailingListTab::load()
 }
 
 //-----------------------------------------------------------------------------
-void FolderDiaMailingListTab::save()
+bool FolderDiaMailingListTab::save()
 {
   KMFolder* folder = mDlg->folder();
   if( folder )
@@ -942,6 +958,7 @@ void FolderDiaMailingListTab::save()
     fillMLFromWidgets();
     folder->setMailingList( mMailingList );
   }
+  return true;
 }
 
 //----------------------------------------------------------------------------
