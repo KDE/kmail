@@ -6,11 +6,11 @@
 #include "kmheaders.h"
 #include "headeritem.h"
 using KMail::HeaderItem;
+
 #include "kcursorsaver.h"
 #include "kmcommands.h"
-#include "kmfolderimap.h"
 #include "kmmainwidget.h"
-#include "kmcomposewin.h"
+#include "kmmsglist.h"
 #include "kmfiltermgr.h"
 #include "undostack.h"
 #include "kmmsgdict.h"
