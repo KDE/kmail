@@ -31,6 +31,9 @@
 #include "kio/job.h"
 #include "kio/global.h"
 
+#include <qintdict.h>
+#include <qvaluelist.h>
+
 class KMFolderTreeItem;
 class KMFolderImap;
 
@@ -40,7 +43,7 @@ class KMImapJob : public QObject
 
 public:
   enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
-    tGetMessage, tPutMessage, tCopyMessage };
+    tGetMessage, tPutMessage, tCopyMessage, tMoveMessage };
   KMImapJob(KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0);
   KMImapJob(QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   ~KMImapJob();
@@ -57,7 +60,11 @@ private slots:
   /** Feeds the message in pieces to the server */
   void slotPutMessageDataReq(KIO::Job *job, QByteArray &data);
   void slotPutMessageResult(KIO::Job *job);
+  void slotPutMessageInfoData(KIO::Job *, const QString &data);
+  /** result of a copy-operation */
   void slotCopyMessageResult(KIO::Job *job);
+  void slotCopyMessageInfoData(KIO::Job *, const QString &data);
+
 private:
   void init(JobType jt, QString sets, KMFolderImap *folder, QPtrList<KMMessage>& msgList);
   JobType mType;
@@ -216,6 +223,17 @@ public:
    */
   virtual QString fileName() const { return encodeFileName(name()); }
 
+  /**
+   * Insert a new entry into the uid <=> sernum cache
+   */ 
+  void insertUidSerNumEntry(ulong uid, const ulong * sernum) {
+    uidmap.insert(uid, sernum); }
+
+  /**
+   * Splits a uid-set into single uids
+   */
+  static QValueList<int> splitSets(QString); 
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 
@@ -332,6 +350,7 @@ protected:
   bool        mCheckFlags;
   bool        mReadOnly;
   QGuardedPtr<KMAcctImap> mAccount;
+  QIntDict<ulong> uidmap;
 };
 
 #endif // kmfolderimap_h
