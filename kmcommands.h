@@ -62,6 +62,9 @@ public slots:
   // Retrieve messages then calls execute
   void start();
 
+  // advance the progressbar, emitted by the folderjob
+  void slotProgress( unsigned long done, unsigned long total );
+
 signals:
   void messagesTransfered( KMCommand::Result result );
   /** Emitted when the command has completed.
