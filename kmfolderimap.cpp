@@ -55,7 +55,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   KConfigGroupSaver saver(config, "Folder-" + idString());
   mUidValidity = config->readEntry("UidValidity");
   if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
-  if (mImapPath == "/INBOX")
+  if (aName == "INBOX" && mImapPath == "/INBOX/")
   {
     mIsSystemFolder = TRUE;
     mLabel = i18n("inbox");
@@ -259,8 +259,12 @@ void KMFolderImap::slotListResult(KIO::Job * job)
   {
     if (it_inboxOnly) listDirectory(NULL, TRUE);
     else {
-      if (mImapPath == "/INBOX" && mAccount->prefix() == "/INBOX/")
+      if (mIsSystemFolder && mImapPath == "/INBOX/"
+        && mAccount->prefix() == "/INBOX/")
+      {
+        mHasInbox = FALSE;
         mSubfolderNames.clear();
+      }
       createChildFolder();
       KMFolderImap *folder;
       KMFolderNode *node = mChild->first();
@@ -284,8 +288,9 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
         else folder = static_cast<KMFolderImap*>
           (mChild->createFolder("INBOX", TRUE));
         folder->setAccount(mAccount);
-        folder->setImapPath("/INBOX");
+        folder->setImapPath("/INBOX/");
         folder->setLabel(i18n("inbox"));
+        folder->listDirectory(NULL);
         changed = TRUE;
       }
       for (uint i = 0; i < mSubfolderNames.count(); i++)
@@ -339,7 +344,8 @@ void KMFolderImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds
         && name != ".." && (mAccount->hiddenFolders() || name.at(0) != '.')
         && (!(*it).inboxOnly || name == "INBOX"))
     {
-      if (((*it).inboxOnly || KURL(url).path() == "/") && name == "INBOX")
+kdDebug() << "path = " << KURL(url).path() << endl;
+      if (((*it).inboxOnly || KURL(url).path() == "/INBOX/") && name == "INBOX")
         mHasInbox = TRUE;
       else {
         mSubfolderNames.append(name);

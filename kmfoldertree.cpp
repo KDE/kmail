@@ -447,16 +447,19 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
       Q_ASSERT(parent);
       fti = new KMFolderTreeItem( parent, folder, &mPaintInfo );
 
-      if (folder->label() == i18n("inbox"))
-	fti->setPixmap( 0, *pixIn );
-      else if (folder->label() == i18n("outbox"))
-	fti->setPixmap( 0, *pixOut );
-      else if (folder->label() == i18n("sent-mail"))
-	fti->setPixmap( 0, *pixSent );
-      else if (folder->label() == i18n("trash"))
-	fti->setPixmap( 0, *pixTr );
-      else
-	fti->setPixmap( 0, *pixPlain );
+      if (folder->isSystemFolder())
+      {
+        if (folder->label() == i18n("inbox"))
+          fti->setPixmap( 0, *pixIn );
+        else if (folder->label() == i18n("outbox"))
+          fti->setPixmap( 0, *pixOut );
+        else if (folder->label() == i18n("sent-mail"))
+          fti->setPixmap( 0, *pixSent );
+        else if (folder->label() == i18n("trash"))
+          fti->setPixmap( 0, *pixTr );
+        else
+          fti->setPixmap( 0, *pixPlain );
+      } else fti->setPixmap( 0, *pixPlain );
 
       if (fti->folder && fti->folder->child())
 	addDirectory( fti->folder->child(), fti );
@@ -1204,7 +1207,8 @@ void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder && fti->folder->protocol() == "imap")
+  if (fti && fti->parent() == firstChild() && fti->folder
+    && fti->folder->protocol() == "imap")
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
     if (folder->getImapState() == KMFolderImap::imapNoInformation)
