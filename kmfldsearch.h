@@ -33,6 +33,7 @@ public:
 protected slots:
   virtual void slotClose();
   virtual void slotSearch();
+  virtual void slotStop();
   virtual void slotShowMsg(QListViewItem *);
 
 protected:
@@ -60,7 +61,7 @@ protected:
 protected:
   QGridLayout* mGrid;
   QComboBox *mCbxFolders;
-  QPushButton *mBtnSearch, *mBtnClose;
+  QPushButton *mBtnSearch, *mBtnStop, *mBtnClose;
   KMFldSearchRule **mRules;
   QListView* mLbxMatches;
   QLabel* mLblStatus;

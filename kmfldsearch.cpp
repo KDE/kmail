@@ -103,10 +103,13 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mGrid->addMultiCellWidget(mLbxMatches, mNumRules+2, mNumRules+2, 0, 4);
 
   bbox = new KButtonBox(this, Vertical);
-  mGrid->addMultiCellWidget(bbox, 0, mNumRules-1, 4, 4);
+  mGrid->addMultiCellWidget(bbox, 0, mNumRules, 4, 4);
   mBtnSearch = bbox->addButton(i18n("Search"));
   mBtnSearch->setDefault(true);
   connect(mBtnSearch, SIGNAL(clicked()), SLOT(slotSearch()));
+  mBtnStop = bbox->addButton(i18n("Stop"));
+  mBtnStop->setEnabled(false);
+  connect(mBtnStop, SIGNAL(clicked()), SLOT(slotStop()));
   mBtnClose  = bbox->addButton(i18n("Close"));
   connect(mBtnClose, SIGNAL(clicked()), SLOT(slotClose()));
   bbox->layout();
@@ -228,7 +231,6 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
 
   assert(!aFld.isNull());
 
-  mBtnSearch->setText("Stop");
   if (aFld->isSystemFolder()) mSearchFolder = i18n(aFld->name());
     else mSearchFolder = aFld->name();
   kapp->processEvents();
@@ -272,7 +274,6 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   updStatus();
 
   aFld->close();
-  mBtnSearch->setText(i18n("Search"));
 }
 
 
@@ -303,18 +304,13 @@ void KMFldSearch::slotSearch()
   mLastFocus = focusWidget();
   mBtnSearch->setFocus();	// set focus so we don't miss key event
 
-  if (mSearching)
-  {
-    mSearching = false;
-    return;
-  }
-
   mCount = 0;
   mStopped = false;
   mNumMatches = 0;
   mSearching  = true;
 
-  mBtnSearch->setCaption(i18n("Stop"));
+  mBtnSearch->setEnabled(false);
+  mBtnStop->setEnabled(true);
   enableGUI();
   mLbxMatches->clear();
   kapp->processEvents();
@@ -337,12 +333,19 @@ void KMFldSearch::slotSearch()
   mSearching=false;
   updStatus();
 
-  mBtnSearch->setCaption(i18n("Search"));
+  mBtnSearch->setEnabled(true);
+  mBtnStop->setEnabled(false);
   enableGUI();
   if( mLastFocus )
     mLastFocus->setFocus();
 }
 
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotStop()
+{
+  mSearching = false;
+}
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotClose()
