@@ -1345,6 +1345,8 @@ void KMHeaders::resendMsg ()
   newMsg->setCharset(msg->codec()->mimeName());
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
+  // the message needs a new Message-Id
+  newMsg->removeHeaderField( "Message-Id" );
 
   win = new KMComposeWin();
   win->setMsg(newMsg, FALSE, true);
