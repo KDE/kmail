@@ -44,6 +44,7 @@ namespace KIO
 
 namespace KMail {
   class Vacation;
+  class AttachmentStrategy;
 }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -224,7 +225,7 @@ protected slots:
   void slotInlineAttachments();
   void slotHideAttachments();
   void slotCycleHeaderStyles();
-  void slotCycleAttachmentStyles();
+  void slotCycleAttachmentStrategy();
   void slotSetEncoding();
   void slotSendQueued();
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
@@ -288,7 +289,7 @@ protected:
   KActionCollection * actionCollection() { return mActionCollection; }
 
   KRadioAction * actionForHeaderStyle(int);
-  KRadioAction * actionForAttachmentStyle(int);
+  KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
 
 protected:
   KMFolderTree *mFolderTree;

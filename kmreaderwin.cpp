@@ -71,6 +71,8 @@ using namespace KMime;
 using KMail::ObjectTreeParser;
 #include "partmetadata.h"
 using KMail::PartMetaData;
+#include "attachmentstrategy.h"
+using KMail::AttachmentStrategy;
 
 // for the MIME structure viewer (khz):
 #include "kmmimeparttree.h"
@@ -788,10 +790,8 @@ void KMReaderWin::readConfig(void)
     mHeadersShow[ehs] = config->readListEntry("showExtraHeaders_"+QString::number(ehs+1));
   }
 
-  mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
-							   SmartAttmnt);
-  mLoadExternal = config->readBoolEntry( "htmlLoadExternal", false );
-  mViewer->setOnlyLocalReferences( !mLoadExternal );
+  mAttachmentStrategy =
+    AttachmentStrategy::create( config->readEntry( "attachment-strategy" ) );
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
@@ -847,7 +847,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
   config->writeEntry( "useFixedFont", mUseFixedFont );
   config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
-  config->writeEntry("attmnt-style",(int)mAttachmentStyle);
+  config->writeEntry("attachment-strategy",attachmentStrategy()->name());
   if (aWithSync) config->sync();
 }
 
@@ -966,10 +966,8 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 }
 
 
-//-----------------------------------------------------------------------------
-void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
-{
-  mAttachmentStyle = (AttachmentStyle)aAttachmentStyle;
+void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
+  mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart() ;
   update(true);
 }
 

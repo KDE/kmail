@@ -70,6 +70,8 @@
 using KMail::Vacation;
 #include "subscriptiondialog.h"
 using KMail::SubscriptionDialog;
+#include "attachmentstrategy.h"
+using KMail::AttachmentStrategy;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -1412,30 +1414,24 @@ void KMMainWidget::slotCycleHeaderStyles() {
 
 
 void KMMainWidget::slotIconicAttachments() {
-  mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
+  mMsgView->setAttachmentStrategy( AttachmentStrategy::iconic() );
 }
 
 void KMMainWidget::slotSmartAttachments() {
-  mMsgView->setAttachmentStyle( KMReaderWin::SmartAttmnt );
+  mMsgView->setAttachmentStrategy( AttachmentStrategy::smart() );
 }
 
 void KMMainWidget::slotInlineAttachments() {
-  mMsgView->setAttachmentStyle( KMReaderWin::InlineAttmnt );
+  mMsgView->setAttachmentStrategy( AttachmentStrategy::inlined() );
 }
 
 void KMMainWidget::slotHideAttachments() {
-  mMsgView->setAttachmentStyle( KMReaderWin::HideAttmnt );
+  mMsgView->setAttachmentStrategy( AttachmentStrategy::hidden() );
 }
 
-void KMMainWidget::slotCycleAttachmentStyles() {
-  KMReaderWin::AttachmentStyle style = mMsgView->attachmentStyle();
-  if ( style == KMReaderWin::HideAttmnt ) // last, go to top again:
-    mMsgView->setAttachmentStyle( KMReaderWin::IconicAttmnt );
-  else {
-    style = KMReaderWin::AttachmentStyle((int)style+1);
-    mMsgView->setAttachmentStyle( KMReaderWin::AttachmentStyle(style) );
-  }
-  KRadioAction * action = actionForAttachmentStyle( mMsgView->attachmentStyle() );
+void KMMainWidget::slotCycleAttachmentStrategy() {
+  mMsgView->setAttachmentStrategy( mMsgView->attachmentStrategy()->next() );
+  KRadioAction * action = actionForAttachmentStrategy( mMsgView->attachmentStrategy() );
   assert( action );
   action->setChecked( true );
 }
@@ -1862,18 +1858,17 @@ KRadioAction * KMMainWidget::actionForHeaderStyle( int style ) {
     return 0;
 }
 
-KRadioAction * KMMainWidget::actionForAttachmentStyle( int style ) {
+KRadioAction * KMMainWidget::actionForAttachmentStrategy( const AttachmentStrategy * as ) {
   const char * actionName = 0;
-  switch ( style ) {
-  case KMReaderWin::IconicAttmnt:
-    actionName = "view_attachments_as_icons"; break;
-  case KMReaderWin::SmartAttmnt:
-    actionName = "view_attachments_smart"; break;
-  case KMReaderWin::InlineAttmnt:
-    actionName = "view_attachments_inline"; break;
-  case KMReaderWin::HideAttmnt:
-    actionName = "view_attachments_hide"; break;
-  }
+  if ( as == AttachmentStrategy::iconic() )
+    actionName = "view_attachments_as_icons";
+  else if ( as == AttachmentStrategy::smart() )
+    actionName = "view_attachments_smart";
+  else if ( as == AttachmentStrategy::inlined() )
+    actionName = "view_attachments_inline";
+  else if ( as == AttachmentStrategy::hidden() )
+    actionName = "view_attachments_hide";
+
   if ( actionName )
     return static_cast<KRadioAction*>(actionCollection()->action(actionName));
   else
@@ -2198,7 +2193,7 @@ void KMMainWidget::setupActions()
     new KActionMenu( i18n("View->", "&Attachments"),
 		     actionCollection(), "view_attachments" );
   connect( attachmentMenu, SIGNAL(activated()),
-	   SLOT(slotCycleAttachmentStyles()) );
+	   SLOT(slotCycleAttachmentStrategy()) );
 
   attachmentMenu->setToolTip( i18n("Choose display style of attachments") );
 
@@ -2231,7 +2226,7 @@ void KMMainWidget::setupActions()
   attachmentMenu->insert( raction );
 
   // check the right one:
-  raction = actionForAttachmentStyle( mMsgView->attachmentStyle() );
+  raction = actionForAttachmentStrategy( mMsgView->attachmentStrategy() );
   if ( raction )
     raction->setChecked( true );
 

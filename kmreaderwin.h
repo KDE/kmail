@@ -36,6 +36,7 @@ class KMMessagePart;
 namespace KMail {
   class PartMetaData;
   class ObjectTreeParser;
+  class AttachmentStrategy;
 };
 
 class partNode; // might be removed when KMime is used instead of mimelib
@@ -93,16 +94,16 @@ public:
   /** Style of the message header. */
   enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
                      HdrAll=5 };
-  /** Style of attachments. */
-  enum AttachmentStyle {IconicAttmnt=1, SmartAttmnt =2, InlineAttmnt = 3, HideAttmnt = 4};
 
   /** Get/set the message header style. */
   HeaderStyle headerStyle(void) const { return mHeaderStyle; }
   virtual void setHeaderStyle(HeaderStyle style);
 
-  /** Get/set the message attachment style. */
-  AttachmentStyle attachmentStyle(void) const { return mAttachmentStyle;}
-  virtual void setAttachmentStyle(int style);
+  /** Get/set the message attachment strategy. */
+  const KMail::AttachmentStrategy * attachmentStrategy() const {
+    return mAttachmentStrategy;
+  }
+  void setAttachmentStrategy( const KMail::AttachmentStrategy * strategy );
 
   /** Get/set codec for reader win. */
   const QTextCodec *codec(void) const { return mCodec; }
@@ -439,7 +440,7 @@ protected:
   bool mShowAllHeaders[HdrAll];
   QStringList mHeadersHide[HdrAll];
   QStringList mHeadersShow[HdrAll];
-  AttachmentStyle mAttachmentStyle;
+  const KMail::AttachmentStrategy * mAttachmentStrategy;
   bool mAutoDelete;
   QFont mBodyFont, mFixedFont;
   bool mInlineImage;
