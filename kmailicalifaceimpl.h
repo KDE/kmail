@@ -40,6 +40,7 @@
 #include <kfoldertree.h>
 
 #include <qdict.h>
+#include <qguardedptr.h>
 
 class KMFolder;
 class KMMessage;
@@ -148,11 +149,11 @@ private:
 
   void loadPixmaps() const;
 
-  KMFolder* mContacts;
-  KMFolder* mCalendar;
-  KMFolder* mNotes;
-  KMFolder* mTasks;
-  KMFolder* mJournals;
+  QGuardedPtr<KMFolder> mContacts;
+  QGuardedPtr<KMFolder> mCalendar;
+  QGuardedPtr<KMFolder> mNotes;
+  QGuardedPtr<KMFolder> mTasks;
+  QGuardedPtr<KMFolder> mJournals;
 
   // The extra IMAP resource folders
   class ExtraFolder;
