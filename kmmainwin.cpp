@@ -339,9 +339,12 @@ void KMMainWin::slotEmptyFolder()
     mFolder->open();
     mHeaders->setFolder(NULL);
     mMsgView->clear();
-    while ((msg = mFolder->take(0)) != NULL)
-      trashFolder->addMsg(msg);
 
+    if (mFolder != trashFolder)
+    {
+      while ((msg = mFolder->take(0)) != NULL)
+	trashFolder->addMsg(msg);
+    }
     mFolder->close();
     mFolder->expunge();
     mHeaders->setFolder(mFolder);

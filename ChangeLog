@@ -1,4 +1,9 @@
-1998-04-04  Stefan Taferner  <taferner@kde.org>
+1998-04-28  Stefan Taferner  <taferner@kde.org> (KMail-0.6.6)
+
+	* Folders: Emptying of the trash folder resulted in an infinite 
+	loop. Fixed now.
+
+1998-04-04  Stefan Taferner  <taferner@kde.org> (Kde Beta-4)
 
 	* Filters: Removed warning dialog. Filters are working ok for
 	me for several weeks now.
