@@ -126,7 +126,7 @@ void lockOrDie() {
 
 void cleanup()
 {
-  const QString lockLocation = locateLocal("appdata", "lock");
+  const QString lockLocation = locateLocal("data", "kmail/lock");
   KSimpleConfig config(lockLocation);
   config.writeEntry("pid", -1);
   config.sync();
