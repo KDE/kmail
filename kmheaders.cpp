@@ -1081,12 +1081,6 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
     rc = destFolder->addMsg(newMsg);
   }
   destFolder->close();
-
-  QListViewItem *item;
-  for (item = firstChild(); item; item = item->nextSibling())
-    if (item->isSelected())
-      setSelected( item, FALSE );
-
   kbp->idle();
 }
 
@@ -1264,7 +1258,6 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
   return -1;
 }
 
-
 //-----------------------------------------------------------------------------
 void KMHeaders::nextUnreadMessage()
 {
@@ -1298,7 +1291,6 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
   KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
   if (!item)
     return;
-
   int idx = item->msgId();
 
   mOwner->statusMsg("");
@@ -1351,9 +1343,14 @@ void KMHeaders::updateMessageList(void)
   setUpdatesEnabled(FALSE);
 
   int oldSize = mItems.size();
+  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+	     this,SLOT(highlightMessage(QListViewItem*)));
+
   for (int temp = oldSize; temp > mFolder->count(); --temp)
     if (mItems[temp-1])
       delete mItems[temp-1];
+  connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	  this,SLOT(highlightMessage(QListViewItem*)));
   
   mItems.resize( mFolder->count() );
   for (i=0; i<mFolder->count(); i++)
@@ -1401,9 +1398,62 @@ void KMHeaders::updateMessageList(void)
   //  highlightMessage(currentItem());
 }
 
+//-----------------------------------------------------------------------------
+// KMail Header list selection/navigation description
+// 
+// If the selection state changes the reader window is updated to show the 
+// current item.
+// 
+// (The selection state of a message or messages can be changed by pressing 
+//  space, or normal/shift/cntrl clicking).
+// 
+// The following keyboard events are supported when the messages headers list 
+// has focus, Ctrl+Key_Down, Ctrl+Key_Up, Ctrl+Key_Home, Ctrl+Key_End, 
+// Ctrl+Key_Next, Ctrl+Key_Prior, these events change the current item but do 
+// not change the selection state.
+//
+//
+// See contentsMousePressEvent below for a description of mouse selection
+// behaviour.
+void KMHeaders::keyPressEvent( QKeyEvent * e )
+{
+    bool cntrl = (e->state() & ControlButton );
+    QListViewItem *cur = currentItem();
+
+    if (!e || !firstChild())
+      return;
+
+    // If no current item, make some first item current when a key is pressed
+    if (!cur) {
+      setCurrentItem( firstChild() );
+      return;
+    }
+
+    // Handle space key press
+    if (cur->isSelectable() && e->ascii() == ' ' ) {
+	setSelected( cur, !cur->isSelected() );
+	highlightMessage( cur );
+	return;
+    }
+
+    if (cntrl) {
+      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+		 this,SLOT(highlightMessage(QListViewItem*)));
+      switch (e->key()) {
+      case Key_Down:
+      case Key_Up:
+      case Key_End:
+      case Key_Next:
+      case Key_Prior:
+	KMHeadersInherited::keyPressEvent( e );
+      }
+      connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	      this,SLOT(highlightMessage(QListViewItem*)));
+    }
+}
 
 //-----------------------------------------------------------------------------
-// KMail selection - simple description
+// KMail mouse selection - simple description
 // Normal click - select and make current just this item  unselect all others
 // Shift click  - select all items from current item to clicked item
 //                can be used multiple times
@@ -1418,7 +1468,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     KMHeadersInherited::contentsMousePressEvent(e);
     return;
   }
-  
+
   setCurrentItem( lvi );
   if ((e->button() == LeftButton) && 
       !(e->state() & ControlButton) &&
@@ -1443,7 +1493,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
       setSelected( lvi, TRUE );
     }
     slotRMB();
-  }
+  }  
 }
 
 void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
