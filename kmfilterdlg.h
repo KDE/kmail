@@ -307,7 +307,7 @@ public:
   /** Create the filter dialog. The only class which should be able to
       do this is @ref KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  KMFilterDlg(QWidget* parent=0, const char* name=0, bool popFilter = false);
+  KMFilterDlg(QWidget* parent=0, const char* name=0, bool popFilter=false);
 
   /** Called from @ref KMFilterMgr. Creates a new filter and presets
       the first rule with "field equals value". Internally forwarded
@@ -329,6 +329,7 @@ protected slots:
   void slotApplicabilityChanged();
   void slotStopProcessingButtonToggled( bool aChecked );
   void slotReset();
+  void slotSaveSize();
 
 protected:
   /** The widget that contains the ListBox showing the filters, and

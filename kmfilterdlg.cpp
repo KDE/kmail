@@ -12,6 +12,7 @@
 #include <klocale.h>
 #include <klineeditdlg.h>
 #include <kiconloader.h>
+#include <kapplication.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -175,7 +176,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
 	     this, SLOT(slotStopProcessingButtonToggled(bool)) );
   }
 	
-	// reset all widgets here
+  // reset all widgets here
   connect( mFilterList, SIGNAL(resetWidgets()),
 	   this, SLOT(slotReset()) );
   
@@ -190,15 +191,30 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
   // apply changes on 'OK'
   connect( this, SIGNAL(okClicked()),
 	   mFilterList, SLOT(slotApplyFilterChanges()) );
-  
+
+  // save dialog size on 'OK'
+  connect( this, SIGNAL(okClicked()),
+	   this, SLOT(slotSaveSize()) );
+
   // destruct the dialog on OK, close and Cancel
   connect( this, SIGNAL(finished()),
 	   this, SLOT(slotDelayedDestruct()) );
 
-  adjustSize();
+  KConfigGroup geometry( kapp->config(), "Geometry");
+  const char * configKey
+    = bPopFilter ? "popFilterDialogSize" : "filterDialogSize";
+  if ( geometry.hasKey( configKey ) )
+    resize( geometry.readSizeEntry( configKey ) );
+  else
+    adjustSize();
 
   // load the filter list (emits filterSelected())
   mFilterList->loadFilterList();
+}
+
+void KMFilterDlg::slotSaveSize() {
+  KConfigGroup geometry( kapp->config(), "Geometry" );
+  geometry.writeEntry( bPopFilter ? "popFilterDialogSize" : "filterDialogSize", size() );
 }
 
 /** Set action of popFilter */
