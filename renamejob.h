@@ -53,11 +53,10 @@ public:
   /**
    * Create a new job
    * @param storage the folder that should be renames
-   * @param account the ImapAccountBase of the folder
    * @param newName the new name of the folder
    * @param newParent the new parent if the folder should be moved, else 0
    */
-  RenameJob( FolderStorage* storage, const QString& newName, 
+  RenameJob( FolderStorage* storage, const QString& newName,
       KMFolderDir* newParent = 0 );
 
   virtual ~RenameJob();

@@ -51,8 +51,11 @@ class SearchJob : public FolderJob
 public:
   /**
    * Creates a new job
+   * @param folder the folder that should be searched
+   * @param account the ImapAccountBase of the folder
+   * @param pattern the search pattern
    * @param serNum if you specify the serNum only this is checked
-   */ 
+   */
   SearchJob( KMFolderImap* folder, ImapAccountBase* account,
              KMSearchPattern* pattern, Q_UINT32 serNum = 0 );
 
