@@ -43,8 +43,9 @@ public:
 		  FuncEquals, FuncNotEqual,
 		  FuncRegExp, FuncNotRegExp,
 		  FuncIsGreater, FuncIsLessOrEqual,
-		  FuncIsLess, FuncIsGreaterOrEqual,
-		  FuncIsInAddressbook, FuncIsNotInAddressbook};
+  		  FuncIsLess, FuncIsGreaterOrEqual,
+		  FuncIsInAddressbook, FuncIsNotInAddressbook,
+                  FuncIsInCategory, FuncIsNotInCategory};
   KMSearchRule ( const QCString & field=0, Function=FuncContains,
                  const QString &contents=QString::null );
   KMSearchRule ( const KMSearchRule &other );

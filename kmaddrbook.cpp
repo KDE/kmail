@@ -108,6 +108,7 @@ QString KabcBridge::expandNickName( const QString& nickName )
   return QString();
 }
 
+
 //-----------------------------------------------------------------------------
 QString KabcBridge::expandDistributionList( const QString& listName )
 {
@@ -130,6 +131,22 @@ QString KabcBridge::expandDistributionList( const QString& listName )
   return QString();
 }
 
+QStringList KabcBridge::categories()
+{
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::Addressee::List addresses = addressBook->allAddressees();
+  QStringList allcategories, aux;
+    
+  for ( KABC::Addressee::List::Iterator it = addresses.begin(); it != addresses.end(); ++it ) {
+    aux = ( *it ).categories();
+    for ( QStringList::ConstIterator itAux = aux.begin(); itAux != aux.end(); ++itAux ) {  // don't have duplicates in allcategories
+      if ( allcategories.find( *itAux ) == allcategories.end() )
+        allcategories += *itAux;
+    }
+  }
+  return allcategories;
+}
+ 
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
 #if KDE_IS_VERSION( 3, 1, 92 )

@@ -5,6 +5,7 @@
 
 #include <config.h>
 
+#include "kmaddrbook.h"
 #include "kmsearchpattern.h"
 #include "kmmessage.h"
 #include "kmmsgindex.h"
@@ -28,7 +29,7 @@ using KMail::FilterLog;
 static const char* funcConfigNames[] =
   { "contains", "contains-not", "equals", "not-equal", "regexp",
     "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal",
-    "is-in-addressbook", "is-not-in-addressbook" };
+    "is-in-addressbook", "is-not-in-addressbook" , "is-in-category", "is-not-in-category"};
 static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfigNames;
 
 
@@ -318,7 +319,7 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     if ( msgContents.isEmpty() )
       return false;
   }
-
+  
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {
     QString msg = ( rc ? "<font color=#00FF00>1 = </font>"
@@ -397,7 +398,40 @@ bool KMSearchRuleString::matchesInternal( const QString & msgContents ) const
     }
     return false;
   }
-
+  
+  case FuncIsInCategory: {
+    QString category = contents();
+    QStringList addressList =  KMMessage::splitEmailAddrList( msgContents.lower() );
+    KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
+    
+    for( QStringList::ConstIterator it = addressList.begin();  
+      it != addressList.end(); ++it ) {
+        KABC::Addressee::List addresses = stdAb->findByEmail( KMMessage::getEmailAddr( *it ) );
+       
+          for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )
+              if ( (*itAd).hasCategory(category) )
+                return true;
+      
+      }
+      return false;
+    }
+    
+    case FuncIsNotInCategory: {
+      QString category = contents();
+      QStringList addressList =  KMMessage::splitEmailAddrList( msgContents.lower() );
+      KABC::AddressBook *stdAb = KABC::StdAddressBook::self();
+      
+      for( QStringList::ConstIterator it = addressList.begin();  
+        it != addressList.end(); ++it ) {
+          KABC::Addressee::List addresses = stdAb->findByEmail( KMMessage::getEmailAddr( *it ) );
+     
+            for ( KABC::Addressee::List::Iterator itAd = addresses.begin(); itAd != addresses.end(); ++itAd )
+                if ( (*itAd).hasCategory(category) )
+                  return false;
+     
+      }
+      return true;
+    }
   default:
     ;
   }
@@ -501,7 +535,7 @@ bool KMSearchRuleNumerical::matchesInternal( long numericalValue,
 
   case FuncIsNotInAddressbook:
     return false;
-
+    
   default:
     ;
   }
