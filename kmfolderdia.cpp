@@ -583,7 +583,7 @@ void KMFolderDialog::slotOk()
     if( bIsNewFolder ) {
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
-        mFolder = new KMFolderImap(mFolderDir, fldName);
+        mFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
       } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
         mFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
