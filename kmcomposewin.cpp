@@ -925,6 +925,8 @@ void KMComposeWin::setupActions(void)
   KStdAction::selectAll (this, SLOT(slotMarkAll()), actionCollection());
 
   KStdAction::find (this, SLOT(slotFind()), actionCollection());
+  KStdAction::findNext(this, SLOT(slotSearchAgain()), actionCollection());
+
   KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
   KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
@@ -2464,6 +2466,10 @@ void KMComposeWin::slotFind()
   mEditor->search();
 }
 
+void KMComposeWin::slotSearchAgain()
+{
+  mEditor->repeatSearch();
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotReplace()

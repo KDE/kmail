@@ -374,6 +374,7 @@ public slots:
   void slotHelp();
 
   void slotFind();
+  void slotSearchAgain();
   void slotReplace();
   void slotUndo();
   void slotRedo();
