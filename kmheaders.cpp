@@ -1520,9 +1520,13 @@ void KMHeaders::styleChange( QStyle& oldStyle )
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {
-  QString str = i18n("%n message, %1.", "%n messages, %1.", mFolder->count())
-    .arg(i18n("%n unread", "%n unread", mFolder->countUnread()));
-  if (mFolder->isReadOnly()) str += i18n("Folder is read-only.").prepend(' ');
+  QString str = ( mFolder == kmkernel->outboxFolder() )
+                ? i18n( "1 unsent", "%n unsent", mFolder->countUnread() )
+                : i18n( "1 unread", "%n unread", mFolder->countUnread() );
+  str = i18n( "1 message, %1.", "%n messages, %1.", mFolder->count() )
+        .arg( str );
+  if ( mFolder->isReadOnly() )
+    str = i18n("%1 = n messages, m unread.", "%1 Folder is read-only.");
   KMBroadcastStatus::instance()->setStatusMsg(str);
 }
 
