@@ -3305,12 +3305,12 @@ SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * n
   vlay->addStretch( 10 ); // spacer
 
   // and now: adding QWhat'sThis all over the place:
-  msg = i18n( "<qt><p>When this option is enabled then all messages you send "
+  msg = i18n( "<qt><p>When this option is enabled, all messages you send "
               "will be signed by default. Of course it's still possible to "
               "disable signing for each message individually.</p></qt>" );
   QWhatsThis::add( mPgpAutoSignatureCheck, msg );
 
-  msg = i18n( "<qt><p>When this option is enabled then every message you send "
+  msg = i18n( "<qt><p>When this option is enabled, every message you send "
               "will be encrypted whenever encryption is possible and desired. "
               "Of course it's still possible to disable the automatic "
               "encryption for each message individually.</p></qt>" );

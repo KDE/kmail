@@ -231,8 +231,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   mEdtTo->setFocus();
   mErrorProcessingStructuringInfo =
-    i18n("<qt><p>Structuring information returned by the Crypto Plug-In "
-         "could not be processed correctly, the Plug-In might be damaged.</p>"
+    i18n("<qt><p>Structuring information returned by the Crypto plug-in "
+         "could not be processed correctly; the plug-in might be damaged.</p>"
          "<p>Please contact your system administrator.</p></qt>");
   mErrorNoCryptPlugAndNoBuildIn =
     i18n("<p>No active Crypto Plug-In was found and the built-in OpenPGP code "
@@ -2468,7 +2468,7 @@ kdDebug() << "***************************************" << endl;
         KMessageBox::sorry( this,
           i18n("<qt><p>Error: The Crypto Plug-in '%1' returned<br>"
                "       \" structuring.makeMultiMime \"<br>"
-               "but did NOT specify a Content-Type header "
+               "but did <b>not</b> specify a Content-Type header "
                "for the ciphertext that was generated.</p>"
                "<p>Please report this bug:<br>%2</p></qt>")
           .arg(mSelectedCryptPlug->libName())
@@ -2958,9 +2958,9 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
             crlDaysLeft <
             mSelectedCryptPlug->encryptionCRLNearExpiryInterval() ) {
             int ret = KMessageBox::warningYesNo( this,
-                        i18n( "<qt><p>The certification revocation lists that "
+                        i18n( "<qt><p>The certification revocation lists, that "
                               "are used for checking the validity of the "
-                              "certificate you want to use for encrypting "
+                              "certificate you want to use for encrypting, "
                               "expire in %1 days.</p>"
                               "<p>Do you still want to encrypt this message?"
                               "</p></qt>" )
@@ -3811,7 +3811,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   if (armoredKey.isEmpty())
   {
     kernel->kbp()->idle();
-    KMessageBox::sorry( 0L, i18n("Couldn't get your public key.") );
+    KMessageBox::sorry( 0L, i18n("Unable to obtain your public key.") );
     return;
   }
 
@@ -3863,7 +3863,7 @@ void KMComposeWin::slotInsertPublicKey()
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
   } else {
-    KMessageBox::sorry( 0L, i18n( "Couldn't get the selected public key." ) );
+    KMessageBox::sorry( 0L, i18n( "Unable to obtain the selected public key." ) );
   }
 }
 
@@ -4156,12 +4156,12 @@ void KMComposeWin::slotEncryptToggled(bool on)
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to encrypt "
                                "this message you first have to "
-                               "define the OpenPGP key which should be "
+                               "define the OpenPGP key, which should be "
                                "used to encrypt the message to "
                                "yourself.</p>"
-                               "<p>You can define the OpenPGP key "
+                               "<p>You can define the OpenPGP key, "
                                "which should be used with the current "
-                               "identity in the identity configuration.</p>"
+                               "identity, in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Encryption Key") );
       encryptAction->setChecked( false );
@@ -4243,7 +4243,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
         mEdtSubject->setFocus();
         int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
                                             i18n("No Subject Specified"),
-                                            i18n("&Yes, Send as is"),
+                                            i18n("&Yes, Send as Is"),
                                             i18n("&No, Let Me Specify the Subject"),
                                             "no_subject_specified" );
         if( rc == KMessageBox::No )

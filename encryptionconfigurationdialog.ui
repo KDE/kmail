@@ -138,7 +138,7 @@ It is recommended to leave this option turned on for maximum integrity.
                     <property name="whatsThis" stdset="0">
                         <string>&lt;qt&gt;
 &lt;h1&gt;Always encrypt to self&lt;/h1&gt;
-If this box is checked, encrypted messages sent by you will also be encrypted using ypur own key.
+If this box is checked, encrypted messages sent by you will also be encrypted using your own key.
 &lt;p&gt;
 It is recommended to leave this option turned on to enable you to read the messages you have sent.
 &lt;/qt&gt;</string>
