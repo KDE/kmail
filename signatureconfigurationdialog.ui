@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>816</width>
-            <height>479</height>
+            <height>497</height>
         </rect>
     </property>
     <property name="caption">
@@ -44,7 +44,7 @@
                         <cstring>signMessagesBG</cstring>
                     </property>
                     <property name="title">
-                        <string>Sign &amp;Messages</string>
+                        <string>Sign Messages</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -61,7 +61,7 @@
                                 <cstring>signAllPartsRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Sign a&amp;ll message parts</string>
+                                <string>Sign all message &amp;parts</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -83,7 +83,7 @@ This is a default setting, you can still override it for each individual message
                                 <cstring>askEachPartRB</cstring>
                             </property>
                             <property name="text">
-                                <string>As&amp;k before signing each part</string>
+                                <string>Ask &amp;before signing each part</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Check to be asked for each part whether to sign</string>
@@ -100,7 +100,7 @@ When this option is selected, you will be asked for each part of the message (i.
                                 <cstring>dontSignRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Don't sign messages</string>
+                                <string>Don'&amp;t sign messages</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Check for not signing a message by default</string>
@@ -119,7 +119,7 @@ This is a default setting, you can still override it for each individual setting
                                 <cstring>warnUnsignedCB</cstring>
                             </property>
                             <property name="text">
-                                <string>&amp;Warn when trying to send unsigned messages</string>
+                                <string>Warn when trying to send &amp;unsigned messages</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -143,7 +143,7 @@ It is recommended to leave this option turned on for maximum integrity.
                         <cstring>sendCertificatesBG</cstring>
                     </property>
                     <property name="title">
-                        <string>S&amp;ending Certificates</string>
+                        <string>Sending Certificates</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -177,7 +177,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <cstring>sendYourOwnCertificateRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Send your &amp;own certificate</string>
+                                <string>Send &amp;your own certificate</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -194,7 +194,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <cstring>sendChainWithoutRootRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Send certificate &amp;chain without root</string>
+                                <string>Send certificate chain &amp;without root</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Selects which certificates to send</string>
@@ -208,7 +208,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <cstring>sendChainWithRootRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Send certificate chain with &amp;root</string>
+                                <string>Send certificate c&amp;hain with root</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Selects which certificates to send</string>
@@ -240,7 +240,7 @@ It is recommended to leave this option turned on for maximum integrity.
                         <cstring>signatureSettingsBG</cstring>
                     </property>
                     <property name="title">
-                        <string>&amp;Signature Settings</string>
+                        <string>Signature Settings</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -346,7 +346,7 @@ This setting is a default, you can override it for each individual message.
                                         <cstring>warnCACertificateExpiresCB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Warn if &amp;CA certificate expires in less than</string>
+                                        <string>Warn if CA certificate e&amp;xpires in less than</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>
@@ -415,7 +415,7 @@ It is recommended to keep this option turned on to avoid using certificates that
                                         <cstring>warnRootCertificateExpiresCB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Warn if r&amp;oot certificate expires in less than</string>
+                                        <string>Warn if root certificate expires in &amp;less than</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>
@@ -500,7 +500,7 @@ The recommended SPHINX setting is 14 days.
                                 <cstring>warnAddressNotInCertificateCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn if si&amp;gner's email address is not in certificate</string>
+                                <string>Warn if signer's email address is &amp;not in certificate</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -555,7 +555,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                         <cstring>sendSigMultiPartRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Standard MIME</string>
+                                        <string>Standa&amp;rd MIME</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>A Multipart/Signed holding Signature and signed data.</string>
@@ -572,7 +572,7 @@ When this option is selected, the signature and the signed data will be separate
                                         <cstring>sendSigOpaqueRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Opaque</string>
+                                        <string>Opa&amp;que</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Signature and signed data encoded in one ASN.1 block.</string>
@@ -625,7 +625,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <enum>NoFocus</enum>
                                     </property>
                                     <property name="text">
-                                        <string>On&amp;ce per session</string>
+                                        <string>Once per session</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Select how often the PIN must be entered</string>
@@ -639,7 +639,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <cstring>pinAlwaysRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Alwa&amp;ys</string>
+                                        <string>Always</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>
@@ -656,7 +656,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <cstring>pinAddCertificatesRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>When a&amp;dding certificates</string>
+                                        <string>When adding certificates</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Select how often the PIN must be entered</string>
@@ -670,7 +670,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <cstring>pinAlwaysWhenSigningRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Always when si&amp;gning</string>
+                                        <string>Always when signing</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Select how often the PIN must be entered</string>
@@ -698,7 +698,7 @@ When this option is selected, both the signature and the signed data will be enc
                                                 <cstring>pinIntervalRB</cstring>
                                             </property>
                                             <property name="text">
-                                                <string>Aft&amp;er</string>
+                                                <string>After</string>
                                             </property>
                                             <property name="toolTip" stdset="0">
                                                 <string>Select how often the PIN must be entered</string>
@@ -730,7 +730,7 @@ When this option is selected, both the signature and the signed data will be enc
                                 <cstring>saveMessagesBG</cstring>
                             </property>
                             <property name="title">
-                                <string>Sa&amp;ve Messages</string>
+                                <string>Save Messages</string>
                             </property>
                             <vbox>
                                 <property name="name">
@@ -747,7 +747,7 @@ When this option is selected, both the signature and the signed data will be enc
                                         <cstring>saveSentSigsCB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>S&amp;tore messages with signatures</string>
+                                        <string>&amp;Store messages with signatures</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>

@@ -47,7 +47,7 @@
                         <cstring>encryptAllPartsRB</cstring>
                     </property>
                     <property name="text">
-                        <string>Encrypt a&amp;ll message parts</string>
+                        <string>Encr&amp;ypt all message parts</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -69,7 +69,7 @@ This is a default setting, you can still override it for each individual message
                         <cstring>askEachPartRB</cstring>
                     </property>
                     <property name="text">
-                        <string>As&amp;k before encrypting each part</string>
+                        <string>Ask &amp;before encrypting each part</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Check to be asked for each part whether to encrypt</string>
@@ -86,7 +86,7 @@ When this option is selected, you will be asked for each part of the message (i.
                         <cstring>dontEncryptRB</cstring>
                     </property>
                     <property name="text">
-                        <string>Don't encrypt messages</string>
+                        <string>&amp;Don't encrypt messages</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Check for not encrypting a message by default</string>
@@ -314,7 +314,7 @@ The recommended SPHINX setting is 14 days.
                                 <cstring>warnChainCertificateExpiresCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn if a certificate in the &amp;chain expires in less than</string>
+                                <string>Warn if a certificate in &amp;the chain expires in less than</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -418,7 +418,7 @@ It is recommended to keep this option turned on to avoid using certificates that
                         <cstring>warnReceiverNotInCertificateCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Warn if receiver's &amp;email address is not in certificate</string>
+                        <string>Warn if receiver's email address is &amp;not in certificate</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -520,7 +520,7 @@ This setting is a default, you can override it for each individual message.
                         <cstring>storeEncryptedCB</cstring>
                     </property>
                     <property name="text">
-                        <string>S&amp;tore messages encrypted</string>
+                        <string>Store messages &amp;encrypted</string>
                     </property>
                     <property name="checked">
                         <bool>false</bool>
@@ -583,7 +583,7 @@ Note that it is not possible to turn off checking the receiver's certificate its
                         <cstring>alwaysCheckRootRB</cstring>
                     </property>
                     <property name="text">
-                        <string>Always check certificate path to r&amp;oot certificate</string>
+                        <string>Always c&amp;heck certificate path to root certificate</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
