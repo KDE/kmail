@@ -19,7 +19,7 @@
 #include <qwidget.h>
 #include <qcombobox.h>
 #include <qlayout.h>
-#include <qpushbt.h>
+#include <qpushbutton.h>
 #include <qlistbox.h>
 #include <qbuttongroup.h>
 #include <qradiobutton.h>
