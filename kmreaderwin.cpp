@@ -688,7 +688,7 @@ void KMReaderWin::parseMsg(void)
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
       : QString("a { color: #%1; ").arg(colorToString(c2)) +
         "text-decoration: none; }" + // just playing
-        QString( "table.encr { background-color: #%1; "
+        QString( "table.encr { width: 100%; background-color: #%1; "
                  "border-width: 0px; }\n" )
         .arg( colorToString( cPgpEncrF ) ) +
         QString( "tr.encrH { background-color: #%1; "
@@ -696,7 +696,7 @@ void KMReaderWin::parseMsg(void)
         .arg( colorToString( cPgpEncrH ) ) +
         QString( "tr.encrB { background-color: #%1; }\n" )
         .arg( colorToString( cPgpEncrB ) ) +
-        QString( "table.signOkKeyOk { background-color: #%1; "
+        QString( "table.signOkKeyOk { width: 100%; background-color: #%1; "
                  "border-width: 0px; }\n" )
         .arg( colorToString( cPgpOk1F ) ) +
         QString( "tr.signOkKeyOkH { background-color: #%1; "
@@ -704,7 +704,7 @@ void KMReaderWin::parseMsg(void)
         .arg( colorToString( cPgpOk1H ) ) +
         QString( "tr.signOkKeyOkB { background-color: #%1; }\n" )
         .arg( colorToString( cPgpOk1B ) ) +
-        QString( "table.signOkKeyBad { background-color: #%1; "
+        QString( "table.signOkKeyBad { width: 100%; background-color: #%1; "
                  "border-width: 0px; }\n" )
         .arg( colorToString( cPgpOk0F ) ) +
         QString( "tr.signOkKeyBadH { background-color: #%1; "
@@ -712,7 +712,7 @@ void KMReaderWin::parseMsg(void)
         .arg( colorToString( cPgpOk0H ) ) +
         QString( "tr.signOkKeyBadB { background-color: #%1; }\n" )
         .arg( colorToString( cPgpOk0B ) ) +
-        QString( "table.signWarn { background-color: #%1; "
+        QString( "table.signWarn { width: 100%; background-color: #%1; "
                  "border-width: 0px; }\n" )
         .arg( colorToString( cPgpWarnF ) ) +
         QString( "tr.signWarnH { background-color: #%1; "
@@ -720,7 +720,7 @@ void KMReaderWin::parseMsg(void)
         .arg( colorToString( cPgpWarnH ) ) +
         QString( "tr.signWarnB { background-color: #%1; }\n" )
         .arg( colorToString( cPgpWarnB ) ) +
-        QString( "table.signErr { background-color: #%1; "
+        QString( "table.signErr { width: 100%; background-color: #%1; "
                  "border-width: 0px; }\n" )
         .arg( colorToString( cPgpErrF ) ) +
         QString( "tr.signErrH { background-color: #%1; "
