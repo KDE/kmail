@@ -29,7 +29,7 @@
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                     KMFolderType aFolderType )
   : KMFolderNode( aParent, aFolderName ), mStorage(0),
-    mParent( aParent ), mChild( 0 ),
+    mChild( 0 ),
     mIsSystemFolder( false ),
     mExpireMessages( false ), mUnreadExpireAge( 28 ),
     mReadExpireAge( 14 ), mUnreadExpireUnits( expireNever ),

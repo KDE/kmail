@@ -554,7 +554,6 @@ public slots:
 
 private:
   FolderStorage* mStorage;
-  KMFolderDir* mParent;
   KMFolderDir* mChild;
   bool mIsSystemFolder;
 
