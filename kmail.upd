@@ -54,3 +54,10 @@ Script=kmail-upd-identities.pl,perl
 Id=3.1-use-identity-uoids
 File=kmailrc
 Script=kmail-3.1-use-UOID-for-identities.pl,perl
+#
+# Important notice:
+# If you add updates here, keep this text below them.
+# Make sure your updates can be safely run twice and add any new Id
+# to the QStringList in kmail/main.cpp:checkConfigUpdates().
+# (mmutz)
+#
