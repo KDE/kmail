@@ -16,6 +16,46 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#include <config.h>
+
+#if HAVE_BYTESWAP_H
+#include <byteswap.h>
+#endif
+
+// We define functions as kmail_swap_NN so that we don't get compile errors
+// on platforms where bswap_NN happens to be a function instead of a define.
+
+/* Swap bytes in 16 bit value.  */
+#ifdef bswap_16
+#define kmail_swap_16(x) bswap_16(x)
+#else 
+#define kmail_swap_16(x) \
+     ((((x) >> 8) & 0xff) | (((x) & 0xff) << 8))
+#endif
+
+/* Swap bytes in 32 bit value.  */
+#ifdef bswap_32
+#define kmail_swap_32(x) bswap_32(x)
+#else
+#define kmail_swap_32(x) \
+     ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >>  8) |		      \
+      (((x) & 0x0000ff00) <<  8) | (((x) & 0x000000ff) << 24))
+#endif
+
+/* Swap bytes in 64 bit value.  */
+#ifdef bswap_64
+#define kmail_swap_64(x) bswap_64(x)
+#else
+#define kmail_swap_64(x) \
+     ((((x) & 0xff00000000000000ull) >> 56)				      \
+      | (((x) & 0x00ff000000000000ull) >> 40)				      \
+      | (((x) & 0x0000ff0000000000ull) >> 24)				      \
+      | (((x) & 0x000000ff00000000ull) >> 8)				      \
+      | (((x) & 0x00000000ff000000ull) << 8)				      \
+      | (((x) & 0x0000000000ff0000ull) << 24)				      \
+      | (((x) & 0x000000000000ff00ull) << 40)				      \
+      | (((x) & 0x00000000000000ffull) << 56))
+#endif
 
 static KMMsgStatus sStatusList[] =
 {
@@ -666,7 +706,7 @@ unsigned long KMMsgBase::getMsgSerNum() const
 {
   unsigned long msn = 0;
   if (mParent) {
-    int index = mParent->find((const KMMsgBasePtr)this);
+    int index = mParent->find((KMMsgBasePtr)this);
     msn = kernel->msgDict()->getMsgSerNum(mParent, index);
   }
   return msn;
@@ -680,7 +720,7 @@ void swapEndian(QString &str)
   for (uint i = 0; i < len; i++)
   {
     us = str[i].unicode();
-    str[i] = QChar(((us & 0xFF) << 8) + ((us & 0xFF00) >> 8));
+    str[i] = QChar(kmail_swap_16(us));
   }
 }
 
@@ -697,8 +737,8 @@ static uchar *g_chunk = NULL;
         memcpy(x, g_chunk+g_chunk_offset, length); \
 	g_chunk_offset += length; \
      } } while(0)
-#define COPY_HEADER_TYPE(x) Q_ASSERT(sizeof(x) == sizeof(MsgPartType)); COPY_DATA(&x, sizeof(x))
-#define COPY_HEADER_LEN(x)  Q_ASSERT(sizeof(x) == sizeof(short)); COPY_DATA(&x, sizeof(x));
+#define COPY_HEADER_TYPE(x) Q_ASSERT(sizeof(x) == sizeof(Q_UINT32)); COPY_DATA(&x, sizeof(x));
+#define COPY_HEADER_LEN(x)  Q_ASSERT(sizeof(x) == sizeof(Q_UINT16)); COPY_DATA(&x, sizeof(x));
 //-----------------------------------------------------------------------------
 QString KMMsgBase::getStringPart(MsgPartType t) const
 {
@@ -706,6 +746,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
 
   g_chunk_offset = 0;
   bool using_mmap = FALSE;
+  bool swapByteOrder = mParent->indexSwapByteOrder();
   if (mParent->indexStreamBasePtr()) {
     if (g_chunk)
 	free(g_chunk);
@@ -724,15 +765,24 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
   }
 
   MsgPartType type;
-  short l;
+  Q_UINT16 l;
   while(g_chunk_offset < mIndexLength) {
-    COPY_HEADER_TYPE(type);
+    Q_UINT32 tmp;
+    COPY_HEADER_TYPE(tmp);
     COPY_HEADER_LEN(l);
+    if (swapByteOrder)
+    {
+       tmp = kmail_swap_32(tmp);
+       l = kmail_swap_16(l);
+    }
+    type = (MsgPartType) tmp;
     if(g_chunk_offset + l > mIndexLength) {
 	kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
 	break;
     }
     if(type == t) {
+        // This works because the QString constructor does a memcpy.
+        // Otherwise we would need to be concerned about the alignment.
 	if(l)
 	    ret = QString((QChar *)(g_chunk + g_chunk_offset), l/2);
 	break;
@@ -743,7 +793,18 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
       g_chunk_length = 0;
       g_chunk = NULL;
   }
+  // Normally we need to swap the byte order because the QStrings are written
+  // in the style of Qt2 (MSB -> network ordered). 
+  // QStrings in Qt3 expect host ordering.
+  // On e.g. Intel host ordering is LSB, on e.g. Sparc it is MSB.
+
+#ifndef WORDS_BIGENDIAN
+#warning Byte order is little endian (swap is true)
   swapEndian(ret);
+#else
+#warning Byte order is big endian (swap is false)
+#endif  
+
   return ret;
 }
 
@@ -754,6 +815,8 @@ unsigned long KMMsgBase::getLongPart(MsgPartType t) const
 
   g_chunk_offset = 0;
   bool using_mmap = FALSE;
+  int sizeOfLong = mParent->indexSizeOfLong();
+  bool swapByteOrder = mParent->indexSwapByteOrder();
   if (mParent->indexStreamBasePtr()) {
     if (g_chunk)
       free(g_chunk);
@@ -773,18 +836,77 @@ unsigned long KMMsgBase::getLongPart(MsgPartType t) const
   }
 
   MsgPartType type;
-  short l;
+  Q_UINT16 l;
   while (g_chunk_offset < mIndexLength) {
-    COPY_HEADER_TYPE(type);
+    Q_UINT32 tmp;
+    COPY_HEADER_TYPE(tmp);
     COPY_HEADER_LEN(l);
+    if (swapByteOrder)
+    {
+       tmp = kmail_swap_32(tmp);
+       l = kmail_swap_16(l);
+    }
+    type = (MsgPartType) tmp;
 
     if (g_chunk_offset + l > mIndexLength) {
       kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
       break;
     }
     if(type == t) {
-      Q_ASSERT(l == sizeof(unsigned long));
-      COPY_DATA(&ret, sizeof(ret));
+      assert(sizeOfLong == l);
+      if (sizeOfLong == sizeof(ret))
+      {
+         COPY_DATA(&ret, sizeof(ret));
+         if (swapByteOrder)
+         {
+            if (sizeof(ret) == 4)
+               ret = kmail_swap_32(ret);
+            else
+               ret = kmail_swap_64(ret);
+         }
+      }
+      else if (sizeOfLong == 4)
+      {
+         // Long is stored as 4 bytes in index file, sizeof(long) = 8
+         Q_UINT32 ret_32;
+         COPY_DATA(&ret_32, sizeof(ret_32));
+         if (swapByteOrder)
+            ret_32 = kmail_swap_32(ret_32);
+         ret = ret_32;
+      }
+      else if (sizeOfLong == 8)
+      {
+         // Long is stored as 8 bytes in index file, sizeof(long) = 4
+         Q_UINT32 ret_1;
+         Q_UINT32 ret_2;
+         COPY_DATA(&ret_1, sizeof(ret_1));
+         COPY_DATA(&ret_2, sizeof(ret_2));
+         if (!swapByteOrder)
+         {
+            // Index file order is the same as the order of this CPU.
+#ifndef WORDS_BIGENDIAN
+            // Index file order is little endian
+            ret = ret_1; // We drop the 4 most significant bytes
+#else
+            // Index file order is big endian
+            ret = ret_2; // We drop the 4 most significant bytes
+#endif
+         }
+         else
+         {
+            // Index file order is different from this CPU.
+#ifndef WORDS_BIGENDIAN
+            // Index file order is big endian
+            ret = ret_2; // We drop the 4 most significant bytes
+#else
+            // Index file order is little endian
+            ret = ret_1; // We drop the 4 most significant bytes
+#endif
+            // We swap the result to host order.
+            ret = kmail_swap_32(ret);
+         }
+         
+      }
       break;
     }
     g_chunk_offset += l;
@@ -810,40 +932,47 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 	int len2 = (len > 256) ? 256 : len; \
 	if(csize < (length + (len2 + sizeof(short) + sizeof(MsgPartType)))) \
     	   ret = (uchar *)realloc(ret, csize += len2+sizeof(short)+sizeof(MsgPartType)); \
-        MsgPartType t = type; memcpy(ret+length, &t, sizeof(MsgPartType)); \
-        short l = len2; memcpy(ret+length+sizeof(MsgPartType), &l, sizeof(short)); \
-        memcpy(ret+length+sizeof(short)+sizeof(MsgPartType), x, len2); \
-        length += len2 + sizeof(short) + sizeof(MsgPartType); \
+        Q_UINT32 t = (Q_UINT32) type; memcpy(ret+length, &t, sizeof(t)); \
+        Q_UINT16 l = len2; memcpy(ret+length+sizeof(t), &l, sizeof(l)); \
+        memcpy(ret+length+sizeof(t)+sizeof(l), x, len2); \
+        length += len2+sizeof(t)+sizeof(l); \
     } while(0)
 #define STORE_DATA(type, x) STORE_DATA_LEN(type, &x, sizeof(x))
+#ifndef WORDS_BIGENDIAN
+#warning Byte order is little endian (call swapEndian)
+#define SWAP_TO_NETWORK_ORDER(x) swapEndian(x)
+#else 
+#warning Byte order is big endian
+#define SWAP_TO_NETWORK_ORDER(x)
+#endif
   unsigned long tmp;
   QString tmp_str;
 
   //these is at the beginning because it is queried quite often
   tmp_str = msgIdMD5().stripWhiteSpace();
-  swapEndian(tmp_str);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
   STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
   tmp = status();
   STORE_DATA(MsgStatusPart, tmp);
 
   //these are completely arbitrary order
   tmp_str = fromStrip().stripWhiteSpace();
-  swapEndian(tmp_str);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
   STORE_DATA_LEN(MsgFromPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = subject().stripWhiteSpace();
-  swapEndian(tmp_str);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
   STORE_DATA_LEN(MsgSubjectPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = toStrip().stripWhiteSpace();
-  swapEndian(tmp_str);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
   STORE_DATA_LEN(MsgToPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = replyToIdMD5().stripWhiteSpace();
-  swapEndian(tmp_str);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
   STORE_DATA_LEN(MsgReplyToIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = xmark().stripWhiteSpace();
-  swapEndian(tmp_str);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
   STORE_DATA_LEN(MsgXMarkPart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp_str = fileName().stripWhiteSpace();
-  swapEndian(tmp_str);
+  SWAP_TO_NETWORK_ORDER(tmp_str);
   STORE_DATA_LEN(MsgFilePart, tmp_str.unicode(), tmp_str.length() * 2);
   tmp = msgSize();
   STORE_DATA(MsgSizePart, tmp);

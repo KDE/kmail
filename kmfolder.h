@@ -306,7 +306,10 @@ public:
   /** Returns a string that can be used to identify this folder */
   virtual QString idString();
 
-    uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
+  uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
+  
+  bool indexSwapByteOrder() { return mIndexSwapByteOrder; }
+  int  indexSizeOfLong() { return mIndexSizeOfLong; }
 
   /**
    * Set whether this folder automatically expires messages.
@@ -539,6 +542,8 @@ protected:
   bool mConvertToUtf8;
   uchar *mIndexStreamPtr;
   int mIndexStreamPtrLength, mIndexId;
+  bool mIndexSwapByteOrder; // Index file was written with swapped byte order
+  int mIndexSizeOfLong; // Index file was written with longs of this size
 
   /** Support for automatic expiry of old messages */
   bool         expireMessages;          // TRUE if old messages are expired
@@ -551,7 +556,6 @@ protected:
   
   /** Points at the reverse dictionary for this folder. */
   KMMsgDictREntry *mRDict;
-
 };
 
 #endif /*kmfolder_h*/

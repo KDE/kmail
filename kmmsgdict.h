@@ -77,7 +77,7 @@ protected:
   
   /** Opens the .folder.index.ids file, and writes the header
    * information at the beginning of the file. */
-  KMMsgDictREntry *openFolderIds(KMFolder *folder);
+  KMMsgDictREntry *openFolderIds(KMFolder *folder, bool truncate);
   
   /** The dictionary. */
   KMDict *dict;

@@ -2749,7 +2749,7 @@ void KMHeaders::setSorting( int column, bool ascending )
 }
 
 //Flatten the list and write it to disk
-#define KMAIL_SORT_VERSION 1006
+#define KMAIL_SORT_VERSION 1007
 #define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
 #define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
 #define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
@@ -2759,14 +2759,14 @@ static void internalWriteItem(FILE *sortStream, int msgid, int parent_id,
 {
   fwrite(&msgid, sizeof(msgid), 1, sortStream);
   fwrite(&parent_id, sizeof(parent_id), 1, sortStream);
-  int len = key.length() * 2;
+  Q_INT32 len = key.length() * sizeof(QChar);
   fwrite(&len, sizeof(len), 1, sortStream);
   if (len)
     fwrite(key.unicode(), QMIN(len, KMAIL_MAX_KEY_LEN), 1, sortStream);
 
   if (update_discover) {
     //update the discovered change count
-      int discovered_count = 0;
+      Q_INT32 discovered_count = 0;
       fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
       fread(&discovered_count, sizeof(discovered_count), 1, sortStream);
       discovered_count++;
@@ -2796,9 +2796,14 @@ bool KMHeaders::writeSortOrder()
     mSortInfo.dirty = FALSE;
     fprintf(sortStream, KMAIL_SORT_HEADER, KMAIL_SORT_VERSION);
     //magic header information
-    int column = mSortCol, ascending=!mSortDescending;
-    int threaded = (mNested != mNestedOverride);
-    int discovered_count = 0, sorted_count=0, appended=0;
+    Q_INT32 byteOrder = 0x12345678;
+    Q_INT32 column = mSortCol;
+    Q_INT32 ascending= !mSortDescending;
+    Q_INT32 threaded = (mNested != mNestedOverride);
+    Q_INT32 appended=0;
+    Q_INT32 discovered_count = 0;
+    Q_INT32 sorted_count=0;
+    fwrite(&byteOrder, sizeof(byteOrder), 1, sortStream);
     fwrite(&column, sizeof(column), 1, sortStream);
     fwrite(&ascending, sizeof(ascending), 1, sortStream);
     fwrite(&threaded, sizeof(threaded), 1, sortStream);
@@ -2855,6 +2860,7 @@ bool KMHeaders::writeSortOrder()
 
     //magic header twice, case they've changed
     fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET, SEEK_SET);
+    fwrite(&byteOrder, sizeof(byteOrder), 1, sortStream);
     fwrite(&column, sizeof(column), 1, sortStream);
     fwrite(&ascending, sizeof(ascending), 1, sortStream);
     fwrite(&threaded, sizeof(threaded), 1, sortStream);
@@ -2890,8 +2896,8 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 		      khi->key(mSortCol, !mSortDescending));
 
     //update the appended flag
-    int appended = 1;
-    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 12, SEEK_SET);
+    Q_INT32 appended = 1;
+    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
     fwrite(&appended, sizeof(appended), 1, sortStream);
 
     if (sortStream && ferror(sortStream)) {
@@ -3003,7 +3009,7 @@ static int compare_KMSortCacheItem(const void *s1, const void *s2)
 bool KMHeaders::readSortOrder(bool set_selection)
 {
     //all cases
-    int column, ascending, threaded, discovered_count, sorted_count, appended;
+    Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
     bool unread_exists = false;
     QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
     KMSortCacheItem root;
@@ -3035,6 +3041,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	int version;
 	fscanf(sortStream, KMAIL_SORT_HEADER, &version);
 	if(version == KMAIL_SORT_VERSION) {
+	  Q_INT32 byteOrder = 0;
+	  fread(&byteOrder, sizeof(byteOrder), 1, sortStream);
+	  if (byteOrder == 0x12345678)
+	  {
 	    fread(&column, sizeof(column), 1, sortStream);
 	    fread(&ascending, sizeof(ascending), 1, sortStream);
 	    fread(&threaded, sizeof(threaded), 1, sortStream);
@@ -3144,6 +3154,11 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		fclose(sortStream);
 		sortStream = NULL;
 	    }
+	  }
+	  else {
+	      fclose(sortStream);
+ 	      sortStream = NULL;
+	  }
 	} else {
 	    fclose(sortStream);
 	    sortStream = NULL;
@@ -3268,7 +3283,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	} else {
 	    //update the appended flag
 	    appended = 0;
-	    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 12, SEEK_SET);
+	    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
 	    fwrite(&appended, sizeof(appended), 1, sortStream);
 	}
     }

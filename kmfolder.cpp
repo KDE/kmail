@@ -31,6 +31,22 @@
 #include <fcntl.h>
 #endif
 
+#if HAVE_BYTESWAP_H
+#include <byteswap.h>
+#endif
+
+// We define functions as kmail_swap_NN so that we don't get compile errors
+// on platforms where bswap_NN happens to be a function instead of a define.
+
+/* Swap bytes in 32 bit value.  */
+#ifdef bswap_32
+#define kmail_swap_32(x) bswap_32(x)
+#else
+#define kmail_swap_32(x) \
+     ((((x) & 0xff000000) >> 24) | (((x) & 0x00ff0000) >>  8) |		      \
+      (((x) & 0x0000ff00) <<  8) | (((x) & 0x000000ff) << 24))
+#endif
+
 //#define HAVE_MMAP //need to get this into autoconf FIXME  --Sam
 #ifdef HAVE_MMAP
 #include <unistd.h>
@@ -83,6 +99,8 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mIndexId        = -1;
   mIndexStreamPtr = NULL;
   mIndexStreamPtrLength = 0;
+  mIndexSwapByteOrder = false;
+  mIndexSizeOfLong = sizeof(long);
   mCompactable     = TRUE;
   mNoContent      = FALSE;
   expireMessages = FALSE;
@@ -220,10 +238,19 @@ int KMFolder::writeIndex()
     return errno;
 
   fprintf(tmpIndexStream, "# KMail-Index V%d\n", INDEX_VERSION);
+
+  // Header
+  Q_UINT32 byteOrder = 0x12345678;
+  Q_UINT32 sizeOfLong = sizeof(long);
+
+  Q_UINT32 header_length = sizeof(byteOrder)+sizeof(sizeOfLong); 
   char pad_char = '\0';
-  int header_length = 0; // Reserved for future expansion
   fwrite(&pad_char, sizeof(pad_char), 1, tmpIndexStream);
   fwrite(&header_length, sizeof(header_length), 1, tmpIndexStream);
+
+  // Write header 
+  fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
+  fwrite(&sizeOfLong, sizeof(sizeOfLong), 1, tmpIndexStream);
 
   long nho = ftell(tmpIndexStream);
   for (i=0; i<mMsgList.high(); i++)
@@ -247,6 +274,7 @@ int KMFolder::writeIndex()
   if (mIndexStream)
       fclose(mIndexStream);
   mHeaderOffset = nho;
+
   mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
   updateIndexStreamPtr();
 
@@ -269,6 +297,8 @@ bool KMFolder::readIndexHeader(int *gv)
 {
   int indexVersion;
   assert(mIndexStream != NULL);
+  mIndexSwapByteOrder = false;
+  mIndexSizeOfLong = sizeof(long);
 
   fscanf(mIndexStream, "# KMail-Index V%d\n", &indexVersion);
   if(gv)
@@ -280,7 +310,6 @@ bool KMFolder::readIndexHeader(int *gv)
       }
       return TRUE;
   } else if (indexVersion == 1505) {
-      fseek(mIndexStream, sizeof(char), SEEK_CUR );
   } else if (indexVersion < INDEX_VERSION) {
       kdDebug(5006) << "Index file " << indexLocation() << " is out of date. Re-creating it." << endl;
       createIndexFromContents();
@@ -299,10 +328,46 @@ bool KMFolder::readIndexHeader(int *gv)
       return FALSE;
   }
   else {
-      int header_length = 0;
+      // Header
+      Q_UINT32 byteOrder = 0;
+      Q_UINT32 sizeOfLong = sizeof(long); // default
+
+      Q_UINT32 header_length = 0;
       fseek(mIndexStream, sizeof(char), SEEK_CUR );
       fread(&header_length, sizeof(header_length), 1, mIndexStream);
-      fseek(mIndexStream, header_length, SEEK_CUR );
+      if (header_length > 0xFFFF)
+         header_length = kmail_swap_32(header_length);
+      
+      long endOfHeader = ftell(mIndexStream) + header_length;
+
+      bool needs_update = true;
+      // Process available header parts
+      if (header_length >= sizeof(byteOrder))
+      {
+         fread(&byteOrder, sizeof(byteOrder), 1, mIndexStream);
+         mIndexSwapByteOrder = (byteOrder == 0x78563412);
+         header_length -= sizeof(byteOrder);
+      
+         if (header_length >= sizeof(sizeOfLong))
+         {
+            fread(&sizeOfLong, sizeof(sizeOfLong), 1, mIndexStream);
+            if (mIndexSwapByteOrder)
+               sizeOfLong = kmail_swap_32(sizeOfLong);
+            mIndexSizeOfLong = sizeOfLong;
+            header_length -= sizeof(sizeOfLong);
+            needs_update = false;
+         }
+      }
+      if (needs_update || mIndexSwapByteOrder)
+	mDirty = true;
+      // Seek to end of header
+      fseek(mIndexStream, endOfHeader, SEEK_SET );
+
+      if (mIndexSwapByteOrder)
+         kdDebug(5006) << "Index File has byte order swapped!" << endl;
+      if (mIndexSizeOfLong != sizeof(long))
+         kdDebug(5006) << "Index File sizeOfLong is " << mIndexSizeOfLong << " while sizeof(long) is " << sizeof(long) << " !" << endl;
+
   }
   return TRUE;
 }
@@ -311,7 +376,8 @@ bool KMFolder::readIndexHeader(int *gv)
 //-----------------------------------------------------------------------------
 bool KMFolder::readIndex()
 {
-  int len, offs;
+  Q_INT32 len;
+  int offs;
   KMMsgInfo* mi;
 
   assert(mIndexStream != NULL);
@@ -319,10 +385,12 @@ bool KMFolder::readIndex()
 
   mMsgList.clear();
   int version;
+
+  mDirty = false;
+  
   if (!readIndexHeader(&version)) return false;
 
   mUnreadMsgs = 0;
-  mDirty = FALSE;
   mHeaderOffset = ftell(mIndexStream);
 
   mMsgList.clear();
@@ -331,12 +399,18 @@ bool KMFolder::readIndex()
     mi = NULL;
     if(version >= 1505) {
       if(!fread(&len, sizeof(len), 1, mIndexStream))
-	break;
+        break;
+
+      if (mIndexSwapByteOrder)
+        len = kmail_swap_32(len);
+
       offs = ftell(mIndexStream);
       if(fseek(mIndexStream, len, SEEK_CUR))
-	break;
+        break;
       mi = new KMMsgInfo(this, offs, len);
-    } else {
+    } 
+    else 
+    {
       QCString line(MAX_LINE);
       fgets(line.data(), MAX_LINE, mIndexStream);
       if (feof(mIndexStream)) break;
@@ -907,6 +981,7 @@ int KMFolder::find(const QString& msgIdMD5) const
     if (mMsgList[i]->msgIdMD5() == msgIdMD5)
       return i;
 
+
   return -1;
 }
 
@@ -1207,6 +1282,7 @@ bool KMFolder::updateIndexStreamPtr(bool)
   q << "touch" << indexLocation();
   q.start(KProcess::Block);
 
+  mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP
     if(just_close) {
 	if(mIndexStreamPtr)
