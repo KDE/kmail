@@ -739,6 +739,8 @@ bool KMKernel::doSessionManagement()
 
 void KMKernel::cleanup(void)
 {
+  dumpDeadLetters();
+  mDeadLetterTimer->stop();
   the_shuttingDown = TRUE;
 
   delete the_acctMgr;
