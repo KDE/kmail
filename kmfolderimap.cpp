@@ -693,7 +693,9 @@ void KMFolderImap::checkValidity()
               account()->mailCheckProgressItem(),
               "MailCheck" + folder()->prettyURL(),
               folder()->prettyURL(),
-              i18n("checking"), false);
+              i18n("checking"),
+              false,
+              account()->useSSL() || account()->useTLS() );
   } else {
     mMailCheckProgressItem->setProgress(0);
   }
@@ -1508,7 +1510,9 @@ bool KMFolderImap::processNewMail(bool)
   mMailCheckProgressItem = ProgressManager::createProgressItem(
               "MailCheckAccount" + account()->name(),
               "MailCheck" + folder()->prettyURL(), folder()->prettyURL(),
-              i18n("updating message counts"), false);
+              i18n("updating message counts"),
+              false,
+              account()->useSSL() || account()->useTLS() );
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd(url.url(), folder() );
