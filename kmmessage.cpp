@@ -2490,6 +2490,8 @@ QCString KMMessage::html2source( const QCString & src )
         *d++ = '<';
         *d++ = 'b';
         *d++ = 'r';
+        *d++ = ' ';
+        *d++ = '/';
         *d++ = '>';
         ++s;
       }
@@ -2502,7 +2504,7 @@ QCString KMMessage::html2source( const QCString & src )
         ++s;
       }
       break;
-    case '~': {
+    case '&': {
         *d++ = '&';
         *d++ = 'a';
         *d++ = 'm';
@@ -2511,7 +2513,7 @@ QCString KMMessage::html2source( const QCString & src )
         ++s;
       }
       break;
-    case '\\': {
+    case '\"': {
         *d++ = '&';
         *d++ = 'q';
         *d++ = 'u';
