@@ -533,20 +533,21 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if (!fti->folder)
     return;
 
-  if (fti->folder && !fti->folder->isSystemFolder()) {
-    folderMenu->insertItem(i18n("&Create Child Folder..."), this,
-			   SLOT(addChildFolder()));
-    folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
-			   SLOT(slotModifyFolder()));
-  }
+  int m1 =folderMenu->insertItem(i18n("&Create Child Folder..."), this,
+				   SLOT(addChildFolder()));
+  int m2 = folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
+				  SLOT(slotModifyFolder()));
   folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
 			 SLOT(slotCompactFolder()));
   folderMenu->insertSeparator();
   folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
 			 SLOT(slotEmptyFolder()));
-  if (fti->folder && !fti->folder->isSystemFolder()) {
-  folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
-			 SLOT(slotRemoveFolder()));
+  int m3 = folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
+				  SLOT(slotRemoveFolder()));
+  if (fti->folder->isSystemFolder()) {
+    folderMenu->setItemEnabled(m1,false);
+    folderMenu->setItemEnabled(m2,false);
+    folderMenu->setItemEnabled(m3,false);
   }
   folderMenu->exec (p, 0);
   triggerUpdate();

@@ -273,6 +273,7 @@ void KMKernel::initFolders(KConfig* cfg)
   if (name.isEmpty()) name = "inbox";
 
   the_inboxFolder  = (KMFolder*)the_folderMgr->findOrCreate(name);
+  the_inboxFolder->setSystemFolder(TRUE);
   // inboxFolder->open();
 
   the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
