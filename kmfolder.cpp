@@ -9,6 +9,7 @@
 #include "kmfolderimap.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
+#include "kmidentity.h"
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
@@ -1044,21 +1045,6 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx = -1)
 
 
 //-----------------------------------------------------------------------------
-const char* KMFolder::whoField() const
-{
- // return (mWhoField.isEmpty() ? "From" : mWhoField.latin1());
-  return mWhoField.latin1();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolder::setWhoField(const QString& aWhoField)
-{
-	mWhoField = aWhoField;
-	writeConfig();
-}
-
-//-----------------------------------------------------------------------------
 QString KMFolder::idString()
 {
   KMFolderNode* folderNode = parent();
@@ -1092,8 +1078,7 @@ void KMFolder::readConfig()
   readExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
   unreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
   unreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
-	if ( mWhoField.isEmpty() )
-		mWhoField = config->readEntry("WhoField");
+	setUserWhoField( config->readEntry("WhoField") );
 }
 
 //-----------------------------------------------------------------------------
@@ -1112,7 +1097,7 @@ void KMFolder::writeConfig()
   config->writeEntry("ReadExpireUnits", readExpireUnits);
   config->writeEntry("UnreadExpireAge", unreadExpireAge);
   config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
-	if ( !mWhoField.isEmpty() ) config->writeEntry("WhoField", mWhoField);
+	config->writeEntry("WhoField", mUserWhoField);
 }
 
 //-----------------------------------------------------------------------------
@@ -1218,6 +1203,43 @@ void KMFolder::setStatus(KMMsgBase *msg, KMMsgStatus status)
     if (folder == this && folder == msg->parent())
       setStatus(index, status);
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::setUserWhoField(const QString &whoField)
+{
+	mUserWhoField = whoField;
+	if ( whoField.isEmpty() )
+	{
+		// default setting
+		QString ident = mIdentity; if (ident.isEmpty()) ident = i18n("Default");
+		KMIdentity identity (ident);
+		identity.readConfig();
+		
+		if ( mIsSystemFolder && protocol() != "imap" ) 
+		{	
+			// local system folders
+			if ( this == kernel->inboxFolder() || this == kernel->trashFolder() ) mWhoField = "From";
+			if ( this == kernel->outboxFolder() || this == kernel->sentFolder() || this == kernel->draftsFolder() ) mWhoField = "To";
+			
+		} else if ( identity.drafts() == idString() || identity.fcc() == idString() ) {
+			// drafts or sent of the identity
+			mWhoField = "To";
+		} else { 
+			mWhoField = "From";
+		}	
+
+	} else if ( whoField == "From" || whoField == "To" ) {
+
+		// set the whoField according to the user-setting
+		mWhoField = whoField;
+
+	} else {
+		// this should not happen...
+		kdDebug(5006) << "Illegal setting " << whoField << " for userWhoField!" << endl;
+	}
+
+	writeConfig();
 }
 
 //-----------------------------------------------------------------------------

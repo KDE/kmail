@@ -452,13 +452,11 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
   the_outboxFolder->setType("Out");
-  the_outboxFolder->setWhoField("To");
   the_outboxFolder->setSystemFolder(TRUE);
   the_outboxFolder->open();
 
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent-mail"));
   the_sentFolder->setType("St");
-  the_sentFolder->setWhoField("To");
   the_sentFolder->setSystemFolder(TRUE);
   the_sentFolder->open();
 
@@ -469,7 +467,6 @@ void KMKernel::initFolders(KConfig* cfg)
 
   the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", "drafts"));
   the_draftsFolder->setType("Df");
-  the_draftsFolder->setWhoField("To");
   the_draftsFolder->setSystemFolder(TRUE);
   the_draftsFolder->open();
 
@@ -859,8 +856,7 @@ bool KMKernel::folderIsDraftOrOutbox(KMFolder * folder)
 {
 	bool test = false;
 	
-	if (folder == the_outboxFolder || folder == the_draftsFolder
-            || folder == the_sentFolder) 
+	if (folder == the_outboxFolder || folder == the_draftsFolder)
 	{
 		test = true;
 		return test;

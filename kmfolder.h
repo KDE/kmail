@@ -281,12 +281,13 @@ public:
     This method is usually called from within KMMessage::setSubject/set... */
   virtual void headerOfMsgChanged(const KMMsgBase*, int idx = -1);
 
-  /** Name of the field that is used for the "From" column in index
-    and listbox. */
-  const char* whoField() const;
+  /** Get / set the name of the field that is used for the Sender/Receiver column in the headers (From/To) */
+  const char* whoField() const { return mWhoField.latin1(); }
+  void setWhoField(const QString& aWhoField) { mWhoField = aWhoField; /*writeConfig();*/ }
 
-  /** Set contents of whoField as QString (From / To). */
-  void setWhoField(const QString&);
+  /** Get / set the user-settings for the WhoField (From/To/Empty) */
+	QString userWhoField(void) { return mUserWhoField; }
+	void setUserWhoField(const QString &whoField);
 
   /** A cludge to help make sure the count of unread messges is kept in sync */
   virtual void correctUnreadMsgsCount();
@@ -486,7 +487,7 @@ protected:
   /** nationalized label or NULL (then name() should be used) */
   QString mLabel;
   /** name of the field that is used for "From" in listbox */
-  QString mWhoField;
+  QString mWhoField, mUserWhoField;
   bool mIsSystemFolder;
   KMAcctList* mAcctList;
 

@@ -220,13 +220,16 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   QLabel *sender_label = new QLabel( i18n("Show:" ), senderGroup );
   sl->addWidget( sender_label );
   senderType = new QComboBox(senderGroup);
-  senderType->insertItem(i18n("Sender"), 0);
-  senderType->insertItem(i18n("Receiver"), 1);
-  {
-		QString whoField = "From";
-		if (aFolder) whoField = aFolder->whoField();
-    senderType->setCurrentItem(whoField == "To"? 1 : 0);
-  }
+  senderType->insertItem(i18n("Default"), 0);
+  senderType->insertItem(i18n("Sender"), 1);
+  senderType->insertItem(i18n("Receiver"), 2);
+
+	QString whoField;
+	if (aFolder) whoField = aFolder->userWhoField();
+	if (whoField.isEmpty()) senderType->setCurrentItem(0);
+	if (whoField == "From") senderType->setCurrentItem(1);
+	if (whoField == "To") senderType->setCurrentItem(2);
+  
   sl->addWidget( senderType );
   sl->addStretch( 1 );
 
@@ -419,17 +422,7 @@ void KMFolderDialog::slotOk()
 				 * when the folder is created successfully the settings are read
 				 * otherwise the entry is automatically deleted at the next startup
 				*/
-				KMFolder *temp = new KMFolderImap(mFolderDir, fldName);
-				if (senderType->currentItem() == 0)
-					temp->setWhoField("From");
-				else 
-					temp->setWhoField("To");
-    		temp->setMailingList( holdsMailingList->isChecked() );
-    		temp->setMailingListPostAddress( mailingListPostAddress->text() );
-    		temp->setMailingListAdminAddress( QString::null );
-    		temp->setIdentity( identity->currentText() );
-
-//				folder = static_cast<KMAcctFolder*>(temp);
+				folder = (KMAcctFolder*) new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
       } else if (mailboxType->currentItem() == 1) {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
@@ -467,13 +460,15 @@ void KMFolderDialog::slotOk()
     folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
 
 		// set whoField
-		if (senderType->currentItem() == 0)
-			folder->setWhoField("From");
-		else 
-			folder->setWhoField("To");
+		if (senderType->currentItem() == 1)
+			folder->setUserWhoField("From");
+		else if (senderType->currentItem() == 2)
+			folder->setUserWhoField("To");
+		else
+			folder->setUserWhoField(QString());
   }
-	// reload the headers to show the changes
-	static_cast<KMHeaders*>(this->parentWidget()->child("headers"))->setFolder(folder);
+	// reload the headers to show the changes if the folder was modified
+	if (mFolder) static_cast<KMHeaders*>(this->parentWidget()->child("headers"))->setFolder(folder);
 
   KDialogBase::slotOk();
 }
