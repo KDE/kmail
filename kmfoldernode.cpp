@@ -13,7 +13,7 @@ KMFolderNode::KMFolderNode(KMFolderDir* aParent, const QString& aName)
   mName = aName;
   mParent = aParent;
   mDir = FALSE;
-  
+
   setName(mName);
 }
 
@@ -46,14 +46,14 @@ bool KMFolderNode::isDir(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolderNode::path() const
+QString KMFolderNode::path() const
 {
   if (parent()) return parent()->path();
   return 0;
 }
 
 //-----------------------------------------------------------------------------
-const QString KMFolderNode::label(void) const
+QString KMFolderNode::label(void) const
 {
   return name();
 }

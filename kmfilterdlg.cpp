@@ -412,7 +412,7 @@ QPushButton* KMFilterDlg::createDetailsButton(void)
 }
 
 //-----------------------------------------------------------------------------
-QLineEdit* KMFilterDlg::createEdit(const QString aTxt)
+QLineEdit* KMFilterDlg::createEdit(const QString &aTxt)
 {
   QLineEdit* edt = new QLineEdit(this);
 
@@ -659,7 +659,7 @@ void KMFilterDlg::slotBtnHelp()
 }
 
 //-----------------------------------------------------------------------------
-int KMFilterDlg::indexOfRuleField(const QString aName) const
+int KMFilterDlg::indexOfRuleField(const QString &aName) const
 {
   int i;
 
@@ -758,7 +758,7 @@ void KMFilterDlg::enableControls()
 
 
 //-----------------------------------------------------------------------------
-void KMFilterDlg::createFilter(const QString field, const QString value)
+void KMFilterDlg::createFilter(const QString &field, const QString &value)
 {
   int idx;
   KMFilter* filter = new KMFilter;

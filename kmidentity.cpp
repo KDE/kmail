@@ -29,7 +29,7 @@ QStringList KMIdentity::identities()
     result.prepend( i18n( "Default" ));
   }
   return result;
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ void KMIdentity::saveIdentities( QStringList ids, bool aWithSync )
   config->writeEntry( "IdentityList", ids );
 
   if (aWithSync) config->sync();
-} 
+}
 
 
 //-----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void KMIdentity::readConfig(void)
     config->setGroup( "Identity" );
   else
     config->setGroup( "Identity-" + mIdentity );
-  
+
   mFullName = config->readEntry("Name");
   if (mFullName.isEmpty())
   {
@@ -79,7 +79,7 @@ void KMIdentity::readConfig(void)
     if (pw)
     {
       mFullName = pw->pw_gecos;
-      
+
       i = mFullName.find(',');
       if (i>0) mFullName.truncate(i);
     }
@@ -94,7 +94,7 @@ void KMIdentity::readConfig(void)
     {
       gethostname(str, 79);
       mEmailAddr = QString(pw->pw_name) + "@" + str;
-      
+
     }
   }
 
@@ -143,42 +143,42 @@ bool KMIdentity::mailingAllowed(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setFullName(const QString str)
+void KMIdentity::setFullName(const QString &str)
 {
   mFullName = str.copy();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setOrganization(const QString str)
+void KMIdentity::setOrganization(const QString &str)
 {
-  mOrganization = str.copy();
+  mOrganization = str;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setPgpIdentity(const QString str)
+void KMIdentity::setPgpIdentity(const QString &str)
 {
-  mPgpIdentity = str.copy();
+  mPgpIdentity = str;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setEmailAddr(const QString str)
+void KMIdentity::setEmailAddr(const QString &str)
 {
-  mEmailAddr = str.copy();
+  mEmailAddr = str;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setVCardFile(const QString str)
+void KMIdentity::setVCardFile(const QString &str)
 {
-  mVCardFile = str.copy();
+  mVCardFile = str;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMIdentity::fullEmailAddr(void) const
+QString KMIdentity::fullEmailAddr(void) const
 {
   QString result;
 
@@ -189,23 +189,23 @@ const QString KMIdentity::fullEmailAddr(void) const
 }
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setReplyToAddr(const QString str)
+void KMIdentity::setReplyToAddr(const QString& str)
 {
-  mReplyToAddr = str.copy();
+  mReplyToAddr = str;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setSignatureFile(const QString str)
+void KMIdentity::setSignatureFile(const QString &str)
 {
-  mSignatureFile = str.copy();
+    mSignatureFile = str;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setSignatureInlineText(const QString str )
+void KMIdentity::setSignatureInlineText(const QString &str )
 {
-  mSignatureInlineText = str.copy();
+    mSignatureInlineText = str;
 }
 
 
@@ -216,18 +216,18 @@ void KMIdentity::setUseSignatureFile( bool flag )
 }
 
 //-----------------------------------------------------------------------------
-void KMIdentity::setTransport(const QString str)
+void KMIdentity::setTransport(const QString &str)
 {
   mTransport = str.copy();
 }
 
 //-----------------------------------------------------------------------------
-const QString KMIdentity::signature(void) const
+QString KMIdentity::signature(void) const
 {
   QString result, sigcmd;
 
   if( mUseSignatureFile == false ) { return mSignatureInlineText; }
- 
+
   if (mSignatureFile.isEmpty()) return QString::null;
 
   if (mSignatureFile.right(1)=="|")

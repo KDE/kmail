@@ -44,14 +44,14 @@ void KMIOStatusDlg::done(void)
 
 
 //-----------------------------------------------------------------------------
-void KMIOStatusDlg::setTask(const QString aMsg)
+void KMIOStatusDlg::setTask(const QString &aMsg)
 {
   mLblTask->setText(aMsg);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMIOStatusDlg::setStatus(const QString aMsg)
+void KMIOStatusDlg::setStatus(const QString &aMsg)
 {
   mLblStatus->setText(aMsg);
 }

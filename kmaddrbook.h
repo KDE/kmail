@@ -20,10 +20,10 @@ public:
 
   /** Insert given address to the addressbook. Sorted. Duplicate
     addresses are not inserted. */
-  virtual void insert(const QString address);
+  virtual void insert(const QString& address);
 
   /** Remove given address from the addressbook. */
-  virtual void remove(const QString address);
+  virtual void remove(const QString& address);
 
   /** Returns first address in addressbook or NULL if addressbook is empty. */
   virtual QString first(void) { return KMAddrBookInherited::first(); }

@@ -37,12 +37,12 @@ KMFolderRootDir::~KMFolderRootDir()
 void KMFolderRootDir::setPath(const QString& aPath)
 {
   mPath = aPath;
-  
+
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolderRootDir::path() const
+QString KMFolderRootDir::path() const
 {
   return mPath;
 }
@@ -108,8 +108,8 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr)
 }
 
 
-//-----------------------------------------------------------------------------
-const QString KMFolderDir::path() const
+//----------------------------------------------------------------------------
+QString KMFolderDir::path() const
 {
   static QString p;
 
@@ -138,11 +138,11 @@ bool KMFolderDir::reload(void)
   QString fldPath;
 
   clear();
-  
+
   fldPath = path();
   dir.setFilter(QDir::Files | QDir::Dirs | QDir::Hidden);
   dir.setNameFilter("*");
-  
+
   if (!dir.cd(fldPath, TRUE))
   {
     QString msg = i18n("Cannot enter directory '%1'.\n").arg(fldPath);
@@ -161,14 +161,14 @@ bool KMFolderDir::reload(void)
   {
     fname = fileInfo->fileName();
 
-    if ((fname[0]=='.') && 
+    if ((fname[0]=='.') &&
 	!(fname.right(10)==".directory"))
       continue;
     else if (fname == ".directory")
-      continue;    
+      continue;
     else if (fileInfo->isDir()) // a directory
       diList.append(fname);
-    
+
     else // all other files are folders (at the moment ;-)
     {
       folder = new KMFolder(this, fname);
@@ -179,8 +179,8 @@ bool KMFolderDir::reload(void)
 
   for (folder=folderList.first(); folder; folder=folderList.next())
   {
-    for(QStringList::Iterator it = diList.begin(); 
-	it != diList.end(); 
+    for(QStringList::Iterator it = diList.begin();
+	it != diList.end();
 	++it)
       if (*it == "." + folder->name() + ".directory") {
 	KMFolderDir* folderDir = new KMFolderDir(this, *it);

@@ -183,7 +183,7 @@ public:
   /** Recode to the specified charset */
    void setCharset(const QString& aCharset, bool forceDefault = FALSE);
 
-  /** Sets the focus to the edit-widget and the cursor below the 
+  /** Sets the focus to the edit-widget and the cursor below the
     "On ... you wrote" line when hasMessage is true.
     Make sure you call this _after_ setMsg(). */
    void setReplyFocus( bool hasMessage = true );
@@ -302,10 +302,10 @@ protected:
 
   /** Show or hide header lines */
   void rethinkHeaderLine(int value, int mask, int& row,
-				 const QString labelStr, QLabel* lbl,
+				 const QString& labelStr, QLabel* lbl,
 				 QLineEdit* edt, QPushButton* btn=NULL);
   void rethinkHeaderLine(int value, int mask, int& row,
-				 const QString labelStr, QLabel* lbl,
+				 const QString& labelStr, QLabel* lbl,
 				 QComboBox* cbx, QCheckBox *chk);
 
   /** Initialization methods */
@@ -315,14 +315,14 @@ protected:
 
 
   /** Header fields. */
-   const QString subject(void) const { return mEdtSubject.text(); }
-   const QString to(void) const { return mEdtTo.text(); }
-   const QString cc(void) const
+    QString subject(void) const { return mEdtSubject.text(); }
+    QString to(void) const { return mEdtTo.text(); }
+    QString cc(void) const
    { return (mEdtCc.isHidden()) ? QString() : mEdtCc.text(); }
-   const QString bcc(void) const
+    QString bcc(void) const
    { return (mEdtBcc.isHidden()) ? QString() : mEdtBcc.text(); }
-   const QString from(void) const { return mEdtFrom.text(); }
-   const QString replyTo(void) const { return mEdtReplyTo.text(); }
+    QString from(void) const { return mEdtFrom.text(); }
+    QString replyTo(void) const { return mEdtReplyTo.text(); }
 
   /** Ask for confirmation if the message was changed before close. */
   virtual bool queryClose ();
@@ -334,7 +334,7 @@ protected:
    void addAttach(const KMMessagePart* msgPart);
 
   /** Remove an attachment from the list. */
-   void removeAttach(const QString url);
+   void removeAttach(const QString &url);
    void removeAttach(int idx);
 
    /* Updates an item in the QListView to represnet a given message part */
@@ -346,10 +346,10 @@ protected:
 
 private:
   /** Get message including signing and encrypting it */
-  const QCString pgpProcessedMsg(void);
+  QCString pgpProcessedMsg(void);
 
   /** Test if string has any 8-bit characters */
-  bool is8Bit(const QString str);
+  bool is8Bit(const QString &str);
 
   /** Set edit widget charset */
   void setEditCharset();
@@ -358,7 +358,7 @@ private:
   void doSend(int sendNow=-1, bool saveInDrafts = false);
 
   /** get default charset from locale settings */
-  const QString defaultCharset(void);
+  QString defaultCharset(void) const;
 
 protected:
   QWidget   mMainWidget;

@@ -106,7 +106,7 @@ KMFolder :: ~KMFolder()
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolder::location() const
+QString KMFolder::location() const
 {
   QString sLocation(path().local8Bit());
 
@@ -118,7 +118,7 @@ const QString KMFolder::location() const
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolder::indexLocation() const
+QString KMFolder::indexLocation() const
 {
   QString sLocation(path().local8Bit());
 
@@ -131,7 +131,7 @@ const QString KMFolder::indexLocation() const
 }
 
 //-----------------------------------------------------------------------------
-const QString KMFolder::subdirLocation() const
+QString KMFolder::subdirLocation() const
 {
   QString sLocation(path().local8Bit());
 
@@ -807,7 +807,7 @@ void KMFolder::readIndex()
     if ((mi->status() == KMMsgStatusNew) ||
 	(mi->status() == KMMsgStatusUnread))
     {
-      ++mUnreadMsgs; 
+      ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;
     }
     mMsgList.append(mi);
@@ -866,13 +866,13 @@ int operator<( KMMsgBase & m1, KMMsgBase & m2 )
 {
   return (m1.date() < m2.date());
 }
-  
+
 /** Compare message's date. This is useful for message sorting */
 int operator==( KMMsgBase & m1, KMMsgBase & m2 )
 {
   return (m1.date() == m2.date());
 }
-  
+
 //-----------------------------------------------------------------------------
 int KMFolder::reduceSize( int aSize )
 {
@@ -888,8 +888,8 @@ int KMFolder::reduceSize( int aSize )
   sliceArr.setAutoDelete( true );
 
   // I put each email in a slice according to its size (slices of 500Ko, 1Mo,
-  // 2Mo, ... 10 Mo). Then I delete the oldest mail until the good size is 
-  // reached. 10 slices of 1Mo each is probably overkill. 500Ko, 1Mo, 5Mo 
+  // 2Mo, ... 10 Mo). Then I delete the oldest mail until the good size is
+  // reached. 10 slices of 1Mo each is probably overkill. 500Ko, 1Mo, 5Mo
   // and 10Mo could be enough.
 
 
@@ -932,7 +932,7 @@ int KMFolder::reduceSize( int aSize )
   while (folderSize > size) {
     //kdDebug() << "Treating slice " << sliceArr.at()-1 << " Mo : " << slice->count() << endl;
     assert( slice );
-    
+
     slice->sort();
 
     // Empty this slice taking the oldest mails first:
@@ -1154,7 +1154,7 @@ QCString& KMFolder::getMsgString(int idx, QCString &mDest)
   fseek(mStream, mi->folderOffset(), SEEK_SET);
   fread(mDest.data(), msgSize, 1, mStream);
   mDest[msgSize] = '\0';
- 
+
   return mDest;
 }
 
@@ -1514,7 +1514,7 @@ int KMFolder::remove()
   needsCompact = false; //we are dead - no need to compact us
   return 0;
 }
-	
+
 
 //-----------------------------------------------------------------------------
 int KMFolder::expunge()
@@ -1670,7 +1670,7 @@ const char* KMFolder::type() const
 
 
 //-----------------------------------------------------------------------------
-const QString KMFolder::label() const
+QString KMFolder::label() const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
   if (mIsSystemFolder) return i18n(name());
@@ -1709,7 +1709,7 @@ int KMFolder::countUnreadRecursive()
 	  folder = static_cast<KMFolder*>(it.current());
 	  count += folder->countUnreadRecursive();
       }
-	
+
   return count;
 }
 

@@ -89,11 +89,11 @@ public:
   virtual void setLogin(const QString&);
 
   /** Imap user password */
-  const QString passwd(void) const;
+  QString passwd(void) const;
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
 
   /** Imap authentificaion method */
-  const QString auth(void) const { return mAuth; }
+  QString auth(void) const { return mAuth; }
   virtual void setAuth(const QString&);
 
   /** Will the password be stored in the config file ? */
@@ -153,7 +153,7 @@ public:
   virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool) { emit finishedCheck(false); }
   virtual void pseudoAssign(KMAccount*);
-  
+
   struct jobData
   {
     QByteArray data;
@@ -185,8 +185,8 @@ protected:
 
   /** Very primitive en/de-cryption so that the password is not
       readable in the config file. But still very easy breakable. */
-  const QString encryptStr(const QString inStr) const;
-  const QString decryptStr(const QString inStr) const;
+  QString encryptStr(const QString &inStr) const;
+  QString decryptStr(const QString &inStr) const;
 
   /** Connect to the IMAP server, if no connection is active */
   bool makeConnection();
@@ -231,7 +231,7 @@ protected slots:
   void slotListFolderEntries(KIO::Job * job, const KIO::UDSEntryList & uds);
 
   /** For retrieving a message digest */
-  void slotGetMessagesResult(KIO::Job * job); 
+  void slotGetMessagesResult(KIO::Job * job);
   void slotGetMessagesData(KIO::Job * job, const QByteArray & data);
 
   /** For creating a new subfolder */
@@ -256,8 +256,8 @@ class KMImapPasswdDialog : public QDialog
 
 public:
   KMImapPasswdDialog(QWidget *parent = 0,const char *name= 0,
-                     KMAcctImap *act=0, const QString caption=QString::null,
-                     const char *login=0, QString passwd=QString::null);
+                     KMAcctImap *act=0, const QString &caption=QString::null,
+                     const char *login=0, const QString &passwd=QString::null);
 
 private:
   QLineEdit *usernameLEdit;

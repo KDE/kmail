@@ -77,42 +77,42 @@ void KMMsgInfo::init(const QString& aSubject, const QString& aFrom,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::subject(void) const
+QString KMMsgInfo::subject(void) const
 {
   return mSubject;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::fromStrip(void) const
+QString KMMsgInfo::fromStrip(void) const
 {
   return mFromStrip;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::toStrip(void) const
+QString KMMsgInfo::toStrip(void) const
 {
   return mToStrip;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::xmark(void) const
+QString KMMsgInfo::xmark(void) const
 {
   return mXMark;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::replyToIdMD5(void) const
+QString KMMsgInfo::replyToIdMD5(void) const
 {
   return mReplyToIdMD5;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgInfo::msgIdMD5(void) const
+QString KMMsgInfo::msgIdMD5(void) const
 {
   return mMsgIdMD5;
 }

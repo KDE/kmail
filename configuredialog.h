@@ -217,7 +217,7 @@ class NewLanguageDialog : public KDialogBase
   public:
     NewLanguageDialog( QWidget *parent, const char *name, bool modal,
       LanguageItem *langList );
-    const QString language( void );
+    QString language( void ) const;
 
   private:
     QComboBox *mComboBox;
@@ -230,7 +230,7 @@ class LanguageComboBox : public QComboBox
   public:
     LanguageComboBox( bool rw, QWidget *parent=0, const char *name=0 );
     int insertLanguage( const QString & language );
-    const QString language( void );
+    QString language( void ) const;
     void setLanguage( const QString & language );
   private:
     QString *i18nPath;

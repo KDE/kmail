@@ -17,8 +17,8 @@ class KMIOStatusDlg: public QDialog
 public:
   KMIOStatusDlg(const char* caption);
 
-  virtual void setTask(const QString msg);
-  virtual void setStatus(const QString msg);
+  virtual void setTask(const QString &msg);
+  virtual void setStatus(const QString &msg);
 
   // return from exec() loop with result 0
   virtual void done(void);

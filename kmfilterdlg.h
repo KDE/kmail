@@ -53,9 +53,9 @@ public:
   virtual QComboBox* createCombo( QStringList *str,
 				  QString curItem );
 
-  virtual QLineEdit* createEdit(const QString txt=0);
+  virtual QLineEdit* createEdit(const QString &txt=0);
 
-  virtual void createFilter( const QString field, const QString value );
+  virtual void createFilter( const QString &field, const QString &value );
 
 protected slots:
   void updateCurFilterName(const QString &text);
@@ -78,7 +78,7 @@ protected:
   virtual bool testOpts(const QWidget* ptr) const;
 
   // Returns index of filter rule field
-  virtual int indexOfRuleField(const QString fieldName) const;
+  virtual int indexOfRuleField(const QString &fieldName) const;
 
   // Initialize static lists. Automatically called.
   static void initLists(void);
@@ -91,7 +91,7 @@ protected:
 
   // Undo any changes that have been applied
   virtual void closeEvent( QCloseEvent * );
-    
+
   KMFilter* mFilter;
   QGridLayout *mGrid;
   int mGridRow, mCbxHeight, mCbxWidth;

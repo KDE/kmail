@@ -51,15 +51,15 @@ void ColorListBox::setEnabled( bool state )
 void ColorListBox::setColor( uint index, const QColor &color )
 {
   if( index < count() )
-  { 
+  {
     ColorListItem *colorItem = (ColorListItem*)item(index);
     colorItem->setColor(color);
     updateItem( colorItem );
   }
-} 
+}
 
 
-const QColor ColorListBox::color( uint index )
+QColor ColorListBox::color( uint index ) const
 {
   if( index < count() )
   {
@@ -73,7 +73,7 @@ const QColor ColorListBox::color( uint index )
 }
 
 
-void ColorListBox::newColor( int index ) 
+void ColorListBox::newColor( int index )
 {
   if( isEnabled() == false )
   {
@@ -106,7 +106,7 @@ void ColorListBox::dragEnterEvent( QDragEnterEvent *e )
 }
 
 
-void ColorListBox::dragLeaveEvent( QDragLeaveEvent * ) 
+void ColorListBox::dragLeaveEvent( QDragLeaveEvent * )
 {
   if( mCurrentOnDragEnter != -1 )
   {
@@ -118,7 +118,7 @@ void ColorListBox::dragLeaveEvent( QDragLeaveEvent * )
 
 void ColorListBox::dragMoveEvent( QDragMoveEvent *e )
 {
-  if( KColorDrag::canDecode(e) && isEnabled() ) 
+  if( KColorDrag::canDecode(e) && isEnabled() )
   {
     ColorListItem *item = (ColorListItem*)itemAt( e->pos() );
     if( item != 0 )
@@ -132,7 +132,7 @@ void ColorListBox::dragMoveEvent( QDragMoveEvent *e )
 void ColorListBox::dropEvent( QDropEvent *e )
 {
   QColor color;
-  if( KColorDrag::decode( e, color ) ) 
+  if( KColorDrag::decode( e, color ) )
   {
     int index = currentItem();
     if( index != -1 )

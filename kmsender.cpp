@@ -295,7 +295,7 @@ void KMSender::doSendMsg()
     // Run the precommand if there is one
     setStatusMsg(i18n("Executing precommand %1").arg(mPrecommand));
     if (!KMAccount::runPrecommand(mPrecommand))
-      {	
+      {
 	KMessageBox::error(0, i18n("Couldn't execute precommand:\n%1")
           .arg(mPrecommand));
       }
@@ -581,7 +581,7 @@ void KMSendProc::preSendInit(void)
 }
 
 //-----------------------------------------------------------------------------
-void KMSendProc::failed(const QString aMsg)
+void KMSendProc::failed(const QString &aMsg)
 {
   mSending = FALSE;
   mSendOk = FALSE;
@@ -603,7 +603,7 @@ bool KMSendProc::finish(bool destructive)
 }
 
 //-----------------------------------------------------------------------------
-const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF,
+QString KMSendProc::prepareStr(const QString &aStr, bool toCRLF,
  bool noSingleDot)
 {
   QString str;
@@ -822,7 +822,7 @@ void KMSendSendmail::sendmailExited(KProcess *proc)
 
 
 //-----------------------------------------------------------------------------
-bool KMSendSendmail::addOneRecipient(const QString aRcpt)
+bool KMSendSendmail::addOneRecipient(const QString &aRcpt)
 {
   assert(mMailerProc!=NULL);
   if (!aRcpt.isEmpty()) *mMailerProc << aRcpt;
@@ -934,7 +934,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-bool KMSendSMTP::addOneRecipient(const QString aRcpt)
+bool KMSendSMTP::addOneRecipient(const QString &aRcpt)
 {
   if (aRcpt.isEmpty()) return TRUE;
 

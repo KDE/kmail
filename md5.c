@@ -22,6 +22,12 @@
  * Solaris, AIX,... [where MD5*() are defined in networking libs!]
  *
  * $Log$
+ * Revision 1.1  2000/05/17 23:42:13  sanders
+ * Converted some 'const QString' to 'const QString&'
+ * Use MD5 digests Base 64 encoded for replyId and msgId
+ * Fixed a few errors in threading code.
+ * pre-strip 'From' and 'To' fields in index.
+ *
  * Revision 1.1  2000/03/05 12:40:56  mario
  * Mario: added APOP support
  *
@@ -34,7 +40,7 @@
 #include <string.h>		/* for memcpy() */
 #include "md5.h"
 
-static char *rcsid="$Id$";
+static const char *rcsid="$Id$";
 
 #ifndef WORDS_BIGENDIAN
 #define byteReverse(buf, len)	/* Nothing */

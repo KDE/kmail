@@ -120,7 +120,7 @@ void KMAccount::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo)
+void KMAccount::sendReceipt(KMMessage* aMsg, const QString &aReceiptTo)
 {
   KMMessage* newMsg = new KMMessage;
   QString str, receiptTo;

@@ -138,7 +138,7 @@ KURL KMAcctImap::getUrl()
   url.setPort(mPort);
   return url;
 }
-  
+
 
 //-----------------------------------------------------------------------------
 bool KMAcctImap::makeConnection()
@@ -185,7 +185,7 @@ void KMAcctImap::displayProgress()
   {
     total += (*it).total;
     done += (*it).done;
-  } 
+  }
   if (total == 0)
   {
     mTotal = 0;
@@ -264,7 +264,7 @@ void KMAcctImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList & uds)
         && (!(*it).inboxOnly || name == "INBOX"))
     {
       static_cast<KMFolderTree*>((*it).parent->listView())
-        ->addImapChildFolder((*it).parent, name, KURL(url).path(), 
+        ->addImapChildFolder((*it).parent, name, KURL(url).path(),
         mimeType, (*it).inboxOnly);
     }
   }
@@ -308,7 +308,7 @@ void KMAcctImap::slotCheckValidityResult(KIO::Job * job)
     QCString cstr((*it).data + '\0');
     int a = cstr.find("X-uidValidity: ");
     int  b = cstr.find("\r\n", a);
-    if ((*it).parent->folder->uidValidity() != 
+    if ((*it).parent->folder->uidValidity() !=
       QString(cstr.mid(a + 15, b - a - 15)))
         (*it).parent->folder->expunge();
     KMFolderTreeItem *fti = (*it).parent;
@@ -991,7 +991,7 @@ void KMAcctImap::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-const QString KMAcctImap::encryptStr(const QString aStr) const
+QString KMAcctImap::encryptStr(const QString &aStr) const
 {
   unsigned int i, val;
   unsigned int len = aStr.length();
@@ -1011,7 +1011,7 @@ const QString KMAcctImap::encryptStr(const QString aStr) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMAcctImap::decryptStr(const QString aStr) const
+QString KMAcctImap::decryptStr(const QString &aStr) const
 {
   return encryptStr(aStr);
 }
@@ -1032,7 +1032,7 @@ void KMAcctImap::setLogin(const QString& aLogin)
 
 
 //-----------------------------------------------------------------------------
-const QString KMAcctImap::passwd(void) const
+QString KMAcctImap::passwd(void) const
 {
   return decryptStr(mPasswd);
 }
@@ -1097,8 +1097,8 @@ void KMAcctImap::setAuth(const QString& aAuth)
 
 KMImapPasswdDialog::KMImapPasswdDialog(QWidget *parent, const char *name,
 			             KMAcctImap *account ,
-				     const QString caption,
-			             const char *login, QString passwd)
+				     const QString &caption,
+			             const char *login, const QString &passwd)
   :QDialog(parent,name,true)
 {
   // This function pops up a little dialog which asks you

@@ -192,7 +192,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 }
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
+KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 {
   KMAccount* act = NULL;
 
@@ -221,7 +221,7 @@ void KMAcctMgr::add(KMAccount *account)
 
 
 //-----------------------------------------------------------------------------
-KMAccount* KMAcctMgr::find(const QString aName)
+KMAccount* KMAcctMgr::find(const QString &aName)
 {
   KMAccount* cur;
 

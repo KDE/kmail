@@ -67,12 +67,12 @@ public:
 
   /** Name of the mail client (usually "/usr/bin/mail") that
     is used for mailing if the method is smMail */
-  const QString mailer(void) const { return mMailer; }
+  QString mailer(void) const { return mMailer; }
   virtual void setMailer(const QString&);
 
   /** Name of the host that is contacted via SMTP if the mailing
     method is smSMTP. */
-  const QString smtpHost(void) const { return mSmtpHost; }
+  QString smtpHost(void) const { return mSmtpHost; }
   virtual void setSmtpHost(const QString&);
 
   /** Port of the SMTP host, usually 110. */
@@ -187,7 +187,7 @@ public:
   bool sending(void) const { return mSending; }
 
   /** Returns error message of last call of failed(). */
-  const QString message(void) const { return mMsg; }
+  QString message(void) const { return mMsg; }
 
 signals:
   /** Emitted when the current message is sent or an error occured. */
@@ -201,10 +201,10 @@ protected:
   /** Called to signal a transmission error. The sender then
     calls finish() and terminates sending of messages.
     Sets mSending to FALSE. */
-  virtual void failed(const QString msg);
+  virtual void failed(const QString &msg);
 
   /** Prepare message for sending. */
-  virtual const QString prepareStr(const QString str, bool toCRLF=FALSE,
+  virtual QString prepareStr(const QString &str, bool toCRLF=FALSE,
    bool noSingleDot=TRUE);
 
   /** Informs the user about what is going on. */
@@ -221,7 +221,7 @@ protected:
     for: "Stefan Taferner" <taferner@kde.org>
     addRecpient(taferner@kde.org) is called.
     Returns TRUE on success and FALSE on failure. */
-  virtual bool addOneRecipient(const QString aRecipient) = 0;
+  virtual bool addOneRecipient(const QString& aRecipient) = 0;
 
 protected:
   bool mSendOk, mSending;
@@ -249,7 +249,7 @@ protected slots:
   void sendmailExited(KProcess*);
 
 protected:
-  virtual bool addOneRecipient(const QString aRecipient);
+  virtual bool addOneRecipient(const QString& aRecipient);
 
   QCString mMsgStr;
   char* mMsgPos;
@@ -277,7 +277,7 @@ public slots:
 protected:
   virtual bool smtpSend(KMMessage* msg);
   virtual void smtpInCmd(const char* inCommand);
-  virtual bool addOneRecipient(const QString aRecipient);
+  virtual bool addOneRecipient(const QString& aRecipient);
 
   Smtp *smtp;
   QStringList recipients;

@@ -28,12 +28,12 @@ public:
 		    unsigned long folderOffset=0, unsigned long msgSize=0);
 
   /** Inherited methods (see KMMsgBase for description): */
-  virtual const QString subject(void) const;
-  virtual const QString fromStrip(void) const;
-  virtual const QString toStrip(void) const;
-  virtual const QString xmark(void) const;
-  virtual const QString replyToIdMD5(void) const;
-  virtual const QString msgIdMD5(void) const;
+  virtual QString subject(void) const;
+  virtual QString fromStrip(void) const;
+  virtual QString toStrip(void) const;
+  virtual QString xmark(void) const;
+  virtual QString replyToIdMD5(void) const;
+  virtual QString msgIdMD5(void) const;
   virtual void setSubject(const QString&);
   virtual void setXMark(const QString&);
   virtual void setReplyToIdMD5(const QString&);

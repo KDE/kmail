@@ -76,7 +76,7 @@ void KMMessage::setReferences(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::id(void) const
+QString KMMessage::id(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasMessageId())
@@ -126,7 +126,7 @@ bool KMMessage::isMessage(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::asString(void)
+QString KMMessage::asString(void)
 {
   if (mNeedsAssembly)
   {
@@ -151,7 +151,7 @@ void KMMessage::setStatusFields(void)
 
 
 //----------------------------------------------------------------------------
-const QString KMMessage::headerAsString(void) const
+QString KMMessage::headerAsString(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if(header.AsString() != "")
@@ -218,7 +218,7 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::formatString(const QString& aStr) const
+QString KMMessage::formatString(const QString& aStr) const
 {
   QString result, str;
   QChar ch;
@@ -517,11 +517,11 @@ static void smartQuote( QString &msg, const QString &ownIndent,
 
 
 //-----------------------------------------------------------------------------
-const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
-					const QString& aIndentStr,
-					const QString selection,
-					bool aIncludeAttach,
-                                        bool aStripSignature) const
+QCString KMMessage::asQuotedString(const QString& aHeaderStr,
+                                   const QString& aIndentStr,
+                                   const QString& selection,
+                                   bool aIncludeAttach,
+                                   bool aStripSignature) const
 {
   QString result;
   QCString cStr;
@@ -561,7 +561,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
     } else {
       result = codec->toUnicode(cStr);
     }
-    
+
     // Remove blank lines at the beginning
     for( i = 0; i < (int)result.length() && result[i] <= ' '; i++ );
     while (i > 0 && result[i-1] == ' ') i--;
@@ -583,7 +583,7 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         isInline = (qstricmp(msgPart.contentDisposition(), "inline") == 0);
 
       if (isInline) {
-        if (qstricmp(msgPart.typeStr(),"text") == 0 || 
+        if (qstricmp(msgPart.typeStr(),"text") == 0 ||
           msgPart.typeStr().isEmpty())
         {
           Kpgp* pgp = Kpgp::getKpgp();
@@ -753,7 +753,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString sel
   else replyStr = sReplyStr;
 
   if (!noQuote)
-  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection));  
+  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection));
 
   QStringList::Iterator it;
   bool recognized = false;
@@ -787,7 +787,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList, QString sel
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::getRefStr()
+QString KMMessage::getRefStr()
 {
   QString firstRef, lastRef, refStr, retRefStr;
   int i, j;
@@ -1015,14 +1015,14 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::dateStr(void) const
+QString KMMessage::dateStr(void) const
 {
-  return headerField("Date").stripWhiteSpace();
+    return headerField("Date").stripWhiteSpace();
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::dateShortStr(void) const
+QString KMMessage::dateShortStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
@@ -1040,7 +1040,7 @@ const QString KMMessage::dateShortStr(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::dateIsoStr(void) const
+QString KMMessage::dateIsoStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
@@ -1099,7 +1099,7 @@ void KMMessage::setDate(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::to(void) const
+QString KMMessage::to(void) const
 {
   return headerField("To").simplifyWhiteSpace();
 }
@@ -1112,13 +1112,13 @@ void KMMessage::setTo(const QString& aStr)
 }
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::toStrip(void) const
+QString KMMessage::toStrip(void) const
 {
   return stripEmailAddr(headerField("To"));
 }
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::replyTo(void) const
+QString KMMessage::replyTo(void) const
 {
   return headerField("Reply-To").simplifyWhiteSpace();
 }
@@ -1139,7 +1139,7 @@ void KMMessage::setReplyTo(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::cc(void) const
+QString KMMessage::cc(void) const
 {
   return headerField("Cc").simplifyWhiteSpace();
 }
@@ -1153,7 +1153,7 @@ void KMMessage::setCc(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::bcc(void) const
+QString KMMessage::bcc(void) const
 {
   return headerField("Bcc").simplifyWhiteSpace();
 }
@@ -1167,7 +1167,7 @@ void KMMessage::setBcc(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::who(void) const
+QString KMMessage::who(void) const
 {
   const char* whoField;
 
@@ -1179,7 +1179,7 @@ const QString KMMessage::who(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::from(void) const
+QString KMMessage::from(void) const
 {
   return headerField("From").simplifyWhiteSpace();
 }
@@ -1197,20 +1197,20 @@ void KMMessage::setFrom(const QString& bStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::fromStrip(void) const
+QString KMMessage::fromStrip(void) const
 {
   return stripEmailAddr(headerField("From"));
 }
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::fromEmail(void) const
+QString KMMessage::fromEmail(void) const
 {
   return getEmailAddr(headerField("From"));
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::subject(void) const
+QString KMMessage::subject(void) const
 {
   return headerField("Subject").simplifyWhiteSpace();
 }
@@ -1225,7 +1225,7 @@ void KMMessage::setSubject(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::xmark(void) const
+QString KMMessage::xmark(void) const
 {
   return headerField("X-KMail-Mark");
 }
@@ -1240,7 +1240,7 @@ void KMMessage::setXMark(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::replyToId(void) const
+QString KMMessage::replyToId(void) const
 {
   int leftAngle, rightAngle;
   QString replyTo, references;
@@ -1267,7 +1267,7 @@ const QString KMMessage::replyToId(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::replyToIdMD5(void) const
+QString KMMessage::replyToIdMD5(void) const
 {
   //  QString result = KMMessagePart::encodeBase64( decodeRFC2047String(replyToId()) );
   QString result = KMMessagePart::encodeBase64( replyToId() );
@@ -1284,7 +1284,7 @@ void KMMessage::setReplyToId(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::msgId(void) const
+QString KMMessage::msgId(void) const
 {
   int rightAngle;
   QString msgId = headerField("Message-Id");
@@ -1297,7 +1297,7 @@ const QString KMMessage::msgId(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::msgIdMD5(void) const
+QString KMMessage::msgIdMD5(void) const
 {
   //  QString result = KMMessagePart::encodeBase64(  decodeRFC2047String(msgId()) );
   QString result = KMMessagePart::encodeBase64( msgId() );
@@ -1314,7 +1314,7 @@ void KMMessage::setMsgId(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QStrList KMMessage::headerAddrField(const QString& aName) const
+QStrList KMMessage::headerAddrField(const QString& aName) const
 {
   QStrList resultList;
   DwHeaders& header = mMsg->Headers();
@@ -1344,7 +1344,7 @@ const QStrList KMMessage::headerAddrField(const QString& aName) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::headerField(const QString& aName) const
+QString KMMessage::headerField(const QString& aName) const
 {
   DwHeaders& header = mMsg->Headers();
   DwField* field;
@@ -1400,7 +1400,7 @@ void KMMessage::setHeaderField(const QString& aName, const QString& bValue)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::typeStr(void) const
+QString KMMessage::typeStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().AsString().c_str();
@@ -1436,7 +1436,7 @@ void KMMessage::setType(int aType)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::subtypeStr(void) const
+QString KMMessage::subtypeStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentType()) return header.ContentType().SubtypeStr().c_str();
@@ -1471,7 +1471,7 @@ void KMMessage::setSubtype(int aSubtype)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::contentTransferEncodingStr(void) const
+QString KMMessage::contentTransferEncodingStr(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasContentTransferEncoding())
@@ -1916,7 +1916,7 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::stripEmailAddr(const QString& aStr)
+QString KMMessage::stripEmailAddr(const QString& aStr)
 {
   int i, j, len;
   QString partA, partB, result;
@@ -1949,7 +1949,7 @@ const QString KMMessage::stripEmailAddr(const QString& aStr)
 }
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::getEmailAddr(const QString& aStr)
+QString KMMessage::getEmailAddr(const QString& aStr)
 {
   int a, i, j, len, found = 0;
   QChar c;
@@ -1979,7 +1979,7 @@ const QString KMMessage::getEmailAddr(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
+QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 {
   QCString result, addr, tmp2;
   const char *pos;
@@ -2069,7 +2069,7 @@ void KMMessage::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessage::charset(void) const
+QString KMMessage::charset(void) const
 {
    DwMediaType &mType=mMsg->Headers().ContentType();
    mType.Parse();

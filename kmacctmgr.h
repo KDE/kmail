@@ -28,7 +28,7 @@ public:
   virtual ~KMAcctMgr();
 
   /** Returns path to directory where the accounts' configuration is stored. */
-  const QString basePath(void) const { return mBasePath; }
+  QString basePath(void) const { return mBasePath; }
 
   /** Set base path. Does *not* call reload(). A tilde (~) as the first
     character is expanded to the contents of the HOME environment variable. */
@@ -42,14 +42,14 @@ public:
 
   /** Create a new account of given type with given name. Currently
    the types "local" for local mail folders and "pop" are supported. */
-  virtual KMAccount* create(const QString type, const QString name);
+  virtual KMAccount* create(const QString& type, const QString& name);
 
   /** Adds an account to the list of accounts */
   virtual void add(KMAccount *account);
 
   /** Find account by name. Returns NULL if account does not exist.
     Search is done case sensitive. */
-  virtual KMAccount* find(const QString name);
+  virtual KMAccount* find(const QString& name);
 
   /** Physically remove account. Also deletes the given account object !
       Returns FALSE and does nothing if the account cannot be removed. */

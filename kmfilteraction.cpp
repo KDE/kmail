@@ -80,12 +80,12 @@ class KMFilterActionMove: public KMFilterAction
 {
 public:
   KMFilterActionMove();
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
   virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString argsStr);
-  virtual const QString argsAsString(void) const;
+  virtual void argsFromString(const QString &argsStr);
+  virtual QString argsAsString(void) const;
   virtual bool folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder);
   static KMFilterAction* newAction(void);
 protected:
@@ -107,7 +107,7 @@ KMFilterAction* KMFilterActionMove::newAction(void)
   return (new KMFilterActionMove);
 }
 
-const QString KMFilterActionMove::label(void) const
+QString KMFilterActionMove::label(void) const
 {
   return i18n("transfer");
 }
@@ -156,12 +156,12 @@ void KMFilterActionMove::applyParamWidgetValue(QWidget* aParamWidget)
     mDest = 0;
 }
 
-void KMFilterActionMove::argsFromString(const QString argsStr)
+void KMFilterActionMove::argsFromString(const QString &argsStr)
 {
   mDest = (KMFolder*)kernel->folderMgr()->findIdString(argsStr);
 }
 
-const QString KMFilterActionMove::argsAsString(void) const
+QString KMFilterActionMove::argsAsString(void) const
 {
   if (mDest) resultStr = mDest->idString();
   else resultStr = "";
@@ -175,12 +175,12 @@ class KMFilterActionForward: public KMFilterAction
 {
 public:
   KMFilterActionForward();
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
   virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString argsStr);
-  virtual const QString argsAsString(void) const;
+  virtual void argsFromString(const QString& argsStr);
+  virtual QString argsAsString(void) const;
   static KMFilterAction* newAction(void);
 protected:
   QString mTo;
@@ -191,7 +191,7 @@ KMFilterAction* KMFilterActionForward::newAction(void)
   return (new KMFilterActionForward);
 }
 
-const QString KMFilterActionForward::label(void) const
+QString KMFilterActionForward::label(void) const
 {
   return i18n("forward to");
 }
@@ -227,12 +227,12 @@ void KMFilterActionForward::applyParamWidgetValue(QWidget* aParamWidget)
   mTo = w->text();
 }
 
-void KMFilterActionForward::argsFromString(const QString argsStr)
+void KMFilterActionForward::argsFromString(const QString &argsStr)
 {
   mTo = argsStr;
 }
 
-const QString KMFilterActionForward::argsAsString(void) const
+QString KMFilterActionForward::argsAsString(void) const
 {
   return mTo;
 }
@@ -244,12 +244,12 @@ class KMFilterActionExec:public KMFilterAction
 {
 public:
   KMFilterActionExec(const char* name = "execute");
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
   virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString argsStr);
-  virtual const QString argsAsString(void) const;
+  virtual void argsFromString(const QString &argsStr);
+  virtual QString argsAsString(void) const;
   static KMFilterAction* newAction(void);
   static void dummySigHandler(int);
 protected:
@@ -261,7 +261,7 @@ KMFilterAction* KMFilterActionExec::newAction(void)
   return (new KMFilterActionExec);
 }
 
-const QString KMFilterActionExec::label(void) const
+QString KMFilterActionExec::label(void) const
 {
   return i18n("execute");
 }
@@ -320,12 +320,12 @@ void KMFilterActionExec::applyParamWidgetValue(QWidget* aParamWidget)
   mCmd = w->text();
 }
 
-void KMFilterActionExec::argsFromString(const QString argsStr)
+void KMFilterActionExec::argsFromString(const QString &argsStr)
 {
   mCmd = argsStr;
 }
 
-const QString KMFilterActionExec::argsAsString(void) const
+QString KMFilterActionExec::argsAsString(void) const
 {
   return mCmd;
 }
@@ -338,7 +338,7 @@ class KMFilterActionExtFilter: public KMFilterActionExec
 {
 public:
   KMFilterActionExtFilter(const char* name = "filter app");
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
   static KMFilterAction* newAction(void);
   virtual int process(KMMessage* msg, bool& stopIt);
 };
@@ -348,7 +348,7 @@ KMFilterAction* KMFilterActionExtFilter::newAction(void)
   return (new KMFilterActionExtFilter);
 }
 
-const QString KMFilterActionExtFilter::label(void) const
+QString KMFilterActionExtFilter::label(void) const
 {
   return i18n("filter app");
 }
@@ -420,12 +420,12 @@ class KMFilterActionIdentity: public KMFilterAction
 {
 public:
   KMFilterActionIdentity();
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
   virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString argsStr);
-  virtual const QString argsAsString(void) const;
+  virtual void argsFromString(const QString &argsStr);
+  virtual QString argsAsString(void) const;
   static KMFilterAction* newAction(void);
 protected:
   QStringList ids;
@@ -437,7 +437,7 @@ KMFilterAction* KMFilterActionIdentity::newAction(void)
   return (new KMFilterActionIdentity);
 }
 
-const QString KMFilterActionIdentity::label(void) const
+QString KMFilterActionIdentity::label(void) const
 {
   return i18n("set identity");
 }
@@ -467,7 +467,7 @@ void KMFilterActionIdentity::applyParamWidgetValue(QWidget* aParamWidget)
   id = cbx->currentText();
 }
 
-void KMFilterActionIdentity::argsFromString(const QString argsStr)
+void KMFilterActionIdentity::argsFromString(const QString &argsStr)
 {
   if (argsStr.isEmpty())
     id = i18n( "Default" );
@@ -475,7 +475,7 @@ void KMFilterActionIdentity::argsFromString(const QString argsStr)
     id = argsStr;
 }
 
-const QString KMFilterActionIdentity::argsAsString(void) const
+QString KMFilterActionIdentity::argsAsString(void) const
 {
   if (id == i18n( "Default" ))
     return "";
@@ -491,12 +491,12 @@ class KMFilterActionTransport: public KMFilterAction
 {
 public:
   KMFilterActionTransport();
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
   virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString argsStr);
-  virtual const QString argsAsString(void) const;
+  virtual void argsFromString(const QString& argsStr);
+  virtual QString argsAsString(void) const;
   static KMFilterAction* newAction(void);
 protected:
   QString mTransport;
@@ -507,7 +507,7 @@ KMFilterAction* KMFilterActionTransport::newAction(void)
   return (new KMFilterActionTransport);
 }
 
-const QString KMFilterActionTransport::label(void) const
+QString KMFilterActionTransport::label(void) const
 {
   return i18n("set transport");
 }
@@ -536,12 +536,12 @@ void KMFilterActionTransport::applyParamWidgetValue(QWidget* aParamWidget)
   mTransport = w->text();
 }
 
-void KMFilterActionTransport::argsFromString(const QString argsStr)
+void KMFilterActionTransport::argsFromString(const QString &argsStr)
 {
   mTransport = argsStr;
 }
 
-const QString KMFilterActionTransport::argsAsString(void) const
+QString KMFilterActionTransport::argsAsString(void) const
 {
   return mTransport;
 }
@@ -554,12 +554,12 @@ class KMFilterActionReplyTo: public KMFilterAction
 {
 public:
   KMFilterActionReplyTo();
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
   virtual int process(KMMessage* msg, bool& stopIt);
   virtual QWidget* createParamWidget(KMGFilterDlg* parent);
   virtual void applyParamWidgetValue(QWidget* paramWidget);
-  virtual void argsFromString(const QString argsStr);
-  virtual const QString argsAsString(void) const;
+  virtual void argsFromString(const QString &argsStr);
+  virtual QString argsAsString(void) const;
   static KMFilterAction* newAction(void);
 protected:
   QString mReplyTo;
@@ -570,7 +570,7 @@ KMFilterAction* KMFilterActionReplyTo::newAction(void)
   return (new KMFilterActionReplyTo);
 }
 
-const QString KMFilterActionReplyTo::label(void) const
+QString KMFilterActionReplyTo::label(void) const
 {
   return i18n("set Reply-To");
 }
@@ -599,12 +599,12 @@ void KMFilterActionReplyTo::applyParamWidgetValue(QWidget* aParamWidget)
   mReplyTo = w->text();
 }
 
-void KMFilterActionReplyTo::argsFromString(const QString argsStr)
+void KMFilterActionReplyTo::argsFromString(const QString &argsStr)
 {
   mReplyTo = argsStr;
 }
 
-const QString KMFilterActionReplyTo::argsAsString(void) const
+QString KMFilterActionReplyTo::argsAsString(void) const
 {
   return mReplyTo;
 }
@@ -644,7 +644,7 @@ KMFilterActionDict::~KMFilterActionDict()
 {
 }
 
-void KMFilterActionDict::insert(const QString aName, const QString aLabel,
+void KMFilterActionDict::insert(const QString &aName, const QString &aLabel,
 				KMFilterActionNewFunc aFunc)
 {
   KMFilterActionDesc* desc = new KMFilterActionDesc;
@@ -654,14 +654,14 @@ void KMFilterActionDict::insert(const QString aName, const QString aLabel,
   mList.append(desc);
 }
 
-KMFilterAction* KMFilterActionDict::create(const QString name)
+KMFilterAction* KMFilterActionDict::create(const QString &name)
 {
   KMFilterActionDesc* desc = find(name);
   if (desc) return desc->func();
   return NULL;
 }
 
-int KMFilterActionDict::indexOf(const QString aName)
+int KMFilterActionDict::indexOf(const QString &aName)
 {
   KMFilterActionDesc* desc;
   int i;
@@ -671,14 +671,14 @@ int KMFilterActionDict::indexOf(const QString aName)
   return -1;
 }
 
-const QString KMFilterActionDict::labelOf(const QString aName)
+QString KMFilterActionDict::labelOf(const QString &aName)
 {
   KMFilterActionDesc* desc = find(aName);
   if (desc) return desc->label;
   return "";
 }
 
-const QString KMFilterActionDict::nameOf(const QString aLabel)
+QString KMFilterActionDict::nameOf(const QString &aLabel)
 {
   KMFilterActionDesc* desc;
   for (desc=mList.first(); desc; desc=mList.next())
@@ -686,7 +686,7 @@ const QString KMFilterActionDict::nameOf(const QString aLabel)
   return "";
 }
 
-KMFilterActionDesc* KMFilterActionDict::find(const QString aName)
+KMFilterActionDesc* KMFilterActionDict::find(const QString &aName)
 {
   KMFilterActionDesc* desc;
   for (desc=mList.first(); desc; desc=mList.next())
@@ -694,26 +694,26 @@ KMFilterActionDesc* KMFilterActionDict::find(const QString aName)
   return NULL;
 }
 
-const QString KMFilterActionDict::first(void)
+QString KMFilterActionDict::first(void)
 {
   KMFilterActionDesc* desc = mList.first();
   if (!desc) return "";
   return desc->name;
 }
 
-const QString KMFilterActionDict::next(void)
+QString KMFilterActionDict::next(void)
 {
   KMFilterActionDesc* desc = mList.next();
   if (!desc) return "";
   return desc->name;
 }
 
-const QString KMFilterActionDict::currentName(void)
+QString KMFilterActionDict::currentName(void)
 {
   return mList.current()->name;
 }
 
-const QString KMFilterActionDict::currentLabel(void)
+QString KMFilterActionDict::currentLabel(void)
 {
   return mList.current()->label;
 }

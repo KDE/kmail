@@ -53,23 +53,23 @@ public:
 
   /** Returns TRUE if status is new. */
   virtual bool isNew(void) const;
-    
+
   /** Set status and mark dirty. */
   virtual void setStatus(const KMMsgStatus status);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);
 
   /** Important header fields of the message that are also kept in the index. */
-  virtual const QString subject(void) const = 0;
-  virtual const QString fromStrip(void) const = 0;
-  virtual const QString toStrip(void) const = 0;
-  virtual const QString replyToIdMD5(void) const = 0;
-  virtual const QString msgIdMD5(void) const = 0;
+  virtual QString subject(void) const = 0;
+  virtual QString fromStrip(void) const = 0;
+  virtual QString toStrip(void) const = 0;
+  virtual QString replyToIdMD5(void) const = 0;
+  virtual QString msgIdMD5(void) const = 0;
   virtual time_t date(void) const;
-  virtual const QString dateStr(void) const;
-  virtual const QString xmark(void) const = 0;
+  virtual QString dateStr(void) const;
+  virtual QString xmark(void) const = 0;
 
   /** Set date. */
-  virtual void setDate(const char* aStrDate);
+  virtual void setDate(const QString &aStrDate);
   virtual void setDate(time_t aUnixTime);
 
   /** Returns TRUE if changed since last folder-sync. */
@@ -84,7 +84,7 @@ public:
 
   /** Return contents as index string. This string is of fixed size
     that can be read with indexStringLength(). */
-  virtual const QCString asIndexString(void) const;
+  virtual QCString asIndexString(void) const;
 
   /** Returns fixed length of index strings returned by asIndexString(). */
   static int indexStringLength(void);
@@ -118,39 +118,39 @@ public:
   KMMsgBase& operator=(const KMMsgBase& other);
 
   /** En-/decode given string to/from quoted-printable. */
-  static const QString decodeQuotedPrintable(const QString& str);
-  static const QString encodeQuotedPrintable(const QString& str);
+  static QString decodeQuotedPrintable(const QString& str);
+  static QString encodeQuotedPrintable(const QString& str);
 
   /** Decode given string from possibly quoted-printable encoded
     string. These strings contain parts of the type "=?iso8859-1?Q?...?=".
     These parts are not correct decoded by decodeQuotedPrintable().
     Use this method if you want to ensure that a given header field
     is readable. */
-  static const QString decodeQuotedPrintableString(const QString& str);
+  static QString decodeQuotedPrintableString(const QString& str);
 
   /** En/-decode given string to/from Base64. */
-  static const QString decodeBase64(const QString& str);
-  static const QString encodeBase64(const QString& str);
+  static QString decodeBase64(const QString& str);
+  static QString encodeBase64(const QString& str);
 
   /** Helper function for encodeRFC2047String */
-  static const QString encodeRFC2047Quoted(const QString& aStr, bool base64);
+  static QString encodeRFC2047Quoted(const QString& aStr, bool base64);
 
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
-  static const QString decodeRFC2047String(const QString& aStr);
+  static QString decodeRFC2047String(const QString& aStr);
 
-  /** Encode given string as described in RFC2047: 
+  /** Encode given string as described in RFC2047:
     using quoted-printable. */
-  static const QString encodeRFC2047String(const QString& aStr,
+  static QString encodeRFC2047String(const QString& aStr,
     const QString& charset);
 
   /** Encode given string as described in RFC2231
     (parameters in MIME headers) */
-  static const QString encodeRFC2231String(const QString& aStr,
+  static QString encodeRFC2231String(const QString& aStr,
     const QString& charset);
 
   /** Decode given string as described in RFC2231 */
-  static const QString decodeRFC2231String(const QString& aStr);
+  static QString decodeRFC2231String(const QString& aStr);
 
 protected:
   KMFolder* mParent;

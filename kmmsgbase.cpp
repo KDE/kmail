@@ -101,7 +101,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
   // if not successful then use the "Status" field
   if (mStatus == KMMsgStatusUnknown)
   {
-    if (aStatusStr && 
+    if (aStatusStr &&
         ((aStatusStr[0]=='R' && aStatusStr[1]=='O') ||
 	 (aStatusStr[0]=='O' && aStatusStr[1]=='R')))
 	mStatus=KMMsgStatusOld;
@@ -159,7 +159,7 @@ void KMMsgBase::setDate(time_t aUnixTime)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgBase::setDate(const char* aDateStr)
+void KMMsgBase::setDate(const QString& aDateStr)
 {
   DwDateTime dwDate;
 
@@ -178,17 +178,17 @@ time_t KMMsgBase::date(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::dateStr(void) const
+QString KMMsgBase::dateStr(void) const
 {
   return ctime(&mDate);
 }
 
 
 //-----------------------------------------------------------------------------
-const QCString KMMsgBase::asIndexString(void) const
+QCString KMMsgBase::asIndexString(void) const
 {
   int i, len;
-  QCString str; 
+  QCString str;
   unsigned long dateTen = date();
 //  dateTen %= 10000000000; // In index only 10 chars are reserved for the date
 //  This is nonsense because 10000000000 is bigger than the highest unsigned
@@ -298,7 +298,7 @@ const QCString KMMsgBase::toUsAscii(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeRFC2047String(const QString& _str)
+QString KMMsgBase::decodeRFC2047String(const QString& _str)
 {
   QCString aStr = _str.ascii();
   QString result;
@@ -402,7 +402,7 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 const QString especials = "()<>@,;:\"/[]?.= \033";
 const QString dontQuote = "\"()<>";
 
-const QString KMMsgBase::encodeRFC2047Quoted(const QString& aStr, bool base64)
+QString KMMsgBase::encodeRFC2047Quoted(const QString& aStr, bool base64)
 {
   if (base64) return encodeBase64(aStr).copy().replace(QRegExp("\n"),"");
   QString result;
@@ -427,7 +427,7 @@ const QString KMMsgBase::encodeRFC2047Quoted(const QString& aStr, bool base64)
 }
 
 
-const QString KMMsgBase::encodeRFC2047String(const QString& _str,
+QString KMMsgBase::encodeRFC2047String(const QString& _str,
   const QString& charset)
 {
   if (_str.isEmpty()) return _str;
@@ -505,7 +505,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::encodeRFC2231String(const QString& _str,
+QString KMMsgBase::encodeRFC2231String(const QString& _str,
   const QString& charset)
 {
   if (_str.isEmpty()) return _str;
@@ -554,7 +554,7 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeRFC2231String(const QString& _str)
+QString KMMsgBase::decodeRFC2231String(const QString& _str)
 {
   int p = _str.find("'");
   if (p < 0) return QString::fromLocal8Bit(_str);
@@ -588,7 +588,7 @@ const QString KMMsgBase::decodeRFC2231String(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
+QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
 {
 #ifdef BROKEN
   static QString result;
@@ -638,7 +638,7 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
+QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
 {
   QString bStr = aStr;
   if (aStr.isNull())
@@ -653,7 +653,7 @@ const QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
+QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
 {
   QString bStr = aStr;
   if (aStr.isNull())
@@ -670,7 +670,7 @@ const QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeBase64(const QString& aStr)
+QString KMMsgBase::decodeBase64(const QString& aStr)
 {
   QString bStr = aStr;
   if (aStr.isNull())
@@ -688,7 +688,7 @@ const QString KMMsgBase::decodeBase64(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::encodeBase64(const QString& aStr)
+QString KMMsgBase::encodeBase64(const QString& aStr)
 {
   QString bStr = aStr;
   if (aStr.isNull())

@@ -37,10 +37,13 @@ signals:
   void timeout(int timerId);
 
 protected:
-  /** Virtual method that can be overloaded and is empty per default. 
+  /** Virtual method that can be overloaded and is empty per default.
    You do not need to call `KAlarmTimer::timerEvent' in inherited
    methods. */
   virtual void timerEvent(void);
+
+  // avoid warning about hidden virtual
+  virtual void timerEvent(QTimerEvent *e) { QObject::timerEvent( e ); }
 
 private:
   void internalTimerEvent(KAlarmTimerId id);
@@ -50,6 +53,7 @@ private:
   bool once;
 
   friend void KAlarmTimeoutHandler(int);
+
 };
 
 #endif /*kalarmtimer_h_*/

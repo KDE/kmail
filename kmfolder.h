@@ -58,13 +58,13 @@ public:
   virtual ~KMFolder();
 
   /** Returns full path to folder file */
-  const QString location() const;
+  QString location() const;
 
   /** Returns full path to index file */
-  const QString indexLocation() const;
+  QString indexLocation() const;
 
   /** Returns full path to sub directory file */
-  const QString subdirLocation() const;
+  QString subdirLocation() const;
 
   /** Returns the folder directory associated with this node or
       0 if no such directory exists */
@@ -124,7 +124,7 @@ public:
    * number of deleted messages. */
   virtual int expungeOldMsg(int days);
 
-  /** Delete messages until the size of the folder goes below size Mo. 
+  /** Delete messages until the size of the folder goes below size Mo.
    * Returns the number of deleted messages. */
   virtual int reduceSize( int size );
 
@@ -152,8 +152,8 @@ public:
 
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
-  virtual void msgStatusChanged( const KMMsgStatus oldStatus,
-    const KMMsgStatus newStatus);
+  virtual void msgStatusChanged( KMMsgStatus oldStatus,
+                                 KMMsgStatus newStatus);
 
   /** Open folder for access. Does not work if the parent is not set.
     Does nothing if the folder is already opened. To reopen a folder
@@ -232,8 +232,8 @@ public:
   void setSystemFolder(bool itIs) { mIsSystemFolder=itIs; }
 
   /** Returns the label of the folder for visualization. */
-  virtual const QString label() const;
-  void setLabel(const QString lbl) { mLabel = lbl; }
+  virtual QString label() const;
+  void setLabel(const QString& lbl) { mLabel = lbl; }
 
   /** Type of the folder. Inherited. */
   virtual const char* type() const;
@@ -278,11 +278,11 @@ public:
 
   /** The path to the imap folder on the server */
   void setImapPath(const QString &path) { mImapPath = path; }
-  const QString imapPath() { return mImapPath; }
+  QString imapPath() { return mImapPath; }
 
   /** The uidvalidity of the last update */
   void setUidValidity(const QString &validity) { mUidValidity = validity; }
-  const QString uidValidity() { return mUidValidity; }
+  QString uidValidity() { return mUidValidity; }
 
   /** The imap account the folder belongs to */
   void setAccount(KMAcctImap *acct) { mAccount = acct; }

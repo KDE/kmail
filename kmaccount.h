@@ -104,7 +104,7 @@ protected:
   virtual bool processNewMsg(KMMessage* msg);
 
   /** Send receipt of message back to sender (confirming delivery). */
-  virtual void sendReceipt(KMMessage* msg, const QString receiptTo);
+  virtual void sendReceipt(KMMessage* msg, const QString& receiptTo);
 
   /** Install/deinstall automatic new-mail checker timer. */
   virtual void installTimer();
@@ -120,6 +120,10 @@ protected:
   bool mExclude;
   bool mCheckingMail;
   QValueList<KMMessage*> mReceipts;
+
+private:
+    // avoid compiler warning about hidden virtual
+    virtual void setName( const char *name ) { QObject::setName( name ); }
 };
 
 

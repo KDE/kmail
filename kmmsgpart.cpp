@@ -25,7 +25,7 @@ extern "C" {
 #include <mimelib/utility.h>
 
 //-----------------------------------------------------------------------------
-KMMessagePart::KMMessagePart() : 
+KMMessagePart::KMMessagePart() :
   mType("text"), mSubtype("plain"), mCte("7bit"), mContentDescription(),
   mContentDisposition(), mBody(), mName()
 {
@@ -44,7 +44,7 @@ int KMMessagePart::size(void) const
 {
   if (mBodySize < 0)
   {
-    ((KMMessagePart*)this)->mBodySize = 
+    ((KMMessagePart*)this)->mBodySize =
       bodyDecodedBinary().size();
   }
   return mBodySize;
@@ -52,7 +52,7 @@ int KMMessagePart::size(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setBody(const QString aStr)
+void KMMessagePart::setBody(const QString &aStr)
 // aStr may contain binary data ! See KMMessage::BodyPart()
 // However here we assume aStr is not binary and append hex 00. FIXME
 {
@@ -203,16 +203,16 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   QString mimetype;
   QByteArray body;
   KMimeMagicResult *result;
- 
+
   int sep;
 
   KMimeMagic::self()->setFollowLinks(TRUE); // is it necessary ?
 
-  if (aAutoDecode) 
+  if (aAutoDecode)
     body = bodyDecoded();
-  else 
+  else
     body = mBody;
- 
+
   result = KMimeMagic::self()->findBufferType( body );
   mimetype = result->mimeType();
   sep = mimetype.find('/');
@@ -222,7 +222,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::iconName(const QString& mimeType) const
+QString KMMessagePart::iconName(const QString& mimeType) const
 {
   QString fileName = KMimeType::mimeType(mimeType.isEmpty() ?
     (mType + "/" + mSubtype).lower() : mimeType.lower())->icon(QString(),FALSE);
@@ -233,7 +233,7 @@ const QString KMMessagePart::iconName(const QString& mimeType) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::typeStr(void) const
+QString KMMessagePart::typeStr(void) const
 {
   return mType;
 }
@@ -248,7 +248,7 @@ int KMMessagePart::type(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setTypeStr(const QString aStr)
+void KMMessagePart::setTypeStr(const QString &aStr)
 {
   mType = aStr.copy();
 }
@@ -260,13 +260,11 @@ void KMMessagePart::setType(int aType)
   DwString dwType;
   DwTypeEnumToStr(aType, dwType);
   mType = dwType.c_str();
-  
+
 }
 
-
-
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::subtypeStr(void) const
+QString KMMessagePart::subtypeStr(void) const
 {
   return mSubtype;
 }
@@ -281,7 +279,7 @@ int KMMessagePart::subtype(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setSubtypeStr(const QString aStr)
+void KMMessagePart::setSubtypeStr(const QString &aStr)
 {
   mSubtype = aStr;
 }
@@ -293,12 +291,12 @@ void KMMessagePart::setSubtype(int aSubtype)
   DwString dwSubtype;
   DwSubtypeEnumToStr(aSubtype, dwSubtype);
   mSubtype = dwSubtype.c_str();
-  
+
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::contentTransferEncodingStr(void) const
+QString KMMessagePart::contentTransferEncodingStr(void) const
 {
   return mCte;
 }
@@ -313,7 +311,7 @@ int KMMessagePart::contentTransferEncoding(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentTransferEncodingStr(const QString aStr)
+void KMMessagePart::setContentTransferEncodingStr(const QString &aStr)
 {
   mCte = aStr.copy();
 }
@@ -325,26 +323,26 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
   DwString dwCte;
   DwCteEnumToStr(aCte, dwCte);
   mCte = dwCte.c_str();
-  
+
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::contentDescription(void) const
+QString KMMessagePart::contentDescription(void) const
 {
   return KMMsgBase::decodeRFC2047String(mContentDescription);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentDescription(const QString aStr)
+void KMMessagePart::setContentDescription(const QString &aStr)
 {
   mContentDescription = KMMsgBase::encodeRFC2047String(aStr, charset());
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::fileName(void) const
+QString KMMessagePart::fileName(void) const
 {
   int i, j, len;
   QString str;
@@ -363,7 +361,7 @@ const QString KMMessagePart::fileName(void) const
     stripWhiteSpace();
 
   len = str.length();
-  if (str[0]=='"' && str[len-1]=='"') 
+  if (str[0]=='"' && str[len-1]=='"')
       str = str.mid(1, len-2);
 
   if (RFC2231encoded)
@@ -376,48 +374,48 @@ const QString KMMessagePart::fileName(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::contentDisposition(void) const
+QString KMMessagePart::contentDisposition(void) const
 {
   return mContentDisposition;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentDisposition(const QString aStr)
+void KMMessagePart::setContentDisposition(const QString &aStr)
 {
   mContentDisposition = aStr.copy();
 }
 
- 
+
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::body(void) const
+QString KMMessagePart::body(void) const
 {
   return mBody;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::name(void) const
+QString KMMessagePart::name(void) const
 {
   return mName;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setName(const QString aStr)
+void KMMessagePart::setName(const QString &aStr)
 {
   mName = aStr;
 }
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::charset(void) const
+QString KMMessagePart::charset(void) const
 {
    return mCharset;
 }
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setCharset(const QString aStr)
+void KMMessagePart::setCharset(const QString &aStr)
 {
   mCharset=aStr;
 }

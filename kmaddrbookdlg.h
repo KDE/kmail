@@ -28,9 +28,9 @@ public:
   virtual ~KMAddrBookSelDlg();
 
   /** returns selected address(es) or NULL if none was selected or the cancel
-    button was pressed. If multiple addresses were selected they 
+    button was pressed. If multiple addresses were selected they
     are returned comma separated. */
-  virtual const QString address(void) const { return mAddress; }
+  virtual QString address(void) const { return mAddress; }
 
 protected slots:
   void slotOk();
@@ -53,7 +53,7 @@ class KMAddrBookEditDlg: public KDialogBase
   Q_OBJECT
 
 public:
-  KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent=0, 
+  KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent=0,
 		     const char *name=0, bool modal=true );
 
   virtual ~KMAddrBookEditDlg();

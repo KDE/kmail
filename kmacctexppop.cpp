@@ -190,7 +190,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-const QString KMAcctExpPop::encryptStr(const QString aStr) const
+QString KMAcctExpPop::encryptStr(const QString &aStr) const
 {
   unsigned int i, val;
   unsigned int len = aStr.length();
@@ -210,7 +210,7 @@ const QString KMAcctExpPop::encryptStr(const QString aStr) const
 
 
 //-----------------------------------------------------------------------------
-const QString KMAcctExpPop::decryptStr(const QString aStr) const
+QString KMAcctExpPop::decryptStr(const QString &aStr) const
 {
   return encryptStr(aStr);
 }
@@ -244,8 +244,8 @@ void KMAcctExpPop::setLogin(const QString& aLogin)
 }
 
 
-//-----------------------------------------------------------------------------
-const QString KMAcctExpPop::passwd(void) const
+//----------------------------------------------------------------------------
+QString KMAcctExpPop::passwd(void) const
 {
   return decryptStr(mPasswd);
 }
@@ -300,8 +300,8 @@ bool KMAcctExpPop::setProtocol(short aProtocol)
 
 KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
 			             KMAcctExpPop *account ,
-				     const QString caption,
-			             const char *login, QString passwd)
+				     const QString& caption,
+			             const char *login, const QString &passwd)
   :QDialog(parent,name,true)
 {
   // This function pops up a little dialog which asks you

@@ -21,7 +21,7 @@
 #ifndef _COLOR_LISTBOX_H_
 #define _COLOR_LISTBOX_H_
 
-#include <klistbox.h> 
+#include <klistbox.h>
 
 class ColorListBox : public KListBox
 {
@@ -30,7 +30,7 @@ class ColorListBox : public KListBox
   public:
     ColorListBox( QWidget *parent=0, const char * name=0, WFlags f=0 );
     void setColor( uint index, const QColor &color );
-    const QColor color( uint index );
+    QColor color( uint index ) const;
 
   public slots:
     virtual void setEnabled( bool state );
@@ -56,7 +56,7 @@ class ColorListItem : public QListBoxItem
     ColorListItem( const QString &text, const QColor &color=Qt::black );
     const QColor &color( void );
     void  setColor( const QColor &color );
-  
+
   protected:
     virtual void paint( QPainter * );
     virtual int height( const QListBox * ) const;

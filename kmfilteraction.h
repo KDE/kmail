@@ -32,11 +32,11 @@ public:
   virtual ~KMFilterAction();
 
   /** Returns nationalized label */
-  virtual const QString label(void) const = 0;
+  virtual QString label(void) const = 0;
 
   /** Execute action on given message. Returns 2 if a critical error
    *  has occurred (eg disk full), 1 if the message
-   * shall be processed by further filters and 0 otherwise. 
+   * shall be processed by further filters and 0 otherwise.
    * Sets stopIt to TRUE to stop applying filters to this msg and
    * do not change it otherwise. */
   virtual int process(KMMessage* msg, bool& stopIt) = 0;
@@ -51,12 +51,12 @@ public:
   virtual void applyParamWidgetValue(QWidget* paramWidget);
 
   /** Read extra arguments from given string. */
-  virtual void argsFromString(const QString argsStr) = 0;
+  virtual void argsFromString(const QString& argsStr) = 0;
 
   /** Return extra arguments as string. Must not contain newlines. */
-  virtual const QString argsAsString(void) const = 0;
+  virtual QString argsAsString(void) const = 0;
 
-  /** 
+  /**
    * Called from the filter when a folder is removed.
    * Tests if the folder aFolder is used and changes to aNewFolder
    * in this case. Returns TRUE if a change was made.
@@ -67,7 +67,7 @@ public:
   static KMFilterAction* newAction(void);
 
   /**
-   * Temporarily open folder. Will be closed by the next 
+   * Temporarily open folder. Will be closed by the next
    * KMFilterMgr::cleanup() call.
    */
   static int tempOpenFolder(KMFolder* aFolder);
@@ -78,7 +78,7 @@ typedef KMFilterAction* (*KMFilterActionNewFunc)(void);
 
 //-----------------------------------------------------------------------------
 // Abstract base class for the filter UI. The methods of
-// KMFilterAction::installGUI() is allowed to call all the methods given 
+// KMFilterAction::installGUI() is allowed to call all the methods given
 // in this class.
 #define KMGFilterDlgInherited QDialog
 
@@ -94,9 +94,9 @@ public:
   /** Creates a details button "..." for the current filter action. */
   virtual QPushButton* createDetailsButton(void) = 0;
 
-  /** Creates a combobox with a list of folders for the current filter 
+  /** Creates a combobox with a list of folders for the current filter
     action, with curFolder as the current entry (if given). */
-  virtual QComboBox* createFolderCombo( QStringList*, 
+  virtual QComboBox* createFolderCombo( QStringList*,
 					QValueList<QGuardedPtr<KMFolder> >*,
 					QGuardedPtr<KMFolder> ) = 0;
 
@@ -105,7 +105,7 @@ public:
 				  QString curItem ) = 0;
 
   /** Creates a line-edit field with txt in it. */
-  virtual QLineEdit* createEdit(const QString txt=0) = 0;
+  virtual QLineEdit* createEdit(const QString& txt=0) = 0;
 };
 
 
@@ -127,29 +127,29 @@ public:
   KMFilterActionDict();
   virtual ~KMFilterActionDict();
 
-  virtual void insert(const QString name, const QString label,
+  virtual void insert(const QString &name, const QString &label,
 		      KMFilterActionNewFunc func);
 
   // returns name of element or an empty QString if end of list.
-  virtual const QString first(void);
-  virtual const QString next(void);
+  virtual QString first(void);
+  virtual QString next(void);
 
   // these methods work with the current element of first/next
-  virtual const QString currentName(void);
-  virtual const QString currentLabel(void);
+  virtual QString currentName(void);
+  virtual QString currentLabel(void);
   virtual KMFilterAction* currentCreate(void);
 
   // Note: the following methods use first/next internally
-  virtual KMFilterAction* create(const QString name);
-  virtual const QString labelOf(const QString name);
-  virtual const QString nameOf(const QString label);
-  virtual int indexOf(const QString name);
+  virtual KMFilterAction* create(const QString &name);
+  virtual QString labelOf(const QString& name);
+  virtual QString nameOf(const QString& label);
+  virtual int indexOf(const QString& name);
 
 protected:
   virtual void init(void);
 
   // Find filter action with given name
-  virtual KMFilterActionDesc* find(const QString name);
+  virtual KMFilterActionDesc* find(const QString& name);
 
   KMFilterActionDescList mList;
 };

@@ -43,7 +43,7 @@ KMAddrBook::~KMAddrBook()
 
 
 //-----------------------------------------------------------------------------
-void KMAddrBook::insert(const QString aAddress)
+void KMAddrBook::insert(const QString &aAddress)
 {
   if (find((const char *)aAddress.local8Bit())<0)
   {
@@ -54,7 +54,7 @@ void KMAddrBook::insert(const QString aAddress)
 
 
 //-----------------------------------------------------------------------------
-void KMAddrBook::remove(const QString aAddress)
+void KMAddrBook::remove(const QString &aAddress)
 {
   remove(aAddress);
   mModified=TRUE;

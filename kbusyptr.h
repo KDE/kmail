@@ -54,6 +54,8 @@ protected:
   int currentCursor;
   bool animated;
   QCursor* cursorList;
+  // avoid warning about hidden virtual
+  virtual void timerEvent(QTimerEvent *e) { KAlarmTimer::timerEvent( e ); }
 };
 
 #endif /*kbusyptr_h_*/

@@ -208,9 +208,9 @@ protected:
   /** Convert given string to HTML. Converts blanks and tabs at
     beginning of line to non-breakable spaces if preserveLeadingBlanks
     is TRUE. */
-  virtual const QString strToHtml(const QString str,
-				  bool decodeQuotedPrintable=FALSE,
-				  bool preserveLeadingBlanks=FALSE) const;
+  virtual QString strToHtml(const QString &str,
+                            bool decodeQuotedPrintable=FALSE,
+                            bool preserveLeadingBlanks=FALSE) const;
 
   /** Change the string to `quoted' html (meaning, that the quoted
     part of the message get italized */

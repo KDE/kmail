@@ -390,13 +390,13 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
       kdDebug() << aMsg->subject() << " " << aMsg->fromStrip() << endl;
-	
+
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   if (!force && aMsg && mMsg == aMsg)
     return;
 
   kdDebug() << "Not equal" << endl;
-  
+
   mMsg = aMsg;
   if (mMsg) mMsg->setCodec(mCodec);
 
@@ -1121,8 +1121,8 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
 
 //-----------------------------------------------------------------------------
-const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
-				     bool aPreserveBlanks) const
+QString KMReaderWin::strToHtml(const QString &aStr, bool aDecodeQP,
+                               bool aPreserveBlanks) const
 {
   QCString qpstr, iStr, result;
   const char *pos;

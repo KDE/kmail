@@ -17,8 +17,8 @@ public:
   virtual ~KMMessagePart();
 
   /** Get or set the message body */
-  const QString body(void) const;
-  void setBody(const QString aStr);
+  QString body(void) const;
+  void setBody(const QString &aStr);
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
     contains the correct encoding. This routine is meant for binary data.
@@ -42,20 +42,20 @@ public:
   virtual int size(void) const;
 
   /** Get or set name parameter */
-  const QString name(void) const;
-  void setName(const QString aStr);
+  QString name(void) const;
+  void setName(const QString& aStr);
 
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
-  const QString typeStr(void) const;
+  QString typeStr(void) const;
   int type(void) const;
-  void setTypeStr(const QString aStr);
+  void setTypeStr(const QString &aStr);
   void setType(int aType);
   // Subtype
-  const QString subtypeStr(void) const;
+  QString subtypeStr(void) const;
   int subtype(void) const;
-  void setSubtypeStr(const QString aStr);
+  void setSubtypeStr(const QString &aStr);
   void setSubtype(int aSubtype);
 
   /** Set the 'Content-Type' by mime-magic from the contents of the body.
@@ -66,42 +66,42 @@ public:
   /** Tries to find a good icon for the 'Content-Type' by scanning
     the installed mimelnk files. Returns the found icon. If no matching
     icon is found, the one for application/octet-stream is returned. */
-  const QString iconName(const QString &mimeType = QString::null) const;
+  QString iconName(const QString &mimeType = QString::null) const;
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
     will work only for well-known encodings. */
-  const QString contentTransferEncodingStr(void) const;
+  QString contentTransferEncodingStr(void) const;
   int  contentTransferEncoding(void) const;
-  void setContentTransferEncodingStr(const QString aStr);
+  void setContentTransferEncodingStr(const QString &aStr);
   void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
       These functions are an alternative to the ones with longer names. */
-  const QString cteStr(void) const { return contentTransferEncodingStr(); }
+  QString cteStr(void) const { return contentTransferEncodingStr(); }
   int cte(void) const { return contentTransferEncoding(); }
-  void setCteStr(const QString aStr) { setContentTransferEncodingStr(aStr); }
+  void setCteStr(const QString& aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
-  
+
   // Get or set the 'Content-Description' header field
-  const QString contentDescription() const;
-  void setContentDescription(const QString aStr);
+  QString contentDescription() const;
+  void setContentDescription(const QString &aStr);
 
   // Get or set the 'Content-Disposition' header field
-  const QString contentDisposition() const;
-  void setContentDisposition(const QString aStr);
+  QString contentDisposition() const;
+  void setContentDisposition(const QString &aStr);
 
   /** Get the message part charset.*/
-  virtual const QString charset(void) const;
-  
+  virtual QString charset(void) const;
+
   /** Set the message part charset. */
-  virtual void setCharset(const QString aStr);
+  virtual void setCharset(const QString &aStr);
 
   /** Returns name of filename part of 'Content-Disposition' header field,
       if present. */
-  const QString fileName(void) const;
-   
+  QString fileName(void) const;
+
 protected:
   QString mType;
   QString mSubtype;

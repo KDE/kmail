@@ -13,10 +13,10 @@ class KMIdentity
 {
 public:
   /** Returns list of identity ids written to the config file */
-  static QStringList identities(); 
+  static QStringList identities();
 
   /** Save a list of identity ids in the config file */
-  static void saveIdentities( QStringList ids, bool aWithSync = TRUE ); 
+  static void saveIdentities( QStringList ids, bool aWithSync = TRUE );
 
   /** Constructor loads config file */
   KMIdentity( QString id );
@@ -34,44 +34,44 @@ public:
   virtual bool mailingAllowed(void) const;
 
   /** Identity/nickname fot this collection */
-  const QString identity(void) const { return mIdentity; }
+  QString identity(void) const { return mIdentity; }
 
   /** Full name of the user */
-  const QString fullName(void) const { return mFullName; }
-  virtual void setFullName(const QString);
+  QString fullName(void) const { return mFullName; }
+  virtual void setFullName(const QString&);
 
   /** The user's organization (optional) */
-  const QString organization(void) const { return mOrganization; }
-  virtual void setOrganization(const QString);
- 
+  QString organization(void) const { return mOrganization; }
+  virtual void setOrganization(const QString&);
+
   /** The user's PGP identity */
-  const QString pgpIdentity(void) const { return mPgpIdentity; }
-  virtual void setPgpIdentity(const QString);
+  QString pgpIdentity(void) const { return mPgpIdentity; }
+  virtual void setPgpIdentity(const QString&);
 
   /** email address (without the user name - only name@host) */
-  const QString emailAddr(void) const { return mEmailAddr; }
-  virtual void setEmailAddr(const QString);
+  QString emailAddr(void) const { return mEmailAddr; }
+  virtual void setEmailAddr(const QString&);
 
   /** vCard to attach to outgoing emails */
-  const QString vCardFile(void) const { return mVCardFile; }
-  const QString VCardFile(void) const { return mVCardFile; }
-  virtual void setVCardFile(const QString);
+  QString vCardFile(void) const { return mVCardFile; }
+  QString VCardFile(void) const { return mVCardFile; }
+  virtual void setVCardFile(const QString&);
 
   /** email address in the format "username <name@host>" suitable
     for the "From:" field of email messages. */
-  const QString fullEmailAddr(void) const;
+  QString fullEmailAddr(void) const;
 
   /** email address for the ReplyTo: field */
-  const QString replyToAddr(void) const { return mReplyToAddr; }
-  virtual void setReplyToAddr(const QString);
+  QString replyToAddr(void) const { return mReplyToAddr; }
+  virtual void setReplyToAddr(const QString&);
 
   /** name of the signature file (with path) */
-  const QString signatureFile(void) const { return mSignatureFile; }
-  virtual void setSignatureFile(const QString);
-  
+  QString signatureFile(void) const { return mSignatureFile; }
+  virtual void setSignatureFile(const QString&);
+
   /** inline signature */
-  const QString signatureInlineText(void) const { return mSignatureInlineText;}
-  virtual void setSignatureInlineText(const QString);
+  QString signatureInlineText(void) const { return mSignatureInlineText;}
+  virtual void setSignatureInlineText(const QString&);
 
   /** Inline or signature from a file */
   bool useSignatureFile(void) { return mUseSignatureFile; }
@@ -81,12 +81,12 @@ public:
     special signature files that are shell scripts and handles
     them correct. So use this method to rectreive the contents of
     the signature file. */
-  virtual const QString signature(void) const;
+  virtual QString signature(void) const;
 
   /** The transport that is set for this identity. Used to link a
       transport with an identity. */
-  const QString transport(void) { return mTransport; }
-  virtual void setTransport(const QString);
+  QString transport(void) { return mTransport; }
+  virtual void setTransport(const QString&);
 
 protected:
   QString mIdentity, mFullName, mOrganization, mPgpIdentity, mEmailAddr;

@@ -567,7 +567,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
-				     const QString aLabelStr, QLabel* aLbl,
+				     const QString &aLabelStr, QLabel* aLbl,
 				     QLineEdit* aEdt, QPushButton* aBtn)
 {
   if (aValue & aMask)
@@ -605,7 +605,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
-				     const QString aLabelStr, QLabel* aLbl,
+				     const QString &aLabelStr, QLabel* aLbl,
 				     QComboBox* aCbx, QCheckBox* aChk)
 {
   if (aValue & aMask)
@@ -1168,7 +1168,7 @@ bool KMComposeWin::queryExit ()
 }
 
 //-----------------------------------------------------------------------------
-const QCString KMComposeWin::pgpProcessedMsg(void)
+QCString KMComposeWin::pgpProcessedMsg(void)
 {
   Kpgp *pgp = Kpgp::getKpgp();
   bool doSign = signAction->isChecked();
@@ -1310,7 +1310,7 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::removeAttach(const QString aUrl)
+void KMComposeWin::removeAttach(const QString &aUrl)
 {
   int idx;
   KMMessagePart* msgPart;
@@ -1436,7 +1436,7 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KURL::List files = KFileDialog::getOpenURLs(QString::null, QString::null, 
+  KURL::List files = KFileDialog::getOpenURLs(QString::null, QString::null,
 	this, i18n("Attach File"));
   for (KURL::List::Iterator it = files.begin(); it != files.end(); ++it)
     addAttach(*it);
@@ -2105,7 +2105,7 @@ void KMComposeWin::slotSpellcheckDone()
 
 
 //-----------------------------------------------------------------------------
-bool KMComposeWin::is8Bit(const QString str)
+bool KMComposeWin::is8Bit(const QString &str)
 {
   const char *ptr=str;
   while(*ptr)
@@ -2140,7 +2140,7 @@ void KMComposeWin::setEditCharset()
 }
 
 //-----------------------------------------------------------------------------
-const QString KMComposeWin::defaultCharset(void)
+QString KMComposeWin::defaultCharset(void) const
 {
   // first try
   QString retval = KGlobal::locale()->charset();

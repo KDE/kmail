@@ -413,7 +413,7 @@ NewLanguageDialog::NewLanguageDialog( QWidget *parent, const char *name,
   } else mComboBox->listBox()->sort();
 }
 
-const QString NewLanguageDialog::language( void )
+QString NewLanguageDialog::language( void ) const
 {
   QString s = QString( mComboBox->currentText() );
   int i = s.findRev( "(" );
@@ -437,7 +437,7 @@ int LanguageComboBox::insertLanguage( const QString & language )
   return listBox()->index( listBox()->findItem(output) );
 }
 
-const QString LanguageComboBox::language( void )
+QString LanguageComboBox::language( void ) const
 {
   QString s = QString( currentText() );
   int i = s.findRev( "(" );
@@ -628,7 +628,7 @@ void ConfigureDialog::makeIdentityPage( void )
   connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
 	   this, SLOT( slotSignatureFile(const QString &)) );
   glay->addMultiCellWidget( mIdentity.signatureFileEdit, 8, 8, 1, 2 );
-  
+
   mIdentity.signatureExecCheck =
     new QCheckBox( i18n("The file is a program"), page );
   glay->addWidget( mIdentity.signatureExecCheck, 9, 1 );
@@ -2041,7 +2041,7 @@ void ConfigureDialog::slotDoApply( bool everything )
       if ((it == 0) || (!kernel->acctMgr()->remove(*it)))
         KMessageBox::sorry( this,
 			    i18n("Unable to locate account %1").arg((*it)->name()) );
-    }		
+    }
     mAccountsToDelete.clear();
 
     // Incoming mail
@@ -2392,7 +2392,7 @@ void ConfigureDialog::slotNewIdentity( void )
     {
       if (list.count() == 1)
 	  secondIdentity = true;
-	
+
       //
       // Add the new identity. Make sure the default identity is
       // first in the otherwise sorted list
@@ -2529,7 +2529,7 @@ void ConfigureDialog::slotSignatureChooser( KURLRequester *req )
 {
   if ( req->url().isEmpty() )
     req->fileDialog()->setURL( QDir::homeDirPath() );
-    
+
   req->fileDialog()->setCaption(i18n("Choose Signature File"));
 }
 

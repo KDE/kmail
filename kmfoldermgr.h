@@ -23,7 +23,7 @@ public:
   virtual ~KMFolderMgr();
 
   /** Returns path to directory where all the folders live. */
-  const QString basePath() const { return mBasePath; }
+  QString basePath() const { return mBasePath; }
 
   /** Set base path. Also calls reload() on the base directory. */
   virtual void setBasePath(const QString&);
@@ -31,7 +31,7 @@ public:
   /** Provides access to base directory */
   KMFolderRootDir& dir();
 
-  /** Searches folder and returns it. Skips directories 
+  /** Searches folder and returns it. Skips directories
     (objects of type KMFolderDir) if foldersOnly is TRUE. */
   virtual KMFolder* find(const QString& folderName, bool foldersOnly=TRUE);
 
@@ -46,7 +46,7 @@ public:
     with given name. Returns Folder on success. */
   virtual KMFolder* createFolder(const QString& fName, bool sysFldr=FALSE,
 				 KMFolderDir *aFolderDir = 0);
-  
+
   /** Physically remove given folder and delete the given folder object. */
   virtual void remove(KMFolder* obsoleteFolder);
 
@@ -58,12 +58,12 @@ public:
 
   /** Create a list of formatted formatted folder labels and corresponding
    folders*/
-  virtual void createFolderList( QStringList *str, 
+  virtual void createFolderList( QStringList *str,
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
   /** Create a list of formatted formatted folder labels and corresponding
    folders. The system folder names are translated */
-  virtual void createI18nFolderList( QStringList *str, 
+  virtual void createI18nFolderList( QStringList *str,
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
 public slots:

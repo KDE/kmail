@@ -27,14 +27,14 @@ public:
   /** Operators for comparison of field and contents. */
   // If you change the order or contents of the enum: do not forget
   // to change the string list in kmfilter.cpp
-  enum Function { FuncEquals=0, FuncNotEqual, FuncContains, FuncContainsNot, 
+  enum Function { FuncEquals=0, FuncNotEqual, FuncContains, FuncContainsNot,
 		  FuncRegExp, FuncNotRegExp };
 
   /** Initializing constructor. */
   KMFilterRule();
 
   /** Initialize the rule. */
-  void init(const QString field, Function function, const QString contents);
+  void init(const QString &field, Function function, const QString &contents);
 
   /** Return TRUE if this rule matches the given message. */
   bool matches(const KMMessage* msg);
@@ -43,13 +43,13 @@ public:
   Function function(void) const { return mFunction; }
 
   /** Return message field name. */
-  const QString field(void) const { return mField; }
+  QString field(void) const { return mField; }
 
   /** Return expected field contents. */
-  const QString contents(void) const { return mContents; }
+  QString contents(void) const { return mContents; }
 
   /** Returns contents of rule as string. */
-  const QString asString(void) const;
+  QString asString(void) const;
 
 protected:
   QString  mField;
@@ -63,7 +63,7 @@ class KMFilter
 {
 public:
   /** Filter operators. Boolean operators on how rule A and B shall
-   * be handled together. 
+   * be handled together.
    */
   // If you change the order or contents of the enum: do not forget
   // to change the string list in kmfilter.cpp
@@ -81,26 +81,26 @@ public:
 
   /** Execute the filter action(s) on the given message. stopIt contains
    * TRUE if the caller may apply other filters and FALSE if he shall
-   * stop the filtering of this message. 
-   * Returns 2 if a critical error occurred, 1 if the caller is still 
+   * stop the filtering of this message.
+   * Returns 2 if a critical error occurred, 1 if the caller is still
    * the owner of the message, 0 if processed successfully */
   virtual int execActions(KMMessage* msg, bool& stopIt);
 
   /**
-   * Write contents to given config file. The config group is preset. 
+   * Write contents to given config file. The config group is preset.
    * The config object will be deleted, so it is not allowed to
    * store a pointer to it anywhere. */
   virtual void writeConfig(KConfig* config);
 
   /**
-   * Initialize from given config file. The config group is preset. 
+   * Initialize from given config file. The config group is preset.
    * The config object will be deleted, so it is not allowed to
    * store a pointer to it anywhere. */
   virtual void readConfig(KConfig* config);
 
   /** Get/set name of the filter. */
-  const QString name(void) const { return mName; }
-  virtual void setName(const QString newName);
+  QString name(void) const { return mName; }
+  virtual void setName(const QString& newName);
 
   /** Access to the filter rules. */
   KMFilterRule& ruleA(void) { return mRuleA; }
@@ -117,11 +117,11 @@ public:
   virtual void setAction(int index, KMFilterAction* action);
 
   /** Returns contents of filter as string. */
-  const QString asString(void) const;
+  QString asString(void) const;
 
-  /** 
+  /**
    * Called from the filter manager when a folder is removed.
-   * Tests if the folder aFolder is used in any action. Changes 
+   * Tests if the folder aFolder is used in any action. Changes
    * to aNewFolder folder in this case. Returns TRUE if a change
    * occured.
    */

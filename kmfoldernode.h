@@ -37,9 +37,9 @@ public:
 
   /** Returns full path to the directory where this node is stored or NULL
    if the node has no parent. Example: if this object represents a folder
-   ~joe/Mail/inbox then path() returns "/home/joe/Mail" and name() returns 
+   ~joe/Mail/inbox then path() returns "/home/joe/Mail" and name() returns
    "inbox". */
-  virtual const QString path() const;
+  virtual QString path() const;
 
   /** Returns type of the folder (or folder node/dir). This type can be e.g.:
     "in" for folders that have at least one account associated
@@ -53,12 +53,12 @@ public:
   virtual void setType(const char*);
 
   /** Name of the node. Also used as file name. */
-  const QString name() const { return mName; }
+  QString name() const { return mName; }
   void setName(const QString& aName) { mName = aName; }
 
   /** Label of the node for visualzation purposes. Default the same as
    the name. */
-  virtual const QString label(void) const;
+  virtual QString label(void) const;
 
 protected:
   QString mName;

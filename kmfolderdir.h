@@ -23,10 +23,10 @@ public:
   virtual bool reload();
 
   /** Return full pathname of this directory. */
-  virtual const QString path() const;
+  virtual QString path() const;
 
   /** Create a mail folder in this directory with given name. If sysFldr==TRUE
-   the folder is marked as a (KMail) system folder. 
+   the folder is marked as a (KMail) system folder.
    Returns Folder on success. */
   virtual KMFolder* createFolder(const QString& folderName,
 				 bool sysFldr=FALSE);
@@ -46,7 +46,7 @@ class KMFolderRootDir: public KMFolderDir
 public:
   KMFolderRootDir(const QString& path=0);
   virtual ~KMFolderRootDir();
-  virtual const QString path() const;
+  virtual QString path() const;
 
   // set the absolute path
   virtual void setPath(const QString&);

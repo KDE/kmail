@@ -35,13 +35,13 @@ public:
   virtual void init(void);
 
   /** Pop user login name */
-  const QString& login(void) const { return mLogin; }
+  QString login(void) const { return mLogin; }
   virtual void setLogin(const QString&);
 
   /** Pop user password */
-  const QString passwd(void) const;
+  QString passwd(void) const;
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
-  
+
   /** Set the password to "" (empty string) */
   virtual void clearPasswd();
 
@@ -65,7 +65,7 @@ public:
   short protocol(void) { return mProtocol; }
   virtual bool setProtocol(short);
 
-  /** Shall messages be left on the server upon retreival (TRUE) 
+  /** Shall messages be left on the server upon retreival (TRUE)
     or deleted (FALSE). */
   bool leaveOnServer(void) const { return mLeaveOnServer; }
   virtual void setLeaveOnServer(bool);
@@ -76,7 +76,7 @@ public:
   virtual void writeConfig(KConfig&);
   virtual void processNewMail(bool _interactive);
   virtual void pseudoAssign(KMAccount*);
-  
+
 protected:
   enum Stage { Idle, List, Uidl, Retr, Dele, Quit };
   friend class KMAcctMgr;
@@ -85,8 +85,8 @@ protected:
 
   /** Very primitive en/de-cryption so that the password is not
       readable in the config file. But still very easy breakable. */
-  const QString encryptStr(const QString inStr) const;
-  const QString decryptStr(const QString inStr) const;
+  QString encryptStr(const QString& inStr) const;
+  QString decryptStr(const QString& inStr) const;
 
   /** Start a KIO Job to get a list of messages on the pop server */
   void startJob();
@@ -144,7 +144,7 @@ protected slots:
       in a single second causes flicker) when using a fast pop server such as
       one on a lan.
 
-      Processing a message means applying KMAccount::processNewMsg to it and 
+      Processing a message means applying KMAccount::processNewMsg to it and
       adding its UID to the list of seen UIDs */
   void slotProcessPendingMsgs();
 
@@ -179,8 +179,8 @@ class KMExpPasswdDialog : public QDialog
 
 public:
   KMExpPasswdDialog(QWidget *parent = 0,const char *name= 0,
-	  	    KMAcctExpPop *act=0, const QString caption=QString::null,
-		    const char *login=0, QString passwd=QString::null);
+	  	    KMAcctExpPop *act=0, const QString &caption=QString::null,
+		    const char *login=0, const QString &passwd=QString::null);
 
 private:
   QLineEdit *usernameLEdit;

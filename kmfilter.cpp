@@ -139,7 +139,7 @@ bool KMFilter::folderRemoved(KMFolder* aFolder, KMFolder* aNewFolder)
 
 
 //-----------------------------------------------------------------------------
-void KMFilter::setName(const QString aName)
+void KMFilter::setName(const QString &aName)
 {
   mName = aName.copy();
 }
@@ -254,7 +254,7 @@ void KMFilter::writeConfig(KConfig* config)
 
 
 //-----------------------------------------------------------------------------
-const QString KMFilter::asString(void) const
+QString KMFilter::asString(void) const
 {
   QString result;
   int i;
@@ -296,12 +296,12 @@ KMFilterRule::KMFilterRule()
 
 
 //-----------------------------------------------------------------------------
-void KMFilterRule::init(const QString aField, Function aFunction,
-			const QString aContents)
+void KMFilterRule::init(const QString &aField, Function aFunction,
+			const QString &aContents)
 {
-  mField    = aField.copy();
+  mField    = aField;
   mFunction = aFunction;
-  mContents = aContents.copy();
+  mContents = aContents;
 }
 
 
@@ -355,7 +355,7 @@ bool KMFilterRule::matches(const KMMessage* msg)
 
 
 //-----------------------------------------------------------------------------
-const QString KMFilterRule::asString(void) const
+QString KMFilterRule::asString(void) const
 {
   QString result;
 
