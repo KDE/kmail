@@ -209,17 +209,15 @@ KMFolderDir* KMFolder::createChildFolder()
 }
 
 //-----------------------------------------------------------------------------
-KMFolder::IndexStatus KMFolder::indexStatus()
+bool KMFolder::isIndexOutdated()
 {
   QFileInfo contInfo(location());
   QFileInfo indInfo(indexLocation());
 
-  if (!contInfo.exists()) return KMFolder::IndexOk;
-  if (!indInfo.exists()) return KMFolder::IndexMissing;
+  if (!contInfo.exists()) return FALSE;
+  if (!indInfo.exists()) return TRUE;
 
-  return ( contInfo.lastModified() > indInfo.lastModified() )
-         ? KMFolder::IndexTooOld
-         : KMFolder::IndexOk;
+  return (contInfo.lastModified() > indInfo.lastModified());
 }
 
 

@@ -95,12 +95,11 @@ private:
       failure. */
   virtual int createIndexFromContents();
 
-  /** Tests whether the contents of this folder is newer than the index.
-      Returns IndexTooOld if the index is older than the contents.
-      Returns IndexMissing if there is no index.
-      Returns IndexOk if the index is not older than the contents.
-  */
-  virtual IndexStatus indexStatus();
+  /** Tests whether the contents (file) is newer than the index. Returns
+    TRUE if the contents has changed (and the index should be recreated),
+    and FALSE otherwise. Returns TRUE if there is no index file, and
+    TRUE if there is no contents (file). */
+  virtual bool isIndexOutdated();
 
   QStrList mIdxToFileList;
   int mIdxCount;

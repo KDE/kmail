@@ -1642,7 +1642,6 @@ KMMessage *KMMainWin::jumpToMessage(KMMessage *aMsg)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
-kdDebug(5006) << "KMMainWin::slotMsgSelected" << endl;
   if (msg && msg->parent() && (msg->parent()->protocol() == "imap") &&
       !msg->isComplete())
   {

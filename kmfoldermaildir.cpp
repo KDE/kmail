@@ -99,7 +99,7 @@ int KMFolderMaildir::open()
 
   if (!path().isEmpty())
   {
-    if (KMFolder::IndexOk != indexStatus()) // test if contents file has changed
+    if (isIndexOutdated()) // test if contents file has changed
     {
       QString str;
       mIndexStream = NULL;
@@ -745,19 +745,17 @@ int KMFolderMaildir::createIndexFromContents()
   return 0;
 }
 
-KMFolder::IndexStatus KMFolderMaildir::indexStatus()
+bool KMFolderMaildir::isIndexOutdated()
 {
   QFileInfo new_info(location() + "/new");
   QFileInfo cur_info(location() + "/cur");
   QFileInfo index_info(indexLocation());
 
   if (!index_info.exists())
-    return KMFolder::IndexMissing;
+    return TRUE;
 
   return ((new_info.lastModified() > index_info.lastModified()) ||
-          (cur_info.lastModified() > index_info.lastModified()))
-         ? KMFolder::IndexTooOld
-         : KMFolder::IndexOk;
+          (cur_info.lastModified() > index_info.lastModified()));
 }
 
 //-----------------------------------------------------------------------------
