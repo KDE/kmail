@@ -423,22 +423,25 @@ void KMail::FolderDiaACLTab::load()
   mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( mImapAccount->host() ) );
   ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
-    slotConnectionResult( 1 ); // any error code != 0
+    slotConnectionResult( -1, QString::null );
   } else if ( state == ImapAccountBase::Connecting ) {
-    connect( mImapAccount, SIGNAL( connectionResult(int) ),
-             this, SLOT( slotConnectionResult(int) ) );
+    connect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
+             this, SLOT( slotConnectionResult(int, const QString&) ) );
   } else { // Connected
-    slotConnectionResult( 0 );
+    slotConnectionResult( 0, QString::null );
   }
 }
 
-void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode )
+void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString& errorMsg )
 {
-  disconnect( mImapAccount, SIGNAL( connectionResult(int) ),
-              this, SLOT( slotConnectionResult(int) ) );
+  disconnect( mImapAccount, SIGNAL( connectionResult(int, const QString&) ),
+              this, SLOT( slotConnectionResult(int, const QString&) ) );
   if ( errorCode ) {
-    // Error (error message already shown by the account)
-    mLabel->setText( i18n( "Error connecting to server %1" ).arg( mImapAccount->host() ) );
+    if ( errorCode == -1 ) // unspecified error
+      mLabel->setText( i18n( "Error connecting to server %1" ).arg( mImapAccount->host() ) );
+    else
+      // Connection error (error message box already shown by the account)
+      mLabel->setText( KIO::buildErrorString( errorCode, errorMsg ) );
     return;
   }
 

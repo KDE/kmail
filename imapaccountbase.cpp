@@ -588,14 +588,14 @@ namespace KMail {
   {
       if (aSlave != mSlave) return;
       handleError( errorCode, errorMsg, 0, QString::null, true );
-      emit connectionResult( errorCode );
+      emit connectionResult( errorCode, errorMsg );
   }
 
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
   {
       if (aSlave != mSlave) return;
-      emit connectionResult( 0 ); // success
+      emit connectionResult( 0, QString::null ); // success
   }
 
   //-----------------------------------------------------------------------------
@@ -640,9 +640,14 @@ namespace KMail {
       if ( !mStorePasswd )
         mAskAgain = true;
       break;
+    case KIO::ERR_CONNECTION_BROKEN:
+    case KIO::ERR_COULD_NOT_CONNECT:
+      // These mean that we'll have to reconnect on the next attempt, so set mSlave to 0.
+      killAllJobs( true );
+      break;
     default:
       if ( abortSync )
-        killAllJobs( errorCode == KIO::ERR_CONNECTION_BROKEN );
+        killAllJobs( false );
       else
         jobsKilled = false;
       break;

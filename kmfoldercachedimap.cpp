@@ -568,15 +568,17 @@ void KMFolderCachedImap::serverSyncInternal()
     ImapAccountBase::ConnectionState cs = mAccount->makeConnection();
     if ( cs == ImapAccountBase::Error ) {
       // Cancelled by user, or slave can't start
-      kdDebug(5006) << "makeConnection said Error, aborting." << endl;
+      // kdDebug(5006) << "makeConnection said Error, aborting." << endl;
       // We stop here. We're already in SYNC_STATE_INITIAL for the next time.
+      emit newState( label(), progress(), i18n( "Error connecting to server %1" ).arg( mAccount->host() ) );
       emit folderComplete(this, FALSE);
       break;
     } else if ( cs == ImapAccountBase::Connecting ) {
       // kdDebug(5006) << "makeConnection said Connecting, waiting for signal." << endl;
+      emit newState( label(), progress(), i18n("Connecting to %1").arg( mAccount->host() ) );
       // We'll wait for the connectionResult signal from the account.
-      connect( mAccount, SIGNAL( connectionResult(int) ),
-               this, SLOT( slotConnectionResult(int) ) );
+      connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+               this, SLOT( slotConnectionResult(int, const QString&) ) );
       break;
     } else {
       // Connected
@@ -841,10 +843,10 @@ void KMFolderCachedImap::serverSyncInternal()
 /* Connected to the imap account's connectionResult signal.
    Emitted when the slave connected or failed to connect.
 */
-void KMFolderCachedImap::slotConnectionResult( int errorCode )
+void KMFolderCachedImap::slotConnectionResult( int errorCode, const QString& errorMsg )
 {
-  disconnect( mAccount, SIGNAL( connectionResult(int) ),
-              this, SLOT( slotConnectionResult(int) ) );
+  disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+              this, SLOT( slotConnectionResult(int, const QString&) ) );
   if ( !errorCode ) {
     // Success
     mSyncState = SYNC_STATE_GET_USERRIGHTS;
@@ -852,6 +854,7 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode )
     serverSyncInternal();
   } else {
     // Error (error message already shown by the account)
+    emit newState( label(), progress(), KIO::buildErrorString( errorCode, errorMsg ));
     emit folderComplete(this, FALSE);
   }
 }

@@ -228,7 +228,7 @@ protected slots:
   void slotSubFolderComplete(KMFolderCachedImap*, bool);
 
   // Connected to the imap account
-  void slotConnectionResult( int errorCode );
+  void slotConnectionResult( int errorCode, const QString& errorMsg );
 
   void slotReceivedUserRights( KMFolder* );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );

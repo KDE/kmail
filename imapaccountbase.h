@@ -384,8 +384,9 @@ namespace KMail {
      * Emitted when the slave managed or failed to connect
      * This is always emitted at some point after makeConnection returned Connecting.
      * @param errorCode 0 for success, != 0 in case of error
+     * @param errorMsg if errorCode is != 0, this goes with errorCode to call KIO::buildErrorString
      */
-    void connectionResult( int errorCode );
+    void connectionResult( int errorCode, const QString& errorMsg );
 
     /**
      * Emitted when new folders have been received

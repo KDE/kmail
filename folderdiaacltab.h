@@ -96,7 +96,7 @@ public:
 
 private slots:
   // Network (KIO) slots
-  void slotConnectionResult( int );
+  void slotConnectionResult( int, const QString& );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
   void slotMultiSetACLResult(KIO::Job *);
   void slotACLChanged( const QString&, int );
