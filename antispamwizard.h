@@ -122,7 +122,7 @@ namespace KMail {
                         QString name, QString exec, QString url, QString filter,
                         QString detection, QString spam, QString ham,
                         QString header, QString pattern, bool regExp,
-                        bool bayesFilter );
+                        bool bayesFilter, QString type );
     
           int getVersion() const { return mVersion; };
           QString getId()  const { return mId; };
@@ -137,6 +137,7 @@ namespace KMail {
           QString getDetectionPattern() const { return mDetectionPattern; };
           bool isUseRegExp() const { return mUseRegExp; };
           bool useBayesFilter() const { return mSupportsBayesFilter; };
+          QString getType() const { return mType; };
     
         private:
           // used to identifiy configs for the same tool
@@ -166,6 +167,8 @@ namespace KMail {
           bool mUseRegExp;
           // can the tool learn spam and ham, has it a bayesian algorithm
           bool mSupportsBayesFilter;
+          // Is the tool anti-spam ("spam") or anti-virus ("av")
+          QString mType;
       };
       /**
         Instances of this class control reading the configuration of the 
@@ -265,9 +268,11 @@ namespace KMail {
       bool pipeRulesSelected() const;
       bool classifyRulesSelected() const;
       bool moveRulesSelected() const;
+      bool moveVirusRulesSelected() const;
       bool markReadRulesSelected() const;
       
       QString selectedFolderName() const;
+      QString selectedVirusFolderName() const;
       void allowClassification( bool enabled );
 
     private slots:
@@ -280,8 +285,10 @@ namespace KMail {
       QCheckBox * mPipeRules;
       QCheckBox * mClassifyRules;
       QCheckBox * mMoveRules;
-      QCheckBox * mMarkRules;
       SimpleFolderTree *mFolderTree;
+      QCheckBox * mMoveVirusRules;
+      SimpleFolderTree *mVirusFolderTree;
+      QCheckBox * mMarkRules;
   };
 
 

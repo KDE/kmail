@@ -2212,7 +2212,7 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("Filter &Log Viewer..."), 0, this,
  		      SLOT(slotFilterLogViewer()), actionCollection(), "filter_log_viewer" );
 
-  (void) new KAction( i18n("&Anti-Spam Wizard..."), 0, this,
+  (void) new KAction( i18n("&Anti-Spam/Virus Wizard..."), 0, this,
  		      SLOT(slotAntiSpamWizard()), actionCollection(), "antiSpamWizard" );
 
   //----- Edit Menu

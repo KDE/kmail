@@ -1,7 +1,7 @@
 KDE_OPTIONS = nofinal
 KDE_CXXFLAGS = $(USE_RTTI)
 
-SUBDIRS =  . about pics profiles
+SUBDIRS =  . about pics profiles avscripts
 
 INCLUDES = -I$(top_srcdir)/libkdenetwork \
 	-I$(top_srcdir)/libkdepim \

@@ -1,5 +1,5 @@
 [General]
-tools=3
+tools=5
 
 [Spamtool #1]
 Ident=spamassassin
@@ -15,6 +15,7 @@ DetectionHeader=X-Spam-Flag
 DetectionPattern=yes
 UseRegExp=0
 SupportsBayes=1
+Type=spam
 
 [Spamtool #2]
 Ident=bogofilter
@@ -30,6 +31,7 @@ DetectionHeader=X-Bogosity
 DetectionPattern=yes
 UseRegExp=0
 SupportsBayes=1
+Type=spam
 
 [Spamtool #3]
 Ident=annoyance-filter
@@ -45,4 +47,36 @@ DetectionHeader=X-Annoyance-Filter-Classification
 DetectionPattern=Junk
 UseRegExp=0
 SupportsBayes=1
+Type=spam
 
+[Spamtool #4]
+Ident=ClamAV
+Version=1
+VisibleName=&Clam Anti-Virus
+Executable=clamscan -V
+URL=http://clamav.sf.net
+PipeFilterName=Clam Anti-Virus Check
+PipeCmdDetect=kmail_clamav.sh
+ExecCmdSpam=
+ExecCmdHam=
+DetectionHeader=X-Virus-Flag
+DetectionPattern=yes
+UseRegExp=0
+SupportsBayes=0
+Type=av
+
+[Spamtool #5]
+Ident=SophosAV
+Version=1
+VisibleName=Sophos Anti&Virus
+Executable=sweep -v
+URL=http://www.sophos.com
+PipeFilterName=Sophos Anti-Virus Check
+PipeCmdDetect=kmail_sav.sh
+ExecCmdSpam=
+ExecCmdHam=
+DetectionHeader=X-Virus-Flag
+DetectionPattern=yes
+UseRegExp=0
+SupportsBayes=0
+Type=av
