@@ -22,7 +22,7 @@
 #ifndef KRN
 #include "kmmainwin.h"
 #include "kmsettings.h"
-#include <fstream.h>
+#include "kfileio.h"
 #endif
 
 #include <assert.h>
@@ -59,6 +59,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <klocale.h>
+#include <ktempfile.h>
 
 #if defined CHARSETS
 #include <kcharsets.h>
@@ -2218,39 +2219,36 @@ bool KMEdit::eventFilter(QObject*, QEvent* e)
 
       QRegExp repFn("\\%f");
       QString sysLine = mExtEditor;
-      char tmpFile[20] = "/tmp/kmailXXXXXX";
-      // make temporary file
-      mkstemp(tmpFile);
+      KTempFile tmpFile;
+      QString tmpName = tmpFile.name();
 
-      // write the data out to the file
-      fstream mailFile(tmpFile, ios::out);
+      tmpFile.setAutoDelete(true);
 
-      mailFile << text();
+      fprintf(tmpFile.fstream(), "%s", (const char *)text());
 
-      mailFile.close();
+      tmpFile.close();
       // replace %f in the system line
-      sysLine.replace(repFn, QString(tmpFile));
+      sysLine.replace(repFn, tmpName);
       system((const char *)sysLine);
 
       setAutoUpdate(false);
       clear();
 
       // read data back in from file
-      mailFile.open(tmpFile, ios::in);
+      insertLine(kFileToString(tmpName, TRUE, FALSE), -1);
+//       QFile mailFile(tmpName);
 
-      while (!mailFile.eof()) {
-         char tmpbuf[1025];
-         mailFile.getline(tmpbuf, 1024, '\n');
-         insertLine(tmpbuf, -1);
-      }
+//       while (!mailFile.atEnd()) {
+//          QString oneLine;
+//          mailFile.readLine(oneLine, 1024);
+//          insertLine(oneLine, -1);
+//       }
       
-      setModified(true);
-      mailFile.close();
+//       setModified(true);
+//       mailFile.close();
 
       setAutoUpdate(true);
       repaint();
-
-      unlink(tmpFile);
       return TRUE;
     } else {
 #endif

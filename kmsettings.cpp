@@ -286,7 +286,7 @@ void KMSettings::createTabIdentity(QWidget* parent)
   connect(sigModify, SIGNAL(clicked()), this, SLOT(slotSigModify()));
 
   label = new QLabel(tab);
-  label->setText(i18n("(Prepend the signature file with a \"|\" to specify a program.)"));
+  label->setText(i18n("(Append a \"|\" to the signature file to specify a program.)"));
   label->setMinimumSize(label->size());
   grid->addMultiCellWidget(label, 5, 5, 1, 1);
 

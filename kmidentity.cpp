@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <klocale.h>
+#include <ktempfile.h>
 
 
 //-----------------------------------------------------------------------------
@@ -144,34 +145,35 @@ void KMIdentity::setSignatureFile(const QString str)
 const QString KMIdentity::signature(void) const
 {
   QString result, sigcmd;
-  char tmpf[30] = "/tmp/kmailXXXXXX";
-  int fd;
 
   if (mSignatureFile.isEmpty()) return QString::null;
 
   if (mSignatureFile.right(1)=="|")
   {
+    KTempFile tmpf;
+    int rc;
+
+    tmpf.setAutoDelete(true);
     // signature file is a shell script that returns the signature
-    fd = mkstemp(tmpf);
-    if (fd == -1) {
+    if (tmpf.status() != 0) {
       warning(i18n("Failed to create temporary file\n%s\n%s"),
-	      tmpf, strerror(errno));
+	      (const char *)tmpf.name(), strerror(errno));
       return QString::null;
     }
-    close(fd);
+    tmpf.close();
+
     sigcmd = mSignatureFile.left(mSignatureFile.length()-1);
     sigcmd += " >";
-    sigcmd += tmpf;
-    system(sigcmd);
+    sigcmd += tmpf.name();
+    rc = system(sigcmd);
 
-    if (errno)
+    if (rc != 0)
     {
       warning(i18n("Failed to execute signature script\n%s\n%s"),
 	      sigcmd.data(), strerror(errno));
       return QString::null;
     }
-    result = kFileToString(tmpf, TRUE, FALSE);
-    unlink(tmpf);
+    result = kFileToString(tmpf.name(), TRUE, FALSE);
   }
   else
   {
