@@ -20,8 +20,8 @@
     Boston, MA 02111-1307, USA.
 */
 
-#ifndef KMGROUPWAREWIZARD_H
-#define KMGROUPWAREWIZARD_H
+#ifndef STARTUPWIZARD_H
+#define STARTUPWIZARD_H
 
 #include <qwizard.h>
 
@@ -80,7 +80,7 @@ public:
 };
 
 
-class KMGroupwareWizard : public QWizard {
+class StartupWizard : public QWizard {
   Q_OBJECT
 public:
   // Call this to execute the thing
@@ -95,7 +95,7 @@ private slots:
   void slotUpdateParentFolderName();
 
 private:
-  KMGroupwareWizard( QWidget* parent = 0, const char* name = 0, bool modal = FALSE );
+  StartupWizard( QWidget* parent = 0, const char* name = 0, bool modal = FALSE );
 
   int language() const;
   KMFolder* folder() const;
@@ -115,13 +115,13 @@ private:
   void setLanguage( int, bool );
 
   // Write the KOrganizer settings
-  static void writeKOrganizerConfig( const KMGroupwareWizard& );
+  static void writeKOrganizerConfig( const StartupWizard& );
 
   // Write the KABC settings
   static void writeKAbcConfig();
 
   // Write the KAddressbook settings
-  static void writeKAddressbookConfig( const KMGroupwareWizard& );
+  static void writeKAddressbookConfig( const StartupWizard& );
 
   KMIdentity& userIdentity();
   const KMIdentity& userIdentity() const;
@@ -156,4 +156,4 @@ private:
 };
 
 
-#endif // KMGROUPWAREWIZARD_H
+#endif // STARTUPWIZARD_H

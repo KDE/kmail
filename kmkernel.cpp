@@ -51,7 +51,7 @@ using KMail::RecentAddresses;
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "configuredialog.h"
-#include "kmgroupwarewizard.h"
+#include "startupwizard.h"
 #include "kmsystemtray.h"
 #include <kwin.h>
 #include <ktip.h>
@@ -1117,7 +1117,7 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
 {
   // Run the groupware setup wizard. It doesn't do anything if this isn't
   // the first run. Replace this with a general wizard later
-  KMGroupwareWizard::run();
+  StartupWizard::run();
 
   if (mailto)
     openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);

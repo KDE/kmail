@@ -59,7 +59,7 @@
 #include "kmmainwin.h"
 #include "kmgroupware.h"
 
-#include "kmgroupwarewizard.h"
+#include "startupwizard.h"
 
 
 WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
@@ -268,7 +268,7 @@ void WizardKolabPage::apply()
 }
 
 
-KMGroupwareWizard::KMGroupwareWizard( QWidget* parent, const char* name, bool modal )
+StartupWizard::StartupWizard( QWidget* parent, const char* name, bool modal )
   : QWizard( parent, name, modal ), mGroupwareEnabled(true)
 {
   addPage( mIntroPage = createIntroPage(), i18n("Groupware Functionality for KMail") );
@@ -281,12 +281,12 @@ KMGroupwareWizard::KMGroupwareWizard( QWidget* parent, const char* name, bool mo
   addPage( mOutroPage = createOutroPage(), i18n("Done") );
 }
 
-int KMGroupwareWizard::language() const
+int StartupWizard::language() const
 {
   return mLanguageCombo->currentItem();
 }
 
-KMFolder* KMGroupwareWizard::folder() const
+KMFolder* StartupWizard::folder() const
 {
   if( groupwareEnabled() && useDefaultKolabSettings() )
     return mKolabWidget->folder();
@@ -294,7 +294,7 @@ KMFolder* KMGroupwareWizard::folder() const
     return mFolderCombo->getFolder();
 }
 
-void KMGroupwareWizard::setAppropriatePages()
+void StartupWizard::setAppropriatePages()
 {
   setAppropriate( mKolabPage, groupwareEnabled() && useDefaultKolabSettings() );
   setAppropriate( mAccountPage, !groupwareEnabled() || !useDefaultKolabSettings() );
@@ -307,18 +307,18 @@ void KMGroupwareWizard::setAppropriatePages()
   setFinishEnabled( mFolderCreationPage, true );
 }
 
-void KMGroupwareWizard::slotGroupwareEnabled( int i )
+void StartupWizard::slotGroupwareEnabled( int i )
 {
   mGroupwareEnabled = (i == 0);
   serverSettings->setEnabled( mGroupwareEnabled );
 }
 
-void KMGroupwareWizard::slotServerSettings( int i )
+void StartupWizard::slotServerSettings( int i )
 {
   mUseDefaultKolabSettings = (i == 0);
 }
 
-QWidget* KMGroupwareWizard::createIntroPage()
+QWidget* StartupWizard::createIntroPage()
 {
   QWidget* page = new QWidget(this, "intro_page");
   QBoxLayout* top = new QHBoxLayout( page );
@@ -355,7 +355,7 @@ QWidget* KMGroupwareWizard::createIntroPage()
   return page;
 }
 
-QWidget* KMGroupwareWizard::createIdentityPage()
+QWidget* StartupWizard::createIdentityPage()
 {
   QWidget* page = new QWidget( this, "identity_page" );
   QBoxLayout* top = new QHBoxLayout( page );
@@ -369,7 +369,7 @@ QWidget* KMGroupwareWizard::createIdentityPage()
   return page;
 }
 
-QWidget* KMGroupwareWizard::createKolabPage()
+QWidget* StartupWizard::createKolabPage()
 {
   QWidget* page = new QWidget( this, "kolabserver_page" );
   QBoxLayout* top = new QHBoxLayout( page );
@@ -384,7 +384,7 @@ QWidget* KMGroupwareWizard::createKolabPage()
   return page;
 }
 
-QWidget* KMGroupwareWizard::createAccountPage()
+QWidget* StartupWizard::createAccountPage()
 {
   QWidget* page = new QWidget( this, "account_page");
   QBoxLayout* top = new QHBoxLayout( page );
@@ -400,7 +400,7 @@ QWidget* KMGroupwareWizard::createAccountPage()
   return page;
 }
 
-QWidget* KMGroupwareWizard::createLanguagePage()
+QWidget* StartupWizard::createLanguagePage()
 {
   QWidget* page = new QWidget(this, "language_page");
   QBoxLayout* top = new QHBoxLayout( page );
@@ -427,7 +427,7 @@ QWidget* KMGroupwareWizard::createLanguagePage()
   return page;
 }
 
-QWidget* KMGroupwareWizard::createFolderSelectionPage()
+QWidget* StartupWizard::createFolderSelectionPage()
 {
   QWidget* page = new QWidget(this, "foldersel_page");
   QBoxLayout* top = new QHBoxLayout( page );
@@ -445,7 +445,7 @@ QWidget* KMGroupwareWizard::createFolderSelectionPage()
   return page;
 }
 
-void KMGroupwareWizard::slotUpdateParentFolderName()
+void StartupWizard::slotUpdateParentFolderName()
 {
   KMFolder* folder = mFolderCombo->getFolder();
   QString fldrName = i18n("<unnamed>");
@@ -457,7 +457,7 @@ void KMGroupwareWizard::slotUpdateParentFolderName()
 		    "they do not already exist").arg( fldrName ));
 }
 
-void KMGroupwareWizard::setLanguage( int language, bool guessed ) 
+void StartupWizard::setLanguage( int language, bool guessed ) 
 {
   mLanguageCombo->setCurrentItem( language );
   if( guessed ) {
@@ -467,7 +467,7 @@ void KMGroupwareWizard::setLanguage( int language, bool guessed )
   }
 }
 
-QWidget* KMGroupwareWizard::createFolderCreationPage()
+QWidget* StartupWizard::createFolderCreationPage()
 {
   QHBox* page = new QHBox(this, "foldercre_page");
   mFolderCreationText = new QTextBrowser( page );
@@ -478,7 +478,7 @@ QWidget* KMGroupwareWizard::createFolderCreationPage()
   return page;
 }
 
-QWidget* KMGroupwareWizard::createOutroPage()
+QWidget* StartupWizard::createOutroPage()
 {
   QHBox* page = new QHBox(this, "outtro_page");
   QTextBrowser* text = new QTextBrowser( page );
@@ -489,12 +489,12 @@ QWidget* KMGroupwareWizard::createOutroPage()
   return page;
 }
 
-void KMGroupwareWizard::back()
+void StartupWizard::back()
 {
   QWizard::back();
 }
 
-void KMGroupwareWizard::next()
+void StartupWizard::next()
 {
   if( currentPage() == mAccountPage ) {
     kdDebug(5006) << "AccountPage appropriate: " << appropriate(mAccountPage) << endl;
@@ -531,7 +531,7 @@ static bool checkSubfolders( KMFolderDir* dir, KMGroupware* gw, int language )
     dir->hasNamedFolder( gw->folderName( KFolderTreeItem::Tasks, language ) );
 }
 
-void KMGroupwareWizard::guessExistingFolderLanguage()
+void StartupWizard::guessExistingFolderLanguage()
 {
   KMFolderDir* dir = folder()->child();
   KMGroupware* gw = &(KMKernel::self()->groupware());
@@ -547,48 +547,48 @@ void KMGroupwareWizard::guessExistingFolderLanguage()
   }
 }
 
-KMIdentity &KMGroupwareWizard::userIdentity()
+KMIdentity &StartupWizard::userIdentity()
 {
   return mIdentityWidget->identity();
 }
 
-const KMIdentity &KMGroupwareWizard::userIdentity() const
+const KMIdentity &StartupWizard::userIdentity() const
 {
   return mIdentityWidget->identity();
 }
 
-QString KMGroupwareWizard::name() const
+QString StartupWizard::name() const
 {
   return userIdentity().fullName();
 }
 
-QString KMGroupwareWizard::login() const
+QString StartupWizard::login() const
 {
   return mKolabWidget->loginEdit->text().stripWhiteSpace();
 }
 
-QString KMGroupwareWizard::host() const
+QString StartupWizard::host() const
 {
   return mKolabWidget->hostEdit->text().stripWhiteSpace();
 }
 
-QString KMGroupwareWizard::email() const
+QString StartupWizard::email() const
 {
   return userIdentity().emailAddr();
 }
 
-QString KMGroupwareWizard::passwd() const
+QString StartupWizard::passwd() const
 {
   return KMAccount::encryptStr( mKolabWidget->passwordEdit->text() );
 }
 
-bool KMGroupwareWizard::storePasswd() const
+bool StartupWizard::storePasswd() const
 {
   return mKolabWidget->storePasswordCheck->isChecked();
 }
 
 
-void KMGroupwareWizard::run()
+void StartupWizard::run()
 {
   KConfigGroup options( KMKernel::config(), "Groupware" );
 
@@ -596,7 +596,7 @@ void KMGroupwareWizard::run()
   if( options.readEntry( "Enabled", "notset" ) != "notset" )
     return;
 
-  KMGroupwareWizard wiz(0, "groupware wizard", TRUE );
+  StartupWizard wiz(0, "groupware wizard", TRUE );
   int rc = wiz.exec();
 
   options.writeEntry( "Enabled", rc == QDialog::Accepted && wiz.groupwareEnabled() );
@@ -617,7 +617,7 @@ void KMGroupwareWizard::run()
 
 
 // Write the KOrganizer settings
-void KMGroupwareWizard::writeKOrganizerConfig( const KMGroupwareWizard& wiz ) {
+void StartupWizard::writeKOrganizerConfig( const StartupWizard& wiz ) {
   KConfig config( "korganizerrc" );
 
   KConfigGroup optionsKOrgGeneral( &config, "Personal Settings" );
@@ -646,7 +646,7 @@ void KMGroupwareWizard::writeKOrganizerConfig( const KMGroupwareWizard& wiz ) {
 
 
 // Write the KABC settings
-void KMGroupwareWizard::writeKAbcConfig() {
+void StartupWizard::writeKAbcConfig() {
   KConfig config( "kabcrc" );
   KConfigGroup optionsKAbcGeneral( &config, "General" );
   QString standardKey = optionsKAbcGeneral.readEntry( "Standard" );
@@ -691,7 +691,7 @@ void KMGroupwareWizard::writeKAbcConfig() {
 
 
 // Write the KAddressbook settings
-void KMGroupwareWizard::writeKAddressbookConfig( const KMGroupwareWizard& wiz ) {
+void StartupWizard::writeKAddressbookConfig( const StartupWizard& wiz ) {
   KConfig config( "kaddressbookrc" );
   KConfigGroup options( &config, "LDAP" );
 
@@ -747,4 +747,4 @@ void KMGroupwareWizard::writeKAddressbookConfig( const KMGroupwareWizard& wiz ) 
 }
 
 
-#include "kmgroupwarewizard.moc"
+#include "startupwizard.moc"
