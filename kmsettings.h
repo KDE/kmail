@@ -38,7 +38,7 @@ protected:
 
   // Create a button in given grid. The name is internationalized.
   virtual QPushButton* createPushButton(QWidget* parent, QGridLayout* grid,
-					const char* label, 
+					const QString& label,
 					int row, int col);
 
   // Returns a string suitable for account listbox

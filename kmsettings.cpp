@@ -84,8 +84,8 @@ KMSettings::~KMSettings()
 // The argument 'text' is the text that will show up in the entry field.
 // The whole thing is placed in the grid from row/col to the right.
 static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
-				     const char* aLabel,
-				     const char* aText, 
+				     const QString& aLabel,
+				     const QString& aText,
 				     int gridy, int gridx,
 				     QPushButton** detail_return=NULL)
 {
@@ -99,7 +99,7 @@ static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
   label->setMinimumSize(label->size());
   grid->addWidget(label, gridy, gridx++);
 
-  if (aText) edit->setText(aText);
+  if (!aText.isEmpty()) edit->setText(aText);
   edit->setMinimumSize(100, label->height()+2);
   edit->setMaximumSize(1000, label->height()+2);
   grid->addWidget(edit, gridy, gridx++);
@@ -123,7 +123,7 @@ static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
 // The argument 'label' is the label that will be left of the entry field.
 // The whole thing is placed in the grid from row/col to the right.
 static void addLabeledWidget(QWidget* parent, QGridLayout* grid,
-			     const char* aLabel, QWidget* widg,
+			     const QString& aLabel, QWidget* widg,
 			     int gridy, int gridx,
 			     QPushButton** detail_return,
                              QLabel** label_return)
@@ -157,11 +157,11 @@ static void addLabeledWidget(QWidget* parent, QGridLayout* grid,
 
 //-----------------------------------------------------------------------------
 QPushButton* KMSettings::createPushButton(QWidget* parent, QGridLayout* grid,
-					  const char* label, 
+					  const QString& label,
 					  int gridy, int gridx)
 {
   QPushButton* button = new QPushButton(parent, label);
-  button->setText(i18n(label));
+  button->setText(label);
   button->adjustSize();
   button->setMinimumSize(button->size());
   grid->addWidget(button, gridy, gridx);
