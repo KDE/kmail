@@ -1167,7 +1167,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   if ( mComposeWin->mEditor->textFormat() == Qt::RichText ) { // create a multipart body
     // calculate a boundary string
     QCString boundaryCStr;  // storing boundary string data
-    QCString newbody="";
+    QCString newbody;
     DwMediaType tmpCT;
     tmpCT.CreateBoundary( mPreviousBoundaryLevel++ ); // was 0
     boundaryCStr = tmpCT.Boundary().c_str();
@@ -1179,8 +1179,12 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     mComposeWin->mEditor->setTextFormat(Qt::PlainText);
     QCString textbody = breakLinesAndApplyCodec();
     mComposeWin->mEditor->setTextFormat(Qt::RichText);
-    textBodyPart.setBodyAndGuessCte(textbody, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
-				    doSign);
+    // the signed body must not be 8bit encoded
+    textBodyPart.setBodyAndGuessCte( textbody, allowedCTEs,
+                                     !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
+				     doSign );
+    textBodyPart.setCharset( mCharset );
+    textBodyPart.setBodyEncoded( textbody );
     DwBodyPart* textDwPart = theMessage.createDWBodyPart( &textBodyPart );
     textDwPart->Assemble();
     newbody += "--";
@@ -1193,10 +1197,13 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     KMMessagePart htmlBodyPart;
     htmlBodyPart.setTypeStr("text");
     htmlBodyPart.setSubtypeStr("html");
-    // the signed body must not be 8bit encoded
     QCString htmlbody = breakLinesAndApplyCodec();
-    htmlBodyPart.setBodyAndGuessCte(htmlbody, allowedCTEs, !!kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
-				    doSign);
+    // the signed body must not be 8bit encoded
+    htmlBodyPart.setBodyAndGuessCte( htmlbody, allowedCTEs,
+                                     !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
+				     doSign );
+    htmlBodyPart.setCharset( mCharset );
+    htmlBodyPart.setBodyEncoded( htmlbody );
     DwBodyPart* htmlDwPart = theMessage.createDWBodyPart( &htmlBodyPart );
     htmlDwPart->Assemble();
     newbody += "\n--";
@@ -1236,7 +1243,8 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     innerBodyPart.setBodyAndGuessCte( body, allowedCTEs,
                                       !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
                                       doSign );
-    innerBodyPart.setCharset( mCharset );
+    if ( mComposeWin->mEditor->textFormat() != Qt::RichText )
+      innerBodyPart.setCharset( mCharset );
     innerBodyPart.setBodyEncoded( body ); // do we need this, since setBodyAndGuessCte does this already?
     DwBodyPart* innerDwPart = theMessage.createDWBodyPart( &innerBodyPart );
     innerDwPart->Assemble();
@@ -1292,7 +1300,8 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     // the signed body must not be 8bit encoded
     mOldBodyPart.setBodyAndGuessCte(body, allowedCTEs, !kmkernel->msgSender()->sendQuotedPrintable() && !doSign,
                                    doSign);
-    mOldBodyPart.setCharset(mCharset);
+    if ( mComposeWin->mEditor->textFormat() != Qt::RichText )
+      mOldBodyPart.setCharset(mCharset);
   }
   // create S/MIME body part for signing and/or encrypting
   mOldBodyPart.setBodyEncoded( body );
