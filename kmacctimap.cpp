@@ -42,7 +42,8 @@ using KMail::ImapJob;
 
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
-  KMail::ImapAccountBase(aOwner, aAccountName, id)
+  KMail::ImapAccountBase(aOwner, aAccountName, id),
+  mCountRemainChecks( 0 )
 {
   mFolder = 0;
   mOpenFolders.setAutoDelete(true);
@@ -274,6 +275,22 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
   disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
       this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
   postProcessNewMail(static_cast<KMFolder*>(folder->folder()));
+}
+
+void KMAcctImap::postProcessNewMail( KMFolder * folder ) {
+
+  disconnect( folder->storage(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+              this, SLOT(postProcessNewMail(KMFolder*)) );
+
+  mCountRemainChecks--;
+
+  // count the unread messages
+  mCountUnread += folder->countUnread();
+  if (mCountRemainChecks == 0)
+  {
+    // all checks are done
+    ImapAccountBase::postProcessNewMail();
+  }
 }
 
 //-----------------------------------------------------------------------------

@@ -1028,6 +1028,9 @@ void KMMainWidget::slotRefreshFolder()
     {
       KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
       imap->getAndCheckFolder();
+    } else if ( mFolder->folderType() == KMFolderTypeCachedImap ) {
+      KMFolderCachedImap* f = static_cast<KMFolderCachedImap*>( mFolder->storage() );
+      f->account()->processNewMailSingleFolder( mFolder );
     }
   }
 }
@@ -3027,7 +3030,8 @@ void KMMainWidget::updateFolderMenu()
   mModifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   mCompactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
   mRefreshFolderAction->setEnabled( mFolder ? !mFolder->noContent()
-                                            && mFolder->folderType()==KMFolderTypeImap
+                                            && ( mFolder->folderType() == KMFolderTypeImap
+                                                 || mFolder->folderType() == KMFolderTypeCachedImap )
                                             : false );
   mEmptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
                                              && ( mFolder->count() > 0 ) )

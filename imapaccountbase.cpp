@@ -77,7 +77,6 @@ namespace KMail {
       mTotal( 0 ),
       mCountUnread( 0 ),
       mCountLastUnread( 0 ),
-      mCountRemainChecks( 0 ),
       mAutoExpunge( true ),
       mHiddenFolders( false ),
       mOnlySubscribedFolders( false ),
@@ -261,29 +260,18 @@ namespace KMail {
     return handleError( job->error(), job->errorText(), job, context, abortSync );
   }
 
-  void ImapAccountBase::postProcessNewMail( KMFolder * folder ) {
-
-    disconnect( folder->storage(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-                this, SLOT(postProcessNewMail(KMFolder*)) );
-
-    mCountRemainChecks--;
-
-    // count the unread messages
-    mCountUnread += folder->countUnread();
-    if (mCountRemainChecks == 0)
-    {
-      // all checks are done
+  // Called when we're really all done.
+  void ImapAccountBase::postProcessNewMail() {
+    if (mCountUnread > 0 && mCountUnread > mCountLastUnread) {
       KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
-          name(), mCountUnread );
-      if (mCountUnread > 0 && mCountUnread > mCountLastUnread) {
-        checkDone(true, mCountUnread);
-        mCountLastUnread = mCountUnread;
-      } else {
-        checkDone(false, 0);
-      }
-      setCheckingMail(false);
-      mCountUnread = 0;
+        name(), mCountUnread  - mCountLastUnread);
+      checkDone(true, mCountUnread - mCountLastUnread);
+      mCountLastUnread = mCountUnread;
+    } else {
+      checkDone(false, 0);
     }
+    setCheckingMail(false);
+    mCountUnread = 0;
   }
 
   //-----------------------------------------------------------------------------

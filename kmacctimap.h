@@ -114,8 +114,14 @@ protected:
 protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderImap*, bool);
-  void postProcessNewMail( KMFolder * f ) { ImapAccountBase::postProcessNewMail( f ); }
+  /**
+   * new-mail-notification for not-selected folders (is called via
+   * numUnreadMsgsChanged)
+   */
+  void postProcessNewMail( KMFolder * f );
 
+private:
+  int mCountRemainChecks;
 };
 
 #endif /*KMAcctImap_h*/

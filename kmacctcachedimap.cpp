@@ -46,6 +46,7 @@ using KMail::IMAPProgressDialog;
 #include "kmfoldercachedimap.h"
 #include "kmmainwin.h"
 #include "kmkernel.h"
+#include "kmacctmgr.h"
 
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
@@ -190,12 +191,6 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     KIO::Scheduler::disconnectSlave( slave() );
     mSlave = 0;
   }
-  // make sure that no new-mail-check is blocked
-  if (mCountRemainChecks > 0) // #### This is unused in cached imap
-  {
-    checkDone(false, 0);
-    mCountRemainChecks = 0;
-  }
   for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
     KMFolderCachedImap *fld = *it;
     fld->resetSyncState();
@@ -243,14 +238,37 @@ void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
   }
 }
 
-//-----------------------------------------------------------------------------
+// Reimplemented from ImapAccountBase because we only check one folder at a time
+void KMAcctCachedImap::slotCheckQueuedFolders()
+{
+    disconnect (this, SIGNAL(finishedCheck(bool)),
+          this, SLOT(slotCheckQueuedFolders()));
+
+    mMailCheckFolders.clear();
+    mMailCheckFolders.append( mFoldersQueuedForChecking.front() );
+    mFoldersQueuedForChecking.pop_front();
+    kmkernel->acctMgr()->singleCheckMail(this, true);
+    mMailCheckFolders.clear();
+}
+
+void KMAcctCachedImap::processNewMail( bool interactive )
+{
+  if ( mMailCheckFolders.isEmpty() )
+   processNewMail( mFolder, interactive );
+  else {
+    KMFolder* f = mMailCheckFolders.front();
+    mMailCheckFolders.pop_front();
+    processNewMail( static_cast<KMFolderCachedImap *>( f->storage() ), interactive );
+  }
+}
+
 void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
 				       bool interactive )
 {
   // This should never be set for a cached IMAP account
   mAutoExpunge = false;
+  mCountLastUnread = 0;
 
-  emit newMailsProcessed(-1);
   if( interactive && isProgressDialogEnabled() ) {
     imapProgressDialog()->clear();
     imapProgressDialog()->show();
@@ -267,7 +285,6 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
-  setCheckingMail( false );
   emit finishedCheck(false);
 
   // We remove everything from the deleted folders list after a sync, unconditionally.
@@ -278,7 +295,17 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
   mDeletedFolders.clear();
   mPreviouslyDeletedFolders.clear();
 
-  //postProcessNewMail(static_cast<KMFolder*>(folder));
+  KMail::ImapAccountBase::postProcessNewMail();
+}
+
+void KMAcctCachedImap::addUnreadMsgCount( int msgs )
+{
+  mCountUnread += msgs;
+}
+
+void KMAcctCachedImap::addLastUnreadMsgCount( int msgs )
+{
+  mCountLastUnread += msgs;
 }
 
 //
@@ -319,7 +346,6 @@ void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 						folder->folder()->child(), QString::null,
 						false );
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
-  mCountRemainChecks = 0;
   mCountLastUnread = 0;
 
   if( folderList.count() > 0 )

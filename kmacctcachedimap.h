@@ -76,7 +76,7 @@ public:
    * Inherited methods.
    */
   virtual QString type() const;
-  virtual void processNewMail( bool interactive ) { processNewMail( mFolder, interactive ); }
+  virtual void processNewMail( bool interactive );
 
   void processNewMail( KMFolderCachedImap* folder, bool interactive );
 
@@ -152,6 +152,16 @@ public:
    */
   void removeDeletedFolder( const QString& subFolderPath );
 
+  /**
+   * Add a folder's unread count to the new "unread messages count", done during a sync after getting new mail
+   */
+  void addUnreadMsgCount( int msgs );
+
+  /**
+   * Add a folder's unread count to the last "unread messages count", i.e. the counts before getting new mail
+   */
+  void addLastUnreadMsgCount( int msgs );
+
 protected:
   friend class KMAcctMgr;
   KMAcctCachedImap(KMAcctMgr* owner, const QString& accountName, uint id);
@@ -159,8 +169,8 @@ protected:
 protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderCachedImap*, bool);
-  void postProcessNewMail( KMFolder * f ) { ImapAccountBase::postProcessNewMail( f ); }
 
+  virtual void slotCheckQueuedFolders();
 private:
   QPtrList<CachedImapJob> mJobList;
   KMFolderCachedImap *mFolder;

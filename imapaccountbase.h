@@ -221,6 +221,11 @@ namespace KMail {
     void processNewMailSingleFolder(KMFolder* folder);
 
     /**
+     * Called when we're completely done checking mail for this account
+     */
+    void postProcessNewMail();
+
+    /**
      * Check whether we're checking for new mail
      * and the folder is included
      */
@@ -282,12 +287,7 @@ namespace KMail {
     virtual void displayProgress();
 
   protected slots:
-    /**
-     * new-mail-notification for not-selected folders (is called via
-     * numUnreadMsgsChanged)
-     */
-    virtual void postProcessNewMail( KMFolder * );
-    void slotCheckQueuedFolders();
+    virtual void slotCheckQueuedFolders();
 
     /// Handle a message coming from the KIO scheduler saying that the slave is now connected
     void slotSchedulerSlaveConnected(KIO::Slave *aSlave);
@@ -357,7 +357,7 @@ namespace KMail {
     QMap<KIO::Job *, jobData> mapJobData;
     QTimer mIdleTimer;
     QString mPrefix;
-    int mTotal, mCountUnread, mCountLastUnread, mCountRemainChecks;
+    int mTotal, mCountUnread, mCountLastUnread;
     bool mAutoExpunge : 1;
     bool mHiddenFolders : 1;
     bool mOnlySubscribedFolders : 1;

@@ -1210,7 +1210,8 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 }
 
 
-// This synchronizes the subfolders with the server
+// This lists the subfolders on the server
+// and (in slotListResult) takes care of folders that have been removed on the server
 bool KMFolderCachedImap::listDirectory(bool secondStep)
 {
   mSubfolderState = imapInProgress;
@@ -1276,27 +1277,30 @@ void KMFolderCachedImap::slotListResult( QStringList mFolderNames,
   }
   folder()->createChildFolder();
   // Find all subfolders present on disk but not on the server
-  KMFolderCachedImap *f;
   KMFolderNode *node = folder()->child()->first();
   QPtrList<KMFolder> toRemove;
   while (node) {
     if (!node->isDir() ) {
+      KMFolderCachedImap *f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
       if ( mSubfolderNames.findIndex(node->name()) == -1 &&
           (node->name().upper() != "INBOX" || !mAccount->createInbox()) )
       {
         // This subfolder isn't present on the server
         kdDebug(5006) << node->name() << " isn't on the server." << endl;
-        f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
         if( !f->uidValidity().isEmpty() ) {
           // The folder have a uidValidity setting, so it has been on the
           // server before. Delete it locally.
           toRemove.append( f->folder() );
         }
       }
+      else // folder both local and on server
+      {
+        mAccount->addLastUnreadMsgCount( f->countUnread() );
+      }
     }
     node = folder()->child()->next();
   }
-  // Remove all folders
+
   for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() )
     kmkernel->dimapFolderMgr()->remove( doomed );
 
@@ -1305,7 +1309,7 @@ void KMFolderCachedImap::slotListResult( QStringList mFolderNames,
   serverSyncInternal();
 }
 
-
+// This synchronizes the local folders as needed (creation/deletion). No network communication here.
 void KMFolderCachedImap::listDirectory2() {
   foldersForDeletionOnServer.clear();
   QString path = folder()->path();
@@ -1402,8 +1406,10 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
 {
   Q_UNUSED(sub);
   //kdDebug(5006) << label() << " slotSubFolderComplete: " << sub->label() << endl;
-  if ( success )
+  if ( success ) {
+    mAccount->addUnreadMsgCount( sub->countUnread() );
     serverSyncInternal();
+  }
   else
   {
     // success == false means the sync was aborted.
