@@ -292,6 +292,7 @@ protected:
   QCheckBox   *mSendOutboxCheck;
   QComboBox   *mSendMethodCombo;
   QComboBox   *mMessagePropertyCombo;
+  QLineEdit   *mDefaultDomainEdit;
 
   QPtrList< KMTransportInfo > mTransportInfoList;
 

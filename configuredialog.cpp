@@ -1086,7 +1086,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   vlay->addWidget(group);
 
   // a grid layout for the contents of the "common options" group box
-  glay = new QGridLayout( group->layout(), 4, 3, KDialog::spacingHint() );
+  glay = new QGridLayout( group->layout(), 5, 3, KDialog::spacingHint() );
   glay->setColStretch( 2, 10 );
 
   // "confirm before send" check box:
@@ -1113,11 +1113,25 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 		     << i18n("MIME Compliant (Quoted Printable)") );
   glay->addWidget( mMessagePropertyCombo, 3, 1 );
 
+  // "default domain" input field:
+  mDefaultDomainEdit = new QLineEdit( group );
+  glay->addMultiCellWidget( mDefaultDomainEdit, 4, 4, 1, 2 );
+
   // labels:
   glay->addWidget( new QLabel( mSendMethodCombo, /*buddy*/
 			       i18n("Defa&ult send method:"), group ), 2, 0 );
   glay->addWidget( new QLabel( mMessagePropertyCombo, /*buddy*/
 			       i18n("Message &property:"), group ), 3, 0 );
+  QLabel *l = new QLabel( mDefaultDomainEdit, /*buddy*/
+                          i18n("Default domain:"), group );
+  glay->addWidget( l, 4, 0 );
+
+  // and now: add QWhatsThis:
+  QString msg = i18n( "<qt><p>The default domain is used to complete email "
+                      "addresses that only consist of the user's name."
+                      "</p></qt>" );
+  QWhatsThis::add( l, msg );
+  QWhatsThis::add( mDefaultDomainEdit, msg );
 };
 
 
@@ -1385,6 +1399,21 @@ void NetworkPage::SendingTab::setup() {
 
   mConfirmSendCheck->setChecked( composer.readBoolEntry( "confirm-before-send",
 							 false ) );
+  QString str = general.readEntry( "Default domain", "" );
+  if( str.isEmpty() )
+  {
+    //### FIXME: Use the global convenience function instead of the homebrewed
+    //           solution once we can rely on HEAD kdelibs.
+    //str = KGlobal::hostname(); ???????
+    char buffer[256];
+    if ( !gethostname( buffer, 255 ) )
+      // buffer need not be NUL-terminated if it has full length
+      buffer[255] = 0;
+    else
+      buffer[0] = 0;
+    str = QString::fromLatin1( *buffer ? buffer : "localhost" );
+  }
+  mDefaultDomainEdit->setText( str );
 }
 
 
@@ -1406,6 +1435,7 @@ void NetworkPage::SendingTab::apply() {
 			     mMessagePropertyCombo->currentItem() == 1 );
   kernel->msgSender()->writeConfig( false ); // don't sync
   composer.writeEntry("confirm-before-send", mConfirmSendCheck->isChecked() );
+  general.writeEntry( "Default domain", mDefaultDomainEdit->text() );
 }
 
 
