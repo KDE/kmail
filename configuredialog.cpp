@@ -4140,7 +4140,9 @@ void MiscPage::GroupwareTab::load() {
     gBox->setEnabled( mEnableGwCB->isChecked() );
   }
   mLegacyMangleFromTo->setChecked( GlobalSettings::legacyMangleFromToHeaders() );
+  mLegacyBodyInvites->blockSignals( true );
   mLegacyBodyInvites->setChecked( GlobalSettings::legacyBodyInvites() );
+  mLegacyBodyInvites->blockSignals( false );
 
   // Read the IMAP resource config
   mEnableImapResCB->setChecked( GlobalSettings::theIMAPResourceEnabled() );
