@@ -116,7 +116,8 @@ void KMSearchRuleWidget::setRule(KMSearchRule *aRule)
 }
 
 KMSearchRule* KMSearchRuleWidget::rule() const {
-  return new KMSearchRule( ruleFieldToEnglish( mRuleField->currentText() ),
+  return KMSearchRule::createInstance( 
+                           ruleFieldToEnglish( mRuleField->currentText() ),
 			   (KMSearchRule::Function)mRuleFunc->currentItem(),
 			   mRuleValue->text() );
 }
@@ -143,6 +144,7 @@ QCString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) {
   if (i18nVal == i18n("<any header>")) return "<any header>";
   if (i18nVal == i18n("<size in bytes>")) return "<size>";
   if (i18nVal == i18n("<age in days>")) return "<age in days>";
+  if (i18nVal == i18n("<status>")) return "<status>";
   return i18nVal.latin1();
 }
 
@@ -190,6 +192,7 @@ void KMSearchRuleWidget::initLists(bool headersOnly, bool absoluteDates)
     mFilterFieldList.append(i18n("<recipients>"));
     mFilterFieldList.append(i18n("<size in bytes>"));
     if ( !absoluteDates )  mFilterFieldList.append(i18n("<age in days>"));
+    mFilterFieldList.append(i18n("<status>"));
     // these others only represent message headers and you can add to
     // them as you like
     mFilterFieldList.append("Subject");

@@ -266,9 +266,10 @@ void KMSearch::slotProcessNextBatch()
 		continue;
 	    }
 
-	    DwString str = folder->getDwString(idx);
-	    //TODO: matches should try header rules first
-	    if (mSearchPattern && !mSearchPattern->matches(str))
+	    //TODO: matches should try header rules first and check 
+            // rule->needsBody() and download imap message if needed
+            KMMessage *msg = folder->getMsg(idx);
+	    if (mSearchPattern && !mSearchPattern->matches(msg))
 		continue;
 	    emit found(serNum);
 	    ++mFoundCount;

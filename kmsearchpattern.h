@@ -8,6 +8,7 @@
 #include <qptrlist.h>
 #include <qstring.h>
 #include <qcstring.h>
+#include "kmmsgbase.h" // for KMMsgStatus
 
 class KMMessage;
 class KConfig;
@@ -20,7 +21,8 @@ const int FILTER_MAX_RULES=8;
 
 /** Incoming mail is sent through the list of mail filter
     rules before it is placed in the associated mail folder (usually "inbox").
-    This class represents one mail filter rule.
+    This class represents one mail filter rule. It is also used to represent
+    a search rule as used by the search dialog and folders.
 
     @short This class represents one search pattern rule.
 */
@@ -39,46 +41,56 @@ public:
 		  FuncRegExp, FuncNotRegExp,
 		  FuncIsGreater, FuncIsLessOrEqual,
 		  FuncIsLess, FuncIsGreaterOrEqual };
-
-  /** Constructor. Initializes the field and the value to the empty
-      string and the function to @p FuncContains. Use @ref init to set
-      other data.*/
-  KMSearchRule( const QCString & field=0, Function function=FuncContains,
-		const QString & contents=QString::null );
-  KMSearchRule( const QCString & field, const char * function, const QString & contents );
-  KMSearchRule( const KMSearchRule & other );
+  KMSearchRule ( const QCString & field=0, Function=FuncContains, 
+                 const QString &contents=QString::null );
+  KMSearchRule ( const KMSearchRule &other );
+                  
   const KMSearchRule & operator=( const KMSearchRule & other );
 
-  ~KMSearchRule();
+  /** Create a search rule of a certain type by instantiating the appro-
+      priate subclass depending on the @p field. */
+  static KMSearchRule* createInstance( const QCString & field=0, 
+                                      Function function=FuncContains,
+		                      const QString & contents=QString::null );
+                  
+  static KMSearchRule* createInstance( const QCString & field, 
+                                       const char * function, 
+                                       const QString & contents );
 
-  /** Tries to match the rule against the given @ref KMMessage.
-      @return TRUE if the rule matched, FALSE otherwise.
-  */
-  bool matches( const KMMessage * msg ) const;
-
-  /** Optimized version tries to match the rule against the given @ref DwString.
-      @return TRUE if the rule matched, FALSE otherwise.
-  */
-  bool matches( const DwString & str, KMMessage & msg, const DwBoyerMoore * headerField=0, int headerLen=-1 ) const;
-
+  static KMSearchRule * createInstance( const KMSearchRule & other );
+  
   /** Initialize the object from a given config file. The group must
       be preset. @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function does no
       validation of the data obtained from the config file. You should
       call @ref isEmpty yourself if you need valid rules. */
-  void readConfig( const KConfig * config, int aIdx );
+  static KMSearchRule* createInstanceFromConfig( const KConfig * config, int aIdx );
+
+  virtual ~KMSearchRule() {};
+
+  /** Tries to match the rule against the given @ref KMMessage.
+      @return TRUE if the rule matched, FALSE otherwise. Must be
+      implemented by subclasses.
+  */
+  virtual bool matches( const KMMessage * msg ) const = 0;
+
+  /** Determine whether the rule is worth considering. It isn't if
+      either the field is not set or the contents is empty.
+      @ref KFilter should make sure that it's rule list contains
+      only non-empty rules, as @ref matches doesn't check this. */
+  virtual bool isEmpty() const = 0;
+
+  /** Returns true if the rule only depends on fields stored in
+      a KMFolder index, otherwise returns false. */
+  virtual bool requiresBody() const = 0; 
+
+
   /** Save the object into a given config file. The group must be
       preset. @p aIdx is an identifier that is used to distinguish
       rules within a single config group. This function will happily
       write itself even when it's not valid, assuming higher layers to
       Do The Right Thing(TM). */
   void writeConfig( KConfig * config, int aIdx ) const;
-
-  /** Determine whether the rule is worth considering. It isn't if
-      either the field is not set or the contents is empty.
-      @ref KFilter should make sure that it's rule list contains
-      only non-empty rules, as @ref matches doesn't check this. */
-  bool isEmpty() const;
 
   /** Return filter function. This can be any of the operators
       defined in @ref Function. */
@@ -88,22 +100,20 @@ public:
   void setFunction( Function aFunction ) { mFunction = aFunction; }
 
   /** Return message header field name (without the trailing ':').
-      There are also five pseudo-headers:
+      There are also six pseudo-headers:
       @li <message>: Try to match against the whole message.
       @li <body>: Try to match against the body of the message.
       @li <any header>: Try to match against any header field.
       @li <recipients>: Try to match against both To: and Cc: header fields.
       @li <size>: Try to match against size of message (numerical).
       @li <age in days>: Try to match against age of message (numerical).
+      @li <status>: Try to match against status of message (status).
   */
   QCString field() const { return mField; }
+
   /** Set message header field name (make sure there's no trailing
       colon ':') */
-  void setField( const QCString & field ) { mField = field; init( field ); }
-
-  /** Returns true if the rule only depends on fields stored in
-      a KMFolder index, otherwise returns false. */
-  bool requiresBody() const { return true; }
+  void setField( const QCString & field ) { mField = field; }
 
   /** Return the value. This can be either a substring to search for in
       or a regexp pattern to match against the header. */
@@ -117,17 +127,92 @@ public:
 #endif
 
 private:
-  /** Helper for the main matches() method */
-  bool matches( bool numerical, unsigned long numericalValue, unsigned long numericalMsgContents, const QString & msgContents ) const;
   static Function configValueToFunc( const char * str );
-  void init( const QCString & aField );
-
-  QCString  mField;
+  QCString mField;
   Function mFunction;
   QString  mContents;
+};
+
+
+// subclasses representing the different kinds of searches
+
+/** This class represents a search to be performed against a string.
+ *  The string can be either a message header, or a pseudo header, such
+ *  as <body>
+    @short This class represents a search pattern rule operating on a string.
+*/
+
+class KMSearchRuleString : public KMSearchRule
+{
+public:
+  KMSearchRuleString( const QCString & field=0, Function function=FuncContains,
+		const QString & contents=QString::null );
+  KMSearchRuleString( const KMSearchRuleString & other );
+  const KMSearchRuleString & operator=( const KMSearchRuleString & other );
+
+  virtual ~KMSearchRuleString();
+  virtual bool isEmpty() const ;
+  virtual bool requiresBody() const { return true; }
+
+  virtual bool matches( const KMMessage * msg ) const;
+  /** Optimized version tries to match the rule against the given @ref DwString.
+      @return TRUE if the rule matched, FALSE otherwise.
+  */
+  virtual bool matches( const DwString & str, KMMessage & msg, 
+                        const DwBoyerMoore * headerField=0, 
+                        int headerLen=-1 ) const;
+
+  /** Helper for the main matches() method. Does the actual comparing. */
+  bool matchesInternal( const QString & msgContents ) const;
+ 
+private:
   const DwBoyerMoore *mBmHeaderField;
 };
 
+
+/** This class represents a search to be performed against a numerical value,
+ *  such as the age of the message in days or its size.
+    @short This class represents a search pattern rule operating on numerical
+    values.
+*/
+
+class KMSearchRuleNumerical : public KMSearchRule
+{
+public:
+  KMSearchRuleNumerical( const QCString & field=0, Function function=FuncContains,
+		         const QString & contents=QString::null );
+  virtual bool isEmpty() const ;
+
+  virtual bool matches( const KMMessage * msg ) const;
+
+  virtual bool requiresBody() const { return false; }
+
+  /** Helper for the main matches() method. Does the actual comparing. */
+  bool matchesInternal( unsigned long numericalValue, 
+                        unsigned long numericalMsgContents, 
+                        const QString & msgContents ) const;
+};
+
+
+/** This class represents a search to be performed against the status of a
+ *  messsage. The status is represented by a bitfield.
+    @short This class represents a search pattern rule operating on message 
+    status.
+*/
+
+class KMSearchRuleStatus : public KMSearchRule
+{
+public:
+   KMSearchRuleStatus( const QCString & field=0, Function function=FuncContains,
+		       const QString & contents=QString::null );
+  virtual bool isEmpty() const ;
+  virtual bool matches( const KMMessage * msg ) const;
+  virtual bool requiresBody() const { return false; }
+private:
+  KMMsgStatus mStatus;
+};
+
+// ------------------------------------------------------------------------
 
 /** This class is an abstraction of a search over messages.  It is
     intended to be used inside a @ref KFilter (which adds

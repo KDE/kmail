@@ -1070,13 +1070,12 @@ KMMsgIndex::find(QString data, bool contains, KMSearchRule *rule,
 	for(QValueListIterator<Q_UINT32> it = ret.begin();
 	    it != ret.end(); ++it) {
 	    int idx = -1, ser = (*it);
-	    KMMessage msg;
 	    KMFolder *folder = 0;
 	    kernel->msgDict()->getLocation(ser, &folder, &idx);
 	    if(!folder || (idx == -1))
-		continue;
-	    rule->matches(folder->getDwString(idx), msg);
-	    if(rule->matches(folder->getDwString(idx), msg))
+              continue;
+	    KMMessage *msg = folder->getMsg(idx);
+	    if(rule->matches(msg))
 		tmp << ser;
 	}
 	return tmp;
