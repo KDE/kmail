@@ -116,7 +116,6 @@ void Smtp::readyRead()
 	    responseLine = mSocket->readLine();
 	    response += responseLine;
 	} while( mSocket->canReadLine() && responseLine[3] != ' ' );
-	responseLine.truncate( 3 );
     }
     skipReadResponse = false;
 	
