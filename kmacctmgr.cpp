@@ -65,14 +65,15 @@ void KMAcctMgr::readConfig(void)
 {
   KConfig* config = kapp->config();
   KMAccount* acct;
-  QString groupName, acctType, acctName;
+  QString acctType, acctName;
+  QCString groupName;
   int i, num;
 
   mAcctList.clear();
   *mAccountIt = mAcctList;
 
-  KConfigGroupSaver saver(config, "General");
-  num = config->readNumEntry("accounts", 0);
+  KConfigGroup general(config, "General");
+  num = general.readNumEntry("accounts", 0);
 
   for (i=1; i<=num; i++)
   {
@@ -83,6 +84,7 @@ void KMAcctMgr::readConfig(void)
     if (acctType == "advanced pop" || acctType == "experimental pop")
       acctType = "pop";
     acctName = config->readEntry("Name");
+    if (acctName.isEmpty()) acctName = i18n("Account %1").arg(i);
     acct = create(acctType, acctName);
     if (!acct) continue;
     add(acct);

@@ -119,7 +119,6 @@ void KMAccount::readConfig(KConfig& config)
   QString folderName;
 
   mFolder = NULL;
-  mName   = config.readEntry("Name", i18n("Unnamed"));
   folderName = config.readEntry("Folder", "");
   setCheckInterval(config.readNumEntry("check-interval", 0));
   setCheckExclude(config.readBoolEntry("check-exclude", false));

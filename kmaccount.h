@@ -94,7 +94,8 @@ public:
 
   /**
    * Read config file entries. This method is called by the account
-   * manager when a new account is created.
+   * manager when a new account is created. The config group is
+   * already properly set by the caller.
    */
   virtual void readConfig(KConfig& config);
 
@@ -194,7 +195,6 @@ private:
      */
     virtual void setName( const char *name ) { QObject::setName( name ); }
 };
-
 
 class KMAcctList: public QPtrList<KMAccount>
 {
