@@ -313,7 +313,7 @@ bool KMailICalIfaceImpl::kolabXMLFoundAndDecoded( const KMMessage& msg, const QS
   if ( part ) {
     KMMessagePart msgPart;
     KMMessage::bodyPart(part, &msgPart);
-    s = msgPart.body();
+    s = msgPart.bodyToUnicode();
     return true;
   }
   return false;
