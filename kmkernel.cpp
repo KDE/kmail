@@ -45,7 +45,7 @@
 #include "kmpgpwrap.h"
 #include "kmversion.h"
 #include "recentaddresses.h"
-using KMail::RecentAddresses;
+using KRecentAddress::RecentAddresses;
 #include "kmmsgdict.h"
 #include "kmmessage.h"
 #include "kmidentity.h"

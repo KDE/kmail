@@ -81,7 +81,7 @@ using Syntaxhighlighter::SpellChecker;
 #include <fcntl.h>
 
 #include "recentaddresses.h"
-using KMail::RecentAddresses;
+using KRecentAddress::RecentAddresses;
 #include <klocale.h>
 #include <kapplication.h>
 #include <kstatusbar.h>
@@ -5795,11 +5795,12 @@ void KMEdit::slotSpellResult(const QString &s)
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellDone()
 {
+    kdDebug()<<" void KMEdit::slotSpellDone()**********************************************\n";
   KSpell::spellStatus status = mKSpell->status();
   delete mKSpell;
   mKSpell = 0;
 
-  kdDebug(5006) << "spelling: delete SpellingFilter" << endl;
+  kdDebug() << "spelling: delete SpellingFilter" << endl;
   delete mSpellingFilter;
   mSpellingFilter = 0;
   mComposer->sujectLineWidget()->deselect();
