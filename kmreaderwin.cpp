@@ -464,7 +464,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
-    mShowCompleteMessage( false ),
+    //mShowCompleteMessage( false ),
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
     mRootNode( 0 ),
@@ -480,7 +480,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mMsgDisplay = true;
   mPrinting = false;
   mShowColorbar = false;
-  mIsFirstTextPart = true;
 
   initHtmlWidget();
   readConfig();
@@ -1173,10 +1172,6 @@ void KMReaderWin::updateReaderWin()
 {
   if (!mMsgDisplay) return;
 
-  mViewer->view()->setUpdatesEnabled( false );
-  mViewer->view()->viewport()->setUpdatesEnabled( false );
-  static_cast<QScrollView *>(mViewer->widget())->ensureVisible(0,0);
-
   htmlWriter()->reset();
 
   KMFolder* folder;
@@ -1194,17 +1189,8 @@ void KMReaderWin::updateReaderWin()
   {
     mColorBar->hide();
     htmlWriter()->begin();
-    htmlWriter()->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
-			"Transitional//EN\">\n<html><body" +
-			QString(" bgcolor=\"%1\"").arg(c4.name()));
-
-    if (mBackingPixmapOn)
-      htmlWriter()->write(" background=\"file://" + mBackingPixmapStr + "\"");
-    htmlWriter()->write("></body></html>");
+    htmlWriter()->write( htmlHead( mPrinting ) + "</body></html>" );
     htmlWriter()->end();
-    mViewer->view()->viewport()->setUpdatesEnabled( true );
-    mViewer->view()->setUpdatesEnabled( true );
-    mViewer->view()->viewport()->repaint( false );
     if( mMimePartTree )
       mMimePartTree->clear();
   }
@@ -1227,6 +1213,238 @@ void KMReaderWin::showHideMimeTree( bool showIt )
     else
       mMimePartTree->hide();
   }
+}
+
+QString KMReaderWin::htmlHead( bool printing ) const {
+  QString fgColor = printing ? QString("#000000") : c1.name();
+  QString bgColor = printing ? QString("#FFFFFF") : c4.name();
+  QString linkColor = printing ? QString("#000000") : c2.name();
+  QString headerFont = ( printing
+                         ? QString("font-family: \"%1\"; "
+                                   "font-size: %2pt; ")
+                           .arg( mBodyFont.family() )
+                           .arg( mBodyFont.pointSize() )
+                         : QString("font-family: \"%1\"; "
+                                   "font-size: %2px; ")
+                           .arg( mBodyFont.family() )
+                           .arg( pointsToPixel( mBodyFont.pointSize() ) ) );
+  QString background = ( mBackingPixmapOn && !printing
+                         ? QString( "background-image:url(file://%1)" )
+                           .arg( mBackingPixmapStr )
+                         : QString( "background-color: %1;" )
+                           .arg( bgColor ) );
+  QString bodyFontSize = printing
+    ? QString::number( fontSize() ) + "pt"
+    : QString::number( pointsToPixel( fontSize() ) ) + "px" ;
+  QColorGroup cg = kapp->palette().active();
+
+  return
+    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
+    "<html><head><title></title>\n"
+    "<style type=\"text/css\">\n"
+    +
+    QString( "body {\n"
+	     "  font-family: \"%1\";\n"
+	     "  font-size: %2;\n"
+	     "  color: %3;\n"
+	     "  %4\n"
+	     "}\n\n" )
+    .arg( bodyFontFamily() )
+    .arg( bodyFontSize )
+    .arg( fgColor )
+    .arg( background )
+    +
+    QString( "a {\n"
+	     "  color: %1;\n"
+	     "  text-decoration: none;\n"
+	     "}\n\n" )
+    .arg( linkColor )
+    +
+    QString( "table.textAtm {\n"
+	     "  width: 100%;\n"
+	     "  background-color: %1;\n"
+	     "  border-width: 0px;\n"
+	     "  margin-top: 10pt;\n"
+	     "  margin-bottom: 10pt;\n"
+	     "}\n\n" )
+    .arg( fgColor )
+    +
+    QString( "tr.textAtmH {\n"
+	     "  background-color: %1;\n"
+	     "  %2\n"
+	     "  font-weight: normal;\n"
+	     "}\n\n" )
+    .arg( bgColor )
+    .arg( headerFont )
+    +
+    QString( "tr.textAtmB {\n"
+	     "  background-color: %1;\n"
+	     "  font-weight: normal;\n"
+	     "}\n\n" )
+    .arg( bgColor )
+    +
+    "tr.textAtmH td { padding: 3px; }\n\n"
+    "tr.textAtmB td { padding: 3px; }\n\n"
+    +
+    QString( "table.rfc822 {\n"
+	     "  width: 100%;\n"
+	     "  background-color: %1;\n"
+	     "  border: solid 1px black;\n"
+	     "  margin-top: 10pt;\n"
+	     "  margin-bottom: 10pt;\n"
+	     "}\n\n" )
+    .arg( bgColor )
+    +
+    QString( "tr.rfc822H {\n"
+	     "  %1\n"
+	     "  font-weight: bold;\n"
+	     "}\n\n" )
+    .arg( headerFont )
+    +
+    "tr.rfc822B { font-weight: normal; }\n"
+    +
+    QString( "table.encr {\n"
+	     "  width: 100%;\n"
+	     "  background-color: %1;\n"
+	     "  border-width: 0px;\n"
+	     "}\n\n" )
+    .arg( cPgpEncrF.name() )
+    +
+    QString( "tr.encrH {\n"
+	     "  background-color: %1;\n"
+	     "  %2\n"
+	     "  font-weight: bold;\n"
+	     "}\n" )
+    .arg( cPgpEncrH.name() )
+    .arg( headerFont )
+    +
+    QString( "tr.encrB { background-color: %1; }\n\n" )
+    .arg( cPgpEncrB.name() )
+    +
+    QString( "table.signOkKeyOk {\n"
+	     "  width: 100%;\n"
+	     "  background-color: %1;\n"
+	     "  border-width: 0px;\n"
+	     "}\n\n" )
+    .arg( cPgpOk1F.name() )
+    +
+    QString( "tr.signOkKeyOkH {\n"
+	     "  background-color: %1;\n"
+	     "  %2\n"
+	     "  font-weight: bold;\n"
+	     "}\n\n" )
+    .arg( cPgpOk1H.name() )
+    .arg( headerFont )
+    +
+    QString( "tr.signOkKeyOkB { background-color: %1; }\n\n" )
+    .arg( cPgpOk1B.name() )
+    +
+    QString( "table.signOkKeyBad {\n"
+	     "  width: 100%;\n"
+	     "  background-color: %1;\n"
+	     "  border-width: 0px;\n"
+	     "}\n\n" )
+    .arg( cPgpOk0F.name() )
+    +
+    QString( "tr.signOkKeyBadH {\n"
+	     "  background-color: %1;\n"
+	     "  %2\n"
+	     "  font-weight: bold;\n"
+	     "}\n\n" )
+    .arg( cPgpOk0H.name() )
+    .arg( headerFont )
+    +
+    QString( "tr.signOkKeyBadB { background-color: %1; }\n\n" )
+    .arg( cPgpOk0B.name() )
+    +
+    QString( "table.signWarn {\n"
+	     "  width: 100%;\n"
+	     "  background-color: %1;\n"
+	     "  border-width: 0px;\n"
+	     "}\n" )
+    .arg( cPgpWarnF.name() )
+    +
+    QString( "tr.signWarnH {\n"
+	     "  background-color: %1;\n"
+	     "  %2\n"
+	     "  font-weight: bold;\n"
+	     "}\n\n" )
+    .arg( cPgpWarnH.name() )
+    .arg( headerFont )
+    +
+    QString( "tr.signWarnB { background-color: %1; }\n\n" )
+    .arg( cPgpWarnB.name() )
+    +
+    QString( "table.signErr {\n"
+	     "  width: 100%;\n"
+	     "  background-color: %1;\n"
+	     "  border-width: 0px;\n"
+	     "}\n\n" )
+    .arg( cPgpErrF.name() )
+    +
+    QString( "tr.signErrH {\n"
+	     "  background-color: %1;\n"
+	     "  %2\n"
+	     "  font-weight: bold;\n"
+	     "}\n\n" )
+    .arg( cPgpErrH.name() )
+    .arg( headerFont )
+    +
+    QString( "tr.signErrB { background-color: %1; }\n\n" )
+    .arg( cPgpErrB.name() )
+    +
+    QString( "div.header { %1 }\n\n" )
+    .arg( headerFont )
+    +
+    QString( "div.fancyHeaderSubj {\n"
+	     "  background-color: %1;\n"
+	     "  color: %2;\n"
+	     "  padding: 4px;\n"
+	     "  border: solid %3 1px;\n"
+	     "}\n\n"
+             "div.fancyHeaderSubj a[href] { color: %2; }\n\n"
+             "div.fancyHeaderSubj a[href]:hover { text-decoration: underline; }\n\n")
+    .arg((printing) ? cg.background().name() : cg.highlight().name())
+    .arg((printing) ? cg.foreground().name() : cg.highlightedText().name())
+    .arg((printing) ? cg.foreground().name() : cg.highlightedText().name())
+    .arg(cg.foreground().name())
+    +
+    QString( "div.fancyHeaderDtls {\n"
+	     "  background-color: %1;\n"
+	     "  color: %2;\n"
+	     "  border-bottom: solid %3 1px;\n"
+	     "  border-left: solid %4 1px;\n"
+	     "  border-right: solid %5 1px;\n"
+	     "  margin-bottom: 1em;\n"
+	     "  padding: 2px;\n"
+	     "}\n\n" )
+    .arg(cg.background().name())
+    .arg(cg.foreground().name())
+    .arg(cg.foreground().name())
+    .arg(cg.foreground().name())
+    .arg(cg.foreground().name())
+    +
+    "table.fancyHeaderDtls {\n"
+    "  width: 100%;\n"
+    "  border-width: 0px;\n"
+    "  align: left\n"
+    "}\n\n"
+    "th.fancyHeaderDtls {\n"
+    "  padding: 0px;\n"
+    "  white-space: nowrap;\n"
+    "  border-spacing: 0px;\n"
+    "  text-align: left;\n"
+    "  vertical-align: top;\n"
+    "}\n\n"
+    "td.fancyHeaderDtls {\n"
+    "  padding: 0px;\n"
+    "  border-spacing: 0px;\n"
+    "  text-align: left;\n"
+    "  text-valign: top;\n"
+    "  width: 100%;\n"
+    "}\n\n"
+    "</style></head>\n"
+    "<body>\n";
 }
 
 //-----------------------------------------------------------------------------
@@ -1267,181 +1485,7 @@ void KMReaderWin::parseMsg(void)
     mCodec = QTextCodec::codecForName("iso8859-1");
   msg->setCodec(mCodec, mAutoDetectEncoding);
 
-  QColorGroup cg = kapp->palette().active();
-  QString fgColor = mPrinting ? QString("#000000") : c1.name();
-  QString bgColor = mPrinting ? QString("#FFFFFF") : c4.name();
-  QString headerFont = ( mPrinting
-                         ? QString("font-family: \"%1\"; "
-                                   "font-size: %2pt; ")
-                           .arg( mBodyFont.family() )
-                           .arg( mBodyFont.pointSize() )
-                         : QString("font-family: \"%1\"; "
-                                   "font-size: %2px; ")
-                           .arg( mBodyFont.family() )
-                           .arg( pointsToPixel( mBodyFont.pointSize() ) ) );
-  QString background = ( mBackingPixmapOn
-                         ? QString( "background-image:url(file://%1)" )
-                           .arg( mBackingPixmapStr )
-                         : QString( "background-color: %1;" )
-                           .arg( bgColor ) );
-
-  htmlWriter()->queue(
-    "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n"
-    "<html><head><title></title>"
-    "<style type=\"text/css\">" +
-
-    ( mPrinting
-      ? QString( "body { font-family: \"%1\"; "
-                        "font-size: %2pt; "
-                        "color: #000000; "
-                        "background-color: #FFFFFF; }\n" )
-        .arg( bodyFontFamily() )
-        .arg( fontSize() )
-      : QString( "body { font-family: \"%1\"; "
-                        "font-size: %2px; "
-                        "color: %3; "
-                        "%4 }\n" )
-        .arg( bodyFontFamily() )
-        .arg( pointsToPixel( fontSize() ) )
-        .arg( fgColor )
-        .arg( background ) ) +
-
-    ( mPrinting
-      ? QString( "a { color: #000000; "
-                 "text-decoration: none; }\n" )
-      : QString( "a { color: %1; "
-                 "text-decoration: none; }\n" )
-        .arg( c2.name() ) ) +
-
-    QString( "table.textAtm { width: 100%; "
-                             "background-color: %1; "
-                             "border-width: 0px; "
-                             "margin-top: 10pt; "
-                             "margin-bottom: 10pt; } \n" )
-    .arg( fgColor ) +
-    QString( "tr.textAtmH { background-color: %1; "
-                           "%2"
-                           "font-weight: normal; }\n" )
-    .arg( bgColor )
-    .arg( headerFont ) +
-    QString( "tr.textAtmB { background-color: %1; "
-                           "font-weight: normal; }\n" )
-    .arg( bgColor ) +
-    "tr.textAtmH td { padding: 3px; }\n"
-    "tr.textAtmB td { padding: 3px; }\n" +
-
-    QString( "table.rfc822 { width: 100%; "
-                            "background-color: %1; "
-                            "border: solid 1px black; "
-                            "margin-top: 10pt; "
-                            "margin-bottom: 10pt; } \n" )
-    .arg( bgColor ) +
-    QString( "tr.rfc822H { %1"
-                          "font-weight: bold; }\n" )
-    .arg( headerFont ) +
-    QString( "tr.rfc822B { font-weight: normal; }\n" ) +
-
-    QString( "table.encr { width: 100%; "
-                          "background-color: %1; "
-                          "border-width: 0px; }\n" )
-    .arg( cPgpEncrF.name() ) +
-    QString( "tr.encrH { background-color: %1; "
-                        "%2"
-                        "font-weight: bold; }\n" )
-    .arg( cPgpEncrH.name() )
-    .arg( headerFont ) +
-    QString( "tr.encrB { background-color: %1; }\n" )
-    .arg( cPgpEncrB.name() ) +
-
-    QString( "table.signOkKeyOk { width: 100%; "
-                                 "background-color: %1; "
-                                 "border-width: 0px; }\n" )
-    .arg( cPgpOk1F.name() ) +
-    QString( "tr.signOkKeyOkH { background-color: %1; "
-                               "%2"
-                               "font-weight: bold; }\n" )
-    .arg( cPgpOk1H.name() )
-    .arg( headerFont ) +
-    QString( "tr.signOkKeyOkB { background-color: %1; }\n" )
-    .arg( cPgpOk1B.name() ) +
-
-    QString( "table.signOkKeyBad { width: 100%; "
-                                  "background-color: %1; "
-                                  "border-width: 0px; }\n" )
-    .arg( cPgpOk0F.name() ) +
-    QString( "tr.signOkKeyBadH { background-color: %1; "
-                                "%2"
-                                "font-weight: bold; }\n" )
-    .arg( cPgpOk0H.name() )
-    .arg( headerFont ) +
-    QString( "tr.signOkKeyBadB { background-color: %1; }\n" )
-    .arg( cPgpOk0B.name() ) +
-
-    QString( "table.signWarn { width: 100%; "
-                              "background-color: %1; "
-                              "border-width: 0px; }\n" )
-    .arg( cPgpWarnF.name() ) +
-    QString( "tr.signWarnH { background-color: %1; "
-                            "%2"
-                            "font-weight: bold; }\n" )
-    .arg( cPgpWarnH.name() )
-    .arg( headerFont ) +
-    QString( "tr.signWarnB { background-color: %1; }\n" )
-    .arg( cPgpWarnB.name() ) +
-
-    QString( "table.signErr { width: 100%; "
-                             "background-color: %1; "
-                             "border-width: 0px; }\n" )
-    .arg( cPgpErrF.name() ) +
-    QString( "tr.signErrH { background-color: %1; "
-                           "%2"
-                           "font-weight: bold; }\n" )
-    .arg( cPgpErrH.name() )
-    .arg( headerFont ) +
-    QString( "tr.signErrB { background-color: %1; }\n" )
-    .arg( cPgpErrB.name() ) +
-
-    QString( "div.header { %1 }\n" )
-    .arg( headerFont ) +
-
-    QString( "div.fancyHeaderSubj { background-color: %1; "
-                                   "color: %2; "
-                                   "padding: 4px; "
-                                   "border: solid %3 1px; }\n"
-             "div.fancyHeaderSubj a[href] { color: %2; }"
-             "div.fancyHeaderSubj a[href]:hover { text-decoration: underline; }\n")
-    .arg((mPrinting) ? cg.background().name() : cg.highlight().name())
-    .arg((mPrinting) ? cg.foreground().name() : cg.highlightedText().name())
-    .arg((mPrinting) ? cg.foreground().name() : cg.highlightedText().name())
-    .arg(cg.foreground().name()) +
-
-    QString( "div.fancyHeaderDtls { background-color: %1; color: %2; "
-                                   "border-bottom: solid %3 1px; "
-                                   "border-left: solid %4 1px; "
-                                   "border-right: solid %5 1px; "
-                                   "margin-bottom: 1em; "
-                                   "padding: 2px; }\n" )
-    .arg(cg.background().name())
-    .arg(cg.foreground().name())
-    .arg(cg.foreground().name())
-    .arg(cg.foreground().name())
-    .arg(cg.foreground().name()) +
-    QString( "table.fancyHeaderDtls { width: 100%; "
-                                     "border-width: 0px; "
-                                     "align: left }\n"
-             "th.fancyHeaderDtls { padding: 0px; "
-				  "white-space: nowrap; "
-                                  "border-spacing: 0px; "
-                                  "text-align: left; "
-                                  "vertical-align: top; }\n"
-             "td.fancyHeaderDtls { padding: 0px; "
-                                  "border-spacing: 0px; "
-                                  "text-align: left; "
-                                  "text-valign: top; "
-                                  "width: 100%; }\n" ) +
-    "</style></head>" +
-
-    QString( "<body>" ) );
+  htmlWriter()->queue( htmlHead( mPrinting ) );
 
   if (!parent())
     setCaption(msg->subject());
@@ -1586,7 +1630,6 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
           + "</div><div><br></div>");
 
 
-  mIsFirstTextPart = true;
   // show message content
   if( !onlyProcessHeaders ) {
     ObjectTreeParser otp( this );
@@ -2096,7 +2139,6 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
     bool aHTML, const QString& aFileName, const QString& pname,
     const QTextCodec *aCodec )
 {
-  QString str;
   KCursorSaver busy(KBusyPtr::busy());
   if (qstricmp(aMsgPart->typeStr(), "message")==0) {
       // if called from compose win
@@ -2116,26 +2158,17 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       else
 	setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
       htmlWriter()->begin();
-      htmlWriter()->queue("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
-		"Transitional//EN\">\n<html><head><title></title>"
-		"<style type=\"text/css\">" +
-		QString("a { color: %1;").arg(c2.name()) +
-		"text-decoration: none; }" + // just playing
-		"</style></head><body " +
-		QString(" text=\"%1\"").arg(c1.name()) +
-		QString(" bgcolor=\"%1\"").arg(c4.name()) +
-		">" );
+      htmlWriter()->queue( htmlHead( mPrinting ) );
+
       QCString str = aMsgPart->bodyDecoded();
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
-	  writeHTMLStr(codec()->toUnicode(str));
-      else // plain text
-#if 0
-	  writeBodyStr( str,
-		    codec(),
-		    message() ? message()->from() : QString("") );
-#else
-          htmlWriter()->queue( "FIXME" );
-#endif
+	writeHTMLStr(codec()->toUnicode(str));
+      else { // plain text
+	ObjectTreeParser otp( this );
+	otp.writeBodyStr( str,
+			  codec(),
+			  message() ? message()->from() : QString::null );
+      }
       htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
       mMainWindow->setCaption(i18n("View Attachment: %1").arg(pname));
@@ -2175,14 +2208,13 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       }
       // Just write the img tag to HTML:
       htmlWriter()->begin();
-      htmlWriter()->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
-		     "Transitional//EN\">\n<html><title></title><body>");
-      QString linkName = QString("<img src=\"file:%1\" border=0>")
-                         .arg(KURL::encode_string(aFileName));
-      htmlWriter()->write(linkName);
-      htmlWriter()->write("</body></html>");
+      htmlWriter()->write( htmlHead( mPrinting ) );
+      htmlWriter()->write( "<img src=\"file:" +
+			   KURL::encode_string( aFileName ) +
+			   "\" border=\"0\">\n"
+			   "</body></html>\n" );
       htmlWriter()->end();
-      setCaption(i18n("View Attachment: ") + pname);
+      setCaption( i18n("View Attachment: %1").arg( pname ) );
       show();
   } else {
       MailSourceViewer *viewer = new MailSourceViewer(); // deletes itself

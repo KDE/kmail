@@ -235,11 +235,12 @@ namespace KMail {
 		       const QString & fromAddress,
 		       KMMsgSignatureState &  inlineSignatureState,
 		       KMMsgEncryptionState & inlineEncryptionState );
+  public: // KMReaderWin still needs this...
     void writeBodyStr( const QCString & bodyString,
 		       const QTextCodec * aCodec,
 		       const QString & fromAddress );
 
-
+  private:
     /** Change the string to `quoted' html (meaning, that the quoted
 	part of the message get italized */
     QString quotedHTML(const QString& pos);
@@ -259,6 +260,7 @@ namespace KMail {
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;
     bool mIncludeSignatures;
+    bool mIsFirstTextPart;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
     KMail::HtmlWriter * mHtmlWriter;
   };

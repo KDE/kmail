@@ -139,11 +139,13 @@ public:
   void setIdOfLastViewedMessage( const QString & msgId )
     { mIdOfLastViewedMessage = msgId; }
 
+#if 0
   /** Specify whether message is to be shown completely or not.
       This is used to make sure message contains it's headers
       when displayed in separate Viewer window after double-click */
   void setShowCompleteMessage( bool showCompleteMessage )
     { mShowCompleteMessage = showCompleteMessage; }
+#endif
 
   /** Clear the reader and discard the current message. */
   void clear(bool force = false) { setMsg(0, force); }
@@ -365,6 +367,10 @@ protected:
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
 
+  /** @return HTML head including style sheet definitions and the
+      &gt;body&lt; tag */
+  QString htmlHead( bool printing=false ) const;
+
   /** Some necessary event handling. */
   virtual void closeEvent(QCloseEvent *);
   virtual void resizeEvent(QResizeEvent *);
@@ -388,12 +394,9 @@ protected:
   const KMail::HeaderStrategy * mHeaderStrategy;
   const KMail::HeaderStyle * mHeaderStyle;
   bool mAutoDelete;
-  QFont mBodyFont, mFixedFont;
   /** where did the user save the attachment last time */
   QString mSaveAttachDir;
   static const int delay;
-  bool mBackingPixmapOn;
-  QString mBackingPixmapStr;
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
   QTimer mDelayedMarkTimer;
@@ -404,12 +407,15 @@ protected:
   unsigned long mLastSerNum;
   KMMsgStatus mLastStatus;
 
+  // style info (fonts/color)
   int fontSize() const;
   QString bodyFontFamily() const;
 
+  QFont mBodyFont, mFixedFont;
   bool mUseFixedFont;
   bool mPrinting;
-  bool mIsFirstTextPart;
+  bool mBackingPixmapOn;
+  QString mBackingPixmapStr;
   QColor c1, c2, c3, c4;
   // colors for PGP (Frame, Header, Body)
   QColor cPgpOk1F, cPgpOk1H, cPgpOk1B,
@@ -420,8 +426,10 @@ protected:
   // color of frame of warning preceding the source of HTML messages
   QColor cHtmlWarning;
   QString mQuoteFontTag[3];
+  // end style info
+
   bool mShowColorbar;
-  bool mShowCompleteMessage;
+  //bool mShowCompleteMessage;
   uint mDelayedMarkTimeout;
   QStringList mTempFiles;
   QStringList mTempDirs;

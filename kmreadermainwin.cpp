@@ -28,7 +28,7 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
 {
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
   mReaderWin = new KMReaderWin( this, this, actionCollection() );
-  mReaderWin->setShowCompleteMessage( true );
+  //mReaderWin->setShowCompleteMessage( true );
   mReaderWin->setAutoDelete( true );
   mReaderWin->setHtmlOverride( htmlOverride );
   setCentralWidget( mReaderWin );

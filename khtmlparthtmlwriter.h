@@ -64,6 +64,11 @@ namespace KMail {
     KHTMLPart * mHtmlPart;
     QStringList mHtmlQueue;
     QTimer mHtmlTimer;
+    enum State {
+      Begun,
+      Queued,
+      Ended
+    } mState;
   };
 
 }; // namespace KMail

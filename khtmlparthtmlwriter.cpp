@@ -29,8 +29,11 @@
     your version.
 */
 
+#include <config.h>
+
 #include "khtmlparthtmlwriter.h"
 
+#include <kdebug.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
 
@@ -42,7 +45,7 @@ namespace KMail {
   KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KHTMLPart * part,
 					    QObject * parent, const char * name )
     : QObject( parent, name ), HtmlWriter(),
-      mHtmlPart( part )
+      mHtmlPart( part ), mState( Ended )
   {
     assert( part );
     connect( &mHtmlTimer, SIGNAL(timeout()), SLOT(slotWriteNextHtmlChunk()) );
@@ -53,22 +56,41 @@ namespace KMail {
   }
 
   void KHtmlPartHtmlWriter::begin() {
+    if ( mState != Ended ) {
+      kdWarning( 5006 ) << "KHtmlPartHtmlWriter: begin() called on non-ended session!" << endl;
+      reset();
+    }
+
+    // clear the widget:
+    mHtmlPart->view()->setUpdatesEnabled( false );
+    mHtmlPart->view()->viewport()->setUpdatesEnabled( false );
+    static_cast<QScrollView *>(mHtmlPart->widget())->ensureVisible( 0, 0 );
+
     mHtmlPart->begin( KURL( "file:/" ) );
+    mState = Begun;
   }
 
   void KHtmlPartHtmlWriter::end() {
+    kdWarning( mState != Begun, 5006 ) << "KHtmlPartHtmlWriter: end() called on non-begun or queued session!" << endl;
     mHtmlPart->end();
+    mHtmlPart->view()->viewport()->setUpdatesEnabled( true );
+    mHtmlPart->view()->setUpdatesEnabled( true );
+    mHtmlPart->view()->viewport()->repaint( false );
+    mState = Ended;
   }
 
   void KHtmlPartHtmlWriter::reset() {
-    if ( mHtmlTimer.isActive() ) {
+    if ( mState != Ended ) {
       mHtmlTimer.stop();
+      mHtmlQueue.clear();
+      mState = Begun; // don't run into end()'s warning
       end();
     }
-    mHtmlQueue.clear();
+    mState = Ended;
   }
 
   void KHtmlPartHtmlWriter::write( const QString & str ) {
+    kdWarning( mState != Begun ) << "KHtmlPartHtmlWriter: write() called in Ended or Queued state!" << endl;
     mHtmlPart->write( str );
   }
 
@@ -76,6 +98,7 @@ namespace KMail {
     static const uint chunksize = 16384;
     for ( uint pos = 0 ; pos < str.length() ; pos += chunksize )
       mHtmlQueue.push_back( str.mid( pos, chunksize ) );
+    mState = Queued;
   }
 
   void KHtmlPartHtmlWriter::flush() {
@@ -84,12 +107,10 @@ namespace KMail {
 
   void KHtmlPartHtmlWriter::slotWriteNextHtmlChunk() {
     if ( mHtmlQueue.empty() ) {
+      mState = Begun; // don't run into end()'s warning
       end();
-      mHtmlPart->view()->viewport()->setUpdatesEnabled( true );
-      mHtmlPart->view()->setUpdatesEnabled( true );
-      mHtmlPart->view()->viewport()->repaint( false );
     } else {
-      write( mHtmlQueue.front() );
+      mHtmlPart->write( mHtmlQueue.front() );
       mHtmlQueue.pop_front();
       mHtmlTimer.start( 0, true );
     }

@@ -13,9 +13,7 @@
     Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, US
 */
 
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
 
 // my header file
 #include "objecttreeparser.h"
@@ -45,11 +43,9 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <khtml_part.h>
-#include <khtmlview.h>
 #include <ktempfile.h>
 
 // other Qt headers
-#include <qlabel.h>
 #include <qtextcodec.h>
 #include <qfile.h>
 #include <qapplication.h>
@@ -91,6 +87,7 @@ namespace KMail {
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
       mKeepEncryptions( keepEncryptions ),
       mIncludeSignatures( includeSignatures ),
+      mIsFirstTextPart( true ),
       mAttachmentStrategy( strategy ),
       mHtmlWriter( htmlWriter )
   {
@@ -107,6 +104,7 @@ namespace KMail {
       mShowOnlyOneMimePart( other.showOnlyOneMimePart() ),
       mKeepEncryptions( other.keepEncryptions() ),
       mIncludeSignatures( other.includeSignatures() ),
+      mIsFirstTextPart( other.mIsFirstTextPart ),
       mAttachmentStrategy( other.attachmentStrategy() ),
       mHtmlWriter( other.htmlWriter() )
   {
@@ -174,36 +172,16 @@ namespace KMail {
     if ( mReader && mReader->mUseGroupware )
       emit mReader->signalGroupwareShow( false );
 
-    /*
-    // Use this array to return the complete data that were in this
-    // message parts - *after* all encryption has been removed that
-    // could be removed.
-    // - This is used to store the message in decrypted form.
-    NewByteArray dummyData;
-    NewByteArray& resultingRawData( resultingRawDataPtr ? *resultingRawDataPtr
-                                                      : dummyData );
-    */
-
     if ( showOnlyOneMimePart() && mReader ) {
-      // clear the viewer
-      mReader->mViewer->view()->setUpdatesEnabled( false );
-      mReader->mViewer->view()->viewport()->setUpdatesEnabled( false );
-      static_cast<QScrollView *>(mReader->mViewer->widget())->ensureVisible(0,0);
-
       htmlWriter()->reset();
 
       mReader->mColorBar->hide();
 
       // start the new viewer content
       htmlWriter()->begin();
-      htmlWriter()->write("<html><body" +
-      (mReader->mPrinting ? QString(" bgcolor=\"#FFFFFF\"")
-                         : QString(" bgcolor=\"%1\"").arg(mReader->c4.name())));
-      if (mReader->mBackingPixmapOn && !mReader->mPrinting )
-	htmlWriter()->write(" background=\"file://" + mReader->mBackingPixmapStr + "\"");
-      htmlWriter()->write(">");
+      htmlWriter()->write( mReader->htmlHead( mReader->mPrinting ) );
     }
-    if (node && (showOnlyOneMimePart() || (mReader && mReader->mShowCompleteMessage && !node->mRoot ))) {
+    if (node && (showOnlyOneMimePart() || (mReader && /*mReader->mShowCompleteMessage &&*/ !node->mRoot ))) {
       if ( showOnlyOneMimePart() ) {
 	// set this node and all it's children and their children to 'not yet processed'
 	node->mWasProcessed = false;
@@ -214,58 +192,45 @@ namespace KMail {
 	node->setProcessed( false );
     }
 
-    ProcessResult processResult;
-
     if ( node ) {
+      ProcessResult processResult;
       partNode* curNode = node;
 
       // process all mime parts that are not covered by one of the CRYPTPLUGs
       if ( !curNode->mWasProcessed ) {
 	bool bDone = false;
 
-	int curNode_replacedType    = curNode->type();
-	int curNode_replacedSubType = curNode->subType();
-	// In order to correctly recognoze clearsigned data we threat the old
-	// "Content-Type=application/pgp" like plain text.
-	// Note: This does not cover "application/pgp-signature" nor
-	//                    "application/pgp-encrypted".  (khz, 2002/08/28)
-	if ( DwMime::kTypeApplication       == curNode->type() &&
-	    DwMime::kSubtypePgpClearsigned == curNode->subType() ){
-	  curNode_replacedType    = DwMime::kTypeText;
-	  curNode_replacedSubType = DwMime::kSubtypePlain;
-	}
-
-	switch ( curNode_replacedType ){
+	switch ( curNode->type() ){
 	case DwMime::kTypeText:
-	  bDone = processTextType( curNode_replacedSubType, curNode,
+	  bDone = processTextType( curNode->subType(), curNode,
 				   processResult );
 	  break;
 	case DwMime::kTypeMultipart:
-	  bDone = processMultiPartType( curNode_replacedSubType, curNode,
+	  bDone = processMultiPartType( curNode->subType(), curNode,
 					processResult );
 	  break;
 	case DwMime::kTypeMessage:
-	  bDone = processMessageType( curNode_replacedSubType, curNode,
+	  bDone = processMessageType( curNode->subType(), curNode,
 				      processResult );
 	  break;
 	case DwMime::kTypeApplication:
-	  bDone = processApplicationType( curNode_replacedSubType, curNode,
+	  bDone = processApplicationType( curNode->subType(), curNode,
 					  processResult );
 	  break;
 	case DwMime::kTypeImage:
-	  bDone = processImageType( curNode_replacedSubType, curNode,
+	  bDone = processImageType( curNode->subType(), curNode,
 				    processResult );
 	  break;
 	case DwMime::kTypeAudio:
-	  bDone = processAudioType( curNode_replacedSubType, curNode,
+	  bDone = processAudioType( curNode->subType(), curNode,
 				    processResult );
 	  break;
 	case DwMime::kTypeVideo:
-	  bDone = processVideoType( curNode_replacedSubType, curNode,
+	  bDone = processVideoType( curNode->subType(), curNode,
 				    processResult );
 	  break;
 	case DwMime::kTypeModel:
-	  bDone = processModelType( curNode_replacedSubType, curNode,
+	  bDone = processModelType( curNode->subType(), curNode,
 				    processResult );
 	  break;
 	}
@@ -328,11 +293,8 @@ namespace KMail {
     }
 
     if ( mReader && showOnlyOneMimePart() ) {
-      htmlWriter()->write("</body></html>");
+      htmlWriter()->queue("</body></html>");
       htmlWriter()->flush();
-      /*mReader->mViewer->view()->viewport()->setUpdatesEnabled( true );
-	mReader->mViewer->view()->setUpdatesEnabled( true );
-	mReader->mViewer->view()->viewport()->repaint( false );*/
     }
   }
 
@@ -843,14 +805,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if ( !mReader )
       return true;
 
-    if ( mReader->mIsFirstTextPart
+    if ( mIsFirstTextPart
 	|| attachmentStrategy() == AttachmentStrategy::inlined()
 	|| ( attachmentStrategy() == AttachmentStrategy::smart()
 	     && curNode->hasContentDispositionInline() )
 	|| showOnlyOneMimePart() )
     {
-      // ### move to OTP?
-      mReader->mIsFirstTextPart = false;
+      mIsFirstTextPart = false;
       if ( mReader->htmlMail() ) {
 	// ---Sven's strip </BODY> and </HTML> from end of attachment start-
 	// We must fo this, or else we will see only 1st inlined html
@@ -964,14 +925,14 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       label = curNode->msgPart().name().stripWhiteSpace();
     //resultingRawData += cstr;
     if ( !mReader
-	|| mReader->mIsFirstTextPart
+	|| mIsFirstTextPart
 	|| attachmentStrategy() == AttachmentStrategy::inlined()
 	|| ( attachmentStrategy() == AttachmentStrategy::smart()
 	     && ( curNode->hasContentDispositionInline() || label.isEmpty() ) )
 	|| showOnlyOneMimePart() )
     {
       if ( mReader ) {
-	bool bDrawFrame = !mReader->mIsFirstTextPart
+	bool bDrawFrame = !mIsFirstTextPart
                           && !showOnlyOneMimePart()
                           && !label.isEmpty();
 	if ( bDrawFrame ) {
@@ -1119,7 +1080,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	if ( bDrawFrame ) {
 	  htmlWriter()->queue( "</td></tr></table>" );
 	}
-	mReader->mIsFirstTextPart = false;
+	mIsFirstTextPart = false;
       }
       mResultString = cstr;
       bDone = true;
@@ -1525,6 +1486,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 						 ProcessResult & result ) {
     kdDebug(5006) << "* application *" << endl;
     switch ( subtype  ){
+    case DwMime::kSubtypePgpClearsigned:
+      kdDebug(5006) << "pgp" << endl;
+      // treat obsolete app/pgp subtype as t/p:
+      return processTextPlainSubtype( curNode, result );
     case DwMime::kSubtypePostscript:
       kdDebug(5006) << "postscript" << endl;
       return processApplicationPostscriptSubtype( curNode, result );
