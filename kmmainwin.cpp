@@ -851,7 +851,7 @@ void KMMainWin::slotCompactAll()
 void KMMainWin::slotOverrideHtml()
 {
   if( !mFolderHtmlPref ) {
-    int result = KMessageBox::warningContinueCancel( this, 
+    int result = KMessageBox::warningContinueCancel( this,
       // the warning text is taken from configuredialog.cpp:
       i18n( "Use of HTML in mail will make you more vulnerable to\n"
         "\"spam\" and may increase the likelihood that your system will be\n"
@@ -1936,7 +1936,7 @@ void KMMainWin::slotReadOn()
         i = mHeaders->findUnread(true, 0, false, true);
     if ( i >= 0 ) {
          mHeaders->setCurrentMsg(i);
-         mHeaders->ensureCurrentItemVisible();
+         QTimer::singleShot( 100, mHeaders, SLOT( ensureCurrentItemVisible() ) );
          return;
     }
     mFolderTree->nextUnreadFolder( true );

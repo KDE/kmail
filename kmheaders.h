@@ -168,8 +168,6 @@ public:
     is unset. */
   virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = false, bool acceptCurrent = false);
 
-  virtual void ensureCurrentItemVisible();
-
   void highlightMessage(QListViewItem*, bool markitread);
 
   // return a string relativ to the current time
@@ -218,6 +216,8 @@ public slots:
   void slotNoDrag();
   // timer function to set the current time regularly
   void resetCurrentTime();
+
+  virtual void ensureCurrentItemVisible();     
 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
