@@ -614,7 +614,7 @@ static uchar *g_chunk = NULL;
 #define COPY_DATA(x, length) do { \
      if(g_chunk_offset + ((int)length) > g_chunk_length) {\
         g_chunk_offset = g_chunk_length; \
-        qDebug("This should never happen.. %s:%d", __FILE__, __LINE__); \
+        kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl; \
         memset(x, length, '\0'); \
      } else { \
         memcpy(x, g_chunk+g_chunk_offset, length); \
@@ -652,7 +652,7 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
     COPY_HEADER_TYPE(type);
     COPY_HEADER_LEN(l);
     if(g_chunk_offset + l > mIndexLength) {
-	qDebug("This should never happen.. %s:%d", __FILE__, __LINE__);
+	kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
 	break;
     }
     if(type == t) {
@@ -700,7 +700,7 @@ unsigned long KMMsgBase::getLongPart(MsgPartType t) const
     COPY_HEADER_LEN(l);
 
     if (g_chunk_offset + l > mIndexLength) {
-      qDebug("This should never happen.. %s:%d", __FILE__, __LINE__);
+      kdDebug(5006) << "This should never happen.. " << __FILE__ << ":" << __LINE__ << endl;
       break;
     }
     if(type == t) {

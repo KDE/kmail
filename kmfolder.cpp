@@ -756,7 +756,7 @@ int KMFolder::writeIndex()
     msgBase->setIndexOffset(tmp);
     msgBase->setIndexLength(len);
     if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
-	qDebug("Whoa! %s:%d", __FILE__, __LINE__);
+	kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
   }
   if (ferror(tmpIndexStream)) return ferror(tmpIndexStream);
   if (fflush(tmpIndexStream) != 0) return errno;
@@ -1488,7 +1488,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 	aMsg->setIndexOffset( ftell(mIndexStream) );
 	aMsg->setIndexLength( len );
 	if(fwrite(buffer, len, 1, mIndexStream) != 1)
-	    qDebug("Whoa! %s:%d", __FILE__, __LINE__);
+	    kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 
     fflush(mIndexStream);
     error = ferror(mIndexStream);

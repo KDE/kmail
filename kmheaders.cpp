@@ -825,7 +825,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       }
     }
   }
-   qDebug("end %d %s:%d", (QTime::currentTime().second()*1000)+QTime::currentTime().msec(), __FILE__,__LINE__);
+   kdDebug(5006) << "end " << (QTime::currentTime().second()*1000)+QTime::currentTime().msec() <<  k_funcinfo << endl;
 }
 
 // QListView::setContentsPos doesn't seem to work
@@ -2804,7 +2804,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    fread(&discovered_count, sizeof(discovered_count), 1, sortStream);
 	    fread(&sorted_count, sizeof(sorted_count), 1, sortStream);
 	
-	    qDebug( "foo sorted_count %d, discovered_count %d, foler count %d", sorted_count, discovered_count, mFolder->count() );
+	    kdDebug(5006) << "foo sorted_count " << sorted_count << ", discovered_count " << discovered_count << ", foler count " << mFolder->count() << endl;
 
             if (sorted_count + discovered_count > mFolder->count()) { //sanity check
 		kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
@@ -2876,7 +2876,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		    }
 		}
 		if (x != sorted_count + discovered_count) {// sanity check
-		    qDebug( "Whoa: x %d, sorted_count %d, discovered_count %d, count %d", x, sorted_count, discovered_count, mFolder->count() );
+		    kdDebug(5006) << "Whoa: x " << x << ", sorted_count " << sorted_count << ", discovered_count " << discovered_count << ", count " << mFolder->count() << endl;
 		    fclose(sortStream);
 		    sortStream = NULL;
 		}
