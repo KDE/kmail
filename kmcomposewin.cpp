@@ -988,29 +988,32 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     QString bodyDecoded; // Workaroud for bug in QT-2.2.4, better use QCString
     mMsg->bodyPart(0, &bodyPart);
 
-    mCharset = bodyPart.charset();
-    if (mCharset=="")
-      mCharset = mDefCharset;
-    if ((mCharset=="") || (mCharset == "default"))
-      mCharset = defaultCharset();
+    int firstAttachment = (bodyPart.typeStr().lower() == "text") ? 1 : 0;
+    if (firstAttachment)
+    {
+      mCharset = bodyPart.charset();
+      if (mCharset=="")
+        mCharset = mDefCharset;
+      if ((mCharset=="") || (mCharset == "default"))
+        mCharset = defaultCharset();
 
-    bodyDecoded = bodyPart.bodyDecoded();
+      bodyDecoded = bodyPart.bodyDecoded();
 
-    verifyWordWrapLengthIsAdequate(bodyDecoded);
+      verifyWordWrapLengthIsAdequate(bodyDecoded);
 
 // Workaround for bug in QT-2.2.2
 if (mCharset == "utf-8") mEditor->setText(QString::fromUtf8(bodyDecoded));
 else
 {
-    QTextCodec *codec = KMMsgBase::codecForName(mCharset);
-    if (codec)
-      mEditor->setText(codec->toUnicode(bodyDecoded));
-    else
-      mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
-    mEditor->insertLine("\n", -1);
+      QTextCodec *codec = KMMsgBase::codecForName(mCharset);
+      if (codec)
+        mEditor->setText(codec->toUnicode(bodyDecoded));
+      else
+        mEditor->setText(QString::fromLocal8Bit(bodyDecoded));
+      mEditor->insertLine("\n", -1);
 }
-
-    for(i=1; i<num; i++)
+    } else mEditor->setText("");
+    for(i=firstAttachment; i<num; i++)
     {
       msgPart = new KMMessagePart;
       mMsg->bodyPart(i, msgPart);

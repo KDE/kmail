@@ -179,7 +179,7 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
   mCbxEncoding->setCurrentItem(idx);
 
   mEdtComment->setText(mMsgPart->contentDescription());
-  mEdtName->setText(mMsgPart->name());
+  mEdtName->setText(mMsgPart->fileName());
   QString mimeType = mMsgPart->typeStr() + "/" + mMsgPart->subtypeStr();
   mEdtMimetype->setEditText(mimeType);
   mEdtMimetype->insertItem(mimeType, 0);

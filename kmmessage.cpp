@@ -900,10 +900,10 @@ KMMessage* KMMessage::createRedirect(void)
     msgPart.setCharset("utf-8");
     msg->addBodyPart(&msgPart);
 
-    for (i = 1; i < numBodyParts(); i++)
+    for (i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      if (qstricmp(msgPart.contentDisposition(),"inline")!=0 ||
+      if ((qstricmp(msgPart.contentDisposition(),"inline")!=0 && i > 0) ||
 	  (qstricmp(msgPart.typeStr(),"text")!=0 &&
 	   qstricmp(msgPart.typeStr(),"message")!=0))
       {
@@ -961,10 +961,10 @@ KMMessage* KMMessage::createForward(void)
     msgPart.setBody(str);
     msg->addBodyPart(&msgPart);
 
-    for (i = 1; i < numBodyParts(); i++)
+    for (i = 0; i < numBodyParts(); i++)
     {
       bodyPart(i, &msgPart);
-      if (qstricmp(msgPart.contentDisposition(),"inline")!=0 ||
+      if ((qstricmp(msgPart.contentDisposition(),"inline")!=0 && i > 0) ||
 	  (qstricmp(msgPart.typeStr(),"text")!=0 &&
 	   qstricmp(msgPart.typeStr(),"message")!=0))
       {
