@@ -1493,7 +1493,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // SHOULD be obtained (or no MDN sent) if there is no Return-Path
   // header in the message [...]
   AddrSpecList returnPathList = extractAddrSpecs("Return-Path");
-  QString returnPath = returnPathList.isEmpty() ? 0
+  QString returnPath = returnPathList.isEmpty() ? QString::null
     : returnPathList.front().localPart + '@' + returnPathList.front().domain ;
   kdDebug(5006) << "clean return path: " << returnPath << endl;
   if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, false ) ) {
