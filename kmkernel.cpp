@@ -571,7 +571,9 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 QStringList KMKernel::folderList() const
 {
   QStringList folders;
-  the_folderMgr->getFolderURLS( folders );
+  QString localPrefix = i18n( "/Local" );
+  folders << localPrefix;
+  the_folderMgr->getFolderURLS( folders, localPrefix);
   the_imapFolderMgr->getFolderURLS( folders );
   the_dimapFolderMgr->getFolderURLS( folders );
   return folders;
