@@ -1371,7 +1371,7 @@ bool KMGroupware::msTNEFToVPart( const QByteArray& tnef, QString& vPart )
 
   QString s;
   vPart  = calFormat.toString(&cal);
-  if (cardConv.addresseeToVCard(addressee, s, VCardConverter::v3_0));
+  if (cardConv.addresseeToVCard(addressee, s, VCardConverter::v3_0))
     vPart += s;
 
   return bOk;
