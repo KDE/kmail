@@ -673,7 +673,7 @@ main(int argc, char *argv[])
       {
         if (kill(0-pId, 0) != 0)      // try if it lives at all
         {
-          printf ("Server died whyle busy\n");
+          printf ("Server died while busy\n");
           writePid(true);             // he diedd and left his pid uncleaned
         }
         else
@@ -686,7 +686,7 @@ main(int argc, char *argv[])
       {
         if (kill (pId, SIGUSR1) != 0) // Dead?
         {
-          printf ("Server died whyle ready\n");
+          printf ("Server died while ready\n");
           writePid(true);             // then we are server
         }
         else
