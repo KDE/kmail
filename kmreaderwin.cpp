@@ -2071,9 +2071,9 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
     }
   }
 
-  queueHtml("<div id=\"header\" style=\"margin-bottom: 1em;\">"
+  queueHtml("<div id=\"header\">"
           + (writeMsgHeader(hasVCard))
-          + "</div>");
+          + "</div><div><br></div>");
 
 
   // show message content
@@ -2662,8 +2662,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	    case '>':
 	    case '|':	actQuoteLevel++;
 			break;
-	    case ' ':
-	    case '\t':
+
 	    case '\r':  break;
 	    default:	finish = TRUE;
 			break;
