@@ -739,7 +739,8 @@ static void smartQuote( QString &msg, int maxLength )
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
+void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
+					   DwBodyPart * firstBodyPart,
                                            QCString& parsedString,
                                            bool& isHTML ) const
 {
@@ -756,15 +757,17 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
       mainType    = DwMime::kTypeText;
       mainSubType = DwMime::kSubtypePlain;
   }
-  partNode rootNode(0, mainType, mainSubType);
-  partNode* curNode = rootNode.setFirstChild( new partNode( &dwPart ) );
-  curNode->buildObjectTree( false );
+  partNode rootNode( mainBody, mainType, mainSubType);
+  if ( firstBodyPart ) {
+    partNode* curNode = rootNode.setFirstChild( new partNode( firstBodyPart ) );
+    curNode->buildObjectTree();
+  }
   // initialy parse the complete message to decrypt any encrypted parts
   {
     ObjectTreeParser otp( 0, 0, true, false, true );
     otp.parseObjectTree( &rootNode );
   }
-  curNode = curNode->findType( DwMime::kTypeText,
+  partNode * curNode = rootNode.findType( DwMime::kTypeText,
                                DwMime::kSubtypeUnknown,
                                true,
                                false );
@@ -818,11 +821,13 @@ QCString KMMessage::asQuotedString( const QString& aHeaderStr,
       result = selection;
     } else {
 
-      DwBodyPart *dwPart = getFirstDwBodyPart();
-      if( !dwPart )
-        dwPart = new DwBodyPart(((KMMessage*)this)->asDwString(), 0);
-      dwPart->Parse();
-      parseTextStringFromDwPart( *dwPart, parsedString, isHTML );
+      DwBodyPart * mainBody = 0;
+      DwBodyPart * firstBodyPart = getFirstDwBodyPart();
+      if( !firstBodyPart ) {
+        mainBody = new DwBodyPart(((KMMessage*)this)->asDwString(), 0);
+	mainBody->Parse();
+      }
+      parseTextStringFromDwPart( mainBody, firstBodyPart, parsedString, isHTML );
 
       if( !parsedString.isEmpty() ) {
 
@@ -897,7 +902,7 @@ QCString KMMessage::asQuotedString( const QString& aHeaderStr,
 
     DwBodyPart *dwPart = getFirstDwBodyPart();
     if( dwPart )
-      parseTextStringFromDwPart( *dwPart, parsedString, isHTML );
+      parseTextStringFromDwPart( 0, dwPart, parsedString, isHTML );
 
     if( !parsedString.isEmpty() )
     {

@@ -228,7 +228,8 @@ public:
     by function asQuotedString().
     THIS FUNCTION WILL BE REPLACED ONCE KMime IS FULLY INTEGRATED
     (khz, June 05 2002)*/
-  virtual void parseTextStringFromDwPart( DwBodyPart& dwPart,
+  virtual void parseTextStringFromDwPart( DwBodyPart * mainBody,
+					  DwBodyPart * firstBodyPart,
                                           QCString& parsedString,
                                           bool& isHTML ) const;
 
