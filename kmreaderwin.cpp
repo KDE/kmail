@@ -1557,10 +1557,13 @@ void KMReaderWin::slotAtmOpen()
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, true);
   QString question;
   QString open_text = i18n("Open");
+  QString filenameText = msgPart.fileName();
+  if (filenameText.isEmpty()) filenameText = msgPart.name();
   if ( offer ) {
-    question = i18n("Open attachment '%1' using '%2'?").arg(msgPart.fileName()).arg(offer->name());
+    question = i18n("Open attachment '%1' using '%2'?").arg(filenameText)
+      .arg(offer->name());
   } else {
-    question = i18n("Open attachment?");
+    question = i18n("Open attachment '%1'?").arg(filenameText);
     open_text = i18n("Open with...");
   }
   question += i18n("\n\nNote that opening an attachment may compromise your system's security!");
