@@ -746,9 +746,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
 
   header()->setStretchEnabled( false );
   header()->setResizeEnabled( false );
-  setResizeMode( QListView::NoColumn );
 
-  mPaintInfo.subCol    =   addColumn( i18n("Subject"), 310 );
+  mPaintInfo.subCol      = addColumn( i18n("Subject"), 310 );
   mPaintInfo.senderCol   = addColumn( i18n("Sender"),  170 );
   mPaintInfo.dateCol     = addColumn( i18n("Date"),    170 );
   mPaintInfo.sizeCol     = addColumn( i18n("Size"),      0 );
@@ -761,6 +760,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPaintInfo.watchedIgnoredCol = addColumn( *pixWatched       , "", 0 );
   mPaintInfo.signedCol         = addColumn( *pixFullySigned   , "", 0 );
   mPaintInfo.cryptoCol         = addColumn( *pixFullyEncrypted, "", 0 );
+
+  setResizeMode( QListView::NoColumn );
 
   // only the non-optional columns shall be resizeable
   header()->setResizeEnabled( true, mPaintInfo.subCol );
@@ -901,7 +902,6 @@ void KMHeaders::slotToggleColumn(int id, int mode)
 
   if (*show) {
     header()->setResizeEnabled(true, *col);
-    header()->setStretchEnabled(true, *col);
     setColumnWidth(*col, width);
   }
   else {
