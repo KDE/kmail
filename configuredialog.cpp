@@ -532,14 +532,6 @@ NetworkPage::NetworkPage( QWidget * parent, const char * name )
   : ConfigModuleWithTabs( parent, name )
 {
   //
-  // "Sending" tab:
-  //
-  mSendingTab = new SendingTab();
-  addTab( mSendingTab, i18n( "&Sending" ) );
-  connect( mSendingTab, SIGNAL(transportListChanged(const QStringList&)),
-	   this, SIGNAL(transportListChanged(const QStringList&)) );
-
-  //
   // "Receiving" tab:
   //
   mReceivingTab = new ReceivingTab();
@@ -548,8 +540,16 @@ NetworkPage::NetworkPage( QWidget * parent, const char * name )
   connect( mReceivingTab, SIGNAL(accountListChanged(const QStringList &)),
 	   this, SIGNAL(accountListChanged(const QStringList &)) );
   load();
-}
 
+  //
+  // "Sending" tab:
+  //
+  mSendingTab = new SendingTab();
+  addTab( mSendingTab, i18n( "&Sending" ) );
+  connect( mSendingTab, SIGNAL(transportListChanged(const QStringList&)),
+	   this, SIGNAL(transportListChanged(const QStringList&)) );
+
+}
 
 QString NetworkPage::SendingTab::helpAnchor() const {
   return QString::fromLatin1("configure-network-sending");
