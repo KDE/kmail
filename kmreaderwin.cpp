@@ -577,8 +577,7 @@ while( ( current = it.current() ) ) {
                   else
                   {
                     writeHTMLStr(mCodec->toUnicode( decryptedData ));
-                  }
-                  bDone = true;
+                  }                  bDone = true;
                 }
               }
               useThisCryptPlug = oldUseThisCryptPlug;
@@ -1734,13 +1733,38 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     QString unknown( i18n("(unknown)") );
     if( !data ){
       if( new_cleartext ) {
-        queueHtml( new_cleartext );
+        bIsOpaqueSigned = true;
         deb = "\n\nN E W    C O N T E N T = \"";
         deb += new_cleartext;
         deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
         kdDebug(5006) << deb << endl;
+
+        DwBodyPart* myBody = new DwBodyPart(DwString( new_cleartext ), sign.dwPart());
+        myBody->Parse();
+        if( myBody->hasHeaders() ) {
+          DwText& desc = myBody->Headers().ContentDescription();
+          desc.FromString( "opaque signed data" );
+          desc.SetModified();
+          //desc.Assemble();
+          myBody->Headers().Parse();
+        }
+        sign.setFirstChild( new partNode( false, myBody ) )->buildObjectTree( false );
+
+        if( sign.mimePartTreeItem() ) {
+kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
+          sign.mChild->fillMimePartTree( sign.mimePartTreeItem(),
+                                         0,
+                                         "",   // cntDesc,
+                                         "",   // mainCntTypeStr,
+                                         "",   // cntEnc,
+                                         "" ); // cntSize );
+kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
+        } else {
+kdDebug(5006) << "\n     ------  Sorry, curNode->mimePartTreeItem() returns ZERO so"
+              << "\n                    we cannot insert new lines into MimePartTree. :-(\n" << endl;
+        }
+        parseObjectTree( sign.mChild );// showOneMimePart, keepEncryptions, includeSignatures );
         delete new_cleartext;
-        bIsOpaqueSigned = true;
       } else {
         txt = "<hr><b><h2>";
         txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
@@ -1833,6 +1857,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
                    "proposal:<br><i>&nbsp; &nbsp; Please specify a Plug-In by invoking<br>&nbsp; &nbsp; the "
                    "'Settings/Configure KMail / Plug-In' dialog!</i>"));
   }
+  kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: done, returning "
+                << ( bIsOpaqueSigned ? "TRUE" : "FALSE" ) << endl;
   return bIsOpaqueSigned;
 }
 
