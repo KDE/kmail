@@ -828,11 +828,11 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
                          const char *aName,
                          int aFlags)
   : KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose),
+    mShowCompleteMessage( false ),
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
     mCryptPlugList( cryptPlugList ),
-    mRootNode( 0 ),
-    mShowCompleteMessage( false )
+    mRootNode( 0 )
 {
   mAutoDelete = false;
   mLastSerNum = 0;
@@ -2198,9 +2198,12 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
 // considered left-to-right, they are ignored when determining its
 // direction. TODO: Implement this using the custom prefixes.
 
-  QString subjectDir = QString(mMsg->subject()
-                       .replace(QRegExp("^(Re:|Fwd:)"), "")
-                       .isRightToLeft() ? "rtl" : "ltr");
+   QString subjectDir;
+   if (!mMsg->subject().isEmpty()) {
+      subjectDir = (KMMsgBase::skipKeyword(mMsg->subject())
+                         .isRightToLeft()) ? "rtl" : "ltr";
+   } else
+      subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
 
 
   if (hasVCard) vcname = mTempFiles.last();
@@ -2287,8 +2290,9 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
     }
 
     // the date
-    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
+    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td dir=\"%2\" class=\"fancyHeaderDtls\">%3</td></tr>")
                             .arg(i18n("Date: "))
+			    .arg(mMsg->dateStr().isRightToLeft() ? "rtl" : "ltr")
                             .arg(strToHtml(mMsg->dateStr())));
     headerStr.append("</table></div>");
     break;
@@ -2368,6 +2372,8 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
   assert(pgp != NULL);
   bool isPgpMessage = false; // true if the message contains at least one
                              // PGP MESSAGE or one PGP SIGNED MESSAGE block
+  QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+  QString headerStr = QString("<div dir=\"%1\">").arg(dir);
 
   QPtrList<Kpgp::Block> pgpBlocks;
   QStrList nonPgpBlocks;
@@ -2402,7 +2408,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
           if( isEncrypted )
           {
             htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" class=\"encr\">"
-                       "<tr class=\"encrH\"><td>";
+                       "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
             if( couldDecrypt )
               htmlStr += i18n("Encrypted message");
             else
@@ -2427,7 +2433,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
             signClass = "signWarn";
             htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
                        "class=\"" + signClass + "\">"
-                       "<tr class=\"" + signClass + "H\"><td>";
+                       "<tr class=\"" + signClass + "H\"><td dir=\"" + dir + "\">";
             htmlStr += i18n( "Message was signed with unknown key 0x%1." )
                        .arg( block->signatureKeyId() );
             htmlStr += "<br />";
@@ -2463,7 +2469,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
                 signClass = "signOkKeyOk";
               htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
                          "class=\"" + signClass + "\">"
-                         "<tr class=\"" + signClass + "H\"><td>";
+                         "<tr class=\"" + signClass + "H\"><td dir=\"" + dir + "\">";
               if( !keyId.isEmpty() )
                 htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
                            .arg( signer )
@@ -2501,7 +2507,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
               signClass = "signErr";
               htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
                          "class=\"" + signClass + "\">"
-                         "<tr class=\"" + signClass + "H\"><td>";
+                         "<tr class=\"" + signClass + "H\"><td dir=\"" + dir + "\">";
               if( !keyId.isEmpty() )
                 htmlStr += i18n( "Message was signed by %1 (Key ID: 0x%2)." )
                            .arg( signer )
@@ -2519,14 +2525,15 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
         htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
 
         if( isSigned ) {
-          htmlStr += "</td></tr><tr class=\"" + signClass + "H\"><td>" +
+          htmlStr += "</td></tr><tr class=\"" + signClass + "H\">";
+          htmlStr += "<td dir=\"" + dir + "\">" +
                      i18n( "End of signed message" ) +
                      "</td></tr></table>";
           if( flagSigned )
             *flagSigned = true;
         }
         if( isEncrypted ) {
-          htmlStr += "</td></tr><tr class=\"encrH\"><td>" +
+          htmlStr += "</td></tr><tr class=\"encrH\"><td dir=\"" + dir + "\">" +
                      i18n( "End of encrypted message" ) +
                      "</td></tr></table>";
           if( flagEncrypted )
@@ -2620,8 +2627,6 @@ QString KMReaderWin::quotedHTML(const QString& s)
     } /* for() */
 
     if ( (paragState != Mid && finish) || (actQuoteLevel != currQuoteLevel) ) {
-	if ( finish )
-	    rightToLeft = line.isRightToLeft();
 
 	/* finish last quotelevel */
 	if (currQuoteLevel == -1)
@@ -2630,9 +2635,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	    htmlStr.append( quoteEnd );
 
 	if ( paragState == New )
-	    htmlStr += "</div>";
-
-	htmlStr += ( rightToLeft ? "<div dir=\"rtl\">" : "<div dir=\"ltr\">" );
+            htmlStr += "<br>";
 
 	/* start new quotelevel */
 	currQuoteLevel = actQuoteLevel;
@@ -2647,10 +2650,12 @@ QString KMReaderWin::quotedHTML(const QString& s)
     if ( !finish && paragState == Mid )
 	paragState = New;
 
+    rightToLeft = line.isRightToLeft();
     line = strToHtml(line, TRUE);
-    line.append("<br>");
 
-    htmlStr.append(line);
+    htmlStr+= QString("<div dir=\"%1\">" ).arg(rightToLeft ? "rtl" : "ltr");
+    htmlStr+= (line);
+    htmlStr+= QString("</div>");
   } /* while() */
 
   /* really finish the last quotelevel */
@@ -2658,7 +2663,6 @@ QString KMReaderWin::quotedHTML(const QString& s)
      htmlStr.append( normalEndTag );
   else
      htmlStr.append( quoteEnd );
-  htmlStr += "</div>";
 
   return htmlStr;
 }
