@@ -53,6 +53,20 @@ typedef enum
     KMMsgSignatureProblematic='X'
 } KMMsgSignatureState;
 
+/** Flags for the "MDN sent" state. */
+typedef enum
+{
+    KMMsgMDNStateUnknown = ' ',
+    KMMsgMDNNone = 'N',
+    KMMsgMDNIgnore = 'I',
+    KMMsgMDNDisplayed = 'R',
+    KMMsgMDNDeleted = 'D',
+    KMMsgMDNDispatched = 'F',
+    KMMsgMDNProcessed = 'P',
+    KMMsgMDNDenied = 'X',
+    KMMsgMDNFailed = 'E'
+} KMMsgMDNSentState;
+
 /** Flags for the signature state. */
 typedef enum
 {
@@ -101,21 +115,28 @@ public:
   /** Signature status of the message. */
   virtual KMMsgSignatureState signatureState() const = 0;
 
-  /** Set encryption status of the message. */
+  /** "MDN send" status of the message. */
+  virtual KMMsgMDNSentState mdnSentState() const = 0;
+
+  /** Set encryption status of message */
   virtual void setEncryptionState(const KMMsgEncryptionState, int idx = -1);
 
   /** Set signature status of the message. */
   virtual void setSignatureState(const KMMsgSignatureState, int idx = -1);
 
+  /** Set "MDN sent" status of the message. */
+  virtual void setMDNSentState( KMMsgMDNSentState status, int idx=-1 );
+
   /** Set encryption status of the message and mark dirty. Optional
    * optimization: @p idx may specify the index of this message within
    * the parent folder. */
   virtual void setEncryptionStateChar( QChar status, int idx = -1 );
-                                     
+    
   /** Set signature status of the message and mark dirty. Optional
    * optimization: @p idx may specify the index of this message within
    * the parent folder. */
-  virtual void setSignatureStateChar( QChar status, int idx = -1 );                                    
+  virtual void setSignatureStateChar( QChar status, int idx = -1 );
+    
 
   /** Important header fields of the message that are also kept in the index. */
   virtual QString subject(void) const = 0;
@@ -258,7 +279,8 @@ public:
     MsgSizePart = 9,
     MsgDatePart = 10,
     MsgFilePart = 11,
-    MsgCryptoStatePart = 12
+    MsgCryptoStatePart = 12,
+    MsgMDNSentPart = 13
   };
   /** access to long msgparts */
   off_t getLongPart(MsgPartType) const;

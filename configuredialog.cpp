@@ -3150,10 +3150,13 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   : ConfigurationPage ( parent, name )
 {
   // tmp. vars:
-  QVBoxLayout *vlay;
-  QGroupBox   *group;
-  QLabel      *label;
-  QString     msg;
+  QVBoxLayout  *vlay;
+  QHBox        *hbox;
+  QGroupBox    *group;
+  QRadioButton *radio;
+  QLabel       *label;
+  QWidget      *w;
+  QString       msg;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
@@ -3174,16 +3177,75 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   vlay->addWidget( group );
 
-  group = new QVGroupBox( i18n( "Delivery && Read Confirmations" ), this );
+  // "Delivery Confirmations" group box:
+  group = new QVGroupBox( i18n( "Delivery Confirmations" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
-  mSendReceiptCheck = new QCheckBox( i18n("Automatically &send receive- and "
-					  "read confirmations"), group );
+  mSendReceivedReceiptCheck = new QCheckBox( i18n("Automatically &send delivery confirmations"), group );
   label = new QLabel( i18n( "<qt><b>WARNING:</b> Unconditionally returning "
 			    "confirmations undermines your privacy. See "
 			    "\"What's this\" help (Shift+F1) for more.</qt>" ),
 		      group );
   label->setAlignment( WordBreak);
+
+  vlay->addWidget( group );
+
+  // "Message Disposition Notification" groupbox:
+  group = new QVGroupBox( i18n("Message Disposition Notifications"), this );
+  group->layout()->setSpacing( KDialog::spacingHint() );
+
+
+  // "ignore", "ask", "deny", "always send" radiobutton line:
+  mMDNGroup = new QButtonGroup( group );
+  mMDNGroup->hide();
+
+  hbox = new QHBox( group );
+  hbox->setSpacing( KDialog::spacingHint() );
+
+  (void)new QLabel( i18n("Send policy:"), hbox );
+
+  radio = new QRadioButton( i18n("&Ignore"), hbox );
+  mMDNGroup->insert( radio );
+
+  radio = new QRadioButton( i18n("As&k"), hbox );
+  mMDNGroup->insert( radio );
+
+  radio = new QRadioButton( i18n("&Deny"), hbox );
+  mMDNGroup->insert( radio );
+
+  radio = new QRadioButton( i18n("Al&ways send"), hbox );
+  mMDNGroup->insert( radio );
+
+  w = new QWidget( hbox ); // spacer
+  hbox->setStretchFactor( w, 1 );
+
+  // "Original Message quote" radiobutton line:
+  mOrigQuoteGroup = new QButtonGroup( group );
+  mOrigQuoteGroup->hide();
+
+  hbox = new QHBox( group );
+  hbox->setSpacing( KDialog::spacingHint() );
+
+  (void)new QLabel( i18n("Quote original message:"), hbox );
+
+  radio = new QRadioButton( i18n("Nothin&g"), hbox );
+  mOrigQuoteGroup->insert( radio );
+
+  radio = new QRadioButton( i18n("&Full message"), hbox );
+  mOrigQuoteGroup->insert( radio );
+
+  radio = new QRadioButton( i18n("Onl&y headers"), hbox );
+  mOrigQuoteGroup->insert( radio );
+
+  w = new QWidget( hbox );
+  hbox->setStretchFactor( w, 1 );
+
+  // Warning label:
+  label = new QLabel( i18n("<qt><b>WARNING:</b> Unconditionally returning "
+			   "confirmations undermines you privacy. See "
+			   "\"What's this\" help (Shift+F1) for more.</qt>"),
+		      group );
+  label->setAlignment( WordBreak );
 
   vlay->addWidget( group );
   vlay->addStretch( 10 ); // spacer
@@ -3229,34 +3291,87 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "fine-grained manner using the \"confirm delivery\" filter "
 	      "action. We advise against issuing <em>read</em> confirmations "
 	      "at all.</p></qt>");
-  QWhatsThis::add( mSendReceiptCheck, msg );
+  QWhatsThis::add( mSendReceivedReceiptCheck, msg );
+
+  msg = i18n( "<qt><h3>Message Dispositon Notification Policy</h3>"
+	      "<p>MDNs are a generalization of what is commonly called \"read"
+	      "   receipt\". The message author requests a disposition"
+	      "   notification to be sent and the receiver's mail program"
+	      "   generates a reply from which the author can learn what"
+	      "   happened to his message. Common disposition types include"
+	      "   \"displayed\" (i.e. read), \"deleted\" and \"dispatched\""
+	      "   (i.e. e.g. forwarded).</p>"
+	      "<p>The following options are available to control KMail's"
+	      "   sending of MDNs:</p>"
+	      "<ul>"
+	      "<li><em>Ignore</em>: Ignores any request for disposition"
+	      "    notifications. No MDN will ever be sent automatically"
+	      "    (recommended).</li>"
+	      "<li><em>Ask</em>: Answers requests only after asking the user"
+	      "    for permission. This way, you can send MDNs for selected"
+	      "    messages while denying or ignoring them for others.</li>"
+	      "<li><em>Deny</em>: Always sends a \"denied\" notification. This"
+	      "    is only <em>slightly</em> better than always sending MDNs."
+	      "    The author will still know that the messages has been acted"
+	      "    upon, he just cannot tell whether it was deleted or read"
+	      "    etc.</li>"
+	      "<li><em>Always send</em>: Always sends the requested"
+	      "    disposition notification. That means that the author of the"
+	      "    message gets to know when the message was acted upon and,"
+	      "    in addition, what happened to it (displayed, deleted,"
+	      "    etc.). This option is strongly discouraged, but since it"
+	      "    makes much sense e.g. for customer relationship management,"
+	      "    it has been made available.</li>"
+	      "</ul></qt>" );
+  for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
+    QWhatsThis::add( mMDNGroup->find( i ), msg );
+
 }
 
 void SecurityPage::GeneralTab::setup() {
   KConfigGroup general( kapp->config(), "General" );
   KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup mdn( kapp->config(), "MDN" );
 
 
   mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail", false ) );
   mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal", false ) );
-  mSendReceiptCheck->setChecked( general.readBoolEntry( "send-receipts", false ) );
+  mSendReceivedReceiptCheck->setChecked( general.readBoolEntry( "send-receipts", false ) );
+  int num = mdn.readNumEntry( "default-policy", 0 );
+  if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
+  mMDNGroup->setButton( num );
+  num = mdn.readNumEntry( "quote-message", 0 );
+  if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
+  mOrigQuoteGroup->setButton( num );
 }
 
 void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
   KConfigGroup general( profile, "General" );
   KConfigGroup reader( profile, "Reader" );
+  KConfigGroup mdn( profile, "MDN" );
 
   if ( reader.hasKey( "htmlMail" ) )
     mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail" ) );
   if ( reader.hasKey( "htmlLoadExternal" ) )
     mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal" ) );
   if ( general.hasKey( "send-receipts" ) )
-    mSendReceiptCheck->setChecked( general.readBoolEntry( "send-receipts" ) );
+    mSendReceivedReceiptCheck->setChecked( general.readBoolEntry( "send-receipts" ) );
+  if ( mdn.hasKey( "default-policy" ) ) {
+    int num = mdn.readNumEntry( "default-policy" );
+    if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
+    mMDNGroup->setButton( num );
+  }
+  if ( mdn.hasKey( "quote-message" ) ) {
+    int num = mdn.readNumEntry( "quote-message" );
+    if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
+    mOrigQuoteGroup->setButton( num );
+  }
 };
 
 void SecurityPage::GeneralTab::apply() {
   KConfigGroup general( kapp->config(), "General" );
   KConfigGroup reader( kapp->config(), "Reader" );
+  KConfigGroup mdn( kapp->config(), "MDN" );
 
   if (reader.readBoolEntry( "htmlMail", false ) != mHtmlMailCheck->isChecked())
   {
@@ -3282,7 +3397,9 @@ void SecurityPage::GeneralTab::apply() {
     }
   }
   reader.writeEntry( "htmlLoadExternal", mExternalReferences->isChecked() );
-  general.writeEntry( "send-receipts", mSendReceiptCheck->isChecked() );
+  general.writeEntry( "send-receipts", mSendReceivedReceiptCheck->isChecked() );
+  mdn.writeEntry( "default-policy", mMDNGroup->id( mMDNGroup->selected() ) );
+  mdn.writeEntry( "quote-message", mOrigQuoteGroup->id( mOrigQuoteGroup->selected() ) );
 }
 
 

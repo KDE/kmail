@@ -17,6 +17,8 @@
 
 #include <kiconloader.h>
 
+#include <qtextcodec.h>
+
 #if QT_VERSION <= 0x030100
 #include <qregexp.h>
 #endif
@@ -57,6 +59,17 @@ void KMMessagePart::setBody(const QCString &aStr)
     mBodyDecodedSize = mBody.size();
   else
     mBodyDecodedSize = -1; // Can't know the decoded size
+}
+
+void KMMessagePart::setBodyFromUnicode( const QString & str ) {
+  QCString encoding = KMMsgBase::autoDetectCharset( charset(), KMMessage::preferredCharsets(), str );
+  if ( encoding.isEmpty() )
+    encoding = "utf-8";
+  QTextCodec * codec = KMMessage::codecForName( encoding );
+  assert( codec );
+  QValueList<int> dummy;
+  setCharset( encoding );
+  setBodyAndGuessCte( codec->fromUnicode( str ), dummy, false /* no 8bit */ );
 }
 
 //-----------------------------------------------------------------------------

@@ -35,6 +35,7 @@
 
 #include <qtextcodec.h>
 #include <qstrlist.h>
+#include <qmessagebox.h>
 #include <qregexp.h>
 
 #include <kmime_util.h>
@@ -111,6 +112,7 @@ void KMMessage::assign( const KMMessage& other )
   mStatus  = other.mStatus;
   mEncryptionState = other.mEncryptionState;
   mSignatureState = other.mSignatureState;
+  mMDNSentState = other.mMDNSentState;
   mDate    = other.mDate;
   if( other.hasUnencryptedMsg() )
     mUnencryptedMsg = new KMMessage( *other.unencryptedMsg() );
@@ -175,6 +177,7 @@ KMMessage::KMMessage(KMFolder* parent): KMMessageInherited(parent)
   mStatus  = KMMsgStatusNew;
   mEncryptionState = KMMsgEncryptionStateUnknown;
   mSignatureState = KMMsgSignatureStateUnknown;
+  mMDNSentState = KMMsgMDNStateUnknown;
   mDate    = 0;
   mFileName = "";
   mMsgSerNum = 0;
@@ -197,6 +200,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
   mStatus = msgInfo.status();
   mEncryptionState = msgInfo.encryptionState();
   mSignatureState = msgInfo.signatureState();
+  mMDNSentState = msgInfo.mdnSentState();
   mDate = msgInfo.date();
   mFileName = msgInfo.fileName();
   mMsgSerNum = msgInfo.getMsgSerNum();
@@ -233,7 +237,7 @@ void KMMessage::setUnencryptedMsg( KMMessage* unencrypted )
 }
 
 //-----------------------------------------------------------------------------
-const DwString& KMMessage::asDwString(void)
+const DwString& KMMessage::asDwString() const
 {
   if (mNeedsAssembly)
   {
@@ -245,34 +249,41 @@ const DwString& KMMessage::asDwString(void)
 
 
 //-----------------------------------------------------------------------------
-QCString KMMessage::asString(void)
-{
-  if (mNeedsAssembly)
-  {
-    mNeedsAssembly = FALSE;
-    mMsg->Assemble();
-  }
-  return mMsg->AsString().c_str();
+QCString KMMessage::asString() const {
+  return asDwString().c_str();
 }
 
 
-//-----------------------------------------------------------------------------
-QCString KMMessage::asSendableString()
+QCString KMMessage::asSendableString() const
 {
   KMMessage msg;
   msg.fromString(asString());
-  msg.removeHeaderField("Status");
-  msg.removeHeaderField("X-Status");
-  msg.removeHeaderField("X-KMail-EncryptionState");
-  msg.removeHeaderField("X-KMail-SignatureState");
-  msg.removeHeaderField("X-KMail-Transport");
-  msg.removeHeaderField("X-KMail-Identity");
-  msg.removeHeaderField("X-KMail-Fcc");
-  msg.removeHeaderField("X-KMail-Redirect-From");
-  msg.removeHeaderField("X-KMail-Link-Message");
-  msg.removeHeaderField("X-KMail-Link-Type");
+  msg.removePrivateHeaderFields();
   msg.removeHeaderField("Bcc");
   return msg.asString();
+}
+
+QCString KMMessage::headerAsSendableString() const
+{
+  KMMessage msg;
+  msg.fromString(asString());
+  msg.removePrivateHeaderFields();
+  msg.removeHeaderField("Bcc");
+  return msg.headerAsString().latin1();
+}
+
+void KMMessage::removePrivateHeaderFields() {
+  removeHeaderField("Status");
+  removeHeaderField("X-Status");
+  removeHeaderField("X-KMail-EncryptionState");
+  removeHeaderField("X-KMail-SignatureState");
+  removeHeaderField("X-KMail-MDN-Sent");
+  removeHeaderField("X-KMail-Transport");
+  removeHeaderField("X-KMail-Identity");
+  removeHeaderField("X-KMail-Fcc");
+  removeHeaderField("X-KMail-Redirect-From");
+  removeHeaderField("X-KMail-Link-Message");
+  removeHeaderField("X-KMail-Link-Type");
 }
 
 //-----------------------------------------------------------------------------
@@ -294,6 +305,10 @@ void KMMessage::setStatusFields(void)
   kdDebug() << "Setting SignatureState header field to " << str[0] << endl;
   setHeaderField("X-KMail-SignatureState", str);
 
+  str[0] = static_cast<char>( mdnSentState() );
+  str[1] = '\0';
+  setHeaderField("X-KMail-MDN-Sent", str);
+
   // We better do the assembling ourselves now to prevent the
   // mimelib from changing the message *body*.  (khz, 10.8.2002)
   mNeedsAssembly = false;
@@ -307,6 +322,7 @@ void KMMessage::setStatusFields(void)
 QString KMMessage::headerAsString(void) const
 {
   DwHeaders& header = mMsg->Headers();
+  header.Assemble();
   if(header.AsString() != "")
     return header.AsString().c_str();
   return "";
@@ -356,6 +372,7 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
     setStatus(headerField("Status").latin1(), headerField("X-Status").latin1());
     setEncryptionStateChar( headerField("X-KMail-EncryptionState").at(0) );
     setSignatureStateChar(  headerField("X-KMail-SignatureState").at(0) );
+    setMDNSentState( static_cast<KMMsgMDNSentState>( headerField("X-KMail-MDN-Sent").at(0).latin1() ) );
   }
 
   mNeedsAssembly = FALSE;
@@ -1293,6 +1310,298 @@ KMMessage* KMMessage::createForward(void)
   return msg;
 }
 
+static const struct {
+  const char * dontAskAgainID;
+  bool         canDeny;
+  const char * text;
+} mdnMessageBoxes[] = {
+  { "mdnNormalAsk", true,
+    I18N_NOOP("This message contains a request to send a dispositon "
+	      "notification.\n"
+	      "You can either ignore the request or let KMail send a "
+	      "\"denied\" or normal response.") },
+  { "mdnUnknownOption", false,
+    I18N_NOOP("This message contains a request to send a dispositon "
+	      "notification.\n"
+	      "It contains a processing instruction that is marked as "
+	      "\"required\", but which is unknown to KMail.\n"
+	      "You can either ignore the request or let KMail send a "
+	      "\"failed\" response.") },
+  { "mdnMultipleAddressesInReceiptTo", true,
+    I18N_NOOP("This message contains a request to send a dispositon "
+	      "notification,\n"
+	      "but it is requested to send the notification to more "
+	      "than one address.\n"
+	      "You can either ignore the request or let KMail send a "
+	      "\"denied\" or normal response.") },
+  { "mdnReturnPathEmpty", true,
+    I18N_NOOP("This message contains a request to send a dispositon "
+	      "notification,\n"
+	      "but there is no return-path set.\n"
+	      "You can either ignore the request or let KMail send a "
+	      "\"denied\" or normal response.") },
+  { "mdnReturnPathNotInReceiptTo", true,
+    I18N_NOOP("This message contains a request to send a dispositon "
+	      "notification,\n"
+	      "but the return-path address differs from the address "
+	      "the notification was requested to be sent to.\n"
+	      "You can either ignore the request or let KMail send a "
+	      "\"denied\" or normal response.") },
+};
+
+static const int numMdnMessageBoxes
+      = sizeof mdnMessageBoxes / sizeof *mdnMessageBoxes;
+
+
+static int requestAdviceOnMDN( const char * what ) {
+  for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
+    if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) )
+      if ( mdnMessageBoxes[i].canDeny ) {
+	int answer = QMessageBox::information( 0,
+			 i18n("Message Disposition Notification Request"),
+			 i18n( mdnMessageBoxes[i].text ),
+			 i18n("&Ignore"), i18n("Send \"&denied\""), i18n("&Send") );
+	return answer ? answer + 1 : 0 ; // map to "mode" in createMDN
+      } else {
+	int answer = QMessageBox::information( 0,
+			 i18n("Message Disposition Notification Request"),
+			 i18n( mdnMessageBoxes[i].text ),
+			 i18n("&Ignore"), i18n("&Send") );
+	return answer ? answer + 2 : 0 ; // map to "mode" in createMDN
+      }
+  kdWarning(5006) << "didn't find data for message box \""
+		  << what << "\"" << endl;
+  return 0;
+}
+
+KMMessage* KMMessage::createMDN( MDN::ActionMode a,
+				 MDN::DispositionType d,
+				 bool allowGUI,
+				 QValueList<MDN::DispositionModifier> m )
+{
+  // RFC 2298: At most one MDN may be issued on behalf of each
+  // particular recipient by their user agent.  That is, once an MDN
+  // has been issued on behalf of a recipient, no further MDNs may be
+  // issued on behalf of that recipient, even if another disposition
+  // is performed on the message.
+//#define MDN_DEBUG 1
+#ifndef MDN_DEBUG
+  if ( mdnSentState() != KMMsgMDNStateUnknown &&
+       mdnSentState() != KMMsgMDNNone )
+    return 0;
+#else
+  char st[2]; st[0] = (char)mdnSentState(); st[1] = 0;
+  kdDebug(5006) << "mdnSentState() == '" << st << "'" << endl;
+#endif
+
+  // RFC 2298: An MDN MUST NOT be generated in response to an MDN.
+  if ( findDwBodyPart( DwMime::kTypeMessage,
+		       DwMime::kSubtypeDispositionNotification ) ) {
+    setMDNSentState( KMMsgMDNIgnore );
+    return 0;
+  }
+
+  // extract where to send to:
+  QString receiptTo = headerField("Disposition-Notification-To");
+  if ( receiptTo.stripWhiteSpace().isEmpty() ) return 0;
+#if QT_VERSION >= 0x030100
+  receiptTo.remove( '\n' );
+#else
+  receiptTo.replace(QRegExp("\\n"),"");
+#endif
+
+
+  MDN::SendingMode s = MDN::SentAutomatically; // set to manual if asked user
+  QString special; // fill in case of error, warning or failure
+  KConfigGroup mdnConfig( KGlobal::config(), "MDN" );
+
+  // default:
+  int mode = mdnConfig.readNumEntry( "default-policy", 0 );
+  if ( !mode || mode < 0 || mode > 3 ) {
+    // early out for ignore:
+    setMDNSentState( KMMsgMDNIgnore );
+    return 0;
+  }
+
+  // RFC 2298: An importance of "required" indicates that
+  // interpretation of the parameter is necessary for proper
+  // generation of an MDN in response to this request.  If a UA does
+  // not understand the meaning of the parameter, it MUST NOT generate
+  // an MDN with any disposition type other than "failed" in response
+  // to the request.
+  QString notificationOptions = headerField("Disposition-Notification-Options");
+  if ( notificationOptions.contains( "required", false ) ) {
+    // ### hacky; should parse...
+    // There is a required option that we don't understand. We need to
+    // ask the user what we should do:
+    if ( !allowGUI ) return 0; // don't setMDNSentState here!
+    mode = requestAdviceOnMDN( "mdnUnknownOption" );
+    s = MDN::SentManually;
+
+    special = i18n("Header \"Disposition-Notification-Options\" contained "
+		   "required, but unknown parameter");
+    d = MDN::Failed;
+    m.clear(); // clear modifiers
+  }
+
+  // RFC 2298: [ Confirmation from the user SHOULD be obtained (or no
+  // MDN sent) ] if there is more than one distinct address in the
+  // Disposition-Notification-To header.
+  kdDebug() << "splitEmailAddrList(receiptTo): "
+	    << splitEmailAddrList(receiptTo).join("\n") << endl;
+  if ( splitEmailAddrList(receiptTo).count() > 1 ) {
+    if ( !allowGUI ) return 0; // don't setMDNSentState here!
+    mode = requestAdviceOnMDN( "mdnMultipleAddressesInReceiptTo" );
+    s = MDN::SentManually;
+  }
+
+  // RFC 2298: MDNs SHOULD NOT be sent automatically if the address in
+  // the Disposition-Notification-To header differs from the address
+  // in the Return-Path header. [...] Confirmation from the user
+  // SHOULD be obtained (or no MDN sent) if there is no Return-Path
+  // header in the message [...]
+  QStrList returnPathList = headerAddrField("Return-Path");
+  QString returnPath = returnPathList.isEmpty() ? 0 : returnPathList.first() ;
+  kdDebug() << "clean return path: " << returnPath << endl;
+  if ( returnPath.isEmpty() || !receiptTo.contains( returnPath, false ) ) {
+    if ( !allowGUI ) return 0; // don't setMDNSentState here!
+    mode = requestAdviceOnMDN( returnPath.isEmpty() ?
+			       "mdnReturnPathEmpty" :
+			       "mdnReturnPathNotInReceiptTo" );
+    s = MDN::SentManually;
+  }
+
+  if ( mode == 1 ) { // ask
+    if ( !allowGUI ) return 0; // don't setMDNSentState here!
+    mode = requestAdviceOnMDN( "mdnNormalAsk" );
+    s = MDN::SentManually; // asked user
+  }
+
+  switch ( mode ) {
+  case 0: // ignore:
+    setMDNSentState( KMMsgMDNIgnore );
+    return 0;
+  default:
+  case 1:
+    kdFatal(5006) << "KMMessage::createMDN(): The \"ask\" mode should "
+		  << "never appear here!" << endl;
+    break;
+  case 2: // deny
+    d = MDN::Denied;
+    m.clear();
+    break;
+  case 3:
+    break;
+  }
+
+
+  // extract where to send from:
+  QString finalRecipient = kernel->identityManager()
+    ->identityForUoidOrDefault( identityUoid() ).fullEmailAddr();
+
+  //
+  // Generate message:
+  //
+
+  KMMessage * receipt = new KMMessage();
+  receipt->initFromMessage( this );
+  receipt->removeHeaderField("Content-Type");
+  receipt->removeHeaderField("Content-Transfer-Encoding");
+  // Modify the ContentType directly (replaces setAutomaticFields(true))
+  DwHeaders & header = receipt->mMsg->Headers();
+  header.MimeVersion().FromString("1.0");
+  DwMediaType & contentType = receipt->dwContentType();
+  contentType.SetType( DwMime::kTypeMultipart );
+  contentType.SetSubtype( DwMime::kSubtypeReport );
+  contentType.CreateBoundary(0);
+  receipt->mNeedsAssembly = true;
+  receipt->setContentTypeParam( "report-type", "disposition-notification" );
+
+  QString description = replaceHeadersInString( MDN::descriptionFor( d, m ) );
+
+  // text/plain part:
+  KMMessagePart firstMsgPart;
+  firstMsgPart.setTypeStr( "text" );
+  firstMsgPart.setSubtypeStr( "plain" );
+  firstMsgPart.setBodyFromUnicode( description );
+  receipt->addBodyPart( &firstMsgPart );
+
+  // message/disposition-notification part:
+  KMMessagePart secondMsgPart;
+  secondMsgPart.setType( DwMime::kTypeMessage );
+  secondMsgPart.setSubtype( DwMime::kSubtypeDispositionNotification );
+  //secondMsgPart.setCharset( "us-ascii" );
+  //secondMsgPart.setCteStr( "7bit" );
+  secondMsgPart.setBodyEncoded( MDN::dispositionNotificationBodyContent(
+	                    finalRecipient,
+			    rawHeaderField("Original-Recipient"),
+			    id(), /* Message-ID */
+			    d, a, s, m, special ) );
+  receipt->addBodyPart( &secondMsgPart );
+
+  // message/rfc822 or text/rfc822-headers body part:
+  int num = mdnConfig.readNumEntry( "quote-message", 0 );
+  if ( num < 0 || num > 2 ) num = 0;
+  MDN::ReturnContent returnContent = static_cast<MDN::ReturnContent>( num );
+
+  KMMessagePart thirdMsgPart;
+  switch ( returnContent ) {
+  case MDN::All:
+    thirdMsgPart.setTypeStr( "message" );
+    thirdMsgPart.setSubtypeStr( "rfc822" );
+    thirdMsgPart.setBody( asSendableString() );
+    receipt->addBodyPart( &thirdMsgPart );
+    break;
+  case MDN::HeadersOnly:
+    thirdMsgPart.setTypeStr( "text" );
+    thirdMsgPart.setSubtypeStr( "rfc822-headers" );
+    thirdMsgPart.setBody( headerAsSendableString() );
+    receipt->addBodyPart( &thirdMsgPart );
+    break;
+  case MDN::Nothing:
+  default:
+    break;
+  };
+
+  receipt->setTo( receiptTo );
+  receipt->setSubject( "Message Disposition Notification" );
+  receipt->setReplyToId( msgId() );
+  receipt->setReferences( getRefStr() );
+
+  receipt->cleanupHeader();
+
+  kdDebug() << "final message:\n" + receipt->asString() << endl;
+
+  //
+  // Set "MDN sent" status:
+  //
+  KMMsgMDNSentState state = KMMsgMDNStateUnknown;
+  switch ( d ) {
+  case MDN::Displayed:   state = KMMsgMDNDisplayed;  break;
+  case MDN::Deleted:     state = KMMsgMDNDeleted;    break;
+  case MDN::Dispatched:  state = KMMsgMDNDispatched; break;
+  case MDN::Processed:   state = KMMsgMDNProcessed;  break;
+  case MDN::Denied:      state = KMMsgMDNDenied;     break;
+  case MDN::Failed:      state = KMMsgMDNFailed;     break;
+  };
+  setMDNSentState( state );
+
+  return receipt;
+}
+
+QString KMMessage::replaceHeadersInString( const QString & s ) const {
+  QString result = s;
+  QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", false );
+  assert( rx.isValid() );
+  int idx = 0;
+  while ( ( idx = rx.search( result, idx ) ) != -1 ) {
+    QString replacement = headerField( rx.cap(1).latin1() );
+    result.replace( idx, rx.matchedLength(), replacement );
+    idx += replacement.length();
+  }
+  return result;
+}
+
 KMMessage* KMMessage::createDeliveryReceipt() const
 {
   QString str, receiptTo;
@@ -1374,18 +1683,25 @@ void KMMessage::initHeader( uint id )
   setHeaderField("Content-Type","text/plain");
 }
 
+uint KMMessage::identityUoid() const {
+  QString idString = headerField("X-KMail-Identity").stripWhiteSpace();
+  bool ok = false;
+  int id = idString.toUInt( &ok );
+
+  if ( !ok || id == 0 )
+    id = kernel->identityManager()->identityForAddress( to() + cc() ).uoid();
+  if ( id == 0 && parent() )
+    id = parent()->identity();
+
+  return id;
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMessage::initFromMessage(const KMMessage *msg, bool idHeaders)
 {
-  QString idString = msg->headerField("X-KMail-Identity").stripWhiteSpace();
-  bool ok = false;
-  uint id = idString.toUInt( &ok );
+  uint id = msg->identityUoid();
 
-  if ( !ok || id == 0 )
-    id = kernel->identityManager()->identityForAddress( msg->to() + msg->cc() ).uoid();
-  if ( id == 0 && msg->parent() )
-    id = msg->parent()->identity();
   if ( idHeaders ) initHeader(id);
   else setHeaderField("X-KMail-Identity", QString().setNum(id));
   if (!msg->headerField("X-KMail-Transport").isEmpty())
@@ -1806,7 +2122,17 @@ QStrList KMMessage::headerAddrField(const QCString& aName) const
 }
 
 
-//-----------------------------------------------------------------------------
+QCString KMMessage::rawHeaderField( const QCString & name ) const {
+  if ( name.isEmpty() ) return QCString();
+
+  DwHeaders & header = mMsg->Headers();
+  DwField * field = header.FindField( name );
+
+  if ( !field ) return QCString();
+
+  return header.FieldBody( name.data() ).AsString().c_str();
+}
+
 QString KMMessage::headerField(const QCString& aName) const
 {
   DwHeaders& header = mMsg->Headers();
@@ -2348,6 +2674,7 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
   while (curpart && !part) {
     //dive into multipart messages
     while(    curpart
+           && curpart->hasHeaders()
            && curpart->Headers().HasContentType()
            && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
     {
@@ -2371,13 +2698,65 @@ DwBodyPart * KMMessage::dwBodyPart( int aIdx ) const
   return part;
 }
 
+//-----------------------------------------------------------------------------
+
+DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
+{
+  DwBodyPart *part, *curpart;
+  QPtrList< DwBodyPart > parts;
+  // Get the DwBodyPart for this index
+
+  curpart = getFirstDwBodyPart();
+  part = 0;
+
+  while (curpart && !part) {
+    //dive into multipart messages
+    while(    curpart
+           && curpart->hasHeaders()
+           && curpart->Headers().HasContentType()
+           && (DwMime::kTypeMultipart == curpart->Headers().ContentType().Type()) )
+    {
+      parts.append( curpart );
+      curpart = curpart->Body().FirstBodyPart();
+    }
+    // this is where curPart->msgPart contains a leaf message part
+
+
+// pending(khz): Find out WHY this look does not travel down *into* an
+//               embedded "Message/RfF822" message containing a "Multipart/Mixed"
+if (curpart && curpart->hasHeaders() ){
+kdDebug() << curpart->Headers().ContentType().TypeStr().c_str()
+<< "  " << curpart->Headers().ContentType().SubtypeStr().c_str() << endl;
+}
+
+
+    if (curpart &&
+        curpart->hasHeaders() &&
+        curpart->Headers().ContentType().Type() == type &&
+        curpart->Headers().ContentType().Subtype() == subtype){
+      part = curpart;
+    }else{
+      // go up in the tree until reaching a node with next
+      // (or the last top-level node)
+      while (curpart && !(curpart->Next()) && !(parts.isEmpty()))
+      {
+        curpart = parts.getLast();
+        parts.removeLast();
+      } ;
+      if (curpart)
+        curpart = curpart->Next();
+    }
+  }
+  return part;
+}
 
 
 //-----------------------------------------------------------------------------
+
 void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart)
 {
   if( aPart ) {
-    if( aDwBodyPart ) {
+    if( aDwBodyPart && aDwBodyPart->hasHeaders() ) {
       // This must not be an empty string, because we'll get a
       // spurious empty Subject: line in some of the parts.
       aPart->setName(" ");
@@ -3148,6 +3527,7 @@ void KMMessage::setEncryptionState(const KMMsgEncryptionState s, int idx)
     KMMsgBase::setEncryptionState(s, idx);
 }
 
+
 //-----------------------------------------------------------------------------
 void KMMessage::setSignatureState(KMMsgSignatureState s, int idx)
 {
@@ -3156,6 +3536,14 @@ void KMMessage::setSignatureState(KMMsgSignatureState s, int idx)
     mSignatureState = s;
     mDirty = true;
     KMMsgBase::setSignatureState(s, idx);
+}
+
+void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
+  if ( mMDNSentState == status )
+    return;
+  mMDNSentState = status;
+  mDirty = true;
+  KMMsgBase::setMDNSentState( status, idx );
 }
 
 //-----------------------------------------------------------------------------

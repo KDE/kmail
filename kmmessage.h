@@ -11,6 +11,8 @@
 #include <mimelib/string.h>
 #include "kmmsgbase.h"
 
+#include <kmime_mdn.h>
+
 template <typename T>
 class QValueList;
 
@@ -147,7 +149,25 @@ public:
   /** Create a new message that is a delivery receipt of this message,
       filling required header fileds with the proper values. The
       returned message is not stored in any folder. */
-  virtual KMMessage* createDeliveryReceipt(void) const;
+  KMMessage* createDeliveryReceipt() const;
+
+  /** Create a new message that is a MDN for this message, filling all
+      required felds with proper values. Th ereturned message is not
+      stored in any folder.
+
+      @param a Use AutomaticAction for filtering and ManualAction for
+               user-induced events.
+      @param d See docs for @ref KMime::MDN::DispositionType
+      @param m See docs for @ref KMime::MDN::DispositionModifier
+      @param allowGUI Set to true if this method is allowed to ask the
+                      user questions
+
+      @return The notification message or 0, if none should be sent.
+   **/
+  KMMessage* createMDN( KMime::MDN::ActionMode a,
+			KMime::MDN::DispositionType d,
+			bool allowGUI=false,
+			QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
 
   /** Parse the string and create this message from it. */
   virtual void fromString(const QCString& str, bool setStatus=FALSE);
@@ -156,7 +176,7 @@ public:
       is *fast* even for large message since it does *not* involve a
       string copy.
   */
-  virtual const DwString& asDwString(void);
+  virtual const DwString& asDwString() const;
 
   /** Return the entire message contents as a string. This function is
       slow for large message since it involves a string copy. If you
@@ -167,12 +187,24 @@ public:
       @see asByteArray
       @see asDwString
   */
-  virtual QCString asString(void);
+  virtual QCString asString() const;
 
   /**
-   * Return the message contents besides the headers that should not be sent.
+   * Return the message contents with the headers that should not be
+   * sent stripped off.
    */
-  virtual QCString asSendableString();
+  QCString asSendableString() const;
+
+  /**
+   * Return the message header with the headers that should not be
+   * sent stripped off.
+   */
+  QCString headerAsSendableString() const;
+
+  /**
+   * Remove all private header fields: *Status: and X-KMail-*
+   **/
+  void removePrivateHeaderFields();
 
   /** Return reference to Content-Type header for direct manipulation. */
   DwMediaType& dwContentType(void);
@@ -217,6 +249,13 @@ public:
   /** Initialize headers fields according to the identity and the transport
     header of the given original message */
   virtual void initFromMessage(const KMMessage *msg, bool idHeaders = TRUE);
+
+  /** @return the UOID of the identity for this message.
+      Searches the "x-kmail-identity" header and if that fails,
+      searches with @ref IdentityManager::identityForAddress()
+      and if that fails queries the @ref #parent() folde for a default.
+   **/
+  uint identityUoid() const;
 
   /** Removes empty fields from the header, e.g. an empty Cc: or Bcc:
     field. */
@@ -320,6 +359,9 @@ public:
   virtual QString headerField(const QCString& name) const;
   virtual void setHeaderField(const QCString& name, const QString& value);
 
+  /** Get a raw header field */
+  QCString rawHeaderField( const QCString & name ) const;
+
   /** Returns header address list as string list. Warning: returns
       a temporary object !
       Valid for the following fields: To, Bcc, Cc, ReplyTo, ResentBcc,
@@ -410,6 +452,10 @@ public:
   /** Number of body parts the message has. This is one for plain messages
       without any attachment. */
   virtual int numBodyParts(void) const;
+
+  /** Return the first DwBodyPart matching a given Content-Type
+      or zero, if no found. */
+  virtual DwBodyPart * findDwBodyPart( int type, int subtype ) const;
 
   /** Get the DwBodyPart at position in aIdx.  Indexing starts at 0.
       If there is no body part at that index, return value will be zero. */
@@ -513,6 +559,10 @@ public:
   /** Get a list of preferred message charsets.*/
   static const QStringList &preferredCharsets(void);
 
+  /** Replaces every occurrence of "${foo}" in @p s with @ref
+      headerField("foo") */
+  QString replaceHeadersInString( const QString & s ) const;
+
   /** Get the message charset.*/
   virtual QCString charset(void) const;
 
@@ -584,15 +634,19 @@ public:
 
   /** Set encryption status of the message. */
   virtual void setEncryptionState(const KMMsgEncryptionState, int idx = -1);
-
+    
   /** Set signature status of the message. */
   virtual void setSignatureState(const KMMsgSignatureState, int idx = -1);
+
+  virtual void setMDNSentState( KMMsgMDNSentState status, int idx=-1 );
 
   /** Encryption status of the message. */
   virtual KMMsgEncryptionState encryptionState() const { return mEncryptionState; }
 
   /** Signature status of the message. */
   virtual KMMsgSignatureState signatureState() const { return mSignatureState; }
+
+  virtual KMMsgMDNSentState mdnSentState() const { return mMDNSentState; }
 
   /** Links this message to @p aMsg, setting link type to @p aStatus. */
   void link(const KMMessage *aMsg, KMMsgStatus aStatus);
@@ -609,8 +663,9 @@ protected:
   QString mDrafts;
 
 protected:
-  DwMessage* mMsg;
-  bool       mNeedsAssembly, mIsComplete, mTransferInProgress, mDecodeHTML;
+  mutable DwMessage* mMsg;
+  mutable bool       mNeedsAssembly;
+  bool mIsComplete, mTransferInProgress, mDecodeHTML;
   static int sHdrStyle;
   static QString sForwardStr;
   QTextCodec* mCodec;
@@ -623,6 +678,7 @@ protected:
   unsigned long mMsgSerNum;
   KMMsgEncryptionState mEncryptionState;
   KMMsgSignatureState mSignatureState;
+  KMMsgMDNSentState mMDNSentState;
   KMMessage* mUnencryptedMsg;
 };
 

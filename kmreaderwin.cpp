@@ -43,6 +43,9 @@
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
 
+#include <kmime_mdn.h>
+using namespace KMime;
+
 #include "kmversion.h"
 #include "kmglobal.h"
 #include "kmmainwin.h"
@@ -58,6 +61,7 @@
 #include "partNode.h"
 #include "linklocator.h"
 #include "kmmsgdict.h"
+#include "kmsender.h"
 
 // for the MIME structure viewer (khz):
 #include "kmmimeparttree.h"
@@ -4582,6 +4586,14 @@ void KMReaderWin::slotTouchMessage()
     if (st == KMMsgStatusNew || st == KMMsgStatusUnread
         || st == KMMsgStatusRead)
       message()->setStatus(KMMsgStatusOld);
+    if ( st == KMMsgStatusNew || st == KMMsgStatusUnread ) {
+      KMMessage * receipt = message()->createMDN( MDN::ManualAction,
+						  MDN::Displayed,
+						  true /* allow GUI */ );
+      if ( receipt )
+	if ( !kernel->msgSender()->send( receipt ) ) // send or queue
+	  KMessageBox::error( this, i18n("Couldn't send MDN!") );
+    }
   }
 }
 

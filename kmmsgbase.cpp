@@ -193,7 +193,11 @@ void KMMsgBase::setSignatureState( const KMMsgSignatureState status, int idx )
          mParent->headerOfMsgChanged(this, idx);
 }
 
-
+void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
+  mDirty = true;
+  if ( mParent )
+    mParent->headerOfMsgChanged(this, idx);
+}
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 {
@@ -1043,6 +1047,8 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   STORE_DATA(MsgDatePart, tmp);
   tmp = (signatureState() << 16) | encryptionState();
   STORE_DATA(MsgCryptoStatePart, tmp);
+  tmp = mdnSentState();
+  STORE_DATA(MsgMDNSentPart, tmp);
 #undef STORE_DATA_LEN
   return ret;
 }
