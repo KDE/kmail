@@ -22,7 +22,7 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  KMFolderMaildir(KMFolderDir* parent=0, const QString& name=QString::null);
+  KMFolderMaildir(KMFolder* folder, const char* name=0);
   virtual ~KMFolderMaildir();
 
   /** Returns the type of this folder */

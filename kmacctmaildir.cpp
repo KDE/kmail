@@ -86,7 +86,7 @@ void KMAcctMaildir::processNewMail(bool)
     }
   }
 
-  KMFolderMaildir mailFolder(0, location());
+  KMFolder mailFolder(0, location(), KMFolderTypeMaildir);
 
   long num = 0;
   long i;

@@ -6,6 +6,7 @@
 
 #include "kmacctfolder.h"
 #include "kmacctmgr.h"
+#include "folderstorage.h"
 #include <stdlib.h>
 
 #define MAX_ACCOUNTS 16
@@ -13,7 +14,7 @@
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctFolder::account(void)
 {
-  if (mAcctList) return mAcctList->first();
+  if (storage()->acctList()) return storage()->acctList()->first();
   return 0;
 }
 
@@ -21,7 +22,7 @@ KMAccount* KMAcctFolder::account(void)
 //-----------------------------------------------------------------------------
 KMAccount* KMAcctFolder::nextAccount(void)
 {
-  if (mAcctList) return mAcctList->next();
+  if (storage()->acctList()) return storage()->acctList()->next();
   return 0;
 }
 
@@ -30,9 +31,9 @@ KMAccount* KMAcctFolder::nextAccount(void)
 void KMAcctFolder::addAccount(KMAccount* aAcct)
 {
   if (!aAcct) return;
-  if (!mAcctList) mAcctList = new KMAcctList;
+  if (!storage()->acctList()) storage()->setAcctList( new KMAcctList );
 
-  mAcctList->append(aAcct);
+  storage()->acctList()->append(aAcct);
   aAcct->setFolder(this);
 }
 
@@ -40,21 +41,21 @@ void KMAcctFolder::addAccount(KMAccount* aAcct)
 //-----------------------------------------------------------------------------
 void KMAcctFolder::clearAccountList(void)
 {
-  if (mAcctList) mAcctList->clear();
+  if (storage()->acctList()) storage()->acctList()->clear();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMAcctFolder::removeAccount(KMAccount* aAcct)
 {
-  if (!aAcct || !mAcctList) return;
+  if (!aAcct || !storage()->acctList()) return;
 
-  mAcctList->remove(aAcct);
+  storage()->acctList()->remove(aAcct);
   aAcct->setFolder(0);
-  if (mAcctList->count() <= 0)
+  if (storage()->acctList()->count() <= 0)
   {
-    delete mAcctList;
-    mAcctList = 0;
+    delete storage()->acctList();
+    storage()->setAcctList( 0 );
   }
 }
 

@@ -171,15 +171,7 @@ void KMAddrBookExternal::addEmail( const QString& addr, QWidget *parent) {
     a.setNameFromString( name );
     a.insertEmail( email, true );
 
-    KABC::Ticket *t = ab->requestSaveTicket();
-    bool saved = false;
-    if ( t ) {
-      ab->insertAddressee(a);
-      saved = ab->save( t );
-      if ( !saved )
-        ab->releaseSaveTicket( t );
-    }
-    if ( !saved ) {
+    if ( !KMAddrBookExternal::addAddressee( a ) ) {
       KMessageBox::error( parent, i18n("Can't save to addressbook.") );
     } else {
       QString text = i18n("<qt>The email address <b>%1</b> was added to your "
@@ -241,15 +233,7 @@ bool KMAddrBookExternal::addVCard( const KABC::Addressee& addressee, QWidget *pa
       ab->findByEmail( addressee.preferredEmail() );
 
   if ( addressees.isEmpty() ) {
-    KABC::Ticket *t = ab->requestSaveTicket();
-    bool saved = false;
-    if ( t ) {
-      ab->insertAddressee( addressee );
-      saved = ab->save( t );
-      if ( !saved )
-        ab->releaseSaveTicket( t );
-    }
-    if ( !saved ) {
+    if ( !KMAddrBookExternal::addAddressee( addressee ) ) {
       KMessageBox::error( parent, i18n("Can't save to addressbook.") );
       inserted = false;
     } else {
@@ -269,4 +253,18 @@ bool KMAddrBookExternal::addVCard( const KABC::Addressee& addressee, QWidget *pa
   }
 
   return inserted;
+}
+
+bool KMAddrBookExternal::addAddressee( const KABC::Addressee& addressee )
+{
+  KABC::AddressBook *ab = KABC::StdAddressBook::self();
+  KABC::Ticket *t = ab->requestSaveTicket();
+  bool saved = false;
+  if ( t ) {
+    ab->insertAddressee( addressee );
+    saved = ab->save( t );
+    if ( !saved )
+      ab->releaseSaveTicket( t );
+  }
+  return saved;
 }

@@ -14,7 +14,7 @@ class KMMessage;
 class KMMsgInfo: public KMMsgBase
 {
 public:
-  KMMsgInfo(KMFolderIndex* parent, off_t off=0, short len=0);
+  KMMsgInfo(KMFolder* parent, off_t off=0, short len=0);
   virtual ~KMMsgInfo();
 
   /** left for old style index files */

@@ -36,22 +36,26 @@ using KABC::Addressee;
 
 #include <qstring.h>
 
-// FIXME The title should be "VCard Viewer" instead of "VCard viewer",
-// can't change now because of KDE 3.2 string freeze
 KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const char* name)
-  : KDialogBase( parent, name, false, i18n("VCard viewer"), User1|Close, Close,
-		 true, i18n("&Import"))
+  : KDialogBase( parent, name, false, i18n("VCard Viewer"), User1|User2|User3|Close, Close,
+		 true, i18n("&Import"), QString("&Next Card"), QString("&Previous Card") )
 {
   mAddresseeView = new AddresseeView(this);
   mAddresseeView->setVScrollBarMode(QScrollView::Auto);
   setMainWidget(mAddresseeView);
 
-  Addressee::List al;
-  VCardConverter t;
-    
-  al = t.parseVCards( vCard );
-  if ( !al.empty() ) 
-      mAddresseeView->setAddressee( *(al.begin()) );
+  VCardConverter vcc;
+  mAddresseeList = vcc.parseVCards( vCard );
+  if ( !mAddresseeList.empty() ) {
+    itAddresseeList = mAddresseeList.begin();
+    mAddresseeView->setAddressee( *itAddresseeList );
+    if ( mAddresseeList.size() <= 1 ) {
+      showButton(User2, false);
+      showButton(User3, false);
+    }
+    else
+      enableButton(User3, false);
+  }
   else {
     mAddresseeView->setText(i18n("Failed to parse vCard!"));
     enableButton(User1, false);
@@ -66,8 +70,25 @@ KMail::VCardViewer::~VCardViewer()
 
 void KMail::VCardViewer::slotUser1()
 {
-  if (KMAddrBookExternal::addVCard(mAddresseeView->addressee(), this))
-    enableButton(User1, false);
+  KMAddrBookExternal::addVCard( *itAddresseeList, this );
+}
+
+void KMail::VCardViewer::slotUser2()
+{
+  // next vcard
+  mAddresseeView->setAddressee( *(++itAddresseeList) );
+  if ( itAddresseeList == --(mAddresseeList.end()) )
+    enableButton(User2, false);
+  enableButton(User3, true);
+}
+
+void KMail::VCardViewer::slotUser3()
+{
+  // previous vcard
+  mAddresseeView->setAddressee( *(--itAddresseeList) );
+  if ( itAddresseeList == mAddresseeList.begin() )
+    enableButton(User3, false);
+  enableButton(User2, true);
 }
 
 #include "vcardviewer.moc"

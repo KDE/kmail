@@ -239,6 +239,7 @@ bool KMKernel::handleCommandLine( bool noArgsOpensReader )
 
   args->clear();
 
+  kdDebug() << k_funcinfo << "noArgsOpensReader=" << noArgsOpensReader << endl;
   if (!noArgsOpensReader && !mailto && !checkMail)
     return false;
 
@@ -563,16 +564,6 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
   return retval;
 }
 
-void KMKernel::requestAddresses( QString filename )
-{
-  mGroupware->requestAddresses( filename );
-}
-
-bool KMKernel::storeAddresses( QString addresses, QStringList delUIDs )
-{
-  return mGroupware->storeAddresses( addresses, delUIDs );
-}
-
 QStringList KMKernel::folderList() const
 {
   QStringList folders;
@@ -738,7 +729,7 @@ void KMKernel::recoverDeadLetters(void)
   }
 
   fname += "/dead.letter";
-  KMFolderMbox folder(0, fname);
+  KMFolder folder(0, fname, KMFolderTypeMbox);
 
   folder.setAutoCreateIndex(FALSE);
   rc = folder.open();
@@ -919,7 +910,7 @@ void KMKernel::cleanupImapFolders()
     {
       node = the_imapFolderMgr->dir().next();
     } else {
-      the_imapFolderMgr->remove(static_cast<KMFolderImap*>(node));
+      the_imapFolderMgr->remove(static_cast<KMFolder*>(node));
       node = the_imapFolderMgr->dir().first();
     }
   }
@@ -932,8 +923,8 @@ void KMKernel::cleanupImapFolders()
     {
       node = the_dimapFolderMgr->dir().next();
     } else {
-      static_cast<KMFolderCachedImap*>(node)->removeRightAway();
-      the_dimapFolderMgr->remove(static_cast<KMFolderCachedImap*>(node));
+      static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->removeRightAway();
+      the_dimapFolderMgr->remove(static_cast<KMFolder*>(node));
       node = the_imapFolderMgr->dir().first();
     }
   }
@@ -946,7 +937,7 @@ void KMKernel::cleanupImapFolders()
 
     if (acct->type() != "imap") continue;
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
-      ->findOrCreate(acct->name(), false));
+      ->findOrCreate(acct->name(), false)->storage());
     fld->setNoContent(true);
     imapAcct = static_cast<KMAcctImap*>(acct);
     fld->setAccount(imapAcct);
@@ -958,17 +949,19 @@ void KMKernel::cleanupImapFolders()
   the_dimapFolderMgr->quiet( true );
   for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
   {
-    KMFolderCachedImap *cfld;
+    KMFolderCachedImap *cfld = 0;
     KMAcctCachedImap *cachedImapAcct;
 
     if (acct->type() != "cachedimap" ) continue;
 
-    cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->find(acct->name()));
+    KMFolder* fld = the_dimapFolderMgr->find(acct->name());
+    if( fld )
+      cfld = static_cast<KMFolderCachedImap*>( fld->storage() );
     if (cfld == 0) {
       // Folder doesn't exist yet
-      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(acct->name(), FALSE, KMFolderTypeCachedImap));
+      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(acct->name(), false, KMFolderTypeCachedImap)->storage());
       if (!cfld) {
-	KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_imapFolderMgr->basePath())));
+	KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_dimapFolderMgr->basePath())));
 	exit(-1);
       }
     }
@@ -1276,7 +1269,7 @@ void KMKernel::cleanupLoop()
   mCryptPlugList = 0;
 
   //qInstallMsgHandler(oldMsgHandler);
-  RecentAddresses::self(KMKernel::config())->save( KMKernel::config() );
+  RecentAddresses::self()->save( KMKernel::config() );
   KMKernel::config()->sync();
   if (mCleanupPopup)
   {
@@ -1599,7 +1592,7 @@ bool KMKernel::folderIsTrash(KMFolder * folder)
   assert(folder);
   if (folder == the_trashFolder) return true;
   if (folder->folderType() != KMFolderTypeImap) return false;
-  KMFolderImap *fi = static_cast<KMFolderImap*>(folder);
+  KMFolderImap *fi = static_cast<KMFolderImap*>(folder->storage());
   if (fi->account() && fi->account()->trash() == fi->idString())
     return true;
   return false;

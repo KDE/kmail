@@ -290,6 +290,7 @@ protected slots:
   void slotShowTipOnStart();
   /** Show tip-of-the-day, forced */
   void slotShowTip();
+  void slotAntiSpamWizard();
 
   /** Message navigation */
   void slotNextMessage();

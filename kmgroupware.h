@@ -3,7 +3,7 @@
 
     This file is part of KMail.
 
-    Copyright (c) 2003 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
     Copyright (c) 2002 Karl-Heinz Zimmer <khz@klaralvdalens-datakonsult.se>
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
 
@@ -21,6 +21,17 @@
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
     Boston, MA 02111-1307, USA.
+
+    In addition, as a special exception, the copyright holders give
+    permission to link the code of this program with any edition of
+    the Qt library by Trolltech AS, Norway (or with modified versions
+    of Qt that use the same license as Qt), and distribute linked
+    combinations including the two.  You must obey the GNU General
+    Public License in all respects for all of the code used other than
+    Qt.  If you modify this file, you may extend this exception to
+    your version of the file, but you are not obligated to do so.  If
+    you do not wish to do so, delete this exception statement from
+    your version.
 */
 
 #ifndef KMGROUPWARE_H
@@ -30,7 +41,6 @@
 
 class KMAccount;
 class KMMessage;
-class KMReaderWin;
 class KMMainWidget;
 class KURL;
 
@@ -41,70 +51,43 @@ class KMGroupware : public QObject
 
 public:
   KMGroupware( QObject* parent = 0, const char* name = 0 );
-  virtual ~KMGroupware();
-
-
-public:
-  void processVCalRequest( const QCString& receiver, const QString& vCalIn,
-                           QString& choice );
-  void processVCalReply( const QCString& sender, const QString& vCalIn,
-			 const QString& choice );
-
-  /* (Re-)Read configuration file */
-  void readConfig();
+  ~KMGroupware();
 
   bool isEnabled() const { return mUseGroupware; }
 
-  // retrieve matching body part (either text/vCal (or vCard) or application/ms-tnef)
-  // and decode it
-  // returns a readable vPart in *s or in *sc or in both
-  // (please make sure to set s or sc to o if you don't want ot use it)
-  // note: Additionally the number of the update counter (if any was found) is
-  //       returned in aUpdateCounter, this applies only to TNEF data - in the
-  //       iCal standard (RfC2445,2446) there is no update counter.
+  /**
+     Retrieve matching body part (either text/vCal (or vCard) or
+     application/ms-tnef) and decode it.
+  
+     If return value is true, s holds a readable vPart.
+  */
   static bool vPartFoundAndDecoded( KMMessage* msg, QString& s );
 
-  enum DefaultUpdateCounterValue { NoUpdateCounter=-1 };
   // functions to be called by KMReaderWin for 'print formatting'
-  bool vPartToHTML( int aUpdateCounter, const QString& vCal, QString fname,
-		    QString& prefix, QString& postfix ) const;
-  static bool msTNEFToVPart( const QByteArray& tnef, QString& aVPart );
-  bool msTNEFToHTML( KMReaderWin* reader, QString& vPart, QString fname,
-		     QString& prefix, QString& postfix ) const;
+  QString vPartToHTML( const QString& iCal );
+  QString msTNEFToHTML( const QByteArray& tnef );
 
-  // function to be called by KMReaderWin for analyzing of clicked URL
-  static bool foundGroupwareLink( const QString aUrl,
-                                  QString& gwType,
-                                  QString& gwAction,
-                                  QString& gwAction2,
-                                  QString& gwData );
+  /**
+     KMReaderWin calls this with a URL. Return true if a groupware
+     url was handled.
+  */
+  bool handleLink( const KURL &aUrl, KMMessage* msg );
 
-  /** KMReaderWin calls this with an URL. Return true if a groupware url was
-      handled. */
-  virtual bool handleLink( const KURL &aUrl, KMMessage* msg );
-
-  /** These methods are called by KMKernel's DCOP functions. */
-  virtual void requestAddresses( QString );
-  virtual bool storeAddresses(QString, QStringList);
-
-  // automatic resource handling
+  /**
+     This method handles incoming resource requests.
+  */
   bool incomingResourceMessage( KMAccount*, KMMessage* );
 
-  // To be exchanged with something reasonable
-  void reloadFolderTree() const;
+public slots:
+  /* (Re-)Read configuration file */
+  void readConfig();
 
-  void setMainWidget( KMMainWidget* mw ) { mMainWidget = mw; }
+private slots:
+  void unregisteredFromDCOP( const QCString& );
 
-protected:
-  // Figure out if a vCal is a todo, event or neither
-  enum VCalType { vCalEvent, vCalTodo, vCalUnknown };
-  static VCalType getVCalType( const QString &vCard );
-
-  void setEnabled( bool b );
-
+private:
   bool mUseGroupware;
-
-  QGuardedPtr<KMMainWidget> mMainWidget;
 };
+
 
 #endif /* KMGROUPWARE_H */

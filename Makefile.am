@@ -7,15 +7,14 @@ INCLUDES = -I$(top_srcdir)/libkdenetwork \
 	-I$(top_srcdir)/libkdepim \
 	-I$(top_srcdir)/libksieve \
 	-I$(top_srcdir)/mimelib \
-	-I$(top_srcdir)/ktnef \
 	-I$(top_srcdir) $(all_includes)
 
 lib_LTLIBRARIES = libkmailprivate.la
 libkmailprivate_la_LDFLAGS = $(all_libraries) -version-info 0:0:0 -no-undefined
 libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
-			../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
-			../mimelib/libmimelib.la ../ktnef/lib/libktnef.la \
-			../libksieve/libksieve.la ../libkcal/libkcal.la
+	../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
+	../mimelib/libmimelib.la \
+	../libksieve/libksieve.la
 
 kde_module_LTLIBRARIES = libkmailpart.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
@@ -34,7 +33,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp htmlstatusbar.cpp kmmsgdict.cpp \
-		kmgroupware.cpp kmgroupwarefuncs.cpp \
+		kmgroupware.cpp folderstorage.cpp \
 		csshelper.cpp klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
@@ -82,8 +81,9 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		subscriptiondialog.cpp kmailicalifaceimpl.cpp aboutdata.cpp \
 		folderIface.cpp folderIface.skel mailserviceimpl.cpp \
 		attachmentlistview.cpp ssllabel.cpp \
-		iobserver.cpp isubject.cpp bodyvisitor.cpp \
-		urlhandlermanager.cpp dictionarycombobox.cpp
+		iobserver.cpp isubject.cpp bodyvisitor.cpp antispamwizard.cpp \
+		urlhandlermanager.cpp dictionarycombobox.cpp \
+		korganizeriface.stub
 
 kmail_SOURCES = main.cpp
 
@@ -96,6 +96,8 @@ METASOURCES = AUTO
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
 
 kmailIface_DCOPIDLNG = true
+
+korganizeriface_DIR = $(top_srcdir)/korganizer
 
 include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 
@@ -116,6 +118,9 @@ update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
                 kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl \
 		kmail-3.2-update-loop-on-goto-unread-settings.sh \
 		kmail-3.2-misc.sh
+
+confdir = $(kde_confdir)
+conf_DATA = kmail.antispamrc
 
 tipdir = $(kde_datadir)/kmail
 tip_DATA = tips

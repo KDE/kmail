@@ -7,10 +7,10 @@
 #ifndef kmfolderindex_h
 #define kmfolderindex_h
 
-#include "kmfolder.h"
+#include "folderstorage.h"
 #include "kmmsglist.h"
 
-class KMFolderIndex: public KMFolder
+class KMFolderIndex: public FolderStorage
 {
   Q_OBJECT
   //TODO:Have to get rid of this friend declaration and add necessary pure
@@ -30,7 +30,7 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  KMFolderIndex(KMFolderDir* parent=0, const QString& name=QString::null);
+  KMFolderIndex(KMFolder* folder, const char* name=0);
   virtual ~KMFolderIndex();
   virtual int count(bool cache = false) const;
 
@@ -44,7 +44,7 @@ public:
   virtual KMMsgBase* getMsgBase(int idx) { return mMsgList[idx]; }
 
   virtual int find(const KMMsgBase* msg) const { return mMsgList.find((KMMsgBase*)msg); }
-  int find( const KMMessage * msg ) const { return KMFolder::find( msg ); }
+  int find( const KMMessage * msg ) const { return FolderStorage::find( msg ); }
 
   /** Registered unique serial number for the index file */
   int serialIndexId() const { return mIndexId; }

@@ -225,6 +225,8 @@ class AttachmentStrategy;
      */
     void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
+    /** Helper method to set the status on the server */
+    void setImapStatus(QString path, QCString flags);
   protected slots:
     /**
      * new-mail-notification for not-selected folders (is called via
@@ -235,6 +237,11 @@ class AttachmentStrategy;
 
     void slotSchedulerSlaveConnected(KIO::Slave *aSlave);
     void slotSchedulerSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
+
+    /**
+     * Only delete information about the job and ignore write errors
+     */
+    void slotSetStatusResult(KIO::Job * job);
 
   protected:
     virtual QString protocol() const;

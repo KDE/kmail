@@ -347,7 +347,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
        (mFolder && (mFolder->folderType() == KMFolderTypeImap)) )
   {
     KMFolderImap* imapFolder = 0;
-    if (mFolder) imapFolder = static_cast<KMFolderImap*>((KMFolder*)mFolder);
+    if (mFolder) imapFolder = static_cast<KMFolderImap*>(((KMFolder*)mFolder)->storage());
     bool checked = (imapFolder) ? imapFolder->includeInMailCheck() : true;
     // should this folder be included in new-mail-checks?
     QGroupBox* newmailGroup = new QGroupBox( i18n("Check for New Mail"), page, "newmailGroup" );
@@ -595,7 +595,7 @@ void KMFolderDialog::slotOk()
       if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
         mFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
-        static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
+        static_cast<KMFolderImap*>(selectedFolder->storage())->createFolder(fldName);
       } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
         mFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
       } else if (mMailboxTypeComboBox->currentItem() == 2) {
@@ -666,7 +666,7 @@ void KMFolderDialog::slotOk()
 
     if( mFolder->folderType() == KMFolderTypeImap )
     {
-      KMFolderImap* imapFolder = static_cast<KMFolderImap*>( (KMFolder*) mFolder );
+      KMFolderImap* imapFolder = static_cast<KMFolderImap*>( ((KMFolder*) mFolder)->storage() );
       imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
     }

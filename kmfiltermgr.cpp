@@ -204,8 +204,15 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
 	 ( (set&Explicit) && (*it)->applyOnExplicit() ) ) {
 	// filter is applicable
 
+#ifndef NDEBUG
+      kdDebug(5006) << "####### KMFilterMgr::process: going to check for filter rule " 
+                    << (*it)->pattern()->asString() << endl;
+#endif
       if ( (*it)->pattern()->matches( msg ) ) {
 	// filter matches
+#ifndef NDEBUG
+        kdDebug(5006) << "####### KMFilterMgr::process: filter rule did match" << endl;
+#endif
 	// execute actions:
 	if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
 	  return 2;
@@ -279,6 +286,16 @@ void KMFilterMgr::createFilter( const QCString & field, const QString & value )
 {
   openDialog( 0 );
   mEditDialog->createFilter( field, value );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFilterMgr::appendFilter( KMFilter* filter )
+{
+  beginUpdate();
+  append( filter );
+  writeConfig( TRUE );
+  endUpdate();
 }
 
 

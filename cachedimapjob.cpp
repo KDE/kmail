@@ -1,7 +1,7 @@
 /*  -*- mode: C++; c-file-style: "gnu" -*-
  *
  *  This file is part of KMail, the KDE mail client.
- *  Copyright (c) 2002-2003  Bo Thorsen <bo@sonofthor.dk>
+ *  Copyright (c) 2002-2004  Bo Thorsen <bo@sonofthor.dk>
  *                2002-2003  Steffen Hansen <hansen@kde.org>
  *                2002-2003  Zack Rusin <zack@kde.org>
  *
@@ -28,6 +28,17 @@
  *  your version of the file, but you are not obligated to do so.  If
  *  you do not wish to do so, delete this exception statement from
  *  your version.
+ *
+ *  In addition, as a special exception, the copyright holders give
+ *  permission to link the code of this program with any edition of
+ *  the Qt library by Trolltech AS, Norway (or with modified versions
+ *  of Qt that use the same license as Qt), and distribute linked
+ *  combinations including the two.  You must obey the GNU General
+ *  Public License in all respects for all of the code used other than
+ *  Qt.  If you modify this file, you may extend this exception to
+ *  your version of the file, but you are not obligated to do so.  If
+ *  you do not wish to do so, delete this exception statement from
+ *  your version.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -37,6 +48,7 @@
 #include "cachedimapjob.h"
 
 #include "kmfoldermgr.h"
+#include "kmfolder.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
 #include "kmmsgdict.h"
@@ -65,14 +77,14 @@ CachedImapJob::CachedImapJob( const QValueList<MsgForDownload>& msgs,
 // Put messages
 CachedImapJob::CachedImapJob( const QPtrList<KMMessage>& msgs, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( msgs, QString::null, type, folder ), mFolder( folder ),
+  : FolderJob( msgs, QString::null, type, folder->folder() ), mFolder( folder ),
     mTotalBytes( 0 ), mMsg( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( const QValueList<unsigned long>& msgs,
 			      JobType type, KMFolderCachedImap* folder )
-  : FolderJob( QPtrList<KMMessage>(), QString::null, type, folder ),
+  : FolderJob( QPtrList<KMMessage>(), QString::null, type, folder->folder() ),
     mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( 0 ), mMsg( 0 )
 {
 }
@@ -116,7 +128,7 @@ void CachedImapJob::init()
 
   if( !mFolder ) {
     if( !mMsgList.isEmpty() ) {
-      mFolder = static_cast<KMFolderCachedImap*>(mMsgList.first()->parent());
+      mFolder = static_cast<KMFolderCachedImap*>(mMsgList.first()->storage());
     }
   }
   assert( mFolder );
@@ -156,7 +168,7 @@ void CachedImapJob::deleteMessages( const QString& uids )
 
   KIO::SimpleJob *job = KIO::file_delete( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
-  ImapAccountBase::jobData jd( url.url(), mFolder );
+  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL( result(KIO::Job *) ),
            this, SLOT( slotDeleteResult(KIO::Job *) ) );
@@ -170,7 +182,7 @@ void CachedImapJob::expungeFolder()
 
   KIO::SimpleJob *job = KIO::file_delete( url, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
-  ImapAccountBase::jobData jd( url.url(), mFolder );
+  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL( result(KIO::Job *) ),
            this, SLOT( slotDeleteResult(KIO::Job *) ) );
@@ -244,7 +256,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + QString(";UID=%1;SECTION=FLAGS BODY.PEEK[]").arg(mfd.uid));
 
-  ImapAccountBase::jobData jd( url.url(), mFolder );
+  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mMsg->setTransferInProgress(true);
   KIO::SimpleJob *simpleJob = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
@@ -281,7 +293,7 @@ void CachedImapJob::slotPutNextMessage()
     int i = 0;
     KMFolder* aFolder = 0;
     kmkernel->msgDict()->getLocation( serNum, &aFolder, &i );
-    if( mFolder != aFolder )
+    if( mFolder->folder() != aFolder )
       // This message was moved or something
       continue;
     mMsg = mFolder->getMsg( i );
@@ -297,13 +309,13 @@ void CachedImapJob::slotPutNextMessage()
   QString flags = KMFolderImap::statusToFlags( mMsg->status() ); 
   url.setPath( mFolder->imapPath() + ";SECTION=" + flags );
 
-  ImapAccountBase::jobData jd( url.url(), mFolder );
+  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
 
   QCString cstr(mMsg->asString());
   int a = cstr.find("\nX-UID: ");
   int b = cstr.find('\n', a);
   if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
-  mData.resize(cstr.length() + cstr.contains('\n'));
+  QCString mData(cstr.length() + cstr.contains('\n'));
   unsigned int i = 0;
   for( char *ch = cstr.data(); *ch; ch++ ) {
     if ( *ch == '\n' ) {
@@ -387,7 +399,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
     }
 
     if ( job->error() &&
-         !static_cast<KMFolderCachedImap*>((*it).parent)->silentUpload() ) {
+         !static_cast<KMFolderCachedImap*>((*it).parent->storage())->silentUpload() ) {
       QStringList errors = job->detailedErrorStrings();
       QString myError = "<qt><p><b>" + i18n("Error while uploading folder")
         + "</b></p><p>" + i18n("Could not make the folder %1 on the server.").arg((*it).items[0])
@@ -395,7 +407,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
       KMessageBox::error( 0, myError + errors[1] + '\n' + errors[2],
                           errors[0] );
     }
-    static_cast<KMFolderCachedImap*>((*it).parent)->setSilentUpload( false );
+    static_cast<KMFolderCachedImap*>((*it).parent->storage())->setSilentUpload( false );
     mAccount->removeJob( it );
 
     if( job->error() ) {
@@ -415,7 +427,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
   KURL url = mAccount->getUrl();
   url.setPath(mFolder->imapPath() + folder->name());
 
-  ImapAccountBase::jobData jd( url.url(), folder );
+  ImapAccountBase::jobData jd( url.url(), folder->folder() );
   KIO::SimpleJob *simpleJob = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
@@ -450,7 +462,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
   QString folderPath = mFolderPathList.front(); mFolderPathList.pop_front();
   KURL url = mAccount->getUrl();
   url.setPath(folderPath);
-  ImapAccountBase::jobData jd( url.url(), mFolder );
+  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   KIO::SimpleJob *simpleJob = KIO::file_delete(url, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
   mAccount->insertJob(simpleJob, jd);
@@ -463,7 +475,7 @@ void CachedImapJob::checkUidValidity()
   KURL url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() + ";UID=0:0" );
 
-  ImapAccountBase::jobData jd( url.url(), mFolder );
+  ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
 
   KIO::SimpleJob *job = KIO::get( url, false, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
@@ -529,11 +541,11 @@ void CachedImapJob::renameFolder( const QString &newName )
   KURL urlDst = mAccount->getUrl();
   QString imapPath( mFolder->imapPath() );
   // Destination url = old imappath - oldname + new name
-  imapPath.truncate( imapPath.length() - mFolder->name().length() - 1);
+  imapPath.truncate( imapPath.length() - mFolder->folder()->name().length() - 1);
   imapPath += newName + '/';
   urlDst.setPath( imapPath );
 
-  ImapAccountBase::jobData jd( newName, mFolder );
+  ImapAccountBase::jobData jd( newName, mFolder->folder() );
   jd.path = imapPath;
 
   KIO::SimpleJob *simpleJob = KIO::rename( urlSrc, urlDst, false );
@@ -551,7 +563,7 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath,
     while( node ) {
       if( !node->isDir() ) {
         KMFolderCachedImap* imapFolder =
-          static_cast<KMFolderCachedImap*>(node);
+          static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
         if ( !imapFolder->imapPath().isEmpty() )
           // Only rename folders that have been accepted by the server
           if( imapFolder->imapPath().find( oldPath ) == 0 ) {
@@ -583,7 +595,7 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
     QString oldName = mFolder->name();
     QString oldPath = mFolder->imapPath();
     mFolder->setImapPath( (*it).path );
-    mFolder->KMFolder::rename( (*it).url );
+    mFolder->FolderStorage::rename( (*it).url );
 
     if( oldPath.endsWith( "/" ) ) oldPath.truncate( oldPath.length() -1 );
     QString newPath = mFolder->imapPath();

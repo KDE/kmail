@@ -23,7 +23,7 @@
 #include "kmenubar.h"
 #include "kpopupmenu.h"
 #include "kmreaderwin.h"
-#include "kmfolderindex.h"
+#include "kmfolder.h"
 
 #include "kmreadermainwin.h"
 #include "kmreadermainwin.moc"

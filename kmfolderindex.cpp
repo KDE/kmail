@@ -3,6 +3,7 @@
 // License GPL
 
 #include "kmfolderindex.h"
+#include "kmfolder.h"
 #include <config.h>
 #include <qfileinfo.h>
 #include <qtimer.h>
@@ -56,8 +57,8 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 
-KMFolderIndex::KMFolderIndex(KMFolderDir* parent, const QString& name)
-  : KMFolder(parent, name), mMsgList(INIT_MSGS)
+KMFolderIndex::KMFolderIndex(KMFolder* folder, const char* name)
+  : FolderStorage(folder, name), mMsgList(INIT_MSGS)
 {
     mIndexStream = 0;
     mIndexStreamPtr = 0;
@@ -76,7 +77,7 @@ KMFolderIndex::~KMFolderIndex()
 
 QString KMFolderIndex::indexLocation() const
 {
-  QString sLocation(path());
+  QString sLocation(folder()->path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
@@ -223,7 +224,7 @@ bool KMFolderIndex::readIndex()
       off_t offs = ftell(mIndexStream);
       if(fseek(mIndexStream, len, SEEK_CUR))
         break;
-      mi = new KMMsgInfo(this, offs, len);
+      mi = new KMMsgInfo(folder(), offs, len);
     }
     else
     {
@@ -236,7 +237,7 @@ bool KMFolderIndex::readIndex()
 	  clearIndex();
 	  return false;
       }
-      mi = new KMMsgInfo(this);
+      mi = new KMMsgInfo(folder());
       mi->compat_fromOldIndexString(line, mConvertToUtf8);
     }
     if(!mi)
@@ -257,7 +258,7 @@ bool KMFolderIndex::readIndex()
     }
 #endif
     if ((mi->isNew()) || (mi->isUnread()) ||
-        (this == kmkernel->outboxFolder()))
+        (folder() == kmkernel->outboxFolder()))
     {
       ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;
@@ -277,7 +278,7 @@ bool KMFolderIndex::readIndex()
 
 int KMFolderIndex::count(bool cache) const
 {
-  int res = KMFolder::count(cache);
+  int res = FolderStorage::count(cache);
   if (res == -1)
     res = mMsgList.count();
   return res;
@@ -376,7 +377,7 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
     // running, while the clock switches from daylight savings time to normal time
     utime(QFile::encodeName(location()), 0);
     utime(QFile::encodeName(indexLocation()), 0);
-    utime(QFile::encodeName(KMMsgDict::getFolderIdsLocation( this )), 0);
+    utime(QFile::encodeName(KMMsgDict::getFolderIdsLocation( folder() )), 0);
 
   mIndexSwapByteOrder = false;
 #ifdef HAVE_MMAP
@@ -452,7 +453,7 @@ void KMFolderIndex::fillDictFromIndex(KMMsgDict *dict)
 
 KMMsgInfo* KMFolderIndex::setIndexEntry( int idx, KMMessage *msg )
 {
-  KMMsgInfo *msgInfo = new KMMsgInfo( this );
+  KMMsgInfo *msgInfo = new KMMsgInfo( folder() );
   *msgInfo = *msg;
   mMsgList.set( idx, msgInfo );
   return msgInfo;

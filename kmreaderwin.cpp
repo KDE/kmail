@@ -15,7 +15,6 @@
 #include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
-#include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
 #include "kfileio.h"
 #include "kmfolderindex.h"
@@ -28,6 +27,7 @@ using KMail::MailSourceViewer;
 #include "kmsender.h"
 #include "kcursorsaver.h"
 #include "kmkernel.h"
+#include "kmfolder.h"
 #include "vcardviewer.h"
 using KMail::VCardViewer;
 #include "objecttreeparser.h"
@@ -1179,10 +1179,6 @@ kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tre
   }
   htmlWriter()->queue( writeMsgHeader(aMsg, hasVCard) );
 
-  // ### extracted from parseObjectTree
-  if ( kmkernel->groupware().isEnabled() )
-    emit signalGroupwareShow( false );
-
   // show message content
   ObjectTreeParser otp( this );
   otp.parseObjectTree( mRootNode );
@@ -1646,9 +1642,6 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 
 
 void KMReaderWin::setMsgPart( partNode * node ) {
-  // ### extracted from parseObjectTree...
-  if ( kmkernel->groupware().isEnabled() )
-    emit signalGroupwareShow( false );
   htmlWriter()->reset();
   mColorBar->hide();
   htmlWriter()->begin( mCSSHelper->cssDefinitions( isFixedFont() ) );
@@ -1828,7 +1821,7 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
   if ( offer ) {
     open_text = i18n("&Open with '%1'").arg(offer->name());
   } else {
-    open_text = i18n("&Open with...");
+    open_text = i18n("&Open With...");
   }
   question = i18n("Open attachment '%1'?\n"
                   "Note that opening an attachment may compromise your "

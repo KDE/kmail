@@ -82,7 +82,7 @@ public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
-  KMFolderImap(KMFolderDir* parent=0, const QString& name=QString::null);
+  KMFolderImap(KMFolder* folder, const char* name=0);
   virtual ~KMFolderImap();
 
   /** Returns the type of this folder */
@@ -166,9 +166,6 @@ public:
    * Change the status of several messages indicated by @p ids
    */
   virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle);
-
-  /** Helper method to set the status on the server */
-  void setImapStatus(QString path, QCString flags);
 
   /** generates sets of uids */
   QStringList makeSets(QValueList<int>&, bool sort = true);
@@ -352,11 +349,6 @@ protected slots:
    * For creating a new subfolder
    */
   void slotCreateFolderResult(KIO::Job * job);
-
-  /**
-   * Only delete information about the job and ignore write errors
-   */
-  void slotSetStatusResult(KIO::Job * job);
 
   /**
    * Remove the folder also locally, if removing on the server succeeded

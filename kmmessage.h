@@ -76,7 +76,7 @@ public:
   using KMMsgBase::setSignatureStateChar; // dto.
 
   /** Straight forward initialization. */
-  KMMessage(KMFolderIndex* parent=0);
+  KMMessage(KMFolder* parent=0);
 
   /** Constructor from a DwMessage. */
   KMMessage(DwMessage*);

@@ -21,8 +21,12 @@
 #define VCARDVIEWER_H
 
 #include <kdialogbase.h>
+#include <kabc/addressee.h>
+
+#include <qvaluelist.h>
 
 class QString;
+
 namespace KPIM {
   class AddresseeView;
 }
@@ -38,9 +42,14 @@ namespace KMail {
 
      protected:
        virtual void slotUser1();
+       virtual void slotUser2();
+       virtual void slotUser3();
 
      private:
-       KPIM::AddresseeView * mAddresseeView;
+       KPIM::AddresseeView *  mAddresseeView;
+       KABC::Addressee::List  mAddresseeList;
+
+       QValueListIterator<KABC::Addressee> itAddresseeList;
   };
 
 }

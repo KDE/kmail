@@ -69,7 +69,8 @@ using KMail::HeaderStyle;
 #include "folderjob.h"
 using KMail::FolderJob;
 #include "mailinglist-magic.h"
-#include "kmgroupware.h"
+#include "antispamwizard.h"
+using KMail::AntiSpamWizard;
 
 #include <assert.h>
 #include <kstatusbar.h>
@@ -110,8 +111,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mPanner2Sep << 1 << 1;
 
   setMinimumSize(400, 300);
-
-  kmkernel->groupware().setMainWidget( this );
 
   readPreConfig();
   createWidgets();
@@ -987,7 +986,7 @@ void KMMainWidget::slotRemoveFolder()
       }
     }
     if (mFolder->folderType() == KMFolderTypeImap)
-      static_cast<KMFolderImap*>(mFolder)->removeOnServer();
+      static_cast<KMFolderImap*>(mFolder->storage())->removeOnServer();
     else if (mFolder->folderType() == KMFolderTypeSearch)
       kmkernel->searchFolderMgr()->remove(mFolder);
     else
@@ -1023,7 +1022,7 @@ void KMMainWidget::slotRefreshFolder()
   {
     if (mFolder->folderType() == KMFolderTypeImap)
     {
-      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
+      KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
       imap->getAndCheckFolder();
     }
   }
@@ -1570,7 +1569,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 
   if (mFolder && mFolder->needsCompacting() && (mFolder->folderType() == KMFolderTypeImap))
   {
-    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
+    KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder->storage());
     if (imap->autoExpunge())
       imap->expungeFolder(imap, TRUE);
   }
@@ -1728,7 +1727,7 @@ void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
   }  else {
     // force an update of the folder
     if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
-      static_cast<KMFolderImap*>(mFolder)->getFolder(true);
+      static_cast<KMFolderImap*>(mFolder->storage())->getFolder(true);
   }
 }
 
@@ -2648,6 +2647,9 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("Configure &POP Filters..."), 0, this,
  		      SLOT(slotPopFilter()), actionCollection(), "popFilter" );
 
+  (void) new KAction( i18n("&Anti Spam Wizard..."), 0, this,
+ 		      SLOT(slotAntiSpamWizard()), actionCollection(), "antiSpamWizard" );
+
   (void) new KAction( KGuiItem( i18n("KMail &Introduction"), 0,
 				i18n("Display KMail's Welcome Page") ),
 		      0, this, SLOT(slotIntro()),
@@ -3206,10 +3208,10 @@ void KMMainWidget::slotSubscriptionDialog()
   ImapAccountBase* account;
   if (mFolder->folderType() == KMFolderTypeImap)
   {
-    account = static_cast<KMFolderImap*>(mFolder)->account();
+    account = static_cast<KMFolderImap*>(mFolder->storage())->account();
   } else if (mFolder->folderType() == KMFolderTypeCachedImap)
   {
-    account = static_cast<KMFolderCachedImap*>(mFolder)->account();
+    account = static_cast<KMFolderCachedImap*>(mFolder->storage())->account();
   } else
     return;
 
@@ -3248,4 +3250,11 @@ void KMMainWidget::toggleSystray(bool enabled, int mode)
     kdDebug(5006) << "Setting system tray mode" << endl;
     mSystemTray->setMode(mode);
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotAntiSpamWizard()
+{
+  AntiSpamWizard wiz( this, folderTree(), actionCollection() );
+  wiz.exec();
 }

@@ -107,14 +107,17 @@ typedef enum
 class KMMsgBase
 {
 public:
-  KMMsgBase(KMFolderIndex* p=0);
+  KMMsgBase(KMFolder* p=0);
   virtual ~KMMsgBase();
 
-    /** Return owning folder. */
-  KMFolderIndex* parent(void) const { return mParent; }
+  /** Return owning storage. */
+  KMFolderIndex* storage() const;
+
+  /** Return owning folder. */
+  KMFolder* parent() const { return mParent; }
 
   /** Set owning folder. */
-  void setParent(KMFolderIndex* p) { mParent=p; }
+  void setParent(KMFolder* p) { mParent = p; }
 
   /** Convert the given message status to a string. */
   static QCString statusToStr(const KMMsgStatus status);
@@ -351,7 +354,7 @@ public:
   void setTransferInProgress(bool value, bool force = false);
 
 protected:
-  KMFolderIndex* mParent;
+  KMFolder* mParent;
   bool mDirty;
   off_t mIndexOffset;
   short mIndexLength;

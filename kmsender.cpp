@@ -271,7 +271,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
       sentFolder = kmkernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
       if ( sentFolder == 0 )
       // This is *NOT* supposed to be imapSentFolder!
-        sentFolder = 
+        sentFolder =
           kmkernel->dimapFolderMgr()->findIdString( mCurrentMsg->fcc() );
       if ( sentFolder == 0 )
         imapSentFolder =
@@ -551,8 +551,8 @@ void KMSender::slotIdle()
             .arg(errString)
             .arg(mMethodStr);
           res = KMessageBox::warningYesNo( 0 , msg ,
-                  i18n( "Continue sending" ), i18n( "&Continue sending" ),
-                  i18n("&Abort sending") );
+                  i18n( "Continue Sending" ), i18n( "&Continue Sending" ),
+                  i18n("&Abort Sending") );
         } else {
           msg = i18n("Sending failed:\n%1\n"
             "The message will stay in the 'outbox' folder until you either "

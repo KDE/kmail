@@ -108,8 +108,6 @@ public:
   void compactAllFolders();
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
-  void requestAddresses( QString filename );
-  bool storeAddresses( QString addresses, QStringList delUIDs );
   QStringList folderList() const;
   DCOPRef getFolder( const QString& vpath );
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId );

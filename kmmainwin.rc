@@ -123,6 +123,8 @@
    <Action name="filter" append="save_merge"/>
    <Action name="popFilter" append="save_merge"/>
    <Separator/>
+   <Action name="antiSpamWizard" append="save_merge"/>
+   <Separator/>
    <Action name="options_configure_keybinding" group="settings_configure"/>
    <Action name="kmail_configure_notifications" group="settings_configure"/>
    <Action name="options_configure_toolbars" group="settings_configure" />

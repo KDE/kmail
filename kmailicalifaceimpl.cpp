@@ -18,6 +18,17 @@
     along with this library; see the file COPYING.LIB.  If not, write to
     the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
     Boston, MA 02111-1307, USA.
+
+    In addition, as a special exception, the copyright holders give
+    permission to link the code of this program with any edition of
+    the Qt library by Trolltech AS, Norway (or with modified versions
+    of Qt that use the same license as Qt), and distribute linked
+    combinations including the two.  You must obey the GNU General
+    Public License in all respects for all of the code used other than
+    Qt.  If you modify this file, you may extend this exception to
+    your version of the file, but you are not obligated to do so.  If
+    you do not wish to do so, delete this exception statement from
+    your version.
 */
 
 #ifdef HAVE_CONFIG_H
@@ -28,7 +39,6 @@
 #include "kmfoldertree.h"
 #include "kmfolderdir.h"
 #include "kmgroupware.h"
-#include "kmgroupwarefuncs.h"
 #include "kmfoldermgr.h"
 #include "kmcommands.h"
 #include "kmfolderindex.h"
@@ -42,6 +52,10 @@
 #include <kmessagebox.h>
 #include <kconfig.h>
 #include <qmap.h>
+
+// Local helper methods
+static void vPartMicroParser( const QString& str, QString& s );
+static void reloadFolderTree();
 
 /*
   This interface have three parts to it - libkcal interface;
@@ -58,6 +72,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
     mFolderLanguage( 0 ), mUseResourceIMAP( false ), mResourceQuiet( false )
 {
+  // Listen to config changes
+  connect( kmkernel, SIGNAL( configChanged() ), this, SLOT( readConfig() ) );
 }
 
 // Receive an iCal or vCard from the resource
@@ -65,6 +81,9 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
                                        const QString& uid, 
                                        const QString& ical )
 {
+  kdDebug() << "KMailICalIfaceImpl::addIncidence( " << type << ", "
+            << uid << ", " << ical << " )" << endl;
+
   if( !mUseResourceIMAP )
     return false;
 
@@ -110,6 +129,9 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   if( !mUseResourceIMAP )
     return false;
 
+  kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
+            << uid << " )" << endl;
+
   bool rc = false;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
@@ -137,6 +159,7 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
   if( !mUseResourceIMAP )
     return QStringList();
 
+  kdDebug() << "KMailICalIfaceImpl::incidences( " << type << " )" << endl;
   QStringList ilist;
 
   KMFolder* folder = folderFromType( type );
@@ -145,6 +168,9 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
     for( int i=0; i<folder->count(); ++i ) {
       bool unget = !folder->isMessage(i);
       if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
+        if( folder == mContacts ) {
+          kdDebug(5006) << "vCard for KAB: " << s << endl;
+        }
         ilist << s;
       }
       if( unget ) folder->unGetMsg(i);
@@ -241,6 +267,8 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
       arg << type << s;
+      kdDebug() << "Emitting DCOP signal incidenceAdded( " << type
+                << ", " << s << " )" << endl;
       emitDCOPSignal( "incidenceAdded(QString,QString)", data );
     }
     if( unget ) folder->unGetMsg(i);
@@ -268,10 +296,12 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     QString s;
     if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
       QString uid( "UID" );
-      vPartMicroParser( s.utf8(), uid );
+      vPartMicroParser( s, uid );
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
       arg << type << uid;
+      kdDebug() << "Emitting DCOP signal incidenceDeleted( "
+                << type << ", " << uid << " )" << endl;
       emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
     }
     if( unget ) folder->unGetMsg(i);
@@ -286,6 +316,8 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
     QByteArray data;
     QDataStream arg(data, IO_WriteOnly );
     arg << type;
+    kdDebug() << "Emitting DCOP signal signalRefresh( " << type << " )"
+              << endl;
     emitDCOPSignal( "signalRefresh(QString)", data );
   }
 }
@@ -420,7 +452,7 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
       QString vCal;
       if( KMGroupware::vPartFoundAndDecoded( msg, vCal ) ) {
         QString msgUid( "UID" );
-        vPartMicroParser( vCal.utf8(), msgUid );
+        vPartMicroParser( vCal, msgUid );
         if( msgUid == uid )
           return msg;
       }
@@ -452,7 +484,7 @@ void KMailICalIfaceImpl::readConfig()
       // Shutting down
       mUseResourceIMAP = false;
       cleanup();
-      kmkernel->groupware().reloadFolderTree();
+      reloadFolderTree();
     }
     return;
   }
@@ -483,15 +515,30 @@ void KMailICalIfaceImpl::readConfig()
   bool makeSubFolders = false;
   KMFolderNode* node;
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Calendar ) );
-  if( !node || node->isDir() ) makeSubFolders = true;
+  if( !node || node->isDir() ) {
+    makeSubFolders = true;
+    mCalendar = 0;
+  }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Tasks ) );
-  if( !node || node->isDir() ) makeSubFolders = true;
+  if( !node || node->isDir() ) {
+    makeSubFolders = true;
+    mTasks = 0;
+  }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Journals ) );
-  if( !node || node->isDir() ) makeSubFolders = true;
+  if( !node || node->isDir() ) {
+    makeSubFolders = true;
+    mJournals = 0;
+  }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Contacts ) );
-  if( !node || node->isDir() ) makeSubFolders = true;
+  if( !node || node->isDir() ) {
+    makeSubFolders = true;
+    mContacts = 0;
+  }
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Notes ) );
-  if( !node || node->isDir() ) makeSubFolders = true;
+  if( !node || node->isDir() ) {
+    makeSubFolders = true;
+    mNotes = 0;
+  }
   if( makeSubFolders ) {
     // Not all subfolders were there, so ask if we can make them
     if( KMessageBox::questionYesNo( 0, i18n("KMail will now create the required folders for the IMAP resource"
@@ -500,7 +547,7 @@ void KMailICalIfaceImpl::readConfig()
                                     i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
       mUseResourceIMAP = false;
       mFolderParent = 0;
-      kmkernel->groupware().reloadFolderTree();
+      reloadFolderTree();
       return;
     }
   }
@@ -543,7 +590,7 @@ void KMailICalIfaceImpl::readConfig()
   slotRefresh( "Contact" );
   slotRefresh( "Notes" );
 
-  kmkernel->groupware().reloadFolderTree();
+  reloadFolderTree();
 }
 
 void KMailICalIfaceImpl::slotRefreshCalendar() { slotRefresh( "Calendar" ); }
@@ -641,6 +688,44 @@ QPixmap* KMailICalIfaceImpl::pixContacts;
 QPixmap* KMailICalIfaceImpl::pixCalendar;
 QPixmap* KMailICalIfaceImpl::pixNotes;
 QPixmap* KMailICalIfaceImpl::pixTasks;
+
+static void reloadFolderTree()
+{
+  // Make the folder tree show the icons or not
+  kmkernel->folderMgr()->contentsChanged();
+}
+
+// This is a very light-weight and fast 'parser' to retrieve
+// a data entry from a vCal taking continuation lines
+// into account
+static void vPartMicroParser( const QString& str, QString& s )
+{
+  QString line;
+  uint len = str.length();
+
+  for( uint i=0; i<len; ++i){
+    if( str[i] == '\r' || str[i] == '\n' ){
+      if( str[i] == '\r' )
+        ++i;
+      if( i+1 < len && str[i+1] == ' ' ){
+        // found a continuation line, skip it's leading blanc
+        ++i;
+      }else{
+        // found a logical line end, process the line
+        if( line.startsWith( s ) ) {
+          s = line.mid( s.length() + 1 );
+          return;
+        }
+        line = "";
+      }
+    } else {
+      line += str[i];
+    }
+  }
+
+  // Not found. Clear it
+  s.truncate(0);
+}
 
 
 #include "kmailicalifaceimpl.moc"

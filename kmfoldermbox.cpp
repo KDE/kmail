@@ -8,6 +8,7 @@
 
 #include "kmfoldermbox.h"
 #include "kmfoldermgr.h"
+#include "kmfolder.h"
 #include "undostack.h"
 #include "kcursorsaver.h"
 
@@ -47,8 +48,8 @@ static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
 
 //-----------------------------------------------------------------------------
-KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
-  : KMFolderIndex(aParent, aName)
+KMFolderMbox::KMFolderMbox(KMFolder* folder, const char* name)
+  : KMFolderIndex(folder, name)
 {
   mStream         = 0;
   mFilesLocked    = false;
@@ -60,7 +61,7 @@ KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
 KMFolderMbox::~KMFolderMbox()
 {
   if (mOpenCount>0) close(true);
-  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
 //-----------------------------------------------------------------------------
@@ -71,7 +72,7 @@ int KMFolderMbox::open()
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
-  assert(!name().isEmpty());
+  assert(!folder()->name().isEmpty());
 
   mFilesLocked = false;
   mStream = fopen(QFile::encodeName(location()), "r+"); // messages file
@@ -86,7 +87,7 @@ int KMFolderMbox::open()
 
   lock();
 
-  if (!path().isEmpty())
+  if (!folder()->path().isEmpty())
   {
      KMFolderIndex::IndexStatus index_status = indexStatus();
      // test if index file exists and is up-to-date
@@ -160,7 +161,7 @@ int KMFolderMbox::open()
 //----------------------------------------------------------------------------
 int KMFolderMbox::canAccess()
 {
-  assert(!name().isEmpty());
+  assert(!folder()->name().isEmpty());
 
   if (access(QFile::encodeName(location()), R_OK | W_OK) != 0) {
     kdDebug(5006) << "KMFolderMbox::access call to access function failed" << endl;
@@ -177,7 +178,7 @@ int KMFolderMbox::create(bool imap)
 
   Q_UNUSED(imap);
 
-  assert(!name().isEmpty());
+  assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);
 
   kdDebug(5006) << "Creating folder " << name() << endl;
@@ -194,7 +195,7 @@ int KMFolderMbox::create(bool imap)
 
   if (!mStream) return errno;
 
-  if (!path().isEmpty())
+  if (!folder()->path().isEmpty())
   {
     old_umask = umask(077);
     mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
@@ -223,7 +224,7 @@ void KMFolderMbox::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((this != kmkernel->inboxFolder()) && isSystemFolder() && !aForced)
+  if ((folder() != kmkernel->inboxFolder()) && isSystemFolder() && !aForced)
   {
       mOpenCount = 1;
       return;
@@ -603,7 +604,7 @@ int KMFolderMbox::createIndexFromContents()
               replyToAuxIdStr.truncate( rightAngle + 1 );
           }
 
-          mi = new KMMsgInfo(this);
+          mi = new KMMsgInfo(folder());
           mi->init( subjStr.stripWhiteSpace(),
                     fromStr.stripWhiteSpace(),
                     toStr.stripWhiteSpace(),
@@ -714,14 +715,14 @@ int KMFolderMbox::createIndexFromContents()
 
   correctUnreadMsgsCount();
 
-  if (kmkernel->outboxFolder() == this && count() > 0)
+  if (kmkernel->outboxFolder() == folder() && count() > 0)
     KMessageBox::queuedMessageBox(0, KMessageBox::Information,
                                   i18n("Your outbox contains messages which were "
     "most likely not created by KMail.\nPlease remove them from there, if you "
     "don't want KMail to send them."));
 
-  if ( parent() )
-      parent()->manager()->invalidateFolder(kmkernel->msgDict(), this);
+  if ( folder()->parent() )
+      folder()->parent()->manager()->invalidateFolder( kmkernel->msgDict(), folder() );
   return 0;
 }
 
@@ -896,9 +897,9 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   msgParent = aMsg->parent();
   if (msgParent)
   {
-    if (msgParent==this)
+    if ( msgParent== folder() )
     {
-        if (kmkernel->folderIsDraftOrOutbox(this))
+        if (kmkernel->folderIsDraftOrOutbox( folder() ))
           //special case for Edit message.
           {
             kdDebug(5006) << "Editing message in outbox or drafts" << endl;
@@ -1013,15 +1014,15 @@ if( fileD1.open( IO_WriteOnly ) ) {
 //  if (mAccount) aMsg->removeHeaderField("X-UID");
 
   if (aMsg->isUnread() || aMsg->isNew() ||
-      (this == kmkernel->outboxFolder())) {
+      (folder() == kmkernel->outboxFolder())) {
     if (mUnreadMsgs == -1) mUnreadMsgs = 1;
     else ++mUnreadMsgs;
-    emit numUnreadMsgsChanged( this );
+    emit numUnreadMsgsChanged( folder() );
   }
   ++mTotalMsgs;
 
   // store information about the position in the folder file in the message
-  aMsg->setParent(this);
+  aMsg->setParent(folder());
   aMsg->setFolderOffset(offs);
   aMsg->setMsgSize(size);
   idx = mMsgList.append(&aMsg->toMsgBase());
@@ -1117,7 +1118,7 @@ int KMFolderMbox::compact()
       //      exit(1); backed out due to broken nfs
   }
 
-  tempName = path() + "/." + name() + ".compacted";
+  tempName = folder()->path() + "/." + folder()->name() + ".compacted";
   mode_t old_umask = umask(077);
   FILE *tmpfile = fopen(QFile::encodeName(tempName), "w");
   umask(old_umask);

@@ -35,6 +35,7 @@
 
 #include "imapjob.h"
 #include "kmfolderimap.h"
+#include "kmfolder.h"
 #include "kmmsgpart.h"
 
 #include <kio/scheduler.h>
@@ -49,7 +50,7 @@ namespace KMail {
 //-----------------------------------------------------------------------------
 ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
     QString partSpecifier, const AttachmentStrategy *as )
-  : FolderJob( msg, jt, folder, partSpecifier ),
+  : FolderJob( msg, jt, folder? folder->folder() : 0, partSpecifier ),
     mAttachmentStrategy( as )
 {
 }
@@ -57,7 +58,7 @@ ImapJob::ImapJob( KMMessage *msg, JobType jt, KMFolderImap* folder,
 //-----------------------------------------------------------------------------
 ImapJob::ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt,
                   KMFolderImap* folder )
-  : FolderJob( msgList, sets, jt, folder ),
+  : FolderJob( msgList, sets, jt, folder? folder->folder() : 0 ),
     mAttachmentStrategy ( 0 )
 {
 }
@@ -69,14 +70,14 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   assert(jt == tGetMessage || folder);
   KMMessage* msg = msgList.first();
   mType = jt;
-  mDestFolder = folder;
+  mDestFolder = folder? folder->folder() : 0;
   // refcount++
   if (folder) {
     folder->open();
   }
   KMFolder *msg_parent = msg->parent();
   if (msg_parent) {
-    if (!folder || folder!= msg_parent) {
+    if (!folder || folder!= msg_parent->storage()) {
       msg_parent->open();
     }
   }
@@ -89,7 +90,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   if (folder) {
     account = folder->account();
   } else { 
-    account = static_cast<KMFolderImap*>(msg_parent)->account();
+    account = static_cast<KMFolderImap*>(msg_parent->storage())->account();
   }
   if ( !account ||
        account->makeConnection() == ImapAccountBase::Error ) {
@@ -142,7 +143,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     KURL url = account->getUrl();
     KURL destUrl = account->getUrl();
     destUrl.setPath(folder->imapPath());
-    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(msg_parent);
+    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(msg_parent->storage());
     url.setPath( imapDestFolder->imapPath() + ";UID=" + sets );
     ImapAccountBase::jobData jd;
     jd.parent = 0; mOffset = 0;
@@ -177,7 +178,7 @@ ImapJob::~ImapJob()
 
   if ( mDestFolder )
   {
-    KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
+    KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
     if ( account ) // just to be sure this job is removed from the list
       account->mJobList.remove(this);
     if ( account && mJob )
@@ -196,7 +197,7 @@ ImapJob::~ImapJob()
   if (mSrcFolder) {
     if (!mDestFolder || mDestFolder != mSrcFolder) {
       if (! (mSrcFolder->folderType() == KMFolderTypeImap) ) return;
-      KMAcctImap *account = static_cast<KMFolderImap*>(mSrcFolder)->account();
+      KMAcctImap *account = static_cast<KMFolderImap*>(mSrcFolder->storage())->account();
       if ( account ) // just to be sure this job is removed from the list
         account->mJobList.remove(this);
       if ( account && mJob )
@@ -219,7 +220,7 @@ ImapJob::~ImapJob()
 void ImapJob::slotGetNextMessage()
 {
   KMMessage *msg = mMsgList.first();
-  KMFolderImap *msgParent = static_cast<KMFolderImap*>(msg->parent());
+  KMFolderImap *msgParent = static_cast<KMFolderImap*>(msg->storage());
   KMAcctImap *account = msgParent->account();
   if ( msg->headerField("X-UID").isEmpty() )
   {
@@ -237,11 +238,11 @@ void ImapJob::slotGetNextMessage()
     } else if ( mPartSpecifier == "HEADER" ) {
       path += ";SECTION=HEADER";
     } else {
-      path += ";SECTION=BODY.PEEK[" + mPartSpecifier +"]";
+      path += ";SECTION=BODY.PEEK[" + mPartSpecifier + "]";
     }
   } else {
       path += ";SECTION=BODY.PEEK[]";
-  }
+  }  
   url.setPath( path );
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
   ImapAccountBase::jobData jd;
@@ -274,7 +275,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     deleteLater();
     return;
   }
-  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent());
+  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->storage());
   if (msg->transferInProgress())
     msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
@@ -301,8 +302,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
         QString uid = msg->headerField("X-UID");
         msg->fromByteArray( (*it).data );
         msg->setHeaderField("X-UID",uid);
-        // set correct size
-        msg->setMsgLength(size);
+        msg->setMsgSize(size);
         if ( mPartSpecifier.isEmpty() ) 
           msg->setComplete( true );
         else
@@ -354,7 +354,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
     deleteLater();
     return;
   }
-  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent());
+  KMFolderImap* parent = static_cast<KMFolderImap*>(msg->storage());
   if (msg->transferInProgress())
     msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
@@ -388,7 +388,7 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
 //-----------------------------------------------------------------------------
 void ImapJob::slotPutMessageDataReq( KIO::Job *job, QByteArray &data )
 {
-  KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
+  KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
@@ -409,7 +409,7 @@ void ImapJob::slotPutMessageDataReq( KIO::Job *job, QByteArray &data )
 void ImapJob::slotPutMessageResult( KIO::Job *job )
 {
   KMMessage *msg = mMsgList.first();
-  KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
+  KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
@@ -439,7 +439,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
 //-----------------------------------------------------------------------------
 void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
 {
-  KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder);
+  KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
   KMAcctImap *account = imapFolder->account();
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
@@ -485,7 +485,7 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
 //----------------------------------------------------------------------------
 void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
 {
-  KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder);
+  KMFolderImap * imapFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
   KMAcctImap *account = imapFolder->account();
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
@@ -512,7 +512,7 @@ void ImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
 //-----------------------------------------------------------------------------
 void ImapJob::slotCopyMessageResult( KIO::Job *job )
 {
-  KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
+  KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder->storage())->account();
   ImapAccountBase::JobIterator it = account->findJob( job );
   if ( it == account->jobsEnd() ) return;
 
@@ -539,7 +539,8 @@ void ImapJob::slotCopyMessageResult( KIO::Job *job )
 //-----------------------------------------------------------------------------
 void ImapJob::execute()
 {
-  init( mType, mSets, static_cast<KMFolderImap*>( mDestFolder ), mMsgList );
+  init( mType, mSets, mDestFolder? 
+        dynamic_cast<KMFolderImap*>( mDestFolder->storage() ):0, mMsgList );
 }
 
 //-----------------------------------------------------------------------------

@@ -11,6 +11,7 @@
 #include <qvaluevector.h>
 #include <qvaluestack.h>
 #include "kmfolder.h"
+#include "folderstorage.h"
 
 /** A search folder is a folder that shows the result of evaluating a
     search expression. This folder is dynamically updated as the
@@ -85,12 +86,12 @@ private:
   QTimer *mProcessNextBatchTimer;
 };
 
-class KMFolderSearch: public KMFolder
+class KMFolderSearch: public FolderStorage
 {
   Q_OBJECT
   friend class KMFolderSearchJob;
 public:
-  KMFolderSearch(KMFolderDir* parent=0, const QString& name=QString::null);
+  KMFolderSearch(KMFolder* folder, const char* name=0);
   virtual ~KMFolderSearch();
 
   /** Returns the type of this folder */

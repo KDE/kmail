@@ -34,6 +34,7 @@
 #include "maildirjob.h"
 
 #include "kmfoldermaildir.h"
+#include "kmfolder.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -91,7 +92,7 @@ void MaildirJob::startJob()
     break;
   case tDeleteMessage:
     {
-      static_cast<KMFolder*>(mParentFolder)->removeMsg( mMsgList );
+      static_cast<KMFolder*>(mParentFolder->folder())->removeMsg( mMsgList );
     }
     break;
   case tPutMessage:

@@ -44,6 +44,10 @@ public:
   int moveMessage(KMMessage *msg) const;
   void endFiltering(KMMsgBase *msgBase) const;
 
+  /** Append the new filter to the current list of filters and 
+      write everything back into the configuration.*/
+  void appendFilter( KMFilter* filter );
+
   /** Process given message by applying the filter rules one by
       one. You can select which set of filters (incoming or outgoing)
       should be used.

@@ -165,7 +165,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
     if ((*it).parent)
     {
       // clear folder state
-      KMFolderImap *fld = static_cast<KMFolderImap*>((*it).parent);
+      KMFolderImap *fld = static_cast<KMFolderImap*>((*it).parent->storage());
       fld->setCheckingValidity(false);
       fld->setContentState(KMFolderImap::imapNoInformation);
       fld->setSubfolderState(KMFolderImap::imapNoInformation);
@@ -221,7 +221,7 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
   {
     ImapJob *job = it.current();
     ++it;
-    if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder ) 
+    if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder )
     {
       if ( job->mJob )
         removeJob( job->mJob );
@@ -313,7 +313,7 @@ void KMAcctImap::processNewMail(bool interactive)
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
     {
-      KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder);
+      KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder->storage());
       if (imapFolder->getContentState() != KMFolderImap::imapInProgress)
       {
         // connect the result-signals for new-mail-notification
@@ -346,7 +346,7 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
 {
   disconnect(folder, SIGNAL(folderComplete(KMFolderImap*, bool)),
       this, SLOT(postProcessNewMail(KMFolderImap*, bool)));
-  postProcessNewMail(static_cast<KMFolder*>(folder));
+  postProcessNewMail(static_cast<KMFolder*>(folder->folder()));
 }
 
 //-----------------------------------------------------------------------------
@@ -365,7 +365,7 @@ void KMAcctImap::slotUpdateFolderList()
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
   {
-    KMFolderImap* folder = static_cast<KMFolderImap*>((KMFolder*)(*it));
+    KMFolderImap* folder = static_cast<KMFolderImap*>(((KMFolder*)(*it))->storage());
     if (folder->includeInMailCheck())
       includedFolders.append(*it);
   }

@@ -113,7 +113,7 @@ public:
 };
 
 //-----------------------------------------------------------------------------
-KMMsgInfo::KMMsgInfo(KMFolderIndex* p, off_t off, short len) :
+KMMsgInfo::KMMsgInfo(KMFolder* p, off_t off, short len) :
     KMMsgBase(p),
     kd(0)
 {

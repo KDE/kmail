@@ -81,19 +81,6 @@ k_dcop:
   virtual int dcopAddMessage(const QString & foldername,
                              const KURL & messagefile) = 0;
 
-  /**
-     Stores the addresses from the Contacts folder in the specified
-     file.
-     @param filename the file in which to store the addresses
-  */
-  virtual void requestAddresses( QString filename ) = 0;
-
-  /**
-     Stores the addresses found in the specified file in the
-     Contacts folder.
-  */
-  virtual bool storeAddresses( QString addresses, QStringList delUIDs ) = 0;
-
   virtual QStringList folderList() const =0;
   virtual DCOPRef getFolder( const QString& vpath ) =0;
 

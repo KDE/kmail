@@ -1174,7 +1174,8 @@ void KMFilterActionCommand::execute()
   QPtrList<KMMessage> msgList = retrievedMsgs();
 
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next())
-    kmkernel->filterMgr()->tempOpenFolder(msg->parent());
+    if( msg->parent() )
+      kmkernel->filterMgr()->tempOpenFolder(msg->parent());
 
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
     msg->setTransferInProgress(false);
@@ -1369,8 +1370,8 @@ void KMCopyCommand::execute()
     if (srcFolder &&
         (srcFolder->folderType()== KMFolderTypeImap) &&
         (mDestFolder->folderType() == KMFolderTypeImap) &&
-        (static_cast<KMFolderImap*>(srcFolder)->account() ==
-         static_cast<KMFolderImap*>(mDestFolder)->account()))
+        (static_cast<KMFolderImap*>(srcFolder->storage())->account() ==
+         static_cast<KMFolderImap*>(mDestFolder->storage())->account()))
     {
       list.append(msg);
     } else {
@@ -1410,7 +1411,7 @@ void KMCopyCommand::execute()
   if (!list.isEmpty())
   {
     // copy the message(s); note: the list is empty afterwards!
-    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder);
+    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(mDestFolder->storage());
     imapDestFolder->copyMsg(list);
     imapDestFolder->getFolder();
   }
@@ -1480,7 +1481,7 @@ void KMMoveCommand::execute()
     {
       // cancel the download
       msg->setTransferInProgress( false, true );
-      static_cast<KMFolderImap*>(srcFolder)->ignoreJobsForMessage( msg );
+      static_cast<KMFolderImap*>(srcFolder->storage())->ignoreJobsForMessage( msg );
     }
 
     if (mDestFolder) {
@@ -1605,7 +1606,7 @@ KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
 {
   if (folder->folderType()== KMFolderTypeImap)
   {
-    KMFolderImap* fi = static_cast<KMFolderImap*> (folder);
+    KMFolderImap* fi = static_cast<KMFolderImap*>( folder->storage() );
     QString trashStr = fi->account()->trash();
     KMFolder* trash = kmkernel->imapFolderMgr()->findIdString( trashStr );
     if (!trash) trash = kmkernel->trashFolder();

@@ -2,6 +2,7 @@
 /* Author: Ronen Tzur <rtzur@shani.net> */
 
 #include "kmfolderindex.h"
+#include "kmfolder.h"
 #include "kmmsgdict.h"
 #include "kmdict.h"
 
@@ -172,7 +173,7 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
       nextMsgSerNum = msn + 1;
   }
 
-  KMFolderIndex *folder = msg->parent();
+  KMFolderIndex* folder = static_cast<KMFolderIndex*>( msg->storage() );
   if (folder && index == -1)
     index = folder->find(msg);
 
@@ -188,7 +189,7 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
     folder->setDirty( true ); // rewrite id file
   }
 
-  KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
+  KMMsgDictEntry *entry = new KMMsgDictEntry(folder->folder(), index);
   dict->replace((long)msn, entry);
 
   KMMsgDictREntry *rentry = folder->rDict();

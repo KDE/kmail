@@ -544,14 +544,6 @@ namespace KMail {
       kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no attachment strategy!" << endl;
       return;
     }
-    // check the size, if the message is smaller than 5KB then load it in one go
-    if ( msg->msgLength() < 5000 )
-    {
-      FolderJob *job = msg->parent()->createJob(
-          msg, FolderJob::tGetMessage, 0, "TEXT" );
-      job->start();
-      return;
-    }
 
     // download parts according to attachmentstrategy
     BodyVisitor *visitor = BodyVisitorFactory::getVisitor( as );
@@ -636,6 +628,43 @@ namespace KMail {
     }
   }
 
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::setImapStatus(QString path, QCString flags)
+  {
+     // set the status on the server, the uids are integrated in the path
+     kdDebug(5006) << "setImapStatus path=" << path << " to: " << flags << endl;
+     KURL url = getUrl();
+     url.setPath(path);
+
+     QByteArray packedArgs;
+     QDataStream stream( packedArgs, IO_WriteOnly);
+
+     stream << (int) 'S' << url << flags;
+
+     if ( makeConnection() != ImapAccountBase::Connected )
+        return;
+     KIO::SimpleJob *job = KIO::special(url, packedArgs, FALSE);
+     KIO::Scheduler::assignJobToSlave(slave(), job);
+     ImapAccountBase::jobData jd( url.url(), 0 );
+     insertJob(job, jd);
+     connect(job, SIGNAL(result(KIO::Job *)),
+           SLOT(slotSetStatusResult(KIO::Job *)));
+  }
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::slotSetStatusResult(KIO::Job * job)
+  {
+     ImapAccountBase::JobIterator it = findJob(job);
+     if ( it == jobsEnd() ) return;
+     removeJob(it);
+     if (job->error() && job->error() != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
+     {
+        slotSlaveError( slave(), job->error(),
+              job->errorText() );
+     }
+     displayProgress();
+  }
+
+  
 } // namespace KMail
 
 #include "imapaccountbase.moc"

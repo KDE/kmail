@@ -1,8 +1,8 @@
 /**
- * kmfoldercachedimap.cpp
+ *  kmfoldercachedimap.cpp
  *
- * Copyright (c) 2002-2003 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
- * Copyright (c) 2002-2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
+ *  Copyright (c) 2002-2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+ *  Copyright (c) 2002-2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -16,6 +16,17 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
+ *  In addition, as a special exception, the copyright holders give
+ *  permission to link the code of this program with any edition of
+ *  the Qt library by Trolltech AS, Norway (or with modified versions
+ *  of Qt that use the same license as Qt), and distribute linked
+ *  combinations including the two.  You must obey the GNU General
+ *  Public License in all respects for all of the code used other than
+ *  Qt.  If you modify this file, you may extend this exception to
+ *  your version of the file, but you are not obligated to do so.  If
+ *  you do not wish to do so, delete this exception statement from
+ *  your version.
  */
 
 #ifdef HAVE_CONFIG_H
@@ -32,8 +43,8 @@
 #include "kmacctcachedimap.h"
 #include "kmacctmgr.h"
 #include "imapprogressdialog.h"
-#include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
+#include "kmfolder.h"
 
 using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
@@ -55,21 +66,21 @@ using KMail::ImapAccountBase;
 
 
 DImapTroubleShootDialog::DImapTroubleShootDialog( QWidget* parent,
-						  const char* name )
+                                                  const char* name )
   : KDialogBase( Plain, i18n( "Troubleshooting the IMAP cache" ),
-		 Cancel | User1 | User2, Cancel, parent, name, true ),
+                 Cancel | User1 | User2, Cancel, parent, name, true ),
     rc( Cancel )
 {
   QFrame* page = plainPage();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0 );
   QString txt = i18n( "<p><b>Troubleshooting the IMAP cache.</b></p>"
-		      "<p>If you have problems with synchronizing an IMAP "
-		      "folder, you should first try rebuilding the index "
-		      "file. This will take some time to rebuild, but will "
-		      "not cause any problems.</p><p>If that is not enough, "
-		      "you can try refreshing the IMAP cache. If you do this, "
-		      "you will loose all your local changes for this folder "
-		      "and all it's subfolders.</p>" );
+                      "<p>If you have problems with synchronizing an IMAP "
+                      "folder, you should first try rebuilding the index "
+                      "file. This will take some time to rebuild, but will "
+                      "not cause any problems.</p><p>If that is not enough, "
+                      "you can try refreshing the IMAP cache. If you do this, "
+                      "you will loose all your local changes for this folder "
+                      "and all it's subfolders.</p>" );
   topLayout->addWidget( new QLabel( txt, page ) );
   enableButtonSeparator( true );
 
@@ -100,9 +111,8 @@ void DImapTroubleShootDialog::slotRebuildIndex()
 }
 
 
-KMFolderCachedImap::KMFolderCachedImap( KMFolderDir* aParent,
-					const QString& aName )
-  : KMFolderMaildir( aParent, aName ),
+KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
+  : KMFolderMaildir( folder, aName ),
     mSyncState( SYNC_STATE_INITIAL ), mContentState( imapNoInformation ),
     mSubfolderState( imapNoInformation ), mIsSelected( false ),
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
@@ -122,7 +132,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolderDir* aParent,
   mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
 
   connect( this, SIGNAL( listMessagesComplete() ),
-	   this, SLOT( serverSyncInternal() ) );
+           this, SLOT( serverSyncInternal() ) );
 
   setUidValidity("");
   mLastUid=0;
@@ -144,7 +154,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
     writeUidCache();
   }
 
-  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
 int KMFolderCachedImap::remove()
@@ -155,7 +165,7 @@ int KMFolderCachedImap::remove()
   if( mRemoveRightAway ) {
     // This is the account folder of an account that was just removed
     // When this happens, be sure to delete all traces of the cache
-    QString part1 = path() + "/." + dotEscape(name());
+    QString part1 = folder()->path() + "/." + dotEscape(name());
     QString uidCacheFile = part1 + ".uidcache";
     if( QFile::exists(uidCacheFile) )
       unlink( QFile::encodeName( uidCacheFile ) );
@@ -172,7 +182,7 @@ int KMFolderCachedImap::remove()
 
 QString KMFolderCachedImap::uidCacheLocation() const
 {
-  QString sLocation(path());
+  QString sLocation(folder()->path());
   if (!sLocation.isEmpty()) sLocation += '/';
   return sLocation + '.' + dotEscape(fileName()) + ".uidcache";
 }
@@ -187,16 +197,16 @@ int KMFolderCachedImap::readUidCache()
       int cacheVersion;
       sscanf( buf, "# KMail-UidCache V%d\n",  &cacheVersion );
       if( cacheVersion == UIDCACHE_VERSION ) {
-	len = uidcache.readLine( buf, sizeof(buf) );
-	if( len > 0 ) {
-	  setUidValidity( QString::fromLocal8Bit( buf).stripWhiteSpace() );
-	  len = uidcache.readLine( buf, sizeof(buf) );
-	  if( len > 0 ) {
-	    mLastUid =
-	      QString::fromLocal8Bit( buf).stripWhiteSpace().toULong();
-	    return 0;
-	  }
-	}
+        len = uidcache.readLine( buf, sizeof(buf) );
+        if( len > 0 ) {
+          setUidValidity( QString::fromLocal8Bit( buf).stripWhiteSpace() );
+          len = uidcache.readLine( buf, sizeof(buf) );
+          if( len > 0 ) {
+            mLastUid =
+              QString::fromLocal8Bit( buf).stripWhiteSpace().toULong();
+            return 0;
+          }
+        }
       }
     }
   }
@@ -205,7 +215,8 @@ int KMFolderCachedImap::readUidCache()
 
 int KMFolderCachedImap::writeUidCache()
 {
-  if( lastUid() == 0 || uidValidity().isEmpty() )
+  if( ( lastUid() == 0 || uidValidity().isEmpty() )
+      && uidValidity() != "INVALID" )
     // No info from the server yet
     return 0;
 
@@ -293,7 +304,7 @@ void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
   // Remove it from disk
   KMFolderMaildir::removeMsg(idx,imapQuiet);
 
-  kmkernel->dimapFolderMgr()->contentsChanged();
+  //kmkernel->dimapFolderMgr()->contentsChanged();
 }
 
 bool KMFolderCachedImap::canRemoveFolder() const {
@@ -310,7 +321,7 @@ bool KMFolderCachedImap::canRemoveFolder() const {
 
 /* Reimplemented from KMFolderDir */
 int KMFolderCachedImap::rename( const QString& aName,
-				KMFolderDir* /*aParent*/ )
+                                KMFolderDir* /*aParent*/ )
 {
   if ( aName == name() )
     // Stupid user trying to rename it to it's old name :)
@@ -406,23 +417,23 @@ void KMFolderCachedImap::slotTroubleshoot()
     // Refresh cache
     if( !account() ) {
       KMessageBox::sorry( 0, i18n("No account setup for this folder.\n"
-				  "Please try running a sync before this.") );
+                                  "Please try running a sync before this.") );
       return;
     }
     QString str = i18n("Are you sure you want to refresh the IMAP cache of "
-		       "the folder %1 and all it's subfolders?\nThis will "
-		       "remove all changes you have done locally to your "
-		       "folders").arg( name() );
+                       "the folder %1 and all it's subfolders?\nThis will "
+                       "remove all changes you have done locally to your "
+                       "folders").arg( name() );
     QString s1 = i18n("Refresh IMAP Cache");
     QString s2 = i18n("&Refresh");
     if( KMessageBox::warningContinueCancel( 0, str, s1, s2 ) ==
-	KMessageBox::Continue )
+        KMessageBox::Continue )
       account()->invalidateIMAPFolders( this );
   } else if( rc == KDialogBase::User2 ) {
     // Rebuild index file
     createIndexFromContents();
     KMessageBox::information( 0, i18n( "The index of this folder has been "
-				       "recreated." ) );
+                                       "recreated." ) );
   }
 }
 
@@ -449,12 +460,12 @@ void KMFolderCachedImap::serverSync( bool suppressDialog )
   {
     if( !mIsConnected )
       connect( this, SIGNAL( newState( const QString&, int, const QString& ) ),
-	       account()->imapProgressDialog(),
-	       SLOT( syncState( const QString&, int, const QString& ) ) );
+               account()->imapProgressDialog(),
+               SLOT( syncState( const QString&, int, const QString& ) ) );
     else
       disconnect( this, SIGNAL( newState( const QString&, int, const QString& ) ),
-	       account()->imapProgressDialog(),
-	       SLOT( syncState( const QString&, int, const QString& ) ) );
+               account()->imapProgressDialog(),
+               SLOT( syncState( const QString&, int, const QString& ) ) );
     mIsConnected = mAccount->isProgressDialogEnabled();
   }
 
@@ -478,6 +489,7 @@ QString KMFolderCachedImap::state2String( int state ) const
   switch( state ) {
   case SYNC_STATE_INITIAL:           return "SYNC_STATE_INITIAL";
   case SYNC_STATE_PUT_MESSAGES:      return "SYNC_STATE_PUT_MESSAGES";
+  case SYNC_STATE_UPLOAD_FLAGS:      return "SYNC_STATE_UPLOAD_FLAGS";
   case SYNC_STATE_CREATE_SUBFOLDERS: return "SYNC_STATE_CREATE_SUBFOLDERS";
   case SYNC_STATE_LIST_SUBFOLDERS:   return "SYNC_STATE_LIST_SUBFOLDERS";
   case SYNC_STATE_LIST_SUBFOLDERS2:  return "SYNC_STATE_LIST_SUBFOLDERS2";
@@ -520,10 +532,10 @@ void KMFolderCachedImap::serverSyncInternal()
     } else if ( cs == ImapAccountBase::Connecting )
     {
       kdDebug(5006) << "makeConnection said Connecting, waiting for signal."
-		    << endl;
+                    << endl;
       // We'll wait for the connectionResult signal from the account.
       connect( mAccount, SIGNAL( connectionResult(int) ),
-	       this, SLOT( slotConnectionResult(int) ) );
+               this, SLOT( slotConnectionResult(int) ) );
       break;
     } else // Connected
     {
@@ -533,7 +545,7 @@ void KMFolderCachedImap::serverSyncInternal()
     }
   }
   case SYNC_STATE_CHECK_UIDVALIDITY:
-    emit syncRunning( this, true );
+    emit syncRunning( folder(), true );
     mSyncState = SYNC_STATE_CREATE_SUBFOLDERS;
     if( !noContent() ) {
       // TODO (Bo): How can we obtain the UID validity on a noContent folder?
@@ -549,13 +561,22 @@ void KMFolderCachedImap::serverSyncInternal()
     break;
 
   case SYNC_STATE_PUT_MESSAGES:
-    mSyncState = SYNC_STATE_LIST_SUBFOLDERS;
+    mSyncState = SYNC_STATE_UPLOAD_FLAGS;
     if( !noContent() ) {
       uploadNewMessages();
       break;
     }
     // Else carry on
-
+  case SYNC_STATE_UPLOAD_FLAGS:
+    mSyncState = SYNC_STATE_LIST_SUBFOLDERS;
+    if( !noContent() ) {
+       // We haven't downloaded messages yet, so we need to build the map.
+       if( uidMapDirty )
+         reloadUidMap();
+       uploadFlags();
+      break;
+    }
+    // Else carry on
   case SYNC_STATE_LIST_SUBFOLDERS:
     mSyncState = SYNC_STATE_LIST_SUBFOLDERS2;
     mProgress += 10;
@@ -579,10 +600,10 @@ void KMFolderCachedImap::serverSyncInternal()
     emit syncState( SYNC_STATE_DELETE_SUBFOLDERS, foldersForDeletionOnServer.count() );
     if( !foldersForDeletionOnServer.isEmpty() ) {
       emit statusMsg( i18n("%1: Deleting folders %2 from server").arg(name())
-		      .arg( foldersForDeletionOnServer.join(", ") ) );
+                      .arg( foldersForDeletionOnServer.join(", ") ) );
       emit newState( name(), mProgress, i18n("Deleting folders from server"));
       CachedImapJob* job = new CachedImapJob( foldersForDeletionOnServer,
-						  CachedImapJob::tDeleteFolders, this );
+                                                  CachedImapJob::tDeleteFolders, this );
       connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
       job->start();
       break;
@@ -606,12 +627,12 @@ void KMFolderCachedImap::serverSyncInternal()
     mSyncState = SYNC_STATE_EXPUNGE_MESSAGES;
     if( !noContent() ) {
       if( deleteMessages() ) {
-	// Fine, we will continue with the next state
+        // Fine, we will continue with the next state
       } else {
-	// No messages to delete, skip to GET_MESSAGES
-	emit newState( name(), mProgress, i18n("No messages to delete..."));
-	mSyncState = SYNC_STATE_GET_MESSAGES;
-	serverSyncInternal();
+        // No messages to delete, skip to GET_MESSAGES
+        emit newState( name(), mProgress, i18n("No messages to delete..."));
+        mSyncState = SYNC_STATE_GET_MESSAGES;
+        serverSyncInternal();
       }
       break;
     }
@@ -624,7 +645,7 @@ void KMFolderCachedImap::serverSyncInternal()
       emit statusMsg( i18n("%1: Expunging deleted messages").arg(name()) );
       emit newState( name(), mProgress, i18n("Expunging deleted messages"));
       CachedImapJob *job = new CachedImapJob( QString::null,
-						  CachedImapJob::tExpungeFolder, this );
+                                                  CachedImapJob::tExpungeFolder, this );
       connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
       job->start();
       break;
@@ -636,19 +657,19 @@ void KMFolderCachedImap::serverSyncInternal()
     if( !noContent() ) {
       //emit syncState( SYNC_STATE_GET_MESSAGES, mMsgsForDownload.count() );
       if( !mMsgsForDownload.isEmpty() ) {
-	emit statusMsg( i18n("%1: Retrieving new messages").arg(name()) );
-	emit newState( name(), mProgress, i18n("Retrieving new messages"));
-	CachedImapJob *job = new CachedImapJob( mMsgsForDownload,
+        emit statusMsg( i18n("%1: Retrieving new messages").arg(name()) );
+        emit newState( name(), mProgress, i18n("Retrieving new messages"));
+        CachedImapJob *job = new CachedImapJob( mMsgsForDownload,
                                                 CachedImapJob::tGetMessage,
                                                 this );
-	connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
+        connect( job, SIGNAL( progress(unsigned long, unsigned long) ),
                  this, SLOT( slotProgress(unsigned long, unsigned long) ) );
-	connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
+        connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
         job->start();
-	mMsgsForDownload.clear();
-	break;
+        mMsgsForDownload.clear();
+        break;
       } else {
-	emit newState( name(), mProgress, i18n("No new messages from server"));
+        emit newState( name(), mProgress, i18n("No new messages from server"));
       }
     }
     // Else carry on
@@ -676,55 +697,55 @@ void KMFolderCachedImap::serverSyncInternal()
       mSubfoldersForSync.clear();
       mCurrentSubfolder = 0;
       if( child() ) {
-	KMFolderNode *node = child()->first();
-	while( node ) {
-	  if( !node->isDir() ) {
-            if ( !static_cast<KMFolderCachedImap*>(node)->imapPath().isEmpty() )
-	      // Only sync folders that have been accepted by the server
-	      mSubfoldersForSync << static_cast<KMFolderCachedImap*>(node);
-	  }
-	  node = child()->next();
-	}
+        KMFolderNode *node = child()->first();
+        while( node ) {
+          if( !node->isDir() ) {
+            if ( !static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->imapPath().isEmpty() )
+              // Only sync folders that have been accepted by the server
+              mSubfoldersForSync << static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+          }
+          node = child()->next();
+        }
       }
     }
 
     // All done for this folder.
     mProgress = 100; // all done
     emit newState( name(), mProgress, i18n("Synchronization done"));
-    emit syncRunning( this, false );
+    emit syncRunning( folder(), false );
     mAccount->displayProgress();
     // Carry on
 
   case SYNC_STATE_SYNC_SUBFOLDERS:
     {
       if( mCurrentSubfolder ) {
-	disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-		    this, SLOT( serverSyncInternal() ) );
-	mCurrentSubfolder = 0;
+        disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
+                    this, SLOT( serverSyncInternal() ) );
+        mCurrentSubfolder = 0;
       }
 
       if( mSubfoldersForSync.isEmpty() ) {
-	mSyncState = SYNC_STATE_INITIAL;
-	emit statusMsg( i18n("%1: Synchronization done").arg(name()) );
-	emit folderComplete( this, TRUE );
-	close();
+        mSyncState = SYNC_STATE_INITIAL;
+        emit statusMsg( i18n("%1: Synchronization done").arg(name()) );
+        emit folderComplete( this, TRUE );
+        close();
       } else {
-	mCurrentSubfolder = mSubfoldersForSync.front();
-	mSubfoldersForSync.pop_front();
-	connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
-		 this, SLOT( serverSyncInternal() ) );
+        mCurrentSubfolder = mSubfoldersForSync.front();
+        mSubfoldersForSync.pop_front();
+        connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
+                 this, SLOT( serverSyncInternal() ) );
 
-	// kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
-	assert( !mCurrentSubfolder->imapPath().isEmpty() );
-	mCurrentSubfolder->setAccount( account() );
-	mCurrentSubfolder->serverSync( mSuppressDialog );
+        // kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
+        assert( !mCurrentSubfolder->imapPath().isEmpty() );
+        mCurrentSubfolder->setAccount( account() );
+        mCurrentSubfolder->serverSync( mSuppressDialog );
       }
     }
     break;
 
   default:
     kdDebug(5006) << "KMFolderCachedImap::serverSyncInternal() WARNING: no such state "
-	      << mSyncState << endl;
+              << mSyncState << endl;
   }
 }
 
@@ -735,7 +756,7 @@ void KMFolderCachedImap::slotConnectionResult( int errorCode )
 {
   kdDebug(5006) << k_funcinfo << errorCode << endl;
   disconnect( mAccount, SIGNAL( connectionResult(int) ),
-	      this, SLOT( slotConnectionResult(int) ) );
+              this, SLOT( slotConnectionResult(int) ) );
   if ( !errorCode ) {
     // Success
     mSyncState = SYNC_STATE_CHECK_UIDVALIDITY;
@@ -784,6 +805,46 @@ void KMFolderCachedImap::uploadNewMessages()
   }
 }
 
+/* Upload message flags to server */
+void KMFolderCachedImap::uploadFlags()
+{
+  mProgress += 10;
+  kdDebug() << name() << ": +10 (uploadFlags) -> " << mProgress << "%" << endl;
+  if( !uidMap.isEmpty() ) {
+     emit statusMsg( i18n("%1: Uploading status of messages to server").arg(name()) );
+
+     emit newState( name(), mProgress, i18n("Uploading status of messages to server"));
+
+     // FIXME DUPLICATED FROM KMFOLDERIMAP
+     QMap< QString, QStringList > groups;
+     for ( QMap<ulong, int>::Iterator it = uidMap.begin(); it != uidMap.end(); ++it ) {
+        KMMsgBase *msg = 0;
+        kdDebug(5006) << " UID: " << it.data()  << endl;
+        msg = getMsgBase(it.data());
+        if (!msg) continue;
+        QString flags = KMFolderImap::statusToFlags(msg->status());
+        // Collect uids for each typem of flags.
+        QString uid;
+        uid.setNum( it.key() );
+        groups[flags].append(uid);
+     }
+     QMapIterator< QString, QStringList > dit;
+     for ( dit = groups.begin(); dit != groups.end(); ++dit ) {
+        QCString flags = dit.key().latin1();
+        QStringList sets = makeSets( (*dit), true );
+        // Send off a status setting job for each set.
+        for (  QStringList::Iterator slit = sets.begin(); slit != sets.end(); ++slit ) {
+           QString imappath = imapPath() + ";UID=" + ( *slit );
+           mAccount->setImapStatus(imappath, flags);
+        }
+     }
+     // FIXME END DUPLICATED FROM KMFOLDERIMAP
+  } else {
+    emit newState( name(), mProgress, i18n("No messages to upload to server"));
+  }
+  serverSyncInternal();
+}
+
 /* Upload new folders to server */
 void KMFolderCachedImap::createNewFolders()
 {
@@ -809,15 +870,15 @@ QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
     KMFolderNode *node = child()->first();
     while( node ) {
       if( !node->isDir() ) {
-	if( !node->isA("KMFolderCachedImap") ) {
-	  kdDebug(5006) << "KMFolderCachedImap::findNewFolders(): ARGH!!! "
-			<< node->name() << " is not an IMAP folder. It is a "
-			<< node->className() << endl;
-	  node = child()->next();
-	  assert(0);
-	}
-	KMFolderCachedImap* folder = static_cast<KMFolderCachedImap*>(node);
-	if( folder->imapPath().isEmpty() ) newFolders << folder;
+        if( !static_cast<KMFolder*>(node)->storage()->isA("KMFolderCachedImap") ) {
+          kdDebug(5006) << "KMFolderCachedImap::findNewFolders(): ARGH!!! "
+                        << node->name() << " is not an IMAP folder. It is a "
+                        << node->className() << endl;
+          node = child()->next();
+          assert(0);
+        }
+        KMFolderCachedImap* folder = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+        if( folder->imapPath().isEmpty() ) newFolders << folder;
       }
       node = child()->next();
     }
@@ -865,7 +926,7 @@ bool KMFolderCachedImap::deleteMessages()
     }
     //kdDebug(5006) << "Deleting " << sets.front() << " from sever folder " << imapPath() << endl;
     CachedImapJob *job = new CachedImapJob( sets.front(), CachedImapJob::tDeleteMessage,
-						this );
+                                                this );
     connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
     job->start();
     return true;
@@ -911,16 +972,16 @@ void KMFolderCachedImap::listMessages() {
   mUidsForDownload.clear();
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=1:*;SECTION=ENVELOPE");
-  KMAcctCachedImap::jobData jd( url.url(), this );
+  KMAcctCachedImap::jobData jd( url.url(), folder() );
 
   KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
   mAccount->insertJob(newJob, jd);
 
   connect( newJob, SIGNAL( result( KIO::Job* ) ),
-	   this, SLOT( slotGetLastMessagesResult( KIO::Job* ) ) );
+           this, SLOT( slotGetLastMessagesResult( KIO::Job* ) ) );
   connect( newJob, SIGNAL( data( KIO::Job*, const QByteArray& ) ),
-	   this, SLOT( slotGetMessagesData( KIO::Job* , const QByteArray& ) ) );
+           this, SLOT( slotGetMessagesData( KIO::Job* , const QByteArray& ) ) );
 }
 
 void KMFolderCachedImap::slotGetLastMessagesResult(KIO::Job * job)
@@ -1002,7 +1063,7 @@ void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
 
   if( job->error() ) {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
-			      job->errorText() );
+                              job->errorText() );
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else if (lastSet) mContentState = imapFinished;
@@ -1042,12 +1103,12 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
 {
   assert( aAccount->isA("KMAcctCachedImap") );
   mAccount = aAccount;
-  if( imapPath()=="/" ) aAccount->setFolder(this);
+  if( imapPath()=="/" ) aAccount->setFolder( folder() );
 
   if( !mChild || mChild->count() == 0) return;
   for( KMFolderNode* node = mChild->first(); node; node = mChild->next() )
     if (!node->isDir())
-      static_cast<KMFolderCachedImap*>(node)->setAccount(aAccount);
+      static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->setAccount(aAccount);
 }
 
 
@@ -1057,8 +1118,8 @@ bool KMFolderCachedImap::listDirectory()
   mSubfolderState = imapInProgress;
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";TYPE="
-	      + (mAccount->onlySubscribedFolders() ? "LSUB" : "LIST"));
-  KMAcctCachedImap::jobData jd( url.url(), this );
+              + (mAccount->onlySubscribedFolders() ? "LSUB" : "LIST"));
+  KMAcctCachedImap::jobData jd( url.url(), folder() );
   mSubfolderNames.clear();
   mSubfolderPaths.clear();
   mSubfolderMimeTypes.clear();
@@ -1106,16 +1167,16 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
     QPtrList<KMFolder> toRemove;
     while (node) {
       if (!node->isDir() ) {
-	if( mSubfolderNames.findIndex(node->name()) == -1) {
-	  // This subfolder isn't present on the server
-	  kdDebug(5006) << node->name() << " isn't on the server." << endl;
-	  folder = static_cast<KMFolderCachedImap*>(node);
-	  if( !folder->uidValidity().isEmpty() ) {
-	    // The folder have a uidValidity setting, so it has been on the
-	    // server before. Delete it locally.
-	    toRemove.append( folder );
-	  }
-	}
+        if( mSubfolderNames.findIndex(node->name()) == -1) {
+          // This subfolder isn't present on the server
+          kdDebug(5006) << node->name() << " isn't on the server." << endl;
+          folder = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+          if( !folder->uidValidity().isEmpty() ) {
+            // The folder have a uidValidity setting, so it has been on the
+            // server before. Delete it locally.
+            toRemove.append( folder->folder() );
+          }
+        }
       }
       node = mChild->next();
     }
@@ -1131,6 +1192,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
 
 void KMFolderCachedImap::listDirectory2() {
   foldersForDeletionOnServer.clear();
+  QString path = folder()->path();
 
   // Find all subfolders present on server but not on disk
   for (uint i = 0; i < mSubfolderNames.count(); i++) {
@@ -1143,31 +1205,31 @@ void KMFolderCachedImap::listDirectory2() {
 
     if (!node) {
       // This folder is not present here
-      QString part1 = path() + "/." + dotEscape(name()) + ".directory/."
-	+ dotEscape(mSubfolderNames[i]);
+      QString part1 = path + "/." + dotEscape(name()) + ".directory/."
+        + dotEscape(mSubfolderNames[i]);
       QString uidCacheFile = part1 + ".uidcache";
       if( QFile::exists(uidCacheFile) ) {
-	// This is an old folder that is deleted locally - delete it on the server
-	unlink( QFile::encodeName( uidCacheFile ) );
-	foldersForDeletionOnServer << mSubfolderPaths[i];
-	// Make sure all trace of the dir is gone
-	KIO::del( part1 + ".directory" );
+        // This is an old folder that is deleted locally - delete it on the server
+        unlink( QFile::encodeName( uidCacheFile ) );
+        foldersForDeletionOnServer << mSubfolderPaths[i];
+        // Make sure all trace of the dir is gone
+        KIO::del( part1 + ".directory" );
       } else {
-	// This is a new folder, create the local cache
-	folder = static_cast<KMFolderCachedImap*>
-	  (mChild->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap));
-	if (folder) {
-	  folder->close();
-	  folder->setAccount(mAccount);
-	  kmkernel->dimapFolderMgr()->contentsChanged();
-	} else {
-	  kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
-	}
+        // This is a new folder, create the local cache
+        folder = static_cast<KMFolderCachedImap*>
+          (mChild->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap)->storage());
+        if (folder) {
+          folder->close();
+          folder->setAccount(mAccount);
+          kmkernel->dimapFolderMgr()->contentsChanged();
+        } else {
+          kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
+        }
       }
     } else {
       // kdDebug(5006) << "node " << node->name() << " is a " << node->className() << endl;
       if( node->isA("KMFolderCachedImap") )
-	folder = static_cast<KMFolderCachedImap*>(node);
+        folder = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
     }
 
     if( folder && folder->imapPath().isEmpty() ) {
@@ -1225,9 +1287,9 @@ void KMFolderCachedImap::slotListEntries(KIO::Job * job, const KIO::UDSEntryList
     {
       // Some servers send _lots_ of duplicates
       if (mSubfolderNames.findIndex(name) == -1) {
-	mSubfolderNames.append(name);
-	mSubfolderPaths.append(url.path());
-	mSubfolderMimeTypes.append(mimeType);
+        mSubfolderNames.append(name);
+        mSubfolderPaths.append(url.path());
+        mSubfolderMimeTypes.append(mimeType);
       }
     }
   }
@@ -1311,7 +1373,7 @@ KMFolderCachedImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder
 {
   QPtrList<KMMessage> msgList;
   msgList.append( msg );
-  CachedImapJob *job = new CachedImapJob( msgList, jt, static_cast<KMFolderCachedImap*>( folder ) );
+  CachedImapJob *job = new CachedImapJob( msgList, jt, static_cast<KMFolderCachedImap*>( folder->storage() ) );
   return job;
 }
 
@@ -1321,7 +1383,7 @@ KMFolderCachedImap::doCreateJob( QPtrList<KMMessage>& msgList, const QString& se
 {
   //FIXME: how to handle sets here?
   Q_UNUSED( sets );
-  CachedImapJob *job = new CachedImapJob( msgList, jt, static_cast<KMFolderCachedImap*>( folder ) );
+  CachedImapJob *job = new CachedImapJob( msgList, jt, static_cast<KMFolderCachedImap*>( folder->storage() ) );
   return job;
 }
 

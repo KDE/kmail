@@ -250,9 +250,6 @@ signals:
   /** Pgp displays a password dialog */
   void noDrag(void);
 
-  /** Show/hide Groupware */
-  void signalGroupwareShow(bool);
-
 public slots:
 
   /** Select message body. */

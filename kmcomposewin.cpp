@@ -1519,8 +1519,8 @@ bool KMComposeWin::userForgotAttachment()
                   "attached file but you have not attached anything.\n"
                   "Do you want to attach a file to your message?"),
              i18n("File Attachment Reminder"),
-             i18n("&Attach file..."),
-             i18n("&Send as is") );
+             i18n("&Attach File..."),
+             i18n("&Send as Is") );
   if ( rc == KMessageBox::Cancel )
     return true;
   if ( rc == KMessageBox::Yes ) {
@@ -1665,7 +1665,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
             + "</b></qt>" ),
           i18n("Signature Warning"),
           KGuiItem( i18n("&Sign All Parts") ),
-          KGuiItem( i18n("Send &as is") ) );
+          KGuiItem( i18n("Send &as Is") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1790,7 +1790,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
 						      + "</b></qt>" ),
 					     i18n("Encryption Warning"),
 					     KGuiItem( i18n("&Encrypt All Parts") ),
-					     KGuiItem( i18n("Send &as is") ) );
+					     KGuiItem( i18n("Send &as Is") ) );
 	  if( ret == KMessageBox::Cancel )
 	    bOk = false;
 	  else if( ret == KMessageBox::Yes ) {
@@ -3020,7 +3020,7 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
                                                i18n("<qt>Not all characters fit into the chosen"
                                                     " encoding.<br><br>Send the message anyway?</qt>"),
                                                i18n("Some characters will be lost"),
-                                               i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
+                                               i18n("Send"), i18n("Change Encoding") ) == KMessageBox::Yes);
       if (!anyway)
       {
         mEditor->setText(oldText);
@@ -3899,7 +3899,7 @@ void KMComposeWin::addrBookSelInto()
       dlg.setSelectedBCC( lst );
   }
 
-  dlg.setRecentAddresses( RecentAddresses::self( KMKernel::config() )->kabcAddresses() );
+  dlg.setRecentAddresses( RecentAddresses::self()->kabcAddresses() );
 
   if (dlg.exec()==QDialog::Rejected) return;
 
@@ -4938,7 +4938,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     {
       // move the message to the imap-folder and highlight it
       imapDraftsFolder->moveMsg(mMsg);
-      (static_cast<KMFolderImap*>(imapDraftsFolder))->getFolder();
+      (static_cast<KMFolderImap*>(imapDraftsFolder->storage()))->getFolder();
     }
 
   } else {
@@ -4972,9 +4972,9 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
 
-  RecentAddresses::self(KMKernel::config())->add( bcc() );
-  RecentAddresses::self(KMKernel::config())->add( cc() );
-  RecentAddresses::self(KMKernel::config())->add( to() );
+  RecentAddresses::self()->add( bcc() );
+  RecentAddresses::self()->add( cc() );
+  RecentAddresses::self()->add( to() );
 
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
@@ -5686,7 +5686,7 @@ void KMLineEdit::loadAddresses()
 {
     AddressLineEdit::loadAddresses();
 
-    QStringList recent = RecentAddresses::self(KMKernel::config())->addresses();
+    QStringList recent = RecentAddresses::self()->addresses();
     QStringList::Iterator it = recent.begin();
     for ( ; it != recent.end(); ++it )
         addAddress( *it );

@@ -845,72 +845,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if ( !mReader )
       return false;
 
-    QString vCal( curNode->msgPart().bodyToUnicode() );
-    QString prefix;
-    QString postfix;
-    // We let KMGroupware do most of our 'print formatting':
-    // generates text preceding to and following to the vCal
-    if ( kmkernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
-                                            vCal, QString::null, prefix,
-                                            postfix ) ) {
-      htmlWriter()->queue( prefix );
-      htmlWriter()->queue( quotedHTML( vCal ) );
-      htmlWriter()->queue( postfix );
-    }
-
-    // Pass iTIP message to KOrganizer
-    QString location = locateLocal( "data", "korganizer/income/", true );
-    QString file = location + KApplication::randomString( 10 );
-    QFile f( file );
-    if ( !f.open( IO_WriteOnly ) ) {
-      KMessageBox::error( mReader, i18n("Could not open file for writing:\n%1")
-		                   .arg( file ) );
-    } else {
-      QByteArray msgArray = curNode->msgPart().bodyDecodedBinary();
-      f.writeBlock( msgArray, msgArray.size() );
-      f.close();
-    }
+    QString iCal = curNode->msgPart().bodyToUnicode();
+    QString html = kmkernel->groupware().vPartToHTML( iCal );
+    if( !html.isEmpty() )
+      htmlWriter()->queue( html );
+    htmlWriter()->queue( quotedHTML( iCal ) );
 
     return true;
-
-// Disable kroupware code, because KOrganizer counterpart code also is disabled.
-// Analyzing of iCalendar attachments belongs into KOrganizer anyway.
-#if 0
-    DwMediaType ct = curNode->dwPart()->Headers().ContentType();
-    for( DwParameter * param = ct.FirstParameter(); param;
-         param = param->Next() ) {
-      if ( DwStrcasecmp( param->Attribute(), "method" ) == 0 ) {
-        QCString method = QCString( param->Value().c_str() ).lower();
-        kdDebug(5006) << "         method=" << method << endl;
-	if ( method == "request" || // an invitation to a meeting *or*
-             method == "reply" ||   // a reply to an invitation we sent
-             method == "cancel" ) { // Outlook uses this when cancelling
-          QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
-          QString fname( byteArrayToTempFile( mReader,
-                                              "groupware",
-                                              "vCal_request.raw",
-                                              theBody ) );
-          if ( !fname.isEmpty() && !showOnlyOneMimePart() ) {
-            QString vCal( curNode->msgPart().bodyToUnicode() );
-            QString prefix;
-            QString postfix;
-            // We let KMGroupware do most of our 'print formatting':
-            // generates text preceding to and following to the vCal
-            if ( kmkernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
-                                                    vCal, fname, prefix,
-                                                    postfix ) ) {
-              htmlWriter()->queue( prefix );
-              htmlWriter()->queue( quotedHTML( vCal ) );
-              htmlWriter()->queue( postfix );
-              return true;
-            }
-	  }
-	}
-        return false; // we found a "method" but we couldn't handle it
-      }
-    }
-    return false;
-#endif  
   }
 
 } // namespace KMail
@@ -1654,38 +1595,20 @@ namespace KMail {
   }
 
   bool ObjectTreeParser::processApplicationMsTnefSubtype( partNode * curNode,
-                                                          ProcessResult & result )
+                                                          ProcessResult & )
   {
     // For special treatment of invitations etc. we need a reader window
     if ( !mReader )
       return false;
 
-    QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
-    QString fname( byteArrayToTempFile( mReader,
-					"groupware",
-					"msTNEF.raw",
-					theBody ) );
-    if ( !fname.isEmpty() &&
-         theBody.size() > 0 ) {
-      QString vPart( curNode->msgPart().bodyDecoded() );
-      QString prefix;
-      QString postfix;
-      // We let KMGroupware do most of our 'print formatting':
-      // 1. decodes the TNEF data and produces a vPart
-      //    or preserves the old data (if no vPart can be created)
-      // 2. generates text preceding to / following to the vPart
-      bool bVPartCreated =
-        kmkernel->groupware().msTNEFToHTML( mReader, vPart, fname,
-                                          prefix, postfix );
-      if ( bVPartCreated && !showOnlyOneMimePart() ) {
-        htmlWriter()->queue( prefix );
-        writeBodyString( vPart.latin1(), curNode->trueFromAddress(),
-            codecFor( curNode ), result );
-        htmlWriter()->queue( postfix );
-        return true;
-      }
-    }
-    return false;
+    QByteArray theBody = curNode->msgPart().bodyDecodedBinary();
+    QString html = kmkernel->groupware().msTNEFToHTML( theBody );
+    if( !html.isEmpty() && theBody.size() > 0 )
+      htmlWriter()->queue( html );
+    else
+      return false;
+
+    return true;
   }
 
 

@@ -37,8 +37,6 @@
 #include "kmtopwidget.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
-#include "kmgroupware.h"
-#include "kmailicalifaceimpl.h"
 #include "cryptplugconfigdialog.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
@@ -3899,7 +3897,7 @@ const char * MiscPage::iconName() {
 }
 
 QString MiscPage::title() {
-  return i18n("Setting that don't fit elsewhere");
+  return i18n("Settings that don't fit elsewhere");
 }
 
 QString MiscPage::helpAnchor() const {
@@ -4193,15 +4191,16 @@ void MiscPage::GroupwareTab::apply() {
 
   // Write the IMAP resource config
   KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
-  irOptions.writeEntry( "Enabled", mEnableImapResCB->isChecked() );
-  if ( mEnableImapResCB->isChecked() ) {
+
+  // If there is a leftover folder in the foldercombo, getFolder can
+  // return 0. In that case we really don't have it enabled
+  bool enabled = mEnableImapResCB->isChecked() &&
+    mFolderCombo->getFolder();
+  irOptions.writeEntry( "Enabled", enabled );
+  if ( enabled ) {
     irOptions.writeEntry( "Folder Language", mLanguageCombo->currentItem() );
     irOptions.writeEntry( "Folder Parent", mFolderCombo->getFolder()->idString() );
   }
-
-  // Make the groupware and resource options read the config settings
-  kmkernel->groupware().readConfig();
-  kmkernel->iCalIface().readConfig();
 }
 
 

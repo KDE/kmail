@@ -38,7 +38,7 @@ using namespace KPIM;
 //=============================================================================
 
 KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
-				    KFolderTreeItem::Protocol protocol )
+                                    KFolderTreeItem::Protocol protocol )
   : QObject( parent, name.latin1() ),
     KFolderTreeItem( parent, name, protocol, Root ),
     mFolder( 0 )
@@ -165,7 +165,7 @@ void KMFolderTreeItem::init()
     setType(Root);
   else if (mFolder->isSystemFolder()) {
     if (mFolder == kmkernel->inboxFolder()
-	|| mFolder->folderType() == KMFolderTypeImap)
+        || mFolder->folderType() == KMFolderTypeImap)
       setType(Inbox);
     else if (mFolder == kmkernel->outboxFolder())
       setType(Outbox);
@@ -271,7 +271,7 @@ void KMFolderTree::connectSignals()
           this, SLOT(delayedUpdate()));
 
   connect(kmkernel->folderMgr(), SIGNAL(changed()),
-	  this, SLOT(doFolderListChanged()));
+          this, SLOT(doFolderListChanged()));
 
   connect(kmkernel->folderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
@@ -298,13 +298,13 @@ void KMFolderTree::connectSignals()
           this, SLOT(slotFolderRemoved(KMFolder*)));
 
   connect( &autoopen_timer, SIGNAL( timeout() ),
-	   this, SLOT( openFolder() ) );
+           this, SLOT( openFolder() ) );
 
   connect( &autoscroll_timer, SIGNAL( timeout() ),
-	   this, SLOT( autoScroll() ) );
+           this, SLOT( autoScroll() ) );
 
   connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
-	   this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
+           this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
 
   connect( this, SIGNAL( expanded( QListViewItem* ) ),
            this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
@@ -313,7 +313,7 @@ void KMFolderTree::connectSignals()
            this, SLOT( slotFolderCollapsed( QListViewItem* ) ) );
 
   connect( this, SIGNAL( itemRenamed( QListViewItem*, int, const QString &)),
-	   this, SLOT( slotRenameFolder( QListViewItem*, int, const QString &)));
+           this, SLOT( slotRenameFolder( QListViewItem*, int, const QString &)));
 }
 
 //-----------------------------------------------------------------------------
@@ -358,7 +358,7 @@ void KMFolderTree::createImapFolderList(KMFolderImap *aFolder, QStringList *name
     if ( !fti || !fti->folder() )
       continue;
 
-    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
+    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder()->storage());
     if ( folder != aFolder )
       continue;
 
@@ -483,9 +483,9 @@ void KMFolderTree::paintEmptyArea( QPainter * p, const QRect & rect )
 {
   if (mPaintInfo.pixmapOn)
     p->drawTiledPixmap( rect.left(), rect.top(), rect.width(), rect.height(),
-			mPaintInfo.pixmap,
-			rect.left() + contentsX(),
-			rect.top() + contentsY() );
+                        mPaintInfo.pixmap,
+                        rect.left() + contentsX(),
+                        rect.top() + contentsY() );
   else
     p->fillRect( rect, colorGroup().base() );
 }
@@ -500,7 +500,7 @@ void KMFolderTree::reload(bool openFolders)
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder())
       disconnect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-		 this,SLOT(refresh()));
+                 this,SLOT(refresh()));
     writeIsListViewItemOpen( fti );
   }
   clear();
@@ -542,45 +542,47 @@ void KMFolderTree::reload(bool openFolders)
     // first disconnect before each connect
     // to make sure we don't call it several times with each reload
     disconnect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-	       this,SLOT(refresh()));
+               this,SLOT(refresh()));
     connect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-	    this,SLOT(refresh()));
+            this,SLOT(refresh()));
     disconnect(fti->folder(),SIGNAL(iconsChanged()),
-	       fti,SLOT(slotRepaint()));
+               fti,SLOT(slotRepaint()));
     connect(fti->folder(),SIGNAL(iconsChanged()),
-	    fti,SLOT(slotRepaint()));
+            fti,SLOT(slotRepaint()));
 
     disconnect(fti->folder(),SIGNAL(nameChanged()),
-	       fti,SLOT(slotNameChanged()));
+               fti,SLOT(slotNameChanged()));
     connect(fti->folder(),SIGNAL(nameChanged()),
-	    fti,SLOT(slotNameChanged()));
+            fti,SLOT(slotNameChanged()));
 
     if (isTotalActive() || isUnreadActive())
     {
 
       if (fti->folder()->folderType() == KMFolderTypeImap)
       {
-	// imap-only
-	disconnect(fti->folder(), SIGNAL(folderComplete(KMFolderImap*, bool)),
-		   this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
-	connect(fti->folder(), SIGNAL(folderComplete(KMFolderImap*, bool)),
-		this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
+        // imap-only
+        KMFolderImap *imapFolder = 
+           dynamic_cast<KMFolderImap*> ( fti->folder()->storage() );
+        disconnect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+                    this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
+        connect( imapFolder, SIGNAL(folderComplete(KMFolderImap*, bool)),
+                 this,SLOT(slotUpdateCounts(KMFolderImap*, bool)));
       } else {
-	// others-only, imap doesn't need this because of the folderComplete-signal
-	// we want to be noticed of changes to update the unread/total columns
+        // others-only, imap doesn't need this because of the folderComplete-signal
+        // we want to be noticed of changes to update the unread/total columns
         disconnect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-		   this,SLOT(slotUpdateCounts(KMFolder*)));
+                   this,SLOT(slotUpdateCounts(KMFolder*)));
         connect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
-		this,SLOT(slotUpdateCounts(KMFolder*)));
-	disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
-		   this,SLOT(slotUpdateCounts(KMFolder*)));
-	connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
-		this,SLOT(slotUpdateCounts(KMFolder*)));
+                this,SLOT(slotUpdateCounts(KMFolder*)));
+        disconnect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+                   this,SLOT(slotUpdateCounts(KMFolder*)));
+        connect(fti->folder(), SIGNAL(msgAdded(KMFolder*,Q_UINT32)),
+                this,SLOT(slotUpdateCounts(KMFolder*)));
       }
       disconnect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
-		 this,SLOT(slotUpdateCounts(KMFolder*)));
+                 this,SLOT(slotUpdateCounts(KMFolder*)));
       connect(fti->folder(), SIGNAL(msgRemoved(KMFolder*)),
-	      this,SLOT(slotUpdateCounts(KMFolder*)));
+              this,SLOT(slotUpdateCounts(KMFolder*)));
     }
     if (!openFolders)
       slotUpdateCounts(fti->folder());
@@ -643,7 +645,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       addDirectory( folder->child(), fti );
     // make sure that the folder-settings are correctly read on startup by calling listDirectory
    if (readIsListViewItemOpen(fti) &&
-	fti->folder() && fti->folder()->folderType() == KMFolderTypeImap) {
+        fti->folder() && fti->folder()->folderType() == KMFolderTypeImap) {
       disconnect( this, SIGNAL( expanded( QListViewItem* ) ),
            this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
       slotFolderExpanded(fti);
@@ -783,11 +785,20 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
   if (fti && fti->folder()  &&
       (fti->folder()->countUnread() > 0)) {
 
-    // Don't change into the trash folder.
-    if (fti->type() == KFolderTreeItem::Trash)
+    // Don't change into the trash or outbox folders.
+    if (fti->type() == KFolderTreeItem::Trash ||
+        fti->type() == KFolderTreeItem::Outbox )
       return false;
 
     if (confirm) {
+      // Skip drafts and sent mail as well, when reading mail with the space bar
+      // but not when changing into the next folder with unread mail via ctrl+ or
+      // ctrl- so we do this only if (confirm == true), which means we are doing 
+      // readOn.
+      if ( fti->type() == KFolderTreeItem::Drafts ||
+           fti->type() == KFolderTreeItem::SentMail )
+        return false;
+
       //  warn user that going to next folder - but keep track of
       //  whether he wishes to be notified again in "AskNextFolder"
       //  parameter (kept in the config file for kmail)
@@ -883,7 +894,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   if (mLastItem && mLastItem != fti && mLastItem->folder()
      && (mLastItem->folder()->folderType() == KMFolderTypeImap))
   {
-    KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder());
+    KMFolderImap *imapFolder = static_cast<KMFolderImap*>(mLastItem->folder()->storage());
     imapFolder->setSelected(FALSE);
     KMAcctImap *act = imapFolder->account();
     if (act)
@@ -905,7 +916,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     emit folderSelected(folder);
     if (folder->folderType() == KMFolderTypeImap)
     {
-      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
+      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder->storage());
       imap_folder->setSelected(TRUE);
       if (imap_folder->getContentState() != KMFolderImap::imapInProgress)
         imap_folder->getAndCheckFolder();
@@ -966,15 +977,15 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     if (!fti->folder()) createChild = i18n("&New Folder...");
 
     if (fti->folder() || (fti->text(0) != i18n("Searches")))
-	folderMenu->insertItem(SmallIcon("folder_new"),
-			       createChild, this,
-			       SLOT(addChildFolder()));
+        folderMenu->insertItem(SmallIcon("folder_new"),
+                               createChild, this,
+                               SLOT(addChildFolder()));
 
     if (!fti->folder()) {
       folderMenu->insertItem(i18n("&Compact All Folders"),
                      kmkernel->folderMgr(), SLOT(compactAll()));
       folderMenu->insertItem(i18n("&Expire All Folders"),
-			     kmkernel->folderMgr(), SLOT(expireAll()));
+                             kmkernel->folderMgr(), SLOT(expireAll()));
     } else if (fti->folder()->folderType() == KMFolderTypeImap) {
       folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check &Mail"),
         this,
@@ -986,8 +997,8 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
                                i18n("&Send Queued Messages"), mMainWidget,
                                SLOT(slotSendQueued()));
     if ((!fti->folder()->isSystemFolder() && 
-	 (fti->folder()->folderType() != KMFolderTypeSearch)) ||
-	fti->folder()->folderType() == KMFolderTypeImap)
+         (fti->folder()->folderType() != KMFolderTypeSearch)) ||
+        fti->folder()->folderType() == KMFolderTypeImap)
     {
       folderMenu->insertItem(SmallIcon("folder_new"),
                              i18n("&New Subfolder..."), this,
@@ -1041,10 +1052,10 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
           SLOT(slotRefreshFolder()));
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
-      KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder() );
+      KMFolderCachedImap * folder = static_cast<KMFolderCachedImap*>( fti->folder()->storage() );
       folderMenu->insertItem( SmallIcon("wizard"),
-			      i18n("&Troubleshoot IMAP Cache..."),
-			      folder, SLOT(slotTroubleshoot()) );
+                              i18n("&Troubleshoot IMAP Cache..."),
+                              folder, SLOT(slotTroubleshoot()) );
     }
   }
 
@@ -1441,7 +1452,7 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
   if (fti && fti->folder() && fti->folder()->folderType() == KMFolderTypeImap &&
       !fti->parent())
   {
-    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
+    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder()->storage());
     if (folder->getSubfolderState() == KMFolderImap::imapNoInformation)
     {
       // the tree will be reloaded after that
@@ -1459,35 +1470,35 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
   if (fti && fti->parent() == firstChild() && fti->folder()
     && fti->folder()->folderType() == KMFolderTypeImap)
   {
-    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
+    KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder()->storage());
     folder->setSubfolderState(KMFolderImap::imapNoInformation);
   }
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
-		const QString &text)
+                const QString &text)
 {
 
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
 
   if (fti && fti->folder() && col != 0 && !currentFolder()->child())
-	  return;
+          return;
 
   QString fldName, oldFldName;
 
   oldFldName = fti->name(0);
 
   if (!text.isEmpty())
-	  fldName = text;
+          fldName = text;
   else
-	  fldName = oldFldName;
+          fldName = oldFldName;
 
   fldName.replace("/", "");
   fldName.replace(QRegExp("^\\."), "");
 
   if (fldName.isEmpty())
-	  fldName = i18n("unnamed");
+          fldName = i18n("unnamed");
 
   fti->setText(0, fldName);
   fti->folder()->rename(fldName, &(kmkernel->folderMgr()->dir()));
@@ -1496,7 +1507,7 @@ void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)
 {
-  if (success) slotUpdateCounts(static_cast<KMFolder*>(folder));
+  if (success) slotUpdateCounts(folder->folder());
 }
 
 //-----------------------------------------------------------------------------
@@ -1620,7 +1631,7 @@ void KMFolderTree::slotCheckMail()
   KMFolder* folder = fti->folder();
   if (folder && folder->folderType() == KMFolderTypeImap)
   {
-    KMAccount* acct = static_cast<KMFolderImap*>(folder)->account();
+    KMAccount* acct = static_cast<KMFolderImap*>(folder->storage())->account();
     kmkernel->acctMgr()->singleCheckMail(acct, true);
   }
 }

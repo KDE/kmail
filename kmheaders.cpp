@@ -14,6 +14,7 @@
 #include "undostack.h"
 #include "kmmsgdict.h"
 #include "kmkernel.h"
+#include "kmdebug.h"
 using KMail::FolderJob;
 #include "kmbroadcaststatus.h"
 #include "actionscheduler.h"
@@ -47,21 +48,6 @@ using namespace KPIM;
 
 #include <stdlib.h>
 #include <errno.h>
-
-#if 0 //timing utilities
-#include <qdatetime.h>
-#define CREATE_TIMER(x) int x=0, x ## _tmp=0; QTime x ## _tmp2
-#define START_TIMER(x) x ## _tmp2 = QTime::currentTime()
-#define GRAB_TIMER(x) x ## _tmp2.msecsTo(QTime::currentTime())
-#define END_TIMER(x) x += GRAB_TIMER(x); x ## _tmp++
-#define SHOW_TIMER(x) kdDebug(5006) << #x " == " << x << "(" << x ## _tmp << ")\n"
-#else
-#define CREATE_TIMER(x)
-#define START_TIMER(x)
-#define GRAB_TIMER(x)
-#define END_TIMER(x)
-#define SHOW_TIMER(x)
-#endif
 
 QPixmap* KMHeaders::pixNew = 0;
 QPixmap* KMHeaders::pixUns = 0;

@@ -219,7 +219,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   // Save this one for readding
   KMFolderCachedImap* parent = 0;
   if( type() == "cachedimap" )
-    parent = static_cast<KMFolderCachedImap*>( aMsg->parent() );
+    parent = static_cast<KMFolderCachedImap*>( aMsg->storage() );
 
   // checks whether we should send delivery receipts
   // and sends them.
@@ -227,10 +227,14 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
 
   // Set status of new messages that are marked as old to read, otherwise
   // the user won't see which messages newly arrived.
-  if (aMsg->isOld())
-    aMsg->setStatus(KMMsgStatusUnread);  // -sanders
-  //    aMsg->setStatus(KMMsgStatusRead);
-  else aMsg->setStatus(KMMsgStatusNew);
+  // This is only valid for pop accounts and produces wrong stati for imap.
+  if ( type() != "cachedimap" && type() != "imap" ) {
+    if ( aMsg->isOld() )
+      aMsg->setStatus(KMMsgStatusUnread);  // -sanders
+    //    aMsg->setStatus(KMMsgStatusRead);
+    else 
+      aMsg->setStatus(KMMsgStatusNew);
+  }
 /*
 QFile fileD0( "testdat_xx-kmaccount-0" );
 if( fileD0.open( IO_WriteOnly ) ) {

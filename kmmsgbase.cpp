@@ -5,6 +5,7 @@
 #include "kmmsgbase.h"
 
 #include "kmfolderindex.h"
+#include "kmfolder.h"
 #include "kmheaders.h"
 #include "kmmsgdict.h"
 #include "messageproperty.h"
@@ -66,14 +67,10 @@ using KMail::MessageProperty;
 #endif
 
 //-----------------------------------------------------------------------------
-KMMsgBase::KMMsgBase(KMFolderIndex* aParent)
+KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
+  : mParent( aParentFolder ), mDirty( false), mIndexOffset( 0 ),
+    mIndexLength( 0 ), mEnableUndo( false ), mStatus( KMMsgStatusUnknown )
 {
-  mParent  = aParent;
-  mDirty   = FALSE;
-  mIndexOffset = 0;
-  mIndexLength = 0;
-  mStatus = KMMsgStatusUnknown;
-  mEnableUndo = false;
 }
 
 
@@ -83,6 +80,14 @@ KMMsgBase::~KMMsgBase()
   MessageProperty::forget( this );
 }
 
+KMFolderIndex* KMMsgBase::storage() const
+{
+  // TODO: How did this ever work? What about KMFolderSearch that does
+  // not inherit KMFolderIndex?
+  if( mParent )
+    return static_cast<KMFolderIndex*>( mParent->storage() );
+  return 0;
+}
 
 //-----------------------------------------------------------------------------
 void KMMsgBase::assign(const KMMsgBase* other)
@@ -139,11 +144,11 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
     if (aStatus == KMMsgStatusHam)
       mStatus &= ~KMMsgStatusSpam;
   }
-  if (mParent) {
+  if (storage()) {
      if (idx < 0)
-       idx = mParent->find( this );
-     mParent->msgStatusChanged( oldStatus, status(), idx );
-     mParent->headerOfMsgChanged(this, idx);
+       idx = storage()->find( this );
+     storage()->msgStatusChanged( oldStatus, status(), idx );
+     storage()->headerOfMsgChanged(this, idx);
   }
 
 }
@@ -235,11 +240,11 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       break;
   }
 
-  if (mParent) {
+  if (storage()) {
     if (idx < 0)
-      idx = mParent->find( this );
-    mParent->msgStatusChanged( oldStatus, status(), idx );
-    mParent->headerOfMsgChanged( this, idx );
+      idx = storage()->find( this );
+    storage()->msgStatusChanged( oldStatus, status(), idx );
+    storage()->headerOfMsgChanged( this, idx );
   }
 }
 
@@ -285,8 +290,8 @@ void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status, int idx )
 {
     kdDebug(5006) << "***setEncryptionState1( " << status << " )" << endl;
     mDirty = TRUE;
-    if (mParent)
-        mParent->headerOfMsgChanged(this, idx);
+    if (storage())
+        storage()->headerOfMsgChanged(this, idx);
 }
 
 void KMMsgBase::setEncryptionStateChar( QChar status, int idx )
@@ -310,14 +315,14 @@ void KMMsgBase::setSignatureState( const KMMsgSignatureState status, int idx )
 {
     kdDebug(5006) << "***setSignatureState1( " << status << " )" << endl;
     mDirty = TRUE;
-    if (mParent)
-         mParent->headerOfMsgChanged(this, idx);
+    if (storage())
+         storage()->headerOfMsgChanged(this, idx);
 }
 
 void KMMsgBase::setMDNSentState( KMMsgMDNSentState, int idx ) {
   mDirty = true;
-  if ( mParent )
-    mParent->headerOfMsgChanged(this, idx);
+  if ( storage() )
+    storage()->headerOfMsgChanged(this, idx);
 }
 
 void KMMsgBase::setSignatureStateChar( QChar status, int idx )
@@ -1053,22 +1058,22 @@ QString KMMsgBase::getStringPart(MsgPartType t) const
 
   g_chunk_offset = 0;
   bool using_mmap = FALSE;
-  bool swapByteOrder = mParent->indexSwapByteOrder();
-  if (mParent->indexStreamBasePtr()) {
+  bool swapByteOrder = storage()->indexSwapByteOrder();
+  if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
 	free(g_chunk);
     using_mmap = TRUE;
-    g_chunk = mParent->indexStreamBasePtr() + mIndexOffset;
+    g_chunk = storage()->indexStreamBasePtr() + mIndexOffset;
     g_chunk_length = mIndexLength;
   } else {
-    if(!mParent->mIndexStream)
+    if(!storage()->mIndexStream)
       return ret;
     if (g_chunk_length < mIndexLength)
 	g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
-    off_t first_off=ftell(mParent->mIndexStream);
-    fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
-    fread( g_chunk, mIndexLength, 1, mParent->mIndexStream);
-    fseek(mParent->mIndexStream, first_off, SEEK_SET);
+    off_t first_off=ftell(storage()->mIndexStream);
+    fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
+    fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
+    fseek(storage()->mIndexStream, first_off, SEEK_SET);
   }
 
   MsgPartType type;
@@ -1122,24 +1127,24 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
 
   g_chunk_offset = 0;
   bool using_mmap = FALSE;
-  int sizeOfLong = mParent->indexSizeOfLong();
-  bool swapByteOrder = mParent->indexSwapByteOrder();
-  if (mParent->indexStreamBasePtr()) {
+  int sizeOfLong = storage()->indexSizeOfLong();
+  bool swapByteOrder = storage()->indexSwapByteOrder();
+  if (storage()->indexStreamBasePtr()) {
     if (g_chunk)
       free(g_chunk);
     using_mmap = TRUE;
-    g_chunk = mParent->indexStreamBasePtr() + mIndexOffset;
+    g_chunk = storage()->indexStreamBasePtr() + mIndexOffset;
     g_chunk_length = mIndexLength;
   } else {
-    if (!mParent->mIndexStream)
+    if (!storage()->mIndexStream)
       return ret;
     assert(mIndexLength >= 0);
     if (g_chunk_length < mIndexLength)
       g_chunk = (uchar *)realloc(g_chunk, g_chunk_length = mIndexLength);
-    off_t first_off=ftell(mParent->mIndexStream);
-    fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
-    fread( g_chunk, mIndexLength, 1, mParent->mIndexStream);
-    fseek(mParent->mIndexStream, first_off, SEEK_SET);
+    off_t first_off=ftell(storage()->mIndexStream);
+    fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
+    fread( g_chunk, mIndexLength, 1, storage()->mIndexStream);
+    fseek(storage()->mIndexStream, first_off, SEEK_SET);
   }
 
   MsgPartType type;
@@ -1310,10 +1315,10 @@ bool KMMsgBase::syncIndexString() const
   int len;
   const uchar *buffer = asIndexString(len);
   if (len == mIndexLength) {
-    Q_ASSERT(mParent->mIndexStream);
-    fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
+    Q_ASSERT(storage()->mIndexStream);
+    fseek(storage()->mIndexStream, mIndexOffset, SEEK_SET);
     assert( mIndexOffset > 0 );
-    fwrite( buffer, len, 1, mParent->mIndexStream);
+    fwrite( buffer, len, 1, storage()->mIndexStream);
     return TRUE;
   }
   return FALSE;

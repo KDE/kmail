@@ -430,9 +430,9 @@ void KMFldSearch::slotSearch()
     mFolder->setSearch(search);
     enableGUI();
 
-    if (mFolder && !mFolders.contains(mFolder.operator->())) {
+    if (mFolder && !mFolders.contains(mFolder.operator->()->folder())) {
 	mFolder->open();
-	mFolders.append(mFolder.operator->());
+	mFolders.append(mFolder.operator->()->folder());
     }
     mTimer->start(200);
 }
@@ -557,7 +557,7 @@ void KMFldSearch::openSearchFolder()
 {
     renameSearchFolder();
     KMFolderTree *folderTree = mKMMainWidget->folderTree();
-    QListViewItem *index = folderTree->indexOfFolder((KMFolder*)mFolder);
+    QListViewItem *index = folderTree->indexOfFolder(mFolder->folder());
     if (index) {
 	folderTree->ensureItemVisible(index);
 	folderTree->doFolderSelected(index);
@@ -568,7 +568,7 @@ void KMFldSearch::openSearchFolder()
 //-----------------------------------------------------------------------------
 void KMFldSearch::folderInvalidated(KMFolder *folder)
 {
-    if (folder == mFolder) {
+    if (folder->storage() == mFolder) {
 	mLbxMatches->clear();
 	if (mFolder->search())
 	    connect(mFolder->search(), SIGNAL(finished(bool)),
@@ -607,10 +607,8 @@ void KMFldSearch::enableGUI()
     KMSearch const *search = (mFolder) ? (mFolder->search()) : 0;
     bool searching = (search) ? (search->running()) : false;
     actionButton(KDialogBase::Close)->setEnabled(!searching);
-    if (mChkbxSpecificFolders->isChecked()) {
-	mCbxFolders->setEnabled(!searching);
-	mChkSubFolders->setEnabled(!searching);
-    }
+    mCbxFolders->setEnabled(!searching);
+    mChkSubFolders->setEnabled(!searching);
     mChkbxAllFolders->setEnabled(!searching);
     mChkbxSpecificFolders->setEnabled(!searching);
     mPatternEdit->setEnabled(!searching);

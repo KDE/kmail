@@ -30,6 +30,10 @@ public:
 
   /** Clear list of accounts */
   void clearAccountList(void);
+
+private:
+  KMAcctFolder( KMFolderDir* parent, const QString& name,
+                KMFolderType aFolderType );
 };
 
 

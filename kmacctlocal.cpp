@@ -78,10 +78,10 @@ void KMAcctLocal::processNewMail(bool)
     }
   }
 
-  KMFolderMbox mailFolder(0, location());
-  mailFolder.setLockType( mLock );
+  KMFolder mailFolder(0, location(), KMFolderTypeMbox);
+  static_cast<KMFolderMbox*>(mailFolder.storage())->setLockType( mLock );
   if ( mLock == procmail_lockfile)
-    mailFolder.setProcmailLockFileName( mProcmailLockFileName );
+    static_cast<KMFolderMbox*>(mailFolder.storage())->setProcmailLockFileName( mProcmailLockFileName );
 
   long num = 0;
   long i;

@@ -83,16 +83,10 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   int rc;
 
   assert(!aFolderName.isEmpty());
-  if (aFolderType == KMFolderTypeCachedImap )
-    fld = new KMFolderCachedImap(this, aFolderName);
-  else if (mDirType == KMImapDir)
-    fld = new KMFolderImap(this, aFolderName);
-  else if (aFolderType == KMFolderTypeMaildir)
-    fld = new KMFolderMaildir(this, aFolderName);
-  else if (aFolderType == KMFolderTypeSearch)
-    fld = new KMFolderSearch(this, aFolderName);
+  if (mDirType == KMImapDir)
+    fld = new KMFolder( this, aFolderName, KMFolderTypeImap );
   else
-    fld = new KMFolderMbox(this, aFolderName);
+    fld = new KMFolder( this, aFolderName, aFolderType );
   assert(fld != 0);
 
   fld->setSystemFolder(aSysFldr);
@@ -195,15 +189,14 @@ bool KMFolderDir::reload(void)
       if( path().startsWith( locateLocal("data", "kmail/dimap") )
 	  && ( dir.exists( imapcachefile) || dir.exists( maildir ) ) )
       {
-	kdDebug(5006) << "KMFolderDir creating new CachedImap folder with name " << fname << endl;
-	folder = new KMFolderCachedImap(this, fname);
+	folder = new KMFolder( this, fname, KMFolderTypeCachedImap );
         append(folder);
         folderList.append(folder);
       } else if( ( mDirType != KMImapDir )
                  && !( ( fname[0] == '.' ) && fname.endsWith( ".directory" ) )
                  && dir.exists( maildir ) ) {
 	// see if this is a maildir before assuming a subdir
-        folder = new KMFolderMaildir(this, fname);
+        folder = new KMFolder( this, fname, KMFolderTypeMaildir );
         append(folder);
         folderList.append(folder);
       }
@@ -215,20 +208,21 @@ bool KMFolderDir::reload(void)
       if (KMFolderImap::encodeFileName(KMFolderImap::decodeFileName(fname))
           == fname)
       {
-        folder = new KMFolderImap(this, KMFolderImap::decodeFileName(fname));
+        folder = new KMFolder( this, KMFolderImap::decodeFileName(fname),
+                               KMFolderTypeImap );
         append(folder);
         folderList.append(folder);
       }
     }
     else if (mDirType == KMSearchDir)
     {
-	folder = new KMFolderSearch(this, fname);
+	folder = new KMFolder( this, fname, KMFolderTypeSearch );
 	append(folder);
 	folderList.append(folder);
     }
     else // all other files are folders (at the moment ;-)
     {
-      folder = new KMFolderMbox(this, fname);
+      folder = new KMFolder( this, fname, KMFolderTypeMbox );
       append(folder);
       folderList.append(folder);
     }

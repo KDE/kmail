@@ -12,6 +12,7 @@
 #include "kfileio.h"
 #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
+#include "kmfolder.h"
 #include "undostack.h"
 #include "maildirjob.h"
 #include "kcursorsaver.h"
@@ -41,8 +42,8 @@ using KMail::MaildirJob;
 
 
 //-----------------------------------------------------------------------------
-KMFolderMaildir::KMFolderMaildir(KMFolderDir* aParent, const QString& aName)
-  : KMFolderIndex(aParent, aName)
+KMFolderMaildir::KMFolderMaildir(KMFolder* folder, const char* name)
+  : KMFolderIndex(folder, name)
 {
 }
 
@@ -51,14 +52,14 @@ KMFolderMaildir::KMFolderMaildir(KMFolderDir* aParent, const QString& aName)
 KMFolderMaildir::~KMFolderMaildir()
 {
   if (mOpenCount>0) close(TRUE);
-  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed( folder() );
 }
 
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::canAccess()
 {
 
-  assert(!name().isEmpty());
+  assert(!folder()->name().isEmpty());
 
   if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0)
     return 1;
@@ -83,7 +84,7 @@ int KMFolderMaildir::open()
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
-  assert(!name().isEmpty());
+  assert(!folder()->name().isEmpty());
 
   if (canAccess() != 0) {
       KCursorSaver idle(KBusyPtr::idle());
@@ -93,7 +94,7 @@ int KMFolderMaildir::open()
       return EPERM;
   }
 
-  if (!path().isEmpty())
+  if (!folder()->path().isEmpty())
   {
     if (KMFolderIndex::IndexOk != indexStatus()) // test if contents file has changed
     {
@@ -132,7 +133,7 @@ int KMFolderMaildir::create(bool imap)
   int rc;
   int old_umask;
 
-  assert(!name().isEmpty());
+  assert(!folder()->name().isEmpty());
   assert(mOpenCount == 0);
   
   // Make sure that neither a new, cur or tmp subfolder exists already.
@@ -166,7 +167,7 @@ int KMFolderMaildir::create(bool imap)
     return errno;
   }
 
-  if (!path().isEmpty())
+  if (!folder()->path().isEmpty())
   {
     old_umask = umask(077);
     mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
@@ -198,7 +199,7 @@ void KMFolderMaildir::close(bool aForced)
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((this != kmkernel->inboxFolder()) && isSystemFolder() && !aForced)
+  if ((folder() != kmkernel->inboxFolder()) && isSystemFolder() && !aForced)
   {
      mOpenCount = 1;
      return;
@@ -351,7 +352,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   msgParent = aMsg->parent();
   if (msgParent)
   {
-    if (msgParent==this && !kmkernel->folderIsDraftOrOutbox(this))
+    if (msgParent==folder() && !kmkernel->folderIsDraftOrOutbox(folder()))
         return 0;
 
     idx = msgParent->find(aMsg);
@@ -407,18 +408,18 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (filename != aMsg->fileName())
     aMsg->setFileName(filename);
 
-  if (aMsg->isUnread() || aMsg->isNew() || this == kmkernel->outboxFolder())
+  if (aMsg->isUnread() || aMsg->isNew() || folder() == kmkernel->outboxFolder())
   {
     if (mUnreadMsgs == -1)
       mUnreadMsgs = 1;
     else
       ++mUnreadMsgs;
-    emit numUnreadMsgsChanged( this );
+    emit numUnreadMsgsChanged( folder() );
   }
   ++mTotalMsgs;
 
   // store information about the position in the folder file in the message
-  aMsg->setParent(this);
+  aMsg->setParent(folder());
   aMsg->setMsgSize(size);
   idx = mMsgList.append(&aMsg->toMsgBase());
   if (aMsg->getMsgSerNum() <= 0)
@@ -649,7 +650,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
           status |= KMMsgStatusFlag;
       }
 
-      KMMsgInfo *mi = new KMMsgInfo(this);
+      KMMsgInfo *mi = new KMMsgInfo(folder());
       mi->init( subjStr.stripWhiteSpace(),
                 fromStr.stripWhiteSpace(),
                 toStr.stripWhiteSpace(),
@@ -743,7 +744,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   }
 
   if (status & KMMsgStatusNew || status & KMMsgStatusUnread ||
-      (this == kmkernel->outboxFolder()))
+      (folder() == kmkernel->outboxFolder()))
   {
     mUnreadMsgs++;
    if (mUnreadMsgs == 0) ++mUnreadMsgs;
@@ -813,15 +814,15 @@ int KMFolderMaildir::createIndexFromContents()
 
   correctUnreadMsgsCount();
 
-  if (kmkernel->outboxFolder() == this && count() > 0)
+  if (kmkernel->outboxFolder() == folder() && count() > 0)
     KMessageBox::information(0, i18n("Your outbox contains messages which were "
     "most likely not created by KMail.\nPlease remove them from there, if you "
     "don't want KMail to send them."));
 
   needsCompact = true;
 
-  if (parent())
-    parent()->manager()->invalidateFolder(kmkernel->msgDict(), this);
+  if (folder()->parent())
+    folder()->parent()->manager()->invalidateFolder(kmkernel->msgDict(), folder());
   return 0;
 }
 
