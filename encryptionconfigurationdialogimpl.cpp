@@ -54,7 +54,7 @@ void EncryptionConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPl
     if( ! FULLTEST ) {
         askEachPartRB                 ->hide(); // We won't implement that.
         
-        encryptionSettingsBG          ->hide(); // Will implement that later.
+//        encryptionSettingsBG          ->hide(); // Will implement that later.
         
         certificatePathCheckBG        ->hide(); // Will implement that later.
         
@@ -63,8 +63,8 @@ void EncryptionConfigurationDialogImpl::enableDisable( CryptPlugWrapper* cryptPl
         warnCRLExpireCB               ->hide(); // Will implement that later.
         warnCRLExpireSB               ->hide(); // Will implement that later.
         
-        warnReceiverCertificateExpiresCB->hide();//Will implement that later.
-        warnReceiverCertificateExpiresSB->hide();//Will implement that later.
+//        warnReceiverCertificateExpiresCB->hide();//Will implement that later.
+//        warnReceiverCertificateExpiresSB->hide();//Will implement that later.
         
         warnChainCertificateExpiresCB ->hide(); // Will implement that later.
         warnChainCertificateExpiresSB ->hide(); // Will implement that later.
