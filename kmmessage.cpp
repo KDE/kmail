@@ -1966,6 +1966,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
     if (ch == '<') addr += "&lt;";
     else if (ch == '>') addr += "&gt;";
     else if (ch == '&') addr += "&amp;";
+    else if (ch == '\'') addr += "&#39;";
     else if (ch != ',' || insideQuote) addr += ch;
 
     if (ch != ',' || insideQuote)
