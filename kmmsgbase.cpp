@@ -137,7 +137,11 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusIgnored;
     if (aStatus == KMMsgStatusIgnored) {
       mStatus &= ~KMMsgStatusWatched;
-      setStatus(KMMsgStatusRead, idx);
+      // Set to read. Don't use setStatus, that emits msgStatusChanged
+      // and we only want to do that once.
+      mStatus &= ~KMMsgStatusUnread;
+      mStatus &= ~KMMsgStatusNew;
+      mStatus |= KMMsgStatusRead;
     }
     if (aStatus == KMMsgStatusSpam)
       mStatus &= ~KMMsgStatusHam;
