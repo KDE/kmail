@@ -300,10 +300,10 @@ QCString KMMessagePart::bodyDecoded(void) const
       break;
     }
   }
-  result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
-
   kdWarning( result.length() != (unsigned int)len, 5006 )
     << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
+
+  result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
 
   assert( mBodyDecodedSize < 0 || mBodyDecodedSize == len );
   if ( mBodyDecodedSize < 0 )
