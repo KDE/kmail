@@ -1437,7 +1437,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   {
     int col, line;
     mEditor->getCursorPosition(&line, &col);
-    mEditor->insertAt(QString::fromLocal8Bit((*it).data), line, col);
+    mEditor->insertAt(QString::fromLocal8Bit((*it).data + '\0'), line, col);
     mapAtmLoadData.remove(it);
     return;
   }
