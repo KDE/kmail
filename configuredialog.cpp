@@ -868,14 +868,10 @@ void AccountsPage::SendingTab::slotRemoveSelectedTransport()
     }
   }
 
-  // this part cannot be backported to BRANCH since it holds new strings
   if ( !changedIdents.isEmpty() ) {
-    QString information;
-    if ( changedIdents.count() > 1 ) {
-      information = i18n( "These identitites have been changed to use the default transport:" );
-    } else {
-      information = i18n( "This identity has been changed to use the default transport:" );
-    }
+    QString information = i18n( "This identity has been changed to use the default transport:",
+                          "These %n identitites have been changed to use the default transport:",
+                          changedIdents.count() );
     KMessageBox::informationList( this, information, changedIdents );
   }
 
