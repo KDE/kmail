@@ -90,20 +90,21 @@ CachedImapJob::CachedImapJob( const QValueList<KMFolderCachedImap*>& fList,
 {
 }
 
-// Delete message ; Rename folder
-CachedImapJob::CachedImapJob( const QString& uids, JobType type,
+// Rename folder
+CachedImapJob::CachedImapJob( const QString& string1, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder(folder), mMsg( 0 ), mString( uids ),
+  : FolderJob( type ), mFolder(folder), mMsg( 0 ), mString( string1 ),
     mParentFolder ( 0 )
 {
   assert( folder );
+  assert( type != tDeleteMessage ); // moved to another ctor
 }
 
-// Delete folders
-CachedImapJob::CachedImapJob( const QStringList& folderpaths, JobType type,
+// Delete folders or messages
+CachedImapJob::CachedImapJob( const QStringList& foldersOrMsgs, JobType type,
                               KMFolderCachedImap* folder )
-  : FolderJob( type ), mFolder( folder ), mFolderPathList( folderpaths ),
-    mMsg( 0 ), mParentFolder ( 0 )
+  : FolderJob( type ), mFolder( folder ), mFoldersOrMessages( foldersOrMsgs ),
+    mMsg( 0 ), mParentFolder( 0 )
 {
   assert( folder );
 }
@@ -147,7 +148,7 @@ void CachedImapJob::execute()
   switch( mType ) {
   case tGetMessage:       slotGetNextMessage();     break;
   case tPutMessage:       slotPutNextMessage();     break;
-  case tDeleteMessage:    deleteMessages(mString);  break;
+  case tDeleteMessage:    slotDeleteNextMessages(); break;
   case tExpungeFolder:    expungeFolder();          break;
   case tAddSubfolders:    slotAddNextSubfolder();   break;
   case tDeleteFolders:    slotDeleteNextFolder();   break;
@@ -176,18 +177,41 @@ void CachedImapJob::listMessages()
            mFolder, SLOT( slotGetMessagesData( KIO::Job* , const QByteArray& ) ) );
 }
 
-void CachedImapJob::deleteMessages( const QString& uids )
+void CachedImapJob::slotDeleteNextMessages( KIO::Job* job )
 {
+  if (job) {
+    KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+    if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
+      delete this;
+      return;
+    }
+
+    if( job->error() ) {
+      mAccount->handleJobError( job, i18n( "Error while deleting messages on the server: " ) + '\n' );
+      delete this;
+      return;
+    }
+    mAccount->removeJob(it);
+  }
+
+  if( mFoldersOrMessages.isEmpty() ) {
+    // No more messages to delete
+    delete this;
+    return;
+  }
+
+  QString uids = mFoldersOrMessages.front(); mFoldersOrMessages.pop_front();
+
   KURL url = mAccount->getUrl();
   url.setPath( mFolder->imapPath() +
                QString::fromLatin1(";UID=%1").arg(uids) );
 
-  KIO::SimpleJob *job = KIO::file_delete( url, false );
-  KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
+  KIO::SimpleJob *simpleJob = KIO::file_delete( url, false );
+  KIO::Scheduler::assignJobToSlave( mAccount->slave(), simpleJob );
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
-  mAccount->insertJob( job, jd );
-  connect( job, SIGNAL( result(KIO::Job *) ),
-           this, SLOT( slotDeleteResult(KIO::Job *) ) );
+  mAccount->insertJob( simpleJob, jd );
+  connect( simpleJob, SIGNAL( result(KIO::Job *) ),
+           this, SLOT( slotDeleteNextMessages(KIO::Job *) ) );
 }
 
 void CachedImapJob::expungeFolder()
@@ -201,10 +225,10 @@ void CachedImapJob::expungeFolder()
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL( result(KIO::Job *) ),
-           this, SLOT( slotDeleteResult(KIO::Job *) ) );
+           this, SLOT( slotExpungeResult(KIO::Job *) ) );
 }
 
-void CachedImapJob::slotDeleteResult( KIO::Job * job )
+void CachedImapJob::slotExpungeResult( KIO::Job * job )
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
@@ -522,13 +546,13 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
     mAccount->removeJob(it);
   }
 
-  if( mFolderPathList.isEmpty() ) {
+  if( mFoldersOrMessages.isEmpty() ) {
     // No more folders to delete
     delete this;
     return;
   }
 
-  QString folderPath = mFolderPathList.front(); mFolderPathList.pop_front();
+  QString folderPath = mFoldersOrMessages.front(); mFoldersOrMessages.pop_front();
   KURL url = mAccount->getUrl();
   url.setPath(folderPath);
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );

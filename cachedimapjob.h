@@ -83,12 +83,12 @@ public:
   CachedImapJob( const QValueList<KMFolderCachedImap*>& folders,
                  JobType type = tAddSubfolders,
                  KMFolderCachedImap* folder = 0 );
-  // Delete message ; Rename folder
+  // Rename folder
   CachedImapJob( const QString& string1, JobType type,
                  KMFolderCachedImap* folder );
-  // Delete folders
-  CachedImapJob( const QStringList& folders, JobType type,
-                 KMFolderCachedImap* folder = 0 );
+  // Delete folders or messages
+  CachedImapJob( const QStringList& foldersOrMsgs, JobType type,
+                 KMFolderCachedImap* folder );
   // Other jobs (list messages,expunge folder, check uid validity)
   CachedImapJob( JobType type, KMFolderCachedImap* folder );
 
@@ -98,7 +98,6 @@ public:
 
 protected:
   virtual void execute();
-  void deleteMessages( const QString& uids );
   void expungeFolder();
   void checkUidValidity();
   void renameFolder( const QString &newName );
@@ -111,11 +110,12 @@ protected slots:
   virtual void slotPutMessageDataReq( KIO::Job *job, QByteArray &data );
   virtual void slotPutMessageResult( KIO::Job *job );
   virtual void slotPutMessageInfoData(KIO::Job *, const QString &data);
-  virtual void slotDeleteResult( KIO::Job *job );
+  virtual void slotExpungeResult( KIO::Job *job );
   virtual void slotDeleteNextFolder( KIO::Job *job = 0 );
   virtual void slotCheckUidValidityResult( KIO::Job *job );
   virtual void slotRenameFolderResult( KIO::Job *job );
   virtual void slotListMessagesResult( KIO::Job * job );
+  void slotDeleteNextMessages( KIO::Job* job = 0 );
   void slotProcessedSize( KIO::Job *, KIO::filesize_t processed );
 
 private:
@@ -126,7 +126,7 @@ private:
   QValueList<unsigned long> mSerNumMsgList;
   ulong mSentBytes; // previous messages
   ulong mTotalBytes;
-  QStringList mFolderPathList; // Used only for folder deletion
+  QStringList mFoldersOrMessages; // Folder deletion: path list. Message deletion: sets of uids
   KMMessage* mMsg;
   QString mString; // Used as uids and as rename target
   KMFolderCachedImap *mParentFolder;
