@@ -10,14 +10,10 @@
 #include "kmmessage.h"
 
 #include <kmime_charfreq.h>
-#include <kmime_codecs.h>
 #include <mimelib/enum.h>
 #include <mimelib/utility.h>
 #include <mimelib/string.h>
-
 #include <kiconloader.h>
-
-#include <assert.h>
 
 using namespace KMime;
 
@@ -84,26 +80,15 @@ void KMMessagePart::setBodyEncoded(const QCString& aStr)
   switch (cte())
   {
   case DwMime::kCteQuotedPrintable:
+  case DwMime::kCteBase64:
     {
       DwString dwSrc(aStr.data(), mBodyDecodedSize);
       DwString dwResult;
-      DwEncodeQuotedPrintable(dwSrc, dwResult);
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwEncodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwEncodeBase64(dwSrc, dwResult);
       mBody.duplicate(dwResult.data(), dwResult.size());
-      break;
-    }
-  case DwMime::kCteBase64:
-    {
-      Codec * codec = Codec::codecForName( "base64" );
-      assert( codec );
-      mBody.resize( mBodyDecodedSize*3/2 );
-      QCString::ConstIterator iit = aStr.data();
-      QCString::ConstIterator iend = aStr.data() + mBodyDecodedSize;
-      QByteArray::Iterator oit = mBody.begin();
-      QByteArray::ConstIterator oend = mBody.end();
-      if ( !codec->encode( iit, iend, oit, oend ) )
-	kdWarning(5006) << "Hmmmm. base64 encoding is more than 150% the "
-	  "size of the original data???" << endl;
-      mBody.truncate( oit - mBody.begin() );
       break;
     }
   default:
@@ -230,26 +215,15 @@ void KMMessagePart::setBodyEncodedBinary(const QByteArray& aStr)
   switch (cte())
   {
   case DwMime::kCteQuotedPrintable:
+  case DwMime::kCteBase64:
     {
       DwString dwSrc(aStr.data(), aStr.size());
       DwString dwResult;
-      DwEncodeQuotedPrintable(dwSrc, dwResult);
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwEncodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwEncodeBase64(dwSrc, dwResult);
       mBody.duplicate(dwResult.data(), dwResult.size());
-      break;
-    }
-  case DwMime::kCteBase64:
-    {
-      Codec * codec = Codec::codecForName( "base64" );
-      assert( codec );
-      mBody.resize( mBodyDecodedSize*3/2 );
-      QByteArray::ConstIterator iit = aStr.begin();
-      QByteArray::ConstIterator iend = aStr.end();
-      QByteArray::Iterator oit = mBody.begin();
-      QByteArray::ConstIterator oend = mBody.end();
-      if ( !codec->encode( iit, iend, oit, oend ) )
-	kdWarning(5006) << "Hmmmm. base64 encoding is more than 150% the "
-	  "size of the original data???" << endl;
-      mBody.truncate( oit - mBody.begin() );
       break;
     }
   default:
@@ -273,23 +247,15 @@ QByteArray KMMessagePart::bodyDecodedBinary(void) const
   switch (cte())
   {
   case DwMime::kCteQuotedPrintable:
+  case DwMime::kCteBase64:
     {
       DwString dwSrc(mBody.data(), mBody.size());
       DwString dwResult;
-      DwDecodeQuotedPrintable(dwSrc, dwResult);
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwDecodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwDecodeBase64(dwSrc, dwResult);
       result.duplicate( dwResult.data(), dwResult.size() );
-      break;
-    }
-  case DwMime::kCteBase64:
-    {
-      Codec * codec = Codec::codecForName( "base64" );
-      assert( codec );
-      result.resize( mBody.size() );
-      QByteArray::ConstIterator iit = mBody.begin();
-      QByteArray::Iterator oit = result.begin();
-      if ( !codec->decode( iit, mBody.end(), oit, result.end() ) )
-	kdWarning(5006) << "Hmmm. base64 encoding smaller than decoded data???" << endl;
-      result.truncate( oit - result.begin() );
       break;
     }
   default:
@@ -319,27 +285,18 @@ QCString KMMessagePart::bodyDecoded(void) const
   switch (cte())
   {
   case DwMime::kCteQuotedPrintable:
+  case DwMime::kCteBase64:
     {
       DwString dwSrc(mBody.data(), mBody.size());
       DwString dwResult;
-      DwDecodeQuotedPrintable(dwSrc, dwResult);
+      if (cte() == DwMime::kCteQuotedPrintable)
+	DwDecodeQuotedPrintable(dwSrc, dwResult);
+      else
+	DwDecodeBase64(dwSrc, dwResult);
       len = dwResult.size();
       result.resize( len+1 /* trailing NUL */ );
       memcpy(result.data(), dwResult.data(), len);
       break;
-    }
-  case DwMime::kCteBase64:
-    {
-      Codec * codec = Codec::codecForName( "base64" );
-      assert( codec );
-      result.resize( mBody.size()+1 ); /* trailing NUL */
-      QByteArray::ConstIterator iit = mBody.begin();
-      QCString::Iterator oit = result.begin();
-      QCString::ConstIterator oend = result.begin() + (mBody.size()+1);
-      if ( !codec->decode( iit, mBody.end(), oit, oend ) )
-	kdWarning(5006) << "Hmmm. base64 encoding smaller than decoded data???"
-			<< endl;
-      result.truncate( oit - result.begin() ); // adds trailing NUL
     }
   default:
     kdWarning(5006) << "unknown encoding '" << cteStr()
