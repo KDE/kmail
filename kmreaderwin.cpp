@@ -1999,7 +1999,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 
     QByteArray signaturetext( sign.msgPart().bodyDecodedBinary() );
     QCString signatureStr( signaturetext );
-    bool signatureIsBinary = (-1 == signatureStr.find("BEGIN SIGNED MESSAGE", 0, false) );
+    bool signatureIsBinary = (-1 == signatureStr.find("BEGIN SIGNED MESSAGE", 0, false) ) &&
+                             (-1 == signatureStr.find("BEGIN PGP SIGNED MESSAGE", 0, false) ) &&
+                             (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
     int signatureLen = signaturetext.size();
 #ifdef KHZ_TEST
     QFile fileS( "testdat_xx1.sig" );
@@ -2081,7 +2083,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
             messagePart.creationTime.tm_mday = 1;
         }
         if( messagePart.signer.isEmpty() ) {
-            messagePart.signer = QString::fromUtf8( ext.name );
+            if( ext.name && *ext.name )
+                messagePart.signer = QString::fromUtf8( ext.name );
             if( ext.email && *ext.email ) {
                 if( !messagePart.signer.isEmpty() )
                     messagePart.signer += " ";
@@ -2263,8 +2266,11 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
   if( cryptPlug ) {
     QByteArray ciphertext( data.msgPart().bodyDecodedBinary() );
     QCString cipherStr( ciphertext );
-    bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) );
+    bool cipherIsBinary = (-1 == cipherStr.find("BEGIN ENCRYPTED MESSAGE", 0, false) ) &&
+                          (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
+                          (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
     int cipherLen = ciphertext.size();
+#define KHZ_TEST
 #ifdef KHZ_TEST
     QFile fileC( "testdat_xx1.encrypted" );
     if( fileC.open( IO_WriteOnly ) ) {
@@ -2310,6 +2316,17 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
       if( bDecryptionOk )
         decryptedData = cleartext;
       else if( reader && showWarning ){
+        // pending (khz): show more information...
+        /*
+        QString reason("");
+        reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
+          i18n("Crypto Plug-In %1 could not decrypt the data.\n%2")
+          .arg(cryptPlug->libName())
+          .arg(reason),
+          i18n("Make sure the Plug-In is installed properly and check your"),
+          i18n("specifications made in the 'Settings/Configure KMail / Plug-In' dialog!"),
+          decryptedData );
+        */
         reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
           i18n("Crypto Plug-In %1 could not decrypt the data.").arg(cryptPlug->libName()),
           i18n("Make sure the Plug-In is installed properly and check your"),
