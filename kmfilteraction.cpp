@@ -179,7 +179,11 @@ void KMFilterActionWithStringList::clearParamWidget( QWidget* paramWidget ) cons
 void KMFilterActionWithStringList::argsFromString( const QString argsStr )
 {
   int idx = mParameterList.findIndex( argsStr );
-  mParameter = *mParameterList.at( idx >= 0 ? idx : 0 );
+  if ( idx < 0 ) {
+    mParameterList.append( argsStr );
+    idx = mParameterList.count() - 1;
+  }
+  mParameter = *mParameterList.at( idx );
 }
 
 
@@ -637,8 +641,6 @@ public:
   virtual QWidget* createParamWidget( QWidget* parent ) const;
   virtual void setParamWidgetValue( QWidget* paramWidget ) const;
 
-  virtual void argsFromString( const QString argsStr );
-
   static KMFilterAction* newAction();
 };
 
@@ -678,21 +680,20 @@ KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMMessage* msg) c
 
 void KMFilterActionRemoveHeader::setParamWidgetValue( QWidget* paramWidget ) const
 {
+  QComboBox * cb = dynamic_cast<QComboBox*>(paramWidget);
+  Q_ASSERT( cb );
+
   int idx = mParameterList.findIndex( mParameter );
-  ((QComboBox*)paramWidget)->clear();
-  ((QComboBox*)paramWidget)->insertStringList( mParameterList );
-  ((QComboBox*)paramWidget)->setCurrentItem( idx >= 0 ? idx : 0 );
+  cb->clear();
+  cb->insertStringList( mParameterList );
+  if ( idx < 0 ) {
+    cb->insertItem( mParameter );
+    cb->setCurrentItem( cb->count() - 1 );
+  } else {
+    cb->setCurrentItem( idx );
+  }
 }
 
-void KMFilterActionRemoveHeader::argsFromString( const QString argsStr )
-{
-  int idx = mParameterList.findIndex( argsStr );
-  if ( idx < 0 ) {
-    mParameterList.insert( mParameterList.at(1), argsStr );
-    idx = 1;
-  }
-  mParameter = *mParameterList.at( idx );
-}
 
 //=============================================================================
 // KMFilterActionAddHeader - add header
@@ -763,7 +764,12 @@ void KMFilterActionAddHeader::setParamWidgetValue( QWidget* paramWidget ) const
   Q_ASSERT( cb );
   cb->clear();
   cb->insertStringList( mParameterList );
-  cb->setCurrentItem( idx >= 0 ? idx : 0 );
+  if ( idx < 0 ) {
+    cb->insertItem( mParameter );
+    cb->setCurrentItem( cb->count() - 1 );
+  } else {
+    cb->setCurrentItem( idx );
+  }
   QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
   Q_ASSERT( le );
   le->setText( mValue );
@@ -813,16 +819,16 @@ void KMFilterActionAddHeader::argsFromString( const QString argsStr )
 
   int idx = mParameterList.findIndex( s );
   if ( idx < 0 ) {
-    mParameterList.insert( mParameterList.at(1), s );
-    idx = 1;
+    mParameterList.append( s );
+    idx = mParameterList.count() - 1;
   }
   mParameter = *mParameterList.at( idx );
 }
 
 
 //=============================================================================
-// KMFilterActionRewriteHeader - add header
-// Add a header with the given value.
+// KMFilterActionRewriteHeader - rewrite header
+// Rewrite a header using a regexp.
 //=============================================================================
 class KMFilterActionRewriteHeader: public KMFilterActionWithStringList
 {
@@ -906,9 +912,15 @@ void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) co
   int idx = mParameterList.findIndex( mParameter );
   QComboBox *cb = (QComboBox*)paramWidget->child("combo");
   Q_ASSERT( cb );
+
   cb->clear();
   cb->insertStringList( mParameterList );
-  cb->setCurrentItem( idx >= 0 ? idx : 0 );
+  if ( idx < 0 ) {
+    cb->insertItem( mParameter );
+    cb->setCurrentItem( cb->count() - 1 );
+  } else {
+    cb->setCurrentItem( idx );
+  }
 
   QLineEdit *le = (QLineEdit*)paramWidget->child("search");
   Q_ASSERT( le );
@@ -971,8 +983,8 @@ void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
 
   int idx = mParameterList.findIndex( s );
   if ( idx < 0 ) {
-    mParameterList.insert( mParameterList.at(1), s );
-    idx = 1;
+    mParameterList.append( s );
+    idx = mParameterList.count() - 1;
   }
   mParameter = *mParameterList.at( idx );
 }
