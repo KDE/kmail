@@ -797,7 +797,8 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_SET_ANNOTATIONS:
 
     mSyncState = SYNC_STATE_SET_ACLS;
-    if( mAccount->hasAnnotationSupport() ) {
+    if ( mAccount->hasAnnotationSupport() &&
+         ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
       newState( mProgress, i18n("Setting annotations"));
       // If in the future we want to set more annotations, we should then write
       // a multiSetAnnotation job in annotationjobs.*
@@ -1768,9 +1769,9 @@ KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
   if ( (*it).parent != folder() ) return; // Shouldn't happen
 
   bool cont = true;
-  if ( job->error() )
+  if ( job->error() ) {
     cont = mAccount->handleJobError( job, i18n( "Error while setting annotation: " ) + '\n' );
-  else {
+  } else {
     mContentsTypeChanged = false;
     if (mAccount->slave()) mAccount->removeJob(job);
   }
