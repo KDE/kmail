@@ -142,8 +142,24 @@ public:
 
   /**
    * Change the status of the message indicated by @p index
+   * Overloaded function for the following one
    */
   virtual void setStatus(int idx, KMMsgStatus status);
+
+  /**
+   * Change the status of several messages indicated by @p ids
+   */
+  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status);
+
+  /** Helper method to set the status on the server */
+  void setImapStatus(QString path, QCString flags);
+
+  /** generates sets of uids */
+  QStringList makeSets(QValueList<int>&);
+  QStringList makeSets(QStringList&);
+
+  /** gets the uids of the given ids */ 
+  void getUids(QValueList<int>& in, QValueList<int>& out);
   
   /**
    * Expunge deleted messages from the folder

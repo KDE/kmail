@@ -406,6 +406,9 @@ public:
    * should be in the current folder. */
   void setStatus(KMMsgBase *msg, KMMsgStatus status);
 
+  /** Set the status of the message(s) in the QValueList @p ids to @p status. */
+  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status);
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */

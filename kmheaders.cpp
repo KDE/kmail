@@ -1013,11 +1013,18 @@ void KMHeaders::msgHeaderChanged(int msgId)
 void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
 {
   QListViewItem *qitem;
+  QValueList<int> ids;
   for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
     if (qitem->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
-      mFolder->setStatus(item->msgId(), status);
+      if (mFolder->protocol() == "imap")
+        ids.append(item->msgId());
+      else	
+        mFolder->setStatus(item->msgId(), status);
     }
+
+  if ( !ids.empty() ) 
+    mFolder->setStatus(ids, status);	
 }
 
 

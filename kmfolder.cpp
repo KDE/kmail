@@ -1196,6 +1196,15 @@ void KMFolder::setStatus(int idx, KMMsgStatus status)
 }
 
 //-----------------------------------------------------------------------------
+void KMFolder::setStatus(QValueList<int>& ids, KMMsgStatus status)
+{
+  for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
+  {
+    KMFolder::setStatus(*it, status);
+  }  
+}
+
+//-----------------------------------------------------------------------------
 void KMFolder::setStatus(KMMsgBase *msg, KMMsgStatus status)
 {
   KMMsgDict *dict = kernel->msgDict();
@@ -1211,38 +1220,38 @@ void KMFolder::setStatus(KMMsgBase *msg, KMMsgStatus status)
 //-----------------------------------------------------------------------------
 void KMFolder::setUserWhoField(const QString &whoField)
 {
-	mUserWhoField = whoField;
-	if ( whoField.isEmpty() )
-	{
-		// default setting
-		QString ident = mIdentity; if (ident.isEmpty()) ident = i18n("Default");
-		KMIdentity identity (ident);
-		identity.readConfig();
-		
-		if ( mIsSystemFolder && protocol() != "imap" ) 
-		{	
-			// local system folders
-			if ( this == kernel->inboxFolder() || this == kernel->trashFolder() ) mWhoField = "From";
-			if ( this == kernel->outboxFolder() || this == kernel->sentFolder() || this == kernel->draftsFolder() ) mWhoField = "To";
-			
-		} else if ( identity.drafts() == idString() || identity.fcc() == idString() ) {
-			// drafts or sent of the identity
-			mWhoField = "To";
-		} else { 
-			mWhoField = "From";
-		}	
+  mUserWhoField = whoField;
+  if ( whoField.isEmpty() )
+  {
+    // default setting
+    QString ident = mIdentity; if (ident.isEmpty()) ident = i18n("Default");
+    KMIdentity identity (ident);
+    identity.readConfig();
 
-	} else if ( whoField == "From" || whoField == "To" ) {
+    if ( mIsSystemFolder && protocol() != "imap" ) 
+    {	
+      // local system folders
+      if ( this == kernel->inboxFolder() || this == kernel->trashFolder() ) mWhoField = "From";
+      if ( this == kernel->outboxFolder() || this == kernel->sentFolder() || this == kernel->draftsFolder() ) mWhoField = "To";
 
-		// set the whoField according to the user-setting
-		mWhoField = whoField;
+    } else if ( identity.drafts() == idString() || identity.fcc() == idString() ) {
+      // drafts or sent of the identity
+      mWhoField = "To";
+    } else { 
+      mWhoField = "From";
+    }	
 
-	} else {
-		// this should not happen...
-		kdDebug(5006) << "Illegal setting " << whoField << " for userWhoField!" << endl;
-	}
+  } else if ( whoField == "From" || whoField == "To" ) {
 
-	writeConfig();
+    // set the whoField according to the user-setting
+    mWhoField = whoField;
+
+  } else {
+    // this should not happen...
+    kdDebug(5006) << "Illegal setting " << whoField << " for userWhoField!" << endl;
+  }
+
+  writeConfig();
 }
 
 //-----------------------------------------------------------------------------
