@@ -805,6 +805,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   }
   
   setContentsPos( topX, topY );
+  emit selected( 0 );
   if (next) {
     setCurrentItem( next );
     setSelected( next, TRUE );
