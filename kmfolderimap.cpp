@@ -846,15 +846,12 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     QString access;
     if ( (b - a - 10) >= 0 ) access = cstr.mid(a + 10, b - a - 10);
     mReadOnly = access == "Read only";
-    int c = (*it).cdata.find("\r\nX-Count:");
+    a = cstr.find("X-Count: ");
+    b = cstr.find("\r\n", a);
     int exists = -1;
-    if ( c != -1 )
-    {
-      bool ok;
-      exists = (*it).cdata.mid( c+10,
-          (*it).cdata.find("\r\n", c+1) - c-10 ).toInt(&ok);
-      if ( !ok ) exists = -1;
-    }
+    bool ok;
+    if ( (b - a - 9) >= 0 ) exists = cstr.mid(a + 9, b - a - 9).toInt(&ok);
+    if ( !ok ) exists = -1;
     QString startUid;
     if (uidValidity() != uidv)
     {
