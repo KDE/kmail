@@ -119,7 +119,7 @@ public:
   static KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
 
   /** Convenience function to delete a message. */
-  static void deleteMsg( KMMessage* msg );
+  void deleteMsg( KMMessage* msg );
 
   bool isEnabled() const { return mUseResourceIMAP; }
 
@@ -164,11 +164,20 @@ private:
   KMFolderDir* mFolderParent;
   KMFolderType mFolderType;
 
+  // Ignore 'added' notifications for those incidences, we added them ourselves
+  // This is a temporary storage, between addIncidence and slotIncidenceAdded,
+  // which is called a bit later.
+  // We store the KMMessage* since we don't have a serial number yet.
+  QValueList<KMMessage*> mIgnoreAdded;
+  // Ignore 'deleted' notifications for those incidences, we deleted them ourselves
+  // This is a temporary storage, between deleteIncidence and slotIncidenceDeleted,
+  // which is called a bit later.
+  QValueList<Q_UINT32> mIgnoreDeleted;
+
   // groupware folder icons:
   static QPixmap *pixContacts, *pixCalendar, *pixNotes, *pixTasks;
 
   bool mUseResourceIMAP;
-  bool mResourceQuiet;
   bool mHideFolders;
 };
 

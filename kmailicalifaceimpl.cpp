@@ -105,7 +105,7 @@ static KMail::FolderContentsType folderContentsType( const QString& type )
 KMailICalIfaceImpl::KMailICalIfaceImpl()
   : DCOPObject( "KMailICalIface" ), QObject( 0, "KMailICalIfaceImpl" ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
-    mFolderLanguage( 0 ), mUseResourceIMAP( false ), mResourceQuiet( false ),
+    mFolderLanguage( 0 ), mUseResourceIMAP( false ),
     mHideFolders( true )
 {
   // Listen to config changes
@@ -127,8 +127,6 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
     return false;
 
   bool rc = false;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   // Find the folder
   KMFolder* f = folderFromType( type, folder );
@@ -151,13 +149,14 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
     // Mark the message as read and store it in the folder
     msg->touch();
+    //kdDebug(5006) << "addIncidence: will ignore added notification for msg=" << msg << endl;
+    mIgnoreAdded.append( msg );
     f->addMsg( msg );
 
     rc = true;
   } else
     kdError(5006) << "Not an IMAP resource folder" << endl;
 
-  mResourceQuiet = quiet;
   return rc;
 }
 
@@ -173,8 +172,6 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
             << uid << " )" << endl;
 
   bool rc = false;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   // Find the folder and the incidence in it
   KMFolder* f = folderFromType( type, folder );
@@ -189,7 +186,6 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   } else
     kdError(5006) << "Not an IMAP resource folder" << endl;
 
-  mResourceQuiet = quiet;
   return rc;
 }
 
@@ -288,8 +284,6 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 
   kdDebug(5006) << "Update( " << type << ", " << folder << ", " << uid << ")\n";
   bool rc = true;
-  bool quiet = mResourceQuiet;
-  mResourceQuiet = true;
 
   // Find the folder and the incidence in it
   KMFolder* f = folderFromType( type, folder );
@@ -310,7 +304,6 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
     rc = false;
   }
 
-  mResourceQuiet = quiet;
   return rc;
 }
 
@@ -318,7 +311,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
 void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
                                              Q_UINT32 sernum )
 {
-  if( mResourceQuiet || !mUseResourceIMAP )
+  if( !mUseResourceIMAP )
     return;
 
   QString type = icalFolderType( folder );
@@ -332,12 +325,20 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
     QString s;
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
-      kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
-                    << ", " << folder->location() << ", " << s << " )" << endl;
-      incidenceAdded( type, folder->location(), s );
+    KMMessage* msg = folder->getMsg( i );
+    QValueList<KMMessage*>::iterator addit = mIgnoreAdded.find( msg );
+    if ( addit == mIgnoreAdded.end() ) {
+      if( KMGroupware::vPartFoundAndDecoded( msg, s ) ) {
+        kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
+                      << ", " << folder->location() << ", " << s << " )" << endl;
+        incidenceAdded( type, folder->location(), s );
+      }
+    } else {
+      //kdDebug(5006) << "slotIncidenceAdded: ignoring addition of " << msg << endl;
+      mIgnoreAdded.remove( addit );
     }
-    if( unget ) folder->unGetMsg(i);
+    if( unget )
+      folder->unGetMsg(i);
   } else
     kdError(5006) << "Not an IMAP resource folder" << endl;
 }
@@ -346,8 +347,14 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
 void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
                                                Q_UINT32 sernum )
 {
-  if( mResourceQuiet || !mUseResourceIMAP )
+  if( !mUseResourceIMAP )
     return;
+  QValueList<Q_UINT32>::iterator delit = mIgnoreDeleted.find( sernum );
+  if ( delit != mIgnoreDeleted.end() ) {
+    //kdDebug(5006) << "slotIncidenceDeleted: ignoring deletion of " << sernum << endl;
+    mIgnoreDeleted.remove( delit );
+    return;
+  }
 
   QString type = icalFolderType( folder );
   if( !type.isEmpty() ) {
@@ -543,6 +550,8 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
 void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
 {
   if( !msg ) return;
+  //kdDebug(5006) << "deleteMsg: will ignore deleted notification for " << msg->getMsgSerNum() << endl;
+  mIgnoreDeleted.append( msg->getMsgSerNum() );
   ( new KMDeleteMsgCommand( msg->parent(), msg ) )->start();
 }
 
