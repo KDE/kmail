@@ -4023,7 +4023,7 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
 
   if ( !part )
   {
-    kdDebug(5006) << "updateAttachmentState - no part!" << endl;
+    // kdDebug(5006) << "updateAttachmentState - no part!" << endl;
     setStatus( KMMsgStatusHasNoAttach );
     return;
   }
