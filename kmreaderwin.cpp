@@ -369,7 +369,7 @@ kdDebug(5006) << "* text *" << endl;
               bDone = true;
             }
             break;
-	  }
+          }
           case DwMime::kSubtypeXVCard: {
 kdDebug(5006) << "v-card" << endl;
               // do nothing: X-VCard is handled in parseMsg(KMMessage* aMsg)
@@ -415,7 +415,7 @@ kdDebug(5006) << "mixed" << endl;
                                  cryptPlugList,
                                  useThisCryptPlug,
                                  curNode->mChild,
-                                 showOneMimePart,
+                                 false,
                                  keepEncryptions,
                                  includeSignatures );
               bDone = true;
@@ -437,7 +437,7 @@ kdDebug(5006) << "alternative" << endl;
                                      cryptPlugList,
                                      useThisCryptPlug,
                                      dataHtml,
-                                     showOneMimePart,
+                                     false,
                                      keepEncryptions,
                                      includeSignatures );
                 }
@@ -449,7 +449,7 @@ kdDebug(5006) << "alternative" << endl;
                                      cryptPlugList,
                                      useThisCryptPlug,
                                      dataPlain,
-                                     showOneMimePart,
+                                     false,
                                      keepEncryptions,
                                      includeSignatures );
                 }
@@ -459,7 +459,7 @@ kdDebug(5006) << "alternative" << endl;
                                      cryptPlugList,
                                      useThisCryptPlug,
                                      curNode->mChild,
-                                     showOneMimePart,
+                                     true,
                                      keepEncryptions,
                                      includeSignatures );
                 bDone = true;
@@ -599,14 +599,13 @@ kdDebug(5006) << "encrypted" << endl;
                       messagePart.isSigned = false;
                       reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
                     }
-                    parseObjectTree( reader,
-                                     &resultString,
-                                     cryptPlugList,
-                                     useThisCryptPlug,
-                                     &myBodyNode,
-                                     showOneMimePart,
-                                     keepEncryptions,
-                                     includeSignatures );
+                    insertAndParseNewChildNode( reader,
+                                                &resultString,
+                                                cryptPlugList,
+                                                useThisCryptPlug,
+                                                *curNode,
+                                                &*decryptedData,
+                                                "encrypted data" );
                     if( reader )
                       reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                   }
@@ -637,7 +636,7 @@ kdDebug(5006) << "(  unknown subtype  )" << endl;
                                cryptPlugList,
                                useThisCryptPlug,
                                curNode->mChild,
-                               showOneMimePart,
+                               false,
                                keepEncryptions,
                                includeSignatures );
               bDone = true;
@@ -696,11 +695,7 @@ kdDebug(5006) << "octet stream" << endl;
                   if( foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
                     QCString decryptedData;
                     if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *curNode, decryptedData ) ) {
-                      DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), curNode->dwPart());
-                      myBody->Parse();
-                      partNode myBodyNode( true, myBody );
-                      myBodyNode.buildObjectTree( false );
-
+                      
                       // paint the frame
                       PartMetaData messagePart;
                       if( reader ) {
@@ -709,14 +704,14 @@ kdDebug(5006) << "octet stream" << endl;
                         messagePart.isSigned = false;
                         reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
                       }
-                      parseObjectTree( reader,
-                                       &resultString,
-                                       cryptPlugList,
-                                       useThisCryptPlug,
-                                       &myBodyNode,
-                                       showOneMimePart,
-                                       keepEncryptions,
-                                       includeSignatures );
+                      // fixing the missing attachments bug #1090-b
+                      insertAndParseNewChildNode( reader,
+                                                  &resultString,
+                                                  cryptPlugList,
+                                                  useThisCryptPlug,
+                                                  *curNode,
+                                                  &*decryptedData,
+                                                  "encrypted data" );
                       if( reader )
                         reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                     }
@@ -773,7 +768,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                     // Analyze "signTestNode" node to find/verify a signature.
                     // If zero this verification was sucessfully done after
                     // decrypting via recursion by insertAndParseNewChildNode().
-                    partNode* signTestNode = curNode;
+                    partNode* signTestNode = isEncrypted ? 0 : curNode;
 
 
                     // We try decrypting the content
@@ -785,21 +780,23 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                       else
                         kdDebug(5006) << "pkcs7 mime  -  type unknown  -  enveloped (encrypted) data ?" << endl;
                       QCString decryptedData;
+                      PartMetaData messagePart;
+                      if( reader ) {
+                        messagePart.isEncrypted = true;
+                        messagePart.isSigned = false;
+                      }
                       if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
                                          *curNode,
                                          decryptedData,
                                          false ) ) {
                         kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
-                        bool cryptoDone = isEncrypted;
                         isEncrypted = true;
                         curNode->setEncrypted( true );
-                        PartMetaData messagePart;
-                        if( reader ) {
-                            messagePart.isDecryptable = true;
-                            messagePart.isEncrypted = true;
-                            messagePart.isSigned = false;
-                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
-                        }
+                        signTestNode = 0;
+                        // paint the frame
+                        messagePart.isDecryptable = true;
+                        if( reader )
+                          reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
                         insertAndParseNewChildNode( reader,
                                                     &resultString,
                                                     cryptPlugList,
@@ -809,16 +806,22 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                                                     "encrypted data" );
                         if( reader )
                             reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
-                        if( curNode->mChild && curNode->mChild->isSigned() ) {
-                          isSigned = true;
-                          signTestNode = 0;
-                        } else if( cryptoDone )
-                          signTestNode = 0;
-                        else
-                          signTestNode = curNode->mChild;
                       } else {
-                        kdDebug(5006) << "pkcs7 mime  -  NO encryption found   :-(" << endl;
+                        if( isEncrypted ) {
+                          kdDebug(5006) << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !" << endl;
+                          // paint the frame
+                          messagePart.isDecryptable = false;
+                          if( reader ) {
+                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                            reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
+                            reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
+                          }
+                        } else {
+                          kdDebug(5006) << "pkcs7 mime  -  NO encryption found" << endl;
+                        }
                       }
+                      if( isEncrypted )
+                        curNode->setEncrypted( true );
                     }
 
                     // We now try signature verification if necessarry.
