@@ -407,7 +407,6 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  // Do not remove imapPath, FolderDiaACLTab needs to call this with parent==0.
   void ImapAccountBase::getACL( KMFolder* parent, const QString& imapPath )
   {
     KURL url = getUrl();
@@ -428,7 +427,7 @@ namespace KMail {
     JobIterator it = findJob( job );
     if ( it == jobsEnd() ) return;
 
-    KMFolder* folder = (*it).parent; // can be 0
+    KMFolder* folder = (*it).parent;
     emit receivedACL( folder, job, job->entries() );
     if (mSlave) removeJob(job);
   }
@@ -835,7 +834,7 @@ namespace KMail {
     }
     mapJobData.remove( it );
   }
-  
+
   //-----------------------------------------------------------------------------
   KPIM::ProgressItem* ImapAccountBase::listDirProgressItem()
   {
@@ -854,7 +853,7 @@ namespace KMail {
     }
     return mListDirProgressItem;
   }
-  
+
 } // namespace KMail
 
 #include "imapaccountbase.moc"

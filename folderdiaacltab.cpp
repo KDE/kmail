@@ -451,7 +451,8 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString&
   if ( mUserRights == 0 ) {
     connect( mImapAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
              this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
-    mImapAccount->getUserRights( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
+    KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
+    mImapAccount->getUserRights( folder, mImapPath );
   }
   else
     startListing();
@@ -474,7 +475,7 @@ void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
 void KMail::FolderDiaACLTab::startListing()
 {
   // List ACLs of folder - or its parent, if creating a new folder
-  mImapAccount->getACL( 0, mImapPath );
+  mImapAccount->getACL( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
   connect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
            this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 }
