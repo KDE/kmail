@@ -179,6 +179,8 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
     kernel->undoStack()->pushAction( msg->getMsgSerNum(), folder, this );
   }
   if (folder) folder->take(msgList);
+  msgList.setAutoDelete(true);
+  msgList.clear();
   if (mIsSelected) getFolder();
 }
 
@@ -353,8 +355,6 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
 {
-  kdDebug(5006) << "KMFolderImap::listDirectory " << label() << ", "
-    << secondStep << endl;
   mSubfolderState = imapInProgress;
   KMAcctImap::jobData jd;
   jd.parent = this;
@@ -1200,7 +1200,6 @@ void KMImapJob::slotCopyMessageResult(KIO::Job *job)
     if ( !(*it).msgList.isEmpty() )
     {
       emit messageCopied((*it).msgList);
-      (*it).msgList.clear();
     } else if (mMsg) {
       emit messageCopied(mMsg);
       mMsg = NULL;
