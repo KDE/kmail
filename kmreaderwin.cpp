@@ -417,7 +417,7 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
         curNode_replacedType    = DwMime::kTypeText;
         curNode_replacedSubType = DwMime::kSubtypePlain;
       }
-
+        
 
       switch( curNode_replacedType ){
       case DwMime::kTypeText: {
@@ -459,7 +459,7 @@ kdDebug(5006) << "* text *" << endl;
                 reader->writeHTMLStr(QString("<div style=\"margin:0px 5%;"
                                   "border:2px solid %1;padding:10px;"
                                   "text-align:left;font-size:90%\">")
-                                  .arg( reader->cCBhtml.name() ) );
+                                  .arg( reader->cHtmlWarning.name() ) );
                 reader->writeHTMLStr(i18n("<b>Note:</b> This is a HTML message. For "
                                   "security reasons, only the raw HTML code "
                                   "is shown. If you trust the sender of this "
@@ -729,7 +729,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     sigMeta.extended_info_count = 0;
                     sigMeta.nota_xml            = 0;
                     bool passphraseError;
-
+                    
                     bool bOkDecrypt = okDecryptMIME( reader, useThisCryptPlug,
                                        *data,
                                        decryptedData,
@@ -738,7 +738,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                                        true,
                                        passphraseError,
                                        messagePart.errorText );
-
+                                       
                     if( bOkDecrypt ){
                       // paint the frame
                       if( reader ) {
@@ -749,7 +749,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                                                                        useThisCryptPlug,
                                                                        curNode->trueFromAddress() ) );
                       }
-
+                      
                       // Note: Multipart/Encrypted might also be signed
                       //       without encapsulating a nicely formatted
                       //       ~~~~~~~                 Multipart/Signed part.
@@ -781,7 +781,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                                                     &*decryptedData,
                                                     "encrypted data" );
                       }
-
+                      
                       if( reader )
                         reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                     }
@@ -1589,7 +1589,7 @@ KMReaderWin::KMReaderWin(KMMimePartTree* mimePartTree,
 
   mCodec = 0;
   mAutoDetectEncoding = true;
-
+    
   if(getenv("KMAIL_DEBUG_READER_CRYPTO") != NULL){
     QCString cE = getenv("KMAIL_DEBUG_READER_CRYPTO");
     mDebugReaderCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
@@ -1661,6 +1661,7 @@ void KMReaderWin::readColorConfig(void)
   c2 = KGlobalSettings::linkColor();
   c3 = KGlobalSettings::visitedLinkColor();
   c4 = QColor(kapp->palette().active().base());
+  cHtmlWarning = QColor( 0xFF, 0x40, 0x40 ); // warning text color: light red
 
   // The default colors are also defined in configuredialog.cpp
   cPgpEncrH = QColor( 0x00, 0x80, 0xFF ); // light blue
@@ -1668,9 +1669,10 @@ void KMReaderWin::readColorConfig(void)
   cPgpOk0H  = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
   cPgpWarnH = QColor( 0xFF, 0xFF, 0x40 ); // light yellow
   cPgpErrH  = QColor( 0xFF, 0x00, 0x00 ); // red
-  cCBpgp   = QColor( 0x80, 0xFF, 0x80 ); // very light green
-  cCBplain = QColor( 0xFF, 0xFF, 0x80 ); // very light yellow
-  cCBhtml  = QColor( 0xFF, 0x40, 0x40 ); // light red
+  cCBnoHtmlB = Qt::lightGray;
+  cCBnoHtmlF = Qt::black;
+  cCBisHtmlB = Qt::black;
+  cCBisHtmlF = Qt::white;
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     c1 = config->readColorEntry("ForegroundColor",&c1);
@@ -1682,9 +1684,11 @@ void KMReaderWin::readColorConfig(void)
     cPgpOk0H  = config->readColorEntry( "PGPMessageOkKeyBad", &cPgpOk0H );
     cPgpWarnH = config->readColorEntry( "PGPMessageWarn", &cPgpWarnH );
     cPgpErrH  = config->readColorEntry( "PGPMessageErr", &cPgpErrH );
-    cCBpgp   = config->readColorEntry( "ColorbarPGP", &cCBpgp );
-    cCBplain = config->readColorEntry( "ColorbarPlain", &cCBplain );
-    cCBhtml  = config->readColorEntry( "ColorbarHTML", &cCBhtml );
+    cHtmlWarning = config->readColorEntry( "HTMLWarningColor", &cHtmlWarning );
+    cCBnoHtmlB = config->readColorEntry( "ColorbarBackgroundPlain", &cCBnoHtmlB );
+    cCBnoHtmlF = config->readColorEntry( "ColorbarForegroundPlain", &cCBnoHtmlF );
+    cCBisHtmlB = config->readColorEntry( "ColorbarBackgroundHTML",  &cCBisHtmlB );
+    cCBisHtmlF = config->readColorEntry( "ColorbarForegroundHTML",  &cCBisHtmlF );
   }
 
   // determine the frame and body color for PGP messages from the header color
@@ -2399,7 +2403,6 @@ void KMReaderWin::parseMsg(void)
                                           "border-width: 0px; "
                                           "align: left }\n"
                   "th.fancyHeaderDtls { padding: 0px; "
-				       "white-space: nowrap; "
                                        "border-spacing: 0px; "
                                        "text-align: left; "
                                        "vertical-align: top; }\n"
@@ -2485,7 +2488,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
     QByteArray signaturetext;
     bool signatureIsBinary = false;
     int signatureLen = 0;
-
+    
     if( doCheck ){
       if( data )
         cleartext = data->dwPart()->AsString().c_str();
@@ -2667,7 +2670,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                            useThisCryptPlug,
                                                            fromAddress ) );
         bIsOpaqueSigned = true;
-
+        
         if( doCheck ){
           QCString deb;
           deb = "\n\nN E W    C O N T E N T = \"";
@@ -2675,7 +2678,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
           deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
           kdDebug(5006) << deb << endl;
         }
-
+        
         insertAndParseNewChildNode( reader,
                                     resultString,
                                     useThisCryptPlug,
@@ -2896,7 +2899,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                           (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
     int cipherLen = ciphertext.size();
-
+    
     if( reader && reader->mDebugReaderCrypto ){
       QFile fileC( "dat_04_reader.encrypted" );
       if( fileC.open( IO_WriteOnly ) ) {
@@ -3231,7 +3234,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
   if( mRootNode && DwMime::kTypeApplication       == rootNodeCntType
                 && DwMime::kSubtypePgpClearsigned == mRootNode->subType() )
     rootNodeCntType = DwMime::kTypeText;
-
+    
   // if necessary restore original mRootNode
   if(onlyProcessHeaders) {
     delete mRootNode;
@@ -3250,38 +3253,12 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
                         (DwMime::kTypeApplication == rootNodeCntType) ||
                         (DwMime::kTypeMessage     == rootNodeCntType) ||
                         (DwMime::kTypeModel       == rootNodeCntType) );
-
-    if( mColorBar->text().isEmpty() ) {
-      if(    (KMMsgFullyEncrypted     == encryptionState)
-          || (KMMsgPartiallyEncrypted == encryptionState)
-          || (KMMsgFullySigned        == signatureState)
-          || (KMMsgPartiallySigned    == signatureState) ){
-        mColorBar->setEraseColor( mPrinting ? QColor( "white" ) : cCBpgp );
-        partNode::CryptoType crypt = mRootNode->firstCryptoType();
-        switch( crypt ){
-            case partNode::CryptoTypeUnknown:
-                kdDebug(5006) << "KMReaderWin  -  BUG: crypto flag is set but CryptoTypeUnknown." << endl;
-                break;
-            case partNode::CryptoTypeNone:
-                kdDebug(5006) << "KMReaderWin  -  BUG: crypto flag is set but CryptoTypeNone." << endl;
-                break;
-            case partNode::CryptoTypeInlinePGP:
-            case partNode::CryptoTypeOpenPgpMIME:
-                mColorBar->setText(i18n("\nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
-                break;
-            case partNode::CryptoTypeSMIME:
-                mColorBar->setText(i18n("\nS\n-\nM\nI\nM\nE\n \nM\ne\ns\ns\na\ng\ne"));
-                break;
-            case partNode::CryptoType3rdParty:
-                mColorBar->setText(i18n("\nS\ne\nc\nu\nr\ne\n \nM\ne\ns\ns\na\ng\ne"));
-                break;
-        }
-      }
-    }
   }
   if( mColorBar->text().isEmpty() ) {
-    mColorBar->setEraseColor( cCBplain );
-    mColorBar->setText(i18n("\nU\nn\nt\nr\nu\ns\nt\ne\nd\n \nM\ne\ns\ns\na\ng\ne"));
+    mColorBar->setEraseColor( cCBnoHtmlB );
+    mColorBar->setPaletteForegroundColor( cCBnoHtmlF );
+    mColorBar->setTextFormat( Qt::PlainText );
+    mColorBar->setText(i18n("\nn\no\n \nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
   }
 }
 
@@ -4204,8 +4181,10 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeHTMLStr(const QString& aStr)
 {
-  mColorBar->setEraseColor( cCBhtml );
-  mColorBar->setText(i18n("\nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
+  mColorBar->setEraseColor( cCBisHtmlB );
+  mColorBar->setPaletteForegroundColor( cCBisHtmlF );
+  mColorBar->setTextFormat( Qt::RichText );
+  mColorBar->setText(i18n("<b><br>H<br>T<br>M<br>L<br> <br>M<br>e<br>s<br>s<br>a<br>g<br>e</b>"));
   queueHtml(aStr);
 }
 
@@ -4623,7 +4602,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     KPopupMenu *menu = new KPopupMenu();
     menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
     menu->insertItem(i18n("Open With..."), this, SLOT(slotAtmOpenWith()));
-    menu->insertItem(i18n("View"), this, SLOT(slotAtmView()));
+    menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
     menu->insertItem(i18n("Save As..."), this, SLOT(slotAtmSave()));
     menu->insertItem(i18n("Properties..."), this,
 		     SLOT(slotAtmProperties()));
@@ -4678,7 +4657,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
   kernel->kbp()->busy();
   {
     KMReaderWin* win = new KMReaderWin; //new reader
-
+    
     QString partTypeStr    = aMsgPart->typeStr().lower();
     QString partSubtypeStr = aMsgPart->subtypeStr().lower();
     if(    DwMime::kTypeApplication       == aMsgPart->type()
@@ -4686,7 +4665,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       partTypeStr    = "text";
       partSubtypeStr = "plain";
     }
-
+    
     if (partTypeStr == "message")
     {               // if called from compose win
       KMMessage* msg = new KMMessage;

@@ -1686,9 +1686,11 @@ static const struct {
   { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP message - valid signature with untrusted key") },
   { "PGPMessageWarn", I18N_NOOP("OpenPGP message - unchecked signature") },
   { "PGPMessageErr", I18N_NOOP("OpenPGP message - bad signature") },
-  { "ColorbarPGP", I18N_NOOP("Colorbar - OpenPGP message") },
-  { "ColorbarPlain", I18N_NOOP("Colorbar - plain text message") },
-  { "ColorbarHTML", I18N_NOOP("Colorbar - HTML message") },
+  { "HTMLWarningColor", I18N_NOOP("Warning text predeeding HTML message") },
+  { "ColorbarBackgroundPlain", I18N_NOOP("Colorbar background - plain text message") },
+  { "ColorbarForegroundPlain", I18N_NOOP("Colorbar foreground - plain text message") },
+  { "ColorbarBackgroundHTML",  I18N_NOOP("Colorbar background - HTML message") },
+  { "ColorbarForegroundHTML",  I18N_NOOP("Colorbar foreground - HTML message") },
 };
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
@@ -1747,9 +1749,11 @@ void AppearancePage::ColorsTab::setup() {
     QColor( 0xA0, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp unchk
     QColor( 0xFF, 0x00, 0x00 ), // red // pgp bad
-    QColor( 0x80, 0xFF, 0x80 ), // very light green // colorbar pgp
-    QColor( 0xFF, 0xFF, 0x80 ), // very light yellow // colorbar plain
-    QColor( 0xFF, 0x40, 0x40 ), // light red // colorbar html
+    QColor( 0xFF, 0x40, 0x40 ), // warning text color: light red
+    QColor( "lightGray" ), // colorbar plain bg
+    QColor( "black" ),     // colorbar plain fg
+    QColor( "black" ),     // colorbar html  bg
+    QColor( "white" ),     // colorbar html  fg
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ )
