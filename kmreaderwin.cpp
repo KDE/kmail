@@ -1604,7 +1604,10 @@ void KMReaderWin::slotAtmSave()
 
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
-  fileName.append(msgPart.name());
+  if (!msgPart.fileName().isEmpty())
+    fileName.append(msgPart.fileName());
+  else
+    fileName.append(msgPart.name());
 
   KURL url = KFileDialog::getSaveURL( fileName, "*", this );
 
