@@ -359,12 +359,12 @@ void KMFldSearch::slotSearch()
     mFolder->stopSearch();
     disconnect(mFolder, SIGNAL(msgAdded(int)),
 	    this, SLOT(slotAddMsg(int)));
-    disconnect(mFolder, SIGNAL(msgRemoved(int, QString)),
-	    this, SLOT(slotRemoveMsg(int)));
+    disconnect(mFolder, SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
+	    this, SLOT(slotRemoveMsg(KMFolder*, Q_UINT32)));
     connect(mFolder, SIGNAL(msgAdded(int)),
 	    this, SLOT(slotAddMsg(int)));
-    connect(mFolder, SIGNAL(msgRemoved(int, QString)),
-	    this, SLOT(slotRemoveMsg(int)));
+    connect(mFolder, SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
+	    this, SLOT(slotRemoveMsg(KMFolder*, Q_UINT32)));
     KMSearch *search = new KMSearch();
     connect(search, SIGNAL(finished(bool)),
 	    this, SLOT(searchDone()));
@@ -432,11 +432,10 @@ void KMFldSearch::slotAddMsg(int idx)
 	mFolder->unGetMsg(idx);
 }
 
-void KMFldSearch::slotRemoveMsg(int idx)
+void KMFldSearch::slotRemoveMsg(KMFolder *, Q_UINT32 serNum)
 {
     if (!mFolder)
 	return;
-    Q_UINT32 serNum = mFolder->serNum(idx);
     QListViewItemIterator it(mLbxMatches);
     while (it.current()) {
 	QListViewItem *item = *it;
@@ -558,7 +557,6 @@ KMMessageList KMFldSearch::selectedMessages()
 	if (it.current()->isSelected()) {
 	    kernel->msgDict()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
 					   &folder, &msgIndex);
-
 	    if (folder && msgIndex >= 0)
 		msgList.append(folder->getMsgBase(msgIndex));
 	}

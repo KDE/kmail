@@ -469,6 +469,7 @@ void KMFolderSearch::removeSerNum(Q_UINT32 serNum)
 	    KMFolder *folder = 0;
 	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
 	    assert(folder && (idx != -1));
+	    emit msgRemoved(this, serNum);
 	    removeMsg(i);
 	    return;
 	}

@@ -400,7 +400,7 @@ void KMFolder::removeMsg(int idx, bool)
   KMMsgBase* mb = getMsgBase(idx);
   QString msgIdMD5 = mb->msgIdMD5();
   Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
-  if (!mQuiet)
+  if (!mQuiet && serNum != 0)
     emit msgRemoved(this, serNum);
   mb = takeIndexEntry( idx );
 
