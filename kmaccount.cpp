@@ -233,6 +233,6 @@ void KMAccount::mailCheck()
 {
  if (mCheckingMail) return;
  mCheckingMail = TRUE;
- acctMgr->singleCheckMail(this);
+ acctMgr->singleCheckMail(this,false);
  mCheckingMail = FALSE;
 }

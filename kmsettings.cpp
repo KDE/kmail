@@ -1,10 +1,12 @@
 // kmsettings.cpp
 
+#include <kfilereader.h>
 #include <qdir.h>
 
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
 #include "kmacctpop.h"
+#include "kmacctexppop.h"
 #include "kmacctseldlg.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
@@ -32,10 +34,10 @@
 #include <qcheckbox.h>
 #include <qvalidator.h>
 #include <qmessagebox.h>
+#include <kmessagebox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kcolorbtn.h>
-#include <kmessagebox.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -1167,6 +1169,9 @@ void KMSettings::addAccount()
   case 1:
     acctType = "pop";
     break;
+  case 2:
+    acctType = "experimental pop";
+    break;
   default:
     fatal("KMSettings: unsupported account type selected");
   }
@@ -1195,7 +1200,7 @@ void KMSettings::chooseSendmailLocation()
   if( dlg.exec() )
   {
     KURL url = dlg.selectedURL();
-
+      
     if( url.isEmpty() )
       return;
     
@@ -1464,9 +1469,11 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 				      2, 0, &btnDetail);
     connect(btnDetail,SIGNAL(clicked()), SLOT(chooseLocation()));
   }
-  else if (acctType == "pop")
+  else if ((acctType == "pop") || (acctType == "experimental pop"))
   {
     lbl->setText(i18n("Pop Account"));
+    if (acctType == "experimental pop")
+      lbl->setText(i18n("Experimental Pop Account"));
 
     mEdtLogin = createLabeledEntry(this, grid, i18n("Login:"),
 				   ((KMAcctPop*)mAcct)->login(), 2, 0);
@@ -1654,6 +1661,19 @@ void KMAccountSettings::accept()
                  ((KMAcctPop*)mAcct)->storePasswd());
     ((KMAcctPop*)mAcct)->setLeaveOnServer(!mChkDelete->isChecked());
     ((KMAcctPop*)mAcct)->setRetrieveAll(mChkRetrieveAll->isChecked());
+  }
+
+  else if (acctType == "experimental pop")
+  {
+    ((KMAcctExpPop*)mAcct)->setHost(mEdtHost->text());
+    ((KMAcctExpPop*)mAcct)->setPort(atoi(mEdtPort->text()));
+    ((KMAcctExpPop*)mAcct)->setLogin(mEdtLogin->text());
+    ((KMAcctExpPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
+    ((KMAcctExpPop*)mAcct)->setStorePasswd(mStorePasswd->isChecked());
+    ((KMAcctExpPop*)mAcct)->setPasswd(mEdtPasswd->text(),
+                 ((KMAcctExpPop*)mAcct)->storePasswd());
+    ((KMAcctExpPop*)mAcct)->setLeaveOnServer(!mChkDelete->isChecked());
+    ((KMAcctExpPop*)mAcct)->setRetrieveAll(mChkRetrieveAll->isChecked());
   }
 
   acctMgr->writeConfig(TRUE);

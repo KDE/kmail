@@ -22,6 +22,7 @@
 #include "kbusyptr.h"
 #include "kmacctfolder.h"
 #include "kmfiltermgr.h"
+#include "kmbroadcaststatus.h"
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -68,11 +69,11 @@ void KMAcctPop::init(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctPop::processNewMail(KMIOStatus *wid)
+void KMAcctPop::processNewMail(bool interactive)
 {
   void (*oldHandler)(int);
   void (*pipeHandler)(int);
-  bool result;
+  bool hasNewMail;
 
   // Before we do anything else let's ignore the friggin' SIGALRM signal
   // This signal somehow interrupts the network functions and messed up
@@ -82,10 +83,17 @@ bool KMAcctPop::processNewMail(KMIOStatus *wid)
   // abort the app when received. SIGPIPE is send when e.g the client attempts
   // to write to a TCP socket when the connection was shutdown by the server.
   pipeHandler = signal(SIGPIPE, SIG_IGN);
-  result = doProcessNewMail(wid);
+  KMBroadcastStatus::instance()->reset();
+  KMBroadcastStatus::instance()->setStatusMsg( 
+                     i18n( "Preparing transmission..." ));
+  KMBroadcastStatus::instance()->setStatusProgressEnable( true );
+  hasNewMail = doProcessNewMail(interactive);
+  KMBroadcastStatus::instance()->setStatusProgressEnable( false );
+  KMBroadcastStatus::instance()->reset();
+
   signal(SIGALRM, oldHandler);
   signal(SIGPIPE, pipeHandler);
-  return result;
+  emit finishedCheck(hasNewMail);
 }
 
 
@@ -157,12 +165,14 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     break;
   }
 
+  KMBroadcastStatus::instance()->setStatusMsg( 
+		     i18n( "Transmission completed..." ));
   return TRUE;
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
+bool KMAcctPop::doProcessNewMail(bool interactive)
 {
   DwPopClient client;
   QString passwd;
@@ -177,9 +187,6 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   gotMsgs = FALSE;
   bool doFetchMsg;
   bool addedOk;   //Flag if msg was delivered succesfully
-
-  if (wid)
-    wid->prepareTransmission(host(), KMIOStatus::RETRIEVE);
 
   // is everything specified ?
   app->processEvents();
@@ -221,12 +228,15 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   {
     client.SetReceiveTimeout(40);
 
-    if(wid && wid->abortRequested()) {
+    if (KMBroadcastStatus::instance()->abortRequested()) {
       client.Quit();
       return gotMsgs;
     }
-    if (wid)
-      wid->updateProgressBar(id,num);
+
+    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") +
+			                QString("%1/%2").arg(id).arg(num) );
+    KMBroadcastStatus::instance()->setStatusProgressPercent( (id*100) / num );
+
     app->processEvents();
     if (client.List(id) != '+')
       return popError("LIST", client);
@@ -288,9 +298,8 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     gotMsgs = TRUE;
     id++;
   }
-  if (wid)
-    wid->transmissionCompleted();
   client.Quit();
+
   return gotMsgs;
 }
 

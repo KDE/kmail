@@ -271,7 +271,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     updateReaderWinTimer.changeInterval( 100 );
   else {
     //    updateReaderWin();
-    updateReaderWinTimer.start( 0, TRUE );  
+    updateReaderWinTimer.start( 20, TRUE );  
   }
 }
 
@@ -1141,7 +1141,7 @@ void KMReaderWin::slotAtmSave()
   }
 
   fileName = url.path();
-
+ 
   kbp->busy();
   if (!kByteArrayToFile(msgPart.bodyDecoded(), fileName, TRUE))
     warning(i18n("Could not save file"));

@@ -25,12 +25,13 @@ public:
   virtual void setLocation(const QString&);
 
   virtual const char* type(void) const;
-  virtual bool processNewMail(KMIOStatus *);
+  virtual void processNewMail(bool);
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
 
 protected:
   QString mLocation;
+  bool hasNewMail;
 };
 
 #endif /*kmacctlocal_h*/

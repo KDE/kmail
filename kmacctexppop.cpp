@@ -1,0 +1,526 @@
+// KMAcctExpPop.cpp
+// Authors: Don Sanders, (based on kmacctpop by) 
+//          Stefan Taferner and Markus Wuebben
+
+#include "kmacctexppop.moc"
+
+#include <assert.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <mimelib/mimepp.h>
+#include <kmfolder.h>
+#include <kmmessage.h>
+#include <qtextstream.h>
+#include <kconfig.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
+#include <kapp.h>
+#include <kstddirs.h>
+
+#include "kmacctexppop.h"
+#include "kalarmtimer.h"
+#include "kmglobal.h"
+#include "kbusyptr.h"
+#include "kmacctfolder.h"
+#include "kmfiltermgr.h"
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <qmessagebox.h> // just for kioslave testing
+#include <qtooltip.h>
+#include "kmbroadcaststatus.h"
+
+//-----------------------------------------------------------------------------
+KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
+  KMAcctExpPopInherited(aOwner, aAccountName)
+{
+  initMetaObject();
+
+  mStorePasswd = FALSE;
+  mLeaveOnServer = FALSE;
+  mRetrieveAll = TRUE;
+  mProtocol = 3;
+  mPort = 110;
+  job = 0L;
+  stage = Idle;
+  indexOfCurrentMsg = -1;
+  processingDelay = 2*100;
+  connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
+  ss = new QTimer();
+  connect( ss, SIGNAL( timeout() ), this, SLOT( slotGetNextMsg() ));
+}
+
+
+//-----------------------------------------------------------------------------
+KMAcctExpPop::~KMAcctExpPop()
+{
+  if (job)
+    job->kill();
+}
+
+
+//-----------------------------------------------------------------------------
+const char* KMAcctExpPop::type(void) const
+{
+  return "experimental pop";
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::init(void)
+{
+  mHost   = "";
+  mPort   = 110;
+  mLogin  = "";
+  mPasswd = "";
+  mProtocol = 3;
+  mStorePasswd = FALSE;
+  mLeaveOnServer = FALSE;
+  mRetrieveAll = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::processNewMail(bool _interactive)
+{
+  if (stage == Idle) {
+    
+    if(mPasswd.isEmpty() || mLogin.isEmpty()) {
+      QString passwd = decryptStr(mPasswd);
+      QString msg = i18n("Please set Password and Username");
+      KMExpPasswdDialog dlg(NULL, NULL, this, msg, mLogin, passwd);
+      if (!dlg.exec()) {
+	emit finishedCheck(false);
+	return;
+      }
+    }
+    
+    QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
+				       ":" + QString("%1").arg(mPort) );
+    KConfig config( seenUidList );
+    uidsOfSeenMsgs = config.readListEntry( "seenUidList" );
+
+    interactive = _interactive;
+    startJob();
+  }
+  else {
+    emit finishedCheck(false);
+    return;
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::readConfig(KConfig& config)
+{
+  KMAcctExpPopInherited::readConfig(config);
+
+
+  mLogin = config.readEntry("login", "");
+  mStorePasswd = config.readNumEntry("store-passwd", TRUE);
+  if (mStorePasswd) mPasswd = config.readEntry("passwd");
+  else mPasswd = "";
+  mHost = config.readEntry("host");
+  mPort = config.readNumEntry("port");
+  mProtocol = config.readNumEntry("protocol");
+  mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
+  mRetrieveAll = config.readNumEntry("retrieve-all", FALSE);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::writeConfig(KConfig& config)
+{
+  KMAcctExpPopInherited::writeConfig(config);
+
+  config.writeEntry("login", mLogin);
+  config.writeEntry("store-passwd", mStorePasswd);
+  if (mStorePasswd) config.writeEntry("passwd", mPasswd);
+  else config.writeEntry("passwd", "");
+
+  config.writeEntry("host", mHost);
+  config.writeEntry("port", static_cast<int>(mPort));
+  config.writeEntry("protocol", mProtocol);
+  config.writeEntry("leave-on-server", mLeaveOnServer);
+  config.writeEntry("retrieve-all", mRetrieveAll);
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMAcctExpPop::encryptStr(const QString aStr) const
+{
+  unsigned int i, val;
+  unsigned int len = aStr.length();
+  QCString result;
+  result.resize(len+1);
+
+  for (i=0; i<len; i++)
+  {
+    val = aStr[i] - ' ';
+    val = (255-' ') - val;
+    result[i] = (char)(val + ' ');
+  }
+  result[i] = '\0';
+
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMAcctExpPop::decryptStr(const QString aStr) const
+{
+  return encryptStr(aStr);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setStorePasswd(bool b)
+{
+  mStorePasswd = b;
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setLeaveOnServer(bool b)
+{
+  mLeaveOnServer = b;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setRetrieveAll(bool b)
+{
+  mRetrieveAll = b;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setLogin(const QString& aLogin)
+{
+  mLogin = aLogin;
+}
+//-----------------------------------------------------------------------------
+const QString KMAcctExpPop::passwd(void) const
+{
+  return decryptStr(mPasswd);
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setPasswd(const QString& aPasswd, bool aStoreInConfig)
+{
+  mPasswd = encryptStr(aPasswd);
+  mStorePasswd = aStoreInConfig;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setHost(const QString& aHost)
+{
+  mHost = aHost;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setPort(unsigned short int aPort)
+{
+  mPort = aPort;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMAcctExpPop::setProtocol(short aProtocol)
+{
+  //assert(aProtocol==2 || aProtocol==3);
+  if(aProtocol != 2 || aProtocol != 3)
+    return false;
+  mProtocol = aProtocol;
+  return true;
+}
+
+
+//=============================================================================
+//
+//  Class  KMExpPasswdDialog
+//
+//=============================================================================
+
+KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name, 
+			             KMAcctExpPop *account , 
+				     const char *caption,
+			             const char *login, QString passwd)
+  :QDialog(parent,name,true)
+{
+  // This function pops up a little dialog which asks you 
+  // for a new username and password if one of them was wrong or not set.
+
+  kbp->idle();
+
+  act = account;
+  setMaximumSize(300,180);
+  setMinimumSize(300,180);
+  setCaption(caption);
+
+  QLabel *label = new QLabel(this);
+  label->setText(i18n("Login Name:"));
+  label->resize(label->sizeHint());
+
+  label->move(20,30);
+  usernameLEdit = new QLineEdit(this,"NULL");
+  usernameLEdit->setText(login);
+  usernameLEdit->setGeometry(100,27,150,25);
+  
+  QLabel *label1 = new QLabel(this);
+  label1->setText(i18n("Password:"));
+  label1->resize(label1->sizeHint());
+  label1->move(20,80);
+
+  passwdLEdit = new QLineEdit(this,"NULL");
+  passwdLEdit->setEchoMode(QLineEdit::Password);
+  passwdLEdit->setText(passwd);
+  passwdLEdit->setGeometry(100,76,150,25);
+  connect(passwdLEdit,SIGNAL(returnPressed()),SLOT(slotOkPressed()));
+
+  ok = new QPushButton(i18n("OK") ,this,"NULL");
+  ok->setGeometry(55,130,70,25);
+  connect(ok,SIGNAL(pressed()),this,SLOT(slotOkPressed()));
+
+  cancel = new QPushButton(i18n("Cancel"), this);
+  cancel->setGeometry(180,130,70,25);
+  connect(cancel,SIGNAL(pressed()),this,SLOT(slotCancelPressed()));
+
+}
+
+//-----------------------------------------------------------------------------
+void KMExpPasswdDialog::slotOkPressed()
+{
+  act->setLogin(usernameLEdit->text());
+  act->setPasswd(passwdLEdit->text(), act->storePasswd());
+  done(1);
+}
+
+//-----------------------------------------------------------------------------
+void KMExpPasswdDialog::slotCancelPressed()
+{
+  done(0);
+}
+
+void KMAcctExpPop::connectJob() {
+  connect(job, SIGNAL( data( KIO::Job*, const QByteArray &)),
+	  SLOT( slotData( KIO::Job*, const QByteArray &)));
+  connect( job, SIGNAL( result( KIO::Job * ) ),
+	   SLOT( slotResult( KIO::Job * ) ) );
+}
+
+void KMAcctExpPop::slotCancel()
+{
+  idsOfMsgsPendingDownload.clear();
+  processRemainingQueuedMessagesAndSaveUidList();
+  slotJobFinished();
+}
+
+void KMAcctExpPop::slotProcessPendingMsgs()
+{
+  QString prefix = "pop:3//" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+    + ":" + QString("%1").arg(mPort);
+  bool addedOk;
+  QValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
+  QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
+  QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
+  while (cur != msgsAwaitingProcessing.end()) {
+    addedOk = processNewMsg(*cur); //added ok? Error displayed if not.
+    if (!addedOk) {
+      idsOfMsgsPendingDownload.clear();
+      msgIdsAwaitingProcessing.clear();
+      msgUidsAwaitingProcessing.clear();
+      break;
+    }
+    else {
+      idsOfMsgsToDelete.append(prefix + QString("/%1").arg(*curId));
+      uidsOfNextSeenMsgs.append( *curUid );
+    }
+    ++cur;
+    ++curId;
+    ++curUid;
+  }
+  msgsAwaitingProcessing.clear();
+  msgIdsAwaitingProcessing.clear();
+  msgUidsAwaitingProcessing.clear();
+}
+
+void KMAcctExpPop::startJob() {
+  QString text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+    mHost + ":" + QString("%1").arg(mPort) + "/index";
+  KURL url = text;
+  if ( url.isMalformed() ) {
+    QMessageBox::critical(0, i18n("Kioslave Error Message"), 
+			  i18n("Source URL is malformed") );
+    return;
+  }
+  
+  idsOfMsgsPendingDownload.clear();
+  idsOfMsgs.clear();
+  uidsOfMsgs.clear();
+  idsOfMsgsToDelete.clear();
+  indexOfCurrentMsg = -1;
+  KMBroadcastStatus::instance()->reset();
+  KMBroadcastStatus::instance()->setStatusProgressEnable( true );
+  KMBroadcastStatus::instance()->setStatusMsg( 
+                     i18n( "Preparing transmission..." ));
+
+  stage = List;  
+  job = KIO::get( text );
+  connectJob();
+}
+
+void KMAcctExpPop::slotJobFinished() {
+  QStringList emptyList;
+  if (stage == List) {
+    debug( "stage == List" );
+    QString command = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+      + ":" + QString("%1/uidl").arg(mPort);
+    job = KIO::get( command );
+    connectJob();
+    stage = Uidl;
+  }
+  else if (stage == Uidl) {
+    debug( "stage == Uidl" );
+    stage = Retr;
+    numMsgs = idsOfMsgsPendingDownload.count();
+    slotGetNextMsg();
+    processMsgsTimer.start(processingDelay);
+
+  }
+  else if (stage == Retr) {
+    debug( "stage == Retr" );
+    KMMessage *msg = new KMMessage;
+    msg->fromString(curMsgData,TRUE);
+    msgsAwaitingProcessing.append(msg);
+    msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
+    msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
+    // Have to user timer otherwise littleProgress only works for
+    // one job->get call.
+    ss->start( 0, true );
+  }
+  else if (stage == Quit) {
+    debug( "stage == Quit" );
+    job = 0L;
+    stage = Idle;
+    KMBroadcastStatus::instance()->setStatusMsg( 
+		       i18n( "Transmission completed..." ));
+    KMBroadcastStatus::instance()->setStatusProgressEnable( false );
+    KMBroadcastStatus::instance()->reset();
+
+    emit finishedCheck(idsOfMsgs.count() > 0);
+  }
+}
+
+void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
+{
+  int oldStage = stage;
+  slotProcessPendingMsgs(); // Force processing of any messages still in the queue
+  processMsgsTimer.stop();
+    
+  stage = Quit;
+  // Don't update the seen uid list unless we successfully got
+  // a new list from the server
+  if ((oldStage == List) || (oldStage == Uidl))
+    return; 
+  QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
+				       ":" + QString("%1").arg(mPort) );
+  KConfig config( seenUidList );
+  config.writeEntry( "seenUidList", uidsOfNextSeenMsgs );
+}
+
+void KMAcctExpPop::slotGetNextMsg()
+{
+  QStringList::Iterator next = idsOfMsgsPendingDownload.begin();
+  if (KMBroadcastStatus::instance()->abortRequested()) {
+    slotCancel();
+    return;
+  }
+
+  if (next == idsOfMsgsPendingDownload.end()) {
+    processRemainingQueuedMessagesAndSaveUidList();
+    QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      mHost + ":" + QString("%1").arg(mPort);
+
+    if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty())
+      job = KIO::get(  prefix + "/commit" );
+    else {
+      // sanders: TODO: Reimplement this properly
+      //      job->del( idsOfMsgsToDelete );
+      job = KIO::get(  prefix + "/commit" );
+    }
+  }
+  else {
+    curMsgData = "";
+    ++indexOfCurrentMsg;
+    KMBroadcastStatus::instance()->setStatusMsg( 
+      i18n("Message ") + QString("%1/%2").arg(indexOfCurrentMsg+1).arg(numMsgs) );
+    KMBroadcastStatus::instance()->setStatusProgressPercent( 
+      ((indexOfCurrentMsg + 1)*100) / numMsgs );
+
+    job = KIO::get( *next );
+    idsOfMsgsPendingDownload.remove( next );
+  }
+  connectJob();
+}
+
+void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
+{
+  if (data.size() == 0) {
+    debug( "Data: <End>");
+    return;
+  }
+
+  if (stage == Retr) {
+    curMsgData += data;
+    curMsgData += '\n';
+    return;
+  }
+
+  // otherwise stage is List Or Uidl
+  QString qdata = data;
+  int spc = qdata.find( ' ' );
+  if (spc > 0) {
+    QString text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      mHost + ":" + QString("%1/download/").arg(mPort);
+    if (stage == List) {
+      QString id = qdata.left(spc);
+      idsOfMsgs.append( id );
+      idsOfMsgsPendingDownload.append( text + id );
+    }
+    else { // stage == Uidl
+      QString uid = qdata.mid(spc + 1);
+      uidsOfMsgs.append( uid );
+      if (uidsOfSeenMsgs.contains(uid)) {
+	if (!mRetrieveAll) {
+	  QString id = qdata.left(spc);
+	  idsOfMsgsPendingDownload.remove( text + id );
+	  idsOfMsgs.remove( id );
+	  uidsOfMsgs.remove( uid );
+	}
+	uidsOfNextSeenMsgs.append( uid );
+      }
+    }
+  }
+  else {
+    stage = Idle;
+    job->kill();
+    job = 0L;
+    QMessageBox::critical(0, i18n("Invalid response from server"), 
+			  i18n( "Unable to complete LIST operation" ));
+    return;
+  }
+}
+
+void KMAcctExpPop::slotResult( KIO::Job* )
+{
+  if ( job->error() )
+  {
+    if (interactive)
+      job->showErrorDialog();
+    slotCancel();
+  }
+  else
+    slotJobFinished();
+}

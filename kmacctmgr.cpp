@@ -3,9 +3,12 @@
 #include "kmacctmgr.h"
 #include "kmacctlocal.h"
 #include "kmacctpop.h"
+#include "kmacctexppop.h"
 #include "kmglobal.h"
 #include "kbusyptr.h"
 #include "kmfiltermgr.h"
+
+#include <qlabel.h>
 
 #include <assert.h>
 #include <kconfig.h>
@@ -24,12 +27,16 @@ KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
   assert(aBasePath != NULL);
   mAcctList.setAutoDelete(TRUE);
   setBasePath(aBasePath);
+  mAccountIt = new QListIterator<KMAccount>(mAcctList);
+  checking = false;
+  lastAccountChecked = 0;
 }
 
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::~KMAcctMgr()
 {
+  delete mAccountIt;
   writeConfig(FALSE);
   mAcctList.clear();
 }
@@ -47,9 +54,6 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
     mBasePath.append(aBasePath+1);
   }
   else mBasePath = aBasePath;
-
-  
-  
 }
 
 
@@ -101,17 +105,13 @@ void KMAcctMgr::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::singleCheckMail(KMAccount *account, bool interactive)
+void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 {
-  debug ("checking mail, server busy");
-  serverReady(false);
-  bool hasNewMail = FALSE;
-  //kbp->busy();
-  KMIOStatusWdg *wid = 0;
-  if (interactive) {
-    wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
-    wid->show();
-  }
+  newMailArrived = false;
+  interactive = _interactive;
+
+  if (checking)
+    return;
 
   if (account->folder() == 0)
   {
@@ -121,22 +121,21 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account, bool interactive)
 	        "Check your account settings!")
 		.arg(account->name());
     warning(tmp);
+    return;
   }
-  else {
-    if (account->processNewMail(wid))
-      {
-	hasNewMail = TRUE;
-	emit newMail(account);
-      }
-  }
-  delete wid;
-  filterMgr->cleanup();
-  kbp->idle();
 
-  debug ("checked mail, server ready"); // sven
-  serverReady(true);                    // sven warning this might be recursive
-  // if message "check" is pending. No harm I think.
-  return hasNewMail;
+  checking = true;
+
+  debug ("checking mail, server busy");
+  serverReady(false);
+
+  mAccountIt->toLast(); 
+  ++(*mAccountIt);
+
+  lastAccountChecked = account;
+  connect( account, SIGNAL(finishedCheck(bool)),
+	   this, SLOT(processNextAccount(bool)) );
+  account->processNewMail(interactive);
 }
 
 
@@ -150,6 +149,9 @@ KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
 
   else if (stricmp(aType,"pop")==0) 
     act = new KMAcctPop(this, aName);
+
+  else if (stricmp(aType,"experimental pop")==0) 
+    act = new KMAcctExpPop(this, aName);
 
   if (act) 
   {
@@ -201,70 +203,72 @@ bool KMAcctMgr::remove(KMAccount* acct)
   return TRUE;
 }
 
-
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::checkMail(bool interactive)
+void KMAcctMgr::checkMail(bool _interactive)
 {
-  KMAccount* cur;
-  bool hasNewMail = FALSE;
+  newMailArrived = false;
+  interactive = _interactive;
+
+  if (checking)
+    return;
 
   if (mAcctList.isEmpty())
   {
     warning(i18n("You need to add an account in the network\n"
 		 "section of the settings in order to\n"
 		 "receive mail."));
-    return FALSE;
+    return;
   }
+
+  checking = true;
 
   serverReady(false);
-  KMIOStatusWdg *wid = 0;
-  if (interactive) {
-    wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
-    wid->show();
-  }
-
-  int accounts = 0;
   
-  for (cur=mAcctList.first(); cur; cur=mAcctList.next())
-  {
-    if (cur->folder() == 0)
+  mAccountIt->toFirst(); 
+  lastAccountChecked = 0;
+  processNextAccount(false);
+}
+
+void KMAcctMgr::processNextAccount(bool _newMail)
+{
+  KMAccount *cur = mAccountIt->current();
+  newMailArrived |= _newMail;
+  if (lastAccountChecked)
+    disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
+		this, SLOT(processNextAccount(bool)) );
+
+  if (!cur) {
+    filterMgr->cleanup();
+    debug ("checked mail, server ready");
+    serverReady(true);
+    checking = false;
+    if (newMailArrived)
+      emit newMail();
+    return;
+  }
+  
+  connect( cur, SIGNAL(finishedCheck(bool)),
+	   this, SLOT(processNextAccount(bool)) );
+
+  lastAccountChecked = cur;
+  ++(*mAccountIt);
+
+  if (cur->folder() == 0)
     {
       QString tmp; 
       tmp = i18n("Account %1 has no mailbox defined!\n"
-                       "Mail checking aborted\n"
-                       "Check your account settings!")
-		.arg(cur->name());
+		 "Mail checking aborted\n"
+		 "Check your account settings!")
+	.arg(cur->name());
       warning(tmp);
-      break;
+      processNextAccount(false);
     }
-    else   if (cur->checkExclude())
+  else   if (cur->checkExclude())
     {
       // Account excluded from mail check.
+      processNextAccount(false);
     }
-    else
-    {
-      accounts++;
-      if (cur->processNewMail(wid))
-      {
-        hasNewMail = TRUE;
-        emit newMail(cur);
-      }
-    }
-  }
-  if (wid)
-    delete wid;
-  filterMgr->cleanup();
-  if (!accounts)
-  {
-    QString tmp; 
-    tmp = i18n("All accounts are excluded from \"Check Mail\".\n"
-               "Select a specific account to check or\n"
-               "change your account settings!");
-    warning(tmp);
-  }
-  debug ("checked mail, server ready");
-  serverReady(true);
-  return hasNewMail;
+  else cur->processNewMail(interactive);
 }
 
 
@@ -282,27 +286,23 @@ QStrList  KMAcctMgr::getAccounts() {
 }
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::intCheckMail(int item, bool interactive) {
+void KMAcctMgr::intCheckMail(int item, bool _interactive) {
 
   KMAccount* cur;
-  bool hasNewMail = FALSE;
+  newMailArrived = false;
+  interactive = _interactive;
+
+  if (checking)
+    return;
 
   if (mAcctList.isEmpty())
   {
     warning(i18n("You need to add an account in the network\n"
 		 "section of the settings in order to\n"
 		 "receive mail."));
-    return FALSE;
+    return;
   }
-  debug ("checking mail, server busy");
-  serverReady(false);
-  
-  KMIOStatusWdg *wid = 0;
-  if (interactive) {
-    wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
-    wid->show();
-  }
-  
+
   int x = 0;
   cur = mAcctList.first();
   for(x=0; x < item; x++)
@@ -318,19 +318,21 @@ bool KMAcctMgr::intCheckMail(int item, bool interactive) {
                      "Check your account settings!")
 		.arg(cur->name());
     warning(tmp);
-  }
-  else if (cur->processNewMail(wid))
-  {
-    hasNewMail = TRUE;
-    emit newMail(cur);
+    return;
   }
 
-  if (wid)
-    delete wid;
-  debug ("checked mail, server ready");
-  serverReady(true);
-  return hasNewMail;
+  checking = true;
 
+  debug ("checking mail, server busy");
+  serverReady(false);
+
+  mAccountIt->toLast(); 
+  ++(*mAccountIt);
+
+  lastAccountChecked = cur;
+  connect( cur, SIGNAL(finishedCheck(bool)),
+	   this, SLOT(processNextAccount(bool)) );
+  cur->processNewMail(interactive);
 }
 
 

@@ -60,7 +60,7 @@ public:
   virtual const char* type(void) const;
   virtual void readConfig(KConfig&);
   virtual void writeConfig(KConfig&);
-  virtual bool processNewMail(KMIOStatus *);
+  virtual void processNewMail(bool interactive);
 
   
 protected:
@@ -74,7 +74,7 @@ protected:
   const QString decryptStr(const QString inStr) const;
 
   /** Mail processing main worker method. */
-  virtual bool doProcessNewMail(KMIOStatus *);
+  virtual bool doProcessNewMail(bool interactive);
 
   /** Authenticate at POP server. Returns TRUE on success and FALSE
     on failure. Automatically asks for user/password if necessary. */

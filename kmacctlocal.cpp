@@ -4,11 +4,13 @@
 #include <config.h>
 #endif
 
+#include "qdatetime.h" 
 #include "kmacctlocal.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmacctfolder.h"
 #include "kmglobal.h"
+#include "kmbroadcaststatus.h"
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -61,8 +63,9 @@ void KMAcctLocal::init(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
+void KMAcctLocal::processNewMail(bool)
 {
+  QTime t; 
   KMFolder mailFolder(NULL, location());
   long num = 0;
   long i;
@@ -70,10 +73,16 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
   KMMessage* msg;
   bool addedOk;
 
-  if (mFolder==NULL) return FALSE;
+  hasNewMail = false;
+  if (mFolder==NULL) {
+    emit finishedCheck(hasNewMail);
+    return;
+  }
 
-  if (statusWdg)
-    statusWdg->prepareTransmission(location(), KMIOStatus::RETRIEVE);
+  KMBroadcastStatus::instance()->reset();
+  KMBroadcastStatus::instance()->setStatusMsg( 
+                     i18n( "Preparing transmission..." ));
+
   app->processEvents();
   mailFolder.setAutoCreateIndex(FALSE);
 
@@ -85,7 +94,8 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
     aStr += mailFolder.path()+"/"+mailFolder.name();
     KMessageBox::sorry(0, aStr);
     perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
-    return FALSE;
+    emit finishedCheck(hasNewMail); 
+    return;
   }
 
   mFolder->quiet(TRUE);
@@ -95,25 +105,36 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
   num = mailFolder.count();
 
   addedOk = true;
+  t.start(); 
 
+  KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   for (i=0; i<num; i++)
   {
 
     if (!addedOk) break;
+    if (KMBroadcastStatus::instance()->abortRequested()) break;
 
-    //if(statusWdg->abortRequested())
-    //break;
-    if (statusWdg)
-      statusWdg->updateProgressBar(i,num);
+    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") +
+			                QString("%1/%2").arg(i).arg(num) );
+    KMBroadcastStatus::instance()->setStatusProgressPercent( (i*100) / num );
+
     msg = mailFolder.take(0);
     if (msg)
     {
       msg->setStatus(msg->headerField("Status"), msg->headerField("X-Status"));
       addedOk = processNewMsg(msg);
+      if (addedOk)
+	hasNewMail = true;
     }
-    //    app->processEvents();
-  }
 
+    if (t.elapsed() >= 200) { //hardwired constant
+      app->processEvents();
+      t.start();
+    }
+    
+  }
+  KMBroadcastStatus::instance()->setStatusProgressEnable( false );
+  KMBroadcastStatus::instance()->reset();
 
   if (addedOk)
   {
@@ -121,16 +142,18 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
   if (rc)
     warning(i18n("Cannot remove mail from\nmailbox `%s':\n%s"),
 	    (const char*)mailFolder.location(), strerror(rc));
+  KMBroadcastStatus::instance()->setStatusMsg( 
+		     i18n( "Transmission completed..." ));
   }
   // else warning is written already
 
   mailFolder.close();
   mFolder->close();
   mFolder->quiet(FALSE);
-  if (statusWdg)
-    statusWdg->transmissionCompleted();
 
-  return (num > 0);
+  emit finishedCheck(hasNewMail);
+ 
+  return;
 }
 
 

@@ -32,6 +32,7 @@
 #include <kmessagebox.h>
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
+#include <kdebug.h>
 
 #include "kmglobal.h"
 #include "kmmainwin.h"
@@ -150,12 +151,12 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
   switch (aType)
   {
   case QtDebugMsg:
-    kDebugInfo( 0, msg);
+    kDebugInfo(0, msg);
     break;
 
   case QtWarningMsg:
     fprintf(stderr, "%s: %s\n", (const char*)app->name(), msg.data());
-    kDebugInfo( 0, msg);
+    kDebugInfo(0, msg);
     break;
 
   case QtFatalMsg:
@@ -170,8 +171,17 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 //--- Sven's pseudo IPC&locking start ---
 void serverReady(bool flag)
 {
+  static int nested = 0; // Only the server calls this function,
+                          // by default the server is ready.
+  if (flag)
+    --nested;
+  else
+    ++nested;
+  if (nested < 0) // Safety precaution
+    nested = 0;
+
   writePid(flag);
-  if (flag) // are we ready now?
+  if (nested == 0) // are we ready now?
     checkMessage(); //check for any pending mesages
 }
 
@@ -740,7 +750,7 @@ main(int argc, char *argv[])
   }
   //--- Sven's pseudo IPC&locking end ---
 
-  KMMainWin* mainWin;
+  KMMainWin* mainWin = 0;
 
   init();
   // filterMgr->dump();
@@ -774,7 +784,7 @@ main(int argc, char *argv[])
 // 	  }
 //   }
 
-  if (checkNewMail) acctMgr->checkMail();
+  if (checkNewMail && mainWin) mainWin->slotCheckMail();
   recoverDeadLetters();
 
   if (firstStart)
@@ -787,4 +797,3 @@ main(int argc, char *argv[])
   app->exec();
   cleanup();
 }
-

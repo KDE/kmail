@@ -19,7 +19,7 @@ public:
   KMAcctSelDlg(QWidget* parent=0, const char* name=0);
 
   /** Returns selected button from the account selection group:
-    0=local mail, 1=pop3. */
+    0=local mail, 1=pop3, 2=experimental pop3. */
   int selected(void) const { return mSelBtn; }
 
 protected slots:

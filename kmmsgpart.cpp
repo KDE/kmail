@@ -147,6 +147,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   QString mimetype;
   QByteArray body;
   KMimeMagicResult *result;
+ 
   int sep;
 
   KMimeMagic::self()->setFollowLinks(TRUE); // is it necessary ?
@@ -155,7 +156,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
     body = bodyDecoded();
   else 
     body = mBody;
-
+ 
   result = KMimeMagic::self()->findBufferType( body );
   mimetype = result->mimeType();
   sep = mimetype.find('/');
@@ -368,7 +369,6 @@ void KMMessagePart::setCharset(const QString aStr)
   mCharset=aStr;
 }
 #endif
-
 
 
 

@@ -19,19 +19,19 @@ KMAcctSelDlg::KMAcctSelDlg(QWidget* parent, const char* name):
 
   initMetaObject();
 
-  setFixedSize(230,150);
+  setFixedSize(230,180);
   setCaption(name);
   mSelBtn = 0;
 
   grp = new QButtonGroup(i18n("Account Type"), this);
-  grp->resize(230, 110);
+  grp->resize(230, 140);
   connect(grp, SIGNAL(clicked(int)), SLOT(buttonClicked(int)));
 
   ok = new QPushButton(i18n("OK"), this);
   ok->adjustSize();
   ok->setMinimumSize(ok->sizeHint());
   ok->resize(100, ok->size().height());
-  ok->move(10, 145-ok->size().height());
+  ok->move(10, 175-ok->size().height());
   ok->setEnabled(FALSE);
   connect(ok, SIGNAL(clicked()), SLOT(accept()));
 
@@ -39,7 +39,7 @@ KMAcctSelDlg::KMAcctSelDlg(QWidget* parent, const char* name):
   cancel->adjustSize();
   cancel->setMinimumSize(cancel->sizeHint());
   cancel->resize(100, cancel->size().height());
-  cancel->move(120, 145-cancel->size().height());
+  cancel->move(120, 175-cancel->size().height());
   connect(cancel, SIGNAL(clicked()), SLOT(reject()));
 
   rbtn = new QRadioButton(i18n("Local Mailbox"), grp);
@@ -49,6 +49,10 @@ KMAcctSelDlg::KMAcctSelDlg(QWidget* parent, const char* name):
   rbtn = new QRadioButton(i18n("Pop3"), grp);
   rbtn->adjustSize();
   rbtn->move(30,60);
+
+  rbtn = new QRadioButton(i18n("Experimental Pop3"), grp);
+  rbtn->adjustSize();
+  rbtn->move(30,90);
 }
 
 

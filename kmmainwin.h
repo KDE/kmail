@@ -21,6 +21,7 @@ class KStatusBar;
 class KMMessage;
 class KMFolder;
 class KMAccount;
+class KMLittleProgressDlg;
 
 #define KMMainWinInherited KMTopLevelWidget
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -85,7 +86,7 @@ protected:
 
 protected slots:
   void slotCheckOneAccount(int);
-  void slotNewMail(KMAccount*);
+  void slotNewMail();
   void getAccountMenu(); 
   void slotMenuActivated();
   void slotClose();
@@ -175,6 +176,7 @@ protected:
   KMMenuToFolder mMenuToFolder;
   int copyId, moveId;
   QPopupMenu *messageMenu;
+  KMLittleProgressDlg *littleProgress;
 };
 
 #endif

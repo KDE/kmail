@@ -10,6 +10,8 @@
 #include <qsplitter.h>
 #include <qtimer.h>
 
+#include "kmbroadcaststatus.h"
+ 
 #include <kconfig.h>
 #include <kapp.h>
 #include <kglobal.h>
@@ -84,8 +86,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   
   connect(msgSender, SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
-  connect(acctMgr, SIGNAL( newMail(KMAccount *)),
-          SLOT( slotNewMail(KMAccount *)));
+  connect(acctMgr, SIGNAL( newMail()),
+          SLOT( slotNewMail()));
 
   // must be the last line of the constructor:
   mStartupDone = TRUE;
@@ -418,9 +420,6 @@ void KMMainWin::slotAddFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCheckMail() 
 {
-  bool rc;
-
-
  if(checkingMail) 
  {
     KMessageBox::information(this,
@@ -430,11 +429,7 @@ void KMMainWin::slotCheckMail()
     
  checkingMail = TRUE;
  
- kbp->busy();
- rc = acctMgr->checkMail(true);
- kbp->idle();
- 
- if (!rc) statusMsg(i18n("No new mail available"));
+ acctMgr->checkMail(true);
  
  if(mSendOnCheck) slotSendQueued();
  checkingMail = FALSE;
@@ -452,9 +447,6 @@ void KMMainWin::slotMenuActivated()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCheckOneAccount(int item)
 {
-  bool rc = FALSE;
-
-
   if(checkingMail)
   {
     KMessageBox::information(this,
@@ -464,19 +456,17 @@ void KMMainWin::slotCheckOneAccount(int item)
     
   checkingMail = TRUE;
    
-  kbp->busy();
-  rc = acctMgr->intCheckMail(item);
-  kbp->idle();
+  //  kbp->busy();
+  acctMgr->intCheckMail(item);
+  // kbp->idle();
   
-  if (!rc) warning(i18n("No new mail available"));
   if(mSendOnCheck)
     slotSendQueued();
 
   checkingMail = FALSE; 
-
 }
 
-void KMMainWin::slotNewMail(KMAccount *) {
+void KMMainWin::slotNewMail() {
 
   if (mBeepOnNew) {
     KApplication::beep();
@@ -1306,8 +1296,21 @@ void KMMainWin::setupStatusBar()
 {
   mStatusBar = new KStatusBar(this);
 
+  littleProgress = new KMLittleProgressDlg( mStatusBar );
+  mStatusBar->insertWidget( littleProgress, littleProgress->width()+20 , 0 );
   mMessageStatusId = statusBarAddItem(i18n("Initializing..."));
   mStatusBar->enable(KStatusBar::Show);
+  littleProgress->show();
+  connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
+	   littleProgress, SLOT(slotEnable( bool )));
+  connect( KMBroadcastStatus::instance(), 
+	   SIGNAL(statusProgressPercent( unsigned long )),
+	   littleProgress, 
+	   SLOT(slotJustPercent( unsigned long )));
+  connect( KMBroadcastStatus::instance(), SIGNAL(resetRequested()),
+	   littleProgress, SLOT(slotClean()));
+  connect( KMBroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
+	   this, SLOT(statusMsg( const QString& )));
   setStatusBar(mStatusBar);
 }
 
@@ -1389,5 +1392,3 @@ void KMMainWin::updateMessageMenu()
   copyId = messageMenu->insertItem(i18n("&Copy to"), msgCopyMenu, -1, 
 				   copyIndex );
 }
-
-

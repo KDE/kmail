@@ -58,27 +58,29 @@ public:
   /** Next account of the list */
   virtual KMAccount* next(void);
 
-  /** Processes all accounts looking for new mail. Returns TRUE if there
-   is new mail in at least one account. */
-  virtual bool checkMail(bool interactive = TRUE);
+  /** Processes all accounts looking for new mail */
+  virtual void checkMail(bool _interactive = true);
 
   QStrList getAccounts();
-  
- 
-
 
 public slots:
-  virtual bool singleCheckMail(KMAccount *, bool interactive = TRUE);
+  virtual void singleCheckMail(KMAccount *, bool _interactive = true);
 
- virtual bool intCheckMail(int, bool interactive = TRUE);
+  virtual void intCheckMail(int, bool _interactive = true);
+  virtual void processNextAccount(bool newMail); 
 
 signals:
-  /** emitted if new mail arrived in the account */
-  void newMail(KMAccount* inAccount);
+  /** emitted if new mail has been collected */
+  void newMail();
 
 private:
   QString      mBasePath;
   KMAcctList   mAcctList;
+  QListIterator< KMAccount > *mAccountIt;
+  KMAccount *lastAccountChecked;
+  bool checking;
+  bool newMailArrived;
+  bool interactive;
 };
 
 #endif /*kmacctmgr_h*/

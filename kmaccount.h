@@ -46,7 +46,7 @@ public:
   /** Process new mail for this account if one arrived. Returns TRUE if new
     mail has been found. Whether the mail is automatically loaded to
     an associated folder or not depends on the type of the account. */
-  virtual bool processNewMail(KMIOStatus *) = 0;
+  virtual void processNewMail(bool interactive) = 0; 
 
   /** Read config file entries. This method is called by the account
     manager when a new account is created. */
@@ -68,6 +68,9 @@ public:
     with "Check Mail". */
   virtual void setCheckExclude(bool aExclude);
   int checkExclude(void) const { return mExclude; }
+
+signals:
+  virtual void finishedCheck(bool newMail);
 
 protected slots:
   virtual void mailCheck();
