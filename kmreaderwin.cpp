@@ -56,6 +56,13 @@
 #include <kstddirs.h>  // for access and getpid
 //--- Sven's save attachments to /tmp end ---
 
+// for the click on attachment stuff (dnaber):
+#include <kmessagebox.h>
+#include <kuserprofile.h>
+#include <kurl.h>
+#include <kmimemagic.h>
+#include <kmimetype.h>
+		    		    
 // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)
 
@@ -858,6 +865,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 	fname.remove(c, 1);
     }
 
+    // fixme: use KTempFile!
     if (!kByteArrayToFile(aMsgPart->bodyDecoded(), fname, false, false, false))
       ok = false;
   }
@@ -1236,12 +1244,9 @@ void KMReaderWin::slotAtmOpen()
 {
   QString str, pname, cmd, fileName;
   KMMessagePart msgPart;
-  // char* tmpName;
-  // int old_umask;
   int c;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
-
   if (stricmp(msgPart.typeStr(), "message")==0)
   {
     atmViewMsg(&msgPart);
@@ -1251,21 +1256,8 @@ void KMReaderWin::slotAtmOpen()
   pname = msgPart.fileName();
   if (pname.isEmpty()) pname=msgPart.name();
   if (pname.isEmpty()) pname="unnamed";
-  //--- Sven's save attachments to /tmp start ---
-  // Sven added:
   fileName = QString("%1part%2/%3")
              .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
-  // Sven commented out:
-  //tmpName = tempnam(NULL, NULL);
-  //if (!tmpName)
-  //{
-  //  warning(i18n("Could not create temporary file"));
-  //  return;
-  //}
-  //fileName = tmpName;
-  //free(tmpName);
-  //fileName += '-';
-  //fileName += pname;
 
   // remove quotes from the filename so that the shell does not get confused
   c = 0;
@@ -1276,22 +1268,44 @@ void KMReaderWin::slotAtmOpen()
   while ((c = fileName.find('\'', c)) >= 0)
     fileName.remove(c, 1);
 
-  // Sven commented out:
-  //kernel->kbp()->busy();
-  // NOTE: this next line will not work with Qt 2.0 - use a QByteArray str.
-  //str = msgPart.bodyDecoded();
-  //old_umask = umask(077);
-  //if (!kCStringToFile(str, fileName, TRUE))
-  //  warning(i18n("Could not save temporary file %s"),
-  //	    (const char*)fileName);
-  //umask(old_umask);
-  //kernel->kbp()->idle();
-  //--- Sven's save attachments to /tmp end ---
-
-  // -- David : replacement for KFM::openURL
-  if ( !KOpenWithHandler::exists() )
-    (void) new KFileOpenWithHandler();
-  (void) new KRun(fileName);
+  // What to do when user clicks on an attachment --dnaber, 2000-06-01
+  // TODO: add "Open with..." to RMB menu
+  // TODO: use KTempFile?
+  // TODO: show full path for Service, not only name
+  QString mimetype = KMimeType::findByURL(KURL(fileName))->name();
+  KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, true);
+  QString question;
+  if ( offer ) {
+    question = i18n("Open attachment using '%1'?").arg(offer->name());
+  } else {
+    question = i18n("Open attachment?\n");
+    question += i18n("You will be able to choose the application that opens the attachment.");
+  }
+  question += i18n("\n\nNote that opening an attachment may compromise your system's security!");
+  // TODO: buttons don't have the correct order, but "Save" should be default
+  int choice = KMessageBox::warningYesNoCancel(this,
+      question,
+      i18n("Open Attachment?"), i18n("Save to disk"), i18n("Open"), i18n("Cancel"));
+  if( choice == KMessageBox::Yes ) {		// Save
+    slotAtmSave();
+  } else if( choice == KMessageBox::No ) {	// Open
+    if ( offer ) {
+      // There's a default service for this kind of file - use it
+      KURL::List *lst;
+      lst = new KURL::List(fileName);
+      KRun::run(*offer, *lst);
+    } else {
+      // There's no know service that handles this type of file, so open
+      // the "Open with..." dialog.
+      KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
+      KURL::List *lst;
+      lst = new KURL::List(fileName);
+      openhandler->displayOpenWithDialog(*lst);
+    }
+  } else {					// Cancel
+    debug("Cancelled opening attachment");
+  }
+  
 }
 
 
