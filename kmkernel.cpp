@@ -184,6 +184,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   return 1;
 }
 
+
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
@@ -245,6 +246,36 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
 
   return DCOPRef(cWin);
 }
+
+
+int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
+{
+  kdDebug(5006) << "KMKernel::sendCertificate called" << endl;
+
+  KMMessage *msg = new KMMessage;
+  msg->initHeader();
+  msg->setCharset("utf-8");
+  msg->setSubject( i18n( "Certificate Signature Request" ) );
+  if (!to.isEmpty()) msg->setTo(to);
+  msg->setBody( i18n( "Please sign this certificate and return to sender." ).utf8() );
+
+  KMComposeWin *cWin = new KMComposeWin(0, msg);
+  cWin->setCharset("", TRUE);
+  if (!certData.isEmpty()) {
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setName("smime.p10");
+    msgPart->setCteStr("base64");
+    msgPart->setBodyEncodedBinary(certData);
+    msgPart->setTypeStr("application");
+    msgPart->setSubtypeStr("pkcs10");
+    msgPart->setContentDisposition("attachment");
+    cWin->addAttach(msgPart);
+  }
+
+  cWin->show();
+  return 1;
+}
+
 
 void KMKernel::compactAllFolders ()
 {
@@ -649,7 +680,7 @@ void KMKernel::cleanup(void)
     if (config->readBoolEntry("empty-trash-on-exit", true))
       the_trashFolder->expunge();
 
-  } 
+  }
 
   // Expire old messages in all folders.
   if (closed_by_user) {
@@ -669,14 +700,14 @@ void KMKernel::cleanup(void)
     if (config->readBoolEntry("compact-all-on-exit", true))
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
   }
-  
+
   if (the_inboxFolder) the_inboxFolder->close(TRUE);
   if (the_outboxFolder) the_outboxFolder->close(TRUE);
   if (the_sentFolder) the_sentFolder->close(TRUE);
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
-  
+
   delete the_msgDict;
-  
+
   delete the_folderMgr;
   the_folderMgr = 0;
   delete the_imapFolderMgr;

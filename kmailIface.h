@@ -48,6 +48,17 @@ k_dcop:
                                const QString &bcc, const QString &subject,
                                const QString &body, bool hidden) = 0;
 
+    /**
+       Send a certificate request to the CA specified in \a to. The
+       certificate is stored in the byte array \a certData. It needs
+       to stored according to BER and PKCS#10.
+       This method will set content type encoding, mime types, etc. as
+       per the MailTT specification.
+    */
+    virtual int sendCertificate( const QString& to, 
+                                 const QByteArray& certData ) = 0;
+
+    
   virtual void compactAllFolders() = 0;
 
   /** @param foldername the requested foldername in kmail (at the

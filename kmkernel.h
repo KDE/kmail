@@ -77,6 +77,9 @@ public:
   DCOPRef openComposer(const QString &to, const QString &cc,
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
+
+    int sendCertificate( const QString& to, const QByteArray& certData );
+
   void openReader();
   void compactAllFolders();
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
