@@ -1,3 +1,4 @@
+#undef QT_NO_ASCII_CAST
 // KMAcctExpPop.cpp
 // Authors: Don Sanders, (based on kmacctpop by)
 //          Stefan Taferner and Markus Wuebben

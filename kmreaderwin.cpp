@@ -1,3 +1,5 @@
+#undef QT_NO_ASCII_CAST
+#undef QT_NO_COMPAT
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 

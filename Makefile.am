@@ -1,4 +1,4 @@
-KDE_CXXFLAGS = $(USE_RTTI) -UQT_NO_ASCII_CAST -UQT_NO_COMPAT
+KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS = . about pics
 INCLUDES = -I$(top_srcdir)/libkdenetwork $(all_includes)
