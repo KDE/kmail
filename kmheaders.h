@@ -107,14 +107,14 @@ public:
   virtual void saveMsg(int msgId = -1);
   virtual void undo();
   virtual bool canUndo() const;
-  virtual void forwardMsg();
-  virtual void forwardAttachedMsg();
-  virtual void bounceMsg();
-  virtual void replyToMsg(QString selection=QString::null);
-  virtual void noQuoteReplyToMsg();
-  virtual void redirectMsg();
-  virtual void replyAllToMsg(QString selection=QString::null);
-  virtual void replyListToMsg(QString selection=QString::null);
+  virtual void forwardMsg(QPtrList<KMMessage>* msgList = NULL);
+  virtual void forwardAttachedMsg(QPtrList<KMMessage>* msgList = NULL);
+  virtual void bounceMsg(KMMessage* msg = NULL);
+  virtual void replyToMsg(QString selection=QString::null, KMMessage* msg = NULL);
+  virtual void noQuoteReplyToMsg(KMMessage* msg = NULL);
+  virtual void redirectMsg(KMMessage* msg = NULL);
+  virtual void replyAllToMsg(QString selection=QString::null, KMMessage* msg = NULL);
+  virtual void replyListToMsg(QString selection=QString::null, KMMessage* msg = NULL);
   virtual void resendMsg();
 
   /** If destination==NULL the messages are deleted, otherwise
@@ -127,6 +127,9 @@ public:
  /** Returns list of selected messages or a list with the message with
     the given Id if msgId >= 0. Do not delete the returned list. */
   virtual KMMessageList* selectedMsgs(int msgId=-1);
+
+ /** Returns list of selected KMMessages */
+  virtual QPtrList<KMMessage>* selectedMessages();
 
   /** Returns message with given id or current message if no
     id is given. First call with msgId==-1 returns first
@@ -351,7 +354,8 @@ private:
   /** ditto */
   KMHeaderItem* getMsgItem;
   /** @ref KMHeaders::selectedMsgs isn't reentrant */
-  KMMessageList mSelMsgList;
+  KMMessageList mSelMsgBaseList;
+  QPtrList<KMMessage> mSelMsgList;
   KMHeaderItem* mPrevCurrent;
 
   /** For shift selection */

@@ -1072,6 +1072,7 @@ KMImapJob::~KMImapJob()
         msg->setTransferInProgress(false);
     }
   }
+  emit finished();
 }
 
 

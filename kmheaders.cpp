@@ -1431,9 +1431,11 @@ void KMHeaders::resendMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::bounceMsg ()
+void KMHeaders::bounceMsg (KMMessage* msg)
 {
-  KMMessage *newMsg, *msg = currentMsg();
+  KMMessage *newMsg; 
+  if (!msg)
+   msg = currentMsg();
 
   if (!msg) return;
 
@@ -1444,10 +1446,11 @@ void KMHeaders::bounceMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::forwardMsg ()
+void KMHeaders::forwardMsg (QPtrList<KMMessage>* msgList)
 {
   KMComposeWin *win;
-  KMMessageList* msgList = selectedMsgs();
+  if (!msgList)
+    msgList = selectedMessages();
 
   if (msgList->count() >= 2) {
     // ask if they want a mime digest forward
@@ -1559,7 +1562,7 @@ void KMHeaders::forwardMsg ()
 
   // forward a single message at most.
 
-  KMMessage *msg = currentMsg();
+  KMMessage *msg = msgList->getFirst();
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
@@ -1571,10 +1574,11 @@ void KMHeaders::forwardMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::forwardAttachedMsg ()
+void KMHeaders::forwardAttachedMsg (QPtrList<KMMessage>* msgList)
 {
   KMComposeWin *win;
-  KMMessageList* msgList = selectedMsgs();
+  if (!msgList)
+    msgList = selectedMessages();
   uint id = 0;
   KMMessage *fwdMsg = new KMMessage;
 
@@ -1585,7 +1589,7 @@ void KMHeaders::forwardAttachedMsg ()
     fwdMsg->initHeader(id);
   }
   else if (msgList->count() == 1) {
-    KMMessage *msg = currentMsg();
+    KMMessage *msg = msgList->getFirst();
     fwdMsg->initFromMessage(msg);
   }
 
@@ -1624,10 +1628,11 @@ void KMHeaders::forwardAttachedMsg ()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::redirectMsg()
+void KMHeaders::redirectMsg(KMMessage* msg)
 {
   KMComposeWin *win;
-  KMMessage *msg = currentMsg();
+  if (!msg)
+   msg = currentMsg();
 
   if (!msg || !msg->codec()) return;
 
@@ -1641,10 +1646,11 @@ void KMHeaders::redirectMsg()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::noQuoteReplyToMsg()
+void KMHeaders::noQuoteReplyToMsg(KMMessage* msg)
 {
   KMComposeWin *win;
-  KMMessage *msg = currentMsg();
+  if (!msg)
+    msg = currentMsg();
   QString id;
 
   if (!msg || !msg->codec())
@@ -1659,10 +1665,11 @@ void KMHeaders::noQuoteReplyToMsg()
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyToMsg (QString selection)
+void KMHeaders::replyToMsg (QString selection, KMMessage *msg)
 {
   KMComposeWin *win;
-  KMMessage *msg = currentMsg();
+  if (!msg)
+     msg = currentMsg();
   QString id;
 
   if (!msg || !msg->codec())
@@ -1678,10 +1685,11 @@ void KMHeaders::replyToMsg (QString selection)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyAllToMsg (QString selection)
+void KMHeaders::replyAllToMsg (QString selection, KMMessage* msg)
 {
   KMComposeWin *win;
-  KMMessage *msg = currentMsg();
+  if (!msg)
+   msg = currentMsg();
   QString id;
 
   if (!msg || !msg->codec()) return;
@@ -1695,10 +1703,11 @@ void KMHeaders::replyAllToMsg (QString selection)
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyListToMsg (QString selection)
+void KMHeaders::replyListToMsg (QString selection, KMMessage* msg)
 {
   KMComposeWin *win;
-  KMMessage *msg = currentMsg();
+  if (!msg)
+   msg = currentMsg();
   QString id;
 
   if (!msg || !msg->codec()) return;
@@ -1960,14 +1969,28 @@ void KMHeaders::setCurrentMsg(int cur)
 
 
 //-----------------------------------------------------------------------------
-KMMessageList* KMHeaders::selectedMsgs(int /*idx*/)
+KMMessageList* KMHeaders::selectedMsgs(int)
+{
+  mSelMsgBaseList.clear();
+  for (QListViewItemIterator it(this); it.current(); it++)
+    if (it.current()->isSelected()) {
+      KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
+      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
+      mSelMsgBaseList.append(msgBase);
+    }
+
+  return &mSelMsgBaseList;
+}
+
+//-----------------------------------------------------------------------------
+QPtrList<KMMessage>* KMHeaders::selectedMessages()
 {
   mSelMsgList.clear();
   for (QListViewItemIterator it(this); it.current(); it++)
     if (it.current()->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
-      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
-      mSelMsgList.append(msgBase);
+      KMMessage *msg = mFolder->getMsg(item->msgId());
+      mSelMsgList.append(msg);
     }
 
   return &mSelMsgList;

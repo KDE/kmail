@@ -58,10 +58,10 @@
 #include "kmacctfolder.h"
 #include "kmmimeparttree.h"
 
-
 #include <assert.h>
 #include <kstatusbar.h>
 #include <kpopupmenu.h>
+#include <kprogress.h>
 
 #include "kmmainwin.moc"
 
@@ -1253,55 +1253,184 @@ void KMMainWin::slotPrintMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyToMsg()
 {
-  mHeaders->replyToMsg(mMsgView->copyText());
+  if (mFolder->protocol() == "imap")
+  {
+    // disable the reply-action
+    replyAction->setEnabled(false);
+
+    // transfer the selected messages first
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyReplyToMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->replyToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
+  }
+}
+
+void KMMainWin::slotReallyReplyToMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyReplyToMsg(bool)));
+  replyAction->setEnabled(true); 
+  if (success) mHeaders->replyToMsg(mMsgView->copyText());
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotNoQuoteReplyToMsg()
 {
-  mHeaders->noQuoteReplyToMsg();
+  if (mFolder->protocol() == "imap")
+  {
+    // transfer the selected messages first
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyNoQuoteReplyToMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->noQuoteReplyToMsg();
+  }
+}
+
+void KMMainWin::slotReallyNoQuoteReplyToMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyNoQuoteReplyToMsg(bool)));
+  if (success) mHeaders->noQuoteReplyToMsg(mSelectedMsgs.getFirst());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyAllToMsg()
 {
-  mHeaders->replyAllToMsg(mMsgView->copyText());
+  if (mFolder->protocol() == "imap")
+  {
+    // disable the action
+    replyAllAction->setEnabled(false);
+
+    // transfer the selected messages first
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyReplyAllToMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->replyAllToMsg(mMsgView->copyText());
+  }
+}
+
+void KMMainWin::slotReallyReplyAllToMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyReplyAllToMsg(bool)));
+  replyAllAction->setEnabled(true); 
+  if (success) mHeaders->replyAllToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyListToMsg()
 {
-  mHeaders->replyListToMsg(mMsgView->copyText());
+  if (mFolder->protocol() == "imap")
+  {
+    // transfer the selected messages first
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyReplyListToMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->replyListToMsg(mMsgView->copyText());
+  }
+}
+
+void KMMainWin::slotReallyReplyListToMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyReplyListToMsg(bool)));
+  if (success) mHeaders->replyListToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardMsg()
 {
-  mHeaders->forwardMsg();
+  if (mFolder->protocol() == "imap")
+  {
+    // disable the forward-action
+    forwardAction->setEnabled(false);
+
+    // transfer the selected messages first
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyForwardMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->forwardMsg();
+  }
+}
+
+void KMMainWin::slotReallyForwardMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyForwardMsg(bool)));
+  forwardAction->setEnabled(true); 
+  if (success) mHeaders->forwardMsg(&mSelectedMsgs);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardAttachedMsg()
 {
-  mHeaders->forwardAttachedMsg();
+  if (mFolder->protocol() == "imap")
+  {
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyForwardAttachedMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->forwardAttachedMsg();
+  }
+}
+
+void KMMainWin::slotReallyForwardAttachedMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyForwardAttachedMsg(bool)));
+  if (success) mHeaders->forwardAttachedMsg(&mSelectedMsgs);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotRedirectMsg()
 {
-  mHeaders->redirectMsg();
+  if (mFolder->protocol() == "imap")
+  {
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyRedirectMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->redirectMsg();
+  }
+}
+
+void KMMainWin::slotReallyRedirectMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyRedirectMsg(bool)));
+  if (success) mHeaders->redirectMsg(mSelectedMsgs.getFirst());
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotBounceMsg()
 {
-  mHeaders->bounceMsg();
+  if (mFolder->protocol() == "imap")
+  {
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallyBounceMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->bounceMsg();
+  }
+}
+
+void KMMainWin::slotReallyBounceMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallyBounceMsg(bool)));
+  if (success) mHeaders->bounceMsg(mSelectedMsgs.getFirst());
 }
 
 
@@ -3103,18 +3232,9 @@ void KMMainWin::updateMessageActions()
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
-    // FIXME: Temporarily disable forwarding of multiple IMAP messages because
-    //        it doesn't work correctly
-    if( mFolder && mFolder->protocol() != "imap" )
-    {
-      forwardAction->setEnabled( mass_actions );
-      forwardAttachedAction->setEnabled( mass_actions );
-    }
-    else
-    {
-      forwardAction->setEnabled( count == 1 );
-      forwardAttachedAction->setEnabled( count == 1 );
-    }
+    forwardAction->setEnabled( mass_actions );
+    forwardAttachedAction->setEnabled( mass_actions );
+
     action( "apply_filters" )->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
@@ -3253,6 +3373,141 @@ bool KMMainWin::queryClose() {
   return true;
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::transferSelectedMsgs()
+{
+  // make sure no other transfer is active
+  if (mCountJobs > 0)
+    return; 
+  
+  bool complete = true;
+  mCountJobs = 0;
+  mCountMsgs = 0;
+  mSelectedMsgs.clear();
+
+  // get the selected messages
+  QPtrList<KMMsgBase>* msgList = mHeaders->selectedMsgs();
+  mCountMsgs = msgList->count();
+  // the KProgressDialog for the user-feedback
+  mProgressDialog = new KProgressDialog(this, "transferProgress", 
+      i18n("Please wait"), 
+      i18n("Please wait while the message is transferred", 
+        "Please wait while the %n messages are transferred", msgList->count()),
+      true);
+  mProgressDialog->setMinimumDuration(1000);
+  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) 
+  {
+    // check if all messages are complete
+    int idx = mFolder->find(mb);
+    if (idx < 0) continue;
+    KMMessage *thisMsg = mFolder->getMsg(idx);
+    if (!thisMsg) continue;
+    if (thisMsg->parent() && thisMsg->parent()->protocol() == "imap" && 
+        !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
+    {
+      // the message needs to be transferred first
+      complete = false;
+      mCountJobs++;
+      KMImapJob *imapJob = new KMImapJob(thisMsg);
+      // emitted when the message was transferred successfully
+      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+          this, SLOT(slotMsgTransfered(KMMessage*)));
+      // emitted when the job is destroyed
+      connect(imapJob, SIGNAL(finished()),
+          this, SLOT(slotJobFinished()));
+      // msg musn't be deleted
+      thisMsg->setTransferInProgress(true);
+    } else {
+      mSelectedMsgs.append(thisMsg);
+    } 
+  }
+
+  if (complete)
+  {
+    delete mProgressDialog;
+    emit messagesTransfered(true);
+  } else {
+    // wait for the transfer and tell the progressBar the necessary steps
+    connect(mProgressDialog, SIGNAL(cancelClicked()),
+        this, SLOT(slotTransferCancelled()));
+    mProgressDialog->progressBar()->setTotalSteps(mCountJobs);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMsgTransfered(KMMessage* msg)
+{
+  msg->setTransferInProgress(false);
+  if (mProgressDialog->wasCancelled()) return; 
+  // save the complete messages  
+  mSelectedMsgs.append(msg);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotJobFinished()
+{
+  // the job is finished (with / without error)  
+  mCountJobs--;
+  if (mProgressDialog->wasCancelled()) return; 
+  
+  if ( (mCountMsgs - mSelectedMsgs.count()) > mCountJobs )
+  {
+    // the message wasn't retrieved before => error
+    mProgressDialog->hide();
+    slotTransferCancelled();
+    return;
+  }
+  // update the progressbar
+  mProgressDialog->progressBar()->advance(1);
+  mProgressDialog->setLabel(i18n("Please wait while the message is transferred", 
+          "Please wait while the %n messages are transferred", mCountJobs));
+  if (mCountJobs == 0) 
+  {
+    // all done
+    delete mProgressDialog;
+    emit messagesTransfered(true);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotTransferCancelled()
+{
+  if (mFolder->protocol() != "imap") return;
+
+  emit messagesTransfered(false);
+  // kill the pending jobs
+  KMAcctImap* acct = static_cast<KMFolderImap*>(mFolder)->account();
+  if (acct)
+  {
+    acct->killAllJobs();
+    acct->setIdle(true);
+  }
+
+  mCountJobs = 0;
+  mCountMsgs = 0;
+  // unget the transfered messages
+  QPtrListIterator<KMMessage> it( mSelectedMsgs );
+  KMMessage* msg;
+  while ( (msg = it.current()) != 0 ) 
+  {
+    ++it;
+    int idx = mFolder->find(msg);
+    if (idx > 0) mFolder->unGetMsg(idx);
+  }
+  mSelectedMsgs.clear();
+  // unget the selected messages
+  QPtrList<KMMsgBase>* msgList = mHeaders->selectedMsgs();
+  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next())
+  {
+    if (mb->isMessage())
+    {
+      int idx = mFolder->find(mb);
+      if (idx > 0) mFolder->unGetMsg(idx);
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotIntro() {
   if ( !mFolderTree || !mMsgView ) return;
 

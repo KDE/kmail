@@ -50,6 +50,7 @@ signals:
   void messageStored(KMMessage *);
   void messageCopied(KMMessage *);
   void messageCopied(QPtrList<KMMessage>);
+  void finished();
 private slots:
   void slotGetMessageResult(KIO::Job * job);
   void slotGetNextMessage();

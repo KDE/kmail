@@ -32,6 +32,7 @@ class KToggleAction;
 class KActionMenu;
 class KSelectAction;
 class KRadioAction;
+class KProgressDialog;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
 
@@ -106,6 +107,10 @@ public:
       is then returned. */
   KMMessage *jumpToMessage(KMMessage *aMsg);
 
+  /** transfers the currently selected (imap)-messages 
+   *  this is a necessary preparation for e.g. forwarding */ 
+  void transferSelectedMsgs();
+
 public slots:
   virtual void show();
   virtual void hide();
@@ -168,14 +173,32 @@ protected slots:
   void slotCompactAll();
   void slotOverrideHtml();
   void slotOverrideThread();
+
+  /** replying */
   void slotReplyToMsg();
   void slotNoQuoteReplyToMsg();
   void slotReplyAllToMsg();
   void slotReplyListToMsg();
+
+  /** forwarding */
   void slotForwardMsg();
   void slotForwardAttachedMsg();
+
+  /** redirect and bounce */ 
   void slotRedirectMsg();
   void slotBounceMsg();
+
+  /** these are called when incomplete (imap-)messages have been transferred 
+   *  they call the corresponding action and disconnect the signal */
+  void slotReallyReplyToMsg(bool);
+  void slotReallyNoQuoteReplyToMsg(bool);
+  void slotReallyReplyAllToMsg(bool);
+  void slotReallyReplyListToMsg(bool);
+  void slotReallyForwardMsg(bool);
+  void slotReallyForwardAttachedMsg(bool);
+  void slotReallyRedirectMsg(bool);
+  void slotReallyBounceMsg(bool);
+
   void slotMessageQueuedOrDrafted();
   void slotEditMsg();
   void slotEditMsg(KMMessage*);
@@ -307,6 +330,15 @@ protected slots:
   void slotUpdateToolbars();
   void slotEditKeys();
 
+  /** the msg has been transferred */
+  void slotMsgTransfered(KMMessage*);
+
+  /** the transfer was cancelled */
+  void slotTransferCancelled();
+
+  /** the KMImapJob is finished */
+  void slotJobFinished();
+
 protected:
   KRadioAction * actionForHeaderStyle(int);
   KRadioAction * actionForAttachmentStyle(int);
@@ -360,6 +392,15 @@ protected:
   KDockWidget* mHeaderDock;
   KDockWidget* mFolderDock;
   KDockWidget* mMimeDock;
+
+  // ProgressDialog for transfering messages
+  KProgressDialog* mProgressDialog;
+  int mCountJobs, mCountMsgs;
+
+  QPtrList<KMMessage> mSelectedMsgs;
+
+signals:
+  void messagesTransfered(bool);
 };
 
 #endif
