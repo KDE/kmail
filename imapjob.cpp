@@ -126,7 +126,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
       url.setPath( folder->imapPath() + ";SECTION=" + flags );
       ImapAccountBase::jobData jd;
       jd.parent = 0; jd.offset = 0; jd.done = 0;
-      jd.total = curMsg->msgSizeServer();
+      jd.total = ( curMsg->msgSizeServer() > 0 ) ? 
+        curMsg->msgSizeServer() : curMsg->msgSize();
       jd.msgList.append( curMsg );
       QCString cstr( curMsg->asString() );
       int a = cstr.find("\nX-UID: ");
@@ -150,7 +151,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
           mParentProgressItem,
           "ImapJobUploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
-          i18n("Destination folder: ") + mDestFolder->prettyURL(),
+          curMsg->subject(),
           true,
           account->useSSL() || account->useTLS() );
       jd.progressItem->setTotalItems( jd.total );

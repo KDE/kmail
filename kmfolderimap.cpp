@@ -437,10 +437,12 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, QValueList<int>& aIndex_r
         msg->setTransferInProgress( true );
     }
     imapJob = new ImapJob( msgList, QString::null, ImapJob::tPutMessage, this );
-    if ( !mAddMessageProgressItem )
+    if ( !mAddMessageProgressItem && msgList.count() > 1 )
     {
+      // use a parent progress if we have more than 1 message
+      // otherwise the normal progress is more accurate
       mAddMessageProgressItem = ProgressManager::createProgressItem(
-          "ImapJobUploading"+ProgressManager::getUniqueID(),
+          "Uploading"+ProgressManager::getUniqueID(),
           i18n("Uploading message data"),
           i18n("Destination folder: ") + folder()->prettyURL(),
           true,
