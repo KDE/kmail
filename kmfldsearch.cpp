@@ -144,7 +144,7 @@ QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
  QComboBox* cbx = new QComboBox(false, this);
  QStringList str;
  
- kernel->folderMgr()->createFolderList( &str, &folders );
+ kernel->folderMgr()->createI18nFolderList( &str, &folders );
  cbx->setFixedHeight(cbx->sizeHint().height());
  
  cbx->insertItem(i18n("<Search all folders>"));
@@ -229,7 +229,8 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   assert(!aFld.isNull());
   
   mBtnSearch->setText("Stop");
-  mSearchFolder=aFld->name();
+  if (aFld->isSystemFolder()) mSearchFolder = i18n(aFld->name());
+    else mSearchFolder = aFld->name();
   kapp->processEvents();
   if (aFld->open() != 0)
   {
@@ -247,7 +248,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
 			      msg->subject(), 
 			      msg->from(),
 			      msg->dateIsoStr(),
-			      aFld->name(),
+			      mSearchFolder,
 			      QString("%1").arg(i),
 			      QString("%1").arg(fldNum)
 			      );
@@ -326,7 +327,7 @@ void KMFldSearch::slotSearch()
   else {
     QValueList<QGuardedPtr<KMFolder> > folders;
     QStringList str;
-    kernel->folderMgr()->createFolderList( &str, &folders );
+    kernel->folderMgr()->createI18nFolderList( &str, &folders );
     if (str[mCbxFolders->currentItem()-1] == mCbxFolders->currentText()) {
       searchInFolder(*folders.at(mCbxFolders->currentItem()-1),
 		     mCbxFolders->currentItem()-1);

@@ -136,7 +136,7 @@ QWidget* KMFilterActionMove::createParamWidget(KMGFilterDlg* aParent)
 
   gfolders.clear();
 
-  kernel->folderMgr()->createFolderList( &str, &gfolders );
+  kernel->folderMgr()->createI18nFolderList( &str, &gfolders );
   cbx = aParent->createFolderCombo( &str, &gfolders, mDest );
 
   return cbx;

@@ -61,6 +61,11 @@ public:
   virtual void createFolderList( QStringList *str, 
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
+  /** Create a list of formatted formatted folder labels and corresponding
+   folders. The system folder names are translated */
+  virtual void createI18nFolderList( QStringList *str, 
+				 QValueList<QGuardedPtr<KMFolder> > *folders );
+
 public slots:
   /** Compacts all folders (they know is it needed) */
   void compactAll();

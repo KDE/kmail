@@ -280,6 +280,18 @@ void KMFolderMgr::createFolderList(QStringList *str,
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderMgr::createI18nFolderList(QStringList *str, 
+				   QValueList<QGuardedPtr<KMFolder> > *folders)
+{
+  createFolderList( str, folders, 0, "" );
+  for (unsigned int i = 0; i < str->count() && i < folders->count(); i++)
+  {
+    if ((*folders->at(i))->isSystemFolder())
+      *str->at(i) = i18n(*str->at(i));
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderMgr::createFolderList(QStringList *str, 
 				   QValueList<QGuardedPtr<KMFolder> > *folders,
 				   KMFolderDir *adir, 
