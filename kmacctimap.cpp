@@ -221,7 +221,8 @@ void KMAcctImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
   jd.inboxOnly = !secondStep && mPrefix != "/"
     && fti->folder->imapPath() == mPrefix;
   KURL url = getUrl();
-  url.setPath((jd.inboxOnly) ? QString("/") : fti->folder->imapPath());
+  url.setPath(((jd.inboxOnly) ? QString("/") : fti->folder->imapPath())
+    + ";TYPE=LIST");
   if (!makeConnection())
   { 
     fti->setOpen( FALSE );
@@ -250,7 +251,6 @@ void KMAcctImap::slotListResult(KIO::Job * job)
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
   } else if ((*it).inboxOnly) listDirectory((*it).parent, TRUE);
   (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
-  if (!(*it).parent->childCount()) (*it).parent->setExpandable( FALSE );
   mapJobData.remove(it);
   displayProgress();
 }

@@ -154,7 +154,6 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
   }
   if (mimeType == "message/directory" || mimeType == "inode/directory")
   {
-    fti->setExpandable( TRUE );
     if (mimeType == "inode/directory") fti->folder->setDir( TRUE );
     if (readIsListViewItemOpen( fti )) setOpen( fti, TRUE );
     slotFolderExpanded( fti );

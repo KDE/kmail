@@ -33,7 +33,6 @@
 #include "kmglobal.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
-#include "kfileio.h"
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
 #include "kmsender.h"
