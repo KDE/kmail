@@ -911,7 +911,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
       startOfMessage = mMsgString.find( '\n' );
       if ( startOfMessage == -1 ) {
         KMessageBox::sorry( parentWidget(),
-                            i18n( "The file doesn't contain a message." ) );
+                            i18n( "The file does not contain a message." ) );
         setResult( Failed );
         emit completed( this );
         // Emulate closing of a secondary window so that KMail exits in case it
@@ -939,7 +939,7 @@ void KMOpenMsgCommand::slotResult( KIO::Job *job )
     // check whether we have a message ( no headers => this isn't a message )
     if ( dwMsg->Headers().NumFields() == 0 ) {
       KMessageBox::sorry( parentWidget(),
-                          i18n( "The file doesn't contain a message." ) );
+                          i18n( "The file does not contain a message." ) );
       delete dwMsg; dwMsg = 0;
       setResult( Failed );
       emit completed( this );

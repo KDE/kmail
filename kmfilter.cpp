@@ -100,7 +100,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
     case KMFilterAction::CriticalError:
       if ( FilterLog::instance()->isLogging() ) {
         QString logText = QString( "<font color=#FF0000>%1</font>" )
-          .arg( i18n( "A critical error occured. Processing stops here." ) );
+          .arg( i18n( "A critical error occurred. Processing stops here." ) );
         FilterLog::instance()->add( logText, FilterLog::appliedAction );
       }
       // in case it's a critical error: return immediately!
@@ -108,7 +108,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
     case KMFilterAction::ErrorButGoOn:
       if ( FilterLog::instance()->isLogging() ) {
         QString logText = QString( "<font color=#FF0000>%1</font>" )
-          .arg( i18n( "A problem was found while applying this action!" ) );
+          .arg( i18n( "A problem was found while applying this action." ) );
         FilterLog::instance()->add( logText, FilterLog::appliedAction );
       }
     default:

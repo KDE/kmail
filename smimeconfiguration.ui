@@ -183,7 +183,7 @@
                         <string>Ignore HTTP CRL Distribution Point of certificates</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>When looking for the location of a CRL, the to be tested certificate usually contains so called "CRL Distribution Point" (DP) entries which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
+                        <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the HTTP scheme are ignored when looking for a suitable DP.</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">
@@ -191,7 +191,7 @@
                         <cstring>disableHTTPCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Don't perform any HTTP requests</string>
+                        <string>Do not perform any HTTP requests</string>
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>Entirely disables the use of HTTP for S/MIME.</string>
@@ -263,7 +263,7 @@
                         <string>Ignore LDAP CRL Distribution Point of certificates</string>
                     </property>
                     <property name="whatsThis" stdset="0">
-                        <string>When looking for the location of a CRL, the to be tested certificate usually contains so called "CRL Distribution Point" (DP) entries which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>
+                        <string>When looking for the location of a CRL, the to-be-tested certificate usually contains what are known as "CRL Distribution Point" (DP) entries, which are URLs describing the way to access the URL. The first found DP entry is used.  With this option all entries using the LDAP scheme are ignored when looking for a suitable DP.</string>
                     </property>
                 </widget>
                 <widget class="QCheckBox">
@@ -271,7 +271,7 @@
                         <cstring>disableLDAPCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Don't perform any LDAP requests</string>
+                        <string>Do not perform any LDAP requests</string>
                     </property>
                     <property name="whatsThis" stdset="0">
                         <string>Entirely disables the use of LDAP for S/MIME.</string>
@@ -298,8 +298,8 @@
                                 <cstring>customLDAPProxy</cstring>
                             </property>
                             <property name="whatsThis" stdset="0">
-                                <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been ommitted from the URL. Other LDAP servers will be used only if the connection to the "proxy" failed.
-The syntax is "HOST" or "HOST:PORT". If PORT is ommitted, port 389 (standard LDAP port) is used.</string>
+                                <string>Entering a LDAP server here will make all LDAP requests go to that server first. More precisely, this setting overrides any specified host and port part in a LDAP URL and will also be used if host and port have been omitted from the URL. Other LDAP servers will be used only if the connection to the "proxy" failed.
+The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP port) is used.</string>
                             </property>
                         </widget>
                     </hbox>

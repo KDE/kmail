@@ -1925,7 +1925,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
       // that's when the imap server doesn't support annotations
       if ( GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML
            && (uint)GlobalSettings::theIMAPResourceAccount() == mAccount->id() )
-        KMessageBox::error( 0, i18n( "The IMAP server %1 doesn't have support for imap annotations. The XML storage cannot be used on this server, please re-configure KMail differently" ).arg( mAccount->host() ) );
+	KMessageBox::error( 0, i18n( "The IMAP server %1 does not have support for IMAP annotations. The XML storage cannot be used on this server; please re-configure KMail differently." ).arg( mAccount->host() ) );
       mAccount->setHasNoAnnotationSupport();
     }
     else

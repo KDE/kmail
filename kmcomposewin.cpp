@@ -2819,7 +2819,7 @@ void KMComposeWin::compressAttach( int idx )
   KZip zip( &dev );
   QByteArray decoded = msgPart->bodyDecodedBinary();
   if ( ! zip.open( IO_WriteOnly ) ) {
-    KMessageBox::sorry(0, i18n("KMail couldn't compress the file.") );
+    KMessageBox::sorry(0, i18n("KMail could not compress the file.") );
     static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
     return;
   }
@@ -2827,7 +2827,7 @@ void KMComposeWin::compressAttach( int idx )
   zip.setCompression( KZip::DeflateCompression );
   if ( ! zip.writeFile( msgPart->name(), "", "", decoded.size(),
            decoded.data() ) ) {
-    KMessageBox::sorry(0, i18n("KMail couldn't compress the file.") );
+    KMessageBox::sorry(0, i18n("KMail could not compress the file.") );
     static_cast<KMAtmListViewItem*>( mAtmItemList.at( i ) )->setCompress( false );
     return;
   }
@@ -2900,7 +2900,7 @@ void KMComposeWin::uncompressAttach( int idx )
   
   decoded = msgPart->bodyDecodedBinary();
   if ( ! zip.open( IO_ReadOnly ) ) {
-    KMessageBox::sorry(0, i18n("KMail couldn't uncompress the file.") );
+    KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
     static_cast<KMAtmListViewItem *>( mAtmItemList.at( i ) )->setCompress( true );
     return;
   }
@@ -2908,7 +2908,7 @@ void KMComposeWin::uncompressAttach( int idx )
   
   KZipFileEntry *entry;
   if ( dir->entries().count() != 1 ) {
-    KMessageBox::sorry(0, i18n("KMail couldn't uncompress the file.") );
+    KMessageBox::sorry(0, i18n("KMail could not uncompress the file.") );
     static_cast<KMAtmListViewItem *>( mAtmItemList.at( i ) )->setCompress( true );
     return;
   }
