@@ -912,7 +912,7 @@ KMMessage* KMMessage::createForward(void)
     s += "Date: " + dateStr() + "\n";
     s += "From: " + from() + "\n";
     s += "To: " + to() + "\n";
-    s += "Cc: " + cc() + "\n";
+    if (!cc().isEmpty()) s += "Cc: " + cc() + "\n";
     s += "\n";
     str = asQuotedString(s, "", FALSE, false);
     str += "\n-------------------------------------------------------\n";

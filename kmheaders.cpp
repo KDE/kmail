@@ -1112,7 +1112,7 @@ void KMHeaders::forwardMsg ()
           msgText += "Date: " + thisMsg->dateStr() + "\n";
           msgText += "From: " + thisMsg->from() + "\n";
           msgText += "To: " + thisMsg->to() + "\n";
-	  msgText += "Cc: " + thisMsg->cc() + "\n";
+	  if (!thisMsg->cc().isEmpty()) msgText += "Cc: " + thisMsg->cc() + "\n";
           msgText += "\n";
           msgText = thisMsg->asQuotedString(msgText, "", FALSE, false);
           msgText += "\n-------------------------------------------------------\n";
