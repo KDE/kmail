@@ -202,7 +202,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   KMimeMagic::self()->setFollowLinks(TRUE); // is it necessary ?
 
   if (aAutoDecode)
-    body = bodyDecoded();
+    body = bodyDecodedBinary();
   else
     body = mBody;
 
