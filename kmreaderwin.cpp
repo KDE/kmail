@@ -901,7 +901,10 @@ static const int numKMailChanges = 0;
 // the translators). Note that the <li>...</li> tags are added
 // automatically below:
 static const char * const kmailNewFeatures[] = {
-  I18N_NOOP("Antispam wizard")
+  I18N_NOOP( "Antispam wizard" ),
+  I18N_NOOP( "Filter log" ),
+  I18N_NOOP( "Quick search" ),
+  I18N_NOOP( "Automatic mailing-list detection" )
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
