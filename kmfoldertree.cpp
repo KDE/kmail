@@ -626,9 +626,14 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
     if (folder && folder->child())
       addDirectory( folder->child(), fti );
     // make sure that the folder-settings are correctly read on startup by calling listDirectory
-    if (readIsListViewItemOpen(fti) &&
-        fti->folder() && fti->folder()->folderType() == KMFolderTypeImap)
+   if (readIsListViewItemOpen(fti) &&
+	fti->folder() && fti->folder()->folderType() == KMFolderTypeImap) {
+      disconnect( this, SIGNAL( expanded( QListViewItem* ) ),
+           this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
       slotFolderExpanded(fti);
+      connect( this, SIGNAL( expanded( QListViewItem* ) ),
+           this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
+   }
   } // for-end
 }
 //-----------------------------------------------------------------------------
