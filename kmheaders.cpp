@@ -1858,6 +1858,8 @@ void KMHeaders::applyFiltersOnMsg()
       next = next->itemAbove();
   }
 
+  bool updatesWereEnabled = isUpdatesEnabled();
+  setUpdatesEnabled( false );
   clearSelection();
   for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
     int idx = msgBase->parent()->find(msgBase);
@@ -1875,6 +1877,8 @@ void KMHeaders::applyFiltersOnMsg()
       if (slotFilterMsg(msg) == 2) break;
     }
   }
+  setUpdatesEnabled( updatesWereEnabled );
+  emit messageListUpdated();
 
   setContentsPos( topX, topY );
   emit selected( 0 );
