@@ -304,14 +304,14 @@ void KMFolder::close(bool aForced)
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
 
-  if (isIndexOutdated()) {
-      kdDebug(5006) << "Critical error: " << location() << 
-	  " has been modified by an external application while KMail was running." << endl;
-      exit(1);      
-  }
-
   if (mAutoCreateIndex)
   {
+      if (isIndexOutdated()) {
+	  kdDebug(5006) << "Critical error: " << location() << 
+	      " has been modified by an external application while KMail was running." << endl;
+	  exit(1);      
+      }
+
       bool dirty = mDirty;
       for (int i=0; !dirty && i<mMsgList.high(); i++)
 	  if (mMsgList[i])
