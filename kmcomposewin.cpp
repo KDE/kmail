@@ -1600,7 +1600,7 @@ void KMComposeWin::slotInsertPublicKey()
     // add the new attachment to the list
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
-  } else {
+  } else if( str ) {
     KMessageBox::sorry( 0L, i18n( "Could not attach public key, perhaps its format is invalid\n"
     	"(e.g. key contains umlaut with wrong encoding)." ) );
   }
