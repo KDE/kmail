@@ -36,6 +36,20 @@ public:
   static KMBroadcastStatus *instance();
   /** Emit an update status bar signal */
   void setStatusMsg( const QString& );
+  /** Sets a status bar message with timestamp */
+  void setStatusMsgWithTimestamp( const QString& message );
+  /** Sets a transmission completed status bar message */
+  void setStatusMsgTransmissionCompleted( int numMessages,
+                                          int numBytes = -1,
+                                          int numBytesRead = -1,
+                                          int numBytesToRead = -1,
+                                          bool mLeaveOnServer = false );
+  void setStatusMsgTransmissionCompleted( const QString& account,
+                                          int numMessages,
+                                          int numBytes = -1,
+                                          int numBytesRead = -1,
+                                          int numBytesToRead = -1,
+                                          bool mLeaveOnServer = false );
   /** Emit an enable progress widget(s) in status bar(s) signal */
   void setStatusProgressEnable( const QString&, bool );
   /** Emit an update progress widget(s) percent completed signal */

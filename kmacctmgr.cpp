@@ -133,23 +133,12 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     {
       // check done
       kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
-      mAcctChecking.remove(acct);
+      mAcctChecking.removeRef( acct );
       disconnect( acct, SIGNAL(finishedCheck(bool)),
-          this, SLOT(processNextCheck(bool)) );
+                  this, SLOT(processNextCheck(bool)) );
       kernel->filterMgr()->cleanup();
-      if (mTotalNewMailsArrived > 0)
-      {  
-        KMBroadcastStatus::instance()->setStatusMsg(
-            i18n("Transmission for account %1 completed, %n new message.",
-              "Transmission for account %1 completed, %n new messages.", mTotalNewMailsArrived)
-            .arg(acct->name()));
-      } else if (mTotalNewMailsArrived == 0)
-      {
-        KMBroadcastStatus::instance()->setStatusMsg(
-            i18n("Transmission for account %1 completed, no new messages.")
-            .arg(acct->name()));
-      }
-      // if mTotalNewMailsArrived we do nothing
+      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+        acct->name(), mTotalNewMailsArrived );
       emit checkedMail(newMailArrived, interactive);
       mTotalNewMailsArrived = 0;
     }
@@ -257,7 +246,7 @@ bool KMAcctMgr::remove(KMAccount* acct)
   //assert(acct != 0);
   if(!acct)
     return FALSE;
-  mAcctList.remove(acct);
+  mAcctList.removeRef(acct);
   return TRUE;
 }
 

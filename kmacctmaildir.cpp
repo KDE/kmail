@@ -81,8 +81,7 @@ void KMAcctMaildir::processNewMail(bool)
     QFileInfo fi( location() );
     if ( !fi.exists() ) {
       checkDone(hasNewMail, 0);
-      QString statusMsg = i18n("Transmission completed, no new messages");
-      KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
+      KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( 0 );
       return;
     }
   }
@@ -185,16 +184,12 @@ void KMAcctMaildir::processNewMail(bool)
   {
     rc = mailFolder.expunge();
     if (rc)
-      KMessageBox::information( 0,
-                              i18n("<qt>Cannot remove mail from mailbox <b>%1</b>:<br>%2</qt>")
-                                .arg(mailFolder.location()).arg(strerror(rc)));
-    QString statusMsg;
-    if ( num )
-      statusMsg = i18n("Transmission completed, %n new message.",
-		       "Transmission completed, %n new messages.", num);
-    else
-      statusMsg = i18n("Transmission completed, no new messages");
-    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
+      KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
+                                     i18n( "<qt>Cannot remove mail from "
+                                           "mailbox <b>%1</b>:<br>%2</qt>" )
+                                     .arg( mailFolder.location() )
+                                     .arg( strerror( rc ) ) );
+    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
   }
   // else warning is written already
 

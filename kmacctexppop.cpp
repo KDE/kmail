@@ -607,25 +607,10 @@ void KMAcctExpPop::slotJobFinished() {
     KMBroadcastStatus::instance()->setStatusProgressPercent( "P" + mName, 100 );
     int numMessages = (KMBroadcastStatus::instance()->abortRequested()) ?
       indexOfCurrentMsg : idsOfMsgs.count();
-    QString statusMsg;
-    if (numMessages > 0)
-      if (numBytesToRead != numBytes && mLeaveOnServer)
-	statusMsg = i18n("Transmission complete. %n new message in %1 KB "
-			 "(%2 KB remaining on the server).",
-			 "Transmission complete. %n new messages in %1 KB "
-			 "(%2 KB remaining on the server).",
-			 numMessages)
-	  .arg(numBytesRead/1024).arg(numBytes/1024);
-      else
-	statusMsg = i18n("Transmission complete. %n message in %1 KB.",
-			 "Transmission complete. %n messages in %1 KB.",
-			 numMessages)
-	  .arg(numBytesRead/1024);
-    else
-      statusMsg = i18n("Transmission complete. No new messages." );
-    KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
+    KMBroadcastStatus::instance()->setStatusMsgTransmissionCompleted(
+      numMessages, numBytes, numBytesRead, numBytesToRead, mLeaveOnServer );
     KMBroadcastStatus::instance()->setStatusProgressEnable( "P" + mName,
-      false );
+                                                            false );
     KMBroadcastStatus::instance()->reset();
 
     // use -1 as newmail count to use our statusMsg
