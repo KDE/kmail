@@ -30,7 +30,7 @@
 */
 
 // config keys:
-static const char * configKeyDefaultIdentity = "Default Identity";
+static const char configKeyDefaultIdentity[] = "Default Identity";
 
 #include "identitymanager.h"
 
