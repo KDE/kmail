@@ -43,7 +43,7 @@
 // Regular expression to find the line that seperates messages in a mail
 // folder:
 #define MSG_SEPERATOR_START "From "
-#define MSG_SEPERATOR_REGEX "^From .*..:...*$"
+#define MSG_SEPERATOR_REGEX "^From .*[0-9][0-9]:[0-9][0-9].*$"
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
 
@@ -224,7 +224,7 @@ void KMFolderMbox::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ( (folder() != kmkernel->inboxFolder()) 
+  if ( (folder() != kmkernel->inboxFolder())
         && folder()->isSystemFolder() && !aForced )
   {
       mOpenCount = 1;
@@ -936,8 +936,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
     if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
       aMsg->removeHeaderField("Content-Type");        // the line above
   }
-  msgText = aMsg->asString();
-  escapeFrom( msgText );
+  msgText = escapeFrom( aMsg->asString() );
   size_t len = msgText.length();
 
   assert(mStream != 0);
