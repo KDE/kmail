@@ -695,7 +695,7 @@ void KMComposeWin::setupActions(void)
                         actionCollection(), "send_alternative");
   }
 
-  (void) new KAction (i18n("Save in &drafts folder"), "", 0,
+  (void) new KAction (i18n("Save in &drafts folder"), 0,
 		      this, SLOT(slotSaveDraft()),
 		      actionCollection(), "save_in_drafts");
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,

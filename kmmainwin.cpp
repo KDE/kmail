@@ -1647,7 +1647,7 @@ void KMMainWin::setupMenuBar()
   connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
   connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
-  (void) new KAction( i18n("&Send Queued"), "mail_send_queued", 0, this,
+  (void) new KAction( i18n("&Send Queued"), 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
   (void) new KAction( i18n("Address &Book..."), "contents", 0, this,
@@ -1733,7 +1733,7 @@ void KMMainWin::setupMenuBar()
   forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
 		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
 
-  forwardAttachedAction = new KAction( i18n("&Forward as attachment"), "mail_forward_attached", SHIFT+Key_F, this,
+  forwardAttachedAction = new KAction( i18n("&Forward as attachment"), SHIFT+Key_F, this,
 		      SLOT(slotForwardAttachedMsg()), actionCollection(), "forward_attached" );
 
   redirectAction = new KAction( i18n("R&edirect..."), Key_E, this,
