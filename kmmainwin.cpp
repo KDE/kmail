@@ -1056,18 +1056,18 @@ void KMMainWin::setupMenuBar()
 {
   //----- File Menu
   fileMenu = new QPopupMenu();
-  fileMenu->insertItem(i18n("New Mailreader"), this, 
+  fileMenu->insertItem(i18n("&New Mailreader"), this, 
 		       SLOT(slotNewMailReader()));
   fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Save As..."), this,
+  fileMenu->insertItem(i18n("Save &As..."), this,
 		       SLOT(slotSaveMsg()), KStdAccel::save());
-  fileMenu->insertItem(i18n("Print..."), this,
+  fileMenu->insertItem(i18n("&Print..."), this,
 		       SLOT(slotPrintMsg()), KStdAccel::print());
   fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Compact all folders"), folderMgr,
+  fileMenu->insertItem(i18n("Compact all &folders"), folderMgr,
                         SLOT(compactAll()));
   fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Check Mail..."), this,
+  fileMenu->insertItem(i18n("Check &Mail"), this,
 		       SLOT(slotCheckMail()), CTRL+Key_L);
   actMenu = new QPopupMenu();
 
@@ -1078,7 +1078,7 @@ void KMMainWin::setupMenuBar()
 
   fileMenu->insertItem(i18n("Check Mail in..."),actMenu);
 
-  fileMenu->insertItem(i18n("Send Queued"), this,
+  fileMenu->insertItem(i18n("Send &Queued"), this,
 		       SLOT(slotSendQueued()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("&Settings..."), this, 
