@@ -68,6 +68,7 @@ public:
   virtual void setMsgRead(int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
   virtual void forwardMsg(int msgId=-1);
+  virtual void bounceMsg(int msgId=-1);
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
   virtual void resendMsg(int msgId=-1);

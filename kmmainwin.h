@@ -105,6 +105,7 @@ protected slots:
   void slotReplyToMsg();
   void slotReplyAllToMsg();
   void slotForwardMsg();
+  void slotBounceMsg();
   void slotEditMsg();
   void slotDeleteMsg();
   void slotSaveMsg();

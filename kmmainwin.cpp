@@ -623,6 +623,13 @@ void KMMainWin::slotForwardMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotBounceMsg()
+{ 
+  mHeaders->bounceMsg();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotEditMsg() 
 {
   KMMessage *msg;
@@ -1134,6 +1141,8 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotReplyAllToMsg()), Key_A);
   messageMenu->insertItem(i18n("&Forward..."), this, 
 			  SLOT(slotForwardMsg()), Key_F);
+  messageMenu->insertItem(i18n("&Bounce..."), this, 
+			  SLOT(slotBounceMsg()));
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("Edi&t..."),this,
 			  SLOT(slotEditMsg()), Key_T);

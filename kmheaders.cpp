@@ -27,6 +27,7 @@
 #include "kmfiltermgr.h"
 #include "kfontutils.h"
 #include "kmfoldermgr.h"
+#include "kmsender.h"
 
 QPixmap* KMHeaders::pixNew = 0;
 QPixmap* KMHeaders::pixUns = 0;
@@ -809,6 +810,78 @@ void KMHeaders::resendMsg (int msgId)
   win = new KMComposeWin;
   win->setMsg(newMsg, FALSE);
   win->show();
+  kbp->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::bounceMsg (int msgId)
+{
+  KMMessage *msg, *newMsg;
+  KMMessage bounceMsg;
+  QString str, fromStr;
+  int i;
+  const char* fromFields[] = { "Return-Path", "Resent-From", "Resent-Sender",
+			       "From", "Sender", 0 };
+
+  msg = getMsg(msgId);
+  if (!msg) return;
+
+  // Find email address of sender
+  for (i=0; fromFields[i]; i++)
+  {
+    fromStr = msg->headerField(fromFields[i]);
+    if (!fromStr.isEmpty()) break;
+  }
+  if (fromStr.isEmpty())
+  {
+    KMessageBox::sorry(this, i18n("The message has no sender set"),
+		       i18n("Bounce Message - KMail"));
+    return;
+  }
+
+  // No composer appears. So better ask before sending.
+  if (KMessageBox::warningContinueCancel(this, 
+      i18n("Return the message to the sender as undeliverable?\n"
+	   "This will only work if the email address of the sender,\n"
+	   "%1, is valid.").arg(fromStr),
+      i18n("Bounce Message - KMail"), i18n("Continue")) ==
+	  KMessageBox::Cancel)
+  {
+    return;
+  }
+
+  kbp->busy();
+
+  // Copy the original message, so that we can remove some of the
+  // header fields that shall not get bounced back
+  bounceMsg.fromString(msg->asString());
+  bounceMsg.removeHeaderField("Status");
+  bounceMsg.removeHeaderField("X-Status");
+  bounceMsg.removeHeaderField("X-KMail-Mark");
+
+  newMsg = new KMMessage;
+  newMsg->setTo(fromStr);
+  newMsg->setSubject("mail failed, returning to sender");
+
+  str = newMsg->from();
+  i = str.find('@');
+  newMsg->setFrom(str.replace(0, i, "MAILER-DAEMON"));
+  newMsg->setReferences(bounceMsg.id());
+
+  str = "|------------------------- Message log follows: -------------------------|\n"
+        "no valid recipients were found for this message\n"
+	"|------------------------- Failed addresses follow: ---------------------|\n";
+  str += bounceMsg.to();
+  str += "\n|------------------------- Message text follows: ------------------------|\n";
+  str += bounceMsg.asString();
+
+  newMsg->setBody(str);
+
+  // Queue the message for sending, so the user can still intercept
+  // it. This is currently for testing
+  msgSender->send(newMsg, FALSE);
+
   kbp->idle();
 }
 

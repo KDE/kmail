@@ -1,3 +1,8 @@
+1999-12-04  Stefan Taferner  <taferner@kde.org> (KMail-1.1.31)
+
+	* Implemented bouncing of mails. Hopefully this will help
+	  to fool spammers ;-)
+
 1999-10-10  Stefan Taferner  <taferner@kde.org> (KMail-1.1.25)
 
 	* Switched folder-tree widget to QListView. Currently
