@@ -87,6 +87,7 @@ void KMReaderMainWin::showMsg( const QTextCodec *codec, KMMessage *msg )
   mReaderWin->setMsg( msg, true );
   setCaption( msg->subject() );
   mMsg = msg;
+  toolBar( "mainToolBar" )->show();
 }
 
 //-----------------------------------------------------------------------------
@@ -253,7 +254,7 @@ void KMReaderMainWin::setupAccel()
   mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
   createGUI( "kmreadermainwin.rc" );
   menuBar()->hide();
-
+  toolBar( "mainToolBar" )->hide();
 }
 
 
