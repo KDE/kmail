@@ -270,8 +270,7 @@ namespace KMail {
 			 .arg( getUrl().protocol() ) );
       return Error;
     }
-    if ( mSlave && mSlave->isConnected() )
-    {
+    if ( mSlave->isConnected() ) {
       mSlaveConnected = true;
       return Connected;
     }
