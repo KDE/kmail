@@ -17,7 +17,7 @@
 #include "kfileio.h"
 #include "kmfawidgets.h"
 
-#include <qregexp.h>
+#include <kregexp3.h>
 #include <ktempfile.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -852,7 +852,7 @@ public:
     return (new KMFilterActionRewriteHeader);
   }
 private:
-  QRegExp mRegExp;
+  KRegExp3 mRegExp;
   QString mReplacementString;
 };
 
@@ -874,8 +874,10 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
   if ( mParameter.isEmpty() || !mRegExp.isValid() )
     return ErrorButGoOn;
 
-  QString newValue = msg->headerField( mParameter.latin1() );
-  newValue.replace( mRegExp, mReplacementString );
+  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
+
+  QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
+				     mReplacementString );
 
   msg->setHeaderField( mParameter.latin1(), newValue );
   return GoOn;
