@@ -1820,28 +1820,40 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
   if( oldMsg ) {
     kdDebug(5006) << "KMMainWin  -  old message found" << endl;
     if( oldMsg->hasUnencryptedMsg() ) {
-      // insert the unencrypted message
       kdDebug(5006) << "KMMainWin  -  extra unencrypted message found" << endl;
       KMMessage* newMsg = oldMsg->unencryptedMsg();
+      // adjust the message id
+      {
+        QString msgId( oldMsg->msgId() );
+        int leftAngle = msgId.findRev( '<' );
+        newMsg->setMsgId( msgId.insert( (-1 == leftAngle) ? 0 : ++leftAngle,
+                                        "local." ) );
+      }
+      const QString newMsgIdMD5( newMsg->msgIdMD5() );
+      // insert the unencrypted message
       kdDebug(5006) << "KMMainWin  -  copying unencrypted message to same folder" << endl;
       mHeaders->copyMsgToFolder(mFolder, -1, newMsg);
-      // delete the encrypted message (this will delete newMsg too)
+      // delete the encrypted message - this will also delete newMsg
       kdDebug(5006) << "KMMainWin  -  deleting encrypted message" << endl;
       mHeaders->deleteMsg();
       kdDebug(5006) << "KMMainWin  -  updating message actions" << endl;
       updateMessageActions();
       
-      // Sorry, no idea how to *select* the freshly added message now.  :-(
-      //
-      //     slotSelectMessage( ?? but what param to give it ?? );
-      //
-      // (khz, 2002/06/21)
+      // find and select and show the new message
+      int idx = mFolder->find( newMsgIdMD5 );
+      if( -1 != idx ) {
+        mHeaders->setCurrentMsg( idx );
+        mHeaders->highlightMessage(mHeaders->currentItem(), true);
+        mMsgView->setMsg( newMsg );
+      } else {
+        kdDebug(5006) << "KMMainWin  -  SORRY, could not store unencrypted message!" << endl;
+      }
       
       kdDebug(5006) << "KMMainWin  -  done." << endl;
     } else
       kdDebug(5006) << "KMMainWin  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
   } else
-    kdDebug(5006) << "KMMainWin  -  NO OLD MESSAGE FOUND" << endl;
+    kdDebug(5006) << "KMMainWin  -  PANIC: NO OLD MESSAGE FOUND" << endl;
 }
 
 

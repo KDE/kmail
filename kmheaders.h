@@ -122,9 +122,11 @@ public:
     they are moved to this folder. */
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
 
-  /** Messages are duplicated and added to given folder. */
+  /** Messages are duplicated and added to given folder.
+      If aMsg is set this one will be written to the destination folder. */
   virtual void copyMsgToFolder(KMFolder* destination,
-                               int msgId=-1, KMMessage* aMsg = NULL);
+                               int msgId=-1,
+                               KMMessage* aMsg = NULL);
 
  /** Returns list of selected messages or a list with the message with
     the given Id if msgId >= 0. Do not delete the returned list. */

@@ -1133,6 +1133,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                             bool weAreReplacingTheRootNode,
                                             int recCount )
 {
+  kdDebug(5006) << QString("-------------------------------------------------" ) << endl;
   kdDebug(5006) << QString("KMReaderWin::objectTreeToDecryptedMsg( %1 )  START").arg( recCount ) << endl;
   if( node ) {
     partNode* curNode = node;
@@ -1237,7 +1238,9 @@ kdDebug(5006) << "pgp signed" << endl;
             break;
           case DwMime::kSubtypePkcs7Mime: {
 kdDebug(5006) << "pkcs7 mime" << endl;
-              if( curNode->mChild )
+              // note: subtype Pkcs7Mime can also be signed
+              //       and we do NOT want to remove the signature!
+              if( curNode->isEncrypted() && curNode->mChild )
                 dataNode = curNode->mChild;
             }
             break;
@@ -2796,6 +2799,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   //       This could be changed in the objectTreeToDecryptedMsg() function
   //       by deciding when (or when not, resp.) to set the 'dataNode' to
   //       something different than 'curNode'.
+  bool emitReplaceMsgByUnencryptedVersion = false;
   if(    !onlyProcessHeaders
       && (aMsg == mMsg)
       && (    (KMMsgFullyEncrypted == encryptionState)
@@ -2824,10 +2828,8 @@ kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
 kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
 kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to mMsg" << endl;
       mMsg->setUnencryptedMsg( unencryptedMessage );
-kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form" << endl;
-      emit replaceMsgByUnencryptedVersion();
-    }  
-kdDebug(5006) << "KMReaderWin  -  done." << endl;
+      emitReplaceMsgByUnencryptedVersion = true;
+    }
   }
 #endif
   
@@ -2840,6 +2842,11 @@ kdDebug(5006) << "KMReaderWin  -  done." << endl;
     if( mRootNode )
       delete mRootNode;
     mRootNode = savedRootNode;
+  }
+  
+  if( emitReplaceMsgByUnencryptedVersion ) {
+kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
+    emit replaceMsgByUnencryptedVersion();
   }
 }
 

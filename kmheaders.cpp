@@ -1900,7 +1900,8 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
   QPtrList<KMMessage> list;
 
   if (!destFolder) return;
-  
+
+    
   bool useParam_aMsg = (NULL != aMsg);
 
   kernel->kbp()->busy();
@@ -1944,6 +1945,7 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
 		destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
       } else {
 	rc = destFolder->addMsg(newMsg, &index);
+    
 	if (rc == 0 && index != -1)
 	    destFolder->unGetMsg( destFolder->count() - 1 );
       }
@@ -1954,8 +1956,11 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
       assert(idx != -1);
       mFolder->unGetMsg( idx );
     }
+    
+    // To process only one single message?
     if( useParam_aMsg )
       break;
+      
   } // end for
 
   if (!list.isEmpty())
