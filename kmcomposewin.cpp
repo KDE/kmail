@@ -2035,10 +2035,17 @@ void KMEdit::slotSpellResult(char *aNewText)
   setText(aNewText);
   setReadOnly(FALSE);
   setModified();
+  connect (mKSpell, SIGNAL (cleanDone()),
+	   this, SLOT (slotSpellDone()));
+  mKSpell->cleanUp();
+}
+
+//-----------------------------------------------------------------------------
+void KMEdit::slotSpellDone()
+{
   delete mKSpell;
   mKSpell = NULL;  //Shouldn't this be zero, not NULL?
   emit spellcheck_done();
-
 }
 
 //-----------------------------------------------------------------------------

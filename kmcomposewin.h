@@ -64,11 +64,12 @@ public:
 signals:
   void spellcheck_done();
 public slots:
-  void slotSpellResult (char *newtext);
   void slotSpellCorrected (char *originalword, char *newword, unsigned pos);
   void slotSpellMisspelling (char *word, QStrList *, unsigned pos);
   void slotSpellcheck2(KSpell*);
-  
+  void slotSpellResult (char *newtext);
+  void slotSpellDone();
+
 protected:
   /** Event filter that does Tab-key handling. */
   virtual bool eventFilter(QObject*, QEvent*);
