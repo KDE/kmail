@@ -659,7 +659,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	                                    // wasn't html show only if
 	{                                   // support for html is turned off
           str = msgPart.bodyDecoded();      // decode it...
-          writeBodyStr(str.data());
+          writeBodyStr(str.data(), mCodec);
           return;
 	}
       }
@@ -703,6 +703,10 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	  if (i>0)
 	      mViewer->write("<br><hr><br>");
 
+          QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+            KMMsgBase::codecForName(msgPart.charset()) : mCodec;
+          if (!atmCodec) atmCodec = mCodec;
+          
 	  if (htmlMail() && (qstricmp(subtype, "html")==0))
           {
             // ---Sven's strip </BODY> and </HTML> from end of attachment start-
@@ -718,9 +722,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
               if (i>0) cstr.truncate(i);
             }
             // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-            mViewer->write(mCodec->toUnicode(cstr.data()));
+            mViewer->write(atmCodec->toUnicode(cstr.data()));
 	  }
-          else writeBodyStr(cstr);
+          else writeBodyStr(cstr, atmCodec);
 	}
         // ---Sven's view smart or inline image attachments in kmail start---
         else if (qstricmp(type, "image")==0)
@@ -743,7 +747,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     if (htmlMail() && ((type == "text/html") || (type.find("text/html") != -1)))
       mViewer->write(mCodec->toUnicode(aMsg->bodyDecoded().data()));
     else
-      writeBodyStr(aMsg->bodyDecoded());
+      writeBodyStr(aMsg->bodyDecoded(), mCodec);
   }
 }
 
@@ -867,7 +871,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeBodyStr(const QCString aStr)
+void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 {
   QString line, sig, htmlStr = "";
   Kpgp* pgp = Kpgp::getKpgp();
@@ -878,7 +882,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr)
   if (pgp->setMessage(aStr))
   {
     QString str = pgp->frontmatter();
-    if(!str.isEmpty()) htmlStr += mCodec->toUnicode(quotedHTML(str));
+    if(!str.isEmpty()) htmlStr += aCodec->toUnicode(quotedHTML(str));
     htmlStr += "<br>";
     if (pgp->isEncrypted())
     {
@@ -922,21 +926,21 @@ void KMReaderWin::writeBodyStr(const QCString aStr)
     }
     if (pgpMessage)
     {
-      htmlStr += mCodec->toUnicode(quotedHTML(pgp->message()));
+      htmlStr += aCodec->toUnicode(quotedHTML(pgp->message()));
       htmlStr += QString("<br><b>%1</b><br><br>")
         .arg(i18n("End of pgp message"));
       str = pgp->backmatter();
-      if(!str.isEmpty()) htmlStr += mCodec->toUnicode(quotedHTML(str));
+      if(!str.isEmpty()) htmlStr += aCodec->toUnicode(quotedHTML(str));
     } // if (!pgpMessage) then the message only looked similar to a pgp message
-    else htmlStr = mCodec->toUnicode(quotedHTML(aStr));
+    else htmlStr = aCodec->toUnicode(quotedHTML(aStr));
   }
 //  Mail header charset(iso-2022-jp) is using all most E-mail system in Japan.
 //  ISO-2022-JP code consists of ESC(0x1b) character and 7Bit character which
 //  used from '!' character to  '~' character.
 //  JIS7 is header charset of iso-2022-jp.  toyo
-  else if( QString(mCodec->name()) == "JIS7" )
-    htmlStr += quotedHTML(mCodec->toUnicode(aStr));
-  else htmlStr += mCodec->toUnicode(quotedHTML(aStr));
+  else if( QString(aCodec->name()) == "JIS7" )
+    htmlStr += quotedHTML(aCodec->toUnicode(aStr));
+  else htmlStr += aCodec->toUnicode(quotedHTML(aStr));
   mViewer->write(htmlStr);
 }
 
@@ -1472,7 +1476,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
 	win->mViewer->write(win->codec()->toUnicode(str));
       else  // plain text
-	win->writeBodyStr(str);
+	win->writeBodyStr(str, codec);
       win->mViewer->write("</body></html>");
       win->mViewer->end();
       win->setCaption(i18n("View Attachment: ") + pname);
@@ -1530,8 +1534,11 @@ void KMReaderWin::slotAtmView()
   if (pname.isEmpty()) pname=msgPart.contentDescription();
   if (pname.isEmpty()) pname="unnamed";
   // image Attachment is saved already
+  QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+    KMMsgBase::codecForName(msgPart.charset()) : mCodec;
+  if (!atmCodec) atmCodec = mCodec;
   atmView(this, &msgPart, htmlMail(), QString("%1part%2/%3").arg(mAttachDir).
-    arg(mAtmCurrent+1).arg(pname), pname, mCodec);
+    arg(mAtmCurrent+1).arg(pname), pname, atmCodec);
 }
 
 

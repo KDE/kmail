@@ -194,7 +194,7 @@ protected:
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
-  virtual void writeBodyStr(const QCString bodyString);
+  virtual void writeBodyStr(const QCString bodyString, QTextCodec *aCodec);
 
   /** Create a nice icon with comment and name for the given
     body part, appended to the HTML view. Content type and subtype
