@@ -884,7 +884,7 @@ void KMComposeWin::setupActions(void)
                       actionCollection(), "setup_spellchecker");
 
   encryptAction = new KToggleAction (i18n("Encrypt Message"),
-                                     "unlock", 0,
+                                     "decrypted", 0,
                                      actionCollection(), "encrypt_message");
   signAction = new KToggleAction (i18n("Sign Message"),
                                   "signature", 0,
@@ -2134,8 +2134,8 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotEncryptToggled(bool on)
 {
-  if (on) encryptAction->setIcon("lock");
-  else encryptAction->setIcon("unlock");
+  if (on) encryptAction->setIcon("encrypted");
+  else encryptAction->setIcon("decrypted");
 }
 
 
