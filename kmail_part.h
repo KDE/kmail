@@ -66,7 +66,6 @@ class KMailPart: public KParts::ReadOnlyPart, virtual public KMailPartIface
     void exportFolder( KMFolder* folder );
     void slotIconChanged( KMFolderTreeItem *fti );
     void slotNameChanged( KMFolderTreeItem *fti );
-    void slotToolbarChanged();
 
   signals:
     void textChanged( const QString& );

@@ -137,8 +137,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
            this, SLOT(slotIconChanged(KMFolderTreeItem*)) );
   connect( mainWidget->folderTree(), SIGNAL(nameChanged(KMFolderTreeItem*)),
            this, SLOT(slotNameChanged(KMFolderTreeItem*)) );
-  connect( mainWidget, SIGNAL(modifiedToolBarConfig()),
-           this, SLOT(slotToolbarChanged()) );
   connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
   connect( this, SIGNAL(iconChanged(const QPixmap&)), ie, SIGNAL(iconChanged(const QPixmap&)) );
 
@@ -209,23 +207,6 @@ public:
     createGUI( part );
   }
 };
-
-void KMailPart::slotToolbarChanged()
-{
-  kdDebug(5006) << "KMailPart - need to reload the toolbar" << endl;
-  reloadXML();
-  KParts::MainWindow *win =
-    dynamic_cast<KParts::MainWindow*>( mainWidget->topLevelWidget() );
-  if ( win ) {
-    ( static_cast<KPartsMainWindowWithPublicizedCreateGUI*>( win ) )
-      ->createGUIPublic( this );
-  }
-  else {
-    kdDebug(5006) << "KMailPart::slotToolbarChanged() - "
-                  << "dynamic_cast<KPart::MainWindow*>( toplevelWidget() ) "
-                  << "failed" << endl;
-  }
-}
 
 //-----------------------------------------------------------------------------
 
