@@ -94,7 +94,8 @@ public:
     QString signer;
     QCString keyId;
     Kpgp::Validity keyTrust;
-    QString status;
+    QString status;  // to be used for unknown plug-ins
+    int status_code; // to be used for i18n of OpenPGP and S/MIME CryptPlugs
     tm creationTime;
     bool isEncrypted;
     bool isDecryptable;
@@ -539,7 +540,7 @@ if(data){
 		    messagePart.isEncrypted = true;
 		    messagePart.isSigned = false;
 
-		    queueHtml( writeSigstatHeader( messagePart ) );
+		    queueHtml( writeSigstatHeader( messagePart, useThisCryptPlug ) );
                     parseObjectTree( &myBodyNode, showOneMimePart,
                                                   keepEncryptions,
                                                   includeSignatures );
@@ -1807,7 +1808,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     messagePart.isEncrypted = false;
     messagePart.isDecryptable = false;
     messagePart.keyTrust = Kpgp::KPGP_VALIDITY_UNKNOWN;
-    messagePart.status = sigMeta.status;
+    messagePart.status      = sigMeta.status_code;
+    messagePart.status_code = sigMeta.status_code;
 
     // only one signature supported
     if (sigMeta.extended_info_count != 0) {
@@ -1815,6 +1817,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
 
         CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
+        if( messagePart.status.isEmpty() )
+            messagePart.status = ext.status_text;
         messagePart.keyId = ext.keyid;
         if( messagePart.keyId.isEmpty() )
             messagePart.keyId = ext.fingerprint; // take fingerprint if no id found (e.g. for S/MIME)
@@ -1855,7 +1859,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     QString unknown( i18n("(unknown)") );
     if( !data ){
       if( new_cleartext ) {
-        queueHtml( writeSigstatHeader( messagePart ) );
+        queueHtml( writeSigstatHeader( messagePart, cryptPlug ) );
 
         bIsOpaqueSigned = true;
         deb = "\n\nN E W    C O N T E N T = \"";
@@ -1889,7 +1893,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     }
     else
     {
-      queueHtml( writeSigstatHeader( messagePart ) );
+      queueHtml( writeSigstatHeader( messagePart, cryptPlug ) );
       parseObjectTree( data );
       queueHtml( writeSigstatFooter( messagePart ) );
     }
@@ -2505,9 +2509,63 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
   return headerStr;
 }
 
+
+QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug, int status_code )
+{
+    QString result;
+    if( cryptPlug ) {
+        if( (0 <= cryptPlug->libName().find( "gpgme-openpgp", 0, false )) ||
+            (0 <= cryptPlug->libName().find( "gpgme-smime",   0, false )) ) {
+            // process enum according to it's definition to be read in
+            // GNU Privacy Guard CVS repository /gpgme/gpgme/gpgme.h
+            switch( status_code ) {
+            case 0: // GPGME_SIG_STAT_NONE
+                result = i18n("Oops: Signature not verified");
+                break;
+            case 1: // GPGME_SIG_STAT_GOOD
+                result = i18n("Good signature");
+                break;
+            case 2: // GPGME_SIG_STAT_BAD
+                result = i18n("BAD signature");
+                break;
+            case 3: // GPGME_SIG_STAT_NOKEY
+                result = i18n("No public key to verify the signature");
+                break;
+            case 4: // GPGME_SIG_STAT_NOSIG
+                result = i18n("No signature found");
+                break;
+            case 5: // GPGME_SIG_STAT_ERROR
+                result = i18n("Error verifying the signature");
+                break;
+            case 6: // GPGME_SIG_STAT_DIFF
+                result = i18n("Different results for signatures");
+                break;
+            /* PENDING(khz) Verify exact meaning of the following values:
+            case 7: // GPGME_SIG_STAT_GOOD_EXP
+                return i18n("Signature certificate is expired");
+            break;
+            case 8: // GPGME_SIG_STAT_GOOD_EXPKEY
+                return i18n("One of the certificate's keys is expired");
+            break;
+            */
+            default:
+                result = "";   // do *not* return a default text here !
+                break;
+            }
+        }
+        /*
+        // add i18n support for 3rd party plug-ins here:
+        else if (0 <= cryptPlug->libName().find( "yetanotherpluginname", 0, false )) {
+
+        }
+        */
+    }
+    return result;
+}
+
 //---------------------------------------------------
 
-QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
+QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* cryptPlug )
 {
     QString signer = block.signer;
 
@@ -2528,6 +2586,10 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
     }
 
     if (block.isSigned) {
+
+        QString statusStr = sigStatusToString( cryptPlug, block.status_code );
+        if( statusStr.isEmpty() )
+            statusStr = block.status;
 
         if (block.signer.isEmpty()) {
             block.signClass = "signWarn";
@@ -2551,17 +2613,17 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
             htmlStr += "<br />";
             htmlStr += i18n( "The validity of the signature cannot be "
                     "verified." );
-            if( !block.status.isEmpty() ) {
+            if( !statusStr.isEmpty() ) {
                 htmlStr += "<br />";
                 htmlStr += i18n( "Status: " );
                 htmlStr += "<i>";
-                htmlStr += block.status;
+                htmlStr += statusStr;
                 htmlStr += "</i>";
             }
-        htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
-    }
-	else
-	{
+            htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
+        }
+	    else
+	    {
 	    // HTMLize the signer's user id and create mailto: link
 	    signer.replace( QRegExp("&"), "&amp;" );
 	    signer.replace( QRegExp("<"), "&lt;" );
@@ -2584,7 +2646,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
 		else
 		    htmlStr += i18n( "Message was signed by %1." ).arg( signer );
 		htmlStr += "<br />";
-		
+
 		switch( block.keyTrust )
 		{
 		    case Kpgp::KPGP_VALIDITY_UNKNOWN:
@@ -2609,8 +2671,8 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block )
 		}
 		htmlStr += "</td></tr>"
 		    "<tr class=\"" + block.signClass + "B\"><td>";
-	    } 
-	    else 
+	    }
+	    else
 	    {
 		block.signClass = "signErr";
 		htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
@@ -2752,7 +2814,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
 	      messagePart.keyId = keyId;
 	      messagePart.keyTrust = keyTrust;
 
-	      htmlStr += writeSigstatHeader( messagePart );
+	      htmlStr += writeSigstatHeader( messagePart, 0 );
 	      htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
 	      htmlStr += writeSigstatFooter( messagePart );
 	  }

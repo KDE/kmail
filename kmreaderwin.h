@@ -28,6 +28,7 @@ class CryptPlugWrapperList;
 class KMMessagePart;
 class KURL;
 class QListViewItem;
+class CryptPlugWrapper;
 
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
@@ -323,7 +324,8 @@ protected:
 private:
   /** extracted parts from writeBodyStr() */
   class PartMetaData;
-  QString writeSigstatHeader(PartMetaData& part);
+  QString sigStatusToString( CryptPlugWrapper* cryptPlug, int status_code );
+  QString writeSigstatHeader(PartMetaData& part,CryptPlugWrapper* cryptPlug);
   QString writeSigstatFooter(PartMetaData& part);
 
 protected:
