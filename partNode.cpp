@@ -564,8 +564,14 @@ bool partNode::isFirstTextPart() const {
   if ( type() != DwMime::kTypeText )
     return false;
   const partNode * root = this;
-  while ( const partNode * p = root->parentNode() )
-    root = p;
+  // go up until we reach the root node of a message (of the actual message or
+  // of an attached message)
+  while ( const partNode * p = root->parentNode() ) {
+    if ( p->type() == DwMime::kTypeMessage )
+      break;
+    else
+      root = p;
+  }
   for ( const partNode * n = root ; n ; n = n->next() )
     if ( n->type() == DwMime::kTypeText )
       return n == this;

@@ -210,6 +210,9 @@ public:
 
     bool isAttachment() const;
     bool isHeuristicalAttachment() const;
+    /** returns true if this is the first text part of the message this node
+        is a body part of
+    */
     bool isFirstTextPart() const;
 
     bool hasContentDispositionInline() const;
