@@ -9,11 +9,13 @@
 #include <kdebug.h>
 #include <kconfig.h>
 
-#include <string.h>
+#include <qdatetime.h>
+
+//#include <string.h>
 
 static const char* funcConfigNames[] =
   { "equals", "not-equal", "contains", "contains-not", "regexp",
-    "not-regexp", 0 };
+    "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal", 0 };
 
 
 //-----------------------------------------------------------------------------
@@ -33,7 +35,7 @@ static int findInStrList(const char* strList[], const char* str)
   if (!str) return -1;
 
   for (i=0; strList[i]; i++)
-    if (strcasecmp(strList[i], str)==0) return i;
+    if (qstricmp(strList[i], str)==0) return i;
 
   return -1;
 }
@@ -81,6 +83,9 @@ void KMSearchRule::init(const QString aField, const char* aStrFunction,
 bool KMSearchRule::matches(const KMMessage* msg) const
 {
   QString msgContents;
+  unsigned long numericalMsgContents = 0;
+  unsigned long numericalValue = 0;
+  bool numerical = FALSE;
 
   assert(msg != NULL); // This assert seems to be important
 
@@ -96,6 +101,18 @@ bool KMSearchRule::matches(const KMMessage* msg) const
     msgContents = msg->headerField("To");
     msgContents += "\n";
     msgContents += msg->headerField("Cc");
+  } else if( mField == "<size>" ) {
+    numerical = TRUE;
+    numericalMsgContents = msg->msgSize();
+    numericalValue = mContents.toULong(); // isEmpty() checks this
+    msgContents.setNum( numericalMsgContents );
+  } else if( mField == "<age in days>" ) {
+    numerical = TRUE;
+    QDateTime msgDateTime;
+    msgDateTime.setTime_t( msg->date() );
+    numericalMsgContents = msgDateTime.daysTo( QDateTime::currentDateTime() );
+    numericalValue = mContents.toULong(); // isEmpty() checks this
+    msgContents.setNum( numericalMsgContents );
   } else {
     msgContents = msg->headerField(mField);
   }
@@ -104,10 +121,16 @@ bool KMSearchRule::matches(const KMMessage* msg) const
   switch (mFunction)
   {
   case KMSearchRule::FuncEquals:
-    return (qstricmp(mContents, msgContents) == 0);
+    if (numerical)
+      return ( numericalValue == numericalMsgContents );
+    else
+      return (qstricmp(msgContents, mContents) == 0);
 
   case KMSearchRule::FuncNotEqual:
-    return (qstricmp(mContents, msgContents) != 0);
+    if (numerical)
+      return ( numericalValue != numericalMsgContents );
+    else
+      return (qstricmp(msgContents, mContents) != 0);
 
   case KMSearchRule::FuncContains:
     return msgContents.contains(mContents, FALSE);
@@ -120,6 +143,30 @@ bool KMSearchRule::matches(const KMMessage* msg) const
 
   case KMSearchRule::FuncNotRegExp:
     return (msgContents.find(QRegExp(mContents, FALSE)) < 0);
+
+  case FuncIsGreater:
+    if (numerical)
+      return (numericalMsgContents > numericalValue);
+    else
+      return (qstricmp(msgContents, mContents) > 0);
+
+  case FuncIsLessOrEqual:
+    if (numerical)
+      return (numericalMsgContents <= numericalValue);
+    else
+      return (qstricmp(msgContents, mContents) <= 0);
+
+  case FuncIsLess:
+    if (numerical)
+      return (numericalMsgContents < numericalValue);
+    else
+      return (qstricmp(msgContents, mContents) < 0);
+
+  case FuncIsGreaterOrEqual:
+    if (numerical)
+      return (numericalMsgContents >= numericalValue);
+    else
+      return (qstricmp(msgContents, mContents) >= 0);
   }
 
   return FALSE;
@@ -148,7 +195,16 @@ void KMSearchRule::writeConfig( KConfig *config, int aIdx ) const
 //-----------------------------------------------------------------------------
 bool KMSearchRule::isEmpty() const
 {
-  return mField.stripWhiteSpace().isEmpty() || mContents.isEmpty();
+  bool ok;
+
+  if ( mField == "<size>" || mField == "<age in days>" ) {
+    ok = FALSE;
+    mContents.toULong(&ok);
+  } else
+    ok = TRUE;
+
+  return mField.stripWhiteSpace().isEmpty()
+    || mContents.isEmpty() || !ok;
 }
 
 //-----------------------------------------------------------------------------

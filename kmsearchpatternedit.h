@@ -11,10 +11,6 @@
 #include <qhbox.h>
 #include <qgroupbox.h>
 #include <qlist.h>
-//#include <qstring.h>
-//#include <qradiobutton.h>
-//#include <qlineedit.h>
-//#include <qcombobox.h>
 
 class QPushButton;
 class QVBoxLayout;

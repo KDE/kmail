@@ -112,6 +112,8 @@ QString KMSearchRuleWidget::ruleFieldToEnglish(const QString & i18nVal) const
   if (i18nVal == i18n("<body>")) return QString("<body>");
   if (i18nVal == i18n("<message>")) return QString("<message>");
   if (i18nVal == i18n("<any header>")) return QString("<any header>");
+  if (i18nVal == i18n("<size>")) return QString("<size>");
+  if (i18nVal == i18n("<age in days>")) return QString("<age in days>");
   return i18nVal;
 }
 
@@ -133,13 +135,17 @@ void KMSearchRuleWidget::initLists() const
   if ( sFilterFuncList.isEmpty() )
   {
     // also see KMSearchRule::matches() and KMSearchRule::Function
-    // you change the following strings!
+    // if you change the following strings!
     sFilterFuncList.append(i18n("equals"));
     sFilterFuncList.append(i18n("doesn't equal"));
     sFilterFuncList.append(i18n("contains"));
     sFilterFuncList.append(i18n("doesn't contain"));
     sFilterFuncList.append(i18n("matches regular expr."));
     sFilterFuncList.append(i18n("doesn't match reg. expr."));
+    sFilterFuncList.append(i18n("is greater than"));
+    sFilterFuncList.append(i18n("is less than or equal to"));
+    sFilterFuncList.append(i18n("is less than"));
+    sFilterFuncList.append(i18n("is greater than or equal to"));
   }
 
   //---------- initialize list of filter operators
@@ -152,6 +158,8 @@ void KMSearchRuleWidget::initLists() const
     sFilterFieldList.append(i18n("<body>"));
     sFilterFieldList.append(i18n("<any header>"));
     sFilterFieldList.append(i18n("<To or Cc>"));
+    sFilterFieldList.append(i18n("<size>"));
+    sFilterFieldList.append(i18n("<age in days>"));
     // these others only represent meassage headers and you can add to
     // them as you like
     sFilterFieldList.append("Subject");
@@ -159,6 +167,7 @@ void KMSearchRuleWidget::initLists() const
     sFilterFieldList.append("To");
     sFilterFieldList.append("Cc");
     sFilterFieldList.append("Reply-To");
+    sFilterFieldList.append("List-Id");
     sFilterFieldList.append("Organization");
     sFilterFieldList.append("Resent-From");
     sFilterFieldList.append("X-Loop");

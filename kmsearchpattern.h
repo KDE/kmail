@@ -5,16 +5,9 @@
 #ifndef _kmsearchpattern_h_
 #define _kmsearchpattern_h_
 
-//#include "kmmessage.h"
-//#include "kmfilter.h"
-//#include "kmfolder.h"
-
-//#include <kconfig.h>
-
 #include <qlist.h>
 #include <qstring.h>
 
-//class QString;
 class KMMessage;
 class KConfig;
 
@@ -27,20 +20,27 @@ class KConfig;
     rules before it is placed in the associated mail folder (usually "inbox").
     This class represents one mail filter rule.
     
-    @short This class represents one mail folder rule.
+    @short This class represents one search pattern rule.
 */
 class KMSearchRule
 {
 public:
   /** Operators for comparison of field and contents.
       If you change the order or contents of the enum: do not forget
-      to change sFilterFuncList and matches() in @ref KMSearchRule, too. */
-  enum Function { FuncEquals=0, FuncNotEqual, FuncContains, FuncContainsNot, 
-		  FuncRegExp, FuncNotRegExp /*, FuncIsEqual, FuncIsNotEqual,
-		  FuncIsGreater, FuncIsLess */ };
+      to change funcConfNames[], sFilterFuncList and matches()
+      in @ref KMSearchRule, too.
+      Also, it is assumed that these functions come in pairs of logical
+      opposites (ie. "=" <-> "!=", ">" <-> "<=", etc.).
+  */
+  enum Function { FuncEquals=0, FuncNotEqual,
+		  FuncContains, FuncContainsNot, 
+		  FuncRegExp, FuncNotRegExp,
+		  FuncIsGreater, FuncIsLessOrEqual,
+		  FuncIsLess, FuncIsGreaterOrEqual };
   
-  /** Constructor. Initializes the field and the value to the empty string and the function
-      to FuncContains. Use @ref init to set other data.*/
+  /** Constructor. Initializes the field and the value to the empty
+      string and the function to @p FuncEquals. Use @ref init to set
+      other data.*/
   KMSearchRule();
   
   /** Initialize the rule.
@@ -95,11 +95,13 @@ public:
   void setFunction( Function aFunction ) { mFunction = aFunction; }
   
   /** Return message header field name (without the trailing ':').
-      There are also four pseudo-headers:
+      There are also five pseudo-headers:
       @li <message>: Try to match against the whole message.
       @li <body>: Try to match against the body of the message.
       @li <any header>: Try to match against any header field.
       @li <To or Cc>: Try to match against both To: and Cc: header fields.
+      @li <size>: Try to match against size of message (numerical).
+      @li <age in days>: Try to match against age of message (numerical).
   */
   const QString field() const { return mField; }
   /** Set message header field name (make sure there's no trailing
