@@ -411,7 +411,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder, bool truncate)
       fp = fopen(filename.local8Bit(), "w+");
       if (!fp)
       {
-        kdDebug(5006) << "Dict '" << filename.local8Bit() << "' cannot open with folder " << folder->label() << ": "
+        kdDebug(5006) << "Dict cannot open with folder " << folder->label() << ": "
                       << strerror(errno) << " (" << errno << ")" << endl;
          delete rentry;
          rentry = 0;
