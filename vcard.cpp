@@ -31,7 +31,6 @@
 #endif
 #include "vcard.h"
 #include <klocale.h>
-#include <kdebug.h>
 #include <qregexp.h>
 
 /*
@@ -159,8 +158,6 @@ QValueList<QString> lines;
                                    j != lines.end(); ++j) {
     VCardLine _vcl;
 
-    kdDebug(5006) << "parseVCard: parsing line '" << QString(*j) << "'" << endl;
-
     // take spaces off the end - ugly but necessary hack
     for (int g = (*j).length()-1; g > 0 && (*j)[g].isSpace(); g++)
       (*j)[g] = 0;
@@ -186,8 +183,6 @@ QValueList<QString> lines;
       unsigned int tail = (*j).find(':', 0);
       if (tail > (*j).length()) {  // invalid line - no ':'
         _err = VC_ERR_INVALID_LINE;
-        kdDebug(5006) << "parseVCard: " << getError(_err)
-                      << "(no ':')\nLine: '" << QString(*j) << "'" << endl;
         break;
       }
 
@@ -214,46 +209,18 @@ QValueList<QString> lines;
                                          z != nametokens.end();
                                          ++z) {
           QString zz = (*z).lower();
-          kdDebug(5006) << "parseVCard: parsing name token '" << zz << "'\n";
-          if (zz == VCARD_QUOTED_PRINTABLE) {
+          if (zz == VCARD_QUOTED_PRINTABLE || zz == VCARD_ENCODING_QUOTED_PRINTABLE) {
             qp = true;
           } else if (zz == VCARD_BASE64) {
             b64 = true;
 	  } else if (!first_pass) {
-            if (zz.startsWith(VCARD_ENCODING_BEGIN)) {
-              // strip off the leading 'encoding='
-              zz = zz.mid(QString(VCARD_ENCODING_BEGIN).length());
-              if (zz == VCARD_QUOTED_PRINTABLE) {
-                qp = true;
-              } else if (zz == VCARD_B) {
-                b64 = true;
-              }
-            }
-            else if (zz.startsWith(VCARD_QUALIFIER_BEGIN)) {
-              // strip off the leading 'type='
-              zz = zz.mid(QString(VCARD_QUALIFIER_BEGIN).length());
-              QValueList<QString> qualifiertokens = tokenizeBy(zz, QRegExp(","));
-              if (qualifiertokens.count() > 0) {
-                _vcl.qualified = true;
-                for (QValueListIterator<QString> qit = qualifiertokens.begin();
-                                                 qit != qualifiertokens.end();
-                                               ++qit) {
-                  kdDebug(5006) << "parseVCard: parsing qualifier token '" << (*qit) << "'\n";
-                  _vcl.qualifiers.append((*qit).lower());
-                }
-              }
-            }
-            else {
-              _vcl.qualified = true;
-              _vcl.qualifiers.append(zz);
-            }
+            _vcl.qualified = true;
+            _vcl.qualifiers.append(zz);
           }
           first_pass = false;
 	}
       } else {
         _err = VC_ERR_INVALID_LINE;
-        kdDebug(5006) << "parseVCard: " << getError(_err)
-                      << "(nametokens.count() == 0)\nLine: '" << QString(*j) << "'" << endl;
       }
 
       if (_err != 0) break;
@@ -297,8 +264,6 @@ QValueList<QString> lines;
     // validate VCardLine
     if (!_vcl.isValid()) {
       _err = VC_ERR_INVALID_LINE;
-      kdDebug(5006) << "parseVCard: " << getError(_err)
-                    << "(_vcl.isValid() == false)\nLine: '" << QString(*j) << "'" << endl;
       break;
     }
 
@@ -644,25 +609,21 @@ bool VCardLine::isValid() const {
   case 'c':
     if (name == VCARD_CATEGORIES)
       return true;
-    // This causes false alerts with v3.0 vCards
-    //if (name == VCARD_CLASS && qualified &&
-    //                          (qualifiers.contains(VCARD_CLASS_PUBLIC)      ||
-    //                           qualifiers.contains(VCARD_CLASS_PRIVATE)     ||
-    //                           qualifiers.contains(VCARD_CLASS_CONFIDENTIAL)
-    //                          ))
-    if (name == VCARD_CLASS)
+    if (name == VCARD_CLASS && qualified &&
+                              (qualifiers.contains(VCARD_CLASS_PUBLIC)      ||
+                               qualifiers.contains(VCARD_CLASS_PRIVATE)     ||
+                               qualifiers.contains(VCARD_CLASS_CONFIDENTIAL)
+                              ))
       return true;
    break;
   case 'd':
    break;
   case 'e':
-    // This causes false alerts with v3.0 vCards
     if (name == VCARD_EMAIL && qualified &&
                               (qualifiers.contains(VCARD_EMAIL_INTERNET) ||
                                qualifiers.contains(VCARD_EMAIL_PREF)     ||
                                qualifiers.contains(VCARD_EMAIL_X400)
                               ))
-    //if (name == VCARD_EMAIL)
       return true;
    break;
   case 'f':
@@ -680,12 +641,10 @@ bool VCardLine::isValid() const {
   case 'j':
    break;
   case 'k':
-    // This causes false alerts with v3.0 vCards
-    //if (name == VCARD_KEY && qualified &&
-    //                        (qualifiers.contains(VCARD_KEY_X509) ||
-    //                         qualifiers.contains(VCARD_KEY_PGP)
-    //                        ))
-    if (name == VCARD_KEY)
+    if (name == VCARD_KEY && qualified &&
+                            (qualifiers.contains(VCARD_KEY_X509) ||
+                             qualifiers.contains(VCARD_KEY_PGP)
+                            ))
       return true;
    break;
   case 'l':
@@ -735,7 +694,6 @@ bool VCardLine::isValid() const {
       return true;
    break;
   case 't':
-    // This causes false alerts with v3.0 vCards
     if (name == VCARD_TEL && qualified &&
                             (qualifiers.contains(VCARD_TEL_HOME)  ||
                              qualifiers.contains(VCARD_TEL_WORK)  ||
@@ -752,7 +710,6 @@ bool VCardLine::isValid() const {
                              qualifiers.contains(VCARD_TEL_VIDEO) ||
                              qualifiers.contains(VCARD_TEL_PCS)
                             ))
-    //if (name == VCARD_TEL)
       return true;
     if (name == VCARD_TZ)
       return true;
