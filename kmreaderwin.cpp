@@ -523,6 +523,7 @@ void KMReaderWin::displayAboutPage()
     "(compared to KMail 1.3, which is part of KDE 2.2):</p>\n"
     "<ul>\n"
     "<li>Maildir support</li>\n"
+    "<li>Distribution lists</li>\n"
     "<li>SMTP authentication</li>\n"
     "<li>SMTP over SSL/TLS</li>\n"
     "<li>Pipelining for POP3 (faster mail download on slow responding networks)</li>\n"
@@ -531,7 +532,7 @@ void KMReaderWin::displayAboutPage()
     "a POP3 server</li>\n"
     "<li>Automatic configuration of the POP3/IMAP/SMTP security features</li>\n"
     "<li>DIGEST-MD5 authentication</li>\n"
-    "<li>Identity based sent-mail folders</li>\n"
+    "<li>Identity based sent-mail and drafts folders</li>\n"
     "<li>Expiry of old messages</li>\n"
     "<li>Hotkey to temporary switch to fixed width fonts</li>\n"
     "</ul>\n");
