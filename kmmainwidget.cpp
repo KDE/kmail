@@ -1751,25 +1751,27 @@ void KMMainWidget::slotReplaceMsgByUnencryptedVersion()
         newMsg->setMsgId( msgId );
         mMsgView->setIdOfLastViewedMessage( msgId );
       }
-      const QString newMsgIdMD5( newMsg->msgIdMD5() );
       // insert the unencrypted message
-      kdDebug(5006) << "KMMainWidget  -  copying unencrypted message to same folder" << endl;
-      mHeaders->copyMsgToFolder(mFolder, newMsg);
-      // delete the encrypted message - this will also delete newMsg
-      kdDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
-      mHeaders->deleteMsg();
-      kdDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
-      updateMessageActions();
-
-      // find and select and show the new message
-      int idx = mHeaders->currentItemIndex();
-      if( -1 != idx ) {
-        mHeaders->setCurrentMsg( idx );
-        mMsgView->setMsg( mHeaders->currentMsg() );
-      } else {
-        kdDebug(5006) << "KMMainWidget  -  SORRY, could not store unencrypted message!" << endl;
+      kdDebug(5006) << "KMMainWidget  -  adding unencrypted message to folder" << endl;
+      mFolder->addMsg( newMsg );
+      /* Figure out its index in the folder for selecting. This must be count()-1,
+       * since we append. Be safe and do find, though, just in case. */
+      int newMsgIdx = mFolder->find( newMsg );
+      Q_ASSERT( newMsgIdx != -1 );
+      int idx = mFolder->find( oldMsg );
+      Q_ASSERT( idx != -1 );
+      /* only select here, so the old one is not un-Gotten before, which would 
+       * render the pointer we hold invalid so that find would fail */
+      mHeaders->setCurrentItemByIndex( newMsgIdx ); 
+      // remove the old one
+      if ( idx != -1 ) {
+        kdDebug(5006) << "KMMainWidget  -  deleting encrypted message" << endl;
+        mFolder->take( idx );
       }
 
+      kdDebug(5006) << "KMMainWidget  -  updating message actions" << endl;
+      updateMessageActions();
+      
       kdDebug(5006) << "KMMainWidget  -  done." << endl;
     } else
       kdDebug(5006) << "KMMainWidget  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
