@@ -396,7 +396,6 @@ private:
   //bool mHoldSyncs;
   bool mRecurse;
   bool mCreateInbox;
-  bool mContentsTypeChanged;
   /** Set to true by setStatus. Indicates that the client has changed
       the status of at least one mail. The mail flags will therefore be
       uploaded to the server, overwriting the server's notion of the status
