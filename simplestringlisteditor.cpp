@@ -31,7 +31,7 @@
 
 #include "simplestringlisteditor.h"
 
-#include <klineeditdlg.h>
+#include <kinputdialog.h>
 #include <kiconloader.h>
 #include <klocale.h>
 #include <kdebug.h>
@@ -196,7 +196,8 @@ void SimpleStringListEditor::setButtonText( ButtonCode button,
 
 void SimpleStringListEditor::slotAdd() {
   bool ok = false;
-  QString newEntry = KLineEditDlg::getText( mAddDialogLabel, QString::null,
+  QString newEntry = KInputDialog::getText( i18n("New Value"),
+                                            mAddDialogLabel, QString::null,
 					    &ok, this );
   // let the user verify the string before adding
   emit aboutToAdd( newEntry );
@@ -213,7 +214,8 @@ void SimpleStringListEditor::slotModify() {
   if ( !item ) return;
 
   bool ok = false;
-  QString newText = KLineEditDlg::getText( mAddDialogLabel, item->text(),
+  QString newText = KInputDialog::getText( i18n("Change Value"),
+                                           mAddDialogLabel, item->text(),
 					   &ok, this );
   emit aboutToAdd( newText );
   if ( !ok || newText.isEmpty() || newText == item->text() ) return;
