@@ -131,11 +131,8 @@ KMReaderWin::~KMReaderWin()
 void KMReaderWin::makeAttachDir(void)
 {
   QString directory;
-  directory.sprintf("kmail/tmp/kmail%d/", getpid());
-  KGlobal::dirs()->
-    addResourceType("kmail_tmp",
-		    KStandardDirs::kde_default("data") + directory);
-  mAttachDir = locateLocal( "kmail_tmp", "" );
+  directory.sprintf("kmail%d/", getpid());
+  mAttachDir = locateLocal( "tmp", directory );
 
   if (mAttachDir.isNull()) qWarning(i18n("Failed to create temporary "
 					"attachment directory '%2': %1")
