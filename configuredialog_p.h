@@ -844,6 +844,7 @@ public:
 
 private slots:
   void slotStorageFormatChanged( int );
+  void slotLegaceBodyInvitesToggled( bool on );
 
 private:
   QCheckBox* mEnableGwCB;
@@ -866,6 +867,7 @@ private:
   QCheckBox* mAutoDeclRecurCB;
 
   QCheckBox* mLegacyMangleFromTo;
+  QCheckBox* mLegacyBodyInvites;
 };
 
 class MiscPage : public ConfigModuleWithTabs {

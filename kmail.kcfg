@@ -81,13 +81,23 @@
         <default>true</default>
       </entry>
 
-      <entry name="GroupwareLegacyMangleFromToHeaders" type="Bool">
-        <label>Legacy mode: Mangle From:/To: headers in replies to invitations</label>
+      <entry name="LegacyMangleFromToHeaders" type="Bool">
+        <label>Mangle From:/To: headers in replies to replies</label>
         <whatsthis>Microsoft Outlook has a number of shortcomings "
           "in its implementation of the iCalendar standard; "
           "this option works around one of them. If you have "
           "problems with Outlook users not being able to "
           "get your replies, try setting this option.</whatsthis>
+        <default>false</default>
+      </entry>
+
+      <entry name="LegacyBodyInvites" type="Bool">
+        <label>Send groupware invitations in the mail body</label>
+        <whatsthis>Microsoft Outlook has a number of shortcomings "
+          "in its implementation of the iCalendar standard; "
+          "this option works around one of them. If you have "
+          "problems with Outlook users not being able to "
+          "get your invitations, try setting this option.</whatsthis>
         <default>false</default>
       </entry>
     </group>
