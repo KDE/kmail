@@ -361,7 +361,7 @@ void KMSender::doSendMsg()
 
   if (mMsgSendProc) {
     mMsgSendProc->preSendInit();
-    setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
+    setStatusMsg(i18n("Sending message: %1").arg(mCurrentMsg->subject()));
     if (!mMsgSendProc->send(mCurrentMsg))
       {
 	cleanup();
@@ -370,7 +370,7 @@ void KMSender::doSendMsg()
       }
   } else {
     mSendProc->preSendInit();
-    setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
+    setStatusMsg(i18n("Sending message: %1").arg(mCurrentMsg->subject()));
     if (!mSendProc->send(mCurrentMsg))
       {
 	cleanup();
@@ -436,13 +436,13 @@ void KMSender::slotIdle()
 
   // sending of message failed
   QString msg;
-  msg = i18n("Sending failed:");
-  msg += '\n';
-  msg += mSendProc->message();
-  msg += i18n("\nThe message will stay in the 'outbox' folder and will be resent.\n");
-  msg += i18n("Please remove it from there if you do not want the message to \nbe resent\n");
-  msg += i18n("\nThe following transport protocol was used:\n  ");
-  msg += mMethodStr;
+  msg = i18n("Sending failed:\n%1\n"
+        "The message will stay in the 'outbox' folder and will be resent.\n"
+        "Please remove it from there if you do not want the message to\n"
+		"be resent.\n\n"
+        "The following transport protocol was used:\n  %2");
+  msg.arg(mSendProc->message());
+  msg.arg(mMethodStr);
   KMessageBox::information(0,msg);
   
   if (mMsgSendProc) {
