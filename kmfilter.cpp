@@ -32,8 +32,13 @@ static int findInStrList(const char* strList[], const char* str)
   if (!str) return -1;
 
   for (i=0; strList[i]; i++)
-    if (strcasecmp(strList[i], str)) return i;
+    if (strcasecmp(strList[i], str)==0) 
+    {
+      debug("findInStrList: %s is at %d", str, i);
+      return i;
+    }
 
+  debug("findInStrList: %s not found", str);
   return -1;
 }
 
@@ -127,7 +132,7 @@ void KMFilter::readConfig(KConfig* config)
   KMFilterRule::Function funcA, funcB;
   QString fieldA, fieldB;
   QString contA, contB;
-  int idx, i, num;
+  int idx, i, j, num;
   QString actName(64), argsName(64);
 
   mName = config->readEntry("name").copy();
@@ -154,22 +159,22 @@ void KMFilter::readConfig(KConfig* config)
   if (num > FILTER_MAX_ACTIONS)
   {
     num = FILTER_MAX_ACTIONS;
-    debug("Too many filter actions in filter rule `%s'", (const char*)mName);
+    warning("Too many filter actions in filter rule `%s'", (const char*)mName);
   }
 
-  for (i=0; i<num; i++)
+  for (i=0, j=0; i<num; i++, j++)
   {
     actName.sprintf("action-name-%d", i);
     argsName.sprintf("action-args-%d", i);
     actName = config->readEntry(actName);
-    mAction[i] = NULL; //sActionDict->find(actName);
-    if (!mAction[i])
+    mAction[j] = sActionDict->create(actName);
+    if (!mAction[j])
     {
       warning(nls->translate("Unknown filter action `%s'\n"
 			     "in filter rule `%s'.\n"
 			     "Ignoring it."),
 	      (const char*)actName, (const char*)mName);
-      i--;
+      j--;
       continue;
     }
     mAction[i]->argsFromString(config->readEntry(argsName));
@@ -206,6 +211,32 @@ void KMFilter::writeConfig(KConfig* config)
   config->writeEntry("actions", i);
 }
 
+
+//-----------------------------------------------------------------------------
+const QString KMFilter::asString(void) const
+{
+  QString result;
+  int i;
+
+  result = "Filter \"" + mName + "\":\n{\n    ";
+  result += mRuleA.asString();
+  result += "\n    ";
+  result += opConfigNames[(int)mOperator];
+  result += "\n    ";
+  result += mRuleB.asString();
+  result += "\n";
+  for (i=0; i<=FILTER_MAX_ACTIONS && mAction[i]; i++)
+  {
+    result += "    action: ";
+    result += mAction[i]->label();
+    result += " ";
+    result += mAction[i]->argsAsString();
+    result += "\n";
+  }
+  result += "}";
+
+  return result;
+}
 
 
 
@@ -263,4 +294,18 @@ bool KMFilterRule::matches(const KMMessage* msg)
   }
 
   return FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMFilterRule::asString(void) const
+{
+  QString result;
+
+  result  = "\"" + mField + "\" ";
+  result += funcConfigNames[(int)mFunction];
+  result += " \"" + mContents + "\"";
+
+  debug("%s=%d",funcConfigNames[(int)mFunction], (int)mFunction);
+  return result;
 }

@@ -7,6 +7,7 @@
 #include "kmfiltermgr.h"
 #include "kmfilter.h"
 #include "kmfilterdlg.h"
+#include "kmmessage.h"
 
 
 //-----------------------------------------------------------------------------
@@ -79,6 +80,8 @@ bool KMFilterMgr::process(KMMessage* msg)
   for (filter=first(); !stopIt && filter; filter=next())
   {
     if (!filter->matches(msg)) continue;
+    debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
+	  msg->subject().data());
     if (!filter->execActions(msg, stopIt)) stillOwner = FALSE;
   }
   return stillOwner;
@@ -104,5 +107,18 @@ void KMFilterMgr::openDialog(void)
   {
     mEditDialog = new KMFilterDlg;
     mEditDialog->show();
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFilterMgr::dump(void)
+{
+  KMFilter* filter;
+  int i;
+
+  for (i=0, filter=first(); filter; filter=next(), i++)
+  {
+    debug(filter->asString());
   }
 }

@@ -42,6 +42,7 @@ public:
   virtual void replyAllToMsg(int msgId=-1);
   virtual void resendMsg(int msgId=-1);
   virtual void saveMsg(int msgId=-1);
+  virtual void applyFiltersOnMsg(int msgId=-1);
 
   /** If destination==NULL the messages are deleted, otherwise
     they are moved to this folder. */

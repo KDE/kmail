@@ -86,7 +86,7 @@ public:
     Call this method before sending *after* all changes to the message
     are done because this method does things different if there are
     attachments / multiple body parts. */
-  virtual void setAutomaticFields(void);
+  virtual void setAutomaticFields(bool isMultipart=FALSE);
     
   /** Get or set the 'Date' header field */
   virtual const QString dateStr(void) const;

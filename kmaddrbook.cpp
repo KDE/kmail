@@ -4,6 +4,8 @@
 
 #include "kmaddrbook.h"
 #include <kapp.h>
+#include <klocale.h>
+#include <kmsgbox.h>
 #include <qfile.h>
 #include <assert.h>
 
@@ -81,22 +83,23 @@ int KMAddrBook::load(const char* aFileName)
   char line[256];
   const char* fname = (aFileName ? aFileName : (const char*)mDefaultFileName);
   QFile file(fname);
+  int rc;
 
   assert(fname != NULL);
 
   if (!file.open(IO_ReadOnly)) return file.status();
   clear();
 
-  while (!file.atEnd())
+  while (file.readLine(line,255)>0 && !file.atEnd())
   {
-    if (file.readLine(line,255) < 0) return file.status();
     if (line[strlen(line)-1] < ' ') line[strlen(line)-1] = '\0';
     if (line[0]!='#' && line[0]!='\0') inSort(line);
   }
+  rc = file.status();
   file.close();
 
   mModified = FALSE;
-  return IO_Ok;
+  return rc;
 }
 
 
@@ -109,20 +112,45 @@ int KMAddrBook::store(const char* aFileName)
 
   assert(fname != NULL);
 
-  if (!file.open(IO_ReadWrite|IO_Truncate)) return file.status();
+  if (!file.open(IO_ReadWrite|IO_Truncate)) return fileError(file.status());
 
   addr = "# kmail addressbook file\n";
-  if (file.writeBlock(addr,strlen(addr)) < 0) return file.status();
+  if (file.writeBlock(addr,strlen(addr)) < 0) return fileError(file.status());
 
   for (addr=first(); addr; addr=next())
   {
-    if (file.writeBlock(addr,strlen(addr)) < 0) return file.status();
+    if (file.writeBlock(addr,strlen(addr)) < 0) return fileError(file.status());
     file.writeBlock("\n",1);
   }
   file.close();
 
   mModified = FALSE;
   return IO_Ok;
+}
+
+
+//-----------------------------------------------------------------------------
+int KMAddrBook::fileError(int status) const
+{
+  QString msg, str;
+
+  switch(status)
+  {
+  case IO_ReadError:
+    msg = klocale->translate("Could not read file:\n%s");
+    break;
+  case IO_OpenError:
+    msg = klocale->translate("Could not open file:\n%s");
+    break;
+  default:
+    msg = klocale->translate("Error while writing file:\n%s");
+  }
+
+  str.sprintf(msg, mDefaultFileName.data());
+  KMsgBox::message(NULL, klocale->translate("File I/O Error"), str,
+		   KMsgBox::STOP, klocale->translate("Ok"));
+
+  return status;
 }
 
 

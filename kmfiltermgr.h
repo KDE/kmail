@@ -34,6 +34,9 @@ public:
    */
   virtual bool process(KMMessage* msg);
 
+  /** Output all rules to stdout */
+  virtual void dump(void);
+
 protected:
   friend class KMFilterMgrDlg;
 

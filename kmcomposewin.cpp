@@ -1,8 +1,8 @@
 // kmcomposewin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
+#include <keditcl.h>
 #include "kmcomposewin.h"
-#include "keditcl.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmsender.h"
@@ -87,10 +87,12 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget), 
   mBtnBcc("...",&mMainWidget),  mBtnFrom("...",&mMainWidget),
   mBtnReplyTo("...",&mMainWidget)
+#ifdef KRN
   /* start added for KRN */
   ,mEdtNewsgroups(&mMainWidget),mEdtFollowupTo(&mMainWidget),
   mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
   /* end added for KRN */
+#endif
 {
 
   mGrid = NULL;
@@ -265,10 +267,12 @@ void KMComposeWin::rethinkFields(void)
 		    &mLblBcc, &mEdtBcc, &mBtnBcc);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, nls->translate("&Subject:"),
 		    &mLblSubject, &mEdtSubject);
+#ifdef KRN
   rethinkHeaderLine(showHeaders,HDR_NEWSGROUPS, row, nls->translate("&Newsgroups:"),
 		    &mLblNewsgroups, &mEdtNewsgroups);
   rethinkHeaderLine(showHeaders,HDR_FOLLOWUP_TO, row, nls->translate("&Followup-To:"),
 		    &mLblFollowupTo, &mEdtFollowupTo);
+#endif
   assert(row<=mNumHeaders);
 
   mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
@@ -343,7 +347,7 @@ void KMComposeWin::setupMenuBar(void)
 		    SLOT(slotInsertFile()));
   menu->insertSeparator();
   menu->insertItem(nls->translate("&Addressbook..."),this,
-		   SLOT(slotToDo()));
+		   SLOT(slotAddrBook()));
   menu->insertItem(nls->translate("&Print..."),this, 
 		   SLOT(slotPrint()), keys->print());
   menu->insertSeparator();
@@ -362,18 +366,19 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertItem(nls->translate("Undo"),this,
 		   SLOT(slotUndoEvent()), keys->undo());
   menu->insertSeparator();
-  menu->insertItem(nls->translate("Cut"), mEditor,
-		   SLOT(cutText()), keys->cut());
-  menu->insertItem(nls->translate("Copy"), mEditor,
-		   SLOT(copyText()), keys->copy());
-  menu->insertItem(nls->translate("Paste"), mEditor,
-		   SLOT(pasteText()), keys->paste());
+#endif //BROKEN
+  menu->insertItem(nls->translate("Cut"), this, SLOT(slotCut()));
+  menu->insertItem(nls->translate("Copy"), this, SLOT(slotCopy()));
+  menu->insertItem(nls->translate("Paste"), this, SLOT(slotPaste()));
+#ifdef BROKEN
   menu->insertItem(nls->translate("Mark all"),this,
 		   SLOT(slotMarkAll()), CTRL + Key_A);
+  menu->insertItem(nls->translate("Replace..."), this,
+		   SLOT(slotReplace()), keys->replace());
+#endif
   menu->insertSeparator();
-  menu->insertItem(nls->translate("Find..."), mEditor,
-		   SLOT(search()), keys->find());
-#endif //BROKEN
+  menu->insertItem(nls->translate("Find..."), this,
+		   SLOT(slotFind()), keys->find());
 
   //---------- Menu: Options
   menu = new QPopupMenu();
@@ -403,8 +408,10 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertItem(nls->translate("&Cc"), HDR_CC);
   menu->insertItem(nls->translate("&Bcc"), HDR_BCC);
   menu->insertItem(nls->translate("&Subject"), HDR_SUBJECT);
+#ifdef KRN
   menu->insertItem(nls->translate("&Newsgroups"), HDR_NEWSGROUPS); // for KRN
   menu->insertItem(nls->translate("&Followup-To"), HDR_FOLLOWUP_TO); // for KRN
+#endif
   mMenuBar->insertItem(nls->translate("&View"), menu);
 
   menu = new QPopupMenu();
@@ -647,6 +654,8 @@ void KMComposeWin::applyChanges(void)
 
   if(mAtmList.count() <= 0)
   {
+    mMsg->setAutomaticFields(FALSE);
+
     // If there are no attachments in the list waiting it is a simple 
     // text message.
     if (msgSender->sendQuotedPrintable())
@@ -664,6 +673,7 @@ void KMComposeWin::applyChanges(void)
   else 
   { 
     mMsg->deleteBodyParts();
+    mMsg->setAutomaticFields(TRUE);
 
     // create informative header for those that have no mime-capable
     // email client
@@ -682,8 +692,6 @@ void KMComposeWin::applyChanges(void)
     for (msgPart=mAtmList.first(); msgPart; msgPart=mAtmList.next())
 	mMsg->addBodyPart(msgPart);
   }
-
-  mMsg->setAutomaticFields();
   if (!mAutoDeleteMsg) mEditor->toggleModified(FALSE);
 
   // remove fields that contain no data (e.g. an empty Cc: or Bcc:)
@@ -1134,20 +1142,49 @@ void KMComposeWin::slotMenuViewActivated(int id)
 
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::slotFind()
+{
+  mEditor->Search();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotReplace()
+{
+  mEditor->Replace();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::slotCut()
 {
+  QWidget* fw = focusWidget();
+  if (!fw) return;
+
+  QKeyEvent k(Event_KeyPress, Key_X , 0 , ControlButton);
+  app->notify(fw, &k);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotCopy()
 {
+  QWidget* fw = focusWidget();
+  if (!fw) return;
+
+  QKeyEvent k(Event_KeyPress, Key_C , 0 , ControlButton);
+  app->notify(fw, &k);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPaste()
 {
+  QWidget* fw = focusWidget();
+  if (!fw) return;
+
+  QKeyEvent k(Event_KeyPress, Key_V , 0 , ControlButton);
+  app->notify(fw, &k);
 }
 
 
@@ -1440,19 +1477,24 @@ KMLineEdit::KMLineEdit(QWidget *parent, const char *name)
 
 void KMLineEdit::mousePressEvent(QMouseEvent *e)
 {
-  if(e->button() == MidButton) {
+  if(e->button() == MidButton)
+  {
+    setFocus();
     QKeyEvent k( Event_KeyPress, Key_V, 0 , ControlButton);
     keyPressEvent(&k);
     return;
   }
-  else if(e->button() == RightButton){
+  else if(e->button() == RightButton)
+  {
     QPopupMenu *p = new QPopupMenu;
-    p->insertItem("Copy",this,SLOT(copy()));
-    p->insertItem("Cut",this,SLOT(cut()));
-    p->insertItem("Paste",this,SLOT(paste()));
-    p->insertItem("Mark all",this,SLOT(markAll()));
+    p->insertItem(nls->translate("Cut"),this,SLOT(cut()));
+    p->insertItem(nls->translate("Copy"),this,SLOT(copy()));
+    p->insertItem(nls->translate("Paste"),this,SLOT(paste()));
+    p->insertItem(nls->translate("Mark all"),this,SLOT(markAll()));
+    setFocus();
     p->popup(QCursor::pos());
-    }
+  }
+  else QLineEdit::mousePressEvent(e);
 }
 
 //-----------------------------------------------------------------------------
@@ -1465,10 +1507,13 @@ void KMLineEdit::copy()
 //-----------------------------------------------------------------------------
 void KMLineEdit::cut()
 {
-    if(hasMarkedText()) {
-    copy();
-    // Delete text is missing
-    }
+  if(hasMarkedText())
+  {
+    QString t = markedText();
+    QKeyEvent k( Event_KeyPress, Key_D , 0 , ControlButton);
+    keyPressEvent(&k);
+    QApplication::clipboard()->setText(t);
+  }
 }
 
 //-----------------------------------------------------------------------------

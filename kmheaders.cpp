@@ -11,6 +11,7 @@
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kfileio.h"
+#include "kmfiltermgr.h"
 
 #include <drag.h>
 #include <qstrlist.h>
@@ -197,6 +198,18 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
     msg->setStatus(status);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::applyFiltersOnMsg(int msgId)
+{
+  KMMessage* msg;
+
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    filterMgr->process(msg);
+  }
 }
 
 

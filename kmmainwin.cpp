@@ -420,6 +420,13 @@ void KMMainWin::slotMoveMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotApplyFilters()
+{ 
+  mHeaders->applyFiltersOnMsg();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotCopyMsg()
 { 
   KMFolderSelDlg dlg(nls->translate("Select Folder"));
@@ -802,6 +809,10 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("Send again..."), this, 
 			  SLOT(slotResendMsg()));
+#ifdef BROKEN
+  messageMenu->insertItem(nls->translate("Apply filters"), this, 
+			  SLOT(slotApplyFilters()), CTRL+Key_J);
+#endif
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("View Source..."), this,
 			  SLOT(slotShowMsgSrc()));

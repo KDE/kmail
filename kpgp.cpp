@@ -569,7 +569,6 @@ Kpgp::runPGP(int action, const char* args)
   if(havePassPhrase)
   {
     sprintf(str," \"-z%s\"",(const char *)passPhrase);
-    debug("Kpgp: phrase is: \"%s\"",str);
     cmd += str;
   }
   cmd += " -f";
@@ -585,7 +584,6 @@ Kpgp::runPGP(int action, const char* args)
   if (!input.isEmpty()) write(infd, input.data(), input.length());
   close(infd);
 
-  debug("pgp: executing: %s", cmd.data());
   oldsig = signal(SIGALRM,pgpSigHandler);
   alarm(5);
   rc = system(cmd.data());

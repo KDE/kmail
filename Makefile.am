@@ -17,7 +17,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp \
-		kfileio.cpp keditcl1.cpp keditcl2.cpp kmaddrbook.cpp \
+		kfileio.cpp kmaddrbook.cpp \
 		kmaddrbookdlg.cpp kmiostatusdlg.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
@@ -27,7 +27,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc \
 		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
-		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc keditcl.moc \
+		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc \
 		kmaddrbookdlg.moc kmiostatusdlg.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
@@ -81,11 +81,6 @@ kmacctmgr.moc: kmacctmgr.h
 kmsettings.cpp:kmsettings.moc
 kmsettings.moc: kmsettings.h
 	$(MOC) kmsettings.h -o kmsettings.moc
-
-keditcl1.cpp: keditcl.moc
-keditcl2.cpp: keditcl.moc
-keditcl.moc: keditcl.h
-	$(MOC) keditcl.h -o keditcl.moc
 
 kmreaderwin.cpp:kmreaderwin.moc
 kmreaderwin.moc: kmreaderwin.h

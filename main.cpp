@@ -250,6 +250,7 @@ main(int argc, char *argv[])
   KMMainWin* mainWin;
 
   init(argc, argv);
+  filterMgr->dump();
 
   mainWin = new KMMainWin;
   mainWin->show();
@@ -266,6 +267,9 @@ main(int argc, char *argv[])
   }
     
   app->exec();
+
+  mainWin->writeConfig(FALSE);
+  delete mainWin;
 
   cleanup();
 }

@@ -51,6 +51,10 @@ public:
 
 protected:
   virtual int compareItems(GCI item1, GCI item2);
+
+  /** Displays a detailed message box and returns 'status' */
+  virtual int KMAddrBook::fileError(int status) const;
+
   QString mDefaultFileName;
   bool mModified;
 };

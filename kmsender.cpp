@@ -28,13 +28,18 @@ extern KMIdentity *identity;
 
 #include <assert.h>
 #include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
 
 #define SENDER_GROUP "sending mail"
 
 // uncomment the following line for SMTP debug output
 #define SMTP_DEBUG_OUTPUT
+
+#define MSG_BLOCK_SIZE 1024
 
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
@@ -412,6 +417,8 @@ bool KMSendSendmail::start(void)
     assert(mMailerProc != NULL);
     connect(mMailerProc,SIGNAL(processExited(KProcess*)),
 	    this, SLOT(sendmailExited(KProcess*)));
+    connect(mMailerProc,SIGNAL(wroteStdin(KProcess*)),
+	    this, SLOT(wroteStdin(KProcess*)));
     connect(mMailerProc,SIGNAL(receivedStderr(KProcess*,char*,int)),
 	    this, SLOT(receivedStderr(KProcess*, char*, int)));
   }
@@ -429,30 +436,51 @@ bool KMSendSendmail::finish(void)
 //-----------------------------------------------------------------------------
 bool KMSendSendmail::send(KMMessage* aMsg)
 {
-  QString msgstr;
-
-  msgstr = prepareStr(aMsg->asString());
+  mMsgStr = prepareStr(aMsg->asString());
 
   mMailerProc->clearArguments();
-  *mMailerProc << mSender->mailer() << aMsg->to();
+  *mMailerProc << mSender->mailer();
+  addRcptList(aMsg->to());
+  if (!aMsg->cc().isEmpty()) addRcptList(aMsg->cc());
+  if (!aMsg->bcc().isEmpty()) addRcptList(aMsg->bcc());
 
-  if (!mMailerProc->start(KProcess::NotifyOnExit,
-      (enum KProcess::Communication)(KProcess::Stdin|KProcess::Stderr)))
+  if (!mMailerProc->start(KProcess::NotifyOnExit,KProcess::All))
   {
     warning(nls->translate("Failed to execute mailer program %s"),
 	    (const char*)mSender->mailer());
     return FALSE;
   }
-
-  if (!mMailerProc->writeStdin(msgstr.data(), msgstr.length()) ||
-      !mMailerProc->closeStdin())
-  {
-    warning(nls->translate("Failed to pipe mail message into mailer program %s"),
-	    (const char*)mSender->mailer());
-    return FALSE;
-  }
+  mMsgPos  = mMsgStr.data();
+  mMsgRest = mMsgStr.length();
+  wroteStdin(mMailerProc);
 
   return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSendSendmail::wroteStdin(KProcess *proc)
+{
+  char* str;
+  int len;
+
+  assert(proc!=NULL);
+
+  str = mMsgPos;
+  len = (mMsgRest>1024 ? 1024 : mMsgRest);
+
+  if (len <= 0)
+  {
+    mMailerProc->closeStdin();
+  }
+  else
+  {
+    mMsgRest -= len;
+    mMsgPos  += len;
+    mMailerProc->writeStdin(str,len);
+    // if code is added after writeStdin() KProcess probably initiates
+    // a race condition.
+  }
 }
 
 
@@ -469,8 +497,39 @@ void KMSendSendmail::sendmailExited(KProcess *proc)
 {
   assert(proc!=NULL);
   mSendOk = (proc->normalExit() && proc->exitStatus()==0);
+  mMsgStr = 0;
   emit idle();
 }
+
+
+//-----------------------------------------------------------------------------
+void KMSendSendmail::addRcptList(const QString aRecipients)
+{
+  QString receiver;
+  int index, lastindex, replyCode, i, j;
+
+  lastindex = -1;
+  do
+  {
+    index = aRecipients.find(",",lastindex+1);
+    receiver = aRecipients.mid(lastindex+1, index<0 ? 255 : index-lastindex-1);
+    i = receiver.find('<');
+    if (i >= 0)
+    {
+      j = receiver.find('>', i+1);
+      receiver = receiver.mid(i+1, j-i-1);
+    }
+
+    if (!receiver.isEmpty()) 
+    {
+      debug("KMSendSendmail::addRcptList: adding %s", receiver.data());
+      *mMailerProc << receiver;
+      lastindex = index;
+    }
+  }
+  while (lastindex > 0);
+}
+
 
 
 //=============================================================================

@@ -125,6 +125,8 @@ public:
 
 protected:
   virtual void init(void);
+
+  // Find filter action with given name
   virtual KMFilterActionDesc* find(const QString name);
 
   KMFilterActionDescList mList;

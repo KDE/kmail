@@ -48,6 +48,9 @@ public:
   /** Return expected field contents. */
   const QString contents(void) const { return mContents; }
 
+  /** Returns contents of rule as string. */
+  const QString asString(void) const;
+
 protected:
   QString  mField;
   Function mFunction;
@@ -111,6 +114,9 @@ public:
   /** Get/set filter actions. */
   KMFilterAction* action(int index) const;
   virtual void setAction(int index, KMFilterAction* action);
+
+  /** Returns contents of filter as string. */
+  const QString asString(void) const;
 
 protected:
   QString         mName;

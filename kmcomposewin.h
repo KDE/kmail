@@ -97,12 +97,16 @@ public slots:
   void slotDropAction();
   void slotNewComposer();
   void slotClose();
+  void slotHelp();
+
+  /** editor functionality */
+  void slotFind();
+  void slotReplace();
 
   /** Do cut/copy/paste on the active line-edit */
   void slotCut();
   void slotCopy();
   void slotPaste();
-  void slotHelp();
 
   /** Change window title to given string. */
   void slotUpdWinTitle(const char *);

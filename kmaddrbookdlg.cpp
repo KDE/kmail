@@ -39,6 +39,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   mGrid.activate();
 
   connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
+  connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
   connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
 
   for (addr=mAddrBook->first(); addr; addr=mAddrBook->next())
@@ -158,13 +159,19 @@ void KMAddrBookEditDlg::slotLbxHighlighted(const char* aItem)
 void KMAddrBookEditDlg::slotOk()
 {
   int idx, num;
-  const char* addr;
+  const char* addr = mEdtAddress.text();
+
+  if (mIndex>=0)
+    mListBox.changeItem(addr, mIndex);
+  else if (addr && *addr)
+    mListBox.insertItem(mEdtAddress.text(), mListBox.currentItem());
 
   mAddrBook->clear();
   num = mListBox.count();
   for(idx=0; idx<num; idx++)
   {
     addr = mListBox.text(idx);
+    debug("addressbook: %s", addr);
     mAddrBook->insert(addr);
   }
   mAddrBook->store();

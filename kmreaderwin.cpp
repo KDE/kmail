@@ -224,7 +224,7 @@ void KMReaderWin::parseMsg(void)
       contDisp = msgPart.contentDisposition();
       
       if (i <= 0) asIcon = FALSE;
-      else asIcon = (stricmp(contDisp,"inline")!=0);
+      else asIcon = (contDisp.find("inline")<0);
 
       if (!asIcon)
       {

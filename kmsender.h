@@ -181,9 +181,15 @@ public:
 
 protected slots:
   void receivedStderr(KProcess*,char*,int);
+  void wroteStdin(KProcess*);
   void sendmailExited(KProcess*);
 
 protected:
+  virtual void addRcptList(const QString aRecipients);
+
+  QString mMsgStr;
+  char* mMsgPos;
+  int mMsgRest;
   KProcess* mMailerProc;
 };
 
