@@ -149,10 +149,20 @@ KMAddrBookEditDlg::~KMAddrBookEditDlg()
 //-----------------------------------------------------------------------------
 void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
 {
-  if (mIndex>=0)
-    mListBox.changeItem(mEdtAddress.text(), mIndex);
-  mEdtAddress.setText(aItem);
+  int oldIndex = mIndex;
+  disconnect(&mListBox, SIGNAL(highlighted(const QString&)), 
+	  this, SLOT(slotLbxHighlighted(const QString&)));
   mIndex = mListBox.currentItem();
+
+  // Change of behaviour between QT 2.1b1 and QT2.1b2
+  //  changeItem below changes the currentItem!
+  if (oldIndex>=0)
+    mListBox.changeItem(mEdtAddress.text(), oldIndex);
+  mListBox.setCurrentItem( mIndex );  // keep currentItem the same
+  mEdtAddress.setText(aItem);
+
+  connect(&mListBox, SIGNAL(highlighted(const QString&)), 
+	  SLOT(slotLbxHighlighted(const QString&)));
 }
 
 
@@ -160,11 +170,11 @@ void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
 void KMAddrBookEditDlg::slotOk()
 {
   int idx, num;
-  const char* addr = mEdtAddress.text();
+  QString addr = mEdtAddress.text();
 
   if (mIndex>=0)
     mListBox.changeItem(addr, mIndex);
-  else if (addr && *addr)
+  else if (!addr.isEmpty())
     mListBox.insertItem(mEdtAddress.text(), mListBox.currentItem());
 
   mAddrBook->clear();

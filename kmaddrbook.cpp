@@ -6,6 +6,7 @@
 #include <kapp.h>
 #include <kconfig.h>
 #include <qfile.h>
+#include <qtextstream.h>
 #include <assert.h>
 #include <klocale.h>
 #include <kstddirs.h>
@@ -86,25 +87,24 @@ void KMAddrBook::readConfig(void)
 //-----------------------------------------------------------------------------
 int KMAddrBook::load(const QString &aFileName)
 {
-  char line[256];
+  QString line;
   QString fname = aFileName.isNull() ? mDefaultFileName : aFileName;
   QFile file(fname);
   int rc;
 
-  //assert(fname != NULL);
   if(!fname)
     return IO_FatalError;
 
   if (!file.open(IO_ReadOnly)) return file.status();
   clear();
 
-  while (!file.atEnd())
+  QTextStream t( &file );
+
+  while ( !t.eof() )
   {
-    if (file.readLine(line,255) > 0)
-    {
-      if (line[strlen(line)-1] < ' ') line[strlen(line)-1] = '\0';
-      if (line[0]!='#' && line[0]!='\0') inSort(line);
-    }
+    line = t.readLine();
+    debug( QString("load ") + line );
+      if (line[0]!='#' && !line.isNull()) inSort(line);
   }
   rc = file.status();
   file.close();
@@ -117,23 +117,24 @@ int KMAddrBook::load(const QString &aFileName)
 //-----------------------------------------------------------------------------
 int KMAddrBook::store(const QString &aFileName)
 {
-  const char* addr;
+  QString addr;
   QString fname = aFileName.isNull() ? mDefaultFileName : aFileName;
   QFile file(fname);
 
-  //assert(fname != NULL);
   if(fname.isNull())
     return IO_FatalError;
 
   if (!file.open(IO_ReadWrite|IO_Truncate)) return fileError(file.status());
+  QTextStream ts( &file );
 
   addr = "# kmail addressbook file\n";
-  if (file.writeBlock(addr,strlen(addr)) < 0) return fileError(file.status());
+  ts << addr;
+  if (file.status() != IO_Ok) return fileError(file.status());
 
   for (addr=first(); addr; addr=next())
   {
-    if (file.writeBlock(addr,strlen(addr)) < 0) return fileError(file.status());
-    file.writeBlock("\n",1);
+    ts << addr << "\n";
+    if (file.status() != IO_Ok) return fileError(file.status());
   }
   file.close();
 

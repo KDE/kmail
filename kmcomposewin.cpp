@@ -121,7 +121,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
 #endif
 {
-    setWFlags( WType_TopLevel | WStyle_Dialog );
+  setWFlags( WType_TopLevel | WStyle_Dialog );
 
   mGrid = NULL;
   mAtmListBox = NULL;
@@ -2009,7 +2009,7 @@ bool KMLineEdit::eventFilter(QObject*, QEvent* e)
       mComposer->focusNextPrevEdit(this,TRUE);
       return TRUE;
     }
-    if (k->key() == Key_Right)
+    if (k->state()==ControlButton && k->key() == Key_Right)
     {
       if ((int)strlen(text()) == cursorPosition()) // at End?
       {
@@ -2125,7 +2125,7 @@ void KMLineEdit::slotCompletion()
   //QRegExp regexp(s.data(), FALSE, TRUE);
 
   n=0;
-  for (const char *a=adb.first(); a; a=adb.next())
+  for (QString a=adb.first(); a; a=adb.next())
   {
     //t.setStr(a);
     //if (t.contains(regexp))
