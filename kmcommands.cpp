@@ -2085,6 +2085,8 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
   }
 
+  QMap< QString, int > renameNumbering;
+
   Result globalResult = OK;
   int unnamedAtmCount = 0;
   for ( PartNodeMessageMap::const_iterator it = mAttachmentMap.begin();
@@ -2109,6 +2111,34 @@ void KMSaveAttachmentsCommand::slotSaveAll()
     }
 
     if ( !curUrl.isEmpty() ) {
+
+     // Rename the file if we have already saved one with the same name:
+     // try appending a number before extension (e.g. "pic.jpg" => "pic_2.jpg")
+     QString origFile = curUrl.fileName();
+     QString file = origFile;
+
+     while ( renameNumbering.contains(file) ) {
+       file = origFile;
+       int num = renameNumbering[file] + 1;
+       int dotIdx = file.findRev('.');
+       file = file.insert( (dotIdx>=0) ? dotIdx : file.length(), QString("_") + QString::number(num) );
+     }
+     curUrl.setFileName(file);
+
+     // Increment the counter for both the old and the new filename
+     if ( !renameNumbering.contains(origFile))
+         renameNumbering[origFile] = 1;
+     else
+         renameNumbering[origFile]++;
+
+     if ( file != origFile ) {
+        if ( !renameNumbering.contains(file))
+            renameNumbering[file] = 1;
+        else
+            renameNumbering[file]++;
+     }
+
+
       if ( KIO::NetAccess::exists( curUrl, false, parentWidget() ) ) {
         if ( KMessageBox::warningContinueCancel( parentWidget(),
               i18n( "A file named %1 already exists. Do you want to overwrite it?" )
