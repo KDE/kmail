@@ -93,6 +93,10 @@ public:
 
   void addSubTransaction( ProgressItem *item);
 
+  // The progressitem is deleted immediately, we take 5s to go out,
+  // so better not use mItem during this time.
+  void setItemComplete() { mItem = 0; }
+
 public slots:
   void slotItemCanceled();
 

@@ -172,7 +172,8 @@ void TransactionItem::setStatus( const QString& status )
 
 void TransactionItem::slotItemCanceled()
 {
-  mItem->cancel();
+  if ( mItem )
+    mItem->cancel();
 }
 
 
@@ -256,6 +257,7 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
    if ( mTransactionsToListviewItems.contains( item ) ) {
      TransactionItem *ti = mTransactionsToListviewItems[ item ];
      mTransactionsToListviewItems.remove( item );
+     ti->setItemComplete();
      QTimer::singleShot( 5000, ti, SLOT( deleteLater() ) );
    }
    // This was the last item, hide.
