@@ -1385,8 +1385,8 @@ void KMMainWidget::slotStartCertManager()
 {
   const CryptPlugWrapper *wrapper = KMail::CryptPlugFactory::instance()->smime();
   if ( !wrapper ) {
-    KMessageBox::error( this, i18n( "Could not start certificate manager. "
-                                    "You need to configure an S/MIME plugin first." ),
+    KMessageBox::error( this, i18n( "Could not start certificate manager: "
+                                    "you need to configure an S/MIME plugin first." ),
                                     i18n( "KMail Error" ) );
     return;
   }
@@ -1397,8 +1397,8 @@ void KMMainWidget::slotStartCertManager()
   certManagerProc << wrapper->libName();
 
   if( !certManagerProc.start( KProcess::DontCare ) )
-    KMessageBox::error( this, i18n( "Could not start certificate manager. "
-                                    "Please check your installation!" ),
+    KMessageBox::error( this, i18n( "Could not start certificate manager; "
+                                    "please check your installation." ),
                                     i18n( "KMail Error" ) );
   else
     kdDebug(5006) << "\nslotStartCertManager(): certificate manager started.\n" << endl;

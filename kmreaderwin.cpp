@@ -1750,7 +1750,7 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
   }
   question = i18n("Open attachment '%1'?\n"
                   "Note that opening an attachment may compromise your "
-                  "system's security!").arg(filenameText);
+                  "system's security.").arg(filenameText);
   int choice = KMessageBox::questionYesNoCancel(this, question,
       i18n("Open Attachment?"), KStdGuiItem::saveAs(), open_text,
       QString::fromLatin1("askSave")+ mimetype ); // dontAskAgainName

@@ -414,10 +414,10 @@ void MessageComposer::adjustCryptFlags()
             + i18n("Warning:")
             + "</b><br>"
             + ((doSign && !doSignCompletely)
-              ? i18n("You specified not to sign some parts of this message, but"
-                     " you wanted to be warned not to send unsigned messages!")
-              : i18n("You specified not to sign this message, but"
-                     " you wanted to be warned not to send unsigned messages!") )
+              ? i18n("You specified to not sign some parts of this message, but"
+                     " you wanted to be warned not to send unsigned messages.")
+              : i18n("You specified to not sign this message, but"
+                     " you wanted to be warned not to send unsigned messages.") )
             + "<br>&nbsp;<br><b>"
             + i18n("Sign all parts of this message?")
             + "</b></qt>" ),
@@ -536,10 +536,10 @@ void MessageComposer::adjustCryptFlags()
                                                     + i18n("Warning:")
                                                     + "</b><br>"
                                                     + ((doEncrypt && !doEncryptCompletely)
-                                                       ? i18n("You specified not to encrypt some parts of this message, but"
-                                                              " you wanted to be warned not to send unencrypted messages!")
-                                                       : i18n("You specified not to encrypt this message, but"
-                                                              " you wanted to be warned not to send unencrypted messages!") )
+                                                       ? i18n("You specified to not encrypt some parts of this message, but"
+                                                              " you wanted to be warned not to send unencrypted messages.")
+                                                       : i18n("You specified to not encrypt this message, but"
+                                                              " you wanted to be warned not to send unencrypted messages.") )
                                                     + "<br>&nbsp;<br><b>"
                                                     + i18n("Encrypt all parts of this message?")
                                                     + "</b></qt>" ),
@@ -1295,10 +1295,10 @@ void MessageComposer::encryptMessage( KMMessage* msg,
         } else {
           mRc = false;
           KMessageBox::sorry( mComposeWin,
-                              i18n( "<qt><p><b>This message could not be encrypted!</b></p>"
+                              i18n( "<qt><p><b>This message could not be encrypted:</b></p>"
                                     "<p>The Crypto Plug-in '%1' did not return an encoded text "
-                                    "block.</p>"
-                                    "<p>Probably a recipient's public key was not found or is "
+                                    "block;</p>"
+                                    "<p>probably, a recipient's public key was not found or is "
                                     "untrusted.</p></qt>" )
                               .arg( mSelectedCryptPlug->libName() ) );
         }
@@ -1317,7 +1317,7 @@ void MessageComposer::encryptMessage( KMMessage* msg,
         } else {
           mRc = false;
           KMessageBox::sorry(mComposeWin,
-            i18n("<qt><p>This message could not be encrypted!</p>%1</qt>")
+            i18n("<qt><p>This message could not be encrypted.</p>%1</qt>")
            .arg( mErrorNoCryptPlugAndNoBuildIn ));
         }
       }
@@ -2115,12 +2115,12 @@ void MessageComposer::pgpSignedMsg( QCString cText,
         else
           error += i18n("[unknown error]");
         KMessageBox::sorry( mComposeWin,
-                            i18n( "<qt><p><b>This message could not be signed!</b></p>"
+                            i18n( "<qt><p><b>This message could not be signed;</b></p>"
                                   "<p>The Crypto Plug-In '%1' reported the following "
                                   "details:</p>"
                                   "<p><i>%2</i></p>"
                                   "<p>Your configuration might be invalid or the Plug-In "
-                                  "damaged.</p>"
+                                  "damaged;</p>"
                                   "<p><b>Please contact your system "
                                   "administrator.</b></p></qt>" )
                             .arg( mSelectedCryptPlug->libName() )
@@ -2194,12 +2194,12 @@ Kpgp::Result MessageComposer::pgpEncryptedMsg( QByteArray & encryptedBody,
     else
       error += i18n("[unknown error]");
     KMessageBox::sorry(mComposeWin,
-                       i18n("<qt><p><b>This message could not be encrypted!</b></p>"
+                       i18n("<qt><p><b>This message could not be encrypted;</b></p>"
                             "<p>The Crypto Plug-In '%1' reported the following "
                             "details:</p>"
                             "<p><i>%2</i></p>"
                             "<p>Your configuration might be invalid or the Plug-In "
-                            "damaged.</p>"
+                            "damaged;</p>"
                             "<p><b>Please contact your system "
                             "administrator.</b></p></qt>")
                        .arg(mSelectedCryptPlug->libName())

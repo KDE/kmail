@@ -1709,9 +1709,9 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
        KMessageBox::warningContinueCancel(this,
          ( msgList.count() == 1 )
          ? i18n("<qt>Do you really want to delete the selected message?<br>"
-                "Once deleted, it cannot be restored!</qt>")
+                "Once deleted, it cannot be restored.</qt>")
          : i18n("<qt>Do you really want to delete the selected messages?<br>"
-                "Once deleted, they cannot be restored!</qt>"),
+                "Once deleted, they cannot be restored.</qt>"),
          i18n("Delete Messages"), i18n("De&lete"), "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 

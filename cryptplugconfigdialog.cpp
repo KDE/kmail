@@ -460,7 +460,7 @@ void CryptPlugConfigDialog::slotStartCertManager() {
   certManagerProc << mWrapper->libName();
 
   if( !certManagerProc.start( KProcess::DontCare ) )
-    KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
+    KMessageBox::error( this, i18n( "Could not start certificate manager; please check your installation." ),
 			i18n( "KMail Error" ) );
   else
     kdDebug(5006) << "\nCertificatesPage::slotStartCertManager(): certificate manager started.\n" << endl;

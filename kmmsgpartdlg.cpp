@@ -144,7 +144,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
 	     "<p>normally, you do not need to change this, since %1 will use "
 	     "a decent default encoding, depending on the MIME type; yet, "
 	     "sometimes, you can significantly reduce the size of the "
-	     "resulting message, e.g. if a PostScript file doesn't contain "
+	     "resulting message, e.g. if a PostScript file does not contain "
 	     "binary data, but consists of pure text -- in this case, choosing "
 	     "\"quoted-printable\" over the default \"base64\" will save up "
 	     "to 25% in resulting message size.</p></qt>")

@@ -156,9 +156,9 @@ void KMAcctMgr::processNextCheck(bool _newMail)
   if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" &&
       curAccount->folder() == 0)
   {
-    QString tmp = i18n("Account %1 has no mailbox defined!\n"
-        "Mail checking aborted.\n"
-        "Check your account settings!")
+    QString tmp = i18n("Account %1 has no mailbox defined:\n"
+        "mail checking aborted;\n"
+        "check your account settings.")
       .arg(curAccount->name());
     KMessageBox::information(0,tmp);
     emit checkedMail(false, interactive);
