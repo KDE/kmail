@@ -985,7 +985,22 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
 
   if (replyToList && !headerField("Mail-Followup-To").isEmpty())
   {
-    toStr = headerField("Mail-Followup-To");
+    QStringList recipients =
+      splitEmailAddrList( headerField( "Mail-Followup-To" ) );
+
+    // strip my own address from the list of recipients
+    QString myAddr = getEmailAddr( msg->from() );
+    for( QStringList::Iterator it = recipients.begin();
+         it != recipients.end(); ) {
+      if( (*it).find( myAddr, 0, false ) != -1 ) {
+        kdDebug(5006) << "Removing " << *it << " from the list of recipients"
+                      << endl;
+        it = recipients.remove( it );
+      }
+      else
+        ++it;
+    }
+    toStr = recipients.join(", ");
   }
   else if (replyToList && parent() && parent()->isMailingList())
   {
