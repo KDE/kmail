@@ -1735,12 +1735,10 @@ void KMHeaders::setCurrentMsg(int cur)
 //-----------------------------------------------------------------------------
 KMMessageList* KMHeaders::selectedMsgs(int /*idx*/)
 {
-  QListViewItem *qitem;
-
   mSelMsgList.clear();
-  for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
-    if (qitem->isSelected()) {
-      KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
+  for (QListViewItemIterator it(this); it.current(); it++)
+    if (it.current()->isSelected()) {
+      KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       mSelMsgList.append(msgBase);
     }

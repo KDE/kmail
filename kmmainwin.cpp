@@ -1402,10 +1402,10 @@ void KMMainWin::slotCopyText()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMarkAll() {
-    QListViewItem *item;
-    for (item = mHeaders->firstChild(); item; item = item->itemBelow())
-        mHeaders->setSelected( item, TRUE );
+void KMMainWin::slotMarkAll()
+{
+  for (QListViewItemIterator it(mHeaders); it.current(); it++)
+    mHeaders->setSelected( it.current(), TRUE );
 }
 
 //-----------------------------------------------------------------------------
