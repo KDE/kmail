@@ -46,6 +46,16 @@ class KMMessage;
 class KMFolderDir;
 class KMFolderTreeItem;
 
+namespace {
+
+// Local helper class
+class ExtraFolder {
+public:
+  ExtraFolder( KMFolder* f ) : folder( f ) {}
+  QGuardedPtr<KMFolder> folder;
+};
+
+} // anonymous namespace
 
 class KMailICalIfaceImpl : public QObject, virtual public KMailICalIface {
   Q_OBJECT
@@ -220,7 +230,6 @@ private:
 
   // The extra IMAP resource folders
   // Key: folder location. Data: folder.
-  class ExtraFolder;
   QDict<ExtraFolder> mExtraFolders;
 
   // More info for each folder we care about (mContacts etc. as well as the extra folders)

@@ -68,12 +68,6 @@
 // Local helper methods
 static void vPartMicroParser( const QString& str, QString& s );
 static void reloadFolderTree();
-// Local helper class
-class KMailICalIfaceImpl::ExtraFolder {
-public:
-  ExtraFolder( KMFolder* f ) : folder( f ) {}
-  QGuardedPtr<KMFolder> folder;
-};
 
 // The index in this array is the KMail::FolderContentsType enum
 static const struct {
@@ -837,7 +831,6 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
 
   f->close();
   addFolderChange( f, Contents );
-
   return rc;
 }
 
@@ -900,7 +893,6 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
   mResourceQuiet = quiet;
   return url;
 }
-
 
 void KMailICalIfaceImpl::slotFolderRemoved( KMFolder* folder )
 {
@@ -1173,7 +1165,7 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
   return 0;
 }
 
-// Find message matching a given UID
+// Find message matching a given serial number
 KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder )
 {
   if( !folder ) return 0;
@@ -1215,8 +1207,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
                 << ", " << contentsType << ")\n";
 
   // The builtins can't change type
-  if ( folder == mCalendar || folder == mTasks || folder == mJournals ||
-       folder == mNotes || folder == mContacts )
+  if ( isStandardResourceFolder( folder ) )
     return;
 
   // Check if already know that 'extra folder'
@@ -1232,7 +1223,6 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
       folder->disconnect( this );
       return;
     }
-
     // So the type changed to another groupware type, ok.
   } else {
     if ( ef && !ef->folder ) // deleted folder, clean up
@@ -1244,6 +1234,14 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     // Make a new entry for the list
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( location, ef );
+
+    // avoid multiple connections
+    disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+                this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+    disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+                this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+    disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
+                this, SLOT( slotRefreshFolder( KMFolder* ) ) );
 
     // And listen to changes from it
     connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
@@ -1425,6 +1423,7 @@ void KMailICalIfaceImpl::readConfig()
     kdDebug(5006) << "Groupware folder " << parentName << " not found. Groupware functionality disabled" << endl;
     // Or maybe the inbox simply wasn't created on the first startup
     KMAccount* account = kmkernel->acctMgr()->find( GlobalSettings::theIMAPResourceAccount() );
+    Q_ASSERT( account );
     if ( account ) {
       // just in case we were connected already
       disconnect( account, SIGNAL( finishedCheck( bool, CheckStatus ) ),
@@ -1657,7 +1656,13 @@ KMFolder* KMailICalIfaceImpl::initFolder( const char* typeString,
 
   folder->setSystemFolder( true );
   folder->open();
-
+  // avoid multiple connections
+  disconnect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+              this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+  disconnect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+              this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+  disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
+              this, SLOT( slotRefreshFolder( KMFolder* ) ) );
   // Setup the signals to listen for changes
   connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
            this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
