@@ -844,7 +844,7 @@ QSize ConfigureDialog::ListView::sizeHint( void ) const
 
 NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name, 
 				      bool modal )
-  :KDialogBase( parent, name, modal, i18n("New identity"), Ok|Cancel|Help, Ok,
+  :KDialogBase( parent, name, modal, i18n("New Identity"), Ok|Cancel|Help, Ok,
 		true )
 {
   QFrame *page = makeMainWidget();
@@ -946,6 +946,81 @@ int NewIdentityDialog::duplicateMode( void )
 
 
 
+RenameIdentityDialog::RenameIdentityDialog( QWidget *parent, const char *name, 
+					    bool modal )
+  :KDialogBase( parent, name, modal, i18n("Rename Identity"), Ok|Cancel|Help, 
+		Ok, true )
+{
+  QFrame *page = makeMainWidget();
+  QGridLayout *glay = new QGridLayout( page, 4, 2, 0, spacingHint() );
+  glay->addColSpacing( 1, fontMetrics().maxWidth()*20 );
+  glay->setRowStretch( 3, 10 );
+
+  QLabel *label = new QLabel( i18n("Current Name:"), page );
+  glay->addWidget( label, 0, 0 );
+
+  mCurrentNameLabel = new QLabel( page );
+  glay->addWidget( mCurrentNameLabel, 0, 1 );
+
+  QFont f( mCurrentNameLabel->font() );
+  f.setBold(true);
+  mCurrentNameLabel->setFont(f);
+
+  glay->addRowSpacing( 1, spacingHint() );
+
+  label = new QLabel( i18n("New Name:"), page );
+  glay->addWidget( label, 2, 0 );
+
+  mLineEdit = new QLineEdit( page );
+  glay->addWidget( mLineEdit, 2, 1 );
+}
+
+
+void RenameIdentityDialog::showEvent( QShowEvent * )
+{
+  mLineEdit->setFocus();
+}
+
+
+void RenameIdentityDialog::slotOk( void )
+{
+  QString identity = identityText().stripWhiteSpace();
+  if( identity.isEmpty() == true )
+  {
+    KMessageBox::error( this, i18n("You must specify an identity") );
+    return;
+  }
+
+  QStringList::Iterator it;
+  for( it = mIdentityList.begin(); it != mIdentityList.end(); ++it ) 
+  {
+    if( *it == identity )
+    {
+      KMessageBox::error( this, i18n("The identity already exist") );
+      return;
+    }
+  }
+
+  accept();
+}
+
+
+void RenameIdentityDialog::setIdentities( const QString &current, 
+					  const QStringList &list )
+{
+  mCurrentNameLabel->setText( current );
+  mIdentityList = list;
+  mLineEdit->setText( current );
+  mLineEdit->setSelection( 0, current.length() );
+}
+
+
+QString RenameIdentityDialog::identityText( void )
+{
+  return( mLineEdit->text() );
+}
+
+
 
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, 
@@ -996,6 +1071,7 @@ void ConfigureDialog::makeIdentityPage( void )
   glay->setRowStretch( 11, 10 );
   glay->setColStretch( 1, 10 );
 
+  /*
   QLabel *label = new QLabel( i18n("Identity:"), page );
   glay->addWidget( label, 0, 0 );
   QWidget *helper = new QWidget( page );
@@ -1015,6 +1091,34 @@ void ConfigureDialog::makeIdentityPage( void )
 	   this, SLOT(slotRemoveIdentity()) );
   mIdentity.removeIdentityButton->setAutoDefault( false );
   hlay->addWidget( mIdentity.removeIdentityButton );
+  */
+
+  QLabel *label = new QLabel( i18n("Identity:"), page );
+  glay->addWidget( label, 0, 0 );
+  mIdentity.identityCombo = new QComboBox( false, page );
+  connect( mIdentity.identityCombo, SIGNAL(activated(int)),
+	   this, SLOT(slotIdentitySelectorChanged()) ); 
+  glay->addMultiCellWidget( mIdentity.identityCombo, 0, 0, 1, 2 );
+
+  QWidget *helper = new QWidget( page );
+  glay->addMultiCellWidget( helper, 1, 1, 1, 2 );
+  QHBoxLayout *hlay = new QHBoxLayout( helper, 0, spacingHint() );
+  QPushButton *newButton = new QPushButton( i18n("New..."), helper );
+  QPushButton *renameButton = new QPushButton( i18n("Rename..."), helper );
+  mIdentity.removeIdentityButton = new QPushButton( i18n("Remove"), helper );
+  newButton->setAutoDefault( false );
+  renameButton->setAutoDefault( false );
+  mIdentity.removeIdentityButton->setAutoDefault( false );
+  connect( newButton, SIGNAL(clicked()),
+	   this, SLOT(slotNewIdentity()) );
+  connect( renameButton, SIGNAL(clicked()),
+	   this, SLOT(slotRenameIdentity()) );
+  connect( mIdentity.removeIdentityButton, SIGNAL(clicked()),
+	   this, SLOT(slotRemoveIdentity()) );
+  hlay->addWidget( newButton );
+  hlay->addWidget( renameButton );
+  hlay->addWidget( mIdentity.removeIdentityButton );
+
 
   label = new QLabel( i18n("Name:"), page );
   glay->addWidget( label, 2, 0 );
@@ -2314,6 +2418,32 @@ void ConfigureDialog::slotNewIdentity( void )
 }
 
 
+void ConfigureDialog::slotRenameIdentity( void )
+{
+  RenameIdentityDialog *dialog = new RenameIdentityDialog( this, "new", true );
+
+  QStringList list = identityStrings();
+  dialog->setIdentities( mIdentity.identityCombo->currentText(), list );
+  
+  int result = dialog->exec();
+  if( result == QDialog::Accepted )
+  {
+    int index = mIdentity.identityCombo->currentItem();
+    IdentityEntry *entry = mIdentityList.get( index );
+    if( entry != 0 )
+    { 
+      entry->setIdentity( dialog->identityText() );
+      mIdentity.mActiveIdentity = entry->identity();      
+      mIdentity.identityCombo->clear();
+      mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
+      mIdentity.identityCombo->setCurrentItem( index );
+    }
+  }
+
+  delete dialog;
+}
+
+
 void ConfigureDialog::slotRemoveIdentity( void )
 {
   int currentItem = mIdentity.identityCombo->currentItem();
@@ -2674,8 +2804,6 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
   if( mAppearance.fontString[index].isEmpty() == false ) 
     mAppearance.fontChooser->setFont(kstrToFont(mAppearance.fontString[index]));
   
-  #warning "espen: New Feature depending on a change in kdeui";
-  #warning "Either update kdeui (kfontdialog) or comment it out"
   //
   // Disable Family and Size list if we have selected a qoute font 
   //
@@ -3002,6 +3130,12 @@ IdentityEntry *IdentityList::get( const QString &identity )
 }
 
 
+IdentityEntry *IdentityList::get( uint index )
+{
+  return( mList.at(index) );
+}
+
+
 void IdentityList::remove( const QString &identity )
 {
   IdentityEntry *e = get(identity);
@@ -3015,14 +3149,11 @@ void IdentityList::remove( const QString &identity )
 
 void IdentityList::importData()
 {
-  //
-  // Pretty easy for now.
-  //
   IdentityEntry entry;
   QStringList identities = KMIdentity::identities();
   QStringList::Iterator it;
-
-  for( it = identities.begin(); it != identities.end(); ++it ) {
+  for( it = identities.begin(); it != identities.end(); ++it ) 
+  {
     KMIdentity ident( *it );
     ident.readConfig();
     entry.setIdentity( ident.identity() );
@@ -3041,8 +3172,8 @@ void IdentityList::importData()
 void IdentityList::exportData()
 {
   QStringList ids;
-  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() ) {
-    ids.append( e->identity() );
+  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() ) 
+  {
     KMIdentity ident( e->identity() );
     ident.setFullName( e->fullName() );
     ident.setOrganization( e->organization() );
@@ -3052,6 +3183,7 @@ void IdentityList::exportData()
     ident.setSignatureFile( e->signatureFileName(true) );
     ident.setSignatureInlineText( e->signatureInlineText() );
     ident.writeConfig();
+    ids.append( e->identity() );
   }
 
   KMIdentity::saveIdentities( ids, true );

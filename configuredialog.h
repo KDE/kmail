@@ -74,6 +74,29 @@ class NewIdentityDialog : public KDialogBase
 
 
 
+class RenameIdentityDialog : public KDialogBase
+{
+  Q_OBJECT
+
+  public:
+    RenameIdentityDialog( QWidget *parent=0, const char *name=0, 
+			  bool modal=true );
+    void setIdentities( const QString &current, const QStringList &list );
+    QString identityText( void );
+
+  protected:
+    virtual void showEvent( QShowEvent * );
+
+  protected slots:
+    virtual void slotOk( void );
+
+  private:
+    QLineEdit   *mLineEdit;
+    QLabel      *mCurrentNameLabel;
+    QStringList mIdentityList;
+};
+
+
 
 class IdentityEntry
 {
@@ -120,6 +143,7 @@ class IdentityList
 
     QStringList identities( void );
     IdentityEntry *get( const QString &identity );
+    IdentityEntry *get( uint index );
  
     void importData( void ); // Load system settings 
     void exportData( void ); // Save state to system
@@ -337,6 +361,7 @@ class ConfigureDialog : public KDialogBase
 
   private slots:
     void slotNewIdentity( void );
+    void slotRenameIdentity( void );
     void slotRemoveIdentity( void );
     void slotIdentitySelectorChanged( void );
     void slotSignatureType( int id );
