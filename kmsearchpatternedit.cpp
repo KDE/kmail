@@ -47,15 +47,14 @@ void KMSearchRuleWidget::initWidget()
   mRuleFunc = new QComboBox( false, this, "mRuleFunc" );
   mRuleValue = new QLineEdit( this, "mRuleValue" );
 
-	mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>("KRegExpEditor/KRegExpEditor", QString::null, this );
-	if( mRegExpEditDialog )
-	{
+  mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>("KRegExpEditor/KRegExpEditor", QString::null, this );
+  if( mRegExpEditDialog ) {
     mRuleEditBut = new QPushButton( i18n("Edit"), this, "mRuleEditBut" );
     connect( mRuleEditBut, SIGNAL( clicked() ), this, SLOT( editRegExp()));
     connect( mRuleFunc, SIGNAL( activated(int) ), this, SLOT( functionChanged(int) ) );
     functionChanged( mRuleFunc->currentItem() );
-	}
-
+  }
+  
   mRuleFunc->insertStringList(sFilterFuncList);
   mRuleFunc->adjustSize();
 
@@ -76,7 +75,7 @@ void KMSearchRuleWidget::editRegExp()
   if( iface ) {
     iface->setRegExp( mRuleValue->text() );
     if( mRegExpEditDialog->exec() == QDialog::Accepted )
-	    mRuleValue->setText( iface->regExp() );
+      mRuleValue->setText( iface->regExp() );
   }  
 }
 
@@ -243,7 +242,7 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
   int superfluousItems = (int)mRuleList->count() - mMaxWidgets ;
   if ( superfluousItems > 0 ) {
     kdDebug(5006) << "KMSearchRuleWidgetLister: Clipping rule list to "
-	      << mMaxWidgets << " items!" << endl;
+		  << mMaxWidgets << " items!" << endl;
 
     for ( ; superfluousItems ; superfluousItems-- )
       mRuleList->removeLast();
@@ -398,4 +397,5 @@ void KMSearchPatternEdit::slotAutoNameHack()
   mRuleLister->regenerateRuleListFromWidgets();
   emit maybeNameChanged();
 }
+
 #include "kmsearchpatternedit.moc"
