@@ -4416,6 +4416,11 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom->setText(ident.fullEmailAddr());
   mEdtReplyTo->setText(ident.replyToAddr());
+  mEdtBcc->setText(ident.bcc());
+  // make sure the BCC field is shown because else it's ignored
+  if (! ident.bcc().isEmpty()) {
+    mShowHeaders |= HDR_BCC;
+  }
   if (ident.organization().isEmpty())
     mMsg->removeHeaderField("Organization");
   else
@@ -4502,6 +4507,9 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
 
   mEditor->setModified(TRUE);
   mId = uoid;
+
+  // make sure the BCC field is shown if necessary
+  rethinkFields( false );
 }
 
 //-----------------------------------------------------------------------------

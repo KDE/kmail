@@ -173,6 +173,10 @@ public:
   QString replyToAddr() const { return mReplyToAddr; }
   void setReplyToAddr(const QString&);
 
+  /** email addresses for the BCC: field */
+  QString bcc() const { return mBcc; }
+  void setBcc(const QString& aBcc) { mBcc = aBcc; }
+
   void setSignature( const Signature & sig ) { mSignature = sig; }
   Signature & signature() /* _not_ const! */ { return mSignature; }
 
@@ -227,6 +231,7 @@ protected:
   uint mUoid;
   QString mIdentity, mFullName, mEmailAddr, mOrganization;
   QString mReplyToAddr;
+  QString mBcc;
   QString mVCardFile;
   QCString mPgpIdentity;
   QString mFcc, mDrafts, mTransport;

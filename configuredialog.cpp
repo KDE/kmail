@@ -434,24 +434,34 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   //
   tab = new QWidget( tabWidget );
   tabWidget->addTab( tab, i18n("Ad&vanced") );
-  glay = new QGridLayout( tab, 6, 4, KDialog::spacingHint() );
+  glay = new QGridLayout( tab, 8, 4, KDialog::spacingHint() );
   glay->setMargin( KDialog::marginHint() );
-  glay->setRowStretch( 5, 1 );
+  // the last (empty) row takes all the remaining space
+  glay->setRowStretch( 8-1, 1 );
   glay->setColStretch( 1, 1 );
 
-  // row 0: "Reply-To Address" line edit and label:
+  // "Reply-To Address" line edit and label:
+  int row = 0; // this will make it a lot easier to insert/move rows
   mReplyToEdit = new QLineEdit( tab );
-  glay->addMultiCellWidget( mReplyToEdit, 0, 0, 1, 3 );
+  glay->addMultiCellWidget( mReplyToEdit, row, row, 1, 3 );
   glay->addWidget( new QLabel( mReplyToEdit,
-			       i18n("Re&ply-To address:"), tab ), 0, 0 );
+			       i18n("Re&ply-To address:"), tab ), row, 0 );
 
-  // row 1: "OpenPGP Key" requester and label:
+  // "BCC addresses" line edit and label:
+  row++;
+  mBccEdit = new QLineEdit( tab );
+  glay->addMultiCellWidget( mBccEdit, row, row, 1, 3 );
+  glay->addWidget( new QLabel( mBccEdit,
+			       i18n("&BCC addresses:"), tab ), row, 0 );
+
+  // "OpenPGP Key" requester and label:
+  row++;
   // the label
-  glay->addWidget( new QLabel( button, i18n("OpenPGP &key:"), tab ), 1, 0 );
+  glay->addWidget( new QLabel( button, i18n("OpenPGP &key:"), tab ), row, 0 );
   // the Key Id label
   mPgpIdentityLabel = new QLabel( tab );
   mPgpIdentityLabel->setFrameStyle( QFrame::Panel | QFrame::Sunken );
-  glay->addWidget( mPgpIdentityLabel, 1, 1 );
+  glay->addWidget( mPgpIdentityLabel, row, 1 );
   // the Clear button
   button = new QPushButton( tab );
   // change the size policy in order to make this button use the same vertical
@@ -461,13 +471,13 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   button->setPixmap( SmallIcon( "clear_left" ) );
   button->setAutoDefault( false );
   QToolTip::add( button, i18n( "Clear" ) );
-  glay->addWidget( button, 1, 2 );
+  glay->addWidget( button, row, 2 );
   connect( button, SIGNAL( clicked() ),
            mPgpIdentityLabel, SLOT( clear() ) );
   // the Change button
   button = new QPushButton( i18n("Chang&e..."), tab );
   button->setAutoDefault( false );
-  glay->addWidget( button, 1, 3 );
+  glay->addWidget( button, row, 3 );
   connect( button, SIGNAL(clicked()),
            this, SLOT(slotChangeDefaultPGPKey()) );
   QWhatsThis::add( mPgpIdentityLabel,
@@ -475,29 +485,33 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 			"to sign messages and to encrypt messages to "
 			"yourself.</p></qt>") );
 
-  // row 2: "Sent-mail Folder" combo box and label:
+  // "Sent-mail Folder" combo box and label:
+  row++;
   mFccCombo = new KMFolderComboBox( tab );
   mFccCombo->showOutboxFolder( false );
-  glay->addMultiCellWidget( mFccCombo, 2, 2, 1, 3 );
+  glay->addMultiCellWidget( mFccCombo, row, row, 1, 3 );
   glay->addWidget( new QLabel( mFccCombo, i18n("Sent-mail &folder:"), tab ),
-		   2, 0 );
+		   row, 0 );
 
-  // row 3: "Drafts Folder" combo box and label:
+  // "Drafts Folder" combo box and label:
+  row++;
   mDraftsCombo = new KMFolderComboBox( tab );
   mDraftsCombo->showOutboxFolder( false );
-  glay->addMultiCellWidget( mDraftsCombo, 3, 3, 1, 3 );
+  glay->addMultiCellWidget( mDraftsCombo, row, row, 1, 3 );
   glay->addWidget( new QLabel( mDraftsCombo, i18n("Drafts fo&lder:"), tab ),
-		   3, 0 );
+		   row, 0 );
 
-  // row 4: "Special transport" combobox and label:
-  // (row 5: spacer)
+  // "Special transport" combobox and label:
+  row++;
   mTransportCheck = new QCheckBox( i18n("Special &transport:"), tab );
-  glay->addWidget( mTransportCheck, 4, 0 );
+  glay->addWidget( mTransportCheck, row, 0 );
   mTransportCombo = new QComboBox( true, tab );
   mTransportCombo->setEnabled( false ); // since !mTransportCheck->isChecked()
-  glay->addMultiCellWidget( mTransportCombo, 4, 4, 1, 3 );
+  glay->addMultiCellWidget( mTransportCombo, row, row, 1, 3 );
   connect( mTransportCheck, SIGNAL(toggled(bool)),
 	   mTransportCombo, SLOT(setEnabled(bool)) );
+
+  // the last row is a spacer
 
   //
   // Tab Widget: Signature
@@ -623,6 +637,7 @@ void IdentityPage::saveActiveIdentity()
   // "Advanced" tab:
   ident.setPgpIdentity( mPgpIdentityLabel->text().local8Bit() );
   ident.setReplyToAddr( mReplyToEdit->text() );
+  ident.setBcc( mBccEdit->text() );
   ident.setTransport( ( mTransportCheck->isChecked() ) ?
 		      mTransportCombo->currentText() : QString::null );
   ident.setFcc( mFccCombo->getFolder() ?
@@ -679,6 +694,7 @@ void IdentityPage::setIdentityInformation( const QString &identity )
   // "Advanced" tab:
   mPgpIdentityLabel->setText( ident.pgpIdentity() );
   mReplyToEdit->setText( ident.replyToAddr() );
+  mBccEdit->setText( ident.bcc() );
   mTransportCheck->setChecked( !ident.transport().isEmpty() );
   mTransportCombo->setEditText( ident.transport() );
   mTransportCombo->setEnabled( !ident.transport().isEmpty() );

@@ -1333,6 +1333,11 @@ void KMMessage::initHeader( uint id )
   else
     setReplyTo(ident.replyToAddr());
 
+  if(ident.bcc().isEmpty())
+    setBcc("");
+  else
+    setBcc(ident.bcc());
+
   if (ident.organization().isEmpty())
     removeHeaderField("Organization");
   else

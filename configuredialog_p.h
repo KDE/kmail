@@ -234,6 +234,7 @@ protected: // data members
   QLineEdit        *mEmailEdit;
   // "advanced" tab:
   QLineEdit        *mReplyToEdit;
+  QLineEdit        *mBccEdit;
   QLabel           *mPgpIdentityLabel;
   KMFolderComboBox *mFccCombo;
   KMFolderComboBox *mDraftsCombo;

@@ -217,7 +217,8 @@ KMIdentity KMIdentity::null;
 
 bool KMIdentity::isNull() const {
   return mIdentity.isNull() && mFullName.isNull() && mEmailAddr.isNull() &&
-    mOrganization.isNull() && mReplyToAddr.isNull() && mVCardFile.isNull() &&
+    mOrganization.isNull() && mReplyToAddr.isNull() && mBcc.isNull() && 
+    mVCardFile.isNull() &&
     mPgpIdentity.isNull() && mFcc.isNull() && mDrafts.isNull() &&
     mTransport.isNull() && mSignature.type() == Signature::Disabled;
 }
@@ -226,7 +227,8 @@ bool KMIdentity::operator==( const KMIdentity & other ) const {
     return mUoid == other.mUoid &&
       mIdentity == other.mIdentity && mFullName == other.mFullName &&
       mEmailAddr == other.mEmailAddr && mOrganization == other.mOrganization &&
-      mReplyToAddr == other.mReplyToAddr && mVCardFile == other.mVCardFile &&
+      mReplyToAddr == other.mReplyToAddr && mBcc == other.mBcc &&
+      mVCardFile == other.mVCardFile &&
       mPgpIdentity == other.mPgpIdentity && mFcc == other.mFcc &&
       mDrafts == other.mDrafts && mTransport == other.mTransport &&
       mSignature == other.mSignature;
@@ -258,6 +260,7 @@ void KMIdentity::readConfig( const KConfigBase * config )
   mOrganization = config->readEntry("Organization");
   mPgpIdentity = config->readEntry("Default PGP Key").local8Bit();
   mReplyToAddr = config->readEntry("Reply-To Address");
+  mBcc = config->readEntry("Bcc");
   mFcc = config->readEntry("Fcc");
   mDrafts = config->readEntry("Drafts");
   mTransport = config->readEntry("Transport");
@@ -278,6 +281,7 @@ void KMIdentity::writeConfig( KConfigBase * config ) const
   config->writeEntry("Default PGP Key", mPgpIdentity.data());
   config->writeEntry("Email Address", mEmailAddr);
   config->writeEntry("Reply-To Address", mReplyToAddr);
+  config->writeEntry("Bcc", mBcc);
   config->writeEntry("VCardFile", mVCardFile);
   config->writeEntry("Transport", mTransport);
   config->writeEntry("Fcc", mFcc);
