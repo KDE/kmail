@@ -583,9 +583,11 @@ void RecipientsPicker::pick( Recipient::Type type )
   }
   if ( count > GlobalSettings::maximumRecipients() ) {
     KMessageBox::sorry( this,
-      i18n("You selected %1 recipients. The maximum supported number of "
-        "recipients is %2. Please adapt the selection.")
-      .arg( count ).arg( GlobalSettings::maximumRecipients() ) );
+        i18n("You selected 1 recipient. The maximum supported number of "
+             "recipients is %1. Please adapt the selection.",
+             "You selected %n recipients. The maximum supported number of "
+             "recipients is %1. Please adapt the selection.", count)
+      .arg( GlobalSettings::maximumRecipients() ) );
     return;
   }
 
