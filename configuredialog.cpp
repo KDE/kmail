@@ -2119,6 +2119,10 @@ void AppearancePage::HeadersTab::save() {
 }
 
 
+QString AppearancePage::SystemTrayTab::helpAnchor() const {
+  return QString::fromLatin1("configure-appearance-systemtray");
+}
+
 AppearancePageSystemTrayTab::AppearancePageSystemTrayTab( QWidget * parent,
                                                           const char * name )
   : ConfigModuleTab( parent, name )
