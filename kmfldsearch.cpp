@@ -196,7 +196,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mSearchFolderBtn = new QPushButton(i18n("&Rename..."), searchWidget);
   mSearchFolderBtn->setEnabled(false);
   hbl2->addWidget(mSearchFolderBtn);
-  mSearchFolderOpenBtn = new QPushButton(i18n("&Open"), searchWidget);
+  mSearchFolderOpenBtn = new QPushButton(i18n("Op&en"), searchWidget);
   mSearchFolderOpenBtn->setEnabled(false);
   hbl2->addWidget(mSearchFolderOpenBtn);
   connect( mSearchFolderEdt, SIGNAL( textChanged( const QString &)),
