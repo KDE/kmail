@@ -123,9 +123,6 @@ public:
   virtual bool save();
 
 private slots:
-  void slotExpireFolder( bool );
-  void slotReadExpiryUnitChanged( int );
-  void slotUnreadExpiryUnitChanged( int );
   void slotChangeIcon( QString icon );
   /*
    * is called if the folder dropdown changes
@@ -150,16 +147,41 @@ private:
   QCheckBox   *mIconsCheckBox;
   QCheckBox   *mNewMailCheckBox;
 
-  QCheckBox *mExpireFolderCheckBox;
   KPIM::IdentityCombo *mIdentityComboBox;
-  QGroupBox *mExpireGroupBox;
   QGroupBox *mMailboxTypeGroupBox;
-//   QLineEdit *mailingListAdminAddress;
 
+  KMFolderDialog* mDlg;
+};
+
+/**
+ * "Old Message Expiry" tab in the folder dialog
+ * Internal class, only used by KMFolderDialog
+ */
+class FolderDiaExpiryTab : public FolderDiaTab
+{
+  Q_OBJECT
+
+public:
+  FolderDiaExpiryTab( KMFolderDialog* dlg,
+                      QWidget* parent, const char* name = 0 );
+
+  virtual void load();
+  virtual bool save();
+
+private slots:
+  void slotExpireFolder( bool );
+  void slotReadExpiryUnitChanged( int );
+  void slotUnreadExpiryUnitChanged( int );
+
+private:
+
+private:
+  QCheckBox    *mExpireFolderCheckBox;
   KIntNumInput *mReadExpiryTimeNumInput, *mUnreadExpiryTimeNumInput;
   QComboBox    *mReadExpiryUnitsComboBox, *mUnreadExpiryUnitsComboBox;
   QRadioButton *mExpireActionDelete, *mExpireActionMove;
-  QComboBox *mExpireToFolderComboBox;
+  QComboBox    *mExpireToFolderComboBox;
+
   KMFolderDialog* mDlg;
 };
 

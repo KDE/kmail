@@ -135,6 +135,10 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 
   if ( !mFolder || !mFolder->noContent() )
   {
+    box = addVBoxPage( i18n("Old Message Expiry") );
+    tab = new FolderDiaExpiryTab( this, box );
+    addTab( tab );
+
     box = addVBoxPage( i18n("Mailing List") );
     tab = new FolderDiaMailingListTab( this, box );
     addTab( tab );
@@ -367,88 +371,6 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   // we want to know if the activated changes
   connect( mBelongsToComboBox, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
 
-  //
-  // Expiry data.
-  //
-  mExpireGroupBox = new QGroupBox(i18n("Old Message Expiry"), this);
-  mExpireGroupBox->setColumnLayout(0, Qt::Vertical);
-  QGridLayout *expLayout = new QGridLayout(mExpireGroupBox->layout());
-  expLayout->setSpacing(6);
-
-  // Checkbox for setting whether expiry is enabled on this folder.
-  mExpireFolderCheckBox = new QCheckBox(i18n("E&xpire old messages in this folder"), mExpireGroupBox);
-  QObject::connect(mExpireFolderCheckBox, SIGNAL(toggled(bool)), SLOT(slotExpireFolder(bool)));
-  topLayout->addWidget(mExpireGroupBox);
-  expLayout->addMultiCellWidget(mExpireFolderCheckBox, 0, 0, 0, 1);
-
-  // Expiry time for read documents.
-  label = new QLabel(i18n("Expire &read email after:"), mExpireGroupBox);
-  label->setEnabled(false);
-  QObject::connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
-		    label, SLOT(setEnabled(bool)) );
-  expLayout->addWidget(label, 1, 0);
-  mReadExpiryTimeNumInput = new KIntNumInput(mExpireGroupBox);
-  mReadExpiryTimeNumInput->setRange(1, 500, 1, false);
-  mReadExpiryTimeNumInput->setEnabled(false);
-  mReadExpiryTimeNumInput->setValue(7);
-  label->setBuddy(mReadExpiryTimeNumInput);
-  expLayout->addWidget(mReadExpiryTimeNumInput, 1, 1);
-
-  mReadExpiryUnitsComboBox = new QComboBox(mExpireGroupBox);
-  mReadExpiryUnitsComboBox->insertItem(i18n("Never"));
-  mReadExpiryUnitsComboBox->insertItem(i18n("Day(s)"));
-  mReadExpiryUnitsComboBox->insertItem(i18n("Week(s)"));
-  mReadExpiryUnitsComboBox->insertItem(i18n("Month(s)"));
-  mReadExpiryUnitsComboBox->setEnabled(false);
-  expLayout->addWidget(mReadExpiryUnitsComboBox, 1, 2);
-  connect( mReadExpiryUnitsComboBox, SIGNAL( activated( int ) ),
-           this, SLOT( slotReadExpiryUnitChanged( int ) ) );
-
-  // Expiry time for unread documents.
-  label = new QLabel(i18n("Expire unr&ead email after:"), mExpireGroupBox);
-  label->setEnabled(false);
-  QObject::connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
-		    label, SLOT(setEnabled(bool)) );
-  expLayout->addWidget(label, 2, 0);
-  mUnreadExpiryTimeNumInput = new KIntNumInput(mExpireGroupBox);
-  mUnreadExpiryTimeNumInput->setRange(1, 500, 1, false);
-  mUnreadExpiryTimeNumInput->setEnabled(false);
-  mUnreadExpiryTimeNumInput->setValue(28);
-  label->setBuddy(mUnreadExpiryTimeNumInput);
-  expLayout->addWidget(mUnreadExpiryTimeNumInput, 2, 1);
-
-  mUnreadExpiryUnitsComboBox = new QComboBox(mExpireGroupBox);
-  mUnreadExpiryUnitsComboBox->insertItem(i18n("Never"));
-  mUnreadExpiryUnitsComboBox->insertItem(i18n("Day(s)"));
-  mUnreadExpiryUnitsComboBox->insertItem(i18n("Week(s)"));
-  mUnreadExpiryUnitsComboBox->insertItem(i18n("Month(s)"));
-  mUnreadExpiryUnitsComboBox->setEnabled(false);
-  expLayout->addWidget(mUnreadExpiryUnitsComboBox, 2, 2);
-  connect( mUnreadExpiryUnitsComboBox, SIGNAL( activated( int ) ),
-           this, SLOT( slotUnreadExpiryUnitChanged( int ) ) );
-
-  QHBox* expireActionBox = new QHBox( mExpireGroupBox );
-  QButtonGroup* radioBG = new QButtonGroup( mExpireGroupBox );
-  radioBG->hide(); // just for the exclusive behavior
-  mExpireActionDelete = new QRadioButton( i18n( "Delete old messages" ), expireActionBox );
-  radioBG->insert(mExpireActionDelete);
-  mExpireActionMove = new QRadioButton( i18n( "Move messages to:" ), expireActionBox );
-  radioBG->insert(mExpireActionMove);
-  mExpireActionDelete->setChecked( true );
-  mExpireToFolderComboBox = new QComboBox( expireActionBox );
-  mExpireToFolderComboBox->insertStringList( mDlg->moveToFolderNameList() );
-  expLayout->addMultiCellWidget(expireActionBox, 3, 3, 0, 2);
-
-  connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
-           mExpireActionDelete, SLOT(setEnabled(bool)) );
-  connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
-           mExpireActionMove, SLOT(setEnabled(bool)) );
-  connect( mExpireFolderCheckBox, SIGNAL(toggled(bool)),
-           mExpireToFolderComboBox, SLOT(setEnabled(bool)) );
-
-  expLayout->setColStretch(3, 100);
-
-
   QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), this );
   idGroup->setColumnLayout( 0, Qt::Vertical );
   QHBoxLayout *idLayout = new QHBoxLayout(idGroup->layout());
@@ -527,6 +449,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   newmailLabel->setBuddy(mNewMailCheckBox);
   nml->addWidget( mNewMailCheckBox );
   nml->addStretch( 1 );
+
+  topLayout->addStretch( 100 ); // eat all superfluous space
 
   KMFolder* parentFolder = mDlg->parentFolder();
 
@@ -638,56 +562,6 @@ void FolderDiaGeneralTab::initializeWithValuesFromFolder( KMFolder* folder ) {
   // folder identity
   mIdentityComboBox->setCurrentIdentity( folder->identity() );
 
-  // settings for automatic deletion of old messages
-  mExpireFolderCheckBox->setChecked( folder->isAutoExpire() );
-  // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
-  if( folder->getReadExpireUnits() >= 0
-      && folder->getReadExpireUnits() < expireMaxUnits) {
-    mReadExpiryUnitsComboBox->setCurrentItem( folder->getReadExpireUnits() );
-  }
-  if( folder->getUnreadExpireUnits() >= 0
-      && folder->getUnreadExpireUnits() < expireMaxUnits ) {
-    mUnreadExpiryUnitsComboBox->setCurrentItem( folder->getUnreadExpireUnits() );
-  }
-  int age = folder->getReadExpireAge();
-  if ( age >= 1 && age <= 500 ) {
-    mReadExpiryTimeNumInput->setValue( age );
-  } else {
-    mReadExpiryTimeNumInput->setValue( 7 );
-  }
-  age = folder->getUnreadExpireAge();
-  if ( age >= 1 && age <= 500 ) {
-    mUnreadExpiryTimeNumInput->setValue( age );
-  } else {
-    mUnreadExpiryTimeNumInput->setValue( 28 );
-  }
-  if ( folder->expireAction() == KMFolder::ExpireDelete )
-    mExpireActionDelete->setChecked( true );
-  else
-    mExpireActionMove->setChecked( true );
-  QString destFolderID = folder->expireToFolderId();
-  if ( !destFolderID.isEmpty() ) {
-    KMFolderDialog::FolderList moveToFolderList = mDlg->moveToFolderList();
-    KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
-    int pos = moveToFolderList.findIndex( QGuardedPtr<KMFolder>( destFolder ) );
-    if ( pos > -1 )
-      mExpireToFolderComboBox->setCurrentItem( pos );
-  }
-
-  if( !folder->isAutoExpire() ) {
-    mReadExpiryTimeNumInput->setEnabled( false );
-    mReadExpiryUnitsComboBox->setEnabled( false );
-    mUnreadExpiryTimeNumInput->setEnabled( false );
-    mUnreadExpiryUnitsComboBox->setEnabled( false );
-    mExpireActionDelete->setEnabled( false );
-    mExpireActionMove->setEnabled( false );
-    mExpireToFolderComboBox->setEnabled( false );
-  }
-  else {
-    // disable the number fields if "Never" is selected
-    mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
-    mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
-  }
   if (folder->folderType() == KMFolderTypeImap)
   {
     KMFolderImap* imapFolder = static_cast<KMFolderImap*>(folder->storage());
@@ -825,19 +699,7 @@ bool FolderDiaGeneralTab::save()
   KMFolder* folder = mDlg->folder();
   if( folder ) {
     folder->setIdentity( mIdentityComboBox->currentIdentity() );
-    // Settings for auto expiry of old email messages.
-    folder->setAutoExpire(mExpireFolderCheckBox->isChecked());
-    folder->setUnreadExpireAge(mUnreadExpiryTimeNumInput->value());
-    folder->setReadExpireAge(mReadExpiryTimeNumInput->value());
-    folder->setUnreadExpireUnits((ExpireUnits)mUnreadExpiryUnitsComboBox->currentItem());
-    folder->setReadExpireUnits((ExpireUnits)mReadExpiryUnitsComboBox->currentItem());
-    if ( mExpireActionDelete->isChecked() )
-      folder->setExpireAction( KMFolder::ExpireDelete );
-    else
-      folder->setExpireAction( KMFolder::ExpireMove );
-    KMFolder* expireToFolder = mDlg->moveToFolderList()[mExpireToFolderComboBox->currentItem()];
-    if ( expireToFolder )
-      folder->setExpireToFolderId( expireToFolder->idString() );
+
     // Update the tree iff new icon paths are different and not empty or if
     // useCustomIcons changed.
     if ( folder->useCustomIcons() != mIconsCheckBox->isChecked() ) {
@@ -879,11 +741,197 @@ bool FolderDiaGeneralTab::save()
   return true;
 }
 
+void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
+{
+    mUnreadIconButton->setIcon( icon );
+}
+
+//----------------------------------------------------------------------------
+KMail::FolderDiaExpiryTab::FolderDiaExpiryTab( KMFolderDialog* dlg,
+                                               QWidget* parent,
+                                               const char* name )
+  : FolderDiaTab( parent, name ), mDlg( dlg )
+{
+  QLabel *label;
+
+  QVBoxLayout *topLayout = new QVBoxLayout( this, 0, KDialog::spacingHint() );
+
+  // Checkbox for setting whether expiry is enabled on this folder.
+  mExpireFolderCheckBox =
+    new QCheckBox( i18n("E&xpire old messages in this folder"), this );
+  QObject::connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
+                    this, SLOT( slotExpireFolder( bool ) ) );
+  topLayout->addWidget( mExpireFolderCheckBox );
+
+  QGridLayout *expLayout = new QGridLayout( topLayout );
+
+  // Expiry time for read documents.
+  label = new QLabel( i18n("Expire &read email after:"), this );
+  //label->setEnabled( false );
+  QObject::connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
+		    label, SLOT( setEnabled( bool ) ) );
+  expLayout->addWidget( label, 1, 0 );
+
+  mReadExpiryTimeNumInput = new KIntNumInput( this );
+  mReadExpiryTimeNumInput->setRange( 1, 500, 1, false );
+  //mReadExpiryTimeNumInput->setEnabled( false );
+  //mReadExpiryTimeNumInput->setValue( 7 );
+  label->setBuddy( mReadExpiryTimeNumInput );
+  expLayout->addWidget( mReadExpiryTimeNumInput, 1, 1 );
+
+  mReadExpiryUnitsComboBox = new QComboBox( this );
+  mReadExpiryUnitsComboBox->insertItem( i18n("Never") );
+  mReadExpiryUnitsComboBox->insertItem( i18n("Day(s)") );
+  mReadExpiryUnitsComboBox->insertItem( i18n("Week(s)") );
+  mReadExpiryUnitsComboBox->insertItem( i18n("Month(s)") );
+  //mReadExpiryUnitsComboBox->setEnabled(false);
+  expLayout->addWidget( mReadExpiryUnitsComboBox, 1, 2 );
+  connect( mReadExpiryUnitsComboBox, SIGNAL( activated( int ) ),
+           this, SLOT( slotReadExpiryUnitChanged( int ) ) );
+
+  // Expiry time for unread documents.
+  label = new QLabel( i18n("Expire unr&ead email after:"), this );
+  //label->setEnabled(false);
+  QObject::connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
+		    label, SLOT( setEnabled( bool ) ) );
+  expLayout->addWidget( label, 2, 0 );
+
+  mUnreadExpiryTimeNumInput = new KIntNumInput( this );
+  mUnreadExpiryTimeNumInput->setRange( 1, 500, 1, false );
+  //mUnreadExpiryTimeNumInput->setEnabled(false);
+  //mUnreadExpiryTimeNumInput->setValue(28);
+  label->setBuddy( mUnreadExpiryTimeNumInput );
+  expLayout->addWidget( mUnreadExpiryTimeNumInput, 2, 1 );
+
+  mUnreadExpiryUnitsComboBox = new QComboBox( this );
+  mUnreadExpiryUnitsComboBox->insertItem( i18n("Never") );
+  mUnreadExpiryUnitsComboBox->insertItem( i18n("Day(s)") );
+  mUnreadExpiryUnitsComboBox->insertItem( i18n("Week(s)") );
+  mUnreadExpiryUnitsComboBox->insertItem( i18n("Month(s)") );
+  //mUnreadExpiryUnitsComboBox->setEnabled(false);
+  expLayout->addWidget( mUnreadExpiryUnitsComboBox, 2, 2 );
+  connect( mUnreadExpiryUnitsComboBox, SIGNAL( activated( int ) ),
+           this, SLOT( slotUnreadExpiryUnitChanged( int ) ) );
+
+  expLayout->setColStretch( 3, 100 );
+
+  // delete or archive old messages
+  QButtonGroup* radioBG = new QButtonGroup( this );
+  radioBG->hide(); // just for the exclusive behavior
+  mExpireActionDelete = new QRadioButton( i18n( "Delete old messages" ),
+                                          this );
+  radioBG->insert( mExpireActionDelete );
+  topLayout->addWidget( mExpireActionDelete );
+
+  QHBoxLayout *hbl = new QHBoxLayout( topLayout );
+  mExpireActionMove = new QRadioButton( i18n( "Move old messages to:" ),
+                                        this );
+  radioBG->insert( mExpireActionMove );
+  hbl->addWidget( mExpireActionMove );
+  //mExpireActionDelete->setChecked( true );
+  mExpireToFolderComboBox = new QComboBox( this );
+  hbl->addWidget( mExpireToFolderComboBox );
+  mExpireToFolderComboBox->insertStringList( mDlg->moveToFolderNameList() );
+  hbl->addStretch( 100 );
+
+  topLayout->addStretch( 100 ); // eat all superfluous space
+
+  connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
+           mExpireActionDelete, SLOT( setEnabled( bool ) ) );
+  connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
+           mExpireActionMove, SLOT( setEnabled( bool ) ) );
+  connect( mExpireFolderCheckBox, SIGNAL( toggled( bool ) ),
+           mExpireToFolderComboBox, SLOT( setEnabled( bool ) ) );
+}
+
+void FolderDiaExpiryTab::load()
+{
+  KMFolder* folder = mDlg->folder();
+  if( !folder )
+    return;
+
+  // settings for automatic deletion of old messages
+  mExpireFolderCheckBox->setChecked( folder->isAutoExpire() );
+  // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
+  if( folder->getReadExpireUnits() >= 0
+      && folder->getReadExpireUnits() < expireMaxUnits ) {
+    mReadExpiryUnitsComboBox->setCurrentItem( folder->getReadExpireUnits() );
+  }
+  if( folder->getUnreadExpireUnits() >= 0
+      && folder->getUnreadExpireUnits() < expireMaxUnits ) {
+    mUnreadExpiryUnitsComboBox->setCurrentItem( folder->getUnreadExpireUnits() );
+  }
+  int age = folder->getReadExpireAge();
+  if ( age >= 1 && age <= 500 ) {
+    mReadExpiryTimeNumInput->setValue( age );
+  } else {
+    mReadExpiryTimeNumInput->setValue( 7 );
+  }
+  age = folder->getUnreadExpireAge();
+  if ( age >= 1 && age <= 500 ) {
+    mUnreadExpiryTimeNumInput->setValue( age );
+  } else {
+    mUnreadExpiryTimeNumInput->setValue( 28 );
+  }
+  if ( folder->expireAction() == KMFolder::ExpireDelete )
+    mExpireActionDelete->setChecked( true );
+  else
+    mExpireActionMove->setChecked( true );
+  QString destFolderID = folder->expireToFolderId();
+  if ( !destFolderID.isEmpty() ) {
+    KMFolderDialog::FolderList moveToFolderList = mDlg->moveToFolderList();
+    KMFolder* destFolder = kmkernel->findFolderById( destFolderID );
+    int pos = moveToFolderList.findIndex( QGuardedPtr<KMFolder>( destFolder ) );
+    if ( pos > -1 )
+      mExpireToFolderComboBox->setCurrentItem( pos );
+  }
+
+  if( !folder->isAutoExpire() ) {
+    mReadExpiryTimeNumInput->setEnabled( false );
+    mReadExpiryUnitsComboBox->setEnabled( false );
+    mUnreadExpiryTimeNumInput->setEnabled( false );
+    mUnreadExpiryUnitsComboBox->setEnabled( false );
+    mExpireActionDelete->setEnabled( false );
+    mExpireActionMove->setEnabled( false );
+    mExpireToFolderComboBox->setEnabled( false );
+  }
+  else {
+    // disable the number fields if "Never" is selected
+    mReadExpiryTimeNumInput->setEnabled( mReadExpiryUnitsComboBox->currentItem() != 0 );
+    mUnreadExpiryTimeNumInput->setEnabled( mUnreadExpiryUnitsComboBox->currentItem() != 0 );
+  }
+}
+
+//-----------------------------------------------------------------------------
+bool FolderDiaExpiryTab::save()
+{
+  KMFolder* folder = mDlg->folder();
+  if( !folder )
+    return true;
+
+  // Settings for auto expiry of old email messages.
+  folder->setAutoExpire( mExpireFolderCheckBox->isChecked() );
+  folder->setUnreadExpireAge( mUnreadExpiryTimeNumInput->value() );
+  folder->setReadExpireAge( mReadExpiryTimeNumInput->value() );
+  folder->setUnreadExpireUnits( static_cast<ExpireUnits>( mUnreadExpiryUnitsComboBox->currentItem() ) );
+  folder->setReadExpireUnits( static_cast<ExpireUnits>( mReadExpiryUnitsComboBox->currentItem() ) );
+  if ( mExpireActionDelete->isChecked() )
+    folder->setExpireAction( KMFolder::ExpireDelete );
+  else
+    folder->setExpireAction( KMFolder::ExpireMove );
+  KMFolder* expireToFolder =
+    mDlg->moveToFolderList()[mExpireToFolderComboBox->currentItem()];
+  if ( expireToFolder )
+    folder->setExpireToFolderId( expireToFolder->idString() );
+
+  return true;
+}
+
 /**
  * Called when the 'auto expire' toggle is clicked.
  * Enables/disables all widgets related to this.
  */
-void FolderDiaGeneralTab::slotExpireFolder(bool expire)
+void FolderDiaExpiryTab::slotExpireFolder(bool expire)
 {
   if (expire) {
     // disable the number field if "Never" is selected
@@ -904,7 +952,7 @@ void FolderDiaGeneralTab::slotExpireFolder(bool expire)
 /**
  * Enable/disable the number field if appropriate
  */
-void FolderDiaGeneralTab::slotReadExpiryUnitChanged( int value )
+void FolderDiaExpiryTab::slotReadExpiryUnitChanged( int value )
 {
   // disable the number field if "Never" is selected
   mReadExpiryTimeNumInput->setEnabled( value != 0 );
@@ -914,15 +962,10 @@ void FolderDiaGeneralTab::slotReadExpiryUnitChanged( int value )
 /**
  * Enable/disable the number field if appropriate
  */
-void FolderDiaGeneralTab::slotUnreadExpiryUnitChanged( int value )
+void FolderDiaExpiryTab::slotUnreadExpiryUnitChanged( int value )
 {
   // disable the number field if "Never" is selected
   mUnreadExpiryTimeNumInput->setEnabled( value != 0 );
-}
-
-void FolderDiaGeneralTab::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
-{
-    mUnreadIconButton->setIcon( icon );
 }
 
 //----------------------------------------------------------------------------
