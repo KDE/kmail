@@ -1886,7 +1886,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 result = i18n("Good signature");
                 break;
             case 2: // GPGME_SIG_STAT_BAD
-                result = i18n("BAD signature");
+                result = i18n("<b>Bad</b> signature");
                 break;
             case 3: // GPGME_SIG_STAT_NOKEY
                 result = i18n("No public key to verify the signature");
@@ -1925,7 +1925,7 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
             }
 
             if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
-                result = i18n("GOOD signature!");
+                result = i18n("Good signature!");
                 // Note:
                 // Here we are work differently than KMail did before!
                 //
@@ -2018,15 +2018,9 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 result = "";
 
             if( SIG_FRAME_COL_GREEN == frameColor ) {
-                if( result2.isEmpty() )
-                    result = i18n("GOOD signature!");
-                else
-                    result = i18n("Good signature.");
+                result = i18n("Good signature.");
             } else if( SIG_FRAME_COL_RED == frameColor ) {
-                if( result2.isEmpty() )
-                    result = i18n("BAD signature!");
-                else
-                    result = i18n("Bad signature.");
+                result = i18n("<b>Bad</b> signature.");
             } else
                 result = "";
 
