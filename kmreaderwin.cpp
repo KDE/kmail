@@ -1814,7 +1814,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
         messagePart.keyId = ext.keyid;
         if( messagePart.keyId.isEmpty() )
             messagePart.keyId = ext.fingerprint; // take fingerprint if no id found (e.g. for S/MIME)
-        messagePart.keyTrust = ext.validity;
+	// ### Ugh. We depend on two enums being in sync:
+        messagePart.keyTrust = (Kpgp::Validity)ext.validity;
         messagePart.signer = ext.userid;
         if( ext.creation_time )
             messagePart.creationTime = *ext.creation_time;
