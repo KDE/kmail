@@ -540,7 +540,8 @@ void KMReaderWin::displayAboutPage()
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
 	 "%4: prior KMail version; %5: prior KDE version; "
 	 "%6: generated list of new features; "
-	 "%7: First-time user text (only shown on first start)",
+	 "%7: First-time user text (only shown on first start)"
+	 "--- end of comment ---",
 	 "<h2>Welcome to KMail %1</h2><p>KMail is the email client for the K "
 	 "Desktop Environment. It is designed to be fully compatible with "
 	 "Internet mailing standards including MIME, SMTP, POP3 and IMAP."
