@@ -4221,25 +4221,27 @@ void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)
+void KMMessage::link( const KMMessage *aMsg, KMMsgStatus aStatus )
 {
-  Q_ASSERT(aStatus == KMMsgStatusReplied || aStatus == KMMsgStatusForwarded);
+  Q_ASSERT( aStatus == KMMsgStatusReplied || aStatus == KMMsgStatusForwarded );
 
-  QString message = headerField("X-KMail-Link-Message");
-  if (!message.isEmpty())
+  QString message = headerField( "X-KMail-Link-Message" );
+  if ( !message.isEmpty() )
     message += ',';
-  QString type = headerField("X-KMail-Link-Type");
-  if (!type.isEmpty())
+  QString type = headerField( "X-KMail-Link-Type" );
+  if ( !type.isEmpty() )
     type += ',';
 
-  message += QString::number(aMsg->getMsgSerNum());
-  if (aStatus == KMMsgStatusReplied)
+  message += QString::number( aMsg->getMsgSerNum() );
+  if ( aStatus == KMMsgStatusReplied )
     type += "reply";
-  else if (aStatus == KMMsgStatusForwarded)
+  else if ( aStatus == KMMsgStatusForwarded )
     type += "forward";
+  else if ( aStatus == KMMsgStatusDeleted )
+    type += "deleted";
 
-  setHeaderField("X-KMail-Link-Message", message);
-  setHeaderField("X-KMail-Link-Type", type);
+  setHeaderField( "X-KMail-Link-Message", message );
+  setHeaderField( "X-KMail-Link-Type", type );
 }
 
 //-----------------------------------------------------------------------------
@@ -4253,12 +4255,14 @@ void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) cons
   message = message.section(',', n, n);
   type = type.section(',', n, n);
 
-  if (!message.isEmpty() && !type.isEmpty()) {
+  if ( !message.isEmpty() && !type.isEmpty() ) {
     *retMsgSerNum = message.toULong();
-    if (type == "reply")
+    if ( type == "reply" )
       *retStatus = KMMsgStatusReplied;
-    else if (type == "forward")
+    else if ( type == "forward" )
       *retStatus = KMMsgStatusForwarded;
+    else if ( type == "deleted" )
+      *retStatus = KMMsgStatusDeleted;
   }
 }
 
