@@ -1356,19 +1356,28 @@ void KMFolderCachedImap::listDirectory2() {
     if (!node) {
       // This folder is not present here
       // Either it's new on the server, or we just deleted it.
+      QString subfolderPath = mSubfolderPaths[i];
       // The code used to look at the uidcache to know if it was "just deleted".
-      // But this breaks with noContent folders.
-      // So instead we keep a list in the account. But this gets forgotten if you restart
-      // KMail before syncing. Ah well.
-      if( mAccount->isDeletedFolder( mSubfolderPaths[i] ) ) {
-        kdDebug(5006) << mSubfolderPaths[i] << " was just deleted locally => delete on server." << endl;
-        foldersForDeletionOnServer << mSubfolderPaths[i];
+      // But this breaks with noContent folders and with shared folders.
+      // So instead we keep a list in the account.
+      bool locallyDeleted = mAccount->isDeletedFolder( subfolderPath );
+      // That list is saved/restored across sessions, but to avoid any mistake,
+      // ask for confirmation if the folder was deleted in a previous session
+      // (could be that the folder was deleted & recreated meanwhile from another client...)
+      if ( !locallyDeleted && mAccount->isPreviouslyDeletedFolder( subfolderPath ) ) {
+           locallyDeleted = KMessageBox::warningYesNo(
+             0, i18n( "<qt><p>It seems that the folder <b>%1</b> was deleted. Do you want to delete it from the server?</p></qt>" ).arg( mSubfolderNames[i] ) ) == KMessageBox::Yes;
+      }
+
+      if ( locallyDeleted ) {
+        kdDebug(5006) << subfolderPath << " was deleted locally => delete on server." << endl;
+        foldersForDeletionOnServer << subfolderPath;
         // We immediately remove it from the deleted folders list.
         // If removing the folder from the server fails (no permission), then on the next sync
         // the server will reappear, instead of the user being stuck with "can't delete" every time.
-        mAccount->removeDeletedFolder( mSubfolderPaths[i] );
+        mAccount->removeDeletedFolder( subfolderPath );
       } else {
-        kdDebug(5006) << mSubfolderPaths[i] << " is a new folder on the server => create local cache" << endl;
+        kdDebug(5006) << subfolderPath << " is a new folder on the server => create local cache" << endl;
         f = static_cast<KMFolderCachedImap*>
           (folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap)->storage());
         if (f) {

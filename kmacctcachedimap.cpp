@@ -281,11 +281,15 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
   ImapAccountBase::readConfig( config );
   setProgressDialogEnabled( config.readBoolEntry( "progressdialog", true ) );
+  // Apparently this method is only ever called once (from KMKernel::init) so this is ok
+  mPreviouslyDeletedFolders = config.readListEntry( "deleted-folders" );
+  mDeletedFolders.clear(); // but just in case...
 }
 
 void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
   ImapAccountBase::writeConfig( config );
   config.writeEntry( "progressdialog", isProgressDialogEnabled() );
+  config.writeEntry( "deleted-folders", mDeletedFolders + mPreviouslyDeletedFolders );
 }
 
 void KMAcctCachedImap::invalidateIMAPFolders()
@@ -359,9 +363,15 @@ bool KMAcctCachedImap::isDeletedFolder( const QString& subFolderPath ) const
   return mDeletedFolders.find( subFolderPath ) != mDeletedFolders.end();
 }
 
+bool KMAcctCachedImap::isPreviouslyDeletedFolder( const QString& subFolderPath ) const
+{
+  return mPreviouslyDeletedFolders.find( subFolderPath ) != mPreviouslyDeletedFolders.end();
+}
+
 void KMAcctCachedImap::removeDeletedFolder( const QString& subFolderPath )
 {
   mDeletedFolders.remove( subFolderPath );
+  mPreviouslyDeletedFolders.remove( subFolderPath );
 }
 
 #include "kmacctcachedimap.moc"

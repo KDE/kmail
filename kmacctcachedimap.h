@@ -138,9 +138,14 @@ public:
   void addDeletedFolder( const QString& subFolderPath );
 
   /**
-   * Ask if a folder was explicitely deleted
+   * Ask if a folder was explicitely deleted in this session
    */
   bool isDeletedFolder( const QString& subFolderPath ) const;
+
+  /**
+   * Ask if a folder was explicitely deleted in a previous session
+   */
+  bool isPreviouslyDeletedFolder( const QString& subFolderPath ) const;
 
   /**
    * Remove folder from the "deleted folders" list
@@ -164,7 +169,8 @@ private:
   KMFolderCachedImap *mFolder;
   mutable QGuardedPtr<KMail::IMAPProgressDialog> mProgressDlg;
   bool mProgressDialogEnabled;
-  QStringList mDeletedFolders;
+  QStringList mDeletedFolders; // folders deleted in this session
+  QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session
 };
 
 #endif /*KMAcctCachedImap_h*/
