@@ -479,7 +479,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   //if (!force && aMsg && mMsg == aMsg)
   //  return;
 
-  kdDebug(5006) << "Not equal" << endl;
+  kdDebug(5006) << "set Msg, force = " << force << endl;
 
   // connect to the updates if we have hancy headers
   
@@ -492,12 +492,10 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   // Avoid flicker, somewhat of a cludge
   if (force) {
+    // stop the timer to avoid calling updateReaderWin twice
+    updateReaderWinTimer.stop();
     mMsgBuf = 0;
     updateReaderWin();
-
-    // Work around a very strange QTimer bug that requires more investigation
-    // double clicking too quickly on message headers was crashing kmail
-    updateReaderWinTimer.stop();
   }
   else if (updateReaderWinTimer.isActive())
     updateReaderWinTimer.changeInterval( delay );
