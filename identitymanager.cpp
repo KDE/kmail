@@ -1,5 +1,5 @@
 /*  -*- c++ -*-
-    identitymanager.h
+    identitymanager.cpp
 
     KMail, the KDE mail client.
     Copyright (c) 2002 the KMail authors.
