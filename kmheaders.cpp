@@ -1322,10 +1322,10 @@ void KMHeaders::updateMessageList(void)
 
     if (i >= oldSize) {
       KMHeaderItem* hi = new KMHeaderItem( this, mFolder, i, &mPaintInfo );
-      mItems[i] = hi;
+      mItems.operator[](i) = hi;
     }
     else
-      mItems[i]->reset( mFolder, i );
+      mItems.operator[](i)->reset( mFolder, i );
   }
 
   sort();
@@ -1349,14 +1349,15 @@ void KMHeaders::updateMessageList(void)
   // if the maybeHeight of the Root QListViewItem is -1, which it seems
   // to be (I guess it is marked as invalid after items are deleted/inserted).
 
-  if (firstChild())
-    ensureItemVisible(firstChild());
+  // if (firstChild())
+  //   ensureItemVisible(firstChild());
   //  updateContents(); // -sanders Started causing flicker in QT 2.1cvs :-(
 
   setUpdatesEnabled(autoUpd);
   if (autoUpd) repaint();
   // WABA: The following line is somehow necassery
-  highlightMessage(currentItem()); 
+  // SANDERS: It shouldn't be necessary in a recent QT snapshot (Nov-26+) 
+  // highlightMessage(currentItem()); 
 }
 
 
