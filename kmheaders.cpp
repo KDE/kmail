@@ -1257,32 +1257,30 @@ void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
         mItems.resize( 0 );
       }
     }
-  }
 
-  CREATE_TIMER(updateMsg);
-  START_TIMER(updateMsg);
-  updateMessageList(true, forceJumpToUnread);
-  END_TIMER(updateMsg);
-  SHOW_TIMER(updateMsg);
-  makeHeaderVisible();
-
-  if (mFolder)
+    CREATE_TIMER(updateMsg);
+    START_TIMER(updateMsg);
+    updateMessageList(true, forceJumpToUnread);
+    END_TIMER(updateMsg);
+    SHOW_TIMER(updateMsg);
+    makeHeaderVisible();
     setFolderInfoStatus();
 
-  QString colText = i18n( "Sender" );
-  if (mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
-    colText = i18n("Receiver");
-  setColumnText( mPaintInfo.senderCol, colText);
+    QString colText = i18n( "Sender" );
+    if (mFolder && (mFolder->whoField().lower() == "to") && !mPaintInfo.showReceiver)
+      colText = i18n("Receiver");
+    setColumnText( mPaintInfo.senderCol, colText);
 
-  colText = i18n( "Date" );
-  if (mPaintInfo.orderOfArrival)
-    colText = i18n( "Date (Order of Arrival)" );
-  setColumnText( mPaintInfo.dateCol, colText);
+    colText = i18n( "Date" );
+    if (mPaintInfo.orderOfArrival)
+      colText = i18n( "Date (Order of Arrival)" );
+    setColumnText( mPaintInfo.dateCol, colText);
 
-  colText = i18n( "Subject" );
-  if (mPaintInfo.status)
-    colText = colText + i18n( " (Status)" );
-  setColumnText( mPaintInfo.subCol, colText);
+    colText = i18n( "Subject" );
+    if (mPaintInfo.status)
+      colText = colText + i18n( " (Status)" );
+    setColumnText( mPaintInfo.subCol, colText);
+  }
 
   END_TIMER(set_folder);
   SHOW_TIMER(set_folder);
