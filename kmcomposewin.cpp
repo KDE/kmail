@@ -4780,49 +4780,11 @@ void KMComposeWin::slotAppendSignature()
 
   const KMIdentity & ident =
     kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  QString sigText = ident.signatureText();
-#if 0 // will be moved to identitymanager
-  if( sigText.isNull() && ident.useSignatureFile() )
-  {
-    // open a file dialog and let the user choose manually
-    KFileDialog dlg( QDir::homeDirPath(), QString::null, this, 0, TRUE );
-    if (ident.signatureIsPlainFile())
-      dlg.setCaption(i18n("Choose Signature File"));
-    else
-      dlg.setCaption(i18n("Choose Signature Command"));
-    if( !dlg.exec() )
-    {
-      return;
-    }
-    KURL url = dlg.selectedURL();
-    if( url.isEmpty() )
-    {
-      return;
-    }
-    if( !url.isLocalFile() )
-    {
-      KMessageBox::sorry( 0, i18n( "Only local files are supported." ) );
-      return;
-    }
-    QString sigFileName = url.path();
-    QFileInfo qfi( sigFileName );
-    if ( ident.signatureIsCommand() && !qfi.isExecutable() )
-    {
-      // ### Commented out due to msg freeze (remove comment and underscores):
-      //KMessageBox::sorry( 0, _i_1_8_n_( "%1 is not executable." ).arg( url.path() ) );
-      return;
-    }
-    ident.setSignatureFile(sigFileName);
-    ident.writeConfig(true);
-    sigText = ident.signature(false); // try again, but don't prompt
-  }
-#endif
-  mOldSigText = sigText;
-  if( !sigText.isEmpty() )
+  mOldSigText = ident.signatureText();
+  if( !mOldSigText.isEmpty() )
   {
     mEditor->sync();
-    mEditor->append("\n");
-    mEditor->append(sigText);
+    mEditor->append(mOldSigText);
     mEditor->update();
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
@@ -4967,8 +4929,8 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   // try to truncate the old sig
   if( !mOldSigText.isEmpty() )
   {
-    if( edtText.endsWith( "\n" + mOldSigText ) )
-      edtText.truncate( edtText.length() - mOldSigText.length() - 1 );
+    if( edtText.endsWith( mOldSigText ) )
+      edtText.truncate( edtText.length() - mOldSigText.length() );
     else
       appendNewSig = false;
   }
@@ -4977,7 +4939,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   if( appendNewSig )
   {
     if( !mOldSigText.isEmpty() && mAutoSign )
-      edtText.append( "\n" + mOldSigText );
+      edtText.append( mOldSigText );
     mEditor->setText( edtText );
   }
 
