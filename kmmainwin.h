@@ -252,8 +252,12 @@ protected slots:
   /** Message navigation */
   void slotNextMessage();
   void slotNextUnreadMessage();
+  void slotNextImportantMessage();
+  void slotNextUnreadFolder();
   void slotPrevMessage();
   void slotPrevUnreadMessage();
+  void slotPrevImportantMessage();
+  void slotPrevUnreadFolder();
 
   /** etc. */
   void slotMsgActivated(KMMessage*);

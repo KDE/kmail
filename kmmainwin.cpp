@@ -536,18 +536,14 @@ void KMMainWin::createWidgets(void)
   // Probably need to disconnect them first.
 
   // create list of messages
-    headerParent->dumpObjectTree();
-    mHeaders = new KMHeaders(this, headerParent, "headers");
+  headerParent->dumpObjectTree();
+  mHeaders = new KMHeaders(this, headerParent, "headers");
   connect(mHeaders, SIGNAL(selected(KMMessage*)),
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
 	  this, SLOT(slotMsgActivated(KMMessage*)));
   connect( mHeaders, SIGNAL( selectionChanged() ),
            SLOT( startUpdateMessageActionsTimer() ) );
-  accel->connectItem(accel->insertItem(Key_Left),
-		     mHeaders, SLOT(prevMessage()));
-  accel->connectItem(accel->insertItem(Key_Right),
-  		     mHeaders, SLOT(nextMessage()));
   accel->connectItem(accel->insertItem(SHIFT+Key_Left),
                      mHeaders, SLOT(selectPrevMessage()));
   accel->connectItem(accel->insertItem(SHIFT+Key_Right),
@@ -614,14 +610,6 @@ void KMMainWin::createWidgets(void)
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
-    i18n("Next folder with unread messages"), CTRL+Key_Plus, mFolderTree,
-    SLOT(nextUnreadFolder()), actionCollection(), "next_unread_folder");
-
-  new KAction(
-   i18n("Previous folder with unread messages"), CTRL+Key_Minus, mFolderTree,
-   SLOT(prevUnreadFolder()), actionCollection(), "prev_unread_folder");
-
-  new KAction(
    i18n("Focus on next folder"), CTRL+Key_Right, mFolderTree,
    SLOT(incCurrentFolder()), actionCollection(), "inc_current_folder");
 
@@ -632,10 +620,6 @@ void KMMainWin::createWidgets(void)
   new KAction(
    i18n("Select folder with focus"), CTRL+Key_Space, mFolderTree,
    SLOT(selectCurrentFolder()), actionCollection(), "select_current_folder");
-
-  new KAction( i18n( "Move to the Next Unread Text" ),
-               Key_Space, this,  SLOT( slotReadOn() ),
-               actionCollection(), "read_on" );
 
   connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
@@ -1827,8 +1811,14 @@ void KMMainWin::slotSetThreadStatusSent()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotNextMessage()       { mHeaders->nextMessage(); }
 void KMMainWin::slotNextUnreadMessage() { mHeaders->nextUnreadMessage(); }
+void KMMainWin::slotNextImportantMessage() {
+  //mHeaders->nextImportantMessage();
+}
 void KMMainWin::slotPrevMessage()       { mHeaders->prevMessage(); }
 void KMMainWin::slotPrevUnreadMessage() { mHeaders->prevUnreadMessage(); }
+void KMMainWin::slotPrevImportantMessage() {
+  //mHeaders->prevImportantMessage();
+}
 
 //-----------------------------------------------------------------------------
 //called from headers. Message must not be deleted on close
@@ -2360,18 +2350,6 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("P&ost to Mailing-List..."), 0, this,
 		      SLOT(slotPostToML()), actionCollection(), "post_message" );
 
-  (void) new KAction( i18n("next message","Ne&xt"), Key_N, this,
-		      SLOT(slotNextMessage()), actionCollection(), "next" );
-
-  (void) new KAction( i18n("Next &Unread"), "next", Key_Plus, this,
-		      SLOT(slotNextUnreadMessage()), actionCollection(), "next_unread" );
-
-  (void) new KAction( i18n("previous message","&Previous"), Key_P, this,
-		      SLOT(slotPrevMessage()), actionCollection(), "previous" );
-
-  (void) new KAction( i18n("Previou&s Unread"), "previous", Key_Minus, this,
-		      SLOT(slotPrevUnreadMessage()), actionCollection(), "previous_unread" );
-
   replyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
 
@@ -2560,9 +2538,6 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("Appl&y Filters"), "filter", CTRL+Key_J, this,
 		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
 
-  viewSourceAction = new KAction( i18n("&View Source..."), Key_V, this,
-		      SLOT(slotShowMsgSrc()), actionCollection(), "view_source" );
-
 
   //----- View Menu
   KRadioAction * raction = 0;
@@ -2704,6 +2679,92 @@ void KMMainWin::setupMenuBar()
 			0, this, SLOT(slotToggleFixedFont()),
 			actionCollection(), "toggle_fixedfont" );
 
+  viewSourceAction = new KAction( i18n("&View Source..."), Key_V, this,
+		      SLOT(slotShowMsgSrc()), actionCollection(), "view_source" );
+
+
+  //----- Go Menu
+  KActionMenu * goNextMenu = new KActionMenu( i18n("Go->","&Next"),
+					      actionCollection(),
+					      "go_next_menu" );
+  // clicking the button in the toolbar doesn't do anything:
+  goNextMenu->setDelayed( false );
+
+  action = new KAction( KGuiItem( i18n("Go->Next->","&Message"), "next",
+				  i18n("Go to the next message") ),
+			"N;Right", this, SLOT(slotNextMessage()),
+			actionCollection(), "go_next_message" );
+  goNextMenu->insert( action );
+
+  action = new KAction( KGuiItem( i18n("Go->Next->","&Unread Message"), "next",
+				  i18n("Go to the next unread message") ),
+			Key_Plus, this, SLOT(slotNextUnreadMessage()),
+			actionCollection(), "go_next_unread_message" );
+  goNextMenu->insert( action );
+
+  /* ### needs better support ffrom folders: 
+  action = new KAction( KGuiItem( i18n("Go->Next->","&Important Message"),
+				  "next",
+				  i18n("Go to the next important message") ),
+			0, this, SLOT(slotNextImportantMessage()),
+			actionCollection(), "go_next_important_message" );
+  goNextMenu->insert( action );
+  */
+  goNextMenu->insert( new KActionSeparator() );
+
+  action = new KAction( KGuiItem( i18n("Go->Next->","Unread &Folder"),
+				  "next",
+				  i18n("Go to the next folder with unread "
+				       "messages") ),
+			CTRL+Key_Plus, this, SLOT(slotNextUnreadFolder()),
+			actionCollection(), "go_next_unread_folder" );
+  goNextMenu->insert( action );
+
+  KActionMenu * goPrevMenu = new KActionMenu( i18n("Go->","&Previous"),
+					      actionCollection(),
+					      "go_prev_menu" );
+  // clicking the button in the toolbar doesn't do anything:
+  goPrevMenu->setDelayed( false );
+  
+  action = new KAction( KGuiItem( i18n("Go->Prev->","&Message"), "previous",
+				  i18n("Go to the previous message") ),
+			"P;Left", this, SLOT(slotPrevMessage()),
+			actionCollection(), "go_prev_message" );
+  goPrevMenu->insert( action );
+
+  action = new KAction( KGuiItem( i18n("Go->Prev->","&Unread Message"),
+				  "previous",
+				  i18n("Go to the previous unread message") ),
+			Key_Minus, this, SLOT(slotPrevUnreadMessage()),
+			actionCollection(), "go_prev_unread_message" );
+  goPrevMenu->insert( action );
+
+  /* needs better support from folders:
+  action = new KAction( KGuiItem( i18n("Go->Prev->","&Important Message"),
+				  "previous",
+				  i18n("Go to the previous important message") ),
+			0, this, SLOT(slotPrevImportantMessage()),
+			actionCollection(), "go_prev_important_message" );
+  goPrevMenu->insert( action );
+  */
+  goPrevMenu->insert( new KActionSeparator() );
+
+  action = new KAction( KGuiItem( i18n("Go->Prev->","Unread &Folder"),
+				  "previous",
+				  i18n("Go to the previous folder with unread "
+				       "messages") ),
+			CTRL+Key_Minus, this, SLOT(slotPrevUnreadFolder()),
+			actionCollection(), "go_prev_unread_folder" );
+  goPrevMenu->insert( action );
+
+  (void)new KAction( KGuiItem( i18n("Go->","Next &Unread Text"), "next",
+			       i18n("Go to the next unread text"),
+			       i18n("Scroll down current message. "
+				    "If at end of current message, "
+				    "go to next unread message.") ),
+		     Key_Space, this, SLOT(slotReadOn()),
+		     actionCollection(), "go_next_unread_text" );
+
   //----- Settings Menu
   toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
     actionCollection());
@@ -2827,6 +2888,16 @@ void KMMainWin::slotReadOn()
          return;
     }
     mFolderTree->nextUnreadFolder( true );
+}
+
+void KMMainWin::slotNextUnreadFolder() {
+  if ( !mFolderTree ) return;
+  mFolderTree->nextUnreadFolder();
+}
+
+void KMMainWin::slotPrevUnreadFolder() {
+  if ( !mFolderTree ) return;
+  mFolderTree->prevUnreadFolder();
 }
 
 void KMMainWin::slotExpandThread()
@@ -3037,10 +3108,10 @@ void KMMainWin::updateMessageActions()
     }
 
     bool mails = mFolder && mFolder->count();
-    action( "next" )->setEnabled( mails );
-    action( "next_unread" )->setEnabled( mails );
-    action( "previous" )->setEnabled( mails );
-    action( "previous_unread" )->setEnabled( mails );
+    action( "go_next_message" )->setEnabled( mails );
+    action( "go_next_unread_message" )->setEnabled( mails );
+    action( "go_prev_message" )->setEnabled( mails );
+    action( "go_prev_unread_message" )->setEnabled( mails );
 
     action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
     action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
