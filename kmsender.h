@@ -20,7 +20,7 @@ class KMIOStatusDlg;
 class KMSendProc;
 class QStrList;
 class KMainWindow;
-class Smtp;
+class KMTransportInfo;
 
 namespace KIO
 {
@@ -35,8 +35,6 @@ class KMSender: public QObject
   friend class KMSendProc;
 
 public:
-  enum Method { smUnknown=0, smSMTP=1, smMail=2 };
-
   KMSender();
   virtual ~KMSender();
 
@@ -56,10 +54,6 @@ public:
   /** Returns TRUE if sending is in progress. */
   bool sending(void) const { return mSendInProgress; }
 
-  /** Method the sender shall use: either SMTP or local mail program */
-  Method method(void) const { return mMethod; }
-  virtual void setMethod(Method);
-
   /** Shall messages be sent immediately (TRUE), or shall they be
     queued and sent later upon call of sendQueued() ? */
   bool sendImmediate(void) const { return mSendImmediate; }
@@ -70,31 +64,8 @@ public:
   bool sendQuotedPrintable(void) const { return mSendQuotedPrintable; }
   virtual void setSendQuotedPrintable(bool);
 
-  /** Name of the mail client (usually "/usr/bin/mail") that
-    is used for mailing if the method is smMail */
-  QString mailer(void) const { return mMailer; }
-  virtual void setMailer(const QString&);
-
-  /** Name of the host that is contacted via SMTP if the mailing
-    method is smSMTP. */
-  QString smtpHost(void) const { return mSmtpHost; }
-  virtual void setSmtpHost(const QString&);
-
-  /** Port of the SMTP host, usually 110. */
-  unsigned short int smtpPort(void) const { return mSmtpPort; }
-  virtual void setSmtpPort(unsigned short int);
-
-  /** Username to use for loging in if appropriate */
-  QString username(void) const { return mUsername; }
-  virtual void setUsername(const QString&);
-
-  /** Password to use for loging in if appropriate */
-  QString password(void) const { return mPassword; }
-  virtual void setPassword(const QString&);
-
-  /** Precommand - command run before sending */
-  const QString& precommand(void) const { return mPrecommand; }
-  virtual void setPrecommand(const QString& cmd) { mPrecommand = cmd; }
+  /** Get the transport information */
+  KMTransportInfo * transportInfo() { return mTransportInfo; }
 
   /** Read configuration from global config. */
   virtual void readConfig(void);
@@ -110,9 +81,6 @@ public:
   /** sets a status msg and emits statusMsg() */
   void setStatusMsg(const QString&);
 
-  /** returns current outgoing mail settings in string format */
-  QString transportString(void) const;
-
 signals:
   /** Emitted regularly to inform the user of what is going on */
   void statusMsg(const QString&);
@@ -124,7 +92,6 @@ protected slots:
   virtual void slotAbortSend();
 
   /** initialization sequence has finised */
-  virtual void msgSendProcStarted(bool success);
   virtual void sendProcStarted(bool success);
 
 protected:
@@ -147,22 +114,14 @@ protected:
   virtual KMSendProc* createSendProcFromString(QString transport);
 
 private:
-  Method mMethod;
   bool mSendImmediate;
   bool mSendQuotedPrintable;
-  bool mUseSSL;
-  QString mMailer;
-  QString mSmtpHost;
-  QString mUsername;
-  QString mPassword;
-  unsigned short int mSmtpPort;
-  QString mPrecommand;
+  KMTransportInfo *mTransportInfo;
 
   bool mSentOk, mSendAborted;
-  bool mSendInfoChanged;
   QString mErrorMsg;
   KMIOStatusDlg* mSendDlg;
-  KMSendProc *mSendProc, *mMsgSendProc;
+  KMSendProc *mSendProc;
   QString mMethodStr;
   bool mSendProcStarted;
   bool mSendInProgress;
@@ -198,9 +157,6 @@ public:
   /** Abort sending the current message. Sets mSending to false */
   virtual void abort() = 0;
 
-  /** Return the type so we can identify it at run time **/
-  virtual KMSender::Method sendType() { return KMSender::smUnknown; }
-  
   /** Returns TRUE if send was successful, and FALSE otherwise.
       Returns FALSE if sending is still in progress. */
   bool sendOk(void) const { return mSendOk; }
@@ -258,13 +214,12 @@ class KMSendSendmail: public KMSendProc
 {
   Q_OBJECT
 public:
-  KMSendSendmail(KMSender*,QString);
+  KMSendSendmail(KMSender*);
   virtual ~KMSendSendmail();
   virtual void start(void);
   virtual bool send(KMMessage* msg);
   virtual bool finish(bool destructive);
   virtual void abort();
-  KMSender::Method sendType() { return KMSender::smMail; }
 
 protected slots:
   void receivedStderr(KProcess*,char*,int);
@@ -278,7 +233,6 @@ protected:
   char* mMsgPos;
   int mMsgRest;
   KProcess* mMailerProc;
-  QString mMailer;
 };
 
 //-----------------------------------------------------------------------------
@@ -286,13 +240,12 @@ class KMSendSMTP : public KMSendProc
 {
 Q_OBJECT
 public:
-  KMSendSMTP(KMSender *_sender, QString server, unsigned short int port);
+  KMSendSMTP(KMSender *sender);
   ~KMSendSMTP();
   
   virtual bool send(KMMessage *);
   virtual void abort();
   virtual bool finish(bool);
-  KMSender::Method sendType() { return KMSender::smSMTP; }
 
 protected:
   virtual bool addOneRecipient(const QString& aRecipient);
@@ -303,19 +256,14 @@ private slots:
   void slaveError(KIO::Slave *, int, const QString &);
 
 private:
-  QString mServer;
-  unsigned short int mPort;
   QString mQuery;
   QString mQueryField;
   QCString mMessage;
 
-  bool mUseSSL;
-  bool mUseTLS;
   bool mInProcess;
   
   KIO::TransferJob *mJob;
   KIO::Slave *mSlave;
-  KIO::MetaData mSlaveConfig;
 };
 
 #endif /*kmsender_h*/

@@ -8,7 +8,7 @@ bin_PROGRAMS = kmail
 
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
-		kmfolderdia.cpp kmfoldertree.cpp \
+		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
 		kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp kbusyptr.cpp \
@@ -50,6 +50,9 @@ KDE_ICON = AUTO
 
 rcdir = $(kde_datadir)/kmail
 rc_DATA = kmcomposerui.rc kmmainwin.rc
+
+updatedir = $(kde_datadir)/kconf_update
+update_DATA = kmail.upd
 
 messages: rc.cpp
 	$(XGETTEXT) *.cpp *.h -o $(podir)/kmail.pot

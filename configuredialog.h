@@ -37,6 +37,7 @@ class KURLRequester;
 class KpgpConfig;
 class ColorListBox;
 class KMAccount;
+class KMTransportInfo;
 
 #include <klistview.h>
 #include <kdialogbase.h>
@@ -173,35 +174,6 @@ class IdentityList
     QList<IdentityEntry> mList;
 };
 
-
-class ConfigureTransportDialog : public KDialogBase
-{
-Q_OBJECT
- public:
-  ConfigureTransportDialog(QWidget *parent=0, const char *name=0,
-                           bool modal=true, const QString &transport=0);
- QString getTransport(void);
-
- protected slots:
-  virtual void slotOk( void );
-  virtual void slotCancel( void );
-
- private slots:
-  void slotSendmailType( int id );
-  void slotSendmailChooser( void );
-
-
- private:
-  QRadioButton *sendmailRadio;
-  QRadioButton *smtpRadio;
-  QRadioButton *deleteRadio;
-  QPushButton  *sendmailChooseButton;
-  QLineEdit    *sendmailLocationEdit;
-  QLineEdit    *smtpServerEdit;
-  QLineEdit    *smtpPortEdit;
-  QString      mTransport;
-};
-
 class LanguageItem
 {
   public:
@@ -284,14 +256,15 @@ private:
       QPushButton    *renameIdentityButton;
       QLineEdit      *nameEdit;
       QLineEdit      *organizationEdit;
-      QLineEdit      *pgpIdentityEdit;
       QLineEdit      *emailEdit;
       QLineEdit      *replytoEdit;
+      QLineEdit      *pgpIdentityEdit;
+      QCheckBox      *transportCheck;
+      QComboBox      *transportCombo;
       KURLRequester  *signatureFileEdit;
       QLabel         *signatureFileLabel;
       QCheckBox      *signatureExecCheck;
       QPushButton    *signatureEditButton;
-      QPushButton    *transportButton;
       QRadioButton   *signatureFileRadio;
       QRadioButton   *signatureTextRadio;
       QMultiLineEdit *signatureTextEdit;
@@ -300,20 +273,16 @@ private:
     struct NetworkWidget
     {
       int          pageIndex;
-      QRadioButton *sendmailRadio;
-      QRadioButton *smtpRadio;
-      QPushButton  *sendmailChooseButton;
-      QLineEdit    *sendmailLocationEdit;
-      QLineEdit    *smtpServerEdit;
-      QLineEdit    *smtpPortEdit;
-      QLineEdit    *precommandEdit;
+      ListView     *transportList;
+      QPushButton  *addTransportButton;
+      QPushButton  *modifyTransportButton;
+      QPushButton  *removeTransportButton;
+      QPushButton  *transportUpButton;
+      QPushButton  *transportDownButton;
       ListView     *accountList;
       QPushButton  *addAccountButton;
       QPushButton  *modifyAccountButton;
       QPushButton  *removeAccountButton;
-      QComboBox    *sendMethodCombo;
-      QComboBox    *messagePropertyCombo;
-      QCheckBox    *confirmSendCheck;
     };
     struct AppearanceWidget
     {
@@ -354,6 +323,9 @@ private:
     struct ComposerWidget
     {
       int       pageIndex;
+      QComboBox    *sendMethodCombo;
+      QComboBox    *messagePropertyCombo;
+      QCheckBox    *confirmSendCheck;
       LanguageComboBox *phraseLanguageCombo;
       QPushButton  *removeButton;
       QLineEdit    *phraseReplyEdit;
@@ -494,10 +466,14 @@ private:
     void slotSignatureChooser( KURLRequester * );
     void slotSignatureEdit( void );
     void slotSignatureFile( const QString &filename );
-    void slotSignatureExecMode( bool state );
-    void slotIdentityTransport( void );
-    void slotSendmailType( int id );
-    void slotSendmailChooser( void );
+    void slotSpecialTransportClicked( void );
+    void slotTransportSelected( void );
+    void slotUpdateTransportCombo( void );
+    void slotAddTransport( void );
+    void slotModifySelectedTransport( void );
+    void slotRemoveSelectedTransport( void );
+    void slotTransportUp( void );
+    void slotTransportDown( void );
     void slotAccountSelected( void );
     void slotAddAccount( void );
     void slotModifySelectedAccount( void );
@@ -553,6 +529,7 @@ private:
       QGuardedPtr<KMAccount> newAccount;
     };
     QValueList<mModifiedAccountsType*> mModifiedAccounts;
+    QList<KMTransportInfo> mTransportList;
     bool secondIdentity;
 };
 

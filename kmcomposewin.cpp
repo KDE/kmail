@@ -26,6 +26,7 @@
 #include "kmaddrbook.h"
 #include "kmidentity.h"
 #include "kmfolder.h"
+#include "kmtransport.h"
 
 #include <kabapi.h>
 #include <kaction.h>
@@ -373,6 +374,7 @@ void KMComposeWin::readConfig(void)
     mId = config->readEntry("previous-identity", mId );
   mBtnTransport.setChecked(config->readBoolEntry("sticky-transport", false));
   mTransportHistory = config->readListEntry("transport-history");
+  QString currentTransport = config->readEntry("current-transport");
   maxTransportItems = config->readNumEntry("max-transport-items",10);
 
   if ((mLineBreak == 0) || (mLineBreak > 78))
@@ -444,14 +446,12 @@ void KMComposeWin::readConfig(void)
       break;
     }
 
-  if (!mBtnTransport.isChecked() || mTransportHistory.isEmpty()) {
-    QString curTransport = kernel->msgSender()->transportString();
-    mTransportHistory.remove( curTransport );
-    mTransportHistory.prepend( curTransport );
-  }
+  mTransport.insertStringList( KMTransportInfo::availableTransports() );
   while (mTransportHistory.count() > (uint)maxTransportItems)
-    mTransportHistory.remove( mTransportHistory.last());
+    mTransportHistory.remove( mTransportHistory.last() );
   mTransport.insertStringList( mTransportHistory );
+  if (mBtnTransport.isChecked() && !currentTransport.isEmpty())
+    mTransport.setEditText( currentTransport );
 }
 
 
@@ -468,8 +468,11 @@ void KMComposeWin::writeConfig(void)
     config->writeEntry("sticky-transport", mBtnTransport.isChecked());
     config->writeEntry("sticky-identity", mBtnIdentity.isChecked());
     config->writeEntry("previous-identity", mIdentity.currentText() );
+    config->writeEntry("current-transport", mTransport.currentText());
     mTransportHistory.remove(mTransport.currentText());
-    mTransportHistory.prepend(mTransport.currentText());
+    if (KMTransportInfo::availableTransports().findIndex(mTransport
+      .currentText()) == -1)
+        mTransportHistory.prepend(mTransport.currentText());
     config->writeEntry("transport-history", mTransportHistory );
   }
 
@@ -1044,7 +1047,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
   QString transport = newMsg->headerField("X-KMail-Transport");
   if (!mBtnTransport.isChecked() && !transport.isEmpty())
-    mTransport.insertItem( transport, 0 );
+    mTransport.setEditText( transport );
 
   num = mMsg->numBodyParts();
 
@@ -2105,8 +2108,8 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   // rectify the problem by editing their outgoing preferences and
   // resending.
   // Hence this following conditional
-  if ((mTransport.currentText() != kernel->msgSender()->transportString()) ||
-      (!hf.isEmpty() && (hf != kernel->msgSender()->transportString())))
+  if ((mTransport.currentText() != mTransport.text(0)) ||
+      (!hf.isEmpty() && (hf != mTransport.text(0))))
     mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
 
   disableBreaking = saveInDrafts;
@@ -2379,7 +2382,7 @@ void KMComposeWin::slotIdentityActivated(int)
     else
       mMsg->setHeaderField("X-KMail-Transport", ident.transport());
     QString transp = ident.transport();
-    if (transp.isEmpty()) transp = kernel->msgSender()->transportString();
+    if (transp.isEmpty()) transp = mTransport.text(0);
     bool found = false;
     int i;
     for (i = 0; i < mTransport.count(); i++) {

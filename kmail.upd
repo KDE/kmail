@@ -1,0 +1,6 @@
+# Update for transport configuration
+Id=1
+File=kmailrc,kmailrc
+Group=sending mail,Transport 1
+Key=Smtp Host,host
+Key=Smtp Port,port

@@ -34,7 +34,8 @@ KMServerTest::KMServerTest(const QString &aProtocol, const QString &aHost,
   mSlaveConfig.insert("nologin", "on");
   mUrl.setProtocol(aProtocol);
   mUrl.setHost(aHost);
-  if (aPort != "993" && aPort != "995") mUrl.setPort(aPort.toInt());
+  if (aPort != "993" && aPort != "995" && aPort != "465")
+    mUrl.setPort(aPort.toInt());
   mSlave = KIO::Scheduler::getConnectedSlave(mUrl, mSlaveConfig);
   if (!mSlave)
   {
@@ -56,10 +57,13 @@ KMServerTest::~KMServerTest()
 }
 
 
+#include <kdebug.h>
 //-----------------------------------------------------------------------------
 void KMServerTest::slotData(KIO::Job *, const QString &data)
 {
   mList = QStringList::split(' ', data);
+kdDebug() << data << endl;
+kdDebug() << "count = " << mList.count() << endl;
 }
 
 

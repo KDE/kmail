@@ -87,12 +87,16 @@
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmtopwidget.h"
+#include "kmtransport.h"
 #include "kmscoring.h"
 
 #include "configuredialog.moc"
 
 #include <stdlib.h>
 
+#ifndef _PATH_SENDMAIL
+#define _PATH_SENDMAIL  "/usr/sbin/sendmail"
+#endif
 
 ConfigureDialog::ApplicationLaunch::ApplicationLaunch( const QString &cmd )
 {
@@ -463,6 +467,7 @@ LanguageItem::LanguageItem( const QString& language, const QString& reply,
   mIndentPrefix = indentPrefix;
 }
 
+
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 				  bool modal )
 
@@ -518,33 +523,11 @@ void ConfigureDialog::makeIdentityPage( void )
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mIdentity.pageIndex = pageIndex(page);
 
-  QGridLayout *glay = new QGridLayout( topLevel, 12, 3 );
+  QGridLayout *glay = new QGridLayout( topLevel, 13, 3 );
   glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   //glay->addRowSpacing( 6, spacingHint() );
-  glay->setRowStretch( 11, 10 );
+  glay->setRowStretch( 12, 10 );
   glay->setColStretch( 1, 10 );
-
-  /*
-  QLabel *label = new QLabel( i18n("Identity:"), page );
-  glay->addWidget( label, 0, 0 );
-  QWidget *helper = new QWidget( page );
-  glay->addMultiCellWidget( helper, 0, 0, 1, 2 );
-  QHBoxLayout *hlay = new QHBoxLayout( helper, 0, spacingHint() );
-  mIdentity.identityCombo = new QComboBox( false, helper );
-  connect( mIdentity.identityCombo, SIGNAL(activated(int)),
-	   this, SLOT(slotIdentitySelectorChanged()) );
-  hlay->addWidget( mIdentity.identityCombo, 10 );
-  QPushButton *newButton = new QPushButton( i18n("New..."), helper );
-  connect( newButton, SIGNAL(clicked()),
-	   this, SLOT(slotNewIdentity()) );
-  newButton->setAutoDefault( false );
-  hlay->addWidget( newButton );
-  mIdentity.removeIdentityButton = new QPushButton( i18n("Remove"), helper );
-  connect( mIdentity.removeIdentityButton, SIGNAL(clicked()),
-	   this, SLOT(slotRemoveIdentity()) );
-  mIdentity.removeIdentityButton->setAutoDefault( false );
-  hlay->addWidget( mIdentity.removeIdentityButton );
-  */
 
   QLabel *label = new QLabel( i18n("&Identity:"), page );
   glay->addWidget( label, 0, 0 );
@@ -598,11 +581,20 @@ void ConfigureDialog::makeIdentityPage( void )
   label->setBuddy(mIdentity.replytoEdit);
   glay->addMultiCellWidget( mIdentity.replytoEdit, 5, 5, 1, 2 );
 
-  label = new QLabel( i18n("PGP &User Identity:"),page );
+  label = new QLabel( i18n("PGP &User Identity:"), page );
   glay->addWidget( label, 6, 0 );
   mIdentity.pgpIdentityEdit = new QLineEdit( page );
   label->setBuddy(mIdentity.pgpIdentityEdit);
   glay->addMultiCellWidget( mIdentity.pgpIdentityEdit, 6, 6, 1, 2 );
+
+  mIdentity.transportCheck = new QCheckBox( i18n("Spe&cial transport"), page );
+  glay->addWidget( mIdentity.transportCheck, 7, 0 );
+  mIdentity.transportCombo = new QComboBox( page );
+  mIdentity.transportCombo->setEditable( TRUE );
+  label->setBuddy(mIdentity.transportCombo);
+  glay->addMultiCellWidget( mIdentity.transportCombo, 7, 7, 1, 2 );
+  connect(mIdentity.transportCheck, SIGNAL(clicked()),
+    SLOT(slotSpecialTransportClicked()));
 
   QButtonGroup *buttonGroup = new QButtonGroup( page );
   connect( buttonGroup, SIGNAL(clicked(int)),
@@ -611,25 +603,10 @@ void ConfigureDialog::makeIdentityPage( void )
   mIdentity.signatureFileRadio =
     new QRadioButton( i18n("&Use a signature from file"), page );
   buttonGroup->insert( mIdentity.signatureFileRadio );
-  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 7, 7, 0, 1 );
-
-  mIdentity.transportButton = new QPushButton(i18n("&Add Transport..."),
-                                              page);
-  connect(mIdentity.transportButton, SIGNAL(clicked()), this,
-          SLOT(slotIdentityTransport()));
-  glay->addWidget(mIdentity.transportButton, 7, 2);
-  mIdentity.transportButton->setAutoDefault( false );
-  if (mIdentity.identityCombo->currentItem() == 0) {
-    mIdentity.transportButton->setEnabled(false);
-    mIdentity.transportButton->hide();
-  }
-  else {
-    mIdentity.transportButton->setEnabled(true);
-    mIdentity.transportButton->show();
-  }
+  glay->addMultiCellWidget( mIdentity.signatureFileRadio, 8, 8, 0, 1 );
 
   mIdentity.signatureFileLabel = new QLabel( i18n("&Signature File:"), page );
-  glay->addWidget( mIdentity.signatureFileLabel, 8, 0 );
+  glay->addWidget( mIdentity.signatureFileLabel, 9, 0 );
   mIdentity.signatureFileEdit = new KURLRequester( page );
   mIdentity.signatureFileLabel->setBuddy(mIdentity.signatureFileEdit);
   QPushButton *button = mIdentity.signatureFileEdit->button();
@@ -637,26 +614,26 @@ void ConfigureDialog::makeIdentityPage( void )
   button->setAutoDefault( false );
   connect( mIdentity.signatureFileEdit, SIGNAL(textChanged(const QString &)),
 	   this, SLOT( slotSignatureFile(const QString &)) );
-  glay->addMultiCellWidget( mIdentity.signatureFileEdit, 8, 8, 1, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureFileEdit, 9, 9, 1, 2 );
 
   mIdentity.signatureExecCheck =
     new QCheckBox( i18n("&The file is a program"), page );
-  glay->addWidget( mIdentity.signatureExecCheck, 9, 1 );
+  glay->addWidget( mIdentity.signatureExecCheck, 10, 1 );
   mIdentity.signatureEditButton = new QPushButton( i18n("Ed&it File"), page );
   connect( mIdentity.signatureEditButton, SIGNAL(clicked()),
 	   this, SLOT(slotSignatureEdit()) );
   mIdentity.signatureEditButton->setAutoDefault( false );
-  glay->addWidget( mIdentity.signatureEditButton, 9, 2 );
+  glay->addWidget( mIdentity.signatureEditButton, 10, 2 );
   button->setMinimumSize( mIdentity.signatureEditButton->sizeHint() );
 
   mIdentity.signatureTextRadio =
     new QRadioButton( i18n("&Specify signature below"), page );
   buttonGroup->insert( mIdentity.signatureTextRadio );
-  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 10, 10, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextRadio, 11, 11, 0, 2 );
 
   mIdentity.signatureTextEdit = new QMultiLineEdit( page );
   mIdentity.signatureTextEdit->setText("Does not work yet");
-  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 11, 11, 0, 2 );
+  glay->addMultiCellWidget( mIdentity.signatureTextEdit, 12, 12, 0, 2 );
 }
 
 
@@ -670,84 +647,68 @@ void ConfigureDialog::makeNetworkPage( void )
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mNetwork.pageIndex = pageIndex(page);
 
-  QTabWidget *tabWidget = new QTabWidget( page, "tab" );
-  topLevel->addWidget( tabWidget );
+  QButtonGroup *buttonGroup = new QButtonGroup(i18n("Outgoing Mail"), page);
+  topLevel->addWidget(buttonGroup, 10);
 
-  QWidget *page1 = new QWidget( tabWidget );
-  tabWidget->addTab( page1, i18n("Se&nding Mail") );
+  QGridLayout *glay = new QGridLayout(buttonGroup, 8, 2, spacingHint());
+  glay->addColSpacing( 0, fontMetrics().maxWidth()*15 );
+  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
+  glay->setColStretch( 0, 10 );
+  glay->setRowStretch( 5, 100 );
 
-  QButtonGroup *buttonGroup = new QButtonGroup( page1 );
-  buttonGroup->hide();
-  connect( buttonGroup, SIGNAL(clicked(int)),
-	   this, SLOT(slotSendmailType(int)) );
+  QLabel *label = new QLabel( buttonGroup );
+  label->setText(i18n("SMTP or sendmail"));
+  glay->addMultiCellWidget(label, 1, 1, 0, 1);
+  mNetwork.transportList = new ListView( buttonGroup, "transportList", 5 );
+  mNetwork.transportList->addColumn( i18n("Name") );
+  mNetwork.transportList->addColumn( i18n("Type") );
+  mNetwork.transportList->setAllColumnsShowFocus( true );
+  mNetwork.transportList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
+  mNetwork.transportList->setSorting( -1 );
+  connect( mNetwork.transportList, SIGNAL(selectionChanged()),
+           SLOT(slotTransportSelected()) );
+  connect( mNetwork.transportList, SIGNAL(doubleClicked( QListViewItem *)),
+           SLOT(slotModifySelectedTransport()) );
+  glay->addMultiCellWidget( mNetwork.transportList, 2, 7, 0, 0 );
 
-  QGridLayout *glay = new QGridLayout( page1, 5, 4, spacingHint() );
-  glay->addColSpacing( 2, fontMetrics().maxWidth()*15 );
+  mNetwork.addTransportButton =
+    new QPushButton( i18n("&Add..."), buttonGroup );
+  mNetwork.addTransportButton->setAutoDefault( false );
+  connect( mNetwork.addTransportButton, SIGNAL(clicked()),
+	   this, SLOT(slotAddTransport()) );
+  glay->addWidget( mNetwork.addTransportButton, 2, 1 );
 
-  mNetwork.sendmailRadio = new QRadioButton( i18n("&Sendmail"), page1 );
-  buttonGroup->insert(mNetwork.sendmailRadio);
-  glay->addMultiCellWidget(mNetwork.sendmailRadio, 0, 0, 0, 3);
-  QLabel *label = new QLabel( i18n("&Location:"), page1 );
-  glay->addWidget( label, 1, 1 );
-  mNetwork.sendmailLocationEdit = new QLineEdit( page1 );
-  label->setBuddy(mNetwork.sendmailLocationEdit);
-  glay->addWidget( mNetwork.sendmailLocationEdit, 1, 2 );
-  mNetwork.sendmailChooseButton =
-    new QPushButton( i18n("&Choose..."), page1 );
-  connect( mNetwork.sendmailChooseButton, SIGNAL(clicked()),
-	   this, SLOT(slotSendmailChooser()) );
-  mNetwork.sendmailChooseButton->setAutoDefault( false );
-  glay->addWidget( mNetwork.sendmailChooseButton, 1, 3 );
+  mNetwork.modifyTransportButton =
+    new QPushButton( i18n("&Modify..."), buttonGroup );
+  mNetwork.modifyTransportButton->setAutoDefault( false );
+  mNetwork.modifyTransportButton->setEnabled( false );
+  connect( mNetwork.modifyTransportButton, SIGNAL(clicked()),
+	   this, SLOT(slotModifySelectedTransport()) );
+  glay->addWidget( mNetwork.modifyTransportButton, 3, 1 );
 
-  mNetwork.smtpRadio = new QRadioButton( i18n("SM&TP"), page1 );
-  buttonGroup->insert(mNetwork.smtpRadio);
-  glay->addMultiCellWidget(mNetwork.smtpRadio, 2, 2, 0, 3);
-  label = new QLabel( i18n("Ser&ver:"), page1 );
-  glay->addWidget( label, 3, 1 );
-  mNetwork.smtpServerEdit = new QLineEdit( page1 );
-  label->setBuddy(mNetwork.smtpServerEdit);
-  glay->addWidget( mNetwork.smtpServerEdit, 3, 2 );
-  label = new QLabel( i18n("&Port:"), page1 );
-  glay->addWidget( label, 4, 1 );
-  mNetwork.smtpPortEdit = new QLineEdit( page1 );
-  label->setBuddy(mNetwork.smtpPortEdit);
-  mNetwork.smtpPortEdit->setValidator( new QIntValidator(page1) );
-  glay->addWidget( mNetwork.smtpPortEdit, 4, 2 );
+  mNetwork.removeTransportButton
+    = new QPushButton( i18n("&Remove..."), buttonGroup );
+  mNetwork.removeTransportButton->setAutoDefault( false );
+  mNetwork.removeTransportButton->setEnabled( false );
+  connect( mNetwork.removeTransportButton, SIGNAL(clicked()),
+	   this, SLOT(slotRemoveSelectedTransport()) );
+  glay->addWidget( mNetwork.removeTransportButton, 4, 1 );
 
-  QWidget *page2 = new QWidget( tabWidget );
-  tabWidget->addTab( page2, i18n("&Properties") );
+  mNetwork.transportUpButton
+    = new QPushButton( QString::null, buttonGroup );
+  mNetwork.transportUpButton->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
+  mNetwork.transportUpButton->setEnabled( false );
+  connect( mNetwork.transportUpButton, SIGNAL(clicked()),
+           this, SLOT(slotTransportUp()) );
+  glay->addWidget( mNetwork.transportUpButton, 5, 1 );
 
-  glay = new QGridLayout( page2, 4, 3, spacingHint() );
-  glay->setColStretch( 2, 10 );
-
-  label = new QLabel( i18n("&Default send method:"), page2 );
-  glay->addWidget( label, 0, 0 );
-  mNetwork.sendMethodCombo = new QComboBox( page2 );
-  label->setBuddy( mNetwork.sendMethodCombo );
-  mNetwork.sendMethodCombo->insertItem(i18n("Send now"));
-  mNetwork.sendMethodCombo->insertItem(i18n("Send later"));
-  glay->addWidget( mNetwork.sendMethodCombo, 0, 1 );
-
-  label = new QLabel( i18n("Message &Property:"), page2 );
-  glay->addWidget( label, 1, 0 );
-  mNetwork.messagePropertyCombo = new QComboBox( page2 );
-  label->setBuddy( mNetwork.messagePropertyCombo );
-  mNetwork.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
-  mNetwork.messagePropertyCombo->insertItem(
-    i18n("MIME Compliant (Quoted Printable)"));
-  glay->addWidget( mNetwork.messagePropertyCombo, 1, 1 );
-
- label = new QLabel( i18n("Pr&ecommand:"), page2 );
-  glay->addWidget( label, 2, 0 );
-  mNetwork.precommandEdit = new QLineEdit( page2 );
-  label->setBuddy(mNetwork.precommandEdit);
-  glay->addWidget( mNetwork.precommandEdit, 2, 1 );
-
-  mNetwork.confirmSendCheck =
-    new QCheckBox(i18n("&Confirm before send"), page2 );
-  glay->addMultiCellWidget( mNetwork.confirmSendCheck, 3, 3, 0, 1 );
-
-
+  mNetwork.transportDownButton
+    = new QPushButton( QString::null, buttonGroup );
+  mNetwork.transportDownButton->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
+  mNetwork.transportDownButton->setEnabled( false );
+  connect( mNetwork.transportDownButton, SIGNAL(clicked()),
+           this, SLOT(slotTransportDown()) );
+  glay->addWidget( mNetwork.transportDownButton, 6, 1 );
 
   buttonGroup = new QButtonGroup(i18n("Incoming Mail"), page );
   topLevel->addWidget(buttonGroup, 10 );
@@ -1042,7 +1003,7 @@ void ConfigureDialog::makeAppearancePage( void )
 
 void ConfigureDialog::makeComposerPage( void )
 {
-   QVBox *vbox = addVBoxPage( i18n("Composer"),
+  QVBox *vbox = addVBoxPage( i18n("Composer"),
 			  i18n("Phrases and general behavior"),
       KGlobal::instance()->iconLoader()->loadIcon( "edit", KIcon::NoGroup,
       KIcon::SizeMedium ));
@@ -1052,14 +1013,100 @@ void ConfigureDialog::makeComposerPage( void )
   QWidget *page = new QWidget( tabWidget );
   tabWidget->addTab( page, i18n("&General") );
   QVBoxLayout *topLevel = new QVBoxLayout( page, spacingHint() );
+
+  mComposer.autoAppSignFileCheck =
+    new QCheckBox( i18n("&Automatically append signature"), page );
+  topLevel->addWidget( mComposer.autoAppSignFileCheck );
+
+  mComposer.smartQuoteCheck =
+    new QCheckBox( i18n("&Use smart quoting"), page );
+  topLevel->addWidget( mComposer.smartQuoteCheck );
+
+  mComposer.pgpAutoSignatureCheck =
+    new QCheckBox( i18n("Automatically &sign messages using PGP"), page );
+  topLevel->addWidget( mComposer.pgpAutoSignatureCheck );
+
+  QHBoxLayout *hlay = new QHBoxLayout( topLevel );
+  mComposer.wordWrapCheck =
+    new QCheckBox( i18n("&Word wrap at column:"), page );
+  connect( mComposer.wordWrapCheck, SIGNAL(clicked() ),
+	   this, SLOT(slotWordWrapSelectionChanged()) );
+  hlay->addWidget( mComposer.wordWrapCheck );
+  mComposer.wrapColumnSpin = new KIntNumInput( page );
+  mComposer.wrapColumnSpin->setRange( 1, 10000, 1, FALSE );
+  hlay->addWidget( mComposer.wrapColumnSpin, 0, AlignLeft );
+  hlay->addStretch(10);
+
+  QGroupBox *sendingGroup = new QGroupBox( i18n("Sending"), page );
+  topLevel->addWidget(sendingGroup);
+  QGridLayout *glay = new QGridLayout( sendingGroup, 4, 3, spacingHint() );
+  glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
+  glay->setColStretch( 2, 10 );
+  QLabel *label = new QLabel( i18n("&Default send method:"), sendingGroup );
+  glay->addWidget( label, 1, 0 );
+  mComposer.sendMethodCombo = new QComboBox( sendingGroup );
+  label->setBuddy( mComposer.sendMethodCombo );
+  mComposer.sendMethodCombo->insertItem(i18n("Send now"));
+  mComposer.sendMethodCombo->insertItem(i18n("Send later"));
+  glay->addWidget( mComposer.sendMethodCombo, 1, 1 );
+ 
+  label = new QLabel( i18n("Message &Property:"), sendingGroup );
+  glay->addWidget( label, 2, 0 );
+  mComposer.messagePropertyCombo = new QComboBox( sendingGroup );
+  label->setBuddy( mComposer.messagePropertyCombo );
+  mComposer.messagePropertyCombo->insertItem(i18n("Allow 8-bit"));
+  mComposer.messagePropertyCombo->insertItem(
+    i18n("MIME Compliant (Quoted Printable)"));
+  glay->addWidget( mComposer.messagePropertyCombo, 2, 1 );
+ 
+  mComposer.confirmSendCheck =
+    new QCheckBox(i18n("&Confirm before send"), sendingGroup );
+  glay->addMultiCellWidget( mComposer.confirmSendCheck, 3, 3, 0, 1 );
+
+  QGroupBox * editorGroup = new QGroupBox( i18n("External Editor"), page );
+  topLevel->addWidget(editorGroup);
+  QBoxLayout * vlay = new QVBoxLayout( editorGroup, spacingHint() );
+  vlay->addSpacing( fontMetrics().lineSpacing() );
+  mComposer.externalEditorCheck =
+    new QCheckBox(i18n("&Use external editor instead of composer"),
+    editorGroup );
+  connect( mComposer.externalEditorCheck, SIGNAL(clicked() ),
+	   this, SLOT(slotExternalEditorSelectionChanged()) );
+  vlay->addWidget( mComposer.externalEditorCheck );
+  QHBoxLayout *edhlay = new QHBoxLayout( vlay );
+  mComposer.externalEditorLabel = new QLabel( i18n("&Specify editor:"),
+    editorGroup );
+  edhlay->addWidget( mComposer.externalEditorLabel );
+  mComposer.externalEditorEdit = new QLineEdit( editorGroup );
+  mComposer.externalEditorLabel->setBuddy( mComposer.externalEditorEdit );
+  edhlay->addWidget( mComposer.externalEditorEdit );
+  mComposer.externalEditorChooseButton =
+    new QPushButton( i18n("&Choose..."), editorGroup );
+  connect( mComposer.externalEditorChooseButton, SIGNAL(clicked()),
+	   this, SLOT(slotExternalEditorChooser()) );
+  mComposer.externalEditorChooseButton->setAutoDefault( false );
+  edhlay->addWidget( mComposer.externalEditorChooseButton );
+  mComposer.externalEditorHelp = new QLabel( editorGroup );
+  mComposer.externalEditorHelp->setText(
+    i18n("\"%f\" will be replaced with the filename to edit."));
+  vlay->addWidget( mComposer.externalEditorHelp );
+
+  topLevel->addStretch(10);
+
+  // ----- reply phrases page
+
+  page = new QWidget( tabWidget );
+  tabWidget->addTab( page, i18n("P&hrases") );
+  topLevel = new QVBoxLayout( page, spacingHint() );
   QGroupBox *group = new QGroupBox(i18n("Phrases"), page );
   topLevel->addWidget( group );
+  topLevel->addStretch( 10 );
 
-  QGridLayout *glay = new QGridLayout( group, 8, 2, spacingHint() );
+  glay = new QGridLayout( group, 8, 2, spacingHint() );
   glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
   glay->setColStretch( 1, 10 );
 
-  QLabel *label = new QLabel( group );
+  label = new QLabel( group );
   label->setText(
      i18n( "The following placeholders are supported in the reply phrases:\n"
 	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space, %L=linebreak"));
@@ -1105,64 +1152,6 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.phraseindentPrefixEdit = new QLineEdit( group );
   label->setBuddy(mComposer.phraseindentPrefixEdit);
   glay->addWidget( mComposer.phraseindentPrefixEdit, 7, 1 );
-
-  mComposer.autoAppSignFileCheck =
-    new QCheckBox( i18n("&Automatically append signature"), page );
-  topLevel->addWidget( mComposer.autoAppSignFileCheck );
-
-  mComposer.smartQuoteCheck =
-    new QCheckBox( i18n("&Use smart quoting"), page );
-  topLevel->addWidget( mComposer.smartQuoteCheck );
-
-  mComposer.pgpAutoSignatureCheck =
-    new QCheckBox( i18n("Automatically &sign messages using PGP"), page );
-  topLevel->addWidget( mComposer.pgpAutoSignatureCheck );
-
-  QHBoxLayout *hlay = new QHBoxLayout( topLevel );
-  mComposer.wordWrapCheck =
-    new QCheckBox( i18n("&Word wrap at column:"), page );
-  connect( mComposer.wordWrapCheck, SIGNAL(clicked() ),
-	   this, SLOT(slotWordWrapSelectionChanged()) );
-  hlay->addWidget( mComposer.wordWrapCheck );
-  mComposer.wrapColumnSpin = new KIntNumInput( page );
-  mComposer.wrapColumnSpin->setRange( 1, 10000, 1, FALSE );
-  hlay->addWidget( mComposer.wrapColumnSpin, 0, AlignLeft );
-  hlay->addStretch(10);
-
-  topLevel->addStretch(10);
-
-  // ----- editor page
-  page = new QWidget( tabWidget );
-  QGroupBox * editorGroup = new QGroupBox( i18n("External Editor"), page );
-  tabWidget->addTab( page, i18n("&Editor") );
-  QBoxLayout * elay = new QVBoxLayout( page, spacingHint() );
-  elay->addWidget( editorGroup );
-  elay->addStretch( 10 );
-  QBoxLayout * vlay = new QVBoxLayout( editorGroup, spacingHint() );
-  vlay->addSpacing( fontMetrics().lineSpacing() );
-  mComposer.externalEditorCheck =
-    new QCheckBox(i18n("&Use external editor instead of composer"),
-    editorGroup );
-  connect( mComposer.externalEditorCheck, SIGNAL(clicked() ),
-	   this, SLOT(slotExternalEditorSelectionChanged()) );
-  vlay->addWidget( mComposer.externalEditorCheck );
-  QHBoxLayout *edhlay = new QHBoxLayout( vlay );
-  mComposer.externalEditorLabel = new QLabel( i18n("&Specify editor:"),
-    editorGroup );
-  edhlay->addWidget( mComposer.externalEditorLabel );
-  mComposer.externalEditorEdit = new QLineEdit( editorGroup );
-  mComposer.externalEditorLabel->setBuddy( mComposer.externalEditorEdit );
-  edhlay->addWidget( mComposer.externalEditorEdit );
-  mComposer.externalEditorChooseButton =
-    new QPushButton( i18n("&Choose..."), editorGroup );
-  connect( mComposer.externalEditorChooseButton, SIGNAL(clicked()),
-	   this, SLOT(slotExternalEditorChooser()) );
-  mComposer.externalEditorChooseButton->setAutoDefault( false );
-  edhlay->addWidget( mComposer.externalEditorChooseButton );
-  mComposer.externalEditorHelp = new QLabel( editorGroup );
-  mComposer.externalEditorHelp->setText(
-    i18n("\"%f\" will be replaced with the filename to edit."));
-  vlay->addWidget( mComposer.externalEditorHelp );
 
   // ----- subject page
   QWidget *subjectPage = new QWidget( tabWidget );
@@ -1631,35 +1620,35 @@ void ConfigureDialog::setupIdentityPage( void )
 
 void ConfigureDialog::setupNetworkPage( void )
 {
-  if( kernel->msgSender()->method() == KMSender::smMail )
-  {
-    mNetwork.sendmailRadio->setChecked(true);
-    slotSendmailType(0);
-  }
-  else if( kernel->msgSender()->method() == KMSender::smSMTP )
-  {
-    mNetwork.smtpRadio->setChecked(true);
-    slotSendmailType(1);
-  }
-
-  mNetwork.sendmailLocationEdit->setText( kernel->msgSender()->mailer() );
-  mNetwork.smtpServerEdit->setText( kernel->msgSender()->smtpHost() );
-  mNetwork.smtpPortEdit->setText(
-    QString().setNum(kernel->msgSender()->smtpPort()) );
-  mNetwork.precommandEdit->setText( kernel->msgSender()->precommand() );
-
   KConfig *config = kapp->config();
-  KConfigGroupSaver saver(config, "Composer");
+  KConfigGroupSaver saver(config, "General");
+  int numTransports = config->readNumEntry("transports", 1);
 
-  mNetwork.sendMethodCombo->setCurrentItem(
-    kernel->msgSender()->sendImmediate() ? 0 : 1 );
-  mNetwork.messagePropertyCombo->setCurrentItem(
-    kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
-  mNetwork.confirmSendCheck->setChecked(
-    config->readBoolEntry( "confirm-before-send", false ) );
+  QListViewItem *top = NULL;
+  mTransportList.setAutoDelete(TRUE);
+  mTransportList.clear();
+  mNetwork.transportList->clear();
+  for (int i = 1; i <= numTransports; i++)
+  {
+    KMTransportInfo *ti = new KMTransportInfo();
+    ti->readConfig(i);
+    mTransportList.append(ti);
+    QListViewItem *listItem =
+      new QListViewItem( mNetwork.transportList, top, ti->name, ti->type );
+    top = listItem;
+  }
+
+  QListViewItem *listItem = mNetwork.transportList->firstChild();
+  if (listItem)
+  {
+    listItem->setText(1, listItem->text(1) + " " + i18n("(Default)"));
+    mNetwork.transportList->setCurrentItem( listItem );
+    mNetwork.transportList->setSelected( listItem, true );
+  }
+  slotUpdateTransportCombo();
 
   mNetwork.accountList->clear();
-  QListViewItem *top = 0;
+  top = NULL;
   for( KMAccount *a = kernel->acctMgr()->first(); a!=0;
        a = kernel->acctMgr()->next() )
   {
@@ -1670,9 +1659,10 @@ void ConfigureDialog::setupNetworkPage( void )
     top = listItem;
   }
 
-  QListViewItem *listItem = mNetwork.accountList->firstChild();
-  if( listItem != 0 )
+  listItem = mNetwork.accountList->firstChild();
+  if (listItem)
   {
+    mNetwork.accountList->setCurrentItem( listItem );
     mNetwork.accountList->setSelected( listItem, true );
   }
 }
@@ -1882,6 +1872,15 @@ void ConfigureDialog::setupComposerPage( void )
     int value = config->readEntry("break-at","78" ).toInt();
     mComposer.wrapColumnSpin->setValue( value );
     slotWordWrapSelectionChanged();
+
+    mComposer.sendMethodCombo->setCurrentItem(
+      kernel->msgSender()->sendImmediate() ? 0 : 1 );
+
+    mComposer.messagePropertyCombo->setCurrentItem(
+      kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
+
+    mComposer.confirmSendCheck->setChecked(
+      config->readBoolEntry( "confirm-before-send", false ) );
 
     //charsets
     QStringList charsets = config->readListEntry("charsets");
@@ -2193,29 +2192,11 @@ void ConfigureDialog::slotDoApply( bool everything )
   }
   if( activePage == mNetwork.pageIndex || everything )
   {
-    // Sending mail
-    if( mNetwork.sendmailRadio->isChecked() )
-    {
-      kernel->msgSender()->setMethod( KMSender::smMail );
-    }
-    else
-    {
-      kernel->msgSender()->setMethod( KMSender::smSMTP );
-    }
-    kernel->msgSender()->setMailer(mNetwork.sendmailLocationEdit->text() );
-    kernel->msgSender()->setSmtpHost( mNetwork.smtpServerEdit->text() );
-    kernel->msgSender()->setSmtpPort( mNetwork.smtpPortEdit->text().toInt() );
-    kernel->msgSender()->setPrecommand( mNetwork.precommandEdit->text() );
-
-    bool sendNow = mNetwork.sendMethodCombo->currentItem() == 0;
-    kernel->msgSender()->setSendImmediate( sendNow );
-    bool quotedPrintable = mNetwork.messagePropertyCombo->currentItem() == 1;
-    kernel->msgSender()->setSendQuotedPrintable( quotedPrintable );
-    kernel->msgSender()->writeConfig(FALSE);
-    // Moved from composer page !
-    KConfigGroupSaver saver(config, "Composer");
-    bool confirmBeforeSend = mNetwork.confirmSendCheck->isChecked();
-    config->writeEntry("confirm-before-send", confirmBeforeSend );
+    // Save transports
+    KConfigGroupSaver saver(config, "General");
+    config->writeEntry("transports", mTransportList.count());
+    for (uint i = 1; i <= mTransportList.count(); i++)
+      mTransportList.at(i-1)->writeConfig(i);
 
     // Add accounts marked as new
     QValueList< QGuardedPtr<KMAccount> >::Iterator it;
@@ -2389,6 +2370,15 @@ void ConfigureDialog::slotDoApply( bool everything )
 			 mComposer.pgpAutoSignatureCheck->isChecked() );
       config->writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
       config->writeEntry("break-at", mComposer.wrapColumnSpin->value() );
+
+      bool sendNow = mComposer.sendMethodCombo->currentItem() == 0;
+      kernel->msgSender()->setSendImmediate( sendNow );
+      bool quotedPrintable = mComposer.messagePropertyCombo->currentItem() == 1;
+      kernel->msgSender()->setSendQuotedPrintable( quotedPrintable );
+      kernel->msgSender()->writeConfig(FALSE);
+      bool confirmBeforeSend = mComposer.confirmSendCheck->isChecked();
+      config->writeEntry("confirm-before-send", confirmBeforeSend );
+
       // charset settings
       if ( mComposer.defaultCharsetCombo->currentItem() == 0 )
 	config->writeEntry("charset", "default");
@@ -2508,6 +2498,8 @@ void ConfigureDialog::saveActiveIdentity( void )
     entry->setSignatureFileIsAProgram(
       mIdentity.signatureExecCheck->isChecked() );
     entry->setUseSignatureFile( mIdentity.signatureFileRadio->isChecked() );
+    entry->setTransport( (mIdentity.transportCheck->isChecked()) ?
+      mIdentity.transportCombo->currentText() : QString::null );
   }
 }
 
@@ -2542,6 +2534,8 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.signatureExecCheck->setChecked( false );
     mIdentity.signatureTextEdit->clear();
     useSignatureFile = true;
+    mIdentity.transportCheck->setChecked( false );
+    mIdentity.transportCombo->setEditText( QString::null );
   }
   else
   {
@@ -2554,10 +2548,9 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.signatureExecCheck->setChecked(entry->signatureFileIsAProgram());
     mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
     useSignatureFile = entry->useSignatureFile();
-    if (entry->transport().isNull() || entry->transport().isEmpty())
-      mIdentity.transportButton->setText(i18n("&Add Transport..."));
-    else
-      mIdentity.transportButton->setText(i18n("Edit Transport..."));
+    mIdentity.transportCheck->setChecked(!entry->transport().isEmpty());
+    mIdentity.transportCombo->setEditText(entry->transport());
+    mIdentity.transportCombo->setEnabled(!entry->transport().isEmpty());
   }
 
   if( useSignatureFile == true )
@@ -2698,14 +2691,12 @@ void ConfigureDialog::slotIdentitySelectorChanged( void )
   mIdentity.removeIdentityButton->setEnabled( currentItem != 0 );
   mIdentity.renameIdentityButton->setEnabled( currentItem != 0 );
   setIdentityInformation( mIdentity.identityCombo->currentText() );
-  if (currentItem == 0) {
-    mIdentity.transportButton->setEnabled(false);
-    mIdentity.transportButton->hide();
-  }
-  else {
-    mIdentity.transportButton->setEnabled(true);
-    mIdentity.transportButton->show();
-  }
+}
+
+
+void ConfigureDialog::slotSpecialTransportClicked( void )
+{
+  mIdentity.transportCombo->setEnabled(mIdentity.transportCheck->isChecked());
 }
 
 
@@ -2799,62 +2790,188 @@ void ConfigureDialog::slotSignatureEdit( void )
 }
 
 
-void ConfigureDialog::slotSignatureExecMode( bool state )
-{
-  mIdentity.signatureEditButton->setEnabled( !state );
-}
-
 //
 // Network page
 //
 
-void ConfigureDialog::slotSendmailChooser( void )
+void ConfigureDialog::slotTransportSelected()
 {
-  KFileDialog dialog("/", QString::null, this, 0, true );
-  dialog.setCaption(i18n("Choose Sendmail Location") );
-
-  if( dialog.exec() == QDialog::Accepted )
-  {
-    KURL url = dialog.selectedURL();
-    if( url.isEmpty() == true )
-    {
-      return;
-    }
-
-    if( url.isLocalFile() == false )
-    {
-      KMessageBox::sorry( 0L, i18n( "Only local files allowed." ) );
-      return;
-    }
-
-    mNetwork.sendmailLocationEdit->setText( url.path() );
-  }
+  QListViewItem *cur = mNetwork.transportList->currentItem();
+  mNetwork.modifyTransportButton->setEnabled( cur );
+  mNetwork.removeTransportButton->setEnabled( cur );
+  mNetwork.transportDownButton->setEnabled( cur && cur->itemBelow() );
+  mNetwork.transportUpButton->setEnabled( cur && cur->itemAbove() );
 }
 
 
-void ConfigureDialog::slotSendmailType( int id )
+void ConfigureDialog::slotUpdateTransportCombo()
 {
-  bool useSendmail;
-  if( id == 0 )
-  {
-    useSendmail = true;
-  }
-  else if( id == 1 )
-  {
-    useSendmail = false;
-  }
-  else
+  QString content = mIdentity.transportCombo->currentText();
+  mIdentity.transportCombo->clear();
+  for (KMTransportInfo *ti = mTransportList.first(); ti;
+    ti = mTransportList.next())
+      mIdentity.transportCombo->insertItem(ti->name);
+  mIdentity.transportCombo->setEditText( content );
+}
+
+
+void ConfigureDialog::slotAddTransport()
+{
+  KMTransportSelDlg transportSelectorDialog( this );
+  if( transportSelectorDialog.exec() != QDialog::Accepted )
   {
     return;
   }
 
-  mNetwork.sendmailLocationEdit->setEnabled( useSendmail );
-  mNetwork.sendmailChooseButton->setEnabled( useSendmail );
-  mNetwork.smtpServerEdit->setEnabled( !useSendmail );
-  mNetwork.smtpPortEdit->setEnabled( !useSendmail );
+  KMTransportInfo *transportInfo = new KMTransportInfo();
+  transportInfo->type
+    = (transportSelectorDialog.selected() == 1) ? "sendmail" : "smtp";
+
+  if (transportInfo->type == "sendmail")
+  {
+    transportInfo->name = i18n("Sendmail");
+    transportInfo->host = _PATH_SENDMAIL;
+  }
+
+  KMTransportDialog *dialog = new KMTransportDialog( transportInfo, this );
+  dialog->setCaption( i18n("Add transport") );
+
+  QStringList transportNames;
+  for (KMTransportInfo *ti = mTransportList.first(); ti;
+    ti = mTransportList.next())
+      transportNames.append(ti->name);
+
+  if( dialog->exec() == QDialog::Accepted )
+  {
+    QString transportName = transportInfo->name;
+    int suffix = 1;
+    while (transportNames.find( transportInfo->name ) != transportNames.end())
+    {
+      transportInfo->name = QString( "%1 %2" ).arg( transportName )
+      .arg( suffix );
+      suffix++;
+    }
+    mTransportList.append(transportInfo);
+    QListViewItem *lastItem = mNetwork.transportList->firstChild();
+    if (lastItem)
+      while (lastItem->nextSibling()) lastItem = lastItem->nextSibling();
+    new QListViewItem( mNetwork.transportList, lastItem, transportInfo->name,
+      (lastItem) ? transportInfo->type :
+      transportInfo->type + " " + i18n("(Default)") );
+  } else {
+    delete transportInfo;
+  }
+
+  delete dialog;
+  slotUpdateTransportCombo();
 }
 
 
+void ConfigureDialog::slotModifySelectedTransport()
+{
+  QListViewItem *item = mNetwork.transportList->currentItem();
+  if (!item) return;
+  KMTransportInfo *ti;
+  for (ti = mTransportList.first(); ti; ti = mTransportList.next())
+    if (ti->name == item->text(0)) break;
+  if (!ti) return;
+
+  KMTransportDialog *dialog = new KMTransportDialog( ti, this );
+  dialog->setCaption( i18n("Modify transport") );
+ 
+  if (dialog->exec() == QDialog::Accepted )
+  {
+    QStringList transportNames;
+    for (KMTransportInfo *ti2 = mTransportList.first(); ti2;
+      ti2 = mTransportList.next())
+        if (ti2 != ti) transportNames.append(ti2->name);
+
+    QString transportName = ti->name;
+    int suffix = 1;
+    while (transportNames.find( ti->name ) != transportNames.end())
+    {
+      ti->name = QString( "%1 %2" ).arg( transportName ).arg( suffix );
+      suffix++;
+    }
+    item->setText(0, ti->name);
+  }
+
+  delete dialog;
+  slotUpdateTransportCombo();
+}
+
+
+void ConfigureDialog::slotRemoveSelectedTransport()
+{
+  QListViewItem *item = mNetwork.transportList->currentItem();
+  if (!item) return;
+  KMTransportInfo *ti;
+  for (ti = mTransportList.first(); ti; ti = mTransportList.next())
+    if (ti->name == item->text(0)) break;
+  if (!ti) return;
+
+  QListViewItem *item2 = item->itemBelow();
+  if (!item2) item2 = item->itemAbove();
+  if (item2) mNetwork.transportList->setCurrentItem(item2);
+  mNetwork.transportList->setSelected(item2, TRUE);
+  mNetwork.transportList->removeItem(item);
+  mTransportList.remove(ti);
+  slotUpdateTransportCombo();
+}
+
+
+void ConfigureDialog::slotTransportUp()
+{
+  QListViewItem *item = mNetwork.transportList->currentItem();
+  if (!item) return;
+  QListViewItem *above = item->itemAbove();
+  if (!above) return;
+
+  KMTransportInfo *ti, *ti2 = NULL;
+  int i = 0;
+  for (ti = mTransportList.first(); ti;
+    ti2 = ti, ti = mTransportList.next(), i++)
+      if (ti->name == item->text(0)) break;
+  if (!ti || !ti2) return;
+  ti = mTransportList.take(i);
+  mTransportList.insert(i-1, ti);
+
+  above->setText(0, ti->name);
+  above->setText(1, ti->type + ((above->itemAbove()) ? "" :
+    (" " + i18n("(Default)"))));
+  item->setText(0, ti2->name);
+  item->setText(1, ti2->type);
+
+  mNetwork.transportList->setCurrentItem(above);
+  mNetwork.transportList->setSelected(above, TRUE);
+}
+
+
+void ConfigureDialog::slotTransportDown()
+{
+  QListViewItem *item = mNetwork.transportList->currentItem();
+  if (!item) return;
+  QListViewItem *below = item->itemBelow();
+  if (!below) return;
+
+  KMTransportInfo *ti, *ti2 = NULL;
+  int i = 0;
+  for (ti = mTransportList.first(); ti; ti = mTransportList.next(), i++)
+    if (ti->name == item->text(0)) break;
+  ti2 = mTransportList.next();
+  if (!ti || !ti2) return;
+  ti = mTransportList.take(i);
+  mTransportList.insert(i+1, ti);
+
+  item->setText(0, ti2->name);
+  item->setText(1, ti2->type + ((item->itemAbove()) ? "" :
+    (" " + i18n("(Default)"))));
+  below->setText(0, ti->name);
+  below->setText(1, ti->type);
+
+  mNetwork.transportList->setCurrentItem(below);
+  mNetwork.transportList->setSelected(below, TRUE);
+}
 
 
 void ConfigureDialog::slotAccountSelected( void )
@@ -3819,169 +3936,3 @@ void IdentityList::update( const IdentityEntry &entry )
   }
 }
 
-
-// ConfigureTransportDialog stuff below here.
-
-ConfigureTransportDialog::ConfigureTransportDialog(QWidget *parent, const char *name, bool modal, const QString &transport) : KDialogBase( parent, name, modal, i18n("Configure Transport"), Ok|Cancel, Ok, true )
-{
-  QFrame *frame = makeMainWidget();
-  QButtonGroup *buttonGroup = new QButtonGroup( frame );
-  buttonGroup->hide();
-  connect( buttonGroup, SIGNAL(clicked(int)),
-	   this, SLOT(slotSendmailType(int)) );
-
-  QGridLayout *glay = new QGridLayout( frame, 6, 4, spacingHint() );
-  glay->addColSpacing( 2, fontMetrics().maxWidth()*15 );
-
-  this->sendmailRadio = new QRadioButton( i18n("Sendmail"), frame );
-  buttonGroup->insert(this->sendmailRadio);
-  glay->addMultiCellWidget(this->sendmailRadio, 0, 0, 0, 3);
-  QLabel *label = new QLabel( i18n("Location:"), frame );
-  glay->addWidget( label, 1, 1 );
-  this->sendmailLocationEdit = new QLineEdit( frame );
-  glay->addWidget( this->sendmailLocationEdit, 1, 2 );
-  this->sendmailChooseButton =
-    new QPushButton( i18n("Choose..."), frame );
-  connect( this->sendmailChooseButton, SIGNAL(clicked()),
-	   this, SLOT(slotSendmailChooser()) );
-  this->sendmailChooseButton->setAutoDefault( false );
-  glay->addWidget( this->sendmailChooseButton, 1, 3 );
-
-  this->smtpRadio = new QRadioButton( i18n("SMTP"), frame );
-  buttonGroup->insert(this->smtpRadio);
-  glay->addMultiCellWidget(this->smtpRadio, 2, 2, 0, 3);
-  label = new QLabel( i18n("Server:"), frame );
-  glay->addWidget( label, 3, 1 );
-  this->smtpServerEdit = new QLineEdit( frame );
-  glay->addWidget( this->smtpServerEdit, 3, 2 );
-  label = new QLabel( i18n("Port:"), frame );
-  glay->addWidget( label, 4, 1 );
-  this->smtpPortEdit = new QLineEdit( frame );
-  this->smtpPortEdit->setValidator( new QIntValidator(frame) );
-  glay->addWidget( this->smtpPortEdit, 4, 2 );
-
-  this->deleteRadio = new QRadioButton(i18n("Remove this transport."), frame);
-  buttonGroup->insert(this->deleteRadio);
-  glay->addMultiCellWidget(this->deleteRadio, 5, 5, 0, 3);
-
-  // Set widgets to default values:
-  sendmailLocationEdit->setText(kernel->msgSender()->mailer());
-  // Reset the widgets based on passed in values.
-  mTransport = transport;
-  if (mTransport.isEmpty()) {
-    deleteRadio->hide();
-    sendmailRadio->setChecked(true);
-    this->slotSendmailType(0);
-  } else {
-    if (mTransport.startsWith("smtp:")) {
-      int lastColon = mTransport.findRev(':');
-      smtpRadio->setChecked(true);
-      smtpServerEdit->setText(mTransport.mid(7,lastColon - 7));
-      smtpPortEdit->setText(mTransport.mid(lastColon + 1, mTransport.length()
-                                           - (lastColon + 1)));
-      this->slotSendmailType(1);
-    }
-    else {
-      sendmailRadio->setChecked(true);
-      sendmailLocationEdit->setText(mTransport);
-      this->slotSendmailType(0);
-    }
-  }
-}
-
-QString ConfigureTransportDialog::getTransport(void)
-{
-  return mTransport;
-}
-
-void ConfigureTransportDialog::slotOk( void )
-{
-  if (smtpRadio->isChecked()) {
-    if (!smtpServerEdit->text().isEmpty()) {
-      mTransport = "smtp://" + smtpServerEdit->text() + ":";
-      if (smtpPortEdit->text().isNull()) mTransport += "25";
-      else mTransport += smtpPortEdit->text();
-    }
-  }
-  else if (sendmailRadio->isChecked()) {
-    if (!sendmailLocationEdit->text().isEmpty())
-      mTransport = sendmailLocationEdit->text();
-  }
-  else if (deleteRadio->isChecked()) {
-    mTransport = "";
-  }
-  accept();
-}
-
-void ConfigureTransportDialog::slotCancel( void )
-{
-  reject();
-}
-
-void ConfigureTransportDialog::slotSendmailType( int id )
-{
-  bool useSendmail;
-  if( id == 0 )
-  {
-    useSendmail = true;
-  }
-  else if( id == 1 )
-  {
-    useSendmail = false;
-  }
-  else
-  {
-    this->sendmailLocationEdit->setEnabled(false);
-    this->sendmailChooseButton->setEnabled(false);
-    this->smtpServerEdit->setEnabled(false);
-    this->smtpPortEdit->setEnabled(false);
-    return;
-  }
-
-  this->sendmailLocationEdit->setEnabled( useSendmail );
-  this->sendmailChooseButton->setEnabled( useSendmail );
-  this->smtpServerEdit->setEnabled( !useSendmail );
-  this->smtpPortEdit->setEnabled( !useSendmail );
-}
-
-void ConfigureTransportDialog::slotSendmailChooser( void )
-{
-  KFileDialog dialog("/", QString::null, this, 0, true );
-  dialog.setCaption(i18n("Choose Sendmail Location") );
-
-  if( dialog.exec() == QDialog::Accepted )
-  {
-    KURL url = dialog.selectedURL();
-    if( url.isEmpty() == true )
-    {
-      return;
-    }
-
-    if( url.isLocalFile() == false )
-    {
-      KMessageBox::sorry( 0L, i18n( "Only local files allowed." ) );
-      return;
-    }
-
-    this->sendmailLocationEdit->setText( url.path() );
-  }
-}
-
-// This is the ConfigureDialog slot for the button that opens the
-// ConfigureTransportDialog. I put it down here, so I can easily
-// find it while working on it.
-void ConfigureDialog::slotIdentityTransport(void)
-{
-  IdentityEntry *id;
-  id = mIdentityList.get(mIdentity.mActiveIdentity);
-  // Create the dialog.
-  ConfigureTransportDialog ctd(this, 0, true, id->transport());
-  ctd.setCaption(i18n("Configure Transport"));
-  if (ctd.exec() == QDialog::Accepted) {
-    id->setTransport(ctd.getTransport());
-    if (ctd.getTransport().isEmpty())
-      mIdentity.transportButton->setText(i18n("&Add Transport..."));
-    else
-      mIdentity.transportButton->setText(i18n("Edit Transport..."));
-  }
-}
