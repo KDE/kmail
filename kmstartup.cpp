@@ -96,7 +96,9 @@ void checkConfigUpdates() {
     "3.3-aegypten-emailidentities-split-sign-encr-keys",
     "3.3-misc",
     "3.3b1-misc",
-    "3.4-misc"
+    "3.4-misc",
+    "3.4a",
+    "3.4b"
   };
   static const int numUpdates = sizeof updates / sizeof *updates;
   // Warning: do not remove entries in the above array, or the update-level check below will break
@@ -107,8 +109,9 @@ void checkConfigUpdates() {
   if ( configUpdateLevel == numUpdates ) // Optimize for the common case that everything is OK
     return;
 
-  for ( int i = 0 ; i < numUpdates ; ++i )
+  for ( int i = configUpdateLevel ; i < numUpdates ; ++i ) {
     config->checkUpdate( updates[i], "kmail.upd" );
+  }
   startup.writeEntry( "update-level", numUpdates );
 }
 

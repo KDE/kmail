@@ -189,7 +189,7 @@ void HeaderItem::setup()
 
 typedef QValueList<QPixmap> PixmapList;
 
-QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const 
+QPixmap HeaderItem::pixmapMerge( PixmapList pixmaps ) const
 {
   int width = 0;
   int height = 0;
@@ -341,23 +341,40 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   KMHeaders *headers = static_cast<KMHeaders*>(listView());
   if (headers->noRepaint) return;
   if (!headers->folder()) return;
-  QColorGroup _cg( cg );
-  QColor c = _cg.text();
-  QColor *color;
-
   KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
   if (!mMsgBase) return;
 
-  color = (QColor *)(&headers->paintInfo()->colFore);
-  // new overrides unread, and flagged overrides new.
-  if (mMsgBase->isUnread()) color = (QColor*)(&headers->paintInfo()->colUnread);
-  if (mMsgBase->isNew()) color = (QColor*)(&headers->paintInfo()->colNew);
-  if (mMsgBase->isImportant()) color = (QColor*)(&headers->paintInfo()->colFlag);
+  QColorGroup _cg( cg );
+  QColor c = _cg.text();
+  QColor *color = const_cast<QColor *>( &headers->paintInfo()->colFore );
+  QFont font = p->font();
+  int weight = font.weight();
 
+  // for color and font family "important" overrides "new" overrides "unread",
+  // for the weight we use the maximal weight
+  if ( mMsgBase->isUnread() ) {
+    color = const_cast<QColor*>( &headers->paintInfo()->colUnread );
+    font = headers->unreadFont();
+    weight = QMAX( weight, font.weight() );
+  }
+  if ( mMsgBase->isNew() ) {
+    color = const_cast<QColor*>( &headers->paintInfo()->colNew );
+    font = headers->newFont();
+    weight = QMAX( weight, font.weight() );
+  }
+  if ( mMsgBase->isImportant() ) {
+    color = const_cast<QColor*>( &headers->paintInfo()->colFlag );
+    font = headers->importantFont();
+    weight = QMAX( weight, font.weight() );
+  }
+  if ( column == headers->paintInfo()->dateCol ) {
+    font = headers->dateFont();
+  }
+
+  // set color and font
   _cg.setColor( QColorGroup::Text, *color );
-
-  if( column == headers->paintInfo()->dateCol )
-    p->setFont(headers->dateFont);
+  font.setWeight( weight );
+  p->setFont( font );
 
   KListViewItem::paintCell( p, _cg, column, width, align );
 
@@ -365,12 +382,14 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
     // strike through
     p->drawLine( 0, height()/2, width, height()/2);
   }
+
+  // reset color
   _cg.setColor( QColorGroup::Text, c );
 }
 
-QString HeaderItem::generate_key( KMHeaders *headers, 
-    KMMsgBase *msg, 
-    const KPaintInfo *paintInfo, 
+QString HeaderItem::generate_key( KMHeaders *headers,
+    KMMsgBase *msg,
+    const KPaintInfo *paintInfo,
     int sortOrder )
 {
   // It appears, that QListView in Qt-3.0 asks for the key
@@ -525,7 +544,7 @@ int HeaderItem::compare( QListViewItem *i, int col, bool ascending ) const
   return res;
 }
 
-QListViewItem* HeaderItem::firstChildNonConst() /* Non const! */ 
+QListViewItem* HeaderItem::firstChildNonConst() /* Non const! */
 {
   enforceSortOrder(); // Try not to rely on QListView implementation details
   return firstChild();

@@ -1480,6 +1480,9 @@ static const struct {
 } fontNames[] = {
   { "body-font", I18N_NOOP("Message Body"), true, false },
   { "list-font", I18N_NOOP("Message List"), true, false },
+  { "list-new-font", I18N_NOOP("Message List - New Messages"), true, false },
+  { "list-unread-font", I18N_NOOP("Message List - Unread Messages"), true, false },
+  { "list-important-font", I18N_NOOP("Message List - Important Messages"), true, false },
   { "list-date-font", I18N_NOOP("Message List - Date Field"), true, false },
   { "folder-font", I18N_NOOP("Folder List"), true, false },
   { "quote1-font", I18N_NOOP("Quoted Text - First Level"), false, false },

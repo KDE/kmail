@@ -166,8 +166,6 @@ public:
   /** return a string relativ to the current time */
   static QString fancyDate( time_t otime );
 
-  QFont dateFont;
-
   bool noRepaint;
 
   // filter events for popup
@@ -175,6 +173,12 @@ public:
 
     /** gets the message represented by the item as a KMMsgBase. */
   const KMMsgBase * getMsgBaseForItem( const QListViewItem *item ) const;
+
+  // accessors
+  QFont newFont() const { return mNewFont; }
+  QFont unreadFont() const { return mUnreadFont; }
+  QFont importantFont() const { return mImportantFont; }
+  QFont dateFont() const { return mDateFont; }
 
 signals:
   /** emitted when the list view item corresponding to this message
@@ -398,6 +402,8 @@ private:
   /** Current colours and backing pixmap */
   KPaintInfo mPaintInfo;
 
+  QFont mNewFont, mUnreadFont, mImportantFont, mDateFont;
+
   /** Icons shown in header */
   static QIconSet *up, *down;
   /** Map menu id into a folder */
@@ -414,5 +420,5 @@ private:
   /** popup to switch columns */
   KPopupMenu* mPopup;
 
-}; // class 
+}; // class
 #endif

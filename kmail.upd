@@ -144,6 +144,16 @@ Id=3.4a
 File=kmailrc
 Group=Separate Reader Window
 RemoveKey=MenuBar
+# Use the normal message list font for the new fonts for important/new/unread
+Id=3.4b
+File=kmailrc
+Group=Fonts
+Options=copy
+Key=list-font,list-important-font
+Options=copy
+Key=list-font,list-new-font
+Options=copy
+Key=list-font,list-unread-font
 #
 # Important notice:
 # If you add updates here, keep this text below them.

@@ -468,12 +468,17 @@ void KMHeaders::readConfig (void)
     if (!(config->readBoolEntry("defaultFonts",true)))
     {
       QFont listFont( KGlobalSettings::generalFont() );
-      setFont(config->readFontEntry("list-font", &listFont));
-      dateFont = KGlobalSettings::fixedFont();
-      dateFont = config->readFontEntry("list-date-font", &dateFont);
+      listFont = config->readFontEntry( "list-font", &listFont );
+      setFont( listFont );
+      mNewFont = config->readFontEntry( "list-new-font", &listFont );
+      mUnreadFont = config->readFontEntry( "list-unread-font", &listFont );
+      mImportantFont = config->readFontEntry( "list-important-font", &listFont );
+      mDateFont = KGlobalSettings::fixedFont();
+      mDateFont = config->readFontEntry( "list-date-font", &mDateFont );
     } else {
-      dateFont = KGlobalSettings::generalFont();
-      setFont(dateFont);
+      mNewFont= mUnreadFont = mImportantFont = mDateFont =
+        KGlobalSettings::generalFont();
+      setFont( mDateFont );
     }
   }
 
@@ -2598,7 +2603,7 @@ void KMHeaders::dirtySortOrder(int column)
     setSorting(column, mSortInfo.column == column ? !mSortInfo.ascending : true);
 }
 
-// ----------------- 
+// -----------------
 void SortCacheItem::updateSortFile( FILE *sortStream, KMFolder *folder,
                                       bool waiting_for_parent, bool update_discover)
 {
