@@ -145,16 +145,14 @@ bool KMSender::sendSMTP(KMMessage* msg)
   if(replyCode != 250 && replyCode != 251) 
     return smtpFailed(client, "RCPT", replyCode);
 
-  str = msg->cc();
-  if(*msg->cc())  // Check if cc is set.
+  if(!msg->cc().isEmpty())  // Check if cc is set.
   {
     replyCode = client.Rcpt(msg->cc()); // Send RCPT command
     if(replyCode != 250 && replyCode != 251)
       return smtpFailed(client, "RCPT", replyCode);
   }
 
-  str = msg->bcc(); // Check if bcc ist set.
-  if(!str.isEmpty())
+  if(!msg->bcc().isEmpty())  // Check if bcc ist set.
   {
     replyCode = client.Rcpt(msg->bcc()); // Send RCPT command
     if(replyCode != 250 && replyCode != 251)

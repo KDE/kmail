@@ -112,6 +112,7 @@ void KMFilterActionSkip::argsFromString(const QString)
 
 const QString KMFilterActionSkip::argsAsString(void) const
 {
+  return "";
 }
 
 

@@ -8,6 +8,7 @@
 
 #include <klocale.h>
 #include <mimelib/mimepp.h>
+#include <qregexp.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -18,30 +19,20 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 
-extern "C" 
-{
-#include <regex.h>
-}
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
-
-#ifdef HAVE_RE_COMP_H
-#include <re_comp.h>
 #endif
 
 #define MAX_LINE 4096
 #define INIT_MSGS 32
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1.1
+#define INDEX_VERSION 1010
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:
 #define MSG_SEPERATOR_START "From "
 #define MSG_SEPERATOR_REGEX "^From.*..\\:..\\:...*$"
-
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
 
@@ -261,12 +252,12 @@ int KMFolder::createIndexFromContents(void)
 {
   char line[MAX_LINE];
   char status[8], subjStr[128], dateStr[80], fromStr[80];
-  char* msg;
   unsigned long offs, size, pos;
   int i, msgArrNum;
   bool atEof = FALSE;
   KMMsgInfo* mi;
   QString msgStr;
+  QRegExp regexp(MSG_SEPERATOR_REGEX);
 
   assert(name() != NULL);
   assert(path() != NULL);
@@ -276,26 +267,14 @@ int KMFolder::createIndexFromContents(void)
 
   debug("*** creating index file %s\n", (const char*)indexLocation());
 
-  offs = 0;
-  size = 0;
-  strcpy(status, "RO");
-
-  msg = re_comp(MSG_SEPERATOR_REGEX);
-  if (msg)
-  {
-    fatal("Error in %s:%d\nwhile parsing bultin\n"
-	  "regular expression\n%s\n%s", __FILE__, __LINE__,
-	  MSG_SEPERATOR_REGEX, msg);
-    return -1;
-  }
-
-  msgArrNum = mMsgInfo.size();
-
-  mMsgs = -1;
-  offs  = 0;
+  msgArrNum  = mMsgInfo.size();
+  mMsgs      = -1;
+  offs       = 0;
+  size       = 0;
   dateStr[0] = '\0';
   fromStr[0] = '\0';
   subjStr[0] = '\0';
+  strcpy(status, "RO");
 
   while (!atEof)
   {
@@ -306,11 +285,12 @@ int KMFolder::createIndexFromContents(void)
       emit statusMsg(msgStr);
     }
 
-    pos = ftell(mStream);
     if (!fgets(line, MAX_LINE, mStream)) atEof = TRUE;
+    pos = ftell(mStream);
 
     if (atEof ||
-	(strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 && re_exec(line)))
+	(strncmp(line,MSG_SEPERATOR_START, msgSepLen)==0 && 
+	 regexp.match(line) >= 0))
     {
       size = pos - offs;
       if (mMsgs >= 0)
@@ -376,7 +356,7 @@ int KMFolder::writeIndex(void)
   mIndexStream = fopen(indexLocation(), "w");
   if (!mIndexStream) return errno;
 
-  fprintf(mIndexStream, "# KMail-Index V%g", INDEX_VERSION);
+  fprintf(mIndexStream, "# KMail-Index V%d", INDEX_VERSION);
 
   mHeaderOffset = ftell(mIndexStream);
   for (i=0; i<mMsgs; i++)
@@ -400,11 +380,11 @@ void KMFolder::setAutoCreateIndex(bool autoIndex)
 //-----------------------------------------------------------------------------
 bool KMFolder::readIndexHeader(void)
 {
-  float indexVersion;
+  int indexVersion;
 
   assert(mIndexStream != NULL);
 
-  fscanf(mIndexStream, "# KMail-Index V%g", &indexVersion);
+  fscanf(mIndexStream, "# KMail-Index V%d", &indexVersion);
   if (indexVersion < INDEX_VERSION)
   {
     debug("Index index file %s is out of date. Re-creating it.", 

@@ -206,7 +206,7 @@ const char* KMMsgInfo::dateStr(void) const
 void KMMsgInfo::fromString(const char* aStr)
 {
   char st;
-  unsigned int idate;
+  unsigned long idate;
 
   assert(aStr != NULL);
 

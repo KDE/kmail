@@ -168,31 +168,30 @@ void KMReaderView::parseMessage(KMMessage *message)
   currentMessage = message; // To make sure currentMessage is set.
 
 
-  dateStr.sprintf("Date: %s<br>",message->dateStr());
+  dateStr = "Date: "+message->dateStr()+"<BR>";
 
-  strTemp.sprintf("%s",message->from());
+  strTemp = message->from();
   if((pos=strTemp.find("<",0,0)) != -1)
     {strTemp.remove(0,pos+1);
     strTemp.replace(QRegExp(">",0,0),"");
     }
-  fromStr.sprintf("From: <A HREF=\"mailto:");
+  fromStr = "From: <A HREF=\"mailto:" + strTemp + "\">";
   fromStr.append(strTemp + "\">");
   if(pos != -1)
-    {strTemp.sprintf("%s",message->from());
+    {strTemp = message->from();
     strTemp.truncate(pos);
     }
   strTemp = strTemp.stripWhiteSpace();
   fromStr.append(strTemp + "</A>"+"<br>");
 
-  ccStr.sprintf("%s",message->cc());
+  ccStr = message->cc();
   if(ccStr.isEmpty())
     ccStr = "";
   else
-    ccStr.sprintf("Cc: %s",message->cc());
+    ccStr= "Cc: " + message->cc();
 			 
-  subjStr.sprintf("<FONT SIZE=+1> Subject: %s</FONT><P>",
-		  message->subject());	
-  toStr.sprintf("To: %s<br>", message->to());
+  subjStr = "<FONT SIZE=+1> Subject: " + message->subject() + "</FONT><P>";
+  toStr = "To: " + message->to() + "<BR>";
 
   // Init messageCanvas
   messageCanvas->begin(picsDir);
@@ -366,10 +365,10 @@ QString KMReaderView::decodeString(KMMessagePart *part, QString type)
   debug("decoding %s",type.data());
   if(type=="base64") 
     {printf("->base64\n");
-    DwDecodeBase64(part->body(),dwDest);}
+    DwDecodeBase64((const char*)part->body(),dwDest);}
   else if(type=="quoted-printable")
     {printf("->quotedp\n");
-    DwDecodeQuotedPrintable(part->body(),dwDest);}
+    DwDecodeQuotedPrintable((const char*)part->body(),dwDest);}
   else if(type=="8bit") 
     {printf("Raw 8 bit data read. Things may look strange");
     dwDest = part->body();
@@ -1015,9 +1014,9 @@ void KMGeneral::paintEvent(QPaintEvent *)
   QPixmap pix(temp);
   p.drawPixmap(point,pix);
   p.setPen(black);
-  temp.sprintf("Subject: %s", tempMes->subject());
+  temp = "Subject: " + tempMes->subject();
   p.drawText(60, 30, temp);
-  temp.sprintf("From: %s", tempMes->from());
+  temp = "From: " + tempMes->from();
   p.drawText(60, 60, temp);
   p.drawLine(10,80,380,80);
   temp = tempMes->asString();
@@ -1029,7 +1028,7 @@ void KMGeneral::paintEvent(QPaintEvent *)
   p.drawText(20,170,temp);
   p.drawText(20,200,"Format:");
   p.drawLine(10,220,380,220);
-  temp.sprintf("Sent: %s", tempMes->dateStr());
+  temp = "Sent: " + tempMes->dateStr();
   p.drawText(20,240,temp);
   p.drawText(20,270,"Recieved on:");
   p.end();

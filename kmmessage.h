@@ -35,7 +35,7 @@ public:
   virtual void setStatus(Status);
 
   /** Convert the given message status to a string. */
-  static const char* statusToStr(Status);
+  static const QString statusToStr(Status);
 
   /** Mark the message as deleted */
   void del(void) { setStatus(stDeleted); }
@@ -49,13 +49,31 @@ public:
   /** Create a reply to this message, filling all required header fields
    with the proper values. The returned message is not associated with
    any folder. */
-  virtual KMMessage* reply(void);
+  virtual KMMessage* reply(bool replyToAll=FALSE) const;
 
   /** Return the entire message contents as a string. */
-  virtual const char* asString(void);
+  virtual const QString asString(void);
 
   /** Parse the string and create this message from it. */
   virtual void fromString(const QString str);
+
+  /** Returns message with quoting header and indented by the given
+   indentation string. This is suitable for including the message
+   in another message of for replies, forwards. The header string
+   is a template where the following fields are replaced with the
+   corresponding values:
+	%d: date of this message
+	%s: subject of this message
+	%f: sender (from) of this message
+	%%: a single percent sign
+  */
+  virtual const QString asQuotedString(const QString headerStr, 
+				       const QString indentStr);
+
+  /** Initialize header fields. Should be called on new messages
+    if they are not set manually. E.g. before composing. Calling
+    if setAutomaticFields() is still required. */
+  virtual void initHeader(void);
 
   /** Set fields that are either automatically set (Message-id)
    or that do not change from one message to another (MIME-Version).
@@ -65,70 +83,71 @@ public:
   virtual void setAutomaticFields(void);
     
   /** Get or set the 'Date' header field */
-  virtual const char* dateStr(void) const;
+  virtual const QString dateStr(void) const;
   virtual time_t date(void) const;
+  virtual void setDate(const QString str);
   virtual void setDate(time_t aUnixTime);
 
   /** Get or set the 'To' header field */
-  virtual const char* to(void) const;
-  virtual void setTo(const char* aStr);
+  virtual const QString to(void) const;
+  virtual void setTo(const QString aStr);
 
   /** Get or set the 'ReplyTo' header field */
-  virtual const char* replyTo(void) const;
-  virtual void setReplyTo(const char* aStr);
+  virtual const QString replyTo(void) const;
+  virtual void setReplyTo(const QString aStr);
   virtual void setReplyTo(KMMessage*);
 
   /** Get or set the 'Cc' header field */
-  virtual const char* cc(void) const;
-  virtual void setCc(const char* aStr);
+  virtual const QString cc(void) const;
+  virtual void setCc(const QString aStr);
 
   /** Get or set the 'Bcc' header field */
-  virtual const char* bcc(void) const;
-  virtual void setBcc(const char* aStr);
+  virtual const QString bcc(void) const;
+  virtual void setBcc(const QString aStr);
 
   /** Get or set the 'From' header field */
-  virtual const char* from(void) const;
-  virtual void setFrom(const char* aStr);
+  virtual const QString from(void) const;
+  virtual void setFrom(const QString aStr);
 
   /** Get or set the 'Subject' header field */
-  virtual const char* subject(void) const;
-  virtual void setSubject(const char* aStr);
+  virtual const QString subject(void) const;
+  virtual void setSubject(const QString aStr);
 
   /** Get or set header field with given name */
-  virtual const char* headerField(const char* name) const;
-  virtual void setHeaderField(const char* name, const char* value);
+  virtual const QString headerField(const QString name) const;
+  virtual void setHeaderField(const QString name, const QString value);
 
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
-  virtual const char* typeStr(void) const;
+  virtual const QString typeStr(void) const;
   virtual int type(void) const;
-  virtual void setTypeStr(const char* aStr);
+  virtual void setTypeStr(const QString aStr);
   virtual void setType(int aType);
   // Subtype
-  virtual const char* subtypeStr(void) const;
+  virtual const QString subtypeStr(void) const;
   virtual int subtype(void) const;
-  virtual void setSubtypeStr(const char* aStr);
+  virtual void setSubtypeStr(const QString aStr);
   virtual void setSubtype(int aSubtype);
 
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
     will work only for well-known encodings. */
-  virtual const char* contentTransferEncodingStr(void) const;
+  virtual const QString contentTransferEncodingStr(void) const;
   virtual int  contentTransferEncoding(void) const;
-  virtual void setContentTransferEncodingStr(const char* aStr);
+  virtual void setContentTransferEncodingStr(const QString aStr);
   virtual void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
       These functions are an alternative to the ones with longer names. */
-  const char* cteStr(void) const { return contentTransferEncodingStr(); }
+  const QString cteStr(void) const { return contentTransferEncodingStr(); }
   int cte(void) const { return contentTransferEncoding(); }
-  void setCteStr(const char* aStr) { setContentTransferEncodingStr(aStr); }
+  void setCteStr(const QString aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
   /** Get or set the message body */
-  virtual const char* body(long* length_return=NULL) const;
-  virtual void setBody(const char* aStr);
+  virtual const QString body(long* length_return=NULL) const;
+  virtual void setBody(const QString aStr);
 
   /** Number of body parts the message has. This is one for plain messages
       without any attachment. */
@@ -153,7 +172,18 @@ public:
   KMFolder* owner(void) const { return mOwner; }
 
   /** Open a window containing the complete, unparsed, message. */
-  virtual void viewSource(const char* windowCaption) const;
+  virtual void viewSource(const QString windowCaption) const;
+
+  /** Strip email address from string. Examples:
+   * "Stefan Taferner <taferner@kde.org>" returns "Stefan Taferner"
+   * "joe@nowhere.com" returns "joe@nowhere.com" */
+  static const QString stripEmailAddr(const QString emailAddr);
+
+  /** Converts given email address to a nice HTML mailto: anchor. 
+   * If stripped is TRUE then the visible part of the anchor contains
+   * only the name part and not the given emailAddr. */
+  static const QString emailAddrAsAnchor(const QString emailAddr, 
+					 bool stripped=TRUE);
 
 protected:
   void setOwner(KMFolder*);

@@ -590,30 +590,35 @@ void KMComposeView::parseConfiguration()
 //-----------------------------------------------------------------------------
 void KMComposeView::forwardMessage()
 {
-  QString temp, spc;
-  temp.sprintf(nls->translate("Fwd: %s"),currentMessage->subject());
-  setSubject(temp);
+  setSubject(nls->translate("Fwd: %s") + currentMessage->subject());
 
-  spc = " ";
+  appendText(nls->translate("Date:"));
+  appendText(" ");
+  appendText(currentMessage->dateStr());
+  appendText(nls->translate("From:"));
+  appendText(" ");
+  appendText(currentMessage->from());
+  appendText(nls->translate("To:"));
+  appendText(" ");
+  appendText(currentMessage->to());
+  appendText(nls->translate("Cc:"));
+  appendText(" ");
+  appendText(currentMessage->cc());
+  appendText(nls->translate("Subject:"));
+  appendText(" ");
+  appendText(currentMessage->subject());
 
-  appendText(QString("\n\n---------")+nls->translate("Forwarded message")
-		 +"-----------");
-  appendText(nls->translate("Date:") + spc + currentMessage->dateStr());
-  appendText(nls->translate("From:") + spc + currentMessage->from());
-  appendText(nls->translate("To:") + spc + currentMessage->to());
-  appendText(nls->translate("Cc:") + spc + currentMessage->cc());
-  appendText(nls->translate("Subject:") + spc + currentMessage->subject());
+  appendText("\n\n---------");
+  appendText(nls->translate("Forwarded message"));
+  appendText("-----------");
 
-  appendText(temp);
   if ((currentMessage->numBodyParts()) == 0) 
-    temp = currentMessage->body();
+    appendText(currentMessage->body());
   else
     {KMMessagePart *p = new KMMessagePart();
     currentMessage->bodyPart(0,p);
-    temp = p->body();
+    appendText(p->body());
     delete p;}
-  appendText(temp);
-
 }
 
 //-----------------------------------------------------------------------------
@@ -621,13 +626,14 @@ void KMComposeView::replyAll()
 {
   QString temp;
   int lines;
-  temp.sprintf(nls->translate("Re: %s"),currentMessage->subject());
+  temp.sprintf(nls->translate("Re: %s"),(const char*)currentMessage->subject());
   setTo(currentMessage->from());
   setCc(currentMessage->cc());
   setSubject(temp);
 
   temp.sprintf(nls->translate("\nOn %s %s wrote:\n"), 
-	       currentMessage->dateStr(), currentMessage->from());
+	       (const char*)currentMessage->dateStr(), 
+	       (const char*)currentMessage->from());
   appendText(temp);
 
   //If there are no bodyparts take body.
@@ -655,12 +661,13 @@ void KMComposeView::replyMessage()
   QString temp;
   int lines;
 
-  temp.sprintf(nls->translate("Re: %s"),currentMessage->subject());
+  temp.sprintf(nls->translate("Re: %s"),(const char*)currentMessage->subject());
   setTo(currentMessage->from());
   setSubject(temp);
 
   temp.sprintf(nls->translate("\nOn %s %s wrote:\n"), 
-	       currentMessage->dateStr(), currentMessage->from());
+	       (const char*)currentMessage->dateStr(),
+	       (const char*)currentMessage->from());
   appendText(temp);
 
   if ((currentMessage->numBodyParts()) == 0) 

@@ -1,7 +1,6 @@
 // kmidentity.cpp
 
 #include "kmidentity.h"
-#include "kmglobal.h"
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -28,7 +27,7 @@ KMIdentity::~KMIdentity()
 //-----------------------------------------------------------------------------
 void KMIdentity::readConfig(void)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = kapp->getConfig();
   struct passwd* pw;
   char str[80];
 
@@ -67,7 +66,7 @@ void KMIdentity::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMIdentity::writeConfig(bool aWithSync)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = kapp->getConfig();
   config->setGroup("Identity");
 
   config->writeEntry("Name", mFullName);
@@ -107,6 +106,17 @@ void KMIdentity::setEmailAddr(const QString str)
   mEmailAddr = str.copy();
 }
 
+
+//-----------------------------------------------------------------------------
+const QString KMIdentity::fullEmailAddr(void) const
+{
+  QString result;
+
+  if (mFullName.isEmpty()) result = mEmailAddr.copy();
+  else result = mFullName.copy() + " <" + mEmailAddr + ">";
+
+  return result;
+}
 
 //-----------------------------------------------------------------------------
 void KMIdentity::setReplyToAddr(const QString str)

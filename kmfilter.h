@@ -33,7 +33,7 @@ public:
   KMFilterRule();
 
   /** Initialize the rule. */
-  init(const QString field, Function function, const QString contents);
+  void init(const QString field, Function function, const QString contents);
 
   /** Return TRUE if this rule matches the given message. */
   bool matches(const KMMessage* msg);

@@ -29,6 +29,7 @@
 #include "kmglobal.h"
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
+#include "kmversion.h"
 
 #include "kmmainwin.moc"
 
@@ -176,7 +177,7 @@ void KMMainWin::closeEvent(QCloseEvent *e)
 void KMMainWin::doAbout()
 {
   KMsgBox::message(this, nls->translate("About"),
-		   "KMail [V0.1.1] by\n\n"
+		   "KMail [" KMAIL_VERSION "] by\n\n"
 		   "Stefan Taferner <taferner@kde.org>,\n"
 		   "Markus Wübben <markus.wuebben@kde.org>\n"
 		   "\nbased on the work of\n"

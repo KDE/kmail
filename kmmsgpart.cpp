@@ -21,7 +21,7 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
-const char* KMMessagePart::typeStr(void) const
+const QString KMMessagePart::typeStr(void) const
 {
   return mType.c_str();
 }
@@ -36,7 +36,7 @@ int KMMessagePart::type(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setTypeStr(const char* aStr)
+void KMMessagePart::setTypeStr(const QString aStr)
 {
   mType = aStr;
 }
@@ -51,7 +51,7 @@ void KMMessagePart::setType(int aType)
 
 
 //-----------------------------------------------------------------------------
-const char* KMMessagePart::subtypeStr(void) const
+const QString KMMessagePart::subtypeStr(void) const
 {
   return mSubtype.c_str();
 }
@@ -66,7 +66,7 @@ int KMMessagePart::subtype(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setSubtypeStr(const char* aStr)
+void KMMessagePart::setSubtypeStr(const QString aStr)
 {
   mSubtype = aStr;
 }
@@ -80,7 +80,7 @@ void KMMessagePart::setSubtype(int aSubtype)
 
 
 //-----------------------------------------------------------------------------
-const char* KMMessagePart::contentTransferEncodingStr(void) const
+const QString KMMessagePart::contentTransferEncodingStr(void) const
 {
   return mCte.c_str();
 }
@@ -95,7 +95,7 @@ int KMMessagePart::contentTransferEncoding(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentTransferEncodingStr(const char* aStr)
+void KMMessagePart::setContentTransferEncodingStr(const QString aStr)
 {
   mCte = aStr;
 }
@@ -109,35 +109,35 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
 
 
 //-----------------------------------------------------------------------------
-const char* KMMessagePart::contentDescription(void) const
+const QString KMMessagePart::contentDescription(void) const
 {
   return mContentDescription.c_str();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentDescription(const char* aStr)
+void KMMessagePart::setContentDescription(const QString aStr)
 {
   mContentDescription = aStr;
 }
 
 
 //-----------------------------------------------------------------------------
-const char* KMMessagePart::contentDisposition(void) const
+const QString KMMessagePart::contentDisposition(void) const
 {
   return mContentDisposition.c_str();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentDisposition(const char* aStr)
+void KMMessagePart::setContentDisposition(const QString aStr)
 {
   mContentDisposition = aStr;
 }
 
  
 //-----------------------------------------------------------------------------
-const char* KMMessagePart::body(long* len_ret) const
+const QString KMMessagePart::body(long* len_ret) const
 {
   if (len_ret) *len_ret = mBody.length();
   return mBody.data();
@@ -145,21 +145,21 @@ const char* KMMessagePart::body(long* len_ret) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setBody(const char* aStr)
+void KMMessagePart::setBody(const QString aStr)
 {
   mBody.assign(aStr);
 }
 
 
 //-----------------------------------------------------------------------------
-const char * KMMessagePart::name(void) const
+const QString KMMessagePart::name(void) const
 {
   return mName.c_str();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setName(const char *aStr)
+void KMMessagePart::setName(const QString aStr)
 {
   mName = aStr;
 }

@@ -27,23 +27,27 @@ public:
   virtual bool mailingAllowed(void) const;
 
   /** Full name of the user */
-  const char* fullName(void) const { return mFullName; }
+  const QString fullName(void) const { return mFullName; }
   virtual void setFullName(const QString);
 
   /** The user's organization (optional) */
-  const char* organization(void) const { return mOrganization; }
+  const QString organization(void) const { return mOrganization; }
   virtual void setOrganization(const QString);
 
   /** email address (without the user name - only name@host) */
-  const char* emailAddr(void) const { return mEmailAddr; }
+  const QString emailAddr(void) const { return mEmailAddr; }
   virtual void setEmailAddr(const QString);
 
+  /** email address in the format "username <name@host>" suitable
+    for the "From:" field of email messages. */
+  const QString fullEmailAddr(void) const;
+
   /** email address for the ReplyTo: field */
-  const char* replyToAddr(void) const { return mReplyToAddr; }
+  const QString replyToAddr(void) const { return mReplyToAddr; }
   virtual void setReplyToAddr(const QString);
 
   /** name of the signature file (with path) */
-  const char* signatureFile(void) const { return mSignatureFile; }
+  const QString signatureFile(void) const { return mSignatureFile; }
   virtual void setSignatureFile(const QString);
 
 protected:

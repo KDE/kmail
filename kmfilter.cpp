@@ -72,8 +72,9 @@ bool KMFilter::matches(const KMMessage* msg)
     return (matchesA || matchesB);
   case OpOrNot:
     return (matchesA || !matchesB);
+  default:
+    return FALSE;
   }
-  return FALSE;
 }
 
 
@@ -224,8 +225,8 @@ KMFilterRule::KMFilterRule()
 
 
 //-----------------------------------------------------------------------------
-KMFilterRule::init(const QString aField, Function aFunction,
-		   const QString aContents)
+void KMFilterRule::init(const QString aField, Function aFunction,
+			const QString aContents)
 {
   mField    = aField.copy();
   mFunction = aFunction;
