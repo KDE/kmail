@@ -226,7 +226,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   int i, num, upd;
   QString str;
 
-  assert(aFld);
+  assert(!aFld.isNull());
   
   mBtnSearch->setText("Stop");
   mSearchFolder=aFld->name();
