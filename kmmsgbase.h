@@ -252,7 +252,8 @@ public:
     MsgStatusPart = 8,
     MsgSizePart = 9,
     MsgDatePart = 10,
-    MsgFilePart = 11
+    MsgFilePart = 11,
+    MsgCryptoStatePart = 12
   };
   /** access to long msgparts */
   unsigned long getLongPart(MsgPartType) const;

@@ -74,7 +74,7 @@ public:
 
 //-----------------------------------------------------------------------------
 KMMsgInfo::KMMsgInfo(KMFolder* p, long off, short len) :
-    KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown), 
+    KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown),
     mEncryptionState( KMMsgEncryptionStateUnknown ),
     mSignatureState( KMMsgSignatureStateUnknown ), kd(NULL)
 {
@@ -299,18 +299,30 @@ KMMsgStatus KMMsgInfo::status(void) const
 //-----------------------------------------------------------------------------
 KMMsgEncryptionState KMMsgInfo::encryptionState() const
 {
-    // no caching in index file yet
+    if (mEncryptionState == KMMsgEncryptionStateUnknown) {
+        unsigned long encStat = getLongPart(MsgCryptoStatePart) & 0x0000FFFF;
+        ((KMMsgInfo *)this)->mEncryptionState =
+            encStat
+            ? (KMMsgEncryptionState)encStat
+            : KMMsgEncryptionStateUnknown;
+    }
     return mEncryptionState;
 }
 
 
 KMMsgSignatureState KMMsgInfo::signatureState() const
 {
-    // no caching in index file yet
+    if (mSignatureState == KMMsgSignatureStateUnknown) {
+        unsigned long sigStat = getLongPart(MsgCryptoStatePart) >> 16;
+        ((KMMsgInfo *)this)->mSignatureState =
+            sigStat
+            ? (KMMsgSignatureState)sigStat
+            : KMMsgSignatureStateUnknown;
+    }
     return mSignatureState;
 }
 
-    
+
 
 
 //-----------------------------------------------------------------------------

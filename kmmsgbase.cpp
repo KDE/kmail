@@ -160,8 +160,8 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 
 
 void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status,
-                                    int idx ) 
-{ 
+                                    int idx )
+{
     qDebug( "***setEncryptionState1( %c )", status );
     mDirty = TRUE;
     if (mParent)
@@ -1040,6 +1040,8 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   STORE_DATA(MsgOffsetPart, tmp);
   tmp = date();
   STORE_DATA(MsgDatePart, tmp);
+  tmp = (signatureState() << 16) | encryptionState();
+  STORE_DATA(MsgCryptoStatePart, tmp);
 #undef STORE_DATA_LEN
   return ret;
 }
