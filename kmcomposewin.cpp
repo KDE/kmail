@@ -2539,6 +2539,7 @@ void KMEdit::slotSpellResult(const QString &aNewText)
      setText(aNewText);
   }
   mKSpell->cleanUp();
+  emit spellcheck_done();
 }
 
 //-----------------------------------------------------------------------------
