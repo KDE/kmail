@@ -524,6 +524,8 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mEdtList.clear();
   row = 0;
   debug( "KMComposeWin::rethinkFields" );
+  if (!fromSlot) allFieldsAction->setChecked(showHeaders&HDR_ALL);
+
   if (!fromSlot) identityAction->setChecked(showHeaders&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    &mLblIdentity, &mIdentity, &mBtnIdentity);
