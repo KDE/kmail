@@ -1727,19 +1727,29 @@ void KMFolderCachedImap::setImapPath(const QString &path)
 // on startup, it's too early there to know if this is a standard resource folder.
 void KMFolderCachedImap::updateAnnotationFolderType()
 {
-  const QString oldAnnotation = mAnnotationFolderType;
+  QString oldType = mAnnotationFolderType;
+  QString oldSubType;
+  int dot = oldType.find( '.' );
+  if ( dot != -1 ) {
+    oldType.truncate( dot );
+    oldSubType = mAnnotationFolderType.mid( dot + 1 );
+  }
+
+  QString newType, newSubType;
   // We want to store an annotation on the folder only if using the kolab storage.
   if ( kmkernel->iCalIface().storageFormat( folder() ) == KMailICalIfaceImpl::StorageXML ) {
-    mAnnotationFolderType = KMailICalIfaceImpl::annotationForContentsType( mContentsType );
+    newType = KMailICalIfaceImpl::annotationForContentsType( mContentsType );
     if ( kmkernel->iCalIface().isStandardResourceFolder( folder() ) )
-      mAnnotationFolderType += ".default";
+      newSubType = "default";
+    else if ( oldSubType != "default" )
+      newSubType = oldSubType; // preserve unknown subtypes, like drafts etc.
   }
-  else
-    mAnnotationFolderType = QString::null;
-  //kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: " << mAnnotationFolderType << endl;
-  if ( mAnnotationFolderType != oldAnnotation ) {
+
+  //kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: " << newType << " " << newSubType << endl;
+  if ( newType != oldType || newSubType != oldSubType ) {
+    mAnnotationFolderType = newType + ( newSubType.isEmpty() ? QString::null : "."+newSubType );
     mAnnotationFolderTypeChanged = true; // force a "set annotation" on next sync
-    kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: '" << mAnnotationFolderType << "', was '" << oldAnnotation << "' => mAnnotationFolderTypeChanged set to TRUE" << endl;
+    kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: '" << mAnnotationFolderType << "', was (" << oldType << " " << oldSubType << ") => mAnnotationFolderTypeChanged set to TRUE" << endl;
   }
   // Ensure that further readConfig()s don't lose mAnnotationFolderType
   writeAnnotationConfig();
@@ -1789,12 +1799,12 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
             // Case 3: known content-type on server, get it
             //kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: found known type of annotation" << endl;
             kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
-            if ( kmkernel->iCalIface().standardResourceFolderParent() != folder()->parent()
+            if ( folder()->parent()->owner()->idString() != GlobalSettings::theIMAPResourceFolderParent()
                  && subtype == "default" ) {
               // Truncate subtype if this folder can't be a default resource folder for us,
               // although it apparently is for someone else.
               value = type;
-              kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: truncating annotation to " << value << endl;
+              kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: parent folder is " << folder()->parent()->owner()->idString() << " => truncating annotation to " << value << endl;
             }
             setContentsType( contentsType );
             mAnnotationFolderType = value;
@@ -1816,7 +1826,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
     }
     if ( !foundContentType && !mReadOnly ) {
       // Case 1: server doesn't have content-type, set it
-      //kdDebug(5006) << "slotGetAnnotationResult: no anntation found, will need to set it" << endl;
+      //kdDebug(5006) << "slotGetAnnotationResult: no annotation found, will need to set it" << endl;
       mAnnotationFolderTypeChanged = true;
     }
   }
