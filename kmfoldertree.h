@@ -99,6 +99,10 @@ public:
   virtual void createFolderList(QStringList * str,
     QValueList<QGuardedPtr<KMFolder> > * folders);
 
+  /** Create a list of all IMAP folders of a given account */
+  void createImapFolderList(KMAcctImap *account, QStringList *names,
+    QStringList *urls, QStringList *mimeTypes);
+
   /** Read config options. */
   virtual void readConfig(void);
 

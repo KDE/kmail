@@ -211,6 +211,13 @@ public:
     when the folder is closed. */
   bool dirty() const { return mDirty; }
 
+  /** Change the dirty flag. */
+  void setDirty(bool f) { mDirty=f; }
+
+  /** Returns TRUE if the folder contains deleted messages */
+  bool needsCompacting() const { return needsCompact; }
+  virtual void setNeedsCompacting(bool f) { needsCompact = f; }
+
   /** If set to quiet the folder will not emit signals. */
   virtual void quiet(bool beQuiet);
 
@@ -334,9 +341,6 @@ protected:
   /** Write index to index-file. Returns 0 on success and errno error on
     failure. */
   virtual int writeIndex();
-
-  /** Change the dirty flag. */
-  void setDirty(bool f) { mDirty=f; }
 
   /** Lock mail folder files. Called by ::open(). Returns 0 on success and
     an errno error code on failure. */

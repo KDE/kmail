@@ -1061,6 +1061,9 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
     mMsgView->setMsg(0,TRUE);
     mHeaders->show();
   }
+  if (mFolder && mFolder->account() && mFolder->account()->autoExpunge()
+    && mFolder->needsCompacting())
+      mFolder->account()->expungeFolder(mFolder);
   writeFolderConfig();
   mFolder = (KMFolder*)aFolder;
   readFolderConfig();

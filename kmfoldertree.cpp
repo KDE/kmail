@@ -279,6 +279,26 @@ void KMFolderTree::createFolderList(QStringList *str,
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderTree::createImapFolderList(KMAcctImap *account, QStringList *names,
+  QStringList *urls, QStringList *mimeTypes)
+{
+  QListViewItemIterator it( this );
+  KMFolderTreeItem *fti;
+  while (it.current())
+  {
+    fti = static_cast<KMFolderTreeItem*>(it.current());
+    if (fti && fti->folder && fti->folder->account() == account)
+    {
+      names->append(fti->text(0));
+      urls->append(fti->folder->imapPath());
+      mimeTypes->append((fti->folder->isDir()) ? "inode/directory" :
+        (fti->isExpandable()) ? "message/directory" : "message/digest");
+    }
+    ++it;
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderTree::readColorConfig (void)
 {
   KConfig* conf = kapp->config();
@@ -664,8 +684,11 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   KMFolder* folder = 0;
   if (fti) folder = fti->folder;
 
-  if (mLastItem && mLastItem != fti && mLastItem->folder && mLastItem->folder->account())
+  if (mLastItem && mLastItem != fti && mLastItem->folder
+     && mLastItem->folder->account())
+  {
     mLastItem->folder->account()->killAllJobs();
+  }
   mLastItem = fti;
 
   clearSelection();

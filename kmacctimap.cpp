@@ -101,6 +101,9 @@ void KMAcctImap::init(void)
   mAuth = "*";
   mStorePasswd = FALSE;
   mProgressEnabled = FALSE;
+  mPrefix = "/";
+  mAutoExpunge = TRUE;
+  mHiddenFolders = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -117,6 +120,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   setPrefix(acct->prefix());
   setLogin(acct->login());
   setAuth(acct->auth());
+  setAutoExpunge(acct->autoExpunge());
   setHiddenFolders(acct->hiddenFolders());
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
@@ -910,6 +914,7 @@ void KMAcctImap::setStatus(KMMessage * msg, KMMsgStatus status)
 //-----------------------------------------------------------------------------
 void KMAcctImap::expungeFolder(KMFolder * aFolder)
 {
+  aFolder->setNeedsCompacting(FALSE);
   KURL url = getUrl();
   url.setPath(aFolder->imapPath() + ";UID=*");
   makeConnection();
@@ -959,6 +964,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mPort = config.readNumEntry("port");
   mAuth = config.readEntry("auth", "*");
   mPrefix = config.readEntry("prefix", "/");
+  mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
 }
 
@@ -977,6 +983,7 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("port", static_cast<int>(mPort));
   config.writeEntry("auth", mAuth);
   config.writeEntry("prefix", mPrefix);
+  config.writeEntry("auto-expunge", mAutoExpunge);
   config.writeEntry("hidden-folders", mHiddenFolders);
 }
 
@@ -1059,6 +1066,12 @@ void KMAcctImap::setPrefix(const QString& aPrefix)
   if (mPrefix.at(mPrefix.length() - 1) != '/') mPrefix += '/';
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::setAutoExpunge(bool aAutoExpunge)
+{
+  mAutoExpunge = aAutoExpunge;
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::setHiddenFolders(bool aHiddenFolders)

@@ -112,6 +112,10 @@ public:
   const QString& prefix(void) const { return mPrefix; }
   virtual void setPrefix(const QString&);
 
+  /** Automatically expunge deleted messages when leaving the folder */
+  bool autoExpunge() { return mAutoExpunge; }
+  virtual void setAutoExpunge(bool);
+
   /** Show hidden files on the server */
   bool hiddenFolders() { return mHiddenFolders; }
   virtual void setHiddenFolders(bool);
@@ -192,6 +196,7 @@ protected:
   QString mPrefix;
   unsigned short int mPort;
   bool    mStorePasswd;
+  bool    mAutoExpunge;
   bool    mHiddenFolders;
   bool    gotMsgs;
   bool    mProgressEnabled;
