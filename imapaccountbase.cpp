@@ -844,6 +844,12 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
+  void ImapAccountBase::removeJob( KIO::Job* job )
+  {
+    mapJobData.remove( job );
+  }
+
+  //-----------------------------------------------------------------------------
   KPIM::ProgressItem* ImapAccountBase::listDirProgressItem()
   {
     if ( !mListDirProgressItem )
