@@ -206,12 +206,28 @@ void KabBridge::addresses(QStringList* result, QValueList<KabKey> *keys)
 	kernel->KABaddrBook()->addressbook()->getEntry( key, entry ))
       continue;
     unsigned int emails_count;
+    QString allowed_chars(" @_.-");
     for( emails_count = 0; emails_count < entry.emails.count(); emails_count++ ) {
       if (!entry.emails[emails_count].isEmpty()) {
 	if (entry.fn.isEmpty() || (entry.emails[0].find( "<" ) != -1))
 	  addr = "";
-	else
-	  addr = "\"" + entry.fn + "\" ";
+	else { /* do we really need quotes around this name ? */
+	  bool need_quotes = false;
+	  QChar c;
+	  int i;
+	  for (i=entry.fn.length()-1; (i>=0) && !need_quotes; --i) {
+	    c = entry.fn.at(i);
+	    if ((c>='0' && c<='9') || (c>='a' && c<='z') || (c>='A' && c<='Z'))
+		continue;
+	    if (allowed_chars.find(c)>=0)
+		continue;
+	    need_quotes = true;
+	  }
+	  if (need_quotes)
+		addr = "\"" + entry.fn + "\" ";
+	  else
+		addr = entry.fn + " ";
+	}
 	email = entry.emails[emails_count];
 	if (!addr.isEmpty() && (email.find( "<" ) == -1)
 	    && (email.find( ">" ) == -1)
