@@ -203,7 +203,7 @@ void KMReaderMainWin::setupAccel()
 					"mail_forward", actionCollection(),
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL( activated() ), this,
-           SLOT( slotForwardMsg() ) );
+           SLOT( slotForwardAttachedMsg() ) );
 
   mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
 				SHIFT+Key_F, this, SLOT(slotForwardMsg()),

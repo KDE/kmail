@@ -2344,7 +2344,7 @@ void KMMainWidget::setupActions()
 					"mail_forward", actionCollection(),
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotForwardMsg()) );
+	   SLOT(slotForwardAttachedMsg()) );
 
   mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
 				       "mail_forward", Key_F, this,
