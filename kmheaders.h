@@ -164,7 +164,7 @@ public:
 
   /** Find next/prev unread message. Starts at currentItem() if startAt
     is unset. */
-  virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = FALSE);
+  virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = false, bool acceptCurrent = false);
 
   virtual void ensureCurrentItemVisible();
 

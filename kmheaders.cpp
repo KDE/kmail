@@ -1772,7 +1772,7 @@ void KMHeaders::findUnreadAux( KMHeaderItem*& item,
 }
 
 //-----------------------------------------------------------------------------
-int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
+int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool acceptCurrent)
 {
   KMHeaderItem *item, *pitem;
   bool foundUnreadMessage = false;
@@ -1789,12 +1789,11 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
     if (!item)
       return -1;
 
-    /* coolo - I don't know why this is here as it prevents the current item to be accepted
-    if (aDirNext)
-      item = static_cast<KMHeaderItem*>(item->itemBelow());
-    else
-      item = static_cast<KMHeaderItem*>(item->itemAbove());
-    */
+    if ( !acceptCurrent )
+        if (aDirNext)
+            item = static_cast<KMHeaderItem*>(item->itemBelow());
+        else
+            item = static_cast<KMHeaderItem*>(item->itemAbove());
   }
 
   pitem =  item;
@@ -1848,16 +1847,16 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
 //-----------------------------------------------------------------------------
 void KMHeaders::nextUnreadMessage()
 {
-  int i = findUnread(TRUE);
-  setCurrentMsg(i);
+    int i = findUnread(TRUE);
+    setCurrentMsg(i);
     ensureCurrentItemVisible();
 }
 
 void KMHeaders::ensureCurrentItemVisible()
 {
     int i = currentItemIndex();
-  if ((i >= 0) && (i < (int)mItems.size()))
-    center( contentsX(), itemPos(mItems[i]), 0, 9.0 );
+    if ((i >= 0) && (i < (int)mItems.size()))
+        center( contentsX(), itemPos(mItems[i]), 0, 9.0 );
 }
 
 //-----------------------------------------------------------------------------

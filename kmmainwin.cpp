@@ -1892,9 +1892,10 @@ void KMMainWin::slotReadOn()
         mMsgView->slotJumpDown();
         return;
     }
-    int i = mHeaders->findUnread(TRUE);
+    int i = mHeaders->findUnread(true, -1, false, true);
     if ( i >= 0 ) {
-        mHeaders->nextUnreadMessage();
+         mHeaders->setCurrentMsg(i);
+         mHeaders->ensureCurrentItemVisible();
         return;
     }
     mFolderTree->nextUnreadFolder( true );
@@ -2005,7 +2006,7 @@ void KMMainWin::updateMessageMenu()
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
-    forwardAction->setEnabled( mass_actions ); 
+    forwardAction->setEnabled( mass_actions );
     action( "apply_filters" )->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
