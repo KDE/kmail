@@ -58,6 +58,8 @@ public:
                                 const QString& uid );
   virtual QStringList incidences( const QString& type, const QString& folder );
 
+  virtual QStringList subresources( const QString& type );
+
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...
   virtual bool update( const QString& type, const QString& folder,
@@ -140,10 +142,7 @@ private:
   /** Helper function for initFolders. Initializes a single folder. */
   KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString );
 
-  /** Emit a dcop signal */
-  void dcopEmit( const QCString& signal, const QString& arg0,
-                 const QString& arg1 = QString::null,
-                 const QString& arg2 = QString::null );
+  KMFolder* extraFolder( const QString& type, const QString& folder );
 
   void loadPixmaps() const;
 

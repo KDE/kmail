@@ -152,7 +152,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
     rc = true;
   } else
-    kdError() << "Not an IMAP resource folder" << endl;
+    kdError(5006) << "Not an IMAP resource folder" << endl;
 
   mResourceQuiet = quiet;
   return rc;
@@ -184,7 +184,7 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
     } else
       kdDebug(5006) << type << " not found, cannot remove uid " << uid << endl;
   } else
-    kdError() << "Not an IMAP resource folder" << endl;
+    kdError(5006) << "Not an IMAP resource folder" << endl;
 
   mResourceQuiet = quiet;
   return rc;
@@ -197,11 +197,18 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   if( !mUseResourceIMAP )
     return QStringList();
 
-  kdDebug(5006) << "KMailICalIfaceImpl::incidences( " << type << " )" << endl;
+  kdDebug(5006) << "KMailICalIfaceImpl::incidences( " << type << ", "
+                << folder << " )" << endl;
   QStringList ilist;
 
-  KMFolder* f = folderFromType( type );
+  KMFolder* f;
+  if ( folder.isEmpty() || ( folderFromType( type ) &&
+                             folderFromType( type )->location() == folder ) )
+    f = folderFromType( type );
+  else
+    f = extraFolder( type, folder );
   if( f ) {
+    f->open();
     QString s;
     for( int i=0; i<f->count(); ++i ) {
       bool unget = !f->isMessage(i);
@@ -213,10 +220,32 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
       }
       if( unget ) f->unGetMsg(i);
     }
-  } else
-    kdError() << "Not an IMAP resource folder" << endl;
+  } else {
+    // Check if it's an error or just something with another type
+    if ( mExtraFolders.find( folder ) == 0 )
+      kdError(5006) << "Not an IMAP resource folder" << endl;
+  }
 
   return ilist;
+}
+
+QStringList KMailICalIfaceImpl::subresources( const QString& type )
+{
+  QStringList lst;
+
+  // Add the default one
+  KMFolder* f = folderFromType( type );
+  if ( f )
+    lst << f->location();
+
+  // Add the extra folders
+  int t = folderContentsType( type );
+  QDictIterator<ExtraFolder> it( mExtraFolders );
+  for ( ; it.current(); ++it )
+    if ( it.current()->type == t )
+      lst << it.current()->folder->location();
+
+  return lst;
 }
 
 bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
@@ -275,7 +304,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
       addIncidence( type, folder, uid, entry );
     }
   } else {
-    kdError() << "Not an IMAP resource folder" << endl;
+    kdError(5006) << "Not an IMAP resource folder" << endl;
     rc = false;
   }
 
@@ -308,7 +337,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     }
     if( unget ) folder->unGetMsg(i);
   } else
-    kdError() << "Not an IMAP resource folder" << endl;
+    kdError(5006) << "Not an IMAP resource folder" << endl;
 }
 
 // KMail deleted a file
@@ -339,7 +368,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     }
     if( unget ) folder->unGetMsg(i);
   } else
-    kdError() << "Not a groupware folder" << endl;
+    kdError(5006) << "Not a groupware folder" << endl;
 }
 
 // KMail orders a refresh
@@ -365,7 +394,7 @@ KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type )
     else if( type == "Task" || type == "Todo" ) return mTasks;
     else if( type == "Journal" ) return mJournals;
 
-    kdError() << "No folder type \"" << type << "\"" << endl;
+    kdError(5006) << "No folder type \"" << type << "\"" << endl;
   }
 
   return 0;
@@ -548,6 +577,25 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   // Tell about the new resource
   subresourceAdded( folderContentsType( contentsType ), folder->location() );
 }
+
+KMFolder* KMailICalIfaceImpl::extraFolder( const QString& type,
+                                           const QString& folder )
+{
+  // If an extra folder exists that match the type and folder location,
+  // use that
+  int t = folderContentsType( type );
+  if ( t < 1 || t > 5 )
+    return 0;
+
+  QDictIterator<ExtraFolder> it( mExtraFolders );
+  for ( ; it.current(); ++it )
+    if ( it.current()->type == t &&
+         it.current()->folder->location() == folder )
+      return it.current()->folder;
+
+  return 0;
+}
+
 
 /****************************
  * The config stuff
