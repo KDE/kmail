@@ -49,7 +49,8 @@ void KMFolderComboBox::createFolderList(QStringList *names,
   uint i = 0;
   while (i < folders->count())
   {
-    if ((*(folders->at(i)))->isSystemFolder())
+    if ((*(folders->at(i)))->isSystemFolder()
+      && (*(folders->at(i)))->protocol() != "imap")
     {
       folders->remove(folders->at(i));
       names->remove(names->at(i));
@@ -99,6 +100,7 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
 void KMFolderComboBox::setFolder( QString &idString )
 {
   KMFolder *folder = kernel->folderMgr()->findIdString( idString );
+  if (!folder) folder = kernel->imapFolderMgr()->findIdString( idString );
   setFolder( folder );
 }
 

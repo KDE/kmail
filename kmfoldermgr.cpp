@@ -309,7 +309,8 @@ void KMFolderMgr::createFolderList(QStringList *str,
       str->append(prefix + folder->name());
     folders->append( folder );
     if (folder->child())
-      createFolderList( str, folders, folder->child(), "  " + prefix );
+      createFolderList( str, folders, folder->child(), "  " + prefix,
+        i18nized );
   }
 }
 

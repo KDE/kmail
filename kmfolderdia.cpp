@@ -50,7 +50,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 
   nameEdit = new QLineEdit( fpGroup );
   nameEdit->setFocus();
-  nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
+  nameEdit->setText(folder ? folder->label() : i18n("unnamed"));
   nameEdit->setMinimumSize(nameEdit->sizeHint());
   nameEdit->selectAll();
   label->setBuddy( nameEdit );
