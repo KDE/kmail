@@ -307,8 +307,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 	aStr += i18n("This person will not be able to\n");
 
       aStr += i18n("decrypt the message.");
-      int ret = KMsgBox::yesNo(0,i18n("PGP Warning"), aStr,
-			       KMsgBox::EXCLAMATION, 
+      int ret = QMessageBox::warning(0,i18n("PGP Warning"), aStr,
 			       i18n("Continue"), i18n("Cancel"));
       if(ret == 2) return false;
     }
@@ -320,13 +319,12 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   while(status & KpgpBase::BADPHRASE)
   {
     havePassPhrase = false;
-    ret = KMsgBox::yesNoCancel(0,i18n("PGP Warning"),
-			       i18n("You just entered an invalid passphrase.\n"
-				    "Do you wan't to try again, continue and\n" 
-				    "leave the message unsigned, "
-				    "or cancel sending the message?"),
-			       KMsgBox::EXCLAMATION, 
-			       i18n("Retry"), i18n("Continue"));
+    ret = QMessageBox::information(0,i18n("PGP Warning"),
+				   i18n("You just entered an invalid passphrase.\n"
+					"Do you wan't to try again, continue and\n" 
+					"leave the message unsigned, "
+					"or cancel sending the message?"),
+				   i18n("Retry"), i18n("Continue"), i18n("Cancel"));
     if(ret == 3) return false;
     if(ret == 2) sign = false;
     // ok let's try once again...
@@ -339,9 +337,9 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     aStr += "\n";
     aStr += i18n("Do you wan't to encrypt anyway, leave the\n" 
 		 "message as is, or cancel the message?");
-    ret = KMsgBox::yesNoCancel(0,i18n("PGP Warning"),
-			      aStr, KMsgBox::EXCLAMATION,
-			      i18n("Encrypt"), i18n("Continue"));
+    ret = QMessageBox::warning(0,i18n("PGP Warning"),
+			      aStr, i18n("Encrypt"), 
+			       i18n("Continue"), i18n("Cancel"));
     if(ret == 3) return false;
     if(ret == 2) 
     {

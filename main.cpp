@@ -36,6 +36,8 @@
 #include "kfileio.h"
 #include "kwm.h"
 #include <klocale.h>
+#include <kglobal.h>
+#include <kstddirs.h>
 //--- Sven's pseudo IPC&locking end ---
  // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)
@@ -390,7 +392,7 @@ static void transferMail(void)
   // Markus: lol ;-)
   if (!dir.cd("KMail")) return;
 
-  rc = KMsgBox::yesNo(NULL, QString(app->name())+" "+i18n("warning"),
+  rc = QMessageBox::information(NULL, QString(app->name())+" "+i18n("warning"),
 		      i18n(
 	    "The directory ~/KMail exists. From now on, KMail uses the\n"
 	    "directory ~/Mail for it's messages.\n"
@@ -398,7 +400,7 @@ static void transferMail(void)
 	    "~/Mail, but this will replace existing files with the same\n"
 	    "name in the directory ~/Mail (e.g. inbox).\n\n"
 	    "Shall KMail move the mail folders now ?"),
-		      KMsgBox::QUESTION);
+		      i18n("Yes"), i18n("No"));
   if (rc != 1) return;
 
   dir.cd("/");  // otherwise we lock the directory
@@ -503,8 +505,9 @@ static void init(int& argc, char *argv[])
   addrBook->readConfig();
   if(addrBook->load() == IO_FatalError)
     {
-      KMsgBox::message(0,i18n("KMail error"),
-		       i18n("Loading addressbook failed"));
+      QMessageBox::warning(0,i18n("KMail error"),
+			   i18n("Loading addressbook failed"), 
+			   i18n("OK"));
     }
   KMMessage::readConfig();
 

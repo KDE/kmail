@@ -27,6 +27,7 @@
 #include <qstring.h>
 #include <qpixmap.h>
 #include <qfile.h>
+#include <qsplitter.h>
 #include <qtextstream.h>
 #include <kconfig.h>
 #include <kapp.h>
@@ -39,6 +40,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <klocale.h>
+#include <kmenubar.h>
 
 #include "kmmainwin.moc"
 
@@ -60,7 +62,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   readPreConfig();
   createWidgets();
   readConfig();
-  activatePanners();
 
   setupMenuBar();
   setupToolBar();
@@ -187,24 +188,20 @@ void KMMainWin::createWidgets(void)
   // create panners
   if (mLongFolderList)
   {
-    mHorizPanner = new KNewPanner(this, "horizPanner",
-				  KNewPanner::Vertical, KNewPanner::Absolute);
+    mHorizPanner = new QSPlitter(QSplitter::Horizontal, this, "horizPanner");
     mHorizPanner->resize(size());
     setView(mHorizPanner);
-    mVertPanner  = new KNewPanner(mHorizPanner, "vertPanner", 
-				  KNewPanner::Horizontal,KNewPanner::Absolute);
+    mVertPanner  = new QSplitter(QSplitter::Vertical, mHorizPanner, "vertPanner");
     pnrFldList = mHorizPanner;
     pnrMsgView = mVertPanner;
     pnrMsgList = mVertPanner;
   }
   else
   {
-    mVertPanner  = new KNewPanner(this, "vertPanner", KNewPanner::Horizontal,
-				  KNewPanner::Absolute);
+    mVertPanner  = new QSplitter(QSplitter::Vertical, this, "vertPanner");
     mVertPanner->resize(size());
     setView(mVertPanner);
-    mHorizPanner = new KNewPanner(mVertPanner,"horizPanner",
-				  KNewPanner::Vertical, KNewPanner::Absolute);
+    mHorizPanner = new QSplitter(QSplitter::Horizontal, mVertPanner,"horizPanner");
     pnrMsgView = mVertPanner;
     pnrMsgList = mHorizPanner;
     pnrFldList = mHorizPanner;
@@ -249,24 +246,6 @@ void KMMainWin::createWidgets(void)
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
 }
-
-
-//-----------------------------------------------------------------------------
-void KMMainWin::activatePanners(void)
-{
-  // glue everything together
-  if (mLongFolderList)
-  {
-    mVertPanner->activate(mHeaders, mMsgView);
-    mHorizPanner->activate(mFolderTree, mVertPanner);
-  }
-  else
-  {    
-    mVertPanner->activate(mHorizPanner, mMsgView);
-    mHorizPanner->activate(mFolderTree, mHeaders);
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 int KMMainWin::statusBarAddItem(const char* aText)
@@ -582,8 +561,9 @@ void KMMainWin::slotEditMsg()
   
   if(mFolder != outboxFolder) 
     {
-      KMsgBox::message(0,i18n("KMail notification!"),
-		       i18n("Only messages in the outbox folder can be edited!"));
+      QMessageBox::information(0,i18n("KMail notification!"),
+			       i18n("Only messages in the outbox folder can be edited!"), 
+			       i18n("OK"));
       return;
     }
     

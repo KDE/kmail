@@ -32,6 +32,7 @@
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <klocale.h>
+#include <kconfig.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>

@@ -63,7 +63,7 @@ protected:
   void setupToolBar();
   void setupStatusBar();
   void createWidgets();
-  void activatePanners();
+
 
 protected slots:
   void slotCheckOneAccount(int);

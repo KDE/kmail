@@ -364,7 +364,7 @@ void KMAcctPop::writeConfig(KConfig& config)
   else config.writeEntry("passwd", "");
 
   config.writeEntry("host", mHost);
-  config.writeEntry("port", mPort);
+  config.writeEntry("port", static_cast<int>(mPort));
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server", mLeaveOnServer);
   config.writeEntry("retrieve-all", mRetrieveAll);

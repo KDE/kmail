@@ -34,7 +34,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   mUpdateTimer = NULL;
 
-  setDropAccepted(true);
+  setAcceptDrops(true);
 
   connect(this, SIGNAL(highlighted(int,int)),
 	  this, SLOT(doFolderSelected(int,int)));

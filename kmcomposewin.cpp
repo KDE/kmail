@@ -50,7 +50,6 @@
 #include <unistd.h>
 #include <errno.h>
 #include <klocale.h>
-#include <drag.h>
 
 #if defined CHARSETS
 #include <kcharsets.h>
@@ -915,8 +914,9 @@ void KMComposeWin::closeEvent(QCloseEvent* e)
 
   if(mEditor->isModified())
   {
-    rc = KMsgBox::yesNo(0,i18n("KMail Confirm"),
-			i18n("Close and discard\nedited message?"));
+    rc = QMessageBox::information(0,i18n("KMail Confirm"),
+				  i18n("Close and discard\nedited message?"),
+				  i18n("Close"));
     if (rc != 1)
     {
       e->ignore();

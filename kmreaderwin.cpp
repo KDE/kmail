@@ -47,7 +47,8 @@
 
 //--- Sven's save attachments to /tmp start ---
 #include <unistd.h>
-#include <klocale.h>  // for access and getpid
+#include <klocale.h>
+#include <kstddirs.h>  // for access and getpid
 //--- Sven's save attachments to /tmp end ---
 
 // Do the tmp stuff correctly - thanks to Harri Porten for
@@ -197,7 +198,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
-  mViewer = new KHTMLWidget(this, mPicsDir);
+  mViewer = new KHTMLWidget(this, "htmlw");
   mViewer->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
   mViewer->setDefaultBGColor(QColor("#ffffff"));
@@ -272,7 +273,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   if (mMsg) parseMsg();
   else
   {
-    mViewer->begin(mPicsDir);
+    mViewer->begin();
     mViewer->write("<HTML><BODY></BODY></HTML>");
     mViewer->end();
     mViewer->parse();
@@ -287,7 +288,7 @@ void KMReaderWin::parseMsg(void)
   if(mMsg == NULL)
     return;
 
-  mViewer->begin(mPicsDir);
+  mViewer->begin();
   mViewer->write("<HTML><BODY>");
 #if defined CHARSETS  
   printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
@@ -453,8 +454,9 @@ void KMReaderWin::writeMsgHeader(void)
     break;
 
   case HdrFancy:
-    mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") + mPicsDir +
-                   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+2>");
+    mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") + 
+		   locate("data", "kmail/pics/kdelogo.xpm") +
+                   "></TD><TD HSPACE=50><B><FONT SIZE=+2>");
     mViewer->write(strToHtml(mMsg->subject()) + "</FONT></B><BR>");
     mViewer->write(i18n("From: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>\n");
@@ -986,7 +988,7 @@ void KMReaderWin::slotAtmView()
     
     if (stricmp(msgPart.typeStr(), "text")==0)
     {
-      win->mViewer->begin(mPicsDir);
+      win->mViewer->begin();
       win->mViewer->write("<HTML><BODY>");
       QString str = msgPart.bodyDecoded();
       if (stricmp(msgPart.subtypeStr(), "html")==0)
@@ -1007,7 +1009,7 @@ void KMReaderWin::slotAtmView()
       linkName.sprintf ("<img src=\"file:%s/part%d/%s\" border=0>",
                         (const char*)mAttachDir, mAtmCurrent+1,
                         pname.data()); // set linkname
-      win->mViewer->begin(mPicsDir);
+      win->mViewer->begin();
       win->mViewer->write("<HTML><BODY>");
       win->mViewer->write(linkName.data());
       win->mViewer->write("</BODY></HTML>");
