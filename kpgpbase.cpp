@@ -485,7 +485,8 @@ KpgpBaseG::decrypt(const char *passphrase)
     // FIXME: should do something with it...
   }
 
-  if(info.find("key not found") != -1)
+  if ((info.find("secret key not available") != -1)
+      || (info.find("key not found") != -1))
   {
     //debug("kpgpbase: message is encrypted");
     status |= ENCRYPTED;
