@@ -351,10 +351,8 @@ bool KMAddrBookExternal::useKAB()
   KConfig *config = kapp->config();
   config->setGroup("General");
   int ab = config->readNumEntry("addressbook", -1);
-  KURL::List list;
   if (ab <= 0)
     return false;
-  else
-    return true;
+  return true;
 }
 
