@@ -1,5 +1,8 @@
 1998-06-18  Stefan Taferner  <taferner@kde.org> (KMail-0.7.5)
 
+	* Folder-compacting: added busy pointer and progress
+	output in the status bar (idea from Mario).	
+
 	* Reader: removed ':' from the characters that mark
 	quoted text to catch smileys at the beginning of the
 	line ;-)

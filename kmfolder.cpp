@@ -359,7 +359,7 @@ int KMFolder::createIndexFromContents(void)
 
       if (num >= 0)
       {
-	if ((num & 127) == 0)
+	if ((num & 255) == 0)
 	{
 	  msgStr.sprintf(i18n("Creating index file: %d messages done"), num);
 	  emit statusMsg(msgStr);
@@ -439,7 +439,11 @@ int KMFolder::createIndexFromContents(void)
     }
   }
 
-  if (mAutoCreateIndex) writeIndex();
+  if (mAutoCreateIndex)
+  {
+    emit statusMsg(i18n("Writing index file"));
+    writeIndex();
+  }
   else mHeaderOffset = 0;
 
   return 0;
@@ -844,8 +848,9 @@ int KMFolder::compact(void)
 {
   KMFolder* tempFolder;
   KMMessage* msg;
-  QString tempName;
+  QString tempName, msgStr;
   int openCount = mOpenCount;
+  int num;
 
   tempName = "." + name();
   tempName.detach();
@@ -858,8 +863,14 @@ int KMFolder::compact(void)
   tempFolder->open();
   open();
 
-  while(count() > 0)
+  for(num=1; count() > 0; num++)
   {
+    if ((num & 255) == 0)
+    {
+      msgStr.sprintf(i18n("Compacting folder: %d messages done"), num);
+      emit statusMsg(msgStr);
+    }
+
     msg = getMsg(0);
     tempFolder->moveMsg(msg);
   }
