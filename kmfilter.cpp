@@ -193,8 +193,7 @@ void KMFilter::readConfig(KConfig* config)
   if (num >= FILTER_MAX_ACTIONS)
   {
     num = FILTER_MAX_ACTIONS - 1;
-    KMessageBox::information(0,i18n("Too many filter actions in filter rule ") +
-			     QString("`%1'").arg(mName));
+    KMessageBox::information(0,i18n("Too many filter actions in filter rule `%1'").arg(mName));
   }
 
   for (i=0, j=0; i<num; i++)
@@ -205,11 +204,8 @@ void KMFilter::readConfig(KConfig* config)
     mAction[j] = sActionDict->create(actName);
     if (!mAction[j])
     {
-      KMessageBox::information(0,i18n("Unknown filter action ") +
-			       QString("`%1'\n").arg(actName) +
-			       i18n("in filter rule ") +
-			       QString("`%1'.\n").arg(mName) +
-			       i18n("Ignoring it."));
+      KMessageBox::information(0,i18n("Unknown filter action `%1'\n in filter rule `%2'."
+                   "\nIgnoring it.").arg(actName).arg(mName));
       continue;
     }
     mAction[j]->argsFromString(config->readEntry(argsName));

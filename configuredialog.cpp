@@ -1335,7 +1335,7 @@ void ConfigureDialog::makeComposerPage( void )
   topLevel->addWidget( mComposer.autoAppSignFileCheck );
 
   mComposer.smartQuoteCheck =
-    new QCheckBox( i18n("Use smart qouting"), page );
+    new QCheckBox( i18n("Use smart quoting"), page );
   topLevel->addWidget( mComposer.smartQuoteCheck );
 
   mComposer.pgpAutoSignatureCheck =
@@ -2195,7 +2195,7 @@ void ConfigureDialog::slotSignatureEdit( void )
   QFileInfo fileInfo( fileName );
   if( fileInfo.isDir() == true )
   {
-    QString msg = i18n("You have specified a diretory\n\n%1").arg(fileName);
+    QString msg = i18n("You have specified a directory\n\n%1").arg(fileName);
     KMessageBox::error( this, msg );
     return;
   }

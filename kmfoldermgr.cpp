@@ -100,9 +100,8 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   {
     KMFolder fld(&mDir);
 
-    KMessageBox::information(0, i18n("Directory\n") + mBasePath + 
-			     i18n("\ndoes not exist.\n\n"
-				  "KMail will create it now."));
+    KMessageBox::information(0, i18n("Directory\n%1\ndoes not exist.\n\n"
+				  "KMail will create it now.").arg(mBasePath));
     // dir.mkdir(mBasePath, TRUE);
     mkdir(mBasePath.data(), 0700);
     mDir.setPath(mBasePath.local8Bit());

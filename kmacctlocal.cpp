@@ -140,8 +140,7 @@ void KMAcctLocal::processNewMail(bool)
   {
   rc = mailFolder.expunge();
   if (rc)
-    KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox ") +
-      QString("`%1':\n%2").arg(mailFolder.location().arg(strerror(rc))));
+    KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location().arg(strerror(rc))));
   KMBroadcastStatus::instance()->setStatusMsg( 
 		     i18n( "Transmission completed..." ));
   }

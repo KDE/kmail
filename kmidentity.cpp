@@ -192,9 +192,8 @@ const QString KMIdentity::signature(void) const
     tmpf.setAutoDelete(true);
     // signature file is a shell script that returns the signature
     if (tmpf.status() != 0) {
-      QString wmsg = QString("%1\n%2").arg(tmpf.name()).arg(strerror(errno));
-      KMessageBox::information(0, i18n("Failed to create temporary file\n") +
-			       wmsg);
+      QString wmsg = i18n("Failed to create temporary file\n%1:\n%2").arg(tmpf.name()).arg(strerror(errno));
+      KMessageBox::information(0, wmsg);
       return QString::null;
     }
     tmpf.close();
@@ -206,9 +205,8 @@ const QString KMIdentity::signature(void) const
 
     if (rc != 0)
     {
-      QString wmsg = QString("%1\n%2").arg(sigcmd.data()).arg(strerror(errno));
-      KMessageBox::information(0, i18n("Failed to execute signature script\n") +
-			       wmsg );
+      QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd.data()).arg(strerror(errno));
+      KMessageBox::information(0, wmsg);
       return QString::null;
     }
     result = kFileToString(tmpf.name(), TRUE, FALSE);
