@@ -2,7 +2,10 @@
 #define KMMIMEPARTTREE_H
 
 #include <klistview.h>
+#include <kio/global.h>
+
 #include <qstring.h>
+
 class partNode;
 class KMReaderWin;
 class KMMimePartTreeItem;
@@ -34,13 +37,13 @@ public:
                       const QString& labelDescr,
                       QString labelCntType  = QString::null,
                       QString labelEncoding = QString::null,
-                      QString labelSize     = QString::null );
+                      KIO::filesize_t size=0 );
   KMMimePartTreeItem( KMMimePartTreeItem& parent,
                       partNode* node,
                       const QString& labelDescr,
                       QString labelCntType  = QString::null,
                       QString labelEncoding = QString::null,
-                      QString labelSize     = QString::null );
+                      KIO::filesize_t size=0  );
   partNode* node() const { return mPartNode; }
 
 private:

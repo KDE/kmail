@@ -254,12 +254,7 @@ void KMReaderWin::insertAndParseNewChildNode( KMReaderWin* reader,
 
   if( node.mimePartTreeItem() ) {
 kdDebug(5006) << "\n     ----->  Inserting items into MimePartTree\n" << endl;
-    node.mChild->fillMimePartTree( node.mimePartTreeItem(),
-                                    0,
-                                    "",   // cntDesc,
-                                    "",   // mainCntTypeStr,
-                                    "",   // cntEnc,
-                                    "" ); // cntSize );
+    node.mChild->fillMimePartTree( node.mimePartTreeItem(), 0 );
 kdDebug(5006) << "\n     <-----  Finished inserting items into MimePartTree\n" << endl;
   } else {
 kdDebug(5006) << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
@@ -2958,11 +2953,12 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
   mRootNode = new partNode( mainBody, mainType, mainSubType, true );
   mRootNode->setFromAddress( aMsg->from() );
 
-  QString cntDesc, cntSize, cntEnc;
+  QString cntDesc, cntEnc;
+  KIO::filesize_t cntSize = 0;
   cntDesc = aMsg->subject();
   if( cntDesc.isEmpty() )
     cntDesc = i18n("( body part )");
-  cntSize = QString::number( aMsg->msgSize() );
+  cntSize = aMsg->msgSize();
   if( aMsg->contentTransferEncodingStr().isEmpty() )
     cntEnc = "7bit";
   else

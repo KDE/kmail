@@ -241,14 +241,15 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
                                  QString labelDescr,
                                  QString labelCntType,
                                  QString labelEncoding,
-                                 QString labelSize )
+                                 KIO::filesize_t size )
 {
   if( parentItem || mimePartTree ) {
 
     if( mNext )
         mNext->fillMimePartTree( parentItem, mimePartTree );
 
-    QString cntDesc, cntType, cntEnc, cntSize;
+    QString cntDesc, cntType, cntEnc;
+    KIO::filesize_t cntSize = 0;
 
     if( labelDescr.isEmpty() ) {
         DwHeaders* headers = 0;
@@ -305,12 +306,12 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         else
             cntEnc = "7bit";
         if( mDwPart )
-            cntSize = QString::number( mDwPart->Body().AsString().length() );
+            cntSize = mDwPart->Body().AsString().length();
     } else {
         cntDesc = labelDescr;
         cntType = labelCntType;
         cntEnc  = labelEncoding;
-        cntSize = labelSize;
+        cntSize = size;
     }
 
     cntType = KMComposeWin::prettyMimeType( cntType );

@@ -12,15 +12,16 @@
 #ifndef PARTNODE_H
 #define PARTNODE_H
 
-#include <kdebug.h>
+#include "kmmsgpart.h"
+#include "kmmsgbase.h"
+#include "kmmessage.h"
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
 
-#include "kmmsgpart.h"
-#include "kmmsgbase.h"
-#include "kmmessage.h"
+#include <kdebug.h>
+#include <kio/global.h>
 
 class KMMimePartTreeItem;
 class KMMimePartTree;
@@ -231,7 +232,7 @@ public:
                            QString labelDescr    = QString::null,
                            QString labelCntType  = QString::null,
                            QString labelEncoding = QString::null,
-                           QString labelSize     = QString::null );
+                           KIO::filesize_t size=0 );
 
     void adjustDefaultType( partNode* node );
 

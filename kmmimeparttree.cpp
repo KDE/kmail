@@ -189,11 +189,11 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree& parent,
                                         const QString& labelDescr,
                                         QString labelCntType,
                                         QString labelEncoding,
-                                        QString labelSize )
+                                        KIO::filesize_t size )
     : QListViewItem( &parent, labelDescr,
                      labelCntType,
                      labelEncoding,
-                     labelSize ),
+                     KIO::convertSize( size ) ),
       mPartNode( node )
 {
     if( node )
@@ -205,11 +205,11 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem& parent,
                                         const QString& labelDescr,
                                         QString labelCntType,
                                         QString labelEncoding,
-                                        QString labelSize )
+                                        KIO::filesize_t size )
     : QListViewItem( &parent, labelDescr,
                      labelCntType,
                      labelEncoding,
-                     labelSize ),
+                     KIO::convertSize( size ) ),
       mPartNode( node )
 {
     if( node )
