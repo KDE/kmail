@@ -228,7 +228,6 @@ protected slots:
   void slotAddrBook();
   void slotImport();
   void slotViewChange();
-  void slotAddFolder();
   void slotCompose();
   void slotPostToML();
   void slotModifyFolder();
