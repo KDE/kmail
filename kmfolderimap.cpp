@@ -153,6 +153,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
   kernel->undoStack()->pushAction( aMsg->getMsgSerNum(), folder, this );
   if (folder) folder->take(folder->find(aMsg));
   delete aMsg;
+  if (mIsSelected) getFolder();
 }
 
 //-----------------------------------------------------------------------------
@@ -176,7 +177,6 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
         connect(imapJob, SIGNAL(messageCopied(KMMessage*)),
           SLOT(addMsgQuiet(KMMessage*)));
         aMsg->setTransferInProgress(TRUE);
-				if (this == msgParent) this->getFolder();
         if (aIndex_ret) *aIndex_ret = -1;
         return 0;
       }
@@ -189,8 +189,6 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
     SLOT(addMsgQuiet(KMMessage*)));
   if (aIndex_ret) *aIndex_ret = -1;
   return 0;
-
-  KMFolderImapInherited::addMsg(aMsg, aIndex_ret);
 }
 
 //-----------------------------------------------------------------------------

@@ -1671,8 +1671,9 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 	(static_cast<KMFolderImap*>(mFolder)->account() ==
 	 static_cast<KMFolderImap*>(destFolder)->account()))
     {
-      new KMImapJob(msg, KMImapJob::tCopyMessage, 
-		    static_cast<KMFolderImap*>(destFolder));
+      KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(destFolder);
+      new KMImapJob(msg, KMImapJob::tCopyMessage, imapDestFolder);
+      if (imapDestFolder->isSelected()) imapDestFolder->getFolder();
     } else {
       newMsg = new KMMessage;
       newMsg->fromString(msg->asString());
