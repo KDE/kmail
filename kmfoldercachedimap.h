@@ -116,7 +116,7 @@ public:
   ulong lastUid();
 
   /** Find message by UID. Returns NULL if it doesn't exist */
-  KMMessage* findByUID( ulong uid );
+  KMMsgBase* findByUID( ulong uid );
 
   /** The uidvalidity of the last update */
   void setUidValidity(const QString &validity) { mUidValidity = validity; }

@@ -111,6 +111,7 @@ protected slots:
   virtual void slotPutNextMessage();
   virtual void slotPutMessageDataReq( KIO::Job *job, QByteArray &data );
   virtual void slotPutMessageResult( KIO::Job *job );
+  virtual void slotPutMessageInfoData(KIO::Job *, const QString &data);
   virtual void slotDeleteResult( KIO::Job *job );
   virtual void slotDeleteNextFolder( KIO::Job *job = 0 );
   virtual void slotCheckUidValidityResult( KIO::Job *job );

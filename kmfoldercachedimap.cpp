@@ -239,16 +239,11 @@ void KMFolderCachedImap::reloadUidMap()
   uidMap.clear();
   open();
   for( int i = 0; i < count(); ++i ) {
-    bool unget = !isMessage(i);
-    bool ok;
-    KMMessage *msg = getMsg(i);
+    KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue;
-    ulong uid = msg->headerField("X-UID").toULong(&ok);
-    if (unget) unGetMsg(i);
-    if( ok ) {
-      uidMap.insert( uid, i );
-      if( uid > mLastUid ) setLastUid( uid );
-    }
+    ulong uid = msg->UID();
+    uidMap.insert( uid, i );
+    if( uid > mLastUid ) setLastUid( uid );
   }
   close();
   uidMapDirty = false;
@@ -266,9 +261,8 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
                                         int* index_return )
 {
   // Possible optimization: Only dirty if not filtered below
-  bool ok;
-  ulong uid = msg->headerField("X-UID").toULong( &ok );
-  if( ok ) {
+  ulong uid = msg->UID();
+  if( uid != 0 ) {
     uidMapDirty = true;
     if( uid > mLastUid )
       setLastUid( uid );
@@ -289,6 +283,7 @@ int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
 {
   // Strip the IMAP UID
   msg->removeHeaderField( "X-UID" );
+  msg->setUID( 0 );
 
   // Add it to storage
   return addMsgInternal( msg, false, index_return );
@@ -362,7 +357,7 @@ ulong KMFolderCachedImap::lastUid()
   return mLastUid;
 }
 
-KMMessage* KMFolderCachedImap::findByUID( ulong uid )
+KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
 {
   bool mapReloaded = false;
   if( uidMapDirty ) {
@@ -372,12 +367,9 @@ KMMessage* KMFolderCachedImap::findByUID( ulong uid )
 
   QMap<ulong,int>::Iterator it = uidMap.find( uid );
   if( it != uidMap.end() ) {
-    bool unget = !isMessage(count() - 1);
-    KMMessage* msg = getMsg( *it );
-    if( msg && msg->headerField("X-UID").toULong() == uid )
+    KMMsgBase *msg = getMsgBase( *it );
+    if( msg && msg->UID() == uid )
       return msg;
-    else if( unget )
-      unGetMsg( *it );
   }
 
   // Not found by now
@@ -771,14 +763,10 @@ QValueList<unsigned long> KMFolderCachedImap::findNewMessages()
 {
   QValueList<unsigned long> result;
   for( int i = 0; i < count(); ++i ) {
-    bool unget = !isMessage(i);
-    KMMessage *msg = getMsg(i);
+    KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue; /* what goes on if getMsg() returns 0? */
-    if( msg->headerField("X-UID").isEmpty() ) {
+    if ( msg->UID() == 0 )
       result.append( msg->getMsgSerNum() );
-    } else {
-      if (unget) unGetMsg(i);
-    }
   }
   return result;
 }
@@ -894,15 +882,11 @@ bool KMFolderCachedImap::deleteMessages()
   // them one by one because the index list can get resized under
   // us. So use msg pointers instead
   for( int i = 0; i < count(); ++i ) {
-    bool unget = !isMessage(i);
-    KMMessage *msg = getMsg(i);
+    KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue;
-    bool ok;
-    ulong uid = msg->headerField( "X-UID" ).toULong( &ok );
-    if( ok && !uidsOnServer.contains( uid ) )
-      msgsForDeletion.append( msg );
-    else
-      if (unget) unGetMsg(i);
+    ulong uid = msg->UID();
+    if( uid!=0 && !uidsOnServer.contains( uid ) )
+      msgsForDeletion.append( getMsg( i ) );
   }
 
   if( !msgsForDeletion.isEmpty() ) {
@@ -1019,9 +1003,9 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     KMMessage *msg = new KMMessage;
     msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
-    bool ok;
-    ulong uid = msg->headerField("X-UID").toULong(&ok);
-    if( ok ) uidsOnServer.append( uid );
+    ulong uid = msg->UID();
+    if( uid != 0 ) 
+       uidsOnServer.append( uid );
     if ( /*flags & 8 ||*/ uid <= lastUid()) {
       // kdDebug(5006) << "KMFolderCachedImap::slotGetMessagesData() : folder "<<name()<<" already has msg="<<msg->headerField("Subject") << ", UID="<<uid << ", lastUid = " << mLastUid << endl;
       /* If this message UID is not present locally, then it must
@@ -1035,6 +1019,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       } else {
          /* The message is OK, update flags */
          flagsToStatus( existingMessage, flags );
+         kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       }
       delete msg;
     } else {

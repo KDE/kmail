@@ -301,6 +301,7 @@ void CachedImapJob::slotPutNextMessage()
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
 
+  mMsg->setUID( 0 ); // for the index
   QCString cstr(mMsg->asString());
   int a = cstr.find("\nX-UID: ");
   int b = cstr.find('\n', a);
@@ -326,6 +327,9 @@ void CachedImapJob::slotPutNextMessage()
            SLOT( slotPutMessageDataReq(KIO::Job *, QByteArray &) ) );
   connect( simpleJob, SIGNAL( data(KIO::Job *, const QByteArray &) ),
            mFolder, SLOT( slotSimpleData(KIO::Job *, const QByteArray &) ) );
+  connect( simpleJob, SIGNAL(infoMessage(KIO::Job *, const QString &)),
+             SLOT(slotPutMessageInfoData(KIO::Job *, const QString &)) );
+
 }
 
 //-----------------------------------------------------------------------------
@@ -345,6 +349,22 @@ void CachedImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
     (*it).offset = (*it).data.size();
   } else
     data.resize(0);
+}
+
+//----------------------------------------------------------------------------
+void CachedImapJob::slotPutMessageInfoData(KIO::Job *job, const QString &data)
+{
+  KMFolderCachedImap * imapFolder = static_cast<KMFolderCachedImap*>(mDestFolder->storage());
+  KMAcctCachedImap *account = imapFolder->account();
+  ImapAccountBase::JobIterator it = account->findJob( job );
+  if ( it == account->jobsEnd() ) return;
+
+  if (data.find("UID") != -1)
+  {
+    int uid = (data.right(data.length()-4)).toInt();
+    kdDebug( 5006 ) << k_funcinfo << "Server told us uid is: " << uid << endl;
+    mMsg->setUID( uid );
+  }
 }
 
 
@@ -371,7 +391,18 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   emit messageStored( mMsg );
   int i;
   if( ( i = mFolder->find(mMsg) ) != -1 ) {
-    mFolder->removeMsg(i);
+     /*
+      * If we have aquired a uid during upload the server supports the uidnext
+      * extension and there is no need to redownload this mail, we already have
+      * it. Otherwise remove it, it will be redownloaded.
+      */
+     if ( mMsg->UID() == 0 ) {
+        mFolder->removeMsg(i);
+     } else {
+        mFolder->take( i );
+        mFolder->addMsgKeepUID( mMsg );
+        mMsg->setTransferInProgress( false );
+     }
   }
   mMsg = NULL;
   mAccount->removeJob( it );
