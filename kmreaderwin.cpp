@@ -3267,6 +3267,12 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
                        KMMessage::emailAddrAsAnchor(aMsg->cc(),TRUE) + ", ");
     }
 
+    if (!aMsg->bcc().isEmpty())
+    {
+      headerStr.append(i18n("BCC: ")+
+                       KMMessage::emailAddrAsAnchor(aMsg->bcc(),TRUE) + ", ");
+    }
+
     headerStr.append("&nbsp;"+strToHtml(aMsg->dateShortStr()) + ")");
 
     if (hasVCard)
@@ -3293,6 +3299,9 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     if (!aMsg->cc().isEmpty())
       headerStr.append(i18n("CC: ")+
                        KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE) + "<br>");
+    if (!aMsg->bcc().isEmpty())
+      headerStr.append(i18n("BCC: ")+
+                       KMMessage::emailAddrAsAnchor(aMsg->bcc(),FALSE) + "<br>");
     break;
 
   case HdrFancy:
@@ -3331,6 +3340,14 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
       headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
                               .arg(i18n("CC: "))
                               .arg(KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE)));
+    }
+
+    // Bcc line, if any
+    if (!aMsg->bcc().isEmpty())
+    {
+      headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
+                              .arg(i18n("BCC: "))
+                              .arg(KMMessage::emailAddrAsAnchor(aMsg->bcc(),FALSE)));
     }
 
     // the date
