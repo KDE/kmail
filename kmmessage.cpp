@@ -1053,7 +1053,7 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
     headers.ContentType().SetTypeStr(type);
     headers.ContentType().SetSubtypeStr(subtype);
 #ifdef CHARSETS
-    if (!charset.isEmpty())
+    if (!charset.empty())
     {
       DwParameter *param=headers.ContentType().FirstParameter();
       while(param)

@@ -15,7 +15,10 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kfontutils.h"
+
+#ifndef KRN
 #include "kmmainwin.h"
+#endif
 
 #include <assert.h>
 #include <drag.h>
@@ -444,9 +447,11 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotPrint()), keys->print());
   menu->insertSeparator();
   menu->insertItem(i18n("&New Composer..."),this,
-		   SLOT(slotNewComposer()), keys->openNew());
+                   SLOT(slotNewComposer()), keys->openNew());
+#ifndef KRN
   menu->insertItem(i18n("New Mailreader"), this, 
 		   SLOT(slotNewMailReader()));
+#endif
   menu->insertSeparator();
   menu->insertItem(i18n("&Close"),this,
 		   SLOT(slotClose()), keys->close());
@@ -1400,11 +1405,15 @@ void KMComposeWin::slotNewComposer()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotNewMailReader()
 {
+
+#ifndef KRN
   KMMainWin *d;
 
   d = new KMMainWin(NULL);
   d->show();
   d->resize(d->size());
+#endif
+
 }
 
 
