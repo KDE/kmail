@@ -4579,6 +4579,8 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
 
 void PluginPage::savePluginConfig( int pluginno )
 {
+    if ( mCryptPlugList->isEmpty() )
+        return;
     CryptPlugWrapper* wrapper = mCryptPlugList->at( pluginno );
     Q_ASSERT( wrapper );
     if( !wrapper )
