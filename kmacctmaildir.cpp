@@ -150,8 +150,12 @@ void KMAcctMaildir::processNewMail(bool)
   for (i=0; i<num; i++)
   {
 
+    if( KMBroadcastStatus::instance()->abortRequested() ) {
+      KMBroadcastStatus::instance()->setStatusMsg( i18n("Transmission aborted.") );
+      num = i;
+      addedOk = false;
+    }
     if (!addedOk) break;
-    if (KMBroadcastStatus::instance()->abortRequested()) break;
 
     QString statusMsg = statusMsgStub.arg(i);
     KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
