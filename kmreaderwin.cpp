@@ -535,8 +535,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 			     SLOT(slotUrlCopy()), ac, "copy_url" );
   mUrlOpenAction = new KAction( i18n("Open URL"), 0, this,
 			     SLOT(slotUrlOpen()), ac, "open_url" );
-  mAddBookmarksAction = new KAction( i18n("Add Bookmarks..."), 0, this,
-			     SLOT(slotAddBookmarks()), ac, "add_bookmarks" );
+  mAddBookmarksAction = new KAction( i18n("Add to Bookmarks"), "bookmark_add",
+                                     0, this, SLOT(slotAddBookmarks()),
+                                     ac, "add_bookmarks" );
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
 			     SLOT(slotUrlSave()), ac, "saveas_url" );
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
