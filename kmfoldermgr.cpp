@@ -20,6 +20,7 @@
 #include <qdir.h>
 
 #include <kapp.h>
+#include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 
@@ -191,8 +192,12 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       welcomeMessage->setReplyTo(i18n("kmail@kde.org"));
       welcomeMessage->setFrom(i18n("KMail"));
       welcomeMessage->setSubject(i18n("Welcome to KMail!"));
-      //FIXME should also set a charset for the message
-      welcomeMessage->setBody(i18n(KM_WelcomeMsg).local8Bit());
+      welcomeMessage->setHeaderField("Content-Type","text/plain");
+      welcomeMessage->setCharset( KGlobal::locale()->charset() );
+      QTextCodec *codec = QTextCodec::codecForName( KGlobal::locale()
+        ->charset() );
+      welcomeMessage->setContentTransferEncodingStr("8-bit");
+      welcomeMessage->setBody(codec->fromUnicode(i18n(KM_WelcomeMsg)));
       welcomeMessage->setStatus(KMMsgStatusNew);
 
       switch(kernel->filterMgr()->process(welcomeMessage)) {
