@@ -3157,16 +3157,30 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	if(unsorted)
 	    qsort(unsorted, unsorted_count, sizeof(KMSortCacheItem *), //sort
 		  compare_KMSortCacheItem);
-	//merge two sorted lists of siblings
+        
+        /* The sorted list now contains all sorted children of this item, while
+         * the (aptly named) unsorted array contains all as of yet unsorted
+         * ones. It has just been qsorted, so it is in itself sorted. These two
+         * sorted lists are now merged into one. */
 	for(QPtrListIterator<KMSortCacheItem> it(*sorted);
 	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {
+            /* As long as we have something in the sorted list and there is
+               nothing unsorted left, use the item from the sorted list. Also
+               if we are sorting descendingly and the sorted item is supposed
+               to be sorted before the unsorted one do so. In the ascending 
+               case we invert the logic for non top level items. */
 	    if(it.current() &&
-	       (!unsorted || unsorted_off >= unsorted_count ||
-		(ascending && !compare_toplevel && (*it)->key() >= unsorted[unsorted_off]->key()) ||
-		(!ascending && (*it)->key() < unsorted[unsorted_off]->key()))) {
-		new_kci = (*it);
+	       (!unsorted || unsorted_off >= unsorted_count 
+                ||
+		( (ascending && !compare_toplevel ) 
+                  && (*it)->key() < unsorted[unsorted_off]->key()) 
+                ||
+		( !ascending || compare_toplevel 
+                  && (*it)->key() >= unsorted[unsorted_off]->key()))) {
+                new_kci = (*it);
 		++it;
 	    } else {
+                /* Otherwise use the next item of the unsorted list */
 		new_kci = unsorted[unsorted_off++];
 	    }
 	    if(new_kci->item() || new_kci->parent() != i) //could happen if you reparent
@@ -3176,7 +3190,6 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		khi = new KMHeaderItem(i->item(), new_kci->id(), new_kci->key());
                 // If the parent is watched or ignored, propagate that to it's
                 // children
- 
                 if (mFolder->getMsgBase(i->id())->isWatched())
                   mFolder->getMsgBase(new_kci->id())->setStatus(KMMsgStatusWatched);
                 if (mFolder->getMsgBase(i->id())->isIgnored()) {
