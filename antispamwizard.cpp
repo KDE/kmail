@@ -505,6 +505,11 @@ AntiSpamWizard::ConfigReader::ConfigReader( WizardMode mode,
     mConfig = new KConfig( "kmail.antivirusrc", true );
 }
 
+AntiSpamWizard::ConfigReader::~ConfigReader( )
+{
+  delete mConfig;
+}
+
 
 void AntiSpamWizard::ConfigReader::readAndMergeConfig()
 {

@@ -192,6 +192,7 @@ namespace KMail {
           ConfigReader( WizardMode mode,
                         QValueList<SpamToolConfig> & configList );
 
+	~ConfigReader( );
           QValueList<SpamToolConfig> & getToolList() { return mToolList; }
 
           void readAndMergeConfig();
