@@ -789,7 +789,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   if ((!fti->folder || (fti->folder->noContent()
     && fti->parent() == firstChild())))
   {
-    folderMenu->insertItem(i18n("&Create Child Folder..."), this,
+    folderMenu->insertItem(SmallIcon("folder_new"),
+                           i18n("&Create Child Folder..."), this,
                            SLOT(addChildFolder()));
     if (!fti->folder) {
       folderMenu->insertItem(i18n("Compact All &Folders"),
@@ -797,16 +798,18 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
       folderMenu->insertItem(i18n("Expire All Folders"),
 			     kernel->folderMgr(), SLOT(expireAll()));
     } else if (fti->folder->protocol() == "imap")
-      folderMenu->insertItem(i18n("Check &Mail"),
+      folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check &Mail"),
         static_cast<KMFolderImap*>(fti->folder)->account(),
         SLOT(processNewMail()));
   } else {
     if ((fti->folder == kernel->outboxFolder()) && (fti->folder->count()) )
-        folderMenu->insertItem(i18n("Send Queued"), topLevelWidget(),
-                                     SLOT(slotSendQueued()));
+        folderMenu->insertItem(SmallIcon("mail_send"),
+                               i18n("Send Queued"), topLevelWidget(),
+                               SLOT(slotSendQueued()));
     if (!fti->folder->isSystemFolder() || fti->folder->protocol() == "imap")
     {
-      folderMenu->insertItem(i18n("&Create Child Folder..."), this,
+      folderMenu->insertItem(SmallIcon("folder_new"),
+                             i18n("&Create Child Folder..."), this,
                              SLOT(addChildFolder()));
     }
 
@@ -826,7 +829,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
                              SLOT(slotCompactFolder()));
       folderMenu->insertSeparator();
       if (fti->folder->countUnread() > 0)
-        folderMenu->insertItem(i18n("&Mark All Messages as Read"), topLevelWidget(),
+        folderMenu->insertItem(SmallIcon("goto"),
+                               i18n("&Mark All Messages as Read"), topLevelWidget(),
                                SLOT(slotMarkAllAsRead()));
       folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
                              SLOT(slotEmptyFolder()));

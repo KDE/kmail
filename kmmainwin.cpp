@@ -1918,7 +1918,7 @@ void KMMainWin::setupMenuBar()
   connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
   connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
-  (void) new KAction( i18n("&Send Queued"), 0, this,
+  (void) new KAction( i18n("&Send Queued"), "mail_send", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
 
   (void) new KAction( i18n("Address &Book..."), "contents", 0, this,
@@ -1957,7 +1957,7 @@ void KMMainWin::setupMenuBar()
   modifyFolderAction = new KAction( i18n("&Properties..."), 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
-  markAllAsReadAction = new KAction( i18n("&Mark All Messages as Read"), 0, this,
+  markAllAsReadAction = new KAction( i18n("&Mark All Messages as Read"), "goto", 0, this,
 		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
 
   expireFolderAction = new KAction(i18n("E&xpire"), 0, this, SLOT(slotExpireFolder()),
