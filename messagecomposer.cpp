@@ -1092,6 +1092,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   }
 
   // set the main headers
+  QString oldContentType = theMessage.headerField( "Content-Type" );
   theMessage.deleteBodyParts();
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
@@ -1126,10 +1127,11 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
     mOldBodyPart.setTypeStr(   "multipart");
     mOldBodyPart.setSubtypeStr(mEarlyAddAttachments ? "mixed"     : "alternative");
   }
-  else {
-    mOldBodyPart.setTypeStr(   mEarlyAddAttachments ? "multipart" : "text" );
-    mOldBodyPart.setSubtypeStr(mEarlyAddAttachments ? "mixed"     : "plain");
-  }
+  else if( mEarlyAddAttachments ) {
+    mOldBodyPart.setTypeStr( "multipart" );
+    mOldBodyPart.setSubtypeStr( "mixed" );
+  } else
+    mOldBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
 
   mOldBodyPart.setContentDisposition( "inline" );
 
@@ -1198,8 +1200,7 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
       innerBodyPart.setSubtypeStr("alternative");//html");
     }
     else {
-      innerBodyPart.setTypeStr(   "text" );
-      innerBodyPart.setSubtypeStr("plain");
+      innerBodyPart.setOriginalContentTypeStr( oldContentType.utf8() );
     }
     innerBodyPart.setContentDisposition( "inline" );
     QValueList<int> allowedCTEs;
