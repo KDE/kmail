@@ -1333,7 +1333,7 @@ bool KMKernel::folderIsTrash(KMFolder * folder)
   if (folder == the_trashFolder) return true;
   if (folder->folderType() != KMFolderTypeImap) return false;
   KMFolderImap *fi = static_cast<KMFolderImap*>(folder);
-  if (fi->account() && fi->account()->trash() == fi->idString()) 
+  if (fi->account() && fi->account()->trash() == fi->idString())
     return true;
   return false;
 }
@@ -1363,23 +1363,29 @@ KMMsgIndex *KMKernel::msgIndex()
 
 KMainWindow* KMKernel::mainWin()
 {
-  KMainWindow *kmWin = 0;
-
   if (KMainWindow::memberList) {
+    KMainWindow *kmWin = 0;
+
+    // First look for a KMMainWin.
     for (kmWin = KMainWindow::memberList->first(); kmWin;
-        kmWin = KMainWindow::memberList->next())
-      if (kmWin->isA("KMMainWin")) break;
+         kmWin = KMainWindow::memberList->next())
+      if (kmWin->isA("KMMainWin"))
+        return kmWin;
+
+    // There is no KMMainWin. Use any other KMainWindow instead (e.g. in
+    // case we are running inside Kontact) because we anyway only need
+    // it for modal message boxes and for KNotify events.
+    kmWin = KMainWindow::memberList->first();
+    if ( kmWin )
+      return kmWin;
   }
-  if (kmWin) {
-    return kmWin;
-  } else {
-    /* There is not a single KMMainWin. Create one.
-       This could happen if we want to pop up an error message
-       while we are still doing the startup wizard and no other
-       KMainWindow is running. */
-    mWin = new KMMainWin;
-    return mWin;
-  }
+
+  // There's not a single KMainWindow. Create a KMMainWin.
+  // This could happen if we want to pop up an error message
+  // while we are still doing the startup wizard and no other
+  // KMainWindow is running.
+  mWin = new KMMainWin;
+  return mWin;
 }
 
 KMReaderWin* KMKernel::activeReaderWin()
