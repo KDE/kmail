@@ -48,11 +48,10 @@ KMFolderTreeItem::~KMFolderTreeItem()
 {
   if (folder && (folder->protocol() == "imap"))
   {
-    KMFolderImap *imap = static_cast<KMFolderImap*>(folder);
+    KMAcctImap *imap = static_cast<KMFolderImap*>(folder)->account();
     imap->killJobsForItem(this);
     folder->close();
     delete folder;
-    imap = 0;
   }
 }
 
@@ -756,7 +755,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   if (mLastItem && mLastItem != fti && mLastItem->folder
      && (mLastItem->folder->protocol() == "imap"))
   {
-    KMFolderImap *act = static_cast<KMFolderImap*>(mLastItem->folder);
+    KMAcctImap *act = static_cast<KMFolderImap*>(mLastItem->folder)->account();
     act->killAllJobs();
     act->setIdle(TRUE);
   }
@@ -1293,8 +1292,8 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
       delete ftic;
     }
     KMFolderImap *fti_folder = static_cast<KMFolderImap*>(fti->folder);
-    fti_folder->displayProgress();
-    fti_folder->setIdle(TRUE);
+    fti_folder->account()->displayProgress();
+    fti_folder->account()->setIdle(TRUE);
     fti->mImapState = KMFolderTreeItem::imapNoInformation;
   }
 }

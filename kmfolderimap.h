@@ -31,14 +31,9 @@
 #include "kio/job.h"
 #include "kio/global.h"
 
-#include <qdialog.h>
-
 class KMFolderTreeItem;
 class KMFolderImap;
 class KMFolderMaildir;
-
-class QLineEdit;
-class QPushButton;
 
 class KMImapJob : public QObject
 {
@@ -116,11 +111,6 @@ public:
   virtual void readConfig();
 
   /**
-   * Initialize the slave configuration
-   */
-  virtual void initSlaveConfig();
-
-  /**
    * List a directory and add the contents to a KMFolderTreeItem
    */
   void listDirectory(KMFolderTreeItem * fti, bool secondStep = FALSE);
@@ -141,21 +131,6 @@ public:
   void createFolder(KMFolderTreeItem * fti, const QString &name);
 
   /**
-   * Kill all jobs related the the specified folder
-   */
-  void killJobsForItem(KMFolderTreeItem * fti);
-
-  /**
-   * Kill the slave if any jobs are active
-   */
-  void killAllJobs();
-
-  /**
-   * Set the account idle or busy
-   */
-  void setIdle(bool aIdle) { mIdle = aIdle; }
-
-  /**
    * Delete a message
    */
   void deleteMessage(KMMessage * msg);
@@ -170,32 +145,11 @@ public:
    */
   void expungeFolder(KMFolderImap * aFolder);
 
-  struct jobData
-  {
-    QByteArray data;
-    QCString cdata;
-    QStringList items;
-    KMFolderTreeItem *parent;
-    int total, done;
-    bool inboxOnly;
-  };
-  QMap<KIO::Job *, jobData> mapJobData;
-
   /**
-   * Get the URL for the account
-    */
-  KURL getUrl();
-
-  /**
-   * Update the progress bar
+   * Emit the folderComplete signal
    */
-  void displayProgress();
-
-  /**
-   * Get the Slave used for the account
-   */
-  KIO::Slave * slave() { return mSlave; }
-  void slaveDied() { mSlave = NULL; }
+  void sendFolderComplete(KMFolderTreeItem * fti, bool success)
+  { emit folderComplete(fti, success); }
 
 signals:
   void folderComplete(KMFolderTreeItem * fti, bool success);
@@ -233,34 +187,11 @@ protected:
    */
   KMMsgStatus flagsToStatus(int flags, bool newMsg = TRUE);
 
-  /**
-   * Connect to the IMAP server, if no connection is active
-   */
-  bool makeConnection();
-
   bool    gotMsgs;
-  bool    mProgressEnabled;
-  int     mTotal;
-  bool    mIdle;
-  QTimer  mIdleTimer;
-
-  KIO::Slave *mSlave;
-  KIO::MetaData mSlaveConfig;
-
-  QList<KMImapJob> mJobList;
 
   QString mUidValidity;
 
 protected slots:
-  /**
-   * Send a NOOP command or log out when idle
-   */
-  void slotIdleTimeout();
-
-  /**
-   * Kills all jobs
-   */
-  void slotAbortRequested();
 
   /**
    * Add the imap folders to the folder tree
@@ -287,7 +218,7 @@ protected slots:
   /**
    * Retrieve the next message
    */
-  void getNextMessage(jobData & jd);
+  void getNextMessage(KMAcctImap::jobData & jd);
 
   /**
    * For listing the contents of a folder
@@ -316,39 +247,10 @@ protected slots:
    */
   void slotSetStatusResult(KIO::Job * job);
 
-  /**
-   * Display an error message, that connecting failed
-   */
-  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
-
 protected:
   QString    mImapPath;
   QString    mUidNext;
   KMAcctImap *mAccount;
 };
 
-
-//-----------------------------------------------------------------------------
-class KMImapPasswdDialog : public QDialog
-{
-  Q_OBJECT
-
-public:
-  KMImapPasswdDialog(QWidget *parent = 0,const char *name= 0,
-                     KMAcctImap *act=0, const QString &caption=QString::null,
-                     const QString &login=QString::null,
-                     const QString &passwd=QString::null);
-
-private:
-  QLineEdit *usernameLEdit;
-  QLineEdit *passwdLEdit;
-  QPushButton *ok;
-  QPushButton *cancel;
-  KMAcctImap *act;
-
-private slots:
-  void slotOkPressed();
-  void slotCancelPressed();
-
-};
 #endif // kmfolderimap_h

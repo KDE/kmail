@@ -23,6 +23,14 @@
 #define KMAcctImap_h
 
 #include "kmaccount.h"
+#include <qdialog.h>
+#include <kio/global.h>
+#include <kio/job.h>
+
+class QLineEdit;
+class QPushButton;
+class KMFolderTreeItem;
+class KMImapJob;
 
 #define KMAcctImapInherited KMAccount
 
@@ -30,10 +38,16 @@
 class KMAcctImap: public KMAccount
 {
   Q_OBJECT
+  friend class KMImapJob;
 
 public:
   virtual ~KMAcctImap();
   virtual void init(void);
+
+  /**
+   * Initialize the slave configuration
+   */
+  virtual void initSlaveConfig();
 
   /**
    * Imap user login name
@@ -110,6 +124,59 @@ public:
   virtual void processNewMail(bool) { emit finishedCheck(false); }
   virtual void pseudoAssign(KMAccount*);
 
+  struct jobData
+  {
+    QByteArray data;
+    QCString cdata;
+    QStringList items;
+    KMFolderTreeItem *parent;
+    int total, done;
+    bool inboxOnly;
+  };
+  QMap<KIO::Job *, jobData> mapJobData;
+ 
+  /**
+   * Get the URL for the account
+   */
+  KURL getUrl();
+
+  /**
+   * Connect to the IMAP server, if no connection is active
+   */
+  bool makeConnection();
+
+  /**
+   * Update the progress bar
+   */
+  void displayProgress();
+ 
+  /**
+   * Kill all jobs related the the specified folder
+   */
+  void killJobsForItem(KMFolderTreeItem * fti);
+
+  /**
+   * Kill the slave if any jobs are active
+   */
+  void killAllJobs();
+
+  /**
+   * Set the account idle or busy
+   */
+  void setIdle(bool aIdle) { mIdle = aIdle; }
+
+  /**
+   * Get the Slave used for the account
+   */
+  KIO::Slave * slave() { return mSlave; }
+  void slaveDied() { mSlave = NULL; }
+
+signals:
+  /**
+   * Emitted, when the account is deleted
+   */
+  void deleted(KMAcctImap*);
+
 protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
@@ -131,6 +198,53 @@ protected:
   bool    mUseSSL;
   bool    mUseTLS;
   bool    mHiddenFolders;
+  bool    mProgressEnabled;
+  int     mTotal;
+  bool    mIdle;
+  QTimer  mIdleTimer;
+  KIO::Slave *mSlave;
+  KIO::MetaData mSlaveConfig;
+  QList<KMImapJob> mJobList;
+
+protected slots:
+  /**
+   * Send a NOOP command or log out when idle
+   */
+  void slotIdleTimeout();
+ 
+  /**
+   * Kills all jobs
+   */
+  void slotAbortRequested();
+
+  /**
+   * Display an error message, that connecting failed
+   */
+  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 };
 
+
+//-----------------------------------------------------------------------------
+class KMImapPasswdDialog : public QDialog
+{
+  Q_OBJECT
+ 
+public:
+  KMImapPasswdDialog(QWidget *parent = 0,const char *name= 0,
+                     KMAcctImap *act=0, const QString &caption=QString::null,
+                     const QString &login=QString::null,
+                     const QString &passwd=QString::null);
+ 
+private:
+  QLineEdit *usernameLEdit;
+  QLineEdit *passwdLEdit;
+  QPushButton *ok;
+  QPushButton *cancel;
+  KMAcctImap *act;
+ 
+private slots:
+  void slotOkPressed();
+  void slotCancelPressed();
+ 
+};
 #endif /*KMAcctImap_h*/

@@ -31,25 +31,49 @@
 #include <kmmessage.h>
 #include <kconfig.h>
 #include <qpushbutton.h>
+#include <qlineedit.h>
 #include <kapp.h>
+#include <klocale.h>
+#include <kio/scheduler.h>
+#include <kio/slave.h>
+#include <kmessagebox.h>
 
 #include "kmacctimap.h"
 #include "kmglobal.h"
+#include "kbusyptr.h"
 #include "kmacctfolder.h"
+#include "kmbroadcaststatus.h"
+#include "kmfoldertree.h"
 #include <kprocess.h>
 #include <qtooltip.h>
+#include <qlayout.h>
+
+#include <kwin.h>
+#include <kbuttonbox.h>
+#include <kstddirs.h>
 
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   KMAcctImapInherited(aOwner, aAccountName)
 {
   init();
+  mSlave = NULL;
+  mTotal = 0;
+  connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
+          this, SLOT(slotAbortRequested()));
+  connect(&mIdleTimer, SIGNAL(timeout()), SLOT(slotIdleTimeout()));
+  KIO::Scheduler::connect(
+    SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
+    this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
 }
 
 
 //-----------------------------------------------------------------------------
 KMAcctImap::~KMAcctImap()
 {
+  killAllJobs();
+  if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
+  emit deleted(this);
 }
 
 
@@ -73,11 +97,13 @@ void KMAcctImap::init(void)
   mPasswd = "";
   mAuth = "*";
   mStorePasswd = FALSE;
+  mProgressEnabled = FALSE;
   mPrefix = "/";
   mAutoExpunge = TRUE;
   mHiddenFolders = FALSE;
   mUseSSL = FALSE;
   mUseTLS = FALSE;
+  mIdle = TRUE;
 }
 
 //-----------------------------------------------------------------------------
@@ -254,4 +280,268 @@ void KMAcctImap::setHiddenFolders(bool aHiddenFolders)
 void KMAcctImap::setAuth(const QString& aAuth)
 {
   mAuth = aAuth;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::initSlaveConfig()
+{
+  mSlaveConfig.clear();
+  mSlaveConfig.insert("auth", mAuth);
+  mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
+  if (mAutoExpunge) mSlaveConfig.insert("expunge", "auto");
+}
+
+
+//-----------------------------------------------------------------------------
+KURL KMAcctImap::getUrl()
+{
+  KURL url;
+  url.setProtocol(mUseSSL ? QString("imaps") : QString("imap"));
+  url.setUser(mLogin);
+  url.setPass(decryptStr(mPasswd));
+  url.setHost(mHost);
+  url.setPort(mPort);
+  return url;
+}
+ 
+ 
+//-----------------------------------------------------------------------------
+bool KMAcctImap::makeConnection()
+{
+  if (mSlave) return TRUE;
+  if(mPasswd.isEmpty() || mLogin.isEmpty())
+  {
+    QString passwd = decryptStr(mPasswd);
+    QString msg = i18n("Please set Password and Username");
+    KMImapPasswdDialog dlg(NULL, NULL, this, msg, mLogin, passwd);
+    if (!dlg.exec()) return FALSE;
+  }
+  initSlaveConfig();
+  mSlave = KIO::Scheduler::getConnectedSlave(getUrl(), mSlaveConfig);
+  if (!mSlave) return FALSE;
+  return TRUE;
+}
+ 
+ 
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
+  const QString &errorMsg)
+{
+  if (aSlave != mSlave) return;
+  if (errorCode == KIO::ERR_SLAVE_DIED)
+  {
+    mSlave = NULL;
+    KMessageBox::error(0,
+    i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
+  }
+  else KMessageBox::error(0, i18n("Error connecting to %1:\n%2")
+    .arg(mHost).arg(errorMsg));
+  killAllJobs();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::displayProgress()
+{
+  if (mProgressEnabled == mapJobData.isEmpty())
+  {
+    mProgressEnabled = !mapJobData.isEmpty();
+    KMBroadcastStatus::instance()->setStatusProgressEnable( mProgressEnabled );
+  }
+  mIdle = FALSE;
+  if (mapJobData.isEmpty())
+    mIdleTimer.start(15000);
+  else
+    mIdleTimer.stop();
+  int total = 0, done = 0;
+  for (QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+    it != mapJobData.end(); it++)
+  {
+    total += (*it).total;
+    done += (*it).done;
+  }
+  if (total == 0)
+  {
+    mTotal = 0;
+    return;
+  }
+  if (total > mTotal) mTotal = total;
+  done += mTotal - total;
+  KMBroadcastStatus::instance()->setStatusProgressPercent( 100*done / mTotal );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotIdleTimeout()
+{
+  if (mIdle)
+  {
+    if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
+    mSlave = NULL;
+    mIdleTimer.stop();
+  } else {
+    if (mSlave)
+    {
+      KIO::SimpleJob *job = KIO::special(getUrl(), QCString("NOOP"), FALSE);
+      KIO::Scheduler::assignJobToSlave(mSlave, job);
+      connect(job, SIGNAL(result(KIO::Job *)),
+        this, SLOT(slotSimpleResult(KIO::Job *)));
+    }
+    else mIdleTimer.stop();
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotAbortRequested()
+{
+  killAllJobs();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::killAllJobs()
+{
+  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  for (it = mapJobData.begin(); it != mapJobData.end(); it++)
+    if ((*it).parent)
+    {
+      KMFolderImap *fld = static_cast<KMFolderImap*>((*it).parent->folder);
+      (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+      fld->setUidNext("");
+      fld->sendFolderComplete((*it).parent, FALSE);
+      (*it).parent->folder->quiet(FALSE);
+    }
+  if (mapJobData.begin() != mapJobData.end())
+  {
+    mSlave->kill();
+    mSlave = NULL;
+  }
+  mapJobData.clear();
+  mJobList.setAutoDelete(true);
+  mJobList.clear();
+  mJobList.setAutoDelete(false);
+  displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
+{
+  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.begin();
+  while (it != mapJobData.end())
+  {
+    if (it.data().parent == fti)
+    {
+      killAllJobs();
+      break;
+    }
+    else it++;
+  }
+}
+
+
+//=============================================================================
+//
+//  Class  KMImapPasswdDialog
+//
+//=============================================================================
+ 
+KMImapPasswdDialog::KMImapPasswdDialog(QWidget *parent, const char *name,
+                                     KMAcctImap *account,
+                                     const QString &caption,
+                                     const QString &login,
+                                     const QString &passwd)
+  :QDialog(parent,name,true)
+{
+  // This function pops up a little dialog which asks you
+  // for a new username and password if one of them was wrong or not set.
+  QLabel *l;
+ 
+  kernel->kbp()->idle();
+  act = account;
+  KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
+  if (!caption.isNull())
+    setCaption(caption);
+ 
+  QGridLayout *gl = new QGridLayout(this, 5, 2, 10);
+ 
+  QPixmap pix(locate("data", QString::fromLatin1("kdeui/pics/keys.png")));
+  if(!pix.isNull()) {
+    l = new QLabel(this);
+    l->setPixmap(pix);
+    l->setFixedSize(l->sizeHint());
+    gl->addWidget(l, 0, 0);
+  }
+ 
+  l = new QLabel(i18n("You need to supply a username and a\n"
+                      "password to access this mailbox."),
+                 this);
+  l->setFixedSize(l->sizeHint());
+  gl->addWidget(l, 0, 1);
+ 
+  l = new QLabel(i18n("Server:"), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 1, 0);
+ 
+  l = new QLabel(act->host(), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 1, 1);
+ 
+  l = new QLabel(i18n("Login Name:"), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 2, 0);
+ 
+  usernameLEdit = new QLineEdit(login, this);
+  usernameLEdit->setFixedHeight(usernameLEdit->sizeHint().height());
+  usernameLEdit->setMinimumWidth(usernameLEdit->sizeHint().width());
+  gl->addWidget(usernameLEdit, 2, 1);
+ 
+  l = new QLabel(i18n("Password:"), this);
+  l->setMinimumSize(l->sizeHint());
+  gl->addWidget(l, 3, 0);
+ 
+  passwdLEdit = new QLineEdit(this,"NULL");
+  passwdLEdit->setEchoMode(QLineEdit::Password);
+  passwdLEdit->setText(passwd);
+  passwdLEdit->setFixedHeight(passwdLEdit->sizeHint().height());
+  passwdLEdit->setMinimumWidth(passwdLEdit->sizeHint().width());
+  gl->addWidget(passwdLEdit, 3, 1);
+  connect(passwdLEdit, SIGNAL(returnPressed()),
+          SLOT(slotOkPressed()));
+ 
+  KButtonBox *bbox = new KButtonBox(this);
+  bbox->addStretch(1);
+  ok = bbox->addButton(i18n("OK"));
+  ok->setDefault(true);
+  cancel = bbox->addButton(i18n("Cancel"));
+  bbox->layout();
+  gl->addMultiCellWidget(bbox, 4, 4, 0, 1);
+ 
+  connect(ok, SIGNAL(pressed()),
+          this, SLOT(slotOkPressed()));
+  connect(cancel, SIGNAL(pressed()),
+          this, SLOT(slotCancelPressed()));
+ 
+  if(!login.isEmpty())
+    passwdLEdit->setFocus();
+  else
+    usernameLEdit->setFocus();
+  gl->activate();
+}
+ 
+//-----------------------------------------------------------------------------
+void KMImapPasswdDialog::slotOkPressed()
+{
+  act->setLogin(usernameLEdit->text());
+  act->setPasswd(passwdLEdit->text(), act->storePasswd());
+  done(1);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMImapPasswdDialog::slotCancelPressed()
+{
+  done(0);
 }
