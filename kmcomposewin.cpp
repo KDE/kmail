@@ -524,37 +524,37 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   mEdtList.clear();
   row = 0;
   debug( "KMComposeWin::rethinkFields" );
-  if (!fromSlot) allFieldsAction->setChecked(showHeaders&HDR_ALL);
+  if (!fromSlot) allFieldsAction->setChecked(showHeaders==HDR_ALL);
 
-  if (!fromSlot) identityAction->setChecked(showHeaders&HDR_IDENTITY);
+  if (!fromSlot) identityAction->setChecked(abs(mShowHeaders)&HDR_IDENTITY);
   rethinkHeaderLine(showHeaders,HDR_IDENTITY, row, i18n("&Identity:"),
 		    &mLblIdentity, &mIdentity, &mBtnIdentity);
-  if (!fromSlot) transportAction->setChecked(showHeaders&HDR_TRANSPORT);
+  if (!fromSlot) transportAction->setChecked(abs(mShowHeaders)&HDR_TRANSPORT);
   rethinkHeaderLine(showHeaders,HDR_TRANSPORT, row, i18n("Mai&l Transport:"),
 		    &mLblTransport, &mTransport, &mBtnTransport);
-  if (!fromSlot) fromAction->setChecked(showHeaders&HDR_FROM);
+  if (!fromSlot) fromAction->setChecked(abs(mShowHeaders)&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("Fro&m:"),
 		    &mLblFrom, &mEdtFrom, &mBtnFrom);
-  if (!fromSlot) replyToAction->setChecked(showHeaders&HDR_REPLY_TO);
+  if (!fromSlot) replyToAction->setChecked(abs(mShowHeaders)&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
 		    &mLblReplyTo, &mEdtReplyTo, &mBtnReplyTo);
-  if (!fromSlot) toAction->setChecked(showHeaders&HDR_TO);
+  if (!fromSlot) toAction->setChecked(abs(mShowHeaders)&HDR_TO);
   rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("&To:"),
 		    &mLblTo, &mEdtTo, &mBtnTo);
-  if (!fromSlot) ccAction->setChecked(showHeaders&HDR_CC);
+  if (!fromSlot) ccAction->setChecked(abs(mShowHeaders)&HDR_CC);
   rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&Cc:"),
 		    &mLblCc, &mEdtCc, &mBtnCc);
-  if (!fromSlot) bccAction->setChecked(showHeaders&HDR_BCC);
+  if (!fromSlot) bccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Bcc:"),
 		    &mLblBcc, &mEdtBcc, &mBtnBcc);
-  if (!fromSlot) subjectAction->setChecked(showHeaders&HDR_SUBJECT);
+  if (!fromSlot) subjectAction->setChecked(abs(mShowHeaders)&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("S&ubject:"),
 		    &mLblSubject, &mEdtSubject);
 #ifdef KRN
-  if (!fromSlot) newsgroupsAction->setChecked(showHeaders&HDR_NEWSGROUPS);
+  if (!fromSlot) newsgroupsAction->setChecked(abs(mShowHeaders)&HDR_NEWSGROUPS);
   rethinkHeaderLine(showHeaders,HDR_NEWSGROUPS, row, i18n("&Newsgroups:"),
 		    &mLblNewsgroups, &mEdtNewsgroups);
-  if (!fromSlot) followupToAction->setChecked(showHeaders&HDR_FOLLOWUP_TO);
+  if (!fromSlot) followupToAction->setChecked(abs(mShowHeaders)&HDR_FOLLOWUP_TO);
   rethinkHeaderLine(showHeaders,HDR_FOLLOWUP_TO, row, i18n("&Followup-To:"),
 		    &mLblFollowupTo, &mEdtFollowupTo);
 #endif
