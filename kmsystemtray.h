@@ -52,11 +52,6 @@ public:
 
   void hideKMail();
 
-  enum SystrayMode {
-    AlwaysOn,
-    OnNewMail
-  };
-
 private slots:
   void updateNewMessageNotification(KMFolder * folder);
   void foldersChanged();
@@ -89,7 +84,7 @@ private:
 
   QPtrVector<KMFolder> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
-  QMap<KMFolder*, bool> mPendingUpdates;
+  QMap<QGuardedPtr<KMFolder>, bool> mPendingUpdates;
   QTimer *mUpdateTimer;
   time_t mLastUpdate;
 };

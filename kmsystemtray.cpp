@@ -24,8 +24,10 @@
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
 #include "kmacctmgr.h"
+#include "globalsettings.h"
 
 #include <kapplication.h>
+#include <kmainwindow.h>
 #include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kiconeffect.h>
@@ -57,7 +59,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
     mParentVisible( true ),
     mPosOfMainWin( 0, 0 ),
     mDesktopOfMainWin( 0 ),
-    mMode( OnNewMail ),
+    mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
     mNewMessagePopupId(-1),
     mPopupMenu(0)
@@ -122,8 +124,11 @@ void KMSystemTray::buildPopupMenu()
   if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
     action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
-  if ( ( action = mainWidget->action("file_quit") ) )
-    action->plug( mPopupMenu );
+
+  KMainWindow *mainWin = ::qt_cast<KMainWindow*>(getKMMainWidget()->topLevelWidget());
+  if(mainWin)
+    if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
+      action->plug( mPopupMenu );
 }
 
 KMSystemTray::~KMSystemTray()
@@ -142,17 +147,18 @@ void KMSystemTray::setMode(int newMode)
   kdDebug(5006) << "Setting systray mMode to " << newMode << endl;
   mMode = newMode;
 
-  if(mMode == AlwaysOn)
-  {
-    kdDebug(5006) << "Initting alwayson mMode" << endl;
-
-    if(isHidden()) show();
-  } else
-  {
-    if(mCount == 0)
-    {
+  switch ( mMode ) {
+  case GlobalSettings::EnumSystemTrayPolicy::ShowAlways:
+    if ( isHidden() )
+      show();
+    break;
+  case GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread:
+    if ( mCount == 0 && !isHidden() )
       hide();
-    }
+    else if ( mCount > 0 && isHidden() )
+      show();
+  default:
+    kdDebug(5006) << k_funcinfo << " Unknown systray mode " << mMode << endl;
   }
 }
 
@@ -240,8 +246,7 @@ void KMSystemTray::foldersChanged()
   mFoldersWithUnread.clear();
   mCount = 0;
 
-  if(mMode == OnNewMail)
-  {
+  if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
     hide();
   }
 
@@ -263,8 +268,9 @@ void KMSystemTray::foldersChanged()
     KMFolder * currentFolder = *it;
     QString currentName = *strIt;
 
-    if((!currentFolder->isSystemFolder() || (currentFolder->name().lower() == "inbox")) ||
-       (currentFolder->folderType() == KMFolderTypeImap))
+    if ( ((!currentFolder->isSystemFolder() || (currentFolder->name().lower() == "inbox")) ||
+         (currentFolder->folderType() == KMFolderTypeImap)) &&
+         !currentFolder->ignoreNewMail() )
     {
       /** If this is a new folder, start listening for messages */
       connect(currentFolder, SIGNAL(numUnreadMsgsChanged(KMFolder *)),
@@ -474,10 +480,12 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
 
 void KMSystemTray::updateNewMessages()
 {
-  for ( QMap<KMFolder*, bool>::Iterator it = mPendingUpdates.begin();
+  for ( QMap<QGuardedPtr<KMFolder>, bool>::Iterator it = mPendingUpdates.begin();
         it != mPendingUpdates.end(); ++it)
   {
   KMFolder *fldr = it.key();
+  if ( !fldr ) // deleted folder
+    continue;
 
   /** The number of unread messages in that folder */
   int unread = fldr->countUnread();
@@ -515,9 +523,9 @@ void KMSystemTray::updateNewMessages()
     if(unread == 0) continue;
 
     /** Make sure the icon will be displayed */
-    if(mMode == OnNewMail)
-    {
-      if(isHidden()) show();
+    if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread )
+         && isHidden() ) {
+      show();
     }
 
   } else
@@ -538,8 +546,9 @@ void KMSystemTray::updateNewMessages()
 
         mCount = 0;
 
-        if(mMode == OnNewMail)
+        if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
           hide();
+        }
       }
     }
   }

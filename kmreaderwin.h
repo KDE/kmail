@@ -186,13 +186,12 @@ public:
 
   bool isFixedFont() { return mUseFixedFont; }
 
-  /** Return the @ref HtmlWriter connected to the @ref KHTMLPart we use */
+  /** Return the @see HtmlWriter connected to the @see KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
 
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
   KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
-  KAction *viewSourceAction() { return mViewSourceAction; }
   KAction *mailToComposeAction() { return mMailToComposeAction; }
   KAction *mailToReplyAction() { return mMailToReplyAction; }
   KAction *mailToForwardAction() { return mMailToForwardAction; }
@@ -224,7 +223,7 @@ public:
 
   void setUpdateAttachment() { mAtmUpdate = true; }
 
-  /** Access to the @ref KHTMLPart used for the viewer. Use with
+  /** Access to the @see KHTMLPart used for the viewer. Use with
       care! */
   KHTMLPart * htmlPart() const { return mViewer; }
 
@@ -252,9 +251,6 @@ signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
   void replaceMsgByUnencryptedVersion();
-
-  /** Emitted to show a text on the status line. */
-  void statusMsg(const QString& text);
 
   /** The user presses the right mouse button. 'url' may be 0. */
   void popupMenu(KMMessage &msg, const KURL &url, const QPoint& mousePos);
@@ -319,7 +315,6 @@ public slots:
   /** Save the page to a file */
   void slotUrlSave();
   void slotAddBookmarks();
-  void slotShowMsgSrc();
   void slotSaveMsg();
   void slotSaveAttachments();
 
@@ -327,7 +322,7 @@ public slots:
   /** start IM Chat with addressee */
   void slotIMChat();
   void contactStatusChanged( const QString &uid);
-  
+
 protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
@@ -340,7 +335,7 @@ protected slots:
   void slotTouchMessage();
   void slotAtmLoadPart( int );
   void slotAtmDistributeClick();
-  
+
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
@@ -390,6 +385,7 @@ private:
   void createWidgets();
   void createActions( KActionCollection * ac );
   void saveSplitterSizes( KConfigBase & c ) const;
+  QString createAtmFileLink() const;
 
 private:
   bool mHtmlMail, mHtmlOverride;
@@ -433,7 +429,7 @@ private:
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
-  KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+  KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
 
@@ -444,7 +440,6 @@ private:
   bool mAtmUpdate;
   int mChoice;
   KService::Ptr mOffer;
-  enum { ContentType, Filename, Content } mMimeTypeGuessedFrom;
   unsigned long mWaitingForSerNum;
 };
 

@@ -36,7 +36,8 @@ using namespace KMail;
 
 JobScheduler::JobScheduler( QObject* parent, const char* name )
   : QObject( parent, name ), mTimer( this ),
-    mCurrentTask( 0 ), mCurrentJob( 0 ), mIgnoreOpenNotify( false )
+    mPendingImmediateTasks( 0 ),
+    mCurrentTask( 0 ), mCurrentJob( 0 )
 {
   connect( &mTimer, SIGNAL( timeout() ), SLOT( slotRunNextJob() ) );
   // No need to start the internal timer yet, we wait for a task to be scheduled
@@ -46,7 +47,7 @@ JobScheduler::JobScheduler( QObject* parent, const char* name )
 JobScheduler::~JobScheduler()
 {
   // delete tasks in tasklist (no autodelete for QValueList)
-  for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+  for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
     delete (*it);
   }
   delete mCurrentTask;
@@ -55,38 +56,56 @@ JobScheduler::~JobScheduler()
 
 void JobScheduler::registerTask( ScheduledTask* task )
 {
+  bool immediate = task->isImmediate();
   int typeId = task->taskTypeId();
   if ( typeId ) {
     KMFolder* folder = task->folder();
     // Search for an identical task already scheduled
-    for( QValueList<ScheduledTask *>::ConstIterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+    for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       if ( (*it)->taskTypeId() == typeId && (*it)->folder() == folder ) {
 #ifdef DEBUG_SCHEDULER
         kdDebug(5006) << "JobScheduler: already having task type " << typeId << " for folder " << folder->label() << endl;
 #endif
         delete task;
+        if ( !mCurrentTask && immediate ) {
+          ScheduledTask* task = *it;
+          removeTask( it );
+          runTaskNow( task );
+        }
         return;
       }
     }
     // Note that scheduling an identical task as the one currently running is allowed.
   }
+  if ( !mCurrentTask && immediate )
+    runTaskNow( task );
+  else {
 #ifdef DEBUG_SCHEDULER
-  kdDebug(5006) << "JobScheduler: adding task " << task << " (type " << task->taskTypeId()
-                << ") for folder " << task->folder() << " " << task->folder()->label() << endl;
+    kdDebug(5006) << "JobScheduler: adding task " << task << " (type " << task->taskTypeId()
+                  << ") for folder " << task->folder() << " " << task->folder()->label() << endl;
 #endif
-  mTaskList.append( task );
-  if ( !mTimer.isActive() )
-    restartTimer();
+    mTaskList.append( task );
+    if ( immediate )
+      ++mPendingImmediateTasks;
+    if ( !mCurrentTask && !mTimer.isActive() )
+      restartTimer();
+  }
+}
+
+void JobScheduler::removeTask( TaskList::Iterator& it )
+{
+  if ( (*it)->isImmediate() )
+    --mPendingImmediateTasks;
+  mTaskList.remove( it );
 }
 
 void JobScheduler::notifyOpeningFolder( KMFolder* folder )
 {
   if ( mCurrentTask && mCurrentTask->folder() == folder ) {
-    if ( mIgnoreOpenNotify ) { // set when starting a job for this folder
+    if ( mCurrentJob->isOpeningFolder() ) { // set when starting a job for this folder
 #ifdef DEBUG_SCHEDULER
       kdDebug(5006) << "JobScheduler: got the opening-notification for " << folder->label() << " as expected." << endl;
 #endif
-      mIgnoreOpenNotify = false;
     } else {
       // Jobs scheduled from here should always be cancellable.
       // One exception though, is when ExpireJob does its final KMMoveCommand.
@@ -118,13 +137,14 @@ void JobScheduler::slotRunNextJob()
     Q_ASSERT( mCurrentTask == 0 );
     ScheduledTask* task = 0;
     // Find a task suitable for being run
-    for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+    for( TaskList::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
       // Remove if folder died
-      if ( (*it)->folder() == 0 ) {
+      KMFolder* folder = (*it)->folder();
+      if ( folder == 0 ) {
 #ifdef DEBUG_SCHEDULER
         kdDebug(5006) << "   folder for task " << (*it) << " was deleted" << endl;
 #endif
-        mTaskList.remove( it );
+        removeTask( it );
         if ( !mTaskList.isEmpty() )
           slotRunNextJob(); // to avoid the mess with invalid iterators :)
         else
@@ -133,15 +153,15 @@ void JobScheduler::slotRunNextJob()
       }
       // The condition is that the folder must be unused (not open)
       // But first we ask search folders to release their access to it
-      kmkernel->searchFolderMgr()->tryReleasingFolder( (*it)->folder() );
+      kmkernel->searchFolderMgr()->tryReleasingFolder( folder );
 #ifdef DEBUG_SCHEDULER
-      kdDebug(5006) << "   looking at folder " << (*it)->folder()->label()
-                    << " " << (*it)->folder()->location()
+      kdDebug(5006) << "   looking at folder " << folder->label()
+                    << " " << folder->location()
                     << "  isOpened=" << (*it)->folder()->isOpened() << endl;
 #endif
-      if ( !(*it)->folder()->isOpened() ) {
+      if ( !folder->isOpened() ) {
         task = *it;
-        mTaskList.remove( it );
+        removeTask( it );
         break;
       }
     }
@@ -155,15 +175,21 @@ void JobScheduler::slotRunNextJob()
 
 void JobScheduler::restartTimer()
 {
+  if ( mPendingImmediateTasks > 0 )
+    slotRunNextJob();
+  else
+  {
 #ifdef DEBUG_SCHEDULER
-  mTimer.start( 10000 ); // 10 seconds
+    mTimer.start( 10000 ); // 10 seconds
 #else
-  mTimer.start( 1 * 60000 ); // 1 minute
+    mTimer.start( 1 * 60000 ); // 1 minute
 #endif
+  }
 }
 
 void JobScheduler::runTaskNow( ScheduledTask* task )
 {
+  Q_ASSERT( mCurrentTask == 0 );
   if ( mCurrentTask ) {
     interruptCurrentTask();
   }
@@ -187,9 +213,7 @@ void JobScheduler::runTaskNow( ScheduledTask* task )
   // Register the job in the folder. This makes it autodeleted if the folder is deleted.
   mCurrentTask->folder()->storage()->addJob( mCurrentJob );
   connect( mCurrentJob, SIGNAL( finished() ), this, SLOT( slotJobFinished() ) );
-  mIgnoreOpenNotify = true; // Obviously we'll have to open the folder ourselves
   mCurrentJob->start();
-  mIgnoreOpenNotify = false;
 }
 
 void JobScheduler::slotJobFinished()
@@ -203,6 +227,16 @@ void JobScheduler::slotJobFinished()
   mCurrentJob = 0;
   if ( !mTaskList.isEmpty() )
     restartTimer();
+}
+
+////
+
+KMail::ScheduledJob::ScheduledJob( KMFolder* folder, bool immediate )
+  : FolderJob( 0, tOther, folder ), mImmediate( immediate ),
+    mOpeningFolder( false )
+{
+  mCancellable = true;
+  mSrcFolder = folder;
 }
 
 #include "jobscheduler.moc"
