@@ -255,12 +255,17 @@ namespace KMail {
     return Connecting;
   }
 
+  bool ImapAccountBase::handleJobError( KIO::Job *job, const QString& context, bool abortSync )
+  {
+    return handleJobErrorInternal( job->error(), job->errorText(), job, context, abortSync );
+  }
+
   // Deprecated method for error handling. Please port to handleJobError.
   void ImapAccountBase::slotSlaveError(KIO::Slave *aSlave, int errorCode,
                                        const QString &errorMsg )
   {
     if (aSlave != mSlave) return;
-    handleJobError( errorCode, errorMsg, 0, QString::null, true );
+    handleJobErrorInternal( errorCode, errorMsg, 0, QString::null, true );
   }
 
   void ImapAccountBase::postProcessNewMail( KMFolder * folder ) {
@@ -585,7 +590,7 @@ namespace KMail {
   {
       if (aSlave != mSlave) return;
       // was: slotSlaveError( aSlave, errorCode, errorMsg );
-      handleJobError( errorCode, errorMsg, 0, QString::null, true );
+      handleJobErrorInternal( errorCode, errorMsg, 0, QString::null, true );
       emit connectionResult( errorCode );
   }
 
@@ -821,7 +826,7 @@ namespace KMail {
      int errorCode = job->error();
      if (errorCode && errorCode != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
      {
-       bool cont = handleJobError( errorCode, job->errorText(), job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
+       bool cont = handleJobError( job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
        emit imapStatusChanged( (*it).parent, (*it).path, cont );
      }
      else

@@ -35,6 +35,7 @@
 #endif
 
 #include "cachedimapjob.h"
+#include "imapaccountbase.h"
 
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
@@ -217,7 +218,7 @@ void CachedImapJob::slotDeleteResult( KIO::Job * job )
 
   if (job->error()) {
     mErrorCode = job->error();
-    mAccount->handleJobError( mErrorCode, job->errorText(), job, i18n( "Error while deleting messages on the server: " ) + '\n' );
+    mAccount->handleJobError( job, i18n( "Error while deleting messages on the server: " ) + '\n' );
   }
   else
     mAccount->removeJob(it);
@@ -236,7 +237,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
 
     if (job->error()) {
       mErrorCode = job->error();
-      mAccount->handleJobError( mErrorCode, job->errorText(), job, i18n( "Error while retrieving message on the server: " ) + '\n' );
+      mAccount->handleJobError( job, i18n( "Error while retrieving message on the server: " ) + '\n' );
       delete this;
       return;
     }
@@ -416,7 +417,7 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
     QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>" + i18n("Could not upload the message %1 on the server from folder %2 with URL %3.").arg((*it).items[0]).arg(mFolder->label()).arg((*it).htmlURL())
       + "</p><p>" + i18n("This could be because you do not have permission to do this; the error message from the server communication is here:") + "</p>";
-    mAccount->handleJobError( job->error(), job->errorText(), job, myError );
+    mAccount->handleJobError( job, myError );
     delete this;
     return;
   }
@@ -460,7 +461,7 @@ void CachedImapJob::slotAddNextSubfolder( KIO::Job * job )
       QString myError = "<p><b>" + i18n("Error while uploading folder")
         + "</b></p><p>" + i18n("Could not make the folder <b>%1</b> on the server.").arg((*it).items[0])
         + "</p><p>" + i18n("This could be because you do not have permission to do this, or because the folder is already present on the server; the error message from the server communication is here:") + "</p>";
-      mAccount->handleJobError( job->error(), job->errorText(), job, myError );
+      mAccount->handleJobError( job, myError );
     }
 
     if( job->error() ) {
@@ -504,7 +505,7 @@ void CachedImapJob::slotDeleteNextFolder( KIO::Job *job )
     }
 
     if( job->error() ) {
-      mAccount->handleJobError( job->error(), job->errorText(), job, i18n( "Error while deleting folder %1 on the server: " ).arg( (*it).path ) + '\n' );
+      mAccount->handleJobError( job, i18n( "Error while deleting folder %1 on the server: " ).arg( (*it).path ) + '\n' );
       delete this;
       return;
     }
@@ -554,7 +555,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
   }
 
   if( job->error() ) {
-    mAccount->handleJobError( job->error(), job->errorText(), job, i18n( "Error while reading folder %1 on the server: " ).arg( (*it).parent->label() ) + '\n' );
+    mAccount->handleJobError( job, i18n( "Error while reading folder %1 on the server: " ).arg( (*it).parent->label() ) + '\n' );
     delete this;
     return;
   }
@@ -647,7 +648,7 @@ void CachedImapJob::slotRenameFolderResult( KIO::Job *job )
   }
 
   if( job->error() ) {
-    mAccount->handleJobError( job->error(), job->errorText(), job, i18n( "Error while trying to rename folder %1" ).arg( mFolder->label() ) + '\n' );
+    mAccount->handleJobError( job, i18n( "Error while trying to rename folder %1" ).arg( mFolder->label() ) + '\n' );
   } else {
     // Okay, the folder seems to be renamed on the server,
     // now rename it on disk
@@ -677,7 +678,7 @@ void CachedImapJob::slotListMessagesResult( KIO::Job * job )
 
   if (job->error()) {
     mErrorCode = job->error();
-    mAccount->handleJobError( mErrorCode, job->errorText(), job, i18n( "Error while deleting messages on the server: " ) + '\n' );
+    mAccount->handleJobError( job, i18n( "Error while deleting messages on the server: " ) + '\n' );
   }
   else
     mAccount->removeJob(it);

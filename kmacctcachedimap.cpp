@@ -123,7 +123,7 @@ void KMAcctCachedImap::setAutoExpunge( bool /*aAutoExpunge*/ )
 }
 
 //-----------------------------------------------------------------------------
-bool KMAcctCachedImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
+bool KMAcctCachedImap::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
 {
   // Copy job's data before a possible killAllJobs
   QStringList errors;

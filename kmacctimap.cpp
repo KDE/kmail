@@ -86,7 +86,7 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 
 //-----------------------------------------------------------------------------
 
-bool KMAcctImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Job* /*job*/, const QString& /*context*/, bool /*abortSync*/ )
+bool KMAcctImap::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* /*job*/, const QString& /*context*/, bool /*abortSync*/ )
 {
   if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;

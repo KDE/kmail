@@ -92,12 +92,6 @@ public:
    */
   virtual void readConfig(KConfig& config);
 
-  /**
-   * Handle an error coming from a KIO job
-   * See ImapAccountBase::handleJobError for details.
-   */
-  virtual bool handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
-
 public slots:
   void processNewMail() { processNewMail(TRUE); }
 
@@ -110,6 +104,11 @@ protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
   KMAcctImap(KMAcctMgr* owner, const QString& accountName, uint id);
+  /**
+   * Handle an error coming from a KIO job
+   * See ImapAccountBase::handleJobError for details.
+   */
+  virtual bool handleJobErrorInternal( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
   QPtrList<KMail::ImapJob> mJobList;
   QGuardedPtr<KMFolderImap> mFolder;

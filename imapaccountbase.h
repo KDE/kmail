@@ -252,22 +252,10 @@ namespace KMail {
     void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
     /**
-     * Handle an error coming from a KIO job
-     * and abort everything (in all cases) if abortSync is true [this is for slotSlaveError].
-     * Otherwise (abortSync==false), dimap will only abort in case of severe errors (connection broken),
-     * but on "normal" errors (no permission to delete, etc.) it will ask the user.
-     *
-     * @param error the error code, usually job->error())
-     * @param errorMsg the error message, usually job->errorText()
-     * @param job the kio job (can be 0). If set, removeJob will be called automatically.
-     * This is important! It means you should not call removeJob yourself in case of errors.
-     * We can't let the caller do that, since it should only be done afterwards, and only if we didn't abort.
-     *
-     * @param context a sentence that gives some context to the error, e.g. i18n("Error while uploading message [...]")
-     * @param abortSync if true, abort sync in all cases (see above). If false, ask the user (when possible).
-     * @return false when aborting, true when continuing
+     * React to an error from the job. Uses job->error and job->errorString and calls
+     * the protected virtual handleJobError with them. See below for details.
      */
-    virtual bool handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false ) = 0;
+    bool handleJobError( KIO::Job* job, const QString& context, bool abortSync = false );
 
   public slots:
     /**
@@ -332,6 +320,24 @@ namespace KMail {
     */
     void slotSimpleResult(KIO::Job * job);
   protected:
+
+  /**
+     * Handle an error coming from a KIO job
+     * and abort everything (in all cases) if abortSync is true [this is for slotSlaveError].
+     * Otherwise (abortSync==false), dimap will only abort in case of severe errors (connection broken),
+     * but on "normal" errors (no permission to delete, etc.) it will ask the user.
+     *
+     * @param error the error code, usually job->error())
+     * @param errorMsg the error message, usually job->errorText()
+     * @param job the kio job (can be 0). If set, removeJob will be called automatically.
+     * This is important! It means you should not call removeJob yourself in case of errors.
+     * We can't let the caller do that, since it should only be done afterwards, and only if we didn't abort.
+     *
+     * @param context a sentence that gives some context to the error, e.g. i18n("Error while uploading message [...]")
+     * @param abortSync if true, abort sync in all cases (see above). If false, ask the user (when possible).
+     * @return false when aborting, true when continuing
+     */
+    virtual bool handleJobErrorInternal( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false ) = 0;
 
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;
