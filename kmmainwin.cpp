@@ -618,7 +618,8 @@ void KMMainWin::slotMailChecked(bool newMail) {
     return;
 
   if (mBeepOnNew) {
-    KNotifyClient::beep();
+//    KNotifyClient::beep();  FIXME: Use this one, when kdelibs-2.1 is out
+    KApplication::beep();
   }
 
   // FIXME: change system() to a KProcess
