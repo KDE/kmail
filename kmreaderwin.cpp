@@ -2075,7 +2075,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
             messagePart.keyId = ext.fingerprint; // take fingerprint if no id found (e.g. for S/MIME)
 	// ### Ugh. We depend on two enums being in sync:
         messagePart.keyTrust = (Kpgp::Validity)ext.validity;
-        messagePart.signer = QString::fromUtf8( ext.userid );
+        if( ext.userid && *ext.userid )
+            messagePart.signer = QString::fromUtf8( ext.userid );
         if( ext.creation_time )
             messagePart.creationTime = *ext.creation_time;
         if(     70 > messagePart.creationTime.tm_year
