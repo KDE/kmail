@@ -26,7 +26,9 @@
 
 class KMFolderImap;
 class KMFolderTreeItem;
-class KMImapJob;
+namespace KMail {
+  class ImapJob;
+}
 namespace KIO {
   class Job;
 };
@@ -35,7 +37,7 @@ namespace KIO {
 class KMAcctImap: public KMail::ImapAccountBase
 {
   Q_OBJECT
-  friend class KMImapJob;
+  friend class KMail::ImapJob;
 
 protected: // ### Hacks
   void setPrefixHook();
@@ -94,7 +96,7 @@ protected:
   friend class KMPasswdDialog;
   KMAcctImap(KMAcctMgr* owner, const QString& accountName);
 
-  QPtrList<KMImapJob> mJobList;
+  QPtrList<KMail::ImapJob> mJobList;
   KMFolderImap *mFolder;
   QPtrList<QGuardedPtr<KMFolder> > mOpenFolders;
 

@@ -58,6 +58,8 @@
 #include "kmreaderwin.h"
 #include "kmsender.h"
 #include "kmundostack.h"
+#include "folderjob.h"
+using KMail::FolderJob;
 
 #include "kmcommands.h"
 #include "kmcommands.moc"
@@ -189,13 +191,13 @@ void KMCommand::transferSelectedMsgs()
     if (thisMsg->transferInProgress()) continue;
 
     if ( thisMsg->parent() && !thisMsg->isComplete() && !mProgressDialog->wasCancelled() )
-        kdDebug(5006)<<"### HERE, protocol = "<<thisMsg->parent()->protocol() <<endl;
+        kdDebug(5006)<<"### INCOMPLETE with protocol = "<<thisMsg->parent()->protocol() <<endl;
     if (thisMsg->parent()  && !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
     {
       // the message needs to be transferred first
       complete = false;
       KMCommand::mCountJobs++;
-      KMFolderJob *job = thisMsg->parent()->createJob(thisMsg);
+      FolderJob *job = thisMsg->parent()->createJob(thisMsg);
       // emitted when the message was transferred successfully
       connect(job, SIGNAL(messageRetrieved(KMMessage*)),
               this, SLOT(slotMsgTransfered(KMMessage*)));
@@ -1082,7 +1084,7 @@ void KMCopyCommand::execute()
       {
 	kernel->filterMgr()->tempOpenFolder(mDestFolder);
 	newMsg->setParent(msg->parent());
-        KMFolderJob *job = srcFolder->createJob(newMsg);
+        FolderJob *job = srcFolder->createJob(newMsg);
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
 		mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
         job->start();

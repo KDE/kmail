@@ -612,15 +612,15 @@ bool KMFolderSearch::isReadOnly() const
     return false; //TODO: Make it true and get that working ok
 }
 
-KMFolderJob* KMFolderSearch::createJob(KMMessage*, KMFolderJob::JobType,
-				       KMFolder*)
+FolderJob* KMFolderSearch::doCreateJob(KMMessage*, FolderJob::JobType,
+                                     KMFolder*) const
 {
     // Should never be called
     assert(0);
 }
 
-KMFolderJob* KMFolderSearch::createJob(QPtrList<KMMessage>&, const QString&,
-				       KMFolderJob::JobType, KMFolder*)
+FolderJob* KMFolderSearch::doCreateJob(QPtrList<KMMessage>&, const QString&,
+                                       FolderJob::JobType, KMFolder*) const
 {
     // Should never be called
     assert(0);

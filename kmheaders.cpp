@@ -34,6 +34,8 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
+#include "folderjob.h"
+using KMail::FolderJob;
 #include "mailinglist-magic.h"
 #include "kmbroadcaststatus.h"
 
@@ -1277,7 +1279,7 @@ void KMHeaders::applyFiltersOnMsg()
     msg->setTransferInProgress(true);
     if ( !msg->isComplete() )
     {
-      KMFolderJob *job = mFolder->createJob(msg);
+      FolderJob *job = mFolder->createJob(msg);
       connect(job, SIGNAL(messageRetrieved(KMMessage*)),
               SLOT(slotFilterMsg(KMMessage*)));
       job->start();

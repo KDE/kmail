@@ -33,44 +33,24 @@ using KMail::ImapAccountBase;
 #include "kio/job.h"
 #include "kio/global.h"
 
+#include <qintdict.h>
+#include <qvaluelist.h>
+
 class KMFolderTreeItem;
 class KMFolderImap;
-
-class KMImapJob : public KMFolderJob
-{
-  Q_OBJECT
-  friend class KMAcctImap;
-
-public:
-  KMImapJob(KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0);
-  KMImapJob(QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = 0);
-  ~KMImapJob();
-  static void ignoreJobsForMessage(KMMessage *msg);
-
-private slots:
-  void slotGetMessageResult(KIO::Job * job);
-  void slotGetNextMessage();
-  /** Feeds the message in pieces to the server */
-  void slotPutMessageDataReq(KIO::Job *job, QByteArray &data);
-  void slotPutMessageResult(KIO::Job *job);
-  void slotCopyMessageResult(KIO::Job *job);
-private:
-  void execute();
-  void expireMessages();
-  void init(JobType jt, QString sets, KMFolderImap *folder, QPtrList<KMMessage>& msgList);
-  KIO::Job *mJob;
-  QByteArray mData;
-  QCString mStrData;
-  KMFolderTreeItem *mFti;
-  int mTotal, mDone, mOffset;
-};
+namespace KMail {
+  class FolderJob;
+  class ImapJob;
+}
+using KMail::FolderJob;
+using KMail::ImapJob;
 
 #define KMFolderImapInherited KMFolderMbox
 
 class KMFolderImap : public KMFolderMbox
 {
   Q_OBJECT
-  friend class KMImapJob;
+  friend class ImapJob;
 
 public:
   enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
@@ -217,10 +197,17 @@ public:
    */
   virtual QString fileName() const { return encodeFileName(name()); }
 
-  virtual KMFolderJob* createJob( KMMessage *msg, KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
-                                  KMFolder *folder = 0 );
-  virtual KMFolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                                  KMFolderJob::JobType jt = KMFolderJob::tGetMessage, KMFolder *folder = 0 );
+  /**
+   * Insert a new entry into the uid <=> sernum cache
+   */
+  void insertUidSerNumEntry(ulong uid, const ulong * sernum) {
+    uidmap.insert(uid, sernum); }
+
+  /**
+   * Splits a uid-set into single uids
+   */
+  static QValueList<int> splitSets(QString);
+
   virtual void ignoreJobsForMessage( KMMessage* );
 
 signals:
@@ -261,6 +248,10 @@ public slots:
   void slotSimpleData(KIO::Job * job, const QByteArray & data);
 
 protected:
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt,
+                                  KMFolder *folder ) const;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const;
   /**
    * Convert IMAP flags to a message status
    * @param newMsg specifies whether unseen messages are new or unread
@@ -340,6 +331,7 @@ protected:
   bool        mCheckFlags;
   bool        mReadOnly;
   QGuardedPtr<KMAcctImap> mAccount;
+  QIntDict<ulong> uidmap;
 };
 
 #endif // kmfolderimap_h

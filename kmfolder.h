@@ -16,6 +16,8 @@
 #include "kmmsglist.h"
 #include "kmglobal.h"
 #include "mimelib/string.h"
+#include "folderjob.h"
+using KMail::FolderJob;
 
 #include <stdio.h>
 #include <qptrvector.h>
@@ -27,40 +29,6 @@ class KMMsgDict;
 class KMMsgDictREntry;
 
 #define KMFolderInherited KMFolderNode
-
-
-class KMFolderJob : public QObject
-{
-  Q_OBJECT
-
-public:
-  enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
-                 tGetMessage, tPutMessage, tCopyMessage, tExpireMessages };
-  KMFolderJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0  );
-  KMFolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
-               JobType jt = tGetMessage, KMFolder *folder = 0 );
-  virtual ~KMFolderJob();
-
-  QPtrList<KMMessage> msgList() const;
-  void start();
-  //void KMFolder* srcFolder() const;
-  //void KMFolder* destFolder() const;
-
-signals:
-  void messageRetrieved(KMMessage *);
-  void messageStored(KMMessage *);
-  void messageCopied(KMMessage *);
-  void messageCopied(QPtrList<KMMessage>);
-  void finished();
-protected:
-  virtual void execute()=0;
-  virtual void expireMessages()=0;
-
-  QPtrList<KMMessage> mMsgList;
-  JobType             mType;
-  QString             mSets;
-  KMFolder*           mDestFolder;
-};
 
 /** Mail folder.
  * (description will be here).
@@ -136,22 +104,19 @@ public:
   virtual DwString getDwString(int idx) = 0;
 
   /**
-   * The following two functions have to be reimplemented in derived folders.
-   * They're supposed to create respective KMFolderJob (You should derive KMFolderJob
-   * for each derived KMFolder).
-   */
-  virtual KMFolderJob* createJob( KMMessage *msg, KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
-                                  KMFolder *folder = 0 ) = 0;
-  virtual KMFolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                                  KMFolderJob::JobType jt = KMFolderJob::tGetMessage, KMFolder *folder = 0 ) = 0;
-  /**
    * Removes and deletes all jobs associated with the particular message
    */
   virtual void ignoreJobsForMessage( KMMessage* );
+
   /**
-   * Removes the given job from the list (doesn't delete it)
+   * These methods create respective FolderJob (You should derive FolderJob
+   * for each derived KMFolder).
    */
-  virtual void removeJobFromList( KMFolderJob* job );
+  virtual FolderJob* createJob( KMMessage *msg, FolderJob::JobType jt = FolderJob::tGetMessage,
+                                KMFolder *folder = 0 ) const;
+  virtual FolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                FolderJob::JobType jt = FolderJob::tGetMessage,
+                                KMFolder *folder = 0 ) const;
 
   /** Provides access to the basic message fields that are also stored
     in the index. Whenever you only need subject, from, date, status
@@ -514,7 +479,19 @@ public slots:
       from an IMAP server */
   virtual void reallyAddCopyOfMsg(KMMessage* aMsg);
 
+protected slots:
+  virtual void removeJob( QObject* );
 protected:
+  virtual void addJob( FolderJob* ) const;
+  /**
+   * These two methods actually create the jobs. They have to be implemented
+   * in all folders.
+   * @see createJob
+   */
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const = 0;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const = 0;
+
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
@@ -599,7 +576,7 @@ protected:
    *  REMEBER to add jobs created via createJob
    *  to this list.
    */
-  QPtrList<KMFolderJob> mJobList;
+  mutable QPtrList<FolderJob> mJobList;
 
   /** Icon related variables */
   bool mUseCustomIcons;

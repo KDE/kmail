@@ -15,6 +15,8 @@
 #include "kmmessage.h"
 #include "kmundostack.h"
 #include "kbusyptr.h"
+#include "maildirjob.h"
+using KMail::MaildirJob;
 #include <kio/netaccess.h>
 #include <kapplication.h>
 #include <kdebug.h>
@@ -41,127 +43,6 @@
 #define INIT_MSGS 8
 #endif
 
-//-----------------------------------------------------------------------------
-KMMaildirJob::KMMaildirJob( KMMessage *msg, JobType jt , KMFolder *folder )
-  : KMFolderJob( msg, jt, folder ), mParentFolder( 0 )
-{
-}
-
-//-----------------------------------------------------------------------------
-KMMaildirJob::KMMaildirJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                            JobType jt , KMFolder *folder )
-  : KMFolderJob( msgList, sets, jt, folder ), mParentFolder( 0 )
-{
-}
-
-//-----------------------------------------------------------------------------
-KMMaildirJob::~KMMaildirJob()
-{
-}
-
-//-----------------------------------------------------------------------------
-void KMMaildirJob::setParentFolder( KMFolderMaildir* parent )
-{
-  mParentFolder = parent;
-}
-
-//-----------------------------------------------------------------------------
-void KMMaildirJob::execute()
-{
-  QTimer::singleShot( 0, this, SLOT(startJob()) );
-}
-
-//-----------------------------------------------------------------------------
-void KMMaildirJob::startJob()
-{
-  switch( mType ) {
-  case tGetMessage:
-    {
-      KMMessage* msg = mParentFolder->getMsg( mParentFolder->find( mMsgList.first() ) );
-      emit messageRetrieved( msg );
-    }
-    break;
-  case tDeleteMessage:
-    {
-      static_cast<KMFolder*>(mParentFolder)->removeMsg( mMsgList );
-    }
-    break;
-  case tPutMessage:
-    {
-      mParentFolder->addMsg(  mMsgList.first() );
-      emit messageStored( mMsgList.first() );
-    }
-    break;
-  case tExpireMessages:
-    {
-      expireMessages();
-    }
-    break;
-  case tCopyMessage:
-  case tCreateFolder:
-  case tGetFolder:
-  case tListDirectory:
-    kdDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
-    break;
-  default:
-    break;
-  }
-  //OK, we're done
-  mParentFolder->removeJobFromList( this );
-  delete this;
-}
-
-void
-KMMaildirJob::expireMessages()
-{
-  int              days             = 0;
-  int              maxUnreadTime    = 0;
-  int              maxReadTime      = 0;
-  const KMMsgBase *mb               = 0;
-  QValueList<int>  rmvMsgList;
-  int              i                = 0;
-  time_t           msgTime, maxTime = 0;
-
-  days = mParentFolder->daysToExpire( mParentFolder->getUnreadExpireAge(),
-                                      mParentFolder->getUnreadExpireUnits() );
-  if (days > 0) {
-    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
-    maxUnreadTime = time(0) - days * 3600 * 24;
-  }
-
-  days = mParentFolder->daysToExpire( mParentFolder->getReadExpireAge(),
-                                      mParentFolder->getReadExpireUnits() );
-  if (days > 0) {
-    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
-    maxReadTime = time(0) - days * 3600 * 24;
-  }
-
-  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
-    return;
-  }
-
-  mParentFolder->open();
-  for( i=mParentFolder->count()-1; i>=0; i-- ) {
-    mb = mParentFolder->getMsgBase(i);
-    if (mb == 0) {
-      continue;
-    }
-    msgTime = mb->date();
-
-    if (mb->isUnread()) {
-      maxTime = maxUnreadTime;
-    } else {
-      maxTime = maxReadTime;
-    }
-
-    if (msgTime < maxTime) {
-      mParentFolder->removeMsg( i );
-    }
-  }
-  mParentFolder->close();
-
-  return;
-}
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolderDir* aParent, const QString& aName)
@@ -419,24 +300,22 @@ int KMFolderMaildir::compact()
 }
 
 //-------------------------------------------------------------
-KMFolderJob*
-KMFolderMaildir::createJob( KMMessage *msg, KMFolderJob::JobType jt,
-                            KMFolder *folder )
+FolderJob*
+KMFolderMaildir::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
+                              KMFolder *folder ) const
 {
-  KMMaildirJob *job = new KMMaildirJob( msg, jt, folder );
+  MaildirJob *job = new MaildirJob( msg, jt, folder );
   job->setParentFolder( this );
-  mJobList.append( job );
   return job;
 }
 
 //-------------------------------------------------------------
-KMFolderJob*
-KMFolderMaildir::createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                            KMFolderJob::JobType jt, KMFolder *folder )
+FolderJob*
+KMFolderMaildir::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                              FolderJob::JobType jt, KMFolder *folder ) const
 {
-  KMMaildirJob *job = new KMMaildirJob( msgList, sets, jt, folder );
+  MaildirJob *job = new MaildirJob( msgList, sets, jt, folder );
   job->setParentFolder( this );
-  mJobList.append( job );
   return job;
 }
 

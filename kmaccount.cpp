@@ -20,6 +20,8 @@
 #include "kmsender.h"
 #include "kmbroadcaststatus.h"
 #include "kmmessage.h"
+#include "folderjob.h"
+using KMail::FolderJob;
 
 //----------------------
 #include "kmaccount.moc"
@@ -298,11 +300,12 @@ void KMAccount::deleteFolderJobs()
 //----------------------------------------------------------------------------
 void KMAccount::ignoreJobsForMessage( KMMessage* msg )
 {
-  for( KMFolderJob *it = mJobList.first(); it;
-       it = mJobList.next() ) {
-    if ((*it).msgList().first() == msg) {
-      mJobList.remove( it );
-      delete it;
+  //FIXME: remove, make folders handle those
+  for( QPtrListIterator<FolderJob> it(mJobList); it.current(); ++it ) {
+    if ( it.current()->msgList().first() == msg) {
+      FolderJob *job = it.current();
+      mJobList.remove( job );
+      delete job;
       break;
     }
   }

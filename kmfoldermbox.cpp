@@ -11,6 +11,7 @@
 #include "kmmessage.h"
 #include "kmundostack.h"
 #include "kbusyptr.h"
+#include "mboxjob.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -50,131 +51,6 @@
 #define MSG_SEPERATOR_REGEX "^From .*..:...*$"
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
-//-----------------------------------------------------------------------------
-KMMboxJob::KMMboxJob( KMMessage *msg, JobType jt , KMFolder *folder  )
-    : KMFolderJob( msg, jt, folder )
-{
-}
-
-//-----------------------------------------------------------------------------
-KMMboxJob::KMMboxJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                      JobType jt, KMFolder *folder  )
-    : KMFolderJob( msgList, sets, jt, folder )
-{
-}
-
-//-----------------------------------------------------------------------------
-KMMboxJob::~KMMboxJob()
-{
-}
-
-//-----------------------------------------------------------------------------
-void
-KMMboxJob::execute()
-{
-  QTimer::singleShot( 0, this, SLOT(startJob()) );
-}
-
-//-----------------------------------------------------------------------------
-void
-KMMboxJob::expireMessages()
-{
-  int              days             = 0;
-  int              maxUnreadTime    = 0;
-  int              maxReadTime      = 0;
-  const KMMsgBase *mb               = 0;
-  QValueList<int>  rmvMsgList;
-  int              i                = 0;
-  time_t           msgTime, maxTime = 0;
-
-  days = mParent->daysToExpire( mParent->getUnreadExpireAge(),
-                                mParent->getUnreadExpireUnits() );
-  if (days > 0) {
-    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
-    maxUnreadTime = time(0) - days * 3600 * 24;
-  }
-
-  days = mParent->daysToExpire( mParent->getReadExpireAge(),
-                                mParent->getReadExpireUnits() );
-  if (days > 0) {
-    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
-    maxReadTime = time(0) - days * 3600 * 24;
-  }
-
-  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
-    return;
-  }
-
-  mParent->open();
-  for( i=mParent->count()-1; i>=0; i-- ) {
-    mb = mParent->getMsgBase(i);
-    if (mb == 0) {
-      continue;
-    }
-    msgTime = mb->date();
-
-    if (mb->isUnread()) {
-      maxTime = maxUnreadTime;
-    } else {
-      maxTime = maxReadTime;
-    }
-
-    if (msgTime < maxTime) {
-      mParent->removeMsg( i );
-    }
-  }
-  mParent->close();
-
-  return;
-}
-
-//-----------------------------------------------------------------------------
-void
-KMMboxJob::setParent( KMFolderMbox *parent )
-{
-  mParent = parent;
-}
-
-//-----------------------------------------------------------------------------
-void
-KMMboxJob::startJob()
-{
-  switch( mType ) {
-  case tGetMessage:
-    {
-      KMMessage* msg = mParent->getMsg( mParent->find( mMsgList.first() ) );
-      emit messageRetrieved( msg );
-    }
-    break;
-  case tDeleteMessage:
-    {
-      mParent->removeMsg( mMsgList );
-    }
-    break;
-  case tPutMessage:
-    {
-      mParent->addMsg(  mMsgList.first() );
-      emit messageStored( mMsgList.first() );
-    }
-    break;
-  case tExpireMessages:
-    {
-      expireMessages();
-    }
-    break;
-  case tCopyMessage:
-  case tCreateFolder:
-  case tGetFolder:
-  case tListDirectory:
-    kdDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
-    break;
-  default:
-    break;
-  }
-  //OK, we're done
-  mParent->removeJobFromList( this );
-  delete this;
-}
 
 //-----------------------------------------------------------------------------
 KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
@@ -542,6 +418,25 @@ int KMFolderMbox::lock()
   return 0;
 }
 
+//-------------------------------------------------------------
+FolderJob*
+KMFolderMbox::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
+                           KMFolder *folder ) const
+{
+  MboxJob *job = new MboxJob( msg, jt, folder );
+  job->setParent( this );
+  return job;
+}
+
+//-------------------------------------------------------------
+FolderJob*
+KMFolderMbox::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                           FolderJob::JobType jt, KMFolder *folder ) const
+{
+  MboxJob *job = new MboxJob( msgList, sets, jt, folder );
+  job->setParent( this );
+  return job;
+}
 
 //-----------------------------------------------------------------------------
 int KMFolderMbox::unlock()
@@ -627,27 +522,6 @@ KMFolderIndex::IndexStatus KMFolderMbox::indexStatus()
       : KMFolderIndex::IndexOk;
 }
 
-//-------------------------------------------------------------
-KMFolderJob*
-KMFolderMbox::createJob( KMMessage *msg, KMFolderJob::JobType jt,
-                         KMFolder *folder )
-{
-  KMMboxJob *job = new KMMboxJob( msg, jt, folder );
-  job->setParent( this );
-  mJobList.append( job );
-  return job;
-}
-
-//-------------------------------------------------------------
-KMFolderJob*
-KMFolderMbox::createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                         KMFolderJob::JobType jt, KMFolder *folder )
-{
-  KMMboxJob *job = new KMMboxJob( msgList, sets, jt, folder );
-  job->setParent( this );
-  mJobList.append( job );
-  return job;
-}
 
 //-----------------------------------------------------------------------------
 int KMFolderMbox::createIndexFromContents()

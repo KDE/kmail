@@ -21,7 +21,8 @@ class KMAcctFolder;
 class KConfig;
 class KMMessage;
 class KMFolderJob;
-
+namespace  KMail { class FolderJob; }
+using KMail::FolderJob;
 
 class KMPrecommand : public QObject
 {
@@ -48,7 +49,7 @@ class KMAccount: public QObject, public KAccount
 {
   Q_OBJECT
   friend class KMAcctMgr;
-  friend class KMFolderJob;
+  friend class FolderJob;
 
 public:
   virtual ~KMAccount();
@@ -233,7 +234,7 @@ protected:
   bool mCheckingMail;
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
-  QPtrList<KMFolderJob>  mJobList;
+  QPtrList<FolderJob>  mJobList;
   bool mHasInbox : 1;  
 
   // for resource handling

@@ -24,44 +24,6 @@
 #include <klocale.h>
 #include <kapplication.h>
 
-//----------------------------------------------------------------------------
-KMFolderJob::KMFolderJob( KMMessage *msg, JobType jt, KMFolder* folder )
-  : mType( jt ), mDestFolder( folder )
-{
-  if ( msg ) {
-    mMsgList.append(msg);
-    mSets = msg->headerField("X-UID");
-  }
-}
-
-//----------------------------------------------------------------------------
-KMFolderJob::KMFolderJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                          JobType jt, KMFolder *folder )
-  : mMsgList( msgList ),mType( jt ),
-    mSets( sets ), mDestFolder( folder )
-{
-}
-
-//----------------------------------------------------------------------------
-KMFolderJob::~KMFolderJob()
-{
-  emit finished();
-}
-
-//----------------------------------------------------------------------------
-void
-KMFolderJob::start()
-{
-  execute();
-}
-
-//----------------------------------------------------------------------------
-QPtrList<KMMessage>
-KMFolderJob::msgList() const
-{
-  return mMsgList;
-}
-
 //-----------------------------------------------------------------------------
 
 KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
@@ -112,6 +74,9 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
 KMFolder :: ~KMFolder()
 {
   delete mAcctList;
+  mJobList.setAutoDelete( true );
+  QObject::disconnect( SIGNAL(destroyed(QObject*)), this, 0 );
+  mJobList.clear();
   KMMsgDict::deleteRentry(mRDict);
 }
 
@@ -121,6 +86,18 @@ QString KMFolder::dotEscape(const QString& aStr) const
 {
   if (aStr[0] != '.') return aStr;
   return aStr.left(aStr.find(QRegExp("[^\\.]"))) + aStr;
+}
+
+void KMFolder::addJob( FolderJob* job ) const
+{
+  QObject::connect( job, SIGNAL(destroyed(QObject*)),
+                    SLOT(removeJob(QObject*)) );
+  mJobList.append( job );
+}
+
+void KMFolder::removeJob( QObject* job )
+{
+  mJobList.remove( static_cast<FolderJob*>( job ) );
 }
 
 
@@ -331,7 +308,7 @@ KMFolder::daysToExpire(int number, ExpireUnits units) {
  * mean no-expiry. Also check the general 'expire' flag as well.
  */
 void KMFolder::expireOldMessages() {
-  KMFolderJob *job = createJob( 0, KMFolderJob::tExpireMessages );
+  FolderJob *job = createJob( 0, FolderJob::tExpireMessages );
   job->start();
 }
 
@@ -354,13 +331,15 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
   KMFolder *msgParent = aMsg->parent();
   if (aMsg->transferInProgress())
       return false;
-  if (msgParent  && !aMsg->isComplete())
+  #warning "FIXME : extract tempOpenFolder to some base class"
+  if (msgParent  && msgParent->protocol() == "imap" &&!aMsg->isComplete())
   {
-    KMFolderJob *job = msgParent->createJob(aMsg);
+    FolderJob *job = msgParent->createJob(aMsg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(reallyAddMsg(KMMessage*)));
     job->start();
     aMsg->setTransferInProgress(TRUE);
+    //FIXME: remove that. Maybe extract tempOpenFolder to some base class
     static_cast<KMFolderImap*>(msgParent)->account()->tempOpenFolder(this);
     return FALSE;
   }
@@ -565,6 +544,26 @@ bool KMFolder::isMessage(int idx)
   return (mb && mb->isMessage());
 }
 
+//-----------------------------------------------------------------------------
+FolderJob* KMFolder::createJob( KMMessage *msg, FolderJob::JobType jt,
+                                KMFolder *folder ) const
+{
+  FolderJob * job = doCreateJob( msg, jt, folder );
+  if ( job )
+    addJob( job );
+  return job;
+}
+
+//-----------------------------------------------------------------------------
+FolderJob* KMFolder::createJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                FolderJob::JobType jt, KMFolder *folder ) const
+{
+  FolderJob * job = doCreateJob( msgList, sets, jt, folder );
+  if ( job )
+    addJob( job );
+  return job;
+}
+
 
 //-----------------------------------------------------------------------------
 int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
@@ -602,6 +601,7 @@ int KMFolder::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
     msgParent->open();
 
   open();
+  //FIXME : is it always imap ?
   rc = static_cast<KMFolderImap*>(this)->addMsg(msglist, aIndex_ret); //yuck: Don
   close();
 
@@ -671,7 +671,7 @@ int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
     }
 
     // if the folder is being moved then move its node and, if necessary, also
-    // the associated subfolder directory node to the new parent 
+    // the associated subfolder directory node to the new parent
     if (newParent) {
       if (oldParent->findRef( this ) != -1)
         oldParent->take();
@@ -1037,30 +1037,14 @@ void KMFolder::ignoreJobsForMessage( KMMessage *msg )
   if ( !msg || msg->transferInProgress() )
     return;
 
-  for( KMFolderJob *it = mJobList.first(); it; it = mJobList.next() ) {
+  for( QPtrListIterator<FolderJob> it( mJobList ); it.current(); ++it ) {
     //FIXME: the questions is : should we iterate through all
     //messages in jobs? I don't think so, because it would
     //mean canceling the jobs that work with other messages
-    if ((*it).msgList().first() == msg) {
-
-      mJobList.remove( it );
-      delete it;
+    if ( it.current()->msgList().first() == msg) {
+      mJobList.remove( it.current() );
+      delete it.current();
       break;
-    }
-  }
-}
-
-void KMFolder::removeJobFromList( KMFolderJob* job )
-{
-  if ( !job ) return;
-
-  for( KMFolderJob *it = mJobList.first(); it; it = mJobList.next() ) {
-    //FIXME: the questions is : should we iterate through all
-    //messages in jobs? I don't think so, because it would
-    //mean canceling the jobs that work with other messages
-    if ( it == job ) {
-      mJobList.remove( it );
-      return;
     }
   }
 }

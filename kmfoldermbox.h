@@ -8,29 +8,18 @@
 #define kmfoldermbox_h
 
 #include "kmfolderindex.h"
+#include "mboxjob.h"
+namespace KMail {
+  class FolderJob;
+  class MboxJob;
+}
+using KMail::FolderJob;
+using KMail::MboxJob;
 
 #define KMFolderMboxInherited KMFolderIndex
 
 class KMFolderMbox;
 
-class KMMboxJob : public KMFolderJob
-{
-  Q_OBJECT
-  friend class KMFolderMbox;
-public:
-  KMMboxJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
-  KMMboxJob( QPtrList<KMMessage>& msgList, const QString& sets,
-             JobType jt = tGetMessage, KMFolder *folder = 0 );
-  ~KMMboxJob();
-protected:
-  void execute();
-  void expireMessages();
-  void setParent( KMFolderMbox *parent );
-protected slots:
-  void startJob();
-private:
-  KMFolderMbox *mParent;
-};
 
 /* Mail folder.
  * (description will be here).
@@ -45,7 +34,7 @@ private:
 class KMFolderMbox : public KMFolderIndex
 {
   Q_OBJECT
-  friend class KMMboxJob;
+  friend class MboxJob;
 public:
 
 
@@ -104,12 +93,10 @@ public:
 
   virtual QCString protocol() const { return "mbox"; }
 
-  virtual KMFolderJob* createJob( KMMessage *msg, KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
-                                  KMFolder *folder = 0 );
-  virtual KMFolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                                  KMFolderJob::JobType jt = KMFolderJob::tGetMessage, KMFolder *folder = 0 );
-
 protected:
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */
   virtual KMMessage* readMsg(int idx);

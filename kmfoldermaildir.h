@@ -6,30 +6,17 @@
 #define KMFolderMaildirInherited KMFolderIndex
 
 class KMFolderMaildir;
-
-class KMMaildirJob : public KMFolderJob
-{
-  Q_OBJECT
-public:
-  KMMaildirJob( KMMessage *msg, JobType jt = tGetMessage, KMFolder *folder = 0 );
-  KMMaildirJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                JobType jt = tGetMessage, KMFolder *folder = 0 );
-  ~KMMaildirJob();
-
-  void setParentFolder( KMFolderMaildir* parent );
-protected:
-  void execute();
-  void expireMessages();
-protected slots:
-  void startJob();
-private:
-  KMFolderMaildir* mParentFolder;
-};
+namespace KMail {
+  class FolderJob;
+  class MaildirJob;
+}
+using KMail::FolderJob;
+using KMail::MaildirJob;
 
 class KMFolderMaildir : public KMFolderIndex
 {
   Q_OBJECT
-  friend class KMMaildirJob;
+  friend class MaildirJob;
 public:
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
@@ -95,12 +82,10 @@ public:
 
   virtual QCString protocol() const { return "maildir"; }
 
-  virtual KMFolderJob* createJob( KMMessage *msg, KMFolderJob::JobType jt = KMFolderJob::tGetMessage,
-                                  KMFolder *folder = 0 );
-  virtual KMFolderJob* createJob( QPtrList<KMMessage>& msgList, const QString& sets,
-                                  KMFolderJob::JobType jt = KMFolderJob::tGetMessage, KMFolder *folder = 0 );
-
 protected:
+  virtual FolderJob* doCreateJob( KMMessage *msg, FolderJob::JobType jt, KMFolder *folder ) const;
+  virtual FolderJob* doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
+                                  FolderJob::JobType jt, KMFolder *folder ) const;
   /** Load message from file and store it at given index. Returns 0
     on failure. */
   virtual KMMessage* readMsg(int idx);

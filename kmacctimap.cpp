@@ -31,6 +31,8 @@ using KMail::SieveConfig;
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmmainwin.h"
+#include "imapjob.h"
+using KMail::ImapJob;
 
 #include <kmfolderimap.h>
 #include <kio/scheduler.h>
@@ -198,11 +200,10 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
 //-----------------------------------------------------------------------------
 void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
 {
-  KMImapJob *job;
-  for (KMFolderJob *it = mJobList.first(); it;
-       it = mJobList.next()) {
-    if ((*it).msgList().first() == msg) {
-      job = dynamic_cast<KMImapJob*>(it);
+  ImapJob *job;
+  for ( QPtrListIterator<ImapJob> it( mJobList ); it; ++it ) {
+    if ( it.current()->msgList().first() == msg) {
+      job = dynamic_cast<ImapJob*>( it.current() );
       mapJobData.remove( job->mJob );
       mJobList.remove( job );
       delete job;
