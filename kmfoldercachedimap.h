@@ -177,6 +177,9 @@ public:
    */
   bool listDirectory();
 
+  /** Return the trash folder. */
+  KMFolder* trashFolder() const;
+
 protected slots:
   /**
    * Add the imap folders to the folder tree

@@ -260,7 +260,10 @@ public:
   virtual void close(bool force=FALSE);
 
   void setCheckingValidity( bool val ) { mCheckingValidity = val; }
-  
+
+  /** Return the trash folder. */
+  KMFolder* trashFolder() const;
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 

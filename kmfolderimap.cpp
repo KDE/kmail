@@ -111,6 +111,12 @@ void KMFolderImap::close(bool aForced)
   KMFolderMbox::close(aForced);
 }
 
+KMFolder* KMFolderImap::trashFolder() const
+{
+  QString trashStr = account()->trash();
+  return kmkernel->imapFolderMgr()->findIdString( trashStr );
+}
+
 //-----------------------------------------------------------------------------
 KMMessage* KMFolderImap::getMsg(int idx)
 {
