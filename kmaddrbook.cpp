@@ -20,8 +20,7 @@
 #include <kabc/stdaddressbook.h>
 #include <kabc/distributionlist.h>
 #include <kabc/vcardconverter.h>
-
-void KabcBridge::addresses(QStringList* result) // includes lists
+void KabcBridge::addresses(QStringList& result) // includes lists
 {
   KCursorSaver busy(KBusyPtr::busy()); // loading might take a while
 
@@ -47,7 +46,7 @@ void KabcBridge::addresses(QStringList* result) // includes lists
       if (!email.isEmpty()) {
 	if (n.isEmpty() || (email.find( '<' ) != -1))
 	  addr = empty;
-	else { /* do we really need quotes around this name ? */
+	else { // do we really need quotes around this name ? 
           if (n.find(needQuotes) != -1)
 	    addr = '"' + n + endQuote;
 	  else
@@ -61,7 +60,7 @@ void KabcBridge::addresses(QStringList* result) // includes lists
 	else
 	  addr += email;
 	addr = addr.stripWhiteSpace();
-	result->append( addr );
+	result.append( addr );
       }
     }
   }
@@ -71,8 +70,8 @@ void KabcBridge::addresses(QStringList* result) // includes lists
   QStringList names = manager.listNames();
   QStringList::Iterator jt;
   for ( jt = names.begin(); jt != names.end(); ++jt)
-    result->append( *jt );
-  result->sort();
+    result.append( *jt );
+  result.sort();
 }
 
 QStringList KabcBridge::addresses()
@@ -88,7 +87,7 @@ QStringList KabcBridge::addresses()
 }
 
 //-----------------------------------------------------------------------------
-QString KabcBridge::expandDistributionLists(QString recipients)
+QString KabcBridge::expandDistributionLists(const QString& recipients)
 {
   if (recipients.isEmpty())
     return "";
@@ -167,7 +166,6 @@ QString KabcBridge::expandDistributionLists(QString recipients)
   }
   return expRecipients;
 }
-
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
   if (useKAddressbook()) {
@@ -182,7 +180,7 @@ void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
 }
 
 //-----------------------------------------------------------------------------
-void KMAddrBookExternal::addEmail( const QString &addr, QWidget *parent) {
+void KMAddrBookExternal::addEmail( const QString& addr, QWidget *parent) {
   QString email;
   QString name;
 
@@ -274,7 +272,7 @@ void KMAddrBookExternal::addNewAddressee( QWidget* )
   // silently to kabc.
 }
 
-bool KMAddrBookExternal::addVCard( KABC::Addressee addressee, QWidget *parent )
+bool KMAddrBookExternal::addVCard( const KABC::Addressee& addressee, QWidget *parent )
 {
   KABC::AddressBook *ab = KABC::StdAddressBook::self();
   bool inserted = false;

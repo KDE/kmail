@@ -14,8 +14,8 @@
 class KabcBridge {
 public:
   static QStringList addresses();
-  static void addresses(QStringList* result);
-  static QString expandDistributionLists(QString recipients);
+  static void addresses(QStringList& result);
+  static QString expandDistributionLists(const QString& recipients);
 };
 
 class KMAddrBookExternal {
@@ -27,7 +27,7 @@ public:
   static bool useKab();
   static bool useKAddressbook();
   static bool checkForAddressBook();
-  static bool addVCard( KABC::Addressee addressee, QWidget *parent );
+  static bool addVCard( const KABC::Addressee& addressee, QWidget *parent );
 };
 
 #endif /*KMAddrBook_h*/
