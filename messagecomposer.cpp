@@ -1527,7 +1527,10 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       if ( !encryptThisNow && !signThisNow ) {
         msg->addBodyPart( it->part );
         // I DON'T KNOW WHY, BUT THIS FIXES THE VANISHING BOUNDARY PARAMTER
-        (void)msg->asString();
+        //(void)msg->asString();
+        /* I assume the above was needed for the side effect of assembling the
+         * message. The below does that as well without copying the string. - Till */
+        (void)msg->asDwMessage();
         continue;
       }
 
