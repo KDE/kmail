@@ -180,7 +180,6 @@ void SearchJob::slotSearchFolderComplete()
 
   if ( mLocalSearchPattern->isEmpty() ) {
     // search for the serial number of the UIDs
-    // data contains all found uids separated by blank
     QValueList<Q_UINT32> serNums;
     for ( int i = 0; i < mFolder->count(); ++i ) {
       KMMsgBase * base = mFolder->getMsgBase( i );
