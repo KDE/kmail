@@ -1120,11 +1120,14 @@ bool KMComposeWin::queryClose ()
      mEdtSubject.edited() ||
      (mTransport.lineEdit() && mTransport.lineEdit()->edited()))
   {
-    rc = KMessageBox::warningContinueCancel(this,
-           i18n("Close and discard\nedited message?"),
-           i18n("Close message"), i18n("&Discard"));
+    rc = KMessageBox::warningYesNoCancel(this,
+           i18n("Do you want to discard the message or save it for later?"),
+           i18n("Discard or save message"),
+           i18n("Discard"), i18n("Save as draft"), i18n("Cancel"));
     if (rc == KMessageBox::Cancel)
       return false;
+    else if (rc == KMessageBox::No)
+      slotSaveDraft();
   }
   return true;
 }
