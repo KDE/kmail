@@ -29,12 +29,12 @@ KpgpBase::~KpgpBase()
   
 }
 
-void 
+void
 KpgpBase::readConfig()
 {
   KSimpleConfig *config = Kpgp::getConfig();
   pgpUser = config->readEntry("user");
-  flagEncryptToSelf = config->readBoolEntry("encryptToSelf");
+  flagEncryptToSelf = config->readBoolEntry("encryptToSelf", true);
 }
 
 void
@@ -110,14 +110,17 @@ KpgpBase::run(const char *cmd, const char *passphrase)
     tmp.sprintf("%d",ppass[0]);
     setenv("PGPPASSFD",tmp,1);
 
-    //printf("PGPPASSFD = %s\n",tmp.data());
-    //printf("pass = %s\n",passphrase);
+    //Uncomment these lines for testing only! Doing so will decrease security!
+    //kdDebug() << "pgp PGPPASSFD = " << tmp << endl;
+    //kdDebug() << "pgp pass = " << passphrase << endl;
   }
   else
     unsetenv("PGPPASSFD");
 
-  //printf("cmd = %s\n",cmd);
-  //printf("input = %s\nlength = %d\n",input.data(), input.length());
+  //Uncomment these lines for testing only! Doing so will decrease security!
+  //kdDebug() << "pgp cmd = " << cmd << endl;
+  //kdDebug() << "pgp input = " << QString(input)
+  //          << "input length = " << input.length() << endl;
 
   info = "";
   output = "";
@@ -179,8 +182,14 @@ KpgpBase::run(const char *cmd, const char *passphrase)
   if(passphrase)
     close(ppass[0]);
 
-  //printf("output = %s\n",output.data());
-  //printf("info = %s\n",info.data());
+  //Uncomment these lines for testing only! Doing so will decrease security!
+  //kdDebug() << "pgp output = " << QString(output) << endl;
+  //kdDebug() << "pgp info = " << info << endl;
+
+  /* Make the information visible, so that a user can
+   * get to know what's going on during the pgp calls.
+   */
+  kdDebug() << info << endl;
 
   // we don't want a zombie, do we?  ;-)
   rc = waitpid(0/*child_pid*/, &status, 0);
@@ -218,11 +227,14 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     fclose(pass);
     close(ppass[1]);
 
-    //printf("pass = %s\n",passphrase);
+    //Uncomment these lines for testing only! Doing so will decrease security!
+    //kdDebug() << "pass = " << passphrase << endl;
   }
 
-  //printf("cmd = %s\n",cmd);
-  //printf("input = %s\nlength = %d\n",input.data(), input.length());
+  //Uncomment these lines for testing only! Doing so will decrease security!
+  //kdDebug() << "pgp cmd = " << cmd << endl;
+  //kdDebug() << "pgp input = " << QString(input)
+  //          << "input length = " << input.length() << endl;
 
   info = "";
   output = "";
@@ -300,8 +312,14 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
   if(passphrase)
     close(ppass[0]);
 
-  //printf("output = %s\n",output.data());
-  //printf("info = %s\n",info.data());
+  //Uncomment these lines for testing only! Doing so will decrease security!
+  //kdDebug() << "pgp output = " << QString(output) << endl;
+  //kdDebug() << "pgp info = " << info << endl;
+
+  /* Make the information visible, so that a user can
+   * get to know what's going on during the gpg calls.
+   */
+  kdDebug() << info << endl;
 
   // we don't want a zombie, do we?  ;-)
   rc = waitpid(0/*child_pid*/, &status, 0);
