@@ -191,7 +191,7 @@ void KMHeaders::msgHeaderChanged(int msgId)
   assert(mb != NULL);
 
   flag = mb->status();
-  hdr.sprintf("%c\n%.100s\n %.100s\n%.40s", (char)flag, 
+  hdr.sprintf("%c\n%.100s \n%.100s \n%.40s ", (char)flag, 
 	      (const char*)KMMessage::stripEmailAddr(mb->from()),
 	      (const char*)mb->subject(),
 	      (const char*)mb->dateStr());

@@ -117,7 +117,8 @@ Kpgp::setMessage(const QString mess)
     index = input.find("\n",index+1);
     back  = input.right(input.size() - index - 1);
 
-    runPGP();
+    prepare(TRUE);
+    runPGP(DECRYPT);
     return TRUE;
   }
   //  debug("Kpgp: message does not contain PGP parts");

@@ -720,9 +720,9 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     else if (KCharset(mCharset).isDisplayable()) mComposeCharset=mCharset;
     else mComposeCharset=mDefComposeCharset;
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
-    mEditor->setText(convertToLocal(bodyPart.body()));
+    mEditor->setText(convertToLocal(bodyPart.bodyDecoded()));
 #else   
-    mEditor->setText(bodyPart.body());
+    mEditor->setText(bodyPart.bodyDecoded());
 #endif
     mEditor->insertLine("\n", -1);
 
@@ -746,10 +746,10 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     else if (KCharset(mCharset).isDisplayable()) mComposeCharset=mCharset;
     else mComposeCharset=mDefComposeCharset;
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
-    mEditor->setText(convertToLocal(mMsg->body()));
+    mEditor->setText(convertToLocal(mMsg->bodyDecoded()));
   }  
 #else  
-  else mEditor->setText(mMsg->body());
+  else mEditor->setText(mMsg->bodyDecoded());
 #endif
 
   if (mAutoSign && mayAutoSign) slotAppendSignature();

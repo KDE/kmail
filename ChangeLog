@@ -1,3 +1,15 @@
+1998-05-25  Stefan Taferner  <taferner@kde.org> (KMail-0.6.8)
+
+	* Headers: Empty Subject moved From and Date one column
+	left. Fixed (hopefully).
+
+	* Composer: Send again did not decode quoted-printable
+	sent messages. Fixed.
+
+	* PGP: KMail did not ask for mantra upon first reading of
+	an encrypted message. Applied patch, from Michael Vogel 
+	<icarus@hades.pop-celle.de>, which hopefully works :-)
+
 1998-05-13  Stefan Taferner  <taferner@kde.org> (KMail-0.6.7)
 
 	* Filters: Bugfix: when deleting a folder that was the target
