@@ -122,7 +122,7 @@ void KMMainWin::slotToggleStatusBar()
 
 void KMMainWin::slotEditToolbars()
 {
-  saveMainWindowSettings(KMKernel::config(), "MainWindow");
+  saveMainWindowSettings(KMKernel::config(), "Main Window");
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -134,7 +134,7 @@ void KMMainWin::slotEditToolbars()
 void KMMainWin::slotUpdateToolbars()
 {
   createGUI("kmmainwin.rc");
-  applyMainWindowSettings(KMKernel::config(), "MainWindow");
+  applyMainWindowSettings(KMKernel::config(), "Main Window");
 #if !KDE_IS_VERSION( 3, 1, 90 )
   mToolbarAction->setChecked(!toolBar()->isHidden());
 #endif
