@@ -648,11 +648,12 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
       expunge();
       mLastUid = 0;
       uidmap.clear();
+      setUidValidity(uidv);
     } else {
       if (!mCheckFlags)
         startUid = QString::number(lastUid() + 1);
-      mAccount->removeJob(it);
     }
+    mAccount->removeJob(it);
     reallyGetFolder(startUid);
   }
 }
