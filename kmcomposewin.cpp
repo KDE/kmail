@@ -2587,9 +2587,7 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
   if ( !s_completion ) {
       s_completion = new KCompletion();
       s_completion->setOrder( KCompletion::Sorted );
-#if KDE_VERSION >= 290
       s_completion->setIgnoreCase( true );
-#endif
   }
 
   installEventFilter(this);
@@ -2801,7 +2799,11 @@ void KMLineEdit::doCompletion(bool ctrlT)
     QString match;
     int curPos = cursorPosition();
     if ( mode != KGlobalSettings::CompletionNone )
+    {
         match = s_completion->makeCompletion( s );
+        if (match.isNull())
+            match = s_completion->makeCompletion( "\"" + s );
+    }
 
     // kdDebug(5006) << "** completion for: " << s << " : " << match << endl;
 
@@ -2839,6 +2841,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
             {
                 m_previousAddresses = prevAddr;
                 box->insertItems( s_completion->allMatches( s ));
+                box->insertItems( s_completion->allMatches( "\"" + s ));
                 box->setCancelledText( text() );
                 box->popup();
             }
