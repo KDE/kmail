@@ -614,7 +614,17 @@ void AccountDialog::makePopAccountPage()
   grid->addWidget( mPop.portEdit, 4, 1 );
 
   mPop.storePasswordCheck =
-    new QCheckBox( i18n("Sto&re POP password in configuration file"), page1 );
+    new QCheckBox( i18n("Sto&re POP password"), page1 );
+  QWhatsThis::add( mPop.storePasswordCheck,
+                   i18n("Check this option to have KMail store "
+                   "the password.\nIf KWallet is available "
+                   "the password will be stored there which is considered "
+                   "safe.\nHowever, if KWallet is not available, "
+                   "the password will be stored in KMail's configuration "
+                   "file. The password is stored in an "
+                   "obfuscated format, but should not be "
+                   "considered secure from decryption efforts "
+                   "if access to the configuration file is obtained.") );
   grid->addMultiCellWidget( mPop.storePasswordCheck, 5, 5, 0, 1 );
 
   mPop.leaveOnServerCheck =
@@ -840,7 +850,17 @@ void AccountDialog::makeImapAccountPage( bool connected )
 
   ++row;
   mImap.storePasswordCheck =
-    new QCheckBox( i18n("Sto&re IMAP password in configuration file"), page1 );
+    new QCheckBox( i18n("Sto&re IMAP password"), page1 );
+  QWhatsThis::add( mImap.storePasswordCheck,
+                   i18n("Check this option to have KMail store "
+                   "the password.\nIf KWallet is available "
+                   "the password will be stored there which is considered "
+                   "safe.\nHowever, if KWallet is not available, "
+                   "the password will be stored in KMail's configuration "
+                   "file. The password is stored in an "
+                   "obfuscated format, but should not be "
+                   "considered secure from decryption efforts "
+                   "if access to the configuration file is obtained.") );
   grid->addMultiCellWidget( mImap.storePasswordCheck, row, row, 0, 1 );
 
   if( !connected ) {

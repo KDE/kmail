@@ -126,7 +126,7 @@ namespace KMail {
     bool mUseSSL : 1;
     bool mUseTLS : 1;
     bool mAskAgain : 1;
-    bool mPasswdDirty;
+    bool mPasswdDirty, mStorePasswdInConfig;
 
   };
 

@@ -50,7 +50,7 @@ using KWallet::Wallet;
 using namespace KMail;
 
 KMTransportInfo::KMTransportInfo() : mPasswdDirty( false ),
-  mStorePasswd( false ), mId( 0 )
+  mStorePasswd( false ), mStorePasswdInConfig( false ), mId( 0 )
 {
   name = i18n("Unnamed");
   port = "25";
@@ -87,10 +87,14 @@ void KMTransportInfo::readConfig(int id)
     return;
 
   if ( !mPasswd.isEmpty() ) {
-    // migration to kwallet
-    config->deleteEntry( "pass" );
-    mPasswdDirty = true;
-    writeConfig( id );
+    // migration to kwallet if available
+    if ( Wallet::isEnabled() ) {
+      config->deleteEntry( "pass" );
+      mPasswdDirty = true;
+      mStorePasswdInConfig = false;
+      writeConfig( id );
+    } else
+      mStorePasswdInConfig = true;
   } else {
     // read password if wallet is open, defer otherwise
     if ( Wallet::isOpen( Wallet::NetworkWallet() ) )
@@ -119,24 +123,47 @@ void KMTransportInfo::writeConfig(int id)
   config->writeEntry("specifyHostname", specifyHostname);
   config->writeEntry("localHostname", localHostname);
 
-  // write password to the wallet if necessary
-  if ( storePasswd() && auth && mPasswdDirty ) {
-    Wallet *wallet = kmkernel->wallet();
-    if ( !wallet || wallet->writePassword( "transport-" + QString::number(mId), passwd() ) ) {
-      KMessageBox::information(0, i18n("KWallet is not running. It is strongly recommended to use "
-          "KWallet for managing your passwords."),
-          i18n("KWallet is Not Running"), "KWalletWarning" );
+  if ( storePasswd() ) {
+    // write password into the wallet if possible and necessary
+    bool passwdStored = false;
+    if ( mPasswdDirty ) {
+      Wallet *wallet = kmkernel->wallet();
+      if ( wallet && wallet->writePassword( "transport-" + QString::number(mId), passwd() ) == 0 ) {
+        passwdStored = true;
+        mPasswdDirty = false;
+        mStorePasswdInConfig = false;
+      }
+    } else {
+      passwdStored = !mStorePasswdInConfig; // already in the wallet
+    }
+    // wallet not available, ask the user if we should use the config file instead
+    if ( !passwdStored && ( mStorePasswdInConfig ||  KMessageBox::warningYesNo( 0,
+         i18n("KWallet is not available. It is strongly recommended to use "
+              "KWallet for managing your passwords.\n"
+              "However, KMail can store the password in its configuration "
+              "file instead. The password is stored in an obfuscated format, "
+              "but should not be considered secure from decryption efforts "
+              "if access to the configuration file is obtained.\n"
+              "Do you want to store the password for account '%1' in the "
+              "configuration file?").arg( name ),
+         i18n("KWallet Not Available"),
+         KGuiItem( i18n("Store Password") ),
+         KGuiItem( i18n("Do Not Store Password") ) )
+         == KMessageBox::Yes ) ) {
       config->writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
-    } else
-      mPasswdDirty = false;
+      mStorePasswdInConfig = true;
+    }
   }
 
-  // delete already stored password from the wallet if password storage is disabled
-  if ( !storePasswd() && !Wallet::keyDoesNotExist(
-       Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) ) {
-    Wallet *wallet = kmkernel->wallet();
-    if ( wallet )
-      wallet->removeEntry( "transport-" + QString::number(mId) );
+  // delete already stored password if password storage is disabled
+  if ( !storePasswd() ) {
+    if ( !Wallet::keyDoesNotExist( 
+          Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) ) {
+      Wallet *wallet = kmkernel->wallet();
+      if ( wallet )
+        wallet->removeEntry( "transport-" + QString::number(mId) );
+    }
+    config->deleteEntry( "pass" );
   }
 }
 
@@ -423,10 +450,13 @@ void KMTransportDialog::makeSmtpPage()
   grid->addWidget( mSmtp.passwordEdit, 9, 1 );
 
   mSmtp.storePasswordCheck =
-    new QCheckBox( i18n("&Store SMTP password in configuration file"), page1 );
+    new QCheckBox( i18n("&Store SMTP password"), page1 );
   QWhatsThis::add(mSmtp.storePasswordCheck,
                   i18n("Check this option to have KMail store "
-                  "the SMTP password in its configuration "
+                  "the password.\nIf KWallet is available "
+                  "the password will be stored there which is considered "
+                  "safe.\nHowever, if KWallet is not available, "
+                  "the password will be stored in KMail's configuration "
                   "file. The password is stored in an "
                   "obfuscated format, but should not be "
                   "considered secure from decryption efforts "

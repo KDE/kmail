@@ -57,7 +57,7 @@ public:
 
   private:
     mutable QString mPasswd;
-    bool mPasswdDirty, mStorePasswd;
+    bool mPasswdDirty, mStorePasswd, mStorePasswdInConfig;
     uint mId;
 };
 
