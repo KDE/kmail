@@ -138,15 +138,25 @@ namespace Kleo {
     ~KeyResolver();
 
     struct Item : public KeyApprovalDialog::Item {
-      Item() : KeyApprovalDialog::Item() {}
+      Item()
+	: KeyApprovalDialog::Item(),
+	  signPref( UnknownSigningPreference ),
+	  format( AutoFormat ),
+	  needKeys( true ) {}
+      Item( const QString & a,
+	    EncryptionPreference e, SigningPreference s,
+	    CryptoMessageFormat f )
+	: KeyApprovalDialog::Item( a, std::vector<GpgME::Key>(), e ),
+	  signPref( s ), format( f ), needKeys( true ) {}
       Item( const QString & a, const std::vector<GpgME::Key> & k,
 	    EncryptionPreference e, SigningPreference s,
 	    CryptoMessageFormat f )
 	: KeyApprovalDialog::Item( a, k, e ),
-	  signPref( s ), format( f ) {}
+	  signPref( s ), format( f ), needKeys( false ) {}
 
       SigningPreference signPref;
       CryptoMessageFormat format;
+      bool needKeys;
     };
 
 
