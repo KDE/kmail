@@ -308,7 +308,7 @@ namespace KMail {
 						 i18n("No Email Adress"));
 	if (email.contains('@') > 1) {
 	  KMessageBox::sorry(this,
-						 i18n("Your email address contains two @ characters,"
+						 i18n("Your email address contains more than one @ character,"
 							  "which most email servers do not accept."
 							  "You won't create valid emails without changing your address."),
 						 i18n("No Email Adress"));
