@@ -149,9 +149,9 @@ public slots:
   /** sven: moved here as public */
   void slotCheckMail();
 
-  /** 
+  /**
    * Select the given folder
-   * If the folder is 0 the intro is shown 
+   * If the folder is 0 the intro is shown
    */
   void folderSelected( KMFolder* );
 
@@ -434,7 +434,6 @@ private:
   QString       mStartupFolder;
   int		mMessageStatusId;
   QValueList<int> mPanner1Sep, mPanner2Sep;
-  KMMessage     *mMsgCurrent;
   KURL          mUrlCurrent;
   QPopupMenu	*mActMenu;
   QPopupMenu	*mFileMenu;
@@ -459,7 +458,6 @@ private:
 
   QTimer *menutimer;
 
-  QPtrList<KMMessage> mSelectedMsgs;
   QGuardedPtr<KMail::Vacation> mVacation;
   KActionCollection *mActionCollection;
   QVBoxLayout *mTopLayout;

@@ -2030,11 +2030,9 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     {
       // popup on a mailto URL
       mMsgView->mailToComposeAction()->plug( menu );
-      if ( mMsgCurrent ) {
-        mMsgView->mailToReplyAction()->plug( menu );
-        mMsgView->mailToForwardAction()->plug( menu );
-        menu->insertSeparator();
-      }
+      mMsgView->mailToReplyAction()->plug( menu );
+      mMsgView->mailToForwardAction()->plug( menu );
+      menu->insertSeparator();
       mMsgView->addAddrBookAction()->plug( menu );
       mMsgView->openAddrBookAction()->plug( menu );
       mMsgView->copyAction()->plug( menu );
