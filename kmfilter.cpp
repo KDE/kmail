@@ -73,7 +73,6 @@ KMFilter::~KMFilter()
 bool KMFilter::matches(const KMMessage* msg)
 {
   bool matchesA, matchesB;
-  cout << "," << endl;
 
   matchesA = mRuleA.matches(msg);
   if (mOperator==OpIgnore) return matchesA;

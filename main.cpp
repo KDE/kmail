@@ -409,7 +409,7 @@ static void transferMail(void)
   rc = KMessageBox::questionYesNo(NULL, 
          i18n(
 	    "The directory ~/KMail exists. From now on, KMail uses the\n"
-	    "directory ~/Mail for it's messages.\n"
+	    "directory ~/Mail for its messages.\n"
 	    "KMail can move the contents of the directory ~/KMail into\n"
 	    "~/Mail, but this will replace existing files with the same\n"
 	    "name in the directory ~/Mail (e.g. inbox).\n\n"

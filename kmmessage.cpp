@@ -691,7 +691,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
       pos1 = ccStr.findRev(", ", i);
       if( pos1 == -1 ) pos1 = 0;
       pos2 = ccStr.find(", ", i);
-      ccStr = ccStr.left(pos1) + toStr.right(ccStr.length() - pos2 - 1); //Daniel
+      ccStr = ccStr.left(pos1) + ccStr.right(ccStr.length() - pos2 - 1); //Daniel
     }
     ccStr.truncate(ccStr.length()-2);
 
