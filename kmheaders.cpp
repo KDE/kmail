@@ -10,7 +10,6 @@
 #include <qdragobject.h>
 #include <qptrstack.h>
 #include <qptrqueue.h>
-#include <qheader.h>
 #include <qpainter.h>
 
 #if QT_VERSION < 300

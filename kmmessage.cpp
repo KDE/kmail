@@ -38,7 +38,6 @@
 #include <kwin.h>
 #include <qstringlist.h>
 
-#include "kmmsgpart.h" // for encodeBase64
 
 #if ALLOW_GUI
 #include <kmessagebox.h>

@@ -9,7 +9,6 @@
 #include <qcombobox.h>
 #include <qdragobject.h>
 #include <qlistview.h>
-#include <qcombobox.h>
 #include <qtooltip.h>
 
 #include "kmcomposewin.h"
@@ -24,7 +23,6 @@
 #include <kpgp.h>
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
-#include "kmidentity.h"
 #include "kmfolder.h"
 #include "kmtransport.h"
 
@@ -42,11 +40,9 @@
 
 #include "kmmainwin.h"
 #include "configuredialog.h"
-#include "kfileio.h"
 #include "kmreaderwin.h"
 
 #include <assert.h>
-#include <kapp.h>
 #include <kconfig.h>
 #include <kiconloader.h>
 #include <kmenubar.h>

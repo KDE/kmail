@@ -131,7 +131,6 @@ void KMAddrBookSelDlg::slotCancel()
 //
 //=============================================================================
 
-#include <qvbox.h>
 KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent,
 				      const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Addressbook Manager"),

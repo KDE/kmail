@@ -62,9 +62,7 @@
 //--- Sven's save attachments to /tmp end ---
 
 // for the click on attachment stuff (dnaber):
-#include <kmessagebox.h>
 #include <kuserprofile.h>
-#include <kurl.h>
 #include <kmimemagic.h>
 #include <kmimetype.h>
 

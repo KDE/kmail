@@ -64,7 +64,6 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmversion.h"
-#include "kwin.h"
 #include "kmfldsearch.h"
 #include "mailinglist-magic.h"
 
