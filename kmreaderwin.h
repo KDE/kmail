@@ -78,6 +78,7 @@ private slots:
 	QString parseEAddress(QString);
 	QString parseBodyPart(KMMessagePart *);
 	QString decodeString(const char *, QString); 
+	QString scanURL(QString);
                                                 
 protected:
 	void resizeEvent(QResizeEvent *);

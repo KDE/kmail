@@ -15,60 +15,63 @@
 KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno = 0,KMFolder *f = 0)
 	:QWidget(parent,name)
 {
-	printf("Entering view:  msgno = %i \n",msgno);
+  printf("Entering view:  msgno = %i \n",msgno);
 
-	kdeDir = getenv("KDEDIR");
-	if(!kdeDir)
-		{KMsgBox::message(0,"Ouuch","$KDEDIR not set.\nPlease do so");
-		qApp->quit();
-		}
-	picsDir.append(kdeDir);
-	picsDir +="/lib/pics";
+  kdeDir = getenv("KDEDIR");
+  if(!kdeDir)
+       	{KMsgBox::message(0,"Ouuch","$KDEDIR not set.\nPlease do so");
+       	qApp->quit();}
 
-	currentFolder = new KMFolder();
-	currentFolder = f;
+ picsDir.append(kdeDir);
+ picsDir +="/lib/pics";
+ 
+ currentFolder = new KMFolder();
+ currentFolder = f;
 
-	currentMessage = new KMMessage();
-        currentIndex = msgno;
+ currentMessage = new KMMessage();
+ currentIndex = msgno;
 
-	if(f !=0)
-		currentMessage = f->getMsg(msgno);
-	else 
-		currentMessage= NULL;
-
-	printf("After getmsg\n");	
+ if(f !=0)
+    currentMessage = f->getMsg(msgno);
+ else
+    currentMessage= NULL;
 
 	// Let's initialize the HTMLWidget
 
-	messageCanvas = new KHTMLWidget(this,0,picsDir);
-	messageCanvas->setURLCursor(upArrowCursor);
-	messageCanvas->resize(parent->width()-16,parent->height()-110); //16
-	connect(messageCanvas,SIGNAL(URLSelected(const char *,int)),this,SLOT(openURL(const char *,int)));
-	connect(messageCanvas,SIGNAL(popupMenu(const char *, const QPoint &)), SLOT(popupMenu(const char *, const QPoint &)));
-	vert = new QScrollBar( 0, 110, 12, messageCanvas->height()-110, 0,
+  messageCanvas = new KHTMLWidget(this,0,picsDir);
+  messageCanvas->setURLCursor(upArrowCursor);
+  messageCanvas->resize(parent->width()-16,parent->height()-110); //16
+  connect(messageCanvas,SIGNAL(URLSelected(const char *,int)),this,
+	  SLOT(openURL(const char *,int)));
+  connect(messageCanvas,SIGNAL(popupMenu(const char *, const QPoint &)), 
+	  SLOT(popupMenu(const char *, const QPoint &)));
+  vert = new QScrollBar( 0, 110, 12, messageCanvas->height()-110, 0,
                         QScrollBar::Vertical, this, "vert" );
-        	horz = new QScrollBar( 0, 0, 24, messageCanvas->width()-16, 0,
+  horz = new QScrollBar( 0, 0, 24, messageCanvas->width()-16, 0,
                         QScrollBar::Horizontal, this, "horz" );	
-	connect( messageCanvas, SIGNAL( scrollVert( int ) ), SLOT( slotScrollVert(int)));
-        	connect( messageCanvas, SIGNAL( scrollHorz( int ) ), SLOT( slotScrollHorz(int)));
-        	connect( vert, SIGNAL(valueChanged(int)), messageCanvas, SLOT(slotScrollVert(int)));
-        	connect( horz, SIGNAL(valueChanged(int)), messageCanvas, SLOT(slotScrollHorz(int)));
-	connect( messageCanvas, SIGNAL( documentChanged() ), SLOT( slotDocumentChanged() ) );
-        	connect( messageCanvas, SIGNAL( documentDone() ), SLOT( slotDocumentDone() ) );	
-
+  connect( messageCanvas, SIGNAL( scrollVert( int ) ), 
+	SLOT( slotScrollVert(int)));
+  connect( messageCanvas, SIGNAL( scrollHorz( int ) ), 
+	   SLOT( slotScrollHorz(int)));
+  connect( vert, SIGNAL(valueChanged(int)), messageCanvas, 
+	   SLOT(slotScrollVert(int)));
+  connect( horz, SIGNAL(valueChanged(int)), messageCanvas, 
+	   SLOT(slotScrollHorz(int)));
+  connect( messageCanvas, SIGNAL( documentChanged() ), 
+	   SLOT( slotDocumentChanged() ) );
+  connect( messageCanvas, SIGNAL( documentDone() ), 
+	   SLOT( slotDocumentDone() ) );	
+		
 	// Puh, okay this is done
 
-	QAccel *accel = new QAccel( this );       
-        	accel->connectItem( accel->insertItem(Key_Up),this,SLOT(slotScrollLeRi()) );      
-	accel->connectItem( accel->insertItem(Key_Down),this,SLOT(slotScrollUpDo()) );      
+  QAccel *accel = new QAccel( this );       
+  accel->connectItem( accel->insertItem(Key_Up),this,SLOT(slotScrollLeRi()));
+  accel->connectItem( accel->insertItem(Key_Down),this,SLOT(slotScrollUpDo()));
 
-	if(currentMessage)
-		parseMessage(currentMessage);
-	else
-		clearCanvas();
-
-	printf("Leaving constructor\n");		
-	
+  if(currentMessage)
+    parseMessage(currentMessage);
+  else
+   clearCanvas();
 }
 
 
@@ -77,11 +80,10 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 void KMReaderView::clearCanvas()
 {
 	// Produce a white canvas
-
-	messageCanvas->begin(picsDir);
-	messageCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
-	messageCanvas->end();
-	messageCanvas->parse();
+  messageCanvas->begin(picsDir);
+  messageCanvas->write("<HTML><BODY BGCOLOR=WHITE></BODY></HTML>");
+  messageCanvas->end();
+  messageCanvas->parse();
 }
 
 void KMReaderView::updateDisplay()
@@ -103,20 +105,21 @@ void KMReaderView::resizeEvent(QResizeEvent *)
 
 void KMReaderView::parseMessage(KMMessage *message)
 {
-	QString strTemp;
-	QString str1Temp;
-	QString subjStr;
-	QString text;
-	QString header;
-	QString dateStr;
-	QString fromStr;
-	QString toStr;
-	QString ccStr;
-	long length;
-	int multi=0;
-	int pos=0;
-	int numParts=0;
-	currentMessage = message; // To make sure currentMessage is set.
+  QString strTemp;
+  QString str1Temp;
+  QString subjStr;
+  QString text;
+  QString header;
+  QString dateStr;
+  QString fromStr;
+  QString toStr;
+  QString ccStr;
+  long length;
+  int multi=0;
+  int pos=0;
+  int numParts=0;
+
+  currentMessage = message; // To make sure currentMessage is set.
 
 
 	printf("Debug numBodyparts=%i\n", numParts);
@@ -135,33 +138,12 @@ void KMReaderView::parseMessage(KMMessage *message)
 	strTemp = strTemp.stripWhiteSpace();
 	fromStr.append(strTemp + "</A>"+"<br>");
 
-	ccStr.sprintf("Cc: %s<br>",message->cc());
+	ccStr.sprintf("%s",message->cc());
 	if(ccStr.isEmpty())
-		ccStr = "";
+	  ccStr = "";
 	else
-		/*{pos=0;
-		tempStr =message->cc();
-		tempStr = tempStr.stripWhiteSpace();
-		cout << "->" << tempStr << "<-\n";
-		while((pos=tempStr.find(",",pos+1,0)) != -1)
-			{multi++;
-			temp1Str = tempStr.copy();
-			if(multi==1)
-				{temp1Str.truncate(pos);
-				temp1Str.stripWhiteSpace();
-				cout << "First address:" << temp1Str << "<-\n");
-				temp1Str = parseEAddress(temp1Str);
-				ccStr = temp1Str.copy();
-				}
-			else  
-				{
-
-			}
-			
-		printf("%i addresses in ccStr\n",multi+1);
-		}*/
-		
-			
+	  ccStr.sprintf("Cc: %s",message->cc());
+	
 			 
         subjStr.sprintf("Subject: %s<br><P>",message->subject());	
 	toStr.sprintf("To: %s<br>", message->to());
@@ -170,7 +152,8 @@ void KMReaderView::parseMessage(KMMessage *message)
         messageCanvas->begin(picsDir);
 
 	// header
-	messageCanvas->write("<TABLE><TR><TD><IMG SRC=\"" + picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
+	messageCanvas->write("<TABLE><TR><TD><IMG SRC=\"" + 
+			     picsDir +"/kdelogo.xpm\"></TD><TD HSPACE=50><B>");
 	messageCanvas->write(subjStr);
 	messageCanvas->write(fromStr);
 	messageCanvas->write(toStr);
@@ -184,9 +167,10 @@ void KMReaderView::parseMessage(KMMessage *message)
 	if((numParts = message->numBodyParts()) == 0)
 		{text = message->body(&length);
 		text.truncate(length);}
+		//text = scanURL(text);}
 	else
 		{KMMessagePart *part = new KMMessagePart();
-		for(multi=0;multi <= numParts;multi++)
+		for(multi=0;multi < numParts;multi++)
 			{printf("in body part loop\n");
 			message->bodyPart(multi,part);
 			text += parseBodyPart(part);
@@ -194,19 +178,14 @@ void KMReaderView::parseMessage(KMMessage *message)
 			part= new KMMessagePart();}
 		}			
 
-//  ****** 2. Check if message body is html. Search for <html> tag ********//
-/*
-	if((text.find(QRegExp("<html>",0,0)) != -1) && (text.find(QRegExp("</html>",0,0)) != -1)) // we found the tags
-		printf("Found html tags!\n");
+	// Convert text to html
 
-	else
-	        {// First of all convert escape sequences etc to html*/
 		text.replace(QRegExp("\n"),"<BR>");
 		text.replace(QRegExp("\\x20",FALSE,FALSE),"&nbsp"); // SP
 		
-		messageCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
+		messageCanvas->write("<HTML><HEAD><TITLE>\"+ message->subject() + \"</TITLE></HEAD>");
 		messageCanvas->write("<BODY BGCOLOR=WHITE>");
-		//}
+
 
 	// Okay! Let's write it to the canvas
 	 messageCanvas->write(text);
@@ -214,6 +193,22 @@ void KMReaderView::parseMessage(KMMessage *message)
   messageCanvas->write("</BODY></HTML>");
   messageCanvas->end();
   messageCanvas->parse();
+}
+
+
+QString KMReaderView::parseBodyPart(KMMessagePart *p)
+{
+	QString text;
+	text = decodeString(p->body(),p->cteStr());
+	printf("Returned from decoding\n");
+	text +="<br><hr><br>";
+	return text;
+	// Later on when we have Torben's mimestuff 
+	// we can determine of which mimetype 
+	// the bodypart is. Very very usefull.
+	// -> Ask if we want to display text more the configured length etc.
+	// Eventually we will include the kpart thought.
+
 }
 
 QString KMReaderView::decodeString(const char* data, QString type)
@@ -237,20 +232,33 @@ QString KMReaderView::decodeString(const char* data, QString type)
     return dwstr.c_str();
 }
 
-QString KMReaderView::parseBodyPart(KMMessagePart *p)
+
+QString KMReaderView::scanURL(QString text)
 {
-	QString text;
-	text = decodeString(p->body(),p->cteStr());
-	printf("Returned from decoding\n");
-	text +="<br><hr><br>";
-	return text;
+  // scan for @. Cut out the url than pre-append necessary HREF stuff.
+  int pos = 0; // Position where @ is found in the tex. Init to position 0
+  int startPos; // Beginnig of url
+  int endPos;  // End of url
+  int urlLength = 0; // _url Length
+  QString deepCopy; // deep copy of text
 
+  while((pos = text.find("@",pos,0)) != -1) // As long as we find @ urls.
+    {endPos = text.find(QRegExp("\\s",0,0),pos); // Find end of url;
+    startPos = text.findRev(QRegExp("\\s",0,0),pos); // Find beginnig of url
+    deepCopy = text.copy(); // make a deep copy of text
+    deepCopy.remove(0,startPos+1);
+    deepCopy.truncate(endPos);
+    cout << "cut deep copy:" << deepCopy << "<---\n";
+    text.remove(startPos+1,endPos-1);
+    deepCopy = "<A HREF=\"mailto:" + deepCopy + "\">" + deepCopy + "</A>";
+    cout << "url:" << deepCopy << "<--\n";
+    urlLength = deepCopy.length();
+    text.insert(endPos,deepCopy);
+    pos = startPos + urlLength;}
+  
+  return text;
 }
-
-
-
-
-
+    
 
 QString KMReaderView::parseEAddress(QString old)
 {
@@ -266,7 +274,8 @@ QString KMReaderView::parseEAddress(QString old)
 void KMReaderView::replyMessage()
 {
 	printf("Entering reply\n");
-	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,currentMessage,REPLY);
+	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
+					   currentMessage,REPLY);
 	c->show();
 	c->resize(c->size());
 	printf("Leaving reply()\n");
@@ -274,7 +283,8 @@ void KMReaderView::replyMessage()
 
 void KMReaderView::replyAll()
 {
-	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,currentMessage,REPLYALL);
+	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
+					   currentMessage,REPLYALL);
         c->show();
         c->resize(c->size());
         printf("Leaving replyAll()\n");
@@ -282,7 +292,8 @@ void KMReaderView::replyAll()
 }
 void KMReaderView::forwardMessage()
 {
-	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,currentMessage,FORWARD);
+	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
+					   currentMessage,FORWARD);
 	c->show();
 	c->resize(c->size());
 }
@@ -348,6 +359,7 @@ void KMReaderView::saveMail()
 
 void KMReaderView::printMail()
 {
+  messageCanvas->print();
 }
 
 void KMReaderView::slotScrollVert( int _y )
@@ -428,9 +440,8 @@ void KMReaderView::openURL(const char *url, int)
 }
 void KMReaderView::popupHeaderMenu(const char *_url, const QPoint &cords)
 {
-	printf("Right mouse button pressed on headerCanvas\n");
 	QString url = _url;
-        if(!url.isEmpty())
+        if(!url.isEmpty() && (url.find("@",0,0) != -1) )
                 {printf("Mouse was pressed over an url!\n");
                 QPopupMenu *p = new QPopupMenu();
                 p->insertItem("Add to Addressbook");
@@ -465,6 +476,9 @@ void KMReaderView::popupMenu(const char *_url, const QPoint &cords)
 
         else
 		{printf("Mouse was pressed over an url: %s\n",_url); // Pressed over url
+		if(temp.find("@",0,0) != -1)
+		  {popupHeaderMenu(temp,cords);
+		  return;}
 	       	temp.replace(QRegExp("file:/"),"");
 	       	cout << temp << "\n";
         	number = temp.toUInt();
@@ -629,27 +643,36 @@ void KMReaderWin::setupToolBar()
 	QPixmap pixmap;
 
 	pixmap.load(pixdir+"kmsave.xpm");
-	toolBar->insertButton(pixmap,0,SIGNAL(clicked()),newView,SLOT(saveMail()),TRUE,"Save Mail");
+	toolBar->insertButton(pixmap,0,SIGNAL(clicked()),
+			      newView,SLOT(saveMail()),TRUE,"Save Mail");
 	pixmap.load(pixdir+"kmprint.xpm");
-	toolBar->insertButton(pixmap,1,SIGNAL(clicked()),newView,SLOT(printMail()),TRUE,"Print");
+	toolBar->insertButton(pixmap,1,SIGNAL(clicked()),
+			      newView,SLOT(printMail()),TRUE,"Print");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"kmreply.xpm");
-	toolBar->insertButton(pixmap,2,SIGNAL(clicked()),newView,SLOT(replyMessage()),TRUE,"Reply");
+	toolBar->insertButton(pixmap,2,SIGNAL(clicked()),
+			      newView,SLOT(replyMessage()),TRUE,"Reply");
 	pixmap.load(pixdir+"kmreply.xpm");
-	toolBar->insertButton(pixmap,3,SIGNAL(clicked()),newView,SLOT(replyAll()),TRUE,"Reply all");
+	toolBar->insertButton(pixmap,3,SIGNAL(clicked()),
+			      newView,SLOT(replyAll()),TRUE,"Reply all");
 	pixmap.load(pixdir+"kmforward.xpm");
-	toolBar->insertButton(pixmap,4,SIGNAL(clicked()),newView,SLOT(forwardMessage()),TRUE,"Forward");
+	toolBar->insertButton(pixmap,4,SIGNAL(clicked()),
+			      newView,SLOT(forwardMessage()),TRUE,"Forward");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"down.xpm");
-	toolBar->insertButton(pixmap,5,SIGNAL(clicked()),newView,SLOT(nextMessage()),TRUE,"Next message");
+	toolBar->insertButton(pixmap,5,SIGNAL(clicked()),
+			      newView,SLOT(nextMessage()),TRUE,"Next message");
 	pixmap.load(pixdir+"up.xpm");
-	toolBar->insertButton(pixmap,6,SIGNAL(clicked()),newView,SLOT(previousMessage()),TRUE,"Previous message");
+	toolBar->insertButton(pixmap,6,SIGNAL(clicked()),newView,
+			      SLOT(previousMessage()),TRUE,"Previous message");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"kmdel.xpm");
-	toolBar->insertButton(pixmap,7,SIGNAL(clicked()),newView,SLOT(deleteMessage()),TRUE,"Delete Message");
+	toolBar->insertButton(pixmap,7,SIGNAL(clicked()),newView,
+			      SLOT(deleteMessage()),TRUE,"Delete Message");
 	toolBar->insertSeparator();
 	pixmap.load(pixdir+"help.xpm");
-	toolBar->insertButton(pixmap,8,SIGNAL(clicked()),this,SLOT(invokeHelp()),TRUE,"Help");
+	toolBar->insertButton(pixmap,8,SIGNAL(clicked()),
+			      this,SLOT(invokeHelp()),TRUE,"Help");
 
 	addToolBar(toolBar);
 }

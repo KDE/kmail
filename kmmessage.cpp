@@ -93,7 +93,6 @@ void KMMessage::setAutomaticFields(void)
   if (numBodyParts() > 1)
   {
     // Set the type to 'Multipart' and the subtype to 'Mixed'
-
     DwMediaType& contentType = mMsg->Headers().ContentType();
     contentType.SetType(DwMime::kTypeMultipart);
     contentType.SetSubtype(DwMime::kSubtypeMixed);

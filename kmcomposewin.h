@@ -16,6 +16,7 @@
 #include <qprinter.h>
 #include <qregexp.h>
 #include <qlist.h>
+#include <qframe.h>
 #include "KEdit.h"
 #include <ktopwidget.h>
 #include <kmenubar.h>
@@ -27,21 +28,13 @@
 #include "kmmsgpart.h"
 #include <qpainter.h>
 #include <drag.h>
+#include <html.h>
 #define FORWARD 0
 #define REPLY 1
 #define REPLYALL 2
 
 class KMMessage;
 class QGridLayout;
-
-
-class KMAttachmentItem  // for Attachment Widget
-{
-public:
-  KMAttachmentItem(QString fileName =0, int index = 0);
-  QString fileName;
-  int index;
-};
 
 
 //-----------------------------------------------------------------------------
@@ -64,15 +57,21 @@ private:
   KTabListBox *attWidget;
   QString SMTPServer;
   QString EMailAddress;
+  QString ReplyToAddress;
   int indexAttachment;
   QStrList *urlList;
   KMMessagePart * createKMMsgPart(KMMessagePart *, QString);
+  KHTMLWidget *attachmentWidget;
+  KMMessage * prepareMessage();
+  QFrame *frame;
 
 public slots:
-  void sendIt();
   void printIt();
   void find();
   void attachFile();
+  void sendNow();
+  void sendLater();
+  void slotEncodingChanged();
 
 private slots:
   void undoEvent();
@@ -91,6 +90,11 @@ private slots:
   void detachFile(int,int);
   void insertFile();
   void getDNDAttachment();
+  void insertNewAttachment(QString );
+  void createAttachmentWidget();
+  void deleteAttachmentWidget();
+  void slotChangeHeading(const char *);
+  void slotPopupMenu(const char *, const QPoint &);
 
 protected:
   QGridLayout* grid;
@@ -113,11 +117,13 @@ protected:
 
 private slots:
   void abort();
+  void about();
   void invokeHelp();
   void toDo();
   void parseConfiguration();
   void doNewMailReader();
   void toggleToolBar();
+  void send();
 
 private:
   void setupMenuBar();
