@@ -131,6 +131,7 @@ public:
   // Make the item corresponding to the message with the given id the
   // top most visible item.
   virtual void setTopItemByIndex( int aMsgIdx );
+  virtual void setNestedOverride( bool override );
 
 signals:
   // emitted when the list view item corresponding to this message
@@ -235,7 +236,7 @@ private:
   QDict< QValueList< int > > mTree;
   QDict< bool > mTreeSeen;
   QDict< bool > mTreeToplevel;
-  bool mNested;
+  bool mNested, mNestedOverride;
 
   static bool mTrue, mFalse;    // These must replaced by something better!
 

@@ -1735,7 +1735,7 @@ void ConfigureDialog::setupAppearancePage( void )
 
   config.setGroup("Reader");
   state = config.readBoolEntry( "htmlMail", true );
-  mAppearance.htmlMailCheck->setChecked( state );
+  mAppearance.htmlMailCheck->setChecked( !state );
 }
 
 
@@ -1867,7 +1867,7 @@ void ConfigureDialog::installProfile( void )
     
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
-    mAppearance.htmlMailCheck->setChecked( false );
+    mAppearance.htmlMailCheck->setChecked( true );
   }
   else if( item == mAppearance.mListItemNewFeature )
   {
@@ -1891,7 +1891,7 @@ void ConfigureDialog::installProfile( void )
     
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.htmlMailCheck->setChecked( true );
+    mAppearance.htmlMailCheck->setChecked( false );
   }
   else if( item == mAppearance.mListItemContrast )
   {
@@ -1915,7 +1915,7 @@ void ConfigureDialog::installProfile( void )
     
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.htmlMailCheck->setChecked( true );
+    mAppearance.htmlMailCheck->setChecked( false );
   }
   else
   {
@@ -2048,7 +2048,7 @@ void ConfigureDialog::slotApply( void )
 
     config.setGroup("Reader");
     bool htmlMail = mAppearance.htmlMailCheck->isChecked();
-    config.writeEntry( "htmlMail", htmlMail );
+    config.writeEntry( "htmlMail", !htmlMail );
   }
   else if( activePage == mComposer.pageIndex )
   {

@@ -90,6 +90,12 @@ public:
   KMReaderWin that is created. */
   static QString attachDir(void) { return mAttachDir; }
 
+  /* Override default html mail setting */
+  void setHtmlOverride( bool override );
+
+  /* Is html mail to be supported? Takes into account override */
+  bool htmlMail();
+
 signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const QString& text);
@@ -185,7 +191,7 @@ protected:
 protected:
   QString colorToString(const QColor&);
 
-  bool mHtmlMail;
+  bool mHtmlMail, mHtmlOverride;
   int mAtmInline;
   int mAtmCurrent;
   KMMessage *mMsg, *mMsgBuf;

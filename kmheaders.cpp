@@ -257,6 +257,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   setMultiSelection( TRUE );
   setAllColumnsShowFocus( TRUE );
   mNested = false;
+  mNestedOverride = false;
 
   readConfig();
 
@@ -406,6 +407,7 @@ void KMHeaders::readFolderConfig (void)
   if (!path.isEmpty())
     path = path.right( path.length() - 1 ) + "/";
   config->setGroup("Folder-" + path + mFolder->name());
+  mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
   setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 200));
   setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 270));
   setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 300));
@@ -508,13 +510,18 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       // Not very nice, but if we go from nested to non-nested
       // in the folderConfig below then we need to do this otherwise
       // updateMessageList would do something unspeakable
-      if (mNested) {
+      if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
 	clear();
 	mItems.resize( 0 );
       }
 
       readFolderConfig();
       mFolder->open();
+
+      if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
+	clear();
+	mItems.resize( 0 );
+      }
     }
 
     updateMessageList();
@@ -615,7 +622,7 @@ void KMHeaders::msgAdded(int id)
   KMMsgBase* mb = mFolder->getMsgBase( id );
   assert(mb != NULL); // otherwise using count() above is wrong
 
-  if (mNested) {
+  if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
     QString msgId = mb->msgId();
     if (msgId.isNull())
       msgId = "";
@@ -1389,7 +1396,7 @@ void KMHeaders::updateMessageList(void)
 	     this,SLOT(highlightMessage(QListViewItem*)));
 
   int oldSize = mItems.size();
-  if (!mNested) {
+  if (!((mNested && !mNestedOverride) || (!mNested && mNestedOverride))) {
     // We can gain some speed by reusing QListViewItems hence
     // avoiding expensive calls to operator new and the QListViewItem
     // constructor
@@ -1409,7 +1416,7 @@ void KMHeaders::updateMessageList(void)
 
   mItems.resize( mFolder->count() );  
 
-  if (mNested) {
+  if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {
     for (i=0; i<mFolder->count(); i++)
       mItems[i] = 0;
 
@@ -1817,6 +1824,13 @@ void KMHeaders::setTopItemByIndex( int aMsgIdx)
     msgIdx = mItems.size() - 1;
   if ((msgIdx >= 0) && (msgIdx < (int)mItems.size()))
     setContentsPos( 0, itemPos( mItems[msgIdx] ));
+}
+
+//-----------------------------------------------------------------------------
+void KMHeaders::setNestedOverride( bool override )
+{
+  mNestedOverride = override;
+  reset();
 }
 
 //-----------------------------------------------------------------------------

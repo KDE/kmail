@@ -80,6 +80,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 
   initHtmlWidget();
   readConfig();
+  mHtmlOverride = false;
 
   if (mAttachDir.isNull()) makeAttachDir();
   connect(&updateReaderWinTimer, SIGNAL(timeout()),
@@ -443,13 +444,13 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       {
         aMsg->bodyPart(i, &msgPart);        // set part...
         subtype = msgPart.subtypeStr();     // get subtype...
-        if (mHtmlMail && stricmp(subtype, "html")==0)    // is it html?
+        if (htmlMail() && stricmp(subtype, "html")==0)    // is it html?
         {                                   // yes...
           str = QCString(msgPart.bodyDecoded());      // decode it...
           mViewer->write(str);              // write it...
           return;                           // return, finshed.
         }
-	else if (!mHtmlMail && (stricmp(subtype, "plain")==0))    
+	else if (!htmlMail() && (stricmp(subtype, "plain")==0))    
 	                                    // wasn't html show only if
 	{                                   // support for html is turned off
           str = QCString(msgPart.bodyDecoded());      // decode it...
@@ -496,7 +497,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	  str = QCString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<BR><HR><BR>");
 
-	  if (mHtmlMail && (stricmp(subtype, "html")==0))
+	  if (htmlMail() && (stricmp(subtype, "html")==0))
           {
             // ---Sven's strip </BODY> and </HTML> from end of attachment start-
             // We must fo this, or else we will see only 1st inlined html attachment
@@ -533,7 +534,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   }
   else // if numBodyParts <= 0
   {
-    if (mHtmlMail && (type.find("text/html;") != -1))
+    if (htmlMail() && (type.find("text/html;") != -1))
       mViewer->write(aMsg->bodyDecoded());
     else
       writeBodyStr(aMsg->bodyDecoded());
@@ -1155,7 +1156,7 @@ void KMReaderWin::slotAtmView()
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<HTML><BODY>");
       QString str = msgPart.bodyDecoded();
-      if (mHtmlMail && (stricmp(msgPart.subtypeStr(), "html")==0))
+      if (htmlMail() && (stricmp(msgPart.subtypeStr(), "html")==0))
         win->mViewer->write(str);
       else  //plain text
         win->writeBodyStr(str);
@@ -1367,6 +1368,19 @@ void KMReaderWin::slotDocumentDone()
   // mSbVert->setValue(0);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::setHtmlOverride(bool override)
+{
+  mHtmlOverride = override;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMReaderWin::htmlMail()
+{
+  return ((mHtmlMail && !mHtmlOverride) || (!mHtmlMail && mHtmlOverride));
+}
 
 //-----------------------------------------------------------------------------
 #include "kmreaderwin.moc"

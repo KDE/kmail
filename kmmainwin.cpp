@@ -101,6 +101,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 KMMainWin::~KMMainWin()
 {
   writeConfig();
+  writeFolderConfig();
 
   if (mHeaders)    delete mHeaders;
   if (mToolBar)    delete mToolBar;
@@ -118,6 +119,42 @@ void KMMainWin::readPreConfig(void)
 
   config->setGroup("Geometry");
   mLongFolderList = config->readBoolEntry("longFolderList", false);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::readFolderConfig(void)
+{
+  if (!mFolder)
+    return;
+
+  KConfig *config = kapp->config();
+  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
+  QString path = mFolder->path().right( pathLen );
+
+  if (!path.isEmpty())
+    path = path.right( path.length() - 1 ) + "/";
+  config->setGroup("Folder-" + path + mFolder->name());
+  mFolderThreadPref = config->readBoolEntry( "threadMessagesOverride", false );
+  mFolderHtmlPref = config->readBoolEntry( "htmlMailOverride", false );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::writeFolderConfig(void)
+{
+  if (!mFolder)
+    return;
+
+  KConfig *config = kapp->config();
+  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
+  QString path = mFolder->path().right( pathLen );
+
+  if (!path.isEmpty())
+    path = path.right( path.length() - 1 ) + "/";
+  config->setGroup("Folder-" + path + mFolder->name());
+  config->writeEntry( "threadMessagesOverride", mFolderThreadPref );
+  config->writeEntry( "htmlMailOverride", mFolderHtmlPref );
 }
 
 
@@ -144,7 +181,11 @@ void KMMainWin::readConfig(void)
     }
   }
 
+  config->setGroup("Reader");
+  mHtmlPref = config->readBoolEntry( "htmlMail", true );
+
   config->setGroup("Geometry");
+  mThreadPref = config->readBoolEntry( "nestedMessages", false );
   str = config->readEntry("MainWin", "300,600");
   if (!str.isEmpty() && str.find(',')>=0)
   {
@@ -629,6 +670,21 @@ void KMMainWin::slotCompactFolder()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotOverrideHtml()
+{
+  mFolderHtmlPref = !mFolderHtmlPref;
+  mMsgView->setHtmlOverride(mFolderHtmlPref);
+  mMsgView->setMsg( mMsgView->msg(), TRUE );
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotOverrideThread()
+{
+  mFolderThreadPref = !mFolderThreadPref;
+  mHeaders->setNestedOverride(mFolderThreadPref);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotPrintMsg()
 {
   if(mHeaders->currentItemIndex() >= 0)
@@ -817,8 +873,10 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
     return;
 
   kernel->kbp()->busy();
+  writeFolderConfig();
   mFolder = (KMFolder*)aFolder;
-  //  mMsgView->clear();
+  readFolderConfig();
+  mMsgView->setHtmlOverride(mFolderHtmlPref);
   mHeaders->setFolder(mFolder);
   kernel->kbp()->idle();
 }
@@ -1141,18 +1199,25 @@ void KMMainWin::setupMenuBar()
 			   SLOT(slotUnimplemented()), KStdAccel::key(KStdAccel::Find));
 #endif
   //----- Folder Menu
-  QPopupMenu *folderMenu = new QPopupMenu();
-  folderMenu->insertItem(i18n("&Create..."), this,
+  mFolderMenu = new QPopupMenu();
+  mFolderMenu->insertItem(i18n("&Create..."), this,
 			 SLOT(slotAddFolder()));
-  folderMenu->insertItem(i18n("&Modify..."), this,
+  mFolderMenu->insertItem(i18n("&Modify..."), this,
 			 SLOT(slotModifyFolder()));
-  folderMenu->insertItem(i18n("C&ompact"), this,
+  mFolderMenu->insertItem(i18n("C&ompact"), this,
 			 SLOT(slotCompactFolder()));
-  folderMenu->insertSeparator();
-  folderMenu->insertItem(i18n("&Empty"), this,
+  mFolderMenu->insertSeparator();
+  mFolderMenu->insertItem(i18n("&Empty"), this,
 			 SLOT(slotEmptyFolder()));
-  folderMenu->insertItem(i18n("&Remove"), this,
+  mFolderMenu->insertItem(i18n("&Remove"), this,
 			 SLOT(slotRemoveFolder()));
+  mFolderMenu->insertSeparator();
+  htmlId = mFolderMenu->insertItem("", this,
+				  SLOT(slotOverrideHtml()));
+  threadId = mFolderMenu->insertItem("", this,
+				    SLOT(slotOverrideThread()));
+  QObject::connect( mFolderMenu, SIGNAL( aboutToShow() ), 
+		    this, SLOT( updateFolderMenu() ));
 
   //----- Message-Status Submenu
   QPopupMenu *msgStatusMenu = new QPopupMenu;
@@ -1247,7 +1312,7 @@ void KMMainWin::setupMenuBar()
   mMenuBar  = new KMenuBar(this);
   mMenuBar->insertItem(i18n("&File"), fileMenu);
   mMenuBar->insertItem(i18n("&Edit"), editMenu);
-  mMenuBar->insertItem(i18n("F&older"), folderMenu);
+  mMenuBar->insertItem(i18n("F&older"), mFolderMenu);
   mMenuBar->insertItem(i18n("&Message"), messageMenu);
   mMenuBar->insertItem(i18n("&View"), mViewMenu);
   mMenuBar->insertSeparator();
@@ -1421,3 +1486,26 @@ void KMMainWin::updateMessageMenu()
 }
 
 
+void KMMainWin::updateFolderMenu()
+{
+  mFolderMenu->setItemEnabled(htmlId, mFolder ? true : false);
+  mFolderMenu->setItemEnabled(threadId, mFolder ? true : false);
+
+  if (mHtmlPref && mFolderHtmlPref)
+    mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text (default)" ));
+  else if (mHtmlPref && !mFolderHtmlPref)
+    mFolderMenu->changeItem(htmlId, i18n( "Prefer plain text to HTML (override default)" ));
+  else if (!mHtmlPref && mFolderHtmlPref)
+    mFolderMenu->changeItem(htmlId, i18n( "Prefer plain text to HTML (default)" ));
+  else if (!mHtmlPref && !mFolderHtmlPref)
+    mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text (override default)" ));
+
+  if (mThreadPref && mFolderThreadPref)
+    mFolderMenu->changeItem(threadId, i18n( "Thread messages (default)" ));
+  else if (mThreadPref && !mFolderThreadPref)
+    mFolderMenu->changeItem(threadId, i18n( "Don't thread messages (override default)" ));
+  else if (!mThreadPref && mFolderThreadPref)
+    mFolderMenu->changeItem(threadId, i18n( "Don't thread messages (default)" ));
+  else if (!mThreadPref && !mFolderThreadPref)
+    mFolderMenu->changeItem(threadId, i18n( "Thread messages (override default)" ));
+}

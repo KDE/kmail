@@ -37,6 +37,12 @@ public:
   /** Read configuration options before widgets are created. */
   virtual void readPreConfig(void);
 
+  /** Read configuration for current folder. */
+  virtual void readFolderConfig(void);
+
+  /** Write configuration for current folder. */
+  virtual void writeFolderConfig(void);
+
   /** Read configuration options after widgets are created. */
   virtual void readConfig(void);
 
@@ -98,6 +104,8 @@ protected slots:
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
+  void slotOverrideHtml();
+  void slotOverrideThread();
   void slotReplyToMsg();
   void slotReplyAllToMsg();
   void slotForwardMsg();
@@ -146,6 +154,8 @@ protected slots:
   virtual void copySelectedToFolder( int menuId );
   // Update the "Move to" and "Copy to" popoutmenus in the Messages menu.
   virtual void updateMessageMenu();
+  // Update html and threaded messages preferences in Folder menu.
+  virtual void updateFolderMenu();
   
 protected:
   KMenuBar     *mMenuBar;
@@ -156,7 +166,7 @@ protected:
   QSplitter    *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
-  QPopupMenu   *mViewMenu, *mBodyPartsMenu;
+  QPopupMenu   *mFolderMenu, *mViewMenu, *mBodyPartsMenu;
   bool		mIntegrated;
   bool          mSendOnCheck;
   bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
@@ -169,7 +179,8 @@ protected:
   bool		mLongFolderList;
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;
-  int copyId, moveId;
+  int copyId, moveId, htmlId, threadId;
+  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref;
   QPopupMenu *messageMenu;
   KMLittleProgressDlg *littleProgress;
 };
