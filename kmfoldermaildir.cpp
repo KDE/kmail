@@ -521,7 +521,7 @@ DwString KMFolderMaildir::getDwString(int idx)
       return str;
     }
   }
-  kdDebug(5006) << "Could not open file r+" << abs_file << endl;
+  kdDebug(5006) << "Could not open file r+ " << abs_file << endl;
   return DwString();
 }
 
