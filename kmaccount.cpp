@@ -233,9 +233,11 @@ if( fileD0.open( IO_WriteOnly ) ) {
   // answer this message automatically, but only if this is a resource
   // account.
   if( resource() ) {
+#if 0
       if( kernel->groupware().incomingResourceMessage( this, aMsg ) )
           // If it was a resource message, we have already answered it.
           aMsg->setStatus( KMMsgStatusReplied );
+#endif
   }
   
   processResult = kernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
