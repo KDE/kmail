@@ -446,9 +446,9 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString&
   }
 
   if ( mUserRights == 0 ) {
-    mImapAccount->getUserRights( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
     connect( mImapAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
              this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
+    mImapAccount->getUserRights( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
   }
   else
     startListing();

@@ -592,9 +592,9 @@ void KMFolderCachedImap::serverSyncInternal()
     if( !noContent() && mAccount->hasACLSupport() ) {
       // Check the user's own rights. We do this every time in case they changed.
       emit newState( label(), progress(), i18n("Checking permissions"));
-      mAccount->getUserRights( folder(), imapPath() );
       connect( mAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
                this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
+      mAccount->getUserRights( folder(), imapPath() ); // after connecting, due to the INBOX case
       break;
     }
 

@@ -476,6 +476,19 @@ namespace KMail {
   // TODO imapPath can be removed once parent can be a KMFolderImapBase or whatever
   void ImapAccountBase::getUserRights( KMFolder* parent, const QString& imapPath )
   {
+    // There isn't much point in asking the server about a user's rights on his own inbox,
+    // it might not be the effective permissions (at least with Cyrus, one can admin his own inbox,
+    // even after a SETACL that removes the admin permissions. Other imap servers apparently
+    // don't even allow removing one's own admin permission, so this code won't hurt either).
+    if ( imapPath == "/INBOX/" ) {
+      if ( parent->folderType() == KMFolderTypeImap )
+        static_cast<KMFolderImap*>( parent->storage() )->setUserRights( ACLJobs::All );
+      else if ( parent->folderType() == KMFolderTypeCachedImap )
+        static_cast<KMFolderCachedImap*>( parent->storage() )->setUserRights( ACLJobs::All );
+      emit receivedUserRights( parent ); // warning, you need to connect first to get that one
+      return;
+    }
+
     KURL url = getUrl();
     url.setPath(imapPath);
 
