@@ -1590,7 +1590,7 @@ void KMMainWin::getAccountMenu()
 void KMMainWin::setupMenuBar()
 {
   //----- File Menu
-  (void) new KAction( i18n("&New Mail Client..."), 0, this, SLOT(slotNewMailReader()),
+  (void) new KAction( i18n("&New Mail Client..."), "window_new", 0, this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
   saveAsAction = new KAction( i18n("Save &As..."), "filesave",
@@ -1652,7 +1652,7 @@ void KMMainWin::setupMenuBar()
 		      SLOT(slotSelectText()), actionCollection(), "mark_all_text" );
 
   //----- Folder Menu
-  (void) new KAction( i18n("&Create..."), 0, this,
+  (void) new KAction( i18n("&Create..."), "folder_new", 0, this,
 		      SLOT(slotAddFolder()), actionCollection(), "create" );
 
   modifyFolderAction = new KAction( i18n("&Properties..."), 0, this,
@@ -1802,7 +1802,7 @@ void KMMainWin::setupMenuBar()
   copyActionMenu = new KActionMenu( i18n("&Copy to" ),
                                     actionCollection(), "copy_to" );
 
-  (void) new KAction( i18n("Apply filters"), CTRL+Key_J, this,
+  (void) new KAction( i18n("Apply filters"), "filter", CTRL+Key_J, this,
 		      SLOT(slotApplyFilters()), actionCollection(), "apply_filters" );
 
   (void) new KAction( i18n("View Source..."), 0, this,
@@ -1837,9 +1837,7 @@ void KMMainWin::setupMenuBar()
     actionCollection());
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
-  //  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
- (void) new KAction( i18n("Configuration..."), 0, this,
-		     SLOT(slotSettings()), actionCollection(), "settings" );
+  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
 
 
   (void) new KAction( i18n("F&ilter Rules..."), 0, this,
