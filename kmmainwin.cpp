@@ -2529,10 +2529,11 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Copy Text"), KStdAccel::shortcut(KStdAccel::Copy), this,
 		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
 
-  KShortcut trash(Key_Delete);
-  trash.append(KKey(Key_D));
-  trashAction = new KAction( i18n("&Move to Trash"), "edittrash", trash, this,
-                             SLOT(slotTrashMsg()), actionCollection(), "move_to_trash" );
+  trashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
+                                       i18n("Move message to trash bin") ),
+                             "D;Delete", this, SLOT(slotTrashMsg()),
+                             actionCollection(), "move_to_trash" );
+
   deleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
                               SLOT(slotDeleteMsg()), actionCollection(), "delete" );
 
