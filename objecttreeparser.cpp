@@ -1492,7 +1492,7 @@ namespace KMail {
                          "%n new certificates were imported.", nImp ) + "<br>";
       if ( nUnc )
         comment += i18n( "%n certificate was unchanged.",
-                         "%n certificates were unchanged", nUnc ) + "<br>";
+                         "%n certificates were unchanged.", nUnc ) + "<br>";
       if ( nSKImp )
         comment += i18n( "%n new secret key was imported.",
                          "%n new secret keys were imported.", nSKImp ) + "<br>";
