@@ -73,7 +73,7 @@ int KMFolderMbox::open()
   assert(!name().isEmpty());
 
   mFilesLocked = FALSE;
-  mStream = fopen(location().local8Bit(), "r+"); // messages file
+  mStream = fopen(QFile::encodeName(location()), "r+"); // messages file
   if (!mStream)
   {
     KNotifyClient::event("warning",
@@ -135,7 +135,7 @@ int KMFolderMbox::open()
              .arg(name());
        emit statusMsg(str);
      } else {
-       mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
+       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
        updateIndexStreamPtr();
      }
 
@@ -162,7 +162,7 @@ int KMFolderMbox::canAccess()
 {
   assert(!name().isEmpty());
 
-  if (access(location().local8Bit(), R_OK | W_OK) != 0) {
+  if (access(QFile::encodeName(location()), R_OK | W_OK) != 0) {
     kdDebug(5006) << "KMFolderMbox::access call to access function failed" << endl;
       return 1;
   }
@@ -181,7 +181,7 @@ int KMFolderMbox::create(bool imap)
   assert(mOpenCount == 0);
 
   kdDebug(5006) << "Creating folder " << name() << endl;
-  if (access(location().local8Bit(), F_OK) == 0) {
+  if (access(QFile::encodeName(location()), F_OK) == 0) {
     kdDebug(5006) << "KMFolderMbox::create call to access function failed." << endl;
     kdDebug(5006) << "File:: " << endl;
     kdDebug(5006) << "Error " << endl;
@@ -189,7 +189,7 @@ int KMFolderMbox::create(bool imap)
   }
 
   old_umask = umask(077);
-  mStream = fopen(location().local8Bit(), "w+"); //sven; open RW
+  mStream = fopen(QFile::encodeName(location()), "w+"); //sven; open RW
   umask(old_umask);
 
   if (!mStream) return errno;
@@ -197,7 +197,7 @@ int KMFolderMbox::create(bool imap)
   if (!path().isEmpty())
   {
     old_umask = umask(077);
-    mIndexStream = fopen(indexLocation().local8Bit(), "w+"); //sven; open RW
+    mIndexStream = fopen(QFile::encodeName(indexLocation()), "w+"); //sven; open RW
 	updateIndexStreamPtr(TRUE);
     umask(old_umask);
 
@@ -909,7 +909,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
     kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
     if (ftell(mStream) > revert) {
       kdDebug(5006) << "Undoing changes" << endl;
-      truncate( location().local8Bit(), revert );
+      truncate( QFile::encodeName(location()), revert );
     }
     kernel->emergencyExit( i18n("Not enough free disk space.") );
 
@@ -981,7 +981,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
       kdWarning(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
 	kdWarning(5006) << "Undoing changes" << endl;
-	truncate( indexLocation().local8Bit(), revert );
+	truncate( QFile::encodeName(indexLocation()), revert );
       }
       kernel->emergencyExit( i18n("Not enough free disk space.") );
 
@@ -1036,7 +1036,7 @@ int KMFolderMbox::compact()
 
   tempName = path() + "/." + name() + ".compacted";
   mode_t old_umask = umask(077);
-  FILE *tmpfile = fopen(tempName.local8Bit(), "w");
+  FILE *tmpfile = fopen(QFile::encodeName(tempName), "w");
   umask(old_umask);
   if (!tmpfile)
     return errno;
@@ -1178,7 +1178,7 @@ void KMFolderMbox::setProcmailLockFileName( const QString &fname )
 int KMFolderMbox::removeContents()
 {
   int rc = 0;
-  rc = unlink(location().local8Bit());
+  rc = unlink(QFile::encodeName(location()));
   return rc;
 }
 
@@ -1186,7 +1186,7 @@ int KMFolderMbox::removeContents()
 int KMFolderMbox::expungeContents()
 {
   int rc = 0;
-  if (truncate(location().local8Bit(), 0))
+  if (truncate(QFile::encodeName(location()), 0))
     rc = errno;
   return rc;
 }

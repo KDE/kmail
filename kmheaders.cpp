@@ -26,6 +26,7 @@ using KMail::FolderJob;
 #include <kdebug.h>
 
 #include <qbuffer.h>
+#include <qfile.h>
 #include <qheader.h>
 #include <qptrstack.h>
 #include <qptrqueue.h>
@@ -2397,7 +2398,7 @@ void KMHeaders::setNestedOverride( bool override )
   setRootIsDecorated( nestingPolicy != AlwaysOpen
 		      && mNested != mNestedOverride );
   QString sortFile = mFolder->indexLocation() + ".sorted";
-  unlink(sortFile.local8Bit());
+  unlink(QFile::encodeName(sortFile));
   reset();
 }
 
@@ -2407,7 +2408,7 @@ void KMHeaders::setSubjectThreading( bool aSubjThreading )
   mSortInfo.dirty = TRUE;
   mSubjThreading = aSubjThreading;
   QString sortFile = mFolder->indexLocation() + ".sorted";
-  unlink(sortFile.local8Bit());
+  unlink(QFile::encodeName(sortFile));
   reset();
 }
 
@@ -2548,19 +2549,19 @@ bool KMHeaders::writeSortOrder()
 
   if (!mSortInfo.dirty) {
     struct stat stat_tmp;
-    if(stat(sortFile.local8Bit(), &stat_tmp) == -1) {
+    if(stat(QFile::encodeName(sortFile), &stat_tmp) == -1) {
 	mSortInfo.dirty = TRUE;
     }
   }
   if (mSortInfo.dirty) {
     if (!mFolder->count()) {
       // Folder is empty now, remove the sort file.
-      unlink(sortFile.local8Bit());
+      unlink(QFile::encodeName(sortFile));
       return TRUE;
     }
     QString tempName = sortFile + ".temp";
-    unlink(tempName.local8Bit());
-    FILE *sortStream = fopen(tempName.local8Bit(), "w");
+    unlink(QFile::encodeName(tempName));
+    FILE *sortStream = fopen(QFile::encodeName(tempName), "w");
     if (!sortStream)
       return FALSE;
     mSortInfo.dirty = FALSE;
@@ -2642,13 +2643,13 @@ bool KMHeaders::writeSortOrder()
     fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile.local8Bit());
+	unlink(QFile::encodeName(sortFile));
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
 	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     fclose(sortStream);
-    ::rename(tempName.local8Bit(), sortFile.local8Bit());
+    ::rename(QFile::encodeName(tempName), QFile::encodeName(sortFile));
   }
 
   return TRUE;
@@ -2657,7 +2658,7 @@ bool KMHeaders::writeSortOrder()
 void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 {
   QString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(sortFile.local8Bit(), "r+")) {
+  if(FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+")) {
     KMMsgBase *kmb = mFolder->getMsgBase( khi->mMsgId );
     int parent_id = -2; //no parent, top level
     if(khi->parent())
@@ -2676,7 +2677,7 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
-	unlink(sortFile.local8Bit());
+	unlink(QFile::encodeName(sortFile));
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
 	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
@@ -2814,7 +2815,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     }
 
     QString sortFile = KMAIL_SORT_FILE(mFolder);
-    FILE *sortStream = fopen(sortFile.local8Bit(), "r+");
+    FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
     mSortInfo.fakeSort = 0;
 
     if(sortStream) {
@@ -3197,7 +3198,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if (error || (sortStream && ferror(sortStream))) {
         if ( sortStream )
             fclose(sortStream);
-	unlink(sortFile.local8Bit());
+	unlink(QFile::encodeName(sortFile));
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
 	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));

@@ -427,8 +427,8 @@ void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
 //-----------------------------------------------------------------------------
 void KMFolderMgr::invalidateFolder(KMMsgDict *dict, KMFolder *folder)
 {
-    unlink(folder->indexLocation().local8Bit() + ".sorted");
-    unlink(folder->indexLocation().local8Bit() + ".ids");
+    unlink(QFile::encodeName(folder->indexLocation()) + ".sorted");
+    unlink(QFile::encodeName(folder->indexLocation()) + ".ids");
     if (dict) {
 	folder->fillMsgDict(dict);
 	dict->writeFolderIds(folder);

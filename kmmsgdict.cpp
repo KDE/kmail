@@ -315,7 +315,7 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
     return -1;
 
   QString filename = getFolderIdsLocation(folder);
-  FILE *fp = fopen(filename.local8Bit(), "r+");
+  FILE *fp = fopen(QFile::encodeName(filename), "r+");
   if (!fp)
     return -1;
 
@@ -390,7 +390,7 @@ KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder, bool truncate)
 
   if (!rentry->fp) {
     QString filename = getFolderIdsLocation(folder);
-    FILE *fp = truncate ? 0 : fopen(filename.local8Bit(), "r+");
+    FILE *fp = truncate ? 0 : fopen(QFile::encodeName(filename), "r+");
     if (fp)
     {
       int version = 0;
@@ -410,10 +410,10 @@ KMMsgDictREntry *KMMsgDict::openFolderIds(KMFolder *folder, bool truncate)
 
     if (!fp)
     {
-      fp = fopen(filename.local8Bit(), "w+");
+      fp = fopen(QFile::encodeName(filename), "w+");
       if (!fp)
       {
-        kdDebug(5006) << "Dict '" << filename.local8Bit()
+        kdDebug(5006) << "Dict '" << filename
                       << "' cannot open with folder " << folder->label() << ": "
                       << strerror(errno) << " (" << errno << ")" << endl;
          delete rentry;
@@ -460,7 +460,7 @@ int KMMsgDict::writeFolderIds(KMFolder *folder)
 
   off_t eof = ftell(fp);
   QString filename = getFolderIdsLocation(folder);
-  truncate(filename.local8Bit(), eof);
+  truncate(QFile::encodeName(filename), eof);
   fclose(rentry->fp);
   rentry->fp = 0;
 
@@ -545,5 +545,5 @@ bool KMMsgDict::removeFolderIds(KMFolder *folder)
 {
   folder->setRDict(0);
   QString filename = getFolderIdsLocation(folder);
-  return unlink(filename.local8Bit());
+  return unlink(QFile::encodeName(filename));
 }

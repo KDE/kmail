@@ -110,13 +110,13 @@ int KMFolderIndex::writeIndex()
   old_umask = umask(077);
 
   tempName = indexLocation() + ".temp";
-  unlink(tempName.local8Bit());
+  unlink(QFile::encodeName(tempName));
 
   // We touch the folder, otherwise the index is regenerated, if KMail is
   // running, while the clock switches from daylight savings time to normal time
   utime(QFile::encodeName(location()), 0);
 
-  FILE *tmpIndexStream = fopen(tempName.local8Bit(), "w");
+  FILE *tmpIndexStream = fopen(QFile::encodeName(tempName), "w");
   umask(old_umask);
   if (!tmpIndexStream)
     return errno;
@@ -164,12 +164,12 @@ int KMFolderIndex::writeIndex()
   if( fclose( tmpIndexStream ) != 0 )
     return errno;
 
-  ::rename(tempName.local8Bit(), indexLocation().local8Bit());
+  ::rename(QFile::encodeName(tempName), QFile::encodeName(indexLocation()));
   if (mIndexStream)
       fclose(mIndexStream);
   mHeaderOffset = nho;
 
-  mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
+  mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
   updateIndexStreamPtr();
 
   writeMsgDict();
@@ -420,7 +420,7 @@ void KMFolderIndex::clearIndex(bool autoDelete, bool syncDict)
 
 void KMFolderIndex::truncateIndex()
 {
-    truncate(indexLocation().local8Bit(), mHeaderOffset);
+    truncate(QFile::encodeName(indexLocation()), mHeaderOffset);
 }
 
 

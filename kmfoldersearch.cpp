@@ -394,7 +394,7 @@ void KMFolderSearch::setSearch(KMSearch *search)
     mInvalid = false;
     setDirty( true ); //have to write the index
     if (!mUnlinked) {
-	unlink(indexLocation().local8Bit());
+	unlink(QFile::encodeName(indexLocation()));
 	mUnlinked = true;
     }
     if (mSearch != search) {
@@ -458,7 +458,7 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
     }
     setDirty( true ); //TODO append a single entry to .ids file and sync.
     if (!mUnlinked) {
-	unlink(indexLocation().local8Bit());
+	unlink(QFile::encodeName(indexLocation()));
 	mUnlinked = true;
     }
     mSerNums.append(serNum);
@@ -487,7 +487,7 @@ void KMFolderSearch::removeSerNum(Q_UINT32 serNum)
 	    return;
 	}
     if (!mUnlinked) {
-	unlink(indexLocation().local8Bit());
+	unlink(QFile::encodeName(indexLocation()));
 	mUnlinked = true;
     }
 }
@@ -588,7 +588,7 @@ void KMFolderSearch::close(bool force)
 int KMFolderSearch::create(bool)
 {
     int old_umask;
-    int rc = unlink(location().local8Bit());
+    int rc = unlink(QFile::encodeName(location()));
     if (!rc)
 	return rc;
     rc = 0;
@@ -597,14 +597,14 @@ int KMFolderSearch::create(bool)
     assert(mOpenCount == 0);
 
     kdDebug(5006) << "Creating folder " << location() << endl;
-    if (access(location().local8Bit(), F_OK) == 0) {
+    if (access(QFile::encodeName(location()), F_OK) == 0) {
 	kdDebug(5006) << "KMFolderSearch::create call to access function failed."
 		      << endl;
 	return EEXIST;
     }
 
     old_umask = umask(077);
-    FILE *mStream = fopen(location().local8Bit(), "w+");
+    FILE *mStream = fopen(QFile::encodeName(location()), "w+");
     umask(old_umask);
     if (!mStream) return errno;
     fclose(mStream);
@@ -736,7 +736,7 @@ QString KMFolderSearch::indexLocation() const
 int KMFolderSearch::updateIndex()
 {
   if (mSearch && search()->running())
-      unlink(indexLocation().local8Bit());
+      unlink(QFile::encodeName(indexLocation()));
   else
       if (dirty())
 	  return writeIndex();
@@ -750,19 +750,19 @@ int KMFolderSearch::writeIndex()
     QString filename = indexLocation();
     int old_umask = umask(077);
     QString tempName = filename + ".temp";
-    unlink(tempName.local8Bit());
+    unlink(QFile::encodeName(tempName));
 
     // We touch the folder, otherwise the index is regenerated, if KMail is
     // running, while the clock switches from daylight savings time to normal time
     utime(QFile::encodeName(location()), 0);
 
-    FILE *tmpIndexStream = fopen(tempName.local8Bit(), "w");
+    FILE *tmpIndexStream = fopen(QFile::encodeName(tempName), "w");
     umask(old_umask);
 
     if (!tmpIndexStream) {
-	kdDebug(5006) << "Cannot write '" << filename.local8Bit()
+	kdDebug(5006) << "Cannot write '" << filename 
 		      << strerror(errno) << " (" << errno << ")" << endl;
-	truncate(filename.local8Bit(), 0);
+	truncate(QFile::encodeName(filename), 0);
 	return -1;
     }
     fprintf(tmpIndexStream, IDS_HEADER, IDS_VERSION);
@@ -772,7 +772,7 @@ int KMFolderSearch::writeIndex()
     Q_UINT32 count = mSerNums.count();
     if (!fwrite(&count, sizeof(count), 1, tmpIndexStream)) {
 	fclose(tmpIndexStream);
-	truncate(filename.local8Bit(), 0);
+	truncate(QFile::encodeName(filename), 0);
 	return -1;
     }
 
@@ -787,7 +787,7 @@ int KMFolderSearch::writeIndex()
     if (fsync(fileno(tmpIndexStream)) != 0) return errno;
     if (fclose(tmpIndexStream) != 0) return errno;
 
-    ::rename(tempName.local8Bit(), indexLocation().local8Bit());
+    ::rename(QFile::encodeName(tempName), QFile::encodeName(indexLocation()));
     mDirty = FALSE;
     mUnlinked = FALSE;
 
@@ -812,7 +812,7 @@ bool KMFolderSearch::readIndex()
 {
     clearIndex();
     QString filename = indexLocation();
-    mIdsStream = fopen(filename.local8Bit(), "r+");
+    mIdsStream = fopen(QFile::encodeName(filename), "r+");
     if (!mIdsStream)
 	return false;
 
@@ -888,8 +888,8 @@ bool KMFolderSearch::readIndex()
 
 int KMFolderSearch::removeContents()
 {
-    unlink(location().local8Bit());
-    unlink(indexLocation().local8Bit());
+    unlink(QFile::encodeName(location()));
+    unlink(QFile::encodeName(indexLocation()));
     mUnlinked = true;
     return 0;
 }
@@ -940,7 +940,7 @@ void KMFolderSearch::fillDictFromIndex(KMMsgDict *)
 
 void KMFolderSearch::truncateIndex()
 {
-    truncate(indexLocation().local8Bit(), IDS_HEADER_LEN);
+    truncate(QFile::encodeName(indexLocation()), IDS_HEADER_LEN);
 }
 
 void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)

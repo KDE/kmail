@@ -102,7 +102,7 @@ int KMFolderMaildir::open()
 		  .arg(name());
       emit statusMsg(str);
     } else {
-      mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
+      mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
       updateIndexStreamPtr();
     }
 
@@ -497,7 +497,7 @@ DwString KMFolderMaildir::getDwString(int idx)
 
   if (fi.exists() && fi.isFile() && fi.isWritable())
   {
-    FILE* stream = fopen(abs_file.local8Bit(), "r+");
+    FILE* stream = fopen(QFile::encodeName(abs_file), "r+");
     DwString str( stream, mi->msgSize() );
     fclose( stream );
     return str;
@@ -532,7 +532,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   // we keep our current directory to restore it later
   char path_buffer[PATH_MAX];
   ::getcwd(path_buffer, PATH_MAX - 1);
-  ::chdir(dir.local8Bit());
+  ::chdir(QFile::encodeName(dir));
 
   // messages in the 'cur' directory are Read by default.. but may
   // actually be some other state (but not New)
@@ -635,7 +635,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
                 0, status,
                 xmarkStr.stripWhiteSpace(),
                 replyToIdStr, replyToAuxIdStr, msgIdStr,
-                file.local8Bit(),
+				file.local8Bit(),
                 KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                 KMMsgMDNStateUnknown, f.size() );
 

@@ -19,6 +19,7 @@
 #include <kconfig.h>
 #include <kdebug.h>
 
+#include <qfile.h>
 #include <qregexp.h>
 
 #include <mimelib/mimepp.h>
@@ -139,10 +140,10 @@ KMFolderDir* KMFolder::createChildFolder()
   if (mChild)
     return mChild;
 
-  if (access(childDir.local8Bit(), W_OK) != 0) // Not there or not writable
+  if (access(QFile::encodeName(childDir), W_OK) != 0) // Not there or not writable
   {
-    if (mkdir(childDir.local8Bit(), S_IRWXU) != 0
-      && chmod(childDir.local8Bit(), S_IRWXU) != 0)
+    if (mkdir(QFile::encodeName(childDir), S_IRWXU) != 0
+      && chmod(QFile::encodeName(childDir), S_IRWXU) != 0)
         ok=false; //failed create new or chmod existing tmp/
   }
 
@@ -672,7 +673,7 @@ int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
   if (kernel->msgDict())
     newIdsLoc = kernel->msgDict()->getFolderIdsLocation(this);
 
-  if (::rename(oldLoc.local8Bit(), newLoc.local8Bit())) {
+  if (::rename(QFile::encodeName(oldLoc), QFile::encodeName(newLoc))) {
     setName(oldName);
     setParent(oldParent);
     rc = errno;
@@ -680,22 +681,22 @@ int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
   else {
     // rename/move index file and index.sorted file
     if (!oldIndexLoc.isEmpty()) {
-      ::rename(oldIndexLoc.local8Bit(), newIndexLoc.local8Bit());
-      ::rename(oldIndexLoc.local8Bit() + ".sorted",
-               newIndexLoc.local8Bit() + ".sorted");
+      ::rename(QFile::encodeName(oldIndexLoc), QFile::encodeName(newIndexLoc));
+      ::rename(QFile::encodeName(oldIndexLoc) + ".sorted",
+               QFile::encodeName(newIndexLoc) + ".sorted");
     }
 
     // rename/move serial number file
     if (!oldIdsLoc.isEmpty())
-      ::rename(oldIdsLoc.local8Bit(), newIdsLoc.local8Bit());
+      ::rename(QFile::encodeName(oldIdsLoc), QFile::encodeName(newIdsLoc));
 
     // rename/move the subfolder directory
-    if (!::rename(oldSubDirLoc.local8Bit(), newSubDirLoc.local8Bit() )) {
+    if (!::rename(QFile::encodeName(oldSubDirLoc), QFile::encodeName(newSubDirLoc) )) {
       // now that the subfolder directory has been renamed and/or moved also
       // change the name that is stored in the corresponding KMFolderNode
       // (provide that the name actually changed)
       if( mChild && ( oldName != newName ) ) {
-        mChild->setName( "." + newName.local8Bit() + ".directory" );
+        mChild->setName( "." + QFile::encodeName(newName) + ".directory" );
       }
     }
 
@@ -734,8 +735,8 @@ int KMFolder::remove()
   close(TRUE);
 
   if (kernel->msgDict()) kernel->msgDict()->removeFolderIds(this);
-  unlink(indexLocation().local8Bit() + ".sorted");
-  unlink(indexLocation().local8Bit());
+  unlink(QFile::encodeName(indexLocation()) + ".sorted");
+  unlink(QFile::encodeName(indexLocation()));
 
   int rc = removeContents();
   if (rc) return rc;
@@ -758,7 +759,7 @@ int KMFolder::expunge()
   kernel->msgDict()->removeFolderIds(this);
   if (mAutoCreateIndex)
     truncateIndex();
-  else unlink(indexLocation().local8Bit());
+  else unlink(QFile::encodeName(indexLocation()));
 
   int rc = expungeContents();
   if (rc) return rc;
