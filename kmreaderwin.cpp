@@ -457,7 +457,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mRootNode( 0 ),
     mIdOfLastViewedMessage(),
     mMainWindow( mainWindow ),
-    mActionCollection( actionCollection )
+    mActionCollection( actionCollection ),
+    mHtmlWriter( 0 )
 {
   mUseGroupware = false;
   mAutoDelete = false;
@@ -593,6 +594,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  delete mHtmlWriter; // should be deleted before mViewer
   delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete message();
   delete mRootNode;
@@ -940,9 +942,12 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setJavaEnabled(false);    // just make this explicit
   mViewer->setMetaRefreshEnabled(false);
   mViewer->setURLCursor(KCursor::handCursor());
-
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
+
+  if ( !htmlWriter() )
+    mHtmlWriter = new KHtmlPartHtmlWriter( this );
+
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
           SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
@@ -1181,10 +1186,6 @@ void KMReaderWin::updateReaderWin()
     if( mMimePartTree )
       mMimePartTree->clear();
   }
-}
-
-HtmlWriter * KMReaderWin::makeHtmlWriter() {
-  return new KHtmlPartHtmlWriter( this );
 }
 
 //-----------------------------------------------------------------------------

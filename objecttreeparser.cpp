@@ -73,7 +73,7 @@ namespace KMail {
       mAttachmentStrategy = reader ? reader->attachmentStrategy()
 	                           : AttachmentStrategy::smart();
     if ( reader && !this->htmlWriter() )
-      mHtmlWriter = reader->makeHtmlWriter();
+      mHtmlWriter = reader->htmlWriter();
   }
   
   ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )

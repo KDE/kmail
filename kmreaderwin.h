@@ -181,8 +181,8 @@ public:
   /** Queue HTML code to be sent later in chunks to khtml */
   void queueHtml(const QString &aStr);
 
-  /** Return a @ref HtmlWriter connected to the @ref KHTMLPart we use */
-  KMail::HtmlWriter * makeHtmlWriter();
+  /** Return the @ref HtmlWriter connected to the @ref KHTMLPart we use */
+  KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
 
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
@@ -514,6 +514,7 @@ protected:
 
   KToggleAction *mToggleFixFontAction;
   KURL mUrlClicked;
+  KMail::HtmlWriter * mHtmlWriter;
 
 public:
   bool mDebugReaderCrypto;
