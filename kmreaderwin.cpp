@@ -1572,14 +1572,14 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
     if (!atmCodec) atmCodec = mCodec;
     QString vcard = atmCodec->toUnicode(vCardNode->msgPart().bodyDecoded());
     KABC::VCardConverter vc;
-	KABC::Addressee a;
+    KABC::Addressee a;
     bool isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v3_0);
     if (!isOk)
       isOk = vc.vCardToAddressee(vcard, a, KABC::VCardConverter::v2_1);
     if( isOk ) {
       hasVCard = true;
       kdDebug(5006) << "FOUND A VALID VCARD" << endl;
-      writePartIcon(&vCardNode->msgPart(), aMsg->partNumber(vCardNode->dwPart()), TRUE );
+      writePartIcon(&vCardNode->msgPart(), vCardNode->nodeId(), TRUE );
     }
   }
   htmlWriter()->queue("<div id=\"header\">"
@@ -1712,8 +1712,12 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     << "trying to writeMsgHeader() without a header style set!" << endl;
   kdFatal( !headerStrategy(), 5006 )
     << "trying to writeMsgHeader() without a header strategy set!" << endl;
+  QString href;
+  if (hasVCard)
+    href = QString("file:") + KURL::encode_string( mTempFiles.last() );
+
   return headerStyle()->format( aMsg, headerStrategy(),
-				hasVCard ? mTempFiles.last() : QString::null,
+				hasVCard ? href : QString::null,
 				mPrinting );
 }
 
