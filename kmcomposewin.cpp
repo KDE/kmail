@@ -647,7 +647,12 @@ void KMComposeWin::deadLetter()
   qApp->enter_loop();
 
   // Ok, it's done now - continue dead letter saving
-  QCString msgStr = mMsg->asString();
+  if ( mComposedMessages.isEmpty() ) {
+    kdDebug(5006) << "Composing the message failed." << endl;
+    return;
+  }
+  KMMessage *msg = mComposedMessages.first();
+  QCString msgStr = msg->asString();
   QCString fname = getenv("HOME");
   fname += "/dead.letter.tmp";
   // Security: the file is created in the user's home directory, which
@@ -658,7 +663,7 @@ void KMComposeWin::deadLetter()
   int fd = open(fname, O_CREAT|O_APPEND|O_WRONLY, S_IWRITE|S_IREAD);
   if (fd != -1)
   {
-    QCString startStr = "From " + mMsg->fromEmail() + " " + mMsg->dateShortStr() + "\n";
+    QCString startStr = "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
     ::write(fd, startStr, startStr.length());
     ::write(fd, msgStr, msgStr.length());
     ::write(fd, "\n", 1);
@@ -2849,7 +2854,11 @@ void KMComposeWin::slotContinuePrint( bool rc )
               this, SLOT( slotContinuePrint( bool ) ) );
 
   if( rc ) {
-    KMCommand *command = new KMPrintCommand( this, mMsg );
+    if ( mComposedMessages.isEmpty() ) {
+      kdDebug(5006) << "Composing the message failed." << endl;
+      return;
+    }
+    KMCommand *command = new KMPrintCommand( this, mComposedMessages.first() );
     command->start();
     mEditor->setModified( mMessageWasModified );
   }
