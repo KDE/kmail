@@ -8,6 +8,8 @@
 #include "kmmessage.h"
 #include "kmmsgindex.h"
 #include "kmmsgdict.h"
+#include "filterlog.h"
+using KMail::FilterLog;
 
 #include <kglobal.h>
 #include <klocale.h>
@@ -281,7 +283,13 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
   }  else {
     msgContents = msg->headerField( field() );
   }
-  return matchesInternal( msgContents );
+  bool rc = matchesInternal( msgContents );
+  if ( FilterLog::instance()->isLogging() ) {
+    QString msg = ( rc ? "\t1 = " : "\t0 = " );
+    msg += asString() + " (" + msgContents + ")";
+    FilterLog::instance()->add( msg, FilterLog::ruleResult );
+  }
+  return rc;
 }
 
 // helper, does the actual comparing
@@ -368,7 +376,14 @@ bool KMSearchRuleNumerical::matches( const KMMessage * msg ) const
     numericalValue = contents().toInt();
     msgContents.setNum( numericalMsgContents );
   }
-  return matchesInternal( numericalValue, numericalMsgContents, msgContents );
+  bool rc = matchesInternal( numericalValue, numericalMsgContents, msgContents );
+  if ( FilterLog::instance()->isLogging() ) {
+    QString msg = ( rc ? "\t1 = " : "\t0 = " );
+    msg += asString() + " ( " + QString::number(numericalValue);
+    msg += " / " + QString::number(numericalMsgContents) + " )";
+    FilterLog::instance()->add( msg, FilterLog::ruleResult );
+  }
+  return rc;
 }
 
 bool KMSearchRuleNumerical::matchesInternal( unsigned long numericalValue,
@@ -479,17 +494,18 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
 {
 
   KMMsgStatus msgStatus = msg->status();
+  bool rc = false;
 
   switch ( function() ) {
     case FuncEquals: // fallthrough. So that "<status> 'is' 'read'" works
     case FuncContains:
       if (msgStatus & mStatus)
-        return true;
+        rc = true;
       break;
     case FuncNotEqual: // fallthrough. So that "<status> 'is not' 'read'" works
     case FuncContainsNot:
       if (! (msgStatus & mStatus) )
-        return true;
+        rc = true;
       break;
     // FIXME what about the remaining funcs, how can they make sense for
     // stati?
@@ -497,7 +513,12 @@ bool KMSearchRuleStatus::matches( const KMMessage * msg ) const
       break;
   }
 
-  return false;
+  if ( FilterLog::instance()->isLogging() ) {
+    QString msg = ( rc ? "\t1 = " : "\t0 = " );
+    msg += asString();
+    FilterLog::instance()->add( msg, FilterLog::ruleResult );
+  }
+  return rc;
 }
 
 // ----------------------------------------------------------------------------

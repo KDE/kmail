@@ -48,15 +48,17 @@ FilterLog * FilterLog::instance()
 }
 
 
-void FilterLog::add( QString logEntry )
+void FilterLog::add( QString logEntry, ContentType contentType )
 {
 #ifndef NDEBUG
   kdDebug(5006) << "New filter log entry: " << logEntry << endl;
 #endif
-  if ( isLogging() )
+  if ( isLogging() && ( allowedTypes & contentType ) )
   {
     logEntries.append( logEntry );
     emit logEntryAdded( logEntry );
+// FIXME remove it
+kdDebug(5006) << "New filter log entry added."<< endl;
   }
 }
 

@@ -56,13 +56,22 @@ namespace KMail {
       /** access to the singleton instance */
       static FilterLog * instance();
       
+      /** log data types */
+      enum ContentType { meta = 1, patternDesc, ruleResult, patternResult, appliedAction };
+      
       /** check the logging state */
       bool isLogging() { return logging; };
       /** set the logging state */
       void setLogging( bool active ) { logging = active; };
+      /** add a content type to the set of logged ones */
+      void enableContentType( ContentType contentType ) { allowedTypes |= contentType; };
+      /** remove a content type from the set of logged ones */
+      void disableContentType( ContentType contentType ) { allowedTypes &= ~contentType; };
 
       /** add a log entry */
-      void add( QString logEntry );
+      void add( QString logEntry, ContentType contentType );
+      /** add a separating line in the log */
+      void addSeparator() { add( "------------------------------", meta ); };
       /** discard collected log data */
       void clear() { logEntries.clear(); };
       
@@ -79,12 +88,18 @@ namespace KMail {
 
     protected:
       /** Non-public constructor needed by the singleton implementation */
-      FilterLog() { self = this; logging = true; };
+      FilterLog() 
+      { 
+        self = this; 
+        logging = true; 
+        allowedTypes = meta | patternDesc | ruleResult | patternResult | appliedAction;
+      };
       
       /** The list contains the single log pieces */
       QStringList logEntries;
       /** the log status */
       bool logging;
+      int allowedTypes;
       
     private:
       static FilterLog * self;

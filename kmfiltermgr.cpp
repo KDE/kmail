@@ -136,7 +136,7 @@ bool KMFilterMgr::beginFiltering(KMMsgBase *msgBase) const
   MessageProperty::setFiltering( msgBase, true );
   MessageProperty::setFilterFolder( msgBase, 0 );
   if ( FilterLog::instance()->isLogging() ) {
-    FilterLog::instance()->add( "------------------------------" );
+    FilterLog::instance()->addSeparator();
   }
   return true;
 }
@@ -212,12 +212,14 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) {
       if ( FilterLog::instance()->isLogging() ) {
         QString logText( i18n( "Evaluating filter rules:\n" ) );
         logText.append( (*it)->pattern()->asString() );
-        FilterLog::instance()->add( logText );
+        FilterLog::instance()->add( logText, FilterLog::patternDesc );
       }
       if ( (*it)->pattern()->matches( msg ) ) {
 	// filter matches
-        if ( FilterLog::instance()->isLogging() )
-          FilterLog::instance()->add( i18n( "Filter rules have matched." ) );
+        if ( FilterLog::instance()->isLogging() ) {
+          FilterLog::instance()->add( i18n( "Filter rules have matched." ), 
+                                      FilterLog::patternResult );
+        }
 	// execute actions:
 	if ( (*it)->execActions(msg, stopIt) == KMFilter::CriticalError )
 	  return 2;

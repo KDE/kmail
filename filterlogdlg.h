@@ -31,7 +31,7 @@
 
 #include <kdialogbase.h>
 
-class KTextEdit;
+class QTextEdit;
 
 namespace KMail {
 
@@ -55,7 +55,7 @@ namespace KMail {
       
     protected:
       virtual void slotUser1();
-      KTextEdit * textEdit;
+      QTextEdit * textEdit;
   };
 
 } // namespace KMail

@@ -87,7 +87,7 @@ KMFilter::ReturnCode KMFilter::execActions( KMMessage* msg, bool& stopIt ) const
       logText.append( " \"" );
       logText.append( (*it)->argsAsString() );
       logText.append( "\"" );
-      FilterLog::instance()->add( logText );
+      FilterLog::instance()->add( logText, FilterLog::appliedAction );
     }
 
     KMFilterAction::ReturnCode result = (*it)->process( msg );

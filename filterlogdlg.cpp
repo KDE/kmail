@@ -32,9 +32,9 @@
 
 #include <kdebug.h>
 #include <klocale.h>
-#include <ktextedit.h>
 
 #include <qstringlist.h>
+#include <qtextedit.h>
 
 
 using namespace KMail;
@@ -44,7 +44,7 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 : KDialogBase( parent, "FilterLogDlg", false, i18n( "KMail Filter Log Viewer" ),
               User1|Close, Close, true, i18n("C&lear") )
 {
-  textEdit = new KTextEdit( this );
+  textEdit = new QTextEdit( this );
   setMainWidget( textEdit );
   textEdit->setReadOnly( true );
 
