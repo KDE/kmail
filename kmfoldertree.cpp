@@ -863,7 +863,8 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     KMAcctImap *act = imapFolder->account();
     if (act)
     {
-      act->killAllJobs();
+      // Can't we do without this? -till
+      //act->killAllJobs(); 
       act->setIdle(TRUE);
     }
   }
