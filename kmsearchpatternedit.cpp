@@ -76,13 +76,12 @@ void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
   mRuleField->insertStringList( mFilterFieldList );
   mRuleField->setSizeLimit( mRuleField->count() );
   mRuleField->adjustSize();
-  
-  int i = indexOfRuleField( currentText );
-  if ( i >= 0 ) {
+
+  if ((currentText != "<message>") &&
+      (currentText != "<body>"))
     mRuleField->changeItem( currentText, 0 );
-  } else {
+  else
     mRuleField->changeItem( QString::null, 0 );
-  }
 }
 
 void KMSearchRuleWidget::initWidget()
