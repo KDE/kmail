@@ -571,8 +571,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
   {
     if( !isHeaderField() ) {
       value = aMsg->headerAsString();
-      QString charset;
-      QCString content;
+      QCString charset, content;
       if (aMsg->typeStr().lower().find("multipart/") != -1)
       {
         KMMessagePart mp;

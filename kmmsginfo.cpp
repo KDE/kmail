@@ -123,10 +123,10 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::init(const QString& aSubject, const QString& aFrom,
-                     const QString& aTo, time_t aDate,
-		     KMMsgStatus aStatus, const QString& aXMark,
-		     const QString& replyToId, const QString& msgId,
+void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
+                     const QCString& aTo, time_t aDate,
+		     KMMsgStatus aStatus, const QCString& aXMark,
+		     const QCString& replyToId, const QCString& msgId,
 		     unsigned long aFolderOffset, unsigned long aMsgSize)
 {
     mIndexOffset = 0;

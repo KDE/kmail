@@ -3305,7 +3305,7 @@ void ConfigureDialog::slotAddCharset( void )
   if ( linedlg->exec() == QDialog::Accepted )
   {
     if (linedlg->text().lower() == "us-ascii" ||
-      KMMsgBase::codecForName( linedlg->text() ))
+      KMMsgBase::codecForName( linedlg->text().latin1() ))
     {
       mComposer.charsetListBox->insertItem( linedlg->text(),
         mComposer.charsetListBox->currentItem() + 1 );

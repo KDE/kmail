@@ -90,7 +90,6 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
     return 1;
   }
 
-  KMFilter* filter;
   bool stopIt = FALSE;
   int status = -1;
   KMFilter::ReturnCode result;

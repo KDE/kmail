@@ -158,7 +158,7 @@ void KMMainWin::readPreConfig(void)
   }
 
   KConfigGroupSaver saver(config, "General");
-  mEncodingStr = config->readEntry("encoding", "");
+  mEncodingStr = config->readEntry("encoding", "").latin1();
 }
 
 
@@ -316,7 +316,7 @@ void KMMainWin::writeConfig(void)
   }
 
   KConfigGroupSaver saver(config, "General");
-  config->writeEntry("encoding", mEncodingStr);
+  config->writeEntry("encoding", QString(mEncodingStr));
 }
 
 
@@ -480,7 +480,7 @@ void KMMainWin::activatePanners(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSetEncoding()
 {
-    mEncodingStr = KGlobal::charsets()->encodingForName(mEncoding->currentText());
+    mEncodingStr = KGlobal::charsets()->encodingForName(mEncoding->currentText()).latin1();
     if (mEncoding->currentItem() == 0) // Auto
     {
       mCodec = 0;
@@ -1025,7 +1025,7 @@ void KMMainWin::slotShowMsgSrc()
     QTextCodec *codec = mCodec;
     if (!codec) //this is Auto setting
     {
-       QString cset = msg->charset();
+       QCString cset = msg->charset();
        if (!cset.isEmpty())
          codec = KMMsgBase::codecForName(cset);
     }
@@ -1753,12 +1753,14 @@ void KMMainWin::setupMenuBar()
 
   QStringList::Iterator it;
   int i = 0;
-  for( it = encodings.begin(); it != encodings.end(); ++it) {
-      if ( KGlobal::charsets()->encodingForName(*it ) == mEncodingStr ) {
-	  mEncoding->setCurrentItem( i );
-	  break;
-      }
-      i++;
+  for( it = encodings.begin(); it != encodings.end(); ++it)
+  {
+    if ( KGlobal::charsets()->encodingForName(*it ) == QString(mEncodingStr) )
+    {
+      mEncoding->setCurrentItem( i );
+      break;
+    }
+    i++;
   }
 
   editAction = new KAction( i18n("Edi&t"), Key_T, this,

@@ -217,13 +217,13 @@ void KMComposeWin::makeDescriptiveNames(QStringList &encodings)
   for (QStringList::Iterator it = encodingNames.begin();
     it != encodingNames.end(); it++)
   {
-    QTextCodec *codec = KMMsgBase::codecForName(*it);
+    QTextCodec *codec = KMMsgBase::codecForName((*it).latin1());
     if (codec) encodingMap.insert(codec, *it);
   }
   for (QStringList::Iterator it = encodings.begin();
     it != encodings.end(); it++)
   {
-    QTextCodec *codec = KMMsgBase::codecForName(*it);
+    QTextCodec *codec = KMMsgBase::codecForName((*it).latin1());
     QMap<QTextCodec*, QString>::Iterator it2 = encodingMap.find(codec);
     if (it2 == encodingMap.end())
       (*it) = KGlobal::charsets()->languageForEncoding(*it)
@@ -1403,8 +1403,8 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
-    if (KMMsgBase::codecForName(KGlobal::charsets()->encodingForName(*it))
-      == KMMsgBase::codecForName(mCharset))
+    if (KMMsgBase::codecForName(KGlobal::charsets()->encodingForName(*it)
+      .latin1()) == KMMsgBase::codecForName(mCharset))
     {
       encodingAction->setCurrentItem( i );
       slotSetCharset();
@@ -1510,8 +1510,8 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   kernel->kbp()->busy();
   i = urlStr.findRev('/');
   name = (i>=0 ? urlStr.mid(i+1, 256) : urlStr);
-  QString encName = KMMsgBase::encodeRFC2231String(name, mCharset);
-  bool RFC2231encoded = name != encName;
+  QCString encName = KMMsgBase::encodeRFC2231String(name, mCharset);
+  bool RFC2231encoded = name != QString(encName);
 
   // create message part
   msgPart = new KMMessagePart;
@@ -1519,7 +1519,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setCteStr(mDefEncoding);
   msgPart->setBodyEncodedBinary((*it).data);
   msgPart->magicSetType();
-  msgPart->setContentDisposition(QString("attachment; filename")
+  msgPart->setContentDisposition(QCString("attachment; filename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
   mapAtmLoadData.remove(it);

@@ -69,7 +69,7 @@ public:
   virtual QString xmark(void) const = 0;
 
   /** Set date. */
-  virtual void setDate(const QString &aStrDate);
+  virtual void setDate(const QCString &aStrDate);
   virtual void setDate(time_t aUnixTime) = 0;
 
   /** Returns TRUE if changed since last folder-sync. */
@@ -105,12 +105,12 @@ public:
    * (e.g. ':' or ',') and skip the then following blanks (if any) too.
    * If keywordFound is specified it will be TRUE if a keyword was skipped
    * and FALSE otherwise. */
-  static QString skipKeyword(const QString& str, char sepChar=':',
+  static QString skipKeyword(const QString& str, QChar sepChar=':',
 				 bool* keywordFound=NULL);
 
   /** Return a QTextCodec for the specified charset.
    * This function is a bit more tolerant, than QTextCodec::codecForName */
-  static QTextCodec* codecForName(const QString& _str);
+  static QTextCodec* codecForName(const QCString& _str);
 
   /** Convert all non-ascii characters to question marks */
   static const QCString toUsAscii(const QString& _str);
@@ -122,39 +122,32 @@ public:
   KMMsgBase& operator=(const KMMsgBase& other);
 
   /** En-/decode given string to/from quoted-printable. */
-  static QString decodeQuotedPrintable(const QString& str);
-  static QString encodeQuotedPrintable(const QString& str);
-
-  /** Decode given string from possibly quoted-printable encoded
-    string. These strings contain parts of the type "=?iso8859-1?Q?...?=".
-    These parts are not correct decoded by decodeQuotedPrintable().
-    Use this method if you want to ensure that a given header field
-    is readable. */
-  static QString decodeQuotedPrintableString(const QString& str);
+  static QCString decodeQuotedPrintable(const QCString& str);
+  static QCString encodeQuotedPrintable(const QCString& str);
 
   /** En/-decode given string to/from Base64. */
-  static QString decodeBase64(const QString& str);
-  static QString encodeBase64(const QString& str);
+  static QCString decodeBase64(const QCString& str);
+  static QCString encodeBase64(const QCString& str);
 
   /** Helper function for encodeRFC2047String */
-  static QString encodeRFC2047Quoted(const QString& aStr, bool base64);
+  static QCString encodeRFC2047Quoted(const QCString& aStr, bool base64);
 
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
-  static QString decodeRFC2047String(const QString& aStr);
+  static QString decodeRFC2047String(const QCString& aStr);
 
   /** Encode given string as described in RFC2047:
     using quoted-printable. */
-  static QString encodeRFC2047String(const QString& aStr,
-    const QString& charset);
+  static QCString encodeRFC2047String(const QString& aStr,
+    const QCString& charset);
 
   /** Encode given string as described in RFC2231
     (parameters in MIME headers) */
-  static QString encodeRFC2231String(const QString& aStr,
-    const QString& charset);
+  static QCString encodeRFC2231String(const QString& aStr,
+    const QCString& charset);
 
   /** Decode given string as described in RFC2231 */
-  static QString decodeRFC2231String(const QString& aStr);
+  static QString decodeRFC2231String(const QCString& aStr);
 
 protected:
   KMFolder* mParent;

@@ -205,9 +205,9 @@ void KMMsgPartDlg::applyChanges(void)
   if (!str.isEmpty() || !mMsgPart->name().isEmpty())
   {
     mMsgPart->setName(str);
-    QString encName = KMMsgBase::encodeRFC2231String(str, mMsgPart->charset());
-    mMsgPart->setContentDisposition(QString("attachment; filename")
-      + ((str != encName) ? "*" : "") +  "=\"" + encName + "\"");
+    QCString encName = KMMsgBase::encodeRFC2231String(str, mMsgPart->charset());
+    mMsgPart->setContentDisposition(QCString("attachment; filename")
+      + ((str != QString(encName)) ? "*" : "") +  "=\"" + encName + "\"");
   }
 
   str = mEdtComment->text();

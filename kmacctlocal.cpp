@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // kmacctlocal.cpp
 
 #ifdef HAVE_CONFIG_H
@@ -120,7 +119,7 @@ void KMAcctLocal::processNewMail(bool)
   // run the precommand
   if (!runPrecommand(precommand()))
     {
-        perror("cannot run precommand "+precommand());
+        kdDebug(5006) << "cannot run precommand " << precommand() << endl;
 	emit finishedCheck(hasNewMail);
     }
 
@@ -133,7 +132,8 @@ void KMAcctLocal::processNewMail(bool)
     aStr = i18n("Cannot open file:");
     aStr += mailFolder.path()+"/"+mailFolder.name();
     KMessageBox::sorry(0, aStr);
-    perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
+    kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
+      << mailFolder.name() << endl;
     emit finishedCheck(hasNewMail);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed." ));
     return;
@@ -170,7 +170,8 @@ void KMAcctLocal::processNewMail(bool)
     msg = mailFolder.take(0);
     if (msg)
     {
-      msg->setStatus(msg->headerField("Status"), msg->headerField("X-Status"));
+      msg->setStatus(msg->headerField("Status").latin1(),
+        msg->headerField("X-Status").latin1());
       addedOk = processNewMsg(msg);
       if (addedOk)
 	hasNewMail = true;
@@ -255,7 +256,7 @@ void KMAcctLocal::setLocation(const QString& aLocation)
 void
 KMAcctLocal::setProcmailLockFileName(QString s)
 {
-  if (s && !s.isEmpty())
+  if (!s.isEmpty())
     mProcmailLockFileName = s;
   else
     mProcmailLockFileName = mLocation + ".lock";

@@ -221,9 +221,9 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
   KMMessagePart bodyPart;
   bodyPart.setTypeStr(ct);
   bodyPart.setSubtypeStr(subtypeStr());
-  bodyPart.setContentDisposition(headerField("Content-Disposition"));
+  bodyPart.setContentDisposition(headerField("Content-Disposition").latin1());
   bodyPart.setCteStr(contentTransferEncodingStr());
-  bodyPart.setContentDisposition(headerField("Content-Disposition"));
+  bodyPart.setContentDisposition(headerField("Content-Disposition").latin1());
   bodyPart.setBodyEncodedBinary(bodyDecodedBinary());
   addBodyPart(&textPart);
   addBodyPart(&bodyPart);
@@ -550,7 +550,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   QTextCodec *codec = mCodec;
   if (!codec)
   {
-    QString cset = charset();
+    QCString cset = charset();
     if (!cset.isEmpty())
       codec = KMMsgBase::codecForName(cset);
     if (!codec) codec = QTextCodec::codecForLocale();
@@ -1874,10 +1874,10 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
     if (aPart->name().isEmpty())
     {
       if (!headers->ContentType().Name().empty())
-        aPart->setName(KMMsgBase::decodeQuotedPrintableString(headers->
+        aPart->setName(KMMsgBase::decodeRFC2047String(headers->
           ContentType().Name().c_str()) );
       else if (!headers->Subject().AsString().empty())
-        aPart->setName( KMMsgBase::decodeQuotedPrintableString(headers->
+        aPart->setName( KMMsgBase::decodeRFC2047String(headers->
           Subject().AsString().c_str()) );
       else
         aPart->setName( i18n("Attachment: ") + QString( "%1" ).arg( aIdx ) );
@@ -2002,29 +2002,29 @@ void KMMessage::deleteBodyParts(void)
 //-----------------------------------------------------------------------------
 void KMMessage::addBodyPart(const KMMessagePart* aPart)
 {
-  QString charset  = aPart->charset();
+  QCString charset  = aPart->charset();
 
   DwBodyPart* part = DwBodyPart::NewBodyPart(emptyString, 0);
 
-  QString type     = aPart->typeStr();
-  QString subtype  = aPart->subtypeStr();
-  QString cte      = aPart->cteStr();
-  QString contDesc = KMMsgBase::encodeRFC2047String(aPart->
+  QCString type     = aPart->typeStr();
+  QCString subtype  = aPart->subtypeStr();
+  QCString cte      = aPart->cteStr();
+  QCString contDesc = KMMsgBase::encodeRFC2047String(aPart->
     contentDescription(), charset);
-  QString contDisp = aPart->contentDisposition();
-  QString name     = KMMsgBase::encodeRFC2231String(aPart->name(), charset);
-  bool RFC2231encoded = aPart->name() != name;
+  QCString contDisp = aPart->contentDisposition();
+  QCString name     = KMMsgBase::encodeRFC2231String(aPart->name(), charset);
+  bool RFC2231encoded = aPart->name() != QString(name);
 
   DwHeaders& headers = part->Headers();
   if (type != "" && subtype != "")
   {
-    headers.ContentType().SetTypeStr((const char*)type);
-    headers.ContentType().SetSubtypeStr((const char*)subtype);
+    headers.ContentType().SetTypeStr(type.data());
+    headers.ContentType().SetSubtypeStr(subtype.data());
     if (!charset.isEmpty()){
          DwParameter *param;
          param=new DwParameter;
          param->SetAttribute("charset");
-         param->SetValue((const char *)charset);
+         param->SetValue(charset.data());
          headers.ContentType().AddParameter(param);
     }
   }
@@ -2034,11 +2034,11 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
     DwParameter *nameParam;
     nameParam = new DwParameter;
     nameParam->SetAttribute("name*");
-    nameParam->SetValue((const char*)name);
+    nameParam->SetValue(name.data());
     headers.ContentType().AddParameter(nameParam);
   } else {
     if(!name.isEmpty())
-      headers.ContentType().SetName((const char*)name);
+      headers.ContentType().SetName(name.data());
   }
 
   if (!cte.isEmpty())

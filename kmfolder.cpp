@@ -529,8 +529,8 @@ int KMFolder::createIndexFromContents()
 {
   char line[MAX_LINE];
   char status[8], xstatus[8];
-  QString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
-  QString replyToIdStr, referencesStr, msgIdStr;
+  QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=NULL;
+  QCString replyToIdStr, referencesStr, msgIdStr;
   QString whoFieldName;
   unsigned long offs, size, pos;
   bool atEof = FALSE;
@@ -595,7 +595,7 @@ int KMFolder::createIndexFromContents()
 	  mi = new KMMsgInfo(this);
 	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr, offs, size);
 	  mi->setStatus("RO","O");
-	  mi->setDate(dateStr.latin1());
+	  mi->setDate(dateStr);
 	  mi->setDirty(FALSE);
 	  mMsgList.append(mi);
 
@@ -651,17 +651,17 @@ int KMFolder::createIndexFromContents()
       needStatus &= ~2;
     }
     else*/ if (strncasecmp(line,"X-KMail-Mark:",13)==0 && isblank(line[13]))
-        xmarkStr = QString(line+14);
+        xmarkStr = QCString(line+14);
     else if (strncasecmp(line,"In-Reply-To:",12)==0 && isblank(line[12])) {
       int rightAngle;
-      replyToIdStr = QString(line+13);
+      replyToIdStr = QCString(line+13);
       rightAngle = replyToIdStr.find( '>' );
       if (rightAngle != -1)
 	replyToIdStr.truncate( rightAngle + 1 );
     }
     else if (strncasecmp(line,"References:",11)==0 && isblank(line[11])) {
       int leftAngle, rightAngle;
-      referencesStr = QString(line+12);
+      referencesStr = QCString(line+12);
       leftAngle = referencesStr.findRev( '<' );
       if (leftAngle != -1)
 	referencesStr = referencesStr.mid( leftAngle );
@@ -671,31 +671,31 @@ int KMFolder::createIndexFromContents()
     }
     else if (strncasecmp(line,"Message-Id:",11)==0 && isblank(line[11])) {
       int rightAngle;
-      msgIdStr = QString(line+12);
+      msgIdStr = QCString(line+12);
       rightAngle = msgIdStr.find( '>' );
       if (rightAngle != -1)
 	msgIdStr.truncate( rightAngle + 1 );
     }
     else if (strncasecmp(line,"Date:",5)==0 && isblank(line[5]))
     {
-        dateStr = QString(line+6);
+        dateStr = QCString(line+6);
       lastStr = &dateStr;
     }
     else if (strncasecmp(line,"From:", 5)==0 &&
 	     isblank(line[5]))
     {
-        fromStr = QString(line+6);
+        fromStr = QCString(line+6);
       lastStr = &fromStr;
     }
     else if (strncasecmp(line,"To:", 3)==0 &&
 	     isblank(line[3]))
     {
-        toStr = QString(line+4);
+        toStr = QCString(line+4);
       lastStr = &toStr;
     }
     else if (strncasecmp(line,"Subject:",8)==0 && isblank(line[8]))
     {
-        subjStr = QString(line+9);
+        subjStr = QCString(line+9);
       lastStr = &subjStr;
     }
   }

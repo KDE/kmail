@@ -554,7 +554,7 @@ void KMReaderWin::parseMsg(void)
 
   if (mAutoDetectEncoding) {
     mCodec = 0;
-    QString encoding;
+    QCString encoding;
     if (type.find("text/") != -1)
       encoding = mMsg->charset();
     else if (type.find("multipart/") != -1) {
@@ -855,7 +855,7 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     break;
 
   case HdrAll:
-    str = strToHtml(mMsg->headerAsString(), false, true);
+    str = strToHtml(mMsg->headerAsString(), true);
     mViewer->write(str);
     mViewer->write("\n");
     if (vcpartnum >= 0) {
@@ -977,7 +977,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
     {
       int adj = (ch == '\n') ? 0 : 1;
       newlineCount ++;
-      line = strToHtml(s.mid(beg,pos-beg+adj),FALSE,TRUE);
+      line = strToHtml(s.mid(beg,pos-beg+adj),TRUE);
       if( currQuoteLevel >= 0 )
       {
 	if( currQuoteLevel != prevQuoteLevel )
@@ -1120,8 +1120,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::strToHtml(const QString &aStr, bool aDecodeQP,
-                               bool aPreserveBlanks) const
+QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 {
   QCString qpstr, iStr, result;
   const char *pos;
@@ -1133,8 +1132,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aDecodeQP,
   bool startOfLine = true;
 
   // FIXME: use really unicode within a QString instead of utf8
-  if (aDecodeQP) qpstr = KMMsgBase::decodeRFC2047String(aStr).utf8();
-  else qpstr = aStr.utf8();
+  qpstr = aStr.utf8();
 
 #define HTML_ADD(str,len) strcpy(htmlPos,str),htmlPos+=len
 

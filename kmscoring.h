@@ -26,7 +26,7 @@ class KDialogBase;
 class KMScorableArticle : public ScorableArticle
 {
 public:
-  KMScorableArticle(const QString&);
+  KMScorableArticle(const QCString&);
   virtual ~KMScorableArticle();
 
   virtual void addScore(short s);
@@ -37,7 +37,7 @@ public:
   int score() const { return mScore; }
 
 private:
-  QString mMsgStr;
+  QCString mMsgStr;
   int mScore;
   mutable QMap<QString, QString> mParsedHeaders;
 };

@@ -7,7 +7,7 @@
 #include "kmfoldertree.h"
 #include "kmscoring.h"
 
-KMScorableArticle::KMScorableArticle(const QString &msg)
+KMScorableArticle::KMScorableArticle(const QCString &msg)
   : mMsgStr(msg),
     mScore(0)
 {

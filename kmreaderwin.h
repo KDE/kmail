@@ -205,7 +205,6 @@ protected:
     beginning of line to non-breakable spaces if preserveLeadingBlanks
     is TRUE. */
   virtual QString strToHtml(const QString &str,
-                            bool decodeQuotedPrintable=FALSE,
                             bool preserveLeadingBlanks=FALSE) const;
 
   /** Change the string to `quoted' html (meaning, that the quoted

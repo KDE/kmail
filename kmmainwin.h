@@ -221,7 +221,7 @@ protected:
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   KSelectAction *mEncoding;
   KAction       *mlistFilterAction;
-  QString	mEncodingStr;
+  QCString	mEncodingStr;
   bool		mIntegrated;
   bool          mSendOnCheck;
   bool          mBeepOnNew, mBoxOnNew, mExecOnNew;

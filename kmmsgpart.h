@@ -89,8 +89,8 @@ public:
   void setContentDescription(const QString &aStr);
 
   // Get or set the 'Content-Disposition' header field
-  QString contentDisposition() const;
-  void setContentDisposition(const QString &aStr);
+  QCString contentDisposition() const;
+  void setContentDisposition(const QCString &aStr);
 
   /** Get the message part charset.*/
   virtual QCString charset(void) const;
@@ -106,8 +106,8 @@ protected:
   QCString mType;
   QCString mSubtype;
   QCString mCte;
-  QString mContentDescription;
-  QString mContentDisposition;
+  QCString mContentDescription;
+  QCString mContentDisposition;
   QByteArray mBody;  // keep it null terminated since some callers
                      // misuse it as a QCString. Really the callers
                      // should be fixed like in kmreaderwin.cpp.

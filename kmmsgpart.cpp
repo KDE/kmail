@@ -336,7 +336,7 @@ void KMMessagePart::setContentDescription(const QString &aStr)
 QString KMMessagePart::fileName(void) const
 {
   int i, j, len;
-  QString str;
+  QCString str;
   int RFC2231encoded = 0;
 
   i = mContentDisposition.find("filename*=", 0, FALSE);
@@ -356,25 +356,23 @@ QString KMMessagePart::fileName(void) const
       str = str.mid(1, len-2);
 
   if (RFC2231encoded)
-    str = KMMsgBase::decodeRFC2231String(str);
+    return KMMsgBase::decodeRFC2231String(str);
   else
-    str = KMMsgBase::decodeQuotedPrintableString(str);
-
-  return str;
+    return KMMsgBase::decodeRFC2047String(str);
 }
 
 
 //-----------------------------------------------------------------------------
-QString KMMessagePart::contentDisposition(void) const
+QCString KMMessagePart::contentDisposition(void) const
 {
   return mContentDisposition;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setContentDisposition(const QString &aStr)
+void KMMessagePart::setContentDisposition(const QCString &aStr)
 {
-    mContentDisposition = aStr;
+  mContentDisposition = aStr;
 }
 
 

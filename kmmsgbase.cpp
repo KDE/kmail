@@ -1,5 +1,3 @@
-#undef QT_NO_ASCII_CAST
-#undef QT_NO_COMPAT
 // kmmsgbase.cpp
 
 #include <kdebug.h>
@@ -136,7 +134,7 @@ const char* KMMsgBase::statusToStr(KMMsgStatus aStatus)
 }
 
 //-----------------------------------------------------------------------------
-void KMMsgBase::setDate(const QString& aDateStr)
+void KMMsgBase::setDate(const QCString& aDateStr)
 {
   DwDateTime dwDate;
   dwDate.FromString(aDateStr);
@@ -154,36 +152,32 @@ QString KMMsgBase::dateStr(void) const
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
+QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 			       bool* hasKeyword)
 {
-  int i, maxChars=3;
-  const char *pos, *str = aStr.data();
+  unsigned int i = 0, maxChars = 3;
+  QString str = aStr;
 
-  if (!str) return 0;
-
-  while (*str==' ')
-    str++;
+  while (str[0] == ' ') str.remove(0,1);
   if (hasKeyword) *hasKeyword=FALSE;
 
-  for (i=0,pos=str; *pos && i<maxChars; pos++,i++)
+  for (i=0; i < str.length() && i < maxChars; i++)
   {
-    if (*pos < 'A' || *pos == sepChar) break;
+    if (str[i] < 'A' || str[i] == sepChar) break;
   }
 
-  if (i>1 && *pos == sepChar) // skip following spaces too
+  if (str[i] == sepChar) // skip following spaces too
   {
-    for (pos++; *pos==' '; pos++)
-      ;
+    while (str[i] == ' ') i++;
     if (hasKeyword) *hasKeyword=TRUE;
-    return pos;
+    return str.mid(i);
   }
   return str;
 }
 
 
 //-----------------------------------------------------------------------------
-QTextCodec* KMMsgBase::codecForName(const QString& _str)
+QTextCodec* KMMsgBase::codecForName(const QCString& _str)
 {
   if (_str.isEmpty()) return NULL;
   if (_str.lower() == "shift_jis" || _str.lower() == "shift-jis")
@@ -205,14 +199,12 @@ const QCString KMMsgBase::toUsAscii(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeRFC2047String(const QString& _str)
+QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 {
-  QCString aStr = _str.ascii();
   QString result;
   QCString charset;
   char *pos, *beg, *end, *mid;
-  QCString cstr;
-  QString str;
+  QCString str, cstr;
   char encoding, ch;
   bool valid;
   const int maxLen=200;
@@ -263,7 +255,7 @@ QString KMMsgBase::decodeRFC2047String(const QString& _str)
     {
       ch = *pos;
       *pos = '\0';
-      str = QString(mid).left((int)(mid - pos - 1));
+      str = QCString(mid).left((int)(mid - pos - 1));
       if (encoding == 'Q')
       {
 	// decode quoted printable text
@@ -277,15 +269,11 @@ QString KMMsgBase::decodeRFC2047String(const QString& _str)
 	cstr = decodeBase64(str);
       }
       QTextCodec *codec = codecForName(charset);
-      if (!codec) codec = codecForName(KGlobal::locale()->charset());
-      if (codec) str = codec->toUnicode(cstr);
-      else str = QString::fromLocal8Bit(cstr);
+      if (!codec) codec = codecForName(KGlobal::locale()->charset().latin1());
+      if (codec) result += codec->toUnicode(cstr);
+      else result += QString::fromLocal8Bit(cstr);
 
       *pos = ch;
-      result += str;
-//      for (i=0; i < (int)str.length(); i++)
-//	result += (char)(QChar)str[i];
-
       pos = end -1;
     }
     else
@@ -305,11 +293,11 @@ QString KMMsgBase::decodeRFC2047String(const QString& _str)
 const QString especials = "()<>@,;:\"/[]?.= \033";
 const QString dontQuote = "\"()<>";
 
-QString KMMsgBase::encodeRFC2047Quoted(const QString& aStr, bool base64)
+QCString KMMsgBase::encodeRFC2047Quoted(const QCString& aStr, bool base64)
 {
   if (base64)
       return encodeBase64(aStr).replace(QRegExp("\n"),"");
-  QString result;
+  QCString result;
   unsigned char ch, hex;
   for (unsigned int i = 0; i < aStr.length(); i++)
   {
@@ -331,14 +319,14 @@ QString KMMsgBase::encodeRFC2047Quoted(const QString& aStr, bool base64)
 }
 
 
-QString KMMsgBase::encodeRFC2047String(const QString& _str,
-  const QString& charset)
+QCString KMMsgBase::encodeRFC2047String(const QString& _str,
+  const QCString& charset)
 {
-  if (_str.isEmpty()) return _str;
+  if (_str.isEmpty()) return QCString();
   if (charset == "us-ascii") return toUsAscii(_str);
 
-  QString cset;
-  if (charset.isEmpty()) cset = KGlobal::locale()->charset();
+  QCString cset;
+  if (charset.isEmpty()) cset = KGlobal::locale()->charset().latin1();
     else cset = charset;
   QTextCodec *codec = codecForName(cset);
   if (!codec) codec = QTextCodec::codecForLocale();
@@ -349,7 +337,7 @@ QString KMMsgBase::encodeRFC2047String(const QString& _str,
   bool useBase64 = (nonAscii * 6 > _str.length());
 
   unsigned int start, stop, p, pos = 0, encLength;
-  QString result = QString();
+  QCString result;
   bool breakLine;
   const unsigned int maxLen = 75 - 7 - cset.length();
 
@@ -368,7 +356,7 @@ QString KMMsgBase::encodeRFC2047String(const QString& _str,
       stop = start;
       while (stop < _str.length() && dontQuote.find(_str.at(stop)) == -1)
         stop++;
-      result += _str.mid(pos, start - pos);
+      result += _str.mid(pos, start - pos).latin1();
       encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
         mid(start, stop - start)), useBase64).length();
       breakLine = (encLength > maxLen);
@@ -400,7 +388,7 @@ QString KMMsgBase::encodeRFC2047String(const QString& _str,
       if (breakLine) result += "\n ";
       pos = stop;
     } else {
-      result += _str.mid(pos);
+      result += _str.mid(pos).latin1();
       break;
     }
   }
@@ -409,12 +397,12 @@ QString KMMsgBase::encodeRFC2047String(const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::encodeRFC2231String(const QString& _str,
-  const QString& charset)
+QCString KMMsgBase::encodeRFC2231String(const QString& _str,
+  const QCString& charset)
 {
-  if (_str.isEmpty()) return _str;
-  QString cset;
-  if (charset.isEmpty()) cset = KGlobal::locale()->charset();
+  if (_str.isEmpty()) return QCString();
+  QCString cset;
+  if (charset.isEmpty()) cset = KGlobal::locale()->charset().latin1();
     else cset = charset;
   QTextCodec *codec = codecForName(cset);
   QCString latin;
@@ -432,8 +420,7 @@ QString KMMsgBase::encodeRFC2231String(const QString& _str,
     l++;
   }
   if (!*l) return latin;
-  QString result = cset;
-  result += QString("''");
+  QCString result = cset + "''";
   l = latin.data();
   while (*l)
   {
@@ -458,14 +445,14 @@ QString KMMsgBase::encodeRFC2231String(const QString& _str,
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeRFC2231String(const QString& _str)
+QString KMMsgBase::decodeRFC2231String(const QCString& _str)
 {
   int p = _str.find("'");
   if (p < 0) return QString::fromLocal8Bit(_str);
 
-  QString charset = _str.left(p);
+  QCString charset = _str.left(p);
 
-  QCString st = _str.mid(_str.findRev("'") + 1).ascii();
+  QCString st = _str.mid(_str.findRev("'") + 1);
   char ch, ch2;
   p = 0;
   while (p < (int)st.length())
@@ -483,7 +470,7 @@ QString KMMsgBase::decodeRFC2231String(const QString& _str)
   }
   QString result;
   QTextCodec *codec = codecForName(charset);
-  if (!codec) codec = codecForName(KGlobal::locale()->charset());
+  if (!codec) codec = codecForName(KGlobal::locale()->charset().latin1());
   if (codec) result = codec->toUnicode(st);
   else result = QString::fromLocal8Bit(st);
 
@@ -492,59 +479,9 @@ QString KMMsgBase::decodeRFC2231String(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
+QCString KMMsgBase::decodeQuotedPrintable(const QCString& aStr)
 {
-#ifdef BROKEN
-  static QString result;
-  int start, beg, mid, end;
-  end = 0; // Remove compiler warning;
-
-  start = 0;
-  end = 0;
-  result = "";
-
-  while (1)
-  {
-    beg = aStr.find("=?", start);
-    if (beg < 0)
-    {
-      // no more suspicious string parts found -- done
-      result += aStr.mid(start, 32767);
-      break;
-    }
-
-    if (beg > start) result += aStr.mid(start, beg-start);
-    mid = aStr.find("?Q?", beg+2);
-    if (mid>beg) end = aStr.find("?=", mid+3);
-    if (mid < 0 || end < 0)
-    {
-      // no quoted printable part -- skip it
-      result += "=?";
-      start += 2;
-      continue;
-    }
-    if (aStr[mid+3]=='_' )
-    {
-      result += ' ';
-      mid++;
-    }
-    else if (aStr[mid+3]==' ') mid++;
-
-    if (end-mid-3 > 0)
-      result += decodeQuotedPrintable(aStr.mid(mid+3, end-mid-3).data());
-    start = end+2;
-  }
-  return result;
-#else
-  return decodeRFC2047String(aStr);
-#endif
-}
-
-
-//-----------------------------------------------------------------------------
-QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
-{
-  QString bStr = aStr;
+  QCString bStr = aStr;
   if (aStr.isNull())
     bStr = "";
 
@@ -557,15 +494,15 @@ QString KMMsgBase::decodeQuotedPrintable(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
+QCString KMMsgBase::encodeQuotedPrintable(const QCString& aStr)
 {
-  QString bStr = aStr;
+  QCString bStr = aStr;
   if (aStr.isNull())
     bStr = "";
 
   DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;
-  QString result;
+  QCString result;
 
   DwEncodeQuotedPrintable(dwsrc, dwdest);
   result = dwdest.c_str();
@@ -574,16 +511,16 @@ QString KMMsgBase::encodeQuotedPrintable(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::decodeBase64(const QString& aStr)
+QCString KMMsgBase::decodeBase64(const QCString& aStr)
 {
-  QString bStr = aStr;
+  QCString bStr = aStr;
   if (aStr.isNull())
     bStr = "";
   while (bStr.length() < 16) bStr += "=";
 
   DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;
-  QString result;
+  QCString result;
 
   DwDecodeBase64(dwsrc, dwdest);
   result = dwdest.c_str();
@@ -592,15 +529,15 @@ QString KMMsgBase::decodeBase64(const QString& aStr)
 
 
 //-----------------------------------------------------------------------------
-QString KMMsgBase::encodeBase64(const QString& aStr)
+QCString KMMsgBase::encodeBase64(const QCString& aStr)
 {
-  QString bStr = aStr;
+  QCString bStr = aStr;
   if (aStr.isNull())
     bStr = "";
 
   DwString dwsrc(bStr.data(), bStr.length());
   DwString dwdest;
-  QString result;
+  QCString result;
 
   DwEncodeBase64(dwsrc, dwdest);
   result = dwdest.c_str();

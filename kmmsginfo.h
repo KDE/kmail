@@ -22,10 +22,10 @@ public:
 
 
   /** Initialize with given values and set dirty flag to FALSE. */
-  virtual void init(const QString& subject, const QString& from,
-                    const QString& to, time_t date,
-		    KMMsgStatus status, const QString& xmark,
-		    const QString& replyToId, const QString& msgId,
+  virtual void init(const QCString& subject, const QCString& from,
+                    const QCString& to, time_t date,
+		    KMMsgStatus status, const QCString& xmark,
+		    const QCString& replyToId, const QCString& msgId,
 		    unsigned long folderOffset=0, unsigned long msgSize=0);
 
   /** Inherited methods (see KMMsgBase for description): */
