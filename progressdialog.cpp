@@ -122,7 +122,10 @@ TransactionItem::TransactionItem( QWidget* parent,
 
   QHBox *h = new QHBox( this );
   h->setSpacing( 5 );
+
+  mItemLabel = new QLabel( item->label(), h );
   h->setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
+
   mProgress = new QProgressBar( 100, h );
   mProgress->setProgress( item->progress() );
   if ( item->canBeCanceled() ) {
@@ -130,7 +133,7 @@ TransactionItem::TransactionItem( QWidget* parent,
     connect ( mCancelButton, SIGNAL( clicked() ),
               this, SLOT( slotItemCanceled() ));
   }
-  mItemLabel = new QLabel( item->label(), h );
+
 
   mItemStatus =  new QLabel( item->status(), this );
 }
@@ -225,39 +228,40 @@ ProgressDialog::~ProgressDialog()
 void ProgressDialog::slotTransactionAdded( ProgressItem *item )
 {
    TransactionItem *parent = 0;
-   TransactionItem *ti = 0;
    if ( item->parent() ) {
-     parent = mTransactionsToListviewItems[ item->parent() ];
-     parent->addSubTransaction( item );
+     if ( mTransactionsToListviewItems.contains( item->parent() ) ) {
+       parent = mTransactionsToListviewItems[ item->parent() ];
+       parent->addSubTransaction( item );
+     }
    } else {
-     ti = mScrollView->addTransactionItem( item, mTransactionsToListviewItems.empty() );
+     TransactionItem *ti = mScrollView->addTransactionItem( item, mTransactionsToListviewItems.empty() );
+     if ( ti )
+       mTransactionsToListviewItems.replace( item, ti );
    }
-   if ( ti )
-     mTransactionsToListviewItems.replace( item, ti );
 }
 
 void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
 {
-   TransactionItem *ti = mTransactionsToListviewItems[ item ];
-   if ( ti ) {
+   if ( mTransactionsToListviewItems.contains( item ) ) {
+     TransactionItem *ti = mTransactionsToListviewItems[ item ];
      ti->setStatus(i18n("Completed"));
      mTransactionsToListviewItems.remove( item );
      QTimer::singleShot( 5000, ti, SLOT( deleteLater() ) );
    }
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.empty() )
-     QTimer::singleShot( 5000, this, SLOT( slotHide() ) );
+     QTimer::singleShot( 6000, this, SLOT( slotHide() ) );
 }
 
-void ProgressDialog::slotTransactionCanceled( ProgressItem * )
+void ProgressDialog::slotTransactionCanceled( ProgressItem* /* item */ )
 {
 }
 
 void ProgressDialog::slotTransactionProgress( ProgressItem *item,
                                               unsigned int progress )
 {
-   TransactionItem *ti = mTransactionsToListviewItems[ item ];
-   if ( ti ) {
+   if ( mTransactionsToListviewItems.contains( item ) ) {
+     TransactionItem *ti = mTransactionsToListviewItems[ item ];
      ti->setProgress( progress );
    }
 }
@@ -265,8 +269,8 @@ void ProgressDialog::slotTransactionProgress( ProgressItem *item,
 void ProgressDialog::slotTransactionStatus( ProgressItem *item,
                                             const QString& status )
 {
-   TransactionItem *ti = mTransactionsToListviewItems[ item ];
-   if ( ti ) {
+   if ( mTransactionsToListviewItems.contains( item ) ) {
+     TransactionItem *ti = mTransactionsToListviewItems[ item ];
      ti->setStatus( status );
    }
 }
@@ -274,8 +278,8 @@ void ProgressDialog::slotTransactionStatus( ProgressItem *item,
 void ProgressDialog::slotTransactionLabel( ProgressItem *item,
                                            const QString& label )
 {
-   TransactionItem *ti = mTransactionsToListviewItems[ item ];
-   if ( ti ) {
+   if ( mTransactionsToListviewItems.contains( item ) ) {
+     TransactionItem *ti = mTransactionsToListviewItems[ item ];
      ti->setLabel( label );
    }
 }
