@@ -446,12 +446,19 @@ void KMFolderTree::reload(bool openFolders)
   
   int top = contentsY();
   mLastItem = 0;
+  // invalidate selected drop item
+  oldSelected = 0;
+  // remember last
+  KMFolder* last = currentFolder();
+  KMFolder* selected = 0;
+  KMFolder* oldCurrentFolder = 
+    ( oldCurrent ? static_cast<KMFolderTreeItem*>(oldCurrent)->folder(): 0 );
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     writeIsListViewItemOpen( fti );
+    if ( fti->isSelected() )
+      selected = fti->folder();
   }
-  // remember last
-  KMFolder* last = currentFolder();
   clear();
 
   // construct the root of the local folders
@@ -528,19 +535,27 @@ void KMFolderTree::reload(bool openFolders)
       slotUpdateCounts(fti->folder());
   }
   ensureVisible(0, top + visibleHeight(), 0, 0);
-  refresh();
-  if ( last )
+  // if current and selected folder did not change set it again
+  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
   {
-    // if the current folder did not change set it again
-    for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
-      if ( static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
-      {
-        mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
-        setSelected( it.current(), true );
-        setCurrentItem( it.current() );
-        break;
-      }
+    if ( last && 
+         static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
+    {
+      mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
+      setCurrentItem( it.current() );
+    }
+    if ( selected && 
+         static_cast<KMFolderTreeItem*>( it.current() )->folder() == selected )
+    {
+      setSelected( it.current(), true );
+    }
+    if ( oldCurrentFolder && 
+         static_cast<KMFolderTreeItem*>( it.current() )->folder() == oldCurrentFolder )
+    {
+      oldCurrent = it.current();
+    }
   }
+  refresh();
   mReloading = false;
 }
 
@@ -646,14 +661,7 @@ void KMFolderTree::delayedUpdate()
 // Folders have been added/deleted update the tree of folders
 void KMFolderTree::doFolderListChanged()
 {
-  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(currentItem());
-  KMFolder* folder = (fti) ? fti->folder() : 0;
   reload();
-  QListViewItem *qlvi = indexOfFolder(folder);
-  if (qlvi) {
-    setCurrentItem( qlvi );
-    setSelected( qlvi, TRUE );
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1322,7 +1330,7 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
     dropItem = 0;
 
     setCurrentItem( oldCurrent );
-    if (oldSelected)
+    if ( oldSelected )
       setSelected( oldSelected, TRUE );
 }
 
@@ -1373,10 +1381,13 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 
     dropItem = 0;
 
-    clearSelection();
     setCurrentItem( oldCurrent );
+    if ( oldCurrent) mLastItem = static_cast<KMFolderTreeItem*>(oldCurrent);
     if ( oldSelected )
+    {
+      clearSelection();
       setSelected( oldSelected, TRUE );
+    }
 }
 
 //-----------------------------------------------------------------------------
