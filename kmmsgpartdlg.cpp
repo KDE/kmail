@@ -379,6 +379,8 @@ KMMsgPartDialogCompat::KMMsgPartDialogCompat( const char *, bool readOnly)
     mDescription->setEnabled(false);
     mEncoding->setEnabled(false);
     mInline->setEnabled(false);
+    mEncrypted->setEnabled(false);
+    mSigned->setEnabled(false);
   }
 }
 
