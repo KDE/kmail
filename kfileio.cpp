@@ -165,7 +165,7 @@ QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
 //-----------------------------------------------------------------------------
 static
 bool kBytesToFile(const char* aBuffer, int len,
-		   const QString &aFileName, 
+		   const QString &aFileName,
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
   QFile file(aFileName);
@@ -183,7 +183,7 @@ bool kBytesToFile(const char* aBuffer, int len,
       QString str;
       str = i18n("File %1 exists.\nDo you want to replace it?")
 		  .arg(aFileName);
-      rc = KMessageBox::warningContinueCancel(0, 
+      rc = KMessageBox::warningContinueCancel(0,
 	   str, i18n("Save to file"), i18n("&Replace"));
       if (rc != KMessageBox::Continue) return FALSE;
     }
@@ -207,7 +207,7 @@ bool kBytesToFile(const char* aBuffer, int len,
     }
   }
 
-  if (!file.open(IO_Raw|IO_WriteOnly))
+  if (!file.open(IO_Raw|IO_WriteOnly|IO_Truncate))
   {
     if (aVerbose) switch(file.status())
     {
@@ -226,7 +226,7 @@ bool kBytesToFile(const char* aBuffer, int len,
 
   writeLen = file.writeBlock(aBuffer, len);
 
-  if (writeLen < 0) 
+  if (writeLen < 0)
   {
     msgDialog(i18n("Could not write to file:\n%1").arg(aFileName));
     return FALSE;
@@ -237,19 +237,19 @@ bool kBytesToFile(const char* aBuffer, int len,
 		.arg(writeLen).arg(len);
     msgDialog(msg);
     return FALSE;
-  } 
+  }
 
   return TRUE;
 }
 
-bool kCStringToFile(const QCString& aBuffer, const QString &aFileName, 
+bool kCStringToFile(const QCString& aBuffer, const QString &aFileName,
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
     return kBytesToFile(aBuffer, aBuffer.length(), aFileName, aAskIfExists,
 	aBackup, aVerbose);
 }
 
-bool kByteArrayToFile(const QByteArray& aBuffer, const QString &aFileName, 
+bool kByteArrayToFile(const QByteArray& aBuffer, const QString &aFileName,
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
     return kBytesToFile(aBuffer, aBuffer.size(), aFileName, aAskIfExists,
