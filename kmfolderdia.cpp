@@ -121,6 +121,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   if ( !mIconsCheckBox->isChecked() ) {
     mNormalIconButton->setEnabled( false );
     mUnreadIconButton->setEnabled( false );
+    ilabel->setEnabled( false );
+    ilabel2->setEnabled( false );
+    
   }
 
   connect( mIconsCheckBox, SIGNAL(toggled(bool)),
