@@ -1261,8 +1261,8 @@ KMimeMagic::finishResult()
 		magicResult->setEncoding(resultBuf.mid(encoding_pos,
 						       encoding_len));
 	/* detect memory allocation errors */
-	if (!magicResult->getContent ||
-	    (state == rsl_encoding && !magicResult->getEncoding)) {
+	if (!magicResult->getContent() ||
+	    (state == rsl_encoding && !magicResult->getEncoding())) {
 		return -1;
 	}
 	/* success! */
