@@ -3,7 +3,7 @@
 use strict;
 
 # this script goes through all the config keys that deal with
-# identities and replaces identies referenced by name to be referenced
+# identities and replaces identities referenced by name to be referenced
 # by UOIDs. To this end, adds uoid keys to the identity groups.
 
 # read the whole config file:
@@ -16,6 +16,12 @@ while ( <> ) {
     if ( /^\[/ ) { # group begin
 	$currentGroup = $_;
 	next;
+    } elsif ( $currentGroup =~ /^\[Identity/ and /^uoid/ ) {
+	# We need to prevent this script from running twice, since it
+        # would change UOIDs of identities then.
+        # Presence of a uoid key in an [Identity #n] section is the
+	# best indicator:
+	exit;
     } elsif ( $currentGroup ne "" ) { # normal entry
 	my ($key,$value) = split /=/;
 	$configFile{$currentGroup}{$key}=$value;

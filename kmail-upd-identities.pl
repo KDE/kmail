@@ -16,6 +16,11 @@ while (<>) {
     }
 }
 
+# We need to prevent this script from being run twice, since it would
+# kill all identities then.
+# Non-presence of the [Identity]IdentityList key is the best indiator:
+unless ( defined( $data{'Identity'}{'IdentityList'} ) ) { exit; }
+
 # first, delete all old groups:
 foreach $group ( keys %data ) {
     print "# DELETEGROUP [$group]\n";

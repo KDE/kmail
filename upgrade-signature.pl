@@ -51,6 +51,10 @@ while (<>) {
 	next;
     }
     chomp;
+    # We need to prevent this script from begin run twice
+    # since it would set all signatures to 'disabled' then.
+    # Presence of the Signature Type key is the best indicator.
+    /^Signature Type/ and exit;
     /^Inline Signature=(.*)$/ and $data{'inline'} = $1;
     /^Signature File=(.*)$/   and $data{'file'} = $1;
     /^UseSignatureFile=(.*)$/ and $data{'usefile'} = $1;
