@@ -3142,7 +3142,7 @@ void KMComposeWin::toggleMarkup(bool markup)
     slotAutoSpellCheckingToggled(false);
    }
   }
-  else {
+  else if ( useHTMLEditor ) {
     kdDebug(5006) << "setting PlainText editor" << endl;
     useHTMLEditor = false;
     mEditor->setTextFormat(Qt::PlainText);
@@ -3990,6 +3990,8 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
 //-----------------------------------------------------------------------------
 void KMEdit::initializeAutoSpellChecking( KSpellConfig* autoSpellConfig )
 {
+  if ( mSpellChecker )
+    return; // already initialized
   KConfigGroup readerConfig( KMKernel::config(), "Reader" );
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
   QColor defaultColor2( 0x00, 0x70, 0x00 );
