@@ -201,9 +201,6 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
   else if (aType == "cachedimap")
     act = new KMAcctCachedImap(this, aName);
 
-  else if (aType == "cachedimap")
-    act = new KMAcctCachedImap(this, aName);
-
   if (act)
   {
     act->setFolder(kernel->inboxFolder());
