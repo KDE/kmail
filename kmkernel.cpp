@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
+#include "kmkernel.h"
+
 #include <dcopclient.h>
 
 #include <qvbox.h>
@@ -51,8 +53,12 @@
 #include "kmmainwidget.h"
 
 #include <X11/Xlib.h>
+#undef Unsorted
+#undef None
 #include <kapplication.h>
 
+#include <qdir.h>
+#include <qfile.h>
 
 KMKernel *KMKernel::mySelf = 0;
 KConfig *KMKernel::myConfig = 0;

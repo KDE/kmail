@@ -1,5 +1,7 @@
 // KMail Account
 
+#include "kmaccount.h"
+
 #include <config.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -37,7 +39,6 @@ KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
   connect(&mPrecommandProcess, SIGNAL(processExited(KProcess *)),
           SLOT(precommandExited(KProcess *)));
 }
-
 
 //-----------------------------------------------------------------------------
 KMPrecommand::~KMPrecommand()
@@ -83,6 +84,11 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
   connect(&mReceiptTimer,SIGNAL(timeout()),SLOT(sendReceipts()));
 }
 
+void KMAccount::init() {
+  mTrash = kernel->trashFolder()->idString();
+  mExclude = false;
+  mInterval = 0;
+}
 
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount()
@@ -127,6 +133,7 @@ void KMAccount::readConfig(KConfig& config)
   mFolder = 0;
   folderName = config.readEntry("Folder", "");
   setCheckInterval(config.readNumEntry("check-interval", 0));
+  setTrash(config.readEntry("trash", kernel->trashFolder()->idString()));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
   setPrecommand(config.readEntry("precommand"));
 
@@ -146,6 +153,7 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
   config.writeEntry("precommand", mPrecommand);
+  config.writeEntry("trash", mTrash);
 }
 
 
@@ -374,4 +382,15 @@ QString KMAccount::importPassword(const QString &aStr)
   result[i] = '\0';
 
   return encryptStr(result);
+}
+
+void KMAccount::pseudoAssign( const KMAccount * a ) {
+  if ( !a ) return;
+
+  setName( a->name() );
+  setCheckInterval( a->checkInterval() );
+  setCheckExclude( a->checkExclude() );
+  setFolder( a->folder() );
+  setPrecommand( a->precommand() );
+  setTrash( a->trash() );
 }

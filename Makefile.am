@@ -45,6 +45,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kmpgpwrap.cpp \
 		kfileio.cpp kmaddrbook.cpp kmaddrbookdlg.cpp \
 		signatureconfigurator.cpp \
+		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
 		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
 		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
