@@ -92,8 +92,8 @@ public:
   /** Builds the font tag that will be used for quouted lines */
   QString quoteFontTag( int quoteLevel );
 
-  const KMail::HeaderStyle * headerStyleNew() const {
-    return mHeaderStyleNew;
+  const KMail::HeaderStyle * headerStyle() const {
+    return mHeaderStyle;
   }
   /** Set the header style and strategy. We only want them to be set
       together. */
@@ -413,7 +413,7 @@ protected:
   KHTMLPart *mViewer;
   const KMail::AttachmentStrategy * mAttachmentStrategy;
   const KMail::HeaderStrategy * mHeaderStrategy;
-  const KMail::HeaderStyle * mHeaderStyleNew;
+  const KMail::HeaderStyle * mHeaderStyle;
   bool mAutoDelete;
   QFont mBodyFont, mFixedFont;
   bool mInlineImage;

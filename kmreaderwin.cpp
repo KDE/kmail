@@ -80,7 +80,7 @@ using KMail::AttachmentStrategy;
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
 #include "headerstyle.h"
-//using KMail::HeaderStyle; // conflicts with KMReaderWin's own HeaderStyle
+using KMail::HeaderStyle;
 #include "khtmlparthtmlwriter.h"
 using KMail::HtmlWriter;
 using KMail::KHtmlPartHtmlWriter;
@@ -468,7 +468,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   : KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose),
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
-    mHeaderStyleNew( 0 ),
+    mHeaderStyle( 0 ),
     mShowCompleteMessage( false ),
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
@@ -795,7 +795,7 @@ void KMReaderWin::readConfig(void)
   // action is initialized in the main window
   mUseFixedFont = config->readBoolEntry( "useFixedFont", false );
   mHtmlMail = config->readBoolEntry( "htmlMail", false );
-  setHeaderStyleAndStrategy( KMail::HeaderStyle::create( config->readEntry( "header-style", "fancy" ) ),
+  setHeaderStyleAndStrategy( HeaderStyle::create( config->readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( config->readEntry( "header-set-displayed", "rich" ) ) );
 
   mAttachmentStrategy =
@@ -852,8 +852,8 @@ void KMReaderWin::writeConfig(bool aWithSync)
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   config->writeEntry( "useFixedFont", mUseFixedFont );
-  if ( headerStyleNew() )
-    config->writeEntry( "header-style", headerStyleNew()->name() );
+  if ( headerStyle() )
+    config->writeEntry( "header-style", headerStyle()->name() );
   if ( headerStrategy() )
     config->writeEntry( "header-set-displayed", headerStrategy()->name() );
   if ( attachmentStrategy() )
@@ -980,9 +980,9 @@ void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
   update( true );
 }
 
-void KMReaderWin::setHeaderStyleAndStrategy( const KMail::HeaderStyle * style,
+void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
 					     const HeaderStrategy * strategy ) {
-  mHeaderStyleNew = style ? style : KMail::HeaderStyle::fancy() ;
+  mHeaderStyle = style ? style : HeaderStyle::fancy() ;
   mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich() ;
   update( true );
 }
@@ -1663,13 +1663,13 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 {
-  kdFatal( !headerStyleNew(), 5006 )
+  kdFatal( !headerStyle(), 5006 )
     << "trying to writeMsgHeader() without a header style set!" << endl;
   kdFatal( !headerStrategy(), 5006 )
     << "trying to writeMsgHeader() without a header strategy set!" << endl;
-  return headerStyleNew()->format( aMsg, headerStrategy(),
-				   hasVCard ? mTempFiles.last() : QString::null,
-				   mPrinting );
+  return headerStyle()->format( aMsg, headerStrategy(),
+				hasVCard ? mTempFiles.last() : QString::null,
+				mPrinting );
 }
 
 

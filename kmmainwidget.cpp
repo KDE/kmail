@@ -1413,7 +1413,7 @@ void KMMainWidget::slotAllHeaders() {
 
 void KMMainWidget::slotCycleHeaderStyles() {
   const HeaderStrategy * strategy = mMsgView->headerStrategy();
-  const HeaderStyle * style = mMsgView->headerStyleNew();
+  const HeaderStyle * style = mMsgView->headerStyle();
 
   const char * actionName = 0;
   if ( style == HeaderStyle::fancy() ) {
@@ -2211,7 +2211,7 @@ void KMMainWidget::setupActions()
   headerMenu->insert( raction );
 
   // check the right one:
-  raction = actionForHeaderStyle( mMsgView->headerStyleNew(), mMsgView->headerStrategy() );
+  raction = actionForHeaderStyle( mMsgView->headerStyle(), mMsgView->headerStrategy() );
   if ( raction )
     raction->setChecked( true );
 
