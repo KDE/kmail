@@ -76,8 +76,10 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   box = new QHBoxLayout( this, 0, 0 );
 
   m_pButton = new QPushButton( "X", this );
+  m_pButton->setMinimumWidth(fontMetrics().width("XXXX"));
   box->addWidget( m_pButton  );
   stack = new QWidgetStack( this );
+  stack->setMaximumHeight( fontMetrics().height() );
   box->addWidget( stack );
 
   QToolTip::add( m_pButton, i18n("Cancel job") );
