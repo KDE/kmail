@@ -4123,14 +4123,14 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   QWhatsThis::add( mLegacyMangleFromTo, i18n( GlobalSettings::self()->
            legacyBodyInvitesItem()->whatsThis().utf8() ) );
   connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
-           this, SLOT( slotLegaceBodyInvitesToggled( bool ) ) );
+           this, SLOT( slotLegacyBodyInvitesToggled( bool ) ) );
   connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   // Open space padding at the end
   new QLabel( this );
 }
 
-void MiscPageGroupwareTab::slotLegaceBodyInvitesToggled( bool on )
+void MiscPageGroupwareTab::slotLegacyBodyInvitesToggled( bool on )
 {
   if ( on ) {
     QString txt = i18n( "<qt>Invitations are normally sent as attachments to "
