@@ -121,6 +121,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mailingListPostAddress = new QLineEdit( mlGroup );
   label->setBuddy( mailingListPostAddress );
   mlLayout->addWidget( mailingListPostAddress, 1, 1 );
+  mailingListPostAddress->setEnabled(false);
 
   QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), page );
   idGroup->setColumnLayout( 0, Qt::Vertical );
