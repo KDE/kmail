@@ -2754,7 +2754,7 @@ static int compare_KMSortCacheItem(const void *s1, const void *s2)
     KMSortCacheItem **b1 = (KMSortCacheItem **)s1;
     KMSortCacheItem **b2 = (KMSortCacheItem **)s2;
     int ret = (*b1)->key().compare((*b2)->key());
-    if(compare_ascending && compare_toplevel)
+    if(compare_ascending || !compare_toplevel)
 	ret = -ret;
     return ret;
 }
@@ -3141,7 +3141,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    (unsorted && unsorted_off < unsorted_count) || it.current(); ) {
 	    if(it.current() &&
 	       (!unsorted || unsorted_off >= unsorted_count ||
-		(ascending && (*it)->key() >= unsorted[unsorted_off]->key()) ||
+		(ascending && !compare_toplevel && (*it)->key() >= unsorted[unsorted_off]->key()) ||
 		(!ascending && (*it)->key() < unsorted[unsorted_off]->key()))) {
 		new_kci = (*it);
 		++it;
