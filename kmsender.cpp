@@ -348,6 +348,7 @@ void KMSender::doSendMsg()
       if (imapSentFolder) {
         // Does proper folder refcounting and message locking
         KMCommand *command = new KMMoveCommand( imapSentFolder, mCurrentMsg );
+        command->keepFolderOpen( sentFolder ); // will open it, and close it once done
         command->start();
       }
     default:

@@ -47,6 +47,12 @@ public:
   KMCommand( QWidget *parent, KMMessage *message );
   virtual ~KMCommand();
 
+  /** These folders will be closed by the dtor, handy, if you need to keep
+      a folder open during the lifetime of the command, but don't want to
+      care about closing it again.
+   */
+  void keepFolderOpen( KMFolder *folder );
+
   /** Returns the result of the command. Only call this method from the slot
       connected to completed().
   */

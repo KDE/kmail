@@ -368,6 +368,12 @@ void KMCommand::slotTransferCancelled()
   emit messagesTransfered( Canceled );
 }
 
+void KMCommand::keepFolderOpen( KMFolder *folder )
+{
+  folder->open();
+  mFolders.append( folder );
+}
+
 KMMailtoComposeCommand::KMMailtoComposeCommand( const KURL &url,
                                                 KMMessage *msg )
   :mUrl( url ), mMessage( msg )
