@@ -1756,8 +1756,6 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew )
 //-----------------------------------------------------------------------------
 void KMHeaders::nextUnreadMessage()
 {
-    KMMessage *msg = currentMsg();
-
   int i = findUnread(TRUE);
   setCurrentMsg(i);
     ensureCurrentItemVisible();
