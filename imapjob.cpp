@@ -64,8 +64,31 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
   KMMessage* msg = msgList.first();
   mType = jt;
   mDestFolder = folder;
-  KMFolderImap *msg_parent = static_cast<KMFolderImap*>( msg->parent() );
-  KMAcctImap *account = (folder) ? folder->account() : msg_parent->account();
+  // refcount++
+  if (folder) {
+    folder->open();
+  }
+  KMFolder *msg_parent = msg->parent();
+  if (msg_parent) {
+    if (!folder || folder!= msg_parent) {
+      msg_parent->open();
+    }
+  }
+  mSrcFolder = msg_parent;
+  // If there is a destination folder, this is a copy, move or put to an
+  // imap folder, use its account for keeping track of the job. Otherwise,
+  // this is a get job and the src folder is an imap one. Use its account
+  // then.
+  KMAcctImap *account;
+  if (folder) {
+    account = folder->account();
+  } else { 
+    account = static_cast<KMFolderImap*>(msg_parent)->account();
+  }
+  if (!account) {
+    deleteLater();
+    return;
+  }
   account->mJobList.append( this );
   if ( jt == tPutMessage )
   {
@@ -118,7 +141,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     KURL url = account->getUrl();
     KURL destUrl = account->getUrl();
     destUrl.setPath(folder->imapPath());
-    url.setPath( msg_parent->imapPath() + ";UID=" + sets );
+    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(msg_parent);
+    url.setPath( imapDestFolder->imapPath() + ";UID=" + sets );
     ImapAccountBase::jobData jd;
     jd.parent = 0; mOffset = 0;
     jd.total = 1; jd.done = 0;
@@ -155,6 +179,7 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
 //-----------------------------------------------------------------------------
 ImapJob::~ImapJob()
 {
+
   if ( mDestFolder )
   {
     KMAcctImap *account = static_cast<KMFolderImap*>(mDestFolder)->account();
@@ -169,6 +194,28 @@ ImapJob::~ImapJob()
           mit.current()->setTransferInProgress(false);
       }
     }
+      
+    mDestFolder->close();
+  }
+
+  if (mSrcFolder) {
+    if (!mDestFolder || mDestFolder != mSrcFolder) {
+      if (! (mSrcFolder->folderType() == KMFolderTypeImap) ) return;
+      KMAcctImap *account = static_cast<KMFolderImap*>(mSrcFolder)->account();
+      if ( account ) // just to be sure this job is removed from the list
+        account->mJobList.remove(this);
+      if ( account && mJob )
+      {
+        ImapAccountBase::JobIterator it = account->findJob( mJob );
+        if ( it != account->jobsEnd() && !(*it).msgList.isEmpty() )
+        {
+          for ( QPtrListIterator<KMMessage> mit( (*it).msgList ); mit.current(); ++mit )
+            mit.current()->setTransferInProgress(false);
+        }
+      }
+    }
+      
+    mSrcFolder->close();
   }
 }
 
@@ -178,7 +225,6 @@ void ImapJob::slotGetNextMessage()
 {
   KMMessage *msg = mMsgList.first();
   KMFolderImap *msgParent = static_cast<KMFolderImap*>(msg->parent());
-  if (msgParent) msgParent->open();
   KMAcctImap *account = msgParent->account();
   if ( msg->headerField("X-UID").isEmpty() )
   {
@@ -241,20 +287,15 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
   if ( !account ) {
-    if (parent) parent->close();
     deleteLater();
     return;
   }
   ImapAccountBase::JobIterator it = account->findJob( job );
-  if ( it == account->jobsEnd() ) {
-    if (parent) parent->close();
-    return;
-  }
+  if ( it == account->jobsEnd() ) return;
 
   if (job->error())
   {
     account->slotSlaveError( account->slave(), job->error(), job->errorText() );
-    if (parent) parent->close();
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -288,7 +329,6 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
     emit messageUpdated(msg, mPartSpecifier);
   }
   deleteLater();
-  if (parent) parent->close();
 }
 
 //-----------------------------------------------------------------------------
@@ -297,7 +337,6 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
   KMMessage *msg = mMsgList.first();
   if (!msg || !msg->parent() || !job) {
     deleteLater();
-    if (msg->parent()) msg->parent()->close();
     return;
   }
   KMFolderImap* parent = static_cast<KMFolderImap*>(msg->parent());
@@ -305,21 +344,17 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
     msg->setTransferInProgress( false );
   KMAcctImap *account = parent->account();
   if ( !account ) {
-    if (parent) parent->close();
     deleteLater();
     return;
   }
   ImapAccountBase::JobIterator it = account->findJob( job );
-  if ( it == account->jobsEnd() ) {
-    if (parent) parent->close();
-    return;
-  }
+  if ( it == account->jobsEnd() ) return;
+  
 
   if (job->error())
   {
     account->slotSlaveError( account->slave(), job->error(),
         job->errorText() );
-    if (parent) parent->close();
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -333,7 +368,6 @@ void ImapJob::slotGetBodyStructureResult( KIO::Job * job )
       account->mJobList.remove(this);
   }
   deleteLater();
-  if (parent) parent->close();
 }
 
 //-----------------------------------------------------------------------------

@@ -345,8 +345,6 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
             SLOT(reallyAddMsg(KMMessage*)));
     job->start();
     aMsg->setTransferInProgress(TRUE);
-    //FIXME: remove that. Maybe extract tempOpenFolder to some base class
-    static_cast<KMFolderImap*>(msgParent)->account()->tempOpenFolder(msgParent);
     return FALSE;
   }
   return TRUE;
@@ -380,8 +378,6 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
   aMsg->setTransferInProgress( false );
   addMsg( aMsg );
   unGetMsg( count() - 1 );
-  // We have been opened before the transfer was started.
-  close( );
 }
 
 int KMFolder::find( const KMMessage * msg ) const {

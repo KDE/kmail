@@ -134,6 +134,7 @@ protected:
   QPtrList<KMMessage> mMsgList;
   JobType             mType;
   QString             mSets;
+  KMFolder*           mSrcFolder;
   KMFolder*           mDestFolder;
   QString             mPartSpecifier;
 

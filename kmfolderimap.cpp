@@ -79,6 +79,7 @@ void KMFolderImap::close(bool aForced)
   if (mOpenCount <= 0 ) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
+  // FIXME is this still needed?
   if (mAccount)
     mAccount->ignoreJobsForFolder( this );
   int idx = count();
@@ -283,14 +284,12 @@ int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
 int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 {
-  mAccount->tempOpenFolder(this);
   KMMessage *aMsg = msgList.getFirst();
   KMFolder *msgParent = aMsg->parent();
 
   ImapJob *imapJob = 0;
   if (msgParent)
   {
-    mAccount->tempOpenFolder(msgParent);
     if (msgParent->folderType() == KMFolderTypeImap)
     {
       if (static_cast<KMFolderImap*>(msgParent)->account() == account())
@@ -382,13 +381,6 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 //-----------------------------------------------------------------------------
 void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
 {
-  mAccount->tempOpenFolder(this);
-  KMMessage *aMsg = msgList.getFirst();
-  if (aMsg)
-  {
-    KMFolder* parent = aMsg->parent();
-    if (parent) mAccount->tempOpenFolder(parent);
-  }
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
     // Remember the status, so it can be transfered to the new message.
     mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
@@ -592,7 +584,6 @@ void KMFolderImap::checkValidity()
   }
   // Only check once at a time.
   if (mCheckingValidity) return;
-  mAccount->tempOpenFolder(this);
   ImapAccountBase::jobData jd( url.url(), this );
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -603,6 +594,7 @@ void KMFolderImap::checkValidity()
           SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
   // Only check once at a time.
   mCheckingValidity = true;
+  
 }
 
 
@@ -1130,13 +1122,6 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
 
 void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
 {
-  mAccount->tempOpenFolder(this);
-  KMMessage *aMsg = msgList.getFirst();
-  if (aMsg)
-  {
-    KMFolder* parent = aMsg->parent();
-    if (parent) mAccount->tempOpenFolder(parent);
-  }
   QValueList<int> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids);

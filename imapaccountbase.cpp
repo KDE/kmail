@@ -272,13 +272,6 @@ namespace KMail {
       mProgressEnabled = !mapJobData.isEmpty();
       KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
           mProgressEnabled );
-      if (!mProgressEnabled)
-      {
-        QPtrListIterator<QGuardedPtr<KMFolder> > it(mOpenFolders);
-        for ( it.toFirst() ; it.current() ; ++it )
-          if ( it.current() ) (*(it.current()))->close();
-        mOpenFolders.clear();
-      }
     }
     mIdle = FALSE;
     if (mapJobData.isEmpty())

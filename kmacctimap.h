@@ -77,11 +77,6 @@ public:
    */
   virtual void setImapFolder(KMFolderImap *);
 
-  /**
-   * Open a folder and close it again when the network transfer is finished
-   */
-  int tempOpenFolder(KMFolder *folder);
-
 public slots:
   void processNewMail() { processNewMail(TRUE); }
 

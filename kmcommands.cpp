@@ -1264,7 +1264,6 @@ void KMCopyCommand::execute()
   QPtrList<KMMessage> list;
 
   KCursorSaver busy(KBusyPtr::busy());
-  mDestFolder->open();
 
   for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
   {
@@ -1293,8 +1292,6 @@ void KMCopyCommand::execute()
 
       if (srcFolder && !newMsg->isComplete())
       {
-        // will be closed in reallyAddCopyOfMsg
-        mDestFolder->open();
 	newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
@@ -1329,7 +1326,6 @@ void KMCopyCommand::execute()
     imapDestFolder->getFolder();
   }
 
-  mDestFolder->close();
 }
 
 
@@ -1426,7 +1422,6 @@ void KMMoveCommand::execute()
   FolderToMessageListMap::Iterator it;
   for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
     it.key()->removeMsg(*it.data());
-    it.key()->close();
     delete it.data();
   }
 
@@ -1435,7 +1430,6 @@ void KMMoveCommand::execute()
 
   if (mDestFolder) {
      mDestFolder->sync();
-     mDestFolder->close();
   }
 }
 

@@ -91,16 +91,6 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 
 
 //-----------------------------------------------------------------------------
-int KMAcctImap::tempOpenFolder(KMFolder *folder)
-{
-  int rc = folder->open();
-  if (rc) return rc;
-  mOpenFolders.append(new QGuardedPtr<KMFolder>(folder));
-  return 0;
-}
-
-
-//-----------------------------------------------------------------------------
 void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   const QString &errorMsg)
 {
@@ -205,11 +195,10 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
   QPtrListIterator<ImapJob> it( mJobList );
   while ( it.current() )
   {
-    if ( it.current()->msgList().findRef( msg ) != -1 ) 
+    ImapJob *job = it.current();
+    ++it;
+    if ( job->msgList().findRef( msg ) != -1 ) 
     {
-      // decrement the ref count of the folder for each job
-      if (msg->parent()) msg->parent()->close();
-      ImapJob *job = it.current();
       if ( job->mJob )
       {
         job->mJob->disconnect();
@@ -217,8 +206,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
       }
       mJobList.remove( job );
       delete job;
-    } else
-      ++it;
+    }
   }
 }
 
@@ -228,9 +216,10 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
   QPtrListIterator<ImapJob> it( mJobList );
   while ( it.current() )
   {
-    if ( it.current()->msgList().first()->parent() == folder ) 
+    ImapJob *job = it.current();
+    ++it;
+    if ( job->msgList().first()->parent() == folder ) 
     {
-      ImapJob *job = it.current();
       if ( job->mJob )
       {
         job->mJob->disconnect();
@@ -238,8 +227,7 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
       }
       mJobList.remove( job );
       delete job;
-    } else
-      ++it;
+    }
   }
 }
 
