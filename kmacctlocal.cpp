@@ -252,12 +252,10 @@ void KMAcctLocal::postProcess()
 
     if( mMailCheckProgressItem ) { // do this only once...
       BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( mNumMsgs );
-      // FIXME Message reused from KMAcctExpPop, due to feature freeze
       mMailCheckProgressItem->setStatus(
-        i18n( "Fetched 1 message from %1. Terminating transmission...",
-              "Fetched %n messages from %1. Terminating transmission...",
-              mNumMsgs )
-        .arg( "localhost" ) );
+        i18n( "Fetched 1 message from local mail spool.",
+              "Fetched %n messages from local mail spool.",
+              mNumMsgs ) );
       mMailCheckProgressItem->setComplete();
       mMailCheckProgressItem = 0;
     }

@@ -185,12 +185,10 @@ void KMAcctMaildir::processNewMail(bool)
 
   if( mMailCheckProgressItem ) { // do this only once...
     BroadcastStatus::instance()->setStatusMsgTransmissionCompleted( num );
-    // FIXME Message reused from KMAcctExpPop, due to feature freeze
     mMailCheckProgressItem->setStatus(
-      i18n( "Fetched 1 message from %1. Terminating transmission...",
-            "Fetched %n messages from %1. Terminating transmission...",
-            num )
-      .arg( "localhost" ) );
+      i18n( "Fetched 1 message from maildir folder.",
+            "Fetched %n messages from maildir folder.",
+            num ) );
     mMailCheckProgressItem->setComplete();
     mMailCheckProgressItem = 0;
   }
