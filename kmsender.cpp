@@ -92,9 +92,7 @@ bool KMSender::settingsOk() const
 {
   if (KMTransportInfo::availableTransports().isEmpty())
   {
-    KMessageBox::information(0,i18n("Please specify a send "
-				    "method in the settings "
-				    "and try again."));
+    KMessageBox::information(0,i18n("Please create an account for sending and try again."));
     return false;
   }
   if (!kernel->identityManager()->defaultIdentity().mailingAllowed())
