@@ -118,7 +118,8 @@ rcdir = $(kde_datadir)/kmail
 rc_DATA = kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc
 
 updatedir = $(kde_datadir)/kconf_update
-update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
+update_DATA = kmail.upd
+update_SCRIPTS = upgrade-transport.pl kmail-pgpidentity.pl \
 		upgrade-signature.pl kmail-upd-identities.pl \
                 kmail-3.1-use-UOID-for-identities.pl \
                 kmail-3.1-update-new-mail-notification-settings.pl \
