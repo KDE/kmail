@@ -560,20 +560,7 @@ void IdentityPage::saveActiveIdentity()
   entry.setReplyToAddress( mReplyToEdit->text() );
   entry.setTransport( ( mTransportCheck->isChecked() ) ?
 		      mTransportCombo->currentText() : QString::null );
-	if (!entry.fcc().isEmpty() && entry.fcc() != mFccCombo->getFolder()->idString())
-	{
-		// restore the previous setting
-		KMFolder* folder = kernel->folderMgr()->findIdString(entry.fcc());
-		if (!folder) folder = kernel->imapFolderMgr()->findIdString(entry.fcc());
-	}	
   entry.setFcc( mFccCombo->getFolder()->idString() );
-		
-	if (!entry.drafts().isEmpty() && entry.drafts() != mDraftsCombo->getFolder()->idString())
-	{
-		// restore the previous setting
-		KMFolder* folder = kernel->folderMgr()->findIdString(entry.drafts());
-		if (!folder) folder = kernel->imapFolderMgr()->findIdString(entry.drafts());
-	}	
   entry.setDrafts( mDraftsCombo->getFolder()->idString() );
 
   // "Signature" tab:
