@@ -27,7 +27,9 @@
 
 // my headers:
 #include "configuredialog.h"
+#define private public
 #include "configuredialog_p.h"
+#undef private
 
 // other KMail headers:
 #include "simplestringlisteditor.h"
@@ -4787,7 +4789,7 @@ void GeneralPage::setup()
         _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( true );
     else
         _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( false );
-    
+
     if( 0 < plugList->childCount() ) {
         plugList->setCurrentItem( plugList->firstChild());
         plugList->setSelected(   plugList->firstChild(), TRUE);

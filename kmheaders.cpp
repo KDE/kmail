@@ -333,7 +333,7 @@ public:
           else
               pixmaps << *KMHeaders::pixFiller;
       }
-      
+
       static QPixmap mergedpix;
       mergedpix = pixmapMerge( pixmaps );
       return &mergedpix;
@@ -504,8 +504,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortInfo.dirty = TRUE;
   mSortInfo.fakeSort = 0;
   mSortInfo.removed = 0;
-
-  // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
 
 #ifdef SCORING
@@ -676,7 +674,7 @@ void KMHeaders::readConfig (void)
     KConfigGroupSaver saver(config, "General");
     mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
     mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", true );
-    
+
     KMime::DateFormatter::FormatType t =
       (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
     mDate.setCustomFormat( config->readEntry("customDateFormat", QString::null ) );

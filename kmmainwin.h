@@ -83,7 +83,6 @@ public:
 
   /** Easy access to main components of the window. */
   KMReaderWin* messageView(void) const { return mMsgView; }
-  KStatusBar* statusBar(void) const   { return mStatusBar; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
   /** Returns a popupmenu containing a hierarchy of folder names
@@ -310,7 +309,6 @@ protected:
   KRadioAction * actionForAttachmentStyle(int);
 
 protected:
-  KStatusBar   *mStatusBar;
   QString      mLastStatusMsg;
   KMFolderTree *mFolderTree;
   KMMimePartTree* mMimePartTree;

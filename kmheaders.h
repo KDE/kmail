@@ -3,7 +3,6 @@
 
 #include <qwidget.h>
 #include <qstrlist.h>
-#define private public
 #include <klistview.h>
 #include <qmemarray.h>
 #include <qmap.h>
