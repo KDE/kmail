@@ -340,6 +340,7 @@ protected: // methods
 protected: // data members
   QString        mActiveIdentity;
   IdentityList   mIdentities;
+  int            mOldNumberOfIdentities;
 
   // Widgets:
   // outside tabwidget:

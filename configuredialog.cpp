@@ -543,6 +543,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 void IdentityPage::setup()
 {
   mIdentities.importData();
+  mOldNumberOfIdentities = mIdentities.count();
   mIdentityCombo->clear();
   mIdentityCombo->insertStringList( mIdentities.names() );
   mActiveIdentity = QString::null;
@@ -553,7 +554,7 @@ void IdentityPage::apply() {
   saveActiveIdentity(); // Copy from textfields into list
   mIdentities.exportData();
 
-  if( mIdentities.count() > 1 ) {
+  if( mOldNumberOfIdentities < 2 && mIdentities.count() > 1 ) {
     // have more than one identity, so better show the combo in the
     // composer now:
     KConfigGroup composer( kapp->config(), "Composer" );
@@ -561,7 +562,6 @@ void IdentityPage::apply() {
     showHeaders |= HDR_IDENTITY;
     composer.writeEntry( "headers", showHeaders );
   }
-
 }
 
 
@@ -2512,8 +2512,8 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mWordWrapCheck = new QCheckBox( i18n("Word &wrap at column:"), this );
   hlay->addWidget( mWordWrapCheck );
-  mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 100/*max*/, 1/*step*/,
-				     72/*init*/, 10 /*base*/, this );
+  mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 78/*max*/, 1/*step*/,
+				     78/*init*/, 10 /*base*/, this );
   mWrapColumnSpin->setEnabled( false ); // since !mWordWrapCheck->isChecked()
   hlay->addWidget( mWrapColumnSpin );
   hlay->addStretch( 1 );
@@ -2566,7 +2566,7 @@ void ComposerPage::GeneralTab::setup() {
   mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt", false ) );
   mWordWrapCheck->setChecked( composer.readBoolEntry( "word-wrap", true ) );
   mWrapColumnSpin->setValue( composer.readNumEntry( "break-at", 78 ) );
-  
+
   // editor group:
   mExternalEditorCheck->setChecked( general.readBoolEntry( "use-external-editor", false ) );
   mEditorRequester->setURL( general.readEntry( "external-editor", "" ) );
