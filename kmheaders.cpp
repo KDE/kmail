@@ -1670,8 +1670,10 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
   emit selected( 0 );
 
   if ( item ) {
-    setCurrentMsg( item->msgId() );
-    highlightMessage( currentItem(), false);
+    clearSelection();
+    setCurrentItem( item );
+    setSelected( item, TRUE );
+    highlightMessage( item, false);
   }
 
   setContentsPos( contentX, contentY );
