@@ -1019,7 +1019,7 @@ void KMMainWin::showMsg(KMReaderWin *win, KMMessage *msg)
   KWin::setIcons(win->winId(), kapp->icon(), kapp->miniIcon());
   win->setCaption(msg->subject());
 
-  win->setMsg(msg);
+  win->setMsg(msg, true); // hack to work around strange QTimer bug
   win->resize(550,600);
 
   connect(win, SIGNAL(statusMsg(const QString&)),

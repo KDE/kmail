@@ -107,7 +107,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()), 
-	   this, SLOT(slotDelayedResize()) );
+  	   this, SLOT(slotDelayedResize()) );
 }
 
 
@@ -372,6 +372,10 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   if (force) {
     mMsgBuf = 0;
     updateReaderWin();
+
+    // Work around a very strange QTimer bug that requires more investigation
+    // double clicking too quickly on message headers was crashing kmail
+    updateReaderWinTimer.stop();
   }
   else if (updateReaderWinTimer.isActive())
     updateReaderWinTimer.changeInterval( delay );
