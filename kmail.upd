@@ -135,6 +135,10 @@ Script=kmail-3.3-misc.pl,perl
 Id=3.3b1-misc
 File=kmailrc
 Script=kmail-3.3b1-misc.pl,perl
+# Updates which were added after the release of KDE 3.3
+Id=3.4
+File=kmailrc
+Script=kmail-3.4-misc.pl,perl
 #
 # Important notice:
 # If you add updates here, keep this text below them.

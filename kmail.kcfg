@@ -13,10 +13,15 @@
         <whatsthis></whatsthis>
         <default>0</default>
       </entry>
-      <entry name="JumpToUnread"  type="Bool">
+      <entry name="ActionEnterFolder"  type="Enum">
         <label></label>
         <whatsthis></whatsthis>
-        <default>false</default>
+        <choices>
+          <choice name="SelectFirstNew"/>
+          <choice name="SelectFirstUnreadNew"/>
+          <choice name="SelectLastSelected"/>
+        </choices>
+        <default>SelectFirstNew</default>
       </entry>
       <entry name="LoopOnGotoUnread"  type="Enum">
         <label></label>

@@ -3041,7 +3041,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
     Q_INT32 deleted_count = 0;
     bool unread_exists = false;
-    bool jumpToUnread = GlobalSettings::jumpToUnread() ||
+    bool jumpToUnread = (GlobalSettings::actionEnterFolder() == 
+                         GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew) ||
                         forceJumpToUnread;
     QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
     KMSortCacheItem root;
@@ -3338,9 +3339,12 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 s.enqueue(new_kci);
             // we always jump to new messages, but we only jump to
             // unread messages if we are told to do so
-            if ( mFolder->getMsgBase(new_kci->id())->isNew() ||
-                 ( jumpToUnread &&
-                   mFolder->getMsgBase(new_kci->id())->isUnread() ) ) {
+            if ( ( mFolder->getMsgBase(new_kci->id())->isNew() && 
+                   GlobalSettings::actionEnterFolder() == 
+                   GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
+                 ( mFolder->getMsgBase(new_kci->id())->isUnread() &&
+                   jumpToUnread ) )
+            {
               unread_exists = true;
             }
         }
@@ -3400,9 +3404,12 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
         if (unread_exists) {
             KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
             while (item) {
-              if ( mFolder->getMsgBase( item->msgId() )->isNew() ||
-                   ( jumpToUnread &&
-                     mFolder->getMsgBase( item->msgId() )->isUnread() ) ) {
+              if ( ( mFolder->getMsgBase(item->msgId())->isNew() && 
+                     GlobalSettings::actionEnterFolder() == 
+                     GlobalSettings::EnumActionEnterFolder::SelectFirstNew ) ||
+                   ( mFolder->getMsgBase(item->msgId())->isUnread() &&
+                     jumpToUnread ) )
+              {
                 first_unread = item->msgId();
                 break;
               }

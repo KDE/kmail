@@ -3885,11 +3885,24 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   connect( mLoopOnGotoUnread, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  mJumpToUnread =
-    new QCheckBox( i18n("&Jump to first unread message when entering a "
-			"folder"), this );
-  vlay->addWidget( mJumpToUnread );
-  connect( mJumpToUnread, SIGNAL( stateChanged( int ) ),
+  // when entering a folder
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mActionEnterFolder = new QComboBox( false, this );
+  label = new QLabel( mActionEnterFolder,
+           i18n("to be continued with \"jump to first new message\", "
+                "\"jump to first unread or new message\","
+                "and \"jump to last selected message\".",
+                "When entering a folder:"), this );
+  mActionEnterFolder->insertStringList( QStringList()
+      << i18n("continuation of \"When entering a folder:\"",
+              "Jump to first new message")
+      << i18n("continuation of \"When entering a folder:\"",
+              "Jump to first unread or new message")
+      << i18n("continuation of \"When entering a folder:\"",
+              "Jump to last selected message"));
+  hlay->addWidget( label );
+  hlay->addWidget( mActionEnterFolder, 1 );
+  connect( mActionEnterFolder, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -3996,7 +4009,7 @@ void MiscPage::FolderTab::load() {
   // default = "Loop in current folder"
 
   mLoopOnGotoUnread->setCurrentItem( GlobalSettings::loopOnGotoUnread() );
-  mJumpToUnread->setChecked( GlobalSettings::jumpToUnread() );
+  mActionEnterFolder->setCurrentItem( GlobalSettings::actionEnterFolder() );
   mDelayedMarkAsRead->setChecked( GlobalSettings::delayedMarkAsRead() );
   mDelayedMarkTime->setValue( GlobalSettings::delayedMarkTime() );
   mShowPopupAfterDnD->setChecked( GlobalSettings::showPopupAfterDnD() );
@@ -4017,7 +4030,7 @@ void MiscPage::FolderTab::save() {
 
   GlobalSettings::setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
   GlobalSettings::setDelayedMarkTime( mDelayedMarkTime->value() );
-  GlobalSettings::setJumpToUnread( mJumpToUnread->isChecked() );
+  GlobalSettings::setActionEnterFolder( mActionEnterFolder->currentItem() );
   GlobalSettings::setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
   GlobalSettings::setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   GlobalSettings::setExcludeImportantMailFromExpiry(

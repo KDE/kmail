@@ -534,7 +534,11 @@ void KMFolderTree::reload(bool openFolders)
     // if the current folder did not change set it again
     for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
       if ( static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
+      {
         mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
+        setSelected( it.current() );
+        setCurrent( it.current() );
+      }
   }
   mReloading = false;
 }
