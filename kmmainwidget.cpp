@@ -2653,8 +2653,7 @@ void KMMainWidget::updateFolderMenu()
   emptyFolderAction->setText( (mFolder && kernel->folderIsTrash(mFolder))
     ? i18n("&Empty Trash") : i18n("&Move All Messages to Trash") );
   removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
-  expireFolderAction->setEnabled( mFolder && mFolder->protocol() != "imap"
-    && mFolder->isAutoExpire() );
+  expireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
   markAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( mFolder ? true : false );

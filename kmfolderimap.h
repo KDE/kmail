@@ -224,6 +224,9 @@ public:
   /** Inherited */
   virtual int create(bool imap = FALSE);
 
+  /** imap folders cannot expire */
+  virtual bool isAutoExpire() const { return false; }
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 

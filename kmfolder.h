@@ -325,7 +325,7 @@ public:
   /**
    * Does this folder automatically expire old messages?
    */
-  bool    isAutoExpire() const { return expireMessages; }
+  virtual bool    isAutoExpire() const { return expireMessages; }
 
   /**
    * Set the maximum age for unread messages in this folder.

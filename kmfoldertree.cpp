@@ -976,7 +976,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
       folderMenu->insertItem(i18n("&Compact"), mMainWidget,
                              SLOT(slotCompactFolder()));
 
-      if (fti->folder()->protocol() != "imap" && fti->folder()->isAutoExpire())
+      if (fti->folder()->isAutoExpire())
         folderMenu->insertItem(i18n("&Expire"), mMainWidget,
                                SLOT(slotExpireFolder()));
 

@@ -438,11 +438,11 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   // Make sure we don't bomb out if there isn't a folder
   // object yet (i.e. just about to create new folder).
 
-  if (mFolder && mFolder->protocol() == "imap") {
+  if (mFolder && mFolder->folderType() == KMFolderTypeImap) {
     expGroup->hide();
     mtGroup->hide();
-		if (mFolder->isSystemFolder())
-			senderGroup->hide();
+    if (mFolder->isSystemFolder())
+      senderGroup->hide();
   }
   else if (folder && folder->isSystemFolder()) {
     fpGroup->hide();
