@@ -203,15 +203,13 @@ void KMReaderWin::readConfig(void)
   mViewer->setOnlyLocalReferences( !mLoadExternal );
   }
 
-  fntSize = 0;
-
   {
   KConfigGroupSaver saver(config, "Fonts");
   mUnicodeFont = config->readBoolEntry("unicodeFont",FALSE);
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
     mBodyFont = QFont("helvetica");
     mBodyFont = config->readFontEntry("body-font", &mBodyFont);
-    fntSize = mBodyFont.pointSize();
+    fntSize = mBodyFont.pixelSize();
     mBodyFamily = mBodyFont.family();
     int pos = mBodyFamily.find("-");
     // We ignore the foundary, otherwise we can't set the charset
@@ -223,7 +221,7 @@ void KMReaderWin::readConfig(void)
   }
   else {
     setFont(KGlobalSettings::generalFont());
-    fntSize = KGlobalSettings::generalFont().pointSize();
+    fntSize = KGlobalSettings::generalFont().pixelSize();
     mBodyFamily = KGlobalSettings::generalFont().family();
   }
   mViewer->setStandardFont(mBodyFamily);
@@ -436,7 +434,6 @@ void KMReaderWin::displayAboutPage()
   QTextCodec *codec = QTextCodec::codecForName(KGlobal::locale()->charset());
   if (codec) mViewer->setCharset(codec->name(), true);
     else mViewer->setCharset(KGlobal::locale()->charset(), true);
-  adjustFontSize();
   QString info =
     i18n("<h2>Welcome to KMail %1</h2><p>KMail is an email client for the K "
     "Desktop Environment. It is designed to be fully compatible with Internet "
@@ -478,7 +475,7 @@ void KMReaderWin::displayAboutPage()
   info += i18n("<p>We hope that you will enjoy KMail.</p>\n"
     "<p>Thank you,</p>\n"
     "<p>&nbsp; &nbsp; The KMail Team</p>");
-  mViewer->write(content.arg(info));
+  mViewer->write(content.arg(fntSize).arg(info));
   mViewer->end();
 }
 
@@ -539,21 +536,6 @@ QString KMReaderWin::colorToString(const QColor& c)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::adjustFontSize()
-{
-  QValueList<int> fontsizes;
-  int i, diff;
-  mViewer->resetFontSizes();
-  diff = fntSize - mViewer->fontSizes()[3];
-  if (mViewer->fontSizes()[0]+diff > 0) {
-    for (i=0;i<7; i++)
-      fontsizes << mViewer->fontSizes()[i] + diff;
-    mViewer->setFontSizes(fontsizes);
-  }
-}
-
-
-//-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
   if(mMsg == NULL)
@@ -595,8 +577,8 @@ void KMReaderWin::parseMsg(void)
     else mViewer->setCharset(mCodec->name(), true);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
-		 QString("body { font-family: \"%1\" }\n").arg( mBodyFamily ) +
-		 QString("p { font-size: %1pt }\n").arg( fntSize  ) +
+		 QString("body { font-family: \"%1\"; font-size: %2px }\n")
+                 .arg( mBodyFamily ).arg( fntSize ) +
 		 QString("a { color: #%1; ").arg(colorToString(c2)) +
 		 "text-decoration: none; }" + // just playing
 		 "</style></head><body " +
@@ -793,8 +775,8 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
   switch (mHeaderStyle)
   {
     case HdrBrief:
-    mViewer->write("<font size=\"+1\"><b>" + strToHtml(mMsg->subject()) +
-                   "</b></font>&nbsp; (" +
+    mViewer->write("<b style=\"font-size:130%\">" + strToHtml(mMsg->subject()) +
+                   "</b>&nbsp; (" +
                    KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
@@ -807,8 +789,8 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     break;
 
   case HdrStandard:
-    mViewer->write("<font size=\"+1\"><b>" +
-                   strToHtml(mMsg->subject()) + "</b></font><br>\n");
+    mViewer->write("<b style=\"font-size:130%\">" +
+                   strToHtml(mMsg->subject()) + "</b><br>\n");
     mViewer->write(i18n("From: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (vcpartnum >= 0) {
@@ -825,8 +807,8 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
   case HdrFancy:
     mViewer->write(QString("<table><tr><td><img src=") +
 		   locate("data", "kmail/pics/kdelogo.xpm") +
-                   "></td><td hspace=\"50\"><b><font size=\"+2\">");
-    mViewer->write(strToHtml(mMsg->subject()) + "</font></b><br>");
+                   "></td><td hspace=\"50\"><b style=\"font-size:160%\">");
+    mViewer->write(strToHtml(mMsg->subject()) + "</b><br>");
     mViewer->write(i18n("From: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (vcpartnum >= 0) {
@@ -844,8 +826,8 @@ void KMReaderWin::writeMsgHeader(int vcpartnum)
     break;
 
   case HdrLong:
-    mViewer->write("<font size=\"+1\"><b>" +
-                   strToHtml(mMsg->subject()) + "</B></font><br>");
+    mViewer->write("<b style=\"font-size:130%\">" +
+                   strToHtml(mMsg->subject()) + "</b><br>");
     mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<br>");
     mViewer->write(i18n("From: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
