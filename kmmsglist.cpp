@@ -181,10 +181,43 @@ void KMMsgList::rethinkHigh(void)
   }
 }
 
+void KMMsgList::qsort(int left, int right, SortField aField, bool aDescending) {
+  if(right <= left)
+    return;
+
+  KMMsgBasePtr mb;
+  int i = left;
+  int j = right;
+  KMMsgBasePtr pivot = KMMsgListInherited::at((int)((i + j) / 2));
+
+  do {
+    while(msgSortCompFunc(KMMsgListInherited::at(i), pivot, aField, aDescending) < 0)
+      i++;
+    while(msgSortCompFunc(pivot, KMMsgListInherited::at(j), aField, aDescending) < 0)
+      j--;
+    if(i <= j) {
+      if(i != j) {
+	mb = KMMsgListInherited::at(i);
+	KMMsgListInherited::at(i) = KMMsgListInherited::at(j);
+	KMMsgListInherited::at(j) = mb;
+      }
+      i++;
+      j--;
+    }
+  } while(i <= j);
+
+    if(left < j)
+      this->qsort(left, j, aField, aDescending);
+    if(i < right)
+      this->qsort(i, right, aField, aDescending);
+}
 
 //-----------------------------------------------------------------------------
 void KMMsgList::sort(SortField aField, bool aDescending)
 {
+#ifndef SLOW_SORT
+  qsort(0, mHigh-1, aField, aDescending);
+#else
   int i, j;
   KMMsgBasePtr mb;
 
@@ -203,6 +236,7 @@ void KMMsgList::sort(SortField aField, bool aDescending)
       }
     }
   }
+#endif
 }
 
 

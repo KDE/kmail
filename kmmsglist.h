@@ -60,6 +60,7 @@ public:
 
   /** Sort messages by given field. */
   virtual void sort(SortField byField=sfDate, bool descending=FALSE);
+  virtual void qsort(int from, int to, SortField byField=sfDate, bool descending=FALSE);
 
   /** Returns first unused index (index of last message plus one). */
   int high(void) const { return mHigh; }

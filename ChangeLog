@@ -1,3 +1,6 @@
+1998-06-12  Mario Weilguni   <mweilguni@kde.org> (KMail-0.7.1)
+	* new sort algorithm - quicksort instead of bubble-sort
+
 1998-06-11  Stefan Taferner  <taferner@kde.org> (KMail-0.7.0)
 
 	* Initial start now opens the settings dialog. Don't
