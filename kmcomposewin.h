@@ -614,14 +614,12 @@ protected:
   /**
    * Header fields.
    */
-    QString subject(void) const { return mEdtSubject->text(); }
-    QString to(void) const { return mEdtTo->text(); }
-    QString cc(void) const
-   { return (mEdtCc->isHidden()) ? QString::null : mEdtCc->text(); }
-    QString bcc(void) const
-   { return (mEdtBcc->isHidden()) ? QString::null : mEdtBcc->text(); }
-    QString from(void) const { return mEdtFrom->text(); }
-    QString replyTo(void) const { return mEdtReplyTo->text(); }
+  QString subject() const;
+  QString to() const;
+  QString cc() const;
+  QString bcc() const;
+  QString from() const;
+  QString replyTo() const;
 
   /**
    * Use the given folder as sent-mail folder if the given folder exists.

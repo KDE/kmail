@@ -1294,6 +1294,58 @@ void KMComposeWin::setupEditor(void)
 
 
 //-----------------------------------------------------------------------------
+static QString cleanedUpHeaderString( const QString & s )
+{
+  // remove invalid characters from the header strings
+  QString res( s );
+  res.replace( '\r', "" );
+  res.replace( '\n', " " );
+  return res.stripWhiteSpace();
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::subject() const
+{
+  return cleanedUpHeaderString( mEdtSubject->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::to() const
+{
+  return cleanedUpHeaderString( mEdtTo->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::cc() const
+{
+  if ( mEdtCc->isHidden() )
+    return QString::null;
+  else
+    return cleanedUpHeaderString( mEdtCc->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::bcc() const
+{
+  if ( mEdtBcc->isHidden() )
+    return QString::null;
+  else
+    return cleanedUpHeaderString( mEdtBcc->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::from() const
+{
+  return cleanedUpHeaderString( mEdtFrom->text() );
+}
+
+//-----------------------------------------------------------------------------
+QString KMComposeWin::replyTo() const
+{
+  return cleanedUpHeaderString( mEdtReplyTo->text() );
+}
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::verifyWordWrapLengthIsAdequate(const QString &body)
 {
   int maxLineLength = 0;
@@ -1639,7 +1691,7 @@ bool KMComposeWin::userForgotAttachment()
 
   // check whether the subject contains one of the attachment key words
   // unless the message is a reply or a forwarded message
-  QString subj = mEdtSubject->text();
+  QString subj = subject();
   gotMatch =    ( KMMessage::stripOffPrefixes( subj ) == subj )
              && ( rx.search( subj ) >= 0 );
 
@@ -1890,19 +1942,19 @@ void KMComposeWin::addrBookSelInto()
   QString txt;
   QStringList lst;
 
-  txt = mEdtTo->text().stripWhiteSpace();
+  txt = to();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedTo( lst );
   }
 
-  txt = mEdtCc->text().stripWhiteSpace();
+  txt = cc();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedCC( lst );
   }
 
-  txt = mEdtBcc->text().stripWhiteSpace();
+  txt = bcc();
   if ( !txt.isEmpty() ) {
       lst = KPIM::splitEmailAddrList( txt );
       dlg.setSelectedBCC( lst );
@@ -3303,7 +3355,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom->setText(ident.fullEmailAddr());
   // make sure the From field is shown if it's empty
-  if ( mEdtFrom->text().isEmpty() )
+  if ( from().isEmpty() )
     mShowHeaders |= HDR_FROM;
   mEdtReplyTo->setText(ident.replyToAddr());
   // don't overwrite the BCC field when the user has edited it and the
