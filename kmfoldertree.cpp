@@ -32,6 +32,41 @@ QPixmap* KMFolderTree::pixSent = 0;
 
 //=============================================================================
 
+KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, QString name )
+    : KFolderTreeItem( parent, name ), mFolder( 0 )
+{
+}
+
+//-----------------------------------------------------------------------------
+KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, QString name,
+                    KMFolder* folder )
+    : KFolderTreeItem( parent, name ), mFolder( folder )
+{
+  init();
+}
+
+//-----------------------------------------------------------------------------
+KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, QString name,
+                    KMFolder* folder )
+    : KFolderTreeItem( parent, name ), mFolder( folder )
+{
+  init();
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTreeItem::init()
+{
+  if (!mFolder) return;
+
+  if (mFolder->protocol() == "imap")
+    setProtocol(Imap);
+  else if (mFolder->protocol() == "mbox" || mFolder->protocol() == "maildir")
+    setProtocol(Local);
+  else
+    setProtocol(NONE);
+}
+
+//-----------------------------------------------------------------------------
 int KMFolderTreeItem::countUnreadRecursive()
 {
   if (mFolder) 
@@ -103,17 +138,6 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
 
   // get rid of old-folders
   cleanupConfigFile();
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::drawContentsOffset( QPainter * p, int ox, int oy,
-                                       int cx, int cy, int cw, int ch )
-{
-  int c = 0;
-  if (mPaintInfo.pixmapOn)
-    paintEmptyArea( p, QRect( c - ox, cy - oy, cx + cw - c, ch ) );
-
-  KFolderTree::drawContentsOffset( p, ox, oy, cx, cy, cw, ch );
 }
 
 //-----------------------------------------------------------------------------
@@ -1229,7 +1253,6 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     } else
       e->ignore();
 
-    // Begin this wasn't necessary in QT 2.0.2
     dropItem = 0L;
 
     clearSelection();
@@ -1238,95 +1261,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
       setSelected( oldSelected, TRUE );
     connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	    this, SLOT(doFolderSelected(QListViewItem*)));
-    // End this wasn't necessary in QT 2.0.2
 }
-
-//-----------------------------------------------------------------------------
-// Navigation/Selection support
-void KMFolderTree::keyPressEvent( QKeyEvent * e )
-{
-    bool cntrl = (e->state() & ControlButton );
-    QListViewItem *cur = currentItem();
- 
-    if (!e || !firstChild())
-      return;
-
-    // If no current item, make some first item current when a key is pressed
-    if (!cur) {
-      clearSelection();
-      setCurrentItem( firstChild() );
-      return;
-    }
-
-    // Handle space key press
-    if (cur->isSelectable() && e->ascii() == ' ' ) {
-      clearSelection();
-      setSelected( cur, !cur->isSelected() );
-      doFolderSelected( cur );
-      return;
-    }
-
-    //Seems to behave sensibly even if ShiftButton is down, suprising
-    if (cntrl) {
-      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-          this,SLOT(doFolderSelected(QListViewItem*)));
-      switch (e->key()) {
-        case Key_Down:
-        case Key_Up:
-        case Key_Home:
-        case Key_End:
-        case Key_Next:
-        case Key_Prior:
-        case Key_Plus:
-        case Key_Minus:
-        case Key_Escape:
-          KListView::keyPressEvent( e );
-      }
-      connect(this,SIGNAL(currentChanged(QListViewItem*)),
-	      this,SLOT(doFolderSelected(QListViewItem*)));
-    }
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::contentsMousePressEvent( QMouseEvent * e )
-{
-  int b = e->state() & !ShiftButton & !ControlButton;
-  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonPress,
-                                   e->pos(),
-                                   e->globalPos(),
-                                   e->button(),
-                                   b );
-  clearSelection();
-  KListView::contentsMousePressEvent( f );
-  // Force current item to be selected for some reason in certain weird
-  // circumstances this is not always the case
-  delete f;
-
-  if (currentItem())
-    setSelected( currentItem(), true );
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::contentsMouseReleaseEvent( QMouseEvent * e )
-{
-  int b = e->state() & !ShiftButton & !ControlButton;
-  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonRelease,
-                                   e->pos(),
-                                   e->globalPos(),
-                                   e->button(),
-                                   b );
-  KListView::contentsMouseReleaseEvent( f );
-  delete f;
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
-{
-  if (e->state() != NoButton)
-    return;
-  KListView::contentsMouseMoveEvent( e );
-}
-
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )

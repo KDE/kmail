@@ -23,22 +23,15 @@ class KMFolderTreeItem : public KFolderTreeItem
 {
 public:
   /** Construct a root item _without_ folder */
-  KMFolderTreeItem( KFolderTree *parent,
-                    QString name )
-    : KFolderTreeItem( parent, name ), mFolder( 0 )
-    {}
+  KMFolderTreeItem( KFolderTree *parent, QString name );
 
   /** Construct a root item _with_ folder */    
   KMFolderTreeItem( KFolderTree *parent, QString name,
-                    KMFolder* folder )
-    : KFolderTreeItem( parent, name, folder->protocol() ), mFolder( folder )
-    {}
+                    KMFolder* folder );
  
   /** Construct a child item */
   KMFolderTreeItem( KFolderTreeItem* parent, QString name,
-                    KMFolder* folder )
-    : KFolderTreeItem( parent, folder->protocol(), name ), mFolder( folder )
-    {}
+                    KMFolder* folder );
 
   /** gets the recursive unread-count */
   virtual int countUnreadRecursive();
@@ -50,6 +43,7 @@ public:
   virtual bool acceptDrag(QDropEvent* ) const;
 
 protected:
+  void init();
   KMFolder* mFolder;
 };
 
@@ -215,12 +209,6 @@ protected:
   void contentsDragLeaveEvent( QDragLeaveEvent *e );
   void contentsDropEvent( QDropEvent *e );
 
-  /** Navigation/Selection methods */
-  virtual void keyPressEvent( QKeyEvent * e );
-  virtual void contentsMousePressEvent( QMouseEvent * e );
-  virtual void contentsMouseReleaseEvent( QMouseEvent * e );
-  virtual void contentsMouseMoveEvent( QMouseEvent* e );
-
   /** Drag and drop variables */
   QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;
@@ -229,9 +217,6 @@ protected:
 
   // filter some rmb-events
   bool eventFilter(QObject*, QEvent*);
-
-  virtual void drawContentsOffset( QPainter * p, int ox, int oy,
-				   int cx, int cy, int cw, int ch );
 
   /** open ancestors and ensure item is visible  */
   void prepareItem( KMFolderTreeItem* );
