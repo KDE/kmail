@@ -1806,11 +1806,15 @@ void KMHeaders::styleChange( QStyle& oldStyle )
 void KMHeaders::setFolderInfoStatus ()
 {
   if ( !mFolder ) return;
-  QString str = ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
-                ? i18n( "1 unsent", "%n unsent", mFolder->countUnread() )
-                : i18n( "1 unread", "%n unread", mFolder->countUnread() );
-  str = i18n( "1 message, %1.", "%n messages, %1.", mFolder->count() )
-        .arg( str );
+  QString str;
+  const int unread = mFolder->countUnread();
+  if ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
+    str = unread ? i18n( "1 unsent", "%n unsent", unread ) : i18n( "0 unsent" );
+  else
+    str = unread ? i18n( "1 unread", "%n unread", unread ) : i18n( "0 unread" );
+  const int count = mFolder->count();
+  str = count ? i18n( "1 message, %1.", "%n messages, %1.", count ).arg( str )
+              : i18n( "0 messages" ); // no need for "0 unread" to be added here
   if ( mFolder->isReadOnly() )
     str = i18n("%1 = n messages, m unread.", "%1 Folder is read-only.").arg( str );
   BroadcastStatus::instance()->setStatusMsg(str);
