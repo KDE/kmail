@@ -36,7 +36,7 @@ KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctLocalInherited(aOwner, aAccountName)
 {
   initMetaObject();
-  mLock = FCNTL;
+  mLock = procmail_lockfile;
 }
 
 
@@ -63,6 +63,7 @@ void KMAcctLocal::init(void)
     mLocation += "/";
     mLocation += getenv("USER");
   }
+  setProcmailLockFileName("");
 }
 
 
@@ -203,11 +204,12 @@ void KMAcctLocal::readConfig(KConfig& config)
 
   KMAcctLocalInherited::readConfig(config);
   mLocation = config.readEntry("Location", defaultPath);
-  QString locktype = config.readEntry("LockType", "fcntl" );
+  QString locktype = config.readEntry("LockType", "procmail_lockfile" );
 
   if( locktype == "procmail_lockfile" ) {
     mLock = procmail_lockfile;
-    mProcmailLockFileName = config.readEntry("ProcmailLockFile", "");
+    mProcmailLockFileName = config.readEntry("ProcmailLockFile",
+      mLocation + ".lock");
   } else if( locktype == "mutt_dotlock" )
     mLock = mutt_dotlock;
   else if( locktype == "mutt_dotlock_privileged" )

@@ -296,25 +296,25 @@ void AccountDialog::makeLocalAccountPage()
   groupLayout->setSpacing( 6 );
   groupLayout->setMargin( 11 );
 
-  mLocal.lockMutt = new QRadioButton(
-    i18n("Mutt dotlock (recommended)"), group);
-  groupLayout->addWidget(mLocal.lockMutt, 0, 0);
-
-  mLocal.lockMuttPriv = new QRadioButton(
-    i18n("Mutt dotlock privileged"), group);
-  groupLayout->addWidget(mLocal.lockMuttPriv, 1, 0);
-
   mLocal.lockProcmail = new QRadioButton(
     i18n("Procmail lockfile"), group);
-  groupLayout->addWidget(mLocal.lockProcmail, 2, 0);
+  groupLayout->addWidget(mLocal.lockProcmail, 0, 0);
 
   mLocal.procmailLockFileName = new QComboBox( true, group );
-  groupLayout->addWidget(mLocal.procmailLockFileName, 2, 1);
+  groupLayout->addWidget(mLocal.procmailLockFileName, 0, 1);
   mLocal.procmailLockFileName->insertStringList(procmailrcParser.getLockFilesList());
   mLocal.procmailLockFileName->setEnabled(false);
 
   QObject::connect(mLocal.lockProcmail, SIGNAL(toggled(bool)),
                    mLocal.procmailLockFileName, SLOT(setEnabled(bool)));
+
+  mLocal.lockMutt = new QRadioButton(
+    i18n("Mutt dotlock"), group);
+  groupLayout->addWidget(mLocal.lockMutt, 1, 0);
+
+  mLocal.lockMuttPriv = new QRadioButton(
+    i18n("Mutt dotlock privileged"), group);
+  groupLayout->addWidget(mLocal.lockMuttPriv, 2, 0);
 
   mLocal.lockFcntl = new QRadioButton(
     i18n("FCNTL"), group);
