@@ -1198,6 +1198,15 @@ void KMFolder::reallyAddMsg(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
+void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
+{
+  aMsg->setParent( NULL );
+  addMsg( aMsg );
+  unGetMsg( count() - 1 );
+}
+
+
+//-----------------------------------------------------------------------------
 int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
   long offs, size, len, revert;

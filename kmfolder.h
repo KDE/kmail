@@ -302,10 +302,14 @@ signals:
   /** Emitted when number of unread messages has changed. */
   void numUnreadMsgsChanged( KMFolder* );
 
-protected slots:
+public slots:
   /** Add the message to the folder after it has been retrieved from an IMAP
       server */
   virtual void reallyAddMsg(KMMessage *);
+
+  /** Add a copy of the message to the folder after it has been retrieved
+      from an IMAP server */
+  virtual void reallyAddCopyOfMsg(KMMessage *);
 
 protected:
   /** Load message from file and store it at given index. Returns NULL

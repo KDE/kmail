@@ -1431,10 +1431,18 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 
     newMsg = new KMMessage;
     newMsg->fromString(msg->asString());
-    assert(newMsg != NULL);
+    newMsg->setComplete(msg->isComplete());
 
-    rc = destFolder->addMsg(newMsg);
-    destFolder->unGetMsg( destFolder->count() - 1 );
+    if (mFolder->account() && !newMsg->isComplete())
+    {
+      newMsg->setParent(msg->parent());
+      KMImapJob *imapJob = new KMImapJob(newMsg);
+      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+        destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+    } else {
+      rc = destFolder->addMsg(newMsg);
+      destFolder->unGetMsg( destFolder->count() - 1 );
+    }
     if (!isMessage)
     {
       assert(idx != -1);
