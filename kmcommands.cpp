@@ -1598,7 +1598,7 @@ void KMMoveCommand::execute()
   mProgressItem =
      ProgressManager::createProgressItem (
          "move"+ProgressManager::getUniqueID(),
-         "Moving messages" );
+         mDestFolder ? "Moving messages" : "Deleting messages" );
   connect( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
            this, SLOT( slotMoveCanceled() ) );
 
