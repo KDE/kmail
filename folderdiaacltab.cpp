@@ -423,6 +423,9 @@ void KMail::FolderDiaACLTab::load()
     mLabel->setText( i18n( "Error: no IMAP account defined for this folder" ) );
     return;
   }
+  KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
+  if ( folder && folder->storage() == mImapAccount->rootFolder() )
+    return; // nothing to be done for the (virtual) account folder
   mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( mImapAccount->host() ) );
   ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
@@ -487,7 +490,10 @@ void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, c
                 this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 
     if ( job && job->error() ) {
-      mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
+      if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION )
+        mLabel->setText( i18n( "This IMAP server does not have support for access control lists (ACL)" ) );
+      else
+        mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
       return;
     }
 
