@@ -209,7 +209,7 @@ ACLJobs::DeleteACLJob::DeleteACLJob( const KURL& url, const QString& userId,
 ACLJobs::MultiSetACLJob::MultiSetACLJob( KIO::Slave* slave, const KURL& url, const ACLList& acl, bool showProgressInfo )
   : KIO::Job( showProgressInfo ),
     mSlave( slave ),
-    mUrl( url ), mACLList( acl ), mACLListIterator( acl.begin() )
+    mUrl( url ), mACLList( acl ), mACLListIterator( mACLList.begin() )
 {
   QTimer::singleShot(0, this, SLOT(slotStart()));
 }
