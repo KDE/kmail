@@ -1306,6 +1306,21 @@ void KMMainWidget::slotDeleteMsg( bool confirmDelete )
   updateMessageActions();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotTrashThread()
+{
+  mHeaders->highlightCurrentThread();
+  mHeaders->deleteMsg();
+  updateMessageActions();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotDeleteThread( bool confirmDelete )
+{
+  mHeaders->highlightCurrentThread();
+  mHeaders->moveMsgToFolder( 0, confirmDelete );
+  updateMessageActions();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotReplyToMsg()
@@ -2232,6 +2247,15 @@ void KMMainWidget::setupActions()
   mDeleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
                               SLOT(slotDeleteMsg()), actionCollection(), "delete" );
 
+  mTrashThreadAction = new KAction( KGuiItem( i18n("M&ove Thread to Trash"), "edittrash",
+                                       i18n("Move thread to trashcan") ),
+                             CTRL+Key_Delete, this, SLOT(slotTrashThread()),
+                             actionCollection(), "move_thread_to_trash" );
+
+  mDeleteThreadAction = new KAction( i18n("Delete T&hread"), "editdelete", CTRL+SHIFT+Key_Delete, this,
+                              SLOT(slotDeleteThread()), actionCollection(), "delete_thread" );
+
+
   (void) new KAction( i18n("&Find Messages..."), "mail_find", Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
 
@@ -2834,12 +2858,13 @@ void KMMainWidget::updateMessageActions()
     QPtrList<QListViewItem> selectedItems;
 
     if ( mFolder ) {
-        for (QListViewItem *item = mHeaders->firstChild(); item; item = item->itemBelow())
-            if (item->isSelected() )
-	        selectedItems.append(item);
-        if ( selectedItems.isEmpty() && mFolder->count() ) // there will always be one in mMsgView
-            count = 1;
-	else count = selectedItems.count();
+      for (QListViewItem *item = mHeaders->firstChild(); item; item = item->itemBelow())
+        if (item->isSelected() )
+          selectedItems.append(item);
+      if ( selectedItems.isEmpty() && mFolder->count() ) // there will always be one in mMsgView
+        count = 1;
+      else 
+        count = selectedItems.count();
     }
 
     updateListFilterAction();
@@ -2848,16 +2873,16 @@ void KMMainWidget::updateMessageActions()
     if ( count > 1 && mHeaders->isThreaded() ) {
       QListViewItem * curItemParent = mHeaders->currentItem();
       while ( curItemParent->parent() )
-	curItemParent = curItemParent->parent();
+        curItemParent = curItemParent->parent();
       for ( QPtrListIterator<QListViewItem> it( selectedItems ) ;
-	    it.current() ; ++ it ) {
-	QListViewItem * item = *it;
-	while ( item->parent() )
-	  item = item->parent();
-	if ( item != curItemParent ) {
-	  allSelectedInCommonThread = false;
-	  break;
-	}
+            it.current() ; ++ it ) {
+        QListViewItem * item = *it;
+        while ( item->parent() )
+          item = item->parent();
+        if ( item != curItemParent ) {
+          allSelectedInCommonThread = false;
+          break;
+        }
       }
     }
 
@@ -2882,6 +2907,8 @@ void KMMainWidget::updateMessageActions()
     mToggleThreadTodoAction->setEnabled( thread_actions );
     mToggleThreadSentAction->setEnabled( thread_actions );
     mToggleThreadFlagAction->setEnabled( thread_actions );
+    mTrashThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
+    mDeleteThreadAction->setEnabled( thread_actions && !mFolder->isReadOnly() );
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
       mToggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());

@@ -161,6 +161,7 @@ public:
   virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = false, bool acceptCurrent = false);
 
   void highlightMessage(QListViewItem*, bool markitread);
+  void highlightCurrentThread();
 
   /** return a string relativ to the current time */
   static QString fancyDate( time_t otime );

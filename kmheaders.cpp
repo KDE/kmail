@@ -1927,6 +1927,18 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   setFolderInfoStatus();
 }
 
+void KMHeaders::highlightCurrentThread()
+{
+  QPtrList<QListViewItem> curThread = currentThread();
+  QPtrListIterator<QListViewItem> it( curThread );
+
+  for ( it.toFirst() ; it.current() ; ++it ) {
+      QListViewItem *lvi = *it;
+      lvi->setSelected( true );
+      lvi->repaint();
+  }
+}
+
 void KMHeaders::resetCurrentTime()
 {
     mDate.reset();
@@ -2208,8 +2220,6 @@ void KMHeaders::slotRMB()
     mOwner->ignoreThreadAction()->plug(menu);
   }
 
-
-
   if ( !out_folder ) {
     menu->insertSeparator();
     mOwner->filterMenu()->plug( menu ); // Create Filter menu
@@ -2223,7 +2233,10 @@ void KMHeaders::slotRMB()
   menu->insertSeparator();
   mOwner->trashAction()->plug(menu);
   mOwner->deleteAction()->plug(menu);
-
+  if ( mOwner->trashThreadAction()->isEnabled() ) {
+    mOwner->trashThreadAction()->plug(menu);
+    mOwner->deleteThreadAction()->plug(menu);
+  }
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );
   menu->exec(QCursor::pos(), 0);

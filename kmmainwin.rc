@@ -28,6 +28,8 @@
    <Separator/>
    <Action name="move_to_trash" />
    <Action name="delete" />
+   <Action name="move_thread_to_trash" />
+   <Action name="delete_thread" />
    <Separator/>
    <Action name="find_in_messages" />
    <Separator/>

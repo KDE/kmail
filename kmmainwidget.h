@@ -108,6 +108,8 @@ public:
   KAction *printAction() const { return mPrintAction; }
   KAction *trashAction() const { return mTrashAction; }
   KAction *deleteAction() const { return mDeleteAction; }
+  KAction *trashThreadAction() const { return mTrashThreadAction; }
+  KAction *deleteThreadAction() const { return mDeleteThreadAction; }
   KAction *saveAsAction() const { return mSaveAsAction; }
   KAction *editAction() const { return mEditAction; }
   KAction *sendAgainAction() const { return mSendAgainAction; }
@@ -247,6 +249,8 @@ protected slots:
   void slotEditMsg();
   //void slotTrashMsg();   // move to trash
   void slotDeleteMsg( bool confirmDelete = true );  // completely delete message
+  void slotTrashThread();
+  void slotDeleteThread( bool confirmDelete = true );  // completely delete thread
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();
@@ -367,7 +371,8 @@ protected slots:
 
 private:
   // Message actions
-  KAction *mTrashAction, *mDeleteAction, *mSaveAsAction, *mEditAction,
+  KAction *mTrashAction, *mDeleteAction, *mTrashThreadAction, 
+    *mDeleteThreadAction, *mSaveAsAction, *mEditAction,
     *mSendAgainAction, *mApplyAllFiltersAction, *mFindInMessageAction,
     *mSaveAttachmentsAction, *mOpenAction, *mViewSourceAction;
   // Composition actions
