@@ -74,27 +74,50 @@ public:
   **/
   const KMIdentity & identityForAddress( const QString & addressList ) const;
 
-  /** @return the identity named @p identityName or @ref
+  /** @deprecated
+      @return the identity named @p identityName or @ref
       KMIdentity::null if not found.
   **/
   const KMIdentity & identityForName( const QString & identityName ) const;
 
-  /** Convenience method.
+  /** @return the identity with Unique Object Identifier (UOID) @p
+      uoid or @ref KMIdentity::null if not found.
+   **/
+  const KMIdentity & identityForUoid( uint uoid ) const;
+
+  /** @deprecated
+      Convenience method.
   
       @return the identity named @p identityName or the default
       identity if not found.
   **/
   const KMIdentity & identityForNameOrDefault( const QString & identityName ) const;
 
+  /** Convenience menthod.
+
+      @return the identity with Unique Object Identifier (UOID) @p
+      uoid or the default identity if not found.
+  **/
+  const KMIdentity & identityForUoidOrDefault( uint uoid ) const;
+
   /** @return the default identity */
   const KMIdentity & defaultIdentity() const;
 
-  /** Sets the identity named @p identityName to be the new default
+  /** @deprecated
+      Sets the identity named @p identityName to be the new default
       identity. As usual, use @ref commit to make this permanent.
       
       @return false if an identity named @p identityName was not found
   **/
   bool setAsDefault( const QString & identityName );
+
+  /** Sets the identity with Unique Object Identifier (UOID) @p uoid
+      to be new the default identity. As usual, use @ref commit to
+      make this permanent.
+
+      @return false if an identity with UOID @p uoid was not found
+  **/
+  bool setAsDefault( uint uoid );
 
   /** @return the identity named @p idenityName. This method returns a
       reference to the identity that can be modified. To let others
@@ -114,6 +137,23 @@ public:
   KMIdentity & newFromControlCenter( const QString & name );
   KMIdentity & newFromExisting( const KMIdentity & other,
 				const QString & name=QString::null );
+
+signals:
+  /** Emitted whenever the identity with Unique Object Identifier
+      (UOID) @p uoid changed. Useful for more fine-grained change
+      notifications than what is possible with the standard @ref
+      changed() signal. */
+  void changed( uint uoid );
+  /** Emitted whenever the identity @p ident changed. Useful for more
+      fine-grained change notifications than what is possible with the
+      standard @ref changed() signal. */
+  void changed( const KMIdentity & ident );
+  /** Emitted on @ref commit() for each deleted identity. At the time
+      this signal is emitted, the identity does still exist and can be
+      retrieved by @ref identityForUoid() if needed */
+  void deleted( uint uoid );
+  /** Emitted on @ref commit() for each new identity */
+  void added( const KMIdentity & ident );
 
 protected:
   /** The list that will be seen by everyone */

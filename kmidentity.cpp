@@ -216,73 +216,24 @@ bool KMIdentity::isNull() const {
 }
 
 bool KMIdentity::operator==( const KMIdentity & other ) const {
-    return mIdentity == other.mIdentity && mFullName == other.mFullName &&
+    return mUoid == other.mUoid &&
+      mIdentity == other.mIdentity && mFullName == other.mFullName &&
       mEmailAddr == other.mEmailAddr && mOrganization == other.mOrganization &&
       mReplyToAddr == other.mReplyToAddr && mVCardFile == other.mVCardFile &&
       mPgpIdentity == other.mPgpIdentity && mFcc == other.mFcc &&
       mDrafts == other.mDrafts && mTransport == other.mTransport &&
       mSignature == other.mSignature;
-  }
-
-#if 0
-QStringList KMIdentity::identities()
-{
-  KConfig* config = kapp->config();
-  KConfigGroupSaver saver( config, "Identity" );
-
-  QStringList result = config->readListEntry( "IdentityList" );
-  if (!result.contains( i18n( "Default" ))) {
-    result.remove( "unknown" );
-    result.prepend( i18n( "Default" ));
-  }
-  return result;
 }
-
-
-//-----------------------------------------------------------------------------
-void KMIdentity::saveIdentities( const QStringList & ids, bool aWithSync )
-{
-  KConfig* config = kapp->config();
-  KConfigGroupSaver saver( config, "Identity" );
-
-  QStringList list = ids;
-  QStringList::Iterator defaultIdentity = list.find( i18n("Default") );
-  if ( defaultIdentity != list.end() )
-    list.remove( defaultIdentity );
-  config->writeEntry( "IdentityList", list );
-
-  if (aWithSync) config->sync();
-}
-
-//-----------------------------------------------------------------------------
-QString KMIdentity::matchIdentity( const QString &addressList )
-{
-  QStringList ids = identities();
-  KConfig* config = kapp->config();
-  for(QStringList::ConstIterator it = ids.begin(); it != ids.end(); ++it)
-  {
-     const QString &id = (*it);
-     KConfigGroupSaver saver( config, (id == i18n( "Default" )) ? 
-		     QString("Identity") : "Identity-" + id );
-     QString email = config->readEntry("Email Address");
-     if (addressList.find(email, 0, false)!= -1)
-        return id;
-  }
-  return QString::null;
-}
-#endif
-
 
 KMIdentity::KMIdentity( const QString & id, const QString & fullName,
 			const QString & emailAddr, const QString & organization,
 			const QString & replyToAddr )
-  : mIdentity( id ), mFullName( fullName ), mEmailAddr( emailAddr ),
-    mOrganization( organization ), mReplyToAddr( replyToAddr ),
-    mIsDefault( false )
+  : mUoid( 0 ), mIdentity( id ), mFullName( fullName ),
+    mEmailAddr( emailAddr ), mOrganization( organization ),
+    mReplyToAddr( replyToAddr ), mIsDefault( false )
 {
 
 }
-
 
 KMIdentity::~KMIdentity()
 {
@@ -291,6 +242,8 @@ KMIdentity::~KMIdentity()
 
 void KMIdentity::readConfig( const KConfigBase * config )
 {
+  mUoid = config->readUnsignedNumEntry("uoid",0);
+
   mIdentity = config->readEntry("Identity");
   mFullName = config->readEntry("Name");
   mEmailAddr = config->readEntry("Email Address");
@@ -303,11 +256,15 @@ void KMIdentity::readConfig( const KConfigBase * config )
   mTransport = config->readEntry("Transport");
 
   mSignature.readConfig( config );
+  kdDebug() << "KMIdentity::readConfig(): UOID = " << mUoid
+	    << " for identity named \"" << mIdentity << "\"" << endl;
 }
 
 
 void KMIdentity::writeConfig( KConfigBase * config ) const
 {
+  config->writeEntry("uoid", mUoid);
+
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Name", mFullName);
   config->writeEntry("Organization", mOrganization);

@@ -153,7 +153,7 @@ public:
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling
     of setAutomaticFields(), see below, is still required. */
-  virtual void initHeader(const QString& id=QString::fromLatin1("unknown"));
+  virtual void initHeader(uint identity=0);
 
   /** Initialize headers fields according to the identity and the transport
     header of the given original message */

@@ -197,8 +197,7 @@ class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
 
 public:
   KMComposeWin( CryptPlugWrapperList * cryptPlugList,
-                KMMessage* msg=0L,
-                QString id=QString::fromLatin1("unknown") );
+                KMMessage* msg=0, uint identity=0 );
   ~KMComposeWin();
 
   /**
@@ -441,7 +440,7 @@ public slots:
   /**
    * Update composer field to reflect new identity
    */
-  void slotIdentityChanged(const QString &);
+  void slotIdentityChanged(uint);
 
   /**
    * KIO slots for attachment insertion
@@ -664,7 +663,8 @@ protected:
   QPtrList<QWidget> mEdtList;
   QPtrList<KTempFile> mAtmTempList;
   QPalette mPalette;
-  QString mId, mOldSigText;
+  uint mId;
+  QString mOldSigText;
   QStringList mTransportHistory;
 
   KAction *selectCryptoAction, *attachPK, *attachMPK;

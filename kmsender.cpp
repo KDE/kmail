@@ -151,9 +151,9 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   // Handle redirections
   QString f = aMsg->headerField("X-KMail-Redirect-From");
   if(!f.isEmpty()) {
-    QString idStr = aMsg->headerField("X-KMail-Identity");
+    uint id = aMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
     const KMIdentity & ident =
-      kernel->identityManager()->identityForNameOrDefault( idStr );
+      kernel->identityManager()->identityForUoidOrDefault( id );
     aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
       .arg(ident.fullName()).arg(ident.emailAddr()));
   }
@@ -223,7 +223,7 @@ void KMSender::doSendMsg()
     mCurrentMsg->setStatus(KMMsgStatusSent);
 
     const KMIdentity & id = kernel->identityManager()
-      ->identityForNameOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ) );
+      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
     if ( !mCurrentMsg->fcc().isEmpty() )
     {
       sentFolder = kernel->folderMgr()->findIdString( mCurrentMsg->fcc() );

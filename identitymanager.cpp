@@ -57,10 +57,41 @@ IdentityManager::~IdentityManager()
 
 void IdentityManager::commit()
 {
+  // early out:
   if ( !hasPendingChanges() ) return;
+
+  QValueList<uint> seenUOIDs;
+  for ( QValueList<KMIdentity>::ConstIterator it = mIdentities.begin() ;
+	it != mIdentities.end() ; ++it )
+    seenUOIDs << (*it).uoid();
+
+  // find added and changed identities:
+  for ( QValueList<KMIdentity>::ConstIterator it = mShadowIdentities.begin() ;
+	it != mShadowIdentities.end() ; ++it ) {
+    QValueList<uint>::Iterator uoid = seenUOIDs.find( (*it).uoid() );
+    if ( uoid != seenUOIDs.end() ) {
+      // changed identity
+      kdDebug( 5006 ) << "emitting changed() for identity " << *uoid << endl;
+      emit changed( *it );
+      emit changed( *uoid );
+    } else {
+      // new identity
+      kdDebug( 5006 ) << "emitting added() for identity " << (*it).uoid() << endl;
+      emit added( *it );
+    }
+    seenUOIDs.remove( uoid );
+  }
+
+  // what's left are deleted identities:
+  for ( QValueList<uint>::ConstIterator it = seenUOIDs.begin() ;
+	it != seenUOIDs.end() ; ++it ) {
+    kdDebug( 5006 ) << "emitting deleted() for identity " << (*it) << endl;
+    emit deleted( *it );
+  }
+
   mIdentities = mShadowIdentities;
   writeConfig();
-  emit changed();
+  emit ConfigManager::changed();
 }
 
 void IdentityManager::rollback()
@@ -112,7 +143,7 @@ void IdentityManager::writeConfig() const {
     if ( (*it).isDefault() ) {
       // remember which one is default:
       KConfigGroup general( config, "General" );
-      general.writeEntry( configKeyDefaultIdentity, (*it).identityName() );
+      general.writeEntry( configKeyDefaultIdentity, (*it).uoid() );
     }
   }
 #ifndef KMAIL_TESTING
@@ -129,7 +160,7 @@ void IdentityManager::readConfig() {
   if ( identities.isEmpty() ) return; // nothing to be done...
 
   KConfigGroup general( kapp->config(), "General" );
-  QString defaultIdentity = general.readEntry( configKeyDefaultIdentity );
+  uint defaultIdentity = general.readUnsignedNumEntry( configKeyDefaultIdentity );
   bool haveDefault = false;
 
   for ( QStringList::Iterator group = identities.begin() ;
@@ -137,7 +168,7 @@ void IdentityManager::readConfig() {
     KConfigGroup config( kapp->config(), *group );
     mIdentities << KMIdentity();
     mIdentities.last().readConfig( &config );
-    if ( !haveDefault && mIdentities.last().identityName() == defaultIdentity ) {
+    if ( !haveDefault && mIdentities.last().uoid() == defaultIdentity ) {
       haveDefault = true;
       mIdentities.last().setIsDefault( true );
     }
@@ -171,14 +202,31 @@ IdentityManager::Iterator IdentityManager::end() {
 
 const KMIdentity & IdentityManager::identityForName( const QString & name ) const
 {
+  kdWarning( 5006 )
+    << "deprecated method IdentityManager::identityForName() called!" << endl;
   for ( ConstIterator it = begin() ; it != end() ; ++it )
     if ( (*it).identityName() == name ) return (*it);
+  return KMIdentity::null;
+}
+
+const KMIdentity & IdentityManager::identityForUoid( uint ouid ) const {
+  for ( ConstIterator it = begin() ; it != end() ; ++it )
+    if ( (*it).uoid() == ouid ) return (*it);
   return KMIdentity::null;
 }
 
 const KMIdentity & IdentityManager::identityForNameOrDefault( const QString & name ) const
 {
   const KMIdentity & ident = identityForName( name );
+  if ( ident.isNull() )
+    return defaultIdentity();
+  else
+    return ident;
+}
+
+const KMIdentity & IdentityManager::identityForUoidOrDefault( uint ouid ) const
+{
+  const KMIdentity & ident = identityForUoid( ouid );
   if ( ident.isNull() )
     return defaultIdentity();
   else
@@ -222,6 +270,25 @@ bool IdentityManager::setAsDefault( const QString & name ) {
   return true;
 }
 
+bool IdentityManager::setAsDefault( uint uoid ) {
+  // First, check if the identity actually exists:
+  bool found = false;
+  for ( ConstIterator it = mShadowIdentities.begin() ;
+	it != mShadowIdentities.end() ; ++it )
+    if ( (*it).uoid() == uoid ) {
+      found = true;
+      break;
+    }
+  if ( !found ) return false;
+
+  // Then, change the default as requested:
+  for ( Iterator it = begin() ; it != end() ; ++it )
+    (*it).setIsDefault( (*it).uoid() == uoid );
+  // and re-sort:
+  sort();
+  return true;
+}
+
 bool IdentityManager::removeIdentity( const QString & name ) {
   for ( Iterator it = begin() ; it != end() ; ++it )
     if ( (*it).identityName() == name ) {
@@ -255,6 +322,7 @@ KMIdentity & IdentityManager::newFromExisting( const KMIdentity & other,
   mShadowIdentities << other;
   KMIdentity & result = mShadowIdentities.last();
   result.setIsDefault( false ); // we don't want two default identities!
+  result.setUoid( kapp->random() ); // we don't want two identies w/ same UOID
   if ( !name.isNull() )
     result.setIdentityName( name );
   return result;

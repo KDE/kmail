@@ -79,10 +79,9 @@
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
-                            KMMessage *aMsg,
-                            QString id )
-  : KMTopLevelWidget (), MailComposerIface(),
-  mId( id ), mCryptPlugList( cryptPlugList )
+                            KMMessage *aMsg, uint id )
+  : KMTopLevelWidget(), MailComposerIface(),
+    mId( id ), mCryptPlugList( cryptPlugList )
 
 {
   // make sure we have a valid CryptPlugList
@@ -190,8 +189,8 @@ KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
   connect(mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
   connect(mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
-  connect(mIdentity,SIGNAL(identityChanged(const QString &)),
-	  SLOT(slotIdentityChanged(const QString &)));
+  connect(mIdentity,SIGNAL(identityChanged(uint)),
+	  SLOT(slotIdentityChanged(uint)));
 
   connect(mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
@@ -385,7 +384,7 @@ void KMComposeWin::readConfig(void)
   mLineBreak = config->readNumEntry("break-at", 78);
   mBtnIdentity->setChecked(config->readBoolEntry("sticky-identity", false));
   if (mBtnIdentity->isChecked())
-    mId = config->readEntry("previous-identity", mId );
+    mId = config->readUnsignedNumEntry("previous-identity", mId );
   mBtnFcc->setChecked(config->readBoolEntry("sticky-fcc", false));
   QString previousFcc = kernel->sentFolder()->idString();
   if (mBtnFcc->isChecked())
@@ -478,9 +477,9 @@ void KMComposeWin::readConfig(void)
 
   if ( !mBtnFcc->isChecked() )
   {
-      kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentity() << endl;
+      kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentityName() << endl;
       const KMIdentity & ident =
-        kernel->identityManager()->identityForName( mIdentity->currentIdentity() );
+        kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
       kdDebug(5006) << "KMComposeWin::readConfig: identity.fcc()='"
                     << ident.fcc() << "'" << endl;
       if ( ident.fcc().isEmpty() )
@@ -932,7 +931,7 @@ void KMComposeWin::setupActions(void)
 
   // get PGP user id for the chosen identity
   const KMIdentity & ident =
-    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
+    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QString pgpUserId = ident.pgpIdentity();
 
   selectCryptoAction->setEnabled(true);
@@ -1125,7 +1124,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   mEdtBcc->setText(mMsg->bcc());
 
   if (!mBtnIdentity->isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
-    mId = newMsg->headerField("X-KMail-Identity");
+    mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
 
   // anyone knows why slotIdentityChanged() is only to be called on
   // mBtnIdentity->isChecked()?
@@ -1136,7 +1135,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     mIdentity->blockSignals( false );
 
   const KMIdentity & ident =
-    kernel->identityManager()->identityForName( mIdentity->currentIdentity() );
+    kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
 
   mOldSigText = ident.signatureText();
 
@@ -1328,7 +1327,7 @@ bool KMComposeWin::applyChanges(void)
   mMsg->setBcc(bcc());
 
   const KMIdentity & id
-    = kernel->identityManager()->identityForName( mIdentity->currentIdentity() );
+    = kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
   kdDebug() << "KMComposeWin::applyChanges: " << mFcc->currentText() << "=="
             << id.fcc() << "?" << endl;
 
@@ -1344,7 +1343,7 @@ bool KMComposeWin::applyChanges(void)
 
   if (id.isDefault())
     mMsg->removeHeaderField("X-KMail-Identity");
-  else mMsg->setHeaderField("X-KMail-Identity", id.identityName() );
+  else mMsg->setHeaderField("X-KMail-Identity", QString().setNum( id.uoid() ));
 
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
@@ -1377,7 +1376,7 @@ bool KMComposeWin::applyChanges(void)
 
   // get PGP user id for the chosen identity
   const KMIdentity & ident =
-    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
+    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QCString pgpUserId = ident.pgpIdentity();
 
   CryptPlugWrapper* cryptPlug = mCryptPlugList ? mCryptPlugList->active() : 0;
@@ -1796,7 +1795,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
 
       // get PGP user id for the chosen identity
       const KMIdentity & ident =
-        kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
+        kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
       QCString pgpUserId = ident.pgpIdentity();
 
       // encrypt the message
@@ -2965,7 +2964,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 
   // get PGP user id for the chosen identity
   QCString pgpUserId =
-    kernel->identityManager()->identityForNameOrDefault( mId ).pgpIdentity();
+    kernel->identityManager()->identityForUoidOrDefault( mId ).pgpIdentity();
 
   if (!doEncrypt)
   { // clearsign the message
@@ -3380,7 +3379,7 @@ void KMComposeWin::slotInsertMyPublicKey()
 
   // get PGP user id for the chosen identity
   QCString pgpUserId =
-    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() ).pgpIdentity();
+    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() ).pgpIdentity();
 
   QCString armoredKey = Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
   if (armoredKey.isEmpty())
@@ -3959,7 +3958,7 @@ void KMComposeWin::slotAppendSignature()
   bool mod = mEditor->isModified();
 
   const KMIdentity & ident =
-    kernel->identityManager()->identityForNameOrDefault( mIdentity->currentIdentity() );
+    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QString sigText = ident.signatureText();
 #if 0 // will be moved to identitymanager
   if( sigText.isNull() && ident.useSignatureFile() )
@@ -4087,12 +4086,11 @@ void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotIdentityChanged(const QString & identStr)
+void KMComposeWin::slotIdentityChanged(uint uoid)
 {
-  if (!kernel->identityManager()->identities().contains(identStr))
-    return;
   const KMIdentity & ident =
-    kernel->identityManager()->identityForName( identStr );
+    kernel->identityManager()->identityForUoid( uoid );
+  if ( ident.isNull() ) return;
 
   if(!ident.fullEmailAddr().isNull())
     mEdtFrom->setText(ident.fullEmailAddr());
@@ -4182,7 +4180,7 @@ void KMComposeWin::slotIdentityChanged(const QString & identStr)
   }
 
   mEditor->setModified(TRUE);
-  mId = identStr;
+  mId = uoid;
 }
 
 //-----------------------------------------------------------------------------

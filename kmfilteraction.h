@@ -227,6 +227,49 @@ protected:
 
 //=========================================================
 //
+// class KMFilterActionWithUOID
+//
+//=========================================================
+
+
+/** Abstract base class for KMail's filter actions that need a
+    parameter that has a UOID, e.g. "set identity". A subclass of this
+    must provide at least implementations for the following methods:
+
+    @li virtual @ref KMFilterAction::ReturnCodes @ref KMFilterAction::process
+    @li static @ref KMFilterAction::newAction
+    @li the *ParamWidget* methods.
+
+    @short Abstract base class for filter actions with a free-form string as parameter.
+    @author Marc Mutz <Marc@Mutz.com>, based upon work by Stefan Taferner <taferner@kde.org>
+    @see KMFilterAction KMFilter
+
+*/
+class KMFilterActionWithUOID : public KMFilterAction
+{
+public:
+  /** Initialize filter action with (english) name @p aName. This is
+      the name under which this action is known in the config file. */
+  KMFilterActionWithUOID(const char* aName, const QString aLabel);
+
+  /** Determines whether this action is valid. But this is just a
+      quick test. Eg., actions that have a mail address as parameter
+      shouldn't try real address validation, but only check if the
+      string representation is empty. */
+  virtual bool isEmpty() const { return mParameter == 0; }
+
+  /** Read extra arguments from given string. */
+  virtual void argsFromString(const QString argsStr);
+
+  /** Return extra arguments as string. Must not contain newlines. */
+  virtual const QString argsAsString() const;
+
+protected:
+  uint mParameter;
+};
+
+//=========================================================
+//
 // class KMFilterActionWithStringList
 //
 //=========================================================

@@ -17,6 +17,7 @@
 #define _KMAIL_IDENTITYCOMBO_H_
 
 #include <qcombobox.h>
+#include <qvaluelist.h>
 
 class KMIdentity;
 class QString;
@@ -31,17 +32,28 @@ class IdentityCombo : public QComboBox {
 public:
   IdentityCombo( QWidget * parent=0, const char * name=0 );
 
-  QString currentIdentity() const;
+  QString currentIdentityName() const;
+  uint currentIdentity() const;
   void setCurrentIdentity( const QString & identityName );
   void setCurrentIdentity( const KMIdentity & identity );
+  void setCurrentIdentity( uint uoid );
 
 signals:
-  /** @em Really emitted whenever the current identity changes. Either
+  /** @deprecated
+   *  @em Really emitted whenever the current identity changes. Either
    *  by user intervention or on @ref setCurrentIdentity() or if the
-   *  current identity disappears or it's default status changes while
-   *  this widget is on screen.
+   *  current identity disappears.
    **/
   void identityChanged( const QString & identityName );
+
+  /** @em Really emitted whenever the current identity changes. Either
+   *  by user intervention or on @ref setCurrentIdentity() or if the
+   *  current identity disappears.
+   *  
+   *  You might also want to listen to @ref IdentityManager::changed,
+   *  @ref IdentityManager::deleted and @ref IdentityManager::added.
+   **/
+  void identityChanged( uint uoid );
 
 public slots:
   /** Connected to @ref IdentityManager::changed(). Reloads the list
@@ -54,6 +66,10 @@ protected slots:
 
 protected:
   void reloadCombo();
+  void reloadUoidList();
+
+protected:
+  QValueList<uint> mUoidList;
 };
 
 

@@ -128,6 +128,8 @@ public:
   /** @return whether this identity is the default identity */
   bool isDefault() const { return mIsDefault; }
 
+  uint uoid() const { return mUoid; }
+
 protected:
   /** Set whether this identity is the default identity. Since this
       affects all other identites, too (most notably, the old default
@@ -139,6 +141,8 @@ protected:
       instead.
   **/
   void setIsDefault( bool flag );
+
+  void setUoid( uint aUoid ) { mUoid = aUoid; }
 
 public:
   /** Full name of the user */
@@ -220,6 +224,7 @@ protected:
   // if you add new members, make sure they have an operator= (or
   // the compiler can synthesize one) and amend KMIdentity::operator==,
   // isNull(), readConfig() and writeConfig() accordingly:
+  uint mUoid;
   QString mIdentity, mFullName, mEmailAddr, mOrganization;
   QString mReplyToAddr;
   QString mVCardFile;

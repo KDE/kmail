@@ -303,6 +303,10 @@ void KMFolder::setAutoCreateIndex(bool autoIndex)
   mAutoCreateIndex = autoIndex;
 }
 
+void KMFolder::setIdentity( uint identity ) {
+  mIdentity = identity;
+  kernel->slotRequestConfigSync();
+}
 
 //-----------------------------------------------------------------------------
 bool KMFolder::readIndexHeader(int *gv)
@@ -1288,9 +1292,7 @@ void KMFolder::readConfig()
   mMailingListEnabled = config->readBoolEntry("MailingListEnabled");
   mMailingListPostingAddress = config->readEntry("MailingListPostingAddress");
   mMailingListAdminAddress = config->readEntry("MailingListAdminAddress");
-  mIdentity = config->readEntry("Identity");
-  if ( mIdentity.isEmpty() ) // backward compatiblity
-      mIdentity = config->readEntry("MailingListIdentity");
+  mIdentity = config->readUnsignedNumEntry("Identity",0);
   mCompactable = config->readBoolEntry("Compactable", TRUE);
 
   mUseCustomIcons = config->readBoolEntry("UseCustomIcons", FALSE );
@@ -1467,7 +1469,7 @@ void KMFolder::setUserWhoField(const QString &whoField)
   {
     // default setting
     const KMIdentity & identity =
-      kernel->identityManager()->identityForNameOrDefault( mIdentity );
+      kernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
     if ( mIsSystemFolder && protocol() != "imap" ) 
     {	

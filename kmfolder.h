@@ -47,7 +47,7 @@ class KMMsgDictREntry;
 class KMFolder: public KMFolderNode
 {
   Q_OBJECT
-    friend class KMMsgBase;
+  friend class KMMsgBase;
   friend class KMMessage;
 
 public:
@@ -287,10 +287,8 @@ public:
   QString mailingListAdminAddress() const
   { return mMailingListAdminAddress; }
 
-  void setIdentity(const QString &identity)
-  { mIdentity = identity; writeConfig(); }
-  QString identity() const
-  { return mIdentity; }
+  void setIdentity(uint identity);
+  uint identity() const { return mIdentity; }
 
   bool useCustomIcons() const { return mUseCustomIcons; }
   void setUseCustomIcons( bool yes ) { mUseCustomIcons = yes; }
@@ -323,8 +321,8 @@ public:
   void setWhoField(const QString& aWhoField) { mWhoField = aWhoField; /*writeConfig();*/ }
 
   /** Get / set the user-settings for the WhoField (From/To/Empty) */
-	QString userWhoField(void) { return mUserWhoField; }
-	void setUserWhoField(const QString &whoField);
+  QString userWhoField(void) { return mUserWhoField; }
+  void setUserWhoField(const QString &whoField);
 
   /** A cludge to help make sure the count of unread messges is kept in sync */
   virtual void correctUnreadMsgsCount();
@@ -559,7 +557,7 @@ protected:
   bool    mMailingListEnabled;
   QString mMailingListPostingAddress;
   QString mMailingListAdminAddress;
-  QString mIdentity;
+  uint    mIdentity;
 
   /** Custom pixmaps to display in the tree, none by default */
   QPixmap *mNormalIcon;

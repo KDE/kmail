@@ -47,3 +47,7 @@ Script=upgrade-signature.pl,perl
 Id=3.1-update-identities
 File=kmailrc
 Script=kmail-upd-identities.pl,perl
+# identify identities by UOID, not name...
+Id=3.1-use-identity-uoids
+File=kmailrc
+Script=kmail-3.1-use-UOID-for-identities.pl,perl

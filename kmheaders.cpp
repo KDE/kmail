@@ -1456,7 +1456,7 @@ void KMHeaders::forwardMsg ()
                                                       == KMessageBox::Yes) {
       // we default to the first identity to save prompting the user
       // (the messages could have different identities)
-      QString id = "";
+      uint id = 0;
       KMMessage *fwdMsg = new KMMessage;
       KMMessagePart *msgPart = new KMMessagePart;
       QString msgPartText;
@@ -1476,8 +1476,8 @@ void KMHeaders::forwardMsg ()
         KMMessage *thisMsg = mFolder->getMsg(idx);
         if (!thisMsg) continue;
         // set the identity
-        if (id.length() == 0)
-          id = thisMsg->headerField("X-KMail-Identity");
+        if (id == 0)
+          id = thisMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
         // set the part header
         msgPartText += "--";
         msgPartText += fwdMsg->mMsg->Headers().ContentType().Boundary().c_str();
@@ -1519,7 +1519,7 @@ void KMHeaders::forwardMsg ()
       kernel->kbp()->idle();
       return;
     } else {            // NO MIME DIGEST, Multiple forward
-      QString id = "";
+      uint id = 0;
       QCString msgText = "";
       KMMessageList linklist;
       for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
@@ -1529,8 +1529,8 @@ void KMHeaders::forwardMsg ()
         if (!thisMsg) continue;
 
         // set the identity
-        if (id.length() == 0)
-          id = thisMsg->headerField("X-KMail-Identity");
+        if (id == 0)
+          id = thisMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
 
         msgText += thisMsg->createForwardBody();
         linklist.append(thisMsg);
@@ -1574,7 +1574,7 @@ void KMHeaders::forwardAttachedMsg ()
 {
   KMComposeWin *win;
   KMMessageList* msgList = selectedMsgs();
-  QString id = "";
+  uint id = 0;
   KMMessage *fwdMsg = new KMMessage;
 
   if (msgList->count() >= 2) {

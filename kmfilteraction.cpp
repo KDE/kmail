@@ -91,7 +91,7 @@ int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 
 //=============================================================================
 //
-// KMFilterActionWithString
+// KMFilterActionWithNone
 //
 //=============================================================================
 
@@ -100,6 +100,27 @@ KMFilterActionWithNone::KMFilterActionWithNone( const char* aName, const QString
 {
 }
 
+
+//=============================================================================
+//
+// KMFilterActionWithUOID
+//
+//=============================================================================
+
+KMFilterActionWithUOID::KMFilterActionWithUOID( const char* aName, const QString aLabel )
+  : KMFilterAction( aName, aLabel ), mParameter( 0 )
+{
+}
+
+void KMFilterActionWithUOID::argsFromString( const QString argsStr )
+{
+  mParameter = argsStr.stripWhiteSpace().toUInt();
+}
+
+const QString KMFilterActionWithUOID::argsAsString() const
+{
+  return QString().setNum( mParameter );
+}
 
 //=============================================================================
 //
@@ -597,7 +618,7 @@ KMFilterAction::ReturnCode KMFilterActionReplyTo::process(KMMessage* msg) const
 // KMFilterActionIdentity - set identity to
 // Specify Identity to be used when replying to a message
 //=============================================================================
-class KMFilterActionIdentity: public KMFilterActionWithString
+class KMFilterActionIdentity: public KMFilterActionWithUOID
 {
 public:
   KMFilterActionIdentity();
@@ -608,9 +629,6 @@ public:
   void applyParamWidgetValue( QWidget * parent );
   void setParamWidgetValue( QWidget * parent ) const;
   void clearParamWidget( QWidget * param ) const;
-
-  bool identityRenamed( const QString & oldName,
-			const QString & newName=QString::null );
 };
 
 KMFilterAction* KMFilterActionIdentity::newAction()
@@ -619,14 +637,14 @@ KMFilterAction* KMFilterActionIdentity::newAction()
 }
 
 KMFilterActionIdentity::KMFilterActionIdentity()
-  : KMFilterActionWithString( "set identity", i18n("set identity to") )
+  : KMFilterActionWithUOID( "set identity", i18n("set identity to") )
 {
-  mParameter = kernel->identityManager()->defaultIdentity().identityName();
+  mParameter = kernel->identityManager()->defaultIdentity().uoid();
 }
 
 KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
 {
-  msg->setHeaderField( "X-KMail-Identity", mParameter );
+  msg->setHeaderField( "X-KMail-Identity", QString().setNum( mParameter ) );
   return GoOn;
 }
 
@@ -657,19 +675,6 @@ void KMFilterActionIdentity::setParamWidgetValue( QWidget * paramWidget ) const
   IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
   assert( ic );
   ic->setCurrentIdentity( mParameter );
-}
-
-bool KMFilterActionIdentity::identityRenamed( const QString & oldName,
-					      const QString & newName )
-{
-  if ( mParameter == oldName ) {
-    if ( newName.isEmpty() )
-      mParameter = kernel->identityManager()->defaultIdentity().identityName();
-    else
-      mParameter = newName;
-    return true;
-  } else
-    return false;
 }
 
 //=============================================================================

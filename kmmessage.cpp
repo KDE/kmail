@@ -1225,10 +1225,10 @@ KMMessage* KMMessage::createDeliveryReceipt() const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::initHeader( const QString & id )
+void KMMessage::initHeader( uint id )
 {
   const KMIdentity & ident =
-    kernel->identityManager()->identityForNameOrDefault( id );
+    kernel->identityManager()->identityForUoidOrDefault( id );
 
   if(ident.fullEmailAddr().isEmpty())
     setFrom("");
@@ -1248,7 +1248,7 @@ void KMMessage::initHeader( const QString & id )
   if (ident.isDefault())
     removeHeaderField("X-KMail-Identity");
   else
-    setHeaderField("X-KMail-Identity", ident.identityName());
+    setHeaderField("X-KMail-Identity", QString().setNum( ident.uoid() ));
 
   if (ident.transport().isEmpty())
     removeHeaderField("X-KMail-Transport");
@@ -1278,14 +1278,16 @@ void KMMessage::initHeader( const QString & id )
 //-----------------------------------------------------------------------------
 void KMMessage::initFromMessage(const KMMessage *msg, bool idHeaders)
 {
-  QString id = msg->headerField("X-KMail-Identity");
-  if ( id.isEmpty() )
-    id = kernel->identityManager()->identityForAddress( msg->to() + msg->cc() )
-      .identityName();
-  if ( id.isEmpty() && msg->parent() )
+  QString idString = msg->headerField("X-KMail-Identity").stripWhiteSpace();
+  bool ok = false;
+  uint id = idString.toUInt( &ok );
+  
+  if ( !ok || id == 0 )
+    id = kernel->identityManager()->identityForAddress( msg->to() + msg->cc() ).uoid();
+  if ( id == 0 && msg->parent() )
     id = msg->parent()->identity();
   if ( idHeaders ) initHeader(id);
-  else setHeaderField("X-KMail-Identity", id);
+  else setHeaderField("X-KMail-Identity", QString().setNum(id));
   if (!msg->headerField("X-KMail-Transport").isEmpty())
     setHeaderField("X-KMail-Transport", msg->headerField("X-KMail-Transport"));
 }
