@@ -1131,7 +1131,6 @@ const QString KMMessage::msgId(void) const
   rightAngle = msgId.find( '>' );
   if (rightAngle != -1)
     msgId.truncate( rightAngle + 1 );
-  debug( "msgId " + msgId );
   return msgId;
 }
 
