@@ -97,13 +97,13 @@ Contact Marc Mutz <mutz@kde.org> on questions...
 
 Filters consist of a search pattern and a list of actions plus a few
 flags to indicate when they are to be applied (kmfilter.h).
-  They are managed in a QList<KMFilter>, called KMFilterMgr. This
+  They are managed in a QPtrList<KMFilter>, called KMFilterMgr. This
 filter magnager is responsible for loading and storing filters
 (read/writeConfig) and for executing them (process). The unique
 instance of the filter manager is held by the kernel
 (KMKernel::filterMgr()).
 
-The search pattern is a QList of search rules (kmsearchpattern.h) and a
+The search pattern is a QPtrList of search rules (kmsearchpattern.h) and a
 boolean operator that defines their relation (and/or).
 
 A search rule consists of a field-QString, a "function"-enum and a
@@ -250,7 +250,7 @@ KMFolderDir.
 
 KMFolderDir is, as one might say, a directory abstration which manages
 purely abstract KMFolder's. KMFolder's often don't have a disk based
-image, they are entities existing only withing KMail's design. To
+image, they are entities existing only within KMail's design. To
 manage the contents of one directory that may contain folders and/or
 other directories KMFolderDir was created.
 It inherits KMFolderNode and KMFolderNodeList. Yes, the inheritance is rather
