@@ -363,6 +363,8 @@ void KMMainWin::createWidgets(void)
 	  this, SLOT(slotAtmMsg(KMMessage *)));
   connect(mHeaders, SIGNAL(maybeDeleting()),
 	  mMsgView, SLOT(clearCache()));
+  connect(mMsgView, SIGNAL(noDrag()),
+          mHeaders, SLOT(slotNoDrag()));
   accel->connectItem(accel->insertItem(Key_Up),
 		     mMsgView, SLOT(slotScrollUp()));
   accel->connectItem(accel->insertItem(Key_Down),

@@ -846,6 +846,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr)
     htmlStr += "<br>";
     if (pgp->isEncrypted())
     {
+      emit noDrag();
       pgpMessage = true;
       if(pgp->decrypt())
       {

@@ -124,6 +124,9 @@ signals:
   /** The user wants to see the attachment which is message */
   void showAtmMsg (KMMessage *msg);
 
+  /** Pgp displays a password dialog */
+  void noDrag(void);
+
 public slots:
 
   /* Force update even if message is the same */

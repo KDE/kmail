@@ -1618,6 +1618,13 @@ void KMHeaders::prevUnreadMessage()
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::slotNoDrag()
+{
+  mousePressed = FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::makeHeaderVisible()
 {
   if (currentItem())

@@ -179,6 +179,8 @@ public slots:
   void nextUnreadMessage();
   // Make the previous message header visible scrolling if necessary
   void prevUnreadMessage();
+  // Don't show a drag cursor
+  void slotNoDrag();
  
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent, 
