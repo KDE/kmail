@@ -353,7 +353,9 @@ void KMAcctExpPop::slotCancel()
 
 void KMAcctExpPop::slotProcessPendingMsgs()
 {
-  KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024) );
+  if ((stage != Idle) && (stage != Quit))
+    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024) );
+
   QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
     + ":" + QString("%1").arg(mPort);
   bool addedOk;
