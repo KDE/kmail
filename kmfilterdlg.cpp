@@ -27,7 +27,7 @@
 #include <klocale.h>
 #include <kwin.h>
 
-static QStrList sFilterOpList, sFilterFuncList, sFilterFieldList, 
+static QStringList sFilterOpList, sFilterFuncList, sFilterFieldList,
                 sFilterActionList;
 
 //=============================================================================
@@ -81,23 +81,23 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   mCbxHeight = h;
   mRuleFuncA->setMinimumSize(110, h);
   mRuleFuncA->setMaximumSize(32767, h);
-  mRuleFuncA->insertStrList(&sFilterFuncList);
+  mRuleFuncA->insertStringList(sFilterFuncList);
   fgrid->addWidget(mRuleFuncA, 0, 1);
 
   mRuleFuncB = new QComboBox(false, this);
   mRuleFuncB->setMinimumSize(110, h);
   mRuleFuncB->setMaximumSize(32767, h);
-  mRuleFuncB->insertStrList(&sFilterFuncList);
+  mRuleFuncB->insertStringList(sFilterFuncList);
   fgrid->addWidget(mRuleFuncB, 2, 1);
 
   mRuleFieldA = new QComboBox(true, this);
-  mRuleFieldA->insertStrList(&sFilterFieldList);
+  mRuleFieldA->insertStringList(sFilterFieldList);
   mRuleFieldA->setMinimumSize(100, h);
   mRuleFieldA->setMaximumSize(32767, h);
   fgrid->addWidget(mRuleFieldA, 0, 0);
 
   mRuleFieldB = new QComboBox(true, this);
-  mRuleFieldB->insertStrList(&sFilterFieldList);
+  mRuleFieldB->insertStringList(sFilterFieldList);
   mRuleFieldB->setMinimumSize(100, h);
   mRuleFieldB->setMaximumSize(32767, h);
   fgrid->addWidget(mRuleFieldB, 2, 0);
@@ -113,7 +113,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   fgrid->addWidget(mRuleValueB, 2, 2);
 
   mRuleOp = new QComboBox(false, this);
-  mRuleOp->insertStrList(&sFilterOpList);
+  mRuleOp->insertStringList(sFilterOpList);
   mRuleOp->setMinimumSize(50, h);
   mRuleOp->setMaximumSize(32767, h);
   fgrid->addMultiCellWidget(mRuleOp, 1, 1, 0, 1);
@@ -124,7 +124,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   for (i=0; i<FILTER_MAX_ACTIONS; i++)
   {
     mFaType[i] = new KMFaComboBox(this);
-    mFaType[i]->insertStrList(&sFilterActionList);
+    mFaType[i]->insertStringList(sFilterActionList);
     mFaType[i]->setMinimumSize(80, h);
     mFaType[i]->setMaximumSize(32767, h);
     agrid->addWidget(mFaType[i], i, 0);
@@ -468,7 +468,7 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
 
   if (mFilter->action(i)) delete mFilter->action(i);
   action = kernel->filterActionDict()->create(
-              kernel->filterActionDict()->nameOf(sFilterActionList.at(idx)));
+              kernel->filterActionDict()->nameOf(*(sFilterActionList.at(idx))));
   mFilter->setAction(i, action);
   if (!action || idx < 0) 
   {
@@ -646,7 +646,7 @@ int KMFilterDlg::indexOfRuleField(const QString aName) const
 
   for (i=sFilterFieldList.count()-1; i>=0; i--)
   {
-    if (sFilterFieldList.at(i)==aName) break;
+    if (*(sFilterFieldList.at(i))==aName) break;
   }
   return i;
 }
