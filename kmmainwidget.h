@@ -285,6 +285,8 @@ protected slots:
   void plugFilterActions(QPopupMenu*);
 
 protected:
+  KActionCollection * actionCollection() { return mActionCollection; }
+
   KRadioAction * actionForHeaderStyle(int);
   KRadioAction * actionForAttachmentStyle(int);
 
