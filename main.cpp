@@ -57,10 +57,10 @@ const char *aboutText =
   "Lynx <lynx@topaz.hknet.com>,\n"
   "Stephan Meyer <Stephan.Meyer@pobox.com>\n"
   "and the above authors.\n\n"
-  "This program is covered by the GPL.\n\n"
   "Please send bugreports to kmail@kde.org";
 
-static const char *description = I18N_NOOP("A KDE E-Mail client."); 
+//static const char *description = I18N_NOOP("A KDE E-Mail client."); 
+static const char *description = aboutText;
 
 static KCmdLineOptions kmoptions[] =
 {
