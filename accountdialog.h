@@ -69,7 +69,7 @@ class AccountDialog : public KDialogBase
       QPushButton  *resourceClearButton;
       QPushButton  *resourceClearPastButton;
 #endif
-      QCheckBox    *excludeCheck;
+      QCheckBox    *includeInCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
@@ -88,7 +88,7 @@ class AccountDialog : public KDialogBase
       QPushButton  *resourceClearButton;
       QPushButton  *resourceClearPastButton;
 #endif
-      QCheckBox    *excludeCheck;
+      QCheckBox    *includeInCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
       KIntNumInput *intervalSpin;
@@ -128,7 +128,7 @@ class AccountDialog : public KDialogBase
       QPushButton  *resourceClearButton;
       QPushButton  *resourceClearPastButton;
 #endif
-      QCheckBox    *excludeCheck;
+      QCheckBox    *includeInCheck;
       QCheckBox    *intervalCheck;
       QCheckBox    *filterOnServerCheck;
       QLabel       *intervalLabel;
@@ -158,7 +158,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *loadOnDemandCheck;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *progressDialogCheck;  // only used by Disconnected IMAP
-      QCheckBox    *excludeCheck;
+      QCheckBox    *includeInCheck;
       QCheckBox    *intervalCheck;
       QCheckBox    *listOnlyOpenCheck;
       QLabel       *intervalLabel;
