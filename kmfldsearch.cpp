@@ -1,12 +1,11 @@
 // kmfldsearch.cpp
-// TODO: Add search in subfolder checkbox
-// TODO: Use msgIdMD5 in MSGID_COLUMN
 
 #include "kmfldsearch.h"
 #include "kmmsgpart.h"
 #include "kmmainwin.h"
 #include "kmfoldertree.h"
 #include "kmfolderimap.h"
+#include "kmmsgdict.h"
 #include <kmfolderdir.h>
 
 #include <qlineedit.h>
@@ -89,17 +88,10 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mLbxMatches->addColumn(i18n("Folder"), 100);
 
 #define MSGID_COLUMN 4
-  //TODO: Use msgIDMD5, and create KMFolder::findIdMD5(QString) method
   mLbxMatches->addColumn("");		// should be hidden
   mLbxMatches->setColumnWidthMode( MSGID_COLUMN, QListView::Manual );
   mLbxMatches->header()->setResizeEnabled(false, MSGID_COLUMN);
   mLbxMatches->setColumnWidth( MSGID_COLUMN, 0 );
-
-#define FOLDERID_COLUMN 5
-  mLbxMatches->addColumn("");		// should be hidden
-  mLbxMatches->setColumnWidthMode( FOLDERID_COLUMN, QListView::Manual );
-  mLbxMatches->header()->setResizeEnabled(false, FOLDERID_COLUMN);
-  mLbxMatches->setColumnWidth( FOLDERID_COLUMN, 0 );
 
   connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
 	  this, SLOT(slotShowMsg(QListViewItem *)));
@@ -228,14 +220,14 @@ void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
   disconnect(folder,
     SIGNAL(folderComplete(KMFolderImap*, bool)),
     this, SLOT(slotFolderComplete(KMFolderImap*, bool)));
-  if (success) searchInFolder(folder, mFolders.findIndex(folder));
+  if (success) searchInFolder(folder);
   else searchDone();
   folder->close();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum, bool recursive)
+void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive)
 {
   KMMessage* msg=0;
   int i, num, upd;
@@ -282,13 +274,8 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum, bool re
         from = msg->from();
       }
       (void)new QListViewItem(mLbxMatches,
-			      msg->subject(),
-			      from,
-			      msg->dateIsoStr(),
-			      mSearchFolder,
-			      QString("%1").arg(i),
-			      QString("%1").arg(fldNum)
-			      );
+         msg->subject(), from, msg->dateIsoStr(), mSearchFolder,
+         QString::number(kernel->msgDict()->getMsgSerNum(aFld, i)));
       mNumMatches++;
     }
     if (upd > 10)
@@ -324,7 +311,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum, bool re
       if (!node->isDir())
       {
         folder = static_cast<KMFolder*>(node);
-        searchInFolder(folder, mFolders.findIndex(folder), recursive);
+        searchInFolder(folder, recursive);
       }
     }
   }
@@ -345,7 +332,7 @@ void KMFldSearch::searchInAllFolders(void)
     // Stop pressed?
     if(!mSearching)
       break;
-    if (folder && (folder->protocol() != "imap")) searchInFolder(folder,i);
+    if (folder && (folder->protocol() != "imap")) searchInFolder(folder);
     ++i;
   }
 }
@@ -403,7 +390,7 @@ void KMFldSearch::slotSearch()
           return;
         }
       }
-      searchInFolder(folder, mCbxFolders->currentItem()-1, mChkSubFolders->isChecked());
+      searchInFolder(folder, mChkSubFolders->isChecked());
     }
   }
   searchDone();
@@ -455,29 +442,20 @@ void KMFldSearch::closeEvent(QCloseEvent *e)
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotShowMsg(QListViewItem *item)
 {
-  QGuardedPtr<KMFolder> fld;
-  KMMessage* msg;
+  KMFolder  *fld;
+  KMMessage *msg;
+  int idx;
 
   if(!item)
     return;
 
-  QString fldName = item->text(LOCATION_COLUMN);
-  QValueList<QGuardedPtr<KMFolder> > folders;
-  QStringList str;
-  int idx = item->text(FOLDERID_COLUMN).toInt();
-  mMainWin->folderTree()->createFolderList( &str, &folders );
-  if (folders.at(idx) == folders.end())
-    return;
-  fld = *folders.at(idx);
-  if (!fld)
-    return;
-  // This could goto the wrong folder if the folder list has been modified
-  kdDebug(5006) << "fld " << endl;
+  kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(), &fld, &idx);
+
+  if (!fld || idx < 0) return;
 
   mMainWin->slotSelectFolder(fld);
-  msg = fld->getMsg(item->text(MSGID_COLUMN).toInt());
-  if (!msg)
-    return;
+  msg = fld->getMsg(idx);
+  if (!msg) return;
 
   mMainWin->slotSelectMessage(msg);
 }
