@@ -8,6 +8,7 @@ Comment[ta]=kஅஞ்சல்
 
 [new-mail-arrived]
 Name=New Mail Arrived
+Name[ar]=بريد جديد قد وصل
 Name[bg]=Имате ново писмо
 Name[bs]=Stigla vam je nova pošta
 Name[ca]=Ha arribat correu nou
@@ -40,6 +41,7 @@ Name[tg]=Почтаи нав қабул шуд
 Name[uk]=Отримана нова пошта
 Name[zh_CN]=新邮件到达
 Comment=New mail arrived
+Comment[ar]=بريد جديد قد وصل
 Comment[bg]=Имате ново писмо
 Comment[bs]=Stigla vam je nova pošta
 Comment[ca]=Ha arribat correu nou
