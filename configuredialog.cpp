@@ -817,9 +817,6 @@ void ConfigureDialog::makeAppearancePage( void )
   connect( mAppearance.customFontCheck, SIGNAL(clicked() ),
 	   this, SLOT(slotCustomFontSelectionChanged()) );
   vlay->addWidget( mAppearance.customFontCheck );
-  mAppearance.unicodeFontCheck =
-    new QCheckBox( i18n("Use un&icode font for messages"), page1 );
-  vlay->addWidget( mAppearance.unicodeFontCheck );
   KSeparator *hline = new KSeparator( KSeparator::HLine, page1);
   vlay->addWidget( hline );
   QHBoxLayout *hlay = new QHBoxLayout( vlay );
@@ -1709,8 +1706,6 @@ void ConfigureDialog::setupAppearancePage( void )
 
     state = config->readBoolEntry("defaultFonts", TRUE );
     mAppearance.customFontCheck->setChecked( state == false ? true : false );
-    mAppearance.unicodeFontCheck->setChecked( config->readBoolEntry(
-      "unicodeFont", false ) );
     slotCustomFontSelectionChanged();
     updateFontSelector();
     slotFontSelectorChanged( mAppearance.fontLocationCombo->currentItem() );
@@ -2281,8 +2276,6 @@ void ConfigureDialog::slotDoApply( bool everything )
       KConfigGroupSaver saver(config, "Fonts");
       bool defaultFonts = !mAppearance.customFontCheck->isChecked();
       config->writeEntry("defaultFonts", defaultFonts );
-      config->writeEntry("unicodeFont", mAppearance.unicodeFontCheck->
-			 isChecked());
       config->writeEntry( "body-font",   mAppearance.font[0] );
       config->writeEntry( "list-font",   mAppearance.font[1] );
       config->writeEntry( "list-date-font", mAppearance.font[2] );

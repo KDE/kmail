@@ -324,7 +324,6 @@ private:
 
       int           pageIndex;
       QCheckBox     *customFontCheck;
-      QCheckBox     *unicodeFontCheck;
       QLabel        *fontLocationLabel;
       QComboBox     *fontLocationCombo;
       KFontChooser  *fontChooser;

@@ -319,6 +319,7 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setMetaRefreshEnabled(false);
   mViewer->widget()->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
+  mViewer->resetFontSizes();
 
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
@@ -370,10 +371,6 @@ void KMReaderWin::setCodec(QTextCodec *codec)
     return;
   }
   mAutoDetectEncoding = false;
-  if(mViewer)
-    if (mUnicodeFont)
-      mViewer->setCharset("iso10646-1", true);
-    else mViewer->setCharset(codec->name(), true);
   update(true);
 }
 
@@ -435,10 +432,6 @@ void KMReaderWin::displayAboutPage()
   QString content = kFileToString(location);
   mViewer->closeURL();
   mViewer->begin(location);
-  QTextCodec *codec = QTextCodec::codecForName(KGlobal::locale()->charset()
-    .latin1());
-  if (codec) mViewer->setCharset(codec->name(), true);
-    else mViewer->setCharset(KGlobal::locale()->charset(), true);
   QString info =
     i18n("<h2>Welcome to KMail %1</h2><p>KMail is an email client for the K "
     "Desktop Environment. It is designed to be fully compatible with Internet "
@@ -562,11 +555,6 @@ void KMReaderWin::parseMsg(void)
   if (!mCodec)
     mCodec = QTextCodec::codecForName("iso8859-1");
   mMsg->setCodec(mCodec);
-
-  if (mViewer)
-    if (mUnicodeFont)
-      mViewer->setCharset("iso10646-1", true);
-    else mViewer->setCharset(mCodec->name(), true);
 
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("body { font-family: \"%1\"; font-size: %2px }\n")

@@ -2294,19 +2294,8 @@ void KMComposeWin::slotSpellcheckDone()
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEditCharset()
 {
-  QFont fnt=mSavedEditorFont;
   if (mCharset == "default" || mCharset.isEmpty())
     mCharset = defaultCharset();
-  QString cset = mCharset;
-/*  if (mUnicodeFont) cset = "iso10646-1";   obsolete with QT3
-  fnt.setCharSet(KGlobal::charsets()->charsetForEncoding(cset));
-  mEditor->setFont(fnt);
-  mEdtFrom.setFont(fnt);
-  mEdtReplyTo.setFont(fnt);
-  mEdtTo.setFont(fnt);
-  mEdtCc.setFont(fnt);
-  mEdtBcc.setFont(fnt);
-  mEdtSubject.setFont(fnt); */
 }
 
 //-----------------------------------------------------------------------------
