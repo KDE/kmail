@@ -304,16 +304,6 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
     return 0;
   }
 
-  // "trash" is a special folder
-  if (name() == "trash")
-  {
-    if ((aMsg->status() == KMMsgStatusNew) ||
-        (aMsg->status() == KMMsgStatusUnread))
-    {
-      aMsg->setStatus(KMMsgStatusRead);
-    }
-  }
-
   // make sure the filename has the correct extension
   QString filename(aMsg->fileName());
   constructValidFileName(filename, aMsg->status());
@@ -345,9 +335,6 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
     return 0;
   }
 
-  if (aMsg->status() == KMMsgStatusNew)
-    aMsg->setStatus(KMMsgStatusUnread);
-
   if (msgParent)
     if (idx >= 0) msgParent->take(idx);
 
@@ -355,6 +342,7 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
     aMsg->setFileName(filename);
 
   if (aMsg->status() == KMMsgStatusUnread || 
+      aMsg->status() == KMMsgStatusNew ||
       this == kernel->outboxFolder())
   {
     if (mUnreadMsgs == -1)
@@ -378,13 +366,13 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
     fseek(mIndexStream, 0, SEEK_END);
     long revert = ftell(mIndexStream);
 	
-	int len;
-	const uchar *buffer = aMsg->asIndexString(len);
-	fwrite(&len,sizeof(len), 1, mIndexStream);
-	aMsg->setIndexOffset( ftell(mIndexStream) );
-	aMsg->setIndexLength( len );
-	if(fwrite(buffer, len, 1, mIndexStream) != 1)
-	    kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+    int len;
+    const uchar *buffer = aMsg->asIndexString(len);
+    fwrite(&len,sizeof(len), 1, mIndexStream);
+    aMsg->setIndexOffset( ftell(mIndexStream) );
+    aMsg->setIndexLength( len );
+    if(fwrite(buffer, len, 1, mIndexStream) != 1)
+    kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 
     fflush(mIndexStream);
     int error = ferror(mIndexStream);
