@@ -193,7 +193,7 @@ void KMKernel::openReader()
   if (ktmw) {
     mWin = (KMMainWin *) ktmw;
     mWin->show();
-    KWin::setActiveWindow(mWin->winId());
+    KWin::activateWindow(mWin->winId());
   }
   else {
     mWin = new KMMainWin;
