@@ -50,6 +50,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   mLastUid = 0;
   mCheckFlags = TRUE;
   mCheckMail = TRUE;
+  mCheckingValidity = FALSE;
 
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
@@ -243,6 +244,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
     if ( idx != -1 )
       folder->take( idx );
   }
+  aMsg->setTransferInProgress( false );
   delete aMsg;
   aMsg = 0;
   getFolder();
@@ -566,7 +568,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
 //-----------------------------------------------------------------------------
 void KMFolderImap::checkValidity()
 {
-  kdDebug(5006) << "KMFolderImap::checkValidity" << endl;
+  kdDebug(5006) << "KMFolderImap::checkValidity of: " << fileName() << endl;
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
   if (!mAccount->makeConnection())
@@ -574,6 +576,8 @@ void KMFolderImap::checkValidity()
     emit folderComplete(this, FALSE);
     return;
   }
+  // Only check once at a time.
+  if (mCheckingValidity) return;
   ImapAccountBase::jobData jd( url.url(), this );
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
@@ -582,6 +586,8 @@ void KMFolderImap::checkValidity()
           SLOT(slotCheckValidityResult(KIO::Job *)));
   connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
           SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
+  // Only check once at a time.
+  mCheckingValidity = true;
 }
 
 
@@ -605,7 +611,8 @@ ulong KMFolderImap::lastUid()
 //-----------------------------------------------------------------------------
 void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
 {
-  kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
+  kdDebug(5006) << "KMFolderImap::slotCheckValidityResult of: " << fileName() << endl;
+  mCheckingValidity = false;
   ImapAccountBase::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error())
