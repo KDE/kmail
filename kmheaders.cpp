@@ -21,6 +21,8 @@
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 
+#include <kio/global.h>
+
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmheaders.h"
@@ -206,8 +208,8 @@ public:
           headers->folder()->getMsgString(mMsgId, cstr);
           int a = cstr.find("\nX-Length: ");
           int b = cstr.find("\n", a+1);
-          tmp = cstr.mid(a+11, b-a-11);
-        } else tmp.setNum(mMsgBase->msgSize());
+          tmp = KIO::convertSize(strtoul(cstr.mid(a+11, b-a-11).data(), 0, 10));
+        } else tmp = KIO::convertSize(mMsgBase->msgSize());
 
 #ifdef SCORING
     } else if(col == headers->paintInfo()->scoreCol) {
