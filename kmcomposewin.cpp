@@ -1152,13 +1152,17 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   if (!mBtnIdentity->isChecked() && !newMsg->headerField("X-KMail-Identity").isEmpty())
     mId = newMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
 
-  // anyone knows why slotIdentityChanged() is only to be called on
-  // mBtnIdentity->isChecked()?
-  if ( !mBtnIdentity->isChecked() )
-    mIdentity->blockSignals( true );
+  // don't overwrite the header values with identity specific values
+  // unless the identity is sticky
+  if ( !mBtnIdentity->isChecked() ) {
+    disconnect(mIdentity,SIGNAL(identityChanged(uint)),
+               this, SLOT(slotIdentityChanged(uint))); 
+  }
   mIdentity->setCurrentIdentity( mId );
-  if ( !mBtnIdentity->isChecked() )
-    mIdentity->blockSignals( false );
+  if ( !mBtnIdentity->isChecked() ) {
+    connect(mIdentity,SIGNAL(identityChanged(uint)),
+            this, SLOT(slotIdentityChanged(uint))); 
+  }
 
   const KMIdentity & ident =
     kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
