@@ -188,6 +188,10 @@ void KMAddrBookExternal::addEmail( const QString& addr, QWidget *parent) {
 
   KABC::AddressBook *ab = KABC::StdAddressBook::self();
 
+  // force a reload of the address book file so that changes that were made
+  // by other programs are loaded
+  ab->load();
+
   KABC::Addressee::List addressees = ab->findByEmail( email );
 
   if ( addressees.isEmpty() ) {
