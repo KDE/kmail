@@ -71,8 +71,8 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
             myState = KMMsgNotEncrypted;
     }
     // siblings are tested allways
-    if( mNext )
-        KMMsgEncryptionState otherState = mNext->overallEncryptionState(); {
+    if( mNext ) {
+        KMMsgEncryptionState otherState = mNext->overallEncryptionState(); 
         switch( otherState ) {
         case KMMsgEncryptionStateUnknown:
             break;
@@ -100,7 +100,7 @@ kdDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
 
 KMMsgSignatureState  partNode::overallSignatureState() const
 {
-    KMMsgSignatureState myState  KMMsgSignatureState
+    KMMsgSignatureState myState = KMMsgSignatureState;
     if( mIsSigned )
         myState = KMMsgFullySigned;
     else {
