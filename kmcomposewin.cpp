@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmcomposewin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
@@ -207,10 +208,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setupEditor();
   setupActions();
   applyMainWindowSettings(KMKernel::config(), "Composer");
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  toolbarAction->setChecked(!toolBar()->isHidden());
-  statusbarAction->setChecked(!statusBar()->isHidden());
-#endif
 
   connect(mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
@@ -969,15 +966,8 @@ void KMComposeWin::setupActions(void)
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
-#if KDE_IS_VERSION( 3, 1, 90 )
   createStandardStatusBarAction();
   setStandardToolBarMenuEnabled(true);
-#else
-  toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
-    actionCollection());
-  statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
-    actionCollection());
-#endif
 
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
@@ -1013,24 +1003,19 @@ void KMComposeWin::setupActions(void)
   attachMPK->setEnabled( Kpgp::Module::getKpgp()->usePGP() &&
                          !pgpUserId.isEmpty() );
 
-  if(!mSelectedCryptPlug && !Kpgp::Module::getKpgp()->usePGP())
-  {
-    encryptAction->setEnabled(false);
-    encryptAction->setChecked(false);
-    signAction->setEnabled(false);
-    signAction->setChecked(false);
+  if ( !mSelectedCryptPlug && !Kpgp::Module::getKpgp()->usePGP() ) {
+    encryptAction->setEnabled( false );
+    setEncryption( false );
+    signAction->setEnabled( false );
+    setSigning( false );
   }
-  else if (!mSelectedCryptPlug && pgpUserId.isEmpty())
-  {
-    encryptAction->setChecked(false);
-    signAction->setChecked(false);
+  else if ( !mSelectedCryptPlug && pgpUserId.isEmpty() ) {
+    setEncryption( false );
+    setSigning( false );
   }
-  else
-  {
-    encryptAction->setChecked( mLastEncryptActionState );
-    signAction->setChecked(    mLastSignActionState    );
-    slotEncryptToggled( mLastEncryptActionState );
-    slotSignToggled(    mLastSignActionState    );
+  else {
+    setEncryption( mLastEncryptActionState );
+    setSigning( mLastSignActionState );
   }
 
   connect(encryptAction, SIGNAL(toggled(bool)),
@@ -1277,17 +1262,14 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
   QCString pgpUserId = ident.pgpIdentity();
   mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
 
-  if( mSelectedCryptPlug || Kpgp::Module::getKpgp()->usePGP() )
-  {
-    if( !mSelectedCryptPlug && pgpUserId.isEmpty() )
-    {
-      encryptAction->setChecked(false);
-      signAction->setChecked(false);
+  if ( mSelectedCryptPlug || Kpgp::Module::getKpgp()->usePGP() ) {
+    if ( !mSelectedCryptPlug && pgpUserId.isEmpty() ) {
+      setEncryption( false );
+      setSigning( false );
     }
-    else
-    {
-      encryptAction->setChecked(mLastEncryptActionState);
-      signAction->setChecked(mLastSignActionState);
+    else {
+      setEncryption( mLastEncryptActionState );
+      setSigning( mLastSignActionState );
     }
   }
 
@@ -4785,21 +4767,21 @@ void KMComposeWin::slotUpdWinTitle(const QString& text)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotEncryptToggled(bool on)
 {
-  if( on )
-    encryptAction->setIcon("encrypted");
-  else
-    encryptAction->setIcon("decrypted");
-  if( mSelectedCryptPlug ) {
-    for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mAtmItemList.first();
-         entry;
-         entry = (KMAtmListViewItem*)mAtmItemList.next() )
-      entry->setEncrypt( on );
-  }
-  else if( on ) {
-    // check if the user wants to encrypt messages to himself and if he defined
-    // an encryption key for the current identity
-    if( Kpgp::Module::getKpgp()->encryptToSelf()
-        && !mLastIdentityHasOpenPgpKey ) {
+  setEncryption( on, true /* set by the user */ );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
+{
+  if ( !encryptAction->isEnabled() )
+    encrypt = false;
+
+  // check if the user wants to encrypt messages to himself and if he defined
+  // an encryption key for the current identity
+  if ( encrypt && Kpgp::Module::getKpgp()->encryptToSelf()
+               && !mLastIdentityHasOpenPgpKey ) {
+    if ( setByUser ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to encrypt "
                                "this message you first have to "
@@ -4811,9 +4793,26 @@ void KMComposeWin::slotEncryptToggled(bool on)
                                "identity, in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Encryption Key") );
-      encryptAction->setChecked( false );
-      encryptAction->setIcon("decrypted");
     }
+    encrypt = false;
+  }
+
+  // make sure the encryptAction is in the right state
+  encryptAction->setChecked( encrypt );
+
+  // show the appropriate icon
+  if ( encrypt )
+    encryptAction->setIcon("encrypted");
+  else
+    encryptAction->setIcon("decrypted");
+
+  // mark the attachments for (no) encryption
+  if ( mSelectedCryptPlug ) {
+    for ( KMAtmListViewItem* entry =
+            static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
+          entry;
+          entry = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) )
+      entry->setEncrypt( encrypt );
   }
 }
 
@@ -4821,15 +4820,19 @@ void KMComposeWin::slotEncryptToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSignToggled(bool on)
 {
-  if( mSelectedCryptPlug ) {
-    for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mAtmItemList.first();
-         entry;
-         entry = (KMAtmListViewItem*)mAtmItemList.next() )
-      entry->setSign( on );
-  }
-  else if( on ) {
-    // check if the user defined a signing key for the current identity
-    if( !mLastIdentityHasOpenPgpKey ) {
+  setSigning( on, true /* set by the user */ );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setSigning( bool sign, bool setByUser )
+{
+  if ( !signAction->isEnabled() )
+    sign = false;
+
+  // check if the user defined a signing key for the current identity
+  if ( sign && !mLastIdentityHasOpenPgpKey ) {
+    if ( setByUser ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to sign "
                                "this message you first have to "
@@ -4840,8 +4843,20 @@ void KMComposeWin::slotSignToggled(bool on)
                                "identity in the identity configuration.</p>"
                                "</qt>"),
                           i18n("Undefined Signing Key") );
-      signAction->setChecked( false );
     }
+    sign = false;
+  }
+
+  // make sure the signAction is in the right state
+  signAction->setChecked( sign );
+
+  // mark the attachments for (no) signing
+  if ( mSelectedCryptPlug ) {
+    for ( KMAtmListViewItem* entry =
+            static_cast<KMAtmListViewItem*>( mAtmItemList.first() );
+          entry;
+          entry = static_cast<KMAtmListViewItem*>( mAtmItemList.next() ) )
+      entry->setSign( sign );
   }
 }
 
@@ -5239,9 +5254,9 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
     if( mLastIdentityHasOpenPgpKey )
     { // save the state of the sign and encrypt button
       mLastEncryptActionState = encryptAction->isChecked();
-      encryptAction->setChecked(false);
+      setEncryption( false );
       mLastSignActionState = signAction->isChecked();
-      signAction->setChecked(false);
+      setSigning( false );
     }
   }
   else
@@ -5249,8 +5264,8 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
     attachMPK->setEnabled(true);
     if( !mLastIdentityHasOpenPgpKey )
     { // restore the last state of the sign and encrypt button
-      encryptAction->setChecked(mLastEncryptActionState);
-      signAction->setChecked(mLastSignActionState);
+      setEncryption( mLastEncryptActionState );
+      setSigning( mLastSignActionState );
     }
   }
   mLastIdentityHasOpenPgpKey = bNewIdentityHasOpenPgpKey;
@@ -5281,26 +5296,6 @@ void KMComposeWin::slotSpellcheckConfig()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotToggleToolBar()
-{
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  if(toolBar("mainToolBar")->isVisible())
-    toolBar("mainToolBar")->hide();
-  else
-    toolBar("mainToolBar")->show();
-#endif
-}
-
-void KMComposeWin::slotToggleStatusBar()
-{
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  if (statusBar()->isVisible())
-    statusBar()->hide();
-  else
-    statusBar()->show();
-#endif
-}
-
 void KMComposeWin::slotStatusMessage(const QString &message)
 {
     statusBar()->changeItem( message, 0 );
@@ -5321,9 +5316,6 @@ void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
   applyMainWindowSettings(KMKernel::config(), "Composer");
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  toolbarAction->setChecked(!toolBar()->isHidden());
-#endif
 }
 
 void KMComposeWin::slotEditKeys()

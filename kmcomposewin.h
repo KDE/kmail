@@ -1,4 +1,5 @@
-/* KMComposeWin Header File
+/* -*- mode: C++; c-file-style: "gnu" -*-
+ * KMComposeWin Header File
  * Author: Markus Wuebben <markus.wuebben@kde.org>
  */
 #ifndef __KMComposeWin
@@ -21,13 +22,7 @@
 #include <kio/job.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
-#if !KDE_IS_VERSION( 3, 1, 90 )
-#define private protected
 #include <keditcl.h>
-#undef private
-#else
-#include <keditcl.h>
-#endif
 
 #include <kpgp.h>
 
@@ -406,10 +401,6 @@ public slots:
   /**
    * XML-GUI stuff
    */
-  // FIXME: Remove this if KMail requires KDE 3.2
-  void slotToggleToolBar();
-  void slotToggleStatusBar();
-  // end of FIXME
   void slotStatusMessage(const QString &message);
   void slotEditToolbars();
   void slotUpdateToolbars();
@@ -610,6 +601,18 @@ protected:
 
 private:
   /**
+   * Turn encryption on/off. If setByUser is true then a message box is shown
+   * in case encryption isn't possible.
+   */
+  void setEncryption( bool encrypt, bool setByUser = false );
+
+  /**
+   * Turn signing on/off. If setByUser is true then a message box is shown
+   * in case signing isn't possible.
+   */
+  void setSigning( bool sign, bool setByUser = false );
+
+  /**
      Returns true if the user forgot to attach something.
   */
   bool userForgotAttachment();
@@ -775,9 +778,6 @@ protected:
   KToggleAction *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction, *fccAction;
-#if !KDE_IS_VERSION( 3, 1, 90 )
-  KToggleAction *toolbarAction, *statusbarAction;
-#endif
   KToggleAction *wordWrapAction, *fixedFontAction;
 
   KSelectAction *encodingAction;
