@@ -1130,14 +1130,14 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
 
   // "beep on new mail" check box:
   mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
-#if QT_VERSION > 0x030005
+#if QT_VERSION >=0x030100
   mBeepNewMailCheck->setSizePolicy( QSizePolicy::MinimumExpanding,
                                     QSizePolicy::Fixed  );
 #endif
 
   // "display message box" check box:
   mOtherNewMailActionsButton = new QPushButton( i18n("Other Actio&ns"), group );
-#if QT_VERSION > 0x030005
+#if QT_VERSION > 0x030100
   mOtherNewMailActionsButton->setSizePolicy( QSizePolicy::Fixed,
                                              QSizePolicy::Fixed  );
 #endif
