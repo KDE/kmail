@@ -547,6 +547,7 @@ public slots:
   void slotTextBold();
   void slotTextItalic();
   void slotTextUnder();
+  void slotFormatReset();
   void slotTextColor();
   void fontChanged( const QFont & );
   void alignmentChanged( int );
@@ -773,7 +774,7 @@ protected:
   KToggleAction *alignLeftAction, *alignCenterAction, *alignRightAction;
   KToggleAction *textBoldAction, *textItalicAction, *textUnderAction;
   KToggleAction *plainTextAction, *markupAction;
-  KAction *actionFormatColor;
+  KAction *actionFormatColor, *actionFormatReset;
   KAction *mHtmlToolbar;
 
   KSelectAction *mEncodingAction;
@@ -807,6 +808,7 @@ private slots:
 
 private:
   QColor mForeColor,mBackColor;
+  QFont mSaveFont;
   struct atmLoadData
   {
     KURL url;

@@ -1166,8 +1166,11 @@ void KMComposeWin::setupActions(void)
                                        this, SLOT(slotTextItalic()),
                                        actionCollection(), "text_italic");
   textUnderAction = new KToggleAction (i18n("&Under"), "text_under", 0,
-                                      this, SLOT(slotTextUnder()),
-                                      actionCollection(), "text_under");
+                                     this, SLOT(slotTextUnder()),
+                                     actionCollection(), "text_under");
+  actionFormatReset = new KAction( i18n( "Reset Font Settings" ), "eraser", 0,
+                                     this, SLOT( slotFormatReset() ),
+                                     actionCollection(), "format_reset");
   actionFormatColor = new KAction( i18n( "Text Color..." ), "colorize", 0,
                                      this, SLOT( slotTextColor() ),
                                      actionCollection(), "format_color");
@@ -3109,6 +3112,10 @@ void KMComposeWin::slotToggleMarkup()
  if ( markupAction->isChecked() ) {
    toolBar("htmlToolBar")->show();
    // markup will be toggled as soon as markup is actually used
+   fontChanged( mEditor->currentFont().family() ); // set buttons in correct position
+   fontAction->setFont( mEditor->currentFont().family() );
+   fontSizeAction->setFontSize( mEditor->currentFont().pointSize() );
+   mSaveFont = mEditor->currentFont();
  }
  else
    toggleMarkup(false);
@@ -3503,9 +3510,15 @@ void KMComposeWin::slotTextUnder()
     mEditor->QTextEdit::setUnderline( textUnderAction->isChecked() );
 }
 
+void KMComposeWin::slotFormatReset()
+{
+  mEditor->setColor(mForeColor);
+  mEditor->setCurrentFont( mSaveFont ); // fontChanged is called now
+}
 void KMComposeWin::slotTextColor()
 {
   QColor color = mEditor->color();
+
   if ( KColorDialog::getColor( color ) ) {
     toggleMarkup(true);
     mEditor->setColor( color );
