@@ -650,7 +650,7 @@ void KMKernel::initFolders(KConfig* cfg)
   }
   the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
-  // the_draftsFolder->open();
+  the_draftsFolder->open();
 }
 
 
