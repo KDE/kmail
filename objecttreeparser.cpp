@@ -409,19 +409,6 @@ public:
 				      isInlineEncrypted, bNeverDisplayInline,
 				      isImage );
 	  break;
-      /*
-      case DwMime::kType..WhatTheHellIsThis: {
-          switch( curNode->subType() ){
-          case DwMime::kSubtypePartial: {
-            }
-            break;
-          case DwMime::kSubtypeExternalBody: {
-            }
-            break;
-          }
-        }
-        break;
-      */
 	case DwMime::kTypeApplication:
 	  bDone = processApplicationType( curNode_replacedSubType, curNode,
 					  showOneMimePart, keepEncryptions,
