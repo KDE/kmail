@@ -159,7 +159,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
       gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 3 );
 
       QHBox *hbox = new QHBox( adv_w );
-      mFilterActionLabel = new QLabel( i18n( "Icon for this filter action:" ),
+      mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
                                        hbox );
       mFilterActionLabel->setEnabled( false );
 
