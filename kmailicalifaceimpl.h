@@ -209,6 +209,7 @@ public slots:
 private slots:
   void slotRefreshFolder( KMFolder* );
   void slotCheckDone();
+  void slotFolderLocationChanged( const QString&, const QString& );
   void slotFolderRenamed();
   void slotMessageRetrieved( KMMessage* );
 

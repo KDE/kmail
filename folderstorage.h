@@ -438,6 +438,11 @@ signals:
   /** Emitted when the name of the folder changes. */
   void nameChanged();
 
+  /** Emitted when the location on disk of the folder changes. This
+   * is used by all code which uses the locatio on disk of the folder storage
+   * ( or the cache storage ) as an identifier for the folder. */
+  void locationChanged( const QString &, const QString & );
+
   /** Emitted when the readonly status of the folder changes. */
   void readOnlyChanged(KMFolder*);
 
