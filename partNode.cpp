@@ -231,6 +231,13 @@ int partNode::calcNodeIdOrFindNode( int &curId, const partNode* findNode, int fi
 
 partNode* partNode::findType( int type, int subType, bool deep, bool wide )
 {
+#ifndef NDEBUG
+  DwString typeStr, subTypeStr;
+  DwTypeEnumToStr( mType, typeStr );
+  DwSubtypeEnumToStr( mSubType, subTypeStr );
+  kdDebug(5006) << "partNode::findType() is looking at " << typeStr.c_str()
+                << "/" << subTypeStr.c_str() << endl;
+#endif
     if(    (mType != DwMime::kTypeUnknown)
            && (    (type == DwMime::kTypeUnknown)
                    || (type == mType) )
@@ -284,57 +291,27 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         if( mDwPart && mDwPart->hasHeaders() )
           headers = &mDwPart->Headers();
         if( headers && headers->HasSubject() )
-            cntDesc = headers->Subject().AsString().c_str();
+            cntDesc = KMMsgBase::decodeRFC2047String( headers->Subject().AsString().c_str() );
         if( headers && headers->HasContentType()) {
             cntType = headers->ContentType().TypeStr().c_str();
             cntType += '/';
             cntType += headers->ContentType().SubtypeStr().c_str();
-            if( 0 < headers->ContentType().Name().length() ) {
-                if( !cntDesc.isEmpty() )
-                    cntDesc += ", ";
-                cntDesc = headers->ContentType().Name().c_str();
-            }
         }
         else
             cntType = "text/plain";
-        if( headers && headers->HasContentDescription()) {
-            if( !cntDesc.isEmpty() )
-                cntDesc += ", ";
-            cntDesc = headers->ContentDescription().AsString().c_str();
-        }
+        if( cntDesc.isEmpty() )
+            cntDesc = msgPart().contentDescription();
+        if( cntDesc.isEmpty() )
+            cntDesc = msgPart().name().stripWhiteSpace();
+        if( cntDesc.isEmpty() )
+            cntDesc = msgPart().fileName();
         if( cntDesc.isEmpty() ) {
-            bool bOk = false;
-            if( headers && headers->HasContentDisposition() ) {
-                QCString dispo = headers->ContentDisposition().AsString().c_str();
-                int i = dispo.find("filename=", 0, false);
-                if( -1 < i ) {  //  123456789
-                    QCString s = dispo.mid( i + 9 ).stripWhiteSpace();
-                    if( !s.isEmpty() ) {
-                        if( '\"' == s[0])
-                            s.remove( 0, 1 );
-                        if( '\"' == s[s.length()-1])
-                            s.truncate( s.length()-1 );
-                        if( !s.isEmpty() ) {
-                            cntDesc  = "file: ";
-                            cntDesc += s;
-                            bOk = true;
-                        }
-                    }
-                }
-            }
-            if( !bOk ) {
-                if( mRoot && mRoot->mRoot )
-                    cntDesc = i18n("internal part");
-                else
-                    cntDesc = i18n("body part");
-            }
+            if( mRoot && mRoot->mRoot )
+                cntDesc = i18n("internal part");
+            else
+                cntDesc = i18n("body part");
         }
-        if(    mDwPart
-            && mDwPart->hasHeaders()
-            && mDwPart->Headers().HasContentTransferEncoding() )
-            cntEnc = mDwPart->Headers().ContentTransferEncoding().AsString().c_str();
-        else
-            cntEnc = "7bit";
+        cntEnc = msgPart().contentTransferEncodingStr();
         if( mDwPart )
             cntSize = mDwPart->BodySize();
     } else {
