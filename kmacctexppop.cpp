@@ -140,6 +140,7 @@ void KMAcctExpPop::pseudoAssign(KMAccount* account)
   setLogin(acct->login());
   setUseSSL(acct->useSSL());
   setUseTLS(acct->useTLS());
+  setAuth(acct->auth());
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
   setLeaveOnServer(acct->leaveOnServer());
@@ -187,6 +188,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mLogin = config.readEntry("login", "");
   mUseSSL = config.readNumEntry("use-ssl", FALSE);
   mUseTLS = config.readNumEntry("use-tls", FALSE);
+  mAuth = config.readEntry("auth", "AUTO");
   mStorePasswd = config.readNumEntry("store-passwd", FALSE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
   else mPasswd = "";
@@ -205,6 +207,7 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   config.writeEntry("login", mLogin);
   config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("use-tls", mUseTLS);
+  config.writeEntry("auth", mAuth);
   config.writeEntry("store-passwd", mStorePasswd);
   if (mStorePasswd) config.writeEntry("passwd", mPasswd);
   else config.writeEntry("passwd", "");
@@ -256,6 +259,12 @@ void KMAcctExpPop::setUseTLS(bool b)
   mUseTLS = b;
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAcctExpPop::setAuth(const QString &aAuth)
+{
+  mAuth = aAuth;
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::setStorePasswd(bool b)
@@ -547,6 +556,7 @@ void KMAcctExpPop::startJob() {
   stage = List;
   mSlaveConfig.clear();
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
+  if (mAuth != "AUTO") mSlaveConfig.insert("auth", mAuth);
   slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
 }
 

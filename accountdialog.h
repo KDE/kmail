@@ -71,6 +71,10 @@ class AccountDialog : public KDialogBase
       QLineEdit    *precommand;
       QCheckBox    *useSSLCheck;
       QCheckBox    *useTLSCheck;
+      QRadioButton *authAuto;
+      QRadioButton *authUser;
+      QRadioButton *authAPOP;
+      QRadioButton *authSASL;
       QCheckBox    *storePasswordCheck;
       QCheckBox    *deleteMailCheck;
       QCheckBox    *retriveAllCheck;

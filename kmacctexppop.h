@@ -53,6 +53,10 @@ public:
   bool useTLS(void) const { return mUseTLS; }
   virtual void setUseTLS(bool);
 
+  /** Authentification method */
+  QString auth(void) const { return mAuth; }
+  virtual void setAuth(const QString &);
+
   /** Will the password be stored in the config file ? */
   bool storePasswd(void) const { return mStorePasswd; }
   virtual void setStorePasswd(bool);
@@ -111,6 +115,7 @@ protected:
   short   mProtocol;
   bool    mUseSSL;
   bool    mUseTLS;
+  QString mAuth;
   bool    mStorePasswd;
   bool    mLeaveOnServer;
   bool    gotMsgs;
