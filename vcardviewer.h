@@ -20,9 +20,12 @@
 #ifndef VCARDVIEWER_H
 #define VCARDVIEWER_H
 
-#include <qstring.h>
 #include <kdialogbase.h>
-#include <kabc/addressee.h>
+
+class QString;
+namespace KPIM {
+  class AddresseeView;
+}
 
 namespace KMail {
 
@@ -37,7 +40,7 @@ namespace KMail {
        virtual void slotUser1();
 
      private:
-       KABC::Addressee mAddressee;
+       KPIM::AddresseeView * mAddresseeView;
   };
 
 }

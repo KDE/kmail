@@ -17,57 +17,55 @@
    Boston, MA 02111-1307, USA.
  */
 
-#include <kmessagebox.h>
-#include <klocale.h>
-#include <kdebug.h>
-
 #include "vcardviewer.h"
 #include "kmaddrbook.h"
 
-#include "addresseeview.h"
+#include <addresseeview.h>
 using KPIM::AddresseeView;
 
 #include <kabc/vcardconverter.h>
-#include <kabc/stdaddressbook.h>
-using namespace KABC;
+#include <kabc/addressee.h>
+using KABC::VCardConverter;
+using KABC::Addressee;
 
-using namespace KMail;
+#include <klocale.h>
 
-VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const char* name)
-:KDialogBase(parent, name, true, i18n("VCard viewer"), User1|Close, Close,
-             true, KGuiItem(i18n("&Import")))
+#include <qstring.h>
+
+KMail::VCardViewer::VCardViewer(QWidget *parent, const QString& vCard, const char* name)
+  : KDialogBase( parent, name, true, i18n("VCard viewer"), User1|Close, Close,
+		 true, i18n("&Import"))
 {
-  AddresseeView *av = new AddresseeView(this);
-  av->setVScrollBarMode(QScrollView::Auto);
-  setMainWidget(av);
+  mAddresseeView = new AddresseeView(this);
+  mAddresseeView->setVScrollBarMode(QScrollView::Auto);
+  setMainWidget(mAddresseeView);
 
-  bool ok;
   VCardConverter vcc;
+  Addressee a;
 
   // FIXME This is not really a good solution. Would be fine
   // if the VCardConverter could handle this internally.
-  if (vCard.contains("VERSION:3.0"))
-    ok = vcc.vCardToAddressee(vCard, mAddressee, VCardConverter::v3_0);
-  else
-    ok = vcc.vCardToAddressee(vCard, mAddressee, VCardConverter::v2_1);
+  bool ok = vcc.vCardToAddressee(vCard, a, VCardConverter::v3_0);
+  if (!ok)
+    ok = vcc.vCardToAddressee(vCard, a, VCardConverter::v2_1);
 
   if (ok)
-    av->setAddressee(mAddressee);
+    mAddresseeView->setAddressee(a);
   else {
-    av->setText(i18n("Failed to parse vCard!"));
+    mAddresseeView->setText(i18n("Failed to parse vCard!"));
     showButton(User1, false);
   }
 
   resize(300,400);
 }
 
-VCardViewer::~VCardViewer()
+KMail::VCardViewer::~VCardViewer()
 {
 }
 
-void VCardViewer::slotUser1()
+void KMail::VCardViewer::slotUser1()
 {
-  if (KMAddrBookExternal::addVCard(mAddressee, this))
+  if (KMAddrBookExternal::addVCard(mAddresseeView->addressee(), this))
     showButton(User1, false);
 }
 
