@@ -97,6 +97,7 @@ void HeaderListQuickSearch::reset()
 {
   clear();
   mStatusCombo->setCurrentItem( 0 );
+  slotStatusChanged( mStatusCombo->currentText());
 }
 
 void HeaderListQuickSearch::slotStatusChanged( const QString & statusString)
