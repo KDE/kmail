@@ -1836,13 +1836,6 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   KMMessagePart oldBodyPart;
   oldBodyPart.setTypeStr(   earlyAddAttachments ? "multipart" : "text" );
   oldBodyPart.setSubtypeStr(earlyAddAttachments ? "mixed"     : "plain");
-  // NOTE: Here *signing* has higher priority than encrypting
-  //       since when signing the oldBodyPart's contents are
-  //       used for signing *first*.
-  if( doSign || doEncrypt )
-    oldBodyPart.setContentDescription( doSign
-                                      ? (mSelectedCryptPlug ? "signed data" : "clearsigned data")
-                                      : "encrypted data" );
   oldBodyPart.setContentDisposition( "inline" );
 
   QCString boundaryCStr;
@@ -1859,7 +1852,6 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
     KMMessagePart innerBodyPart;
     innerBodyPart.setTypeStr(   "text" );
     innerBodyPart.setSubtypeStr("plain");
-    innerBodyPart.setContentDescription( "body text" );
     innerBodyPart.setContentDisposition( "inline" );
     QValueList<int> allowedCTEs;
     // the signed body must not be 8bit encoded
