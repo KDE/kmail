@@ -812,7 +812,8 @@ void KMMainWidget::slotEmptyFolder()
       != KMessageBox::Continue) return;
   }
 
-  if (mFolder->folderType() == KMFolderTypeImap)
+  if (mFolder->folderType() == KMFolderTypeImap 
+      || mFolder->folderType() == KMFolderTypeSearch)
   {
     slotMarkAll();
     if (isTrash)
