@@ -294,7 +294,7 @@ void KMSender::doSendMsg()
   mCurrentMsg->removeHeaderField("Status");
   mCurrentMsg->removeHeaderField("X-Status");
   mCurrentMsg->removeHeaderField("X-KMail-Identity");
-  mCurrentMsg->removeHeaderField("X-KMail_Transport");
+  mCurrentMsg->removeHeaderField("X-KMail-Transport");
 
   // start sending the current message
   mSendProc->preSendInit();

@@ -1853,6 +1853,7 @@ void KMComposeWin::doSend(int aSendNow)
   kernel->kbp()->busy();
   //applyChanges();  // is called twice otherwise. Lars
   mMsg->setDateToday();
+  mMsg->setHeaderField("X-KMail-Transport", mTransport.currentText());
   sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));
   kernel->kbp()->idle();
 
