@@ -754,6 +754,8 @@ int KMFolder::expunge()
     emit changed();
   else
     mChanged = TRUE;
+  emit expunged();
+
   return 0;
 }
 

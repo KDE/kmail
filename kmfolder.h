@@ -441,6 +441,11 @@ signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
   void changed();
+
+  /** Emitted after an expunge. If not quiet, changed() will be
+      emmitted first. */
+  void expunged();
+
   /** Emitted when the icon paths are set. */
   void iconsChanged();
 
