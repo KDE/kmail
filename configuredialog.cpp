@@ -2995,7 +2995,9 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 {
   // calling this w/o selection is a programming error:
   QListViewItem * item = mTagList->selectedItem();
-  assert( item );
+  if ( !item )
+      return;
+  //assert( item );
 
   QListViewItem * below = item->nextSibling();
   delete item;
@@ -3595,7 +3597,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
   mRemoveButton = new QPushButton( i18n("&Remove"), this );
   mRemoveButton->setAutoDefault( false );
   vlay->addWidget( mRemoveButton );
-  
+
   connect( mRemoveButton, SIGNAL(clicked()),
 	   SLOT(slotDeletePlugIn()) );
 
@@ -3651,7 +3653,7 @@ void SecurityPage::CryptPlugTab::setup()
   slotPlugSelectionChanged();
 }
 
-void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() { 
+void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() {
   QListViewItem * item = mPlugList->selectedItem();
 
   // enable/disable action buttons...
@@ -3717,7 +3719,7 @@ void SecurityPage::CryptPlugTab::apply() {
   general.writeEntry("crypt-plug-count", i );
 }
 
-void SecurityPage::CryptPlugTab::slotPlugNameChanged( const QString & text ) 
+void SecurityPage::CryptPlugTab::slotPlugNameChanged( const QString & text )
 {
   QListViewItem * item = mPlugList->selectedItem();
   if ( !item ) return;
@@ -3725,7 +3727,7 @@ void SecurityPage::CryptPlugTab::slotPlugNameChanged( const QString & text )
   item->setText( 0, text );
 }
 
-void SecurityPage::CryptPlugTab::slotPlugLocationChanged( const QString & text ) 
+void SecurityPage::CryptPlugTab::slotPlugLocationChanged( const QString & text )
 {
   QListViewItem * item = mPlugList->selectedItem();
   if ( !item ) return;
