@@ -1119,7 +1119,10 @@ void KMMainWin::slotMsgActivated(KMMessage *msg)
   assert(msg != NULL);
 
   win = new KMReaderWin;
-  showMsg(win, msg);
+  win->setAutoDelete(true);
+  KMMessage *newMessage = new KMMessage();
+  newMessage->fromString(msg->asString());
+  showMsg(win, newMessage);
 }
 
 

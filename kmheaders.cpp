@@ -603,7 +603,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       {
         setMsgRead(mCurrentItem);
 	setTopItemByIndex(mTopItem);
-	setCurrentItemByIndex(mCurrentItem);
+        setCurrentItemByIndex((mCurrentItem >= 0) ? mCurrentItem : 0);
       }
     }
     else setCurrentItemByIndex(0);
