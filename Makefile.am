@@ -20,7 +20,7 @@ libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 	../libksieve/libksieve.la \
 	../certmanager/lib/libkleopatra.la
 
-kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la
+kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la libkmail_bodypartformatter_application_octetstream.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
 libkmailpart_la_LIBADD	= libkmailprivate.la
 
@@ -28,6 +28,11 @@ kcm_kmail_la_SOURCES = configuredialog.cpp
 kcm_kmail_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
 kcm_kmail_la_LIBADD = libkmailprivate.la $(LIB_KDECORE)
 
+libkmail_bodypartformatter_application_octetstream_la_SOURCES = app_octetstream.cpp
+libkmail_bodypartformatter_application_octetstream_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+
+linkdir = $(kde_datadir)/kmail/plugins/bodypartformatter
+link_DATA = application_octetstream.desktop
 
 bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
@@ -75,7 +80,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		headerstrategy.cpp headerstyle.cpp khtmlparthtmlwriter.cpp \
 		filehtmlwriter.cpp teehtmlwriter.cpp \
                 mailcomposerIface.skel objecttreeparser.cpp \
-		bodypartformatter.cpp \
+		bodypartformatter.cpp bodypartformatterfactory.cpp \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
 		encryptionconfigurationdialogimpl.cpp mailsourceviewer.cpp \
 		kmcommands.cpp kmreadermainwin.cpp \
@@ -93,7 +98,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		korganizeriface.stub messagecomposer.cpp \
 		globalsettings.kcfgc \
 		regexplineedit.cpp rulewidgethandlermanager.cpp \
-		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp
+		headerlistquicksearch.cpp acljobs.cpp folderdiaacltab.cpp \
+		pluginloaderbase.cpp partnodebodypart.cpp
 
 kmail_SOURCES = main.cpp
 

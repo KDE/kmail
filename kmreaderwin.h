@@ -12,7 +12,7 @@
 #include <kservice.h>
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
-#include "iobserver.h"
+#include "interfaces/observer.h"
 
 class QFrame;
 class QSplitter;
@@ -35,6 +35,9 @@ class KMFolder;
 class KMMessage;
 class KMMessagePart;
 namespace KMail {
+  namespace Interface {
+    class Observable;
+  }
   class PartMetaData;
   class ObjectTreeParser;
   class AttachmentStrategy;
@@ -57,8 +60,7 @@ namespace KParts {
   struct URLArgs;
 }
 
-class KMReaderWin: public QWidget, public KMail::IObserver
-{
+class KMReaderWin: public QWidget, public KMail::Interface::Observer {
   Q_OBJECT
 
   friend void KMMimePartTree::itemClicked( QListViewItem* item );
@@ -76,8 +78,11 @@ public:
 	       int f=0 );
   virtual ~KMReaderWin();
 
-  /** Updates the current message */
-  virtual bool update( KMail::ISubject * );
+  /**
+     \reimp from Interface::Observer
+     Updates the current message
+   */
+  void update( KMail::Interface::Observable * );
 
   /** Read settings from app's config file. */
   void readConfig();
@@ -207,6 +212,8 @@ public:
 
   /** Returns message part from given URL or null if invalid. */
   partNode* partNodeFromUrl(const KURL &url);
+
+  partNode * partNodeForId( int id );
 
   /** Returns id of message part from given URL or -1 if invalid. */
   static int msgPartFromUrl(const KURL &url);

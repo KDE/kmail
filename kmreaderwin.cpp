@@ -54,6 +54,7 @@ using KMail::CSSHelper;
 using KMail::ISubject;
 #include "urlhandlermanager.h"
 using KMail::URLHandlerManager;
+#include "interfaces/observable.h"
 
 #include <kmime_mdn.h>
 using namespace KMime;
@@ -561,7 +562,7 @@ KMReaderWin::~KMReaderWin()
 {
   delete mHtmlWriter; mHtmlWriter = 0;
   if (mAutoDelete) delete message();
-  delete mRootNode;
+  delete mRootNode; mRootNode = 0;
   removeTempFiles();
 }
 
@@ -578,39 +579,39 @@ void KMReaderWin::slotMessageArrived( KMMessage *msg )
   }
 }
 
-
 //-----------------------------------------------------------------------------
-bool KMReaderWin::update( KMail::ISubject * subject )
-{
-  if ( static_cast<KMMessage*>(subject) != message() )
-  {
-    kdDebug(5006) << "KMReaderWin::update - ignoring update" << endl;
-    return false;
-  }
-  if ( mAtmUpdate )
-  {
-    kdDebug(5006) << "KMReaderWin::update - attachment " << mAtmCurrentName << endl;
-    partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-    if ( node )
-    {
-      // replace the dwpart of the node
-      node->setDwPart( static_cast<KMMessage*>(subject)->lastUpdatedPart() );
-      // update the tmp file
-      // we have to set it writeable temporarily
-      ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRWXU );
-      kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
-          false, false, true );
-      ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
-    } else
-      kdWarning(5006) << "KMReaderWin::update - Could not find node for attachment!" << endl;
-  } else {
+void KMReaderWin::update( KMail::Interface::Observable * observable ) {
+  if ( !mAtmUpdate ) {
     kdDebug(5006) << "KMReaderWin::update - message" << endl;
     updateReaderWin();
+    return;
   }
 
-  return true;
-}
+  if ( !mRootNode )
+    return;
 
+  kdDebug(5006) << "KMReaderWin::update - attachment " << mAtmCurrentName << endl;
+  partNode * node = mRootNode->findId( mAtmCurrent );
+  if ( !node ) {
+    kdWarning(5006) << "KMReaderWin::update - Could not find node for attachment!" << endl;
+    return;
+  }
+
+  assert( dynamic_cast<KMMessage*>( observable ) != 0 );
+  // if the assert ever fails, this curious construction needs to
+  // be rethought:
+
+  // replace the dwpart of the node
+  node->setDwPart( static_cast<KMMessage*>( observable )->lastUpdatedPart() );
+  // update the tmp file
+  // we have to set it writeable temporarily
+  ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRWXU );
+  kByteArrayToFile( node->msgPart().bodyDecodedBinary(), mAtmCurrentName,
+		    false, false, true );
+  ::chmod( QFile::encodeName( mAtmCurrentName ), S_IRUSR );
+
+  // and now? redisplay, perhaps??
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::removeTempFiles()
@@ -2081,6 +2082,10 @@ void KMReaderWin::slotShowMsgSrc()
 //-----------------------------------------------------------------------------
 partNode * KMReaderWin::partNodeFromUrl( const KURL & url ) {
   return mRootNode ? mRootNode->findId( msgPartFromUrl( url ) ) : 0 ;
+}
+
+partNode * KMReaderWin::partNodeForId( int id ) {
+  return mRootNode ? mRootNode->findId( id ) : 0 ;
 }
 
 //-----------------------------------------------------------------------------

@@ -28,36 +28,36 @@
  *  your version.
  */
 
-#ifndef _SUBJECT
-#define _SUBJECT
+#ifndef __KMAIL_ISUBJECT_H__
+#define __KMAIL_ISUBJECT_H__
 
-#include <qptrlist.h>
+#include "interfaces/observable.h"
+
+#include <qvaluevector.h>
 
 namespace KMail {
 
-  class IObserver;
+  namespace Interface {
+    class Observer;
+  }
 
-  class ISubject
-  {
-    public :
+  class ISubject : public Interface::Observable {
+  public :
       virtual ~ISubject();
 
-    public :
-      /** Attach the observer if it is not in the list yet */ 
-      virtual void attach( IObserver * );
+      /** \reimp Attach the observer if it is not in the list yet */ 
+      void attach( Interface::Observer * );
 
-      /** Detach the observer */ 
-      virtual void detach( IObserver * );
+      /** \reimp Detach the observer */ 
+      void detach( Interface::Observer * );
 
-      /** Notify all observers ( call observer->update() ) */ 
-      virtual void notify();
+      /** \reimp Notify all observers ( call observer->update() ) */ 
+      void notify();
 
-    // Protected constructor and attribute(s)
-    protected :
-      ISubject();
-      QPtrList<IObserver> mObserverList;
+  private:
+      QValueVector<Interface::Observer*> mObserverList;
   };
 
 } // namespace KMail
 
-#endif
+#endif // __KMAIL_ISUBJECT_H__

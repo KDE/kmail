@@ -44,6 +44,10 @@ namespace KMail {
 
   class URLHandler;
 
+  namespace Interface {
+    class BodyPartURLHandler;
+  }
+
   /**
    * @short Singleton to manage the list of @ref URLHandlers
    * @author Marc Mutz <mutz@kde.org>
@@ -64,14 +68,18 @@ namespace KMail {
     void registerHandler( const URLHandler * handler );
     void unregisterHandler( const URLHandler * handler );
 
+    void registerHandler( const Interface::BodyPartURLHandler * handler );
+    void unregisterHandler( const Interface::BodyPartURLHandler * handler );
+
     bool handleClick( const KURL & url, KMReaderWin * w=0 ) const;
     bool handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w=0 ) const;
     QString statusBarMessage( const KURL & url, KMReaderWin * w=0 ) const;
 
   private:
-    typedef QValueVector<const URLHandler*>::const_iterator const_iterator;
-    typedef QValueVector<const URLHandler*>::iterator iterator;
-    QValueVector<const URLHandler*> mHandlers;
+    typedef QValueVector<const URLHandler*> HandlerList;
+    HandlerList mHandlers;
+    class BodyPartURLHandlerManager;
+    BodyPartURLHandlerManager * mBodyPartURLHandlerManager;
   };
 
 } // namespace KMail

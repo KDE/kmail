@@ -61,7 +61,8 @@ partNode::partNode()
     mMsgPartOk( false ),
     mEncodedOk( false ),
     mDeleteDwBodyPart( false ),
-    mMimePartTreeItem( 0 )
+    mMimePartTreeItem( 0 ),
+    mBodyPartMemento( 0 )
 {
   adjustDefaultType( this );
 }
@@ -76,7 +77,8 @@ partNode::partNode( DwBodyPart* dwPart, int explicitType, int explicitSubType,
     mMsgPartOk( false ),
     mEncodedOk( false ),
     mDeleteDwBodyPart( deleteDwBodyPart ),
-    mMimePartTreeItem( 0 )
+    mMimePartTreeItem( 0 ),
+    mBodyPartMemento( 0 )
 {
   if ( explicitType != DwMime::kTypeUnknown ) {
     mType    = explicitType;     // this happens e.g. for the Root Node
@@ -137,7 +139,8 @@ partNode::partNode( bool deleteDwBodyPart, DwBodyPart* dwPart )
     mMsgPartOk( false ),
     mEncodedOk( false ),
     mDeleteDwBodyPart( deleteDwBodyPart ),
-    mMimePartTreeItem( 0 )
+    mMimePartTreeItem( 0 ),
+    mBodyPartMemento( 0 )
 {
   if ( dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType() ) {
     mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
@@ -151,8 +154,10 @@ partNode::partNode( bool deleteDwBodyPart, DwBodyPart* dwPart )
 partNode::~partNode() {
   if( mDeleteDwBodyPart )
     delete mDwPart;
-  delete mChild;
-  delete mNext;
+  mDwPart = 0;
+  delete mChild; mChild = 0;
+  delete mNext; mNext = 0;
+  delete mBodyPartMemento; mBodyPartMemento = 0;
 }
 
 #ifndef NDEBUG

@@ -36,6 +36,8 @@
 #include "kmmsgbase.h"
 #include "kmmessage.h"
 
+#include "interfaces/bodypart.h"
+
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
@@ -220,6 +222,11 @@ public:
     int childCount() const;
     bool processed() const { return mWasProcessed; }
 
+    KMail::Interface::BodyPartMemento * bodyPartMemento() const { return mBodyPartMemento; };
+    void setBodyPartMemento( KMail::Interface::BodyPartMemento * memento ) {
+        mBodyPartMemento = memento;
+    };
+
 private:
     partNode*     mRoot;
     partNode*     mNext;
@@ -238,6 +245,7 @@ private:
     bool          mEncodedOk;
     bool          mDeleteDwBodyPart;
     KMMimePartTreeItem* mMimePartTreeItem;
+    KMail::Interface::BodyPartMemento * mBodyPartMemento;
 };
 
 #endif

@@ -37,6 +37,10 @@
 #include "urlhandlermanager.h"
 
 #include "interfaces/urlhandler.h"
+#include "interfaces/bodyparturlhandler.h"
+#include "partNode.h"
+#include "partnodebodypart.h"
+#include "kmreaderwin.h"
 
 #include <kurl.h>
 
@@ -130,8 +134,125 @@ namespace {
     }
   };
 
+} // anon namespace
 
+
+namespace {
+  template <typename T> struct Delete {
+    void operator()( const T * x ) { delete x; x = 0; }
+  };
 }
+
+//
+//
+// BodyPartURLHandlerManager
+//
+//
+
+class KMail::URLHandlerManager::BodyPartURLHandlerManager : public KMail::URLHandler {
+public:
+  BodyPartURLHandlerManager() : KMail::URLHandler() {}
+  ~BodyPartURLHandlerManager();
+
+  bool handleClick( const KURL &, KMReaderWin * ) const;
+  bool handleContextMenuRequest( const KURL &, const QPoint &, KMReaderWin * ) const;
+  QString statusBarMessage( const KURL &, KMReaderWin * ) const;
+
+  void registerHandler( const Interface::BodyPartURLHandler * handler );
+  void unregisterHandler( const Interface::BodyPartURLHandler * handler );
+
+private:
+  typedef QValueVector<const Interface::BodyPartURLHandler*> BodyPartHandlerList;
+  BodyPartHandlerList mHandlers;
+};
+
+KMail::URLHandlerManager::BodyPartURLHandlerManager::~BodyPartURLHandlerManager() {
+  for_each( mHandlers.begin(), mHandlers.end(),
+	    Delete<Interface::BodyPartURLHandler>() );
+}
+
+void KMail::URLHandlerManager::BodyPartURLHandlerManager::registerHandler( const Interface::BodyPartURLHandler * handler ) {
+  if ( !handler )
+    return;
+  unregisterHandler( handler ); // don't produce duplicates
+  mHandlers.push_back( handler );
+}
+
+void KMail::URLHandlerManager::BodyPartURLHandlerManager::unregisterHandler( const Interface::BodyPartURLHandler * handler ) {
+  // don't delete them, only remove them from the list!
+  mHandlers.erase( remove( mHandlers.begin(), mHandlers.end(), handler ), mHandlers.end() );
+}
+
+static partNode * partNodeFromXKMailUrl( const KURL & url, KMReaderWin * w, QString * path ) {
+  assert( path );
+
+  if ( !w || url.protocol() != "x-kmail" )
+    return 0;
+  const QString urlPath = url.path();
+  
+  // urlPath format is: /bodypart/<random number>/<part id>/<path>
+
+  kdDebug( 5006 ) << "BodyPartURLHandler: urlPath == \"" << urlPath << "\"" << endl;
+  if ( !urlPath.startsWith( "/bodypart/" ) )
+    return 0;
+
+  const QStringList urlParts = QStringList::split( '/', urlPath.mid( 10 ), true );
+  if ( urlParts.size() != 3 )
+    return 0;
+  bool ok = false;
+  const int part_id = urlParts[1].toInt( &ok );
+  if ( !ok )
+    return 0;
+  *path = KURL::decode_string( urlParts[2], 106 );
+  return w->partNodeForId( part_id );
+}  
+
+bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleClick( const KURL & url, KMReaderWin * w ) const {
+  QString path;
+  partNode * node = partNodeFromXKMailUrl( url, w, &path );
+  if ( !node )
+    return false;
+
+  KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
+  for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+    if ( (*it)->handleClick( &part, path ) )
+      return true;
+  return false;
+}
+
+bool KMail::URLHandlerManager::BodyPartURLHandlerManager::handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w ) const {
+  QString path;
+  partNode * node = partNodeFromXKMailUrl( url, w, &path );
+  if ( !node )
+    return false;
+
+  KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
+  for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+    if ( (*it)->handleContextMenuRequest( &part, path, p ) )
+      return true;
+  return false;
+}
+
+QString KMail::URLHandlerManager::BodyPartURLHandlerManager::statusBarMessage( const KURL & url, KMReaderWin * w ) const {
+  QString path;
+  partNode * node = partNodeFromXKMailUrl( url, w, &path );
+  if ( !node )
+    return QString::null;
+
+  KMail::PartNodeBodyPart part( *node, w->overrideCodec() );
+  for ( BodyPartHandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it ) {
+    const QString msg = (*it)->statusBarMessage( &part, path );
+    if ( !msg.isEmpty() )
+      return msg;
+  }
+  return QString::null;
+}
+
+//
+//
+// URLHandlerManager
+//
+//
 
 KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new ShowHtmlSwitchURLHandler() );
@@ -140,17 +261,13 @@ KMail::URLHandlerManager::URLHandlerManager() {
   registerHandler( new MailToURLHandler() );
   registerHandler( new HtmlAnchorHandler() );
   registerHandler( new AttachmentURLHandler() );
+  registerHandler( mBodyPartURLHandlerManager = new BodyPartURLHandlerManager() );
   registerHandler( new FallBackURLHandler() );
 }
 
-namespace {
-  template <typename T> struct Delete {
-    void operator()( const T * x ) { delete x; x = 0; }
-  };
-}
-
 KMail::URLHandlerManager::~URLHandlerManager() {
-  for_each( mHandlers.begin(), mHandlers.end(), Delete<URLHandler>() );
+  for_each( mHandlers.begin(), mHandlers.end(),
+	    Delete<URLHandler>() );
 }
 
 void KMail::URLHandlerManager::registerHandler( const URLHandler * handler ) {
@@ -165,28 +282,45 @@ void KMail::URLHandlerManager::unregisterHandler( const URLHandler * handler ) {
   mHandlers.erase( remove( mHandlers.begin(), mHandlers.end(), handler ), mHandlers.end() );
 }
 
+void KMail::URLHandlerManager::registerHandler( const Interface::BodyPartURLHandler * handler ) {
+  if ( mBodyPartURLHandlerManager )
+    mBodyPartURLHandlerManager->registerHandler( handler );
+}
+
+void KMail::URLHandlerManager::unregisterHandler( const Interface::BodyPartURLHandler * handler ) {
+  if ( mBodyPartURLHandlerManager )
+    mBodyPartURLHandlerManager->unregisterHandler( handler );
+}
+
 bool KMail::URLHandlerManager::handleClick( const KURL & url, KMReaderWin * w ) const {
-  for ( const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleClick( url, w ) )
       return true;
   return false;
 }
 
 bool KMail::URLHandlerManager::handleContextMenuRequest( const KURL & url, const QPoint & p, KMReaderWin * w ) const {
-  for ( const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it )
     if ( (*it)->handleContextMenuRequest( url, p, w ) )
       return true;
   return false;
 }
 
 QString KMail::URLHandlerManager::statusBarMessage( const KURL & url, KMReaderWin * w ) const {
-  for ( const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it ) {
+  for ( HandlerList::const_iterator it = mHandlers.begin() ; it != mHandlers.end() ; ++it ) {
     const QString msg = (*it)->statusBarMessage( url, w );
     if ( !msg.isEmpty() )
       return msg;
   }
   return QString::null;
 }
+
+
+//
+//
+// URLHandler
+//
+//
 
 // these includes are temporary and should not be needed for the code
 // above this line, so they appear only here:
@@ -257,10 +391,15 @@ namespace {
     return !w || kmkernel->groupware().handleLink( url, w->message() );
   }
 
-  QString GroupwareURLHandler::statusBarMessage( const KURL & url, KMReaderWin* ) const {
-     if ( !url.path().startsWith( "groupware" ) )
-        return QString::null;
-    return i18n("Groupware choice");
+  QString GroupwareURLHandler::statusBarMessage( const KURL & url, KMReaderWin * ) const {
+    QString type, action, action2, dummy;
+    if ( url.url().find( "groupware_" ) == -1 ) return QString::null;
+    //if ( !KMGroupware::foundGroupwareLink( url.url(), type, action, action2, dummy ) )
+    //  return QString::null;
+    QString result = type + ' ' + action;
+    if ( !action2.isEmpty() )
+      result += ' ' + action2;
+    return i18n("Groupware: \"%1\"").arg( result );
   }
 }
 

@@ -3,43 +3,36 @@
 #endif
 
 #include "isubject.h"
-#include "iobserver.h"
+#include "interfaces/observer.h"
+
+#include <qtl.h>
+
 #include <kdebug.h>
 
 namespace KMail {
-
-  ISubject::ISubject()
-  {
-  }
 
   ISubject::~ISubject()
   {
     mObserverList.clear();
   }
 
-  void ISubject::attach( IObserver * pObserver )
+  void ISubject::attach( Interface::Observer * pObserver )
   {
-    if (mObserverList.find( pObserver ) == -1)
-      mObserverList.append( pObserver );
+    if ( qFind( mObserverList.begin(), mObserverList.end(), pObserver ) == mObserverList.end() )
+      mObserverList.push_back( pObserver );
   }
 
-  void ISubject::detach( IObserver * pObserver )
-  {
-    mObserverList.remove( pObserver );
+  void ISubject::detach( Interface::Observer * pObserver ) {
+    QValueVector<Interface::Observer*>::iterator it = qFind( mObserverList.begin(), mObserverList.end(), pObserver );
+    if ( it != mObserverList.end() )
+      mObserverList.erase( it );
   }
 
   void ISubject::notify()
   {
-    kdDebug(5006) << "ISubject::notify " << mObserverList.count() << endl;
-    QPtrListIterator<IObserver> it( mObserverList );
-    IObserver* observer;
-    while ( (observer = it.current()) != 0 ) 
-    {
-      ++it;
-      bool success = observer->update( this );
-      if ( !success )
-        kdWarning(5006) << "ISubject::notify returned false for observer " << observer << endl;
-    }
+    kdDebug(5006) << "ISubject::notify " << mObserverList.size() << endl;
+    for ( QValueVector<Interface::Observer*>::iterator it = mObserverList.begin() ; it != mObserverList.end() ; ++it )
+      (*it)->update( this );
   }
 
 }

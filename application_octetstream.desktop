@@ -1,0 +1,8 @@
+[Misc]
+Encoding=UTF-8
+Name=Application Octetstream
+Comment=A bodypart formatter plugin for application/octet-stream
+
+[Plugin]
+Type=application/octet-stream
+X-KDE-Library=libkmail_bodypartformatter_application_octetstream

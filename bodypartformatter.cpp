@@ -34,6 +34,8 @@
 #endif
 
 #include "bodypartformatter.h"
+#include "bodypartformatterfactory_p.h"
+#include "interfaces/bodypartformatter.h"
 
 #include "objecttreeparser.h"
 #include "partNode.h"
@@ -42,10 +44,19 @@
 #include <mimelib/string.h>
 #include <mimelib/utility.h>
 
+#include <kdebug.h>
+
 namespace {
-  class AnyTypeBodyPartFormatter : public KMail::BodyPartFormatter {
+  class AnyTypeBodyPartFormatter
+    : public KMail::BodyPartFormatter,
+      public KMail::Interface::BodyPartFormatter {
     static const AnyTypeBodyPartFormatter * self;
   public:
+    Result format( KMail::Interface::BodyPart *, KMail::HtmlWriter * ) const {
+      kdDebug(5006) << "AnyTypeBodyPartFormatter::format() acting as a KMail::Interface::BodyPartFormatter!" << endl;
+      return AsIcon;
+    }
+
     bool process( KMail::ObjectTreeParser *, partNode *, KMail::ProcessResult & result ) const {
       result.setNeverDisplayInline( true );
       return false;
@@ -116,6 +127,12 @@ namespace {
 
 #undef CREATE_BODY_PART_FORMATTER
 } // anon namespace
+
+// FIXME: port some more KMail::BodyPartFormatters to KMail::Interface::BodyPartFormatters
+void KMail::BodyPartFormatterFactoryPrivate::kmail_create_builtin_bodypart_formatters( KMail::BodyPartFormatterFactoryPrivate::TypeRegistry * reg ) {
+  if ( !reg ) return;
+  (*reg)["application"]["octet-stream"] = new AnyTypeBodyPartFormatter();
+}
 
 typedef const KMail::BodyPartFormatter * (*BodyPartFormatterCreator)();
 

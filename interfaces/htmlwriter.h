@@ -1,12 +1,13 @@
 /*  -*- c++ -*-
     interfaces/htmlwriter.h
 
-    This file is part of KMail, the KDE mail client.
+    This file is part of KMail's plugin interface.
     Copyright (c) 2003 Marc Mutz <mutz@kde.org>
 
     KMail is free software; you can redistribute it and/or modify it
-    under the terms of the GNU General Public License, version 2, as
-    published by the Free Software Foundation.
+    under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
 
     KMail is distributed in the hope that it will be useful, but
     WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,9 +36,36 @@
 class QString;
 
 namespace KMail {
+
+  /**
+   * @short An interface for HTML sinks.
+   * @author Marc Mutz <mutz@kde.org>
+   *
+   */
+  namespace Interface {
+    class HtmlWriter {
+    public:
+      virtual ~HtmlWriter() {}
+
+      /** Signal the begin of stuff to write, and give the CSS definitions */
+      virtual void begin( const QString & cssDefinitions ) = 0;
+      /** Write out a chunk of text. No HTML escaping is performed. */
+      virtual void write( const QString & html ) = 0;
+      /** Signal the end of stuff to write. */
+      virtual void end() = 0;
+    };
+  }
+
   /**
    * @short An interface to HTML sinks
    * @author Marc Mutz <mutz@kde.org>
+   *
+   * @deprecated KMail should be ported to Interface::HtmlWriter. This
+   * interface exposes internal working models. The queueing
+   * vs. writing() issues exposed here should be hidden by using two
+   * different implementations of KHTMLPartHtmlWriter: one for
+   * queueing, and one for writing. This should be fixed before the
+   * release, so we an keep the plugin interface stable.
    *
    * Operate this interface in one and only one of the following two
    * modes:
@@ -67,18 +95,13 @@ namespace KMail {
    * Naturally, whenever you queued data in a given session, that
    * session must be ended by calling @ref #flush(), not @ref #end().
    */
-  class HtmlWriter {
+  class HtmlWriter : public Interface::HtmlWriter {
   public:
     virtual ~HtmlWriter() {}
-    /** Signal the begin of stuff to write, and give the CSS definitions */
-    virtual void begin( const QString & cssDefinitions ) = 0;
-    /** Signal the end of stuff to write. */
-    virtual void end() = 0;
+
     /** Stop all possibly pending processing in order to be able to
 	call @ref #begin() again. */
     virtual void reset() = 0;
-    /** Write out a chunk of text. No HTML escaping is performed. */
-    virtual void write( const QString & str ) = 0;
 
     virtual void queue( const QString & str ) = 0;
     /** (Start) flushing internal buffers, if any. */

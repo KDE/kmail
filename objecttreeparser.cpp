@@ -47,6 +47,9 @@
 #include "htmlstatusbar.h"
 #include "csshelper.h"
 #include "bodypartformatter.h"
+#include "bodypartformatterfactory.h"
+#include "partnodebodypart.h"
+#include "interfaces/bodypartformatter.h"
 
 #include "cryptplugwrapperlist.h"
 #include "cryptplugfactory.h"
@@ -232,18 +235,39 @@ namespace KMail {
 
     for ( ; node ; node = node->nextSibling() ) {
       if ( node->processed() )
-	continue;
-
-      const BodyPartFormatter * bpf
-	= BodyPartFormatter::createFor( node->type(), node->subType() );
-      kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
-			    << node->typeString() << '/' << node->subTypeString()
-			    << ')' << endl;
+        continue;
 
       ProcessResult processResult;
-      if ( !bpf->process( this, node, processResult ) )
-	defaultHandling( node, processResult );
 
+      if ( const Interface::BodyPartFormatter * formatter
+           = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
+        PartNodeBodyPart part( *node, codecFor( node ) );
+        const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
+        if ( mReader && node->bodyPartMemento() )
+          if ( Interface::Observable * obs = node->bodyPartMemento()->asObservable() )
+            obs->attach( mReader );
+        switch ( result ) {
+        case Interface::BodyPartFormatter::AsIcon:
+          processResult.setNeverDisplayInline( true );
+          // fall through:
+        case Interface::BodyPartFormatter::Failed:
+          defaultHandling( node, processResult );
+          break;
+        case Interface::BodyPartFormatter::Ok:
+        case Interface::BodyPartFormatter::NeedContent:
+          // FIXME: incomplete content handling
+          ;
+        }
+      } else {
+        const BodyPartFormatter * bpf
+          = BodyPartFormatter::createFor( node->type(), node->subType() );
+        kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
+                              << node->typeString() << '/' << node->subTypeString()
+                              << ')' << endl;
+
+        if ( !bpf->process( this, node, processResult ) )
+          defaultHandling( node, processResult );
+      }
       node->setProcessed( true, false );
 
       // adjust signed/encrypted flags if inline PGP was found
@@ -303,12 +327,12 @@ namespace KMail {
   //////////////////
 
   bool ObjectTreeParser::writeOpaqueOrMultipartSignedData( partNode* data,
-						      partNode& sign,
-						      const QString& fromAddress,
-						      bool doCheck,
-						      QCString* cleartextData,
-						      CryptPlug::SignatureMetaData* paramSigMeta,
-						      bool hideErrors )
+                                                      partNode& sign,
+                                                      const QString& fromAddress,
+                                                      bool doCheck,
+                                                      QCString* cleartextData,
+                                                      CryptPlug::SignatureMetaData* paramSigMeta,
+                                                      bool hideErrors )
   {
     bool bIsOpaqueSigned = false;
     enum { NO_PLUGIN, NOT_INITIALIZED, CANT_VERIFY_SIGNATURES }
@@ -363,14 +387,14 @@ namespace KMail {
       if ( data ) {
         cleartext = data->dwPart()->AsString().c_str();
 
-	dumpToFile( "dat_01_reader_signedtext_before_canonicalization",
-		    cleartext.data(), cleartext.length() );
+        dumpToFile( "dat_01_reader_signedtext_before_canonicalization",
+                    cleartext.data(), cleartext.length() );
 
         // replace simple LFs by CRLSs
         // according to RfC 2633, 3.1.1 Canonicalization
-	kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
-	cleartext = KMMessage::lf2crlf( cleartext );
-	kdDebug(5006) << "                                                       done." << endl;
+        kdDebug(5006) << "Converting LF to CRLF (see RfC 2633, 3.1.1 Canonicalization)" << endl;
+        cleartext = KMMessage::lf2crlf( cleartext );
+        kdDebug(5006) << "                                                       done." << endl;
       }
 
       dumpToFile( "dat_02_reader_signedtext_after_canonicalization",
@@ -1114,9 +1138,9 @@ namespace KMail {
   bool ObjectTreeParser::processMultiPartSignedSubtype( partNode * node, ProcessResult & ) {
     if ( node->childCount() != 2 ) {
       kdDebug(5006) << "mulitpart/signed must have exactly two child parts!" << endl
-		    << "processing as multipart/mixed" << endl;
+                    << "processing as multipart/mixed" << endl;
       if ( node->firstChild() )
-	stdChildHandling( node->firstChild() );
+        stdChildHandling( node->firstChild() );
       return node->firstChild();
     }
 
@@ -1150,7 +1174,7 @@ namespace KMail {
 
     node->setSignatureState( KMMsgFullySigned );
     writeOpaqueOrMultipartSignedData( signedData, *signature,
-				      node->trueFromAddress() );
+                                      node->trueFromAddress() );
     return true;
   }
 
@@ -1429,16 +1453,16 @@ namespace KMail {
     if ( smimeType == "certs-only" ) {
       result.setNeverDisplayInline( true );
       if ( !smimeCrypto )
-	return false;
+        return false;
 
       const QByteArray certData = node->msgPart().bodyDecodedBinary();
 
       const GpgME::ImportResult res
-	= smimeCrypto->importCertificate( certData.data(), certData.size() );
+        = smimeCrypto->importCertificate( certData.data(), certData.size() );
       if ( res.error() ) {
-	htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br>"
-				   "Reason: %1").arg( QString::fromLocal8Bit( res.error().asString() ) ) );
-	return true;
+        htmlWriter()->queue( i18n( "Sorry, certificate could not be imported.<br>"
+                                   "Reason: %1").arg( QString::fromLocal8Bit( res.error().asString() ) ) );
+        return true;
       }
 
       const int nImp = res.numImported();
@@ -1446,44 +1470,44 @@ namespace KMail {
       const int nSKImp = res.numSecretKeysImported();
       const int nSKUnc = res.numSecretKeysUnchanged();
       if ( !nImp && !nSKImp && !nUnc && !nSKUnc ) {
-	htmlWriter()->queue( i18n( "Sorry, no certificates were found in this message." ) );
-	return true;
+        htmlWriter()->queue( i18n( "Sorry, no certificates were found in this message." ) );
+        return true;
       }
       QString comment = "<b>" + i18n( "Certificate import status:" ) + "</b><br>&nbsp;<br>";
       if ( nImp )
-	comment += i18n( "%n new certificate was imported.",
-			 "%n new certificates were imported.", nImp ) + "<br>";
+        comment += i18n( "%n new certificate was imported.",
+                         "%n new certificates were imported.", nImp ) + "<br>";
       if ( nUnc )
-	comment += i18n( "%n certificate was unchanged.",
-			 "%n certificates were unchanged", nUnc ) + "<br>";
+        comment += i18n( "%n certificate was unchanged.",
+                         "%n certificates were unchanged", nUnc ) + "<br>";
       if ( nSKImp )
-	comment += i18n( "%n new secret key was imported.",
-			 "%n new secret keys were imported.", nSKImp ) + "<br>";
+        comment += i18n( "%n new secret key was imported.",
+                         "%n new secret keys were imported.", nSKImp ) + "<br>";
       if ( nSKUnc )
- 	comment += i18n( "%n secret key was unchanged.",
-			 "%n secret keys were unchanged.", nSKUnc ) + "<br>";
+        comment += i18n( "%n secret key was unchanged.",
+                         "%n secret keys were unchanged.", nSKUnc ) + "<br>";
       comment += "&nbsp;<br>";
       htmlWriter()->queue( comment );
       if ( !nImp && !nSKImp ) {
-	htmlWriter()->queue( "<hr>" );
-	return true;
+        htmlWriter()->queue( "<hr>" );
+        return true;
       }
       const std::vector<GpgME::Import> imports = res.imports();
       if ( imports.empty() ) {
-	htmlWriter()->queue( i18n( "Sorry, no details on certificate import available." ) + "<hr>" );
-	return true;
+        htmlWriter()->queue( i18n( "Sorry, no details on certificate import available." ) + "<hr>" );
+        return true;
       }
       htmlWriter()->queue( "<b>" + i18n( "Certificate import details:" ) + "</b><br>" );
       for ( std::vector<GpgME::Import>::const_iterator it = imports.begin() ; it != imports.end() ; ++it ) {
-	if ( (*it).error() )
-	  htmlWriter()->queue( i18n( "Failed: %1 (%2)" ).arg( (*it).fingerprint() )
-			       .arg( QString::fromLocal8Bit( (*it).error().asString() ) ) );
-	else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
-	  if ( (*it).status() & GpgME::Import::ContainedSecretKey )
-	    htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)" ).arg( (*it).fingerprint() ) );
-	  else
-	    htmlWriter()->queue( i18n( "New or changed: %1" ).arg( (*it).fingerprint() ) );
-	htmlWriter()->queue( "<br>" );
+        if ( (*it).error() )
+          htmlWriter()->queue( i18n( "Failed: %1 (%2)" ).arg( (*it).fingerprint() )
+                               .arg( QString::fromLocal8Bit( (*it).error().asString() ) ) );
+        else if ( (*it).status() & ~GpgME::Import::ContainedSecretKey )
+          if ( (*it).status() & GpgME::Import::ContainedSecretKey )
+            htmlWriter()->queue( i18n( "New or changed: %1 (secret key available)" ).arg( (*it).fingerprint() ) );
+          else
+            htmlWriter()->queue( i18n( "New or changed: %1" ).arg( (*it).fingerprint() ) );
+        htmlWriter()->queue( "<br>" );
       }
 
       htmlWriter()->queue( "<hr>" );
