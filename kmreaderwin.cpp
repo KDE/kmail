@@ -1124,46 +1124,31 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 //-----------------------------------------------------------------------------
 QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 {
-  QCString qpstr, iStr, result;
-  const char *pos;
-  char ch, str[256];
+  QString iStr, str;
+  QString result((QChar*)NULL, aStr.length() * 2);
+  int pos;
+  QChar ch;
   int i, i1, x, len;
-  const int maxLen = 30000;
-  char htmlStr[maxLen+256];
-  char* htmlPos;
   bool startOfLine = true;
 
-  // FIXME: use really unicode within a QString instead of utf8
-  qpstr = aStr.utf8();
-
-#define HTML_ADD(str,len) strcpy(htmlPos,str),htmlPos+=len
-
-  htmlPos = htmlStr;
-  for (pos=qpstr.data(),x=0; *pos; pos++,x++)
+  for (pos = 0, x = 0; pos < (int)aStr.length(); pos++, x++)
   {
-    if ((int)(htmlPos-htmlStr) >= maxLen)
-    {
-      *htmlPos = '\0';
-      result += htmlStr;
-      htmlPos = htmlStr;
-    }
-
-    ch = *pos;
+    ch = aStr[pos];
     if (aPreserveBlanks)
     {
       if (ch==' ')
       {
 	if (startOfLine) {
-	  HTML_ADD("&nbsp;", 6);
+	  result += "&nbsp;";
 	  pos++, x++;
 	  startOfLine = false;
 	}
-        while (*pos==' ')
+        while (aStr[pos] == ' ')
         {
-	  HTML_ADD(" ", 1);
+	  result += " ";
           pos++, x++;
-	  if (*pos==' ') {
-	    HTML_ADD("&nbsp;", 6);
+	  if (aStr[pos] == ' ') {
+	    result += "&nbsp;";
 	    pos++, x++;
 	  }
         }
@@ -1175,7 +1160,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       {
 	do
 	{
-	  HTML_ADD("&nbsp;", 6);
+	  result += "&nbsp;";
 	  x++;
 	}
 	while((x&7) != 0);
@@ -1183,84 +1168,76 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
         continue;
       }
     }
-    if (ch=='<') HTML_ADD("&lt;", 4);
-    else if (ch=='>') HTML_ADD("&gt;", 4);
+    if (ch=='<') result += "&lt;";
+    else if (ch=='>') result += "&gt;";
     else if (ch=='\n') {
-      HTML_ADD("<br>", 4);
+      result += "<br>";
       startOfLine = true;
       x = -1;
     }
-    else if (ch=='&') HTML_ADD("&amp;", 5);
-    else if ((ch=='h' && strncmp(pos,"http://", 7)==0) ||
-	     (ch=='h' && strncmp(pos,"https://", 8)==0) ||
-	     (ch=='f' && strncmp(pos,"ftp://", 6)==0) ||
-	     (ch=='m' && strncmp(pos,"mailto:", 7)==0
-	      && pos[7] != ' ' && pos[7] != '\0' ))
+    else if (ch=='&') result += "&amp;";
+    else if ((ch=='h' && aStr.mid(pos, 7) == "http://") ||
+	     (ch=='h' && aStr.mid(pos, 8) == "https://") ||
+	     (ch=='f' && aStr.mid(pos, 6) == "ftp://") ||
+	     (ch=='m' && aStr.mid(pos, 7) == "mailto:"
+              && aStr.length() > pos+7 && aStr[pos+7] != ' '))
 	     // note: no "file:" for security reasons
     {
-      for (i=0; *pos && *pos > ' ' && *pos != '\"' &&
-                *pos != '<' &&		// handle cases like this: <link>http://foobar.org/</link>
+      for (i=0; aStr[pos] && aStr[pos] > ' ' && aStr[pos] != '\"' &&
+                aStr[pos] != '<' &&		// handle cases like this: <link>http://foobar.org/</link>
 		i < 255; i++, pos++)
-	str[i] = *pos;
+	str[i] = aStr[pos];
       pos--;
-      while (i>0 && ispunct(str[i-1]) && str[i-1]!='/')
+      while (i>0 && str[i].isPunct() && str[i-1]!='/')
       {
 	i--;
 	pos--;
       }
-      str[i] = '\0';
-      HTML_ADD("<a href=\"", 9);
-      HTML_ADD(str, strlen(str));
-      HTML_ADD("\">", 2);
-      HTML_ADD(str, strlen(str));
-      HTML_ADD("</a>", 4);
+      str.truncate(i);
+      result += "<a href=\"" + str + "\">" + str + "</a>";
     }
     else if (ch=='@')
     {
-      const char *startofstring = qpstr.data();
-      const char *startpos = pos;
-      for (i=0; pos >= startofstring && *pos > 0
-	     && (isalnum(*pos)
-		 || *pos=='@' || *pos=='.' || *pos=='_' || *pos=='-'
-		 || *pos=='*' || *pos=='[' || *pos==']' || *pos=='=')
+      int startpos = pos;
+      for (i=0; pos >= 0 && aStr[pos].unicode() < 128
+	     && (aStr[pos].isLetterOrNumber()
+                 || QString("@._-*[]=").find(aStr[pos]) != -1)
 	     && i<255; i++, pos--)
 	{
 	}
       i1 = i;
       pos++;
-      for (i=0; *pos > 0 && (isalnum(*pos)||*pos=='@'||*pos=='.'||
-			 *pos=='_' || *pos=='-' || *pos=='*'  || *pos=='[' ||
-                         *pos==']' || *pos=='=')
+      for (i=0; pos < (int)aStr.length() && aStr[pos].unicode() < 128
+             && (aStr[pos].isLetterOrNumber()
+                 || QString("@._-*[]=").find(aStr[pos]) != -1)
 	     && i<255; i++, pos++)
       {
-	iStr += *pos;
+	iStr += aStr[pos];
       }
       pos--;
       len = iStr.length();
-      while (len>2 && ispunct(*pos) && (pos > startpos))
+      while (len>2 && aStr[pos].isPunct() && (pos > startpos))
       {
 	len--;
 	pos--;
       }
       iStr.truncate(len);
 
-      htmlPos -= (i1 - 1);
-      if (iStr.length()>3 && iStr.at(0) != '@'
-        && iStr.at(iStr.length() - 1) != '@')
+      result.truncate(result.length() - i1 + 1);
+      if (iStr.length()>3 && iStr[0] != '@'
+        && iStr[iStr.length() - 1] != '@')
           iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
-      HTML_ADD(iStr.data(), iStr.length());
+      result += iStr;
       iStr = "";
     }
 
     else {
-      *htmlPos++ = ch;
+      result += ch;
       startOfLine = false;
     }
   }
 
-  *htmlPos = '\0';
-  result += htmlStr;
-  return QString::fromUtf8(result);
+  return result;
 }
 
 
