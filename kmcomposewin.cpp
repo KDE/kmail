@@ -671,7 +671,7 @@ void KMComposeWin::setupActions(void)
   if (kernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    (void) new KAction (i18n("&Send"), "send", CTRL+Key_Return,
+    (void) new KAction (i18n("&Send"), "mail_send", CTRL+Key_Return,
                         this, SLOT(slotSendNow()), actionCollection(),
                         "send_default");
     (void) new KAction (i18n("&Queue"), "queue", 0,
@@ -681,11 +681,11 @@ void KMComposeWin::setupActions(void)
   else //no, default = send later
   {
     //default = queue, alternative = send now
-    (void) new KAction (i18n("&Queue"), "filemail",
+    (void) new KAction (i18n("&Queue"), "queue",
                         CTRL+Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),
                         "send_default");
-    (void) new KAction (i18n("S&end now"), "send", 0,
+    (void) new KAction (i18n("S&end now"), "mail_send", 0,
                         this, SLOT(slotSendNow()),
                         actionCollection(), "send_alternative");
   }

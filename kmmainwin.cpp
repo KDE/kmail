@@ -1246,7 +1246,7 @@ void KMMainWin::setupMenuBar()
 		      kernel->folderMgr(), SLOT(compactAll()),
 		      actionCollection(), "compact_all_folders" );
 
-  (void) new KAction( i18n("Check &Mail"), "message_get", CTRL+Key_L,
+  (void) new KAction( i18n("Check &Mail"), "mail_get", CTRL+Key_L,
 		      this, SLOT(slotCheckMail()),
 		      actionCollection(), "check_mail" );
 
@@ -1277,7 +1277,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Copy text"), KStdAccel::key(KStdAccel::Copy), this, 
 		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
 
-  (void) new KAction( i18n("&Delete"), "message_delete", Key_D, this, 
+  (void) new KAction( i18n("&Delete"), "editdelete", Key_D, this, 
 		      SLOT(slotDeleteMsg()), actionCollection(), "delete" );
 
   (void) new KAction( i18n("&Search messages..."), "find", Key_S, this, 
@@ -1327,13 +1327,13 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("Previous unread"), "previous", Key_Minus, mHeaders, 
 		      SLOT(prevUnreadMessage()), actionCollection(), "previous_unread" );
 
-  (void) new KAction( i18n("&Reply..."), "message_reply", Key_R, this, 
+  (void) new KAction( i18n("&Reply..."), "mail_reply", Key_R, this, 
 		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
 
-  (void) new KAction( i18n("Reply &All..."), "message_replyall", Key_A, this, 
+  (void) new KAction( i18n("Reply &All..."), "mail_replyall", Key_A, this, 
 		      SLOT(slotReplyAllToMsg()), actionCollection(), "reply_all" );
 
-  (void) new KAction( i18n("&Forward..."), "message_forward", Key_F, this, 
+  (void) new KAction( i18n("&Forward..."), "mail_forward", Key_F, this, 
 		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
 
   (void) new KAction( i18n("R&edirect..."), Key_E, this, 
