@@ -105,7 +105,7 @@ namespace KMail {
 //     label1 = new QLabel( "X-Face:", this );
 //     vlay->addWidget( label1 );
 
-    // "obtain X-Facet from" combo and label:
+    // "obtain X-Face from" combo and label:
     hlay = new QHBoxLayout( vlay ); // inherits spacing
     mSourceCombo = new QComboBox( false, this );
     QWhatsThis::add(mSourceCombo,
@@ -272,7 +272,9 @@ namespace KMail {
         mTextEdit->setText(str);
       }
       KXFace xf;
-      mXFaceLabel->setPixmap( xf.toBitmap(str) );
+      QPixmap p( 48, 48, true );
+      p.convertFromImage( xf.toImage(str) );
+      mXFaceLabel->setPixmap( p );
     }
     else
       mXFaceLabel->setPixmap( 0L );

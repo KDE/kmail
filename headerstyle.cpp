@@ -523,12 +523,11 @@ namespace KMail {
       if ( !xfhead.isEmpty() )
       {
         KXFace xf;
-        photoURL = imgToDataUrl( xf.toBitmap( xfhead ).convertToImage() );
+        photoURL = imgToDataUrl( xf.toImage( xfhead ) );
         photoWidth = 48;
         photoHeight = 48;
 
       }
-
     }
 
     if( !photoURL.isEmpty() )
