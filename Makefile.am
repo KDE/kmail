@@ -25,7 +25,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
 		kmtopwidget.cpp kmacctimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
-		kmscoring.cpp \
+		kmscoring.cpp kmfawidgets.cpp \
 		kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
