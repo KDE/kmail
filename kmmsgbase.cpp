@@ -512,23 +512,33 @@ const QString KMMsgBase::decodeRFC2231String(const QString& _str)
 {
   int p = _str.find("'");
   if (p < 0) return _str;
-  QString st = _str.mid(_str.findRev("'") + 1);
+
+  QString charset = _str.left(p);
+
+  QCString st = _str.mid(_str.findRev("'") + 1).ascii();
   char ch, ch2;
   p = 0;
   while (p < (int)st.length())
   {
     if (st.at(p) == 37)
     {
-      ch = st.at(p+1).latin1() - 48;
+      ch = st.at(p+1) - 48;
       if (ch > 16) ch -= 7;
-      ch2 = st.at(p+2).latin1() - 48;
+      ch2 = st.at(p+2) - 48;
       if (ch2 > 16) ch2 -= 7;
       st.at(p) = ch * 16 + ch2;
       st.remove( p+1, 2 );
     }
     p++;
   }
-  return st;
+  QString result;
+  QTextCodec *codec = QTextCodec::codecForName(charset);
+  if (!codec) codec = QTextCodec::codecForName(KGlobal::locale()
+    ->charset());
+  if (codec) result = codec->toUnicode(st);
+  else result = QString::fromLocal8Bit(st);
+
+  return result;
 }
 
 

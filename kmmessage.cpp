@@ -1695,9 +1695,14 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
       aPart->setSubtypeStr(headers->ContentType().SubtypeStr().c_str());
       DwParameter *param=headers->ContentType().FirstParameter();
       while(param)
-          if (param->Attribute()=="charset") break;
-          else param=param->Next();
-      if (param) aPart->setCharset(param->Value().c_str());
+      {
+        if (QString(param->Attribute().c_str())=="charset")
+          aPart->setCharset(param->Value().c_str());
+        else if (QString(param->Attribute().c_str())=="name*")
+          aPart->setName(KMMsgBase::decodeRFC2231String(
+            param->Value().c_str()));
+        param=param->Next();
+      }
     }
     else
     {
@@ -1705,12 +1710,17 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
       aPart->setSubtypeStr("plain");
     }
     // Modification by Markus
-    if (!headers->ContentType().Name().empty())
-      aPart->setName(KMMsgBase::decodeQuotedPrintableString(headers->ContentType().Name().c_str()) );
-    else if (!headers->Subject().AsString().empty())
-      aPart->setName( KMMsgBase::decodeQuotedPrintableString(headers->Subject().AsString().c_str()) );
-    else
-      aPart->setName( i18n("Attachment: ") + QString( "%1" ).arg( aIdx ) );
+    if (aPart->name().isEmpty())
+    {
+      if (!headers->ContentType().Name().empty())
+        aPart->setName(KMMsgBase::decodeQuotedPrintableString(headers->
+          ContentType().Name().c_str()) );
+      else if (!headers->Subject().AsString().empty())
+        aPart->setName( KMMsgBase::decodeQuotedPrintableString(headers->
+          Subject().AsString().c_str()) );
+      else
+        aPart->setName( i18n("Attachment: ") + QString( "%1" ).arg( aIdx ) );
+    }
 
     // Content-transfer-encoding
     if (headers->HasContentTransferEncoding())
