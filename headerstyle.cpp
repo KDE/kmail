@@ -257,10 +257,14 @@ namespace KMail {
       headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
     
     // Get Instant Messaging presence
-    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-    KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
-    ::KIMProxy *imProxy = KMKernel::self()->imProxy();
-    QString presence = imProxy->presenceString( addresses[0].uid() );
+    QString presence;
+    if ( strategy->showHeader( "status" ) )
+    {
+      KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+      KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
+      ::KIMProxy *imProxy = KMKernel::self()->imProxy();
+      presence = imProxy->presenceString( addresses[0].uid() );
+    }
  
     if ( strategy->showHeader( "from" ) ) {
       headerStr.append(i18n("From: ") +
@@ -268,7 +272,7 @@ namespace KMail {
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
-      if ( !presence.isEmpty() )
+      if ( !presence.isEmpty() && strategy->showHeader( "status" ) )
         headerStr.append("&nbsp;&nbsp;(" + presence + ")" );
       if ( strategy->showHeader( "organization" )
           && !message->headerField("Organization").isEmpty())
