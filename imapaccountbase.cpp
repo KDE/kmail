@@ -363,7 +363,6 @@ namespace KMail {
           && name != ".." && (hiddenFolders() || name.at(0) != '.')
           && (!(*it).inboxOnly || name.upper() == "INBOX"))
       {
-        kdDebug() << "slotListEntries for " << name << endl;
         if (((*it).inboxOnly ||
               url.path() == "/INBOX/") && name.upper() == "INBOX" &&
             !mHasInbox)
