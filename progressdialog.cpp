@@ -265,6 +265,7 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
      mTransactionsToListviewItems.remove( item );
      delete ti;
    }
+   mListView->slotAdjustGeometry();
    // This was the last item, hide.
    if ( mTransactionsToListviewItems.size() == 0 )
      QTimer::singleShot( 3000, this, SLOT( slotHide() ) );
