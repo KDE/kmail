@@ -1455,6 +1455,19 @@ void KMailICalIfaceImpl::slotFolderRenamed()
   slotFolderPropertiesChanged( const_cast<KMFolder*>( folder ) );
 }
 
+void KMailICalIfaceImpl::slotFolderLocationChanged( const QString &oldLocation,
+                                                    const QString &newLocation )
+{
+   ExtraFolder* ef = mExtraFolders.find( oldLocation );
+   if ( ef ) {
+     // reuse the ExtraFolder entry, but adjust the key
+     mExtraFolders.setAutoDelete( false );
+     mExtraFolders.remove( oldLocation );
+     mExtraFolders.setAutoDelete( true );
+     mExtraFolders.insert( newLocation, ef );
+   }
+}
+
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
 {
   // Try the standard folders
@@ -1752,6 +1765,8 @@ void KMailICalIfaceImpl::connectFolder( KMFolder* folder )
               this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
   disconnect( folder, SIGNAL( nameChanged() ),
               this, SLOT( slotFolderRenamed() ) );
+  disconnect( folder->storage(), SIGNAL( locationChanged( const QString&, const QString&) ),
+              this, SLOT( slotFolderLocationChanged( const QString&, const QString&) ) );
 
   // Setup the signals to listen for changes
   connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
@@ -1764,6 +1779,9 @@ void KMailICalIfaceImpl::connectFolder( KMFolder* folder )
            this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
   connect( folder, SIGNAL( nameChanged() ),
            this, SLOT( slotFolderRenamed() ) );
+  connect( folder->storage(), SIGNAL( locationChanged( const QString&, const QString&) ),
+           this, SLOT( slotFolderLocationChanged( const QString&, const QString&) ) );
+
 }
 
 static void cleanupFolder( KMFolder* folder, KMailICalIfaceImpl* _this )
