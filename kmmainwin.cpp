@@ -1738,11 +1738,19 @@ void KMMainWin::slotUrlCopy()
 
   if (mUrlCurrent.protocol() == "mailto")
   {
+    // put the url into the mouse selection and the clipboard
+    clip->setSelectionMode(true);
+    clip->setText(mUrlCurrent.path());
+    clip->setSelectionMode(false);
     clip->setText(mUrlCurrent.path());
     statusMsg(i18n("Address copied to clipboard."));
   }
   else
   {
+    // put the url into the mouse selection and the clipboard
+    clip->setSelectionMode(true);
+    clip->setText(mUrlCurrent.url());
+    clip->setSelectionMode(false);
     clip->setText(mUrlCurrent.url());
     statusMsg(i18n("URL copied to clipboard."));
   }
