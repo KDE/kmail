@@ -65,6 +65,7 @@ using KMail::AddressesDialog;
 #include <kspelldlg.h>
 #include "spellingfilter.h"
 #include "syntaxhighlighter.h"
+using KMail::DictSpellChecker;
 
 #include <qtabdialog.h>
 #include <qregexp.h>
