@@ -287,7 +287,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mNormalIconButton->setIconSize( 16 );
     mNormalIconButton->setStrictIconSize( true );
     mNormalIconButton->setFixedSize( 28, 28 );
-    mNormalIconButton->setIconSet( SmallIconSet("folder") );
+    mNormalIconButton->setIcon( "folder" );
     mNormalIconButton->setEnabled( false );
     ihl->addWidget( mNormalIconButton );
 
@@ -301,7 +301,7 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
     mUnreadIconButton->setIconSize( 16 );
     mUnreadIconButton->setStrictIconSize( true );
     mUnreadIconButton->setFixedSize( 28, 28 );
-    mUnreadIconButton->setIconSet( SmallIconSet("folder_open") );
+    mUnreadIconButton->setIcon( "folder_open" );
     mUnreadIconButton->setEnabled( false );
     ihl->addWidget( mUnreadIconButton );
     ihl->addStretch( 1 );
