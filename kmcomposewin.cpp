@@ -4610,10 +4610,10 @@ void KMComposeWin::slotUndo()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if (fw->inherits("KEdit"))
-    ((QMultiLineEdit*)fw)->undo();
-  else if (fw->inherits("QLineEdit"))
-    ((QLineEdit*)fw)->undo();
+  if ( ::qt_cast<KEdit*>(fw) )
+      static_cast<QMultiLineEdit*>(fw)->undo();
+  else if (::qt_cast<QLineEdit*>(fw))
+      static_cast<QLineEdit*>(fw)->undo();
 }
 
 void KMComposeWin::slotRedo()
@@ -4621,10 +4621,10 @@ void KMComposeWin::slotRedo()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if (fw->inherits("KEdit"))
-    ((QMultiLineEdit*)fw)->redo();
-  else if (fw->inherits("QLineEdit"))
-    ((QLineEdit*)fw)->redo();
+  if (::qt_cast<KEdit*>(fw))
+      static_cast<KEdit*>(fw)->redo();
+  else if (::qt_cast<QLineEdit*>(fw))
+      static_cast<QLineEdit*>(fw)->redo();
 }
 
 //-----------------------------------------------------------------------------
@@ -4633,11 +4633,10 @@ void KMComposeWin::slotCut()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if (fw->inherits("KEdit"))
-    ((QMultiLineEdit*)fw)->cut();
-  else if (fw->inherits("QLineEdit"))
-    ((QLineEdit*)fw)->cut();
-  else kdDebug(5006) << "wrong focus widget" << endl;
+  if (::qt_cast<KEdit*>(fw))
+      static_cast<KEdit*>(fw)->cut();
+  else if (::qt_cast<QLineEdit*>(fw))
+      static_cast<QLineEdit*>(fw)->cut();
 }
 
 
@@ -4677,10 +4676,10 @@ void KMComposeWin::slotMarkAll()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  if (fw->inherits("QLineEdit"))
-      ((QLineEdit*)fw)->selectAll();
-  else if (fw->inherits("QMultiLineEdit"))
-    ((QMultiLineEdit*)fw)->selectAll();
+  if (::qt_cast<QLineEdit*>(fw))
+      static_cast<QLineEdit*>(fw)->selectAll();
+  else if (::qt_cast<KEdit*>(fw))
+      static_cast<KEdit*>(fw)->selectAll();
 }
 
 
