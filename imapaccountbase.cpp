@@ -705,16 +705,38 @@ namespace KMail {
 
     if ( !as )
     {
-      kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no attachment strategy!" << endl;
+      kdWarning(5006) << k_funcinfo << " - found no attachment strategy!" << endl;
       return;
     }
 
-    // download parts according to attachmentstrategy
+    // see what parts have to loaded according to attachmentstrategy
     BodyVisitor *visitor = BodyVisitorFactory::getVisitor( as );
     visitor->visit( mBodyPartList );
     QPtrList<KMMessagePart> parts = visitor->partsToLoad();
+    delete visitor;
     QPtrListIterator<KMMessagePart> it( parts );
     KMMessagePart *part;
+    int partsToLoad = 0;
+    // check how many parts we have to load
+    while ( (part = it.current()) != 0 )
+    {
+      ++it;
+      if ( part->loadPart() )
+      {
+        ++partsToLoad;
+      }
+    }
+    if ( (mBodyPartList.count() * 0.5) < partsToLoad )
+    {
+      // more than 50% of the parts have to be loaded anyway so it is faster
+      // to load the message completely
+      kdDebug(5006) << "Falling back to normal mode" << endl;
+      FolderJob *job = msg->parent()->createJob(
+          msg, FolderJob::tGetMessage, 0, "TEXT" );
+      job->start();
+      return;
+    }
+    it.toFirst();
     while ( (part = it.current()) != 0 )
     {
       ++it;
@@ -735,7 +757,6 @@ namespace KMail {
         job->start();
       }
     }
-    delete visitor;
   }
 
   //-----------------------------------------------------------------------------
