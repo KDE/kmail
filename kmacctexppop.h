@@ -133,7 +133,7 @@ protected:
   QTimer processMsgsTimer;
   QTimer *ss;
   int processingDelay;
-  int numMsgs, numBytes, numBytesRead;
+  int numMsgs, numBytes, numBytesRead, numMsgBytesRead;
   bool interactive;
   bool mProcessing;
 

@@ -414,7 +414,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   mProcessing = true;
 
   if ((stage != Idle) && (stage != Quit))
-    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024) );
+    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024) );
 
   QString prefix;
   bool addedOk;
@@ -604,6 +604,7 @@ void KMAcctExpPop::slotGetNextMsg()
   QValueList<int>::Iterator nextLen = lensOfMsgsPendingDownload.begin();
 
   curMsgData.resize(0);
+  numMsgBytesRead = 0;
   curMsgLen = 0;
   if (curMsgStrm)
     delete curMsgStrm;
@@ -636,7 +637,7 @@ void KMAcctExpPop::slotGetNextMsg()
     curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
     curMsgLen = *nextLen;
     ++indexOfCurrentMsg;
-    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024) );
+    KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024));
     KMBroadcastStatus::instance()->setStatusProgressPercent( 
       ((indexOfCurrentMsg)*100) / numMsgs );
 //      ((indexOfCurrentMsg + 1)*100) / numMsgs );
@@ -653,13 +654,19 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
 {
   if (data.size() == 0) {
     debug( "Data: <End>");
+    if (numMsgBytesRead < curMsgLen)
+      numBytesRead += curMsgLen - numMsgBytesRead;
     return;
   }
 
+  int oldNumMsgBytesRead = numMsgBytesRead;
   if (stage == Retr) {
     curMsgStrm->writeRawBytes( data.data(), data.size() );
     curMsgStrm->writeRawBytes( "\n", 1 );
-    numBytesRead += data.size() + 2;
+    numMsgBytesRead += data.size() + 1;
+    if (numMsgBytesRead > curMsgLen)
+      numMsgBytesRead = curMsgLen;
+    numBytesRead += numMsgBytesRead - oldNumMsgBytesRead;
     return;
   }
 
