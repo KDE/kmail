@@ -1537,6 +1537,8 @@ void AccountDialog::saveSettings()
   kmkernel->acctMgr()->writeConfig(TRUE);
 
   // get the new account and register the new destination folder
+  // this is the target folder for local or pop accounts and the root folder
+  // of the account for (d)imap
   KMAccount* newAcct = kmkernel->acctMgr()->find(mAccount->id());
   if (newAcct)
   {
@@ -1546,6 +1548,10 @@ void AccountDialog::saveSettings()
       newAcct->setFolder( *mFolderList.at(mPop.folderCombo->currentItem()), true );
     } else if ( accountType == "maildir" ) {
       newAcct->setFolder( *mFolderList.at(mMaildir.folderCombo->currentItem()), true );
+    } else if ( accountType == "imap" ) {
+      newAcct->setFolder( kmkernel->imapFolderMgr()->findById(mAccount->id()), true );
+    } else if ( accountType == "cachedimap" ) {
+      newAcct->setFolder( kmkernel->dimapFolderMgr()->findById(mAccount->id()), true );
     }
   }
 }

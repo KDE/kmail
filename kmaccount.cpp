@@ -510,6 +510,7 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
   if ( !a ) return;
 
   setName( a->name() );
+  setId( a->id() );
   setCheckInterval( a->checkInterval() );
   setResource( a->resource() );
   setIntervals( a->intervals() );
