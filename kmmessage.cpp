@@ -47,6 +47,7 @@ static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr, sMessa
 static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix, sCreateOwnMessageIdHeaders;
 static int sWrapCol;
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
+static QStringList sPrefCharsets;
 
 QString KMMessage::sForwardStr = "";
 int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
@@ -1618,7 +1619,12 @@ void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
   DwField* field;
   QCString aValue = "";
   if (!bValue.isEmpty())
-    aValue = encodeRFC2047String(bValue, charset());
+  {
+    QCString encoding = autoDetectCharset(charset(), sPrefCharsets, bValue);
+    if (encoding.isEmpty())
+       encoding = "utf-8";
+    aValue = encodeRFC2047String(bValue, encoding);
+  }
 
   if (aName.isEmpty()) return;
 
@@ -2330,15 +2336,35 @@ void KMMessage::readConfig(void)
       sWrapCol = 78;
     if (sWrapCol < 60)
       sWrapCol = 60;
+
+    sPrefCharsets = config->readListEntry("pref-charsets");
   }
 
   { // area for config group "Reader"
     KConfigGroupSaver saver(config, "Reader");
     sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);
   }
-
 }
 
+QCString KMMessage::defaultCharset()
+{
+  QCString retval;
+
+  if (!sPrefCharsets.isEmpty())
+      retval = sPrefCharsets[0].latin1();
+
+  if (retval.isEmpty()  || (retval == "locale"))
+      retval = QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower();
+
+  if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
+  else if (retval == "ksc5601.1987-0") retval = "euc-kr";
+  return retval;
+}
+
+const QStringList &KMMessage::preferredCharsets()
+{
+  return sPrefCharsets;
+}
 
 //-----------------------------------------------------------------------------
 QCString KMMessage::charset(void) const
@@ -2357,7 +2383,7 @@ QCString KMMessage::charset(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setCharset(const QCString& bStr)
 {
-   QCString aStr = bStr;
+   QCString aStr = bStr.lower();
    if (aStr.isNull())
        aStr = "";
    DwMediaType &mType=mMsg->Headers().ContentType();

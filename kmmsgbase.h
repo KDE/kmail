@@ -159,6 +159,13 @@ public:
   /** Decode given string as described in RFC2231 */
   static QString decodeRFC2231String(const QCString& aStr);
 
+  /** 
+   * Find out preferred charset for 'text'.
+   * First @p encoding is tried and if that one is not suitable,
+   * the encodings in @p encodingList are tried.
+   */
+  static QCString autoDetectCharset(const QCString &encoding, const QStringList &encodingList, const QString &text);
+
 protected:
   KMFolder* mParent;
   bool mDirty;

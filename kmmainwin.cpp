@@ -1547,7 +1547,7 @@ void KMMainWin::slotMailtoReply()
   rmsg->setTo(mUrlCurrent.path());
 
   win = new KMComposeWin(rmsg, id);
-  win->setCharset(msg->codec()->name(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
 }
@@ -1564,7 +1564,7 @@ void KMMainWin::slotMailtoForward()
   fmsg->setTo(mUrlCurrent.path());
 
   win = new KMComposeWin(fmsg);
-  win->setCharset(msg->codec()->name(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
 }
 

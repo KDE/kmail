@@ -322,7 +322,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 	cstr = decodeBase64(str);
       }
       QTextCodec *codec = codecForName(charset);
-      if (!codec) codec = codecForName(KGlobal::locale()->charset().latin1());
+      if (!codec) codec = KGlobal::locale()->codecForEncoding();
       if (codec) result += codec->toUnicode(cstr);
       else result += QString::fromLocal8Bit(cstr);
       lastWasEncodedWord = TRUE;
@@ -384,7 +384,7 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
   if (charset == "us-ascii") return toUsAscii(_str);
 
   QCString cset;
-  if (charset.isEmpty()) cset = KGlobal::locale()->charset().latin1();
+  if (charset.isEmpty()) cset = QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower();
     else cset = charset;
   QTextCodec *codec = codecForName(cset);
   if (!codec) codec = QTextCodec::codecForLocale();
@@ -465,7 +465,7 @@ QCString KMMsgBase::encodeRFC2231String(const QString& _str,
 {
   if (_str.isEmpty()) return QCString();
   QCString cset;
-  if (charset.isEmpty()) cset = KGlobal::locale()->charset().latin1();
+  if (charset.isEmpty()) cset = QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower();
     else cset = charset;
   QTextCodec *codec = codecForName(cset);
   QCString latin;
@@ -533,12 +533,50 @@ QString KMMsgBase::decodeRFC2231String(const QCString& _str)
   }
   QString result;
   QTextCodec *codec = codecForName(charset);
-  if (!codec) codec = codecForName(KGlobal::locale()->charset().latin1());
+  if (!codec) codec = KGlobal::locale()->codecForEncoding();
   if (codec) result = codec->toUnicode(st);
   else result = QString::fromLocal8Bit(st);
 
   return result;
 }
+
+//-----------------------------------------------------------------------------
+QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringList &encodingList, const QString &text)
+{
+    QStringList charsets = encodingList;
+    if (!_encoding.isEmpty())
+    {
+       QString currentCharset = QString::fromLatin1(_encoding);
+       charsets.remove(currentCharset);
+       charsets.prepend(currentCharset);
+    }
+
+    QStringList::ConstIterator it = charsets.begin();
+    for (; it != charsets.end(); ++it) 
+    {
+       QCString encoding = (*it).latin1();
+       if (encoding == "locale")
+          encoding = QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower();
+       if (encoding == "us-ascii") {
+         bool ok;
+         (void) KMMsgBase::toUsAscii(text, &ok);
+         if (ok)
+            return encoding;
+       }
+       else 
+       {
+         QTextCodec *codec = KMMsgBase::codecForName(encoding);
+         if (!codec) {
+           kdDebug(5006) << "Auto-Charset: Something is wrong and I can not get a codec. [" << encoding << "]" << endl;
+         } else {
+           if (codec->canEncode(text))
+              return encoding;
+         }
+       }
+    }
+    return 0;
+}
+
 
 
 //-----------------------------------------------------------------------------

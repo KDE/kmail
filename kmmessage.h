@@ -307,6 +307,12 @@ public:
   /** Split a comma separated list of email addresses. */
   static QStringList splitEmailAddrList(const QString&);
 
+  /** Get the default message charset.*/
+  static QCString defaultCharset(void);
+
+  /** Get a list of preferred message charsets.*/
+  static const QStringList &preferredCharsets(void);
+
   /** Get the message charset.*/
   virtual QCString charset(void) const;
 

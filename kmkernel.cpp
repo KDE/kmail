@@ -5,11 +5,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-#if QT_VERSION < 300
-#  define Q_CHECK_PTR CHECK_PTR
-#endif
-
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
@@ -527,12 +522,9 @@ void KMKernel::init()
 
   { // area for config group "Composer"
     KConfigGroupSaver saver(cfg, "Composer");
-    if (cfg->readListEntry("charsets").isEmpty())
+    if (cfg->readListEntry("pref-charsets").isEmpty())
     {
-      cfg->writeEntry("charsets", "us-ascii,utf-8,iso-8859-1,iso-8859-15,"
-      "iso-8859-2,iso-8859-3,iso-8859-4,iso-8859-5,koi8-r,koi8-u,windows-1251,"
-      "iso-8859-6,iso-8859-7,iso-8859-8,iso-8859-9,iso-8859-10,iso-8859-13,"
-      "iso-8859-14,iso-2022-jp,euc-jp,shift_jis,euc-kr,Big5,gb2312");
+      cfg->writeEntry("pref-charsets", "us-ascii,locale,utf-8");
     }
   }
   // filterMgr->dump();
@@ -793,7 +785,6 @@ KabAPI* KMKernel::KABaddrBook()
     return the_KAB_addrBook;
 
   the_KAB_addrBook = new KabAPI; // KabApi is a dialog;
-  Q_CHECK_PTR(the_KAB_addrBook);
   if(KABaddrBook()->init()!=AddressBook::NoError)
   { // this connects to the default address book and opens it:
     kdDebug(5006) << "Error initializing the connection to your KAB address book." << endl;

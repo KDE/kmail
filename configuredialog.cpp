@@ -1238,9 +1238,9 @@ void ConfigureDialog::makeComposerPage( void )
   QVBoxLayout *topLevel3 = new QVBoxLayout( charsetPage, spacingHint() );
 
   //list of charsets
-  QGroupBox *charsetsGroup = new QGroupBox( i18n("Available charsets"),
+  QGroupBox *charsetsGroup = new QGroupBox( i18n("Preferred charsets"),
     charsetPage );
-  QGridLayout *charsetsGridLay = new QGridLayout( charsetsGroup, 6, 2,
+  QGridLayout *charsetsGridLay = new QGridLayout( charsetsGroup, 7, 2,
     spacingHint() );
   charsetsGridLay->addRowSpacing( 0, fontMetrics().lineSpacing() );
   charsetsGridLay->setRowStretch( 1, 10 );
@@ -1257,6 +1257,10 @@ void ConfigureDialog::makeComposerPage( void )
   mComposer.charsetDownButton = new QPushButton( i18n("&Down"), charsetsGroup );
   mComposer.charsetDownButton->setAutoRepeat( TRUE );
   charsetsGridLay->addWidget( mComposer.charsetDownButton, 5, 1 );
+  mComposer.forceReplyCharsetCheck =
+    new QCheckBox( i18n("&Keep original charset when replying or forwarding (if possible)."),
+    charsetsGroup );
+  charsetsGridLay->addMultiCellWidget( mComposer.forceReplyCharsetCheck, 6,6, 0, 1 );
   topLevel3->addWidget( charsetsGroup );
   connect( mComposer.addCharsetButton, SIGNAL(clicked()),
   	   this, SLOT(slotAddCharset()) );
@@ -1269,27 +1273,6 @@ void ConfigureDialog::makeComposerPage( void )
   connect( mComposer.charsetListBox, SIGNAL(selectionChanged()),
            this, SLOT(slotCharsetSelectionChanged()) );
 
-  // We might need this again, if we implement automatic charset selection
-  // in the composer
-  charsetsGroup->hide();
-  mComposer.addCharsetButton->hide();
-  mComposer.removeCharsetButton->hide();
-  mComposer.charsetUpButton->hide();
-  mComposer.charsetDownButton->hide();
-
-  //default charset
-  QGroupBox *defaultCharsetGroup = new QGroupBox( i18n("Default charset"),
-    charsetPage );
-  QVBoxLayout *charsetVLay = new QVBoxLayout( defaultCharsetGroup,
-    spacingHint() );
-  charsetVLay->addSpacing( fontMetrics().lineSpacing() );
-  mComposer.defaultCharsetCombo = new QComboBox( defaultCharsetGroup );
-  charsetVLay->addWidget( mComposer.defaultCharsetCombo );
-  mComposer.forceReplyCharsetCheck =
-    new QCheckBox( i18n("&Use own default charset when replying or forwarding"),
-    defaultCharsetGroup );
-  charsetVLay->addWidget( mComposer.forceReplyCharsetCheck );
-  topLevel3->addWidget( defaultCharsetGroup );
   topLevel3->addSpacing( spacingHint() );
   topLevel3->addStretch();
 }
@@ -1893,34 +1876,18 @@ void ConfigureDialog::setupComposerPage( void )
       config->readBoolEntry( "confirm-before-send", false ) );
 
     //charsets
-    QStringList charsets = config->readListEntry("charsets");
+    QStringList charsets = config->readListEntry("pref-charsets");
+    for(QStringList::Iterator it = charsets.begin(); it!= charsets.end(); ++it)
+    {
+       if (*it == "locale")
+         *it = QString("%1 (locale)").arg(QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower());
+    }  
     mComposer.charsetListBox->clear();
     mComposer.charsetListBox->insertStringList( charsets );
     mComposer.charsetListBox->setCurrentItem( 0 );
 
-    mComposer.defaultCharsetCombo->clear();
-    mComposer.defaultCharsetCombo->insertItem( i18n("Use language encoding") );
-    mComposer.defaultCharsetCombo->insertStringList(
-      KMMsgBase::supportedEncodings(TRUE));
-    QString str = config->readEntry( "charset", "" );
-    if (str.isEmpty() || str == "default")
-      mComposer.defaultCharsetCombo->setCurrentItem( 0 );
-    else
-    {
-      bool found = false;
-      for (int j = 1; !found && (j < mComposer.defaultCharsetCombo->count()); j++ )
-	if (KGlobal::charsets()->encodingForName(mComposer
-          .defaultCharsetCombo->text( j )) == str)
-	{
-	  mComposer.defaultCharsetCombo->setCurrentItem( j );
-	  found = true;
-	  break;
-	}
-      if (!found)
-	mComposer.defaultCharsetCombo->setCurrentItem(0);
-    }
     state = config->readBoolEntry( "force-reply-charset", false );
-    mComposer.forceReplyCharsetCheck->setChecked( state );
+    mComposer.forceReplyCharsetCheck->setChecked( !state );
   }
 }
 
@@ -2380,8 +2347,13 @@ void ConfigureDialog::slotDoApply( bool everything )
       QStringList charsetList;
       int charsetCount = mComposer.charsetListBox->count();
       for (j = 0; j < charsetCount; j++)
-	charsetList.append( mComposer.charsetListBox->item( j )->text() );
-      config->writeEntry("charsets", charsetList);
+      {
+        QString charset = mComposer.charsetListBox->item( j )->text();
+        if (charset.endsWith("(locale)"))
+           charset = "locale";
+	charsetList.append( charset );
+      }
+      config->writeEntry("pref-charsets", charsetList);
 
       bool autoSignature = mComposer.autoAppSignFileCheck->isChecked();
       config->writeEntry("signature", autoSignature ? "auto" : "manual" );
@@ -2399,14 +2371,8 @@ void ConfigureDialog::slotDoApply( bool everything )
       bool confirmBeforeSend = mComposer.confirmSendCheck->isChecked();
       config->writeEntry("confirm-before-send", confirmBeforeSend );
 
-      // charset settings
-      if ( mComposer.defaultCharsetCombo->currentItem() == 0 )
-	config->writeEntry("charset", "default");
-      else
-	config->writeEntry("charset", KGlobal::charsets()->encodingForName(
-        mComposer.defaultCharsetCombo->currentText()));
       config->writeEntry("force-reply-charset",
-			 mComposer.forceReplyCharsetCheck->isChecked() );
+			 !mComposer.forceReplyCharsetCheck->isChecked() );
     }
   }
   if( activePage == mMime.pageIndex || everything )
@@ -3457,14 +3423,17 @@ void ConfigureDialog::slotAddCharset( void )
   if ( linedlg->exec() == QDialog::Accepted )
   {
       QString charsetText=linedlg->text();
-      if (!charsetText.isEmpty() && (charsetText.lower() == "us-ascii" ||
-      KMMsgBase::codecForName( charsetText.latin1() )))
+      if (!charsetText.isEmpty() && 
+          ((charsetText.lower() == "us-ascii") ||
+           (charsetText.lower() == "locale") ||
+           KMMsgBase::codecForName( charsetText.latin1() )))
     {
+      if (charsetText.lower() == "locale")
+         charsetText = QString("%1 (locale)").arg(QCString(KGlobal::locale()->codecForEncoding()->mimeName()).lower());
       mComposer.charsetListBox->insertItem( charsetText,
         mComposer.charsetListBox->currentItem() + 1 );
       mComposer.charsetListBox->setSelected( mComposer.charsetListBox->
         currentItem() + 1, TRUE );
-      mComposer.defaultCharsetCombo->insertItem( charsetText );
     } else {
       KMessageBox::sorry( this, i18n("This charset is not supported.") );
     }
@@ -3476,15 +3445,6 @@ void ConfigureDialog::slotRemoveSelCharset( void )
   int crItem = mComposer.charsetListBox->currentItem();
   if( crItem != -1 )
   {
-    for (int i = 0; i < mComposer.defaultCharsetCombo->count(); i++)
-    {
-      if (mComposer.defaultCharsetCombo->text( i ) ==
-          mComposer.charsetListBox->currentText())
-      {
-        mComposer.defaultCharsetCombo->removeItem( i );
-        break;
-      }
-    }
     mComposer.charsetListBox->removeItem( crItem );
     if (crItem - mComposer.charsetListBox->count() <= 0) crItem--;
     mComposer.charsetListBox->setSelected( crItem, TRUE );

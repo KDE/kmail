@@ -472,19 +472,9 @@ private:
   QCString pgpProcessedMsg(void);
 
   /**
-   * Set edit widget charset
-   */
-  void setEditCharset();
-
-  /**
    * Send the message
    */
   void doSend(int sendNow=-1, bool saveInDrafts = false);
-
-  /**
-   * get default charset from locale settings
-   */
-  QCString defaultCharset(void) const;
 
 protected:
   QWidget   *mMainWidget;
@@ -538,6 +528,11 @@ protected:
 
   QCString mCharset;
   QCString mDefCharset;
+  QStringList mCharsets;
+  bool bAutoCharset;
+
+  QStringList mFolderNames;
+  QValueList<QGuardedPtr<KMFolder> > mFolderList;
 
 private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );

@@ -315,20 +315,8 @@ void KMComposeWin::readConfig(void)
   int maxTransportItems;
 
   KConfigGroupSaver saver(config, "Composer");
-
-  str = config->readEntry("charset", "").latin1();
-  if (str.isEmpty() || str=="default")
-    mDefCharset = defaultCharset();
-  else
-  {
-    mDefCharset = str;
-/*    if ( !KGlobal::charsets()->isAvailable(   obsolete with QT3
-      KGlobal::charsets()->charsetForEncoding(mDefCharset)) )
-        mDefCharset = "default"; */
-  }
-
-  kdDebug(5006) << "Default charset: " << mDefCharset << endl;
-
+  
+  mDefCharset = KMMessage::defaultCharset();
   mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
@@ -804,6 +792,7 @@ void KMComposeWin::setupActions(void)
   connect(wordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   QStringList encodings = KMMsgBase::supportedEncodings(TRUE);
+  encodings.prepend( i18n("Auto-detect"));
   encodingAction->setItems( encodings );
   encodingAction->setCurrentItem( -1 );
 
@@ -1061,10 +1050,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     if (firstAttachment)
     {
       mCharset = bodyPart.charset();
-      if (mCharset=="")
-        mCharset = mDefCharset;
       if ((mCharset=="") || (mCharset == "default"))
-        mCharset = defaultCharset();
+        mCharset = mDefCharset;
 
       bodyDecoded = bodyPart.bodyDecoded();
 
@@ -1085,10 +1072,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     }
   } else{
     mCharset=mMsg->charset();
-    if (mCharset=="")
-      mCharset=mDefCharset;
     if ((mCharset=="") || (mCharset == "default"))
-      mCharset = defaultCharset();
+      mCharset = mDefCharset;
 
     QCString bodyDecoded = mMsg->bodyDecoded();
 
@@ -1148,6 +1133,19 @@ bool KMComposeWin::applyChanges(void)
     return FALSE;
   }
 
+  if (bAutoCharset) {
+    QCString charset = KMMsgBase::autoDetectCharset(mCharset, KMMessage::preferredCharsets(), mEditor->text());
+    if (charset.isEmpty())
+    {
+      KMessageBox::sorry(this, 
+           i18n("No suitable encoding could be found for your message.\n"
+                "Please set an encoding using the 'Options' menu."));
+      return false;
+    }
+    mCharset = charset;
+    mMsg->setCharset(mCharset);
+  } 
+
   mMsg->setTo(to());
   mMsg->setFrom(from());
   mMsg->setCc(cc());
@@ -1201,9 +1199,8 @@ bool KMComposeWin::applyChanges(void)
 
     mMsg->setCteStr(isQP ? "quoted-printable": "8bit");
 
-    if (mCharset == "default")
-      mCharset = defaultCharset();
     mMsg->setCharset(mCharset);
+
     QCString body = pgpProcessedMsg();
     if (body.isNull()) return FALSE;
     if (body.isEmpty()) body = "\n";     // don't crash
@@ -1231,8 +1228,6 @@ bool KMComposeWin::applyChanges(void)
 
     bodyPart.setCteStr(isQP ? "quoted-printable": "8bit");
 
-    if (mCharset == "default")
-      mCharset = defaultCharset();
     bodyPart.setCharset(mCharset);
     QCString body = pgpProcessedMsg();
     if (body.isNull()) return FALSE;
@@ -1501,8 +1496,19 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 {
   if ((forceDefault && mForceReplyCharset) || aCharset.isEmpty())
     mCharset = mDefCharset;
-  else mCharset = aCharset;
+  else 
+    mCharset = aCharset.lower();
+
+  if ((mCharset=="") || (mCharset == "default"))
+     mCharset = mDefCharset;
+
   mMsg->setCharset(mCharset);
+
+  if (bAutoCharset)
+  {
+    encodingAction->setCurrentItem( 0 );
+    return;
+  }
 
   QStringList encodings = encodingAction->items();
   int i = 0;
@@ -1510,7 +1516,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end();
      ++it, i++ )
   {
-    if ((mCharset.lower() == "us-ascii" && i == 0) ||
+    if ((mCharset == "us-ascii" && i == 0) ||
      (i != 0 && KGlobal::charsets()->codecForName(
       KGlobal::charsets()->encodingForName(*it))
       == KGlobal::charsets()->codecForName(mCharset)))
@@ -1685,10 +1691,16 @@ void KMComposeWin::slotInsertFile()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSetCharset()
 {
+  if (encodingAction->currentItem() == 0)
+  {
+    bAutoCharset = true;
+    return;
+  }
+  bAutoCharset = false;
+
   mCharset = KGlobal::charsets()->encodingForName( encodingAction->
     currentText() ).latin1();
   mMsg->setCharset(mCharset);
-  setEditCharset();
 }
 
 
@@ -2274,49 +2286,6 @@ void KMComposeWin::slotSpellcheckDone()
   mSpellCheckInProgress=FALSE;
   statusBar()->changeItem(i18n("Spellcheck complete."),0);
 
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::setEditCharset()
-{
-  if (mCharset == "default" || mCharset.isEmpty())
-    mCharset = defaultCharset();
-}
-
-//-----------------------------------------------------------------------------
-QCString KMComposeWin::defaultCharset(void) const
-{
-  // first try
-  QCString retval = KGlobal::locale()->charset().latin1();
-  // however KGlobal::locale->charset() has a fallback value of iso-8859-1,
-  // we try to be smarter
-  QCString aStr = QTextCodec::codecForLocale()->name();
-/*  if ((retval == "iso-8859-1") && (aStr != "ISO 8859-1"))
-  {
-    // read locale if it really gives iso-8859-1
-    KConfig *globalConfig = KGlobal::instance()->config();
-    if (globalConfig)
-    {
-      KConfigGroupSaver saver(globalConfig, "Locale");
-      retval = globalConfig->readEntry("Charset").latin1();
-      if (retval.isNull())  //this means iso-8859-1 was a fallback, make your own guess
-      {
-        //we basicly use LANG envvar here
-        QString bStr = "";
-        QChar spaceChar(' ');
-        for (int i = 0; i < (int)aStr.length(); i++)
-           if (aStr[i] != spaceChar)
-             bStr += QChar(aStr[i]).lower();
-         retval = KGlobal::charsets()->name(KGlobal::charsets()->nameToID(bStr))
-           .latin1();
-      }
-    }
-    //we should be pretty safe: still if sth goes wrong we return iso-8859-1
-  }
-  else */ if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
-  else if (retval == "ksc5601.1987-0") retval = "euc-kr";
-  return retval;
 }
 
 //-----------------------------------------------------------------------------

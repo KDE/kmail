@@ -368,7 +368,6 @@ private:
       QPushButton *removeCharsetButton;
       QPushButton *charsetUpButton;
       QPushButton *charsetDownButton;
-      QComboBox *defaultCharsetCombo;
       QCheckBox* forceReplyCharsetCheck;
     };
     struct MimeWidget

@@ -1205,7 +1205,7 @@ void KMHeaders::resendMsg ()
   newMsg->fromString(msg->asString());
   newMsg->removeHeaderField("Message-Id");
   newMsg->initHeader();
-  newMsg->setCharset(msg->codec()->name());
+  newMsg->setCharset(msg->codec()->mimeName());
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
 
@@ -1363,7 +1363,7 @@ void KMHeaders::forwardMsg ()
     id = mFolder->identity();
   kernel->kbp()->busy();
   win = new KMComposeWin(msg->createForward(), id);
-  win->setCharset(msg->codec()->name(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
   kernel->kbp()->idle();
 }
@@ -1437,7 +1437,7 @@ void KMHeaders::redirectMsg()
   kernel->kbp()->busy();
   win = new KMComposeWin();
   win->setMsg(msg->createRedirect(), FALSE);
-  win->setCharset(msg->codec()->name());
+  win->setCharset(msg->codec()->mimeName());
   win->show();
   kernel->kbp()->idle();
 }
@@ -1458,7 +1458,7 @@ void KMHeaders::noQuoteReplyToMsg()
   if ( id.isEmpty() )
     id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE),id);
-  win->setCharset(msg->codec()->name(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
   win->show();
   kernel->kbp()->idle();
@@ -1479,7 +1479,7 @@ void KMHeaders::replyToMsg (QString selection)
   if ( id.isEmpty() )
     id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection),id);
-  win->setCharset(msg->codec()->name(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
   kernel->kbp()->idle();
@@ -1500,7 +1500,7 @@ void KMHeaders::replyAllToMsg (QString selection)
   if ( id.isEmpty() )
     id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection),id);
-  win->setCharset(msg->codec()->name(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
   kernel->kbp()->idle();
@@ -1520,7 +1520,7 @@ void KMHeaders::replyListToMsg (QString selection)
   if ( id.isEmpty() )
     id = mFolder->identity();
   win = new KMComposeWin(msg->createReply(true, true, selection),id);
-  win->setCharset(msg->codec()->name(), TRUE);
+  win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
   kernel->kbp()->idle();
