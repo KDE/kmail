@@ -2147,34 +2147,44 @@ QString KMMessage::generateMessageId( const QString& addr )
 //-----------------------------------------------------------------------------
 QString KMMessage::stripEmailAddr(const QString& aStr)
 {
+  QStringList list = splitEmailAddrList(aStr);
+  QString result, totalResult, partA, partB;
   int i, j, len;
-  QString partA, partB, result;
-  char endCh = '>';
-
-  i = aStr.find('<');
-  if (i<0)
+  for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
   {
-    i = aStr.find('(');
-    endCh = ')';
+    char endCh = '>';
+
+    i = (*it).find('<');
+    if (i<0)
+    {
+      i = (*it).find('(');
+      endCh = ')';
+    }
+    if (i<0) result = *it;
+    else {
+      partA = (*it).left(i).stripWhiteSpace();
+      j = (*it).find(endCh,i+1);
+      if (j<0) result = *it;
+      else {
+        partB = (*it).mid(i+1, j-i-1).stripWhiteSpace();
+
+        if (partA.find('@') >= 0 && !partB.isEmpty()) result = partB;
+        else if (!partA.isEmpty()) result = partA;
+        else result = (*it);
+
+        len = result.length();
+        if (result[0]=='"' && result[len-1]=='"')
+          result = result.mid(1, result.length()-2);
+        else if (result[0]=='<' && result[len-1]=='>')
+          result = result.mid(1, result.length()-2);
+        else if (result[0]=='(' && result[len-1]==')')
+          result = result.mid(1, result.length()-2);
+      }
+    }
+    if (!totalResult.isEmpty()) totalResult += ", ";
+    totalResult += result;
   }
-  if (i<0) return aStr;
-  partA = aStr.left(i).stripWhiteSpace();
-  j = aStr.find(endCh,i+1);
-  if (j<0) return aStr;
-  partB = aStr.mid(i+1, j-i-1).stripWhiteSpace();
-
-  if (partA.find('@') >= 0 && !partB.isEmpty()) result = partB;
-  else if (!partA.isEmpty()) result = partA;
-  else result = aStr;
-
-  len = result.length();
-  if (result[0]=='"' && result[len-1]=='"')
-    result = result.mid(1, result.length()-2);
-  else if (result[0]=='<' && result[len-1]=='>')
-    result = result.mid(1, result.length()-2);
-  else if (result[0]=='(' && result[len-1]==')')
-    result = result.mid(1, result.length()-2);
-  return result;
+  return totalResult;
 }
 
 //-----------------------------------------------------------------------------
