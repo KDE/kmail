@@ -38,6 +38,7 @@ namespace KMail {
     Q_OBJECT
   public:
     IdentityDialog( QWidget * parent=0, const char * name = 0 );
+    virtual ~IdentityDialog();
 
     void setIdentity( /*_not_ const*/ KMIdentity & ident );
 

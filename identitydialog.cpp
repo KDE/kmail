@@ -29,6 +29,8 @@
 // other KDE headers:
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kconfig.h>
+#include <kapplication.h>
 
 // Qt headers:
 #include <qtabwidget.h>
@@ -179,6 +181,15 @@ namespace KMail {
     mSignatureConfigurator = new SignatureConfigurator( tabWidget );
     mSignatureConfigurator->layout()->setMargin( KDialog::marginHint() );
     tabWidget->addTab( mSignatureConfigurator, i18n("&Signature") );
+
+    KConfigGroup geometry( kapp->config(), "Geometry" );
+    if ( geometry.hasKey( "Identity Dialog size" ) )
+      resize( geometry.readSizeEntry( "Identity Dialog size" ) );
+  }
+
+  IdentityDialog::~IdentityDialog() {
+    KConfigGroup geometry( kapp->config(), "Geometry" );
+    geometry.writeEntry( "Identity Dialog size", size() );
   }
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
