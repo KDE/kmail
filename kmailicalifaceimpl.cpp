@@ -302,12 +302,9 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     bool unget = !folder->isMessage( i );
     QString s;
     if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
-      QByteArray data;
-      QDataStream arg(data, IO_WriteOnly );
-      arg << type << folder->location() << s;
       kdDebug(5006) << "Emitting DCOP signal incidenceAdded( " << type
                     << ", " << folder->location() << ", " << s << " )" << endl;
-      emitDCOPSignal( "incidenceAdded(QString,QString,QString)", data );
+      incidenceAdded( type, folder->location(), s );
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -335,13 +332,10 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
     if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
       QString uid( "UID" );
       vPartMicroParser( s, uid );
-      QByteArray data;
-      QDataStream arg(data, IO_WriteOnly );
-      arg << type << folder->location() << uid;
       kdDebug(5006) << "Emitting DCOP signal incidenceDeleted( "
                     << type << ", " << folder->location() << ", " << uid
                     << " )" << endl;
-      emitDCOPSignal( "incidenceDeleted(QString,QString,QString)", data );
+      incidenceDeleted( type, folder->location(), uid );
     }
     if( unget ) folder->unGetMsg(i);
   } else
@@ -424,6 +418,11 @@ QString KMailICalIfaceImpl::icalFolderType( KMFolder* folder ) const
       return "Task";
     else if( folder == mJournals )
       return "Journal";
+    else {
+      ExtraFolder* ef = mExtraFolders.find( folder->location() );
+      if ( ef != 0 )
+        return folderContentsType( ef->type );
+    }
   }
 
   return QString::null;
@@ -525,8 +524,9 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     subresourceDeleted(folderContentsType( ef->type ), folder->location() );
 
     if ( contentsType == 0 ) {
-      // Delete the old entry and stop here
+      // Delete the old entry, stop listening and stop here
       mExtraFolders.remove( folder->location() );
+      folder->disconnect( this );
       return;
     }
 
@@ -537,6 +537,12 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     // Make a new entry for the list
     ef = new ExtraFolder( folder, contentsType );
     mExtraFolders.insert( folder->location(), ef );
+
+    // And listen to changes from it
+    connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+             this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+    connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
+             this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
   }
 
   // Tell about the new resource
