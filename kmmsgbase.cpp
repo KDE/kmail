@@ -265,6 +265,8 @@ int KMMsgBase::compareByFrom(const KMMsgBase* other) const
   f = from();
   fo = other->from();
 
+  if (!f || !fo) return ((!fo) - (!f));
+
   while (*f && *f<'A') f++;
   while (*fo && *fo<'A') fo++;
 

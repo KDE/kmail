@@ -1,3 +1,7 @@
+1998-12-20  Stefan Taferner  <taferner@kde.org> (KMail-1.0.10)
+
+	* Fixed possible crash when subject is empty.
+
 1998-12-17  Juraj Bednar     <bednar@isternet.sk>
 
         * Added the capatability to insert arbitary public keys from public
