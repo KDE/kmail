@@ -161,13 +161,16 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   mMiscPage->setPageIndex( pageIndex( page ) );
 
   // Plugin Page:
+#if 0
   page = addPage( PluginPage::iconLabel(), PluginPage::title(),
 		  loadIcon( PluginPage::iconName() ) );
+#else
+  page = new QWidget();
+#endif
   vlay = new QVBoxLayout( page, 0, spacingHint() );
   mPluginPage = new PluginPage( page );
   vlay->addWidget( mPluginPage );
   mPluginPage->setPageIndex( pageIndex( page ) );
-  
 }
 
 
