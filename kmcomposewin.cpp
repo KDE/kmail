@@ -64,6 +64,7 @@ using KMail::AddressesDialog;
 #include <kspell.h>
 #include <kspelldlg.h>
 #include "spellingfilter.h"
+#include "syntaxhighlighter.h"
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -88,8 +89,6 @@ using KMail::RecentAddresses;
 #include "klistboxdialog.h"
 
 #include "kmcomposewin.moc"
-
-
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
@@ -5392,8 +5391,8 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   mTempFile = 0;
   mExtEditorProcess = 0;
   mWasModifiedBeforeSpellCheck = false;
+  mSpellChecker = new KMail::DictSpellChecker( this );
 }
-
 
 //-----------------------------------------------------------------------------
 KMEdit::~KMEdit()
@@ -5402,7 +5401,7 @@ KMEdit::~KMEdit()
   removeEventFilter(this);
 
   delete mKSpell;
-
+  delete mSpellChecker;
 }
 
 
@@ -5597,8 +5596,9 @@ void KMEdit::slotSpellResult(const QString &)
     setText(mSpellingFilter->originalText());
     setModified(mWasModifiedBeforeSpellCheck);
   }
-
   mKSpell->cleanUp();
+  KMail::DictSpellChecker::dictionaryChanged();
+
   emit spellcheck_done( dlgResult );
 }
 
