@@ -1887,7 +1887,7 @@ void KMComposeWin::slotSendNow()
 
 void KMComposeWin::slotAppendSignature()
 {
-  QString identStr = "unknown";
+  QString identStr = i18n( "Default" );
   if( !mId.isEmpty() && KMIdentity::identities().contains( mId ) )
   {
     identStr = mId;

@@ -421,7 +421,7 @@ const QString KMFilterActionIdentity::label(void) const
 
 KMFilterActionIdentity::KMFilterActionIdentity(): KMFilterAction("set identity")
 {
-  id = i18n( "unknown" );
+  id = i18n( "Default" );
 }
 
 int KMFilterActionIdentity::process(KMMessage* msg, bool& )
@@ -446,12 +446,18 @@ void KMFilterActionIdentity::applyParamWidgetValue(QWidget* aParamWidget)
 
 void KMFilterActionIdentity::argsFromString(const QString argsStr)
 {
-  id = argsStr;
+  if (argsStr.isEmpty())
+    id = i18n( "Default" );
+  else
+    id = argsStr;
 }
 
 const QString KMFilterActionIdentity::argsAsString(void) const
 {
-  return id;
+  if (id == i18n( "Default" ))
+    return "";
+  else
+    return id;
 }
 
 

@@ -24,8 +24,10 @@ QStringList KMIdentity::identities()
   config->setGroup( "Identity" );
 
   QStringList result = config->readListEntry( "IdentityList" );
-  if (!result.contains( "unknown" ))
-    result.prepend( "unknown" );
+  if (!result.contains( i18n( "Default" ))) {
+    result.remove( "unknown" );
+    result.prepend( i18n( "Default" ));
+  }
   return result;
 } 
 
@@ -36,8 +38,8 @@ void KMIdentity::saveIdentities( QStringList ids, bool aWithSync )
   KConfig* config = kapp->config();
   config->setGroup( "Identity" );
 
-  if (!ids.contains( "unknown" ))
-    ids.prepend( "unknown" );
+  if (ids.contains( i18n( "Default" )))
+    ids.remove( i18n( "Default" ));
   config->writeEntry( "IdentityList", ids );
 
   if (aWithSync) config->sync();
@@ -65,11 +67,11 @@ void KMIdentity::readConfig(void)
   char str[80];
   int i;
 
-  if (mIdentity == "unknown")
+  if (mIdentity == i18n( "Default" ))
     config->setGroup( "Identity" );
   else
     config->setGroup( "Identity-" + mIdentity );
-
+  
   mFullName = config->readEntry("Name");
   if (mFullName.isEmpty())
   {
@@ -109,7 +111,7 @@ void KMIdentity::writeConfig(bool aWithSync)
 {
   KConfig* config = kapp->config();
 
-  if (mIdentity == "unknown")
+  if (mIdentity == i18n( "Default" ))
     config->setGroup( "Identity" );
   else
     config->setGroup( "Identity-" + mIdentity );

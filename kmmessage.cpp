@@ -915,7 +915,7 @@ KMMessage* KMMessage::createForward(void)
 //-----------------------------------------------------------------------------
 void KMMessage::initHeader( QString id )
 {
-  QString identStr = "unknown";
+  QString identStr = i18n( "Default" );
   if (!id.isEmpty() && KMIdentity::identities().contains(id))
     identStr = id;
     

@@ -126,7 +126,7 @@ void KMSender::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 bool KMSender::settingsOk(void) const
 {
-  KMIdentity ident( "unknown" );
+  KMIdentity ident( i18n( "Default" ));
   ident.readConfig();
   if (mMethod!=smSMTP && mMethod!=smMail)
   {
@@ -186,7 +186,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   // Handle redirections
   QString f = aMsg->headerField("X-KMail-Redirect-From");
   if(f.length() > 0) {
-    KMIdentity ident( "unknown" );
+    KMIdentity ident( i18n( "Default" ));
     ident.readConfig();
 
     aMsg->setFrom(f + QString(" (by way of %1 <%2>)").
@@ -888,7 +888,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 {
   QString str, msgStr, bccStr;
   int replyCode;
-  KMIdentity ident( "unknown" );
+  KMIdentity ident( i18n( "Default" ));
   ident.readConfig();
 
   assert(aMsg != NULL);
