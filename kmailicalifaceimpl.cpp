@@ -137,17 +137,13 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
 
   KMFolder* folder = folderFromType( type );
   if( folder ) {
-    if( folder == mJournals ) {
-      // TODO: Make journals work
-    } else {
-      QString s;
-      for( int i=0; i<folder->count(); ++i ) {
-        bool unget = !folder->isMessage(i);
-        if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
-          ilist << s;
-        }
-        if( unget ) folder->unGetMsg(i);
+    QString s;
+    for( int i=0; i<folder->count(); ++i ) {
+      bool unget = !folder->isMessage(i);
+      if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
+        ilist << s;
       }
+      if( unget ) folder->unGetMsg(i);
     }
   } else
     kdError() << "Not an IMAP resource folder" << endl;
@@ -351,6 +347,8 @@ QString KMailICalIfaceImpl::icalFolderType( KMFolder* folder ) const
       return "Note";
     else if( folder == mTasks )
       return "Task";
+    else if( folder == mJournals )
+      return "Journal";
   }
 
   return QString::null;
@@ -484,7 +482,7 @@ void KMailICalIfaceImpl::readConfig()
   if( !node || node->isDir() ) makeSubFolders = true;
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Tasks ) );
   if( !node || node->isDir() ) makeSubFolders = true;
-  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Tasks ) );
+  node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Journals ) );
   if( !node || node->isDir() ) makeSubFolders = true;
   node = folderParentDir->hasNamedFolder( folderName( KFolderTreeItem::Contacts ) );
   if( !node || node->isDir() ) makeSubFolders = true;
@@ -612,6 +610,7 @@ void KMailICalIfaceImpl::loadPixmaps() const
     pixCalendar = new QPixmap( UserIcon("kmgroupware_folder_calendar"));
     pixNotes    = new QPixmap( UserIcon("kmgroupware_folder_notes"));
     pixTasks    = new QPixmap( UserIcon("kmgroupware_folder_tasks"));
+    // TODO: Find a pixmap for journals
   }
 }
 
