@@ -108,6 +108,10 @@ bool KMAcctPop::doProcessNewMail(void)
   client.SetReceiveTimeout(20);
   passwd = decryptStr(mPasswd);
 
+  // Now, we got to do something here. If you can resolve to the address
+  // but cannot connect to the server like on some of our uni-machines
+  // we end up with a lock up! Certainly not desirable!
+
   if (client.Open(mHost,mPort) != '+')
     return popError("OPEN", client);
   if (client.User(mLogin) != '+')
