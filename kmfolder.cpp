@@ -29,7 +29,7 @@
 #define INIT_MSGS 8
 
 // Current version of the table of contents (index) files
-#define INDEX_VERSION 1200
+#define INDEX_VERSION 1201
 
 // Regular expression to find the line that seperates messages in a mail
 // folder:

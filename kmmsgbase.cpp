@@ -167,6 +167,7 @@ const QString KMMsgBase::asIndexString(void) const
   int i, len;
   QString str(256);
 
+  // don't forget to change indexStringLength() below !!
   str.sprintf("%c %-.9lu %-.9lu %-.9lu %-3.3s %-100.100s %-100.100s",
 	      (char)status(), folderOffset(), msgSize(), (unsigned long)date(),
 	      (const char*)xmark(),
@@ -183,7 +184,7 @@ const QString KMMsgBase::asIndexString(void) const
 //-----------------------------------------------------------------------------
 int KMMsgBase::indexStringLength(void)
 {
-  return 234;
+  return 237;
 }
 
 
