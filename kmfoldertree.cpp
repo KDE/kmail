@@ -1000,20 +1000,13 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
                              i18n("&Delete Folder"), mMainWidget,
                              SLOT(slotRemoveFolder()));
 
-    if (!fti->folder()->noContent())
-    {
-      folderMenu->insertSeparator();
-      folderMenu->insertItem(SmallIcon("configure"),
-                             i18n("&Properties"),
-                             fti,
-                             SLOT(properties()));
-    }
   }
   if (fti->folder() &&
       (fti->folder()->folderType() == KMFolderTypeImap || fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
+    folderMenu->insertSeparator();
     folderMenu->insertItem(SmallIcon("configure"),
-        i18n("Subscription"), mMainWidget,
+        i18n("Subscription..."), mMainWidget,
         SLOT(slotSubscriptionDialog()));
 
     if (!fti->folder()->noContent())
@@ -1023,6 +1016,16 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     }
 
   }
+
+  if (fti->folder() && !fti->folder()->noContent())
+  {
+    folderMenu->insertSeparator();
+    folderMenu->insertItem(SmallIcon("configure"),
+        i18n("&Properties"),
+        fti,
+        SLOT(properties()));
+  }
+
 
   folderMenu->exec (p, 0);
   triggerUpdate();
