@@ -750,6 +750,7 @@ void KMMainWidget::slotMailChecked(bool newMail, bool sendOnCheck)
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
+  kapp->dcopClient()->emitDCOPSignal( "unreadCountChanged()", QByteArray() );
 
   // Todo:
   // scroll mHeaders to show new items if current item would
