@@ -53,8 +53,9 @@ void RecipientItem::setAddressee( const KABC::Addressee &a )
 {
   mAddressee = a;
 
-  if ( !a.photo().data().isNull() )
-    mIcon = a.photo().data().smoothScale( 16, 16 );
+  QImage img = a.photo().data();
+  if ( !img.isNull() )
+    mIcon = img.smoothScale( 20, 20, QImage::ScaleMin );
   else
     mIcon = KGlobal::iconLoader()->loadIcon( "personal", KIcon::Small );
 }
