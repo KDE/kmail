@@ -151,7 +151,7 @@ void KMMsgPartDlg::mimetypeChanged(const QString & name)
     mCbxEncoding->setCurrentItem(0);
     mCbxEncoding->setEnabled(false);
   } else {
-    mCbxEncoding->setEnabled(true);
+    mCbxEncoding->setEnabled(mEdtMimetype->isEnabled());
   }
 }
 
