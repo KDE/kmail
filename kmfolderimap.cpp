@@ -244,7 +244,7 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
   KMFolderMbox::removeMsg(idx);
 }
 
-void KMFolderImap::removeMsg(QPtrList<KMMessage> msgList, bool quiet)
+void KMFolderImap::removeMsg( const QPtrList<KMMessage>& msgList, bool quiet )
 {
   if ( msgList.isEmpty() ) return;
   if (!quiet)
@@ -256,8 +256,11 @@ void KMFolderImap::removeMsg(QPtrList<KMMessage> msgList, bool quiet)
      We don't call KMFolderInherited::removeMsg(QPtrList<KMMessage>) but
      iterate ourselves, as that would call KMFolderImap::removeMsg(int)
      and not the one from the store we want to be used. */
-  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
-  {
+
+  QPtrListIterator<KMMessage> it( msgList );
+  KMMessage *msg;
+  while ( (msg = it.current()) != 0 ) {
+    ++it;
     int idx = find(msg);
     assert( idx != -1);
     // ATTENTION port me to maildir
@@ -846,6 +849,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
         if ( remain < 0 ) remain = 1;
         mMailCheckProgressItem->setTotalItems( remain );
       }
+      mMailCheckProgressItem->setCompletedItems( 0 );
     }
     reallyGetFolder(startUid);
   }
@@ -1057,12 +1061,15 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
         mimeType = (*eIt).m_str;
       else if ((*eIt).m_uds == KIO::UDS_ACCESS)
         flags = (*eIt).m_long;
-      if ( mMailCheckProgressItem )
-        mMailCheckProgressItem->incCompletedItems();
     }
     if ((mimeType == "message/rfc822-imap" || mimeType == "message/rfc822") &&
-        !(flags & 8))
+        !(flags & 8)) {
       (*it).items.append(name + "," + QString::number(flags));
+      if ( mMailCheckProgressItem ) {
+        mMailCheckProgressItem->incCompletedItems();
+        mMailCheckProgressItem->updateProgress();
+      }
+    }
   }
 }
 
@@ -1161,8 +1168,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   open();
   while (pos >= 0)
   {
-    if ( mMailCheckProgressItem )
-      mMailCheckProgressItem->incCompletedItems();
     KMMessage *msg = new KMMessage;
     msg->setComplete(false);
     msg->setReadyToShow(false);
@@ -1190,14 +1195,11 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     // deleted flag
     if ( flags & 8 )
       ok = false;
-    if ( !ok )
-    {
+    if ( !ok ) {
       delete msg;
       msg = 0;
-    }
-    else {
-      if (uidmap.find(uid))
-      {
+    } else {
+      if (uidmap.find(uid)) {
         // assign the sernum from the cache
         const ulong sernum = (ulong) uidmap[uid];
         msg->setMsgSerNum(sernum);
@@ -1223,14 +1225,14 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
 
       if (count() > 1) unGetMsg(count() - 1);
       mLastUid = uid;
+      if ( mMailCheckProgressItem ) {
+        mMailCheckProgressItem->incCompletedItems();
+        mMailCheckProgressItem->updateProgress();
+      }
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
     pos = (*it).cdata.find("\r\n--IMAPDIGEST", 1);
-    if ( mMailCheckProgressItem ) {
-      mMailCheckProgressItem->incCompletedItems();
-      mMailCheckProgressItem->updateProgress();
-    }
   } // while
   close();
 }
@@ -1441,14 +1443,14 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
           mAccount, SLOT(slotSimpleResult(KIO::Job *)));
 }
 
-void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
+void KMFolderImap::deleteMessage(const QPtrList<KMMessage>& msgList)
 {
   QValueList<ulong> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids);
 
   KURL url = mAccount->getUrl();
-  KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msgList.first()->storage());
+  KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msgList.getFirst()->storage());
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
   {
     QString uid = *it;
@@ -1594,16 +1596,19 @@ void KMFolderImap::getUids(QValueList<int>& ids, QValueList<ulong>& uids)
   }
 }
 
-void KMFolderImap::getUids(QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent)
+void KMFolderImap::getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent)
 {
   KMMessage *msg = 0;
 
   if (!msgParent)
-    msgParent = msgList.first()->parent();
+    msgParent = msgList.getFirst()->parent();
   if (!msgParent) return;
 
-  for ( msg = msgList.first(); msg; msg = msgList.next() )
+  QPtrListIterator<KMMessage> it( msgList );
+  while ( (msg = it.current()) != 0 ) {
+    ++it;
     uids.append(msg->UID());
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1798,7 +1803,6 @@ void KMFolderImap::slotCompleteMailCheckProgress()
 {
   if ( mMailCheckProgressItem ) {
     mMailCheckProgressItem->setComplete();
-    mMailCheckProgressItem = 0;
   }
 }
 

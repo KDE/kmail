@@ -113,7 +113,7 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool quiet = FALSE);
+  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool quiet = FALSE);
 
   virtual int rename( const QString& newName, KMFolderDir *aParent = 0 );
 
@@ -160,7 +160,7 @@ public:
    * Delete a message
    */
   void deleteMessage(KMMessage * msg);
-  void deleteMessage(QPtrList<KMMessage> msgList);
+  void deleteMessage(const QPtrList<KMMessage>& msgList);
 
   /**
    * Change the status of the message indicated by @p index
@@ -185,7 +185,7 @@ public:
   void getUids(QValueList<int>& ids, QValueList<ulong>& uids);
 
   /** same as above but accepts a Message-List */
-  void getUids(QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent = 0);
+  void getUids(const QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent = 0);
 
   /**
    * Expunge deleted messages from the folder
@@ -433,7 +433,7 @@ private:
   bool        mCheckingValidity;
   QDict<KMMsgMetaData> mMetaDataMap;
   bool        mAlreadyRemoved;
-  ProgressItem *mMailCheckProgressItem;
+  QGuardedPtr<ProgressItem> mMailCheckProgressItem;
   ProgressItem *mListDirProgressItem;
   QStringList mFoldersPendingCreation;
 };
