@@ -71,6 +71,8 @@ KMFolderImap::~KMFolderImap()
 {
   writeConfig();
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
+  mMetaDataMap.setAutoDelete( true );
+  mMetaDataMap.clear();
 }
 
 
@@ -242,15 +244,17 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
+  Q_UINT32 serNum = 0;
   aMsg->setTransferInProgress( false );
   if (folder) {
-    kmkernel->undoStack()->pushSingleAction( aMsg->getMsgSerNum(), folder, this );
+    serNum = aMsg->getMsgSerNum();
+    kmkernel->undoStack()->pushSingleAction( serNum, folder, this );
     int idx = folder->find( aMsg );
     assert( idx != -1 );
     folder->take( idx );
   }
   // Remember the status, so it can be transfered to the new message.
-  mMetaDataMap.insert(aMsg->msgIdMD5(), new KMMsgMetaData(aMsg->status()));
+  mMetaDataMap.insert(aMsg->msgIdMD5(), new KMMsgMetaData(aMsg->status(), serNum));
 
   delete aMsg;
   aMsg = 0;
@@ -261,6 +265,8 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
 {
   KMFolder *folder = msgList.first()->parent();
+  Q_UINT32 serNum = 0;
+  if (folder) serNum = msgList.first()->getMsgSerNum();
   int undoId = -1;
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
   {
@@ -268,7 +274,7 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
       undoId = kmkernel->undoStack()->newUndoAction( folder, this );
     kmkernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
     // Remember the status, so it can be transfered to the new message.
-    mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
+    mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status(), serNum));
     msg->setTransferInProgress( false );
   }
   if (folder) folder->take(msgList);
@@ -331,7 +337,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
             // we need the messages that belong to the current set to pass them to the ImapJob
             QPtrList<KMMessage> temp_msgs = splitMessageList(*it, msgList);
 
-            imapJob = new ImapJob(temp_msgs, *it, ImapJob::tCopyMessage, this);
+            imapJob = new ImapJob(temp_msgs, *it, ImapJob::tMoveMessage, this);
             connect(imapJob, SIGNAL(messageCopied(QPtrList<KMMessage>)),
                 SLOT(addMsgQuiet(QPtrList<KMMessage>)));
             imapJob->start();
@@ -962,6 +968,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       if ( mMetaDataMap.find( id ) ) {
         KMMsgMetaData *md =  mMetaDataMap[id];
         msg->setStatus( md->status() );
+        if ( md->serNum() != 0 )
+          msg->setMsgSerNum( md->serNum() );
         mMetaDataMap.remove( id );
         delete md;
       }

@@ -284,6 +284,10 @@ protected slots:
   /** show context menu */
   void rightButtonPressed( QListViewItem *, const QPoint &, int );
 
+private slots:
+  void slotMoveCompleted( bool success );
+  void slotMoveAborted( );
+
 private:
   /** Is equivalent to clearing the list and inserting an item for
       each message in the current folder */

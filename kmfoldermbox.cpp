@@ -229,7 +229,7 @@ void KMFolderMbox::close(bool aForced)
       mOpenCount = 1;
       return;
   }
-
+  
   if (mAutoCreateIndex)
   {
       if (KMFolderIndex::IndexOk != indexStatus()) {

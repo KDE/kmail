@@ -14,6 +14,7 @@ class KProgressDialog;
 class KMComposeWin;
 class KMFilter;
 class KMFolder;
+class KMFolderImap;
 class KMFolderNode;
 class KMHeaders;
 class KMMainWidget;
@@ -75,6 +76,9 @@ private slots:
   void slotTransferCancelled();
 signals:
   void messagesTransfered(bool);
+  /** Emitted when the command has completed.
+   * @success Success or error. */
+  void completed( bool success);
 
 private:
   // ProgressDialog for transferring messages
@@ -543,12 +547,18 @@ public:
   KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList );
   KMMoveCommand( KMFolder* destFolder, KMMessage * msg );
 
+private slots:
+  void slotImapFolderCompleted(KMFolderImap *folder, bool success);
+  void slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum);
 
 private:
   virtual void execute();
 
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
+  // List of serial numbers that have to be transferred to a host.
+  // Ticked off as they come in via msgAdded signals. 
+  QValueList<Q_UINT32> mLostBoys;
 };
 
 class KMDeleteMsgCommand : public KMMoveCommand

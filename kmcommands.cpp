@@ -1335,6 +1335,7 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
                               const QPtrList<KMMsgBase> &msgList)
   :mDestFolder( destFolder ), mMsgList( msgList )
 {
+  setDeletesItself( true );
 }
 
 KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
@@ -1359,6 +1360,12 @@ void KMMoveCommand::execute()
   int index;
   QPtrList<KMMessage> list;
   int undoId = -1;
+
+  if (mDestFolder) {
+    connect (mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
+             this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
+  }
+
   for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next()) {
     KMFolder *srcFolder = msgBase->parent();
     if (srcFolder == mDestFolder)
@@ -1380,9 +1387,16 @@ void KMMoveCommand::execute()
     }
 
     if (mDestFolder) {
+      mLostBoys.append(msg->getMsgSerNum());
       if (mDestFolder->folderType() == KMFolderTypeImap) {
+        /* If we are moving to an imap folder, connect to it's completed
+         * siganl so we notice when all the mails should have showed up in it
+         * but haven't for some reason. */
+        connect (mDestFolder, SIGNAL(folderComplete( KMFolderImap*, bool )),
+            this, SLOT(slotImapFolderCompleted( KMFolderImap*, bool )));
         list.append(msg);
       } else {
+        // We are moving to a local folder.
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
@@ -1392,6 +1406,12 @@ void KMMoveCommand::execute()
               undoId = kmkernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
             kmkernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
           }
+        } else if (rc != 0) {
+          // Something  went wrong. Stop processing here, it is likely that the 
+          // other moves would fail as well.
+          emit completed( false);
+          deleteLater();
+          return;
         }
       }
     } else {
@@ -1406,17 +1426,57 @@ void KMMoveCommand::execute()
       }
     }
   }
-  if (!list.isEmpty() && mDestFolder)
-    mDestFolder->moveMsg(list, &index);
-
-  FolderToMessageListMap::Iterator it;
-  for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
-    it.key()->removeMsg(*it.data());
-    delete it.data();
+  if (!list.isEmpty() && mDestFolder) {
+       mDestFolder->moveMsg(list, &index);
+  } else {
+    FolderToMessageListMap::Iterator it;
+    for ( it = folderDeleteList.begin(); it != folderDeleteList.end(); ++it ) {
+      it.key()->removeMsg(*it.data());
+      delete it.data();
+    }
+    if ( !mDestFolder ) {
+      emit completed( true );
+      deleteLater();
+    }
   }
+}
 
-  if (mDestFolder) {
-     mDestFolder->sync();
+void KMMoveCommand::slotImapFolderCompleted(KMFolderImap *, bool success)
+{
+  kdDebug(5006) <<  "KMMoveCommand::slotImapFolderCompleted: " << success << endl;
+  if ( success ) {
+    // the folder was checked successfully but we were still called, so check
+    // if we are still waiting for messages to show up. If so, uidValidity
+    // changed, or something else went wrong. Clean up.
+
+    /* Unfortunately older UW imap servers change uid validity for each put job.
+     * Yes, it is really that broken. *sigh* So we cannot report error here, I guess. */
+    if ( !mLostBoys.isEmpty() ) {
+      kdDebug(5006) <<  "### Not all moved messages reported back that they were " << endl
+                    <<  "### added to the target folder. Did uidValidity change? " << endl;
+    }
+  } else {
+    // Should we inform the user here or leave that to the caller? 
+  }
+  emit completed( success );
+  deleteLater();
+}
+
+void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
+{
+  if (folder != mDestFolder) {
+    kdDebug(5006) << "KMMoveCommand::msgAddedToDestFolder different "
+                     "folder or invalid serial number." << endl;
+    return;
+  }
+  mLostBoys.remove(serNum);
+  if ( mLostBoys.isEmpty() ) {
+    // we are done. All messages transferred to the host succesfully
+    if (mDestFolder && mDestFolder->folderType() != KMFolderTypeImap) {
+      mDestFolder->sync();
+    }
+    emit completed( true );
+    deleteLater();
   }
 }
 

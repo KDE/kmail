@@ -49,11 +49,16 @@ using KMail::ImapJob;
 class KMMsgMetaData
 {
 public:
-  KMMsgMetaData(KMMsgStatus aStatus) { mStatus = aStatus; }
+  KMMsgMetaData(KMMsgStatus aStatus) 
+    :mStatus(aStatus), mSerNum(0) {}
+  KMMsgMetaData(KMMsgStatus aStatus, Q_UINT32 aSerNum) 
+    :mStatus(aStatus), mSerNum(aSerNum) {}
   ~KMMsgMetaData() {};
   const KMMsgStatus status() const { return mStatus; }
+  const Q_UINT32 serNum() const { return mSerNum; }
 private:
   KMMsgStatus mStatus;
+  Q_UINT32 mSerNum;
 };
 
 
