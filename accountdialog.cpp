@@ -18,11 +18,13 @@
  *
  */
 
+#include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qlayout.h>
+#include <qradiobutton.h>
 #include <qvalidator.h> 
 
 #include <kapp.h>
@@ -75,9 +77,9 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
 void AccountDialog::makeLocalAccountPage()
 {
   QFrame *page = makeMainWidget();
-  QGridLayout *topLayout = new QGridLayout( page, 10, 3, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  topLayout->setRowStretch( 9, 10 );
+  topLayout->setRowStretch( 10, 10 );
   topLayout->setColStretch( 1, 10 );
 
   mLocal.titleLabel = new QLabel( i18n("Account type: Local account"), page );
@@ -102,33 +104,47 @@ void AccountDialog::makeLocalAccountPage()
   choose->setAutoDefault( false );
   connect( choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
   topLayout->addWidget( choose, 3, 2 );
+
+  QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
+    i18n("Locking method"), page );
+  mLocal.lockMutt = new QRadioButton( 
+    i18n("Mutt dotlock (recommended)"), group);
+  mLocal.lockMuttPriv = new QRadioButton(
+    i18n("Mutt dotlock privileged"), group);
+  mLocal.lockProcmail = new QRadioButton(
+    i18n("Procmail lockfile"), group);
+  mLocal.lockFcntl = new QRadioButton(
+    i18n("FCNTL"), group);
+  mLocal.lockNone = new QRadioButton(
+    i18n("none (use with care)"), group);
+  topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
  
   mLocal.excludeCheck = 
     new QCheckBox( i18n("Exclude from \"Check Mail\""), page );
-  topLayout->addMultiCellWidget( mLocal.excludeCheck, 4, 4, 0, 2 );
+  topLayout->addMultiCellWidget( mLocal.excludeCheck, 5, 5, 0, 2 );
 
   mLocal.intervalCheck = 
     new QCheckBox( i18n("Enable interval mail checking"), page );
-  topLayout->addMultiCellWidget( mLocal.intervalCheck, 5, 5, 0, 2 );
+  topLayout->addMultiCellWidget( mLocal.intervalCheck, 6, 6, 0, 2 );
   connect( mLocal.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnableLocalInterval(bool)) );
   mLocal.intervalLabel = new QLabel( i18n("Check interval (minutes):"), page );
-  topLayout->addWidget( mLocal.intervalLabel, 6, 0 );
+  topLayout->addWidget( mLocal.intervalLabel, 7, 0 );
   mLocal.intervalSpin = new KIntNumInput( page );
   mLocal.intervalSpin->setRange( 1, 10000, 1, FALSE );
   mLocal.intervalSpin->setValue( 1 );
-  topLayout->addWidget( mLocal.intervalSpin, 6, 1 );
+  topLayout->addWidget( mLocal.intervalSpin, 7, 1 );
 
   label = new QLabel( i18n("Destination folder:"), page );
-  topLayout->addWidget( label, 7, 0 );
+  topLayout->addWidget( label, 8, 0 );
   mLocal.folderCombo = new QComboBox( false, page );
-  topLayout->addWidget( mLocal.folderCombo, 7, 1 );
+  topLayout->addWidget( mLocal.folderCombo, 8, 1 );
 
   /* -sanders Probably won't support this way, use filters insteada
   label = new QLabel( i18n("Default identity:"), page );
-  topLayout->addWidget( label, 8, 0 );
+  topLayout->addWidget( label, 9, 0 );
   mLocal.identityCombo = new QComboBox( false, page );
-  topLayout->addWidget( mLocal.identityCombo, 8, 1 );
+  topLayout->addWidget( mLocal.identityCombo, 9, 1 );
   // GS - this was moved inside the commented block 9/30/2000
   //      (I think Don missed it?)
   label->setEnabled(false);
@@ -137,9 +153,9 @@ void AccountDialog::makeLocalAccountPage()
   //mLocal.identityCombo->setEnabled(false);
 
   label = new QLabel( i18n("Precommand:"), page );
-  topLayout->addWidget( label, 8, 0 );
+  topLayout->addWidget( label, 9, 0 );
   mLocal.precommand = new QLineEdit( page );
-  topLayout->addWidget( mLocal.precommand, 8, 1 );
+  topLayout->addWidget( mLocal.precommand, 9, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -259,6 +275,17 @@ void AccountDialog::setupSettings()
   {
     mLocal.nameEdit->setText( mAccount->name() );
     mLocal.locationEdit->setText( ((KMAcctLocal*)mAccount)->location() );
+    if (((KMAcctLocal*)mAccount)->mLock == mutt_dotlock)
+      mLocal.lockMutt->setChecked(true);
+    else if (((KMAcctLocal*)mAccount)->mLock == mutt_dotlock_privileged)
+      mLocal.lockMuttPriv->setChecked(true);
+    else if (((KMAcctLocal*)mAccount)->mLock == procmail_lockfile)
+      mLocal.lockProcmail->setChecked(true);
+    else if (((KMAcctLocal*)mAccount)->mLock == FCNTL)
+      mLocal.lockFcntl->setChecked(true);
+    else if (((KMAcctLocal*)mAccount)->mLock == None)
+      mLocal.lockNone->setChecked(true);
+
     mLocal.intervalSpin->setValue( QMAX(1, interval) ); 
     mLocal.intervalCheck->setChecked( interval >= 1 );
     mLocal.excludeCheck->setChecked( mAccount->checkExclude() );
@@ -365,6 +392,16 @@ void AccountDialog::saveSettings()
   {
     mAccount->setName( mLocal.nameEdit->text() );
     ((KMAcctLocal*)mAccount)->setLocation( mLocal.locationEdit->text() );
+    if (mLocal.lockMutt->isChecked())
+      ((KMAcctLocal*)mAccount)->mLock = mutt_dotlock;
+    else if (mLocal.lockMuttPriv->isChecked())
+      ((KMAcctLocal*)mAccount)->mLock = mutt_dotlock_privileged;
+    else if (mLocal.lockProcmail->isChecked())
+      ((KMAcctLocal*)mAccount)->mLock = procmail_lockfile;
+    else if (mLocal.lockNone->isChecked())
+      ((KMAcctLocal*)mAccount)->mLock = None;
+    else ((KMAcctLocal*)mAccount)->mLock = FCNTL;
+
     mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ? 
 			     mLocal.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );

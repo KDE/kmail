@@ -218,6 +218,13 @@ void KMAcctLocal::writeConfig(KConfig& config)
   KMAcctLocalInherited::writeConfig(config);
 
   config.writeEntry("Location", mLocation);
+  
+  QString st = "fcntl";
+  if (mLock == procmail_lockfile) st = "procmail_lockfile";
+  else if (mLock == mutt_dotlock) st = "mutt_dotlock";
+  else if (mLock == mutt_dotlock_privileged) st = "mutt_dotlock_privileged";
+  else if (mLock == None) st = "none";
+  config.writeEntry("LockType", st);
 }
 
 

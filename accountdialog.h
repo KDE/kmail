@@ -27,6 +27,7 @@ class QCheckBox;
 class QComboBox;
 class QLabel;
 class QLineEdit;
+class QRadioButton;
 class KIntNumInput;
 class KMAccount;
 
@@ -43,6 +44,11 @@ class AccountDialog : public KDialogBase
       QLabel       *titleLabel;
       QLineEdit    *nameEdit;
       QLineEdit    *locationEdit;
+      QRadioButton *lockMutt;
+      QRadioButton *lockMuttPriv;
+      QRadioButton *lockProcmail;
+      QRadioButton *lockFcntl;
+      QRadioButton *lockNone;
       QLineEdit    *precommand;
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;

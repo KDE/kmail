@@ -31,10 +31,11 @@ public:
   virtual void writeConfig(KConfig&);
   virtual void pseudoAssign(KMAccount*);
 
+  LockType mLock;
+
 protected:
   QString mLocation;
   bool hasNewMail;
-  LockType mLock;
 };
 
 #endif /*kmacctlocal_h*/
