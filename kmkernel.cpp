@@ -418,20 +418,22 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if ( !body.isEmpty() ) msg->setBody(body.utf8());
 
   bool iCalAutoSend = false;
+  bool noWordWrap = false;
   KConfigGroup options( config(), "Groupware" );
   if (  !attachData.isEmpty() ) {
     if ( attachName == "cal.ics" && attachType == "text" &&
-	attachSubType == "calendar" && attachParamAttr == "method" &&
-	options.readBoolEntry( "LegacyBodyInvites", false ) ) {
+        attachSubType == "calendar" && attachParamAttr == "method" &&
+        options.readBoolEntry( "LegacyBodyInvites", false ) ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
       msg->setHeaderField( "Content-Type",
-			   QString( "text/calendar; method=%1; "
+                           QString( "text/calendar; method=%1; "
                                     "charset=\"utf-8\"" ).
-			   arg( attachParamValue ) );
+                           arg( attachParamValue ) );
 
       // Don't show the composer window, if the automatic sending is checked
       iCalAutoSend = options.readBoolEntry( "AutomaticSending", true );
+      noWordWrap = true; // we shant word wrap inline invitations
     } else {
       // Just do what we're told to do
       msgPart = new KMMessagePart;
@@ -443,16 +445,16 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
       msgPart->setParameter( attachParamAttr, attachParamValue );
       msgPart->setContentDisposition( attachContDisp );
       if( !attachCharset.isEmpty() ) {
-	// kdDebug(5006) << "KMKernel::openComposer set attachCharset to "
+        // kdDebug(5006) << "KMKernel::openComposer set attachCharset to "
         // << attachCharset << endl;
-	msgPart->setCharset( attachCharset );
+        msgPart->setCharset( attachCharset );
       }
     }
   }
 
   KMComposeWin *cWin = new KMComposeWin( msg );
   cWin->setAutoDelete( true );
-  if( iCalAutoSend )
+  if( noWordWrap )
     cWin->slotWordWrapToggled( false );
   else
     cWin->setCharset( "", true );
