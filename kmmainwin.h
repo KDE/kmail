@@ -6,6 +6,7 @@
 #define __KMMAINWIN
 
 #include "kmtopwidget.h"
+#include "qvaluelist.h"
 
 class KMFolder;
 class KMFolderTree;
@@ -63,7 +64,7 @@ protected:
   void setupToolBar();
   void setupStatusBar();
   void createWidgets();
-
+  void activatePanners();
 
 protected slots:
   void slotCheckOneAccount(int);
@@ -134,14 +135,14 @@ protected:
   KStatusBar   *mStatusBar;
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
-  QSplitter   *mHorizPanner, *mVertPanner;
+  QSplitter    *mHorizPanner, *mVertPanner;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
   bool		mIntegrated;
   bool          mSendOnCheck;
   int		mMessageStatusId;
-  int		mHorizPannerSep, mVertPannerSep;
+  QValueList<int> *mHorizPannerSep, *mVertPannerSep;
   QString       mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
