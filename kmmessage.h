@@ -402,8 +402,10 @@ public:
   /** Returns the message ID, useful for followups */
   QCString id() const;
 
-  /** Sets the message serial number.  If defaulted to zero, the
-    serial number will be assigned using the dictionary. */
+  /** Sets the message serial number. If defaulted to zero, the
+    serial number will be assigned using the dictionary. Note that
+    unless it is explicitely set the serial number will remain 0
+    as long as the mail is not in a folder. */
   void setMsgSerNum(unsigned long newMsgSerNum = 0);
 
   /** Returns the value of a header field with the given name. If multiple
