@@ -18,7 +18,6 @@
 #include <qptrlist.h>
 #include <qvaluevector.h>
 
-#include <klineedit.h>
 #include <kio/job.h>
 #include <kglobalsettings.h>
 #include <kdeversion.h>
@@ -43,7 +42,6 @@ class QCloseEvent;
 class QComboBox;
 class QFrame;
 class QGridLayout;
-class QLineEdit;
 class QListView;
 class QPopupMenu;
 class QPushButton;
@@ -808,12 +806,6 @@ protected:
   QStringList mFolderNames;
   QValueList<QGuardedPtr<KMFolder> > mFolderList;
 
-  /**
-   *  toggle automatic spellchecking
-   */
-  void slotAutoSpellCheckingToggled(bool);
-
-
 private:
   // helper method for slotInsert(My)PublicKey()
   void startPublicKeyExport();
@@ -839,6 +831,10 @@ private slots:
    */
   void slotPublicKeyExportResult( const GpgME::Error & err, const QByteArray & keydata );
 
+  /**
+   *  toggle automatic spellchecking
+   */
+  void slotAutoSpellCheckingToggled(bool);
 
 private:
   QColor mForeColor,mBackColor;

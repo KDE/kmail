@@ -97,7 +97,6 @@ using KRecentAddress::RecentAddresses;
 #include <qtooltip.h>
 #include <qtextcodec.h>
 #include <qheader.h>
-#include <qpopupmenu.h>
 #include <qwhatsthis.h>
 #include <qfontdatabase.h>
 
@@ -3866,7 +3865,7 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
 
 QPopupMenu *KMLineEdit::createPopupMenu()
 {
-    QPopupMenu *menu = KLineEdit::createPopupMenu();
+    QPopupMenu *menu = KPIM::AddresseeLineEdit::createPopupMenu();
     if ( !menu )
         return 0;
 
