@@ -218,6 +218,7 @@ void KMFolder::markUnreadAsRead()
 
   if (items.count() > 0)
     setStatus(items, KMMsgStatusRead);
+  emit numUnreadMsgsChanged( this );
 }
 
 //-----------------------------------------------------------------------------
