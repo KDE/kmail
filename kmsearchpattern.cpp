@@ -29,7 +29,8 @@ using KMail::FilterLog;
 static const char* funcConfigNames[] =
   { "contains", "contains-not", "equals", "not-equal", "regexp",
     "not-regexp", "greater", "less-or-equal", "less", "greater-or-equal",
-    "is-in-addressbook", "is-not-in-addressbook" , "is-in-category", "is-not-in-category"};
+    "is-in-addressbook", "is-not-in-addressbook" , "is-in-category", "is-not-in-category",
+    "has-attachment", "has-no-attachment"};
 static const int numFuncConfigNames = sizeof funcConfigNames / sizeof *funcConfigNames;
 
 
@@ -319,6 +320,12 @@ bool KMSearchRuleString::matches( const KMMessage * msg ) const
     if ( msgContents.isEmpty() )
       return false;
   }
+  
+  // these two functions need the kmmessage therefore they don't call matchesInternal
+  if ( function() == FuncHasAttachment ) 
+    return ( msg->toMsgBase().attachmentState() == KMMsgHasAttachment );
+  if ( function() == FuncHasNoAttachment ) 
+    return ( ((KMMsgAttachmentState) msg->toMsgBase().attachmentState()) == KMMsgHasNoAttachment );
   
   bool rc = matchesInternal( msgContents );
   if ( FilterLog::instance()->isLogging() ) {

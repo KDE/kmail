@@ -89,6 +89,42 @@ namespace {
     QString currentValue( const QWidgetStack *valueStack,
                           KMSearchRule::Function func ) const;
   };
+  
+  class MessageRuleWidgetHandler : public KMail::RuleWidgetHandler {
+  public:
+    MessageRuleWidgetHandler() : KMail::RuleWidgetHandler() {}
+    ~MessageRuleWidgetHandler() {}
+
+    QWidget * createFunctionWidget( int number,
+                                    QWidgetStack *functionStack,
+                                    const QObject *receiver ) const;
+    QWidget * createValueWidget( int number,
+                                 QWidgetStack *valueStack,
+                                 const QObject *receiver ) const;
+    KMSearchRule::Function function( const QCString & field,
+                                     const QWidgetStack *functionStack ) const;
+    QString value( const QCString & field,
+                   const QWidgetStack *functionStack,
+                   const QWidgetStack *valueStack ) const;
+    QString prettyValue( const QCString & field,
+                         const QWidgetStack *functionStack,
+                         const QWidgetStack *valueStack ) const;
+    bool handlesField( const QCString & field ) const;
+    void reset( QWidgetStack *functionStack,
+                QWidgetStack *valueStack ) const;
+    bool setRule( QWidgetStack *functionStack,
+                  QWidgetStack *valueStack,
+                  const KMSearchRule *rule ) const;
+    bool update( const QCString & field,
+                 QWidgetStack *functionStack,
+                 QWidgetStack *valueStack ) const;
+
+ private:
+    KMSearchRule::Function currentFunction( const QWidgetStack *functionStack ) const;
+    QString currentValue( const QWidgetStack *valueStack,
+                          KMSearchRule::Function func ) const;
+  };
+  
 
   class StatusRuleWidgetHandler : public KMail::RuleWidgetHandler {
   public:
@@ -163,7 +199,8 @@ KMail::RuleWidgetHandlerManager::RuleWidgetHandlerManager()
 {
   registerHandler( new NumericRuleWidgetHandler() );
   registerHandler( new StatusRuleWidgetHandler() );
-  // the TextRuleWidgetHandler is the fallback handler, so it has to be added
+  registerHandler( new MessageRuleWidgetHandler() );  
+   // the TextRuleWidgetHandler is the fallback handler, so it has to be added
   // as last handler
   registerHandler( new TextRuleWidgetHandler() );
 }
@@ -379,7 +416,6 @@ namespace {
     { KMSearchRule::FuncIsNotInAddressbook, I18N_NOOP( "is not in address book" ) },
     { KMSearchRule::FuncIsInCategory,       I18N_NOOP( "is in category" ) },
     { KMSearchRule::FuncIsNotInCategory,    I18N_NOOP( "is not in category" ) }
-
   };
   static const int TextFunctionCount =
     sizeof( TextFunctions ) / sizeof( *TextFunctions );
@@ -690,6 +726,293 @@ namespace {
   }
 
 } // anonymous namespace for TextRuleWidgetHandler
+
+
+//=============================================================================
+//
+// class MessageRuleWidgetHandler
+//
+//=============================================================================
+
+namespace {
+  // also see KMSearchRule::matches() and KMSearchRule::Function
+  // if you change the following strings!
+  static const struct {
+    const KMSearchRule::Function id;
+    const char *displayName;
+  } MessageFunctions[] = {
+    { KMSearchRule::FuncContains,           I18N_NOOP( "contains" )          },
+    { KMSearchRule::FuncContainsNot,        I18N_NOOP( "does not contain" )   },
+    { KMSearchRule::FuncRegExp,             I18N_NOOP( "matches regular expr." ) },
+    { KMSearchRule::FuncNotRegExp,          I18N_NOOP( "does not match reg. expr." ) },
+    { KMSearchRule::FuncHasAttachment,      I18N_NOOP( "has an attachment" ) },
+    { KMSearchRule::FuncHasNoAttachment,      I18N_NOOP( "has no attachment" ) },
+  };
+  static const int MessageFunctionCount =
+    sizeof( MessageFunctions ) / sizeof( *MessageFunctions );
+
+  //---------------------------------------------------------------------------
+
+  QWidget * MessageRuleWidgetHandler::createFunctionWidget( int number,
+                                                         QWidgetStack *functionStack,
+                                                         const QObject *receiver ) const
+  {
+    if ( number != 0 )
+      return 0;
+
+    QComboBox *funcCombo = new QComboBox( functionStack, "messageRuleFuncCombo" );
+    for ( int i = 0; i < MessageFunctionCount; ++i ) {
+      funcCombo->insertItem( i18n( MessageFunctions[i].displayName ) );
+    }
+    funcCombo->adjustSize();
+    QObject::connect( funcCombo, SIGNAL( activated( int ) ),
+                      receiver, SLOT( slotFunctionChanged() ) );
+    return funcCombo;
+  }
+
+  //---------------------------------------------------------------------------
+
+  QWidget * MessageRuleWidgetHandler::createValueWidget( int number,
+                                                      QWidgetStack *valueStack,
+                                                      const QObject *receiver ) const
+  {
+    if ( number == 0 ) {
+      RegExpLineEdit *lineEdit =
+        new RegExpLineEdit( valueStack, "regExpLineEdit" );
+      QObject::connect( lineEdit, SIGNAL( textChanged( const QString & ) ),
+                        receiver, SLOT( slotValueChanged() ) );
+      return lineEdit;
+    }
+
+    // blank QLabel to hide value widget for has-attachment rule
+    if ( number == 1 ) {
+      return new QLabel( valueStack, "textRuleValueHider" );
+    }
+
+    return 0;
+  }
+
+  //---------------------------------------------------------------------------
+
+  KMSearchRule::Function MessageRuleWidgetHandler::currentFunction( const QWidgetStack *functionStack ) const
+  {
+    const QComboBox *funcCombo =
+      dynamic_cast<QComboBox*>( QObject_child_const( functionStack,
+                                                     "messageRuleFuncCombo" ) );
+    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
+    //  dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
+    //                                                  0, false ) );
+    if ( funcCombo ) {
+      return MessageFunctions[funcCombo->currentItem()].id;
+    }
+    else
+      kdDebug(5006) << "MessageRuleWidgetHandler::currentFunction: "
+                       "messageRuleFuncCombo not found." << endl;
+    return KMSearchRule::FuncNone;
+  }
+
+  //---------------------------------------------------------------------------
+
+  KMSearchRule::Function MessageRuleWidgetHandler::function( const QCString & field,
+                                                          const QWidgetStack *functionStack ) const
+  {
+   if ( !handlesField( field ) )
+      return KMSearchRule::FuncNone;
+      
+    return currentFunction( functionStack );
+  }
+
+  //---------------------------------------------------------------------------
+
+  QString MessageRuleWidgetHandler::currentValue( const QWidgetStack *valueStack,
+                                               KMSearchRule::Function func ) const
+  {
+      //in other cases of func it is a lineedit
+    const RegExpLineEdit *lineEdit =
+      dynamic_cast<RegExpLineEdit*>( QObject_child_const( valueStack,
+                                                          "regExpLineEdit" ) );
+    // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
+    //  dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
+    //                                                    0, false ) );
+    if ( lineEdit ) {
+      return lineEdit->text();
+      }
+    else
+      kdDebug(5006) << "MessageRuleWidgetHandler::currentValue: "
+                       "regExpLineEdit not found." << endl;
+
+    // or anything else, like addressbook
+    return QString::null;
+  }
+
+  //---------------------------------------------------------------------------
+
+  QString MessageRuleWidgetHandler::value( const QCString & field,
+                                        const QWidgetStack *functionStack,
+                                        const QWidgetStack *valueStack ) const
+  {
+    if ( !handlesField( field ) )
+      return QString::null;
+  
+    KMSearchRule::Function func = currentFunction( functionStack );
+    if ( func == KMSearchRule::FuncHasAttachment )
+      return "has an attachment"; // just a non-empty dummy value
+    else if ( func == KMSearchRule::FuncHasNoAttachment )
+      return "has no attachment"; // just a non-empty dummy value
+    else
+      return currentValue( valueStack, func );
+  }
+
+  //---------------------------------------------------------------------------
+
+  QString MessageRuleWidgetHandler::prettyValue( const QCString & field,
+                                              const QWidgetStack *functionStack,
+                                              const QWidgetStack *valueStack ) const
+  {
+    if ( !handlesField( field ) )
+      return QString::null;
+      
+    KMSearchRule::Function func = currentFunction( functionStack );
+    if ( func == KMSearchRule::FuncHasAttachment )
+      return i18n( "has an attachment" ); 
+    else if ( func == KMSearchRule::FuncHasNoAttachment )
+      return i18n( "has no attachment" ); 
+    else
+      return currentValue( valueStack, func );
+  }
+
+  //---------------------------------------------------------------------------
+
+  bool MessageRuleWidgetHandler::handlesField( const QCString & field ) const
+  {
+     return ( field == "<message>" );
+  }
+
+  //---------------------------------------------------------------------------
+
+  void MessageRuleWidgetHandler::reset( QWidgetStack *functionStack,
+                                     QWidgetStack *valueStack ) const
+  {
+    // reset the function combo box
+    QComboBox *funcCombo =
+      dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
+                                                      0, false ) );
+    if ( funcCombo ) {
+      funcCombo->blockSignals( true );
+      funcCombo->setCurrentItem( 0 );
+      funcCombo->blockSignals( false );
+    }
+
+    // reset the value widget
+    RegExpLineEdit *lineEdit =
+      dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
+                                                        0, false ) );
+    if ( lineEdit ) {
+      lineEdit->blockSignals( true );
+      lineEdit->clear();
+      lineEdit->blockSignals( false );
+      lineEdit->showEditButton( false );
+      valueStack->raiseWidget( lineEdit );
+    }
+
+ }
+
+  //---------------------------------------------------------------------------
+
+  bool MessageRuleWidgetHandler::setRule( QWidgetStack *functionStack,
+                                       QWidgetStack *valueStack,
+                                       const KMSearchRule *rule ) const
+  {
+    if ( !rule || !handlesField( rule->field() ) ) {
+      reset( functionStack, valueStack );
+      return false;
+    }
+  
+    const KMSearchRule::Function func = rule->function();
+    int i = 0;
+    for ( ; i < MessageFunctionCount; ++i )
+      if ( func == MessageFunctions[i].id )
+        break;
+    QComboBox *funcCombo =
+      dynamic_cast<QComboBox*>( functionStack->child( "messageRuleFuncCombo",
+                                                      0, false ) );
+    if ( funcCombo ) {
+      funcCombo->blockSignals( true );
+      if ( i < MessageFunctionCount )
+        funcCombo->setCurrentItem( i );
+      else {
+        kdDebug(5006) << "MessageRuleWidgetHandler::setRule( "
+                      << rule->asString()
+                      << " ): unhandled function" << endl;
+        funcCombo->setCurrentItem( 0 );
+      }
+      funcCombo->blockSignals( false );
+      functionStack->raiseWidget( funcCombo );
+    }
+
+    if ( func == KMSearchRule::FuncHasAttachment  ||
+                  func == KMSearchRule::FuncHasNoAttachment ) {
+      QWidget *w =
+        static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
+                                                  0, false ) );
+      valueStack->raiseWidget( w );
+    }
+    else {
+      RegExpLineEdit *lineEdit =
+        dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
+                                                          0, false ) );
+      if ( lineEdit ) {
+        lineEdit->blockSignals( true );
+        lineEdit->setText( rule->contents() );
+        lineEdit->blockSignals( false );
+        lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
+                                  func == KMSearchRule::FuncNotRegExp );
+        valueStack->raiseWidget( lineEdit );
+      }
+    }
+    return true;
+  }
+
+
+  //---------------------------------------------------------------------------
+
+  bool MessageRuleWidgetHandler::update( const QCString & field,
+                                      QWidgetStack *functionStack,
+                                      QWidgetStack *valueStack ) const
+  {
+    if ( !handlesField( field ) )
+      return false;
+    // raise the correct function widget
+    functionStack->raiseWidget(
+      static_cast<QWidget*>( functionStack->child( "messageRuleFuncCombo",
+                                                   0, false ) ) );
+
+    // raise the correct value widget
+    KMSearchRule::Function func = currentFunction( functionStack );
+    if ( func == KMSearchRule::FuncHasAttachment  ||
+                  func == KMSearchRule::FuncHasNoAttachment ) {
+      QWidget *w =
+        static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
+                                                  0, false ) );
+      valueStack->raiseWidget( w );
+      // and hide also the combobox on the left?
+      //but then the rule won't be stored in the config-file...:( 
+      //so better set the value to "<message>"
+    }
+    else {
+      RegExpLineEdit *lineEdit =
+        dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
+                                                          0, false ) );
+      if ( lineEdit ) {
+        lineEdit->showEditButton( func == KMSearchRule::FuncRegExp ||
+                                  func == KMSearchRule::FuncNotRegExp );
+        valueStack->raiseWidget( lineEdit );
+      }
+    }
+    return true;
+  }
+
+} // anonymous namespace for MessageRuleWidgetHandler
 
 
 //=============================================================================

@@ -1034,7 +1034,7 @@ void KMMsgBase::setTransferInProgress(bool value, bool force)
 
 
 //-----------------------------------------------------------------------------
-KMMsgAttachmentState KMMsgBase::attachmentState()
+KMMsgAttachmentState KMMsgBase::attachmentState() const
 {
   KMMsgStatus st = status();
   if (st & KMMsgStatusHasAttach)

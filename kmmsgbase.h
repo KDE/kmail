@@ -371,7 +371,7 @@ public:
   void setTransferInProgress(bool value, bool force = false);
 
   /** Return if the message has at least one attachment */
-  virtual KMMsgAttachmentState attachmentState();
+  virtual KMMsgAttachmentState attachmentState() const;
 
 protected:
   KMFolder* mParent;

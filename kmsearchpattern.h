@@ -45,7 +45,8 @@ public:
 		  FuncIsGreater, FuncIsLessOrEqual,
   		  FuncIsLess, FuncIsGreaterOrEqual,
 		  FuncIsInAddressbook, FuncIsNotInAddressbook,
-                  FuncIsInCategory, FuncIsNotInCategory};
+                  FuncIsInCategory, FuncIsNotInCategory,
+		  FuncHasAttachment, FuncHasNoAttachment};
   KMSearchRule ( const QCString & field=0, Function=FuncContains,
                  const QString &contents=QString::null );
   KMSearchRule ( const KMSearchRule &other );
