@@ -16,6 +16,7 @@
 #include <sys/types.h>
 #include <mimelib/string.h>
 
+//-----------------------------------------------------------------------------
 KMComposeView::KMComposeView(QWidget *parent, const char *name, 
 			     QString emailAddress, KMMessage *message, 
 			     int action): 
@@ -83,6 +84,7 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   parseConfiguration();	
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::getDNDAttachment()
 {
   QString element;
@@ -96,11 +98,11 @@ void KMComposeView::getDNDAttachment()
     element = urlList->next();}
 }
 
+//-----------------------------------------------------------------------------
 KMComposeView::~KMComposeView()
 {}
 
-// ******************  Public slots *************
-
+//-----------------------------------------------------------------------------
 void KMComposeView::printIt()
 {
   // QPrinter is extremly broken. Even the Trolls admitted
@@ -130,7 +132,7 @@ void KMComposeView::printIt()
   delete printer;
 }
 
-
+//-----------------------------------------------------------------------------
 void KMComposeView::attachFile()
 {
   QString atmntFile;
@@ -144,6 +146,7 @@ void KMComposeView::attachFile()
   urlList->append(atmntFile);
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::sendIt()
 {
   QString option;
@@ -190,8 +193,7 @@ void KMComposeView::sendIt()
 
 }
 
-// ********************* Private slots ****************
-
+//-----------------------------------------------------------------------------
 void KMComposeView::parseConfiguration()
 {
   KConfig *config = new KConfig();
@@ -210,6 +212,7 @@ void KMComposeView::parseConfiguration()
   cout << EMailAddress << "\n";
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::forwardMessage()
 {
   QString temp, spc;
@@ -236,6 +239,7 @@ void KMComposeView::forwardMessage()
 	
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::replyAll()
 {
   QString temp;
@@ -263,7 +267,7 @@ void KMComposeView::replyAll()
   currentMessage = currentMessage->reply();
 }
 
-
+//-----------------------------------------------------------------------------
 void KMComposeView::replyMessage()
 {
   QString temp;
@@ -290,38 +294,42 @@ void KMComposeView::replyMessage()
   currentMessage = currentMessage->reply();
 }
 
-
+//-----------------------------------------------------------------------------
 void KMComposeView::undoEvent()
 {
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::copyText()
 {
   editor->copyText();
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::cutText()
 {
   editor->cut();
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::pasteText()
 {
   editor->paste();
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::markAll()
 {
   editor->selectAll();
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::find()
 {
   editor->Search();
 }
 
-
-
+//-----------------------------------------------------------------------------
 void KMComposeView::detachFile(int index, int col)
 {
   col = col;
@@ -337,6 +345,7 @@ void KMComposeView::detachFile(int index, int col)
 	
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::insertFile()
 {
   QString iFileString;
@@ -361,11 +370,13 @@ void KMComposeView::insertFile()
     }
 }	
 
+//-----------------------------------------------------------------------------
 void KMComposeView::toDo()
 {
   warning(nls->translate("Sorry, but this feature\nis still missing"));
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::newComposer()
 {
   KMComposeWin *newComposer = new KMComposeWin(NULL,NULL,NULL,NULL);
@@ -374,6 +385,7 @@ void KMComposeView::newComposer()
 
 }
 
+//-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress,
 			   KMMessage *message, int action) : 
   KTopLevelWidget(name)
@@ -395,13 +407,14 @@ KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress,
   resize(480, 510);
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::show()
 {
   KTopLevelWidget::show();
   resize(size());
 }
 
-
+//-----------------------------------------------------------------------------
 void KMComposeWin::parseConfiguration()
 {
   KConfig *config;
@@ -433,7 +446,8 @@ void KMComposeWin::parseConfiguration()
     sendButton = true;
 }	
 
-/**********************************************************************************************/
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::setupMenuBar()
 {
   menuBar = new KMenuBar(this);
@@ -486,19 +500,20 @@ void KMComposeWin::setupMenuBar()
   omenu->insertItem(nls->translate("Toggle T&oolbar"),this,SLOT(toggleToolBar()),ALT+Key_O);
   omenu->setItemChecked(omenu->idAt(2),TRUE);
   menuBar->insertItem(nls->translate("Options"),omenu);
-
   menuBar->insertSeparator();
 
-
+#ifdef REMOVED
   QPopupMenu *hmenu = new QPopupMenu();
   hmenu->insertItem(nls->translate("Help"),this,SLOT(invokeHelp()),ALT + Key_H);
   hmenu->insertSeparator();
-  hmenu->insertItem(nls->translate("About"),this,SLOT(about()));
+  hmenu->insertItem(nls->translate("About"),parent(),SLOT(about()));
   menuBar->insertItem(nls->translate("Help"),hmenu);
+#endif
 
   setMenu(menuBar);
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::setupToolBar()
 {
   QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
@@ -541,6 +556,7 @@ void KMComposeWin::setupToolBar()
   addToolBar(toolBar);
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar()
 {
   statusBar = new KStatusBar(this);
@@ -548,7 +564,7 @@ void KMComposeWin::setupStatusBar()
   setStatusBar(statusBar);
 }
 
-
+//-----------------------------------------------------------------------------
 void KMComposeWin::doNewMailReader()
 {
   KMMainWin *newReader = new KMMainWin(NULL);
@@ -556,6 +572,7 @@ void KMComposeWin::doNewMailReader()
   newReader->resize(newReader->size());
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::toggleToolBar()
 {
   enableToolBar(KToolBar::Toggle);
@@ -567,6 +584,7 @@ void KMComposeWin::toggleToolBar()
   repaint();
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeView::appendSignature()
 {
   KConfig *configFile = new KConfig();
@@ -589,37 +607,26 @@ void KMComposeView::appendSignature()
 
 }
 
-
-
+//-----------------------------------------------------------------------------
 void KMComposeWin::abort()
 {
   close();
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::invokeHelp()
 {
 
   KApplication::getKApplication()->invokeHTMLHelp("","");
-
 }
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::toDo()
 {
   warning(nls->translate("Sorry, but this feature\nis still missing"));
 }
 
-void KMComposeWin::about()
-{
-  KMsgBox::message(this,nls->translate("About"),
-		   "kmail [0.1]\n\n"
-		   "Stefan Taferner <taferner@alpin.or.at>\n"
-		   "Markus Wübben <markus.wuebben@kde.org>\n\n" 
-		   "based on the work of the above authors and:\n"
-		   "Lynx <lynx@topaz.hknet.com>\n"
-		   "Stephan Meyer <Stephan.Meyer@munich.netsurf.de>\n\n"
-		   "This program is covered by the GPL.",1);
-}
-
+//-----------------------------------------------------------------------------
 void KMComposeWin::closeEvent(QCloseEvent *e)
 {
   KTopLevelWidget::closeEvent(e);
@@ -632,6 +639,7 @@ void KMComposeWin::closeEvent(QCloseEvent *e)
   delete this;
 }
 
+//-----------------------------------------------------------------------------
 KMAttachmentItem::KMAttachmentItem(QString _name, int _index)
 {
 	

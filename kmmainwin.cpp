@@ -80,14 +80,17 @@ void KMMainWin::setupMenuBar()
 
   //----- Edit Menu
   QPopupMenu *editMenu = new QPopupMenu();
-  editMenu->insertItem(nls->translate("&Undo"), this, SLOT(doUnimplemented()));
-  editMenu->insertItem(nls->translate("&Cut"), this, SLOT(doUnimplemented()));
-  editMenu->insertItem(nls->translate("&Copy"), this, SLOT(doUnimplemented()));
-  editMenu->insertItem(nls->translate("&Paste"),this, SLOT(doUnimplemented()));
+  editMenu->insertItem(nls->translate("&Undo"), this, SLOT(doUnimplemented()),
+		       CTRL + Key_Z);
+  editMenu->insertItem(nls->translate("&Cut"), this, SLOT(doUnimplemented()),
+		       CTRL + Key_X);
+  editMenu->insertItem(nls->translate("&Copy"), this, SLOT(doUnimplemented()),
+		       CTRL + Key_C);
+  editMenu->insertItem(nls->translate("&Paste"),this, SLOT(doUnimplemented()),
+		       CTRL + Key_V);
   editMenu->insertSeparator();
-  editMenu->insertItem(nls->translate("&Find"), this, SLOT(doUnimplemented()));
-  editMenu->insertItem(nls->translate("&Replace"), this, 
-		       SLOT(doUnimplemented()));
+  editMenu->insertItem(nls->translate("&Find..."), this, 
+		       SLOT(doUnimplemented()), CTRL + Key_F);
 
   //----- Message Menu
   QPopupMenu *messageMenu = new QPopupMenu();
@@ -121,13 +124,13 @@ void KMMainWin::setupMenuBar()
   //----- Folder Menu
   QPopupMenu *folderMenu = new QPopupMenu();
   folderMenu->insertItem(nls->translate("&Create..."), mainView, 
-			 SLOT(doAddFolder()), ALT + Key_C);
+			 SLOT(doAddFolder()));
   folderMenu->insertItem(nls->translate("&Modify..."), mainView, 
-			 SLOT(doModifyFolder()), ALT + Key_M);
+			 SLOT(doModifyFolder()));
   folderMenu->insertItem(nls->translate("&Remove"), mainView, 
-			 SLOT(doRemoveFolder()), ALT + Key_R);
+			 SLOT(doRemoveFolder()));
   folderMenu->insertItem(nls->translate("&Empty"), mainView, 
-			 SLOT(doEmptyFolder()), ALT + Key_E);
+			 SLOT(doEmptyFolder()));
 
   //----- Help Menu
   QPopupMenu *helpMenu = new QPopupMenu();
@@ -158,50 +161,49 @@ void KMMainWin::setupToolBar()
   QPixmap pixmap;
 
   pixmap.load(pixdir+"kmnew.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), mainView,
-			SLOT(doCompose()), TRUE, "compose message");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), mainView,
+			SLOT(doCompose()), TRUE, 
+			nls->translate("compose message"));
 
   toolBar->insertSeparator();
 
   pixmap.load(pixdir+"kmcheckmail.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), mainView,
-			SLOT(doCheckMail()), TRUE, "check for new mail");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), mainView,
+			SLOT(doCheckMail()), TRUE,
+			nls->translate("check for new mail"));
 
   toolBar->insertSeparator();
 
   pixmap.load(pixdir+"kmreply.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), mainView,
-			SLOT(doReplyMessage()), TRUE, "reply to message");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), mainView,
+			SLOT(doReplyMessage()), TRUE,
+			nls->translate("reply to message"));
 
   pixmap.load(pixdir+"kmforward.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), mainView,
-			SLOT(doForwardMessage()), TRUE, "forward message");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), mainView,
+			SLOT(doForwardMessage()), TRUE,
+			nls->translate("forward message"));
 
   pixmap.load(pixdir+"kmdel.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), mainView,
-			SLOT(doDeleteMessage()), TRUE, "delete message");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), mainView,
+			SLOT(doDeleteMessage()), TRUE,
+			nls->translate("delete message"));
 
   pixmap.load(pixdir+"kmsave.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), this,
-			SLOT(doUnimplemented()), TRUE, "save message to file");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), this,
+			SLOT(doUnimplemented()), TRUE,
+			nls->translate("save message to file"));
 
   pixmap.load(pixdir+"kmprint.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), this,
-			SLOT(doUnimplemented()), TRUE, "print message");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), this,
+			SLOT(doUnimplemented()), TRUE,
+			nls->translate("print message"));
 
   toolBar->insertSeparator();
 
   pixmap.load(pixdir+"help.xpm");
-  toolBar->insertButton(pixmap, 0,
-			SIGNAL(clicked()), this,
-			SLOT(doHelp()), TRUE, "Help");
+  toolBar->insertButton(pixmap, 0, SIGNAL(clicked()), this,
+			SLOT(doHelp()), TRUE, nls->translate("Help"));
 
   addToolBar(toolBar);
 }
@@ -220,12 +222,14 @@ void KMMainWin::setupStatusBar()
 //-----------------------------------------------------------------------------
 void KMMainWin::doAbout()
 {
-  KMsgBox::message(this,"About",
-		   "kmail [ALPHA]\n\n"
-		   "Yat-Nam Lo <lynx@topaz.hknet.com>\n"
-		   "Stephan Meyer <Stephan.Meyer@munich.netsurf.de>\n"
-		   "Stefan Taferner <taferner@alpin.or.at>\n"
+  KMsgBox::message(this,nls->translate("About"),
+		   "KMail [V0.1] by\n\n"
+		   "Stefan Taferner <taferner@alpin.or.at>,\n"
 		   "Markus Wübben <markus.wuebben@kde.org>\n\n" 
+		   "based on the work of:\n"
+		   "Lynx <lynx@topaz.hknet.com>,\n"
+		   "Stephan Meyer <Stephan.Meyer@pobox.com>,\n"
+		   "and the above authors.\n"
 		   "This program is covered by the GPL.",1);
 }
 
@@ -265,9 +269,7 @@ void KMMainWin::doSettings()
 //-----------------------------------------------------------------------------
 void KMMainWin::doUnimplemented()
 {
-  KMsgBox::message(this, nls->translate("Warning"),
-		   nls->translate("Sorry, but this feature\n"
-				  "is currently not implemented."), 1);
+  warning(nls->translate("Sorry, but this feature\nis still missing"));
 }
 
 

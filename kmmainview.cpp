@@ -170,7 +170,7 @@ void KMMainView::doRemoveFolder()
 
   str.sprintf(nls->translate("Are you sure you want to remove the folder \""
 			     "%s\"\nand all of its child folders?"),
-			     currentFolder->label());
+			     (const char*)currentFolder->label());
   if ((KMsgBox::yesNo(this,nls->translate("Confirmation"),str))==1)
   {
 #ifdef BROKEN

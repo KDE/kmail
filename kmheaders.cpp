@@ -23,7 +23,7 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
 
   //setNumCols(4);
   setColumn(0, nls->translate("F"), 16, KTabListBox::PixmapColumn);
-  setColumn(1, nls->translate("Sender"), 150);
+  setColumn(1, nls->translate("Sender"), 200);
   setColumn(2, nls->translate("Subject"), 250);
   setColumn(3, nls->translate("Date"), 100);
 
