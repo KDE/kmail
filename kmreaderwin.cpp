@@ -1171,15 +1171,15 @@ void KMReaderWin::updateReaderWin()
   else
   {
     mColorBar->hide();
-    mViewer->begin( KURL( "file:/" ) );
-    mViewer->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
-		   "Transitional//EN\">\n<html><body" +
-		   QString(" bgcolor=\"%1\"").arg(c4.name()));
+    htmlWriter()->begin();
+    htmlWriter()->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+			"Transitional//EN\">\n<html><body" +
+			QString(" bgcolor=\"%1\"").arg(c4.name()));
 
     if (mBackingPixmapOn)
-      mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
-    mViewer->write("></body></html>");
-    mViewer->end();
+      htmlWriter()->write(" background=\"file://" + mBackingPixmapStr + "\"");
+    htmlWriter()->write("></body></html>");
+    htmlWriter()->end();
     mViewer->view()->viewport()->setUpdatesEnabled( true );
     mViewer->view()->setUpdatesEnabled( true );
     mViewer->view()->viewport()->repaint( false );
@@ -1191,6 +1191,7 @@ void KMReaderWin::updateReaderWin()
 //-----------------------------------------------------------------------------
 void KMReaderWin::queueHtml(const QString &aStr)
 {
+  // ### (mm) move this to KHtmlPartHtmlWriter
   uint pos = 0;
   while (aStr.length() > pos)
   {
@@ -1202,6 +1203,7 @@ void KMReaderWin::queueHtml(const QString &aStr)
 //-----------------------------------------------------------------------------
 void KMReaderWin::sendNextHtmlChunk()
 {
+  // ### (mm) move this to KHtmlPartHtmlWriter
   QStringList::Iterator it = mHtmlQueue.begin();
   if (it == mHtmlQueue.end())
   {
@@ -1254,7 +1256,7 @@ void KMReaderWin::parseMsg(void)
   if (mBackingPixmapOn)
     bkgrdStr = " background=\"file://" + mBackingPixmapStr + "\"";
 
-  mViewer->begin( KURL( "file:/" ) );
+  htmlWriter()->begin();
 
   if (mAutoDetectEncoding) {
     mCodec = 0;
@@ -1310,9 +1312,9 @@ void KMReaderWin::parseMsg(void)
 
 
   QColorGroup cg = kapp->palette().active();
-  queueHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
-	    "Transitional//EN\">\n<html><head><title></title>"
-	    "<style type=\"text/css\">" +
+  htmlWriter()->queue("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+		      "Transitional//EN\">\n<html><head><title></title>"
+		      "<style type=\"text/css\">" +
     ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; "
                            "color: #000000; background-color: #FFFFFF; }\n")
         .arg( mBodyFamily ).arg( fntSize )
@@ -1429,8 +1431,8 @@ void KMReaderWin::parseMsg(void)
 
   parseMsg(msg);
 
-  queueHtml("</body></html>");
-  sendNextHtmlChunk();
+  htmlWriter()->queue("</body></html>");
+  htmlWriter()->flush();
 }
 
 
@@ -1566,7 +1568,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
       writePartIcon(&vCardNode->msgPart(), aMsg->partNumber(vCardNode->dwPart()), TRUE );
     }
   }
-  queueHtml("<div id=\"header\">"
+  htmlWriter()->queue("<div id=\"header\">"
           + (writeMsgHeader(aMsg, hasVCard))
           + "</div><div><br></div>");
 
@@ -2653,7 +2655,7 @@ void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
   else
       htmlStr = quotedHTML( aCodec->toUnicode( aStr ) );
 
-  queueHtml(htmlStr);
+  htmlWriter()->queue(htmlStr);
 }
 
 
@@ -2664,7 +2666,7 @@ void KMReaderWin::writeHTMLStr(const QString& aStr)
   mColorBar->setPaletteForegroundColor( cCBisHtmlF );
   mColorBar->setTextFormat( Qt::RichText );
   mColorBar->setText(i18n("<b><br>H<br>T<br>M<br>L<br> <br>M<br>e<br>s<br>s<br>a<br>g<br>e</b>"));
-  queueHtml(aStr);
+  htmlWriter()->queue(aStr);
 }
 
 //-----------------------------------------------------------------------------
@@ -2840,7 +2842,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
     iconName = aMsgPart->iconName();
   }
   if (!quiet)
-    queueHtml("<table><tr><td><a href=\"" + href + "\"><img src=\"" +
+    htmlWriter()->queue("<table><tr><td><a href=\"" + href + "\"><img src=\"" +
                    iconName + "\" border=\"0\">" + label +
                    "</a></td></tr></table>" + comment + "<br>");
 }
@@ -2854,7 +2856,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::printMsg(void)
+void KMReaderWin::printMsg()
 {
   if (!message()) return;
     mViewer->view()->print();
@@ -3208,8 +3210,8 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 	setCodec( aCodec );
       else
 	setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
-      mViewer->begin( KURL( "file:/" ) );
-      queueHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+      htmlWriter()->begin();
+      htmlWriter()->queue("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
 		"Transitional//EN\">\n<html><head><title></title>"
 		"<style type=\"text/css\">" +
 		QString("a { color: %1;").arg(c2.name()) +
@@ -3225,8 +3227,8 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 	  writeBodyStr( str,
 		    codec(),
 		    message() ? message()->from() : "" );
-      queueHtml("</body></html>");
-      sendNextHtmlChunk();
+      htmlWriter()->queue("</body></html>");
+      htmlWriter()->flush();
       // ##### FIXME-AFTER-MSG-FREEZE: Use this
       // win->setCaption(i18n("View Attachment: %1").arg(pname));
       // instead of the following line:
@@ -3264,14 +3266,14 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
           mMainWindow->resize( width, height );
       }
       // Just write the img tag to HTML:
-      mViewer->begin( KURL( "file:/" ) );
-      mViewer->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+      htmlWriter()->begin();
+      htmlWriter()->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
 		     "Transitional//EN\">\n<html><title></title><body>");
       QString linkName = QString("<img src=\"file:%1\" border=0>")
                          .arg(KURL::encode_string(aFileName));
-      mViewer->write(linkName);
-      mViewer->write("</body></html>");
-      mViewer->end();
+      htmlWriter()->write(linkName);
+      htmlWriter()->write("</body></html>");
+      htmlWriter()->end();
       setCaption(i18n("View Attachment: ") + pname);
       show();
   } else {
