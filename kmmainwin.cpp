@@ -171,45 +171,45 @@ void KMMainWin::setupToolBar()
 
   toolBar = new KToolBar(this);
 
-  toolBar->insertButton(loader->loadIcon("toolbar/filenew.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("filenew.xpm"), 0, 
 			SIGNAL(clicked()), mainView,
 			SLOT(doCompose()), TRUE, 
 			nls->translate("Compose new message"));
 
-  toolBar->insertButton(loader->loadIcon("toolbar/filefloppy.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("filefloppy.xpm"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(doUnimplemented()), TRUE,
 			nls->translate("Save message to file"));
 
-  toolBar->insertButton(loader->loadIcon("toolbar/fileprint.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(doUnimplemented()), TRUE,
 			nls->translate("Print message"));
 
   toolBar->insertSeparator();
 
-  toolBar->insertButton(loader->loadIcon("toolbar/checkmail.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("checkmail.xpm"), 0, 
 			SIGNAL(clicked()), mainView,
 			SLOT(doCheckMail()), TRUE,
 			nls->translate("Get new mail"));
   toolBar->insertSeparator();
 
-  toolBar->insertButton(loader->loadIcon("toolbar/filereply.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("filereply.xpm"), 0, 
 			SIGNAL(clicked()), mainView, 
 			SLOT(doReplyMessage()), TRUE,
 			nls->translate("Reply to author"));
 
-  toolBar->insertButton(loader->loadIcon("toolbar/filereplyall.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("filereplyall.xpm"), 0, 
 			SIGNAL(clicked()), mainView,
 			SLOT(doReplyMessage()), TRUE,
 			nls->translate("Reply to all recipients"));
 
-  toolBar->insertButton(loader->loadIcon("toolbar/fileforward.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("fileforward.xpm"), 0, 
 			SIGNAL(clicked()), mainView,
 			SLOT(doForwardMessage()), TRUE,
 			nls->translate("Forward message"));
 
-  toolBar->insertButton(loader->loadIcon("toolbar/filedel2.xpm"), 0, 
+  toolBar->insertButton(loader->loadIcon("filedel2.xpm"), 0, 
 			SIGNAL(clicked()), mainView,
 			SLOT(doDeleteMessage()), TRUE,
 			nls->translate("Delete message"));

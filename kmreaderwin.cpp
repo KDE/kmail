@@ -7,6 +7,7 @@
 #include "kmglobal.h"
 #include "kmreaderwin.h"
 #include "kmreaderwin.moc"
+#include <kiconloader.h>
 
 #define FORWARD 0
 #define REPLY 1
@@ -627,51 +628,39 @@ void KMReaderWin::setupMenuBar()
 
 void KMReaderWin::setupToolBar()
 {
-	QString pixdir = "";   // pics dir code "inspired" by kghostview (thanks)
-	char *kdedir = getenv("KDEDIR");
-	if (kdedir) pixdir.append(kdedir);
-	 else 
-		{KMsgBox::message(0,"Oucch","$KDEDIR not set. Please do so");
-		qApp->quit();
-		}
-	pixdir += "/lib/pics/toolbar/";
-
-
-
-	toolBar = new KToolBar(this);
-
-	QPixmap pixmap;
-
-	pixmap.load(pixdir+"kmsave.xpm");
-	toolBar->insertButton(pixmap,0,SIGNAL(clicked()),
-			      newView,SLOT(saveMail()),TRUE,"Save Mail");
-	pixmap.load(pixdir+"kmprint.xpm");
-	toolBar->insertButton(pixmap,1,SIGNAL(clicked()),
+  KIconLoader *loader = kapp->getIconLoader();
+  toolBar = new KToolBar(this);
+  
+  toolBar->insertButton(loader->loadIcon("kmsave.xpm"),
+			0,SIGNAL(clicked()),
+			newView,SLOT(saveMail()),TRUE,"Save Mail");
+  toolBar->insertButton(loader->loadIcon("kmprint.xpm"),
+			      1,SIGNAL(clicked()),
 			      newView,SLOT(printMail()),TRUE,"Print");
 	toolBar->insertSeparator();
-	pixmap.load(pixdir+"kmreply.xpm");
-	toolBar->insertButton(pixmap,2,SIGNAL(clicked()),
+	toolBar->insertButton(loader->loadIcon("kmreply.xpm"),
+			      2,SIGNAL(clicked()),
 			      newView,SLOT(replyMessage()),TRUE,"Reply");
-	pixmap.load(pixdir+"kmreply.xpm");
-	toolBar->insertButton(pixmap,3,SIGNAL(clicked()),
+	toolBar->insertButton(loader->loadIcon("kmreply.xpm"),
+			      3,SIGNAL(clicked()),
 			      newView,SLOT(replyAll()),TRUE,"Reply all");
-	pixmap.load(pixdir+"kmforward.xpm");
-	toolBar->insertButton(pixmap,4,SIGNAL(clicked()),
+	toolBar->insertButton(loader->loadIcon("kmforward.xpm"),
+			      4,SIGNAL(clicked()),
 			      newView,SLOT(forwardMessage()),TRUE,"Forward");
 	toolBar->insertSeparator();
-	pixmap.load(pixdir+"down.xpm");
-	toolBar->insertButton(pixmap,5,SIGNAL(clicked()),
+	toolBar->insertButton( loader->loadIcon("kmforward.xpm"),
+			      5,SIGNAL(clicked()),
 			      newView,SLOT(nextMessage()),TRUE,"Next message");
-	pixmap.load(pixdir+"up.xpm");
-	toolBar->insertButton(pixmap,6,SIGNAL(clicked()),newView,
+	toolBar->insertButton(loader->loadIcon("up.xpm"),
+			      6,SIGNAL(clicked()),newView,
 			      SLOT(previousMessage()),TRUE,"Previous message");
 	toolBar->insertSeparator();
-	pixmap.load(pixdir+"kmdel.xpm");
-	toolBar->insertButton(pixmap,7,SIGNAL(clicked()),newView,
-			      SLOT(deleteMessage()),TRUE,"Delete Message");
+	toolBar->insertButton( loader->loadIcon("kmdel.xpm"),
+			       7,SIGNAL(clicked()),newView,
+			       SLOT(deleteMessage()),TRUE,"Delete Message");
 	toolBar->insertSeparator();
-	pixmap.load(pixdir+"help.xpm");
-	toolBar->insertButton(pixmap,8,SIGNAL(clicked()),
+	toolBar->insertButton(loader->loadIcon("help.xpm"),
+			      8,SIGNAL(clicked()),
 			      this,SLOT(invokeHelp()),TRUE,"Help");
 
 	addToolBar(toolBar);
@@ -680,7 +669,7 @@ void KMReaderWin::setupToolBar()
 void KMReaderWin::invokeHelp()
 {
 
-  KApplication::getKApplication()->invokeHTMLHelp("","");
+  kapp->invokeHTMLHelp("","");
 
 }
 

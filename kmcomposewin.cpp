@@ -740,42 +740,42 @@ void KMComposeWin::setupToolBar()
 
   toolBar = new KToolBar(this);
 
-  toolBar->insertButton(loader->loadIcon("toolbar/filenew.xpm"),0,
+  toolBar->insertButton(loader->loadIcon("filenew.xpm"),0,
 			SIGNAL(clicked()),composeView,
 			SLOT(newComposer()),TRUE,"Compose new message");
   toolBar->insertSeparator();
 
-  toolBar->insertButton(loader->loadIcon("toolbar/send.xpm"),0,
+  toolBar->insertButton(loader->loadIcon("send.xpm"),0,
 			SIGNAL(clicked()),this,
 			SLOT(send()),TRUE,"Send message");
   toolBar->insertSeparator();
-  toolBar->insertButton(loader->loadIcon("toolbar/reload.xpm"),2,
+  toolBar->insertButton(loader->loadIcon("reload.xpm"),2,
 			SIGNAL(clicked()),composeView,
 			SLOT(copyText()),TRUE,"Undo last change");
-  toolBar->insertButton(loader->loadIcon("toolbar/editcopy.xpm"),3,
+  toolBar->insertButton(loader->loadIcon("editcopy.xpm"),3,
 			SIGNAL(clicked()),composeView,
 			SLOT(copyText()),TRUE,"Copy selection");
-  toolBar->insertButton(loader->loadIcon("toolbar/editcut.xpm"),4,
+  toolBar->insertButton(loader->loadIcon("editcut.xpm"),4,
 			SIGNAL(clicked()),composeView,
 			SLOT(cutText()),TRUE,"Cut selection");
-  toolBar->insertButton(loader->loadIcon("toolbar/editpaste.xpm"),5,
+  toolBar->insertButton(loader->loadIcon("editpaste.xpm"),5,
 			SIGNAL(clicked()),composeView,
 			SLOT(pasteText()),TRUE,"Paste selection");
   toolBar->insertSeparator();
-  toolBar->insertButton(loader->loadIcon("toolbar/thumb_up.xpm"),6,
+  toolBar->insertButton(loader->loadIcon("thumb_up.xpm"),6,
 			SIGNAL(clicked()),composeView,
 			SLOT(toDo()),TRUE,"Recipients");
-  toolBar->insertButton(loader->loadIcon("toolbar/OpenBook.xpm"),7,
+  toolBar->insertButton(loader->loadIcon("OpenBook.xpm"),7,
 			SIGNAL(clicked()),composeView,
 			SLOT(toDo()),TRUE,"Open addressbook");
-  toolBar->insertButton(loader->loadIcon("toolbar/attach.xpm"),8,
+  toolBar->insertButton(loader->loadIcon("attach.xpm"),8,
 			SIGNAL(clicked()),composeView,
 			SLOT(attachFile()),TRUE,"Attach file");
   toolBar->insertSeparator();
-  toolBar->insertButton(loader->loadIcon("toolbar/fileprint.xpm"),12,
+  toolBar->insertButton(loader->loadIcon("fileprint.xpm"),12,
 			SIGNAL(clicked()),composeView,
 			SLOT(printIt()),TRUE,"Print message");
-  toolBar->insertButton(loader->loadIcon("toolbar/help.xpm"),13,
+  toolBar->insertButton(loader->loadIcon("help.xpm"),13,
 			SIGNAL(clicked()),this,
 			SLOT(invokeHelp()),TRUE,"Help");
 
