@@ -361,6 +361,8 @@ void KMSender::slotIdle()
     msg = i18n("Sending failed:");
     msg += '\n';
     msg += mSendProc->message();
+    msg += i18n("\nThe message will stay in the 'Outbox' folder and will be resent.\n");
+    msg += i18n("Please remove it from there if you do not want the message to \nbe resent\n");
     KMessageBox::information(0,msg);
     cleanup();
   }
