@@ -691,8 +691,9 @@ protected:
   Kpgp::Config *mPgpConfig;
   QCheckBox    *mPgpAutoSignatureCheck;
   QCheckBox    *mPgpAutoEncryptCheck;
+  QCheckBox    *mNeverSignWhenSavingInDraftsCheck;
+  QCheckBox    *mNeverEncryptWhenSavingInDraftsCheck;
 };
-
 
 class SecurityPageCryptPlugTab : public ConfigModuleTab
 {

@@ -3356,6 +3356,11 @@ SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * n
   connect( mPgpAutoEncryptCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
+  mNeverSignWhenSavingInDraftsCheck =
+    new QCheckBox( i18n("Never sign when saving as draft"), group );
+  mNeverEncryptWhenSavingInDraftsCheck = 
+    new QCheckBox( i18n("Never encrypt when saving as draft"), group );
+
   vlay->addWidget( mPgpConfig );
 
   vlay->addStretch( 10 ); // spacer
@@ -3379,6 +3384,8 @@ void SecurityPage::OpenPgpTab::load() {
   mPgpConfig->setValues();
   mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign", false ) );
   mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt", false ) );
+  mNeverSignWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-sign-drafts", true ) );
+  mNeverEncryptWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-encrypt-drafts", true ) );
 }
 
 void SecurityPage::OpenPgpTab::installProfile( KConfig * profile ) {
@@ -3388,6 +3395,10 @@ void SecurityPage::OpenPgpTab::installProfile( KConfig * profile ) {
     mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign" ) );
   if ( composer.hasKey( "pgp-auto-encrypt" ) )
     mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt" ) );
+  if ( composer.hasKey( "never-sign-drafts" ) )
+    mNeverSignWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-sign-drafts" ) );
+  if ( composer.hasKey( "never-encrypt-drafts" ) )
+    mNeverEncryptWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-encrypt-drafts" ) );
 }
 
 void SecurityPage::OpenPgpTab::save() {
@@ -3396,6 +3407,8 @@ void SecurityPage::OpenPgpTab::save() {
   mPgpConfig->applySettings();
   composer.writeEntry( "pgp-auto-sign", mPgpAutoSignatureCheck->isChecked() );
   composer.writeEntry( "pgp-auto-encrypt", mPgpAutoEncryptCheck->isChecked() );
+  composer.writeEntry( "never-sign-drafts", mNeverSignWhenSavingInDraftsCheck->isChecked() );
+  composer.writeEntry( "never-encrypt-drafts", mNeverEncryptWhenSavingInDraftsCheck->isChecked() );
 }
 
 QString SecurityPage::CryptPlugTab::helpAnchor() const {

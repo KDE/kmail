@@ -784,6 +784,7 @@ protected:
   QPopupMenu *mAttachMenu;
   int mSaveAsId, mPropertiesId;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
+  bool mNeverSignWhenSavingInDrafts, mNeverEncryptWhenSavingInDrafts;
   bool mAutoRequestMDN;
   bool mLastSignActionState, mLastEncryptActionState;
   bool mLastIdentityHasOpenPgpKey;

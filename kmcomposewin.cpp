@@ -454,6 +454,8 @@ void KMComposeWin::readConfig(void)
     mLineBreak = 30;
   mAutoPgpSign = config->readBoolEntry("pgp-auto-sign", false);
   mAutoPgpEncrypt = config->readBoolEntry("pgp-auto-encrypt", false);
+  mNeverSignWhenSavingInDrafts = config->readBoolEntry("never-sign-drafts", true);
+  mNeverEncryptWhenSavingInDrafts = config->readBoolEntry("never-encrypt-drafts", true);
   mConfirmSend = config->readBoolEntry("confirm-before-send", false);
   mAutoRequestMDN = config->readBoolEntry("request-mdn", false);
 
@@ -4902,7 +4904,15 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   mDisableBreaking = saveInDrafts;
 
   mBccMsgList.clear();
+  const bool oldNeverSign = mNeverSign;
+  const bool oldNeverEncrypt = mNeverEncrypt;
+  if ( saveInDrafts && mNeverSignWhenSavingInDrafts )
+    mNeverSign = true;
+  if ( saveInDrafts && mNeverEncryptWhenSavingInDrafts )
+    mNeverEncrypt = true;
   bool sentOk = applyChanges();
+  mNeverSign = oldNeverSign;
+  mNeverEncrypt = oldNeverEncrypt;
   if( sentOk ) {
     if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
     mEdtFrom->setEdited(FALSE);
