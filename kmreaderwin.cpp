@@ -3240,116 +3240,119 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
             
             if( CryptPlugWrapper::SigStatus_UNKNOWN == statusFlags ) {
                 result = i18n("Sorry, no status information available.");
-                frameColor = yellow;
+                frameColor = Qt::yellow;
                 showKeyInfos = false;
-            } else {
-                if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
-                    result = i18n("GOOD signature!");
+                return result;
+            }
+            
+            if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
+                result = i18n("GOOD signature!");
+                // Note:
+                // Here we are work differently than KMail did before!
+                //
+                // The GOOD case ( == sig matching and the complete
+                // certificate chain was verified and is valid today )
+                // by definition does *not* show any key
+                // information but just states that things are OK.
+                //           (khz, according to LinuxTag 2002 meeting)
+                frameColor = Qt::green;
+                showKeyInfos = false;
+                return result;
+            }
+                    
+            // we are still there?  OK, let's test the different cases:
+            
+            // we assume green, test for yellow or red (in this order!)
+            frameColor = Qt::green;
+            QString result2;
+            if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags ){
+                // still is green!
+                result2 = i18n("One key has expired.");
+            }
+            if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags ){
+                // and still is green!
+                result2 = i18n("The signature has expired.");
+            }
+
+            // test for yellow:
+            if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
+                result2 = i18n("Can't verify: key missing.");
+                // if the signature certificate is missing
+                // we cannot show infos on it
+                showKeyInfos = false;
+                frameColor = Qt::yellow;
+            }
+            if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags ){
+                result2 = i18n("CRL not available.");
+                frameColor = Qt::yellow;
+            }
+            if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags ){
+                result2 = i18n("Available CRL is too old.");
+                frameColor = Qt::yellow;
+            }
+            if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags ){
+                result2 = i18n("A policy was not met.");
+                frameColor = Qt::yellow;
+            }
+            if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ){
+                result2 = i18n("A system error occured.");
+                // if a system error occured
+                // we cannot trust any information
+                // that was given back by the plug-in
+                showKeyInfos = false;
+                frameColor = Qt::yellow;
+            }
+            if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
+                result2 = i18n("Internal system error #%1 occured.")
+                        .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
+                // if an unsupported internal error occured
+                // we cannot trust any information
+                // that was given back by the plug-in
+                showKeyInfos = false;
+                frameColor = Qt::yellow;
+            }
+
+            // test for red:
+            if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags ){
+                // this is red!
+                result2 = i18n("One key has been revoked.");
+                frameColor = Qt::red;
+            }
+            if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
+                if( result2.isEmpty() )
                     // Note:
                     // Here we are work differently than KMail did before!
                     //
-                    // The GOOD case ( == sig matching and the complete
-                    // certificate chain was verified and is valid today )
+                    // The BAD case ( == sig *not* matching )
                     // by definition does *not* show any key
-                    // information but just states that things are OK.
-                    //           (khz, according to LinuxTag 2002 meeting)
-                    frameColor = green;
+                    // information but just states that things are BAD.
+                    //
+                    // The reason for this: In this case ALL information
+                    // might be falsificated, we can NOT trust the data
+                    // in the body NOT the signature - so we don't show
+                    // any key/signature information at all!
+                    //         (khz, according to LinuxTag 2002 meeting)
                     showKeyInfos = false;
-                }
-                else {
-                    // we assume green, test for yellow or red (in this order!)
-                    frameColor = green;
-                    QString result2;
-                    if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags ){
-                        // still is green!
-                        result2 = i18n("One key has expired.");
-                    }
-                    if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags ){
-                        // and still is green!
-                        result2 = i18n("The signature has expired.");
-                    }
-                    
-                    // test for yellow:
-                    if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
-                        result2 = i18n("Can't verify: key missing.");
-                        // if the signature certificate is missing
-                        // we cannot show infos on it
-                        showKeyInfos = false;
-                        frameColor = yellow;
-                    }
-                    if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags ){
-                        result2 = i18n("CRL not available.");
-                        frameColor = yellow;
-                    }
-                    if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags ){
-                        result2 = i18n("Available CRL is too old.");
-                        frameColor = yellow;
-                    }
-                    if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags ){
-                        result2 = i18n("A policy was not met.");
-                        frameColor = yellow;
-                    }
-                    if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ){
-                        result2 = i18n("A system error occured.");
-                        // if a system error occured
-                        // we cannot trust any information
-                        // that was given back by the plug-in
-                        showKeyInfos = false;
-                        frameColor = yellow;
-                    }
-                    if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
-                        result2 = i18n("Internal system error #%1 occured.")
-                                .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
-                        // if an unsupported internal error occured
-                        // we cannot trust any information
-                        // that was given back by the plug-in
-                        showKeyInfos = false;
-                        frameColor = yellow;
-                    }
-                    
-                    // test for red:
-                    if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags ){
-                        // this is red!
-                        result2 = i18n("One key has been revoked.");
-                        frameColor = red;
-                    }
-                    if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
-                        if( result2.isEmpty() )
-                            // Note:
-                            // Here we are work differently than KMail did before!
-                            //
-                            // The BAD case ( == sig *not* matching )
-                            // by definition does *not* show any key
-                            // information but just states that things are BAD.
-                            //
-                            // The reason for this: In this case ALL information
-                            // might be falsificated, we can NOT trust the data
-                            // in the body NOT the signature - so we don't show
-                            // any key/signature information at all!
-                            //         (khz, according to LinuxTag 2002 meeting)
-                            showKeyInfos = false;
-                        frameColor = red;
-                    }
-                    else
-                        result = "";
-                        
-                    if( green == frameColor ) {
-                        if( result2.isEmpty() )
-                            result = i18n("GOOD signature!");
-                        else
-                            result = i18n("Good signature.");
-                    } else if( red == frameColor ) {
-                        if( result2.isEmpty() )
-                            result = i18n("BAD signature!");
-                        else
-                            result = i18n("Bad signature.");
-                    } else
-                        result = "";
-                        
-                    if( !result2.isEmpty() )
-                        result += "<br />" + result2;
-                }
+                frameColor = Qt::red;
             }
+            else
+                result = "";
+
+            if( Qt::green == frameColor ) {
+                if( result2.isEmpty() )
+                    result = i18n("GOOD signature!");
+                else
+                    result = i18n("Good signature.");
+            } else if( Qt::red == frameColor ) {
+                if( result2.isEmpty() )
+                    result = i18n("BAD signature!");
+                else
+                    result = i18n("Bad signature.");
+            } else
+                result = "";
+
+            if( !result2.isEmpty() )
+                result += "<br />" + result2;
         }
         /*
         // add i18n support for 3rd party plug-ins here:
@@ -3395,13 +3398,17 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
         // note: At the moment frameColor and showKeyInfos are
         //       used for CMS only but not for PGP signatures
         // pending(khz): Implement usage of these for PGP sigs as well.
-        QColor frameColor(black);
+        QColor frameColor( Qt::black );
         bool showKeyInfos;
         QString statusStr = sigStatusToString( cryptPlug,
                                                block.status_code,
                                                block.sigStatusFlags,
                                                frameColor,
                                                showKeyInfos );
+        
+        // temporary hack: allways show key infos!
+        showKeyInfos = true;
+        
         if( statusStr.isEmpty() )
             statusStr = block.status;
             
@@ -3409,15 +3416,15 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
         // Sorry for using 'black' as NULL color but .isValid()            
         // checking with QColor default c'tor did not work for
         // some reason.
-        if( black != frameColor ) {
+        if( Qt::black != frameColor ) {
         
             // new frame settings for CMS:
             
             // special color handling: S/MIME uses only green/yellow/red.
 kdDebug(5006) << "2. setting CMS color" << endl;
-            if( green == frameColor )
+            if( Qt::green == frameColor )
                 block.signClass = "signOkKeyOk";//"signCMSGreen";    
-            else if( yellow == frameColor )
+            else if( Qt::yellow == frameColor )
                 block.signClass = "signOkKeyBad";//"signCMSYellow";
             else // by definition frame must be red then
                 block.signClass = "signErr";//"signCMSRed";
