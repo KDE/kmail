@@ -1,10 +1,8 @@
-#include <kdebug.h>
-
 #include "certificatewizardimpl.h"
-
-/* 
- *  Constructs a CertificateWizardImpl which is a child of 'parent', with the 
- *  name 'name' and widget flags set to 'f' 
+#include <kdebug.h>
+/*
+ *  Constructs a CertificateWizardImpl which is a child of 'parent', with the
+ *  name 'name' and widget flags set to 'f'
  *
  *  The wizard will by default be modeless, unless you set 'modal' to
  *  TRUE to construct a modal wizard.
@@ -14,7 +12,7 @@ CertificateWizardImpl::CertificateWizardImpl( QWidget* parent,  const char* name
 {
 }
 
-/*  
+/*
  *  Destroys the object and frees any allocated resources
  */
 CertificateWizardImpl::~CertificateWizardImpl()
@@ -22,7 +20,7 @@ CertificateWizardImpl::~CertificateWizardImpl()
     // no need to delete child widgets, Qt does it all for us
 }
 
-/* 
+/*
  * protected slot
  */
 void CertificateWizardImpl::slotCreatePSE()
