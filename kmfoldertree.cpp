@@ -1355,10 +1355,10 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
       } else {
         if ( mShowPopupAfterDnD ) {
           KPopupMenu *menu = new KPopupMenu( this );
-          menu->insertItem( i18n("Move"), DRAG_MOVE, 0 );
-          menu->insertItem( SmallIcon("editcopy"), i18n("Copy"), DRAG_COPY, 1 );
+          menu->insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
+          menu->insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );
           menu->insertSeparator();
-          menu->insertItem( SmallIcon("cancel"), i18n("Cancel"), DRAG_CANCEL, 3 );
+          menu->insertItem( SmallIcon("cancel"), i18n("C&ancel"), DRAG_CANCEL, 3 );
           int id = menu->exec( QCursor::pos(), 0 );
           switch(id) {
             case DRAG_COPY:
