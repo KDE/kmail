@@ -554,13 +554,18 @@ int KMFolder::createIndexFromContents()
 //-----------------------------------------------------------------------------
 int KMFolder::writeIndex()
 {
+  QString tempName;
   KMMsgBase* msgBase;
   int old_umask;
   int i=0;
 
   if (mIndexStream) fclose(mIndexStream);
   old_umask = umask(077);
-  mIndexStream = fopen(indexLocation(), "w");
+
+  tempName = indexLocation() + ".temp";
+  unlink(tempName);
+
+  mIndexStream = fopen(tempName, "w");
   umask(old_umask);
   if (!mIndexStream) return errno;
 
@@ -572,7 +577,11 @@ int KMFolder::writeIndex()
     if (!(msgBase = mMsgList[i])) continue;
     fprintf(mIndexStream, "%s\n", (const char*)msgBase->asIndexString());
   }
-  fflush(mIndexStream);
+  if (fflush(mIndexStream) != 0) return errno;
+  if (fclose(mIndexStream) != 0) return errno;
+
+  _rename(tempName, indexLocation());
+  mIndexStream = 0;
 
   mDirty = FALSE;
   return 0;
