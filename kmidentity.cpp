@@ -16,6 +16,7 @@
 #include <kconfig.h>
 
 #include <qstringlist.h>
+#include <qfileinfo.h>
 
 #include <pwd.h>
 #include <sys/types.h>
@@ -121,7 +122,8 @@ QString Signature::textFromFile( bool * ok ) const
   assert( mType == FromFile );
 
   // ### FIXME: Use KIO::NetAccess to download non-local files!
-  if ( !KURL(mUrl).isLocalFile() ) {
+  if ( !KURL(mUrl).isLocalFile() && !(QFileInfo(mUrl).isRelative()
+					&& QFileInfo(mUrl).exists()) ) {
     kdDebug( 5006 ) << "Signature::textFromFile: non-local URLs are unsupported" << endl;
     if ( ok ) *ok = false;
     return QString::null;
