@@ -56,6 +56,22 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 }
 
 
+#include <dirent.h>
+#include <sys/stat.h>
+
+// Torben
+void testDir( const char *_name )
+{
+    DIR *dp;
+    QString c = getenv( "HOME" );
+    c += _name;
+    dp = opendir( c.data() );
+    if ( dp == NULL )
+	::mkdir( c.data(), S_IRWXU );
+    else
+	closedir( dp );
+}
+
 //-----------------------------------------------------------------------------
 static void init(int argc, char *argv[])
 {
@@ -75,12 +91,19 @@ static void init(int argc, char *argv[])
 
   cfg->setGroup("General");
 
+  // Torben
+  testDir( "/.kde" );
+  testDir( "/.kde/share" );  
+  testDir( "/.kde/share/config" );  
+  testDir( "/.kde/share/apps" );
+  testDir( "/.kde/share/apps/kmail" );
+
   fname = QDir::homeDirPath() + 
-    cfg->readEntry("accounts", QString("/.kde/mail-accounts"));
+    cfg->readEntry("accounts", QString("/.kde/share/apps/kmail/mail-accounts"));
   acctMgr = new KMAcctMgr(fname);
 
   fname = QDir::homeDirPath() + 
-    cfg->readEntry("folders", QString("/.kde/mail-folders"));
+    cfg->readEntry("folders", QString("/.kde/share/apps/kmail/mail-folders"));
   folderMgr = new KMFolderMgr(fname);
 
   trashName   = cfg->readEntry("trashFolder", QString("trash"));

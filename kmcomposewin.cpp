@@ -109,7 +109,7 @@ void KMComposeView::initKMimeMagic()
 {
   // Magic file detection init
   QString mimefile = kapp->kdedir();
-  mimefile += "/share/magic";
+  mimefile += "/share/mimelnk/magic";
   magic = new KMimeMagic( mimefile );
   magic->setFollowLinks( TRUE );
 }
