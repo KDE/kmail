@@ -508,11 +508,12 @@ void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
                readMsgDict(dict, child, pass);
              },
              {
-	       if (pass == 1) {
-                 dict->readFolderIds(folder);
+               if (pass == 1) {
+                 if ( !dict->readFolderIds(folder) )
+                   invalidateFolder(dict, folder);
                } else if (pass == 2) {
                  if (!dict->hasFolderIds(folder)) {
-		   invalidateFolder(dict, folder);
+                   invalidateFolder(dict, folder);
                  }
                }
              }
