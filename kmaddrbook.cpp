@@ -44,9 +44,9 @@ KMAddrBook::~KMAddrBook()
 //-----------------------------------------------------------------------------
 void KMAddrBook::insert(const QString aAddress)
 {
-  if (find(aAddress)<0)
+  if (find((const char *)aAddress.local8Bit())<0)
   {
-    inSort(aAddress);
+    inSort((const char *)aAddress.local8Bit());
     mModified=TRUE;
   }
 }
@@ -107,12 +107,13 @@ int KMAddrBook::load(const QString &aFileName)
   clear();
 
   QTextStream t( &file );
+  t.setEncoding(QTextStream::Locale);
 
   while ( !t.eof() )
   {
     line = t.readLine();
     kdDebug() << QString("load ") + line << endl;
-      if (line[0]!='#' && !line.isNull()) inSort(line);
+      if (line[0]!='#' && !line.isNull()) inSort((const char *)line.local8Bit());
   }
   rc = file.status();
   file.close();
@@ -135,12 +136,13 @@ int KMAddrBook::store(const QString &aFileName)
   if (!file.open(IO_ReadWrite|IO_Truncate)) return fileError(file.status());
   file.resetStatus(); // Work around suspected QT pre 2.2 snapshot bug
   QTextStream ts( &file );
+  ts.setEncoding(QTextStream::Locale);
 
   addr = "# kmail addressbook file\n";
   ts << addr;
   if (file.status() != IO_Ok) return fileError(file.status());
 
-  for (addr=first(); addr; addr=next())
+  for (addr=QString::fromLocal8Bit(first()); addr; addr=QString::fromLocal8Bit(next()))
   {
     ts << addr << "\n";
     if (file.status() != IO_Ok) return fileError(file.status());

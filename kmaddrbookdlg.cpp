@@ -48,7 +48,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
 
   if (!KMAddrBookExternal::useKAB())
-    for (QString addr=mAddrBook->first(); addr; addr=mAddrBook->next())
+    for (QString addr=QString::fromLocal8Bit(mAddrBook->first()); addr; addr=QString::fromLocal8Bit(mAddrBook->next()))
       mListBox.insertItem(addr);
   else {
     QStringList addresses;
@@ -130,7 +130,7 @@ KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent,
   mKeys = new QValueList<KabKey>();
   
   if (!KMAddrBookExternal::useKAB())
-    for (QString addr=mAddrBook->first(); addr; addr=mAddrBook->next())
+    for (QString addr=QString::fromLocal8Bit(mAddrBook->first()); addr; addr=QString::fromLocal8Bit(mAddrBook->next()))
       mListBox->insertItem(addr);
   else {
     KabBridge::addresses(mAddresses,mKeys);
