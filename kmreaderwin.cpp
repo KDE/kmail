@@ -480,7 +480,8 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       if (!asIcon)
       {
 //	if (i<=0 || stricmp(type, "text")==0)//||stricmp(type, "message")==0)
-	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
+//	if (stricmp(type, "text")==0)//||stricmp(type, "message")==0)
+	if ((type == "") || (stricmp(type, "text")==0))//||stricmp(type, "message")==0)
 	{
 	  str = QCString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<BR><HR><BR>");
@@ -706,7 +707,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
   int currQuoteLevel = -1;
   int prevQuoteLevel = -1;
   int newlineCount = 0;
-
+  tmpStr = "<div>"; //work around KHTML slowness
 
   // skip leading empty lines
   for( pos = 0; pos < (int)s.length() && s[pos] <= ' '; pos++ );
@@ -742,6 +743,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
       if( (newlineCount % 100) == 0 ) 
       {
 	htmlStr += tmpStr;
+	htmlStr += "</div><div>"; //work around KHTML slowness
 	tmpStr.truncate(0);
       }
 
@@ -766,6 +768,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
   }
 
   htmlStr += tmpStr;
+  htmlStr += "</div>"; //work around KHTML slowness
   return htmlStr;
 }
 
