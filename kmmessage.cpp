@@ -1008,16 +1008,10 @@ KMMessage* KMMessage::createBounce( bool )
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createForward(void)
+QCString KMMessage::createForwardBody(void)
 {
-  KMMessage* msg = new KMMessage;
-  KMMessagePart msgPart;
-  QCString str;
   QString s;
-  QString id;
-  int i;
-
-  msg->initFromMessage(this);
+  QCString str;
 
   if (sHdrStyle == KMReaderWin::HdrAll) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n\n";
@@ -1035,8 +1029,22 @@ KMMessage* KMMessage::createForward(void)
     str = asQuotedString(s, "", QString::null, FALSE, false, false);
     str += "\n-------------------------------------------------------\n";
   }
+  
+  return str;
+}
 
+//-----------------------------------------------------------------------------
+KMMessage* KMMessage::createForward(void)
+{
+  KMMessage* msg = new KMMessage;
+  KMMessagePart msgPart;
+  QString id;
+  int i;
+
+  msg->initFromMessage(this);
+  
   msg->setCharset("utf-8");
+  QCString str = createForwardBody();
   msg->setBody(str);
 
   if (numBodyParts() > 0)
@@ -2476,31 +2484,37 @@ void KMMessage::setStatus(const KMMsgStatus aStatus)
 void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)
 {
   Q_ASSERT(aStatus == KMMsgStatusReplied || aStatus == KMMsgStatusForwarded);
+
+  QString message = headerField("X-KMail-Link-Message");
+  if (!message.isEmpty())
+    message += ",";
+  QString type = headerField("X-KMail-Link-Type");
+  if (!type.isEmpty())
+    type += ",";
   
-  QString message = QString::number(aMsg->getMsgSerNum());
-  QString type = "";
+  message += QString::number(aMsg->getMsgSerNum());
   if (aStatus == KMMsgStatusReplied)
-    type = "reply";
+    type += "reply";
   else if (aStatus == KMMsgStatusForwarded)
-    type = "forward";
+    type += "forward";
   
-  QString status = QString::number((int)aStatus);
   setHeaderField("X-KMail-Link-Message", message);
   setHeaderField("X-KMail-Link-Type", type);
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::getLink(ulong *retMsgSerNum, KMMsgStatus *retStatus) const
+void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const
 {
+  *retMsgSerNum = 0;
   *retStatus = KMMsgStatusUnknown;
 
   QString message = headerField("X-KMail-Link-Message");
-  if (message.isEmpty())
-    *retMsgSerNum = 0;
+  QString type = headerField("X-KMail-Link-Type");
+  message = message.section(',', n, n);
+  type = type.section(',', n, n);
 
-  else {
+  if (!message.isEmpty() && !type.isEmpty()) {
     *retMsgSerNum = message.toULong();
-    QString type = headerField("X-KMail-Link-Type");
     if (type == "reply")
       *retStatus = KMMsgStatusReplied;
     else if (type == "forward")

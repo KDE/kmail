@@ -1307,6 +1307,7 @@ void KMHeaders::forwardMsg ()
         msgPartText += thisMsg->body();
         msgPartText += "\n";     // eot
         msgCnt++;
+        fwdMsg->link(thisMsg, KMMsgStatusForwarded);
       }
       kdDebug(5006) << "Done adding messages to the digest\n" << endl;
       QCString tmp;
@@ -1328,7 +1329,8 @@ void KMHeaders::forwardMsg ()
       return;
     } else {            // NO MIME DIGEST, Multiple forward
       QString id = "";
-      QString msgText = "";
+      QCString msgText = "";
+      KMMessageList linklist;
       for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
         int idx = mFolder->find(mb);
         if (idx < 0) continue;
@@ -1339,31 +1341,21 @@ void KMHeaders::forwardMsg ()
         if (id.length() == 0)
           id = thisMsg->headerField("X-KMail-Identity");
 
-        // add the message to the body
-        if (KMMessage::sHdrStyle == KMReaderWin::HdrAll) {
-          msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
-          msgText += thisMsg->asString();
-          msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
-            "", QString::null, FALSE, false, false));
-          msgText += "\n-------------------------------------------------------\n";
-        } else {
-          msgText += "\n\n----------  " + KMMessage::sForwardStr + "  ----------\n";
-          msgText += "Subject: " + thisMsg->subject() + "\n";
-          msgText += "Date: " + thisMsg->dateStr() + "\n";
-          msgText += "From: " + thisMsg->from() + "\n";
-          msgText += "To: " + thisMsg->to() + "\n";
-	  if (!thisMsg->cc().isEmpty()) msgText += "Cc: " + thisMsg->cc() + "\n";
-          msgText += "\n";
-          msgText = QString::fromUtf8(thisMsg->asQuotedString(msgText,
-            "", QString::null, FALSE, false, false));
-          msgText += "\n-------------------------------------------------------\n";
-        }
+        msgText += thisMsg->createForwardBody();
+        linklist.append(thisMsg);
       }
+
       KMMessage *fwdMsg = new KMMessage;
       fwdMsg->initHeader(id);
       fwdMsg->setAutomaticFields(true);
       fwdMsg->setCharset("utf-8");
-      fwdMsg->setBody(msgText.utf8());
+      fwdMsg->setBody(msgText);
+      
+      for (KMMsgBase *mb = linklist.first(); mb; mb = linklist.next()) {
+        KMMessage *thisMsg = static_cast<KMMessage *>(mb);
+        fwdMsg->link(thisMsg, KMMsgStatusForwarded);
+      }
+      
       kernel->kbp()->busy();
       win = new KMComposeWin(fwdMsg, id);
       win->setCharset("");
@@ -1403,7 +1395,6 @@ void KMHeaders::forwardAttachedMsg ()
   else if (msgList->count() == 1) {
     KMMessage *msg = currentMsg();
     fwdMsg->initFromMessage(msg);
-    fwdMsg->link(msg, KMMsgStatusForwarded);
   }
 
   fwdMsg->setAutomaticFields(true);
@@ -1431,8 +1422,7 @@ void KMHeaders::forwardAttachedMsg ()
     msgPart->setBodyEncoded(thisMsg->asString());
     msgPart->setCharset("");
 
-//    thisMsg->setStatus(KMMsgStatusForwarded);
-
+    fwdMsg->link(thisMsg, KMMsgStatusForwarded);
     win->addAttach(msgPart);
   }
 

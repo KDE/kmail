@@ -529,11 +529,15 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
 //-----------------------------------------------------------------------------
 void KMSender::setStatusByLink(const KMMessage *aMsg)
 {
-  ulong msn;
-  KMMsgStatus status;
-  aMsg->getLink(&msn, &status);
+  int n = 0;
+  while (1) {
+    ulong msn;
+    KMMsgStatus status;
+    aMsg->getLink(n, &msn, &status);
+    if (!msn || !status)
+      break;
+    n++;
 
-  if (msn) {
     KMFolder *folder;
     int index;
     kernel->msgDict()->getLocation(msn, &folder, &index);

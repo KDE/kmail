@@ -71,6 +71,9 @@ public:
     withUI is true, asks the user if he really wants that. */
   virtual KMMessage* createBounce( bool withUI );
 
+  /** Create the forwarded body for the message. */
+  virtual QCString createForwardBody(void);
+  
   /** Create a new message that is a forward of this message, filling all
     required header fields with the proper values. The returned message
     is not stored in any folder. Marks this message as forwarded. */
@@ -401,8 +404,9 @@ public:
 
     /** Links this message to @p aMsg, setting link type to @p aStatus. */
     void link(const KMMessage *aMsg, KMMsgStatus aStatus);
-    /** Returns the link information into @p retMsg and @p retStatus. */
-    void getLink(ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
+    /** Returns the information for the Nth link into @p retMsg
+     * and @p retStatus. */
+    void getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) const;
     
 protected:
     /** Convert wildcards into normal string */
