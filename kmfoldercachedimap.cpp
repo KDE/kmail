@@ -1135,7 +1135,6 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
           // This subfolder isn't present on the server
           kdDebug(5006) << node->name() << " isn't on the server." << endl;
           f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-          // TODO (Bo): Isn't this unnecessary? If it's a new folder, it was already uploaded
           if( !f->uidValidity().isEmpty() ) {
             // The folder have a uidValidity setting, so it has been on the
             // server before. Delete it locally.
