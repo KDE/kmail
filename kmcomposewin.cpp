@@ -2172,6 +2172,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     // make it visible in the config file:
     composer.writeEntry("showMessagePartDialogOnAttach", false);
   if (composer.readBoolEntry("showMessagePartDialogOnAttach", false)) {
+    const KCursorSaver saver( QCursor::ArrowCursor );
     KMMsgPartDialogCompat dlg;
     int encodings = 0;
     for ( QValueListConstIterator<int> it = allowedCTEs.begin() ;
