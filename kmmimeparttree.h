@@ -25,12 +25,12 @@ protected slots:
   void itemRightClicked( QListViewItem*, const QPoint& );
   void slotSaveAs();
   void slotSaveAsEncoded();
-  void slotSaveSelected();
-    void slotSaveAll();
-
-  void slotSaveItem( KMMimePartTreeItem* item, const QString& filename );
+  void slotSaveAll();
 
 protected:
+  void saveOneFile( QListViewItem* item, bool encoded );
+  void saveMultipleFiles( const QPtrList<QListViewItem>& selected, bool encoded );
+  void saveItem( KMMimePartTreeItem* item, const QString& filename, bool encoded );
   void restoreLayoutIfPresent();
 
 protected:
