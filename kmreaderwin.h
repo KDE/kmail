@@ -117,14 +117,11 @@ public:
   void setShowCompleteMessage( bool showCompleteMessage )
     { mShowCompleteMessage = showCompleteMessage; }
 
-  /** Returns the current message or NULL if none. */
-  KMMessage* msg(void) const { return mMsg; }
-
   /** Clear the reader and discard the current message. */
-  void clear(void) { setMsg(NULL); }
+  void clear(bool force = false) { setMsg(0, force); }
 
   /** Re-parse the current message. */
-  void update(bool force = false) { setMsg(mMsg, force); }
+  void update(bool force = false);
 
   /** Print current message. */
   virtual void printMsg(void);
@@ -314,6 +311,9 @@ protected slots:
   void slotTouchMessage();
 
 protected:
+  /** Returns the current message or NULL if none. */
+  KMMessage* message(void) const;
+
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
@@ -402,9 +402,7 @@ protected:
   int mAtmInline;
   int mAtmCurrent;
   QString mAtmCurrentName;
-  KMMessage *mMsg, *mMsgBuf;
-  int mMsgBufSize;
-  QString mMsgBufMD5;
+  KMMessage *mMessage;
   QHBox *mBox;
   QLabel *mColorBar;
   KHTMLPart *mViewer;

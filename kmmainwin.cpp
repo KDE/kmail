@@ -292,13 +292,13 @@ void KMMainWin::readConfig(void)
         oldShowMIMETreeMode != mShowMIMETreeMode )
     {
       /** unread / total columns
-       * as we have some dependencies in this widget 
+       * as we have some dependencies in this widget
        * it's better to manage these here */
-      int unreadColumn = config->readNumEntry("UnreadColumn", -1); 
+      int unreadColumn = config->readNumEntry("UnreadColumn", -1);
       int totalColumn = config->readNumEntry("TotalColumn", -1);
 
       /* we need to _activate_ them in the correct order
-      * this is ugly because we can't use header()->moveSection 
+      * this is ugly because we can't use header()->moveSection
       * but otherwise the restoreLayout from KMFolderTree
       * doesn't know that to do */
       if (unreadColumn != -1 && unreadColumn < totalColumn)
@@ -307,7 +307,7 @@ void KMMainWin::readConfig(void)
         mFolderTree->toggleColumn(KMFolderTree::total);
       if (unreadColumn != -1 && unreadColumn > totalColumn)
         mFolderTree->toggleColumn(KMFolderTree::unread);
-      
+
     }
   }
 
@@ -331,7 +331,7 @@ void KMMainWin::readConfig(void)
 
   // Re-activate panners
   if (mStartupDone)
-  { 
+  {
 
     if (oldWindowLayout != mWindowLayout ||
         oldShowMIMETreeMode != mShowMIMETreeMode )
@@ -352,7 +352,7 @@ void KMMainWin::readConfig(void)
     if (aIdx != -1)
       mMsgView->setMsg( mFolder->getMsg(aIdx), true );
     else
-      mMsgView->setMsg( 0, true );
+      mMsgView->clear( true );
     updateMessageActions();
     show();
     // sanders - Maybe this fixes a bug?
@@ -602,7 +602,7 @@ void KMMainWin::createWidgets(void)
            SLOT( startUpdateMessageActionsTimer() ) );
 }
 
-
+//-----------------------------------------------------------------------------
 
 void KMMainWin::activatePanners(void)
 {
@@ -1219,7 +1219,7 @@ void KMMainWin::slotOverrideHtml()
   }
   mFolderHtmlPref = !mFolderHtmlPref;
   mMsgView->setHtmlOverride(mFolderHtmlPref);
-  mMsgView->setMsg( mMsgView->msg(), TRUE );
+  mMsgView->update( true );
 }
 
 //-----------------------------------------------------------------------------
@@ -1258,7 +1258,7 @@ void KMMainWin::slotReallyReplyToMsg(bool success)
 {
   disconnect(this, SIGNAL(messagesTransfered(bool)),
       this, SLOT(slotReallyReplyToMsg(bool)));
-  replyAction->setEnabled(true); 
+  replyAction->setEnabled(true);
   if (success) mHeaders->replyToMsg(mMsgView->copyText());
 }
 
@@ -1305,7 +1305,7 @@ void KMMainWin::slotReallyReplyAllToMsg(bool success)
 {
   disconnect(this, SIGNAL(messagesTransfered(bool)),
       this, SLOT(slotReallyReplyAllToMsg(bool)));
-  replyAllAction->setEnabled(true); 
+  replyAllAction->setEnabled(true);
   if (success) mHeaders->replyAllToMsg(mMsgView->copyText(), mSelectedMsgs.getFirst());
 }
 
@@ -1359,7 +1359,7 @@ void KMMainWin::slotReallyForwardMsg(bool success)
 {
   disconnect(this, SIGNAL(messagesTransfered(bool)),
       this, SLOT(slotReallyForwardMsg(bool)));
-  forwardAction->setEnabled(true); 
+  forwardAction->setEnabled(true);
   if (success) mHeaders->forwardMsg(&mSelectedMsgs);
 }
 
@@ -1645,7 +1645,7 @@ void KMMainWin::slotCycleHeaderStyles() {
   else {
     style = KMReaderWin::HeaderStyle((int)style+1);
     mMsgView->setHeaderStyle( KMReaderWin::HeaderStyle(style) );
-  }  
+  }
   KRadioAction * action = actionForHeaderStyle( mMsgView->headerStyle() );
   assert( action );
   action->setChecked( true );
@@ -1675,7 +1675,7 @@ void KMMainWin::slotCycleAttachmentStyles() {
   else {
     style = KMReaderWin::AttachmentStyle((int)style+1);
     mMsgView->setAttachmentStyle( KMReaderWin::AttachmentStyle(style) );
-  }  
+  }
   KRadioAction * action = actionForAttachmentStyle( mMsgView->attachmentStyle() );
   assert( action );
   action->setChecked( true );
@@ -1708,20 +1708,20 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   kernel->kbp()->busy();
 
   if( !aFolder || aFolder->noContent() ||
-      aFolder->count() == 0 ) 
+      aFolder->count() == 0 )
   {
     mMsgView->setMsg( 0, FALSE );
     if( mMimePartTree )
       mMimePartTree->hide();
   } else if( !mFolder ) {
     mMsgView->enableMsgDisplay();
-    mMsgView->setMsg( 0, TRUE );
+    mMsgView->clear( TRUE );
     if( mHeaders )
       mHeaders->show();
     if( mMimePartTree && (0 < mShowMIMETreeMode) )
       mMimePartTree->show();
   } else
-    mMsgView->setMsg( 0, FALSE );
+    mMsgView->clear();
 
   if (mFolder && mFolder->needsCompacting() && (mFolder->protocol() == "imap"))
   {
@@ -1772,7 +1772,7 @@ void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
   if (msg && msg->parent() && (msg->parent()->protocol() == "imap"))
   {
-    mMsgView->setMsg(NULL);
+    mMsgView->clear();
     KMImapJob *job = new KMImapJob(msg);
     connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             SLOT(slotUpdateImapMessage(KMMessage*)));
@@ -1841,7 +1841,7 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
       mHeaders->deleteMsg();
       kdDebug(5006) << "KMMainWin  -  updating message actions" << endl;
       updateMessageActions();
-      
+
       // find and select and show the new message
       int idx = mFolder->find( newMsgIdMD5 );
       if( -1 != idx ) {
@@ -1850,7 +1850,7 @@ void KMMainWin::slotReplaceMsgByUnencryptedVersion()
       } else {
         kdDebug(5006) << "KMMainWin  -  SORRY, could not store unencrypted message!" << endl;
       }
-      
+
       kdDebug(5006) << "KMMainWin  -  done." << endl;
     } else
       kdDebug(5006) << "KMMainWin  -  NO EXTRA UNENCRYPTED MESSAGE FOUND" << endl;
@@ -2161,7 +2161,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
     if( aUrl.path() == "showHTML" )
     {
       mMsgView->setHtmlOverride(!mFolderHtmlPref);
-      mMsgView->setMsg( mMsgView->msg(), TRUE );
+      mMsgView->update( true );
     }
   }
 }
@@ -2806,7 +2806,7 @@ void KMMainWin::setupMenuBar()
   headerMenu->insert( raction );
 
   // check the right one:
-  raction = actionForHeaderStyle( mMsgView->headerStyle() ); 
+  raction = actionForHeaderStyle( mMsgView->headerStyle() );
   if ( raction )
     raction->setChecked( true );
 
@@ -2924,7 +2924,7 @@ void KMMainWin::setupMenuBar()
 			actionCollection(), "go_next_unread_message" );
   goNextMenu->insert( action );
 
-  /* ### needs better support ffrom folders: 
+  /* ### needs better support ffrom folders:
   action = new KAction( KGuiItem( i18n("Go->Next->","&Important Message"),
 				  "next",
 				  i18n("Go to the next important message") ),
@@ -2947,7 +2947,7 @@ void KMMainWin::setupMenuBar()
 					      "go_prev_menu" );
   // clicking the button in the toolbar doesn't do anything:
   goPrevMenu->setDelayed( false );
-  
+
   action = new KAction( KGuiItem( i18n("Go->Prev->","&Message"), "previous",
 				  i18n("Go to the previous message") ),
 			"P;Left", this, SLOT(slotPrevMessage()),
@@ -3194,13 +3194,13 @@ QPopupMenu* KMMainWin::folderToPopupMenu(bool move,
   }
 
   for (QListViewItem *item = mFolderTree->firstChild();
-     item; item = item->nextSibling()) 
+     item; item = item->nextSibling())
   {
     // operate on top-level items
     QString label = item->text(0);
     // make a new Submenu
     QPopupMenu* subMenu = new QPopupMenu(menu);
-    subMenu = makeFolderMenu(dynamic_cast<KMFolderTreeItem*>(item), 
+    subMenu = makeFolderMenu(dynamic_cast<KMFolderTreeItem*>(item),
         move, receiver, aMenuToFolder, subMenu);
     menu->insertItem( label, subMenu );
   }
@@ -3229,7 +3229,7 @@ QPopupMenu* KMMainWin::makeFolderMenu(KMFolderTreeItem* item,
              SLOT(copySelectedToFolder(int)));
   }
 
-  if (item->folder() && !item->folder()->isDir() 
+  if (item->folder() && !item->folder()->isDir()
       && !item->folder()->noContent())
   {
     int menuId;
@@ -3242,7 +3242,7 @@ QPopupMenu* KMMainWin::makeFolderMenu(KMFolderTreeItem* item,
   }
 
   for (QListViewItem *it = item->firstChild();
-      it; it = it->nextSibling()) 
+      it; it = it->nextSibling())
   {
     KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(it);
     if (fti->folder())
@@ -3475,8 +3475,8 @@ void KMMainWin::transferSelectedMsgs()
 {
   // make sure no other transfer is active
   if (mCountJobs > 0)
-    return; 
-  
+    return;
+
   bool complete = true;
   mCountJobs = 0;
   mCountMsgs = 0;
@@ -3486,20 +3486,20 @@ void KMMainWin::transferSelectedMsgs()
   QPtrList<KMMsgBase>* msgList = mHeaders->selectedMsgs();
   mCountMsgs = msgList->count();
   // the KProgressDialog for the user-feedback
-  mProgressDialog = new KProgressDialog(this, "transferProgress", 
-      i18n("Please wait"), 
-      i18n("Please wait while the message is transferred", 
+  mProgressDialog = new KProgressDialog(this, "transferProgress",
+      i18n("Please wait"),
+      i18n("Please wait while the message is transferred",
         "Please wait while the %n messages are transferred", msgList->count()),
       true);
   mProgressDialog->setMinimumDuration(1000);
-  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) 
+  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next())
   {
     // check if all messages are complete
     int idx = mFolder->find(mb);
     if (idx < 0) continue;
     KMMessage *thisMsg = mFolder->getMsg(idx);
     if (!thisMsg) continue;
-    if (thisMsg->parent() && thisMsg->parent()->protocol() == "imap" && 
+    if (thisMsg->parent() && thisMsg->parent()->protocol() == "imap" &&
         !thisMsg->isComplete() && !mProgressDialog->wasCancelled())
     {
       // the message needs to be transferred first
@@ -3516,7 +3516,7 @@ void KMMainWin::transferSelectedMsgs()
       thisMsg->setTransferInProgress(true);
     } else {
       mSelectedMsgs.append(thisMsg);
-    } 
+    }
   }
 
   if (complete)
@@ -3535,18 +3535,19 @@ void KMMainWin::transferSelectedMsgs()
 void KMMainWin::slotMsgTransfered(KMMessage* msg)
 {
   msg->setTransferInProgress(false);
-  if (mProgressDialog->wasCancelled()) return; 
-  // save the complete messages  
+  if (mProgressDialog->wasCancelled()) return;
+  // save the complete messages
   mSelectedMsgs.append(msg);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotJobFinished()
 {
-  // the job is finished (with / without error)  
+  // the job is finished (with / without error)
   mCountJobs--;
-  if (mProgressDialog->wasCancelled()) return; 
-  
+
+  if (mProgressDialog->wasCancelled()) return;
+
   if ( (mCountMsgs - static_cast<int>(mSelectedMsgs.count())) > mCountJobs )
   {
     // the message wasn't retrieved before => error
@@ -3556,9 +3557,9 @@ void KMMainWin::slotJobFinished()
   }
   // update the progressbar
   mProgressDialog->progressBar()->advance(1);
-  mProgressDialog->setLabel(i18n("Please wait while the message is transferred", 
+  mProgressDialog->setLabel(i18n("Please wait while the message is transferred",
           "Please wait while the %n messages are transferred", mCountJobs));
-  if (mCountJobs == 0) 
+  if (mCountJobs == 0)
   {
     // all done
     delete mProgressDialog;
@@ -3585,7 +3586,7 @@ void KMMainWin::slotTransferCancelled()
   // unget the transfered messages
   QPtrListIterator<KMMessage> it( mSelectedMsgs );
   KMMessage* msg;
-  while ( (msg = it.current()) != 0 ) 
+  while ( (msg = it.current()) != 0 )
   {
     ++it;
     int idx = mFolder->find(msg);
@@ -3612,7 +3613,7 @@ void KMMainWin::slotIntro() {
   if ( mFolderTree->currentItem() != mFolderTree->firstChild() ) // don't loop
     mFolderTree->doFolderSelected( mFolderTree->firstChild() );
 
-  mMsgView->setMsg( 0, true );
+  mMsgView->clear( true );
   // hide widgets that are in the way:
   if ( mHeaders && mWindowLayout < 3 )
     mHeaders->hide();

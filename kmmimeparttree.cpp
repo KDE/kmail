@@ -43,7 +43,7 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
     else {
         kdDebug(5006) << "\n**\n** KMMimePartTree::itemClicked() **\n**" << endl;
         if( mReaderWin->mRootNode == i->node() )
-          mReaderWin->setMsg(mReaderWin->mMsg, true); // Force update
+          mReaderWin->update( true ); // Force update
         else
           mReaderWin->parseObjectTree( mReaderWin,
                                        0,

@@ -12,7 +12,6 @@
 #include <string.h>
 
 #include <qclipboard.h>
-//#include <qlayout.h>
 #include <qhbox.h>
 #include <qstyle.h>
 #include <qtextcodec.h>
@@ -56,7 +55,8 @@
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include "linklocator.h"
-                                
+#include "kmmsgdict.h"
+
 // for the MIME structure viewer (khz):
 #include "kmmimeparttree.h"
 
@@ -168,7 +168,7 @@ NewByteArray& NewByteArray::operator+=( const QByteArray & newData )
         return *this;
     memcpy( data() + len1, newData.data(), len2 );
     return *this;
-}                                             
+}
 NewByteArray& NewByteArray::operator+=( const QCString & newData )
 {
     if ( newData.isEmpty() )
@@ -186,8 +186,8 @@ QByteArray& NewByteArray::qByteArray()
     return *((QByteArray*)this);
 }
 
-    
-    
+
+
 //
 // THIS IS AN INTERIM SOLUTION
 // TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
@@ -300,7 +300,7 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
   // could be removed.
   // - This is used to store the message in decrypted form.
   NewByteArray dummyData;
-  NewByteArray& resultingRawData( resultingRawDataPtr ? *resultingRawDataPtr 
+  NewByteArray& resultingRawData( resultingRawDataPtr ? *resultingRawDataPtr
                                                       : dummyData );
 */
 
@@ -707,7 +707,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                       myBody->Parse();
                       partNode myBodyNode( true, myBody );
                       myBodyNode.buildObjectTree( false );
-  
+
                       // paint the frame
                       if( reader ) {
                         messagePart.isDecryptable = true;
@@ -715,7 +715,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                         messagePart.isSigned = false;
                         reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                        useThisCryptPlug,
-                                                                       reader->msg()->from() ) );
+                                                                       reader->message()->from() ) );
                       }
                       insertAndParseNewChildNode( reader,
                                                   &resultString,
@@ -736,7 +736,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                           messagePart.isSigned = false;
                           reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                          useThisCryptPlug,
-                                                                         reader->msg()->from() ) );
+                                                                         reader->message()->from() ) );
                         }
                         reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                         if( passphraseError )
@@ -797,7 +797,7 @@ kdDebug(5006) << "\n----->  Initially processing data of embedded RfC 822 messag
                   messagePart.isEncapsulatedRfc822Message = true;
                   reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                  useThisCryptPlug,
-                                                                 reader->msg()->from() ) );
+                                                                 reader->message()->from() ) );
                 }
                 QCString rfc822messageStr( curNode->msgPart().bodyDecoded() );
                 // display the headers of the encapsulated message
@@ -890,7 +890,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                           messagePart.isSigned = false;
                           reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                          useThisCryptPlug,
-                                                                         reader->msg()->from() ) );
+                                                                         reader->message()->from() ) );
                         }
                         // fixing the missing attachments bug #1090-b
                         insertAndParseNewChildNode( reader,
@@ -912,7 +912,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                             messagePart.isSigned = false;
                             reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                            useThisCryptPlug,
-                                                                           reader->msg()->from() ) );
+                                                                           reader->message()->from() ) );
                           }
                           reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
                           if( passphraseError )
@@ -995,7 +995,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                         if( reader )
                           reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                          useThisCryptPlug,
-                                                                         reader->msg()->from() ) );
+                                                                         reader->message()->from() ) );
                         insertAndParseNewChildNode( reader,
                                                     &resultString,
                                                     cryptPlugList,
@@ -1006,12 +1006,12 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                         if( reader )
                             reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                       } else {
-                        
+
                         if( passphraseError ) {
                           isEncrypted = true;
                           signTestNode = 0;
                         }
-                          
+
                         if( isEncrypted ) {
                           kdDebug(5006) << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !" << endl;
                           // paint the frame
@@ -1019,7 +1019,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                           if( reader ) {
                             reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                                            useThisCryptPlug,
-                                                                           reader->msg()->from() ) );
+                                                                           reader->message()->from() ) );
                             reader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
                             reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                           }
@@ -1116,7 +1116,7 @@ kdDebug(5006) << "* model *" << endl;
         break;
       }
 
-      if( !bDone && reader && 
+      if( !bDone && reader &&
           ( reader->mAttachmentStyle != HideAttmnt || showOneMimePart) ) {
         bool asIcon = true;
         if (showOneMimePart)
@@ -1199,7 +1199,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
     partNode* curNode = node;
     partNode* dataNode = curNode;
     bool bIsMultipart = false;
-      
+
     switch( curNode->type() ){
       case DwMime::kTypeText: {
 kdDebug(5006) << "* text *" << endl;
@@ -1223,7 +1223,7 @@ kdDebug(5006) << "plain " << endl;
 kdDebug(5006) << "default " << endl;
             break;
           }
-        }  
+        }
         break;
       case DwMime::kTypeMultipart: {
 kdDebug(5006) << "* multipart *" << endl;
@@ -1273,7 +1273,7 @@ kdDebug(5006) << "* message *" << endl;
 kdDebug(5006) << "RfC 822" << endl;
               if( curNode->mChild )
                 dataNode = curNode->mChild;
-            }  
+            }
             break;
           }
         }
@@ -1341,17 +1341,17 @@ kdDebug(5006) << "mpeg" << endl;
 kdDebug(5006) << "* model *" << endl;
         break;
     }
-    
-    
+
+
     DwHeaders& rootHeaders( theMessage.headers() );
     DwBodyPart * part = dataNode->dwPart() ? dataNode->dwPart() : 0;
-    DwHeaders * headers( 
-        (part && part->hasHeaders()) 
+    DwHeaders * headers(
+        (part && part->hasHeaders())
         ? &part->Headers()
         : (  (weAreReplacingTheRootNode || !dataNode->mRoot)
             ? &rootHeaders
             : 0 ) );
-    if( dataNode == curNode ) {     
+    if( dataNode == curNode ) {
 kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << endl;
 
       // A) Store the headers of this part IF curNode is not the root node
@@ -1364,10 +1364,10 @@ kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." 
         } else if( weAreReplacingTheRootNode && part->hasHeaders() ){
 kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
 kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
-kdDebug(5006) << "              old Content-Type = " << rootHeaders.ContentType().AsString().c_str() << endl;            
-kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   ).AsString().c_str() << endl;            
+kdDebug(5006) << "              old Content-Type = " << rootHeaders.ContentType().AsString().c_str() << endl;
+kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   ).AsString().c_str() << endl;
           rootHeaders.ContentType()             = headers->ContentType();
-          theMessage.setContentTransferEncodingStr( 
+          theMessage.setContentTransferEncodingStr(
               headers->HasContentTransferEncoding()
             ? headers->ContentTransferEncoding().AsString().c_str()
             : "" );
@@ -1377,7 +1377,7 @@ kdDebug(5006) << "              new Content-Type = " << headers->ContentType(   
         }
       }
 
-      // B) Store the body of this part.        
+      // B) Store the body of this part.
       if( headers && bIsMultipart && dataNode->mChild )  {
 kdDebug(5006) << "is valid Multipart, processing children:" << endl;
         QCString boundary = headers->ContentType().Boundary().c_str();
@@ -1473,15 +1473,12 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
 {
   mAutoDelete = false;
   mLastSerNum = 0;
+  mMessage = 0;
   mLastStatus = KMMsgStatusUnknown;
-  mMsg = 0;
-  mMsgBuf = 0;
-  mMsgBufMD5 = "";
-  mMsgBufSize = -1;
   mMsgDisplay = true;
   mPrinting = false;
   mShowColorbar = false;
-  
+
   if (!aParent)
      mStandaloneWindows.append(this);
 
@@ -1509,7 +1506,7 @@ KMReaderWin::~KMReaderWin()
 {
   mStandaloneWindows.removeRef(this);
   delete mViewer;  //hack to prevent segfault on exit
-  if (mAutoDelete) delete mMsg;
+  if (mAutoDelete) delete message();
   if (mRootNode) delete mRootNode;
   removeTempFiles();
 }
@@ -1544,10 +1541,9 @@ bool KMReaderWin::event(QEvent *e)
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
      readColorConfig();
-     if (mMsg) {
-       mMsg->readConfig();
-       setMsg(mMsg, true); // Force update
-     }
+     if (message())
+	 message()->readConfig();
+     update( true ); // Force update
      return true;
   }
   return KMReaderWinInherited::event(e);
@@ -1730,9 +1726,9 @@ void KMReaderWin::readConfig(void)
 
   readColorConfig();
 
-  if (mMsg) {
+  if (message()) {
     update();
-    mMsg->readConfig();
+    message()->readConfig();
   }
 }
 
@@ -1908,20 +1904,24 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   mDelayedMarkTimer.stop();
 
-  mMsg = aMsg;
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
+
+  // assume if a serial number exists it can be used to find the assoc KMMessage
+  if (!mLastSerNum)
+      mMessage = aMsg;
+  else
+      mMessage = 0;
   mLastStatus = (aMsg) ? aMsg->status() : KMMsgStatusUnknown;
-  if (mMsg)
+  if (aMsg)
   {
-    mMsg->setCodec(mCodec);
-    mMsg->setDecodeHTML(htmlMail());
+    aMsg->setCodec(mCodec);
+    aMsg->setDecodeHTML(htmlMail());
   }
 
   // Avoid flicker, somewhat of a cludge
   if (force) {
     // stop the timer to avoid calling updateReaderWin twice
     updateReaderWinTimer.stop();
-    mMsgBuf = 0;
     updateReaderWin();
   }
   else if (updateReaderWinTimer.isActive())
@@ -1942,7 +1942,8 @@ void KMReaderWin::clearCache()
 {
   updateReaderWinTimer.stop();
   mDelayedMarkTimer.stop();
-  mMsg = 0;
+  mLastSerNum = 0;
+  mMessage = 0;
 }
 
 // enter items for the "new features" list here, so the main body of
@@ -2022,25 +2023,6 @@ void KMReaderWin::displayAboutPage()
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-/*  if (mMsgBuf && mMsg &&
-      !mMsg->msgIdMD5().isEmpty() &&
-      (mMsgBufMD5 == mMsg->msgIdMD5()) &&
-      ((unsigned)mMsgBufSize == mMsg->msgSize()))
-    return; */
-
-  mMsgBuf = mMsg;
-  if (mMsgBuf) {
-    mMsgBufMD5 = mMsgBuf->msgIdMD5();
-    mMsgBufSize = mMsgBuf->msgSize();
-  }
-  else {
-    mMsgBufMD5 = "";
-    mMsgBufSize = -1;
-  }
-
-/*  if (mMsg && !mMsg->msgIdMD5().isEmpty())
-    updateReaderWinTimer.start( delay, TRUE ); */
-
   if (!mMsgDisplay) return;
 
   mViewer->view()->setUpdatesEnabled( false );
@@ -2054,7 +2036,7 @@ void KMReaderWin::updateReaderWin()
   }
   mHtmlQueue.clear();
 
-  if (mMsg)
+  if (message())
   {
     if ( mShowColorbar )
       mColorBar->show();
@@ -2121,13 +2103,14 @@ double KMReaderWin::pointsToPixel(int pointSize)
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
-  if(mMsg == NULL)
+  KMMessage *msg = message();
+  if ( msg == NULL )
     return;
 
   if( mMimePartTree )
     mMimePartTree->clear();
 
-  QString type = mMsg->typeStr().lower();
+  QString type = msg->typeStr().lower();
 
   bool isMultipart = (type.find("multipart/") != -1);
 
@@ -2148,11 +2131,11 @@ void KMReaderWin::parseMsg(void)
     mCodec = 0;
     QCString encoding;
     if (type.find("text/") != -1)
-      encoding = mMsg->charset();
+      encoding = msg->charset();
     else if ( isMultipart ) {
-      if (mMsg->numBodyParts() > 0) {
+      if (msg->numBodyParts() > 0) {
         KMMessagePart msgPart;
-        mMsg->bodyPart(0, &msgPart);
+        msg->bodyPart(0, &msgPart);
         encoding = msgPart.charset();
       }
     }
@@ -2163,7 +2146,7 @@ void KMReaderWin::parseMsg(void)
 
   if (!mCodec)
     mCodec = QTextCodec::codecForName("iso8859-1");
-  mMsg->setCodec(mCodec);
+  msg->setCodec(mCodec);
 
 
 //      QString( "table.rfc822 { width: 100%; "
@@ -2237,8 +2220,8 @@ void KMReaderWin::parseMsg(void)
                  "padding: 2px; } \n" ) +
         QString( "tr.rfc822H { font-weight: bold; }\n" ) +
         QString( "tr.rfc822B { font-weight: normal; }\n" ) +
-        
-            
+
+
         QString( "table.signOkKeyOk { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpOk1F.name() ) +
@@ -2312,9 +2295,9 @@ void KMReaderWin::parseMsg(void)
     ((mPrinting) ? QString("<body>") : QString("<body ") + bkgrdStr + ">" ));
 
   if (!parent())
-    setCaption(mMsg->subject());
+    setCaption(msg->subject());
 
-  parseMsg(mMsg);
+  parseMsg(msg);
 
   queueHtml("</body></html>");
   sendNextHtmlChunk();
@@ -2447,9 +2430,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
     messagePart.isDecryptable = false;
     messagePart.keyTrust = Kpgp::KPGP_VALIDITY_UNKNOWN;
     messagePart.status = i18n("Wrong Crypto Plug-In!");
-    
+
     if( cryptPlug->hasFeature( Feature_VerifySignatures ) ) {
-    
+
       if( cryptPlug->checkMessageSignature(
                                 data ? const_cast<char**>(&cleartextP)
                                     : &new_cleartext,
@@ -2459,9 +2442,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                 &sigMeta ) ) {
         messagePart.isGoodSignature = true;
       }
-      
+
       kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
-      
+
       if( sigMeta.status && *sigMeta.status )
         messagePart.status = QString::fromUtf8( sigMeta.status );
       messagePart.status_code = sigMeta.status_code;
@@ -2472,10 +2455,10 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: found extended sigMeta info" << endl;
 
         CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
-        
+
         // save extended signature status flags
         messagePart.sigStatusFlags = ext.sigStatusFlags;
-        
+
         if( messagePart.status.isEmpty()
             && ext.status_text
             && *ext.status_text )
@@ -2518,7 +2501,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         }
 
         kdDebug(5006) << "\n  key id: " << messagePart.keyId << "\n  key trust: " << messagePart.keyTrust << "\n  signer: " << messagePart.signer << endl;
-        
+
       } else {
         messagePart.creationTime.tm_year = 0;
         messagePart.creationTime.tm_mon  = 1;
@@ -2538,7 +2521,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         if( reader )
             reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                            useThisCryptPlug,
-                                                           reader->msg()->from() ) );
+                                                           reader->message()->from() ) );
         bIsOpaqueSigned = true;
         deb = "\n\nN E W    C O N T E N T = \"";
         deb += new_cleartext;
@@ -2581,7 +2564,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
       if( reader )
         reader->queueHtml( reader->writeSigstatHeader( messagePart,
                                                        useThisCryptPlug,
-                                                       reader->msg()->from() ) );
+                                                       reader->message()->from() ) );
       parseObjectTree( reader,
                        resultString,
                        cryptPlugList,
@@ -2614,11 +2597,11 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 
 //pending(khz): replace this and put it into CryptPlugWrapper class  (khz, 2002/06/27)
 class tmpHelper {
-public:    
+public:
     static QString pluginErrorIdToErrorText( int errId, bool& passphraseError )
     {
         /* The error numbers used by GPGME.  */
-    /*    
+    /*
         typedef enum
         {
             GPGME_EOF                = -1,
@@ -2799,7 +2782,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
         decryptedData );
     } else {
       kdDebug() << "\nKMReaderWin::decryptMIME: going to call CRYPTPLUG "
-                << cryptPlug->libName() << endl; 
+                << cryptPlug->libName() << endl;
       int errId = 0;
       char* errTxt = 0;
       bDecryptionOk = cryptPlug->decryptMessage( ciphertext,
@@ -2848,7 +2831,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
 void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
 {
   QString s("\n#######\n#######\n#######  parseMsg(KMMessage* aMsg ");
-  if( aMsg == mMsg )
+  if( aMsg == message() )
     s += "==";
   else
     s += "!=";
@@ -2918,7 +2901,7 @@ kdDebug(5006) << s << endl;
     mainBody = new DwBodyPart(aMsg->asDwString(), 0);
     mainBody->Parse();
   }
-  
+
   if( mRootNode ) {
     if( onlyProcessHeaders )
       savedRootNode = mRootNode;
@@ -3001,13 +2984,13 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   KMMsgEncryptionState encryptionState = mRootNode->overallEncryptionState();
   aMsg->setEncryptionState( encryptionState );
   aMsg->setSignatureState(  mRootNode->overallSignatureState()  );
-  
+
   bool emitReplaceMsgByUnencryptedVersion = false;
-  
+
 // note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
 #ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_02
-  
+
   // Hack to make sure the S/MIME CryptPlugs follows the strict requirement
   // of german government:
   // --> All received encrypted messages *must* be stored in unencrypted form
@@ -3019,8 +3002,8 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   //       This could be changed in the objectTreeToDecryptedMsg() function
   //       by deciding when (or when not, resp.) to set the 'dataNode' to
   //       something different than 'curNode'.
-                                         
-  
+
+
 kdDebug(5006) << "\n\n\nKMReaderWin::parseMsg()  -  special post-encryption handling:\n1." << endl;
 kdDebug(5006) << "(!onlyProcessHeaders) = "                        << (!onlyProcessHeaders) << endl;
 kdDebug(5006) << "(aMsg == mMsg) = "                               << (aMsg == mMsg) << endl;
@@ -3046,9 +3029,9 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
          // only proceed if this message is (at least partially) encrypted
       && (    (KMMsgFullyEncrypted == encryptionState)
            || (KMMsgPartiallyEncrypted == encryptionState) ) ) {
-           
+
 kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
-    
+
     NewByteArray decryptedData;
     // note: The following call may change the message's headers.
     objectTreeToDecryptedMsg( mRootNode, decryptedData, *aMsg );
@@ -3076,7 +3059,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
     }
   }
 #endif
-  
+
   // remove temp. CryptPlugList
   if( tmpPlugList )
     delete mCryptPlugList;
@@ -3090,7 +3073,7 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
 
   // store message id to avoid endless recursions
   setIdOfLastViewedMessage( aMsg->msgId() );
-  
+
   if( emitReplaceMsgByUnencryptedVersion ) {
 kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
     emit replaceMsgByUnencryptedVersion();
@@ -3477,14 +3460,14 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
         if( 0 <= cryptPlug->libName().find( "gpgme-smime",   0, false ) ) {
             // process status bits according to SigStatus_...
             // definitions in kdenetwork/libkdenetwork/cryptplug.h
-            
+
             if( CryptPlugWrapper::SigStatus_UNKNOWN == statusFlags ) {
                 result = i18n("Sorry, no status information available.");
                 frameColor = SIG_FRAME_COL_YELLOW;
                 showKeyInfos = false;
                 return result;
             }
-            
+
             if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
                 result = i18n("GOOD signature!");
                 // Note:
@@ -3499,9 +3482,9 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 showKeyInfos = false;
                 return result;
             }
-                    
+
             // we are still there?  OK, let's test the different cases:
-            
+
             // we assume green, test for yellow or red (in this order!)
             frameColor = SIG_FRAME_COL_GREEN;
             QString result2;
@@ -3590,7 +3573,6 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                     result = i18n("Bad signature.");
             } else
                 result = "";
-                
 
             if( !result2.isEmpty() ) {
                 if( !result.isEmpty() )
@@ -3661,7 +3643,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         // that was reported by the plugin
         if( statusStr.isEmpty() )
             statusStr = block.status;
-            
+
         switch( frameColor ){
             case SIG_FRAME_COL_RED:
                 cannotCheckSignature = false;
@@ -3673,7 +3655,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                 cannotCheckSignature = false;
                 break;
         }
-        
+
         // compose the string for displaying the key ID
         // either as URL or not linked (for PGP)
         // note: Once we can start PGP key manager programs
@@ -3692,25 +3674,23 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                 .arg( startKeyHREF )
                 .arg( cannotCheckSignature ? i18n("[Details]") : ("0x" + block.keyId) )
             : "0x" + QString::fromUtf8( block.keyId );
-        
-                                            
+
+
         // temporary hack: allways show key infos!
         showKeyInfos = true;
-        
-            
-        // Sorry for using 'black' as NULL color but .isValid()            
+
+        // Sorry for using 'black' as NULL color but .isValid()
         // checking with QColor default c'tor did not work for
         // some reason.
         if( isSMIME && (SIG_FRAME_COL_UNDEF != frameColor) ) {
-        
+
             // new frame settings for CMS:
-            
             // beautify the status string
             if( !statusStr.isEmpty() ) {
                 statusStr.prepend("<i>");
                 statusStr.append( "</i>");
             }
-            
+
             // special color handling: S/MIME uses only green/yellow/red.
             switch( frameColor ){
                 case SIG_FRAME_COL_RED:
@@ -3733,7 +3713,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                                           .arg( startKeyHREF )
                                           .arg( "certificate" );
                         if( blockAddrs.count() ){
-                            if( blockAddrs.grep( 
+                            if( blockAddrs.grep(
                                     msgFrom,
                                     false ).isEmpty() ) {
                                 greenCaseWarning =
@@ -3786,14 +3766,14 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                 "class=\"" + block.signClass + "\">"
                 "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
             if( showKeyInfos ) {
-                        
+
                 if( cannotCheckSignature ) {
                     htmlStr += i18n( "Not enough information to check "
                                      "signature. %1" )
                                 .arg( keyWithWithoutURL );
                 }
                 else {
-                
+
                     if (block.signer.isEmpty())
                         signer = "";
                     else {
@@ -3811,7 +3791,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                             signer = "<a href=\"mailto:" + address + "\">" + signer + "</a>";
                         }
                     }
-                    
+
                     if( block.keyId.isEmpty() ) {
                         if( signer.isEmpty() )
                             htmlStr += i18n( "Message was signed with unknown key." );
@@ -3854,11 +3834,11 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                 htmlStr += statusStr;
             }
             htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
-        
+
         } else {
-        
+
             // old frame settings for PGP:
-            
+
             if (block.signer.isEmpty()) {
                 block.signClass = "signWarn";
                 htmlStr += "<table cellspacing=\"1\" cellpadding=\"0\" "
@@ -3898,7 +3878,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                 signer.replace( QRegExp(">"), "&gt;" );
                 signer.replace( QRegExp("\""), "&quot;" );
                 signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
-                
+
 
                 if (block.isGoodSignature) {
                     if( block.keyTrust < Kpgp::KPGP_VALIDITY_MARGINAL )
@@ -4091,8 +4071,8 @@ void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
 	      messagePart.keyId = keyId;
 	      messagePart.keyTrust = keyTrust;
 
-	      htmlStr += writeSigstatHeader( messagePart, 0, msg()->from() );
-          
+	      htmlStr += writeSigstatHeader( messagePart, 0, message()->from() );
+
 	      htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
 	      htmlStr += writeSigstatFooter( messagePart );
 	  }
@@ -4141,7 +4121,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 
   unsigned int pos, beg;
   unsigned int length = s.length();
-  
+
   QString style;
   if( mBodyFont.bold() )
     style += "font-weight:bold;";
@@ -4322,7 +4302,7 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 //-----------------------------------------------------------------------------
 void KMReaderWin::printMsg(void)
 {
-  if (!mMsg) return;
+  if (!message()) return;
 
   if (mPrinting)
     mViewer->view()->print();
@@ -4330,7 +4310,7 @@ void KMReaderWin::printMsg(void)
     KMReaderWin printWin;
     printWin.setPrinting(TRUE);
     printWin.readConfig();
-    printWin.setMsg(mMsg, TRUE);
+    printWin.setMsg(message(), TRUE);
     printWin.printMsg();
   }
 }
@@ -4339,7 +4319,7 @@ void KMReaderWin::printMsg(void)
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 {
-  if (aUrl.isEmpty() || !mMsg) return -1;
+  if (aUrl.isEmpty() || !message()) return -1;
 
   if (!aUrl.isLocalFile()) return -1;
 
@@ -4378,12 +4358,12 @@ void KMReaderWin::slotDelayedResize()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTouchMessage()
 {
-  if (mMsg)
+  if (message())
   {
-    KMMsgStatus st = mMsg->status();
+    KMMsgStatus st = message()->status();
     if (st == KMMsgStatusNew || st == KMMsgStatusUnread
         || st == KMMsgStatusRead)
-      mMsg->setStatus(KMMsgStatusOld);
+      message()->setStatus(KMMsgStatusOld);
   }
 }
 
@@ -4418,7 +4398,7 @@ bool foundSMIMEData( const QString aUrl,
       {
         libName = aUrl.mid( i1, i2-i1 );
         i2 += 5;
-        
+
         keyId = aUrl.mid( i2 );
         /*
         int len = aUrl.length();
@@ -4443,17 +4423,15 @@ bool foundSMIMEData( const QString aUrl,
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   bool bOk = false;
-  
+
   QString dummyStr;
   QString keyId;
-  
+
   KURL url(aUrl);
   int id = msgPartFromUrl(url);
 
   if (id > 0)
   {
-    // KMMessagePart msgPart;
-    // mMsg->bodyPart(id, &msgPart);
     partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
     if( node ) {
       KMMessagePart& msgPart = node->msgPart();
@@ -4504,7 +4482,7 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
     // out of scope here, since it is started in DontCare run mode.
     return;
   }
-  
+
   if (!aUrl.hasHost() && aUrl.path() == "/" && aUrl.hasRef())
   {
     if (!mViewer->gotoAnchor(aUrl.ref()))
@@ -4530,13 +4508,13 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
-  if (!mMsg) return;
+  if (!message()) return;
   KURL url( aUrl );
 
   int id = msgPartFromUrl(url);
   if (id <= 0)
   {
-    emit popupMenu(*mMsg, url, aPos);
+    emit popupMenu(*message(), url, aPos);
   }
   else
   {
@@ -4704,8 +4682,6 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmView()
 {
-//  KMMessagePart msgPart;
-//  mMsg->bodyPart(mAtmCurrent, &msgPart);
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   if( node ) {
     KMMessagePart& msgPart = node->msgPart();
@@ -4727,8 +4703,6 @@ void KMReaderWin::slotAtmOpen()
 {
   QString str, pname, cmd, fileName;
 
-//  KMMessagePart msgPart;
-//  mMsg->bodyPart(mAtmCurrent, &msgPart);
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   if( !node )
     return;
@@ -4816,21 +4790,11 @@ void KMReaderWin::slotAtmOpenWith()
   // It makes sense to have an extra "Open with..." entry in the menu
   // so the user can change filetype associations.
 
-//  KMMessagePart msgPart;
-//  mMsg->bodyPart(mAtmCurrent, &msgPart);
-
-
-/*
-  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  if( node ) {
-    KMMessagePart& msgPart = node->msgPart();
-*/
     KURL::List lst;
     KURL url;
     url.setPath(mAtmCurrentName);
     lst.append(url);
     KRun::displayOpenWithDialog(lst);
-/*  }*/
 }
 
 
@@ -4839,9 +4803,6 @@ void KMReaderWin::slotAtmSave()
 {
   QString fileName;
   fileName = mSaveAttachDir;
-
-//  KMMessagePart msgPart;
-//  mMsg->bodyPart(mAtmCurrent, &msgPart);
 
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   if( node ) {
@@ -4870,8 +4831,6 @@ void KMReaderWin::slotAtmProperties()
   KMMsgPartDialogCompat dlg(0,TRUE);
 
   kernel->kbp()->busy();
-//  KMMessagePart msgPart;
-//  mMsg->bodyPart(mAtmCurrent, &msgPart);
   partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
   if( node ) {
     KMMessagePart& msgPart = node->msgPart();
@@ -4964,7 +4923,8 @@ void KMReaderWin::slotDocumentDone()
 void KMReaderWin::setHtmlOverride(bool override)
 {
   mHtmlOverride = override;
-  if (mMsg) mMsg->setDecodeHTML(htmlMail());
+  if (message())
+      message()->setDecodeHTML(htmlMail());
 }
 
 
@@ -4972,6 +4932,34 @@ void KMReaderWin::setHtmlOverride(bool override)
 bool KMReaderWin::htmlMail()
 {
   return ((mHtmlMail && !mHtmlOverride) || (!mHtmlMail && mHtmlOverride));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::update( bool force )
+{
+    setMsg( message(), force );
+}
+
+
+//-----------------------------------------------------------------------------
+KMMessage* KMReaderWin::message() const
+{
+  if (mMessage)
+      return mMessage;
+  if (mLastSerNum) {
+    KMFolder *folder;
+    KMMessage *message = 0;
+    int index;
+    kernel->msgDict()->getLocation( mLastSerNum, &folder, &index );
+    Q_ASSERT( folder );
+    Q_ASSERT( (*folder)[index] );
+    Q_ASSERT( (*folder)[index]->isMessage() );
+    if (folder )
+      message = folder->getMsg( index );
+    return message;
+  }
+  return 0;
 }
 
 void KMReaderWin::deleteAllStandaloneWindows()
