@@ -1959,7 +1959,8 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
       if (fti->firstChild())
       {
         QPopupMenu *subMenu = folderToPopupMenu(fti, move, receiver,
-          aMenuToFolder, new QPopupMenu());
+                                                aMenuToFolder,
+                                                new QPopupMenu(menu, "subMenu"));
         menu->insertItem(label, subMenu);
       } else
       if (!fti->folder->isDir())
