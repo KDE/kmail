@@ -284,6 +284,9 @@ void KMFolderTree::connectSignals()
   connect(kmkernel->searchFolderMgr(), SIGNAL(changed()),
           this, SLOT(doFolderListChanged()));
 
+  connect(kmkernel->acctMgr(), SIGNAL(accountRemoved(KMAccount*)),
+          this, SLOT(slotAccountRemoved(KMAccount*)));
+
   connect(kmkernel->searchFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
 
@@ -714,6 +717,12 @@ void KMFolderTree::doFolderListChanged()
     setCurrentItem( qlvi );
     setSelected( qlvi, TRUE );
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotAccountRemoved(KMAccount *aAccount)
+{
+    doFolderSelected( firstChild() );
 }
 
 //-----------------------------------------------------------------------------
@@ -1472,32 +1481,6 @@ void KMFolderTree::slotRenameFolder(QListViewItem *item, int col,
   fti->setText(0, fldName);
   fti->folder()->rename(fldName, &(kmkernel->folderMgr()->dir()));
 }
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::slotAccountDeleted(KMFolderImap *aFolder)
-{
-  writeConfig();
-  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
-  if (fti && fti->folder() && fti->folder() == aFolder)
-    doFolderSelected(0);
-  QListViewItem *lvi = firstChild();
-  if (lvi) lvi = lvi->firstChild();
-  while (lvi)
-  {
-    fti = static_cast<KMFolderTreeItem*>(lvi);
-    if (fti && fti->folder())
-    {
-      KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder());
-      if (folder == aFolder)
-      {
-        delete fti;
-        break;
-      }
-    }
-    lvi = lvi->nextSibling();
-  }
-}
-
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::slotUpdateCounts(KMFolderImap * folder, bool success)

@@ -72,6 +72,8 @@ public slots:
 signals:
   /** emitted if new mail has been collected */
   void checkedMail(bool, bool);
+  /** emitted when an account is removed */
+  void accountRemoved( KMAccount* account );
 
 private:
   KMAcctList   mAcctList;

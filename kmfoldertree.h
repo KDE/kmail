@@ -35,6 +35,7 @@ class QPainter;
 class KMFolderImap;
 class KMFolderTree;
 class KMMainWidget;
+class KMAccount;
 template <typename T> class QGuardedPtr;
 
 class KMFolderTreeItem : public QObject, public KFolderTreeItem
@@ -179,8 +180,8 @@ public slots:
   /** Executes delayed update of folder tree */
   void delayedUpdate();
 
-  /** Remove all items associated with the given IMAP account */
-  void slotAccountDeleted(KMFolderImap*);
+  /** Make sure the given account is not selected because it is gone */
+  void slotAccountRemoved(KMAccount*);
 
   /** Select the item and switch to the folder */
   void doFolderSelected(QListViewItem*);

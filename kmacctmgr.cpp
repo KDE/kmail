@@ -254,13 +254,14 @@ KMAccount* KMAcctMgr::next(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::remove(KMAccount* acct)
+bool KMAcctMgr::remove( KMAccount* acct )
 {
   //assert(acct != 0);
-  if(!acct)
-    return FALSE;
-  mAcctList.removeRef(acct);
-  return TRUE;
+  if( !acct )
+    return false;
+  mAcctList.removeRef( acct );
+  emit accountRemoved( acct );
+  return true;
 }
 
 //-----------------------------------------------------------------------------
