@@ -817,7 +817,6 @@ void KMHeaders::reset(void)
   setCurrentMsg(id);
   setTopItemByIndex(top);
   ensureCurrentItemVisible();
-  setSelectionAnchor( currentItem() );
 }
 
 //-----------------------------------------------------------------------------
@@ -909,7 +908,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     updateMessageList();
     setCurrentMsg(id);
     setTopItemByIndex(top);
-    setSelectionAnchor( currentItem() );
   } else {
     if (mFolder) {
     // WABA: Make sure that no KMReaderWin is still using a msg
@@ -960,7 +958,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
               this, SLOT(folderCleared()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
               mOwner, SLOT(statusMsg(const QString&)));
-      connect(aFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+      connect(mFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
           this, SLOT(setFolderInfoStatus()));
 
       // Not very nice, but if we go from nested to non-nested
@@ -996,7 +994,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
   END_TIMER(updateMsg);
   SHOW_TIMER(updateMsg);
   makeHeaderVisible();
-  setSelectionAnchor( currentItem() );
 
   if (mFolder)
     setFolderInfoStatus();
@@ -1077,7 +1074,6 @@ void KMHeaders::msgChanged()
   setTopItemByIndex( i );
   setCurrentMsg(cur);
   setSelected( currentItem(), true );
-  setSelectionAnchor( currentItem() );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
           this,SLOT(highlightMessage(QListViewItem*)));
 
@@ -1259,6 +1255,7 @@ void KMHeaders::msgAdded(int id)
   if ((childCount() == 1) && hi) {
     setSelected( hi, true );
     setCurrentItem( firstChild() );
+    setSelectionAnchor( currentItem() );
   }
 
   END_TIMER(msgAdded);
@@ -1277,7 +1274,8 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   START_TIMER(msgRemoved);
 
   KMHeaderItem *removedItem = mItems[id];
-  KMHeaderItem *currentItem = currentHeaderItem();
+  KMHeaderItem *curItem = currentHeaderItem();
+  int curItemIndex = currentItemIndex();
 
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
@@ -1352,8 +1350,9 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   mImperfectlyThreadedList.removeRef(removedItem);
   delete removedItem;
   // we might have rethreaded it, in which case its current state will be lost
-  if ( currentItem && currentItem != removedItem )
-    setCurrentItem( currentItem );
+  if ( curItem && curItem != removedItem ) {
+    setCurrentMsg( curItemIndex );
+  }
   END_TIMER(msgRemoved);
   SHOW_TIMER(msgRemoved);
 
@@ -1582,10 +1581,12 @@ void KMHeaders::applyFiltersOnMsg()
   if (next) {
     setCurrentItem( next );
     setSelected( next, true );
+    setSelectionAnchor( currentItem() );
     highlightMessage( next, true);
   }
   else if (currentItem()) {
     setSelected( currentItem(), true );
+    setSelectionAnchor( currentItem() );
     highlightMessage( currentItem(), true);
   }
   else
@@ -1702,6 +1703,7 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
     clearSelection();
     setCurrentItem( item );
     setSelected( item, true );
+    setSelectionAnchor( currentItem() );
     mPrevCurrent = 0;
     highlightMessage( item, false);
   }
@@ -1826,6 +1828,7 @@ void KMHeaders::setCurrentMsg(int cur)
     clearSelection();
     setCurrentItem( mItems[cur] );
     setSelected( mItems[cur], true );
+    setSelectionAnchor( currentItem() );
   }
   makeHeaderVisible();
   setFolderInfoStatus();
@@ -1904,6 +1907,7 @@ void KMHeaders::nextMessage()
     clearSelection();
     setSelected( lvi, false );
     selectNextMessage();
+    setSelectionAnchor( currentItem() );
     ensureCurrentItemVisible();
   }
 }
@@ -1937,6 +1941,7 @@ void KMHeaders::prevMessage()
     clearSelection();
     setSelected( lvi, false );
     selectPrevMessage();
+    setSelectionAnchor( currentItem() );
     ensureCurrentItemVisible();
   }
 }
@@ -2252,6 +2257,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
     // If no current item, make some first item current when a key is pressed
     if (!cur) {
       setCurrentItem( firstChild() );
+      setSelectionAnchor( currentItem() );
       return;
     }
 
@@ -2514,6 +2520,7 @@ void KMHeaders::setCurrentItemByIndex(int msgIdx)
     bool unchanged = (currentItem() == mItems[msgIdx]);
     setCurrentItem( mItems[msgIdx] );
     setSelected( mItems[msgIdx], true );
+    setSelectionAnchor( currentItem() );
     if (unchanged)
        highlightMessage( mItems[msgIdx], false);
   }
