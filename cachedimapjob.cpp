@@ -69,14 +69,15 @@ CachedImapJob::CachedImapJob( const QValueList<MsgForDownload>& msgs,
 CachedImapJob::CachedImapJob( const QPtrList<KMMessage>& msgs, JobType type,
                               KMFolderCachedImap* folder )
   : FolderJob( msgs, QString::null, type, folder?folder->folder():0 ), mFolder( folder ),
-    mTotalBytes( 0 ), mMsg( 0 ), mParentFolder( 0 )
+    mTotalBytes( msgs.count() ), // we abuse it as "total number of messages"
+    mMsg( 0 ), mParentFolder( 0 )
 {
 }
 
 CachedImapJob::CachedImapJob( const QValueList<unsigned long>& msgs,
 			      JobType type, KMFolderCachedImap* folder )
   : FolderJob( QPtrList<KMMessage>(), QString::null, type, folder?folder->folder():0 ),
-    mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( 0 ), mMsg( 0 ),
+    mFolder( folder ), mSerNumMsgList( msgs ), mTotalBytes( msgs.count() ), mMsg( 0 ),
     mParentFolder ( 0 )
 {
 }
@@ -425,6 +426,11 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   }
 
   emit messageStored( mMsg );
+
+  // we abuse those fields, the unit is the number of messages, here
+  ++mSentBytes;
+  emit progress( mSentBytes, mTotalBytes );
+
   int i;
   if( ( i = mFolder->find(mMsg) ) != -1 ) {
      /*

@@ -32,6 +32,7 @@
 #include <qstyle.h>
 #include <qpainter.h>
 #include <qprogressbar.h>
+#include <kdebug.h>
 
 
 namespace KMail {
@@ -175,6 +176,7 @@ void IMAPProgressDialog::clear()
 void IMAPProgressDialog::syncState( const QString& folderName,
 				    int progress, const QString& syncStatus )
 {
+  //kdDebug(5006) << "syncState: " << folderName << " " << progress << " " << syncStatus << endl;
   ProgressListViewItem* item = 0;
   for( QListViewItem* it = mSyncEditorListView->firstChild(); it != 0; it = it->nextSibling() ) {
     if( folderName == it->text(0) ) {
@@ -188,7 +190,8 @@ void IMAPProgressDialog::syncState( const QString& folderName,
 
   if( item ) {
     item->setProgress( progress );
-    item->setText( 2, syncStatus );
+    if ( !syncStatus.isNull() ) // see KMFolderCachedImap::slotProgress
+      item->setText( 2, syncStatus );
     mSyncEditorListView->ensureItemVisible( item );
   } else {
     mPreviousItem = new ProgressListViewItem( 1, progress,

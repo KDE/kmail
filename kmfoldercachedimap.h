@@ -138,7 +138,7 @@ public:
   /** Write the uidValitidy and lastUid values to disk */
   int writeUidCache();
 
-  /** Current progress status (in percents) */
+  /** Current progress status (between 0 and 100) */
   int progress() const { return mProgress; }
 
   /* Reimplemented from KMFolder. Moving is not supported, so aParent must be 0 */
@@ -221,6 +221,7 @@ protected slots:
   void getMessagesResult(KMail::FolderJob *, bool lastSet);
   void slotGetLastMessagesResult(KMail::FolderJob *);
   void slotProgress(unsigned long done, unsigned long total);
+  void slotPutProgress( unsigned long, unsigned long );
 
   //virtual void slotCheckValidityResult(KIO::Job * job);
   void slotSubFolderComplete(KMFolderCachedImap*, bool);
@@ -284,6 +285,7 @@ public slots:
 
 private slots:
   void serverSyncInternal();
+  void slotIncreaseProgress();
 
 signals:
   void folderComplete(KMFolderCachedImap *folder, bool success);
