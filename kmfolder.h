@@ -269,6 +269,8 @@ public:
   void setAccount(KMAcctImap *acct) { mAccount = acct; }
   KMAcctImap* account() { return mAccount; }
 
+  void setProcmailLockFileName( const QString& );
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -359,6 +361,7 @@ protected:
   bool needsCompact; //sven: true if on destruct folder needs to be compacted.
   KMFolderDir* mChild;
   LockType mLockType;
+  QString mProcmailLockFileName;
   bool mConvertToUtf8;
 };
 

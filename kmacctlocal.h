@@ -27,7 +27,10 @@ public:
 
   /** Acceso to Locking method */
   LockType lockType(void) { return mLock; }
-  virtual void setLockType(LockType lt) { mLock = lt; }
+  void setLockType(LockType lt) { mLock = lt; }
+
+  const QString& procmailLockFileName(void) { return mProcmailLockFileName; }
+  void setProcmailLockFileName(QString s);
 
   virtual const char* type(void) const;
   virtual void processNewMail(bool);
@@ -39,6 +42,7 @@ public:
 
 protected:
   QString mLocation;
+  QString mProcmailLockFileName;
   bool hasNewMail;
 };
 

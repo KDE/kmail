@@ -340,7 +340,12 @@ int KMFolder::lock()
       break;
 
     case procmail_lockfile:
-      cmd_str = "lockfile " + location() + ".lock";
+      cmd_str = "lockfile ";
+      if (mProcmailLockFileName && !mProcmailLockFileName.isEmpty())
+        cmd_str += mProcmailLockFileName;
+      else
+        cmd_str += location() + ".lock";
+
       rc = system( cmd_str.latin1() );
       if( rc != 0 )
       {
@@ -439,7 +444,12 @@ int KMFolder::unlock()
       break;
 
     case procmail_lockfile:
-      cmd_str = "rm -f " + location() + ".lock";
+      cmd_str = "rm -f ";
+      if (mProcmailLockFileName && !mProcmailLockFileName.isEmpty())
+        cmd_str += mProcmailLockFileName;
+      else
+        cmd_str += location() + ".lock";
+
       rc = system( cmd_str.latin1() );
       if( mIndexStream )
       {
@@ -1582,6 +1592,12 @@ void KMFolder::correctUnreadMsgsCount()
 void KMFolder::setLockType( LockType ltype )
 {
   mLockType = ltype;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::setProcmailLockFileName( const QString &fname )
+{
+  mProcmailLockFileName = fname;
 }
 
 #include "kmfolder.moc"

@@ -24,6 +24,7 @@
 #include <qlabel.h>
 #include <qlineedit.h>
 #include <qlayout.h>
+#include <qtextstream.h>
 #include <qradiobutton.h>
 #include <qvalidator.h>
 
@@ -48,6 +49,177 @@
 
 #include "accountdialog.moc"
 #undef None
+
+class ProcmailRCParser 
+{
+public:
+  ProcmailRCParser(QString fileName = QString::null);
+  ~ProcmailRCParser();
+
+  QStringList getLockFilesList() { return mLockFiles; }
+  QStringList getSpoolFilesList() { return mSpoolFiles; }
+
+protected:
+  void processGlobalLock(const QString&);
+  void processLocalLock(const QString&);
+  void processVariableSetting(const QString&, int);
+  QString expandVars(const QString&);
+
+  QFile mProcmailrc;
+  QTextStream *mStream;
+  QStringList mLockFiles;
+  QStringList mSpoolFiles;
+  QAsciiDict<QString> mVars;
+};
+
+ProcmailRCParser::ProcmailRCParser(QString fname)
+  : mProcmailrc(fname),
+    mStream(new QTextStream(&mProcmailrc))
+{
+  mVars.setAutoDelete(true);
+
+  if( !fname || fname.isEmpty() ) {
+    fname = QDir::homeDirPath() + "/.procmailrc";
+    mProcmailrc.setName(fname);
+  }
+
+  static QRegExp lockFileGlobal("LOCKFILE=", true),
+    lockFileLocal("^:0", true);
+    
+  if(  mProcmailrc.open(IO_ReadOnly) ) {
+
+    QString s;
+
+    while( !mStream->eof() ) {
+
+      s = mStream->readLine().stripWhiteSpace();
+
+      if(  s[0] == '#' ) continue; // skip comments
+
+      int commentPos = -1;
+      
+      if( (commentPos = s.find('#')) > -1 ) {
+        // get rid of trailing comment
+        s.truncate(commentPos);
+        s = s.stripWhiteSpace();
+      }
+            
+      if(  lockFileGlobal.match(s) != -1 ) {
+        processGlobalLock(s);
+      } else if( lockFileLocal.match(s) != -1 ) {
+        processLocalLock(s);
+      } else if( int i = s.find('=') ) {
+        processVariableSetting(s,i);
+      }
+    }
+
+  }
+}
+
+ProcmailRCParser::~ProcmailRCParser()
+{
+  delete mStream;
+}
+
+void
+ProcmailRCParser::processGlobalLock(const QString &s)
+{
+  QString val = expandVars(s.mid(s.find('=') + 1).stripWhiteSpace());
+  if ( !mLockFiles.contains(val) )
+    mLockFiles << val;
+}
+
+void
+ProcmailRCParser::processLocalLock(const QString &s)
+{
+  QString val;
+  int colonPos = s.findRev(':');
+
+  if (colonPos > 0) { // we don't care about the leading one  
+    val = s.mid(colonPos + 1).stripWhiteSpace();
+
+    if ( val.length() ) {
+      // user specified a lockfile, so process it
+      // 
+      val = expandVars(val);
+      if( val[0] != '/' && mVars.find("MAILDIR") )
+        val.insert(0, *(mVars["MAILDIR"]) + '/');
+    } // else we'll deduce the lockfile name one we
+    // get the spoolfile name
+  }
+
+  // parse until we find the spoolfile
+  QString line, prevLine;
+  do {
+    prevLine = line;
+    line = mStream->readLine().stripWhiteSpace();
+  } while ( !mStream->eof() && (line[0] == '*' ||
+                                prevLine[prevLine.length() - 1] == '\\' ));
+            
+  if( line[0] != '!' && line[0] != '|' &&  line[0] != '{' ) {
+    // this is a filename, expand it
+    //
+    line =  line.stripWhiteSpace();
+    line = expandVars(line);
+
+    // prepend default MAILDIR if needed
+    if( line[0] != '/' && mVars.find("MAILDIR") )
+      line.insert(0, *(mVars["MAILDIR"]) + '/');
+
+    // now we have the spoolfile name
+    if ( !mSpoolFiles.contains(line) )
+      mSpoolFiles << line;
+
+    if( colonPos > 0 && (!val || val.isEmpty()) ) {
+      // there is a local lockfile, but the user didn't
+      // specify the name so compute it from the spoolfile's name
+      val = line;
+
+      // append lock extension
+      if( mVars.find("LOCKEXT") )
+        val += *(mVars["LOCKEXT"]);
+      else
+        val += ".lock";
+    }
+
+    if ( val && !mLockFiles.contains(val) )
+      mLockFiles << val;
+  }
+
+}
+
+void
+ProcmailRCParser::processVariableSetting(const QString &s, int eqPos)
+{
+  if( eqPos == -1) return;
+    
+  QString varName = s.left(eqPos),
+    varValue = expandVars(s.mid(eqPos + 1).stripWhiteSpace());
+
+  mVars.insert(varName.latin1(), new QString(varValue));
+}
+
+QString
+ProcmailRCParser::expandVars(const QString &s)
+{
+  if( !s || s.isEmpty()) return s;
+
+  QString expS = s;
+
+  QAsciiDictIterator<QString> it( mVars ); // iterator for dict
+
+  while ( it.current() ) {
+    QString var = "\\$"; var += it.currentKey();
+
+    expS.replace(QRegExp(var), *it.current());
+
+    ++it;        
+  }
+
+  return expS;
+}
+
+
 
 AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
 			      QWidget *parent, const char *name, bool modal )
@@ -82,6 +254,8 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
 
 void AccountDialog::makeLocalAccountPage()
 {
+  ProcmailRCParser procmailrcParser;
+
   QFrame *page = makeMainWidget();
   QGridLayout *topLayout = new QGridLayout( page, 11, 3, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
@@ -104,25 +278,52 @@ void AccountDialog::makeLocalAccountPage()
 
   label = new QLabel( i18n("Location:"), page );
   topLayout->addWidget( label, 3, 0 );
-  mLocal.locationEdit = new QLineEdit( page );
+  mLocal.locationEdit = new QComboBox( true, page );
   topLayout->addWidget( mLocal.locationEdit, 3, 1 );
+  mLocal.locationEdit->insertStringList(procmailrcParser.getSpoolFilesList());
+
   QPushButton *choose = new QPushButton( i18n("Choose..."), page );
   choose->setAutoDefault( false );
   connect( choose, SIGNAL(clicked()), this, SLOT(slotLocationChooser()) );
   topLayout->addWidget( choose, 3, 2 );
 
-  QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
-    i18n("Locking method"), page );
+  QButtonGroup *group = new QButtonGroup(i18n("Locking method"), page );
+  group->setColumnLayout(0, Qt::Horizontal);
+  group->layout()->setSpacing( 0 );
+  group->layout()->setMargin( 0 );
+  QGridLayout *groupLayout = new QGridLayout( group->layout() );
+  groupLayout->setAlignment( Qt::AlignTop );
+  groupLayout->setSpacing( 6 );
+  groupLayout->setMargin( 11 );
+
   mLocal.lockMutt = new QRadioButton(
     i18n("Mutt dotlock (recommended)"), group);
+  groupLayout->addWidget(mLocal.lockMutt, 0, 0);
+  
   mLocal.lockMuttPriv = new QRadioButton(
     i18n("Mutt dotlock privileged"), group);
+  groupLayout->addWidget(mLocal.lockMuttPriv, 1, 0);
+
   mLocal.lockProcmail = new QRadioButton(
     i18n("Procmail lockfile"), group);
+  groupLayout->addWidget(mLocal.lockProcmail, 2, 0);
+
+  mLocal.procmailLockFileName = new QComboBox( true, group );
+  groupLayout->addWidget(mLocal.procmailLockFileName, 2, 1);
+  mLocal.procmailLockFileName->insertStringList(procmailrcParser.getLockFilesList());
+  mLocal.procmailLockFileName->setEnabled(false);
+
+  QObject::connect(mLocal.lockProcmail, SIGNAL(toggled(bool)),
+                   mLocal.procmailLockFileName, SLOT(setEnabled(bool)));
+
   mLocal.lockFcntl = new QRadioButton(
     i18n("FCNTL"), group);
+  groupLayout->addWidget(mLocal.lockFcntl, 3, 0);
+
   mLocal.lockNone = new QRadioButton(
     i18n("none (use with care)"), group);
+  groupLayout->addWidget(mLocal.lockNone, 4, 0);
+
   topLayout->addMultiCellWidget( group, 4, 4, 0, 2 );
 
   mLocal.excludeCheck =
@@ -354,17 +555,20 @@ void AccountDialog::setupSettings()
   QString accountType = mAccount->type();
   if( accountType == "local" )
   {
+    KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
+
     mLocal.nameEdit->setText( mAccount->name() );
-    mLocal.locationEdit->setText( ((KMAcctLocal*)mAccount)->location() );
-    if (((KMAcctLocal*)mAccount)->mLock == mutt_dotlock)
+    mLocal.locationEdit->setEditText( acctLocal->location() );
+    if (acctLocal->mLock == mutt_dotlock)
       mLocal.lockMutt->setChecked(true);
-    else if (((KMAcctLocal*)mAccount)->mLock == mutt_dotlock_privileged)
+    else if (acctLocal->mLock == mutt_dotlock_privileged)
       mLocal.lockMuttPriv->setChecked(true);
-    else if (((KMAcctLocal*)mAccount)->mLock == procmail_lockfile)
+    else if (acctLocal->mLock == procmail_lockfile) {
       mLocal.lockProcmail->setChecked(true);
-    else if (((KMAcctLocal*)mAccount)->mLock == FCNTL)
+      mLocal.procmailLockFileName->setEditText(acctLocal->procmailLockFileName());
+    } else if (acctLocal->mLock == FCNTL)
       mLocal.lockFcntl->setChecked(true);
-    else if (((KMAcctLocal*)mAccount)->mLock == None)
+    else if (acctLocal->mLock == None)
       mLocal.lockNone->setChecked(true);
 
     mLocal.intervalSpin->setValue( QMAX(1, interval) );
@@ -494,18 +698,24 @@ void AccountDialog::saveSettings()
   QString accountType = mAccount->type();
   if( accountType == "local" )
   {
-    mAccount->setName( mLocal.nameEdit->text() );
-    ((KMAcctLocal*)mAccount)->setLocation( mLocal.locationEdit->text() );
-    if (mLocal.lockMutt->isChecked())
-      ((KMAcctLocal*)mAccount)->mLock = mutt_dotlock;
-    else if (mLocal.lockMuttPriv->isChecked())
-      ((KMAcctLocal*)mAccount)->mLock = mutt_dotlock_privileged;
-    else if (mLocal.lockProcmail->isChecked())
-      ((KMAcctLocal*)mAccount)->mLock = procmail_lockfile;
-    else if (mLocal.lockNone->isChecked())
-      ((KMAcctLocal*)mAccount)->mLock = None;
-    else ((KMAcctLocal*)mAccount)->mLock = FCNTL;
+    KMAcctLocal *acctLocal = dynamic_cast<KMAcctLocal*>(mAccount);
 
+    if (acctLocal) {
+      mAccount->setName( mLocal.nameEdit->text() );
+      acctLocal->setLocation( mLocal.locationEdit->currentText() );
+      if (mLocal.lockMutt->isChecked())
+        acctLocal->setLockType(mutt_dotlock);
+      else if (mLocal.lockMuttPriv->isChecked())
+        acctLocal->setLockType(mutt_dotlock_privileged);
+      else if (mLocal.lockProcmail->isChecked()) {
+        acctLocal->setLockType(procmail_lockfile);
+        acctLocal->setProcmailLockFileName(mLocal.procmailLockFileName->currentText());
+      }
+      else if (mLocal.lockNone->isChecked())
+        acctLocal->setLockType(None);
+      else acctLocal->setLockType(FCNTL);
+    }
+    
     mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ?
 			     mLocal.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
@@ -597,7 +807,7 @@ void AccountDialog::slotLocationChooser()
     return;
   }
 
-  mLocal.locationEdit->setText( url.path() );
+  mLocal.locationEdit->setEditText( url.path() );
   directory = url.directory();
 }
 

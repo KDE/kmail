@@ -43,10 +43,11 @@ class AccountDialog : public KDialogBase
     {
       QLabel       *titleLabel;
       QLineEdit    *nameEdit;
-      QLineEdit    *locationEdit;
+      QComboBox    *locationEdit;
       QRadioButton *lockMutt;
       QRadioButton *lockMuttPriv;
       QRadioButton *lockProcmail;
+      QComboBox    *procmailLockFileName;
       QRadioButton *lockFcntl;
       QRadioButton *lockNone;
       QLineEdit    *precommand;

@@ -76,6 +76,7 @@ void KMAcctLocal::pseudoAssign(KMAccount *account)
   setCheckInterval(acct->checkInterval());
   setCheckExclude(acct->checkExclude());
   setLockType(acct->lockType());
+  setProcmailLockFileName(acct->procmailLockFileName());
   setFolder(acct->folder());
   setPrecommand(acct->precommand());
 }
@@ -86,6 +87,9 @@ void KMAcctLocal::processNewMail(bool)
   QTime t;
   KMFolder mailFolder(NULL, location());
   mailFolder.setLockType( mLock );
+  if ( mLock == procmail_lockfile)
+    mailFolder.setProcmailLockFileName( mProcmailLockFileName );
+
   long num = 0;
   long i;
   int rc;
@@ -201,9 +205,10 @@ void KMAcctLocal::readConfig(KConfig& config)
   mLocation = config.readEntry("Location", defaultPath);
   QString locktype = config.readEntry("LockType", "fcntl" );
 
-  if( locktype == "procmail_lockfile" )
+  if( locktype == "procmail_lockfile" ) {
     mLock = procmail_lockfile;
-  else if( locktype == "mutt_dotlock" )
+    mProcmailLockFileName = config.readEntry("ProcmailLockFile", "");
+  } else if( locktype == "mutt_dotlock" )
     mLock = mutt_dotlock;
   else if( locktype == "mutt_dotlock_privileged" )
     mLock = mutt_dotlock_privileged;
@@ -226,6 +231,11 @@ void KMAcctLocal::writeConfig(KConfig& config)
   else if (mLock == mutt_dotlock_privileged) st = "mutt_dotlock_privileged";
   else if (mLock == None) st = "none";
   config.writeEntry("LockType", st);
+
+  if (mLock == procmail_lockfile) {
+    config.writeEntry("ProcmailLockFile", mProcmailLockFileName);
+  }
+  
 }
 
 
@@ -234,3 +244,13 @@ void KMAcctLocal::setLocation(const QString& aLocation)
 {
   mLocation = aLocation;
 }
+
+void
+KMAcctLocal::setProcmailLockFileName(QString s)
+{
+  if (s && !s.isEmpty())
+    mProcmailLockFileName = s;
+  else
+    mProcmailLockFileName = mLocation + ".lock";
+}
+
