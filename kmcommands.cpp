@@ -60,8 +60,6 @@
 #include "kmcommands.h"
 #include "kmcommands.moc"
 
-#define IDENTITY_UOIDs
-
 KMCommand::KMCommand( QWidget *parent )
   :mParent( parent ), mFolder( 0 )
 {
@@ -278,11 +276,7 @@ void KMMailtoComposeCommand::execute()
 {
   KMComposeWin *win;
   KMMessage *msg = new KMMessage;
-#ifdef IDENTITY_UOIDs
   uint id = 0;
-#else
-  QString id = "";
-#endif
 
   if ( mMsgBase && mMsgBase->parent() )
     id = mMsgBase->parent()->identity();
@@ -311,11 +305,7 @@ void KMMailtoReplyCommand::execute()
   KMMessage *rmsg = msg->createReply(FALSE, FALSE, mSelection );
   rmsg->setTo( KMMessage::decodeMailtoUrl( mUrl.path() ) );
 
-#ifdef IDENTITY_UOIDs
   win = new KMComposeWin(rmsg, 0);
-#else
-  win = new KMComposeWin(rmsg, QString::null);
-#endif
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1195,11 +1185,7 @@ void KMUrlClickedCommand::execute()
 
   if (mUrl.protocol() == "mailto")
   {
-#ifdef IDENTITY_UOIDs
     uint id = 0;
-#else
-    QString id = "";
-#endif
     if ( mFolder )
       id = mFolder->identity();
 
