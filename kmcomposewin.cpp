@@ -810,14 +810,14 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
-  (void) new KAction (i18n("&Address Book..."), "contents",0,
+  (void) new KAction (i18n("&Address Book"), "contents",0,
                       this, SLOT(slotAddrBook()),
                       actionCollection(), "addressbook");
-  (void) new KAction (i18n("&New Composer..."), "mail_new",
+  (void) new KAction (i18n("&New Composer"), "mail_new",
                       KStdAccel::shortcut(KStdAccel::New),
                       this, SLOT(slotNewComposer()),
                       actionCollection(), "new_composer");
-  (void) new KAction (i18n("New Main &Window..."), "window_new", 0,
+  (void) new KAction (i18n("New Main &Window"), "window_new", 0,
                       this, SLOT(slotNewMailReader()),
                       actionCollection(), "open_mailreader");
 
@@ -3800,7 +3800,7 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
   {
      mAttachMenu = new QPopupMenu(this);
 
-     mAttachMenu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
+     mAttachMenu->insertItem(i18n("View"), this, SLOT(slotAttachView()));
      mAttachMenu->insertItem(i18n("Save..."), this, SLOT(slotAttachSave()));
      mAttachMenu->insertItem(i18n("Properties..."),
 		   this, SLOT(slotAttachProperties()));

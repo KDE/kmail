@@ -4623,7 +4623,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     KPopupMenu *menu = new KPopupMenu();
     menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
     menu->insertItem(i18n("Open With..."), this, SLOT(slotAtmOpenWith()));
-    menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
+    menu->insertItem(i18n("View"), this, SLOT(slotAtmView()));
     menu->insertItem(i18n("Save As..."), this, SLOT(slotAtmSave()));
     menu->insertItem(i18n("Properties..."), this,
 		     SLOT(slotAtmProperties()));

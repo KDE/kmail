@@ -2057,9 +2057,9 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
                          SLOT(slotMailtoForward()));
         menu->insertSeparator();
       }
-      menu->insertItem(i18n("Add to Addressbook"), this,
+      menu->insertItem(i18n("Add to Address Book"), this,
 		       SLOT(slotMailtoAddAddrBook()));
-      menu->insertItem(i18n("Open in Addressbook..."), this,
+      menu->insertItem(i18n("Open in Address Book"), this,
 		       SLOT(slotMailtoOpenAddrBook()));
       menu->insertItem(i18n("Copy to Clipboard"), this,
 		       SLOT(slotUrlCopy()));
@@ -2067,7 +2067,7 @@ void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aP
     else
     {
       // popup on a not-mailto URL
-      menu->insertItem(i18n("Open URL..."), this,
+      menu->insertItem(i18n("Open URL"), this,
 		       SLOT(slotUrlOpen()));
       menu->insertItem(i18n("Save Link As..."), this,
                        SLOT(slotUrlSave()));
@@ -2176,7 +2176,7 @@ KRadioAction * KMMainWin::actionForAttachmentStyle( int style ) {
 void KMMainWin::setupMenuBar()
 {
   //----- File Menu
-  (void) new KAction( i18n("New &Window..."), "window_new", 0,
+  (void) new KAction( i18n("New &Window"), "window_new", 0,
 		      this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
@@ -2215,7 +2215,7 @@ void KMMainWin::setupMenuBar()
   KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
 
   //----- Tools menu
-  (void) new KAction( i18n("&Address Book..."), "contents", 0, this,
+  (void) new KAction( i18n("&Address Book"), "contents", 0, this,
 		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
 
   (void) new KAction( i18n("&Import..."), "fileopen", 0, this,
@@ -2675,7 +2675,7 @@ void KMMainWin::setupMenuBar()
 #if KDE_VERSION >= 305 // KDE 3.1
   KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
 #else
-  (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), "idea",
+  (void) new KAction( KGuiItem( i18n("Tip of the &Day"), "idea",
 				i18n("Show \"Tip of the Day\"") ),
 		      0, this, SLOT(slotShowTip()),
 		      actionCollection(), "help_show_tip" );
