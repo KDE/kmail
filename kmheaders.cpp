@@ -2312,7 +2312,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
   mPressPos = e->pos();
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
-  bool wasSelected;
+  bool wasSelected = false;
   if (lvi) wasSelected = lvi->isSelected();
   
   bool rootDecoClicked =
