@@ -37,30 +37,31 @@ KMTopLevelWidget::~KMTopLevelWidget()
 //-----------------------------------------------------------------------------
 void KMTopLevelWidget::closeEvent(QCloseEvent* e)
 {
-  KMTopLevelWidgetInherited::closeEvent(e);
-
-  if (e->isAccepted())
-  {
     writeConfig();
-    e->ignore();
-    //delete this;
-  }
+    KMTopLevelWidgetInherited::closeEvent(e);
+
+//   if (e->isAccepted())
+//   {
+//     writeConfig();
+//     e->ignore();
+//     //delete this;
+//   }
 }
 
 
 //-----------------------------------------------------------------------------
-bool KMTopLevelWidget::close(bool aForceKill)
-{
-  static bool rc;
-  rc = KMTopLevelWidgetInherited::close(aForceKill);
-  if (!rc) return FALSE;
+// bool KMTopLevelWidget::close(bool aForceKill)
+// {
+//   static bool rc;
+//   rc = KMTopLevelWidgetInherited::close(aForceKill);
+//   if (!rc) return FALSE;
 
-  if (KMTopLevelWidgetInherited::memberList && 
-      KMTopLevelWidgetInherited::memberList->isEmpty())
-    kapp->quit();
+//   if (KMTopLevelWidgetInherited::memberList &&
+//       KMTopLevelWidgetInherited::memberList->isEmpty())
+//     kapp->quit();
 
-  return TRUE;
-}
+//   return TRUE;
+// }
 
 
 //-----------------------------------------------------------------------------
@@ -76,7 +77,7 @@ void KMTopLevelWidget::forEvery(KForEvery func)
     {
       if (w->inherits("KMTopLevelWidget")) (w->*func)();
     }
-  } 
+  }
 }
 
 
