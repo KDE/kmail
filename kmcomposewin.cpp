@@ -4463,7 +4463,7 @@ void KMComposeWin::slotNewMailReader()
 void KMComposeWin::slotUpdWinTitle(const QString& text)
 {
   if (text.isEmpty())
-       setCaption("("+QString(i18n("unnamed"))+")");
+       setCaption("("+i18n("unnamed")+")");
   else setCaption(text);
 }
 
