@@ -7,13 +7,33 @@ KMail as well as people that want to trace bugs in parts of KMail
 which they don't know well.
 
 Contents:
+- Kernel
 - Identity
 - Filters
 - ConfigureDialog
 - MDNs
-- folder
+- Folders
 
 TODO: reader, composer, messages, accounts, ...
+
+KERNEL
+======
+
+Files: kmkernel.{h,cpp}
+
+Contact Zack Rusin <zack@kde.org> with questions...
+
+The first thing you'll notice about KMail is the extensive use of
+kernel->xxx() constructs. The "kernel" is a define in kmkernel.h
+declared as :
+#define kernel KMKernel::self() 
+KMKernel is the central object in KMail. It's always created before
+any other class, therefore you are _guaranteed_ that KMKernel::self()
+(and therefore "kernel" construct) won't return 0 (null).
+
+KMKernel implements the KMailIface (our DCOP interface) and gives
+access to all the core KMail functionality. 
+
 
 IDENTITY
 ========
@@ -241,3 +261,37 @@ QPtrList<KMFolderNode>.  A special case of a KMFolderDir is known as
 KMFolderRootDir and is supposed to represent the toplevel KMFolderDir
 in the KMail's folder hierarchy. 
 
+KMFolderDir's serve as folder holders which are managed by
+KMFolderMgr's. KMail contains three main KMFolderMgr's. They can be
+accessed via KMKernel ( the "kernel" construct ). Those methods are :
+1) KMFolderMgr *folderMgr() - which returns the folder manager for
+   the folders stored locally.
+2) KMFolderMgr *imapFolderMgr() - which returns the folder manager
+   for all imap folders. They're handled a little differently because
+   for all imap messages only headers are cached locally while the
+   main contents of all messages is kept on the server.
+3) KMFolderMgr *searchFolderMgr() - which returns the folder manager
+   for the search folders (the folders created by using the "find
+   messages" tool. Other email clients call that type of folders
+   "virtual folders".
+
+Finally one has to remember FolderJob classes. These classes allow
+one to have asynchronous operations on KMFolder's. You simply create
+a Job on a heap, connect to one of its signals and wait till the job
+finishes. Folders serve as FolderJob's factories. For example to
+asynchronously expire messages in a folder you'd do:
+
+FolderJob *job = parentFolder->createJob( 0,
+	       	 			  FolderJob::tExpireMessages
+					  );
+
+job->start();
+
+In this example we ignore signals emitted by the message, in case you
+want to do something more interactive like retrieve the full message
+from a folder you'd have to do something like :
+
+FolderJob *job = folderParent->createJob( aMsg, tGetMessage );
+connect( job, SIGNAL(messageRetrieved(KMMessage*)),
+         SLOT(msgWasRetrieved(KMMessage*)) );
+job->start();
