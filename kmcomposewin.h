@@ -648,6 +648,7 @@ private:
 
   CryptPlugWrapperList * mCryptPlugList;
   QString mErrorProcessingStructuringInfo;
+  QString mErrorNoCryptPlugAndNoBuildIn;
 };
 #endif
 
