@@ -672,6 +672,10 @@ kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << end
 kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
               } else {
 
+                QCString rfc822headers
+                  ( curNode->dwPart() && curNode->dwPart()->hasHeaders()
+                  ? curNode->dwPart()->Headers().AsString().c_str()
+                  : "content-type=text/plain" );
                 QCString rfc822message( curNode->msgPart().bodyDecoded() );
 
                 // paint the frame
@@ -990,7 +994,7 @@ kdDebug(5006) << "* model *" << endl;
         } else {
           QCString cstr( curNode->msgPart().bodyDecoded() );
           reader->writeBodyStr(cstr, reader->mCodec, &isInlineSigned, &isInlineEncrypted);
-        } 
+        }
       }
       curNode->mWasProcessed = true;
     }
@@ -1848,7 +1852,7 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpWarnH.name() ) +
         QString( "tr.signWarnB { background-color: %1; }\n" )
         .arg( cPgpWarnB.name() ) +
-        
+
         QString( "table.signErr { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
         .arg( cPgpErrF.name() ) +
@@ -1857,7 +1861,7 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpErrH.name() ) +
         QString( "tr.signErrB { background-color: %1; }\n" )
         .arg( cPgpErrB.name() )) +
-        
+
         QString( "div.fancyHeaderSubj { background-color: %1; "
                                        "color: %2; padding: 4px; "
                                        "border: solid %3 1px; }\n"
@@ -2332,6 +2336,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   QByteArray str;
 
   assert(aMsg!=NULL);
+
   type = aMsg->typeStr();
   numParts = aMsg->numBodyParts();
 
@@ -2350,8 +2355,6 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
     if( -1 < scpos)
       mainCntTypeStr.truncate( scpos );
   }
-
-  assert( aMsg != NULL );
 
   VCard *vc = 0;
   bool hasVCard = false;
@@ -2441,7 +2444,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   }
 
   queueHtml("<div id=\"header\">"
-          + (writeMsgHeader(hasVCard))
+          + (writeMsgHeader(aMsg, hasVCard))
           + "</div><div><br></div>");
 
 
@@ -2589,8 +2592,11 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
 
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::writeMsgHeader(bool hasVCard)
+QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 {
+  if( !aMsg )
+    return QString();
+
   QString vcname;
 
 // The direction of the header is determined according to the direction
@@ -2606,8 +2612,8 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
 // direction. TODO: Implement this using the custom prefixes.
 
    QString subjectDir;
-   if (!mMsg->subject().isEmpty()) {
-      subjectDir = (KMMsgBase::skipKeyword(mMsg->subject())
+   if (!aMsg->subject().isEmpty()) {
+      subjectDir = (KMMsgBase::skipKeyword(aMsg->subject())
                          .isRightToLeft()) ? "rtl" : "ltr";
    } else
       subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
@@ -2619,18 +2625,18 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
   {
   case HdrBrief:
     headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-                        strToHtml(mMsg->subject()) +
+                        strToHtml(aMsg->subject()) +
                         "</b>&nbsp; (" +
-                        KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ")
+                        KMMessage::emailAddrAsAnchor(aMsg->from(),TRUE) + ", ")
                         .arg(subjectDir);
 
-    if (!mMsg->cc().isEmpty())
+    if (!aMsg->cc().isEmpty())
     {
       headerStr.append(i18n("Cc: ")+
-                       KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
+                       KMMessage::emailAddrAsAnchor(aMsg->cc(),TRUE) + ", ");
     }
 
-    headerStr.append("&nbsp;"+strToHtml(mMsg->dateShortStr()) + ")");
+    headerStr.append("&nbsp;"+strToHtml(aMsg->dateShortStr()) + ")");
 
     if (hasVCard)
     {
@@ -2642,20 +2648,20 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
 
   case HdrStandard:
     headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-                        strToHtml(mMsg->subject()) + "</b></div>")
+                        strToHtml(aMsg->subject()) + "</b></div>")
                         .arg(subjectDir);
     headerStr.append(i18n("From: ") +
-                     KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
+                     KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE));
     if (hasVCard)
     {
       headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
     headerStr.append("<br>");
     headerStr.append(i18n("To: ") +
-                     KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
-    if (!mMsg->cc().isEmpty())
+                     KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE) + "<br>");
+    if (!aMsg->cc().isEmpty())
       headerStr.append(i18n("Cc: ")+
-                       KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>");
+                       KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE) + "<br>");
     break;
 
   case HdrFancy:
@@ -2666,34 +2672,34 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
                         "<div class=\"fancyHeaderDtls\">"
                         "<table class=\"fancyHeaderDtls\">")
                         .arg(subjectDir)
-		        .arg(mMsg->subject().isEmpty()?
+		        .arg(aMsg->subject().isEmpty()?
 			     i18n("No Subject") :
-			     strToHtml(mMsg->subject()));
+			     strToHtml(aMsg->subject()));
 
     // from line
     headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2%3%4</td></tr>")
                             .arg(i18n("From: "))
-                            .arg(KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE))
+                            .arg(KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE))
                             .arg(hasVCard ?
                                  "&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>"
                                  : "")
-                            .arg((mMsg->headerField("Organization").isEmpty()) ?
+                            .arg((aMsg->headerField("Organization").isEmpty()) ?
                                  ""
                                  : "&nbsp;&nbsp;(" +
-                                   strToHtml(mMsg->headerField("Organization")) +
+                                   strToHtml(aMsg->headerField("Organization")) +
                                    ")"));
 
     // to line
     headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
                             .arg(i18n("To: "))
-                            .arg(KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE)));
+                            .arg(KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE)));
 
     // cc line, if any
-    if (!mMsg->cc().isEmpty())
+    if (!aMsg->cc().isEmpty())
     {
       headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
                               .arg(i18n("Cc: "))
-                              .arg(KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE)));
+                              .arg(KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE)));
     }
 
     // the date
@@ -2702,27 +2708,27 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
     {
         QDateTime dateTime;
         KLocale* locale = KGlobal::locale();
-        dateTime.setTime_t(mMsg->date());
+        dateTime.setTime_t(aMsg->date());
         dateString = locale->formatDateTime(dateTime);
     }
     else
     {
-        dateString = mMsg->dateStr();
+        dateString = aMsg->dateStr();
     }
     headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td dir=\"%2\" class=\"fancyHeaderDtls\">%3</td></tr>")
                             .arg(i18n("Date: "))
-			    .arg(mMsg->dateStr().isRightToLeft() ? "rtl" : "ltr")
+			    .arg(aMsg->dateStr().isRightToLeft() ? "rtl" : "ltr")
                             .arg(strToHtml(dateString)));
     headerStr.append("</table></div>");
     break;
   }
   case HdrLong:
     headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-                        strToHtml(mMsg->subject()) + "</b></div>")
+                        strToHtml(aMsg->subject()) + "</b></div>")
                         .arg(subjectDir);
-    headerStr.append(i18n("Date: ") + strToHtml(mMsg->dateStr())+"<br>");
+    headerStr.append(i18n("Date: ") + strToHtml(aMsg->dateStr())+"<br>");
     headerStr.append(i18n("From: ") +
-                     KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
+                     KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE));
     if (hasVCard)
     {
       headerStr.append("&nbsp;&nbsp;<a href=\"" +
@@ -2730,31 +2736,31 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
                        "\">"+i18n("[vCard]")+"</a>");
     }
 
-    if (!mMsg->headerField("Organization").isEmpty())
+    if (!aMsg->headerField("Organization").isEmpty())
     {
       headerStr.append("&nbsp;&nbsp;(" +
-                       strToHtml(mMsg->headerField("Organization")) + ")");
+                       strToHtml(aMsg->headerField("Organization")) + ")");
     }
 
     headerStr.append("<br>");
     headerStr.append(i18n("To: ")+
-                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
-    if (!mMsg->cc().isEmpty())
+                   KMMessage::emailAddrAsAnchor(aMsg->to(),FALSE) + "<br>");
+    if (!aMsg->cc().isEmpty())
     {
       headerStr.append(i18n("Cc: ")+
-                       KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<br>");
+                       KMMessage::emailAddrAsAnchor(aMsg->cc(),FALSE) + "<br>");
     }
 
-    if (!mMsg->bcc().isEmpty())
+    if (!aMsg->bcc().isEmpty())
     {
       headerStr.append(i18n("Bcc: ")+
-                       KMMessage::emailAddrAsAnchor(mMsg->bcc(),FALSE) + "<br>");
+                       KMMessage::emailAddrAsAnchor(aMsg->bcc(),FALSE) + "<br>");
     }
 
-    if (!mMsg->replyTo().isEmpty())
+    if (!aMsg->replyTo().isEmpty())
     {
       headerStr.append(i18n("Reply to: ")+
-                     KMMessage::emailAddrAsAnchor(mMsg->replyTo(),FALSE) + "<br>");
+                     KMMessage::emailAddrAsAnchor(aMsg->replyTo(),FALSE) + "<br>");
     }
     break;
 
@@ -2762,7 +2768,7 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
       // we force the direction to ltr here, even in a arabic/hebrew UI,
       // as the headers are almost all Latin1
     headerStr += "<div dir=\"ltr\">";
-    headerStr += strToHtml(mMsg->headerAsString(), true);
+    headerStr += strToHtml(aMsg->headerAsString(), true);
     if (hasVCard)
     {
       headerStr.append("<br><a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");

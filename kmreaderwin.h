@@ -302,7 +302,7 @@ protected:
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  virtual QString writeMsgHeader(bool hasVCard);
+  virtual QString writeMsgHeader(KMMessage* aMsg, bool hasVCard);
 
   /** Processed the txt strings and composed an appropriate
     HTML string that is stored into data for displaying it
