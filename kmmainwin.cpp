@@ -570,8 +570,6 @@ void KMMainWin::slotSettings()
 }
 
 
-
-
 //-----------------------------------------------------------------------------
 void KMMainWin::slotFilter()
 {
@@ -583,6 +581,13 @@ void KMMainWin::slotFilter()
 void KMMainWin::slotAddrBook()
 {
   KMAddrBookExternal::launch(this);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotImport()
+{
+  KRun::runCommand("kmailcvt");
 }
 
 
@@ -1600,6 +1605,9 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("Address &Book..."), "contents", 0, this,
 		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
+
+  (void) new KAction( i18n("&Import..."), "kmailcvt", 0, this,
+		      SLOT(slotImport()), actionCollection(), "import" );
 
   KStdAction::close( this, SLOT(slotClose()), actionCollection());
   //KStdAction::quit( this, SLOT(quit()), actionCollection());

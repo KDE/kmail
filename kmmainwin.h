@@ -122,6 +122,7 @@ protected slots:
   void slotSettings();
   void slotFilter();
   void slotAddrBook();
+  void slotImport();
   void slotViewChange();
   void slotAddFolder();
   void slotCompose();
