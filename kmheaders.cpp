@@ -684,7 +684,7 @@ void KMHeaders::readConfig (void)
   {
     KConfigGroupSaver saver(config, "Behaviour");
     mLoopOnGotoUnread = (LoopOnGotoUnreadValue)config->readNumEntry(
-            "LoopOnGotoUnread", LoopInCurrentFolder );
+            "LoopOnGotoUnread", LoopInAllFolders );
     mJumpToUnread = config->readBoolEntry( "JumpToUnread", false );
   }
 }
