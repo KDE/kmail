@@ -83,7 +83,7 @@ public:
   inline void setExternalEditorPath(QString path) { mExtEditor=path; }
 
 signals:
-  void spellcheck_done();
+  void spellcheck_done(int result);
 public slots:
   void slotSpellcheck2(KSpell*);
   void slotSpellResult(const QString &newtext);
@@ -364,7 +364,8 @@ public slots:
 
 
 //  void slotSpellConfigure();
-  void slotSpellcheckDone();
+  void slotSpellcheckDone(int result);
+  void slotSpellcheckDoneClearStatus();
 
   /**
    * Append current message to ~/dead.letter

@@ -47,6 +47,7 @@
 #include <kurldrag.h>
 
 #include <kspell.h>
+#include <kspelldlg.h>
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -184,6 +185,9 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
 					SLOT(slotFolderRemoved(KMFolder*)));
 	connect(kernel->imapFolderMgr(),SIGNAL(removed(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
+
+  connect (mEditor, SIGNAL (spellcheck_done(int)),
+    this, SLOT (slotSpellcheckDone (int)));
 
   mMainWidget->resize(480,510);
   setCentralWidget(mMainWidget);
@@ -926,7 +930,9 @@ void KMComposeWin::setupActions(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar(void)
 {
-  statusBar()->addWidget( new QLabel( statusBar(), "" ), 1 );
+  statusBar()->insertItem("", 0, 1);
+  statusBar()->setItemAlignment(0, AlignLeft | AlignVCenter);
+  
   statusBar()->insertItem(QString(i18n(" Column"))+":     ",2,0,true);
   statusBar()->insertItem(QString(i18n(" Line"))+":     ",1,0,true);
 }
@@ -2029,7 +2035,6 @@ void KMComposeWin::slotReplace()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotUpdateFont()
 {
-  if (!mEditor) return;
   mEditor->setFont( fixedFontAction && (fixedFontAction->isChecked())
     ? mFixedFont : mBodyFont );
 }
@@ -2394,8 +2399,6 @@ void KMComposeWin::slotHelp()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotCleanSpace()
 {
-  if (!mEditor) return;
-
   mEditor->cleanWhiteSpace();
 }
 
@@ -2411,21 +2414,34 @@ void KMComposeWin::slotSpellcheck()
     this, SLOT (spell_progress (unsigned)));
     */
 
-  if(mEditor){
-    connect (mEditor, SIGNAL (spellcheck_done()),
-	     this, SLOT (slotSpellcheckDone ()));
-    mEditor->spellcheck();
-  }
+  mEditor->spellcheck();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotSpellcheckDone()
+void KMComposeWin::slotSpellcheckDone(int result)
 {
-  kdDebug(5006) << "spell check complete" << endl;
+  kdDebug(5006) << "spell check complete: result = " << result << endl;
   mSpellCheckInProgress=FALSE;
-  statusBar()->changeItem(i18n("Spellcheck complete."),0);
 
+  switch( result )
+  {
+    case KS_CANCEL:
+      statusBar()->changeItem(i18n(" Spell check cancelled."),0);
+      break;
+    case KS_STOP:
+      statusBar()->changeItem(i18n(" Spell check stopped."),0);
+      break;
+    default:
+      statusBar()->changeItem(i18n(" Spell check complete."),0);
+      break;
+  }
+  QTimer::singleShot( 2000, this, SLOT(slotSpellcheckDoneClearStatus()) );
+}
+
+void KMComposeWin::slotSpellcheckDoneClearStatus()
+{
+  statusBar()->changeItem("", 0);
 }
 
 //-----------------------------------------------------------------------------
@@ -3175,12 +3191,16 @@ void KMEdit::slotSpellcheck2(KSpell*)
 void KMEdit::slotSpellResult(const QString &aNewText)
 {
   spellcheck_stop();
-  if (mKSpell->dlgResult() == 0)
+
+  int dlgResult = mKSpell->dlgResult();
+  if ( dlgResult == KS_CANCEL )
   {
      setText(aNewText);
   }
   mKSpell->cleanUp();
-  emit spellcheck_done();
+
+  kdDebug(5006) << "emitting spellcheck_done" << endl;
+  emit spellcheck_done( dlgResult );
 }
 
 //-----------------------------------------------------------------------------
@@ -3197,9 +3217,5 @@ void KMEdit::slotSpellDone()
   {
      spellcheck_stop();
      KMessageBox::sorry(this, i18n("ISpell/Aspell seems to have crashed."));
-  }
-  else
-  {
-     emit spellcheck_done();
   }
 }
