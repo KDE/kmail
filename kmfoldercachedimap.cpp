@@ -206,10 +206,6 @@ void KMFolderCachedImap::remove()
     unlink( QFile::encodeName( uidCacheFile ) );
   KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
 
-  // Tell the account (see listDirectory2)
-  if (mAccount)
-    mAccount->addDeletedFolder( imapPath() );
-
   FolderStorage::remove();
 }
 
