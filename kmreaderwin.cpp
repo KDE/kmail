@@ -206,6 +206,7 @@ void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
     partNode* dataNode = curNode;
     partNode * child = node->firstChild();
     bool bIsMultipart = false;
+    bool bKeepPartAsIs= false;
 
     switch( curNode->type() ){
       case DwMime::kTypeText: {
@@ -305,6 +306,13 @@ kdDebug(5006) << "pkcs7 mime" << endl;
               //       and we do NOT want to remove the signature!
               if ( child && curNode->encryptionState() != KMMsgNotEncrypted )
                 dataNode = child;
+            }
+            break;
+          case DwMime::kSubtypePkcs7Signature: {
+kdDebug(5006) << "pkcs7 signature" << endl;
+              // note: subtype Pkcs7Signature specifies a signature part
+              //       which we do NOT want to remove!
+              bKeepPartAsIs = true;
             }
             break;
           }
@@ -414,38 +422,43 @@ kdDebug(5006) << "Multipart processing children - DONE" << endl;
         // decrypt and store simple part
 kdDebug(5006) << "is Simple part or invalid Multipart, processing single body (if inline encrypted):" << endl;
         // Problem: body text may be inline PGP encrypted, so we can not just dump it.
-        // resultingData += part->Body().AsString().c_str();
-
-        // Note: parseObjectTree() does no inline PGP decrypting anymore.
-        ObjectTreeParser otp( 0, 0, false, false, true );
-        dataNode->setProcessed( false, true );
-        otp.setKeepEncryptions( false );
-        otp.parseObjectTree( curNode );
-        //resultingData += otp.rawReplyString();  // re-enable this, once ObjectTreeParser is updated.
-
-
-        // Temporary solution, to be replaced by a Kleo::CryptoBackend job inside ObjectTreeParser:
-        bool bDecryptedInlinePGP = false;
-        QPtrList<Kpgp::Block> pgpBlocks;
-        QStrList nonPgpBlocks;
-        if ( Kpgp::Module::prepareMessageForDecryption( otp.rawReplyString(),
-                                                        pgpBlocks,
-                                                        nonPgpBlocks ) ) {
-          if ( pgpBlocks.count() == 1 ) {
-            Kpgp::Block * block = pgpBlocks.first();
-            if ( block->type() == Kpgp::PgpMessageBlock ) {
-              // try to decrypt this OpenPGP block
-              block->decrypt();
-              resultingData += nonPgpBlocks.first() + block->text() + nonPgpBlocks.last();
-              bDecryptedInlinePGP = true;
+        if( bKeepPartAsIs ){
+          resultingData += part->Body().AsString().c_str();
+        }else{
+          // Note: parseObjectTree() does no inline PGP decrypting anymore.
+          ObjectTreeParser otp( 0, 0, false, false, true );
+          dataNode->setProcessed( false, true );
+          otp.setKeepEncryptions( false );
+          otp.parseObjectTree( curNode );
+          //resultingData += otp.rawReplyString();  // re-enable this, once ObjectTreeParser is updated.
+  
+  
+          // Temporary solution, to be replaced by a Kleo::CryptoBackend job inside ObjectTreeParser:
+          bool bDecryptedInlinePGP = false;
+          QPtrList<Kpgp::Block> pgpBlocks;
+          QStrList nonPgpBlocks;
+          if ( Kpgp::Module::prepareMessageForDecryption( otp.rawReplyString(),
+                                                          pgpBlocks,
+                                                          nonPgpBlocks ) ) {
+            if ( pgpBlocks.count() == 1 ) {
+              Kpgp::Block * block = pgpBlocks.first();
+              if ( block->type() == Kpgp::PgpMessageBlock ) {
+                // try to decrypt this OpenPGP block
+                block->decrypt();
+                resultingData += nonPgpBlocks.first() + block->text() + nonPgpBlocks.last();
+                bDecryptedInlinePGP = true;
+              }
             }
           }
-        }
-        if( !bDecryptedInlinePGP )
-          resultingData += otp.rawReplyString();
-        // end of temporary solution.
-
-
+          if( !bDecryptedInlinePGP ){
+            // if this new line is omitted, signed text can not be verified later
+            resultingData += "\n";
+            resultingData += otp.rawReplyString();
+          }
+          // end of temporary solution.
+  
+          
+        }  
 kdDebug(5006) << "decrypting of single body - DONE" << endl;
       }
     } else {
