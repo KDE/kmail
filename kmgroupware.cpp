@@ -881,6 +881,10 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   QPtrList<Attendee> attendees = event->attendees();
   QString sAttendee;
 
+  // FIXME: This is a temporary workaround to get the method
+  sMethod = "METHOD";
+  vPartMicroParser( vCal.utf8(), sMethod );
+
   QPtrListIterator<Attendee> it(attendees);
 
   while (it.current())
