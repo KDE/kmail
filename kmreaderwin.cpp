@@ -904,6 +904,12 @@ void KMReaderWin::writeBodyStr(const QCString aStr)
     } // if (!pgpMessage) then the message only looked similar to a pgp message
     else htmlStr = mCodec->toUnicode(quotedHTML(aStr));
   }
+//  Mail header charset(iso-2022-jp) is using all most E-mail system in Japan.
+//  ISO-2022-JP code consists of ESC(0x1b) character and 7Bit character which
+//  used from '!' character to  '~' character.
+//  JIS7 is header charset of iso-2022-jp.  toyo
+  else if( QString(mCodec->name()) == "JIS7" )
+    htmlStr += quotedHTML(mCodec->toUnicode(aStr));
   else htmlStr += mCodec->toUnicode(quotedHTML(aStr));
   mViewer->write(htmlStr);
 }

@@ -255,7 +255,10 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
   resultPos = (char*)result.data();
   if (strPos) for (; (ch=*strPos)!='\0'; strPos++)
   {
-    if ((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0')
+//  Mail header charset(iso-2022-jp) is using all most E-mail system in Japan.
+//  ISO-2022-JP code consists of ESC(0x1b) character and 7Bit character which
+//  used from '!' character to  '~' character.  toyo
+    if ((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0' || ch == 0x1b)
        && !(ch=='>' && aStr.mid(strPos-aStr.data()-1,6)=="\n>From"))
       *resultPos++ = ch;
   }

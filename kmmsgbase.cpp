@@ -284,6 +284,8 @@ QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
 QTextCodec* KMMsgBase::codecForName(const QString& _str)
 {
   if (_str.isEmpty()) return NULL;
+  if (_str.lower() == "shift_jis" || _str.lower() == "shift-jis")
+    return QTextCodec::codecForName("sjis");
   return QTextCodec::codecForName(_str.lower().replace(
     QRegExp("windows"), "cp") );
 }
@@ -402,7 +404,7 @@ const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 
 
 //-----------------------------------------------------------------------------
-const char especials[17] = "()<>@,;:\"/[]?.= ";
+const char especials[18] = "()<>@,;:\"/[]?.= \033";
 
 const QString KMMsgBase::encodeRFC2047String(const QString& _str,
   const QString& charset)
@@ -428,7 +430,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
     while (cr < latinLen)
     {
       if (latin[cr] == 32) start = cr + 1;
-      if (latin[cr] < 0) break;
+      if (latin[cr] < 32) break;
       cr++;
     }
     if (cr < latinLen)
@@ -438,7 +440,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
       while (cr < latinLen)
       {
         /* The encoded word must be limited to 75 character */
-        for (i = 0; i < 16; i++) if (latin[cr] == especials[i]) numQuotes++;
+        for (i = 0; i < 17; i++) if (latin[cr] == especials[i]) numQuotes++;
         if (latin[cr] < 0) numQuotes++;
         /* Stop after 58 = 75 - 17 characters or at "<user@host..." */
         if (cr - start + 2 * numQuotes >= 58 || latin[cr] == 60) break;
@@ -456,7 +458,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str,
       while (pos < stop)
       {
         numQuotes = 0;
-        for (i = 0; i < 16; i++) if (latin[pos] == especials[i]) numQuotes = 1;
+        for (i = 0; i < 17; i++) if (latin[pos] == especials[i]) numQuotes = 1;
         if (latin[pos] < 0) numQuotes = 1;
         if (numQuotes)
         {
@@ -501,7 +503,7 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str,
   bool quote;
   while (*l)
   {
-    if (*l < 0) break;
+    if (*l < 32) break;
     l++;
   }
   if (!*l) return latin;
@@ -511,7 +513,7 @@ const QString KMMsgBase::encodeRFC2231String(const QString& _str,
   while (*l)
   {
     quote = *l < 0;
-    for (i = 0; i < 16; i++) if (*l == especials[i]) quote = true;
+    for (i = 0; i < 17; i++) if (*l == especials[i]) quote = true;
     if (quote)
     {
       result += "%";
