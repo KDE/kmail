@@ -256,6 +256,7 @@ namespace KMail {
     if ( strategy->showHeader( "date" ) )
       headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>\n");
 
+#if 0
     // Get Instant Messaging presence
     QString presence;
     QString kabcUid;
@@ -267,6 +268,7 @@ namespace KMail {
       kabcUid = addresses[0].uid();
       presence = imProxy->presenceString( kabcUid );
     }
+#endif
 
     if ( strategy->showHeader( "from" ) ) {
       headerStr.append(i18n("From: ") +
@@ -274,8 +276,11 @@ namespace KMail {
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
+#if 0
       if ( !presence.isEmpty() && strategy->showHeader( "status" ) )
         headerStr.append("&nbsp;&nbsp;(<span name=\"presence-" + kabcUid + "\">" + presence + "</span>)" );
+#endif
+
       if ( strategy->showHeader( "organization" )
           && !message->headerField("Organization").isEmpty())
         headerStr.append("&nbsp;&nbsp;(" +
@@ -381,22 +386,18 @@ namespace KMail {
     QString presence;
 
     // IM presence and kabc photo
-    // Check first that KIMProxy has any IM presence data, to save hitting KABC
-    // unless really necessary
+    
     ::KIMProxy *imProxy = KMKernel::self()->imProxy();
     QString kabcUid;
-    if ( ( strategy->showHeader( "status" ) || strategy->showHeader( "statuspic" ) ) )
+    KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+    KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
+
+    if( addresses.count() == 1 )
     {
-      if ( imProxy->initialize() )
-      {
-        KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
-        KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
-
-        if( addresses.count() == 1 )
-        {
-          // kabcUid is embedded in im: URIs to indicate which IM contact to message
-          kabcUid = addresses[0].uid();
-
+      // kabcUid is embedded in im: URIs to indicate which IM contact to message
+      kabcUid = addresses[0].uid();
+ 
+      if ( imProxy->initialize() ) {
           // im status
           presence = imProxy->presenceString( kabcUid );
           if ( !presence.isEmpty() )
@@ -405,60 +406,77 @@ namespace KMail {
                 .arg( imgToDataUrl( imProxy->presenceIcon( kabcUid ).convertToImage() ) );
             presence += presenceIcon;
           }
-          // picture
-          if ( strategy->showHeader( "statuspic" ) )
-          {
-            QString photoURL;
-            if ( addresses[0].photo().isIntern() )
-            {
-              // get photo data and convert to data: url
-              //kdDebug( 5006 ) << "INTERNAL photo found" << endl;
-              QImage photo = addresses[0].photo().data();
-              if ( !photo.isNull() )
-              {
-                photoURL = imgToDataUrl( photo );
-              }
-            }
-            else
-            {
-              //kdDebug( 5006 ) << "URL found" << endl;
-              photoURL = addresses[0].photo().url();
-              if ( photoURL.startsWith("/") )
-                photoURL.prepend( "file:" );
-            }
-            if( !photoURL.isEmpty() )
-            {
-              //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
-              userHTML = QString("<img src=\"%1\" width=\"60\" height=\"60\">").arg( photoURL );
-              if ( presence.isEmpty() )
-              {
-                userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
-              }
-              else
-                userHTML = QString( "<div class=\"senderpic\">"
-                                      "<a href=\"im:%1\">%2<div class=\"senderstatus\">"
-                                      "<span name=\"presence-%3\">%4</span></div></a>"
-                                      "</div>" ).arg( kabcUid )
-                                                .arg( userHTML )
-                                                .arg( kabcUid )
-                                                .arg( presence );
-            }
+      }
+      // picture
+      QString photoURL;
+      int photoWidth = 60;
+      int photoHeight = 60;
+      if ( addresses[0].photo().isIntern() )
+      {
+        // get photo data and convert to data: url
+        //kdDebug( 5006 ) << "INTERNAL photo found" << endl;
+        QImage photo = addresses[0].photo().data();
+        if ( !photo.isNull() )
+        {
+          photoURL = imgToDataUrl( photo );
+          photoWidth = photo.width();
+          photoHeight = photo.height();
+          // scale below 60, otherwise it can get way too large
+          if ( photoHeight > 60 ) {
+            double ratio = ( double )photoHeight / ( double )photoWidth;
+            photoHeight = 60;
+            photoWidth = (int)( 60 / ratio );
           }
         }
-        else
-        {
-          kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
-          userHTML = "&nbsp;";
+      }
+      else
+      {
+        //kdDebug( 5006 ) << "URL found" << endl;
+        photoURL = addresses[0].photo().url();
+        if ( photoURL.startsWith("/") )
+          photoURL.prepend( "file:" );
+      }
+      if( !photoURL.isEmpty() )
+      {
+        //kdDebug( 5006 ) << "Got a photo: " << photoURL << endl;
+        userHTML = QString("<img src=\"%1\" width=\"%2\" height=\"%3\">")
+                           .arg( photoURL ).arg( photoWidth ).arg( photoHeight );
+        if ( presence.isEmpty() ) {
+          userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
+        } else {
+          userHTML = QString( "<div class=\"senderpic\">"
+              "<a href=\"im:%1\">%2<div class=\"senderstatus\">"
+              "<span name=\"presence-%3\">%4</span></div></a>"
+              "</div>" ).arg( kabcUid )
+              .arg( userHTML )
+              .arg( kabcUid )
+              .arg( presence );
+        }
+      } else {
+        // we don't have a photo, just show presence, if we have it
+        if ( !presence.isEmpty() ) {
+          userHTML = QString( "<div class=\"senderstatus\">"
+              "<span name=\"presence-%1\">%2</span></div>" )
+              .arg( kabcUid )
+              .arg( presence );
         }
       }
-// Disabled 'Launch IM' link in headers - Will
-//      else
-//        if ( imProxy->imAppsAvailable() )
-//          presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
     }
+    else // TODO: find a usable one
+    {
+      kdDebug( 5006 ) << "Multiple / No addressees matched email address; Count is " << addresses.count() << endl;
+      userHTML = "&nbsp;";
+    }
+#if 0
+    // Disabled 'Launch IM' link in headers - Will
+    if ( imProxy->imAppsAvailable() )
+      presence = "<a name=\"launchim\" href=\"kmail:startIMApp\">" + i18n("Launch IM") + "</a></span>";
     // do nothing - no im apps available, leave presence empty
     //presence = i18n( "DCOP/InstantMessenger not installed" );
     kdDebug( 5006 ) << "final presence: '" << presence << "'" << endl;
+#endif
+    
+    
     //case HdrFancy:
     // the subject line and box below for details
     if ( strategy->showHeader( "subject" ) )
@@ -480,9 +498,11 @@ namespace KMail {
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
                               : QString("") )
-                 + ( ( !presence.isEmpty() && strategy->showHeader( "status" ) )
+#if 0
+                 + ( ( !presence.isEmpty() )
                               ? "&nbsp;&nbsp;(<span name=\"presence-" + kabcUid + "\">" + presence + "</span>)"
                               : QString("") )
+#endif
                  + ( message->headerField("Organization").isEmpty()
                               ? QString("")
                               : "&nbsp;&nbsp;("
