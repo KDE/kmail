@@ -1168,8 +1168,11 @@ const QString KMMessage::from(void) const
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::setFrom(const QString& aStr)
+void KMMessage::setFrom(const QString& bStr)
 {
+  QString aStr = bStr;
+  if (aStr.isNull())
+      aStr = "";
   setHeaderField("From", aStr);
   mDirty = TRUE;
 }
@@ -1971,8 +1974,11 @@ const QString KMMessage::charset(void) const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setCharset(const QString& aStr)
+void KMMessage::setCharset(const QString& bStr)
 {
+   QString aStr = bStr;
+   if (aStr.isNull())
+       aStr = "";
    printf("Setting charset to: %s\n",(const char *)aStr);
    DwMediaType &mType=mMsg->Headers().ContentType();
    mType.Parse();
