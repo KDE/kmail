@@ -243,6 +243,7 @@ private:
 
   static bool mTrue, mFalse;    // These must replaced by something better!
 
+  bool showingSize;             // are we currently showing the size field?
   int getMsgIndex;              // Updated as side effect of KMHeaders::getMsg
   bool getMsgMulti;             // ditto
   KMHeaderItem* getMsgItem;     // ditto

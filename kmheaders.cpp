@@ -278,8 +278,12 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   addColumn( i18n("Subject"), 310 );
   addColumn( i18n("Sender"), 170 );
   addColumn( i18n("Date"), 170 );
-  if (mPaintInfo.showSize)
+  if (mPaintInfo.showSize) {
     addColumn( i18n("Size"), 80 );
+    showingSize = true;
+  } else {
+    showingSize = false;
+  }
 
   if (!pixmapsLoaded)
   {
@@ -424,8 +428,10 @@ void KMHeaders::readFolderConfig (void)
   setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 310));
   setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
   setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 170));
-  if (mPaintInfo.showSize)
-    setColumnWidth(mPaintInfo.sizeCol, config->readNumEntry("SizeWidth", 80));
+  if (mPaintInfo.showSize) {
+    int x = config->readNumEntry("SizeWidth", 80);
+    setColumnWidth(mPaintInfo.sizeCol, x>0?x:10);
+  }
 
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
   mSortDescending = (mSortCol < 0);
@@ -458,7 +464,8 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("SenderWidth", columnWidth(mPaintInfo.senderCol));
   config->writeEntry("SubjectWidth", columnWidth(mPaintInfo.subCol));
   config->writeEntry("DateWidth", columnWidth(mPaintInfo.dateCol));
-  config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
+  if (mPaintInfo.showSize)
+    config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
@@ -488,6 +495,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   }
   else
   {
+
     if (mFolder)
     {
       // WABA: Make sure that no KMReaderWin is still using a msg
@@ -594,9 +602,31 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     colText = colText + i18n( " (Status)" );
   setColumnText( mPaintInfo.subCol, colText);
 
+  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
+  QString path = mFolder->path().right( pathLen );
+
+  if (!path.isEmpty())
+    path = path.right( path.length() - 1 ) + "/";
+  KConfig *config = kapp->config();
+  config->setGroup("Folder-" + path + mFolder->name());
+
   if (mPaintInfo.showSize) {
     colText = i18n( "Size" );
-    setColumnText( mPaintInfo.sizeCol, colText);
+    if (showingSize) {
+      setColumnText( mPaintInfo.sizeCol, colText);
+    } else {
+      // add in the size field
+      int x = config->readNumEntry("SizeWidth", 80);
+      addColumn(colText, x>0?x:10);
+    }
+    showingSize = true;
+  } else {
+    if (showingSize) {
+      // remove the size field
+      config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
+      removeColumn(mPaintInfo.sizeCol);
+    }
+    showingSize = false;
   }
 
   if (!mSortDescending)
