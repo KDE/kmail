@@ -4,7 +4,7 @@
 
 #include "kmmsgpart.h"
 #include "kmmessage.h"
-#include "kmimemagic.h"
+#include <kmimemagic.h>
 #include <kapp.h>
 #include <kconfig.h>
 
@@ -12,9 +12,6 @@
 #include <mimelib/body.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/utility.h>
-
-
-static KMimeMagic* sMagic = NULL;
 
 
 //-----------------------------------------------------------------------------
@@ -148,17 +145,12 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   QString mimetype, bod;
   int sep;
 
-  if (!sMagic)
-  {
-    // initialize mime magic
-    sMagic = new KMimeMagic(kapp->kde_mimedir() + "/magic");
-    sMagic->setFollowLinks(TRUE);
-  }
+  KMimeMagic::self()->setFollowLinks(TRUE); // is it necessary ?
 
   if (aAutoDecode) bod = bodyDecoded();
   else bod = mBody;
 
-  mimetype = sMagic->findBufferType(bod, bod.length())->getContent();
+  mimetype = KMimeMagic::self()->findBufferType(bod, bod.length())->mimeType();
   sep = mimetype.find('/');
   mType = mimetype.left(sep);
   mSubtype = mimetype.mid(sep+1, 64);
