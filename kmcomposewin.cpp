@@ -122,6 +122,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mAtmModified( false ),
     mMsg( 0 ),
     mAttachMenu( 0 ),
+    mSigningAndEncryptionExplicitlyDisabled( false ),
     mAutoRequestMDN( false ),
     mFolder( 0 ),
     mUseHTMLEditor( false ),
@@ -2999,7 +3000,8 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   
   mDisableBreaking = saveInDrafts;
 
-  const bool neverEncrypt = saveInDrafts && mNeverEncryptWhenSavingInDrafts;
+  const bool neverEncrypt = ( saveInDrafts && mNeverEncryptWhenSavingInDrafts ) 
+                           || mSigningAndEncryptionExplicitlyDisabled;
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            SLOT( slotContinueDoSend( bool ) ) );
 
