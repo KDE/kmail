@@ -1716,9 +1716,13 @@ void KMMainWidget::slotUpdateImapMessage(KMMessage *msg)
     if ( mFolder &&
        ( mFolder == msg->parent()
       || mFolder->folderType() == KMFolderTypeSearch ) )
+    {
+      if ( msg->isComplete() )
+        msg->cleanupHeader(); // assemble the message, important for signature-check
       mMsgView->setMsg(msg, TRUE);
-    else
+    } else {
       kdDebug( 5006 ) <<  "KMMainWidget::slotUpdateImapMessage - ignoring update for already left folder" << endl;
+    }
   }  else {
     // force an update of the folder
     if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
