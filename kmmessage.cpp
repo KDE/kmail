@@ -1095,7 +1095,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::initHeader( QString id )
+void KMMessage::initHeader( const QString & id )
 {
   QString identStr = i18n( "Default" );
   if (!id.isEmpty() && KMIdentity::identities().contains(id))
