@@ -48,7 +48,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
 
 
 //-----------------------------------------------------------------------------
-KMAccount::~KMAccount() 
+KMAccount::~KMAccount()
 {
   if (!kernel->shuttingDown() && mFolder) mFolder->removeAccount(this);
   if (mTimer) deinstallTimer();
@@ -65,7 +65,7 @@ void KMAccount::setName(const QString& aName)
 //-----------------------------------------------------------------------------
 void KMAccount::setFolder(KMFolder* aFolder)
 {
-  if(!aFolder) 
+  if(!aFolder)
     {
     kdDebug() << "KMAccount::setFolder() : aFolder == NULL" << endl;
     mFolder = NULL;
@@ -91,7 +91,7 @@ void KMAccount::readConfig(KConfig& config)
   if (!folderName.isEmpty())
   {
     folder = (KMAcctFolder*)kernel->folderMgr()->find(folderName);
-    if (folder) 
+    if (folder)
     {
       mFolder = folder;
       mFolder->addAccount(this);
@@ -175,6 +175,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   }
   else if (processResult == 1)
   {
+    kernel->filterMgr()->tempOpenFolder(mFolder);
     rc = mFolder->addMsg(aMsg);
     if (rc) {
       perror("failed to add message");
@@ -223,7 +224,7 @@ void KMAccount::installTimer()
   else
   {
     mTimer->stop();
-  }   
+  }
   mTimer->start(mInterval*60000);
 }
 
@@ -246,8 +247,8 @@ bool KMAccount::runPrecommand(const QString &precommand)
   // Run the pre command if there is one
   if (precommand.length() == 0)
     return true;
-  
-  KMBroadcastStatus::instance()->setStatusMsg( 
+
+  KMBroadcastStatus::instance()->setStatusMsg(
 	 i18n( QString("Executing precommand ") + precommand ));
 
   QStringList args;
