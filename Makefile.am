@@ -117,7 +117,8 @@ check_PROGRAMS = dcoptest
 
 METASOURCES = AUTO
 
-dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
+dcoptest_SOURCES = dcoptest.cpp kmailIface.skel kmailIface.stub mailcomposerIface.skel mailcomposerIface.stub
+dcoptest_LDADD = $(LIB_KIO)
 
 kmailIface_DCOPIDLNG = true
 kmailicalIface_DCOPIDLNG = true
