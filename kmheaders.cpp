@@ -2825,8 +2825,6 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	       (threaded && !((mNested && !mNestedOverride) || (!mNested && mNestedOverride))) ||
 	       sorted_count <= mFolder->count())  {
 
-		//setup msortinfo
-		setSorting(column, ascending);
 		//Hackyness to work around qlistview problems
 		KMHeadersInherited::setSorting(-1);
 		header()->setSortIndicator(column, ascending);
