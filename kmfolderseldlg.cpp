@@ -13,8 +13,8 @@ QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg(KMMainWidget * parent, const QString& caption)
-    : KMFolderSelDlgInherited(parent, "folder dialog", true, caption,
-                              Ok|Cancel, Ok, true) // mainwin as parent, modal
+  : KDialogBase(parent, "folder dialog", true, caption,
+		Ok|Cancel, Ok, true) // mainwin as parent, modal
 {
   QGuardedPtr<KMFolder> cur;
 

@@ -42,7 +42,7 @@ using KMail::ImapJob;
 #include <assert.h>
 
 KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
-  : KMFolderImapInherited(aParent, aName)
+  : KMFolderMbox(aParent, aName)
 {
   mContentState = imapNoInformation;
   mSubfolderState = imapNoInformation;
@@ -96,7 +96,7 @@ void KMFolderImap::close(bool aForced)
   }
   // The inherited close will decrement again, so we have to adjust.
   mOpenCount++;
-  KMFolderImapInherited::close(aForced);
+  KMFolderMbox::close(aForced);
 }
 
 //-----------------------------------------------------------------------------
@@ -127,7 +127,7 @@ void KMFolderImap::readConfig()
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   mCheckMail = config->readBoolEntry("checkmail", true);
-  KMFolderImapInherited::readConfig();
+  KMFolderMbox::readConfig();
 }
 
 //-----------------------------------------------------------------------------
@@ -140,7 +140,7 @@ void KMFolderImap::writeConfig()
   config->writeEntry("ImapPath", mImapPath);
   config->writeEntry("NoContent", mNoContent);
   config->writeEntry("ReadOnly", mReadOnly);
-  KMFolderImapInherited::writeConfig();
+  KMFolderMbox::writeConfig();
 }
 
 //-----------------------------------------------------------------------------
@@ -186,7 +186,7 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
   }
 
   mLastUid = 0;
-  KMFolderImapInherited::removeMsg(idx);
+  KMFolderMbox::removeMsg(idx);
 }
 
 void KMFolderImap::removeMsg(QPtrList<KMMessage> msgList, bool quiet)
@@ -248,7 +248,7 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
   int i = path.findRev( '.' );
   path = path.mid( ++i );
   path.remove( '/' );
-  KMFolderImapInherited::rename( path );
+  KMFolderMbox::rename( path );
   kmkernel->folderMgr()->contentsChanged();
 }
 
@@ -466,7 +466,7 @@ KMMessage* KMFolderImap::take(int idx)
   deleteMessage(msg);
 
   mLastUid = 0;
-  return KMFolderImapInherited::take(idx);
+  return KMFolderMbox::take(idx);
 }
 
 void KMFolderImap::take(QPtrList<KMMessage> msgList)
@@ -474,7 +474,7 @@ void KMFolderImap::take(QPtrList<KMMessage> msgList)
   deleteMessage(msgList);
 
   mLastUid = 0;
-  KMFolderImapInherited::take(msgList);
+  KMFolderMbox::take(msgList);
 }
 
 //-----------------------------------------------------------------------------
@@ -970,7 +970,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         uidmap.remove(uid);
       }
       open();
-      KMFolderImapInherited::addMsg(msg, 0);
+      KMFolderMbox::addMsg(msg, 0);
       /* The above calls emitMsgAddedSignals, but since we are in quiet mode,
          that has no effect. To get search folders to update on arrival of new
          messages explicitly emit the signal below on its own, so the folder
@@ -1412,7 +1412,7 @@ int KMFolderImap::create(bool imap)
 {
   readConfig();
   mUnreadMsgs = -1;
-  return KMFolderImapInherited::create(imap);
+  return KMFolderMbox::create(imap);
 }
 
 QValueList<int> KMFolderImap::splitSets(QString uids)

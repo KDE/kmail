@@ -189,7 +189,7 @@ void KMMimePartTree::setStyleDependantFrameWidth()
 void KMMimePartTree::styleChange( QStyle& oldStyle )
 {
   setStyleDependantFrameWidth();
-  KMMimePartTreeInherited::styleChange( oldStyle );
+  KListView::styleChange( oldStyle );
 }
 
 

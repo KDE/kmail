@@ -79,7 +79,7 @@ void KMAcctImap::pseudoAssign( const KMAccount * a ) {
     mFolder->setContentState(KMFolderImap::imapNoInformation);
     mFolder->setSubfolderState(KMFolderImap::imapNoInformation);
   }
-  base::pseudoAssign( a );
+  ImapAccountBase::pseudoAssign( a );
 }
 
 //-----------------------------------------------------------------------------

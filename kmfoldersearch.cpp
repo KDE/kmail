@@ -699,7 +699,7 @@ KMFolderSearch::ignoreJobsForMessage( KMMessage* msg )
   /* While non-imap folders manage their jobs themselves, imap ones let
      their account manage them. Therefor first clear the jobs managed by
      this folder via the inherited method, then clear the imap ones. */
-  KMFolderSearchInherited::ignoreJobsForMessage( msg );
+  KMFolder::ignoreJobsForMessage( msg );
 
   if (msg->parent()->folderType() == KMFolderTypeImap) {
     KMAcctImap *account;

@@ -46,8 +46,6 @@ namespace KMail {
   protected:
     NetworkAccount( KMAcctMgr * parent, const QString & name );
   public:
-    typedef KMAccount base;
-
     virtual ~NetworkAccount();
 
     /** Set the config options to a decent state */

@@ -34,7 +34,7 @@ using KIO::MetaData;
 namespace KMail {
 
   NetworkAccount::NetworkAccount( KMAcctMgr * parent, const QString & name )
-    : base( parent, name ),
+    : KMAccount( parent, name ),
       mSlave( 0 ),
       mAuth( "*" ),
       mPort( 0 ),
@@ -51,7 +51,7 @@ namespace KMail {
   }
 
   void NetworkAccount::init() {
-    base::init();
+    KMAccount::init();
 
     mSieveConfig = SieveConfig();
     mLogin = QString::null;
@@ -123,7 +123,7 @@ namespace KMail {
   //
 
   void NetworkAccount::readConfig( /*const*/ KConfig/*Base*/ & config ) {
-    base::readConfig( config );
+    KMAccount::readConfig( config );
 
     setLogin( config.readEntry( "login" ) );
 
@@ -151,7 +151,7 @@ namespace KMail {
   }
 
   void NetworkAccount::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
-    base::writeConfig( config );
+    KMAccount::writeConfig( config );
 
     config.writeEntry( "login", login() );
     config.writeEntry( "store-passwd", storePasswd() );
@@ -190,7 +190,7 @@ namespace KMail {
   }
 
   void NetworkAccount::pseudoAssign( const KMAccount * a ) {
-    base::pseudoAssign( a );
+    KMAccount::pseudoAssign( a );
 
     const NetworkAccount * n = dynamic_cast<const NetworkAccount*>( a );
     if ( !n ) return;

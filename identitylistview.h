@@ -69,8 +69,6 @@ namespace KMail {
   class IdentityListView : public KListView {
     Q_OBJECT
   public:
-    typedef KListView base;
-
     IdentityListView( QWidget * parent=0, const char * name=0 );
     virtual ~IdentityListView() {}
 

@@ -11,8 +11,7 @@ class partNode;
 class KMReaderWin;
 class KMMimePartTreeItem;
 
-#define KMMimePartTreeInherited KListView
-class KMMimePartTree : public KMMimePartTreeInherited
+class KMMimePartTree : public KListView
 {
   Q_OBJECT
   friend class KMReaderWin;

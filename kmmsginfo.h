@@ -11,8 +11,6 @@
 
 class KMMessage;
 
-#define KMMsgInfoInherited KMMsgBase
-
 class KMMsgInfo: public KMMsgBase
 {
 public:

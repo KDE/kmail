@@ -25,7 +25,7 @@
 
 //-----------------------------------------------------------------------------
 KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const QString& aAccountName):
-  base(aOwner, aAccountName)
+  KMAccount(aOwner, aAccountName)
 {
   mLock = procmail_lockfile;
 }
@@ -46,14 +46,14 @@ QString KMAcctLocal::type(void) const
 
 //-----------------------------------------------------------------------------
 void KMAcctLocal::init() {
-  base::init();
+  KMAccount::init();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMAcctLocal::pseudoAssign( const KMAccount * a )
 {
-  base::pseudoAssign( a );
+  KMAccount::pseudoAssign( a );
 
   const KMAcctLocal * l = dynamic_cast<const KMAcctLocal*>( a );
   if ( !l ) return;
@@ -221,7 +221,7 @@ void KMAcctLocal::processNewMail(bool)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::readConfig(KConfig& config)
 {
-  base::readConfig(config);
+  KMAccount::readConfig(config);
   mLocation = config.readPathEntry("Location", mLocation);
   QString locktype = config.readEntry("LockType", "procmail_lockfile" );
 
@@ -242,7 +242,7 @@ void KMAcctLocal::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::writeConfig(KConfig& config)
 {
-  base::writeConfig(config);
+  KMAccount::writeConfig(config);
 
   config.writePathEntry("Location", mLocation);
 

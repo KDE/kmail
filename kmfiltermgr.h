@@ -19,7 +19,6 @@ class KMFilterMgr: public QObject, public QPtrList<KMFilter>
 {
   Q_OBJECT
 
-  typedef QPtrList<KMFilter> base;
 public:
   KMFilterMgr(bool popFilter = false);
   virtual ~KMFilterMgr();

@@ -25,8 +25,7 @@ class KMComposeWin;
 
 namespace KMail {
 
-#define AttachmentListViewInherited KListView
-class AttachmentListView : public AttachmentListViewInherited
+class AttachmentListView : public KListView
 {
 public:
   AttachmentListView( KMComposeWin* composer = 0, QWidget* parent = 0,

@@ -43,8 +43,6 @@ protected: // ### Hacks
   void setPrefixHook();
 
 public:
-  typedef KMail::ImapAccountBase base;
-
   virtual ~KMAcctImap();
 
   /** A weak assignment operator */
@@ -137,7 +135,7 @@ protected slots:
 
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderImap*, bool);
-  void postProcessNewMail( KMFolder * f ) { base::postProcessNewMail( f ); }
+  void postProcessNewMail( KMFolder * f ) { ImapAccountBase::postProcessNewMail( f ); }
 
 };
 

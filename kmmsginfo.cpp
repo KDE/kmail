@@ -110,7 +110,7 @@ public:
 
 //-----------------------------------------------------------------------------
 KMMsgInfo::KMMsgInfo(KMFolderIndex* p, off_t off, short len) :
-    KMMsgInfoInherited(p),
+    KMMsgBase(p),
     kd(0)
 {
     setIndexOffset(off);
@@ -129,7 +129,7 @@ KMMsgInfo::~KMMsgInfo()
 //-----------------------------------------------------------------------------
 KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 {
-    KMMsgInfoInherited::assign(&other);
+    KMMsgBase::assign(&other);
     if(other.kd) {
         if(!kd)
 	    kd = new KMMsgInfoPrivate;
@@ -146,7 +146,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 //-----------------------------------------------------------------------------
 KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 {
-    KMMsgInfoInherited::assign(&msg.toMsgBase());
+    KMMsgBase::assign(&msg.toMsgBase());
     if(!kd)
 	kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;

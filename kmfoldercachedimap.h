@@ -37,8 +37,6 @@
 using KMail::FolderJob;
 class KMAcctCachedImap;
 
-#define KMFolderCachedImapInherited KMFolderMaildir
-
 class KMFolderCachedImap : public KMFolderMaildir
 {
   Q_OBJECT

@@ -47,7 +47,6 @@ class DwBodyPart;
 class DwMediaType;
 class DwHeaders;
 
-#define KMMessageInherited KMMsgBase
 class KMMessage: public KMMsgBase, public KMail::ISubject
 {
   friend class KMForwardCommand;    // needed for MIME Digest forward

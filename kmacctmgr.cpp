@@ -24,7 +24,7 @@ using KMail::NetworkAccount;
 #include <qregexp.h>
 
 //-----------------------------------------------------------------------------
-KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
+KMAcctMgr::KMAcctMgr(): QObject()
 {
   mAcctList.setAutoDelete(TRUE);
   mAcctChecking.clear();

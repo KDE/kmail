@@ -29,7 +29,7 @@
 
 //-----------------------------------------------------------------------------
 KMAcctMaildir::KMAcctMaildir(KMAcctMgr* aOwner, const QString& aAccountName):
-  base(aOwner, aAccountName)
+  KMAccount(aOwner, aAccountName)
 {
 }
 
@@ -50,7 +50,7 @@ QString KMAcctMaildir::type(void) const
 
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::init() {
-  base::init();
+  KMAccount::init();
 
   mLocation = getenv("MAIL");
   if (mLocation.isNull()) {
@@ -63,7 +63,7 @@ void KMAcctMaildir::init() {
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::pseudoAssign( const KMAccount * a )
 {
-  base::pseudoAssign( a );
+  KMAccount::pseudoAssign( a );
 
   const KMAcctMaildir * m = dynamic_cast<const KMAcctMaildir*>( a );
   if ( !m ) return;
@@ -210,7 +210,7 @@ void KMAcctMaildir::processNewMail(bool)
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::readConfig(KConfig& config)
 {
-  base::readConfig(config);
+  KMAccount::readConfig(config);
   mLocation = config.readPathEntry("Location", mLocation);
 }
 
@@ -218,7 +218,7 @@ void KMAcctMaildir::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctMaildir::writeConfig(KConfig& config)
 {
-  base::writeConfig(config);
+  KMAccount::writeConfig(config);
   config.writePathEntry("Location", mLocation);
 }
 

@@ -3,7 +3,6 @@
 
 #include "kmfolderindex.h"
 
-#define KMFolderMaildirInherited KMFolderIndex
 
 class KMFolderMaildir;
 namespace KMail {

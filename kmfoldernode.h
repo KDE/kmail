@@ -12,8 +12,6 @@
 
 class KMFolderDir;
 
-#define KMFolderNodeInherited QObject
-
 class KMFolderNode: public QObject
 {
   Q_OBJECT

@@ -28,7 +28,7 @@ static const unsigned short int pop3DefaultPort = 110;
 
 //-----------------------------------------------------------------------------
 KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const QString& aAccountName)
-  : base(aOwner, aAccountName),
+  : NetworkAccount(aOwner, aAccountName),
     headerIt(headersOnServer)
 {
   init();
@@ -86,7 +86,7 @@ unsigned short int KMAcctExpPop::defaultPort() const {
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::init(void)
 {
-  base::init();
+  NetworkAccount::init();
 
   mUsePipelining = FALSE;
   mLeaveOnServer = FALSE;
@@ -98,7 +98,7 @@ void KMAcctExpPop::init(void)
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::pseudoAssign( const KMAccount * a ) {
   slotAbortRequested();
-  base::pseudoAssign( a );
+  NetworkAccount::pseudoAssign( a );
 
   const KMAcctExpPop * p = dynamic_cast<const KMAcctExpPop*>( a );
   if ( !p ) return;
@@ -151,7 +151,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::readConfig(KConfig& config)
 {
-  base::readConfig(config);
+  NetworkAccount::readConfig(config);
 
   mUsePipelining = config.readNumEntry("pipelining", FALSE);
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
@@ -163,7 +163,7 @@ void KMAcctExpPop::readConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::writeConfig(KConfig& config)
 {
-  base::writeConfig(config);
+  NetworkAccount::writeConfig(config);
 
   config.writeEntry("pipelining", mUsePipelining);
   config.writeEntry("leave-on-server", mLeaveOnServer);
@@ -330,7 +330,7 @@ void KMAcctExpPop::startJob() {
 }
 
 MetaData KMAcctExpPop::slaveConfig() const {
-  MetaData m = base::slaveConfig();
+  MetaData m = NetworkAccount::slaveConfig();
 
   m.insert("progress", "off");
   m.insert("pipelining", (mUsePipelining) ? "on" : "off");

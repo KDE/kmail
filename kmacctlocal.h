@@ -15,8 +15,6 @@ protected:
   KMAcctLocal(KMAcctMgr* owner, const QString& accountName);
 
 public:
-  typedef KMAccount base;
-
   virtual ~KMAcctLocal();
   virtual void init(void);
 

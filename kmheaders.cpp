@@ -541,7 +541,7 @@ public:
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
                      const char *name) :
-  KMHeadersInherited(parent, name)
+  KListView(parent, name)
 {
     static bool pixmapsLoaded = FALSE;
   //qInitImageIO();
@@ -695,7 +695,7 @@ void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
 
 bool KMHeaders::event(QEvent *e)
 {
-  bool result = KMHeadersInherited::event(e);
+  bool result = KListView::event(e);
   if (e->type() == QEvent::ApplicationPaletteChange)
   {
      readColorConfig();
@@ -1241,7 +1241,7 @@ void KMHeaders::msgAdded(int id)
 
   if (mSortInfo.fakeSort) {
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-    KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
+    KListView::setSorting(mSortCol, !mSortDescending );
     mSortInfo.fakeSort = 0;
   }
   appendItemToSortFile(hi); //inserted into sorted list
@@ -1313,7 +1313,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       item->setTempKey( key + item->key( mSortCol, !mSortDescending ));
       if (mSortInfo.fakeSort) {
         QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
-        KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
+        KListView::setSorting(mSortCol, !mSortDescending );
         mSortInfo.fakeSort = 0;
       }
     }
@@ -1499,7 +1499,7 @@ void KMHeaders::setStyleDependantFrameWidth()
 void KMHeaders::styleChange( QStyle& oldStyle )
 {
   setStyleDependantFrameWidth();
-  KMHeadersInherited::styleChange( oldStyle );
+  KListView::styleChange( oldStyle );
 }
 
 //-----------------------------------------------------------------------------
@@ -1811,7 +1811,7 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
   if ( !item || item->isSelected() == selected )
     return;
 
-  KMHeadersInherited::setSelected( item, selected );
+  KListView::setSelected( item, selected );
   // If the item is the parent of a closed thread recursively select
   // children .
   if ( isThreaded() && !item->isOpen() && item->firstChild() ) {
@@ -2169,7 +2169,7 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 void KMHeaders::updateMessageList(bool set_selection)
 {
   mPrevCurrent = 0;
-  KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
+  KListView::setSorting( mSortCol, !mSortDescending );
   if (!mFolder) {
     noRepaint = TRUE;
     clear();
@@ -2235,7 +2235,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
       case Key_Next:
       case Key_Prior:
       case Key_Escape:
-        KMHeadersInherited::keyPressEvent( e );
+        KListView::keyPressEvent( e );
       }
       if (!shft)
         connect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -2274,7 +2274,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
 
   if (!lvi) {
-    KMHeadersInherited::contentsMousePressEvent(e);
+    KListView::contentsMousePressEvent(e);
     return;
   }
   // Check if our item is the parent of a closed thread and if so, if the root
@@ -2299,9 +2299,9 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
     mousePressed = TRUE;
     if (!(lvi->isSelected())) {
       clearSelection();
-      KMHeadersInherited::contentsMousePressEvent(e);
+      KListView::contentsMousePressEvent(e);
     } else {
-      KMHeadersInherited::contentsMousePressEvent(e);
+      KListView::contentsMousePressEvent(e);
       setSelected(lvi, TRUE);
     }
   }
@@ -2328,7 +2328,7 @@ void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
   }
 
   if (e->button() != RightButton)
-    KMHeadersInherited::contentsMouseReleaseEvent(e);
+    KListView::contentsMouseReleaseEvent(e);
 
   beginSelection = 0;
   endSelection = 0;
@@ -2611,7 +2611,7 @@ void KMHeaders::setSorting( int column, bool ascending )
       colText = colText + i18n( " (Status)" );
     setColumnText( mPaintInfo.subCol, colText);
   }
-  KMHeadersInherited::setSorting( column, ascending );
+  KListView::setSorting( column, ascending );
   ensureCurrentItemVisible();
 }
 
@@ -3007,7 +3007,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
             fread(&sorted_count, sizeof(sorted_count), 1, sortStream);
 
             //Hackyness to work around qlistview problems
-            KMHeadersInherited::setSorting(-1);
+            KListView::setSorting(-1);
             header()->setSortIndicator(column, ascending);
             QObject::connect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
             //setup mSortInfo here now, as above may change it
@@ -3126,7 +3126,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
         mSortInfo.ascending = ascending = !mSortDescending;
         threaded = (isThreaded());
         sorted_count = discovered_count = appended = 0;
-        KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
+        KListView::setSorting( mSortCol, !mSortDescending );
     }
     //fill in empty holes
     if((sorted_count + discovered_count - deleted_count) < mFolder->count()) {

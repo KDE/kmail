@@ -56,7 +56,6 @@ namespace KParts {
   struct URLArgs;
 }
 
-#define KMReaderWinInherited QWidget
 class KMReaderWin: public QWidget, public KMail::IObserver
 {
   Q_OBJECT

@@ -31,7 +31,6 @@ enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
 enum LoopOnGotoUnreadValue { DontLoop = 0, LoopInCurrentFolder, LoopInAllFolders };
 
 /** The widget that shows the contents of folders */
-#define KMHeadersInherited KListView
 class KMHeaders : public KListView
 {
   Q_OBJECT

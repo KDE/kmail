@@ -29,7 +29,7 @@
 //-----------------------------------------------------------------------------
 
 KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
-  KMFolderInherited(aParent, aName)
+  KMFolderNode(aParent, aName)
 {
   mOpenCount      = 0;
   mQuiet          = 0;
@@ -786,7 +786,7 @@ int KMFolder::expunge()
 const char* KMFolder::type() const
 {
   if (mAcctList) return "In";
-  return KMFolderInherited::type();
+  return KMFolderNode::type();
 }
 
 

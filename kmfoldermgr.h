@@ -14,7 +14,6 @@
 class KMFolder;
 class KMMsgDict;
 
-#define KMFolderMgrInherited QObject
 class KMFolderMgr: public QObject
 {
   Q_OBJECT

@@ -80,8 +80,6 @@ private:
   QTimer *mProcessNextBatchTimer;
 };
 
-#define KMFolderSearchInherited KMFolder
-
 class KMFolderSearch: public KMFolder
 {
   Q_OBJECT

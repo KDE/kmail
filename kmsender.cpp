@@ -834,7 +834,7 @@ bool KMSendProc::addRecipients( const AddrSpecList & al )
 //=============================================================================
 //=============================================================================
 KMSendSendmail::KMSendSendmail(KMSender* aSender):
-  KMSendSendmailInherited(aSender)
+  KMSendProc(aSender)
 {
   mMailerProc = 0;
 }

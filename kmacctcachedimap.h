@@ -50,8 +50,6 @@ protected: // ### Hacks
   void setPrefixHook();
 
 public:
-  typedef KMail::ImapAccountBase base;
-
   virtual ~KMAcctCachedImap();
   virtual void init();
 
@@ -140,7 +138,7 @@ protected slots:
 
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderCachedImap*, bool);
-  void postProcessNewMail( KMFolder * f ) { base::postProcessNewMail( f ); }
+  void postProcessNewMail( KMFolder * f ) { ImapAccountBase::postProcessNewMail( f ); }
 
 private:
   QPtrList<CachedImapJob> mJobList;

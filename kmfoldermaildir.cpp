@@ -42,7 +42,7 @@ using KMail::MaildirJob;
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolderDir* aParent, const QString& aName)
-  : KMFolderMaildirInherited(aParent, aName)
+  : KMFolderIndex(aParent, aName)
 {
 }
 
@@ -842,14 +842,14 @@ void KMFolderMaildir::removeMsg(int idx, bool)
 
   removeFile(msg->fileName());
 
-  KMFolderMaildirInherited::removeMsg(idx);
+  KMFolderIndex::removeMsg(idx);
 }
 
 //-----------------------------------------------------------------------------
 KMMessage* KMFolderMaildir::take(int idx)
 {
   // first, we do the high-level stuff.. then delete later
-  KMMessage *msg = KMFolderMaildirInherited::take(idx);
+  KMMessage *msg = KMFolderIndex::take(idx);
 
   if (!msg || !msg->fileName()) return 0;
 
@@ -966,7 +966,7 @@ void KMFolderMaildir::msgStatusChanged(const KMMsgStatus oldStatus,
   // if the status of any message changes, then we need to compact
   needsCompact = true;
 
-  KMFolderMaildirInherited::msgStatusChanged(oldStatus, newStatus, idx);
+  KMFolderIndex::msgStatusChanged(oldStatus, newStatus, idx);
 }
 
 #include "kmfoldermaildir.moc"

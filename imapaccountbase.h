@@ -48,8 +48,6 @@ namespace KMail {
   protected:
     ImapAccountBase( KMAcctMgr * parent, const QString & name );
   public:
-    typedef KMail::NetworkAccount base;
-
     virtual ~ImapAccountBase();
 
     /** Set the config options to a decent state */

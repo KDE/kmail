@@ -15,8 +15,6 @@ protected:
   KMAcctMaildir(KMAcctMgr* owner, const QString& accountName);
 
 public:
-  typedef KMAccount base;
-
   virtual ~KMAcctMaildir();
   virtual void init(void);
   virtual void pseudoAssign( const KMAccount * a );

@@ -66,7 +66,7 @@ QString KMAcctCachedImap::type() const
 }
 
 void KMAcctCachedImap::init() {
-  base::init();
+  ImapAccountBase::init();
 
   setProgressDialogEnabled( true );
 }
@@ -83,7 +83,7 @@ void KMAcctCachedImap::pseudoAssign( const KMAccount * a ) {
 
   setProgressDialogEnabled(static_cast<const KMAcctCachedImap*>(a)->isProgressDialogEnabled());
 
-  base::pseudoAssign( a );
+  ImapAccountBase::pseudoAssign( a );
 }
 
 void KMAcctCachedImap::setPrefixHook() {
@@ -271,12 +271,12 @@ void KMAcctCachedImap::postProcessNewMail(KMFolderCachedImap* folder, bool)
 //
 
 void KMAcctCachedImap::readConfig( /*const*/ KConfig/*Base*/ & config ) {
-  base::readConfig( config );
+  ImapAccountBase::readConfig( config );
   setProgressDialogEnabled( config.readBoolEntry( "progressdialog", true ) );
 }
 
 void KMAcctCachedImap::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
-  base::writeConfig( config );
+  ImapAccountBase::writeConfig( config );
   config.writeEntry( "progressdialog", isProgressDialogEnabled() );
 }
 

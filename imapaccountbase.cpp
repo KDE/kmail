@@ -64,7 +64,7 @@ namespace KMail {
   //
 
   ImapAccountBase::ImapAccountBase( KMAcctMgr * parent, const QString & name )
-    : base( parent, name ),
+    : NetworkAccount( parent, name ),
       mPrefix( "/" ),
       mTotal( 0 ),
       mCountUnread( 0 ),
@@ -103,7 +103,7 @@ namespace KMail {
   }
 
   void ImapAccountBase::pseudoAssign( const KMAccount * a ) {
-    base::pseudoAssign( a );
+    NetworkAccount::pseudoAssign( a );
 
     const ImapAccountBase * i = dynamic_cast<const ImapAccountBase*>( a );
     if ( !i ) return;
@@ -166,7 +166,7 @@ namespace KMail {
   //
 
   void ImapAccountBase::readConfig( /*const*/ KConfig/*Base*/ & config ) {
-    base::readConfig( config );
+    NetworkAccount::readConfig( config );
 
     setPrefix( config.readEntry( "prefix", "/" ) );
     setAutoExpunge( config.readBoolEntry( "auto-expunge", false ) );
@@ -176,7 +176,7 @@ namespace KMail {
   }
 
   void ImapAccountBase::writeConfig( KConfig/*Base*/ & config ) /*const*/ {
-    base::writeConfig( config );
+    NetworkAccount::writeConfig( config );
 
     config.writeEntry( "prefix", prefix() );
     config.writeEntry( "auto-expunge", autoExpunge() );
@@ -192,7 +192,7 @@ namespace KMail {
   //
 
   MetaData ImapAccountBase::slaveConfig() const {
-    MetaData m = base::slaveConfig();
+    MetaData m = NetworkAccount::slaveConfig();
 
     m.insert( "auth", auth() );
     if ( autoExpunge() )

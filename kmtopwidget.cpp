@@ -20,7 +20,7 @@
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::KMTopLevelWidget(const char* aName):
-  KMTopLevelWidgetInherited(0, aName)
+  KMainWindow(0, aName)
 {}
 
 

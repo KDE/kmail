@@ -19,8 +19,6 @@ namespace KMail {
 using KMail::FolderJob;
 using KMail::MboxJob;
 
-#define KMFolderMboxInherited KMFolderIndex
-
 class KMFolderMbox;
 
 

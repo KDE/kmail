@@ -473,7 +473,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 			 KActionCollection* actionCollection,
                          const char *aName,
                          int aFlags )
-  : KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose),
+  : QWidget(aParent, aName, aFlags | Qt::WDestructiveClose),
     mAttachmentStrategy( 0 ),
     mHeaderStrategy( 0 ),
     mHeaderStyle( 0 ),
@@ -621,7 +621,7 @@ bool KMReaderWin::event(QEvent *e)
     update( true ); // Force update
     return true;
   }
-  return KMReaderWinInherited::event(e);
+  return QWidget::event(e);
 }
 
 
@@ -1399,7 +1399,7 @@ void KMReaderWin::slotTouchMessage()
 //-----------------------------------------------------------------------------
 void KMReaderWin::closeEvent(QCloseEvent *e)
 {
-  KMReaderWinInherited::closeEvent(e);
+  QWidget::closeEvent(e);
   writeConfig();
 }
 
@@ -1620,7 +1620,7 @@ void KMReaderWin::setStyleDependantFrameWidth()
 void KMReaderWin::styleChange( QStyle& oldStyle )
 {
   setStyleDependantFrameWidth();
-  KMReaderWinInherited::styleChange( oldStyle );
+  QWidget::styleChange( oldStyle );
 }
 
 //-----------------------------------------------------------------------------

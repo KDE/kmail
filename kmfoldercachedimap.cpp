@@ -47,7 +47,7 @@ using KMail::ImapAccountBase;
 
 
 KMFolderCachedImap::KMFolderCachedImap(KMFolderDir* aParent, const QString& aName)
- : KMFolderCachedImapInherited(aParent, aName), mSyncState(SYNC_STATE_INITIAL),
+ : KMFolderMaildir(aParent, aName), mSyncState(SYNC_STATE_INITIAL),
    mContentState(imapNoInformation),
    mSubfolderState(imapNoInformation), mIsSelected(FALSE), mCheckFlags(TRUE), mAccount(NULL),
    mLastUid(0), mIsConnected(false), mFolderRemoved(false)
@@ -93,7 +93,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
 int KMFolderCachedImap::remove()
 {
   mFolderRemoved = true;
-  return KMFolderCachedImapInherited::remove();
+  return KMFolderMaildir::remove();
 }
 
 QString KMFolderCachedImap::uidCacheLocation() const
@@ -147,7 +147,7 @@ int KMFolderCachedImap::writeUidCache()
 
 int KMFolderCachedImap::create(bool imap)
 {
-  int rc = KMFolderCachedImapInherited::create(imap);
+  int rc = KMFolderMaildir::create(imap);
   mLastUid = 0;
   mUidValidity = "";
   if( !rc ) return writeUidCache();
@@ -182,7 +182,7 @@ KMMessage* KMFolderCachedImap::take(int idx)
     uidMap.remove( it.data() );
     uidRevMap.remove( idx );
   }
-  return KMFolderCachedImapInherited::take(idx);
+  return KMFolderMaildir::take(idx);
 }
 
 // Add a message without clearing it's X-UID field.
@@ -193,7 +193,7 @@ int KMFolderCachedImap::addMsgInternal(KMMessage* msg, int* index_return)
 
   // Add the message
   ulong uid = msg->headerField("X-UID").toULong(&ok);
-  int rc = KMFolderCachedImapInherited::addMsg(msg, &idx_return);
+  int rc = KMFolderMaildir::addMsg(msg, &idx_return);
   if( index_return ) *index_return = idx_return;
 
   // Put it in the uid maps
@@ -233,7 +233,7 @@ void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
   }
 
   // Remove it from disk
-  KMFolderCachedImapInherited::removeMsg(idx,imapQuiet);
+  KMFolderMaildir::removeMsg(idx,imapQuiet);
 
   // TODO (Bo): Shouldn't this be "emit changed();"?
   kmkernel->imapFolderMgr()->contentsChanged();
@@ -246,7 +246,7 @@ bool KMFolderCachedImap::canRemoveFolder() const {
 
 #if 0
   // No special condition here, so let base class decide
-  return KMFolderCachedImapInherited::canRemoveFolder();
+  return KMFolderMaildir::canRemoveFolder();
 #endif
   return true;
 }
@@ -881,7 +881,7 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
 #if 0
       msg->setStatus(flagsToStatus(flags));
       open();
-      //KMFolderCachedImapInherited::addMsg(msg, NULL);
+      //KMFolderMaildir::addMsg(msg, NULL);
       msg->setComplete( FALSE );
       addMsgInternal(msg, NULL);
       //sync();

@@ -30,8 +30,6 @@ class KMMsgDict;
 class KMMsgDictREntry;
 class QTimer;
 
-#define KMFolderInherited KMFolderNode
-
 typedef QValueList<Q_UINT32> SerNumList;
 
 /** Mail folder.

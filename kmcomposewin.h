@@ -77,7 +77,6 @@ typedef QPtrList<KMMessagePart> KMMsgPartList;
 
 
 //-----------------------------------------------------------------------------
-#define KMEditInherited KEdit
 class KMEdit: public KEdit
 {
   Q_OBJECT
@@ -147,7 +146,6 @@ private:
 class KMLineEdit : public KABC::AddressLineEdit
 {
     Q_OBJECT
-    typedef KABC::AddressLineEdit KMLineEditInherited;
 public:
     KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0,
                const char *name = 0);

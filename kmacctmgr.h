@@ -11,7 +11,6 @@
 class QString;
 class QStringList;
 
-#define KMAcctMgrInherited QObject
 
 class KMAcctMgr: public QObject
 {

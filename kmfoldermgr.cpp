@@ -30,7 +30,7 @@
 
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const QString& aBasePath, KMFolderDirType dirType):
-  KMFolderMgrInherited(), mDir(this, QString::null, dirType)
+  QObject(), mDir(this, QString::null, dirType)
 {
   mQuiet = 0;
   mChanged = FALSE;

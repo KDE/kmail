@@ -13,7 +13,6 @@ class QListBox;
 class KMFolder;
 class KMMainWidget;
 
-#define KMFolderSelDlgInherited KDialogBase
 class KMFolderSelDlg: public KDialogBase
 {
   Q_OBJECT

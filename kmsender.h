@@ -144,7 +144,6 @@ private:
 
 
 //-----------------------------------------------------------------------------
-#define KMSendProcInherited QObject
 class KMSendProc: public QObject
 {
   Q_OBJECT
@@ -223,7 +222,6 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-#define KMSendSendmailInherited KMSendProc
 class KMSendSendmail: public KMSendProc
 {
   Q_OBJECT

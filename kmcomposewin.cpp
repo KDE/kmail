@@ -5369,7 +5369,7 @@ void KMEdit::contentsDragEnterEvent(QDragEnterEvent *e)
     if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
 	e->accept(true);
     else
-	return KMEditInherited::dragEnterEvent(e);
+	return KEdit::dragEnterEvent(e);
 }
 
 void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
@@ -5377,7 +5377,7 @@ void KMEdit::contentsDragMoveEvent(QDragMoveEvent *e)
     if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message")))
 	e->accept();
     else
-	return KMEditInherited::dragMoveEvent(e);
+	return KEdit::dragMoveEvent(e);
 }
 
 void KMEdit::keyPressEvent( QKeyEvent* e )
@@ -5406,7 +5406,7 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
                 }
             }
 
-            KMEditInherited::keyPressEvent( e );
+            KEdit::keyPressEvent( e );
 
             // duplicate quote indicators of the previous line before the new
             // line if the line actually contained text (apart from the quote
@@ -5433,10 +5433,10 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
             }
         }
         else
-            KMEditInherited::keyPressEvent( e );
+            KEdit::keyPressEvent( e );
     }
     else
-        KMEditInherited::keyPressEvent( e );
+        KEdit::keyPressEvent( e );
 }
 
 void KMEdit::contentsDropEvent(QDropEvent *e)
@@ -5477,7 +5477,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
         }
     }
     else {
-	return KMEditInherited::dropEvent(e);
+	return KEdit::dropEvent(e);
     }
 }
 
@@ -5585,7 +5585,7 @@ bool KMAtmListViewItem::isSign()
 
 KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
                        QWidget *parent, const char *name)
-    : KMLineEditInherited(parent,useCompletion,name), mComposer(composer)
+    : AddressLineEdit(parent,useCompletion,name), mComposer(composer)
 {
 }
 
@@ -5611,7 +5611,7 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
       return;
     }
     // ---sven's Return is same Tab and arrow key navigation end ---
-  KMLineEditInherited::keyPressEvent(e);
+  AddressLineEdit::keyPressEvent(e);
 }
 
 #if 0
@@ -5705,7 +5705,7 @@ void KMLineEdit::smartInsert( const QString &str, int pos /* = -1 */ )
 //-----------------------------------------------------------------------------
 void KMLineEdit::loadAddresses()
 {
-    KMLineEditInherited::loadAddresses();
+    AddressLineEdit::loadAddresses();
 
     QStringList recent = RecentAddresses::self()->addresses();
     QStringList::Iterator it = recent.begin();
@@ -5754,8 +5754,8 @@ void KMLineEditSpell::spellCheckerCorrected( const QString &old, const QString &
 //
 //=============================================================================
 KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
-	       const char *name):
-  KMEditInherited(parent, name)
+	       const char *name)
+  : KEdit(parent, name)
 {
   mComposer = composer;
   installEventFilter(this);
@@ -5966,7 +5966,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     }
   }
 
-  return KMEditInherited::eventFilter(o, e);
+  return KEdit::eventFilter(o, e);
 }
 
 

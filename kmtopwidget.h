@@ -26,7 +26,6 @@ class QCloseEvent;
 /** Top level window that offers methods to be called on every
  * existing top level window.
  */
-#define KMTopLevelWidgetInherited KMainWindow
 class KMTopLevelWidget: public KMainWindow
 {
   Q_OBJECT

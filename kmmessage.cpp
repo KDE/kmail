@@ -92,7 +92,7 @@ KMMessage::KMMessage(DwMessage* aMsg)
 
 //-----------------------------------------------------------------------------
 KMMessage::KMMessage(const KMMessage& other) :
-    KMMessageInherited( other ),
+    KMMsgBase( other ),
     ISubject(),
     mMsg(0)
 {
@@ -170,7 +170,7 @@ void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMFolderIndex* parent): KMMessageInherited(parent)
+KMMessage::KMMessage(KMFolderIndex* parent): KMMsgBase(parent)
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;
@@ -193,7 +193,7 @@ KMMessage::KMMessage(KMFolderIndex* parent): KMMessageInherited(parent)
 
 
 //-----------------------------------------------------------------------------
-KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
+KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMsgBase()
 {
   mNeedsAssembly = FALSE;
   mMsg = new DwMessage;

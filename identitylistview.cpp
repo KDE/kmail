@@ -119,7 +119,7 @@ namespace KMail {
 	  item->setText( 0, ident.identityName() );
       }
     }
-    base::rename( i, col );
+    KListView::rename( i, col );
   }
 
   bool IdentityListView::acceptDrag( QDropEvent * e ) const {

@@ -25,8 +25,6 @@ class KMAcctExpPop: public KMail::NetworkAccount {
   Q_OBJECT
 
 public:
-  typedef KMail::NetworkAccount base;
-
   virtual ~KMAcctExpPop();
   virtual void init(void);
 

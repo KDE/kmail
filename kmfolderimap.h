@@ -63,8 +63,6 @@ private:
 
 
 
-#define KMFolderImapInherited KMFolderMbox
-
 class KMFolderImap : public KMFolderMbox
 {
   Q_OBJECT
