@@ -16,8 +16,9 @@
  ***************************************************************************/
 
 #ifdef HAVE_CONFIG_H
-  #include <config.h>
+#include <config.h>
 #endif
+
 #include "kmsystemtray.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
@@ -50,8 +51,15 @@
  * with its count of unread messages, allowing the user to jump
  * to the first unread message in each folder.
  */
-KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(parent, name),
-mNewMessagePopupId(-1), mPopupMenu(0)
+KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
+  : KSystemTray( parent, name ),
+    mParentVisible( true ),
+    mPosOfMainWin( 0, 0 ),
+    mDesktopOfMainWin( 0 ),
+    mMode( OnNewMail ),
+    mCount( 0 ),
+    mNewMessagePopupId(-1),
+    mPopupMenu(0)
 {
   setAlignment( AlignCenter );
   kdDebug(5006) << "Initting systray" << endl;
@@ -61,8 +69,16 @@ mNewMessagePopupId(-1), mPopupMenu(0)
   KIconEffect::semiTransparent( mTransparentIcon );
 
   setPixmap(mDefaultIcon);
-  mParentVisible = true;
-  mMode = OnNewMail;
+
+  KMMainWidget * mainWidget = getKMMainWidget();
+  if ( mainWidget ) {
+    QWidget * mainWin = mainWidget->topLevelWidget();
+    if ( mainWin ) {
+      mDesktopOfMainWin = KWin::windowInfo( mainWin->winId(),
+                                            NET::WMDesktop ).desktop();
+      mPosOfMainWin = mainWin->pos();
+    }
+  }
 
   /** Initiate connections between folders and this object */
   foldersChanged();
@@ -129,21 +145,18 @@ void KMSystemTray::updateCount()
 {
   if(mCount != 0)
   {
-
     int oldPixmapWidth = pixmap()->size().width();
     int oldPixmapHeight = pixmap()->size().height();
 
-    /** Scale the font size down with each increase in the number
-     * of digits in the count, to a minimum point size of 6 */
-    int numDigits = ((int) log10((double) mCount) + 1);
-    QString testString;
-    testString.fill( '0', numDigits );
+    QString countString = QString::number( mCount );
     QFont countFont = KGlobalSettings::generalFont();
     countFont.setBold(true);
 
+    // decrease the size of the font for the number of unread messages if the
+    // number doesn't fit into the available space
     float countFontSize = countFont.pointSizeFloat();
     QFontMetrics qfm( countFont );
-    int width = qfm.width( testString );
+    int width = qfm.width( countString );
     if( width > oldPixmapWidth )
     {
       countFontSize *= float( oldPixmapWidth ) / float( width );
@@ -158,7 +171,7 @@ void KMSystemTray::updateCount()
     p.drawPixmap(0, 0, mTransparentIcon);
     p.setFont(countFont);
     p.setPen(Qt::blue);
-    p.drawText(pixmap()->rect(), Qt::AlignCenter, QString::number(mCount));
+    p.drawText(pixmap()->rect(), Qt::AlignCenter, countString);
 
     setPixmap(bg);
   } else
@@ -224,7 +237,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
   // switch to kmail on left mouse button
   if( e->button() == LeftButton )
   {
-    if( mParentVisible )
+    if( mParentVisible && mainWindowIsOnCurrentDesktop() )
       hideKMail();
     else
       showKMail();
@@ -296,6 +309,21 @@ QString KMSystemTray::prettyName(KMFolder * fldr)
   return rvalue;
 }
 
+
+bool KMSystemTray::mainWindowIsOnCurrentDesktop()
+{
+  KMMainWidget * mainWidget = getKMMainWidget();
+  if ( !mainWidget )
+    return false;
+
+  QWidget *mainWin = getKMMainWidget()->topLevelWidget();
+  if ( !mainWin )
+    return false;
+
+  return KWin::windowInfo( mainWin->winId(),
+                           NET::WMDesktop ).isOnCurrentDesktop();
+}
+
 /**
  * Shows and raises the first KMMainWidget and
  * switches to the appropriate virtual desktop.
@@ -308,15 +336,17 @@ void KMSystemTray::showKMail()
   assert(mainWin);
   if(mainWin)
   {
-    /** Force window to grab focus */
-    mainWin->show();
-    KWin::deIconifyWindow( mainWin->winId() );
-    mainWin->raise();
+    // switch to appropriate desktop
+    if ( mDesktopOfMainWin != NET::OnAllDesktops )
+      KWin::setCurrentDesktop( mDesktopOfMainWin );
+    if ( !mParentVisible ) {
+      if ( mDesktopOfMainWin == NET::OnAllDesktops )
+        KWin::setOnAllDesktops( mainWin->winId(), true );
+      mainWin->move( mPosOfMainWin );
+      mainWin->show();
+    }
+    KWin::setActiveWindow( mainWin->winId() );
     mParentVisible = true;
-    /** Switch to appropriate desktop */
-    int desk = KWin::windowInfo( mainWin->winId(), NET::WMDesktop ).desktop();
-    if ( desk != NET::OnAllDesktops )
-      KWin::setCurrentDesktop(desk);
   }
 }
 
@@ -328,7 +358,12 @@ void KMSystemTray::hideKMail()
   assert(mainWin);
   if(mainWin)
   {
+    mDesktopOfMainWin = KWin::windowInfo( mainWin->winId(),
+                                          NET::WMDesktop ).desktop();
+    mPosOfMainWin = mainWin->pos();
+    // iconifying is unnecessary, but it looks cooler
     KWin::iconifyWindow( mainWin->winId() );
+    mainWin->hide();
     mParentVisible = false;
   }
 }
@@ -475,7 +510,6 @@ void KMSystemTray::selectedAccount(int id)
 
   ft->setCurrentItem(fldrIdx);
   ft->selectCurrentFolder();
-  mainWidget->folderSelectedUnread(fldr);
 }
 
 

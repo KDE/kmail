@@ -29,6 +29,7 @@ class KMFolder;
 class KMMainWidget;
 class QMouseEvent;
 class KPopupMenu;
+class QPoint;
 
 /**
  * KMSystemTray extends KSystemTray and handles system
@@ -57,6 +58,7 @@ private slots:
 
 protected:
   void mousePressEvent(QMouseEvent *);
+  bool mainWindowIsOnCurrentDesktop();
   void showKMail();
   void hideKMail();
   void buildPopupMenu();
@@ -67,8 +69,9 @@ protected:
 
 private:
 
-  bool mInverted;
   bool mParentVisible;
+  QPoint mPosOfMainWin;
+  int mDesktopOfMainWin;
 
   int mMode;
   int mCount;
