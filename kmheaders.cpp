@@ -953,6 +953,16 @@ void KMHeaders::msgChanged()
   int i = topItemIndex();
   int cur = currentItemIndex();
   if (!isUpdatesEnabled()) return;
+  QString msgIdMD5;
+  QListViewItem *item = currentItem();
+  KMHeaderItem *hi = dynamic_cast<KMHeaderItem*>(item);
+  if (item && hi) {
+    KMMsgBase *mb = mFolder->getMsgBase(hi->msgId());
+    if (mb)
+      msgIdMD5 = mb->msgIdMD5();
+  }
+  if (!isUpdatesEnabled()) return;
+  // prevent IMAP messages from scrolling to top
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
   	     this,SLOT(highlightMessage(QListViewItem*)));
   updateMessageList();
@@ -961,6 +971,26 @@ void KMHeaders::msgChanged()
   setSelected( currentItem(), TRUE );
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	  this,SLOT(highlightMessage(QListViewItem*)));
+  
+  // if the current message has changed then emit
+  // the selected signal to force an update
+  
+  // Normally the serial number of the message would be
+  // used to do this, but because we don't yet have
+  // guaranteed serial numbers for IMAP messages fall back
+  // to using the MD5 checksum of the msgId.
+  item = currentItem();
+  hi = dynamic_cast<KMHeaderItem*>(item);
+  if (item && hi) {
+    KMMsgBase *mb = mFolder->getMsgBase(hi->msgId());
+    if (mb) {
+      if (msgIdMD5.isEmpty() || (msgIdMD5 != mb->msgIdMD5()))
+        emit selected(mFolder->getMsg(hi->msgId()));
+    } else {
+      emit selected(0);
+    }
+  } else
+    emit selected(0);
 }
 
 
