@@ -32,6 +32,8 @@
 #include "kmcommands.h"
 #include "kcursorsaver.h"
 #include "kmkernel.h"
+#include "attachmentlistview.h"
+using KMail::AttachmentListView;
 #include "addressesdialog.h"
 using KPIM::AddressesDialog;
 #include "recentaddresses.h"
@@ -129,7 +131,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   //setWFlags( WType_TopLevel | WStyle_Dialog );
   mDone = false;
   mGrid = 0;
-  mAtmListBox = 0;
+  mAtmListView = 0;
   mAtmList.setAutoDelete(TRUE);
   mAtmTempList.setAutoDelete(TRUE);
   mAtmModified = FALSE;
@@ -160,32 +162,37 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   mBtnFrom->setFocusPolicy(QWidget::NoFocus);
   mBtnReplyTo->setFocusPolicy(QWidget::NoFocus);
 
-  mAtmListBox = new QListView(mMainWidget, "mAtmListBox");
-  mAtmListBox->setFocusPolicy(QWidget::NoFocus);
-  mAtmListBox->addColumn(i18n("Name"), 200);
-  mAtmListBox->addColumn(i18n("Size"), 80);
-  mAtmListBox->addColumn(i18n("Encoding"), 120);
-  int atmColType = mAtmListBox->addColumn(i18n("Type"), 120);
-  mAtmListBox->header()->setStretchEnabled(true, atmColType); // Stretch "Type".
+  mAtmListView = new AttachmentListView( this, mMainWidget,
+                                         "attachment list view" );
+  mAtmListView->setFocusPolicy( QWidget::NoFocus );
+  mAtmListView->addColumn( i18n("Name"), 200 );
+  mAtmListView->addColumn( i18n("Size"), 80 );
+  mAtmListView->addColumn( i18n("Encoding"), 120 );
+  int atmColType = mAtmListView->addColumn( i18n("Type"), 120 );
+  // Stretch "Type".
+  mAtmListView->header()->setStretchEnabled( true, atmColType );
   mAtmEncryptColWidth = 80;
   mAtmSignColWidth = 80;
-  mAtmColEncrypt= mAtmListBox->addColumn(i18n("Encrypt"),mAtmEncryptColWidth);
-  mAtmColSign   = mAtmListBox->addColumn(i18n("Sign"),   mAtmSignColWidth);
+  mAtmColEncrypt = mAtmListView->addColumn( i18n("Encrypt"),
+                                            mAtmEncryptColWidth );
+  mAtmColSign    = mAtmListView->addColumn( i18n("Sign"),
+                                            mAtmSignColWidth );
   if( mSelectedCryptPlug ) {
-    mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
-    mAtmListBox->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
-  } else {
-    mAtmListBox->setColumnWidth( mAtmColEncrypt, 0 );
-    mAtmListBox->setColumnWidth( mAtmColSign,    0 );
+    mAtmListView->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
+    mAtmListView->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
   }
-  mAtmListBox->setAllColumnsShowFocus(true);
+  else {
+    mAtmListView->setColumnWidth( mAtmColEncrypt, 0 );
+    mAtmListView->setColumnWidth( mAtmColSign,    0 );
+  }
+  mAtmListView->setAllColumnsShowFocus( true );
 
-  connect(mAtmListBox,
-	  SIGNAL(doubleClicked(QListViewItem *)),
-	  SLOT(slotAttachProperties()));
-  connect(mAtmListBox,
-	  SIGNAL(rightButtonPressed(QListViewItem *, const QPoint &, int)),
-	  SLOT(slotAttachPopupMenu(QListViewItem *, const QPoint &, int)));
+  connect( mAtmListView,
+	   SIGNAL( doubleClicked( QListViewItem* ) ),
+	   SLOT( slotAttachProperties() ) );
+  connect( mAtmListView,
+           SIGNAL( rightButtonPressed( QListViewItem*, const QPoint&, int ) ),
+           SLOT( slotAttachPopupMenu( QListViewItem*, const QPoint&, int ) ) );
   mAttachMenu = 0;
 
   readConfig();
@@ -709,12 +716,12 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   assert(row<=mNumHeaders);
 
   mGrid->addMultiCellWidget(mEditor, row, mNumHeaders, 0, 2);
-  mGrid->addMultiCellWidget(mAtmListBox, mNumHeaders+1, mNumHeaders+1, 0, 2);
+  mGrid->addMultiCellWidget(mAtmListView, mNumHeaders+1, mNumHeaders+1, 0, 2);
 
   if (mAtmList.count() > 0)
-    mAtmListBox->show();
+    mAtmListView->show();
   else
-    mAtmListBox->hide();
+    mAtmListView->hide();
   resize(this->size());
   repaint();
 
@@ -3712,15 +3719,15 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
   if (mAtmList.count()==1)
   {
     mGrid->setRowStretch(mNumHeaders+1, 50);
-    mAtmListBox->setMinimumSize(100, 80);
-    mAtmListBox->setMaximumHeight( 100 );
-    mAtmListBox->show();
+    mAtmListView->setMinimumSize(100, 80);
+    mAtmListView->setMaximumHeight( 100 );
+    mAtmListView->show();
     resize(size());
     enableAttachActions();
   }
 
   // add a line in the attachment listbox
-  KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListBox );
+  KMAtmListViewItem *lvi = new KMAtmListViewItem( mAtmListView );
   msgPartToItem(msgPart, lvi);
   mAtmItemList.append(lvi);
 }
@@ -3791,9 +3798,9 @@ void KMComposeWin::removeAttach(int idx)
 
   if (mAtmList.count()<=0)
   {
-    mAtmListBox->hide();
+    mAtmListView->hide();
     mGrid->setRowStretch(mNumHeaders+1, 0);
-    mAtmListBox->setMinimumSize(0, 0);
+    mAtmListView->setMinimumSize(0, 0);
     resize(size());
     enableAttachActions();
   }
@@ -4103,29 +4110,29 @@ void KMComposeWin::slotSelectCryptoModule()
     }
   if( mSelectedCryptPlug ) {
     // if the encrypt/sign columns are hidden then show them
-    if( 0 == mAtmListBox->columnWidth( mAtmColEncrypt ) ) {
+    if( 0 == mAtmListView->columnWidth( mAtmColEncrypt ) ) {
       int totalWidth = 0;
       // determine the total width of the columns
       for( int col=0; col < mAtmColEncrypt; col++ )
-        totalWidth += mAtmListBox->columnWidth( col );
+        totalWidth += mAtmListView->columnWidth( col );
       int reducedTotalWidth = totalWidth - mAtmEncryptColWidth
                                          - mAtmSignColWidth;
       // reduce the width of all columns so that the encrypt and sign column
       // fit
       int usedWidth = 0;
       for( int col=0; col < mAtmColEncrypt-1; col++ ) {
-        int newWidth = mAtmListBox->columnWidth( col ) * reducedTotalWidth
+        int newWidth = mAtmListView->columnWidth( col ) * reducedTotalWidth
                                                        / totalWidth;
-        mAtmListBox->setColumnWidth( col, newWidth );
+        mAtmListView->setColumnWidth( col, newWidth );
         usedWidth += newWidth;
       }
       // the last column before the encrypt column gets the remaining space
       // (because of rounding errors the width of this column isn't calculated
       // the same way as the width of the other columns)
-      mAtmListBox->setColumnWidth( mAtmColEncrypt-1,
-                                   reducedTotalWidth - usedWidth );
-      mAtmListBox->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
-      mAtmListBox->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
+      mAtmListView->setColumnWidth( mAtmColEncrypt-1,
+                                    reducedTotalWidth - usedWidth );
+      mAtmListView->setColumnWidth( mAtmColEncrypt, mAtmEncryptColWidth );
+      mAtmListView->setColumnWidth( mAtmColSign,    mAtmSignColWidth );
       for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
            lvi;
            lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
@@ -4134,30 +4141,30 @@ void KMComposeWin::slotSelectCryptoModule()
     }
   } else {
     // if the encrypt/sign columns are visible then hide them
-    if( 0 != mAtmListBox->columnWidth( mAtmColEncrypt ) ) {
-      mAtmEncryptColWidth = mAtmListBox->columnWidth( mAtmColEncrypt );
-      mAtmSignColWidth = mAtmListBox->columnWidth( mAtmColSign );
+    if( 0 != mAtmListView->columnWidth( mAtmColEncrypt ) ) {
+      mAtmEncryptColWidth = mAtmListView->columnWidth( mAtmColEncrypt );
+      mAtmSignColWidth = mAtmListView->columnWidth( mAtmColSign );
       int totalWidth = 0;
       // determine the total width of the columns
-      for( int col=0; col < mAtmListBox->columns(); col++ )
-        totalWidth += mAtmListBox->columnWidth( col );
+      for( int col=0; col < mAtmListView->columns(); col++ )
+        totalWidth += mAtmListView->columnWidth( col );
       int reducedTotalWidth = totalWidth - mAtmEncryptColWidth
                                          - mAtmSignColWidth;
       // increase the width of all columns so that the visible columns take
       // up the whole space
       int usedWidth = 0;
       for( int col=0; col < mAtmColEncrypt-1; col++ ) {
-        int newWidth = mAtmListBox->columnWidth( col ) * totalWidth
+        int newWidth = mAtmListView->columnWidth( col ) * totalWidth
                                                        / reducedTotalWidth;
-        mAtmListBox->setColumnWidth( col, newWidth );
+        mAtmListView->setColumnWidth( col, newWidth );
         usedWidth += newWidth;
       }
       // the last column before the encrypt column gets the remaining space
       // (because of rounding errors the width of this column isn't calculated
       // the same way as the width of the other columns)
-      mAtmListBox->setColumnWidth( mAtmColEncrypt-1, totalWidth - usedWidth );
-      mAtmListBox->setColumnWidth( mAtmColEncrypt, 0 );
-      mAtmListBox->setColumnWidth( mAtmColSign,    0 );
+      mAtmListView->setColumnWidth( mAtmColEncrypt-1, totalWidth - usedWidth );
+      mAtmListView->setColumnWidth( mAtmColEncrypt, 0 );
+      mAtmListView->setColumnWidth( mAtmColSign,    0 );
       for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
            lvi;
            lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
@@ -4267,7 +4274,7 @@ int KMComposeWin::currentAttachmentNum()
   int idx = -1;
   QPtrListIterator<QListViewItem> it(mAtmItemList);
   for ( int i = 0; it.current(); ++it, ++i )
-    if (*it == mAtmListBox->currentItem()) {
+    if (*it == mAtmListView->currentItem()) {
       idx = i;
       break;
     }

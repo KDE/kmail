@@ -74,7 +74,8 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		folderjob.cpp cachedimapjob.cpp \
 		maildirjob.cpp mboxjob.cpp imapjob.cpp \
 		subscriptiondialog.cpp kmailicalifaceimpl.cpp aboutdata.cpp \
-		folderIface.cpp folderIface.skel mailserviceimpl.cpp
+		folderIface.cpp folderIface.skel mailserviceimpl.cpp \
+		attachmentlistview.cpp
 
 kmail_SOURCES = main.cpp
 

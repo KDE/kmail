@@ -74,6 +74,10 @@ class IdentityCombo;
 class SpellingFilter;
 class  CryptPlugWrapperList;
 
+namespace KMail {
+class AttachmentListView;
+};
+
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
 
@@ -712,7 +716,7 @@ protected:
   QGridLayout* mGrid;
   KMMessage *mMsg;
   QPtrList<KMMessage> bccMsgList;
-  QListView *mAtmListBox;
+  KMail::AttachmentListView* mAtmListView;
   int mAtmColEncrypt;
   int mAtmColSign;
   int mAtmEncryptColWidth;
