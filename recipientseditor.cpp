@@ -602,6 +602,8 @@ RecipientsEditor::~RecipientsEditor()
 void RecipientsEditor::slotPickedRecipient( const Recipient &rec )
 {
   RecipientLine *line = mRecipientsView->activeLine();
+  if ( !line->isEmpty() ) line = mRecipientsView->addLine();
+
   Recipient r = rec;
   if ( r.type() == Recipient::Undefined ) {
     r.setType( line->recipientType() );
