@@ -409,6 +409,7 @@ void IdentityPage::setup()
 void IdentityPage::apply() {
   assert( !mIdentityDialog );
 
+  kernel->identityManager()->sort();
   kernel->identityManager()->commit();
 
   if( mOldNumberOfIdentities < 2 && mIdentityList->childCount() > 1 ) {
@@ -454,8 +455,6 @@ void IdentityPage::slotNewIdentity()
       im->newFromScratch( identityName );
     default: ;
     }
-    // re-sort the list:
-    im->sort();
     
     //
     // Insert into listview:
