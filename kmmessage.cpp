@@ -194,7 +194,8 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 //  ISO-2022-JP code consists of ESC(0x1b) character and 7Bit character which
 //  used from '!' character to  '~' character.  toyo
     if ((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0' || ch == 0x1b)
-       && !(ch=='>' && aStr.mid(strPos-aStr.data()-1,6)=="\n>From"))
+       && !(ch=='>' && strPos > aStr.data()
+            && qstrncmp(strPos-1, "\n>From", 6) == 0))
       *resultPos++ = ch;
   }
   *resultPos = '\0'; // terminate zero for casting
