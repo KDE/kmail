@@ -63,6 +63,7 @@ using KIO::PasswordDialog;
 #include <qregexp.h>
 #include "acljobs.h"
 #include "kmfoldercachedimap.h"
+#include <qstylesheet.h>
 
 namespace KMail {
 
@@ -660,8 +661,9 @@ namespace KMail {
     const QString from = msg->from().isEmpty() ? i18n( "<unknown>" ) : msg->from();
     QString myError = "<p><b>" + i18n("Error while uploading message")
       + "</b></p><p>"
-      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), from, subject )
-      + i18n("The destination folder was %1, which has the URL %2.").arg( folder->label(), jd.htmlURL() )
+      + i18n("Could not upload the message dated %1 from %2 with subject %3 on the server.").arg( msg->dateStr(), QStyleSheet::escape( from ), QStyleSheet::escape( subject ) )
+      + "</p><p>"
+      + i18n("The destination folder was %1, which has the URL %2.").arg( QStyleSheet::escape( folder->label() ), QStyleSheet::escape( jd.htmlURL() ) )
       + "</p><p>"
       + i18n("The error message from the server communication is here:") + "</p>";
     return handleJobError( job, myError );
