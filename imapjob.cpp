@@ -229,7 +229,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       msg->setComplete( TRUE );
       emit messageRetrieved(msg);
     } else {
-      emit messageRetrieved( 0 );
+      emit finished();
     }
     msg = 0;
   }
