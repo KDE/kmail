@@ -61,11 +61,12 @@ namespace KMail {
     mSourceCombo->setEnabled( false ); // since !mEnableCheck->isChecked()
     mSourceCombo->insertStringList( QStringList()
 		   << i18n("continuation of \"obtain signature text from\"",
+			   "Input Field Below") 
+		   << i18n("continuation of \"obtain signature text from\"",
 			   "File")
                    << i18n("continuation of \"obtain signature text from\"",
 			   "Output of Command")
-		   << i18n("continuation of \"obtain signature text from\"",
-			   "Input Field Below") );
+		   );
     label = new QLabel( mSourceCombo,
 			i18n("Obtain signature &text from:"), this );
     label->setEnabled( false ); // since !mEnableCheck->isChecked()
@@ -90,9 +91,19 @@ namespace KMail {
     connect( mEnableCheck, SIGNAL(clicked()),
 	     mEnableCheck, SLOT(setFocus()) );
 
-    // page 0: "signature file" requester, label, "edit file" button:
     int pageno = 0;
-    page = new QWidget( widgetStack );
+    // page 0: input field for direct entering:
+    mTextEdit = new QTextEdit( widgetStack );
+    widgetStack->addWidget( mTextEdit, pageno );
+    mTextEdit->setFont( KGlobalSettings::fixedFont() );
+    mTextEdit->setWordWrap( QTextEdit::NoWrap );
+    mTextEdit->setTextFormat( Qt::PlainText );
+
+    widgetStack->raiseWidget( 0 ); // since mSourceCombo->currentItem() == 0
+
+    // page 1: "signature file" requester, label, "edit file" button:
+    ++pageno;
+	page = new QWidget( widgetStack );
     widgetStack->addWidget( page, pageno ); // force sequential numbers (play safe)
     page_vlay = new QVBoxLayout( page, 0, KDialog::spacingHint() );
     hlay = new QHBoxLayout( page_vlay ); // inherits spacing
@@ -110,7 +121,7 @@ namespace KMail {
     hlay->addWidget( mEditButton );
     page_vlay->addStretch( 1 ); // spacer
 
-    // page 1: "signature command" requester and label:
+    // page 2: "signature command" requester and label:
     ++pageno;
     page = new QWidget( widgetStack );
     widgetStack->addWidget( page, pageno );
@@ -123,16 +134,6 @@ namespace KMail {
 				 i18n("S&pecify command:"), page ) );
     hlay->addWidget( mCommandEdit, 1 );
     page_vlay->addStretch( 1 ); // spacer
-
-    // page 2: input field for direct entering:
-    ++pageno;
-    mTextEdit = new QTextEdit( widgetStack );
-    widgetStack->addWidget( mTextEdit, pageno );
-    mTextEdit->setFont( KGlobalSettings::fixedFont() );
-    mTextEdit->setWordWrap( QTextEdit::NoWrap );
-    mTextEdit->setTextFormat( Qt::PlainText );
-
-    widgetStack->raiseWidget( 0 ); // since mSourceCombo->currentItem() == 0
 
   }
 
@@ -152,9 +153,9 @@ namespace KMail {
     if ( !isSignatureEnabled() ) return Signature::Disabled;
 
     switch ( mSourceCombo->currentItem() ) {
-    case 0:  return Signature::FromFile;
-    case 1:  return Signature::FromCommand;
-    case 2:  return Signature::Inlined;
+    case 0:  return Signature::Inlined;
+    case 1:  return Signature::FromFile;
+    case 2:  return Signature::FromCommand;
     default: return Signature::Disabled;
     }
   }
@@ -164,9 +165,9 @@ namespace KMail {
 
     int idx = 0;
     switch( type ) {
-    case Signature::Inlined:     idx = 2; break;
+    case Signature::Inlined:     idx = 0; break;
     case Signature::FromCommand: idx = 1; break;
-    case Signature::FromFile:
+    case Signature::FromFile:	 idx = 2; break;
     default:                     idx = 0; break;
     };
 
