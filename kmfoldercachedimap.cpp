@@ -1639,6 +1639,7 @@ void
 KMFolderCachedImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
+  writeAnnotationConfig();
 }
 
 void
