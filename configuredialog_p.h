@@ -214,6 +214,11 @@ protected slots:
   void slotNewIdentity();
   void slotModifyIdentity();
   void slotRemoveIdentity();
+  /** Connected to @p mRenameButton's clicked() signal. Just does a
+      KListView::rename on the selected item */
+  void slotRenameIdentity();
+  /** connected to @p mIdentityList's renamed() signal. Validates the
+      new name and sets it in the @ref IdentityManager */
   void slotRenameIdentity( QListViewItem *, const QString &, int );
   void slotContextMenu( KListView*, QListViewItem *, const QPoint & );
   void slotSetAsDefault();
@@ -228,6 +233,7 @@ protected: // data members
 
   KMail::IdentityListView * mIdentityList;
   QPushButton             * mModifyButton;
+  QPushButton             * mRenameButton;
   QPushButton             * mRemoveButton;
   QPushButton             * mSetAsDefaultButton;
 

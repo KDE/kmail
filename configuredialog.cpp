@@ -323,11 +323,14 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 
   QPushButton * button = new QPushButton( i18n("&New..."), this );
   mModifyButton = new QPushButton( i18n("&Modify..."), this );
-  mRemoveButton = new QPushButton( i18n("&Remove..."), this );
+  mRenameButton = new QPushButton( i18n("&Rename"), this );
+  mRemoveButton = new QPushButton( i18n("Remo&ve..."), this );
   mSetAsDefaultButton = new QPushButton( i18n("Set as &Default"), this );
   button->setAutoDefault( false );
   mModifyButton->setAutoDefault( false );
   mModifyButton->setEnabled( false );
+  mRenameButton->setAutoDefault( false );
+  mRenameButton->setEnabled( false );
   mRemoveButton->setAutoDefault( false );
   mRemoveButton->setEnabled( false );
   mSetAsDefaultButton->setAutoDefault( false );
@@ -336,12 +339,15 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 	   this, SLOT(slotNewIdentity()) );
   connect( mModifyButton, SIGNAL(clicked()),
 	   this, SLOT(slotModifyIdentity()) );
+  connect( mRenameButton, SIGNAL(clicked()),
+	   this, SLOT(slotRenameIdentity()) );
   connect( mRemoveButton, SIGNAL(clicked()),
 	   this, SLOT(slotRemoveIdentity()) );
   connect( mSetAsDefaultButton, SIGNAL(clicked()),
 	   this, SLOT(slotSetAsDefault()) );
   vlay->addWidget( button );
   vlay->addWidget( mModifyButton );
+  vlay->addWidget( mRenameButton );
   vlay->addWidget( mRemoveButton );
   vlay->addWidget( mSetAsDefaultButton );
   vlay->addStretch( 1 );
@@ -467,6 +473,15 @@ void IdentityPage::slotRemoveIdentity()
     }
 }
 
+void IdentityPage::slotRenameIdentity() {
+  assert( !mIdentityDialog );
+
+  QListViewItem * item = mIdentityList->selectedItem();
+  if ( !item ) return;
+
+  mIdentityList->rename( item, 0 );
+}
+
 void IdentityPage::slotRenameIdentity( QListViewItem * i,
 				       const QString & s, int col ) {
   assert( col == 0 );
@@ -529,6 +544,7 @@ void IdentityPage::slotIdentitySelectionChanged( QListViewItem * i ) {
 
   mRemoveButton->setEnabled( item && mIdentityList->childCount() > 1 );
   mModifyButton->setEnabled( item );
+  mRenameButton->setEnabled( item );
   mSetAsDefaultButton->setEnabled( item && !item->identity().isDefault() );
 }
 
@@ -1802,7 +1818,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay->addWidget( mShowColorbarCheck );
 
   // The window layout
-  mWindowLayoutBG = new QHButtonGroup( i18n("Window Layout"), this );
+  mWindowLayoutBG = new QHButtonGroup( i18n("&Window Layout"), this );
   mWindowLayoutBG->layout()->setSpacing( KDialog::spacingHint() );
   mWindowLayoutBG->setExclusive( true );
 
@@ -1822,11 +1838,11 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   mShowMIMETreeMode->layout()->setSpacing( KDialog::spacingHint() );
 
   mShowMIMETreeMode->insert(
-    new QRadioButton( i18n("Never"),  mShowMIMETreeMode ), 0 );
+    new QRadioButton( i18n("&Never"),  mShowMIMETreeMode ), 0 );
   mShowMIMETreeMode->insert(
-    new QRadioButton( i18n("Smart"),  mShowMIMETreeMode ), 1 );
+    new QRadioButton( i18n("&Smart"),  mShowMIMETreeMode ), 1 );
   mShowMIMETreeMode->insert(
-    new QRadioButton( i18n("Always"), mShowMIMETreeMode ), 2 );
+    new QRadioButton( i18n("Alwa&ys"), mShowMIMETreeMode ), 2 );
 
   vlay->addWidget( mShowMIMETreeMode );
 
@@ -1926,7 +1942,7 @@ static const struct {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
   { I18N_NOOP("Fanc&y format (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("&Custom (shift + F1 for help)"), KMime::DateFormatter::Custom }
+  { I18N_NOOP("C&ustom (shift + F1 for help)"), KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
@@ -1948,7 +1964,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 
   mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"), group );
 
-  mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto icons" ), group );
+  mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto &icons" ), group );
 
   mNestedMessagesCheck =
     new QCheckBox( i18n("&Thread list of message headers"), group );
@@ -1971,7 +1987,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Open threads that contain new, unread "
-			   "or important messages"), mNestingPolicy ), 3 );
+			   "or important &messages"), mNestingPolicy ), 3 );
 
   vlay->addWidget( mNestingPolicy );
 
@@ -3300,7 +3316,7 @@ FolderPage::FolderPage( QWidget * parent, const char * name )
 
   // "show popup after Drag'n'Drop" checkbox: stretch 0
   mShowPopupAfterDnD =
-    new QCheckBox( i18n("Ask for action after dragging messages to another folder"), this );
+    new QCheckBox( i18n("Ask for action after &dragging messages to another folder"), this );
   vlay->addWidget( mShowPopupAfterDnD );
 
   // "default mailbox format" combo + label: stretch 0
@@ -3401,7 +3417,7 @@ void FolderPage::apply() {
 
 
 QString SecurityPage::CryptPlugTab::title() {
-  return i18n("Crypto Plugins");
+  return i18n("Crypto Plugi&ns");
 }
 
 QString SecurityPage::CryptPlugTab::helpAnchor() const {
@@ -3465,18 +3481,19 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
   connect( plugNameEdit, SIGNAL(textChanged(const QString&)),
     this, SLOT(slotPlugNameChanged(const QString&)) );
 
-  QLabel* plugLocationLabel = new QLabel( plugNameEdit,
-                                          i18n("&Location:"), this );
-  glay->addWidget( plugLocationLabel, 7, 0 );
   plugLocationRequester = new KURLRequester( this );
   plugLocationRequester->setEnabled( false );
+  QLabel* plugLocationLabel = new QLabel( plugLocationRequester,
+                                          i18n("&Location:"), this );
+  glay->addWidget( plugLocationLabel, 7, 0 );
   glay->addWidget( plugLocationRequester, 7, 1 );
   connect( plugLocationRequester, SIGNAL(textChanged(const QString&)),
 	   SLOT(slotPlugLocationChanged(const QString&)) );
 
   plugUpdateURLEdit = new QLineEdit( this );
   plugUpdateURLEdit->setEnabled( false );
-  QLabel* plugUpdateURLLabel = new QLabel( plugNameEdit, i18n("&Update URL:"), this );
+  QLabel* plugUpdateURLLabel = new QLabel( plugUpdateURLEdit,
+					   i18n("&Update URL:"), this );
   glay->addWidget( plugUpdateURLLabel, 8, 0 );
   glay->addWidget( plugUpdateURLEdit,  8, 1 );
   connect( plugUpdateURLEdit, SIGNAL(textChanged(const QString&)),
