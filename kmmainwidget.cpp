@@ -394,6 +394,7 @@ void KMMainWidget::readConfig(void)
   }
   updateMessageMenu();
   updateFileMenu();
+  updateViewMenu();
 }
 
 
@@ -1714,6 +1715,7 @@ void KMMainWidget::slotMsgSelected(KMMessage *msg)
       return;
     mMsgView->clear();
     mMsgView->setWaitingForSerNum( msg->getMsgSerNum() );
+
     if ( mJob ) {
        disconnect( mJob, 0, mMsgView, 0 );
        delete mJob;
@@ -2586,94 +2588,85 @@ void KMMainWidget::setupActions()
   // "Headers" submenu:
   KActionMenu * headerMenu =
     new KActionMenu( i18n("View->", "&Headers"),
-		     actionCollection(), "view_headers" );
+                    actionCollection(), "view_headers" );
   headerMenu->setToolTip( i18n("Choose display style of message headers") );
 
-  if (mMsgView) {
-    connect( headerMenu, SIGNAL(activated()), SLOT(slotCycleHeaderStyles()) );
+  connect( headerMenu, SIGNAL(activated()), SLOT(slotCycleHeaderStyles()) );
 
-    raction = new KRadioAction( i18n("View->headers->", "&Fancy Headers"), 0, this,
-        SLOT(slotFancyHeaders()),
-        actionCollection(), "view_headers_fancy" );
-    raction->setToolTip( i18n("Show the list of headers in a fancy format") );
-    raction->setExclusiveGroup( "view_headers_group" );
-    headerMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->headers->", "&Fancy Headers"), 0, this,
+      SLOT(slotFancyHeaders()),
+      actionCollection(), "view_headers_fancy" );
+  raction->setToolTip( i18n("Show the list of headers in a fancy format") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
 
-    raction = new KRadioAction( i18n("View->headers->", "&Brief Headers"), 0, this,
-        SLOT(slotBriefHeaders()),
-        actionCollection(), "view_headers_brief" );
-    raction->setToolTip( i18n("Show brief list of message headers") );
-    raction->setExclusiveGroup( "view_headers_group" );
-    headerMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->headers->", "&Brief Headers"), 0, this,
+      SLOT(slotBriefHeaders()),
+      actionCollection(), "view_headers_brief" );
+  raction->setToolTip( i18n("Show brief list of message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
 
-    raction = new KRadioAction( i18n("View->headers->", "&Standard Headers"), 0, this,
-        SLOT(slotStandardHeaders()),
-        actionCollection(), "view_headers_standard" );
-    raction->setToolTip( i18n("Show standard list of message headers") );
-    raction->setExclusiveGroup( "view_headers_group" );
-    headerMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->headers->", "&Standard Headers"), 0, this,
+      SLOT(slotStandardHeaders()),
+      actionCollection(), "view_headers_standard" );
+  raction->setToolTip( i18n("Show standard list of message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
 
-    raction = new KRadioAction( i18n("View->headers->", "&Long Headers"), 0, this,
-        SLOT(slotLongHeaders()),
-        actionCollection(), "view_headers_long" );
-    raction->setToolTip( i18n("Show long list of message headers") );
-    raction->setExclusiveGroup( "view_headers_group" );
-    headerMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->headers->", "&Long Headers"), 0, this,
+      SLOT(slotLongHeaders()),
+      actionCollection(), "view_headers_long" );
+  raction->setToolTip( i18n("Show long list of message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
 
-    raction = new KRadioAction( i18n("View->headers->", "&All Headers"), 0, this,
-        SLOT(slotAllHeaders()),
-        actionCollection(), "view_headers_all" );
-    raction->setToolTip( i18n("Show all message headers") );
-    raction->setExclusiveGroup( "view_headers_group" );
-    headerMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->headers->", "&All Headers"), 0, this,
+      SLOT(slotAllHeaders()),
+      actionCollection(), "view_headers_all" );
+  raction->setToolTip( i18n("Show all message headers") );
+  raction->setExclusiveGroup( "view_headers_group" );
+  headerMenu->insert( raction );
 
-    // check the right one:
-    raction = actionForHeaderStyle( mMsgView->headerStyle(), mMsgView->headerStrategy() );
-    if ( raction )
-      raction->setChecked( true );
 
-    // "Attachments" submenu:
-    KActionMenu * attachmentMenu =
-      new KActionMenu( i18n("View->", "&Attachments"),
-          actionCollection(), "view_attachments" );
-    connect( attachmentMenu, SIGNAL(activated()),
-        SLOT(slotCycleAttachmentStrategy()) );
 
-    attachmentMenu->setToolTip( i18n("Choose display style of attachments") );
+  // "Attachments" submenu:
+  KActionMenu * attachmentMenu =
+    new KActionMenu( i18n("View->", "&Attachments"),
+        actionCollection(), "view_attachments" );
+  connect( attachmentMenu, SIGNAL(activated()),
+      SLOT(slotCycleAttachmentStrategy()) );
 
-    raction = new KRadioAction( i18n("View->attachments->", "&As Icons"), 0, this,
-        SLOT(slotIconicAttachments()),
-        actionCollection(), "view_attachments_as_icons" );
-    raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
-    raction->setExclusiveGroup( "view_attachments_group" );
-    attachmentMenu->insert( raction );
+  attachmentMenu->setToolTip( i18n("Choose display style of attachments") );
 
-    raction = new KRadioAction( i18n("View->attachments->", "&Smart"), 0, this,
-        SLOT(slotSmartAttachments()),
-        actionCollection(), "view_attachments_smart" );
-    raction->setToolTip( i18n("Show attachments as suggested by sender.") );
-    raction->setExclusiveGroup( "view_attachments_group" );
-    attachmentMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->attachments->", "&As Icons"), 0, this,
+      SLOT(slotIconicAttachments()),
+      actionCollection(), "view_attachments_as_icons" );
+  raction->setToolTip( i18n("Show all attachments as icons. Click to see them.") );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
 
-    raction = new KRadioAction( i18n("View->attachments->", "&Inline"), 0, this,
-        SLOT(slotInlineAttachments()),
-        actionCollection(), "view_attachments_inline" );
-    raction->setToolTip( i18n("Show all attachments inline (if possible)") );
-    raction->setExclusiveGroup( "view_attachments_group" );
-    attachmentMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->attachments->", "&Smart"), 0, this,
+      SLOT(slotSmartAttachments()),
+      actionCollection(), "view_attachments_smart" );
+  raction->setToolTip( i18n("Show attachments as suggested by sender.") );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
 
-    raction = new KRadioAction( i18n("View->attachments->", "&Hide"), 0, this,
-        SLOT(slotHideAttachments()),
-        actionCollection(), "view_attachments_hide" );
-    raction->setToolTip( i18n("Do not show attachments in the message viewer") );
-    raction->setExclusiveGroup( "view_attachments_group" );
-    attachmentMenu->insert( raction );
+  raction = new KRadioAction( i18n("View->attachments->", "&Inline"), 0, this,
+      SLOT(slotInlineAttachments()),
+      actionCollection(), "view_attachments_inline" );
+  raction->setToolTip( i18n("Show all attachments inline (if possible)") );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
 
-    // check the right one:
-    raction = actionForAttachmentStrategy( mMsgView->attachmentStrategy() );
-    if ( raction )
-      raction->setChecked( true );
-  }
+  raction = new KRadioAction( i18n("View->attachments->", "&Hide"), 0, this,
+      SLOT(slotHideAttachments()),
+      actionCollection(), "view_attachments_hide" );
+  raction->setToolTip( i18n("Do not show attachments in the message viewer") );
+  raction->setExclusiveGroup( "view_attachments_group" );
+  attachmentMenu->insert( raction );
+
   // Unread Submenu
   KActionMenu * unreadMenu =
     new KActionMenu( i18n("View->", "&Unread Count"),
@@ -3423,6 +3416,23 @@ void KMMainWidget::updateFileMenu()
 
   actionCollection()->action("check_mail")->setEnabled( actList.size() > 0 );
   actionCollection()->action("check_mail_in")->setEnabled( actList.size() > 0 );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::updateViewMenu()
+{
+  bool previewPaneVisible = ( mMsgView != 0 );
+  if ( previewPaneVisible ) {
+    KRadioAction *raction = actionForHeaderStyle( mMsgView->headerStyle(), mMsgView->headerStrategy() );
+    if ( raction )
+      raction->setChecked( true );
+    raction = actionForAttachmentStrategy( mMsgView->attachmentStrategy() );
+    if ( raction )
+      raction->setChecked( true );
+  }
+  actionCollection()->action("view_headers")->setEnabled( previewPaneVisible );
+  actionCollection()->action("view_attachments")->setEnabled( previewPaneVisible );
 }
 
 //-----------------------------------------------------------------------------
