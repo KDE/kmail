@@ -1701,11 +1701,13 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     // and the incapability of the plugin to verify the signature?
     const char* cleartextP = cleartext;
     bool bSignatureOk = cryptPlug->hasFeature( Feature_VerifySignatures ) &&
-                        cryptPlug->checkMessageSignature( data ? &(char*)cleartextP : &new_cleartext,
-                                                          signaturetext,
-                                                          signatureIsBinary,
-                                                          signatureLen,
-                                                          &sigMeta );
+                        cryptPlug->checkMessageSignature(
+                          data ? const_cast<char**>(&cleartextP)
+                               : &new_cleartext,
+                          signaturetext,
+                          signatureIsBinary,
+                          signatureLen,
+                          &sigMeta );
 
     kdDebug(5006) << "\nKMReaderWin::writeOpaqueOrMultipartSignedData: returned from CRYPTPLUG" << endl;
 
