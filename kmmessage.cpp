@@ -2120,7 +2120,7 @@ QString KMMessage::subjectMD5() const {
 
 //-----------------------------------------------------------------------------
 bool KMMessage::subjectIsPrefixed() const {
-  return subjectMD5() == strippedSubjectMD5();
+  return subjectMD5() != strippedSubjectMD5();
 }
 
 //-----------------------------------------------------------------------------
