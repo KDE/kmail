@@ -1122,15 +1122,19 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 
 void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 {
-  doFolderSelected(item);
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
   if (fti && fti->folder && fti->folder->account())
+  {
+    QListViewItemIterator it(item);
+    for (; it.current() != item->nextSibling(); it++)
+      if ((it.current()) == currentItem()) { doFolderSelected(item); break; }
     while (fti->firstChild())
     {
       KMFolderTreeItem* ftic = static_cast<KMFolderTreeItem*>
         (fti->firstChild());
       delete ftic;
     }
+  }
 }
 
 
