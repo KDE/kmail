@@ -189,10 +189,22 @@ static void checkMessage()
   delcmd.sprintf("%s.kmail%d.msg", _PATH_TMP, getuid());
   unlink (delcmd.data()); // unlink
   //system (delcmd.data()); // delete message if any
+
   // find a KMMainWin
   KMMainWin *kmmWin = 0;
-  if (kapp->topWidget() && kapp->topWidget()->isA("KMMainWin"))
-    kmmWin = (KMMainWin *) kapp->topWidget();
+  if (KTMainWindow::memberList)
+  {
+     for(  KTMainWindow *ktmWin = KTMainWindow::memberList->first();
+           ktmWin;
+           ktmWin = KTMainWindow::memberList->next())
+     {
+        if (ktmWin && ktmWin->isA("KMMainWin"))
+        {
+           kmmWin = (KMMainWin *) ktmWin;
+           break;
+        }
+     }
+  }
 
   if (cmd.find ("show") == 0)
   {
