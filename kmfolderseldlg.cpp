@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // kmfolderseldlg.cpp
 
 #include "kmfolderseldlg.h"
@@ -10,7 +9,6 @@
 #include <qpushbutton.h>
 #include <qlistbox.h>
 #include <qlayout.h>
-#include <unistd.h>
 #include <kapp.h>
 #include <qaccel.h>
 #include <kbuttonbox.h>
@@ -20,7 +18,7 @@ QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
 KMFolderSelDlg::KMFolderSelDlg(QString caption):
-  KMFolderSelDlgInherited(NULL, caption, TRUE)
+  KMFolderSelDlgInherited(0, 0, TRUE) // no parent, no name, but modal
 {
   QPushButton *btnCancel, *btnOk;
   QBoxLayout* box = new QVBoxLayout(this, 2, 0);

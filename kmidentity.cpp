@@ -1,4 +1,3 @@
-#undef QT_NO_COMPAT
 // kmidentity.cpp
 
 #include "kmidentity.h"
@@ -251,7 +250,7 @@ QString KMIdentity::signature(void) const
 
     if (rc != 0)
     {
-      QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd.data()).arg(strerror(errno));
+      QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd).arg(strerror(errno));
       KMessageBox::information(0, wmsg);
       return QString::null;
     }
