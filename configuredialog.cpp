@@ -3207,7 +3207,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   label = new QLabel( i18n("<qt><b>WARNING:</b> Allowing HTML in email may "
 			   "increase the risk that your system will be "
 			   "compromised by present and anticipated security "
-			   "exploits. Use \"What's this\" help (Shift-F1) for "
+			   "exploits. Use \"What's this\" help (Shift+F1) for "
 			   "detailed information on each option.</qt>"),
 		      group );
   label->setAlignment( WordBreak);
@@ -3221,7 +3221,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 					  "read confirmations"), group );
   label = new QLabel( i18n( "<qt><b>WARNING:</b> Unconditionally returning "
 			    "confirmations undermines your privacy. See "
-			    "\"What's this\" help (Shift-F1) for more.</qt>" ),
+			    "\"What's this\" help (Shift+F1) for more.</qt>" ),
 		      group );
   label->setAlignment( WordBreak);
 
