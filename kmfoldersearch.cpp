@@ -193,7 +193,7 @@ void KMSearch::start()
 	}
 	//TODO: Get rid of this protocol check, need a bool KMFolder::isComplete()
 	if (folder->folderType() == KMFolderTypeImap) {
-	    KMFolderImap *imapFolder = 
+	    KMFolderImap *imapFolder =
           dynamic_cast<KMFolderImap*>( folder->storage() );
 	    if (imapFolder && imapFolder->getContentState() ==
 		KMFolderImap::imapNoInformation) {
@@ -294,7 +294,8 @@ void KMSearch::slotProcessNextBatch()
 	    for(int i = 0; i < folder->count(); ++i) {
 		Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(folder, i);
 		++mRemainingMessages;
-		mSerNums.append(serNum);
+                // Prepend message to the list to search newest mail first.
+                mSerNums.prepend(serNum);
 	    }
 	}
 	mProcessNextBatchTimer->start(0, true);
@@ -992,7 +993,7 @@ void KMFolderSearch::examineAddedMessage(KMFolder *aFolder, Q_UINT32 serNum)
     if (folder->folderType() == KMFolderTypeImap) {
         // Unless there is a search currently running, add the message to
 	// the list of ones to check on folderCompleted and hook up the signal.
-        KMFolderImap *imapFolder = 
+        KMFolderImap *imapFolder =
            dynamic_cast<KMFolderImap*> ( folder->storage() );
 	if (!mSearch->running()) {
 	    mUnexaminedMessages.push(serNum);
