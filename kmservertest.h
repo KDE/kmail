@@ -47,15 +47,18 @@ namespace KIO {
 class KMServerTest : public QObject
 {
   Q_OBJECT
-  
+
 public:
   KMServerTest( const QString & protocol, const QString & host, int port );
   virtual ~KMServerTest();
 
 signals:
-  void capabilities(const QStringList &);
-  void capabilities(const QStringList & caps, const QString & authNone,
-		    const QString & authSSL, const QString & authTLS );
+  void capabilities( const QStringList & capaNormal,
+                     const QStringList & capaSSL );
+  void capabilities( const QStringList & capaNormal,
+                     const QStringList & capaSSL,
+                     const QString & authNone, const QString & authSSL,
+                     const QString & authTLS );
 
 protected slots:
   void slotData(KIO::Job *job, const QString &data);
@@ -72,7 +75,8 @@ protected:
   const QString  mProtocol;
   const QString  mHost;
   bool           mSSL;
-  QStringList    mList;
+  QStringList    mListNormal;
+  QStringList    mListSSL;
   QString        mAuthNone;
   QString        mAuthSSL;
   QString        mAuthTLS;

@@ -257,10 +257,15 @@ ProcmailRCParser::expandVars(const QString &s)
 AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 			      QWidget *parent, const char *name, bool modal )
   : KDialogBase( parent, name, modal, caption, Ok|Cancel|Help, Ok, true ),
-    mAccount(account), mSieveConfigEditor( 0 )
+    mAccount( account ),
+    mServerTest( 0 ),
+    mCapaNormal( AllCapa ),
+    mCapaSSL( AllCapa ),
+    mCapaTLS( AllCapa ),
+    mCurCapa( AllCapa ),
+    mSieveConfigEditor( 0 )
 {
   mValidator = new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 );
-  mServerTest = 0;
   setHelp("receiving-mail");
 
   QString accountType = mAccount->type();
@@ -297,10 +302,10 @@ AccountDialog::AccountDialog( const QString & caption, KMAccount *account,
 
 AccountDialog::~AccountDialog()
 {
-    delete mValidator;
-    mValidator = 0L;
-    delete mServerTest;
-    mServerTest = 0L;
+  delete mValidator;
+  mValidator = 0;
+  delete mServerTest;
+  mServerTest = 0;
 }
 
 void AccountDialog::makeLocalAccountPage()
@@ -606,9 +611,11 @@ void AccountDialog::makePopAccountPage()
     new QCheckBox( i18n("Sto&re POP password in configuration file"), page1 );
   grid->addMultiCellWidget( mPop.storePasswordCheck, 5, 5, 0, 1 );
 
-  mPop.deleteMailCheck =
-    new QCheckBox( i18n("&Delete message from server after fetching"), page1 );
-  grid->addMultiCellWidget( mPop.deleteMailCheck, 6, 6, 0, 1 );
+  mPop.leaveOnServerCheck =
+    new QCheckBox( i18n("Lea&ve fetched messages on the server"), page1 );
+  connect( mPop.leaveOnServerCheck, SIGNAL( clicked() ),
+           this, SLOT( slotLeaveOnServerClicked() ) );
+  grid->addMultiCellWidget( mPop.leaveOnServerCheck, 6, 6, 0, 1 );
 
 #if 0
   QHBox* resourceHB = new QHBox( page1 );
@@ -653,6 +660,8 @@ void AccountDialog::makePopAccountPage()
   grid->addMultiCellWidget( hbox, 8, 8, 0, 1 );
   connect( mPop.filterOnServerCheck, SIGNAL(toggled(bool)),
 	   mPop.filterOnServerSizeSpin, SLOT(setEnabled(bool)) );
+  connect( mPop.filterOnServerCheck, SIGNAL( clicked() ),
+           this, SLOT( slotFilterOnServerClicked() ) );
   QString msg = i18n("If you select this option, POP Filters will be used to "
 		     "decide what to do with messages. You can then select "
 		     "to download, delete or keep them on the server." );
@@ -664,7 +673,7 @@ void AccountDialog::makePopAccountPage()
   grid->addMultiCellWidget( mPop.intervalCheck, 9, 9, 0, 1 );
   connect( mPop.intervalCheck, SIGNAL(toggled(bool)),
 	   this, SLOT(slotEnablePopInterval(bool)) );
-  mPop.intervalLabel = new QLabel( i18n("Check inter&val:"), page1 );
+  mPop.intervalLabel = new QLabel( i18n("Chec&k interval:"), page1 );
   grid->addWidget( mPop.intervalLabel, 10, 0 );
   mPop.intervalSpin = new KIntNumInput( page1 );
   mPop.intervalSpin->setRange( 1, 10000, 1, FALSE );
@@ -711,16 +720,17 @@ void AccountDialog::makePopAccountPage()
 
   mPop.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication Method"), page2 );
-  mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup );
+  mPop.authUser = new QRadioButton( i18n("Clear te&xt") , mPop.authGroup,
+                                    "auth clear text" );
   mPop.authLogin = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&LOGIN"),
-    mPop.authGroup );
+    mPop.authGroup, "auth login" );
   mPop.authPlain = new QRadioButton( i18n("Please translate this "
     "authentication method only if you have a good reason", "&PLAIN"),
-    mPop.authGroup  );
-  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup );
-  mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup );
-  mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup );
+    mPop.authGroup, "auth plain"  );
+  mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD&5"), mPop.authGroup, "auth cram-md5" );
+  mPop.authDigestMd5 = new QRadioButton( i18n("&DIGEST-MD5"), mPop.authGroup, "auth digest-md5" );
+  mPop.authAPOP = new QRadioButton( i18n("&APOP"), mPop.authGroup, "auth apop" );
   vlay->addWidget( mPop.authGroup );
 
   vlay->addStretch();
@@ -1012,7 +1022,7 @@ void AccountDialog::setupSettings()
     mPop.portEdit->setText( QString("%1").arg( ap.port() ) );
     mPop.usePipeliningCheck->setChecked( ap.usePipelining() );
     mPop.storePasswordCheck->setChecked( ap.storePasswd() );
-    mPop.deleteMailCheck->setChecked( !ap.leaveOnServer() );
+    mPop.leaveOnServerCheck->setChecked( ap.leaveOnServer() );
     mPop.filterOnServerCheck->setChecked( ap.filterOnServer() );
     mPop.filterOnServerSizeSpin->setValue( ap.filterOnServerCheckSize() );
     mPop.intervalCheck->setChecked( interval >= 1 );
@@ -1207,10 +1217,40 @@ void AccountDialog::setupSettings()
 }
 
 
+void AccountDialog::slotLeaveOnServerClicked()
+{
+  if ( !( mCurCapa & UIDL ) && mPop.leaveOnServerCheck->isChecked() ) {
+    KMessageBox::information( topLevelWidget(),
+                              i18n("The server doesn't seem to support unique "
+                                   "message numbers, but this is a "
+                                   "requirement for leaving messages on the "
+                                   "server.\n"
+                                   "Since some servers don't correctly "
+                                   "announce their capabilities you still "
+                                   "have the possibility to turn leaving "
+                                   "fetched messages on the server on.") );
+  }
+}
+
+void AccountDialog::slotFilterOnServerClicked()
+{
+  if ( !( mCurCapa & TOP ) && mPop.filterOnServerCheck->isChecked() ) {
+    KMessageBox::information( topLevelWidget(),
+                              i18n("The server doesn't seem to support "
+                                   "fetching message headers, but this is a "
+                                   "requirement for filtering messages on the "
+                                   "server.\n"
+                                   "Since some servers don't correctly "
+                                   "announce their capabilities you still "
+                                   "have the possibility to turn filtering "
+                                   "messages on the server on.") );
+  }
+}
+
 void AccountDialog::slotPipeliningClicked()
 {
   if (mPop.usePipeliningCheck->isChecked())
-    KMessageBox::information(0,
+    KMessageBox::information( topLevelWidget(),
       i18n("Please note that this feature can cause some POP3 servers "
       "that do not support pipelining to send corrupted mail;\n"
       "this is configurable, though, because some servers support pipelining "
@@ -1226,15 +1266,37 @@ void AccountDialog::slotPipeliningClicked()
 
 void AccountDialog::slotPopEncryptionChanged(int id)
 {
-  if (id == 1 || mPop.portEdit->text() == "995")
-    mPop.portEdit->setText((id == 1) ? "995" : "110");
+  kdDebug(5006) << "slotPopEncryptionChanged( " << id << " )" << endl;
+  // adjust port
+  if ( id == SSL || mPop.portEdit->text() == "995" )
+    mPop.portEdit->setText( ( id == SSL ) ? "995" : "110" );
+
+  // switch supported auth methods
+  mCurCapa = ( id == TLS ) ? mCapaTLS
+                           : ( id == SSL ) ? mCapaSSL
+                                           : mCapaNormal;
+  enablePopFeatures( mCurCapa );
+  const QButton *old = mPop.authGroup->selected();
+  if ( !old->isEnabled() )
+    checkHighest( mPop.authGroup );
 }
 
 
 void AccountDialog::slotImapEncryptionChanged(int id)
 {
-  if (id == 1 || mImap.portEdit->text() == "993")
-    mImap.portEdit->setText((id == 1) ? "993" : "143");
+  kdDebug(5006) << "slotImapEncryptionChanged( " << id << " )" << endl;
+  // adjust port
+  if ( id == SSL || mImap.portEdit->text() == "993" )
+    mImap.portEdit->setText( ( id == SSL ) ? "993" : "143" );
+
+  // switch supported auth methods
+  int authMethods = ( id == TLS ) ? mCapaTLS
+                                  : ( id == SSL ) ? mCapaSSL
+                                                  : mCapaNormal;
+  enableImapAuthMethods( authMethods );
+  QButton *old = mImap.authGroup->selected();
+  if ( !old->isEnabled() )
+    checkHighest( mImap.authGroup );
 }
 
 
@@ -1249,8 +1311,10 @@ void AccountDialog::slotCheckPopCapabilities()
   delete mServerTest;
   mServerTest = new KMServerTest(POP_PROTOCOL, mPop.hostEdit->text(),
     mPop.portEdit->text().toInt());
-  connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
-    SLOT(slotPopCapabilities(const QStringList &)));
+  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
+                                              const QStringList & ) ),
+           this, SLOT( slotPopCapabilities( const QStringList &,
+                                            const QStringList & ) ) );
   mPop.checkCapabilities->setEnabled(FALSE);
 }
 
@@ -1266,61 +1330,181 @@ void AccountDialog::slotCheckImapCapabilities()
   delete mServerTest;
   mServerTest = new KMServerTest(IMAP_PROTOCOL, mImap.hostEdit->text(),
     mImap.portEdit->text().toInt());
-  connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
-    SLOT(slotImapCapabilities(const QStringList &)));
+  connect( mServerTest, SIGNAL( capabilities( const QStringList &,
+                                              const QStringList & ) ),
+           this, SLOT( slotImapCapabilities( const QStringList &,
+                                             const QStringList & ) ) );
   mImap.checkCapabilities->setEnabled(FALSE);
 }
 
 
-void AccountDialog::slotPopCapabilities(const QStringList &list)
+unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l )
 {
-  mPop.checkCapabilities->setEnabled(TRUE);
-  bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
-  mPop.usePipeliningCheck->setChecked(list.findIndex("PIPELINING") != -1);
-  mPop.encryptionNone->setEnabled(nc);
-  mPop.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
-  mPop.encryptionTLS->setEnabled(list.findIndex("STLS") != -1 && nc);
-  mPop.authPlain->setEnabled(list.findIndex("PLAIN") != -1);
-  mPop.authLogin->setEnabled(list.findIndex("LOGIN") != -1);
-  mPop.authCRAM_MD5->setEnabled(list.findIndex("CRAM-MD5") != -1);
-  mPop.authDigestMd5->setEnabled(list.findIndex("DIGEST-MD5") != -1);
-  mPop.authAPOP->setEnabled(list.findIndex("APOP") != -1);
-  checkHighest(mPop.encryptionGroup);
-  checkHighest(mPop.authGroup);
+  unsigned int capa = 0;
+  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
+    if ( *it == "PLAIN" )
+      capa |= Plain;
+    else if ( *it == "LOGIN" )
+      capa |= Login;
+    else if ( *it == "CRAM-MD5" )
+      capa |= CRAM_MD5;
+    else if ( *it == "DIGEST-MD5" )
+      capa |= Digest_MD5;
+    else if ( *it == "APOP" )
+      capa |= APOP;
+    else if ( *it == "PIPELINING" )
+      capa |= Pipelining;
+    else if ( *it == "TOP" )
+      capa |= TOP;
+    else if ( *it == "UIDL" )
+      capa |= UIDL;
+    else if ( *it == "STLS" )
+      capa |= STLS;
+  }
+  return capa;
+}
+
+
+void AccountDialog::slotPopCapabilities( const QStringList & capaNormal,
+                                         const QStringList & capaSSL )
+{
+  mPop.checkCapabilities->setEnabled( true );
+  mCapaNormal = popCapabilitiesFromStringList( capaNormal );
+  if ( mCapaNormal & STLS )
+    mCapaTLS = mCapaNormal;
+  else
+    mCapaTLS = 0;
+  mCapaSSL = popCapabilitiesFromStringList( capaSSL );
+  kdDebug(5006) << "mCapaNormal = " << mCapaNormal
+                << "; mCapaSSL = " << mCapaSSL
+                << "; mCapaTLS = " << mCapaTLS << endl;
+  mPop.encryptionNone->setEnabled( !capaNormal.isEmpty() );
+  mPop.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
+  mPop.encryptionTLS->setEnabled( mCapaTLS != 0 );
+  checkHighest( mPop.encryptionGroup );
   delete mServerTest;
   mServerTest = 0;
 }
 
 
-void AccountDialog::slotImapCapabilities(const QStringList &list)
+void AccountDialog::enablePopFeatures( unsigned int capa )
 {
-  mImap.checkCapabilities->setEnabled(TRUE);
-  bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
-  mImap.encryptionNone->setEnabled(nc);
-  mImap.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
-  mImap.encryptionTLS->setEnabled(list.findIndex("STARTTLS") != -1 && nc);
-  mImap.authPlain->setEnabled(list.findIndex("AUTH=PLAIN") != -1);
-  mImap.authLogin->setEnabled(list.findIndex("AUTH=LOGIN") != -1);
-  mImap.authCramMd5->setEnabled(list.findIndex("AUTH=CRAM-MD5") != -1);
-  mImap.authDigestMd5->setEnabled(list.findIndex("AUTH=DIGEST-MD5") != -1);
-  mImap.authAnonymous->setEnabled(list.findIndex("AUTH=ANONYMOUS") != -1);
-  checkHighest(mImap.encryptionGroup);
-  checkHighest(mImap.authGroup);
+  kdDebug(5006) << "enablePopFeatures( " << capa << " )" << endl;
+  mPop.authPlain->setEnabled( capa & Plain );
+  mPop.authLogin->setEnabled( capa & Login );
+  mPop.authCRAM_MD5->setEnabled( capa & CRAM_MD5 );
+  mPop.authDigestMd5->setEnabled( capa & Digest_MD5 );
+  mPop.authAPOP->setEnabled( capa & APOP );
+  if ( !( capa & Pipelining ) && mPop.usePipeliningCheck->isChecked() ) {
+    mPop.usePipeliningCheck->setChecked( false );
+    KMessageBox::information( topLevelWidget(),
+                              i18n("The server doesn't seem to support "
+                                   "pipelining. Therefore this option has "
+                                   "been disabled.\n"
+                                   "Since some servers don't correctly "
+                                   "announce their capabilities you still "
+                                   "have the possibility to turn pipelining "
+                                   "on. But please note that this feature can "
+                                   "cause some POP servers that do not "
+                                   "support pipelining to send corrupt "
+                                   "messages. So before using this feature "
+                                   "with important mail you should first "
+                                   "test it by sending yourself a larger "
+                                   "number of test messages which you all "
+                                   "download in one go from the POP "
+                                   "server.") );
+  }
+  if ( !( capa & UIDL ) && mPop.leaveOnServerCheck->isChecked() ) {
+    mPop.leaveOnServerCheck->setChecked( false );
+    KMessageBox::information( topLevelWidget(),
+                              i18n("The server doesn't seem to support unique "
+                                   "message numbers, but this is a "
+                                   "requirement for leaving messages on the "
+                                   "server. Therefore this option has been "
+                                   "disabled.\n"
+                                   "Since some servers don't correctly "
+                                   "announce their capabilities you still "
+                                   "have the possibility to turn leaving "
+                                   "fetched messages on the server on.") );
+  }
+  if ( !( capa & TOP ) && mPop.filterOnServerCheck->isChecked() ) {
+    mPop.filterOnServerCheck->setChecked( false );
+    KMessageBox::information( topLevelWidget(),
+                              i18n("The server doesn't seem to support "
+                                   "fetching message headers, but this is a "
+                                   "requirement for filtering messages on the "
+                                   "server. Therefore this option has been "
+                                   "disabled.\n"
+                                   "Since some servers don't correctly "
+                                   "announce their capabilities you still "
+                                   "have the possibility to turn filtering "
+                                   "messages on the server on.") );
+  }
+}
+
+
+unsigned int AccountDialog::imapCapabilitiesFromStringList( const QStringList & l )
+{
+  unsigned int capa = 0;
+  for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
+    if ( *it == "AUTH=PLAIN" )
+      capa |= Plain;
+    else if ( *it == "AUTH=LOGIN" )
+      capa |= Login;
+    else if ( *it == "AUTH=CRAM-MD5" )
+      capa |= CRAM_MD5;
+    else if ( *it == "AUTH=DIGEST-MD5" )
+      capa |= Digest_MD5;
+    else if ( *it == "AUTH=ANONYMOUS" )
+      capa |= Anonymous;
+    else if ( *it == "STARTTLS" )
+      capa |= STARTTLS;
+  }
+  return capa;
+}
+
+
+void AccountDialog::slotImapCapabilities( const QStringList & capaNormal,
+                                          const QStringList & capaSSL )
+{
+  mImap.checkCapabilities->setEnabled( true );
+  mCapaNormal = imapCapabilitiesFromStringList( capaNormal );
+  if ( mCapaNormal & STARTTLS )
+    mCapaTLS = mCapaNormal;
+  else
+    mCapaTLS = 0;
+  mCapaSSL = imapCapabilitiesFromStringList( capaSSL );
+  kdDebug(5006) << "mCapaNormal = " << mCapaNormal
+                << "; mCapaSSL = " << mCapaSSL
+                << "; mCapaTLS = " << mCapaTLS << endl;
+  mImap.encryptionNone->setEnabled( !capaNormal.isEmpty() );
+  mImap.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
+  mImap.encryptionTLS->setEnabled( mCapaTLS != 0 );
+  checkHighest( mImap.encryptionGroup );
   delete mServerTest;
   mServerTest = 0;
 }
 
 
-void AccountDialog::checkHighest(QButtonGroup *btnGroup)
+void AccountDialog::enableImapAuthMethods( unsigned int capa )
 {
-  QButton *btn;
-  for (int i = btnGroup->count() - 1; i >= 0; i--)
-  {
-    btn = btnGroup->find(i);
-    if (btn && btn->isEnabled())
-    {
+  kdDebug(5006) << "enableImapAuthMethods( " << capa << " )" << endl;
+  mImap.authPlain->setEnabled( capa & Plain );
+  mImap.authLogin->setEnabled( capa & Login );
+  mImap.authCramMd5->setEnabled( capa & CRAM_MD5 );
+  mImap.authDigestMd5->setEnabled( capa & Digest_MD5 );
+  mImap.authAnonymous->setEnabled( capa & Anonymous );
+}
+
+
+void AccountDialog::checkHighest( QButtonGroup *btnGroup )
+{
+  kdDebug(5006) << "checkHighest( " << btnGroup << " )" << endl;
+  for ( int i = btnGroup->count() - 1; i >= 0 ; --i ) {
+    QButton * btn = btnGroup->find( i );
+    if ( btn && btn->isEnabled() ) {
       btn->animateClick();
-      break;
+      return;
     }
   }
 }
@@ -1388,7 +1572,7 @@ void AccountDialog::saveSettings()
     epa.setUsePipelining( mPop.usePipeliningCheck->isChecked() );
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
-    epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
+    epa.setLeaveOnServer( mPop.leaveOnServerCheck->isChecked() );
     epa.setFilterOnServer( mPop.filterOnServerCheck->isChecked() );
     epa.setFilterOnServerCheckSize (mPop.filterOnServerSizeSpin->value() );
     epa.setPrecommand( mPop.precommand->text() );

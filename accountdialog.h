@@ -1,4 +1,6 @@
-/*
+/*   -*- c++ -*-
+ *   accountdialog.h
+ *
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
  *
@@ -116,8 +118,7 @@ class AccountDialog : public KDialogBase
       QPushButton  *checkCapabilities;
       QCheckBox    *usePipeliningCheck;
       QCheckBox    *storePasswordCheck;
-      QCheckBox    *deleteMailCheck;
-      QCheckBox    *retriveAllCheck;
+      QCheckBox    *leaveOnServerCheck;
 #if 0
       QCheckBox    *resourceCheck;
       QPushButton  *resourceClearButton;
@@ -181,13 +182,15 @@ class AccountDialog : public KDialogBase
     void slotEnableLocalInterval( bool state );
     void slotEnableMaildirInterval( bool state );
     void slotFontChanged();
+    void slotLeaveOnServerClicked();
+    void slotFilterOnServerClicked();
     void slotPipeliningClicked();
     void slotPopEncryptionChanged(int);
     void slotImapEncryptionChanged(int);
     void slotCheckPopCapabilities();
     void slotCheckImapCapabilities();
-    void slotPopCapabilities(const QStringList &);
-    void slotImapCapabilities(const QStringList &);
+    void slotPopCapabilities( const QStringList &, const QStringList & );
+    void slotImapCapabilities( const QStringList &, const QStringList & );
 #if 0
     // Moc doesn't understand #if 0, so they are also commented out
     // void slotClearResourceAllocations();
@@ -201,7 +204,11 @@ class AccountDialog : public KDialogBase
     void makeImapAccountPage( bool disconnected = false );
     void setupSettings();
     void saveSettings();
-    void checkHighest(QButtonGroup *);
+    void checkHighest( QButtonGroup * );
+    static unsigned int popCapabilitiesFromStringList( const QStringList & );
+    static unsigned int imapCapabilitiesFromStringList( const QStringList & );
+    void enablePopFeatures( unsigned int );
+    void enableImapAuthMethods( unsigned int );
 
   private:
     LocalWidgets mLocal;
@@ -212,6 +219,29 @@ class AccountDialog : public KDialogBase
     QValueList<QGuardedPtr<KMFolder> > mFolderList;
     QStringList  mFolderNames;
     KMServerTest *mServerTest;
+    enum EncryptionMethods {
+      NoEncryption = 0,
+      SSL = 1,
+      TLS = 2
+    };
+    enum Capabilities {
+      Plain      =   1,
+      Login      =   2,
+      CRAM_MD5   =   4,
+      Digest_MD5 =   8,
+      Anonymous  =  16,
+      APOP       =  32,
+      Pipelining =  64,
+      TOP        = 128,
+      UIDL       = 256,
+      STLS       = 512, // TLS for POP
+      STARTTLS   = 512, // TLS for IMAP
+      AllCapa    = 0xffffffff
+    };
+    unsigned int mCurCapa;
+    unsigned int mCapaNormal;
+    unsigned int mCapaSSL;
+    unsigned int mCapaTLS;
     KMail::SieveConfigEditor *mSieveConfigEditor;
     QRegExpValidator *mValidator;
 };

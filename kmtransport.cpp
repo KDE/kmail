@@ -536,7 +536,7 @@ void KMTransportDialog::slotSmtpEncryptionChanged(int id)
 }
 
 void KMTransportDialog::enableAuthMethods( unsigned int auth ) {
-  kdDebug(5006) << "KMTransportDislaog::enableAuthMethods( " << auth << " )" << endl;
+  kdDebug(5006) << "KMTransportDialog::enableAuthMethods( " << auth << " )" << endl;
   mSmtp.authPlain->setEnabled( auth & PLAIN );
   // LOGIN doesn't offer anything over PLAIN, requires more server
   // roundtrips and is not an official SASL mechanism, but a MS-ism,
@@ -580,8 +580,14 @@ void KMTransportDialog::slotCheckSmtpCapabilities()
   delete mServerTest;
   mServerTest = new KMServerTest(SMTP_PROTOCOL, mSmtp.hostEdit->text(),
     mSmtp.portEdit->text().toInt());
-  connect(mServerTest, SIGNAL(capabilities(const QStringList&,const QString&,const QString&,const QString&)),
-    SLOT(slotSmtpCapabilities(const QStringList&,const QString&,const QString&, const QString&)));
+  connect( mServerTest,
+           SIGNAL( capabilities( const QStringList &, const QStringList &,
+                                 const QString &, const QString &,
+                                 const QString & )),
+           this,
+           SLOT( slotSmtpCapabilities( const QStringList &,
+                                       const QStringList &, const QString &,
+                                       const QString &, const QString & ) ) );
   mSmtp.checkCapabilities->setEnabled(FALSE);
 }
 
@@ -600,28 +606,36 @@ void KMTransportDialog::checkHighest(QButtonGroup *btnGroup)
 }
 
 
-void KMTransportDialog::slotSmtpCapabilities(const QStringList & list,
-    const QString & authNone, const QString & authSSL, const QString & authTLS )
+void KMTransportDialog::slotSmtpCapabilities( const QStringList & capaNormal,
+                                              const QStringList & capaSSL,
+                                              const QString & authNone,
+                                              const QString & authSSL,
+                                              const QString & authTLS )
 {
+  mSmtp.checkCapabilities->setEnabled( true );
   kdDebug(5006) << "KMTransportDialog::slotSmtpCapabilities( ..., "
 	    << authNone << ", " << authSSL << ", " << authTLS << " )" << endl;
-  mSmtp.checkCapabilities->setEnabled(TRUE);
-  bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
-  mSmtp.encryptionNone->setEnabled(nc);
-  mSmtp.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
-  mSmtp.encryptionTLS->setEnabled(list.findIndex("STARTTLS") != -1 && nc);
-  if ( authNone.isEmpty() && authSSL.isEmpty() && authTLS.isEmpty() )
+  mSmtp.encryptionNone->setEnabled( !capaNormal.isEmpty() );
+  mSmtp.encryptionSSL->setEnabled( !capaSSL.isEmpty() );
+  mSmtp.encryptionTLS->setEnabled( capaNormal.findIndex("STARTTLS") != -1 );
+  if ( authNone.isEmpty() && authSSL.isEmpty() && authTLS.isEmpty() ) {
     // slave doesn't seem to support "* AUTH METHODS" metadata (or server can't do AUTH)
-    mAuthNone = mAuthSSL = mAuthTLS = authMethodsFromStringList( list );
+    mAuthNone = authMethodsFromStringList( capaNormal );
+    if ( mSmtp.encryptionTLS->isEnabled() )
+      mAuthTLS = mAuthNone;
+    else
+      mAuthTLS = 0;
+    mAuthSSL = authMethodsFromStringList( capaSSL );
+  }
   else {
     mAuthNone = authMethodsFromString( authNone );
     mAuthSSL = authMethodsFromString( authSSL );
     mAuthTLS = authMethodsFromString( authTLS );
-    kdDebug(5006) << "mAuthNone = " << mAuthNone
-	      << "; mAuthSSL = " << mAuthSSL
-	      << "; mAuthTLS = " << mAuthTLS << endl;
   }
-  checkHighest(mSmtp.encryptionGroup);
+  kdDebug(5006) << "mAuthNone = " << mAuthNone
+                << "; mAuthSSL = " << mAuthSSL
+                << "; mAuthTLS = " << mAuthTLS << endl;
+  checkHighest( mSmtp.encryptionGroup );
   delete mServerTest;
   mServerTest = 0;
 }

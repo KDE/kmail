@@ -103,23 +103,30 @@ void KMServerTest::startOffSlave( int port ) {
 //-----------------------------------------------------------------------------
 void KMServerTest::slotData(KIO::Job *, const QString &data)
 {
-  if ( mList.empty() )
-    mList = QStringList::split(' ', data);
+  if ( mSSL )
+    mListSSL = QStringList::split(' ', data);
+  else
+    mListNormal = QStringList::split(' ', data);
 kdDebug(5006) << data << endl;
-kdDebug(5006) << "count = " << mList.count() << endl;
 }
 
 
 void KMServerTest::slotMetaData( const KIO::MetaData & md ) {
   KIO::MetaData::const_iterator it = md.find( "PLAIN AUTH METHODS" );
-  if ( it != md.end() )
+  if ( it != md.end() ) {
     mAuthNone = it.data();
+    kdDebug(5006) << "mAuthNone: " << mAuthNone << endl;
+  }
   it = md.find( "TLS AUTH METHODS" );
-  if ( it != md.end() )
+  if ( it != md.end() ) {
     mAuthTLS = it.data();
+    kdDebug(5006) << "mAuthTLS: " << mAuthTLS << endl;
+  }
   it = md.find( "SSL AUTH METHODS" );
-  if ( it != md.end() )
+  if ( it != md.end() ) {
     mAuthSSL = it.data();
+    kdDebug(5006) << "mAuthSSL: " << mAuthSSL << endl;
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -141,17 +148,20 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
   if (!mSSL) {
     mSSL = true;
     if ( error )
-      mList.clear();
+      mListNormal.clear();
     else
-      mList.append("NORMAL-CONNECTION");
+      mListNormal.append("NORMAL-CONNECTION");
     startOffSlave();
   } else {
-    if (!error) mList.append("SSL");
+    if ( error )
+      mListSSL.clear();
+    else
+      mListSSL.append("SSL");
 
     mJob = 0;
 
-    emit capabilities(mList);
-    emit capabilities(mList, mAuthNone, mAuthSSL, mAuthTLS);
+    emit capabilities( mListNormal, mListSSL );
+    emit capabilities( mListNormal, mListSSL, mAuthNone, mAuthSSL, mAuthTLS );
   }
 }
 
