@@ -137,7 +137,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   mActLineHeight = mFaType[0]->size().height();
 
   //---------- button area
-  buttonBox = new KButtonBox(this, KButtonBox::HORIZONTAL, 0, 2);
+  buttonBox = new KButtonBox(this, Horizontal, 0, 2);
   grid->addMultiCellWidget(buttonBox, 3, 3, 0, 1);
 
   mBtnUp = buttonBox->addButton(i18n("Up"));

@@ -387,7 +387,7 @@ void KMHeaders::readConfig (void)
     setFont(kstrToFont(fntStr));
   }
   else
-    setFont(KGlobal::generalFont());
+    setFont(KGlobalSettings::generalFont());
 }
 
 

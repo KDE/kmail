@@ -12,6 +12,7 @@
 #include <qpopupmenu.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kglobalsettings.h>
 #include "kfontutils.h"
 
 #include "kmglobal.h"
@@ -257,7 +258,7 @@ void KMFolderTree::readConfig (void)
     setFont(kstrToFont(fntStr));
   }
   else
-    setFont(KGlobal::generalFont());
+    setFont(KGlobalSettings::generalFont());
 }
 
 //-----------------------------------------------------------------------------

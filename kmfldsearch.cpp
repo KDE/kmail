@@ -91,7 +91,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   //mLbxMatches->readConfig();
   mGrid->addMultiCellWidget(mLbxMatches, mNumRules+2, mNumRules+2, 0, 4);
 
-  bbox = new KButtonBox(this, KButtonBox::VERTICAL);
+  bbox = new KButtonBox(this, Vertical);
   mGrid->addMultiCellWidget(bbox, 0, mNumRules-1, 4, 4);
   mBtnSearch = bbox->addButton(i18n("Search"));
   mBtnSearch->setDefault(true);

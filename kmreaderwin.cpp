@@ -53,6 +53,7 @@
 #include <unistd.h>
 #include <klocale.h>
 #include <kglobal.h>
+#include <kglobalsettings.h>
 #include <kstddirs.h>  // for access and getpid
 //--- Sven's save attachments to /tmp end ---
 
@@ -186,9 +187,9 @@ void KMReaderWin::readConfig(void)
     mBodyFamily = kstrToFont(mBodyFont).family();
   }
   else {
-    setFont(KGlobal::generalFont());
-    fntSize = KGlobal::generalFont().pointSize();
-    mBodyFamily = KGlobal::generalFont().family();
+    setFont(KGlobalSettings::generalFont());
+    fntSize = KGlobalSettings::generalFont().pointSize();
+    mBodyFamily = KGlobalSettings::generalFont().family();
   }
 
   QValueList<int> fontsizes;
@@ -265,7 +266,7 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
   config.setGroup("Fonts");
   if( config.readBoolEntry( "defaultFonts", true ) == true )
   {
-    font = KGlobal::generalFont();
+    font = KGlobalSettings::generalFont();
     font.setItalic(true);
   }
   else
@@ -279,7 +280,7 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
       font  = kstrToFont(config.readEntry( "quote3-font", defaultFont ) );    
     else
     {
-      font = KGlobal::generalFont();
+      font = KGlobalSettings::generalFont();
       font.setItalic(true);
     }
   }

@@ -318,7 +318,7 @@ void KMComposeWin::readConfig(void)
     mBodyFont = kstrToFont(mBodyFontStr);
   }
   else
-    mBodyFont = KGlobal::generalFont();
+    mBodyFont = KGlobalSettings::generalFont();
   if (mEditor) mEditor->setFont(mBodyFont);
 
 #if defined CHARSETS
