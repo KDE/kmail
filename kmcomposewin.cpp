@@ -80,17 +80,6 @@
 
 
 
-// function is here only temporarily - will be moved into certificate manager
-//-----------------------------------------------------------------------------
-QString normalizedDN( char* src )
-{
-  QString dest;
-
-  dest = src;
-  
-  return dest;
-}
-
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
                             KMMessage *aMsg, uint id )
@@ -2453,11 +2442,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 		    dialog.setCaption( caption );
 		}
 		certificate[iZ] = '\0';
-		QString s;
-        if( isSMIME )
-          s = normalizedDN( &certificate[iA] );
-        else
-          s = &certificate[iA];
+		QString s = &certificate[iA];
 		certificate[iZ] = c;
 		if( useDialog )
 		    dialog.entriesLB->insertItem( s );
