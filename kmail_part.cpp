@@ -111,8 +111,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mReaderWin->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
 #if KDE_IS_VERSION( 3, 1, 90 )
-//  mStatusBar  = new KMailStatusBarExtension(this);
-//  mStatusBar->addStatusBarItem( kmailKernel->mainWin()->progressDialog(), 0, true );
+  mStatusBar  = new KMailStatusBarExtension(this);
+  mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
@@ -125,8 +125,8 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
 #if KDE_IS_VERSION( 3, 1, 90 )
-//  mStatusBar  = new KMailStatusBarExtension(this);
-//  mStatusBar->addStatusBarItem( kmailKernel->mainWin()->progressDialog(), 0, true );
+  mStatusBar  = new KMailStatusBarExtension(this);
+  mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );

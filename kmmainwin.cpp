@@ -135,21 +135,13 @@ void KMMainWin::slotUpdateToolbars()
 
 void KMMainWin::setupStatusBar()
 {
-  littleProgress = new KMLittleProgressDlg( statusBar() );
+  mMessageStatusId = 1;
+  littleProgress = mainKMWidget()->progressDialog();
 
   statusBar()->addWidget( littleProgress, 0 , true );
-  mMessageStatusId = 1;
   statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
   statusBar()->setItemAlignment( 1, AlignLeft | AlignVCenter );
   littleProgress->show();
-  connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
-	   littleProgress, SLOT(slotEnable( bool )));
-  connect( KMBroadcastStatus::instance(),
-	   SIGNAL(statusProgressPercent( unsigned long )),
-	   littleProgress,
-	   SLOT(slotJustPercent( unsigned long )));
-  connect( KMBroadcastStatus::instance(), SIGNAL(resetRequested()),
-	   littleProgress, SLOT(slotClean()));
 }
 
 /** Read configuration options after widgets are created. */

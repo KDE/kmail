@@ -115,6 +115,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   readPreConfig();
   createWidgets();
 
+  setupStatusBar();
   setupActions();
 
   readConfig();
@@ -1457,6 +1458,11 @@ void KMMainWidget::folderSelected(KMFolder* aFolder)
     folderSelected( aFolder, false );
 }
 
+KMLittleProgressDlg* KMMainWidget::progressDialog() const
+{
+    return mLittleProgress;
+}
+
 void KMMainWidget::folderSelectedUnread(KMFolder* aFolder)
 {
     mHeaders->blockSignals( true );
@@ -2391,6 +2397,26 @@ void KMMainWidget::setupActions()
 
   initializeFilterActions();
   updateMessageActions();
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::setupStatusBar()
+{
+  //we setup the progress dialog here, because its the one widget
+  //we want to export to the part.
+  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
+  KStatusBar *bar =  mainWin ? mainWin->statusBar() : 0;
+  mLittleProgress = new KMLittleProgressDlg( bar );
+
+  //mLittleProgress->show();
+  connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
+           mLittleProgress, SLOT(slotEnable( bool )));
+  connect( KMBroadcastStatus::instance(),
+           SIGNAL(statusProgressPercent( unsigned long )),
+           mLittleProgress,
+           SLOT(slotJustPercent( unsigned long )));
+  connect( KMBroadcastStatus::instance(), SIGNAL(resetRequested()),
+           mLittleProgress, SLOT(slotClean()));
 }
 
 

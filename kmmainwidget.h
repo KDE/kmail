@@ -9,6 +9,7 @@
 
 #include <kurl.h>
 #include <qlistview.h>
+
 #include "kmreaderwin.h" //for inline actions
 
 class KMFolder;
@@ -32,6 +33,7 @@ class KActionMenu;
 class KSelectAction;
 class KRadioAction;
 class KProgressDialog;
+class KMLittleProgressDlg;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
 template <typename T> class QGuardedPtr;
@@ -112,7 +114,8 @@ public:
   KToggleAction* totalColumnToggle;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
-  KMHeaders *headers() { return mHeaders; }
+  KMHeaders *headers() const { return mHeaders; }
+  KMLittleProgressDlg* progressDialog() const;
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -149,6 +152,7 @@ public slots:
 
 protected:
   void setupActions();
+  void setupStatusBar();
   void createWidgets();
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
@@ -338,6 +342,8 @@ protected:
   // ProgressDialog for transfering messages
   KProgressDialog* mProgressDialog;
   int mCountJobs, mCountMsgs;
+
+  KMLittleProgressDlg *mLittleProgress;
 
   QPtrList<KMMessage> mSelectedMsgs;
   QGuardedPtr<KMail::Vacation> mVacation;
