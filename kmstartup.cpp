@@ -11,7 +11,7 @@
 #include <klocale.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
-#include <knotifyclient.h>
+#include <kmessagebox.h>
 #include <dcopclient.h>
 #include <kcrash.h>
 #include <kglobal.h>
@@ -120,15 +120,23 @@ void lockOrDie() {
 
   if ( !first_instance )
   {
-    QString msg = i18n("Only one instance of KMail can be run at "
-      "any one time. It is already running "
-      "with PID %1 on host %2 according to the lock file located "
-      "at %3.").arg(oldPid).arg(oldHostName).arg(lockLocation);
+    QString msg( i18n("<qt>"
+       "To prevent <b>major damage to your existing mails</b> KMail has "
+       "been locked by another instance of KMail which seems to run "
+       "on host %1 with process id (PID) %2.<br><br>"
+       "In case you are really sure that this instance is not running any "
+       "longer, press <b>Continue</b> to delete the stale lock file and "
+       "restart KMail afterwards again.<br><br>"
+       "If unsure, press <b>Cancel</b>."
+       "</qt>").arg(oldHostName).arg(oldPid) );
 
-    KNotifyClient::userEvent( 0, msg,  KNotifyClient::Messagebox,
-      KNotifyClient::Error );
-    fprintf(stderr, "*** KMail is already running with PID %d on host %s\n",
-            oldPid, oldHostName.local8Bit().data());
+    if (KMessageBox::Continue == KMessageBox::warningContinueCancel(0, 
+         msg, i18n("Warning"), KStdGuiItem::cont(), QString::null, 
+         KMessageBox::Dangerous) ) {
+       // remove stale lock file entry
+       config.writeEntry("pid", -1);
+       config.sync();
+    }
     exit(1);
   }
 

@@ -10,7 +10,6 @@
 #include <dcopclient.h>
 #include "kmkernel.h" //control center
 #include "kmail_options.h"
-#include <qtimer.h>
 
 #undef Status // stupid X headers
 
@@ -51,12 +50,8 @@ void KMailApplication::commitData(QSessionManager& sm) {
 
 int KMailApplication::newInstance()
 {
-  if (dcopClient()->isSuspended())
-  {
-    // Try again later.
-    QTimer::singleShot( 100, this, SLOT(newInstance()) );
-    return 0;
-  }
+  if (!kmkernel)
+     return 0;
 
   if (!kmkernel->firstInstance() || !kapp->isRestored())
     kmkernel->handleCommandLine( true );
