@@ -777,6 +777,7 @@ void KMForwardAttachedCommand::execute()
     msgPart->setName("forwarded message");
     msgPart->setCte(DwMime::kCte8bit);   // is 8bit O.K.?
     msgPart->setContentDescription(msg->from()+": "+msg->subject());
+    msgPart->setContentDisposition( "inline" );
     // THIS HAS TO BE AFTER setCte()!!!!
     msgPart->setBodyEncoded(msg->asString());
     msgPart->setCharset("");
