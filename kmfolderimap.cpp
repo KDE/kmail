@@ -49,6 +49,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   mIsSelected = FALSE;
   mLastUid = 0;
   mCheckFlags = TRUE;
+  mCheckMail = TRUE;
 
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
@@ -61,17 +62,13 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   }
   mNoContent = config->readBoolEntry("NoContent", FALSE);
   mReadOnly = config->readBoolEntry("ReadOnly", FALSE);
+
+  readConfig();
 }
 
 KMFolderImap::~KMFolderImap()
 {
-  KConfig* config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Folder-" + idString());
-  config->writeEntry("UidValidity", mUidValidity);
-  config->writeEntry("ImapPath", mImapPath);
-  config->writeEntry("NoContent", mNoContent);
-  config->writeEntry("ReadOnly", mReadOnly);
-
+  writeConfig();
   if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
 }
 
@@ -99,13 +96,21 @@ void KMFolderImap::setAccount(KMAcctImap *aAccount)
 //-----------------------------------------------------------------------------
 void KMFolderImap::readConfig()
 {
-  KMFolderImapInherited::readConfig();
+  KConfig* config = KMKernel::config();
+  KConfigGroupSaver saver(config, "Folder-" + idString());
+  mCheckMail = config->readBoolEntry("checkmail", true);
 }
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::writeConfig()
 {
-  KMFolderImapInherited::writeConfig();
+  KConfig* config = KMKernel::config();
+  KConfigGroupSaver saver(config, "Folder-" + idString());
+  config->writeEntry("checkmail", mCheckMail);
+  config->writeEntry("UidValidity", mUidValidity);
+  config->writeEntry("ImapPath", mImapPath);
+  config->writeEntry("NoContent", mNoContent);
+  config->writeEntry("ReadOnly", mReadOnly);
 }
 
 //-----------------------------------------------------------------------------
@@ -260,7 +265,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
     {
       // make sure the messages won't be deleted while we work with them
       for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
-	msg->setTransferInProgress(true);
+        msg->setTransferInProgress(true);
 
       if (static_cast<KMFolderImap*>(msgParent)->account() == account())
       {
@@ -283,8 +288,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
 
         } else {
 
-          /* get the messages and the uids
-             don't unGet the messages because we need to access the serial number in addMsgQuiet */
+          // get the messages and the uids
           QValueList<int> uids;
           getUids(msgList, uids);
 
@@ -615,6 +619,18 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderImap::getAndCheckFolder(bool force)
+{
+  if (mNoContent)
+    return getFolder(force);
+
+  mAccount->processNewMailSingleFolder(this);
+  if (force) {
+    // force an update
+    mCheckFlags = TRUE;
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMFolderImap::getFolder(bool force)
@@ -1289,6 +1305,14 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
     }
   }
   mAccount->displayProgress();
+}
+
+//-----------------------------------------------------------------------------
+int KMFolderImap::create(bool imap)
+{
+  readConfig();
+  mUnreadMsgs = -1;
+  return KMFolderImapInherited::create(imap);
 }
 
 QValueList<int> KMFolderImap::splitSets(QString uids)

@@ -53,6 +53,8 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
+  connect(kernel->imapFolderMgr(), SIGNAL(changed()),
+      this, SLOT(slotUpdateFolderList()));	
 }
 
 
@@ -259,15 +261,19 @@ void KMAcctImap::processNewMail(bool interactive)
     emit finishedCheck(false);
     return;
   }
-  QStringList strList;
-  QValueList<QGuardedPtr<KMFolder> > folderList;
-  kernel->imapFolderMgr()->createFolderList(&strList, &folderList,
-    mFolder->child(), QString::null, false);
+  // if necessary then initialize the list of folders which should be checked
+  if( mMailCheckFolders.isEmpty() ) 
+  {
+    slotUpdateFolderList();
+    // if no folders should be checked then the check is finished
+    if( mMailCheckFolders.isEmpty() )
+      emit finishedCheck(false);
+  }
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   // first get the current count of unread-messages
   mCountRemainChecks = 0;
   mCountLastUnread = 0;
-  for (it = folderList.begin(); it != folderList.end(); ++it)
+  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
   {
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
@@ -276,7 +282,7 @@ void KMAcctImap::processNewMail(bool interactive)
     }
   }
   // then check for new mails
-  for (it = folderList.begin(); it != folderList.end(); ++it)
+  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
   {
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
@@ -309,6 +315,29 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
   postProcessNewMail(static_cast<KMFolder*>(folder));
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotUpdateFolderList()
+{
+  if (!mFolder || !mFolder->child() || !makeConnection())
+    return; 
+  QStringList strList;
+  mMailCheckFolders.clear();
+  kernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,
+    mFolder->child(), QString::null, false);
+  // the new list
+  QValueList<QGuardedPtr<KMFolder> > includedFolders;
+  // check for excluded folders
+  QValueList<QGuardedPtr<KMFolder> >::Iterator it;
+  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
+  {
+    KMFolderImap* folder = static_cast<KMFolderImap*>((KMFolder*)(*it));
+    if (folder->includeInMailCheck())
+      includedFolders.append(*it);
+  }
+  mMailCheckFolders = includedFolders;
+}
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::setPrefixHook() {
   if ( mFolder ) mFolder->setImapPath( prefix() );
 }

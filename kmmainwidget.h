@@ -144,7 +144,7 @@ public slots:
   void updateMessageActions();
   void statusMsg(const QString&);
 
-  /** Lauch subscription-dialog */
+  /** Launch subscription-dialog */
   void slotSubscriptionDialog();
 
 protected:

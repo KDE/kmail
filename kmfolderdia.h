@@ -52,6 +52,7 @@ protected:
   KIconButton *mNormalIconButton;
   KIconButton *mUnreadIconButton;
   QCheckBox   *mIconsCheckBox;
+  QCheckBox   *mNewMailCheckBox;
 
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 

@@ -237,10 +237,6 @@ int KMFolderMbox::create(bool imap)
   mOpenCount++;
   mQuiet = 0;
   mChanged = FALSE;
-  if (imap) {
-    readConfig();
-    mUnreadMsgs = -1;
-  }
 
   rc = writeIndex();
   if (!rc) lock();

@@ -338,9 +338,6 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
   KMAccount* cur;
   newMailArrived = false;
 
-  if (checking)
-    return;
-
   if (mAcctList.isEmpty())
   {
     KMessageBox::information(0,i18n("You need to add an account in the network "

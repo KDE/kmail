@@ -163,6 +163,11 @@ namespace KMail {
      */
     void killAllJobs( bool disconnectSlave=false ) = 0;
 
+	/**
+	 * Init a new-mail-check for a single folder
+	 */
+	void processNewMailSingleFolder(KMFolder* folder); 
+
   public slots:
     /**
      * gets the results of listDirectory
@@ -221,6 +226,8 @@ namespace KMail {
 
     bool mIdle : 1;
     bool mErrorDialogIsActive : 1;
+	// folders that should be checked for new mails
+	QValueList<QGuardedPtr<KMFolder> > mMailCheckFolders;
 
   signals:
     /**

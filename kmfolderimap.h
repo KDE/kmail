@@ -118,6 +118,11 @@ public:
   void getFolder(bool force = FALSE);
 
   /**
+   * same as above but also checks for new mails
+   */
+  void getAndCheckFolder(bool force = FALSE);
+
+  /**
    * Get the whole message
    */
   void getMessage(KMFolder * folder, KMMessage * msg);
@@ -209,6 +214,15 @@ public:
   static QValueList<int> splitSets(QString);
 
   virtual void ignoreJobsForMessage( KMMessage* );
+
+  /**
+   * If this folder should be included in new-mail-check
+   */   
+  bool includeInMailCheck() { return mCheckMail; }
+  void setIncludeInMailCheck( bool check ) { mCheckMail = check; }
+
+  /** Inherited */
+  virtual int create(bool imap = FALSE);
 
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
@@ -330,6 +344,7 @@ protected:
   bool        mIsSelected;
   bool        mCheckFlags;
   bool        mReadOnly;
+  bool		  mCheckMail : 1;
   QGuardedPtr<KMAcctImap> mAccount;
   QIntDict<ulong> uidmap;
 };

@@ -19,6 +19,7 @@
 #include "kmcomposewin.h"
 #include "kmmainwidget.h"
 #include "kmgroupware.h"
+#include "kmacctmgr.h"
 #include <X11/Xlib.h>
 #undef KeyPress
 
@@ -842,6 +843,10 @@ KMFolder *KMFolderTree::currentFolder() const
 // so that the header list and reader window can be udpated.
 void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 {
+  if (!qlvi) return;
+  disconnect(this, SIGNAL(currentChanged(QListViewItem*)),
+         this, SLOT(doFolderSelected(QListViewItem*)));
+
   KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(qlvi);
   KMFolder* folder = 0;
   if (fti) folder = fti->folder();
@@ -870,16 +875,18 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     emit folderSelected(folder);
     if (folder->protocol() == "imap")
     {
-      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fti->folder());
+      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
       imap_folder->setSelected(TRUE);
       if (imap_folder->getContentState() != KMFolderImap::imapInProgress)
-        imap_folder->getFolder();
+        imap_folder->getAndCheckFolder();
     } else {
       // we don't need this for imap-folders because
       // they're updated with the folderComplete-signal
       slotUpdateCounts(folder);
     }
   }
+  connect(this, SIGNAL(currentChanged(QListViewItem*)),
+         this, SLOT(doFolderSelected(QListViewItem*)));
 }
 
 //-----------------------------------------------------------------------------
@@ -942,8 +949,8 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 			     kernel->folderMgr(), SLOT(expireAll()));
     } else if (fti->folder()->protocol() == "imap") {
       folderMenu->insertItem(SmallIcon("mail_get"), i18n("Check &Mail"),
-        static_cast<KMFolderImap*>(fti->folder())->account(),
-        SLOT(processNewMail()));
+        this,
+        SLOT(slotCheckMail()));
     }
   } else {
     if ((fti->folder() == kernel->outboxFolder()) && (fti->folder()->count()) )
@@ -1569,6 +1576,20 @@ bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
     return true;
   }
   return KFolderTree::eventFilter(o, e);
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotCheckMail()
+{
+  if (!currentItem())
+    return;
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(currentItem());
+  KMFolder* folder = fti->folder();
+  if (folder && folder->protocol() == "imap")
+  {
+    KMAccount* acct = static_cast<KMFolderImap*>(folder)->account();
+    kernel->acctMgr()->singleCheckMail(acct, true);
+  }
 }
 
 #include "kmfoldertree.moc"

@@ -459,6 +459,18 @@ namespace KMail {
     return u.htmlURL();
   }
 
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::processNewMailSingleFolder(KMFolder* folder)
+  {
+	QValueList<QGuardedPtr<KMFolder> > mSaveList = mMailCheckFolders;
+	mMailCheckFolders.clear();
+	mMailCheckFolders.append(folder);
+
+	kernel->acctMgr()->singleCheckMail(this, true);
+
+	mMailCheckFolders = mSaveList;
+  }
+
 }; // namespace KMail
 
 #include "imapaccountbase.moc"

@@ -149,9 +149,9 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
 //------------------------------------------------------------------------------
 void SubscriptionDialog::slotSave()
 {
-    if (!account())
-        return;
-    // subscribe
+  if (!account())
+    return;
+  // subscribe
   QListViewItemIterator it(subView);
   for ( ; it.current(); ++it)
   {
@@ -173,7 +173,7 @@ void SubscriptionDialog::slotLoadFolders()
 {
   KSubscription::slotLoadFolders();
   if ( !account())
-      return;
+    return;
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(account());
   // get folders
   ai->listDirectory(ai->prefix(), false);

@@ -325,6 +325,27 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   sl->addWidget( senderType );
   sl->addStretch( 1 );
 
+  if (mFolder && 
+      mFolder->protocol() == "imap") 
+  {
+    KMFolderImap* imapFolder = static_cast<KMFolderImap*>((KMFolder*)mFolder);
+    // should this folder be included in new-mail-checks?
+    QGroupBox* newmailGroup = new QGroupBox( i18n("Check for new mails"), page, "newmailGroup" );
+    newmailGroup->setColumnLayout( 0,  Qt::Vertical );
+    topLayout->addWidget( newmailGroup );
+
+    QHBoxLayout *nml = new QHBoxLayout( newmailGroup->layout() );
+    nml->setSpacing( 6 );
+
+    QLabel *newmailLabel = new QLabel( i18n("Include in check:" ), newmailGroup );
+    nml->addWidget( newmailLabel );
+    mNewMailCheckBox = new QCheckBox(newmailGroup);
+    mNewMailCheckBox->setChecked( imapFolder->includeInMailCheck() );
+    newmailLabel->setBuddy(mNewMailCheckBox);
+    nml->addWidget( mNewMailCheckBox );
+    nml->addStretch( 1 );
+  }
+
   for( i = 1; mFolders.at(i - 1) != mFolders.end(); ++i ) {
     curFolder = *mFolders.at(i - 1);
     if (curFolder->child() == aFolderDir) {
@@ -539,11 +560,11 @@ void KMFolderDialog::slotOk()
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
       if (folder->parent() != selectedFolderDir) {
-	if (folder->protocol() == "cachedimap") {
-	  QString message = i18n("Moving IMAP folders is not supported");
-	  KMessageBox::error( this, message );
-	} else
-	  folder->rename(fldName, selectedFolderDir );
+        if (folder->protocol() == "cachedimap") {
+          QString message = i18n("Moving IMAP folders is not supported");
+          KMessageBox::error( this, message );
+        } else
+          folder->rename(fldName, selectedFolderDir );
       } else
         folder->rename(fldName);
 
@@ -584,6 +605,13 @@ void KMFolderDialog::slotOk()
     else
       folder->setUserWhoField(QString());
     if (!mFolder) folder->close();
+
+    if (folder->protocol() == "imap")
+    {
+      KMFolderImap* imapFolder = static_cast<KMFolderImap*>((KMFolder*)mFolder);
+      imapFolder->setIncludeInMailCheck( mNewMailCheckBox->isChecked() );
+      kernel->imapFolderMgr()->contentsChanged();
+    }
   }
 
   KDialogBase::slotOk();

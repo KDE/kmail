@@ -91,6 +91,11 @@ public slots:
    */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
+  /**
+   * updates the new-mail-check folderlist
+   */
+  void slotUpdateFolderList();
+
 protected:
   friend class KMAcctMgr;
   friend class KMPasswdDialog;

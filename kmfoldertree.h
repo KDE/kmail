@@ -215,6 +215,9 @@ protected slots:
   void rightButtonPressed( QListViewItem *, const QPoint &, int);
   void mouseButtonPressed( int btn, QListViewItem *, const QPoint &, int);
 
+  /** Fires a new-mail-check of the account that is accociated with currentItem */
+  void slotCheckMail();
+
 protected:
   /** Catch palette changes */
   virtual bool event(QEvent *e);
