@@ -35,7 +35,7 @@ public:
 // Information shared by all items in a list view
 struct KMPaintInfo {
   bool pixmapOn;
-  QPixmap pixmap; 
+  QPixmap pixmap;
   QColor colFore;
   QColor colBack;
   QColor colNew;
@@ -118,12 +118,15 @@ public:
   /** Returns pointer to owning main window. */
   KMMainWin* owner(void) const { return mOwner; }
 
+  /** PaintInfo pointer */
+  const KMPaintInfo *paintInfo(void) const { return &mPaintInfo; }
+
   /** Read config options. */
   virtual void readConfig(void);
 
   /** Read color options and set palette. */
   virtual void readColorConfig(void);
-  
+
   // Refresh the list of message headers shown
   virtual void reset(void);
 
@@ -165,7 +168,7 @@ public slots:
   void selectMessage(QListViewItem*);
   // For nested message view, recusively add all children of a message
   void recursivelyAddChildren( int i, KMHeaderItem *parent );
-  // For when a list view item has been selected 
+  // For when a list view item has been selected
   void highlightMessage(QListViewItem*);
   // For when righ mouse button is pressed
   void slotRMB();
@@ -187,9 +190,9 @@ public slots:
   void prevUnreadMessage();
   // Don't show a drag cursor
   void slotNoDrag();
- 
+
 protected:
-  static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent, 
+  static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
     *pixQueued, *pixFwd, *pixFlag;
 
   // Look for color changes
@@ -230,7 +233,7 @@ protected:
 
   /* Select all items in list from begin to end, return FALSE
      if end occurs before begin in the list */
-  virtual bool shiftSelection( QListViewItem *begin, QListViewItem *end );  
+  virtual bool shiftSelection( QListViewItem *begin, QListViewItem *end );
 
   /** Called when a header is clicked */
   virtual void setSorting( int column, bool ascending = TRUE);
@@ -242,7 +245,7 @@ protected slots:
   // Move messages corresponding to the selected items to the folder
   // corresponding to the given menuId
   virtual void moveSelectedToFolder( int menuId );
-  // Same thing but copy 
+  // Same thing but copy
   virtual void copySelectedToFolder( int menuId );
   // Apply the filter Rules to a single message
   virtual int slotFilterMsg( KMMessage * );
