@@ -1566,7 +1566,7 @@ void KMComposeWin::slotInsertPublicKey()
   str=pgp->getAsciiPublicKey(
          KpgpKey::getKeyName(this, pgp->keys()));
 
-  if( str ) {
+  if( str && str.length() > 0 ) {
     // create message part
     msgPart = new KMMessagePart;
     msgPart->setName(i18n("pgp key"));
@@ -1579,6 +1579,9 @@ void KMComposeWin::slotInsertPublicKey()
     // add the new attachment to the list
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
+  } else {
+    KMessageBox::sorry( 0L, i18n( "Could not attach public key, perhaps its format is invalid\n"
+    	"(e.g. key contains umlaut with wrong encoding)." ) );
   }
 }
 
