@@ -768,7 +768,7 @@ void KMMainWin::slotRemoveFolder()
   QDir dir;
 
   if (!mFolder) return;
-  if (mFolder->isSystemFolder() || strcmp(mFolder->type(),"plain")!=0)
+  if (mFolder->isSystemFolder() || qstrcmp(mFolder->type(),"plain")!=0)
   {
     kdDebug(5006) << "Cannot remove a\nsystem folder." << endl;
     return;
