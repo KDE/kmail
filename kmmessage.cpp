@@ -2523,6 +2523,7 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixe
 #if ALLOW_GUI
   KTextBrowser *browser = new KTextBrowser();
   browser->setTextFormat( Qt::PlainText );
+  browser->setWordWrap( KTextBrowser::NoWrap );
 
   KWin::setIcons(browser->winId(), kapp->icon(), kapp->miniIcon());
   if (!aCaption.isEmpty()) browser->setCaption(aCaption);
