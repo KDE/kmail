@@ -1805,7 +1805,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( partNode* data, partNode& si
     }
     else {
       txt = "<hr><b><h2>";
-      txt.append( i18n( "Signature could *not* be verified !" ) );
+      txt.append( i18n( "Signature could <em>not</em> be verified!" ) );
       txt.append( "</h2></b>" );
       txt.append( "<br>&nbsp;<br>" );
       txt.append( i18n( "Status: " ).local8Bit() );
