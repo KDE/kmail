@@ -48,6 +48,7 @@ using KRecentAddress::RecentAddresses;
 #include <kcursor.h>
 #include <kcombobox.h>
 #include <kstdaccel.h>
+#include <kpopupmenu.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
@@ -1191,7 +1192,7 @@ void KMComposeWin::decryptOrStripOffCleartextSignature( QCString& body )
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, 
+void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 			  bool allowDecryption, bool isModified)
 {
   KMMessagePart bodyPart, *msgPart;
@@ -4929,8 +4930,8 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (!sentOk)
       return false;
-  
-  // needed for imap    
+
+  // needed for imap
   mMsg->setComplete( true );
 
   if (saveInDrafts)
@@ -5439,7 +5440,6 @@ void KMEdit::keyPressEvent( QKeyEvent* e )
         KMEditInherited::keyPressEvent( e );
 }
 
-
 void KMEdit::contentsDropEvent(QDropEvent *e)
 {
     if (e->format(0) && (e->format(0) == QString("x-kmail-drag/message"))) {
@@ -5733,7 +5733,7 @@ void KMLineEditSpell::spellCheckDone( const QString &s )
 	setText( s );
 }
 
-void KMLineEditSpell::spellCheckerMisspelling( const QString &_text, const QStringList &, unsigned int pos)
+void KMLineEditSpell::spellCheckerMisspelling( const QString &_text, const QStringList&, unsigned int pos)
 {
      highLightWord( _text.length(),pos );
 }
@@ -5769,6 +5769,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   mTempFile = 0;
   mExtEditorProcess = 0;
   mWasModifiedBeforeSpellCheck = false;
+  mBound = QRegExp( QString::fromLatin1("[\\s\\W]") );
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   QColor defaultColor1( 0x00, 0x80, 0x00 ); // defaults from kmreaderwin.cpp
@@ -5785,6 +5786,13 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
     /*colorQuoting*/ true, col1, col2, col3, col4);
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
 	   composer, SLOT(slotStatusMessage(const QString &)));
+  connect( mSpellChecker, SIGNAL(newSuggestions(const QString&, const QStringList&, unsigned int)),
+           SLOT(addSuggestion(const QString&, const QStringList&, unsigned int)) );
+}
+
+void KMEdit::addSuggestion(const QString& text, const QStringList& lst, unsigned int )
+{
+  mReplacements[text] = lst;
 }
 
 //-----------------------------------------------------------------------------
@@ -5895,6 +5903,68 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     }
 
     }
+  } else if ( e->type() == QEvent::ContextMenu ) {
+    QContextMenuEvent *event = (QContextMenuEvent*) e;
+
+    int para = 1, charPos, firstSpace, lastSpace;
+
+    //Get the character at the position of the click
+    charPos = charAt( event->pos(), &para );
+    QString paraText = text( para );
+
+    if( !paraText.at(charPos).isSpace() )
+    {
+      //Get word right clicked on
+      firstSpace = paraText.findRev( mBound, charPos ) + 1;
+      lastSpace = paraText.find( mBound, charPos );
+      if( lastSpace == -1 )
+        lastSpace = paraText.length();
+      QString word = paraText.mid( firstSpace, lastSpace - firstSpace );
+      //Continue if this word was misspelled
+      if( !word.isEmpty() && mReplacements.contains( word ) )
+      {
+        KPopupMenu p;
+        p.insertTitle( i18n("Suggestions") );
+
+        //Add the suggestions to the popup menu
+        QStringList reps = mReplacements[word];
+        if( reps.count() > 0 )
+        {
+          int listPos = 0;
+          for ( QStringList::Iterator it = reps.begin(); it != reps.end(); ++it ) {
+            p.insertItem( *it, listPos );
+            listPos++;
+          }
+        }
+        else
+        {
+          p.insertItem( QString::fromLatin1("No Suggestions"), -2 );
+        }
+
+        //Execute the popup inline
+        int id = p.exec( mapToGlobal( event->pos() ) );
+
+        if( id > -1 )
+        {
+          //Save the cursor position
+          int parIdx = 1, txtIdx = 1;
+          getCursorPosition(&parIdx, &txtIdx);
+
+          //Put in our replacement
+          QString txtContents = text();
+          QString newContents = txtContents.left(firstSpace) + mReplacements[word][id] +
+                                txtContents.right( txtContents.length() - lastSpace );
+          setText( newContents );
+
+          //Restore the cursor position
+          if( txtIdx > lastSpace )
+            txtIdx += newContents.length() - txtContents.length();
+          setCursorPosition(parIdx, txtIdx);
+        }
+        //Cancel original event
+        return true;
+      }
+    }
   }
 
   return KMEditInherited::eventFilter(o, e);
@@ -5966,12 +6036,10 @@ void KMEdit::del()
 void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos)
 {
     kdDebug()<<"void KMEdit::slotMisspelling(const QString &text, const QStringList &lst, unsigned int pos) : "<<text <<endl;
-
-     if( spellLineEdit )
-         mComposer->sujectLineWidget()->spellCheckerMisspelling( text, lst, pos);
-     else
-         misspelling(text, lst, pos);
-
+    if( spellLineEdit )
+        mComposer->sujectLineWidget()->spellCheckerMisspelling( text, lst, pos);
+    else
+        misspelling(text, lst, pos);
 }
 
 void KMEdit::slotCorrected (const QString &oldWord, const QString &newWord, unsigned int pos)
