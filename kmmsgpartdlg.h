@@ -4,6 +4,7 @@
 #ifndef kmmsgpartdlg_h
 #define kmmsgpartdlg_h
 
+#include <kcombobox.h>
 #include <qdialog.h>
 #include <qpixmap.h>
 
@@ -37,8 +38,9 @@ protected:
   virtual void applyChanges(void);
 
   KMMessagePart *mMsgPart;
-  QLineEdit *mEdtName, *mEdtComment, *mEdtMimetype;
+  QLineEdit *mEdtName, *mEdtComment;
   QComboBox *mCbxEncoding;
+  KComboBox *mEdtMimetype;
   QLabel *mLblIcon, *mLblSize;
   QPixmap mIconPixmap;
 };

@@ -15,6 +15,7 @@ extern KBusyPtr *kbp;
 
 #include "kbusyptr.h"
 #include <kapp.h>
+#include <kcombobox.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
@@ -36,7 +37,6 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
 
   mMsgPart = NULL;
 
-  resize(320, 190);
   if (aCaption) setCaption(aCaption);
   else setCaption(i18n("Message Part Properties"));
 
@@ -45,13 +45,22 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   grid->addMultiCellWidget(mLblIcon, 0, 1, 0, 0);
 
   //-----
-  mEdtMimetype = new QLineEdit(this);
-  mEdtMimetype->adjustSize();
+  mEdtMimetype = new KComboBox(true, this);
+  mEdtMimetype->setInsertionPolicy(QComboBox::NoInsertion);
+  // here's only a small selection of what I think are very common mime types (dnaber, 2000-04-24):
+  mEdtMimetype->insertItem("text/html");
+  mEdtMimetype->insertItem("text/plain");
+  mEdtMimetype->insertItem("image/gif");
+  mEdtMimetype->insertItem("image/jpeg");
+  mEdtMimetype->insertItem("image/png");
+  mEdtMimetype->insertItem("application/octet-stream");
+  mEdtMimetype->insertItem("application/x-gunzip");
+  mEdtMimetype->insertItem("application/zip");
   h = mEdtMimetype->sizeHint().height();
   mEdtMimetype->setMinimumSize(100, h);
   mEdtMimetype->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mEdtMimetype, 0, 0, 1, 3);
-
+  
   //-----
   mLblSize = new QLabel(this);
   mLblSize->adjustSize();
@@ -106,7 +115,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   btnOk->adjustSize();
   btnOk->setMinimumSize(btnOk->sizeHint());
   connect(btnOk, SIGNAL(clicked()), SLOT(accept()));
-  grid->addMultiCellWidget(btnOk, 5, 5, 0, 1);
+  grid->addMultiCellWidget(btnOk, 5, 5, 1, 1);
 
   btnCancel = new QPushButton(i18n("Cancel"), this);
   btnCancel->adjustSize();
@@ -128,7 +137,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   grid->setColStretch(3, 10);
   grid->activate();
 
-  adjustSize();
+  resize(420, 190);
 }
 
 
@@ -149,7 +158,9 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 
   mEdtComment->setText(mMsgPart->contentDescription());
   mEdtName->setText(mMsgPart->name());
-  mEdtMimetype->setText(mMsgPart->typeStr()+"/"+mMsgPart->subtypeStr());
+  QString mimeType = mMsgPart->typeStr() + "/" + mMsgPart->subtypeStr();
+  mEdtMimetype->setEditText(mimeType);
+  mEdtMimetype->insertItem(mimeType, 0);
 
   len = mMsgPart->size();
   if (len > 9999) lenStr.sprintf("%u KB", (len>>10));
@@ -192,7 +203,7 @@ void KMMsgPartDlg::applyChanges(void)
   else if (idx==2) str = "quoted-printable";
   else str = "8bit";
 
-  type = mEdtMimetype->text();
+  type = mEdtMimetype->currentText();
   idx = type.find('/');
   if (idx < 0) subtype = "";
   else
