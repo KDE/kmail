@@ -243,7 +243,7 @@ int KMFolder::lock(void)
     return errno;
   }
 
-  if (mIndexStream >= 0)
+  if (!mIndexStream)
   {
 #if HAVE_FLOCK
     rc = flock(fileno(mIndexStream), LOCK_UN);
