@@ -176,6 +176,9 @@ public slots:
   /** Insert a file to the end of the text in the editor. */
   void slotInsertFile();
 
+  /** Insert sender's public key block in the editor. */
+  void slotInsertMyPublicKey();
+
   /** Popup a nice "not implemented" message. */
   void slotToDo();
 

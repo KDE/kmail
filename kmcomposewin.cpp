@@ -436,6 +436,7 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertSeparator();
   menu->insertItem(i18n("&Insert File..."), this,
 		    SLOT(slotInsertFile()));
+
   menu->insertSeparator();
   menu->insertItem(i18n("&Addressbook..."),this,
 		   SLOT(slotAddrBook()));
@@ -517,11 +518,17 @@ void KMComposeWin::setupMenuBar(void)
 #endif
   mMenuBar->insertItem(i18n("&View"), menu);
 
+  //---------- Menu: Attach
   menu = new QPopupMenu();
   menu->insertItem(i18n("Append S&ignature"), this, 
 		   SLOT(slotAppendSignature()));
   menu->insertItem(i18n("&Insert File"), this,
 		   SLOT(slotInsertFile()));
+  int id=menu->insertItem(i18n("Insert My &Public Key..."), this,
+		    SLOT(slotInsertMyPublicKey()));
+  if(!Kpgp::getKpgp()->havePGP())
+   menu->setItemEnabled(id, false);
+
   menu->insertItem(i18n("&Attach..."), this, SLOT(slotAttachFile()));
   menu->insertSeparator();
   menu->insertItem(i18n("&Remove"), this, SLOT(slotAttachRemove()));
@@ -1204,6 +1211,18 @@ void KMComposeWin::slotInsertFile()
 
   str = kFileToString(fileName, TRUE, TRUE);
   if (str.isEmpty()) return;
+
+  mEditor->getCursorPosition(&line, &col);
+  mEditor->insertAt(str, line, col);
+}  
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotInsertMyPublicKey()
+{
+  QString str;
+  int col, line;
+  
+  str=Kpgp::getKpgp()->getAsciiPublicKey(mMsg->from());
 
   mEditor->getCursorPosition(&line, &col);
   mEditor->insertAt(str, line, col);

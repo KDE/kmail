@@ -472,6 +472,12 @@ Kpgp::getPublicKey(QString _person)
   return 0;
 }
 
+QString 
+Kpgp::getAsciiPublicKey(QString _person)
+{
+  return pgp->getAsciiPublicKey(_person);
+}
+
 bool 
 Kpgp::isEncrypted(void) const
 {

@@ -46,6 +46,7 @@ public:
 		      bool = false) { return OK; };
   virtual int decrypt(const char * = 0) { return OK; };
   virtual QStrList pubKeys() { return OK; };
+  virtual QString getAsciiPublicKey(QString _person) { return OK; };
   virtual int signKey(const char *, const char *) { return OK; };
 
   /** various functions to get the status of a message */
@@ -105,6 +106,7 @@ public:
 		      bool ingoreUntrusted = false);
   virtual int decrypt(const char *passphrase = 0);
   virtual QStrList pubKeys();
+  virtual QString getAsciiPublicKey(QString _person);
   virtual int signKey(const char *key, const char *passphrase);
 };
 
@@ -123,6 +125,7 @@ public:
 		      bool ingoreUntrusted = false);
   virtual int decrypt(const char *passphrase = 0);
   virtual QStrList pubKeys();
+  virtual QString getAsciiPublicKey(QString _person);
   virtual int signKey(const char *key, const char *passphrase);
 };
 

@@ -73,6 +73,8 @@ public:
   bool havePublicKey(QString person);
   /** try to get the public key for this person */
   QString getPublicKey(QString _person);
+  /** try to ascii output of the public key of this person */
+  QString getAsciiPublicKey(QString _person);
      
   /** is the message encrypted ? */
   bool isEncrypted(void) const;
