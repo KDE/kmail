@@ -157,7 +157,6 @@ QByteArray kFileToBytes(const QString &aFileName, bool aVerbose)
 
 
 //-----------------------------------------------------------------------------
-static
 bool kBytesToFile(const char* aBuffer, int len,
 		   const QString &aFileName,
 		   bool aAskIfExists, bool aBackup, bool aVerbose)

@@ -31,6 +31,10 @@ QByteArray kFileToBytes(const QString &fileName, bool withDialogs=true);
  * Replaces existing files without warning if askIfExists==FALSE.
  * Makes a copy if the file exists to filename~ if createBackup==TRUE.
  */
+bool kBytesToFile(const char* aBuffer, int len,
+                  const QString &aFileName,
+                  bool aAskIfExists, bool aBackup, bool aVerbose);
+
 bool kCStringToFile(const QCString& buffer, const QString &fileName, 
 		   bool askIfExists=false, bool createBackup=true,
 		   bool withDialogs=true);
