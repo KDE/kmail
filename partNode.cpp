@@ -354,7 +354,7 @@ bool partNode::isAttachment() const
 
 const QString& partNode::trueFromAddress() const
 {
-  partNode* node = this;
+  const partNode* node = this;
   while( node->mFromAddress.isEmpty() && node->mRoot )
     node = node->mRoot;
   return node->mFromAddress;
