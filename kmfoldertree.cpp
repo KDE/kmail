@@ -511,7 +511,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
         addDirectory( folder->child(), fti );
       // make sure that the folder-settings are correctly read on startup by calling listDirectory
       if (readIsListViewItemOpen(fti) &&
-         folder && fti->folder()->protocol() == "imap")
+         fti->folder() && fti->folder()->protocol() == "imap")
         slotFolderExpanded(fti);
     }
   } // for-end
