@@ -41,7 +41,7 @@ Smtp::Smtp( const QString &from, const QStringList &to,
 
     mSocket->connectToHost( server, port );
     t = new QTextStream( mSocket );
-    t->setEncoding(QTextCoding::Latin1);
+    t->setEncoding(QTextStream::Latin1);
 }
 
 
