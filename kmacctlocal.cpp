@@ -145,6 +145,7 @@ bool KMAcctLocal::preProcess()
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
     checkDone( mHasNewMail, CheckError );
+    BroadcastStatus::instance()->setStatusMsg( i18n( "Running precommand failed." ));
     return false;
   }
 
