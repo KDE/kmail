@@ -38,6 +38,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kurl.h>
+#include <kapplication.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kio/job.h>
@@ -80,6 +81,7 @@ void KMServerTest::startOffSlave( int port ) {
     url.setPort( port );
 
   mSlave = KIO::Scheduler::getConnectedSlave( url, slaveConfig() );
+  kdDebug() << "slave=" << mSlave << endl;
   if ( !mSlave ) {
     slotSlaveResult( 0, 1 );
     return;
@@ -107,7 +109,6 @@ void KMServerTest::slotData(KIO::Job *, const QString &data)
     mListSSL = QStringList::split(' ', data);
   else
     mListNormal = QStringList::split(' ', data);
-kdDebug(5006) << data << endl;
 }
 
 
@@ -137,7 +138,7 @@ void KMServerTest::slotResult(KIO::Job *job)
 
 //-----------------------------------------------------------------------------
 void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
-  const QString &)
+  const QString &errorText)
 {
   if (aSlave != mSlave) return;
   if (error != KIO::ERR_SLAVE_DIED && mSlave)
@@ -145,19 +146,22 @@ void KMServerTest::slotSlaveResult(KIO::Slave *aSlave, int error,
     KIO::Scheduler::disconnectSlave(mSlave);
     mSlave = 0;
   }
+  if ( error > 0 )
+  {
+    KMessageBox::error( kapp->activeWindow(), KIO::buildErrorString( error, errorText ),
+        i18n("Error") );
+    mJob = 0;
+    mListNormal.clear();
+    mListSSL.clear();
+    emit capabilities( mListNormal, mListSSL );
+    return;
+  }
   if (!mSSL) {
     mSSL = true;
-    if ( error )
-      mListNormal.clear();
-    else
-      mListNormal.append("NORMAL-CONNECTION");
+    mListNormal.append("NORMAL-CONNECTION");
     startOffSlave();
   } else {
-    if ( error )
-      mListSSL.clear();
-    else
-      mListSSL.append("SSL");
-
+    mListSSL.append("SSL");
     mJob = 0;
 
     emit capabilities( mListNormal, mListSSL );
