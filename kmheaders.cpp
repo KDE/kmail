@@ -54,6 +54,8 @@ using namespace KPIM;
 #include <stdlib.h>
 #include <errno.h>
 
+#include "textsource.h"
+
 QPixmap* KMHeaders::pixNew = 0;
 QPixmap* KMHeaders::pixUns = 0;
 QPixmap* KMHeaders::pixDel = 0;
@@ -2171,7 +2173,7 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
           mailList.append( mailSummary );
           ++count;
         }
-      MailListDrag *d = new MailListDrag( mailList, viewport() );
+      MailListDrag *d = new MailListDrag( mailList, viewport(), new KMTextSource );
 
       // Set pixmap
       QPixmap pixmap;
