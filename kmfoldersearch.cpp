@@ -179,8 +179,10 @@ void KMSearch::start()
     QValueListConstIterator<QGuardedPtr<KMFolder> > it;
     for (it = folders.begin(); it != folders.end(); ++it) {
 	KMFolder *folder = *it;
-	if (!folder)
+	if (!folder) {
+	    --mRemainingFolders;
 	    continue;
+	}
 	//TODO: Get rid of this protocol check, need a bool KMFolder::isComplete()
 	if (folder->protocol() == "imap") {
 	    KMFolderImap *imapFolder = dynamic_cast<KMFolderImap*>(folder);
