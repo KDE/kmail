@@ -192,7 +192,8 @@ public:
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool imapQuiet = FALSE);
-  virtual void removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet = FALSE);
+  virtual void removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet = FALSE);
 
   /** Delete messages in the folder that are older than days. Return the
    * number of deleted messages. */

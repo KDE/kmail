@@ -310,11 +310,22 @@ int FolderStorage::find( const KMMessage * msg ) const {
 }
 
 //-----------------------------------------------------------------------------
-void FolderStorage::removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet)
+void FolderStorage::removeMsg(const QPtrList<KMMsgBase>& msgList, bool imapQuiet)
 {
-  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+  for( QPtrListIterator<KMMsgBase> it( msgList ); *it; ++it )
   {
-    int idx = find(msg);
+    int idx = find(it.current());
+    assert( idx != -1);
+    removeMsg(idx, imapQuiet);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void FolderStorage::removeMsg(const QPtrList<KMMessage>& msgList, bool imapQuiet)
+{
+  for( QPtrListIterator<KMMessage> it( msgList ); *it; ++it )
+  {
+    int idx = find(it.current());
     assert( idx != -1);
     removeMsg(idx, imapQuiet);
   }
