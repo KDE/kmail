@@ -404,19 +404,20 @@ void KMReaderWin::writeMsgHeader(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeBodyStr(const QString aStr)
 {
-  char ch, *pos, *beg;
-  bool atStart = TRUE;
-  bool quoted = FALSE;
-  bool lastQuoted = FALSE;
-  QString line(256), sig, htmlStr;
+  QString line(256), sig, htmlStr = "";
   Kpgp* pgp = Kpgp::getKpgp();
   assert(pgp != NULL);
   assert(!aStr.isNull());
+  bool pgpMessage = false;
 
   if (pgp->setMessage(aStr))
   {
+    QString str = pgp->frontmatter();
+    if(!str.isEmpty()) htmlStr += quotedHTML(str.data());
+    htmlStr += "<BR>";
     if (pgp->isEncrypted())
     {      
+      pgpMessage = true;
       if(pgp->decrypt())
       {
 	line.sprintf("<B>%s</B><BR>",
@@ -431,32 +432,48 @@ void KMReaderWin::writeBodyStr(const QString aStr)
 	htmlStr += line;
       }
     }
-    pos = pgp->message().data();
+    // check for PGP signing
+    if (pgp->isSigned())
+    {
+      pgpMessage = true;
+      if (pgp->goodSignature()) sig = i18n("Message was signed by");
+      else sig = i18n("Warning: Bad signature from");
+      
+      /* HTMLize signedBy data */
+      QString *sdata=new QString(pgp->signedBy());
+      sdata->replace(QRegExp("\""), "&quot;");
+      sdata->replace(QRegExp("<"), "&lt;");
+      sdata->replace(QRegExp(">"), "&gt;");
+      
+      line.sprintf("<B>%s <A HREF=\"mailto:%s\">%s</A></B><BR>", sig.data(), 
+		   sdata->data(),sdata->data());
+      delete sdata;
+      htmlStr += line;
+    }
+    htmlStr += quotedHTML(pgp->message().data());
+    if(pgpMessage) htmlStr += "<BR><B>End pgp message</B><BR><BR>";
+    str = pgp->backmatter();
+    if(!str.isEmpty()) htmlStr += quotedHTML(str.data());
   }
-  else pos = aStr.data();
+  else htmlStr += quotedHTML(aStr.data());
+
+  mViewer->write(htmlStr);
+}
+
+QString KMReaderWin::quotedHTML(char * pos)
+{
+  QString htmlStr, line;
+  char ch, *beg;
+  bool quoted = FALSE;
+  bool lastQuoted = FALSE;
+  bool atStart = TRUE;
+
+  htmlStr = "";
 
   // skip leading empty lines
   for (beg=pos; *pos && *pos<=' '; pos++)
   {
     if (*pos=='\n') beg = pos+1;
-  }
-
-  // check for PGP encryption/signing
-  if (pgp->isSigned())
-  {
-    if (pgp->goodSignature()) sig = i18n("Message was signed by");
-    else sig = i18n("Warning: Bad signature from");
-    
-    /* HTMLize signedBy data */
-    QString *sdata=new QString(pgp->signedBy());
-    sdata->replace(QRegExp("\""), "&quot;");
-    sdata->replace(QRegExp("<"), "&lt;");
-    sdata->replace(QRegExp(">"), "&gt;");
-
-    line.sprintf("<B>%s <A HREF=\"mailto:%s\">%s</A></B><BR>", sig.data(), 
-		 sdata->data(),sdata->data());
-    delete sdata;
-    htmlStr += line;
   }
 
   pos = beg;
@@ -485,10 +502,8 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if (!ch) break;
     pos++;
   }
-
-  mViewer->write(htmlStr);
+  return htmlStr;
 }
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
