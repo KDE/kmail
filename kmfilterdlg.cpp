@@ -648,7 +648,7 @@ void KMFilterListBox::slotRename()
      i18n("Rename Filter"),
      i18n("Rename filter \"%1\" to:").arg( filter->pattern()->name() ) /*label*/,
      filter->pattern()->name() /* initial value */,
-     &okPressed, 0 /* parent */
+     &okPressed, topLevelWidget()
      );
 
   if ( !okPressed ) return;
