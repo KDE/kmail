@@ -13,7 +13,6 @@ INCLUDES = -I$(top_srcdir)/libkmime \
 	-I$(top_srcdir)/mimelib \
 	-I$(top_srcdir)/certmanager/lib \
 	-I$(top_srcdir) \
-	-I$(top_builddir)/libkdepim \
 	$(GPGME_CFLAGS) \
 	$(all_includes)
 
