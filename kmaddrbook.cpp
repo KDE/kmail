@@ -206,14 +206,14 @@ void KMAddrBookExternal::addEmail( const QString &addr, QWidget *parent) {
     if ( !KABC::StdAddressBook::save() ) {
       KMessageBox::error( parent, i18n("Can't save to addressbook.") );
     } else {
-      QString text = i18n("The email address '%1' was added to your "
+      QString text = i18n("<qt>The email address <b>%1</b> was added to your "
                           "addressbook. You can add more information to this "
-                          "entry by opening the addressbook.").arg( addr );
+                          "entry by opening the addressbook.</qt>").arg( addr );
       KMessageBox::information( parent, text, QString::null, "addedtokabc" );
     }
   } else {
-    QString text = i18n("The email address '%1' is already in your "
-                        "addressbook.").arg( addr );
+    QString text = i18n("<qt>The email address <b>%1</b> is already in your "
+                        "addressbook.</qt>").arg( addr );
     KMessageBox::information( parent, text );
   }
 }

@@ -120,7 +120,7 @@ void KMAcctMaildir::processNewMail(bool)
   rc = mailFolder.open();
   if (rc)
   {
-    QString aStr = i18n("Cannot open folder %1.").arg( mailFolder.location() );
+    QString aStr = i18n("<qt>Cannot open folder <b>%1</b>.</qt>").arg( mailFolder.location() );
     KMessageBox::sorry(0, aStr);
     kdDebug(5006) << "cannot open folder " << mailFolder.location() << endl;
     emit finishedCheck(hasNewMail);
@@ -191,7 +191,7 @@ void KMAcctMaildir::processNewMail(bool)
     rc = mailFolder.expunge();
     if (rc)
       KMessageBox::information( 0,
-                              i18n("Cannot remove mail from mailbox '%1':\n%2")
+                              i18n("<qt>Cannot remove mail from mailbox <b>%1</b>:<br>%2</qt>")
                                 .arg(mailFolder.location()).arg(strerror(rc)));
     QString statusMsg;
     if ( num )

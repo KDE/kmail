@@ -962,7 +962,7 @@ void KMMainWidget::slotExpireFolder()
   KConfigGroupSaver saver(config, "General");
 
   if (config->readBoolEntry("warn-before-expire")) {
-    str = i18n("Are you sure you want to expire this folder \"%1\"?").arg(mFolder->label());
+    str = i18n("<qt>Are you sure you want to expire the folder <b>%1</b>?</qt>").arg(mFolder->label());
     if (KMessageBox::warningContinueCancel(this, str, i18n("Expire Folder"),
 					   i18n("&Expire"))
 	!= KMessageBox::Continue) return;
@@ -985,8 +985,8 @@ void KMMainWidget::slotEmptyFolder()
     QString title = (isTrash) ? i18n("Empty Trash") : i18n("Move to Trash");
     QString text = (isTrash) ?
       i18n("Are you sure you want to empty the trash folder?") :
-      i18n("Are you sure you want to move all messages from "
-           "folder \"%1\" to the trash?").arg(mFolder->label());
+      i18n("<qt>Are you sure you want to move all messages from "
+           "folder <b>%1</b> to the trash?</qt>").arg(mFolder->label());
 
     if (KMessageBox::warningContinueCancel(this, text, title, title)
       != KMessageBox::Continue) return;
@@ -1044,8 +1044,8 @@ void KMMainWidget::slotRemoveFolder()
   if (!mFolder) return;
   if (mFolder->isSystemFolder()) return;
 
-  str = i18n("Are you sure you want to delete the folder "
-	     "\"%1\" and all its subfolders, discarding their contents?")
+  str = i18n("<qt>Are you sure you want to delete the folder "
+	     "<b>%1</b> and all its subfolders, discarding their contents?</qt>")
 			     .arg(mFolder->label());
 
   if (KMessageBox::warningContinueCancel(this, str, i18n("Delete Folder"),
@@ -1061,7 +1061,7 @@ void KMMainWidget::slotRemoveFolder()
       {
         acct->setFolder(kernel->inboxFolder());
         KMessageBox::information(this,
-            i18n("The destination folder of the account '%1' was restored to the inbox.").arg(acct->name()));
+            i18n("<qt>The destination folder of the account <b>%1</b> was restored to the inbox.</qt>").arg(acct->name()));
       }
     }
     if (mFolder->protocol() == "imap")
