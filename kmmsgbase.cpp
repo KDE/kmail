@@ -1144,7 +1144,7 @@ off_t KMMsgBase::getLongPart(MsgPartType t) const
 
 #ifndef WORDS_BIGENDIAN
 // We need to use swab to swap bytes to network byte order
-#define memcpy_networkorder(to, from, len)  swab(from, to, len)
+#define memcpy_networkorder(to, from, len)  swab((char *)(from), (char *)(to), len)
 #else
 // We're already in network byte order
 #define memcpy_networkorder(to, from, len)  memcpy(to, from, len)

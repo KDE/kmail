@@ -370,7 +370,7 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
 #ifdef HAVE_MMAP
     if(just_close) {
 	if(mIndexStreamPtr)
-	    munmap(mIndexStreamPtr, mIndexStreamPtrLength);
+	    munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
 	mIndexStreamPtr = 0;
 	mIndexStreamPtrLength = 0;
 	return TRUE;
@@ -380,13 +380,13 @@ bool KMFolderIndex::updateIndexStreamPtr(bool)
     struct stat stat_buf;
     if(fstat(fileno(mIndexStream), &stat_buf) == -1) {
 	if(mIndexStreamPtr)
-	    munmap(mIndexStreamPtr, mIndexStreamPtrLength);
+	    munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
 	mIndexStreamPtr = 0;
 	mIndexStreamPtrLength = 0;
 	return FALSE;
     }
     if(mIndexStreamPtr)
-	munmap(mIndexStreamPtr, mIndexStreamPtrLength);
+	munmap((char *)mIndexStreamPtr, mIndexStreamPtrLength);
     mIndexStreamPtrLength = stat_buf.st_size;
     mIndexStreamPtr = (uchar *)mmap(0, mIndexStreamPtrLength, PROT_READ, MAP_SHARED,
 				    fileno(mIndexStream), 0);
