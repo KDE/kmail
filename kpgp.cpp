@@ -248,6 +248,7 @@ Kpgp::changePassPhrase(QString *oldPassPhrase, QString
 {
   //FIXME...
   warning(translate("Sorry, but this feature\nis still missing"));
+  return FALSE;
 }
 
 void 
