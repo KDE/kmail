@@ -295,7 +295,7 @@ void KMAcctCachedImap::invalidateIMAPFolders()
   if( folderList.count() > 0 )
     for( it = folderList.begin(); it != folderList.end(); ++it ) {
       KMFolder *folder = *it;
-      if( folder && folder->protocol() == "cachedimap" ) {
+      if( folder && folder->folderType() == KMFolderTypeCachedImap ) {
 	KMFolderCachedImap *cfolder = static_cast<KMFolderCachedImap*>(folder);
 	// This invalidates the folder completely
 	cfolder->setUidValidity("INVALID");

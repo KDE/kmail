@@ -224,7 +224,7 @@ void KMFolderMbox::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced) 
+  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced)
   {
       mOpenCount = 1;
       return;
@@ -835,7 +835,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
     msgParent->getMsg( idx );
   }
 
-  if (protocol() != "imap")
+  if (folderType() != KMFolderTypeImap)
   {
 /*
 QFile fileD0( "testdat_xx-kmfoldermbox-0" );

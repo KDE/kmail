@@ -81,7 +81,7 @@ static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
   }
 }
 
-QPixmap KMFolderTreeItem::normalIcon(int size) const 
+QPixmap KMFolderTreeItem::normalIcon(int size) const
 {
   QString icon;
   icon = "folder";
@@ -112,17 +112,17 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
     icon = mFolder->normalIconPath();
   }
   KIconLoader * il = KGlobal::instance()->iconLoader();
-  QPixmap pm = il->loadIcon( icon, KIcon::Small, size, 
+  QPixmap pm = il->loadIcon( icon, KIcon::Small, size,
                              KIcon::DefaultState, 0, true );
   if ( pm.isNull() ) {
-      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size, 
+      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size,
                          KIcon::DefaultState, 0, true );
   }
 
   return pm;
 }
 
-QPixmap KMFolderTreeItem::unreadIcon(int size) const 
+QPixmap KMFolderTreeItem::unreadIcon(int size) const
 {
   QPixmap pm;
 
@@ -131,14 +131,14 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
 
   KIconLoader * il = KGlobal::instance()->iconLoader();
   if ( mFolder->useCustomIcons() ) {
-    pm = il->loadIcon( mFolder->unreadIconPath(), KIcon::Small, size, 
+    pm = il->loadIcon( mFolder->unreadIconPath(), KIcon::Small, size,
                        KIcon::DefaultState, 0, true );
     if ( pm.isNull() )
-      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size, 
+      pm = il->loadIcon( mFolder->normalIconPath(), KIcon::Small, size,
                          KIcon::DefaultState, 0, true );
   }
   if ( pm.isNull() )
-    pm = il->loadIcon( "folder_open", KIcon::Small, size, 
+    pm = il->loadIcon( "folder_open", KIcon::Small, size,
                        KIcon::DefaultState, 0, true );
 
   return pm;
@@ -763,7 +763,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
       //  whether he wishes to be notified again in "AskNextFolder"
       //  parameter (kept in the config file for kmail)
       if ( KMessageBox::questionYesNo( this,
-            i18n( "<qt>Go to the next unread message in folder <b>%1</b>?</qt>" ) 
+            i18n( "<qt>Go to the next unread message in folder <b>%1</b>?</qt>" )
             .arg( fti->folder()->label() ),
             i18n( "Go to the Next Unread Message" ),
             KStdGuiItem::yes(), KStdGuiItem::no(), // defaults
@@ -864,7 +864,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
     if (act)
     {
       // Can't we do without this? -till
-      //act->killAllJobs(); 
+      //act->killAllJobs();
       act->setIdle(TRUE);
     }
   }
@@ -1001,7 +1001,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     }
   }
   if (fti->folder() &&
-      (fti->folder()->folderType() == KMFolderTypeImap || fti->folder()->protocol() == "cachedimap" ))
+      (fti->folder()->folderType() == KMFolderTypeImap || fti->folder()->folderType() == KMFolderTypeCachedImap ))
   {
     folderMenu->insertItem(SmallIcon("configure"),
         i18n("Subscription"), mMainWidget,
@@ -1091,7 +1091,7 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
   if (folder)
   {
     name = "Folder-" + folder->idString();
-  } else if (fti->type() == KFolderTreeItem::Root) 
+  } else if (fti->type() == KFolderTreeItem::Root)
   {
     if (fti->protocol() == KFolderTreeItem::NONE) // local root
       name = "Folder_local_root";
@@ -1117,7 +1117,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
   if (folder)
   {
     name = "Folder-" + folder->idString();
-  } else if (fti->type() == KFolderTreeItem::Root) 
+  } else if (fti->type() == KFolderTreeItem::Root)
   {
     if (fti->protocol() == KFolderTreeItem::NONE) // local root
       name = "Folder_local_root";
@@ -1518,7 +1518,7 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
   }
   if (repaint) {
     // repaint the item and it's parents
-    for (QListViewItem *p = fti; p; p = p->parent()) 
+    for (QListViewItem *p = fti; p; p = p->parent())
       p->repaint();
   }
 }

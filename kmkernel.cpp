@@ -1308,7 +1308,7 @@ bool KMKernel::folderIsTrash(KMFolder * folder)
 {
   assert(folder);
   if (folder == the_trashFolder) return true;
-  if (folder->protocol() != "imap") return false;
+  if (folder->folderType() != KMFolderTypeImap) return false;
   KMFolderImap *fi = static_cast<KMFolderImap*>(folder);
   if (fi->account()->trash() == fi->idString()) return true;
   return false;

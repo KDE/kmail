@@ -204,7 +204,7 @@ void KMSystemTray::foldersChanged()
     QString currentName = *strIt;
 
     if((!currentFolder->isSystemFolder() || (currentFolder->name().lower() == "inbox")) ||
-       (currentFolder->protocol() == "imap"))
+       (currentFolder->folderType() == KMFolderTypeImap))
     {
       /** If this is a new folder, start listening for messages */
       connect(currentFolder, SIGNAL(numUnreadMsgsChanged(KMFolder *)),
@@ -279,7 +279,7 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
 QString KMSystemTray::prettyName(KMFolder * fldr)
 {
   QString rvalue = fldr->label();
-  if(fldr->protocol() == "imap")
+  if(fldr->folderType() == KMFolderTypeImap)
   {
     KMFolderImap * imap = dynamic_cast<KMFolderImap*> (fldr);
     assert(imap);

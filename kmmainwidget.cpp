@@ -973,7 +973,7 @@ void KMMainWidget::slotEmptyFolder()
       != KMessageBox::Continue) return;
   }
 
-  if (mFolder->protocol() == "imap")
+  if (mFolder->folderType() == KMFolderTypeImap)
   {
     slotMarkAll();
     if (isTrash)
@@ -1051,9 +1051,9 @@ void KMMainWidget::slotRemoveFolder()
             i18n("<qt>The destination folder of the account <b>%1</b> was restored to the inbox.</qt>").arg(acct->name()));
       }
     }
-    if (mFolder->protocol() == "imap")
+    if (mFolder->folderType() == KMFolderTypeImap)
       static_cast<KMFolderImap*>(mFolder)->removeOnServer();
-    else if (mFolder->protocol() == "search")
+    else if (mFolder->folderType() == KMFolderTypeSearch)
       kernel->searchFolderMgr()->remove(mFolder);
     else
       kernel->folderMgr()->remove(mFolder);
@@ -1157,7 +1157,7 @@ void KMMainWidget::slotOverrideThread()
 {
   mFolderThreadPref = !mFolderThreadPref;
   mHeaders->setNestedOverride(mFolderThreadPref);
-  threadBySubjectAction->setEnabled(!mFolderThreadPref); 
+  threadBySubjectAction->setEnabled(!mFolderThreadPref);
 }
 
 //-----------------------------------------------------------------------------
@@ -1484,7 +1484,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
       mHeaders->show();
   }
 
-  if (mFolder && mFolder->needsCompacting() && (mFolder->protocol() == "imap"))
+  if (mFolder && mFolder->needsCompacting() && (mFolder->folderType() == KMFolderTypeImap))
   {
     KMFolderImap *imap = static_cast<KMFolderImap*>(mFolder);
     if (imap->autoExpunge())
@@ -2597,7 +2597,7 @@ void KMMainWidget::updateMessageActions()
     threadStatusMenu->setEnabled( thread_actions );
     watchThreadAction->setEnabled( thread_actions );
     ignoreThreadAction->setEnabled( thread_actions );
-    
+
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
       toggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
       toggleForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
@@ -2614,7 +2614,7 @@ void KMMainWidget::updateMessageActions()
         ignoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
       }
     }
- 
+
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     trashAction->setEnabled( mass_actions );
@@ -2696,9 +2696,9 @@ void KMMainWidget::updateFolderMenu()
   threadMessagesAction->setEnabled( mFolder ? true : false );
 
   preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
-  threadMessagesAction->setChecked( 
+  threadMessagesAction->setChecked(
       mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
-  threadBySubjectAction->setEnabled(  
+  threadBySubjectAction->setEnabled(
       mFolder ? (mThreadPref ? !mFolderThreadPref : mFolderThreadPref) : false );
   threadBySubjectAction->setChecked( mFolderThreadSubjPref );
 }
@@ -2952,13 +2952,13 @@ void KMMainWidget::slotSubscriptionDialog()
 {
   if (!mFolder) return;
 
-  if (mFolder->protocol() == "imap")
+  if (mFolder->folderType() == KMFolderTypeImap)
   {
     SubscriptionDialog * dialog = new SubscriptionDialog(this,
         i18n("Subscription"),
         static_cast<KMFolderImap*>(mFolder)->account());
     dialog->show();
-  } else if (mFolder->protocol() == "cachedimap")
+  } else if (mFolder->folderType() == KMFolderTypeCachedImap)
   {
     SubscriptionDialog * dialog = new SubscriptionDialog(this,
         i18n("Subscription"),

@@ -185,7 +185,7 @@ void KMSearch::start()
 	    continue;
 	}
 	//TODO: Get rid of this protocol check, need a bool KMFolder::isComplete()
-	if (folder->protocol() == "imap") {
+	if (folder->folderType() == KMFolderTypeImap) {
 	    KMFolderImap *imapFolder = dynamic_cast<KMFolderImap*>(folder);
 	    if (imapFolder && imapFolder->getContentState() ==
 		KMFolderImap::imapNoInformation) {
@@ -401,9 +401,9 @@ void KMFolderSearch::setSearch(KMSearch *search)
 	delete mSearch;
 	mSearch = search; // take ownership
 	if (mSearch) {
-	    QObject::connect(search, SIGNAL(found(Q_UINT32)), 
+	    QObject::connect(search, SIGNAL(found(Q_UINT32)),
 			     SLOT(addSerNum(Q_UINT32)));
-	    QObject::connect(search, SIGNAL(finished(bool)), 
+	    QObject::connect(search, SIGNAL(finished(bool)),
 			     SLOT(searchFinished(bool)));
 	}
     }

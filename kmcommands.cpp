@@ -1268,8 +1268,8 @@ void KMCopyCommand::execute()
     }
 
     if (srcFolder &&
-	(srcFolder->protocol() == "imap") &&
-	(mDestFolder->protocol() == "imap") &&
+	(srcFolder->folderType()== KMFolderTypeImap) &&
+	(mDestFolder->folderType() == KMFolderTypeImap) &&
 	(static_cast<KMFolderImap*>(srcFolder)->account() ==
 	 static_cast<KMFolderImap*>(mDestFolder)->account()))
     {
@@ -1371,7 +1371,7 @@ void KMMoveCommand::execute()
     if (msg->transferInProgress()) continue;
 
     if (mDestFolder) {
-      if (mDestFolder->protocol() == "imap") {
+      if (mDestFolder->folderType() == KMFolderTypeImap) {
         list.append(msg);
       } else {
         rc = mDestFolder->moveMsg(msg, &index);
@@ -1387,7 +1387,7 @@ void KMMoveCommand::execute()
       }
     } else {
       // really delete messages that are already in the trash folder
-      if (srcFolder->protocol() == "imap") {
+      if (srcFolder->folderType() == KMFolderTypeImap) {
 	if (!folderDeleteList[srcFolder])
 	  folderDeleteList[srcFolder] = new QPtrList<KMMessage>;
 	folderDeleteList[srcFolder]->append( msg );
@@ -1443,7 +1443,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
 }
 
 KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder ) {
-  if (folder->protocol() == "imap")
+  if (folder->folderType()== KMFolderTypeImap)
   {
     KMFolderImap* fi = static_cast<KMFolderImap*> (folder);
     QString trashStr = fi->account()->trash();

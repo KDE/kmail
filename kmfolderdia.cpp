@@ -171,8 +171,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     kernel->folderMgr()->createFolderList( &str, &mFolders  );
     kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
   }
-  else if( mFolder->protocol() != "imap"
-           && mFolder->protocol() != "cachedimap" ) {
+  else if( mFolder->folderType() != KMFolderTypeImap
+           && mFolder->folderType() != KMFolderTypeCachedImap ) {
     // already existant local folder can only be moved locally
     kernel->folderMgr()->createFolderList( &str, &mFolders  );
   }
@@ -184,8 +184,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 
   // remove the local system folders from the list of parent folders because
   // they can't have child folders
-  if( !mFolder || ( mFolder->protocol() != "imap"
-                    && mFolder->protocol() != "cachedimap" ) ) {
+  if( !mFolder || ( mFolder->folderType() != KMFolderTypeImap
+                    && mFolder->folderType() != KMFolderTypeCachedImap ) ) {
     QGuardedPtr<KMFolder> curFolder;
     QValueListIterator<QGuardedPtr<KMFolder> > folderIt = mFolders.begin();
     QStringList::Iterator strIt = str.begin();
@@ -195,8 +195,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
                     << " and corresponding string '" << (*strIt) << "'"
                     << endl;
       if( curFolder->isSystemFolder()
-          && curFolder->protocol() != "imap"
-          && curFolder->protocol() != "cachedimap" ) {
+          && curFolder->folderType() != KMFolderTypeImap
+          && curFolder->folderType() != KMFolderTypeCachedImap ) {
         kdDebug(5006) << "Removing folder '" << curFolder->label() << "'"
                       << endl;
         folderIt = mFolders.remove( folderIt );
@@ -217,7 +217,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   // we want to know if the activated changes
   connect( fileInFolder, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
 
-  if (mFolder && (mFolder->protocol() == "imap")) {
+  if (mFolder && (mFolder->folderType() == KMFolderTypeImap)) {
     //label->setEnabled( false );
     //nameEdit->setEnabled( false );
     label2->setEnabled( false );
@@ -397,11 +397,11 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     mailingListPostAddress->setEnabled( mFolder->isMailingList() );
     holdsMailingList->setChecked( mFolder->isMailingList() );
 
-    if( mFolder->protocol() == "search" ) {
+    if( mFolder->folderType() == KMFolderTypeSearch ) {
       mailboxType->setCurrentItem(2);
       label2->hide();
       fileInFolder->hide();
-    } else if( mFolder->protocol() == "maildir" ) {
+    } else if( mFolder->folderType() == KMFolderTypeMaildir ) {
       mailboxType->setCurrentItem(1);
     } else {
       mailboxType->setCurrentItem(0);
@@ -485,8 +485,8 @@ void KMFolderDialog::slotUpdateItems ( int current )
   KMFolder* selectedFolder = 0;
   // check if the index is valid (the top level has no entrance in the mFolders)
   if (current > 0) selectedFolder = *mFolders.at(current - 1);
-  if (selectedFolder && (selectedFolder->protocol() == "imap" ||
-			 selectedFolder->protocol() == "cachedimap"))
+  if (selectedFolder && (selectedFolder->folderType() == KMFolderTypeImap ||
+			 selectedFolder->folderType() == KMFolderTypeCachedImap))
   {
     // deactivate stuff that is not available for imap
     mtGroup->setEnabled( false );
@@ -567,11 +567,11 @@ void KMFolderDialog::slotOk()
     }
 
     if( bIsNewFolder ) {
-      if (selectedFolder && selectedFolder->protocol() == "imap")
+      if (selectedFolder && selectedFolder->folderType() == KMFolderTypeImap)
       {
         mFolder = new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
-      } else if (selectedFolder && selectedFolder->protocol() == "cachedimap"){
+      } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
         mFolder = kernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
       } else if (mailboxType->currentItem() == 2) {
         mFolder = kernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kernel->searchFolderMgr()->dir() );
@@ -585,7 +585,7 @@ void KMFolderDialog::slotOk()
              || ( mFolder->parent() != selectedFolderDir ) )
     {
       if( mFolder->parent() != selectedFolderDir ) {
-        if( mFolder->protocol() == "cachedimap" ) {
+        if( mFolder->folderType() == KMFolderTypeCachedImap ) {
           QString message = i18n("Moving IMAP folders is not supported");
           KMessageBox::error( this, message );
         } else
@@ -619,7 +619,7 @@ void KMFolderDialog::slotOk()
       // Reset icons, useCustomIcons was turned off.
       if ( !mFolder->useCustomIcons() ) {
         mFolder->setIconPaths( "", "" );
-      } 
+      }
     }
     if ( mFolder->useCustomIcons() &&
       (( mNormalIconButton->icon() != mFolder->normalIconPath() ) &&

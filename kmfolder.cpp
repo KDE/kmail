@@ -153,7 +153,7 @@ KMFolderDir* KMFolder::createChildFolder()
   }
 
   KMFolderDir* folderDir = new KMFolderDir(parent(), childName,
-    (protocol() == "imap") ? KMImapDir : KMStandardDir);
+    (folderType() == KMFolderTypeImap) ? KMImapDir : KMStandardDir);
   if (!folderDir)
     return 0;
   folderDir->reload();
@@ -555,7 +555,7 @@ KMMsgInfo* KMFolder::unGetMsg(int idx)
   if (mb->isMessage()) {
     // Remove this message from all jobs' list it might still be on.
     // setIndexEntry deletes the message.
-    KMMessage *msg = static_cast<KMMessage*>(mb); 
+    KMMessage *msg = static_cast<KMMessage*>(mb);
     ignoreJobsForMessage( msg );
     return setIndexEntry( idx, msg );
   }
@@ -1048,7 +1048,7 @@ void KMFolder::setUserWhoField(const QString &whoField, bool aWriteConfig)
     const KMIdentity & identity =
       kernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
-    if ( mIsSystemFolder && protocol() != "imap" )
+    if ( mIsSystemFolder && folderType() != KMFolderTypeImap )
     {
       // local system folders
       if ( this == kernel->inboxFolder() || this == kernel->trashFolder() ) mWhoField = "From";
