@@ -1,5 +1,6 @@
 // $Id$
 
+#include "kmcomposewin.h"
 #include "kmheaders.h"
 #include "mclass.h"
 #include "kbusyptr.h"
@@ -119,24 +120,72 @@ void KMHeaders::toggleDeleteMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::forwardMsg (int msgId)
 {
-  static bool isBusy = FALSE;
+  kbp->busy();
+  Message *msg = new Message();
+  if((msg = getMsg(-1)) == NULL) // First call
+	{kbp->idle();
+	return;
+	} 
+  else
+	{KMComposeWin *w0 = new KMComposeWin(0,0,0,msg,FORWARD);
+	w0->show();
+	w0->resize(w0->size());
+	}
 
-  if (isBusy) kbp->idle();
-  else kbp->busy();
-
-  isBusy = !isBusy;
+  while((msg = getMsg()) != NULL) // If more than 1 msg is selected
+       {KMComposeWin *w1 = new KMComposeWin(0,0,0,msg,FORWARD);
+       	w1->show();
+       	w1->resize(w1->size());
+	}
+  kbp->idle(); 
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::replyToMsg (int msgId)
 {
+  kbp->busy();
+  Message *msg = new Message();
+  if((msg = getMsg(-1)) == NULL) // First call
+	{kbp->idle();
+	return;
+	} 
+  else
+	{KMComposeWin *w0 = new KMComposeWin(0,0,0,msg,REPLY);
+	w0->show();
+	w0->resize(w0->size());
+	}
+
+  while((msg = getMsg()) != NULL) // If more than 1 msg is selected
+       {KMComposeWin *w1 = new KMComposeWin(0,0,0,msg,REPLY);
+       	w1->show();
+       	w1->resize(w1->size());
+	}
+  kbp->idle(); 
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::replyAllToMsg (int msgId)
 {
+  kbp->busy();
+  Message *msg = new Message();
+  if((msg = getMsg(-1)) == NULL) // First call
+	{kbp->idle();
+	return;
+	} 
+  else
+	{KMComposeWin *w0 = new KMComposeWin(0,0,0,msg,REPLYALL);
+	w0->show();
+	w0->resize(w0->size());
+	}
+
+  while((msg = getMsg()) != NULL) // If more than 1 msg is selected
+       {KMComposeWin *w1 = new KMComposeWin(0,0,0,msg,REPLYALL);
+       	w1->show();
+       	w1->resize(w1->size());
+	}
+  kbp->idle(); 
 }
 
 
