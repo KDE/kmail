@@ -306,12 +306,14 @@ int KMFolderCachedImap::writeUidCache()
 
 void KMFolderCachedImap::reloadUidMap()
 {
+  kdDebug(5006) << "Reloading Uid Map " << endl;
   uidMap.clear();
   open();
   for( int i = 0; i < count(); ++i ) {
     KMMsgBase *msg = getMsgBase( i );
     if( !msg ) continue;
     ulong uid = msg->UID();
+    kdDebug(5006) << "Inserting: " << i << " with uid: " << uid << endl;
     uidMap.insert( uid, i );
   }
   close();
@@ -446,6 +448,8 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
     KMMsgBase *msg = getMsgBase( *it );
     if( msg && msg->UID() == uid )
       return msg;
+  } else {
+    kdDebug(5006) << "Didn't find uid: " << uid << "in cache!" << endl;
   }
   // Not found by now
   if( mapReloaded )
@@ -457,6 +461,8 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
   if( it != uidMap.end() )
     // Since the uid map is just rebuilt, no need for the sanity check
     return getMsg( *it );
+  else
+    kdDebug(5006) << "Reloaded, but stil didn't find uid: " << uid << endl;
   // Then it's not here
   return 0;
 }
@@ -1351,13 +1357,13 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
         */
         // kdDebug(5006) << "KMFolderCachedImap::slotGetMessagesData() : folder "<<label()<<" already has msg="<<msg->headerField("Subject") << ", UID="<<uid << ", lastUid = " << mLastUid << endl;
         KMMsgBase *existingMessage = findByUID(uid);
-          // if this is a read only folder, ignore status updates from the server
-          // since we can't write our status back our local version is what has to
-          // be considered correct.
         if( !existingMessage ) {
           // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
           uidsForDeletionOnServer << uid;
         } else {
+          // if this is a read only folder, ignore status updates from the server
+          // since we can't write our status back our local version is what has to
+          // be considered correct.
           if (!mReadOnly) {
             /* The message is OK, update flags */
             KMFolderImap::flagsToStatus( existingMessage, flags );
