@@ -141,9 +141,6 @@ public:
   /** PaintInfo pointer */
   const KMPaintInfo *paintInfo(void) const { return &mPaintInfo; }
 
-  /** Returns if painting is disabled */
-  bool noPaint() const { return mNoPaint; }
-
   /** Read config options. */
   virtual void readConfig(void);
 
@@ -345,7 +342,6 @@ private:
 
   int mSortCol;
   bool mSortDescending;
-  bool mNoPaint;
 
   /** Icons shown in header */
   static QIconSet *up, *down;
