@@ -489,8 +489,9 @@ public:
     //columns put them in generate_key
     if(mKey.isEmpty() || mKey[0] != (char)sortOrder) {
       KMHeaders *headers = static_cast<KMHeaders*>(listView());
+      KMMsgBase *msgBase = headers->folder()->getMsgBase( mMsgId );
       return ((KMHeaderItem *)this)->mKey =
-        generate_key(mMsgId, headers, headers->folder()->getMsgBase( mMsgId ),
+        generate_key(mMsgId, headers, msgBase,
                      headers->paintInfo(), sortOrder);
     }
     return mKey;
@@ -1229,7 +1230,6 @@ void KMHeaders::msgAdded(int id)
     // o/` ... my buddy and me .. o/`
     hi->setSortCacheItem(sci);
     sci->setItem(hi);
-
   }
   if (mSortInfo.fakeSort) {
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
@@ -2230,11 +2230,11 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 void KMHeaders::updateMessageList( bool set_selection, bool forceJumpToUnread )
 {
   mPrevCurrent = 0;
+  noRepaint = true;
+  clear();
+  noRepaint = false;
   KListView::setSorting( mSortCol, !mSortDescending );
   if (!mFolder) {
-    noRepaint = true;
-    clear();
-    noRepaint = false;
     mItems.resize(0);
     repaint();
     return;
@@ -3033,10 +3033,6 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     mImperfectlyThreadedList.clear();
 
     //cleanup
-    noRepaint = true;
-    clear();
-    noRepaint = false;
-
     mItems.fill( 0, mFolder->count() );
     sortCache.fill( 0 );
 
@@ -3448,6 +3444,7 @@ void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
     }
   }
   // Not found. Maybe we should select the last item instead?
+  kdDebug(5006) << "KMHeaders::setCurrentItem item with serial number " << serialNum << " NOT FOUND" << endl;
 }
 
 #include "kmheaders.moc"
