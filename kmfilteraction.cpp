@@ -25,6 +25,7 @@
 #include <kdebug.h>
 #include <klocale.h>
 #include <kprocess.h>
+#include <kdeversion.h>
 
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
 #include <qlabel.h>
