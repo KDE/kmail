@@ -17,6 +17,7 @@ using KMail::FolderJob;
 #include "kmbroadcaststatus.h"
 
 #include <kapplication.h>
+#include <kglobalsettings.h>
 #include <kmessagebox.h>
 #include <kiconloader.h>
 #include <kimageio.h>
@@ -668,9 +669,9 @@ void KMHeaders::readConfig (void)
     KConfigGroupSaver saver(config, "Fonts");
     if (!(config->readBoolEntry("defaultFonts",TRUE)))
     {
-      QFont listFont = QFont("helvetica");
+      QFont listFont( KGlobalSettings::generalFont() );
       setFont(config->readFontEntry("list-font", &listFont));
-      dateFont = QFont("courier");
+      dateFont = KGlobalSettings::fixedFont();
       dateFont = config->readFontEntry("list-date-font", &dateFont);
     } else {
       dateFont = KGlobalSettings::generalFont();

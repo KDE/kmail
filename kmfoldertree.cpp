@@ -11,6 +11,7 @@
 #include "kmkernel.h"
 
 #include <kapplication.h>
+#include <kglobalsettings.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
@@ -403,7 +404,7 @@ void KMFolderTree::readConfig (void)
   { //area for config group "Pixmaps"
     KConfigGroupSaver saver(conf, "Fonts");
     if (!conf->readBoolEntry("defaultFonts",TRUE)) {
-      QFont folderFont = QFont("helvetica");
+      QFont folderFont( KGlobalSettings::generalFont() );
       setFont(conf->readFontEntry("folder-font", &folderFont));
     }
     else
