@@ -29,11 +29,11 @@ using KMail::SieveConfig;
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
+#include "kmfolderimap.h"
 #include "kmmainwin.h"
 #include "imapjob.h"
 using KMail::ImapJob;
 
-#include "kmfolderimap.h"
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
@@ -338,6 +338,19 @@ void KMAcctImap::slotUpdateFolderList()
       includedFolders.append(*it);
   }
   mMailCheckFolders = includedFolders;
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::listDirectory(QString path, bool onlySubscribed,
+    bool secondStep, KMFolder* parent)
+{
+  ImapAccountBase::listDirectory( path, onlySubscribed, secondStep, parent );
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::listDirectory()
+{
+  mFolder->listDirectory();
 }
 
 //-----------------------------------------------------------------------------

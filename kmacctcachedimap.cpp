@@ -306,6 +306,19 @@ void KMAcctCachedImap::invalidateIMAPFolders()
   processNewMail(false);
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctCachedImap::listDirectory(QString path, bool onlySubscribed,
+    bool secondStep, KMFolder* parent)
+{
+  ImapAccountBase::listDirectory( path, onlySubscribed, secondStep, parent );
+}
+
+//-----------------------------------------------------------------------------
+void KMAcctCachedImap::listDirectory()
+{
+  mFolder->listDirectory();
+}
+
 IMAPProgressDialog* KMAcctCachedImap::imapProgressDialog() const
 {
   if( !mProgressDlg ) {

@@ -158,6 +158,11 @@ namespace KMail {
     void listDirectory(QString path, bool onlySubscribed,
         bool secondStep = FALSE, KMFolder* parent = NULL);
 
+    /** 
+     * Starts the folderlisting for the root folder
+     */ 
+    virtual void listDirectory() = 0;
+
     /**
      * Subscribe (@p subscribe = TRUE) / Unsubscribe the folder
      * identified by @p imapPath

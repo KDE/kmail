@@ -141,6 +141,12 @@ public:
   void setSilentUpload( bool silent ) { mSilentUpload = silent; }
   bool silentUpload() { return mSilentUpload; }
 
+  /**
+   * List a directory and add the contents to kmfoldermgr
+   * returns false if the connection failed
+   */
+  bool listDirectory();
+
 protected slots:
   /**
    * Add the imap folders to the folder tree
@@ -169,11 +175,6 @@ protected slots:
   void slotConnectionResult( int errorCode );
 
 protected:
-  /**
-   * List a directory and add the contents to kmfoldermgr
-   * returns false if the connection failed
-   */
-  bool listDirectory();
   void listDirectory2();
 
 

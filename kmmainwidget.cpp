@@ -2989,19 +2989,21 @@ void KMMainWidget::slotSubscriptionDialog()
 {
   if (!mFolder) return;
 
+  ImapAccountBase* account;
   if (mFolder->folderType() == KMFolderTypeImap)
   {
-    SubscriptionDialog * dialog = new SubscriptionDialog(this,
-        i18n("Subscription"),
-        static_cast<KMFolderImap*>(mFolder)->account());
-    dialog->show();
+    account = static_cast<KMFolderImap*>(mFolder)->account();
   } else if (mFolder->folderType() == KMFolderTypeCachedImap)
   {
-    SubscriptionDialog * dialog = new SubscriptionDialog(this,
-        i18n("Subscription"),
-        static_cast<KMFolderCachedImap*>(mFolder)->account());
-    dialog->show();
-  }
+    account = static_cast<KMFolderCachedImap*>(mFolder)->account();
+  } else
+    return;
+
+  SubscriptionDialog *dialog = new SubscriptionDialog(this,
+      i18n("Subscription"),
+      account);
+  if ( dialog->exec() )
+    account->listDirectory();
 }
 
 //-----------------------------------------------------------------------------

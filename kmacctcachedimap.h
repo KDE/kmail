@@ -101,6 +101,20 @@ public:
    */
   virtual void invalidateIMAPFolders();
 
+  /**
+   * Lists the directory starting from @p path
+   * All parameters (onlySubscribed, secondStep, parent) are included
+   * in the jobData
+   * connects to slotListResult and slotListEntries
+   */
+  void listDirectory(QString path, bool onlySubscribed,
+      bool secondStep = FALSE, KMFolder* parent = NULL);  
+
+  /** 
+   * Starts the folderlisting for the root folder
+   */   
+  virtual void listDirectory();
+
 public slots:
   void processNewMail() { processNewMail(TRUE); }
 
