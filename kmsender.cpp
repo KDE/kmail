@@ -273,8 +273,6 @@ void KMSender::doSendMsg()
     return;
   }
 
-  QString tf = mCurrentMsg->headerField("To");
-  
   // start the sender process or initialize communication
   if (!mSendProcStarted)
   {
@@ -398,7 +396,7 @@ void KMSender::cleanup(void)
   mSendInProgress = FALSE;
   kernel->sentFolder()->close();
   kernel->outboxFolder()->close();
-  if (kernel->outboxFolder()->count()<0) 
+  if (kernel->outboxFolder()->count()<0)
     kernel->outboxFolder()->expunge();
   else kernel->outboxFolder()->compact();
 
@@ -887,7 +885,6 @@ bool KMSendSMTP::send(KMMessage *msg)
 //-----------------------------------------------------------------------------
 bool KMSendSMTP::smtpSend(KMMessage* aMsg)
 {
-  QString tf = aMsg->headerField("To");
   QString str, msgStr, bccStr;
   QString idStr = aMsg->headerField("X-KMail-Identity");
   aMsg->removeHeaderField("X-KMail-Identity");
