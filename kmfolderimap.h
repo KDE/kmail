@@ -354,9 +354,11 @@ protected:
   bool        mIsSelected;
   bool        mCheckFlags;
   bool        mReadOnly;
-  bool		  mCheckMail : 1;
+  bool	      mCheckMail : 1;
   QGuardedPtr<KMAcctImap> mAccount;
   QIntDict<ulong> uidmap;
+private:
+  bool        mCheckingValidity;
 };
 
 #endif // kmfolderimap_h
