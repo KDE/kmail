@@ -13,6 +13,7 @@
 #include <qhbox.h>
 #include <qstyle.h>
 #include <qtextcodec.h>
+#include <qpaintdevicemetrics.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -589,7 +590,7 @@ void KMReaderWin::displayAboutPage()
   } else {
     info = info.arg( QString::null );
   }
-  mViewer->write(content.arg(fntSize).arg(info));
+  mViewer->write(content.arg(pointsToPixel(fntSize), 0, 'f', 5).arg(info));
   mViewer->end();
 }
 
@@ -684,6 +685,14 @@ void KMReaderWin::sendNextHtmlChunk()
 }
 
 //-----------------------------------------------------------------------------
+double KMReaderWin::pointsToPixel(int pointSize)
+{
+  QPaintDeviceMetrics pdm(mViewer->view());
+  double pixelSize = pointSize;
+  return pixelSize * pdm.logicalDpiY() / 72;
+}
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
   if(mMsg == NULL)
@@ -725,10 +734,10 @@ void KMReaderWin::parseMsg(void)
     ((mPrinting) ? QString("body { font-family: \"%1\"; font-size: %2pt; "
                            "color: #000000; background-color: #FFFFFF; }\n")
         .arg( mBodyFamily ).arg( fntSize )
-      : QString("body { font-family: \"%1\"; font-size: %2pt; "
+      : QString("body { font-family: \"%1\"; font-size: %2px; "
         "color: %3; background-color: %4; }\n")
-        .arg( mBodyFamily ).arg( fntSize ).arg(c1.name())
-        .arg(c4.name())) +
+        .arg( mBodyFamily ).arg( pointsToPixel(fntSize), 0, 'f', 5 )
+        .arg(c1.name()) .arg(c4.name())) +
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
       : QString("a { color: %1; ").arg(c2.name()) +
         "text-decoration: none; }" + // just playing

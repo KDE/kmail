@@ -191,6 +191,9 @@ protected:
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
+  /** Calculate the pixel size */
+  double pointsToPixel(int pointSize);
+
   /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
   virtual void parseMsg(void);
