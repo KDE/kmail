@@ -18,6 +18,7 @@
 #include "kmcommands.h"
 #include "foldershortcutdialog.h"
 #include "expirypropertiesdialog.h"
+#include "newfolderdialog.h"
 #include "acljobs.h"
 
 #include <maillistdrag.h>
@@ -1103,6 +1104,9 @@ void KMFolderTree::addChildFolder()
     }
   }
 
+  ( new KMail::NewFolderDialog( this, aFolder ) )->show();
+  return;
+/*
   KMFolderDir *dir = &(kmkernel->folderMgr()->dir());
   if (aFolder)
     dir = aFolder->child();
@@ -1110,7 +1114,7 @@ void KMFolderTree::addChildFolder()
   KMFolderDialog *d =
     new KMFolderDialog(0, dir, this, i18n("Create Subfolder") );
 
-  if (d->exec()) /* fti may be deleted here */ {
+  if (d->exec()) { // fti may be deleted here 
     QListViewItem *qlvi = indexOfFolder( aFolder );
     if (qlvi) {
       qlvi->setOpen(TRUE);
@@ -1124,6 +1128,7 @@ void KMFolderTree::addChildFolder()
   if (!aFolder || aFolder->noContent()) {
      doFolderListChanged();
   }
+  */
 }
 
 //-----------------------------------------------------------------------------
