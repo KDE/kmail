@@ -213,9 +213,9 @@ public slots:
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
     *pixQueued, *pixFwd, *pixFlag,
-    *pixFullySigned, *pixPartiallySigned,
-    *pixFullyEncrypted, *pixPartiallyEncrypted,
-      *pixFiller, *pixUndefined, *pixEncryptionProblematic,
+    *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
+    *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
+      *pixFiller, *pixEncryptionProblematic,
       *pixSignatureProblematic;
 
   /** Look for color changes */

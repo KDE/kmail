@@ -5,7 +5,8 @@ data_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
 	pub_key_red.png pgp-keys.png \
 	kmmsgpartiallyencrypted.png \
 	kmmsgpartiallysigned.png kmmsgfiller.png kmmsgfullyencrypted.png \
-	kmmsgfullysigned.png kmundefined.png kmailwindowlayout1.png \
+	kmmsgfullysigned.png kmmsgundefinedencrypted.png \
+	kmmsgundefinedsigned.png kmailwindowlayout1.png \
 	kmailwindowlayout2.png kmailwindowlayout3.png kmailwindowlayout4.png \
 	kmailwindowlayout5.png kmailwindowlayout1_smart_mime.png \
 	kmailwindowlayout2_smart_mime.png kmailwindowlayout3_smart_mime.png \

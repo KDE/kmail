@@ -70,10 +70,11 @@ QPixmap* KMHeaders::pixFwd = 0;
 QPixmap* KMHeaders::pixFlag = 0;
 QPixmap* KMHeaders::pixFullySigned = 0;
 QPixmap* KMHeaders::pixPartiallySigned = 0;
+QPixmap* KMHeaders::pixUndefinedSigned = 0;
 QPixmap* KMHeaders::pixFullyEncrypted = 0;
 QPixmap* KMHeaders::pixPartiallyEncrypted = 0;
+QPixmap* KMHeaders::pixUndefinedEncrypted = 0;
 QPixmap* KMHeaders::pixFiller = 0;
-QPixmap* KMHeaders::pixUndefined = 0;
 QPixmap* KMHeaders::pixEncryptionProblematic = 0;
 QPixmap* KMHeaders::pixSignatureProblematic = 0;
 
@@ -294,7 +295,7 @@ public:
           else if( mMsgBase->encryptionState() == KMMsgPartiallyEncrypted )
               pixmaps << *KMHeaders::pixPartiallyEncrypted;
           else if( mMsgBase->encryptionState() == KMMsgEncryptionStateUnknown )
-              pixmaps << *KMHeaders::pixUndefined;
+              pixmaps << *KMHeaders::pixUndefinedEncrypted;
           else if( mMsgBase->encryptionState() == KMMsgEncryptionProblematic )
               pixmaps << *KMHeaders::pixEncryptionProblematic;
           else
@@ -305,7 +306,7 @@ public:
           else if( mMsgBase->signatureState() == KMMsgPartiallySigned )
               pixmaps << *KMHeaders::pixPartiallySigned;
           else if( mMsgBase->signatureState() == KMMsgSignatureStateUnknown )
-              pixmaps << *KMHeaders::pixUndefined;
+              pixmaps << *KMHeaders::pixUndefinedSigned;
           else if( mMsgBase->signatureState() == KMMsgSignatureProblematic )
               pixmaps << *KMHeaders::pixSignatureProblematic;
           else
@@ -535,10 +536,11 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     pixFlag  = new QPixmap( UserIcon("kmmsgflag") );
     pixFullySigned = new QPixmap( UserIcon( "kmmsgfullysigned" ) );
     pixPartiallySigned = new QPixmap( UserIcon( "kmmsgpartiallysigned" ) );
+    pixUndefinedSigned = new QPixmap( UserIcon( "kmmsgundefinedsigned" ) );
     pixFullyEncrypted = new QPixmap( UserIcon( "kmmsgfullyencrypted" ) );
     pixPartiallyEncrypted = new QPixmap( UserIcon( "kmmsgpartiallyencrypted" ) );
+    pixUndefinedEncrypted = new QPixmap( UserIcon( "kmmsgundefinedencrypted" ) );
     pixFiller = new QPixmap( UserIcon( "kmmsgfiller" ) );
-    pixUndefined = new QPixmap( UserIcon( "kmundefined" ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic = new QPixmap( UserIcon( "kmmsgsignatureproblematic" ) );
   }
