@@ -128,6 +128,10 @@ public:
   void setUidValidity(const QString &validity) { mUidValidity = validity; }
   QString uidValidity() const { return mUidValidity; }
 
+  /** Forget which mails are considered locally present. Needed when uidvalidity
+   * changes. */
+  void clearUidMap() { uidMap.clear(); }
+
   /** The imap account associated with this folder */
   void setAccount(KMAcctCachedImap *acct);
   KMAcctCachedImap* account() const;
