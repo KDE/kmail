@@ -1,7 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
 
 #include <config.h>
 #include <stdlib.h>
