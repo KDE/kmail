@@ -21,7 +21,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
 		kmcomposewin.moc kbusyptr.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
-		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
+		kmacctmgr.moc kmfolderdir.moc \
 		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
 		knewpanner.moc
