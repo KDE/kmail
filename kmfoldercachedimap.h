@@ -124,7 +124,7 @@ public:
 
   /** The imap account associated with this folder */
   void setAccount(KMAcctCachedImap *acct);
-  KMAcctCachedImap* account();
+  KMAcctCachedImap* account() const;
 
   /** Returns the filename of the uidcache file */
   QString uidCacheLocation() const;
@@ -295,7 +295,7 @@ private:
   bool        mIsSelected;
   bool        mCheckFlags;
   bool        mReadOnly;
-  QGuardedPtr<KMAcctCachedImap> mAccount;
+  mutable QGuardedPtr<KMAcctCachedImap> mAccount;
 
   QValueList<ulong> uidsOnServer;
   QValueList<ulong> uidsForDeletionOnServer;

@@ -301,7 +301,7 @@ int KMFolderCachedImap::rename( const QString& aName,
 
 KMFolder* KMFolderCachedImap::trashFolder() const
 {
-  QString trashStr = fi->account()->trash();
+  QString trashStr = account()->trash();
   return kmkernel->dimapFolderMgr()->findIdString( trashStr );
 }
 
@@ -343,7 +343,7 @@ KMMsgBase* KMFolderCachedImap::findByUID( ulong uid )
 
 // This finds and sets the proper account for this folder if it has
 // not been done
-KMAcctCachedImap *KMFolderCachedImap::account()
+KMAcctCachedImap *KMFolderCachedImap::account() const
 {
   if( (KMAcctCachedImap *)mAccount == 0 ) {
     // Find the account

@@ -108,7 +108,7 @@ public:
 
   /** The imap account associated with this folder */
   void setAccount(KMAcctImap *acct);
-  KMAcctImap* account() { return mAccount; }
+  KMAcctImap* account() const { return mAccount; }
 
   /** Remove (first occurrence of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
