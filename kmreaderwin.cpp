@@ -23,6 +23,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <ktempfile.h>
+#include <kapplication.h>
 
 #include <mimelib/mimepp.h>
 

@@ -32,6 +32,7 @@
 #include <kmessagebox.h>
 #include <knuminput.h>
 #include <kseparator.h>
+#include <kapplication.h>
 
 #include <netdb.h>
 #include <netinet/in.h>

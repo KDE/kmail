@@ -20,7 +20,7 @@
 
 #include <qpainter.h>
 
-#include <kcolordlg.h>
+#include <kcolordialog.h>
 #include <kcolordrag.h>
 
 #include "colorlistbox.h"

@@ -26,6 +26,7 @@
 #include <klocale.h>
 #include <kurllabel.h>
 #include <kdialog.h>
+#include <kapplication.h>
 
 KMDisplayVCard::KMDisplayVCard(VCard *vc, QWidget *parent, const char *name) : QTabDialog(parent, name) {
   _vc = vc;

@@ -8,7 +8,7 @@
 #include <qgroupbox.h>
 #include <qregexp.h>
 
-#include <kapp.h>
+#include <kapplication.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>

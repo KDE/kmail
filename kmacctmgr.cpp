@@ -18,6 +18,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kapplication.h>
 
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()

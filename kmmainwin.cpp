@@ -29,6 +29,7 @@
 #include <kmimetype.h>
 #include <knotifyclient.h>
 #include <kdebug.h>
+#include <kapplication.h>
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
