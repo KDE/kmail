@@ -50,4 +50,3 @@ bool KBusyPtr :: isBusy (void)
   return (busyLevel != 0);
 }
 
-#include "kbusyptr.moc"
