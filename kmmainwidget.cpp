@@ -292,11 +292,6 @@ void KMMainWidget::readConfig(void)
   // read "Reader" config options
   KConfigGroup readerConfig( config, "Reader" );
   mHtmlPref = readerConfig.readBoolEntry( "htmlMail", false );
-  // restore the toggle action to the saved value; this is also read during
-  // the reader initialization
-  if (mMsgView)
-    mMsgView->toggleFixFontAction()->setChecked( readerConfig.readBoolEntry( "useFixedFont",
-                                                               false ) );
 
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
@@ -2196,7 +2191,7 @@ void KMMainWidget::setupActions()
 
   (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
-  
+
   //select all now in KMReaderWin::selectAllAction()
   //(void) new KAction( i18n("Select Message &Text"),
   //	      CTRL+SHIFT+Key_A, mMsgView,

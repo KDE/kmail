@@ -505,6 +505,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mAtmUpdate = false;
 
   createWidgets();
+  createActions( actionCollection );
   initHtmlWidget();
   readConfig();
 
@@ -516,8 +517,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   	   this, SLOT(slotDelayedResize()) );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
-
-  createActions( actionCollection );
 }
 
 void KMReaderWin::createActions( KActionCollection * ac ) {
@@ -605,37 +604,37 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   attachmentMenu->insert( raction );
 
   mMailToComposeAction = new KAction( i18n("New Message To..."), 0, this,
-				    SLOT(slotMailtoCompose()), ac,
-				    "mailto_compose" );
+                                      SLOT(slotMailtoCompose()), ac,
+                                      "mailto_compose" );
   mMailToReplyAction = new KAction( i18n("Reply To..."), 0, this,
 				    SLOT(slotMailtoReply()), ac,
 				    "mailto_reply" );
   mMailToForwardAction = new KAction( i18n("Forward To..."),
-				    0, this, SLOT(slotMailtoForward()), ac,
-				    "mailto_forward" );
+                                      0, this, SLOT(slotMailtoForward()), ac,
+                                      "mailto_forward" );
   mAddAddrBookAction = new KAction( i18n("Add to Address Book"),
 				    0, this, SLOT(slotMailtoAddAddrBook()),
 				    ac, "add_addr_book" );
   mOpenAddrBookAction = new KAction( i18n("Open in Address Book"),
-				    0, this, SLOT(slotMailtoOpenAddrBook()),
-				    ac, "openin_addr_book" );
+                                     0, this, SLOT(slotMailtoOpenAddrBook()),
+                                     ac, "openin_addr_book" );
   mCopyAction = KStdAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
   mSelectAllAction = new KAction( i18n("Select All"), CTRL+SHIFT+Key_A, this,
-                SLOT(selectAll()), ac, "mark_all_text" );
+                                  SLOT(selectAll()), ac, "mark_all_text" );
   mCopyURLAction = new KAction( i18n("Copy Link Address"), 0, this,
 				SLOT(slotUrlCopy()), ac, "copy_url" );
   mUrlOpenAction = new KAction( i18n("Open URL"), 0, this,
-			     SLOT(slotUrlOpen()), ac, "open_url" );
+                                SLOT(slotUrlOpen()), ac, "open_url" );
   mAddBookmarksAction = new KAction( i18n("Bookmark This Link"),
                                      "bookmark_add",
                                      0, this, SLOT(slotAddBookmarks()),
                                      ac, "add_bookmarks" );
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
-			     SLOT(slotUrlSave()), ac, "saveas_url" );
+                                  SLOT(slotUrlSave()), ac, "saveas_url" );
 
   mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
- 			Key_X, this, SLOT(slotToggleFixedFont()),
- 			ac, "toggle_fixedfont" );
+                                            Key_X, this, SLOT(slotToggleFixedFont()),
+                                            ac, "toggle_fixedfont" );
 
   mStartIMChatAction = new KAction( i18n("Chat &With..."), 0, this,
 				    SLOT(slotIMChat()), ac, "start_im_chat" );
@@ -681,27 +680,27 @@ KRadioAction *KMReaderWin::actionForAttachmentStrategy( const AttachmentStrategy
 
 void KMReaderWin::slotFancyHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::fancy(),
-				       HeaderStrategy::rich() );
+                             HeaderStrategy::rich() );
 }
 
 void KMReaderWin::slotBriefHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::brief(),
-				       HeaderStrategy::brief() );
+                             HeaderStrategy::brief() );
 }
 
 void KMReaderWin::slotStandardHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
-				       HeaderStrategy::standard());
+                             HeaderStrategy::standard());
 }
 
 void KMReaderWin::slotLongHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
-				       HeaderStrategy::rich() );
+                             HeaderStrategy::rich() );
 }
 
 void KMReaderWin::slotAllHeaders() {
   setHeaderStyleAndStrategy( HeaderStyle::plain(),
-				       HeaderStrategy::all() );
+                             HeaderStrategy::all() );
 }
 
 void KMReaderWin::slotCycleHeaderStyles() {
@@ -859,15 +858,21 @@ void KMReaderWin::readConfig(void)
 
   mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
 
-  // initialize useFixedFont from the saved value; the corresponding toggle
-  // action is initialized in the main window
   mUseFixedFont = reader.readBoolEntry( "useFixedFont", false );
+  mToggleFixFontAction->setChecked( mUseFixedFont );
+
   mHtmlMail = reader.readBoolEntry( "htmlMail", false );
+
   setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
 			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
+  KRadioAction *raction = actionForHeaderStyle( headerStyle(), headerStrategy() );
+  assert( raction );
+  raction->setChecked( true );
 
-  mAttachmentStrategy =
-    AttachmentStrategy::create( reader.readEntry( "attachment-strategy" ) );
+  setAttachmentStrategy( AttachmentStrategy::create( reader.readEntry( "attachment-strategy", "smart" ) ) );
+  raction = actionForAttachmentStrategy( attachmentStrategy() );
+  assert( raction );
+  raction->setChecked( true );
 
   mViewer->setOnlyLocalReferences( !reader.readBoolEntry( "htmlLoadExternal", false ) );
 
@@ -1008,14 +1013,14 @@ void KMReaderWin::contactStatusChanged( const QString &uid)
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
-  mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart() ;
+  mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart();
   update( true );
 }
 
 void KMReaderWin::setHeaderStyleAndStrategy( const HeaderStyle * style,
 					     const HeaderStrategy * strategy ) {
-  mHeaderStyle = style ? style : HeaderStyle::fancy() ;
-  mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich() ;
+  mHeaderStyle = style ? style : HeaderStyle::fancy();
+  mHeaderStrategy = strategy ? strategy : HeaderStrategy::rich();
   update( true );
 }
 
