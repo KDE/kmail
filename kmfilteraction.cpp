@@ -200,6 +200,7 @@ KMFilterActionWithFolder::KMFilterActionWithFolder( const char* aName, const QSt
 QWidget* KMFilterActionWithFolder::createParamWidget( QWidget* parent ) const
 {
   KMFolderComboBox *cb = new KMFolderComboBox( parent );
+  cb->showImapFolders( false );
   setParamWidgetValue( cb );
   return cb;
 }

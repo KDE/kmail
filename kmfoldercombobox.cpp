@@ -15,6 +15,7 @@ KMFolderComboBox::KMFolderComboBox( QWidget *parent, char *name )
   : QComboBox( parent, name )
 {
   mOutboxShown = true;
+  mImapShown = true;
   refreshFolders();
   connect( this, SIGNAL( activated(int) ), this, SLOT( slotActivated(int) ) );  
   connect( kernel->folderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
@@ -30,22 +31,39 @@ void KMFolderComboBox::showOutboxFolder(bool shown)
 
 //-----------------------------------------------------------------------------
 
-void KMFolderComboBox::createFolderList(QStringList *names,
-                                        QValueList<QGuardedPtr<KMFolder> > *folders,
-                                        bool i18nized)
+void KMFolderComboBox::showImapFolders(bool shown)
 {
-  if (i18nized)
-    kernel->folderMgr()->createI18nFolderList( names, folders );
-  else
-    kernel->folderMgr()->createFolderList( names, folders );
-  
-  if (!mOutboxShown) {
-    int idx = folders->findIndex( kernel->outboxFolder() );
-    if (idx != -1) {
-      names->remove( names->at( idx ) );
-      folders->remove( folders->at( idx ) );
+  mImapShown = shown;
+  refreshFolders();
+}
+
+//-----------------------------------------------------------------------------
+
+void KMFolderComboBox::createFolderList(QStringList *names,
+                                        QValueList<QGuardedPtr<KMFolder> > *folders)
+{
+  if (mImapShown)
+    kernel->imapFolderMgr()->createI18nFolderList( names, folders );
+
+  kernel->folderMgr()->createFolderList( names, folders );
+  uint i = 0;
+  while (i < folders->count())
+  {
+    if ((*(folders->at(i)))->isSystemFolder())
+    {
+      folders->remove(folders->at(i));
+      names->remove(names->at(i));
     }
+    else i++;
   }
+
+  folders->prepend(kernel->draftsFolder());
+  folders->prepend(kernel->trashFolder());
+  folders->prepend(kernel->sentFolder());
+  if (mOutboxShown) folders->prepend(kernel->outboxFolder());
+  folders->prepend(kernel->inboxFolder());
+  for (int i = ((mOutboxShown) ? 4 : 3); i >= 0; i--)
+    names->prepend((*(folders->at(i)))->label());
 }
 
 //-----------------------------------------------------------------------------
@@ -54,7 +72,7 @@ void KMFolderComboBox::refreshFolders()
 {
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
-  createFolderList( &names, &folders, true );
+  createFolderList( &names, &folders );
   
   KMFolder *folder = getFolder();
   this->clear();
@@ -68,7 +86,7 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
 {
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
-  createFolderList( &names, &folders, false );
+  createFolderList( &names, &folders );
   
   int idx = folders.findIndex( aFolder );
   if (idx == -1)
@@ -93,7 +111,7 @@ KMFolder *KMFolderComboBox::getFolder()
   
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
-  createFolderList( &names, &folders, true );
+  createFolderList( &names, &folders );
 
   int idx = 0;
   QStringList::Iterator it;
@@ -112,7 +130,7 @@ void KMFolderComboBox::slotActivated(int index)
 {
   QStringList names;
   QValueList<QGuardedPtr<KMFolder> > folders;
-  createFolderList( &names, &folders, false );
+  createFolderList( &names, &folders );
   
   mFolder = *folders.at( index );
   KMFolder *folder = mFolder;

@@ -201,7 +201,7 @@ bool KMSender::sendQueued(void)
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
 {
-  KMFolder *sentFolder = 0;	
+  KMFolder *sentFolder = 0, *imapSentFolder = 0;
   bool someSent = mCurrentMsg;
   if (someSent) mSentMessages++;
   int percent = (mTotalMessages) ? (100 * mSentMessages / mTotalMessages) : 0;
@@ -224,17 +224,26 @@ void KMSender::doSendMsg()
     kdDebug(5006) << "KMSender::doSendMsg: msgIdentity = " << msgIdentity << endl;
     KMIdentity id( msgIdentity );
     id.readConfig();
-    if ( !id.fcc().isEmpty() )
+    if ( !mCurrentMsg->fcc().isEmpty() )
     {
-        sentFolder = kernel->folderMgr()->findIdString( id.fcc() );
-        if ( sentFolder == 0 )
-            sentFolder = kernel->sentFolder();
-        else
-            sentFolder->open();
+      sentFolder = kernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
+      if ( sentFolder == 0 )
+        imapSentFolder = kernel->imapFolderMgr()->findIdString(
+          mCurrentMsg->fcc() );
     }
+    else if ( !id.fcc().isEmpty() )
+    {
+      sentFolder = kernel->folderMgr()->findIdString( id.fcc() );
+      if ( sentFolder == 0 )
+        imapSentFolder = kernel->imapFolderMgr()->findIdString( id.fcc() );
+    }
+    if (imapSentFolder && imapSentFolder->noContent()) imapSentFolder = NULL;
 
     if ( sentFolder == 0 )
-        sentFolder = kernel->sentFolder();
+      sentFolder = kernel->sentFolder();
+    else
+      sentFolder->open();
+
 
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
     int processResult = kernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
@@ -254,13 +263,14 @@ void KMSender::doSendMsg()
     case 1:
       sentFolder->quiet(TRUE);
       sentFolder->moveMsg(mCurrentMsg);
+      if (imapSentFolder) imapSentFolder->moveMsg(mCurrentMsg);
       sentFolder->quiet(FALSE);
     default:
       break;
     }
     if (!mCurrentMsg->parent())
       parent->addMsg( mCurrentMsg );
-    if (mCurrentMsg->parent()) // unGet this message
+    if (mCurrentMsg->parent() && !imapSentFolder) // unGet this message
       mCurrentMsg->parent()->unGetMsg( mCurrentMsg->parent()->count() -1 );
 
     mCurrentMsg = 0;

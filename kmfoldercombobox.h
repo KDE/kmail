@@ -21,6 +21,7 @@ public:
   
   /** Select wheather the outbox folder is shown.  Default is yes. */
   void showOutboxFolder(bool shown);
+  void showImapFolders(bool shown);
   
   void setFolder( KMFolder *aFolder );
   void setFolder( QString &idString );
@@ -36,11 +37,11 @@ private slots:
 private:
   /** Create folder list using the folder manager. */
   void createFolderList(QStringList *names,
-                        QValueList<QGuardedPtr<KMFolder> > *folders,
-                        bool i18nized);
+                        QValueList<QGuardedPtr<KMFolder> > *folders);
   
   QGuardedPtr<KMFolder> mFolder;
   bool mOutboxShown;
+  bool mImapShown;
 };
 
 #endif /* __KMFOLDERCOMBOBOX */

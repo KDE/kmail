@@ -93,27 +93,6 @@ int KMFilterMgr::process(KMMessage* msg, FilterSet aSet)
   int status = -1;
   KMFilter::ReturnCode result;
 
-  // here we must treat X-KMail-Fcc on outgoing messages
-  if ( ( !msg->fcc().isEmpty() ) && ( aSet == Outbound ) )
-  {
-      KMFolder *f = kernel->folderMgr()->findIdString( msg->fcc() );
-
-      if ( f != 0 )
-      {
-          kdDebug(5006) << "KMFilterMgr::process: moving to " << f->label() << endl;
-          KMFilterAction::tempOpenFolder( f );
-          f->moveMsg( msg );
-          status = 0; // Message moved to a folder.
-      }
-      else
-      {
-          KMessageBox::information( NULL, i18n( "Could not save to '%1'. Will process filters normally." )
-                             .arg( msg->fcc() ) );
-          // we remove X-KMail-Fcc so that the filter will take over
-          msg->setFcc( QString::null );
-      }
-  }
-
   QPtrListIterator<KMFilter> it(*this);
   for (it.toFirst() ; !stopIt && it.current() ; ++it)
   {
