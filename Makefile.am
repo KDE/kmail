@@ -1,12 +1,13 @@
+
 SUBDIRS = pics doc
-INCLUDES = -g $(all_includes)
-#LDADD	= $(all_libraries) -lkhtmlw -ljscript -ljpeg -lkfile -lkfm -lkdeui -lkdecore -lqt -lXext -lX11 -lmimelib -lstdc++ $(LIBSOCKET)
-LDADD	= $(all_libraries) $(LIB_KHTMLW) -lkfile -lkfm -lkdeui -lkdecore -lkspell -lqt -lXext -lX11 -lmimelib -lstdc++ $(LIBSOCKET)
+INCLUDES = $(all_includes)
+#LDADD	= -lkhtmlw -ljscript -ljpeg -lkfile -lkfm -lkdeui -lkdecore -lqt -lXext -lX11 -lmimelib -lstdc++ $(LIBSOCKET)
+LDADD	= $(LIB_KHTMLW) -lkfile -lkfm -lkdeui -lkdecore -lkspell -lqt -lXext -lX11 -lmimelib $(LIBSOCKET)
 #DEFS += -DCHARSETS
 
 bin_PROGRAMS = kmail
 
-kmail_LDFLAGS = $(LDFLAGS) $(KDE_RPATH)
+kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
 kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
