@@ -13,7 +13,9 @@ data_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
 	kmailwindowlayout4_smart_mime.png kmailwindowlayout5_smart_mime.png \
 	kmailwindowlayout1_no_mime.png kmailwindowlayout2_no_mime.png \
 	kmailwindowlayout3_no_mime.png kmailwindowlayout4_no_mime.png \
-	kmailwindowlayout5_no_mime.png
+	kmailwindowlayout5_no_mime.png kmgroupware_folder_contacts.png \
+	kmgroupware_folder_calendar.png kmgroupware_folder_notes.png \
+	kmgroupware_folder_tasks.png
 
 
 datadir = $(kde_datadir)/kmail/pics
