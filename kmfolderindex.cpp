@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // Author:: Don Sanders <sanders@kde.org>
 // License GPL
 
@@ -101,7 +102,7 @@ int KMFolderIndex::updateIndex()
   return writeIndex();
 }
 
-int KMFolderIndex::writeIndex()
+int KMFolderIndex::writeIndex( bool createEmptyIndex )
 {
   QString tempName;
   QString indexName;
@@ -138,20 +139,24 @@ int KMFolderIndex::writeIndex()
   fwrite(&byteOrder, sizeof(byteOrder), 1, tmpIndexStream);
   fwrite(&sizeOfLong, sizeof(sizeOfLong), 1, tmpIndexStream);
 
-  KMMsgBase* msgBase;
   off_t nho = ftell(tmpIndexStream);
-  for (i=0; i<mMsgList.high(); i++)
-  {
-    if (!(msgBase = mMsgList[i])) continue;
-    buffer = msgBase->asIndexString(len);
-    fwrite(&len,sizeof(len), 1, tmpIndexStream);
 
-    off_t tmp = ftell(tmpIndexStream);
-    msgBase->setIndexOffset(tmp);
-    msgBase->setIndexLength(len);
-    if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
+  if ( !createEmptyIndex ) {
+    KMMsgBase* msgBase;
+    for (i=0; i<mMsgList.high(); i++)
+    {
+      if (!(msgBase = mMsgList[i])) continue;
+      buffer = msgBase->asIndexString(len);
+      fwrite(&len,sizeof(len), 1, tmpIndexStream);
+
+      off_t tmp = ftell(tmpIndexStream);
+      msgBase->setIndexOffset(tmp);
+      msgBase->setIndexLength(len);
+      if(fwrite(buffer, len, 1, tmpIndexStream) != 1)
 	kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
+    }
   }
+
   int fError = ferror( tmpIndexStream );
   if( fError != 0 ) {
     fclose( tmpIndexStream );
@@ -167,9 +172,12 @@ int KMFolderIndex::writeIndex()
     return errno;
 
   ::rename(QFile::encodeName(tempName), QFile::encodeName(indexName));
+  mHeaderOffset = nho;
   if (mIndexStream)
       fclose(mIndexStream);
-  mHeaderOffset = nho;
+
+  if ( createEmptyIndex )
+    return 0;
 
   mIndexStream = fopen(QFile::encodeName(indexName), "r+"); // index file
   assert( mIndexStream );
@@ -425,8 +433,12 @@ void KMFolderIndex::clearIndex(bool autoDelete, bool syncDict)
 
 void KMFolderIndex::truncateIndex()
 {
-    assert( mHeaderOffset );
+  if ( mHeaderOffset )
     truncate(QFile::encodeName(indexLocation()), mHeaderOffset);
+  else
+    // The index file wasn't opened, so we don't know the header offset.
+    // So let's just create a new empty index.
+    writeIndex( true );
 }
 
 

@@ -1,4 +1,5 @@
-/* Virtual base class for mail folder with .*.index style index
+/* -*- mode: C++; c-file-style: "gnu" -*-
+ * Virtual base class for mail folder with .*.index style index
  *
  * Author: Don Sanders <sanders@kde.org>
  * License: GPL
@@ -54,7 +55,7 @@ public:
   int  indexSizeOfLong() { return mIndexSizeOfLong; }
 
   virtual QString indexLocation() const;
-  virtual int writeIndex();
+  virtual int writeIndex( bool createEmptyIndex = false );
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */
