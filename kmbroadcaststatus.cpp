@@ -84,11 +84,9 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
 
   QToolTip::add( m_pButton, i18n("Cancel job") );
   
-  m_pProgressBar = new KProgress( 0, 100, 0, KProgress::Horizontal, this );
-  m_pProgressBar->setFrameStyle( QFrame::Box | QFrame::Raised );
+  m_pProgressBar = new KProgress( this );
   m_pProgressBar->setLineWidth( 1 );
-  m_pProgressBar->setBackgroundMode( QWidget::PaletteBackground );
-  m_pProgressBar->setBarColor( Qt::blue );
+  m_pProgressBar->setFrameStyle( QFrame::Box | QFrame::Raised );
   m_pProgressBar->installEventFilter( this );
   m_pProgressBar->setMinimumWidth( w );
   stack->addWidget( m_pProgressBar, 1 );
@@ -150,12 +148,12 @@ void KMLittleProgressDlg::setMode() {
 
 void KMLittleProgressDlg::slotJustPercent( unsigned long _percent )
 {
-  m_pProgressBar->setValue( _percent );
+  m_pProgressBar->setProgress( _percent );
 }
 
 void KMLittleProgressDlg::slotClean()
 {
-  m_pProgressBar->setValue( 0 );
+  m_pProgressBar->setProgress( 0 );
   m_pLabel->clear();
 
   mode = None;
