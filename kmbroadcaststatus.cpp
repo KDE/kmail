@@ -261,7 +261,7 @@ void KMLittleProgressDlg::slotProgressItemAdded( ProgressItem *item )
   connect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
             this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
   if ( mode == None ) {
-    mode = Label;
+    mode = Progress;
     setMode();
   }
 }
