@@ -1187,10 +1187,11 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       x = -1;
     }
     else if (ch=='&') HTML_ADD("&amp;", 5);
-    else if ((ch=='h' && strncmp(pos,"http:", 5)==0) ||
-	     (ch=='h' && strncmp(pos,"https:", 6)==0) ||
-	     (ch=='f' && strncmp(pos,"ftp:", 4)==0) ||
-	     (ch=='m' && strncmp(pos,"mailto:", 7)==0))
+    else if ((ch=='h' && strncmp(pos,"http://", 7)==0) ||
+	     (ch=='h' && strncmp(pos,"https://", 8)==0) ||
+	     (ch=='f' && strncmp(pos,"ftp://", 6)==0) ||
+	     (ch=='m' && strncmp(pos,"mailto:", 7)==0
+	      && pos[7] != ' ' && pos[7] != '\0' ))
 	     // note: no "file:" for security reasons
     {
       for (i=0; *pos && *pos > ' ' && *pos != '\"' &&
