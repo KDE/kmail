@@ -558,6 +558,8 @@ void KMFolderCachedImap::serverSyncInternal()
     emit newState( label(), progress(), i18n("Synchronizing"));
 
     open();
+    if ( !noContent() )
+        mAccount->addLastUnreadMsgCount( countUnread() );
 
     // Connect to the server (i.e. prepare the slave)
     ImapAccountBase::ConnectionState cs = mAccount->makeConnection();
@@ -816,6 +818,7 @@ void KMFolderCachedImap::serverSyncInternal()
       if( mSubfoldersForSync.isEmpty() ) {
         mSyncState = SYNC_STATE_INITIAL;
         emit statusMsg( i18n("%1: Synchronization done").arg(label()) );
+        mAccount->addUnreadMsgCount( countUnread() ); // before closing
         close();
         emit folderComplete( this, TRUE );
       } else {
@@ -1292,18 +1295,17 @@ void KMFolderCachedImap::slotListResult( QStringList folderNames,
       {
         // This subfolder isn't present on the server
         if( !f->uidValidity().isEmpty() ) {
-          // The folder have a uidValidity setting, so it has been on the
-          // server before. Delete it locally.
+          // The folder have a uidValidity setting, so it has been
+          // on the server before. Delete it locally.
           toRemove.append( f->folder() );
           kdDebug(5006) << node->name() << " isn't on the server. It has a uidvalidity -> delete it locally" << endl;
-        }
-        else
-          kdDebug(5006) << node->name() << " isn't on the server. It has no uidvalidity -> keep it" << endl;
-      }
-      else // folder both local and on server
-      {
+        } else if ( f->noContent() ) { // separated only for better debug output
+          toRemove.append( f->folder() );
+          kdDebug(5006) << node->name() << " isn't on the server. NoContent is set -> delete it locally" << endl;
+        } else
+          kdDebug(5006) << node->name() << " isn't on the server. No uidvalidity, not NoContent -> keep it" << endl;
+      } else { // folder both local and on server
         //kdDebug(5006) << node->name() << " is on the server." << endl;
-        mAccount->addLastUnreadMsgCount( f->countUnread() );
       }
     } else {
       //kdDebug(5006) << "skipping dir node:" << node->name() << endl;
@@ -1417,7 +1419,6 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
   Q_UNUSED(sub);
   //kdDebug(5006) << label() << " slotSubFolderComplete: " << sub->label() << endl;
   if ( success ) {
-    mAccount->addUnreadMsgCount( sub->countUnread() );
     serverSyncInternal();
   }
   else
