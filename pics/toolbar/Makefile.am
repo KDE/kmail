@@ -1,6 +1,6 @@
 
-data_DATA = attach.xpm filedel2.xpm filereply.xpm send.xpm \
-	checkmail.xpm fileforward.xpm filereplyall.xpm thumb_up.xpm
+data_DATA = attach.png filedel2.png filereply.png send.png \
+	checkmail.png fileforward.png filereplyall.png thumb_up.png
 
 datadir = $(kde_datadir)/kmail/pics
 
