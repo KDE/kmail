@@ -1,4 +1,4 @@
-// -*- c-basic-offset: 2 -*-
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmmessage.cpp
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
@@ -353,54 +353,9 @@ void KMMessage::fromString( const QCString & str, bool aSetStatus ) {
 
 void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
 {
-  const char* strPos = str.data();
-  char ch;
-  bool needsJpDecode = false;
   delete mMsg;
   mMsg = new DwMessage;
-  mMsgLength = str.length();
-
-  if (strPos) for (; strPos < str.data() + str.length(); ++strPos)
-  {
-    ch = *strPos;
-    if (!((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0' || ch == 0x1b)
-	  && !(ch=='>' && strPos > str.data()
-	       && qstrncmp(strPos-1, "\n>From", 6) == 0)))
-    {
-	needsJpDecode = true;
-	break;
-    }
-  }
-
-  if (needsJpDecode) {
-  // copy string and throw out obsolete control characters
-      char *resultPos;
-      int len = str.length();
-      char* rawData = new char[ len + 1 ];
-      QCString result;
-      result.setRawData( rawData, len + 1 );
-      strPos = str.data();
-      resultPos = (char*)result.data();
-
-      if (strPos) for (; strPos < str.data() + str.length(); ++strPos)
-      {
-	  ch = *strPos;
-//  Mail header charset(iso-2022-jp) is using all most E-mail system in Japan.
-//  ISO-2022-JP code consists of ESC(0x1b) character and 7Bit character which
-//  used from '!' character to  '~' character.  toyo
-	  if ((ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0' || ch == 0x1b)
-	      && !(ch=='>' && strPos > str.data()
-	      && qstrncmp(strPos-1, "\n>From", 6) == 0))
-	      *resultPos++ = ch;
-      }
-      *resultPos = '\0'; // terminate zero for casting
-      DwString jpStr;
-      jpStr.TakeBuffer( result.data(), len + 1, 0, result.length() );
-      mMsg->FromString( jpStr );
-      result.resetRawData( result, len + 1);
-  } else {
-      mMsg->FromString( str );
-  }
+  mMsg->FromString( str );
   mMsg->Parse();
 
   if (aSetStatus) {
