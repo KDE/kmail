@@ -252,8 +252,6 @@ protected:
 
   virtual void contentsMouseReleaseEvent(QMouseEvent* me);
 
-  virtual void paintEmptyArea( QPainter * p, const QRect & rect );
-
   /** Updates the number of unread messages for all folders */
   virtual void updateUnreadAll( );
 
