@@ -62,9 +62,9 @@ int MessageHighlighter::highlightParagraph( const QString &text, int )
 {
     QString simplified = text;
     simplified = simplified.replace( QRegExp( "\\s" ), "" ).replace( QRegExp( "\\|" ), ">" );
-    if ( simplified.startsWith( ">>>>" ) )
-	setFormat( 0, text.length(), col1 );
-    else if	( simplified.startsWith( ">>>" ) || simplified.startsWith( "> >	>" ) )
+    while ( simplified.startsWith( ">>>>" ) ) 
+	simplified = simplified.mid(3);
+    if	( simplified.startsWith( ">>>" ) || simplified.startsWith( "> >	>" ) )
 	setFormat( 0, text.length(), col2 );
     else if	( simplified.startsWith( ">>" )	|| simplified.startsWith( "> >"	) )
 	setFormat( 0, text.length(), col3 );
@@ -121,7 +121,7 @@ int SpellChecker::highlightParagraph( const QString& text,
 	    }
 	}
 	if ( !text[len - 1].isLetter() ||
-	     index + 1 != text.length() ||
+	     (uint)(index + 1) != text.length() ||
 	     para != parano)
 	    flushCurrentWord();
     }
