@@ -7,6 +7,7 @@
 #include <mimelib/smtp.h>
 #include <mimelib/string.h>
 #include <mimelib/utility.h>
+#include <qcstring.h>
 #include <qstring.h>
 #include <qstringlist.h>
 #include <qobject.h>
@@ -24,13 +25,19 @@ class QStrList;
 class QDialog;
 class Smtp;
 
+namespace KIO
+{
+class Job;
+class TransferJob;
+}
+
 class KMSender: public QObject
 {
   Q_OBJECT
   friend class KMSendProc;
 
 public:
-  enum Method { smUnknown=0, smSMTP=1, smMail=2 };
+  enum Method { smUnknown=0, smSMTP=1, smMail=2, smKDE=3};
 
   KMSender();
   virtual ~KMSender();
@@ -285,4 +292,29 @@ protected:
   unsigned short int mSmtpPort;
 };
 
+//-----------------------------------------------------------------------------
+class KMSendKDE : public KMSendProc
+{
+Q_OBJECT
+public:
+  KMSendKDE(KMSender *);
+  virtual bool send(KMMessage *);
+  virtual void abort(void);
+  virtual bool finish(bool);
+
+protected:
+  virtual bool addOneRecipient(const QString aRecipient);
+
+private slots:
+  void dataReq(KIO::Job *, QByteArray &);
+  void result(KIO::Job *);
+
+private:
+  QString query, queryField;
+  KIO::TransferJob *job;
+  QCString message;
+};
+
 #endif /*kmsender_h*/
+
+// vim: ts=2 et

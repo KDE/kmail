@@ -15,6 +15,9 @@
 
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kemailsettings.h>
+#include <kio/global.h>
+#include <kio/job.h>
 #include <kprocess.h>
 #include <kapp.h>
 #include <kmessagebox.h>
@@ -91,6 +94,7 @@ void KMSender::readConfig(void)
   str = config->readEntry("Method");
   if (str=="mail") mMethod = smMail;
   else if (str=="smtp") mMethod = smSMTP;
+  else if (str=="kde") mMethod = smKDE;
   else mMethod = smUnknown;
 }
 
@@ -106,8 +110,22 @@ void KMSender::writeConfig(bool aWithSync)
   config->writeEntry("Mailer", mMailer);
   config->writeEntry("Smtp Host", mSmtpHost);
   config->writeEntry("Smtp Port", (int)mSmtpPort);
-  config->writeEntry("Method", (mMethod==smSMTP) ? "smtp" : "mail");
   config->writeEntry("Precommand", mPrecommand);
+  switch(mMethod)
+  {
+  case smMail:
+    config->writeEntry("Method", "mail");
+    break;
+  case smKDE:
+    config->writeEntry("Method", "kde");
+    break;
+  case smSMTP:
+    config->writeEntry("Method", "smtp");
+    break;
+  case smUnknown:
+    config->writeEntry("Method", "unknown");
+    break;
+  }
 
   if (aWithSync) config->sync();
 }
@@ -118,7 +136,7 @@ bool KMSender::settingsOk(void) const
 {
   KMIdentity ident( i18n( "Default" ));
   ident.readConfig();
-  if (mMethod!=smSMTP && mMethod!=smMail)
+  if (mMethod!=smSMTP && mMethod!=smMail && mMethod!=smKDE)
   {
     KMessageBox::information(0,i18n("Please specify a send\n"
 				    "method in the settings\n"
@@ -228,6 +246,7 @@ bool KMSender::sendQueued(void)
   if (mSendProc) delete mSendProc;
   if (mMethod == smMail) mSendProc = new KMSendSendmail(this,mMailer);
   else if (mMethod == smSMTP) mSendProc = new KMSendSMTP(this,mSmtpHost,mSmtpPort);
+  else if (mMethod == smKDE) mSendProc = new KMSendKDE(this);
   else mSendProc = NULL;
   assert(mSendProc != NULL);
   connect(mSendProc,SIGNAL(idle()),SLOT(slotIdle()));
@@ -550,6 +569,8 @@ QString KMSender::transportString(void) const
     return QString("smtp://%1:%2").arg(mSmtpHost).arg(mSmtpPort);
   else if (mMethod == smMail)
     return QString("file://%1").arg(mMailer);
+  else if (mMethod == smKDE)
+    return QString("kde://");
   else
     return "";
 }
@@ -961,6 +982,132 @@ void KMSendSMTP::smtpInCmd(const char* inCommand)
   statusMsg(str);
 }
 
+//=============================================================================
+//=============================================================================
+KMSendKDE::KMSendKDE(KMSender *_sender)
+  : KMSendProc(_sender)
+  , job(0)
+{
+}
+
+bool KMSendKDE::send(KMMessage *aMsg)
+{
+  assert(aMsg != NULL);
+
+  KMIdentity ident( i18n( "Default" ));
+  ident.readConfig();
+
+  // prepare the destination URL
+  QString to, cc, bcc, subject, from;
+
+  query = QString::null;
+
+  // recipients
+  queryField = "&to=";
+  if(!addRecipients(aMsg->headerAddrField("To"))) return FALSE;
+  to = aMsg->headerField("To");
+  aMsg->removeHeaderField("To");
+
+  queryField = "&cc=";
+  if(!aMsg->cc().isEmpty())
+  {
+    if(!addRecipients(aMsg->headerAddrField("Cc"))) return FALSE;
+    cc = aMsg->headerField("Cc");
+    aMsg->removeHeaderField("Cc");
+  }
+
+  queryField = "&bcc=";
+  if(!aMsg->bcc().isEmpty())
+  {
+    if (!addRecipients(aMsg->headerAddrField("Bcc"))) return FALSE;
+    bcc = aMsg->headerField("Bcc");
+    aMsg->removeHeaderField("Bcc");
+  }
+
+  if(!aMsg->subject().isEmpty())
+  {
+    query += QString("&subject=") + aMsg->subject();
+    subject = aMsg->headerField("Subject");
+    aMsg->removeHeaderField("Subject");
+  }
+
+  from = aMsg->headerField("From");
+  aMsg->removeHeaderField("From");
+
+  KEMailSettings settings;
+  settings.setProfile(ident.identity());
+  KURL destination;
+  destination.setProtocol(settings.getSetting(KEMailSettings::OutServerType));
+  destination.setHost(ident.identity());
+  destination.setPath("/send");
+  destination.setQuery(query);
+
+  message = prepareStr(aMsg->asString(), TRUE);
+
+  if(!bcc.isEmpty()) aMsg->setHeaderField("Bcc", bcc);
+  if(!to.isEmpty()) aMsg->setHeaderField("To", to);
+  if(!cc.isEmpty()) aMsg->setHeaderField("Cc", cc);
+  if(!subject.isEmpty()) aMsg->setHeaderField("Subject", subject);
+  if(!from.isEmpty()) aMsg->setHeaderField("From", from);
+
+  job = KIO::put(destination, -1, false, false, false);
+  connect(job, SIGNAL(result(KIO::Job *)), this, SLOT(result(KIO::Job *)));
+  connect(job, SIGNAL(dataReq(KIO::Job *, QByteArray &)), this, SLOT(dataReq(KIO::Job *, QByteArray &)));
+
+  return mSendOk = true;
+}
+
+void KMSendKDE::abort(void)
+{
+  if(job)
+  {
+    job->kill();
+    job = 0;
+  }
+  idle();
+}
+
+bool KMSendKDE::finish(bool b)
+{
+  if(job)
+  {
+    job->kill();
+    job = 0;
+  }
+  return KMSendProc::finish(b);
+}
+
+bool KMSendKDE::addOneRecipient(const QString _addr)
+{
+  if(!_addr.isEmpty())
+    query += queryField + _addr;
+
+  return true;
+}
+
+void KMSendKDE::dataReq(KIO::Job *, QByteArray &array)
+{
+  if(message.length())
+  {
+    array.duplicate(message);
+    message = "";
+  }
+}
+
+void KMSendKDE::result(KIO::Job *_job)
+{
+  job = 0;
+
+  if(_job->error())
+  {
+    mSendOk = false;
+    failed(_job->errorString());
+  }
+
+  emit idle();
+}
 
 //-----------------------------------------------------------------------------
 #include "kmsender.moc"
+
+// vim: ts=2 et
