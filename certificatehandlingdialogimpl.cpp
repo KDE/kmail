@@ -127,7 +127,7 @@ void CertificateHandlingDialogImpl::slotUseForEncrypting()
         // mark the current one as used
         if( item->text( 3 ) == i18n( "Sign" ) )
             item->setText( 3, i18n( "Sign/Encrypt" ) );
-        else if( item->text( 3 ) == "" )
+        else if( item->text( 3 ).isEmpty() )
             item->setText( 3, i18n( "Encrypt" ) );
     }
 }
@@ -157,7 +157,7 @@ void CertificateHandlingDialogImpl::slotUseForSigning()
         // mark the current one as used
         if( item->text( 3 ) == i18n( "Encrypt" ) )
             item->setText( 3, i18n( "Sign/Encrypt" ) );
-        else if( item->text( 3 ) == "" )
+        else if( item->text( 3 ).isEmpty() )
             item->setText( 3, i18n( "Sign" ) );
     }
 }

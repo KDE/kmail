@@ -94,11 +94,9 @@ QValueList<QString> values;
     }
   }
   QString nn = _vc->getValue(VCARD_NICKNAME);
-  if (nn != "") {
-    tmpstr += " (";
-    tmpstr += nn;
-    tmpstr += ")";
-  }
+  if (!nn.isEmpty()) 
+    tmpstr += " (" + nn + ")";
+
   name = new QLabel(i18n("Name:"), page);
   value = new QLabel(tmpstr, page);
   grid->addWidget(name, 0, 0);

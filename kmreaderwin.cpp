@@ -785,7 +785,7 @@ void KMReaderWin::readConfig(void)
   KConfigGroupSaver saver(config, "Pixmaps");
   mBackingPixmapOn = FALSE;
   mBackingPixmapStr = config->readEntry("Readerwin","");
-  if (mBackingPixmapStr != "")
+  if (!mBackingPixmapStr.isEmpty())
     mBackingPixmapOn = TRUE;
   }
 

@@ -421,13 +421,13 @@ bool readFolderMsgIds=false;
           QString dt=ctime(&DT);
           QString id=mb->subject();
 
-          if (id=="") { id=mb->fromStrip(); }
-          if (id=="") { id=mb->toStrip(); }
+          if (id.isEmpty()) { id=mb->fromStrip(); }
+          if (id.isEmpty()) { id=mb->toStrip(); }
 
           id+=dt;
 
           //fprintf(stderr,"%s\n",(const char *) id);
-          if (id!="") { msgIds->append(id); }
+          if (!id.isEmpty()) { msgIds->append(id); }
         }
         F->close();
       }
@@ -436,8 +436,8 @@ bool readFolderMsgIds=false;
       QString dt=ctime(&DT);
       QString msgId=M->subject();
 
-      if (msgId=="") { msgId=M->fromStrip(); }
-      if (msgId=="") { msgId=M->toStrip(); }
+      if (msgId.isEmpty()) { msgId=M->fromStrip(); }
+      if (msgId.isEmpty()) { msgId=M->toStrip(); }
 
       msgId+=dt;
 
@@ -445,7 +445,7 @@ bool readFolderMsgIds=false;
       //fprintf(stderr,"find %s = %d\n",(const char *) msgId,k);
 
       if (k==-1) {
-        if (msgId!="") { msgIds->append(msgId); }
+        if (!msgId.isEmpty()) { msgIds->append(msgId); }
         if (F->addMsg(M)==0) { retval=1; }
         else { retval=-2;delete M; M = 0; }
       }

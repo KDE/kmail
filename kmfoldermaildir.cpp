@@ -62,7 +62,7 @@ KMFolderMaildir::~KMFolderMaildir()
 int KMFolderMaildir::canAccess()
 {
 
-  assert(name() != "");
+  assert(!name().isEmpty());
 
   if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0)
     return 1;
@@ -87,7 +87,7 @@ int KMFolderMaildir::open()
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
-  assert(name() != "");
+  assert(!name().isEmpty());
 
   if (canAccess() != 0) {
     bool busy = kernel->kbp()->isBusy();
@@ -139,7 +139,7 @@ int KMFolderMaildir::create(bool imap)
   int rc;
   int old_umask;
 
-  assert(name() != "");
+  assert(!name().isEmpty());
   assert(mOpenCount == 0);
 
   // create the maildir directory structure

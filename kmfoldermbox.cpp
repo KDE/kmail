@@ -77,7 +77,7 @@ int KMFolderMbox::open()
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
-  assert(name() != "");
+  assert(!name().isEmpty());
 
   mFilesLocked = FALSE;
   mStream = fopen(location().local8Bit(), "r+"); // messages file
@@ -188,7 +188,7 @@ int KMFolderMbox::open()
 //----------------------------------------------------------------------------
 int KMFolderMbox::canAccess()
 {
-  assert(name() != "");
+  assert(!name().isEmpty());
 
   if (access(location().local8Bit(), R_OK | W_OK) != 0) {
     kdDebug(5006) << "KMFolderMbox::access call to access function failed" << endl;
@@ -205,7 +205,7 @@ int KMFolderMbox::create(bool imap)
 
   Q_UNUSED(imap);
 
-  assert(name() != "");
+  assert(!name().isEmpty());
   assert(mOpenCount == 0);
 
   kdDebug(5006) << "Creating folder " << name() << endl;

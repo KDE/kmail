@@ -338,7 +338,7 @@ void KMFolderTree::readConfig (void)
     KConfigGroupSaver saver(conf, "Pixmaps");
     QString pixmapFile = conf->readEntry("FolderTree","");
     mPaintInfo.pixmapOn = FALSE;
-    if (pixmapFile != "") {
+    if (!pixmapFile.isEmpty()) {
       mPaintInfo.pixmapOn = TRUE;
       mPaintInfo.pixmap = QPixmap( pixmapFile );
     }

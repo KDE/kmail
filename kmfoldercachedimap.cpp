@@ -520,7 +520,7 @@ void KMFolderCachedImap::serverSyncInternal()
 	  if( !node->isDir() ) {
             //kdDebug(5006) << "##### child folder " << node->name() << " is a "
             //           << node->className() << endl;
-            if ( static_cast<KMFolderCachedImap*>(node)->imapPath() != "" )
+            if ( !static_cast<KMFolderCachedImap*>(node)->imapPath().isEmpty() )
 	      // Only sync folders that have been accepted by the server
 	      mSubfoldersForSync << static_cast<KMFolderCachedImap*>(node);
 	  }
@@ -557,7 +557,7 @@ void KMFolderCachedImap::serverSyncInternal()
 		 this, SLOT( serverSyncInternal() ) );
 
 	// kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
-	assert( mCurrentSubfolder->imapPath() != "" );
+	assert( !mCurrentSubfolder->imapPath().isEmpty() );
 	mCurrentSubfolder->setAccount( account() );
 	mCurrentSubfolder->serverSync();
       }
@@ -642,7 +642,7 @@ QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 	  assert(0);
 	}
 	KMFolderCachedImap* folder = static_cast<KMFolderCachedImap*>(node);
-	if( folder->imapPath() == "" ) newFolders << folder;
+	if( folder->imapPath().isEmpty() ) newFolders << folder;
       }
       node = child()->next();
     }
@@ -984,7 +984,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
 	  kdDebug(5006) << node->name() << " isn't on the server." << endl;
 
 	  folder = static_cast<KMFolderCachedImap*>(node);
-	  if (folder->uidValidity() == "") {
+	  if (folder->uidValidity().isEmpty()) {
 	    // This folder doesn't have a uidValidity setting yet, so assume
 	    // it's a new one the user made. Add it on the server
 	    subfolders.append(folder);
@@ -1053,7 +1053,7 @@ void KMFolderCachedImap::listDirectory2() {
 	folder = static_cast<KMFolderCachedImap*>(node);
     }
 
-    if (folder && folder->imapPath() == "") {
+    if (folder && folder->imapPath().isEmpty()) {
       // kdDebug(5006) << "folder("<<folder->name()<<")->imapPath()=" << folder->imapPath()
       // << "\nAssigning new imapPath " << mSubfolderPaths[i] << endl;
       // Write folder settings

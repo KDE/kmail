@@ -479,7 +479,7 @@ void CachedImapJob::slotCheckUidValidityResult(KIO::Job * job)
     QString uidv = cstr.mid(a + 15, b - a - 15);
     // kdDebug(5006) << "New uidv = " << uidv << ", old uidv = " << mFolder->uidValidity()
     // << endl;
-    if( mFolder->uidValidity() != "" && mFolder->uidValidity() != uidv ) {
+    if( !mFolder->uidValidity().isEmpty() && mFolder->uidValidity() != uidv ) {
       // kdDebug(5006) << "Expunging the mailbox " << mFolder->name() << "!" << endl;
       mFolder->expunge();
       mFolder->setLastUid( 0 );
@@ -533,7 +533,7 @@ static void renameChildFolders( KMFolderDir* dir, const QString& oldPath, const 
     while( node ) {
       if( !node->isDir() ) {
 	KMFolderCachedImap* imapFolder = static_cast<KMFolderCachedImap*>(node);
-	if ( imapFolder->imapPath() != "" )
+	if ( !imapFolder->imapPath().isEmpty() )
 	  // Only rename folders that have been accepted by the server
 	  if( imapFolder->imapPath().find( oldPath ) == 0 ) {
 	    QString p = imapFolder->imapPath();

@@ -333,7 +333,7 @@ QString KMMessage::headerAsString(void) const
 {
   DwHeaders& header = mMsg->Headers();
   header.Assemble();
-  if(header.AsString() != "")
+  if (!header.AsString().isEmpty())
     return header.AsString().c_str();
   return "";
 }
@@ -2975,7 +2975,7 @@ DwBodyPart* KMMessage::createDWBodyPart(const KMMessagePart* aPart)
     DwHeaders& headers = part->Headers();
 
     DwMediaType& ct = headers.ContentType();
-    if (type != "" && subtype != "")
+    if (!type.isEmpty() && !subtype.isEmpty())
     {
       ct.SetTypeStr(type.data());
       ct.SetSubtypeStr(subtype.data());

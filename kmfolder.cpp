@@ -700,7 +700,7 @@ int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
 //-----------------------------------------------------------------------------
 int KMFolder::remove()
 {
-  assert(name() != "");
+  assert(!name().isEmpty());
 
   clearIndex(true, true); // delete and remove from dict
   close(TRUE);
@@ -722,7 +722,7 @@ int KMFolder::expunge()
 {
   int openCount = mOpenCount;
 
-  assert(name() != "");
+  assert(!name().isEmpty());
 
   clearIndex(true, true);   // delete and remove from dict
   close(TRUE);

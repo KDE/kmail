@@ -1272,7 +1272,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     if (firstAttachment)
     {
       mCharset = bodyPart.charset();
-      if ((mCharset=="") || (mCharset == "default"))
+      if ( mCharset.isEmpty() || mCharset == "default" )
         mCharset = mDefCharset;
 
       bodyDecoded = bodyPart.bodyDecoded();
@@ -1301,7 +1301,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     }
   } else{
     mCharset=mMsg->charset();
-    if ((mCharset=="") || (mCharset == "default"))
+    if ( mCharset.isEmpty() ||  mCharset == "default" )
       mCharset = mDefCharset;
 
     QCString bodyDecoded = mMsg->bodyDecoded();
@@ -3839,7 +3839,7 @@ void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
   else
     mCharset = aCharset.lower();
 
-  if ((mCharset=="") || (mCharset == "default"))
+  if ( mCharset.isEmpty() || mCharset == "default" )
      mCharset = mDefCharset;
 
   if (bAutoCharset)

@@ -666,7 +666,7 @@ void KMHeaders::readConfig (void)
     KConfigGroupSaver saver(config, "Pixmaps");
     QString pixmapFile = config->readEntry("Headers","");
     mPaintInfo.pixmapOn = FALSE;
-    if (pixmapFile != "") {
+    if (!pixmapFile.isEmpty()) {
       mPaintInfo.pixmapOn = TRUE;
       mPaintInfo.pixmap = QPixmap( pixmapFile );
     }

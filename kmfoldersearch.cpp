@@ -521,7 +521,7 @@ int KMFolderSearch::open()
 
 int KMFolderSearch::canAccess()
 {
-    assert(name() != "");
+    assert(!name().isEmpty());
 
     if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0)
 	return 1;
@@ -579,7 +579,7 @@ int KMFolderSearch::create(bool)
 	return rc;
     rc = 0;
 
-    assert(name() != "");
+    assert(!name().isEmpty());
     assert(mOpenCount == 0);
 
     kdDebug(5006) << "Creating folder " << location() << endl;
