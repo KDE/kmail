@@ -3688,8 +3688,8 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
 
   if( !ident.fullEmailAddr().isNull() )
     mEdtFrom->setText(ident.fullEmailAddr());
-  // make sure the From field is shown if it's empty
-  if ( from().isEmpty() )
+  // make sure the From field is shown if it does not contain a valid email address
+  if ( KPIM::getEmailAddr( from() ).isEmpty() )
     mShowHeaders |= HDR_FROM;
   mEdtReplyTo->setText(ident.replyToAddr());
   // don't overwrite the BCC field under certain circomstances
