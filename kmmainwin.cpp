@@ -1073,9 +1073,12 @@ void KMMainWin::setupMenuBar()
   mViewMenu->insertItem(i18n("&All Headers"),
 		       KMReaderWin::HdrAll);
   mViewMenu->insertSeparator();
-  mViewMenu->insertItem(i18n("Iconic Attachments"));
-  mViewMenu->insertItem(i18n("Smart Attachments"));
-  mViewMenu->insertItem(i18n("Inlined Attachments"));
+  mViewMenu->insertItem(i18n("Iconic Attachments"),
+			KMReaderWin::HdrAll + KMReaderWin::IconicAttmnt);
+  mViewMenu->insertItem(i18n("Smart Attachments"),
+			KMReaderWin::HdrAll + KMReaderWin::SmartAttmnt);
+  mViewMenu->insertItem(i18n("Inlined Attachments"),
+			KMReaderWin::HdrAll + KMReaderWin::InlineAttmnt);
   mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
