@@ -310,7 +310,7 @@ QWidget* StartupWizard::createIntroPage()
   QWidget* page = new QWidget(this, "intro_page");
   QBoxLayout* top = new QHBoxLayout( page );
   QTextBrowser* text = new QTextBrowser( page );
-  text->setText( i18n("<b>You dont seem to have any groupware folders "
+  text->setText( i18n("<b>You don't seem to have any groupware folders "
 		    "configured in KMail.</b><br>"
 		    "This is probably because you are running KMail for the first time, or "
 		    "because you have enabled the groupware functionality for the first time.<br>"

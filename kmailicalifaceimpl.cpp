@@ -390,7 +390,7 @@ void KMailICalIfaceImpl::readConfig()
   if( makeSubFolders ) {
     // Not all subfolders were there, so ask if we can make them
     if( KMessageBox::questionYesNo( 0, i18n("KMail will now create the required folders for the IMAP resource"
-					    " as subfolders of %1. If you dont want this, press \"No\","
+					    " as subfolders of %1. If you don't want this, press \"No\","
 					    " and the IMAP resource will be disabled").arg(folderParentDir->name()),
 				    i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
       mUseResourceIMAP = false;

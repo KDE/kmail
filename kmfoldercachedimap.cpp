@@ -378,7 +378,7 @@ void KMFolderCachedImap::serverSyncInternal()
   {
     mProgress = 0;
     emit statusMsg( i18n("%1: Synchronizing").arg(name()) );
-    emit newState( name(), mProgress, i18n("Syncronizing"));
+    emit newState( name(), mProgress, i18n("Synchronizing"));
 
     open();
 
