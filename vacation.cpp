@@ -102,10 +102,11 @@ namespace KMail {
     KMAcctMgr * am = kernel->acctMgr();
     assert( am );
     for ( KMAccount * a = am->first() ; a ; a = am->next() )
-    {
-      if (a->inherits("ImapAccountBase"))
-        return findUrlForAccount( static_cast<KMail::ImapAccountBase*>(a) );
-    }
+      if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( a ) ) {
+        KURL u = findUrlForAccount( iab );
+	if ( !u.isEmpty() )
+	  return u;
+      }
     return KURL();
   }
 
