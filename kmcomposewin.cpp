@@ -3302,11 +3302,13 @@ void KMComposeWin::slotSpellcheck()
 
 void KMComposeWin::polish()
 {
+  // Ensure the html toolbar is appropriately shown/hidden
   markupAction->setChecked(mHtmlMarkup);
   if (mHtmlMarkup)
     toolBar("htmlToolBar")->show();
   else
     toolBar("htmlToolBar")->hide();
+  KMail::SecondaryWindow::polish();
 }
 
 //-----------------------------------------------------------------------------
