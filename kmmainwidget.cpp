@@ -2434,7 +2434,7 @@ void KMMainWidget::slotReadOn()
         i = mHeaders->findUnread(true, 0, false, true);
     if ( i >= 0 ) {
          mHeaders->setCurrentMsg(i);
-         QTimer::singleShot( 100, mHeaders, SLOT( ensureCurrentItemVisible() ) );
+         mHeaders->ensureCurrentItemVisible();
          return;
     }
     mFolderTree->nextUnreadFolder( true );
