@@ -1,5 +1,5 @@
 // KMAcctExpPop.cpp
-// Authors: Don Sanders, (based on kmacctpop by) 
+// Authors: Don Sanders, (based on kmacctpop by)
 //          Stefan Taferner and Markus Wuebben
 
 #include "kmacctexppop.moc"
@@ -128,7 +128,7 @@ void KMAcctExpPop::pseudoAssign(KMAccount* account)
 void KMAcctExpPop::processNewMail(bool _interactive)
 {
   if (stage == Idle) {
-    
+
     if(mPasswd.isEmpty() || mLogin.isEmpty()) {
       QString passwd = decryptStr(mPasswd);
       QString msg = i18n("Please set Password and Username");
@@ -138,7 +138,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 	return;
       }
     }
-    
+
     QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
 				       ":" + QString("%1").arg(mPort) );
     KConfig config( seenUidList );
@@ -296,13 +296,13 @@ bool KMAcctExpPop::setProtocol(short aProtocol)
 //
 //=============================================================================
 
-KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name, 
-			             KMAcctExpPop *account , 
+KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
+			             KMAcctExpPop *account ,
 				     const QString caption,
 			             const char *login, QString passwd)
   :QDialog(parent,name,true)
 {
-  // This function pops up a little dialog which asks you 
+  // This function pops up a little dialog which asks you
   // for a new username and password if one of them was wrong or not set.
   QLabel *l;
 
@@ -310,7 +310,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   act = account;
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
   if (!caption.isNull())
-    setCaption(caption);  
+    setCaption(caption);
 
   QGridLayout *gl = new QGridLayout(this, 5, 2, 10);
 
@@ -323,7 +323,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   }
 
   l = new QLabel(i18n("You need to supply a username and a\n"
-		      "password to access this mailbox."), 
+		      "password to access this mailbox."),
 		 this);
   l->setFixedSize(l->sizeHint());
   gl->addWidget(l, 0, 1);
@@ -331,11 +331,11 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   l = new QLabel(i18n("Server:"), this);
   l->setMinimumSize(l->sizeHint());
   gl->addWidget(l, 1, 0);
-  
+
   l = new QLabel(act->host(), this);
   l->setMinimumSize(l->sizeHint());
   gl->addWidget(l, 1, 1);
-  
+
   l = new QLabel(i18n("Login Name:"), this);
   l->setMinimumSize(l->sizeHint());
   gl->addWidget(l, 2, 0);
@@ -347,7 +347,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
 
   l = new QLabel(i18n("Password:"), this);
   l->setMinimumSize(l->sizeHint());
-  gl->addWidget(l, 3, 0);  
+  gl->addWidget(l, 3, 0);
 
   passwdLEdit = new QLineEdit(this,"NULL");
   passwdLEdit->setEchoMode(QLineEdit::Password);
@@ -422,13 +422,13 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
   QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
 
-  if (mUseSSL) {
-    prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
-    + ":" + QString("%1").arg(mPort);
-  } else {
-    prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
-    + ":" + QString("%1").arg(mPort);
-  }
+  prefix = KURL::encode_string( mLogin ) + ":" + 
+	   KURL::encode_string(decryptStr(mPasswd)) + "@" + mHost  + ":" + 
+	   QString("%1").arg(mPort);
+  if (mUseSSL)
+      prefix = "pop3s://" + prefix;
+  else
+      prefix = "pop3://" + prefix;
 
   while (cur != msgsAwaitingProcessing.end()) {
     // note we can actually end up processing events in processNewMsg
@@ -473,27 +473,27 @@ void KMAcctExpPop::startJob() {
   // Run the precommand
   if (!runPrecommand(precommand()))
     {
-      QMessageBox::warning(0, i18n("Kmail Error Message"), 
-			    i18n("Couldn't execute precommand: %1").arg(precommand()) );  
+      QMessageBox::warning(0, i18n("Kmail Error Message"),
+			    i18n("Couldn't execute precommand: %1").arg(precommand()) );
       emit finishedCheck(idsOfMsgs.count() > 0);
       return;
     }
   // end precommand code
-  
+
   if (mUseSSL) {
-    text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+    text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
             mHost + ":" + QString("%1").arg(mPort) + "/index";
   } else {
-    text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+    text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
             mHost + ":" + QString("%1").arg(mPort) + "/index";
   }
   KURL url = text;
   if ( url.isMalformed() ) {
-    QMessageBox::critical(0, i18n("Kioslave Error Message"), 
+    QMessageBox::critical(0, i18n("Kioslave Error Message"),
 			  i18n("Source URL is malformed") );
     return;
   }
-  
+
   idsOfMsgsPendingDownload.clear();
   lensOfMsgsPendingDownload.clear();
   idsOfMsgs.clear();
@@ -502,12 +502,12 @@ void KMAcctExpPop::startJob() {
   indexOfCurrentMsg = -1;
   KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
-  KMBroadcastStatus::instance()->setStatusMsg( 
+  KMBroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from %1...").arg(mHost));
 
   numBytes = 0;
   numBytesRead = 0;
-  stage = List;  
+  stage = List;
   job = KIO::get( text, false, false );
   connectJob();
 }
@@ -553,10 +553,10 @@ void KMAcctExpPop::slotJobFinished() {
     kdDebug() << "stage == Dele" << endl;
     QString prefix;
     if (mUseSSL) {
-      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
                 mHost + ":" + QString("%1").arg(mPort);
     } else {
-      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
                 mHost + ":" + QString("%1").arg(mPort);
     }
     job = KIO::get(  prefix + "/commit", false, false );
@@ -586,12 +586,12 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   int oldStage = stage;
   slotProcessPendingMsgs(); // Force processing of any messages still in the queue
   processMsgsTimer.stop();
-    
+
   stage = Quit;
   // Don't update the seen uid list unless we successfully got
   // a new list from the server
   if ((oldStage == List) || (oldStage == Uidl))
-    return; 
+    return;
   QString seenUidList = locateLocal( "appdata", mLogin + ":" + "@" + mHost +
 				       ":" + QString("%1").arg(mPort) );
   KConfig config( seenUidList );
@@ -619,10 +619,10 @@ void KMAcctExpPop::slotGetNextMsg()
     processRemainingQueuedMessagesAndSaveUidList();
     QString prefix;
     if (mUseSSL) {
-      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
                 mHost + ":" + QString("%1").arg(mPort);
     } else {
-      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
                 mHost + ":" + QString("%1").arg(mPort);
     }
 
@@ -638,7 +638,7 @@ void KMAcctExpPop::slotGetNextMsg()
     curMsgLen = *nextLen;
     ++indexOfCurrentMsg;
     KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024));
-    KMBroadcastStatus::instance()->setStatusProgressPercent( 
+    KMBroadcastStatus::instance()->setStatusProgressPercent(
       ((indexOfCurrentMsg)*100) / numMsgs );
 //      ((indexOfCurrentMsg + 1)*100) / numMsgs );
 
@@ -676,10 +676,10 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   if (spc > 0) {
     QString text;
     if (mUseSSL) {
-      text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
               mHost + ":" + QString("%1/download/").arg(mPort);
     } else {
-      text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
               mHost + ":" + QString("%1/download/").arg(mPort);
     }
     if (stage == List) {
@@ -716,7 +716,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     stage = Idle;
     job->kill();
     job = 0L;
-    QMessageBox::critical(0, i18n("Invalid response from server"), 
+    QMessageBox::critical(0, i18n("Invalid response from server"),
 			  i18n( "Unable to complete LIST operation" ));
     return;
   }
