@@ -9,6 +9,7 @@ class KMReaderWin;
 class KMMessage;
 class KMMessagePart;
 class KAction;
+class KActionMenu;
 class KMFolderIndex;
 template <typename T, typename S> class QMap;
 
@@ -31,6 +32,13 @@ private slots:
 
   /** Copy selected messages to folder with corresponding to given menuid */
   void copySelectedToFolder( int menuId );
+  void slotPrintMsg();
+  void slotReplyToMsg();
+  void slotReplyAllToMsg();
+  void slotForwardMsg();
+  void slotForwardAttachedMsg();
+  void slotRedirectMsg();
+  void slotBounceMsg();
 
 private:
   void setupAccel();
@@ -39,6 +47,11 @@ private:
   KMMessage *mMsg;
   KURL mUrl;
   QMap<int,KMFolder*> mMenuToFolder;
+  // a few actions duplicated from kmmainwidget
+  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mForwardAction,
+          *mForwardAttachedAction, *mRedirectAction, *mBounceAction; 
+  KActionMenu *mForwardActionMenu;
+
 };
 
 #endif /*KMReaderMainWin_h*/

@@ -360,6 +360,7 @@ private:
   /** value of config key Behaviour/LoopOnGotoUnread */
   LoopOnGotoUnreadValue mLoopOnGotoUnread;
   bool mJumpToUnread;
+  bool mReaderWindowActive;
 
   /** popup to switch columns */
   KPopupMenu* mPopup;

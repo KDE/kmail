@@ -26,7 +26,6 @@ using KMail::MailSourceViewer;
 #include "kmmsgdict.h"
 #include "kmsender.h"
 #include "kcursorsaver.h"
-#include "mailinglist-magic.h"
 #include "kmkernel.h"
 #include "vcardviewer.h"
 using KMail::VCardViewer;
@@ -52,17 +51,14 @@ using KMail::CSSHelper;
 #include "isubject.h"
 using KMail::ISubject;
 
+#include <kmime_mdn.h>
+using namespace KMime;
 #ifdef KMAIL_READER_HTML_DEBUG
 #include "filehtmlwriter.h"
 using KMail::FileHtmlWriter;
 #include "teehtmlwriter.h"
 using KMail::TeeHtmlWriter;
 #endif
-
-#include <kmime_mdn.h>
-#include <kmime_header_parsing.h>
-using KMime::Types::AddrSpecList;
-using namespace KMime;
 
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
@@ -541,81 +537,12 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
                                      ac, "add_bookmarks" );
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
 			     SLOT(slotUrlSave()), ac, "saveas_url" );
-  mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
-			      SLOT(slotReplyToMsg()), ac, "reply" );
-  mReplyAllAction = new KAction( i18n("Reply to &All..."), "mail_replyall",
-				 Key_A, this, SLOT(slotReplyAllToMsg()),
-				 ac, "reply_all" );
-  mReplyListAction = new KAction( i18n("Reply to Mailing-&List..."),
-				  "mail_replylist", Key_L, this,
-				  SLOT(slotReplyListToMsg()), ac,
-				  "reply_list" );
-
-  mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
-					"mail_forward", ac,
-					"message_forward" );
-  connect( mForwardActionMenu, SIGNAL(activated()), this,
-	   SLOT(slotForwardMsg()) );
-
-  mForwardAction = ac->action( "message_forward_inline" );
-  if (!mForwardAction) {
-    mForwardAction = new KAction( i18n("&Inline..."), "mail_forward",
-                                  SHIFT+Key_F, this, SLOT(slotForwardMsg()),
-                                  ac, "message_forward_inline" );
-  }
-  mForwardActionMenu->insert( mForwardAction );
-
-  mForwardAttachedAction = ac->action( "message_forward_as_attachment" );
-  if (!mForwardAttachedAction) {
-    mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
-				       "mail_forward", Key_F, this,
-					SLOT(slotForwardAttachedMsg()), ac,
-					"message_forward_as_attachment" );
-  }
-  mForwardActionMenu->insert( mForwardAttachedAction );
-
-  mRedirectAction = new KAction( i18n("Message->Forward->","&Redirect..."),
-				 Key_E, this, SLOT(slotRedirectMsg()),
-				 ac, "message_forward_redirect" );
-  mForwardActionMenu->insert( mRedirectAction );
-  mNoQuoteReplyAction = new KAction( i18n("Reply Without &Quote..."), SHIFT+Key_R,
-    this, SLOT(slotNoQuoteReplyToMsg()), ac, "noquotereply" );
-
-  //---- Bounce action
-  mBounceAction = new KAction( i18n("&Bounce..."), 0, this,
-			      SLOT(slotBounceMsg()), ac, "bounce" );
-
-  //----- Create filter actions
-  mFilterMenu = new KActionMenu( i18n("&Create Filter"), ac, "create_filter" );
-
-  mSubjectFilterAction = new KAction( i18n("Filter on &Subject..."), 0, this,
-				      SLOT(slotSubjectFilter()),
-				      ac, "subject_filter");
-  mFilterMenu->insert( mSubjectFilterAction );
-
-  mFromFilterAction = new KAction( i18n("Filter on &From..."), 0, this,
-				   SLOT(slotFromFilter()),
-				   ac, "from_filter");
-  mFilterMenu->insert( mFromFilterAction );
-
-  mToFilterAction = new KAction( i18n("Filter on &To..."), 0, this,
-				 SLOT(slotToFilter()),
-				 ac, "to_filter");
-  mFilterMenu->insert( mToFilterAction );
-
-  mListFilterAction = new KAction( i18n("Filter on Mailing-&List..."), 0, this,
-                                   SLOT(slotMailingListFilter()), ac,
-                                   "mlist_filter");
-  mFilterMenu->insert( mListFilterAction );
-
-  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
-			0, this, SLOT(slotToggleFixedFont()),
-			ac, "toggle_fixedfont" );
-
   mViewSourceAction = new KAction( i18n("&View Source"), Key_V, this,
 		      SLOT(slotShowMsgSrc()), ac, "view_source" );
 
-  mPrintAction = KStdAction::print (this, SLOT(slotPrintMsg()), ac);
+  mToggleFixFontAction = new KToggleAction( i18n("Use Fi&xed Font"),
+ 			Key_X, this, SLOT(slotToggleFixedFont()),
+ 			ac, "toggle_fixedfont" );
 
 }
 
@@ -2122,139 +2049,6 @@ KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
 }
 
 
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotReplyToMsg()
-{
-  KMCommand *command = new KMReplyToCommand( mMainWindow, message(), copyText() );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotReplyAllToMsg()
-{
-  KMCommand *command = new KMReplyToAllCommand( mMainWindow, message(), copyText() );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotForward() {
-  // ### FIXME: remember the last used subaction and use that
-  // currently, we hard-code "as attachment".
-  slotForwardAttachedMsg();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotForwardMsg()
-{
-  KMCommand *command = new KMForwardCommand( mMainWindow, message() );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotForwardAttachedMsg()
-{
-  KMCommand *command = new KMForwardAttachedCommand( mMainWindow, message(), 0 );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotRedirectMsg()
-{
-  KMCommand *command = new KMRedirectCommand( mMainWindow, message() );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotBounceMsg()
-{
-  KMCommand *command = new KMBounceCommand( mMainWindow, message() );
-  command->start();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotReplyListToMsg()
-{
-  KMCommand *command = new KMReplyListCommand( mMainWindow, message(),
-					       copyText() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotNoQuoteReplyToMsg()
-{
-  KMCommand *command = new KMNoQuoteReplyToCommand( mMainWindow, message() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotSubjectFilter()
-{
-  KMMessage *msg = message();
-  if (!msg)
-    return;
-
-  KMCommand *command = new KMFilterCommand( "Subject", msg->subject() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotMailingListFilter()
-{
-  KMMessage *msg = message();
-  if (!msg)
-    return;
-
-  KMCommand *command = new KMMailingListFilterCommand( mMainWindow, msg );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotFromFilter()
-{
-  KMMessage *msg = message();
-  if (!msg)
-    return;
-
-  AddrSpecList al = msg->extractAddrSpecs( "From" );
-  if ( al.empty() )
-    return;
-  KMCommand *command = new KMFilterCommand( "From",  al.front().asString() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotToFilter()
-{
-  KMMessage *msg = message();
-  if (!msg)
-    return;
-
-  KMCommand *command = new KMFilterCommand( "To",  msg->to() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::updateListFilterAction()
-{
-  //Proxy the mListFilterAction to update the action text
-  QCString name;
-  QString value;
-  QString lname = KMMLInfo::name( message(), name, value );
-  mListFilterAction->setText( i18n("Filter on Mailing-List...") );
-  if ( lname.isNull() )
-    mListFilterAction->setEnabled( false );
-  else {
-    mListFilterAction->setEnabled( true );
-    mListFilterAction->setText( i18n( "Filter on Mailing-List %1..." ).arg( lname ) );
-  }
-}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlClicked()
@@ -2351,24 +2145,6 @@ void KMReaderWin::slotShowMsgSrc()
                                                 isFixedFont() );
   command->start();
   msg->setComplete( oldStatus );
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotPrintMsg()
-{
-  KMCommand *command = new KMPrintCommand( mMainWindow, message(), htmlOverride() );
-  command->start();
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotSaveMsg()
-{
-  KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( mMainWindow,
-							message() );
-  if (saveCommand->url().isEmpty())
-    delete saveCommand;
-  else
-    saveCommand->start();
 }
 
 //-----------------------------------------------------------------------------

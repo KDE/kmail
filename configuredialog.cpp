@@ -1918,6 +1918,17 @@ static const EnumConfigEntry mimeTreeMode = {
   mimeTreeModes, DIM(mimeTreeModes), 1
 };
 
+
+static const EnumConfigEntryItem readerWindowModes[] = {
+  { "hide", I18N_NOOP("&Don't show a message preview pane") },
+  { "below", I18N_NOOP("Show a message preview pane &below the message list") },
+  { "right", I18N_NOOP("Show a message preview pane to the &right of the message list") }
+};
+static const EnumConfigEntry readerWindowMode = {
+  "Geometry", "readerWindowMode", I18N_NOOP("Message Preview Pane Display"),
+  readerWindowModes, DIM(readerWindowModes), 1
+};
+
 static const BoolConfigEntry showColorbarMode = {
   "Reader", "showColorbar", I18N_NOOP("Sho&w HTML status bar"), false
 };
@@ -1946,6 +1957,10 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   populate( mMIMETreeModeGroup = new QVButtonGroup( this ), mimeTreeMode );
   vlay->addWidget( mMIMETreeModeGroup );
 
+  // "show reader window" radio buttons: 
+  populate( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
+  vlay->addWidget( mReaderWindowModeGroup );
+
   vlay->addStretch( 10 ); // spacer
 }
 
@@ -1957,6 +1972,7 @@ void AppearancePage::LayoutTab::setup() {
   load( mFolderListGroup, geometry, folderListMode );
   load( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   load( mMIMETreeModeGroup, reader, mimeTreeMode );
+  load( mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
@@ -1967,6 +1983,7 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   loadProfile( mFolderListGroup, geometry, folderListMode );
   loadProfile( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadProfile( mMIMETreeModeGroup, reader, mimeTreeMode );
+  loadProfile( mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
 void AppearancePage::LayoutTab::apply() {
@@ -1977,6 +1994,7 @@ void AppearancePage::LayoutTab::apply() {
   save( mFolderListGroup, geometry, folderListMode );
   save( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   save( mMIMETreeModeGroup, reader, mimeTreeMode );
+  save( mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
 QString AppearancePage::HeadersTab::title() {

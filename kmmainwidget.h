@@ -90,27 +90,39 @@ public:
   // Proxy the actions from the reader window,
   // but action( "some_name" ) some name could be used instead.
   KAction *action( const char *name ) { return mActionCollection->action( name ); }
-  KAction *replyAction() { return mMsgView->replyAction(); }
-  KAction *replyAllAction() { return mMsgView->replyAllAction(); }
-  KAction *replyListAction() { return mMsgView->replyListAction(); }
+  KAction *replyAction() { return mReplyAction; }
+  KAction *replyAllAction() { return mReplyAllAction; }
+  KAction *replyListAction() { return mReplyListAction; }
   KActionMenu *forwardMenu() { return mForwardActionMenu; }
   KAction *forwardAction() { return mForwardAction; }
   KAction *forwardAttachedAction() { return mForwardAttachedAction; }
-  KAction *redirectAction() { return mMsgView->redirectAction(); }
-  KAction *bounceAction() { return mMsgView->bounceAction(); }
-  KAction *noQuoteReplyAction() { return mMsgView->noQuoteReplyAction(); }
-  KActionMenu *filterMenu() { return mMsgView->filterMenu(); }
+  KAction *redirectAction() { return mRedirectAction; }
+  KAction *bounceAction() { return mBounceAction; }
+  KAction *noQuoteReplyAction() { return mNoQuoteReplyAction; }
+  KActionMenu *filterMenu() { return mFilterMenu; }
+  KAction *printAction() { return mPrintAction; }
+
+  // Forwarded to the reader window.
   KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
   KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
-  KAction *printAction() { return mMsgView->printAction(); }
 
   //FIXME: wtf? member variables in the public interface:
   KAction *trashAction, *deleteAction, *saveAsAction, *editAction,
-    *sendAgainAction, *mForwardAction, *mForwardAttachedAction,
-    *applyFiltersAction, *findInMessageAction, *saveAttachments;
+    *sendAgainAction, *applyFiltersAction, *findInMessageAction, *saveAttachments;
+  // Composition actions
+  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyListAction,
+      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
+      *mBounceAction, *mNoQuoteReplyAction;
+  KActionMenu *mForwardActionMenu;
+  // Filter actions
+  KActionMenu *mFilterMenu;
+  KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
+      *mListFilterAction;
+
+  void updateListFilterAction();
+  
   KActionMenu *statusMenu, *threadStatusMenu,
-    *moveActionMenu, *copyActionMenu, *mForwardActionMenu,
-    *applyFilterActionsMenu;
+    *moveActionMenu, *copyActionMenu, *applyFilterActionsMenu;
   KToggleAction *toggleThreadRepliedAction;
   KToggleAction *toggleThreadForwardedAction;
   KToggleAction *toggleThreadQueuedAction;
@@ -205,8 +217,6 @@ protected slots:
   void slotOverrideThread();
   void slotToggleSubjectThreading();
   void slotMessageQueuedOrDrafted();
-  void slotForwardMsg();
-  void slotForwardAttachedMsg();
   void slotEditMsg();
   //void slotTrashMsg();   // move to trash
   void slotDeleteMsg();  // completely delete message
@@ -308,6 +318,21 @@ protected slots:
   /** Plug filter actions into a popup menu */
   void plugFilterActions(QPopupMenu*);
 
+  /** Slot to reply to a message */
+  void slotReplyToMsg();
+  void slotReplyListToMsg();
+  void slotReplyAllToMsg();
+  void slotForwardMsg();
+  void slotForwardAttachedMsg();
+  void slotRedirectMsg();
+  void slotBounceMsg();
+  void slotNoQuoteReplyToMsg();
+  void slotSubjectFilter();
+  void slotMailingListFilter();
+  void slotFromFilter();
+  void slotToFilter();
+  void slotPrintMsg();
+
 protected:
   KActionCollection * actionCollection() { return mActionCollection; }
 
@@ -344,7 +369,9 @@ protected:
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;
   int copyId, moveId, htmlId, threadId;
-  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref, mFolderThreadSubjPref;
+  bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref, 
+       mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
+  
   QPopupMenu *messageMenu;
   KMFldSearch *searchWin;
 

@@ -73,6 +73,7 @@ KMFolderImap::~KMFolderImap()
   if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
 }
 
+
 //-----------------------------------------------------------------------------
 void KMFolderImap::close(bool aForced)
 {

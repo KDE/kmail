@@ -472,6 +472,7 @@ protected: // data
   QButtonGroup *mFolderListGroup;
   QButtonGroup *mMIMETreeLocationGroup;
   QButtonGroup *mMIMETreeModeGroup;
+  QButtonGroup *mReaderWindowModeGroup;
 };
 
 class AppearancePageHeadersTab : public ConfigurationPage {

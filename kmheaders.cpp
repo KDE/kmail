@@ -40,7 +40,7 @@ using KMail::FolderJob;
 
 #include <stdlib.h>
 
-#ifndef NDEBUG //timing utilities
+#if 0 //timing utilities
 #include <qdatetime.h>
 #define CREATE_TIMER(x) int x=0, x ## _tmp=0; QTime x ## _tmp2
 #define START_TIMER(x) x ## _tmp2 = QTime::currentTime()
@@ -552,6 +552,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mSortInfo.column = 0;
   mSortInfo.ascending = false;
   mJumpToUnread = false;
+  mReaderWindowActive = false;
   setLineWidth(0);
   // popup-menu
   header()->setClickEnabled(true);
@@ -781,6 +782,7 @@ void KMHeaders::readConfig (void)
     mLoopOnGotoUnread = (LoopOnGotoUnreadValue)config->readNumEntry(
             "LoopOnGotoUnread", LoopInAllFolders );
     mJumpToUnread = config->readBoolEntry( "JumpToUnread", false );
+    mReaderWindowActive = config->readEntry( "readerWindowMode", "below" ) != "hide";
   }
 }
 
@@ -925,7 +927,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     mOwner->editAction->setEnabled(mFolder ?  (kernel->folderIsDraftOrOutbox(mFolder)): false );
     mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingList() :
       false);
-
     if (mFolder)
     {
       connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
@@ -2026,7 +2027,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
     if (mPrevCurrent)
     {
       KMMessage *prevMsg = mFolder->getMsg(mPrevCurrent->msgId());
-      if (prevMsg)
+      if (prevMsg && mReaderWindowActive) 
       {
         mFolder->ignoreJobsForMessage(prevMsg);
         if (!prevMsg->transferInProgress())
@@ -2035,18 +2036,22 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
     }
     mPrevCurrent = item;
   }
+  
   if (!item)
   {
     emit selected( 0 ); return;
   }
 
   int idx = item->msgId();
-  KMMessage *msg = mFolder->getMsg(idx);
-  if (!msg || msg->transferInProgress())
+  if (mReaderWindowActive) 
   {
-    emit selected( 0 );
-    mPrevCurrent = 0;
-    return;
+    KMMessage *msg = mFolder->getMsg(idx);
+    if (!msg || msg->transferInProgress())
+    {
+      emit selected( 0 );
+      mPrevCurrent = 0;
+      return;
+    }
   }
 
   KMBroadcastStatus::instance()->setStatusMsg("");

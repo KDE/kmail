@@ -180,26 +180,8 @@ public:
 
   // Action to reply to a message
   // but action( "some_name" ) some name could be used instead.
-  KAction *replyAction() { return mReplyAction; }
-  KAction *replyAllAction() { return mReplyAllAction; }
-  KAction *replyListAction() { return mReplyListAction; }
-  KActionMenu *forwardMenu() { return mForwardActionMenu; }
-  KAction *forwardAction() { return mForwardAction; }
-  KAction *forwardAttachedAction() { return mForwardAttachedAction; }
-  KAction *redirectAction() { return mRedirectAction; }
-  KAction *noQuoteReplyAction() { return mNoQuoteReplyAction; }
-
-  KAction *bounceAction() { return mBounceAction; }
-
-  KActionMenu *filterMenu() { return mFilterMenu; }
-  KAction *subjectFilterAction() { return mSubjectFilterAction; }
-  KAction *fromFilterAction() { return mFromFilterAction; }
-  KAction *toFilterAction() { return mToFilterAction; }
-  KAction *listFilterAction() { return mListFilterAction; }
-  void updateListFilterAction();
   KToggleAction *toggleFixFontAction() { return mToggleFixFontAction; }
   KAction *viewSourceAction() { return mViewSourceAction; }
-  KAction *printAction() { return mPrintAction; }
   KAction *mailToComposeAction() { return mMailToComposeAction; }
   KAction *mailToReplyAction() { return mMailToReplyAction; }
   KAction *mailToForwardAction() { return mMailToForwardAction; }
@@ -284,21 +266,7 @@ public slots:
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();
 
-  /** Slot to reply to a message */
-  void slotReplyToMsg();
-  void slotReplyListToMsg();
-  void slotReplyAllToMsg();
-  void slotForward();
-  void slotForwardMsg();
-  void slotForwardAttachedMsg();
-  void slotRedirectMsg();
-  void slotBounceMsg();
-  void slotNoQuoteReplyToMsg();
-  void slotSubjectFilter();
-  void slotMailingListFilter();
-  void slotFromFilter();
-  void slotToFilter();
-  void slotUrlClicked();
+   void slotUrlClicked();
 
   /** Operations on mailto: URLs. */
   void slotMailtoReply();
@@ -313,10 +281,8 @@ public slots:
   void slotUrlOpen();
   /** Save the page to a file */
   void slotUrlSave();
-    void slotAddBookmarks();
+  void slotAddBookmarks();
   void slotShowMsgSrc();
-  void slotPrintMsg();
-  void slotSaveMsg();
   void slotSaveAttachments();
 
   /** Returns the current message or 0 if none. */
@@ -422,16 +388,7 @@ private:
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
-  // Composition actions
-  KAction *mReplyAction, *mReplyAllAction, *mReplyListAction,
-      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
-      *mBounceAction, *mNoQuoteReplyAction;
-  KActionMenu *mForwardActionMenu;
-  // Filter actions
-  KActionMenu *mFilterMenu;
-  KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
-      *mListFilterAction, *mViewSourceAction, *mPrintAction,
-      *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
+  KAction *mViewSourceAction, *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
       *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction;
 
