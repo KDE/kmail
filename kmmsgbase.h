@@ -115,7 +115,7 @@ public:
   void setParent(KMFolderIndex* p) { mParent=p; }
 
   /** Convert the given message status to a string. */
-  static const QCString statusToStr(KMMsgStatus status);
+  static const QCString statusToStr(const KMMsgStatus status);
   
   /** Convert the given message status to a string. */
   QString statusToSortRank();
