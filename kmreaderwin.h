@@ -240,7 +240,9 @@ public:
                                CryptPlugWrapper*     useThisCryptPlug,
                                partNode& data,
                                QCString& decryptedData,
-                               bool showWarning = true );
+                               bool showWarning,
+                               bool& passphraseError,
+                               QString& aErrorText );
 
     /** Delete all KMReaderWin's that do not have a parent. */
     static void deleteAllStandaloneWindows();

@@ -105,6 +105,7 @@ public:
     Kpgp::Validity keyTrust;
     QString status;  // to be used for unknown plug-ins
     int status_code; // to be used for i18n of OpenPGP and S/MIME CryptPlugs
+    QString errorText;
     tm creationTime;
     bool isEncrypted;
     bool isDecryptable;
@@ -381,7 +382,10 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
         if( okDecryptMIME( *plugForDecrypting,
                            versionPart,
                            *encryptedDataPart,
-                           decryptedData ) ) {
+                           decryptedData,
+                           true,
+                           bool& isEncrypted,
+                           QString& errCode ) ) {
           DwBodyPart* myBody = new DwBodyPart( DwString( decryptedData ),
                                                encryptedDataPart->dwPart() );
           myBody->Parse();
@@ -688,16 +692,22 @@ kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n"
                   }
                   else if( plugFound ) {
 kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
+                    PartMetaData messagePart;
                     curNode->setEncrypted( true );
                     QCString decryptedData;
-                    if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *data, decryptedData ) ) {
+                    bool passphraseError;
+                    if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
+                                       *data,
+                                       decryptedData,
+                                       true,
+                                       passphraseError,
+                                       messagePart.errorText ) ) {
                       DwBodyPart* myBody = new DwBodyPart(DwString( decryptedData ), data->dwPart());
                       myBody->Parse();
                       partNode myBodyNode( true, myBody );
                       myBodyNode.buildObjectTree( false );
   
                       // paint the frame
-                      PartMetaData messagePart;
                       if( reader ) {
                         messagePart.isDecryptable = true;
                         messagePart.isEncrypted = true;
@@ -716,8 +726,17 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     }
                     else
                     {
-                      if( reader )
+                      if( reader ) {
+                        if( passphraseError ) {
+                          messagePart.isDecryptable = false;
+                          messagePart.isEncrypted = true;
+                          messagePart.isSigned = false;
+                          reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                        }
                         reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
+                        if( passphraseError )
+                          reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
+                      }
                       resultString += decryptedData;
                     }
                     data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
@@ -846,12 +865,18 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     /*
                         ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
                     */
+                    PartMetaData messagePart;
                     if( foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
                       QCString decryptedData;
-                      if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug, *curNode, decryptedData ) ) {
+                      bool passphraseError;
+                      if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
+                                         *curNode,
+                                         decryptedData,
+                                         true,
+                                         passphraseError,
+                                         messagePart.errorText ) ) {
 
                         // paint the frame
-                        PartMetaData messagePart;
                         if( reader ) {
                           messagePart.isDecryptable = true;
                           messagePart.isEncrypted = true;
@@ -871,8 +896,17 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                       }
                       else
                       {
-                        if( reader )
+                        if( reader ) {
+                          if( passphraseError ) {
+                            messagePart.isDecryptable = false;
+                            messagePart.isEncrypted = true;
+                            messagePart.isSigned = false;
+                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                          }
                           reader->writeHTMLStr(reader->mCodec->toUnicode( decryptedData ));
+                          if( passphraseError )
+                            reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
+                        }
                         resultString += decryptedData;
                       }
                     }
@@ -936,10 +970,13 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                         messagePart.isEncrypted = true;
                         messagePart.isSigned = false;
                       }
+                      bool passphraseError;
                       if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
                                          *curNode,
                                          decryptedData,
-                                         false ) ) {
+                                         false,
+                                         passphraseError,
+                                         messagePart.errorText ) ) {
                         kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
                         isEncrypted = true;
                         curNode->setEncrypted( true );
@@ -958,6 +995,12 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                         if( reader )
                             reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                       } else {
+                        
+                        if( passphraseError ) {
+                          isEncrypted = true;
+                          signTestNode = 0;
+                        }
+                          
                         if( isEncrypted ) {
                           kdDebug(5006) << "pkcs7 mime  -  ERROR: COULD NOT DECRYPT enveloped data !" << endl;
                           // paint the frame
@@ -2548,13 +2591,146 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 }
 
 
+//pending(khz): replace this and put it into CryptPlugWrapper class  (khz, 2002/06/27)
+class tmpHelper {
+public:    
+    static QString pluginErrorIdToErrorText( int errId, bool& passphraseError )
+    {
+        /* The error numbers used by GPGME.  */
+    /*    
+        typedef enum
+        {
+            GPGME_EOF                = -1,
+            GPGME_No_Error           = 0,
+            GPGME_General_Error      = 1,
+            GPGME_Out_Of_Core        = 2,
+            GPGME_Invalid_Value      = 3,
+            GPGME_Busy               = 4,
+            GPGME_No_Request         = 5,
+            GPGME_Exec_Error         = 6,
+            GPGME_Too_Many_Procs     = 7,
+            GPGME_Pipe_Error         = 8,
+            GPGME_No_Recipients      = 9,
+            GPGME_No_Data            = 10,
+            GPGME_Conflict           = 11,
+            GPGME_Not_Implemented    = 12,
+            GPGME_Read_Error         = 13,
+            GPGME_Write_Error        = 14,
+            GPGME_Invalid_Type       = 15,
+            GPGME_Invalid_Mode       = 16,
+            GPGME_File_Error         = 17,  // errno is set in this case.
+            GPGME_Decryption_Failed  = 18,
+            GPGME_No_Passphrase      = 19,
+            GPGME_Canceled           = 20,
+            GPGME_Invalid_Key        = 21,
+            GPGME_Invalid_Engine     = 22,
+            GPGME_Invalid_Recipients = 23
+        }
+    */
+        /*
+        NOTE:
+            The following hack *must* be changed into something
+            using an extra enum specified in the CryptPlug API
+            *and* the file error number (case 17) must be taken
+            into account.                     (khz, 2002/27/06)
+        */
+        passphraseError = false;
+        switch( errId ){
+            case /*GPGME_EOF                = */-1:
+                return(i18n("End of File reached during operation."));
+                break;
+            case /*GPGME_No_Error           = */0:
+                return(i18n("No error."));
+                break;
+            case /*GPGME_General_Error      = */1:
+                return(i18n("General error."));
+                break;
+            case /*GPGME_Out_Of_Core        = */2:
+                return(i18n("Out of core!"));
+                break;
+            case /*GPGME_Invalid_Value      = */3:
+                return(i18n("Invalid value."));
+                break;
+            case /*GPGME_Busy               = */4:
+                return(i18n("Engine is busy."));
+                break;
+            case /*GPGME_No_Request         = */5:
+                return(i18n("No request."));
+                break;
+            case /*GPGME_Exec_Error         = */6:
+                return(i18n("Execution error."));
+                break;
+            case /*GPGME_Too_Many_Procs     = */7:
+                return(i18n("Too many processes."));
+                break;
+            case /*GPGME_Pipe_Error         = */8:
+                return(i18n("Pipe error."));
+                break;
+            case /*GPGME_No_Recipients      = */9:
+                return(i18n("No recipients."));
+                break;
+            case /*GPGME_No_Data            = */10:
+                return(i18n("No data."));
+                break;
+            case /*GPGME_Conflict           = */11:
+                return(i18n("Conflict."));
+                break;
+            case /*GPGME_Not_Implemented    = */12:
+                return(i18n("Not implemented."));
+                break;
+            case /*GPGME_Read_Error         = */13:
+                return(i18n("Read error."));
+                break;
+            case /*GPGME_Write_Error        = */14:
+                return(i18n("Write error."));
+                break;
+            case /*GPGME_Invalid_Type       = */15:
+                return(i18n("Invalid type."));
+                break;
+            case /*GPGME_Invalid_Mode       = */16:
+                return(i18n("Invalid mode."));
+                break;
+            case /*GPGME_File_Error         = */17:  // errno is set in this case.
+                return(i18n("File error."));
+                break;
+            case /*GPGME_Decryption_Failed  = */18:
+                return(i18n("Decryption failed."));
+                break;
+            case /*GPGME_No_Passphrase      = */19:
+                passphraseError = true;
+                return(i18n("No passphrase."));
+                break;
+            case /*GPGME_Canceled           = */20:
+                passphraseError = true;
+                return(i18n("Canceled."));
+                break;
+            case /*GPGME_Invalid_Key        = */21:
+                passphraseError = true;
+                return(i18n("Invalid key."));
+                break;
+            case /*GPGME_Invalid_Engine     = */22:
+                return(i18n("Invalid engine."));
+                break;
+            case /*GPGME_Invalid_Recipients = */23:
+                return(i18n("Invalid recipients."));
+                break;
+            default:
+                return(i18n("Unknown error."));
+            }
+    }
+};
+
 bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                                  CryptPlugWrapperList* cryptPlugList,
                                  CryptPlugWrapper*     useThisCryptPlug,
                                  partNode& data,
                                  QCString& decryptedData,
-                                 bool showWarning )
+                                 bool showWarning,
+                                 bool& passphraseError,
+                                 QString& aErrorText )
 {
+  passphraseError = false;
+  aErrorText = "";
   const QString errorContentCouldNotBeDecrypted( i18n("Content could *not* be decrypted.") );
 
   bool bDecryptionOk = false;
@@ -2602,33 +2778,34 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
         decryptedData );
     } else {
       kdDebug() << "\nKMReaderWin::decryptMIME: going to call CRYPTPLUG "
-                << cryptPlug->libName() << endl;
+                << cryptPlug->libName() << endl; 
+      int errId = 0;
+      char* errTxt = 0;
       bDecryptionOk = cryptPlug->decryptMessage( ciphertext,
                                                  cipherIsBinary,
                                                  cipherLen,
                                                  &cleartext,
-                                                 certificate );
+                                                 certificate,
+                                                 &errId,
+                                                 &errTxt );
       kdDebug() << "\nKMReaderWin::decryptMIME: returned from CRYPTPLUG" << endl;
+      aErrorText = tmpHelper::pluginErrorIdToErrorText( errId, passphraseError );
       if( bDecryptionOk )
         decryptedData = cleartext;
       else if( reader && showWarning ){
-        // pending (khz): show more information...
-        /*
-        QString reason("");
         reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
-          i18n("Crypto Plug-In %1 could not decrypt the data.\n%2")
-          .arg(cryptPlug->libName())
-          .arg(reason),
-          i18n("Make sure the Plug-In is installed properly and check your"),
-          i18n("specifications made in the 'Settings/Configure KMail / Plug-In' dialog!"),
-          decryptedData );
-        */
-        reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
-          i18n("Crypto Plug-In %1 could not decrypt the data.").arg(cryptPlug->libName()),
-          i18n("Make sure the Plug-In is installed properly and check your"),
-          i18n("specifications made in the 'Settings/Configure KMail / Plug-In' dialog!"),
+          i18n("Crypto Plug-In %1 could not decrypt the data.")
+            .arg(cryptPlug->libName()),
+          i18n("Error: %2")
+            .arg( aErrorText ),
+          passphraseError
+          ? ""
+          : i18n("Make sure the Plug-In is installed properly and check "
+                 "your specifications made in the "
+                 "'Settings/Configure KMail / Plug-In' dialog!"),
           decryptedData );
       }
+      delete errTxt;
     }
 
     delete cleartext;
@@ -3424,10 +3601,13 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block, CryptPlugWrapper* 
             "<tr class=\"encrH\"><td dir=\"" + dir + "\">";
         if( block.isDecryptable )
             htmlStr += i18n("Encrypted message");
-        else
-            htmlStr += QString("%1<br />%2")
-            .arg(i18n("Cannot decrypt message:"))
-            .arg(block.decryptionError);
+        else {
+            htmlStr +=
+                QString("%1<br />%2 <i>%3</i>")
+                .arg( i18n("Cannot decrypt message.") )
+                .arg( block.errorText.isEmpty() ? "" : i18n("Error: ") )
+                .arg( block.errorText );
+        }
         htmlStr += "</td></tr><tr class=\"encrB\"><td>";
     }
 
