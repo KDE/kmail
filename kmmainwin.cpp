@@ -47,6 +47,7 @@
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
 #include "kmaccount.h"
+#include "kmacctimap.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
 #include "kmfoldertree.h"
@@ -1067,6 +1068,12 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 void KMMainWin::slotMsgSelected(KMMessage *msg)
 {
   mMsgView->setMsg(msg);
+  if (msg && msg->parent() && msg->parent()->account())
+  {
+    KMImapJob *job = new KMImapJob(msg);
+    connect(job, SIGNAL(messageRetrieved(KMMessage*)),
+            SLOT(slotUpdateImapMessage(KMMessage*)));
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -1085,6 +1092,13 @@ void KMMainWin::slotSelectMessage(KMMessage* msg)
     mHeaders->setCurrentMsg(idx);
     mMsgView->setMsg(msg);
   }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUpdateImapMessage(KMMessage *msg)
+{
+  if (((KMMsgBase*)msg)->isMessage()) mMsgView->setMsg(msg, TRUE);
 }
 
 

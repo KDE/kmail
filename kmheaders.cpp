@@ -37,6 +37,7 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmreaderwin.h"
+#include "kmacctimap.h"
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -1703,13 +1704,18 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
   int idx = item->msgId();
 
   mOwner->statusMsg("");
-  emit selected(mFolder->getMsg(idx));
+//  if (mFolder->imapPath.isEmpty())
+    emit selected(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
   if (lvi != mPrevCurrent) {
     if (mPrevCurrent)
+    {
+      if (mFolder->account()) KMImapJob::killJobsForMessage(
+        mFolder->getMsg(mPrevCurrent->msgId()));
       mFolder->unGetMsg(mPrevCurrent->msgId());
+    }
     mPrevCurrent = item;
   }
 }
@@ -1770,6 +1776,7 @@ void KMHeaders::recursivelyAddChildren( int i, KMHeaderItem *parent )
 //-----------------------------------------------------------------------------
 void KMHeaders::updateMessageList(void)
 {
+kdDebug() << "KMHeaders::updateMessageList(void)" << endl;
   int i;
   KMMsgBase* mb;
 
@@ -1782,6 +1789,7 @@ void KMHeaders::updateMessageList(void)
     repaint();
     return;
   }
+kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
 
   // About 60% of the time spent in populating the list view in spent
   // in operator new and QListViewItem::QListViewItem. Reseting an item
@@ -1814,6 +1822,7 @@ void KMHeaders::updateMessageList(void)
       delete mItems[temp-1];
   }
 
+kdDebug() << "mFolder->count() = " << mFolder->count() << endl;
   mItems.resize( mFolder->count() );
 
   if ((mNested && !mNestedOverride) || (!mNested && mNestedOverride)) {

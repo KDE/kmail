@@ -12,6 +12,7 @@ KMFolderNode::KMFolderNode(KMFolderDir* aParent, const QString& aName)
   mType = "node";
   mName = aName;
   mParent = aParent;
+  mDir = FALSE;
   
   setName(mName);
 }
@@ -40,7 +41,7 @@ void KMFolderNode::setType(const char* aType)
 //-----------------------------------------------------------------------------
 bool KMFolderNode::isDir(void) const
 {
-  return FALSE;
+  return mDir;
 }
 
 

@@ -159,6 +159,7 @@ protected slots:
   void slotSearch();
   void slotSearchClosed();
   void slotFind();
+  void slotUpdateImapMessage(KMMessage *msg);
 
   /** etc. */
   void slotMsgActivated(KMMessage*);

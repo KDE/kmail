@@ -3,6 +3,7 @@
 #include "kmacctmgr.h"
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
+#include "kmacctimap.h"
 #include "kmglobal.h"
 #include "kbusyptr.h"
 #include "kmfiltermgr.h"
@@ -200,6 +201,9 @@ KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
 
   else if (qstricmp(aType,"pop")==0)
     act = new KMAcctExpPop(this, aName);
+
+  else if (stricmp(aType,"imap")==0)
+    act = new KMAcctImap(this, aName);
 
   if (act)
     act->setFolder(kernel->inboxFolder());

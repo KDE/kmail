@@ -41,6 +41,7 @@
 #include "kmacctlocal.h"
 #include "kmacctmgr.h"
 #include "kmacctexppop.h"
+#include "kmacctimap.h"
 #include "kmfolder.h"
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
@@ -63,6 +64,10 @@ AccountDialog::AccountDialog( KMAccount *account, const QStringList &identity,
   else if( accountType == "pop" )
   {
     makePopAccountPage();
+  }
+  else if( accountType == "imap" )
+  {
+    makeImapAccountPage();
   }
   else
   {
@@ -268,6 +273,76 @@ void AccountDialog::makePopAccountPage()
 }
 
 
+void AccountDialog::makeImapAccountPage()
+{
+  QFrame *page = makeMainWidget();
+  QGridLayout *topLayout = new QGridLayout( page, 11, 2, 0, spacingHint() );
+  topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
+  topLayout->setRowStretch( 10, 10 );
+  topLayout->setColStretch( 1, 10 );
+  
+  mImap.titleLabel = new QLabel( page );
+  mImap.titleLabel->setText( i18n("Account type: Imap Account") );
+  QFont titleFont( mImap.titleLabel->font() );
+  titleFont.setBold( true );
+  mImap.titleLabel->setFont( titleFont );
+  topLayout->addMultiCellWidget( mImap.titleLabel, 0, 0, 0, 1 );
+  QFrame *hline = new QFrame( page );
+  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  topLayout->addMultiCellWidget( hline, 1, 1, 0, 1 );
+
+  QLabel *label = new QLabel( i18n("Name:"), page );
+  topLayout->addWidget( label, 2, 0 );
+  mImap.nameEdit = new QLineEdit( page );
+  topLayout->addWidget( mImap.nameEdit, 2, 1 );
+
+  label = new QLabel( i18n("Login:"), page );
+  topLayout->addWidget( label, 3, 0 );
+  mImap.loginEdit = new QLineEdit( page );
+  topLayout->addWidget( mImap.loginEdit, 3, 1 );
+
+  label = new QLabel( i18n("Password:"), page );
+  topLayout->addWidget( label, 4, 0 );
+  mImap.passwordEdit = new QLineEdit( page );
+  mImap.passwordEdit->setEchoMode( QLineEdit::Password );
+  topLayout->addWidget( mImap.passwordEdit, 4, 1 );  
+
+  label = new QLabel( i18n("Host:"), page );
+  topLayout->addWidget( label, 5, 0 );
+  mImap.hostEdit = new QLineEdit( page );
+  topLayout->addWidget( mImap.hostEdit, 5, 1 );  
+
+  label = new QLabel( i18n("Port:"), page );
+  topLayout->addWidget( label, 6, 0 );
+  mImap.portEdit = new QLineEdit( page );
+  mImap.portEdit->setValidator( new QIntValidator(this) );
+  topLayout->addWidget( mImap.portEdit, 6, 1 ); 
+
+  label = new QLabel( i18n("Prefix to folders:"), page );
+  topLayout->addWidget( label, 7, 0 );
+  mImap.prefixEdit = new QLineEdit( page );
+  topLayout->addWidget( mImap.prefixEdit, 7, 1 );
+
+  mImap.storePasswordCheck = 
+    new QCheckBox( i18n("Store IMAP password in configuration file"), page );
+  topLayout->addMultiCellWidget( mImap.storePasswordCheck, 8, 8, 0, 1 );
+  
+  QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
+    i18n("Authentification method"), page );
+  mImap.authAuto = new QRadioButton(
+    i18n("Auto"), group);
+  mImap.authLogin = new QRadioButton(
+    i18n("Login"), group);
+  mImap.authCramMd5 = new QRadioButton(
+    i18n("CRAM-MD5"), group);
+  mImap.authAnonymous = new QRadioButton(
+    i18n("Anonymous"), group);
+  topLayout->addMultiCellWidget( group, 9, 9, 0, 1 );
+
+  connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
+}
+
+
 void AccountDialog::setupSettings()
 {
   QComboBox *folderCombo = 0;
@@ -318,8 +393,28 @@ void AccountDialog::setupSettings()
     folderCombo = mPop.folderCombo;
     //    mPop.identityCombo->insertStringList( mIdentityList );
   }
+  else if( accountType == "imap" )
+  {
+    KMAcctImap &ai = *(KMAcctImap*)mAccount;
+    mImap.nameEdit->setText( mAccount->name() );
+    mImap.loginEdit->setText( ai.login() );
+    mImap.passwordEdit->setText( ai.passwd());
+    mImap.hostEdit->setText( ai.host() );
+    mImap.portEdit->setText( QString("%1").arg( ai.port() ) ); 
+    mImap.prefixEdit->setText( ai.prefix() );
+    mImap.storePasswordCheck->setChecked( ai.storePasswd() );
+    if (ai.auth() == "CRAM-MD5")
+      mImap.authCramMd5->setChecked( TRUE );
+    else if (ai.auth() == "ANONYMOUS")
+      mImap.authAnonymous->setChecked( TRUE );
+    else if (ai.auth() == "LOGIN")
+      mImap.authLogin->setChecked( TRUE );
+    else mImap.authAuto->setChecked( TRUE );
+  }
   else // Unknown account type
     return;
+
+  if (!folderCombo) return;
 
   KMFolderDir *fdir = (KMFolderDir*)&kernel->folderMgr()->dir();
   KMFolder *acctFolder = mAccount->folder();
@@ -446,7 +541,28 @@ void AccountDialog::saveSettings()
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
     epa.setPrecommand( mPop.precommand->text() );
+  }
+  else if( accountType == "imap" )
+  {
+    mAccount->setName( mImap.nameEdit->text() );
+    mAccount->setCheckInterval( 0 ); 
+    mAccount->setCheckExclude( TRUE );
+    
+    KMAcctImap &epa = *(KMAcctImap*)mAccount;
+    epa.setHost( mImap.hostEdit->text() );
+    epa.setPort( mImap.portEdit->text().toInt() );
+    epa.setPrefix( mImap.prefixEdit->text() );
+    epa.setLogin( mImap.loginEdit->text() );
+    epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
+    epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
 
+    if (mImap.authCramMd5->isChecked())
+      epa.setAuth("CRAM-MD5");
+    else if (mImap.authAnonymous->isChecked())
+      epa.setAuth("ANONYMOUS");
+    else if (mImap.authLogin->isChecked())
+      epa.setAuth("LOGIN");
+    else epa.setAuth("*");
   }
   kernel->acctMgr()->writeConfig(TRUE);
 }
@@ -505,11 +621,17 @@ void AccountDialog::slotFontChanged( void )
     titleFont.setBold( true );
     mLocal.titleLabel->setFont(titleFont);
   }
-  else
+  else if( accountType == "pop" )
   {
     QFont titleFont( mPop.titleLabel->font() );
     titleFont.setBold( true );
     mPop.titleLabel->setFont(titleFont);
+  }
+  else if( accountType == "imap" )
+  {
+    QFont titleFont( mImap.titleLabel->font() );
+    titleFont.setBold( true );
+    mImap.titleLabel->setFont(titleFont);
   }
 }
 

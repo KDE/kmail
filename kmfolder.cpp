@@ -9,6 +9,7 @@
 #include "kmfolderdir.h"
 #include "kbusyptr.h"
 #include "kmundostack.h"
+#include "kmacctimap.h"
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -85,6 +86,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mChild          = 0;
   mLockType       = None;
   mConvertToUtf8  = FALSE;
+  mAccount        = NULL;
 }
 
 
@@ -852,7 +854,15 @@ void KMFolder::removeMsg(int idx)
       return;
     }
   QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
+  if (mAccount && !mb->isMessage()) readMsg(idx);
   mb = mMsgList.take(idx);
+
+  if (mAccount)
+  {
+    KMMessage *msg = static_cast<KMMessage*>(mb);
+    mAccount->deleteMessage(msg);
+  }
+
   mDirty = TRUE;
   needsCompact=true; // message is taken from here - needs to be compacted
 
@@ -881,6 +891,12 @@ KMMessage* KMFolder::take(int idx)
   mb = mMsgList[idx];
   if (!mb) return NULL;
   if (!mb->isMessage()) readMsg(idx);
+
+  if (mAccount)
+  {
+    KMMessage *msg = static_cast<KMMessage*>(mb);
+    mAccount->deleteMessage(msg);
+  }
 
   QString msgIdMD5 = mMsgList[idx]->msgIdMD5();
   msg = (KMMessage*)mMsgList.take(idx);
@@ -1430,7 +1446,6 @@ const QString KMFolder::label() const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
   if (mIsSystemFolder) return i18n(name());
-  if (name() == "inbox") return i18n(name());
   return name();
 }
 
@@ -1543,6 +1558,7 @@ void KMFolder::readConfig()
 //-----------------------------------------------------------------------------
 void KMFolder::writeConfig()
 {
+  if (mAccount) return;  // Don't store information about IMAP Folders
   KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
   config->writeEntry("UnreadMsgs", mUnreadMsgs);

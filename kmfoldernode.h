@@ -27,6 +27,7 @@ public:
     Note that there are some kinds of mail folders like the type mh uses that
     are directories on disk but are handled as folders here. */
   virtual bool isDir(void) const;
+  virtual void setDir(bool aDir) { mDir = aDir; }
 
   /** Returns ptr to owning directory object or NULL if none. This
     is just a wrapper for convenient access. */
@@ -63,6 +64,7 @@ protected:
   QString mName;
   const char* mType;
   KMFolderDir *mParent;
+  bool mDir;
 };
 
 typedef QList<KMFolderNode> KMFolderNodeList;

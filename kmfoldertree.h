@@ -3,7 +3,7 @@
 
 #include <qwidget.h>
 #include <qlistview.h>
-//#include <ktablistbox.h>
+#include <klocale.h>
 #include "kmfolder.h"
 
 // Fixme! A temporary dependency
@@ -12,7 +12,59 @@
 class QDropEvent;
 class QTimer;
 class QPixmap;
-class KMFolderTreeItem;
+
+class KMFolderTreeItem : public QListViewItem
+{
+ 
+public:
+  KMFolder* folder;
+  QString unread;
+  KMPaintInfo *mPaintInfo;
+  enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
+  imapState mImapState;
+ 
+  /* Construct the root item */
+  KMFolderTreeItem( QListView *parent,
+                    KMPaintInfo *aPaintInfo )
+    : QListViewItem( parent, i18n("Mail") ),
+      folder( 0 ),
+      unread( QString::null ),
+      mPaintInfo( aPaintInfo ),
+      mImapState( imapNoInformation )
+    {}
+  KMFolderTreeItem( QListView *parent,
+                    KMFolder* folder,
+                    KMPaintInfo *aPaintInfo )
+    : QListViewItem( parent, i18n("Mail") ),
+      folder( folder ),
+      unread( QString::null ),
+      mPaintInfo( aPaintInfo ),
+      mImapState( imapNoInformation )
+    {}
+ 
+  /* Construct a child item */
+  KMFolderTreeItem( QListViewItem* parent,
+                    KMFolder* folder,
+                    KMPaintInfo *aPaintInfo )
+    : QListViewItem( parent, (folder) ? folder->label() : QString::null ),
+      folder( folder ),
+      unread( QString::null ),
+      mPaintInfo( aPaintInfo ),
+      mImapState( imapNoInformation )
+    {}
+ 
+  virtual ~KMFolderTreeItem();
+  void paintBranches( QPainter * p, const QColorGroup & cg,
+                      int w, int y, int h, GUIStyle s )
+  {
+    QListViewItem::paintBranches( p, cg, w, y, h, s);
+  }
+
+  void paintCell( QPainter * p, const QColorGroup & cg,
+                  int column, int width, int align ); 
+  virtual QString key( int, bool ) const;
+};
+
 
 #define KMFolderTreeInherited QListView
 class KMFolderTree : public QListView
@@ -27,16 +79,20 @@ public:
   KMFolderTree(QWidget *parent=0, const char *name=0);
   virtual ~KMFolderTree();
 
-  // Save config options
+  /** Save config options */
   void writeConfig();
 
-  // Get/refresh the folder tree
+  /** Get/refresh the folder tree */
   virtual void reload(void);
 
-  // Recusively add folders in a folder directory to a listview item.
+  /** Recusively add folders in a folder directory to a listview item. */
   virtual void addDirectory( KMFolderDir *fdir, QListViewItem* parent );
 
-  // Find index of given folder. Returns -1 if not found
+  /** Add an item for an Imap foler */
+  void addImapChildFolder(KMFolderTreeItem *item, const QString& name,
+    bool expandable, bool noPrefix);
+
+  /** Find index of given folder. Returns -1 if not found */
   virtual QListViewItem* indexOfFolder(const KMFolder*);
 
   /** Read config options. */
@@ -73,6 +129,8 @@ public slots:
   void decCurrentFolder();
   /* Select the current folder */
   void selectCurrentFolder();
+  /** Executes delayed update of folder tree */
+  void delayedUpdate();
 
 protected slots:
   void doFolderSelected(QListViewItem*);
@@ -84,14 +142,17 @@ protected slots:
   /** Updates the folder tree only if some folder lable has changed */
   void refresh(KMFolder*);
 
-  /** Executes delayed update of folder tree */
-  void delayedUpdate();
-
   /* Create a child folder */
   void addChildFolder();
 
   /* Open a folder */
   void openFolder();
+
+  /* Expand an IMAP folder */
+  void slotFolderExpanded( QListViewItem * item );
+
+  /* Delete all child items on collapse */
+  void slotFolderCollapsed( QListViewItem * item );
 
 protected:
   // Catch palette changes

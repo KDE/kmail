@@ -29,6 +29,7 @@
 class KMMessage;
 class KMFolderDir;
 class KMAcctList;
+class KMAcctImap;
 
 #define KMFolderInherited KMFolderNode
 
@@ -235,7 +236,7 @@ public:
   { mMailingListAdminAddress = address; writeConfig(); }
   const QString& mailingListAdminAddress() const
   { return mMailingListAdminAddress; }
-  
+
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
@@ -251,10 +252,22 @@ public:
   /** A cludge to help make sure the count of unread messges is kept in sync */
   virtual void correctUnreadMsgsCount();
 
-  /* Returns a string that can be used to identify this folder */
+  /** Returns a string that can be used to identify this folder */
   virtual QString idString();
 
   void setLockType( LockType ltype=FCNTL );
+
+  /** The path to the imap folder on the server */
+  void setImapPath(const QString &path) { mImapPath = path; }
+  const QString imapPath() { return mImapPath; }
+
+  /** The uidvalidity of the last update */
+  void setUidValidity(const QString &validity) { mUidValidity = validity; }
+  const QString uidValidity() { return mUidValidity; }
+
+  /** The imap account the folder belongs to */
+  void setAccount(KMAcctImap *acct) { mAccount = acct; }
+  KMAcctImap* account() { return mAccount; }
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -337,7 +350,12 @@ protected:
   QString mMailingListPostingAddress;
   QString mMailingListAdminAddress;
 
+  QString    mImapPath;
+  QString    mUidValidity;
+  KMAcctImap *mAccount;
+
   int mUnreadMsgs; // number of unread messages, -1 if not yet set
+  bool mWriteConfigEnabled;
   bool needsCompact; //sven: true if on destruct folder needs to be compacted.
   KMFolderDir* mChild;
   LockType mLockType;

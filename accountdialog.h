@@ -79,6 +79,22 @@ class AccountDialog : public KDialogBase
       QComboBox    *identityCombo;
     };
 
+    struct ImapWidgets
+    {
+      QLabel       *titleLabel;
+      QLineEdit    *nameEdit;
+      QLineEdit    *loginEdit;
+      QLineEdit    *passwordEdit;
+      QLineEdit    *hostEdit;
+      QLineEdit    *portEdit;
+      QLineEdit    *prefixEdit;
+      QCheckBox    *storePasswordCheck;
+      QRadioButton *authAuto;
+      QRadioButton *authLogin;
+      QRadioButton *authCramMd5;
+      QRadioButton *authAnonymous;
+    };
+
   private slots:
     virtual void slotOk();
     void slotLocationChooser();
@@ -90,12 +106,14 @@ class AccountDialog : public KDialogBase
   private:
     void makeLocalAccountPage();
     void makePopAccountPage();
+    void makeImapAccountPage();
     void setupSettings();
     void saveSettings();
 
   private:
     LocalWidgets mLocal;
     PopWidgets   mPop;
+    ImapWidgets  mImap;
     KMAccount    *mAccount;
     QStringList  mIdentityList;
 };
