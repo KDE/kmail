@@ -1806,7 +1806,7 @@ bool KMReaderWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readColorConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
 
   c1 = QColor(kapp->palette().active().text());
@@ -1920,7 +1920,7 @@ void KMReaderWin::readColorConfig(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   QString encoding;
 
   { // block defines the lifetime of KConfigGroupSaver
@@ -1976,7 +1976,7 @@ void KMReaderWin::readConfig(void)
   }
 
   {
-    KConfigGroup behaviour( kapp->config(), "Behaviour" );
+    KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
     mDelayedMarkAsRead = behaviour.readBoolEntry( "DelayedMarkAsRead", true );
     mDelayedMarkTimeout = behaviour.readNumEntry( "DelayedMarkTime", 0 );
   }
@@ -1992,7 +1992,7 @@ void KMReaderWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeConfig(bool aWithSync)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   config->writeEntry( "useFixedFont", mUseFixedFont );
   config->writeEntry("attach-inline", mAtmInline);
@@ -2005,7 +2005,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 QString KMReaderWin::quoteFontTag( int quoteLevel )
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
 
   QColor color;
 

@@ -50,7 +50,7 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
 static const char configGroup[] = "MimePartTree";
 
 KMMimePartTree::~KMMimePartTree() {
-  saveLayout( kapp->config(), configGroup );
+  saveLayout( KMKernel::config(), configGroup );
 }
 
 
@@ -59,9 +59,9 @@ void KMMimePartTree::restoreLayoutIfPresent() {
   setColumnWidthMode( 0, Manual );
   header()->setStretchEnabled( true, 0 );
   // rest of the columns:
-  if ( kapp->config()->hasGroup( configGroup ) ) {
+  if ( KMKernel::config()->hasGroup( configGroup ) ) {
     // there is a saved layout. use it...
-    restoreLayout( kapp->config(), configGroup );
+    restoreLayout( KMKernel::config(), configGroup );
     // and disable Maximum mode:
     for ( int i = 1 ; i < 4 ; ++i )
       setColumnWidthMode( i, Manual );

@@ -22,6 +22,7 @@
 #include <kprocess.h>
 #include <kprogress.h>
 #include <kpassivepopup.h>
+#include <kstaticdeleter.h>
 
 #include "kmreaderwin.h"
 #include "kmmainwin.h"
@@ -600,7 +601,7 @@ void KMKernel::init()
   the_server_is_ready = false;
 
   the_kbp = new KBusyPtr;
-  cfg = kapp->config();
+  cfg = KMKernel::config();
   //kdDebug(5006) << "1" << endl;
 
   mCryptPlugList.loadFromConfig( cfg );
@@ -756,7 +757,7 @@ void KMKernel::cleanupLoop()
     mCleanupLabel = new QLabel( i18n("Cleaning up"), box );
     mProgress = new KProgress( box, "kmail-cleanupProgress" );
     mCleanupPopup->setView( box );
-    
+
     mProgress->setTotalSteps(nrFolders*2+2);
     mProgress->setProgress(1);
     QApplication::syncX();
@@ -767,7 +768,7 @@ void KMKernel::cleanupLoop()
   }
 
 
-  KConfig* config =  kapp->config();
+  KConfig* config =  KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
   bool expire = false;
@@ -849,7 +850,7 @@ void KMKernel::cleanupLoop()
 
   //qInstallMsgHandler(oldMsgHandler);
   KMRecentAddresses::self()->save( KGlobal::config() );
-  kapp->config()->sync();
+  KMKernel::config()->sync();
   if (mCleanupPopup)
   {
     sleep(1); // Give the user some time to realize what's going on
@@ -1050,7 +1051,7 @@ QByteArray KMKernel::getCollectedStdErr( KProcess * proc )
 
 void KMKernel::slotRequestConfigSync() {
   // ### FIXME: delay as promised in the kdoc of this function ;-)
-  kapp->config()->sync();
+  KMKernel::config()->sync();
 }
 
 void KMKernel::slotShowConfigurationDialog()
@@ -1162,6 +1163,16 @@ KMMainWin* KMKernel::mainWin()
     mWin = new KMMainWin;
     return mWin;
   }
+}
+
+KConfig *KMKernel::myConfig = 0;
+KStaticDeleter<KConfig> myConfigSD;
+
+KConfig* KMKernel::config()
+{
+    if (!myConfig)
+	myConfig = myConfigSD.setObject(new KConfig( "kmailrc"));
+    return myConfig;
 }
 
 #include "kmkernel.moc"

@@ -99,7 +99,7 @@ KMMainWin::KMMainWin(QWidget *) :
   setupMenuBar();
   setupStatusBar();
 
-  applyMainWindowSettings(kapp->config(), "Main Window");
+  applyMainWindowSettings(KMKernel::config(), "Main Window");
   toolbarAction->setChecked(!toolBar()->isHidden());
   statusbarAction->setChecked(!statusBar()->isHidden());
 
@@ -152,8 +152,8 @@ KMMainWin::~KMMainWin()
   writeConfig();
   writeFolderConfig();
 
-  saveMainWindowSettings(kapp->config(), "Main Window");
-  kapp->config()->sync();
+  saveMainWindowSettings(KMKernel::config(), "Main Window");
+  KMKernel::config()->sync();
 
   delete mHeaders;
   delete mFolderTree;
@@ -163,7 +163,7 @@ KMMainWin::~KMMainWin()
 //-----------------------------------------------------------------------------
 void KMMainWin::readPreConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
 
 
   { // area for config group "Geometry"
@@ -183,7 +183,7 @@ void KMMainWin::readFolderConfig(void)
   if (!mFolder)
     return;
 
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mFolderThreadPref = config->readBoolEntry( "threadMessagesOverride", false );
   mFolderHtmlPref = config->readBoolEntry( "htmlMailOverride", false );
@@ -196,7 +196,7 @@ void KMMainWin::writeFolderConfig(void)
   if (!mFolder)
     return;
 
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   config->writeEntry( "threadMessagesOverride", mFolderThreadPref );
   config->writeEntry( "htmlMailOverride", mFolderHtmlPref );
@@ -206,7 +206,7 @@ void KMMainWin::writeFolderConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::readConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
 
 
   int oldWindowLayout = 1;
@@ -326,7 +326,7 @@ void KMMainWin::readConfig(void)
   mMsgView->readConfig();
   slotSetEncoding();
   mHeaders->readConfig();
-  mHeaders->restoreLayout(kapp->config(), "Header-Geometry");
+  mHeaders->restoreLayout(KMKernel::config(), "Header-Geometry");
   mFolderTree->readConfig();
 
   { // area for config group "General"
@@ -380,7 +380,7 @@ void KMMainWin::readConfig(void)
 void KMMainWin::writeConfig(void)
 {
   QString s;
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
 
 
   QRect r = geometry();
@@ -454,7 +454,7 @@ void KMMainWin::createWidgets(void)
 {
     QAccel *accel = new QAccel(this, "createWidgets()");
 
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Geometry");
 
   // Create the splitters according to the layout settings
@@ -994,7 +994,7 @@ void KMMainWin::slotExpireFolder()
     KMessageBox::information(this, str);
     return;
   }
-  KConfig           *config = kapp->config();
+  KConfig           *config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
   if (config->readBoolEntry("warn-before-expire")) {
@@ -1136,7 +1136,7 @@ void KMMainWin::slotCompactFolder()
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotExpireAll() {
-  KConfig    *config = kapp->config();
+  KConfig    *config = KMKernel::config();
   int        ret = 0;
 
   KConfigGroupSaver saver(config, "General");
@@ -2775,7 +2775,7 @@ void KMMainWin::slotToggleStatusBar()
 
 void KMMainWin::slotEditToolbars()
 {
-  saveMainWindowSettings(kapp->config(), "MainWindow");
+  saveMainWindowSettings(KMKernel::config(), "MainWindow");
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -2794,7 +2794,7 @@ void KMMainWin::slotEditNotifications()
 void KMMainWin::slotUpdateToolbars()
 {
   createGUI("kmmainwin.rc");
-  applyMainWindowSettings(kapp->config(), "MainWindow");
+  applyMainWindowSettings(KMKernel::config(), "MainWindow");
   toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
@@ -3076,7 +3076,7 @@ bool KMMainWin::queryClose() {
   int      ret = 0;
   QString  str = i18n("Expire old messages from all folders? "
 		      "Expired messages are permanently deleted.");
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
 
   // Make sure this is the last window.
   KMainWindow   *kmWin = 0;

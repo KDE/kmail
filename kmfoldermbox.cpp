@@ -116,7 +116,7 @@ int KMFolderMbox::open()
         // message boxes don't have a "Don't ask again" checkbox.
         if (kernel->startingUp())
         {
-          KConfigGroup configGroup( kapp->config(), "Notification Messages" );
+          KConfigGroup configGroup( KMKernel::config(), "Notification Messages" );
           bool showMessage =
             configGroup.readBoolEntry( "showIndexRegenerationMessage", true );
           if (showMessage)

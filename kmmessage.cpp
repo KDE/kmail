@@ -1763,7 +1763,7 @@ void KMMessage::setAutomaticFields(bool aIsMulti)
 //-----------------------------------------------------------------------------
 QString KMMessage::dateStr(void) const
 {
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
   DwHeaders& header = mMsg->Headers();
   time_t unixTime;
 
@@ -3050,7 +3050,7 @@ QString KMMessage::generateMessageId( const QString& addr )
   msgIdStr = '<' + datetime.toString( "yyyyMMddhhmm.sszzz" );
 
   QString msgIdSuffix;
-  KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup general( KMKernel::config(), "General" );
 
   if( general.readBoolEntry( "useCustomMessageIdSuffix", false ) )
     msgIdSuffix = general.readEntry( "myMessageIdSuffix", "" );
@@ -3411,7 +3411,7 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
 //-----------------------------------------------------------------------------
 void KMMessage::readConfig(void)
 {
-  KConfig *config=kapp->config();
+  KConfig *config=KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
   config->setGroup("General");

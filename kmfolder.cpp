@@ -1288,7 +1288,7 @@ void KMFolder::iconsFromPath()
 //-----------------------------------------------------------------------------
 void KMFolder::readConfig()
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   if (mUnreadMsgs == -1)
     mUnreadMsgs = config->readNumEntry("UnreadMsgs", -1);
@@ -1318,7 +1318,7 @@ void KMFolder::readConfig()
 //-----------------------------------------------------------------------------
 void KMFolder::writeConfig()
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UnreadMsgs", mUnreadMsgs);
   config->writeEntry("TotalMsgs", mTotalMsgs);

@@ -154,7 +154,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mailboxType->insertItem("mbox", 0);
   mailboxType->insertItem("maildir", 1);
   {
-    KConfig *config = kapp->config();
+    KConfig *config = KMKernel::config();
     KConfigGroupSaver saver(config, "General");
     int type = config->readNumEntry("default-mailbox-format", 1);
     if ( type < 0 || type > 1 ) type = 1;

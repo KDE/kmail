@@ -68,7 +68,7 @@ void KMSender::setStatusMsg(const QString &msg)
 void KMSender::readConfig(void)
 {
   QString str;
-  KConfigGroup config(kapp->config(), SENDER_GROUP);
+  KConfigGroup config(KMKernel::config(), SENDER_GROUP);
 
   mSendImmediate = config.readBoolEntry("Immediate", TRUE);
   mSendQuotedPrintable = config.readBoolEntry("Quoted-Printable", TRUE);
@@ -78,7 +78,7 @@ void KMSender::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMSender::writeConfig(bool aWithSync)
 {
-  KConfigGroup config(kapp->config(), SENDER_GROUP);
+  KConfigGroup config(KMKernel::config(), SENDER_GROUP);
 
   config.writeEntry("Immediate", mSendImmediate);
   config.writeEntry("Quoted-Printable", mSendQuotedPrintable);

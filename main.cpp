@@ -208,7 +208,7 @@ QString getMyHostName(void)
 
 static void checkConfigUpdates() {
 #if KDE_VERSION >= 306
-  KConfig * config = kapp->config();
+  KConfig * config = KMKernel::config();
   const QString updateFile = QString::fromLatin1("kmail.upd");
   QStringList updates;
   updates << "9"

@@ -25,7 +25,7 @@ namespace KMail {
 
   QStringList TransportManager::transportNames()
   {
-    KConfigGroup general( kapp->config(), "General");
+    KConfigGroup general( KMKernel::config(), "General");
     
     int numTransports = general.readNumEntry("transports", 0);
     

@@ -183,7 +183,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   setupStatusBar();
   setupEditor();
   setupActions();
-  applyMainWindowSettings(kapp->config(), "Composer");
+  applyMainWindowSettings(KMKernel::config(), "Composer");
   toolbarAction->setChecked(!toolBar()->isHidden());
   statusbarAction->setChecked(!statusBar()->isHidden());
 
@@ -346,7 +346,7 @@ bool KMComposeWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readColorConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   QColor c1=QColor(kapp->palette().active().text());
   QColor c4=QColor(kapp->palette().active().base());
@@ -383,7 +383,7 @@ void KMComposeWin::readColorConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   QCString str;
   //  int w, h,
   int maxTransportItems;
@@ -511,7 +511,7 @@ void KMComposeWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::writeConfig(void)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   QString str;
 
   {
@@ -3950,7 +3950,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setCharset(mCharset);
 
   // show message part dialog, if not configured away (default):
-  KConfigGroup composer(kapp->config(), "Composer");
+  KConfigGroup composer(KMKernel::config(), "Composer");
   if (!composer.hasKey("showMessagePartDialogOnAttach"))
     // make it visible in the config file:
     composer.writeEntry("showMessagePartDialogOnAttach", false);
@@ -4930,7 +4930,7 @@ void KMComposeWin::slotToggleStatusBar()
 
 void KMComposeWin::slotEditToolbars()
 {
-  saveMainWindowSettings(kapp->config(), "Composer");
+  saveMainWindowSettings(KMKernel::config(), "Composer");
   KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
 
   connect( &dlg, SIGNAL(newToolbarConfig()),
@@ -4942,7 +4942,7 @@ void KMComposeWin::slotEditToolbars()
 void KMComposeWin::slotUpdateToolbars()
 {
   createGUI("kmcomposerui.rc");
-  applyMainWindowSettings(kapp->config(), "Composer");
+  applyMainWindowSettings(KMKernel::config(), "Composer");
   toolbarAction->setChecked(!toolBar()->isHidden());
 }
 
@@ -5679,7 +5679,7 @@ void KMEdit::slotSpellcheck2(KSpell*)
   if(mComposer && mComposer->msg())
   {
     // read the quote indicator from the preferences
-    KConfig *config=kapp->config();
+    KConfig *config=KMKernel::config();
     KConfigGroupSaver saver(config, "General");
 
     int languageNr = config->readNumEntry("reply-current-language",0);

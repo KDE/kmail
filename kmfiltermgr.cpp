@@ -45,7 +45,7 @@ KMFilterMgr::~KMFilterMgr()
 //-----------------------------------------------------------------------------
 void KMFilterMgr::readConfig(void)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   int numFilters;
   QString grpName;
 
@@ -78,7 +78,7 @@ void KMFilterMgr::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMFilterMgr::writeConfig(bool withSync)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
 
   // first, delete all groups:
   QStringList filterGroups =

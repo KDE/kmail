@@ -121,7 +121,7 @@ QString KabcBridge::expandDistributionLists(QString recipients)
     {
       if (receiver.find('@') == -1)
       {
-        KConfigGroup general( kapp->config(), "General" );
+        KConfigGroup general( KMKernel::config(), "General" );
         QString defaultdomain = general.readEntry( "Default domain", "" );
         if( !defaultdomain.isEmpty() )
         {
@@ -234,7 +234,7 @@ void KMAddrBookExternal::launch(QWidget *) {
 
 bool KMAddrBookExternal::useKab()
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   return (ab == 0);
@@ -242,7 +242,7 @@ bool KMAddrBookExternal::useKab()
 
 bool KMAddrBookExternal::useKAddressbook()
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
   int ab = config->readNumEntry("addressbook", 1);
   return (ab == 1);

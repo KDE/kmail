@@ -151,7 +151,7 @@ void KMAccount::writeConfig(KConfig& config)
 //-----------------------------------------------------------------------------
 void KMAccount::sendReceipt(KMMessage* aMsg)
 {
-  KConfig* cfg = kapp->config();
+  KConfig* cfg = KMKernel::config();
   bool sendReceipts;
 
   KConfigGroupSaver saver(cfg, "General");

@@ -52,7 +52,7 @@ CryptPlugConfigDialog::CryptPlugConfigDialog( CryptPlugWrapper * wrapper,
 void CryptPlugConfigDialog::slotOk() {
   assert( mWrapper );
 
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
   // Set the right config group

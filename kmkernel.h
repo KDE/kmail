@@ -96,6 +96,7 @@ public:
   /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }
+  static KConfig *config();
 
   void init ();
   void cleanupImapFolders();
@@ -196,7 +197,7 @@ protected slots:
   void slotResult(KIO::Job*);
   void cleanupLoop();
   void cleanupProgress();
-  
+
 private:
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
@@ -241,6 +242,7 @@ private:
   bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
+  static KConfig *myConfig;
   QTextCodec *netCodec;
   KProgress *mProgress;
   KPassivePopup *mCleanupPopup;

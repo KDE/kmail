@@ -507,7 +507,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortDescending = FALSE;
 
   readConfig();
-  restoreLayout(kapp->config(), "Header-Geometry");
+  restoreLayout(KMKernel::config(), "Header-Geometry");
   setShowSortIndicator(true);
   setFocusPolicy( WheelFocus );
 
@@ -592,7 +592,7 @@ void KMHeaders::slotToggleSizeColumn ()
 
   // we need to write it back so that
   // the configure-dialog knows the correct status
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
   config->writeEntry("showMessageSize", mPaintInfo.showSize);
 
@@ -626,7 +626,7 @@ bool KMHeaders::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMHeaders::readColorConfig (void)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   // Custom/System colors
   KConfigGroupSaver saver(config, "Reader");
   QColor c1=QColor(kapp->palette().active().text());
@@ -665,7 +665,7 @@ void KMHeaders::readColorConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readConfig (void)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
 
   // Backing pixmap support
   { // area for config group "Pixmaps"
@@ -735,7 +735,7 @@ void KMHeaders::refreshNestedState(void)
 {
   bool oldState = mNested != mNestedOverride;
   int oldNestPolicy = nestingPolicy;
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Geometry");
   mNested = config->readBoolEntry( "nestedMessages", FALSE );
 
@@ -752,7 +752,7 @@ void KMHeaders::refreshNestedState(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readFolderConfig (void)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
@@ -780,7 +780,7 @@ void KMHeaders::readFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeFolderConfig (void)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   int mSortColAdj = mSortCol + 1;
 
   assert(mFolder!=0);
@@ -796,7 +796,7 @@ void KMHeaders::writeFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeConfig (void)
 {
-  saveLayout(kapp->config(), "Header-Geometry");
+  saveLayout(KMKernel::config(), "Header-Geometry");
 }
 
 //-----------------------------------------------------------------------------

@@ -44,7 +44,7 @@ KMAcctMgr::~KMAcctMgr()
 //-----------------------------------------------------------------------------
 void KMAcctMgr::writeConfig(bool withSync)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   QString groupName;
 
   KConfigGroupSaver saver(config, "General");
@@ -72,7 +72,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readConfig(void)
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KMAccount* acct;
   QString acctType, acctName;
   QCString groupName;

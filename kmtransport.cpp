@@ -59,7 +59,7 @@ KMTransportInfo::~KMTransportInfo()
 
 void KMTransportInfo::readConfig(int id)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Transport " + QString::number(id));
   type = config->readEntry("type", "smtp");
   name = config->readEntry("name", i18n("Unnamed"));
@@ -79,7 +79,7 @@ void KMTransportInfo::readConfig(int id)
 
 void KMTransportInfo::writeConfig(int id)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Transport " + QString::number(id));
   config->writeEntry("type", type);
   config->writeEntry("name", name);
@@ -99,7 +99,7 @@ void KMTransportInfo::writeConfig(int id)
 
 int KMTransportInfo::findTransport(const QString &name)
 {
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
   int numTransports = config->readNumEntry("transports", 0);
   for (int i = 1; i <= numTransports; i++)
@@ -114,7 +114,7 @@ int KMTransportInfo::findTransport(const QString &name)
 QStringList KMTransportInfo::availableTransports()
 {
   QStringList result;
-  KConfig *config = kapp->config();
+  KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "General");
   int numTransports = config->readNumEntry("transports", 0);
   for (int i = 1; i <= numTransports; i++)

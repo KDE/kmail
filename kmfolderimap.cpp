@@ -48,7 +48,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   mLastUid = 0;
   mCheckFlags = TRUE;
 
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   mUidValidity = config->readEntry("UidValidity");
   if (mImapPath.isEmpty()) mImapPath = config->readEntry("ImapPath");
@@ -63,7 +63,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
 
 KMFolderImap::~KMFolderImap()
 {
-  KConfig* config = kapp->config();
+  KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Folder-" + idString());
   config->writeEntry("UidValidity", mUidValidity);
   config->writeEntry("ImapPath", mImapPath);
