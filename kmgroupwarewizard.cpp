@@ -508,7 +508,7 @@ void KMGroupwareWizard::next()
     // TODO: guessExistingFolderLanguage();
 
     // Finally, just set the message at the end of the wizard
-    mFolderCreationText->setText( i18n("You have chosen to use standard kolab settings") );
+    mFolderCreationText->setText( i18n("You have chosen to use standard kolab settings.\nPress Finish to proceed.") );
 
   } else if( currentPage() == mIdentityPage ) {
     mIdentityWidget->apply();
