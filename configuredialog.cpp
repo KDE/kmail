@@ -1933,13 +1933,13 @@ void ConfigureDialog::setupMiscPage( void )
   KConfig &config = *kapp->config();
   config.setGroup("General");
 
-  bool state = config.readBoolEntry("empty-trash-on-exit",false);
+  bool state = config.readBoolEntry("empty-trash-on-exit",true);
   mMisc.emptyTrashCheck->setChecked( state );
   state = config.readBoolEntry("sendOnCheck", false);
   mMisc.sendOutboxCheck->setChecked( state );
   state = config.readBoolEntry("send-receipts", false );
   mMisc.sendReceiptCheck->setChecked( state );
-  state = config.readNumEntry("compact-all-on-exit", 0 ) ? true : false;
+  state = config.readBoolEntry("compact-all-on-exit", true );
   mMisc.compactOnExitCheck->setChecked( state );
   state = config.readBoolEntry( "use-external-editor", false );
   mMisc.externalEditorCheck->setChecked( state );

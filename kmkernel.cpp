@@ -387,12 +387,12 @@ void KMKernel::cleanup(void)
   if (the_trashFolder) {
     the_trashFolder->close(TRUE);
     config->setGroup("General");
-    if (config->readNumEntry("empty-trash-on-exit", 0))
+    if (config->readBoolEntry("empty-trash-on-exit", true))
       the_trashFolder->expunge();
   }
 
   if (the_folderMgr) {
-    if (config->readNumEntry("compact-all-on-exit", 0))
+    if (config->readBoolEntry("compact-all-on-exit", true))
       the_folderMgr->compactAll(); // I can compact for ages in peace now!
   }
 
