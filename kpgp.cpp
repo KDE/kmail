@@ -761,10 +761,7 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys)
   QPixmap pixm;
 
   setCaption(name);
-  setFixedSize(350,120);
-  cursor = kapp->overrideCursor();
-  if(cursor != 0)
-    kapp->setOverrideCursor(QCursor(ibeamCursor));
+  setFixedSize(350,110);
   this->setCursor(QCursor(ibeamCursor));
   QLabel *text = new QLabel(i18n("Please select the public key to insert"),this);
   text->move(56,4);
@@ -778,17 +775,19 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, QStrList *keys)
   combobox = new QComboBox(FALSE, this, "combo");
   if (keys==NULL) debug("keys = NULL");
   combobox->insertStrList(keys);
+  combobox->move(56,40);
+  combobox->resize(290,20);
   combobox->setFocus();
 
   button = new QPushButton(i18n("&Insert"),this);
+  button->move(145,75);
 
   connect(button,SIGNAL(clicked()),this,SLOT(accept()) );  
 }
 
 KpgpKey::~KpgpKey()
 {
-  if(cursor != 0)
-    kapp->restoreOverrideCursor();
+ //nothing yet
 }
 
 QString 
