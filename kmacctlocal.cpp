@@ -20,6 +20,7 @@
 #include <errno.h>
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>	/* defines _PATH_MAILDIR */
@@ -80,7 +81,7 @@ void KMAcctLocal::pseudoAssign(KMAccount *account)
 //-----------------------------------------------------------------------------
 void KMAcctLocal::processNewMail(bool)
 {
-  QTime t; 
+  QTime t;
   KMFolder mailFolder(NULL, location());
   long num = 0;
   long i;
@@ -95,14 +96,14 @@ void KMAcctLocal::processNewMail(bool)
   }
 
   KMBroadcastStatus::instance()->reset();
-  KMBroadcastStatus::instance()->setStatusMsg( 
+  KMBroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from %1...").arg(mailFolder.name()));
 
   // run the precommand
   if (!runPrecommand(precommand()))
     {
         perror("cannot run precommand "+precommand());
-	emit finishedCheck(hasNewMail); 
+	emit finishedCheck(hasNewMail);
     }
 
   kapp->processEvents();
@@ -116,18 +117,25 @@ void KMAcctLocal::processNewMail(bool)
     aStr += mailFolder.path()+"/"+mailFolder.name();
     KMessageBox::sorry(0, aStr);
     perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
-    emit finishedCheck(hasNewMail); 
+    emit finishedCheck(hasNewMail);
+    return;
+  }
+
+  if (mailFolder.isReadOnly()) { // mailFolder is locked
+    kdDebug() << "mailFolder could not be locked" << endl;
+    mailFolder.close();
+    emit finishedCheck(hasNewMail);
     return;
   }
 
   mFolder->quiet(TRUE);
   mFolder->open();
-		       
+		
 
   num = mailFolder.count();
 
   addedOk = true;
-  t.start(); 
+  t.start();
 
   KMBroadcastStatus::instance()->setStatusProgressEnable( true );
   for (i=0; i<num; i++)
@@ -153,7 +161,7 @@ void KMAcctLocal::processNewMail(bool)
       kapp->processEvents();
       t.start();
     }
-    
+
   }
   KMBroadcastStatus::instance()->setStatusProgressEnable( false );
   KMBroadcastStatus::instance()->reset();
@@ -163,7 +171,7 @@ void KMAcctLocal::processNewMail(bool)
   rc = mailFolder.expunge();
   if (rc)
     KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location().arg(strerror(rc))));
-  KMBroadcastStatus::instance()->setStatusMsg( 
+  KMBroadcastStatus::instance()->setStatusMsg(
 		     i18n( "Transmission completed..." ));
   }
   // else warning is written already
@@ -173,7 +181,7 @@ void KMAcctLocal::processNewMail(bool)
   mFolder->quiet(FALSE);
 
   emit finishedCheck(hasNewMail);
- 
+
   return;
 }
 
