@@ -28,6 +28,7 @@ class partNode;
 namespace KMail {
 
   class AttachmentStrategy;
+  class HtmlWriter;
 
   class ProcessResult {
   public:
@@ -73,7 +74,8 @@ namespace KMail {
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
 		      bool showOneMimePart=false, bool keepEncryptions=false,
 		      bool includeSignatures=true,
-		      const KMail::AttachmentStrategy * attachmentStrategy=0 );
+		      const KMail::AttachmentStrategy * attachmentStrategy=0,
+		      KMail::HtmlWriter * htmlWriter=0 );
     virtual ~ObjectTreeParser();
 
     QCString resultString() const { return mResultString; }
@@ -103,6 +105,8 @@ namespace KMail {
     const KMail::AttachmentStrategy * attachmentStrategy() const {
       return mAttachmentStrategy;
     }
+
+    KMail::HtmlWriter * htmlWriter() const { return mHtmlWriter; }
 
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
@@ -200,6 +204,7 @@ namespace KMail {
     bool mKeepEncryptions;
     bool mIncludeSignatures;
     const KMail::AttachmentStrategy * mAttachmentStrategy;
+    KMail::HtmlWriter * mHtmlWriter;
   };
 
 }; // namespace KMail

@@ -28,6 +28,7 @@
 #include "kfileio.h"
 #include "partmetadata.h"
 #include "attachmentstrategy.h"
+#include "interfaces/htmlwriter.h"
 
 // other module headers (none)
 #include <mimelib/enum.h>
@@ -58,17 +59,21 @@ namespace KMail {
   ObjectTreeParser::ObjectTreeParser( KMReaderWin * reader, CryptPlugWrapper * wrapper,
 				      bool showOnlyOneMimePart, bool keepEncryptions,
 				      bool includeSignatures,
-				      const AttachmentStrategy * strategy )
+				      const AttachmentStrategy * strategy,
+				      HtmlWriter * htmlWriter )
     : mReader( reader ),
       mCryptPlugWrapper( wrapper ),
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
       mKeepEncryptions( keepEncryptions ),
       mIncludeSignatures( includeSignatures ),
-      mAttachmentStrategy( strategy )
+      mAttachmentStrategy( strategy ),
+      mHtmlWriter( htmlWriter )
   {
     if ( !attachmentStrategy() )
       mAttachmentStrategy = reader ? reader->attachmentStrategy()
 	                           : AttachmentStrategy::smart();
+    if ( reader && !this->htmlWriter() )
+      mHtmlWriter = reader->makeHtmlWriter();
   }
   
   ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )
@@ -77,9 +82,10 @@ namespace KMail {
       mShowOnlyOneMimePart( other.showOnlyOneMimePart() ),
       mKeepEncryptions( other.keepEncryptions() ),
       mIncludeSignatures( other.includeSignatures() ),
-      mAttachmentStrategy( other.attachmentStrategy() )
+      mAttachmentStrategy( other.attachmentStrategy() ),
+      mHtmlWriter( other.htmlWriter() )
   {
-    
+
   }
 
   ObjectTreeParser::~ObjectTreeParser() {}
@@ -300,13 +306,13 @@ public:
       mReader->mColorBar->hide();
 
       // start the new viewer content
-      mReader->mViewer->begin( KURL( "file:/" ) );
-      mReader->mViewer->write("<html><body" +
+      htmlWriter()->begin();
+      htmlWriter()->write("<html><body" +
       (mReader->mPrinting ? " bgcolor=\"#FFFFFF\""
                          : QString(" bgcolor=\"%1\"").arg(mReader->c4.name())));
       if (mReader->mBackingPixmapOn && !mReader->mPrinting )
-	mReader->mViewer->write(" background=\"file://" + mReader->mBackingPixmapStr + "\"");
-      mReader->mViewer->write(">");
+	htmlWriter()->write(" background=\"file://" + mReader->mBackingPixmapStr + "\"");
+      htmlWriter()->write(">");
     }
     if(node && (showOnlyOneMimePart() || (mReader && mReader->mShowCompleteMessage && !node->mRoot ))) {
       if( showOnlyOneMimePart() ) {
@@ -495,8 +501,8 @@ public:
     }
 
     if( mReader && showOnlyOneMimePart() ) {
-      mReader->mViewer->write("</body></html>");
-      mReader->sendNextHtmlChunk();
+      htmlWriter()->write("</body></html>");
+      htmlWriter()->flush();
       /*mReader->mViewer->view()->viewport()->setUpdatesEnabled( true );
 	mReader->mViewer->view()->setUpdatesEnabled( true );
 	mReader->mViewer->view()->viewport()->repaint( false );*/
@@ -704,9 +710,9 @@ public:
       if( !doCheck || !data ){
 	if( cleartextData || new_cleartext ) {
 	  if( mReader )
-            mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-							     cryptPlug,
-							     fromAddress ) );
+            htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+							      cryptPlug,
+							      fromAddress ) );
 	  bIsOpaqueSigned = true;
 
 #ifndef NDEBUG
@@ -728,7 +734,7 @@ public:
 	    delete new_cleartext;
 
 	  if( mReader )
-	    mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+	    htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 
 	}
 	else if( !hideErrors )
@@ -747,21 +753,21 @@ public:
 	  else
 	    txt.append( unknown );
 	  if( mReader )
-	    mReader->queueHtml(txt);
+	    htmlWriter()->queue(txt);
 	}
       }
       else
       {
 	if( mReader )
-	  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-							   cryptPlug,
-							   fromAddress ) );
+	  htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+							    cryptPlug,
+							    fromAddress ) );
 	ObjectTreeParser otp( mReader, cryptPlug );
 	otp.parseObjectTree( data );
 	mResultString += otp.resultString();
 	
 	if( mReader )
-	  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+	  htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
       }
 
       cryptPlug->freeSignatureMetaData( sigMeta );
@@ -773,10 +779,10 @@ public:
 				      "Please specify a plug-in using the 'Settings->Configure KMail->Security' dialog."),
 				 QString::null,
 				 "cryptoPluginBox");
-	mReader->queueHtml(i18n("<hr><b><h2>Signature could <u>not</u> be verified!</h2></b><br>"
-			       "reason:<br><i>&nbsp; &nbsp; No Crypto plug-ins found.</i><br>"
-			       "proposal:<br><i>&nbsp; &nbsp; Please specify a plug-in from<br>&nbsp; &nbsp; the "
-			       "'Settings->Configure KMail->Security' dialog.</i>"));
+	htmlWriter()->queue(i18n("<hr><b><h2>Signature could <u>not</u> be verified!</h2></b><br>"
+				 "reason:<br><i>&nbsp; &nbsp; No Crypto plug-ins found.</i><br>"
+				 "proposal:<br><i>&nbsp; &nbsp; Please specify a plug-in from<br>&nbsp; &nbsp; the "
+				 "'Settings->Configure KMail->Security' dialog.</i>"));
       }
     }
     kdDebug(5006) << "\nObjectTreeParser::writeOpaqueOrMultipartSignedData: done, returning "
@@ -1045,13 +1051,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					      fname,
 					      mReader->mUseGroupware,
 					      prefix, postfix ) ){
-		  mReader->queueHtml( prefix );
+		  htmlWriter()->queue( prefix );
 		  vCal.replace( '&',  "&amp;"  );
 		  vCal.replace( '<',  "&lt;"   );
 		  vCal.replace( '>',  "&gt;"   );
 		  vCal.replace( '\"', "&quot;" );
 		  writeBodyString( vCal, curNode->trueFromAddress(), result );
-		  mReader->queueHtml( postfix );
+		  htmlWriter()->queue( postfix );
 		}
 	      }
 	    }
@@ -1094,7 +1100,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	{
 	  if (mReader) mReader->mIsFirstTextPart = false;
 	  if ( mReader && curNode->isAttachment() && !showOnlyOneMimePart() )
-	    mReader->queueHtml("<br><hr><br>");
+	    htmlWriter()->queue("<br><hr><br>");
 	  if ( mReader ) {
 	    // process old style not-multipart Mailman messages to
 	    // enable verification of the embedded messages' signatures
@@ -1457,9 +1463,9 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		messagePart.isDecryptable = true;
 		messagePart.isEncrypted = true;
 		messagePart.isSigned = false;
-		mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								 cryptPlugWrapper(),
-								 curNode->trueFromAddress() ) );
+		htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+								  cryptPlugWrapper(),
+								  curNode->trueFromAddress() ) );
 	      }
 
 	      // Note: Multipart/Encrypted might also be signed
@@ -1489,20 +1495,20 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      }
 
 	      if( mReader )
-		mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+		htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 	    } else {
 	      if( mReader ) {
 		if( passphraseError ) {
 		  messagePart.isDecryptable = false;
 		  messagePart.isEncrypted = true;
 		  messagePart.isSigned = false;
-		  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								   cryptPlugWrapper(),
-								   curNode->trueFromAddress() ) );
+		  htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+								    cryptPlugWrapper(),
+								    curNode->trueFromAddress() ) );
 		}
 		mReader->writeHTMLStr(mReader->mCodec->toUnicode( decryptedData ));
 		if( passphraseError )
-		  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+		  htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 	      }
 	      mResultString += decryptedData;
 	    }
@@ -1560,9 +1566,9 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  messagePart.isEncrypted = false;
 	  messagePart.isSigned = false;
 	  messagePart.isEncapsulatedRfc822Message = true;
-	  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-							   cryptPlugWrapper(),
-							   curNode->trueFromAddress() ) );
+	  htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+							    cryptPlugWrapper(),
+							    curNode->trueFromAddress() ) );
 	}
 	QCString rfc822messageStr( curNode->msgPart().bodyDecoded() );
 	// display the headers of the encapsulated message
@@ -1579,7 +1585,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 				    &*rfc822messageStr,
 				    "encapsulated message" );
 	if( mReader )
-	  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+	  htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 	bDone = true;
       }
     }
@@ -1649,29 +1655,29 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  messagePart.isDecryptable = true;
 		  messagePart.isEncrypted = true;
 		  messagePart.isSigned = false;
-		  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								   cryptPlugWrapper(),
-								   curNode->trueFromAddress() ) );
+		  htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+								    cryptPlugWrapper(),
+								    curNode->trueFromAddress() ) );
 		}
 		// fixing the missing attachments bug #1090-b
 		insertAndParseNewChildNode( *curNode,
 					    &*decryptedData,
 					    "encrypted data" );
 		if( mReader )
-		  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+		  htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 	      } else {
 		if( mReader ) {
 		  if( passphraseError ) {
 		    messagePart.isDecryptable = false;
 		    messagePart.isEncrypted = true;
 		    messagePart.isSigned = false;
-		    mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								     cryptPlugWrapper(),
-								     curNode->trueFromAddress() ) );
+		    htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+								      cryptPlugWrapper(),
+								      curNode->trueFromAddress() ) );
 		  }
 		  mReader->writeHTMLStr(mReader->mCodec->toUnicode( decryptedData ));
 		  if( passphraseError )
-		    mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+		    htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 		}
 		mResultString += decryptedData;
 	      }
@@ -1753,14 +1759,14 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		// paint the frame
 		messagePart.isDecryptable = true;
 		if( mReader )
-		  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								   cryptPlugWrapper(),
-								   curNode->trueFromAddress() ) );
+		  htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+								    cryptPlugWrapper(),
+								    curNode->trueFromAddress() ) );
 		insertAndParseNewChildNode( *curNode,
 					    &*decryptedData,
 					    "encrypted data" );
 		if( mReader )
-		  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+		  htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 	      } else {
 
 		if( passphraseError ) {
@@ -1773,11 +1779,11 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 		  // paint the frame
 		  messagePart.isDecryptable = false;
 		  if( mReader ) {
-		    mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-								     cryptPlugWrapper(),
-								     curNode->trueFromAddress() ) );
+		    htmlWriter()->queue( mReader->writeSigstatHeader( messagePart,
+								      cryptPlugWrapper(),
+								      curNode->trueFromAddress() ) );
 		    mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
-		    mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
+		    htmlWriter()->queue( mReader->writeSigstatFooter( messagePart ) );
 		  }
 		} else {
 		  kdDebug(5006) << "pkcs7 mime  -  NO encryption found" << endl;
@@ -1842,13 +1848,13 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 				       mReader && mReader->mUseGroupware,
 				       prefix, postfix );
 	if( bVPartCreated && mReader && !showOnlyOneMimePart() ){
-	  mReader->queueHtml( prefix );
+	  htmlWriter()->queue( prefix );
 	  vPart.replace( '&',  "&amp;"  );
 	  vPart.replace( '<',  "&lt;"   );
 	  vPart.replace( '>',  "&gt;"   );
 	  vPart.replace( '\"', "&quot;" );
 	  writeBodyString( vPart.latin1(), curNode->trueFromAddress(), result );
-	  mReader->queueHtml( postfix );
+	  htmlWriter()->queue( postfix );
 	}
       }
       mResultString = vPart.latin1();
