@@ -54,6 +54,9 @@ protected:
   /** Update status line widget. */
   virtual void updStatus(void);
 
+  /** Reimplemented to react to Escape. */
+  virtual void keyPressEvent(QKeyEvent*);
+
 protected:
   QGridLayout* mGrid;
   QComboBox *mCbxFolders;

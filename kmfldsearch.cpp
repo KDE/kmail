@@ -172,6 +172,23 @@ void KMFldSearch::updStatus(void)
 
 
 //-----------------------------------------------------------------------------
+void KMFldSearch::keyPressEvent(QKeyEvent *evt)
+{
+
+  if(!evt)
+    return;
+    
+  switch (evt->key()) {
+      case Key_Return:
+        KMFldSearchInherited::keyPressEvent(evt);
+        break;
+      case Key_Escape:
+        slotClose();
+        break;
+  }
+}
+
+//-----------------------------------------------------------------------------
 bool KMFldSearch::searchInMessage(KMMessage* aMsg)
 {
   int i;
@@ -318,9 +335,7 @@ void KMFldSearch::slotSearch()
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotClose()
 {
-#warning Also connect the escape key to this
   accept();
-  fprintf(stderr, "here\n");
   delete this;
 }
 
