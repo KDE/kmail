@@ -111,7 +111,7 @@ class ProgressItem : public QObject
      * Reset the progress value of this item to 0 and the status string to
      * the empty string.
      */
-    void reset() { setProgress( 0 ); setStatus( QString::null ); }
+    void reset() { setProgress( 0 ); setStatus( QString::null ); mCompleted = 0; }
 
     void cancel();
 

@@ -98,7 +98,7 @@ public:
   virtual void remove();
 
   /** Synchronize this folder and it's subfolders with the server */
-  virtual void serverSync( bool suppressDialog, bool recurse );
+  virtual void serverSync( bool recurse );
 
   /** Force the sync state to be done. */
   void resetSyncState();
@@ -353,12 +353,10 @@ private:
 
   int mUserRights;
   ACLList mACLList;
-  bool mIsConnected;
 
   bool mSilentUpload;
   bool mFolderRemoved;
   bool mResync;
-  bool mSuppressDialog;
   //bool mHoldSyncs;
   bool mRecurse;
 };

@@ -42,7 +42,6 @@
 #include "kmmessage.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmgr.h"
-#include "imapprogressdialog.h"
 #include "kmailicalifaceimpl.h"
 #include "kmfolder.h"
 #include "kmdict.h"
@@ -121,8 +120,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSubfolderState( imapNoInformation ), mIsSelected( false ),
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
-    mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
-    mSuppressDialog( false ), /*mHoldSyncs( false ),*/ mRecurse( true )
+    mFolderRemoved( false ), mResync( false ),
+    /*mHoldSyncs( false ),*/ mRecurse( true )
 {
   setUidValidity("");
   mLastUid=0;
@@ -443,7 +442,7 @@ void KMFolderCachedImap::slotTroubleshoot()
   }
 }
 
-void KMFolderCachedImap::serverSync( bool suppressDialog, bool recurse )
+void KMFolderCachedImap::serverSync( bool recurse )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
     if( KMessageBox::warningYesNo( 0, i18n("Folder %1 is not in initial sync state (state was %2). Do you want to reset it to initial sync state and sync anyway?" ).arg( imapPath() ).arg( mSyncState ) ) == KMessageBox::Yes ) {
@@ -454,26 +453,6 @@ void KMFolderCachedImap::serverSync( bool suppressDialog, bool recurse )
   mRecurse = recurse;
   assert( account() );
 
-#if 0
-  // Connect to the imap progress dialog
-  // ### This code is broken. If the kmmainwin is closed, the progressdialog is closed,
-  // and if recreating a kmmainwin, we won't connect to the new progressdialog.
-  // To be redone differently with the new progress info stuff.
-  mSuppressDialog = suppressDialog;
-  if( mIsConnected != mAccount->isProgressDialogEnabled() &&
-      suppressDialog )
-  {
-    if( !mIsConnected )
-      connect( this, SIGNAL( newState( const QString&, int, const QString& ) ),
-               account()->imapProgressDialog(),
-               SLOT( syncState( const QString&, int, const QString& ) ) );
-    else
-      disconnect( this, SIGNAL( newState( const QString&, int, const QString& ) ),
-               account()->imapProgressDialog(),
-               SLOT( syncState( const QString&, int, const QString& ) ) );
-    mIsConnected = mAccount->isProgressDialogEnabled();
-  }
-#endif
   mAccount->mailCheckProgressItem()->reset();
   mAccount->mailCheckProgressItem()->setTotalItems( 100 );
   mProgress = 0;
@@ -840,7 +819,7 @@ void KMFolderCachedImap::serverSyncInternal()
         // kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
         assert( !mCurrentSubfolder->imapPath().isEmpty() );
         mCurrentSubfolder->setAccount( account() );
-        mCurrentSubfolder->serverSync( mSuppressDialog, mRecurse /*which is true*/ );
+        mCurrentSubfolder->serverSync( mRecurse /*which is true*/ );
       }
     }
     break;

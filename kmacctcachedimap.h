@@ -39,7 +39,6 @@
 class KMFolderCachedImap;
 class KMFolderTreeItem;
 namespace KMail {
-  class IMAPProgressDialog;
   class FolderJob;
   class ImapJob;
   class CachedImapJob;
@@ -103,7 +102,6 @@ public:
    */
   virtual void setImapFolder(KMFolderCachedImap *);
 
-  KMail::IMAPProgressDialog * imapProgressDialog() const;
   bool isProgressDialogEnabled() const { return mProgressDialogEnabled; }
   void setProgressDialogEnabled( bool enable ) { mProgressDialogEnabled = enable; }
 
@@ -176,7 +174,6 @@ private:
 private:
   QPtrList<CachedImapJob> mJobList;
   KMFolderCachedImap *mFolder;
-  mutable QGuardedPtr<KMail::IMAPProgressDialog> mProgressDlg;
   bool mProgressDialogEnabled;
   QStringList mDeletedFolders; // folders deleted in this session
   QStringList mPreviouslyDeletedFolders; // folders deleted in a previous session

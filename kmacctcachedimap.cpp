@@ -36,9 +36,6 @@
 #include "kmacctcachedimap.h"
 using KMail::SieveConfig;
 
-#include "imapprogressdialog.h" // TODO remove
-using KMail::IMAPProgressDialog;
-
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
@@ -73,7 +70,6 @@ KMAcctCachedImap::KMAcctCachedImap( KMAcctMgr* aOwner,
 KMAcctCachedImap::~KMAcctCachedImap()
 {
   killAllJobs( true );
-  delete mProgressDlg;
 }
 
 
@@ -276,13 +272,9 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mAutoExpunge = false;
   mCountLastUnread = 0;
 
-#if 0
   if( interactive && isProgressDialogEnabled() ) {
-    imapProgressDialog()->clear();
-    imapProgressDialog()->show();
-    imapProgressDialog()->raise();
+    kmkernel->slotShowProgressDialog();
   }
-#endif
 
   Q_ASSERT( !mMailCheckProgressItem );
   mMailCheckProgressItem = KMail::ProgressManager::createProgressItem(
@@ -293,7 +285,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   folder->setAccount(this);
   connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
 	  this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
-  folder->serverSync( interactive && isProgressDialogEnabled(), recurse );
+  folder->serverSync( recurse );
 }
 
 void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
@@ -391,14 +383,6 @@ void KMAcctCachedImap::listDirectory(QString path, ListType subscription,
 void KMAcctCachedImap::listDirectory()
 {
   mFolder->listDirectory();
-}
-
-IMAPProgressDialog* KMAcctCachedImap::imapProgressDialog() const
-{
-  if( !mProgressDlg ) {
-    mProgressDlg = new IMAPProgressDialog( KMKernel::self()->mainWin() );
-  }
-  return mProgressDlg;
 }
 
 void KMAcctCachedImap::addDeletedFolder( const QString& subFolderPath )
