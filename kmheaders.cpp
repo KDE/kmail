@@ -1413,7 +1413,6 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
   beginSelection = currentItem();
   presspos = e->pos();
-  mousePressed = TRUE;
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
   if (!lvi) {
     KMHeadersInherited::contentsMousePressEvent(e);
@@ -1424,6 +1423,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   if ((e->button() == LeftButton) && 
       !(e->state() & ControlButton) &&
       !(e->state() & ShiftButton)) {
+    mousePressed = TRUE;
     if (!(lvi->isSelected())) {
       clearSelection();
       KMHeadersInherited::contentsMousePressEvent(e);
@@ -1466,14 +1466,14 @@ void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 
 void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 {
-    if ( mousePressed && (e->pos() - presspos).manhattanLength() > 4 ) {
-	mousePressed = FALSE;
-        QListViewItem *item = itemAt( contentsToViewport(presspos) );
-        if ( item ) {
-	  KMHeaderToFolderDrag* d = new KMHeaderToFolderDrag(viewport());
-	  d->drag();
-	}
+  if ( mousePressed && (e->pos() - presspos).manhattanLength() > 4 ) {
+    mousePressed = FALSE;
+    QListViewItem *item = itemAt( contentsToViewport(presspos) );
+    if ( item ) {
+      KMHeaderToFolderDrag* d = new KMHeaderToFolderDrag(viewport());
+      d->drag();
     }
+  }
 }
 
 void KMHeaders::clearSelectionExcept( QListViewItem *exception )
