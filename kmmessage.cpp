@@ -1398,7 +1398,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   MDN::SendingMode s = MDN::SentAutomatically; // set to manual if asked user
   QString special; // fill in case of error, warning or failure
-  KConfigGroup mdnConfig( KGlobal::config(), "MDN" );
+  KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
 
   // default:
   int mode = mdnConfig.readNumEntry( "default-policy", 0 );
