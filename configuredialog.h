@@ -41,6 +41,7 @@ class KMAccount;
 #include <kdialogbase.h>
 #include <qguardedptr.h>
 #include <qvaluelist.h>
+#include <qcombobox.h>
 
 #define DEFAULT_EDITOR_STR "kedit %f"
 
@@ -164,6 +165,41 @@ class IdentityList
 };
 
 
+class LanguageItem
+{
+  public:
+    LanguageItem( const QString& language, const QString& reply,
+      const QString& replyAll, const QString& forward,
+      const QString& indentPrefix );
+    QString mLanguage, mReply, mReplyAll, mForward, mIndentPrefix;
+    LanguageItem *next;
+};
+
+class NewLanguageDialog : public KDialogBase
+{
+  Q_OBJECT
+
+  public:
+    NewLanguageDialog( QWidget *parent, const char *name, bool modal,
+      LanguageItem *langList );
+    const QString language( void );
+
+  private:
+    QComboBox *mComboBox;
+};
+
+class LanguageComboBox : public QComboBox
+{
+  Q_OBJECT
+
+  public:
+    LanguageComboBox( bool rw, QWidget *parent=0, const char *name=0 );
+    int insertLanguage( const QString & language );
+    const QString language( void );
+    void setLanguage( const QString & language );
+  private:
+    QString *i18nPath;
+};
 
 class ConfigureDialog : public KDialogBase
 {
@@ -271,15 +307,19 @@ class ConfigureDialog : public KDialogBase
     struct ComposerWidget
     {
       int       pageIndex;
-      QLineEdit *phraseReplyEdit;
-      QLineEdit *phraseReplyAllEdit;
-      QLineEdit *phraseForwardEdit;
-      QLineEdit *phraseindentPrefixEdit;
-      QCheckBox *autoAppSignFileCheck;
-      QCheckBox *smartQuoteCheck;
-      QCheckBox *pgpAutoSignatureCheck;
-      QCheckBox *wordWrapCheck;
-      QSpinBox  *wrapColumnSpin;
+      LanguageComboBox *phraseLanguageCombo;
+      QPushButton  *removeButton;
+      QLineEdit    *phraseReplyEdit;
+      QLineEdit    *phraseReplyAllEdit;
+      QLineEdit    *phraseForwardEdit;
+      QLineEdit    *phraseindentPrefixEdit;
+      QCheckBox    *autoAppSignFileCheck;
+      QCheckBox    *smartQuoteCheck;
+      QCheckBox    *pgpAutoSignatureCheck;
+      QCheckBox    *wordWrapCheck;
+      QSpinBox     *wrapColumnSpin;
+      LanguageItem *LanguageList;
+      LanguageItem *CurrentLanguage;
     };
     struct MimeWidget
     {
@@ -390,6 +430,11 @@ class ConfigureDialog : public KDialogBase
     void slotFontSelectorChanged( int index );
     void slotAddressbookSelectorChanged( int index );
     void slotCustomColorSelectionChanged( void );
+    void slotNewLanguage( void );
+    void slotRemoveLanguage( void );
+    void slotSaveOldPhrases( void );
+    void slotLanguageChanged( const QString& );
+    void slotAddNewLanguage( const QString& );
     void slotWordWrapSelectionChanged( void );
     void slotMimeHeaderSelectionChanged( void );
     void slotMimeHeaderNameChanged( const QString &text );

@@ -366,6 +366,93 @@ QString RenameIdentityDialog::identityText( void )
 
 
 
+NewLanguageDialog::NewLanguageDialog( QWidget *parent, const char *name,
+                                      bool modal, LanguageItem *langList )
+  :KDialogBase( parent, name, modal, i18n("New Language"), Ok|Cancel|Help, Ok,
+                true )
+{
+  QFrame *page = makeMainWidget();
+  QHBoxLayout *hlay = new QHBoxLayout( page, 0, spacingHint() );
+  QLabel *label = new QLabel( i18n("Language:"), page );
+  hlay->addWidget( label );
+  mComboBox = new QComboBox( page );
+  hlay->addWidget( mComboBox, 1 );
+  QStringList langlist = KGlobal::dirs()->findAllResources( "locale",
+                               "*/entry.desktop" );
+  LanguageItem *l;
+  for ( QStringList::ConstIterator it = langlist.begin();
+    it != langlist.end(); ++it )
+  {
+    KSimpleConfig entry( *it );
+    entry.setGroup( "KCM Locale" );
+    QString name = entry.readEntry( "Name" );
+    QString path = *it;
+    int index = path.findRev('/');
+    path = path.left(index);
+    index = path.findRev('/');
+    path = path.mid(index+1);
+    l = langList;
+    while (l && l->mLanguage != path) l = l->next;
+    if (!l)
+    {
+      QString output = name + " (" + path + ")";
+      QPixmap flag( locate("locale", path + "/flag.png") );
+      mComboBox->insertItem( flag, output );
+    }
+  }
+  if (mComboBox->count() == 0)
+  {
+    mComboBox->insertItem( i18n("No more languages available") );
+    enableButtonOK( false );
+  } else mComboBox->listBox()->sort();
+}
+
+const QString NewLanguageDialog::language( void )
+{
+  QString s = QString( mComboBox->currentText() );
+  int i = s.findRev( "(" );
+  return( s.mid( i + 1, s.length() - i - 2 ) );
+}
+
+LanguageComboBox::LanguageComboBox( bool rw, QWidget *parent, const char *name )
+  :QComboBox( rw, parent, name )
+{
+}
+
+int LanguageComboBox::insertLanguage( const QString & language )
+{
+  KSimpleConfig entry( locate("locale", language + "/entry.desktop") );
+  entry.setGroup( "KCM Locale" );
+  QString name = entry.readEntry( "Name" );
+  QString output = name + " (" + language + ")";
+  insertItem( QPixmap( locate("locale", language + "/flag.png") ),
+    output );
+  listBox()->sort();
+  return listBox()->index( listBox()->findItem(output) );
+}
+
+const QString LanguageComboBox::language( void )
+{
+  QString s = QString( currentText() );
+  int i = s.findRev( "(" );
+  return( s.mid( i + 1, s.length() - i - 2 ) );
+}
+
+void LanguageComboBox::setLanguage( const QString & language )
+{
+  for (int i = 0; i < count(); i++)
+    if (text(i).find(QString("(%1)").arg(language)) >= 0) setCurrentItem(i);
+}
+
+LanguageItem::LanguageItem( const QString& language, const QString& reply,
+  const QString& replyAll, const QString& forward, const QString& indentPrefix )
+{
+  mLanguage = language;
+  mReply = reply;
+  mReplyAll = replyAll;
+  mForward = forward;
+  mIndentPrefix = indentPrefix;
+}
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 				  bool modal )
@@ -867,7 +954,7 @@ void ConfigureDialog::makeComposerPage( void )
   QGroupBox *group = new QGroupBox(i18n("Phrases"), page );
   topLevel->addWidget( group );
 
-  QGridLayout *glay = new QGridLayout( group, 6, 2, spacingHint() );
+  QGridLayout *glay = new QGridLayout( group, 8, 2, spacingHint() );
   glay->addRowSpacing( 0, fontMetrics().lineSpacing() );
   glay->setColStretch( 1, 10 );
 
@@ -876,22 +963,41 @@ void ConfigureDialog::makeComposerPage( void )
      i18n( "The following placeholders are supported in the reply phrases:\n"
 	   "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space"));
   glay->addMultiCellWidget( label, 1, 1, 0, 1 );
-  label = new QLabel( i18n("Reply to sender:"), group );
+  label = new QLabel( i18n("Language:"), group );
   glay->addWidget( label, 2, 0 );
-  mComposer.phraseReplyEdit = new QLineEdit( group );
-  glay->addWidget( mComposer.phraseReplyEdit, 2, 1 );
-  label = new QLabel( i18n("Reply to all:"), group );
-  glay->addWidget( label, 3, 0 );
-  mComposer.phraseReplyAllEdit = new QLineEdit( group );
-  glay->addWidget( mComposer.phraseReplyAllEdit, 3, 1 );
-  label = new QLabel( i18n("Forward:"), group );
+  mComposer.phraseLanguageCombo = new LanguageComboBox( false, group );
+  glay->addWidget( mComposer.phraseLanguageCombo, 2, 1 );
+  mComposer.LanguageList = NULL;
+  QHBoxLayout *languageHlay = new QHBoxLayout( group, 0, spacingHint() );
+  glay->addLayout( languageHlay, 3, 1 );
+  QPushButton *newButton = new QPushButton( i18n("New..."), group );
+  mComposer.removeButton = new QPushButton( i18n("Remove"), group );
+  newButton->setAutoDefault( false );
+  mComposer.removeButton->setAutoDefault( false );
+  languageHlay->addWidget( newButton );
+  languageHlay->addWidget( mComposer.removeButton );
+  connect( newButton, SIGNAL(clicked()),
+           this, SLOT(slotNewLanguage()) );
+  connect( mComposer.removeButton, SIGNAL(clicked()),
+           this, SLOT(slotRemoveLanguage()) );
+  connect( mComposer.phraseLanguageCombo, SIGNAL(activated( const QString& )),
+           this, SLOT(slotLanguageChanged( const QString& )) );
+  label = new QLabel( i18n("Reply to sender:"), group );
   glay->addWidget( label, 4, 0 );
-  mComposer.phraseForwardEdit = new QLineEdit( group );
-  glay->addWidget( mComposer.phraseForwardEdit, 4, 1 );
-  label = new QLabel( i18n("Indentation:"), group );
+  mComposer.phraseReplyEdit = new QLineEdit( group );
+  glay->addWidget( mComposer.phraseReplyEdit, 4, 1 );
+  label = new QLabel( i18n("Reply to all:"), group );
   glay->addWidget( label, 5, 0 );
+  mComposer.phraseReplyAllEdit = new QLineEdit( group );
+  glay->addWidget( mComposer.phraseReplyAllEdit, 5, 1 );
+  label = new QLabel( i18n("Forward:"), group );
+  glay->addWidget( label, 6, 0 );
+  mComposer.phraseForwardEdit = new QLineEdit( group );
+  glay->addWidget( mComposer.phraseForwardEdit, 6, 1 );
+  label = new QLabel( i18n("Indentation:"), group );
+  glay->addWidget( label, 7, 0 );
   mComposer.phraseindentPrefixEdit = new QLineEdit( group );
-  glay->addWidget( mComposer.phraseindentPrefixEdit, 5, 1 );
+  glay->addWidget( mComposer.phraseindentPrefixEdit, 7, 1 );
 
   mComposer.autoAppSignFileCheck =
     new QCheckBox( i18n("Automatically append signature"), page );
@@ -1261,22 +1367,43 @@ void ConfigureDialog::setupAppearancePage( void )
 void ConfigureDialog::setupComposerPage( void )
 {
   KConfig &config = *kapp->config();
-  config.setGroup("KMMessage");
+  mComposer.CurrentLanguage = NULL;
+  LanguageItem *l = mComposer.LanguageList;
+  while (mComposer.LanguageList) 
+  { 
+    l = mComposer.LanguageList;
+    mComposer.LanguageList = l->next;
+    delete l; 
+  }
+  mComposer.phraseLanguageCombo->clear();
 
-  QString str = config.readEntry("phrase-reply");
-  if (str.isEmpty()) str = i18n("On %D, you wrote:");
-  mComposer.phraseReplyEdit->setText(str);
+  config.setGroup("General");
+  int num = config.readNumEntry("reply-languages",0);
+  int currentNr = config.readNumEntry("reply-current-language",0);
+  QString itemStr = QString();
+  int nr;
 
-  str = config.readEntry("phrase-reply-all");
-  if (str.isEmpty()) str = i18n("On %D, %F wrote:");
-  mComposer.phraseReplyAllEdit->setText(str);
-
-  str = config.readEntry("phrase-forward");
-  if (str.isEmpty()) str = i18n("Forwarded Message");
-  mComposer.phraseForwardEdit->setText(str);
-
-  str = config.readEntry("indent-prefix", ">%_");
-  mComposer.phraseindentPrefixEdit->setText(str );
+  for (int i = num - 1; i >= 0; i--)
+  {
+    config.setGroup(QString("KMMessage #%1").arg(i));
+    l = new LanguageItem( config.readEntry("language"),
+                          config.readEntry("phrase-reply"),
+                          config.readEntry("phrase-reply-all"),
+                          config.readEntry("phrase-forward"),
+                          config.readEntry("indent-prefix") );
+    l->next = mComposer.LanguageList;
+    mComposer.LanguageList = l;
+    nr = mComposer.phraseLanguageCombo->insertLanguage( l->mLanguage );
+    if (currentNr == i) itemStr = mComposer.phraseLanguageCombo->listBox()->
+      text(nr);
+  }
+  mComposer.phraseLanguageCombo->setCurrentItem(mComposer.phraseLanguageCombo->
+    listBox()->index(mComposer.phraseLanguageCombo->
+    listBox()->findItem(itemStr)));
+  mComposer.phraseLanguageCombo->listBox()->setCurrentItem(
+    mComposer.phraseLanguageCombo->currentItem() );
+  if (num == 0) slotAddNewLanguage( KGlobal::locale()->language() );
+  slotLanguageChanged( NULL );
 
   config.setGroup("Composer");
 
@@ -1636,15 +1763,25 @@ void ConfigureDialog::slotDoApply( bool everything )
   }
   if( activePage == mComposer.pageIndex || everything )
   {
-    config.setGroup("KMMessage");
-    config.writeEntry("phrase-reply",
-		      mComposer.phraseReplyEdit->text() );
-    config.writeEntry("phrase-reply-all",
-		      mComposer.phraseReplyAllEdit->text() );
-    config.writeEntry("phrase-forward",
-		      mComposer.phraseForwardEdit->text() );
-    config.writeEntry("indent-prefix",
-		      mComposer.phraseindentPrefixEdit->text() );
+    slotSaveOldPhrases();
+    LanguageItem *l = mComposer.LanguageList;
+    int languageCount = 0, currentNr = 0;
+    while (l)
+    {
+      if (l == mComposer.CurrentLanguage) currentNr = languageCount;
+      config.setGroup(QString("KMMessage #%1").arg(languageCount));
+      config.writeEntry( "language", l->mLanguage );
+      config.writeEntry( "phrase-reply", l->mReply );
+      config.writeEntry( "phrase-reply-all", l->mReplyAll );
+      config.writeEntry( "phrase-forward", l->mForward );
+      config.writeEntry( "indent-prefix", l->mIndentPrefix );
+      l = l->next;
+      languageCount++;
+    }
+
+    config.setGroup("General");
+    config.writeEntry("reply-languages", languageCount);
+    config.writeEntry("reply-current-language", currentNr);
 
     config.setGroup("Composer");
     bool autoSignature = mComposer.autoAppSignFileCheck->isChecked();
@@ -2371,6 +2508,79 @@ void ConfigureDialog::slotCustomColorSelectionChanged( void )
   if (state && (mAppearance.colorList->currentItem() < 0))
      mAppearance.colorList->setCurrentItem(0);
   mAppearance.recycleColorCheck->setEnabled( state );
+}
+
+void ConfigureDialog::slotNewLanguage( void )
+{
+  NewLanguageDialog *dialog = new NewLanguageDialog( this, "new", true,
+    mComposer.LanguageList );
+  int result = dialog->exec();
+  if ( result == QDialog::Accepted ) slotAddNewLanguage( dialog->language() );
+  delete dialog;
+}
+
+void ConfigureDialog::slotAddNewLanguage( const QString& lang )
+{
+  mComposer.phraseLanguageCombo->setCurrentItem( mComposer.
+    phraseLanguageCombo->insertLanguage(lang) );
+  KLocale locale("kmail");
+  locale.setLanguage( lang );
+  LanguageItem *l = new LanguageItem( lang,
+    locale.translate("On %D, you wrote:"),
+    locale.translate("On %D, %F wrote:"),
+    locale.translate("Forwarded Message"),
+    locale.translate(">%_") );
+  l->next = mComposer.LanguageList;
+  mComposer.LanguageList = l;
+  slotLanguageChanged( NULL );
+}
+
+void ConfigureDialog::slotRemoveLanguage( void )
+{
+  LanguageItem *l = mComposer.LanguageList, *l2 = NULL;
+  while (l && l->mLanguage != mComposer.phraseLanguageCombo->language())
+  { l2 = l; l = l->next; }
+  if (l)
+  {
+    if (l2 == NULL) {
+      mComposer.LanguageList = l->next;
+    } else l2->next = l->next;
+    delete l;
+    mComposer.CurrentLanguage = NULL;
+  }
+  mComposer.phraseLanguageCombo->removeItem( mComposer.phraseLanguageCombo->
+    currentItem() );
+  slotLanguageChanged( NULL );
+}
+
+void ConfigureDialog::slotSaveOldPhrases( void )
+{
+  LanguageItem *l = mComposer.CurrentLanguage;
+  if (l)
+  {
+    l->mReply = mComposer.phraseReplyEdit->text();
+    l->mReplyAll = mComposer.phraseReplyAllEdit->text();
+    l->mForward  = mComposer.phraseForwardEdit->text();
+    l->mIndentPrefix = mComposer.phraseindentPrefixEdit->text();
+  }
+}
+
+void ConfigureDialog::slotLanguageChanged( const QString& )
+{
+  QString s = mComposer.phraseLanguageCombo->language();
+  slotSaveOldPhrases();
+  LanguageItem *l = mComposer.LanguageList;
+  while (l && l->mLanguage != s) l = l->next;
+  if (l)
+  {
+    mComposer.phraseReplyEdit->setText( l->mReply );
+    mComposer.phraseReplyAllEdit->setText( l->mReplyAll );
+    mComposer.phraseForwardEdit->setText( l->mForward );
+    mComposer.phraseindentPrefixEdit->setText( l->mIndentPrefix );
+  }
+  mComposer.CurrentLanguage = l;
+  mComposer.removeButton->setEnabled( mComposer.phraseLanguageCombo->
+    count() > 1 );
 }
 
 void ConfigureDialog::slotWordWrapSelectionChanged( void )

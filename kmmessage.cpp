@@ -48,7 +48,7 @@
 static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
-static QString sReplyStr, sReplyAllStr, sIndentPrefixStr;
+static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
 static bool sSmartQuote, sReplaceSubjPrefix;
 static int sWrapCol;
 static QStringList sReplySubjPrefixes;
@@ -281,6 +281,7 @@ const QString KMMessage::formatString(const QString& aStr) const
     ch = aStr[i++];
     if (ch == '%') {
       ch = aStr[i++];
+      QString langSave = KGlobal::locale()->language();
       switch ((char)ch) {
       case 'D':
 	/* I'm not too sure about this change. Is it not possible
@@ -288,9 +289,11 @@ const QString KMMessage::formatString(const QString& aStr) const
 	   like this change to a short XX/XX/YY date format.
 	   At least not for the default. -sanders */
         {
-        QDateTime datetime;
-	datetime.setTime_t(date());
-        result += KGlobal::locale()->formatDateTime(datetime, false);
+          QDateTime datetime;
+          datetime.setTime_t(date());
+          KLocale locale("kmail");
+          locale.setLanguage(sReplyLanguage);
+          result += locale.formatDateTime(datetime, false);
         }
         break;
       case 'F':
@@ -1980,17 +1983,32 @@ const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 //-----------------------------------------------------------------------------
 void KMMessage::readConfig(void)
 {
+  KConfig *config=kapp->config();
+
+  config->setGroup("General");
+  int languageNr = config->readNumEntry("reply-current-language",0);
+//  int replyLanguages = config->readNumEntry("reply-languages",1);
 
   /* Default values added for KRN otherwise createReply() segfaults*/
   /* They are taken from kmail's dialog */
 
-  KConfig *config=kapp->config();
-
+//  for (int i=0; i<replyLanguages; i++)
+  {
+    config->setGroup(QString("KMMessage #%1").arg(languageNr));
+//    if (i == replyLanguages - 1 || config->readEntry("language") == sLanguage)
+    {
+      sReplyLanguage = config->readEntry("language",KGlobal::locale()->language());
+      sReplyStr = config->readEntry("phrase-reply",
+        i18n("On %D, you wrote:"));
+      sReplyAllStr = config->readEntry("phrase-reply-all",
+        i18n("On %D, %F wrote:"));
+      sForwardStr = config->readEntry("phrase-forward",
+        i18n("Forwarded Message"));
+      sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
+//      break;
+    }
+  }
   config->setGroup("KMMessage");
-  sReplyStr = config->readEntry("phrase-reply",i18n("On %D, you wrote:"));
-  sReplyAllStr = config->readEntry("phrase-reply-all",i18n("On %D, %F wrote:"));
-  sForwardStr = config->readEntry("phrase-forward",i18n("Forwarded Message"));
-  sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
   sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
   if (sReplySubjPrefixes.count() == 0)
     sReplySubjPrefixes.append("Re:");
