@@ -4778,6 +4778,9 @@ void KMReaderWin::slotAtmSave()
     else
       fileName.append(msgPart.name());
 
+    while (fileName.find(':') != -1)
+      fileName = fileName.mid(fileName.find(':') + 1).stripWhiteSpace();
+    fileName.replace(QRegExp("/"), "");
     KURL url = KFileDialog::getSaveURL( fileName, QString::null, this );
 
     if( url.isEmpty() )
