@@ -188,8 +188,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
     if (mFolder)
     {
-      id = findUnread(TRUE, 0);
-      if (id >= 0 && mFolder->getMsgBase(id)->isNew()) 
+      id = findUnread(TRUE, 0, TRUE);
+      if (id >= 0) 
       {
 	setCurrentItem(id);
 	msgHeaderChanged(id);
@@ -682,7 +682,7 @@ void KMHeaders::prevMessage()
 
 
 //-----------------------------------------------------------------------------
-int KMHeaders::findUnread(bool aDirNext, int aStartAt)
+int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
 {
   KMMsgBase* msgBase = NULL;
   int i, idx, cnt;
@@ -703,7 +703,8 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt)
     for (i=idx; i<cnt; i++)
     {
       msgBase = mFolder->getMsgBase(i);
-      if (msgBase && msgBase->isUnread()) break;
+      if (!onlyNew && msgBase && msgBase->isUnread()) break;
+      if (onlyNew && msgBase && msgBase->isNew()) break;
     }
   }
   else
@@ -711,7 +712,8 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt)
     for (i=idx; i>=0; i--)
     {
       msgBase = mFolder->getMsgBase(i);
-      if (msgBase && msgBase->isUnread()) break;
+      if (!onlyNew && msgBase && msgBase->isUnread()) break;
+      if (onlyNew && msgBase && msgBase->isNew()) break;
     }
   }
   if (i<cnt && i>=0 && msgBase) return i;

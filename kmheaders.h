@@ -96,7 +96,7 @@ protected:
 
   /** Find next/prev unread message. Starts at currentItem() if startAt
     is unset. */
-  virtual int findUnread(bool findNext, int startAt=-1);
+  virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = FALSE);
 
   /** Returns message index of first selected message of the messages
     where the message with the given id is in. This for finding the correct
