@@ -90,138 +90,6 @@ namespace KMail {
 
   ObjectTreeParser::~ObjectTreeParser() {}
 
-//pending(khz): replace this and put it into CryptPlugWrapper class  (khz, 2002/06/27)
-class tmpHelper {
-public:
-    static QString pluginErrorIdToErrorText( int errId, bool& passphraseError )
-    {
-        /* The error numbers used by GPGME.  */
-    /*
-        typedef enum
-        {
-            GPGME_EOF                = -1,
-            GPGME_No_Error           = 0,
-            GPGME_General_Error      = 1,
-            GPGME_Out_Of_Core        = 2,
-            GPGME_Invalid_Value      = 3,
-            GPGME_Busy               = 4,
-            GPGME_No_Request         = 5,
-            GPGME_Exec_Error         = 6,
-            GPGME_Too_Many_Procs     = 7,
-            GPGME_Pipe_Error         = 8,
-            GPGME_No_Recipients      = 9,
-            GPGME_No_Data            = 10,
-            GPGME_Conflict           = 11,
-            GPGME_Not_Implemented    = 12,
-            GPGME_Read_Error         = 13,
-            GPGME_Write_Error        = 14,
-            GPGME_Invalid_Type       = 15,
-            GPGME_Invalid_Mode       = 16,
-            GPGME_File_Error         = 17,  // errno is set in this case.
-            GPGME_Decryption_Failed  = 18,
-            GPGME_No_Passphrase      = 19,
-            GPGME_Canceled           = 20,
-            GPGME_Invalid_Key        = 21,
-            GPGME_Invalid_Engine     = 22,
-            GPGME_Invalid_Recipients = 23
-        }
-    */
-        /*
-        NOTE:
-            The following hack *must* be changed into something
-            using an extra enum specified in the CryptPlug API
-            *and* the file error number (case 17) must be taken
-            into account.                     (khz, 2002/27/06)
-        */
-        passphraseError = false;
-        switch( errId ){
-            case /*GPGME_EOF                = */-1:
-                return(i18n("End of File reached during operation."));
-                break;
-            case /*GPGME_No_Error           = */0:
-                return(i18n("No error."));
-                break;
-            case /*GPGME_General_Error      = */1:
-                return(i18n("General error."));
-                break;
-            case /*GPGME_Out_Of_Core        = */2:
-                return(i18n("Out of core!"));
-                break;
-            case /*GPGME_Invalid_Value      = */3:
-                return(i18n("Invalid value."));
-                break;
-            case /*GPGME_Busy               = */4:
-                return(i18n("Engine is busy."));
-                break;
-            case /*GPGME_No_Request         = */5:
-                return(i18n("No request."));
-                break;
-            case /*GPGME_Exec_Error         = */6:
-                return(i18n("Execution error."));
-                break;
-            case /*GPGME_Too_Many_Procs     = */7:
-                return(i18n("Too many processes."));
-                break;
-            case /*GPGME_Pipe_Error         = */8:
-                return(i18n("Pipe error."));
-                break;
-            case /*GPGME_No_Recipients      = */9:
-                return(i18n("No recipients."));
-                break;
-            case /*GPGME_No_Data            = */10:
-                return(i18n("No data."));
-                break;
-            case /*GPGME_Conflict           = */11:
-                return(i18n("Conflict."));
-                break;
-            case /*GPGME_Not_Implemented    = */12:
-                return(i18n("Not implemented."));
-                break;
-            case /*GPGME_Read_Error         = */13:
-                return(i18n("Read error."));
-                break;
-            case /*GPGME_Write_Error        = */14:
-                return(i18n("Write error."));
-                break;
-            case /*GPGME_Invalid_Type       = */15:
-                return(i18n("Invalid type."));
-                break;
-            case /*GPGME_Invalid_Mode       = */16:
-                return(i18n("Invalid mode."));
-                break;
-            case /*GPGME_File_Error         = */17:  // errno is set in this case.
-                return(i18n("File error."));
-                break;
-            case /*GPGME_Decryption_Failed  = */18:
-                return(i18n("Decryption failed."));
-                break;
-            case /*GPGME_No_Passphrase      = */19:
-                passphraseError = true;
-                return(i18n("No passphrase."));
-                break;
-            case /*GPGME_Canceled           = */20:
-                passphraseError = true;
-                return(i18n("Canceled."));
-                break;
-            case /*GPGME_Invalid_Key        = */21:
-                passphraseError = true;
-                return(i18n("Invalid key."));
-                break;
-            case /*GPGME_Invalid_Engine     = */22:
-                return(i18n("Invalid engine."));
-                break;
-            case /*GPGME_Invalid_Recipients = */23:
-                return(i18n("Invalid recipients."));
-                break;
-            default:
-                return(i18n("Unknown error."));
-            }
-    }
-};
-
-
-
-
   void ObjectTreeParser::insertAndParseNewChildNode( partNode& startNode,
 						     const char* content,
 						     const char* cntDesc,
@@ -882,7 +750,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                                                          &errId,
                                                          &errTxt );
       kdDebug(5006) << "ObjectTreeParser::decryptMIME: returned from CRYPTPLUG" << endl;
-      aErrorText = tmpHelper::pluginErrorIdToErrorText( errId, passphraseError );
+      aErrorText = CryptPlugWrapper::errorIdToText( errId, passphraseError );
       if( bDecryptionOk )
         decryptedData = cleartext;
       else if( mReader && showWarning ){
