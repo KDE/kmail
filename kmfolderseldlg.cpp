@@ -18,7 +18,7 @@
 QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg(QString caption): 
+KMFolderSelDlg::KMFolderSelDlg(QString caption):
   KMFolderSelDlgInherited(NULL, caption, TRUE)
 {
   QPushButton *btnCancel, *btnOk;
@@ -62,9 +62,9 @@ KMFolderSelDlg::KMFolderSelDlg(QString caption):
       mListBox->setCurrentItem(i - 1);
     ++i;
   }
-  
+
   // make sure item is visible
-  if(mListBox->currentItem() != -1) 
+  if(mListBox->currentItem() != -1)
   {
     unsigned idx = 0;
     while(mListBox->numItemsVisible()-2 + mListBox->topItem() < mListBox->currentItem() && idx < mListBox->count())
@@ -94,7 +94,6 @@ KMFolder* KMFolderSelDlg::folder(void)
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotSelect(int)
 {
-  kapp->processEvents(200);
   if(mListBox->currentItem() != -1)
     oldSelection = mListBox->text(mListBox->currentItem());
   accept();
@@ -104,8 +103,7 @@ void KMFolderSelDlg::slotSelect(int)
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotCancel()
 {
-  kapp->processEvents(200);
-  disconnect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));  
+  disconnect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));
   if(mListBox->currentItem() != -1)
     oldSelection = mListBox->text(mListBox->currentItem());
   reject();

@@ -114,7 +114,6 @@ void KMAcctLocal::processNewMail(bool)
 	emit finishedCheck(hasNewMail);
     }
 
-  kapp->processEvents();
   mailFolder.setAutoCreateIndex(FALSE);
 
   rc = mailFolder.open();
@@ -226,7 +225,7 @@ void KMAcctLocal::writeConfig(KConfig& config)
   KMAcctLocalInherited::writeConfig(config);
 
   config.writeEntry("Location", mLocation);
-  
+
   QString st = "fcntl";
   if (mLock == procmail_lockfile) st = "procmail_lockfile";
   else if (mLock == mutt_dotlock) st = "mutt_dotlock";
@@ -237,7 +236,7 @@ void KMAcctLocal::writeConfig(KConfig& config)
   if (mLock == procmail_lockfile) {
     config.writeEntry("ProcmailLockFile", mProcmailLockFileName);
   }
-  
+
 }
 
 

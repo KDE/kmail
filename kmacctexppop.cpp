@@ -608,7 +608,6 @@ void KMAcctExpPop::slotJobFinished() {
     } else {
       KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed." ));
     }
-    kapp->processEvents(200);
     KMBroadcastStatus::instance()->setStatusProgressEnable( false );
     KMBroadcastStatus::instance()->reset();
 
