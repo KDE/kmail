@@ -104,7 +104,7 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       case SentMail: icon = "folder_sent_mail"; break;
       case Trash: icon = "trashcan_empty"; break;
       default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
-      case Drafts: icon = "folder";break;
+      case Drafts: icon = "edit";break;
     }
   } else if ( protocol() == KMFolderTreeItem::Search) {
     icon = "mail_find";
