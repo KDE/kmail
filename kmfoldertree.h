@@ -58,11 +58,21 @@ signals:
   /* Messages have been dropped onto a folder with Ctrl */
   void folderDropCopy(KMFolder*);
 
+protected:
+  /* open ancestors and ensure item is visible  */
+  void prepareItem( KMFolderTreeItem* );
+
 public slots:
   /* Select the next folder with unread messages */
   void nextUnreadFolder();
   /* Select the previous folder with unread messages */
   void prevUnreadFolder();
+  /* Increment current folder */
+  void incCurrentFolder();
+  /* Decrement current folder */
+  void decCurrentFolder();
+  /* Select the current folder */
+  void selectCurrentFolder();
 
 protected slots:
   void doFolderSelected(QListViewItem*);

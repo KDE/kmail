@@ -478,27 +478,35 @@ void KMFolderTree::doFolderListChanged()
   }
 }
 
-
 void KMFolderTree::setSelected( QListViewItem *i, bool select )
 {
     clearSelection();
     QListView::setSelected( i, select );
 }
 
+//-----------------------------------------------------------------------------
+// Methods for navigating folders with the keyboard
+
+void KMFolderTree::prepareItem( KMFolderTreeItem* fti )
+{
+    QListViewItem *parent = fti->parent();
+    while (parent) {
+	parent->setOpen( TRUE );
+	parent = parent->parent();
+    }
+    ensureItemVisible( fti );
+}
+
 void KMFolderTree::nextUnreadFolder()
 {
   QListViewItemIterator it( currentItem() );
-  
+
   while (it.current()) {
     ++it;
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
-	QListViewItem *parent = fti->parent();
-	while (parent) {
-	    parent->setOpen( TRUE );
-	    parent = parent->parent();
-	}
-	doFolderSelected( fti );
+	prepareItem( fti );
+	doFolderSelected( fti );    
 	return;
     }
   }
@@ -512,14 +520,51 @@ void KMFolderTree::prevUnreadFolder()
     --it;
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (fti && fti->folder && (fti->folder->countUnread() > 0)) {
-	QListViewItem *parent = fti->parent();
-	while (parent) {
-	    parent->setOpen( TRUE );
-	    parent = parent->parent();
-	}
-	doFolderSelected( fti );
+	prepareItem( fti );
+	doFolderSelected( fti );    
 	return;
     }
+  }
+}
+
+void KMFolderTree::incCurrentFolder()
+{
+  QListViewItemIterator it( currentItem() );
+  ++it;
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+  if (fti && fti->folder) {
+      prepareItem( fti );
+      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+		 this,SLOT(doFolderSelected(QListViewItem*)));
+      setFocus();
+      setCurrentItem( fti );    
+      connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	      this,SLOT(doFolderSelected(QListViewItem*)));
+  }
+}
+
+void KMFolderTree::decCurrentFolder()
+{
+  QListViewItemIterator it( currentItem() );
+  --it;
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
+  if (fti && fti->folder) {
+      prepareItem( fti );
+      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+		 this,SLOT(doFolderSelected(QListViewItem*)));
+      setFocus();
+      setCurrentItem( fti );
+      connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	      this,SLOT(doFolderSelected(QListViewItem*)));
+  }
+}
+
+void KMFolderTree::selectCurrentFolder()
+{
+  KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>( currentItem() );
+  if (fti && fti->folder) {
+      prepareItem( fti );
+      doFolderSelected( fti );
   }
 }
 

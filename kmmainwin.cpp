@@ -390,6 +390,12 @@ void KMMainWin::createWidgets(void)
 		     mFolderTree, SLOT(nextUnreadFolder()));
   accel->connectItem(accel->insertItem(CTRL+Key_Minus),
 		     mFolderTree, SLOT(prevUnreadFolder()));
+  accel->connectItem(accel->insertItem(CTRL+Key_Right),
+		     mFolderTree, SLOT(incCurrentFolder()));
+  accel->connectItem(accel->insertItem(CTRL+Key_Left),
+		     mFolderTree, SLOT(decCurrentFolder()));
+  accel->connectItem(accel->insertItem(CTRL+Key_Space),
+		     mFolderTree, SLOT(selectCurrentFolder()));
 }
 
 
