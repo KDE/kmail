@@ -1118,7 +1118,11 @@ void KMImapJob::slotGetNextMessage()
 //-----------------------------------------------------------------------------
 void KMImapJob::slotGetMessageResult(KIO::Job * job)
 {
-  KMAcctImap *account = static_cast<KMFolderImap*>(mMsg->parent())->account();
+  KMMessage *msg = mMsgList.first();
+  KMFolderImap * folder = static_cast<KMFolderImap*>(msg->parent());
+  if (!folder) // guarded ptr - can be 0
+	return;
+  KMAcctImap *account = folder->account();
   QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
     account->mapJobData.find(job);
   if (it == account->mapJobData.end()) return;
