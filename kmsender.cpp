@@ -144,20 +144,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     // RFC822 says:
     // Note that the "Bcc" field may be empty, while the "To" field is required to
     // have at least one address.
-    kernel->kbp()->idle();
-    KMessageBox::information(0,i18n("You must specify at least one receiver in the To: field."));
     return FALSE;
-  }
-
-  if (aMsg->subject().isEmpty())
-  {
-    kernel->kbp()->idle();
-    int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
-    		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"));
-    if( rc == KMessageBox::No ) {
-      return FALSE;
-    }
-    kernel->kbp()->busy();
   }
 
   if (sendNow==-1) sendNow = mSendImmediate;

@@ -2103,16 +2103,34 @@ void KMComposeWin::slotPrint()
 //----------------------------------------------------------------------------
 void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 {
-  QString hf = mMsg->headerField("X-KMail-Transport");
-  QString msgId = mMsg->msgId();
-  static bool busy = 0;
-  bool sentOk;
-  bool editSubject = true;   // This is an inverted variable due to return type
+  static bool busy = false;
   if (busy) return;
   busy = true;
 
+  if (!saveInDrafts)
+  {
+     if (to().isEmpty())
+     {
+        mEdtTo->setFocus();
+        KMessageBox::information(0,i18n("You must specify at least one receiver in the To: field."));
+        busy = false;
+        return;
+     }
+
+     if (subject().isEmpty())
+     {
+        mEdtSubject->setFocus();
+        int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
+    		i18n("No subject specified"), i18n("Yes"), i18n("No, let me specify the subject"));
+        if( rc == KMessageBox::No ) 
+        {
+           busy = false;
+           return;
+        }
+     }
+  }
+
   kernel->kbp()->busy();
-  //applyChanges();  // is called twice otherwise. Lars
   mMsg->setDateToday();
 
   // If a user sets up their outgoing messages preferences wrong and then
@@ -2120,43 +2138,48 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   // rectify the problem by editing their outgoing preferences and
   // resending.
   // Hence this following conditional
+  QString hf = mMsg->headerField("X-KMail-Transport");
   if ((mTransport->currentText() != mTransport->text(0)) ||
       (!hf.isEmpty() && (hf != mTransport->text(0))))
     mMsg->setHeaderField("X-KMail-Transport", mTransport->currentText());
 
   disableBreaking = saveInDrafts;
-  if (saveInDrafts)
-      sentOk = (applyChanges() && !(kernel->draftsFolder()->addMsg(mMsg)));
-  else
-      sentOk = (applyChanges() && (editSubject = kernel->msgSender()->send(mMsg, aSendNow)));
+
+  bool sentOk = applyChanges();
+
   disableBreaking = false;
 
+  if (!sentOk)
+  {
+     kernel->kbp()->idle();
+     busy = false;
+     return;
+  }
+
+  if (saveInDrafts)
+     sentOk = !(kernel->draftsFolder()->addMsg(mMsg));
+  else
+     sentOk = kernel->msgSender()->send(mMsg, aSendNow);
+
   kernel->kbp()->idle();
+
+  if (!sentOk)
+  {
+     busy = false;
+     return;
+  }
 
   if (saveInDrafts || !aSendNow)
       emit messageQueuedOrDrafted();
 
-  // Warning this is an ugly hack but it covers all the changes needed
-  // with minimal code changes.  If you want to add more warning boxes
-  // (say if the From: field is empty), then you will need to modify this.
-  if (!editSubject) {
-    if (mEdtTo->text().stripWhiteSpace().isEmpty())
-      mEdtTo->setFocus();
-    else
-      mEdtSubject->setFocus();
-  }
+  KMRecentAddresses::self()->add( bcc() );
+  KMRecentAddresses::self()->add( cc() );
+  KMRecentAddresses::self()->add( to() );
 
-  if (sentOk)
-  {
-    KMRecentAddresses::self()->add( bcc() );
-    KMRecentAddresses::self()->add( cc() );
-    KMRecentAddresses::self()->add( to() );
-
-    mAutoDeleteMsg = FALSE;
-    mFolder = NULL;
-    hide();
-    delete this;
-  }
+  mAutoDeleteMsg = FALSE;
+  mFolder = NULL;
+  hide();
+  delete this;
 
   busy = false;
 }
