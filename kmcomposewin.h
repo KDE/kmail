@@ -44,10 +44,6 @@ class _StringPair {
    QString value;
 };
 
-namespace Syntaxhighlighter {
-  class DictSpellChecker;
-}
-
 class QCloseEvent;
 class QComboBox;
 class QFrame;
@@ -66,6 +62,7 @@ class KProcess;
 class KSelectAction;
 class KSpell;
 class KSpellConfig;
+class KDictSpellingHighlighter;
 class KStatusBar;
 class KAction;
 class KToggleAction;
@@ -146,7 +143,7 @@ private:
   bool      extEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
-  Syntaxhighlighter::DictSpellChecker *mSpellChecker;
+  KDictSpellingHighlighter *mSpellChecker;
   bool spellLineEdit;
 };
 

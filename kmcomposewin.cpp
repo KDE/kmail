@@ -67,9 +67,7 @@ using KRecentAddress::RecentAddresses;
 #include <kspell.h>
 #include <kspelldlg.h>
 #include <spellingfilter.h>
-#include <syntaxhighlighter.h>
-using Syntaxhighlighter::DictSpellChecker;
-using Syntaxhighlighter::SpellChecker;
+#include <ksyntaxhighlighter.h>
 
 #include <qtabdialog.h>
 #include <qregexp.h>
@@ -5781,7 +5779,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   QColor col3 = config->readColorEntry( "QuotedText2", &defaultColor2 );
   QColor col4 = config->readColorEntry( "QuotedText1", &defaultColor1 );
   QColor c = QColor("red");
-  mSpellChecker = new DictSpellChecker(this, /*active*/ true, /*autoEnabled*/ true,
+  mSpellChecker = new KDictSpellingHighlighter(this, /*active*/ true, /*autoEnabled*/ true,
     /*spellColor*/ config->readColorEntry("NewMessage", &c),
     /*colorQuoting*/ true, col1, col2, col3, col4);
   connect( mSpellChecker, SIGNAL(activeChanged(const QString &)),
@@ -5999,7 +5997,7 @@ void KMEdit::spellcheck()
   spellLineEdit = !spellLineEdit;
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
 		       SLOT(slotSpellcheck2(KSpell*)));
-  QStringList l = SpellChecker::personalWords();
+  QStringList l = KSpellingHighlighter::personalWords();
   for ( QStringList::Iterator it = l.begin(); it != l.end(); ++it ) {
       mKSpell->addPersonal( *it );
   }
@@ -6109,7 +6107,7 @@ void KMEdit::slotSpellResult(const QString &s)
       }
   }
   mKSpell->cleanUp();
-  DictSpellChecker::dictionaryChanged();
+  KDictSpellingHighlighter::dictionaryChanged();
 
   emit spellcheck_done( dlgResult );
 }
