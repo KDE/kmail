@@ -147,6 +147,10 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     kdDebug(5006) << "checked mail, server ready" << endl;
     kernel->serverReady (true);
     checking = false;
+    if (mTotalNewMailsArrived != -1)
+      KMBroadcastStatus::instance()->setStatusMsg(
+      i18n("Transmission completed, %n new message.",
+           "Transmission completed, %n new messages.", mTotalNewMailsArrived));
     emit checkedMail(newMailArrived, interactive);
     return;
   }
