@@ -2,6 +2,7 @@
 // Author: Stefan Taferner <taferner@kde.org>
 // This code is under GPL
 
+#include <pwd.h>
 #include <config.h>
 #include "kmaddrbook.h"
 #include <kapplication.h>
@@ -243,24 +244,20 @@ QString KabcBridge::expandDistributionLists(QString recipients)
         receiver += "@";
         receiver += QCString(hostname, 100);
 
-        QFile f("/etc/passwd");
-        if (f.open(IO_ReadOnly))
+        passwd *pw;
+        setpwent();
+        while ((pw = getpwent()))
         {
-          QTextStream t( &f );
-          QString s;
-          QStringList sl;
-          while ( !t.eof() )
+          if (qstrcmp(pw->pw_name, username.local8Bit()) == 0)
           {
-            s = t.readLine();
-            sl = QStringList::split(':', s);
-            if (sl[0] == username)
-            {
-              receiver = sl[4] + " <" + receiver + ">";
-              break;
-            }
+            QString fn = QString::fromLocal8Bit(pw->pw_gecos);
+            if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
+              receiver = "\"" + fn + "\" <" + receiver + ">";
+            else
+              receiver = fn + " <" + receiver + ">";
           }
-          f.close();
         }
+        endpwent();
         expRecipients += receiver;
       } else {
         expRecipients += receiver;
