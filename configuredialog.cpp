@@ -177,189 +177,6 @@ QSize ConfigureDialog::ListView::sizeHint( void ) const
   return( s );
 }
 
-// FIXME: Add the help button again if there actually _is_ a
-// help text for this dialog!
-NewIdentityDialog::NewIdentityDialog( QWidget *parent, const char *name,
-				      bool modal )
-  :KDialogBase( parent, name, modal, i18n("New Identity"),
-		Ok|Cancel/*|Help*/, Ok, true )
-{
-  QFrame *page = makeMainWidget();
-  QGridLayout *glay = new QGridLayout( page, 6, 2, 0, spacingHint() );
-  glay->addColSpacing( 1, fontMetrics().maxWidth()*15 );
-  glay->setRowStretch( 5, 10 );
-
-  QLabel *label = new QLabel( i18n("&New Identity:"), page );
-  glay->addWidget( label, 0, 0 );
-
-  mLineEdit = new QLineEdit( page );
-  label->setBuddy(mLineEdit);
-  mLineEdit->setFocus();
-  glay->addWidget( mLineEdit, 0, 1 );
-
-  QButtonGroup *buttonGroup = new QButtonGroup( page );
-  connect( buttonGroup, SIGNAL(clicked(int)), this, SLOT(radioClicked(int)) );
-  buttonGroup->hide();
-
-  QRadioButton *radioEmpty =
-    new QRadioButton( i18n("&With empty fields"), page );
-  buttonGroup->insert(radioEmpty, Empty );
-  glay->addMultiCellWidget( radioEmpty, 1, 1, 0, 1 );
-
-  QRadioButton *radioControlCenter =
-    new QRadioButton( i18n("&Use Control Center settings"), page );
-  buttonGroup->insert(radioControlCenter, ControlCenter );
-  glay->addMultiCellWidget( radioControlCenter, 2, 2, 0, 1 );
-
-  QRadioButton *radioDuplicate =
-    new QRadioButton( i18n("&Duplicate existing identity"), page );
-  buttonGroup->insert(radioDuplicate, ExistingEntry );
-  glay->addMultiCellWidget( radioDuplicate, 3, 3, 0, 1 );
-
-  mComboLabel = new QLabel( i18n("Existing identities:"), page );
-  glay->addWidget( mComboLabel, 4, 0 );
-
-  mComboBox = new QComboBox( false, page );
-  glay->addWidget( mComboBox, 4, 1 );
-
-  buttonGroup->setButton(0);
-  radioClicked(0);
-}
-
-
-void NewIdentityDialog::slotOk( void )
-{
-  QString identity = identityText().stripWhiteSpace();
-  if( identity.isEmpty() == true )
-  {
-    KMessageBox::error( this, i18n("You must specify an identity") );
-    return;
-  }
-
-  for( int i=0; i<mComboBox->count(); i++ )
-  {
-    if( identity == mComboBox->text(i) )
-    {
-      KMessageBox::error( this, i18n("The identity already exist") );
-      return;
-    }
-  }
-  accept();
-}
-
-
-
-void NewIdentityDialog::radioClicked( int id )
-{
-  mDuplicateMode = id;
-
-  bool state = mDuplicateMode == 2;
-  mComboLabel->setEnabled( state );
-  mComboBox->setEnabled( state );
-}
-
-
-void NewIdentityDialog::setIdentities( const QStringList &list )
-{
-  mComboBox->clear();
-  mComboBox->insertStringList( list );
-}
-
-
-QString NewIdentityDialog::identityText( void )
-{
-  return( mLineEdit->text() );
-}
-
-
-QString NewIdentityDialog::duplicateText( void )
-{
-  return( mComboBox->isEnabled() ? mComboBox->currentText() : QString::null );
-}
-
-
-int NewIdentityDialog::duplicateMode( void )
-{
-  return( mDuplicateMode );
-}
-
-
-
-RenameIdentityDialog::RenameIdentityDialog( QWidget *parent, const char *name,
-					    bool modal )
-  :KDialogBase( parent, name, modal, i18n("Rename Identity"), Ok|Cancel|Help,
-		Ok, true )
-{
-  QFrame *page = makeMainWidget();
-  QGridLayout *glay = new QGridLayout( page, 4, 2, 0, spacingHint() );
-  glay->addColSpacing( 1, fontMetrics().maxWidth()*20 );
-  glay->setRowStretch( 3, 10 );
-
-  QLabel *label = new QLabel( i18n("Current Name:"), page );
-  glay->addWidget( label, 0, 0 );
-
-  mCurrentNameLabel = new QLabel( page );
-  glay->addWidget( mCurrentNameLabel, 0, 1 );
-
-  QFont f( mCurrentNameLabel->font() );
-  f.setBold(true);
-  mCurrentNameLabel->setFont(f);
-
-  glay->addRowSpacing( 1, spacingHint() );
-
-  label = new QLabel( i18n("&New Name:"), page );
-  glay->addWidget( label, 2, 0 );
-
-  mLineEdit = new QLineEdit( page );
-  label->setBuddy( mLineEdit );
-  glay->addWidget( mLineEdit, 2, 1 );
-}
-
-
-void RenameIdentityDialog::showEvent( QShowEvent * )
-{
-  mLineEdit->setFocus();
-}
-
-
-void RenameIdentityDialog::slotOk( void )
-{
-  QString identity = identityText().stripWhiteSpace();
-  if( identity.isEmpty() == true )
-  {
-    KMessageBox::error( this, i18n("You must specify an identity") );
-    return;
-  }
-
-  QStringList::Iterator it;
-  for( it = mIdentityList.begin(); it != mIdentityList.end(); ++it )
-  {
-    if( *it == identity )
-    {
-      KMessageBox::error( this, i18n("The identity already exist") );
-      return;
-    }
-  }
-
-  accept();
-}
-
-
-void RenameIdentityDialog::setIdentities( const QString &current,
-					  const QStringList &list )
-{
-  mCurrentNameLabel->setText( current );
-  mIdentityList = list;
-  mLineEdit->setText( current );
-  mLineEdit->setSelection( 0, current.length() );
-}
-
-
-QString RenameIdentityDialog::identityText( void )
-{
-  return( mLineEdit->text() );
-}
-
 
 
 NewLanguageDialog::NewLanguageDialog( QWidget *parent, const char *name,
@@ -459,16 +276,15 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 		Ok, parent, name, modal, true )
   */
 
-  :KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel,
-		Ok, parent, name, modal, true )
+  : KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel,
+		 Ok, parent, name, modal, true )
 {
-  setHelp( "configure" );	// The documentation anchor of the configure dialog's help
+  setHelp( "configure" ); // The documentation anchor of the configure dialog's help
   setIconListAllVisible( true );
 
   /* Button not used
   enableButton( Default, false );
   */
-  secondIdentity = false;
   connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancelOrClose() ));
   connect( this, SIGNAL( closeClicked() ), this, SLOT( slotCancelOrClose() ));
 
@@ -1756,10 +1572,10 @@ void ConfigureDialog::setup( void )
 
 void ConfigureDialog::setupIdentityPage( void )
 {
-  mIdentityList.importData();
+  mIdentity.identities.importData();
   mIdentity.identityCombo->clear();
-  mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
-  mIdentity.mActiveIdentity = "";
+  mIdentity.identityCombo->insertStringList( mIdentity.identities.names() );
+  mIdentity.activeIdentity = QString::null;
   slotIdentitySelectorChanged(); // This will trigger an update
 }
 
@@ -2339,8 +2155,8 @@ void ConfigureDialog::slotDoApply( bool everything )
   if( activePage == mIdentity.pageIndex || everything )
   {
     saveActiveIdentity(); // Copy from textfields into list
-    mIdentityList.exportData();
-    if( secondIdentity ) {
+    mIdentity.identities.exportData();
+    if( mIdentity.secondIdentity ) {
 	KConfigGroupSaver saver(config, "Composer");
 	long mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
 	mShowHeaders |= HDR_IDENTITY;
@@ -2673,71 +2489,74 @@ void ConfigureDialog::slotDoApply( bool everything )
 
 
 
-void ConfigureDialog::saveActiveIdentity( void )
+void ConfigureDialog::saveActiveIdentity()
 {
-  IdentityEntry *entry = mIdentityList.get(mIdentity.mActiveIdentity);
-  if( entry )
-  {
-    // "General" tab:
-    entry->setFullName( mIdentity.nameEdit->text() );
-    entry->setOrganization( mIdentity.organizationEdit->text() );
-    entry->setEmailAddress( mIdentity.emailEdit->text() );
-    // "Advanced" tab:
-    entry->setPgpIdentity( mIdentity.pgpIdentityLabel->text() );
-    entry->setReplyToAddress( mIdentity.replytoEdit->text() );
-    entry->setTransport( (mIdentity.transportCheck->isChecked()) ?
-      mIdentity.transportCombo->currentText() : QString::null );
-    entry->setFcc( mIdentity.fccCombo->getFolder()->idString() );
-    // "Signature" tab:
-    if ( mIdentity.signatureEnabled->isChecked() ) {
-      switch ( mIdentity.signatureSourceCombo->currentItem() ) {
-      case 0: // signature from file
-	entry->setSignatureFileName( mIdentity.signatureFileRequester->url() );
-	entry->setUseSignatureFile( true );
-	entry->setSignatureFileIsAProgram( false );
-	break;
-      case 1: // signature from command
-	entry->setSignatureFileName( mIdentity.signatureCommandRequester->url() );
-	entry->setUseSignatureFile( true );
-	entry->setSignatureFileIsAProgram( true );
-	break;
-      case 2: // inline specified
-	entry->setSignatureFileName( QString::null );
-	entry->setUseSignatureFile( false );
-	entry->setSignatureFileIsAProgram( false );
-	break;
-      default:
-	kdFatal(5006) << "mIdentity.signatureSourceCombo->currentItem() > 2"
-		      << endl;
-      }
-    } else {
-      // not enabled - fake empty data file:
-      entry->setSignatureFileName( QString::null );
-      entry->setUseSignatureFile( true );
-      entry->setSignatureFileIsAProgram( false );
+  if ( mIdentity.activeIdentity.isEmpty() ) return;
+
+  kdDebug() << "mIdentity.activeIdentity == \""
+	    << mIdentity.activeIdentity << "\"" << endl;
+  // hits an assert if mIdentity.activeIdentity isn't in the list:
+  IdentityEntry & entry
+    = mIdentity.identities.getByName( mIdentity.activeIdentity );
+
+  // "General" tab:
+  entry.setFullName( mIdentity.nameEdit->text() );
+  entry.setOrganization( mIdentity.organizationEdit->text() );
+  entry.setEmailAddress( mIdentity.emailEdit->text() );
+  // "Advanced" tab:
+  entry.setPgpIdentity( mIdentity.pgpIdentityLabel->text() );
+  entry.setReplyToAddress( mIdentity.replytoEdit->text() );
+  entry.setTransport( ( mIdentity.transportCheck->isChecked() ) ?
+	        mIdentity.transportCombo->currentText() : QString::null );
+  entry.setFcc( mIdentity.fccCombo->getFolder()->idString() );
+  // "Signature" tab:
+  if ( mIdentity.signatureEnabled->isChecked() ) {
+    switch ( mIdentity.signatureSourceCombo->currentItem() ) {
+    case 0: // signature from file
+      entry.setSignatureFileName( mIdentity.signatureFileRequester->url() );
+      entry.setUseSignatureFile( true );
+      entry.setSignatureFileIsAProgram( false );
+      break;
+    case 1: // signature from command
+      entry.setSignatureFileName( mIdentity.signatureCommandRequester->url() );
+      entry.setUseSignatureFile( true );
+      entry.setSignatureFileIsAProgram( true );
+      break;
+    case 2: // inline specified
+      entry.setSignatureFileName( QString::null );
+      entry.setUseSignatureFile( false );
+      entry.setSignatureFileIsAProgram( false );
+      break;
+    default:
+      kdFatal(5006) << "mIdentity.signatureSourceCombo->currentItem() > 2"
+		    << endl;
     }
-    entry->setSignatureInlineText( mIdentity.signatureTextEdit->text() );
+  } else {
+    // not enabled - fake empty data file:
+    entry.setSignatureFileName( QString::null );
+    entry.setUseSignatureFile( true );
+    entry.setSignatureFileIsAProgram( false );
   }
+  entry.setSignatureInlineText( mIdentity.signatureTextEdit->text() );
 }
 
 
 void ConfigureDialog::setIdentityInformation( const QString &identity )
 {
-  if( mIdentity.mActiveIdentity == identity ) return;
+  if( mIdentity.activeIdentity == identity ) return;
 
   //
   // 1. Save current settings to the list
   //
   saveActiveIdentity();
 
-  mIdentity.mActiveIdentity = identity;
+  mIdentity.activeIdentity = identity;
 
   //
   // 2. Display the new settings
   //
-  IdentityEntry *entry = mIdentityList.get( mIdentity.mActiveIdentity );
-
-  if( !entry ) { // new entry:
+  if( mIdentity.identities.names().findIndex( mIdentity.activeIdentity ) < 0 ) {
+    // new entry: clear the widgets
     // "General" tab:
     mIdentity.nameEdit->clear();
     mIdentity.organizationEdit->clear();
@@ -2754,24 +2573,27 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
     mIdentity.signatureFileRequester->clear();
     mIdentity.signatureCommandRequester->clear();
     mIdentity.signatureTextEdit->clear();
-  } else { // existing entry:
+  } else {
+    // existing entry: set from saved values
+    const IdentityEntry & entry =
+      mIdentity.identities.getByName( mIdentity.activeIdentity );
     // "General" tab:
-    mIdentity.nameEdit->setText( entry->fullName() );
-    mIdentity.organizationEdit->setText( entry->organization() );
-    mIdentity.emailEdit->setText( entry->emailAddress() );
+    mIdentity.nameEdit->setText( entry.fullName() );
+    mIdentity.organizationEdit->setText( entry.organization() );
+    mIdentity.emailEdit->setText( entry.emailAddress() );
     // "Advanced" tab:
-    mIdentity.pgpIdentityLabel->setText( entry->pgpIdentity() );
-    mIdentity.replytoEdit->setText( entry->replyToAddress() );
-    mIdentity.transportCheck->setChecked(!entry->transport().isEmpty());
-    mIdentity.transportCombo->setEditText(entry->transport());
-    mIdentity.transportCombo->setEnabled(!entry->transport().isEmpty());
-    if ( entry->fcc().isEmpty() )
-        entry->setFcc( kernel->sentFolder()->idString() );
-    QString theFcc = entry->fcc();
-    mIdentity.fccCombo->setFolder( theFcc );
+    mIdentity.pgpIdentityLabel->setText( entry.pgpIdentity() );
+    mIdentity.replytoEdit->setText( entry.replyToAddress() );
+    mIdentity.transportCheck->setChecked( !entry.transport().isEmpty() );
+    mIdentity.transportCombo->setEditText( entry.transport() );
+    mIdentity.transportCombo->setEnabled( !entry.transport().isEmpty() );
+    if ( entry.fcc().isEmpty() )
+      mIdentity.fccCombo->setFolder( kernel->sentFolder() );
+    else
+      mIdentity.fccCombo->setFolder( entry.fcc() );
     // "Signature" tab:
-    if ( entry->useSignatureFile() ) {
-      if ( entry->signatureFileName().stripWhiteSpace().isEmpty() ) {
+    if ( entry.useSignatureFile() ) {
+      if ( entry.signatureFileName().stripWhiteSpace().isEmpty() ) {
 	// disable signatures:
 	mIdentity.signatureEnabled->setChecked( false );
 	mIdentity.signatureFileRequester->clear();
@@ -2779,47 +2601,35 @@ void ConfigureDialog::setIdentityInformation( const QString &identity )
 	mIdentity.signatureSourceCombo->setCurrentItem( 0 );
       } else {
 	mIdentity.signatureEnabled->setChecked( true );
-	if ( entry->signatureFileIsAProgram() ) {
+	if ( entry.signatureFileIsAProgram() ) {
 	  // use file && file is a program
 	  mIdentity.signatureFileRequester->clear();
-	  mIdentity.signatureCommandRequester->setURL( entry->signatureFileName() );
+	  mIdentity.signatureCommandRequester->setURL( entry.signatureFileName() );
 	  mIdentity.signatureSourceCombo->setCurrentItem( 1 );
 	} else {
 	  // use file && file is data file
-	  mIdentity.signatureFileRequester->setURL( entry->signatureFileName() );
+	  mIdentity.signatureFileRequester->setURL( entry.signatureFileName() );
 	  mIdentity.signatureCommandRequester->clear();
 	  mIdentity.signatureSourceCombo->setCurrentItem( 0 );
 	}
       }
     } else {
       mIdentity.signatureEnabled->setChecked(
-               !entry->signatureInlineText().isEmpty() );
+               !entry.signatureInlineText().isEmpty() );
       // !use file, specify inline
       mIdentity.signatureFileRequester->clear();
       mIdentity.signatureCommandRequester->clear();
       mIdentity.signatureSourceCombo->setCurrentItem( 2 );
     }
-    mIdentity.signatureTextEdit->setText( entry->signatureInlineText() );
+    mIdentity.signatureTextEdit->setText( entry.signatureInlineText() );
   }
 }
 
 
-QStringList ConfigureDialog::identityStrings( void )
-{
-  QStringList list;
-  for( int i=0; i< mIdentity.identityCombo->count(); i++ )
-  {
-    list += mIdentity.identityCombo->text(i);
-  }
-  return( list );
-}
-
-
-
-void ConfigureDialog::slotNewIdentity( void )
+void ConfigureDialog::slotNewIdentity()
 {
   //
-  // First. Save current setting to the list. In the dialog box we
+  // First: Save current setting to the list. In the dialog box we
   // can choose to copy from the list so it must be synced.
   //
   saveActiveIdentity();
@@ -2827,103 +2637,116 @@ void ConfigureDialog::slotNewIdentity( void )
   //
   // Make and open the dialog
   //
-  NewIdentityDialog *dialog = new NewIdentityDialog( this, "new", true );
-  QStringList list = identityStrings();
-  dialog->setIdentities( list );
+  NewIdentityDialog dialog( mIdentity.identities.names(), this, "new", true );
 
-  int result = dialog->exec();
-  if( result == QDialog::Accepted )
-  {
-    QString identityText = dialog->identityText().stripWhiteSpace();
-    if( identityText.isEmpty() == false )
+  if( dialog.exec() == QDialog::Accepted ) {
+    QString identityName = dialog.identityName().stripWhiteSpace();
+    if( !identityName.isEmpty() )
     {
-      if (list.count() == 1)
-	  secondIdentity = true;
+      if ( mIdentity.identities.count() == 1 )
+	mIdentity.secondIdentity = true;
 
       //
-      // Add the new identity. Make sure the default identity is
-      // first in the otherwise sorted list
+      // Construct a new IdentityEntry:
       //
-      QString defaultIdentity = list.first();
-      list.remove( defaultIdentity );
-      list += identityText;
-      list.sort();
-      list.prepend( defaultIdentity );
+      IdentityEntry entry;
+      switch ( dialog.duplicateMode() ) {
+      case NewIdentityDialog::ExistingEntry:
+	// let's hope this uses operator=
+	entry = mIdentity.identities[ dialog.duplicateIdentity() ];
+	break;
+      case NewIdentityDialog::ControlCenter:
+	entry = IdentityEntry::fromControlCenter();
+	break;
+      case NewIdentityDialog::Empty:
+      default: ;
+      }
+      entry.setIdentityName( identityName );
+      // add the new entry and sort the list:
+      mIdentity.identities << entry;
+      mIdentity.identities.sort();
 
       //
-      // Set the modifiled list as the valid list in the combo and
-      // make the new identity the current item.
+      // Set the modified identity list as the valid list in the
+      // identity combo and make the new identity the current item.
       //
       mIdentity.identityCombo->clear();
-      mIdentity.identityCombo->insertStringList(list);
-      mIdentity.identityCombo->setCurrentItem( list.findIndex(identityText) );
+      mIdentity.identityCombo->insertStringList( mIdentity.identities.names() );
+      mIdentity.identityCombo->setCurrentItem(
+		 mIdentity.identities.names().findIndex( identityName ) );
 
-      if( dialog->duplicateMode() == NewIdentityDialog::ControlCenter )
-      {
-	mIdentityList.add( identityText, this, true );
-      }
-      else if( dialog->duplicateMode() == NewIdentityDialog::ExistingEntry )
-      {
-	mIdentityList.add( identityText, dialog->duplicateText() );
-      }
-      else
-      {
-	mIdentityList.add( identityText, this, false );
-      }
-      slotIdentitySelectorChanged();
+      slotIdentitySelectorChanged(); // ### needed?
     }
   }
-  delete dialog;
 }
 
 
-void ConfigureDialog::slotRenameIdentity( void )
+void ConfigureDialog::slotRenameIdentity()
 {
-  RenameIdentityDialog *dialog = new RenameIdentityDialog( this, "new", true );
+  bool ok;
+  QString oldName = mIdentity.identityCombo->currentText();
+  QString message = i18n("Rename identity \"%1\" to").arg( oldName );
+  do {
+    QString newName = KLineEditDlg::getText( i18n("Rename identity"),
+			     message, oldName, &ok, this ).stripWhiteSpace();
+    
+    if ( ok && newName != oldName ) {
+      if ( newName.isEmpty() ) {
+	KMessageBox::error( this, i18n("You must specify an identity name!") );
+	continue;
+      }
+      if ( mIdentity.identities.names().contains( newName ) ) {
+	QString errorMessage =
+	  i18n("An identity named \"%1\" already exists!\n"
+	       "Please choose another name.").arg( newName );
+	KMessageBox::error( this, errorMessage );
+	continue;
+      }
 
-  QStringList list = identityStrings();
-  dialog->setIdentities( mIdentity.identityCombo->currentText(), list );
+      // change the name
+      int index = mIdentity.identityCombo->currentItem();
+      assert( index < mIdentity.identities.count() );
+      IdentityEntry & entry = mIdentity.identities[ index ];
+      assert( entry.identityName() == oldName );
+      entry.setIdentityName( newName );
+      
+      // resort the list:
+      mIdentity.identities.sort();
 
-  int result = dialog->exec();
-  if( result == QDialog::Accepted )
-  {
-    int index = mIdentity.identityCombo->currentItem();
-    IdentityEntry *entry = mIdentityList.get( index );
-    if( entry != 0 )
-    {
-      entry->setIdentity( dialog->identityText() );
-      mIdentity.mActiveIdentity = entry->identity();
+      // and update the view:
+      mIdentity.activeIdentity = newName;
+      QStringList identityNames = mIdentity.identities.names();
       mIdentity.identityCombo->clear();
-      mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
-      mIdentity.identityCombo->setCurrentItem( index );
+      mIdentity.identityCombo->insertStringList( identityNames );
+      mIdentity.identityCombo->setCurrentItem( identityNames.findIndex( newName ) );
+      slotIdentitySelectorChanged(); // ### needed?
     }
-  }
-
-  delete dialog;
+  } while ( false );
 }
 
 
-void ConfigureDialog::slotRemoveIdentity( void )
+void ConfigureDialog::slotRemoveIdentity()
 {
   int currentItem = mIdentity.identityCombo->currentItem();
-  if( currentItem > 0 ) // Item 0 is the default and can not be removed.
-  {
-    QString msg = i18n(
-     "Do you really want to remove the identity\n"
-     "named \"%1\" ?").arg(mIdentity.identityCombo->currentText());
-    int result = KMessageBox::warningYesNo( this, msg );
-    if( result == KMessageBox::Yes )
-    {
-      mIdentityList.remove( mIdentity.identityCombo->currentText() );
+  if( currentItem > 0 ) { // Item 0 is the default and cannot be removed.
+    QString msg = i18n("<qt>Do you really want to remove identity\n"
+		       "<b>%1</b>?</qt>")
+      .arg( mIdentity.identityCombo->currentText() );
+
+    if( KMessageBox::warningYesNo( this, msg ) == KMessageBox::Yes ) {
+      mIdentity.identities.remove( // hasn't a ::remove(int)
+         mIdentity.identities.getByName( mIdentity.identityCombo->currentText() ) );
       mIdentity.identityCombo->removeItem( currentItem );
       mIdentity.identityCombo->setCurrentItem( currentItem-1 );
-      slotIdentitySelectorChanged();
+      // prevent attempt to save removed identity:
+      mIdentity.activeIdentity = QString::null;
+      slotIdentitySelectorChanged(); // ### needed?
     }
   }
 }
 
 
-void ConfigureDialog::slotIdentitySelectorChanged( void )
+void ConfigureDialog::slotIdentitySelectorChanged()
 {
   int currentItem = mIdentity.identityCombo->currentItem();
   mIdentity.removeIdentityButton->setEnabled( currentItem != 0 );
@@ -3247,7 +3070,8 @@ void ConfigureDialog::slotAddAccount( void )
 
   account->init(); // fill the account fields with good default values
 
-  AccountDialog *dialog = new AccountDialog( account, identityStrings(), this);
+  AccountDialog *dialog =
+    new AccountDialog( account, mIdentity.identities.names(), this);
   dialog->setCaption( i18n("Add account") );
 
   QStringList accountNames = occupiedNames();
@@ -3333,7 +3157,8 @@ void ConfigureDialog::slotModifySelectedAccount( void )
 
   QStringList accountNames = occupiedNames();
   accountNames.remove( account->name() );
-  AccountDialog *dialog = new AccountDialog( account, identityStrings(), this);
+  AccountDialog *dialog =
+    new AccountDialog( account, mIdentity.identities.names(), this);
   dialog->setCaption( i18n("Modify account") );
   if( dialog->exec() == QDialog::Accepted )
   {
@@ -3785,330 +3610,6 @@ void ConfigureDialog::slotMailCommandChooser( void )
     }
 
     mNetwork.mailCommandEdit->setText( url.path() );
-  }
-}
-
-IdentityEntry::IdentityEntry( void )
-{
-  mSignatureFileIsAProgram = false;
-  mUseSignatureFile = true;
-}
-
-
-QString IdentityEntry::identity() const
-{
-  return( mIdentity );
-}
-
-QString IdentityEntry::fullName() const
-{
-  return( mFullName );
-}
-
-QString IdentityEntry::organization() const
-{
-  return( mOrganization );
-}
-
-QString IdentityEntry::pgpIdentity() const
-{
-  return( mPgpIdentity );
-}
-
-QString IdentityEntry::emailAddress() const
-{
-  return( mEmailAddress );
-}
-
-QString IdentityEntry::replyToAddress() const
-{
-  return( mReplytoAddress );
-}
-
-QString IdentityEntry::signatureFileName( bool exportIdentity ) const
-{
-  if( exportIdentity == true && mSignatureFileIsAProgram == true )
-  {
-    printf("exportIdentity=%d\n", exportIdentity );
-    printf("mSignatureFileIsAProgram=%d\n", mSignatureFileIsAProgram );
-
-    return( mSignatureFileName + "|" );
-  }
-  else
-  {
-    return( mSignatureFileName );
-  }
-}
-
-QString IdentityEntry::signatureInlineText() const
-{
-  return( mSignatureInlineText );
-}
-
-bool IdentityEntry::signatureFileIsAProgram() const
-{
-  return( mSignatureFileIsAProgram );
-}
-
-bool IdentityEntry::useSignatureFile() const
-{
-  return( mUseSignatureFile );
-}
-
-QString IdentityEntry::transport() const
-{
-  return ( mTransport );
-}
-
-QString IdentityEntry::fcc() const
-{
-  return ( mFcc );
-}
-
-
-void IdentityEntry::setIdentity( const QString &identity )
-{
-  mIdentity = identity;
-}
-
-void IdentityEntry::setFullName( const QString &fullName )
-{
-  mFullName = fullName;
-}
-
-void IdentityEntry::setOrganization( const QString &organization )
-{
-  mOrganization = organization;
-}
-
-void IdentityEntry::setPgpIdentity( const QString &pgpIdentity )
-{
-  mPgpIdentity = pgpIdentity;
-}
-
-void IdentityEntry::setEmailAddress( const QString &emailAddress )
-{
-  mEmailAddress = emailAddress;
-}
-
-void IdentityEntry::setReplyToAddress( const QString &replytoAddress )
-{
-  mReplytoAddress = replytoAddress;
-}
-
-void IdentityEntry::setSignatureFileName( const QString &signatureFileName,
-					  bool importIdentity )
-{
-  if( importIdentity == true )
-  {
-    if( signatureFileName.right(1) == "|" )
-    {
-      mSignatureFileName=signatureFileName.left(signatureFileName.length()-1);
-      setSignatureFileIsAProgram(true);
-    }
-    else
-    {
-      mSignatureFileName=signatureFileName;
-      setSignatureFileIsAProgram(false);
-    }
-  }
-  else
-  {
-    mSignatureFileName=signatureFileName;
-  }
-}
-
-void IdentityEntry::setSignatureInlineText( const QString &signatureInlineText)
-{
-  mSignatureInlineText = signatureInlineText;
-}
-
-void IdentityEntry::setSignatureFileIsAProgram( bool signatureFileIsAProgram )
-{
-  mSignatureFileIsAProgram = signatureFileIsAProgram;
-}
-
-void IdentityEntry::setUseSignatureFile( bool useSignatureFile )
-{
-  mUseSignatureFile = useSignatureFile;
-}
-
-void IdentityEntry::setTransport( const QString &transport )
-{
-  mTransport = transport;
-}
-
-void IdentityEntry::setFcc( const QString &fcc )
-{
-  mFcc = fcc;
-}
-
-
-IdentityList::IdentityList()
-{
-  mList.setAutoDelete(true);
-}
-
-
-QStringList IdentityList::identities()
-{
-  QStringList list;
-  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
-  {
-    list += e->identity();
-  }
-  return( list );
-}
-
-
-IdentityEntry *IdentityList::get( const QString &identity )
-{
-  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
-  {
-    if( identity == e->identity() )
-    {
-      return( e );
-    }
-  }
-  return( 0 );
-}
-
-
-IdentityEntry *IdentityList::get( uint index )
-{
-  return( mList.at(index) );
-}
-
-
-void IdentityList::remove( const QString &identity )
-{
-  IdentityEntry *e = get(identity);
-  if( e != 0 )
-  {
-    mList.remove(e);
-  }
-}
-
-
-
-void IdentityList::importData()
-{
-  mList.clear();
-  IdentityEntry entry;
-  QStringList identities = KMIdentity::identities();
-  QStringList::Iterator it;
-  for( it = identities.begin(); it != identities.end(); ++it )
-  {
-    KMIdentity ident( *it );
-    ident.readConfig();
-    entry.setIdentity( ident.identity() );
-    entry.setFullName( ident.fullName() );
-    entry.setOrganization( ident.organization() );
-    entry.setPgpIdentity( ident.pgpIdentity() );
-    entry.setEmailAddress( ident.emailAddr() );
-    entry.setReplyToAddress( ident.replyToAddr() );
-    entry.setSignatureFileName( ident.signatureFile(), true );
-    entry.setSignatureInlineText( ident.signatureInlineText() );
-    entry.setUseSignatureFile( ident.useSignatureFile() );
-    entry.setTransport(ident.transport());
-    entry.setFcc(ident.fcc());
-    add( entry );
-  }
-}
-
-
-void IdentityList::exportData()
-{
-  QStringList ids;
-  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
-  {
-    KMIdentity ident( e->identity() );
-    ident.setFullName( e->fullName() );
-    ident.setOrganization( e->organization() );
-    ident.setPgpIdentity( e->pgpIdentity().local8Bit() );
-    ident.setEmailAddr( e->emailAddress() );
-    ident.setReplyToAddr( e->replyToAddress() );
-    ident.setUseSignatureFile( e->useSignatureFile() );
-    ident.setSignatureFile( e->signatureFileName(true) );
-    ident.setSignatureInlineText( e->signatureInlineText() );
-    ident.setTransport( e->transport() );
-    ident.setFcc( e->fcc() );
-    ident.writeConfig(false);
-    ids.append( e->identity() );
-  }
-
-  KMIdentity::saveIdentities( ids, false );
-}
-
-
-
-void IdentityList::add( const IdentityEntry &entry )
-{
-  if( get( entry.identity() ) != 0 )
-  {
-    return; // We can not have duplicates.
-  }
-
-  mList.append( new IdentityEntry(entry) );
-}
-
-
-void IdentityList::add( const QString &identity, const QString &copyFrom )
-{
-  if( get( identity ) != 0 )
-  {
-    return; // We can not have duplicates.
-  }
-
-  IdentityEntry newEntry;
-
-  IdentityEntry *src = get( copyFrom );
-  if( src != 0 )
-  {
-    newEntry = *src;
-  }
-
-  newEntry.setIdentity( identity );
-  add( newEntry );
-}
-
-
-void IdentityList::add( const QString &identity, QWidget *,
-			bool useControlCenter )
-{
-  if( get( identity ) != 0 )
-  {
-    return; // We can not have duplicates.
-  }
-
-  IdentityEntry newEntry;
-
-  newEntry.setIdentity( identity );
-  if( useControlCenter == true )
-  {
-    KEMailSettings emailSetting;
-    emailSetting.setProfile(emailSetting.defaultProfileName());
-    newEntry.setFullName(emailSetting.getSetting(KEMailSettings::RealName));
-    newEntry.setEmailAddress(emailSetting.getSetting(
-      KEMailSettings::EmailAddress));
-    newEntry.setOrganization(emailSetting.getSetting(
-      KEMailSettings::Organization));
-    newEntry.setReplyToAddress(emailSetting.getSetting(
-      KEMailSettings::ReplyToAddress));
-  }
-  add( newEntry );
-}
-
-
-void IdentityList::update( const IdentityEntry &entry )
-{
-  for( IdentityEntry *e = mList.first(); e != 0; e = mList.next() )
-  {
-    if( entry.identity() == e->identity() )
-    {
-      *e = entry;
-      return;
-    }
   }
 }
 

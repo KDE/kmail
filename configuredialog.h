@@ -44,6 +44,8 @@ namespace Kpgp {
   class Config;
 };
 
+#include "configuredialog_p.h"
+
 #include <klistview.h>
 #include <kdialogbase.h>
 #include <qguardedptr.h>
@@ -52,136 +54,6 @@ namespace Kpgp {
 
 #define DEFAULT_EDITOR_STR "kwrite %f"
 
-class NewIdentityDialog : public KDialogBase
-{
-  Q_OBJECT
-
-  public:
-    enum DuplicateMode
-    {
-      Empty = 0,
-      ControlCenter,
-      ExistingEntry
-    };
-
-    NewIdentityDialog( QWidget *parent=0, const char *name=0, bool modal=true);
-    void setIdentities( const QStringList &list );
-
-    QString identityText( void );
-    QString duplicateText( void );
-    int     duplicateMode( void );
-
-  private slots:
-    void radioClicked( int id );
-
-  protected slots:
-    virtual void slotOk( void );
-
-  private:
-  int mDuplicateMode;
-    QLineEdit  *mLineEdit;
-    QLabel     *mComboLabel;
-    QComboBox  *mComboBox;
-};
-
-
-
-class RenameIdentityDialog : public KDialogBase
-{
-  Q_OBJECT
-
-  public:
-    RenameIdentityDialog( QWidget *parent=0, const char *name=0,
-			  bool modal=true );
-    void setIdentities( const QString &current, const QStringList &list );
-    QString identityText( void );
-
-  protected:
-    virtual void showEvent( QShowEvent * );
-
-  protected slots:
-    virtual void slotOk( void );
-
-  private:
-    QLineEdit   *mLineEdit;
-    QLabel      *mCurrentNameLabel;
-    QStringList mIdentityList;
-};
-
-
-
-class IdentityEntry
-{
-  public:
-    IdentityEntry( void );
-    QString identity() const;
-    QString fullName() const;
-    QString organization() const;
-    QString pgpIdentity() const;
-    QString emailAddress() const;
-    QString replyToAddress() const;
-    QString signatureFileName( bool exportIdentity = false ) const;
-    QString signatureInlineText() const;
-    bool    signatureFileIsAProgram() const;
-    bool    useSignatureFile() const;
-    QString transport() const;
-    QString fcc() const;
-
-    void setIdentity( const QString &identity );
-    void setFullName( const QString &fullName );
-    void setOrganization( const QString &organization );
-    void setPgpIdentity( const QString &pgpIdentity );
-    void setEmailAddress( const QString &emailAddress );
-    void setReplyToAddress( const QString &replytoAddress );
-    void setSignatureFileName( const QString &signatureFileName,
-			       bool importIdentity=false );
-    void setSignatureInlineText( const QString &signatureInlineText );
-    void setSignatureFileIsAProgram( bool signatureFileIsAProgram );
-    void setUseSignatureFile( bool useSignatureFile );
-    void setTransport(const QString &transport);
-    void setFcc( const QString &fcc );
-
-  private:
-    QString mIdentity;
-    QString mFullName;
-    QString mOrganization;
-    QString mPgpIdentity;
-    QString mEmailAddress;
-    QString mReplytoAddress;
-    QString mSignatureFileName;
-    QString mSignatureInlineText;
-    bool    mSignatureFileIsAProgram;
-    bool    mUseSignatureFile;
-    QString mTransport;
-    QString mFcc;
-
-};
-
-
-class IdentityList
-{
-  public:
-    IdentityList();
-
-    QStringList identities( void );
-    IdentityEntry *get( const QString &identity );
-    IdentityEntry *get( uint index );
-
-    /** Load system settings */
-    void importData( void );
-    /** Save state to system */
-    void exportData( void );
-
-    void add( const IdentityEntry &entry );
-    void add( const QString &identity, const QString &copyFrom );
-    void add( const QString &identity, QWidget *parent, bool useControlCenter);
-    void update( const IdentityEntry &entry );
-
-    void remove( const QString &identity );
-
-  private:
-    QPtrList<IdentityEntry> mList;
-};
 
 class LanguageItem
 {
@@ -259,8 +131,12 @@ public:
 private:
     struct IdentityWidget
     {
+      IdentityWidget() : secondIdentity( false ) {}
       int            pageIndex;
-      QString        mActiveIdentity;
+      QString        activeIdentity;
+      IdentityList   identities;
+      bool           secondIdentity;
+
       QComboBox      *identityCombo;
       QPushButton    *removeIdentityButton;
       QPushButton    *renameIdentityButton;
@@ -526,7 +402,6 @@ private:
     SecurityWidget   mSecurity;
     MiscWidget       mMisc;
 
-    IdentityList     mIdentityList;
     QValueList<QGuardedPtr<KMAccount> > mAccountsToDelete;
     QValueList<QGuardedPtr<KMAccount> > mNewAccounts;
     struct mModifiedAccountsType
@@ -536,7 +411,6 @@ private:
     };
     QValueList<mModifiedAccountsType*> mModifiedAccounts;
     QPtrList<KMTransportInfo> mTransportList;
-    bool secondIdentity;
 };
 
 #endif
