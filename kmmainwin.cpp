@@ -1643,9 +1643,6 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
       if (KMessageBox::warningYesNo( 0, i18n( "Do you really want to execute"
         " '%1' ? " ).arg( aUrl.prettyURL() ) ) != KMessageBox::Yes) return;
     }
-    // -- David : replacement for KFM::openURL
-    if ( !KOpenWithHandler::exists() )
-      (void) new KFileOpenWithHandler();
     (void) new KRun( aUrl );
   }
 }
