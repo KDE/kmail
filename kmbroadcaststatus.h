@@ -14,6 +14,8 @@
 class KProgress;
 class QLabel;
 class QPushButton;
+class QWidgetStack;
+class QBoxLayout;
 
 /** When KMail is running it is possible to have multiple KMMainWin open
     at the same time. We want certain messages/information to be displayed 
@@ -99,6 +101,8 @@ protected:
   void setMode();
 
   virtual bool eventFilter( QObject *, QEvent * );
+  QBoxLayout *box;
+  QWidgetStack *stack;
 };
 
 
