@@ -1042,8 +1042,7 @@ void KMHeaders::msgAdded(int id)
   CREATE_TIMER(msgAdded);
   START_TIMER(msgAdded);
 
-  KMMsgBase* mb = mFolder->getMsgBase( id );
-  assert(mb != 0); // otherwise using count() above is wrong
+  assert( mFolder->getMsgBase( id ) ); // otherwise using count() above is wrong
 
   if (mNested != mNestedOverride) {
     // make sure the id and subject dicts grow, if necessary

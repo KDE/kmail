@@ -477,6 +477,7 @@ void IdentityPage::slotRenameIdentity() {
 void IdentityPage::slotRenameIdentity( QListViewItem * i,
 				       const QString & s, int col ) {
   assert( col == 0 );
+  Q_UNUSED( col );
 
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
   if ( !item ) return;

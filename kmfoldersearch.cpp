@@ -629,6 +629,7 @@ FolderJob* KMFolderSearch::doCreateJob(KMMessage*, FolderJob::JobType,
 {
     // Should never be called
     assert(0);
+    return 0;
 }
 
 FolderJob* KMFolderSearch::doCreateJob(QPtrList<KMMessage>&, const QString&,
@@ -636,6 +637,7 @@ FolderJob* KMFolderSearch::doCreateJob(QPtrList<KMMessage>&, const QString&,
 {
     // Should never be called
     assert(0);
+    return 0;
 }
 
 const KMMsgBase* KMFolderSearch::getMsgBase(int idx) const
@@ -911,6 +913,7 @@ KMMsgBase* KMFolderSearch::takeIndexEntry(int idx)
 KMMsgInfo* KMFolderSearch::setIndexEntry(int idx, KMMessage *msg)
 {
     assert(idx >= 0 && idx < (int)mSerNums.count());
+    Q_UNUSED( idx );
     return msg->parent()->setIndexEntry(msg->parent()->find(msg), msg);
 }
 

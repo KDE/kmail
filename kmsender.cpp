@@ -932,6 +932,7 @@ void KMSendSendmail::wroteStdin(KProcess *proc)
   int len;
 
   assert(proc!=0);
+  Q_UNUSED( proc );
 
   str = mMsgPos;
   len = (mMsgRest>1024 ? 1024 : mMsgRest);
@@ -955,6 +956,7 @@ void KMSendSendmail::wroteStdin(KProcess *proc)
 void KMSendSendmail::receivedStderr(KProcess *proc, char *buffer, int buflen)
 {
   assert(proc!=0);
+  Q_UNUSED( proc );
   mMsg.replace(mMsg.length(), buflen, buffer);
 }
 
