@@ -202,7 +202,6 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
 
 //#warning "*** If client.Last() cannot be found then install the latest kdesupport"
-  /* Kurt deleted this have to ask why
   if (client.Last() == '+' && !mRetrieveAll)
   {
     response = client.SingleLineResponse().c_str();
@@ -210,7 +209,6 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     id++;
   }
   else id = 1;
-  */
 
   // workaround but still is no good. If msgs are too big in size
   // we will get a timeout.
