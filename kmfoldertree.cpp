@@ -44,7 +44,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   clearTableFlags();
   setTableFlags (Tbl_smoothVScrolling | Tbl_autoVScrollBar);
 
-  setColumn(0, "Folders", 400, KTabListBox::MixedColumn);
+  setColumn(0, i18n("Folders"), 400, KTabListBox::MixedColumn);
 
   if (!pixmapsLoaded)
   {
