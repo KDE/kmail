@@ -472,7 +472,7 @@ static void smartQuote( QString &msg, const QString &ownIndent,
 {
   QStringList part;
   QString startOfSig1;
-  QString startOfSig2 = ownIndent+"--";
+  QString startOfSig2 = ownIndent+"-- ";
   QString oldIndent;
   bool firstPart = true;
   int i = 0;
