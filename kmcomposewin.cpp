@@ -1174,6 +1174,12 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
     connect(mIdentity,SIGNAL(identityChanged(uint)),
             this, SLOT(slotIdentityChanged(uint)));
   }
+  else {
+    // make sure the header values are overwritten with the values of the
+    // sticky identity (the slot isn't called by the signal for new messages
+    // since the identity has already been set before the signal was connected)
+    slotIdentityChanged( mId );
+  }
 
   IdentityManager * im = kernel->identityManager();
 
