@@ -147,7 +147,6 @@ QString KabcBridge::expandDistributionLists(QString recipients)
                 receiver = "\"" + fn + "\" <" + receiver + ">";
               else
                 receiver = fn + " <" + receiver + ">";
-            }
           }
         }
         expRecipients += receiver;

@@ -1101,7 +1101,7 @@ void KMHeaders::msgRemoved(int id, QString msgId)
 void KMHeaders::msgHeaderChanged(int msgId)
 {
   if (msgId<0 || msgId >= (int)mItems.size() || !isUpdatesEnabled()) return;
-  KMheaderItem *item = mItems[msgId];
+  KMHeaderItem *item = mItems[msgId];
   if (item) {
     item->irefresh();
     item->repaint();
