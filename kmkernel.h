@@ -44,14 +44,20 @@ public:
   /** returns id of composer if more are opened */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
-                    const KURL &messageFile, const KURL &attachURL);
+                    const KURL &messageFile, const KURL::List &attachURLs);
+  /** For backward compatibility */
+  int openComposer (const QString &to, const QString &cc, const QString &bcc,
+                    const QString &subject, const QString &body, int hidden,
+                    const KURL &messageFile, const KURL& attachURL)
+  {
+    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KURL::List(attachURL));
+  }
   /** For backward compatibility */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
                     const KURL &messageFile)
   {
-    return openComposer(to, cc, bcc, subject, body, hidden, messageFile,
-    KURL());
+    return openComposer(to, cc, bcc, subject, body, hidden, messageFile, KURL::List());
   }
   int openComposer (const QString &to, const QString &cc,
                     const QString &bcc, const QString &subject,
@@ -88,8 +94,8 @@ public:
   void dumpDeadLetters();
   bool doSessionManagement ();
   void action (bool mailto, bool check, const QString &to, const QString &cc,
-               const QString &bcc, const QString &subj, const QString &body, const KURL &attach,
-               const KURL &messageFile);
+               const QString &bcc, const QString &subj, const QString &body, const KURL &messageFile,
+               const KURL::List &attach);
   void byteArrayToRemoteFile(const QByteArray&, const KURL&,
     bool overwrite = FALSE);
 	bool folderIsDraftOrOutbox(KMFolder *);	

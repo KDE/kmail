@@ -122,7 +122,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
                             const KURL &messageFile,
-			    const KURL &attachURL)
+			    const KURL::List &attachURLs)
 {
   kdDebug(5006) << "KMKernel::openComposer called" << endl;
 
@@ -141,8 +141,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
-  if (cWin && !attachURL.isEmpty() && attachURL.isValid())
-    cWin->addAttach(attachURL);
+  for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
+    cWin->addAttach((*it));
   if (hidden == 0)
     cWin->show();
   return 1;
@@ -743,11 +743,11 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
                       const QString &cc, const QString &bcc,
                       const QString &subj, const QString &body,
                       const KURL &messageFile,
-                      const KURL &attachURL)
+                      const KURL::List &attachURLs)
 {
 
   if (mailto)
-    openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURL);
+    openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);
   else
     openReader();
 
