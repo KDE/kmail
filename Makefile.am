@@ -1,6 +1,6 @@
 SUBDIRS = pics doc
 INCLUDES = $(all_includes)
-LDADD	= $(all_libraries) -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib
+LDADD	= $(all_libraries) -lkhtmlw -ljscript -lkdeui -lkdecore -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib
 
 bin_PROGRAMS = kmail
 
