@@ -30,7 +30,6 @@
 #include <qvaluelist.h>
 #include <qstringlist.h>
 #include <qcstring.h>
-#include <qqueue.h>
 #include "kmmsgbase.h"
 
 class QLineEdit;
@@ -38,7 +37,6 @@ class QPushButton;
 class KApplication;
 class KMMessage;
 class QTimer;
-class KURL::List;
 class QDataStream;
 class KMFolderTreeItem;
 
@@ -49,11 +47,9 @@ class KMImapJob : public QObject
   Q_OBJECT
 
 public:
-  KMImapJob(QList<KMMessage> msgList, KMFolder *destFolder);
   KMImapJob(KMMessage *msg, bool put = false, KMFolder *folder = NULL);
-  static void killJobsForMessage(KMMessage *msg);
+  static void ignoreJobsForMessage(KMMessage *msg);
 signals:
-  void messagesRetrieved(QList<KMMessage>, KMFolder*);
   void messageRetrieved(KMMessage *);
   void messageStored(KMMessage *);
 private slots:
@@ -65,13 +61,11 @@ private:
   enum JobType { tListDirectory, tGetFolder, tCreateFolder, tDeleteMessage,
     tGetMessage, tPutMessage };
   JobType mType;
-  QList<KMMessage> mMsgList;
+  KMMessage *mMsg;
   KMFolder *mDestFolder;
   KIO::Job *mJob;
-  bool mSingleMessage;
   QByteArray mData;
   QCString mStrData;
-  QStringList mItems;
   KMFolderTreeItem *mFti;
   int mTotal, mDone;
 };
@@ -175,7 +169,6 @@ public:
   void slaveDied() { mSlave = NULL; }
 
 protected:
-  enum Stage { Idle, List, Uidl, Retr, Dele, Quit };
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
   KMAcctImap(KMAcctMgr* owner, const char* accountName);
@@ -184,16 +177,6 @@ protected:
       readable in the config file. But still very easy breakable. */
   const QString encryptStr(const QString inStr) const;
   const QString decryptStr(const QString inStr) const;
-
-  /** Start a KIO Job to get a list of messages on the pop server */
-  void startJob();
-
-  /** Connect up the standard signals/slots for the KIO Jobs */
-  void connectJob();
-
-  /** Process any queued messages and save the list of seen uids
-      for this user/server */
-  void processRemainingQueuedMessagesAndSaveUidList();
 
   /** Connect to the IMAP server, if no connection is active */
   bool makeConnection();
@@ -207,42 +190,9 @@ protected:
   bool    gotMsgs;
   bool    mProgressEnabled;
 
-  KIO::Job *job;
   KIO::Slave *mSlave;
 
-  QStringList idsOfMsgsPendingDownload;
-  QValueList<int> lensOfMsgsPendingDownload;
-
-  QStringList idsOfMsgs;
-  QValueList<int> lensOfMsgs;
-  QStringList uidsOfMsgs;
-  QStringList uidsOfSeenMsgs;
-  QStringList uidsOfNextSeenMsgs;
-  KURL::List idsOfMsgsToDelete;
-  int indexOfCurrentMsg;
-
-  QValueList<KMMessage*> msgsAwaitingProcessing;
-  QStringList msgIdsAwaitingProcessing;
-  QStringList msgUidsAwaitingProcessing;
-
-  QByteArray curMsgData;
-  QDataStream *curMsgStrm;
-
-  int curMsgLen;
-  int stage;
-  int processingDelay;
-  int numMsgs, numBytes, numBytesRead, numMsgBytesRead;
-  bool interactive;
-  bool mProcessing;
-
   QList<KMImapJob> mJobList;
-
-  struct statusData
-  {
-    KURL url;
-    bool Delete;
-  };
-  QQueue<statusData> mStatusQueue;
 
 protected slots:
   /** Kills all jobs */
@@ -274,10 +224,6 @@ protected slots:
 
   /** For creating a new subfolder */
   void slotCreateFolderResult(KIO::Job * job);
-
-  /** For deleting messages and changing the status */
-  void nextStatusAction();
-  void slotStatusResult(KIO::Job * job);
 
   /** Only delete information about the job */
   void slotSimpleResult(KIO::Job * job);
