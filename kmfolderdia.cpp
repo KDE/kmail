@@ -231,11 +231,14 @@ void KMFolderDialog::slotOk()
     }
   }
 
-  folder->setMailingList( holdsMailingList->isChecked() );
-  folder->setMailingListPostAddress( mailingListPostAddress->text() );
+  if (folder)
+  {
+    folder->setMailingList( holdsMailingList->isChecked() );
+    folder->setMailingListPostAddress( mailingListPostAddress->text() );
 //   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
-  folder->setMailingListAdminAddress( QString::null );
-  folder->setMailingListIdentity( mailingListIdentity->currentText() );
+    folder->setMailingListAdminAddress( QString::null );
+    folder->setMailingListIdentity( mailingListIdentity->currentText() );
+  }
 
   KMFolderDialogInherited::slotOk();
 }
