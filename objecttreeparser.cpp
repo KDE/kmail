@@ -699,7 +699,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                    + "<br />"
                    + i18n("Error: %1").arg( aErrorText );
     }
-    delete errTxt;
+    if ( errTxt )
+      free( errTxt );
     delete[] cleartext;
   }
   else if ( !cryptPlug ) {
