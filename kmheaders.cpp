@@ -993,7 +993,7 @@ void KMHeaders::forwardMsg ()
     // ask if they want a mime digest forward
 
     if (KMessageBox::questionYesNo(this, i18n("Forward selected messages as"
-                                              " a mime digest?")) 
+                                              " a MIME digest?")) 
                                   == KMessageBox::Yes) {
       KMessageBox::error(this, "FINISH ME");
       return;
