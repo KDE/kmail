@@ -27,6 +27,7 @@
 #include <qwidget.h>
 #include <qscrollview.h>
 #include <qlineedit.h>
+#include <qtooltip.h>
 
 #include "kmcomposewin.h"
 
@@ -196,6 +197,18 @@ class RecipientsView : public QScrollView
     RecipientLine* mCurDelLine;
     int mLineHeight;
     int mFirstColumnWidth;
+};
+
+class RecipientsToolTip : public QToolTip
+{
+  public:
+    RecipientsToolTip( RecipientsView *, QWidget *parent );
+
+  protected:
+    void maybeTip( const QPoint & p );
+    
+  private:
+    RecipientsView *mView; 
 };
 
 class SideWidget : public QWidget

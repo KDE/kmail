@@ -510,6 +510,27 @@ void RecipientsView::setFirstColumnWidth( int w )
 }
 
 
+RecipientsToolTip::RecipientsToolTip( RecipientsView *view, QWidget *parent )
+  : QToolTip( parent ), mView( view )
+{
+}
+
+void RecipientsToolTip::maybeTip( const QPoint & p )
+{
+  QString text = "<qt>";
+
+  Recipient::List recipients = mView->recipients();
+  Recipient::List::ConstIterator it;
+  for( it = recipients.begin(); it != recipients.end(); ++it ) {
+    text.append( (*it).email() + "<br/>" );
+  }
+
+  text.append( "</qt>" );
+
+  tip( QRect( p.x() - 20, p.y() - 20, 40, 40 ), text );
+}
+
+
 SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   : QWidget( parent ), mView( view ), mRecipientPicker( 0 )
 {
@@ -519,6 +540,8 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   mTotalLabel->setAlignment( AlignCenter );
   topLayout->addWidget( mTotalLabel, 1 );
   mTotalLabel->hide();
+
+  new RecipientsToolTip( view, mTotalLabel );
 
   mDistributionListButton = new QPushButton( "List...", this );
   topLayout->addWidget( mDistributionListButton );
