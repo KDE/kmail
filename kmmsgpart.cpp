@@ -87,28 +87,6 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
   return codec->toUnicode( bodyDecoded() );
 }
 
-#if 0
-//-----------------------------------------------------------------------------
-// Returns Base64 encoded MD5 digest of a QString
-QString KMMessagePart::encodeBase64(const QString& aStr)
-{
-  if (aStr.isEmpty())
-    return QString::null;
-
-  // Generate digest
-  KMD5 context( aStr.latin1() );
-
-  DwString dwResult, dwSrc;
-  QString result;
-
-  const DwString dwSrc = DwString( static_cast<const char*>( context.rawDigest() ), 16);
-  DwEncodeBase64(dwSrc, dwResult);
-  result = QString( dwResult.c_str() );
-  result.truncate(22);
-  return result;
-}
-#endif
-
 //-----------------------------------------------------------------------------
 void KMMessagePart::setBodyEncoded(const QCString& aStr)
 {
