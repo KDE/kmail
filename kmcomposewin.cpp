@@ -373,9 +373,6 @@ void KMComposeWin::writeConfig(void)
   mTransportHistory.prepend(mTransport.currentText());
   config->writeEntry("transport-history", mTransportHistory );
 
-  config->writeEntry("charset",mDefCharset);
-
-
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
   config->writeEntry("composer", str);
