@@ -5447,12 +5447,12 @@ void KMLineEdit::keyPressEvent(QKeyEvent *e)
 //-----------------------------------------------------------------------------
 void KMLineEdit::dropEvent(QDropEvent *e)
 {
-  QStrList uriList;
-  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, uriList ))
+  KURL::List uriList;
+  if(KURLDrag::decode( e, uriList ))
   {
-    for (QStrListIterator it(uriList); it; ++it)
+    for (KURL::List::ConstIterator it = uriList.begin(); it != uriList.end(); ++it)
     {
-      smartInsert( QString::fromUtf8(*it) );
+      smartInsert( (*it).url() );
     }
   }
   else {
