@@ -92,13 +92,12 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   //cWin->mNeverSign = true;
   //cWin->mNeverEncrypt = true;
 
-  // This is commented out, since there is no other visual indication of
-  // the fact that a message has been sent. Also, there is no way
-  // to delete the mail and the composer window :-(
-  // TODO: Fix this somehow. Difficult because of the async readerwindow
-  // cWin->slotSendNow();
-  // Instead, we do this for now:
-  cWin->show();
+  if ( options.readBoolEntry( "AutomaticSending", true ) ) {
+    cWin->setAutoDeleteWindow(  true );
+    cWin->slotSendNow();
+  } else {
+    cWin->show();
+  }
 
   return true;
 }
@@ -120,7 +119,7 @@ QString Callback::receiver() const
     for( QStringList::Iterator it = addrs.begin(); it != addrs.end(); ++it ) {
       if( kmkernel->identityManager()->identityForAddress( *it ) !=
           KPIM::Identity::null ) {
-	// Ok, this could be us
+        // Ok, this could be us
         ++found;
         mReceiver = *it;
       }
@@ -142,3 +141,4 @@ QString Callback::receiver() const
 
   return mReceiver;
 }
+
