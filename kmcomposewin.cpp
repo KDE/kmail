@@ -4930,12 +4930,14 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
     mMsg->setHeaderField("Organization", ident.organization());
 
   if (!mBtnTransport->isChecked()) {
-    if (ident.transport().isEmpty())
-      mMsg->removeHeaderField("X-KMail-Transport");
-    else
-      mMsg->setHeaderField("X-KMail-Transport", ident.transport());
     QString transp = ident.transport();
-    if (transp.isEmpty()) transp = mTransport->text(0);
+    if (transp.isEmpty())
+    {
+      mMsg->removeHeaderField("X-KMail-Transport");
+      transp = mTransport->text(0);
+    }
+    else
+      mMsg->setHeaderField("X-KMail-Transport", transp);
     bool found = false;
     int i;
     for (i = 0; i < mTransport->count(); i++) {
