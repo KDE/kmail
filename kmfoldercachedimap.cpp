@@ -68,6 +68,7 @@ using KMail::ListJob;
 #include <qlayout.h>
 #include <qvaluelist.h>
 #include "annotationjobs.h"
+#include <libkdepim/kincidencechooser.h>
 using namespace KMail;
 #include <globalsettings.h>
 
@@ -574,6 +575,7 @@ void KMFolderCachedImap::serverSyncInternal()
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
   {
+    KIncidenceChooser::chooseMode = KIncidenceChooser::ask ;
     mProgress = 0;
     newState( mProgress, i18n("Synchronizing"));
 
