@@ -4199,7 +4199,6 @@ void MiscPage::GroupwareTab::save() {
           folder = static_cast<KMFolder*>(node);
     }
   }
-  kdDebug() << k_funcinfo << folder->location() << endl;
 
   bool enabled = mEnableImapResCB->isChecked() && folder;
   GlobalSettings::setTheIMAPResourceEnabled( enabled );
