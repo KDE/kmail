@@ -152,6 +152,13 @@ public:
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = 0) = 0;
 
+  /** (Note(bo): This needs to be fixed better at a later point.)
+      This is overridden by dIMAP because addMsg strips the X-UID
+      header from the mail. */
+  virtual int addMsgKeepUID(KMMessage* msg, int* index_return = 0) {
+    return addMsg(msg, index_return);
+  }
+
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
   void emitMsgAddedSignals(int idx);

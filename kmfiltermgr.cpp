@@ -155,7 +155,7 @@ void KMFilterMgr::endFiltering(KMMsgBase *msgBase) const
       int index = parent->find( msgBase );
       KMMessage *msg = parent->getMsg( index );
       parent->take( index );
-      parent->addMsg( msg );
+      parent->addMsgKeepUID( msg );
     }
   }
   MessageProperty::setFiltering( msgBase, false );
