@@ -304,15 +304,23 @@ kdDebug(5006) << node->name() << " disappeared." << endl;
         else {
           folder = static_cast<KMFolderImap*>
             (mChild->createFolder(mSubfolderNames[i]));
-          folder->close();
-          kernel->imapFolderMgr()->contentsChanged();
+          if (folder)
+          {
+            folder->close();
+            kernel->imapFolderMgr()->contentsChanged();
+          } else {
+            kdDebug(5006) << "can't create folder " << mSubfolderNames[i] << endl;
+          }
         }
-        folder->setAccount(mAccount);
-        folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
-        folder->setImapPath(mSubfolderPaths[i]);
-        if (mSubfolderMimeTypes[i] == "message/directory" ||
-            mSubfolderMimeTypes[i] == "inode/directory")
-          folder->listDirectory(NULL);
+        if (folder)
+        {
+          folder->setAccount(mAccount);
+          folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
+          folder->setImapPath(mSubfolderPaths[i]);
+          if (mSubfolderMimeTypes[i] == "message/directory" ||
+              mSubfolderMimeTypes[i] == "inode/directory")
+            folder->listDirectory(NULL);
+        }
       }
     }
     kernel->imapFolderMgr()->quiet(FALSE);
@@ -726,6 +734,22 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
   }
   mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
+QString KMFolderImap::encodeFileName(const QString &name)
+{
+  QString result = QTextCodec::codecForName("utf-7")->fromUnicode(name);
+  return KURL::encode_string_no_slash(result);
+}
+
+
+//-----------------------------------------------------------------------------
+QString KMFolderImap::decodeFileName(const QString &name)
+{
+  QString result = KURL::decode_string(name);
+  return QTextCodec::codecForName("utf-7")->toUnicode(result.latin1());
 }
 
 

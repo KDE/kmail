@@ -182,9 +182,13 @@ bool KMFolderDir::reload(void)
     }
     else if (mImap)
     {
-      folder = new KMFolderImap(this, fname);
-      append(folder);
-      folderList.append(folder);
+      if (KMFolderImap::encodeFileName(KMFolderImap::decodeFileName(fname))
+        == fname)
+      {
+        folder = new KMFolderImap(this, KMFolderImap::decodeFileName(fname));
+        append(folder);
+        folderList.append(folder);
+      }
     }
     else // all other files are folders (at the moment ;-)
     {
@@ -199,7 +203,8 @@ bool KMFolderDir::reload(void)
     for(QStringList::Iterator it = diList.begin();
 	it != diList.end();
 	++it)
-      if (*it == "." + folder->name() + ".directory") {
+      if (*it == "." + folder->fileName() + ".directory")
+      {
 	KMFolderDir* folderDir = new KMFolderDir(this, *it, mImap);
 	folderDir->reload();
 	append(folderDir);

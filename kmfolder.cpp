@@ -111,7 +111,7 @@ QString KMFolder::location() const
   QString sLocation(path());
 
   if (!sLocation.isEmpty()) sLocation += '/';
-  sLocation += dotEscape(name());
+  sLocation += dotEscape(fileName());
 
   return sLocation;
 }
@@ -124,7 +124,7 @@ QString KMFolder::indexLocation() const
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += dotEscape(name());
+  sLocation += dotEscape(fileName());
   sLocation += ".index";
 
   return sLocation;
@@ -137,7 +137,7 @@ QString KMFolder::subdirLocation() const
 
   if (!sLocation.isEmpty()) sLocation += '/';
   sLocation += '.';
-  sLocation += dotEscape(name());
+  sLocation += dotEscape(fileName());
   sLocation += ".directory";
 
   return sLocation;
@@ -146,7 +146,7 @@ QString KMFolder::subdirLocation() const
 //-----------------------------------------------------------------------------
 KMFolderDir* KMFolder::createChildFolder()
 {
-  QString childName = "." + name() + ".directory";
+  QString childName = "." + fileName() + ".directory";
   QString childDir = path() + "/" + childName;
   bool ok = true;
 
@@ -853,7 +853,7 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 
   close(TRUE);
 
-  oldName = name();
+  oldName = fileName();
   oldParent = parent();
   if (aParent)
     setParent( aParent );
@@ -876,7 +876,7 @@ int KMFolder::rename(const QString& aName, KMFolderDir *aParent)
 
       for (fN = fdir->first(); fN != 0; fN = fdir->next())
 	if (fN->name() == "." + oldName + ".directory" ) {
-	  fN->setName( "." + name().local8Bit() + ".directory" );
+	  fN->setName( "." + fileName().local8Bit() + ".directory" );
 	  break;
 	}
     }

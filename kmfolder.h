@@ -58,6 +58,9 @@ public:
   KMFolder(KMFolderDir* parent=0, const QString& name=QString::null);
   virtual ~KMFolder();
 
+  /** Returns the filename of the folder (reimplemented in KMFolderImap) */
+  virtual QString fileName() const { return name(); }
+
   /** Returns full path to folder file */
   QString location() const;
 

@@ -184,6 +184,17 @@ public:
   void setSelected(bool selected) { mIsSelected = selected; }
   bool isSelected() { return mIsSelected; }
 
+  /**
+   * Encode the given string in a filename save 7 bit string
+   */
+  static QString encodeFileName(const QString &);
+  static QString decodeFileName(const QString &);
+
+  /**
+   * Return the filename of the folder (reimplemented from KFolder)
+   */
+  virtual QString fileName() const { return encodeFileName(name()); }
+
 signals:
   void folderComplete(KMFolderImap *folder, bool success);
 
