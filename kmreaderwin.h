@@ -90,10 +90,6 @@ public:
   /** Builds the font tag that will be used for quouted lines */
   QString quoteFontTag( int quoteLevel );
 
-  /** Get/set maximum lines of text for inline attachments. */
-  int inlineAttach(void) const { return mAtmInline; }
-  virtual void setInlineAttach(int maxLines);
-
   /** Style of the message header. */
   enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
                      HdrAll=5 };
@@ -417,7 +413,6 @@ private:
 protected:
   bool mUseGroupware;
   bool mHtmlMail, mHtmlOverride;
-  int mAtmInline;
   int mAtmCurrent;
   QString mAtmCurrentName;
   KMMessage *mMessage;

@@ -779,7 +779,6 @@ void KMReaderWin::readConfig(void)
   // action is initialized in the main window
   mUseFixedFont = config->readBoolEntry( "useFixedFont", false );
   mHtmlMail = config->readBoolEntry( "htmlMail", false );
-  mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   for (int ehs = HdrFancy-1; ehs < HdrAll;ehs++) {
     mShowAllHeaders[ehs] = config->readBoolEntry("showAllHeaders_"+QString::number(ehs+1), ehs+1 == HdrAll);
@@ -843,7 +842,6 @@ void KMReaderWin::writeConfig(bool aWithSync)
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Reader");
   config->writeEntry( "useFixedFont", mUseFixedFont );
-  config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
   config->writeEntry("attachment-strategy",attachmentStrategy()->name());
   if (aWithSync) config->sync();
@@ -984,14 +982,6 @@ void KMReaderWin::setCodec(const QTextCodec *codec)
   mAutoDetectEncoding = false;
   update(true);
 }
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::setInlineAttach(int aAtmInline)
-{
-  mAtmInline = aAtmInline;
-  update(true);
-}
-
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
