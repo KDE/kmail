@@ -115,15 +115,24 @@ k_dcop:
   enum StorageFormat { StorageIcalVcard, StorageXML };
 
 k_dcop_signals:
+  // For vcard/ical type storage (imap resource)
   void incidenceAdded( const QString& type, const QString& folder,
                        const QString& entry );
+  void asyncLoadResult( const QStringList& list, const QString& type,
+                        const QString& folder );
+ 
+  // For xml kolab style storage
   void incidenceAdded( const QString& type, const QString& folder,
                        Q_UINT32 sernum, int format, const QString& entry );
+  void asyncLoadResult( const QMap<Q_UINT32, QString>, const QString& type,
+                        const QString& folder );
+  //common
   void incidenceDeleted( const QString& type, const QString& folder,
                          const QString& uid );
   void signalRefresh( const QString& type, const QString& folder );
   void subresourceAdded( const QString& type, const QString& resource );
   void subresourceDeleted( const QString& type, const QString& resource );
+
 };
 
 inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResource& subResource )
