@@ -190,7 +190,7 @@ bool KMFolderDir::reload(void)
       QString maildir(fname + "/new");
       QString imapcachefile = QString::fromLatin1(".%1.uidcache").arg(fname);
 
-      // For this to be a cached IMAP folder, it must be in the KMail imap
+      // For this to be a cached IMAP folder, it must be in the KMail dimap
       // subdir and must be have a uidcache file or be a maildir folder
       if( path().startsWith( locateLocal("data", "kmail/dimap") )
 	  && ( dir.exists( imapcachefile) || dir.exists( maildir ) ) )
