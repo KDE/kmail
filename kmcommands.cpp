@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmcommands
 // (c) 2002 Don Sanders <sanders@kde.org>
 // License: GPL
@@ -197,7 +198,7 @@ void KMCommand::transferSelectedMsgs()
       thisMsg = folder->getMsg(idx);
     }
     if (!thisMsg) continue;
-    if ( thisMsg->transferInProgress() && 
+    if ( thisMsg->transferInProgress() &&
          thisMsg->parent()->folderType() == KMFolderTypeImap )
     {
       thisMsg->setTransferInProgress( false, true );
@@ -425,10 +426,11 @@ void KMUrlCopyCommand::execute()
 
   if (mUrl.protocol() == "mailto") {
     // put the url into the mouse selection and the clipboard
+    QString address = KMMessage::decodeMailtoUrl( mUrl.path() );
     clip->setSelectionMode( true );
-    clip->setText( mUrl.path() );
+    clip->setText( address );
     clip->setSelectionMode( false );
-    clip->setText( mUrl.path() );
+    clip->setText( address );
     if (mMainWidget)
       mMainWidget->statusMsg( i18n( "Address copied to clipboard." ));
   } else {
@@ -1376,7 +1378,7 @@ void KMMoveCommand::execute()
     assert(idx != -1);
     if ( msgBase->isMessage() )
       msg = static_cast<KMMessage*>(msgBase);
-    else 
+    else
       msg = srcFolder->getMsg(idx);
 
     if ( msg->transferInProgress() &&
@@ -1408,7 +1410,7 @@ void KMMoveCommand::execute()
             kmkernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
           }
         } else if (rc != 0) {
-          // Something  went wrong. Stop processing here, it is likely that the 
+          // Something  went wrong. Stop processing here, it is likely that the
           // other moves would fail as well.
           emit completed( false);
           deleteLater();
@@ -1457,7 +1459,7 @@ void KMMoveCommand::slotImapFolderCompleted(KMFolderImap *, bool success)
                     <<  "### added to the target folder. Did uidValidity change? " << endl;
     }
   } else {
-    // Should we inform the user here or leave that to the caller? 
+    // Should we inform the user here or leave that to the caller?
   }
   emit completed( success );
   deleteLater();
@@ -1494,7 +1496,7 @@ KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder, KMMessage * msg )
 }
 
 
-KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder ) 
+KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
 {
   if (folder->folderType()== KMFolderTypeImap)
   {
@@ -1786,7 +1788,7 @@ void KMLoadPartsCommand::start()
       KMFolder* curFolder = mMsg->parent();
       if ( curFolder )
       {
-        FolderJob *job = curFolder->createJob( mMsg, FolderJob::tGetMessage, 
+        FolderJob *job = curFolder->createJob( mMsg, FolderJob::tGetMessage,
             0, it.current()->msgPart().partSpecifier() );
         connect( job, SIGNAL(messageUpdated(KMMessage*, QString)),
             this, SLOT(slotPartRetrieved(KMMessage*, QString)) );
