@@ -78,6 +78,8 @@ using KMail::TeeHtmlWriter;
 #include <khtmlview.h> // So that we can get rid of the frames
 #include <dom/html_element.h>
 #include <dom/html_block.h>
+#include <dom/html_document.h>
+#include <dom/dom_string.h>
 
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
@@ -782,8 +784,28 @@ void KMReaderWin::initHtmlWidget(void)
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
+  connect( kmkernel->imProxy(), SIGNAL( sigContactStatusChanged( const QString & ) ), 
+          this, SLOT( contactStatusChanged( const QString & ) ) );
+  connect( kmkernel->imProxy(), SIGNAL( sigPresenceInfoExpired() ), 
+          this, SLOT( updateReaderWin() ) );
 }
 
+void KMReaderWin::contactStatusChanged( const QString &uid)
+{
+	kdDebug( 5006 ) << k_funcinfo << " got a presence change for " << uid << endl;
+	// get the list of nodes for this contact from the htmlView
+	DOM::NodeList presenceNodes = mViewer->htmlDocument()
+        .getElementsByName( DOM::DOMString( QString::fromLatin1("presence-") + uid ) );
+	for ( unsigned int i = 0; i < presenceNodes.length(); ++i )
+	{
+		DOM::Node n =  presenceNodes.item( i );
+		kdDebug( 5006 ) << "name is " << n.nodeName().string() << endl;
+		kdDebug( 5006 ) << "value of content was " << n.firstChild().nodeValue().string() << endl;
+        n.firstChild().setNodeValue( kmkernel->imProxy()->presenceString( uid ) );
+        kdDebug( 5006 ) << "value of content is now " << n.firstChild().nodeValue().string() << endl;
+	}
+	kdDebug( 5006 ) << "That's all folks! " << uid << endl;
+}
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
   mAttachmentStrategy = strategy ? strategy : AttachmentStrategy::smart() ;
@@ -1009,6 +1031,7 @@ void KMReaderWin::enableMsgDisplay() {
 
 
 //-----------------------------------------------------------------------------
+
 void KMReaderWin::updateReaderWin()
 {
   if (!mMsgDisplay) return;

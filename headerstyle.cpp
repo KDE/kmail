@@ -258,12 +258,14 @@ namespace KMail {
     
     // Get Instant Messaging presence
     QString presence;
+    QString kabcUid;
     if ( strategy->showHeader( "status" ) )
     {
       KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
       KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
       ::KIMProxy *imProxy = KMKernel::self()->imProxy();
-      presence = imProxy->presenceString( addresses[0].uid() );
+      kabcUid = addresses[0].uid();
+      presence = imProxy->presenceString( kabcUid );
     }
  
     if ( strategy->showHeader( "from" ) ) {
@@ -273,7 +275,7 @@ namespace KMail {
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
       if ( !presence.isEmpty() && strategy->showHeader( "status" ) )
-        headerStr.append("&nbsp;&nbsp;(" + presence + ")" );
+        headerStr.append("&nbsp;&nbsp;(<span name=\"presence-" + kabcUid + "\">" + presence + "</span>)" );
       if ( strategy->showHeader( "organization" )
           && !message->headerField("Organization").isEmpty())
         headerStr.append("&nbsp;&nbsp;(" +
@@ -380,14 +382,12 @@ namespace KMail {
     // Check first that KIMProxy has any IM presence data, to save hitting KABC 
     // unless really necessary
     ::KIMProxy *imProxy = KMKernel::self()->imProxy();
+    QString kabcUid;
     if ( ( strategy->showHeader( "status" ) || strategy->showHeader( "statuspic" ) ) 
           && ( imProxy->imAddresseeUids().count() > 0 ) )
     {
       KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
       KABC::AddresseeList addresses = addressBook->findByEmail( KPIM::getEmailAddr( message->from() ) );
-  
-      // Get KABC picture and IM status
-      QString kabcUid;
   
       if( addresses.count() == 1 )
       {
@@ -433,7 +433,7 @@ namespace KMail {
             userHTML = QString("<div class=\"senderpic\">") + userHTML + "</div>";
           else
             userHTML = QString( "<div class=\"senderpic\">"
-                                "<a href=\"im:%1\">%2<div class=\"senderstatus\">%3</div></a>"
+                                "<a href=\"im:%1\">%2<div class=\"senderstatus\"><span name=\"presence-%2\">%3</span></div></a>"
                                 "</div>" ).arg( kabcUid )
                                           .arg( userHTML )
                                           .arg( presence );
@@ -466,7 +466,8 @@ namespace KMail {
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
                               : QString("") )
-                 + ( ( !presence.isEmpty() && strategy->showHeader( "status" ) ) ? "&nbsp;&nbsp;(" + presence + ")"
+                 + ( ( !presence.isEmpty() && strategy->showHeader( "status" ) ) 
+                              ? "&nbsp;&nbsp;(<span name=\"presence-" + kabcUid + "\">" + presence + "</span>)"
                               : QString("") )
                  + ( message->headerField("Organization").isEmpty()
                               ? QString("")

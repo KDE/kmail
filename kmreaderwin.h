@@ -326,6 +326,7 @@ public slots:
   void slotMessageArrived( KMMessage *msg );
   /** start IM Chat with addressee */
   void slotIMChat();
+  void contactStatusChanged( const QString &uid);
   
 protected slots:
   /** Some attachment operations. */
@@ -339,7 +340,7 @@ protected slots:
   void slotTouchMessage();
   void slotAtmLoadPart( int );
   void slotAtmDistributeClick();
-
+  
 protected:
   /** reimplemented in order to update the frame width in case of a changed
       GUI style */
