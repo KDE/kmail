@@ -2,8 +2,6 @@
 #include <qpainter.h>
 #include <qcursor.h>
 
-#include <qheader.h>
-
 #include <unistd.h>
 #include <assert.h>
 
@@ -158,16 +156,7 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
   readConfig();
 
   addColumn( i18n("Folders"), 400 );
-  
-
-  // ORG:
-  // setShowSortIndicator(TRUE);
-  //
-  // KHZ:
-  setShowSortIndicator(false);
-  header()->hide();
-  setRootIsDecorated( false );
-
+  setShowSortIndicator(TRUE);
 
   if (!pixmapsLoaded)
   {
