@@ -82,16 +82,19 @@ class RecipientLine : public QWidget
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );
     void upPressed( RecipientLine * );
+    void emptyChanged();
 
   protected:
     void keyPressEvent( QKeyEvent * );
 
   protected slots:
     void slotReturnPressed();
+    void checkEmptyState( const QString & );
 
   private:
     QComboBox *mCombo;
     QLineEdit *mEdit;
+    bool mIsEmpty;
 };
 
 class RecipientsView : public QScrollView
@@ -119,7 +122,7 @@ class RecipientsView : public QScrollView
     void setFocusBottom();
 
   signals:
-    void totalChanged( int );
+    void totalChanged( int recipients, int lines );
     void focusUp();
     void focusDown();
 
@@ -130,6 +133,7 @@ class RecipientsView : public QScrollView
     void slotReturnPressed( RecipientLine * );
     void slotDownPressed( RecipientLine * );
     void slotUpPressed( RecipientLine * );
+    void calculateTotal();
 
   private:
     QPtrList<RecipientLine> mLines;
@@ -143,7 +147,7 @@ class SideWidget : public QWidget
     SideWidget( RecipientsView *view, QWidget *parent );
 
   public slots:
-    void setTotal( int );
+    void setTotal( int recipients, int lines );
 
   signals:
     void pickedRecipient( const QString & );

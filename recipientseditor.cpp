@@ -113,7 +113,7 @@ QStringList Recipient::allTypeLabels()
 
 
 RecipientLine::RecipientLine( QWidget *parent )
-  : QWidget( parent )
+  : QWidget( parent ), mIsEmpty( true )
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
   
@@ -126,10 +126,20 @@ RecipientLine::RecipientLine( QWidget *parent )
   mEdit = new QLineEdit( this );
   topLayout->addWidget( mEdit );
   connect( mEdit, SIGNAL( returnPressed() ), SLOT( slotReturnPressed() ) );
+  connect( mEdit, SIGNAL( textChanged( const QString & ) ),
+    SLOT( checkEmptyState( const QString & ) ) );
 
   kdDebug() << "HEIGHT: " << mEdit->minimumSizeHint().height() << endl;
 
   mCombo->setFixedHeight( mEdit->minimumSizeHint().height() );
+}
+
+void RecipientLine::checkEmptyState( const QString &text )
+{
+  if ( text.isEmpty() != mIsEmpty ) {
+    mIsEmpty = text.isEmpty();
+    emit emptyChanged();
+  }
 }
 
 void RecipientLine::setRecipient( const Recipient &rec )
@@ -216,6 +226,7 @@ RecipientLine *RecipientsView::addLine()
     SLOT( slotUpPressed( RecipientLine * ) ) );
   connect( line, SIGNAL( downPressed( RecipientLine * ) ),
     SLOT( slotDownPressed( RecipientLine * ) ) );
+  connect( line, SIGNAL( emptyChanged() ), SLOT( calculateTotal() ) );
 
   mLines.append( line );
 
@@ -229,11 +240,23 @@ RecipientLine *RecipientsView::addLine()
     setFixedHeight( mLineHeight * mLines.count() );
   }
 
-  emit totalChanged( mLines.count() );
+  calculateTotal();
 
   ensureVisible( 0, mLines.count() * mLineHeight );
 
   return line;
+}
+
+void RecipientsView::calculateTotal()
+{
+  int count = 0;
+
+  RecipientLine *line;
+  for( line = mLines.first(); line; line = mLines.next() ) {
+    if ( !line->isEmpty() ) ++count;
+  }
+  
+  emit totalChanged( count, mLines.count() );
 }
 
 void RecipientsView::slotReturnPressed( RecipientLine *line )
@@ -345,7 +368,7 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   topLayout->addWidget( mTotalLabel, 1 );
   mTotalLabel->hide();
 
-  QPushButton *button = new QPushButton( "...", this );
+  QPushButton *button = new QPushButton( "Select...", this );
   topLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( pickRecipient() ) );
 
@@ -363,10 +386,15 @@ void SideWidget::initRecipientPicker()
   new KWindowPositioner( this, mRecipientPicker );
 }
 
-void SideWidget::setTotal( int total )
+void SideWidget::setTotal( int recipients, int lines )
 {
-  mTotalLabel->setText( QString::number( total ) );
-  if ( total > 1 ) mTotalLabel->show();
+#if 0
+  kdDebug() << "SideWidget::setTotal() recipients: " << recipients <<
+    "  lines: " << lines << endl;
+#endif
+
+  mTotalLabel->setText( i18n("1 recipient","%n recipients", recipients ) );
+  if ( lines > 1 ) mTotalLabel->show();
   else mTotalLabel->hide();
 }
 
@@ -400,8 +428,8 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
   connect( side, SIGNAL( pickedRecipient( const QString & ) ),
     SLOT( slotPickedRecipient( const QString & ) ) );
 
-  connect( mRecipientsView, SIGNAL( totalChanged( int ) ),
-    side, SLOT( setTotal( int ) ) );
+  connect( mRecipientsView, SIGNAL( totalChanged( int, int ) ),
+    side, SLOT( setTotal( int, int ) ) );
 }
 
 void RecipientsEditor::slotPickedRecipient( const QString &rec )
