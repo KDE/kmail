@@ -20,6 +20,7 @@
 #include <kimageio.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
+#include <kglobalsettings.h>
 
 #include "kmfolder.h"
 #include "kmheaders.h"
