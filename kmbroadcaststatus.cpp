@@ -14,6 +14,7 @@
 using KMail::SSLLabel;
 
 #include <kprogress.h>
+#include <kiconloader.h>
 #include <kdebug.h>
 
 #include <qlabel.h>
@@ -190,8 +191,10 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
   box = new QHBoxLayout( this, 0, 0 );
 
-  m_pButton = new QPushButton( "X", this );
-  m_pButton->setMinimumWidth(fontMetrics().width("XXXX"));
+  m_pButton = new QPushButton( this );
+  m_pButton->setSizePolicy( QSizePolicy( QSizePolicy::Minimum,
+                                         QSizePolicy::Minimum ) );
+  m_pButton->setPixmap( SmallIcon( "cancel" ) );
   box->addWidget( m_pButton  );
   stack = new QWidgetStack( this );
   stack->setMaximumHeight( fontMetrics().height() );
