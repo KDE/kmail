@@ -90,7 +90,6 @@ static bool ignore_GroupwareDataChangeSlots = false;
 //-----------------------------------------------------------------------------
 KMGroupware::KMGroupware( QObject* parent, const char* name ) :
     QObject(parent, name),
-    mMainWin(0),
     mUseGroupware(false),
     mGroupwareIsHidingMimePartTree(false),
     mKOrgPart(0)
@@ -668,40 +667,6 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
       mMainWin->mainKMWidget()->slotTrashMsg();
   } else
     kdDebug(5006) << "KOrganizer call failed";
-
-#if 0
-  // step 2: process vCal returned by Organizer
-  // (HEAD port:) This is crap. It needs to be done by korganizer, not by kmail
-  if( outOK && mMainWin ){
-    // mMainWin->slotNewBodyReplyToMsg( outVCal );
-    KMMessage* msgNew = 0;
-    if( msgOld ){
-      msgNew = msgOld->createReply( false, false, outVCal, false, true, TRUE );
-
-      // This is really, really, really ugly, but Outlook will only
-      // understand the reply if the From: header is the same as the
-      // To: header of the invitation message.
-      KConfigGroup options( KMKernel::config(), "Groupware" );
-      if( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) )
-          msgNew->setFrom( fromAddress );
-
-      msgNew->setType(    DwMime::kTypeText );
-      msgNew->setSubtype( DwMime::kSubtypeVCal );
-      msgNew->setHeaderField("Content-Type",
-                             "text/calendar; method=REPLY; charset=\"utf-8\"");
-      internal_directlySendMessage( msgNew );
-    }
-    if( "accept" == choice || "accept conditionally" == choice ) {
-      // TODO: Don't save this directly - give it to korganizer instead
-      if( type == vCalTodo )
-	// This is a task
-	mMainWin->mainKMWidget()->slotMoveMsgToFolder( mTasks );
-      else
-	// This is an appointment
-	mMainWin->mainKMWidget()->slotMoveMsgToFolder( mCalendar );
-    } else if("decline" == choice )
-  }
-#endif
 
   slotGroupwareHide();
 }
