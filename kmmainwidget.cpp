@@ -2730,6 +2730,7 @@ void KMMainWidget::updateMessageActions()
     }
       
     mSendAgainAction->setEnabled( single_actions &&
+          mHeaders->currentMsg() &&
           mHeaders->currentMsg()->isSent() );
     mSaveAsAction->setEnabled( mass_actions );
     bool mails = mFolder && mFolder->count();
