@@ -1807,12 +1807,12 @@ void KMReaderWin::slotAtmOpen()
       .arg(offer->name());
   } else {
     question = i18n("Open attachment '%1'?").arg(filenameText);
-    open_text = i18n("Open with...");
+    open_text = i18n("Open With...");
   }
   question += i18n("\n\nNote that opening an attachment may compromise your system's security!");
   // TODO: buttons don't have the correct order, but "Save" should be default
   int choice = KMessageBox::warningYesNoCancel(this, question,
-      i18n("Open Attachment?"), i18n("Save to disk"), open_text);
+      i18n("Open Attachment?"), i18n("Save to Disk"), open_text);
   if( choice == KMessageBox::Yes ) {		// Save
     slotAtmSave();
   } else if( choice == KMessageBox::No ) {	// Open
