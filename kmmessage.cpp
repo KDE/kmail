@@ -681,7 +681,7 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
                                true,
                                false );
   kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    "
-                << QString( curNode ? "text part found" : "sorry, no text node" ) << "!\n" << endl;
+                << QString( curNode ? "text part found!\n" : "sorry, no text node!\n" ) << endl;
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->type();
     // now parse the TEXT message part we want to quote

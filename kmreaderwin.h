@@ -209,7 +209,8 @@ public:
                                                   CryptPlugWrapperList* cryptPlugList,
                                                   CryptPlugWrapper*     useThisCryptPlug,
                                                   partNode* data,
-                                                  partNode& sign );
+                                                  partNode& sign,
+                                                  bool hideErrors = false );
 
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */

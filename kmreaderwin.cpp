@@ -590,14 +590,15 @@ kdDebug(5006) << "encrypted" << endl;
                     myBody->Parse();
                     partNode myBodyNode( true, myBody );
                     myBodyNode.buildObjectTree( false );
-		    // paint the frame
-		    PartMetaData messagePart;
-		    messagePart.isDecryptable = true;
-		    messagePart.isEncrypted = true;
-		    messagePart.isSigned = false;
 
-                    if( reader )
+                    // paint the frame
+                    PartMetaData messagePart;
+                    if( reader ) {
+                      messagePart.isDecryptable = true;
+                      messagePart.isEncrypted = true;
+                      messagePart.isSigned = false;
                       reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                    }
                     parseObjectTree( reader,
                                      &resultString,
                                      cryptPlugList,
@@ -699,6 +700,15 @@ kdDebug(5006) << "octet stream" << endl;
                       myBody->Parse();
                       partNode myBodyNode( true, myBody );
                       myBodyNode.buildObjectTree( false );
+
+                      // paint the frame
+                      PartMetaData messagePart;
+                      if( reader ) {
+                        messagePart.isDecryptable = true;
+                        messagePart.isEncrypted = true;
+                        messagePart.isSigned = false;
+                        reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                      }
                       parseObjectTree( reader,
                                        &resultString,
                                        cryptPlugList,
@@ -707,6 +717,8 @@ kdDebug(5006) << "octet stream" << endl;
                                        showOneMimePart,
                                        keepEncryptions,
                                        includeSignatures );
+                      if( reader )
+                        reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                     }
                     else
                     {
@@ -753,6 +765,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
 
                     DwHeaders& headers( curNode->dwPart()->Headers() );
                     QCString ctypStr( headers.ContentType().AsString().c_str() );
+                    ctypStr.replace( QRegExp("\""), "" );
                     bool isSigned    = 0 <= ctypStr.find("smime-type=signed-data",    0, false);
                     bool isEncrypted = 0 <= ctypStr.find("smime-type=enveloped-data", 0, false);
 
@@ -777,8 +790,16 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                                          decryptedData,
                                          false ) ) {
                         kdDebug(5006) << "pkcs7 mime  -  encryption found  -  enveloped (encrypted) data !" << endl;
+                        bool cryptoDone = isEncrypted;
                         isEncrypted = true;
                         curNode->setEncrypted( true );
+                        PartMetaData messagePart;
+                        if( reader ) {
+                            messagePart.isDecryptable = true;
+                            messagePart.isEncrypted = true;
+                            messagePart.isSigned = false;
+                            reader->queueHtml( reader->writeSigstatHeader( messagePart, useThisCryptPlug ) );
+                        }
                         insertAndParseNewChildNode( reader,
                                                     &resultString,
                                                     cryptPlugList,
@@ -786,10 +807,14 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                                                     *curNode,
                                                     &*decryptedData,
                                                     "encrypted data" );
+                        if( reader )
+                            reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
                         if( curNode->mChild && curNode->mChild->isSigned() ) {
                           isSigned = true;
                           signTestNode = 0;
-                        } else
+                        } else if( cryptoDone )
+                          signTestNode = 0;
+                        else
                           signTestNode = curNode->mChild;
                       } else {
                         kdDebug(5006) << "pkcs7 mime  -  NO encryption found   :-(" << endl;
@@ -808,7 +833,8 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                                                                cryptPlugList,
                                                                useThisCryptPlug,
                                                                0,
-                                                               *signTestNode )
+                                                               *signTestNode,
+                                                               isEncrypted )
                           && !isSigned ) {
                         kdDebug(5006) << "pkcs7 mime  -  signature found  -  opaque signed data !" << endl;
                         isSigned = true;
@@ -1785,7 +1811,8 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                     CryptPlugWrapperList* cryptPlugList,
                                                     CryptPlugWrapper*     useThisCryptPlug,
                                                     partNode* data,
-                                                    partNode& sign )
+                                                    partNode& sign,
+                                                    bool hideErrors )
 {
   bool bIsOpaqueSigned = false;
 
@@ -1800,7 +1827,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                   << cryptPlug->libName() << endl;
 
     if( !cryptPlug->initStatus( 0 ) == CryptPlugWrapper::InitStatus_Ok ) {
-        if( reader )
+        if( reader && !hideErrors )
           KMessageBox::sorry(reader, i18n("Crypto Plug-In \"%1\" is not initialized.\n"
             "Please specify the Plug-In using the 'Settings/Configure KMail / Plug-In' dialog.").arg(cryptPlug->libName()));
         return false;
@@ -1964,7 +1991,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
           reader->queueHtml( reader->writeSigstatFooter( messagePart ) );
 
       }
-      else
+      else if( !hideErrors )
       {
         txt = "<hr><b><h2>";
         txt.append( i18n( "The crypto engine returned no cleartext data!" ) );
@@ -2072,7 +2099,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 */
 
   } else {
-    if( reader ) {
+    if( reader && !hideErrors ) {
       KMessageBox::information(reader,
         i18n("problem: No Crypto Plug-Ins found.\n"
              "Please specify a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."),
