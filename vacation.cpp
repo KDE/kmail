@@ -169,7 +169,6 @@ namespace KMail {
     kdDebug(5006) << "Vacation: found url \"" << mUrl.prettyURL() << "\"" << endl;
     if ( mUrl.isEmpty() ) // nothing to do...
       return;
-    mUrl.setFileName( "kmail-vacation.siv" );
     mSieveJob = SieveJob::get( mUrl );
     connect( mSieveJob, SIGNAL(result(KMail::SieveJob*,bool,const QString&,bool)),
 	     SLOT(slotGetResult(KMail::SieveJob*,bool,const QString&,bool)) );
@@ -229,9 +228,12 @@ namespace KMail {
       u.setPass( a->passwd() );
       u.setPort( sieve.port() );
       u.setQuery( "x-mech=" + (a->auth() == "*" ? "PLAIN" : a->auth()) ); //translate IMAP LOGIN to PLAIN
+      u.setFileName( sieve.fileName() );
       return u;
     } else {
-      return sieve.alternateURL();
+      KURL u = sieve.alternateURL();
+      u.setFileName( sieve.fileName() );
+      return u;
     }
   }
 
@@ -401,7 +403,7 @@ namespace KMail {
 				       "Out of Office reply is now active.")
 				: i18n("Sieve script installed successfully on the server.\n"
 				       "Out of Office reply has been deactivated.") );
-    
+
     kdDebug(5006) << "Vacation::handlePutResult( ???, " << success << ", ? )"
 		  << endl;
     mSieveJob = 0; // job deletes itself after returning from this slot!

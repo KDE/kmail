@@ -69,6 +69,8 @@ namespace KMail {
       mAlternateURL = url;
     }
 
+    QString fileName() const { return mFileName; }
+
     void readConfig( const KConfigBase & config );
     void writeConfig( KConfigBase & config ) const;
 
@@ -77,6 +79,7 @@ namespace KMail {
     bool mReuseConfig;
     unsigned short mPort;
     KURL mAlternateURL;
+    QString mFileName;
   };
 
   class SieveConfigEditor : public QWidget {
@@ -105,7 +108,7 @@ namespace KMail {
 
   protected slots:
     void slotEnableWidgets();
-    
+
   protected:
     QCheckBox * mManagesieveCheck;
     QCheckBox * mSameConfigCheck;
