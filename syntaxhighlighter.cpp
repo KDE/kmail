@@ -158,8 +158,7 @@ void SpellChecker::flushCurrentWord()
 
     if ( !currentWord.isEmpty() ) {
 	if ( isMisspelled(currentWord) )
-	    setMisspelled( currentPos, currentWord.length(), true );
-	//setFormat( currentPos, currentWord.length(), mColor );
+	    setFormat( currentPos, currentWord.length(), mColor );
     }
     currentWord = "";
 }
