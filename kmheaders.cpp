@@ -468,6 +468,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
 
+  connect( this, SIGNAL( rightButtonPressed( QListViewItem*, const QPoint &, int )),
+	   this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int )));
   connect(this, SIGNAL(doubleClicked(QListViewItem*)),
   	  this,SLOT(selectMessage(QListViewItem*)));
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
@@ -2292,6 +2294,21 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
 }
 
 //-----------------------------------------------------------------------------
+// Handle RMB press, show pop up menu
+void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &p, int )
+{
+  if (!lvi)
+    return;
+
+  if (!(lvi->isSelected())) {
+    clearSelection();
+    setSelected( lvi, TRUE );
+  }
+  slotRMB();
+}
+
+
+//-----------------------------------------------------------------------------
 // KMail mouse selection - simple description
 // Normal click - select and make current just this item  unselect all others
 // Shift click  - select all items from current item to clicked item
@@ -2300,6 +2317,7 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
 //                item the current item.
 void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
+  kdDebug(5006) << "MB pressed: " << e->button() << endl;
   beginSelection = currentItem();
   presspos = e->pos();
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));

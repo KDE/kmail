@@ -285,6 +285,8 @@ protected slots:
   virtual int slotFilterMsg( KMMessage * );
   /** dirties the sort order */
   void dirtySortOrder(int);
+  /** show context menu */
+  void rightButtonPressed( QListViewItem *, const QPoint &, int );
 
 private:
   /** Is equivalent to clearing the list and inserting an item for
