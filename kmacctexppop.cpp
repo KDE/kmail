@@ -423,7 +423,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
 
   if (mUseSSL) {
-    prefix = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+    prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
     + ":" + QString("%1").arg(mPort);
   } else {
     prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
@@ -481,7 +481,7 @@ void KMAcctExpPop::startJob() {
   // end precommand code
   
   if (mUseSSL) {
-    text = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+    text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
             mHost + ":" + QString("%1").arg(mPort) + "/index";
   } else {
     text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
@@ -518,7 +518,7 @@ void KMAcctExpPop::slotJobFinished() {
     kdDebug() << "stage == List" << endl;
     QString command;
     if (mUseSSL) {
-      command = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+      command = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
         + ":" + QString("%1/uidl").arg(mPort);
     } else {
       command = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
@@ -553,7 +553,7 @@ void KMAcctExpPop::slotJobFinished() {
     kdDebug() << "stage == Dele" << endl;
     QString prefix;
     if (mUseSSL) {
-      prefix = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
                 mHost + ":" + QString("%1").arg(mPort);
     } else {
       prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
@@ -619,7 +619,7 @@ void KMAcctExpPop::slotGetNextMsg()
     processRemainingQueuedMessagesAndSaveUidList();
     QString prefix;
     if (mUseSSL) {
-      prefix = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
                 mHost + ":" + QString("%1").arg(mPort);
     } else {
       prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
@@ -676,7 +676,7 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   if (spc > 0) {
     QString text;
     if (mUseSSL) {
-      text = "spop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
               mHost + ":" + QString("%1/download/").arg(mPort);
     } else {
       text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 

@@ -356,7 +356,7 @@ void AccountDialog::setupSettings()
 void AccountDialog::slotSSLChanged()
 {
   if (mPop.useSSLCheck->isChecked()) {
-    struct servent *serv = getservbyname("spop3", "tcp");
+    struct servent *serv = getservbyname("pop3s", "tcp");
     if (serv) {
       QString x;
       x.sprintf("%u", ntohs(serv->s_port));
