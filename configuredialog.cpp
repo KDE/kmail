@@ -224,7 +224,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal 
 
 }
 
-void ConfigureDialog::hideEvent( QHideEvent * ) {
+void ConfigureDialog::hideEvent( QHideEvent *ev ) {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
   geometry.writeEntry( "ConfigureDialogWidth", width() );
   geometry.writeEntry( "ConfigureDialogHeight",height() );
