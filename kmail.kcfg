@@ -153,7 +153,7 @@
     <group name="UserInterface">
       <entry name="QuickSearchActive" type="Bool">
         <label>Show quick search line edit</label>
-        <whatsthis>This option enabled or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
+        <whatsthis>This option enables or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
         <default>true</default>
       </entry>
     </group>
