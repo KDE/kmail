@@ -458,12 +458,21 @@ LanguageItem::LanguageItem( const QString& language, const QString& reply,
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 				  bool modal )
+
+  /* deactivated Default Button as it is not used 
   :KDialogBase( IconList, i18n("Configure"), Help|Default|Apply|Ok|Cancel,
+		Ok, parent, name, modal, true )
+  */
+
+  :KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel,
 		Ok, parent, name, modal, true )
 {
   setHelp( "kmail/kmail.html", QString::null );
   setIconListAllVisible( true );
+
+  /* Button not used
   enableButton( Default, false );
+  */
   secondIdentity = false;
   connect( this, SIGNAL( cancelClicked() ), this, SLOT( slotCancelOrClose() ));
   connect( this, SIGNAL( closeClicked() ), this, SLOT( slotCancelOrClose() ));
@@ -1821,8 +1830,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
     mAppearance.colorList->setColor( 2, red );
-    mAppearance.colorList->setColor( 3, QColor("#009000") );
-    mAppearance.colorList->setColor( 4, QColor("#BD3EB5") );
+    mAppearance.colorList->setColor( 3, darkGreen );
+    mAppearance.colorList->setColor( 4, darkMagenta );
     mAppearance.colorList->setColor( 5, KGlobalSettings::linkColor() );
     mAppearance.colorList->setColor( 6, KGlobalSettings::visitedLinkColor() );
     mAppearance.colorList->setColor( 7, blue );
@@ -1847,8 +1856,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
     mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
     mAppearance.colorList->setColor( 2, red );
-    mAppearance.colorList->setColor( 3, QColor("#009000") );
-    mAppearance.colorList->setColor( 4, QColor("#BD3EB5") );
+    mAppearance.colorList->setColor( 3, darkGreen );
+    mAppearance.colorList->setColor( 4, darkMagenta );
     mAppearance.colorList->setColor( 5, blue );
     mAppearance.colorList->setColor( 6, red );
     mAppearance.colorList->setColor( 7, blue );
@@ -1872,8 +1881,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 0, QColor("#FAEBD7") );
     mAppearance.colorList->setColor( 1, black );
     mAppearance.colorList->setColor( 2, red );
-    mAppearance.colorList->setColor( 3, QColor("#006400") );
-    mAppearance.colorList->setColor( 4, QColor("#832B8B") );
+    mAppearance.colorList->setColor( 3, darkGreen );
+    mAppearance.colorList->setColor( 4, darkMagenta );
     mAppearance.colorList->setColor( 5, blue );
     mAppearance.colorList->setColor( 6, red );
     mAppearance.colorList->setColor( 7, blue );
@@ -1887,28 +1896,8 @@ void ConfigureDialog::installProfile( void )
   }
   else if( item == mAppearance.mListItemPurist)
   {
-    /* 
-    Do we need the font and color settings here ?
-    They are not used anyway
-    */
-
-    mAppearance.font[0] = QFont("helvetica");
-    mAppearance.font[1] = QFont("helvetica");
-    mAppearance.font[2] = QFont("helvetica");
-    mAppearance.font[3] = QFont("helvetica");
-    mAppearance.font[4] = QFont("helvetica");
-    mAppearance.font[5] = QFont("helvetica");
     mAppearance.customFontCheck->setChecked( false );
 
-    mAppearance.colorList->setColor( 0, kapp->palette().normal().base() );
-    mAppearance.colorList->setColor( 1, kapp->palette().normal().text() );
-    mAppearance.colorList->setColor( 2, red );
-    mAppearance.colorList->setColor( 3, QColor("#009000") );
-    mAppearance.colorList->setColor( 4, QColor("#BD3EB5") );
-    mAppearance.colorList->setColor( 5, KGlobalSettings::linkColor() );
-    mAppearance.colorList->setColor( 6, KGlobalSettings::visitedLinkColor() );
-    mAppearance.colorList->setColor( 7, blue );
-    mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( false );
 
     mAppearance.longFolderCheck->setChecked( false );
