@@ -277,11 +277,6 @@ protected slots:
   void reallyGetFolder(const QString &startUid = QString::null);
 
   /**
-   * Retrieve the next message
-   */
-  void getNextMessage(KMAcctImap::jobData & jd);
-
-  /**
    * For listing the contents of a folder
    */
   void slotListFolderResult(KIO::Job * job);

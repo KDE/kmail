@@ -97,7 +97,7 @@ void KMFolderImap::removeOnServer()
 {
   KURL url = mAccount->getUrl();
   url.setPath(imapPath());
-  mAccount->makeConnection();
+  if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::file_delete(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
@@ -521,7 +521,11 @@ kdDebug(5006) << "KMFolderImap::checkValidity" << endl;
   jd.total = 1; jd.done = 0;
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";UID=0:0");
-  mAccount->makeConnection();
+  if (!mAccount->makeConnection())
+  {
+    emit folderComplete(this, FALSE);
+    return;
+  }
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   mAccount->mapJobData.insert(job, jd);
@@ -596,10 +600,14 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
   jd.parent = this;
   jd.total = 1; jd.done = 0;
   KURL url = mAccount->getUrl();
+  if (!mAccount->makeConnection())
+  {
+    emit folderComplete(this, FALSE);
+    return;
+  }
   if (startUid.isEmpty())
   {
     url.setPath(imapPath() + ";SECTION=UID FLAGS");
-    mAccount->makeConnection();
     KIO::SimpleJob *job = KIO::listDir(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     mAccount->mapJobData.insert(job, jd);
@@ -611,7 +619,6 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
   } else {
     url.setPath(imapPath() + ";UID=" + startUid
       + ":*;SECTION=ENVELOPE");
-    mAccount->makeConnection();
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
     mAccount->mapJobData.insert(newJob, jd);
@@ -621,29 +628,6 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
             this, SLOT(slotGetMessagesData(KIO::Job *, const QByteArray &)));
   }
   mAccount->displayProgress();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderImap::getNextMessage(KMAcctImap::jobData & jd)
-{
-  if (jd.items.isEmpty())
-  {
-    mImapState = imapFinished;
-    return;
-  }
-  KURL url = mAccount->getUrl();
-  url.setPath(imapPath() + ";UID=" + *jd.items.begin() +
-    ";SECTION=ENVELOPE");
-  jd.items.remove(jd.items.begin());
-  mAccount->makeConnection();
-  KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
-  KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  mAccount->mapJobData.insert(job, jd);
-  connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotGetMessageResult(KIO::Job *)));
-  connect(job, SIGNAL(data(KIO::Job *, const QByteArray &)),
-          this, SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
 }
 
 
@@ -720,7 +704,11 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     KURL url = mAccount->getUrl();
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
-    mAccount->makeConnection();
+    if (!mAccount->makeConnection())
+    {
+      emit folderComplete(this, FALSE);
+      return;
+    }
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
     mAccount->mapJobData.insert(newJob, jd);
@@ -843,7 +831,7 @@ void KMFolderImap::createFolder(const QString &name)
 {
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + name);
-  mAccount->makeConnection();
+  if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
@@ -935,7 +923,12 @@ void KMImapJob::init(JobType jt, QString sets, KMFolderImap* folder, QPtrList<KM
       mData.at(i) = *ch; i++;
     }
     jd.data = mData;
-    account->makeConnection();
+    if (!account->makeConnection())
+    {
+      account->mJobList.remove(this);
+      delete this;
+      return;
+    }
     KIO::SimpleJob *simpleJob = KIO::put(url, 0, FALSE, FALSE, FALSE);
     KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
     mJob = simpleJob;
@@ -964,7 +957,12 @@ void KMImapJob::init(JobType jt, QString sets, KMFolderImap* folder, QPtrList<KM
     urlStr = destUrl.url().utf8();
     buff.writeBlock(urlStr.data(), urlStr.size());
     buff.close();
-    account->makeConnection();
+    if (!account->makeConnection())
+    {
+      account->mJobList.remove(this);
+      delete this;
+      return;
+    }
     KIO::SimpleJob *simpleJob = KIO::special(url, data, FALSE);
     KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
     mJob = simpleJob;
@@ -1015,7 +1013,12 @@ void KMImapJob::slotGetNextMessage()
   KMAcctImap::jobData jd;
   jd.parent = NULL;
   jd.total = 1; jd.done = 0;
-  account->makeConnection();
+  if (!account->makeConnection())
+  {
+    account->mJobList.remove(this);
+    delete this;
+    return;
+  }
   KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
   mJob = simpleJob;
@@ -1175,7 +1178,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   KURL url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->parent());
   url.setPath(msg_parent->imapPath() + ";UID=" + msg->headerField("X-UID"));
-  mAccount->makeConnection();
+  if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
@@ -1197,7 +1200,7 @@ void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
   {
     url.setPath(msg_parent->imapPath() + ";UID=" + *it);
-    mAccount->makeConnection();
+    if (!mAccount->makeConnection()) return;
     KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     KMAcctImap::jobData jd;
@@ -1368,7 +1371,7 @@ void KMFolderImap::setImapStatus(QString path, QCString flags)
   buff.writeBlock(urlStr.data(), urlStr.size());
   buff.writeBlock(flags.data(), flags.size());
   buff.close();
-  mAccount->makeConnection();
+  if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::special(url, data, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
@@ -1385,7 +1388,7 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
   aFolder->setNeedsCompacting(FALSE);
   KURL url = mAccount->getUrl();
   url.setPath(aFolder->imapPath() + ";UID=*");
-  mAccount->makeConnection();
+  if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
@@ -1420,7 +1423,7 @@ void KMFolderImap::processNewMail(bool)
 {
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + ";SECTION=UNSEEN");
-  mAccount->makeConnection();
+  if (!mAccount->makeConnection()) return;
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   KMAcctImap::jobData jd;
