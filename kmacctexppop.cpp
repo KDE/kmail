@@ -849,8 +849,9 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       }
       KMBroadcastStatus::instance()->setStatusMsg( msg );
       KMBroadcastStatus::instance()->setStatusProgressPercent("P" + mName,
-        (numBytesToRead == 0) ? 50  // We never know what the server tells us
-        : (numBytesRead * 100 / numBytesToRead) );
+        (numBytesToRead <= 100) ? 50  // We never know what the server tells us
+        // This way of dividing is reqired for > 21MB of mail
+        : (numBytesRead / (numBytesToRead / 100)) );
     }
     return;
   }
