@@ -114,6 +114,7 @@ private:
   KProcess  *mExtEditorProcess;
   bool      extEditor;
   QString   mExtEditor;
+  bool      mWasModifiedBeforeSpellCheck;
 };
 
 

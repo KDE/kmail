@@ -5438,6 +5438,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   mSpellingFilter = 0;
   mTempFile = 0;
   mExtEditorProcess = 0;
+  mWasModifiedBeforeSpellCheck = false;
 }
 
 
@@ -5590,6 +5591,8 @@ void KMEdit::slotExternalEditorDone(KProcess* proc)
 //-----------------------------------------------------------------------------
 void KMEdit::spellcheck()
 {
+  mWasModifiedBeforeSpellCheck = isModified();
+
   mKSpell = new KSpell(this, i18n("Spellcheck - KMail"), this,
 		       SLOT(slotSpellcheck2(KSpell*)));
   connect (mKSpell, SIGNAL( death()),
@@ -5639,6 +5642,7 @@ void KMEdit::slotSpellResult(const QString &)
   {
     kdDebug(5006) << "spelling: canceled - restoring text from SpellingFilter" << endl;
     setText(mSpellingFilter->originalText());
+    setModified(mWasModifiedBeforeSpellCheck);
   }
 
   mKSpell->cleanUp();
