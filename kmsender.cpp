@@ -269,19 +269,19 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
     {
       sentFolder = kmkernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
       if ( sentFolder == 0 )
-	// This is *NOT* supposed to be imapSentFolder!
-        sentFolder =
-	  kmkernel->dimapFolderMgr()->findIdString( mCurrentMsg->fcc() );
+      // This is *NOT* supposed to be imapSentFolder!
+        sentFolder = 
+          kmkernel->dimapFolderMgr()->findIdString( mCurrentMsg->fcc() );
       if ( sentFolder == 0 )
         imapSentFolder =
-	  kmkernel->imapFolderMgr()->findIdString( mCurrentMsg->fcc() );
+          kmkernel->imapFolderMgr()->findIdString( mCurrentMsg->fcc() );
     }
     else if ( !id.fcc().isEmpty() )
     {
       sentFolder = kmkernel->folderMgr()->findIdString( id.fcc() );
       if ( sentFolder == 0 )
-	// This is *NOT* supposed to be imapSentFolder!
-	sentFolder = kmkernel->dimapFolderMgr()->findIdString( id.fcc() );
+        // This is *NOT* supposed to be imapSentFolder!
+        sentFolder = kmkernel->dimapFolderMgr()->findIdString( id.fcc() );
       if ( sentFolder == 0 )
         imapSentFolder = kmkernel->imapFolderMgr()->findIdString( id.fcc() );
     }
