@@ -182,7 +182,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   // is everything specified ?
   app->processEvents();
 
-  if (mHost.isEmpty() || mPort<=0)
+  if (mHost.isEmpty() || mPort==0)
   {
     warning(i18n("Please specify Host, Port  and\n"
 		 "destination folder in the settings\n"
@@ -444,7 +444,7 @@ void KMAcctPop::setHost(const QString& aHost)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctPop::setPort(int aPort)
+void KMAcctPop::setPort(unsigned short int aPort)
 {
   mPort = aPort;
 }

@@ -377,7 +377,7 @@ void KMSender::setSmtpHost(const QString& aSmtpHost)
 
 
 //-----------------------------------------------------------------------------
-void KMSender::setSmtpPort(int aSmtpPort)
+void KMSender::setSmtpPort(unsigned short int aSmtpPort)
 {
   mSmtpPort = aSmtpPort;
 }

@@ -73,8 +73,8 @@ public:
   virtual void setSmtpHost(const QString&);
 
   /** Port of the SMTP host, usually 110. */
-  int smtpPort(void) const { return mSmtpPort; }
-  virtual void setSmtpPort(int);
+  unsigned short int smtpPort(void) const { return mSmtpPort; }
+  virtual void setSmtpPort(unsigned short int);
 
   /** Read configuration from global config. */
   virtual void readConfig(void);
@@ -111,7 +111,7 @@ private:
   bool mSendImmediate, mSendQuotedPrintable;
   QString mMailer;
   QString mSmtpHost;
-  int mSmtpPort;
+  unsigned short int mSmtpPort;
 
   bool mSentOk;
   QString mErrorMsg;

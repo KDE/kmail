@@ -914,7 +914,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 				  ((KMAcctPop*)mAcct)->host(), 4, 0);
 
     QString tmpStr;
-    tmpStr.sprintf("%d",((KMAcctPop*)mAcct)->port());
+    tmpStr.sprintf("%u",((KMAcctPop*)mAcct)->port());
     mEdtPort = createLabeledEntry(this, grid, i18n("Port:"),
 				  tmpStr, 5, 0);
 

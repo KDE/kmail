@@ -39,8 +39,8 @@ public:
   virtual void setHost(const QString&);
 
   /** Port on pop host */
-  int port(void) { return mPort; }
-  virtual void setPort(int);
+  unsigned short int port(void) { return mPort; }
+  virtual void setPort(unsigned short int);
 
   /** Pop protocol: shall be 2 or 3 */
   short protocol(void) { return mProtocol; }
@@ -85,7 +85,7 @@ protected:
 
   QString mLogin, mPasswd;
   QString mHost;
-  int     mPort;
+  unsigned short int mPort;
   short   mProtocol;
   bool    mStorePasswd;
   bool    mLeaveOnServer;
