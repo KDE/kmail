@@ -906,15 +906,21 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
   vlay->addWidget( storePass );
   vlay->addWidget( encToSelf );
 
-  // set default values
-  pgpUserEdit->setText( pgp->user() );
-  storePass->setChecked( pgp->storePassPhrase() );
-  encToSelf->setChecked( pgp->encryptToSelf() );
+  setValues();
 }
 
 
 KpgpConfig::~KpgpConfig()
 {
+}
+
+void
+KpgpConfig::setValues()
+{
+  // set default values
+  pgpUserEdit->setText( pgp->user() );
+  storePass->setChecked( pgp->storePassPhrase() );
+  encToSelf->setChecked( pgp->encryptToSelf() );
 }
 
 void

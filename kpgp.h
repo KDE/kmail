@@ -240,6 +240,7 @@ class KpgpConfig : public QWidget
     KpgpConfig(QWidget *parent = 0, const char *name = 0);
     virtual ~KpgpConfig();
 
+    virtual void setValues();
     virtual void applySettings();
        
   protected:

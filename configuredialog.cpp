@@ -1978,7 +1978,7 @@ void ConfigureDialog::setupMimePage( void )
 
 void ConfigureDialog::setupSecurityPage( void )
 {
-  // Nothing here
+  mSecurity.pgpConfig->setValues();
 }
 
 
