@@ -1934,12 +1934,10 @@ void KMComposeWin::slotPrint()
 void KMComposeWin::slotDropAction(QDropEvent *e)
 {
   QStrList fileStrList;
-  QStringList::Iterator it;
-  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, fileStrList )) {
-    QStringList fileList = QStringList::fromStrList(fileStrList);
-    for (it = fileList.begin(); it != fileList.end(); ++it) {
-      addAttach(QString::fromLocal8Bit(*it));
-    }
+  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, fileStrList ))
+  {
+    for (QStrListIterator it(fileStrList); it; ++it)
+      addAttach(QString::fromUtf8(KURL(*it).prettyURL()));
   }
   else
     KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
@@ -2470,6 +2468,25 @@ void KMLineEdit::slotCompletion()
 
   setFocus();
   cursorAtEnd();
+}
+
+//-----------------------------------------------------------------------------
+void KMLineEdit::dropEvent(QDropEvent *e)
+{
+  QStrList uriList;
+  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, uriList ))
+  {
+    QString ct = text();
+    for (QStrListIterator it(uriList); it; ++it)
+    {
+      if (!ct.isEmpty()) ct.append(", ");
+      KURL u(*it);
+      if (u.protocol() == "mailto") ct.append(QString::fromUtf8(u.path()));
+      else ct.append(QString::fromUtf8(*it));
+    }
+    setText(ct);
+  }
+  else QLineEdit::dropEvent(e);
 }
 
 //-----------------------------------------------------------------------------

@@ -130,6 +130,7 @@ public slots:
 
 protected:
   virtual bool eventFilter(QObject*, QEvent*);
+  virtual void dropEvent(QDropEvent *e);
   KMComposeWin* mComposer;
 protected:
 };
