@@ -1151,15 +1151,15 @@ Kpgp::Result Kleo::KeyResolver::showKeyApprovalDialog() {
 
   std::vector<Kleo::KeyApprovalDialog::Item> items;
   items.reserve( d->mPrimaryEncryptionKeys.size() +
-		 d->mSecondaryEncryptionKeys.size() );
+	         d->mSecondaryEncryptionKeys.size() );
   std::copy( d->mPrimaryEncryptionKeys.begin(), d->mPrimaryEncryptionKeys.end(),
 	     std::back_inserter( items ) );
   std::copy( d->mSecondaryEncryptionKeys.begin(), d->mSecondaryEncryptionKeys.end(),
 	     std::back_inserter( items ) );
 
   std::vector<GpgME::Key> senderKeys;
-  items.reserve( d->mOpenPGPEncryptToSelfKeys.size() +
-		 d->mSMIMEEncryptToSelfKeys.size() );
+  senderKeys.reserve( d->mOpenPGPEncryptToSelfKeys.size() +
+	              d->mSMIMEEncryptToSelfKeys.size() );
   std::copy( d->mOpenPGPEncryptToSelfKeys.begin(), d->mOpenPGPEncryptToSelfKeys.end(),
 	     std::back_inserter( senderKeys ) );
   std::copy( d->mSMIMEEncryptToSelfKeys.begin(), d->mSMIMEEncryptToSelfKeys.end(),
