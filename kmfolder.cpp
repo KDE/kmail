@@ -461,7 +461,7 @@ int KMFolder::createIndexFromContents()
 	{
 	  mi = new KMMsgInfo(this);
 	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr, offs, size);
-	  mi->setStatus(status,xstatus);
+	  mi->setStatus("RO","O");
 	  mi->setDate(dateStr);
 	  mi->setDirty(FALSE);
 	  mMsgList.append(mi);
@@ -499,6 +499,7 @@ int KMFolder::createIndexFromContents()
       inHeader = FALSE;
     if (!inHeader) continue;
 
+    /* -sanders Make all messages read when auto-recreating index
     if ((needStatus & 1) && strncasecmp(line, "Status:", 7) == 0 && 
 	isblank(line[7])) 
     {
@@ -515,7 +516,7 @@ int KMFolder::createIndexFromContents()
       xstatus[i] = '\0';
       needStatus &= ~2;
     }
-    else if (strncasecmp(line,"X-KMail-Mark:",13)==0 && isblank(line[13]))
+    else*/ if (strncasecmp(line,"X-KMail-Mark:",13)==0 && isblank(line[13]))
       xmarkStr = QString(line+14).copy();
     else if (strncasecmp(line,"In-Reply-To:",12)==0 && isblank(line[12])) {
       int rightAngle;
