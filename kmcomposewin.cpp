@@ -1074,16 +1074,6 @@ bool KMComposeWin::applyChanges(void)
 #endif
 
   bool isQP = kernel->msgSender()->sendQuotedPrintable();
-
-  // Change "From " to " From "
-  QString text;
-  if (disableBreaking)
-      text = mEditor->text();
-  else
-      text = mEditor->brokenText();
-  text.replace(QRegExp("\nFrom "),QString("\n From "));
-  mEditor->setText(text);
-
   if(mAtmList.count() <= 0) {
     // If there are no attachments in the list waiting it is a simple
     // text message.
