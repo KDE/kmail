@@ -619,8 +619,9 @@ void KMReaderWin::createActions( KActionCollection * ac ) {
   mOpenAddrBookAction = new KAction( i18n("Open in Address Book"),
 				    0, this, SLOT(slotMailtoOpenAddrBook()),
 				    ac, "openin_addr_book" );
-  mCopyAction = new KAction( i18n("Copy to Clipboard"), 0, this,
-			     SLOT(slotUrlCopy()), ac, "copy_address" );
+  mCopyAction = KStdAction::copy( this, SLOT(slotCopySelectedText()), ac, "kmail_copy");
+  mSelectAllAction = new KAction( i18n("Select All"), CTRL+SHIFT+Key_A, this,
+                SLOT(selectAll()), ac, "mark_all_text" );
   mCopyURLAction = new KAction( i18n("Copy Link Address"), 0, this,
 				SLOT(slotUrlCopy()), ac, "copy_url" );
   mUrlOpenAction = new KAction( i18n("Open URL"), 0, this,

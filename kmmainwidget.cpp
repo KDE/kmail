@@ -295,7 +295,7 @@ void KMMainWidget::readConfig(void)
   // restore the toggle action to the saved value; this is also read during
   // the reader initialization
   if (mMsgView)
-    toggleFixFontAction()->setChecked( readerConfig.readBoolEntry( "useFixedFont",
+    mMsgView->toggleFixFontAction()->setChecked( readerConfig.readBoolEntry( "useFixedFont",
                                                                false ) );
 
   { // area for config group "Geometry"
@@ -637,7 +637,7 @@ void KMMainWidget::createWidgets(void)
 void KMMainWidget::activatePanners(void)
 {
   if (mMsgView) {
-    QObject::disconnect( actionCollection()->action( "kmail_copy" ),
+    QObject::disconnect( mMsgView->copyAction(),
         SIGNAL( activated() ),
         mMsgView, SLOT( slotCopySelectedText() ));
   }
@@ -669,7 +669,7 @@ void KMMainWidget::activatePanners(void)
   }
 
   if (mMsgView) {
-    QObject::connect( actionCollection()->action( "kmail_copy" ),
+    QObject::connect( mMsgView->copyAction(),
 		    SIGNAL( activated() ),
 		    mMsgView, SLOT( slotCopySelectedText() ));
   }
@@ -2002,8 +2002,10 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
   KPopupMenu * menu = new KPopupMenu;
   updateMessageMenu();
   mUrlCurrent = aUrl;
-
-  if (!aUrl.isEmpty())
+  if(mMsgView && !mMsgView->copyText().isEmpty()) {
+    mMsgView->copyAction()->plug( menu );
+    mMsgView->selectAllAction()->plug( menu );
+  } else if (!aUrl.isEmpty())
   {
     if (aUrl.protocol() == "mailto")
     {
@@ -2014,7 +2016,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       menu->insertSeparator();
       mMsgView->addAddrBookAction()->plug( menu );
       mMsgView->openAddrBookAction()->plug( menu );
-      mMsgView->copyAction()->plug( menu );
+      mMsgView->copyURLAction()->plug( menu );
       mMsgView->startImChatAction()->plug( menu );
       // only enable if our KIMProxy is functional
       mMsgView->startImChatAction()->setEnabled( kmkernel->imProxy()->initialize() );
@@ -2050,38 +2052,28 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mEditAction->plug(menu);
     }
     else {
-      mReplyAction->plug(menu);
-      mReplyAllAction->plug(menu);
-      mReplyAuthorAction->plug( menu );
-      mReplyListAction->plug( menu );
+      mReplyActionMenu->plug(menu);
       mForwardActionMenu->plug(menu);
     }
     menu->insertSeparator();
-    if ( !out_folder ) {
-      //   mFilterMenu()->plug( menu );
-      mStatusMenu->plug( menu );
-      mThreadStatusMenu->plug( menu );
-    }
 
     mCopyActionMenu->plug( menu );
     mMoveActionMenu->plug( menu );
 
     menu->insertSeparator();
-    mWatchThreadAction->plug( menu );
-    mIgnoreThreadAction->plug( menu );
 
+    mStatusMenu->plug( menu );
     menu->insertSeparator();
 
-    // this one only make sense if there is a reader window.
-    if (mMsgView) {
-      toggleFixFontAction()->plug(menu);
-    }
     viewSourceAction()->plug(menu);
-
+    if(mMsgView) {
+      mMsgView->toggleFixFontAction()->plug(menu);
+    }
     menu->insertSeparator();
     mPrintAction->plug( menu );
     mSaveAsAction->plug( menu );
     mSaveAttachmentsAction->plug( menu );
+
     menu->insertSeparator();
     mTrashAction->plug( menu );
     mDeleteAction->plug( menu );
@@ -2204,10 +2196,11 @@ void KMMainWidget::setupActions()
 
   (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
-
-  (void) new KAction( i18n("Select Message &Text"),
-		      CTRL+SHIFT+Key_A, mMsgView,
-		      SLOT(selectAll()), actionCollection(), "mark_all_text" );
+  
+  //select all now in KMReaderWin::selectAllAction()
+  //(void) new KAction( i18n("Select Message &Text"),
+  //	      CTRL+SHIFT+Key_A, mMsgView,
+  //	      SLOT(selectAll()), actionCollection(), "mark_all_text" );
 
   //----- Folder Menu
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, this,
@@ -2524,7 +2517,7 @@ void KMMainWidget::setupActions()
   mCopyActionMenu = new KActionMenu( i18n("&Copy To" ),
                                     actionCollection(), "copy_to" );
 
-  mApplyFiltersAction = new KAction( i18n("Appl&y Filters"), "filter",
+  mApplyAllFiltersAction = new KAction( i18n("Appl&y All Filters"), "filter",
 				    CTRL+Key_J, this,
 				    SLOT(slotApplyFilters()),
 				    actionCollection(), "apply_filters" );
@@ -2681,7 +2674,8 @@ void KMMainWidget::setupActions()
 // 		      SLOT(slotUndo()), actionCollection(),
 //		      "kmail_undo" );
 
-  KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
+  //copy now defined in KMReaderWin::copyAction()
+  //KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
 //  (void) new KAction( i18n("&Copy"), CTRL+Key_C, mMsgView,
 // 		      SLOT(slotCopySelectedText()), actionCollection(),
 //		      "kmail_copy" );
@@ -2927,8 +2921,8 @@ void KMMainWidget::updateMessageActions()
         mEditAction->setEnabled( !msg->transferInProgress() );
     }
 
-    mApplyFiltersAction->setEnabled(count);
-    mApplyFilterActionsMenu->setEnabled(count && (mApplyFilterActionsMenu->popupMenu()->count()>0));
+    mApplyAllFiltersAction->setEnabled(count);
+    mApplyFilterActionsMenu->setEnabled(count/* && (mApplyFilterActionsMenu->popupMenu()->count()>1)*/);
 }
 
 // This needs to be updated more often, so it is in its method.
@@ -3194,6 +3188,8 @@ void KMMainWidget::initializeFilterActions()
   KAction *filterAction = 0;
 
   clearFilterActions();
+  mApplyAllFiltersAction->plug(mApplyFilterActionsMenu->popupMenu());
+  bool addedSeparator = false;
   for ( QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()) ;
         it.current() ; ++it ) {
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
@@ -3210,6 +3206,10 @@ void KMMainWidget::initializeFilterActions()
       filterAction = new KAction(as, icon, (*it)->shortcut(), filterCommand,
                                  SLOT(start()), actionCollection(),
                                  normalizedName.local8Bit());
+      if(!addedSeparator) {
+        mApplyFilterActionsMenu->popupMenu()->insertSeparator();
+        addedSeparator = !addedSeparator;
+      }
       filterAction->plug( mApplyFilterActionsMenu->popupMenu() );
       mFilterMenuActions.append(filterAction);
       if ( (*it)->configureToolbar() )

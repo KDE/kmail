@@ -285,14 +285,17 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
   KPopupMenu * menu = new KPopupMenu;
   mUrl = aUrl;
   mMsg = &aMsg;
-
-  if (!aUrl.isEmpty()) {
+  
+  if(mReaderWin && !mReaderWin->copyText().isEmpty()) {
+    mReaderWin->copyAction()->plug( menu );
+    mReaderWin->selectAllAction()->plug( menu );
+  } else if (!aUrl.isEmpty()) {
     if (aUrl.protocol() == "mailto") {
       // popup on a mailto URL
       mReaderWin->mailToComposeAction()->plug( menu );
       if ( mMsg ) {
-	mReaderWin->mailToReplyAction()->plug( menu );
-	mReaderWin->mailToForwardAction()->plug( menu );
+        mReaderWin->mailToReplyAction()->plug( menu );
+        mReaderWin->mailToForwardAction()->plug( menu );
         menu->insertSeparator();
       }
       mReaderWin->addAddrBookAction()->plug( menu );
@@ -314,10 +317,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       return;
     }
 
-    mReplyAction->plug( menu );
-    mReplyAllAction->plug( menu );
-    mReplyAuthorAction->plug( menu );
-    mReplyListAction->plug( menu );
+    mReplyActionMenu->plug( menu );
     mForwardActionMenu->plug( menu );
 
     menu->insertSeparator();
@@ -328,9 +328,9 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       mainwin->folderTree()->folderToPopupMenu( false, this, &mMenuToFolder, copyMenu );
     menu->insertItem( i18n("&Copy To" ), copyMenu );
     menu->insertSeparator();
-    mReaderWin->toggleFixFontAction()->plug( menu );
     mViewSourceAction->plug( menu );
-
+    mReaderWin->toggleFixFontAction()->plug( menu );
+    menu->insertSeparator();
     mPrintAction->plug( menu );
     menu->insertItem(  SmallIcon("filesaveas"), i18n( "Save &As..." ), mReaderWin, SLOT( slotSaveMsg() ) );
     menu->insertItem( i18n("Save Attachments..."), mReaderWin, SLOT(slotSaveAttachments()) );

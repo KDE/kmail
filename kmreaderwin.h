@@ -202,6 +202,7 @@ public:
   KAction *addAddrBookAction() { return mAddAddrBookAction; }
   KAction *openAddrBookAction() { return mOpenAddrBookAction; }
   KAction *copyAction() { return mCopyAction; }
+  KAction *selectAllAction() { return mSelectAllAction; }
   KAction *copyURLAction() { return mCopyURLAction; }
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
@@ -454,7 +455,7 @@ private:
   KActionCollection *mActionCollection;
   KAction *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction, *mCopyURLAction,
-      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction;
+      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction, *mStartIMChatAction, *mSelectAllAction;
 
   KToggleAction *mToggleFixFontAction;
   KURL mUrlClicked;

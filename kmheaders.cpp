@@ -2758,12 +2758,11 @@ void KMHeaders::slotRMB()
      mOwner->editAction()->plug(menu);
   else {
      // show most used actions
-     mOwner->replyAction()->plug(menu);
-     mOwner->replyAllAction()->plug(menu);
-     mOwner->replyAuthorAction()->plug( menu );
-     mOwner->replyListAction()->plug(menu);
+     mOwner->replyMenu()->plug(menu);
      mOwner->forwardMenu()->plug(menu);
-     mOwner->sendAgainAction()->plug(menu);
+     if(mOwner->sendAgainAction()->isEnabled()) {
+       mOwner->sendAgainAction()->plug(menu);
+     }
   }
   menu->insertSeparator();
 
@@ -2779,35 +2778,33 @@ void KMHeaders::slotRMB()
     mOwner->folderTree()->folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
   }
-
-  if ( !out_folder ) {
-    mOwner->statusMenu()->plug( menu ); // Mark Message menu
-    if ( mOwner->threadStatusMenu()->isEnabled() ) {
-      mOwner->threadStatusMenu()->plug( menu ); // Mark Thread menu
-    }
+  menu->insertSeparator();
+  mOwner->statusMenu()->plug( menu ); // Mark Message menu
+  if ( mOwner->threadStatusMenu()->isEnabled() ) {
+    mOwner->threadStatusMenu()->plug( menu ); // Mark Thread menu
   }
 
-  if (mOwner->watchThreadAction()->isEnabled() ) {
-    menu->insertSeparator();
+  if (!out_folder && mOwner->watchThreadAction()->isEnabled() ) {
     mOwner->watchThreadAction()->plug(menu);
     mOwner->ignoreThreadAction()->plug(menu);
   }
-  menu->insertSeparator();
-  mOwner->trashAction()->plug(menu);
-  mOwner->deleteAction()->plug(menu);
+  
+
+
+  if ( !out_folder ) {
+    menu->insertSeparator();
+    //mOwner->action("apply_filters")->plug(menu);  //this is now a submenu in apply_filter_actions
+    mOwner->filterMenu()->plug( menu ); // Create Filter menu
+    mOwner->action("apply_filter_actions")->plug(menu);
+  }
 
   menu->insertSeparator();
   mOwner->saveAsAction()->plug(menu);
   mOwner->saveAttachmentsAction()->plug(menu);
   mOwner->printAction()->plug(menu);
-
-  if ( !out_folder ) {
-    menu->insertSeparator();
-    mOwner->action("apply_filters")->plug(menu);
-    mOwner->filterMenu()->plug( menu ); // Create Filter menu
-  }
-
-  mOwner->action("apply_filter_actions")->plug(menu);
+  menu->insertSeparator();
+  mOwner->trashAction()->plug(menu);
+  mOwner->deleteAction()->plug(menu);
 
   KAcceleratorManager::manage(menu);
   kmkernel->setContextMenuShown( true );
