@@ -2303,7 +2303,7 @@ void KMLoadPartsCommand::slotPartRetrieved( KMMessage *msg,
     for ( PartNodeMessageMap::const_iterator it = mPartMap.begin();
           it != mPartMap.end();
           ++it ) {
-      if ( it.key()->dwPart() == part )
+      if ( it.key()->dwPart()->partId() == part->partId() )
         it.key()->setDwPart( part );
     }
   } else
