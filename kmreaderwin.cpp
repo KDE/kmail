@@ -1073,9 +1073,16 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
         signer.replace(QRegExp("&"), "&amp;");
         signer.replace(QRegExp("<"), "&lt;");
         signer.replace(QRegExp(">"), "&gt;");
-
         signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
-        Kpgp::Validity keyTrust = pgp->keyTrust( pgp->signedByKey() );
+
+        QCString keyId = pgp->signedByKey();
+        Kpgp::Validity keyTrust;
+        if( !keyId.isEmpty() )
+          keyTrust = pgp->keyTrust( keyId );
+        else
+          // This is needed for the PGP 6 support because PGP 6 doesn't
+          // print the key id of the signing key if the key is known.
+          keyTrust = pgp->keyTrust( pgp->signedBy() );
 
         if (goodSignature)
         {
