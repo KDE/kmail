@@ -104,7 +104,6 @@ using KMail::TeeHtmlWriter;
 //--- Sven's save attachments to /tmp start ---
 #include <unistd.h>
 #include <kstandarddirs.h>  // for access and getpid
-#include <kglobalsettings.h>
 //--- Sven's save attachments to /tmp end ---
 
 // for the click on attachment stuff (dnaber):
@@ -2981,7 +2980,11 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       iio->setFileName(aFileName);
       if( iio->read() ) {
           QImage img = iio->image();
+#if KDE_IS_VERSION( 3, 1, 90 )
           QRect desk = KGlobalSettings::desktopGeometry(mMainWindow);
+#else
+          QRect desk = QApplication::desktop()->screen(QApplication::desktop()->screenNumber(mMainWindow))->rect();
+#endif
           // determine a reasonable window size
           int width, height;
           if( img.width() < 50 )
