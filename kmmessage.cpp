@@ -29,10 +29,7 @@ using KMail::ObjectTreeParser;
 #include <kurl.h>
 #include <qcursor.h>
 
-// we need access to the protected member DwBody::DeleteBodyParts()...
-#define protected public
 #include <mimelib/body.h>
-#undef protected
 #include <mimelib/field.h>
 
 #include <qtextcodec.h>
