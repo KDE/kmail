@@ -2358,17 +2358,17 @@ void KMMainWidget::setupActions()
                       "kmail_configure_kmail" );
 
   KStdAction::undo(this, SLOT(slotUndo()), actionCollection(), "kmail_undo");
-//  (void) new KAction( i18n("&Undo..."), 0, this,
+//  (void) new KAction( i18n("&Undo"), 0, this,
 // 		      SLOT(slotUndo()), actionCollection(),
 //		      "kmail_undo" );
 
   KStdAction::copy( messageView(), SLOT(slotCopySelectedText()), actionCollection(), "kmail_copy");
-//  (void) new KAction( i18n("&Copy..."), CTRL+Key_C, mMsgView,
+//  (void) new KAction( i18n("&Copy"), CTRL+Key_C, mMsgView,
 // 		      SLOT(slotCopySelectedText()), actionCollection(),
 //		      "kmail_copy" );
 
 //  KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
-  (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), "idea",
+  (void) new KAction( KGuiItem( i18n("Tip of the &Day"), "idea",
                                 i18n("Show \"Tip of the Day\"") ),
                       0, this, SLOT(slotShowTip()),
                       actionCollection(), "help_show_tip" );
