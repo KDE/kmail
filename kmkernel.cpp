@@ -1441,7 +1441,7 @@ static KStaticDeleter<KConfig> myConfigSD;
 KConfig* KMKernel::config()
 {
     if (!myConfig)
-	myConfig = myConfigSD.setObject(new KConfig( "kmailrc"));
+	myConfig = myConfigSD.setObject(myConfig, new KConfig( "kmailrc"));
     return myConfig;
 }
 
