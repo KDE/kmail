@@ -956,6 +956,8 @@ void KMMainWin::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotEditMsg()
 {
+  if (mFolder != kernel->outboxFolder() && mFolder != kernel->draftsFolder())
+    return;
   KMMessage *msg;
   int aIdx;
 
@@ -2071,7 +2073,8 @@ void KMMainWin::updateMessageMenu()
 
     bool single_actions = count == 1;
     filterMenu->setEnabled( single_actions );
-    editAction->setEnabled( single_actions );
+    editAction->setEnabled( single_actions && 
+      (mFolder == kernel->outboxFolder() || mFolder == kernel->draftsFolder()));
     bounceAction->setEnabled( single_actions );
     replyAction->setEnabled( single_actions );
     noQuoteReplyAction->setEnabled( single_actions );
