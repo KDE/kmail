@@ -101,7 +101,6 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ihl->addWidget( mNormalIconButton );
   ihl->addStretch( 1 );
   
-  ihl = new QHBoxLayout( ivl );
   QLabel *ilabel2 = new QLabel( i18n("Unread:"), iconGroup );
   ihl->addWidget( ilabel2 );
 
