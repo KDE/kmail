@@ -223,10 +223,19 @@ void KMTransportDialog::makeSendmailPage()
     new QPushButton( i18n("Choos&e..."), page );
   connect( mSendmail.chooseButton, SIGNAL(clicked()),
            this, SLOT(slotSendmailChooser()) );
+
+  connect( mSendmail.locationEdit, SIGNAL(textChanged ( const QString & )),
+           this, SLOT(slotSendmailEditPath(const QString &)) );
+
   mSendmail.chooseButton->setAutoDefault( false );
   grid->addWidget( mSendmail.chooseButton, 1, 2 );
+  slotSendmailEditPath(mSendmail.locationEdit->text());
 }
 
+void KMTransportDialog::slotSendmailEditPath(const QString & _text)
+{
+  enableButtonOK( !_text.isEmpty() );
+}
 
 void KMTransportDialog::makeSmtpPage()
 {

@@ -74,7 +74,7 @@ private slots:
   void slotSmtpEncryptionChanged(int);
   void slotCheckSmtpCapabilities();
   void slotSmtpCapabilities(const QStringList &);
-
+  void slotSendmailEditPath(const QString &);
 private:
   struct SendmailWidgets
   {
