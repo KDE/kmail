@@ -809,13 +809,14 @@ void KMHeaders::msgRemoved(int id, QString msgId)
 
   if (currentItem() == mItems[id])
     mPrevCurrent = 0;
-  delete mItems[id];
+  KMHeaderItem *removedItem = mItems[id];
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     //    kdDebug() << QString("i = %1, id =%2").arg(i).arg(mItems[i+1]->msgId()) << endl;
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
   }
   mItems.resize( mItems.size() - 1 );
+  delete removedItem;
 }
 
 
