@@ -4913,11 +4913,11 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     {
       draftsFolder = kmkernel->folderMgr()->findIdString( mMsg->drafts() );
       if ( draftsFolder == 0 )
-	// This is *NOT* supposed to be "imapDraftsFolder", because a
-	// dIMAP folder works like a normal folder
-	draftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
+        // This is *NOT* supposed to be "imapDraftsFolder", because a
+        // dIMAP folder works like a normal folder
+        draftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
       if ( draftsFolder == 0 )
-	imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
+        imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
     }
     if (imapDraftsFolder && imapDraftsFolder->noContent())
       imapDraftsFolder = 0;
@@ -4930,7 +4930,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     kdDebug(5006) << "saveindrafts: drafts=" << draftsFolder->name() << endl;
     if (imapDraftsFolder)
       kdDebug(5006) << "saveindrafts: imapdrafts="
-		    << imapDraftsFolder->name() << endl;
+        << imapDraftsFolder->name() << endl;
 
     sentOk = !(draftsFolder->addMsg(mMsg));
     if (imapDraftsFolder)
