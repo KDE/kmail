@@ -1673,7 +1673,7 @@ static const struct {
   { "NewMessage", I18N_NOOP("New Message") },
   { "UnreadMessage", I18N_NOOP("Unread Message") },
   { "FlagMessage", I18N_NOOP("Important Message") },
-  { "PGPMessageEncr", I18N_NOOP("OpenPGP Message - ncrypted") },
+  { "PGPMessageEncr", I18N_NOOP("OpenPGP Message - Encrypted") },
   { "PGPMessageOkKeyOk", I18N_NOOP("OpenPGP Message - Valid Signature with Trusted Key") },
   { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP Message - Valid Signature with Untrusted Key") },
   { "PGPMessageWarn", I18N_NOOP("OpenPGP Message - Unchecked Signature") },
