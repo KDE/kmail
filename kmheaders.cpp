@@ -319,7 +319,7 @@ public:
 
   static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KMPaintInfo *paintInfo, int sortOrder)
   {
-    if (!msg) return;  // It appears, that QListView in Qt-3.0 asks for the key
+    if (!msg) return QString::null;  // It appears, that QListView in Qt-3.0 asks for the key
                        // in QListView::clear(), which is called from
                        // readSortOrder()
     int column = sortOrder & ((1 << 5) - 1);
