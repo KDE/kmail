@@ -121,9 +121,11 @@ void RedirectDialog::slotAddrBook()
   dlg.setRecentAddresses( 
       RecentAddresses::self( KMKernel::config() )->kabcAddresses() );
 
-  // FIXME We have to make changes to the address dialog so that
-  // it's impossible to specify Cc or Bcc addresses as we support
+  // Make it impossible to specify Cc or Bcc addresses as we support
   // only the Redirect-To header!
+  dlg.setShowCC( false );
+  dlg.setShowBCC( false );
+
   if (dlg.exec()==QDialog::Rejected) return;
 
   mEditTo->setText( dlg.to().join(", ") );
