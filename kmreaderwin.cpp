@@ -912,8 +912,6 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::clearCache()
 {
-  if (mLastSerNum > 0) // no risk for a dangling pointer
-    return;
   updateReaderWinTimer.stop();
   clear();
   mDelayedMarkTimer.stop();
