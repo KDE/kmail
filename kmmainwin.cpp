@@ -90,7 +90,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   connect(acctMgr, SIGNAL( newMail()),
           SLOT( slotNewMail()));
 
-  kapp->setName("KMail");
   setCaption( i18n("KDE Mail Client") );
 
   // must be the last line of the constructor:
