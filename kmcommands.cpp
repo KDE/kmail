@@ -71,9 +71,10 @@ using KMail::ActionScheduler;
 #include "kmmsgdict.h"
 #include "kmsender.h"
 #include "undostack.h"
-#include "partNode.h"
 #include "kcursorsaver.h"
 #include "partNode.h"
+#include "objecttreeparser.h"
+using KMail::ObjectTreeParser;
 using KMail::FolderJob;
 #include "mailsourceviewer.h"
 using KMail::MailSourceViewer;
@@ -2112,6 +2113,8 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
   {
     if( bSaveEncrypted || !bEncryptedParts) {
       partNode *dataNode = node;
+      QCString rawReplyString;
+      bool gotRawReplyString = false;
       if( !bSaveWithSig ) {
         if( DwMime::kTypeMultipart == node->type() &&
             DwMime::kSubtypeSigned == node->subType() ){
@@ -2133,9 +2136,20 @@ KMCommand::Result KMSaveAttachmentsCommand::saveItem( partNode *node,
                 DwMime::kSubtypeUnknown,
                 TRUE, false );
           }
+	}else{
+	  ObjectTreeParser otp( 0, 0, false, false, false );
+
+	  // process this node and all it's siblings and descendants
+	  dataNode->setProcessed( false, true );
+	  otp.parseObjectTree( dataNode );
+
+	  rawReplyString = otp.rawReplyString();
+	  gotRawReplyString = true;
         }
       }
-      QByteArray cstr = dataNode->msgPart().bodyDecodedBinary();
+      QByteArray cstr = gotRawReplyString
+                         ? rawReplyString
+                         : dataNode->msgPart().bodyDecodedBinary();
       data = cstr;
       size_t size = cstr.size();
       if ( dataNode->msgPart().type() == DwMime::kTypeText ) {
