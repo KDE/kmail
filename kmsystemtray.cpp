@@ -26,13 +26,17 @@
 #include <kwin.h>
 
 #include <qevent.h>
+#include <qfontmetrics.h>
 #include <qlistview.h>
 #include <qstring.h>
 #include <qtooltip.h>
+#include <qlabel.h>
 
-#include <qimage.h>
-#include <qpixmap.h>
-#include <qpixmapcache.h>
+#include <kglobalsettings.h>
+#include <kiconeffect.h>
+#include <qpainter.h>
+
+#include <math.h>
 
 #include "kaction.h"
 #include "kmmainwin.h"
@@ -56,16 +60,17 @@
  * to the first unread message in each folder.
  */
 KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(parent, name),
-  mNewMessagePopupId(-1), mPopupMenu(0)
+mNewMessagePopupId(-1), mPopupMenu(0)
 {
   setAlignment( AlignCenter );
   kdDebug(5006) << "Initting systray" << endl;
-  KIconLoader *loader = KGlobal::iconLoader();
 
-  mDefaultIcon = loader->loadIcon("kmail", KIcon::Small);
+  mDefaultIcon = SmallIcon( "kmail" );
+  mTransparentIcon = SmallIcon( "kmail" );
+  KIconEffect::semiTransparent( mTransparentIcon );
+
   setPixmap(mDefaultIcon);
   mParentVisible = true;
-  mStep = 0;
   mMode = OnNewMail;
 
   /** Initiate connections between folders and this object */
@@ -110,77 +115,62 @@ void KMSystemTray::setMode(int newMode)
   {
     kdDebug(5006) << "Initting alwayson mMode" << endl;
 
-    mAnimating = false;
-    mInverted = false;
     if(isHidden()) show();
-    // Already visible, so there must be new mail.  Start mAnimating
-    else startAnimation();
   } else
   {
-    // Animating, so there must be new mail.  Turn off animation
-    if(mAnimating) mAnimating = false;
-    else hide();
-  }
-}
-
-void KMSystemTray::startAnimation()
-{
-  mAnimating = true;
-  clear();
-  kdDebug(5006) << "Called start animate" << endl;
-  slotAnimate();
-}
-
-void KMSystemTray::slotAnimate()
-{
-
-  // Swap the icons and check again in half a second as long
-  // as the user has not signalled
-  // to stop animation by clicking on the system tray
-  if( mAnimating )
-  {
-    switchIcon();
-    QTimer::singleShot( 70, this, SLOT(slotAnimate()));
-  } else
-  {
-    // Animation is over, so start polling again
-    kdDebug(5006) << "User interrupted animation, poll" << endl;
-
-    // Switch back to the default icon since animation is done
-    setPixmap(mDefaultIcon);
+    if(mCount == 0)
+    {
+      hide();
+    }
   }
 }
 
 /**
- * Switch the Pixmap to the next icon in the sequence, moving
- * to progressively larger images before cycling back to the
- * default.  QPixmapCache is used to store the images so building
- * the pixmap is only a first time hit.
+ * Update the count of unread messages.  If there are unread messages,
+ * overlay the count on top of a transparent version of the KMail icon.
+ * If there is no unread mail, restore the normal KMail icon.
  */
-void KMSystemTray::switchIcon()
+void KMSystemTray::updateCount() 
 {
-    //kdDebug(5006) << "step is " << mStep << endl;
+  if(mCount != 0)
+  {
 
-  QString iconName = QString("icon%1").arg(mStep);
-  QPixmap icon;
+    int oldPixmapWidth = pixmap()->size().width();
+    int oldPixmapHeight = pixmap()->size().height();
 
-  if ( !QPixmapCache::find(iconName, icon) ) {
-    int w = mDefaultIcon.width() + (mStep * 1);
-    int h = mDefaultIcon.width() + (mStep * 1);
+    /** Scale the font size down with each increase in the number
+     * of digits in the count, to a minimum point size of 6 */
+    int numDigits = ((int) log10((double) mCount) + 1);
+    QFont countFont = KGlobalSettings::generalFont();
+    countFont.setBold(true);
 
-    // Scale icon out from default
-    icon.convertFromImage(mDefaultIcon.convertToImage().smoothScale(w, h));
+    int countFontSize = countFont.pointSize();
+    while(countFontSize > 5)
+    {
+      QFontMetrics qfm( countFont );
+      int fontWidth = qfm.width( QChar( '0' ) );
+      if((fontWidth * numDigits) > oldPixmapWidth)
+      {
+        --countFontSize;
+        countFont.setPointSize(countFontSize);
+      } else break;
+    }
 
-    QPixmapCache::insert(iconName, icon);
+    QPixmap bg(oldPixmapWidth, oldPixmapHeight);
+    bg.fill(this, 0, 0);
+
+    /** Overlay count on transparent icon */
+    QPainter p(&bg);
+    p.drawPixmap(0, 0, mTransparentIcon);
+    p.setFont(countFont);
+    p.setPen(Qt::blue);
+    p.drawText(pixmap()->rect(), Qt::AlignCenter, QString::number(mCount));
+
+    setPixmap(bg);
+  } else
+  {
+    setPixmap(mDefaultIcon);
   }
-
-  if(mStep == 9) mInverted = true;
-  if(mStep == 0) mInverted = false;
-
-  if(mInverted) --mStep;
-  else ++mStep;
-
-  setPixmap(icon);
 }
 
 /**
@@ -194,6 +184,7 @@ void KMSystemTray::foldersChanged()
    * unread message was in a folder that was just removed.
    */
   mFoldersWithUnread.clear();
+  mCount = 0;
 
   if(mMode == OnNewMail)
   {
@@ -239,13 +230,11 @@ void KMSystemTray::mousePressEvent(QMouseEvent *e)
   // switch to kmail on left mouse button
   if( e->button() == LeftButton )
   {
-    if ( mParentVisible && !mAnimating )
+    if( mParentVisible )
       hideKMail();
     else
       showKMail();
   }
-
-  mAnimating = false;
 
   // open popup menu on right mouse button
   if( e->button() == RightButton )
@@ -384,12 +373,26 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   /** The number of unread messages in that folder */
   int unread = fldr->countUnread();
 
-  bool unmapped = (mFoldersWithUnread.find(fldr) == mFoldersWithUnread.end());
+  QMap<QGuardedPtr<KMFolder>, int>::Iterator it = 
+  mFoldersWithUnread.find(fldr);
+  bool unmapped = (it == mFoldersWithUnread.end());
+
+  /** If the folder is not mapped yet, increment count by numUnread
+      in folder */
+  if(unmapped) mCount += unread;
+  /* Otherwise, get the difference between the numUnread in the folder and
+   * our last known version, and adjust mCount with that difference */
+  else
+  {
+    int diff = unread - it.data();
+    mCount += diff;
+  }
 
   if(unread > 0)
   {
     /** Add folder to our internal store, or update unread count if already mapped */
     mFoldersWithUnread.insert(fldr, unread);
+    kdDebug(5006) << "There are now " << mFoldersWithUnread.count() << " folders with unread" << endl;
   }
 
   /**
@@ -406,9 +409,6 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
     if(mMode == OnNewMail)
     {
       if(isHidden()) show();
-    } else
-    {
-      if(!mAnimating) startAnimation();
     }
 
   } else
@@ -427,20 +427,20 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
         mPopupFolders.clear();
         disconnect(this, SLOT(selectedAccount(int)));
 
+        mCount = 0;
+
         if(mMode == OnNewMail)
           hide();
-        else
-          mAnimating = false;
       }
     }
   }
 
-  /** Update tooltip to reflect count of folders with unread messages */
-  int folderCount = mFoldersWithUnread.count();
+  updateCount();
 
-  QToolTip::add(this, i18n("There is 1 folder with unread messages.",
-                           "There are %n folders with unread messages.",
-                           folderCount));
+  /** Update tooltip to reflect count of unread messages */
+  QToolTip::add(this, i18n("There is 1 unread message.",
+                           "There are %n unread messages.",
+                           mCount));
 }
 
 /**

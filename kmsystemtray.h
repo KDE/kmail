@@ -26,7 +26,6 @@
 #include <qpixmap.h>
 
 class KMFolder;
-class KMFolderMgr;
 class KMMainWin;
 class QMouseEvent;
 class KPopupMenu;
@@ -55,33 +54,29 @@ private slots:
   void updateNewMessageNotification(KMFolder * folder);
   void foldersChanged();
   void selectedAccount(int);
-  void slotAnimate();
 
 protected:
   void mousePressEvent(QMouseEvent *);
   void showKMail();
   void hideKMail();
-  void switchIcon();
-  void startAnimation();
   void buildPopupMenu();
+  void updateCount();
 
   QString prettyName(KMFolder *);
   KMMainWin * getKMMainWin();
 
 private:
-
-  QPixmap mDefaultIcon;
   
   bool mInverted;
-  bool mAnimating;
   bool mParentVisible;
 
   int mMode;
-  int mStep;
-
+  int mCount;
   int mNewMessagePopupId;
 
   KPopupMenu * mPopupMenu;
+  QPixmap mDefaultIcon; 
+  QPixmap mTransparentIcon;
 
   QPtrVector<KMFolder> mPopupFolders;
   QMap<QGuardedPtr<KMFolder>, int> mFoldersWithUnread;
