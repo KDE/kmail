@@ -1045,8 +1045,7 @@ bool KMailICalIfaceImpl::isResourceImapFolder( KMFolder* folder ) const
 {
   return mUseResourceIMAP && folder &&
     ( folder == mCalendar || folder == mTasks || folder == mJournals ||
-      folder == mNotes || folder == mContacts );
-  // Extra folders are not checked here, since those can't be hidden (right?)
+      folder == mNotes || folder == mContacts || mExtraFolders.find( folder->location() )!=0 );
 }
 
 bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
@@ -1057,16 +1056,21 @@ bool KMailICalIfaceImpl::hideResourceImapFolder( KMFolder* folder ) const
 KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
 {
   if( mUseResourceIMAP && folder ) {
-    if( folder == mCalendar )
-      return KFolderTreeItem::Calendar;
-    else if( folder == mContacts )
-      return KFolderTreeItem::Contacts;
-    else if( folder == mNotes )
-      return KFolderTreeItem::Notes;
-    else if( folder == mTasks )
-      return KFolderTreeItem::Tasks;
-    else if( folder == mJournals )
-      return KFolderTreeItem::Journals;
+    if( folder == mCalendar || folder == mContacts 
+        || folder == mNotes || folder == mTasks
+        || folder == mJournals || mExtraFolders.find( folder->location() ) ) {
+      KMail::FolderContentsType ct = folder->storage()->contentsType();
+      if ( ct == KMail::ContentsTypeCalendar )
+        return KFolderTreeItem::Calendar;
+      if ( ct == KMail::ContentsTypeContact )
+        return KFolderTreeItem::Contacts;
+      if ( ct == KMail::ContentsTypeNote )
+        return KFolderTreeItem::Notes;
+      if ( ct == KMail::ContentsTypeTask )
+        return KFolderTreeItem::Tasks;
+      if ( ct == KMail::ContentsTypeJournal )
+        return KFolderTreeItem::Journals;
+    }
   }
 
   return KFolderTreeItem::Other;
