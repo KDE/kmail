@@ -114,7 +114,7 @@ void KMAcctCachedImap::displayProgress()
     mProgressEnabled = !mapJobData.isEmpty();
     KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
       mProgressEnabled );
-    if (!mProgressEnabled) kernel->filterMgr()->cleanup();
+    if (!mProgressEnabled) kmkernel->filterMgr()->cleanup();
   }
   mIdle = FALSE;
   if (mapJobData.isEmpty())  {
@@ -286,7 +286,7 @@ void KMAcctCachedImap::invalidateIMAPFolders()
 
   QStringList strList;
   QValueList<QGuardedPtr<KMFolder> > folderList;
-  kernel->imapFolderMgr()->createFolderList(&strList, &folderList,
+  kmkernel->imapFolderMgr()->createFolderList(&strList, &folderList,
 					    mFolder->child(), QString::null, false);
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   mCountRemainChecks = 0;

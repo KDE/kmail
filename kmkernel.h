@@ -8,7 +8,7 @@
 
 #include "kmailIface.h"
 
-#define kernel KMKernel::self()
+#define kmkernel KMKernel::self()
 #define kmconfig KMKernel::config()
 
 namespace KIO {

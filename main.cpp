@@ -62,8 +62,8 @@ public:
 };
 
 void KMailApplication::commitData(QSessionManager& sm) {
-  kernel->dumpDeadLetters();
-  kernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
+  kmkernel->dumpDeadLetters();
+  kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
   KApplication::commitData( sm );
 }
 
@@ -144,9 +144,9 @@ int KMailApplication::newInstance()
 
   args->clear();
 
-  if (!kernel->firstInstance() || !kapp->isRestored())
-    kernel->action (mailto, checkMail, to, cc, bcc, subj, body, messageFile, attachURLs);
-  kernel->setFirstInstance(FALSE);
+  if (!kmkernel->firstInstance() || !kapp->isRestored())
+    kmkernel->action (mailto, checkMail, to, cc, bcc, subj, body, messageFile, attachURLs);
+  kmkernel->setFirstInstance(FALSE);
   return 0;
 }
 
@@ -194,11 +194,11 @@ int main(int argc, char *argv[])
   kmsetSignalHandler(kmsignalHandler);
 
   kapp->dcopClient()->resume(); // Ok. We are ready for DCOP requests.
-  kernel->setStartingUp( false ); // Starting up is finished
+  kmkernel->setStartingUp( false ); // Starting up is finished
   // Go!
   int ret = kapp->exec();
   // clean up
-  if (kernel->shuttingDown())
+  if (kmkernel->shuttingDown())
       kmailKernel.notClosedByUser();
   else
       kmailKernel.cleanup();

@@ -34,8 +34,8 @@ void KMFolderComboBox::init()
   mImapShown = true;
   refreshFolders();
   connect( this, SIGNAL( activated(int) ), this, SLOT( slotActivated(int) ) );
-  connect( kernel->folderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
-  if (mImapShown) connect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+  connect( kmkernel->folderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+  if (mImapShown) connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
 }
 
 
@@ -54,9 +54,9 @@ void KMFolderComboBox::showImapFolders(bool shown)
   mImapShown = shown;
   refreshFolders();
   if (shown)
-    connect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+    connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
   else
-    disconnect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+    disconnect( kmkernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -65,9 +65,9 @@ void KMFolderComboBox::createFolderList(QStringList *names,
                                         QValueList<QGuardedPtr<KMFolder> > *folders)
 {
   if (mImapShown)
-    kernel->imapFolderMgr()->createI18nFolderList( names, folders );
+    kmkernel->imapFolderMgr()->createI18nFolderList( names, folders );
 
-  kernel->folderMgr()->createFolderList( names, folders );
+  kmkernel->folderMgr()->createFolderList( names, folders );
   uint i = 0;
   while (i < folders->count())
   {
@@ -81,11 +81,11 @@ void KMFolderComboBox::createFolderList(QStringList *names,
     else i++;
   }
 
-  folders->prepend(kernel->draftsFolder());
-  folders->prepend(kernel->trashFolder());
-  folders->prepend(kernel->sentFolder());
-  if (mOutboxShown) folders->prepend(kernel->outboxFolder());
-  folders->prepend(kernel->inboxFolder());
+  folders->prepend(kmkernel->draftsFolder());
+  folders->prepend(kmkernel->trashFolder());
+  folders->prepend(kmkernel->sentFolder());
+  if (mOutboxShown) folders->prepend(kmkernel->outboxFolder());
+  folders->prepend(kmkernel->inboxFolder());
   for (int i = ((mOutboxShown) ? 4 : 3); i >= 0; i--)
     names->prepend((*(folders->at(i)))->label());
 }
@@ -114,7 +114,7 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
 
   int idx = folders.findIndex( aFolder );
   if (idx == -1)
-    idx = folders.findIndex( kernel->draftsFolder() );
+    idx = folders.findIndex( kmkernel->draftsFolder() );
   setCurrentItem( idx >= 0 ? idx : 0 );
 
   mFolder = aFolder;
@@ -122,8 +122,8 @@ void KMFolderComboBox::setFolder( KMFolder *aFolder )
 
 void KMFolderComboBox::setFolder( const QString &idString )
 {
-  KMFolder *folder = kernel->folderMgr()->findIdString( idString );
-  if (!folder) folder = kernel->imapFolderMgr()->findIdString( idString );
+  KMFolder *folder = kmkernel->folderMgr()->findIdString( idString );
+  if (!folder) folder = kmkernel->imapFolderMgr()->findIdString( idString );
   if (!folder && !idString.isEmpty())
   {
      if (mSpecialIdx >= 0)
@@ -161,7 +161,7 @@ KMFolder *KMFolderComboBox::getFolder()
     idx++;
   }
 
-  return kernel->draftsFolder();
+  return kmkernel->draftsFolder();
 }
 
 //-----------------------------------------------------------------------------

@@ -478,7 +478,7 @@ namespace KMail {
     if ( !mErrorDialogIsActive )
     {
       mErrorDialogIsActive = true;
-      KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
+      KMessageBox::messageBox(kmkernel->mainWin(), KMessageBox::Error,
             KIO::buildErrorString(errorCode, errorMsg),
             i18n("Error"));
       mErrorDialogIsActive = false;
@@ -516,7 +516,7 @@ namespace KMail {
 
     QValueList<QGuardedPtr<KMFolder> > mSaveList = mMailCheckFolders;
     mMailCheckFolders = mFoldersQueuedForChecking;
-    kernel->acctMgr()->singleCheckMail(this, true);
+    kmkernel->acctMgr()->singleCheckMail(this, true);
     mMailCheckFolders = mSaveList;
     mFoldersQueuedForChecking.clear();
   }
@@ -532,7 +532,7 @@ namespace KMail {
       msg->deleteBodyParts();
 
     // get the currently active reader window
-    if ( !kernel->activeReaderWin() )
+    if ( !kmkernel->activeReaderWin() )
     {
       kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no readerwin!" << endl;
       return;
@@ -540,7 +540,7 @@ namespace KMail {
 
     // download parts according to attachmentstrategy
     BodyVisitor *visitor = BodyVisitorFactory::getVisitor(
-        kernel->activeReaderWin()->attachmentStrategy() );
+        kmkernel->activeReaderWin()->attachmentStrategy() );
     visitor->visit( mBodyPartList );
     QPtrList<KMMessagePart> parts = visitor->partsToLoad();
     QPtrListIterator<KMMessagePart> it( parts );

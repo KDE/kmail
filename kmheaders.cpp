@@ -436,7 +436,7 @@ public:
     int column = sortOrder & ((1 << 5) - 1);
     QString ret = QChar( (char)sortOrder );
     QString sortArrival = QString( "%1" )
-      .arg( kernel->msgDict()->getMsgSerNum(headers->folder(), id), 0, 36 );
+      .arg( kmkernel->msgDict()->getMsgSerNum(headers->folder(), id), 0, 36 );
     while (sortArrival.length() < 7) sortArrival = '0' + sortArrival;
 
     if (column == paintInfo->dateCol) {
@@ -933,7 +933,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = TRUE;
-    mOwner->editAction->setEnabled(mFolder ?  (kernel->folderIsDraftOrOutbox(mFolder)): false );
+    mOwner->editAction->setEnabled(mFolder ?  (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
     mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingList() :
       false);
     if (mFolder)
@@ -1422,16 +1422,16 @@ void KMHeaders::setThreadStatus(KMMsgStatus status, bool toggle)
 int KMHeaders::slotFilterMsg(KMMessage *msg)
 {
   msg->setTransferInProgress(false);
-  int filterResult = kernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
+  int filterResult = kmkernel->filterMgr()->process(msg,KMFilterMgr::Explicit);
   if (filterResult == 2) {
     // something went horribly wrong (out of space?)
-    kernel->emergencyExit( i18n("Unable to process messages (out of space?)" ));
+    kmkernel->emergencyExit( i18n("Unable to process messages (out of space?)" ));
     return 2;
   }
   if (msg->parent()) { // unGet this msg
     int idx = -1;
     KMFolder * p = 0;
-    kernel->msgDict()->getLocation( msg, &p, &idx );
+    kmkernel->msgDict()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
   }
@@ -1703,13 +1703,13 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
 
 bool KMHeaders::canUndo() const
 {
-    return ( kernel->undoStack()->size() > 0 );
+    return ( kmkernel->undoStack()->size() > 0 );
 }
 
 //-----------------------------------------------------------------------------
 void KMHeaders::undo()
 {
-  kernel->undoStack()->undo();
+  kmkernel->undoStack()->undo();
 }
 
 //-----------------------------------------------------------------------------
@@ -2107,7 +2107,7 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
     emit activated(mFolder->getMsg(idx));
   }
 
-//  if (kernel->folderIsDraftOrOutbox(mFolder))
+//  if (kmkernel->folderIsDraftOrOutbox(mFolder))
 //    setOpen(lvi, !lvi->isOpen());
 }
 
@@ -2303,7 +2303,7 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 	  KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
 	  KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
 	  KMFolder *pFolder = msgBase->parent();
-	  serNumStream << kernel->msgDict()->getMsgSerNum(pFolder, pFolder->find( msgBase ) );
+	  serNumStream << kmkernel->msgDict()->getMsgSerNum(pFolder, pFolder->find( msgBase ) );
           count++;
 	}
       serNumBuffer.close();
@@ -2374,7 +2374,7 @@ void KMHeaders::slotRMB()
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
   KMCopyCommand::folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
 
-  bool out_folder = kernel->folderIsDraftOrOutbox(mFolder);
+  bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )
      mOwner->editAction->plug(menu);
   else {
@@ -2569,9 +2569,9 @@ static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
 {
   unsigned long msgSerNum;
   unsigned long parentSerNum;
-  msgSerNum = kernel->msgDict()->getMsgSerNum( folder, msgid );
+  msgSerNum = kmkernel->msgDict()->getMsgSerNum( folder, msgid );
   if (parent_id >= 0)
-    parentSerNum = kernel->msgDict()->getMsgSerNum( folder, parent_id ) + KMAIL_RESERVED;
+    parentSerNum = kmkernel->msgDict()->getMsgSerNum( folder, parent_id ) + KMAIL_RESERVED;
   else
     parentSerNum = (unsigned long)(parent_id + KMAIL_RESERVED);
 
@@ -2703,7 +2703,7 @@ bool KMHeaders::writeSortOrder()
 	unlink(QFile::encodeName(sortFile));
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+	kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     fclose(sortStream);
     ::rename(QFile::encodeName(tempName), QFile::encodeName(sortFile));
@@ -2743,7 +2743,7 @@ void KMHeaders::appendItemToSortFile(KMHeaderItem *khi)
 	unlink(QFile::encodeName(sortFile));
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+	kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     fclose(sortStream);
   } else {
@@ -2998,7 +2998,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		    key = QString(""); //yuck
 		}
 
-		kernel->msgDict()->getLocation(serNum, &folder, &id);
+		kmkernel->msgDict()->getLocation(serNum, &folder, &id);
 		if (folder != mFolder) {
 		    ++deleted_count;
 		    continue;
@@ -3006,7 +3006,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		if (parentSerNum < KMAIL_RESERVED) {
 		    parent = (int)parentSerNum - KMAIL_RESERVED;
 		} else {
-		    kernel->msgDict()->getLocation(parentSerNum - KMAIL_RESERVED, &folder, &parent);
+		    kmkernel->msgDict()->getLocation(parentSerNum - KMAIL_RESERVED, &folder, &parent);
 		    if (folder != mFolder)
 			parent = -1;
 		}
@@ -3308,7 +3308,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	unlink(QFile::encodeName(sortFile));
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+	kmkernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     if(sortStream)
 	fclose(sortStream);

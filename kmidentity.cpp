@@ -85,7 +85,7 @@ QString Signature::textFromCommand( bool * ok ) const
 
   // let the kernel collect the output for us:
   QObject::connect( &proc, SIGNAL(receivedStdout(KProcess*,char*,int)),
-		    kernel, SLOT(slotCollectStdOut(KProcess*,char*,int)) );
+		    kmkernel, SLOT(slotCollectStdOut(KProcess*,char*,int)) );
 
   // run the process:
   int rc = 0;
@@ -95,7 +95,7 @@ QString Signature::textFromCommand( bool * ok ) const
     rc = ( proc.normalExit() ) ? proc.exitStatus() : -1 ;
 
   // get output:
-  QByteArray output = kernel->getCollectedStdOut( &proc );
+  QByteArray output = kmkernel->getCollectedStdOut( &proc );
 
   // handle errors, if any:
   if ( rc != 0 ) {

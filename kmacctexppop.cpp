@@ -479,7 +479,7 @@ void KMAcctExpPop::slotJobFinished() {
     KMPopFilterAction action;
     bool dlgPopup = false;
     for (headersOnServer.first(); headersOnServer.current(); headersOnServer.next()) {
-      action = (KMPopFilterAction)kernel->popFilterMgr()->process(headersOnServer.current()->header());
+      action = (KMPopFilterAction)kmkernel->popFilterMgr()->process(headersOnServer.current()->header());
       //debug todo
       switch ( action ) {
         case NoAction:
@@ -504,7 +504,7 @@ void KMAcctExpPop::slotJobFinished() {
           dlgPopup = true;
           break;
         case Later:
-          if (kernel->popFilterMgr()->showLaterMsgs())
+          if (kmkernel->popFilterMgr()->showLaterMsgs())
             dlgPopup = true;
         default:
           headersOnServer.current()->setAction(action);
@@ -517,7 +517,7 @@ void KMAcctExpPop::slotJobFinished() {
     // show the dialog
     headers = true;
     if (dlgPopup) {
-      KMPopFilterCnfrmDlg dlg(&headersOnServer, this->name(), kernel->popFilterMgr()->showLaterMsgs());
+      KMPopFilterCnfrmDlg dlg(&headersOnServer, this->name(), kmkernel->popFilterMgr()->showLaterMsgs());
       dlg.exec();
     }
 
@@ -571,7 +571,7 @@ void KMAcctExpPop::slotJobFinished() {
     headerDownUids.clear();
     headerLaterUids.clear();
 
-    kernel->folderMgr()->syncAllFolders();
+    kmkernel->folderMgr()->syncAllFolders();
 
     KURL url = getUrl();
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
@@ -622,7 +622,7 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
   processMsgsTimer.stop();
 
   stage = Quit;
-  kernel->folderMgr()->syncAllFolders();
+  kmkernel->folderMgr()->syncAllFolders();
 
   // Don't update the seen uid list unless we successfully got
   // a new list from the server

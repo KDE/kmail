@@ -493,7 +493,7 @@ void KMEditMsgCommand::execute()
 {
   KMMessage *msg = retrievedMessage();
   if (!msg || !msg->parent() ||
-      !kernel->folderIsDraftOrOutbox( msg->parent() ))
+      !kmkernel->folderIsDraftOrOutbox( msg->parent() ))
     return;
 
   msg->parent()->removeMsg( msg->parent()->find( msg ) );
@@ -625,7 +625,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
     KMMessage *msg = 0;
     int idx = -1;
     KMFolder * p = 0;
-    kernel->msgDict()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
+    kmkernel->msgDict()->getLocation( mMsgList[mMsgListIndex], &p, &idx );
     assert( p );
     assert( idx >= 0 );
     msg = p->getMsg(idx);
@@ -680,7 +680,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   if (msg->parent()) {
     int idx = -1;
     KMFolder * p = 0;
-    kernel->msgDict()->getLocation( msg, &p, &idx );
+    kmkernel->msgDict()->getLocation( msg, &p, &idx );
     assert( p == msg->parent() ); assert( idx >= 0 );
     p->unGetMsg( idx );
     p->close();
@@ -1007,7 +1007,7 @@ void KMBounceCommand::execute()
   KMMessage *msg = retrievedMessage();
   KMMessage *newMsg = msg->createBounce( TRUE /* with UI */);
   if (newMsg)
-    kernel->msgSender()->send(newMsg, kernel->msgSender()->sendImmediate());
+    kmkernel->msgSender()->send(newMsg, kmkernel->msgSender()->sendImmediate());
 }
 
 
@@ -1045,7 +1045,7 @@ void KMSetStatusCommand::execute()
   // depending on the state of the parent.
   if (mToggle) {
     KMMsgBase *msg;
-    kernel->msgDict()->getLocation( *mSerNums.begin(), &folder, &idx );
+    kmkernel->msgDict()->getLocation( *mSerNums.begin(), &folder, &idx );
     if (folder) {
       msg = folder->getMsgBase(idx);
       if (msg && (msg->status()&mStatus))
@@ -1055,7 +1055,7 @@ void KMSetStatusCommand::execute()
     }
   }
   for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
-    kernel->msgDict()->getLocation( *it, &folder, &idx );
+    kmkernel->msgDict()->getLocation( *it, &folder, &idx );
     if (folder) {
       if (mToggle) {
         KMMsgBase *msg = folder->getMsgBase(idx);
@@ -1083,7 +1083,7 @@ KMFilterCommand::KMFilterCommand( const QCString &field, const QString &value )
 
 void KMFilterCommand::execute()
 {
-  kernel->filterMgr()->createFilter( mField, mValue );
+  kmkernel->filterMgr()->createFilter( mField, mValue );
 }
 
 
@@ -1105,19 +1105,19 @@ void KMFilterActionCommand::execute()
   QPtrList<KMMessage> msgList = retrievedMsgs();
 
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next())
-    kernel->filterMgr()->tempOpenFolder(msg->parent());
+    kmkernel->filterMgr()->tempOpenFolder(msg->parent());
 
   for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
     msg->setTransferInProgress(false);
 
-    int filterResult = kernel->filterMgr()->process(msg, mFilter);
+    int filterResult = kmkernel->filterMgr()->process(msg, mFilter);
     if (filterResult == 2) {
       // something went horribly wrong (out of space?)
-        kernel->emergencyExit( i18n("Not enough free disk space." ));
+        kmkernel->emergencyExit( i18n("Not enough free disk space." ));
     }
     msg->setTransferInProgress(true);
   }
-  kernel->filterMgr()->cleanup();
+  kmkernel->filterMgr()->cleanup();
 }
 
 
@@ -1146,7 +1146,7 @@ void KMMailingListFilterCommand::execute()
     return;
 
   if (!KMMLInfo::name( msg, name, value ).isNull())
-    kernel->filterMgr()->createFilter( name, value );
+    kmkernel->filterMgr()->createFilter( name, value );
 }
 
 
@@ -1162,16 +1162,16 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
       menu->removeItemAt( 0 );
   }
 
-  if (!kernel->imapFolderMgr()->dir().first()) {
-    KMMenuCommand::makeFolderMenu(  &kernel->folderMgr()->dir(), move,
+  if (!kmkernel->imapFolderMgr()->dir().first()) {
+    KMMenuCommand::makeFolderMenu(  &kmkernel->folderMgr()->dir(), move,
       receiver, aMenuToFolder, menu );
   } else {
     // operate on top-level items
     QPopupMenu* subMenu = new QPopupMenu(menu);
-    subMenu = KMMenuCommand::makeFolderMenu(  &kernel->folderMgr()->dir(),
+    subMenu = KMMenuCommand::makeFolderMenu(  &kmkernel->folderMgr()->dir(),
         move, receiver, aMenuToFolder, subMenu );
     menu->insertItem( i18n( "Local Folders" ), subMenu );
-    KMFolderDir* fdir = &kernel->imapFolderMgr()->dir();
+    KMFolderDir* fdir = &kmkernel->imapFolderMgr()->dir();
     for (KMFolderNode *node = fdir->first(); node; node = fdir->next()) {
       if (node->isDir())
         continue;
@@ -1389,8 +1389,8 @@ void KMMoveCommand::execute()
           if (undo && mb)
           {
             if ( undoId == -1 )
-              undoId = kernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
-            kernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
+              undoId = kmkernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
+            kmkernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
           }
         }
       }
@@ -1439,14 +1439,14 @@ KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder )
   {
     KMFolderImap* fi = static_cast<KMFolderImap*> (folder);
     QString trashStr = fi->account()->trash();
-    KMFolder* trash = kernel->imapFolderMgr()->findIdString( trashStr );
-    if (!trash) trash = kernel->trashFolder();
+    KMFolder* trash = kmkernel->imapFolderMgr()->findIdString( trashStr );
+    if (!trash) trash = kmkernel->trashFolder();
     if (folder != trash)
       return trash;
   } else {
-    if (folder != kernel->trashFolder())
+    if (folder != kmkernel->trashFolder())
       // move to trash folder
-      return kernel->trashFolder();
+      return kmkernel->trashFolder();
   }
   return 0;
 }

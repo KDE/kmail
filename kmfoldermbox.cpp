@@ -59,7 +59,7 @@ KMFolderMbox::KMFolderMbox(KMFolderDir* aParent, const QString& aName)
 KMFolderMbox::~KMFolderMbox()
 {
   if (mOpenCount>0) close(TRUE);
-  if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
 }
 
 //-----------------------------------------------------------------------------
@@ -111,7 +111,7 @@ int KMFolderMbox::open()
         // box so that the initialization can continue. We don't show a
         // queued message box when KMail isn't starting up because queued
         // message boxes don't have a "Don't ask again" checkbox.
-        if (kernel->startingUp())
+        if (kmkernel->startingUp())
         {
           KConfigGroup configGroup( KMKernel::config(), "Notification Messages" );
           bool showMessage =
@@ -224,7 +224,7 @@ void KMFolderMbox::close(bool aForced)
   if (mOpenCount <= 0 || !mStream) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced)
+  if ((this != kmkernel->inboxFolder()) && isSystemFolder() && !aForced)
   {
       mOpenCount = 1;
       return;
@@ -267,7 +267,7 @@ void KMFolderMbox::sync()
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
 	!mIndexStream || fsync(fileno(mIndexStream))) {
-    kernel->emergencyExit( i18n("Not enough free disk space." ));
+    kmkernel->emergencyExit( i18n("Not enough free disk space." ));
     }
 }
 
@@ -717,14 +717,14 @@ int KMFolderMbox::createIndexFromContents()
   quiet(FALSE);
   correctUnreadMsgsCount();
 
-  if (kernel->outboxFolder() == this && count() > 0)
+  if (kmkernel->outboxFolder() == this && count() > 0)
     KMessageBox::queuedMessageBox(0, KMessageBox::Information,
                                   i18n("Your outbox contains messages which were "
     "most likely not created by KMail.\nPlease remove them from there, if you "
     "don't want KMail to send them."));
 
   if ( parent() )
-      parent()->manager()->invalidateFolder(kernel->msgDict(), this);
+      parent()->manager()->invalidateFolder(kmkernel->msgDict(), this);
   return 0;
 }
 
@@ -822,7 +822,7 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
   {
     if (msgParent==this)
     {
-	if (kernel->folderIsDraftOrOutbox(this))
+	if (kmkernel->folderIsDraftOrOutbox(this))
           //special case for Edit message.
 	  {
 	    kdDebug(5006) << "Editing message in outbox or drafts" << endl;
@@ -912,18 +912,18 @@ if( fileD1.open( IO_WriteOnly ) ) {
       kdDebug(5006) << "Undoing changes" << endl;
       truncate( QFile::encodeName(location()), revert );
     }
-    kernel->emergencyExit( i18n("Not enough free disk space.") );
+    kmkernel->emergencyExit( i18n("Not enough free disk space.") );
 
     /* This code is not 100% reliable
-    bool busy = kernel->kbp()->isBusy();
-    if (busy) kernel->kbp()->idle();
+    bool busy = kmkernel->kbp()->isBusy();
+    if (busy) kmkernel->kbp()->idle();
     KMessageBox::sorry(0,
 	  i18n("Unable to add message to folder.\n"
 	       "(No space left on device or insufficient quota?)\n"
 	       "Free space and sufficient quota are required to continue safely."));
-    if (busy) kernel->kbp()->busy();
+    if (busy) kmkernel->kbp()->busy();
     if (opened) close();
-    kernel->kbp()->idle();
+    kmkernel->kbp()->idle();
     */
     return error;
   }
@@ -934,7 +934,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
 //  if (mAccount) aMsg->removeHeaderField("X-UID");
 
   if (aMsg->isUnread() || aMsg->isNew() ||
-      (this == kernel->outboxFolder())) {
+      (this == kmkernel->outboxFolder())) {
     if (mUnreadMsgs == -1) mUnreadMsgs = 1;
     else ++mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
@@ -984,16 +984,16 @@ if( fileD1.open( IO_WriteOnly ) ) {
 	kdWarning(5006) << "Undoing changes" << endl;
 	truncate( QFile::encodeName(indexLocation()), revert );
       }
-      kernel->emergencyExit( i18n("Not enough free disk space.") );
+      kmkernel->emergencyExit( i18n("Not enough free disk space.") );
 
       /* This code may not be 100% reliable
-      bool busy = kernel->kbp()->isBusy();
-      if (busy) kernel->kbp()->idle();
+      bool busy = kmkernel->kbp()->isBusy();
+      if (busy) kmkernel->kbp()->idle();
       KMessageBox::sorry(0,
         i18n("Unable to add message to folder.\n"
 	     "(No space left on device or insufficient quota?)\n"
 	     "Free space and sufficient quota are required to continue safely."));
-      if (busy) kernel->kbp()->busy();
+      if (busy) kmkernel->kbp()->busy();
       if (opened) close();
       */
       return error;
@@ -1053,7 +1053,7 @@ int KMFolderMbox::compact()
     if(!(msgs++ % 10)) {
       msgStr = i18n("Compacting folder: one message done",
       				"Compacting folder: %n messages done", msgs);
-      if (!kernel->shuttingDown())
+      if (!kmkernel->shuttingDown())
 	  emit statusMsg(msgStr);
     }
     mi = (KMMsgInfo*)mMsgList[idx];

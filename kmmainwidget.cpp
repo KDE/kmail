@@ -114,7 +114,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 
   QTimer::singleShot( 0, this, SLOT( slotShowStartupFolder() ));
 
-  connect(kernel->acctMgr(), SIGNAL( checkedMail(bool, bool)),
+  connect(kmkernel->acctMgr(), SIGNAL( checkedMail(bool, bool)),
           SLOT( slotMailChecked(bool, bool)));
 
   // display the full path to the folder in the caption
@@ -123,7 +123,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   connect( KMBroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
 	   this, SLOT(statusMsg( const QString& )));
 
-  if ( kernel->firstInstance() )
+  if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
 
   toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
@@ -312,7 +312,7 @@ void KMMainWidget::readConfig(void)
       KMSystemTray::AlwaysOn;
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
     // startup-Folder, defaults to system-inbox
-	mStartupFolder = config->readEntry("startupFolder", kernel->inboxFolder()->idString());
+	mStartupFolder = config->readEntry("startupFolder", kmkernel->inboxFolder()->idString());
     if (!mStartupDone)
     {
       // check mail on startup
@@ -335,7 +335,7 @@ void KMMainWidget::readConfig(void)
       activatePanners();
     }
 
-    //    kernel->kbp()->busy(); //Crashes KMail
+    //    kmkernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
     if (qlvi!=0) {
@@ -532,9 +532,9 @@ void KMMainWidget::createWidgets(void)
   accel->connectItem(accel->insertItem(CTRL+Key_Space),
                      mFolderTree, SLOT(selectCurrentFolder()));
 
-  connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString, QString) ),
+  connect( kmkernel->outboxFolder(), SIGNAL( msgRemoved(int, QString, QString) ),
            SLOT( startUpdateMessageActionsTimer() ) );
-  connect( kernel->outboxFolder(), SIGNAL( msgAdded(int) ),
+  connect( kmkernel->outboxFolder(), SIGNAL( msgAdded(int) ),
            SLOT( startUpdateMessageActionsTimer() ) );
 }
 
@@ -668,14 +668,14 @@ void KMMainWidget::slotNewMailReader()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFilter()
 {
-  kernel->filterMgr()->openDialog( this );
+  kmkernel->filterMgr()->openDialog( this );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotPopFilter()
 {
-  kernel->popFilterMgr()->openDialog( this );
+  kmkernel->popFilterMgr()->openDialog( this );
 }
 
 
@@ -698,7 +698,7 @@ void KMMainWidget::slotAddFolder()
 {
   KMFolderDialog *d;
 
-  d = new KMFolderDialog(0, &(kernel->folderMgr()->dir()),
+  d = new KMFolderDialog(0, &(kmkernel->folderMgr()->dir()),
 			 this, i18n("Create Folder"));
   if (d->exec()) {
     mFolderTree->reload();
@@ -715,14 +715,14 @@ void KMMainWidget::slotAddFolder()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckMail()
 {
- kernel->acctMgr()->checkMail(true);
+ kmkernel->acctMgr()->checkMail(true);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCheckOneAccount(int item)
 {
-  kernel->acctMgr()->intCheckMail(item);
+  kmkernel->acctMgr()->intCheckMail(item);
 }
 
 //-----------------------------------------------------------------------------
@@ -838,7 +838,7 @@ void KMMainWidget::slotEmptyFolder()
   KMMessage* msg;
 
   if (!mFolder) return;
-  bool isTrash = kernel->folderIsTrash(mFolder);
+  bool isTrash = kmkernel->folderIsTrash(mFolder);
 
   if (mConfirmEmpty)
   {
@@ -876,20 +876,20 @@ void KMMainWidget::slotEmptyFolder()
   if (mMsgView)
     mMsgView->clear();
 
-  if (mFolder != kernel->trashFolder())
+  if (mFolder != kmkernel->trashFolder())
   {
     // FIXME: If we run out of disk space mail may be lost rather
     // than moved into the trash -sanders
     while ((msg = mFolder->take(0)) != 0) {
-      kernel->trashFolder()->addMsg(msg);
-      kernel->trashFolder()->unGetMsg(kernel->trashFolder()->count()-1);
+      kmkernel->trashFolder()->addMsg(msg);
+      kmkernel->trashFolder()->unGetMsg(kmkernel->trashFolder()->count()-1);
     }
   }
 
   mFolder->close();
   mFolder->expunge();
   // end of critical
-  if (mFolder != kernel->trashFolder())
+  if (mFolder != kmkernel->trashFolder())
     statusMsg(i18n("Moved all messages to the trash"));
 
   mHeaders->setFolder(mFolder);
@@ -935,7 +935,7 @@ void KMMainWidget::slotRemoveFolder()
       KMAcctFolder* acctFolder = static_cast<KMAcctFolder*>(mFolder);
       for ( acct = acctFolder->account(); acct; acct = acctFolder->nextAccount() )
       {
-        acct->setFolder(kernel->inboxFolder());
+        acct->setFolder(kmkernel->inboxFolder());
         KMessageBox::information(this,
             i18n("<qt>The destination folder of the account <b>%1</b> was restored to the inbox.</qt>").arg(acct->name()));
       }
@@ -943,9 +943,9 @@ void KMMainWidget::slotRemoveFolder()
     if (mFolder->folderType() == KMFolderTypeImap)
       static_cast<KMFolderImap*>(mFolder)->removeOnServer();
     else if (mFolder->folderType() == KMFolderTypeSearch)
-      kernel->searchFolderMgr()->remove(mFolder);
+      kmkernel->searchFolderMgr()->remove(mFolder);
     else
-      kernel->folderMgr()->remove(mFolder);
+      kmkernel->folderMgr()->remove(mFolder);
   }
 }
 
@@ -1000,7 +1000,7 @@ void KMMainWidget::slotExpireAll() {
     }
   }
 
-  kernel->folderMgr()->expireAllFolders();
+  kmkernel->folderMgr()->expireAllFolders();
 }
 
 //-----------------------------------------------------------------------------
@@ -1061,7 +1061,7 @@ void KMMainWidget::slotToggleSubjectThreading()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotMessageQueuedOrDrafted()
 {
-  if (!kernel->folderIsDraftOrOutbox(mFolder))
+  if (!kmkernel->folderIsDraftOrOutbox(mFolder))
       return;
   if (mMsgView)
     mMsgView->update(true);
@@ -1356,7 +1356,7 @@ void KMMainWidget::slotSaveAttachments()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
 {
-  kernel->msgSender()->sendQueued();
+  kmkernel->msgSender()->sendQueued();
 }
 
 
@@ -1782,7 +1782,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
     return;
   }
 
-  if (kernel->folderIsDraftOrOutbox(mFolder))
+  if (kmkernel->folderIsDraftOrOutbox(mFolder))
   {
     slotEditMsg();
     return;
@@ -1844,7 +1844,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       return;
     }
 
-    bool out_folder = kernel->folderIsDraftOrOutbox(mFolder);
+    bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
     if ( out_folder ) {
       editAction->plug(menu);
     }
@@ -1895,7 +1895,7 @@ void KMMainWidget::getAccountMenu()
   QStringList actList;
 
   actMenu->clear();
-  actList = kernel->acctMgr()->getAccounts(false);
+  actList = kmkernel->acctMgr()->getAccounts(false);
   QStringList::Iterator it;
   int id = 0;
   for(it = actList.begin(); it != actList.end() ; ++it, id++)
@@ -2491,7 +2491,7 @@ void KMMainWidget::setupActions()
 		      "kmail_configure_notifications" );
 //  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
   (void) new KAction( i18n("&Configure KMail..."),
-		      "configure", 0, kernel,
+		      "configure", 0, kmkernel,
                       SLOT(slotShowConfigurationDialog()), actionCollection(),
                       "kmail_configure_kmail" );
 
@@ -2509,7 +2509,7 @@ void KMMainWidget::setupActions()
 
   menutimer = new QTimer( this, "menutimer" );
   connect( menutimer, SIGNAL( timeout() ), SLOT( updateMessageActions() ) );
-  connect( kernel->undoStack(),
+  connect( kmkernel->undoStack(),
            SIGNAL( undoStackChanged() ), this, SLOT( slotUpdateUndo() ));
 
   initializeFilterActions();
@@ -2700,7 +2700,7 @@ void KMMainWidget::updateMessageActions()
 
     bool single_actions = count == 1;
     editAction->setEnabled( single_actions &&
-    kernel->folderIsDraftOrOutbox(mFolder));
+    kmkernel->folderIsDraftOrOutbox(mFolder));
    
     filterMenu()->setEnabled( single_actions );
     bounceAction()->setEnabled( single_actions );
@@ -2723,7 +2723,7 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "go_prev_message" )->setEnabled( mails );
     actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
-    actionCollection()->action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
+    actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 
@@ -2735,7 +2735,7 @@ void KMMainWidget::updateMessageActions()
       if(!(msg = mFolder->getMsg(aIdx)))
         return;
 
-      if (mFolder == kernel->outboxFolder())
+      if (mFolder == kmkernel->outboxFolder())
         editAction->setEnabled( !msg->transferInProgress() );
     }
 
@@ -2766,7 +2766,7 @@ void KMMainWidget::updateFolderMenu()
   emptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
                                              && ( mFolder->count() > 0 ) )
                                          : false );
-  emptyFolderAction->setText( (mFolder && kernel->folderIsTrash(mFolder))
+  emptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("&Empty Trash") : i18n("&Move All Messages to Trash") );
   removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   expireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
@@ -2843,10 +2843,10 @@ void KMMainWidget::slotShowStartupFolder()
     mFolderTree->cleanupConfigFile();
   }
 
-  connect( kernel->filterMgr(), SIGNAL( filterListUpdated() ),
+  connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
 	   this, SLOT( initializeFilterActions() ));
 
-  if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION) {
+  if (kmkernel->firstStart() || kmkernel->previousVersion() != KMAIL_VERSION) {
     slotIntro();
     return;
   }
@@ -2854,13 +2854,13 @@ void KMMainWidget::slotShowStartupFolder()
   KMFolder* startup = 0;
   if (!mStartupFolder.isEmpty()) {
     // find the startup-folder with this ugly folderMgr switch
-    startup = kernel->folderMgr()->findIdString(mStartupFolder);
+    startup = kmkernel->folderMgr()->findIdString(mStartupFolder);
     if (!startup)
-      startup = kernel->imapFolderMgr()->findIdString(mStartupFolder);
+      startup = kmkernel->imapFolderMgr()->findIdString(mStartupFolder);
     if (!startup)
-      startup = kernel->inboxFolder();
+      startup = kmkernel->inboxFolder();
   } else {
-    startup = kernel->inboxFolder();
+    startup = kmkernel->inboxFolder();
   }
   mFolderTree->doFolderSelected(mFolderTree->indexOfFolder(startup));
   mFolderTree->ensureItemVisible(mFolderTree->indexOfFolder(startup));
@@ -2951,7 +2951,7 @@ void KMMainWidget::initializeFilterActions()
   KAction *filterAction;
   mFilterActions.clear();
   mFilterCommands.clear();
-  for ( QPtrListIterator<KMFilter> it(*kernel->filterMgr()) ;
+  for ( QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()) ;
         it.current() ; ++it )
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
       filterName = QString("Filter Action %1").arg((*it)->name());
@@ -2975,7 +2975,7 @@ void KMMainWidget::initializeFilterActions()
 //-----------------------------------------------------------------------------
 void KMMainWidget::plugFilterActions(QPopupMenu *menu)
 {
-  for (QPtrListIterator<KMFilter> it(*kernel->filterMgr()); it.current(); ++it)
+  for (QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()); it.current(); ++it)
       if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
 	  QString filterName = QString("Filter Action %1").arg((*it)->name());
 	  filterName = filterName.replace(" ","_");

@@ -50,7 +50,7 @@ KMFolderMaildir::KMFolderMaildir(KMFolderDir* aParent, const QString& aName)
 KMFolderMaildir::~KMFolderMaildir()
 {
   if (mOpenCount>0) close(TRUE);
-  if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
 }
 
 //-----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ void KMFolderMaildir::close(bool aForced)
   if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
-  if ((this != kernel->inboxFolder()) && isSystemFolder() && !aForced)
+  if ((this != kmkernel->inboxFolder()) && isSystemFolder() && !aForced)
   {
      mOpenCount = 1;
      return;
@@ -221,7 +221,7 @@ void KMFolderMaildir::sync()
 {
   if (mOpenCount > 0)
     if (!mIndexStream || fsync(fileno(mIndexStream))) {
-    kernel->emergencyExit( i18n("Couldn't sync maildir folder.") );
+    kmkernel->emergencyExit( i18n("Couldn't sync maildir folder.") );
     }
 }
 
@@ -341,7 +341,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   msgParent = aMsg->parent();
   if (msgParent)
   {
-    if (msgParent==this && !kernel->folderIsDraftOrOutbox(this))
+    if (msgParent==this && !kmkernel->folderIsDraftOrOutbox(this))
         return 0;
 
     idx = msgParent->find(aMsg);
@@ -368,7 +368,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   tmp_file += filename;
 
   if (!kCStringToFile(msgText, tmp_file, false, false, false))
-    kernel->emergencyExit( i18n("Not enough free disk space.") );
+    kmkernel->emergencyExit( i18n("Not enough free disk space.") );
 
   QFile file(tmp_file);
   size = msgText.length();
@@ -397,7 +397,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (filename != aMsg->fileName())
     aMsg->setFileName(filename);
 
-  if (aMsg->isUnread() || aMsg->isNew() || this == kernel->outboxFolder())
+  if (aMsg->isUnread() || aMsg->isNew() || this == kmkernel->outboxFolder())
   {
     if (mUnreadMsgs == -1)
       mUnreadMsgs = 1;
@@ -442,17 +442,17 @@ if( fileD0.open( IO_WriteOnly ) ) {
 	kdDebug(5006) << "Undoing changes" << endl;
 	truncate( QFile::encodeName(indexLocation()), revert );
       }
-      kernel->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
+      kmkernel->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
       // exit(1); // don't ever use exit(), use the above!
 
       /* This code may not be 100% reliable
-      bool busy = kernel->kbp()->isBusy();
-      if (busy) kernel->kbp()->idle();
+      bool busy = kmkernel->kbp()->isBusy();
+      if (busy) kmkernel->kbp()->idle();
       KMessageBox::sorry(0,
         i18n("Unable to add message to folder.\n"
 	     "(No space left on device or insufficient quota?)\n"
 	     "Free space and sufficient quota are required to continue safely."));
-      if (busy) kernel->kbp()->busy();
+      if (busy) kmkernel->kbp()->busy();
       if (opened) close();
       */
       return error;
@@ -722,7 +722,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
   }
 
   if (status & KMMsgStatusNew || status & KMMsgStatusUnread ||
-      (this == kernel->outboxFolder()))
+      (this == kmkernel->outboxFolder()))
   {
     mUnreadMsgs++;
    if (mUnreadMsgs == 0) ++mUnreadMsgs;
@@ -792,7 +792,7 @@ int KMFolderMaildir::createIndexFromContents()
 
   correctUnreadMsgsCount();
 
-  if (kernel->outboxFolder() == this && count() > 0)
+  if (kmkernel->outboxFolder() == this && count() > 0)
     KMessageBox::information(0, i18n("Your outbox contains messages which were "
     "most likely not created by KMail.\nPlease remove them from there, if you "
     "don't want KMail to send them."));
@@ -800,7 +800,7 @@ int KMFolderMaildir::createIndexFromContents()
   needsCompact = true;
 
   if (parent())
-    parent()->manager()->invalidateFolder(kernel->msgDict(), this);
+    parent()->manager()->invalidateFolder(kmkernel->msgDict(), this);
   return 0;
 }
 

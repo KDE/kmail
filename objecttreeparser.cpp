@@ -192,7 +192,7 @@ namespace KMail {
 
     // make widgets visible that might have been hidden by
     // previous groupware activation
-    if ( mReader && kernel->groupware().isEnabled() )
+    if ( mReader && kmkernel->groupware().isEnabled() )
       emit mReader->signalGroupwareShow( false );
 
     if ( showOnlyOneMimePart() && mReader ) {
@@ -344,7 +344,7 @@ namespace KMail {
 
     CryptPlugWrapper* cryptPlug = cryptPlugWrapper();
     if ( !cryptPlug )
-      cryptPlug = kernel->cryptPlugList()->active();
+      cryptPlug = kmkernel->cryptPlugList()->active();
 
     QString cryptPlugLibName;
     QString cryptPlugDisplayName;
@@ -649,7 +649,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
 
   CryptPlugWrapper* cryptPlug = cryptPlugWrapper();
   if ( !cryptPlug )
-    cryptPlug = kernel->cryptPlugList()->active();
+    cryptPlug = kmkernel->cryptPlugList()->active();
 
   QString cryptPlugLibName;
   if ( cryptPlug )
@@ -899,7 +899,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      QString postfix;
 	      // We let KMGroupware do most of our 'print formatting':
 	      // generates text preceding to and following to the vCal
-	      if ( kernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
+	      if ( kmkernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
 						    vCal, fname, prefix,
 						    postfix ) )
 	      {
@@ -1265,7 +1265,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					   false, true );
       if ( data ){
 	curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-	setCryptPlugWrapper( kernel->cryptPlugList()->findForLibName( "openpgp" ) );
+	setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "openpgp" ) );
       }
     } else {
       sign = curNode->mChild->findType( DwMime::kTypeApplication,
@@ -1278,7 +1278,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					     false, true );
 	if ( data ){
 	  curNode->setCryptoType( partNode::CryptoTypeSMIME );
-	  setCryptPlugWrapper( kernel->cryptPlugList()->findForLibName( "smime" ) );
+	  setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "smime" ) );
 	}
       } else {
 	kdDebug(5006) << "       Sorry, *neither* OpenPGP *nor* S/MIME signature could be found!\n\n" << endl;
@@ -1344,7 +1344,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 				 false, true );
     if ( data ) {
       curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-      setCryptPlugWrapper( kernel->cryptPlugList()->findForLibName( "openpgp" ) );
+      setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "openpgp" ) );
     }
     if ( !data ) {
       data = curNode->mChild->findType( DwMime::kTypeApplication,
@@ -1352,7 +1352,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 					false, true );
       if ( data ) {
 	curNode->setCryptoType( partNode::CryptoTypeSMIME );
-	setCryptPlugWrapper( kernel->cryptPlugList()->findForLibName( "smime" ) );
+	setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "smime" ) );
       }
     }
     /*
@@ -1571,7 +1571,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	  ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
 	*/
 	PartMetaData messagePart;
-	setCryptPlugWrapper( kernel->cryptPlugList()->findForLibName( "openpgp" ) );
+	setCryptPlugWrapper( kmkernel->cryptPlugList()->findForLibName( "openpgp" ) );
 	QCString decryptedData;
 	bool signatureFound;
 	struct CryptPlugWrapper::SignatureMetaData sigMeta;
@@ -1637,7 +1637,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if ( !curNode->dwPart() || !curNode->dwPart()->hasHeaders() )
       return false;
 
-    CryptPlugWrapper * smimeCrypto = kernel->cryptPlugList()->findForLibName( "smime" );
+    CryptPlugWrapper * smimeCrypto = kmkernel->cryptPlugList()->findForLibName( "smime" );
     if ( !smimeCrypto )
       return false;
     CryptPlugWrapperSaver cpws( this, smimeCrypto );
@@ -1767,7 +1767,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       //    or preserves the old data (if no vPart can be created)
       // 2. generates text preceding to / following to the vPart
       bool bVPartCreated
-	= kernel->groupware().msTNEFToHTML( mReader, vPart, fname,
+	= kmkernel->groupware().msTNEFToHTML( mReader, vPart, fname,
 					    prefix, postfix );
       if ( bVPartCreated && mReader && !showOnlyOneMimePart() ){
 	htmlWriter()->queue( prefix );

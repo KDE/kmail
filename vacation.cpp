@@ -233,7 +233,7 @@ namespace KMail {
   }
 
   KURL Vacation::findURL() const {
-    KMAcctMgr * am = kernel->acctMgr();
+    KMAcctMgr * am = kmkernel->acctMgr();
     assert( am );
     for ( KMAccount * a = am->first() ; a ; a = am->next() )
       if ( KMail::ImapAccountBase * iab = dynamic_cast<KMail::ImapAccountBase*>( a ) ) {
@@ -290,8 +290,8 @@ namespace KMail {
 
   QStringList Vacation::defaultMailAliases() {
     QStringList sl;
-    for ( IdentityManager::ConstIterator it = kernel->identityManager()->begin() ;
-	  it != kernel->identityManager()->end() ; ++it )
+    for ( IdentityManager::ConstIterator it = kmkernel->identityManager()->begin() ;
+	  it != kmkernel->identityManager()->end() ; ++it )
       if ( !(*it).emailAddr().isEmpty() )
 	sl.push_back( (*it).emailAddr() );
     return sl;

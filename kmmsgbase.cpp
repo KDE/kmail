@@ -558,7 +558,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 
   if (aStr.find("=?") < 0)
   {
-    QString str = kernel->networkCodec()->toUnicode(aStr);
+    QString str = kmkernel->networkCodec()->toUnicode(aStr);
     if (str.find('\n') == -1) return str;
     QString str2((QChar*)0, str.length());
     uint i = 0;
@@ -640,7 +640,7 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
       in.resetRawData( enc_start, pos - enc_start );
 
       const QTextCodec * codec = codecForName(charset);
-      if (!codec) codec = kernel->networkCodec();
+      if (!codec) codec = kmkernel->networkCodec();
       result += codec->toUnicode(enc);
       lastWasEncodedWord = true;
 
@@ -682,10 +682,10 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
   if (charset == "us-ascii") return toUsAscii(_str);
 
   QCString cset;
-  if (charset.isEmpty()) cset = QCString(kernel->networkCodec()->mimeName()).lower();
+  if (charset.isEmpty()) cset = QCString(kmkernel->networkCodec()->mimeName()).lower();
     else cset = charset;
   const QTextCodec *codec = codecForName(cset);
-  if (!codec) codec = kernel->networkCodec();
+  if (!codec) codec = kmkernel->networkCodec();
 
   unsigned int nonAscii = 0;
   for (unsigned int i = 0; i < _str.length(); i++)
@@ -768,7 +768,7 @@ QCString KMMsgBase::encodeRFC2231String( const QString& _str,
 
   QCString cset;
   if ( charset.isEmpty() )
-    cset = QCString( kernel->networkCodec()->mimeName() ).lower();
+    cset = QCString( kmkernel->networkCodec()->mimeName() ).lower();
   else
     cset = charset;
   const QTextCodec *codec = codecForName( cset );
@@ -823,7 +823,7 @@ QCString KMMsgBase::encodeRFC2231String( const QString& _str,
 QString KMMsgBase::decodeRFC2231String(const QCString& _str)
 {
   int p = _str.find('\'');
-  if (p < 0) return kernel->networkCodec()->toUnicode(_str);
+  if (p < 0) return kmkernel->networkCodec()->toUnicode(_str);
 
   QCString charset = _str.left(p);
 
@@ -846,7 +846,7 @@ QString KMMsgBase::decodeRFC2231String(const QCString& _str)
   QString result;
   const QTextCodec * codec = codecForName( charset );
   if ( !codec )
-    codec = kernel->networkCodec();
+    codec = kmkernel->networkCodec();
   return codec->toUnicode( st );
 }
 
@@ -887,7 +887,7 @@ QCString KMMsgBase::autoDetectCharset(const QCString &_encoding, const QStringLi
     {
        QCString encoding = (*it).latin1();
        if (encoding == "locale")
-          encoding = QCString(kernel->networkCodec()->mimeName()).lower();
+          encoding = QCString(kmkernel->networkCodec()->mimeName()).lower();
        if (text.isEmpty())
          return encoding;
        if (encoding == "us-ascii") {
@@ -917,7 +917,7 @@ unsigned long KMMsgBase::getMsgSerNum() const
   unsigned long msn = 0;
   if (mParent) {
     int index = mParent->find((KMMsgBase*)this);
-    msn = kernel->msgDict()->getMsgSerNum(mParent, index);
+    msn = kmkernel->msgDict()->getMsgSerNum(mParent, index);
   }
   return msn;
 }

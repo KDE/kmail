@@ -426,7 +426,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 void IdentityPage::setup()
 {
   kdDebug(5006) << "IdentityPage::setup()" << endl;
-  IdentityManager * im = kernel->identityManager();
+  IdentityManager * im = kmkernel->identityManager();
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
   mIdentityList->clear();
@@ -440,8 +440,8 @@ void IdentityPage::setup()
 void IdentityPage::apply() {
   assert( !mIdentityDialog );
 
-  kernel->identityManager()->sort();
-  kernel->identityManager()->commit();
+  kmkernel->identityManager()->sort();
+  kmkernel->identityManager()->commit();
 
   if( mOldNumberOfIdentities < 2 && mIdentityList->childCount() > 1 ) {
     // have more than one identity, so better show the combo in the
@@ -463,14 +463,14 @@ void IdentityPage::apply() {
 
 void IdentityPage::dismiss() {
   assert( !mIdentityDialog );
-  kernel->identityManager()->rollback();
+  kmkernel->identityManager()->rollback();
 }
 
 void IdentityPage::slotNewIdentity()
 {
   assert( !mIdentityDialog );
 
-  IdentityManager * im = kernel->identityManager();
+  IdentityManager * im = kmkernel->identityManager();
   NewIdentityDialog dialog( im->shadowIdentities(), this, "new", true );
 
   if( dialog.exec() == QDialog::Accepted ) {
@@ -533,7 +533,7 @@ void IdentityPage::slotRemoveIdentity()
 {
   assert( !mIdentityDialog );
 
-  IdentityManager * im = kernel->identityManager();
+  IdentityManager * im = kmkernel->identityManager();
   kdFatal( im->shadowIdentities().count() < 2 )
     << "Attempted to remove the last identity!" << endl;
 
@@ -570,7 +570,7 @@ void IdentityPage::slotRenameIdentity( QListViewItem * i,
 
   QString newName = s.stripWhiteSpace();
   if ( !newName.isEmpty() &&
-       !kernel->identityManager()->shadowIdentities().contains( newName ) ) {
+       !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
     KMIdentity & ident = item->identity();
     ident.setIdentityName( newName );
   }
@@ -602,7 +602,7 @@ void IdentityPage::slotSetAsDefault() {
     dynamic_cast<IdentityListViewItem*>( mIdentityList->selectedItem() );
   if ( !item ) return;
 
-  IdentityManager * im = kernel->identityManager();
+  IdentityManager * im = kmkernel->identityManager();
   im->setAsDefault( item->identity().identityName() );
   refreshList();
 }
@@ -1084,9 +1084,9 @@ void NetworkPage::SendingTab::setup() {
   }
 
   mSendMethodCombo->setCurrentItem(
-		kernel->msgSender()->sendImmediate() ? 0 : 1 );
+		kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
   mMessagePropertyCombo->setCurrentItem(
-                kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
+                kmkernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
   mSendOutboxCheck->setChecked( general.readBoolEntry( "sendOnCheck",
 						       false ) );
 
@@ -1122,11 +1122,11 @@ void NetworkPage::SendingTab::apply() {
 
   // Save common options:
   general.writeEntry( "sendOnCheck", mSendOutboxCheck->isChecked() );
-  kernel->msgSender()->setSendImmediate(
+  kmkernel->msgSender()->setSendImmediate(
 			     mSendMethodCombo->currentItem() == 0 );
-  kernel->msgSender()->setSendQuotedPrintable(
+  kmkernel->msgSender()->setSendQuotedPrintable(
 			     mMessagePropertyCombo->currentItem() == 1 );
-  kernel->msgSender()->writeConfig( false ); // don't sync
+  kmkernel->msgSender()->writeConfig( false ); // don't sync
   composer.writeEntry("confirm-before-send", mConfirmSendCheck->isChecked() );
   general.writeEntry( "Default domain", mDefaultDomainEdit->text() );
 }
@@ -1253,7 +1253,7 @@ void NetworkPage::ReceivingTab::slotAccountSelected()
 
 QStringList NetworkPage::ReceivingTab::occupiedNames()
 {
-  QStringList accountNames = kernel->acctMgr()->getAccounts();
+  QStringList accountNames = kmkernel->acctMgr()->getAccounts();
 
   QValueList<ModifiedAccountsType*>::Iterator k;
   for (k = mModifiedAccounts.begin(); k != mModifiedAccounts.end(); ++k )
@@ -1297,7 +1297,7 @@ void NetworkPage::ReceivingTab::slotAddAccount() {
   }
 
   KMAccount *account
-    = kernel->acctMgr()->create( QString::fromLatin1( accountType ),
+    = kmkernel->acctMgr()->create( QString::fromLatin1( accountType ),
 				 i18n("Unnamed") );
   if ( !account ) {
     // ### FIXME: Give the user more information. Is this error
@@ -1355,7 +1355,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
       }
 
     if ( !account ) {
-      account = kernel->acctMgr()->find( listItem->text(0) );
+      account = kmkernel->acctMgr()->find( listItem->text(0) );
       if( !account ) {
 	// ### FIXME: How should this happen? See above.
         KMessageBox::sorry( this, i18n("Unable to locate account") );
@@ -1364,7 +1364,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
 
       ModifiedAccountsType *mod = new ModifiedAccountsType;
       mod->oldAccount = account;
-      mod->newAccount = kernel->acctMgr()->create( account->type(),
+      mod->newAccount = kmkernel->acctMgr()->create( account->type(),
 						   account->name() );
       mod->newAccount->pseudoAssign( account );
       mModifiedAccounts.append( mod );
@@ -1418,7 +1418,7 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
       }
   }
   if ( !acct ) {
-    acct = kernel->acctMgr()->find( listItem->text(0) );
+    acct = kmkernel->acctMgr()->find( listItem->text(0) );
     if ( acct )
       mAccountsToDelete.append( acct );
   }
@@ -1447,8 +1447,8 @@ void NetworkPage::ReceivingTab::setup() {
 
   mAccountList->clear();
   QListViewItem *top = 0;
-  for( KMAccount *a = kernel->acctMgr()->first(); a!=0;
-       a = kernel->acctMgr()->next() ) {
+  for( KMAccount *a = kmkernel->acctMgr()->first(); a!=0;
+       a = kmkernel->acctMgr()->next() ) {
     QListViewItem *listItem =
       new QListViewItem( mAccountList, top, a->name(), a->type() );
     if( a->folder() )
@@ -1475,7 +1475,7 @@ void NetworkPage::ReceivingTab::apply() {
   QValueList< QGuardedPtr<KMAccount> > newCachedImapAccounts;
   QValueList< QGuardedPtr<KMAccount> >::Iterator it;
   for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
-    kernel->acctMgr()->add( *it );
+    kmkernel->acctMgr()->add( *it );
     // remember new Disconnected IMAP accounts because they are needed again
     if( (*it)->isA( "KMAcctCachedImap" ) ) {
       newCachedImapAccounts.append( *it );
@@ -1500,16 +1500,16 @@ void NetworkPage::ReceivingTab::apply() {
     // The old entries will never really disappear, so better at least
     // clear the password:
     (*it)->clearPasswd();
-    kernel->acctMgr()->writeConfig( true );
-    if ( !(*it) || !kernel->acctMgr()->remove(*it) )
+    kmkernel->acctMgr()->writeConfig( true );
+    if ( !(*it) || !kmkernel->acctMgr()->remove(*it) )
       KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
 			  .arg( (*it)->name() ) );
   }
   mAccountsToDelete.clear();
 
   // Incoming mail
-  kernel->acctMgr()->writeConfig( false );
-  kernel->cleanupImapFolders();
+  kmkernel->acctMgr()->writeConfig( false );
+  kmkernel->cleanupImapFolders();
 
   // Save Mail notification settings
   KConfigGroup general( KMKernel::config(), "General" );
@@ -2794,7 +2794,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
 
   if ( charset.lower() == QString::fromLatin1("locale") ) {
     charset =  QString::fromLatin1("%1 (locale)")
-      .arg( QCString( kernel->networkCodec()->mimeName() ).lower() );
+      .arg( QCString( kmkernel->networkCodec()->mimeName() ).lower() );
     return;
   }
 
@@ -2817,7 +2817,7 @@ void ComposerPage::CharsetTab::setup() {
 	it != charsets.end() ; ++it )
       if ( (*it) == QString::fromLatin1("locale") )
 	(*it) = QString("%1 (locale)")
-	  .arg( QCString( kernel->networkCodec()->mimeName() ).lower() );
+	  .arg( QCString( kmkernel->networkCodec()->mimeName() ).lower() );
 
   mCharsetListEditor->setStringList( charsets );
   mKeepReplyCharsetCheck->setChecked( !composer.readBoolEntry( "force-reply-charset", false ) );
@@ -3441,9 +3441,9 @@ void SecurityPage::GeneralTab::apply() {
       reader.writeEntry( "htmlMail", mHtmlMailCheck->isChecked() );
       QStringList names;
       QValueList<QGuardedPtr<KMFolder> > folders;
-      kernel->folderMgr()->createFolderList(&names, &folders);
-      kernel->imapFolderMgr()->createFolderList(&names, &folders);
-      kernel->searchFolderMgr()->createFolderList(&names, &folders);
+      kmkernel->folderMgr()->createFolderList(&names, &folders);
+      kmkernel->imapFolderMgr()->createFolderList(&names, &folders);
+      kmkernel->searchFolderMgr()->createFolderList(&names, &folders);
       for (QValueList<QGuardedPtr<KMFolder> >::iterator it = folders.begin();
         it != folders.end(); ++it)
       {
@@ -3656,14 +3656,14 @@ SecurityPageCryptPlugTab::~SecurityPageCryptPlugTab()
 void SecurityPage::CryptPlugTab::setup()
 {
   kdDebug(5006) << "CryptPlugTab::setup(): found "
-	    << kernel->cryptPlugList()->count()
+	    << kmkernel->cryptPlugList()->count()
 	    << " CryptPlugWrappers." << endl;
   mPlugList->clear();
 
   // populate the plugin list:
   int i = 0;
   QListViewItem * top = 0;
-  for ( CryptPlugWrapperListIterator it( *(kernel->cryptPlugList()) ) ;
+  for ( CryptPlugWrapperListIterator it( *(kmkernel->cryptPlugList()) ) ;
 	it.current() ; ++it, ++i ) {
     kdDebug(5006) << "processing { \"" << (*it)->displayName()
 	      << "\", \"" << (*it)->libName()
@@ -3715,7 +3715,7 @@ void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() {
 }
 
 void SecurityPage::CryptPlugTab::dismiss() {
-  CryptPlugWrapperList * cpl = kernel->cryptPlugList();
+  CryptPlugWrapperList * cpl = kmkernel->cryptPlugList();
   for ( CryptPlugWrapperListIterator it( *(mlistCryptoAdd) );
         it.current(); ++it ) {
     CryptPlugWrapper* wrapper = cpl->take( cpl->find( *it ) );
@@ -3734,7 +3734,7 @@ void SecurityPage::CryptPlugTab::dismiss() {
 void SecurityPage::CryptPlugTab::apply() {
   KConfigGroup general( KMKernel::config(), "General" );
 
-  CryptPlugWrapperList * cpl = kernel->cryptPlugList();
+  CryptPlugWrapperList * cpl = kmkernel->cryptPlugList();
 
   uint cryptPlugCount = 0;
   for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it ) {
@@ -3812,7 +3812,7 @@ void SecurityPage::CryptPlugTab::slotPlugUpdateURLChanged( const QString & text 
 void SecurityPage::CryptPlugTab::slotNewPlugIn()
 {
   CryptPlugWrapper * newWrapper = new CryptPlugWrapper( this, "", "", "" );
-  kernel->cryptPlugList()->append( newWrapper );
+  kmkernel->cryptPlugList()->append( newWrapper );
   mlistCryptoAdd->append( newWrapper );
 
   QListViewItem * item = new QListViewItem( mPlugList, mPlugList->lastItem() );
@@ -3835,7 +3835,7 @@ void SecurityPage::CryptPlugTab::slotDeletePlugIn()
 }
 
 void SecurityPage::CryptPlugTab::slotConfigurePlugIn() {
-  CryptPlugWrapperList * cpl = kernel->cryptPlugList();
+  CryptPlugWrapperList * cpl = kmkernel->cryptPlugList();
   int i = 0;
   for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it, ++i ) {
     if ( it.current()->isSelected() ) {
@@ -3854,7 +3854,7 @@ void SecurityPage::CryptPlugTab::slotActivatePlugIn()
   QListViewItem * item = mPlugList->selectedItem();
   if ( !item ) return;
 
-  CryptPlugWrapperList * cpl = kernel->cryptPlugList();
+  CryptPlugWrapperList * cpl = kmkernel->cryptPlugList();
 
   // find out whether the plug-in is to be activated or de-activated
   bool activate = ( item->text( 3 ).isEmpty() );
@@ -4057,7 +4057,7 @@ void MiscPage::FolderTab::setup() {
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
   mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-						  kernel->inboxFolder()->idString() ) );
+						  kmkernel->inboxFolder()->idString() ) );
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
@@ -4197,8 +4197,8 @@ void MiscPage::GroupwareTab::apply() {
   }
 
   // Make the groupware and resource options read the config settings
-  kernel->groupware().readConfig();
-  kernel->iCalIface().readConfig();
+  kmkernel->groupware().readConfig();
+  kmkernel->iCalIface().readConfig();
 }
 
 

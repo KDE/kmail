@@ -149,7 +149,7 @@ int KMFilterMgr::process( KMMessage * msg, const KMFilter * filter ) const {
   if ( parent && !msg->parent() ) {
     parent->open();
     if ( parent->addMsg( msg ) != 0 )
-      kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
+      kmkernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
     parent->close();
   }
 
@@ -212,7 +212,7 @@ int KMFilterMgr::process( KMMessage * msg, FilterSet set ) const {
   if ( msgTaken && parent && !msg->parent() ) {
     int rc = parent->addMsg( msg );
     if ( rc )
-      kernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
+      kmkernel->emergencyExit( i18n("Unable to process messages (message locking synchronization failure?)" ))   ;
   }
   if (status < 0) // No filters matched, keep copy of message
     status = 1;

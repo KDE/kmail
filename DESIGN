@@ -25,12 +25,12 @@ Files: kmkernel.{h,cpp}
 Contact Zack Rusin <zack@kde.org> with questions...
 
 The first thing you'll notice about KMail is the extensive use of
-kernel->xxx() constructs. The "kernel" is a define in kmkernel.h
+kmkernel->xxx() constructs. The "kmkernel" is a define in kmkernel.h
 declared as :
-#define kernel KMKernel::self() 
+#define kmkernel KMKernel::self() 
 KMKernel is the central object in KMail. It's always created before
 any other class, therefore you are _guaranteed_ that KMKernel::self()
-(and therefore "kernel" construct) won't return 0 (null).
+(and therefore "kmkernel" construct) won't return 0 (null).
 
 KMKernel implements the KMailIface (our DCOP interface) and gives
 access to all the core KMail functionality. 
@@ -55,7 +55,7 @@ identitydialog.
 
 KMIdentities are designed to be used through the IdentityManager:
 const KMIdentity & ident =
-	 kernel->identityManager()->identityForUoidOrDefault(...)
+	 kmkernel->identityManager()->identityForUoidOrDefault(...)
 Make sure you assign to a _const_ reference, since the identityForFoo
 methods are overloaded with non-const methods that access a different
 list of identities in the manager that is used while configuring. That
@@ -264,7 +264,7 @@ in the KMail's folder hierarchy.
 
 KMFolderDir's serve as folder holders which are managed by
 KMFolderMgr's. KMail contains three main KMFolderMgr's. They can be
-accessed via KMKernel ( the "kernel" construct ). Those methods are :
+accessed via KMKernel ( the "kmkernel" construct ). Those methods are :
 1) KMFolderMgr *folderMgr() - which returns the folder manager for
    the folders stored locally.
 2) KMFolderMgr *imapFolderMgr() - which returns the folder manager

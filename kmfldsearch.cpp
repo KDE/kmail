@@ -265,7 +265,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
 			      SLOT(slotClearSelection()), ac, "search_clear_selection" );
   connect(mTimer, SIGNAL(timeout()), this, SLOT(updStatus()));
-  connect(kernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
+  connect(kmkernel->searchFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
 	  this, SLOT(folderInvalidated(KMFolder*)));
 }
 
@@ -384,7 +384,7 @@ void KMFldSearch::slotSearch()
     // If we haven't openend an existing search folder, find or
     // create one.
     if (!mFolder) {
-      KMFolderMgr *mgr = kernel->searchFolderMgr();
+      KMFolderMgr *mgr = kmkernel->searchFolderMgr();
       QString baseName = "search";
       QString fullName = baseName;
       int count = 0;
@@ -542,7 +542,7 @@ void KMFldSearch::renameSearchFolder()
 				    i18n("Properties of Folder %1").arg( mFolder->label() ),
 				    mSearchFolderEdt->text() );
 	props->exec();
-	kernel->searchFolderMgr()->contentsChanged();
+	kmkernel->searchFolderMgr()->contentsChanged();
     }
 }
 
@@ -577,7 +577,7 @@ bool KMFldSearch::slotShowMsg(QListViewItem *item)
 
     KMFolder* folder;
     int msgIndex;
-    kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
+    kmkernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
 				   &folder, &msgIndex);
 
     if (!folder || msgIndex < 0)
@@ -616,7 +616,7 @@ KMMessageList KMFldSearch::selectedMessages()
     int msgIndex = -1;
     for (QListViewItemIterator it(mLbxMatches); it.current(); it++)
 	if (it.current()->isSelected()) {
-	    kernel->msgDict()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
+	    kmkernel->msgDict()->getLocation((*it)->text(MSGID_COLUMN).toUInt(),
 					   &folder, &msgIndex);
 	    if (folder && msgIndex >= 0)
 		msgList.append(folder->getMsgBase(msgIndex));
@@ -632,7 +632,7 @@ KMMessage* KMFldSearch::message()
     int msgIndex = -1;
     if (!item)
 	return 0;
-    kernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
+    kmkernel->msgDict()->getLocation(item->text(MSGID_COLUMN).toUInt(),
 				   &folder, &msgIndex);
     if (!folder || msgIndex < 0)
 	return 0;

@@ -41,9 +41,9 @@ FolderIface::FolderIface( const QString& vpath )
   : DCOPObject( "FolderIface" ), mPath( vpath )
 {
     kdDebug(5006)<<"FolderIface folder = "<< mPath <<endl;
-    mFolder = kernel->folderMgr()->getFolderByURL( mPath );
+    mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
     if ( !mFolder )
-      mFolder = kernel->imapFolderMgr()->getFolderByURL( mPath );
+      mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
 }
 
 QString

@@ -168,18 +168,18 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   QStringList str;
   if( !mFolder ) {
     // new folder can be subfolder of any other folder
-    kernel->folderMgr()->createFolderList( &str, &mFolders  );
-    kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
+    kmkernel->folderMgr()->createFolderList( &str, &mFolders  );
+    kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
   }
   else if( mFolder->folderType() != KMFolderTypeImap
            && mFolder->folderType() != KMFolderTypeCachedImap ) {
     // already existant local folder can only be moved locally
-    kernel->folderMgr()->createFolderList( &str, &mFolders  );
+    kmkernel->folderMgr()->createFolderList( &str, &mFolders  );
   }
   else {
     // already existant IMAP folder can't be moved, but we add all
     // IMAP folders so that the correct parent folder can be shown
-    kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
+    kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
   }
 
   // remove the local system folders from the list of parent folders because
@@ -507,7 +507,7 @@ void KMFolderDialog::slotOk()
   {
     QString acctName;
     QString fldName, oldFldName;
-    KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
+    KMFolderDir *selectedFolderDir = &(kmkernel->folderMgr()->dir());
     KMFolder *selectedFolder = 0;
     int curFolder = fileInFolder->currentItem();
 
@@ -519,7 +519,7 @@ void KMFolderDialog::slotOk()
     if (fldName.isEmpty()) fldName = i18n("unnamed");
 
     if (mailboxType->currentItem() == 2) {
-      selectedFolderDir = &(kernel->searchFolderMgr()->dir());
+      selectedFolderDir = &(kmkernel->searchFolderMgr()->dir());
     }
     else if (curFolder != 0)
     {
@@ -543,7 +543,7 @@ void KMFolderDialog::slotOk()
 
     // Buggy?
     if( mFolder && mFolder->child() )
-      while( ( folderDir != &kernel->folderMgr()->dir() )
+      while( ( folderDir != &kmkernel->folderMgr()->dir() )
              && ( folderDir != mFolder->parent() ) ) {
         if( folderDir->findRef( mFolder ) != -1 ) {
           KMessageBox::error( this, message );
@@ -572,13 +572,13 @@ void KMFolderDialog::slotOk()
         mFolder = new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
       } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
-        mFolder = kernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
+        mFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
       } else if (mailboxType->currentItem() == 2) {
-        mFolder = kernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kernel->searchFolderMgr()->dir() );
+        mFolder = kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() );
       } else if (mailboxType->currentItem() == 1) {
-        mFolder = kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
+        mFolder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       } else {
-        mFolder = kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
+        mFolder = kmkernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
       }
     }
     else if( ( oldFldName != fldName )
@@ -593,7 +593,7 @@ void KMFolderDialog::slotOk()
       } else
         mFolder->rename(fldName);
 
-      kernel->folderMgr()->contentsChanged();
+      kmkernel->folderMgr()->contentsChanged();
     }
   }
 

@@ -166,7 +166,7 @@ void IdentityManager::writeConfig() const {
     }
   }
 #ifndef KMAIL_TESTING
-  kernel->slotRequestConfigSync();
+  kmkernel->slotRequestConfigSync();
 #else
   config->sync();
 #endif

@@ -83,9 +83,9 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
   /** Initiate connections between folders and this object */
   foldersChanged();
 
-  connect( kernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
-  connect( kernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
-  connect( kernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+  connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+  connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+  connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 }
 
 void KMSystemTray::buildPopupMenu()
@@ -203,9 +203,9 @@ void KMSystemTray::foldersChanged()
 
   QStringList folderNames;
   QValueList<QGuardedPtr<KMFolder> > folderList;
-  kernel->folderMgr()->createFolderList(&folderNames, &folderList);
-  kernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
-  kernel->searchFolderMgr()->createFolderList(&folderNames, &folderList);
+  kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
+  kmkernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
+  kmkernel->searchFolderMgr()->createFolderList(&folderNames, &folderList);
 
   QStringList::iterator strIt = folderNames.begin();
 
@@ -497,7 +497,7 @@ void KMSystemTray::selectedAccount(int id)
   KMMainWidget * mainWidget = getKMMainWidget();
   if (!mainWidget)
   {
-    kernel->openReader();
+    kmkernel->openReader();
     mainWidget = getKMMainWidget();
   }
 

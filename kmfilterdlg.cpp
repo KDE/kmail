@@ -411,7 +411,7 @@ void KMFilterListBox::createFilter( const QCString & field,
   newFilter->pattern()->append( newRule );
   newFilter->pattern()->setName( QString("<%1>:%2").arg( field ).arg( value) );
 
-  KMFilterActionDesc *desc = (*kernel->filterActionDict())["transfer"];
+  KMFilterActionDesc *desc = (*kmkernel->filterActionDict())["transfer"];
   if ( desc )
     newFilter->actions()->append( desc->create() );
 
@@ -469,9 +469,9 @@ void KMFilterListBox::slotApplyFilterChanges()
 
   KMFilterMgr *fm;
   if (bPopFilter)
-    fm = kernel->popFilterMgr();
+    fm = kmkernel->popFilterMgr();
   else
-    fm = kernel->filterMgr();
+    fm = kmkernel->filterMgr();
 
   // block attemts to use filters (currently a no-op)
   fm->beginUpdate();
@@ -660,12 +660,12 @@ void KMFilterListBox::loadFilterList()
 	QPtrList<KMFilter> *manager;
   if(bPopFilter)
 	{
-    mShowLater = kernel->popFilterMgr()->showLaterMsgs();
-		manager = kernel->popFilterMgr();
+    mShowLater = kmkernel->popFilterMgr()->showLaterMsgs();
+		manager = kmkernel->popFilterMgr();
 	}
 	else
 	{
-		manager = kernel->filterMgr();
+		manager = kmkernel->filterMgr();
 	}
 
   QPtrListIterator<KMFilter> it( *manager );
@@ -751,7 +751,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
 
   setSpacing( 4 );
 
-  QPtrListIterator<KMFilterActionDesc> it ( kernel->filterActionDict()->list() );
+  QPtrListIterator<KMFilterActionDesc> it ( kmkernel->filterActionDict()->list() );
   for ( i=0, it.toFirst() ; it.current() ; ++it, ++i ) {
     //create an instance:
     KMFilterAction *a = (*it)->create();
@@ -816,7 +816,7 @@ KMFilterAction * KMFilterActionWidget::action()
 {
   // look up the action description via the label
   // returned by QComboBox::currentText()...
-  KMFilterActionDesc *desc = (*kernel->filterActionDict())[ mComboBox->currentText() ];
+  KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ mComboBox->currentText() ];
   if ( desc ) {
     // ...create an instance...
     KMFilterAction *fa = desc->create();

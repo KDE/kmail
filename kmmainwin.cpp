@@ -47,7 +47,7 @@ KMMainWin::KMMainWin(QWidget *)
 
   conserveMemory();
   applyMainWindowSettings(KMKernel::config(), "Main Window");
-  connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
+  connect(kmkernel->msgSender(), SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(statusMsg(const QString&)));
   connect(mKMMainWidget->messageView(), SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(htmlStatusMsg(const QString&)));
@@ -163,7 +163,7 @@ void KMMainWin::slotQuit()
 
 //-----------------------------------------------------------------------------
 bool KMMainWin::queryClose() {
-  if (kernel->shuttingDown() || kapp->sessionSaving())
+  if (kmkernel->shuttingDown() || kapp->sessionSaving())
     return true;
 
   int      ret = 0;
@@ -175,7 +175,7 @@ bool KMMainWin::queryClose() {
   KMainWindow   *kmWin = 0;
   int           num = 0;
 
-  kernel->setCanExpire(false);
+  kmkernel->setCanExpire(false);
   for (kmWin = KMainWindow::memberList->first(); kmWin;
        kmWin = KMainWindow::memberList->next()) {
     if (kmWin->isA("KMMainWin")) {
@@ -196,7 +196,7 @@ bool KMMainWin::queryClose() {
     ret = KMessageBox::warningYesNo(KMainWindow::memberList->first(),
 			 str, i18n("Expire Old Messages?"), i18n("Expire"), i18n("Don't Expire"));
     if (ret == KMessageBox::Continue) {
-      kernel->setCanExpire(true);
+      kmkernel->setCanExpire(true);
     }
   }
 

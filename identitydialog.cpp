@@ -206,9 +206,9 @@ namespace KMail {
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
 					  const QString & msg ) {
-    KMFolder * folder = kernel->folderMgr()->findIdString( folderID );
+    KMFolder * folder = kmkernel->folderMgr()->findIdString( folderID );
     if ( !folder )
-      folder = kernel->imapFolderMgr()->findIdString( folderID );
+      folder = kmkernel->imapFolderMgr()->findIdString( folderID );
     if ( !folder ) {
       KMessageBox::sorry( this, msg );
       return false;
@@ -240,7 +240,7 @@ namespace KMail {
 				  "Therefore the default sent-mail folder "
 				  "will be used.")
 			     .arg( ident.identityName() ) ) )
-      mFccCombo->setFolder( kernel->sentFolder() );
+      mFccCombo->setFolder( kmkernel->sentFolder() );
     else
       mFccCombo->setFolder( ident.fcc() );
 
@@ -251,7 +251,7 @@ namespace KMail {
 				  "Therefore the default drafts folder "
 				  "will be used.")
 			     .arg( ident.identityName() ) ) )
-      mDraftsCombo->setFolder( kernel->draftsFolder() );
+      mDraftsCombo->setFolder( kmkernel->draftsFolder() );
     else
       mDraftsCombo->setFolder( ident.drafts() );
 

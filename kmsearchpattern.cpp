@@ -563,7 +563,7 @@ bool KMSearchPattern::matches( Q_UINT32 serNum ) const
   bool res;
   int idx = -1;
   KMFolder *folder = 0;
-  kernel->msgDict()->getLocation(serNum, &folder, &idx);
+  kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
   if (!folder || (idx == -1) || (idx >= folder->count())) {
     return false;
   }

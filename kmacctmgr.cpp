@@ -135,7 +135,7 @@ void KMAcctMgr::processNextCheck(bool _newMail)
       mAcctChecking.removeRef( acct );
       disconnect( acct, SIGNAL(finishedCheck(bool)),
                   this, SLOT(processNextCheck(bool)) );
-      kernel->filterMgr()->cleanup();
+      kmkernel->filterMgr()->cleanup();
       emit checkedMail(newMailArrived, interactive);
     }
   }
@@ -205,7 +205,7 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 
   if (act)
   {
-    act->setFolder(kernel->inboxFolder());
+    act->setFolder(kmkernel->inboxFolder());
     connect( act, SIGNAL(newMailsProcessed(int)),
 	this, SLOT(addToTotalNewMailCount(int)) );
   }

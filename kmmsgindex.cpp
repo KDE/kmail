@@ -209,9 +209,9 @@ static int kmindex_grow_increment = 40960; //grow this many buckets at a time
 KMMsgIndex::KMMsgIndex(QObject *o, const char *n) :
     QObject(o, n), mIndexState(INDEX_IDLE), delay_cnt(0), mLastSearch()
 {
-    mTermIndex.loc = kernel->folderMgr()->basePath() + "/.kmmsgindex_search";
-    mTermTOC.loc = kernel->folderMgr()->basePath() + "/.kmmsgindex_toc";
-    mTermProcessed.loc = kernel->folderMgr()->basePath() +
+    mTermIndex.loc = kmkernel->folderMgr()->basePath() + "/.kmmsgindex_search";
+    mTermTOC.loc = kmkernel->folderMgr()->basePath() + "/.kmmsgindex_toc";
+    mTermProcessed.loc = kmkernel->folderMgr()->basePath() +
 			 "/.kmmsgindex_processed";
 }
 
@@ -220,9 +220,9 @@ void KMMsgIndex::init()
     mActiveSearches.setAutoDelete(TRUE);
     reset(FALSE);
     readIndex();
-    connect(kernel->folderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
+    connect(kmkernel->folderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
 	    this, SLOT(slotRemoveMsg(KMFolder*, Q_UINT32)));
-    connect(kernel->folderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
+    connect(kmkernel->folderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
 	    this, SLOT(slotAddMsg(KMFolder*, Q_UINT32)));
 }
 
@@ -471,7 +471,7 @@ KMMsgIndex::processMsg(Q_UINT32 serNum)
 
     int idx = -1;
     KMFolder *folder = 0;
-    kernel->msgDict()->getLocation(serNum, &folder, &idx);
+    kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
     if(!folder || (idx == -1) || (idx >= folder->count()))
 	return -1;
     if(mOpenedFolders.findIndex(folder) == -1) {
@@ -682,7 +682,7 @@ KMMsgIndex::createState(bool finish)
 	    mOpenedFolders.append(f);
 	}
 	for(int i = 0, s; i < f->count(); ++i) {
-	    s = kernel->msgDict()->getMsgSerNum(f, i);
+	    s = kmkernel->msgDict()->getMsgSerNum(f, i);
 	    if(finish ||
 	       (terms < max_terms && processed < max_process &&
 		skipped < (max_process*4))) {
@@ -821,7 +821,7 @@ KMMsgIndex::syncIndex()
     if(mIndexState != INDEX_CREATE)
 	return;
     QValueStack<QGuardedPtr<KMFolderDir> > folders;
-    folders.push(&(kernel->folderMgr()->dir()));
+    folders.push(&(kmkernel->folderMgr()->dir()));
     while(KMFolderDir *dir = folders.pop()) {
 	for(KMFolderNode *child = dir->first(); child; child = dir->next()) {
 	    if(child->isDir())
@@ -1071,7 +1071,7 @@ KMMsgIndex::find(QString data, bool contains, KMSearchRule *rule,
 	    it != ret.end(); ++it) {
 	    int idx = -1, ser = (*it);
 	    KMFolder *folder = 0;
-	    kernel->msgDict()->getLocation(ser, &folder, &idx);
+	    kmkernel->msgDict()->getLocation(ser, &folder, &idx);
 	    if(!folder || (idx == -1))
               continue;
 	    KMMessage *msg = folder->getMsg(idx);
@@ -1193,7 +1193,7 @@ KMIndexSearchTarget::KMIndexSearchTarget(KMSearch *s) : QObject(NULL, NULL),
     mSearch = s;
     mId = startTimer(0);
     {
-	QValueList<Q_UINT32> lst = kernel->msgIndex()->query(
+	QValueList<Q_UINT32> lst = kmkernel->msgIndex()->query(
 	    s->searchPattern(), FALSE);
 	for(QValueListConstIterator<Q_UINT32> it = lst.begin();
 	    it != lst.end(); ++it)
@@ -1235,7 +1235,7 @@ KMIndexSearchTarget::timerEvent(QTimerEvent *)
 	int stop_at = QMIN(mSearchResult.count(), max_src);
 	for(int i = 0, idx; i < stop_at; i++) {
 	    Q_UINT32 serNum = mSearchResult.pop();
-	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
+	    kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
 	    if (!folder || (idx == -1))
 		continue;
 	    if(mSearch->inScope(folder)) {
@@ -1264,7 +1264,7 @@ KMIndexSearchTarget::timerEvent(QTimerEvent *)
 	    mSearch->setRunning(FALSE);
 	stop(TRUE);
 	killTimer(mId);
-	kernel->msgIndex()->stopQuery(id());
+	kmkernel->msgIndex()->stopQuery(id());
     }
     //!!!!! do nothing else because we might be deleted..
 }

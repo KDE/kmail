@@ -93,7 +93,7 @@ const QTextCodec * KMMessagePart::codec() const {
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should
     // be okay
-    c = kernel->networkCodec();
+    c = kmkernel->networkCodec();
   assert( c );
   return c;
 }

@@ -153,7 +153,7 @@ protected:
       identity), only the @ref IdentityManager can change this.
       You should use
       <pre>
-      kernel->identityManager()->setAsDefault( name_of_default )
+      kmkernel->identityManager()->setAsDefault( name_of_default )
       </pre>
       instead.
   **/

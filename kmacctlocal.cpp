@@ -211,7 +211,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
 
   if (addedOk)
   {
-    kernel->folderMgr()->syncAllFolders();
+    kmkernel->folderMgr()->syncAllFolders();
     rc = mailFolder.expunge();
     if (rc)
       KMessageBox::queuedMessageBox( 0, KMessageBox::Information,

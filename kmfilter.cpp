@@ -57,7 +57,7 @@ KMFilter::KMFilter( const KMFilter & aFilter )
 
     QPtrListIterator<KMFilterAction> it( aFilter.mActions );
     for ( it.toFirst() ; it.current() ; ++it ) {
-      KMFilterActionDesc *desc = (*kernel->filterActionDict())[ (*it)->name() ];
+      KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ (*it)->name() ];
       if ( desc ) {
 	KMFilterAction *f = desc->create();
 	if ( f ) {
@@ -171,7 +171,7 @@ void KMFilter::readConfig(KConfig* config)
       actName.sprintf("action-name-%d", i);
       argsName.sprintf("action-args-%d", i);
       // get the action description...
-      KMFilterActionDesc *desc = (*kernel->filterActionDict())[ config->readEntry( actName ) ];
+      KMFilterActionDesc *desc = (*kmkernel->filterActionDict())[ config->readEntry( actName ) ];
       if ( desc ) {
         //...create an instance...
         KMFilterAction *fa = desc->create();

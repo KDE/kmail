@@ -134,8 +134,8 @@ void KMReaderMainWin::slotBounceMsg()
 
 void KMReaderMainWin::setupAccel()
 {
-  if (kernel->xmlGuiInstance())
-    setInstance( kernel->xmlGuiInstance() );
+  if (kmkernel->xmlGuiInstance())
+    setInstance( kmkernel->xmlGuiInstance() );
   KStdAction::close( this, SLOT( close() ), actionCollection() );
   applyMainWindowSettings(KMKernel::config(), "Separate Reader Window");
   QAccel *accel = new QAccel(mReaderWin, "showMsg()");

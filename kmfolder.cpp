@@ -182,7 +182,7 @@ void KMFolder::setDirty(bool f)
 //-----------------------------------------------------------------------------
 void KMFolder::setIdentity( uint identity ) {
   mIdentity = identity;
-  kernel->slotRequestConfigSync();
+  kmkernel->slotRequestConfigSync();
 }
 
 //-----------------------------------------------------------------------------
@@ -321,7 +321,7 @@ void KMFolder::expireOldMessages() {
 void KMFolder::emitMsgAddedSignals(int idx)
 {
   if (!mQuiet) {
-    Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+    Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
     emit msgAdded(idx);
     emit msgAdded(this, serNum);
   } else
@@ -363,7 +363,7 @@ void KMFolder::reallyAddMsg(KMMessage* aMsg)
   unGetMsg(index);
   if (undo)
   {
-    kernel->undoStack()->pushSingleAction( serNum, folder, this );
+    kmkernel->undoStack()->pushSingleAction( serNum, folder, this );
   }
 }
 
@@ -404,7 +404,7 @@ void KMFolder::removeMsg(int idx, bool)
 
   KMMsgBase* mb = getMsgBase(idx);
 
-  Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+  Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
   if (!mQuiet && serNum != 0)
     emit msgRemoved(this, serNum);
   mb = takeIndexEntry( idx );
@@ -413,7 +413,7 @@ void KMFolder::removeMsg(int idx, bool)
   needsCompact=true; // message is taken from here - needs to be compacted
 
   if (mb->isUnread() || mb->isNew() ||
-      (this == kernel->outboxFolder())) {
+      (this == kmkernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
@@ -445,14 +445,14 @@ KMMessage* KMFolder::take(int idx)
   mb = getMsgBase(idx);
   if (!mb) return 0;
   if (!mb->isMessage()) readMsg(idx);
-  Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+  Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
   if (!mQuiet)
     emit msgRemoved(this,serNum);
 
   msg = (KMMessage*)takeIndexEntry(idx);
 
   if (msg->isUnread() || msg->isNew() ||
-      (this == kernel->outboxFolder())) {
+      (this == kmkernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
   }
@@ -523,7 +523,7 @@ KMMessage* KMFolder::getMsg(int idx)
   msg->setEnableUndo(undo);
 
   if (msg->getMsgSerNum() == 0) {
-    msg->setMsgSerNum(kernel->msgDict()->insert(0, msg, idx));
+    msg->setMsgSerNum(kmkernel->msgDict()->insert(0, msg, idx));
     kdDebug(5006) << "Serial number generated for message in folder " << label() << endl;
   }
   msg->setComplete( true );
@@ -649,8 +649,8 @@ int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
   oldLoc = location();
   oldIndexLoc = indexLocation();
   oldSubDirLoc = subdirLocation();
-  if (kernel->msgDict())
-    oldIdsLoc = kernel->msgDict()->getFolderIdsLocation(this);
+  if (kmkernel->msgDict())
+    oldIdsLoc = kmkernel->msgDict()->getFolderIdsLocation(this);
 
   close(TRUE);
 
@@ -663,8 +663,8 @@ int KMFolder::rename(const QString& newName, KMFolderDir *newParent)
   newLoc = location();
   newIndexLoc = indexLocation();
   newSubDirLoc = subdirLocation();
-  if (kernel->msgDict())
-    newIdsLoc = kernel->msgDict()->getFolderIdsLocation(this);
+  if (kmkernel->msgDict())
+    newIdsLoc = kmkernel->msgDict()->getFolderIdsLocation(this);
 
   if (::rename(QFile::encodeName(oldLoc), QFile::encodeName(newLoc))) {
     setName(oldName);
@@ -727,7 +727,7 @@ int KMFolder::remove()
   clearIndex(true, true); // delete and remove from dict
   close(TRUE);
 
-  if (kernel->msgDict()) kernel->msgDict()->removeFolderIds(this);
+  if (kmkernel->msgDict()) kmkernel->msgDict()->removeFolderIds(this);
   unlink(QFile::encodeName(indexLocation()) + ".sorted");
   unlink(QFile::encodeName(indexLocation()));
 
@@ -749,7 +749,7 @@ int KMFolder::expunge()
   clearIndex(true, true);   // delete and remove from dict
   close(TRUE);
 
-  kernel->msgDict()->removeFolderIds(this);
+  kmkernel->msgDict()->removeFolderIds(this);
   if (mAutoCreateIndex)
     truncateIndex();
   else unlink(QFile::encodeName(indexLocation()));
@@ -851,10 +851,10 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
   int newUnread = 0;
 
   if (oldStatus & KMMsgStatusUnread || oldStatus & KMMsgStatusNew ||
-      (this == kernel->outboxFolder()))
+      (this == kmkernel->outboxFolder()))
     oldUnread = 1;
   if (newStatus & KMMsgStatusUnread || newStatus & KMMsgStatusNew ||
-      (this == kernel->outboxFolder()))
+      (this == kmkernel->outboxFolder()))
     newUnread = 1;
   int deltaUnread = newUnread - oldUnread;
 
@@ -864,7 +864,7 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
     mUnreadMsgs += deltaUnread;
     emit numUnreadMsgsChanged( this );
 
-    Q_UINT32 serNum = kernel->msgDict()->getMsgSerNum(this, idx);
+    Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
     emit msgChanged( this, serNum, deltaUnread );
   }
 }
@@ -973,7 +973,7 @@ int KMFolder::writeMsgDict(KMMsgDict *dict)
 {
   int ret = 0;
   if (!dict)
-    dict = kernel->msgDict();
+    dict = kmkernel->msgDict();
   if (dict)
     ret = dict->writeFolderIds(this);
   return ret;
@@ -983,7 +983,7 @@ int KMFolder::writeMsgDict(KMMsgDict *dict)
 int KMFolder::touchMsgDict()
 {
   int ret = 0;
-  KMMsgDict *dict = kernel->msgDict();
+  KMMsgDict *dict = kmkernel->msgDict();
   if (dict)
     ret = dict->touchFolderIds(this);
   return ret;
@@ -993,7 +993,7 @@ int KMFolder::touchMsgDict()
 int KMFolder::appendtoMsgDict(int idx)
 {
   int ret = 0;
-  KMMsgDict *dict = kernel->msgDict();
+  KMMsgDict *dict = kmkernel->msgDict();
   if (dict) {
     if (count() == 1) {
       ret = dict->writeFolderIds(this);
@@ -1040,13 +1040,13 @@ void KMFolder::setUserWhoField(const QString &whoField, bool aWriteConfig)
   {
     // default setting
     const KMIdentity & identity =
-      kernel->identityManager()->identityForUoidOrDefault( mIdentity );
+      kmkernel->identityManager()->identityForUoidOrDefault( mIdentity );
 
     if ( mIsSystemFolder && folderType() != KMFolderTypeImap )
     {
       // local system folders
-      if ( this == kernel->inboxFolder() || this == kernel->trashFolder() ) mWhoField = "From";
-      if ( this == kernel->outboxFolder() || this == kernel->sentFolder() || this == kernel->draftsFolder() ) mWhoField = "To";
+      if ( this == kmkernel->inboxFolder() || this == kmkernel->trashFolder() ) mWhoField = "From";
+      if ( this == kmkernel->outboxFolder() || this == kmkernel->sentFolder() || this == kmkernel->draftsFolder() ) mWhoField = "To";
 
     } else if ( identity.drafts() == idString() || identity.fcc() == idString() ) {
       // drafts or sent of the identity

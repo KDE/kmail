@@ -730,7 +730,7 @@ void KMReaderWin::writeConfig( bool sync ) const {
   saveSplitterSizes( reader );
 
   if ( sync )
-    kernel->slotRequestConfigSync();
+    kmkernel->slotRequestConfigSync();
 }
 
 //-----------------------------------------------------------------------------
@@ -942,7 +942,7 @@ void KMReaderWin::displayAboutPage()
 
   info = info.arg( featureItems );
 
-  if( kernel->firstStart() ) {
+  if( kmkernel->firstStart() ) {
     info = info.arg( i18n("<p>Please take a moment to fill in the KMail "
 			  "configuration panel at Settings-&gt;Configure "
 			  "KMail.\n"
@@ -979,7 +979,7 @@ void KMReaderWin::updateReaderWin()
   KMFolder* folder;
   if (message(&folder))
   {
-    if( !kernel->iCalIface().isResourceImapFolder( folder ) ){
+    if( !kmkernel->iCalIface().isResourceImapFolder( folder ) ){
       if ( mShowColorbar )
 	mColorBar->show();
       else
@@ -1383,7 +1383,7 @@ void KMReaderWin::slotTouchMessage()
 						  MDN::Displayed,
 						  true /* allow GUI */ );
       if ( receipt )
-	if ( !kernel->msgSender()->send( receipt ) ) // send or queue
+	if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
 	  KMessageBox::error( this, i18n("Couldn't send MDN!") );
     }
   }
@@ -1531,8 +1531,8 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
   if( aUrl.hasRef() )
     kdDebug(5006) << QString(aUrl.path()+"#"+aUrl.ref()) << endl;
 
-  if( kernel->groupware().isEnabled()
-      && kernel->groupware().handleLink( aUrl, message() ) )
+  if( kmkernel->groupware().isEnabled()
+      && kmkernel->groupware().handleLink( aUrl, message() ) )
     return;
 
   // handle own links
@@ -1931,7 +1931,7 @@ void KMReaderWin::slotAtmSave()
 
   mSaveAttachDir = url.directory() + '/';
 
-  kernel->byteArrayToRemoteFile( msgPart.bodyDecodedBinary(), url );
+  kmkernel->byteArrayToRemoteFile( msgPart.bodyDecodedBinary(), url );
   */
 }
 
@@ -2061,7 +2061,7 @@ KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
   if (mLastSerNum) {
     KMMessage *message = 0;
     int index;
-    kernel->msgDict()->getLocation( mLastSerNum, &folder, &index );
+    kmkernel->msgDict()->getLocation( mLastSerNum, &folder, &index );
     if (folder )
       message = folder->getMsg( index );
     if (!message)

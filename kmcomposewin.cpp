@@ -94,13 +94,13 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
     mAutoRequestMDN( false ),
     mId( id ), mNeverSign( false ), mNeverEncrypt( false )
 {
-  if (kernel->xmlGuiInstance())
-    setInstance( kernel->xmlGuiInstance() );
+  if (kmkernel->xmlGuiInstance())
+    setInstance( kmkernel->xmlGuiInstance() );
   mMainWidget = new QWidget(this);
 
   // Initialize the plugin selection according to 'active' flag that
   // was set via the global configuration dialog.
-  mSelectedCryptPlug = kernel->cryptPlugList() ? kernel->cryptPlugList()->active() : 0;
+  mSelectedCryptPlug = kmkernel->cryptPlugList() ? kmkernel->cryptPlugList()->active() : 0;
 
   mIdentity = new IdentityCombo(mMainWidget);
   mFcc = new KMFolderComboBox(mMainWidget);
@@ -232,9 +232,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
   connect(mEdtFrom,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
-	connect(kernel->folderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+	connect(kmkernel->folderMgr(),SIGNAL(folderRemoved(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
-	connect(kernel->imapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+	connect(kmkernel->imapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
 
   connect (mEditor, SIGNAL (spellcheck_done(int)),
@@ -342,7 +342,7 @@ void KMComposeWin::addAttachment(const QString &name,
     msgPart->setName(name);
     QValueList<int> dummy;
     msgPart->setBodyAndGuessCte(data, dummy,
-				kernel->msgSender()->sendQuotedPrintable());
+				kmkernel->msgSender()->sendQuotedPrintable());
     msgPart->setTypeStr(type);
     msgPart->setSubtypeStr(subType);
     msgPart->setParameter(paramAttr,paramValue);
@@ -425,7 +425,7 @@ void KMComposeWin::readConfig(void)
   if (mBtnIdentity->isChecked())
     mId = config->readUnsignedNumEntry("previous-identity", mId );
   mBtnFcc->setChecked(config->readBoolEntry("sticky-fcc", false));
-  QString previousFcc = kernel->sentFolder()->idString();
+  QString previousFcc = kmkernel->sentFolder()->idString();
   if (mBtnFcc->isChecked())
     previousFcc = config->readEntry("previous-fcc", previousFcc );
   mBtnTransport->setChecked(config->readBoolEntry("sticky-transport", false));
@@ -521,11 +521,11 @@ void KMComposeWin::readConfig(void)
   {
       kdDebug(5006) << "KMComposeWin::readConfig. " << mIdentity->currentIdentityName() << endl;
       const KMIdentity & ident =
-        kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
+        kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
       kdDebug(5006) << "KMComposeWin::readConfig: identity.fcc()='"
                     << ident.fcc() << "'" << endl;
       if ( ident.fcc().isEmpty() )
-        previousFcc = kernel->sentFolder()->idString();
+        previousFcc = kmkernel->sentFolder()->idString();
       else
         previousFcc = ident.fcc();
       kdDebug(5006) << "KMComposeWin::readConfig: previousFcc="
@@ -600,7 +600,7 @@ void KMComposeWin::deadLetter(void)
     fprintf(stderr,"appending message to ~/dead.letter.tmp\n");
   } else {
     perror("cannot open ~/dead.letter.tmp for saving the current message");
-    kernel->emergencyExit( i18n("Not enough free disk space." ));
+    kmkernel->emergencyExit( i18n("Not enough free disk space." ));
   }
 }
 
@@ -821,7 +821,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupActions(void)
 {
-  if (kernel->msgSender()->sendImmediate()) //default == send now?
+  if (kmkernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
     (void) new KAction (i18n("&Send"), "mail_send", CTRL+Key_Return,
@@ -981,7 +981,7 @@ void KMComposeWin::setupActions(void)
 
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
-  KStdAction::preferences(kernel, SLOT(slotShowConfigurationDialog()), actionCollection());
+  KStdAction::preferences(kmkernel, SLOT(slotShowConfigurationDialog()), actionCollection());
 
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
                       actionCollection(), "setup_spellchecker");
@@ -994,7 +994,7 @@ void KMComposeWin::setupActions(void)
                                   actionCollection(), "sign_message");
   // get PGP user id for the chosen identity
   const KMIdentity & ident =
-    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QCString pgpUserId = ident.pgpIdentity();
   mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
 
@@ -1038,11 +1038,11 @@ void KMComposeWin::setupActions(void)
   connect(signAction,    SIGNAL(toggled(bool)),
                          SLOT(slotSignToggled(    bool )));
 
-  if( kernel->cryptPlugList() && kernel->cryptPlugList()->count() ){
+  if( kmkernel->cryptPlugList() && kmkernel->cryptPlugList()->count() ){
     QStringList lst;
     lst << i18n( "inline OpenPGP (built-in)" );
     CryptPlugWrapper* current;
-    QPtrListIterator<CryptPlugWrapper> it( *kernel->cryptPlugList() );
+    QPtrListIterator<CryptPlugWrapper> it( *kmkernel->cryptPlugList() );
     int idx=0;
     int i=1;
     while( ( current = it.current() ) ) {
@@ -1232,7 +1232,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     slotIdentityChanged( mId );
   }
 
-  IdentityManager * im = kernel->identityManager();
+  IdentityManager * im = kmkernel->identityManager();
 
   const KMIdentity & ident = im->identityForUoid( mIdentity->currentIdentity() );
 
@@ -1373,7 +1373,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     //
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
   } else {
-    kernel->dumpDeadLetters();
+    kmkernel->dumpDeadLetters();
   }
   mEditor->setModified(isModified);
 }
@@ -1383,13 +1383,13 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
 void KMComposeWin::setFcc( const QString &idString )
 {
   // check if the sent-mail folder still exists
-  KMFolder *folder = kernel->folderMgr()->findIdString( idString );
+  KMFolder *folder = kmkernel->folderMgr()->findIdString( idString );
   if ( !folder )
-    folder = kernel->imapFolderMgr()->findIdString( idString );
+    folder = kmkernel->imapFolderMgr()->findIdString( idString );
   if ( folder )
     mFcc->setFolder( idString );
   else
-    mFcc->setFolder( kernel->sentFolder() );
+    mFcc->setFolder( kmkernel->sentFolder() );
 }
 
 
@@ -1397,7 +1397,7 @@ void KMComposeWin::setFcc( const QString &idString )
 bool KMComposeWin::queryClose ()
 {
   int rc;
-  if (kernel->shuttingDown() || kapp->sessionSaving())
+  if (kmkernel->shuttingDown() || kapp->sessionSaving())
     return true;
 
   if(mEditor->isModified() || mEdtFrom->edited() || mEdtReplyTo->edited() ||
@@ -1532,7 +1532,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
   mMsg->setBcc(bcc());
 
   const KMIdentity & id
-    = kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
+    = kmkernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
   kdDebug(5006) << "\n\n\n\nKMComposeWin::applyChanges: " << mFcc->currentText() << "=="
             << id.fcc() << "?" << endl;
 
@@ -1584,7 +1584,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
 
   // get PGP user id for the chosen identity
   const KMIdentity & ident =
-    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   QCString pgpUserId = ident.pgpIdentity();
 
   // check settings of composer buttons *and* attachment check boxes
@@ -1946,7 +1946,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
 
   QCString boundaryCStr;
 
-  bool isQP = kernel->msgSender()->sendQuotedPrintable();
+  bool isQP = kmkernel->msgSender()->sendQuotedPrintable();
 
   if( earlyAddAttachments ) {
     // calculate a boundary string
@@ -2269,7 +2269,7 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
 
         // get PGP user id for the chosen identity
         const KMIdentity & ident =
-          kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+          kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
         QCString pgpUserId = ident.pgpIdentity();
 
         // encrypt the message
@@ -2909,7 +2909,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         // the signing key.
         // get the OpenPGP key ID for the chosen identity
         const KMIdentity & ident =
-          kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+          kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
         QCString userKeyId = ident.pgpIdentity();
         if( !userKeyId.isEmpty() ) {
           Kpgp::Module *pgp = Kpgp::Module::getKpgp();
@@ -3308,7 +3308,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         // the encryption keys.
         // get the OpenPGP key ID for the chosen identity
         const KMIdentity & ident =
-          kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+          kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
         QCString userKeyId = ident.pgpIdentity();
         Kpgp::Module *pgp = Kpgp::Module::getKpgp();
         Kpgp::KeyIDList encryptionKeyIds;
@@ -3709,7 +3709,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
     {
       QString oldText = mEditor->text();
       mEditor->setText(newText);
-      kernel->kbp()->idle();
+      kmkernel->kbp()->idle();
       bool anyway = (KMessageBox::warningYesNo(0,
       i18n("Not all characters fit into the chosen"
       " encoding.\nSend the message anyway?"),
@@ -3737,22 +3737,22 @@ QCString KMComposeWin::pgpProcessedMsg(void)
       doEncrypt = true;
     else if( status == 2 )
     { // the user wants to be asked or has to be asked
-      kernel->kbp()->idle();
+      kmkernel->kbp()->idle();
       int ret =
         KMessageBox::questionYesNo( this,
                                     i18n("Should this message be encrypted?") );
-      kernel->kbp()->busy();
+      kmkernel->kbp()->busy();
       doEncrypt = ( ret == KMessageBox::Yes );
     }
     else if( status == -1 )
     { // warn the user that there are conflicting encryption preferences
-      kernel->kbp()->idle();
+      kmkernel->kbp()->idle();
       int ret =
         KMessageBox::warningYesNoCancel( this,
                                          i18n("There are conflicting encryption "
                                          "preferences!\n"
                                          "Should this message be encrypted?") );
-      kernel->kbp()->busy();
+      kmkernel->kbp()->busy();
       if( ret == KMessageBox::Cancel )
         return QCString();
       doEncrypt = ( ret == KMessageBox::Yes );
@@ -3765,7 +3765,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
 
   // get PGP user id for the chosen identity
   QCString pgpUserId =
-    kernel->identityManager()->identityForUoidOrDefault( mId ).pgpIdentity();
+    kmkernel->identityManager()->identityForUoidOrDefault( mId ).pgpIdentity();
 
   if (!doEncrypt)
   { // clearsign the message
@@ -4132,7 +4132,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setName(name);
   QValueList<int> allowedCTEs;
   msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
-			      !kernel->msgSender()->sendQuotedPrintable());
+			      !kmkernel->msgSender()->sendQuotedPrintable());
   kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
   int slash = mimeType.find( '/' );
   if( slash == -1 )
@@ -4233,7 +4233,7 @@ void KMComposeWin::slotSelectCryptoModule()
   mSelectedCryptPlug = 0;
   int sel = cryptoModuleAction->currentItem();
   int i = 1;  // start at 1 since 0'th entry is "inline OpenPGP (builtin)"
-  for ( CryptPlugWrapperListIterator it( *(kernel->cryptPlugList()) ) ;
+  for ( CryptPlugWrapperListIterator it( *(kmkernel->cryptPlugList()) ) ;
         it.current() ;
         ++it, ++i )
     if( i == sel ){
@@ -4326,7 +4326,7 @@ void KMComposeWin::slotInsertMyPublicKey()
 
   // get PGP user id for the chosen identity
   QCString pgpUserId =
-    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() ).pgpIdentity();
+    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() ).pgpIdentity();
 
   QCString armoredKey = Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
   if (armoredKey.isEmpty())
@@ -4522,7 +4522,7 @@ void KMComposeWin::slotAttachSave()
   if( url.isEmpty() )
     return;
 
-  kernel->byteArrayToRemoteFile(msgPart->bodyDecodedBinary(), url);
+  kmkernel->byteArrayToRemoteFile(msgPart->bodyDecodedBinary(), url);
 }
 
 
@@ -4939,15 +4939,15 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     // get the draftsFolder
     if ( !mMsg->drafts().isEmpty() )
     {
-      draftsFolder = kernel->folderMgr()->findIdString( mMsg->drafts() );
+      draftsFolder = kmkernel->folderMgr()->findIdString( mMsg->drafts() );
       if ( draftsFolder == 0 )
-	imapDraftsFolder = kernel->imapFolderMgr()->findIdString( mMsg->drafts() );
+	imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
     }
     if (imapDraftsFolder && imapDraftsFolder->noContent())
       imapDraftsFolder = 0;
 
     if ( draftsFolder == 0 ) {
-      draftsFolder = kernel->draftsFolder();
+      draftsFolder = kmkernel->draftsFolder();
     } else {
       draftsFolder->open();
     }
@@ -4974,7 +4974,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       mMsg->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
     }
     mMsg->cleanupHeader();
-    sentOk = kernel->msgSender()->send(mMsg, aSendNow);
+    sentOk = kmkernel->msgSender()->send(mMsg, aSendNow);
     KMMessage* msg;
     for( msg = bccMsgList.first(); msg; msg = bccMsgList.next() ) {
       msg->setTo( KMMessage::expandAliases( to() ));
@@ -4985,7 +4985,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
         msg->setHeaderField( "X-KMail-Recipients", KMMessage::expandAliases( recips ) );
       }
       msg->cleanupHeader();
-      sentOk &= kernel->msgSender()->send(msg, aSendNow);
+      sentOk &= kmkernel->msgSender()->send(msg, aSendNow);
     }
   }
 
@@ -5054,7 +5054,7 @@ void KMComposeWin::slotAppendSignature()
   bool mod = mEditor->isModified();
 
   const KMIdentity & ident =
-    kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
+    kmkernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
   mOldSigText = ident.signatureText();
   if( !mOldSigText.isEmpty() )
   {
@@ -5064,7 +5064,7 @@ void KMComposeWin::slotAppendSignature()
     mEditor->setModified(mod);
     mEditor->setContentsPos( 0, 0 );
   }
-  kernel->dumpDeadLetters();
+  kmkernel->dumpDeadLetters();
 }
 
 
@@ -5147,7 +5147,7 @@ void KMComposeWin::focusNextPrevEdit(const QWidget* aCur, bool aNext)
 void KMComposeWin::slotIdentityChanged(uint uoid)
 {
   const KMIdentity & ident =
-    kernel->identityManager()->identityForUoid( uoid );
+    kmkernel->identityManager()->identityForUoid( uoid );
   if ( ident.isNull() ) return;
 
   if(!ident.fullEmailAddr().isNull())
@@ -5194,7 +5194,7 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   if ( !mBtnFcc->isChecked() )
   {
     if ( ident.fcc().isEmpty() )
-      mFcc->setFolder( kernel->sentFolder() );
+      mFcc->setFolder( kmkernel->sentFolder() );
     else
       setFcc( ident.fcc() );
   }
@@ -5351,7 +5351,7 @@ void KMComposeWin::slotFolderRemoved(KMFolder* folder)
 {
 	if ( (mFolder) && (folder->idString() == mFolder->idString()) )
 	{
-		mFolder = kernel->draftsFolder();
+		mFolder = kmkernel->draftsFolder();
 		kdDebug(5006) << "restoring drafts to " << mFolder->idString() << endl;
 	}
 	if (mMsg) mMsg->setParent(0);
@@ -5454,7 +5454,7 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
 	while (!serNumStream.atEnd()) {
 	    KMMsgBase *msgBase = 0;
 	    serNumStream >> serNum;
-	    kernel->msgDict()->getLocation(serNum, &folder, &idx);
+	    kmkernel->msgDict()->getLocation(serNum, &folder, &idx);
 	    if (folder)
 		msgBase = folder->getMsgBase(idx);
 	    if (msgBase)

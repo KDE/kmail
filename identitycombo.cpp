@@ -46,12 +46,12 @@ IdentityCombo::IdentityCombo( QWidget * parent, const char * name )
   reloadCombo();
   reloadUoidList();
   connect( this, SIGNAL(activated(int)), SLOT(slotEmitChanged(int)) );
-  connect( kernel->identityManager(), SIGNAL(changed()),
+  connect( kmkernel->identityManager(), SIGNAL(changed()),
 	   SLOT(slotIdentityManagerChanged()) );
 }
 
 QString IdentityCombo::currentIdentityName() const {
-  return kernel->identityManager()->identities()[ currentItem() ];
+  return kmkernel->identityManager()->identities()[ currentItem() ];
 }
 
 uint IdentityCombo::currentIdentity() const {
@@ -63,7 +63,7 @@ void IdentityCombo::setCurrentIdentity( const KMIdentity & identity ) {
 }
 
 void IdentityCombo::setCurrentIdentity( const QString & name ) {
-  int idx = kernel->identityManager()->identities().findIndex( name );
+  int idx = kmkernel->identityManager()->identities().findIndex( name );
   if ( idx < 0 ) return;
   if ( idx == currentItem() ) return;
 
@@ -87,7 +87,7 @@ void IdentityCombo::setCurrentIdentity( uint uoid ) {
 }
 
 void IdentityCombo::reloadCombo() {
-  QStringList identities = kernel->identityManager()->identities();
+  QStringList identities = kmkernel->identityManager()->identities();
   // the IM should prevent this from happening:
   assert( !identities.isEmpty() );
   identities.first() = i18n("%1 (Default)").arg( identities.first() );
@@ -96,7 +96,7 @@ void IdentityCombo::reloadCombo() {
 }
 
 void IdentityCombo::reloadUoidList() {
-  const IdentityManager * im = kernel->identityManager();
+  const IdentityManager * im = kmkernel->identityManager();
   mUoidList.clear();
   for ( IdentityManager::ConstIterator it = im->begin() ; it != im->end() ; ++it )
     mUoidList << (*it).uoid();
@@ -119,7 +119,7 @@ void IdentityCombo::slotIdentityManagerChanged() {
 }
 
 void IdentityCombo::slotEmitChanged( int idx ) {
-  emit identityChanged( kernel->identityManager()->identities()[idx] );
+  emit identityChanged( kmkernel->identityManager()->identities()[idx] );
   emit identityChanged( mUoidList[idx] );
 }
 

@@ -89,7 +89,7 @@ void UndoStack::undo()
     info->destFolder->open();
     for( itr = info->serNums.begin(); itr != info->serNums.end(); ++itr ) {
       serNum = *itr;
-      kernel->msgDict()->getLocation(serNum, &curFolder, &idx);
+      kmkernel->msgDict()->getLocation(serNum, &curFolder, &idx);
       if ( idx == -1 || curFolder != info->destFolder ) {
         kdDebug(5006)<<"Serious undo error!"<<endl;
         delete info;
@@ -106,7 +106,7 @@ void UndoStack::undo()
   else
   {
     // Sorry.. stack is empty..
-    KMessageBox::sorry( kernel->mainWin(), i18n("There is nothing to undo!"));
+    KMessageBox::sorry( kmkernel->mainWin(), i18n("There is nothing to undo!"));
   }
 }
 

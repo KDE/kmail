@@ -181,7 +181,7 @@ void KMGroupware::slotInvalidateIMAPFolders()
   QString s1 = i18n("Refresh IMAP Cache");
   QString s2 = i18n("&Refresh");
   if( KMessageBox::warningContinueCancel(mMainWin, str, s1, s2 ) == KMessageBox::Continue)
-    kernel->acctMgr()->invalidateIMAPFolders();
+    kmkernel->acctMgr()->invalidateIMAPFolders();
 }
 
 //-----------------------------------------------------------------------------
@@ -247,7 +247,7 @@ void KMGroupware::internalCreateKOrgPart()
 
   // Create the part
   QStringList partArgs;
-  const KMIdentity& identity = kernel->identityManager()->defaultIdentity();
+  const KMIdentity& identity = kmkernel->identityManager()->defaultIdentity();
   partArgs << QString( "name=%1" ).arg( identity.fullName() );
   partArgs << QString( "email=%1" ).arg( identity.emailAddr() );
   partArgs << "storage=imap";
@@ -446,7 +446,7 @@ void KMGroupware::requestAddresses( QString fname )
     QTextStream ts( &file );
     ts.setEncoding( QTextStream::UnicodeUTF8 );
 
-    KMFolder* contacts = kernel->iCalIface().folderFromType( "Contact" );
+    KMFolder* contacts = kmkernel->iCalIface().folderFromType( "Contact" );
     if( contacts ) {
       QString s;
       for( int i=0; i<contacts->count(); ++i ) {
@@ -470,7 +470,7 @@ void KMGroupware::requestAddresses( QString fname )
 //--------------
 bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
 {
-  KMFolder* contacts = kernel->iCalIface().folderFromType( "Contact" );
+  KMFolder* contacts = kmkernel->iCalIface().folderFromType( "Contact" );
   if( !contacts ) {
     kdDebug(5006) << "KMGroupware::storeAddresses(): Contacts folder does not exist" << endl;
     return false;
@@ -501,9 +501,9 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
   }
 
   for( QStringList::iterator it = delUIDs.begin(); it != delUIDs.end(); ++it ) {
-    KMMessage* msg = kernel->iCalIface().findMessageByUID( *it, contacts );
+    KMMessage* msg = kmkernel->iCalIface().findMessageByUID( *it, contacts );
     if( msg )
-      kernel->iCalIface().deleteMsg( msg );
+      kmkernel->iCalIface().deleteMsg( msg );
     else
       kdDebug(5006) << "vCard not found, cannot remove: " << *it << endl;
   }
@@ -513,7 +513,7 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
     QString uid( "UID" );
     QString name( "NAME" );
     vPartMicroParser( vCard, uid, name );
-    KMMessage* msg = kernel->iCalIface().findMessageByUID( uid, contacts );
+    KMMessage* msg = kmkernel->iCalIface().findMessageByUID( uid, contacts );
     if( !msg ) {
       // This is a new vCard, make a message to store it in
       msg = new KMMessage(); // makes a "Content-Type=text/plain" message
@@ -602,7 +602,7 @@ void KMGroupware::processVCalRequest( const QCString& receiver,
           for( QStringList::Iterator sit = toAddresses.begin();
                sit != toAddresses.end(); ++sit ) {
               if( KMMessage::getEmailAddr( *sit ) ==
-                  kernel->identityManager()->defaultIdentity().emailAddr().local8Bit() ) {
+                  kmkernel->identityManager()->defaultIdentity().emailAddr().local8Bit() ) {
                   // our default identity was contained in the To: list,
                   // copy that from To: to From:
                   fromAddress = *sit;
@@ -738,7 +738,7 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
     QString uid( "UID" );
     vPartMicroParser( vCalOut.isEmpty() ? vCalIn.utf8() : vCalOut.utf8(), uid );
     KMFolder* folder = type == vCalEvent ? mCalendar : mTasks;
-    KMMessage* msgNew = kernel->iCalIface().findMessageByUID( uid, folder );
+    KMMessage* msgNew = kmkernel->iCalIface().findMessageByUID( uid, folder );
     bool isNewMsg = ( msgNew == 0 );
     if( isNewMsg ) {
       // Process a new event:
@@ -803,7 +803,7 @@ bool KMGroupware::folderSelected( KMFolder* folder )
 {
   bool bFound = mUseGroupware;
   if( mUseGroupware ) {
-    KFolderTreeItem::Type type = kernel->iCalIface().folderType( folder );
+    KFolderTreeItem::Type type = kmkernel->iCalIface().folderType( folder );
     switch( type ) {
     case KFolderTreeItem::Calendar:
       emit signalShowCalendarView();
@@ -1503,7 +1503,7 @@ bool KMGroupware::handleLink( const KURL &aUrl, KMMessage* msg )
   // Find the receiver if we can
   QString receiver;
   if( msg ) {
-    KMIdentity ident = kernel->identityManager()->identityForAddress( msg->to() );
+    KMIdentity ident = kmkernel->identityManager()->identityForAddress( msg->to() );
     if( ident != KMIdentity::null ) {
       receiver = ident.emailAddr();
     } else {

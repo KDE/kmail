@@ -110,19 +110,19 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mReaderWin);
   mReaderWin->setAutoDelete( true );
-  kernel->inboxFolder()->open();
-  KMMessage *msg = kernel->inboxFolder()->getMsg(0);
+  kmkernel->inboxFolder()->open();
+  KMMessage *msg = kmkernel->inboxFolder()->getMsg(0);
   mReaderWin->setMsg( msg, true );
   mReaderWin->setFocusPolicy(QWidget::ClickFocus);
   m_extension = new KMailBrowserExtension(this);
 #if KDE_IS_VERSION( 3, 1, 90 )
   mStatusBar  = new KMailStatusBarExtension(this);
   mStatusBar->addStatusBarItem( mainWidget->progressDialog(), 0, true );
-  //new KParts::SideBarExtension( kernel->mainWin()-mainKMWidget()->leftFrame(), this );
+  //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
 #endif
   KGlobal::iconLoader()->addAppDir("kmail");
   setXMLFile( "kmmainwin.rc" );
-  kernel->inboxFolder()->close();
+  kmkernel->inboxFolder()->close();
 #else
   mainWidget = new KMMainWidget( canvas, "mainWidget", actionCollection());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
@@ -154,11 +154,11 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
 KMailPart::~KMailPart()
 {
-  kernel->dumpDeadLetters();
-  kernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
+  kmkernel->dumpDeadLetters();
+  kmkernel->setShuttingDown( true ); // Prevent further dumpDeadLetters calls
   mainWidget->destruct();
-  kernel->notClosedByUser();
-  delete kernel;
+  kmkernel->notClosedByUser();
+  delete kmkernel;
   KMail::cleanup();
 }
 

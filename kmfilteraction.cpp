@@ -80,14 +80,14 @@ bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
 
 int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 {
-  return kernel->filterMgr()->tempOpenFolder(aFolder);
+  return kmkernel->filterMgr()->tempOpenFolder(aFolder);
 }
 
 void KMFilterAction::sendMDN( KMMessage * msg, KMime::MDN::DispositionType d,
 			      const QValueList<KMime::MDN::DispositionModifier> & m ) {
   if ( !msg ) return;
   KMMessage * mdn = msg->createMDN( KMime::MDN::AutomaticAction, d, false, m );
-  if ( mdn && !kernel->msgSender()->send( mdn ) ) {
+  if ( mdn && !kmkernel->msgSender()->send( mdn ) ) {
     kdDebug(5006) << "KMFilterAction::sendMDN(): sending failed." << endl;
     //delete mdn;
   }
@@ -259,12 +259,12 @@ void KMFilterActionWithFolder::setParamWidgetValue( QWidget* paramWidget ) const
 
 void KMFilterActionWithFolder::clearParamWidget( QWidget* paramWidget ) const
 {
-  ((KMFolderComboBox *)paramWidget)->setFolder( kernel->draftsFolder() );
+  ((KMFolderComboBox *)paramWidget)->setFolder( kmkernel->draftsFolder() );
 }
 
 void KMFilterActionWithFolder::argsFromString( const QString argsStr )
 {
-  mFolder = kernel->folderMgr()->findIdString( argsStr );
+  mFolder = kmkernel->folderMgr()->findIdString( argsStr );
   if (mFolder)
      mFolderName = QString::null;
   else
@@ -467,7 +467,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
   // let the kernel collect the output for us:
   if ( withOutput )
     QObject::connect( &shProc, SIGNAL(receivedStdout(KProcess*,char*,int)),
-		      kernel, SLOT(slotCollectStdOut(KProcess*,char*,int)) );
+		      kmkernel, SLOT(slotCollectStdOut(KProcess*,char*,int)) );
 
   // run process:
   if ( !shProc.start( KProcess::Block,
@@ -479,7 +479,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
 
   if ( withOutput ) {
     // read altered message:
-    QByteArray msgText = kernel->getCollectedStdOut( &shProc );
+    QByteArray msgText = kmkernel->getCollectedStdOut( &shProc );
 
     if ( !msgText.isEmpty() )
       aMsg->fromByteArray( msgText );
@@ -525,7 +525,7 @@ KMFilterAction::ReturnCode KMFilterActionBounce::process(KMMessage* msg) const
 
   // Queue message. This is a) so that the user can check
   // the bounces before sending and b) for speed reasons.
-  kernel->msgSender()->send( bounceMsg, FALSE );
+  kmkernel->msgSender()->send( bounceMsg, FALSE );
 
   return GoOn;
 }
@@ -560,7 +560,7 @@ KMFilterAction::ReturnCode KMFilterActionSendReceipt::process(KMMessage* msg) co
 
   // Queue message. This is a) so that the user can check
   // the receipt before sending and b) for speed reasons.
-  kernel->msgSender()->send( receipt, FALSE );
+  kmkernel->msgSender()->send( receipt, FALSE );
 
   return GoOn;
 }
@@ -654,7 +654,7 @@ KMFilterAction* KMFilterActionIdentity::newAction()
 KMFilterActionIdentity::KMFilterActionIdentity()
   : KMFilterActionWithUOID( "set identity", i18n("set identity to") )
 {
-  mParameter = kernel->identityManager()->defaultIdentity().uoid();
+  mParameter = kmkernel->identityManager()->defaultIdentity().uoid();
 }
 
 KMFilterAction::ReturnCode KMFilterActionIdentity::process(KMMessage* msg) const
@@ -682,7 +682,7 @@ void KMFilterActionIdentity::clearParamWidget( QWidget * paramWidget ) const
   IdentityCombo * ic = dynamic_cast<IdentityCombo*>( paramWidget );
   assert( ic );
   ic->setCurrentItem( 0 );
-  //ic->setCurrentIdentity( kernel->identityManager()->defaultIdentity() );
+  //ic->setCurrentIdentity( kmkernel->identityManager()->defaultIdentity() );
 }
 
 void KMFilterActionIdentity::setParamWidgetValue( QWidget * paramWidget ) const
@@ -1261,7 +1261,7 @@ KMFilterAction::ReturnCode KMFilterActionMove::process(KMMessage* msg) const
   if ( msg->parent() )
     return Moved; // the message already has a parent??? so what?
   if ( mFolder->moveMsg(msg) == 0 ) {
-    if ( kernel->folderIsTrash( mFolder ) )
+    if ( kmkernel->folderIsTrash( mFolder ) )
       sendMDN( msg, KMime::MDN::Deleted );
     return Moved; // ok, added
   } else {
@@ -1321,7 +1321,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   msg->setTo( mParameter );
   msg->setSubject( "Fwd: " + aMsg->subject() );
 
-  bool isQP = kernel->msgSender()->sendQuotedPrintable();
+  bool isQP = kmkernel->msgSender()->sendQuotedPrintable();
 
   if( aMsg->numBodyParts() == 0 )
   {
@@ -1366,7 +1366,7 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
-  if ( !kernel->msgSender()->send(msg) ) {
+  if ( !kmkernel->msgSender()->send(msg) ) {
     kdDebug(5006) << "KMFilterAction: could not forward message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }
@@ -1407,7 +1407,7 @@ KMFilterAction::ReturnCode KMFilterActionRedirect::process(KMMessage* aMsg) cons
 
   sendMDN( aMsg, KMime::MDN::Dispatched );
 
-  if ( !kernel->msgSender()->send(msg) ) {
+  if ( !kmkernel->msgSender()->send(msg) ) {
     kdDebug(5006) << "KMFilterAction: could not redirect message (sending failed)" << endl;
     return ErrorButGoOn; // error: couldn't send
   }

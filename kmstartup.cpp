@@ -33,7 +33,7 @@ void kmsignalHandler(int sigId)
   kmsetSignalHandler(SIG_DFL);
   fprintf(stderr, "*** KMail got signal %d (Exiting)\n", sigId);
   // try to cleanup all windows
-  if (kernel) kernel->dumpDeadLetters();
+  if (kmkernel) kmkernel->dumpDeadLetters();
   ::exit(-1); //
 }
 
@@ -43,7 +43,7 @@ void kmcrashHandler(int sigId)
   kmsetSignalHandler(SIG_DFL);
   fprintf(stderr, "*** KMail got signal %d (Crashing)\n", sigId);
   // try to cleanup all windows
-  kernel->dumpDeadLetters();
+  kmkernel->dumpDeadLetters();
   // Return to DrKonqi.
 }
 //-----------------------------------------------------------------------------

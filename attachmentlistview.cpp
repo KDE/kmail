@@ -99,7 +99,7 @@ void AttachmentListView::contentsDropEvent( QDropEvent* e )
     while( !serNumStream.atEnd() ) {
       KMMsgBase *msgBase = 0;
       serNumStream >> serNum;
-      kernel->msgDict()->getLocation( serNum, &folder, &idx );
+      kmkernel->msgDict()->getLocation( serNum, &folder, &idx );
       if( folder )
         msgBase = folder->getMsgBase( idx );
       if( msgBase )

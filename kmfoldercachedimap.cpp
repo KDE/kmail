@@ -87,7 +87,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
     writeUidCache();
   }
 
-  if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
 }
 
 int KMFolderCachedImap::remove()
@@ -236,7 +236,7 @@ void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
   KMFolderCachedImapInherited::removeMsg(idx,imapQuiet);
 
   // TODO (Bo): Shouldn't this be "emit changed();"?
-  kernel->imapFolderMgr()->contentsChanged();
+  kmkernel->imapFolderMgr()->contentsChanged();
 }
 
 bool KMFolderCachedImap::canRemoveFolder() const {
@@ -311,7 +311,7 @@ KMAcctCachedImap *KMFolderCachedImap::account()
 {
   if( (KMAcctCachedImap *)mAccount == 0 ) {
     // Find the account
-    mAccount = static_cast<KMAcctCachedImap *>( kernel->acctMgr()->find( name() ) );
+    mAccount = static_cast<KMAcctCachedImap *>( kmkernel->acctMgr()->find( name() ) );
   }
 
   return mAccount;
@@ -531,9 +531,9 @@ void KMFolderCachedImap::serverSyncInternal()
 
     mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 #if 0
-    if( imapPath() == "/INBOX/" && kernel->groupware().isEnabled() ) {
+    if( imapPath() == "/INBOX/" && kmkernel->groupware().isEnabled() ) {
       // Here we need to move messages from INBOX to the "real" inbox
-      KMFolderNode* node = child()->hasNamedFolder( kernel->groupware().folderName( KFolderTreeItem::Inbox ) );
+      KMFolderNode* node = child()->hasNamedFolder( kmkernel->groupware().folderName( KFolderTreeItem::Inbox ) );
       if( node && !node->isDir() ) {
 	KMFolder* inboxFolder = static_cast<KMFolder*>(node);
 	open();
@@ -1037,7 +1037,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
   mAccount->removeJob(it);
 
   if (!job->error()) {
-    kernel->imapFolderMgr()->quiet(TRUE);
+    kmkernel->imapFolderMgr()->quiet(TRUE);
     createChildFolder();
 
     // Find all subfolders present on disk but not on the server
@@ -1060,7 +1060,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
 	    // The folder have a uidValidity setting, so it has been on the
 	    // server before. Delete it locally.
 	    KMFolderNode *n = mChild->next();
-	    kernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
+	    kmkernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
 	    node = n;
 	  }
 	} else {
@@ -1105,7 +1105,7 @@ void KMFolderCachedImap::listDirectory2() {
 	if (folder) {
 	  folder->close();
 	  folder->setAccount(mAccount);
-	  kernel->imapFolderMgr()->contentsChanged();
+	  kmkernel->imapFolderMgr()->contentsChanged();
 	} else {
 	  kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
 	}
@@ -1126,7 +1126,7 @@ void KMFolderCachedImap::listDirectory2() {
     }
   }
 
-  kernel->imapFolderMgr()->quiet(FALSE);
+  kmkernel->imapFolderMgr()->quiet(FALSE);
   emit listComplete(this);
   serverSyncInternal();
 }

@@ -54,7 +54,7 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
      mFolderLanguage( 0 ), mUseResourceIMAP( false )
 {
-  QObject* gw = &kernel->groupware();
+  QObject* gw = &kmkernel->groupware();
   connect( gw, SIGNAL( signalRefresh( const QString& ) ),
 	   this, SLOT( slotRefresh( const QString& ) ) );
 }
@@ -137,7 +137,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
 
   int i = 0;
   KMFolder* aFolder = 0;
-  kernel->msgDict()->getLocation( sernum, &aFolder, &i );
+  kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
   assert( folder == aFolder );
 
   bool unget = !folder->isMessage( i );
@@ -165,7 +165,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 
   int i = 0;
   KMFolder* aFolder = 0;
-  kernel->msgDict()->getLocation( sernum, &aFolder, &i );
+  kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
   assert( folder == aFolder );
 
   bool unget = !folder->isMessage( i );
@@ -349,7 +349,7 @@ void KMailICalIfaceImpl::readConfig()
       // Shutting down
       mUseResourceIMAP = false;
       cleanup();
-      kernel->groupware().reloadFolderTree();
+      kmkernel->groupware().reloadFolderTree();
     }
     return;
   }
@@ -362,12 +362,12 @@ void KMailICalIfaceImpl::readConfig()
   // Find the folder parent
   KMFolderDir* folderParentDir;
   KMFolderType folderType;
-  KMFolder* folderParent = kernel->folderMgr()->findIdString( parentName );
+  KMFolder* folderParent = kmkernel->folderMgr()->findIdString( parentName );
   if( folderParent == 0 )
-    folderParent = kernel->imapFolderMgr()->findIdString( parentName );
+    folderParent = kmkernel->imapFolderMgr()->findIdString( parentName );
   if( folderParent == 0 ) {
     // Maybe nothing was configured?
-    folderParentDir = &(kernel->folderMgr()->dir());
+    folderParentDir = &(kmkernel->folderMgr()->dir());
     folderType = KMFolderTypeMaildir;
   } else {
     folderParentDir = folderParent->createChildFolder();
@@ -395,7 +395,7 @@ void KMailICalIfaceImpl::readConfig()
 				    i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
       mUseResourceIMAP = false;
       mFolderParent = 0;
-      kernel->groupware().reloadFolderTree();
+      kmkernel->groupware().reloadFolderTree();
       return;
     }
   }
@@ -438,7 +438,7 @@ void KMailICalIfaceImpl::readConfig()
   slotRefresh( "Contact" );
   slotRefresh( "Notes" );
 
-  kernel->groupware().reloadFolderTree();
+  kmkernel->groupware().reloadFolderTree();
 }
 
 void KMailICalIfaceImpl::slotRefreshCalendar() { slotRefresh( "Calendar" ); }

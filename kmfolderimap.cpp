@@ -70,7 +70,7 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
 KMFolderImap::~KMFolderImap()
 {
   writeConfig();
-  if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
+  if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
 }
 
 
@@ -166,7 +166,7 @@ void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
         job->errorText() );
   } else {
     mAccount->displayProgress();
-    kernel->imapFolderMgr()->remove(this);
+    kmkernel->imapFolderMgr()->remove(this);
   }
 }
 
@@ -235,7 +235,7 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
   path = path.mid( ++i );
   path.remove( '/' );
   KMFolderImapInherited::rename( path );
-  kernel->folderMgr()->contentsChanged();
+  kmkernel->folderMgr()->contentsChanged();
 }
 
 //-----------------------------------------------------------------------------
@@ -244,7 +244,7 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
   KMFolder *folder = aMsg->parent();
   aMsg->setTransferInProgress( false );
   if (folder) {
-    kernel->undoStack()->pushSingleAction( aMsg->getMsgSerNum(), folder, this );
+    kmkernel->undoStack()->pushSingleAction( aMsg->getMsgSerNum(), folder, this );
     int idx = folder->find( aMsg );
     assert( idx != -1 );
     folder->take( idx );
@@ -265,8 +265,8 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
   for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
   {
     if ( undoId == -1 )
-      undoId = kernel->undoStack()->newUndoAction( folder, this );
-    kernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
+      undoId = kmkernel->undoStack()->newUndoAction( folder, this );
+    kmkernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
     // Remember the status, so it can be transfered to the new message.
     mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
     msg->setTransferInProgress( false );
@@ -500,7 +500,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
   mSubfolderState = imapFinished;
   bool it_inboxOnly = jobData.inboxOnly;
   // don't react on changes
-  kernel->imapFolderMgr()->quiet(TRUE);
+  kmkernel->imapFolderMgr()->quiet(TRUE);
   if (it_inboxOnly) {
     // list again only for the INBOX
     listDirectory(TRUE);
@@ -521,7 +521,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
           && mSubfolderNames.findIndex(node->name()) == -1)
       {
         kdDebug(5006) << node->name() << " disappeared." << endl;
-        kernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
+        kmkernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
         node = mChild->first();
       }
       else node = mChild->next();
@@ -539,7 +539,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       folder->setLabel(i18n("inbox"));
       if (!node) folder->close();
       folder->listDirectory();
-      kernel->imapFolderMgr()->contentsChanged();
+      kmkernel->imapFolderMgr()->contentsChanged();
     }
     for (uint i = 0; i < mSubfolderNames.count(); i++)
     {
@@ -553,7 +553,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
         if (folder)
         {
           folder->close();
-          kernel->imapFolderMgr()->contentsChanged();
+          kmkernel->imapFolderMgr()->contentsChanged();
         } else {
           kdDebug(5006) << "can't create folder " << mSubfolderNames[i] << endl;
         }
@@ -570,7 +570,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     }
   }
   // now others should react on the changes
-  kernel->imapFolderMgr()->quiet(FALSE);
+  kmkernel->imapFolderMgr()->quiet(FALSE);
 }
 
 //-----------------------------------------------------------------------------

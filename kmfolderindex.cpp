@@ -247,7 +247,7 @@ bool KMFolderIndex::readIndex()
     }
 #endif
     if ((mi->isNew()) || (mi->isUnread()) ||
-        (this == kernel->outboxFolder()))
+        (this == kmkernel->outboxFolder()))
     {
       ++mUnreadMsgs;
       if (mUnreadMsgs == 0) ++mUnreadMsgs;

@@ -52,7 +52,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):
   KIO::Scheduler::connect(
     SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
     this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
-  connect(kernel->imapFolderMgr(), SIGNAL(changed()),
+  connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
 }
 
@@ -108,7 +108,7 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if ( !mErrorDialogIsActive )
   {
     mErrorDialogIsActive = true;
-    if ( KMessageBox::messageBox(kernel->mainWin(), KMessageBox::Error,
+    if ( KMessageBox::messageBox(kmkernel->mainWin(), KMessageBox::Error,
           KIO::buildErrorString(errorCode, errorMsg),
           i18n("Error")) == KMessageBox::Ok )
     {
@@ -325,7 +325,7 @@ void KMAcctImap::slotUpdateFolderList()
     return;
   QStringList strList;
   mMailCheckFolders.clear();
-  kernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,
+  kmkernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,
     mFolder->child(), QString::null, false);
   // the new list
   QValueList<QGuardedPtr<KMFolder> > includedFolders;

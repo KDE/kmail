@@ -31,7 +31,7 @@ void KMMsgList::clear(bool doDelete, bool syncDict)
   
   KMMsgDict *dict = 0;
   if (syncDict)
-    dict = kernel->msgDict();
+    dict = kmkernel->msgDict();
   
   for (i=mHigh-1; i>=0; i--)
   {
@@ -123,7 +123,7 @@ void KMMsgList::insert(int idx, KMMsgBase* aMsg, bool syncDict)
   assert(idx>=0);
   KMMsgDict *dict = 0;
   if (syncDict)
-    dict = kernel->msgDict();
+    dict = kmkernel->msgDict();
 
   if (idx >= size())
   {
@@ -164,7 +164,7 @@ void KMMsgList::remove(int idx)
   int i;
 
   assert(idx>=0 && idx<size());
-  KMMsgDict *dict = kernel->msgDict();
+  KMMsgDict *dict = kmkernel->msgDict();
   
   if (KMMsgListInherited::at(idx)) {
     mCount--;

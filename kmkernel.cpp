@@ -182,21 +182,21 @@ KMKernel::~KMKernel ()
 /********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won't show!!
 {
-  kernel->acctMgr()->checkMail(false);
+  kmkernel->acctMgr()->checkMail(false);
 }
 
 QStringList KMKernel::accounts()
 {
-  return kernel->acctMgr()->getAccounts();
+  return kmkernel->acctMgr()->getAccounts();
 }
 
 void KMKernel::checkAccount (const QString &account) //might create a new reader but won't show!!
 {
   kdDebug(5006) << "KMKernel::checkMail called" << endl;
 
-  KMAccount* acct = kernel->acctMgr()->find(account);
+  KMAccount* acct = kmkernel->acctMgr()->find(account);
   if (acct)
-    kernel->acctMgr()->singleCheckMail(acct, false);
+    kmkernel->acctMgr()->singleCheckMail(acct, false);
 }
 
 void KMKernel::openReader()

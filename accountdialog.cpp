@@ -1021,7 +1021,7 @@ void AccountDialog::setupSettings()
     mImap.intervalSpin->setValue( QMAX(1, interval) );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
-      trashfolder = kernel->trashFolder()->idString();
+      trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
@@ -1069,7 +1069,7 @@ void AccountDialog::setupSettings()
     mImap.intervalSpin->setValue( QMAX(1, interval) );
     QString trashfolder = ai.trash();
     if (trashfolder.isEmpty())
-      trashfolder = kernel->trashFolder()->idString();
+      trashfolder = kmkernel->trashFolder()->idString();
     mImap.trashCombo->setFolder( trashfolder );
     slotEnableImapInterval( interval >= 1 );
     if (ai.useSSL())
@@ -1113,7 +1113,7 @@ void AccountDialog::setupSettings()
 
   if (!folderCombo) return;
 
-  KMFolderDir *fdir = (KMFolderDir*)&kernel->folderMgr()->dir();
+  KMFolderDir *fdir = (KMFolderDir*)&kmkernel->folderMgr()->dir();
   KMFolder *acctFolder = mAccount->folder();
   if( acctFolder == 0 )
   {
@@ -1127,7 +1127,7 @@ void AccountDialog::setupSettings()
   {
     uint i = 0;
     int curIndex = -1;
-    kernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
+    kmkernel->folderMgr()->createI18nFolderList(&mFolderNames, &mFolderList);
     while (i < mFolderNames.count())
     {
       QValueList<QGuardedPtr<KMFolder> >::Iterator it = mFolderList.at(i);
@@ -1142,7 +1142,7 @@ void AccountDialog::setupSettings()
       }
     }
     mFolderNames.prepend(i18n("inbox"));
-    mFolderList.prepend(kernel->inboxFolder());
+    mFolderList.prepend(kmkernel->inboxFolder());
     folderCombo->insertStringList(mFolderNames);
     folderCombo->setCurrentItem(curIndex + 1);
 
@@ -1387,7 +1387,7 @@ void AccountDialog::saveSettings()
     mAccount->setResource( mImap.resourceCheck->isChecked() );
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
     //mAccount->setFolder( NULL );
-    mAccount->setFolder( kernel->imapFolderMgr()->find(mAccount->name() ) );
+    mAccount->setFolder( kmkernel->imapFolderMgr()->find(mAccount->name() ) );
     kdDebug(5006) << mAccount->name() << endl;
     //kdDebug(5006) << "account for folder " << mAccount->folder()->name() << endl;
 
@@ -1441,10 +1441,10 @@ void AccountDialog::saveSettings()
 
   }
 
-  kernel->acctMgr()->writeConfig(TRUE);
+  kmkernel->acctMgr()->writeConfig(TRUE);
 
   // get the new account and register the new destination folder
-  KMAccount* newAcct = kernel->acctMgr()->find(mAccount->name());
+  KMAccount* newAcct = kmkernel->acctMgr()->find(mAccount->name());
   if (newAcct)
   {
     if( accountType == "local" ) {

@@ -90,7 +90,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
 }
 
 void KMAccount::init() {
-  mTrash = kernel->trashFolder()->idString();
+  mTrash = kmkernel->trashFolder()->idString();
   mResource = false;
   mExclude = false;
   mInterval = 0;
@@ -99,7 +99,7 @@ void KMAccount::init() {
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount()
 {
-  if (!kernel->shuttingDown() && mFolder) mFolder->removeAccount(this);
+  if (!kmkernel->shuttingDown() && mFolder) mFolder->removeAccount(this);
   if (mTimer) deinstallTimer();
 }
 
@@ -139,14 +139,14 @@ void KMAccount::readConfig(KConfig& config)
   mFolder = 0;
   folderName = config.readEntry("Folder");
   setCheckInterval(config.readNumEntry("check-interval", 0));
-  setTrash(config.readEntry("trash", kernel->trashFolder()->idString()));
+  setTrash(config.readEntry("trash", kmkernel->trashFolder()->idString()));
   setResource(config.readBoolEntry("resource", false) );
   setCheckExclude(config.readBoolEntry("check-exclude", false));
   setPrecommand(config.readPathEntry("precommand"));
 
   if (!folderName.isEmpty())
   {
-    setFolder(kernel->folderMgr()->findIdString(folderName), true);
+    setFolder(kmkernel->folderMgr()->findIdString(folderName), true);
   }
 
   if( mResource ) {
@@ -238,13 +238,13 @@ if( fileD0.open( IO_WriteOnly ) ) {
   // account.
   if( resource() ) {
 #if 0
-      if( kernel->groupware().incomingResourceMessage( this, aMsg ) )
+      if( kmkernel->groupware().incomingResourceMessage( this, aMsg ) )
           // If it was a resource message, we have already answered it.
           aMsg->setStatus( KMMsgStatusReplied );
 #endif
   }
 
-  processResult = kernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
+  processResult = kmkernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
     KMessageBox::information(0,(i18n("Critical error: "
@@ -253,7 +253,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   }
   else if (processResult == 1)
   {
-    kernel->filterMgr()->tempOpenFolder(mFolder);
+    kmkernel->filterMgr()->tempOpenFolder(mFolder);
     rc = mFolder->addMsg(aMsg);
 /*
 QFile fileD0( "testdat_xx-kmaccount-1" );
@@ -387,7 +387,7 @@ void KMAccount::mailCheck()
 {
   if (mTimer)
     mTimer->stop();
-  kernel->acctMgr()->singleCheckMail(this, false);
+  kmkernel->acctMgr()->singleCheckMail(this, false);
 }
 
 //-----------------------------------------------------------------------------
@@ -395,7 +395,7 @@ void KMAccount::sendReceipts()
 {
   QValueList<KMMessage*>::Iterator it;
   for(it = mReceipts.begin(); it != mReceipts.end(); ++it)
-    kernel->msgSender()->send(*it); //might process events
+    kmkernel->msgSender()->send(*it); //might process events
   mReceipts.clear();
 }
 

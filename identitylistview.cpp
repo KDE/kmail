@@ -59,7 +59,7 @@ namespace KMail {
   }
 
   KMIdentity & IdentityListViewItem::identity() const {
-    IdentityManager * im = kernel->identityManager();
+    IdentityManager * im = kmkernel->identityManager();
     assert( im );
     return im->identityForUoid( uoid() );
   }

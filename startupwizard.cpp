@@ -53,7 +53,7 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
   : QWidget( parent, name )
 {
   // First either get the default identity or make a new one
-  IdentityManager *im = kernel->identityManager();
+  IdentityManager *im = kmkernel->identityManager();
   if( im->identities().count() > 0 )
     mIdentity = im->defaultIdentity().uoid();
   else {
@@ -97,12 +97,12 @@ void WizardIdentityPage::apply() const {
   ident.setFullName( nameEdit->text().stripWhiteSpace() );
   ident.setOrganization( orgEdit->text().stripWhiteSpace() );
   ident.setEmailAddr( emailEdit->text().stripWhiteSpace() );
-  kernel->identityManager()->sort();
-  kernel->identityManager()->commit();
+  kmkernel->identityManager()->sort();
+  kmkernel->identityManager()->commit();
 }
 
 KMIdentity & WizardIdentityPage::identity() const {
-  return kernel->identityManager()->identityForUoid( mIdentity );
+  return kmkernel->identityManager()->identityForUoid( mIdentity );
 }
 
 WizardKolabPage::WizardKolabPage( QWidget * parent, const char * name )
@@ -182,9 +182,9 @@ void WizardKolabPage::apply()
   if( mAccount == 0 ) {
     // Create the account
     mAccount = static_cast<KMAcctCachedImap*>
-      ( kernel->acctMgr()->create( QString("cachedimap"), "Kolab" ) );
+      ( kmkernel->acctMgr()->create( QString("cachedimap"), "Kolab" ) );
     mAccount->init(); // fill the account fields with good default values
-    kernel->acctMgr()->add(mAccount);
+    kmkernel->acctMgr()->add(mAccount);
 
     // Set all default settings
     // TODO: read these from a system wide settings file
@@ -193,7 +193,7 @@ void WizardKolabPage::apply()
     mAccount->setUseSSL( false );
     mAccount->setUseTLS( true );
     mAccount->setSieveConfig( KMail::SieveConfig( true ) );
-    kernel->cleanupImapFolders();
+    kmkernel->cleanupImapFolders();
     assert( mAccount->folder() );
 
     // This Must Be False!!
@@ -206,7 +206,7 @@ void WizardKolabPage::apply()
   mAccount->setStorePasswd( storePasswordCheck->isChecked() );
   mAccount->setCheckExclude( excludeCheck->isChecked() );
 
-  kernel->acctMgr()->writeConfig( false );
+  kmkernel->acctMgr()->writeConfig( false );
 
   // Sync new IMAP account ASAP
   kdDebug(5006) << mAccount->folder()->name() << endl;
@@ -216,7 +216,7 @@ void WizardKolabPage::apply()
     if( child == 0 )
       child = mAccount->folder()->createChildFolder();
 
-    mFolder = kernel->imapFolderMgr()->
+    mFolder = kmkernel->imapFolderMgr()->
       createFolder( "INBOX", false, KMFolderTypeCachedImap, child );
     static_cast<KMFolderCachedImap*>(mFolder)->setSilentUpload( true );
   }
@@ -251,7 +251,7 @@ void WizardKolabPage::apply()
 
   // Save common options:
   general.writeEntry( "sendOnCheck", false );
-  kernel->msgSender()->setSendImmediate( true );
+  kmkernel->msgSender()->setSendImmediate( true );
 }
 
 
@@ -511,7 +511,7 @@ void StartupWizard::next()
 
 static bool checkSubfolders( KMFolderDir* dir, int language )
 {
-  KMailICalIfaceImpl& ical = kernel->iCalIface();
+  KMailICalIfaceImpl& ical = kmkernel->iCalIface();
   return dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Inbox, language ) ) &&
     dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Calendar, language ) ) &&
     dir->hasNamedFolder( ical.folderName( KFolderTreeItem::Contacts, language ) ) &&
@@ -591,7 +591,7 @@ void StartupWizard::run()
     options.writeEntry( "FolderLanguage", wiz.language() );
     options.writeEntry( "GroupwareFolder", wiz.folder()->idString() );
 
-    kernel->groupware().readConfig();
+    kmkernel->groupware().readConfig();
 
     if( wiz.groupwareEnabled() && wiz.useDefaultKolabSettings() ) {
       // Write the apps configs

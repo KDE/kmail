@@ -138,7 +138,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
-  kernel->outboxFolder()->open();
+  kmkernel->outboxFolder()->open();
   aMsg->setStatus(KMMsgStatusQueued);
 
   // Handle redirections
@@ -146,12 +146,12 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
   if(!f.isEmpty()) {
     uint id = aMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
     const KMIdentity & ident =
-      kernel->identityManager()->identityForUoidOrDefault( id );
+      kmkernel->identityManager()->identityForUoidOrDefault( id );
     aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
       .arg(ident.fullName()).arg(ident.emailAddr()));
   }
 
-  rc = kernel->outboxFolder()->addMsg(aMsg);
+  rc = kmkernel->outboxFolder()->addMsg(aMsg);
   if (rc)
   {
     KMessageBox::information(0,i18n("Cannot add message to outbox folder"));
@@ -160,7 +160,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (sendNow && !mSendInProgress) rc = sendQueued();
   else rc = TRUE;
-  kernel->outboxFolder()->close();
+  kmkernel->outboxFolder()->close();
 
   return rc;
 }
@@ -170,7 +170,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 void KMSender::outboxMsgAdded(int idx)
 {
     ++mTotalMessages;
-    KMMsgBase* msg = kernel->outboxFolder()->getMsgBase(idx);
+    KMMsgBase* msg = kmkernel->outboxFolder()->getMsgBase(idx);
     Q_ASSERT(msg);
     if ( msg )
         mTotalBytes += msg->msgSize();
@@ -188,7 +188,7 @@ bool KMSender::sendQueued(void)
   }
 
   // open necessary folders
-  KMFolder* outbox = kernel->outboxFolder();
+  KMFolder* outbox = kmkernel->outboxFolder();
   outbox->open();
   mTotalMessages = outbox->count();
   if (mTotalMessages == 0) {
@@ -204,7 +204,7 @@ bool KMSender::sendQueued(void)
           this, SLOT(outboxMsgAdded(int)));
   mCurrentMsg = 0;
 
-  kernel->sentFolder()->open();
+  kmkernel->sentFolder()->open();
 
   // start sending the messages
   doSendMsg();
@@ -222,7 +222,7 @@ void KMSender::emitProgressInfo( int currentFileProgress )
 //-----------------------------------------------------------------------------
 void KMSender::doSendMsg()
 {
-  if (!kernel)  //To handle message sending in progress when kaplan is exited
+  if (!kmkernel)  //To handle message sending in progress when kaplan is exited
     return;	//TODO: handle this case better
 
   KMFolder *sentFolder = 0, *imapSentFolder = 0;
@@ -235,7 +235,7 @@ void KMSender::doSendMsg()
   emitProgressInfo( 0 );
 
   // Post-process sent message (filtering)
-  if (mCurrentMsg  && kernel->filterMgr())
+  if (mCurrentMsg  && kmkernel->filterMgr())
   {
     mCurrentMsg->setTransferInProgress( FALSE );
     if( mCurrentMsg->hasUnencryptedMsg() ) {
@@ -262,25 +262,25 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
     }
     mCurrentMsg->setStatus(KMMsgStatusSent);
 
-    const KMIdentity & id = kernel->identityManager()
+    const KMIdentity & id = kmkernel->identityManager()
       ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
     if ( !mCurrentMsg->fcc().isEmpty() )
     {
-      sentFolder = kernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
+      sentFolder = kmkernel->folderMgr()->findIdString( mCurrentMsg->fcc() );
       if ( sentFolder == 0 )
-        imapSentFolder = kernel->imapFolderMgr()->findIdString(
+        imapSentFolder = kmkernel->imapFolderMgr()->findIdString(
           mCurrentMsg->fcc() );
     }
     else if ( !id.fcc().isEmpty() )
     {
-      sentFolder = kernel->folderMgr()->findIdString( id.fcc() );
+      sentFolder = kmkernel->folderMgr()->findIdString( id.fcc() );
       if ( sentFolder == 0 )
-        imapSentFolder = kernel->imapFolderMgr()->findIdString( id.fcc() );
+        imapSentFolder = kmkernel->imapFolderMgr()->findIdString( id.fcc() );
     }
     if (imapSentFolder && imapSentFolder->noContent()) imapSentFolder = 0;
 
     if ( sentFolder == 0 )
-      sentFolder = kernel->sentFolder();
+      sentFolder = kmkernel->sentFolder();
     else {
       rc = sentFolder->open();
       if (rc != 0) {
@@ -290,7 +290,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
     }
 
     // 0==processed ok, 1==no filter matched, 2==critical error, abort!
-    int processResult = kernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
+    int processResult = kmkernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
     switch (processResult) {
     case 2:
       perror("Critical error: Unable to process sent mail (out of space?)");
@@ -299,7 +299,7 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
 				       "Moving failing message to \"sent-mail\" folder."));
       sentFolder->quiet(TRUE);
       sentFolder->moveMsg(mCurrentMsg);
-      if ( sentFolder != kernel->sentFolder() )
+      if ( sentFolder != kmkernel->sentFolder() )
           sentFolder->close();
       cleanup();
       sentFolder->quiet(FALSE);
@@ -336,14 +336,14 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
   }
 
   // See if there is another queued message
-  mCurrentMsg = kernel->outboxFolder()->getMsg(mFailedMessages);
+  mCurrentMsg = kmkernel->outboxFolder()->getMsg(mFailedMessages);
   if (!mCurrentMsg || mCurrentMsg->transferInProgress())
   {
     // a message is locked finish the send
     if (mCurrentMsg && mCurrentMsg->transferInProgress())
     	mCurrentMsg = 0;
     // no more message: cleanup and done
-    if ( ( sentFolder != kernel->sentFolder() ) && ( sentFolder != 0 ) )
+    if ( ( sentFolder != kmkernel->sentFolder() ) && ( sentFolder != 0 ) )
         sentFolder->close();
     if (someSent) {
       if ( mSentMessages == mTotalMessages ) {
@@ -472,13 +472,13 @@ void KMSender::cleanup(void)
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg = 0;
   }
-  disconnect(kernel->outboxFolder(), SIGNAL(msgAdded(int)),
+  disconnect(kmkernel->outboxFolder(), SIGNAL(msgAdded(int)),
              this, SLOT(outboxMsgAdded(int)));
-  kernel->sentFolder()->close();
-  kernel->outboxFolder()->close();
-  if (kernel->outboxFolder()->count()<0)
-    kernel->outboxFolder()->expunge();
-  else kernel->outboxFolder()->compact();
+  kmkernel->sentFolder()->close();
+  kmkernel->outboxFolder()->close();
+  if (kmkernel->outboxFolder()->count()<0)
+    kmkernel->outboxFolder()->expunge();
+  else kmkernel->outboxFolder()->compact();
 
   mSendAborted = false;
   mSentMessages = 0;
@@ -488,7 +488,7 @@ void KMSender::cleanup(void)
     this, SLOT(slotAbortSend()));
   KMBroadcastStatus::instance()->setStatusProgressEnable( "Sender", false );
   KMBroadcastStatus::instance()->reset();
-  kernel->filterMgr()->cleanup();
+  kmkernel->filterMgr()->cleanup();
 }
 
 
@@ -672,7 +672,7 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
 
     KMFolder *folder;
     int index;
-    kernel->msgDict()->getLocation(msn, &folder, &index);
+    kmkernel->msgDict()->getLocation(msn, &folder, &index);
 
     if (folder) {
       folder->open();
@@ -1053,7 +1053,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
   if (ti->specifyHostname)
     mQuery += "&hostname=" + KURL::encode_string(ti->localHostname);
 
-  if ( !kernel->msgSender()->sendQuotedPrintable() )
+  if ( !kmkernel->msgSender()->sendQuotedPrintable() )
     mQuery += "&body=8bit";
 
   KURL destination;

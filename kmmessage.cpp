@@ -216,7 +216,7 @@ KMMessage::~KMMessage()
 {
   Q_ASSERT( !transferInProgress() );
   delete mMsg;
-  kernel->undoStack()->msgDestroyed( this );
+  kmkernel->undoStack()->msgDestroyed( this );
 }
 
 
@@ -1558,7 +1558,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
 
   // extract where to send from:
-  QString finalRecipient = kernel->identityManager()
+  QString finalRecipient = kmkernel->identityManager()
     ->identityForUoidOrDefault( identityUoid() ).fullEmailAddr();
 
   //
@@ -1702,7 +1702,7 @@ KMMessage* KMMessage::createDeliveryReceipt() const
 void KMMessage::initHeader( uint id )
 {
   const KMIdentity & ident =
-    kernel->identityManager()->identityForUoidOrDefault( id );
+    kmkernel->identityManager()->identityForUoidOrDefault( id );
 
   if(ident.fullEmailAddr().isEmpty())
     setFrom("");
@@ -1759,7 +1759,7 @@ uint KMMessage::identityUoid() const {
   int id = idString.toUInt( &ok );
 
   if ( !ok || id == 0 )
-    id = kernel->identityManager()->identityForAddress( to() + cc() ).uoid();
+    id = kmkernel->identityManager()->identityForAddress( to() + cc() ).uoid();
   if ( id == 0 && parent() )
     id = parent()->identity();
 
@@ -3820,7 +3820,7 @@ QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list 
        it != addresses.end(); ) {
     kdDebug(5006) << "Check whether " << *it << " is one of my addresses"
                   << endl;
-    if( kernel->identityManager()->thatIsMe( getEmailAddr( *it ).lower() ) ) {
+    if( kmkernel->identityManager()->thatIsMe( getEmailAddr( *it ).lower() ) ) {
       kdDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
@@ -3996,7 +3996,7 @@ QCString KMMessage::defaultCharset()
     retval = sPrefCharsets[0].latin1();
 
   if (retval.isEmpty()  || (retval == "locale"))
-    retval = QCString(kernel->networkCodec()->mimeName()).lower();
+    retval = QCString(kmkernel->networkCodec()->mimeName()).lower();
 
   if (retval == "jisx0208.1983-0") retval = "iso-2022-jp";
   else if (retval == "ksc5601.1987-0") retval = "euc-kr";
@@ -4266,7 +4266,7 @@ const QTextCodec * KMMessage::codec() const {
   if ( !c )
     // no charset means us-ascii (RFC 2045), so using local encoding should
     // be okay
-    c = kernel->networkCodec();
+    c = kmkernel->networkCodec();
   assert( c );
   return c;
 }
