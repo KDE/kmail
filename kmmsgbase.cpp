@@ -210,9 +210,14 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusWatched;
       mStatus |= KMMsgStatusIgnored;
       break;
-
+    // as are ham and spam
     case KMMsgStatusSpam:
+      mStatus &= ~KMMsgStatusHam;
       mStatus |= KMMsgStatusSpam;
+      break;
+    case KMMsgStatusHam:
+      mStatus &= ~KMMsgStatusSpam;
+      mStatus |= KMMsgStatusHam;
       break;
     default:
       mStatus = aStatus;
@@ -245,6 +250,7 @@ void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
     if (strchr(aXStatusStr, 'S')) setStatus(KMMsgStatusSent);
     if (strchr(aXStatusStr, 'G')) setStatus(KMMsgStatusFlag);
     if (strchr(aXStatusStr, 'P')) setStatus(KMMsgStatusSpam);
+    if (strchr(aXStatusStr, 'H')) setStatus(KMMsgStatusHam);
   }
 
   // Merge the contents of the "Status" field
@@ -418,6 +424,13 @@ bool KMMsgBase::isSpam(void) const
 }
 
 //-----------------------------------------------------------------------------
+bool KMMsgBase::isHam(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusHam);
+}
+
+//-----------------------------------------------------------------------------
 QCString KMMsgBase::statusToStr(const KMMsgStatus status)
 {
   QCString sstr;
@@ -434,6 +447,7 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
   if (status & KMMsgStatusWatched) sstr += 'W';
   if (status & KMMsgStatusIgnored) sstr += 'I';
   if (status & KMMsgStatusSpam) sstr += 'P';
+  if (status & KMMsgStatusSpam) sstr += 'H';
 
   return sstr;
 }
@@ -460,7 +474,8 @@ QString KMMsgBase::statusToSortRank()
   if (status() & KMMsgStatusForwarded) sstr[5] = 'a';
   if (status() & KMMsgStatusQueued) sstr[6] = 'a';
   if (status() & KMMsgStatusSent) sstr[7] = 'a';
-  if (status() & KMMsgStatusSpam) sstr[8] = 'a';
+  if (status() & KMMsgStatusHam) sstr[8] = 'a';
+  if (status() & KMMsgStatusSpam) sstr[8] = 'c';
 
   return sstr;
 }

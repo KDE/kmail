@@ -721,7 +721,8 @@ static const KMMsgStatus stati[] =
   KMMsgStatusNew,
   KMMsgStatusWatched,
   KMMsgStatusIgnored,
-  KMMsgStatusSpam
+  KMMsgStatusSpam,
+  KMMsgStatusHam
 };
 static const int StatiCount = sizeof( stati ) / sizeof( KMMsgStatus );
 
@@ -746,6 +747,7 @@ KMFilterActionSetStatus::KMFilterActionSetStatus()
   mParameterList.append( i18n("msg status","Watched") );
   mParameterList.append( i18n("msg status","Ignored") );
   mParameterList.append( i18n("msg status","Spam") );
+  mParameterList.append( i18n("msg status","Ham") );
 
   mParameter = *mParameterList.at(0);
 }

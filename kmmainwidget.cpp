@@ -1695,6 +1695,22 @@ void KMMainWidget::slotSetMsgStatusFlag()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotSetMsgStatusSpam()
+{
+  mHeaders->setMsgStatus( KMMsgStatusSpam, true );
+  if ( mToggleSpamAction->isChecked() )
+    mToggleHamAction->setChecked( false );
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSetMsgStatusHam()
+{
+  mHeaders->setMsgStatus( KMMsgStatusHam, true );
+  if ( mToggleHamAction->isChecked() )
+    mToggleSpamAction->setChecked( false );
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusReplied()
 {
   mHeaders->setMsgStatus(KMMsgStatusReplied, true);
@@ -1784,7 +1800,23 @@ void KMMainWidget::slotSetThreadStatusIgnored()
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSetThreadStatusSpam()
+{
+  mHeaders->setThreadStatus(KMMsgStatusSpam, true);
+  if (mMarkThreadAsSpamAction->isChecked()) {
+    mMarkThreadAsHamAction->setChecked(false);
+  }
+}
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSetThreadStatusHam()
+{
+  mHeaders->setThreadStatus(KMMsgStatusHam, true);
+  if (mMarkThreadAsSpamAction->isChecked()) {
+    mMarkThreadAsHamAction->setChecked(false);
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotNextMessage()       { mHeaders->nextMessage(); }
@@ -2235,6 +2267,16 @@ void KMMainWidget::setupActions()
                                  actionCollection(), "status_flag");
   mStatusMenu->insert( mToggleFlagAction );
 
+  mToggleSpamAction = new KToggleAction(i18n("Mark Message as S&pam"), "kmmsgspam",
+                                 0, this, SLOT(slotSetMsgStatusSpam()),
+                                 actionCollection(), "status_spam");
+  mStatusMenu->insert( mToggleSpamAction );
+
+  mToggleHamAction = new KToggleAction(i18n("Mark Message as &Ham"), "kmmsgham",
+                                 0, this, SLOT(slotSetMsgStatusHam()),
+                                 actionCollection(), "status_ham");
+  mStatusMenu->insert( mToggleHamAction );
+
   //----- "Mark Thread" submenu
   mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
@@ -2286,6 +2328,18 @@ void KMMainWidget::setupActions()
   mIgnoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "kmmsgignored",
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
+
+  //------- "Ham and spam thread" actions
+  mMarkThreadAsSpamAction = new KToggleAction(i18n("Mark Thread as S&pam"), "kmmsgspam",
+                                       0, this, SLOT(slotSetThreadStatusSpam()),
+                                       actionCollection(), "thread_spam");
+  mThreadStatusMenu->insert( mMarkThreadAsSpamAction );
+
+  mMarkThreadAsHamAction = new KToggleAction(i18n("Mark Thread as &Ham"), "kmmsgham",
+                                       0, this, SLOT(slotSetThreadStatusHam()),
+                                       actionCollection(), "thread_ham");
+  mThreadStatusMenu->insert( mMarkThreadAsHamAction );
+
 
   mSaveAttachmentsAction = new KAction( i18n("Save A&ttachments..."), "attach",
                                 0, this, SLOT(slotSaveAttachments()),
@@ -2714,6 +2768,8 @@ void KMMainWidget::updateMessageActions()
     // in the toolbar
     mWatchThreadAction->setEnabled( thread_actions );
     mIgnoreThreadAction->setEnabled( thread_actions );
+    mMarkThreadAsSpamAction->setEnabled( thread_actions );
+    mMarkThreadAsHamAction->setEnabled( thread_actions );
     mMarkThreadAsNewAction->setEnabled( thread_actions );
     mMarkThreadAsReadAction->setEnabled( thread_actions );
     mMarkThreadAsUnreadAction->setEnabled( thread_actions );
@@ -2737,6 +2793,8 @@ void KMMainWidget::updateMessageActions()
         mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
         mWatchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());
         mIgnoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
+        mMarkThreadAsSpamAction->setChecked( mHeaders->currentMsg()->isSpam());
+        mMarkThreadAsHamAction->setChecked( mHeaders->currentMsg()->isHam());
       }
     }
 

@@ -283,6 +283,7 @@ void KMSearchRuleWidget::initLists(bool headersOnly, bool absoluteDates)
     mStatiList.append( i18n( "ignored" ) );
     mStatiList.append( i18n( "todo" ) );
     mStatiList.append( i18n( "spam" ) );
+    mStatiList.append( i18n( "ham" ) );
   }
 }
 

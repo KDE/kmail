@@ -34,7 +34,8 @@ enum MsgStatus
     KMMsgStatusWatched =           0x00000400, 
     KMMsgStatusIgnored =           0x00000800, 
     KMMsgStatusTodo =              0x00001000,
-    KMMsgStatusSpam =              0x00002000 
+    KMMsgStatusSpam =              0x00002000,
+    KMMsgStatusHam =               0x00004000 
 };
 
 typedef uint KMMsgStatus;
@@ -165,6 +166,10 @@ public:
 
   /** Returns TRUE if status is spam. */
   virtual bool isSpam(void) const;
+
+  /** Returns TRUE if status is spam. */
+  virtual bool isHam(void) const;
+
 
   /** Status of the message. */
   virtual KMMsgStatus status(void) const = 0;

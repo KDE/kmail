@@ -247,6 +247,8 @@ protected slots:
   void slotSetMsgStatusQueued();
   void slotSetMsgStatusSent();
   void slotSetMsgStatusFlag();
+  void slotSetMsgStatusSpam();
+  void slotSetMsgStatusHam();
   void slotSetThreadStatusNew();
   void slotSetThreadStatusUnread();
   void slotSetThreadStatusRead();
@@ -255,6 +257,8 @@ protected slots:
   void slotSetThreadStatusQueued();
   void slotSetThreadStatusSent();
   void slotSetThreadStatusFlag();
+  void slotSetThreadStatusSpam();
+  void slotSetThreadStatusHam();
   void slotSetThreadStatusWatched();
   void slotSetThreadStatusIgnored();
   void slotToggleUnread();
@@ -362,11 +366,15 @@ private:
   KToggleAction *mToggleThreadQueuedAction;
   KToggleAction *mToggleThreadSentAction;
   KToggleAction *mToggleThreadFlagAction;
+  KToggleAction *mMarkThreadAsSpamAction;
+  KToggleAction *mMarkThreadAsHamAction;
   KToggleAction *mToggleRepliedAction;
   KToggleAction *mToggleForwardedAction;
   KToggleAction *mToggleQueuedAction;
   KToggleAction *mToggleSentAction;
   KToggleAction *mToggleFlagAction;
+  KToggleAction *mToggleSpamAction;
+  KToggleAction *mToggleHamAction;
 
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
