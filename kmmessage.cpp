@@ -47,8 +47,8 @@
 static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
-static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix;
+static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr, sMessageIdSuffix;
+static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix, sCreateOwnMessageIdHeaders;
 static int sWrapCol;
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 
@@ -1045,6 +1045,40 @@ void KMMessage::initHeader( QString id )
     removeHeaderField("Organization");
   else
     setHeaderField("Organization", ident.organization());
+
+
+  if (    !sCreateOwnMessageIdHeaders
+       || sMessageIdSuffix.isEmpty()
+       || sMessageIdSuffix.isNull() )
+    removeHeaderField("Message-Id");
+  else {
+    QDate date( QDate::currentDate() );
+    QTime time( QTime::currentTime() );
+    QString msgIdStr;
+    msgIdStr = "<";
+    msgIdStr += QString::number( date.year() );
+    if( 10 > date.month() ) msgIdStr += "0";
+    msgIdStr += QString::number( date.month() );
+    if( 10 > date.day() )   msgIdStr += "0";
+    msgIdStr += QString::number( date.day() );
+    if( 10 > time.hour() )  msgIdStr += "0";
+    msgIdStr += QString::number( time.hour() );
+    if( 10 > time.minute()) msgIdStr += "0";
+    msgIdStr += QString::number( time.minute() );
+    msgIdStr += ".";
+    if( 10 > time.second()) msgIdStr += "0";
+    msgIdStr += QString::number( time.second() );
+    if( 10 > time.msec() ) {
+      if(100 > time.msec() )  msgIdStr += "0";
+      msgIdStr += "0";
+    }
+    msgIdStr += QString::number( time.msec() );
+    msgIdStr += "@";
+    msgIdStr += sMessageIdSuffix;
+    msgIdStr += ">";
+    setHeaderField("Message-Id", msgIdStr );
+  }
+
 
   setTo("");
   setSubject("");
@@ -2117,6 +2151,11 @@ void KMMessage::readConfig(void)
   KConfig *config=kapp->config();
 
   config->setGroup("General");
+
+  sCreateOwnMessageIdHeaders = config->readBoolEntry( "createOwnMessageIdHeaders",
+                                                  false );
+  sMessageIdSuffix = config->readEntry( "myMessageIdSuffix", "" );
+
   int languageNr = config->readNumEntry("reply-current-language",0);
 
   config->setGroup(QString("KMMessage #%1").arg(languageNr));

@@ -1293,14 +1293,44 @@ void ConfigureDialog::makeComposerPage( void )
 void ConfigureDialog::makeMimePage( void )
 {
   QFrame *page = addPage( i18n("Mime Headers"),
-    i18n("Define custom mime header tags for outgoing emails"),
+    i18n("Custom header tags for outgoing emails"),
     KGlobal::instance()->iconLoader()->loadIcon( "readme", KIcon::NoGroup,
     KIcon::SizeMedium ));
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mMime.pageIndex = pageIndex(page);
 
+  mMime.createOwnMessageIdCheck =
+    new QCheckBox( i18n("Create own Message-Id headers"), page );
+  topLevel->addWidget( mMime.createOwnMessageIdCheck );
+ 
+  QGridLayout *glay0 = new QGridLayout( topLevel, 1, 2 );
+  glay0->setColStretch( 1, 10 );
+
+  QString lblOfs("      ");
+  QString lblTxt( lblOfs );
+  lblTxt += i18n("Use this Message-Id suffix:");
+  mMime.messageIdSuffixLabel = new QLabel( lblTxt, page );
+  glay0->addWidget( mMime.messageIdSuffixLabel, 0, 0 );
+
+  mMime.messageIdSuffixEdit = new QLineEdit( page );
+  mMime.messageIdSuffixEdit->setFocus();
+  glay0->addWidget( mMime.messageIdSuffixEdit,  0, 1 );
+
+  lblTxt = lblOfs;
+  lblTxt += i18n("(Name must be unique, you may use a domain name that you are the owner of.)");
+  mMime.messageIdSuffixHintLabel = new QLabel( lblTxt, page );
+  topLevel->addWidget( mMime.messageIdSuffixHintLabel );
+
+  connect( mMime.createOwnMessageIdCheck, SIGNAL(clicked() ),
+	   this, SLOT(slotCreateOwnMessageIdChanged()) );
+  slotCreateOwnMessageIdChanged();
+
+  QFrame *hline = new QFrame( page );
+  hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
+  topLevel->addWidget( hline );
+  
   QLabel *label = new QLabel( page );
-  label->setText(i18n("Define custom mime header tags for outgoing emails:"));
+  label->setText(i18n("Define custom mime header tags:"));
   topLevel->addWidget( label );
 
   mMime.tagList = new ListView( page, "tagList" );
@@ -1800,6 +1830,17 @@ void ConfigureDialog::setupMimePage( void )
   mMime.tagNameLabel->setEnabled(false);
   mMime.tagValueLabel->setEnabled(false);
 
+  QString str = config.readEntry( "myMessageIdSuffix", "" );
+  mMime.messageIdSuffixEdit->setText( str );
+  bool state = (str.isNull() || str.isEmpty())
+             ? false
+             : config.readBoolEntry("createOwnMessageIdHeaders", false );
+  mMime.createOwnMessageIdCheck->setChecked(  state );
+  mMime.messageIdSuffixLabel->setEnabled(     state );
+  mMime.messageIdSuffixEdit->setEnabled(      state );
+  mMime.messageIdSuffixHintLabel->setEnabled( state );
+
+
   QListViewItem *top = 0;
 
   int count = config.readNumEntry( "mime-header-count", 0 );
@@ -2251,6 +2292,12 @@ void ConfigureDialog::slotDoApply( bool everything )
   }
   if( activePage == mMime.pageIndex || everything )
   {
+    config.setGroup("General");
+    config.writeEntry( "createOwnMessageIdHeaders",
+                       mMime.createOwnMessageIdCheck->isChecked() );
+    config.writeEntry( "myMessageIdSuffix",
+                       mMime.messageIdSuffixEdit->text() );
+
     int numValidEntry = 0;
     int numEntry = mMime.tagList->childCount();
     QListViewItem *item = mMime.tagList->firstChild();
@@ -2945,6 +2992,16 @@ void ConfigureDialog::slotCustomFontSelectionChanged( void )
   mAppearance.fontLocationCombo->setEnabled( flag );
   mAppearance.fontChooser->setEnabled( flag );
 }
+
+
+void ConfigureDialog::slotCreateOwnMessageIdChanged( void )
+{
+  bool flag = mMime.createOwnMessageIdCheck->isChecked();
+  mMime.messageIdSuffixLabel->setEnabled( flag );
+  mMime.messageIdSuffixEdit->setEnabled( flag );
+  mMime.messageIdSuffixHintLabel->setEnabled( flag );
+}
+
 
 void ConfigureDialog::slotFontSelectorChanged( int index )
 {

@@ -403,6 +403,10 @@ private:
       QLineEdit     *tagValueEdit;
       QLabel        *tagNameLabel;
       QLabel        *tagValueLabel;
+      QCheckBox     *createOwnMessageIdCheck;
+      QLabel        *messageIdSuffixLabel;
+      QLineEdit     *messageIdSuffixEdit;
+      QLabel        *messageIdSuffixHintLabel;
     };
     struct SecurityWidget
     {
@@ -498,6 +502,7 @@ private:
     void slotModifySelectedAccount( void );
     void slotRemoveSelectedAccount( void );
     void slotCustomFontSelectionChanged( void );
+    void slotCreateOwnMessageIdChanged( void );
     void slotFontSelectorChanged( int index );
     void slotAddressbookSelectorChanged( int index );
     void slotCustomColorSelectionChanged( void );
