@@ -4483,15 +4483,9 @@ void KMEdit::spellcheck()
 //-----------------------------------------------------------------------------
 void KMEdit::slotSpellcheck2(KSpell*)
 {
-  // Asking for text() when our QMultiLineEdit is in read-only mode sometimes
-  // has an unexpected return value with QT >= 3. As spellcheck_start() sets
-  // read-only mode, we ask for the text before calling spellcheck_start().
-
-  QString txt = text();
-
   spellcheck_start();
   //we're going to want to ignore quoted-message lines...
-  mKSpell->check(txt);
+  mKSpell->check(text());
 }
 
 //-----------------------------------------------------------------------------
