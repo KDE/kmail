@@ -81,7 +81,8 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		subscriptiondialog.cpp kmailicalifaceimpl.cpp aboutdata.cpp \
 		folderIface.cpp folderIface.skel mailserviceimpl.cpp \
 		attachmentlistview.cpp ssllabel.cpp \
-		iobserver.cpp isubject.cpp bodyvisitor.cpp
+		iobserver.cpp isubject.cpp bodyvisitor.cpp \
+		urlhandlermanager.cpp
 
 kmail_SOURCES = main.cpp
 

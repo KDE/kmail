@@ -207,7 +207,30 @@ public:
   /** Returns message part from given URL or null if invalid. */
   partNode* partNodeFromUrl(const KURL &url);
 
+  /** Returns id of message part from given URL or -1 if invalid. */
+  static int msgPartFromUrl(const KURL &url);
+
   void setUpdateAttachment() { mAtmUpdate = true; }
+
+  /** Access to the @ref KHTMLPart used for the viewer. Use with
+      care! */
+  KHTMLPart * htmlPart() const { return mViewer; }
+
+  /** Returns the current message or 0 if none. */
+  KMMessage* message(KMFolder** folder=0) const;
+
+  void openAttachment( int id, const QString & name );
+
+  void emitUrlClicked( const KURL & url, int button ) {
+    emit urlClicked( url, button );
+  }
+
+  void emitPopupMenu( const KURL & url, const QPoint & p ) {
+    if ( message() )
+      emit popupMenu( *message(), url, p );
+  }
+
+  void showAttachmentPopup( int id, const QString & name, const QPoint & p );
 
 signals:
   /** Emitted after parsing of a message to have it stored
@@ -287,9 +310,6 @@ public slots:
   void slotShowMsgSrc();
   void slotSaveAttachments();
 
-  /** Returns the current message or 0 if none. */
-  KMMessage* message(KMFolder** folder=0) const;
-
 protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
@@ -343,9 +363,6 @@ protected:
   /** Some necessary event handling. */
   virtual void closeEvent(QCloseEvent *);
   virtual void resizeEvent(QResizeEvent *);
-
-  /** Returns id of message part from given URL or -1 if invalid. */
-  virtual int msgPartFromUrl(const KURL &url);
 
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();

@@ -51,6 +51,8 @@ using KMail::FolderJob;
 using KMail::CSSHelper;
 #include "isubject.h"
 using KMail::ISubject;
+#include "urlhandlermanager.h"
+using KMail::URLHandlerManager;
 
 #include <kmime_mdn.h>
 using namespace KMime;
@@ -1344,7 +1346,7 @@ void KMReaderWin::printMsg()
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl(const KURL &aUrl)
 {
-  if (aUrl.isEmpty() || !message()) return -1;
+  if (aUrl.isEmpty()) return -1;
 
   if (!aUrl.isLocalFile()) return -1;
 
@@ -1453,157 +1455,60 @@ bool foundSMIMEData( const QString aUrl,
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
-  bool bOk = false;
+  if ( aUrl.stripWhiteSpace().isEmpty() ) {
+    emit statusMsg( QString::null );
+    return;
+  }
 
-  QString dummyStr;
-  QString keyId;
-  QString gwType;
-  QString gwAction;
-  QString gwAction2;
-
-  KURL url(aUrl);
+  const KURL url(aUrl);
   mUrlClicked = url;
-  int id = msgPartFromUrl(url);
 
-  if (id > 0)
-  {
-    partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
-    if( node ) {
-      KMMessagePart& msgPart = node->msgPart();
-      QString str = msgPart.fileName();
-      if (str.isEmpty()) str = msgPart.name();
-      emit statusMsg(i18n("Attachment: ") + str);
-      bOk = true;
-    }
-  }
-  else if( aUrl == "kmail:showHTML" )
-  {
-    emit statusMsg( i18n("Turn on HTML rendering for this message.") );
-    bOk = true;
-  }
-  else if( foundSMIMEData( aUrl, dummyStr, dummyStr, keyId ) )
-  {
-    emit statusMsg(i18n("Show certificate 0x%1").arg(keyId));
-    bOk = true;
-  }
-  else if( KMGroupware::foundGroupwareLink( aUrl,
-                                            gwType,
-                                            gwAction,
-                                            gwAction2,
-                                            dummyStr ) )
-  {
-    dummyStr = gwType+" "+gwAction;
-    if( !gwAction2.isEmpty() )
-      dummyStr.append(" "+gwAction2);
-    emit statusMsg(i18n("Groupware:\"%1\"").arg(dummyStr));
-    bOk = true;
-  }
-  else if( aUrl.startsWith( "mailto:" ) )
-  {
-    emit statusMsg( KMMessage::decodeMailtoUrl( aUrl ) );
-    bOk = true;
-  }
+  const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
 
-  if( !bOk )
-    emit statusMsg(aUrl);
+  kdWarning( msg.isEmpty(), 5006 ) << "KMReaderWin::slotUrlOn(): Unhandled URL hover!" << endl;
+  emit statusMsg( msg );
 }
 
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 {
-  QString displayName;
-  QString libName;
-  QString keyId;
   mUrlClicked = aUrl;
-  if( aUrl.hasRef() && foundSMIMEData( aUrl.path()+"#"+aUrl.ref(), displayName, libName, keyId ) )
-  {
-    QString query( "-query " );
-    query += keyId;
-    KProcess certManagerProc; // save to create on the heap, since
-                            // there is no parent
-    certManagerProc << "kgpgcertmanager";
-    certManagerProc << displayName;
-    certManagerProc << libName;
-    certManagerProc << "-query";
-    certManagerProc << keyId;
-    if( !certManagerProc.start( KProcess::DontCare ) )
-      KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
-                          i18n( "KMail Error" ) );
-    else
-      kdDebug(5006) << "\nKMReaderWin::slotUrlOn(): certificate manager started.\n" << endl;
-    // process continues to run even after the KProcess object goes
-    // out of scope here, since it is started in DontCare run mode.
-    return;
-  }
 
-  if( aUrl.hasRef() )
-    kdDebug(5006) << QString(aUrl.path()+"#"+aUrl.ref()) << endl;
-
-  if( kmkernel->groupware().isEnabled()
-      && kmkernel->groupware().handleLink( aUrl, message() ) )
+  if ( URLHandlerManager::instance()->handleClick( aUrl, this ) )
     return;
 
-  // handle own links
-  if( aUrl.protocol() == "kmail" )
-  {
-    if( aUrl.path() == "showHTML" )
-    {
-      setHtmlOverride(!mHtmlOverride);
-      update( true );
-      return;
-    }
-  }
-
-  if (!aUrl.hasHost() && aUrl.path() == "/" && aUrl.hasRef())
-  {
-    if (!mViewer->gotoAnchor(aUrl.ref()))
-      static_cast<QScrollView *>(mViewer->widget())->ensureVisible(0,0);
-    return;
-  }
-  int id = msgPartFromUrl(aUrl);
-  if (id > 0)
-  {
-    // clicked onto an attachment
-    mAtmCurrent = id;
-    mAtmCurrentName = aUrl.path();
-    slotAtmOpen();
-  }
-  else {
-//      if (aUrl.protocol().isEmpty() || (aUrl.protocol() == "file"))
-//	  return;
-      mUrlClicked = aUrl;
-      emit urlClicked(aUrl,/* aButton*/LeftButton); //### FIXME: add button to URLArgs!
-  }
+  kdWarning( 5006 ) << "KMReaderWin::slotOpenUrl(): Unhandled URL click!" << endl;
+  emit urlClicked( aUrl, Qt::LeftButton );
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
 {
-  if (!message()) return;
-  KURL url( aUrl );
+  const KURL url( aUrl );
   mUrlClicked = url;
 
-  int id = msgPartFromUrl(url);
-  if (id <= 0)
-  {
-    emit popupMenu(*message(), url, aPos);
+  if ( URLHandlerManager::instance()->handleContextMenuRequest( url, aPos, this ) )
+    return;
+
+  if ( message() ) {
+    kdWarning( 5006 ) << "KMReaderWin::slotUrlPopup(): Unhandled URL right-click!" << endl;
+    emit popupMenu( *message(), url, aPos );
   }
-  else
-  {
-    // Attachment popup
-    mAtmCurrent = id;
-    mAtmCurrentName = url.path();
-    KPopupMenu *menu = new KPopupMenu();
-    menu->insertItem(i18n("Open..."), 1);
-    menu->insertItem(i18n("Open With..."), 2);
-    menu->insertItem(i18n("View..."), 3);
-    menu->insertItem(i18n("Save As..."), 4);
-    menu->insertItem(i18n("Properties..."), 5);
-    connect(menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
-    menu->exec(aPos,0);
-    delete menu;
-  }
+}
+
+void KMReaderWin::showAttachmentPopup( int id, const QString & name, const QPoint & p ) {
+  mAtmCurrent = id;
+  mAtmCurrentName = name;
+  KPopupMenu *menu = new KPopupMenu();
+  menu->insertItem(i18n("Open..."), 1);
+  menu->insertItem(i18n("Open With..."), 2);
+  menu->insertItem(i18n("View..."), 3);
+  menu->insertItem(i18n("Save As..."), 4);
+  menu->insertItem(i18n("Properties..."), 5);
+  connect(menu, SIGNAL(activated(int)), this, SLOT(slotAtmLoadPart(int)));
+  menu->exec( p ,0 );
+  delete menu;
 }
 
 //-----------------------------------------------------------------------------
@@ -1849,9 +1754,20 @@ void KMReaderWin::slotAtmView()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmOpen()
 {
+  openAttachment( mAtmCurrent, mAtmCurrentName );
+}
+
+void KMReaderWin::openAttachment( int id, const QString & name ) {
+  // ### hack to make alert us when the caller doesn't play by the
+  // ### (clumsy) rules:
+  kdWarning( name != mAtmCurrentName, 5006 )
+    << "KMReaderWin::openAttachment(): Got \"" << name << "\", expected \""
+    << mAtmCurrentName << "\"" << endl;
+  mAtmCurrentName = name;
+
   QString str, pname, cmd, fileName;
 
-  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+  partNode* node = mRootNode ? mRootNode->findId( id ) : 0;
   if( !node )
     return;
 
@@ -1872,7 +1788,7 @@ void KMReaderWin::slotAtmOpen()
 
   // What to do when user clicks on an attachment --dnaber, 2000-06-01
   // TODO: show full path for Service, not only name
-  QString mimetype = KMimeType::findByURL(KURL(KURL::encode_string(mAtmCurrentName)))->name();
+  QString mimetype = KMimeType::findByURL(KURL(KURL::encode_string(name)))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, "Application");
   // remember for slotDoAtmOpen
   mOffer = offer;
@@ -2222,12 +2138,8 @@ void KMReaderWin::slotShowMsgSrc()
 }
 
 //-----------------------------------------------------------------------------
-partNode* KMReaderWin::partNodeFromUrl( const KURL &url )
-{
-  int id = msgPartFromUrl(url);
-  partNode* node = mRootNode ? mRootNode->findId(id) : 0;
-
-  return node;
+partNode * KMReaderWin::partNodeFromUrl( const KURL & url ) {
+  return mRootNode ? mRootNode->findId( msgPartFromUrl( url ) ) : 0 ;
 }
 
 //-----------------------------------------------------------------------------
