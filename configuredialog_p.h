@@ -841,18 +841,6 @@ protected:
 //
 //
 
-class ApplicationLaunch {
-public:
-  ApplicationLaunch( const QString &cmd ) : mCmdLine( cmd ) {}
-  void run();
-
-private:
-  void doIt();
-
-private:
-  QString mCmdLine;
-};
-
 class ListView : public KListView {
   Q_OBJECT
 public:

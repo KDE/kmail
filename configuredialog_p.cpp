@@ -125,31 +125,6 @@ void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
   enableButtonOK( true );
 }
 
-void ApplicationLaunch::doIt()
-{
-  // This isn't used anywhere else so
-  // it should be safe to do this here.
-  // I dont' see how we can cleanly wait
-  // on all possible childs in this app so
-  // I use this hack instead.  Another
-  // alternative is to fork() twice, recursively,
-  // but that is slower.
-  signal(SIGCHLD, SIG_IGN);
-  // FIXME use KShellProcess instead
-  system(mCmdLine.latin1());
-}
-
-void ApplicationLaunch::run()
-{
-  signal(SIGCHLD, SIG_IGN);  // see comment above.
-  if( fork() == 0 )
-  {
-    doIt();
-    exit(0);
-  }
-}
-
-
 ListView::ListView( QWidget *parent, const char *name,
 				     int visibleItem )
   : KListView( parent, name )
