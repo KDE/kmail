@@ -216,6 +216,9 @@ public slots:
   /** Switch the icon to lock or unlock respectivly. */
   void slotEncryptToggled(bool);
 
+  /** Switch wordWrap on/off */
+  void slotWordWrapToggled(bool);
+
   /** Append signature file to the end of the text in the editor. */
   void slotAppendSignature();
 
@@ -390,6 +393,7 @@ protected:
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction;
   KToggleAction *toolbarAction, *statusbarAction;
+  KToggleAction *wordWrapAction;
 
   KSelectAction *encodingAction;
 
