@@ -11,6 +11,7 @@
 #include "kio/global.h"
 #include <qvaluelist.h>
 #include <qstringlist.h>
+#include <qcstring.h>
 #include <qtimer.h>
 
 class QLineEdit;
@@ -21,6 +22,7 @@ class DwPopClient;
 class KMMessage;
 class QTimer;
 class KURL::List;
+class QDataStream;
 
 #define KMAcctExpPopInherited KMAccount
 
@@ -109,16 +111,24 @@ protected:
 
   KIO::Job *job;
   QStringList idsOfMsgsPendingDownload;
+  QValueList<int> lensOfMsgsPendingDownload;
+
   QStringList idsOfMsgs;
+  QValueList<int> lensOfMsgs;
   QStringList uidsOfMsgs;
   QStringList uidsOfSeenMsgs;
   QStringList uidsOfNextSeenMsgs;
   KURL::List idsOfMsgsToDelete;
   int indexOfCurrentMsg;
+
   QValueList<KMMessage*> msgsAwaitingProcessing;
   QStringList msgIdsAwaitingProcessing;
   QStringList msgUidsAwaitingProcessing;
-  QString curMsgData;
+
+  QByteArray curMsgData;
+  QDataStream *curMsgStrm;
+
+  int curMsgLen;
   int stage;
   QTimer processMsgsTimer;
   QTimer *ss;

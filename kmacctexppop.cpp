@@ -18,6 +18,7 @@
 #include <kapp.h>
 #include <kstddirs.h>
 #include <qlayout.h>
+#include <qdatastream.h>
 
 #include "kmacctexppop.h"
 #include "kalarmtimer.h"
@@ -55,6 +56,7 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
   job = 0L;
   stage = Idle;
   indexOfCurrentMsg = -1;
+  curMsgStrm = 0;
   processingDelay = 2*100;
   mProcessing = false;
   connect(&processMsgsTimer,SIGNAL(timeout()),SLOT(slotProcessPendingMsgs()));
@@ -69,6 +71,7 @@ KMAcctExpPop::~KMAcctExpPop()
   if (job) {
     job->kill();
     idsOfMsgsPendingDownload.clear();
+    lensOfMsgsPendingDownload.clear();
     processRemainingQueuedMessagesAndSaveUidList();
   }
 }
@@ -378,6 +381,7 @@ void KMAcctExpPop::connectJob() {
 void KMAcctExpPop::slotCancel()
 {
   idsOfMsgsPendingDownload.clear();
+  lensOfMsgsPendingDownload.clear();
   processRemainingQueuedMessagesAndSaveUidList();
   slotJobFinished();
 }
@@ -409,9 +413,20 @@ void KMAcctExpPop::slotProcessPendingMsgs()
     // note we can actually end up processing events in processNewMsg
     // this happens when send receipts is turned on
     // hence the check for re-entry at the start of this method.
+    // -sanders Update processNewMsg should no longer process events
+
     addedOk = processNewMsg(*cur); //added ok? Error displayed if not.
+    /*
+    if ((*cur)->parent()) {
+      int count = (*cur)->parent()->count();
+      if ((*cur)->parent()->operator[](count - 1) == *cur)
+	(*cur)->parent()->unGetMsg(count - 1);
+    }
+    */
+
     if (!addedOk) {
       idsOfMsgsPendingDownload.clear();
+      lensOfMsgsPendingDownload.clear();
       msgIdsAwaitingProcessing.clear();
       msgUidsAwaitingProcessing.clear();
       break;
@@ -424,6 +439,7 @@ void KMAcctExpPop::slotProcessPendingMsgs()
     ++curId;
     ++curUid;
   }
+
   msgsAwaitingProcessing.clear();
   msgIdsAwaitingProcessing.clear();
   msgUidsAwaitingProcessing.clear();
@@ -458,6 +474,7 @@ void KMAcctExpPop::startJob() {
   }
   
   idsOfMsgsPendingDownload.clear();
+  lensOfMsgsPendingDownload.clear();
   idsOfMsgs.clear();
   uidsOfMsgs.clear();
   idsOfMsgsToDelete.clear();
@@ -502,6 +519,8 @@ void KMAcctExpPop::slotJobFinished() {
     debug( "stage == Retr" );
     KMMessage *msg = new KMMessage;
     msg->fromString(curMsgData,TRUE);
+    debug( QString( "curMsgData.size() %1" ).arg( curMsgData.size() ));
+
     msgsAwaitingProcessing.append(msg);
     msgIdsAwaitingProcessing.append(idsOfMsgs[indexOfCurrentMsg]);
     msgUidsAwaitingProcessing.append(uidsOfMsgs[indexOfCurrentMsg]);
@@ -561,6 +580,14 @@ void KMAcctExpPop::processRemainingQueuedMessagesAndSaveUidList()
 void KMAcctExpPop::slotGetNextMsg()
 {
   QStringList::Iterator next = idsOfMsgsPendingDownload.begin();
+  QValueList<int>::Iterator nextLen = lensOfMsgsPendingDownload.begin();
+
+  curMsgData.resize(0);
+  curMsgLen = 0;
+  if (curMsgStrm)
+    delete curMsgStrm;
+  curMsgStrm = 0;
+
   if (KMBroadcastStatus::instance()->abortRequested()) {
     slotCancel();
     return;
@@ -585,7 +612,8 @@ void KMAcctExpPop::slotGetNextMsg()
     }
   }
   else {
-    curMsgData = "";
+    curMsgStrm = new QDataStream( curMsgData, IO_WriteOnly );
+    curMsgLen = *nextLen;
     ++indexOfCurrentMsg;
     KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024) );
     KMBroadcastStatus::instance()->setStatusProgressPercent( 
@@ -594,6 +622,8 @@ void KMAcctExpPop::slotGetNextMsg()
 
     job = KIO::get( *next, false, false );
     idsOfMsgsPendingDownload.remove( next );
+    debug( QString("Length of message about to get %1").arg( *nextLen ));
+    lensOfMsgsPendingDownload.remove( nextLen ); //xxx
   }
   connectJob();
 }
@@ -606,8 +636,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   }
 
   if (stage == Retr) {
-    curMsgData += data;
-    curMsgData += '\n';
+    curMsgStrm->writeRawBytes( data.data(), data.size() );
+    curMsgStrm->writeRawBytes( "\n", 1 );
     numBytesRead += data.size() + 2;
     return;
   }
@@ -626,9 +656,11 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
     }
     if (stage == List) {
       QString length = qdata.mid(spc+1);
-      numBytes += length.toInt();
+      int len = length.toInt();
+      numBytes += len;
       QString id = qdata.left(spc);
       idsOfMsgs.append( id );
+      lensOfMsgsPendingDownload.append( len );
       idsOfMsgsPendingDownload.append( text + id );
     }
     else { // stage == Uidl
@@ -637,9 +669,16 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       if (uidsOfSeenMsgs.contains(uid)) {
 	if (!mRetrieveAll) {
 	  QString id = qdata.left(spc);
-	  idsOfMsgsPendingDownload.remove( text + id );
-	  idsOfMsgs.remove( id );
-	  uidsOfMsgs.remove( uid );
+	  int idx = idsOfMsgsPendingDownload.findIndex( text + id );
+	  if (idx != -1) {
+	    lensOfMsgsPendingDownload.remove( lensOfMsgsPendingDownload
+					      .at( idx ));
+	    idsOfMsgsPendingDownload.remove( text + id );
+	    idsOfMsgs.remove( id );
+	    uidsOfMsgs.remove( uid );
+	  }
+	  else
+	    debug( "KMAcctExpPop::slotData synchronization failure." );
 	}
 	uidsOfNextSeenMsgs.append( uid );
       }
