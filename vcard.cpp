@@ -166,7 +166,7 @@ QValueList<QString> lines;
     //        first token:
     //              verify state, update if necessary
     if (_state & VC_STATE_BEGIN) {
-      if (!QString::compare((*j).lower(), VCARD_BEGIN)) {
+      if (!qstricmp((*j).latin1(), VCARD_BEGIN)) {
         _state = VC_STATE_BODY;
         continue;
       } else {
@@ -174,7 +174,7 @@ QValueList<QString> lines;
         break;
       }
     } else if (_state & VC_STATE_BODY) {
-      if (!QString::compare((*j).lower(), VCARD_END)) {
+      if (!qstricmp((*j).latin1(), VCARD_END)) {
         _state |= VC_STATE_END;
         break;
       }
@@ -740,5 +740,4 @@ bool VCardLine::isValid() const {
 
 return false;
 }
-
 
