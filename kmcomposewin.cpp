@@ -796,7 +796,7 @@ void KMComposeWin::setupActions(void)
                         CTRL+Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),
                         "send_default");
-    (void) new KAction (i18n("S&end now"), "mail_send", 0,
+    (void) new KAction (i18n("S&end Now"), "mail_send", 0,
                         this, SLOT(slotSendNow()),
                         actionCollection(), "send_alternative");
   }
