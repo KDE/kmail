@@ -124,7 +124,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
     mFolderRemoved( false ), mResync( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
-    mContentsTypeChanged( false )
+    mContentsTypeChanged( false ), mStatusChangedLocally( false )
 {
   setUidValidity("");
   mLastUid=0;
@@ -138,10 +138,11 @@ KMFolderCachedImap::~KMFolderCachedImap()
   if( !mFolderRemoved ) {
     // Only write configuration when the folder haven't been deleted
     KConfig* config = KMKernel::config();
-    KConfigGroupSaver saver(config, "Folder-" + folder()->idString());
-    config->writeEntry("ImapPath", mImapPath);
-    config->writeEntry("NoContent", mNoContent);
-    config->writeEntry("ReadOnly", mReadOnly);
+    KConfigGroupSaver saver( config, "Folder-" + folder()->idString() );
+    config->writeEntry( "ImapPath", mImapPath );
+    config->writeEntry( "NoContent", mNoContent );
+    config->writeEntry( "ReadOnly", mReadOnly );
+    config->writeEntry( "StatusChangedLocally", mStatusChangedLocally );
 
     writeUidCache();
   }
@@ -174,6 +175,8 @@ void KMFolderCachedImap::readConfig()
 
   KMFolderMaildir::readConfig();
   mContentsTypeChanged = false;
+  mStatusChangedLocally =
+    config->readBoolEntry( "StatusChangedLocally", false );
 }
 
 void KMFolderCachedImap::remove()
@@ -629,10 +632,15 @@ void KMFolderCachedImap::serverSyncInternal()
        // We haven't downloaded messages yet, so we need to build the map.
        if( uidMapDirty )
          reloadUidMap();
-       // Upload flags, unless we know from the ACL that we're not allowed to do that
+       // Upload flags, unless we know from the ACL that we're not allowed
+       // to do that or they did not change locally
        if ( mUserRights <= 0 || ( mUserRights & KMail::ACLJobs::WriteFlags ) ) {
-         uploadFlags();
-         break;
+         if ( mStatusChangedLocally ) {
+           uploadFlags();
+           break;
+         } else {
+           kdDebug(5006) << "Skipping flags upload, folder unchanged: " << label() << endl;
+         }
        }
     }
     // Else carry on
@@ -964,6 +972,13 @@ void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&,
 }
 
 
+void KMFolderCachedImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)
+{
+  KMFolderMaildir::setStatus(ids, status, toggle);
+  // This is not perfect, what if the status didn't really change? Oh well ...
+  mStatusChangedLocally = true;
+}
+
 /* Upload new folders to server */
 void KMFolderCachedImap::createNewFolders()
 {
@@ -1145,39 +1160,46 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
     KMMessage msg;
     msg.fromString((*it).cdata.mid(16, pos - 16));
     flags = msg.headerField("X-Flags").toInt();
+    bool deleted = ( flags & 8 );
     ulong uid = msg.UID();
-    if( uid != 0 ) {
-      if ( uidsOnServer.count() == uidsOnServer.size() ) {
-        uidsOnServer.resize( KMail::nextPrime( uidsOnServer.size() * 2 ) );
-        kdDebug( 5006 ) << "Resizing to: " << uidsOnServer.size() << endl;
+    if ( !deleted ) {
+      if( uid != 0 ) {
+        if ( uidsOnServer.count() == uidsOnServer.size() ) {
+          uidsOnServer.resize( KMail::nextPrime( uidsOnServer.size() * 2 ) );
+          kdDebug( 5006 ) << "Resizing to: " << uidsOnServer.size() << endl;
+        }
+        uidsOnServer.insert( uid, &v );
       }
-      uidsOnServer.insert( uid, &v );
-    }
-    if ( /*flags & 8 ||*/ uid <= lastUid()) {
-      /*
-       * If this message UID is not present locally, then it must
-       * have been deleted by the user, so we delete it on the
-       * server also.
-       *
-       * This relies heavily on lastUid() being correct at all times.
-       */
-      // kdDebug(5006) << "KMFolderCachedImap::slotGetMessagesData() : folder "<<label()<<" already has msg="<<msg->headerField("Subject") << ", UID="<<uid << ", lastUid = " << mLastUid << endl;
-      KMMsgBase *existingMessage = findByUID(uid);
-      if( !existingMessage ) {
-         // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
-         uidsForDeletionOnServer << uid;
+      if (  uid <= lastUid()) {
+        /*
+        * If this message UID is not present locally, then it must
+        * have been deleted by the user, so we delete it on the
+        * server also.
+        *
+        * This relies heavily on lastUid() being correct at all times.
+        */
+        // kdDebug(5006) << "KMFolderCachedImap::slotGetMessagesData() : folder "<<label()<<" already has msg="<<msg->headerField("Subject") << ", UID="<<uid << ", lastUid = " << mLastUid << endl;
+        KMMsgBase *existingMessage = findByUID(uid);
+          // if this is a read only folder, ignore status updates from the server
+          // since we can't write our status back our local version is what has to
+          // be considered correct.
+        if( !existingMessage ) {
+          // kdDebug(5006) << "message with uid " << uid << " is gone from local cache. Must be deleted on server!!!" << endl;
+          uidsForDeletionOnServer << uid;
+        } else {
+          if (!mReadOnly) {
+            /* The message is OK, update flags */
+            KMFolderImap::flagsToStatus( existingMessage, flags );
+          }
+        }
+        // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
       } else {
-        /* The message is OK, update flags */
-        if (!mReadOnly)
-          KMFolderImap::flagsToStatus( existingMessage, flags );
-         // kdDebug(5006) << "message with uid " << uid << " found in the local cache. " << endl;
-      }
-    } else {
-      ulong size = msg.headerField("X-Length").toULong();
-      mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
-      if( imapPath() == "/INBOX/" )
-         mUidsForDownload << uid;
+        ulong size = msg.headerField("X-Length").toULong();
+        mMsgsForDownload << KMail::CachedImapJob::MsgForDownload(uid, flags, size);
+        if( imapPath() == "/INBOX/" )
+          mUidsForDownload << uid;
 
+      }
     }
     (*it).cdata.remove(0, pos);
     (*it).done++;
@@ -1193,6 +1215,7 @@ void KMFolderCachedImap::getMessagesResult( KMail::FolderJob *job, bool lastSet 
   } else {
     if( lastSet ) { // always true here (this comes from online-imap...)
       mContentState = imapFinished;
+      mStatusChangedLocally = false; // we are up to date again
     }
   }
   serverSyncInternal();
