@@ -1,3 +1,9 @@
+1998-06-19  Stefan Taferner  <taferner@kde.org> (KMail-0.7.6)
+
+	* Folder: fixed broken locking on systems without
+	flock(). Thanks to Werner Ertle <wer@christl.hl.siemens.de>
+	who sent me the patch.
+
 1998-06-18  Stefan Taferner  <taferner@kde.org> (KMail-0.7.5)
 
 	* Deleting folders crashed kmail. Fixed.

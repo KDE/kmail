@@ -235,6 +235,13 @@ void KMFolder::close(bool aForced)
 int KMFolder::lock(void)
 {
   int rc;
+#if !HAVE_FLOCK
+  struct flock fl;
+  fl.l_type=F_WRLCK;
+  fl.l_whence=0;
+  fl.l_start=0;
+  fl.l_len=0;
+#endif
 
   assert(mStream != NULL);
   mFilesLocked = FALSE;
@@ -242,7 +249,7 @@ int KMFolder::lock(void)
 #if HAVE_FLOCK
   rc = flock(fileno(mStream), LOCK_NB|LOCK_EX);
 #else
-  rc = fcntl(fileno(mStream), F_SETLK, F_WRLCK);
+  rc = fcntl(fileno(mStream), F_SETLK, &fl);
 #endif
 
   if (rc < 0)
@@ -257,7 +264,7 @@ int KMFolder::lock(void)
 #if HAVE_FLOCK
     rc = flock(fileno(mIndexStream), LOCK_UN);
 #else
-    rc = fcntl(fileno(mIndexStream), F_SETLK, F_WRLCK);
+    rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
 #endif
 
     if (rc < 0) 
@@ -268,7 +275,8 @@ int KMFolder::lock(void)
 #if HAVE_FLOCK
       rc = flock(fileno(mIndexStream), LOCK_UN);
 #else
-      rc = fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
+      fl.l_type = F_UNLCK;
+      rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
 #endif
       return rc;
     }
@@ -284,6 +292,13 @@ int KMFolder::lock(void)
 int KMFolder::unlock(void)
 {
   int rc;
+#if !HAVE_FLOCK
+  struct flock fl;
+  fl.l_type=F_UNLCK;
+  fl.l_whence=0;
+  fl.l_start=0;
+  fl.l_len=0;
+#endif
 
   assert(mStream != NULL);
   mFilesLocked = FALSE;
@@ -293,7 +308,7 @@ int KMFolder::unlock(void)
   if (mIndexStream) flock(fileno(mIndexStream), LOCK_UN);
   rc = flock(fileno(mStream), LOCK_UN);
 #else
-  if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
+  if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, &fl);
   rc = fcntl(fileno(mStream), F_SETLK, F_UNLCK);
 #endif
 
