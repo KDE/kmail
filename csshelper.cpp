@@ -455,7 +455,7 @@ namespace KMail {
 	       "}\n\n" )
 #if QT_VERSION >= 0x030200
       .arg( bodyFont( fixed ).family(),
-	    QString::number( bodyFontSize ),
+	    bodyFontSize,
 	    fgColor,
 	    background )
 #else
