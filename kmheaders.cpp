@@ -1403,6 +1403,7 @@ void KMHeaders::forwardAttachedMsg ()
   else if (msgList->count() == 1) {
     KMMessage *msg = currentMsg();
     fwdMsg->initFromMessage(msg);
+    fwdMsg->link(msg, KMMsgStatusForwarded);
   }
 
   fwdMsg->setAutomaticFields(true);
@@ -1430,7 +1431,7 @@ void KMHeaders::forwardAttachedMsg ()
     msgPart->setBodyEncoded(thisMsg->asString());
     msgPart->setCharset("");
 
-    thisMsg->setStatus(KMMsgStatusForwarded);
+//    thisMsg->setStatus(KMMsgStatusForwarded);
 
     win->addAttach(msgPart);
   }
