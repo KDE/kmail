@@ -175,7 +175,7 @@ MboxJob::startJob()
   case tCopyMessage:
   case tCreateFolder:
   case tGetFolder:
-  case tListDirectory:
+  case tListMessages:
     kdDebug(5006)<<k_funcinfo<<"### Serious problem! "<<endl;
     break;
   default:

@@ -46,7 +46,7 @@ class FolderJob : public QObject
   Q_OBJECT
 
 public:
-  enum JobType { tListDirectory, tGetFolder, tCreateFolder, tExpungeFolder,
+  enum JobType { tListMessages, tGetFolder, tCreateFolder, tExpungeFolder,
 		 tDeleteMessage, tGetMessage, tPutMessage, tAddSubfolders,
 		 tDeleteFolders, tCheckUidValidity, tRenameFolder,
                  tCopyMessage, tExpireMessages, tMoveMessage };
