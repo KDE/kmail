@@ -145,7 +145,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
   connect( KMBroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
-	   this, SLOT(statusMsg( const QString& )));
+      this, SLOT(statusMsg( const QString& )));
 
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
@@ -311,12 +311,11 @@ void KMMainWidget::readConfig(void)
       * but otherwise the restoreLayout from KMFolderTree
       * doesn't know that to do */
       if (unreadColumn != -1 && unreadColumn < totalColumn)
-        mFolderTree->toggleColumn(KMFolderTree::unread);
+        mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
       if (totalColumn != -1)
-        mFolderTree->toggleColumn(KMFolderTree::total);
+        mFolderTree->addTotalColumn( i18n("Total"), 70 );
       if (unreadColumn != -1 && unreadColumn > totalColumn)
-        mFolderTree->toggleColumn(KMFolderTree::unread);
-
+        mFolderTree->addUnreadColumn( i18n("Unread"), 70 );
     }
   }
 
