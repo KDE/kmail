@@ -939,7 +939,25 @@ void KMReaderWin::slotUrlOpen(const QString &aUrl, const QString &, int aButton)
   {
     // clicked onto an attachment
     mAtmCurrent = id-1;
-    slotAtmOpen();
+
+    // Temporary work around for rmb popup not working -sanders
+    //    slotAtmOpen();
+    {
+      Display *display;
+      Window root, child;
+      uint mask;
+      int rootX, rootY, winX, winY;
+
+      display= QApplication::desktop()->x11Display();
+      root= DefaultRootWindow(display);
+      
+      XQueryPointer(display, root, &root, &child, 
+		&rootX, &rootY, &winX, &winY,
+		&mask);
+      slotUrlPopup( aUrl, QPoint(winX, winY) );
+    }
+    // End work around
+
   }
   else emit urlClicked(url, aButton);
 }
