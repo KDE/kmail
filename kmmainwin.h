@@ -6,9 +6,6 @@
 #define __KMMAINWIN
 
 #include "kmtopwidget.h"
-#include <qvaluelist.h>
-#include <qtextcodec.h>
-#include <qmap.h>
 #include <kurl.h>
 
 class ConfigureDialog;
@@ -19,6 +16,7 @@ class KMFolderTreeItem;
 class KMHeaders;
 class KMReaderWin;
 class QSplitter;
+class QTextCodec;
 class KMenuBar;
 class KToolBar;
 class KStatusBar;
@@ -30,6 +28,8 @@ class KMFldSearch;
 class KToggleAction;
 class KActionMenu;
 class KSelectAction;
+template <typename T> class QValueList;
+template <typename T, typename S> class QMap;
 
 namespace KIO
 {

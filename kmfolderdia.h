@@ -3,7 +3,6 @@
 
 #include <kdialogbase.h>
 #include <qlist.h>
-#include <knuminput.h>
 
 class KMAcctFolder;
 class QCheckBox;
@@ -14,6 +13,7 @@ class QComboBox;
 class QGroupBox;
 class KMFolder;
 class KMFolderDir;
+class KIntNumInput;
 template <typename T> class QGuardedPtr;
 
 /** Dialog for handling the properties of a mail folder
@@ -31,11 +31,11 @@ protected slots:
   virtual void slotHoldsML( bool );
   virtual void slotExpireFolder( bool );
 
-	/*
-	* is called if the folder dropdown changes
-	* then we update the other items to reflect the capabilities
-	*/
-	void slotUpdateItems( int );
+  /*
+   * is called if the folder dropdown changes
+   * then we update the other items to reflect the capabilities
+   */
+  void slotUpdateItems( int );
 
 protected:
   QComboBox *fileInFolder;
@@ -49,7 +49,7 @@ protected:
   QCheckBox *holdsMailingList, *markAnyMessage, *expireFolder;
   QLineEdit *mailingListPostAddress;
   QComboBox *identity;
-	QGroupBox *expGroup, *mtGroup;
+  QGroupBox *expGroup, *mtGroup;
 //   QLineEdit *mailingListAdminAddress;
 
   KIntNumInput *readExpiryTime, *unreadExpiryTime;

@@ -7,7 +7,12 @@
 
 #include <qstring.h>
 #include <time.h>
-#include <qtextcodec.h>
+
+class QCString;
+class QStringList;
+class QTextCodec;
+class KMFolder;
+
 
 typedef enum
 {
@@ -23,9 +28,6 @@ typedef enum
     KMMsgStatusSent='S',
     KMMsgStatusFlag='G'
 } KMMsgStatus;
-
-class QStringList;
-class KMFolder;
 
 
 class KMMsgBase
@@ -52,8 +54,8 @@ public:
   /** Returns TRUE if status is new. */
   virtual bool isNew(void) const;
 
-    /** Status of the message. */
-    virtual KMMsgStatus status(void) const = 0;
+  /** Status of the message. */
+  virtual KMMsgStatus status(void) const = 0;
 
   /** Set status and mark dirty.  Optional optimization: @p idx may
    * specify the index of this message within the parent folder. */
@@ -173,33 +175,33 @@ public:
 protected:
   KMFolder* mParent;
   bool mDirty;
-    long mIndexOffset;
-    short mIndexLength;
+  long mIndexOffset;
+  short mIndexLength;
 
 public:
-    enum MsgPartType
-    {
-	MsgNoPart = 0,
-	//unicode strings
-	MsgFromPart = 1,
-	MsgSubjectPart = 2,
-	MsgToPart = 3,
-	MsgReplyToIdMD5Part = 4,
-	MsgIdMD5Part = 5,
-	MsgXMarkPart = 6,
-	//unsigned long
-	MsgOffsetPart = 7,
-	MsgStatusPart = 8,
-	MsgSizePart = 9,
-	MsgDatePart = 10,
-	MsgFilePart = 11
-    };
-    /** access to long msgparts */
-    unsigned long getLongPart(MsgPartType) const; 
-    /** access to string msgparts */
-    QString getStringPart(MsgPartType) const;
-    /** sync'ing just one KMMsgBase */
-    bool syncIndexString() const;
+  enum MsgPartType
+  {
+    MsgNoPart = 0,
+    //unicode strings
+    MsgFromPart = 1,
+    MsgSubjectPart = 2,
+    MsgToPart = 3,
+    MsgReplyToIdMD5Part = 4,
+    MsgIdMD5Part = 5,
+    MsgXMarkPart = 6,
+    //unsigned long
+    MsgOffsetPart = 7,
+    MsgStatusPart = 8,
+    MsgSizePart = 9,
+    MsgDatePart = 10,
+    MsgFilePart = 11
+  };
+  /** access to long msgparts */
+  unsigned long getLongPart(MsgPartType) const; 
+  /** access to string msgparts */
+  QString getStringPart(MsgPartType) const;
+  /** sync'ing just one KMMsgBase */
+  bool syncIndexString() const;
 
 };
 

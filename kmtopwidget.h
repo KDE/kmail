@@ -21,8 +21,7 @@
 
 #include <kmainwindow.h>
 
-class KMTopLevelWidget;
-
+class QCloseEvent;
 
 /** Top level window that offers methods to be called on every
  * existing top level window.

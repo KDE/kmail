@@ -4,17 +4,18 @@
 #ifndef kmmessage_h
 #define kmmessage_h
 
-#include <mimelib/string.h>
 #include "kmmsgbase.h"
-#include <qstrlist.h>
-#include <qtextcodec.h>
 
 class QStringList;
+class QString;
+class QTextCodec;
+class QStrList;
 
 class KMFolder;
 class DwMessage;
 class KMMessagePart;
 class KMMsgInfo;
+class KMHeaders;
 
 #define KMMessageInherited KMMsgBase
 class KMMessage: public KMMsgBase
