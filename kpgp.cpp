@@ -82,7 +82,7 @@ void
 Kpgp::readConfig()
 {
   storePass = config->readBoolEntry("storePass");
-  showEncryptionResult = config->readBoolEntry("showEncryptionResult");
+  showEncryptionResult = config->readBoolEntry("showEncryptionResult", true);
   pgpType = ( Kpgp::PGPType) config->readNumEntry("pgpType",tAuto);
 }
 
