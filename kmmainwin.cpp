@@ -16,6 +16,7 @@
 #include <kedittoolbar.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kstringhandler.h>
 #include <kdebug.h>
 
 #include "kmmainwin.moc"
@@ -104,12 +105,10 @@ void KMMainWin::htmlStatusMsg(const QString& aText)
 void KMMainWin::displayStatusMsg(const QString& aText)
 {
   if ( !statusBar() || !mLittleProgress) return;
-  QString text = " " + aText + " ";
   int statusWidth = statusBar()->width() - mLittleProgress->width()
-    - fontMetrics().maxWidth();
-
-  while (!text.isEmpty() && fontMetrics().width( text ) >= statusWidth)
-    text.truncate( text.length() - 1);
+                    - fontMetrics().maxWidth();
+  QString text = KStringHandler::rPixelSqueeze( " " + aText, fontMetrics(),
+                                                statusWidth );
 
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
   // but this code would double the size of the satus bar if the user hovers
