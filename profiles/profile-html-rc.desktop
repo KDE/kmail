@@ -1,8 +1,16 @@
 [KMail Profile]
 Name=HTML
-Name[xx]=xx
 Comment=Standard profile with HTML preview enabled - less secure!
-Comment[xx]=xx
+Comment[az]=HTML nümayişli standard - ən az etibarlı!
+Comment[da]=Standard-profil med HTML-forhåndsvisning aktiveret - mindre sikkert!
+Comment[es]=Perfil estándar con previsualizaión HTML activada - menos seguro
+Comment[fr]=Profil standard avec l'aperçu HTML activé - Moins sécurisé !
+Comment[he]=הפרופיל הסטנדרטי עם תצוגה מקדימה של HTML - פחות בטוח
+Comment[lv]=Standarta profils ar atļautu HTML apskati - nedrošāks!
+Comment[pt]=Perfil padrão com antevisão de HTML activada - menos segura!
+Comment[pt_BR]=Perfil padrão com antevisão de HTML activada - menos segura!
+Comment[sk]=Štandardný profil pre povolený náhlad HTML - menej bezpečné!
+Comment[sv]=Standardprofil med HTML-förhandsgranskning aktiverad - mindre säker!
 
 [Reader]
 BackgroundColor=255,255,255
@@ -46,3 +54,6 @@ longFolderList=true
 [General]
 dateDisplay=fancyDate
 showMessageSize=true
+
+[Behaviour]
+LoopOnGotoUnread=true

@@ -3495,11 +3495,15 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 
   // "confirm before emptying folder" check box: stretch 0
   mEmptyFolderConfirmCheck =
-    new QCheckBox(i18n("Co&nfirm before emptying folders"), this );
+    new QCheckBox( i18n("Co&nfirm before emptying folders"), this );
   vlay->addWidget( mEmptyFolderConfirmCheck );  
   mWarnBeforeExpire =
     new QCheckBox( i18n("&Warn before expiring messages"), this );
   vlay->addWidget( mWarnBeforeExpire );
+  mLoopOnGotoUnread =
+    new QCheckBox( i18n("&Loop in the current folder when trying to find "
+			"unread mail"), this );
+  vlay->addWidget( mLoopOnGotoUnread );
 
   // "default mailbox format" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -3544,16 +3548,28 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 		      "mails between folders.</p></qt>");
   QWhatsThis::add( mMailboxPrefCombo, msg );
   QWhatsThis::add( label, msg );
+
+  msg = i18n( "what's this help",
+	      "<qt><p>When jumping to the next unread message, it may occur "
+	      "that no more unread messages are below the current message.</p>"
+	      "<p>When this option is checked, the search will start at the "
+	      "top of the message list. Otherwise, it will do nothing.</p>"
+	      "<p>Similarly, when searching for the previous unread message, "
+	      "the search will start from the bottom of the message list if "
+	      "this option is checked.</p></qt>" );
+  QWhatsThis::add( mLoopOnGotoUnread, msg );
 }
 
 void MiscPage::FoldersTab::setup() {
   KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup behaviour( kapp->config(), "Behaviour" );
   
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", false ) );
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
   mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
+  mLoopOnGotoUnread->setChecked( behaviour.readBoolEntry( "LoopOnGotoUnread", true ) );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
@@ -3562,13 +3578,14 @@ void MiscPage::FoldersTab::setup() {
 
 void MiscPage::FoldersTab::apply() {
   KConfigGroup general( kapp->config(), "General" );
+  KConfigGroup behaviour( kapp->config(), "Behaviour" );
 
   general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
   general.writeEntry( "compact-all-on-exit", mCompactOnExitCheck->isChecked() );
   general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
   general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
-
+  behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->isChecked() );
   if ( mExpireAtExit->isChecked() )
     general.writeEntry( "when-to-expire", expireAtExit );
   else

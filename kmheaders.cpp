@@ -599,6 +599,12 @@ void KMHeaders::readConfig (void)
       setFont(KGlobalSettings::generalFont());
   }
 
+  // Behavior
+  {
+    KConfigGroupSaver saver(config, "Behaviour");
+    mLoopOnGotoUnread = config->readBoolEntry( "LoopOnGotoUnread", true );
+  }
+
 }
 
 
@@ -1960,6 +1966,9 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
 void KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
     int i = findUnread(TRUE, -1, false, acceptCurrent);
+    if ( i < 0 && mLoopOnGotoUnread )
+      // this assumes that (0 == firstChild()->msgId()) !
+      i = findUnread(TRUE, 0, false, acceptCurrent); // from top
     setCurrentMsg(i);
     ensureCurrentItemVisible();
 }
@@ -1975,6 +1984,11 @@ void KMHeaders::ensureCurrentItemVisible()
 void KMHeaders::prevUnreadMessage()
 {
   int i = findUnread(FALSE);
+  if ( i < 0 && mLoopOnGotoUnread ) {
+    KMHeaderItem * lastItem = static_cast<KMHeaderItem*>(lastChild());
+    if ( lastItem )
+      i = findUnread(FALSE, lastItem->msgId() ); // from bottom
+  }
   setCurrentMsg(i);
   ensureCurrentItemVisible();
 }

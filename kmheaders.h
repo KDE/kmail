@@ -368,6 +368,8 @@ private:
   static QDateTime *now;
   static time_t now_time;
 
+  /** value of config key Behaviour/LoopOnGotoUnread */
+  bool mLoopOnGotoUnread;
 };
 
 #endif
