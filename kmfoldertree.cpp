@@ -861,6 +861,41 @@ void KMFolderTree::keyPressEvent( QKeyEvent * e )
     }
 }
 
+void KMFolderTree::contentsMousePressEvent( QMouseEvent * e )
+{
+  int b = e->state() & !ShiftButton & !ControlButton;
+  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonPress,
+                                   e->pos(),
+                                   e->globalPos(),
+                                   e->button(),
+                                   b );
+  clearSelection();
+  KMFolderTreeInherited::contentsMousePressEvent( f );
+  // Force current item to be selected for some reason in certain weird
+  // circumstances this is not always the case
+
+  if (currentItem())
+    setSelected( currentItem(), true );
+}
+
+void KMFolderTree::contentsMouseReleaseEvent( QMouseEvent * e )
+{
+  int b = e->state() & !ShiftButton & !ControlButton;
+  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonRelease,
+                                   e->pos(),
+                                   e->globalPos(),
+                                   e->button(),
+                                   b );
+  KMFolderTreeInherited::contentsMouseReleaseEvent( f );
+}
+
+void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
+{
+  if (e->state() != NoButton)
+    return;
+  KMFolderTreeInherited::contentsMouseMoveEvent( e );
+}
+
 #include "kmfoldertree.moc"
 
 

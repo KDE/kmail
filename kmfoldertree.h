@@ -110,7 +110,9 @@ protected:
 
   // Navigation/Selection methods
   virtual void keyPressEvent( QKeyEvent * e );
-
+  virtual void contentsMousePressEvent( QMouseEvent * e );
+  virtual void contentsMouseReleaseEvent( QMouseEvent * e );
+  virtual void contentsMouseMoveEvent( QMouseEvent* e );                                                                                 
   //Drag and drop variables
   QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;
