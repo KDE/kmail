@@ -35,7 +35,7 @@
 // Regular expression to find the line that seperates messages in a mail
 // folder:
 #define MSG_SEPERATOR_START "From "
-#define MSG_SEPERATOR_REGEX "^From .*..:..:...*$"
+#define MSG_SEPERATOR_REGEX "^From .*..:...*$"
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
 
