@@ -36,7 +36,7 @@ static char fontStr[256];
 //-----------------------------------------------------------------------------
 const char* kfontToStr(const QFont& aFont)
 {
-  char *weightStr, *charsetStr;
+  const char *weightStr, *charsetStr;
   int enc = 0;
   int i;
   QFont::Weight weight;

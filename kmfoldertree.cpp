@@ -153,7 +153,7 @@ void KMFolderTree::reload(void)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::refresh(KMFolder* aFolder)
+void KMFolderTree::refresh(KMFolder* )
 {
   if (!mUpdateTimer)
   {
