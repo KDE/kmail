@@ -422,7 +422,10 @@ void KMMainWin::createWidgets(void)
                                        Key_Space, this,  SLOT( slotReadOn() ),
                                        actionCollection(), "read_on" );
   readOnAction->plugAccel( this->accel() );
-
+  connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
+           SLOT( slotUpdateMessageMenu() ) );
+  connect( kernel->outboxFolder(), SIGNAL( msgAdded(int) ),
+           SLOT( slotUpdateMessageMenu() ) );
 }
 
 
@@ -962,7 +965,8 @@ void KMMainWin::slotDeleteMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUndo()
 {
-  mHeaders->undo();
+    mHeaders->undo();
+    updateMessageMenu();
 }
 
 //-----------------------------------------------------------------------------
@@ -1590,7 +1594,7 @@ void KMMainWin::setupMenuBar()
   //KStdAction::quit( this, SLOT(quit()), actionCollection());
 
   //----- Edit Menu
-  KStdAction::undo( this, SLOT(slotUndo()), actionCollection());
+  KStdAction::undo( this, SLOT(slotUndo()), actionCollection(), "edit_undo");
 
   (void) new KAction( i18n("&Copy text"), KStdAccel::key(KStdAccel::Copy), this,
 		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
@@ -2048,6 +2052,9 @@ void KMMainWin::updateMessageMenu()
     action( "next_unread" )->setEnabled( mails );
     action( "previous" )->setEnabled( mails );
     action( "previous_unread" )->setEnabled( mails );
+
+    action( "send_queued" )->setEnabled( kernel->outboxFolder()->count() > 0 );
+    action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 }
 
 

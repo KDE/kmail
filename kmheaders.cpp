@@ -1515,6 +1515,11 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   kernel->kbp()->idle();
 }
 
+bool KMHeaders::canUndo() const
+{
+    return ( kernel->undoStack()->size() > 0 );
+}
+
 //-----------------------------------------------------------------------------
 void KMHeaders::undo()
 {

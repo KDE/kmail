@@ -4,8 +4,8 @@
     Copyright (C) 1999 Waldo Bastian (bastian@kde.org)
 
     This library is free software; you can redistribute it and/or
-    modify it under the terms of the GNU General Public License 
-    version 2 as published by the Free Software Foundation. 
+    modify it under the terms of the GNU General Public License
+    version 2 as published by the Free Software Foundation.
 
     This software is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -35,19 +35,20 @@ public:
    KMFolder *folder;
    KMFolder *destFolder;
 };
-  
-class KMUndoStack 
+
+class KMUndoStack
 {
 public:
    KMUndoStack(int size);
 
-   void clear();   
+   void clear();
+   int size() const { return mStack.count(); }
    void pushAction(QString msgIdMD5, KMFolder *folder, KMFolder* destFolder);
    void msgDestroyed( KMMsgBase *msg);
    void folderDestroyed( KMFolder *folder);
    bool popAction(QString &msgIdMD5, KMFolder *&folder, KMFolder *&destFolder);
 protected:
-   QList<KMUndoInfo> mStack;      
+   QList<KMUndoInfo> mStack;
    int mSize;
 };
 

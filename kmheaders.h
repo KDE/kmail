@@ -96,6 +96,7 @@ public:
   virtual void applyFiltersOnMsg(int msgId=-1);
   virtual void saveMsg(int msgId = -1);
   virtual void undo();
+  virtual bool canUndo() const;
   virtual void forwardMsg();
   virtual void bounceMsg();
   virtual void replyToMsg(QString selection=QString::null);
