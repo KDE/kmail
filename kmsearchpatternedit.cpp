@@ -97,9 +97,13 @@ void KMSearchRuleWidget::initWidget()
 
   // initialize the function/value widget stack
   mFunctionStack = new QWidgetStack( this, "mFunctionStack" );
+	//Don't expand the widget in vertical direction
+	mFunctionStack->setSizePolicy( QSizePolicy::Preferred,QSizePolicy::Fixed );
+
   hlay->addWidget( mFunctionStack );
 
   mValueStack = new QWidgetStack( this, "mValueStack" );
+	mValueStack->setSizePolicy( QSizePolicy::Preferred,QSizePolicy::Fixed );
   hlay->addWidget( mValueStack );
   hlay->setStretchFactor( mValueStack, 10 );
 
