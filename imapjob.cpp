@@ -223,22 +223,18 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       msg->fromByteArray( (*it).data );
       msg->setHeaderField("X-UID",uid);
       msg->setComplete( TRUE );
-      emit messageRetrieved(msg);
     } else {
-      emit messageRetrieved(0);
+      msg = 0;
     }
-    msg = 0;
   }
   account->displayProgress();
   if (account->slave()) {
-    /* Check whether the job and data have already been removed. This
-       happens because unGetMsg could have been called as a result of 
-       the message being filtered away upon messageRetrieved. */
-    if (account->mapJobData.find(it)) 
       account->mapJobData.remove(it);
-    if (account->mJobList.find(this)) 
       account->mJobList.remove(this);
   }
+  /* This needs to be emitted last, so the slots that are hooked to it
+   * don't unGetMsg the msg before we have finished. */
+  emit messageRetrieved(msg);
   deleteLater();
 }
 
