@@ -1977,7 +1977,6 @@ void KMReaderWin::slotAtmProperties()
 {
     KMMsgPartDialogCompat dlg(0,TRUE);
 
-    KCursorSaver busy(KBusyPtr::busy());
     partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
     if( node ) {
         KMMessagePart& msgPart = node->msgPart();
