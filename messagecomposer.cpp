@@ -441,7 +441,7 @@ void MessageComposer::adjustCryptFlags()
                                                     "Really use deprecated inline OpenPGP?"),
                                                i18n("Insecure Message Format"),
                                                KStdGuiItem::yes(),
-                                               i18n("&No, use OpenPGP/MIME") );
+                                               i18n("&No, Use OpenPGP/MIME") );
     if ( ret == KMessageBox::Cancel ) {
       mRc = false;
       return;
