@@ -1634,9 +1634,11 @@ KMCommand::Result KMCopyCommand::execute()
         job->start();
       } else {
         int rc, index;
+        mDestFolder->open();
         rc = mDestFolder->addMsg(newMsg, &index);
         if (rc == 0 && index != -1)
           mDestFolder->unGetMsg( mDestFolder->count() - 1 );
+        mDestFolder->close();
       }
     }
 
@@ -1759,6 +1761,7 @@ KMCommand::Result KMMoveCommand::execute()
         list.append(msg);
       } else {
         // We are moving to a local folder.
+        mDestFolder->open();
         rc = mDestFolder->moveMsg(msg, &index);
         if (rc == 0 && index != -1) {
           KMMsgBase *mb = mDestFolder->unGetMsg( mDestFolder->count() - 1 );
@@ -1768,10 +1771,12 @@ KMCommand::Result KMMoveCommand::execute()
               undoId = kmkernel->undoStack()->newUndoAction( srcFolder, mDestFolder );
             kmkernel->undoStack()->addMsgToAction( undoId, mb->getMsgSerNum() );
           }
+          mDestFolder->close();
         } else if (rc != 0) {
           // Something  went wrong. Stop processing here, it is likely that the
           // other moves would fail as well.
           completeMove( Failed );
+          mDestFolder->close();
           return Failed;
         }
       }
