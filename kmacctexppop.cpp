@@ -555,6 +555,7 @@ void KMAcctExpPop::startJob() {
   numBytesRead = 0;
   stage = List;
   mSlaveConfig.clear();
+  mSlaveConfig.insert("progress", "off");
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
   if (mAuth == "PLAIN" || mAuth == "CRAM-MD5")
   {
@@ -714,13 +715,12 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   int oldNumMsgBytesRead = numMsgBytesRead;
   if (stage == Retr) {
     curMsgStrm->writeRawBytes( data.data(), data.size() );
-    curMsgStrm->writeRawBytes( "\n", 1 );
-    numMsgBytesRead += data.size() + 1;
+    numMsgBytesRead += data.size();
     if (numMsgBytesRead > curMsgLen)
       numMsgBytesRead = curMsgLen;
     numBytesRead += numMsgBytesRead - oldNumMsgBytesRead;
     dataCounter++;
-    if (dataCounter % 100 == 0)
+    if (dataCounter % 5 == 0)
     {
       QString msg = i18n("Message ") + QString("%1/%2 (%3/%4 KB)").
         arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).
