@@ -194,22 +194,42 @@ int main(int argc, char *argv[])
                    I18N_NOOP("(c) 1997-2001, The KMail developers"),
 		   0,
 		   "http://kmail.kde.org");
-  about.addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "don@sanders.org" );
+  about.addAuthor( "Michael Haeckel", I18N_NOOP("Current maintainer"), "michael@haeckel.net" );
+  about.addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "sanders@kde.org" );
+  about.addAuthor( "Stefan Taferner ", 0, "taferner@kde.org" );
+  about.addAuthor( "Daniel Naber", I18N_NOOP("Security"), "daniel.naber@t-online.de" );
+  about.addAuthor( "Andreas Gungl", I18N_NOOP("Encryption"), "a.gungl@gmx.de" );
+  about.addAuthor( "Toyohiro Asukai", 0, "toyohiro@ksmplus.com" );
   about.addAuthor( "Waldo Bastian", 0, "bastian@kde.org" );
-  about.addAuthor( "Andreas Gungl", 0, "a.gungl@gmx.de" );
-  about.addAuthor( "Michael Haeckel", 0, "michael@haeckel.net" );
+  about.addAuthor( "Steven Brown", 0, "swbrown@ucsd.edu" );
+  about.addAuthor( "Cristi Dumitrescu", 0, "cristid@chip.ro" );
+  about.addAuthor( "Philippe Fremy", 0, "pfremy@chez.com" );
+  about.addAuthor( "Igor Janssen", 0, "rm@linux.ru.net" );
+  about.addAuthor( "Matt Johnston", 0, "matt@caifex.org" );
+  about.addAuthor( "Christer Kaivo-oja", 0, "whizkid@telia.com" );
+  about.addAuthor( "Ingo Kloecker", 0, "ingo.kloecker@epost.de" );
   about.addAuthor( "Lars Knoll", 0, "knoll@kde.org" );
   about.addAuthor( "J. Nick Koston", 0, "bdraco@darkorb.net" );
   about.addAuthor( "Stephan Kulow", 0, "coolo@kde.org" );
+  about.addAuthor( "Guillaume Laurent", 0, "glaurent@telegraph-road.org" );
+  about.addAuthor( "Sam Magnuson", 0, "sam@trolltech.com" );
+  about.addAuthor( "Laurent Montel", 0, "lmontel@mandrakesoft.com" );
   about.addAuthor( "Marc Mutz", 0, "mutz@kde.org" );
-  about.addAuthor( "Daniel Naber", 0, "daniel.naber@t-online.de" );
+  about.addAuthor( "Matt Newell", 0, "newellm@proaxis.com" );
+  about.addAuthor( "Denis Perchine", 0, "dyp@perchine.com" );
+  about.addAuthor( "Carsten Pfeiffer", 0, "pfeiffer@kde.org" );
   about.addAuthor( "Sven Radej", 0, "radej@kde.org" );
+  about.addAuthor( "Mark Roberts", 0, "mark@taurine.demon.co.uk" );
+  about.addAuthor( "Wolfgang Rohdewald", 0, "WRohdewald@dplanet.ch" );
   about.addAuthor( "Espen Sand", 0, "espen@kde.org" );
   about.addAuthor( "George Staikos", 0, "staikos@kde.org" );
-  about.addAuthor( "Stefan Taferner ", 0, "taferner@kde.org" );
+  about.addAuthor( "Jason Stephenson", 0, "panda@mis.net" );
+  about.addAuthor( "Jacek Stolarczyk", 0, "jacek@mer.chemia.polsl.gliwice.pl" );
   about.addAuthor( "Mario Weilguni", 0, "mweilguni@sime.com" );
+  about.addAuthor( "Wynn Wilkes", 0, "wynnw@calderasystems.com" );
   about.addAuthor( "Robert D. Williams", 0, "rwilliams@kde.org" );
   about.addAuthor( "Markus Wuebben", 0, "markus.wuebben@kde.org" );
+  about.addAuthor( "Karl-Heinz Zimmer", 0, "khz@kde.org" );
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
