@@ -897,7 +897,7 @@ void ConfigureDialog::makeAppearancePage( void )
     new QCheckBox( i18n("&Thread list of message headers"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
 
-  QButtonGroup *threadGroup = new QButtonGroup( i18n("&essage header threading options"), page3 );
+  QButtonGroup *threadGroup = new QButtonGroup( i18n("Message header threading options"), page3 );
   vlay->addWidget( threadGroup );
   QVBoxLayout * vthread = new QVBoxLayout( threadGroup, spacingHint() );
   vthread->addSpacing( fontMetrics().lineSpacing() );
@@ -1041,7 +1041,7 @@ void ConfigureDialog::makeComposerPage( void )
   QWidget *page = new QWidget( tabWidget );
   tabWidget->addTab( page, i18n("&General") );
   QVBoxLayout *topLevel = new QVBoxLayout( page, spacingHint() );
-  QGroupBox *group = new QGroupBox(i18n("&Phrases"), page );
+  QGroupBox *group = new QGroupBox(i18n("Phrases"), page );
   topLevel->addWidget( group );
 
   QGridLayout *glay = new QGridLayout( group, 8, 2, spacingHint() );
@@ -1120,8 +1120,8 @@ void ConfigureDialog::makeComposerPage( void )
 
   // ----- editor page
   page = new QWidget( tabWidget );
-  QGroupBox * editorGroup = new QGroupBox( i18n("&External Editor"), page );
-  tabWidget->addTab( page, i18n("Editor") );
+  QGroupBox * editorGroup = new QGroupBox( i18n("External Editor"), page );
+  tabWidget->addTab( page, i18n("&Editor") );
   QBoxLayout * elay = new QVBoxLayout( page, spacingHint() );
   elay->addWidget( editorGroup );
   elay->addStretch( 10 );
@@ -1302,11 +1302,12 @@ void ConfigureDialog::makeMimePage( void )
 
   QString lblOfs("      ");
   QString lblTxt( lblOfs );
-  lblTxt += i18n("Use this Message-Id suffix:");
+  lblTxt += i18n("&Use this Message-Id suffix:");
   mMime.messageIdSuffixLabel = new QLabel( lblTxt, page );
   glay0->addWidget( mMime.messageIdSuffixLabel, 0, 0 );
 
   mMime.messageIdSuffixEdit = new QLineEdit( page );
+  mMime.messageIdSuffixLabel->setBuddy( mMime.messageIdSuffixEdit );
   mMime.messageIdSuffixEdit->setFocus();
   glay0->addWidget( mMime.messageIdSuffixEdit,  0, 1 );
 
@@ -1340,7 +1341,7 @@ void ConfigureDialog::makeMimePage( void )
   QGridLayout *glay = new QGridLayout( topLevel, 3, 2 );
   glay->setColStretch( 1, 10 );
 
-  mMime.tagNameLabel = new QLabel(i18n("&Name:"), page );
+  mMime.tagNameLabel = new QLabel(i18n("N&ame:"), page );
   mMime.tagNameLabel->setEnabled(false);
   glay->addWidget( mMime.tagNameLabel, 0, 0 );
   mMime.tagNameEdit = new QLineEdit(page);
@@ -1367,7 +1368,7 @@ void ConfigureDialog::makeMimePage( void )
   connect( pushButton, SIGNAL(clicked()), this, SLOT(slotNewMimeHeader()) );
   pushButton->setAutoDefault( false );
   hlay->addWidget( pushButton );
-  pushButton = new QPushButton(i18n("Dele&te"), helper );
+  pushButton = new QPushButton(i18n("&Delete"), helper );
   connect( pushButton, SIGNAL(clicked()), this, SLOT(slotDeleteMimeHeader()));
   pushButton->setAutoDefault( false );
   hlay->addWidget( pushButton );
