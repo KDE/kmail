@@ -2403,6 +2403,7 @@ void KMReaderWin::parseMsg(void)
                                           "border-width: 0px; "
                                           "align: left }\n"
                   "th.fancyHeaderDtls { padding: 0px; "
+                                       "white-space: nowrap; "
                                        "border-spacing: 0px; "
                                        "text-align: left; "
                                        "vertical-align: top; }\n"
