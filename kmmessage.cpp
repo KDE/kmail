@@ -47,8 +47,9 @@ static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote;
+static bool sSmartQuote, sReplaceSubjPrefix;
 static int sWrapCol;
+static QStringList sReplySubjPrefixes;
 
 QString KMMessage::sForwardStr = "";
 int KMMessage::sHdrStyle = KMReaderWin::HdrFancy;
@@ -747,9 +748,30 @@ KMMessage* KMMessage::createReply(bool replyToAll)
 
   msg->setBody(asQuotedString(replyStr, sIndentPrefixStr));
 
-  if (strnicmp(subject(), "Re:", 3)!=0)
+  QStringList::Iterator it;
+  bool recognized = false;
+  for (it = sReplySubjPrefixes.begin(); !recognized && (it != sReplySubjPrefixes.end()); ++it)
+  {
+    QString prefix = subject().left((*it).length());
+    if (prefix.lower() == (*it).lower()) //recognized
+    {
+      if (!sReplaceSubjPrefix || (prefix == "Re:"))
+        msg->setSubject(subject());
+      else
+      {
+        //replace recognized prefix with "Re: "
+        //handle crappy subjects Re:  blah blah (note double space)
+        int subjStart = (*it).length();
+        while (subject()[subjStart].isSpace()) //strip only from beginning
+          subjStart++;
+        msg->setSubject("Re: " + subject().mid(subjStart,
+                                   subject().length() - subjStart));
+      }
+      recognized = true;
+    }
+  }
+  if (!recognized)
     msg->setSubject("Re: " + subject());
-  else msg->setSubject(subject());
 #if defined CHARSETS
   printf("Setting reply charset: %s\n",(const char *)charset());
   msg->setCharset(charset());
@@ -1849,6 +1871,10 @@ void KMMessage::readConfig(void)
   sReplyAllStr = config->readEntry("phrase-reply-all",i18n("On %D, %F wrote:"));
   sForwardStr = config->readEntry("phrase-forward",i18n("Forwarded Message"));
   sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
+  sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
+  if (sReplySubjPrefixes.count() == 0)
+    sReplySubjPrefixes.append("Re:");
+  sReplaceSubjPrefix = config->readBoolEntry("replace-prefix", true);
 
   config->setGroup("Reader");
   sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);
