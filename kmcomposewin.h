@@ -75,7 +75,6 @@ public slots:
   void attachFile();
   void sendNow();
   void sendLater();
-  void slotEncodingChanged();
 
 private slots:
   void undoEvent();
@@ -119,11 +118,10 @@ public:
   KMComposeWin(QWidget *parent = 0, const char *name = 0, 
 	       QString emailAddress=0, KMMessage *message=0, int action = 0);
   virtual void show();
-  
+  QString encoding;
+  friend class KMComposeView;  
 protected:
   virtual void closeEvent(QCloseEvent *);
-  friend class KMComposeView;
-
 private slots:
   void abort();
   void about();
@@ -133,7 +131,7 @@ private slots:
   void doNewMailReader();
   void toggleToolBar();
   void send();
-
+  void slotEncodingChanged();
 private:
   void setupMenuBar();
   void setupToolBar();
@@ -144,9 +142,8 @@ private:
   KStatusBar *statusBar;
   KMComposeView *composeView;
   bool toolBarStatus, sigStatus, sendButton;
-  QWidget *setWidget;
-  QRadioButton *isLater;
-  QRadioButton *manualSig;
+  QPopupMenu *menu;
+
 };
 #endif
 

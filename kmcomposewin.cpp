@@ -309,7 +309,7 @@ KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, QString s)
   QString str;
   char buf[255];
 
-  p->setCteStr("BASE64");
+  p->setCteStr(((KMComposeWin*)parentWidget())->encoding);
   if(!file->open(IO_ReadOnly))
     {KMsgBox::message(0,"Error","Can't open attachment file");
     p=0;
@@ -603,10 +603,18 @@ void KMComposeView::newComposer()
 
 }
 
-void KMComposeView::slotEncodingChanged()
+void KMComposeWin::slotEncodingChanged()
 {
   // This slot is called if the Encoding in the menuBar was changed
-  toDo();
+  if(menu->isItemChecked(menu->idAt(0)))
+    {menu->setItemChecked(menu->idAt(0),FALSE);
+    menu->setItemChecked(menu->idAt(1),TRUE);
+    encoding="Quoted Printable";}
+  else
+    {menu->setItemChecked(menu->idAt(0),TRUE);
+    menu->setItemChecked(menu->idAt(1),FALSE);
+    encoding="BASE64";}
+    
 }
 
 void KMComposeView::resizeEvent(QResizeEvent *)
@@ -632,7 +640,10 @@ KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress,
 
   if(toolBarStatus==false)
     enableToolBar(KToolBar::Hide);	
-	
+  if(encoding.find("BASE64",0,0) > -1)	
+    menu->setItemChecked(menu->idAt(0),TRUE);
+  else
+      menu->setItemChecked(menu->idAt(1),TRUE);
   resize(480, 510);
 }
 
@@ -670,6 +681,11 @@ void KMComposeWin::parseConfiguration()
     sendButton = false;
   else
     sendButton = true;
+
+
+  encoding = config->readEntry("Encoding");
+  if(encoding.isEmpty())
+    encoding="BASE64";
 }	
 
 
@@ -736,14 +752,13 @@ void KMComposeWin::setupMenuBar()
   amenu->insertItem(nls->translate("Si&gnature"),composeView,
 		    SLOT(appendSignature()),ALT+Key_G);
 
-  mmenu = new QPopupMenu();
-  mmenu->setCheckable(TRUE);
-  mmenu->insertItem(nls->translate("Base 64"),composeView,
+  menu = new QPopupMenu();
+  menu->setCheckable(TRUE);
+  menu->insertItem(nls->translate("Base 64"),this,
 		    SLOT(slotEncodingChanged()));
-  mmenu->insertItem(nls->translate("Quoted Printable"),composeView,
+  menu->insertItem(nls->translate("Quoted Printable"),this,
 		    SLOT(slotEncodingChanged()));
-  mmenu->setItemChecked(mmenu->idAt(0),TRUE);
-  amenu->insertItem(nls->translate("Encoding"),mmenu);
+  amenu->insertItem(nls->translate("Encoding"),menu);
   menuBar->insertItem(nls->translate("Attach"),amenu);
 
   QPopupMenu *omenu = new QPopupMenu();
@@ -889,8 +904,8 @@ void KMComposeWin::closeEvent(QCloseEvent *e)
   KConfig *config = new KConfig();
   config = KApplication::getKApplication()->getConfig();
   config->setGroup("Settings");
-  fflush(stdout);
   config->writeEntry("ShowToolBar", toolBarStatus ? "yes" : "no");
+  config->writeEntry("Encoding",encoding);
   config->sync();
   delete this;
 }

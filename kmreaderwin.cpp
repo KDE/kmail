@@ -24,8 +24,8 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
        	qApp->quit();}
 
  picsDir.append(kdeDir);
- //picsDir +="/share/apps/kmail/pics"; // not yet!
- picsDir +="/lib/pics/"; 
+ picsDir +="/share/apps/kmail/pics"; 
+ // picsDir +="/lib/pics/"; 
 
  currentFolder = new KMFolder();
  currentFolder = f;
@@ -234,6 +234,8 @@ QString KMReaderView::decodeString(const char* data, QString type)
     return dwstr.c_str();
 }
 
+//---------------------------------------------------------------------------
+// This function is my nightmare!
 
 QString KMReaderView::scanURL(QString text)
 {
@@ -275,12 +277,10 @@ QString KMReaderView::parseEAddress(QString old)
 
 void KMReaderView::replyMessage()
 {
-	printf("Entering reply\n");
 	KMComposeWin *c = new KMComposeWin(NULL,NULL,NULL,
 					   currentMessage,REPLY);
 	c->show();
 	c->resize(c->size());
-	printf("Leaving reply()\n");
 }
 
 void KMReaderView::replyAll()
@@ -289,7 +289,6 @@ void KMReaderView::replyAll()
 					   currentMessage,REPLYALL);
         c->show();
         c->resize(c->size());
-        printf("Leaving replyAll()\n");
 
 }
 void KMReaderView::forwardMessage()
@@ -323,11 +322,11 @@ void KMReaderView::previousMessage()
 
 void KMReaderView::deleteMessage()
 {
-	printf("Message %i will be deleted\n",currentIndex);
+  /*	printf("Message %i will be deleted\n",currentIndex);
 	currentMessage->del();
 	currentIndex--;
 	currentFolder->expunge();
-	nextMessage();
+	nextMessage();*/
 }
 
 void KMReaderView::saveMail()
