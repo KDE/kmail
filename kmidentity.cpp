@@ -15,6 +15,7 @@
 #include <klocale.h>
 #include <ktempfile.h>
 #include <kmessagebox.h>
+#include <kprocess.h>
 
 
 //-----------------------------------------------------------------------------
@@ -244,13 +245,16 @@ QString KMIdentity::signature(void) const
     tmpf.close();
 
     sigcmd = mSignatureFile.left(mSignatureFile.length()-1);
-    sigcmd += " >";
+    sigcmd += " > ";
     sigcmd += tmpf.name();
-    rc = system(sigcmd.local8Bit());
+    KShellProcess proc;
+    proc << sigcmd;
+    proc.start(KProcess::Block);
+    rc = (proc.normalExit()) ? proc.exitStatus() : -1;
 
     if (rc != 0)
     {
-      QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd).arg(strerror(errno));
+      QString wmsg = i18n("Failed to execute signature script\n%1:\n%2").arg(sigcmd).arg(strerror(rc));
       KMessageBox::information(0, wmsg);
       return QString::null;
     }
