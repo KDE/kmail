@@ -123,49 +123,22 @@ void lockOrDie() {
   const QString oldAppName = config.readEntry( "appName", appName );
   const QString oldProgramName = config.readEntry( "programName", programName );
   const QString hostName = getMyHostName();
-  bool first_instance = false;
-  if ( oldPid == -1 )
-      first_instance = true;
-  // check if the lock file is stale by trying to see if
-  // the other pid is currently running.
-  // Not 100% correct but better safe than sorry
-  else if (hostName == oldHostName && oldPid != getpid()) {
-      if ( kill(oldPid, 0) == -1 )
-          first_instance = ( errno == ESRCH );
-  }
 
-  if ( !first_instance ) {
+  if ( oldPid != -1 && oldHostName != hostName ) {
+    // KUniqueApplication will take care of the case oldHostName == hostName
     QString msg;
-    if ( oldHostName == hostName ) {
-      if ( oldAppName == appName )
-        msg = i18n("%1 already seems to be running. Running %2 more than once "
-                   "can cause the loss of mail. You should not start %1 "
-                   "unless you are sure that it is not already running.")
-              .arg( programName, programName );
-              // QString::arg( st ) only replaces the first occurrence of %1
-              // with st while QString::arg( s1, s2 ) replacess all occurrences
-              // of %1 with s1 and all occurrences of %2 with s2. So don't
-              // even think about changing the above to .arg( programName ).
-      else
-        msg = i18n("%1 seems to be running. Running %1 and %2 at the same "
-                   "time can cause the loss of mail. You should not start %2 "
-                   "unless you are sure that %1 is not running.")
-              .arg( oldProgramName, programName );
-    }
-    else {
-      if ( oldAppName == appName )
-        msg = i18n("%1 already seems to be running on %2. Running %1 more "
-                   "than once can cause the loss of mail. You should not "
-                   "start %1 on this computer unless you are sure that it is "
-                   "not already running on %2.")
-              .arg( programName, oldHostName );
-      else
-        msg = i18n("%1 seems to be running on %3. Running %1 and %2 at the "
-                   "same time can cause the loss of mail. You should not "
-                   "start %2 on this computer unless you are sure that %1 is "
-                   "not running on %3.")
-              .arg( oldProgramName, programName, oldHostName );
-    }
+    if ( oldAppName == appName )
+      msg = i18n("%1 already seems to be running on %2. Running %1 more "
+                 "than once can cause the loss of mail. You should not "
+                 "start %1 on this computer unless you are sure that it is "
+                 "not already running on %2.")
+            .arg( programName, oldHostName );
+    else
+      msg = i18n("%1 seems to be running on %3. Running %1 and %2 at the "
+                 "same time can cause the loss of mail. You should not "
+                 "start %2 on this computer unless you are sure that %1 is "
+                 "not running on %3.")
+            .arg( oldProgramName, programName, oldHostName );
 
     KCursorSaver idle( KBusyPtr::idle() );
     if ( KMessageBox::No ==
