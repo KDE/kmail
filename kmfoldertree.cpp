@@ -965,9 +965,7 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 //-----------------------------------------------------------------------------
 void KMFolderTree::cleanupConfigFile()
 {
-  KConfig* appConfig = kapp->config();
-  appConfig->sync();
-  KSimpleConfig config(locateLocal("config","kmailrc"));
+  KConfig* config = kapp->config();
   QStringList existingFolders;
   QListViewItemIterator fldIt(this);
   QMap<QString,bool> folderMap;
@@ -978,7 +976,7 @@ void KMFolderTree::cleanupConfigFile()
     if (fti && fti->folder)
       folderMap.insert(fti->folder->idString(), fti->isExpandable());
   }
-  QStringList groupList = config.groupList();
+  QStringList groupList = config->groupList();
   QString name, wholeName;
   int pos;
   bool original;
@@ -997,14 +995,12 @@ void KMFolderTree::cleanupConfigFile()
         name.remove(((pos = name.findRev("/.")) == -1) ? 0 : (pos+1), 1);
         original = FALSE;
       } else {
-        config.deleteGroup(*grpIt, TRUE);
+        config->deleteGroup(*grpIt, TRUE);
 kdDebug(5006) << "Deleting information about folder " << wholeName << endl;
         break;
       }
     }
   }
-  config.sync();
-  appConfig->reparseConfiguration();
 }
 
 
