@@ -1857,7 +1857,7 @@ void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
   if (str[str.length()-1] != ':') str += ": ";
   else str += ' ';
   str += aValue;
-  if (!aValue[aValue.length()-1] != '\n') str += '\n';
+  if (str[str.length()-1] != '\n') str += '\n';
 
   field = new DwField(str, mMsg);
   field->Parse();
