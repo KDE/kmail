@@ -28,12 +28,14 @@
 
 #include "accountcombobox.h"
 #include "kmkernel.h"
+#include "kmfolder.h"
+#include "kmfolderdir.h"
 #include "kmacctmgr.h"
 
 using namespace KMail;
 
-AccountComboBox::AccountComboBox( QWidget* parent, const char* name )
-  : QComboBox( parent, name )
+AccountComboBox::AccountComboBox( bool needsInbox, QWidget* parent, const char* name )
+  : QComboBox( parent, name ), mNeedsInbox( needsInbox )
 {
   // Currently there's no auto-refresh of the account list,
   // since this combo is only used within the configuration dialog itself
@@ -48,7 +50,11 @@ void AccountComboBox::slotRefreshAccounts()
   // until clicking OK or Apply. This would make this class much more complex
   // (this would have to be different depending on whether this combo is in the
   // configuration dialog or not...)
-  QStringList accountNames = kmkernel->acctMgr()->getAccounts();
+  QStringList accountNames;
+  QValueList<KMAccount *> lst = applicableAccounts();
+  QValueList<KMAccount *>::ConstIterator it = lst.begin();
+  for ( ; it != lst.end() ; ++it )
+    accountNames.append( (*it)->name() );
   insertStringList( accountNames );
 }
 
@@ -68,12 +74,36 @@ void AccountComboBox::setCurrentAccount( KMAccount* account )
 KMAccount* AccountComboBox::currentAccount() const
 {
   int i = 0;
-  KMAccount *a = kmkernel->acctMgr()->first();
-  while ( a && i < currentItem() ) {
-    a = kmkernel->acctMgr()->next();
+  QValueList<KMAccount *> lst = applicableAccounts();
+  QValueList<KMAccount *>::ConstIterator it = lst.begin();
+  while ( it != lst.end() && i < currentItem() ) {
+    ++it;
     ++i;
   }
-  return a;
+  return *it;
+}
+
+QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
+{
+  QValueList<KMAccount *> lst;
+  for( KMAccount *a = kmkernel->acctMgr()->first(); a;
+       a = kmkernel->acctMgr()->next() ) {
+    if ( a && a->folder() ) {
+      bool ok = false;
+      if ( mNeedsInbox ) {
+        KMFolderNode *node;
+        for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
+          if (!node->isDir() && node->name() == "INBOX") {
+            ok = true;
+            break;
+          }
+      } else
+        ok = true;
+      if ( ok )
+        lst.append( a );
+    }
+  }
+  return lst;
 }
 
 #include "accountcombobox.moc"

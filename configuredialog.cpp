@@ -4075,7 +4075,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   // Second possibility in the widgetstack: a combo showing the list of accounts
   // This is used with the kolab xml storage since the groupware folders
   // are always under the inbox.
-  mAccountCombo = new KMail::AccountComboBox( mBox );
+  mAccountCombo = new KMail::AccountComboBox( true /*needs inbox*/, mBox );
   mFolderComboStack->addWidget( mAccountCombo, 1 );
   QToolTip::add( mAccountCombo, toolTip );
   QWhatsThis::add( mAccountCombo, whatsThis );
