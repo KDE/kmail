@@ -35,7 +35,8 @@ namespace KMail {
         isEncrypted( false ),
         isDecryptable( false ),
         technicalProblem( false ),
-        isEncapsulatedRfc822Message( false ) {}
+        isEncapsulatedRfc822Message( false ),
+        isWrongKeyUsage( false ) {}
     bool isSigned;
     bool isGoodSignature;
     CryptPlugWrapper::SigStatusFlags sigStatusFlags;
@@ -53,6 +54,7 @@ namespace KMail {
     QString decryptionError;
     bool technicalProblem;
     bool isEncapsulatedRfc822Message;
+    bool isWrongKeyUsage;
   };
 
 } // namespace KMail
