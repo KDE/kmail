@@ -74,6 +74,13 @@ void KBusyPtr :: idle (void)
 
 
 //-----------------------------------------------------------------------------
+bool KBusyPtr :: isBusy (void)
+{
+  return (busyLevel != 0);
+}
+
+
+//-----------------------------------------------------------------------------
 void KBusyPtr :: timerEvent (void)
 {
   if (busyLevel <= 0) return;

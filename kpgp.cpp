@@ -1,5 +1,7 @@
 #include "kpgp.moc"
 #include "kpgpbase.h"
+#include "kmkernel.h"
+#include "kbusyptr.h"
 
 #include <stdio.h>
 #include <time.h>
@@ -301,11 +303,14 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     }
     if(persons.isEmpty())
     {
+      int n = 0;
+      while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
       int ret = KMessageBox::warningContinueCancel(0,
 			       i18n("Could not find the public keys for the\n"
 				    "recipients of this mail.\n"
 				    "Message will not be encrypted."),
                                i18n("PGP Warning"), i18n("C&ontinue"));
+      for (int j = 0; j < n; j++) kernel->kbp()->busy();
       if(ret == KMessageBox::Cancel) return false;
     }
     else if(!noKeyFor.isEmpty())
@@ -325,9 +330,12 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
       else
 	aStr += i18n("This person will not be able to decrypt the message\n");
 
+      int n = 0;
+      while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
       int ret = KMessageBox::warningContinueCancel(0, aStr, 
                                i18n("PGP Warning"), 
 			       i18n("C&ontinue"));
+      for (int j = 0; j < n; j++) kernel->kbp()->busy();
       if(ret == KMessageBox::Cancel) return false;
     }
   }
@@ -338,6 +346,8 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   while(status & KpgpBase::BADPHRASE)
   {
     havePassPhrase = false;
+    int n = 0;
+    while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
     ret = KMessageBox::warningYesNoCancel(0,
 				   i18n("You just entered an invalid passphrase.\n"
 					"Do you wan't to try again, continue and\n"
@@ -345,6 +355,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 					"or cancel sending the message?"),
                                    i18n("PGP Warning"),
 				   i18n("&Retry"), i18n("Send &unsigned"));
+    for (int j = 0; j < n; j++) kernel->kbp()->busy();
     if(ret == KMessageBox::Cancel) return false;
     if(ret == KMessageBox::No) sign = false;
     // ok let's try once again...
@@ -357,8 +368,11 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     aStr += "\n";
     aStr += i18n("Do you wan't to encrypt anyway, leave the\n"
 		 "message as is, or cancel the message?");
+    int n = 0;
+    while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
     ret = KMessageBox::warningYesNoCancel(0,aStr, i18n("PGP Warning"),
                            i18n("&Encrypt"), i18n("&Send unecrypted"));
+    for (int j = 0; j < n; j++) kernel->kbp()->busy();
     if(ret == KMessageBox::Cancel) return false;
     if(ret == KMessageBox::No)
     {
@@ -373,8 +387,11 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     aStr += "\n";
     aStr += i18n("Do you want to leave the message as is,\n"
 		 "or cancel the message?");
+    int n = 0;
+    while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
     ret = KMessageBox::warningContinueCancel(0,aStr, i18n("PGP Warning"),
 				   i18n("&Send as is"));
+    for (int j = 0; j < n; j++) kernel->kbp()->busy();
     if(ret == KMessageBox::Cancel) return false;
     pgp->clearOutput();
     return true;
@@ -631,7 +648,11 @@ Kpgp::getConfig()
 const QString
 Kpgp::askForPass(QWidget *parent)
 {
-  return KpgpPass::getPassphrase(parent);
+  int n = 0;
+  while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
+  QString result = KpgpPass::getPassphrase(parent);
+  for (int j = 0; j < n; j++) kernel->kbp()->busy();
+  return result;
 }
 
 // --------------------- private functions -------------------
@@ -755,7 +776,11 @@ Kpgp::SelectPublicKey(QStrList pbkeys, const char *caption)
   KpgpSelDlg dlg(pbkeys,caption);
   QString txt ="";
 
-  if (dlg.exec()==QDialog::Rejected) return 0;
+  int n = 0;
+  while (kernel->kbp()->isBusy()) { n++; kernel->kbp()->idle(); }
+  bool rej = dlg.exec() == QDialog::Rejected;
+  for (int j = 0; j < n; j++) kernel->kbp()->busy();
+  if (rej)  return 0;
   txt = dlg.key();
   if (!txt.isEmpty())
   {

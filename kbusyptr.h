@@ -25,6 +25,9 @@ public:
   /** Hide busy pointer if the "busy level" is reduced to zero. */
   virtual void idle(void);
 
+  /** Returns true if the "busy level" is non zero. */
+  virtual bool isBusy(void);
+
   /** Stop pointer animation. This is necessary for some system calls. */
   virtual void stopAnimation(void);
 
