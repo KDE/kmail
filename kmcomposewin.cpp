@@ -33,6 +33,7 @@
 #include <kstdaccel.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
+#include <kmimetype.h>
 #include <kdebug.h>
 
 #include "kmmainwin.h"
@@ -1424,6 +1425,8 @@ void KMComposeWin::addAttach(const KURL aUrl)
   ld.url = aUrl;
   ld.data = QByteArray();
   ld.insert = false;
+  ld.mimeType = KMimeType::findByURL(aUrl, 0, aUrl.isLocalFile())
+    ->name().latin1();
   mapAtmLoadData.insert(job, ld);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotAttachFileResult(KIO::Job *)));
@@ -1683,7 +1686,10 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setName(name);
   msgPart->setCteStr("base64");
   msgPart->setBodyEncodedBinary((*it).data);
-  msgPart->magicSetType();
+  int slash = (*it).mimeType.find("/");
+  if (slash == -1) slash = (*it).mimeType.length();
+  msgPart->setTypeStr((*it).mimeType.left(slash));
+  msgPart->setSubtypeStr((*it).mimeType.mid(slash+1));
   msgPart->setContentDisposition(QCString("attachment; filename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
