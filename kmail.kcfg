@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE kcfg SYSTEM "http://www.kde.org/standards/kcfg/1.0/kcfg.dtd">
 <kcfg>
+    <kcfgfile name="kmailrc"/>
     <group name="Behaviour">
     <entry name="DelayedMarkAsRead"  type="Bool">
         <label> </label>
@@ -18,13 +19,13 @@
         <default>false</default>
     </entry>
     <entry name="LoopOnGotoUnread"  type="Enum">
-      <choices>
-        <choice name="DontLoop"/>
-        <choice name="LoopInCurrentFolder"/>
-        <choice name="LoopInAllFolders"/>
-      </choices>
         <label> </label>
         <whatsthis> </whatsthis>
+        <choices>
+            <choice name="DontLoop"/>
+            <choice name="LoopInCurrentFolder"/>
+            <choice name="LoopInAllFolders"/>
+        </choices>
         <default>DontLoop</default>
     </entry>
     <entry name="ShowPopupAfterDnD"  type="Bool">
@@ -33,5 +34,4 @@
         <default>true</default>
     </entry>
     </group>
-
 </kcfg>
