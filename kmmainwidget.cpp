@@ -411,6 +411,7 @@ void KMMainWidget::createWidgets(void)
   headerParent->dumpObjectTree();
 #endif
   mHeaders = new KMHeaders(this, headerParent, "headers");
+  mHeaders->setFullWidth(true);
   connect(mHeaders, SIGNAL(selected(KMMessage*)),
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
