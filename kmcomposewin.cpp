@@ -476,7 +476,7 @@ void KMComposeWin::readConfig(void)
                 << previousFcc <<  endl;
   }
 
-  mFcc->setFolder( previousFcc );
+  setFcc( previousFcc );
 }
 
 //-----------------------------------------------------------------------------
@@ -1179,7 +1179,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   }
 
   if (!mBtnFcc->isChecked() && !mMsg->fcc().isEmpty())
-    mFcc->setFolder(mMsg->fcc());
+    setFcc(mMsg->fcc());
 
   num = mMsg->numBodyParts();
 
@@ -1253,6 +1253,26 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
 
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::setFcc( const QString &idString )
+{
+  // check if the sent-mail folder still exists
+  KMFolder *folder = kernel->folderMgr()->findIdString( idString );
+  if ( !folder )
+    folder = kernel->imapFolderMgr()->findIdString( idString );
+  if ( folder )
+    mFcc->setFolder( idString );
+  else
+  {
+    KMessageBox::sorry( this,
+                        i18n("The sent-mail folder of the current identity "
+                             "doesn't exist. Therefore the default sent-mail "
+                             "folder will be used.") );    
+    mFcc->setFolder( kernel->sentFolder() );
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 bool KMComposeWin::queryClose ()
 {
   int rc;
@@ -1317,6 +1337,7 @@ bool KMComposeWin::applyChanges(void)
             << id.fcc() << "?" << endl;
 
   KMFolder *f = mFcc->getFolder();
+  assert( f != 0 );
   if ( f->idString() == id.fcc() )
     mMsg->removeHeaderField("X-KMail-Fcc");
   else
@@ -3862,7 +3883,7 @@ void KMComposeWin::slotIdentityChanged(const QString & identStr)
     if ( ident.fcc().isEmpty() )
       mFcc->setFolder( kernel->sentFolder() );
     else
-      mFcc->setFolder( ident.fcc() );
+      setFcc( ident.fcc() );
   }
 
   QString edtText = mEditor->text();

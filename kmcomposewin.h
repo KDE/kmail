@@ -467,6 +467,13 @@ protected:
     QString replyTo(void) const { return mEdtReplyTo->text(); }
 
   /**
+   * Use the given folder as sent-mail folder if the given folder exists.
+   * Else show an error message and use the default sent-mail folder as
+   * sent-mail folder.
+   */
+  void setFcc( const QString &idString );
+
+  /**
    * Ask for confirmation if the message was changed before close.
    */
   virtual bool queryClose ();
