@@ -33,21 +33,21 @@ KMAcctSelDlg::KMAcctSelDlg( QWidget *parent, const char *name, bool modal )
 {
   QFrame *page = makeMainWidget();
   QVBoxLayout *topLayout = new QVBoxLayout( page, 0, spacingHint() );
-  
+
   QButtonGroup *group = new QButtonGroup( i18n("Account Type"), page );
   connect(group, SIGNAL(clicked(int)), SLOT(buttonClicked(int)) );
 
   topLayout->addWidget( group, 10 );
   QVBoxLayout *vlay = new QVBoxLayout( group, spacingHint()*2, spacingHint() );
   vlay->addSpacing( fontMetrics().lineSpacing() );
-  
+
   QRadioButton *radioButton1 = new QRadioButton( i18n("&Local mailbox"), group );
   vlay->addWidget( radioButton1 );
   QRadioButton *radioButton2 = new QRadioButton( i18n("&POP3"), group );
   vlay->addWidget( radioButton2 );
   QRadioButton *radioButton3 = new QRadioButton( i18n("&IMAP"), group );
   vlay->addWidget( radioButton3 );
-  QRadioButton *radioButton4 = new QRadioButton( i18n("&Disconnected IMAP"), group );
+  QRadioButton *radioButton4 = new QRadioButton( i18n( "%1 = Disconnected IMAP", "%1 (experimental)" ).arg( i18n("&Disconnected IMAP") ), group );
   vlay->addWidget( radioButton4 );
   QRadioButton *radioButton5 = new QRadioButton( i18n("&Maildir mailbox"), group );
   vlay->addWidget( radioButton5 );
@@ -65,9 +65,9 @@ void KMAcctSelDlg::buttonClicked( int id )
 }
 
 
-int KMAcctSelDlg::selected( void ) const 
-{ 
-  return mSelectedButton; 
+int KMAcctSelDlg::selected( void ) const
+{
+  return mSelectedButton;
 }
 
 
