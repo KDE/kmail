@@ -44,6 +44,7 @@
 #include <kaddrbook.h>
 #include <kpushbutton.h>
 #include <kdebug.h>
+#include <klocale.h>
 
 #include <qlayout.h>
 #include <qlabel.h>
@@ -70,7 +71,7 @@ static const struct {
 } standardPermissions[] = {
   { 0, I18N_NOOP2( "Permissions", "None" ) },
   { ACLJobs::List | ACLJobs::Read, I18N_NOOP2( "Permissions", "Read" ) },
-  { ACLJobs::List | ACLJobs::Read | ACLJobs::Insert, I18N_NOOP2( "Permissions", "Append" ) },
+  { ACLJobs::List | ACLJobs::Read | ACLJobs::Insert | ACLJobs::Post, I18N_NOOP2( "Permissions", "Append" ) },
   { ACLJobs::AllWrite, I18N_NOOP2( "Permissions", "Write" ) },
   { ACLJobs::All, I18N_NOOP2( "Permissions", "All" ) }
 };
@@ -312,6 +313,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   mStack->addWidget( mLabel );
 
   mACLWidget = new QHBox( mStack );
+  mACLWidget->setSpacing( KDialog::spacingHint() );
   mListView = new KListView( mACLWidget );
   mListView->setAllColumnsShowFocus( true );
   mStack->addWidget( mACLWidget );
@@ -326,6 +328,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
 	   SLOT(slotSelectionChanged(QListViewItem*)) );
 
   QVBox* buttonBox = new QVBox( mACLWidget );
+  buttonBox->setSpacing( KDialog::spacingHint() );
   mAddACL = new KPushButton( i18n( "Add Entry" ), buttonBox );
   mEditACL = new KPushButton( i18n( "Modify Entry" ), buttonBox );
   mRemoveACL = new KPushButton( i18n( "Remove Entry" ), buttonBox );
@@ -421,6 +424,9 @@ void KMail::FolderDiaACLTab::load()
     mLabel->setText( i18n( "Error: no IMAP account defined for this folder" ) );
     return;
   }
+  KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
+  if ( folder && folder->storage() == mImapAccount->rootFolder() )
+    return; // nothing to be done for the (virtual) account folder
   mLabel->setText( i18n( "Connecting to server %1, please wait..." ).arg( mImapAccount->host() ) );
   ImapAccountBase::ConnectionState state = mImapAccount->makeConnection();
   if ( state == ImapAccountBase::Error ) { // Cancelled by user, or slave can't start
@@ -449,7 +455,8 @@ void KMail::FolderDiaACLTab::slotConnectionResult( int errorCode, const QString&
   if ( mUserRights == 0 ) {
     connect( mImapAccount, SIGNAL( receivedUserRights( KMFolder* ) ),
              this, SLOT( slotReceivedUserRights( KMFolder* ) ) );
-    mImapAccount->getUserRights( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
+    KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
+    mImapAccount->getUserRights( folder, mImapPath );
   }
   else
     startListing();
@@ -472,22 +479,27 @@ void KMail::FolderDiaACLTab::slotReceivedUserRights( KMFolder* folder )
 void KMail::FolderDiaACLTab::startListing()
 {
   // List ACLs of folder - or its parent, if creating a new folder
-  mImapAccount->getACL( 0, mImapPath );
+  mImapAccount->getACL( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder(), mImapPath );
   connect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
            this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 }
 
-void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder*, KIO::Job* job, const KMail::ACLList& aclList )
+void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& aclList )
 {
-  disconnect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
-              this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
+  if ( folder == ( mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) ) {
+    disconnect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
+                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 
-  if ( job && job->error() ) {
-    mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
-    return;
+    if ( job && job->error() ) {
+      if ( job->error() == KIO::ERR_UNSUPPORTED_ACTION )
+        mLabel->setText( i18n( "This IMAP server does not have support for access control lists (ACL)" ) );
+      else
+        mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
+      return;
+    }
+
+    loadFinished( aclList );
   }
-
-  loadFinished( aclList );
 }
 
 void KMail::FolderDiaACLTab::loadListView( const ACLList& aclList )
@@ -517,6 +529,13 @@ void KMail::FolderDiaACLTab::slotEditACL(QListViewItem* item)
 {
   if ( !item ) return;
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
+  // Same logic as in slotSelectionChanged, but this is also needed for double-click IIRC
+  if ( canAdmin && mImapAccount && item ) {
+    // Don't allow users to remove their own admin permissions - there's no way back
+    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
+    if ( mImapAccount->login() == ACLitem->userId() && ACLitem->permissions() == ACLJobs::All )
+      canAdmin = false;
+  }
   if ( !canAdmin ) return;
 
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
@@ -565,10 +584,18 @@ void KMail::FolderDiaACLTab::slotAddACL()
 void KMail::FolderDiaACLTab::slotSelectionChanged(QListViewItem* item)
 {
   bool canAdmin = ( mUserRights & ACLJobs::Administer );
+  bool canAdminThisItem = canAdmin;
+  if ( canAdmin && mImapAccount && item ) {
+    // Don't allow users to remove their own admin permissions - there's no way back
+    ListViewItem* ACLitem = static_cast<ListViewItem *>( item );
+    if ( mImapAccount->login() == ACLitem->userId() && ACLitem->permissions() == ACLJobs::All )
+      canAdminThisItem = false;
+  }
+
   bool lvVisible = mStack->visibleWidget() == mACLWidget;
   mAddACL->setEnabled( lvVisible && canAdmin && !mSaving );
-  mEditACL->setEnabled( item && lvVisible && canAdmin && !mSaving );
-  mRemoveACL->setEnabled( item && lvVisible && canAdmin && !mSaving );
+  mEditACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
+  mRemoveACL->setEnabled( item && lvVisible && canAdminThisItem && !mSaving );
 }
 
 void KMail::FolderDiaACLTab::slotRemoveACL()
@@ -676,11 +703,18 @@ bool KMail::FolderDiaACLTab::save()
 
 void KMail::FolderDiaACLTab::slotDirectoryListingFinished(KMFolderImap* f)
 {
-  if ( f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) )
+  if ( !f ||
+       f != static_cast<KMFolderImap*>( mDlg->parentFolder()->storage() ) ||
+       !mDlg->folder() ||
+       !mDlg->folder()->storage() ) {
+    emit readyForAccept();
     return;
+  }
 
   // When creating a new folder with online imap, update mImapPath
   KMFolderImap* folderImap = static_cast<KMFolderImap*>( mDlg->folder()->storage() );
+  if ( !folderImap || folderImap->imapPath().isEmpty() )
+    return;
   mImapPath = folderImap->imapPath();
 
   KIO::Job* job = ACLJobs::multiSetACL( mImapAccount->slave(), imapURL(), mACLList );
