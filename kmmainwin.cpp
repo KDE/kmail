@@ -653,6 +653,8 @@ void KMMainWin::slotAddFolder()
       qlvi->setOpen(TRUE);
       mFolderTree->setCurrentItem( qlvi );
     }
+    if ( mFolder->needsRepainting() ) 
+      mFolderTree->delayedUpdate();
   }
   delete d;
 }
@@ -762,7 +764,8 @@ void KMMainWin::slotModifyFolder()
   if (!mFolder) return;
   d = new KMFolderDialog((KMFolder*)mFolder, mFolder->parent(),
 			 this, i18n("Properties of Folder %1").arg( mFolder->label() ) );
-  if (d->exec() && (mFolder->protocol() != "imap")) {
+  if (d->exec() && 
+      ((mFolder->protocol() != "imap") || mFolder->needsRepainting() ) ) {
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
     if (qlvi) {
@@ -770,6 +773,8 @@ void KMMainWin::slotModifyFolder()
       mFolderTree->setCurrentItem( qlvi );
       mHeaders->msgChanged();
     }
+    if ( mFolder->needsRepainting() ) 
+      mFolderTree->delayedUpdate();
   }
   delete d;
 }

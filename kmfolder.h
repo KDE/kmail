@@ -287,6 +287,25 @@ public:
   QString identity() const
   { return mIdentity; }
 
+  void setIconPaths(const QString &normal, const QString &unread)
+  { mNormalIconPath = normal; mUnreadIconPath = unread; iconsFromPath(); 
+    writeConfig(); mNeedsRepainting = true; }
+  QString normalIconPath() const 
+  { return mNormalIconPath; }
+  QString unreadIconPath() const
+  { return mUnreadIconPath; }
+  QPixmap* normalIcon() const 
+  { return mNormalIcon; }
+  QPixmap* unreadIcon() const
+  { return mUnreadIcon; }
+  
+  /** Tell the folder tree if repainting is required */
+  bool needsRepainting() const 
+  { return mNeedsRepainting; }
+  /** repaint has been scheduled so stop demanding it */
+  void repaintScheduled() 
+  { mNeedsRepainting = false; }
+
   /** Tell the folder that a header field that is usually used for
     the index (subject, from, ...) has changed of given message.
     This method is usually called from within KMMessage::setSubject/set... */
@@ -503,6 +522,9 @@ protected:
 
   /** Read the config file */
   virtual void readConfig();
+
+  /** tries to create icons from paths */
+  virtual void iconsFromPath();
   
   /** table of contents file */
   FILE* mIndexStream;
@@ -530,6 +552,13 @@ protected:
   QString mMailingListAdminAddress;
   QString mIdentity;
 
+  /** Custom pixmaps to display in the tree, none by default */
+  QPixmap *mNormalIcon;
+  QPixmap *mUnreadIcon;
+  QString mNormalIconPath;
+  QString mUnreadIconPath;
+  bool    mNeedsRepainting;
+  
   /** number of unread messages, -1 if not yet set */
   int mUnreadMsgs, mGuessedUnreadMsgs;
   bool mWriteConfigEnabled;

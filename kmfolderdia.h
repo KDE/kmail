@@ -14,6 +14,7 @@ class QGroupBox;
 class KMFolder;
 class KMFolderDir;
 class KIntNumInput;
+class KIconButton;
 template <typename T> class QGuardedPtr;
 
 /** Dialog for handling the properties of a mail folder
@@ -30,12 +31,19 @@ protected slots:
   virtual void slotOk( void );
   virtual void slotHoldsML( bool );
   virtual void slotExpireFolder( bool );
-
+  virtual void slotEmitFirstIconPath( QString );
+  virtual void slotEmitSecondIconPath( QString );
+  virtual void slotChangeFirstButtonIcon();
+  virtual void slotChangeSecondButtonIcon();
   /*
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities
    */
   void slotUpdateItems( int );
+
+signals:
+  void firstIconPathChanged( const QString& );
+  void secondIconPathChanged( const QString& );
 
 protected:
   QComboBox *fileInFolder;
@@ -43,7 +51,12 @@ protected:
   QLineEdit *nameEdit;
   KMAcctFolder* folder;
   KMFolder *mFolder;
-  KMFolderDir* mFolderDir;
+  KMFolderDir *mFolderDir;
+  KIconButton *mNormalIconButton;
+  KIconButton *mUnreadIconButton;
+  QLineEdit   *mLineEdit1;
+  QLineEdit   *mLineEdit2;
+  
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 
   QCheckBox *holdsMailingList, *markAnyMessage, *expireFolder;

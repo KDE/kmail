@@ -446,7 +446,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
           fti->setPixmap( 0, *pixTr );
         else
           fti->setPixmap( 0, *pixPlain );
-      } else fti->setPixmap( 0, *pixPlain );
+      } else fti->setPixmap( 0, (folder->normalIcon()) ? *(folder->normalIcon()) : (*pixPlain) );
 
       if (fti->folder && fti->folder->child())
 	addDirectory( fti->folder->child(), fti );
@@ -492,17 +492,21 @@ void KMFolderTree::delayedUpdate()
 	num.setNum(fti->folder->countUnread());
       extendedName = " (" + num + ")";
       if (!fti->folder->isSystemFolder())
-	fti->setPixmap( 0, *pixFull );
+	fti->setPixmap( 0, ((fti->folder->unreadIcon()) ? *(fti->folder->unreadIcon()) : (*pixFull)) );
     }
     else {
       extendedName = "";
       if (!fti->folder->isSystemFolder())
-	fti->setPixmap( 0, *pixPlain );
+	fti->setPixmap( 0, ((fti->folder->normalIcon()) ? *(fti->folder->normalIcon()) : (*pixPlain)) );
     }
 
     if (extendedName != fti->unread) {
       repaintRequired = true;
       fti->unread = extendedName;
+    }
+    if ( fti->folder->needsRepainting() ) {
+      repaintRequired = true;
+      fti->folder->repaintScheduled();
     }
 
     if (upd && repaintRequired)

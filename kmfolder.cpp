@@ -17,6 +17,7 @@
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kcursor.h>
+#include <kiconloader.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -109,12 +110,17 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   readExpireAge = 14;
   readExpireUnits = expireNever;
   mRDict = 0;
+  mNormalIcon = 0;
+  mUnreadIcon = 0;
+  mNeedsRepainting = false;
 }
 
 
 //-----------------------------------------------------------------------------
 KMFolder :: ~KMFolder()
 {
+  delete mNormalIcon;
+  delete mUnreadIcon;
   delete mAcctList;
   KMMsgDict::deleteRentry(mRDict);
 }
@@ -1220,6 +1226,36 @@ QString KMFolder::idString()
     relativePath = relativePath.right( relativePath.length() - 1 ) + "/";
   return relativePath + QString(name());
 }
+
+//---------------------------------------------------------------------------
+void KMFolder::iconsFromPath()
+{
+  KInstance *instance=KGlobal::instance();
+  KIconLoader *loader = instance->iconLoader();
+  QPixmap tmp1(loader->loadIcon(mNormalIconPath, KIcon::Small, 0, KIcon::DefaultState, 0L, true));
+  QPixmap tmp2(loader->loadIcon(mUnreadIconPath, KIcon::Small, 0, KIcon::DefaultState, 0L, true));
+  bool tmp1Valid, tmp2Valid;
+
+  tmp1Valid = !tmp1.isNull();
+  tmp2Valid = !tmp2.isNull();
+
+  if ( tmp1Valid || tmp2Valid) { //we have a valid pixmap  
+    // NOTE: can qpixmap constructors throw/fail?
+    if ( tmp1Valid ) { 
+      delete mNormalIcon;
+      mNormalIcon = new QPixmap(tmp1);
+    }
+    if ( tmp2Valid ) {
+      delete mUnreadIcon;
+      mUnreadIcon = new QPixmap(tmp2);
+    } else { //make this one,same as the other one custom one
+      delete mUnreadIcon;
+      mUnreadIconPath = mNormalIconPath;
+      mUnreadIcon = new QPixmap(tmp1);
+    }
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMFolder::readConfig()
 {
@@ -1234,6 +1270,10 @@ void KMFolder::readConfig()
   if ( mIdentity.isEmpty() ) // backward compatiblity
       mIdentity = config->readEntry("MailingListIdentity");
   mCompactable = config->readBoolEntry("Compactable", TRUE);
+
+  mNormalIconPath = config->readEntry("NormalIconPath");
+  mUnreadIconPath = config->readEntry("UnreadIconPath");
+  iconsFromPath();
 
   expireMessages = config->readBoolEntry("ExpireMessages", FALSE);
   readExpireAge = config->readNumEntry("ReadExpireAge", 3);
@@ -1259,6 +1299,8 @@ void KMFolder::writeConfig()
   config->writeEntry("ReadExpireUnits", readExpireUnits);
   config->writeEntry("UnreadExpireAge", unreadExpireAge);
   config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
+  config->writeEntry("NormalIconPath", mNormalIconPath);
+  config->writeEntry("UnreadIconPath", mUnreadIconPath);
 	config->writeEntry("WhoField", mUserWhoField);
 }
 

@@ -14,6 +14,8 @@
 #include <knuminput.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kicondialog.h>
+#include <kiconloader.h>
 
 #include "kmmainwin.h"
 #include "kmacctfolder.h"
@@ -67,6 +69,67 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   hl->addWidget( fileInFolder );
   label2->setBuddy( fileInFolder );
 
+  //start icons group
+  QString normalIcon = (folder ? folder->normalIconPath() : "");
+  QString unreadIcon = (folder ? folder->unreadIconPath() : "");
+  QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), page, "iconGroup" );
+  iconGroup->setColumnLayout( 0,  Qt::Vertical );
+
+  topLayout->addWidget( iconGroup );
+
+  QVBoxLayout *ivl = new QVBoxLayout( iconGroup->layout() );
+  ivl->setSpacing( 6 );
+
+  QHBoxLayout *ihl = new QHBoxLayout( ivl );
+  
+  QLabel *ilabel = new QLabel( i18n("Normal:"), iconGroup );
+  if ( !normalIcon.isEmpty() ) {
+    mLineEdit1 = new QLineEdit( KGlobal::iconLoader()->iconPath( normalIcon, 0 ) , iconGroup );
+  } else {
+    mLineEdit1 = new QLineEdit( i18n("[default]"), iconGroup );
+  }
+  ihl->addWidget( ilabel );
+  ihl->addWidget( mLineEdit1 );
+
+  mNormalIconButton = new KIconButton( iconGroup );
+  mNormalIconButton->setIconType( KIcon::NoGroup , KIcon::Any );
+  mNormalIconButton->setIconSize( 16 );
+  mNormalIconButton->setStrictIconSize( true );
+  mNormalIconButton->setFixedSize( 28, 28 );
+  if ( folder && folder->normalIcon() ) {
+    mNormalIconButton->setIcon ( folder->normalIconPath() );
+  }
+  ihl->addWidget( mNormalIconButton );
+
+  ihl = new QHBoxLayout( ivl );
+  QLabel *ilabel2 = new QLabel( i18n("Unread:"), iconGroup );
+  if ( !unreadIcon.isEmpty() ) {
+    mLineEdit2 = new QLineEdit( KGlobal::iconLoader()->iconPath( unreadIcon, 0 ) , iconGroup );
+  } else {
+    mLineEdit2 = new QLineEdit( i18n("[default]"), iconGroup );
+  }
+  ihl->addWidget( ilabel2 );
+  ihl->addWidget( mLineEdit2 );
+
+  mUnreadIconButton = new KIconButton( iconGroup );
+  mUnreadIconButton->setIconType( KIcon::NoGroup, KIcon::Any );
+  mUnreadIconButton->setIconSize( 16 );
+  mUnreadIconButton->setStrictIconSize( true );
+   mUnreadIconButton->setFixedSize( 28, 28 );
+  if ( folder && folder->unreadIcon() ) {
+    mUnreadIconButton->setIcon( folder->unreadIconPath() );
+  }
+  ihl->addWidget( mUnreadIconButton );
+  
+  connect( mLineEdit1, SIGNAL(returnPressed()), SLOT(slotChangeFirstButtonIcon()));
+  connect( mLineEdit2, SIGNAL(returnPressed()), SLOT(slotChangeSecondButtonIcon()));
+  connect( mNormalIconButton, SIGNAL(iconChanged(QString)), this, SLOT(slotEmitFirstIconPath(QString)) );
+  connect( mUnreadIconButton, SIGNAL(iconChanged(QString)), this, SLOT(slotEmitSecondIconPath(QString)) );
+  connect( this, SIGNAL(firstIconPathChanged(const QString&)), mLineEdit1, SLOT(setText(const QString&)) );
+  connect( this, SIGNAL(secondIconPathChanged(const QString&)), mLineEdit2, SLOT(setText(const QString&)) );
+
+  //end icons group
+  
   mtGroup = new QGroupBox( i18n("Folder Type"), page, "mtGroup" );
   mtGroup->setColumnLayout( 0,  Qt::Vertical );
 
@@ -338,6 +401,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   }
   else if (folder && folder->isSystemFolder()) {
     fpGroup->hide();
+    iconGroup->hide();
     mtGroup->hide();
     mlGroup->hide();
     idGroup->hide();
@@ -472,6 +536,11 @@ void KMFolderDialog::slotOk()
     folder->setReadExpireAge(readExpiryTime->value());
     folder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
     folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
+    //update the tree iff new icon paths are different and not empty
+    if ( (( mNormalIconButton->icon() != folder->normalIconPath() ) && ( !mNormalIconButton->icon().isEmpty())) || 
+	 (( mUnreadIconButton->icon() != folder->unreadIconPath() ) && ( !mUnreadIconButton->icon().isEmpty())) ) {
+      folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
+    } 
 
     // set whoField
     if (senderType->currentItem() == 1)
@@ -522,4 +591,30 @@ void KMFolderDialog::slotExpireFolder(bool expire)
     unreadExpiryTime->setEnabled(false);
     unreadExpiryUnits->setEnabled(false);
   }
+}
+
+//----------------------------------------------------
+void KMFolderDialog::slotEmitFirstIconPath( QString icon )
+{
+  QString path = KGlobal::iconLoader()->iconPath( icon, 0 );
+  emit firstIconPathChanged( (!path.isEmpty()) ? path : i18n("[default]") );
+}
+
+void KMFolderDialog::slotEmitSecondIconPath( QString icon )
+{
+
+  QString path = KGlobal::iconLoader()->iconPath( icon, 0);
+  emit secondIconPathChanged( (!path.isEmpty()) ? path : i18n("[default]") );
+}
+
+void KMFolderDialog::slotChangeFirstButtonIcon()
+{
+  QString text = mLineEdit1->text().stripWhiteSpace();
+  mNormalIconButton->setIcon( text );
+}
+
+void KMFolderDialog::slotChangeSecondButtonIcon()
+{
+  QString text = mLineEdit2->text().stripWhiteSpace();
+  mUnreadIconButton->setIcon( text );
 }
