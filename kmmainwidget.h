@@ -109,6 +109,17 @@ public:
   KActionMenu *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu, *mForwardActionMenu,
     *applyFilterActionsMenu;
+  KToggleAction *toggleThreadRepliedAction;
+  KToggleAction *toggleThreadForwardedAction;
+  KToggleAction *toggleThreadQueuedAction;
+  KToggleAction *toggleThreadSentAction;
+  KToggleAction *toggleThreadFlagAction;
+  KToggleAction *toggleRepliedAction;
+  KToggleAction *toggleForwardedAction;
+  KToggleAction *toggleQueuedAction;
+  KToggleAction *toggleSentAction;
+  KToggleAction *toggleFlagAction;
+  
   KToggleAction *watchThreadAction, *ignoreThreadAction;
   
   /** we need to access those KToggleActions from the foldertree-popup */
