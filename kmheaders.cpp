@@ -1124,7 +1124,7 @@ void KMHeaders::msgAdded(int id)
         msg->parent()->takeItem(msg);
       else
         takeItem(msg);
-      newParent->insertItem(msg); 
+      newParent->insertItem(msg);
       if (mSubjThreading) {
         // Check if this message was a potential parent for threading by
         // subject. If so, replace it in the dict, we are better.
@@ -1188,7 +1188,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   }
   mItems.resize( mItems.size() - 1 );
 
-  if (mNested != mNestedOverride) {
+  if (mNested != mNestedOverride && mFolder->count()) {
     if (mIdTree.isEmpty())
       buildIdTrees(mFolder->count());
     else {
@@ -2465,6 +2465,7 @@ void KMHeaders::folderCleared()
 
 void KMHeaders::buildIdTrees (int count)
 {
+    if (!count) return;
     CREATE_TIMER(buildIdTrees);
     START_TIMER(buildIdTrees);
 
@@ -2479,7 +2480,7 @@ void KMHeaders::buildIdTrees (int count)
         md5 = mFolder->getMsgBase(x)->msgIdMD5();
         if (!md5.isEmpty() && !mIdTree[md5])
             mIdTree.insert(md5, mItems[x]);
-    } 
+    }
     if (mSubjThreading) {
         for(int x = 0; x < count; x++) {
             QString subjMD5;
@@ -2514,6 +2515,11 @@ bool KMHeaders::writeSortOrder()
     }
   }
   if (mSortInfo.dirty) {
+    if (!mFolder->count()) {
+      // Folder is empty now, remove the sort file.
+      unlink(sortFile.local8Bit());
+      return TRUE;
+    }
     QString tempName = sortFile + ".temp";
     unlink(tempName.local8Bit());
     FILE *sortStream = fopen(tempName.local8Bit(), "w");
@@ -2954,7 +2960,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	// Build two dictionaries, one with all messages and their ids, and
 	// one with the md5 hashes of the subject stripped of prefixes such as
 	// Re: or similar.
-	QDict<KMSortCacheItem> msgs(mFolder->count() * 2);    
+	QDict<KMSortCacheItem> msgs(mFolder->count() * 2);
         QDict<KMSortCacheItem> msgSubjects(mFolder->count() * 2);
 	for(int x = 0; x < mFolder->count(); x++) {
 	    KMMsgBase *mi = mFolder->getMsgBase(x);
@@ -2973,7 +2979,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
                 // The first message with a certain subject is where we want to
                 // thread the other messages with the same suject below. Only keep
                 // that in the dict. Also only accept messages which would not
-                // otherwise be threaded by IDs as top level messages to avoid 
+                // otherwise be threaded by IDs as top level messages to avoid
                 // circular threading.
                 if( !subjMD5.isEmpty() && !msgSubjects.find(subjMD5) ) {
                     QString replyToIdMD5 = mi->replyToIdMD5();
@@ -3005,8 +3011,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    }
 	    if (!parent && msg->subjectIsPrefixed() && mSubjThreading) {
 	        // Still no parent. Let's try by subject, but only if the
-                // subject is prefixed. This is necessary to make for 
-                // example cvs commit mailing lists work as expected without 
+                // subject is prefixed. This is necessary to make for
+                // example cvs commit mailing lists work as expected without
                 // having to turn threading off alltogether.
 	        QString subjMD5 = msg->strippedSubjectMD5();
 	        if (!subjMD5.isEmpty()) {
