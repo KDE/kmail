@@ -1,4 +1,4 @@
-1998-06-29  Stefan Taferner  <taferner@kde.org>
+1998-06-29  Stefan Taferner  <taferner@kde.org> (KMail-0.7.8)
 
 	* Config: writeConfig() was not called when windows
 	got closed. Now it is.
