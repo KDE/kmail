@@ -82,7 +82,7 @@ HeaderListQuickSearch::HeaderListQuickSearch( QWidget *parent,
   disconnect(listView, SIGNAL(itemAdded(QListViewItem *)),
              this, SLOT(itemAdded(QListViewItem *)));
   KMHeaders *headers = static_cast<KMHeaders*>( listView );
-  connect( headers, SIGNAL( itemAddedToListView( QListViewItem * ) ),
+  connect( headers, SIGNAL( msgAddedToListView( KMail::HeaderItem* ) ),
            this, SLOT( itemAdded( QListViewItem* ) ) );
 
 }
