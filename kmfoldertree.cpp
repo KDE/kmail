@@ -485,18 +485,25 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       fti->setOpen( readIsListViewItemOpen(fti) );
 
       // assign icons
-      if (folder->isSystemFolder())
-      {
-        if (folder->label() == i18n("inbox"))
+      if (folder->isSystemFolder()) {
+
+        switch (fti->type()) {
+        case KFolderTreeItem::Inbox:
           fti->setPixmap( 0, SmallIcon("folder_inbox") );
-        else if (folder->label() == i18n("outbox"))
+          break;
+        case KFolderTreeItem::Outbox:
           fti->setPixmap( 0, SmallIcon("folder_outbox") );
-        else if (folder->label() == i18n("sent-mail"))
+          break;
+        case KFolderTreeItem::SentMail:
           fti->setPixmap( 0, SmallIcon("folder_sent_mail") );
-        else if (folder->label() == i18n("trash"))
+          break;
+        case KFolderTreeItem::Trash:
           fti->setPixmap( 0, SmallIcon("trashcan_empty") );
-        else
+          break;
+        default:
           fti->setPixmap( 0, SmallIcon("folder") );
+        }
+
       } else fti->setPixmap( 0, (folder->normalIcon()) ? *(folder->normalIcon()) : SmallIcon("folder") );
 
       // add child-folders
@@ -644,7 +651,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
     if ( confirm ) {
       // If confirm is true then we are doing "ReadOn" and we want to miss
       // Out the trash folder
-      if (fti->folder()->label() == i18n("trash"))
+      if (fti->type() == KFolderTreeItem::Trash)
 	return false;
       else {
       //  warn user that going to next folder - but keep track of

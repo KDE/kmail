@@ -348,7 +348,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
     if (found)
     {
       QString from;
-      if(mSearchFolder == i18n("sent-mail"))
+      if(aFld->type() == KFolderTreeItem::SentMail)
         from = msg->to();
       else
         from = msg->from();
