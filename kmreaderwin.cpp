@@ -792,6 +792,8 @@ void KMReaderWin::readConfig(void)
 
   mAttachmentStrategy =
     AttachmentStrategy::create( config->readEntry( "attachment-strategy" ) );
+  mLoadExternal = config->readBoolEntry( "htmlLoadExternal" );
+  mViewer->setOnlyLocalReferences( !mLoadExternal );
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
