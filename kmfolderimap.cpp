@@ -523,7 +523,7 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
     while (node)
     {
       // check if the folders still exist on the server
-      if (!node->isDir() && (node->name().upper() != "INBOX" || mAccount->createInbox())
+      if (!node->isDir() && (node->name().upper() != "INBOX" || !mAccount->createInbox())
           && mSubfolderNames.findIndex(node->name()) == -1)
       {
         kdDebug(5006) << node->name() << " disappeared." << endl;
