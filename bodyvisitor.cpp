@@ -119,10 +119,10 @@ namespace KMail {
     KMMessagePart *part = msgPart;
     while ( part )
     {
-      if ( ( part->parent() &&
-             part->parent()->originalContentTypeStr() == "MULTIPART/SIGNED") ||
+      if ( part->parent() &&
+           ( part->parent()->originalContentTypeStr() == "MULTIPART/SIGNED" ||
            ( msgPart->originalContentTypeStr() == "APPLICATION/OCTET-STREAM" &&
-             part->parent()->originalContentTypeStr() == "MULTIPART/ENCRYPTED" ) )
+             part->parent()->originalContentTypeStr() == "MULTIPART/ENCRYPTED" ) ) )
         return true;
 
       part = part->parent();
