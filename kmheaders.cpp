@@ -2832,6 +2832,8 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     mItems.fill( 0, mFolder->count() );
     sortCache.fill( 0 );
 
+    mRoot->clearChildren();
+
     QString sortFile = KMAIL_SORT_FILE(mFolder);
     FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
     mSortInfo.fakeSort = 0;

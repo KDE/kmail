@@ -97,6 +97,14 @@ public:
         mUnsortedChildren[mUnsortedCount++] = i;
     }
 
+    /** Clear the sorted and unsorted children datastructures. */
+    void clearChildren() {
+      mSortedChildren.clear();
+      free( mUnsortedChildren );
+      mUnsortedChildren = 0;
+      mUnsortedCount = mUnsortedSize = 0;
+    }
+
     /** the corresponding HeaderItem */
     HeaderItem *item() const { return mItem; }
     void setItem(HeaderItem *i) { Q_ASSERT(!mItem); mItem = i; }
