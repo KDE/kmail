@@ -2318,6 +2318,7 @@ void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
   {
       bool isEncrypted = false, isSigned = false;
       bool fullySignedOrEncrypted = true;
+      bool firstNonPgpBlock = true;
       bool couldDecrypt = false;
       QString signer;
       QCString keyId;
@@ -2337,8 +2338,22 @@ void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
 	    htmlStr += quotedHTML( aCodec->toUnicode( str ) );
             kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
                             << "'" << endl;
-            fullySignedOrEncrypted = false;
+            // treat messages with empty lines before the first clearsigned
+            // block as fully signed/encrypted
+            if( firstNonPgpBlock ) {
+              // check whether str only consists of \n
+              for( QCString::ConstIterator c = str.begin(); *c; ++c ) {
+                if( *c != '\n' ) {
+                  fullySignedOrEncrypted = false;
+                  break;
+                }
+              }
+            }
+            else {
+              fullySignedOrEncrypted = false;
+            }
           }
+          firstNonPgpBlock = false;
 
 	  //htmlStr += "<br>";
 
