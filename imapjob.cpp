@@ -184,6 +184,8 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
                           true,
                           account->useSSL() || account->useTLS() );
     jd.progressItem->setTotalItems( jd.total );
+    connect ( jd.progressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+              account, SLOT( slotAbortRequested( ProgressItem* ) ) );
     KIO::SimpleJob *simpleJob = KIO::special( url, packedArgs, FALSE );
     KIO::Scheduler::assignJobToSlave( account->slave(), simpleJob );
     mJob = simpleJob;
@@ -347,9 +349,9 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
   if (job->error())
   {
     QString errorStr = i18n( "Error while retrieving messages from the server." );
-    account->handleJobError( job, errorStr );
     if ( (*it).progressItem )
       (*it).progressItem->setStatus( errorStr );
+    account->handleJobError( job, errorStr );
     return;
   } else {
     if ((*it).data.size() > 0)
@@ -367,6 +369,11 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
           msg->setComplete( true );
         else
           msg->setReadyToShow( false );
+
+        // Convert CR/LF to LF.
+        size_t dataSize = (*it).data.size();
+        dataSize = FolderStorage::crlf2lf( (*it).data.data(), dataSize ); // always <=
+        (*it).data.resize( dataSize );
 
         msg->fromByteArray( (*it).data );
         // reconstruct as it may be overwritten above
@@ -484,9 +491,9 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
   if ( it == account->jobsEnd() ) return;
   if (job->error())
   {
-    account->handlePutError( job, *it, mDestFolder );
     if ( (*it).progressItem )
-      (*it).progressItem->setStatus("Uploading message data failed.");
+      (*it).progressItem->setStatus( i18n("Uploading message data failed.") );
+    account->handlePutError( job, *it, mDestFolder );
     return;
   } else {
     if ( !(*it).msgList.isEmpty() )
@@ -499,7 +506,7 @@ void ImapJob::slotPutMessageResult( KIO::Job *job )
     }
     msg = 0;
     if ( (*it).progressItem )
-      (*it).progressItem->setStatus("Uploading message data completed.");
+      (*it).progressItem->setStatus( i18n("Uploading message data completed.") );
   }
   if (account->slave()) {
     account->removeJob(it);

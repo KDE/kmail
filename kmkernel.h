@@ -53,7 +53,6 @@ class KProgress;
 class KPassivePopup;
 class KMMainWin;
 class KMainWindow;
-class KMGroupware;
 class KMailICalIfaceImpl;
 class KMReaderWin;
 class KSystemTray;
@@ -122,6 +121,9 @@ public:
                        const QString &bcc, const QString &subject,
                        const QString &body,bool hidden);
 
+  /** DCOP call used by the Kontact plugin to create a new message. */
+  DCOPRef newMessage();
+
   int sendCertificate( const QString& to, const QByteArray& certData );
 
   void openReader() { openReader( false ); }
@@ -132,6 +134,7 @@ public:
   void selectFolder( QString folder );
   int timeOfLastMessageCountChange() const;
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId );
+  virtual QString getFrom( Q_UINT32 serialNumber );
   int viewMessage( const KURL & messageFile );
 
   /** normal control stuff */
@@ -203,7 +206,6 @@ public:
   /** Expire all folders, used for the gui action */
   void expireAllFoldersNow();
 
-  KMGroupware& groupware();
   KMailICalIfaceImpl& iCalIface();
 
   bool firstStart() { return the_firstStart; }
@@ -286,16 +288,16 @@ public slots:
   void slotEmptyTrash();
 
   void slotShowConfigurationDialog();
+  void slotRunBackgroundTasks();
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
   void slotResult(KIO::Job*);
   void slotConfigChanged();
-  void slotFolderRemoved(KMFolder*);
-  void slotRunBackgroundTasks();
 
 signals:
   void configChanged();
+  void folderRemoved( KMFolder* aFolder );
 
 private:
   void openReader( bool onlyCheck );
@@ -350,7 +352,6 @@ private:
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
   QTimer *mBackgroundTasksTimer;
-  KMGroupware * mGroupware;
   KMailICalIfaceImpl* mICalIface;
   JobScheduler* mJobScheduler;
   // temporary mainwin

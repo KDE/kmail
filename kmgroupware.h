@@ -3,7 +3,7 @@
 
     This file is part of KMail.
 
-    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@sonofthor.dk>
     Copyright (c) 2002 Karl-Heinz Zimmer <khz@klaralvdalens-datakonsult.se>
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
 
@@ -37,52 +37,10 @@
 #ifndef KMGROUPWARE_H
 #define KMGROUPWARE_H
 
-#include <qguardedptr.h>
+#include <qstring.h>
 
-class KMAccount;
 class KMMessage;
-class KMMainWidget;
-class KURL;
 
-
-class KMGroupware : public QObject
-{
-  Q_OBJECT
-
-public:
-  KMGroupware( QObject* parent = 0, const char* name = 0 );
-  ~KMGroupware();
-
-  bool isEnabled() const { return mUseGroupware; }
-
-  /**
-     Retrieve matching body part (either text/vCal (or vCard) or
-     application/ms-tnef) and decode it.
-
-     If return value is true, s holds a readable vPart.
-  */
-  static bool vPartFoundAndDecoded( KMMessage* msg, QString& s );
-
-  // functions to be called by KMReaderWin for 'print formatting'
-  QString vPartToHTML( const QString& iCal );
-  QString msTNEFToHTML( const QByteArray& tnef );
-
-  /**
-     KMReaderWin calls this with a URL. Return true if a groupware
-     url was handled.
-  */
-  bool handleLink( const KURL &aUrl, KMMessage* msg );
-
-public slots:
-  /* (Re-)Read configuration file */
-  void readConfig();
-
-private slots:
-  void unregisteredFromDCOP( const QCString& );
-
-private:
-  bool mUseGroupware;
-};
-
+bool vPartFoundAndDecoded( KMMessage* msg, QString& s );
 
 #endif /* KMGROUPWARE_H */

@@ -26,7 +26,8 @@
 #include "kmacctimap.h"
 using KMail::SieveConfig;
 
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
@@ -53,6 +54,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName, uint id):
   mOpenFolders.setAutoDelete(true);
   connect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
       this, SLOT(slotUpdateFolderList()));
+  connect(&mErrorTimer, SIGNAL(timeout()), SLOT(slotResetConnectionError()));
 }
 
 
@@ -128,6 +130,10 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
       fld->sendFolderComplete(FALSE);
       fld->removeJobs();
     }
+    if ( (*it).progressItem )
+    {
+      (*it).progressItem->setComplete();
+    }
   }
   if (mSlave && mapJobData.begin() != mapJobData.end())
   {
@@ -160,9 +166,6 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
     ++it;
     if ( job->msgList().findRef( msg ) != -1 )
     {
-      if ( job->mJob )
-        removeJob( job->mJob );
-      mJobList.remove( job );
       job->kill();
     }
   }
@@ -178,9 +181,6 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
     ++it;
     if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder )
     {
-      if ( job->mJob )
-        removeJob( job->mJob );
-      mJobList.remove( job );
       job->kill();
     }
   }
@@ -410,9 +410,25 @@ void KMAcctImap::slotMailCheckCanceled()
 }
 
 //-----------------------------------------------------------------------------
-FolderStorage* KMAcctImap::rootFolder()
+FolderStorage* const KMAcctImap::rootFolder() const
 {
   return mFolder;
+}
+
+ImapAccountBase::ConnectionState KMAcctImap::makeConnection() 
+{
+    if ( mSlaveConnectionError )
+    {
+       mErrorTimer.start(100, true); // Clear error flag
+       return Error;
+    }
+    return ImapAccountBase::makeConnection();
+}
+
+void KMAcctImap::slotResetConnectionError()
+{
+  mSlaveConnectionError = false;
+  kdDebug(5006) << k_funcinfo << endl;
 }
 
 #include "kmacctimap.moc"

@@ -1,7 +1,7 @@
 /**
  *  kmacctcachedimap.h
  *
- *  Copyright (c) 2002-2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+ *  Copyright (c) 2002-2004 Bo Thorsen <bo@sonofthor.dk>
  *  Copyright (c) 2002-2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
  *
  *  This program is free software; you can redistribute it and/or modify
@@ -173,7 +173,7 @@ public:
   /**
    * Returns the root folder of this account
    */
-  virtual FolderStorage* rootFolder();
+  virtual FolderStorage* const rootFolder() const;
 
 protected:
   friend class KMAcctMgr;
@@ -188,6 +188,7 @@ protected slots:
   virtual void slotCheckQueuedFolders();
 
 private:
+  QValueList<KMFolderCachedImap*> killAllJobsInternal( bool disconnectSlave );
   void processNewMail( KMFolderCachedImap* folder, bool interactive, bool recurse );
 
 private:

@@ -153,17 +153,6 @@ namespace KMail {
     //  and it will be replaced once KMime is alive.
     void parseObjectTree( partNode * node );
 
-    /** Save a QByteArray into a new temp. file using the extension
-        given in dirExt to compose the directory name and
-        the name given in fileName as file name
-        and return the path+filename.
-        If parameter reader is valid the directory and file names are added
-        to the reader's temp directories and temp files lists. */
-    static QString byteArrayToTempFile( KMReaderWin* reader,
-                                        const QString& dirExt,
-                                        const QString& fileName,
-                                        const QByteArray& theBody );
-
   private:
     /** Standard children handling a.k.a. multipart/mixed (w/o
 	kroupware hacks) */
@@ -214,7 +203,6 @@ namespace KMail {
   public:// (during refactoring)
 
     bool processTextHtmlSubtype( partNode * node, ProcessResult & result );
-    bool processTextVCalSubtype( partNode * node, ProcessResult & result );
     bool processTextPlainSubtype( partNode * node, ProcessResult & result );
 
     bool processMultiPartMixedSubtype( partNode * node, ProcessResult & result );
@@ -228,7 +216,6 @@ namespace KMail {
 
     bool processApplicationOctetStreamSubtype( partNode * node, ProcessResult & result );
     bool processApplicationPkcs7MimeSubtype( partNode * node, ProcessResult & result );
-    bool processApplicationMsTnefSubtype( partNode * node, ProcessResult & result );
 
   private:
     void writeBodyString( const QCString & bodyString,
