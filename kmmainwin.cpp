@@ -84,6 +84,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   QListViewItem* idx;
   mIntegrated  = TRUE;
   mFolder = NULL;
+  mFolderThreadPref = false;
+  mFolderHtmlPref = false;
   mHorizPannerSep = new QValueList<int>;
   mVertPannerSep = new QValueList<int>;
   *mHorizPannerSep << 1 << 1;

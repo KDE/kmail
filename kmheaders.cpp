@@ -362,6 +362,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.sizeCol   = mPaintInfo.dateCol   + 1;
   mPaintInfo.scoreCol  = mPaintInfo.sizeCol   + 0;
   mPaintInfo.showScore = false;
+  mPaintInfo.orderOfArrival = false;
+  mPaintInfo.status = false;
   showingScore = false;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
