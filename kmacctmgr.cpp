@@ -10,6 +10,8 @@
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
+#include "networkaccount.h"
+using KMail::NetworkAccount;
 #include "kmacctcachedimap.h"
 #include "kmbroadcaststatus.h"
 #include "kmfiltermgr.h"
@@ -165,6 +167,15 @@ void KMAcctMgr::processNextCheck(bool _newMail)
 
   KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
+
+  NetworkAccount *nacct = dynamic_cast<NetworkAccount*>( curAccount );
+  //If it a NetworkAccount we want to show the user whether the
+  //connection is encrypted. If it's a local account we don't want
+  //to put a useless icon in the statusbar and ignore it.
+  if ( nacct ) {
+    KMBroadcastStatus::instance()->setUsingSSL( nacct->useSSL() ||
+                                                nacct->useTLS() );
+  }
   kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
 
   curAccount->setCheckingMail(true);

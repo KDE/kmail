@@ -2104,7 +2104,7 @@ void KMMainWidget::setupActions()
                                  actionCollection(), "status_read"));
 
   // -------- Toggle Actions
-  toggleRepliedAction = new KToggleAction(i18n("Mark Message as &Replied"), "kmmsgreplied",
+  toggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied");
 
@@ -2463,6 +2463,10 @@ void KMMainWidget::setupStatusBar()
            SIGNAL(statusProgressPercent( unsigned long )),
            mLittleProgress,
            SLOT(slotJustPercent( unsigned long )));
+  connect( KMBroadcastStatus::instance(),
+           SIGNAL(signalUsingSSL( bool )),
+           mLittleProgress,
+           SLOT(slotSetSSL(bool)) );
   connect( KMBroadcastStatus::instance(), SIGNAL(resetRequested()),
            mLittleProgress, SLOT(slotClean()));
 }

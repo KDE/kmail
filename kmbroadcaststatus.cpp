@@ -1,13 +1,17 @@
 /* Authors: Don Sanders <sanders@kde.org>
 
    Copyright (C) 2000 Don Sanders <sanders@kde.org>
-   Includes KMLittleProgressDlg which is based on KIOLittleProgressDlg 
+   Includes KMLittleProgressDlg which is based on KIOLittleProgressDlg
    by Matt Koss <koss@miesto.sk>
 
    License GPL
 */
 
+#include "kmbroadcaststatus.h"
 #include "kmbroadcaststatus.moc"
+
+#include "ssllabel.h"
+using KMail::SSLLabel;
 
 #include <kprogress.h>
 #include <kdebug.h>
@@ -33,6 +37,11 @@ KMBroadcastStatus* KMBroadcastStatus::instance()
 KMBroadcastStatus::KMBroadcastStatus()
 {
   reset();
+}
+
+void KMBroadcastStatus::setUsingSSL( bool isUsing )
+{
+  emit signalUsingSSL( isUsing );
 }
 
 void KMBroadcastStatus::setStatusMsg( const QString& message )
@@ -79,7 +88,7 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( int numMessages,
   }
   else
     statusMsg = i18n( "Transmission complete. No new messages." );
-  
+
   setStatusMsgWithTimestamp( statusMsg );
 }
 
@@ -124,7 +133,7 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( const QString& accoun
   else
     statusMsg = i18n( "Transmission for account %1 complete. No new messages.")
                 .arg( account );
-  
+
   setStatusMsgWithTimestamp( statusMsg );
 }
 
@@ -188,8 +197,11 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   stack->setMaximumHeight( fontMetrics().height() );
   box->addWidget( stack );
 
+  m_sslLabel = new SSLLabel( this );
+  box->addWidget( m_sslLabel );
+
   QToolTip::add( m_pButton, i18n("Cancel job") );
-  
+
   m_pProgressBar = new KProgress( this );
   m_pProgressBar->setLineWidth( 1 );
   m_pProgressBar->setFrameStyle( QFrame::Box );
@@ -225,12 +237,28 @@ void KMLittleProgressDlg::slotEnable( bool enabled )
   setMode();
 }
 
+void KMLittleProgressDlg::slotSetSSL( bool ssl )
+{
+  m_sslLabel->setEncrypted( ssl );
+}
+
 void KMLittleProgressDlg::setMode() {
   switch ( mode ) {
   case None:
     if ( m_bShowButton ) {
       m_pButton->hide();
     }
+    m_sslLabel->setState( SSLLabel::Done );
+    // show the empty label in order to make the status bar look better
+    stack->show();
+    stack->raiseWidget( m_pLabel );
+    break;
+
+  case Clean:
+    if ( m_bShowButton ) {
+      m_pButton->hide();
+    }
+    m_sslLabel->setState( SSLLabel::Clean );
     // show the empty label in order to make the status bar look better
     stack->show();
     stack->raiseWidget( m_pLabel );
@@ -240,6 +268,7 @@ void KMLittleProgressDlg::setMode() {
     if ( m_bShowButton ) {
       m_pButton->show();
     }
+    m_sslLabel->setState( m_sslLabel->lastState() );
     stack->show();
     stack->raiseWidget( m_pLabel );
     break;
@@ -251,11 +280,11 @@ void KMLittleProgressDlg::setMode() {
       if ( m_bShowButton ) {
         m_pButton->show();
       }
+      m_sslLabel->setState( m_sslLabel->lastState() );
     }
     break;
   }
 }
-
 
 void KMLittleProgressDlg::slotJustPercent( unsigned long _percent )
 {
@@ -267,11 +296,11 @@ void KMLittleProgressDlg::slotClean()
   m_pProgressBar->setValue( 0 );
   m_pLabel->clear();
 
-  mode = None;
+  mode = Clean;
   setMode();
 }
 
-bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev ) 
+bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
 {
   if ( ev->type() == QEvent::MouseButtonPress ) {
     QMouseEvent *e = (QMouseEvent*)ev;
@@ -284,7 +313,6 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
       }
       setMode();
       return true;
-
     }
   }
 

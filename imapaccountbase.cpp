@@ -525,7 +525,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg ) 
+  void ImapAccountBase::handleBodyStructure( QDataStream & stream, KMMessage * msg )
   {
     mBodyPartList.clear();
     mCurrentMsg = msg;
@@ -535,14 +535,14 @@ namespace KMail {
       msg->deleteBodyParts();
 
     // get the currently active reader window
-    if ( !kernel->activeReaderWin() ) 
+    if ( !kernel->activeReaderWin() )
     {
       kdWarning(5006) << "ImapAccountBase::handleBodyStructure - found no readerwin!" << endl;
       return;
     }
 
     // download parts according to attachmentstrategy
-    BodyVisitor *visitor = BodyVisitorFactory::getVisitor( 
+    BodyVisitor *visitor = BodyVisitorFactory::getVisitor(
         kernel->activeReaderWin()->attachmentStrategy() );
     visitor->visit( mBodyPartList );
     QPtrList<KMMessagePart> parts = visitor->partsToLoad();
@@ -551,7 +551,7 @@ namespace KMail {
     while ( (part = it.current()) != 0 )
     {
       ++it;
-      kdDebug(5006) << "ImapAccountBase::handleBodyStructure - load " << part->partSpecifier() 
+      kdDebug(5006) << "ImapAccountBase::handleBodyStructure - load " << part->partSpecifier()
         << " (" << part->originalContentTypeStr() << ")" << endl;
       if ( part->loadHeaders() )
       {
@@ -582,7 +582,7 @@ namespace KMail {
       KMMessagePart* part = new KMMessagePart( stream );
       part->setParent( parentKMPart );
       mBodyPartList.append( part );
-      kdDebug(5006) << "ImapAccountBase::constructParts - created id " << part->partSpecifier() 
+      kdDebug(5006) << "ImapAccountBase::constructParts - created id " << part->partSpecifier()
         << " of type " << part->originalContentTypeStr() << endl;
       DwBodyPart *dwpart = mCurrentMsg->createDWBodyPart( part );
       dwpart->Parse(); // also creates an encapsulated DwMessage if necessary
@@ -594,14 +594,14 @@ namespace KMail {
       {
         // add to parent body
         parent->Body().AddBodyPart( dwpart );
-      } else if ( part->partSpecifier() != "0" && 
-                  !part->partSpecifier().endsWith(".HEADER") ) 
+      } else if ( part->partSpecifier() != "0" &&
+                  !part->partSpecifier().endsWith(".HEADER") )
       {
         // add to message
         dwmsg->Body().AddBodyPart( dwpart );
       } else
         dwpart = 0;
-      
+
       if ( !parentKMPart )
         parentKMPart = part;
 
@@ -609,7 +609,7 @@ namespace KMail {
       {
         DwBodyPart* newparent = dwpart;
         const DwMessage* newmsg = dwmsg;
-        if ( part->originalContentTypeStr() == "MESSAGE/RFC822" && 
+        if ( part->originalContentTypeStr() == "MESSAGE/RFC822" &&
              dwpart->Body().Message() )
         {
           // set the encapsulated message as new parent message
