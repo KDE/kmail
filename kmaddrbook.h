@@ -9,7 +9,6 @@
 #include <qvaluelist.h>  // for KabBridge
 #include <kabapi.h> // for KabBridge
 
-
 #define KMAddrBookInherited QStringList
 class KMAddrBook: protected QStringList
 {
@@ -25,13 +24,13 @@ public:
   virtual void remove(const QString& address);
 
   /** Returns an iterator pointing to the first address or to @ref end() */
-  QStringList::ConstIterator begin() const { 
-    return KMAddrBookInherited::begin(); 
+  QStringList::ConstIterator begin() const {
+    return KMAddrBookInherited::begin();
   }
 
   /** Returns an iterator pointing to the end of the list */
-  QStringList::ConstIterator end() const { 
-    return KMAddrBookInherited::end(); 
+  QStringList::ConstIterator end() const {
+    return KMAddrBookInherited::end();
   }
 
   /** Clear addressbook (remove the contents). */
@@ -60,7 +59,7 @@ protected:
   /** Displays a detailed message box and returns 'status' */
   virtual int fileError(int status) const;
 
-  /** inserts @p entry alphabetically sorted into the addressbook 
+  /** inserts @p entry alphabetically sorted into the addressbook
       Does NOT check for duplicates! */
   void inSort(const QString& entry);
 
@@ -78,11 +77,18 @@ public:
   static bool replace(QString address, KabKey);
 };
 
+class KabcBridge {
+public:
+  static void addresses(QStringList* result);
+  static QString expandDistributionLists(QString recipients);
+};
+
 class KMAddrBookExternal {
 public:
   static void addEmail(QString addr, QWidget *parent);
   static void launch(QWidget *parent);
   static bool useKAB();
+  static bool useKABC();
 };
 
 #endif /*KMAddrBook_h*/

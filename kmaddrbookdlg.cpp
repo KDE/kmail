@@ -36,7 +36,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(QWidget *parent, KMAddrBook* aAddrBook, const
   mListBox->setSelectionMode(QListBox::Multi);
   mListBox->setMinimumWidth(fontMetrics().maxWidth()*20);
   mListBox->setMinimumHeight(fontMetrics().lineSpacing()*15);
-  
+
   readConfig();
 
   connect(mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
@@ -78,15 +78,20 @@ void KMAddrBookSelDlg::showAddresses( int addressTypes )
   mListBox->clear();
 
   if ( addressTypes & AddressBookAddresses ) {
-    if (!KMAddrBookExternal::useKAB()) {
-      QStringList::ConstIterator it = mAddrBook->begin();
-      for ( ; it != mAddrBook->end(); ++it)
-        mListBox->insertItem(*it);
+    if (KMAddrBookExternal::useKABC()) {
+      QStringList addresses;
+      KabcBridge::addresses(&addresses);
+      mListBox->insertStringList(addresses);
     }
-    else {
+    else if (KMAddrBookExternal::useKAB()) {
       QStringList addresses;
       KabBridge::addresses(&addresses);
       mListBox->insertStringList(addresses);
+    }
+    else {
+      QStringList::ConstIterator it = mAddrBook->begin();
+      for ( ; it != mAddrBook->end(); ++it)
+        mListBox->insertItem(*it);
     }
   }
   mListBox->sort();

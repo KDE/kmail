@@ -18,12 +18,21 @@
 #include "kmmessage.h" // for KabBridge
 #include "kmaddrbookdlg.h" // for kmaddrbookexternal
 #include <krun.h> // for kmaddrbookexternal
+#include <kprocess.h>
 #include "addtoaddressbook.h"
+#include <kabc/stdaddressbook.h>
+#include <kabc/distributionlist.h>
 
 //-----------------------------------------------------------------------------
 KMAddrBook::KMAddrBook(): KMAddrBookInherited()
 {
   mModified = FALSE;
+  
+  if (!QFile::exists(locateLocal("data", "kabc/std.vcf") )) {
+    KProcess proc;
+    proc << "kab2kabc";
+    proc.start( KProcess::Block );
+  }
 }
 
 
@@ -321,6 +330,94 @@ bool KabBridge::replace(QString address, KabKey kabKey)
   return true;
 }
 
+//-----------------------------------------------------------------------------
+void KabcBridge::addresses(QStringList* result) // includes lists
+{
+  QString addr, email;
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::AddressBook::Iterator it;
+  for( it = addressBook->begin(); it != addressBook->end(); ++it ) {
+    QStringList emails = (*it).emails();
+    QString n = (*it).prefix() + " " +
+		(*it).givenName() + " " +
+		(*it).additionalName() + " " +
+	        (*it).familyName() + " " +
+		(*it).suffix();
+    n = n.simplifyWhiteSpace();
+    for( unsigned int i = 0; i < emails.count(); ++i ) {
+      if (!emails[i].isEmpty()) {
+	if (n.isEmpty() || (emails[i].find( "<" ) != -1))
+	  addr = "";
+	else { /* do we really need quotes around this name ? */
+	  if (n.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
+	    addr = "\"" + n + "\" ";
+	  else
+	    addr = n + " ";
+	}
+	email = emails[i];
+	if (!addr.isEmpty() && (email.find( "<" ) == -1)
+	    && (email.find( ">" ) == -1)
+	    && (email.find( "," ) == -1))
+	  addr += "<" + email + ">";
+	else
+	  addr += email;
+	addr.stripWhiteSpace();
+	result->append( addr );
+      }
+    }
+  }
+  KABC::DistributionListManager manager( addressBook );
+  manager.load();
+
+  QStringList names = manager.listNames();
+  QStringList::Iterator jt;
+  for ( jt = names.begin(); jt != names.end(); ++jt)
+    result->append( *jt );
+  result->sort();
+}
+
+//-----------------------------------------------------------------------------
+QString KabcBridge::expandDistributionLists(QString recipients)
+{
+  if (recipients.isEmpty())
+    return "";
+  KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
+  KABC::DistributionListManager manager( addressBook );
+  manager.load();
+  QStringList recpList, names = manager.listNames();
+  QStringList::Iterator it, jt;
+  QString receiver, expRecipients;
+  int begin = 0, count = 0, quoteDepth = 0;
+  for (; begin + count < recipients.length(); ++count) {
+    if (recipients[begin + count] == '"')
+      ++quoteDepth;
+    if ((recipients[begin + count] == ',') && (quoteDepth % 2 == 0)) {
+      recpList.append( recipients.mid( begin, count ) );
+      begin += count + 1;
+      count = 0;
+    }
+  }
+  recpList.append( recipients.mid( begin ));
+
+  for ( it = recpList.begin(); it != recpList.end(); ++it ) {
+    if (!expRecipients.isEmpty())
+      expRecipients += ", ";
+    receiver = (*it).stripWhiteSpace();
+    for ( jt = names.begin(); jt != names.end(); ++jt)
+      if (receiver.lower() == (*jt).lower()) {
+	QStringList el = manager.list( receiver )->emails();
+	for ( QStringList::Iterator kt = el.begin(); kt != el.end(); ++kt ) {
+	  if (!expRecipients.isEmpty())
+	    expRecipients += ", ";
+	  expRecipients += *kt;
+	}
+	break;
+      }
+    if ( jt == names.end() )
+      expRecipients += receiver;
+  }
+  return expRecipients;
+}
 
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
@@ -375,6 +472,19 @@ bool KMAddrBookExternal::useKAB()
   int ab = config->readNumEntry("addressbook", 3);
   if (ab <= 0)
     return false;
+  if (ab == 3)
+    return false;
   return true;
 }
+
+bool KMAddrBookExternal::useKABC()
+{
+  KConfig *config = kapp->config();
+  KConfigGroupSaver saver(config, "General");
+  int ab = config->readNumEntry("addressbook", 3);
+  if (ab == 3) // or 1?
+    return true;
+  return false;
+}
+
 

@@ -2144,7 +2144,7 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixe
   if (fixedfont)
     edt->setFont(KGlobalSettings::fixedFont());
   edt->setReadOnly(TRUE);
-  
+
   edt->resize(KApplication::desktop()->width()/2,
 	      2*KApplication::desktop()->height()/3);
   edt->setCursorPosition(0, 0);  edt->show();

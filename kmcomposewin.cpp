@@ -1373,7 +1373,7 @@ QCString KMComposeWin::pgpProcessedMsg(void)
     { // the user wants to be asked or has to be asked
       kernel->kbp()->idle();
       int ret =
-        KMessageBox::questionYesNo( this, 
+        KMessageBox::questionYesNo( this,
                                     "Should this message be encrypted?" );
       kernel->kbp()->busy();
       doEncrypt = ( ret == KMessageBox::Yes );
@@ -2201,16 +2201,19 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 		if (imapDraftsFolder) kdDebug(5006) << "saveindrafts: imapdrafts=" << imapDraftsFolder->name() << endl;
 		
     sentOk = !(draftsFolder->addMsg(mMsg));
-		if (imapDraftsFolder) 
+		if (imapDraftsFolder)
 		{
 			// move the message to the imap-folder and highlight it
 			imapDraftsFolder->moveMsg(mMsg);
-			(static_cast<KMFolderImap*>(imapDraftsFolder))->getFolder(); 
+			(static_cast<KMFolderImap*>(imapDraftsFolder))->getFolder();
 		}
 
   } else {
+     mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
+     mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
+     mMsg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
      sentOk = kernel->msgSender()->send(mMsg, aSendNow);
-	}	 
+  }
 
   kernel->kbp()->idle();
 
@@ -2553,7 +2556,7 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
     mEdtBcc->setCompletionMode( mode );
 }
 
-/* 
+/*
 * checks if the drafts-folder has been deleted
 * that is not nice so we set the system-drafts-folder
 */
@@ -2820,18 +2823,23 @@ void KMLineEdit::loadAddresses()
 
     if(adb.load() == IO_FatalError)
         return;
-
-    if (!KMAddrBookExternal::useKAB()) {
-        QStringList::ConstIterator it = adb.begin();
-        for ( ; it != adb.end(); ++it )
-            s_completion->addItem( *it );
+    if (KMAddrBookExternal::useKABC()) {
+        QStringList addresses;
+        KabcBridge::addresses(&addresses);
+        QStringList::Iterator it = addresses.begin();
+        for (; it != addresses.end(); ++it)
+            s_completion->addItem( *it );	
     }
-
-    else {
+    else if (KMAddrBookExternal::useKAB()) {
         QStringList addresses;
         KabBridge::addresses(&addresses);
         QStringList::Iterator it = addresses.begin();
         for (; it != addresses.end(); ++it)
+            s_completion->addItem( *it );
+    }
+    else {
+        QStringList::ConstIterator it = adb.begin();
+        for ( ; it != adb.end(); ++it )
             s_completion->addItem( *it );
     }
 }
