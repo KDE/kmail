@@ -640,13 +640,10 @@ KMCommand::Result KMShowMsgSrcCommand::execute()
   return OK;
 }
 
-namespace {
-  KURL subjectToUrl( const QString & subject ) {
-    return KFileDialog::getSaveURL( subject.mid( subject.findRev(':') + 1 )
-                                            .stripWhiteSpace()
-                                            .replace( QDir::separator(), '_' ),
+static KURL subjectToUrl( const QString & subject ) {
+    return KFileDialog::getSaveURL( subject.stripWhiteSpace()
+                                           .replace( QDir::separator(), '_' ),
                                     QString::null );
-  }
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
@@ -658,7 +655,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
   if ( !msg ) return;
   setDeletesItself( true );
   mMsgList.append( msg->getMsgSerNum() );
-  mUrl = subjectToUrl( msg->subject() );
+  mUrl = subjectToUrl( msg->cleanSubject() );
 }
 
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
@@ -685,7 +682,10 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     ++it;
   }
   mMsgListIndex = 0;
-  mUrl = subjectToUrl( msgBase->subject() );
+  KMMessage* msg = msgBase->isMessage()
+                   ? static_cast<KMMessage*>(msgBase)
+                   : msgBase->parent()->getMsg( msgBase->parent()->find(msgBase) );
+  mUrl = subjectToUrl( msg->cleanSubject() );
 }
 
 KURL KMSaveMsgCommand::url()
