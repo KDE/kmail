@@ -43,7 +43,9 @@
 #include "kmundostack.h"
 #include "kmreaderwin.h"
 #include "kmacctimap.h"
+#ifdef SCORING
 #include "kmscoring.h"
+#endif
 #include "mailinglist-magic.h"
 
 #include <mimelib/enum.h>
@@ -220,8 +222,10 @@ public:
           tmp = cstr.mid(a+11, b-a-11);
         } else tmp.setNum(mMsgBase->msgSize());
 
+#ifdef SCORING
     } else if(col == headers->paintInfo()->scoreCol) {
       tmp.setNum(headers->messageScore(mMsgId));
+#endif
     }
 
     return tmp;
@@ -395,8 +399,10 @@ public:
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 		     const char *name) :
-  KMHeadersInherited(parent, name),
-  mScoringManager(KMScoringManager::globalScoringManager())
+  KMHeadersInherited(parent, name)
+#ifdef SCORING
+  , mScoringManager(KMScoringManager::globalScoringManager())
+#endif
 {
   static bool pixmapsLoaded = FALSE;
   //qInitImageIO();
@@ -419,10 +425,12 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   // Espen 2000-05-14: Getting rid of thick ugly frames
   setLineWidth(0);
 
+#ifdef SCORING
   if (!mScoringManager) {
     kdDebug(5006) << "KMHeaders::KMHeaders() : no globalScoringManager"
               << endl;
   }
+#endif
 
   readConfig();
 
@@ -431,11 +439,15 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.senderCol = mPaintInfo.subCol    + 1;
   mPaintInfo.dateCol   = mPaintInfo.senderCol + 1;
   mPaintInfo.sizeCol   = mPaintInfo.dateCol   + 1;
+#ifdef SCORING
   mPaintInfo.scoreCol  = mPaintInfo.sizeCol   + 0;
   mPaintInfo.showScore = false;
+#endif
   mPaintInfo.orderOfArrival = false;
   mPaintInfo.status = false;
+#ifdef SCORING
   showingScore = false;
+#endif
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
   setShowSortIndicator(true);
@@ -641,10 +653,12 @@ void KMHeaders::readFolderConfig (void)
     setColumnWidth(mPaintInfo.sizeCol, x>0?x:10);
   }
 
+#ifdef SCORING
   if (mPaintInfo.showScore) {
     int x = config->readNumEntry("ScoreWidth", 50);
     setColumnWidth(mPaintInfo.scoreCol, x>0?x:10);
   }
+#endif
 
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
   mSortDescending = (mSortCol < 0);
@@ -681,8 +695,10 @@ void KMHeaders::writeFolderConfig (void)
   if (mPaintInfo.showSize)
     config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
 
+#ifdef SCORING
   if (mPaintInfo.showScore)
       config->writeEntry("ScoreWidth", columnWidth(mPaintInfo.scoreCol));
+#endif
 
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
@@ -764,10 +780,12 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 	mItems.resize( 0 );
       }
 
+#ifdef SCORING
       if (mScoringManager)
         mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
 
       mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
+#endif
       readFolderConfig();
 
       CREATE_TIMER(kmfolder_open);
@@ -782,8 +800,10 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       }
     }
 
+#ifdef SCORING
     if (mScoringManager)
       mScoringManager->initCache((mFolder) ? mFolder->name() : QString());
+#endif
   }
 
   CREATE_TIMER(updateMsg);
@@ -825,7 +845,9 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         int x = config->readNumEntry("SizeWidth", 80);
         addColumn(colText, x>0?x:10);
 	setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
+#ifdef SCORING
         mPaintInfo.scoreCol++;
+#endif
       }
       showingSize = true;
     } else {
@@ -833,11 +855,14 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         // remove the size field
         config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
         removeColumn(mPaintInfo.sizeCol);
+#ifdef SCORING
         mPaintInfo.scoreCol--;
+#endif
       }
       showingSize = false;
     }
 
+#ifdef SCORING
     mPaintInfo.showScore = mScoringManager->hasRulesForCurrentGroup();
     if (mPaintInfo.showScore) {
       colText = i18n( "Score" );
@@ -855,6 +880,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         showingScore = false;
       }
     }
+#endif
   }
    kdDebug(5006) << "end " << (QTime::currentTime().second()*1000)+QTime::currentTime().msec() <<  k_funcinfo << endl;
 }
@@ -2186,6 +2212,7 @@ void KMHeaders::updateMessageList(bool set_selection)
 #endif
 }
 
+#ifdef SCORING
 int
 KMHeaders::messageScore(int msgId)
 {
@@ -2213,6 +2240,7 @@ KMHeaders::messageScore(int msgId)
   return smsg.score();
 
 }
+#endif
 
 
 //-----------------------------------------------------------------------------

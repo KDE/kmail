@@ -88,7 +88,9 @@
 #include "kmsender.h"
 #include "kmtopwidget.h"
 #include "kmtransport.h"
+#ifdef SCORING
 #include "kmscoring.h"
+#endif
 
 #include "configuredialog.moc"
 
@@ -990,6 +992,7 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.addressbookLabel->setText(*mAppearance.addressbookStrings.at(0));
   vlay->addStretch(10);
 
+#ifdef SCORING
   // Score
   QWidget *page6 = new QWidget( tabWidget );
   tabWidget->addTab( page6, i18n("&Messages Scoring") );
@@ -1000,7 +1003,7 @@ void ConfigureDialog::makeAppearancePage( void )
                               page6);
   KMScoringManager::globalScoringManager()->setMainWin(parent());
   vlay->addWidget( ksc );
-
+#endif
 }
 
 
@@ -2477,8 +2480,10 @@ void ConfigureDialog::slotDoApply( bool everything )
 			mMisc.mailCommandEdit->text() );
   }
 
+#ifdef SCORING
   kdDebug(5006) << "KMScoringManager::globalScoringManager()->save();" << endl;
   KMScoringManager::globalScoringManager()->save();
+#endif
 
   //
   // Make other components read the new settings
