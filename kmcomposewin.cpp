@@ -3980,8 +3980,35 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   int i;
 
   KCursorSaver busy(KBusyPtr::busy());
+
+  // ask the job for the mime type of the file
+  QString mimeType = static_cast<KIO::MimetypeJob*>(job)->mimetype();
+
   i = urlStr.findRev('/');
-  name = (i>=0 ? urlStr.mid(i+1, 256) : urlStr);
+  if( i == -1 )
+    name = urlStr;
+  else if( i + 1 < int( urlStr.length() ) )
+    name = urlStr.mid( i + 1, 256 );
+  else {
+    // URL ends with '/' (e.g. http://www.kde.org/)
+    // guess a reasonable filename
+    if( mimeType == "text/html" )
+      name = "index.html";
+    else {
+      // try to determine a reasonable extension
+      QStringList patterns( KMimeType::mimeType( mimeType )->patterns() );
+      QString ext;
+      if( !patterns.isEmpty() ) {
+        ext = patterns[0];
+        int i = ext.findRev( '.' );
+        if( i == -1 )
+          ext.prepend( '.' );
+        else if( i > 0 )
+          ext = ext.mid( i );
+      }
+      name = QString("unknown") += ext;
+    }
+  }
 
   QCString encoding = KMMsgBase::autoDetectCharset(mCharset,
     KMMessage::preferredCharsets(), name);
@@ -3996,15 +4023,11 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   msgPart->setBodyAndGuessCte((*it).data, allowedCTEs,
 			      !kernel->msgSender()->sendQuotedPrintable());
   kdDebug(5006) << "autodetected cte: " << msgPart->cteStr() << endl;
-  // ask the job for the mime type of the file
-  QCString mimeType = static_cast<KIO::MimetypeJob*>(job)->mimetype().latin1();
-  kdDebug(5006) << "According to KIO::MimetypeJob the file has the mime type "
-                << mimeType << endl;
   int slash = mimeType.find( '/' );
   if( slash == -1 )
     slash = mimeType.length();
-  msgPart->setTypeStr( mimeType.left( slash ) );
-  msgPart->setSubtypeStr( mimeType.mid( slash + 1 ) );
+  msgPart->setTypeStr( mimeType.left( slash ).latin1() );
+  msgPart->setSubtypeStr( mimeType.mid( slash + 1 ).latin1() );
   msgPart->setContentDisposition(QCString("attachment;\n\tfilename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
