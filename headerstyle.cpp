@@ -27,6 +27,8 @@
 #include <qstring.h>
 #include <qdatetime.h>
 #include <qapplication.h>
+#include <qstringlist.h>
+#include <qregexp.h>
 
 namespace KMail {
 
@@ -83,16 +85,12 @@ namespace KMail {
     if ( !strategy )
       strategy = HeaderStrategy::brief();
 
-    // ### provide temps for old code:
-    bool hasVCard = !vCardName.isEmpty();
-
     // ### from kmreaderwin begin
 
     // The direction of the header is determined according to the direction
     // of the application layout.
 
-    QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-    QString headerStr = QString("<div dir=\"%1\">").arg(dir);
+    QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
@@ -117,34 +115,34 @@ namespace KMail {
       dateString = message->dateStr();
     }
 
-    // case HdrBrief:
-    headerStr += "<div dir=\"" + subjectDir + "\">";
-
-    // ### use a stringlist and the join( ", " )
+    QString headerStr = QString("<div dir=\"%1\">\n"
+				"<div dir=\"%2\">\n").arg( dir ).arg( subjectDir );
 
     if ( strategy->showHeader( "subject" ) )
       headerStr += "<b style=\"font-size:130%\">" +
 			   strToHtml( message->subject() ) +
 			   "</b>";
 
-    if ( strategy->showHeader( "from" ) )
-      headerStr += "&nbsp; (" +KMMessage::emailAddrAsAnchor(message->from(),TRUE) + ", ";
+    QStringList headerParts;
+
+    if ( strategy->showHeader( "from" ) ) {
+      QString fromPart = KMMessage::emailAddrAsAnchor( message->from(), true );
+      if ( !vCardName.isEmpty() )
+	fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
+      headerParts << fromPart;
+    }
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
-      headerStr.append(i18n("CC: ")+
-		       KMMessage::emailAddrAsAnchor(message->cc(),TRUE) + ", ");
+      headerParts << i18n("CC: ") + KMMessage::emailAddrAsAnchor( message->cc(), true );
 
     if ( strategy->showHeader( "bcc" ) && !message->bcc().isEmpty() )
-      headerStr.append(i18n("BCC: ")+
-		       KMMessage::emailAddrAsAnchor(message->bcc(),TRUE) + ", ");
+      headerParts << i18n("BCC: ") + KMMessage::emailAddrAsAnchor( message->bcc(), true );
 
     if ( strategy->showHeader( "date" ) )
-      headerStr.append("&nbsp;"+strToHtml(message->dateShortStr()) + ")");
+      headerParts << strToHtml(message->dateShortStr());
 
-    // ### move to after from...
-    if ( hasVCard )
-      headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
-		       + i18n("[vCard]") + "</a>" );
+    // remove all empty (modulo whitespace) entries and joins them via ", \n"
+    headerStr += " (" + headerParts.grep( QRegExp( "\\S" ) ).join( ",\n" ) + ')';
 
     // ### check for balanced <div>'s (elsewhere, too).
     headerStr.append("</div>");
@@ -182,8 +180,6 @@ namespace KMail {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
-
-    bool hasVCard = !vCardName.isEmpty();
 
     // ### from kmreaderwin begin
 
@@ -229,7 +225,7 @@ namespace KMail {
     if ( strategy->showHeader( "from" ) ) {
       headerStr.append(i18n("From: ") +
 		       KMMessage::emailAddrAsAnchor(message->from(),FALSE));
-      if ( hasVCard )
+      if ( !vCardName.isEmpty() )
 	headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
 			 "\">" + i18n("[vCard]") + "</a>" );
     }
@@ -289,8 +285,6 @@ namespace KMail {
     if ( !strategy )
       strategy = HeaderStrategy::rich();
 
-    bool hasVCard = !vCardName.isEmpty();
-
     // ### from kmreaderwin begin
     // The direction of the header is determined according to the direction
     // of the application layout.
@@ -342,7 +336,7 @@ namespace KMail {
 			   "<td class=\"fancyHeaderDtls\">")
                          .arg(i18n("From: "))
                  + KMMessage::emailAddrAsAnchor(message->from(),FALSE)
-                 + ( hasVCard ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
+                 + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
                               : QString("") )
                  + ( message->headerField("Organization").isEmpty()

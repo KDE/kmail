@@ -20,7 +20,6 @@ class KMMessage;
 
 namespace KMail {
 
-  class HtmlWriter;
   class HeaderStrategy;
 
   /** This class encapsulates the visual appearance of message
