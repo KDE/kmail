@@ -48,14 +48,14 @@ public:
   /** Get or set the 'Content-Type' header field
    The member functions that involve enumerated types (ints)
    will work only for well-known types or subtypes. */
-  QString typeStr(void) const;
+  QCString typeStr(void) const;
   int type(void) const;
-  void setTypeStr(const QString &aStr);
+  void setTypeStr(const QCString &aStr);
   void setType(int aType);
   // Subtype
-  QString subtypeStr(void) const;
+  QCString subtypeStr(void) const;
   int subtype(void) const;
-  void setSubtypeStr(const QString &aStr);
+  void setSubtypeStr(const QCString &aStr);
   void setSubtype(int aSubtype);
 
   /** Set the 'Content-Type' by mime-magic from the contents of the body.
@@ -71,16 +71,16 @@ public:
   /** Get or set the 'Content-Transfer-Encoding' header field
     The member functions that involve enumerated types (ints)
     will work only for well-known encodings. */
-  QString contentTransferEncodingStr(void) const;
+  QCString contentTransferEncodingStr(void) const;
   int  contentTransferEncoding(void) const;
-  void setContentTransferEncodingStr(const QString &aStr);
+  void setContentTransferEncodingStr(const QCString &aStr);
   void setContentTransferEncoding(int aCte);
 
   /** Cte is short for ContentTransferEncoding.
       These functions are an alternative to the ones with longer names. */
-  QString cteStr(void) const { return contentTransferEncodingStr(); }
+  QCString cteStr(void) const { return contentTransferEncodingStr(); }
   int cte(void) const { return contentTransferEncoding(); }
-  void setCteStr(const QString& aStr) { setContentTransferEncodingStr(aStr); }
+  void setCteStr(const QCString& aStr) { setContentTransferEncodingStr(aStr); }
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
 
@@ -93,19 +93,19 @@ public:
   void setContentDisposition(const QString &aStr);
 
   /** Get the message part charset.*/
-  virtual QString charset(void) const;
+  virtual QCString charset(void) const;
 
   /** Set the message part charset. */
-  virtual void setCharset(const QString &aStr);
+  virtual void setCharset(const QCString &aStr);
 
   /** Returns name of filename part of 'Content-Disposition' header field,
       if present. */
   QString fileName(void) const;
 
 protected:
-  QString mType;
-  QString mSubtype;
-  QString mCte;
+  QCString mType;
+  QCString mSubtype;
+  QCString mCte;
   QString mContentDescription;
   QString mContentDisposition;
   QByteArray mBody;  // keep it null terminated since some callers
@@ -113,7 +113,7 @@ protected:
                      // should be fixed like in kmreaderwin.cpp.
                      // mBody should not be QCString since it can be binary.
   QString mName;
-  QString mCharset;
+  QCString mCharset;
   int mBodySize;
 };
 

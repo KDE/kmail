@@ -305,7 +305,7 @@ void KMComposeWin::readConfig(void)
         mDefCharset = "default";
   }
 
-  kdDebug(5006) << "Default charset: " << (const char*)mDefCharset << endl;
+  kdDebug(5006) << "Default charset: " << mDefCharset << endl;
 
   mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
@@ -414,7 +414,7 @@ void KMComposeWin::writeConfig(void)
   {
     KConfigGroupSaver saver(config, "Composer");
     config->writeEntry("signature", mAutoSign?"auto":"manual");
-    config->writeEntry("encoding", mDefEncoding);
+    config->writeEntry("encoding", (const char*)mDefEncoding);
     config->writeEntry("headers", mShowHeaders);
     config->writeEntry("sticky-transport", mBtnTransport.isChecked());
     config->writeEntry("sticky-identity", mBtnIdentity.isChecked());
@@ -1391,7 +1391,7 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setCharset(const QString& aCharset, bool forceDefault)
+void KMComposeWin::setCharset(const QCString& aCharset, bool forceDefault)
 {
   if ((forceDefault && mForceReplyCharset) || aCharset.isEmpty())
     mCharset = mDefCharset;
@@ -2156,21 +2156,21 @@ void KMComposeWin::setEditCharset()
 }
 
 //-----------------------------------------------------------------------------
-QString KMComposeWin::defaultCharset(void) const
+QCString KMComposeWin::defaultCharset(void) const
 {
   // first try
-  QString retval = KGlobal::locale()->charset();
+  QCString retval = KGlobal::locale()->charset().latin1();
   // however KGlobal::locale->charset() has a fallback value of iso-8859-1,
   // we try to be smarter
-  QString aStr = QTextCodec::codecForLocale()->name();
+  QCString aStr = QTextCodec::codecForLocale()->name();
   if ((retval == "iso-8859-1") && (aStr != "ISO 8859-1"))
   {
     // read locale if it really gives iso-8859-1
     KConfig *globalConfig = KGlobal::instance()->config();
     if (globalConfig)
     {
-      KConfigGroupSaver saver(globalConfig, QString::fromLatin1("Locale"));
-      retval = globalConfig->readEntry(QString::fromLatin1("Charset"));
+      KConfigGroupSaver saver(globalConfig, "Locale");
+      retval = globalConfig->readEntry("Charset");
       if (retval.isNull())  //this means iso-8859-1 was a fallback, make your own guess
       {
         //we basicly use LANG envvar here
@@ -2178,7 +2178,7 @@ QString KMComposeWin::defaultCharset(void) const
         QChar spaceChar(' ');
         for (int i = 0; i < (int)aStr.length(); i++)
            if (aStr[i] != spaceChar)
-             bStr += aStr[i].lower();
+             bStr += QChar(aStr[i]).lower();
          retval = KGlobal::charsets()->name(KGlobal::charsets()->nameToID(bStr));
       }
     }

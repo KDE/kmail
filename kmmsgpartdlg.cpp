@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <assert.h>
 #include <klocale.h>
+#include <kmimetypevalidator.h>
 
 
 //-----------------------------------------------------------------------------
@@ -40,6 +41,7 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly):
   //-----
   mEdtMimetype = new KComboBox(true, this);
   mEdtMimetype->setInsertionPolicy(QComboBox::NoInsertion);
+  mEdtMimetype->setValidator(new KMimeTypeValidator(mEdtMimetype));
   // here's only a small selection of what I think are very common mime types (dnaber, 2000-04-24):
   mEdtMimetype->insertItem("text/html");
   mEdtMimetype->insertItem("text/plain");
@@ -191,7 +193,8 @@ void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 //-----------------------------------------------------------------------------
 void KMMsgPartDlg::applyChanges(void)
 {
-  QString str, type, subtype;
+  QString str;
+  QCString type, subtype, cte;
   QCString body;
   int idx;
 
@@ -211,31 +214,31 @@ void KMMsgPartDlg::applyChanges(void)
   if (!str.isEmpty() || !mMsgPart->contentDescription().isEmpty())
     mMsgPart->setContentDescription(str);
 
-  if (mEdtMimetype->currentText() == "message/rfc822")
-  {
-    str = "7bit";
-  } else {
-    idx = mCbxEncoding->currentItem();
-    if (idx==1) str = "base64";
-    else if (idx==2) str = "quoted-printable";
-    else str = "8bit";
-  }
-  type = mEdtMimetype->currentText();
+  type = mEdtMimetype->currentText().latin1();
   idx = type.find('/');
   if (idx < 0) subtype = "";
   else
   {
-    subtype = type.mid(idx+1, 256);
+    subtype = type.mid(idx+1);
     type = type.left(idx);
   }
 
   mMsgPart->setTypeStr(type);
   mMsgPart->setSubtypeStr(subtype);
 
-  if (str != mMsgPart->cteStr())
+  if (subtype == "rfc822" && type == "message")
+  {
+    cte = "7bit";
+  } else {
+    idx = mCbxEncoding->currentItem();
+    if (idx==1) cte = "base64";
+    else if (idx==2) cte = "quoted-printable";
+    else cte = "8bit";
+  }
+  if (cte != mMsgPart->cteStr())
   {
     body.duplicate( mMsgPart->bodyDecoded() );
-    mMsgPart->setCteStr(str);
+    mMsgPart->setCteStr(cte);
     mMsgPart->setBodyEncoded(body);
   }
   kernel->kbp()->idle();

@@ -2246,37 +2246,38 @@ void KMMessage::readConfig(void)
 
 
 //-----------------------------------------------------------------------------
-QString KMMessage::charset(void) const
+QCString KMMessage::charset(void) const
 {
    DwMediaType &mType=mMsg->Headers().ContentType();
    mType.Parse();
    DwParameter *param=mType.FirstParameter();
    while(param){
-      if (QString(param->Attribute().c_str()).lower()=="charset")
-        return QString(param->Value().c_str());
+      if (!qstricmp(param->Attribute().c_str(), "charset"))
+        return param->Value().c_str();
       else param=param->Next();
    }
    return ""; // us-ascii, but we don't have to specify it
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::setCharset(const QString& bStr)
+void KMMessage::setCharset(const QCString& bStr)
 {
-   QString aStr = bStr;
+   QCString aStr = bStr;
    if (aStr.isNull())
        aStr = "";
    DwMediaType &mType=mMsg->Headers().ContentType();
    mType.Parse();
    DwParameter *param=mType.FirstParameter();
    while(param)
-      if (QString(param->Attribute().c_str()).lower()=="charset") break;
+      // FIXME use the mimelib functions here for comparison.
+      if (!qstricmp(param->Attribute().c_str(), "charset")) break;
       else param=param->Next();
    if (!param){
       param=new DwParameter;
       param->SetAttribute("charset");
       mType.AddParameter(param);
    }
-   param->SetValue((const char *)aStr);
+   param->SetValue(DwString(aStr));
    mType.Assemble();
 }
 

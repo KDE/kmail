@@ -1238,8 +1238,11 @@ void KMHeaders::forwardMsg ()
         msgCnt++;
       }
       kdDebug(5006) << "Done adding messages to the digest\n" << endl;
+      QCString tmp;
       msgPart->setTypeStr("MULTIPART");
-      msgPart->setSubtypeStr(QString("Digest; boundary=\"%1\"").arg(fwdMsg->mMsg->Headers().ContentType().Boundary().c_str()));
+      tmp.sprintf( "Digest; boundary=\"%s\"",
+		   fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
+      msgPart->setSubtypeStr( tmp );
       msgPart->setName("unnamed");
       msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
@@ -1343,7 +1346,7 @@ void KMHeaders::forwardAttachedMsg ()
   kernel->kbp()->busy();
   win = new KMComposeWin(fwdMsg, id);
 
-  kdDebug(5006) << "Doing forward as attachment\n" << endl;
+  kdDebug(5006) << "Doing forward as attachment" << endl;
   // iterate through all the messages to be forwarded
   for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
     int idx = mFolder->find(mb);
@@ -1359,7 +1362,7 @@ void KMHeaders::forwardAttachedMsg ()
     msgPart->setCte(DwMime::kCte8bit);   // is 8bit O.K.?
     msgPart->setContentDescription(thisMsg->from()+": "+thisMsg->subject());
     // THIS HAS TO BE AFTER setCte()!!!!
-    msgPart->setBodyEncoded(QCString(thisMsg->asString()));
+    msgPart->setBodyEncoded(thisMsg->asString());
     msgPart->setCharset("");
 
     thisMsg->setStatus(KMMsgStatusForwarded);

@@ -1,4 +1,3 @@
-#undef QT_NO_COMPAT
 #include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>
@@ -340,8 +339,9 @@ void KMKernel::
 /********************************************************************/
 void KMKernel::testDir(const char *_name)
 {
+  // FIXME: use Qt methods (QFile, QDir)
   DIR *dp;
-  QString c = getenv("HOME");
+  QCString c( getenv("HOME") );
   if(c.isEmpty())
   {
       KMessageBox::sorry(0, i18n("$HOME is not set!\n"
@@ -350,8 +350,8 @@ void KMKernel::testDir(const char *_name)
   }
 
   c += _name;
-  dp = opendir(c.data());
-  if (dp == NULL) ::mkdir(c.data(), S_IRWXU);
+  dp = opendir(c);
+  if (dp == NULL) ::mkdir(c, S_IRWXU);
   else closedir(dp);
 }
 
@@ -540,7 +540,7 @@ void KMKernel::cleanup(void)
 		|| (config->readBoolEntry("keep-small-trash", true)) ) {
       the_trashFolder->open();
       the_trashFolder->quiet(true);
-	}
+    }
 
     if (config->readBoolEntry("remove-old-mail-from-trash", true)) {
       int age;
@@ -594,13 +594,13 @@ void KMKernel::cleanup(void)
   kapp->config()->sync();
   //--- Sven's save attachments to /tmp start ---
   //kdDebug(5006) << "cleaned" << endl;
-  QString cmd;
+  QCString cmd;
   // This is a dir with attachments and it is not critical if they are
-  // left behind.
+  // left behind. FIXME: use Qt/KIO.
   if (!KMReaderWin::attachDir().isEmpty())
   {
-    cmd.sprintf("rm -rf '%s'", (const char*)KMReaderWin::attachDir().local8Bit() );
-    system (cmd.data()); // delete your owns only
+    cmd.sprintf("rm -rf '%s'", QFile::encodeName(KMReaderWin::attachDir()).data() );
+    system (cmd); // delete your owns only
   }
   //--- Sven's save attachments to /tmp end ---
 }
@@ -652,8 +652,6 @@ void KMKernel::ungrabPtrKb(void)
 // Message handler
 void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
-  QString appName = kapp->caption();
-  QString msg = aMsg;
   static int recurse=-1;
 
   recurse++;
@@ -661,17 +659,14 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
   switch (aType)
   {
   case QtDebugMsg:
-    kdDebug(5006) << msg;
-    break;
-
   case QtWarningMsg:
-    fprintf(stderr, "%s: %s\n", (const char*)kapp->name(), msg.data());
-    kdDebug(5006) << msg;
+    kdDebug(5006) << aMsg << endl;;
     break;
 
-  case QtFatalMsg:
+  case QtFatalMsg: // Hm, what about using kdFatal() here?
     ungrabPtrKb();
-    kdDebug(5006) << appName << " " << i18n("fatal error") << " " << msg.data() << endl;
+    kdDebug(5006) << kapp->caption() << " fatal error "
+		  << aMsg << endl;
     KMessageBox::error(0, aMsg);
     abort();
   }

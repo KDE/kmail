@@ -191,7 +191,7 @@ public:
    void setFolder(KMFolder* aFolder) { mFolder = aFolder; }
 
   /** Recode to the specified charset */
-   void setCharset(const QString& aCharset, bool forceDefault = FALSE);
+   void setCharset(const QCString& aCharset, bool forceDefault = FALSE);
 
   /** Sets the focus to the edit-widget and the cursor below the
     "On ... you wrote" line when hasMessage is true.
@@ -366,7 +366,7 @@ private:
   void doSend(int sendNow=-1, bool saveInDrafts = false);
 
   /** get default charset from locale settings */
-  QString defaultCharset(void) const;
+  QCString defaultCharset(void) const;
 
 protected:
   QWidget   mMainWidget;
@@ -388,7 +388,7 @@ protected:
   bool mAutoSign, mAutoPgpSign, mAutoDeleteMsg;
   KMFolder *mFolder;
   long mShowHeaders;
-  QString mDefEncoding;
+  QCString mDefEncoding;
   QString mExtEditor;
   bool useExtEditor;
   QList<_StringPair> mCustHeaders;
@@ -416,8 +416,8 @@ protected:
 
   KSelectAction *encodingAction;
 
-  QString mCharset;
-  QString mDefCharset;
+  QCString mCharset;
+  QCString mDefCharset;
   QFont mSavedEditorFont;
 
 private slots:

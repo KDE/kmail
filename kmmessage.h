@@ -298,10 +298,10 @@ public:
 					 bool stripped=TRUE);
 
   /** Get the message charset.*/
-  virtual QString charset(void) const;
+  virtual QCString charset(void) const;
 
   /** Set the message charset. */
-  virtual void setCharset(const QString& aStr);
+  virtual void setCharset(const QCString& aStr);
 
   /** Get the charset the user selected for the message to display */
   virtual QTextCodec* codec(void) const
