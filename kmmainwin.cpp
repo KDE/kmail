@@ -303,7 +303,8 @@ void KMMainWin::slotCheckMail()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotMenuActivated()
 {
-  getAccountMenu();
+  if ( !actMenu->isVisible() )
+      getAccountMenu();
 }
 
 
