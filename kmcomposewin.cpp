@@ -78,6 +78,7 @@ using KRecentAddress::RecentAddresses;
 #include <kdirwatch.h>
 #include <kstdguiitem.h>
 #include <kiconloader.h>
+#include <kpushbutton.h>
 //#include <keditlistbox.h>
 
 #include <kspell.h>
@@ -1981,6 +1982,7 @@ void KMComposeWin::slotAttachFile()
   KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
   fdlg.setOperationMode( KFileDialog::Other );
   fdlg.setCaption(i18n("Attach File"));
+  fdlg.okButton()->setGuiItem(KGuiItem(i18n("&Attach"),"fileopen"));
   fdlg.setMode(KFile::Files);
   fdlg.exec();
   KURL::List files = fdlg.selectedURLs();
@@ -2130,6 +2132,7 @@ void KMComposeWin::slotInsertFile()
 {
   KFileDialog fdlg(QString::null, QString::null, this, 0, TRUE);
   fdlg.setOperationMode( KFileDialog::Opening );
+  fdlg.okButton()->setText(i18n("&Insert"));
   fdlg.setCaption(i18n("Insert File"));
   fdlg.toolBar()->insertCombo(KMMsgBase::supportedEncodings(FALSE), 4711,
     false, 0, 0, 0);
