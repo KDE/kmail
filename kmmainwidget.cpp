@@ -1614,25 +1614,27 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   }
   writeFolderConfig();
   if ( mFolder ) {
-     disconnect( mFolder, SIGNAL( changed() ),
+    disconnect( mFolder, SIGNAL( changed() ),
            this, SLOT( updateMarkAsReadAction() ) );
-     disconnect( mFolder, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
+    disconnect( mFolder, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
            this, SLOT( updateMarkAsReadAction() ) );
-     disconnect( mFolder, SIGNAL( msgAdded( int ) ),
+    disconnect( mFolder, SIGNAL( msgAdded( int ) ),
            this, SLOT( updateMarkAsReadAction() ) );
-     disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
+    disconnect( mFolder, SIGNAL( msgRemoved( KMFolder * ) ),
            this, SLOT( updateMarkAsReadAction() ) );
 
   }
   mFolder = (KMFolder*)aFolder;
-  connect( mFolder, SIGNAL( changed() ),
+  if ( mFolder ) { // == 0 -> pointing to toplevel ("Welcome to KMail") folder
+    connect( mFolder, SIGNAL( changed() ),
            this, SLOT( updateMarkAsReadAction() ) );
-  connect( mFolder, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
+    connect( mFolder, SIGNAL( msgHeaderChanged( KMFolder*, int ) ),
            this, SLOT( updateMarkAsReadAction() ) );
-  connect( mFolder, SIGNAL( msgAdded( int ) ),
+    connect( mFolder, SIGNAL( msgAdded( int ) ),
            this, SLOT( updateMarkAsReadAction() ) );
-  connect( mFolder, SIGNAL( msgRemoved(KMFolder *) ),
+    connect( mFolder, SIGNAL( msgRemoved(KMFolder *) ),
            this, SLOT( updateMarkAsReadAction() ) );
+  }
 
   readFolderConfig();
   if (mMsgView)
