@@ -140,6 +140,10 @@ public:
 
   void updateListFilterAction();
 
+  /// Show/hide the embedded progress dialog
+  void setProgressDialogVisible( bool b );
+
+  /// @return a list of all KMMainWidgets. Warning, the list itself can be 0.
   static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
 
 public slots:
@@ -180,8 +184,6 @@ public slots:
 
   /** Show/hide the embedded progress dialog */
   void slotToggleProgressDialog();
-  /** Show the embedded progress dialog */
-  void slotShowProgressDialog();
 
 signals:
   void messagesTransfered( bool );

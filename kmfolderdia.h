@@ -221,7 +221,7 @@ public:
   KMFolder* folder() const { return mFolder; }
   void setFolder( KMFolder* folder );
   // Was mFolder just created? (This only makes sense from save())
-  // If Apply is clicked, then next time "new folder" will be false.
+  // If Apply is clicked, or OK proceeeds half-way, then next time "new folder" will be false.
   bool isNewFolder() const { return mIsNewFolder; }
 
   KMFolderDir* folderDir() const { return mFolderDir; }

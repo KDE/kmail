@@ -116,14 +116,12 @@ public:
 
 public slots:
 
-  virtual void slotEnable( bool );
-  virtual void slotJustPercent( unsigned long );
-  virtual void slotClean();
-  virtual void slotSetSSL( bool );
+  void slotClean();
+  void slotSetSSL( bool );
 
-  virtual void slotProgressItemAdded( ProgressItem *i );
-  virtual void slotProgressItemCompleted( ProgressItem *i );
-  virtual void slotProgressItemProgress( ProgressItem *i, unsigned int value );
+  void slotProgressItemAdded( ProgressItem *i );
+  void slotProgressItemCompleted( ProgressItem *i );
+  void slotProgressItemProgress( ProgressItem *i, unsigned int value );
 
 protected slots:
   void slotProgressDialogVisible( bool );
@@ -135,7 +133,7 @@ protected:
   SSLLabel* m_sslLabel;
   QPushButton* m_pButton;
 
-  enum Mode { None, Clean, Label, Progress };
+  enum Mode { None, Label, Progress };
 
   uint mode;
   bool m_bShowButton;

@@ -51,6 +51,7 @@
 
 #include "progressdialog.h"
 #include "progressmanager.h"
+#include "kmmainwidget.h"
 #include <qapplication.h>
 
 using KMail::ProgressItem;
@@ -209,8 +210,8 @@ void TransactionItem::addSubTransaction( ProgressItem* /*item*/ )
 
 // ---------------------------------------------------------------------------
 
-ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const char* name )
-    : OverlayWidget( alignWidget, parent, name )
+ProgressDialog::ProgressDialog( QWidget* alignWidget, KMMainWidget* mainWidget, const char* name )
+    : OverlayWidget( alignWidget, mainWidget, name )
 {
     setFrameStyle( QFrame::Panel | QFrame::Sunken ); // QFrame
     setSpacing( 0 ); // QHBox
@@ -326,8 +327,12 @@ void ProgressDialog::slotTransactionLabel( ProgressItem *item,
 void ProgressDialog::slotHide()
 {
   // check if a new item showed up since we started the timer. If not, hide
-  if ( mTransactionsToListviewItems.isEmpty() )
-    hide();
+  if ( mTransactionsToListviewItems.isEmpty() ) {
+    // [save a member var by simply getting the parent mainwidget from qwidget]
+    KMMainWidget* mainWidget = ::qt_cast<KMMainWidget *>( parentWidget() );
+    // not only hide(), but also toggling the statusbar icon
+    mainWidget->setProgressDialogVisible( false );
+  }
 }
 
 

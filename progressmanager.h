@@ -206,7 +206,7 @@ signals:
  * and notifies observers (progress dialogs) when their progress percent value
  * changes, when they are completed (by their owner), and when they are canceled.
  * Each ProgressItem emits those signals individually and the singleton
- * broadcasts them. Use the ::createProgressItem() statics to aquire an item
+ * broadcasts them. Use the ::createProgressItem() statics to acquire an item
  * and then call ->setProgress( int percent ) on it everytime you want to update
  * the item and ->setComplete() when the operation is done. This will delete the
  * item. Connect to the item's progressItemCanceled() signal to be notified when
@@ -287,6 +287,11 @@ class ProgressManager : public QObject
                                                bool canBeCanceled = true ) {
        return instance()->createProgressItemImpl( 0, id, label, status, canBeCanceled );
      }
+
+    /**
+     * @return true when there is no more progress item
+     */
+    bool isEmpty() const { return mTransactions.isEmpty(); }
 
   signals:
     /** @see ProgressItem::progressItemAdded() */

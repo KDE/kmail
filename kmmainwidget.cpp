@@ -2786,22 +2786,6 @@ void KMMainWidget::setupStatusBar()
   /* Create a progress dialog and hide it. */
   mProgressDialog = new KMail::ProgressDialog( bar, this );
   mProgressDialog->hide();
-
-  /* TODO remove old cruft */
-  /*
-  connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
-           mLittleProgress, SLOT(slotEnable( bool )));
-  connect( KMBroadcastStatus::instance(),
-           SIGNAL(statusProgressPercent( unsigned long )),
-           mLittleProgress,
-           SLOT(slotJustPercent( unsigned long )));
-  connect( KMBroadcastStatus::instance(),
-           SIGNAL(signalUsingSSL( bool )),
-           mLittleProgress,
-           SLOT(slotSetSSL(bool)) );
-  connect( KMBroadcastStatus::instance(), SIGNAL(resetRequested()),
-           mLittleProgress, SLOT(slotClean()));
-  */
 }
 
 
@@ -3369,11 +3353,14 @@ void KMMainWidget::updateFileMenu()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotShowProgressDialog()
+void KMMainWidget::setProgressDialogVisible( bool b )
 {
   if( mProgressDialog ) {
-    mProgressDialog->show();
-    emit progressDialogVisible( true );
+    if ( b )
+      mProgressDialog->show();
+    else
+      mProgressDialog->hide();
+    emit progressDialogVisible( b );
   }
 }
 
@@ -3381,10 +3368,6 @@ void KMMainWidget::slotShowProgressDialog()
 void KMMainWidget::slotToggleProgressDialog()
 {
   if( mProgressDialog ) {
-    if ( mProgressDialog->isShown() )
-      mProgressDialog->hide();
-    else if ( mProgressDialog->isHidden() )
-      mProgressDialog->show();
-    emit progressDialogVisible( mProgressDialog->isShown() );
+    setProgressDialogVisible( !mProgressDialog->isShown() );
   }
 }

@@ -36,7 +36,6 @@
 #include "kmacctcachedimap.h"
 using KMail::SieveConfig;
 
-#include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
@@ -237,7 +236,7 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
     QPtrList<KMMainWidget>* lst = KMMainWidget::mainWidgetList();
     if ( lst ) {
       for( QPtrListIterator<KMMainWidget> it( *lst ); *it; ++it ) {
-        (*it)->slotShowProgressDialog();
+        (*it)->setProgressDialogVisible( true );
       }
     }
   }

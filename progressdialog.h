@@ -39,6 +39,7 @@
 #include <qvbox.h>
 #include "overlaywidget.h"
 
+class KMMainWidget;
 namespace KMail {
   class ProgressItem;
   class TransactionItemListView;
@@ -119,7 +120,7 @@ class ProgressDialog : public OverlayWidget
     Q_OBJECT
 
 public:
-  ProgressDialog( QWidget* alignWidget, QWidget* parent = 0, const char* name = 0 );
+  ProgressDialog( QWidget* alignWidget, KMMainWidget* mainWidget, const char* name = 0 );
   ~ProgressDialog();
 
 protected slots:
