@@ -1484,7 +1484,7 @@ void KMMainWin::setupToolBar()
 			i18n("Delete message"));
 
   mToolBar->insertSeparator();
-  mToolBar->insertButton(BarIcon("openbook"), 0,
+  mToolBar->insertButton(BarIcon("contents"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotAddrBook()), TRUE,
 			i18n("Open addressbook..."));
@@ -1649,3 +1649,4 @@ void KMMainWin::slotMemInfo() {
   QMessageBox::information(0, "Malloc information", s);
 #endif
 }
+
