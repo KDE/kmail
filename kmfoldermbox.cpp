@@ -14,6 +14,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
+#include <kapplication.h>
 
 #include <stdio.h>
 #include <errno.h>
@@ -96,29 +97,60 @@ int KMFolderMbox::open()
       // silently regenerated
       if (KMFolder::IndexTooOld == index_status)
       {
-        bool busy = kernel->kbp()->isBusy();
-        if (busy) kernel->kbp()->idle();
-        if( 0 ) {
-          // #### FIXME: Either make the link work or remove the following code.
-          //             It's only there to get translated.
-        KMessageBox::information( 0,
-                                  i18n("<qt><p>The index of folder '%1' seems "
-                                       "to be out of date. To prevent message "
-                                       "corruption the index will be "
-                                       "regenerated. As a result deleted "
-                                       "messages might reappear and status "
-                                       "flags might be lost.</p>"
-                                       "<p>Please read the corresponding entry "
-                                       "in the <a href=\"%2\">FAQ section of the manual of "
-                                       "KMail</a> for "
-                                       "information about how to prevent this "
-                                       "problem from happening again.</p></qt>")
-                                  .arg(name())
-                                  .arg("help:/kmail/faq.html"),
-                                  i18n("Index Out of Date"),
-                                  "dontshowIndexRegenerationWarning");
+        QString msg = i18n("<qt><p>The index of folder '%2' seems "
+                           "to be out of date. To prevent message "
+                           "corruption the index will be "
+                           "regenerated. As a result deleted "
+                           "messages might reappear and status "
+                           "flags might be lost.</p>"
+                           "<p>Please read the corresponding entry "
+                           "in the <a href=\"%1\">FAQ section of the manual "
+                           "of KMail</a> for "
+                           "information about how to prevent this "
+                           "problem from happening again.</p></qt>")
+                      .arg("help:/kmail/faq.html")
+                      .arg(name());
+        // When KMail is starting up we have to show a non-blocking message
+        // box so that the initialization can continue. We don't show a
+        // queued message box when KMail isn't starting up because queued
+        // message boxes don't have a "Don't ask again" checkbox.
+        if (kernel->startingUp())
+        {
+          KConfigGroup configGroup( kapp->config(), "Notification Messages" );
+          bool showMessage =
+            configGroup.readBoolEntry( "showIndexRegenerationMessage", true );
+// ######### FIXME: Delete this when links can be made active in queued message boxes
+          msg = i18n("<qt><p>The index of folder '%1' seems "
+                     "to be out of date. To prevent message "
+                     "corruption the index will be "
+                     "regenerated. As a result deleted "
+                     "messages might reappear and status "
+                     "flags might be lost.</p>"
+                     "<p>Please read the corresponding entry "
+                     "in the FAQ section of the manual of "
+                     "KMail for "
+                     "information about how to prevent this "
+                     "problem from happening again.</p></qt>")
+                .arg(name());
+// ######### end of FIXME: Delete this when links can be made active in queued message boxes
+          if (showMessage)
+            KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
+                                           msg, i18n("Index Out of Date") );
+// FIXME: Make the link clickable when my patch has gone into kdelibs, IK 2002-10-07
+//                                            msg, i18n("Index Out of Date"),
+//                                            KMessageBox::AllowLink );
         }
-        else {
+        else
+        {
+          bool busy = kernel->kbp()->isBusy();
+          if (busy) kernel->kbp()->idle();
+          KMessageBox::information( 0, msg, i18n("Index Out of Date"),
+                                    "showIndexRegenerationMessage",
+                                    KMessageBox::AllowLink );
+          if (busy) kernel->kbp()->busy();
+        }
+// ######### FIXME-AFTER-MSG-FREEZE: Delete this after the msg freeze
+        if( 0 ) {
         KMessageBox::information( 0,
                                   i18n("<qt><p>The index of folder '%1' seems "
                                        "to be out of date. To prevent message "
@@ -132,10 +164,10 @@ int KMFolderMbox::open()
                                        "information about how to prevent this "
                                        "problem from happening again.</p></qt>")
                                   .arg(name()),
-                                  i18n("Index Out of Date"),
-                                  "dontshowIndexRegenerationWarning");
+                                         i18n("Index Out of Date"),
+                                         "dontshowIndexRegenerationWarning");
         }
-        if (busy) kernel->kbp()->busy();
+// ######### end of FIXME-AFTER-MSG-FREEZE: Delete this after the msg freeze
       }
       QString str;
       mIndexStream = NULL;
