@@ -78,8 +78,7 @@ QPixmap* KMHeaders::pixFiller = 0;
 QPixmap* KMHeaders::pixUndefined = 0;
 QPixmap* KMHeaders::pixEncryptionProblematic = 0;
 QPixmap* KMHeaders::pixSignatureProblematic = 0;
-QIconSet* KMHeaders::up = 0;
-QIconSet* KMHeaders::down = 0;
+
 bool KMHeaders::mTrue = true;
 bool KMHeaders::mFalse = false;
 
@@ -559,8 +558,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     pixUndefined = new QPixmap( UserIcon( "kmundefined" ) );
     pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
     pixSignatureProblematic = new QPixmap( UserIcon( "kmmsgsignatureproblematic" ) );
-    up = new QIconSet( UserIcon("abup" ), QIconSet::Small );
-    down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
 
   connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int )),
