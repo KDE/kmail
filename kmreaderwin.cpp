@@ -989,17 +989,34 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 QString KMReaderWin::writeMsgHeader()
 {
   QString vcname;
-  QString dir = ( QApplication::reverseLayout() ? "RTL" : "LTR" );
-  QString headerStr = QString("<div dir=%1>").arg(dir);
+
+// The direction of the header is determined according to the direction
+// of the application layout.
+
+  QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+  QString headerStr = QString("<div dir=\"%1\">").arg(dir);
+
+// However, the direction of the message subject within the header is
+// determined according to the contents of the subject itself. Since
+// the "Re:" and "Fwd:" prefixes would always cause the subject to be
+// considered left-to-right, they are ignored when determining its
+// direction. TODO: Implement this using the custom prefixes.
+
+  QString subjectDir = QString(mMsg->subject()
+                       .replace(QRegExp("^(Re:|Fwd:)"), "")
+                       .isRightToLeft() ? "rtl" : "ltr");
+
 
   if (mVcnum >= 0) vcname = mTempFiles.last();
 
   switch (mHeaderStyle)
   {
   case HdrBrief:
-    headerStr.append("<b style=\"font-size:130%\">" + strToHtml(mMsg->subject()) +
-                     "</b>&nbsp; (" +
-                     KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
+    headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
+                        strToHtml(mMsg->subject()) +
+                        "</b>&nbsp; (" +
+                        KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ")
+                        .arg(subjectDir);
     
     if (!mMsg->cc().isEmpty())
     {
@@ -1014,12 +1031,13 @@ QString KMReaderWin::writeMsgHeader()
       headerStr.append("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
     }
 
-    headerStr.append("<br>");
+    headerStr.append("</div>");
     break;
 
   case HdrStandard:
-    headerStr.append("<b style=\"font-size:130%\">" +
-                     strToHtml(mMsg->subject()) + "</b><br>");
+    headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
+                        strToHtml(mMsg->subject()) + "</b></div>")
+                        .arg(subjectDir);
     headerStr.append(i18n("From: ") +
                      KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
     if (mVcnum >= 0) 
@@ -1037,10 +1055,11 @@ QString KMReaderWin::writeMsgHeader()
   case HdrFancy:
   {
     // the subject line and box below for details
-    headerStr += QString("<div class=\"fancyHeaderSubj\">"
-                        "<b>%5</b></div>"
+    headerStr += QString("<div class=\"fancyHeaderSubj\" dir=\"%1\">"
+                        "<b>%2</b></div>"
                         "<div class=\"fancyHeaderDtls\">"
                         "<table class=\"fancyHeaderDtls\">")
+                        .arg(subjectDir)
 		        .arg(mMsg->subject().isEmpty()?
 			     i18n("No Subject") :
 			     strToHtml(mMsg->subject()));
@@ -1079,8 +1098,9 @@ QString KMReaderWin::writeMsgHeader()
     break;
   }
   case HdrLong:
-    headerStr.append("<b style=\"font-size:130%\">" +
-                     strToHtml(mMsg->subject()) + "</b><br>");
+    headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
+                        strToHtml(mMsg->subject()) + "</b></div>")
+                        .arg(subjectDir);
     headerStr.append(i18n("Date: ") + strToHtml(mMsg->dateStr())+"<br>");
     headerStr.append(i18n("From: ") +
                      KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
@@ -1120,9 +1140,9 @@ QString KMReaderWin::writeMsgHeader()
     break;
 
   case HdrAll:
-      // we force the direction to LTR here, even in a arabic/hebrew UI,
+      // we force the direction to ltr here, even in a arabic/hebrew UI,
       // as the headers are almost all Latin1
-    headerStr += "<div dir=\"LTR\">";
+    headerStr += "<div dir=\"ltr\">";
     headerStr += strToHtml(mMsg->headerAsString(), true);
     if (mVcnum >= 0) 
     {
@@ -1409,7 +1429,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	if ( paragState == New )
 	    htmlStr += "</div>";
 	
-	htmlStr += ( rightToLeft ? "<div dir=rtl>" : "<div dir=ltr>" );
+	htmlStr += ( rightToLeft ? "<div dir=\"rtl\">" : "<div dir=\"ltr\">" );
 	
 	/* start new quotelevel */
 	currQuoteLevel = actQuoteLevel;
