@@ -34,6 +34,7 @@ class KSelectAction;
 class KRadioAction;
 class KProgressDialog;
 class KMLittleProgressDlg;
+class KMSystemTray;
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
 template <typename T> class QGuardedPtr;
@@ -117,6 +118,8 @@ public:
   void folderSelected(KMFolder*, bool jumpToUnread);
   KMHeaders *headers() const { return mHeaders; }
   KMLittleProgressDlg* progressDialog() const;
+
+  void toggleSystray(bool enabled, int mode);
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -361,6 +364,7 @@ protected:
   QPtrList<KAction> mFilterActions;
   QPtrList<KMMetaFilterActionCommand> mFilterCommands;
 
+  KMSystemTray  *mSystemTray;
 signals:
   void messagesTransfered(bool);
   void captionChangeRequest( const QString & caption );

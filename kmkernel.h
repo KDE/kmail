@@ -32,7 +32,6 @@ class KMKernel;
 class KMMsgDict;
 class IdentityManager;
 class KProcess;
-class KMSystemTray;
 class KProgressDialog;
 class CryptPlugWrapperList;
 class ConfigureDialog;
@@ -177,8 +176,6 @@ public:
   /** See @ref slotCollectStdErr */
   QByteArray getCollectedStdErr(KProcess*);
 
-  void toggleSystray(bool, int);
-
   /** returns a reference to the first Mainwin or a temporary Mainwin */
   KMMainWin* mainWin();
 
@@ -228,7 +225,6 @@ private:
   KMFolder *the_trashFolder;
   KMFolder *the_draftsFolder;
 
-  KMSystemTray  *mSystemTray;
   KMFolderMgr *the_folderMgr, *the_imapFolderMgr, *the_searchFolderMgr;
   KMUndoStack *the_undoStack;
   KMAcctMgr *the_acctMgr;

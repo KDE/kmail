@@ -101,6 +101,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mFolderThreadSubjPref = true;
   mFolderHtmlPref = false;
   mCountJobs = 0;
+  mSystemTray = 0;
   mDestructed = false;
   mActionCollection = actionCollection;
   mTopLayout = new QVBoxLayout(this);
@@ -138,7 +139,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   if ( kernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
 
-  kernel->toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
+  toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
   // must be the last line of the constructor:
   mStartupDone = TRUE;
@@ -166,6 +167,7 @@ void KMMainWidget::destruct()
   writeFolderConfig();
   delete mHeaders;
   delete mFolderTree;
+  delete mSystemTray;
   mDestructed = true;
 }
 
@@ -370,7 +372,7 @@ void KMMainWidget::readConfig(void)
   {
 
     // Update systray
-    kernel->toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
+    toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
     //    kernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
@@ -2908,3 +2910,25 @@ void KMMainWidget::slotFolderTreeColumnsChanged()
   unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
 }
 
+void KMMainWidget::toggleSystray(bool enabled, int mode)
+{
+  kdDebug(5006) << "setupSystray called" << endl;
+  if (enabled && !mSystemTray)
+  {
+    mSystemTray = new KMSystemTray();
+  }
+  else if (!enabled && mSystemTray)
+  {
+    /** Get rid of system tray on user's request */
+    kdDebug(5006) << "deleting systray" << endl;
+    delete mSystemTray;
+    mSystemTray = 0;
+  }
+
+  /** Set mode of systemtray.  If mode has changed, tray will handle this */
+  if(mSystemTray)
+  {
+    kdDebug(5006) << "Setting system tray mode" << endl;
+    mSystemTray->setMode(mode);
+  }
+}

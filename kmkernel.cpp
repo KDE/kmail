@@ -108,7 +108,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   // Set up DCOP interface
   (void)new KMailICalIfaceImpl( mGroupware );
 
-  mSystemTray = 0;
   mXmlGuiInstance = 0;
   mDeadLetterTimer = 0;
   mDeadLetterInterval = 1000*120; // 2 minutes
@@ -138,9 +137,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
 KMKernel::~KMKernel ()
 {
-  delete mSystemTray;
-  mSystemTray = 0;
-
   QMap<KIO::Job*, putData>::Iterator it = mPutJobs.begin();
   while ( it != mPutJobs.end() )
   {
@@ -294,30 +290,6 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
 
   return DCOPRef(cWin);
 }
-
-void KMKernel::toggleSystray(bool enabled, int mode)
-{
-  kdDebug(5006) << "setupSystray called" << endl;
-  if (enabled && !mSystemTray)
-  {
-    mSystemTray = new KMSystemTray();
-  }
-  else if (!enabled && mSystemTray)
-  {
-    /** Get rid of system tray on user's request */
-    kdDebug(5006) << "deleting systray" << endl;
-    delete mSystemTray;
-    mSystemTray = 0;
-  }
-
-  /** Set mode of systemtray.  If mode has changed, tray will handle this */
-  if(mSystemTray)
-  {
-    kdDebug(5006) << "Setting system tray mode" << endl;
-    mSystemTray->setMode(mode);
-  }
-}
-
 
 int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
 {
