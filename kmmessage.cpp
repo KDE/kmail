@@ -1755,8 +1755,8 @@ void KMMessage::bodyPart(int aIdx, KMMessagePart* aPart) const
       DwParameter *param=headers->ContentType().FirstParameter();
       while(param)
       {
-        if (QString(param->Attribute().c_str())=="charset")
-          aPart->setCharset(param->Value().c_str());
+        if (QString(param->Attribute().c_str()).lower()=="charset")
+          aPart->setCharset(QString(param->Value().c_str()).lower());
         else if (QString(param->Attribute().c_str())=="name*")
           aPart->setName(KMMsgBase::decodeRFC2231String(
             param->Value().c_str()));
@@ -1864,7 +1864,7 @@ void KMMessage::setBodyPart(int aIdx, const KMMessagePart* aPart)
       DwParameter *param=headers.ContentType().FirstParameter();
       while(param)
       {
-	if (param->Attribute()=="charset") break;
+	if (QString(param->Attribute().c_str()).lower()=="charset") break;
 	else param=param->Next();
       }
       if (!param)
@@ -2150,7 +2150,7 @@ const QString KMMessage::charset(void) const
    mType.Parse();
    DwParameter *param=mType.FirstParameter();
    while(param){
-      if (param->Attribute()=="charset")
+      if (QString(param->Attribute().c_str()).lower()=="charset")
         return QString(param->Value().c_str());
       else param=param->Next();
    }
@@ -2167,7 +2167,7 @@ void KMMessage::setCharset(const QString& bStr)
    mType.Parse();
    DwParameter *param=mType.FirstParameter();
    while(param)
-      if (param->Attribute()=="charset") break;
+      if (QString(param->Attribute().c_str()).lower()=="charset") break;
       else param=param->Next();
    if (!param){
       param=new DwParameter;
