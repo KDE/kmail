@@ -1,3 +1,4 @@
+// -*- c++ -*-
 #ifndef KMMIMEPARTTREE_H
 #define KMMIMEPARTTREE_H
 
@@ -17,13 +18,17 @@ public:
   KMMimePartTree( KMReaderWin* readerWin,
                   QWidget* parent,
                   const char* name = 0 );
+  virtual ~KMMimePartTree(); 
 
 protected slots:
   void itemClicked( QListViewItem* );
   void itemRightClicked( QListViewItem*, const QPoint& );
   void slotSaveAs();
   void slotSaveAsEncoded();
-    
+
+protected:
+  void restoreLayoutIfPresent();
+
 protected:
   KMReaderWin* mReaderWin;
   KMMimePartTreeItem* mCurrentContextMenuItem;

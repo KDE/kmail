@@ -11,6 +11,8 @@
 #include "kmkernel.h"
 
 #include <kdebug.h>
+#include <kconfig.h>
+#include <kapplication.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
@@ -31,9 +33,9 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     addColumn( i18n("Type") );
     addColumn( i18n("Encoding") );
     addColumn( i18n("Size") );
-    setColumnWidthMode( 0, QListView::Manual );
     setColumnAlignment( 3, Qt::AlignRight );
-    header()->setStretchEnabled( true, 0 ); // first column gets all space
+
+    restoreLayoutIfPresent();
     connect( this, SIGNAL( clicked( QListViewItem* ) ),
              this, SLOT( itemClicked( QListViewItem* ) ) );
     connect( this, SIGNAL( contextMenuRequested( QListViewItem*,
@@ -44,6 +46,33 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     setShowToolTips( true );
     setSorting(-1);
 }
+
+
+static const char configGroup[] = "MimePartTree";
+
+KMMimePartTree::~KMMimePartTree() {
+  saveLayout( kapp->config(), configGroup );
+}
+
+
+void KMMimePartTree::restoreLayoutIfPresent() {
+  // first column: soaks up the rest of the space:
+  setColumnWidthMode( 0, Manual );
+  header()->setStretchEnabled( true, 0 );
+  // rest of the columns:
+  if ( kapp->config()->hasGroup( configGroup ) ) {
+    // there is a saved layout. use it...
+    restoreLayout( kapp->config(), configGroup );
+    // and disable Maximum mode:
+    for ( int i = 1 ; i < 4 ; ++i )
+      setColumnWidthMode( i, Manual );
+  } else {
+    // columns grow with their contents:
+    for ( int i = 1 ; i < 4 ; ++i )
+      setColumnWidthMode( i, Maximum );
+  }
+}
+
 
 void KMMimePartTree::itemClicked( QListViewItem* item )
 {
