@@ -112,7 +112,7 @@ QStringList Recipient::allTypeLabels()
 
 void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 {
-  if ( ev->key() == Key_Backspace  &&  text().isEmpty() )
+  if ( ev->key() == Key_Backspace  &&  isEmpty() )
   {
       ev->accept();
       emit deleteMe(); 
