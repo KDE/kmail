@@ -227,7 +227,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mForwardActionMenu->insert( mForwardAttachedAction );
   mSaveAsAction = new KAction( i18n("Save &As..."), "filesave", 0,
     this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
-  mPrintAction = new KAction( i18n( "&Print ..." ), "fileprint", 0, this,
+  mPrintAction = new KAction( i18n( "&Print..." ), "fileprint", 0, this,
 			      SLOT(slotPrintMsg()), ac, "search_print" );
   mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
 			      SLOT(slotClearSelection()), ac, "search_clear_selection" );
