@@ -1087,7 +1087,8 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("The state of KMail folders is saved to disk periodically to prevent status information loss in the result of a system crash."),
   I18N_NOOP("You can select your startup folder."),
   I18N_NOOP("A system tray applet has been implemented."),
-  I18N_NOOP("As-you-type spell checking is supported.")
+  I18N_NOOP("As-you-type spell checking is supported."),
+  I18N_NOOP("Improved threading; in particular, threading by subject.")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -1284,6 +1285,8 @@ void KMReaderWin::parseMsg(void)
 
 
   QColorGroup cg = kapp->palette().active();
+  QString fgColor = mPrinting ? QString("#000000") : c1.name();
+  QString bgColor = mPrinting ? QString("#FFFFFF") : c4.name();
   htmlWriter()->queue("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
 		      "Transitional//EN\">\n<html><head><title></title>"
 		      "<style type=\"text/css\">" +
@@ -1293,8 +1296,8 @@ void KMReaderWin::parseMsg(void)
       : QString("body { font-family: \"%1\"; font-size: %2px; "
         "color: %3; background-color: %4; }\n")
         .arg( bodyFontFamily() ).arg( pointsToPixel( fontSize() ) )
-        .arg( mPrinting ? QString("#000000") : c1.name() )
-        .arg( mPrinting ? QString("#FFFFFF") : c4.name() ) ) +
+        .arg( fgColor )
+        .arg( bgColor ) ) +
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")
       : QString("a { color: %1; ").arg(c2.name()) +
         "text-decoration: none; }" + // just playing
@@ -1309,21 +1312,28 @@ void KMReaderWin::parseMsg(void)
         .arg( cPgpEncrB.name() ) +
 
         QString( "table.rfc822 { width: 100%; "
-                 "border-top-style: solid; "
-                 "border-top-width: 1px; "
-                 "border-top-color: black; "
-                 "border-left-style: solid; "
-                 "border-left-width: 1px; "
-                 "border-left-color: black; "
-                 "border-bottom-style: solid; "
-                 "border-bottom-width: 1px; "
-                 "border-bottom-color: black; "
-                 "border-right-style: hidden; "
-                 "border-right-width: 0px; "
-                 "padding: 0px; } \n" ) +
+                 "background-color: %1; "
+                 "border: solid 1px black; "
+                 "margin-top: 10pt; "
+                 "margin-bottom: 10pt; } \n" )
+        .arg( bgColor ) +
         QString( "tr.rfc822H { font-weight: bold; }\n" ) +
         QString( "tr.rfc822B { font-weight: normal; }\n" ) +
 
+        QString( "table.textAtm { width: 100%; "
+                 "background-color: %1; "
+                 "border-width: 0px; "
+                 "margin-top: 10pt; "
+                 "margin-bottom: 10pt; } \n" )
+        .arg( fgColor ) +
+        QString( "tr.textAtmH { background-color: %1; "
+                 "font-weight: normal; }\n" )
+        .arg( bgColor ) +
+        QString( "tr.textAtmB { background-color: %1; "
+                 "font-weight: normal; }\n" )
+        .arg( bgColor ) +
+        QString( "tr.textAtmH td { padding: 3px; }\n"
+                 "tr.textAtmB td { padding: 3px; }\n" ) +
 
         QString( "table.signOkKeyOk { width: 100%; background-color: %1; "
                  "border-width: 0px; }\n" )
@@ -2512,79 +2522,106 @@ QString KMReaderWin::quotedHTML(const QString& s)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
-  bool quiet)
+QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
+                                                 int aPartNum )
+{
+  QString fileName = aMsgPart->fileName();
+  if( fileName.isEmpty() )
+    fileName = aMsgPart->name();
+
+  //--- Sven's save attachments to /tmp start ---
+  KTempFile *tempFile = new KTempFile( QString::null,
+                                       "." + QString::number( aPartNum ) );
+  tempFile->setAutoDelete( true );
+  QString fname = tempFile->name();
+  delete tempFile;
+
+  if( ::access( QFile::encodeName( fname ), W_OK ) != 0 )
+    // Not there or not writable
+    if( ::mkdir( QFile::encodeName( fname ), 0 ) != 0
+        || ::chmod( QFile::encodeName( fname ), S_IRWXU ) != 0 )
+      fname = QString::null; //failed create
+
+  if( !fname.isNull() ) {
+    mTempDirs.append( fname );
+    // strip off a leading path
+    int slashPos = fileName.findRev( '/' );
+    if( -1 != slashPos )
+      fileName = fileName.mid( slashPos + 1 );
+    if( fileName.isEmpty() )
+      fileName = "unnamed";
+    fname += "/" + fileName;
+
+    if( kByteArrayToFile( aMsgPart->bodyDecodedBinary(), fname, false, false,
+                          false ) )
+      mTempFiles.append( fname );
+    else
+      fname = QString::null;
+  }
+  
+  return fname;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::writePartIcon( KMMessagePart* aMsgPart, int aPartNum,
+                                 bool quiet )
 {
   QString iconName, href, label, comment, contDisp;
-  QString fileName;
 
-  if(aMsgPart == 0) {
+  if( aMsgPart == 0 ) {
     kdDebug(5006) << "writePartIcon: aMsgPart == 0\n" << endl;
     return;
   }
 
   kdDebug(5006) << "writePartIcon: PartNum: " << aPartNum << endl;
 
+  label = aMsgPart->fileName();
+  if( label.isEmpty() )
+    label = aMsgPart->name();
+  if( label.isEmpty() )
+    label = "unnamed";
+  label = KMMessage::quoteHtmlChars( label, true );
+
   comment = aMsgPart->contentDescription();
   comment = KMMessage::quoteHtmlChars( comment, true );
 
-  fileName = aMsgPart->fileName();
-  if (fileName.isEmpty()) fileName = aMsgPart->name();
-  label = KMMessage::quoteHtmlChars( fileName, true );
+  QString fileName = writeMessagePartToTempFile( aMsgPart, aPartNum );
 
-//--- Sven's save attachments to /tmp start ---
-  KTempFile *tempFile = new KTempFile(QString::null,
-    "." + QString::number(aPartNum));
-  tempFile->setAutoDelete(true);
-  QString fname = tempFile->name();
-  delete tempFile;
-
-  bool ok = true;
-
-  if (access(QFile::encodeName(fname), W_OK) != 0) // Not there or not writable
-    if (mkdir(QFile::encodeName(fname), 0) != 0
-      || chmod (QFile::encodeName(fname), S_IRWXU) != 0)
-        ok = false; //failed create
-
-  if (ok)
-  {
-    mTempDirs.append(fname);
-    //fileName.replace(QRegExp("[/\"\']"),"");
-    // strip off a leading path
-    int slashPos = fileName.findRev( '/' );
-    if( -1 != slashPos )
-      fileName = fileName.mid( slashPos + 1 );
-    if (fileName.isEmpty()) fileName = "unnamed";
-    fname += "/" + fileName;
-
-    if (!kByteArrayToFile(aMsgPart->bodyDecodedBinary(), fname, false, false, false))
-      ok = false;
-    mTempFiles.append(fname);
-  }
-  if (ok)
-  {
-    href = QString("file:")+KURL::encode_string(fname);
+  if( !fileName.isEmpty() ) {
+    href = QString("file:") + KURL::encode_string( fileName );
     //debug ("Wrote attachment to %s", href.data());
   }
   else {
-    //--- Sven's save attachments to /tmp end ---
-    href = QString("part://%1").arg(aPartNum+1);
+    href = QString("part://%1").arg( aPartNum + 1 );
   }
 
   // sven: for viewing images inline
-  if (mInlineImage)
+  if( mInlineImage )
     iconName = href;
-  else
+  else {
     iconName = aMsgPart->iconName();
-  if (iconName.right(14)=="mime_empty.png")
-  {
-    aMsgPart->magicSetType();
-    iconName = aMsgPart->iconName();
+    if( iconName.right( 14 ) == "mime_empty.png" ) {
+      aMsgPart->magicSetType();
+      iconName = aMsgPart->iconName();
+    }
   }
-  if (!quiet)
-    htmlWriter()->queue("<table><tr><td><a href=\"" + href + "\"><img src=\"" +
-                   iconName + "\" border=\"0\">" + label +
-                   "</a></td></tr></table>" + comment + "<br>");
+
+  if( !quiet )
+    if( mInlineImage )
+      // show the filename of the image below the embedded image
+      htmlWriter()->queue( "<div><a href=\"" + href + "\">"
+                           "<img src=\"" + iconName + "\" border=\"0\"></a>"
+                           "</div>"
+                           "<div><a href=\"" + href + "\">" + label + "</a>"
+                           "</div>"
+                           "<div>" + comment + "</div><br>" );
+    else
+      // show the filename next to the image
+      htmlWriter()->queue( "<div><a href=\"" + href + "\"><img src=\"" +
+                           iconName + "\" border=\"0\">" + label +
+                           "</a></div>"
+                           "<div>" + comment + "</div><br>" );
 }
 
 

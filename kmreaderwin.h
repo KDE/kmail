@@ -364,6 +364,11 @@ protected:
     string. May contain body parts. */
   virtual void writeHTMLStr(const QString& aStr);
 
+  /** Writes the given message part to a temporary file and returns the
+      name of this file or QString::null if writing failed.
+  */
+  QString writeMessagePartToTempFile( KMMessagePart* msgPart, int partNumber );
+
   /** Create a nice icon with comment and name for the given
     body part, appended to the HTML view. Content type and subtype
     are set afterwards if they were not before. */

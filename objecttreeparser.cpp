@@ -49,6 +49,7 @@
 #include <qtextcodec.h>
 #include <qregexp.h>
 #include <qfile.h>
+#include <qapplication.h>
 
 // other headers
 #include <sys/stat.h>
@@ -307,32 +308,34 @@ namespace KMail {
 	  break;
 	}
 
-	if( !bDone && mReader &&
-	    ( attachmentStrategy() != AttachmentStrategy::hidden() ||
-	      ( curNode && !curNode->isAttachment() ) ||
-	      showOnlyOneMimePart() ) ) {
+	if( !bDone
+            && mReader
+            && ( attachmentStrategy() != AttachmentStrategy::hidden()
+                 || showOnlyOneMimePart()
+                 || !curNode->mRoot /* message is an attachment */ ) ) {
 	  bool asIcon = true;
-	  if (showOnlyOneMimePart()) {
-	    asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+	  if( showOnlyOneMimePart() ) {
+	    asIcon = !curNode->hasContentDispositionInline();
 	  }
-	  else if ( processResult.neverDisplayInline() ) {
-	    asIcon = true;
-	  } else {
+	  else if ( !processResult.neverDisplayInline() ) {
 	    const AttachmentStrategy * as = attachmentStrategy();
 	    if ( as == AttachmentStrategy::iconic() ) 
 	      asIcon = true;
 	    else if ( as == AttachmentStrategy::inlined() )
 	      asIcon = false;
 	    else if ( as == AttachmentStrategy::smart() )
-              asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+              asIcon = !curNode->hasContentDispositionInline();
 	    else if ( as == AttachmentStrategy::hidden() )
               // the node is the message! show it!
               asIcon = false;
 	  }
-	  bool forcedIcon = !processResult.isImage() && curNode->type() != DwMime::kTypeText;
-	  if (forcedIcon) asIcon = true;
+          // neither image nor text -> show as icon
+	  if( !processResult.isImage()
+              && curNode->type() != DwMime::kTypeText )
+            asIcon = true;
 	  if( asIcon ) {
-	    if (!forcedIcon || attachmentStrategy() != AttachmentStrategy::hidden() )
+	    if( attachmentStrategy() != AttachmentStrategy::hidden() 
+                || showOnlyOneMimePart() )
 	      mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
 	  } else if ( processResult.isImage() ) {
 	    mReader->mInlineImage = true;
@@ -856,12 +859,12 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       mResultString = cstr;
       if( !mReader ) {
 	bDone = true;
-      } else if( attachmentStrategy() == AttachmentStrategy::inlined() ||
-		 (attachmentStrategy() == AttachmentStrategy::smart() &&
-		  !curNode->isAttachment()) ||
-		 (attachmentStrategy() == AttachmentStrategy::iconic() &&
-		  mReader->mIsFirstTextPart) ||
-		 showOnlyOneMimePart() )
+      }
+      else if( mReader->mIsFirstTextPart
+               || attachmentStrategy() == AttachmentStrategy::inlined()
+               || ( attachmentStrategy() == AttachmentStrategy::smart()
+                    && curNode->hasContentDispositionInline() )
+               || showOnlyOneMimePart() )
       {
 	// ### move to OTP?
 	mReader->mIsFirstTextPart = false;
@@ -974,17 +977,46 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       kdDebug(5006) << "default " << endl;
       QCString cstr( curNode->msgPart().bodyDecoded() );
       //resultingRawData += cstr;
-      if( !mReader || attachmentStrategy() == AttachmentStrategy::inlined() ||
-	  (attachmentStrategy() == AttachmentStrategy::smart() &&
-	   !curNode->isAttachment()) ||
-	  (attachmentStrategy() == AttachmentStrategy::iconic() &&
-	   mReader->mIsFirstTextPart) ||
-	  showOnlyOneMimePart() )
+      if( !mReader
+          || mReader->mIsFirstTextPart
+          || attachmentStrategy() == AttachmentStrategy::inlined()
+          || ( attachmentStrategy() == AttachmentStrategy::smart()
+               && curNode->hasContentDispositionInline() )
+          || showOnlyOneMimePart() )
 	{
-	  if (mReader) mReader->mIsFirstTextPart = false;
-	  if ( mReader && curNode->isAttachment() && !showOnlyOneMimePart() )
-	    htmlWriter()->queue("<br><hr><br>");
-	  if ( mReader ) {
+	  if( mReader ) {
+            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() ) {
+              QString label = curNode->msgPart().fileName();
+              if (label.isEmpty())
+                label = curNode->msgPart().name();
+              if( label.isEmpty() )
+                label = "unnamed";
+              label = KMMessage::quoteHtmlChars( label, true );
+
+              QString comment = curNode->msgPart().contentDescription();
+              comment = KMMessage::quoteHtmlChars( comment, true );
+
+              QString fileName =
+                mReader->writeMessagePartToTempFile( &curNode->msgPart(),
+                                                     curNode->nodeId() );
+
+              QString htmlStr;
+              QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+
+              htmlStr += "<table cellspacing=\"1\" class=\"textAtm\">"
+                         "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
+              if( !fileName.isEmpty() )
+                htmlStr += "<a href=\"" + QString("file:")
+                         + KURL::encode_string( fileName ) + "\">"
+                         + label + "</a>";
+              else
+                htmlStr += label;
+              if( !comment.isEmpty() )
+                htmlStr += "<br>" + comment;
+              htmlStr += "</td></tr><tr class=\"textAtmB\"><td>";
+
+              htmlWriter()->queue( htmlStr );
+            }
 	    // process old style not-multipart Mailman messages to
 	    // enable verification of the embedded messages' signatures
 	    if ( subtype == DwMime::kSubtypePlain &&
@@ -1100,6 +1132,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    if( !bDone )
 	      writeBodyString( cstr, curNode->trueFromAddress(),
 			       codecFor( curNode ), result );
+            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() ) {
+              htmlWriter()->queue( "</td></tr></table>" );
+            }
+            mReader->mIsFirstTextPart = false;
 	  }
 	  mResultString = cstr;
 	  bDone = true;
@@ -1431,9 +1467,11 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     switch( subtype  ){
     case DwMime::kSubtypeRfc822: {
       kdDebug(5006) << "RfC 822" << endl;
-      if( mReader && attachmentStrategy() != AttachmentStrategy::inlined() &&
-	  (attachmentStrategy() != AttachmentStrategy::smart() ||
-	   curNode->isAttachment()) && !showOnlyOneMimePart())
+      if( mReader
+          && attachmentStrategy() != AttachmentStrategy::inlined()
+          && ( attachmentStrategy() != AttachmentStrategy::smart()
+               || !curNode->hasContentDispositionInline() )
+          && !showOnlyOneMimePart() )
 	break;
 
       if( curNode->mChild ) {
