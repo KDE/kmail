@@ -312,10 +312,10 @@ void KMTransportDialog::makeSmtpPage()
   mSmtp.authGroup = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page2 );
   mSmtp.authPlain = new QRadioButton( i18n("Please translate this "
-    "authentification method only, if you have a good reason", "PLAIN"),
+    "authentication method only if you have a good reason", "PLAIN"),
     mSmtp.authGroup  );
   mSmtp.authLogin = new QRadioButton( i18n("Please translate this "
-    "authentification method only, if you have a good reason", "LOGIN"),
+    "authentication method only if you have a good reason", "LOGIN"),
     mSmtp.authGroup );
   mSmtp.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), mSmtp.authGroup );
   mSmtp.authDigestMd5 = new QRadioButton( i18n("DIGEST-MD5"), mSmtp.authGroup );

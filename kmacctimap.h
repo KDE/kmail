@@ -63,7 +63,7 @@ public:
   virtual void setPasswd(const QString&, bool storeInConfig=FALSE);
 
   /**
-   * Imap authentificaion method
+   * Imap authentication method
    */
   QString auth(void) const { return mAuth; }
   virtual void setAuth(const QString&);
