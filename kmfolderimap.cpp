@@ -73,6 +73,7 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mHasChildren = ChildrenUnknown;
   mMailCheckProgressItem = 0;
   mListDirProgressItem = 0;
+  mAddMessageProgressItem = 0;
 
   connect (this, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
            this, SLOT( slotCompleteMailCheckProgress()) );
@@ -310,6 +311,11 @@ void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
 {
+  if ( mAddMessageProgressItem )
+  {
+    mAddMessageProgressItem->setComplete();
+    mAddMessageProgressItem = 0;
+  }
   KMFolder *aFolder = msgList.first()->parent();
   Q_UINT32 serNum = 0;
   if (aFolder) serNum = msgList.first()->getMsgSerNum();
@@ -318,7 +324,8 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
   {
     if ( undoId == -1 )
       undoId = kmkernel->undoStack()->newUndoAction( aFolder, folder() );
-    kmkernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
+    if ( msg->getMsgSerNum() > 0 )
+      kmkernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
     // Remember the status, so it can be transfered to the new message.
     mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status(), serNum));
     msg->setTransferInProgress( false );
@@ -332,11 +339,15 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 int KMFolderImap::addMsg(KMMessage* aMsg, int* aIndex_ret)
 {
-  QPtrList<KMMessage> list; list.append(aMsg);
-  return addMsg(list, aIndex_ret);
+  QPtrList<KMMessage> list; 
+  list.append(aMsg);
+  QValueList<int> index;
+  int ret = addMsg(list, index);
+  aIndex_ret = &index.first();
+  return ret;
 }
 
-int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
+int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, QValueList<int>& aIndex_ret)
 {
   KMMessage *aMsg = msgList.getFirst();
   KMFolder *msgParent = aMsg->parent();
@@ -391,7 +402,6 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
             imapJob->start();
           }
         }
-        if (aIndex_ret) *aIndex_ret = -1;
         return 0;
       }
       else
@@ -402,9 +412,11 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
         while ( (msg = it.current()) != 0 )
         {
           ++it;
-          if (!canAddMsgNow(msg, aIndex_ret))
+          int index;
+          if (!canAddMsgNow(msg, &index)) {
+            aIndex_ret << index;
             msgList.remove(msg);
-          else {
+          } else {
             if (!msg->transferInProgress())
               msg->setTransferInProgress(true);
           }
@@ -413,24 +425,36 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
     } // if imap
   }
 
-  for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
+  if ( !msgList.isEmpty() )
   {
     // transfer from local folders or other accounts
-    if (msgParent && !msg->isMessage())
+    QPtrListIterator<KMMessage> it( msgList );
+    KMMessage* msg;
+    while ( ( msg = it.current() ) != 0 ) 
     {
-      int idx = msgParent->find(msg);
-      assert(idx != -1);
-      msg = msgParent->getMsg(idx);
+      ++it;
+      if ( !msg->transferInProgress() )
+        msg->setTransferInProgress( true );
     }
-    if (!msg->transferInProgress())
-      msg->setTransferInProgress(true);
-    imapJob = new ImapJob(msg, ImapJob::tPutMessage, this);
-    connect(imapJob, SIGNAL(messageStored(KMMessage*)),
-            SLOT(addMsgQuiet(KMMessage*)));
+    imapJob = new ImapJob( msgList, QString::null, ImapJob::tPutMessage, this );
+    if ( !mAddMessageProgressItem )
+    {
+      mAddMessageProgressItem = ProgressManager::createProgressItem(
+          "ImapJobUploading"+ProgressManager::getUniqueID(),
+          i18n("Uploading message data"),
+          i18n("Destination folder: ") + folder()->prettyURL(),
+          true,
+          mAccount->useSSL() || mAccount->useTLS() );
+      mAddMessageProgressItem->setTotalItems( msgList.count() );
+      connect ( mAddMessageProgressItem, SIGNAL( progressItemCanceled( KPIM::ProgressItem*)),
+          mAccount, SLOT( slotAbortRequested( KPIM::ProgressItem* ) ) );
+      imapJob->setParentProgressItem( mAddMessageProgressItem );
+    }
+    connect( imapJob, SIGNAL( messageCopied(QPtrList<KMMessage>) ),
+        SLOT( addMsgQuiet(QPtrList<KMMessage>) ) );
     imapJob->start();
   }
 
-  if (aIndex_ret) *aIndex_ret = -1;
   return 0;
 }
 

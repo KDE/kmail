@@ -204,6 +204,12 @@ public:
     return addMsg(msg, index_return);
   }
 
+  /** 
+   * Adds the given messages to the folder. Behaviour is identical 
+   * to addMsg(msg) 
+   */
+  virtual int addMsg( QPtrList<KMMessage>&, QValueList<int>& index_return );
+
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
   void emitMsgAddedSignals(int idx);

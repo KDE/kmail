@@ -1636,6 +1636,7 @@ KMCommand::Result KMCopyCommand::execute()
   int idx = -1;
   bool isMessage;
   QPtrList<KMMessage> list;
+  QPtrList<KMMessage> localList;
 
   if (mDestFolder && mDestFolder->open() != 0)
   {
@@ -1664,6 +1665,7 @@ KMCommand::Result KMCopyCommand::execute()
         (static_cast<KMFolderImap*>(srcFolder->storage())->account() ==
          static_cast<KMFolderImap*>(mDestFolder->storage())->account()))
     {
+      // imap => imap with same account
       list.append(msg);
     } else {
       newMsg = new KMMessage;
@@ -1676,6 +1678,7 @@ KMCommand::Result KMCopyCommand::execute()
 
       if (srcFolder && !newMsg->isComplete())
       {
+        // imap => others
         mWaitingForMsgs.append( msg->getMsgSerNum() );
         disconnect(mDestFolder, SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
             this, SLOT(slotMsgAdded(KMFolder*, Q_UINT32)));
@@ -1688,12 +1691,8 @@ KMCommand::Result KMCopyCommand::execute()
                 mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
         job->start();
       } else {
-        int rc, index;
-        mDestFolder->open();
-        rc = mDestFolder->addMsg(newMsg, &index);
-        if (rc == 0 && index != -1)
-          mDestFolder->unGetMsg( mDestFolder->count() - 1 );
-        mDestFolder->close();
+        // local => others
+        localList.append(newMsg);
       }
     }
 
@@ -1704,6 +1703,16 @@ KMCommand::Result KMCopyCommand::execute()
     }
 
   } // end for
+
+  if (!localList.isEmpty())
+  {
+    QValueList<int> index;
+    mDestFolder->addMsg( localList, index );
+    for ( QValueListIterator<int> it = index.begin(); it != index.end(); ++it ) {
+      mDestFolder->unGetMsg( *it );
+    }
+  }
+  
   // only close the folder if we're done
   if ( mWaitingForMsgs.isEmpty() )
     mDestFolder->close();

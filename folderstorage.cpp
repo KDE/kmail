@@ -576,10 +576,13 @@ int FolderStorage::moveMsg(QPtrList<KMMessage> msglist, int* aIndex_ret)
   if (msgParent)
     msgParent->open();
 
+  QValueList<int> index;
   open();
-  //FIXME : is it always imap ?
-  int rc = static_cast<KMFolderImap*>(this)->addMsg(msglist, aIndex_ret); //yuck: Don
+  int rc = addMsg(msglist, index);
   close();
+  // FIXME: we want to have a QValueList to pass it back, so change this method
+  if ( !index.isEmpty() )
+    aIndex_ret = &index.first();
 
   if (msgParent)
     msgParent->close();
@@ -1060,6 +1063,21 @@ void FolderStorage::search( KMSearchPattern* pattern, Q_UINT32 serNum )
     mySerNum = serNum;
 
   emit searchDone( folder(), mySerNum, pattern );
+}
+
+//-----------------------------------------------------------------------------
+int FolderStorage::addMsg( QPtrList<KMMessage>& msgList, QValueList<int>& index_ret )
+{
+  int ret = 0;
+  int index;
+  for ( QPtrListIterator<KMMessage> it( msgList ); *it; ++it )
+  {
+    int aret = addMsg( *it, &index );
+    index_ret << index;
+    if ( aret != 0 ) // error condition
+      ret = aret;
+  }
+  return ret;
 }
 
 #include "folderstorage.moc"

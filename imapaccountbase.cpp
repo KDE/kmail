@@ -489,6 +489,7 @@ namespace KMail {
   void ImapAccountBase::slotSchedulerSlaveError(KIO::Slave *aSlave, int errorCode,
       const QString &errorMsg)
   {
+    kdDebug() << k_funcinfo << endl;
       if (aSlave != mSlave) return;
       handleError( errorCode, errorMsg, 0, QString::null, true );
       if ( mAskAgain )
@@ -503,6 +504,7 @@ namespace KMail {
   //-----------------------------------------------------------------------------
   void ImapAccountBase::slotSchedulerSlaveConnected(KIO::Slave *aSlave)
   {
+    kdDebug() << k_funcinfo << endl;
       if (aSlave != mSlave) return;
       mSlaveConnected = true;
       mNoopTimer.start( 60000 ); // make sure we start sending noops

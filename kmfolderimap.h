@@ -321,7 +321,7 @@ public slots:
     Please note that the message is added as is to the folder and the folder
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = 0);
-  int addMsg(QPtrList<KMMessage>&, int* index_return = 0);
+  virtual int addMsg(QPtrList<KMMessage>&, QValueList<int>& index_return);
 
   /** Copy the messages to this folder */
   void copyMsg(QPtrList<KMMessage>& msgList/*, KMFolder* parent*/);
@@ -457,6 +457,7 @@ private:
   bool        mAlreadyRemoved;
   QGuardedPtr<ProgressItem> mMailCheckProgressItem;
   ProgressItem *mListDirProgressItem;
+  ProgressItem *mAddMessageProgressItem;
   QStringList mFoldersPendingCreation;
 };
 

@@ -229,6 +229,7 @@ void KMAcctImap::cancelMailCheck()
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
+  kdDebug() << "processNewMail " << mCheckingSingleFolder << ",status="<<makeConnection()<<endl;
   if (!mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
       makeConnection() == ImapAccountBase::Error)
   {

@@ -334,6 +334,11 @@ int KMFolder::addMsgKeepUID( KMMessage* msg, int* index_return )
   return mStorage->addMsgKeepUID( msg, index_return );
 }
 
+int KMFolder::addMsg( QPtrList<KMMessage>& list, QValueList<int>& index_return )
+{
+  return mStorage->addMsg( list, index_return );
+}
+
 void KMFolder::emitMsgAddedSignals( int idx )
 {
   mStorage->emitMsgAddedSignals( idx );

@@ -177,6 +177,12 @@ public:
       header from the mail. */
   int addMsgKeepUID(KMMessage* msg, int* index_return = 0);
 
+  /** 
+   * Adds the given messages to the folder. Behaviour is identical 
+   * to addMsg(msg) 
+   */
+  int addMsg(QPtrList<KMMessage>&, QValueList<int>& index_return);
+
   /** Called by derived classes implementation of addMsg.
       Emits msgAdded signals */
   void emitMsgAddedSignals(int idx);
