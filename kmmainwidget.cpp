@@ -358,6 +358,7 @@ void KMMainWidget::readConfig(void)
     // sanders - Maybe this fixes a bug?
 
   }
+  updateMessageMenu();
 }
 
 
