@@ -423,9 +423,10 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   bool iCalAutoSend = false;
   bool noWordWrap = false;
+  bool isICalInvitation = false;
   KConfigGroup options( config(), "Groupware" );
   if ( !attachData.isEmpty() ) {
-    bool isICalInvitation = attachName == "cal.ics" &&
+    isICalInvitation = attachName == "cal.ics" &&
       attachType == "text" &&
       attachSubType == "calendar" &&
       attachParamAttr == "method";
