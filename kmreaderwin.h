@@ -196,6 +196,7 @@ protected:
   int mAtmInline;
   int mAtmCurrent;
   KMMessage *mMsg, *mMsgBuf;
+  int mMsgBufSize;
   QString mMsgBufMD5;
   KHTMLPart *mViewer;
   HeaderStyle mHeaderStyle;

@@ -79,6 +79,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 
   mAutoDelete = FALSE;
   mMsg = 0;
+  mMsgBuf = 0;
+  mMsgBufMD5 = "";
+  mMsgBufSize = -1;
 
   initHtmlWidget();
   readConfig();
@@ -368,16 +371,20 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-  if (mMsgBuf && mMsg && !mMsg->msgIdMD5().isEmpty() && (mMsgBufMD5 == mMsg->msgIdMD5()))
+  if (mMsgBuf && mMsg && !mMsg->msgIdMD5().isEmpty() && (mMsgBufMD5 == mMsg->msgIdMD5()) && (mMsgBufSize == mMsg->msgSize()))
     return;
 
   mMsgBuf = mMsg;
-  if (mMsgBuf)
+  if (mMsgBuf) {
     mMsgBufMD5 = mMsgBuf->msgIdMD5();
-  else
+    mMsgBufSize = mMsgBuf->msgSize();
+  }
+  else {
     mMsgBufMD5 = "";
+    mMsgBufSize = -1;
+  }
 
-  if (mMsg)
+  if (mMsg && !mMsg->msgIdMD5().isEmpty())
     updateReaderWinTimer.start( delay, TRUE );
 
   if (mMsg) parseMsg();
