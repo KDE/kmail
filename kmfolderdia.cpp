@@ -89,7 +89,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       fileInFolder->setCurrentItem( i );
   }
 
-  if (aFolder->account()) {
+  if (aFolder && aFolder->account()) {
     label->setEnabled( false );
     nameEdit->setEnabled( false );
     label2->setEnabled( false );
