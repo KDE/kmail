@@ -460,6 +460,7 @@ private:
 
   QGuardedPtr<KMail::Vacation> mVacation;
   KActionCollection *mActionCollection;
+  KActionSeparator  *mToolbarActionSeparator;
   QVBoxLayout *mTopLayout;
   bool mDestructed, mForceJumpToUnread;
   QPtrList<KAction> mFilterMenuActions;

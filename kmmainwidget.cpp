@@ -127,6 +127,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mJob = 0;
   mConfig = config;
   mGUIClient = aGUIClient;
+  // FIXME This should become a line separator as soon as the API
+  // is extended in kdelibs.
+  mToolbarActionSeparator = new KActionSeparator( actionCollection );
 
   if( !s_mainWidgetList )
     mwlsd.setObject( s_mainWidgetList, new QPtrList<KMMainWidget>() );
@@ -3318,8 +3321,10 @@ void KMMainWidget::initializeFilterActions()
   }
   if ( !mFilterMenuActions.isEmpty() && mGUIClient->factory() )
     mGUIClient->plugActionList( "menu_filter_actions", mFilterMenuActions );
-  if ( !mFilterTBarActions.isEmpty() && mGUIClient->factory() )
+  if ( !mFilterTBarActions.isEmpty() && mGUIClient->factory() ) {
+    mFilterTBarActions.prepend( mToolbarActionSeparator );
     mGUIClient->plugActionList( "toolbar_filter_actions", mFilterTBarActions );
+  }
 }
 
 

@@ -167,7 +167,6 @@
   <Action name="move_to_trash" />
   <Separator/>
   <Action name="search_messages" />
-  <WeakSeparator/>
   <ActionList name="toolbar_filter_actions" />
  </ToolBar>
 </kpartgui>
