@@ -643,7 +643,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   offs = ftell(mStream);
 
   fwrite("From ???@??? 00:00:00 1997 +0000\n", 33, 1, mStream);
-  fwrite((char*)aMsg->msgStr().data(), len, 1, mStream);
+  fwrite((char*)aMsg->asString(), len, 1, mStream);
   fflush(mStream);
 
   size = ftell(mStream) - offs;
