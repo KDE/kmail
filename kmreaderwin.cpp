@@ -1186,8 +1186,9 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
       iStr.truncate(len);
 
       htmlPos -= (i1 - 1);
-      if (iStr.length()>3)
-	iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
+      if (iStr.length()>3 && iStr.at(0) != '@' 
+        && iStr.at(iStr.length() - 1) != '@')
+          iStr = "<a href=\"mailto:" + iStr + "\">" + iStr + "</a>";
       HTML_ADD(iStr.data(), iStr.length());
       iStr = "";
     }
