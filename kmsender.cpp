@@ -2,6 +2,8 @@
 
 #include <config.h>
 
+#include "kmsender.h"
+
 #include <kmime_header_parsing.h>
 using namespace KMime::Types;
 
@@ -23,7 +25,6 @@ using namespace KMime::Types;
 #include "kmfiltermgr.h"
 
 #include "kcursorsaver.h"
-#include "kmsender.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "kmbroadcaststatus.h"
@@ -33,6 +34,7 @@ using namespace KMime::Types;
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
+#include "protocols.h"
 #include <mimelib/mediatyp.h>
 
 #define SENDER_GROUP "sending mail"
@@ -615,7 +617,7 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
   {
     mTransportInfo->readConfig(nr);
   } else {
-    if (transport.startsWith("smtp://"))
+    if (transport.startsWith("smtp://")) // should probably use KURL and SMTP_PROTOCOL
     {
       mTransportInfo->type = "smtp";
       mTransportInfo->auth = FALSE;
@@ -630,7 +632,7 @@ KMSendProc* KMSender::createSendProcFromString(QString transport)
         mTransportInfo->port = "25";
       }
     } else
-    if (transport.startsWith("smtps://"))
+    if (transport.startsWith("smtps://"))  // should probably use KURL and SMTPS_PROTOCOL
     {
       mTransportInfo->type = "smtps";
       mTransportInfo->auth = FALSE;
@@ -973,7 +975,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   KURL destination;
 
-  destination.setProtocol((ti->encryption == "SSL") ? "smtps" : "smtp");
+  destination.setProtocol((ti->encryption == "SSL") ? SMTPS_PROTOCOL : SMTP_PROTOCOL);
   destination.setHost(ti->host);
   destination.setPort(ti->port.toUShort());
 

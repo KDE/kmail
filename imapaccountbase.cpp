@@ -40,6 +40,7 @@ using KMail::SieveConfig;
 using KMail::BodyVisitor;
 #include "imapjob.h"
 using KMail::ImapJob;
+#include "protocols.h"
 
 #include <kdebug.h>
 #include <kconfig.h>
@@ -125,7 +126,7 @@ namespace KMail {
   }
 
   QString ImapAccountBase::protocol() const {
-    return useSSL() ? "imaps" : "imap";
+    return useSSL() ? IMAP_SSL_PROTOCOL : IMAP_PROTOCOL;
   }
 
   //

@@ -13,6 +13,7 @@
 #include "kmfiltermgr.h"
 #include "kmpopfiltercnfrmdlg.h"
 #include "kmkernel.h"
+#include "protocols.h"
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
@@ -75,7 +76,7 @@ QString KMAcctExpPop::type(void) const
 }
 
 QString KMAcctExpPop::protocol() const {
-  return useSSL() ? "pop3s" : "pop3";
+  return useSSL() ? POP_SSL_PROTOCOL : POP_PROTOCOL;
 }
 
 unsigned short int KMAcctExpPop::defaultPort() const {

@@ -20,6 +20,8 @@
 #include <config.h>
 #include <assert.h>
 
+#include "kmtransport.h"
+
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
@@ -38,10 +40,9 @@
 #include <kdebug.h>
 
 #include "kmservertest.h"
-#include "kmtransport.h"
 #include "kmaccount.h"
 #include "kmkernel.h"
-
+#include "protocols.h"
 
 KMTransportInfo::KMTransportInfo()
 {
@@ -577,7 +578,7 @@ unsigned int KMTransportDialog::authMethodsFromStringList( const QStringList & s
 void KMTransportDialog::slotCheckSmtpCapabilities()
 {
   delete mServerTest;
-  mServerTest = new KMServerTest("smtp", mSmtp.hostEdit->text(),
+  mServerTest = new KMServerTest(SMTP_PROTOCOL, mSmtp.hostEdit->text(),
     mSmtp.portEdit->text().toInt());
   connect(mServerTest, SIGNAL(capabilities(const QStringList&,const QString&,const QString&,const QString&)),
     SLOT(slotSmtpCapabilities(const QStringList&,const QString&,const QString&, const QString&)));

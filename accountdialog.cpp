@@ -18,6 +18,9 @@
  *
  */
 #include <config.h>
+
+#include "accountdialog.h"
+
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <klineedit.h>
@@ -42,7 +45,6 @@
 #include <netdb.h>
 #include <netinet/in.h>
 
-#include "accountdialog.h"
 #include "sieveconfig.h"
 using KMail::SieveConfig;
 using KMail::SieveConfigEditor;
@@ -54,6 +56,7 @@ using KMail::SieveConfigEditor;
 #include "kmacctcachedimap.h"
 #include "kmfoldermgr.h"
 #include "kmservertest.h"
+#include "protocols.h"
 
 #include <cassert>
 #include <stdlib.h>
@@ -1244,7 +1247,7 @@ void AccountDialog::slotCheckPopCapabilities()
      return;
   }
   delete mServerTest;
-  mServerTest = new KMServerTest("pop3", mPop.hostEdit->text(),
+  mServerTest = new KMServerTest(POP_PROTOCOL, mPop.hostEdit->text(),
     mPop.portEdit->text().toInt());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
     SLOT(slotPopCapabilities(const QStringList &)));
@@ -1261,7 +1264,7 @@ void AccountDialog::slotCheckImapCapabilities()
      return;
   }
   delete mServerTest;
-  mServerTest = new KMServerTest("imap", mImap.hostEdit->text(),
+  mServerTest = new KMServerTest(IMAP_PROTOCOL, mImap.hostEdit->text(),
     mImap.portEdit->text().toInt());
   connect(mServerTest, SIGNAL(capabilities(const QStringList &)),
     SLOT(slotImapCapabilities(const QStringList &)));

@@ -24,6 +24,7 @@
 #include <kdialogbase.h>
 #include "kmfoldercombobox.h"
 
+class QRegExpValidator;
 class QCheckBox;
 class QComboBox;
 class QPushButton;
@@ -42,9 +43,9 @@ namespace KMail {
 class AccountDialog : public KDialogBase
 {
   Q_OBJECT
-  
+
   public:
-    AccountDialog( const QString & caption, KMAccount *account, 
+    AccountDialog( const QString & caption, KMAccount *account,
 		   QWidget *parent=0, const char *name=0, bool modal=true );
     virtual ~AccountDialog();
   private:
