@@ -191,8 +191,11 @@ void AccountWizard::setupWelcomePage()
   font.setBold( true );
   label->setFont( font );
 
-  new QLabel( i18n( "<qt>You have startet KMail for the first time so you now have the possibility to setup your mail accounts. Just input the connection data from your email provider into the following masks.</qt>" ), mWelcomePage );
-  
+  new QLabel( i18n( "<qt>It seems you have started KMail for the first time. "
+                    "You can use this wizard to setup your mail accounts. Just "
+                    "enter the connection data that you received from your email provider "
+                    "into the following masks.</qt>" ), mWelcomePage );
+
   addPage( mWelcomePage, i18n( "Welcome" ) );
 }
 
