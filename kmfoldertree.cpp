@@ -1249,13 +1249,16 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
         if ( dragAccepted ) {
             setCurrentItem( i );
         }
-        e->accept( dragAccepted );
+
         if ( i != dropItem ) {
             autoopen_timer.stop();
             dropItem = i;
             autoopen_timer.start( autoopenTime );
         }
+
         if ( dragAccepted ) {
+            e->accept( itemRect(i) );
+
             switch ( e->action() ) {
                 case QDropEvent::Copy:
                 break;
@@ -1268,6 +1271,8 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
                 default:
                 ;
             }
+        } else {
+            e->accept( false );
         }
     } else {
         e->accept( false );
