@@ -186,7 +186,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   hbl2->addWidget(mSearchFolderLbl);
   mSearchFolderEdt = new KLineEdit(searchWidget);
   if (searchFolder)
-    mSearchFolderEdt->setText(searchFolder->name());
+    mSearchFolderEdt->setText(searchFolder->folder()->name());
   else
     mSearchFolderEdt->setText(i18n("Last Search"));
 
@@ -536,7 +536,7 @@ void KMFldSearch::updateCreateButton( const QString &s)
 //-----------------------------------------------------------------------------
 void KMFldSearch::renameSearchFolder()
 {
-    if (mFolder && (mFolder->name() !=mSearchFolderEdt->text())) {
+    if (mFolder && (mFolder->folder()->name() != mSearchFolderEdt->text())) {
 	int i = 1;
 	QString name =  mSearchFolderEdt->text();
 	while (i < 100) {
