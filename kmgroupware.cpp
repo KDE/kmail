@@ -35,57 +35,15 @@
 */
 
 #include "kmgroupware.h"
-
-#include "kmmainwin.h"
-#include "kmmainwidget.h"
-#include "kmfoldertree.h"
-#include "kmcomposewin.h"
-#include <libkpimidentities/identity.h>
-#include <libkpimidentities/identitymanager.h>
-#include <libkdepim/email.h>
-#include "kmkernel.h"
-
-#include <kurl.h>
-#include <kmessagebox.h>
-#include <dcopclient.h>
-#include <kdcopservicestarter.h>
-#include <kconfig.h>
-#include <kapplication.h>
-#include <kinputdialog.h>
+#include "kmmessage.h"
+#include "kmmsgpart.h"
+#include "libkcal/incidenceformatter.h"
 #include <kdebug.h>
-#include <qregexp.h>
-
 #include <mimelib/enum.h>
-
 #include <assert.h>
 
-#include "korganizeriface_stub.h"
 
-
-// Handle KOrganizer connection
-static bool connectToKOrganizer();
-static KOrganizerIface_stub* mKOrganizerIfaceStub;
-
-
-//-----------------------------------------------------------------------------
-KMGroupware::KMGroupware( QObject* parent, const char* name )
-  : QObject( parent, name )
-{
-  // Make the connection to KOrganizer ready
-  mKOrganizerIfaceStub = 0;
-  kapp->dcopClient()->setNotifications( true );
-  connect( kapp->dcopClient(), SIGNAL( applicationRemoved( const QCString& ) ),
-           this, SLOT( unregisteredFromDCOP( const QCString& ) ) );
-}
-
-//-----------------------------------------------------------------------------
-KMGroupware::~KMGroupware()
-{
-  kapp->dcopClient()->setNotifications( false );
-  delete mKOrganizerIfaceStub;
-}
-
-bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
+bool vPartFoundAndDecoded( KMMessage* msg, QString& s )
 {
   assert( msg );
 
@@ -110,12 +68,8 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
       // kdDebug(5006) << "KMGroupware analyzing TNEF data" << endl;
       KMMessagePart msgPart;
       KMMessage::bodyPart(dwPart, &msgPart);
-      if ( !connectToKOrganizer() )
-        kdError() << "DCOP error during KMGroupware::vPartFoundAndDecoded()\n";
-      else {
-        s = mKOrganizerIfaceStub->msTNEFToVPart( msgPart.bodyDecodedBinary() );
-        return !s.isEmpty();
-      }
+      s = KCal::IncidenceFormatter::msTNEFToVPart( msgPart.bodyDecodedBinary() );
+      return !s.isEmpty();
     } else {
       dwPart = msg->findDwBodyPart( DwMime::kTypeText, DwMime::kSubtypeVCal );
       if (dwPart) {
@@ -132,54 +86,3 @@ bool KMGroupware::vPartFoundAndDecoded( KMMessage* msg, QString& s )
 
   return false;
 }
-
-/*
- * Handle connection to KOrganizer.
- */
-
-static const QCString dcopObjectId = "KOrganizerIface";
-
-static bool connectToKOrganizer()
-{
-  if ( !mKOrganizerIfaceStub ) {
-    QString error;
-    QCString dcopService;
-    int result = KDCOPServiceStarter::self()->
-      findServiceFor( "DCOP/Organizer", QString::null,
-                      QString::null, &error, &dcopService );
-    if ( result != 0 ) {
-      kdDebug(5800) << "Could not connect to KOrganizer\n";
-      // TODO: You might want to show "error" (if not empty) here,
-      // using e.g. KMessageBox
-      return false;
-    }
-
-    QCString dummy;
-    // OK, so korganizer (or kontact) is running. Now ensure the object we want is available.
-    if ( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dcopService, dummy ) ) {
-      KDCOPServiceStarter::self()->startServiceFor( "DCOP/Organizer", QString::null,
-                                                    QString::null, &error, &dcopService );
-      if( !kapp->dcopClient()->findObject( dcopService, dcopObjectId, "", QByteArray(), dcopService, dummy ) )
-        return false;
-    }
-
-    mKOrganizerIfaceStub = new KOrganizerIface_stub( kapp->dcopClient(),
-                                                     dcopService,
-                                                     dcopObjectId );
-  }
-
-  return ( mKOrganizerIfaceStub != 0 );
-}
-
-void KMGroupware::unregisteredFromDCOP( const QCString& appId )
-{
-  if ( mKOrganizerIfaceStub && mKOrganizerIfaceStub->app() == appId ) {
-    // Delete the stub so that the next time we need the organizer,
-    // we'll know that we need to start a new one.
-    delete mKOrganizerIfaceStub;
-    mKOrganizerIfaceStub = 0;
-  }
-}
-
-
-#include "kmgroupware.moc"
