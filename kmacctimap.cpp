@@ -92,6 +92,7 @@ void KMAcctImap::initSlaveConfig()
   mSlaveConfig.clear();
   mSlaveConfig.insert("auth", mAuth);
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
+  if (mAutoExpunge) mSlaveConfig.insert("expunge", "auto");
 }
 
 
