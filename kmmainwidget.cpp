@@ -94,7 +94,9 @@ using KMime::Types::AddrSpecList;
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 			   KActionCollection *actionCollection, KConfig* config ) :
-    QWidget(parent, name)
+    QWidget(parent, name),
+    mQuickSearchLine( 0 ),
+    mQuickSearchCombo( 0 )
 {
   // must be the first line of the constructor:
   mSearchWin = 0;
@@ -468,20 +470,39 @@ void KMMainWidget::createWidgets(void)
 #endif
   mSearchAndHeaders = new QVBox( headerParent );
   mSearchToolBar = new KToolBar( mSearchAndHeaders, "search toolbar");
-  mSearchToolBar->boxLayout()->setSpacing(5);
-  new QLabel(i18n("Quick search:"), mSearchToolBar, "kde toolbar widget");
-  mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
-  KPIM::KListViewSearchLine *quickSearchLine =
-    new KPIM::KListViewSearchLine(mSearchToolBar, mHeaders, "headers quick search line");
-  mSearchToolBar->setStretchableWidget(quickSearchLine);
-  connect( mHeaders, SIGNAL( messageListUpdated() ),
-           quickSearchLine, SLOT( updateSearch() ) );
+  mSearchToolBar->boxLayout()->setSpacing( KDialog::spacingHint() );
 
-  new QLabel(i18n("Show only mail with status:"), mSearchToolBar, "kde toolbar widget");
+  KAction *resetQuickSearch = new KAction( i18n( "Reset Quick Search" ),
+                                           QApplication::reverseLayout()
+                                           ? "clear_left"
+                                           : "locationbar_erase",
+                                           0, this,
+                                           SLOT( slotResetQuickSearch() ),
+                                           actionCollection(),
+                                           "reset_quicksearch" );
+  resetQuickSearch->plug( mSearchToolBar );
+  resetQuickSearch->setWhatsThis( i18n( "Reset Quick Search\n"
+                                        "Resets the quick search so that "
+                                        "all messages are shown again." ) );
+
+  QLabel *label = new QLabel( i18n("&Quick search:"), mSearchToolBar,
+                              "kde toolbar widget" );
+  mHeaders = new KMHeaders(this, mSearchAndHeaders, "headers");
+  mQuickSearchLine = new KPIM::KListViewSearchLine( mSearchToolBar, mHeaders,
+                                                    "headers quick search line" );
+  label->setBuddy( mQuickSearchLine );
+  mSearchToolBar->setStretchableWidget( mQuickSearchLine );
+  connect( mHeaders, SIGNAL( messageListUpdated() ),
+           mQuickSearchLine, SLOT( updateSearch() ) );
+
+  label = new QLabel( i18n("Sho&w only mail with status:"), mSearchToolBar,
+                      "kde toolbar widget" );
 
   // FIXME hook up to real status widget once that is back in
-  QComboBox *cb = new QComboBox(mSearchToolBar, "quick search status combo box");
-  cb->insertItem(i18n("Any Status"));
+  mQuickSearchCombo = new QComboBox( mSearchToolBar,
+                                     "quick search status combo box" );
+  mQuickSearchCombo->insertItem( i18n("Any Status") );
+  label->setBuddy( mQuickSearchCombo );
 
   if ( !GlobalSettings::quickSearchActive() ) mSearchToolBar->hide();
 
@@ -547,7 +568,7 @@ void KMMainWidget::createWidgets(void)
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
   connect( mFolderTree, SIGNAL( folderSelected( KMFolder* ) ),
-           quickSearchLine, SLOT( clear() ) );
+           this, SLOT( slotResetQuickSearch() ) );
   connect(mFolderTree, SIGNAL(folderSelectedUnread(KMFolder*)),
 	  this, SLOT(folderSelectedUnread(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDrop(KMFolder*)),
@@ -1120,8 +1141,17 @@ void KMMainWidget::slotToggleShowQuickSearch()
   GlobalSettings::setQuickSearchActive( !GlobalSettings::quickSearchActive() );
   if ( GlobalSettings::quickSearchActive() )
     mSearchToolBar->show();
-  else
+  else {
+    slotResetQuickSearch();
     mSearchToolBar->hide();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotResetQuickSearch()
+{
+  mQuickSearchLine->clear();
+  mQuickSearchCombo->setCurrentItem( 0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -2433,27 +2463,27 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag");
   mThreadStatusMenu->insert( mToggleThreadFlagAction );
-  
+
   mToggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
                                        0, this, SLOT(slotSetThreadStatusReplied()),
                                        actionCollection(), "thread_replied");
   mThreadStatusMenu->insert( mToggleThreadRepliedAction );
-  
+
   mToggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
                                        0, this, SLOT(slotSetThreadStatusForwarded()),
                                        actionCollection(), "thread_forwarded");
   mThreadStatusMenu->insert( mToggleThreadForwardedAction );
-  
+
   mToggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
                                        0, this, SLOT(slotSetThreadStatusQueued()),
                                        actionCollection(), "thread_queued");
   mThreadStatusMenu->insert( mToggleThreadQueuedAction );
-  
+
   mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
                                        0, this, SLOT(slotSetThreadStatusSent()),
                                        actionCollection(), "thread_sent");
   mThreadStatusMenu->insert( mToggleThreadSentAction );
-  
+
   mThreadStatusMenu->insert( new KActionSeparator( this ) );
 
   //------- "Watch and ignore thread" actions

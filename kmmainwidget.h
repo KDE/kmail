@@ -51,6 +51,10 @@ namespace KIO {
   class Job;
 }
 
+namespace KPIM {
+  class KListViewSearchLine;
+}
+
 namespace KMail {
   class Vacation;
   class AttachmentStrategy;
@@ -295,6 +299,7 @@ protected slots:
   void slotShowTip();
   void slotAntiSpamWizard();
   void slotFilterLogViewer();
+  void slotResetQuickSearch();
 
   /** Message navigation */
   void slotNextMessage();
@@ -407,6 +412,8 @@ private:
   KMHeaders    *mHeaders;
   QVBox        *mSearchAndHeaders;
   KToolBar     *mSearchToolBar;
+  KPIM::KListViewSearchLine *mQuickSearchLine;
+  QComboBox    *mQuickSearchCombo;
   KMFolder     *mFolder;
   const QTextCodec   *mCodec;
   QPopupMenu   *mViewMenu, *mBodyPartsMenu;
