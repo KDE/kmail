@@ -286,6 +286,8 @@ public slots:
   /** KIO slots for attachment insertion */
   void slotAttachFileData(KIO::Job *, const QByteArray &);
   void slotAttachFileResult(KIO::Job *);
+   
+  void addAttach(const KURL url);
 
 signals:
   /** A message has been queued or saved in the drafts folder */
@@ -327,7 +329,6 @@ protected:
   virtual bool queryExit ();
 
   /** Add an attachment to the list. */
-   void addAttach(const KURL url);
    void addAttach(const KMMessagePart* msgPart);
 
   /** Remove an attachment from the list. */

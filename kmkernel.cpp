@@ -107,7 +107,8 @@ void KMKernel::openReader()
 int KMKernel::openComposer (const QString &to, const QString &cc,
                             const QString &bcc, const QString &subject,
                             const QString &body, int hidden,
-                            const KURL &messageFile)
+                            const KURL &messageFile,
+			    const KURL &attachURL)
 {
   kdDebug() << "KMKernel::openComposer called" << endl;
 
@@ -124,6 +125,8 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!body.isEmpty()) msg->setBody(body.local8Bit() );
 
   KMComposeWin *cWin = new KMComposeWin(msg);
+  if (cWin && !attachURL.isEmpty() && attachURL.isValid())
+    cWin->addAttach(attachURL);
   if (hidden == 0)
     cWin->show();
   return 1;
@@ -679,11 +682,12 @@ void KMKernel::dumpDeadLetters()
 void KMKernel::action(bool mailto, bool check, const QString &to,
                       const QString &cc, const QString &bcc,
                       const QString &subj, const QString &body,
-                      const KURL &messageFile)
+                      const KURL &messageFile,
+                      const KURL &attachURL)
 {
 
   if (mailto)
-    openComposer (to, cc, bcc, subj, body, 0, messageFile);
+    openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURL);
   else
     openReader();
 
