@@ -521,29 +521,39 @@ void KMMessagePart::setContentDescription(const QString &aStr)
 //-----------------------------------------------------------------------------
 QString KMMessagePart::fileName(void) const
 {
-  int i, j, len;
-  QCString str;
-  int RFC2231encoded = 0;
+  bool bRFC2231encoded = false;
 
-  i = mContentDisposition.find("filename*=", 0, FALSE);
-  if (i >= 0) { RFC2231encoded = 1; }
-  else {
-    i = mContentDisposition.find("filename=", 0, FALSE);
-    if (i < 0) return QString::null;
+  // search the start of the filename
+  int startOfFilename = mContentDisposition.find("filename*=", 0, FALSE);
+  if (startOfFilename >= 0) {
+    bRFC2231encoded = true;
+    startOfFilename += 10;
   }
-  j = mContentDisposition.find(';', i+9);
+  else {
+    startOfFilename = mContentDisposition.find("filename=", 0, FALSE);
+    if (startOfFilename < 0)
+      return QString::null;
+    startOfFilename += 9;
+  }
 
-  if (j < 0) j = 32767;
-  str = mContentDisposition.mid(i+9+RFC2231encoded, j-i-9-RFC2231encoded).
-    stripWhiteSpace();
+  // search the end of the filename
+  int endOfFilename;
+  if ( '"' == mContentDisposition[startOfFilename] ) {
+    startOfFilename++; // the double quote isn't part of the filename
+    endOfFilename = mContentDisposition.find('"', startOfFilename) - 1;
+  }
+  else {
+    endOfFilename = mContentDisposition.find(';', startOfFilename) - 1;
+  }
+  if (endOfFilename < 0)
+    endOfFilename = 32767;
 
-  len = str.length();
-  if (len>1) {
-    if (str[0]=='"' && str[len-1]=='"')
-      str = str.mid(1, len-2);
-  };
+  QCString str;
+  str = mContentDisposition.mid(startOfFilename,
+                                endOfFilename-startOfFilename+1)
+                           .stripWhiteSpace();
 
-  if (RFC2231encoded)
+  if (bRFC2231encoded)
     return KMMsgBase::decodeRFC2231String(str);
   else
     return KMMsgBase::decodeRFC2047String(str);
