@@ -1387,11 +1387,13 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
   {
     // popup somewhere else (i.e., not a URL) on the message
 
-     if (!mFolder->count()) // no messages
+     if (!mFolder) // no messages
+     {
          return;
+     }
      else  {
 
-           if ((mFolder == kernel->outboxFolder()) || 
+           if ((mFolder == kernel->outboxFolder()) ||
                (mFolder == kernel->draftsFolder()))
                   editAction->plug(menu);
            else {
@@ -1404,7 +1406,7 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
            menu->insertSeparator();
            menu->insertItem(i18n("&Move to"), moveMenu);
            menu->insertItem(i18n("&Copy to"), copyMenu);
-           if ((mFolder != kernel->outboxFolder()) &&  
+           if ((mFolder != kernel->outboxFolder()) &&
                (mFolder != kernel->draftsFolder()))
            {
            menu->insertItem(i18n("&Set Status"), setStatusMenu);
