@@ -1,4 +1,4 @@
-<!DOCTYPE UI><UI version="3.0" stdsetdef="1">
+<!DOCTYPE UI><UI version="3.1" stdsetdef="1">
 <class>CertificateWizard</class>
 <widget class="QWizard">
     <property name="name">
@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>490</width>
-            <height>355</height>
+            <width>705</width>
+            <height>442</height>
         </rect>
     </property>
     <property name="caption">
@@ -151,25 +151,6 @@ The certificates can either be generated in a centralized or a decentralized man
         </widget>
         <widget class="QLabel">
             <property name="name">
-                <cstring>organizationLA</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>12</x>
-                    <y>173</y>
-                    <width>110</width>
-                    <height>22</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>&amp;Organization:</string>
-            </property>
-            <property name="buddy" stdset="0">
-                <cstring>organizationED</cstring>
-            </property>
-        </widget>
-        <widget class="QLabel">
-            <property name="name">
                 <cstring>nameLA</cstring>
             </property>
             <property name="geometry">
@@ -185,6 +166,25 @@ The certificates can either be generated in a centralized or a decentralized man
             </property>
             <property name="buddy" stdset="0">
                 <cstring>nameED</cstring>
+            </property>
+        </widget>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>organizationLA</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>12</x>
+                    <y>173</y>
+                    <width>110</width>
+                    <height>22</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&amp;Organization:</string>
+            </property>
+            <property name="buddy" stdset="0">
+                <cstring>organizationED</cstring>
             </property>
         </widget>
         <widget class="QLabel">
@@ -309,7 +309,7 @@ The certificates can either be generated in a centralized or a decentralized man
                                     <cstring>TextLabel5</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>&amp;Email address of the CA that issues certificates</string>
+                                    <string>&amp;Email address of the CA that issues certificates:</string>
                                 </property>
                                 <property name="buddy" stdset="0">
                                     <cstring>caEmailED</cstring>
@@ -366,8 +366,6 @@ If you want to change anything, press Back and make your changes. Otherwise pres
         </vbox>
     </widget>
 </widget>
-<connections>
-</connections>
 <slots>
     <slot access="protected">slotCreatePSE()</slot>
 </slots>
