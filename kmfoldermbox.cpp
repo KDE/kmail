@@ -552,7 +552,7 @@ int KMFolderMbox::createIndexFromContents()
       {
 	if (numStatus <= 0)
 	{
-	  msgStr = i18n("Creating index file: %n message done", "Creating index file: %n messages done", num);
+	  msgStr = i18n("Creating index file: one message done", "Creating index file: %n messages done", num);
 	  emit statusMsg(msgStr);
 	  numStatus = 10;
 	}
@@ -1030,11 +1030,12 @@ int KMFolderMbox::compact()
   size_t msize;
   off_t folder_offset;
   off_t offs=0;
-  size_t msgs=0;
+  int msgs=0;
   QCString mtext;
   for(int idx = 0; idx < mMsgList.count(); idx++) {
     if(!(msgs++ % 10)) {
-      msgStr = i18n("Compacting folder: %1 messages done").arg(msgs);
+      msgStr = i18n("Compacting folder: one message done",
+      				"Compacting folder: %n messages done", msgs);
       emit statusMsg(msgStr);
     }
     mi = (KMMsgInfo*)mMsgList[idx];
