@@ -510,7 +510,7 @@ DwString KMFolderMaildir::getDwString(int idx)
   {
     FILE* stream = fopen(QFile::encodeName(abs_file), "r+");
     if (stream) {
-      size_t msgSize = mi->msgSize();
+      size_t msgSize = fi.size();
       char* msgText = new char[ msgSize + 1 ];
       fread(msgText, msgSize, 1, stream);
       fclose( stream );
@@ -542,9 +542,10 @@ QCString& KMFolderMaildir::getMsgString(int idx, QCString& mDest)
     return mDest;
   }
 
-  mDest.resize(mi->msgSize()+2);
+  QFileInfo fi( abs_file );
+  mDest.resize(fi.size()+2);
   mDest = kFileToString(abs_file, false, false);
-  size_t newMsgSize = crlf2lf( mDest.data(), mi->msgSize() );
+  size_t newMsgSize = crlf2lf( mDest.data(), fi.size() );
   mDest[newMsgSize] = '\0';
   return mDest;
 }
