@@ -1276,10 +1276,13 @@ void NetworkPage::SendingTab::slotRemoveSelectedTransport()
 
   QListViewItem *newCurrent = item->itemBelow();
   if ( !newCurrent ) newCurrent = item->itemAbove();
-  if ( newCurrent ) mTransportList->setCurrentItem( newCurrent );
-  mTransportList->setSelected( newCurrent, true );
+  //mTransportList->removeItem( item );
+  if ( newCurrent ) {
+    mTransportList->setCurrentItem( newCurrent );
+    mTransportList->setSelected( newCurrent, true );
+  }
 
-  mTransportList->removeItem( item );
+  delete item;
   mTransportInfoList.remove( it );
 
   QStringList transportNames;
@@ -1728,7 +1731,7 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
 
   QListViewItem * item = listItem->itemBelow();
   if ( !item ) item = listItem->itemAbove();
-  mAccountList->takeItem( listItem );
+  delete listItem;
 
   if ( item )
     mAccountList->setSelected( item, true );
