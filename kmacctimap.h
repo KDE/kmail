@@ -59,6 +59,7 @@ public:
    */
   virtual void ignoreJobsForMessage( KMMessage * msg );
   virtual void ignoreJobsForFolder( KMFolder * folder );
+  virtual void removeSlaveJobsForFolder( KMFolder * folder );
 
   /**
    * Kill the slave if any jobs are active

@@ -232,6 +232,22 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
 }
 
 //-----------------------------------------------------------------------------
+void KMAcctImap::removeSlaveJobsForFolder( KMFolder* folder )
+{
+  // Make sure the folder is not referenced in any kio slave jobs
+  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  while ( it != mapJobData.end() ) {
+     QMap<KIO::Job*, jobData>::Iterator i = it;
+     it++;
+     if ( (*i).parent ) {
+        if ( (*i).parent == folder ) {
+           mapJobData.remove(i);
+        }
+     }
+  }
+}
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::slotSimpleResult(KIO::Job * job)
 {
   JobIterator it = findJob( job );

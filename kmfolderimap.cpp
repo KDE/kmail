@@ -70,6 +70,16 @@ KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
 
 KMFolderImap::~KMFolderImap()
 {
+  if (mAccount) {
+    mAccount->removeSlaveJobsForFolder( this );
+    /* Now that we've removed ourselves from the accounts jobs map, kill all 
+       ongoing operations and reset mailcheck if we were deleted during an
+       ongoing mailcheck of our account. Not very gracefull, but safe, and the 
+       only way I can see to reset the account state cleanly. */
+    if ( mAccount->checkingMail() ) {
+       mAccount->killAllJobs();
+    }
+  }
   writeConfig();
   if (kmkernel->undoStack()) kmkernel->undoStack()->folderDestroyed(this);
   mMetaDataMap.setAutoDelete( true );
@@ -84,7 +94,7 @@ void KMFolderImap::close(bool aForced)
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
   // FIXME is this still needed?
-  if (mAccount)
+  if (mAccount) 
     mAccount->ignoreJobsForFolder( this );
   int idx = count();
   while (--idx >= 0) {
