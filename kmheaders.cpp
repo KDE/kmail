@@ -277,16 +277,16 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   if (!pixmapsLoaded)
   {
     pixmapsLoaded = TRUE;
-    pixNew   = new QPixmap( BarIcon("kmmsgnew") );
-    pixUns   = new QPixmap( BarIcon("kmmsgunseen") );
-    pixDel   = new QPixmap( BarIcon("kmmsgdel") );
-    pixOld   = new QPixmap( BarIcon("kmmsgold") );
-    pixRep   = new QPixmap( BarIcon("kmmsgreplied") );
-    pixQueued= new QPixmap( BarIcon("kmmsgqueued") );
-    pixSent  = new QPixmap( BarIcon("kmmsgsent") );
-    pixFwd   = new QPixmap( BarIcon("kmmsgforwarded") );
-    up = new QIconSet( BarIcon("abup" ), QIconSet::Small );
-    down = new QIconSet( BarIcon("abdown" ), QIconSet::Small );
+    pixNew   = new QPixmap( UserIcon("kmmsgnew") );
+    pixUns   = new QPixmap( UserIcon("kmmsgunseen") );
+    pixDel   = new QPixmap( UserIcon("kmmsgdel") );
+    pixOld   = new QPixmap( UserIcon("kmmsgold") );
+    pixRep   = new QPixmap( UserIcon("kmmsgreplied") );
+    pixQueued= new QPixmap( UserIcon("kmmsgqueued") );
+    pixSent  = new QPixmap( UserIcon("kmmsgsent") );
+    pixFwd   = new QPixmap( UserIcon("kmmsgforwarded") );
+    up = new QIconSet( UserIcon("abup" ), QIconSet::Small );
+    down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
 
   connect(this, SIGNAL(doubleClicked(QListViewItem*)),
@@ -1695,5 +1695,6 @@ void KMHeaders::setSorting( int column, bool ascending )
 
 //-----------------------------------------------------------------------------
 #include "kmheaders.moc"
+
 
 
