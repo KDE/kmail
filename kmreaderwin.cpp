@@ -461,7 +461,11 @@ void KMReaderWin::createWidgets() {
   mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
   mViewer = new KHTMLPart( mBox, "mViewer" );
+#if KDE_IS_VERSION( 3, 1, 92 )
   mSplitter->setOpaqueResize( KGlobalSettings::opaqueResize() );
+#else
+  mSplitter->setOpaqueResize( true );
+#endif
   mSplitter->setResizeMode( mMimePartTree, QSplitter::KeepSize );
 }
 

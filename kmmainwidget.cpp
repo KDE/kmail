@@ -403,23 +403,28 @@ void KMMainWidget::createWidgets(void)
   QWidget *headerParent = 0, *folderParent = 0,
             *mimeParent = 0, *messageParent = 0;
 
+#if KDE_IS_VERSION( 3, 1, 92 )
+  const bool opaqueResize = KGlobalSettings::opaqueResize();
+#else
+  const bool opaqueResize = true;
+#endif
   if ( mLongFolderList ) {
     // superior splitter: folder tree vs. rest
     // inferior splitter: headers vs. message vs. mime tree
     mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
-    mPanner1->setOpaqueResize( KGlobalSettings::opaqueResize() );
+    mPanner1->setOpaqueResize( opaqueResize );
     Qt::Orientation orientation = mReaderWindowBelow ? Qt::Vertical : Qt::Horizontal;
     mPanner2 = new QSplitter( orientation, mPanner1, "panner 2" );
-    mPanner2->setOpaqueResize( KGlobalSettings::opaqueResize() );
+    mPanner2->setOpaqueResize( opaqueResize );
     folderParent = mPanner1;
     headerParent = mimeParent = messageParent = mPanner2;
   } else /* !mLongFolderList */ {
     // superior splitter: ( folder tree + headers ) vs. message vs. mime
     // inferior splitter: folder tree vs. headers
     mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
-    mPanner1->setOpaqueResize( KGlobalSettings::opaqueResize() );
+    mPanner1->setOpaqueResize( opaqueResize );
     mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
-    mPanner2->setOpaqueResize( KGlobalSettings::opaqueResize() );
+    mPanner2->setOpaqueResize( opaqueResize );
     headerParent = folderParent = mPanner2;
     mimeParent = messageParent = mPanner1;
   }
