@@ -2906,7 +2906,7 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
     // Key Up in first line takes you to Subject line.
     if (k->key() == Key_Up && k->state() != ShiftButton && currentLine() == 0)
     {
-      setSelection(0, 0, 0, 0);
+      deselect();
       mComposer->focusNextPrevEdit(0, false); //take me up
       return TRUE;
     }
