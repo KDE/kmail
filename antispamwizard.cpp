@@ -687,18 +687,17 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
 
   mIntroText = new QLabel( this );
   mIntroText->setText( i18n(
-    "<p>Here you get some assistance in setting up KMail's filter "
+    "<p>Here you can get some assistance in setting up KMail's filter "
     "rules to use some commonly-known anti-spam/virus tools.</p>"
     "<p>The wizard can detect those tools on your computer as "
     "well as create filter rules to classify messages using these "
     "tools and to separate messages classified as spam, or which "
     "contain viruses. The wizard will not take any existing filter "
-    "rules into consideration but will append new rules in any"
-    "case.</p>"
+    "rules into consideration: it will always append the new rules.</p>"
     "<p><b>WARNING:</b> As KMail is blocked during the scan of the "
     "messages for spam or viruses, you may encounter problems with "
     "the responsiveness of KMail because anti-spam/virus tool "
-    "operations are usually time consuming. Please consider "
+    "operations are usually time consuming; please consider "
     "deleting the filter rules created by the wizard to get "
     "back to the former behavior."
     ) );
