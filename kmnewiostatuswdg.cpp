@@ -2,7 +2,7 @@
 // (c) Markus Wuebben markus@kde.org
 // This code is published under the GPL
 
-#include <iostream.h>
+#include <iostream>
 #include <klocale.h>
 #include "kmnewiostatuswdg.moc"
 

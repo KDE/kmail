@@ -2,7 +2,6 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
-#include <iostream.h>
 #include "kmnewiostatus.moc"
 
 KMIOStatus::KMIOStatus(QWidget *parent, const char *name) 
