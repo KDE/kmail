@@ -118,12 +118,14 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 
   //----------- the list box
   mListBox = new QListBox(this);
+  mListBox->setMinimumWidth(150);
   QToolTip::add(mListBox,i18n("Shows all the defined filter rules.\n"
   	"Rules are applied from top to bottom,\n"
 	"the first rule that applies is used."));
   
   //----------- the first row of buttons
   QHBox *hb = new QHBox(this);
+  hb->setSpacing(4);
   mBtnUp = new QPushButton( QString::null, hb );
   mBtnUp->setPixmap( BarIcon( "up", KIcon::SizeSmall ) );
   mBtnUp->setMinimumSize( mBtnUp->sizeHint() * 1.2 );
@@ -136,6 +138,7 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   
   //----------- the second row of buttons
   hb = new QHBox(this);
+  hb->setSpacing(4);
   mBtnNew = new QPushButton( QString::null, hb );
   mBtnNew->setPixmap( BarIcon( "filenew", KIcon::SizeSmall ) );
   mBtnNew->setMinimumSize( mBtnNew->sizeHint() * 1.2 );
@@ -377,6 +380,9 @@ void KMFilterListBox::enableControls()
   mBtnDown->setEnabled( aFilterIsSelected && !theLast );
   mBtnDelete->setEnabled( aFilterIsSelected );
   mBtnRename->setEnabled( aFilterIsSelected );
+
+  if ( aFilterIsSelected )
+    mListBox->ensureCurrentVisible();
 }
 
 void KMFilterListBox::loadFilterList()
