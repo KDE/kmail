@@ -119,7 +119,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mAtmListBox = NULL;
   mAtmList.setAutoDelete(TRUE);
   mAutoDeleteMsg = FALSE;
-  mPathAttach = 0;
+  mPathAttach = QString::null;
   mEditor = NULL;
 
   mSpellCheckInProgress=FALSE;
