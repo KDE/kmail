@@ -37,7 +37,6 @@ void KabcBridge::addresses(QStringList& result) // includes lists
 
     QRegExp needQuotes("[^ 0-9A-Za-z\\x0080-\\xFFFF]");
     QString endQuote = "\" ";
-    QString empty = "";
     QStringList::ConstIterator mit;
     QString addr, email;
 
@@ -45,7 +44,7 @@ void KabcBridge::addresses(QStringList& result) // includes lists
       email = *mit;
       if (!email.isEmpty()) {
 	if (n.isEmpty() || (email.find( '<' ) != -1))
-	  addr = empty;
+	  addr = QString::null;
 	else { // do we really need quotes around this name ? 
           if (n.find(needQuotes) != -1)
 	    addr = '"' + n + endQuote;
