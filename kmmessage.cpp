@@ -374,7 +374,8 @@ QString KMMessage::formatString(const QString& aStr) const
   if (aStr.isEmpty())
     return aStr;
 
-  for (uint i=0; i<aStr.length();) {
+  unsigned int strLength(aStr.length());
+  for (uint i=0; i<strLength;) {
     ch = aStr[i++];
     if (ch == '%') {
       ch = aStr[i++];
@@ -394,11 +395,13 @@ QString KMMessage::formatString(const QString& aStr) const
         result += fromStrip();
         break;
       case 'f':
+		{
         str = fromStrip();
 
         for (j=0; str[j]>' '; j++)
           ;
-        for (; j < str.length() && str[j] <= ' '; j++)
+		unsigned int strLength(str.length());
+        for (; j < strLength && str[j] <= ' '; j++)
           ;
         result += str[0];
         if (str[j]>' ')
@@ -406,6 +409,7 @@ QString KMMessage::formatString(const QString& aStr) const
         else
           if (str[1]>' ')
             result += str[1];
+		}
         break;
       case 'T':
         result += toStrip();
@@ -3682,7 +3686,8 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
   int commentLevel = 0;
 
   QChar ch;
-  for ( uint index = 0; index < aStr.length(); ++index ) {
+  unsigned int strLength(aStr.length());
+  for ( uint index = 0; index < strLength; ++index ) {
     ch = aStr[index];
     switch ( context ) {
     case TopLevel : {
@@ -3825,9 +3830,10 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
 QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
 {
   QString result;
-  result.reserve( 6*str.length() ); // maximal possible length
 
-  for( unsigned int i = 0; i < str.length(); ++i )
+  unsigned int strLength(str.length());
+  result.reserve( 6*strLength ); // maximal possible length
+  for( unsigned int i = 0; i < strLength; ++i )
     switch ( str[i].latin1() ) {
     case '<':
       result += "&lt;";

@@ -539,7 +539,8 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
   while (str[0] == ' ') str.remove(0,1);
   if (hasKeyword) *hasKeyword=FALSE;
 
-  for (i=0; i < str.length() && i < maxChars; i++)
+  unsigned int strLength(str.length());
+  for (i=0; i < strLength && i < maxChars; i++)
   {
     if (str[i] < 'A' || str[i] == sepChar) break;
   }
@@ -757,19 +758,20 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
   if (!codec) codec = kmkernel->networkCodec();
 
   unsigned int nonAscii = 0;
-  for (unsigned int i = 0; i < _str.length(); i++)
+  unsigned int strLength(_str.length());
+  for (unsigned int i = 0; i < strLength; i++)
     if (_str.at(i).unicode() >= 128) nonAscii++;
-  bool useBase64 = (nonAscii * 6 > _str.length());
+  bool useBase64 = (nonAscii * 6 > strLength);
 
   unsigned int start, stop, p, pos = 0, encLength;
   QCString result;
   bool breakLine = FALSE;
   const unsigned int maxLen = 75 - 7 - cset.length();
 
-  while (pos < _str.length())
+  while (pos < strLength)
   {
     start = pos; p = pos;
-    while (p < _str.length())
+    while (p < strLength)
     {
       if (!breakLine && (_str.at(p) == ' ' || dontQuote.find(_str.at(p)) != -1))
         start = p + 1;
@@ -777,11 +779,11 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
         break;
       p++;
     }
-    if (breakLine || p < _str.length())
+    if (breakLine || p < strLength)
     {
       while (dontQuote.find(_str.at(start)) != -1) start++;
       stop = start;
-      while (stop < _str.length() && dontQuote.find(_str.at(stop)) == -1)
+      while (stop < strLength && dontQuote.find(_str.at(stop)) == -1)
         stop++;
       result += _str.mid(pos, start - pos).latin1();
       encLength = encodeRFC2047Quoted(codec->fromUnicode(_str.
