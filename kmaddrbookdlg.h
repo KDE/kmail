@@ -18,11 +18,12 @@ class KMAddrBookSelDlg: public QDialog
 {
   Q_OBJECT
 public:
-  KMAddrBookSelDlg(KMAddrBook* addrBook, const char* caption);
+  KMAddrBookSelDlg(KMAddrBook* addrBook, const char* caption=NULL);
   virtual ~KMAddrBookSelDlg();
 
-  /** returns selected address or NULL if none was selected or the cancel
-    button was pressed. */
+  /** returns selected address(es) or NULL if none was selected or the cancel
+    button was pressed. If multiple addresses were selected they 
+    are returned comma separated. */
   virtual const QString address(void) const { return mAddress; }
 
 protected slots:
@@ -45,7 +46,7 @@ class KMAddrBookEditDlg: public QDialog
 {
   Q_OBJECT
 public:
-  KMAddrBookEditDlg(KMAddrBook* addrBook, const char* caption);
+  KMAddrBookEditDlg(KMAddrBook* addrBook, const char* caption=NULL);
   virtual ~KMAddrBookEditDlg();
 
 protected slots:

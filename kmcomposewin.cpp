@@ -11,6 +11,7 @@
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
 #include "kpgp.h"
+#include "kmaddrbookdlg.h"
 
 #include <assert.h>
 #include <drag.h>
@@ -81,7 +82,9 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mEdtFrom(&mMainWidget), mEdtReplyTo(&mMainWidget), mEdtTo(&mMainWidget),
   mEdtCc(&mMainWidget), mEdtBcc(&mMainWidget), mEdtSubject(&mMainWidget),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
-  mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget)
+  mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
+  mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget), 
+  mBtnBcc("...",&mMainWidget)
     /* start added for KRN */
     ,mEdtNewsgroups(&mMainWidget),mEdtFollowupTo(&mMainWidget),
     mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
@@ -116,6 +119,9 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 
   connect(&mEdtSubject,SIGNAL(textChanged(const char *)),
 	  SLOT(slotUpdWinTitle(const char *)));
+  connect(&mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
+  connect(&mBtnCc,SIGNAL(clicked()),SLOT(slotAddrBookCc()));
+  connect(&mBtnBcc,SIGNAL(clicked()),SLOT(slotAddrBookBcc()));
 
   mDropZone = new KDNDDropZone(mEditor, DndURL);
   connect(mDropZone, SIGNAL(dropAction(KDNDDropZone *)), 
@@ -240,11 +246,11 @@ void KMComposeWin::rethinkFields(void)
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,nls->translate("&Reply to:"),
 		    &mLblReplyTo, &mEdtReplyTo);
   rethinkHeaderLine(showHeaders,HDR_TO, row, nls->translate("&To:"),
-		    &mLblTo, &mEdtTo);
+		    &mLblTo, &mEdtTo, &mBtnTo);
   rethinkHeaderLine(showHeaders,HDR_CC, row, nls->translate("&Cc:"),
-		    &mLblCc, &mEdtCc);
+		    &mLblCc, &mEdtCc, &mBtnCc);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, nls->translate("&Bcc:"),
-		    &mLblBcc, &mEdtBcc);
+		    &mLblBcc, &mEdtBcc, &mBtnBcc);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, nls->translate("&Subject:"),
 		    &mLblSubject, &mEdtSubject);
   rethinkHeaderLine(showHeaders,HDR_NEWSGROUPS, row, nls->translate("&Newsgroups:"),
@@ -457,7 +463,7 @@ void KMComposeWin::setupToolBar(void)
   mToolBar->insertButton(loader->loadIcon("feather_white.xpm"), mBtnIdSign,
 			 TRUE, nls->translate("sign message"));
   mToolBar->setToggle(mBtnIdSign);
-  mToolBar->setButton(mBtnIdSign,mShowToolBar);
+  mToolBar->setButton(mBtnIdSign, mAutoPgpSign);
   mBtnIdEncrypt = 10;
   mToolBar->insertButton(loader->loadIcon("pub_key_red.xpm"), mBtnIdEncrypt,
 			 TRUE, nls->translate("encrypt message"));
@@ -814,6 +820,45 @@ void KMComposeWin::removeAttach(int idx)
 
 
 //-----------------------------------------------------------------------------
+void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
+{
+  KMAddrBookSelDlg dlg(addrBook);
+  QString txt;
+
+  assert(aLineEdit!=NULL);
+  if (dlg.exec()==QDialog::Rejected) return;
+  txt = QString(aLineEdit->text()).stripWhiteSpace();
+  if (!txt.isEmpty())
+  {
+    if (txt.right(1)!=',') txt += ", ";
+    else txt += ' ';
+  }
+  aLineEdit->setText(txt + dlg.address());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAddrBookTo()
+{
+  addrBookSelInto(&mEdtTo);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAddrBookCc()
+{
+  addrBookSelInto(&mEdtCc);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotAddrBookBcc()
+{
+  addrBookSelInto(&mEdtBcc);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachFile()
 {
   // Create File Dialog and return selected file
@@ -832,6 +877,7 @@ void KMComposeWin::slotAttachFile()
 }
 
 
+//-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
   // Create File Dialog and return selected file
@@ -864,6 +910,7 @@ void KMComposeWin::slotInsertFile()
   mEditor->insertAt(strCopy, line ,col);
   f->close();
 }  
+
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachPopupMenu(int index, int)

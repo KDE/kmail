@@ -253,13 +253,13 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write(nls->translate("From: ") +
 		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
     mViewer->write(nls->translate("To: ") +
-                   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR><BR>");
+                   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(nls->translate("References: ") +
-                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR><BR>");
+                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR>");
 #endif
-
+    mViewer->write("<BR>");
     break;
 
   case HdrFancy:
@@ -284,7 +284,30 @@ void KMReaderWin::writeMsgHeader(void)
     break;
 
   case HdrLong:
-    emit statusMsg("`long' header style not yet implemented.");
+    mViewer->write("<FONT SIZE=+1><B>" +
+		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
+    mViewer->write(nls->translate("Date: ")+strToHtml(mMsg->dateStr())+"<BR>");
+    mViewer->write(nls->translate("From: ") +
+		   KMMessage::emailAddrAsAnchor(mMsg->from()) + "<BR>");
+    mViewer->write(nls->translate("To: ") +
+                   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR>");
+    if (!mMsg->cc().isEmpty())
+      mViewer->write(nls->translate("Cc: ")+
+		     KMMessage::emailAddrAsAnchor(mMsg->cc()) + "<BR>");
+    if (!mMsg->bcc().isEmpty())
+      mViewer->write(nls->translate("Bcc: ")+
+		     KMMessage::emailAddrAsAnchor(mMsg->bcc()) + "<BR>");
+    if (!mMsg->replyTo().isEmpty())
+      mViewer->write(nls->translate("Reply to: ")+
+		     KMMessage::emailAddrAsAnchor(mMsg->replyTo()) + "<BR>");
+#ifdef KRN
+    if (!mMsg->references().isEmpty())
+        mViewer->write(nls->translate("References: ") +
+                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR>");
+    if (!mMsg->groups().isEmpty())
+        mViewer->write(nls->translate("Groups: ")+mMsg->groups()+"<BR>");
+#endif
+    mViewer->write("<BR>");
     break;
 
   case HdrAll:
@@ -507,7 +530,7 @@ void KMReaderWin::slotUrlOn(const char* aUrl)
   else
   {
     mMsg->bodyPart(id-1, &msgPart);
-    emit statusMsg(msgPart.name());
+    emit statusMsg(nls->translate("Attachment: ") + msgPart.name());
   }
 }
 
@@ -536,9 +559,10 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
   QPopupMenu *menu;
 
   id = msgPartFromUrl(aUrl);
-  if (id <= 0) emit popupMenu(aPos);
+  if (id <= 0) emit popupMenu(aUrl, aPos);
   else
   {
+    // Attachment popup
     mAtmCurrent = id-1;
     menu = new QPopupMenu();
     menu->insertItem(nls->translate("Open..."), this, SLOT(slotAtmOpen()));

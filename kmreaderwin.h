@@ -72,8 +72,8 @@ signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const char* text);
 
-  /** The user presses the right mouse button. */
-  void popupMenu(const QPoint& mousePos);
+  /** The user presses the right mouse button. 'url' may be NULL. */
+  void popupMenu(const char* url, const QPoint& mousePos);
                          
   /** The user has clicked onto an URL that is no attachment. */
   void urlClicked(const char* url, int button);
@@ -98,6 +98,7 @@ public slots:
   /** The user presses the right mouse button on an URL. */
   void slotUrlPopup(const char* url, const QPoint& mousePos);
 
+protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
   void slotAtmPrint();

@@ -21,7 +21,9 @@
 #include "kmversion.h"
 #include "kmsender.h"
 #include "kmaddrbookdlg.h"
+#include "kmaddrbook.h"
 
+#include <qclipbrd.h>
 #include <qaccel.h>
 #include <qstring.h>
 #include <qpixmap.h>
@@ -81,8 +83,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mMsgView = new KMReaderWin(mVertPanner);
   connect(mMsgView, SIGNAL(statusMsg(const char*)),
 	  this, SLOT(statusMsg(const char*)));
-  connect(mMsgView, SIGNAL(popupMenu(const QPoint&)),
-	  this, SLOT(slotMsgPopup(const QPoint&)));
+  connect(mMsgView, SIGNAL(popupMenu(const char*,const QPoint&)),
+	  this, SLOT(slotMsgPopup(const char*,const QPoint&)));
   connect(mMsgView, SIGNAL(urlClicked(const char*,int)),
 	  this, SLOT(slotUrlClicked(const char*,int)));
   accel->connectItem(accel->insertItem(Key_Up),
@@ -112,8 +114,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   idx = mFolderTree->indexOfFolder(inboxFolder);
   if (idx>=0) mFolderTree->setCurrentItem(idx);
 
-  connect(sender, SIGNAL(statusMsg(const char*)),
-	  this, SLOT(statusMsg(const char*)));
+  connect(msgSender, SIGNAL(statusMsg(const char*)),
+	  SLOT(statusMsg(const char*)));
 }
 
 
@@ -248,7 +250,7 @@ void KMMainWin::slotFilter()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg(addrBook, nls->translate("Addressbook"));
+  KMAddrBookEditDlg dlg(addrBook);
   dlg.exec();
 }
 
@@ -532,29 +534,152 @@ void KMMainWin::slotUrlClicked(const char* aUrl, int)
   else if (!strnicmp(aUrl, "http:", 5) || !strnicmp(aUrl, "ftp:", 4) ||
 	   !strnicmp(aUrl, "file:", 5))
   {
+    statusMsg(nls->translate("Opening URL..."));
     system("kfmclient openURL \""+QString(aUrl)+"\"");
   }
 }
 
 
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMsgPopup(const QPoint& aPoint)
+void KMMainWin::slotMailtoCompose()
+{
+  KMComposeWin *win;
+  KMMessage *msg = new KMMessage;
+
+  msg->initHeader();
+  msg->setTo(mUrlCurrent.mid(7,255));
+
+  kbp->busy();
+  win = new KMComposeWin(msg);
+  win->show();
+  kbp->idle(); 
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMailtoReply()
+{
+  KMComposeWin *win;
+  KMMessage *msg;
+
+  if (!(msg = mHeaders->getMsg(-1))) return;
+  msg = msg->createReply(FALSE);
+  msg->setTo(mUrlCurrent.mid(7,255));
+
+  kbp->busy();
+  win = new KMComposeWin(msg);
+  win->show();
+  kbp->idle(); 
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMailtoForward()
+{
+  KMComposeWin *win;
+  KMMessage *msg;
+
+  if (!(msg = mHeaders->getMsg(-1))) return;
+  msg = msg->createForward();
+  msg->setTo(mUrlCurrent.mid(7,255));
+
+  kbp->busy();
+  win = new KMComposeWin(msg);
+  win->show();
+  kbp->idle(); 
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMailtoAddAddrBook()
+{
+  if (mUrlCurrent.isEmpty()) return;
+  addrBook->insert(mUrlCurrent.mid(7,255));
+  statusMsg(nls->translate("Address added to addressbook."));
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUrlCopy()
+{
+  QClipboard* clip = QApplication::clipboard();
+
+  if (strnicmp(mUrlCurrent,"mailto:",7)==0)
+  {
+    clip->setText(mUrlCurrent.mid(7,255));
+    statusMsg(nls->translate("Address copied to clipboard."));
+  }
+  else 
+  {
+    clip->setText(mUrlCurrent);
+    statusMsg(nls->translate("URL copied to clipboard."));
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUrlOpen()
+{
+  if (mUrlCurrent.isEmpty()) return;
+  mMsgView->slotUrlOpen(mUrlCurrent,0);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
 {
   QPopupMenu* menu = new QPopupMenu;
 
-  menu->insertItem(nls->translate("&Reply..."), this, SLOT(slotReplyToMsg()));
-  menu->insertItem(nls->translate("Reply &All..."), this, 
-		   SLOT(slotReplyAllToMsg()));
-  menu->insertItem(nls->translate("&Forward..."), this, 
-		   SLOT(slotForwardMsg()), Key_F);
-  menu->insertSeparator();
-  menu->insertItem(nls->translate("&Move..."), this, 
-		   SLOT(slotMoveMsg()), Key_M);
-  menu->insertItem(nls->translate("&Copy..."), this, 
-			  SLOT(slotCopyText()), Key_S);
-  menu->insertItem(nls->translate("&Delete"), this, 
-			  SLOT(slotDeleteMsg()), Key_D);
-  menu->popup(aPoint, 0);
+  mUrlCurrent = aUrl;
+  mUrlCurrent.detach();
+
+  if (aUrl)
+  {
+    if (strnicmp(aUrl,"mailto:",7)==0)
+    {
+      // popup on a mailto URL
+      menu = new QPopupMenu();
+      menu->insertItem(nls->translate("Send to..."), this,
+		       SLOT(slotMailtoCompose()));
+      menu->insertItem(nls->translate("Send reply to..."), this,
+		       SLOT(slotMailtoReply()));
+      menu->insertItem(nls->translate("Forward to..."), this,
+		       SLOT(slotMailtoForward()));
+      menu->insertSeparator();
+      menu->insertItem(nls->translate("Add to addressbook"), this,
+		       SLOT(slotMailtoAddAddrBook()));
+      menu->insertItem(nls->translate("Copy to clipboard"), this,
+		       SLOT(slotUrlCopy()));
+      menu->popup(aPoint,0);
+    }
+    else
+    {
+      // popup on a not-mailto URL
+      menu->insertItem(nls->translate("Open URL..."), this,
+		       SLOT(slotUrlOpen()));
+      menu->insertItem(nls->translate("Copy to clipboard"), this,
+		       SLOT(slotUrlCopy()));
+      menu->popup(aPoint,0);
+    }
+  }
+  else
+  {
+    // popup somewhere else on the document
+    menu->insertItem(nls->translate("&Reply..."), this, 
+		     SLOT(slotReplyToMsg()));
+    menu->insertItem(nls->translate("Reply &All..."), this, 
+		     SLOT(slotReplyAllToMsg()));
+    menu->insertItem(nls->translate("&Forward..."), this, 
+		     SLOT(slotForwardMsg()), Key_F);
+    menu->insertSeparator();
+    menu->insertItem(nls->translate("&Move..."), this, 
+		     SLOT(slotMoveMsg()), Key_M);
+    menu->insertItem(nls->translate("&Copy..."), this, 
+		     SLOT(slotCopyText()), Key_S);
+    menu->insertItem(nls->translate("&Delete"), this, 
+		     SLOT(slotDeleteMsg()), Key_D);
+    menu->popup(aPoint, 0);
+  }
 }
 
 
@@ -742,6 +867,13 @@ void KMMainWin::setupToolBar()
 			SIGNAL(clicked()), this,
 			SLOT(slotDeleteMsg()), TRUE,
 			nls->translate("Delete message"));
+
+  mToolBar->insertSeparator();
+  mToolBar->insertButton(loader->loadIcon("openbook.xpm"), 0, 
+			SIGNAL(clicked()), this,
+			SLOT(slotAddrBook()), TRUE,
+			nls->translate("Open addressbook..."));
+
 
   addToolBar(mToolBar);
 }

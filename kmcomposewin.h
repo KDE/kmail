@@ -11,6 +11,7 @@
 #include <qlist.h>
 #include <qevent.h>
 #include <qwidget.h>
+#include <qpushbt.h>
 #include <qclipbrd.h>
 #include <qpalette.h>
 #include <kmsgbox.h>
@@ -124,6 +125,12 @@ public slots:
   /** Change visibility of a header field. */
   void slotMenuViewActivated(int id);
 
+  /** Select an email from the addressbook and add it to the line
+    the pressed button belongs to. */
+  void slotAddrBookTo();
+  void slotAddrBookCc();
+  void slotAddrBookBcc();
+
 protected:
   /** Install grid management and header fields. If fields exist that
     should not be there they are removed. Those that are needed are
@@ -166,6 +173,10 @@ protected:
     the given message part. */
   virtual const QString msgPartLbxString(KMMessagePart* msgPart) const;
 
+  /** Open addressbook and append selected addresses to the given
+    edit field. */
+  virtual void addrBookSelInto(KMLineEdit* destEdit);
+
 private:
   /** Get message including signing and encrypting it */
   virtual const QString pgpProcessedMsg(void);
@@ -174,6 +185,7 @@ protected:
   QWidget   mMainWidget;
   KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
   QLabel    mLblFrom, mLblReplyTo, mLblTo, mLblCc, mLblBcc, mLblSubject;
+  QPushButton mBtnTo, mBtnCc, mBtnBcc;
   /* start Added for KRN */
   KMLineEdit mEdtNewsgroups, mEdtFollowupTo;
   QLabel     mLblNewsgroups, mLblFollowupTo;

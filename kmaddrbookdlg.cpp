@@ -17,6 +17,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   const char* addr;
 
   initMetaObject();
+  setCaption(aCap ? aCap : klocale->translate("Addressbook"));
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;
@@ -80,7 +81,7 @@ void KMAddrBookSelDlg::slotCancel()
 //=============================================================================
 
 KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
-  KMAddrBookEditDlgInherited(NULL, aCap, TRUE), mGrid(this, 3, 4),
+  KMAddrBookEditDlgInherited(NULL, NULL, TRUE), mGrid(this, 3, 4),
   mListBox(this), mEdtAddress(this),
   mBtnOk(klocale->translate("Ok"),this), 
   mBtnCancel(klocale->translate("Cancel"),this),
@@ -90,6 +91,7 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   const char* addr;
 
   initMetaObject();
+  setCaption(aCap ? aCap : klocale->translate("Addressbook Manager"));
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;
@@ -195,6 +197,8 @@ void KMAddrBookEditDlg::slotRemove()
   int idx = mListBox.currentItem();
   mIndex = -1;
   if (idx >= 0) mListBox.removeItem(idx);
+  if (idx >= mListBox.count()) idx--;
+  mListBox.setCurrentItem(idx);
 }
 
 

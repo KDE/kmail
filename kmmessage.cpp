@@ -1074,7 +1074,7 @@ const QString KMMessage::stripEmailAddr(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
 {
-  QString result, addr;
+  QString result, addr, tmp;
   const char *pos;
   char ch;
   QString email = decodeQuotedPrintableString(aEmail);
@@ -1085,15 +1085,15 @@ const QString KMMessage::emailAddrAsAnchor(const QString aEmail, bool stripped)
   for (pos=email.data(); *pos; pos++)
   {
     ch = *pos;
-    if (ch == '"') addr += "'";
-    else if (ch == '<') addr += "&lt;";
+    if (ch == '<') addr += "&lt;";
     else if (ch == '>') addr += "&gt;";
     else if (ch == '&') addr += "&amp;";
     else if (ch != ',') addr += ch;
 
     if (ch == ',' || !pos[1])
     {
-      result += addr;
+      tmp = addr.copy();
+      result += tmp.replace(QRegExp("\""),"");
       result += "\">";
       if (stripped) result += KMMessage::stripEmailAddr(addr);
       else result += addr;

@@ -83,10 +83,11 @@ protected slots:
   void slotShowMsgSrc();
   void slotSetHeaderStyle(int);
   void slotSendQueued();
-  void slotMsgPopup(const QPoint&);
+  void slotMsgPopup(const char* url, const QPoint&);
   void slotUrlClicked(const char* url, int button);
   void slotCopyText();
 
+  /** etc. */
   void folderSelected(KMFolder*);
   void slotMsgSelected(KMMessage*);
   void slotMsgActivated(KMMessage*);
@@ -95,6 +96,19 @@ protected slots:
   //void resizeEvent(QResizeEvent*);
   //void initIntegrated();
   //void initSeparated();
+
+  /** Operations on mailto: URLs. */
+  void slotMailtoCompose();
+  void slotMailtoReply();
+  void slotMailtoForward();
+  void slotMailtoAddAddrBook();
+
+  /** Open URL in mUrlCurrent using Kfm. */
+  void slotUrlOpen();
+
+  /** Copy URL in mUrlCurrent to clipboard. Removes "mailto:" at 
+      beginning of URL before copying. */
+  void slotUrlCopy();
 
 protected:
   KMenuBar     *mMenuBar;
@@ -109,6 +123,7 @@ protected:
   bool		mIntegrated;
   int		mMessageStatusId;
   int		mHorizPannerSep, mVertPannerSep;
+  QString       mUrlCurrent;
 };
 
 #endif
