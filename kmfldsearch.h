@@ -69,6 +69,7 @@ protected slots:
   virtual void copySelectedToFolder( int menuId );
   virtual void moveSelectedToFolder( int menuId );
   virtual void slotFolderActivated(int nr);
+  virtual void slotFilterAvailableRules();
   void slotClearSelection();
   void slotReplyToMsg();
   void slotReplyAllToMsg();

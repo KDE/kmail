@@ -55,7 +55,8 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
   : QWidget( parent, name ),
     mRuleField( 0 ),
     mFunctionStack( 0 ),
-    mValueStack( 0 )
+    mValueStack( 0 ),
+    mAbsoluteDates( absoluteDates )
 {
   initFieldList( headersOnly, absoluteDates );
   initWidget();
@@ -64,6 +65,24 @@ KMSearchRuleWidget::KMSearchRuleWidget( QWidget *parent, KMSearchRule *aRule,
     setRule( aRule );
   else
     reset();
+}
+
+void KMSearchRuleWidget::setHeadersOnly( bool headersOnly )
+{
+  QCString currentText = rule()->field();
+  initFieldList( headersOnly, mAbsoluteDates );
+  
+  mRuleField->clear();
+  mRuleField->insertStringList( mFilterFieldList );
+  mRuleField->setSizeLimit( mRuleField->count() );
+  mRuleField->adjustSize();
+  
+  int i = indexOfRuleField( currentText );
+  if ( i >= 0 ) {
+    mRuleField->changeItem( currentText, 0 );
+  } else {
+    mRuleField->changeItem( QString::null, 0 );
+  }
 }
 
 void KMSearchRuleWidget::initWidget()
@@ -202,6 +221,7 @@ int KMSearchRuleWidget::indexOfRuleField( const QCString & aName ) const
 
 void KMSearchRuleWidget::initFieldList( bool headersOnly, bool absoluteDates )
 {
+  mFilterFieldList.clear();
   mFilterFieldList.append(""); // empty entry for user input
   if( !headersOnly ) {
     mFilterFieldList.append( i18n( SpecialRuleFields[Message].displayName ) );
@@ -297,6 +317,14 @@ void KMSearchRuleWidgetLister::setRuleList( QPtrList<KMSearchRule> *aList )
 
   assert( mWidgetList.first() );
   mWidgetList.first()->blockSignals(FALSE);
+}
+
+void KMSearchRuleWidgetLister::setHeadersOnly( bool headersOnly )
+{
+  QPtrListIterator<QWidget> wIt( mWidgetList );
+  for ( wIt.toFirst() ; wIt.current() ; ++wIt ) {
+    (static_cast<KMSearchRuleWidget*>(*wIt))->setHeadersOnly( headersOnly );
+  }
 }
 
 void KMSearchRuleWidgetLister::reset()
@@ -407,6 +435,11 @@ void KMSearchPatternEdit::setSearchPattern( KMSearchPattern *aPattern )
   blockSignals(FALSE);
 
   setEnabled( TRUE );
+}
+
+void KMSearchPatternEdit::setHeadersOnly( bool headersOnly )
+{
+  mRuleLister->setHeadersOnly( headersOnly );
 }
 
 void KMSearchPatternEdit::reset()
