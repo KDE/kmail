@@ -7,6 +7,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmmsginfo.h"
+#include "kpgp.h"
 #ifndef KRN
 #include "kmfolder.h"
 #include "kmversion.h"
@@ -303,8 +304,23 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   // type than "text".
   if (numBodyParts() == 0)
   {
-    result = QString(bodyDecoded()).stripWhiteSpace()
+     Kpgp* pgp = Kpgp::getKpgp();
+     assert(pgp != NULL);
+     if (pgp->setMessage(bodyDecoded()))
+     {
+       if (pgp->isEncrypted())
+       {
+         if(pgp->decrypt()) 
+             result = QString(pgp->message()).stripWhiteSpace()
+                         .replace(reNL,nlIndentStr) + '\n';
+       }
+     }
+     else 
+     {
+        
+     result = QString(bodyDecoded()).stripWhiteSpace()
                 .replace(reNL,nlIndentStr) + '\n';
+     }
   }
   else
   {
