@@ -163,7 +163,7 @@ signals:
     /**
      * Emitted when the status message of an item changed. Should be used by
      * progress dialogs to update the status message for an item.
-     * @param  The upated item.
+     * @param  The updated item.
      * @param  The new message.
      */
     void progressItemStatus( ProgressItem*, const QString& );
@@ -228,14 +228,14 @@ class ProgressManager : public QObject
 
     /**
      * Use this to aquire a unique id number which can be used to discern
-     * and operation from all others going on at the same time. Use that
-     * number as the id string for you progressItem to ensure it is unique.
+     * an operation from all others going on at the same time. Use that
+     * number as the id string for your progressItem to ensure it is unique.
      * @return
      */
     static unsigned int getUniqueID() { return ++uID; };
 
     /**
-     * Creates a new progresItem with the given parent, id, label and initial
+     * Creates a new progressItem with the given parent, id, label and initial
      * status.
      *
      * @param parent Specify an already existing item as the parent of this one.
@@ -248,12 +248,12 @@ class ProgressManager : public QObject
      * @return The ProgressItem representing the operation.
      */
      static ProgressItem * createProgressItem( ProgressItem* parent,
-                                                         const QString& id,
-                                                         const QString& label,
-                                                         const QString& status = QString::null,
-                                                         bool canBeCanceled = true ) {
+                                               const QString& id,
+                                               const QString& label,
+                                               const QString& status = QString::null,
+                                               bool canBeCanceled = true ) {
        return instance()->createProgressItemImpl( parent, id, label, status,
-                                                 canBeCanceled );
+                                                  canBeCanceled );
      }
 
      /**
@@ -279,7 +279,7 @@ class ProgressManager : public QObject
        return instance()->createProgressItemImpl( 0, id, label, status, canBeCanceled );
      }
 
-signals:
+  signals:
     /** @see ProgressItem::progressItemAdded() */
     void progressItemAdded( ProgressItem* );
     /** @see ProgressItem::progressItemProgress() */
@@ -291,16 +291,16 @@ signals:
     /** @see ProgressItem::progressItemStatus() */
     void progressItemStatus( ProgressItem*, const QString& );
 
-public slots:
+  public slots:
 
     /**
      * Calls setCompleted() on the item, to make sure it goes away.
-     * Provided for conenience.
-     * @param  the canceled item.
+     * Provided for convenience.
+     * @param item the canceled item.
      */
-    void slotStandardCancelHandler( ProgressItem* );
+    void slotStandardCancelHandler( ProgressItem* item );
 
-private slots:
+  private slots:
     void slotTransactionCompleted( ProgressItem *item );
 
   private:
