@@ -19,6 +19,7 @@ KMFolderComboBox::KMFolderComboBox( QWidget *parent, char *name )
   refreshFolders();
   connect( this, SIGNAL( activated(int) ), this, SLOT( slotActivated(int) ) );  
   connect( kernel->folderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+  if (mImapShown) connect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
 }
 
 //-----------------------------------------------------------------------------
@@ -35,6 +36,10 @@ void KMFolderComboBox::showImapFolders(bool shown)
 {
   mImapShown = shown;
   refreshFolders();
+	if (shown)
+  	connect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+	else
+  	disconnect( kernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
 }
 
 //-----------------------------------------------------------------------------
