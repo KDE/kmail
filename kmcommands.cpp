@@ -1195,14 +1195,16 @@ KMCommand::Result KMForwardCommand::execute()
   }
 
   // forward a single message at most.
-
   KMMessage *msg = msgList.getFirst();
   if ( !msg || !msg->codec() )
     return Failed;
 
   KCursorSaver busy(KBusyPtr::busy());
-  win = new KMComposeWin(msg->createForward());
-  win->setCharset(msg->codec()->mimeName(), TRUE);
+  KMMessage *fwdMsg = msg->createForward();
+
+  win = new KMComposeWin( fwdMsg );
+  win->setCharset( fwdMsg->codec()->mimeName(), true );
+  win->setBody( QString::fromUtf8( msg->createForwardBody() ) );
   win->show();
 
   return OK;
