@@ -49,7 +49,8 @@ static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix;
+static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix,
+               sForceReplyCharset;;
 static int sWrapCol;
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 
@@ -797,7 +798,8 @@ KMMessage* KMMessage::createReply(bool replyToAll)
   if (!recognized)
     msg->setSubject("Re: " + subject());
 
-  msg->setCharset(charset());
+  if ( !sForceReplyCharset )
+    msg->setCharset(charset());
   setStatus(KMMsgStatusReplied);
 
   return msg;
@@ -2049,6 +2051,7 @@ void KMMessage::readConfig(void)
   if (sForwardSubjPrefixes.count() == 0)
     sForwardSubjPrefixes.append("Fwd:");
   sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
+  sForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
 
   config->setGroup("Reader");
   sHdrStyle = config->readNumEntry("hdr-style", KMReaderWin::HdrFancy);

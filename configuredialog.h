@@ -328,6 +328,8 @@ class ConfigureDialog : public KDialogBase
       QPushButton *addForwardPrefixButton;
       QPushButton *removeForwardPrefixButton;
       QCheckBox *replaceForwardPrefixCheck;
+      QComboBox *defaultCharsetCombo;
+      QCheckBox* forceReplyCharsetCheck;
     };
     struct MimeWidget
     {

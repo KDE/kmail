@@ -47,6 +47,7 @@
 #include <qvbox.h>
 
 #include <kapp.h>
+#include <kcharsets.h>
 #include <kcolorbtn.h>
 #include <kconfig.h>
 #include <kfiledialog.h>
@@ -1050,7 +1051,7 @@ void ConfigureDialog::makeComposerPage( void )
   glay2->addMultiCellWidget(mComposer.replyListBox, 2, 4, 0, 0);
   connect( mComposer.replyListBox, SIGNAL(selectionChanged ()),
 	   this, SLOT(slotReplyPrefixSelected()) );
-	
+
   mComposer.addReplyPrefixButton =
      new QPushButton( i18n("Add..."), replyGroup );
   mComposer.addReplyPrefixButton->setAutoDefault( false );
@@ -1107,6 +1108,29 @@ void ConfigureDialog::makeComposerPage( void )
   glay3->addMultiCellWidget( mComposer.replaceForwardPrefixCheck, 5, 5, 0, 2);
 
   topLevel2->addStretch(10);
+
+  //third (charset) page
+  QWidget *charsetPage = new QWidget( tabWidget );
+  tabWidget->addTab( charsetPage, i18n("Charset") );
+  QVBoxLayout *topLevel3 = new QVBoxLayout( charsetPage, spacingHint() );
+  //list of charsets
+  QHBoxLayout *charsetHLay = new QHBoxLayout( topLevel3 );
+  label = new QLabel( i18n("Default charset:"), charsetPage );
+  charsetHLay->addWidget( label );
+  mComposer.defaultCharsetCombo = new QComboBox( charsetPage );
+  QStringList charsetList = KGlobal::charsets()->availableCharsetNames();
+  charsetList.remove(QString("*-*"));  //this doesn't make sense
+  charsetList.prepend( "us-ascii" );
+  charsetList.prepend( i18n("Use language encoding") );
+  mComposer.defaultCharsetCombo->insertStringList(charsetList);
+  charsetHLay->addWidget( mComposer.defaultCharsetCombo );
+  charsetHLay->addStretch(10);
+  topLevel3->addSpacing( spacingHint() );
+  mComposer.forceReplyCharsetCheck =
+    new QCheckBox( i18n("Use own default charset when replying"), charsetPage );
+  topLevel3->addWidget( mComposer.forceReplyCharsetCheck );
+
+  topLevel3->addStretch(10);
 }
 
 
@@ -1497,7 +1521,7 @@ void ConfigureDialog::setupComposerPage( void )
     prefixList.append("Re:");
   mComposer.replyListBox->clear();
   mComposer.replyListBox->insertStringList(prefixList);
-  bool state = config.readBoolEntry("replace-reply-prefix", true);
+  bool state = config.readBoolEntry("replace-reply-prefix", true );
   mComposer.replaceReplyPrefixCheck->setChecked( state );
 
   prefixList = config.readListEntry("forward-prefixes", ',');
@@ -1523,6 +1547,33 @@ void ConfigureDialog::setupComposerPage( void )
   int value = config.readEntry("break-at","78" ).toInt();
   mComposer.wrapColumnSpin->setValue( value );
   slotWordWrapSelectionChanged();
+
+  //charsets
+  QString str = config.readEntry( "charset", "" );
+  if (str.isNull() || str.isEmpty() || str == "default")
+    mComposer.defaultCharsetCombo->setCurrentItem( 0 );
+  else
+  {
+    bool found = false;
+    if (str == "us-ascii")
+    {
+      mComposer.defaultCharsetCombo->setCurrentItem( 1 );
+      found = true;
+    }
+    //we start from 2, because 0 stands for "Use language def", 1 stands for "us-ascii"
+    for (int j = 2; !found && (j < mComposer.defaultCharsetCombo->count()); j++ )
+      if (mComposer.defaultCharsetCombo->text( j ) == KGlobal::charsets()->xCharsetName(
+                                    KGlobal::charsets()->nameToID(str)))
+      {
+        mComposer.defaultCharsetCombo->setCurrentItem( j );
+        found = true;
+        break;
+      }
+    if (!found)
+      mComposer.defaultCharsetCombo->setCurrentItem(0);
+  }
+  state = config.readBoolEntry( "force-reply-charset", false );
+  mComposer.forceReplyCharsetCheck->setChecked( state );
 }
 
 void ConfigureDialog::setupMimePage( void )
@@ -1915,6 +1966,14 @@ void ConfigureDialog::slotDoApply( bool everything )
 		      mComposer.pgpAutoSignatureCheck->isChecked() );
     config.writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
     config.writeEntry("break-at", mComposer.wrapColumnSpin->value() );
+    // charset settings
+    if ( mComposer.defaultCharsetCombo->currentItem() == 0 )
+      config.writeEntry("charset", "default");
+    else //charset should be e.g. iso-8889-1, on the list we have iso8859-1
+      config.writeEntry("charset", KGlobal::charsets()->name(
+         KGlobal::charsets()->nameToID( mComposer.defaultCharsetCombo->currentText())));
+    config.writeEntry("force-reply-charset",
+                      mComposer.forceReplyCharsetCheck->isChecked() );
   }
   if( activePage == mMime.pageIndex || everything )
   {
