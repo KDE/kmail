@@ -30,6 +30,7 @@
 #include <kpgpblock.h>
 #include <krun.h>
 #include <ktempfile.h>
+#include <kprocess.h>
 
 // khtml headers
 #include <khtml_part.h>
@@ -3472,19 +3473,27 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                 if (block.signer.isEmpty())
                     signer = "";
                 else {
-                    // HTMLize the signer's user id and create mailto: link
+                    // HTMLize the signer's user id but do *not* create mailto: link
                     signer.replace( QRegExp("&"), "&amp;" );
                     signer.replace( QRegExp("<"), "&lt;" );
                     signer.replace( QRegExp(">"), "&gt;" );
                     signer.replace( QRegExp("\""), "&quot;" );
-                    signer = "<a href=\"mailto:" + signer + "\">" + signer + "</a>";
                 }
                 if( block.keyId.isEmpty() ) {
                     if( signer.isEmpty() )
                         htmlStr += i18n( "Message was signed with unknown key." );
                     else
-                        htmlStr += i18n( "Message was signed by %1." );
+                        htmlStr += i18n( "Message was signed by %1." )
+                                .arg( signer );
                 } else {
+                    QString keyWithURL
+                        = cryptPlug
+                        ? QString("<a href=\"kmail:showCertificate#%1 ### %2 ### %3\">%4</a>")
+                            .arg( cryptPlug->displayName() )
+                            .arg( cryptPlug->libName() )
+                            .arg( block.keyId )
+                            .arg( block.keyId )
+                        : QString::fromUtf8( block.keyId );
                     bool dateOK = (0 < block.creationTime.tm_year);
                     QDate created( 1900 + block.creationTime.tm_year,
                                 block.creationTime.tm_mon,
@@ -3492,21 +3501,21 @@ kdDebug(5006) << "2. setting CMS color" << endl;
                     if( dateOK && created.isValid() ) {
                         if( signer.isEmpty() )
                             htmlStr += i18n( "Message was signed with unknown key 0x%1, created %2." )
-                                    .arg( block.keyId ).arg( created.toString( Qt::LocalDate ) );
+                                    .arg( keyWithURL ).arg( created.toString( Qt::LocalDate ) );
                         else
                             htmlStr += i18n( "Message was signed by %1 with unknown key 0x%2, created %3." )
                                     .arg( signer )
-                                    .arg( block.keyId )
+                                    .arg( keyWithURL )
                                     .arg( created.toString( Qt::LocalDate ) );
                     }
                     else {
                         if( signer.isEmpty() )
                             htmlStr += i18n( "Message was signed with unknown key 0x%1." )
-                                    .arg( block.keyId );
+                                    .arg( keyWithURL );
                         else
                             htmlStr += i18n( "Message was signed by %1 with unknown key 0x%1." )
                                     .arg( signer )
-                                    .arg( block.keyId );
+                                    .arg( keyWithURL );
                     }
                 }
                 htmlStr += "<br />";
@@ -4061,11 +4070,57 @@ void KMReaderWin::closeEvent(QCloseEvent *e)
 }
 
 
+bool foundSMIMEData( const QString aUrl,
+                     QString& displayName,
+                     QString& libName,
+                     QString& keyId )
+{
+  static QString showCertMan("showCertificate#");
+  displayName = "";
+  libName = "";
+  keyId = "";
+  int i1 = aUrl.find( showCertMan );
+  if( -1 < i1 ) {
+    i1 += showCertMan.length();
+    int i2 = aUrl.find(" ### ", i1);
+    if( i1 < i2 )
+    {
+      displayName = aUrl.mid( i1, i2-i1 );
+      i1 = i2+5;
+      i2 = aUrl.find(" ### ", i1);
+      if( i1 < i2 )
+      {
+        libName = aUrl.mid( i1, i2-i1 );
+        i2 += 5;
+        
+        keyId = aUrl.mid( i2 );
+        /*
+        int len = aUrl.length();
+        if( len > i2+1 ) {
+          keyId = aUrl.mid( i2, 2 );
+          i2 += 2;
+          while( len > i2+1 ) {
+            keyId += ':';
+            keyId += aUrl.mid( i2, 2 );
+            i2 += 2;
+          }
+        }
+        */
+      }
+    }
+  }
+  return !keyId.isEmpty();
+}
+
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   bool bOk = false;
-
+  
+  QString dummyStr;
+  QString keyId;
+  
   KURL url(aUrl);
   int id = msgPartFromUrl(url);
 
@@ -4087,6 +4142,11 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
     emit statusMsg( i18n("Turn on HTML rendering for this message.") );
     bOk = true;
   }
+  else if( foundSMIMEData( aUrl, dummyStr, dummyStr, keyId ) )
+  {
+    emit statusMsg(i18n("Show certificate 0x%1").arg(keyId));
+    bOk = true;
+  }
   if( !bOk )
     emit statusMsg(aUrl);
 }
@@ -4095,6 +4155,30 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
 {
+  QString displayName;
+  QString libName;
+  QString keyId;
+  if( aUrl.hasRef() && foundSMIMEData( aUrl.path()+"#"+aUrl.ref(), displayName, libName, keyId ) )
+  {
+    QString query( "-query " );
+    query += keyId;
+    KProcess certManagerProc; // save to create on the heap, since
+                            // there is no parent
+    certManagerProc << "kgpgcertmanager";
+    certManagerProc << displayName;
+    certManagerProc << libName;
+    certManagerProc << "-query";
+    certManagerProc << keyId;
+    if( !certManagerProc.start( KProcess::DontCare ) )
+      KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
+                          i18n( "KMail Error" ) );
+    else
+      kdDebug(5006) << "\nKMReaderWin::slotUrlOn(): certificate manager started.\n" << endl;
+    // process continues to run even after the KProcess object goes
+    // out of scope here, since it is started in DontCare run mode.
+    return;
+  }
+  
   if (!aUrl.hasHost() && aUrl.path() == "/" && aUrl.hasRef())
   {
     if (!mViewer->gotoAnchor(aUrl.ref()))
