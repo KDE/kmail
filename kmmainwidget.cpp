@@ -101,7 +101,7 @@ QPtrList<KMMainWidget>* KMMainWidget::s_mainWidgetList = 0;
 static KStaticDeleter<QPtrList<KMMainWidget> > mwlsd;
 
 //-----------------------------------------------------------------------------
-KMMainWidget::KMMainWidget(QWidget *parent, const char *name, 
+KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
                            KXMLGUIClient *aGUIClient,
                            KActionCollection *actionCollection, KConfig* config ) :
     QWidget(parent, name),
@@ -3170,7 +3170,7 @@ void KMMainWidget::slotShowStartupFolder()
 
   // plug shortcut filter actions now
   initializeFilterActions();
-  
+
   QString newFeaturesMD5 = KMReaderWin::newFeaturesMD5();
   if ( kmkernel->firstStart() ||
        GlobalSettings::previousNewFeaturesMD5() != newFeaturesMD5 ) {
@@ -3292,7 +3292,7 @@ void KMMainWidget::initializeFilterActions()
   QString filterName, normalizedName;
   KMMetaFilterActionCommand *filterCommand;
   KAction *filterAction = 0;
-  
+
   if ( !mFilterTBarActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
