@@ -240,7 +240,7 @@ namespace KMail {
       bool store = true;
       KConfigGroup passwords( KGlobal::config(), "Passwords" );
       passwords.writeEntry( "Keep", storePasswd() );
-      QString msg = i18n("You need to supply a user name and a password to "
+      QString msg = i18n("You need to supply a username and a password to "
 			 "access this mailbox.");
       mPasswordDialogIsActive = true;
       if ( PasswordDialog::getNameAndPassword( log, pass, &store, msg, false,

@@ -1049,7 +1049,7 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
       KCursorSaver idle(KBusyPtr::idle());
       result = KIO::PasswordDialog::getNameAndPassword(ti->user, ti->pass,
-	&b, i18n("You need to supply a user name and a password to use this "
+	&b, i18n("You need to supply a username and a password to use this "
 	     "SMTP server."), FALSE, QString::null, ti->name, QString::null);
 
       if ( result != QDialog::Accepted )

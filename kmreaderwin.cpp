@@ -1870,7 +1870,7 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
                   "<qt><p>Open attachment '%5'?</p>"
                   "<p><b>Warning:</b> The message suggests that this "
                   "attachment is of type '%1' (%2), but according to the "
-                  "file name it seems to be of type '%3' (%4).</p>"
+                  "filename it seems to be of type '%3' (%4).</p>"
                   "<p>Note that opening an attachment may compromise your "
                   "system's security.</p></qt>")
              .arg( KMimeType::mimeType( contentTypeStr )->comment(),
