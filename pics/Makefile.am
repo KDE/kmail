@@ -1,3 +1,4 @@
+SUBDIRS = icons
 
 pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgread.png \
 	kmmsgreplied.png kmmsgforwarded.png kmmsgqueued.png kmmsgflag.png \
