@@ -20,6 +20,10 @@
 
 #include "interfaces/htmlwriter.h"
 
+#include <mimelib/string.h>
+#include <mimelib/field.h>
+#include <mimelib/headers.h>
+
 #include <kdebug.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -172,6 +176,9 @@ namespace KMail {
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
 		    const QString & vCardName, bool printing ) const;
+
+  private:
+    QString formatAllMessageHeaders( const KMMessage * message ) const;
   };
 
   QString PlainHeaderStyle::format( const KMMessage * message,
@@ -181,13 +188,10 @@ namespace KMail {
     if ( !strategy )
       strategy = HeaderStrategy::rich();
 
-    // ### from kmreaderwin begin
-
     // The direction of the header is determined according to the direction
     // of the application layout.
 
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-    QString headerStr = QString("<div dir=\"%1\">").arg(dir);
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
@@ -213,6 +217,15 @@ namespace KMail {
       dateString = message->dateStr();
     }
 
+    QString headerStr = QString("<div dir=\"%1\">").arg(dir);
+
+    if ( strategy->headersToDisplay().isEmpty()
+	 && strategy->defaultPolicy() == HeaderStrategy::Display ) {
+      // crude way to emulate "all" headers:
+      headerStr += formatAllMessageHeaders( message );
+      return headerStr + "</div>";
+    }
+
     //case HdrLong:
     if ( strategy->showHeader( "subject" ) )
       headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
@@ -228,14 +241,12 @@ namespace KMail {
       if ( !vCardName.isEmpty() )
 	headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
 			 "\">" + i18n("[vCard]") + "</a>" );
+      if ( strategy->showHeader( "organization" )
+	   && !message->headerField("Organization").isEmpty())
+	headerStr.append("&nbsp;&nbsp;(" +
+			 strToHtml(message->headerField("Organization")) + ")");
+      headerStr.append("<br>");
     }
-
-    if ( strategy->showHeader( "organization" )
-	 && !message->headerField("Organization").isEmpty())
-      headerStr.append("&nbsp;&nbsp;(" +
-                       strToHtml(message->headerField("Organization")) + ")");
-
-    headerStr.append("<br>");
 
     if ( strategy->showHeader( "to" ) )
       headerStr.append(i18n("To: ")+
@@ -256,6 +267,19 @@ namespace KMail {
     headerStr += "</div>";
 
     return headerStr;
+  }
+
+  QString PlainHeaderStyle::formatAllMessageHeaders( const KMMessage * message ) const {
+    const DwHeaders & headers = message->headers();
+    QString result;
+
+    for ( const DwField * field = headers.FirstField() ; field ; field = field->Next() ) {
+      result += ( field->FieldNameStr() + ": " ).c_str();
+      result += strToHtml( field->FieldBodyStr().c_str() );
+      result += "<br>";
+    }
+
+    return result;
   }
 
   //
