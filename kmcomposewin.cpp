@@ -116,9 +116,10 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   mLblCc = new QLabel(mMainWidget);
   mLblBcc = new QLabel(mMainWidget);
   mLblSubject = new QLabel(mMainWidget);
-  mBtnIdentity = new QCheckBox(i18n("Sticky"),mMainWidget);
-  mBtnFcc = new QCheckBox(i18n("Sticky"),mMainWidget);
-  mBtnTransport = new QCheckBox(i18n("Sticky"),mMainWidget);
+  QString sticky = i18n("Sticky");
+  mBtnIdentity = new QCheckBox(sticky,mMainWidget);
+  mBtnFcc = new QCheckBox(sticky,mMainWidget);
+  mBtnTransport = new QCheckBox(sticky,mMainWidget);
   mBtnTo = new QPushButton("...",mMainWidget);
   mBtnCc = new QPushButton("...",mMainWidget);
   mBtnBcc = new QPushButton("...",mMainWidget);
@@ -230,9 +231,9 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
 
   mEdtTo->setFocus();
   mErrorProcessingStructuringInfo =
-    i18n("Structuring information returned by the Crypto Plug-In "
-         "could not be processed correctly, the Plug-In might be damaged.\n"
-         "PLEASE CONTACT YOUR SYSTEM ADMINISTRATOR");
+    i18n("<qt><p>Structuring information returned by the Crypto Plug-In "
+         "could not be processed correctly, the Plug-In might be damaged.</p>"
+         "<p>Please contact your system administrator.</p></qt>");
   mErrorNoCryptPlugAndNoBuildIn =
     i18n("<p>No active Crypto Plug-In was found and the built-in OpenPGP code "
          "did not run successfully.</p>"
@@ -911,13 +912,13 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Attach File..."), "attach",
                       0, this, SLOT(slotAttachFile()),
                       actionCollection(), "attach");
-  attachRemoveAction = new KAction (i18n("&Remove"), 0, this,
+  attachRemoveAction = new KAction (i18n("&Remove Attachment"), 0, this,
                       SLOT(slotAttachRemove()),
                       actionCollection(), "remove");
-  attachSaveAction = new KAction (i18n("&Save..."), "filesave",0,
+  attachSaveAction = new KAction (i18n("&Save Attachment As..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
-  attachPropertiesAction = new KAction (i18n("Pr&operties..."), 0, this,
+  attachPropertiesAction = new KAction (i18n("Attachment Pr&operties..."), 0, this,
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
@@ -1305,7 +1306,6 @@ bool KMComposeWin::queryClose ()
            i18n("Do you want to discard the message or save it for later?"),
            i18n("Discard or Save Message"),
            i18n("&Save as Draft"),
-	   // i18n fix by mok: avoid clash with common_texts (breaks translation)
 	   i18n("discard message", "&Discard") );
     if (rc == KMessageBox::Cancel)
       return false;
@@ -1435,7 +1435,10 @@ bool KMComposeWin::applyChanges(void)
                      " you wanted to be warned not to send unsigned messages!") )
             + "<br>&nbsp;<br><b>"
             + i18n("Sign all parts of this message?")
-            + "</b></qt>" ) );
+            + "</b></qt>" ),
+          i18n("Signature Warning"),
+          KGuiItem( i18n("&Sign All Parts") ),
+          KGuiItem( i18n("Send &as is") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1465,7 +1468,10 @@ bool KMComposeWin::applyChanges(void)
                      " you wanted to be warned not to send unencrypted messages!") )
             + "<br>&nbsp;<br><b>"
             + i18n("Encrypt all parts of this message?")
-            + "</b></qt>" ) );
+            + "</b></qt>" ),
+          i18n("Encryption Warning"),
+          KGuiItem( i18n("&Encrypt All Parts") ),
+          KGuiItem( i18n("Send &as is") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         else if( ret == KMessageBox::Yes ) {
@@ -1507,9 +1513,9 @@ bool KMComposeWin::applyChanges(void)
         int ret;
         if( doSign )
           ret = KMessageBox::questionYesNoCancel( this,
-                        i18n("<qt><p>All recipients of this message have a "
-                             "trusted OpenPGP key and the message will be "
-                             "signed.</p>"
+                        i18n("<qt><p>You have a trusted OpenPGP key for every "
+                             "recipient of this message and the message will "
+                             "be signed.</p>"
                              "<p>Should this message also be "
                              "encrypted?</p></qt>"),
                         i18n("Encrypt Message?"),
@@ -1517,8 +1523,8 @@ bool KMComposeWin::applyChanges(void)
                         KGuiItem( i18n("&Sign Only") ) );
         else
           ret = KMessageBox::questionYesNoCancel( this,
-                        i18n("<qt><p>All recipients of this message have a "
-                             "trusted OpenPGP key.</p>"
+                        i18n("<qt><p>You have a trusted OpenPGP key for every "
+                             "recipient of this message.</p>"
                              "<p>Should this message be encrypted?</p></qt>"),
                         i18n("Encrypt Message?"),
                         KGuiItem( i18n("&Encrypt") ),
@@ -1532,9 +1538,12 @@ bool KMComposeWin::applyChanges(void)
       { // warn the user that there are conflicting encryption preferences
         int ret =
           KMessageBox::warningYesNoCancel( this,
-                                      i18n("There are conflicting encryption "
-                                      "preferences!\n\n"
-                                      "Should this message be encrypted?") );
+                        i18n("<qt><p>There are conflicting encryption "
+                             "preferences!</p>"
+                             "<p>Should this message be encrypted?</p></qt>"),
+                        i18n("Encrypt Message?"),
+                        KGuiItem( i18n("&Encrypt") ),
+                        KGuiItem( i18n("&Don't Encrypt") ) );
         if( ret == KMessageBox::Cancel )
           bOk = false;
         doEncrypt = ( ret == KMessageBox::Yes );
@@ -1585,7 +1594,12 @@ bool KMComposeWin::applyChanges(void)
         QString question =
           i18n("Store message in the recommended way?");
 
-        if( KMessageBox::Yes == KMessageBox::warningYesNo(this, "<qt><b>" + headTxt + "</b><br>" + encrTxt + "<br>&nbsp;<br>" + footTxt + "<br>&nbsp;<br><b>" + question + "</b></qt>") ) {
+        if( KMessageBox::Yes == KMessageBox::warningYesNo(this,
+                 "<qt><p><b>" + headTxt + "</b><br>" + encrTxt + "</p><p>"
+                 + footTxt + "</p><p><b>" + question + "</b></p></qt>"),
+                 i18n("Unsafe S/MIME Configuration"),
+                 KGuiItem( i18n("Save &Unencrypted") ),
+                 KGuiItem( i18n("Save &Encrypted") ) ) {
             saveMessagesEncrypted = false;
         }
       }
@@ -1853,8 +1867,9 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
         newBodyPart.setBodyEncoded( block.text() );
       }
       else if ( result == Kpgp::Failure )
-        KMessageBox::sorry(this, i18n("<qt><p>Signing not done.</p>%1</qt>")
-			   .arg( mErrorNoCryptPlugAndNoBuildIn ));
+        KMessageBox::sorry(this,
+                   i18n("<qt><p>This message could not be signed.</p>%1</qt>")
+                   .arg( mErrorNoCryptPlugAndNoBuildIn ));
     }
   }
 
@@ -1992,10 +2007,12 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
             KMessageBox::sorry(this, mErrorProcessingStructuringInfo);
         } else
           KMessageBox::sorry(this,
-          i18n( "<qt><b>This message could not be encrypted!</b><br>&nbsp;<br>"
-                "The Crypto Plug-in %1<br>"
-                "did not return an encoded text block.<br>&nbsp;<br>"
-                "Recipient's public key was not found or is untrusted.</qt>").arg(mSelectedCryptPlug->libName()));
+            i18n("<qt><p><b>This message could not be encrypted!</b></p>"
+                 "<p>The Crypto Plug-in '%1' did not return an encoded text "
+                 "block.</p>"
+                 "<p>Probably a recipient's public key was not found or is "
+                 "untrusted.</p></qt>")
+            .arg(mSelectedCryptPlug->libName()));
       } else {
         // we try calling the *old* build-in code for OpenPGP encrypting
         Kpgp::Block block;
@@ -2017,7 +2034,8 @@ Kpgp::Result KMComposeWin::encryptMessage( KMMessage* msg,
         }
         else if( Kpgp::Failure == result ) {
           KMessageBox::sorry(this,
-            i18n("<qt><p>Encrypting not done.</p>%1</qt>").arg( mErrorNoCryptPlugAndNoBuildIn ));
+            i18n("<qt><p>This message could not be encrypted!</p>%1</qt>")
+           .arg( mErrorNoCryptPlugAndNoBuildIn ));
         }
       }
     }
@@ -2431,13 +2449,14 @@ kdDebug() << "***************************************" << endl;
       } else {
 
         // Plugin error!
-        KMessageBox::sorry(this,
-            i18n("Error: Cryptography plugin returned\n"
-                 "       \" structuring.makeMultiMime \"\n"
-                 "but did NOT specify a Content-Type header\n"
-                 "for the ciphertext that was generated.\n\n"
-                 "Please report this bug.\n( ")
-                 + bugURL + " )" );
+        KMessageBox::sorry( this,
+          i18n("<qt><p>Error: The Crypto Plug-in '%1' returned<br>"
+               "       \" structuring.makeMultiMime \"<br>"
+               "but did NOT specify a Content-Type header "
+               "for the ciphertext that was generated.</p>"
+               "<p>Please report this bug:<br>%2</p></qt>")
+          .arg(mSelectedCryptPlug->libName())
+          .arg(bugURL) );
         bOk = false;
       }
 
@@ -2507,10 +2526,11 @@ kdDebug() << "***************************************" << endl;
     else {
         // Plugin error!
         KMessageBox::sorry(this,
-            i18n("Error: Cryptography plugin did not return"
-                 " any encoded data."
-                 "\nPlease report this bug:"
-                 "\n" ) + bugURL );
+          i18n("<qt><p>Error: The Crypto Plug-in '%1' did not return "
+               "any encoded data.</p>"
+               "<p>Please report this bug:<br>%2</p></qt>")
+          .arg(mSelectedCryptPlug->libName())
+          .arg(bugURL) );
         bOk = false;
     }
     if(    structuring.data.flatTextPostfix
@@ -2573,8 +2593,8 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
       mEditor->setText(newText);
       kernel->kbp()->idle();
       bool anyway = (KMessageBox::warningYesNo(0L,
-      i18n("Not all characters fit into the chosen"
-      " encoding.\nSend the message anyway?"),
+      i18n("<qt>Not all characters fit into the chosen"
+      " encoding.<br><br>Send the message anyway?</qt>"),
       i18n("Some characters will be lost"),
       i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
       if (!anyway)
@@ -2638,11 +2658,8 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     if( (c == '\1') && !useDialog ) {
                         // set up selection dialog
                         useDialog = true;
-                        QString caption( i18n( "Select Certificate" ));
-                        caption += " [";
-                        caption += from();
-                        caption += "]";
-                        dialog.setCaption( caption );
+                        dialog.setCaption( i18n("Select Certificate [%1]")
+                                           .arg( from() ) );
                     }
                     certificate[iZ] = '\0';
                     QString s = QString::fromUtf8( &certificate[iA] );
@@ -2713,12 +2730,17 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 if( 0 < sigDaysLeft )
                     txt1 = i18n( "The certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( sigDaysLeft );
                 else if( 0 > sigDaysLeft )
-                    txt1 = i18n( "The certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( sigDaysLeft );
+                    txt1 = i18n( "The certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( -sigDaysLeft );
                 else
                     txt1 = i18n( "The certificate you want to use for signing expires today.<br>This means that, starting from tomorrow, the recipients will not be able to check your signature any longer." );
                 int ret = KMessageBox::warningYesNo( this,
-                                                    i18n( "<qt>%1<br>Do you still want to use this signature?</qt>" ).arg( txt1 ),
-                                                    i18n( "Certificate Warning" ) );
+                            i18n( "<qt><p>%1</p>"
+                                  "<p>Do you still want to use this "
+                                  "certificate?</p></qt>" )
+                            .arg( txt1 ),
+                            i18n( "Certificate Warning" ),
+                            KGuiItem( i18n("&Use Certificate") ),
+                            KGuiItem( i18n("&Don't Use Certificate") ) );
                 if( ret == KMessageBox::No )
                     bSign = false;
             }
@@ -2732,12 +2754,17 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     if( 0 < rootDaysLeft )
                         txt1 = i18n( "The root certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( rootDaysLeft );
                     else if( 0 > rootDaysLeft )
-                        txt1 = i18n( "The root certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( rootDaysLeft );
+                        txt1 = i18n( "The root certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( -rootDaysLeft );
                     else
                         txt1 = i18n( "The root certificate of the certificate you want to use for signing expires today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
                     int ret = KMessageBox::warningYesNo( this,
-                                                        i18n( "<qt>%1<br>Do you still want to use this signature?</qt>" ).arg( txt1 ),
-                                                        i18n( "Certificate Warning" ) );
+                                i18n( "<qt><p>%1</p>"
+                                      "<p>Do you still want to use this "
+                                      "certificate?</p></qt>" )
+                                .arg( txt1 ),
+                                i18n( "Certificate Warning" ),
+                                KGuiItem( i18n("&Use Certificate") ),
+                                KGuiItem( i18n("&Don't Use Certificate") ) );
                     if( ret == KMessageBox::No )
                         bSign = false;
                 }
@@ -2753,12 +2780,17 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     if( 0 < caDaysLeft )
                         txt1 = i18n( "The CA certificate of the certificate you want to use for signing expires in %1 days.<br>This means that after this period, the recipients will not be able to check your signature any longer." ).arg( caDaysLeft );
                     else if( 0 > caDaysLeft )
-                        txt1 = i18n( "The CA certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( caDaysLeft );
+                        txt1 = i18n( "The CA certificate of the certificate you want to use for signing expired %1 days ago.<br>This means that the recipients will not be able to check your signature." ).arg( -caDaysLeft );
                     else
                         txt1 = i18n( "The CA certificate of the certificate you want to use for signing expires today.<br>This means that beginning from tomorrow, the recipients will not be able to check your signature any longer." );
                     int ret = KMessageBox::warningYesNo( this,
-                                                        i18n( "<qt>%1<br>Do you still want to use this signature?</qt>" ).arg( txt1 ),
-                                                        i18n( "Certificate Warning" ) );
+                                i18n( "<qt><p>%1</p>"
+                                      "<p>Do you still want to use this "
+                                      "certificate?</p></qt>" )
+                                .arg( txt1 ),
+                                i18n( "Certificate Warning" ),
+                                KGuiItem( i18n("&Use Certificate") ),
+                                KGuiItem( i18n("&Don't Use Certificate") ) );
                     if( ret == KMessageBox::No )
                         bSign = false;
                 }
@@ -2769,9 +2801,15 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         if( mSelectedCryptPlug->hasFeature( Feature_WarnSignEmailNotInCertificate ) ) {
             if( bSign && mSelectedCryptPlug->warnNoCertificate() &&
                 !mSelectedCryptPlug->isEmailInCertificate( QString( KMMessage::getEmailAddr( from() ) ).utf8(), signCertFingerprint ) )  {
+                QString txt1 = i18n( "The certificate you want to use for signing does not contain your sender email address.<br>This means that it is not possible for the recipients to check whether the email really came from you." );
                 int ret = KMessageBox::warningYesNo( this,
-                                                    i18n( "<qt>The certificate does not contain your sender email address.<br>This means that it is not possible for the recipients to check whether the email really came from you.<br>Do you still want to use this signature?</qt>" ),
-                                                    i18n( "Certificate Warning" ) );
+                            i18n( "<qt><p>%1</p>"
+                                  "<p>Do you still want to use this "
+                                  "certificate?</p></qt>" )
+                            .arg( txt1 ),
+                            i18n( "Certificate Warning" ),
+                            KGuiItem( i18n("&Use Certificate") ),
+                            KGuiItem( i18n("&Don't Use Certificate") ) );
                 if( ret == KMessageBox::No )
                     bSign = false;
             }
@@ -2847,11 +2885,16 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                 else
                   error += i18n("[unknown error]");
                 KMessageBox::sorry(this,
-                  i18n("<b>This message could not be signed!</b><br>&nbsp;<br>"
-                      "The Crypto Plug-In %1<br>"
-                      "reported the following details:<br>&nbsp;<br>&nbsp; &nbsp; <i>%2</i><br>&nbsp;<br>"
-                      "Your configuration might be invalid or the Plug-In damaged.<br>&nbsp;<br>"
-                      "<b>PLEASE CONTACT YOUR SYSTEM ADMINISTRATOR</b>").arg(mSelectedCryptPlug->libName()).arg( error ) );
+                  i18n("<qt><p><b>This message could not be signed!</b></p>"
+                       "<p>The Crypto Plug-In '%1' reported the following "
+                       "details:</p>"
+                       "<p><i>%2</i></p>"
+                       "<p>Your configuration might be invalid or the Plug-In "
+                       "damaged.</p>"
+                       "<p><b>Please contact your system "
+                       "administrator.</b></p></qt>")
+                  .arg(mSelectedCryptPlug->libName())
+                  .arg( error ) );
             }
             // we do NOT call a "delete ciphertext" !
             // since "signature" will take care for it (is a QByteArray)
@@ -2868,8 +2911,8 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
     kdDebug(5006) << "\nKMComposeWin::pgpSignedMsg returning from CRYPTPLUG.\n" << endl;
   } else
       KMessageBox::sorry(this,
-          i18n("No active Crypto Plug-In could be found.\n"
-                "Please activate a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."));
+        i18n("<qt>No active Crypto Plug-In could be found.<br><br>"
+             "Please activate a Plug-In in the configuration dialog.</qt>"));
   return signature;
 }
 
@@ -2899,8 +2942,16 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
             crlDaysLeft <
             mSelectedCryptPlug->encryptionCRLNearExpiryInterval() ) {
             int ret = KMessageBox::warningYesNo( this,
-                                                 i18n( "The certification revocation lists that are used for checking the validity of the certificate you want to use for encrypting expire in %1 days.\n\nDo you still want to encrypt this message?" ).arg( crlDaysLeft ),
-                                                 i18n( "Certificate Warning" ) );
+                        i18n( "<qt><p>The certification revocation lists that "
+                              "are used for checking the validity of the "
+                              "certificate you want to use for encrypting "
+                              "expire in %1 days.</p>"
+                              "<p>Do you still want to encrypt this message?"
+                              "</p></qt>" )
+                        .arg( crlDaysLeft ),
+                        i18n( "Certificate Warning" ),
+                        KGuiItem( i18n( "&Encrypt" ) ),
+                        KGuiItem( i18n( "&Don't Encrypt" ) ) );
             if( ret == KMessageBox::No )
                 bEncrypt = false;
         }
@@ -3003,11 +3054,9 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                 if( (bAllwaysShowDialog || (c == '\1')) && !useDialog ) {
                   // set up selection dialog
                   useDialog = true;
-                  QString caption( i18n( "Select certificate for encryption" ));
-                  caption += " [";
-                  caption += *it;
-                  caption += "]";
-                  dialog.setCaption( caption );
+                  dialog.setCaption( i18n( "Select certificate for encryption "
+                                           "[%1]" )
+                                     .arg(*it) );
                   dialog.setLabelAbove(
                     i18n( "&Select certificate for recipient %1:" )
                     .arg( *it ) );
@@ -3028,8 +3077,8 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
             // OR take the single entry (if only one was found)
             if( useDialog ) {
               dialog.setCommentBelow(
-                i18n("(Certificates matching address \"%1\", "
-                     "press [Cancel] to use different address for recipient %2.)")
+                i18n("(Certificates matching address \"%1\", press "
+                     "[Cancel] to use different address for recipient %2.)")
                 .arg(addressee)
                 .arg(*it) );
               dialog.entriesLB->setFocus();
@@ -3050,10 +3099,8 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
           // Check for expiry of various certificates, but only if the
           // plugin supports this.
           if( mSelectedCryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) ) {
-              QString captionWarn( i18n( "Certificate Warning" ) );
-              captionWarn += " [";
-              captionWarn += *it;
-              captionWarn += "]";
+              QString captionWarn = i18n( "Certificate Warning [%1]" )
+                                    .arg( *it );
               if( bEncrypt ) {
                   int encRecvDaysLeft = mSelectedCryptPlug->receiverCertificateDaysLeftToExpiry( certFingerprint );
                   if( mSelectedCryptPlug->receiverCertificateExpiryNearWarning() &&
@@ -3063,12 +3110,17 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                       if( 0 < encRecvDaysLeft )
                           txt1 = i18n( "The certificate of the recipient you want to send this message to expires in %1 days.<br>This means that after this period, the recipient will not be able to read your message any longer." ).arg( encRecvDaysLeft );
                       else if( 0 > encRecvDaysLeft )
-                          txt1 = i18n( "The certificate of the recipient you want to send this message to expired %1 days ago.<br>This means that the recipient will not be able to read your message." ).arg( encRecvDaysLeft );
+                          txt1 = i18n( "The certificate of the recipient you want to send this message to expired %1 days ago.<br>This means that the recipient will not be able to read your message." ).arg( -encRecvDaysLeft );
                       else
                           txt1 = i18n( "The certificate of the recipient you want to send this message to expires today.<br>This means that beginning from tomorrow, the recipient will not be able to read your message any longer." );
                       int ret = KMessageBox::warningYesNo( this,
-                                                          i18n( "<qt>%1<br>\n\nDo you still want to use this certificate?</qt>" ).arg( txt1 ),
-                                                          captionWarn );
+                                  i18n( "<qt><p>%1</p>"
+                                        "<p>Do you still want to use this "
+                                        "certificate?</p></qt>" )
+                                  .arg( txt1 ),
+                                  captionWarn,
+                                  KGuiItem( i18n("&Use Certificate") ),
+                                  KGuiItem( i18n("&Don't Use Certificate") ) );
                       if( ret == KMessageBox::No )
                           bEncrypt = false;
                   }
@@ -3083,12 +3135,17 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
                       if( 0 < certInChainDaysLeft )
                           txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expires in %1 days.<br>This means that after this period, the recipient might not be able to read your message any longer." ).arg( certInChainDaysLeft );
                       else if( 0 > certInChainDaysLeft )
-                          txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expired %1 days ago.<br>This means that the recipient might not be able to read your message." ).arg( certInChainDaysLeft );
+                          txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expired %1 days ago.<br>This means that the recipient might not be able to read your message." ).arg( -certInChainDaysLeft );
                       else
                           txt1 = i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expires today.<br>This means that beginning from tomorrow, the recipient might not be able to read your message any longer." );
                       int ret = KMessageBox::warningYesNo( this,
-                                                          i18n( "<qt>%1<br>\n\nDo you still want to use this certificate?</qt>" ).arg( txt1 ),
-                                                          captionWarn );
+                                  i18n( "<qt><p>%1</p>"
+                                        "<p>Do you still want to use this "
+                                        "certificate?</p></qt>" )
+                                  .arg( txt1 ),
+                                  captionWarn,
+                                  KGuiItem( i18n("&Use Certificate") ),
+                                  KGuiItem( i18n("&Don't Use Certificate") ) );
                       if( ret == KMessageBox::No )
                           bEncrypt = false;
                   }
@@ -3152,11 +3209,16 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         else
           error += i18n("[unknown error]");
         KMessageBox::sorry(this,
-          i18n("<b>This message could not be encrypted!</b><br>&nbsp;<br>"
-              "The Crypto Plug-In %1<br>"
-              "reported the following details:<br>&nbsp;<br>&nbsp; &nbsp; <i>%2</i><br>&nbsp;<br>"
-              "Your configuration might be invalid or the Plug-In damaged.<br>&nbsp;<br>"
-              "<b>PLEASE CONTACT YOUR SYSTEM ADMINISTRATOR</b>").arg(mSelectedCryptPlug->libName()).arg( error ) );
+                  i18n("<qt><p><b>This message could not be encrypted!</b></p>"
+                       "<p>The Crypto Plug-In '%1' reported the following "
+                       "details:</p>"
+                       "<p><i>%2</i></p>"
+                       "<p>Your configuration might be invalid or the Plug-In "
+                       "damaged.</p>"
+                       "<p><b>Please contact your system "
+                       "administrator.</b></p></qt>")
+                  .arg(mSelectedCryptPlug->libName())
+                  .arg( error ) );
       }
       delete errTxt;
     }
@@ -3168,8 +3230,8 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
 
   } else
       KMessageBox::sorry(this,
-          i18n("No active Crypto Plug-In could be found.\n"
-                "Please activate a Plug-In using the 'Settings/Configure KMail / Plug-In' dialog."));
+        i18n("<qt>No active Crypto Plug-In could be found.<br><br>"
+             "Please activate a Plug-In in the configuration dialog.</qt>"));
 
   return encoding;
 }
@@ -3733,14 +3795,13 @@ void KMComposeWin::slotInsertMyPublicKey()
   if (armoredKey.isEmpty())
   {
     kernel->kbp()->idle();
-    KMessageBox::sorry( 0L, i18n("Couldn't get your public key for\n%1.")
-      .arg(Kpgp::Module::getKpgp()->user()) );
+    KMessageBox::sorry( 0L, i18n("Couldn't get your public key.") );
     return;
   }
 
   // create message part
   msgPart = new KMMessagePart;
-  msgPart->setName(i18n("my pgp key"));
+  msgPart->setName(i18n("My OpenPGP key"));
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
   QValueList<int> dummy;
@@ -3775,7 +3836,7 @@ void KMComposeWin::slotInsertPublicKey()
   if (!armoredKey.isEmpty()) {
     // create message part
     msgPart = new KMMessagePart;
-    msgPart->setName(i18n("PGP key 0x%1").arg(keyID));
+    msgPart->setName(i18n("OpenPGP key 0x%1").arg(keyID));
     msgPart->setTypeStr("application");
     msgPart->setSubtypeStr("pgp-keys");
     QValueList<int> dummy;
@@ -3786,8 +3847,7 @@ void KMComposeWin::slotInsertPublicKey()
     addAttach(msgPart);
     rethinkFields(); //work around initial-size bug in Qt-1.32
   } else {
-    KMessageBox::sorry( 0L, i18n( "Could not attach public key, perhaps its format is invalid "
-    	"(e.g. key contains umlaut with wrong encoding)." ) );
+    KMessageBox::sorry( 0L, i18n( "Couldn't get the selected public key." ) );
   }
 }
 
@@ -3800,12 +3860,12 @@ void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
      mAttachMenu = new QPopupMenu(this);
 
      mAttachMenu->insertItem(i18n("View"), this, SLOT(slotAttachView()));
-     mAttachMenu->insertItem(i18n("Save..."), this, SLOT(slotAttachSave()));
+     mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
+     mAttachMenu->insertItem(i18n("Save As..."), this, SLOT(slotAttachSave()));
      mAttachMenu->insertItem(i18n("Properties..."),
 		   this, SLOT(slotAttachProperties()));
-     mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
      mAttachMenu->insertSeparator();
-     mAttachMenu->insertItem(i18n("Attach..."), this, SLOT(slotAttachFile()));
+     mAttachMenu->insertItem(i18n("Add Attachment..."), this, SLOT(slotAttachFile()));
   }
   mAttachMenu->popup(QCursor::pos());
 }
@@ -4078,14 +4138,15 @@ void KMComposeWin::slotEncryptToggled(bool on)
     if( Kpgp::Module::getKpgp()->encryptToSelf()
         && identity.pgpIdentity().isEmpty() ) {
       KMessageBox::sorry( this,
-                          i18n("<qt>In order to be able to encrypt "
+                          i18n("<qt><p>In order to be able to encrypt "
                                "this message you first have to "
                                "define the OpenPGP key which should be "
                                "used to encrypt the message to "
-                               "yourself.<br>"
-                               "You can define the OpenPGP key "
+                               "yourself.</p>"
+                               "<p>You can define the OpenPGP key "
                                "which should be used with the current "
-                               "identity in the identity configuration.</qt>"),
+                               "identity in the identity configuration.</p>"
+                               "</qt>"),
                           i18n("Undefined Encryption Key") );
       encryptAction->setChecked( false );
       encryptAction->setIcon("decrypted");
@@ -4109,13 +4170,14 @@ void KMComposeWin::slotSignToggled(bool on)
     // check if the user defined a signing key for the current identity
     if( identity.pgpIdentity().isEmpty() ) {
       KMessageBox::sorry( this,
-                          i18n("<qt>In order to be able to sign "
+                          i18n("<qt><p>In order to be able to sign "
                                "this message you first have to "
                                "define the OpenPGP key which should be "
-                               "used for this.<br>"
-                               "You can define the OpenPGP key "
+                               "used for this.</p>"
+                               "<p>You can define the OpenPGP key "
                                "which should be used with the current "
-                               "identity in the identity configuration.</qt>"),
+                               "identity in the identity configuration.</p>"
+                               "</qt>"),
                           i18n("Undefined Signing Key") );
       signAction->setChecked( false );
     }
@@ -4164,7 +4226,10 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
      {
         mEdtSubject->setFocus();
         int rc = KMessageBox::questionYesNo(0, i18n("You did not specify a subject. Send message anyway?"),
-    		i18n("No Subject Specified"), i18n("Yes"), i18n("No, Let Me Specify the Subject"), "no_subject_specified" );
+                                            i18n("No Subject Specified"),
+                                            i18n("&Yes, Send as is"),
+                                            i18n("&No, Let Me Specify the Subject"),
+                                            "no_subject_specified" );
         if( rc == KMessageBox::No )
         {
            return false;
@@ -4331,8 +4396,7 @@ void KMComposeWin::slotAppendSignature()
     if (ident.signatureIsPlainFile())
       dlg.setCaption(i18n("Choose Signature File"));
     else
-      // make this "Choose Signature Command" on msg thaw.
-      dlg.setCaption(i18n("Choose Signature File"));
+      dlg.setCaption(i18n("Choose Signature Command"));
     if( !dlg.exec() )
     {
       return;
