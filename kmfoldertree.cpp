@@ -1136,6 +1136,7 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
         (fti->firstChild());
       delete ftic;
     }
+    fti->folder->account()->displayProgress();
   }
 }
 

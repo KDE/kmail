@@ -1709,8 +1709,6 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
   int idx = item->msgId();
 
   mOwner->statusMsg("");
-//  if (mFolder->imapPath.isEmpty())
-    emit selected(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
@@ -1723,6 +1721,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi)
     }
     mPrevCurrent = item;
   }
+  emit selected(mFolder->getMsg(idx));
 }
 
 

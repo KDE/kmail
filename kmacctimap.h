@@ -48,11 +48,11 @@ class KMImapJob : public QObject
   Q_OBJECT
 
 public:
-  KMImapJob(QList<KMMessage> msgList);
+  KMImapJob(QList<KMMessage> msgList, KMFolder *destFolder);
   KMImapJob(KMMessage *msg);
   static void killJobsForMessage(KMMessage *msg);
 signals:
-  void messagesRetrieved(QList<KMMessage>);
+  void messagesRetrieved(QList<KMMessage>, KMFolder*);
   void messageRetrieved(KMMessage *);
 private slots:
   void slotGetMessageResult(KIO::Job * job);
@@ -62,6 +62,7 @@ private:
     tGetMessage, tPutMessage };
   JobType mType;
   QList<KMMessage> mMsgList;
+  KMFolder *mDestFolder;
   KIO::Job *mJob;
   bool mSingleMessage;
   QByteArray mData;
@@ -126,8 +127,11 @@ public:
   /** Create a new subfolder */
   void createFolder(KMFolderTreeItem * fti, const QString &name);
 
-  /** Kill all job related the the specified folder */
+  /** Kill all jobs related the the specified folder */
   void killJobsForItem(KMFolderTreeItem * fti);
+
+  /** Kill the slave if any jobs are active */
+  void killAllJobs();
 
   /** Delete a message */
   void deleteMessage(KMMessage * msg);
@@ -257,9 +261,6 @@ protected slots:
   /** For deleting messages and changing the status */
   void nextStatusAction();
   void slotStatusResult(KIO::Job * job);
-
-  /** Don't try to connect with the given slave anymore */
-  void slotSlaveDied(KIO::Slave * aSlave);
 
   /** Display an error message, that connecting failed */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
