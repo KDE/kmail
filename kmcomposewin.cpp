@@ -1534,12 +1534,7 @@ bool KMComposeWin::userForgotAttachment()
 //-----------------------------------------------------------------------------
 bool KMComposeWin::applyChanges( bool backgroundMode )
 {
-  QString str, atmntStr;
-  QString temp, replyAddr;
-
-  //assert(mMsg!=0);
-  if(!mMsg)
-  {
+  if(!mMsg) {
     kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == 0!\n" << endl;
     return FALSE;
   }
@@ -1586,6 +1581,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
     mMsg->removeHeaderField("X-KMail-Identity");
   else mMsg->setHeaderField("X-KMail-Identity", QString::number( id.uoid() ));
 
+  QString replyAddr;
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
 
@@ -1644,8 +1640,6 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
     }
   }
 
-  bool bOk = true;
-
   if( !doSignCompletely ) {
     if( mSelectedCryptPlug ) {
       // note: only ask for signing if "Warn me" flag is set! (khz)
@@ -1667,7 +1661,7 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
           KGuiItem( i18n("&Sign All Parts") ),
           KGuiItem( i18n("Send &as Is") ) );
         if( ret == KMessageBox::Cancel )
-          bOk = false;
+          return false;
         else if( ret == KMessageBox::Yes ) {
           doSign = true;
           doSignCompletely = true;
@@ -1679,153 +1673,143 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
     }
   }
 
-  if( bOk ) {
-    if( mNeverEncrypt )
-      doEncrypt = false;
-    else {
-      // check whether all encrypted messages should be encrypted to self
-      bool bEncryptToSelf = mSelectedCryptPlug
-        ? mSelectedCryptPlug->alwaysEncryptToSelf()
-        : Kpgp::Module::getKpgp()->encryptToSelf();
-      // check whether we have the user's key if necessary
-      bool bEncryptionPossible = !bEncryptToSelf || !pgpUserId.isEmpty();
-      // check whether we are using OpenPGP (built-in or plug-in)
-      bool bUsingOpenPgp = !mSelectedCryptPlug || ( mSelectedCryptPlug &&
-                                                    ( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) );
-      // only try automatic encryption if all of the following conditions hold
-      // a) the user enabled automatic encryption
-      // b) we have the user's key if he wants to encrypt to himself
-      // c) we are using OpenPGP
-      // d) no message part is marked for encryption
-      if( mAutoPgpEncrypt && bEncryptionPossible && bUsingOpenPgp &&
-          !doEncryptPartially ) {
-        // check if encryption is possible and if yes suggest encryption
-        // first determine the complete list of recipients
-        QString _to = to().simplifyWhiteSpace();
-        if( !cc().isEmpty() ) {
-          if( !_to.endsWith(",") )
-            _to += ",";
-          _to += cc().simplifyWhiteSpace();
-        }
-        if( !mBcc.isEmpty() ) {
-          if( !_to.endsWith(",") )
-            _to += ",";
-          _to += mBcc.simplifyWhiteSpace();
-        }
-        QStringList allRecipients = KMMessage::splitEmailAddrList(_to);
-        // now check if encrypting to these recipients is possible and desired
-        Kpgp::Module *pgp = Kpgp::Module::getKpgp();
-        int status = pgp->encryptionPossible( allRecipients );
-        if( 1 == status ) {
+  if( !mNeverEncrypt ) {
+    // check whether all encrypted messages should be encrypted to self
+    bool bEncryptToSelf = mSelectedCryptPlug
+      ? mSelectedCryptPlug->alwaysEncryptToSelf()
+      : Kpgp::Module::getKpgp()->encryptToSelf();
+    // check whether we have the user's key if necessary
+    bool bEncryptionPossible = !bEncryptToSelf || !pgpUserId.isEmpty();
+    // check whether we are using OpenPGP (built-in or plug-in)
+    bool bUsingOpenPgp = !mSelectedCryptPlug ||
+      ( mSelectedCryptPlug &&
+        ( -1 != mSelectedCryptPlug->libName().find( "openpgp" ) ) );
+    // only try automatic encryption if all of the following conditions hold
+    // a) the user enabled automatic encryption
+    // b) we have the user's key if he wants to encrypt to himself
+    // c) we are using OpenPGP
+    // d) no message part is marked for encryption
+    if( mAutoPgpEncrypt && bEncryptionPossible && bUsingOpenPgp &&
+        !doEncryptPartially ) {
+      // check if encryption is possible and if yes suggest encryption
+      // first determine the complete list of recipients
+      QString _to = to().simplifyWhiteSpace();
+      if( !cc().isEmpty() ) {
+        if( !_to.endsWith(",") )
+          _to += ",";
+        _to += cc().simplifyWhiteSpace();
+      }
+      if( !mBcc.isEmpty() ) {
+        if( !_to.endsWith(",") )
+          _to += ",";
+        _to += mBcc.simplifyWhiteSpace();
+      }
+      QStringList allRecipients = KMMessage::splitEmailAddrList(_to);
+      // now check if encrypting to these recipients is possible and desired
+      Kpgp::Module *pgp = Kpgp::Module::getKpgp();
+      int status = pgp->encryptionPossible( allRecipients );
+      if( 1 == status ) {
+        // encrypt all message parts
+        doEncrypt = true;
+        doEncryptCompletely = true;
+      } else if( 2 == status ) {
+        // the user wants to be asked or has to be asked
+        KCursorSaver idle(KBusyPtr::idle());
+        int ret;
+        if( doSign )
+          ret = KMessageBox::questionYesNoCancel( this,
+                                                  i18n("<qt><p>You have a trusted OpenPGP key for every "
+                                                       "recipient of this message and the message will "
+                                                       "be signed.</p>"
+                                                       "<p>Should this message also be "
+                                                       "encrypted?</p></qt>"),
+                                                  i18n("Encrypt Message?"),
+                                                  KGuiItem( i18n("Sign && &Encrypt") ),
+                                                  KGuiItem( i18n("&Sign Only") ) );
+        else
+          ret = KMessageBox::questionYesNoCancel( this,
+                                                  i18n("<qt><p>You have a trusted OpenPGP key for every "
+                                                       "recipient of this message.</p>"
+                                                       "<p>Should this message be encrypted?</p></qt>"),
+                                                  i18n("Encrypt Message?"),
+                                                  KGuiItem( i18n("&Encrypt") ),
+                                                  KGuiItem( i18n("&Don't Encrypt") ) );
+        if( KMessageBox::Cancel == ret )
+          return false;
+        else if( KMessageBox::Yes == ret ) {
           // encrypt all message parts
           doEncrypt = true;
           doEncryptCompletely = true;
         }
-        else if( 2 == status ) {
-          // the user wants to be asked or has to be asked
-          KCursorSaver idle(KBusyPtr::idle());
-          int ret;
-          if( doSign )
-            ret = KMessageBox::questionYesNoCancel( this,
-                                                    i18n("<qt><p>You have a trusted OpenPGP key for every "
-                                                         "recipient of this message and the message will "
-                                                         "be signed.</p>"
-                                                         "<p>Should this message also be "
-                                                         "encrypted?</p></qt>"),
-                                                    i18n("Encrypt Message?"),
-                                                    KGuiItem( i18n("Sign && &Encrypt") ),
-                                                    KGuiItem( i18n("&Sign Only") ) );
-          else
-            ret = KMessageBox::questionYesNoCancel( this,
-                                                    i18n("<qt><p>You have a trusted OpenPGP key for every "
-                                                         "recipient of this message.</p>"
-                                                         "<p>Should this message be encrypted?</p></qt>"),
-                                                    i18n("Encrypt Message?"),
-                                                    KGuiItem( i18n("&Encrypt") ),
-                                                    KGuiItem( i18n("&Don't Encrypt") ) );
-          if( KMessageBox::Cancel == ret )
-            return false;
-          else if( KMessageBox::Yes == ret ) {
-            // encrypt all message parts
-            doEncrypt = true;
-            doEncryptCompletely = true;
-          }
-        }
-        else if( status == -1 )
-        {
-          // warn the user that there are conflicting encryption preferences
-          KCursorSaver idle(KBusyPtr::idle());
-          int ret =
-            KMessageBox::warningYesNoCancel( this,
-                                             i18n("<qt><p>There are conflicting encryption "
-                                                  "preferences!</p>"
-                                                  "<p>Should this message be encrypted?</p></qt>"),
-                                             i18n("Encrypt Message?"),
-                                             KGuiItem( i18n("&Encrypt") ),
-                                             KGuiItem( i18n("&Don't Encrypt") ) );
-          if( KMessageBox::Cancel == ret )
-            bOk = false;
-          else if( KMessageBox::Yes == ret ) {
-            // encrypt all message parts
-            doEncrypt = true;
-            doEncryptCompletely = true;
-          }
+      } else if( status == -1 ) {
+        // warn the user that there are conflicting encryption preferences
+        KCursorSaver idle(KBusyPtr::idle());
+        int ret =
+          KMessageBox::warningYesNoCancel( this,
+                                           i18n("<qt><p>There are conflicting encryption "
+                                                "preferences!</p>"
+                                                "<p>Should this message be encrypted?</p></qt>"),
+                                           i18n("Encrypt Message?"),
+                                           KGuiItem( i18n("&Encrypt") ),
+                                           KGuiItem( i18n("&Don't Encrypt") ) );
+        if( KMessageBox::Cancel == ret )
+          return false;
+        else if( KMessageBox::Yes == ret ) {
+          // encrypt all message parts
+          doEncrypt = true;
+          doEncryptCompletely = true;
         }
       }
-      else if( !doEncryptCompletely && mSelectedCryptPlug ) {
-        // note: only ask for encrypting if "Warn me" flag is set! (khz)
-        if( mSelectedCryptPlug->warnSendUnencrypted() ) {
-          int ret =
-            KMessageBox::warningYesNoCancel( this,
-                                             QString( "<qt><b>"
-                                                      + i18n("Warning:")
-                                                      + "</b><br>"
-                                                      + ((doEncrypt && !doEncryptCompletely)
-                                                         ? i18n("You specified not to encrypt some parts of this message, but"
-                                                                " you wanted to be warned not to send unencrypted messages!")
-                                                         : i18n("You specified not to encrypt this message, but"
-                                                                " you wanted to be warned not to send unencrypted messages!") )
-                                                      + "<br>&nbsp;<br><b>"
-                                                      + i18n("Encrypt all parts of this message?")
-                                                      + "</b></qt>" ),
-                                             i18n("Encryption Warning"),
-                                             KGuiItem( i18n("&Encrypt All Parts") ),
-                                             KGuiItem( i18n("Send &as Is") ) );
-          if( ret == KMessageBox::Cancel )
-            bOk = false;
-          else if( ret == KMessageBox::Yes ) {
-            doEncrypt = true;
-            doEncryptCompletely = true;
-          }
+    } else if( !doEncryptCompletely && mSelectedCryptPlug ) {
+      // note: only ask for encrypting if "Warn me" flag is set! (khz)
+      if( mSelectedCryptPlug->warnSendUnencrypted() ) {
+        int ret =
+          KMessageBox::warningYesNoCancel( this,
+                                           QString( "<qt><b>"
+                                                    + i18n("Warning:")
+                                                    + "</b><br>"
+                                                    + ((doEncrypt && !doEncryptCompletely)
+                                                       ? i18n("You specified not to encrypt some parts of this message, but"
+                                                              " you wanted to be warned not to send unencrypted messages!")
+                                                       : i18n("You specified not to encrypt this message, but"
+                                                              " you wanted to be warned not to send unencrypted messages!") )
+                                                    + "<br>&nbsp;<br><b>"
+                                                    + i18n("Encrypt all parts of this message?")
+                                                    + "</b></qt>" ),
+                                           i18n("Encryption Warning"),
+                                           KGuiItem( i18n("&Encrypt All Parts") ),
+                                           KGuiItem( i18n("Send &as Is") ) );
+        if( ret == KMessageBox::Cancel )
+          return false;
+        else if( ret == KMessageBox::Yes ) {
+          doEncrypt = true;
+          doEncryptCompletely = true;
         }
-
-        /*
-          note: Processing the mSelectedCryptPlug->encryptEmail() flag here would
-          be absolutely wrong: this is used for specifying
-          if messages should be encrypted 'in general'.
-          --> This sets the initial state of a freshly started Composer.
-          --> This does *not* mean overriding user setting made while
-          editing in that composer window!         (khz, 2002/06/26)
-        */
-
       }
+
+      /*
+        note: Processing the mSelectedCryptPlug->encryptEmail() flag here would
+        be absolutely wrong: this is used for specifying
+        if messages should be encrypted 'in general'.
+        --> This sets the initial state of a freshly started Composer.
+        --> This does *not* mean overriding user setting made while
+        editing in that composer window!         (khz, 2002/06/26)
+      */
     }
   }
 
-  if( bOk ) {
-    // if necessary mark all attachments for signing/encryption
-    if( mSelectedCryptPlug && ( !mAtmList.isEmpty() ) &&
-        ( doSignCompletely || doEncryptCompletely ) ) {
-      for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
-           lvi;
-           lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
-        if( doSignCompletely )
-          lvi->setSign( true );
-        if( doEncryptCompletely )
-          lvi->setEncrypt( true );
-      }
+  // if necessary mark all attachments for signing/encryption
+  if( mSelectedCryptPlug && ( !mAtmList.isEmpty() ) &&
+      ( doSignCompletely || doEncryptCompletely ) ) {
+    for( KMAtmListViewItem* lvi = (KMAtmListViewItem*)mAtmItemList.first();
+         lvi; lvi = (KMAtmListViewItem*)mAtmItemList.next() ) {
+      if( doSignCompletely )
+        lvi->setSign( true );
+      if( doEncryptCompletely )
+        lvi->setEncrypt( true );
     }
   }
+
   // This c-string (init empty here) is set by *first* testing of expiring
   // signature certificate and stops us from repeatedly asking same questions.
   QCString signCertFingerprint;
@@ -1833,13 +1817,12 @@ bool KMComposeWin::applyChanges( bool backgroundMode )
   // note: Must create extra message *before* calling compose on mMsg.
   KMMessage* extraMessage = new KMMessage( *mMsg );
 
-  if( bOk )
-    bOk = (composeMessage( pgpUserId,
-                           *mMsg, doSign, doEncrypt, false,
-                           signCertFingerprint ) == Kpgp::Ok);
+  bool bOk = (composeMessage( pgpUserId,
+                              *mMsg, doSign, doEncrypt, false,
+                              signCertFingerprint ) == Kpgp::Ok);
   if( bOk ) {
     bool saveMessagesEncrypted = mSelectedCryptPlug ? mSelectedCryptPlug->saveMessagesEncrypted()
-                                                    : true;
+      : true;
 
     kdDebug(5006) << "\n\n" << endl;
     kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Send encrypted=" << doEncrypt << "  Store encrypted=" << saveMessagesEncrypted << endl;
