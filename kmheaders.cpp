@@ -308,6 +308,7 @@ void KMHeaders::slotToggleColumn(int id, int mode)
       width = 170;
       break;
     }
+    case KPaintInfo::COL_SCORE: ; // only used by KNode
     // don't use default, so that the compiler tells us you forgot to code here for a new column
   }
 
