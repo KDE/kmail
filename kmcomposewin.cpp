@@ -34,8 +34,6 @@ using KMail::AddressesDialog;
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
 #include "kmcommands.h"
-#include "syntaxhighlighter.h"
-using KMail::SpellChecker;
 
 #include <kaction.h>
 #include <kcharsets.h>
@@ -68,6 +66,7 @@ using KMail::SpellChecker;
 #include "spellingfilter.h"
 #include "syntaxhighlighter.h"
 using KMail::DictSpellChecker;
+using KMail::SpellChecker;
 
 #include <qtabdialog.h>
 #include <qregexp.h>
