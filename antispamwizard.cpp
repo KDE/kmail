@@ -38,7 +38,6 @@
 #include "kmmainwin.h"
 
 #include <kaction.h>
-#include <kconfig.h>
 #include <kdebug.h>
 #include <kdialog.h>
 #include <klocale.h>
@@ -57,41 +56,13 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   : KWizard( parent )
 {
   // read the configuration for the anti spam tools
-  KConfig config( "kmail.antispamrc", true );
-  KConfigGroup general( &config, "General" );
-  int registeredTools = general.readNumEntry( "tools", 0 );
-  kdDebug(5006) << "Number of tools: " << registeredTools << endl;
-  // Make sure to have add least one tool listed even when the
-  // config file was not found or whatever went wrong
-  if ( registeredTools < 1 )
-    toolList.append( SpamToolConfig( "&SpamAssassin", "spamassassin -V",
-                      "http://spamassassin.org", "SpamAssassin Check",
-                      "spamassassin -L", 
-                      "sa-learn -L --spam --no-rebuild --single",
-                      "sa-learn -L --ham --no-rebuild --single", 
-                      "X-Spam-Flag", "yes",
-                      false, true ) );
-  // read the configuration from the file
-  for (int i = 1; i <= registeredTools; i++)
-  {
-    KConfigGroup toolConfig( &config,
-      QCString("Spamtool #") + QCString().setNum(i) );
-    QString name = toolConfig.readEntry( "VisibleName" );
-    QString executable = toolConfig.readEntry( "Executable" );
-    QString url = toolConfig.readEntry( "URL" );
-    QString filterName = toolConfig.readEntry( "PipeFilterName" );
-    QString detectCmd = toolConfig.readEntry( "PipeCmdDetect" );
-    QString spamCmd = toolConfig.readEntry( "ExecCmdSpam" );
-    QString hamCmd = toolConfig.readEntry( "ExecCmdHam" );
-    QString header = toolConfig.readEntry( "DetectionHeader" );
-    QString pattern = toolConfig.readEntry( "DetectionPattern" );
-    bool useRegExp  = toolConfig.readBoolEntry( "UseRegExp" );
-    bool supportsBayes = toolConfig.readBoolEntry( "SupportsBayes" );
-    toolList.append( SpamToolConfig( name, executable, url,
-                      filterName, detectCmd, spamCmd, hamCmd,
-                      header, pattern, useRegExp, supportsBayes ) );
-  }
+  ConfigReader reader( toolList );
+  reader.readAndMergeConfig();
+  toolList = reader.getToolList();
   
+#ifndef NDEBUG
+    kdDebug(5006) << endl << "Considered anti spam tools: " << endl;
+#endif
   QStringList descriptionList;
   QStringList whatsThisList;
   QValueListIterator<SpamToolConfig> it = toolList.begin();
@@ -100,7 +71,9 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
     descriptionList.append( (*it).getVisibleName() );
     whatsThisList.append( (*it).getWhatsThisText() );
 #ifndef NDEBUG
-    kdDebug(5006) << "Predefined tool: " << (*it).getVisibleName() << endl;
+    kdDebug(5006) << "Predefined tool: " << (*it).getId() << endl;
+    kdDebug(5006) << "Config version: " << (*it).getVersion() << endl;
+    kdDebug(5006) << "Displayed name: " << (*it).getVisibleName() << endl;
     kdDebug(5006) << "Executable: " << (*it).getExecutable() << endl;
     kdDebug(5006) << "WhatsThis URL: " << (*it).getWhatsThisText() << endl;
     kdDebug(5006) << "Filter name: " << (*it).getFilterName() << endl;
@@ -432,15 +405,124 @@ int AntiSpamWizard::checkForProgram( QString executable )
 
 
 //---------------------------------------------------------------------------
-AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString name, QString exec, 
+AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString toolId, 
+      int configVersion,QString name, QString exec, 
       QString url, QString filter, QString detection, QString spam, QString ham,
       QString header, QString pattern, bool regExp, bool bayesFilter)
-  : visibleName( name ), executable( exec ), whatsThisText( url ),
+  : id( toolId ), version( configVersion ),
+    visibleName( name ), executable( exec ), whatsThisText( url ),
     filterName( filter ), detectCmd( detection ), spamCmd( spam ),
     hamCmd( ham ), detectionHeader( header ), detectionPattern( pattern ),
     useRegExp( regExp ), supportsBayesFilter( bayesFilter )
 {
 }
+
+
+//---------------------------------------------------------------------------
+AntiSpamWizard::ConfigReader::ConfigReader( QValueList<SpamToolConfig> & configList )
+  : toolList( configList ),
+    config( "kmail.antispamrc", true )
+{}
+
+
+void AntiSpamWizard::ConfigReader::readAndMergeConfig()
+{
+  // read the configuration from the global config file
+  config.setReadDefaults( true );
+  KConfigGroup general( &config, "General" );
+  int registeredTools = general.readNumEntry( "tools", 0 );
+  for (int i = 1; i <= registeredTools; i++)
+  {
+    KConfigGroup toolConfig( &config,
+      QCString("Spamtool #") + QCString().setNum(i) );
+    toolList.append( readToolConfig( toolConfig ) );
+  }
+  
+  // read the configuration from the user config file
+  // and merge newer config data
+  config.setReadDefaults( false );
+  KConfigGroup user_general( &config, "General" );
+  int user_registeredTools = user_general.readNumEntry( "tools", 0 );
+  for (int i = 1; i <= user_registeredTools; i++)
+  {
+    KConfigGroup toolConfig( &config,
+      QCString("Spamtool #") + QCString().setNum(i) );
+    mergeToolConfig( readToolConfig( toolConfig ) );
+  }
+  // Make sure to have add least one tool listed even when the
+  // config file was not found or whatever went wrong
+  if ( registeredTools < 1 && user_registeredTools < 1)
+    toolList.append( createDummyConfig() );
+}
+
+
+AntiSpamWizard::SpamToolConfig 
+    AntiSpamWizard::ConfigReader::readToolConfig( KConfigGroup & configGroup )
+{
+  QString id = configGroup.readEntry( "Ident" );
+  int version = configGroup.readNumEntry( "Version" );
+#ifndef NDEBUG
+  kdDebug(5006) << "Found predefined tool: " << id << endl;
+  kdDebug(5006) << "With config version  : " << version << endl;
+#endif  
+  QString name = configGroup.readEntry( "VisibleName" );
+  QString executable = configGroup.readEntry( "Executable" );
+  QString url = configGroup.readEntry( "URL" );
+  QString filterName = configGroup.readEntry( "PipeFilterName" );
+  QString detectCmd = configGroup.readEntry( "PipeCmdDetect" );
+  QString spamCmd = configGroup.readEntry( "ExecCmdSpam" );
+  QString hamCmd = configGroup.readEntry( "ExecCmdHam" );
+  QString header = configGroup.readEntry( "DetectionHeader" );
+  QString pattern = configGroup.readEntry( "DetectionPattern" );
+  bool useRegExp  = configGroup.readBoolEntry( "UseRegExp" );
+  bool supportsBayes = configGroup.readBoolEntry( "SupportsBayes" );
+  return SpamToolConfig( id, version, name, executable, url,
+                         filterName, detectCmd, spamCmd, hamCmd,
+                         header, pattern, useRegExp, supportsBayes );
+}
+          
+
+AntiSpamWizard::SpamToolConfig AntiSpamWizard::ConfigReader::createDummyConfig()
+{
+  return SpamToolConfig( "spamassassin", 0, 
+                        "&SpamAssassin", "spamassassin -V",
+                        "http://spamassassin.org", "SpamAssassin Check",
+                        "spamassassin -L", 
+                        "sa-learn -L --spam --no-rebuild --single",
+                        "sa-learn -L --ham --no-rebuild --single", 
+                        "X-Spam-Flag", "yes",
+                        false, true );
+}
+          
+
+void AntiSpamWizard::ConfigReader::mergeToolConfig( AntiSpamWizard::SpamToolConfig config )
+{
+  bool found = false;
+  QValueListIterator<SpamToolConfig> it = toolList.begin();
+  while ( it != toolList.end() && !found)
+  {
+#ifndef NDEBUG
+    kdDebug(5006) << "Check against tool: " << (*it).getId() << endl;
+    kdDebug(5006) << "Against version   : " << (*it).getVersion() << endl;
+#endif
+    if ( (*it).getId() == config.getId() )
+    {
+      found = true;
+      if ( (*it).getVersion() < config.getVersion() )
+      {
+#ifndef NDEBUG
+        kdDebug(5006) << "Replacing config ..." << endl;
+#endif
+        toolList.remove( it );
+        toolList.append( config );
+      }
+    }
+    else it++;
+  }
+  if ( !found )
+    toolList.append( config );
+}
+
 
 //---------------------------------------------------------------------------
 ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )

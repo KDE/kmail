@@ -29,7 +29,8 @@
 #ifndef KMAIL_ANTISPAMWIZARD_H
 #define KMAIL_ANTISPAMWIZARD_H
 
-#include "kwizard.h"
+#include <kconfig.h>
+#include <kwizard.h>
 
 #include <qcheckbox.h>
 #include <qdict.h>
@@ -68,6 +69,8 @@ namespace KMail {
     tools=1
 
     [Spamtool #1]
+    Ident=spamassassin
+    Version=0
     VisibleName=&Spamassassin
     Executable=spamassassin -V
     URL=http://spamassassin.org
@@ -115,11 +118,14 @@ namespace KMail {
       {
         public:
           SpamToolConfig() {};
-          SpamToolConfig(QString name, QString exec, QString url, QString filter,
+          SpamToolConfig( QString toolId, int configVersion,
+                        QString name, QString exec, QString url, QString filter,
                         QString detection, QString spam, QString ham,
                         QString header, QString pattern, bool regExp,
                         bool bayesFilter );
     
+          int getVersion() const { return version; };
+          QString getId()  const { return id; };
           QString getVisibleName()  const { return visibleName; };
           QString getExecutable() const { return executable; };
           QString getWhatsThisText() const { return whatsThisText; };
@@ -133,6 +139,11 @@ namespace KMail {
           bool useBayesFilter() const { return supportsBayesFilter; };
     
         private:
+          // used to identifiy configs for the same tool
+          QString id;
+          // The version of the config data, used for merging and 
+          // detecting newer configs
+          int version;
           // the name as shown by the checkbox in the dialog page
           QString visibleName;
           // the command to check the existance of the tool
@@ -156,7 +167,31 @@ namespace KMail {
           // can the tool learn spam and ham, has it a bayesian algorithm
           bool supportsBayesFilter;
       };
-
+      /**
+        Instances of this class control reading the configuration of the 
+        anti spam tools from global and user config files as well as the 
+        merging of different config versions.
+      */
+      class ConfigReader
+      {
+        public:
+          ConfigReader( QValueList<SpamToolConfig> & configList );
+          
+          QValueList<SpamToolConfig> & getToolList() { return toolList; };
+          
+          void readAndMergeConfig();
+          
+        private:
+          QValueList<SpamToolConfig> & toolList;
+          KConfig config;
+          
+          SpamToolConfig readToolConfig( KConfigGroup & configGroup );
+          SpamToolConfig createDummyConfig();
+          
+          void mergeToolConfig( SpamToolConfig config );
+      };
+      
+      
     protected slots:
       /** Modify the status of the wizard to reflect the selection of spam tools. */
       void checkProgramsSelections();

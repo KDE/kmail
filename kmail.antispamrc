@@ -2,6 +2,8 @@
 tools=2
 
 [Spamtool #1]
+Ident=spamassassin
+Version=1
 VisibleName=&Spamassassin
 Executable=spamassassin -V
 URL=http://spamassassin.org
@@ -15,6 +17,8 @@ UseRegExp=0
 SupportsBayes=1
 
 [Spamtool #2]
+Ident=bogofilter
+Version=1
 VisibleName=&Bogofilter
 Executable=bogofilter -V
 URL=http://bogofilter.sourceforge.net
