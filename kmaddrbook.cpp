@@ -135,14 +135,18 @@ void KMAddrBookExternal::openEmail( const QString &addr, QWidget *) {
       QString email = KMMessage::getEmailAddr(addr);
       KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
       KABC::Addressee::List addresseeList = addressBook->findByEmail(email);
-      if (!addresseeList.isEmpty())
+      if(addresseeList.isEmpty())
       {
-        QString error;
-        kapp->startServiceByDesktopName("kaddressbook", QString::null, &error);
+        addEmail(addr, 0);
+        addresseeList = addressBook->findByEmail(email);
+      }
+      if(!addresseeList.isEmpty())
+      {
+        kapp->startServiceByDesktopName("kaddressbook");
         sleep(2);
 
         DCOPRef call("kaddressbook", "KAddressBookIface");
-        int succ = call.send("showContactEditor(QString)", addresseeList.first().uid() );
+        call.send("showContactEditor(QString)", addresseeList.first().uid() );
       }
     }
     return;
