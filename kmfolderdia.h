@@ -145,7 +145,7 @@ private:
   KIconButton *mUnreadIconButton;
   QCheckBox   *mIconsCheckBox;
   QCheckBox   *mNewMailCheckBox;
-  QCheckBox   *mIgnoreNewMailCheckBox;
+  QCheckBox   *mNotifyOnNewMailCheckBox;
   QCheckBox   *mKeepRepliesInSameFolderCheckBox;
   KLineEdit   *mNameEdit;
 
