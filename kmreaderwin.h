@@ -19,6 +19,8 @@
 #include <kmenubar.h>
 #include <kmsgbox.h>
 #include "kmcomposewin.h"
+#include <mimelib/utility.h>
+#include <mimelib/string.h>
 
 
 #define FORWARD 0
@@ -73,6 +75,9 @@ private slots:
         void popupHeaderMenu(const char *, const QPoint &);
         void popupMenu(const char *, const QPoint &);
         void saveURL(int);
+	QString parseEAddress(QString);
+	QString parseBodyPart(KMMessagePart *);
+	const char * decodeString(const char *, QString); 
                                                 
 protected:
 	void resizeEvent(QResizeEvent *);

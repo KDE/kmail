@@ -24,6 +24,7 @@
 #include <kmsgbox.h>
 #include "ktablistbox.h"
 #include <kstatusbar.h>
+#include "kmmsgpart.h"
 #include <qpainter.h>
 #include <drag.h>
 #define FORWARD 0
@@ -63,9 +64,9 @@ private:
   KTabListBox *attWidget;
   QString SMTPServer;
   QString EMailAddress;
-  QList<KMAttachmentItem> attachmentList;
   int indexAttachment;
   QStrList *urlList;
+  KMMessagePart * createKMMsgPart(KMMessagePart *, QString);
 
 public slots:
   void sendIt();
@@ -132,8 +133,5 @@ private:
   QRadioButton *manualSig;
 };
 #endif
-
-
-
 
 

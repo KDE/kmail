@@ -124,7 +124,8 @@ bool KMSender::sendMail(KMMessage* aMsg)
   mMailerProc->start(KProcess::Block);
   debug("sending done");
 
-  //unlink(msgFileName);
+  unlink(msgFileName);
+  return true;
 }
 
 

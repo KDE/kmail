@@ -113,15 +113,13 @@ void KMReaderView::parseMessage(KMMessage *message)
 	QString toStr;
 	QString ccStr;
 	long length;
+	int multi=0;
 	int pos=0;
-
-	int numParts = message->numBodyParts();
+	int numParts=0;
 	currentMessage = message; // To make sure currentMessage is set.
+
+
 	printf("Debug numBodyparts=%i\n", numParts);
-
-	text = message->body(&length);
-	if (numParts <= 1) text.truncate(length);	
-
 	dateStr.sprintf("Date: %s<br>",message->dateStr());
 
 	strTemp.sprintf("%s",message->from());
@@ -137,15 +135,35 @@ void KMReaderView::parseMessage(KMMessage *message)
 	strTemp = strTemp.stripWhiteSpace();
 	fromStr.append(strTemp + "</A>"+"<br>");
 
-	ccStr = message->cc();
+	ccStr.sprintf("Cc: %s<br>",message->cc());
 	if(ccStr.isEmpty())
 		ccStr = "";
 	else
-		{ccStr="";
-		ccStr.sprintf("Cc: %s<br>",message->cc());}
+		/*{pos=0;
+		tempStr =message->cc();
+		tempStr = tempStr.stripWhiteSpace();
+		cout << "->" << tempStr << "<-\n";
+		while((pos=tempStr.find(",",pos+1,0)) != -1)
+			{multi++;
+			temp1Str = tempStr.copy();
+			if(multi==1)
+				{temp1Str.truncate(pos);
+				temp1Str.stripWhiteSpace();
+				cout << "First address:" << temp1Str << "<-\n");
+				temp1Str = parseEAddress(temp1Str);
+				ccStr = temp1Str.copy();
+				}
+			else  
+				{
+
+			}
+			
+		printf("%i addresses in ccStr\n",multi+1);
+		}*/
+		
+			
 			 
-             subjStr.sprintf("Subject: %s<br><P>",message->subject());
-	
+        subjStr.sprintf("Subject: %s<br><P>",message->subject());	
 	toStr.sprintf("To: %s<br>", message->to());
 
 	// Init messageCanvas
@@ -163,9 +181,18 @@ void KMReaderView::parseMessage(KMMessage *message)
 
 
 	// Prepare text
-
-//***** 1. Search for hyperlinks (http, ftp , @) ********//
-
+	if((numParts = message->numBodyParts()) == 0)
+		{text = message->body(&length);
+		text.truncate(length);}
+	else
+		{KMMessagePart *part = new KMMessagePart();
+		for(multi=0;multi <= numParts;multi++)
+			{printf("in body part loop\n");
+			message->bodyPart(multi,part);
+			text += parseBodyPart(part);
+			delete part;
+			part= new KMMessagePart();}
+		}			
 
 //  ****** 2. Check if message body is html. Search for <html> tag ********//
 /*
@@ -182,6 +209,7 @@ void KMReaderView::parseMessage(KMMessage *message)
 		//}
 
 	// Okay! Let's write it to the canvas
+
 
 	 messageCanvas->write(text);
 
@@ -202,6 +230,50 @@ void KMReaderView::parseMessage(KMMessage *message)
 	messageCanvas->parse();
 	printf("Leaving parsing\n");
 }
+
+const char* KMReaderView::decodeString(const char* data, QString type)
+{
+    DwString dwstr(data);
+  
+    type=type.lower();
+    debug("decoding %s",type.data());
+    if(type=="base64") 
+	{printf("->base64\n");
+	DwDecodeBase64(dwstr,dwstr);}
+    else if(type=="quoted-printable")
+	{printf("->quotedp\n");
+	DwDecodeQuotedPrintable(dwstr,dwstr);}
+    else if(type=="8bit") 
+	printf("Raw 8 bit data read. Thins may look strange");
+
+    printf("decoded data: %s",dwstr.c_str());
+    return dwstr.c_str();
+}
+
+QString KMReaderView::parseBodyPart(KMMessagePart *p)
+{
+	QString text;
+	text = decodeString(p->body(),p->cteStr());
+	printf("Returned from decoding\n");
+	return text;
+
+}
+
+
+
+
+
+
+QString KMReaderView::parseEAddress(QString old)
+{
+	int pos;
+	if((pos = old.find("<",0,0)) == -1)
+		{old = "<A HREF=\"mailto:" + old + "\">" + old +"</A>";
+		cout << old << "\n";
+		return old;}
+
+}
+
 
 void KMReaderView::replyMessage()
 {

@@ -158,12 +158,6 @@ void KMComposeView::sendIt()
 
   // Now all items in the attachment queue are being displayed.
 
-  /* KMAttachmentItem *itm;
-     for ( itm=attachmentList.first(); itm != 0; itm = attachmentList.next())
-     cout <<  "FileName: " << itm->fileName << "\tIndex: " <<  itm->index << "\n";
-   */
-  // All attachments in the queue are being attached here.
-
   QString temp=toLEdit->text();
   if (temp.isEmpty()) {
     warning(nls->translate("No recipients defined."));
@@ -185,15 +179,41 @@ void KMComposeView::sendIt()
   msg->setSubject(subjLEdit->text());
   msg->setBody(temp);
 
+  // Get attachments from the list 
+  if(urlList->first != 0)
+	{QString atmntStr;
+	atmntStr = urlList->first();
+	KMMessagePart *part = new KMMessagePart();
+	part = createKMMsgPart(part, atmntStr);
+	msg->addBodyPart(part);
+	while((atmntStr =urlList->next()) != 0)
+		{part = new KMMessagePart();
+		part = createKMMsgPart(part,atmntStr);
+		msg->addBodyPart(part);
+		delete part;}
+		}
+
+  msg->setFrom(EMailAddress);
+  msg->setTo(toLEdit->text());
+  msg->setCc(ccLEdit->text());
+  msg->setSubject(subjLEdit->text());
+  msg->setBody(temp);
+
   // If sending fails the message is queued into the outbox and
   // is sent later. Also the sender takes care of error messages.
   msgSender->send(msg); 
 
+
   ((KMComposeWin *)parentWidget())->close();
+}
+
+KMMessagePart * KMComposeView::createKMMsgPart(KMMessagePart *p, QString str)
+{
 
 }
 
 //-----------------------------------------------------------------------------
+
 void KMComposeView::parseConfiguration()
 {
   KConfig *config = new KConfig();
@@ -330,19 +350,8 @@ void KMComposeView::find()
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeView::detachFile(int index, int col)
+void KMComposeView::detachFile(int , int)
 {
-  col = col;
-  attachmentList.remove(index);
-  attWidget->removeItem(index);
-  indexAttachment--;
-  if(!indexAttachment)
-    {
-      delete attWidget;
-      attWidget=NULL;
-      resize(size());
-    }
-	
 }
 
 //-----------------------------------------------------------------------------
@@ -648,3 +657,15 @@ KMAttachmentItem::KMAttachmentItem(QString _name, int _index)
   cout << fileName << "\n";
   cout << index << "\n";
 }
+
+
+
+
+
+
+
+
+
+
+
+
