@@ -8,6 +8,7 @@ Comment[xx]=xxKMailxx
 [new-mail-arrived]
 Name= New Mail arrived
 Comment=New Mail arrived
+Comment[bg]=Имате ново писмо
 Comment[bs]=Stigla vam je nova pošta.
 Comment[ca]=Ha arribat correu nou
 Comment[cs]=Přišla nová pošta
