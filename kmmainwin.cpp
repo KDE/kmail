@@ -125,7 +125,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 KMMainWin::~KMMainWin()
 {
   if (searchWin)
-    delete searchWin;
+    searchWin->close();
   writeConfig();
   writeFolderConfig();
 

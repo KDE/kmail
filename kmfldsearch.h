@@ -58,6 +58,9 @@ protected:
   /** Reimplemented to react to Escape. */
   virtual void keyPressEvent(QKeyEvent*);
 
+  /** Reimplemented to stop searching when the window is closed */
+  virtual void closeEvent(QCloseEvent*);
+
 protected:
   QGridLayout* mGrid;
   QComboBox *mCbxFolders;
@@ -68,7 +71,7 @@ protected:
   int mNumRules, mNumMatches;
   int mCount;
   QString mSearchFolder;
-  bool mSearching, mStopped;
+  bool mSearching, mStopped, mCloseRequested;
   KMMainWin* mMainWin;
   QWidget* mLastFocus;
 };

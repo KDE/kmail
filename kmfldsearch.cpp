@@ -41,6 +41,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 
   mNumRules  = 2;
   mSearching = false;
+  mCloseRequested = false;
 
   setCaption(i18n("Search in Folders"));
   mGrid = new QGridLayout(this, mNumRules+4, 5, 4, 4);
@@ -338,6 +339,7 @@ void KMFldSearch::slotSearch()
   enableGUI();
   if( mLastFocus )
     mLastFocus->setFocus();
+  if (mCloseRequested) close();
 }
 
 
@@ -351,6 +353,19 @@ void KMFldSearch::slotStop()
 void KMFldSearch::slotClose()
 {
   accept();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFldSearch::closeEvent(QCloseEvent *e)
+{
+  if (mSearching)
+  {
+    mSearching = false;
+    mCloseRequested = true;
+    e->ignore();
+  }
+  else e->accept();
 }
 
 
