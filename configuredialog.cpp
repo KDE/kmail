@@ -1368,7 +1368,7 @@ void NetworkPage::SendingTab::apply() {
 
 
 QString NetworkPage::ReceivingTab::title() {
-  return i18n("Receiving");
+  return i18n("R&eceiving");
 }
 
 QString NetworkPage::ReceivingTab::helpAnchor() {
