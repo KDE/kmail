@@ -1524,6 +1524,15 @@ KMReaderWin::KMReaderWin(KMMimePartTree* mimePartTree,
 
   mCodec = 0;
   mAutoDetectEncoding = true;
+    
+  if(getenv("KMAIL_DEBUG_READER_CRYPTO") != NULL){
+    QCString cE = getenv("KMAIL_DEBUG_READER_CRYPTO");
+    mDebugReaderCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
+    kdDebug(5006) << "KMAIL_DEBUG_READER_CRYPTO = TRUE" << endl;
+  }else{
+    mDebugReaderCrypto = false;
+    kdDebug(5006) << "KMAIL_DEBUG_READER_CRYPTO = FALSE" << endl;
+  }
 }
 
 
@@ -2405,17 +2414,17 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
     else
       new_cleartext = 0;
 
-// #define KHZ_TEST
-#ifdef KHZ_TEST
-    QFile fileD0( "testdat_xx-0" );
-    if( fileD0.open( IO_WriteOnly ) ) {
+    if( reader && reader->mDebugReaderCrypto ){
+      QFile fileD0( "dat_01_reader_signedtext_before_canonicalization" );
+      if( fileD0.open( IO_WriteOnly ) ) {
         if( data ) {
-          QDataStream ds( &fileD0 );
-          ds.writeRawBytes( cleartext, cleartext.length() );
+        QDataStream ds( &fileD0 );
+        ds.writeRawBytes( cleartext, cleartext.length() );
         }
         fileD0.close();  // If data is 0 we just create a zero length file.
+      }
     }
-#endif
+
     if( data &&
         ( (0 <= cryptPlug->libName().find( "smime",   0, false )) ||
           (0 <= cryptPlug->libName().find( "openpgp", 0, false )) ) ) {
@@ -2429,17 +2438,16 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         kdDebug(5006) << "                                                       done." << endl;
       }
     }
-// #define KHZ_TEST
-#ifdef KHZ_TEST
-    QFile fileD( "testdat_xx1" );
-    if( fileD.open( IO_WriteOnly ) ) {
+    if( reader && reader->mDebugReaderCrypto ){
+      QFile fileD( "dat_02_reader_signedtext_after_canonicalization" );
+      if( fileD.open( IO_WriteOnly ) ) {
         if( data ) {
           QDataStream ds( &fileD );
           ds.writeRawBytes( cleartext, cleartext.length() );
         }
         fileD.close();  // If data is 0 we just create a zero length file.
+      }
     }
-#endif
 
     QByteArray signaturetext( sign.msgPart().bodyDecodedBinary() );
     QCString signatureStr( signaturetext );
@@ -2447,14 +2455,15 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                              (-1 == signatureStr.find("BEGIN PGP SIGNED MESSAGE", 0, false) ) &&
                              (-1 == signatureStr.find("BEGIN PGP MESSAGE", 0, false) );
     int signatureLen = signaturetext.size();
-#ifdef KHZ_TEST
-    QFile fileS( "testdat_xx1.sig" );
-    if( fileS.open( IO_WriteOnly ) ) {
+    
+    if( reader && reader->mDebugReaderCrypto ){
+      QFile fileS( "dat_03_reader.sig" );
+      if( fileS.open( IO_WriteOnly ) ) {
         QDataStream ds( &fileS );
         ds.writeRawBytes( signaturetext, signaturetext.size() );
         fileS.close();
+      }
     }
-#endif
 
     QCString deb;
     deb =  "\n\nS I G N A T U R E = ";
@@ -2799,15 +2808,15 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                           (-1 == cipherStr.find("BEGIN PGP ENCRYPTED MESSAGE", 0, false) ) &&
                           (-1 == cipherStr.find("BEGIN PGP MESSAGE", 0, false) );
     int cipherLen = ciphertext.size();
-//#define KHZ_TEST
-#ifdef KHZ_TEST
-    QFile fileC( "testdat_xx1.encrypted" );
-    if( fileC.open( IO_WriteOnly ) ) {
+    
+    if( reader && reader->mDebugReaderCrypto ){
+      QFile fileC( "dat_04_reader.encrypted" );
+      if( fileC.open( IO_WriteOnly ) ) {
         QDataStream dc( &fileC );
         dc.writeRawBytes( ciphertext, ciphertext.size() );
         fileC.close();
+      }
     }
-#endif
 
     QCString deb;
     deb =  "\n\nE N C R Y P T E D    D A T A = ";
@@ -2874,6 +2883,14 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
           i18n("Please specify a Plug-In by invoking"),
           i18n("the 'Settings/Configure KMail / Plug-In' dialog!"),
           decryptedData );
+  }
+  if( reader && reader->mDebugReaderCrypto ){
+    QFile fileC2( "dat_05_reader.decrypted" );
+    if( fileC2.open( IO_WriteOnly ) ) {
+      QDataStream dc( &fileC2 );
+      dc.writeRawBytes( decryptedData, decryptedData.size() );
+      fileC2.close();
+    }
   }
   return bDecryptionOk;
 }

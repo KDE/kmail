@@ -751,6 +751,9 @@ private:
    * override the global setting using KDComposeWin's options_select_crypto action.
    */
   CryptPlugWrapper* mSelectedCryptPlug;
+  
+public:
+  bool mDebugComposerCrypto;
 };
 #endif
 

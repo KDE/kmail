@@ -455,6 +455,9 @@ protected:
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   static QPtrList<KMReaderWin> mStandaloneWindows;
+  
+public:
+  bool mDebugReaderCrypto;
 };
 
 

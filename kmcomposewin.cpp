@@ -241,6 +241,15 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
          "Settings->Configure KMail->Plug-In dialog.</li>"
          "<li><em>or</em> specify traditional OpenPGP settings on the same dialog's "
          "Identity->Advanced tab.</li></ul>");
+  
+  if(getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != NULL){
+    QCString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
+    mDebugComposerCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
+    kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = TRUE" << endl;
+  }else{
+    mDebugComposerCrypto = false;
+    kdDebug(5006) << "KMAIL_DEBUG_COMPOSER_CRYPTO = FALSE" << endl;
+  }
   mDone = true;
 }
 
@@ -2752,15 +2761,15 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         const char* cleartext = cText;
         char* ciphertext  = 0;
 
-//#define KHZ_TEST
-#ifdef KHZ_TEST
-        QFile fileS( "testdat_sign.input" );
-        if( fileS.open( IO_WriteOnly ) ) {
-            QDataStream ds( &fileS );
-            ds.writeRawBytes( cleartext, strlen( cleartext ) );
-            fileS.close();
+        if( mDebugComposerCrypto ){
+            QFile fileS( "dat_11_sign.input" );
+            if( fileS.open( IO_WriteOnly ) ) {
+                QDataStream ds( &fileS );
+                ds.writeRawBytes( cleartext, strlen( cleartext ) );
+                fileS.close();
+            }
         }
-#endif
+
         if ( bSign ){
             int   errId = 0;
             char* errTxt = 0;
@@ -2770,42 +2779,40 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                                          structuring,
                                          &errId,
                                          &errTxt ) ){
-#ifdef KHZ_TEST
-                QFile fileD( "testdat_sign.output" );
-                if( fileD.open( IO_WriteOnly ) ) {
-                    QDataStream ds( &fileD );
-                    ds.writeRawBytes( ciphertext, cipherLen );
-                    fileD.close();
+                if( mDebugComposerCrypto ){
+                    QFile fileD( "dat_12_sign.output" );
+                    if( fileD.open( IO_WriteOnly ) ) {
+                        QDataStream ds( &fileD );
+                        ds.writeRawBytes( ciphertext, cipherLen );
+                        fileD.close();
+                    }
+                    QString ds( "\nAFTER calling cryptplug:" );
+                    ds += "\nstructuring.contentTypeMain:   \"";
+                    ds += structuring.data.contentTypeMain;
+                    ds += "\"";
+                    ds += "\nstructuring.contentTypeVersion:\"";
+                    ds += structuring.data.contentTypeVersion;
+                    ds += "\"";
+                    ds += "\nstructuring.contentTypeCode:   \"";
+                    ds += structuring.data.contentTypeCode;
+                    ds += "\"";
+                    ds += "\nstructuring.flatTextPrefix:    \"";
+                    ds += structuring.data.flatTextPrefix;
+                    ds += "\"";
+                    ds += "\nstructuring.flatTextSeparator: \"";
+                    ds += structuring.data.flatTextSeparator;
+                    ds += "\"";
+                    ds += "\nstructuring.flatTextPostfix:   \"";
+                    ds += structuring.data.flatTextPostfix;
+                    ds += "\"";
+                    ds += "\n\nresulting signature bloc:\n\"";
+                    ds += ciphertext;
+                    ds += "\"\n\n";
+                    ds += "signature length: ";
+                    ds += cipherLen;
+                    ds += "\n\n";
+                    kdDebug(5006) << ds.utf8();
                 }
-#endif
-#ifdef DEBUG
-                QString ds( "\nAFTER calling cryptplug:" );
-                ds += "\nstructuring.contentTypeMain:   \"";
-                ds += structuring.data.contentTypeMain;
-                ds += "\"";
-                ds += "\nstructuring.contentTypeVersion:\"";
-                ds += structuring.data.contentTypeVersion;
-                ds += "\"";
-                ds += "\nstructuring.contentTypeCode:   \"";
-                ds += structuring.data.contentTypeCode;
-                ds += "\"";
-                ds += "\nstructuring.flatTextPrefix:    \"";
-                ds += structuring.data.flatTextPrefix;
-                ds += "\"";
-                ds += "\nstructuring.flatTextSeparator: \"";
-                ds += structuring.data.flatTextSeparator;
-                ds += "\"";
-                ds += "\nstructuring.flatTextPostfix:   \"";
-                ds += structuring.data.flatTextPostfix;
-                ds += "\"";
-                ds += "\n\nresulting signature bloc:\n\"";
-                ds += ciphertext;
-                ds += "\"\n\n";
-                ds += "signature length: ";
-                ds += cipherLen;
-                ds += "\n\n";
-                kdDebug(5006) << ds.utf8();
-#endif
                 signature.assign( ciphertext, cipherLen );
             } else {
                 QString error("#");
