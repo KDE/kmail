@@ -710,8 +710,7 @@ public:
 };
 
 
-// if you change this list, also update
-// the count in argsFromString
+// if you change this list, also update StatiCount
 static const KMMsgStatus stati[] =
 {
   KMMsgStatusFlag,
@@ -722,6 +721,7 @@ static const KMMsgStatus stati[] =
   KMMsgStatusOld,
   KMMsgStatusNew
 };
+static const int StatiCount = 7;
 
 KMFilterAction* KMFilterActionSetStatus::newAction()
 {
@@ -758,7 +758,7 @@ KMFilterAction::ReturnCode KMFilterActionSetStatus::process(KMMessage* msg) cons
 void KMFilterActionSetStatus::argsFromString( const QString argsStr )
 {
   if ( argsStr.length() == 1 ) {
-    for ( int i = 0 ; i < 8 ; i++ )
+    for ( int i = 0 ; i < StatiCount ; i++ )
       if ( KMMsgBase::statusToStr(stati[i])[0] == argsStr[0] ) {
 	mParameter = *mParameterList.at(i+1);
 	return;
