@@ -13,11 +13,12 @@ INCLUDES = -I$(top_srcdir)/libkdenetwork \
 noinst_LTLIBRARIES = libkmailcommon.la
 
 kde_module_LTLIBRARIES = libkmailpart.la
-libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
+libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
 libkmailpart_la_LIBADD	= $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 			../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
 			../mimelib/libmimelib.la ../ktnef/lib/libktnef.la \
-			../libksieve/libksieve.la libkmailcommon.la
+			../libksieve/libksieve.la libkmailcommon.la \
+			../libkcal/libkcal.la 
 
 bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
