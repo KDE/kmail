@@ -1140,7 +1140,7 @@ void KMHeaders::msgAdded(int id)
           parent = NULL;
       }
     }
-    
+
     if (parent && mFolder->getMsgBase(parent->id())->isWatched())
       mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
     else if (parent && mFolder->getMsgBase(parent->id())->isIgnored()) {
@@ -1187,9 +1187,9 @@ void KMHeaders::msgAdded(int id)
     }
     // The message we just added might be a better parent for one of the as of
     // yet imperfectly threaded messages. Let's find out.
-    
+
     /* In case the current item is taken during reparenting, prevent qlistview
-     * from selecting some unrelated item as a result of take() emitting 
+     * from selecting some unrelated item as a result of take() emitting
      * currentChanged. */
     disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
@@ -1269,7 +1269,7 @@ void KMHeaders::msgAdded(int id)
     setSelectionAnchor( currentItem() );
     highlightMessage( currentItem() );
   }
- 
+
   /* restore signal */
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
@@ -1288,10 +1288,10 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     return;
   CREATE_TIMER(msgRemoved);
   START_TIMER(msgRemoved);
-  /* 
+  /*
    * qlistview has its own ideas about what to select as the next
    * item once this one is removed. Sine we have already selected
-   * something in prepare/finalizeMove that's counter productive 
+   * something in prepare/finalizeMove that's counter productive
    */
   disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
               this, SLOT(highlightMessage(QListViewItem*)));
@@ -1376,7 +1376,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
     setCurrentItem( curItem );
     setSelectionAnchor( currentItem() );
   }
-  
+
   /* restore signal */
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
@@ -2356,29 +2356,29 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
         }
      }
   }
-  
+
   // let klistview do it's thing, expanding/collapsing, selection/deselection
   KListView::contentsMousePressEvent(e);
-  
+
   if ( rootDecoClicked ) {
       // select the thread's children after closing if the parent is selected
      if ( lvi && !lvi->isOpen() && lvi->isSelected() )
         setSelected( lvi, true );
   }
-  
+
   if ( lvi && !rootDecoClicked ) {
     if ( lvi != currentItem() )
       highlightMessage( lvi );
     /* Explicitely set selection state. This is necessary because we want to
      * also select all children of closed threads when the parent is selected. */
-    
+
     // unless ctrl mask, set selected if it isn't already
     if ( !( e->state() & ControlButton ) && !wasSelected )
       setSelected( lvi, true );
     // if ctrl mask, toggle selection
     if ( e->state() & ControlButton )
       setSelected( lvi, !wasSelected );
-    
+
     if ((e->button() == LeftButton) )
       mMousePressed = true;
   }
