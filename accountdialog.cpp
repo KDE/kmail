@@ -903,10 +903,11 @@ void AccountDialog::slotPopCapabilities(const QStringList &list)
 {
   mServerTest = NULL;
   mPop.checkCapabilities->setEnabled(TRUE);
+  bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
   mPop.usePipeliningCheck->setChecked(list.findIndex("PIPELINING") != -1);
-  mPop.encryptionNone->setEnabled(list.findIndex("NORMAL-CONNECTION") != -1);
+  mPop.encryptionNone->setEnabled(nc);
   mPop.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
-  mPop.encryptionTLS->setEnabled(list.findIndex("STLS") != -1);
+  mPop.encryptionTLS->setEnabled(list.findIndex("STLS") != -1 && nc);
   mPop.authPlain->setEnabled(list.findIndex("PLAIN") != -1);
   mPop.authLogin->setEnabled(list.findIndex("LOGIN") != -1);
   mPop.authCRAM_MD5->setEnabled(list.findIndex("CRAM-MD5") != -1);
@@ -920,9 +921,10 @@ void AccountDialog::slotImapCapabilities(const QStringList &list)
 {
   mServerTest = NULL;
   mImap.checkCapabilities->setEnabled(TRUE);
-  mImap.encryptionNone->setEnabled(list.findIndex("NORMAL-CONNECTION") != -1);
+  bool nc = list.findIndex("NORMAL-CONNECTION") != -1;
+  mImap.encryptionNone->setEnabled(nc);
   mImap.encryptionSSL->setEnabled(list.findIndex("SSL") != -1);
-  mImap.encryptionTLS->setEnabled(list.findIndex("STARTTLS") != -1);
+  mImap.encryptionTLS->setEnabled(list.findIndex("STARTTLS") != -1 && nc);
   mImap.authPlain->setEnabled(list.findIndex("AUTH=PLAIN") != -1);
   mImap.authLogin->setEnabled(list.findIndex("AUTH=LOGIN") != -1);
   mImap.authCramMd5->setEnabled(list.findIndex("AUTH=CRAM-MD5") != -1);
