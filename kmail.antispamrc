@@ -1,5 +1,5 @@
 [General]
-tools=5
+tools=6
 
 [Spamtool #1]
 Ident=spamassassin
@@ -73,6 +73,22 @@ Executable=sweep -v
 URL=http://www.sophos.com
 PipeFilterName=Sophos Anti-Virus Check
 PipeCmdDetect=kmail_sav.sh
+ExecCmdSpam=
+ExecCmdHam=
+DetectionHeader=X-Virus-Flag
+DetectionPattern=yes
+UseRegExp=0
+SupportsBayes=0
+Type=av
+
+[Spamtool #6]
+Ident=FProt
+Version=1
+VisibleName=&F-Prot AntiVirus
+Executable=f-prot -verno
+URL=http://www.f-prot.com
+PipeFilterName=F-Prot Anti-Virus Check
+PipeCmdDetect=kmail_fprot.sh
 ExecCmdSpam=
 ExecCmdHam=
 DetectionHeader=X-Virus-Flag

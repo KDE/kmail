@@ -100,11 +100,15 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail." ));
   mRulesPage = new ASWizRulesPage( 0, "", mainFolderTree );
   addPage( mRulesPage, i18n( "Please select the filters to be created inside KMail." ));
+  mVirusRulesPage = new ASWizVirusRulesPage( 0, "", mainFolderTree );
+  addPage( mVirusRulesPage, i18n( "Please select the filters to be created inside KMail." ));
 
   connect( mProgramsPage, SIGNAL( selectionChanged( void ) ),
             this, SLOT( checkProgramsSelections( void ) ) );
-  connect( mRulesPage, SIGNAL( selectionChanged( void) ),
+  connect( mRulesPage, SIGNAL( selectionChanged( void ) ),
             this, SLOT( checkRulesSelections( void ) ) );
+  connect( mVirusRulesPage, SIGNAL( selectionChanged( void ) ),
+            this, SLOT( checkVirusRulesSelections( void ) ) );
 
   connect( this, SIGNAL( helpClicked( void) ),
             this, SLOT( slotHelpClicked( void ) ) );
@@ -112,6 +116,7 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   setNextEnabled( mInfoPage, false );
   setNextEnabled( mProgramsPage, false );
   setNextEnabled( mRulesPage, false );
+  setNextEnabled( mVirusRulesPage, false );
 
   QTimer::singleShot( 500, this, SLOT( checkToolAvailability( void ) ) );
 }
@@ -122,15 +127,92 @@ void AntiSpamWizard::accept()
   kdDebug( 5006 ) << "Folder name for spam is "
                   << mRulesPage->selectedFolderName() << endl;
   kdDebug( 5006 ) << "Folder name for viruses is "
-                  << mRulesPage->selectedVirusFolderName() << endl;
+                  << mVirusRulesPage->selectedFolderName() << endl;
 
   KMFilterActionDict dict;
-
+  
+  // Let's start with virus detection and handling,
+  // so we can avoid spam checks for viral messages
   QValueListIterator<SpamToolConfig> it = mToolList.begin();
   while ( it != mToolList.end() )
   {
-    if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() )
-        && mRulesPage->pipeRulesSelected() )
+    if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
+       ( mVirusRulesPage->pipeRulesSelected() && (*it).isVirusTool() ) )
+    {
+      // pipe messages through the anti-virus tools,
+      // one single filter for each tool
+      // (could get combined but so it's easier to understand for the user)
+      KMFilter* pipeFilter = new KMFilter();
+      QPtrList<KMFilterAction>* pipeFilterActions = pipeFilter->actions();
+      KMFilterAction* pipeFilterAction = dict["filter app"]->create();
+      pipeFilterAction->argsFromString( (*it).getDetectCmd() );
+      pipeFilterActions->append( pipeFilterAction );
+      KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
+      pipeFilterPattern->setName( (*it).getFilterName() );
+      pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
+                                 KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+      pipeFilter->setApplyOnOutbound( FALSE);
+      pipeFilter->setApplyOnInbound();
+      pipeFilter->setApplyOnExplicit();
+      pipeFilter->setStopProcessingHere( FALSE );
+      pipeFilter->setConfigureShortcut( FALSE );
+
+      KMKernel::self()->filterMgr()->appendFilter( pipeFilter );
+    }
+    it++;
+  }
+
+  if ( mVirusRulesPage->moveRulesSelected() )
+  {
+    // Sort out viruses depending on header fields set by the tools
+    KMFilter* virusFilter = new KMFilter();
+    QPtrList<KMFilterAction>* virusFilterActions = virusFilter->actions();
+    KMFilterAction* virusFilterAction1 = dict["transfer"]->create();
+    virusFilterAction1->argsFromString( mVirusRulesPage->selectedFolderName() );
+    virusFilterActions->append( virusFilterAction1 );
+    if ( mVirusRulesPage->markReadRulesSelected() ) {
+      KMFilterAction* virusFilterAction2 = dict["set status"]->create();
+      virusFilterAction2->argsFromString( "R" ); // Read
+      virusFilterActions->append( virusFilterAction2 );
+    }   
+    KMSearchPattern* virusFilterPattern = virusFilter->pattern();
+    virusFilterPattern->setName( i18n( "Virus handling" ) );
+    virusFilterPattern->setOp( KMSearchPattern::OpOr );
+    it = mToolList.begin();
+    while ( it != mToolList.end() )
+    {
+      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ))
+      {
+        if ((*it).getType() == (QString) "av")
+        {
+            const QCString header = (*it).getDetectionHeader().ascii();
+            const QString & pattern = (*it).getDetectionPattern();
+            if ( (*it).isUseRegExp() )
+            virusFilterPattern->append(
+                KMSearchRule::createInstance( header,
+                KMSearchRule::FuncRegExp, pattern ) );
+            else
+            virusFilterPattern->append(
+                KMSearchRule::createInstance( header,
+                KMSearchRule::FuncContains, pattern ) );
+        }
+      }
+      it++;
+    }
+    virusFilter->setApplyOnOutbound( FALSE);
+    virusFilter->setApplyOnInbound();
+    virusFilter->setApplyOnExplicit();
+    virusFilter->setStopProcessingHere( TRUE );
+    virusFilter->setConfigureShortcut( FALSE );
+
+    KMKernel::self()->filterMgr()->appendFilter( virusFilter );
+  }
+
+  it = mToolList.begin();
+  while ( it != mToolList.end() )
+  {
+    if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ) &&
+       ( mRulesPage->pipeRulesSelected() && (*it).isSpamTool() ) )
     {
       // pipe messages through the anti-spam tools,
       // one single filter for each tool
@@ -143,7 +225,7 @@ void AntiSpamWizard::accept()
       KMSearchPattern* pipeFilterPattern = pipeFilter->pattern();
       pipeFilterPattern->setName( (*it).getFilterName() );
       pipeFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                                KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
+                                 KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
       pipeFilter->setApplyOnOutbound( FALSE);
       pipeFilter->setApplyOnInbound();
       pipeFilter->setApplyOnExplicit();
@@ -202,44 +284,6 @@ void AntiSpamWizard::accept()
     spamFilter->setConfigureShortcut( FALSE );
 
     KMKernel::self()->filterMgr()->appendFilter( spamFilter );
-
-    // Sort out viruses depending on header fields set by the tools
-    KMFilter* virusFilter = new KMFilter();
-    QPtrList<KMFilterAction>* virusFilterActions = virusFilter->actions();
-    KMFilterAction* virusFilterAction1 = dict["transfer"]->create();
-    virusFilterAction1->argsFromString( mRulesPage->selectedVirusFolderName() );
-    virusFilterActions->append( virusFilterAction1 );
-    KMSearchPattern* virusFilterPattern = virusFilter->pattern();
-    virusFilterPattern->setName( i18n( "Virus handling" ) );
-    virusFilterPattern->setOp( KMSearchPattern::OpOr );
-    it = mToolList.begin();
-    while ( it != mToolList.end() )
-    {
-      if ( mProgramsPage->isProgramSelected( (*it).getVisibleName() ))
-      {
-        if ((*it).getType() == (QString) "av")
-        {
-            const QCString header = (*it).getDetectionHeader().ascii();
-            const QString & pattern = (*it).getDetectionPattern();
-            if ( (*it).isUseRegExp() )
-            virusFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncRegExp, pattern ) );
-            else
-            virusFilterPattern->append(
-                KMSearchRule::createInstance( header,
-                KMSearchRule::FuncContains, pattern ) );
-        }
-      }
-      it++;
-    }
-    virusFilter->setApplyOnOutbound( FALSE);
-    virusFilter->setApplyOnInbound();
-    virusFilter->setApplyOnExplicit();
-    virusFilter->setStopProcessingHere( TRUE );
-    virusFilter->setConfigureShortcut( FALSE );
-
-    KMKernel::self()->filterMgr()->appendFilter( virusFilter );
   }
 
   if ( mRulesPage->classifyRulesSelected() )
@@ -420,9 +464,19 @@ void AntiSpamWizard::checkRulesSelections()
   if ( mRulesPage->moveRulesSelected() || mRulesPage->pipeRulesSelected()
       || mRulesPage->classifyRulesSelected() )
   {
-    setFinishEnabled( mRulesPage, true );
+    setNextEnabled( mRulesPage, true );
   } else {
-    setFinishEnabled( mRulesPage, false );
+    setNextEnabled( mRulesPage, false );
+  }
+}
+
+void AntiSpamWizard::checkVirusRulesSelections()
+{
+  if ( mVirusRulesPage->moveRulesSelected() || mVirusRulesPage->pipeRulesSelected() )
+  {
+    setFinishEnabled( mVirusRulesPage, true );
+  } else {
+    setFinishEnabled( mVirusRulesPage, false );
   }
 }
 
@@ -601,8 +655,8 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
     "well as create filter rules to classify messages using these "
     "tools and to separate messages classified as spam, or which "
     "contain viruses. The wizard will not take any existing filter "
-    "rules into consideration; it will always append new rules."
-    "</p>"
+    "rules into consideration but will append new rules in any"
+    "case.</p>"
     ) );
   grid->addWidget( mIntroText, 0, 0 );
 
@@ -712,9 +766,9 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
             "created by this wizard." ) );
   grid->addWidget( mClassifyRules, 0, 0 );
 
-  mPipeRules = new QCheckBox( i18n("Classify messages using the anti-spam/virus tools"), this );
+  mPipeRules = new QCheckBox( i18n("Classify messages using the anti-spam tools"), this );
   QWhatsThis::add( mPipeRules,
-      i18n( "Let the anti-spam/virus tools classify your messages. The wizard "
+      i18n( "Let the anti-spam tools classify your messages. The wizard "
             "will create appropriate filters. The messages are usually "
             "marked by the tools so that following filters can react "
             "on this and, for example, move spam messages to a special folder.") );
@@ -728,28 +782,17 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
             "in the folder view.") );
   grid->addWidget( mMoveRules, 2, 0 );
   
-  QString s = "trash";
-  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s );
-  grid->addWidget( mFolderTree, 3, 0 );
-
   mMarkRules = new QCheckBox( i18n("Additionally, mark detected spam messages as read"), this );
   mMarkRules->setEnabled( false );
   QWhatsThis::add( mMarkRules,
       i18n( "Mark messages which have been classified as "
             "spam as read, as well as moving them to the selected "
             "folder.") );
-  grid->addWidget( mMarkRules, 4, 0 );
+  grid->addWidget( mMarkRules, 3, 0 );
   
-  mMoveVirusRules = new QCheckBox( i18n("Move detected viral messages to the selected folder"), this );
-  QWhatsThis::add( mMoveVirusRules,
-      i18n( "A filter to detect messages which contain a virus and to move "
-            "those messages into a predefined folder is created; the "
-            "default folder is the trash folder, but you may change that "
-            "in the folder view.") );
-  grid->addWidget( mMoveVirusRules, 5, 0);
-  
-  mVirusFolderTree = new SimpleFolderTree( this, mainFolderTree, s);
-  grid->addWidget( mVirusFolderTree, 6, 0 );
+  QString s = "trash";
+  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s );
+  grid->addWidget( mFolderTree, 4, 0 );
 
   connect( mPipeRules, SIGNAL(clicked()),
             this, SLOT(processSelectionChange(void)) );
@@ -762,7 +805,6 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
   connect( mMoveRules, SIGNAL( toggled( bool ) ),
            mMarkRules, SLOT( setEnabled( bool ) ) );
 }
-
 
 bool ASWizRulesPage::pipeRulesSelected() const
 {
@@ -781,11 +823,6 @@ bool ASWizRulesPage::moveRulesSelected() const
   return mMoveRules->isChecked();
 }
 
-bool ASWizRulesPage::moveVirusRulesSelected() const
-{
-  return mMoveVirusRules->isChecked();
-}
-
 bool ASWizRulesPage::markReadRulesSelected() const
 {
   return mMarkRules->isChecked();
@@ -799,15 +836,6 @@ QString ASWizRulesPage::selectedFolderName() const
     name = mFolderTree->folder()->idString();
   return name;
 }
-
-QString ASWizRulesPage::selectedVirusFolderName() const
-{
-  QString name = "trash";
-  if (mVirusFolderTree->folder() )
-    name = mVirusFolderTree->folder()->idString();
-  return name;
-}
-
 
 void ASWizRulesPage::processSelectionChange()
 {
@@ -826,5 +854,80 @@ void ASWizRulesPage::allowClassification( bool enabled )
   }
 }
 
+//---------------------------------------------------------------------------
+ASWizVirusRulesPage::ASWizVirusRulesPage( QWidget * parent, const char * name,
+                                  KMFolderTree * mainFolderTree )
+  : QWidget( parent, name )
+{
+  QGridLayout *grid = new QGridLayout( this, 5, 1, KDialog::marginHint(),
+                                       KDialog::spacingHint() );
+
+  mPipeRules = new QCheckBox( i18n("Classify messages using the anti-virus tools"), this );
+  QWhatsThis::add( mPipeRules,
+      i18n( "Let the anti-virus tools classify your messages. The wizard "
+            "will create appropriate filters. The messages are usually "
+            "marked by the tools so that following filters can react "
+            "on this and, for example, move virus messages to a special folder.") );
+  grid->addWidget( mPipeRules, 0, 0 );
+
+  mMoveRules = new QCheckBox( i18n("Move detected viral messages to the selected folder"), this );
+  QWhatsThis::add( mMoveRules,
+      i18n( "A filter to detect messages classified as virus-infected and to move "
+            "those messages into a predefined folder is created. The "
+            "default folder is the trash folder, but you may change that "
+            "in the folder view.") );
+  grid->addWidget( mMoveRules, 1, 0 );
+  
+  mMarkRules = new QCheckBox( i18n("Additionally, mark detected viral messages as read"), this );
+  mMarkRules->setEnabled( false );
+  QWhatsThis::add( mMarkRules,
+      i18n( "Mark messages which have been classified as "
+            "virus-infected as read, as well as moving them "
+            "to the selected folder.") );
+  grid->addWidget( mMarkRules, 2, 0 );
+  
+  QString s = "trash";
+  mFolderTree = new SimpleFolderTree( this, mainFolderTree, s );
+  grid->addWidget( mFolderTree, 3, 0 );
+
+  connect( mPipeRules, SIGNAL(clicked()),
+            this, SLOT(processSelectionChange(void)) );
+  connect( mMoveRules, SIGNAL(clicked()),
+            this, SLOT(processSelectionChange(void)) );
+  connect( mMarkRules, SIGNAL(clicked()),
+            this, SLOT(processSelectionChange(void)) );
+  connect( mMoveRules, SIGNAL( toggled( bool ) ),
+           mMarkRules, SLOT( setEnabled( bool ) ) );
+}
+
+bool ASWizVirusRulesPage::pipeRulesSelected() const
+{
+  return mPipeRules->isChecked();
+}
+
+
+bool ASWizVirusRulesPage::moveRulesSelected() const
+{
+  return mMoveRules->isChecked();
+}
+
+bool ASWizVirusRulesPage::markReadRulesSelected() const
+{
+  return mMarkRules->isChecked();
+}
+
+
+QString ASWizVirusRulesPage::selectedFolderName() const
+{
+  QString name = "trash";
+  if ( mFolderTree->folder() )
+    name = mFolderTree->folder()->idString();
+  return name;
+}
+
+void ASWizVirusRulesPage::processSelectionChange()
+{
+  emit selectionChanged();
+}
 
 #include "antispamwizard.moc"

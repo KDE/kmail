@@ -46,6 +46,7 @@ namespace KMail {
   class ASWizInfoPage;
   class ASWizProgramsPage;
   class ASWizRulesPage;
+  class ASWizVirusRulesPage;
 
   //---------------------------------------------------------------------------
   /**
@@ -60,6 +61,8 @@ namespace KMail {
     The wizard will append the created filter rules after the
     last existing rule to keep possible conflicts with existing
     filter configurations minimal.
+    
+    Anti-virus support was added by Fred Emmott <fred87@users.sf.net>
 
     The configuration for the tools to get checked and set up
     is read fro a config file. The structure of the file is as
@@ -82,9 +85,11 @@ namespace KMail {
     DetectionPattern=yes
     UseRegExp=0
     SupportsBayes=1
+    type=spam
     </pre>
     The name of the config file is kmail.antispamrc
     and it's expected in the config dir of KDE.
+    
   */
   class AntiSpamWizard : public KWizard
   {
@@ -138,6 +143,9 @@ namespace KMail {
           bool isUseRegExp() const { return mUseRegExp; };
           bool useBayesFilter() const { return mSupportsBayesFilter; };
           QString getType() const { return mType; };
+          // convinience methods for types
+          bool isSpamTool() const { return ( mType == "spam" ); };
+          bool isVirusTool() const { return ( mType == "av" ); };
     
         private:
           // used to identifiy configs for the same tool
@@ -200,6 +208,7 @@ namespace KMail {
       void checkProgramsSelections();
       /** Modify the status of the wizard to reflect the selected functionality. */
       void checkRulesSelections();
+      void checkVirusRulesSelections();
       /** Check if the spam tools are available via the PATH */
       void checkToolAvailability();
       /** Show a help topic */
@@ -210,6 +219,7 @@ namespace KMail {
       ASWizInfoPage * mInfoPage;
       ASWizProgramsPage * mProgramsPage;
       ASWizRulesPage * mRulesPage;
+      ASWizVirusRulesPage * mVirusRulesPage;
 
       /* The configured tools and it's settings to be used in the wizard. */
       QValueList<SpamToolConfig> mToolList;
@@ -268,11 +278,9 @@ namespace KMail {
       bool pipeRulesSelected() const;
       bool classifyRulesSelected() const;
       bool moveRulesSelected() const;
-      bool moveVirusRulesSelected() const;
       bool markReadRulesSelected() const;
       
       QString selectedFolderName() const;
-      QString selectedVirusFolderName() const;
       void allowClassification( bool enabled );
 
     private slots:
@@ -286,8 +294,32 @@ namespace KMail {
       QCheckBox * mClassifyRules;
       QCheckBox * mMoveRules;
       SimpleFolderTree *mFolderTree;
-      QCheckBox * mMoveVirusRules;
-      SimpleFolderTree *mVirusFolderTree;
+      QCheckBox * mMarkRules;
+  };
+  
+  //-------------------------------------------------------------------------
+  class ASWizVirusRulesPage : public QWidget
+  {
+    Q_OBJECT
+    
+    public:
+      ASWizVirusRulesPage( QWidget * parent, const char * name, KMFolderTree * mainFolderTree );
+      
+      bool pipeRulesSelected() const;
+      bool moveRulesSelected() const;
+      bool markReadRulesSelected() const;
+      
+      QString selectedFolderName() const;
+      
+    private slots:
+      void processSelectionChange();
+    signals:
+      void selectionChanged();
+      
+    private:
+      QCheckBox * mPipeRules;
+      QCheckBox * mMoveRules;
+      SimpleFolderTree *mFolderTree;
       QCheckBox * mMarkRules;
   };
 
