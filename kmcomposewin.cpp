@@ -1054,7 +1054,6 @@ void KMComposeWin::setupActions(void)
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
-  createStandardStatusBarAction();
   setStandardToolBarMenuEnabled(true);
 
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());

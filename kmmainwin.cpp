@@ -29,7 +29,6 @@ KMMainWin::KMMainWin(QWidget *)
     setInstance( kmkernel->xmlGuiInstance() );
 
 #if KDE_IS_VERSION( 3, 1, 90 )
-  createStandardStatusBarAction();
   setStandardToolBarMenuEnabled(true);
 #endif
 
