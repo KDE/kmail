@@ -2880,8 +2880,10 @@ void KMMainWidget::updateMessageActions()
 
     updateListFilterAction();
 
-    bool allSelectedInCommonThread = true;
+    bool allSelectedInCommonThread = false;
+    bool singleMailIsPartOfThread = false;
     if ( count > 1 && mHeaders->isThreaded() ) {
+      allSelectedInCommonThread = true;
       QListViewItem * curItemParent = mHeaders->currentItem();
       while ( curItemParent->parent() )
         curItemParent = curItemParent->parent();
@@ -2896,10 +2898,14 @@ void KMMainWidget::updateMessageActions()
         }
       }
     }
+    if ( mHeaders->isThreaded() && count == 1 ) {
+      QListViewItem *cur = mHeaders->currentItem();
+      singleMailIsPartOfThread = cur->parent() || cur->childCount() > 0;
+    }
 
     bool mass_actions = count >= 1;
     bool thread_actions = mass_actions &&
-           allSelectedInCommonThread &&
+           ( allSelectedInCommonThread || singleMailIsPartOfThread ) &&
            mHeaders->isThreaded();
     mStatusMenu->setEnabled( mass_actions );
     mThreadStatusMenu->setEnabled( thread_actions );
