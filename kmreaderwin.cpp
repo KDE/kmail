@@ -200,7 +200,7 @@ void KMReaderWin::readConfig(void)
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
 							   SmartAttmnt);
   mLoadExternal = config->readBoolEntry( "htmlLoadExternal", false );
-  //don mViewer->setOnlyLocalReferences( !mLoadExternal );
+  mViewer->setOnlyLocalReferences( !mLoadExternal );
   }
 
   fntSize = 0;
