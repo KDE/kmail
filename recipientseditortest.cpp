@@ -69,6 +69,7 @@ Composer::Composer( QWidget *parent )
 
 void Composer::slotClose()
 {
+#if 0
   QString text;
 
   text += "<qt>";
@@ -82,6 +83,7 @@ void Composer::slotClose()
   text += "</qt>";
 
   KMessageBox::information( this, text );
+#endif
 
   close();
 }

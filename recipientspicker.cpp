@@ -108,6 +108,8 @@ RecipientItem::List RecipientsCollection::items() const
 RecipientsPicker::RecipientsPicker( QWidget *parent )
   : QWidget( parent )
 {
+  setCaption( i18n("Select Recipient") );
+
   QBoxLayout *topLayout = new QVBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
   topLayout->setMargin( KDialog::marginHint() );
@@ -130,6 +132,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( label );
   
   mRecipientList = new KListView( this );
+  mRecipientList->setAllColumnsShowFocus( true );
   topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
   mRecipientList->addColumn( i18n("Name") );
