@@ -83,24 +83,6 @@ bool KMHeaders::mTrue = true;
 bool KMHeaders::mFalse = false;
 
 //-----------------------------------------------------------------------------
-// KMHeaderToFolderDrag method definitions
-QPixmap* KMHeaderToFolderDrag::dragPix = 0;
-KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent,
-					    const char * name )
-    : QStoredDrag( "KMHeaderToFolderDrag/magic", parent, name )
-{
-  dragPix = new QPixmap( DesktopIcon("message",
-				     KIcon::SizeMedium ) );
-
-  setPixmap( *dragPix );
-}
-
-bool KMHeaderToFolderDrag::canDecode( QDropEvent* e )
-{
-    return e->provides( "KMHeaderToFolderDrag/magic" );
-}
-
-//-----------------------------------------------------------------------------
 // KMHeaderItem method definitions
 
 class KMHeaderItem : public KListViewItem
@@ -381,7 +363,7 @@ public:
     _cg.setColor( QColorGroup::Text, c );
   }
 
-  static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KMPaintInfo *paintInfo, int sortOrder)
+  static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder)
   {
     // It appears, that QListView in Qt-3.0 asks for the key
     // in QListView::clear(), which is called from
@@ -609,10 +591,10 @@ KMHeaders::~KMHeaders ()
 bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
-      dynamic_cast<QMouseEvent*>(e)->button() == RightButton &&
+      static_cast<QMouseEvent*>(e)->button() == RightButton &&
       o->isA("QHeader") )
   {
-    mPopup->popup( mapToGlobal( header()->geometry().center() ) );
+    mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );
     return true;
   }
   return KListView::eventFilter(o, e);
@@ -742,16 +724,6 @@ void KMHeaders::readConfig (void)
     KConfigGroupSaver saver(config, "Behaviour");
     mLoopOnGotoUnread = config->readBoolEntry( "LoopOnGotoUnread", true );
     mJumpToUnread = config->readBoolEntry( "JumpToUnread", false );
-    // read D'n'D behavior settings
-    mActionWhenDnD = config->readNumEntry("DnD_action_normal", KMMsgDnDActionASK );
-    if ( mActionWhenDnD < 0 || mActionWhenDnD > 2 )
-      mActionWhenDnD = KMMsgDnDActionASK;
-    mActionWhenShiftDnD = config->readNumEntry("DnD_action_SHIFT", KMMsgDnDActionMOVE );
-    if ( mActionWhenShiftDnD < 0 || mActionWhenShiftDnD > 2 )
-      mActionWhenShiftDnD = KMMsgDnDActionMOVE;
-    mActionWhenCtrlDnD = config->readNumEntry("DnD_action_CTRL", KMMsgDnDActionCOPY );
-    if ( mActionWhenCtrlDnD < 0 || mActionWhenCtrlDnD > 2 )
-      mActionWhenCtrlDnD = KMMsgDnDActionCOPY;
   }
 
   restoreLayout(config, "Header-Geometry");
@@ -1968,7 +1940,7 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
     // copy the message(s); note: the list is empty afterwards!
     KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(destFolder);
     imapDestFolder->copyMsg(list);
-    if (imapDestFolder->isSelected()) imapDestFolder->getFolder();
+    imapDestFolder->getFolder();
   }
 
   destFolder->close();
@@ -2612,30 +2584,27 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
     mousePressed = FALSE;
     QListViewItem *item = itemAt( contentsToViewport(presspos) );
     if ( item ) {
-      KMHeaderToFolderDrag* d = new KMHeaderToFolderDrag(viewport());
+      QDragObject *d = new QStoredDrag("x-kmail-drag/message", viewport());
 
-      const ButtonState keybstate = e->state();
-      int actionSettings;
-      if ( keybstate & Qt::ControlButton )
-        actionSettings = mActionWhenCtrlDnD;
-      else if ( keybstate & Qt::ShiftButton )
-        actionSettings = mActionWhenShiftDnD;
+      // Are multiple messages selected?
+      unsigned int count = 0;
+      for( QListViewItemIterator it(this); (it.current() && count < 2); it++ )
+        if( it.current()->isSelected() )
+          count++;
+
+      // Set pixmap
+      QPixmap pixmap;
+      if( count == 1 )
+        pixmap = QPixmap( DesktopIcon("message", KIcon::SizeSmall) );
       else
-        actionSettings = mActionWhenDnD;
-      switch ( actionSettings ) {
-        case KMMsgDnDActionMOVE:
-          d->dragMove();
-          break;
-        case KMMsgDnDActionCOPY:
-          d->dragCopy();
-          break;
-        default:
-          // We will ASK the user via PopUp menu.
-          // But we _must_ call dragMove() since otherwise Qt will
-          // show the '+' indicator if CTRL key is hold down even if
-          // our KMail user has specified /not/ to copy via CRTL+D'n'D.
-          d->dragMove();
+        pixmap = QPixmap( DesktopIcon("kmultiple", KIcon::SizeSmall) );
+
+      // Calculate hotspot (as in Konqueror)
+      if( !pixmap.isNull() ) {
+        QPoint hotspot( pixmap.width() / 2, pixmap.height() / 2 );
+        d->setPixmap( pixmap, hotspot );
       }
+      d->drag();
     }
   }
 }
@@ -2683,9 +2652,9 @@ void KMHeaders::slotRMB()
   mOwner->updateMessageMenu();
 
   QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-  mOwner->folderToPopupMenu( NULL, TRUE, this, &mMenuToFolder, msgMoveMenu );
+  mOwner->folderToPopupMenu( TRUE, this, &mMenuToFolder, msgMoveMenu );
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-  mOwner->folderToPopupMenu( NULL, FALSE, this, &mMenuToFolder, msgCopyMenu );
+  mOwner->folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
 
   bool out_folder = kernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )

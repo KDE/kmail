@@ -79,8 +79,12 @@ public:
       be moved into the given folder, otherwise messages will be
       copied.
       Am empty @ref KMMenuToFolder must be passed in. */
-  virtual QPopupMenu* folderToPopupMenu(KMFolderTreeItem* fti,
-					bool move,
+  virtual QPopupMenu* folderToPopupMenu(bool move,
+					QObject *receiver,
+					KMMenuToFolder *aMenuToFolder,
+					QPopupMenu *menu);
+  QPopupMenu* makeFolderMenu(KMFolderTreeItem* item,
+                    bool move,
 					QObject *receiver,
 					KMMenuToFolder *aMenuToFolder,
 					QPopupMenu *menu);

@@ -287,34 +287,27 @@ void KMMainWin::readConfig(void)
       mPanner1Sep[1] = width() - siz.height();
     }
 
-    if (!mStartupDone)
+    if (!mStartupDone ||
+        oldWindowLayout != mWindowLayout ||
+        oldShowMIMETreeMode != mShowMIMETreeMode )
     {
-      /** unread / total columns */
-
-      // get the number (aka section) of the column; -1 is de-activated
-      int unreadColumn = config->readNumEntry("UnreadColumn", -1);
+      /** unread / total columns
+       * as we have some dependencies in this widget 
+       * it's better to manage these here */
+      int unreadColumn = config->readNumEntry("UnreadColumn", -1); 
       int totalColumn = config->readNumEntry("TotalColumn", -1);
 
-      // activate them
-      if (unreadColumn != -1) {
+      /* we need to _activate_ them in the correct order
+      * this is ugly because we can't use header()->moveSection 
+      * but otherwise the restoreLayout from KMFolderTree
+      * doesn't know that to do */
+      if (unreadColumn != -1 && unreadColumn < totalColumn)
         mFolderTree->toggleColumn(KMFolderTree::unread);
-        mFolderTree->setColumnWidth(mFolderTree->getUnreadColumnNumber(), config->readNumEntry("UnreadColumnWidth"));
-      }
-      if (totalColumn != -1) {
+      if (totalColumn != -1)
         mFolderTree->toggleColumn(KMFolderTree::total);
-        mFolderTree->setColumnWidth(mFolderTree->getTotalColumnNumber(), config->readNumEntry("TotalColumnWidth"));
-      }
-      // get the correct order back
-      if (totalColumn < unreadColumn && totalColumn != -1)
-        mFolderTree->header()->moveSection(2, 1);
-
-      // resize the folder column
-      int foldercolumnsize = config->readNumEntry("FolderColumnWidth", -1);
-      if (foldercolumnsize == -1) // first start
-        foldercolumnsize = config->readNumEntry("FolderPaneWidth", 160);
-      mFolderTree->setColumnWidth(0, foldercolumnsize);
-
-      /** unread/total end */
+      if (unreadColumn != -1 && unreadColumn > totalColumn)
+        mFolderTree->toggleColumn(KMFolderTree::unread);
+      
     }
   }
 
@@ -434,22 +427,9 @@ void KMMainWin::writeConfig(void)
         break;
     }
 
-    // width of the folder-column (needed if unread/total-column is active
-    config->writeEntry("FolderColumnWidth", mFolderTree->columnWidth(0));
     // save the state of the unread/total-columns
-    if (mFolderTree->isUnreadActive())
-    {
-      config->writeEntry("UnreadColumn", mFolderTree->getUnreadColumnNumber());
-      config->writeEntry("UnreadColumnWidth", mFolderTree->columnWidth(mFolderTree->getUnreadColumnNumber()));
-    } else
-      config->writeEntry("UnreadColumn", -1);
-
-    if (mFolderTree->isTotalActive())
-    {
-      config->writeEntry("TotalColumn", mFolderTree->getTotalColumnNumber());
-      config->writeEntry("TotalColumnWidth", mFolderTree->columnWidth(mFolderTree->getTotalColumnNumber()));
-    } else
-      config->writeEntry("TotalColumn", -1);
+    config->writeEntry("UnreadColumn", mFolderTree->unreadIndex());
+    config->writeEntry("TotalColumn", mFolderTree->totalIndex());
   }
 
 
@@ -598,7 +578,7 @@ void KMMainWin::createWidgets(void)
   // create a mime part tree and store it's pointer in the reader win
   mMimePartTree = new KMMimePartTree( mMsgView, mimeParent, "mMimePartTree" );
   mMsgView->setMimePartTree( mMimePartTree );
-  if( 0 < mShowMIMETreeMode )
+  if( 1 < mShowMIMETreeMode )
       mMimePartTree->show();
   else
       mMimePartTree->hide();
@@ -689,7 +669,7 @@ void KMMainWin::activatePanners(void)
         break;
     }
 
-    if( 0 < mShowMIMETreeMode )
+    if( 1 < mShowMIMETreeMode )
         mMimePartTree->show();
     else
         mMimePartTree->hide();
@@ -1727,8 +1707,12 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
 
   kernel->kbp()->busy();
 
-  if( !aFolder && mFolderTree->currentItem() == mFolderTree->firstChild() ) {
-    slotIntro();
+  if( !aFolder || aFolder->noContent() ||
+      aFolder->count() == 0 ) 
+  {
+    mMsgView->setMsg( 0, FALSE );
+    if( mMimePartTree )
+      mMimePartTree->hide();
   } else if( !mFolder ) {
     mMsgView->enableMsgDisplay();
     mMsgView->setMsg( 0, TRUE );
@@ -3195,8 +3179,7 @@ void KMMainWin::copySelectedToFolder(int menuId )
 
 
 //-----------------------------------------------------------------------------
-QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
-					 bool move,
+QPopupMenu* KMMainWin::folderToPopupMenu(bool move,
 					 QObject *receiver,
 					 KMMenuToFolder *aMenuToFolder,
 					 QPopupMenu *menu )
@@ -3210,7 +3193,29 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
       menu->removeItemAt( 0 );
   }
 
-  if (!fti) fti = static_cast<KMFolderTreeItem*>(mFolderTree->firstChild());
+  for (QListViewItem *item = mFolderTree->firstChild();
+     item; item = item->nextSibling()) 
+  {
+    // operate on top-level items
+    QString label = item->text(0);
+    // make a new Submenu
+    QPopupMenu* subMenu = new QPopupMenu(menu);
+    subMenu = makeFolderMenu(dynamic_cast<KMFolderTreeItem*>(item), 
+        move, receiver, aMenuToFolder, subMenu);
+    menu->insertItem( label, subMenu );
+  }
+
+  return menu;
+}
+
+//-----------------------------------------------------------------------------
+QPopupMenu* KMMainWin::makeFolderMenu(KMFolderTreeItem* item,
+					 bool move,
+					 QObject *receiver,
+					 KMMenuToFolder *aMenuToFolder,
+					 QPopupMenu *menu )
+{
+  // connect the signals
   if (move)
   {
     disconnect(menu, SIGNAL(activated(int)), receiver,
@@ -3224,48 +3229,55 @@ QPopupMenu* KMMainWin::folderToPopupMenu(KMFolderTreeItem* fti,
              SLOT(copySelectedToFolder(int)));
   }
 
-  if (fti->folder && !fti->folder->isDir())
+  if (item->folder() && !item->folder()->isDir() 
+      && !item->folder()->noContent())
   {
-      int menuId;
-      if (move)
-          menuId = menu->insertItem(i18n("Move to this Folder"));
-      else
-          menuId = menu->insertItem(i18n("Copy to this Folder"));
-      aMenuToFolder->insert( menuId, fti->folder );
-      menu->insertSeparator();
+    int menuId;
+    if (move)
+      menuId = menu->insertItem(i18n("Move to this Folder"));
+    else
+      menuId = menu->insertItem(i18n("Copy to this Folder"));
+    aMenuToFolder->insert( menuId, item->folder() );
+    menu->insertSeparator();
   }
-  fti = static_cast<KMFolderTreeItem*>(fti->firstChild());
-  while (fti)
+
+  for (QListViewItem *it = item->firstChild();
+      it; it = it->nextSibling()) 
   {
-    if (fti->folder)
+    KMFolderTreeItem* fti = dynamic_cast<KMFolderTreeItem*>(it);
+    if (fti->folder())
     {
       QString label = fti->text(0);
       label.replace(QRegExp("&"),QString("&&"));
       if (fti->firstChild())
       {
-        QPopupMenu *subMenu = folderToPopupMenu(fti, move, receiver,
+        // descend
+        QPopupMenu *subMenu = makeFolderMenu(fti, move, receiver,
                                                 aMenuToFolder,
                                                 new QPopupMenu(menu, "subMenu"));
         menu->insertItem(label, subMenu);
-      } else
-      if (!fti->folder->isDir())
-      {
-        int menuId = menu->insertItem(label);
-        aMenuToFolder->insert( menuId, fti->folder );
+      } else {
+        // insert an item
+        if (!fti->folder()->isDir())
+        {
+          int menuId = menu->insertItem(label);
+          aMenuToFolder->insert( menuId, fti->folder() );
+        }
       }
     }
-    fti = static_cast<KMFolderTreeItem*>(fti->nextSibling());
   }
   return menu;
 }
+
+
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::updateMessageMenu()
 {
     mMenuToFolder.clear();
-    folderToPopupMenu( 0, true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
-    folderToPopupMenu( 0, false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
+    folderToPopupMenu( true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
+    folderToPopupMenu( false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
     updateMessageActions();
 }
 
@@ -3596,7 +3608,6 @@ void KMMainWin::slotTransferCancelled()
 void KMMainWin::slotIntro() {
   if ( !mFolderTree || !mMsgView ) return;
 
-  // ### select "Mail" in folder tree until Carsten Burghard removes it.
   if ( !mFolderTree->firstChild() ) return;
   if ( mFolderTree->currentItem() != mFolderTree->firstChild() ) // don't loop
     mFolderTree->doFolderSelected( mFolderTree->firstChild() );

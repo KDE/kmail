@@ -793,9 +793,7 @@ protected:
   QCheckBox    *mExpireAtExit;
   QCheckBox    *mDelayedMarkAsRead;
   KIntSpinBox  *mDelayedMarkTime;
-  QButtonGroup *mActionWhenDnD;
-  QButtonGroup *mActionWhenShiftDnD;
-  QButtonGroup *mActionWhenCtrlDnD;
+  QCheckBox    *mShowPopupAfterDnD;
 };
 
 class MiscPageAddressbookTab : public ConfigurationPage {

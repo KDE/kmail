@@ -3776,6 +3776,11 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
   connect(mDelayedMarkAsRead, SIGNAL(toggled(bool)), mDelayedMarkTime,
   	SLOT(setEnabled(bool)));
 
+  // "show popup after Drag'n'Drop" checkbox: stretch 0
+  mShowPopupAfterDnD =
+    new QCheckBox( i18n("Ask for action after dragging messages to another folder"), this );
+  vlay->addWidget( mShowPopupAfterDnD );
+
   // "default mailbox format" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mMailboxPrefCombo = new QComboBox( false, this );
@@ -3790,32 +3795,6 @@ MiscPageFoldersTab::MiscPageFoldersTab( QWidget * parent, const char * name )
 		  "directories (\"maildir\" format)") );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
-
-  vlay->addWidget( new KSeparator( KSeparator::HLine, this ) );
-
-  // mail Drag'n'Drop actions settings:
-  mActionWhenDnD = new QVButtonGroup( i18n("In normal mo&de"), this );
-  mActionWhenDnD->layout()->setSpacing( KDialog::spacingHint() );
-  mActionWhenDnD->insert(new QRadioButton(      i18n("Move message"), mActionWhenDnD));
-  mActionWhenDnD->insert(new QRadioButton(      i18n("Copy message"), mActionWhenDnD));
-  mActionWhenDnD->insert(new QRadioButton(      i18n("Ask me"),    mActionWhenDnD));
-  mActionWhenShiftDnD = new QVButtonGroup( i18n("&SHIFT key pressed"), this );
-  mActionWhenShiftDnD->layout()->setSpacing( KDialog::spacingHint() );
-  mActionWhenShiftDnD->insert(new QRadioButton( i18n("Move message"), mActionWhenShiftDnD));
-  mActionWhenShiftDnD->insert(new QRadioButton( i18n("Copy message"), mActionWhenShiftDnD));
-  mActionWhenShiftDnD->insert(new QRadioButton( i18n("Ask me"),    mActionWhenShiftDnD));
-  mActionWhenCtrlDnD = new QVButtonGroup( i18n("CT&RL key pressed"), this );
-  mActionWhenCtrlDnD->layout()->setSpacing( KDialog::spacingHint() );
-  mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Move message"), mActionWhenCtrlDnD));
-  mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Copy message"), mActionWhenCtrlDnD));
-  mActionWhenCtrlDnD->insert(new QRadioButton(  i18n("Ask me"),    mActionWhenCtrlDnD));
-  vlay->addWidget(
-    new QLabel( i18n("On Drag'n'Drop of mail to another folder:"),
-                this ) );
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  hlay->addWidget( mActionWhenDnD );
-  hlay->addWidget( mActionWhenShiftDnD );
-  hlay->addWidget( mActionWhenCtrlDnD );
 
   // "On exit..." groupbox:
   group = new QVGroupBox( i18n("On Program Exit, "
@@ -3870,20 +3849,11 @@ void MiscPage::FoldersTab::setup() {
   mJumpToUnread->setChecked( behaviour.readBoolEntry( "JumpToUnread", false ) );
   mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", true ) );
   mDelayedMarkTime->setValue( behaviour.readNumEntry( "DelayedMarkTime", 0 ) );
+  mShowPopupAfterDnD->setChecked( behaviour.readBoolEntry( "ShowPopupAfterDnD", true ) );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
   mMailboxPrefCombo->setCurrentItem( num );
-
-  num = behaviour.readNumEntry("DnD_action_normal", KMMsgDnDActionASK );
-  if ( num < 0 || num > 2 ) num = KMMsgDnDActionASK;
-  mActionWhenDnD->setButton( num );
-  num = behaviour.readNumEntry("DnD_action_SHIFT", KMMsgDnDActionMOVE );
-  if ( num < 0 || num > 2 ) num = KMMsgDnDActionMOVE;
-  mActionWhenShiftDnD->setButton( num );
-  num = behaviour.readNumEntry("DnD_action_CTRL", KMMsgDnDActionCOPY );
-  if ( num < 0 || num > 2 ) num = KMMsgDnDActionCOPY;
-  mActionWhenCtrlDnD->setButton( num );
 }
 
 void MiscPage::FoldersTab::apply() {
@@ -3899,18 +3869,12 @@ void MiscPage::FoldersTab::apply() {
   behaviour.writeEntry( "JumpToUnread", mJumpToUnread->isChecked() );
   behaviour.writeEntry( "DelayedMarkAsRead", mDelayedMarkAsRead->isChecked() );
   behaviour.writeEntry( "DelayedMarkTime", mDelayedMarkTime->value() );
+  behaviour.writeEntry( "ShowPopupAfterDnD", mShowPopupAfterDnD->isChecked() );
 
   if ( mExpireAtExit->isChecked() )
     general.writeEntry( "when-to-expire", expireAtExit );
   else
     general.writeEntry( "when-to-expire", expireManual );
-
-  behaviour.writeEntry("DnD_action_normal",
-    mActionWhenDnD->id( mActionWhenDnD->selected() ));
-  behaviour.writeEntry("DnD_action_SHIFT",
-    mActionWhenShiftDnD->id( mActionWhenShiftDnD->selected() ));
-  behaviour.writeEntry("DnD_action_CTRL",
-    mActionWhenCtrlDnD->id( mActionWhenCtrlDnD->selected() ));
 }
 
 
@@ -4707,8 +4671,8 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
     kdDebug(5006) << "29) RET = " << ret << endl;
     return ret;
 }
-
   
+
 void PluginPage::savePluginConfig( int pluginno )
 {
     if ( mCryptPlugList->isEmpty() )

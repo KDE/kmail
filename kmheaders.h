@@ -4,6 +4,7 @@
 #include <qwidget.h>
 #include <qstrlist.h>
 #include <klistview.h>
+#include <kfoldertree.h>
 #include <qmemarray.h>
 #include <qmap.h>
 #include <qdragobject.h>
@@ -27,43 +28,6 @@ class KMScoringManager;
 
 typedef QPtrList<KMMsgBase> KMMessageList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
-
-/** A special drag class for header list to folder tree DnD operations */
-class KMHeaderToFolderDrag: public QStoredDrag {
-public:
-    KMHeaderToFolderDrag( QWidget * parent = 0, const char * name = 0 );
-    ~KMHeaderToFolderDrag() {};
-
-    static bool canDecode( QDropEvent* e );
-protected:
-    static QPixmap *dragPix;
-};
-
-/** Information shared by all items in a list view */
-struct KMPaintInfo {
-  bool pixmapOn;
-  QPixmap pixmap;
-  QColor colFore;
-  QColor colBack;
-  QColor colNew;
-  QColor colUnread;
-  QColor colFlag;
-  bool showSize;      // Do we display the message size?
-#ifdef SCORING
-  bool showScore;
-#endif
-  bool orderOfArrival;
-  bool status;
-  int flagCol;
-  int senderCol;
-  int subCol;
-  int dateCol;
-#ifdef SCORING
-  int scoreCol;
-#endif
-  int sizeCol;
-  bool showCryptoIcons;
-};
 
 /** The widget that shows the contents of folders */
 #define KMHeadersInherited KListView
@@ -148,7 +112,7 @@ public:
   KMMainWin* owner(void) const { return mOwner; }
 
   /** PaintInfo pointer */
-  const KMPaintInfo *paintInfo(void) const { return &mPaintInfo; }
+  const KPaintInfo *paintInfo(void) const { return &mPaintInfo; }
 
   /** Read config options. */
   virtual void readConfig(void);
@@ -374,7 +338,7 @@ private:
   /** For shift selection */
   QListViewItem *beginSelection, *endSelection;
   /** Current colours and backing pixmap */
-  KMPaintInfo mPaintInfo;
+  KPaintInfo mPaintInfo;
 
 #ifdef SCORING
   KMScoringManager *mScoringManager;
@@ -407,10 +371,6 @@ private:
   KMime::DateFormatter mDate;
   /** value of config key Behaviour/LoopOnGotoUnread */
   bool mLoopOnGotoUnread;
-  // actions for D'n'D from Headers to Folder
-  int mActionWhenDnD;
-  int mActionWhenShiftDnD;
-  int mActionWhenCtrlDnD;
   bool mJumpToUnread;
 
   /** popup to switch columns */
