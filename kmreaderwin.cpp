@@ -1790,6 +1790,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
 {
+#ifndef NDEBUG
   QString s("\n#######\n#######\n#######  parseMsg(KMMessage* aMsg ");
   if( aMsg == message() )
     s += "==";
@@ -1802,6 +1803,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
     s += "false";
   s += "\n#######\n#######";
   kdDebug(5006) << s << endl;
+#endif
 
   mColorBar->setEraseColor( QColor( "white" ) );
   mColorBar->setText("");
