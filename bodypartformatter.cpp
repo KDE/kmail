@@ -112,7 +112,7 @@ namespace {
 
   CREATE_BODY_PART_FORMATTER(ApplicationOctetStream)
   CREATE_BODY_PART_FORMATTER(ApplicationPkcs7Mime)
-  CREATE_BODY_PART_FORMATTER(ApplicationMsTnef)
+  //CREATE_BODY_PART_FORMATTER(ApplicationMsTnef)
   //CREATE_BODY_PART_FORMATTER(ApplicationPgp)
 
   CREATE_BODY_PART_FORMATTER(MessageRfc822)
@@ -145,7 +145,7 @@ static const SubtypeBuiltin applicationSubtypeBuiltins[] = {
   { "octet-stream", &ApplicationOctetStreamBodyPartFormatter::create },
   { "pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
   { "x-pkcs7-mime", &ApplicationPkcs7MimeBodyPartFormatter::create },
-  { "ms-tnef", &ApplicationMsTnefBodyPartFormatter::create },
+  //{ "ms-tnef", &ApplicationMsTnefBodyPartFormatter::create },
   { "pgp", &ApplicationPgpBodyPartFormatter::create },
 };
 
@@ -292,8 +292,8 @@ static const KMail::BodyPartFormatter * createForApplication( const char * subty
       break;
     case 'm':
     case 'M':
-      if ( qstricmp( subtype, "ms-tnef" ) == 0 )
-	return ApplicationMsTnefBodyPartFormatter::create();
+      //if ( qstricmp( subtype, "ms-tnef" ) == 0 )
+      //  return ApplicationMsTnefBodyPartFormatter::create();
       break;
     }
 
