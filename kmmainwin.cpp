@@ -77,7 +77,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   // must be the first line of the constructor:
   searchWin = 0;
   mStartupDone = FALSE;
-  mbNewMBVisible = false;
   mIntegrated  = TRUE;
   mFolder = 0;
   mFolderThreadPref = false;
@@ -316,9 +315,6 @@ void KMMainWin::readConfig(void)
     KConfigGroupSaver saver(config, "General");
     mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
     mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
-    mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
-    mExecOnNew = config->readBoolEntry("exec-on-mail", false);
-    mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
   }
 
@@ -879,26 +875,6 @@ void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
   KNotifyClient::event("new-mail-arrived", i18n("New mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
-  }
-
-  if (mExecOnNew) {
-    if (!mNewMailCmd.isEmpty()) {
-#if KDE_VERSION >= 305
-      KProcess p;
-      p.setUseShell(true);
-#else
-      KShellProcess p;
-#endif
-      p << mNewMailCmd;
-      p.start(KProcess::DontCare);
-    }
-  }
-
-  if (mBoxOnNew && !mbNewMBVisible) {
-    mbNewMBVisible = true;
-    KMessageBox::information(this, i18n("You have new mail!"),
-                                   i18n("New Mail"));
-    mbNewMBVisible = false;
   }
 
   // Todo:

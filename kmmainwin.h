@@ -340,9 +340,8 @@ protected:
   QCString	mEncodingStr;
   bool		mIntegrated;
   bool          mSendOnCheck;
-  bool          mBeepOnNew, mBoxOnNew, mExecOnNew;
+  bool          mBeepOnNew;
   bool          mConfirmEmpty;
-  QString       mNewMailCmd;
   int		mMessageStatusId;
   QValueList<int> mPanner1Sep, mPanner2Sep, mPanner3Sep;
   KMMessage     *mMsgCurrent;
@@ -360,7 +359,6 @@ protected:
   QPopupMenu *messageMenu;
   KMLittleProgressDlg *littleProgress;
   KMFldSearch *searchWin;
-  bool mbNewMBVisible;
 
   KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
     *compactFolderAction, *emptyFolderAction, *markAllAsReadAction;
