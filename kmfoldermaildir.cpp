@@ -235,7 +235,7 @@ int KMFolderMaildir::compact()
       continue;
 
     QString filename(mi->fileName());
-    if (filename.isNull() || filename.isEmpty())
+    if (filename.isEmpty())
       continue;
 
     // first, make sure this isn't in the 'new' subdir
@@ -772,7 +772,7 @@ int KMFolderMaildir::removeContents()
 //-----------------------------------------------------------------------------
 QString KMFolderMaildir::constructValidFileName(QString& aFileName, KMMsgStatus status)
 {
-  if (aFileName.isEmpty() || aFileName.isNull())
+  if (aFileName.isEmpty())
   {
     aFileName.sprintf("%ld.%d.", (long)time(NULL), getpid());
     aFileName += KApplication::randomString(5);
