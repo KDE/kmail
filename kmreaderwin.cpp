@@ -309,19 +309,19 @@ void KMReaderWin::writeMsgHeader(void)
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
 		     KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
-    mViewer->write(strToHtml(mMsg->dateShortStr()) + ")<BR>");
+    mViewer->write(strToHtml(mMsg->dateShortStr()) + ")<BR>\n");
     break;
 
   case HdrStandard:
     mViewer->write("<FONT SIZE=+1><B>" +
-		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
+		   strToHtml(mMsg->subject()) + "</B></FONT><BR>\n");
     mViewer->write(i18n("From: ") +
-		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>");
+		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>\n");
     mViewer->write(i18n("To: ") +
-                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>");
+                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>\n");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>");
+		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>\n");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(i18n("References: ") +
@@ -335,20 +335,20 @@ void KMReaderWin::writeMsgHeader(void)
 		   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+2>");
     mViewer->write(strToHtml(mMsg->subject()) + "</FONT></B><BR>");
     mViewer->write(i18n("From: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>");
+		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>\n");
     mViewer->write(i18n("To: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>");
+		   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>\n");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>");
+		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>\n");
     mViewer->write(i18n("Date: ")+
-		   strToHtml(mMsg->dateStr()) + "<BR>");
+		   strToHtml(mMsg->dateStr()) + "<BR>\n");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(i18n("References: ") +
-                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR><BR>");
+                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR><BR>\n");
 #endif
-    mViewer->write("</B></TD></TR></TABLE><BR>");
+    mViewer->write("</B></TD></TR></TABLE><BR>\n");
     break;
 
   case HdrLong:
@@ -371,22 +371,23 @@ void KMReaderWin::writeMsgHeader(void)
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(i18n("References: ")+
-                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR>");
+                       KMMessage::refsAsAnchor(mMsg->references()) + "<BR>\n");
     if (!mMsg->groups().isEmpty())
-        mViewer->write(i18n("Groups: ") + mMsg->groups()+"<BR>");
+        mViewer->write(i18n("Groups: ") + mMsg->groups()+"<BR>\n");
 #endif
-    mViewer->write("<BR>");
+    mViewer->write("<BR>\n");
     break;
 
   case HdrAll:
     str = strToHtml(mMsg->headerAsString());
     mViewer->write(str);
-    mViewer->write("<BR><BR>");
+    mViewer->write("\n<BR>\n");
     break;
 
   default:
     warning("Unsupported header style %d", mHeaderStyle);
   }
+  mViewer->write("<BR>\n");
 }
 
 
