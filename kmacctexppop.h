@@ -4,7 +4,6 @@
 #include "kmaccount.h"
 #include "kmpopheaders.h"
 #include "kmfiltermgr.h"
-#include <kapp.h>
 #include <qdialog.h>
 #include "kio/job.h"
 #include "kio/global.h"

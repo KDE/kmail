@@ -21,7 +21,6 @@
 #ifndef KMDISPLAYVCARD_H
 #define KMDISPLAYVCARD_H
 
-#include <kapp.h>
 #include <kdialog.h>
 #include <qwidget.h>
 #include <qlistbox.h>
