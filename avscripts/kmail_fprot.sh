@@ -33,7 +33,8 @@ if [ $? ] ; then
 fi 
 export TEMPFILE
 cat > $TEMPFILE
-f-prot -archive 3 $TEMPFILE
+f-prot -archive 3 $TEMPFILE > /dev/null
+RC=$?
 if [ $RC -eq 0 ] ; then
     echo "X-Virus-Flag: no"
 else
