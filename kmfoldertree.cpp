@@ -629,7 +629,7 @@ void KMFolderTree::nextUnreadFolder(bool confirm)
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(it.current());
     if (checkUnreadFolder(fti,confirm)) return;
   }
-  //Now if confirm is true we are doing "ReadOn" 
+  //Now if confirm is true we are doing "ReadOn"
   //we have got to the bottom of the folder list
   //so we have to start at the top
   if (confirm) {
@@ -650,7 +650,7 @@ bool KMFolderTree::checkUnreadFolder (KMFolderTreeItem* fti, bool confirm)
     if ( confirm ) {
       // If confirm is true then we are doing "ReadOn" and we want to miss
       // Out the trash folder
-      if (fti->folder->label() == i18n("trash")) 
+      if (fti->folder->label() == i18n("trash"))
 	return false;
       else {
       //  warn user that going to next folder - but keep track of
@@ -914,7 +914,7 @@ void KMFolderTree::addChildFolder()
   KMFolderDialog *d =
     new KMFolderDialog(0, dir, topLevelWidget(), i18n("Create Child Folder") );
 
-  if (d->exec()) {
+  if (d->exec()) /* fti may be deleted here */ {
     QListViewItem *qlvi = indexOfFolder( aFolder );
     if (qlvi) {
       qlvi->setOpen(TRUE);
@@ -924,7 +924,7 @@ void KMFolderTree::addChildFolder()
     }
   }
   // update if added to root Folder
-  if (!fti->folder || fti->folder->isDir()) {
+  if (!aFolder || aFolder->isDir()) {
      doFolderListChanged();
      reload();
   }
