@@ -3552,6 +3552,8 @@ QString KMMessage::expandAliases( const QString& recipients )
         expandedRecipients += guessEmailAddressFromLoginName( receiver );
       }
     }
+    else
+      expandedRecipients += receiver;
   }
 
   return expandedRecipients;
