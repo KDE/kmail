@@ -237,10 +237,23 @@ void KMMainWin::readConfig(void)
       mFolderTree->setCurrentItem(qlvi);
       mFolderTree->setSelected(qlvi,TRUE);
     }
+
+    // sanders - New code
+    mHeaders->setFolder(mFolder);
+    int aIdx = mHeaders->currentItemIndex();
+    if (aIdx != -1)
+      mMsgView->setMsg( mFolder->getMsg(aIdx), true );
+    else
+      mMsgView->setMsg( 0, true );
+    show();
+    // sanders - Maybe this fixes a bug?
+
+    /* Old code
     mMsgView->setMsg( mMsgView->msg(), TRUE );
     mHeaders->setFolder(mFolder);
     //    kernel->kbp()->idle(); //For symmetry
     show();
+    */
   }
 }
 
