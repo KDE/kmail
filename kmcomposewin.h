@@ -397,6 +397,7 @@ protected:
   KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction;
+  KToggleAction *toolbarAction, *statusbarAction;
 
 #if defined CHARSETS
   int m7BitAscii;

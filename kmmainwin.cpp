@@ -91,11 +91,16 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   readPreConfig();
   createWidgets();
-  readConfig();
-  activatePanners();
 
   setupMenuBar();
   setupStatusBar();
+
+  applyMainWindowSettings(kapp->config(), "Main Window");
+  toolbarAction->setChecked(!toolBar()->isHidden());
+  statusbarAction->setChecked(!statusBar()->isHidden());
+
+  readConfig();
+  activatePanners();
 
   idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
   if (idx!=0) {
@@ -122,6 +127,9 @@ KMMainWin::~KMMainWin()
     delete searchWin;
   writeConfig();
   writeFolderConfig();
+
+  saveMainWindowSettings(kapp->config(), "Main Window");
+  kapp->config()->sync();
 
   if (mHeaders)    delete mHeaders;
   if (mStatusBar)  delete mStatusBar;
@@ -1411,8 +1419,10 @@ void KMMainWin::setupMenuBar()
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
   //----- Settings Menu
-  KStdAction::showToolbar(this, SLOT(slotToggleToolBar()), actionCollection());
-  KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()), actionCollection());
+  toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
+    actionCollection());
+  statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
+    actionCollection());
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   //  KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());

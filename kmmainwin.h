@@ -210,6 +210,7 @@ protected:
 
   KAction *modifyFolderAction, *removeFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
+  KToggleAction *toolbarAction, *statusbarAction;
   QPopupMenu *copyMenu, *moveMenu;
 };
 

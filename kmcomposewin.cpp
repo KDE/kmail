@@ -180,6 +180,9 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   setupStatusBar();
   setupEditor();
   setupActions();
+  applyMainWindowSettings(kapp->config(), "Composer");
+  toolbarAction->setChecked(!toolBar()->isHidden());
+  statusbarAction->setChecked(!statusBar()->isHidden());
 
   connect(&mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
@@ -408,6 +411,9 @@ void KMComposeWin::writeConfig(void)
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
   config->writeEntry("composer", str);
+
+  saveMainWindowSettings(config, "Composer");
+  config->sync();
 }
 
 
@@ -801,8 +807,10 @@ void KMComposeWin::setupActions(void)
                       SLOT(slotAttachProperties()),
                       actionCollection(), "attach_properties");
 
-  KStdAction::showToolbar(this, SLOT(slotToggleToolBar()), actionCollection());
-  KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()), actionCollection());
+  toolbarAction = KStdAction::showToolbar(this, SLOT(slotToggleToolBar()),
+    actionCollection());
+  statusbarAction = KStdAction::showStatusbar(this, SLOT(slotToggleStatusBar()),
+    actionCollection());
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
