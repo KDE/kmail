@@ -37,6 +37,8 @@ private slots:
   void doDeleteMessage();
   void doForwardMessage();
   void doReplyMessage();
+  void doReplyAllToMessage();
+  void doPrintMessage();
   void initIntegrated();
   void initSeparated();
 

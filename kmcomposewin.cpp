@@ -432,9 +432,10 @@ void KMComposeView::replyAll()
 	       currentMessage->dateStr(), currentMessage->from());
   editor->append(temp);
 
+  //If there are no bodyparts take body.
   if ((currentMessage->numBodyParts()) == 0) 
     temp = currentMessage->body();
-  else
+  else // if there are more than 0 bodyparts take bodyPart 0's body.
     {KMMessagePart *p = new KMMessagePart();
     currentMessage->bodyPart(0,p);
     temp = p->body();

@@ -115,10 +115,12 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertItem(nls->translate("Toggle All &Headers"), this, 
 			  SLOT(doUnimplemented()), Key_H);
   messageMenu->insertSeparator();
-  messageMenu->insertItem(nls->translate("&Reply..."), this, 
-			  SLOT(doUnimplemented()), Key_R);
-  messageMenu->insertItem(nls->translate("&Forward..."), this, 
-			  SLOT(doUnimplemented()), Key_F);
+  messageMenu->insertItem(nls->translate("&Reply..."), mainView, 
+			  SLOT(doReplyMessage()), Key_R);
+  messageMenu->insertItem(nls->translate("Reply &All..."),mainView,
+			  SLOT(doReplyAllToMessage()), Key_A);
+  messageMenu->insertItem(nls->translate("&Forward..."), mainView, 
+			  SLOT(doForwardMessage()), Key_F);
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("&Move..."), this, 
 			  SLOT(doUnimplemented()), Key_M);
@@ -131,8 +133,8 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("&Export..."), this, 
 			  SLOT(doUnimplemented()), Key_E);
-  messageMenu->insertItem(nls->translate("Pr&int..."), this, 
-			  SLOT(doUnimplemented()), keys->print());
+  messageMenu->insertItem(nls->translate("Pr&int..."), mainView, 
+			  SLOT(doPrintMessage()), keys->print());
 
   //----- Folder Menu
   QPopupMenu *folderMenu = new QPopupMenu();

@@ -226,6 +226,19 @@ void KMMainView::doReplyMessage()
   headers->replyToMsg();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainView::doReplyAllToMessage()
+{
+  headers->replyAllToMsg();
+}
+
+void KMMainView::doPrintMessage()
+{ 
+  if(headers->currentItem() < 0)
+      return;
+  else
+    messageView->printMail();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainView::messageSelected(KMMessage *m)
