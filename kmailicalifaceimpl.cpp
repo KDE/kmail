@@ -584,7 +584,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
         if ( dwPart ) {
           KMMessagePart msgPart;
           KMMessage::bodyPart(dwPart, &msgPart);
-          aMap.insert(msg->getMsgSerNum(), msgPart.body());
+          aMap.insert(msg->getMsgSerNum(), msgPart.bodyToUnicode());
         } else {
           // This is *not* an error: it may be that not all of the messages
           // have a message part that is matching the wanted MIME type
@@ -1255,6 +1255,9 @@ void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat forma
     info.mStorageFormat = format;
     mFolderInfoMap.insert( folder, info );
   }
+  KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
+  configGroup.writeEntry( folder->idString() + "-storageFormat",
+                          format == StorageXML ? "xml" : "icalvcard" );
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
@@ -1422,6 +1425,19 @@ void KMailICalIfaceImpl::readConfig()
   kdDebug() << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
   kdDebug() << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
 
+  // Find all extra folders
+  QStringList folderNames;
+  QValueList<QGuardedPtr<KMFolder> > folderList;
+  kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
+  for(QValueList<QGuardedPtr<KMFolder> >::iterator it = folderList.begin();
+      it != folderList.end(); ++it)
+  {
+    FolderStorage* storage = (*it)->storage();
+    if ( storage->contentsType() != 0 ) {
+      folderContentsTypeChanged( *it, storage->contentsType() );
+    }
+  }
+
   // If we just created them, they might have been registered as extra folders temporarily.
   // -> undo that.
   mExtraFolders.remove( mCalendar->location() );
@@ -1470,9 +1486,6 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
   KMFolderType type = mFolderType;
   if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
 
-  KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
-  FolderInfo info;
-
   // Find the folder
   KMFolder* folder = 0;
   KMFolderNode* node = mFolderParent->hasNamedFolder( folderName( itemType ) );
@@ -1486,12 +1499,13 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
         createFolder( folderName( itemType ) );
 
     // Groupware folder created, use the global setting for storage format
-    info.mStorageFormat = GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard;
-    configGroup.writeEntry( folder->idString() + "-storageFormat",
-                            info.mStorageFormat == StorageXML ? "xml" : "icalvcard" );
+    setStorageFormat( folder, GlobalSettings::theIMAPResourceStorageFormat() == GlobalSettings::EnumTheIMAPResourceStorageFormat::XML ? StorageXML : StorageIcalVcard );
   } else {
+    KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
     QString str = configGroup.readEntry( folder->idString() + "-storageFormat", "icalvcard" );
+    FolderInfo info;
     info.mStorageFormat = ( str == "xml" ) ? StorageXML : StorageIcalVcard;
+    mFolderInfoMap.insert( folder, info );
 
     //kdDebug(5006) << "Found existing folder type " << itemType << " : " << folder->location()  << endl;
   }
@@ -1502,7 +1516,6 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
     return 0;
   }
   folder->setType( typeString );
-  mFolderInfoMap.insert( folder, info );
   folder->storage()->setContentsType( contentsType );
 
   folder->setSystemFolder( true );
