@@ -465,6 +465,7 @@ signals:
    * The matching serial numbers are included
    */
   void searchDone( KMFolder*, QValueList<Q_UINT32> serNums );
+  void searchDone( KMFolder*, Q_UINT32 serNum );
 
 public slots:
   /** Incrementally update the index if possible else call writeIndex */

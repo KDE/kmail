@@ -140,7 +140,7 @@ public slots:
   virtual int updateIndex();
 
   // Examine the added message
-  void slotSearchExamineMsgDone( KMFolder*, QValueList<Q_UINT32> );
+  void slotSearchExamineMsgDone( KMFolder*, Q_UINT32 serNum );
 
 public:
   //See base class for documentation

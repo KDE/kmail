@@ -446,12 +446,14 @@ protected slots:
    * Is called when the search is done
    */ 
   void slotSearchData( KIO::Job * job, const QString& data );
+  void slotSearchDataSingleMessage( KIO::Job * job, const QString& data );
   void slotSearchResult( KIO::Job * job );
 
   /**
    * Called when a msg was downloaded for local search
    */
   void slotSearchMessageArrived( KMMessage* msg );
+  void slotSearchSingleMessage( KMMessage* msg );
   
 protected:
   QString     mImapPath;

@@ -1018,11 +1018,11 @@ void FolderStorage::search( KMSearchPattern* pattern )
 //-----------------------------------------------------------------------------
 void FolderStorage::search( KMSearchPattern* pattern, Q_UINT32 serNum )
 {
-  QValueList<Q_UINT32> serNums;
+  Q_UINT32 mySerNum = 0;
   if ( pattern->matches( serNum ) )
-    serNums.append( serNum );
+    mySerNum = serNum;
 
-  emit searchDone( folder(), serNums );
+  emit searchDone( folder(), mySerNum );
 }
 
 #include "folderstorage.moc"
