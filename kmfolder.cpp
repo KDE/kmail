@@ -237,7 +237,7 @@ int KMFolder::open()
 
 
 //-----------------------------------------------------------------------------
-int KMFolder::create()
+int KMFolder::create(bool imap)
 {
   int rc;
   int old_umask;
@@ -276,6 +276,10 @@ int KMFolder::create()
   mOpenCount++;
   mQuiet = 0;
   mChanged = FALSE;
+  if (imap) {
+    readConfig();
+    mUnreadMsgs = -1;
+  }
 
   rc = writeIndex();
   if (!rc) lock();

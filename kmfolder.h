@@ -176,7 +176,7 @@ public:
   /** Create a new folder with the name of this object and open it.
       Returns zero on success and an error code equal to the
       c-library fopen call otherwise. */
-  virtual int create();
+  virtual int create(bool imap = FALSE);
 
   /** Removes the folder physically from disk and empties the contents
     of the folder in memory. Note that the folder is closed during this

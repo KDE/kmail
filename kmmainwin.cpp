@@ -725,7 +725,7 @@ void KMMainWin::slotModifyFolder()
   if (!mFolder) return;
   d = new KMFolderDialog((KMFolder*)mFolder, mFolder->parent(),
 			 this, i18n("Properties of folder %1").arg( mFolder->label() ) );
-  if (d->exec()) {
+  if (d->exec() && !mFolder->account()) {
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder( mFolder );
     if (qlvi) {

@@ -49,6 +49,7 @@ KMFolderTreeItem::~KMFolderTreeItem()
   if (folder && folder->account())
   {
     folder->account()->killJobsForItem(this);
+    folder->close();
     folder->remove();
     delete folder;
   }
@@ -134,10 +135,10 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
 {
   KMFolderTreeItem *fti = new KMFolderTreeItem( item,
     new KMFolder(item->folder->createChildFolder(), name), &mPaintInfo );
-  if (fti->folder->create())
+  if (fti->folder->create(TRUE))
   {
     fti->folder->remove();
-    fti->folder->create();
+    fti->folder->create(TRUE);
   }
   fti->folder->close();
   fti->folder->setAccount(item->folder->account());
