@@ -1177,7 +1177,10 @@ void KMHeaders::saveMsg (int msgId)
 {
   KMMessage* msg;
   QCString str;
-  KURL url = KFileDialog::getSaveURL(QString::null, QString::null);
+  KMMessageList *msgList = selectedMsgs();
+  QString subject;
+  if (msgList->count() == 1) subject = msgList->first()->subject();
+  KURL url = KFileDialog::getSaveURL(subject, QString::null);
 
   if( url.isEmpty() )
     return;
