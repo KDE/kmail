@@ -762,7 +762,7 @@ bool KMFolder::readIndexHeader()
 //-----------------------------------------------------------------------------
 void KMFolder::readIndex()
 {
-  char line[MAX_LINE];
+  QCString line(MAX_LINE);
   KMMsgInfo* mi;
 
   assert(mIndexStream != NULL);
@@ -778,7 +778,7 @@ void KMFolder::readIndex()
   mMsgList.clear();
   while (!feof(mIndexStream))
   {
-    fgets(line, MAX_LINE, mIndexStream);
+    fgets(line.data(), MAX_LINE, mIndexStream);
     if (feof(mIndexStream)) break;
 
     mi = new KMMsgInfo(this);

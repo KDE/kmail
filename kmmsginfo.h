@@ -18,7 +18,7 @@ public:
   virtual ~KMMsgInfo();
 
   /** Initialize from index string and set dirty flag to FALSE. */
-  virtual void fromIndexString(const QString& str, bool toUtf8);
+  virtual void fromIndexString(const QCString& str, bool toUtf8);
 
   /** Initialize with given values and set dirty flag to FALSE. */
   virtual void init(const QString& subject, const QString& from,

@@ -151,26 +151,34 @@ void KMMsgInfo::setMsgIdMD5(const QString& aMsgIdMD5)
 
 
 //-----------------------------------------------------------------------------
-void KMMsgInfo::fromIndexString(const QString& str, bool toUtf8)
+void KMMsgInfo::fromIndexString(const QCString& str, bool toUtf8)
 {
-  char statusCh;
-  unsigned long ldate;
+  char *start, *offset;
 
-  sscanf(str.data(), "%c %9lu %9lu %10lu", &statusCh,
-	 &mFolderOffset, &mMsgSize, &ldate);
-
-  mDate    = (time_t)ldate;
-  mStatus  = (KMMsgStatus)statusCh;
   mXMark   = str.mid(33, 3).stripWhiteSpace();
+
+  mFolderOffset = str.mid(2,9).toULong();
+  mMsgSize = str.mid(12,9).toULong();
+  mDate = (time_t)str.mid(22,10).toULong();
+  mStatus = (KMMsgStatus)str.at(0);
   if (toUtf8)
   {
     mSubject = str.mid(37, 100).stripWhiteSpace();
     mFromStrip = str.mid(138, 50).stripWhiteSpace();
     mToStrip = str.mid(189, 50).stripWhiteSpace();
   } else {
-    mSubject = QString::fromUtf8(str.mid(37, 100).stripWhiteSpace());
-    mFromStrip = QString::fromUtf8(str.mid(138, 50).stripWhiteSpace());
-    mToStrip = QString::fromUtf8(str.mid(189, 50).stripWhiteSpace());
+    start = offset = str.data() + 37;
+    while (*start == ' ' && start - offset < 100) start++;
+    mSubject = QString::fromUtf8(str.mid(start - str.data(),
+      100 - (start - offset)), 100 - (start - offset));
+    start = offset = str.data() + 138;
+    while (*start == ' ' && start - offset < 50) start++;
+    mFromStrip = QString::fromUtf8(str.mid(start - str.data(),
+      50 - (start - offset)), 50 - (start - offset));
+    start = offset = str.data() + 189;
+    while (*start == ' ' && start - offset < 50) start++;
+    mToStrip = QString::fromUtf8(str.mid(start - str.data(),
+      50 - (start - offset)), 50 - (start - offset));
   }
   mReplyToIdMD5 = str.mid(240, 22).stripWhiteSpace();
   mMsgIdMD5 = str.mid(263, 22).stripWhiteSpace();
