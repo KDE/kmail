@@ -38,10 +38,16 @@ public:
   /** Style of the message header. */
   enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
                      HdrAll=5 };
+  //** Stype of attachments. */
+  enum AttachmentStyle {IconicAttmnt=1, SmartAttmnt =2, InlineAttmnt = 3};
 
   /** Get/set the message header style. */
   HeaderStyle headerStyle(void) const { return mHeaderStyle; }
   virtual void setHeaderStyle(HeaderStyle style);
+
+  /** Get/set the message attachment style. */
+  AttachmentStyle attachmentStyle(void) const { return mAttachmentStyle;}
+  virtual void setAttachmentStyle(int style);
 
   /** Set the message that shall be shown. If NULL, an empty page is 
     displayed. */
@@ -137,6 +143,7 @@ protected:
   QScrollBar *mSbVert, *mSbHorz;
   QString mPicsDir;
   HeaderStyle mHeaderStyle;
+  AttachmentStyle mAttachmentStyle;
 };
 
 

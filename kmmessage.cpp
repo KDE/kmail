@@ -197,7 +197,14 @@ const QString KMMessage::asString(void)
   return resultStr;
 }
 
-
+//----------------------------------------------------------------------------
+const QString KMMessage::headerAsString(void)
+{
+  DwHeaders& header = mMsg->Headers();
+  if(header.AsString() != "")
+    return header.AsString().c_str();
+  return "";
+}
 //-----------------------------------------------------------------------------
 void KMMessage::fromString(const QString aStr)
 {

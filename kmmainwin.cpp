@@ -437,10 +437,18 @@ void KMMainWin::slotViewChange()
 void KMMainWin::slotSetHeaderStyle(int id)
 {
   if (!mMsgView) return;
-
-  mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
-  mMsgView->setHeaderStyle((KMReaderWin::HeaderStyle)id);
-  mViewMenu->setItemChecked(id, TRUE);
+  if(id <= 5)
+    {mViewMenu->setItemChecked((int)mMsgView->headerStyle(), FALSE);
+    mMsgView->setHeaderStyle((KMReaderWin::HeaderStyle)id);
+    mViewMenu->setItemChecked(id, TRUE);
+    return;
+    }
+  if(id > 5)
+    {mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, FALSE);
+    mMsgView->setAttachmentStyle(id-5);
+    mViewMenu->setItemChecked(id, TRUE);
+    return;
+    }
 }
 
 
@@ -652,6 +660,7 @@ void KMMainWin::setupMenuBar()
   mViewMenu->insertItem(nls->translate("Smart Attachments"));
   mViewMenu->insertItem(nls->translate("Inlined Attachments"));
   mViewMenu->setItemChecked((int)mMsgView->headerStyle(), TRUE);
+  mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
   //----- Help Menu
   QPopupMenu *helpMenu = kapp->getHelpMenu(TRUE, aboutText);

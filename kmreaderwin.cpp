@@ -76,6 +76,8 @@ void KMReaderWin::readConfig(void)
   config->setGroup("Reader");
   mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
+  mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
+							IconicAttmnt);
 }
 
 
@@ -87,6 +89,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
   config->setGroup("Reader");
   config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
+  config->writeEntry("attmnt-style",(int)mAttachmentStyle);
 
   if (aWithSync) config->sync();
 }
@@ -134,6 +137,11 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
   update();
 }
 
+void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
+{  
+  mAttachmentStyle = aAttachmentStyle;
+  update();
+}
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setInlineAttach(int aAtmInline)
@@ -228,6 +236,7 @@ void KMReaderWin::parseMsg(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeMsgHeader(void)
 {
+  QString t;
   switch (mHeaderStyle)
   {
   case HdrBrief:
@@ -277,7 +286,9 @@ void KMReaderWin::writeMsgHeader(void)
     break;
 
   case HdrAll:
-    emit statusMsg("`all' header style not yet implemented.");
+    t = mMsg->headerAsString();
+    t = t.replace(QRegExp("\n"),"<br>");
+    mViewer->write(t+"<br><br>");
     break;
 
   default:
