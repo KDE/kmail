@@ -41,7 +41,6 @@ using namespace KMime::Types;
 KMSender::KMSender()
 {
   mPrecommand = 0;
-  mSendDlg = 0;
   mSendProc = 0;
   mSendProcStarted = FALSE;
   mSendInProgress = FALSE;

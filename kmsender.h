@@ -16,7 +16,6 @@ class KMFolder;
 class KMFolderMgr;
 class KConfig;
 class KProcess;
-class KMIOStatusDlg;
 class KMSendProc;
 class QStrList;
 class KMTransportInfo;
@@ -133,7 +132,6 @@ private:
 
   bool mSentOk, mSendAborted;
   QString mErrorMsg;
-  KMIOStatusDlg* mSendDlg;
   KMSendProc *mSendProc;
   QString mMethodStr;
   bool mSendProcStarted;
