@@ -91,12 +91,14 @@ QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
     if ( a && a->folder() ) {
       bool ok = false;
       if ( mNeedsInbox ) {
-        KMFolderNode *node;
-        for (node = a->folder()->child()->first(); node; node = a->folder()->child()->next())
-          if (!node->isDir() && node->name() == "INBOX") {
-            ok = true;
-            break;
-          }
+        KMFolderDir* child = a->folder()->child();
+        if ( child ) {
+          for (KMFolderNode* node = child->first(); node; node = child->next())
+            if (!node->isDir() && node->name() == "INBOX") {
+              ok = true;
+              break;
+            }
+        }
       } else
         ok = true;
       if ( ok )
