@@ -479,8 +479,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   	   this, SLOT(updateReaderWin()) );
   connect( &mResizeTimer, SIGNAL(timeout()),
   	   this, SLOT(slotDelayedResize()) );
-  connect( &mHtmlTimer, SIGNAL(timeout()),
-           this, SLOT(sendNextHtmlChunk()) );
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
 
@@ -594,7 +592,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
-  delete mHtmlWriter; // should be deleted before mViewer
   delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete message();
   delete mRootNode;
@@ -946,7 +943,7 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->view()->setLineWidth(0);
 
   if ( !htmlWriter() )
-    mHtmlWriter = new KHtmlPartHtmlWriter( this );
+    mHtmlWriter = new KHtmlPartHtmlWriter( this, this );
 
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
@@ -1150,12 +1147,7 @@ void KMReaderWin::updateReaderWin()
   mViewer->view()->viewport()->setUpdatesEnabled( false );
   static_cast<QScrollView *>(mViewer->widget())->ensureVisible(0,0);
 
-  if (mHtmlTimer.isActive())
-  {
-    mHtmlTimer.stop();
-    mViewer->end();
-  }
-  mHtmlQueue.clear();
+  htmlWriter()->reset();
 
   KMFolder* folder;
   if (message(&folder))
@@ -1186,36 +1178,6 @@ void KMReaderWin::updateReaderWin()
     if( mMimePartTree )
       mMimePartTree->clear();
   }
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::queueHtml(const QString &aStr)
-{
-  // ### (mm) move this to KHtmlPartHtmlWriter
-  uint pos = 0;
-  while (aStr.length() > pos)
-  {
-    mHtmlQueue += aStr.mid(pos, 16384);
-    pos += 16384;
-  }
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::sendNextHtmlChunk()
-{
-  // ### (mm) move this to KHtmlPartHtmlWriter
-  QStringList::Iterator it = mHtmlQueue.begin();
-  if (it == mHtmlQueue.end())
-  {
-    mViewer->end();
-    mViewer->view()->viewport()->setUpdatesEnabled( true );
-    mViewer->view()->setUpdatesEnabled( true );
-    mViewer->view()->viewport()->repaint( false );
-    return;
-  }
-  mViewer->write(*it);
-  mHtmlQueue.remove(it);
-  mHtmlTimer.start(0, TRUE);
 }
 
 //-----------------------------------------------------------------------------

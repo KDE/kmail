@@ -178,9 +178,6 @@ public:
 
   bool isfixedFont() { return mUseFixedFont; }
 
-  /** Queue HTML code to be sent later in chunks to khtml */
-  void queueHtml(const QString &aStr);
-
   /** Return the @ref HtmlWriter connected to the @ref KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
 
@@ -283,9 +280,6 @@ public slots:
 
   /** Copy the selected text to the clipboard */
   void slotCopySelectedText();
-
-  /** Starts sending the queued HTML code to khtml */
-  void sendNextHtmlChunk();
 
   /** Slot to reply to a message */
   void slotReplyToMsg();
@@ -446,9 +440,7 @@ protected:
   QString mBackingPixmapStr;
   QTimer updateReaderWinTimer;
   QTimer mResizeTimer;
-  QTimer mHtmlTimer;
   QTimer mDelayedMarkTimer;
-  QStringList mHtmlQueue;
   const QTextCodec *mCodec;
   bool mAutoDetectEncoding;
   bool mMsgDisplay;

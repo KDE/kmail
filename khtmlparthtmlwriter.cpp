@@ -17,6 +17,7 @@
 #include "kmreaderwin.h"
 
 #include <khtml_part.h>
+#include <khtmlview.h>
 #include <kurl.h>
 
 #include <qstring.h>
@@ -25,11 +26,13 @@
 
 namespace KMail {
 
-  KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KMReaderWin * readerWin )
-    : HtmlWriter(),
+  KHtmlPartHtmlWriter::KHtmlPartHtmlWriter( KMReaderWin * readerWin,
+					    QObject * parent, const char * name )
+    : QObject( parent, name ), HtmlWriter(),
       mReaderWin( readerWin )
   {
     assert( readerWin );
+    connect( &mHtmlTimer, SIGNAL(timeout()), SLOT(slotWriteNextHtmlChunk()) );
   }
 
   KHtmlPartHtmlWriter::~KHtmlPartHtmlWriter() {
@@ -42,6 +45,14 @@ namespace KMail {
 
   void KHtmlPartHtmlWriter::end() {
     mReaderWin->mViewer->end();
+  }
+
+  void KHtmlPartHtmlWriter::reset() {
+    if ( mHtmlTimer.isActive() ) {
+      mHtmlTimer.stop();
+      end();
+    }
+    mHtmlQueue.clear();
   }
 
   //void KHtmlPartHtmlWriter::escapeAndWrite( const QString & str ) {
@@ -57,11 +68,11 @@ namespace KMail {
   //}
 
   void KHtmlPartHtmlWriter::queue( const QString & str ) {
-    mReaderWin->queueHtml( str );
+    queueHtml( str );
   }
 
   void KHtmlPartHtmlWriter::flush() {
-    mReaderWin->sendNextHtmlChunk();
+    slotWriteNextHtmlChunk();
   }
 
 #if 0
@@ -76,4 +87,30 @@ namespace KMail {
   }
 #endif
 
+  void KHtmlPartHtmlWriter::queueHtml( const QString & str ) {
+    uint pos = 0;
+    while ( str.length() > pos ) {
+      mHtmlQueue += str.mid( pos, 16384 );
+      pos += 16384;
+    }
+  }
+
+  void KHtmlPartHtmlWriter::slotWriteNextHtmlChunk() {
+    QStringList::Iterator it = mHtmlQueue.begin();
+    if ( it == mHtmlQueue.end() ) {
+      end();
+      mReaderWin->mViewer->view()->viewport()->setUpdatesEnabled( true );
+      mReaderWin->mViewer->view()->setUpdatesEnabled( true );
+      mReaderWin->mViewer->view()->viewport()->repaint( false );
+      return;
+    }
+    write( *it );
+    mHtmlQueue.remove( it );
+    mHtmlTimer.start( 0, true );
+  }
+
+  
+
 }; // namespace KMail
+
+#include "khtmlparthtmlwriter.moc"

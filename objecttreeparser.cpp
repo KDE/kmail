@@ -297,11 +297,7 @@ public:
       mReader->mViewer->view()->viewport()->setUpdatesEnabled( false );
       static_cast<QScrollView *>(mReader->mViewer->widget())->ensureVisible(0,0);
 
-      if (mReader->mHtmlTimer.isActive()) {
-	mReader->mHtmlTimer.stop();
-	mReader->mViewer->end();
-      }
-      mReader->mHtmlQueue.clear();
+      htmlWriter()->reset();
 
       mReader->mColorBar->hide();
 

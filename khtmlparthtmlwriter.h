@@ -16,19 +16,26 @@
 #define __KMAIL_KHTMLPARTHTMLWRITER_H__
 
 #include <interfaces/htmlwriter.h>
+#include <qobject.h>
+
+#include <qstringlist.h>
+#include <qtimer.h>
 
 class KMReaderWin;
 class QString;
 
 namespace KMail {
 
-  class KHtmlPartHtmlWriter : public HtmlWriter {
+  class KHtmlPartHtmlWriter : public QObject, public HtmlWriter {
+    Q_OBJECT
   public:
-    KHtmlPartHtmlWriter( KMReaderWin * readerWin );
+    KHtmlPartHtmlWriter( KMReaderWin * readerWin,
+			 QObject * parent=0, const char * name = 0 );
     virtual ~KHtmlPartHtmlWriter();
 
     void begin();
     void end();
+    void reset();
     //void escapeAndWrite( const QString & str );
     void write( const QString & str );
     //void escapeAndQueue( const QString & str );
@@ -39,7 +46,15 @@ namespace KMail {
     //QString escapeHTML( const QString & str );
 
   private:
+    void queueHtml( const QString & str );
+
+  private slots:
+    void slotWriteNextHtmlChunk();
+
+  private:
     KMReaderWin * mReaderWin;
+    QStringList mHtmlQueue;
+    QTimer mHtmlTimer;
   };
 
 }; // namespace KMail
