@@ -4,7 +4,7 @@ tools=6
 [Spamtool #1]
 Ident=spamassassin
 Version=1
-VisibleName=&Spamassassin
+VisibleName=&SpamAssassin
 Executable=spamassassin -V
 URL=http://spamassassin.org
 PipeFilterName=SpamAssassin Check
