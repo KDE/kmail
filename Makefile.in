@@ -1,17 +1,28 @@
-# Makefile.in generated automatically by automake 1.2 from Makefile.am
+# KDE tags expanded automatically by am_edit - $Revision$ 
+# Makefile.in generated automatically by automake 1.4 from Makefile.am
 
-# Copyright (C) 1994, 1995, 1996, 1997 Free Software Foundation, Inc.
+# Copyright (C) 1994, 1995-8, 1999 Free Software Foundation, Inc.
 # This Makefile.in is free software; the Free Software Foundation
-# gives unlimited permission to copy, distribute and modify it.
+# gives unlimited permission to copy and/or distribute it,
+# with or without modifications, as long as this notice is preserved.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY, to the extent permitted by law; without
+# even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
 
 
-SHELL = /bin/sh
+SHELL = @SHELL@
 
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
 prefix = @prefix@
 exec_prefix = @exec_prefix@
+#>- 
+bindir = @bindir@
+#>+ 3
+DEPDIR = .deps
 
 bindir = @bindir@
 sbindir = @sbindir@
@@ -26,6 +37,8 @@ mandir = @mandir@
 includedir = @includedir@
 oldincludedir = /usr/include
 
+DESTDIR =
+
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
 pkgincludedir = $(includedir)/@PACKAGE@
@@ -38,138 +51,301 @@ AUTOMAKE = @AUTOMAKE@
 AUTOHEADER = @AUTOHEADER@
 
 INSTALL = @INSTALL@
-INSTALL_PROGRAM = @INSTALL_PROGRAM@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@ $(AM_INSTALL_PROGRAM_FLAGS)
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 transform = @program_transform_name@
 
-NORMAL_INSTALL = true
-PRE_INSTALL = true
-POST_INSTALL = true
-NORMAL_UNINSTALL = true
-PRE_UNINSTALL = true
-POST_UNINSTALL = true
+NORMAL_INSTALL = :
+PRE_INSTALL = :
+POST_INSTALL = :
+NORMAL_UNINSTALL = :
+PRE_UNINSTALL = :
+POST_UNINSTALL = :
 build_alias = @build_alias@
 build_triplet = @build@
 host_alias = @host_alias@
 host_triplet = @host@
 target_alias = @target_alias@
 target_triplet = @target@
+AS = @AS@
+AUTODIRS = @AUTODIRS@
 CC = @CC@
-CFLAGS = @CFLAGS@
 CPP = @CPP@
 CXX = @CXX@
-CXXFLAGS = @CXXFLAGS@
+CXXCPP = @CXXCPP@
+DCOPIDL = @DCOPIDL@
+DCOPIDL2CPP = @DCOPIDL2CPP@
+DCOP_DEPENDENCIES = @DCOP_DEPENDENCIES@
+DLLTOOL = @DLLTOOL@
+DPMSINC = @DPMSINC@
+DPMSLIB = @DPMSLIB@
+EXEEXT = @EXEEXT@
 GLINC = @GLINC@
 GLLIB = @GLLIB@
 GMSGFMT = @GMSGFMT@
+IDL = @IDL@
+IDL_DEPENDENCIES = @IDL_DEPENDENCIES@
+KDE_CXXFLAGS = @KDE_CXXFLAGS@
+KDE_EXTRA_RPATH = @KDE_EXTRA_RPATH@
 KDE_INCLUDES = @KDE_INCLUDES@
 KDE_LDFLAGS = @KDE_LDFLAGS@
-LDFLAGS = @LDFLAGS@
+KDE_RPATH = @KDE_RPATH@
+KDE_USE_CLOSURE_FALSE = @KDE_USE_CLOSURE_FALSE@
+KDE_USE_CLOSURE_TRUE = @KDE_USE_CLOSURE_TRUE@
+KDE_USE_FINAL_FALSE = @KDE_USE_FINAL_FALSE@
+KDE_USE_FINAL_TRUE = @KDE_USE_FINAL_TRUE@
+LIBBSD = @LIBBSD@
 LIBCOMPAT = @LIBCOMPAT@
 LIBCRYPT = @LIBCRYPT@
+LIBDL = @LIBDL@
 LIBJPEG = @LIBJPEG@
+LIBMICO = @LIBMICO@
 LIBOBJS = @LIBOBJS@
+LIBPNG = @LIBPNG@
+LIBPTHREAD = @LIBPTHREAD@
+LIBPYTHON = @LIBPYTHON@
+LIBQIMGIO = @LIBQIMGIO@
+LIBSM = @LIBSM@
 LIBSOCKET = @LIBSOCKET@
+LIBTIFF = @LIBTIFF@
+LIBTOOL = @LIBTOOL@
+LIBUCB = @LIBUCB@
+LIBUU = @LIBUU@
+LIBZ = @LIBZ@
+LIB_KAB = @LIB_KAB@
+LIB_KDECORE = @LIB_KDECORE@
+LIB_KDEUI = @LIB_KDEUI@
+LIB_KFILE = @LIB_KFILE@
+LIB_KFM = @LIB_KFM@
+LIB_KFORMULA = @LIB_KFORMULA@
+LIB_KHTML = @LIB_KHTML@
+LIB_KIMGIO = @LIB_KIMGIO@
+LIB_KIO = @LIB_KIO@
+LIB_KPARTS = @LIB_KPARTS@
+LIB_KSPELL = @LIB_KSPELL@
+LIB_KSYCOCA = @LIB_KSYCOCA@
+LIB_MEDIATOOL = @LIB_MEDIATOOL@
+LIB_QT = @LIB_QT@
+LIB_SMB = @LIB_SMB@
+LIB_X11 = @LIB_X11@
 LN_S = @LN_S@
 MAKEINFO = @MAKEINFO@
+MICO_INCLUDES = @MICO_INCLUDES@
+MICO_LDFLAGS = @MICO_LDFLAGS@
+MOC = @MOC@
 MSGFMT = @MSGFMT@
+NOOPT_CXXFLAGS = @NOOPT_CXXFLAGS@
+NOREPO = @NOREPO@
+OBJDUMP = @OBJDUMP@
+OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PAMINC = @PAMINC@
 PAMLIBPATHS = @PAMLIBPATHS@
 PAMLIBS = @PAMLIBS@
+PYTHONINC = @PYTHONINC@
+PYTHONLIB = @PYTHONLIB@
 QT_INCLUDES = @QT_INCLUDES@
 QT_LDFLAGS = @QT_LDFLAGS@
 RANLIB = @RANLIB@
+REPO = @REPO@
+STRIP = @STRIP@
+TOPSUBDIRS = @TOPSUBDIRS@
+USER_INCLUDES = @USER_INCLUDES@
+USER_LDFLAGS = @USER_LDFLAGS@
+USE_EXCEPTIONS = @USE_EXCEPTIONS@
 USE_NLS = @USE_NLS@
+USE_RTTI = @USE_RTTI@
 VERSION = @VERSION@
+XGETTEXT = @XGETTEXT@
 XPMINC = @XPMINC@
 XPMLIB = @XPMLIB@
+X_EXTRA_LIBS = @X_EXTRA_LIBS@
 X_INCLUDES = @X_INCLUDES@
 X_LDFLAGS = @X_LDFLAGS@
+X_PRE_LIBS = @X_PRE_LIBS@
 all_includes = @all_includes@
 all_libraries = @all_libraries@
+idldir = @idldir@
+kde_appsdir = @kde_appsdir@
+kde_bindir = @kde_bindir@
+kde_cgidir = @kde_cgidir@
+kde_confdir = @kde_confdir@
+kde_datadir = @kde_datadir@
+kde_htmldir = @kde_htmldir@
+kde_icondir = @kde_icondir@
 kde_includes = @kde_includes@
 kde_libraries = @kde_libraries@
+kde_locale = @kde_locale@
+kde_mimedir = @kde_mimedir@
+kde_minidir = @kde_minidir@
+kde_servicesdir = @kde_servicesdir@
+kde_servicetypesdir = @kde_servicetypesdir@
+kde_sounddir = @kde_sounddir@
+kde_toolbardir = @kde_toolbardir@
+kde_wallpaperdir = @kde_wallpaperdir@
+micodir = @micodir@
 qt_includes = @qt_includes@
 qt_libraries = @qt_libraries@
-topdir = @topdir@
+static_libkde = @static_libkde@
+static_libqt = @static_libqt@
+static_libstdc = @static_libstdc@
+x_includes = @x_includes@
+x_libraries = @x_libraries@
 
-SUBDIRS = pics doc
-INCLUDES=	-I.. @all_includes@
-LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lmimelib
-MOC	=	@MOC@
+SUBDIRS = pics
+INCLUDES = $(all_includes)
+LDADD = $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE)
 
 bin_PROGRAMS = kmail
 
-kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
-		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
-		ktablistbox.cpp kmcomposewin.cpp kmfolder.cpp \
-		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
-		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
-		kmacctmgr.cpp main.cpp kmmainview.cpp kmacctfolder.cpp \
-		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
-		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
-		kmacctseldlg.cpp kshortcut.cpp
+kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp 		kmsettings.cpp kmaccount.cpp kmheaders.cpp 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp 		kmacctmgr.cpp main.cpp kmacctfolder.cpp 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp 		kmacctseldlg.cpp kmfiltermgr.cpp 		kmfilteraction.cpp kmidentity.cpp 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp 		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp 		kfileio.cpp kmaddrbook.cpp 		kmaddrbookdlg.cpp kmiostatusdlg.cpp 		kmnewiostatus.cpp kmnewiostatuswdg.cpp 		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp 		kmundostack.cpp ktablistbox.cpp kmbroadcaststatus.cpp 		kmacctexppop.cpp configuredialog.cpp
 
-BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
-		kmfoldertree.moc kmsettings.moc kmheaders.moc \
-		ktablistbox.moc kmcomposewin.moc kbusyptr.moc \
-		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
-		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
-		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc
 
-CLEAN_FILES = $(BUILT_SOURCES)
+#>- METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc 		kmfoldertree.moc kmsettings.moc kmheaders.moc 		kmcomposewin.moc kbusyptr.moc kmfoldermgr.moc 		kalarmtimer.moc kmreaderwin.moc kmsender.moc 		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc 		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc 		kmacctpop.moc kmaccount.moc 		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc 		kmaddrbookdlg.moc kmiostatusdlg.moc 		kmnewiostatus.moc kmnewiostatuswdg.moc 		charsetsDlg.moc kmtopwidget.moc ktablistbox.moc 		kmbroadcaststatus.moc kmacctexppop.moc configuredialog.moc
 
-appsdir = $(prefix)/share/applnk/Utilities/
-mkinstalldirs = $(SHELL) $(top_srcdir)/mkinstalldirs
+
+appsdir = $(kde_appsdir)/Internet
+apps_DATA = KMail.desktop
+
+EXTRA_DIST = KMail.desktop
+
+KDE_ICON = kmail
+mkinstalldirs = $(SHELL) $(top_srcdir)/admin/mkinstalldirs
 CONFIG_HEADER = ../config.h
 CONFIG_CLEAN_FILES = 
+bin_PROGRAMS =  kmail$(EXEEXT)
 PROGRAMS =  $(bin_PROGRAMS)
 
 
 DEFS = @DEFS@ -I. -I$(srcdir) -I..
 CPPFLAGS = @CPPFLAGS@
+LDFLAGS = @LDFLAGS@
 LIBS = @LIBS@
-kmail_OBJECTS =  kmmainwin.o kmfolderdia.o kmfoldertree.o kmsettings.o \
-kmaccount.o kmheaders.o ktablistbox.o kmcomposewin.o kmfolder.o \
-kmmessage.o kmreaderwin.o kbusyptr.o kalarmtimer.o KEdit.o kmmsgpart.o \
-kmmsginfo.o kmacctmgr.o main.o kmmainview.o kmacctfolder.o \
-kmacctlocal.o kmacctpop.o kmfolderdir.o kmfoldermgr.o kmfoldernode.o \
-kmsender.o kmacctseldlg.o kshortcut.o
+#>- kmail_OBJECTS =  kmmainwin.$(OBJEXT) kmfolderdia.$(OBJEXT) \
+#>- kmfoldertree.$(OBJEXT) kmsettings.$(OBJEXT) kmaccount.$(OBJEXT) \
+#>- kmheaders.$(OBJEXT) kmcomposewin.$(OBJEXT) kmfolder.$(OBJEXT) \
+#>- kmmsgpartdlg.$(OBJEXT) kmmessage.$(OBJEXT) kmreaderwin.$(OBJEXT) \
+#>- kbusyptr.$(OBJEXT) kalarmtimer.$(OBJEXT) kmmsgpart.$(OBJEXT) \
+#>- kmmsginfo.$(OBJEXT) kmacctmgr.$(OBJEXT) main.$(OBJEXT) \
+#>- kmacctfolder.$(OBJEXT) kmacctlocal.$(OBJEXT) kmacctpop.$(OBJEXT) \
+#>- kmfolderdir.$(OBJEXT) kmfoldermgr.$(OBJEXT) kmfoldernode.$(OBJEXT) \
+#>- kmsender.$(OBJEXT) kmacctseldlg.$(OBJEXT) kmfiltermgr.$(OBJEXT) \
+#>- kmfilteraction.$(OBJEXT) kmidentity.$(OBJEXT) kmfolderseldlg.$(OBJEXT) \
+#>- kmfilter.$(OBJEXT) kmfilterdlg.$(OBJEXT) kmmsgbase.$(OBJEXT) \
+#>- kmmsglist.$(OBJEXT) kpgp.$(OBJEXT) kpgpbase.$(OBJEXT) kfileio.$(OBJEXT) \
+#>- kmaddrbook.$(OBJEXT) kmaddrbookdlg.$(OBJEXT) kmiostatusdlg.$(OBJEXT) \
+#>- kmnewiostatus.$(OBJEXT) kmnewiostatuswdg.$(OBJEXT) \
+#>- charsetsDlg.$(OBJEXT) kfontutils.$(OBJEXT) kmtopwidget.$(OBJEXT) \
+#>- kmundostack.$(OBJEXT) ktablistbox.$(OBJEXT) kmbroadcaststatus.$(OBJEXT) \
+#>- kmacctexppop.$(OBJEXT) configuredialog.$(OBJEXT)
+#>+ 19
+@KDE_USE_FINAL_FALSE@kmail_OBJECTS = kmmainwin.$(OBJEXT) kmfolderdia.$(OBJEXT) \
+kmfoldertree.$(OBJEXT) kmsettings.$(OBJEXT) kmaccount.$(OBJEXT) \
+kmheaders.$(OBJEXT) kmcomposewin.$(OBJEXT) kmfolder.$(OBJEXT) \
+kmmsgpartdlg.$(OBJEXT) kmmessage.$(OBJEXT) kmreaderwin.$(OBJEXT) \
+kbusyptr.$(OBJEXT) kalarmtimer.$(OBJEXT) kmmsgpart.$(OBJEXT) \
+kmmsginfo.$(OBJEXT) kmacctmgr.$(OBJEXT) main.$(OBJEXT) \
+kmacctfolder.$(OBJEXT) kmacctlocal.$(OBJEXT) kmacctpop.$(OBJEXT) \
+kmfolderdir.$(OBJEXT) kmfoldermgr.$(OBJEXT) kmfoldernode.$(OBJEXT) \
+kmsender.$(OBJEXT) kmacctseldlg.$(OBJEXT) kmfiltermgr.$(OBJEXT) \
+kmfilteraction.$(OBJEXT) kmidentity.$(OBJEXT) kmfolderseldlg.$(OBJEXT) \
+kmfilter.$(OBJEXT) kmfilterdlg.$(OBJEXT) kmmsgbase.$(OBJEXT) \
+kmmsglist.$(OBJEXT) kpgp.$(OBJEXT) kpgpbase.$(OBJEXT) kfileio.$(OBJEXT) \
+kmaddrbook.$(OBJEXT) kmaddrbookdlg.$(OBJEXT) kmiostatusdlg.$(OBJEXT) \
+kmnewiostatus.$(OBJEXT) kmnewiostatuswdg.$(OBJEXT) \
+charsetsDlg.$(OBJEXT) kfontutils.$(OBJEXT) kmtopwidget.$(OBJEXT) \
+kmundostack.$(OBJEXT) ktablistbox.$(OBJEXT) kmbroadcaststatus.$(OBJEXT) \
+kmacctexppop.$(OBJEXT) configuredialog.$(OBJEXT)
+@KDE_USE_FINAL_TRUE@kmail_OBJECTS = kmail.all_cpp.o 
+kmail_final_OBJECTS = kmail.all_cpp.o 
 kmail_LDADD = $(LDADD)
 kmail_DEPENDENCIES = 
-kmail_LDFLAGS = 
-CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)
-CXXLINK = $(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@
-DIST_COMMON =  README COPYING INSTALL Makefile.am Makefile.in
+CXXFLAGS = @CXXFLAGS@
+#>- CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+#>+ 1
+CXXCOMPILE = $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) $(KDE_CXXFLAGS)
+#>- LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
+#>+ 1
+LTCXXCOMPILE = $(LIBTOOL) --mode=compile $(CXX) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) $(KDE_CXXFLAGS)
+CXXLD = $(CXX)
+#>- CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
+#>+ 1
+CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(KDE_CXXFLAGS) $(LDFLAGS) -o $@
+DATA =  $(apps_DATA)
+
+DIST_COMMON =  ChangeLog Makefile.am Makefile.in
 
 
 DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
 TAR = tar
-GZIP = --best
-DEP_FILES =  .deps/KEdit.P .deps/kalarmtimer.P .deps/kbusyptr.P \
-.deps/kmaccount.P .deps/kmacctfolder.P .deps/kmacctlocal.P \
-.deps/kmacctmgr.P .deps/kmacctpop.P .deps/kmacctseldlg.P \
-.deps/kmcomposewin.P .deps/kmfolder.P .deps/kmfolderdia.P \
-.deps/kmfolderdir.P .deps/kmfoldermgr.P .deps/kmfoldernode.P \
-.deps/kmfoldertree.P .deps/kmheaders.P .deps/kmmainview.P \
-.deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsginfo.P .deps/kmmsgpart.P \
+GZIP_ENV = --best
+#>- DEP_FILES =  .deps/charsetsDlg.P .deps/configuredialog.P \
+#>- .deps/kalarmtimer.P .deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P \
+#>- .deps/kmaccount.P .deps/kmacctexppop.P .deps/kmacctfolder.P \
+#>- .deps/kmacctlocal.P .deps/kmacctmgr.P .deps/kmacctpop.P \
+#>- .deps/kmacctseldlg.P .deps/kmaddrbook.P .deps/kmaddrbookdlg.P \
+#>- .deps/kmbroadcaststatus.P .deps/kmcomposewin.P .deps/kmfilter.P \
+#>- .deps/kmfilteraction.P .deps/kmfilterdlg.P .deps/kmfiltermgr.P \
+#>- .deps/kmfolder.P .deps/kmfolderdia.P .deps/kmfolderdir.P \
+#>- .deps/kmfoldermgr.P .deps/kmfoldernode.P .deps/kmfolderseldlg.P \
+#>- .deps/kmfoldertree.P .deps/kmheaders.P .deps/kmidentity.P \
+#>- .deps/kmiostatusdlg.P .deps/kmmainwin.P .deps/kmmessage.P \
+#>- .deps/kmmsgbase.P .deps/kmmsginfo.P .deps/kmmsglist.P .deps/kmmsgpart.P \
+#>- .deps/kmmsgpartdlg.P .deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P \
+#>- .deps/kmreaderwin.P .deps/kmsender.P .deps/kmsettings.P \
+#>- .deps/kmtopwidget.P .deps/kmundostack.P .deps/kpgp.P .deps/kpgpbase.P \
+#>- .deps/ktablistbox.P .deps/main.P
+#>+ 34
+@KDE_USE_FINAL_TRUE@DEP_FILES =   $(DEPDIR)/kmail.all_cpp.P \
+	  .deps/charsetsDlg.P .deps/configuredialog.P \
+.deps/kalarmtimer.P .deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P \
+.deps/kmaccount.P .deps/kmacctexppop.P .deps/kmacctfolder.P \
+.deps/kmacctlocal.P .deps/kmacctmgr.P .deps/kmacctpop.P \
+.deps/kmacctseldlg.P .deps/kmaddrbook.P .deps/kmaddrbookdlg.P \
+.deps/kmbroadcaststatus.P .deps/kmcomposewin.P .deps/kmfilter.P \
+.deps/kmfilteraction.P .deps/kmfilterdlg.P .deps/kmfiltermgr.P \
+.deps/kmfolder.P .deps/kmfolderdia.P .deps/kmfolderdir.P \
+.deps/kmfoldermgr.P .deps/kmfoldernode.P .deps/kmfolderseldlg.P \
+.deps/kmfoldertree.P .deps/kmheaders.P .deps/kmidentity.P \
+.deps/kmiostatusdlg.P .deps/kmmainwin.P .deps/kmmessage.P \
+.deps/kmmsgbase.P .deps/kmmsginfo.P .deps/kmmsglist.P .deps/kmmsgpart.P \
+.deps/kmmsgpartdlg.P .deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P \
 .deps/kmreaderwin.P .deps/kmsender.P .deps/kmsettings.P \
-.deps/kshortcut.P .deps/ktablistbox.P .deps/main.P
-CXXMKDEP = $(CXX) -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CXXFLAGS)
+.deps/kmtopwidget.P .deps/kmundostack.P .deps/kpgp.P .deps/kpgpbase.P \
+.deps/ktablistbox.P .deps/main.P
+@KDE_USE_FINAL_FALSE@DEP_FILES =    .deps/charsetsDlg.P .deps/configuredialog.P \
+.deps/kalarmtimer.P .deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P \
+.deps/kmaccount.P .deps/kmacctexppop.P .deps/kmacctfolder.P \
+.deps/kmacctlocal.P .deps/kmacctmgr.P .deps/kmacctpop.P \
+.deps/kmacctseldlg.P .deps/kmaddrbook.P .deps/kmaddrbookdlg.P \
+.deps/kmbroadcaststatus.P .deps/kmcomposewin.P .deps/kmfilter.P \
+.deps/kmfilteraction.P .deps/kmfilterdlg.P .deps/kmfiltermgr.P \
+.deps/kmfolder.P .deps/kmfolderdia.P .deps/kmfolderdir.P \
+.deps/kmfoldermgr.P .deps/kmfoldernode.P .deps/kmfolderseldlg.P \
+.deps/kmfoldertree.P .deps/kmheaders.P .deps/kmidentity.P \
+.deps/kmiostatusdlg.P .deps/kmmainwin.P .deps/kmmessage.P \
+.deps/kmmsgbase.P .deps/kmmsginfo.P .deps/kmmsglist.P .deps/kmmsgpart.P \
+.deps/kmmsgpartdlg.P .deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P \
+.deps/kmreaderwin.P .deps/kmsender.P .deps/kmsettings.P \
+.deps/kmtopwidget.P .deps/kmundostack.P .deps/kpgp.P .deps/kpgpbase.P \
+.deps/ktablistbox.P .deps/main.P
+
 SOURCES = $(kmail_SOURCES)
 OBJECTS = $(kmail_OBJECTS)
 
-default: all
-
+all: all-redirect
 .SUFFIXES:
-.SUFFIXES: .c .cpp .o
+.SUFFIXES: .S .c .cpp .lo .o .obj .s
 $(srcdir)/Makefile.in: Makefile.am $(top_srcdir)/configure.in $(ACLOCAL_M4) 
+#>- 	cd $(top_srcdir) && $(AUTOMAKE) --gnu kmail/Makefile
+#>+ 2
 	cd $(top_srcdir) && $(AUTOMAKE) --gnu kmail/Makefile
+	cd $(top_srcdir) && perl admin/am_edit kmail/Makefile.in
 
-Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
+Makefile: $(srcdir)/Makefile.in  $(top_builddir)/config.status $(BUILT_SOURCES)
 	cd $(top_builddir) \
 	  && CONFIG_FILES=$(subdir)/$@ CONFIG_HEADERS= $(SHELL) ./config.status
 
@@ -177,7 +353,7 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status $(BUILT_SOURCES)
 mostlyclean-binPROGRAMS:
 
 clean-binPROGRAMS:
-	test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
+	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 
 distclean-binPROGRAMS:
 
@@ -185,38 +361,86 @@ maintainer-clean-binPROGRAMS:
 
 install-binPROGRAMS: $(bin_PROGRAMS)
 	@$(NORMAL_INSTALL)
-	$(mkinstalldirs) $(bindir)
+	$(mkinstalldirs) $(DESTDIR)$(bindir)
 	@list='$(bin_PROGRAMS)'; for p in $$list; do \
 	  if test -f $$p; then \
-	    echo "  $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`"; \
-	     $(INSTALL_PROGRAM) $$p $(bindir)/`echo $$p|sed '$(transform)'`; \
+	    echo " $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`"; \
+	    $(LIBTOOL)  --mode=install $(INSTALL_PROGRAM) $$p $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
 	  else :; fi; \
 	done
 
 uninstall-binPROGRAMS:
-	$(NORMAL_UNINSTALL)
+	@$(NORMAL_UNINSTALL)
 	list='$(bin_PROGRAMS)'; for p in $$list; do \
-	  rm -f $(bindir)/`echo $$p|sed '$(transform)'`; \
+	  rm -f $(DESTDIR)$(bindir)/`echo $$p|sed 's/$(EXEEXT)$$//'|sed '$(transform)'|sed 's/$$/$(EXEEXT)/'`; \
 	done
 
-.c.o:
+# FIXME: We should only use cygpath when building on Windows,
+# and only if it is available.
+.c.obj:
+	$(COMPILE) -c `cygpath -w $<`
+
+.s.o:
+	$(COMPILE) -c $<
+
+.S.o:
 	$(COMPILE) -c $<
 
 mostlyclean-compile:
-	rm -f *.o core
+	-rm -f *.o core *.core
+	-rm -f *.$(OBJEXT)
 
 clean-compile:
 
 distclean-compile:
-	rm -f *.tab.c
+	-rm -f *.tab.c
 
 maintainer-clean-compile:
 
-kmail: $(kmail_OBJECTS) $(kmail_DEPENDENCIES)
-	@rm -f kmail
+.s.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+.S.lo:
+	$(LIBTOOL) --mode=compile $(COMPILE) -c $<
+
+mostlyclean-libtool:
+	-rm -f *.lo
+
+clean-libtool:
+	-rm -rf .libs _libs
+
+distclean-libtool:
+
+maintainer-clean-libtool:
+
+kmail$(EXEEXT): $(kmail_OBJECTS) $(kmail_DEPENDENCIES)
+	@rm -f kmail$(EXEEXT)
 	$(CXXLINK) $(kmail_LDFLAGS) $(kmail_OBJECTS) $(kmail_LDADD) $(LIBS)
 .cpp.o:
 	$(CXXCOMPILE) -c $<
+.cpp.obj:
+	$(CXXCOMPILE) -c `cygpath -w $<`
+.cpp.lo:
+	$(LTCXXCOMPILE) -c $<
+
+install-appsDATA: $(apps_DATA)
+	@$(NORMAL_INSTALL)
+	$(mkinstalldirs) $(DESTDIR)$(appsdir)
+	@list='$(apps_DATA)'; for p in $$list; do \
+	  if test -f $(srcdir)/$$p; then \
+	    echo " $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(appsdir)/$$p"; \
+	    $(INSTALL_DATA) $(srcdir)/$$p $(DESTDIR)$(appsdir)/$$p; \
+	  else if test -f $$p; then \
+	    echo " $(INSTALL_DATA) $$p $(DESTDIR)$(appsdir)/$$p"; \
+	    $(INSTALL_DATA) $$p $(DESTDIR)$(appsdir)/$$p; \
+	  fi; fi; \
+	done
+
+uninstall-appsDATA:
+	@$(NORMAL_UNINSTALL)
+	list='$(apps_DATA)'; for p in $$list; do \
+	  rm -f $(DESTDIR)$(appsdir)/$$p; \
+	done
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run `make' without going through this Makefile.
@@ -227,52 +451,87 @@ kmail: $(kmail_OBJECTS) $(kmail_DEPENDENCIES)
 
 @SET_MAKE@
 
+#>- all-recursive install-data-recursive install-exec-recursive \
+#>- installdirs-recursive install-recursive uninstall-recursive  \
+#>- check-recursive installcheck-recursive info-recursive dvi-recursive:
+#>+ 3
 all-recursive install-data-recursive install-exec-recursive \
 installdirs-recursive install-recursive uninstall-recursive  \
-check-recursive installcheck-recursive info-recursive dvi-recursive:
+check-recursive installcheck-recursive info-recursive dvi-recursive docs-recursive:
 	@set fnord $(MAKEFLAGS); amf=$$2; \
-	for subdir in $(SUBDIRS); do \
-	  target=`echo $@ | sed s/-recursive//`; \
+	dot_seen=no; \
+	target=`echo $@ | sed s/-recursive//`; \
+	list='$(SUBDIRS)'; for subdir in $$list; do \
 	  echo "Making $$target in $$subdir"; \
-	  (cd $$subdir && $(MAKE) $$target) \
+	  if test "$$subdir" = "."; then \
+	    dot_seen=yes; \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
 	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
-	done && test -z "$$fail"
+	done; \
+	if test "$$dot_seen" = "no"; then \
+	  $(MAKE) $(AM_MAKEFLAGS) "$$target-am" || exit 1; \
+	fi; test -z "$$fail"
 
 mostlyclean-recursive clean-recursive distclean-recursive \
 maintainer-clean-recursive:
 	@set fnord $(MAKEFLAGS); amf=$$2; \
-	rev=''; for subdir in $(SUBDIRS); do rev="$$rev $$subdir"; done; \
+	dot_seen=no; \
+	rev=''; list='$(SUBDIRS)'; for subdir in $$list; do \
+	  rev="$$subdir $$rev"; \
+	  test "$$subdir" = "." && dot_seen=yes; \
+	done; \
+	test "$$dot_seen" = "no" && rev=". $$rev"; \
+	target=`echo $@ | sed s/-recursive//`; \
 	for subdir in $$rev; do \
-	  target=`echo $@ | sed s/-recursive//`; \
 	  echo "Making $$target in $$subdir"; \
-	  (cd $$subdir && $(MAKE) $$target) \
+	  if test "$$subdir" = "."; then \
+	    local_target="$$target-am"; \
+	  else \
+	    local_target="$$target"; \
+	  fi; \
+	  (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) $$local_target) \
 	   || case "$$amf" in *=*) exit 1;; *k*) fail=yes;; *) exit 1;; esac; \
 	done && test -z "$$fail"
 tags-recursive:
 	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  (cd $$subdir && $(MAKE) tags); \
+	  test "$$subdir" = . || (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) tags); \
 	done
 
 tags: TAGS
 
-ID: $(HEADERS) $(SOURCES)
-	here=`pwd` && cd $(srcdir) && mkid -f$$here/ID $(SOURCES) $(HEADERS)
+ID: $(HEADERS) $(SOURCES) $(LISP)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	here=`pwd` && cd $(srcdir) \
+	  && mkid -f$$here/ID $$unique $(LISP)
 
-TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES)
+TAGS: tags-recursive $(HEADERS) $(SOURCES)  $(TAGS_DEPENDENCIES) $(LISP)
 	tags=; \
 	here=`pwd`; \
 	list='$(SUBDIRS)'; for subdir in $$list; do \
-	  test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   if test "$$subdir" = .; then :; else \
+	    test -f $$subdir/TAGS && tags="$$tags -i $$here/$$subdir/TAGS"; \
+   fi; \
 	done; \
-	test -z "$(ETAGS_ARGS)$(SOURCES)$(HEADERS)$$tags" \
-	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $(SOURCES) $(HEADERS) -o $$here/TAGS)
+	list='$(SOURCES) $(HEADERS)'; \
+	unique=`for i in $$list; do echo $$i; done | \
+	  awk '    { files[$$0] = 1; } \
+	       END { for (i in files) print i; }'`; \
+	test -z "$(ETAGS_ARGS)$$unique$(LISP)$$tags" \
+	  || (cd $(srcdir) && etags $(ETAGS_ARGS) $$tags  $$unique $(LISP) -o $$here/TAGS)
 
 mostlyclean-tags:
 
 clean-tags:
 
 distclean-tags:
-	rm -f TAGS ID
+	-rm -f TAGS ID
 
 maintainer-clean-tags:
 
@@ -283,29 +542,31 @@ subdir = kmail
 distdir: $(DISTFILES)
 	here=`cd $(top_builddir) && pwd`; \
 	top_distdir=`cd $(top_distdir) && pwd`; \
+	distdir=`cd $(distdir) && pwd`; \
 	cd $(top_srcdir) \
 	  && $(AUTOMAKE) --include-deps --build-dir=$$here --srcdir-name=$(top_srcdir) --output-dir=$$top_distdir --gnu kmail/Makefile
 	@for file in $(DISTFILES); do \
 	  d=$(srcdir); \
-	  test -f $(distdir)/$$file \
-	  || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
-	  || cp -p $$d/$$file $(distdir)/$$file; \
+	  if test -d $$d/$$file; then \
+	    cp -pr $$/$$file $(distdir)/$$file; \
+	  else \
+	    test -f $(distdir)/$$file \
+	    || ln $$d/$$file $(distdir)/$$file 2> /dev/null \
+	    || cp -p $$d/$$file $(distdir)/$$file || :; \
+	  fi; \
 	done
-	for subdir in $(SUBDIRS); do		\
-	  test -d $(distdir)/$$subdir		\
-	  || mkdir $(distdir)/$$subdir		\
-	  || exit 1;				\
-	  chmod 777 $(distdir)/$$subdir;	\
-	  (cd $$subdir && $(MAKE) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	for subdir in $(SUBDIRS); do \
+	  if test "$$subdir" = .; then :; else \
+	    test -d $(distdir)/$$subdir \
+	    || mkdir $(distdir)/$$subdir \
 	    || exit 1; \
+	    chmod 777 $(distdir)/$$subdir; \
+	    (cd $$subdir && $(MAKE) $(AM_MAKEFLAGS) top_distdir=../$(top_distdir) distdir=../$(distdir)/$$subdir distdir) \
+	      || exit 1; \
+	  fi; \
 	done
-
-MKDEP = gcc -M $(DEFS) $(INCLUDES) $(CPPFLAGS) $(CFLAGS)
 
 DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
--include .deps/.P
-.deps/.P: $(BUILT_SOURCES)
-	echo > $@
 
 -include $(DEP_FILES)
 
@@ -314,196 +575,369 @@ mostlyclean-depend:
 clean-depend:
 
 distclean-depend:
+	-rm -rf .deps
 
 maintainer-clean-depend:
-	rm -rf .deps
 
-.deps/%.P: %.c
-	@echo "Computing dependencies for $<..."
-	@o='o'; \
-	test -n "$o" && o='$$o'; \
-	$(MKDEP) $< >$@.tmp \
-	  && sed "s,^\(.*\)\.o:,\1.$$o \1.l$$o $@:," < $@.tmp > $@ \
-	  && rm -f $@.tmp
+%.o: %.c
+	@echo '$(COMPILE) -c $<'; \
+	$(COMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
 
-.deps/%.P: %.cpp
-	@echo "Computing dependencies for $<..."
-	@o='o'; \
-	$(CXXMKDEP) $< >$@.tmp \
-	  && sed "s,^\(.*\)\.o:,\1.$$o \1.l$$o $@:," < $@.tmp > $@ \
-	  && rm -f $@.tmp
+%.lo: %.c
+	@echo '$(LTCOMPILE) -c $<'; \
+	$(LTCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+
+%.o: %.cpp
+	@echo '$(CXXCOMPILE) -c $<'; \
+	$(CXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-cp .deps/$(*F).pp .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm .deps/$(*F).pp
+
+%.lo: %.cpp
+	@echo '$(LTCXXCOMPILE) -c $<'; \
+	$(LTCXXCOMPILE) -Wp,-MD,.deps/$(*F).pp -c $<
+	@-sed -e 's/^\([^:]*\)\.o[ 	]*:/\1.lo \1.o :/' \
+	  < .deps/$(*F).pp > .deps/$(*F).P; \
+	tr ' ' '\012' < .deps/$(*F).pp \
+	  | sed -e 's/^\\$$//' -e '/^$$/ d' -e '/:$$/ d' -e 's/$$/ :/' \
+	    >> .deps/$(*F).P; \
+	rm -f .deps/$(*F).pp
+info-am:
 info: info-recursive
+dvi-am:
 dvi: dvi-recursive
-check: all-am
-	$(MAKE) check-recursive
+check-am: all-am
+check: check-recursive
+installcheck-am:
 installcheck: installcheck-recursive
-all-am: Makefile $(PROGRAMS)
-
 install-exec-am: install-binPROGRAMS
+install-exec: install-exec-recursive
 
-install-data-am: install-data-local
+#>- install-data-am: install-appsDATA
+#>+ 1
+install-data-am: install-kde-icons  install-appsDATA
+install-data: install-data-recursive
 
-uninstall-am: uninstall-binPROGRAMS uninstall-local
-
-install-exec: install-exec-recursive install-exec-am
-	@$(NORMAL_INSTALL)
-
-install-data: install-data-recursive install-data-am
-	@$(NORMAL_INSTALL)
-
-install: install-recursive install-exec-am install-data-am
-	@:
-
-uninstall: uninstall-recursive uninstall-am
-
-all: all-recursive all-am
-
+install-am: all-am
+	@$(MAKE) $(AM_MAKEFLAGS) install-exec-am install-data-am
+install: install-recursive
+#>- uninstall-am: uninstall-binPROGRAMS uninstall-appsDATA
+#>+ 1
+uninstall-am: uninstall-kde-icons  uninstall-binPROGRAMS uninstall-appsDATA
+uninstall: uninstall-recursive
+all-am: Makefile $(PROGRAMS) $(DATA)
+all-redirect: all-recursive
 install-strip:
-	$(MAKE) INSTALL_PROGRAM='$(INSTALL_PROGRAM) -s' INSTALL_SCRIPT='$(INSTALL_PROGRAM)' install
+	$(MAKE) $(AM_MAKEFLAGS) AM_INSTALL_PROGRAM_FLAGS=-s install
 installdirs: installdirs-recursive
-	$(mkinstalldirs)  $(bindir)
+installdirs-am:
+	$(mkinstalldirs)  $(DESTDIR)$(bindir) $(DESTDIR)$(appsdir)
 
 
 mostlyclean-generic:
-	test -z "$(MOSTLYCLEANFILES)" || rm -f $(MOSTLYCLEANFILES)
 
 clean-generic:
-	test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
-	rm -f Makefile $(DISTCLEANFILES)
-	rm -f config.cache config.log stamp-h stamp-h[0-9]*
-	test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
+	-rm -f Makefile $(CONFIG_CLEAN_FILES)
+	-rm -f config.cache config.log stamp-h stamp-h[0-9]*
 
 maintainer-clean-generic:
-	test -z "$(MAINTAINERCLEANFILES)" || rm -f $(MAINTAINERCLEANFILES)
-	test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 mostlyclean-am:  mostlyclean-binPROGRAMS mostlyclean-compile \
-		mostlyclean-tags mostlyclean-depend mostlyclean-generic
+		mostlyclean-libtool mostlyclean-tags mostlyclean-depend \
+		mostlyclean-generic
 
-clean-am:  clean-binPROGRAMS clean-compile clean-tags clean-depend \
-		clean-generic mostlyclean-am
+mostlyclean: mostlyclean-recursive
 
-distclean-am:  distclean-binPROGRAMS distclean-compile distclean-tags \
-		distclean-depend distclean-generic clean-am
+#>- clean-am:  clean-binPROGRAMS clean-compile clean-libtool clean-tags \
+#>- 		clean-depend clean-generic mostlyclean-am
+#>+ 2
+clean-am: clean-metasources clean-final   clean-binPROGRAMS clean-compile clean-libtool clean-tags \
+		clean-depend clean-generic mostlyclean-am
+
+#>- clean: clean-recursive
+#>+ 1
+clean: kde-rpo-clean  clean-recursive
+
+distclean-am:  distclean-binPROGRAMS distclean-compile distclean-libtool \
+		distclean-tags distclean-depend distclean-generic \
+		clean-am
+	-rm -f libtool
+
+distclean: distclean-recursive
 
 maintainer-clean-am:  maintainer-clean-binPROGRAMS \
-		maintainer-clean-compile maintainer-clean-tags \
-		maintainer-clean-depend maintainer-clean-generic \
-		distclean-am
-
-mostlyclean:  mostlyclean-recursive mostlyclean-am
-
-clean:  clean-recursive clean-am
-
-distclean:  distclean-recursive distclean-am
-	rm -f config.status
-
-maintainer-clean:  maintainer-clean-recursive maintainer-clean-am
+		maintainer-clean-compile maintainer-clean-libtool \
+		maintainer-clean-tags maintainer-clean-depend \
+		maintainer-clean-generic distclean-am
 	@echo "This command is intended for maintainers to use;"
 	@echo "it deletes files that may require special tools to rebuild."
 
-.PHONY: default mostlyclean-binPROGRAMS distclean-binPROGRAMS \
-clean-binPROGRAMS maintainer-clean-binPROGRAMS uninstall-binPROGRAMS \
-install-binPROGRAMS mostlyclean-compile distclean-compile clean-compile \
-maintainer-clean-compile install-data-recursive \
-uninstall-data-recursive install-exec-recursive \
-uninstall-exec-recursive installdirs-recursive uninstalldirs-recursive \
-all-recursive check-recursive installcheck-recursive info-recursive \
-dvi-recursive mostlyclean-recursive distclean-recursive clean-recursive \
+maintainer-clean: maintainer-clean-recursive
+
+.PHONY: mostlyclean-binPROGRAMS distclean-binPROGRAMS clean-binPROGRAMS \
+maintainer-clean-binPROGRAMS uninstall-binPROGRAMS install-binPROGRAMS \
+mostlyclean-compile distclean-compile clean-compile \
+maintainer-clean-compile mostlyclean-libtool distclean-libtool \
+clean-libtool maintainer-clean-libtool uninstall-appsDATA \
+install-appsDATA install-data-recursive uninstall-data-recursive \
+install-exec-recursive uninstall-exec-recursive installdirs-recursive \
+uninstalldirs-recursive all-recursive check-recursive \
+installcheck-recursive info-recursive dvi-recursive \
+mostlyclean-recursive distclean-recursive clean-recursive \
 maintainer-clean-recursive tags tags-recursive mostlyclean-tags \
 distclean-tags clean-tags maintainer-clean-tags distdir \
 mostlyclean-depend distclean-depend clean-depend \
-maintainer-clean-depend info dvi installcheck all-am install-exec-am \
-install-data-am uninstall-am install-exec install-data install \
-uninstall all installdirs mostlyclean-generic distclean-generic \
-clean-generic maintainer-clean-generic clean mostlyclean distclean \
-maintainer-clean
+maintainer-clean-depend info-am info dvi-am dvi check check-am \
+installcheck-am installcheck install-exec-am install-exec \
+install-data-am install-data install-am install uninstall-am uninstall \
+all-redirect all-am all installdirs-am installdirs mostlyclean-generic \
+distclean-generic clean-generic maintainer-clean-generic clean \
+mostlyclean distclean maintainer-clean
 
 
-install-data-local:
-	$(mkinstalldirs) $(appsdir)
-	$(INSTALL_DATA) KMail.kdelnk $(appsdir)
-
-uninstall-local:
-	rm -f $(appsdir)/KMail.kdelnk
-
-kmfolderdia.cpp:kmfolderdia.moc
-kmfolderdia.moc: kmfolderdia.h
-	$(MOC) kmfolderdia.h -o kmfolderdia.moc
-
-kmfolder.cpp:kmfolder.moc
-kmfolder.moc: kmfolder.h
-	$(MOC) kmfolder.h -o kmfolder.moc
-
-kmfoldertree.cpp:kmfoldertree.moc
-kmfoldertree.moc: kmfoldertree.h
-	$(MOC) kmfoldertree.h -o kmfoldertree.moc
-
-kmacctseldlg.cpp:kmacctseldlg.moc
-kmacctseldlg.moc: kmacctseldlg.h
-	$(MOC) kmacctseldlg.h -o kmacctseldlg.moc
-
-kmfoldernode.cpp:kmfoldernode.moc
-kmfoldernode.moc: kmfoldernode.h
-	$(MOC) kmfoldernode.h -o kmfoldernode.moc
-
-kmmainview.cpp:kmmainview.moc
-kmmainview.moc: kmmainview.h
-	$(MOC) kmmainview.h -o kmmainview.moc
-
-kmacctmgr.cpp:kmacctmgr.moc
-kmacctmgr.moc: kmacctmgr.h
-	$(MOC) kmacctmgr.h -o kmacctmgr.moc
-
-kmsettings.cpp:kmsettings.moc
-kmsettings.moc: kmsettings.h
-	$(MOC) kmsettings.h -o kmsettings.moc
-
-KEdit.cpp:KEdit.moc
-KEdit.moc: KEdit.h
-	$(MOC) KEdit.h -o KEdit.moc
-
-kmreaderwin.cpp:kmreaderwin.moc
-kmreaderwin.moc: kmreaderwin.h
-	$(MOC) kmreaderwin.h -o kmreaderwin.moc
-
-kmmessage.cpp:kmmessage.moc
-kmmessage.moc: kmmessage.h
-	$(MOC) kmmessage.h -o kmmessage.moc
-
-kmmainwin.cpp:kmmainwin.moc
-kmmainwin.moc: kmmainwin.h
-	$(MOC) kmmainwin.h -o kmmainwin.moc
-
-kmheaders.cpp:kmheaders.moc
-kmheaders.moc: kmheaders.h
-	$(MOC) kmheaders.h -o kmheaders.moc
-
-kmfolderdir.cpp:kmfolderdir.moc
-kmfolderdir.moc: kmfolderdir.h
-	$(MOC) kmfolderdir.h -o kmfolderdir.moc
-
-kmcomposewin.cpp:kmcomposewin.moc
-kmcomposewin.moc: kmcomposewin.h
-	$(MOC) kmcomposewin.h -o kmcomposewin.moc
-
-ktablistbox.cpp:ktablistbox.moc
-ktablistbox.moc: ktablistbox.h
-	$(MOC) ktablistbox.h -o ktablistbox.moc
-
-kbusyptr.cpp:kbusyptr.moc
-kbusyptr.moc: kbusyptr.h
-	$(MOC) kbusyptr.h -o kbusyptr.moc
-
-kalarmtimer.cpp:kalarmtimer.moc
-kalarmtimer.moc: kalarmtimer.h
-	$(MOC) kalarmtimer.h -o kalarmtimer.moc
-
-kshortcut.cpp: kshortcut.moc
-kshortcut.moc: kshortcut.h
-	$(MOC) kshortcut.h -o kshortcut.moc
+messages:
+	$(XGETTEXT) $(kmail_SOURCES) -o $(podir)/kmail.pot
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:
+
+#>+ 4
+$(srcdir)/kmsettings.cpp: kmsettings.moc
+kmsettings.moc: $(srcdir)/kmsettings.h
+	$(MOC) $(srcdir)/kmsettings.h -o kmsettings.moc
+
+#>+ 4
+$(srcdir)/kmmsgpartdlg.cpp: kmmsgpartdlg.moc
+kmmsgpartdlg.moc: $(srcdir)/kmmsgpartdlg.h
+	$(MOC) $(srcdir)/kmmsgpartdlg.h -o kmmsgpartdlg.moc
+
+#>+ 4
+$(srcdir)/kmbroadcaststatus.cpp: kmbroadcaststatus.moc
+kmbroadcaststatus.moc: $(srcdir)/kmbroadcaststatus.h
+	$(MOC) $(srcdir)/kmbroadcaststatus.h -o kmbroadcaststatus.moc
+
+#>+ 4
+$(srcdir)/kmfolder.cpp: kmfolder.moc
+kmfolder.moc: $(srcdir)/kmfolder.h
+	$(MOC) $(srcdir)/kmfolder.h -o kmfolder.moc
+
+#>+ 4
+$(srcdir)/kmfilterdlg.cpp: kmfilterdlg.moc
+kmfilterdlg.moc: $(srcdir)/kmfilterdlg.h
+	$(MOC) $(srcdir)/kmfilterdlg.h -o kmfilterdlg.moc
+
+#>+ 4
+$(srcdir)/kmacctmgr.cpp: kmacctmgr.moc
+kmacctmgr.moc: $(srcdir)/kmacctmgr.h
+	$(MOC) $(srcdir)/kmacctmgr.h -o kmacctmgr.moc
+
+#>+ 4
+$(srcdir)/kmcomposewin.cpp: kmcomposewin.moc
+kmcomposewin.moc: $(srcdir)/kmcomposewin.h
+	$(MOC) $(srcdir)/kmcomposewin.h -o kmcomposewin.moc
+
+#>+ 4
+$(srcdir)/kmfilteraction.cpp: kmfilteraction.moc
+kmfilteraction.moc: $(srcdir)/kmfilteraction.h
+	$(MOC) $(srcdir)/kmfilteraction.h -o kmfilteraction.moc
+
+#>+ 4
+$(srcdir)/kmnewiostatus.cpp: kmnewiostatus.moc
+kmnewiostatus.moc: $(srcdir)/kmnewiostatus.h
+	$(MOC) $(srcdir)/kmnewiostatus.h -o kmnewiostatus.moc
+
+#>+ 4
+$(srcdir)/kmnewiostatuswdg.cpp: kmnewiostatuswdg.moc
+kmnewiostatuswdg.moc: $(srcdir)/kmnewiostatuswdg.h
+	$(MOC) $(srcdir)/kmnewiostatuswdg.h -o kmnewiostatuswdg.moc
+
+#>+ 4
+$(srcdir)/kmacctpop.cpp: kmacctpop.moc
+kmacctpop.moc: $(srcdir)/kmacctpop.h
+	$(MOC) $(srcdir)/kmacctpop.h -o kmacctpop.moc
+
+#>+ 4
+$(srcdir)/kmfolderdia.cpp: kmfolderdia.moc
+kmfolderdia.moc: $(srcdir)/kmfolderdia.h
+	$(MOC) $(srcdir)/kmfolderdia.h -o kmfolderdia.moc
+
+#>+ 4
+$(srcdir)/kbusyptr.cpp: kbusyptr.moc
+kbusyptr.moc: $(srcdir)/kbusyptr.h
+	$(MOC) $(srcdir)/kbusyptr.h -o kbusyptr.moc
+
+#>+ 4
+$(srcdir)/kmfoldertree.cpp: kmfoldertree.moc
+kmfoldertree.moc: $(srcdir)/kmfoldertree.h
+	$(MOC) $(srcdir)/kmfoldertree.h -o kmfoldertree.moc
+
+#>+ 4
+$(srcdir)/kmaccount.cpp: kmaccount.moc
+kmaccount.moc: $(srcdir)/kmaccount.h
+	$(MOC) $(srcdir)/kmaccount.h -o kmaccount.moc
+
+#>+ 4
+$(srcdir)/ktablistbox.cpp: ktablistbox.moc
+ktablistbox.moc: $(srcdir)/ktablistbox.h
+	$(MOC) $(srcdir)/ktablistbox.h -o ktablistbox.moc
+
+#>+ 4
+$(srcdir)/kmiostatusdlg.cpp: kmiostatusdlg.moc
+kmiostatusdlg.moc: $(srcdir)/kmiostatusdlg.h
+	$(MOC) $(srcdir)/kmiostatusdlg.h -o kmiostatusdlg.moc
+
+#>+ 4
+$(srcdir)/kmmainwin.cpp: kmmainwin.moc
+kmmainwin.moc: $(srcdir)/kmmainwin.h
+	$(MOC) $(srcdir)/kmmainwin.h -o kmmainwin.moc
+
+#>+ 4
+$(srcdir)/kmacctseldlg.cpp: kmacctseldlg.moc
+kmacctseldlg.moc: $(srcdir)/kmacctseldlg.h
+	$(MOC) $(srcdir)/kmacctseldlg.h -o kmacctseldlg.moc
+
+#>+ 4
+$(srcdir)/kmacctexppop.cpp: kmacctexppop.moc
+kmacctexppop.moc: $(srcdir)/kmacctexppop.h
+	$(MOC) $(srcdir)/kmacctexppop.h -o kmacctexppop.moc
+
+#>+ 4
+$(srcdir)/kmtopwidget.cpp: kmtopwidget.moc
+kmtopwidget.moc: $(srcdir)/kmtopwidget.h
+	$(MOC) $(srcdir)/kmtopwidget.h -o kmtopwidget.moc
+
+#>+ 4
+$(srcdir)/kmfolderseldlg.cpp: kmfolderseldlg.moc
+kmfolderseldlg.moc: $(srcdir)/kmfolderseldlg.h
+	$(MOC) $(srcdir)/kmfolderseldlg.h -o kmfolderseldlg.moc
+
+#>+ 4
+$(srcdir)/kpgp.cpp: kpgp.moc
+kpgp.moc: $(srcdir)/kpgp.h
+	$(MOC) $(srcdir)/kpgp.h -o kpgp.moc
+
+#>+ 4
+$(srcdir)/configuredialog.cpp: configuredialog.moc
+configuredialog.moc: $(srcdir)/configuredialog.h
+	$(MOC) $(srcdir)/configuredialog.h -o configuredialog.moc
+
+#>+ 4
+$(srcdir)/kmfolderdir.cpp: kmfolderdir.moc
+kmfolderdir.moc: $(srcdir)/kmfolderdir.h
+	$(MOC) $(srcdir)/kmfolderdir.h -o kmfolderdir.moc
+
+#>+ 4
+$(srcdir)/charsetsDlg.cpp: charsetsDlg.moc
+charsetsDlg.moc: $(srcdir)/charsetsDlg.h
+	$(MOC) $(srcdir)/charsetsDlg.h -o charsetsDlg.moc
+
+#>+ 4
+$(srcdir)/kmheaders.cpp: kmheaders.moc
+kmheaders.moc: $(srcdir)/kmheaders.h
+	$(MOC) $(srcdir)/kmheaders.h -o kmheaders.moc
+
+#>+ 4
+$(srcdir)/kmaddrbookdlg.cpp: kmaddrbookdlg.moc
+kmaddrbookdlg.moc: $(srcdir)/kmaddrbookdlg.h
+	$(MOC) $(srcdir)/kmaddrbookdlg.h -o kmaddrbookdlg.moc
+
+#>+ 4
+$(srcdir)/kmsender.cpp: kmsender.moc
+kmsender.moc: $(srcdir)/kmsender.h
+	$(MOC) $(srcdir)/kmsender.h -o kmsender.moc
+
+#>+ 4
+$(srcdir)/kmreaderwin.cpp: kmreaderwin.moc
+kmreaderwin.moc: $(srcdir)/kmreaderwin.h
+	$(MOC) $(srcdir)/kmreaderwin.h -o kmreaderwin.moc
+
+#>+ 4
+$(srcdir)/kalarmtimer.cpp: kalarmtimer.moc
+kalarmtimer.moc: $(srcdir)/kalarmtimer.h
+	$(MOC) $(srcdir)/kalarmtimer.h -o kalarmtimer.moc
+
+#>+ 4
+$(srcdir)/kmfoldernode.cpp: kmfoldernode.moc
+kmfoldernode.moc: $(srcdir)/kmfoldernode.h
+	$(MOC) $(srcdir)/kmfoldernode.h -o kmfoldernode.moc
+
+#>+ 4
+$(srcdir)/kmfoldermgr.cpp: kmfoldermgr.moc
+kmfoldermgr.moc: $(srcdir)/kmfoldermgr.h
+	$(MOC) $(srcdir)/kmfoldermgr.h -o kmfoldermgr.moc
+
+#>+ 3
+clean-metasources:
+	-rm -f  kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmacctexppop.moc kmtopwidget.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kmsender.moc kmreaderwin.moc kalarmtimer.moc kmfoldernode.moc kmfoldermgr.moc
+
+#>+ 2
+docs: docs-recursive docs-am
+
+#>+ 2
+docs-am:
+
+#>+ 16
+install-kde-icons:
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/medium/hicolor/apps
+	$(INSTALL_DATA) $(srcdir)/him-app-kmail.png $(DESTDIR)$(kde_icondir)/medium/hicolor/apps/kmail.png
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/large/hicolor/apps
+	$(INSTALL_DATA) $(srcdir)/hil-app-kmail.png $(DESTDIR)$(kde_icondir)/large/hicolor/apps/kmail.png
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/medium/locolor/apps
+	$(INSTALL_DATA) $(srcdir)/lom-app-kmail.png $(DESTDIR)$(kde_icondir)/medium/locolor/apps/kmail.png
+	$(mkinstalldirs) $(DESTDIR)$(kde_icondir)/small/locolor/apps
+	$(INSTALL_DATA) $(srcdir)/los-app-kmail.png $(DESTDIR)$(kde_icondir)/small/locolor/apps/kmail.png
+
+uninstall-kde-icons:
+	-rm -f $(DESTDIR)$(kde_icondir)/medium/hicolor/apps/kmail.png
+	-rm -f $(DESTDIR)$(kde_icondir)/large/hicolor/apps/kmail.png
+	-rm -f $(DESTDIR)$(kde_icondir)/medium/locolor/apps/kmail.png
+	-rm -f $(DESTDIR)$(kde_icondir)/small/locolor/apps/kmail.png
+
+#>+ 5
+force-reedit:
+		cd $(top_srcdir) && $(AUTOMAKE) --gnu kmail/Makefile
+	cd $(top_srcdir) && perl admin/am_edit kmail/Makefile.in
+
+
+#>+ 11
+kmail.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kmmainwin.cpp $(srcdir)/kmfolderdia.cpp $(srcdir)/kmfoldertree.cpp $(srcdir)/kmsettings.cpp $(srcdir)/kmaccount.cpp $(srcdir)/kmheaders.cpp $(srcdir)/kmcomposewin.cpp $(srcdir)/kmfolder.cpp $(srcdir)/kmmsgpartdlg.cpp $(srcdir)/kmmessage.cpp $(srcdir)/kmreaderwin.cpp $(srcdir)/kbusyptr.cpp $(srcdir)/kalarmtimer.cpp $(srcdir)/kmmsgpart.cpp $(srcdir)/kmmsginfo.cpp $(srcdir)/kmacctmgr.cpp $(srcdir)/main.cpp $(srcdir)/kmacctfolder.cpp $(srcdir)/kmacctlocal.cpp $(srcdir)/kmacctpop.cpp $(srcdir)/kmfolderdir.cpp $(srcdir)/kmfoldermgr.cpp $(srcdir)/kmfoldernode.cpp $(srcdir)/kmsender.cpp $(srcdir)/kmacctseldlg.cpp $(srcdir)/kmfiltermgr.cpp $(srcdir)/kmfilteraction.cpp $(srcdir)/kmidentity.cpp $(srcdir)/kmfolderseldlg.cpp $(srcdir)/kmfilter.cpp $(srcdir)/kmfilterdlg.cpp $(srcdir)/kmmsgbase.cpp $(srcdir)/kmmsglist.cpp $(srcdir)/kpgp.cpp $(srcdir)/kpgpbase.cpp $(srcdir)/kfileio.cpp $(srcdir)/kmaddrbook.cpp $(srcdir)/kmaddrbookdlg.cpp $(srcdir)/kmiostatusdlg.cpp $(srcdir)/kmnewiostatus.cpp $(srcdir)/kmnewiostatuswdg.cpp $(srcdir)/charsetsDlg.cpp $(srcdir)/kfontutils.cpp $(srcdir)/kmtopwidget.cpp $(srcdir)/kmundostack.cpp $(srcdir)/ktablistbox.cpp $(srcdir)/kmbroadcaststatus.cpp $(srcdir)/kmacctexppop.cpp $(srcdir)/configuredialog.cpp   kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmacctexppop.moc kmtopwidget.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kmsender.moc kmreaderwin.moc kalarmtimer.moc kmfoldernode.moc kmfoldermgr.moc 
+	@echo 'creating kmail.all_cpp.cpp ...'; \
+	rm -f kmail.all_cpp.files kmail.all_cpp.final; \
+	echo "#define KDE_USE_FINAL 1" >> kmail.all_cpp.final; \
+	for file in kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp kmsettings.cpp kmaccount.cpp kmheaders.cpp kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp kmacctmgr.cpp main.cpp kmacctfolder.cpp kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp kmacctseldlg.cpp kmfiltermgr.cpp kmfilteraction.cpp kmidentity.cpp kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp kfileio.cpp kmaddrbook.cpp kmaddrbookdlg.cpp kmiostatusdlg.cpp kmnewiostatus.cpp kmnewiostatuswdg.cpp charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp kmundostack.cpp ktablistbox.cpp kmbroadcaststatus.cpp kmacctexppop.cpp configuredialog.cpp ; do \
+	  echo "#include \"$$file\"" >> kmail.all_cpp.files; \
+	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> kmail.all_cpp.final; \
+	done; \
+	cat kmail.all_cpp.final kmail.all_cpp.files  > kmail.all_cpp.cpp; \
+	rm -f kmail.all_cpp.final kmail.all_cpp.files
+
+#>+ 3
+clean-final:
+	-rm -f kmail.all_cpp.cpp
+
+#>+ 2
+final:
+	$(MAKE) kmail_OBJECTS="$(kmail_final_OBJECTS)" all-am
+#>+ 3
+cvs-clean:
+	$(MAKE) -f $(top_srcdir)/admin/Makefile.common cvs-clean
+
+#>+ 3
+kde-rpo-clean:
+	-rm -f *.rpo

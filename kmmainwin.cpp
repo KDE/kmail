@@ -382,6 +382,25 @@ void KMMainWin::slotSettings()
   dlg.exec();
 }
 
+#include "configuredialog.h"
+
+void KMMainWin::slotNewSettings()
+{
+  //
+  // 2000-03-12 Espen Sand
+  // New Settings Dialog
+  //
+  static ConfigureDialog *dialog = 0;
+  if( dialog == 0 )
+  {
+    dialog = new ConfigureDialog( this, "configure", false );
+  }
+  dialog->show();
+}
+
+
+
+
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotFilter()
@@ -1101,6 +1120,8 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("&Settings..."), this,
 		       SLOT(slotSettings()));
+  fileMenu->insertItem("Settings (new dialog)...", this,
+		       SLOT(slotNewSettings()));
   fileMenu->insertItem(i18n("&Addressbook..."), this,
 		       SLOT(slotAddrBook()));
   fileMenu->insertItem(i18n("F&ilter..."), this,

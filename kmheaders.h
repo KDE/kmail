@@ -183,6 +183,7 @@ protected:
   /* Handle shift and control selection */
   virtual void contentsMousePressEvent(QMouseEvent*);
   virtual void contentsMouseReleaseEvent(QMouseEvent* e);
+  virtual void keyPressEvent( QKeyEvent * e );
 
   /* Unselect all items except one */
   virtual void clearSelectionExcept( QListViewItem *exception );
