@@ -51,25 +51,16 @@ public:
                                           int numBytesToRead = -1,
                                           bool mLeaveOnServer = false,
                                           KMail::ProgressItem* progressItem = 0 ); // set the same status in this progress item
-  /** Emit an enable progress widget(s) in status bar(s) signal */
-  void setStatusProgressEnable( const QString& id, bool enable );
-  /** Emit an update progress widget(s) percent completed signal */
-  void setStatusProgressPercent( const QString& id, unsigned long percent );
 
 signals:
 
   /** Emitted when setStatusMsg is called. */
   void statusMsg( const QString& );
-  /** Emitted when setStatusProgressEnable is called. */
-  void statusProgressEnable( bool );
-  /** Emitted when setStatusProgressPercent is called. */
-  void statusProgressPercent( unsigned long );
 
 protected:
 
   KMBroadcastStatus();
   static KMBroadcastStatus* instance_;
-  QMap<QString,unsigned long> ids;
 };
 
 

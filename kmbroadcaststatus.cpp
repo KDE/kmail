@@ -132,30 +132,4 @@ void KMBroadcastStatus::setStatusMsgTransmissionCompleted( const QString& accoun
     item->setStatus( statusMsg );
 }
 
-void KMBroadcastStatus::setStatusProgressEnable( const QString &id,
-  bool enable )
-{
-  bool wasEmpty = ids.isEmpty();
-  if (enable) ids.insert(id, 0);
-  else ids.remove(id);
-  if (!wasEmpty && !ids.isEmpty())
-    setStatusProgressPercent("", 0);
-  else
-    emit statusProgressEnable( !ids.isEmpty() );
-}
-
-void KMBroadcastStatus::setStatusProgressPercent( const QString &id,
-  unsigned long percent )
-{
-  if (!id.isEmpty() && ids.contains(id)) ids.insert(id, percent);
-  unsigned long sum = 0, count = 0;
-  for (QMap<QString,unsigned long>::iterator it = ids.begin();
-    it != ids.end(); it++)
-  {
-    sum += *it;
-    count++;
-  }
-  emit statusProgressPercent( count ? (sum / count) : sum );
-}
-
 #include "kmbroadcaststatus.moc"
