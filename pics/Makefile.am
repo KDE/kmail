@@ -1,7 +1,8 @@
 
 pics_DATA = kmmsgdel.png kmmsgnew.png kmmsgunseen.png kmmsgold.png \
 	kmmsgreplied.png kmmsgforwarded.png kmmsgqueued.png kmmsgflag.png \
-	kmmsgsent.png stopwatch.xbm stopwatchMask.xbm kdelogo.png \
+	kmmsgsent.png kmmsgwatched.png kmmsgignored.png \
+	stopwatch.xbm stopwatchMask.xbm kdelogo.png \
 	pub_key_red.png pgp-keys.png \
 	kmmsgpartiallyencrypted.png \
 	kmmsgpartiallysigned.png kmmsgfiller.png kmmsgfullyencrypted.png \
