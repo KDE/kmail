@@ -339,7 +339,7 @@ KMMainWin * KMSystemTray::getKMMainWin()
     if(kmWin->isA("KMMainWin")) break;
   if(kmWin && kmWin->isA("KMMainWin"))
   {
-    return dynamic_cast<KMMainWin *> (kmWin);
+    return static_cast<KMMainWin *> (kmWin);
   }
 
   return 0;
@@ -440,11 +440,13 @@ void KMSystemTray::selectedAccount(int id)
   /** Select folder */
   KMFolder * fldr = mPopupFolders.at(id);
   if(!fldr) return;
-  QListViewItem * fldrIdx = ((KMFolderTree *) mainWin->mainKMWidget()->folderTree())->indexOfFolder(fldr);
+  KMFolderTree * ft = mainWin->mainKMWidget()->folderTree();
+  if(!ft) return;
+  QListViewItem * fldrIdx = ft->indexOfFolder(fldr);
   if(!fldrIdx) return;
 
-  (dynamic_cast<KMFolderTree *> (mainWin->mainKMWidget()->folderTree()))->setCurrentItem(fldrIdx);
-  (dynamic_cast<KMFolderTree *> (mainWin->mainKMWidget()->folderTree()))->selectCurrentFolder();
+  ft->setCurrentItem(fldrIdx);
+  ft->selectCurrentFolder();
   mainWin->mainKMWidget()->folderSelectedUnread(fldr);
 }
 
