@@ -272,8 +272,6 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   setupActions();
 
   applyMainWindowSettings(KMKernel::config(), "Composer");
-  // html-toolbar always default off
-  toolBar("htmlToolBar")->hide();
 
   connect( mEdtSubject, SIGNAL( subjectTextSpellChecked() ),
            SLOT( slotSubjectTextSpellChecked() ) );
