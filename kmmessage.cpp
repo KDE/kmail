@@ -212,6 +212,7 @@ KMMessage::KMMessage(KMMsgInfo& msgInfo): KMMessageInherited()
 //-----------------------------------------------------------------------------
 KMMessage::~KMMessage()
 {
+  Q_ASSERT( !transferInProgress() );
   delete mMsg;
   kernel->undoStack()->msgDestroyed( this );
 }
@@ -2513,7 +2514,7 @@ QValueList<int> KMMessage::determineAllowedCtes( const CharFreq& cf,
     allowedCtes.remove( DwMime::kCte8bit );
     allowedCtes.remove( DwMime::kCte7bit );
   }
-  
+
   return allowedCtes;
 }
 
