@@ -53,7 +53,7 @@ using KMail::IdentityDialog;
 #include <kpgpui.h>
 #include <kmime_util.h>
 using KMime::DateFormatter;
-#include <cryptplugfactory.h>
+#include <kleo/cryptobackendfactory.h>
 #include <ui/backendconfigwidget.h>
 
 // other KDE headers:
@@ -3470,7 +3470,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
 {
   QVBoxLayout * vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  mBackendConfig = KMail::CryptPlugFactory::instance()->configWidget( this, "mBackendConfig" );
+  mBackendConfig = Kleo::CryptoBackendFactory::instance()->configWidget( this, "mBackendConfig" );
 
   vlay->addWidget( mBackendConfig );
 }
