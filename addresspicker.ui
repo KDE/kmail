@@ -201,7 +201,7 @@
                         <cstring>mToButton</cstring>
                     </property>
                     <property name="text">
-                        <string>TO &gt;&gt;</string>
+                        <string>To &gt;&gt;</string>
                     </property>
                 </widget>
                 <widget class="KPushButton">
