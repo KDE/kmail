@@ -121,8 +121,6 @@ void KMFolderMgr::compactAllAux(KMFolderDir* dir)
 //-----------------------------------------------------------------------------
 void KMFolderMgr::setBasePath(const QString& aBasePath)
 {
-  QDir dir;
-
   assert(!aBasePath.isNull());
 
   if (aBasePath[0] == '~')
@@ -134,14 +132,30 @@ void KMFolderMgr::setBasePath(const QString& aBasePath)
   else
     mBasePath = aBasePath;
 
+  QFileInfo info( mBasePath );
 
-  dir.setPath(mBasePath);
-  if (!dir.exists())
-  {
-    // FIXME: mkdir can fail!
-    mkdir(QFile::encodeName(mBasePath), 0700);
+  // FIXME We should ask for an alternative dir, rather than bailing out,
+  // I guess - till
+  if ( info.exists() ) {
+   if ( !info.isDir() ) {
+      KMessageBox::sorry(0, i18n("%1 does not appear to be a directory.\n"
+            "Please move the file out of the way.\n").arg( mBasePath ) );
+      ::exit(-1);
+    }
+    if ( !info.isReadable() || !info.isWritable() ) {
+      KMessageBox::sorry(0, i18n("Permissions on the %1 directory are incorrect!\n"
+            "Please set them to 0700.\n").arg( mBasePath ) );
+      ::exit(-1);
+    }
+   } else {
+    // ~/Mail (or whatever the user specified) doesn't exist, create it
+    if ( ::mkdir( QFile::encodeName( mBasePath ) , S_IRWXU ) == -1 ) {
+      KMessageBox::sorry(0, i18n("KMail couldn't create %1 directory !\n"
+                                 "Make sure you have write permissions in %2 directory.\n")
+                         .arg( mBasePath ).arg( QDir::homeDirPath() ) );
+      ::exit(-1);
+    }
   }
-
   mDir.setPath(mBasePath);
   mDir.reload();
   contentsChanged();

@@ -9,6 +9,7 @@
 #include <dcopclient.h>
 #include "kmkernel.h" //control center
 #include <kcmdlineargs.h>
+#include <qtimer.h>
 
 #undef Status // stupid X headers
 
@@ -73,6 +74,13 @@ int KMailApplication::newInstance()
   bool checkMail = false;
   //bool viewOnly = false;
 
+  if (dcopClient()->isSuspended())
+  {
+    // Try again later.
+    QTimer::singleShot( 100, this, SLOT(newInstance()) );
+    return;
+  }
+  
   // process args:
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   if (args->getOption("subject"))
