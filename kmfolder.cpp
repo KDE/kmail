@@ -946,9 +946,13 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
     emit msgAdded(idx);
   else
     mChanged = TRUE;
+
   if (opened) close();
 
-  return ferror(mStream);
+  // All streams have been flushed without errors if we arrive here
+  // Return success!
+  // (Don't return status of stream, it may have been closed already.)
+  return 0;
 } 
 
 
