@@ -1637,7 +1637,9 @@ void KMMessage::viewSource(const QString aCaption) const
 
   edt->insertLine(str);
   edt->setReadOnly(TRUE);
-  edt->show();
+  edt->resize(KApplication::desktop()->width()/2, 
+	      2*KApplication::desktop()->height()/3);
+  edt->setCursorPosition(0, 0);  edt->show();
 
 #else //not ALLOW_GUI
   debug("Message source: %s\n%s\n--- end of message ---", 
