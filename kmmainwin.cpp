@@ -83,7 +83,6 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   if (idx!=0) {
     mFolderTree->setCurrentItem(idx);
     mFolderTree->setSelected(idx,TRUE);
-    mHeaders->workAroundQListViewLimitation();
   }
 
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
@@ -300,6 +299,8 @@ void KMMainWin::activatePanners(void)
     mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
     setView(mHorizPanner);
   }
+  mHorizPanner->setSizes( *mHorizPannerSep );
+  mVertPanner->setSizes( *mVertPannerSep );
 }
 
 
