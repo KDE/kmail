@@ -26,12 +26,13 @@
 #include <klocale.h>
 #include <kabc/stdaddressbook.h>
 #include <kabc/resource.h>
-#include <kdialog.h>
+#include <kdialogbase.h>
 
 #include <qlayout.h>
 #include <qcombobox.h>
 #include <qpushbutton.h>
 #include <qlabel.h>
+#include <qvbox.h>
 
 RecipientItem::RecipientItem()
 {
@@ -106,34 +107,26 @@ RecipientItem::List RecipientsCollection::items() const
 
 
 RecipientsPicker::RecipientsPicker( QWidget *parent )
-  : QWidget( parent )
+  : KDialogBase( parent, "RecipientsPicker", true, i18n( "Select Recipient" ),
+                  KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true )
 {
-  setCaption( i18n("Select Recipient") );
+  QVBox *vbox = makeVBoxMainWidget();
 
-  QBoxLayout *topLayout = new QVBoxLayout( this );
-  topLayout->setSpacing( KDialog::spacingHint() );
-  topLayout->setMargin( KDialog::marginHint() );
-
-  QBoxLayout *resLayout = new QHBoxLayout( topLayout );
-  
-  QLabel *label = new QLabel( i18n("AddressBook:"), this );
-  resLayout->addWidget( label );
-  
-  mCollectionCombo = new QComboBox( this );
-  resLayout->addWidget( mCollectionCombo );
+  QHBox *hbox = new  QHBox( vbox ); 
+  QLabel *label = new QLabel( i18n("Addressbook:"), hbox );
+ 
+  mCollectionCombo = new QComboBox( hbox );
   connect( mCollectionCombo, SIGNAL( highlighted( int ) ),
     SLOT( updateList() ) );
   connect( mCollectionCombo, SIGNAL( activated( int ) ),
     SLOT( updateList() ) );
   
-  QBoxLayout *searchLayout = new QHBoxLayout( topLayout );
-  
-  label = new QLabel( i18n("Search:"), this );
-  searchLayout->addWidget( label );
-  
-  mRecipientList = new KListView( this );
+  hbox = new  QHBox( vbox ); 
+  label = new QLabel( i18n("Search:"), hbox );
+  mSearchLine = new KListViewSearchLine( hbox );
+
+  mRecipientList = new KListView( vbox );
   mRecipientList->setAllColumnsShowFocus( true );
-  topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
   mRecipientList->addColumn( i18n("Name") );
   mRecipientList->addColumn( i18n("Email") );
@@ -142,20 +135,9 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   connect( mRecipientList, SIGNAL( returnPressed( QListViewItem * ) ),
     SLOT( slotPicked( QListViewItem * ) ) );
 
-  mSearchLine = new KListViewSearchLine( this, mRecipientList );
-  searchLayout->addWidget( mSearchLine );
+  mSearchLine->setListView( mRecipientList );
 
-  QBoxLayout *buttonLayout = new QHBoxLayout( topLayout );
-
-  buttonLayout->addStretch( 1 );
-
-  QPushButton *button = new QPushButton( i18n("&Ok"), this );
-  buttonLayout->addWidget( button );
-  connect( button, SIGNAL( clicked() ), SLOT( slotOk() ) );
-
-  button = new QPushButton( i18n("&Cancel"), this );
-  buttonLayout->addWidget( button );
-  connect( button, SIGNAL( clicked() ), SLOT( close() ) );
+  resize( 460 , 460 );
 
   initCollections();
 

@@ -79,7 +79,7 @@ class RecipientsCollection
     RecipientItem::List mItems;
 };
 
-class RecipientsPicker : public QWidget
+class RecipientsPicker : public KDialogBase 
 {
     Q_OBJECT
   public:
