@@ -567,9 +567,8 @@ void KMFolderTree::addChildFolder()
   if (fti->folder)
     dir = fti->folder->child();
 
-  KMFolderDialog *d;
-  d = new KMFolderDialog(0, dir,
-			 kapp->mainWidget(), i18n( "New Child Folder" ));
+  KMFolderDialog *d = 
+    new KMFolderDialog(0, dir, topLevelWidget(), i18n("Create Child Folder") );
 
   if (d->exec()) {
     QListViewItem *qlvi = indexOfFolder( aFolder );
