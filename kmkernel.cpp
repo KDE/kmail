@@ -409,40 +409,67 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   kdDebug(5006) << "KMKernel::openComposer()" << endl;
 
   KMMessage *msg = new KMMessage;
+  KMMessagePart *msgPart = 0;
   msg->initHeader();
-  msg->setCharset("utf-8");
-  if (!cc.isEmpty()) msg->setCc(cc);
-  if (!bcc.isEmpty()) msg->setBcc(bcc);
-  if (!subject.isEmpty()) msg->setSubject(subject);
-  if (!to.isEmpty()) msg->setTo(to);
-  if (!body.isEmpty()) msg->setBody(body.utf8());
+  msg->setCharset( "utf-8" );
+  if ( !cc.isEmpty() ) msg->setCc(cc);
+  if ( !bcc.isEmpty() ) msg->setBcc(bcc);
+  if ( !subject.isEmpty() ) msg->setSubject(subject);
+  if ( !to.isEmpty() ) msg->setTo(to);
+  if ( !body.isEmpty() ) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(msg);
-  cWin->setCharset("", TRUE);
-  if (!attachData.isEmpty()) {
-    KMMessagePart *msgPart = new KMMessagePart;
-    msgPart->setName(attachName);
-    msgPart->setCteStr(attachCte);
-    msgPart->setBodyEncoded(attachData);
-    msgPart->setTypeStr(attachType);
-    msgPart->setSubtypeStr(attachSubType);
-    msgPart->setParameter(attachParamAttr,attachParamValue);
-    msgPart->setContentDisposition(attachContDisp);
-    if( !attachCharset.isEmpty() ) {
-      // kdDebug(5006) << "KMKernel::openComposer set attachCharset to " << attachCharset << endl;
-      msgPart->setCharset(attachCharset);
+  bool iCalHack = false;
+  KConfigGroup options( config(), "Groupware" );
+  if (  !attachData.isEmpty() ) {
+    if ( attachName == "cal.ics" && attachType == "text" &&
+	attachSubType == "calendar" && attachParamAttr == "method" &&
+	options.readBoolEntry( "LegacyBodyInvites", false ) ) {
+      // KOrganizer invitation caught and to be sent as body instead
+      msg->setBody( attachData );
+      msg->setHeaderField( "Content-Type",
+			   QString( "text/calendar; method=%1; "
+                                    "charset=\"utf-8\"" ).
+			   arg( attachParamValue ) );
+      iCalHack = true;
+    } else {
+      // Just do what we're told to do
+      msgPart = new KMMessagePart;
+      msgPart->setName( attachName );
+      msgPart->setCteStr( attachCte );
+      msgPart->setBodyEncoded( attachData );
+      msgPart->setTypeStr( attachType );
+      msgPart->setSubtypeStr( attachSubType );
+      msgPart->setParameter( attachParamAttr, attachParamValue );
+      msgPart->setContentDisposition( attachContDisp );
+      if( !attachCharset.isEmpty() ) {
+	// kdDebug(5006) << "KMKernel::openComposer set attachCharset to "
+        // << attachCharset << endl;
+	msgPart->setCharset( attachCharset );
+      }
     }
-    cWin->addAttach(msgPart);
   }
 
-  if (hidden == 0) {
+  KMComposeWin *cWin = new KMComposeWin( msg );
+  if( iCalHack )
+    cWin->slotWordWrapToggled( false );
+  else
+    cWin->setCharset( "", true );
+  if ( msgPart )
+    cWin->addAttach(msgPart);
+
+  if ( hidden == 0 && !iCalHack ) {
     cWin->show();
     // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
     // so that it also works when called from KMailApplication::newInstance()
 #if defined Q_WS_X11 && ! defined K_WS_QTONLY
     KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
 #endif
+  } else {
+    // TODO: Delete the window
+    kdDebug(5006) << "Hidden send now window\n";
+    cWin->slotSendNow();
   }
+
   return 1;
 }
 

@@ -4045,15 +4045,41 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
            this, SLOT( slotEmitChanged( void ) ) );
 #endif
   mEnableGwCB = 0;
-  mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), gBox );
-  QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
+  mLegacyMangleFromTo = new QCheckBox( i18n( "Mangle From:/To: headers in replies to invitations" ), gBox );
+  QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitation replies" ) );
   QWhatsThis::add( mLegacyMangleFromTo, i18n( GlobalSettings::self()->
-           groupwareLegacyMangleFromToHeadersItem()->whatsThis().utf8() ) );
+           legacyMangleFromToHeadersItem()->whatsThis().utf8() ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-
+  mLegacyBodyInvites = new QCheckBox( i18n( "Send invitations in the mail body" ), gBox );
+  QToolTip::add( mLegacyBodyInvites, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
+  QWhatsThis::add( mLegacyMangleFromTo, i18n( GlobalSettings::self()->
+           legacyBodyInvitesItem()->whatsThis().utf8() ) );
+  connect( mLegacyBodyInvites, SIGNAL( toggled( bool ) ),
+           this, SLOT( slotLegaceBodyInvitesToggled( bool ) ) );
+  connect( mLegacyBodyInvites, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   // Open space padding at the end
   new QLabel( this );
+}
+
+void MiscPageGroupwareTab::slotLegaceBodyInvitesToggled( bool on )
+{
+  if ( on ) {
+    QString txt = i18n( "<qt>Invitations are normally sent as attachments to "
+                        "a mail. This switch changes the invitation mails to "
+                        "be sent in the text of the mail instead. This is "
+                        "necesssary to send invitations and replies to "
+                        "Microsoft Outlook.<br>But when you do this, you no "
+                        "longer get a descriptive text that mail programs "
+                        "can read. So to people who have email programs "
+                        "that do not understand the invitations, this "
+                        "message looks very odd.<br>People that have email "
+                        "programs that do understand invitations will still "
+                        "be able to work with this.</qt>" );
+    KMessageBox::information( this, txt, QString::null,
+                              "LegacyBodyInvitesWarning" );
+  }
 }
 
 void MiscPage::GroupwareTab::load() {
@@ -4062,7 +4088,8 @@ void MiscPage::GroupwareTab::load() {
     mEnableGwCB->setChecked( GlobalSettings::groupwareEnabled() );
     gBox->setEnabled( mEnableGwCB->isChecked() );
   }
-  mLegacyMangleFromTo->setChecked( GlobalSettings::groupwareLegacyMangleFromToHeaders() );
+  mLegacyMangleFromTo->setChecked( GlobalSettings::legacyMangleFromToHeaders() );
+  mLegacyBodyInvites->setChecked( GlobalSettings::legacyBodyInvites() );
 
   // Read the IMAP resource config
   mEnableImapResCB->setChecked( GlobalSettings::theIMAPResourceEnabled() );
@@ -4085,8 +4112,8 @@ void MiscPage::GroupwareTab::save() {
   // Write the groupware config
   if ( mEnableGwCB )
     GlobalSettings::setGroupwareEnabled( mEnableGwCB->isChecked() );
-  GlobalSettings::setGroupwareLegacyMangleFromToHeaders(
-        mLegacyMangleFromTo->isChecked() );
+  GlobalSettings::setLegacyMangleFromToHeaders( mLegacyMangleFromTo->isChecked() );
+  GlobalSettings::setLegacyBodyInvites( mLegacyBodyInvites->isChecked() );
 
   // Write the IMAP resource config
   GlobalSettings::setHideGroupwareFolders( mHideGroupwareFolders->isChecked() );

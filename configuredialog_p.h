@@ -840,6 +840,8 @@ public:
   void save();
   void defaults() {}
   QString helpAnchor() const;
+private slots:
+  void slotLegaceBodyInvitesToggled( bool on );
 private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;
@@ -855,6 +857,7 @@ private:
   QCheckBox* mAutoDeclRecurCB;
 
   QCheckBox* mLegacyMangleFromTo;
+  QCheckBox* mLegacyBodyInvites;
 };
 
 class MiscPage : public ConfigModuleWithTabs {
