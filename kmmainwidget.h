@@ -150,6 +150,9 @@ public slots:
   /** Launch subscription-dialog */
   void slotSubscriptionDialog();
 
+  /** The columns of the foldertree changed */
+  void slotFolderTreeColumnsChanged();
+
 protected:
   void setupActions();
   void setupStatusBar();

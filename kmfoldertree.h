@@ -142,6 +142,9 @@ signals:
   /** Messages have been dropped onto a folder with Ctrl */
   void folderDropCopy(KMFolder*);
 
+  /** unread/total column has changed */
+  void columnsChanged();
+
 public slots:
   /** Select the next folder with unread messages */
   void nextUnreadFolder();

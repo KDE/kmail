@@ -603,6 +603,8 @@ void KMMainWidget::createWidgets(void)
 	  this, SLOT(slotMoveMsgToFolder(KMFolder*)));
   connect(mFolderTree, SIGNAL(folderDropCopy(KMFolder*)),
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
+  connect(mFolderTree, SIGNAL(columnsChanged()),
+          this, SLOT(slotFolderTreeColumnsChanged()));
 
   // create a mime part tree and store it's pointer in the reader win
   mMimePartTree = new KMMimePartTree( mMsgView, mimeParent, "mMimePartTree" );
@@ -2874,5 +2876,12 @@ void KMMainWidget::slotSubscriptionDialog()
         static_cast<KMFolderCachedImap*>(mFolder)->account());
     dialog->show();
   }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotFolderTreeColumnsChanged()
+{
+  totalColumnToggle->setChecked( mFolderTree->isTotalActive() );
+  unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
 }
 

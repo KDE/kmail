@@ -1523,11 +1523,8 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       addUnreadColumn( i18n("Unread"), 70 );
       reload();
     }
-    // toggle KPopupMenu and KToggleAction
+    // toggle KPopupMenu
     mPopup->setItemChecked( mUnreadPop, isUnreadActive() );
-    if ( parentWidget()->parentWidget()->isA("KMMainWidget") )
-      static_cast<KMMainWidget*>(parentWidget()->parentWidget())
-        ->unreadColumnToggle->setChecked( isUnreadActive() );
 
   } else if (column == total) {
     // switch total
@@ -1539,13 +1536,16 @@ void KMFolderTree::toggleColumn(int column, bool openFolders)
       addTotalColumn( i18n("Total"), 70 );
       reload(openFolders);
     }
-    // toggle KPopupMenu and KToggleAction
+    // toggle KPopupMenu
     mPopup->setItemChecked( mTotalPop, isTotalActive() );
     if ( parentWidget()->parentWidget()->isA("KMMainWidget") )
       static_cast<KMMainWidget*>(parentWidget()->parentWidget())
         ->totalColumnToggle->setChecked( isTotalActive() );
 
   } else kdDebug(5006) << "unknown column:" << column << endl;
+
+  // toggles the switches of the mainwin
+  emit columnsChanged();
 }
 
 //-----------------------------------------------------------------------------
