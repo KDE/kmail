@@ -82,10 +82,13 @@ public slots:
   void headerClicked(int);
   void nextMessage();
   void prevMessage();
+  void nextUnreadMessage();
+  void prevUnreadMessage();
 
 protected:
   
   void makeHeaderVisible();
+  bool isUnread(KMMsgStatus status);
 
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 
 			       int* type);

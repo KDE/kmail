@@ -874,8 +874,12 @@ void KMMainWin::setupMenuBar()
   QPopupMenu *messageMenu = new QPopupMenu;
   messageMenu->insertItem(i18n("&Next"), mHeaders, 
 			  SLOT(nextMessage()), Key_N);
+  messageMenu->insertItem(i18n("Next unread"), mHeaders, 
+			  SLOT(nextUnreadMessage()), Key_Plus);
   messageMenu->insertItem(i18n("&Previous"), mHeaders, 
 			  SLOT(prevMessage()), Key_P);
+  messageMenu->insertItem(i18n("Previous unread"), mHeaders, 
+			  SLOT(prevUnreadMessage()), Key_Minus);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Reply..."), this,
 			  SLOT(slotReplyToMsg()), Key_R);

@@ -407,7 +407,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   if (pgp->setMessage(aStr))
   {
     if (pgp->isEncrypted())
-    {
+    {      
       if(pgp->decrypt())
       {
 	line.sprintf("<B>%s</B><BR>",

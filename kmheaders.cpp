@@ -612,6 +612,52 @@ void KMHeaders::prevMessage()
 
 
 //-----------------------------------------------------------------------------
+bool KMHeaders::isUnread(KMMsgStatus status) {
+  return FALSE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::nextUnreadMessage()
+{
+  int idx = currentItem();
+
+  if (idx < mFolder->count()) {
+    // find the next unread message
+    KMMessage *msg;
+    for(int i = idx+1; i < mFolder->count(); i++) {
+      msg = getMsg(i);
+      if(msg->status() == 'N' || msg->status() == 'U') {
+	setCurrentItem(i);
+	makeHeaderVisible();
+	return;
+      }
+    }
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::prevUnreadMessage()
+{
+  int idx = currentItem();
+
+  if (idx > 0) {
+    // find the previous unread message
+    KMMessage *msg;
+    for(int i = idx-1; i >= 0; i--) {
+      msg = getMsg(i);
+      if(msg->status() == 'N' || msg->status() == 'U') {
+	setCurrentItem(i);
+	makeHeaderVisible();
+	return;
+      }
+    }
+  }
+}  
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::makeHeaderVisible() {
     if(currentItem() > lastRowVisible())
       setTopItem(topItem() + currentItem() - lastRowVisible());
