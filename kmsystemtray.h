@@ -52,11 +52,6 @@ public:
 
   void hideKMail();
 
-  enum SystrayMode {
-    AlwaysOn,
-    OnNewMail
-  };
-
 private slots:
   void updateNewMessageNotification(KMFolder * folder);
   void foldersChanged();

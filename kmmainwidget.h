@@ -131,7 +131,7 @@ public:
   KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
 
   KMHeaders *headers() const { return mHeaders; }
-  void toggleSystray(bool enabled, int mode);
+  void toggleSystemTray();
 
   void updateListFilterAction();
 
@@ -428,8 +428,7 @@ private:
   KAction       *mlistFilterAction;
   QCString	mEncodingStr;
   bool		mIntegrated;
-  bool          mBeepOnNew, mSystemTrayOnNew;
-  int           mSystemTrayMode;
+  bool          mBeepOnNew;
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;

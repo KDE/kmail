@@ -94,7 +94,8 @@ void checkConfigUpdates() {
     "3.3-aegypten-kpgprc-to-kmailrc",
     "3.3-aegypten-kpgprc-to-libkleopatrarc",
     "3.3-aegypten-emailidentities-split-sign-encr-keys",
-    "3.3-misc"
+    "3.3-misc",
+    "3.3b1-misc"
   };
   static const int numUpdates = sizeof updates / sizeof *updates;
   // Warning: do not remove entries in the above array, or the update-level check below will break

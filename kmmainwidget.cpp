@@ -159,7 +159,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
 
-  toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
+  toggleSystemTray();
 
   // must be the last line of the constructor:
   mStartupDone = TRUE;
@@ -345,10 +345,6 @@ void KMMainWidget::readConfig(void)
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
-    mSystemTrayOnNew = config->readBoolEntry("systray-on-mail", false);
-    mSystemTrayMode = config->readBoolEntry("systray-on-new", true) ?
-      KMSystemTray::OnNewMail :
-      KMSystemTray::AlwaysOn;
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
     // startup-Folder, defaults to system-inbox
 	mStartupFolder = config->readEntry("startupFolder", kmkernel->inboxFolder()->idString());
@@ -365,7 +361,7 @@ void KMMainWidget::readConfig(void)
   {
 
     // Update systray
-    toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
+    toggleSystemTray();
 
     bool layoutChanged = ( oldLongFolderList != mLongFolderList )
                     || ( oldReaderWindowActive != mReaderWindowActive )
@@ -3359,27 +3355,21 @@ void KMMainWidget::slotFolderTreeColumnsChanged()
   mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
 }
 
-void KMMainWidget::toggleSystray(bool enabled, int mode)
+void KMMainWidget::toggleSystemTray()
 {
-  kdDebug(5006) << "setupSystray called" << endl;
-  if (enabled && !mSystemTray)
-  {
+  if ( !mSystemTray && GlobalSettings::systemTrayEnabled() ) {
     mSystemTray = new KMSystemTray();
   }
-  else if (!enabled && mSystemTray)
-  {
-    /** Get rid of system tray on user's request */
+  else if ( mSystemTray && !GlobalSettings::systemTrayEnabled() ) {
+    // Get rid of system tray on user's request
     kdDebug(5006) << "deleting systray" << endl;
     delete mSystemTray;
     mSystemTray = 0;
   }
 
-  /** Set mode of systemtray.  If mode has changed, tray will handle this */
-  if(mSystemTray)
-  {
-    kdDebug(5006) << "Setting system tray mode" << endl;
-    mSystemTray->setMode(mode);
-  }
+  // Set mode of systemtray. If mode has changed, tray will handle this.
+  if ( mSystemTray )
+    mSystemTray->setMode( GlobalSettings::systemTrayPolicy() );
 }
 
 //-----------------------------------------------------------------------------

@@ -24,6 +24,7 @@
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"
 #include "kmacctmgr.h"
+#include "globalsettings.h"
 
 #include <kapplication.h>
 #include <kmainwindow.h>
@@ -58,7 +59,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
     mParentVisible( true ),
     mPosOfMainWin( 0, 0 ),
     mDesktopOfMainWin( 0 ),
-    mMode( OnNewMail ),
+    mMode( GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ),
     mCount( 0 ),
     mNewMessagePopupId(-1),
     mPopupMenu(0)
@@ -123,7 +124,7 @@ void KMSystemTray::buildPopupMenu()
   if ( ( action = mainWidget->action("kmail_configure_kmail") ) )
     action->plug( mPopupMenu );
   mPopupMenu->insertSeparator();
-  
+
   KMainWindow *mainWin = ::qt_cast<KMainWindow*>(getKMMainWidget()->topLevelWidget());
   if(mainWin)
     if ( ( action=mainWin->actionCollection()->action("file_quit") ) )
@@ -146,17 +147,18 @@ void KMSystemTray::setMode(int newMode)
   kdDebug(5006) << "Setting systray mMode to " << newMode << endl;
   mMode = newMode;
 
-  if(mMode == AlwaysOn)
-  {
-    kdDebug(5006) << "Initting alwayson mMode" << endl;
-
-    if(isHidden()) show();
-  } else
-  {
-    if(mCount == 0)
-    {
+  switch ( mMode ) {
+  case GlobalSettings::EnumSystemTrayPolicy::ShowAlways:
+    if ( isHidden() )
+      show();
+    break;
+  case GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread:
+    if ( mCount == 0 && !isHidden() )
       hide();
-    }
+    else if ( mCount > 0 && isHidden() )
+      show();
+  default:
+    kdDebug(5006) << k_funcinfo << " Unknown systray mode " << mMode << endl;
   }
 }
 
@@ -244,8 +246,7 @@ void KMSystemTray::foldersChanged()
   mFoldersWithUnread.clear();
   mCount = 0;
 
-  if(mMode == OnNewMail)
-  {
+  if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
     hide();
   }
 
@@ -519,9 +520,9 @@ void KMSystemTray::updateNewMessages()
     if(unread == 0) continue;
 
     /** Make sure the icon will be displayed */
-    if(mMode == OnNewMail)
-    {
-      if(isHidden()) show();
+    if ( ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread )
+         && isHidden() ) {
+      show();
     }
 
   } else
@@ -542,8 +543,9 @@ void KMSystemTray::updateNewMessages()
 
         mCount = 0;
 
-        if(mMode == OnNewMail)
+        if ( mMode == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
           hide();
+        }
       }
     }
   }

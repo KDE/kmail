@@ -131,6 +131,11 @@ Id=3.3-misc
 File=kmailrc
 Script=kmail-3.3-misc.sh,bash
 #
+# Updates which were added after the release of KDE 3.3 Beta 1
+Id=3.3b1-misc
+File=kmailrc
+Script=kmail-3.3b1-misc.pl,perl
+#
 # Important notice:
 # If you add updates here, keep this text below them.
 # Make sure your updates can be safely run twice and add any new Id

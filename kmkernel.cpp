@@ -1760,10 +1760,10 @@ bool KMKernel::canQueryClose()
   if ( !widget )
     return true;
   KMSystemTray* systray = widget->systray();
-  if ( systray && systray->mode() == KMSystemTray::AlwaysOn ) {
+  if ( systray && systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowAlways ) {
     systray->hideKMail();
     return false;
-  } else if ( systray && systray->mode() == KMSystemTray::OnNewMail ) {
+  } else if ( systray && systray->mode() == GlobalSettings::EnumSystemTrayPolicy::ShowOnUnread ) {
     systray->show();
     systray->hideKMail();
     return false;
