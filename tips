@@ -27,7 +27,7 @@ header</em> filter action? Just use
 <tip category="KMail|General">
 <html>
 <p>...that you can associate mailing lists with folders in the
-<em>Folder-&gt;Properties</em> dialog? You can then use
+<em>Folder-&gt;Mailing List Management</em> dialog? You can then use
 <em>Message-&gt;New&nbsp;Message&nbsp;to&nbsp;Mailing&nbsp;List...</em>
 to open the composer with the mailing list address preset.
 Alternatively, you can click with the middle mouse button on the folder.</p>
