@@ -531,6 +531,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     }
     else if (ch=='@')
     {
+      char *startpos = pos;
       for (i=0; *pos && (isalnum(*pos) || *pos=='@' || *pos=='.' ||
 			 *pos=='_'||*pos=='-' || *pos=='*' || *pos=='[' || *pos==']') 
 	     && i<255; i++, pos--)
@@ -546,7 +547,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
       }
       pos--;
       len = iStr.length();
-      while (len>2 && ispunct(*pos))
+      while (len>2 && ispunct(*pos) && (pos > startpos))
       {
 	len--;
 	pos--;
