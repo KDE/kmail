@@ -1270,7 +1270,7 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertItem(i18n("Send &Queued"), this,
 		       SLOT(slotSendQueued()));
   fileMenu->insertSeparator();
-  fileMenu->insertItem("Settings...", this,
+  fileMenu->insertItem(i18n("Settings..."), this,
 		       SLOT(slotSettings()));
   fileMenu->insertItem(i18n("&Addressbook..."), this,
 		       SLOT(slotAddrBook()));

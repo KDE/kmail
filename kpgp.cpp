@@ -320,11 +320,10 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
 	++it;
       }
       if(it.count() > 1)
-	aStr += i18n("These persons will not be able to\n");
+	aStr += i18n("These persons will not be able to decrypt the message\n");
       else
-	aStr += i18n("This person will not be able to\n");
+	aStr += i18n("This person will not be able to decrypt the message\n");
 
-      aStr += i18n("decrypt the message.");
       int ret = KMessageBox::warningContinueCancel(0, aStr, 
                                i18n("PGP Warning"), 
 			       i18n("C&ontinue"));
