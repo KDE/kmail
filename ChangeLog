@@ -1,3 +1,14 @@
+1998-12-03  Stefan Taferner  <stefan@idefix> (KMail-1.0.8)
+
+	* Headers: position of top message in folder list is
+	stored and reused upon next opening. Exception: if there
+	is a new or unread message in the folder, then the
+	first new/unread message is shown.
+
+	* Composer: fixed missing last character in replies.
+
+	* Composer: attachments are now included in forwards.
+
 1998-11-24  Stefan Taferner  <stefan@idefix>
 
 	* Pop: does not stop pop retrieval now when pop server does

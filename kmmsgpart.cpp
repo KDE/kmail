@@ -118,9 +118,10 @@ const QString KMMessagePart::bodyDecoded(void) const
     len = dwResult.size() + 1;
     result.resize(len);
     memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
-    break;
+#if 0
     result = dwResult.c_str();
     result.detach();
+#endif
     break;
   case DwMime::kCteBase64:
     dwSrc = DwString(mBody.data(), mBody.size());

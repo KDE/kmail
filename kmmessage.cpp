@@ -253,7 +253,8 @@ void KMMessage::fromString(const QString aStr, bool aSetStatus)
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::asQuotedString(const QString aHeaderStr,
-					const QString aIndentStr) const
+					const QString aIndentStr,
+					bool aIncludeAttach) const
 {
   QString headerStr(256);
   KMMessagePart msgPart;
@@ -306,18 +307,14 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   {
      Kpgp* pgp = Kpgp::getKpgp();
      assert(pgp != NULL);
-     if ((pgp->setMessage(bodyDecoded())) &&
-         (pgp->isEncrypted()) &&
-         (pgp->decrypt()))
+     if (pgp->setMessage(bodyDecoded()) && pgp->isEncrypted() &&
+         pgp->decrypt())
      {
        result = QString(pgp->message()).stripWhiteSpace();
-       result.replace(reNL,nlIndentStr) + '\n';
      }
-     else 
-     {  
-       result = QString(bodyDecoded()).stripWhiteSpace();
-       result.replace(reNL,nlIndentStr) + '\n';
-     }
+     else result = QString(bodyDecoded()).stripWhiteSpace();
+
+     result.replace(reNL,nlIndentStr) + '\n';
   }
   else
   {
@@ -354,7 +351,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 	}
 	else isInline = FALSE;
       }
-      if (!isInline)
+      if (!isInline && aIncludeAttach)
       {
 	result += QString("\n----------------------------------------") +
 	  "\nContent-Type: " + msgPart.typeStr() + "/" + msgPart.subtypeStr();
@@ -453,7 +450,9 @@ KMMessage* KMMessage::createReply(bool replyToAll)
 KMMessage* KMMessage::createForward(void)
 {
   KMMessage* msg = new KMMessage;
+  KMMessagePart msgPart;
   QString str;
+  int i;
 
   msg->initHeader();
 
@@ -462,7 +461,30 @@ KMMessage* KMMessage::createForward(void)
   str += "Date: " + dateStr() + "\n";
   str += "From: " + from() + "\n";
   str += "\n";
-  msg->setBody(asQuotedString(str, ""));
+  str = asQuotedString(str, "", FALSE);
+
+  if (numBodyParts() <= 0)
+  {
+    msg->setBody(str);
+  }
+  else
+  {
+    msgPart.setBody(str);
+    msgPart.setTypeStr("text");
+    msgPart.setSubtypeStr("plain");
+    msg->addBodyPart(&msgPart);
+
+    for (i = 1; i < numBodyParts(); i++)
+    {
+      bodyPart(i, &msgPart);
+      if (stricmp(msgPart.contentDisposition(),"inline")!=0 ||
+	  (stricmp(msgPart.typeStr(),"text")!=0 &&
+	   stricmp(msgPart.typeStr(),"message")!=0))
+      {
+	msg->addBodyPart(&msgPart);
+      }
+    }
+  }
 
   if (strnicmp(subject(), "Fwd:", 4)!=0)
     msg->setSubject("Fwd: " + subject());
@@ -928,6 +950,7 @@ const QString KMMessage::body(void) const
 const QString KMMessage::bodyDecoded(void) const
 {
   DwString dwsrc, dwstr;
+  QString result;
 
   dwsrc = mMsg->Body().AsString().c_str();
   switch (cte())
@@ -942,8 +965,7 @@ const QString KMMessage::bodyDecoded(void) const
     dwstr = dwsrc;
     break;
   }
-
-  return QString(dwstr.c_str(), dwsrc.size());
+  return QString(dwstr.c_str(), dwstr.size()+1);
 }
 
 

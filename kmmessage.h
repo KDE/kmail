@@ -69,9 +69,11 @@ public:
 	%D: date of this message
 	%S: subject of this message
 	%F: sender (from) of this message
-	%%: a single percent sign  */
+	%%: a single percent sign  
+    No attachments are handled if includeAttach is false. */
   virtual const QString asQuotedString(const QString headerStr, 
-				       const QString indentStr) const;
+				       const QString indentStr,
+				       bool includeAttach=TRUE) const;
 
   /** Initialize header fields. Should be called on new messages
     if they are not set manually. E.g. before composing. Calling

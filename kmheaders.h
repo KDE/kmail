@@ -89,11 +89,14 @@ public slots:
   void prevUnreadMessage();
 
 protected:
-  
   void makeHeaderVisible();
 
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 
 			       int* type);
+
+  /** Find next/prev unread message. Starts at currentItem() if startAt
+    is unset. */
+  virtual int findUnread(bool findNext, int startAt=-1);
 
   /** Returns message index of first selected message of the messages
     where the message with the given id is in. This for finding the correct
@@ -119,6 +122,7 @@ private:
   virtual void updateMessageList(void);
   KMFolder* mFolder;
   KMMainWin* mOwner;
+  int mTopItem;
   int getMsgIndex;
   bool getMsgMulti;
   KMMessageList mSelMsgList;

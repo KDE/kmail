@@ -35,6 +35,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   getMsgIndex = -1;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
+  mTopItem = 0;
 
   setColumn(0, i18n("F"), 18, KTabListBox::PixmapColumn);
   setColumn(1, i18n("Sender"), 200, KTabListBox::TextColumn);
@@ -110,7 +111,7 @@ void KMHeaders::readFolderConfig (void)
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol);
-  sort();
+  mTopItem = config->readNumEntry("Top", 0);
 }
 
 
@@ -125,6 +126,7 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("SubjectWidth", columnWidth(2));
   config->writeEntry("DateWidth", columnWidth(3));
   config->writeEntry("SortColumn", (mSortDescending ? -mSortCol : mSortCol));
+  config->writeEntry("Top", topItem());
 }
 
 
@@ -147,7 +149,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     if (mFolder) 
     {
       mFolder->markNewAsUnread();
-      mFolder->close();
       writeFolderConfig();
       disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
 		 this, SLOT(msgHeaderChanged(int)));
@@ -159,6 +160,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 		 this, SLOT(msgChanged()));
       disconnect(mFolder, SIGNAL(statusMsg(const char*)), 
 		 mOwner, SLOT(statusMsg(const char*)));
+      mFolder->close();
     }
 
     mFolder = aFolder;
@@ -177,12 +179,23 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	      mOwner, SLOT(statusMsg(const char*)));
       readFolderConfig();
       mFolder->open();
+      sort();
     }
 
     updateMessageList();
 
-    if(count() > 0) setCurrentItem(0);
-    if (mFolder) nextUnreadMessage();
+    if (mFolder)
+    {
+      id = findUnread(TRUE, 0);
+      if (id >= 0) 
+      {
+	setCurrentItem(id);
+	msgHeaderChanged(id);
+	makeHeaderVisible();
+      }
+      else setTopItem(mTopItem);
+    }
+    else setCurrentItem(0);
   }
 
   setAutoUpdate(autoUpd);
@@ -190,9 +203,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   if (mFolder)
   {
-    msgHeaderChanged(currentItem());
-    makeHeaderVisible();
-
     str.sprintf(i18n("%d Messages, %d unread."),
 		mFolder->count(), mFolder->countUnread());
     if (mFolder->isReadOnly()) str += i18n("Folder is read-only.");
@@ -667,47 +677,56 @@ void KMHeaders::prevMessage()
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::nextUnreadMessage()
+int KMHeaders::findUnread(bool aDirNext, int aStartAt)
 {
   KMMsgBase* msgBase = NULL;
   int i, idx, cnt;
 
-  if (!mFolder) return;
+  if (!mFolder) return -1;
+  if (!(cnt=mFolder->count()) > 0) return -1;
 
-  idx = currentItem();
-  cnt = mFolder->count();
-  if(!cnt)
-    {
-      debug("KMHeaders::nextUnreadMessage(): idx=%i", idx);
-      return;
-    }
-  if(idx < 0) setCurrentMsg(0);
-  for (i=idx+1; i<cnt; i++)
+  if (aStartAt >= 0) idx = aStartAt;
+  else 
   {
-    msgBase = mFolder->getMsgBase(i);
-    if (msgBase && msgBase->isUnread()) break;
+    idx = currentItem();
+    if (aDirNext) idx++;
+    else idx--;
   }
 
-  if (i<cnt && msgBase) setCurrentMsg(i);
+  if (aDirNext)
+  {
+    for (i=idx; i<cnt; i++)
+    {
+      msgBase = mFolder->getMsgBase(i);
+      if (msgBase && msgBase->isUnread()) break;
+    }
+  }
+  else
+  {
+    for (i=idx; i>=0; i--)
+    {
+      msgBase = mFolder->getMsgBase(i);
+      if (msgBase && msgBase->isUnread()) break;
+    }
+  }
+  if (i<cnt && i>=0 && msgBase) return i;
+  return -1;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::nextUnreadMessage()
+{
+  int i = findUnread(TRUE);
+  setCurrentMsg(i);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMHeaders::prevUnreadMessage()
 {
-  KMMsgBase* msgBase = NULL;
-  int i, idx;
-
-  if (!mFolder) return;
-
-  idx = currentItem();
-  for (i=idx-1; i>=0; i--)
-  {
-    msgBase = mFolder->getMsgBase(i);
-    if (msgBase && msgBase->isUnread()) break;
-  }
-
-  if (i>=0 && msgBase) setCurrentMsg(i);
+  int i = findUnread(FALSE);
+  setCurrentMsg(i);
 }  
 
 
