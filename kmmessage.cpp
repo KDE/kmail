@@ -33,7 +33,7 @@
 #include <kglobal.h>
 
 #if ALLOW_GUI
-#include <qmultilinedit.h>
+#include <qmultilineedit.h>
 #endif
 
 

@@ -37,7 +37,7 @@
 #include <qbitmap.h>
 #include <qclipboard.h>
 #include <qcursor.h>
-#include <qmultilinedit.h>
+#include <qmultilineedit.h>
 #include <qregexp.h>
 #include <qscrollbar.h>
 
