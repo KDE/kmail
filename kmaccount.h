@@ -14,8 +14,8 @@
 #include <kprocess.h>
 #include "kmnewiostatuswdg.h"
 
-// The defualt check interval
-#define DEFAULT_CK_INT 5
+// The default check interval
+const int DEFAULT_CK_INT = 5;
 
 class KMAcctMgr;
 class KMFolder;
