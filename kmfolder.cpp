@@ -706,7 +706,8 @@ void KMFolder::expireOldMessages( bool immediate )
   KMail::ScheduledExpireTask* task = new KMail::ScheduledExpireTask(this, immediate);
   if ( immediate ) {
     kmkernel->jobScheduler()->runTaskNow( task );
-    compact( CompactSilentlyNow ); // #82259
+    // #82259: compact after expiring. But we can't do it right now, the "mail moving" could still be happening
+    compact( CompactLater );
   } else
     kmkernel->jobScheduler()->registerTask( task );
 }
