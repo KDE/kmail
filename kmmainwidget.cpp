@@ -2259,7 +2259,7 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, mFolderTree,
 		      SLOT(addChildFolder()), actionCollection(), "new_folder" );
 
-  mModifyFolderAction = new KAction( i18n("&Properties..."), "configure", 0, this,
+  mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
   mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"), 
