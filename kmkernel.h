@@ -18,7 +18,10 @@ class KMUndoStack;
 class KMAcctMgr;
 class KMFilterMgr;
 class KMFilterActionDict;
-class KMAddrBook;
+// ----- <mirko>: replaced by KabApi:
+// class KMAddrBook;
+class KabAPI;
+// ----- </mirko>
 class KMSender;
 class KMIdentity;
 class KMKernel;
@@ -71,7 +74,10 @@ public:
   inline KMAcctMgr *acctMgr() { return the_acctMgr; }
   inline KMFilterMgr *filterMgr() { return the_filterMgr; }
   inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
-  inline KMAddrBook *addrBook() { return the_addrBook; }
+  // ----- <mirko>: replaced by a KabApi object:
+  // inline KMAddrBook *addrBook() { return the_addrBook; }
+  inline KabAPI* addrBook() { return the_addrBook; }
+  // ----- </mirko>
   inline KMSender *msgSender() { return the_msgSender; }
 
   inline bool firstStart() { return the_firstStart; }
@@ -91,7 +97,10 @@ private:
   KMAcctMgr *the_acctMgr;
   KMFilterMgr *the_filterMgr;
   KMFilterActionDict *the_filterActionDict;
-  KMAddrBook *the_addrBook;
+  // ----- <mirko>: replaced by KabApi:
+  // KMAddrBook *the_addrBook;
+  KabAPI *the_addrBook;
+  // ----- </mirko>
   KMSender *the_msgSender;
 
   bool the_firstStart;          // is this the first start?  read from config

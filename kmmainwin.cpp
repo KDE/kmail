@@ -43,8 +43,10 @@
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
 #include "kmsender.h"
-#include "kmaddrbookdlg.h"
-#include "kmaddrbook.h"
+// ----- <mirko>:
+// #include "kmaddrbookdlg.h"
+// #include "kmaddrbook.h"
+// ----- </mirko>
 #include "kwm.h"
 
 #include <errno.h>
@@ -467,8 +469,12 @@ void KMMainWin::slotFilter()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg(kernel->addrBook());
-  dlg.exec();
+  // ----- <mirko>:
+  // KMAddrBookEditDlg dlg(kernel->addrBook());
+  // dlg.exec();
+  // editing the address book should probaby be done in kab:
+  debug("KMMainWin::slotAddrBook: not implemented.");
+  // ----- </mirko>:
 }
 
 
@@ -1055,15 +1061,12 @@ void KMMainWin::slotMailtoForward()
   win->show();
 }
 
-
 //-----------------------------------------------------------------------------
-void KMMainWin::slotMailtoAddAddrBook()
-{
-  if (mUrlCurrent.isEmpty()) return;
-  kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
-  statusMsg(i18n("Address added to addressbook."));
-}
 
+// <mirko>:
+// moved KMMainWin::slotMailtoAddAddrBook to addtoaddressbook.cpp as
+// it grew to much
+// </mirko>
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlCopy()

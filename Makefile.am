@@ -1,7 +1,7 @@
 
 SUBDIRS = pics
 INCLUDES = $(all_includes)
-LDADD	= $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE)
+LDADD	= $(LIB_KHTML) -lkspell -lmimelib -lkab $(LIB_KFILE)
 
 bin_PROGRAMS = kmail
 
@@ -26,7 +26,8 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
 		kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
-		accountdialog.cpp
+		accountdialog.cpp \
+		addtoaddressbook.cpp
 
 METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmheaders.moc \

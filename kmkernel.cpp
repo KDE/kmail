@@ -28,7 +28,11 @@
 #include "kmidentity.h"
 #include "kmacctmgr.h"
 #include "kbusyptr.h"
-#include "kmaddrbook.h"
+// ----- <mirko>: replaced by KabApi:
+// KMAddrBook *the_addrBook;
+// #include "kmaddrbook.h"
+#include <kabapi.h>
+// ----- </mirko>
 
 #include <X11/Xlib.h>
 
@@ -330,16 +334,29 @@ void KMKernel::init()
   the_acctMgr   = new KMAcctMgr(acctPath);
   the_filterMgr = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
-  the_addrBook  = new KMAddrBook;
-
+  // ----- <mirko>: replaced by KabApi:
+  // the_addrBook  = new KMAddrBook;
+  the_addrBook=new KabAPI; // KabApi is a dialog
+  CHECK_PTR(the_addrBook);
+  if(addrBook()->init()!=AddressBook::NoError)
+    { // this connects to the default address book and opens it:
+      KMessageBox::information
+	(0, i18n("Error initializing the connection to your address book.\n"
+		    "The address book will not be available."),
+	 i18n("Error"));
+      the_addrBook=0;
+    } else {
+      debug ("KMKernel::init: KabApi initialized.");
+    }
+  // ----- </mirko>
   initFolders(cfg);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();
-  the_addrBook->readConfig();
-  if(the_addrBook->load() == IO_FatalError)
-  {
-      KMessageBox::sorry(0, i18n("The addressbook could not be loaded."));
-  }
+  // the_addrBook->readConfig();
+  // if(the_addrBook->load() == IO_FatalError)
+  // {
+  //    KMessageBox::sorry(0, i18n("The addressbook could not be loaded."));
+  // }
   KMMessage::readConfig();
   the_msgSender = new KMSender;
 
