@@ -200,7 +200,6 @@ void KMReaderWin::readConfig(void)
   mCodec = KMMsgBase::codecForName(encoding);
   mAutoDetectEncoding = config->readBoolEntry("autodetect-encoding", true );
 
-  int i, diff;
   fntSize = 0;
 
   config->setGroup("Fonts");
@@ -224,15 +223,6 @@ void KMReaderWin::readConfig(void)
     mBodyFamily = KGlobalSettings::generalFont().family();
   }
   mViewer->setStandardFont(mBodyFamily);
-
-  QValueList<int> fontsizes;
-  mViewer->resetFontSizes();
-  diff = fntSize - mViewer->fontSizes()[3];
-  if (mViewer->fontSizes()[0]+diff > 0) {
-    for (i=0;i<7; i++)
-      fontsizes << mViewer->fontSizes()[i] + diff;
-    mViewer->setFontSizes(fontsizes);
-  }
 
   readColorConfig();
 
@@ -555,6 +545,16 @@ void KMReaderWin::parseMsg(void)
     if (mUnicodeFont)
       mViewer->setCharset("iso10646-1", true);
     else mViewer->setCharset(mCodec->name(), true);
+
+  QValueList<int> fontsizes;
+  int i, diff;
+  mViewer->resetFontSizes();
+  diff = fntSize - mViewer->fontSizes()[3];
+  if (mViewer->fontSizes()[0]+diff > 0) {
+    for (i=0;i<7; i++)
+      fontsizes << mViewer->fontSizes()[i] + diff;
+    mViewer->setFontSizes(fontsizes);
+  }
 
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("body { font-family: \"%1\" }\n").arg( mBodyFamily ) +
