@@ -201,6 +201,14 @@ public:
 
     QCString subTypeString() const;
 
+    bool hasType( int type ) {
+      return mType == type;
+    }
+
+    bool hasSubType( int subType ) {
+      return mSubType == subType;
+    }
+
     void setCryptoType( CryptoType cryptoType ) {
         mCryptoType = cryptoType;
     }
