@@ -1015,20 +1015,49 @@ void KMPrintCommand::execute()
 
 
 KMSetStatusCommand::KMSetStatusCommand( KMMsgStatus status,
-  const QValueList<Q_UINT32> &serNums )
-  : mStatus( status ), mSerNums( serNums )
+  const QValueList<Q_UINT32> &serNums, bool toggle )
+  : mStatus( status ), mSerNums( serNums ), mToggle( toggle )
 {
 }
 
 void KMSetStatusCommand::execute()
 {
   QValueListIterator<Q_UINT32> it;
+  int idx = -1;
+  KMFolder *folder = 0;
+  bool parentStatus;
+  
+  // Toggle actions on threads toggle the whole thread
+  // depending on the state of the parent. 
+  if (mToggle) {
+    KMMsgBase *msg;
+    kernel->msgDict()->getLocation( *mSerNums.begin(), &folder, &idx );
+    if (folder) {
+      msg = folder->getMsgBase(idx);
+      if (msg && (msg->status()&mStatus))
+        parentStatus = true;
+      else
+        parentStatus = false;  
+    }
+  }
   for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
-    int idx = -1;
-    KMFolder *folder = 0;
     kernel->msgDict()->getLocation( *it, &folder, &idx );
-    if (folder)
-      folder->setStatus( idx, mStatus );
+    if (folder) {
+      if (mToggle) {
+        KMMsgBase *msg = folder->getMsgBase(idx);
+        // check if we are already at the target toggle state
+        if (msg) {
+          bool myStatus;
+          if (msg->status()&mStatus)
+            myStatus = true;
+          else 
+            myStatus = false;
+          if (myStatus != parentStatus)
+            continue;
+        }
+      }
+      folder->setStatus( idx, mStatus, mToggle );
+    }
   }
 }
 

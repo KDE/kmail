@@ -613,7 +613,7 @@ int KMFolderMbox::createIndexFromContents()
                     replyToIdStr, replyToAuxIdStr, msgIdStr,
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                     KMMsgMDNStateUnknown, offs, size );
-	  mi->setStatus("RO","O");
+	  mi->setStatus(status, xstatus);
 	  mi->setDate( dateStr.stripWhiteSpace() );
 	  mi->setDirty(FALSE);
 	  mMsgList.append(mi);
@@ -653,7 +653,9 @@ int KMFolderMbox::createIndexFromContents()
       inHeader = FALSE;
     if (!inHeader) continue;
 
-    /* -sanders Make all messages read when auto-recreating index
+    /* -sanders Make all messages read when auto-recreating index */
+    /* Reverted, as it breaks reading the sent mail status, for example.
+       -till */
     if ((needStatus & 1) && strncasecmp(line, "Status:", 7) == 0)
     {
       for(i=0; i<4 && line[i+8] > ' '; i++)
@@ -668,7 +670,7 @@ int KMFolderMbox::createIndexFromContents()
       xstatus[i] = '\0';
       needStatus &= ~2;
     }
-    else*/ if (strncasecmp(line,"X-KMail-Mark:",13)==0)
+    else if (strncasecmp(line,"X-KMail-Mark:",13)==0)
         xmarkStr = QCString(line+13);
     else if (strncasecmp(line,"In-Reply-To:",12)==0) {
       replyToIdStr = QCString(line+12);
@@ -930,8 +932,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   }
 //  if (mAccount) aMsg->removeHeaderField("X-UID");
 
-  if (aMsg->status()==KMMsgStatusUnread ||
-      aMsg->status()==KMMsgStatusNew ||
+  if (aMsg->isUnread() || aMsg->isNew() ||
       (this == kernel->outboxFolder())) {
     if (mUnreadMsgs == -1) mUnreadMsgs = 1;
     else ++mUnreadMsgs;

@@ -94,7 +94,6 @@ public:
 
 private:
   // WARNING: Do not add new member variables to the class. Add them to kd
-  KMMsgStatus mStatus;
   class KMMsgInfoPrivate;
   KMMsgInfoPrivate *kd;
 };

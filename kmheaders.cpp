@@ -62,6 +62,8 @@ QPixmap* KMHeaders::pixQueued = 0;
 QPixmap* KMHeaders::pixSent = 0;
 QPixmap* KMHeaders::pixFwd = 0;
 QPixmap* KMHeaders::pixFlag = 0;
+QPixmap* KMHeaders::pixWatched = 0;
+QPixmap* KMHeaders::pixIgnored = 0;
 QPixmap* KMHeaders::pixFullySigned = 0;
 QPixmap* KMHeaders::pixPartiallySigned = 0;
 QPixmap* KMHeaders::pixUndefinedSigned = 0;
@@ -136,9 +138,7 @@ public:
     }
 
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
-    if (mMsgBase->status() == KMMsgStatusNew ||
-	mMsgBase->status() == KMMsgStatusUnread ||
-	mMsgBase->status() == KMMsgStatusFlag) {
+    if (mMsgBase->isNew() || mMsgBase->isUnread() || mMsgBase->isFlag()) {
       setOpen(true);
       KMHeaderItem * topOfThread = this;
       while(topOfThread->parent())
@@ -268,36 +268,19 @@ public:
 
       PixmapList pixmaps;
 
-      switch (mMsgBase->status())
-      {
-        case KMMsgStatusNew:
-            pixmaps << *KMHeaders::pixNew;
-            break;
-        case KMMsgStatusUnread:
-            pixmaps << *KMHeaders::pixUns;
-            break;
-        case KMMsgStatusDeleted:
-            pixmaps << *KMHeaders::pixDel;
-            break;
-        case KMMsgStatusReplied:
-            pixmaps << *KMHeaders::pixRep;
-            break;
-        case KMMsgStatusForwarded:
-            pixmaps << *KMHeaders::pixFwd;
-            break;
-        case KMMsgStatusQueued:
-            pixmaps << *KMHeaders::pixQueued;
-            break;
-        case KMMsgStatusSent:
-            pixmaps <<  *KMHeaders::pixSent;
-            break;
-        case KMMsgStatusFlag:
-            pixmaps << *KMHeaders::pixFlag;
-            break;
-        default:
-            pixmaps << *KMHeaders::pixOld;
-            break;
-      }
+      // Have the watched/ignored icons first, I guess.
+      if(mMsgBase->isIgnored()) pixmaps << *KMHeaders::pixIgnored;
+      if(mMsgBase->isWatched()) pixmaps << *KMHeaders::pixWatched;
+      
+      if(mMsgBase->isNew()) pixmaps << *KMHeaders::pixNew;
+      if(mMsgBase->isOld() || mMsgBase->isRead()) pixmaps << *KMHeaders::pixOld;
+      if(mMsgBase->isUnread()) pixmaps << *KMHeaders::pixUns;
+      if(mMsgBase->isDeleted()) pixmaps << *KMHeaders::pixDel;
+      if(mMsgBase->isFlag()) pixmaps << *KMHeaders::pixFlag;
+      if(mMsgBase->isReplied()) pixmaps << *KMHeaders::pixRep;
+      if(mMsgBase->isForwarded()) pixmaps << *KMHeaders::pixFwd;
+      if(mMsgBase->isQueued()) pixmaps << *KMHeaders::pixQueued;
+      if(mMsgBase->isSent()) pixmaps << *KMHeaders::pixSent;
 
       // Only merge the crypto icons in if that is configured.
       if( headers->paintInfo()->showCryptoIcons ) {
@@ -342,22 +325,13 @@ public:
     QColor *color;
 
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
-    if (!mMsgBase) return;
-    switch (mMsgBase->status())
-    {
-      case KMMsgStatusNew:
-	color = (QColor*)(&headers->paintInfo()->colNew);
-	break;
-      case KMMsgStatusUnread:
-	color = (QColor*)(&headers->paintInfo()->colUnread);
-	break;
-      case KMMsgStatusFlag:
-	color = (QColor *)(&headers->paintInfo()->colFlag);
-	break;
-      default:
-	color = (QColor *)(&headers->paintInfo()->colFore);
-	break;
-    }
+    if (!mMsgBase) return;    
+	
+    color = (QColor *)(&headers->paintInfo()->colFore);
+    // new overrides unread, and flagged overrides new.
+    if (mMsgBase->isUnread()) color = (QColor*)(&headers->paintInfo()->colUnread);
+    if (mMsgBase->isNew()) color = (QColor*)(&headers->paintInfo()->colNew);
+    if (mMsgBase->isFlag()) color = (QColor*)(&headers->paintInfo()->colFlag);
 
     _cg.setColor( QColorGroup::Text, *color );
 
@@ -401,7 +375,7 @@ public:
       return ret + tmp.lower() + ' ' + sortArrival;
     } else if (column == paintInfo->subCol) {
       if (paintInfo->status)
-        return ret + QString( QChar( (uint)msg->status() )) + sortArrival;
+        return ret + ' ' + msg->statusToSortRank() + ' ' + sortArrival;
       return ret + KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
     }
     else if (column == paintInfo->sizeCol) {
@@ -529,6 +503,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixSent  = new QPixmap( UserIcon("kmmsgsent") );
     pixFwd   = new QPixmap( UserIcon("kmmsgforwarded") );
     pixFlag  = new QPixmap( UserIcon("kmmsgflag") );
+    pixWatched  = new QPixmap( UserIcon("kmmsgwatched") );
+    pixIgnored  = new QPixmap( UserIcon("kmmsgignored") );
     pixFullySigned = new QPixmap( UserIcon( "kmmsgfullysigned" ) );
     pixPartiallySigned = new QPixmap( UserIcon( "kmmsgpartiallysigned" ) );
     pixUndefinedSigned = new QPixmap( UserIcon( "kmmsgundefinedsigned" ) );
@@ -1072,6 +1048,11 @@ void KMHeaders::msgAdded(int id)
     else
       hi = new KMHeaderItem( this, id );
 
+    if (parent && mFolder->getMsgBase(parent->msgId())->isWatched())
+      mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
+    else if (parent && mFolder->getMsgBase(parent->msgId())->isIgnored())
+      mFolder->getMsgBase(id)->setStatus( KMMsgStatusIgnored );
+
     // Update and resize the id trees.
     mItems.resize( mFolder->count() );
     mItems[id] = hi;
@@ -1288,7 +1269,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setMsgStatus (KMMsgStatus status)
+void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 {
   SerNumList serNums;
   for (QListViewItemIterator it(this); it.current(); ++it)
@@ -1300,7 +1281,7 @@ void KMHeaders::setMsgStatus (KMMsgStatus status)
   if (serNums.empty())
     return;
 
-  KMCommand *command = new KMSetStatusCommand( status, serNums );
+  KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
   command->start();
 }
 
@@ -1327,7 +1308,7 @@ QPtrList<QListViewItem> KMHeaders::currentThread() const
   return list;
 }
 
-void KMHeaders::setThreadStatus(KMMsgStatus status)
+void KMHeaders::setThreadStatus(KMMsgStatus status, bool toggle)
 {
   QPtrList<QListViewItem> curThread = currentThread();
   QPtrListIterator<QListViewItem> it( curThread );
@@ -1342,7 +1323,7 @@ void KMHeaders::setThreadStatus(KMMsgStatus status)
   if (serNums.empty())
     return;
 
-  KMCommand *command = new KMSetStatusCommand( status, serNums );
+  KMCommand *command = new KMSetStatusCommand( status, serNums, toggle );
   command->start();
 }
 
@@ -1491,9 +1472,7 @@ void KMHeaders::setMsgRead (int msgId)
     return;
 
   SerNumList serNums;
-  KMMsgStatus st = msgBase->status();
-  if (st==KMMsgStatusNew || st==KMMsgStatusUnread ||
-      st==KMMsgStatusRead) {
+  if (msgBase->isNew() || msgBase->isUnread() || msgBase->isRead()) {
     serNums.append( msgBase->getMsgSerNum() );
   }
 
@@ -1790,11 +1769,12 @@ void KMHeaders::findUnreadAux( KMHeaderItem*& item,
   {
     while (item) {
       msgBase = mFolder->getMsgBase(item->msgId());
-      if (msgBase && msgBase->isUnread())
+      if (!msgBase) continue;
+      if (msgBase->isUnread() || msgBase->isNew())
         foundUnreadMessage = true;
 
-      if (!onlyNew && msgBase && msgBase->isUnread()) break;
-      if (onlyNew && msgBase && msgBase->isNew()) break;
+      if (!onlyNew && (msgBase->isUnread() || msgBase->isNew())) break;
+      if (onlyNew && msgBase->isNew()) break;
       item = static_cast<KMHeaderItem*>(item->itemBelow());
     }
   } else {
@@ -1802,10 +1782,11 @@ void KMHeaders::findUnreadAux( KMHeaderItem*& item,
     while (newItem)
     {
       msgBase = mFolder->getMsgBase(newItem->msgId());
-      if (msgBase && msgBase->isUnread())
+      if (!msgBase) continue;
+      if (msgBase->isUnread() || msgBase->isNew())
         foundUnreadMessage = true;
-      if (!onlyNew && msgBase && msgBase->isUnread()
-          || onlyNew && msgBase && msgBase->isNew())
+      if (!onlyNew && (msgBase->isUnread() || msgBase->isNew())
+          || onlyNew && msgBase->isNew())
         lastUnread = newItem;
       if (newItem == item) break;
       newItem = static_cast<KMHeaderItem*>(newItem->itemBelow());
@@ -2294,6 +2275,13 @@ void KMHeaders::slotRMB()
       mOwner->threadStatusMenu->plug( menu ); // Mark Thread menu
   }
 
+  if (mOwner->watchThreadAction->isEnabled() ) {
+    menu->insertSeparator();
+    mOwner->watchThreadAction->plug(menu);
+    mOwner->watchThreadAction->setChecked(currentMsg()->isWatched());
+    mOwner->ignoreThreadAction->plug(menu);
+    mOwner->ignoreThreadAction->setChecked(currentMsg()->isIgnored());
+  }
   menu->insertSeparator();
   mOwner->trashAction->plug(menu);
   mOwner->deleteAction->plug(menu);
@@ -3060,6 +3048,12 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		parent->addUnsortedChild((*it));
 		if(sortStream)
 		    (*it)->updateSortFile(sortStream, mFolder);
+                // If the parent is watched or ignored, propagate that to it's 
+                // children
+                if (mFolder->getMsgBase(parent->id())->isWatched())
+                  msg->setStatus(KMMsgStatusWatched);
+                if (mFolder->getMsgBase(parent->id())->isIgnored())
+                  msg->setStatus(KMMsgStatusIgnored);
 	    } else {
 		//oh well we tried, to the root with you!
 		root.addUnsortedChild((*it));
@@ -3107,8 +3101,8 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    new_kci->setItem(mItems[new_kci->id()] = khi);
 	    if(new_kci->hasChildren())
 		s.enqueue(new_kci);
-	    if(set_selection && mFolder->getMsgBase(new_kci->id())->status() == KMMsgStatusNew ||
-		set_selection && mFolder->getMsgBase(new_kci->id())->status() == KMMsgStatusUnread)
+	    if(set_selection && mFolder->getMsgBase(new_kci->id())->isNew() ||
+		set_selection && mFolder->getMsgBase(new_kci->id())->isUnread() )
 		unread_exists = true;
 	}
     } while(!s.isEmpty());
@@ -3157,10 +3151,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	    while (item) {
 		bool isUnread = false;
 		if (mJumpToUnread) // search unread messages
-		    if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusUnread)
+		    if (mFolder->getMsgBase(item->msgId())->isUnread())
 			isUnread = true;
 
-		if (mFolder->getMsgBase(item->msgId())->status() == KMMsgStatusNew || isUnread) {
+		if (mFolder->getMsgBase(item->msgId())->isNew() || isUnread) {
 		    first_unread = item->msgId();
 		    break;
 		}

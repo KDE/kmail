@@ -205,13 +205,13 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
   for ( QPtrListIterator<ImapJob> it( mJobList ); it; ++it ) {
     if ( it.current()->msgList().first() == msg) {
       job = dynamic_cast<ImapJob*>( it.current() );
-	  if (job)
-	  {
+      if (job)
+      {
         mapJobData.remove( job->mJob );
         mJobList.remove( job );
         delete job;
         break;
-	  }
+      }
     }
   }
 }
@@ -223,12 +223,12 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
   for ( QPtrListIterator<ImapJob> it( mJobList ); it; ++it ) {
     if ( it.current()->msgList().first()->parent() == folder) {
       job = dynamic_cast<ImapJob*>( it.current() );
-	  if (job)
-	  {
+      if (job)
+      {
         mapJobData.remove( job->mJob );
         mJobList.remove( job );
         delete job;
-	  }
+      }
     }
   }
 }

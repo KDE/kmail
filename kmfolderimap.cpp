@@ -239,13 +239,16 @@ void KMFolderImap::slotRenameResult( KIO::Job *job )
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
-  if (folder) kernel->undoStack()->pushSingleAction( aMsg->getMsgSerNum(), folder, this );
   if (folder) {
+    kernel->undoStack()->pushSingleAction( aMsg->getMsgSerNum(), folder, this );
     int idx = folder->find( aMsg );
     if ( idx != -1 )
       folder->take( idx );
   }
   aMsg->setTransferInProgress( false );
+  // Remember the status, so it can be transfered to the new message.
+  mMetaDataMap.insert(aMsg->msgIdMD5(), new KMMsgMetaData(aMsg->status()));
+
   delete aMsg;
   aMsg = 0;
   getFolder();
@@ -261,6 +264,8 @@ void KMFolderImap::addMsgQuiet(QPtrList<KMMessage> msgList)
     if ( undoId == -1 )
       undoId = kernel->undoStack()->newUndoAction( folder, this );
     kernel->undoStack()->addMsgToAction( undoId, msg->getMsgSerNum() );
+    // Remember the status, so it can be transfered to the new message.
+    mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
   }
   if (folder) folder->take(msgList);
   msgList.setAutoDelete(true);
@@ -291,7 +296,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
       {
         // make sure the messages won't be deleted while we work with them
         for ( KMMessage* msg = msgList.first(); msg; msg = msgList.next() )
-        msg->setTransferInProgress(true);
+          msg->setTransferInProgress(true);
 
         if (this == msgParent)
         {
@@ -382,6 +387,10 @@ void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
   {
     KMFolder* parent = aMsg->parent();
     if (parent) mAccount->tempOpenFolder(parent);
+  }
+  for (KMMessage *msg = msgList.first(); msg; msg = msgList.next()) {
+    // Remember the status, so it can be transfered to the new message.
+    mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
   }
   QValueList<int> uids;
   getUids(msgList, uids);
@@ -757,7 +766,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
       else if (mailUid == serverUid)
       {
         if (!mReadOnly)
-          getMsgBase(idx)->setStatus(flagsToStatus(serverFlags, false));
+          flagsToStatus(getMsgBase(idx), serverFlags, false);
         idx++;
         uid = (*it).items.remove(uid);
       }
@@ -837,12 +846,21 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
 
 
 //-----------------------------------------------------------------------------
-KMMsgStatus KMFolderImap::flagsToStatus(int flags, bool newMsg)
+void KMFolderImap::flagsToStatus(KMMsgBase *msg, int flags, bool newMsg)
 {
-  if (flags & 4) return KMMsgStatusFlag;
-  if (flags & 2) return KMMsgStatusReplied;
-  if (flags & 1) return KMMsgStatusOld;
-  return (newMsg) ? KMMsgStatusNew : KMMsgStatusUnread;
+  if (flags & 4) 
+    msg->setStatus( KMMsgStatusFlag );
+  if (flags & 2)
+    msg->setStatus( KMMsgStatusReplied );
+  if (flags & 1)
+    msg->setStatus( KMMsgStatusOld );
+
+  if (msg->isOfUnknownStatus()) {
+    if (newMsg)
+      msg->setStatus( KMMsgStatusNew );
+    else
+      msg->setStatus( KMMsgStatusUnread );
+  }
 }
 
 
@@ -850,23 +868,16 @@ KMMsgStatus KMFolderImap::flagsToStatus(int flags, bool newMsg)
 QCString KMFolderImap::statusToFlags(KMMsgStatus status)
 {
   QCString flags = "";
-  switch (status)
-  {
-    case KMMsgStatusNew:
-    case KMMsgStatusUnread:
-      break;
-    case KMMsgStatusDeleted:
-      flags = "\\DELETED";
-      break;
-    case KMMsgStatusReplied:
-      flags = "\\SEEN \\ANSWERED";
-      break;
-    case KMMsgStatusFlag:
-      flags = "\\SEEN \\FLAGGED";
-      break;
-    default:
-      flags = "\\SEEN";
-  }
+  if (status & KMMsgStatusNew || status & KMMsgStatusUnread) 
+    return flags;
+  if (status & KMMsgStatusDeleted) 
+    flags += "\\DELETED";
+  if (status & KMMsgStatusRead) 
+    flags += "\\SEEN";
+  if (status & KMMsgStatusReplied) 
+    flags += "\\ANSWERED";
+  if (status & KMMsgStatusFlag) 
+    flags += "\\FLAGGED";
   return flags;
 }
 
@@ -910,7 +921,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       msg = 0;
     }
     else {
-      msg->setStatus(flagsToStatus(flags));
       if (uidmap.find(uid))
       {
         // assign the sernum from the cache
@@ -928,6 +938,17 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
          manager realizes there is a new message. */
       emit msgAdded(this, msg->getMsgSerNum());
       close();
+      // Transfer the status, if it is cached.
+      QString id = msg->msgIdMD5();
+      if ( mMetaDataMap.find( id ) ) {
+        KMMsgMetaData *md =  mMetaDataMap[id];
+        msg->setStatus( md->status() );
+        mMetaDataMap.remove( id );
+        delete md;
+      }
+      // Merge with the flags from the server.
+      flagsToStatus((KMMsgBase*)msg, flags);
+
       if (count() > 1) unGetMsg(count() - 1);
       mLastUid = uid;
 /*      if ((*it).total > 20 &&

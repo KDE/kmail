@@ -1610,39 +1610,39 @@ void KMMainWidget::slotSetMsgStatusUnread()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotSetMsgStatusFlag()
-{
-  mHeaders->setMsgStatus(KMMsgStatusFlag);
-}
-
-//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusRead()
 {
   mHeaders->setMsgStatus(KMMsgStatusRead);
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotSetMsgStatusFlag()
+{
+  mHeaders->setMsgStatus(KMMsgStatusFlag, true);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusReplied()
 {
-  mHeaders->setMsgStatus(KMMsgStatusReplied);
+  mHeaders->setMsgStatus(KMMsgStatusReplied, true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusForwarded()
 {
-  mHeaders->setMsgStatus(KMMsgStatusForwarded);
+  mHeaders->setMsgStatus(KMMsgStatusForwarded, true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusQueued()
 {
-  mHeaders->setMsgStatus(KMMsgStatusQueued);
+  mHeaders->setMsgStatus(KMMsgStatusQueued, true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetMsgStatusSent()
 {
-  mHeaders->setMsgStatus(KMMsgStatusSent);
+  mHeaders->setMsgStatus(KMMsgStatusSent, true);
 }
 
 //-----------------------------------------------------------------------------
@@ -1660,7 +1660,7 @@ void KMMainWidget::slotSetThreadStatusUnread()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusFlag()
 {
-  mHeaders->setThreadStatus(KMMsgStatusFlag);
+  mHeaders->setThreadStatus(KMMsgStatusFlag, true);
 }
 
 //-----------------------------------------------------------------------------
@@ -1672,25 +1672,43 @@ void KMMainWidget::slotSetThreadStatusRead()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusReplied()
 {
-  mHeaders->setThreadStatus(KMMsgStatusReplied);
+  mHeaders->setThreadStatus(KMMsgStatusReplied, true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusForwarded()
 {
-  mHeaders->setThreadStatus(KMMsgStatusForwarded);
+  mHeaders->setThreadStatus(KMMsgStatusForwarded, true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusQueued()
 {
-  mHeaders->setThreadStatus(KMMsgStatusQueued);
+  mHeaders->setThreadStatus(KMMsgStatusQueued, true);
 }
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetThreadStatusSent()
 {
-  mHeaders->setThreadStatus(KMMsgStatusSent);
+  mHeaders->setThreadStatus(KMMsgStatusSent, true);
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSetThreadStatusWatched()
+{
+  mHeaders->setThreadStatus(KMMsgStatusWatched, true);
+  if (watchThreadAction->isChecked()) {
+    ignoreThreadAction->setChecked(false);
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSetThreadStatusIgnored()
+{
+  mHeaders->setThreadStatus(KMMsgStatusIgnored, true);
+  if (ignoreThreadAction->isChecked()) {
+    watchThreadAction->setChecked(false);
+  }
 }
 
 
@@ -1801,6 +1819,10 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
      copyActionMenu->plug( menu );
      moveActionMenu->plug( menu );
 
+     menu->insertSeparator();
+     watchThreadAction->plug( menu );
+     ignoreThreadAction->plug( menu );
+     
      menu->insertSeparator();
      toggleFixFontAction()->plug(menu);
      viewSourceAction()->plug(menu);
@@ -2057,11 +2079,11 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusRead()),
                                  actionCollection(), "status_read"));
 
-  statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as R&eplied"), "kmmsgreplied",
+  statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Replied"), "kmmsgreplied",
                                           i18n("Mark selected messages as replied")),
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied"));
-
+  
   statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
                                           i18n("Mark selected messages as forwarded")),
                                  0, this, SLOT(slotSetMsgStatusForwarded()),
@@ -2126,7 +2148,13 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag"));
 
-
+  watchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
+                                       0, this, SLOT(slotSetThreadStatusWatched()),
+                                       actionCollection(), "thread_watched");
+  
+  ignoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "kmmsgignored",
+                                       0, this, SLOT(slotSetThreadStatusIgnored()),
+                                       actionCollection(), "thread_ignored");
 
   moveActionMenu = new KActionMenu( i18n("&Move To" ),
                                     actionCollection(), "move_to" );
@@ -2544,10 +2572,21 @@ void KMMainWidget::updateMessageActions()
     }
 
     bool mass_actions = count >= 1;
+    bool thread_actions = mass_actions &&
+			  allSelectedInCommonThread &&
+			  mHeaders->isThreaded();
     statusMenu->setEnabled( mass_actions );
-    threadStatusMenu->setEnabled( mass_actions &&
-				  allSelectedInCommonThread &&
-				  mHeaders->isThreaded() );
+    threadStatusMenu->setEnabled( thread_actions );
+    watchThreadAction->setEnabled( thread_actions );
+    if (mFolder && mHeaders && 
+        watchThreadAction->isEnabled() &&
+        mHeaders->currentMsg()->isWatched())
+      watchThreadAction->setChecked(true);
+    ignoreThreadAction->setEnabled( thread_actions );
+    if (mFolder && mHeaders && 
+        ignoreThreadAction->isEnabled() &&
+        mHeaders->currentMsg()->isIgnored())
+      ignoreThreadAction->setChecked(true);
     moveActionMenu->setEnabled( mass_actions );
     copyActionMenu->setEnabled( mass_actions );
     trashAction->setEnabled( mass_actions );

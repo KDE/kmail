@@ -109,7 +109,8 @@ public:
   KActionMenu *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu, *mForwardActionMenu,
     *applyFilterActionsMenu;
-
+  KToggleAction *watchThreadAction, *ignoreThreadAction;
+  
   /** we need to access those KToggleActions from the foldertree-popup */
   KRadioAction* unreadColumnToggle;
   KRadioAction* unreadTextToggle;
@@ -227,6 +228,8 @@ protected slots:
   void slotSetThreadStatusQueued();
   void slotSetThreadStatusSent();
   void slotSetThreadStatusFlag();
+  void slotSetThreadStatusWatched();
+  void slotSetThreadStatusIgnored();
   void slotToggleUnread();
   void slotToggleTotalColumn();
   void slotBriefHeaders();

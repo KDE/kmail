@@ -1517,7 +1517,8 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
   }
   if (repaint) {
     // repaint the item and it's parents
-    for (QListViewItem *p = fti; p; p = p->parent()) p->repaint();
+    for (QListViewItem *p = fti; p; p = p->parent()) 
+      p->repaint();
   }
 }
 

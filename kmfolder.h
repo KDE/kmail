@@ -430,10 +430,10 @@ public:
   KMMsgDictREntry *rDict() const { return mRDict; }
 
   /** Set the status of the message at index @p idx to @p status. */
-  virtual void setStatus(int idx, KMMsgStatus status);
+  virtual void setStatus(int idx, KMMsgStatus status, bool toggle=false);
 
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
-  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status);
+  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle=false);
 
   /** Icon related methods */
   virtual bool useCustomIcons() const { return mUseCustomIcons; }

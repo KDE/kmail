@@ -17,20 +17,44 @@ class QTextCodec;
 class KMFolder;
 class KMFolderIndex;
 
+/** The new status format. These can be or'd together. */
+enum MsgStatus
+{
+    KMMsgStatusUnknown =           0x00000000,
+    KMMsgStatusNew =               0x00000001,
+    KMMsgStatusUnread =            0x00000002,
+    KMMsgStatusRead =              0x00000004,
+    KMMsgStatusOld =               0x00000008,
+    KMMsgStatusDeleted =           0x00000010,
+    KMMsgStatusReplied =           0x00000020,
+    KMMsgStatusForwarded =         0x00000040,
+    KMMsgStatusQueued =            0x00000080,
+    KMMsgStatusSent =              0x00000100,
+    KMMsgStatusFlag =              0x00000200, // important
+    KMMsgStatusWatched =           0x00000400, 
+    KMMsgStatusIgnored =           0x00000800, 
+    KMMsgStatusTodo =              0x00001000 
+};
+
+typedef uint KMMsgStatus;
+
+/** The old status format, only one at a time possible. Needed 
+    for upgrade path purposees. */
+  
 typedef enum
 {
-    KMMsgStatusUnknown=' ',
-    KMMsgStatusNew='N',
-    KMMsgStatusUnread='U',
-    KMMsgStatusRead='R',
-    KMMsgStatusOld='O',
-    KMMsgStatusDeleted='D',
-    KMMsgStatusReplied='A',
-    KMMsgStatusForwarded='F',
-    KMMsgStatusQueued='Q',
-    KMMsgStatusSent='S',
-    KMMsgStatusFlag='G'
-} KMMsgStatus;
+    KMLegacyMsgStatusUnknown=' ',
+    KMLegacyMsgStatusNew='N',
+    KMLegacyMsgStatusUnread='U',
+    KMLegacyMsgStatusRead='R',
+    KMLegacyMsgStatusOld='O',
+    KMLegacyMsgStatusDeleted='D',
+    KMLegacyMsgStatusReplied='A',
+    KMLegacyMsgStatusForwarded='F',
+    KMLegacyMsgStatusQueued='Q',
+    KMLegacyMsgStatusSent='S',
+    KMLegacyMsgStatusFlag='G'
+} KMLegacyMsgStatus;
 
 
 
@@ -84,14 +108,17 @@ public:
   KMMsgBase(KMFolderIndex* p=0);
   virtual ~KMMsgBase();
 
-  /** Convert the given message status to a string. */
-  static const char* statusToStr(KMMsgStatus aStatus);
-
-  /** Return owning folder. */
+    /** Return owning folder. */
   KMFolderIndex* parent(void) const { return mParent; }
 
   /** Set owning folder. */
   void setParent(KMFolderIndex* p) { mParent=p; }
+
+  /** Convert the given message status to a string. */
+  const QCString statusToStr();
+  
+  /** Convert the given message status to a string. */
+  QString statusToSortRank();
 
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   virtual bool isMessage(void) const;
@@ -102,12 +129,46 @@ public:
   /** Returns TRUE if status is new. */
   virtual bool isNew(void) const;
 
+  /** Returns TRUE if status is unknown. */
+  virtual bool isOfUnknownStatus(void) const;
+
+  /** Returns TRUE if status is old. */
+  virtual bool isOld(void) const;
+
+  /** Returns TRUE if status is read. */
+  virtual bool isRead(void) const;
+
+  /** Returns TRUE if status is deleted. */
+  virtual bool isDeleted(void) const;
+
+  /** Returns TRUE if status is replied. */
+  virtual bool isReplied(void) const;
+
+  /** Returns TRUE if status is forwarded. */
+  virtual bool isForwarded(void) const;
+
+  /** Returns TRUE if status is queued. */
+  virtual bool isQueued(void) const;
+
+  /** Returns TRUE if status is sent. */
+  virtual bool isSent(void) const;
+
+  /** Returns TRUE if status is flag. */
+  virtual bool isFlag(void) const;
+
+  /** Returns TRUE if status is watched. */
+  virtual bool isWatched(void) const;
+
+  /** Returns TRUE if status is ignored. */
+  virtual bool isIgnored(void) const;
+
   /** Status of the message. */
   virtual KMMsgStatus status(void) const = 0;
 
   /** Set status and mark dirty.  Optional optimization: @p idx may
    * specify the index of this message within the parent folder. */
   virtual void setStatus(const KMMsgStatus status, int idx = -1);
+  virtual void toggleStatus(const KMMsgStatus status, int idx = -1);
   virtual void setStatus(const char* statusField, const char* xstatusField=0);
 
   /** Encryption status of the message. */
@@ -271,6 +332,10 @@ protected:
   off_t mIndexOffset;
   short mIndexLength;
   bool mEnableUndo;
+  mutable KMMsgStatus mStatus;
+  // This is kept to provide an upgrade path from the the old single status
+  // to the new multiple status scheme.
+  mutable KMLegacyMsgStatus mLegacyStatus;
 
 public:
   enum MsgPartType
@@ -285,7 +350,7 @@ public:
     MsgXMarkPart = 6,
     //unsigned long
     MsgOffsetPart = 7,
-    MsgStatusPart = 8,
+    MsgLegacyStatusPart = 8,
     MsgSizePart = 9,
     MsgDatePart = 10,
     MsgFilePart = 11,
@@ -293,7 +358,9 @@ public:
     MsgMDNSentPart = 13,
     //another two unicode strings
     MsgReplyToAuxIdMD5Part = 14,
-    MsgStrippedSubjectMD5Part = 15
+    MsgStrippedSubjectMD5Part = 15,
+    // and another unsigned long
+    MsgStatusPart = 16
   };
   /** access to long msgparts */
   off_t getLongPart(MsgPartType) const;

@@ -55,14 +55,15 @@ public:
   /** Get a list of all items in the current thread */
   QPtrList<QListViewItem> currentThread() const;
 
-  /** Set all messages in the current thread to status @p status */
-  virtual void setThreadStatus(KMMsgStatus status);
+  /** Set all messages in the current thread to status @p status
+      or toggle it, if specified. */
+  virtual void setThreadStatus(KMMsgStatus status, bool toggle=false);
 
   /* Set message status to read if it is new, or unread */
   virtual void setMsgRead(int msgId);
 
   /** The following methods processes all selected messages. */
-  virtual void setMsgStatus(KMMsgStatus status);
+  virtual void setMsgStatus(KMMsgStatus status, bool toggle=false);
   virtual void deleteMsg();
   virtual void applyFiltersOnMsg();
   virtual void undo();
@@ -212,7 +213,7 @@ public slots:
 
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
-    *pixQueued, *pixFwd, *pixFlag,
+    *pixQueued, *pixFwd, *pixFlag, *pixWatched, *pixIgnored,
     *pixFullySigned, *pixPartiallySigned, *pixUndefinedSigned,
     *pixFullyEncrypted, *pixPartiallyEncrypted, *pixUndefinedEncrypted,
       *pixFiller, *pixEncryptionProblematic,
@@ -296,9 +297,6 @@ private:
 
   void buildIdTrees ();
   QDict< KMHeaderItem > mPhantomIdTree;
-  QDict< QValueList< int > > mTree;
-  QDict< bool > mTreeSeen;
-  QDict< bool > mTreeToplevel;
   bool mNested, mNestedOverride, mSubjThreading;
   NestingPolicy nestingPolicy;
   QPtrList<KMHeaderItem> mImperfectlyThreadedList;

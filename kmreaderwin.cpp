@@ -1026,11 +1026,13 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
     Q_ASSERT(0);
   }
 
-  mLastStatus = (aMsg) ? aMsg->status() : KMMsgStatusUnknown;
   if (aMsg)
   {
     aMsg->setCodec(mCodec, mAutoDetectEncoding);
     aMsg->setDecodeHTML(htmlMail());
+    mLastStatus = aMsg->status();
+  } else {
+    mLastStatus = KMMsgStatusUnknown;
   }
 
   // Avoid flicker, somewhat of a cludge
@@ -1873,11 +1875,9 @@ void KMReaderWin::slotTouchMessage()
 {
   if (message())
   {
-    KMMsgStatus st = message()->status();
-    if (st == KMMsgStatusNew || st == KMMsgStatusUnread
-        || st == KMMsgStatusRead)
+    if (message()->isNew() || message()->isUnread() || message()->isRead())
       message()->setStatus(KMMsgStatusOld);
-    if ( st == KMMsgStatusNew || st == KMMsgStatusUnread ) {
+    if ( message()->isNew() || message()->isUnread() ) {
       KMMessage * receipt = message()->createMDN( MDN::ManualAction,
 						  MDN::Displayed,
 						  true /* allow GUI */ );

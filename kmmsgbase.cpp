@@ -55,18 +55,6 @@
       | (((x) & 0x00000000000000ffull) << 56))
 #endif
 
-static KMMsgStatus sStatusList[] =
-{
-  KMMsgStatusDeleted, KMMsgStatusNew,
-  KMMsgStatusUnread,  KMMsgStatusOld,
-  KMMsgStatusRead,    KMMsgStatusReplied,
-  KMMsgStatusSent,    KMMsgStatusQueued,
-  KMMsgStatusFlag,
-  KMMsgStatusUnknown /* "Unknown" must be at the *end* of the list */
-};
-static const int NUM_STATUSLIST = sizeof sStatusList / sizeof *sStatusList;
-
-
 //-----------------------------------------------------------------------------
 KMMsgBase::KMMsgBase(KMFolderIndex* aParent)
 {
@@ -74,6 +62,7 @@ KMMsgBase::KMMsgBase(KMFolderIndex* aParent)
   mDirty   = FALSE;
   mIndexOffset = 0;
   mIndexLength = 0;
+  mStatus = KMMsgStatusUnknown;
   mEnableUndo = false;
 }
 
@@ -114,17 +103,111 @@ bool KMMsgBase::isMessage(void) const
 {
   return FALSE;
 }
-
+//-----------------------------------------------------------------------------
+void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
+{
+  mDirty = true;
+  if (mParent) {
+     if (idx < 0)
+       idx = mParent->find( this );
+     mParent->msgStatusChanged( status(), aStatus, idx );
+     mParent->headerOfMsgChanged(this, idx);
+  }
+  if ( status() & aStatus ) {
+    mStatus &= ~aStatus;
+  } else {
+    mStatus |= aStatus;
+    // Ignored and Watched are toggleable, yet mutually exclusive.
+    // That is an arbitrary restriction on my part. HAR HAR HAR :) -till 
+    if (aStatus == KMMsgStatusWatched)
+      mStatus &= ~KMMsgStatusIgnored;
+    if (aStatus == KMMsgStatusIgnored)
+      mStatus &= ~KMMsgStatusWatched;
+  }
+}
+ 
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
-{
-  if ((idx < 0) && (mParent))
-    idx = mParent->find( this );
-  if (mParent)
-    mParent->msgStatusChanged( status(), aStatus, idx );
+{ 
   mDirty = TRUE;
-  if (mParent)
-    mParent->headerOfMsgChanged(this, idx);
+  if (mParent) {
+     if (idx < 0)
+       idx = mParent->find( this );
+     mParent->msgStatusChanged( status(), aStatus, idx );
+     mParent->headerOfMsgChanged( this, idx );
+  }
+  switch (aStatus) {
+    case KMMsgStatusRead:
+      // Unset unread and new, set read
+      mStatus &= ~KMMsgStatusUnread;
+      mStatus &= ~KMMsgStatusNew;
+      mStatus |= KMMsgStatusRead;
+      break;
+
+    case KMMsgStatusUnread:
+      // unread overrides read
+      mStatus &= ~KMMsgStatusRead;
+      mStatus &= ~KMMsgStatusNew;
+      mStatus |= KMMsgStatusUnread; 
+      break;
+
+    case KMMsgStatusOld:
+      // old can't be new or unread
+      mStatus &= ~KMMsgStatusNew;
+      mStatus &= ~KMMsgStatusUnread;
+      mStatus |= KMMsgStatusOld; 
+      break;
+
+    case KMMsgStatusNew:
+      // new overrides old and read
+      mStatus &= ~KMMsgStatusOld;
+      mStatus &= ~KMMsgStatusRead;
+      mStatus &= ~KMMsgStatusUnread;
+      mStatus |= KMMsgStatusNew; 
+      break;
+
+    case KMMsgStatusDeleted:
+      mStatus |= KMMsgStatusDeleted; 
+      break;
+
+    case KMMsgStatusReplied:
+      mStatus |= KMMsgStatusReplied; 
+      break;
+
+    case KMMsgStatusForwarded:
+      mStatus |= KMMsgStatusForwarded; 
+      break;
+
+    case KMMsgStatusQueued:
+      mStatus |= KMMsgStatusQueued;
+      break;
+
+    case KMMsgStatusSent:
+      mStatus &= ~KMMsgStatusQueued;
+      mStatus &= ~KMMsgStatusUnread;
+      mStatus &= ~KMMsgStatusNew;
+      mStatus |= KMMsgStatusSent;
+      break;
+
+    case KMMsgStatusFlag:
+      mStatus |= KMMsgStatusFlag;
+      break;
+
+    // Watched and ignored are mutually exclusive
+    case KMMsgStatusWatched:
+      mStatus &= ~KMMsgStatusIgnored;
+      mStatus |= KMMsgStatusWatched; 
+      break;
+
+    case KMMsgStatusIgnored:
+      mStatus &= ~KMMsgStatusWatched;
+      mStatus |= KMMsgStatusIgnored;
+      break;
+      
+    default:
+      mStatus = aStatus;
+      break;
+  }
 }
 
 
@@ -132,31 +215,36 @@ void KMMsgBase::setStatus(const KMMsgStatus aStatus, int idx)
 //-----------------------------------------------------------------------------
 void KMMsgBase::setStatus(const char* aStatusStr, const char* aXStatusStr)
 {
-  setStatus(KMMsgStatusUnknown);
   // first try to find status from "X-Status" field if given
   if (aXStatusStr) {
-    for (int i=0; i<NUM_STATUSLIST-1; i++) {
-      if (strchr(aXStatusStr, (char)sStatusList[i])) {
-	  setStatus(sStatusList[i]);
-	  break;
-      }
-    }
+    if (strchr(aXStatusStr, 'N')) setStatus(KMMsgStatusNew);
+    if (strchr(aXStatusStr, 'U')) setStatus(KMMsgStatusUnread);
+    if (strchr(aXStatusStr, 'O')) setStatus(KMMsgStatusOld);
+    if (strchr(aXStatusStr, 'R')) setStatus(KMMsgStatusRead);
+    if (strchr(aXStatusStr, 'D')) setStatus(KMMsgStatusDeleted);
+    if (strchr(aXStatusStr, 'A')) setStatus(KMMsgStatusReplied);
+    if (strchr(aXStatusStr, 'F')) setStatus(KMMsgStatusForwarded);
+    if (strchr(aXStatusStr, 'Q')) setStatus(KMMsgStatusQueued);
+    if (strchr(aXStatusStr, 'S')) setStatus(KMMsgStatusSent);
+    if (strchr(aXStatusStr, 'G')) setStatus(KMMsgStatusFlag);
   }
 
-  // if not successful then use the "Status" field
-  if (status() == KMMsgStatusUnknown)
-  {
-    if (aStatusStr && ((aStatusStr[0]==(char)KMMsgStatusRead && aStatusStr[1]==(char)KMMsgStatusOld) ||
-		       (aStatusStr[0]==(char)KMMsgStatusOld && aStatusStr[1]==(char)KMMsgStatusRead)))
-	setStatus(KMMsgStatusOld);
-    else if (aStatusStr && aStatusStr[0]==(char)KMMsgStatusRead)
-	setStatus(KMMsgStatusRead);
-    else if (aStatusStr && aStatusStr[0]==(char)KMMsgStatusDeleted)
-	setStatus(KMMsgStatusDeleted);
+  // Merge the contents of the "Status" field
+  if (aStatusStr) {
+    if ((aStatusStr[0]== 'R' && aStatusStr[1]== 'O') ||
+        (aStatusStr[0]== 'O' && aStatusStr[1]== 'R')) {
+      setStatus( KMMsgStatusOld );
+      setStatus( KMMsgStatusRead );
+    }
+    else if (aStatusStr[0] == 'R')
+      setStatus(KMMsgStatusRead);
+    else if (aStatusStr[0] == 'D')
+      setStatus(KMMsgStatusDeleted);
     else
-	setStatus(KMMsgStatusNew);
+      setStatus(KMMsgStatusNew);
   }
 }
+
 
 void KMMsgBase::setEncryptionState( const KMMsgEncryptionState status, int idx )
 {
@@ -217,26 +305,142 @@ void KMMsgBase::setSignatureStateChar( QChar status, int idx )
 bool KMMsgBase::isUnread(void) const
 {
   KMMsgStatus st = status();
-  return (st==KMMsgStatusNew || st==KMMsgStatusUnread);
+  return (st & KMMsgStatusUnread);
 }
 
 //-----------------------------------------------------------------------------
 bool KMMsgBase::isNew(void) const
 {
   KMMsgStatus st = status();
-  return (st==KMMsgStatusNew);
+  return (st & KMMsgStatusNew);
 }
 
 //-----------------------------------------------------------------------------
-const char* KMMsgBase::statusToStr(KMMsgStatus aStatus)
+bool KMMsgBase::isOfUnknownStatus(void) const
 {
-  static char sstr[2];
+  KMMsgStatus st = status();
+  return (st == KMMsgStatusUnknown);
+}
 
-  sstr[0] = (char)aStatus;
-  sstr[1] = '\0';
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isOld(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusOld);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isRead(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusRead);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isDeleted(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusDeleted);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isReplied(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusReplied);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isForwarded(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusForwarded);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isQueued(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusQueued);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isSent(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusSent);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isFlag(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusFlag);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isWatched(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusWatched);
+}
+
+//-----------------------------------------------------------------------------
+bool KMMsgBase::isIgnored(void) const
+{
+  KMMsgStatus st = status();
+  return (st & KMMsgStatusIgnored);
+}
+
+//-----------------------------------------------------------------------------
+const QCString KMMsgBase::statusToStr()
+{
+  QCString sstr;
+  if (status() & KMMsgStatusNew) sstr += 'N';
+  if (status() & KMMsgStatusUnread) sstr += 'U';
+  if (status() & KMMsgStatusOld) sstr += 'O';
+  if (status() & KMMsgStatusRead) sstr += 'R';
+  if (status() & KMMsgStatusDeleted) sstr += 'D';
+  if (status() & KMMsgStatusReplied) sstr += 'A';
+  if (status() & KMMsgStatusForwarded) sstr += 'F';
+  if (status() & KMMsgStatusQueued) sstr += 'Q';
+  if (status() & KMMsgStatusSent) sstr += 'S';
+  if (status() & KMMsgStatusFlag) sstr += 'G';
 
   return sstr;
 }
+
+//-----------------------------------------------------------------------------
+QString KMMsgBase::statusToSortRank()
+{
+  QString sstr;
+
+  // put watched ones first, then normal ones, ignored ones last
+  sstr = 'b';
+  if (status() & KMMsgStatusWatched) sstr = 'a';
+  if (status() & KMMsgStatusIgnored) sstr = 'c';
+
+  // Second level. One of new, old, read, unread
+  if (status() & KMMsgStatusNew) sstr += 'a';
+  if (status() & KMMsgStatusUnread) sstr += 'b';
+  if (status() & KMMsgStatusOld) sstr += 'c';
+  if (status() & KMMsgStatusRead) sstr += 'd';
+  
+  // Third level. Mulitple of these.
+  if (status() & KMMsgStatusDeleted) sstr += 'a';
+  if (status() & KMMsgStatusFlag) sstr += 'b';
+  if (status() & KMMsgStatusReplied) sstr += 'c';
+  if (status() & KMMsgStatusForwarded) sstr += 'd';
+  if (status() & KMMsgStatusQueued) sstr += 'e';
+  if (status() & KMMsgStatusSent) sstr += 'f';
+
+  // if the message has no flag at all, this will put it after all flagged
+  // ones. The flagged ones don't care about it.
+  sstr += 'g';
+  
+  return sstr;
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMsgBase::setDate(const QCString& aDateStr)
@@ -1019,8 +1223,8 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   //these is at the beginning because it is queried quite often
   tmp_str = msgIdMD5().stripWhiteSpace();
   STORE_DATA_LEN(MsgIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
-  tmp = status();
-  STORE_DATA(MsgStatusPart, tmp);
+  tmp = mLegacyStatus;
+  STORE_DATA(MsgLegacyStatusPart, tmp);
 
   //these are completely arbitrary order
   tmp_str = fromStrip().stripWhiteSpace();
@@ -1051,6 +1255,9 @@ const uchar *KMMsgBase::asIndexString(int &length) const
 
   tmp_str = strippedSubjectMD5().stripWhiteSpace();
   STORE_DATA_LEN(MsgStrippedSubjectMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
+
+  tmp = status();
+  STORE_DATA(MsgStatusPart, tmp);
 
 #undef STORE_DATA_LEN
   return ret;

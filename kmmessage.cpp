@@ -299,12 +299,10 @@ void KMMessage::removePrivateHeaderFields() {
 //-----------------------------------------------------------------------------
 void KMMessage::setStatusFields(void)
 {
-    char str[3];
+  char str[3];
 
-  str[0] = (char)status();
-  str[1] = '\0';
-  setHeaderField("Status", status()==KMMsgStatusNew ? "R " : "RO");
-  setHeaderField("X-Status", str);
+  setHeaderField("Status", status() & KMMsgStatusNew ? "R \0" : "RO\0");
+  setHeaderField("X-Status", statusToStr());
 
   str[0] = (char)encryptionState();
   str[1] = '\0';
@@ -3627,8 +3625,6 @@ void KMMessage::setStatus(const KMMsgStatus aStatus, int idx)
   if (mStatus == aStatus)
     return;
   KMMsgBase::setStatus(aStatus, idx);
-  mStatus = aStatus;
-  mDirty = TRUE;
 }
 
 void KMMessage::setEncryptionState(const KMMsgEncryptionState s, int idx)

@@ -57,6 +57,12 @@ public:
   using KMMsgBase::setParent;
   using KMMsgBase::enableUndo; // KMFolder
   using KMMsgBase::setEnableUndo; // dto.
+  using KMMsgBase::isRead; // dto.
+  using KMMsgBase::isUnread; // dto.
+  using KMMsgBase::isNew; // dto.
+  using KMMsgBase::isOld;
+  using KMMsgBase::isWatched;
+  using KMMsgBase::isIgnored; 
   using KMMsgBase::setEncryptionStateChar; // KMAcct*
   using KMMsgBase::setSignatureStateChar; // dto.
 
@@ -107,7 +113,6 @@ public:
        that this message should be considered urgent
    **/
   bool isUrgent() const;
-
 
   /** Specifies an unencrypted copy of this message to be stored
       in a separate member variable to allow saving messages in
@@ -784,7 +789,6 @@ private:
   off_t mFolderOffset;
   size_t mMsgSize, mMsgLength;
   time_t mDate;
-  KMMsgStatus mStatus;
   unsigned long mMsgSerNum;
   KMMsgEncryptionState mEncryptionState;
   KMMsgSignatureState mSignatureState;

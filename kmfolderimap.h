@@ -34,6 +34,7 @@ using KMail::ImapAccountBase;
 #include "kio/global.h"
 
 #include <qintdict.h>
+#include <qdict.h>
 #include <qvaluelist.h>
 
 class KMFolderTreeItem;
@@ -44,6 +45,18 @@ namespace KMail {
 }
 using KMail::FolderJob;
 using KMail::ImapJob;
+
+class KMMsgMetaData
+{
+public:
+  KMMsgMetaData(KMMsgStatus aStatus) { mStatus = aStatus; }
+  ~KMMsgMetaData() {};
+  const KMMsgStatus status() const { return mStatus; }
+private:
+  KMMsgStatus mStatus;
+};
+
+
 
 #define KMFolderImapInherited KMFolderMbox
 
@@ -280,7 +293,7 @@ protected:
    * Convert IMAP flags to a message status
    * @param newMsg specifies whether unseen messages are new or unread
    */
-  KMMsgStatus flagsToStatus(int flags, bool newMsg = TRUE);
+  void flagsToStatus(KMMsgBase *msg, int flags, bool newMsg = TRUE);
 
   void getMessagesResult(KIO::Job * job, bool lastSet);
 
@@ -359,6 +372,7 @@ protected:
   QIntDict<ulong> uidmap;
 private:
   bool        mCheckingValidity;
+  QDict<KMMsgMetaData> mMetaDataMap;
 };
 
 #endif // kmfolderimap_h

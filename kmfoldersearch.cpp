@@ -463,8 +463,7 @@ void KMFolderSearch::addSerNum(Q_UINT32 serNum)
     }
     mSerNums.append(serNum);
     KMMsgBase *mb = folder->getMsgBase(idx);
-    if (mb->status() == KMMsgStatusUnread ||
-       mb->status() == KMMsgStatusNew) {
+    if (mb->isUnread() || mb->isNew()) {
        if (mUnreadMsgs == -1)
            mUnreadMsgs = 0;
        ++mUnreadMsgs;
@@ -875,8 +874,7 @@ bool KMFolderSearch::readIndex()
 	KMMsgBase *mb = folder->getMsgBase(folderIdx);
 	if (!mb) //Exceptional case our .ids file is messed up
 	    return false;
-	if ((mb->status() == KMMsgStatusNew) ||
-	    (mb->status() == KMMsgStatusUnread)) {
+	if (mb->isNew() || mb->isUnread()) {
 	    if (mUnreadMsgs == -1) ++mUnreadMsgs;
 	    ++mUnreadMsgs;
 	}

@@ -110,7 +110,7 @@ public:
 
 //-----------------------------------------------------------------------------
 KMMsgInfo::KMMsgInfo(KMFolderIndex* p, off_t off, short len) :
-    KMMsgInfoInherited(p), mStatus(KMMsgStatusUnknown),
+    KMMsgInfoInherited(p),
     kd(0)
 {
     setIndexOffset(off);
@@ -436,8 +436,53 @@ void KMMsgInfo::setMDNSentState( const KMMsgMDNSentState s, int idx )
 //-----------------------------------------------------------------------------
 KMMsgStatus KMMsgInfo::status(void) const
 {
-    if (mStatus == KMMsgStatusUnknown)
-	((KMMsgInfo *)this)->mStatus = (KMMsgStatus)getLongPart(MsgStatusPart);
+    if (mStatus == KMMsgStatusUnknown) {
+        KMMsgStatus st = (KMMsgStatus)getLongPart(MsgStatusPart);
+        if (!st) {
+            // We are opening an old index for the first time, get the legacy 
+            // status and merge it in. 
+            mLegacyStatus = (KMLegacyMsgStatus)getLongPart(MsgLegacyStatusPart); 
+            switch (mLegacyStatus) {
+                case KMLegacyMsgStatusUnknown:
+                    st = KMMsgStatusUnknown;
+                    break;
+                case KMLegacyMsgStatusNew: 
+                    st = KMMsgStatusUnknown;
+                    break;
+                case KMLegacyMsgStatusUnread: 
+                    st = KMMsgStatusUnread;
+                    break;
+                case KMLegacyMsgStatusRead: 
+                    st = KMMsgStatusRead;
+                    break;
+                case KMLegacyMsgStatusOld: 
+                    st = KMMsgStatusOld;
+                    break;
+                case KMLegacyMsgStatusDeleted: 
+                    st = KMMsgStatusDeleted;
+                    break;
+                case KMLegacyMsgStatusReplied: 
+                    st = KMMsgStatusReplied;
+                    break;
+                case KMLegacyMsgStatusForwarded: 
+                    st = KMMsgStatusForwarded;
+                    break;
+                case KMLegacyMsgStatusQueued: 
+                    st = KMMsgStatusQueued;
+                    break;
+                case KMLegacyMsgStatusSent: 
+                    st = KMMsgStatusSent;
+                    break;
+                case KMLegacyMsgStatusFlag:                              
+                    st = KMMsgStatusFlag;
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        mStatus = st;
+    }
     return mStatus;
 }
 
@@ -537,8 +582,6 @@ void KMMsgInfo::setStatus(const KMMsgStatus aStatus, int idx)
     if(aStatus == status())
 	return;
     KMMsgBase::setStatus(aStatus, idx); //base does more "stuff"
-    mStatus = aStatus;
-    mDirty = TRUE;
 }
 
 //-----------------------------------------------------------------------------

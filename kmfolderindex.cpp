@@ -231,7 +231,7 @@ bool KMFolderIndex::readIndex()
     if(!mi)
       break;
 
-    if (mi->status() == KMMsgStatusDeleted)
+    if (mi->isDeleted())
     {
       delete mi;  // skip messages that are marked as deleted
       setDirty( true );
@@ -239,14 +239,13 @@ bool KMFolderIndex::readIndex()
       continue;
     }
 #ifdef OBSOLETE
-    else if (mi->status() == KMMsgStatusNew)
+    else if (mi->isNew())
     {
       mi->setStatus(KMMsgStatusUnread);
       mi->setDirty(FALSE);
     }
 #endif
-    if ((mi->status() == KMMsgStatusNew) ||
-	(mi->status() == KMMsgStatusUnread) ||
+    if ((mi->isNew()) || (mi->isUnread()) ||
         (this == kernel->outboxFolder()))
     {
       ++mUnreadMsgs;

@@ -402,7 +402,8 @@ class KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( KMMsgStatus status, const QValueList<Q_UINT32> & );
+  KMSetStatusCommand( KMMsgStatus status, const QValueList<Q_UINT32> &, 
+                      bool toggle=false );
 
 private:
   virtual void execute();
@@ -410,6 +411,7 @@ private:
   KMMsgStatus mStatus;
   QValueList<Q_UINT32> mSerNums;
   QValueList<int> mIds;
+  bool mToggle;
 };
 
 class KMFilterCommand : public KMCommand

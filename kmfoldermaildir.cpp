@@ -283,7 +283,7 @@ int KMFolderMaildir::compact()
     }
 
     // we can't have any New messages at this point
-    if (mi->status() == KMMsgStatusNew)
+    if (mi->isNew())
     {
       mi->setStatus(KMMsgStatusUnread);
       setDirty( true );
@@ -397,9 +397,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   if (filename != aMsg->fileName())
     aMsg->setFileName(filename);
 
-  if (aMsg->status() == KMMsgStatusUnread ||
-      aMsg->status() == KMMsgStatusNew ||
-      this == kernel->outboxFolder())
+  if (aMsg->isUnread() || aMsg->isNew() || this == kernel->outboxFolder())
   {
     if (mUnreadMsgs == -1)
       mUnreadMsgs = 1;
@@ -541,7 +539,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
     if (file.find(":2,") == -1)
       status = KMMsgStatusUnread;
     else if (file.right(5) == ":2,RS")
-      status = KMMsgStatusReplied;
+      status |= KMMsgStatusReplied;
   }
 
   // open the file and get a pointer to it
@@ -617,15 +615,15 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       {
         // only handle those states not determined by the file suffix
         if (statusStr[0] == 'S')
-          status = KMMsgStatusSent;
+          status |= KMMsgStatusSent;
         else if (statusStr[0] == 'F')
-          status = KMMsgStatusForwarded;
+          status |= KMMsgStatusForwarded;
         else if (statusStr[0] == 'D')
-          status = KMMsgStatusDeleted;
+          status |= KMMsgStatusDeleted;
         else if (statusStr[0] == 'Q')
-          status = KMMsgStatusQueued;
+          status |= KMMsgStatusQueued;
         else if (statusStr[0] == 'G')
-          status = KMMsgStatusFlag;
+          status |= KMMsgStatusFlag;
       }
 
       KMMsgInfo *mi = new KMMsgInfo(this);
@@ -646,7 +644,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       mMsgList.append(mi);
 
       // if this is a New file and is in 'new', we move it to 'cur'
-      if (status == KMMsgStatusNew)
+      if (status & KMMsgStatusNew)
       {
         QString newDir(location() + "/new/");
         QString curDir(location() + "/cur/");
@@ -721,7 +719,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
     }
   }
 
-  if (status == KMMsgStatusNew || status == KMMsgStatusUnread ||
+  if (status & KMMsgStatusNew || status & KMMsgStatusUnread ||
       (this == kernel->outboxFolder()))
   {
     mUnreadMsgs++;
@@ -900,10 +898,10 @@ QString KMFolderMaildir::constructValidFileName(QString& aFileName, KMMsgStatus 
   aFileName.truncate(aFileName.findRev(*suffix_regex));
 
   QString suffix;
-  if ((status != KMMsgStatusNew) && (status != KMMsgStatusUnread))
+  if (! ((status & KMMsgStatusNew) || (status & KMMsgStatusUnread)) )
   {
     suffix += ":2,";
-    if (status == KMMsgStatusReplied)
+    if (status & KMMsgStatusReplied)
       suffix += "RS";
     else
       suffix += "S";

@@ -303,7 +303,7 @@ bool KMMsgDict::isFolderIdsOutdated(const KMFolder *folder)
     outdated = true;
   if (indexInfo.lastModified() > idsInfo.lastModified())
     outdated = true;
-
+  
   return outdated;
 }
 

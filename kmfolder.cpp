@@ -193,7 +193,7 @@ void KMFolder::markNewAsUnread()
   for (i=0; i< count(); ++i)
   {
     if (!(msgBase = getMsgBase(i))) continue;
-    if (msgBase->status() == KMMsgStatusNew)
+    if (msgBase->isNew())
     {
       msgBase->setStatus(KMMsgStatusUnread);
       msgBase->setDirty(TRUE);
@@ -203,14 +203,14 @@ void KMFolder::markNewAsUnread()
 
 void KMFolder::markUnreadAsRead()
 {
-  const KMMsgBase* msgBase;
+  KMMsgBase* msgBase;
   SerNumList serNums;
 
   for (int i=count()-1; i>=0; --i)
   {
     msgBase = getMsgBase(i);
     assert(msgBase);
-    if (msgBase->status() == KMMsgStatusNew || msgBase->status() == KMMsgStatusUnread)
+    if (msgBase->isNew() || msgBase->isUnread())
     {
       serNums.append( msgBase->getMsgSerNum() );
     }
@@ -418,8 +418,7 @@ void KMFolder::removeMsg(int idx, bool)
   setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
 
-  if (mb->status()==KMMsgStatusUnread ||
-      mb->status()==KMMsgStatusNew ||
+  if (mb->isUnread() || mb->isNew() ||
       (this == kernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
@@ -458,8 +457,7 @@ KMMessage* KMFolder::take(int idx)
 
   msg = (KMMessage*)takeIndexEntry(idx);
 
-  if (msg->status()==KMMsgStatusUnread ||
-      msg->status()==KMMsgStatusNew ||
+  if (msg->isUnread() || msg->isNew() ||
       (this == kernel->outboxFolder())) {
     --mUnreadMsgs;
     emit numUnreadMsgsChanged( this );
@@ -858,10 +856,10 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
   int oldUnread = 0;
   int newUnread = 0;
 
-  if (oldStatus==KMMsgStatusUnread || oldStatus==KMMsgStatusNew ||
+  if (oldStatus & KMMsgStatusUnread || oldStatus & KMMsgStatusNew ||
       (this == kernel->outboxFolder()))
     oldUnread = 1;
-  if (newStatus==KMMsgStatusUnread || newStatus==KMMsgStatusNew ||
+  if (newStatus & KMMsgStatusUnread || newStatus & KMMsgStatusNew ||
       (this == kernel->outboxFolder()))
     newUnread = 1;
   int deltaUnread = newUnread - oldUnread;
@@ -1008,11 +1006,15 @@ int KMFolder::appendtoMsgDict(int idx)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolder::setStatus(int idx, KMMsgStatus status)
+void KMFolder::setStatus(int idx, KMMsgStatus status, bool toggle)
 {
   KMMsgBase *msg = getMsgBase(idx);
-  if ( msg )
-    msg->setStatus(status, idx);
+  if ( msg ) {
+    if (toggle)
+      msg->toggleStatus(status, idx);
+    else
+      msg->setStatus(status, idx);
+  }
 }
 
 void KMFolder::setRDict(KMMsgDictREntry *rentry) {
@@ -1023,11 +1025,11 @@ void KMFolder::setRDict(KMMsgDictREntry *rentry) {
 }
 
 //-----------------------------------------------------------------------------
-void KMFolder::setStatus(QValueList<int>& ids, KMMsgStatus status)
+void KMFolder::setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle)
 {
   for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
   {
-    KMFolder::setStatus(*it, status);
+    KMFolder::setStatus(*it, status, toggle);
   }
 }
 
