@@ -4175,7 +4175,8 @@ void PluginPage::slotPlugSelectionChanged()
                     _signaturePage->sigDialog->sendSigMultiPartRB->setChecked( true );
                     break;
                 default:
-                    kdDebug( 5006 ) << "Unknown signature compound mode setting" << endl;
+                    _signaturePage->sigDialog->sendSigMultiPartRB->setChecked( true );
+                    kdDebug( 5006 ) << "Unknown signature compound mode setting, default set to multipart/signed" << endl;
                 };
 
                 // Sending Certificates group box
