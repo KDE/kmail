@@ -108,6 +108,8 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mSortInfo.column = 0;
   mSortInfo.ascending = false;
   mReaderWindowActive = false;
+  mRoot = new SortCacheItem;
+  mRoot->setId(-666); //mark of the root!
   setStyleDependantFrameWidth();
   // popup-menu
   header()->setClickEnabled(true);
@@ -210,6 +212,7 @@ KMHeaders::~KMHeaders ()
     mFolder->close();
   }
   writeConfig();
+  delete mRoot;
 }
 
 //-----------------------------------------------------------------------------
@@ -909,6 +912,8 @@ void KMHeaders::msgAdded(int id)
         else
           takeItem(msg);
         newParent->insertItem(msg);
+        HeaderItem *hi = static_cast<HeaderItem*>( newParent );
+        hi->sortCacheItem()->addSortedChild( cur->sortCacheItem() );
 
         makeHeaderVisible();
 
@@ -970,6 +975,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
 
   if ((id < 0) || (id >= (int)mItems.size()))
     return;
+  //printSubjectThreadingTree();
   /*
    * qlistview has its own ideas about what to select as the next
    * item once this one is removed. Sine we have already selected
@@ -1020,6 +1026,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       if ( item->aboutToBeDeleted() ) {
         myParent->takeItem( item );
         insertItem( item );
+        mRoot->addSortedChild( item->sortCacheItem() );
       }
       item->setTempKey( key + item->key( mSortCol, !mSortDescending ));
       if (mSortInfo.fakeSort) {
@@ -1039,10 +1046,13 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
 
       Q_ASSERT( !parent || parent->item() != removedItem );
       myParent->takeItem(lvi);
-      if ( parent && parent->item() != item && parent->item() != removedItem )
+      if ( parent && parent->item() != item && parent->item() != removedItem ) {
         parent->item()->insertItem(lvi);
-      else
+        parent->addSortedChild( sci );
+      } else {
         insertItem(lvi);
+        mRoot->addSortedChild( sci );
+      }
 
       if (!parent || (sci->isImperfectlyThreaded()
                       && !mImperfectlyThreadedList.containsRef(item)))
@@ -2645,6 +2655,42 @@ static int compare_SortCacheItem(const void *s1, const void *s2)
         ret = -ret;
     return ret;
 }
+
+// Debugging helpers
+void KMHeaders::printSubjectThreadingTree()
+{
+    QDictIterator< QPtrList< SortCacheItem > > it ( mSubjectLists );
+    kdDebug(5006) << "SubjectThreading tree: " << endl;
+    for( ; it.current(); ++it ) {
+      QPtrList<SortCacheItem> list = *( it.current() );
+      QPtrListIterator<SortCacheItem> it2( list ) ;
+      kdDebug(5006) << "Subject MD5: " << it.currentKey() << " list: " << endl;
+      for( ; it2.current(); ++it2 ) {
+        SortCacheItem *sci = it2.current();
+        kdDebug(5006) << "     item:" << sci << " sci id: " << sci->id() << endl;
+      }
+    }
+    kdDebug(5006) << endl;
+}
+
+void KMHeaders::printThreadingTree()
+{
+    kdDebug(5006) << "Threading tree: " << endl;
+    QDictIterator<SortCacheItem> it( mSortCacheItems );
+    kdDebug(5006) << endl;
+    for( ; it.current(); ++it ) {
+      SortCacheItem *sci = it.current();
+      kdDebug(5006) << "MsgId MD5: " << it.currentKey() << " message id: " << sci->id() << endl;
+    }
+    for (int i = 0; i < (int)mItems.size(); ++i) {
+      HeaderItem *item = mItems[i];
+      int parentCacheId = item->sortCacheItem()->parent()?item->sortCacheItem()->parent()->id():0;
+      kdDebug( 5006 ) << "SortCacheItem: " << item->sortCacheItem()->id() << " parent: " << parentCacheId << endl;
+      kdDebug( 5006 ) << "Item: " << item << " sortCache: " << item->sortCacheItem() << " parent: " << item->sortCacheItem()->parent() << endl;
+    }
+    kdDebug(5006) << endl;
+}
+
 // -------------------------------------
 
 void KMHeaders::buildThreadingTree( QMemArray<SortCacheItem *> sortCache )
@@ -2776,8 +2822,6 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                          GlobalSettings::EnumActionEnterFolder::SelectFirstUnreadNew) ||
                         forceJumpToUnread;
     QMemArray<SortCacheItem *> sortCache(mFolder->count());
-    SortCacheItem root;
-    root.setId(-666); //mark of the root!
     bool error = false;
 
     //threaded cases
@@ -2888,17 +2932,18 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 if (threaded && parent != -2) {
                     if(parent == -1) {
                         unparented.append(item);
-                        root.addUnsortedChild(item);
+                        mRoot->addUnsortedChild(item);
                     } else {
-                        if( ! sortCache[parent] )
+                        if( ! sortCache[parent] ) {
                             sortCache[parent] = new SortCacheItem;
+                        }
                         sortCache[parent]->addUnsortedChild(item);
                     }
                 } else {
                     if(x < sorted_count )
-                        root.addSortedChild(item);
+                        mRoot->addSortedChild(item);
                     else {
-                        root.addUnsortedChild(item);
+                        mRoot->addUnsortedChild(item);
                     }
                 }
             }
@@ -2948,7 +2993,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 if(threaded)
                     unparented.append(sortCache[x]);
                 else
-                    root.addUnsortedChild(sortCache[x]);
+                    mRoot->addUnsortedChild(sortCache[x]);
                 if(sortStream)
                     sortCache[x]->updateSortFile(sortStream, mFolder, true, true);
                 discovered_count++;
@@ -2982,7 +3027,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 if (mSubjThreading)
                   toBeSubjThreaded.append((*it));
                 else
-                  root.addUnsortedChild((*it));
+                  mRoot->addUnsortedChild((*it));
             }
         }
 
@@ -2998,7 +3043,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                       (*it)->updateSortFile(sortStream, mFolder);
                 } else {
                     //oh well we tried, to the root with you!
-                    root.addUnsortedChild((*it));
+                    mRoot->addUnsortedChild((*it));
                 }
             }
         }
@@ -3011,7 +3056,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
     HeaderItem *khi;
     SortCacheItem *i, *new_kci;
     QPtrQueue<SortCacheItem> s;
-    s.enqueue(&root);
+    s.enqueue(mRoot);
     compare_toplevel = true;
     do {
         i = s.dequeue();

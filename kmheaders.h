@@ -378,6 +378,9 @@ private:
   /** */
   QPtrList<HeaderItem> mImperfectlyThreadedList;
 
+  /** Debugging helpers for outputting the threading data structures. */
+  void printSubjectThreadingTree( );
+  void printThreadingTree( );
   /** Initializes the mSortCacheItems tree with the contents of the folder */
   void buildThreadingTree( QMemArray<SortCacheItem *> sortCache );
   /** Initializes the mSubjectLists tree with the contents of the folder */
@@ -386,6 +389,7 @@ private:
   SortCacheItem* findParent(SortCacheItem *item);
   /** Find a msg to thread item below by subject */
   SortCacheItem* findParentBySubject(SortCacheItem *item);
+  SortCacheItem* mRoot; // used to represent the list view itself while threading
 
   /** */
   void appendItemToSortFile(HeaderItem *);
