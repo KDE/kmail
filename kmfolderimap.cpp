@@ -1057,6 +1057,15 @@ QValueList<int> KMFolderImap::splitSets(QString uids)
 }
 
 //-----------------------------------------------------------------------------
+bool KMFolderImap::autoExpunge()
+{
+  if (mAccount)
+    return mAccount->autoExpunge();
+
+  return false;
+}
+
+//-----------------------------------------------------------------------------
 KMImapJob::KMImapJob(KMMessage *msg, JobType jt, KMFolderImap* folder)
 {
   mMsg = msg;

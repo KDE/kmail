@@ -124,7 +124,7 @@ public:
   virtual void removeOnServer();
 
   /** Automatically expunge deleted messages when leaving the folder */
-  bool autoExpunge() { return mAccount->autoExpunge(); }
+  bool autoExpunge();
 
   /** Write the config file */
   virtual void writeConfig();
