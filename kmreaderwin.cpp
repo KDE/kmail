@@ -793,22 +793,21 @@ void KMReaderWin::initHtmlWidget(void)
 
 void KMReaderWin::contactStatusChanged( const QString &uid)
 {
-	kdDebug( 5006 ) << k_funcinfo << " got a presence change for " << uid << endl;
-	// get the list of nodes for this contact from the htmlView
-	DOM::NodeList presenceNodes = mViewer->htmlDocument()
-        .getElementsByName( DOM::DOMString( QString::fromLatin1("presence-") + uid ) );
-	for ( unsigned int i = 0; i < presenceNodes.length(); ++i )
-	{
-		DOM::Node n =  presenceNodes.item( i );
-		kdDebug( 5006 ) << "name is " << n.nodeName().string() << endl;
-		kdDebug( 5006 ) << "value of content was " << n.firstChild().nodeValue().string() << endl;
-        QString newPresence = kmkernel->imProxy()->presenceString( uid );
-		if ( newPresence.isNull() ) // KHTML crashes if you setNodeValue( QString::null )
-			newPresence = QString::fromLatin1( "ENOIMRUNNING" );
-		n.firstChild().setNodeValue( newPresence );
-        kdDebug( 5006 ) << "value of content is now " << n.firstChild().nodeValue().string() << endl;
-	}
-	kdDebug( 5006 ) << "and we updated the above presence nodes" << uid << endl;
+//  kdDebug( 5006 ) << k_funcinfo << " got a presence change for " << uid << endl;
+  // get the list of nodes for this contact from the htmlView
+  DOM::NodeList presenceNodes = mViewer->htmlDocument()
+    .getElementsByName( DOM::DOMString( QString::fromLatin1("presence-") + uid ) );
+  for ( unsigned int i = 0; i < presenceNodes.length(); ++i ) {
+    DOM::Node n =  presenceNodes.item( i );
+    kdDebug( 5006 ) << "name is " << n.nodeName().string() << endl;
+    kdDebug( 5006 ) << "value of content was " << n.firstChild().nodeValue().string() << endl;
+    QString newPresence = kmkernel->imProxy()->presenceString( uid );
+    if ( newPresence.isNull() ) // KHTML crashes if you setNodeValue( QString::null )
+      newPresence = QString::fromLatin1( "ENOIMRUNNING" );
+    n.firstChild().setNodeValue( newPresence );
+//    kdDebug( 5006 ) << "value of content is now " << n.firstChild().nodeValue().string() << endl;
+  }
+//  kdDebug( 5006 ) << "and we updated the above presence nodes" << uid << endl;
 }
 
 void KMReaderWin::setAttachmentStrategy( const AttachmentStrategy * strategy ) {
