@@ -4543,7 +4543,7 @@ void KMComposeWin::slotUpdateToolbars()
 
 void KMComposeWin::slotEditKeys()
 {
-  KKeyDialog::configure(actionCollection(), this, true);
+  KKeyDialog::configure( actionCollection() );
 }
 
 void KMComposeWin::setReplyFocus( bool hasMessage )

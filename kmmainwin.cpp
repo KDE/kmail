@@ -3088,7 +3088,7 @@ void KMMainWin::slotUpdateToolbars()
 
 void KMMainWin::slotEditKeys()
 {
-  KKeyDialog::configureKeys(actionCollection(), xmlFile(), true, this);
+  KKeyDialog::configure( actionCollection() );
 }
 
 //-----------------------------------------------------------------------------
