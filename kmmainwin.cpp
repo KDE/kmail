@@ -1,5 +1,6 @@
 // kmmainwin.cpp
 
+#undef Unsorted // X headers...
 #include <qdir.h>
 #include <qclipboard.h>
 #include <qaccel.h>

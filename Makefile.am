@@ -6,10 +6,11 @@ LDADD	= $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE)
 bin_PROGRAMS = kmail
 
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
+kmail_SOURCES = kmmessage.cpp kmmainwin.cpp \
+		kmfolderdia.cpp kmfoldertree.cpp \
 		kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
-		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
+		kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \

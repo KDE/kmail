@@ -17,6 +17,7 @@
 
 #include "kmkernel.h" //control center
 
+#undef Status // stupid X headers
 #include "kmailIface_stub.h" // to call control center of master kmail
 
 #include <kaboutdata.h>

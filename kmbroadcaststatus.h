@@ -16,6 +16,7 @@ class QLabel;
 class QPushButton;
 class QWidgetStack;
 class QBoxLayout;
+#undef None
 
 /** When KMail is running it is possible to have multiple KMMainWin open
     at the same time. We want certain messages/information to be displayed 

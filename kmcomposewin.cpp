@@ -3,6 +3,8 @@
 // This code is published under the GPL.
 
 #include <qdir.h>
+#undef GrayScale
+#undef Color
 #include <qprinter.h>
 #include <qcombobox.h>
 #include <qdragobject.h>
