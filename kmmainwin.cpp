@@ -1222,22 +1222,17 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
   else
   {
     // popup somewhere else on the document
-    menu->insertItem(i18n("&Reply..."), this,
-		     SLOT(slotReplyToMsg()));
-    menu->insertItem(i18n("Reply &All..."), this,
-		     SLOT(slotReplyAllToMsg()));
-    menu->insertItem(i18n("&Forward..."), this,
-		     SLOT(slotForwardMsg()), Key_F);
-    menu->insertItem(i18n("R&edirect..."), this,
-		     SLOT(slotRedirectMsg()));
+    replyAction->plug(menu);
+    replyAllAction->plug(menu);
+    forwardAction->plug(menu);
+    redirectAction->plug(menu);
     menu->insertSeparator();
     menu->insertItem(i18n("&Move..."), this,
-		     SLOT(slotMoveMsg()), Key_M);
+                     SLOT(slotMoveMsg()), Key_M);
     menu->insertItem(i18n("&Copy..."), this,
-		     SLOT(slotCopyMsg()), Key_C);
+                     SLOT(slotCopyMsg()), Key_C); 
     menu->insertSeparator();
-    menu->insertItem(i18n("&Delete"), this,
-		     SLOT(slotDeleteMsg()), Key_D);
+    deleteAction->plug(menu);
     menu->popup(aPoint, 0);
   }
 }
@@ -1264,8 +1259,9 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&New Mail Client..."), 0, this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
-  (void) new KAction( i18n("Save &As..."), "filesave",  KStdAccel::key(KStdAccel::Save),
-		      this, SLOT(slotSaveMsg()), actionCollection(), "save_as" );
+  saveAsAction = new KAction( i18n("Save &As..."), "filesave",
+    KStdAccel::key(KStdAccel::Save),
+    this, SLOT(slotSaveMsg()), actionCollection(), "save_as" );
 
   KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
@@ -1298,7 +1294,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Copy text"), KStdAccel::key(KStdAccel::Copy), this,
 		      SLOT(slotCopyText()), actionCollection(), "copy_text" );
 
-  (void) new KAction( i18n("&Delete"), "editdelete", Key_D, this,
+  deleteAction = new KAction( i18n("&Delete"), "editdelete", Key_D, this,
 		      SLOT(slotDeleteMsg()), actionCollection(), "delete" );
 
   (void) new KAction( i18n("&Search messages..."), "find", Key_S, this,
@@ -1348,19 +1344,19 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("Previous unread"), "previous", Key_Minus, mHeaders,
 		      SLOT(prevUnreadMessage()), actionCollection(), "previous_unread" );
 
-  (void) new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
+  replyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
 
-  (void) new KAction( i18n("Reply &All..."), "mail_replyall", Key_A, this,
-		      SLOT(slotReplyAllToMsg()), actionCollection(), "reply_all" );
+  replyAllAction = new KAction( i18n("Reply &All..."), "mail_replyall",
+     Key_A, this, SLOT(slotReplyAllToMsg()), actionCollection(), "reply_all" );
 
-  (void) new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
+  forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
 		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
 
-  (void) new KAction( i18n("R&edirect..."), Key_E, this,
+  redirectAction = new KAction( i18n("R&edirect..."), Key_E, this,
 		      SLOT(slotRedirectMsg()), actionCollection(), "redirect" );
 
-  (void) new KAction( i18n("&Bounce..."), 0, this,
+  bounceAction = new KAction( i18n("&Bounce..."), 0, this,
 		      SLOT(slotBounceMsg()), actionCollection(), "bounce" );
 
   (void) new KAction( i18n("Send again..."), 0, this,

@@ -75,6 +75,8 @@ public:
 					QPopupMenu *menu);
 
   static void cleanup();
+  KAction *replyAction, *replyAllAction, *forwardAction, *redirectAction,
+    *deleteAction, *saveAsAction, *bounceAction;
 
 public slots:
   virtual void show();

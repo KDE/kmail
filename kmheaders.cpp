@@ -10,6 +10,7 @@
 #include <qheader.h>
 #include <qdragobject.h>
 
+#include <kaction.h>
 #include <kapp.h>
 #include <kglobal.h>
 #include <klocale.h>
@@ -2035,21 +2036,15 @@ void KMHeaders::slotRMB()
   QPopupMenu *msgCopyMenu = new QPopupMenu();
   mOwner->folderToPopupMenu( dir, FALSE, this, &mMenuToFolder, msgCopyMenu );
 
-  menu->insertItem(i18n("&Reply..."), topLevelWidget(),
-		   SLOT(slotReplyToMsg()));
-  menu->insertItem(i18n("Reply &All..."), topLevelWidget(),
-		   SLOT(slotReplyAllToMsg()));
-  menu->insertItem(i18n("&Forward..."), topLevelWidget(),
-		   SLOT(slotForwardMsg()), Key_F);
-  menu->insertItem(i18n("&Bounce"), topLevelWidget(),
-                   SLOT(slotBounceMsg()));
+  mOwner->replyAction->plug(menu);
+  mOwner->replyAllAction->plug(menu);
+  mOwner->forwardAction->plug(menu);
+  mOwner->bounceAction->plug(menu);
   menu->insertSeparator();
-  menu->insertItem(i18n("&Save As..."), topLevelWidget(),
-                   SLOT(slotSaveMsg()), KStdAccel::key(KStdAccel::Save));
+  mOwner->saveAsAction->plug(menu);
   menu->insertItem(i18n("&Move to"), msgMoveMenu);
   menu->insertItem(i18n("&Copy to"), msgCopyMenu);
-  menu->insertItem(i18n("&Delete"), topLevelWidget(),
-		   SLOT(slotDeleteMsg()), Key_D);
+  mOwner->deleteAction->plug(menu);
 
   menu->exec (QCursor::pos(), 0);
   delete menu;
