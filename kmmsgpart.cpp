@@ -165,7 +165,7 @@ const QString KMMessagePart::iconName(void) const
   QString fileName, icon;
   QDir dir;
 
-  fileName = locate("mime", mType + "/" + mSubtype + ".desktop");
+  fileName = locate("mime", mType.lower() + "/" + mSubtype.lower() + ".desktop");
 
   if (!(fileName.isEmpty()) && dir.exists(fileName))
   {
@@ -181,8 +181,7 @@ const QString KMMessagePart::iconName(void) const
     icon = "unknown";
   }
 
-//  return KApplication::kde_icondir() + "/" + icon;
-  return locate( "icon", icon );
+  return locate( "icon", "large/hicolor/" + icon + ".png" );
 }
 
 
