@@ -46,8 +46,6 @@ extern KMSender* msgSender;
 //extern KLocale* nls;  // use i18n() now !
 
 /** Standard accelerator keys. */
-class KStdAccel;
-extern KStdAccel* keys;
 
 /** Filter manager: handles mail filters and applies them to messages. */
 class KMFilterMgr;

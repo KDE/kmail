@@ -61,7 +61,6 @@
 #ifdef KRN
 /* start added for KRN */
 #include "krnsender.h"
-extern KStdAccel* keys;
 extern KApplication *app;
 extern KBusyPtr *kbp;
 extern KRNSender *msgSender;
@@ -471,17 +470,17 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertItem(i18n("&Addressbook..."),this,
 		   SLOT(slotAddrBook()));
   menu->insertItem(i18n("&Print..."),this,
-		   SLOT(slotPrint()), keys->print());
+		   SLOT(slotPrint()), KStdAccel::print());
   menu->insertSeparator();
   menu->insertItem(i18n("&New Composer..."),this,
-                   SLOT(slotNewComposer()), keys->openNew());
+                   SLOT(slotNewComposer()), KStdAccel::openNew());
 #ifndef KRN
   menu->insertItem(i18n("New Mailreader"), this,
 		   SLOT(slotNewMailReader()));
 #endif
   menu->insertSeparator();
   menu->insertItem(i18n("&Close"),this,
-		   SLOT(slotClose()), keys->close());
+		   SLOT(slotClose()), KStdAccel::close());
   mMenuBar->insertItem(i18n("&File"),menu);
 
 
@@ -489,7 +488,7 @@ void KMComposeWin::setupMenuBar(void)
   menu = new QPopupMenu();
 #ifdef BROKEN
   menu->insertItem(i18n("Undo"),this,
-		   SLOT(slotUndoEvent()), keys->undo());
+		   SLOT(slotUndoEvent()), KStdAccel::undo());
   menu->insertSeparator();
 #endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));
@@ -499,9 +498,9 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotMarkAll()));
   menu->insertSeparator();
   menu->insertItem(i18n("Find..."), this,
-		   SLOT(slotFind()), keys->find());
+		   SLOT(slotFind()), KStdAccel::find());
   menu->insertItem(i18n("Replace..."), this,
-		   SLOT(slotReplace()), keys->replace());
+		   SLOT(slotReplace()), KStdAccel::replace());
   menu->insertSeparator();
   menu->insertItem(i18n("&Spellcheck..."), this,
 		   SLOT(slotSpellcheck()));
@@ -712,7 +711,7 @@ void KMComposeWin::setupEditor(void)
   menu = new QPopupMenu();
 #ifdef BROKEN
   menu->insertItem(i18n("Undo"),this,
-		   SLOT(slotUndoEvent()), keys->undo());
+		   SLOT(slotUndoEvent()), KStdAccel::undo());
   menu->insertSeparator();
 #endif //BROKEN
   menu->insertItem(i18n("Cut"), this, SLOT(slotCut()));

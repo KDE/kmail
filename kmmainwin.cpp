@@ -1039,14 +1039,14 @@ void KMMainWin::setupMenuBar()
   //----- File Menu
   fileMenu = new QPopupMenu();
   fileMenu->insertItem(i18n("New Composer"), this, 
-		       SLOT(slotCompose()), keys->openNew());
+		       SLOT(slotCompose()), KStdAccel::openNew());
   fileMenu->insertItem(i18n("New Mailreader"), this, 
 		       SLOT(slotNewMailReader()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Save As..."), this,
-		       SLOT(slotSaveMsg()), keys->save());
+		       SLOT(slotSaveMsg()), KStdAccel::save());
   fileMenu->insertItem(i18n("Print..."), this,
-		       SLOT(slotPrintMsg()), keys->print());
+		       SLOT(slotPrintMsg()), KStdAccel::print());
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Compact all folders"), folderMgr,
                         SLOT(compactAll()));
@@ -1073,18 +1073,18 @@ void KMMainWin::setupMenuBar()
 		       SLOT(slotFilter()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("&Close"), this, 
-		       SLOT(slotClose()), keys->close());
+		       SLOT(slotClose()), KStdAccel::close());
   fileMenu->insertItem(i18n("&Quit"), this,
-		       SLOT(quit()), keys->quit());
+		       SLOT(quit()), KStdAccel::quit());
 
   //----- Edit Menu
   QPopupMenu *editMenu = new QPopupMenu();
   editMenu->insertItem(i18n("&Copy"), this, SLOT(slotCopyText()),
-		       keys->copy());
+		       KStdAccel::copy());
   editMenu->insertSeparator();
 #ifdef BROKEN
   editMenu->insertItem(i18n("&Find..."), this, 
-		       SLOT(slotUnimplemented()), keys->find());
+		       SLOT(slotUnimplemented()), KStdAccel::find());
 #endif
   //----- Folder Menu
   QPopupMenu *folderMenu = new QPopupMenu();
