@@ -2157,8 +2157,10 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
     win->show();
   }
   else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") ||
-	   (aUrl.protocol() ==  "ftp") || (aUrl.protocol() == "file") ||
-           (aUrl.protocol() == "help") || (aUrl.protocol() == "vnc"))
+           (aUrl.protocol() == "ftp") || (aUrl.protocol() == "file") ||
+           (aUrl.protocol() == "ftps") || (aUrl.protocol() == "sftp" ) ||
+           (aUrl.protocol() == "help") || (aUrl.protocol() == "vnc") ||
+           (aUrl.protocol() == "smb"))
   {
     statusMsg(i18n("Opening URL..."));
     KMimeType::Ptr mime = KMimeType::findByURL( aUrl );

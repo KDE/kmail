@@ -86,6 +86,7 @@ QString LinkLocator::getUrl()
   return url;
 }
 
+// keep this in sync with KMMainWin::slotUrlClicked()
 bool LinkLocator::atUrl() const
 {
   QChar ch = mText[mPos];
@@ -94,6 +95,7 @@ bool LinkLocator::atUrl() const
          (ch=='v' && mText.mid(mPos, 6) == "vnc://") ||
          (ch=='f' && ( mText.mid(mPos, 6) == "ftp://" || mText.mid(mPos, 7) == "ftps://") ) ||
          (ch=='s' && mText.mid(mPos, 7) == "sftp://") ||
+         (ch=='s' && mText.mid(mPos, 6) == "smb://") ||
          (ch=='m' && mText.mid(mPos, 7) == "mailto:") ||
          (ch=='w' && mText.mid(mPos, 4) == "www.") ||
          (ch=='f' && mText.mid(mPos, 4) == "ftp.");
@@ -108,6 +110,7 @@ bool LinkLocator::isEmptyUrl(const QString& url)
          url == "ftp://" ||
          url == "ftps://" ||
          url == "sftp://" ||
+         url == "smb://" ||
          url == "vnc://" ||
          url == "mailto" ||
          url == "www" ||
@@ -279,4 +282,5 @@ QString LinkLocator::convertToHtml(const QString& plainText, bool preserveBlanks
 
   return result;
 }
+
 
