@@ -665,12 +665,14 @@ KMImapJob::~KMImapJob()
 //-----------------------------------------------------------------------------
 void KMImapJob::slotGetNextMessage()
 {
+  KMAcctImap *account = mMsg->parent()->account();
   if (mMsg->headerField("X-UID").isEmpty())
   {
     emit messageRetrieved(mMsg);
+    account->mJobList.remove(this);
+    delete this;
     return;
   }
-  KMAcctImap *account = mMsg->parent()->account();
   KURL url = account->getUrl();
   url.setPath(mMsg->parent()->imapPath() + ";UID="
     + mMsg->headerField("X-UID"));

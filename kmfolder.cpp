@@ -1369,7 +1369,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   if (msgParent) {
     if (idx >= 0) msgParent->take(idx);
   }
-  if (mAccount) aMsg->removeHeaderField("X-UID");
+//  if (mAccount) aMsg->removeHeaderField("X-UID");
 
   if (aMsg->status()==KMMsgStatusUnread ||
       aMsg->status()==KMMsgStatusNew) {
