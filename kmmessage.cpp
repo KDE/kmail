@@ -620,8 +620,6 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       if (isInline) {
         if (stricmp(msgPart.typeStr(),"text") == 0 ||
             stricmp(msgPart.typeStr(),"message") == 0) {
-          result += '\n';
-          result += indentStr;
           Kpgp* pgp = Kpgp::getKpgp();
           assert(pgp != NULL);
           QString part;
