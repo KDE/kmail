@@ -97,6 +97,8 @@ protected:
   bool mStopped;
   bool mCloseRequested;
   int mFetchingInProgress;
+  int mSortColumn;
+  SortOrder mSortOrder;
   QGuardedPtr<KMFolderSearch> mFolder;
   QTimer *mTimer;
 

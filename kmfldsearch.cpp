@@ -51,6 +51,8 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
               KGuiItem( i18n("S&top"), "cancel" )),
   mStopped(false),
   mCloseRequested(false),
+  mSortColumn(0),
+  mSortOrder(Ascending),
   mFolder(0),
   mTimer(new QTimer(this)),
   mLastFocus(0),
@@ -140,9 +142,19 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
 	   mChkSubFolders, SLOT(setEnabled(bool)) );
 
   mLbxMatches = new KListView(searchWidget, "Search in Folders");
-  /* Default is to sort by date. TODO: Unfortunately this sorts *while*
+  
+  /* 
+     Default is to sort by date. TODO: Unfortunately this sorts *while*
      inserting, which looks rather strange - the user cannot read
      the results so far as they are constantly re-sorted --dnaber
+
+     Sorting is now disabled when a search is started and reenabled 
+     when it stops. Items are appended to the list. This not only 
+     solves the above problem, but speeds searches with many hits 
+     up considerably. - till
+
+     TODO: subclass KListViewItem and do proper (and performant)
+     comapare functions
   */
   mLbxMatches->setSorting(2, false);
   mLbxMatches->setShowSortIndicator(true);
@@ -360,6 +372,11 @@ void KMFldSearch::slotSearch()
 
     mLbxMatches->clear();
 
+    mSortColumn = mLbxMatches->sortColumn();
+    mSortOrder = mLbxMatches->sortOrder();
+    mLbxMatches->setSorting(-1);
+    mLbxMatches->setShowSortIndicator(false);
+
     // If we haven't openend an existing search folder, find or
     // create one.
     if (!mFolder) {
@@ -425,6 +442,9 @@ void KMFldSearch::searchDone()
 	mLastFocus->setFocus();
     if (mCloseRequested)
 	close();
+
+    mLbxMatches->setSorting(mSortColumn, mSortOrder == Ascending);
+    mLbxMatches->setShowSortIndicator(true);
 }
 
 void KMFldSearch::slotAddMsg(int idx)
@@ -448,7 +468,7 @@ void KMFldSearch::slotAddMsg(int idx)
     else
         fName = pFolder->name();
 
-    (void)new KListViewItem(mLbxMatches,
+    (void)new KListViewItem(mLbxMatches, mLbxMatches->lastItem(),
 			    msg->subject(), from, msg->dateIsoStr(),
 			    fName,
 			    QString::number(mFolder->serNum(idx)));
