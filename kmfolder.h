@@ -72,7 +72,9 @@ public:
   /** This is used by the storage to save the folder specific configuration */
   void writeConfig( KConfig* config ) const;
 
-  FolderStorage* storage() const { return mStorage; }
+  FolderStorage* storage() { return mStorage; }
+  /** if the folder is const, the storage should be as well */
+  const FolderStorage* storage() const { return mStorage; }
 
   /** Returns the type of this folder */
   KMFolderType folderType() const;
