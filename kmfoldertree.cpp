@@ -331,9 +331,7 @@ void KMFolderTree::reload(void)
 {
   KMFolderDir* fdir;
   QString str;
-  bool upd = isUpdatesEnabled();
 
-  setUpdatesEnabled(FALSE);
   writeConfig();
 
   QListViewItemIterator it( this );
@@ -361,9 +359,6 @@ void KMFolderTree::reload(void)
 	      this,SLOT(refresh(KMFolder*)));
     ++jt;
   }
-
-  setUpdatesEnabled(upd);
-  if (upd) repaint();
   refresh(0);
 }
 
