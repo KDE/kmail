@@ -1420,9 +1420,19 @@ QString KMMessage::replyToId(void) const
   QString replyTo, references;
 
   replyTo = headerField("In-Reply-To");
+  // search the end of the (first) message id in the In-Reply-To header
   rightAngle = replyTo.find( '>' );
   if (rightAngle != -1)
     replyTo.truncate( rightAngle + 1 );
+  // now search the start of the message id
+  leftAngle = replyTo.findRev( '<' );
+  if (leftAngle != -1)
+    replyTo = replyTo.mid( leftAngle );
+  kdDebug(5006) << "KMMessage::replyToId(): In-Reply-To=_" << replyTo << "_" << endl;
+
+  // if we have found a good message id we can return immediately
+  if (!replyTo.isEmpty() && (replyTo[0] == '<'))
+    return replyTo;
 
   references = headerField("References");
   leftAngle = references.findRev( '<' );
@@ -1432,11 +1442,12 @@ QString KMMessage::replyToId(void) const
   if (rightAngle != -1)
     references.truncate( rightAngle + 1 );
 
-  if ((replyTo.isEmpty() || replyTo[0] != '<') &&
-      !references.isEmpty() && references[0] == '<')
-    replyTo = references;
-
-  return replyTo;
+  // if we found a good message id in the References header return it
+  if (!references.isEmpty() && references[0] == '<')
+    return references;
+  // else return the broken message id we found in the In-Reply-To header
+  else
+    return replyTo;
 }
 
 
@@ -1460,12 +1471,18 @@ void KMMessage::setReplyToId(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::msgId(void) const
 {
-  int rightAngle;
+  int leftAngle, rightAngle;
   QString msgId = headerField("Message-Id");
 
+  // search the end of the message id
   rightAngle = msgId.find( '>' );
   if (rightAngle != -1)
     msgId.truncate( rightAngle + 1 );
+  // now search the start of the message id
+  leftAngle = msgId.findRev( '<' );
+  if (leftAngle != -1)
+    msgId = msgId.mid( leftAngle );
+  kdDebug(5006) << "KMMessage::msgId(): Message-Id=_" << msgId << "_" << endl;
   return msgId;
 }
 
