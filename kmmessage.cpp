@@ -888,7 +888,7 @@ KMMessage* KMMessage::createForward(void)
   }
 
   msg->setCharset(charset());
-  msg->setBody(str);
+  if (!charset().isEmpty()) msg->setBody(str);
 
   if (numBodyParts() > 0)
   {
@@ -912,7 +912,6 @@ KMMessage* KMMessage::createForward(void)
   if (strnicmp(subject(), "Fwd:", 4)!=0)
     msg->setSubject("Fwd: " + subject());
   else msg->setSubject(subject());
-  msg->setCharset(charset());
   setStatus(KMMsgStatusForwarded);
 
   return msg;
