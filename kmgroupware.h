@@ -104,8 +104,7 @@ public:
   bool hidingMimePartTree(){ return mGroupwareIsHidingMimePartTree; }
 
   // find message matching a given UID and possibly take if from the folder
-  static KMMessage* findMessageByUID( const QString& uid, KMFolder* folder,
-				      bool takeMessage=true );
+  static KMMessage* findMessageByUID( const QString& uid, KMFolder* folder );
 
   // Convenience function to delete a message
   static void deleteMsg( KMMessage* msg );

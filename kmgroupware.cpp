@@ -726,8 +726,7 @@ void KMGroupware::setupActions()
 }
 
 // find message matching a given UID and return it in msg* or trash it
-KMMessage *KMGroupware::findMessageByUID( const QString& uid, KMFolder* folder,
-					  bool takeMessage )
+KMMessage *KMGroupware::findMessageByUID( const QString& uid, KMFolder* folder )
 {
   assert( folder );
 
@@ -742,13 +741,8 @@ KMMessage *KMGroupware::findMessageByUID( const QString& uid, KMFolder* folder,
       if( vPartFoundAndDecoded( m, iDummy, vCalOld ) ){
 	QString uidOld( "UID" );
 	vPartMicroParser( vCalOld.utf8(), uidOld );
-	if( uidOld == uid ){
-	  if( takeMessage ) {
-	    msg = folder->take(i);
-	    msg->removeHeaderField("X-UID");
-	  } else
-	    msg = m;
-	}
+	if( uidOld == uid )
+	  msg = m;
       }
     }
     if( !msg && unget )
@@ -837,9 +831,9 @@ bool KMGroupware::storeAddresses( QString fname, QStringList delUIDs )
       QString uid( "UID" );
       QString name( "NAME" );
       vPartMicroParser( vCard, uid, name );
-      KMMessage* msg = findMessageByUID( uid, mContacts, false );
+      KMMessage* msg = findMessageByUID( uid, mContacts );
       if( !msg ) {
-        // process a new event:
+	// This is a new vCard, make a message to store it in
         msg = new KMMessage(); // makes a "Content-Type=text/plain" message
         msg->initHeader();
         msg->setType( DwMime::kTypeText );
@@ -1003,7 +997,7 @@ bool KMGroupware::deleteIncidence( const QString& type, const QString& uid )
     return false;
   }
 
-  KMMessage* msg = findMessageByUID( uid, folder, false );
+  KMMessage* msg = findMessageByUID( uid, folder );
   if( !msg ) return false;
   
   deleteMsg( msg );
@@ -1339,9 +1333,11 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
 
     QString uid( "UID" );
     vPartMicroParser( vCalOut.isEmpty() ? vCalIn.utf8() : vCalOut.utf8(), uid );
-    KMMessage* msgNew = findMessageByUID( uid, mCalendar );
-    if( !msgNew ){
-      // process a new event:
+    KMFolder* folder = type == vCalEvent ? mCalendar : mTasks;
+    KMMessage* msgNew = findMessageByUID( uid, folder );
+    bool isNewMsg = ( msgNew == 0 );
+    if( isNewMsg ) {
+      // Process a new event:
       msgNew = new KMMessage(); // makes a "Content-Type=text/plain" message
       msgNew->initHeader();
       msgNew->setType(    DwMime::kTypeText );
@@ -1352,17 +1348,19 @@ void KMGroupware::processVCalReply( const QCString& sender, const QString& vCalI
 	msgNew->setSubject( "Meeting" );
       else if( type == vCalTodo )
 	msgNew->setSubject( "Task" );
-    }
+    } else
+      // Strip the X-UID header so it will be uploaded to the IMAP server again
+      msgNew->removeHeaderField("X-UID");
+
     // add missing headers/content:
     msgNew->setTo( msgNew->from() );
     msgNew->setBodyEncoded( vCalOut.isEmpty() ? vCalIn.utf8() : vCalOut.utf8() );
 
-    // mark the message as read and store it in a folder
-    msgNew->touch();
-    if( type == vCalEvent )
-      mCalendar->addMsg( msgNew );
-    else if( type == vCalTodo )
-      mTasks->addMsg( msgNew );
+    if( isNewMsg ) {
+      // Mark the message as read and store it in a folder
+      msgNew->touch();
+      folder->addMsg( msgNew );
+    }
 
     // step 2: inform user that Organizer was updated
     KMessageBox::information( mMainWin, (type == vCalEvent ?
