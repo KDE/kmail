@@ -42,7 +42,7 @@
 #include "transportmanager.h"
 #include "kmkernel.h"
 #include "dictionarycombobox.h"
-
+#include "kleo_util.h"
 
 // other kdepim headers:
 // libkdepim
@@ -70,26 +70,6 @@
 #include <gpgmepp/key.h>
 #include <iterator>
 #include <algorithm>
-
-static const Kleo::CryptoMessageFormat cryptoMessageFormats[] = {
-  Kleo::AutoFormat,
-  Kleo::InlineOpenPGPFormat,
-  Kleo::OpenPGPMIMEFormat,
-  Kleo::SMIMEFormat,
-  Kleo::SMIMEOpaqueFormat,
-};
-static const int numCryptoMessageFormats = sizeof cryptoMessageFormats / sizeof *cryptoMessageFormats ;
-
-static inline Kleo::CryptoMessageFormat cb2format( int idx ) {
-  return cryptoMessageFormats[ idx >= 0 || idx < numCryptoMessageFormats ? idx : 0 ];
-}
-
-static inline int format2cb( Kleo::CryptoMessageFormat f ) {
-  for ( int i = 0 ; i < numCryptoMessageFormats ; ++i )
-    if ( f == cryptoMessageFormats[i] )
-      return i;
-  return 0;
-}
 
 namespace KMail {
 

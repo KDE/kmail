@@ -43,6 +43,7 @@
 #include "kmfolder.h"
 #include "kmfoldercombobox.h"
 #include "keyresolver.h"
+#include "kleo_util.h"
 
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
@@ -152,15 +153,6 @@ static inline int signingChainCertNearExpiryWarningThresholdInDays() {
   const int num = composer.readNumEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 );
   return kMax( 1, num );
 }
-
-static const Kleo::CryptoMessageFormat formats[] = {
-  Kleo::OpenPGPMIMEFormat,
-  Kleo::SMIMEFormat,
-  Kleo::SMIMEOpaqueFormat,
-  Kleo::InlineOpenPGPFormat,
-};
-static const unsigned int numFormats = sizeof formats / sizeof *formats ;
-
 
 /*
   Design of this:
@@ -803,11 +795,11 @@ void MessageComposer::markAllAttachmentsForEncryption( bool enc ) {
 
 void MessageComposer::composeMessage()
 {
-  for ( unsigned int i = 0 ; i < numFormats ; ++i ) {
-    if ( mKeyResolver->encryptionItems( formats[i] ).empty() )
+  for ( unsigned int i = 0 ; i < numConcreteCryptoMessageFormats ; ++i ) {
+    if ( mKeyResolver->encryptionItems( concreteCryptoMessageFormats[i] ).empty() )
       continue;
     KMMessage * msg = new KMMessage( *mReferenceMessage );
-    composeMessage( *msg, mDoSign, mDoEncrypt, formats[i] );
+    composeMessage( *msg, mDoSign, mDoEncrypt, concreteCryptoMessageFormats[i] );
     if ( !mRc )
       return;
   }
@@ -927,10 +919,6 @@ static inline bool binaryHint( Kleo::CryptoMessageFormat f ) {
   case Kleo::InlineOpenPGPFormat:
     return false;
   }
-}
-
-static inline bool isSMIME( Kleo::CryptoMessageFormat f ) {
-  return f == Kleo::SMIMEFormat || f == Kleo::SMIMEOpaqueFormat ;
 }
 
 static inline bool armor( Kleo::CryptoMessageFormat f ) {
