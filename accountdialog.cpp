@@ -1355,23 +1355,24 @@ unsigned int AccountDialog::popCapabilitiesFromStringList( const QStringList & l
 {
   unsigned int capa = 0;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    if ( *it == "PLAIN" )
+    QString cur = (*it).upper();
+    if ( cur == "PLAIN" )
       capa |= Plain;
-    else if ( *it == "LOGIN" )
+    else if ( cur == "LOGIN" )
       capa |= Login;
-    else if ( *it == "CRAM-MD5" )
+    else if ( cur == "CRAM-MD5" )
       capa |= CRAM_MD5;
-    else if ( *it == "DIGEST-MD5" )
+    else if ( cur == "DIGEST-MD5" )
       capa |= Digest_MD5;
-    else if ( *it == "APOP" )
+    else if ( cur == "APOP" )
       capa |= APOP;
-    else if ( *it == "PIPELINING" )
+    else if ( cur == "PIPELINING" )
       capa |= Pipelining;
-    else if ( *it == "TOP" )
+    else if ( cur == "TOP" )
       capa |= TOP;
-    else if ( *it == "UIDL" )
+    else if ( cur == "UIDL" )
       capa |= UIDL;
-    else if ( *it == "STLS" )
+    else if ( cur == "STLS" )
       capa |= STLS;
   }
   return capa;
@@ -1460,17 +1461,18 @@ unsigned int AccountDialog::imapCapabilitiesFromStringList( const QStringList & 
 {
   unsigned int capa = 0;
   for ( QStringList::const_iterator it = l.begin() ; it != l.end() ; ++it ) {
-    if ( *it == "AUTH=PLAIN" )
+    QString cur = (*it).upper();
+    if ( cur == "AUTH=PLAIN" )
       capa |= Plain;
-    else if ( *it == "AUTH=LOGIN" )
+    else if ( cur == "AUTH=LOGIN" )
       capa |= Login;
-    else if ( *it == "AUTH=CRAM-MD5" )
+    else if ( cur == "AUTH=CRAM-MD5" )
       capa |= CRAM_MD5;
-    else if ( *it == "AUTH=DIGEST-MD5" )
+    else if ( cur == "AUTH=DIGEST-MD5" )
       capa |= Digest_MD5;
-    else if ( *it == "AUTH=ANONYMOUS" )
+    else if ( cur == "AUTH=ANONYMOUS" )
       capa |= Anonymous;
-    else if ( *it == "STARTTLS" )
+    else if ( cur == "STARTTLS" )
       capa |= STARTTLS;
   }
   return capa;
