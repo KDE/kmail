@@ -1327,6 +1327,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 
   msgList = selectedMsgs(msgId);
 
+  int index;
   for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
   {
     int idx = mFolder->find(msgBase);
@@ -1334,8 +1335,8 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     msg = mFolder->getMsg(idx);
 
     if (destFolder) {
-      rc = destFolder->moveMsg(msg);
-      if (rc == 0) {
+      rc = destFolder->moveMsg(msg, &index);
+      if (rc == 0 && index != -1) {
 	KMMsgBase *mb = destFolder->unGetMsg( destFolder->count() - 1 );
 	kernel->undoStack()->pushAction( mb->msgIdMD5(), mFolder, destFolder );
       }

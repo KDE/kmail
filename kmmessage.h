@@ -287,7 +287,16 @@ public:
   /** Set the charset the user selected for the message to display */
   virtual void setCodec(QTextCodec* aCodec)
   { mCodec = aCodec; }
-   				       
+
+  /** Return if the message is complete and not only the header of a message
+   * in an IMAP folder */
+  virtual bool isComplete()
+  { return mIsComplete; }
+
+  /** Set if the message is a complete message */
+  virtual void setComplete(bool value)
+  { mIsComplete = value; }
+
   /** Reads config settings from group "KMMessage" and sets all internal
    * variables (e.g. indent-prefix, etc.) */
   static void readConfig(void);
@@ -303,7 +312,7 @@ protected:
 
 protected:
   DwMessage* mMsg;
-  bool       mNeedsAssembly;
+  bool       mNeedsAssembly, mIsComplete;
   static int sHdrStyle;
   static QString sForwardStr;
   QTextCodec* mCodec;

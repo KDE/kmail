@@ -547,6 +547,7 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
     QString uid = mMsgList.current()->headerField("X-UID");
     mMsgList.current()->fromString((*it).data);
     mMsgList.current()->setHeaderField("X-UID",uid);
+    mMsgList.current()->setComplete( TRUE );
     if (mMsgList.next())
       slotGetNextMessage();
     else if (mSingleMessage)

@@ -299,8 +299,13 @@ signals:
   /** Emmited to display a message somewhere in a status line. */
   void statusMsg(const QString&);
 
- /** Emitted when number of unread messages has changed. */
- void numUnreadMsgsChanged( KMFolder* );
+  /** Emitted when number of unread messages has changed. */
+  void numUnreadMsgsChanged( KMFolder* );
+
+protected slots:
+  /** Add the message to the folder after it has been retrieved from an IMAP
+      server */
+  virtual void reallyAddMsg(KMMessage *);
 
 protected:
   /** Load message from file and store it at given index. Returns NULL

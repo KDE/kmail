@@ -1187,6 +1187,15 @@ int KMFolder::find(const QString& msgIdMD5) const
 }
 
 
+//-----------------------------------------------------------------------------
+void KMFolder::reallyAddMsg(KMMessage* aMsg)
+{
+  KMFolder *folder = aMsg->parent();
+  addMsg(aMsg);
+  KMMsgBase *mb = unGetMsg(count() - 1);
+  kernel->undoStack()->pushAction( mb->msgIdMD5(), folder, this );
+}
+
 
 //-----------------------------------------------------------------------------
 int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
@@ -1225,6 +1234,14 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
     idx = msgParent->find(aMsg);
     msgParent->getMsg( idx );
+    if (msgParent->account() && !aMsg->isComplete())
+    {
+      KMImapJob *imapJob = new KMImapJob(aMsg);
+      connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+        SLOT(reallyAddMsg(KMMessage*)));
+      if (aIndex_ret) *aIndex_ret = -1;
+      return 0;
+    }
   }
 
   aMsg->setStatusFields();
