@@ -2270,7 +2270,7 @@ void KMMainWidget::setupActions()
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
   mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
-      "folder_mailinglist_properties", 0, this, SLOT( slotFolderMailingListProperties() ),
+      /*"folder_mailinglist_properties",*/ 0, this, SLOT( slotFolderMailingListProperties() ),
       actionCollection(), "folder_mailinglist_properties" );
 
 
