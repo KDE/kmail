@@ -1,53 +1,13 @@
 [!Global!]
 IconName=kmail
 Comment=KMail
-Comment[af]=Kpos
-Comment[eo]=Retpoŝto (KMail)
-Comment[nso]=KPoso
-Comment[sv]=Kmail
-Comment[zu]=I-KMeyili
 
 [new-mail-arrived]
 Name= New Mail arrived
 Comment=New Mail arrived
-Comment[af]=Nuwe Pos gearriveer
-Comment[bg]=Пристигнала Нова Поща
 Comment[bs]=Stigla vam je nova pošta.
-Comment[ca]=Teniu correu nou
-Comment[cs]=Přišla nová pošta
-Comment[da]=Ny post ankommet
-Comment[de]=Neue Nachrichten sind angekommen
-Comment[el]=Άφιξη νέου mail
-Comment[eo]=Nova poŝto ricevita
-Comment[es]=Tiene correo nuevo
-Comment[et]=Saabus uus meil
-Comment[fi]=Uutta postia saapunut
-Comment[fr]=Nouveau courrier arrivé
-Comment[he]=הגיע דואר חדש
-Comment[hu]=Új üzenet érkezett
-Comment[it]=Nuovi messaggi ricevuti
-Comment[ja]=新規メール着信
-Comment[lt]=Atėjo naujas paštas
-Comment[mt]=Wasal imejl ġdid
-Comment[nb]=Ny e-post ankommet
-Comment[nl]=Nieuwe e-mail gearriveerd
-Comment[nn]=Ny e-post er komen
-Comment[nso]=Molaetsa o Moswa o gorogile
-Comment[pl]=Nadeszła nowa wiadomość
-Comment[pt]=Chegou Correio Novo
-Comment[pt_BR]=Chegou novo E-mail
-Comment[ru]=Пришло новое письмо
-Comment[sk]=Prišla nová pošta
-Comment[sl]=Prišla je nova pošta
-Comment[sv]=Ny post har anlänt
+Comment[ja]=新規メールが到着しました
 Comment[tr]=Yeni İleti Geldi
-Comment[uk]=Прийшли нові листи
-Comment[ven]=Meili muswa wo swika
-Comment[wa]=Vos avoz des noveas emiles
-Comment[xh]=Kufike Iposi Entsha
-Comment[zh_CN]=新邮件到达
-Comment[zh_TW]=新郵件送達
-Comment[zu]=I-Meyili Entsha isifikile
 default_sound=
 default_presentation=0
 # None = 0, Sound = 1, Messagebox = 2, Logfile = 4, Stderr = 8, PassivePopup = 16, Execute = 32
