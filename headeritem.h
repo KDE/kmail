@@ -42,6 +42,14 @@ namespace KMail
 {
 class HeaderItem; // forward declaration
 
+
+/** 
+ * Represents an item in the set of mails to be displayed but only as far
+ * as sorting, threading and reading/writing of the current sort order to
+ * a disk cache is concerned. Each such item is paired with a HeaderItem, 
+ * which holds the graphical representation of each item (mail).
+ * This is what the threading trees are built of.
+ */
 class SortCacheItem {
 
 public:
@@ -55,14 +63,24 @@ public:
     ~SortCacheItem() { if(mUnsortedChildren) free(mUnsortedChildren); }
 
     SortCacheItem *parent() const { return mParent; } //can't be set, only by the parent
+    /**
+     * if an item is imperfectly threaded (by References or subject, not by 
+     * In-Reply-To) it will be reevalutated when a new mail comes in. It could be
+     * the perfect parent. */
     bool isImperfectlyThreaded() const
         { return mImperfectlyThreaded; }
     void setImperfectlyThreaded (bool val)
         { mImperfectlyThreaded = val; }
     bool hasChildren() const
         { return mSortedChildren.count() || mUnsortedCount; }
+    
+    /** The sorted children are an array of sortcache items we know are below the
+     * current one and are already properly sorted (as read from the cache ) */
     const QPtrList<SortCacheItem> *sortedChildren() const
         { return &mSortedChildren; }
+ 
+    /** The unsorted children are an array of sortcache items we know are below the
+     * current one, but are yet to be threaded and sorted properly. */
     SortCacheItem **unsortedChildren(int &count) const
         { count = mUnsortedCount; return mUnsortedChildren; }
     void addSortedChild(SortCacheItem *i) {
@@ -79,15 +97,18 @@ public:
         mUnsortedChildren[mUnsortedCount++] = i;
     }
 
+    /** the corresponding HeaderItem */
     HeaderItem *item() const { return mItem; }
     void setItem(HeaderItem *i) { Q_ASSERT(!mItem); mItem = i; }
 
+    /** sort key as used by the listview */
     const QString &key() const { return mKey; }
     void setKey(const QString &key) { mKey = key; }
 
     int id() const { return mId; }
     void setId(int id) { mId = id; }
 
+    /** offset in the cache file stream */
     int offset() const { return mSortOffset; }
     void setOffset(int x) { mSortOffset = x; }
 
@@ -106,6 +127,12 @@ private:
     bool mImperfectlyThreaded;
 };
 
+
+/**
+ * Visual representation of a member of the set of displayables (mails in 
+ * the current folder). Each item is paired with a sort cache item. See above
+ * how they are meant to cooperate. This should be about the visual aspects of
+ * displaying an entry only. */
 class HeaderItem : public KListViewItem
 {
 public:
