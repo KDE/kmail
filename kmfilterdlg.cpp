@@ -163,11 +163,15 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool
 			      1, 1, /*from to row*/
   			      0, 3 /*from to col*/ );
       mConfigureShortcut = new QCheckBox( i18n("Add this filter to the Apply Filter menu"), adv_w );
-      gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 2 );
+      gl->addMultiCellWidget( mConfigureShortcut, 2, 2, 0, 1 );
+      QLabel *keyButtonLabel = new QLabel( i18n( "Shortcut:" ), adv_w );
+      keyButtonLabel->setAlignment( AlignVCenter | AlignRight );
+      gl->addMultiCellWidget( keyButtonLabel, 2, 2, 2, 2 );
       mKeyButton = new KKeyButton( adv_w, "FilterShortcutSelector" );
       gl->addMultiCellWidget( mKeyButton, 2, 2, 3, 3 );
       mConfigureToolbar = new QCheckBox( i18n("Additionally add this filter to the toolbar"), adv_w );
       gl->addMultiCellWidget( mConfigureToolbar, 3, 3, 1, 3 );
+      mConfigureToolbar->setEnabled( false );
 
       QHBox *hbox = new QHBox( adv_w );
       mFilterActionLabel = new QLabel( i18n( "Icon for this filter:" ),
