@@ -13,10 +13,14 @@
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <qfile.h>
+
 
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                     KMFolderType aFolderType )
-  : KMFolderNode( aParent, aFolderName ), mParent( aParent )
+  : KMFolderNode( aParent, aFolderName ), mParent( aParent ), mChild( 0 )
 {
   if( aFolderType == KMFolderTypeCachedImap )
     mStorage = new KMFolderCachedImap( this, aFolderName.latin1() );
@@ -97,19 +101,30 @@ QString KMFolder::subdirLocation() const
   return mStorage->subdirLocation();
 }
 
-KMFolderDir* KMFolder::child() const
-{
-  return mStorage->child();
-}
-
 KMFolderDir* KMFolder::createChildFolder()
 {
-  return mStorage->createChildFolder();
-}
+  if( mChild )
+    return mChild;
 
-void KMFolder::setChild( KMFolderDir* aChild )
-{
-  mStorage->setChild( aChild );
+  QString childName = "." + fileName() + ".directory";
+  QString childDir = path() + "/" + childName;
+  if (access(QFile::encodeName(childDir), W_OK) != 0) // Not there or not writable
+  {
+    if (mkdir(QFile::encodeName(childDir), S_IRWXU) != 0
+      && chmod(QFile::encodeName(childDir), S_IRWXU) != 0) {
+      QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno));
+      KMessageBox::information(0,i18n("Failed to create folder") + wmsg);
+      return 0;
+    }
+  }
+
+  mChild = new KMFolderDir(parent(), childName,
+    (folderType() == KMFolderTypeImap) ? KMImapDir : KMStandardDir);
+  if( !mChild )
+    return 0;
+  mChild->reload();
+  parent()->append( mChild );
+  return mChild;
 }
 
 bool KMFolder::noContent() const
@@ -263,7 +278,20 @@ int KMFolder::countUnread()
 
 int KMFolder::countUnreadRecursive()
 {
-  return mStorage->countUnreadRecursive();
+  KMFolder *folder;
+  int count = countUnread();
+  KMFolderDir *dir = child();
+  if (!dir)
+    return count;
+
+  QPtrListIterator<KMFolderNode> it(*dir);
+  for ( ; it.current(); ++it )
+    if (!it.current()->isDir()) {
+      folder = static_cast<KMFolder*>(it.current());
+      count += folder->countUnreadRecursive();
+    }
+
+  return count;
 }
 
 void KMFolder::msgStatusChanged( const KMMsgStatus oldStatus,

@@ -46,7 +46,6 @@
 #include "kmkernel.h"
 #include "kmcommands.h"
 
-#include <kmessagebox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kdebug.h>
@@ -74,7 +73,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mGuessedUnreadMsgs = -1;
   mTotalMsgs      = -1;
   needsCompact    = FALSE;
-  mChild          = 0;
   mConvertToUtf8  = FALSE;
   mMailingListEnabled = FALSE;
   mCompactable     = TRUE;
@@ -150,39 +148,6 @@ QString FolderStorage::subdirLocation() const
   sLocation += ".directory";
 
   return sLocation;
-}
-
-//-----------------------------------------------------------------------------
-KMFolderDir* FolderStorage::createChildFolder()
-{
-  QString childName = "." + fileName() + ".directory";
-  QString childDir = folder()->path() + "/" + childName;
-  bool ok = true;
-
-  if (mChild)
-    return mChild;
-
-  if (access(QFile::encodeName(childDir), W_OK) != 0) // Not there or not writable
-  {
-    if (mkdir(QFile::encodeName(childDir), S_IRWXU) != 0
-      && chmod(QFile::encodeName(childDir), S_IRWXU) != 0)
-        ok=false; //failed create new or chmod existing tmp/
-  }
-
-  if (!ok) {
-    QString wmsg = QString(" '%1': %2").arg(childDir).arg(strerror(errno));
-    KMessageBox::information(0,i18n("Failed to create folder") + wmsg);
-    return 0;
-  }
-
-  KMFolderDir* folderDir = new KMFolderDir(folder()->parent(), childName,
-    (folderType() == KMFolderTypeImap) ? KMImapDir : KMStandardDir);
-  if (!folderDir)
-    return 0;
-  folderDir->reload();
-  folder()->parent()->append(folderDir);
-  mChild = folderDir;
-  return folderDir;
 }
 
 //-----------------------------------------------------------------------------
@@ -694,12 +659,16 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
       ::rename(QFile::encodeName(oldIdsLoc), QFile::encodeName(newIdsLoc));
 
     // rename/move the subfolder directory
+    KMFolderDir* child = 0;
+    if( folder() )
+      child = folder()->child();
+
     if (!::rename(QFile::encodeName(oldSubDirLoc), QFile::encodeName(newSubDirLoc) )) {
       // now that the subfolder directory has been renamed and/or moved also
       // change the name that is stored in the corresponding KMFolderNode
       // (provide that the name actually changed)
-      if( mChild && ( oldName != newName ) ) {
-        mChild->setName( "." + QFile::encodeName(newName) + ".directory" );
+      if( child && ( oldName != newName ) ) {
+        child->setName( "." + QFile::encodeName(newName) + ".directory" );
       }
     }
 
@@ -709,11 +678,11 @@ int FolderStorage::rename(const QString& newName, KMFolderDir *newParent)
       if (oldParent->findRef( folder() ) != -1)
         oldParent->take();
       newParent->inSort( folder() );
-      if (mChild) {
-        if (mChild->parent()->findRef( mChild ) != -1)
-          mChild->parent()->take();
-        newParent->inSort( mChild );
-        mChild->setParent( newParent );
+      if ( child ) {
+        if ( child->parent()->findRef( child ) != -1 )
+          child->parent()->take();
+        newParent->inSort( child );
+        child->setParent( newParent );
       }
     }
   }
@@ -829,25 +798,6 @@ int FolderStorage::countUnread()
   int unread = mUnreadMsgs;
   close();
   return (unread > 0) ? unread : 0;
-}
-
-//-----------------------------------------------------------------------------
-int FolderStorage::countUnreadRecursive()
-{
-  KMFolder *folder;
-  int count = countUnread();
-  KMFolderDir *dir = child();
-  if (!dir)
-    return count;
-
-  QPtrListIterator<KMFolderNode> it(*dir);
-  for ( ; it.current(); ++it )
-    if (!it.current()->isDir()) {
-      folder = static_cast<KMFolder*>(it.current());
-      count += folder->countUnreadRecursive();
-    }
-
-  return count;
 }
 
 //-----------------------------------------------------------------------------

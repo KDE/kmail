@@ -364,12 +364,15 @@ void KMAcctCachedImap::invalidateIMAPFolders()
 
 void KMAcctCachedImap::invalidateIMAPFolders( KMFolderCachedImap* folder )
 {
+  if( !folder || !folder->folder() )
+    return;
+
   folder->setAccount(this);
 
   QStringList strList;
   QValueList<QGuardedPtr<KMFolder> > folderList;
   kmkernel->dimapFolderMgr()->createFolderList( &strList, &folderList,
-						folder->child(), QString::null,
+						folder->folder()->child(), QString::null,
 						false );
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   mCountRemainChecks = 0;

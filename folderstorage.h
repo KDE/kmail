@@ -108,18 +108,6 @@ public:
   /** Returns full path to sub directory file */
   QString subdirLocation() const;
 
-  /** Returns the folder directory associated with this node or
-      0 if no such directory exists */
-  virtual KMFolderDir* child() const
-    { return mChild; }
-
-  /** Create a child folder directory and associates it with this folder */
-  virtual KMFolderDir* createChildFolder();
-
-  /** Set the folder directory associated with this node */
-  virtual void setChild( KMFolderDir* aChild )
-    { mChild = aChild; }
-
   /** Returns, if the folder can't contain mails, but only subfolder */
   virtual bool noContent() const
     { return mNoContent; }
@@ -224,10 +212,6 @@ public:
 
   /** Number of new or unread messages in this folder. */
   virtual int countUnread();
-
-  /** Number of new or unread messages in this folder and all folders
-      contained by this folder */
-  virtual int countUnreadRecursive();
 
   /** Called by KMMsgBase::setStatus when status of a message has changed
       required to keep the number unread messages variable current. */
@@ -638,7 +622,6 @@ protected:
   /** false if index file is out of sync with mbox file */
   bool mCompactable;
   bool mNoContent;
-  KMFolderDir* mChild;
   bool mConvertToUtf8;
 
   /** Support for automatic expiry of old messages */

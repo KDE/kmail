@@ -134,9 +134,10 @@ KMMessage* KMFolderImap::getMsg(int idx)
 void KMFolderImap::setAccount(KMAcctImap *aAccount)
 {
   mAccount = aAccount;
-  if (!mChild) return;
+  if( !folder() && !folder()->child() ) return;
   KMFolderNode* node;
-  for (node = mChild->first(); node; node = mChild->next())
+  for (node = folder()->child()->first(); node;
+       node = folder()->child()->next())
   {
     if (!node->isDir())
       static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage())->setAccount(aAccount);
@@ -559,9 +560,9 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       mAccount->setCreateInbox(FALSE);
       mSubfolderNames.clear();
     }
-    createChildFolder();
-    KMFolderImap *folder;
-    KMFolderNode *node = mChild->first();
+    folder()->createChildFolder();
+    KMFolderImap *f;
+    KMFolderNode *node = folder()->child()->first();
     while (node)
     {
       // check if the folders still exist on the server
@@ -570,26 +571,27 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       {
         kdDebug(5006) << node->name() << " disappeared." << endl;
         kmkernel->imapFolderMgr()->remove(static_cast<KMFolder*>(node));
-        node = mChild->first();
+        node = folder()->child()->first();
       }
-      else node = mChild->next();
+      else node = folder()->child()->next();
     }
     if (mAccount->createInbox())
     {
       // create the INBOX
-      for (node = mChild->first(); node; node = mChild->next())
+      for (node = folder()->child()->first(); node;
+           node = folder()->child()->next())
         if (!node->isDir() && node->name() == "INBOX") break;
-      if (node) folder = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
-      else folder = static_cast<KMFolderImap*>
-        (mChild->createFolder("INBOX", TRUE)->storage());
-      folder->setAccount(mAccount);
-      folder->setImapPath("/INBOX/");
-      folder->setLabel(i18n("inbox"));
-      if (!node) folder->close();
+      if (node) f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+      else f = static_cast<KMFolderImap*>
+        (folder()->child()->createFolder("INBOX", TRUE)->storage());
+      f->setAccount(mAccount);
+      f->setImapPath("/INBOX/");
+      f->setLabel(i18n("inbox"));
+      if (!node) f->close();
       // so we have an INBOX
       mAccount->setCreateInbox( false );
       mAccount->setHasInbox( true );
-      folder->listDirectory();
+      f->listDirectory();
       kmkernel->imapFolderMgr()->contentsChanged();
     }
     for (uint i = 0; i < mSubfolderNames.count(); i++)
@@ -598,28 +600,29 @@ void KMFolderImap::slotListResult( QStringList mSubfolderNames,
       if (mSubfolderNames[i].upper() == "INBOX" &&
           mAccount->hasInbox()) // do not create an additional inbox
         continue;
-      for (node = mChild->first(); node; node = mChild->next())
+      for (node = folder()->child()->first(); node;
+           node = folder()->child()->next())
         if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
-      if (node) folder = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
+      if (node) f = static_cast<KMFolderImap*>(static_cast<KMFolder*>(node)->storage());
       else {
-        folder = static_cast<KMFolderImap*>
-          (mChild->createFolder(mSubfolderNames[i])->storage());
-        if (folder)
+        f = static_cast<KMFolderImap*>
+          (folder()->child()->createFolder(mSubfolderNames[i])->storage());
+        if (f)
         {
-          folder->close();
+          f->close();
           kmkernel->imapFolderMgr()->contentsChanged();
         } else {
           kdWarning(5006) << "can't create folder " << mSubfolderNames[i] << endl;
         }
       }
-      if (folder)
+      if (f)
       {
-        folder->setAccount(mAccount);
-        folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
-        folder->setImapPath(mSubfolderPaths[i]);
+        f->setAccount(mAccount);
+        f->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
+        f->setImapPath(mSubfolderPaths[i]);
         if (mSubfolderMimeTypes[i] == "message/directory" ||
             mSubfolderMimeTypes[i] == "inode/directory")
-          folder->listDirectory();
+          f->listDirectory();
       }
     }
   }

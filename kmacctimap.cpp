@@ -277,7 +277,7 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
-  if (!mFolder || !mFolder->child() ||
+  if (!mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
       makeConnection() != ImapAccountBase::Connected)
   {
     mCountRemainChecks = 0;
@@ -352,13 +352,13 @@ void KMAcctImap::postProcessNewMail(KMFolderImap* folder, bool)
 //-----------------------------------------------------------------------------
 void KMAcctImap::slotUpdateFolderList()
 {
-  if (!mFolder || !mFolder->child() || 
+  if (!mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
       makeConnection() != ImapAccountBase::Connected)
     return;
   QStringList strList;
   mMailCheckFolders.clear();
   kmkernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,
-    mFolder->child(), QString::null, false);
+    mFolder->folder()->child(), QString::null, false);
   // the new list
   QValueList<QGuardedPtr<KMFolder> > includedFolders;
   // check for excluded folders

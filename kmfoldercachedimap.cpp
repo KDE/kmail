@@ -309,7 +309,7 @@ void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
 
 bool KMFolderCachedImap::canRemoveFolder() const {
   // If this has subfolders it can't be removed
-  if( child() != 0 && child()->count() > 0 )
+  if( folder() && folder()->child() && folder()->child()->count() > 0 )
     return false;
 
 #if 0
@@ -696,15 +696,15 @@ void KMFolderCachedImap::serverSyncInternal()
       mSyncState = SYNC_STATE_SYNC_SUBFOLDERS;
       mSubfoldersForSync.clear();
       mCurrentSubfolder = 0;
-      if( child() ) {
-        KMFolderNode *node = child()->first();
+      if( folder() && folder()->child() ) {
+        KMFolderNode *node = folder()->child()->first();
         while( node ) {
           if( !node->isDir() ) {
             if ( !static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->imapPath().isEmpty() )
               // Only sync folders that have been accepted by the server
               mSubfoldersForSync << static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
           }
-          node = child()->next();
+          node = folder()->child()->next();
         }
       }
     }
@@ -866,21 +866,21 @@ void KMFolderCachedImap::createNewFolders()
 QValueList<KMFolderCachedImap*> KMFolderCachedImap::findNewFolders()
 {
   QValueList<KMFolderCachedImap*> newFolders;
-  if( child() ) {
-    KMFolderNode *node = child()->first();
+  if( folder() && folder()->child() ) {
+    KMFolderNode *node = folder()->child()->first();
     while( node ) {
       if( !node->isDir() ) {
         if( !static_cast<KMFolder*>(node)->storage()->isA("KMFolderCachedImap") ) {
           kdDebug(5006) << "KMFolderCachedImap::findNewFolders(): ARGH!!! "
                         << node->name() << " is not an IMAP folder. It is a "
                         << node->className() << endl;
-          node = child()->next();
+          node = folder()->child()->next();
           assert(0);
         }
         KMFolderCachedImap* folder = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
         if( folder->imapPath().isEmpty() ) newFolders << folder;
       }
-      node = child()->next();
+      node = folder()->child()->next();
     }
   }
   return newFolders;
@@ -1105,8 +1105,9 @@ void KMFolderCachedImap::setAccount(KMAcctCachedImap *aAccount)
   mAccount = aAccount;
   if( imapPath()=="/" ) aAccount->setFolder( folder() );
 
-  if( !mChild || mChild->count() == 0) return;
-  for( KMFolderNode* node = mChild->first(); node; node = mChild->next() )
+  if( !folder() || !folder()->child() || !folder()->child()->count() ) return;
+  for( KMFolderNode* node = folder()->child()->first(); node;
+       node = folder()->child()->next() )
     if (!node->isDir())
       static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage())->setAccount(aAccount);
 }
@@ -1159,26 +1160,26 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
 
   if (!job->error()) {
     kmkernel->dimapFolderMgr()->quiet(TRUE);
-    createChildFolder();
+    folder()->createChildFolder();
 
     // Find all subfolders present on disk but not on the server
-    KMFolderCachedImap *folder;
-    KMFolderNode *node = mChild->first();
+    KMFolderCachedImap *f;
+    KMFolderNode *node = folder()->child()->first();
     QPtrList<KMFolder> toRemove;
     while (node) {
       if (!node->isDir() ) {
         if( mSubfolderNames.findIndex(node->name()) == -1) {
           // This subfolder isn't present on the server
           kdDebug(5006) << node->name() << " isn't on the server." << endl;
-          folder = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
-          if( !folder->uidValidity().isEmpty() ) {
+          f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+          if( !f->uidValidity().isEmpty() ) {
             // The folder have a uidValidity setting, so it has been on the
             // server before. Delete it locally.
-            toRemove.append( folder->folder() );
+            toRemove.append( f->folder() );
           }
         }
       }
-      node = mChild->next();
+      node = folder()->child()->next();
     }
     // Remove all folders
     for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() )
@@ -1196,11 +1197,12 @@ void KMFolderCachedImap::listDirectory2() {
 
   // Find all subfolders present on server but not on disk
   for (uint i = 0; i < mSubfolderNames.count(); i++) {
-    KMFolderCachedImap *folder = 0;
+    KMFolderCachedImap *f = 0;
 
     // Find the subdir, if already present
     KMFolderNode *node;
-    for (node = mChild->first(); node; node = mChild->next())
+    for (node = folder()->child()->first(); node;
+         node = folder()->child()->next())
       if (!node->isDir() && node->name() == mSubfolderNames[i]) break;
 
     if (!node) {
@@ -1216,11 +1218,11 @@ void KMFolderCachedImap::listDirectory2() {
         KIO::del( part1 + ".directory" );
       } else {
         // This is a new folder, create the local cache
-        folder = static_cast<KMFolderCachedImap*>
-          (mChild->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap)->storage());
-        if (folder) {
-          folder->close();
-          folder->setAccount(mAccount);
+        f = static_cast<KMFolderCachedImap*>
+          (folder()->child()->createFolder(mSubfolderNames[i], false, KMFolderTypeCachedImap)->storage());
+        if (f) {
+          f->close();
+          f->setAccount(mAccount);
           kmkernel->dimapFolderMgr()->contentsChanged();
         } else {
           kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
@@ -1229,16 +1231,16 @@ void KMFolderCachedImap::listDirectory2() {
     } else {
       // kdDebug(5006) << "node " << node->name() << " is a " << node->className() << endl;
       if( node->isA("KMFolderCachedImap") )
-        folder = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
+        f = static_cast<KMFolderCachedImap*>(static_cast<KMFolder*>(node)->storage());
     }
 
-    if( folder && folder->imapPath().isEmpty() ) {
-      // kdDebug(5006) << "folder("<<folder->name()<<")->imapPath()=" << folder->imapPath()
+    if( f && f->imapPath().isEmpty() ) {
+      // kdDebug(5006) << "folder("<<f->name()<<")->imapPath()=" << f->imapPath()
       // << "\nAssigning new imapPath " << mSubfolderPaths[i] << endl;
       // Write folder settings
-      folder->setAccount(mAccount);
-      folder->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
-      folder->setImapPath(mSubfolderPaths[i]);
+      f->setAccount(mAccount);
+      f->setNoContent(mSubfolderMimeTypes[i] == "inode/directory");
+      f->setImapPath(mSubfolderPaths[i]);
     }
   }
 

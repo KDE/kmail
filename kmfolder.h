@@ -81,13 +81,15 @@ public:
 
   /** Returns the folder directory associated with this node or
       0 if no such directory exists */
-  KMFolderDir* child() const;
+  KMFolderDir* child() const
+    { return mChild; }
 
   /** Create a child folder directory and associates it with this folder */
   KMFolderDir* createChildFolder();
 
   /** Set the folder directory associated with this node */
-  void setChild( KMFolderDir* aChild );
+  void setChild( KMFolderDir* aChild )
+    { mChild = aChild; }
 
   /** Returns, if the folder can't contain mails, but only subfolder */
   bool noContent() const;
@@ -494,6 +496,7 @@ public slots:
 private:
   FolderStorage* mStorage;
   KMFolderDir* mParent;
+  KMFolderDir* mChild;
 };
 
 #endif /*kmfolder_h*/
