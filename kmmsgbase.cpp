@@ -98,8 +98,8 @@ void KMMsgBase::assign(const KMMsgBase* other)
   mIndexOffset = other->mIndexOffset;
   mIndexLength = other->mIndexLength;
   MessageProperty::forget( this );
-  bool otherTransfer = MessageProperty::transferInProgress( other );
-  MessageProperty::setTransferInProgress( this, otherTransfer );
+  //bool otherTransfer = MessageProperty::transferInProgress( other );
+  //MessageProperty::setTransferInProgress( this, otherTransfer );
 }
 
 
