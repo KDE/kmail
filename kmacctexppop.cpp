@@ -256,7 +256,7 @@ KMExpPasswdDialog::KMExpPasswdDialog(QWidget *parent, const char *name,
   // for a new username and password if one of them was wrong or not set.
   QLabel *l;
 
-  kbp->idle();
+  kernel->kbp()->idle();
   act = account;
   KWM::setMiniIcon(winId(), kapp->miniIcon());
   setCaption(caption);  

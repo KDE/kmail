@@ -140,7 +140,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     if (client.Open(mHost,mPort) != '+')
       return popError("OPEN", client);
     opened = TRUE;
-    app->processEvents();
+    kapp->processEvents();
 
     // Send user name
     replyCode = client.User((const char*)mLogin);
@@ -151,7 +151,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     }
     else if (replyCode != '+')
       return popError("USER", client);
-    app->processEvents();
+    kapp->processEvents();
 
     // Send password
     passwd = decryptStr(mPasswd);
@@ -176,7 +176,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctPop::doProcessNewMail(bool interactive)
+bool KMAcctPop::doProcessNewMail(bool /* interactive */)
 {
   DwPopClient client;
   QString passwd;
@@ -193,7 +193,7 @@ bool KMAcctPop::doProcessNewMail(bool interactive)
   bool addedOk;   //Flag if msg was delivered succesfully
 
   // is everything specified ?
-  app->processEvents();
+  kapp->processEvents();
 
   if (mHost.isEmpty() || mPort==0)
   {
@@ -241,7 +241,7 @@ bool KMAcctPop::doProcessNewMail(bool interactive)
 			                QString("%1/%2").arg(id).arg(num) );
     KMBroadcastStatus::instance()->setStatusProgressPercent( (id*100) / num );
 
-    app->processEvents();
+    kapp->processEvents();
     if (client.List(id) != '+')
       return popError("LIST", client);
     response = client.SingleLineResponse().c_str();
@@ -312,7 +312,7 @@ bool KMAcctPop::doProcessNewMail(bool interactive)
 bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 {
   QString msg, caption;
-  kbp->idle();
+  kernel->kbp()->idle();
 
   caption = i18n("Pop Mail Error");
 
@@ -345,7 +345,7 @@ bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 		.arg(aStage)
 		.arg(msg);
   KMessageBox::information(0, tmp, caption);
-  //kbp->busy();
+  //kernel->kbp()->busy();
   aClient.Quit();
   return gotMsgs;
 }
@@ -493,7 +493,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
   // for a new username and password if one of them was wrong or not set.
   QLabel *l;
 
-  kbp->idle();
+  kernel->kbp()->idle();
   act = account;
   KWM::setMiniIcon(winId(), kapp->miniIcon());
   setCaption(caption);
@@ -559,7 +559,7 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name,
 //-----------------------------------------------------------------------------
 void KMPasswdDialog::slotOkPressed()
 {
-  //kbp->busy();
+  //kernel->kbp()->busy();
   act->setLogin(usernameLEdit->text());
   act->setPasswd(passwdLEdit->text(), act->storePasswd());
   done(1);
@@ -568,6 +568,6 @@ void KMPasswdDialog::slotOkPressed()
 //-----------------------------------------------------------------------------
 void KMPasswdDialog::slotCancelPressed()
 {
-  //kbp->busy();
+  //kernel->kbp()->busy();
   done(0);
 }

@@ -209,10 +209,10 @@ void KMFilterDlg::reloadFilterList(void)
 
   mFilterList->clear();
 
-  num = filterMgr->count();
+  num = kernel->filterMgr()->count();
   for (i=0; i<num; i++)
   {
-    filter = filterMgr->at(i);
+    filter = kernel->filterMgr()->at(i);
     if (!filter) continue;
     mFilterList->insertItem(filter->name());
   }
@@ -287,7 +287,7 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
     if (!action) mFaType[i]->setCurrentItem(0);
     else
     {
-      mFaType[i]->setCurrentItem(1+filterActionDict->indexOf(action->name()));
+      mFaType[i]->setCurrentItem(1+kernel->filterActionDict()->indexOf(action->name()));
       pwidg = action->createParamWidget(this);
       mFaField[i] = pwidg;
       if (pwidg)
@@ -445,8 +445,8 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   mGridRow = i;
 
   if (mFilter->action(i)) delete mFilter->action(i);
-  action = filterActionDict->create(
-              filterActionDict->nameOf(sFilterActionList.at(idx)));
+  action = kernel->filterActionDict()->create(
+              kernel->filterActionDict()->nameOf(sFilterActionList.at(idx)));
   mFilter->setAction(i, action);
   if (!action || idx < 0) 
   {
@@ -479,9 +479,9 @@ void KMFilterDlg::slotFilterSelected(int idx)
     return;
 
   if (mFilter) applyFilterChanges();
-  if ((uint)idx < filterMgr->count())
+  if ((uint)idx < kernel->filterMgr()->count())
   {
-    filter = filterMgr->at(idx);
+    filter = kernel->filterMgr()->at(idx);
     if (filter) showFilter(filter);
   }
   else
@@ -503,9 +503,9 @@ void KMFilterDlg::slotBtnUp()
   mCurFilterIdx = -1;
   updown_move_semaphore = 0;
 
-  filter = filterMgr->take(idx);
+  filter = kernel->filterMgr()->take(idx);
   assert(filter != 0);
-  filterMgr->insert(idx-1, filter);
+  kernel->filterMgr()->insert(idx-1, filter);
 
   // This next line is to work around a QT 2.0 CVS bug
   // If it is omitted the listbox is refreshed incorrectly
@@ -531,9 +531,9 @@ void KMFilterDlg::slotBtnDown()
 
   updown_move_semaphore = 0;
 
-  filter = filterMgr->take(idx);
+  filter = kernel->filterMgr()->take(idx);
   assert(filter != 0);
-  filterMgr->insert(idx+1, filter);
+  kernel->filterMgr()->insert(idx+1, filter);
 
   mFilterList->removeItem(idx);
   mFilterList->insertItem(filter->name(), idx+1);
@@ -553,9 +553,9 @@ void KMFilterDlg::slotBtnNew()
   mCurFilterIdx = -1;
 
   idx = mFilterList->currentItem();
-  if (idx >= 0) filterMgr->insert(idx, filter);
-  else filterMgr->append(filter);
-  idx = filterMgr->find(filter);
+  if (idx >= 0) kernel->filterMgr()->insert(idx, filter);
+  else kernel->filterMgr()->append(filter);
+  idx = kernel->filterMgr()->find(filter);
   mFilterList->insertItem(filter->name(), idx);
   mFilterList->setCurrentItem(idx);
   slotFilterSelected(idx);
@@ -572,10 +572,10 @@ void KMFilterDlg::slotBtnDelete()
   mCurFilterIdx = -1;
 
   mFilterList->removeItem(idx);
-  filterMgr->remove(idx);
+  kernel->filterMgr()->remove(idx);
 
-  if (idx >= (int)filterMgr->count())
-    idx = (int)filterMgr->count()-1;
+  if (idx >= (int)kernel->filterMgr()->count())
+    idx = (int)kernel->filterMgr()->count()-1;
 
   if (idx >= 0) {
     mFilterList->setCurrentItem(idx);
@@ -595,7 +595,7 @@ void KMFilterDlg::slotBtnOk()
   if (mFilter) 
   {
     applyFilterChanges();
-    filterMgr->writeConfig();
+    kernel->filterMgr()->writeConfig();
   }
 
   accept();
@@ -604,14 +604,14 @@ void KMFilterDlg::slotBtnOk()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnCancel()
 {
-  filterMgr->readConfig();
+  kernel->filterMgr()->readConfig();
   reject();
 }
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnHelp()
 {
-  app->invokeHTMLHelp( QString( app->name() )+"/index-3.html", "ss3.5" );
+  kapp->invokeHTMLHelp( QString( kapp->name() )+"/index-3.html", "ss3.5" );
 }
 
 //-----------------------------------------------------------------------------
@@ -635,10 +635,10 @@ void KMFilterDlg::initLists()
   if (sFilterActionList.count() <= 0)
   {
     sFilterActionList.append(i18n("<nothing>"));
-    for (name=filterActionDict->first(); !name.isEmpty(); 
-	 name=filterActionDict->next())
+    for (name=kernel->filterActionDict()->first(); !name.isEmpty(); 
+	 name=kernel->filterActionDict()->next())
     {
-      sFilterActionList.append(filterActionDict->currentLabel());
+      sFilterActionList.append(kernel->filterActionDict()->currentLabel());
     }
   }
 

@@ -56,8 +56,6 @@
 #define MSG_SEPERATOR_REGEX "^From .*..:...*$"
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
 
-extern KBusyPtr *kbp;
-
 static int _rename(const char* oldname, const char* newname)
 {
   return rename(oldname, newname);
@@ -100,7 +98,7 @@ KMFolder :: ~KMFolder()
   /* Well, this is a problem. If I add the above line then kmfolder depends
    * on kmaccount and is then not that portable. Hmm.
    */
-  if (undoStack) undoStack->folderDestroyed(this);
+  if (kernel->undoStack()) kernel->undoStack()->folderDestroyed(this);
 }
 
 
@@ -892,12 +890,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
       debug("Undoing changes");
       truncate( location(), revert );
     }
-    kbp->idle();
+    kernel->kbp()->idle();
     KMessageBox::sorry(0,
 	  i18n("Unable to add message to folder.\n"
 	       "(No space left on device or insufficient quota?)\n\n"
 	       "Free space and sufficient quota are required to continue safely."));
-    kbp->busy();
+    kernel->kbp()->busy();
     if (opened) close();
     return error;
   }
@@ -934,12 +932,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 	debug("Undoing changes");
 	truncate( indexLocation(), revert );
       }
-      kbp->idle();
+      kernel->kbp()->idle();
       KMessageBox::sorry(0,
         i18n("Unable to add message to folder.\n"
 	     "(No space left on device or insufficient quota?)\n\n"
 	     "Free space and sufficient quota are required to continue safely."));
-      kbp->busy();
+      kernel->kbp()->busy();
       if (opened) close();
       return error;
     }
@@ -1305,7 +1303,7 @@ QString KMFolder::idString()
 //-----------------------------------------------------------------------------
 void KMFolder::readConfig()
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
   unreadMsgs = config->readNumEntry("UnreadMsgs", -1);
 }
@@ -1313,7 +1311,7 @@ void KMFolder::readConfig()
 //-----------------------------------------------------------------------------
 void KMFolder::writeConfig()
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   config->setGroup("Folder-" + idString());
   config->writeEntry("UnreadMsgs", countUnread());
 }

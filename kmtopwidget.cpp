@@ -103,9 +103,9 @@ void KMTopLevelWidget::writeConfig(void)
 bool KMTopLevelWidget::queryExit()
 {
   // sven - against quit while sending
-  if (msgSender && msgSender->sending()) // sender working?
+  if (kernel->msgSender() && kernel->msgSender()->sending()) // sender working?
   {
-    msgSender->quitWhenFinished();       // tell him to quit app when finished
+    kernel->msgSender()->quitWhenFinished();       // tell him to quit app when finished
     return false;                        // don't quit now
   }
   return true;                           // sender not working, quit

@@ -107,7 +107,7 @@ void KMFilterMgr::cleanup(void)
 {
   KMFolder* fld;
 
-  folderMgr->contentsChanged();
+  kernel->folderMgr()->contentsChanged();
 
   for (fld=mOpenFolders.first(); fld; fld=mOpenFolders.next())
     if (fld) fld->close();

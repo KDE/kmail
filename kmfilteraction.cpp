@@ -50,7 +50,7 @@ bool KMFilterAction::folderRemoved(KMFolder*, KMFolder*)
 
 int KMFilterAction::tempOpenFolder(KMFolder* aFolder)
 {
-  return filterMgr->tempOpenFolder(aFolder);
+  return kernel->filterMgr()->tempOpenFolder(aFolder);
 }
 
 
@@ -126,7 +126,7 @@ QWidget* KMFilterActionMove::createParamWidget(KMGFilterDlg* aParent)
   QStringList str;
 
   folders.clear();
-  folderMgr->createFolderList( &str, &folders );
+  kernel->folderMgr()->createFolderList( &str, &folders );
   cbx = aParent->createFolderCombo( &str, &folders, mDest );
   return cbx;
 }
@@ -142,7 +142,7 @@ void KMFilterActionMove::applyParamWidgetValue(QWidget* aParamWidget)
 
 void KMFilterActionMove::argsFromString(const QString argsStr)
 {
-  mDest = (KMFolder*)folderMgr->findIdString(argsStr);
+  mDest = (KMFolder*)kernel->folderMgr()->findIdString(argsStr);
 }
 
 const QString KMFilterActionMove::argsAsString(void) const
@@ -190,7 +190,7 @@ int KMFilterActionForward::process(KMMessage* aMsg, bool& /*stop*/)
   if (mTo.isEmpty()) return TRUE;
   msg = aMsg->createForward();
   msg->setTo(mTo);
-  if (!msgSender->send(msg))
+  if (!kernel->msgSender()->send(msg))
   {
     debug("KMFilterActionForward: could not forward message (sending failed)");
     return 1; // error: couldn't send

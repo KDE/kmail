@@ -83,7 +83,7 @@ void KMAcctLocal::processNewMail(bool)
   KMBroadcastStatus::instance()->setStatusMsg( 
                      i18n( "Preparing transmission..." ));
 
-  app->processEvents();
+  kapp->processEvents();
   mailFolder.setAutoCreateIndex(FALSE);
 
   rc = mailFolder.open();
@@ -128,7 +128,7 @@ void KMAcctLocal::processNewMail(bool)
     }
 
     if (t.elapsed() >= 200) { //hardwired constant
-      app->processEvents();
+      kapp->processEvents();
       t.start();
     }
     

@@ -45,7 +45,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount() 
 {
-  if (!shuttingDown && mFolder) mFolder->removeAccount(this);
+  if (!kernel->shuttingDown() && mFolder) mFolder->removeAccount(this);
   if (mTimer) deinstallTimer();
 }
 
@@ -84,7 +84,7 @@ void KMAccount::readConfig(KConfig& config)
 
   if (!folderName.isEmpty())
   {
-    folder = (KMAcctFolder*)folderMgr->find(folderName);
+    folder = (KMAcctFolder*)kernel->folderMgr()->find(folderName);
     if (folder) 
     {
       mFolder = folder;
@@ -113,7 +113,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
   KMMessage* newMsg = new KMMessage;
   QString str, receiptTo;
 
-  KConfig* cfg = app->config();
+  KConfig* cfg = kapp->config();
   bool sendReceipts;
 
   cfg->setGroup("General");
@@ -134,7 +134,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
   newMsg->setBody(str);
   newMsg->setAutomaticFields();
 
-  msgSender->send(newMsg);
+  kernel->msgSender()->send(newMsg);
 }
 
 
@@ -157,7 +157,7 @@ bool KMAccount::processNewMsg(KMMessage* aMsg)
   else aMsg->setStatus(KMMsgStatusNew);
 
   // 0==processed ok, 1==processing failed, 2==critical error, abort!
-  processResult = filterMgr->process(aMsg);
+  processResult = kernel->filterMgr()->process(aMsg);
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
     KMessageBox::information(0,(i18n("Critical error: "
@@ -236,6 +236,6 @@ void KMAccount::mailCheck()
 {
  if (mCheckingMail) return;
  mCheckingMail = TRUE;
- acctMgr->singleCheckMail(this,false);
+ kernel->acctMgr()->singleCheckMail(this,false);
  mCheckingMail = FALSE;
 }

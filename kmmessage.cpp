@@ -3,7 +3,7 @@
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
 #define ALLOW_GUI 1
-
+#include "kmglobal.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmmsginfo.h"
@@ -37,11 +37,6 @@
 #if ALLOW_GUI
 #include <qmultilineedit.h>
 #endif
-
-
-// Originally in kmglobal.h, but we want to avoid to depend on it here
-extern KMIdentity* identity;
-extern KMUndoStack* undoStack; //WABA: Why not?
 
 
 
@@ -187,7 +182,7 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
 KMMessage::~KMMessage()
 {
   if (mMsg) delete mMsg;
-  undoStack->msgDestroyed( this );
+  kernel->undoStack()->msgDestroyed( this );
 }
 
 
@@ -835,22 +830,20 @@ KMMessage* KMMessage::createForward(void)
 //-----------------------------------------------------------------------------
 void KMMessage::initHeader(void)
 {
-  assert(identity != NULL);
-  
-  if(identity->fullEmailAddr().isEmpty())
+  if(kernel->identity()->fullEmailAddr().isEmpty())
     setFrom("");
   else
-    setFrom(identity->fullEmailAddr());
+    setFrom(kernel->identity()->fullEmailAddr());
 
-  if(identity->replyToAddr().isEmpty()) 
+  if(kernel->identity()->replyToAddr().isEmpty()) 
     setReplyTo("");
   else
-    setReplyTo(identity->replyToAddr());
+    setReplyTo(kernel->identity()->replyToAddr());
 
-  if (identity->organization().isEmpty())
+  if (kernel->identity()->organization().isEmpty())
     removeHeaderField("Organization");
   else
-    setHeaderField("Organization", identity->organization());
+    setHeaderField("Organization", kernel->identity()->organization());
 
   setTo("");
   setSubject("");

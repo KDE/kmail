@@ -44,7 +44,8 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
-  if (undoStack) undoStack->clear(); // Speed things up a bit.
+  if  (kernel->undoStack())
+    kernel->undoStack()->clear(); // Speed things up a bit.
   mBasePath = QString::null;;
 }
 
@@ -223,7 +224,7 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder)
   aFolder->remove();
   aFolder->parent()->remove(aFolder);
   //  mDir.remove(aFolder);
-  if (filterMgr) filterMgr->folderRemoved(aFolder,NULL);
+  if (kernel->filterMgr()) kernel->filterMgr()->folderRemoved(aFolder,NULL);
 }
 
 void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
@@ -274,7 +275,7 @@ void KMFolderMgr::createFolderList( QStringList *str,
 				    const QString& prefix)
 {
   KMFolderNode* cur;
-  KMFolderDir* fdir = adir ? adir : &(folderMgr->dir());
+  KMFolderDir* fdir = adir ? adir : &(kernel->folderMgr()->dir());
 
   for (cur=fdir->first(); cur; cur=fdir->next()) {
     if (cur->isDir())

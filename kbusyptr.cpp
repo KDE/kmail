@@ -47,15 +47,15 @@ void KBusyPtr :: busy (void)
     currentCursor = 0;
     if (!cursorList)
     {
-      if (animated) app->setOverrideCursor(waitCursor);
-      else app->setOverrideCursor(KCursor::waitCursor());
+      if (animated) kapp->setOverrideCursor(waitCursor);
+      else kapp->setOverrideCursor(KCursor::waitCursor());
     }
     else
     {
-      app->setOverrideCursor(cursorList[currentCursor]);
+      kapp->setOverrideCursor(cursorList[currentCursor]);
       if (animated) start(frameDelay);
     }
-    app->processEvents(200);
+    kapp->processEvents(200);
   }
   busyLevel++;
 }
@@ -70,8 +70,8 @@ void KBusyPtr :: idle (void)
   if (busyLevel <= 0)
   {
     stop();
-    app->restoreOverrideCursor();
-    app->processEvents(200);
+    kapp->restoreOverrideCursor();
+    kapp->processEvents(200);
   }
 }
 
@@ -84,7 +84,7 @@ void KBusyPtr :: timerEvent (void)
   if (++currentCursor >= numCursors) currentCursor = 0;
 
   if (cursorList)
-    app->setOverrideCursor(cursorList[currentCursor], TRUE);
+    kapp->setOverrideCursor(cursorList[currentCursor], TRUE);
 }
 
 

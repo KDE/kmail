@@ -128,10 +128,10 @@ void KMReaderWin::readConfig(void)
 #ifdef KRN
   config->setGroup("ArticleListOptions");
 #endif
-  c1 = QColor(app->palette().normal().text());
+  c1 = QColor(kapp->palette().normal().text());
   c2 = QColor("blue");
   c3 = QColor("red");
-  c4 = QColor(app->palette().normal().base());
+  c4 = QColor(kapp->palette().normal().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     c4 = config->readColorEntry("BackgroundColor",&c4);
@@ -165,12 +165,13 @@ void KMReaderWin::readConfig(void)
     mBodyFamily = KGlobal::generalFont().family();
   }
 
-  QValueList<int> fontsizes;
+  //This doesn´t compile (sven)
+  int fontsizes[7]; //QValueList<int> fontsizes;
   mViewer->resetFontSizes();
   diff = fntSize - mViewer->fontSizes()[3];
   if (mViewer->fontSizes()[0]+diff > 0) {
     for (i=0;i<7; i++)
-      fontsizes << mViewer->fontSizes()[i] + diff;
+      fontsizes[i] = mViewer->fontSizes()[i] + diff; //fontsizes << mViewer->fontSizes()[i] + diff;
     mViewer->setFontSizes(fontsizes);
   }
 
@@ -1023,7 +1024,7 @@ void KMReaderWin::slotAtmView()
     return;
   }
 
-  kbp->busy();
+  kernel->kbp()->busy();
   // ---Sven's view text, html and image attachments in html widget start ---
   // ***start commenting out old stuff
   //  str = QCString(msgPart.bodyDecoded());
@@ -1067,7 +1068,7 @@ void KMReaderWin::slotAtmView()
     }
   }
   // ---Sven's view text, html and image attachments in html widget end ---
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -1117,7 +1118,7 @@ void KMReaderWin::slotAtmOpen()
     fileName.remove(c, 1);
 
   // Sven commented out:
-  //kbp->busy();
+  //kernel->kbp()->busy();
   // NOTE: this next line will not work with Qt 2.0 - use a QByteArray str.
   //str = msgPart.bodyDecoded();
   //old_umask = umask(077);
@@ -1125,7 +1126,7 @@ void KMReaderWin::slotAtmOpen()
   //  warning(i18n("Could not save temporary file %s"),
   //	    (const char*)fileName);
   //umask(old_umask);
-  //kbp->idle();
+  //kernel->kbp()->idle();
   //--- Sven's save attachments to /tmp end ---
 
   // -- David : replacement for KFM::openURL
@@ -1158,10 +1159,10 @@ void KMReaderWin::slotAtmSave()
 
   fileName = url.path();
 
-  kbp->busy();
+  kernel->kbp()->busy();
   if (!kByteArrayToFile(msgPart.bodyDecoded(), fileName, TRUE))
     warning(i18n("Could not save file"));
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -1181,10 +1182,10 @@ void KMReaderWin::slotAtmProperties()
   KMMessagePart msgPart;
   KMMsgPartDlg  dlg(0,TRUE);
 
-  kbp->busy();
+  kernel->kbp()->busy();
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   dlg.setMsgPart(&msgPart);
-  kbp->idle();
+  kernel->kbp()->idle();
 
   dlg.exec();
 }

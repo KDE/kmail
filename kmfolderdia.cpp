@@ -59,7 +59,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   hl->addWidget( fileInFolder );
 
   QStringList str;
-  folderMgr->createFolderList( &str, &mFolders  );
+  kernel->folderMgr()->createFolderList( &str, &mFolders  );
   str.prepend( i18n( "Top Level" ));
   KMFolder *curFolder;
   int i = 1;
@@ -77,7 +77,7 @@ void KMFolderDialog::slotOk()
 {
   QString acctName;
   QString fldName, oldFldName;
-  KMFolderDir *selectedFolderDir = &(folderMgr->dir());
+  KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
   int curFolder = fileInFolder->currentItem();
 
   if (folder) oldFldName = folder->name();
@@ -104,7 +104,7 @@ void KMFolderDialog::slotOk()
 
   // Buggy?
   if (folder && folder->child())
-    while ((folderDir != &folderMgr->dir()) &&
+    while ((folderDir != &kernel->folderMgr()->dir()) &&
 	   (folderDir != folder->parent())){
       if (folderDir->findRef( folder ) != -1) {
 	KMessageBox::error( this, message );
@@ -127,7 +127,7 @@ void KMFolderDialog::slotOk()
   }
 
   if (!folder) {
-    folder = (KMAcctFolder*)folderMgr->createFolder(fldName, FALSE, selectedFolderDir );
+    folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, selectedFolderDir );
   }
   else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
@@ -135,7 +135,7 @@ void KMFolderDialog::slotOk()
 	folder->rename(fldName, selectedFolderDir );
       else
 	folder->rename(fldName);
-      folderMgr->contentsChanged();
+      kernel->folderMgr()->contentsChanged();
     }
 
   KMFolderDialogInherited::slotOk();

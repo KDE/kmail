@@ -21,7 +21,7 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 
-extern KBusyPtr *kbp;
+
 //-----------------------------------------------------------------------------
 KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
 {
@@ -61,7 +61,7 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::writeConfig(bool withSync)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   KMAccount* acct;
   QString groupName;
   int i;
@@ -82,7 +82,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readConfig(void)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   KMAccount* acct;
   QString groupName, acctType, acctName;
   int i, num;
@@ -128,7 +128,7 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
   checking = true;
 
   debug ("checking mail, server busy");
-  serverReady(false);
+  kernel->serverReady (false);
 
   mAccountIt->toLast(); 
   ++(*mAccountIt);
@@ -157,7 +157,7 @@ KMAccount* KMAcctMgr::create(const QString aType, const QString aName)
   if (act) 
   {
     mAcctList.append(act);
-    act->setFolder(inboxFolder);
+    act->setFolder(kernel->inboxFolder());
   }
 
   return act;
@@ -223,7 +223,7 @@ void KMAcctMgr::checkMail(bool _interactive)
 
   checking = true;
 
-  serverReady(false);
+  kernel->serverReady (false);
   
   mAccountIt->toFirst(); 
   lastAccountChecked = 0;
@@ -239,9 +239,9 @@ void KMAcctMgr::processNextAccount(bool _newMail)
 		this, SLOT(processNextAccount(bool)) );
 
   if (!cur) {
-    filterMgr->cleanup();
+    kernel->filterMgr()->cleanup();
     debug ("checked mail, server ready");
-    serverReady(true);
+    kernel->serverReady (true);
     checking = false;
     if (newMailArrived)
       emit newMail();
@@ -326,7 +326,7 @@ void KMAcctMgr::intCheckMail(int item, bool _interactive) {
   checking = true;
 
   debug ("checking mail, server busy");
-  serverReady(false);
+  kernel->serverReady (false);
 
   mAccountIt->toLast(); 
   ++(*mAccountIt);

@@ -11,7 +11,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \
-		kmacctmgr.cpp main.cpp kmacctfolder.cpp \
+		kmacctmgr.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
 		kmacctseldlg.cpp kmfiltermgr.cpp \
@@ -23,7 +23,8 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmnewiostatus.cpp kmnewiostatuswdg.cpp \
 		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp \
 		kmundostack.cpp ktablistbox.cpp kmbroadcaststatus.cpp \
-		kmacctexppop.cpp configuredialog.cpp
+		kmacctexppop.cpp configuredialog.cpp kmkernel.cpp \
+                kmailIface.skel kmailIface.stub main.cpp 
 
 METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -36,8 +37,13 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmaddrbookdlg.moc kmiostatusdlg.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
 		charsetsDlg.moc kmtopwidget.moc ktablistbox.moc \
-		kmbroadcaststatus.moc kmacctexppop.moc configuredialog.moc
+		kmbroadcaststatus.moc kmacctexppop.moc configuredialog.moc \
+                kmkernel.moc
 
+
+include_HEADERS = kmailIface.h
+
+METASOURCES = AUTO
 
 appsdir = $(kde_appsdir)/Internet
 apps_DATA = KMail.desktop

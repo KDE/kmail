@@ -20,8 +20,6 @@
 
 #ifdef KRN
 #include <kapp.h>
-extern KApplication *app;
-extern KMIdentity *identity;
 #endif
 
 #include <assert.h>
@@ -86,7 +84,7 @@ KMSender::setStatusMsg(const QString &msg)
 void KMSender::readConfig(void)
 {
   QString str;
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
 
   config->setGroup(SENDER_GROUP);
 
@@ -106,7 +104,7 @@ void KMSender::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMSender::writeConfig(bool aWithSync)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   config->setGroup(SENDER_GROUP);
 
   config->writeEntry("Immediate", mSendImmediate);
@@ -130,7 +128,7 @@ bool KMSender::settingsOk(void) const
 				    "and try again."));
     return FALSE;
   }
-  if (!identity->mailingAllowed())
+  if (!kernel->identity()->mailingAllowed())
   {
     KMessageBox::information(0,i18n("Please set the required fields in the\n"
 				    "identity settings:\n"
@@ -163,9 +161,9 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
-  outboxFolder->open();
+  kernel->outboxFolder()->open();
   aMsg->setStatus(KMMsgStatusQueued);
-  rc = outboxFolder->addMsg(aMsg);
+  rc = kernel->outboxFolder()->addMsg(aMsg);
   if (rc)
   {
     KMessageBox::information(0,i18n("Cannot add message to outbox folder"));
@@ -174,7 +172,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (sendNow && !mSendInProgress) rc = sendQueued();
   else rc = TRUE;
-  outboxFolder->close();
+  kernel->outboxFolder()->close();
 
   return rc;
 #else
@@ -205,10 +203,10 @@ bool KMSender::sendQueued(void)
 
 
   // open necessary folders
-  outboxFolder->open();
+  kernel->outboxFolder()->open();
   mCurrentMsg = NULL;
 
-  sentFolder->open();
+  kernel->sentFolder()->open();
 
 
   // create a sender
@@ -238,13 +236,13 @@ void KMSender::doSendMsg()
   if (mCurrentMsg)
     {
       mCurrentMsg->setStatus(KMMsgStatusSent);
-      sentFolder->moveMsg(mCurrentMsg);
+      kernel->sentFolder()->moveMsg(mCurrentMsg);
       mCurrentMsg = NULL;
     }
   
 
   // See if there is another queued message
-  mCurrentMsg = outboxFolder->getMsg(0);
+  mCurrentMsg = kernel->outboxFolder()->getMsg(0);
   if (!mCurrentMsg)
   {
     // no more message: cleanup and done
@@ -255,7 +253,7 @@ void KMSender::doSendMsg()
   // start the sender process or initialize communication
   if (!mSendProcStarted)
   {
-    serverReady(false); //sven - stop IPC
+    kernel->serverReady (false); //sven - stop IPC
     
     label->setText(i18n("Initiating sender process..."));
     label->resize(400, label->sizeHint().height());
@@ -298,15 +296,15 @@ void KMSender::cleanup(void)
   if (mSendProcStarted) mSendProc->finish();
   mSendProcStarted = FALSE;
   mSendInProgress = FALSE;
-  sentFolder->close();
-  outboxFolder->close();
-  if (outboxFolder->count()<0) 
-    outboxFolder->expunge();
+  kernel->sentFolder()->close();
+  kernel->outboxFolder()->close();
+  if (kernel->outboxFolder()->count()<0)
+    kernel->outboxFolder()->expunge();
 
-  else outboxFolder->compact();
+  else kernel->outboxFolder()->compact();
 
   setStatusMsg(i18n("Done sending messages."));
-  serverReady(true); // sven - enable ipc
+  kernel->serverReady (true); // sven - enable ipc
   label->hide();
   if (quitOnDone)
   {
@@ -468,7 +466,7 @@ const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
 void KMSendProc::statusMsg(const QString& aMsg)
 {
   if (mSender) mSender->setStatusMsg(aMsg);
-  app->processEvents(500);
+  kapp->processEvents(500);
 }
 
 //-----------------------------------------------------------------------------
@@ -676,7 +674,7 @@ bool KMSendSMTP::start(void)
     KMessageBox::information(0,str);
     return FALSE;
   }
-  app->processEvents(1000);
+  kapp->processEvents(1000);
 
   smtpInCmd("HELO");
   replyCode = mClient->Helo(); // Send HELO command
@@ -726,7 +724,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
   assert(aMsg != NULL);
 
   smtpInCmd("MAIL");
-  replyCode = mClient->Mail(identity->emailAddr());
+  replyCode = mClient->Mail(kernel->identity()->emailAddr());
   smtpDebug("MAIL");
   if(replyCode != 250) return smtpFailed("MAIL", replyCode);
 
@@ -742,7 +740,7 @@ bool KMSendSMTP::smtpSend(KMMessage* aMsg)
     aMsg->removeHeaderField("Bcc");
   }
 
-  app->processEvents(500);
+  kapp->processEvents(500);
 
   smtpInCmd("DATA");
   replyCode = mClient->Data(); // Send DATA command

@@ -167,7 +167,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 
   connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	  this, SLOT(doFolderSelected(QListViewItem*)));
-  connect(folderMgr, SIGNAL(changed()),
+  connect(kernel->folderMgr(), SIGNAL(changed()),
 	  this, SLOT(doFolderListChanged()));
 
   readConfig();
@@ -208,7 +208,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 //-----------------------------------------------------------------------------
 void KMFolderTree::readConfig (void)
 {
-  KConfig* conf = app->config();
+  KConfig* conf = kapp->config();
   QString fntStr;
 
   // Backing pixmap support
@@ -222,9 +222,9 @@ void KMFolderTree::readConfig (void)
 
   // Custom/System color support
   conf->setGroup("Reader");
-  QColor c1=QColor(app->palette().normal().text());
+  QColor c1=QColor(kapp->palette().normal().text());
   QColor c2=QColor("blue");
-  QColor c4=QColor(app->palette().normal().base());
+  QColor c4=QColor(kapp->palette().normal().base());
 
   if (!conf->readBoolEntry("defaultColors",TRUE)) {
     mPaintInfo.colFore = conf->readColorEntry("ForegroundColor",&c1);
@@ -255,7 +255,7 @@ void KMFolderTree::readConfig (void)
 //-----------------------------------------------------------------------------
 KMFolderTree::~KMFolderTree()
 {
-  disconnect(folderMgr, SIGNAL(changed()), this, SLOT(doFolderListChanged()));
+  disconnect(kernel->folderMgr(), SIGNAL(changed()), this, SLOT(doFolderListChanged()));
   delete mUpdateTimer;
 }
 
@@ -271,7 +271,7 @@ void KMFolderTree::updateUnreadAll()
   KMFolderNode* folderNode;
   KMFolder* folder;
 
-  fdir = &folderMgr->dir();
+  fdir = &kernel->folderMgr()->dir();
   for (folderNode = fdir->first();
     folderNode != NULL;
     folderNode =fdir->next())
@@ -339,7 +339,7 @@ void KMFolderTree::reload(void)
   // and use our custom paintBranches
   root = new KMFolderTreeItem( this, &mPaintInfo );
   root->setOpen( TRUE );
-  fdir = &folderMgr->dir();
+  fdir = &kernel->folderMgr()->dir();
   addDirectory(fdir, root);
 
   QListViewItemIterator jt( this );
@@ -485,7 +485,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
 //-----------------------------------------------------------------------------
 void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
-  KConfig* conf = app->config();
+  KConfig* conf = kapp->config();
 
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());
@@ -554,13 +554,13 @@ void KMFolderTree::addChildFolder()
     if (!fti->folder->createChildFolder())
       return;
 
-  KMFolderDir *dir = &(folderMgr->dir());
+  KMFolderDir *dir = &(kernel->folderMgr()->dir());
   if (fti->folder)
     dir = fti->folder->child();
 
   KMFolderDialog *d;
   d = new KMFolderDialog(0, dir,
-			 app->mainWidget(), i18n( "New Child Folder" ));
+			 kapp->mainWidget(), i18n( "New Child Folder" ));
 
   if (d->exec()) {
     QListViewItem *qlvi = indexOfFolder( aFolder );
@@ -576,11 +576,11 @@ void KMFolderTree::addChildFolder()
 // config file. The root is always open
 bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   KMFolder *folder = fti->folder;
   if (!folder)
     return TRUE;
-  int pathLen = folder->path().length() - folderMgr->basePath().length();
+  int pathLen = folder->path().length() - kernel->folderMgr()->basePath().length();
   QString path = folder->path().right( pathLen );
 
   if (!path.isEmpty())
@@ -594,11 +594,11 @@ bool KMFolderTree::readIsListViewItemOpen(KMFolderTreeItem *fti)
 // Saves open/closed state of a folder directory into the config file
 void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   KMFolder *folder = fti->folder;
   if (!folder)
     return;
-  int pathLen = folder->path().length() - folderMgr->basePath().length();
+  int pathLen = folder->path().length() - kernel->folderMgr()->basePath().length();
   QString path = folder->path().right( pathLen );
 
   if (!path.isEmpty())

@@ -231,8 +231,8 @@ void KMComposeWin::readConfig(void)
 #endif
 
   config->setGroup("Reader");
-  QColor c1=QColor(app->palette().normal().text());
-  QColor c4=QColor(app->palette().normal().base());
+  QColor c1=QColor(kapp->palette().normal().text());
+  QColor c4=QColor(kapp->palette().normal().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     foreColor = config->readColorEntry("ForegroundColor",&c1);
@@ -503,7 +503,7 @@ void KMComposeWin::setupMenuBar(void)
   menu = new QPopupMenu();
   menu->insertItem(i18n("&Send"),this, SLOT(slotSend()),
 		   CTRL+Key_Return);
-  if (msgSender->sendImmediate())
+  if (kernel->msgSender()->sendImmediate())
     menu->insertItem(i18n("S&end later"),this,SLOT(slotSendLater()));
   else
     menu->insertItem(i18n("S&end now"),this,SLOT(slotSendNow()));
@@ -648,7 +648,7 @@ void KMComposeWin::setupToolBar(void)
 			SLOT(slotNewComposer()), TRUE,
 			i18n("Compose new message"));
 
-  if (msgSender->sendImmediate())
+  if (kernel->msgSender()->sendImmediate())
   mToolBar->insertButton(BarIcon("filefloppy"), 0,
 			SIGNAL(clicked()), this,
 			 SLOT(slotSendLater()), TRUE,
@@ -945,7 +945,7 @@ bool KMComposeWin::applyChanges(void)
 
     // If there are no attachments in the list waiting it is a simple
     // text message.
-    if (msgSender->sendQuotedPrintable())
+    if (kernel->msgSender()->sendQuotedPrintable())
     {
       mMsg->setTypeStr("text");
       mMsg->setSubtypeStr("plain");
@@ -984,7 +984,7 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setBody("This message is in MIME format.\n\n");
 
     // create bodyPart for editor text.
-    if (msgSender->sendQuotedPrintable())
+    if (kernel->msgSender()->sendQuotedPrintable())
          bodyPart.setCteStr("quoted-printable");
     else bodyPart.setCteStr("8bit");
     bodyPart.setTypeStr("text");
@@ -1092,11 +1092,11 @@ void KMComposeWin::addAttach(const QString aUrl)
   int i;
 
   // load the file
-  kbp->busy();
+  kernel->kbp()->busy();
   str = kFileToBytes(aUrl,FALSE);
   if (str.isNull())
   {
-    kbp->idle();
+    kernel->kbp()->idle();
     return;
   }
 
@@ -1112,7 +1112,7 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart->setContentDisposition("attachment; filename=\""+name+"\"");
 
   // show properties dialog
-  kbp->idle();
+  kernel->kbp()->idle();
   dlg.setMsgPart(msgPart);
   if (!dlg.exec())
   {
@@ -1197,7 +1197,7 @@ void KMComposeWin::removeAttach(int idx)
 //-----------------------------------------------------------------------------
 void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
 {
-  KMAddrBookSelDlg dlg(addrBook);
+  KMAddrBookSelDlg dlg(kernel->addrBook());
   QString txt;
 
   //assert(aLineEdit!=NULL);
@@ -1244,7 +1244,7 @@ void KMComposeWin::slotToggleUrgent()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg(addrBook);
+  KMAddrBookEditDlg dlg(kernel->addrBook());
   dlg.exec();
 }
 
@@ -1345,11 +1345,11 @@ void KMComposeWin::slotInsertMyPublicKey()
   KMMessagePart* msgPart;
 
   // load the file
-  kbp->busy();
+  kernel->kbp()->busy();
   str=Kpgp::getKpgp()->getAsciiPublicKey(mMsg->from());
   if (str.isNull())
   {
-    kbp->idle();
+    kernel->kbp()->idle();
     return;
   }
 
@@ -1366,7 +1366,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   addAttach(msgPart);
   rethinkFields(); //work around initial-size bug in Qt-1.32
 
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 //-----------------------------------------------------------------------------
@@ -1449,7 +1449,7 @@ void KMComposeWin::slotAttachView()
   if (pname.isEmpty()) pname=msgPart->contentDescription();
   if (pname.isEmpty()) pname="unnamed";
 
-  kbp->busy();
+  kernel->kbp()->busy();
   str = QCString(msgPart->bodyDecoded());
 
   edt->setCaption(i18n("View Attachment: ") + pname);
@@ -1457,7 +1457,7 @@ void KMComposeWin::slotAttachView()
   edt->setReadOnly(TRUE);
   edt->show();
 
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -1572,7 +1572,7 @@ void KMComposeWin::slotCopy()
 #endif
 
   QKeyEvent k(QEvent::KeyPress, Key_C , 0 , ControlButton);
-  app->notify(fw, &k);
+  kapp->notify(fw, &k);
 }
 
 
@@ -1587,7 +1587,7 @@ void KMComposeWin::slotPaste()
 #endif
 
   QKeyEvent k(QEvent::KeyPress, Key_V , 0 , ControlButton);
-  app->notify(fw, &k);
+  kapp->notify(fw, &k);
 }
 
 
@@ -1704,11 +1704,11 @@ void KMComposeWin::doSend(int aSendNow)
 {
   bool sentOk;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   //applyChanges();  // is called twice otherwise. Lars
   mMsg->setDateToday();
-  sentOk = (applyChanges() && msgSender->send(mMsg, aSendNow));
-  kbp->idle();
+  sentOk = (applyChanges() && kernel->msgSender()->send(mMsg, aSendNow));
+  kernel->kbp()->idle();
 
   if (sentOk)
   {
@@ -1767,7 +1767,7 @@ void KMComposeWin::slotSendNow()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAppendSignature()
 {
-  QString sigFileName = identity->signatureFile();
+  QString sigFileName = kernel->identity()->signatureFile();
   QString sigText;
   bool mod = mEditor->isModified();
 
@@ -1796,10 +1796,10 @@ void KMComposeWin::slotAppendSignature()
 
     sigFileName = url.path();
     sigText = kFileToString(sigFileName, TRUE);
-    identity->setSignatureFile(sigFileName);
-    identity->writeConfig(true);
+    kernel->identity()->setSignatureFile(sigFileName);
+    kernel->identity()->writeConfig(true);
   }
-  else sigText = identity->signature();
+  else sigText = kernel->identity()->signature();
 
   if (!sigText.isEmpty())
   {
@@ -1813,7 +1813,7 @@ void KMComposeWin::slotAppendSignature()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotHelp()
 {
-  app->invokeHTMLHelp("","");
+  kapp->invokeHTMLHelp("","");
 }
 
 //-----------------------------------------------------------------------------

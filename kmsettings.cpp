@@ -192,7 +192,7 @@ void KMSettings::createTabMime(QWidget* parent)
   QLabel *mhAbout = new QLabel(grp);  
   QLabel *mhName = new QLabel(grp);  
   QLabel *mhValue = new QLabel(grp);
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
 
   curMHItem = NULL;    // not pointing to anything yet
 
@@ -274,16 +274,16 @@ void KMSettings::createTabIdentity(QWidget* parent)
   QLabel *label;
 
   nameEdit = createLabeledEntry(tab, grid, i18n("Name:"), 
-				identity->fullName(), 0, 0);
+				kernel->identity()->fullName(), 0, 0);
   orgEdit = createLabeledEntry(tab, grid, i18n("Organization:"), 
-			       identity->organization(), 1, 0);
+			       kernel->identity()->organization(), 1, 0);
   emailEdit = createLabeledEntry(tab, grid, i18n("Email Address:"),
-				 identity->emailAddr(), 2, 0);
+				 kernel->identity()->emailAddr(), 2, 0);
   replytoEdit = createLabeledEntry(tab, grid, 
 				   i18n("Reply-To Address:"),
-				   identity->replyToAddr(), 3, 0);
+				   kernel->identity()->replyToAddr(), 3, 0);
   sigEdit = createLabeledEntry(tab, grid, i18n("Signature File:"),
-			       identity->signatureFile(), 4, 0, &button);
+			       kernel->identity()->signatureFile(), 4, 0, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
   sigModify = createPushButton(tab, grid, i18n("&Edit Signature File..."),
                                5, 0);
@@ -351,15 +351,15 @@ void KMSettings::createTabNetwork(QWidget* parent)
   grid->activate();
   bgrp->adjustSize();
 
-  if (msgSender->method()==KMSender::smMail) 
+  if (kernel->msgSender()->method()==KMSender::smMail) 
     sendmailRadio->setChecked(TRUE);
-  else if (msgSender->method()==KMSender::smSMTP)
+  else if (kernel->msgSender()->method()==KMSender::smSMTP)
     smtpRadio->setChecked(TRUE);
 
-  sendmailLocationEdit->setText(msgSender->mailer());
-  smtpServerEdit->setText(msgSender->smtpHost());
+  sendmailLocationEdit->setText(kernel->msgSender()->mailer());
+  smtpServerEdit->setText(kernel->msgSender()->smtpHost());
   QString tmp;
-  smtpPortEdit->setText(tmp.setNum(msgSender->smtpPort()));
+  smtpPortEdit->setText(tmp.setNum(kernel->msgSender()->smtpPort()));
 
 
   //---- group: incoming mail
@@ -403,7 +403,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
   grp->adjustSize();
 
   accountList->clear();
-  for (act=acctMgr->first(); act; act=acctMgr->next())
+  for (act=kernel->acctMgr()->first(); act; act=kernel->acctMgr()->next())
     accountList->insertItem(tabNetworkAcctStr(act), -1);
 
   addTab(tab, i18n("Network"));
@@ -420,7 +420,7 @@ void KMSettings::createTabAppearance(QWidget* parent)
   QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
   QGridLayout* grid;
   QGroupBox* grp;
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   QFont fnt;
 
   //----- group: fonts
@@ -476,10 +476,10 @@ void KMSettings::createTabAppearance(QWidget* parent)
   //----- group: colors
   config->setGroup("Reader");
 
-  QColor c1=QColor(app->palette().normal().text());
+  QColor c1=QColor(kapp->palette().normal().text());
   QColor c2=QColor("blue");
   QColor c3=QColor("red");
-  QColor c4=QColor(app->palette().normal().base());
+  QColor c4=QColor(kapp->palette().normal().base());
 
   QColor cFore = config->readColorEntry("ForegroundColor",&c1);
   QColor cBack = config->readColorEntry("BackgroundColor",&c4);
@@ -555,7 +555,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   QGridLayout* grid;
   QGroupBox* grp;
   QLabel* lbl;
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   QString str;
   int i;
 
@@ -705,11 +705,11 @@ void KMSettings::createTabComposer(QWidget *parent)
   smartQuote->setChecked(config->readBoolEntry("smart-quote",true));
   confirmSend->setChecked(config->readBoolEntry("confirm-before-send",false));
 
-  i = msgSender->sendImmediate();
+  i = kernel->msgSender()->sendImmediate();
   sendNow->setChecked(i);
   sendLater->setChecked(!i);
 
-  i = msgSender->sendQuotedPrintable();
+  i = kernel->msgSender()->sendQuotedPrintable();
   allow8Bit->setChecked(!i);
   quotedPrintable->setChecked(i);
 
@@ -730,7 +730,7 @@ void KMSettings::createTabMisc(QWidget *parent)
   QGridLayout* grid, *grid2, *grid3;
   QGroupBox* grp, *grp2, *grp3;
 
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   QString str;
 
   //---------- group: folders
@@ -1176,7 +1176,7 @@ void KMSettings::addAccount()
     fatal("KMSettings: unsupported account type selected");
   }
 
-  acct = acctMgr->create(acctType, i18n("Unnamed"));
+  acct = kernel->acctMgr()->create(acctType, i18n("Unnamed"));
   assert(acct != NULL);
 
   acct->init(); // fill the account fields with good default values
@@ -1186,7 +1186,7 @@ void KMSettings::addAccount()
   if (acctSettings->exec())
     accountList->insertItem(tabNetworkAcctStr(acct), -1);
   else
-    acctMgr->remove(acct);
+    kernel->acctMgr()->remove(acct);
 
   delete acctSettings;
 }
@@ -1246,7 +1246,7 @@ void KMSettings::modifyAccount(int index,int)
 
   if (index < 0) return;
 
-  acct = acctMgr->find(accountList->text(index,0));
+  acct = kernel->acctMgr()->find(accountList->text(index,0));
   assert(acct != NULL);
 
   d = new KMAccountSettings(this, NULL, acct);
@@ -1271,10 +1271,10 @@ void KMSettings::removeAccount()
   int idx = accountList->currentItem();
 
   acctName = accountList->text(idx, 0);
-  acct = acctMgr->find(acctName);
+  acct = kernel->acctMgr()->find(acctName);
   if (!acct) return;
 
-  if(!acctMgr->remove(acct))
+  if(!kernel->acctMgr()->remove(acct))
     return;
   accountList->removeItem(idx);
   if (!accountList->count())
@@ -1301,39 +1301,39 @@ void KMSettings::setDefaults()
 //-----------------------------------------------------------------------------
 void KMSettings::doCancel()
 {
-  identity->readConfig();
-  msgSender->readConfig();
-  acctMgr->readConfig();
+  kernel->identity()->readConfig();
+  kernel->msgSender()->readConfig();
+  kernel->acctMgr()->readConfig();
 }
 
 //-----------------------------------------------------------------------------
 void KMSettings::doApply()
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
 
   //----- identity
-  identity->setFullName(nameEdit->text());
-  identity->setOrganization(orgEdit->text());
-  identity->setEmailAddr(emailEdit->text());
-  identity->setReplyToAddr(replytoEdit->text());
-  identity->setSignatureFile(sigEdit->text());
-  identity->writeConfig(FALSE);
+  kernel->identity()->setFullName(nameEdit->text());
+  kernel->identity()->setOrganization(orgEdit->text());
+  kernel->identity()->setEmailAddr(emailEdit->text());
+  kernel->identity()->setReplyToAddr(replytoEdit->text());
+  kernel->identity()->setSignatureFile(sigEdit->text());
+  kernel->identity()->writeConfig(FALSE);
   
   //----- sending mail
   if (sendmailRadio->isChecked())
-    msgSender->setMethod(KMSender::smMail);
+    kernel->msgSender()->setMethod(KMSender::smMail);
   else
-    msgSender->setMethod(KMSender::smSMTP);
+    kernel->msgSender()->setMethod(KMSender::smSMTP);
   
-  msgSender->setMailer(sendmailLocationEdit->text());
-  msgSender->setSmtpHost(smtpServerEdit->text());
-  msgSender->setSmtpPort(atoi(smtpPortEdit->text()));
-  msgSender->setSendImmediate(sendNow->isChecked());
-  msgSender->setSendQuotedPrintable(quotedPrintable->isChecked());
-  msgSender->writeConfig(FALSE);
+  kernel->msgSender()->setMailer(sendmailLocationEdit->text());
+  kernel->msgSender()->setSmtpHost(smtpServerEdit->text());
+  kernel->msgSender()->setSmtpPort(atoi(smtpPortEdit->text()));
+  kernel->msgSender()->setSendImmediate(sendNow->isChecked());
+  kernel->msgSender()->setSendQuotedPrintable(quotedPrintable->isChecked());
+  kernel->msgSender()->writeConfig(FALSE);
   
   //----- incoming mail
-  acctMgr->writeConfig(FALSE);
+  kernel->acctMgr()->writeConfig(FALSE);
 
   //----- fonts
   config->setGroup("Fonts");
@@ -1414,7 +1414,7 @@ void KMSettings::doApply()
   config->sync();
   pgpConfig->applySettings();
 
-  folderMgr->contentsChanged();
+  kernel->folderMgr()->contentsChanged();
   KMMessage::readConfig();
 
   KMTopLevelWidget::forEvery(&KMTopLevelWidget::readConfig);
@@ -1433,7 +1433,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   QWidget *btnBox;
   QLabel *lbl;
   KMFolder *folder, *acctFolder;
-  KMFolderDir* fdir = (KMFolderDir*)&folderMgr->dir();
+  KMFolderDir* fdir = (KMFolderDir*)&kernel->folderMgr()->dir();
   int i;
 
   initMetaObject();
@@ -1645,7 +1645,7 @@ void KMAccountSettings::accept()
   }
 
   id = mFolders->currentItem();
-  fld = folderMgr->find(mFolders->currentText());
+  fld = kernel->folderMgr()->find(mFolders->currentText());
   mAcct->setFolder((KMFolder*)fld);
 
   int _ChkInt = atoi(mChkInt->text());
@@ -1685,7 +1685,7 @@ void KMAccountSettings::accept()
     ((KMAcctExpPop*)mAcct)->setRetrieveAll(mChkRetrieveAll->isChecked());
   }
 
-  acctMgr->writeConfig(TRUE);
+  kernel->acctMgr()->writeConfig(TRUE);
 
   QDialog::accept();
 }

@@ -879,7 +879,7 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
 		Ok, parent, name, modal, true )
 {
   setHelp( "kmail/kmail.html", QString::null );
-  setIconListAllVisible( true );
+  //setIconListAllVisible( true );
 
   makeIdentityPage();
   makeNetworkPage();
@@ -1453,24 +1453,24 @@ void ConfigureDialog::setupIdentityPage( void )
 
 void ConfigureDialog::setupNetworkPage( void )
 {
-  if( msgSender->method() == KMSender::smMail ) 
+  if( kernel->msgSender()->method() == KMSender::smMail )
   {
     mNetwork.sendmailRadio->setChecked(true);
     slotSendmailType(0);
   }
-  else if( msgSender->method() == KMSender::smSMTP )
+  else if( kernel->msgSender()->method() == KMSender::smSMTP )
   {
     mNetwork.smtpRadio->setChecked(true);
     slotSendmailType(1);
   }
   
-  mNetwork.sendmailLocationEdit->setText( msgSender->mailer() );
-  mNetwork.smtpServerEdit->setText( msgSender->smtpHost() );
-  mNetwork.smtpPortEdit->setText( QString().setNum(msgSender->smtpPort()) );
+  mNetwork.sendmailLocationEdit->setText( kernel->msgSender()->mailer() );
+  mNetwork.smtpServerEdit->setText( kernel->msgSender()->smtpHost() );
+  mNetwork.smtpPortEdit->setText( QString().setNum(kernel->msgSender()->smtpPort()) );
 
   mNetwork.accountList->clear();
   QListViewItem *top = 0;
-  for( KMAccount *a = acctMgr->first(); a!=0; a = acctMgr->next() )
+  for( KMAccount *a = kernel->acctMgr()->first(); a!=0; a = kernel->acctMgr()->next() )
   {
     QListViewItem *listItem = 
       new QListViewItem( mNetwork.accountList, top, a->name(), a->type() );
@@ -1504,7 +1504,7 @@ void ConfigureDialog::setupApperancePage( void )
   QColor defaultColor = QColor(kapp->palette().normal().text());
   mAppearance.foregroundColorButton->setColor(
     config.readColorEntry("ForegroundColor",&defaultColor ) );
-  defaultColor = QColor(app->palette().normal().base());
+  defaultColor = QColor(kapp->palette().normal().base());
   mAppearance.backgroundColorButton->setColor(
     config.readColorEntry("BackgroundColor",&defaultColor ) );
   defaultColor = QColor("blue");
@@ -1565,9 +1565,9 @@ void ConfigureDialog::setupComposerPage( void )
   slotWordWrapSelectionChanged(); 
 
   mComposer.sendMethodCombo->setCurrentItem( 
-    msgSender->sendImmediate() ? 0 : 1 ); 
+    kernel->msgSender()->sendImmediate() ? 0 : 1 ); 
   mComposer.messagePropertyCombo->setCurrentItem( 
-    msgSender->sendQuotedPrintable() ? 1 : 0 );
+    kernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
   state = config.readBoolEntry( "confirm-before-send", false );
   mComposer.confirmSendCheck->setChecked( state );
 }
@@ -1983,7 +1983,7 @@ void ConfigureDialog::slotAddAccount( void )
     break;
   }
 
-  KMAccount *account = acctMgr->create( accountType, i18n("Unnamed") );
+  KMAccount *account = kernel->acctMgr()->create( accountType, i18n("Unnamed") );
   if( account == 0 )
   {
     KMessageBox::sorry( this, i18n("Unable to create account") );
@@ -2005,7 +2005,7 @@ void ConfigureDialog::slotAddAccount( void )
   }
   else
   {
-    acctMgr->remove(account);
+    kernel->acctMgr()->remove(account);
   }
 
   delete accountSettings;
@@ -2021,7 +2021,7 @@ void ConfigureDialog::slotModifySelectedAccount( void )
     return;
   }
 
-  KMAccount *account = acctMgr->find( listItem->text(0) );
+  KMAccount *account = kernel->acctMgr()->find( listItem->text(0) );
   if( account == 0 )
   {
     KMessageBox::sorry( this, i18n("Unable to locate account") );
@@ -2049,14 +2049,14 @@ void ConfigureDialog::slotRemoveSelectedAccount( void )
     return;
   }
   
-  KMAccount *account = acctMgr->find( listItem->text(0) );
+  KMAccount *account = kernel->acctMgr()->find( listItem->text(0) );
   if( account == 0 )
   {
     KMessageBox::sorry( this, i18n("Unable to locate account") );
     return;
   }
 
-  if( !acctMgr->remove(account) )
+  if( !kernel->acctMgr()->remove(account) )
   {
     return;
   }
@@ -2409,11 +2409,11 @@ void IdentityList::initialize()
   //
   IdentityEntry entry;
   entry.setIdentity( i18n("Default") );
-  entry.setFullName( identity->fullName() );
-  entry.setOrganization( identity->organization() );
-  entry.setEmailAddress( identity->emailAddr() );
-  entry.setReplyToAddress( identity->replyToAddr() );
-  entry.setSignatureFileName( identity->signatureFile() );
+  entry.setFullName( kernel->identity()->fullName() );
+  entry.setOrganization( kernel->identity()->organization() );
+  entry.setEmailAddress( kernel->identity()->emailAddr() );
+  entry.setReplyToAddress( kernel->identity()->replyToAddr() );
+  entry.setSignatureFileName( kernel->identity()->signatureFile() );
   entry.setSignatureInlineText( "" );
   entry.setSignatureFileIsAProgram( false );
   entry.setUseSignatureFile( true );

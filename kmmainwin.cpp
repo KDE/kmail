@@ -78,16 +78,16 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setupToolBar();
   setupStatusBar();
 
-  idx = mFolderTree->indexOfFolder(inboxFolder);
+  idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
   if (idx!=0) {
     mFolderTree->setCurrentItem(idx);
     mFolderTree->setSelected(idx,TRUE);
     mHeaders->workAroundQListViewLimitation();
   }
 
-  connect(msgSender, SIGNAL(statusMsg(const QString&)),
+  connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
-  connect(acctMgr, SIGNAL( newMail()),
+  connect(kernel->acctMgr(), SIGNAL( newMail()),
           SLOT( slotNewMail()));
 
   setCaption( i18n("KDE Mail Client") );
@@ -113,7 +113,7 @@ KMMainWin::~KMMainWin()
 //-----------------------------------------------------------------------------
 void KMMainWin::readPreConfig(void)
 {
-  KConfig *config = app->config();
+  KConfig *config = kapp->config();
   QString str;
 
   config->setGroup("Geometry");
@@ -124,7 +124,7 @@ void KMMainWin::readPreConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::readConfig(void)
 {
-  KConfig *config = app->config();
+  KConfig *config = kapp->config();
   bool oldLongFolderList=false;
   int w, h;
   QString str;
@@ -174,7 +174,7 @@ void KMMainWin::readConfig(void)
   {
     if (oldLongFolderList != mLongFolderList)
       activatePanners();
-    kbp->busy();
+    kernel->kbp()->busy();
     mFolderTree->reload();
     QListViewItem *qlvi = mFolderTree->indexOfFolder(mFolder);
     if (qlvi!=0) {
@@ -183,7 +183,7 @@ void KMMainWin::readConfig(void)
     }
     mMsgView->setMsg( mMsgView->msg(), TRUE );
     mHeaders->setFolder(mFolder);
-    kbp->idle();
+    kernel->kbp()->idle();
     show();
   }
 }
@@ -193,7 +193,7 @@ void KMMainWin::readConfig(void)
 void KMMainWin::writeConfig(void)
 {
   QString s;
-  KConfig *config = app->config();
+  KConfig *config = kapp->config();
   QRect r = geometry();
 
   mMsgView->writeConfig();
@@ -339,7 +339,7 @@ void KMMainWin::slotClose()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotHelp()
 {
-  app->invokeHTMLHelp("","");
+  kapp->invokeHTMLHelp("","");
 }
 
 
@@ -390,14 +390,14 @@ void KMMainWin::slotNewSettings()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotFilter()
 {
-  filterMgr->openDialog();
+  kernel->filterMgr()->openDialog();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotAddrBook()
 {
-  KMAddrBookEditDlg dlg(addrBook);
+  KMAddrBookEditDlg dlg(kernel->addrBook());
   dlg.exec();
 }
 
@@ -413,7 +413,7 @@ void KMMainWin::slotAddFolder()
 {
   KMFolderDialog *d;
 
-  d = new KMFolderDialog(0, &(folderMgr->dir()),
+  d = new KMFolderDialog(0, &(kernel->folderMgr()->dir()),
 			 this, i18n("Create Folder"));
   if (d->exec()) {
     mFolderTree->reload();
@@ -428,19 +428,20 @@ void KMMainWin::slotAddFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCheckMail()
 {
- if(checkingMail)
+ if(kernel->checkingMail())
  {
     KMessageBox::information(this,
 		     i18n("Your mail is already being checked."));
     return;
   }
 
- checkingMail = TRUE;
+ kernel->setCheckingMail(true);
 
- acctMgr->checkMail(true);
+ kernel->acctMgr()->checkMail(true);
 
- if(mSendOnCheck) slotSendQueued();
- checkingMail = FALSE;
+ if(mSendOnCheck)
+   slotSendQueued();
+ kernel->setCheckingMail(false);
 }
 
 
@@ -455,23 +456,23 @@ void KMMainWin::slotMenuActivated()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCheckOneAccount(int item)
 {
-  if(checkingMail)
+  if(kernel->checkingMail())
   {
     KMessageBox::information(this,
 		     i18n("Your mail is already being checked."));
     return;
   }
 
-  checkingMail = TRUE;
+  kernel->setCheckingMail(true);
 
   //  kbp->busy();
-  acctMgr->intCheckMail(item);
+  kernel->acctMgr()->intCheckMail(item);
   // kbp->idle();
 
   if(mSendOnCheck)
     slotSendQueued();
 
-  checkingMail = FALSE;
+  kernel->setCheckingMail(false);
 }
 
 void KMMainWin::slotNewMail() {
@@ -537,7 +538,7 @@ void KMMainWin::slotEmptyFolder()
 
   if (!mFolder) return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
 
   // begin of critical part
   // from here to "end..." no signal may change to another mFolder, otherwise
@@ -546,22 +547,22 @@ void KMMainWin::slotEmptyFolder()
   mHeaders->setFolder(NULL);
   mMsgView->clear();
 
-  if (mFolder != trashFolder)
+  if (mFolder != kernel->trashFolder())
   {
     // FIXME: If we run out of disk space mail may be lost rather
     // than moved into the trash -sanders
     while ((msg = mFolder->take(0)) != NULL)
-      trashFolder->addMsg(msg);
+      kernel->trashFolder()->addMsg(msg);
   }
 
   mFolder->close();
   mFolder->expunge();
   // end of critical
-  if (mFolder != trashFolder)
+  if (mFolder != kernel->trashFolder())
     statusMsg(i18n("Moved all messages into trash"));
 
   mHeaders->setFolder(mFolder);
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -597,7 +598,7 @@ void KMMainWin::slotRemoveFolder()
     mFolderTree->setCurrentItem( qlvi );
     mFolderTree->setSelected( qlvi, TRUE );
     delete qlviCur;
-    folderMgr->remove(folderToDelete);
+    kernel->folderMgr()->remove(folderToDelete);
   }
 }
 
@@ -608,9 +609,9 @@ void KMMainWin::slotCompactFolder()
   int idx = mHeaders->currentItemIndex();
   if (mFolder)
   {
-    kbp->busy();
+    kernel->kbp()->busy();
     mFolder->compact();
-    kbp->idle();
+    kernel->kbp()->idle();
   }
   mHeaders->setCurrentItemByIndex(idx);
 }
@@ -658,7 +659,7 @@ void KMMainWin::slotEditMsg()
   KMMessage *msg;
   int aIdx;
 
-  if(mFolder != outboxFolder)
+  if(mFolder != kernel->outboxFolder())
   {
       KMessageBox::sorry(0,
          i18n("Sorry, only messages in the outbox folder can be edited."));
@@ -755,7 +756,7 @@ void KMMainWin::slotSaveMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSendQueued()
 {
-  if (msgSender->sendQueued())
+  if (kernel->msgSender()->sendQueued())
     statusMsg(i18n("Queued messages successfully sent."));
   else
     statusMsg(i18n("Failed to send (some) queued messages."));
@@ -804,11 +805,11 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
   if (mFolder == aFolder)
     return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   mFolder = (KMFolder*)aFolder;
   //  mMsgView->clear();
   mHeaders->setFolder(mFolder);
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -884,7 +885,7 @@ void KMMainWin::slotCopyText()
 {
   QString temp;
   temp = mMsgView->copyText();
-  app->clipboard()->setText(temp);
+  kapp->clipboard()->setText(temp);
 }
 
 //-----------------------------------------------------------------------------
@@ -969,7 +970,7 @@ void KMMainWin::slotMailtoForward()
 void KMMainWin::slotMailtoAddAddrBook()
 {
   if (mUrlCurrent.isEmpty()) return;
-  addrBook->insert(mUrlCurrent.mid(7,255));
+  kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
   statusMsg(i18n("Address added to addressbook."));
 }
 
@@ -1065,7 +1066,7 @@ void KMMainWin::getAccountMenu()
   QStrList actList;
 
   actMenu->clear();
-  actList = acctMgr->getAccounts();
+  actList = kernel->acctMgr()->getAccounts();
   QString tmp;
   int id = 0;
   for(tmp = actList.first(); tmp ; tmp = actList.next(), id++)
@@ -1086,7 +1087,7 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertItem(i18n("&Print..."), this,
 			   SLOT(slotPrintMsg()), KStdAccel::key(KStdAccel::Print));
   fileMenu->insertSeparator();
-  fileMenu->insertItem(i18n("Compact all &folders"), folderMgr,
+  fileMenu->insertItem(i18n("Compact all &folders"), kernel->folderMgr(),
                         SLOT(compactAll()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Check &Mail"), this,
@@ -1393,7 +1394,7 @@ void KMMainWin::updateMessageMenu()
   messageMenu->removeItem( moveId );
   messageMenu->removeItem( copyId );
 
-  KMFolderDir *dir = &folderMgr->dir();
+  KMFolderDir *dir = &kernel->folderMgr()->dir();
   mMenuToFolder.clear();
   QPopupMenu *msgMoveMenu;
   msgMoveMenu =  folderToPopupMenu( dir, TRUE, this, &mMenuToFolder );

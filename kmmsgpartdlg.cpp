@@ -177,7 +177,7 @@ void KMMsgPartDlg::applyChanges(void)
 
   if (!mMsgPart) return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   str = mEdtName->text();
   if (!str.isEmpty() || !mMsgPart->name().isEmpty())
     mMsgPart->setName(str);
@@ -209,7 +209,7 @@ void KMMsgPartDlg::applyChanges(void)
     mMsgPart->setCteStr(str);
     mMsgPart->setBodyEncoded(QCString(body.ascii()));
   }
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 

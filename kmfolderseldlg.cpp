@@ -24,7 +24,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   QPushButton *btnCancel, *btnOk;
   QBoxLayout* box = new QVBoxLayout(this, 2, 0);
   QBoxLayout* bbox = new QHBoxLayout(0);
-  KMFolderDir* fdir = &folderMgr->dir();
+  KMFolderDir* fdir = &kernel->folderMgr()->dir();
   KMFolder* cur;
 
   initMetaObject();
@@ -81,7 +81,7 @@ KMFolderSelDlg::~KMFolderSelDlg()
 //-----------------------------------------------------------------------------
 KMFolder* KMFolderSelDlg::folder(void)
 {
-  KMFolderDir* fdir = &folderMgr->dir();
+  KMFolderDir* fdir = &kernel->folderMgr()->dir();
   int idx = mListBox->currentItem();
 
   if (idx < 0) return NULL;
@@ -92,7 +92,7 @@ KMFolder* KMFolderSelDlg::folder(void)
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotSelect(int)
 {
-  app->processEvents(200);
+  kapp->processEvents(200);
   if(mListBox->currentItem() != -1)
     oldSelection = mListBox->text(mListBox->currentItem());
   accept();
@@ -102,7 +102,7 @@ void KMFolderSelDlg::slotSelect(int)
 //-----------------------------------------------------------------------------
 void KMFolderSelDlg::slotCancel()
 {
-  app->processEvents(200);
+  kapp->processEvents(200);
   disconnect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));  
   if(mListBox->currentItem() != -1)
     oldSelection = mListBox->text(mListBox->currentItem());

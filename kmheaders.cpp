@@ -100,7 +100,7 @@ public:
     flag = mMsgBase->status();
     setText( 0, " " + QString( QChar( (char)flag )));
 
-    if (mFolder == outboxFolder || mFolder == sentFolder)
+    if (mFolder == kernel->outboxFolder() || mFolder == kernel->sentFolder())
        fromStr = KMMessage::stripEmailAddr(mMsgBase->to());
     else
       fromStr = KMMessage::stripEmailAddr(mMsgBase->from());
@@ -327,7 +327,7 @@ void KMHeaders::paintEmptyArea( QPainter * p, const QRect & rect )
 //-----------------------------------------------------------------------------
 void KMHeaders::readConfig (void)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   QString fntStr;
 
   // Backing pixmap support
@@ -341,10 +341,10 @@ void KMHeaders::readConfig (void)
 
   // Custom/System colors
   config->setGroup("Reader");
-  QColor c1=QColor(app->palette().normal().text());
+  QColor c1=QColor(kapp->palette().normal().text());
   QColor c2=QColor("blue");
   QColor c3=QColor("red");
-  QColor c4=QColor(app->palette().normal().base());
+  QColor c4=QColor(kapp->palette().normal().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
@@ -392,9 +392,9 @@ void KMHeaders::reset(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readFolderConfig (void)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   assert(mFolder!=NULL);
-  int pathLen = mFolder->path().length() - folderMgr->basePath().length();
+  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
   QString path = mFolder->path().right( pathLen );
 
   if (!path.isEmpty())
@@ -418,9 +418,9 @@ void KMHeaders::readFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeFolderConfig (void)
 {
-  KConfig* config = app->config();
+  KConfig* config = kapp->config();
   assert(mFolder!=NULL);
-  int pathLen = mFolder->path().length() - folderMgr->basePath().length();
+  int pathLen = mFolder->path().length() - kernel->folderMgr()->basePath().length();
   QString path = mFolder->path().right( pathLen );
 
   if (!path.isEmpty())
@@ -712,7 +712,7 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   }
 
   for (idx=cur, msg=msgList->first(); msg; msg=msgList->next())
-    if (filterMgr->process(msg) == 2) {
+    if (kernel->filterMgr()->process(msg) == 2) {
       // something went horribly wrong (out of space?)
       perror("Critical error: Unable to process messages (out of space?)");
       KMessageBox::information(0,
@@ -757,10 +757,10 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
-  if (mFolder != trashFolder)
+  if (mFolder != kernel->trashFolder())
   {
     // move messages into trash folder
-    moveMsgToFolder(trashFolder, msgId);
+    moveMsgToFolder(kernel->trashFolder(), msgId);
   }
   else
   {
@@ -810,7 +810,7 @@ void KMHeaders::resendMsg (int msgId)
   msg = getMsg(msgId);
   if (!msg) return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   newMsg = new KMMessage;
   newMsg->fromString(msg->asString());
   newMsg->initHeader();
@@ -820,7 +820,7 @@ void KMHeaders::resendMsg (int msgId)
   win = new KMComposeWin;
   win->setMsg(newMsg, FALSE);
   win->show();
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -861,7 +861,7 @@ void KMHeaders::bounceMsg (int msgId)
     return;
   }
 
-  kbp->busy();
+  kernel->kbp()->busy();
 
   // Copy the original message, so that we can remove some of the
   // header fields that shall not get bounced back
@@ -890,9 +890,9 @@ void KMHeaders::bounceMsg (int msgId)
 
   // Queue the message for sending, so the user can still intercept
   // it. This is currently for testing
-  msgSender->send(newMsg, FALSE);
+  kernel->msgSender()->send(newMsg, FALSE);
 
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -905,10 +905,10 @@ void KMHeaders::forwardMsg (int msgId)
   msg = getMsg(msgId);
   if (!msg) return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   win = new KMComposeWin(msg->createForward());
   win->show();
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -921,10 +921,10 @@ void KMHeaders::replyToMsg (int msgId)
   msg = getMsg(msgId);
   if (!msg) return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   win = new KMComposeWin(msg->createReply(FALSE));
   win->show();
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -937,10 +937,10 @@ void KMHeaders::replyAllToMsg (int msgId)
   msg = getMsg(msgId);
   if (!msg) return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   win = new KMComposeWin(msg->createReply(TRUE));
   win->show();
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 //-----------------------------------------------------------------------------
@@ -959,7 +959,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   int top, rc;
   bool doUpd;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   top = topItemIndex();
 
   if (destFolder) {
@@ -993,7 +993,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 
   for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
   {
-    undoStack->pushAction( msg, mFolder );
+    kernel->undoStack()->pushAction( msg, mFolder );
     if (destFolder) {
       // "deleting" messages means moving them into the trash folder
       rc = destFolder->moveMsg(msg);
@@ -1031,7 +1031,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   }
 
   if (destFolder) destFolder->close();
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 //-----------------------------------------------------------------------------
@@ -1039,7 +1039,7 @@ void KMHeaders::undo()
 {
   KMMessage *msg;
   KMFolder *folder;
-  if (undoStack->popAction(msg, folder))
+  if (kernel->undoStack()->popAction(msg, folder))
   {
      folder->moveMsg( msg );     
   }
@@ -1067,7 +1067,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
 
   if (!destFolder) return;
 
-  kbp->busy();
+  kernel->kbp()->busy();
   top = topItemIndex();
 
   destFolder->open();
@@ -1081,7 +1081,7 @@ void KMHeaders::copyMsgToFolder (KMFolder* destFolder, int msgId)
     rc = destFolder->addMsg(newMsg);
   }
   destFolder->close();
-  kbp->idle();
+  kernel->kbp()->idle();
 }
 
 
@@ -1338,7 +1338,7 @@ void KMHeaders::updateMessageList(void)
   // reuse list view items when possibly.
   //
 
-  //  kbp->busy();
+  //  kernel->kbp()->busy();
   autoUpd = isUpdatesEnabled();
   setUpdatesEnabled(FALSE);
 
@@ -1579,7 +1579,7 @@ void KMHeaders::slotRMB()
   }
   */
 
-  KMFolderDir *dir = &folderMgr->dir();
+  KMFolderDir *dir = &kernel->folderMgr()->dir();
   mMenuToFolder.clear();
 
   QPopupMenu *msgMoveMenu;
