@@ -32,6 +32,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlist.h>
+#include <qfont.h>
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qregexp.h>
@@ -196,7 +197,7 @@ KMComposeWin::~KMComposeWin()
 void KMComposeWin::readConfig(void)
 {
   KConfig *config = kapp->getConfig();
-  QString str;
+  QString str, bodyFont;
   int w, h;
 
   config->setGroup("Composer");
@@ -211,6 +212,11 @@ void KMComposeWin::readConfig(void)
   mBackColor = config->readEntry( "Back-Color","#ffffff");
   mForeColor = config->readEntry( "Fore-Color","#000000");
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
+
+  config->setGroup("Fonts");
+  bodyFont = config->readEntry("body-font", "helvetica");
+  mEditor->setFont(QFont(bodyFont));
+
 #ifdef CHARSETS  
   m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
   mQuoteUnknownCharacters = config->readNumEntry("quote-unknown",0);

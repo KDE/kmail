@@ -14,6 +14,7 @@
 #include "kmsender.h"
 #include "kmmessage.h"
 #include "kpgp.h"
+#include "kfontdialog.h"
 
 #include <kapp.h>
 #include <kapp.h>
@@ -52,6 +53,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 
   createTabIdentity(this);
   createTabNetwork(this);
+  createTabAppearance(this);
   createTabComposer(this);
   createTabMisc(this);
 }
@@ -101,6 +103,41 @@ static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
   }
 
   return edit;
+}
+
+
+//-----------------------------------------------------------------------------
+// Add a widget with a label and optional detail button ("...")
+// The detail button is not created if detail_return is NULL.
+// The argument 'label' is the label that will be left of the entry field.
+// The argument 'text' is the text that will show up in the entry field.
+// The whole thing is placed in the grid from row/col to the right.
+static void addLabeledWidget(QWidget* parent, QGridLayout* grid,
+			     const char* aLabel, QWidget* widg,
+			     int gridy, int gridx,
+			     QPushButton** detail_return=NULL)
+{
+  QLabel* label = new QLabel(parent);
+  QPushButton* sel;
+
+  label->setText(aLabel);
+  label->adjustSize();
+  label->resize((int)label->sizeHint().width(),label->sizeHint().height() + 6);
+  label->setMinimumSize(label->size());
+  grid->addWidget(label, gridy, gridx++);
+
+  widg->setMinimumSize(100, label->height()+2);
+  widg->setMaximumSize(1000, label->height()+2);
+  grid->addWidget(widg, gridy, gridx++);
+
+  if (detail_return)
+  {
+    sel = new QPushButton("...", parent);
+    sel->setFocusPolicy(QWidget::NoFocus);
+    sel->setFixedSize(sel->sizeHint().width(), label->height());
+    grid->addWidget(sel, gridy, gridx++);
+    *detail_return = sel;
+  }
 }
 
 
@@ -256,6 +293,57 @@ void KMSettings::createTabNetwork(QWidget* parent)
   box->addStretch(100);
   box->activate();
   tab->adjustSize();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::createTabAppearance(QWidget* parent)
+{
+  QWidget* tab = new QWidget(parent);
+  QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
+  QGridLayout* grid;
+  QGroupBox* grp;
+  KConfig* config = app->getConfig();
+  QPushButton* btn;
+  QLabel* lbl;
+
+  //----- group: fonts
+  grp = new QGroupBox(i18n("Fonts"), tab);
+  box->addWidget(grp);
+  grid = new QGridLayout(grp, 8, 5, 20, 4);
+
+  bodyFontLabel = new QLabel(grp);
+  addLabeledWidget(grp, grid, i18n("Message Body Font:"), bodyFontLabel, 
+		   2, 1, &btn);
+  connect(btn,SIGNAL(clicked()),this,SLOT(slotBodyFontSelect()));
+
+  listFontLabel = new QLabel(grp);
+  addLabeledWidget(grp, grid, i18n("Message List Font:"), listFontLabel,
+		   3, 1, &btn);
+  connect(btn,SIGNAL(clicked()),this,SLOT(slotListFontSelect()));
+
+  lbl = new QLabel(i18n("Changing fonts currently only occurs when a new\n"
+			"window is opened or kmail is restarted"), grp);
+  lbl->setMinimumSize(lbl->sizeHint());
+  grid->addMultiCellWidget(lbl, 4, 4, 1, 4);
+
+  grid->setColStretch(0,0);
+  grid->setColStretch(1,1);
+  grid->setColStretch(2,0);
+  grid->setRowStretch(1,1);
+  grid->setRowStretch(2,10);
+  grid->setRowStretch(3,0);
+  grid->setRowStretch(4,10);
+  grid->activate();
+
+  //----- activation
+  box->addStretch(100);
+  addTab(tab, i18n("Appearance"));
+
+  //----- set values
+  config->setGroup("Fonts");
+  bodyFontLabel->setText(config->readEntry("body-font", "helvetica"));
+  listFontLabel->setText(config->readEntry("list-font", "helvetica"));
 }
 
 
@@ -462,6 +550,30 @@ const QString KMSettings::tabNetworkAcctStr(const KMAccount* act) const
 
 
 //-----------------------------------------------------------------------------
+void KMSettings::slotBodyFontSelect()
+{
+  QFont font;
+  KFontDialog dlg(0, i18n("Message Body Font"), TRUE);
+  dlg.setFont(QFont(bodyFontLabel->text()));
+  //dlg.show();
+  dlg.getFont(font);
+  bodyFontLabel->setText(font.family());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotListFontSelect()
+{
+  QFont font;
+  KFontDialog dlg(0, i18n("Message List Font"), TRUE);
+  dlg.setFont(QFont(listFontLabel->text()));
+  //dlg.show();
+  dlg.getFont(font);
+  listFontLabel->setText(font.family());
+}
+
+
+//-----------------------------------------------------------------------------
 void KMSettings::slotAllow8Bit()
 {
   allow8Bit->setChecked(TRUE);
@@ -652,6 +764,11 @@ void KMSettings::doApply()
   //----- incoming mail
   acctMgr->writeConfig(FALSE);
 
+  //----- fonts
+  config->setGroup("Fonts");
+  config->writeEntry("body-font", bodyFontLabel->text());
+  config->writeEntry("list-font", listFontLabel->text());
+
   //----- composer phrases
   config->setGroup("KMMessage");
   config->writeEntry("phrase-reply", phraseReplyEdit->text());
@@ -670,6 +787,7 @@ void KMSettings::doApply()
   //----- misc
   config->setGroup("General");
   config->writeEntry("empty-trash-on-exit", emptyTrashOnExit->isChecked());
+  config->writeEntry("first-start", FALSE);
 
   //-----
   config->sync();

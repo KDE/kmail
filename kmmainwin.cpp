@@ -152,6 +152,8 @@ void KMMainWin::readConfig()
     sscanf(str,"%d,%d",&mVertPannerSep,&mHorizPannerSep);
   else
     mHorizPannerSep = mVertPannerSep = 100;
+
+  mMsgView->readConfig();
 }
 
 
@@ -163,7 +165,6 @@ void KMMainWin::writeConfig(bool aWithSync)
   QRect r = geometry();
 
   mMsgView->writeConfig(FALSE);
-
 
   config->setGroup("Geometry");
 

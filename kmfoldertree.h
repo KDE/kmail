@@ -5,8 +5,9 @@
 #include <ktablistbox.h>
 #include "kmfolder.h"
 
-#define KMFolderTreeInherited KTabListBox
+class KDNDDropZone;
 
+#define KMFolderTreeInherited KTabListBox
 class KMFolderTree : public KTabListBox
 {
   Q_OBJECT
@@ -24,10 +25,13 @@ signals:
   void folderSelected(KMFolder*);
 
 protected slots:
- void doFolderSelected(int,int);
+  void doFolderSelected(int,int);
 
- /** called by the folder-manager when the list of folders changed */
- void doFolderListChanged();
+  /** called by the folder-manager when the list of folders changed */
+  void doFolderListChanged();
+
+  /** called when a drop occurs. */
+  void doDropAction(KDNDDropZone*);
 
 protected:
   // Insert folder sorted by type and name
@@ -36,6 +40,7 @@ protected:
   virtual void resizeEvent(QResizeEvent*);
 
   KMFolderNodeList mList;
+  KDNDDropZone* mDropZone;
 };
 
 #endif

@@ -1,3 +1,20 @@
+1998-06-11  Stefan Taferner  <taferner@kde.org> (KMail-0.7.0)
+
+	* Initial start now opens the settings dialog. Don't
+	be alerted, this will happen once for everybody now ;-)
+
+	* Fonts: implemented font setting for HTML widget,
+	list of messages, and composer.
+
+	* Drag&Drop: implemented drag&drop of messages to
+	folders. Dropping into HTML widget crashes KMail. 
+	Could be a bug of the HTML widget, however.
+
+	* Move-message: improved folder selection dialog.
+
+	* Message-list: now cleared properly when the current
+	folder is deleted.
+
 1998-06-11  Markus Wuebben  <markus@kde.org> (KMail-0.6.9)
 
 	* KMail now uses KFileDialog only!
@@ -12,6 +29,9 @@
 	* panner position is now (again) restored
 	
 1998-06-07  Stefan Taferner  <taferner@kde.org> (KMail-0.6.8)
+
+	* Folders: changed message about index-recreation
+	to debug from warning.
 
 	* Message/Headers: Email addresses like <joe@home.org>
 	(with the <> around the address) no longer lead to

@@ -17,6 +17,7 @@
 #include "kmcomposewin.h"
 #include "kmaddrbook.h"
 #include "kcharsets.h"
+#include "kmsettings.h"
 
 #include <kapp.h>
 #include <stdio.h>
@@ -50,6 +51,7 @@ KMAddrBook* addrBook = NULL;
 WindowList* windowList = NULL;
 
 
+bool firstStart = TRUE;
 bool shuttingDown = FALSE;
 bool checkingMail = FALSE;
 const char* aboutText = 
@@ -286,6 +288,7 @@ static void init(int& argc, char *argv[])
   identity = new KMIdentity;
 
   cfg->setGroup("General");
+  firstStart = cfg->readBoolEntry("first-start", TRUE);
   foldersPath = cfg->readEntry("folders", "");
   acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
 
@@ -312,6 +315,7 @@ static void init(int& argc, char *argv[])
   msgSender = new KMSender;
 
   setSignalHandler(signalHandler);
+
 }
 
 
@@ -410,7 +414,7 @@ main(int argc, char *argv[])
   KMMainWin* mainWin;
 
   init(argc, argv);
-  filterMgr->dump();
+  // filterMgr->dump();
 
   mainWin = new KMMainWin;
   mainWin->show();
@@ -419,6 +423,13 @@ main(int argc, char *argv[])
     processArgs(argc-1, argv+1);
 
   recoverDeadLetters();
+
+  if (firstStart)
+  {
+    KMSettings* dlg = new KMSettings;
+    dlg->show();
+  }
+
   app->exec();
 
   mainWin->writeConfig(FALSE);

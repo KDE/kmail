@@ -100,11 +100,13 @@ void KMReaderWin::readConfig(void)
                                 ,config->readColorEntry("LinkColor",&c2)
                                 ,config->readColorEntry("FollowedColor",&c3));
   mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
-  mViewer->setStandardFont(config->readEntry("StandardFont",
-                                           QString("helvetica").data()));
-  mViewer->setFixedFont(config->readEntry("FixedFont",
-                                        QString("courier").data()));
 
+  config->setGroup("Fonts");
+  mBodyFont = config->readEntry("body-font", "helvetica");
+  mViewer->setStandardFont(mBodyFont);
+  //mViewer->setFixedFont(mFixedFont);
+
+  update();
 }
 
 
@@ -117,6 +119,10 @@ void KMReaderWin::writeConfig(bool aWithSync)
   config->writeEntry("attach-inline", mAtmInline);
   config->writeEntry("hdr-style", (int)mHeaderStyle);
   config->writeEntry("attmnt-style",(int)mAttachmentStyle);
+
+  config->setGroup("Fonts");
+  config->writeEntry("body-font", mBodyFont);
+  // config->writeEntry("fixed-font", mFixedFont);
 
   if (aWithSync) config->sync();
 }
@@ -158,12 +164,22 @@ void KMReaderWin::initHtmlWidget(void)
 
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::setBodyFont(const QString aFont)
+{
+  mBodyFont = aFont.copy();
+  update();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 {
   mHeaderStyle = aHeaderStyle;
   update();
 }
 
+
+//-----------------------------------------------------------------------------
 void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 {  
   mAttachmentStyle = (AttachmentStyle)aAttachmentStyle;
@@ -286,7 +302,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeMsgHeader(void)
 {
-  QString t, str;
+  QString str;
 
   switch (mHeaderStyle)
   {
@@ -359,13 +375,14 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write("<BR>");
     break;
 
-  default:
-    warning("Unsupported header style %d", mHeaderStyle);
   case HdrAll:
     str = strToHtml(mMsg->headerAsString());
     mViewer->write(str);
     mViewer->write("<br><br>");
     break;
+
+  default:
+    warning("Unsupported header style %d", mHeaderStyle);
   }
 }
 

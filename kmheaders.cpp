@@ -65,6 +65,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 	  this,SLOT(highlightMessage(int,int)));
   connect(this,SIGNAL(headerClicked(int)),
 	  this,SLOT(headerClicked(int)));
+
+  readConfig();
 }
 
 
@@ -76,6 +78,20 @@ KMHeaders::~KMHeaders ()
     writeFolderConfig();
     mFolder->close();
   }
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::readConfig (void)
+{
+  KConfig* config = app->getConfig();
+  QString fntStr;
+
+  config->setGroup("Fonts");
+  fntStr = config->readEntry("list-font", "helvetica");
+
+  // You need kdelibs package newer than 11-06-98 for this:
+  setTableFont(QFont(fntStr));
 }
 
 
@@ -650,7 +666,11 @@ void KMHeaders::updateMessageList(void)
   KMMsgBase* mb;
  
   clear();
-  if (!mFolder) return;
+  if (!mFolder) 
+  {
+    repaint();
+    return;
+  }
 
   kbp->busy();
   setAutoUpdate(FALSE);
@@ -724,7 +744,6 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
   *size = sizeof(dd);
   *type = DndRawData;
 
-  debug("Ready to drag...");
   return TRUE;
 }
 

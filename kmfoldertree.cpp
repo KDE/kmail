@@ -7,10 +7,11 @@
 #include <kiconloader.h>
 
 #include "kmglobal.h"
+#include "kmdragdata.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdir.h"
 #include "kmfolder.h"
-
+#include <drag.h>
 
 #include "kmfoldertree.moc"
 
@@ -26,6 +27,10 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   int width;
 
   initMetaObject();
+
+  mDropZone = new KDNDDropZone(this, DndRawData);
+  connect(mDropZone, SIGNAL(dropAction(KDNDDropZone*)),
+	  this, SLOT(doDropAction(KDNDDropZone*)));
 
   connect(this, SIGNAL(highlighted(int,int)),
 	  this, SLOT(doFolderSelected(int,int)));
@@ -78,6 +83,8 @@ KMFolderTree::~KMFolderTree()
   conf->writeEntry(name(), size().width());
 
   disconnect(folderMgr, SIGNAL(changed()), this, SLOT(doFolderListChanged()));
+
+  if (mDropZone) delete mDropZone;
 }
 
 
@@ -111,6 +118,41 @@ void KMFolderTree::reload(void)
 void KMFolderTree::doFolderListChanged()
 {
   reload();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::doDropAction(KDNDDropZone* aDropZone)
+{
+  KMFolder *toFld, *fromFld;
+  KMDragData* dd;
+  KMMessage* msg;
+  QPoint pos;
+  int i;
+
+  if (aDropZone!=mDropZone) return;
+
+  dd = (KMDragData*)aDropZone->getData();
+  if (!dd || sizeof(*dd)!=sizeof(KMDragData)) return;
+  fromFld = dd->folder();
+
+  pos.setY(aDropZone->getMouseY());
+  pos = mapFromGlobal(pos);
+
+  toFld = (KMFolder*)mList.at(findItem(pos.y()));
+  if (!fromFld || !toFld) return;
+
+  fromFld->open();
+  toFld->open();
+
+  for (i=dd->to(); i>=dd->from(); i--)
+  {
+    msg = fromFld->take(i);
+    if (msg) toFld->addMsg(msg);
+  }
+
+  fromFld->close();
+  toFld->close();
 }
 
 

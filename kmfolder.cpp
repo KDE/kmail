@@ -139,10 +139,10 @@ int KMFolder::open(void)
   {
     if (isIndexOutdated()) // test if contents file has changed
     {
+      QString str;
       mIndexStream = NULL;
-      warning(i18n("Contents of folder `%s' changed.\n"
-			     "Recreating the index file."), 
-	      (const char*)name());
+      str.sprintf(i18n("Folder `%s' changed. Recreating index."), name());
+      emit statusMsg(str);
     }
     else mIndexStream = fopen(indexLocation(), "r+"); // index file
 

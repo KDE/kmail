@@ -96,6 +96,9 @@ protected:
     messages. */
   virtual int firstSelectedMsg(int id) const;
 
+  /** Read config options. */
+  virtual void readConfig(void);
+
   /** Read per-folder config options and apply them. */
   virtual void readFolderConfig(void);
 

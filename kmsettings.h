@@ -16,6 +16,7 @@ class QRadioButton;
 class QPushButton;
 class QComboBox;
 class QFileDialog;
+class QLabel;
 class Kpgp;
 
 class KMSettings : public QTabDialog
@@ -31,6 +32,7 @@ protected:
   virtual void createTabNetwork(QWidget*);
   virtual void createTabComposer(QWidget*);
   virtual void createTabMisc(QWidget*);
+  virtual void createTabAppearance(QWidget*);
 
   // Create a button in given grid. The name is internationalized.
   virtual QPushButton* createPushButton(QWidget* parent, QGridLayout* grid,
@@ -57,6 +59,8 @@ private slots:
   void slotSendLater();
   void slotAllow8Bit();
   void slotQuotedPrintable();
+  void slotBodyFontSelect();
+  void slotListFontSelect();
 
 private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
@@ -70,6 +74,7 @@ private:
   QButtonGroup *incomingGroup,*outgoingGroup;
   KTabListBox *accountList;
   QPushButton *addButton,*modifyButton,*removeButton;
+  QLabel *bodyFontLabel, *listFontLabel;
   Kpgp* pgp;
 };
 

@@ -72,6 +72,10 @@ public:
   bool autoDelete(void) const { return mAutoDelete; }
   void setAutoDelete(bool f) { mAutoDelete=f; }
 
+  /** Get/set message body font. */
+  virtual void setBodyFont(const QString);
+  const QString bodyFont(void) const { return mBodyFont; }
+
 signals:
   /** Emitted to show a text on the status line. */
   void statusMsg(const char* text);
@@ -160,6 +164,7 @@ protected:
   HeaderStyle mHeaderStyle;
   AttachmentStyle mAttachmentStyle;
   bool mAutoDelete;
+  QString mBodyFont;
 };
 
 

@@ -18,21 +18,31 @@
 KMFolderSelDlg::KMFolderSelDlg(const char* caption): 
   KMFolderSelDlgInherited(NULL, caption, TRUE)
 {
-  QButton* btnCancel;
+  QButton *btnCancel, *btnOk;
   QBoxLayout* box = new QVBoxLayout(this);
+  QBoxLayout* bbox = new QHBoxLayout;
   KMFolderDir* fdir = &folderMgr->dir();
   KMFolder* cur;
 
   initMetaObject();
 
-  mListBox = new QListBox(this, "list");
-  box->addWidget(mListBox, 100);
-  connect(mListBox, SIGNAL(highlighted(int)), this, SLOT(slotSelect(int)));
+  setCaption(i18n("Select folder"));
 
-  btnCancel = new QPushButton(i18n("Cancel"), this, "Cancel");
+  mListBox = new QListBox(this);
+  box->addWidget(mListBox, 100);
+  connect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));
+
+  box->addLayout(bbox, 1);
+
+  btnOk = new QPushButton(i18n("Ok"), this);
+  btnOk->setMinimumSize(btnOk->size());
+  connect(btnOk, SIGNAL(clicked()), this, SLOT(accept()));
+  bbox->addWidget(btnOk, 1);
+
+  btnCancel = new QPushButton(i18n("Cancel"), this);
   btnCancel->setMinimumSize(btnCancel->size());
   connect(btnCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
-  box->addWidget(btnCancel, 1);
+  bbox->addWidget(btnCancel, 1);
 
   resize(100, 300);
   box->activate();
@@ -41,6 +51,8 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
   {
     mListBox->insertItem(cur->label());
   }
+
+  mListBox->setFocus();
 }
 
 
@@ -73,7 +85,7 @@ void KMFolderSelDlg::slotSelect(int)
 void KMFolderSelDlg::slotCancel()
 {
   app->processEvents(200);
-  disconnect(mListBox, SIGNAL(highlighted(int)), this, SLOT(slotSelect(int)));
+  disconnect(mListBox, SIGNAL(selected(int)), this, SLOT(slotSelect(int)));
   reject();
 }
 
