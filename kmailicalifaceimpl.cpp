@@ -52,7 +52,7 @@
 KMailICalIfaceImpl::KMailICalIfaceImpl()
   : DCOPObject( "KMailICalIface" ), QObject( 0, "KMailICalIfaceImpl" ),
     mContacts( 0 ), mCalendar( 0 ), mNotes( 0 ), mTasks( 0 ), mJournals( 0 ),
-    mUseResourceIMAP( false ), mFolderLanguage( 0 )
+     mFolderLanguage( 0 ), mUseResourceIMAP( false )
 {
   QObject* gw = &kernel->groupware();
   connect( gw, SIGNAL( signalRefresh( const QString& ) ),
