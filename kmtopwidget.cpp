@@ -37,24 +37,7 @@ void KMTopLevelWidget::closeEvent(QCloseEvent* e)
 {
   // Almost verbatim from KMainWindow
   writeConfig();
-  if (queryClose())
-  {
-    e->accept();
-
-    int not_withdrawn = 0;
-    QListIterator<KMainWindow> it(*KMainWindow::memberList);
-    for (it.toFirst(); it.current(); ++it)
-    {
-      if ( !it.current()->testWState( WState_ForceHide ) )
-        not_withdrawn++;
-    }
-
-    if ( not_withdrawn <= 1 ) { // last window close accepted?
-      kernel->quit();             // ...and quit aplication.
-    }
-  }
-  else
-    e->ignore();
+  KMainWindow::closeEvent( e ); 
 }
 
 
