@@ -172,8 +172,9 @@ void TransactionItem::slotItemCanceled()
 ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const char* name )
     : OverlayWidget( alignWidget, parent, name )
 {
-  setFrameStyle( StyledPanel ); // QFrame
-  setSpacing( KDialog::spacingHint() ); // QHBox
+  setFrameStyle( QFrame::Panel | QFrame::Sunken ); // QFrame
+  setSpacing( 0 ); // QHBox
+  setMargin( 1 );
 
     mListView = new TransactionItemListView( this, "SyncEditorListView" );
     mListView->addColumn( i18n( "Transaction" ) );
@@ -190,11 +191,12 @@ ProgressDialog::ProgressDialog( QWidget* alignWidget, QWidget* parent, const cha
 
     mListView->setRootIsDecorated( true );
 
-    QVBox* rightBox = new QVBox( this, 0 );
+    QVBox* rightBox = new QVBox( this );
     QToolButton* pbClose = new QToolButton( rightBox );
+    pbClose->setAutoRaise(true);
     pbClose->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
-    // like knotebutton
-    pbClose->setIconSet( KGlobal::iconLoader()->loadIconSet( "knotes_close", KIcon::Small, 10 ) );
+    pbClose->setFixedSize( 16, 16 );
+    pbClose->setIconSet( KGlobal::iconLoader()->loadIconSet( "fileclose", KIcon::Small, 14 ) );
     connect(pbClose, SIGNAL(clicked()), this, SLOT(close()));
     QWidget* spacer = new QWidget( rightBox ); // don't let the close button take up all the height
     rightBox->setStretchFactor( spacer, 100 );
