@@ -941,16 +941,8 @@ void ConfigureDialog::makeAppearancePage( void )
     new QListViewItem(mAppearance.profileList, mAppearance.mListItemDefaultHtml,
     i18n("High Contrast - Bigger fonts for the visually impaired user"));
   mAppearance.mListItemPurist=
-    new QListViewItem(mAppearance.profileList, mAppearance.mListItemPurist,
+    new QListViewItem(mAppearance.profileList, mAppearance.mListItemContrast,
     i18n("Purist - most features turned off, KDE global settings are used"));
-
-  /* this would be my (ferdinand)  preferred sorting
-  QString defaultIdentity = list.first();
-      list.remove( defaultIdentity );
-      list += identityText;
-      list.sort();
-      list.prepend( defaultIdentity );
-  */
 
   /* this suggests that the default profile is the selected one
      which is not always the case
