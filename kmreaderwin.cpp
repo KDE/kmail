@@ -1317,6 +1317,9 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     return QString::null;
 
   mTempFiles.append( fname );
+  // make file read-only so that nobody gets the impression that he might
+  // edit attached files (cf. bug #52813)
+  ::chmod( QFile::encodeName( fname ), S_IRUSR );
 
   return fname;
 }
