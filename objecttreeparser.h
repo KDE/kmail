@@ -27,6 +27,8 @@ class partNode;
 
 namespace KMail {
 
+  class AttachmentStrategy;
+
   class ProcessResult {
   public:
     ProcessResult( bool isInlineSigned=false, bool isInlineEncrypted=false,
@@ -70,7 +72,8 @@ namespace KMail {
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
 		      bool showOneMimePart=false, bool keepEncryptions=false,
-		      bool includeSignatures=true );
+		      bool includeSignatures=true,
+		      const KMail::AttachmentStrategy * attachmentStrategy=0 );
     virtual ~ObjectTreeParser();
 
     QCString resultString() const { return mResultString; }
@@ -95,6 +98,10 @@ namespace KMail {
     bool includeSignatures() const { return mIncludeSignatures; }
     void setIncludeSignatures( bool include ) {
       mIncludeSignatures = include;
+    }
+
+    const KMail::AttachmentStrategy * attachmentStrategy() const {
+      return mAttachmentStrategy;
     }
 
     /** Parse beginning at a given node and recursively parsing
@@ -192,6 +199,7 @@ namespace KMail {
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;
     bool mIncludeSignatures;
+    const KMail::AttachmentStrategy * mAttachmentStrategy;
   };
 
 }; // namespace KMail

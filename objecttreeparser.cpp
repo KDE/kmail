@@ -27,7 +27,6 @@
 #include "kmkernel.h"
 #include "kfileio.h"
 #include "partmetadata.h"
-//using KMail::PartMetaData;
 #include "attachmentstrategy.h"
 
 // other module headers (none)
@@ -58,14 +57,18 @@ namespace KMail {
 
   ObjectTreeParser::ObjectTreeParser( KMReaderWin * reader, CryptPlugWrapper * wrapper,
 				      bool showOnlyOneMimePart, bool keepEncryptions,
-				      bool includeSignatures )
+				      bool includeSignatures,
+				      const AttachmentStrategy * strategy )
     : mReader( reader ),
       mCryptPlugWrapper( wrapper ),
       mShowOnlyOneMimePart( showOnlyOneMimePart ),
       mKeepEncryptions( keepEncryptions ),
-      mIncludeSignatures( includeSignatures )
+      mIncludeSignatures( includeSignatures ),
+      mAttachmentStrategy( strategy )
   {
-    
+    if ( !attachmentStrategy() )
+      mAttachmentStrategy = reader ? reader->attachmentStrategy()
+	                           : AttachmentStrategy::smart();
   }
   
   ObjectTreeParser::ObjectTreeParser( const ObjectTreeParser & other )
@@ -73,9 +76,10 @@ namespace KMail {
       mCryptPlugWrapper( other.cryptPlugWrapper() ),
       mShowOnlyOneMimePart( other.showOnlyOneMimePart() ),
       mKeepEncryptions( other.keepEncryptions() ),
-      mIncludeSignatures( other.includeSignatures() )
+      mIncludeSignatures( other.includeSignatures() ),
+      mAttachmentStrategy( other.attachmentStrategy() )
   {
-
+    
   }
 
   ObjectTreeParser::~ObjectTreeParser() {}
@@ -434,7 +438,7 @@ public:
 	}
 
 	if( !bDone && mReader &&
-	    ( mReader->attachmentStrategy() != AttachmentStrategy::hidden() ||
+	    ( attachmentStrategy() != AttachmentStrategy::hidden() ||
 	      ( curNode && !curNode->isAttachment() ) ||
 	      showOnlyOneMimePart() ) ) {
 	  bool asIcon = true;
@@ -444,7 +448,7 @@ public:
 	  else if ( processResult.neverDisplayInline() ) {
 	    asIcon = true;
 	  } else {
-	    const AttachmentStrategy * as = mReader->attachmentStrategy();
+	    const AttachmentStrategy * as = attachmentStrategy();
 	    if ( as == AttachmentStrategy::iconic() ) 
 	      asIcon = true;
 	    else if ( as == AttachmentStrategy::inlined() )
@@ -458,7 +462,7 @@ public:
 	  bool forcedIcon = !processResult.isImage() && curNode->type() != DwMime::kTypeText;
 	  if (forcedIcon) asIcon = true;
 	  if( asIcon ) {
-	    if (!forcedIcon || mReader->attachmentStrategy() != AttachmentStrategy::hidden() )
+	    if (!forcedIcon || attachmentStrategy() != AttachmentStrategy::hidden() )
 	      mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
 	  } else if ( processResult.isImage() ) {
 	    mReader->mInlineImage = true;
@@ -958,7 +962,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     case DwMime::kSubtypeHtml: {
       if( mReader )
 	kdDebug(5006) << "html, attachmentstrategy = "
-		      << mReader->attachmentStrategy()->name() << endl;
+		      << attachmentStrategy()->name() << endl;
       else
 	kdDebug(5006) << "html" << endl;
       QCString cstr( curNode->msgPart().bodyDecoded() );
@@ -966,10 +970,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       mResultString = cstr;
       if( !mReader ) {
 	bDone = true;
-      } else if( mReader->attachmentStrategy() == AttachmentStrategy::inlined() ||
-		 (mReader->attachmentStrategy() == AttachmentStrategy::smart() &&
+      } else if( attachmentStrategy() == AttachmentStrategy::inlined() ||
+		 (attachmentStrategy() == AttachmentStrategy::smart() &&
 		  !curNode->isAttachment()) ||
-		 (mReader->attachmentStrategy() == AttachmentStrategy::iconic() &&
+		 (attachmentStrategy() == AttachmentStrategy::iconic() &&
 		  mReader->mIsFirstTextPart) ||
 		 showOnlyOneMimePart() )
       {
@@ -1081,10 +1085,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       kdDebug(5006) << "default " << endl;
       QCString cstr( curNode->msgPart().bodyDecoded() );
       //resultingRawData += cstr;
-      if( !mReader || mReader->attachmentStrategy() == AttachmentStrategy::inlined() ||
-	  (mReader->attachmentStrategy() == AttachmentStrategy::smart() &&
+      if( !mReader || attachmentStrategy() == AttachmentStrategy::inlined() ||
+	  (attachmentStrategy() == AttachmentStrategy::smart() &&
 	   !curNode->isAttachment()) ||
-	  (mReader->attachmentStrategy() == AttachmentStrategy::iconic() &&
+	  (attachmentStrategy() == AttachmentStrategy::iconic() &&
 	   mReader->mIsFirstTextPart) ||
 	  showOnlyOneMimePart() )
 	{
@@ -1536,8 +1540,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     switch( subtype  ){
     case DwMime::kSubtypeRfc822: {
       kdDebug(5006) << "RfC 822" << endl;
-      if( mReader && mReader->attachmentStrategy() != AttachmentStrategy::inlined() &&
-	  (mReader->attachmentStrategy() != AttachmentStrategy::smart() ||
+      if( mReader && attachmentStrategy() != AttachmentStrategy::inlined() &&
+	  (attachmentStrategy() != AttachmentStrategy::smart() ||
 	   curNode->isAttachment()) && !showOnlyOneMimePart())
 	break;
 
@@ -1864,7 +1868,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   bool ObjectTreeParser::processAudioType( int /*subtype*/, partNode * curNode,
 					   ProcessResult & /*result*/ ) {
     // We always show audio as icon.
-    if( mReader && ( mReader->attachmentStrategy() != AttachmentStrategy::hidden()
+    if( mReader && ( attachmentStrategy() != AttachmentStrategy::hidden()
 		     || showOnlyOneMimePart() ) )
       mReader->writePartIcon(&curNode->msgPart(), curNode->nodeId());
     return true;
