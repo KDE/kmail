@@ -757,6 +757,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     mAccount->slotSlaveError( mAccount->slave(), job->error(),
         job->errorText() );
+    quiet( false );
     emit folderComplete(this, FALSE);
     mAccount->removeJob(it);
     mAccount->displayProgress();
