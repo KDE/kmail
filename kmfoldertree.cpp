@@ -495,7 +495,7 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());
 
-  setColumnWidth( 0, size().width() );
+  setColumnWidth( 0, size().width() - 5 );
   KMFolderTreeInherited::resizeEvent(e);
 }
 
