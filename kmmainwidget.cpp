@@ -3268,12 +3268,8 @@ void KMMainWidget::slotUpdateUndo()
 
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::initializeFilterActions()
+void KMMainWidget::clearFilterActions()
 {
-  QString filterName, normalizedName;
-  KMMetaFilterActionCommand *filterCommand;
-  KAction *filterAction = 0;
-
   if ( !mFilterTBarActions.isEmpty() ) {
     if ( mGUIClient->factory() )
       mGUIClient->unplugActionList( "toolbar_filter_actions" );
@@ -3286,6 +3282,17 @@ void KMMainWidget::initializeFilterActions()
     mFilterMenuActions.clear();
   }
   mFilterCommands.clear();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWidget::initializeFilterActions()
+{
+  QString filterName, normalizedName;
+  KMMetaFilterActionCommand *filterCommand;
+  KAction *filterAction = 0;
+
+  clearFilterActions();
   for ( QPtrListIterator<KMFilter> it(*kmkernel->filterMgr()) ;
         it.current() ; ++it ) {
     if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
