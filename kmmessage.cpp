@@ -3595,54 +3595,35 @@ QCString KMMessage::getEmailAddr(const QString& aStr)
 QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
 {
   QString result;
-#if QT_VERSION >= 0x030200
   result.reserve( 6*str.length() ); // maximal possible length
-# define ADD(x) (void)(x) // noop
-#else
-  int resultLength = 0;
-  result.setLength( 6*str.length() ); // maximal possible length
-# define ADD(x) resultLength += (x);
-#endif
 
   for( unsigned int i = 0; i < str.length(); ++i )
     switch ( str[i].latin1() ) {
     case '<':
       result += "&lt;";
-      ADD(4);
       break;
     case '>':
       result += "&gt;";
-      ADD(4);
       break;
     case '&':
       result += "&amp;";
-      ADD(5);
       break;
     case '"':
       result += "&quot;";
-      ADD(6);
       break;
     case '\n':
-      if ( !removeLineBreaks ) {
+      if ( !removeLineBreaks )
 	result += "<br>";
-	ADD(4);
-      }
       break;
     case '\r':
       // ignore CR
       break;
     default:
       result += str[i];
-      ADD(1);
     }
 
-#if QT_VERSION >= 0x030200
   result.squeeze();
-#else
-  result.truncate( resultLength ); // get rid of the undefined junk
-#endif
   return result;
-#undef ADD
 }
 
 //-----------------------------------------------------------------------------

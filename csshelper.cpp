@@ -351,13 +351,8 @@ namespace KMail {
 	       "  color: #000000;\n"
 	       "  background-color: #ffffff\n"
 	       "}\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( mPrintFont.family(),
 	    QString::number( mPrintFont.pointSize() ) )
-#else
-      .arg( mPrintFont.family() )
-      .arg( mPrintFont.pointSize() )
-#endif
       +
       QString( "tr.textAtmH,\n"
 	       "tr.rfc822H,\n"
@@ -390,22 +385,9 @@ namespace KMail {
 	       "div.htmlWarn {\n"
 	       "  border: 2px solid #ffffff;\n"
 	       "}\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( headerFont,
 	    cg.background().name(),
 	    cg.foreground().name() )
-#else
-      .arg( headerFont )
-      .arg(cg.background().name())
-      .arg(cg.background().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-#endif
       + quoteCSS;
   }
 
@@ -436,11 +418,7 @@ namespace KMail {
     for ( int i = 0 ; i < 3 ; ++i ) {
       quoteCSS += QString( "div.quotelevel%1 {\n"
 			   "  color: %2;\n" )
-#if QT_VERSION >= 0x030200
 	.arg( QString::number(i+1), mQuoteColor[i].name() );
-#else
-        .arg(i+1).arg( mQuoteColor[i].name() );
-#endif
       if ( mQuoteFont[i].italic() )
 	quoteCSS += "  font-style: italic;\n";
       if ( mQuoteFont[i].bold() )
@@ -455,17 +433,10 @@ namespace KMail {
 	       "  color: %3;\n"
 	       "%4"
 	       "}\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( bodyFont( fixed ).family(),
 	    bodyFontSize,
 	    fgColor,
 	    background )
-#else
-      .arg( bodyFont( fixed ).family() )
-      .arg( bodyFontSize )
-      .arg( fgColor )
-      .arg( background )
-#endif
       +
       QString( "a {\n"
 	       "  color: %1;\n"
@@ -490,17 +461,7 @@ namespace KMail {
 	       "tr.rfc822H {\n"
 	       "%4"
 	       "}\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( linkColor, fgColor, bgColor, headerFont )
-#else
-      .arg( linkColor )
-      .arg( fgColor )
-      .arg( bgColor )
-      .arg( bgColor )
-      .arg( bgColor )
-      .arg( headerFont )
-      .arg( headerFont )
-#endif
       +
       QString( "table.encr {\n"
 	       "  background-color: %1;\n"
@@ -512,17 +473,10 @@ namespace KMail {
 	       "}\n\n"
 
 	       "tr.encrB { background-color: %4; }\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( cPgpEncrF.name(),
 	    cPgpEncrH.name(),
 	    headerFont,
 	    cPgpEncrB.name() )
-#else
-      .arg( cPgpEncrF.name() )
-      .arg( cPgpEncrH.name() )
-      .arg( headerFont )
-      .arg( cPgpEncrB.name() )
-#endif
       +
       QString( "table.signOkKeyOk {\n"
 	       "  background-color: %1;\n"
@@ -534,17 +488,10 @@ namespace KMail {
 	       "}\n\n"
 
 	       "tr.signOkKeyOkB { background-color: %4; }\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( cPgpOk1F.name(),
 	    cPgpOk1H.name(),
 	    headerFont,
 	    cPgpOk1B.name() )
-#else
-      .arg( cPgpOk1F.name() )
-      .arg( cPgpOk1H.name() )
-      .arg( headerFont )
-      .arg( cPgpOk1B.name() )
-#endif
       +
       QString( "table.signOkKeyBad {\n"
 	       "  background-color: %1;\n"
@@ -556,17 +503,10 @@ namespace KMail {
 	       "}\n\n"
 
 	       "tr.signOkKeyBadB { background-color: %4; }\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( cPgpOk0F.name(),
 	    cPgpOk0H.name(),
 	    headerFont,
 	    cPgpOk0B.name() )
-#else
-      .arg( cPgpOk0F.name() )
-      .arg( cPgpOk0H.name() )
-      .arg( headerFont )
-      .arg( cPgpOk0B.name() )
-#endif
       +
       QString( "table.signWarn {\n"
 	       "  background-color: %1;\n"
@@ -578,17 +518,10 @@ namespace KMail {
 	       "}\n\n"
 
 	       "tr.signWarnB { background-color: %4; }\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( cPgpWarnF.name(),
 	    cPgpWarnH.name(),
 	    headerFont,
 	    cPgpWarnB.name() )
-#else
-      .arg( cPgpWarnF.name() )
-      .arg( cPgpWarnH.name() )
-      .arg( headerFont )
-      .arg( cPgpWarnB.name() )
-#endif
       +
       QString( "table.signErr {\n"
 	       "  background-color: %1;\n"
@@ -600,17 +533,10 @@ namespace KMail {
 	       "}\n\n"
 
 	       "tr.signErrB { background-color: %4; }\n\n" )
-#if QT_VERSION >= 0x030200
       .arg( cPgpErrF.name(),
 	    cPgpErrH.name(),
 	    headerFont,
 	    cPgpErrB.name() )
-#else
-      .arg( cPgpErrF.name() )
-      .arg( cPgpErrH.name() )
-      .arg( headerFont )
-      .arg( cPgpErrB.name() )
-#endif
       +
       QString( "div.htmlWarn {\n"
 	       "  border: 2px solid %1;\n"
@@ -639,22 +565,10 @@ namespace KMail {
 	       "  border-right: solid %4 1px;\n"
 	       "}\n\n" )
       .arg( headerFont )
-#if QT_VERSION >= 0x030200
       .arg( cg.highlight().name(),
 	    cg.highlightedText().name(),
 	    cg.foreground().name(),
 	    cg.background().name() )
-#else
-      .arg(cg.highlight().name())
-      .arg(cg.highlightedText().name())
-      .arg(cg.highlightedText().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.foreground().name())
-      .arg(cg.background().name())
-#endif
       + quoteCSS;
   }
 
