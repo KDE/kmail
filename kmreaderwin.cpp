@@ -33,9 +33,15 @@
 #include <ctype.h>
 #include <string.h>
 #include <qbitmap.h>
+#include <qclipboard.h>
 #include <qcursor.h>
 #include <qmlined.h>
 #include <qregexp.h>
+
+// for selection
+#include <X11/X.h>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 
 #define hand_width 16
@@ -154,6 +160,8 @@ void KMReaderWin::initHtmlWidget(void)
 	  SLOT(slotUrlOn(const char *)));
   connect(mViewer,SIGNAL(popupMenu(const char *, const QPoint &)),  
 	  SLOT(slotUrlPopup(const char *, const QPoint &)));
+  connect(mViewer,SIGNAL(textSelected(bool)), 
+	  SLOT(slotTextSelected(bool)));
 
   mSbVert = new QScrollBar(0, 110, 12, height()-110, 0, 
 			   QScrollBar::Vertical, this);
@@ -909,6 +917,18 @@ void KMReaderWin::slotDocumentChanged()
     mSbHorz->setRange(0, 0);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotTextSelected(bool)
+{
+  QString temp;
+
+  mViewer->getSelectedText(temp);
+  kapp->clipboard()->setText(temp);
+}
+
+
+//-----------------------------------------------------------------------------
 QString KMReaderWin::copyText()
 {
   QString temp;

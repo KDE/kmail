@@ -96,6 +96,7 @@ public slots:
   void slotScrollNext();
   void slotDocumentChanged();
   void slotDocumentDone();
+  void slotTextSelected(bool);
 
   /** An URL has been activate with a click. */
   void slotUrlOpen(const char* url, int button);
