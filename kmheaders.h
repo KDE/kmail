@@ -10,6 +10,7 @@
 #include <qdict.h>
 #include "kmmessage.h"
 #include "kmime_util.h"
+#include <kpopupmenu.h>
 
 class KMFolder;
 class KMMessage;
@@ -195,6 +196,9 @@ public:
 
   bool noRepaint;
 
+  // filter events for popup
+  bool eventFilter ( QObject *o, QEvent *e );
+
 signals:
   /** emitted when the list view item corresponding to this message
       has been selected */
@@ -250,6 +254,9 @@ public slots:
 
   virtual void ensureCurrentItemVisible();
 
+  /** switch size-column */
+  void slotToggleSizeColumn();
+
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
     *pixQueued, *pixFwd, *pixFlag,
@@ -281,6 +288,9 @@ protected:
 
   /** Write per-folder config options. */
   virtual void writeFolderConfig(void);
+
+  /** Write global config options. */
+  virtual void writeConfig(void);
 
   /** Handle shift and control selection */
   virtual void contentsMousePressEvent(QMouseEvent*);
@@ -400,6 +410,10 @@ private:
   int mActionWhenShiftDnD;
   int mActionWhenCtrlDnD;
   bool mJumpToUnread;
+
+  /** popup to switch columns */
+  KPopupMenu* mPopup;
+  int mSizeColumn;
 };
 
 #endif

@@ -13,6 +13,7 @@
 #include <qtextcodec.h>
 #include <qregexp.h>
 #include <qbitmap.h>
+#include <qheader.h>
 
 #include <kaction.h>
 #include <kapplication.h>
@@ -507,6 +508,13 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mSortInfo.removed = 0;
   mJumpToUnread = false;
   setLineWidth(0);
+  // popup-menu
+  header()->setClickEnabled(true);
+  header()->installEventFilter(this);
+  mPopup = new KPopupMenu;
+  mPopup->insertTitle(i18n("Select columns"));
+  mPopup->setCheckable(true);
+  mSizeColumn = mPopup->insertItem(i18n("Size Column"), this, SLOT(slotToggleSizeColumn()));
 
 #ifdef SCORING
   if (!mScoringManager) {
@@ -594,8 +602,36 @@ KMHeaders::~KMHeaders ()
     writeSortOrder();
     mFolder->close();
   }
+  writeConfig();
 }
 
+//-----------------------------------------------------------------------------
+bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
+{
+  if ( e->type() == QEvent::MouseButtonPress &&
+      dynamic_cast<QMouseEvent*>(e)->button() == RightButton &&
+      o->isA("QHeader") )
+  {
+    mPopup->popup( mapToGlobal( header()->geometry().center() ) );
+    return true;
+  }
+  return KListView::eventFilter(o, e);
+}
+
+//-----------------------------------------------------------------------------
+void KMHeaders::slotToggleSizeColumn ()
+{
+  mPaintInfo.showSize = !mPaintInfo.showSize;
+  mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize); 
+
+  // we need to write it back so that 
+  // the configure-dialog knows the correct status
+  KConfig* config = kapp->config();
+  KConfigGroupSaver saver(config, "General");
+  config->writeEntry("showMessageSize", mPaintInfo.showSize);
+
+  setFolder(mFolder);
+}
 
 //-----------------------------------------------------------------------------
 // Support for backing pixmap
@@ -675,6 +711,7 @@ void KMHeaders::readConfig (void)
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
+    mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize); 
     mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", true );
 
     KMime::DateFormatter::FormatType t =
@@ -717,6 +754,7 @@ void KMHeaders::readConfig (void)
       mActionWhenCtrlDnD = KMMsgDnDActionCOPY;
   }
 
+  restoreLayout(config, "Header-Geometry");
 }
 
 
@@ -761,24 +799,6 @@ void KMHeaders::readFolderConfig (void)
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
-  setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 310));
-  setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
-  setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 170));
-  if (mPaintInfo.showSize) {
-    int x = config->readNumEntry("SizeWidth", -1);
-    if ( x > 10 ) // prevent ridiculously small column width
-      setColumnWidth(mPaintInfo.sizeCol, x);
-    else
-      setColumnWidthMode(mPaintInfo.sizeCol, QListView::Maximum );
-  }
-
-#ifdef SCORING
-  if (mPaintInfo.showScore) {
-    int x = config->readNumEntry("ScoreWidth", 50);
-    setColumnWidth(mPaintInfo.scoreCol, x>0?x:10);
-  }
-#endif
-
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
   mSortDescending = (mSortCol < 0);
   mSortCol = abs(mSortCol) - 1;
@@ -808,17 +828,6 @@ void KMHeaders::writeFolderConfig (void)
   assert(mFolder!=NULL);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
-  config->writeEntry("SenderWidth", columnWidth(mPaintInfo.senderCol));
-  config->writeEntry("SubjectWidth", columnWidth(mPaintInfo.subCol));
-  config->writeEntry("DateWidth", columnWidth(mPaintInfo.dateCol));
-  if (mPaintInfo.showSize)
-    config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
-
-#ifdef SCORING
-  if (mPaintInfo.showScore)
-      config->writeEntry("ScoreWidth", columnWidth(mPaintInfo.scoreCol));
-#endif
-
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
@@ -826,6 +835,11 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("Status", mPaintInfo.status);
 }
 
+//-----------------------------------------------------------------------------
+void KMHeaders::writeConfig (void)
+{
+  saveLayout(kapp->config(), "Header-Geometry");
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
@@ -955,20 +969,13 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 
 
   if (mFolder) {
-    KConfig *config = kapp->config();
-    KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
-
     if (mPaintInfo.showSize) {
       colText = i18n( "Size" );
       if (showingSize) {
         setColumnText( mPaintInfo.sizeCol, colText);
       } else {
         // add in the size field
-        int x = config->readNumEntry("SizeWidth", -1);
-	if ( x > 10 ) // prevent ridiculously small header width
-	  addColumn(colText, x);
-	else
-	  addColumn(colText);
+        addColumn(colText);
 
 	setColumnAlignment( mPaintInfo.sizeCol, AlignRight );
 #ifdef SCORING
@@ -979,7 +986,6 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     } else {
       if (showingSize) {
         // remove the size field
-        config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
         removeColumn(mPaintInfo.sizeCol);
 #ifdef SCORING
         mPaintInfo.scoreCol--;
@@ -995,8 +1001,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       if (showingScore) {
         setColumnText( mPaintInfo.scoreCol, colText);
       } else {
-        int x = config->readNumEntry("ScoreWidth", 50);
-        mPaintInfo.scoreCol = addColumn(colText, x>0?x:10);
+        mPaintInfo.scoreCol = addColumn(colText);
         setColumnAlignment( mPaintInfo.scoreCol, AlignRight );
       }
       showingScore = true;
