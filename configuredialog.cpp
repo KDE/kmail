@@ -1572,7 +1572,7 @@ void ConfigureDialog::setupAppearancePage( void )
   mAppearance.font[6] =
     config.readFontEntry("quote3-font", &mAppearance.font[0]);
 
-  bool state = config.readBoolEntry("defaultFonts", false );
+  bool state = config.readBoolEntry("defaultFonts", TRUE );
   mAppearance.customFontCheck->setChecked( state == false ? true : false );
   mAppearance.unicodeFontCheck->setChecked( config.readBoolEntry(
     "unicodeFont", false ) );
