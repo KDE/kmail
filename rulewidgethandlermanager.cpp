@@ -208,7 +208,8 @@ KMail::RuleWidgetHandlerManager::RuleWidgetHandlerManager()
 
 KMail::RuleWidgetHandlerManager::~RuleWidgetHandlerManager()
 {
-  for_each( mHandlers.begin(), mHandlers.end(), DeleteAndSetToZero<RuleWidgetHandler> );
+  for_each( mHandlers.begin(), mHandlers.end(),
+	    DeleteAndSetToZero<RuleWidgetHandler>() );
 }
 
 void KMail::RuleWidgetHandlerManager::registerHandler( const RuleWidgetHandler * handler )
