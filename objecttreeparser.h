@@ -55,12 +55,12 @@ namespace KMail {
   public:
     ProcessResult( KMMsgSignatureState  inlineSignatureState  = KMMsgNotSigned,
                    KMMsgEncryptionState inlineEncryptionState = KMMsgNotEncrypted,
-		   bool neverDisplayInline = false,
+                   bool neverDisplayInline = false,
                    bool isImage = false )
       : mInlineSignatureState( inlineSignatureState ),
-	mInlineEncryptionState( inlineEncryptionState ),
-	mNeverDisplayInline( neverDisplayInline ),
-	mIsImage( isImage ) {}
+        mInlineEncryptionState( inlineEncryptionState ),
+        mNeverDisplayInline( neverDisplayInline ),
+        mIsImage( isImage ) {}
 
     KMMsgSignatureState inlineSignatureState() const {
       return mInlineSignatureState;
@@ -98,15 +98,15 @@ namespace KMail {
   class ObjectTreeParser {
     class CryptPlugWrapperSaver;
     /** Internal. Copies the context of @p other, but not it's @see
-	rawReplyString() */
+        rawReplyString() */
     ObjectTreeParser( const ObjectTreeParser & other );
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
-		      bool showOneMimePart=false, bool keepEncryptions=false,
-		      bool includeSignatures=true,
-		      const KMail::AttachmentStrategy * attachmentStrategy=0,
-		      KMail::HtmlWriter * htmlWriter=0,
-		      KMail::CSSHelper * cssHelper=0 );
+                      bool showOneMimePart=false, bool keepEncryptions=false,
+                      bool includeSignatures=true,
+                      const KMail::AttachmentStrategy * attachmentStrategy=0,
+                      KMail::HtmlWriter * htmlWriter=0,
+                      KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
     QCString rawReplyString() const { return mRawReplyString; }
@@ -155,7 +155,7 @@ namespace KMail {
 
   private:
     /** Standard children handling a.k.a. multipart/mixed (w/o
-	kroupware hacks) */
+        kroupware hacks) */
     void stdChildHandling( partNode * child );
 
     void defaultHandling( partNode * node, ProcessResult & result );
@@ -167,11 +167,11 @@ namespace KMail {
         3. Parse the 'node' to display the content. */
     //  Function will be replaced once KMime is alive.
     void insertAndParseNewChildNode( partNode & node,
-				     const char * content,
-				     const char * cntDesc,
-				     bool append=false );
+                                     const char * content,
+                                     const char * cntDesc,
+                                     bool append=false );
     /** if data is 0:
-	Feeds the HTML widget with the contents of the opaque signed
+        Feeds the HTML widget with the contents of the opaque signed
             data found in partNode 'sign'.
         if data is set:
             Feeds the HTML widget with the contents of the given
@@ -181,22 +181,22 @@ namespace KMail {
         Returns whether a signature was found or not: use this to
         find out if opaque data is signed or not. */
     bool writeOpaqueOrMultipartSignedData( partNode * data,
-					   partNode & sign,
-					   const QString & fromAddress,
-					   bool doCheck=true,
-					   QCString * cleartextData=0,
-					   CryptPlug::SignatureMetaData * paramSigMeta=0,
-					   bool hideErrors=false );
+                                           partNode & sign,
+                                           const QString & fromAddress,
+                                           bool doCheck=true,
+                                           QCString * cleartextData=0,
+                                           CryptPlug::SignatureMetaData * paramSigMeta=0,
+                                           bool hideErrors=false );
 
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     bool okDecryptMIME( partNode& data,
-			QCString& decryptedData,
-			bool& signatureFound,
-			CryptPlug::SignatureMetaData& sigMeta,
-			bool showWarning,
-			bool& passphraseError,
-			QString& aErrorText );
+                        QCString& decryptedData,
+                        bool& signatureFound,
+                        CryptPlug::SignatureMetaData& sigMeta,
+                        bool showWarning,
+                        bool& passphraseError,
+                        QString& aErrorText );
 
     bool processMailmanMessage( partNode * node );
 
@@ -225,37 +225,38 @@ namespace KMail {
 
   private:
     void writeBodyString( const QCString & bodyString,
-			  const QString & fromAddress,
-			  const QTextCodec * codec,
-			  ProcessResult & result );
+                          const QString & fromAddress,
+                          const QTextCodec * codec,
+                          ProcessResult & result, bool decorate );
 
     void writePartIcon( KMMessagePart * msgPart, int partNumber, bool inlineImage=false );
 
     QString sigStatusToString( CryptPlugWrapper * cryptPlug,
-			       int status_code,
-			       CryptPlugWrapper::SigStatusFlags statusFlags,
-			       int & frameColor,
-			       bool & showKeyInfos );
+                               int status_code,
+                               CryptPlugWrapper::SigStatusFlags statusFlags,
+                               int & frameColor,
+                               bool & showKeyInfos );
     QString writeSigstatHeader( KMail::PartMetaData & part,
-				CryptPlugWrapper * cryptPlug,
-				const QString & fromAddress,
+                                CryptPlugWrapper * cryptPlug,
+                                const QString & fromAddress,
                                 const QString & filename = QString::null );
     QString writeSigstatFooter( KMail::PartMetaData & part );
 
     void writeBodyStr( const QCString & bodyString,
-		       const QTextCodec * aCodec,
-		       const QString & fromAddress,
-		       KMMsgSignatureState &  inlineSignatureState,
-		       KMMsgEncryptionState & inlineEncryptionState );
+                       const QTextCodec * aCodec,
+                       const QString & fromAddress,
+                       KMMsgSignatureState &  inlineSignatureState,
+                       KMMsgEncryptionState & inlineEncryptionState,
+                       bool decorate );
   public: // KMReaderWin still needs this...
     void writeBodyStr( const QCString & bodyString,
-		       const QTextCodec * aCodec,
-		       const QString & fromAddress );
+                       const QTextCodec * aCodec,
+                       const QString & fromAddress );
 
   private:
     /** Change the string to `quoted' html (meaning, that the quoted
-	part of the message get italized */
-    QString quotedHTML(const QString& pos);
+        part of the message get italized */
+    QString quotedHTML(const QString& pos, bool decorate);
 
     const QTextCodec * codecFor( partNode * node ) const;
 

@@ -372,7 +372,11 @@
        <whatsthis>Changing this from its default 'Auto' will force the use of the specified encoding for all emails, regardless of what they specify themselves.</whatsthis> 
      </entry>
 
-
+     <entry name="ShowEmoticons" type="Bool">
+       <default>true</default>
+       <label>Replace smileys by emoticons</label>
+       <whatsthis>Enable this if you want smileys like :-) appearing in the message text to be replaced by emoticons (small pictures).</whatsthis> 
+     </entry>
     </group>
 
 </kcfg>

@@ -50,6 +50,7 @@
 #include "bodypartformatterfactory.h"
 #include "partnodebodypart.h"
 #include "interfaces/bodypartformatter.h"
+#include "globalsettings.h"
 
 #include "cryptplugwrapperlist.h"
 #include "cryptplugfactory.h"
@@ -311,7 +312,7 @@ namespace KMail {
     else
       writeBodyString( node->msgPart().bodyDecoded(),
                        node->trueFromAddress(),
-                       codecFor( node ), result );
+                       codecFor( node ), result, false );
     // end of ###
   }
 
@@ -591,7 +592,7 @@ namespace KMail {
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
-	mTextualContentCharset = otp.textualContentCharset();
+        mTextualContentCharset = otp.textualContentCharset();
 
       if ( mReader )
         htmlWriter()->queue( writeSigstatFooter( messagePart ) );
@@ -1021,7 +1022,7 @@ namespace KMail {
     if ( !isMailmanMessage( curNode ) ||
          !processMailmanMessage( curNode ) )
       writeBodyString( cstr, curNode->trueFromAddress(),
-                       codecFor( curNode ), result );
+                       codecFor( curNode ), result, !bDrawFrame );
     if ( bDrawFrame )
       htmlWriter()->queue( "</td></tr></table>" );
 
@@ -1141,7 +1142,7 @@ namespace KMail {
       const QCString cstr = node->msgPart().bodyDecoded();
       if ( mReader )
         writeBodyString( cstr, node->trueFromAddress(),
-                         codecFor( node ), result );
+                         codecFor( node ), result, false );
       mRawReplyString += cstr;
       return true;
     }
@@ -1265,7 +1266,7 @@ namespace KMail {
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
-	mTextualContentCharset = otp.textualContentCharset();
+        mTextualContentCharset = otp.textualContentCharset();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
@@ -1319,7 +1320,7 @@ namespace KMail {
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
-	mTextualContentCharset = otp.textualContentCharset();
+        mTextualContentCharset = otp.textualContentCharset();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
@@ -1334,7 +1335,7 @@ namespace KMail {
         const QCString cstr = node->msgPart().bodyDecoded();
         if ( mReader )
           writeBodyString( cstr, node->trueFromAddress(),
-                           codecFor( node ), result );
+                           codecFor( node ), result, false );
         mRawReplyString += cstr;
       } else {
         /*
@@ -1399,7 +1400,7 @@ namespace KMail {
       mRawReplyString += otp.rawReplyString();
       mTextualContent += otp.textualContent();
       if ( !otp.textualContentCharset().isEmpty() )
-	mTextualContentCharset = otp.textualContentCharset();
+        mTextualContentCharset = otp.textualContentCharset();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
@@ -1593,12 +1594,13 @@ namespace KMail {
   void ObjectTreeParser::writeBodyString( const QCString & bodyString,
                                           const QString & fromAddress,
                                           const QTextCodec * codec,
-                                          ProcessResult & result ) {
+                                          ProcessResult & result,
+                                          bool decorate ) {
     assert( mReader ); assert( codec );
     KMMsgSignatureState inlineSignatureState = result.inlineSignatureState();
     KMMsgEncryptionState inlineEncryptionState = result.inlineEncryptionState();
     writeBodyStr( bodyString, codec, fromAddress,
-                  inlineSignatureState, inlineEncryptionState );
+                  inlineSignatureState, inlineEncryptionState, decorate );
     result.setInlineSignatureState( inlineSignatureState );
     result.setInlineEncryptionState( inlineEncryptionState );
   }
@@ -2238,14 +2240,15 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
 {
   KMMsgSignatureState dummy1;
   KMMsgEncryptionState dummy2;
-  writeBodyStr( aStr, aCodec, fromAddress, dummy1, dummy2 );
+  writeBodyStr( aStr, aCodec, fromAddress, dummy1, dummy2, false );
 }
 
 //-----------------------------------------------------------------------------
 void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
                                 const QString& fromAddress,
                                 KMMsgSignatureState&  inlineSignatureState,
-                                KMMsgEncryptionState& inlineEncryptionState )
+                                KMMsgEncryptionState& inlineEncryptionState,
+                                bool decorate )
 {
   bool goodSignature = false;
   Kpgp::Module* pgp = Kpgp::Module::getKpgp();
@@ -2280,7 +2283,7 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
           // insert the next Non-OpenPGP block
           QCString str( *npbit );
           if( !str.isEmpty() ) {
-            htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+            htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
             kdDebug( 5006 ) << "Non-empty Non-OpenPGP block found: '" << str
                             << "'" << endl;
             // treat messages with empty lines before the first clearsigned
@@ -2370,17 +2373,18 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
 
               htmlStr += writeSigstatHeader( messagePart, 0, fromAddress );
 
-              htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
+              htmlStr += quotedHTML( aCodec->toUnicode( block->text() ), decorate );
               htmlStr += writeSigstatFooter( messagePart );
           }
           else // block is neither message block nor clearsigned block
-            htmlStr += quotedHTML( aCodec->toUnicode( block->text() ) );
+            htmlStr += quotedHTML( aCodec->toUnicode( block->text() ),
+                                   decorate );
       }
 
       // add the last Non-OpenPGP block
       QCString str( nonPgpBlocks.last() );
       if( !str.isEmpty() ) {
-        htmlStr += quotedHTML( aCodec->toUnicode( str ) );
+        htmlStr += quotedHTML( aCodec->toUnicode( str ), decorate );
         // Even if the trailing Non-OpenPGP block isn't empty we still
         // consider the message part fully signed/encrypted because else
         // all inline signed mailing list messages would only be partially
@@ -2396,14 +2400,18 @@ void ObjectTreeParser::writeBodyStr( const QCString& aStr, const QTextCodec *aCo
       htmlWriter()->queue( htmlStr );
   }
   else
-    htmlWriter()->queue( quotedHTML( aCodec->toUnicode( aStr ) ) );
+    htmlWriter()->queue( quotedHTML( aCodec->toUnicode( aStr ), decorate ) );
 }
 
-QString ObjectTreeParser::quotedHTML(const QString& s)
+QString ObjectTreeParser::quotedHTML( const QString& s, bool decorate )
 {
   assert( mReader );
   assert( cssHelper() );
 
+  int convertFlags = LinkLocator::PreserveSpaces;
+  if ( decorate && GlobalSettings::showEmoticons() ) {
+    convertFlags |= LinkLocator::ReplaceSmileys;
+  }
   QString htmlStr;
   const QString normalStartTag = cssHelper()->nonQuotedFontTag();
   QString quoteFontTag[3];
@@ -2475,7 +2483,7 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
         htmlStr += QString( "<div dir=\"rtl\">" );
       else
         htmlStr += QString( "<div dir=\"ltr\">" );
-      htmlStr += LinkLocator::convertToHtml( line, true /* preserve blanks */);
+      htmlStr += LinkLocator::convertToHtml( line, convertFlags );
       htmlStr += QString( "</div>" );
     }
     else

@@ -69,7 +69,7 @@ public:
   enum DuplicateMode { Empty, ControlCenter, ExistingEntry };
 
   NewIdentityDialog( const QStringList & identities,
-		     QWidget *parent=0, const char *name=0, bool modal=true );
+                     QWidget *parent=0, const char *name=0, bool modal=true );
 
   QString identityName() const { return mLineEdit->text(); }
   QString duplicateIdentity() const { return mComboBox->currentText(); }
@@ -95,9 +95,9 @@ struct LanguageItem
 {
   LanguageItem() {}
   LanguageItem( const QString & language, const QString & reply=QString::null,
-		const QString & replyAll=QString::null,
-		const QString & forward=QString::null,
-		const QString & indentPrefix=QString::null ) :
+                const QString & replyAll=QString::null,
+                const QString & forward=QString::null,
+                const QString & indentPrefix=QString::null ) :
     mLanguage( language ), mReply( reply ), mReplyAll( replyAll ),
     mForward( forward ), mIndentPrefix( indentPrefix ) {}
 
@@ -112,7 +112,7 @@ class NewLanguageDialog : public KDialogBase
 
   public:
     NewLanguageDialog( LanguageItemList & suppressedLangs, QWidget *parent=0,
-		       const char *name=0, bool modal=true );
+                       const char *name=0, bool modal=true );
     QString language() const;
 
   private:
@@ -446,6 +446,7 @@ public:
 protected: // data
   QCheckBox    *mShowColorbarCheck;
   QCheckBox    *mShowSpamStatusCheck;
+  QCheckBox    *mShowEmoticonsCheck;
   QButtonGroup *mFolderListGroup;
   QButtonGroup *mMIMETreeLocationGroup;
   QButtonGroup *mMIMETreeModeGroup;
@@ -811,7 +812,7 @@ private:
 class KDE_EXPORT SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
-  SecurityPage(	QWidget * parent=0, const char * name=0 );
+  SecurityPage( QWidget * parent=0, const char * name=0 );
 
   QString helpAnchor() const;
 

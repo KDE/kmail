@@ -141,7 +141,7 @@ namespace {
 
   static const char * lockedDownWarning =
     I18N_NOOP("<qt><p>This setting has been fixed by your administrator.</p>"
-	      "<p>If you think this is an error, please contact him.</p></qt>");
+              "<p>If you think this is an error, please contact him.</p></qt>");
 
   void checkLockDown( QWidget * w, const KConfigBase & c, const char * key ) {
     if ( c.entryIsImmutable( key ) ) {
@@ -176,8 +176,8 @@ namespace {
     const QString s = c.readEntry( e.key, e.items[e.defaultItem].key );
     for ( int i = 0 ; i < e.numItems ; ++i )
       if ( s == e.items[i].key ) {
-	g->setButton( i );
-	return;
+        g->setButton( i );
+        return;
       }
     g->setButton( e.defaultItem );
   }
@@ -256,7 +256,7 @@ void ConfigureDialog::slotUser2() {
   }
   mProfileDialog = new ProfileDialog( this, "mProfileDialog" );
   connect( mProfileDialog, SIGNAL(profileSelected(KConfig*)),
-	        this, SIGNAL(installProfile(KConfig*)) );
+                this, SIGNAL(installProfile(KConfig*)) );
   mProfileDialog->show();
 }
 
@@ -277,13 +277,13 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 
   mIdentityList = new IdentityListView( this );
   connect( mIdentityList, SIGNAL(selectionChanged()),
-	   SLOT(slotIdentitySelectionChanged()) );
+           SLOT(slotIdentitySelectionChanged()) );
   connect( mIdentityList, SIGNAL(itemRenamed(QListViewItem*,const QString&,int)),
-	   SLOT(slotRenameIdentity(QListViewItem*,const QString&,int)) );
+           SLOT(slotRenameIdentity(QListViewItem*,const QString&,int)) );
   connect( mIdentityList, SIGNAL(doubleClicked(QListViewItem*,const QPoint&,int)),
-	   SLOT(slotModifyIdentity()) );
+           SLOT(slotModifyIdentity()) );
   connect( mIdentityList, SIGNAL(contextMenu(KListView*,QListViewItem*,const QPoint&)),
-	   SLOT(slotContextMenu(KListView*,QListViewItem*,const QPoint&)) );
+           SLOT(slotContextMenu(KListView*,QListViewItem*,const QPoint&)) );
   // ### connect dragged(...), ...
 
   hlay->addWidget( mIdentityList, 1 );
@@ -305,15 +305,15 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   mSetAsDefaultButton->setAutoDefault( false );
   mSetAsDefaultButton->setEnabled( false );
   connect( button, SIGNAL(clicked()),
-	   this, SLOT(slotNewIdentity()) );
+           this, SLOT(slotNewIdentity()) );
   connect( mModifyButton, SIGNAL(clicked()),
-	   this, SLOT(slotModifyIdentity()) );
+           this, SLOT(slotModifyIdentity()) );
   connect( mRenameButton, SIGNAL(clicked()),
-	   this, SLOT(slotRenameIdentity()) );
+           this, SLOT(slotRenameIdentity()) );
   connect( mRemoveButton, SIGNAL(clicked()),
-	   this, SLOT(slotRemoveIdentity()) );
+           this, SLOT(slotRemoveIdentity()) );
   connect( mSetAsDefaultButton, SIGNAL(clicked()),
-	   this, SLOT(slotSetAsDefault()) );
+           this, SLOT(slotSetAsDefault()) );
   vlay->addWidget( button );
   vlay->addWidget( mModifyButton );
   vlay->addWidget( mRenameButton );
@@ -376,9 +376,9 @@ void IdentityPage::slotNewIdentity()
     switch ( dialog.duplicateMode() ) {
     case NewIdentityDialog::ExistingEntry:
       {
-	KPIM::Identity & dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
-	im->newFromExisting( dupThis, identityName );
-	break;
+        KPIM::Identity & dupThis = im->modifyIdentityForName( dialog.duplicateIdentity() );
+        im->newFromExisting( dupThis, identityName );
+        break;
       }
     case NewIdentityDialog::ControlCenter:
       im->newFromControlCenter( identityName );
@@ -396,8 +396,8 @@ void IdentityPage::slotNewIdentity()
     if ( item )
       item = item->itemAbove();
     mIdentityList->setSelected( new IdentityListViewItem( mIdentityList,
-							  /*after*/ item,
-							  newIdent ), true );
+                                                          /*after*/ item,
+                                                          newIdent ), true );
     slotModifyIdentity();
   }
 }
@@ -436,7 +436,7 @@ void IdentityPage::slotRemoveIdentity()
   if ( !item ) return;
 
   QString msg = i18n("<qt>Do you really want to remove the identity named "
-		     "<b>%1</b>?</qt>").arg( item->identity().identityName() );
+                     "<b>%1</b>?</qt>").arg( item->identity().identityName() );
   if( KMessageBox::warningContinueCancel( this, msg, i18n("Remove Identity"),
    KGuiItem(i18n("&Remove"),"editdelete") ) == KMessageBox::Continue )
     if ( im->removeIdentity( item->identity().identityName() ) ) {
@@ -456,7 +456,7 @@ void IdentityPage::slotRenameIdentity() {
 }
 
 void IdentityPage::slotRenameIdentity( QListViewItem * i,
-				       const QString & s, int col ) {
+                                       const QString & s, int col ) {
   assert( col == 0 );
   Q_UNUSED( col );
 
@@ -474,7 +474,7 @@ void IdentityPage::slotRenameIdentity( QListViewItem * i,
 }
 
 void IdentityPage::slotContextMenu( KListView *, QListViewItem * i,
-				    const QPoint & pos ) {
+                                    const QPoint & pos ) {
   IdentityListViewItem * item = dynamic_cast<IdentityListViewItem*>( i );
 
   QPopupMenu * menu = new QPopupMenu( this );
@@ -549,7 +549,7 @@ AccountsPage::AccountsPage( QWidget * parent, const char * name )
   mReceivingTab = new ReceivingTab();
   addTab( mReceivingTab, i18n( "&Receiving" ) );
   connect( mReceivingTab, SIGNAL(accountListChanged(const QStringList &)),
-	   this, SIGNAL(accountListChanged(const QStringList &)) );
+           this, SIGNAL(accountListChanged(const QStringList &)) );
 
   //
   // "Sending" tab:
@@ -557,7 +557,7 @@ AccountsPage::AccountsPage( QWidget * parent, const char * name )
   mSendingTab = new SendingTab();
   addTab( mSendingTab, i18n( "&Sending" ) );
   connect( mSendingTab, SIGNAL(transportListChanged(const QStringList&)),
-	   this, SIGNAL(transportListChanged(const QStringList&)) );
+           this, SIGNAL(transportListChanged(const QStringList&)) );
 
   load();
 }
@@ -607,7 +607,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   button = new QPushButton( i18n("A&dd..."), this );
   button->setAutoDefault( false );
   connect( button, SIGNAL(clicked()),
-	   this, SLOT(slotAddTransport()) );
+           this, SLOT(slotAddTransport()) );
   btn_vlay->addWidget( button );
 
   // "modify..." button: stretch 0
@@ -615,7 +615,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   mModifyTransportButton->setAutoDefault( false );
   mModifyTransportButton->setEnabled( false ); // b/c no item is selected yet
   connect( mModifyTransportButton, SIGNAL(clicked()),
-	   this, SLOT(slotModifySelectedTransport()) );
+           this, SLOT(slotModifySelectedTransport()) );
   btn_vlay->addWidget( mModifyTransportButton );
 
   // "remove" button: stretch 0
@@ -623,7 +623,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   mRemoveTransportButton->setAutoDefault( false );
   mRemoveTransportButton->setEnabled( false ); // b/c no item is selected yet
   connect( mRemoveTransportButton, SIGNAL(clicked()),
-	   this, SLOT(slotRemoveSelectedTransport()) );
+           this, SLOT(slotRemoveSelectedTransport()) );
   btn_vlay->addWidget( mRemoveTransportButton );
 
   // "up" button: stretch 0
@@ -651,7 +651,7 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
 
   // "Common options" groupbox:
   group = new QGroupBox( 0, Qt::Vertical,
-			 i18n("Common Options"), this );
+                         i18n("Common Options"), this );
   vlay->addWidget(group);
 
   // a grid layout for the contents of the "common options" group box
@@ -667,8 +667,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   // "send on check" combo:
   mSendOnCheckCombo = new QComboBox( false, group );
   mSendOnCheckCombo->insertStringList( QStringList()
-				      << i18n("Never Automatically")
-				      << i18n("On Manual Mail Checks")
+                                      << i18n("Never Automatically")
+                                      << i18n("On Manual Mail Checks")
                                       << i18n("On All Mail Checks") );
   glay->addWidget( mSendOnCheckCombo, 1, 1 );
   connect( mSendOnCheckCombo, SIGNAL( activated( int ) ),
@@ -677,8 +677,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   // "default send method" combo:
   mSendMethodCombo = new QComboBox( false, group );
   mSendMethodCombo->insertStringList( QStringList()
-				      << i18n("Send Now")
-				      << i18n("Send Later") );
+                                      << i18n("Send Now")
+                                      << i18n("Send Later") );
   glay->addWidget( mSendMethodCombo, 2, 1 );
   connect( mSendMethodCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -688,8 +688,8 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   // ### FIXME: remove completely?
   mMessagePropertyCombo = new QComboBox( false, group );
   mMessagePropertyCombo->insertStringList( QStringList()
-		     << i18n("Allow 8-bit")
-		     << i18n("MIME Compliant (Quoted Printable)") );
+                     << i18n("Allow 8-bit")
+                     << i18n("MIME Compliant (Quoted Printable)") );
   glay->addWidget( mMessagePropertyCombo, 3, 1 );
   connect( mMessagePropertyCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -710,9 +710,9 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   QWhatsThis::add( mSendOnCheckCombo, msg );
 
   glay->addWidget( new QLabel( mSendMethodCombo, /*buddy*/
-			       i18n("Defa&ult send method:"), group ), 2, 0 );
+                               i18n("Defa&ult send method:"), group ), 2, 0 );
   glay->addWidget( new QLabel( mMessagePropertyCombo, /*buddy*/
-			       i18n("Message &property:"), group ), 3, 0 );
+                               i18n("Message &property:"), group ), 3, 0 );
   l = new QLabel( mDefaultDomainEdit, /*buddy*/
                           i18n("Defaul&t domain:"), group );
   glay->addWidget( l, 4, 0 );
@@ -737,13 +737,13 @@ void AccountsPage::SendingTab::slotTransportSelected()
 
 // adds a number to @p name to make the name unique
 static inline QString uniqueName( const QStringList & list,
-				  const QString & name )
+                                  const QString & name )
 {
   int suffix = 1;
   QString result = name;
   while ( list.find( result ) != list.end() ) {
     result = i18n("%1: name; %2: number appended to it to make it unique "
-		  "among a list of names", "%1 %2")
+                  "among a list of names", "%1 %2")
       .arg( name ).arg( suffix );
     suffix++;
   }
@@ -806,12 +806,12 @@ void AccountsPage::SendingTab::slotAddTransport()
     typeDisplayName = transportInfo->type;
   else
     typeDisplayName = i18n("%1: type of transport. Result used in "
-			   "Configure->Accounts->Sending listview, \"type\" "
-			   "column, first row, to indicate that this is the "
-			   "default transport", "%1 (Default)")
+                           "Configure->Accounts->Sending listview, \"type\" "
+                           "column, first row, to indicate that this is the "
+                           "default transport", "%1 (Default)")
       .arg( transportInfo->type );
   (void) new QListViewItem( mTransportList, lastItem, transportInfo->name,
-			    typeDisplayName );
+                            typeDisplayName );
 
   // notify anyone who cares:
   emit transportListChanged( transportNames );
@@ -913,10 +913,10 @@ void AccountsPage::SendingTab::slotTransportUp()
   else
     // first:
     above->setText( 1, i18n("%1: type of transport. Result used in "
-			    "Configure->Accounts->Sending listview, \"type\" "
-			    "column, first row, to indicate that this is the "
-			    "default transport", "%1 (Default)")
-		    .arg( ti->type ) );
+                            "Configure->Accounts->Sending listview, \"type\" "
+                            "column, first row, to indicate that this is the "
+                            "default transport", "%1 (Default)")
+                    .arg( ti->type ) );
 
   mTransportList->setCurrentItem( above );
   mTransportList->setSelected( above, true );
@@ -948,10 +948,10 @@ void AccountsPage::SendingTab::slotTransportDown()
     item->setText( 1, ti2->type );
   else
     item->setText( 1, i18n("%1: type of transport. Result used in "
-			   "Configure->Accounts->Sending listview, \"type\" "
-			   "column, first row, to indicate that this is the "
-			   "default transport", "%1 (Default)")
-		   .arg( ti2->type ) );
+                           "Configure->Accounts->Sending listview, \"type\" "
+                           "column, first row, to indicate that this is the "
+                           "default transport", "%1 (Default)")
+                   .arg( ti2->type ) );
 
 
   mTransportList->setCurrentItem(below);
@@ -981,21 +981,21 @@ void AccountsPage::SendingTab::load() {
   QListViewItem *listItem = mTransportList->firstChild();
   if ( listItem ) {
     listItem->setText( 1, i18n("%1: type of transport. Result used in "
-			       "Configure->Accounts->Sending listview, "
-			       "\"type\" column, first row, to indicate "
-			       "that this is the default transport",
-			       "%1 (Default)").arg( listItem->text(1) ) );
+                               "Configure->Accounts->Sending listview, "
+                               "\"type\" column, first row, to indicate "
+                               "that this is the default transport",
+                               "%1 (Default)").arg( listItem->text(1) ) );
     mTransportList->setCurrentItem( listItem );
     mTransportList->setSelected( listItem, true );
   }
 
   mSendMethodCombo->setCurrentItem(
-		kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
+                kmkernel->msgSender()->sendImmediate() ? 0 : 1 );
   mMessagePropertyCombo->setCurrentItem(
                 kmkernel->msgSender()->sendQuotedPrintable() ? 1 : 0 );
 
   mConfirmSendCheck->setChecked( composer.readBoolEntry( "confirm-before-send",
-							 false ) );
+                                                         false ) );
   mSendOnCheckCombo->setCurrentItem( GlobalSettings::sendOnCheck() );
   QString str = general.readEntry( "Default domain" );
   if( str.isEmpty() )
@@ -1028,9 +1028,9 @@ void AccountsPage::SendingTab::save() {
   // Save common options:
   GlobalSettings::setSendOnCheck( mSendOnCheckCombo->currentItem() );
   kmkernel->msgSender()->setSendImmediate(
-			     mSendMethodCombo->currentItem() == 0 );
+                             mSendMethodCombo->currentItem() == 0 );
   kmkernel->msgSender()->setSendQuotedPrintable(
-			     mMessagePropertyCombo->currentItem() == 1 );
+                             mMessagePropertyCombo->currentItem() == 1 );
   kmkernel->msgSender()->writeConfig( false ); // don't sync
   composer.writeEntry("confirm-before-send", mConfirmSendCheck->isChecked() );
   general.writeEntry( "Default domain", mDefaultDomainEdit->text() );
@@ -1068,9 +1068,9 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mAccountList->setSorting( -1 );
   connect( mAccountList, SIGNAL(selectionChanged()),
-	   this, SLOT(slotAccountSelected()) );
+           this, SLOT(slotAccountSelected()) );
   connect( mAccountList, SIGNAL(doubleClicked( QListViewItem *)),
-	   this, SLOT(slotModifySelectedAccount()) );
+           this, SLOT(slotModifySelectedAccount()) );
   hlay->addWidget( mAccountList, 1 );
 
   // a vbox layout for the buttons: zero stretch, spacing inherited from hlay
@@ -1080,7 +1080,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   button = new QPushButton( i18n("A&dd..."), this );
   button->setAutoDefault( false );
   connect( button, SIGNAL(clicked()),
-	   this, SLOT(slotAddAccount()) );
+           this, SLOT(slotAddAccount()) );
   btn_vlay->addWidget( button );
 
   // "modify..." button: stretch 0
@@ -1088,7 +1088,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   mModifyAccountButton->setAutoDefault( false );
   mModifyAccountButton->setEnabled( false ); // b/c no item is selected yet
   connect( mModifyAccountButton, SIGNAL(clicked()),
-	   this, SLOT(slotModifySelectedAccount()) );
+           this, SLOT(slotModifySelectedAccount()) );
   btn_vlay->addWidget( mModifyAccountButton );
 
   // "remove..." button: stretch 0
@@ -1096,7 +1096,7 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   mRemoveAccountButton->setAutoDefault( false );
   mRemoveAccountButton->setEnabled( false ); // b/c no item is selected yet
   connect( mRemoveAccountButton, SIGNAL(clicked()),
-	   this, SLOT(slotRemoveSelectedAccount()) );
+           this, SLOT(slotRemoveSelectedAccount()) );
   btn_vlay->addWidget( mRemoveAccountButton );
   btn_vlay->addStretch( 1 ); // spacer
 
@@ -1245,14 +1245,14 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
     QValueList< QGuardedPtr<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
-	account = *it;
-	break;
+        account = *it;
+        break;
       }
 
     if ( !account ) {
       account = kmkernel->acctMgr()->findByName( listItem->text(0) );
       if( !account ) {
-	// ### FIXME: How should this happen? See above.
+        // ### FIXME: How should this happen? See above.
         KMessageBox::sorry( this, i18n("Unable to locate account") );
         return;
       }
@@ -1260,7 +1260,7 @@ void AccountsPage::ReceivingTab::slotModifySelectedAccount()
       ModifiedAccountsType *mod = new ModifiedAccountsType;
       mod->oldAccount = account;
       mod->newAccount = kmkernel->acctMgr()->create( account->type(),
-						   account->name() );
+                                                   account->name() );
       mod->newAccount->pseudoAssign( account );
       mModifiedAccounts.append( mod );
       account = mod->newAccount;
@@ -1309,9 +1309,9 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
     QValueList< QGuardedPtr<KMAccount> >::Iterator it;
     for ( it = mNewAccounts.begin() ; it != mNewAccounts.end() ; ++it )
       if ( (*it)->name() == listItem->text(0) ) {
-	acct = *it;
-	mNewAccounts.remove( it );
-	break;
+        acct = *it;
+        mNewAccounts.remove( it );
+        break;
       }
   }
   if ( !acct ) {
@@ -1322,7 +1322,7 @@ void AccountsPage::ReceivingTab::slotRemoveSelectedAccount() {
   if ( !acct ) {
     // ### FIXME: see above
     KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
-			.arg(listItem->text(0)) );
+                        .arg(listItem->text(0)) );
     return;
   }
 
@@ -1394,11 +1394,11 @@ void AccountsPage::ReceivingTab::save() {
 
   // Delete accounts marked for deletion
   for ( it = mAccountsToDelete.begin() ;
-	it != mAccountsToDelete.end() ; ++it ) {
+        it != mAccountsToDelete.end() ; ++it ) {
     kmkernel->acctMgr()->writeConfig( true );
     if ( (*it) && !kmkernel->acctMgr()->remove(*it) )
       KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
-			  .arg( (*it)->name() ) );
+                          .arg( (*it)->name() ) );
   }
   mAccountsToDelete.clear();
 
@@ -1536,7 +1536,7 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * n
   hlay->addStretch( 10 );
   vlay->addSpacing( KDialog::spacingHint() );
   mFontChooser = new KFontChooser( this, "font", false, QStringList(),
-				   false, 4 );
+                                   false, 4 );
   mFontChooser->setEnabled( false ); // since !mCustomFontCheck->isChecked()
   vlay->addWidget( mFontChooser );
   connect ( mFontChooser, SIGNAL( fontSelected( const QFont& ) ),
@@ -1545,14 +1545,14 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * n
 
   // {en,dis}able widgets depending on the state of mCustomFontCheck:
   connect( mCustomFontCheck, SIGNAL(toggled(bool)),
-	   label, SLOT(setEnabled(bool)) );
+           label, SLOT(setEnabled(bool)) );
   connect( mCustomFontCheck, SIGNAL(toggled(bool)),
-	   mFontLocationCombo, SLOT(setEnabled(bool)) );
+           mFontLocationCombo, SLOT(setEnabled(bool)) );
   connect( mCustomFontCheck, SIGNAL(toggled(bool)),
-	   mFontChooser, SLOT(setEnabled(bool)) );
+           mFontChooser, SLOT(setEnabled(bool)) );
   // load the right font settings into mFontChooser:
   connect( mFontLocationCombo, SIGNAL(activated(int) ),
-	   this, SLOT(slotFontSelectorChanged(int)) );
+           this, SLOT(slotFontSelectorChanged(int)) );
 }
 
 
@@ -1568,11 +1568,11 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
     // hardcode the family and size of "message body" dependant fonts:
     for ( int i = 0 ; i < numFontNames ; i++ )
       if ( !fontNames[i].enableFamilyAndSize ) {
-	// ### shall we copy the font and set the save and re-set
-	// {regular,italic,bold,bold italic} property or should we
-	// copy only family and pointSize?
-	mFont[i].setFamily( mFont[0].family() );
-	mFont[i].setPointSize/*Float?*/( mFont[0].pointSize/*Float?*/() );
+        // ### shall we copy the font and set the save and re-set
+        // {regular,italic,bold,bold italic} property or should we
+        // copy only family and pointSize?
+        mFont[i].setFamily( mFont[0].family() );
+        mFont[i].setPointSize/*Float?*/( mFont[0].pointSize/*Float?*/() );
       }
   } else if ( mActiveFontIndex > 0 )
     mFont[ mActiveFontIndex ] = mFontChooser->font();
@@ -1590,7 +1590,7 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
 
   // Disable Family and Size list if we have selected a quote font:
   mFontChooser->enableColumn( KFontChooser::FamilyList|KFontChooser::SizeList,
-			      fontNames[ index ].enableFamilyAndSize );
+                              fontNames[ index ].enableFamilyAndSize );
 }
 
 void AppearancePage::FontsTab::load() {
@@ -1617,7 +1617,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
       needChange = true;
       mFont[i] = fonts.readFontEntry( fontNames[i].configName );
       kdDebug(5006) << "got font \"" << fontNames[i].configName
-		<< "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
+                << "\" thusly: \"" << mFont[i].toString() << "\"" << endl;
     }
   if ( needChange && mFontLocationCombo->currentItem() > 0 )
     mFontChooser->setFont( mFont[ mFontLocationCombo->currentItem() ],
@@ -1708,9 +1708,9 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
 
   // {en,dir}able widgets depending on the state of mCustomColorCheck:
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
-	   mColorList, SLOT(setEnabled(bool)) );
+           mColorList, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
-	   mRecycleColorCheck, SLOT(setEnabled(bool)) );
+           mRecycleColorCheck, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 }
@@ -1833,6 +1833,10 @@ static const BoolConfigEntry showSpamStatusMode = {
   "Reader", "showSpamStatus", I18N_NOOP("Show s&pam status in fancy headers"), true
 };
 
+static const BoolConfigEntry showEmoticons = {
+  "Reader", "ShowEmoticons", I18N_NOOP("Replace smileys by emoticons"), true
+};
+
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
   : ConfigModuleTab( parent, name )
 {
@@ -1851,6 +1855,12 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   populateCheckBox( mShowSpamStatusCheck = new QCheckBox( this ), showSpamStatusMode );
   vlay->addWidget( mShowSpamStatusCheck );
   connect( mShowSpamStatusCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
+
+  // "replace smileys by emoticons" check box;
+  populateCheckBox( mShowEmoticonsCheck = new QCheckBox( this ), showEmoticons );
+  vlay->addWidget( mShowEmoticonsCheck );
+  connect( mShowEmoticonsCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged() ) );
 
   // "folder list" radio buttons:
@@ -1886,6 +1896,7 @@ void AppearancePage::LayoutTab::load() {
 
   loadWidget( mShowColorbarCheck, reader, showColorbarMode );
   loadWidget( mShowSpamStatusCheck, reader, showSpamStatusMode );
+  loadWidget( mShowEmoticonsCheck, reader, showEmoticons );
   loadWidget( mFolderListGroup, geometry, folderListMode );
   loadWidget( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadWidget( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1898,6 +1909,7 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
 
   loadProfile( mShowColorbarCheck, reader, showColorbarMode );
   loadProfile( mShowSpamStatusCheck, reader, showSpamStatusMode );
+  loadProfile( mShowEmoticonsCheck, reader, showEmoticons );
   loadProfile( mFolderListGroup, geometry, folderListMode );
   loadProfile( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   loadProfile( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1910,6 +1922,7 @@ void AppearancePage::LayoutTab::save() {
 
   saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
   saveCheckBox( mShowSpamStatusCheck, reader, showSpamStatusMode );
+  saveCheckBox( mShowEmoticonsCheck, reader, showEmoticons );
   saveButtonGroup( mFolderListGroup, geometry, folderListMode );
   saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
   saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
@@ -1979,16 +1992,16 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
 
   mNestingPolicy->insert(
     new QRadioButton( i18n("Always &keep threads open"),
-		      mNestingPolicy ), 0 );
+                      mNestingPolicy ), 0 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Threads default to o&pen"),
-		      mNestingPolicy ), 1 );
+                      mNestingPolicy ), 1 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Threads default to closed"),
-		      mNestingPolicy ), 2 );
+                      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Open threads that contain ne&w, unread "
-			   "or important messages and open watched threads."),
+                           "or important messages and open watched threads."),
                       mNestingPolicy ), 3 );
 
   vlay->addWidget( mNestingPolicy );
@@ -2010,7 +2023,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
       mCustomDateFormatEdit = new KLineEdit( mDateDisplay );
       mCustomDateFormatEdit->setEnabled( false );
       connect( radio, SIGNAL(toggled(bool)),
-	       mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
+               mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
       QString customDateWhatsThis =
         i18n("<qt><p><strong>These expressions may be used for the date:"
              "</strong></p>"
@@ -2073,7 +2086,7 @@ void AppearancePage::HeadersTab::load() {
 
   // "Date Display":
   setDateDisplay( general.readNumEntry( "dateFormat", DateFormatter::Fancy ),
-		  general.readEntry( "customDateFormat" ) );
+                  general.readEntry( "customDateFormat" ) );
 }
 
 void AppearancePage::HeadersTab::setDateDisplay( int num, const QString & format ) {
@@ -2115,7 +2128,7 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
 
   if ( general.hasKey( "dateFormat" ) )
     setDateDisplay( general.readNumEntry( "dateFormat" ),
-		   general.readEntry( "customDateFormat" ) );
+                   general.readEntry( "customDateFormat" ) );
 }
 
 void AppearancePage::HeadersTab::save() {
@@ -2125,23 +2138,23 @@ void AppearancePage::HeadersTab::save() {
   if ( geometry.readBoolEntry( "nestedMessages", false )
        != mNestedMessagesCheck->isChecked() ) {
     int result = KMessageBox::warningContinueCancel( this,
-		   i18n("Changing the global threading setting will override "
-			"all folder specific values."),
-		   QString::null, QString::null, "threadOverride" );
+                   i18n("Changing the global threading setting will override "
+                        "all folder specific values."),
+                   QString::null, QString::null, "threadOverride" );
     if ( result == KMessageBox::Continue ) {
       geometry.writeEntry( "nestedMessages", mNestedMessagesCheck->isChecked() );
       // remove all threadMessagesOverride keys from all [Folder-*] groups:
       QStringList groups = KMKernel::config()->groupList().grep( QRegExp("^Folder-") );
       kdDebug(5006) << "groups.count() == " << groups.count() << endl;
       for ( QStringList::const_iterator it = groups.begin() ; it != groups.end() ; ++it ) {
-	KConfigGroup group( KMKernel::config(), *it );
-	group.deleteEntry( "threadMessagesOverride" );
+        KConfigGroup group( KMKernel::config(), *it );
+        group.deleteEntry( "threadMessagesOverride" );
       }
     }
   }
 
   geometry.writeEntry( "nestingPolicy",
-		       mNestingPolicy->id( mNestingPolicy->selected() ) );
+                       mNestingPolicy->id( mNestingPolicy->selected() ) );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
   general.writeEntry( "showCryptoIcons", mCryptoIconsCheck->isChecked() );
   general.writeEntry( "showAttachmentIcon", mAttachmentCheck->isChecked() );
@@ -2150,13 +2163,13 @@ void AppearancePage::HeadersTab::save() {
   // check bounds:
   assert( dateDisplayID >= 0 ); assert( dateDisplayID < numDateDisplayConfig );
   general.writeEntry( "dateFormat",
-		      dateDisplayConfig[ dateDisplayID ].dateDisplay );
+                      dateDisplayConfig[ dateDisplayID ].dateDisplay );
   general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
 }
 
 
 //
-// Message Window 
+// Message Window
 //
 
 
@@ -2192,7 +2205,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
   connect( mCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  QString fallbackCharsetWhatsThis = 
+  QString fallbackCharsetWhatsThis =
     i18n( GlobalSettings::self()->fallbackCharacterEncodingItem()->whatsThis().utf8() );
   QWhatsThis::add( mCharsetCombo, fallbackCharsetWhatsThis );
 
@@ -2210,7 +2223,7 @@ AppearancePageReaderTab::AppearancePageReaderTab( QWidget * parent,
   connect( mOverrideCharsetCombo, SIGNAL( activated( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  QString overrideCharsetWhatsThis = 
+  QString overrideCharsetWhatsThis =
     i18n( GlobalSettings::self()->overrideCharacterEncodingItem()->whatsThis().utf8() );
   QWhatsThis::add( mOverrideCharsetCombo, overrideCharsetWhatsThis );
 
@@ -2246,7 +2259,7 @@ void AppearancePage::ReaderTab::readCurrentOverrideCodec()
   }
 }
 
-void AppearancePage::ReaderTab::load() 
+void AppearancePage::ReaderTab::load()
 {
   readCurrentOverrideCodec();
 }
@@ -2436,7 +2449,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   hlay->addStretch( 1 );
   // only enable the spinbox if the checkbox is checked:
   connect( mWordWrapCheck, SIGNAL(toggled(bool)),
-	   mWrapColumnSpin, SLOT(setEnabled(bool)) );
+           mWrapColumnSpin, SLOT(setEnabled(bool)) );
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mAutoSave = new KIntSpinBox( 0, 60, 1, 1, 10, this, "kcfg_AutosaveInterval" );
@@ -2474,19 +2487,19 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   label->setEnabled( false ); // since !mExternalEditorCheck->isChecked()
   // ### FIXME: allow only executables (x-bit when available..)
   mEditorRequester->setFilter( "application/x-executable "
-			       "application/x-shellscript "
-			       "application/x-desktop" );
+                               "application/x-shellscript "
+                               "application/x-desktop" );
   mEditorRequester->setEnabled( false ); // !mExternalEditorCheck->isChecked()
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
-	   label, SLOT(setEnabled(bool)) );
+           label, SLOT(setEnabled(bool)) );
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
-	   mEditorRequester, SLOT(setEnabled(bool)) );
+           mEditorRequester, SLOT(setEnabled(bool)) );
 
   label = new QLabel( i18n("<b>%f</b> will be replaced with the "
-			   "filename to edit."), group );
+                           "filename to edit."), group );
   label->setEnabled( false ); // see above
   connect( mExternalEditorCheck, SIGNAL(toggled(bool)),
-	   label, SLOT(setEnabled(bool)) );
+           label, SLOT(setEnabled(bool)) );
 
   vlay->addWidget( group );
   vlay->addStretch( 100 );
@@ -2564,19 +2577,19 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
 
   // row 0: help text
   glay->addMultiCellWidget( new QLabel( i18n("<qt>The following placeholders are "
-					     "supported in the reply phrases:<br>"
-					     "<b>%D</b>: date, <b>%S</b>: subject,<br>"
+                                             "supported in the reply phrases:<br>"
+                                             "<b>%D</b>: date, <b>%S</b>: subject,<br>"
                                              "<b>%e</b>: sender's address, <b>%F</b>: sender's name, <b>%f</b>: sender's initials,<br>"
                                              "<b>%T</b>: recipient's name, <b>%t</b>: recipient's name and address,<br>"
                                              "<b>%C</b>: carbon copy names, <b>%c</b>: carbon copy names and addresses,<br>"
-					     "<b>%%</b>: percent sign, <b>%_</b>: space, "
-					     "<b>%L</b>: linebreak</qt>"), this ),
-			    0, 0, 0, 2 ); // row 0; cols 0..2
+                                             "<b>%%</b>: percent sign, <b>%_</b>: space, "
+                                             "<b>%L</b>: linebreak</qt>"), this ),
+                            0, 0, 0, 2 ); // row 0; cols 0..2
 
   // row 1: label and language combo box:
   mPhraseLanguageCombo = new LanguageComboBox( false, this );
   glay->addWidget( new QLabel( mPhraseLanguageCombo,
-			       i18n("Lang&uage:"), this ), 1, 0 );
+                               i18n("Lang&uage:"), this ), 1, 0 );
   glay->addMultiCellWidget( mPhraseLanguageCombo, 1, 1, 1, 2 );
   connect( mPhraseLanguageCombo, SIGNAL(activated(const QString&)),
            this, SLOT(slotLanguageChanged(const QString&)) );
@@ -2599,7 +2612,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   connect( mPhraseReplyEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseReplyEdit,
-			       i18n("Reply to se&nder:"), this ), 3, 0 );
+                               i18n("Reply to se&nder:"), this ), 3, 0 );
   glay->addMultiCellWidget( mPhraseReplyEdit, 3, 3, 1, 2 ); // cols 1..2
 
   // row 4: "reply to all" line edit and label:
@@ -2607,7 +2620,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   connect( mPhraseReplyAllEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseReplyAllEdit,
-			       i18n("Repl&y to all:"), this ), 4, 0 );
+                               i18n("Repl&y to all:"), this ), 4, 0 );
   glay->addMultiCellWidget( mPhraseReplyAllEdit, 4, 4, 1, 2 ); // cols 1..2
 
   // row 5: "forward" line edit and label:
@@ -2615,7 +2628,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   connect( mPhraseForwardEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseForwardEdit,
-			       i18n("&Forward:"), this ), 5, 0 );
+                               i18n("&Forward:"), this ), 5, 0 );
   glay->addMultiCellWidget( mPhraseForwardEdit, 5, 5, 1, 2 ); // cols 1..2
 
   // row 6: "quote indicator" line edit and label:
@@ -2623,7 +2636,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   connect( mPhraseIndentPrefixEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseIndentPrefixEdit,
-			       i18n("&Quote indicator:"), this ), 6, 0 );
+                               i18n("&Quote indicator:"), this ), 6, 0 );
   glay->addMultiCellWidget( mPhraseIndentPrefixEdit, 6, 6, 1, 2 );
 
   // row 7: spacer
@@ -2668,10 +2681,10 @@ void ComposerPage::PhrasesTab::slotAddNewLanguage( const QString& lang )
   locale.setLanguage( lang );
   mLanguageList.append(
      LanguageItem( lang,
-		   locale.translate("On %D, you wrote:"),
-		   locale.translate("On %D, %F wrote:"),
-		   locale.translate("Forwarded Message"),
-		   locale.translate(">%_") ) );
+                   locale.translate("On %D, you wrote:"),
+                   locale.translate("On %D, %F wrote:"),
+                   locale.translate("Forwarded Message"),
+                   locale.translate(">%_") ) );
   mRemoveButton->setEnabled( true );
   slotLanguageChanged( QString::null );
 }
@@ -2720,10 +2733,10 @@ void ComposerPage::PhrasesTab::load() {
     QString lang = replyPhrases.language();
     mLanguageList.append(
          LanguageItem( lang,
-		       replyPhrases.phraseReplySender(),
-		       replyPhrases.phraseReplyAll(),
-		       replyPhrases.phraseForward(),
-		       replyPhrases.indentPrefix() ) );
+                       replyPhrases.phraseReplySender(),
+                       replyPhrases.phraseReplyAll(),
+                       replyPhrases.phraseForward(),
+                       replyPhrases.indentPrefix() ) );
     mPhraseLanguageCombo->insertLanguage( lang );
   }
 
@@ -2777,7 +2790,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 
   // row 0: help text:
   label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
-			   "(entries are case-insensitive regular expressions):"), group );
+                           "(entries are case-insensitive regular expressions):"), group );
   label->setAlignment( AlignLeft|WordBreak );
 
   // row 1, string list editor:
@@ -2785,9 +2798,9 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
     static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add | SimpleStringListEditor::Remove | SimpleStringListEditor::Modify );
   mReplyListEditor =
     new SimpleStringListEditor( group, 0, buttonCode,
-				i18n("A&dd..."), i18n("Re&move"),
-				i18n("Mod&ify..."),
-				i18n("Enter new reply prefix:") );
+                                i18n("A&dd..."), i18n("Re&move"),
+                                i18n("Mod&ify..."),
+                                i18n("Enter new reply prefix:") );
   connect( mReplyListEditor, SIGNAL( changed( void ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2806,16 +2819,16 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 
   // row 0: help text:
   label= new QLabel( i18n("Recognize any sequence of the following prefixes\n"
-			  "(entries are case-insensitive regular expressions):"), group );
+                          "(entries are case-insensitive regular expressions):"), group );
   label->setAlignment( AlignLeft|WordBreak );
 
   // row 1: string list editor
   mForwardListEditor =
     new SimpleStringListEditor( group, 0, buttonCode,
-				i18n("Add..."),
-				i18n("Remo&ve"),
+                                i18n("Add..."),
+                                i18n("Remo&ve"),
                                 i18n("Modify..."),
-				i18n("Enter new forward prefix:") );
+                                i18n("Enter new forward prefix:") );
   connect( mForwardListEditor, SIGNAL( changed( void ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2862,22 +2875,22 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
 
   mCharsetListEditor =
     new SimpleStringListEditor( this, 0, SimpleStringListEditor::All,
-				i18n("A&dd..."), i18n("Remo&ve"),
-				i18n("&Modify..."), i18n("Enter charset:") );
+                                i18n("A&dd..."), i18n("Remo&ve"),
+                                i18n("&Modify..."), i18n("Enter charset:") );
   connect( mCharsetListEditor, SIGNAL( changed( void ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
   vlay->addWidget( mCharsetListEditor, 1 );
 
   mKeepReplyCharsetCheck = new QCheckBox( i18n("&Keep original charset when "
-						"replying or forwarding (if "
-						"possible)"), this );
+                                                "replying or forwarding (if "
+                                                "possible)"), this );
   connect( mKeepReplyCharsetCheck, SIGNAL ( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   vlay->addWidget( mKeepReplyCharsetCheck );
 
   connect( mCharsetListEditor, SIGNAL(aboutToAdd(QString&)),
-	   this, SLOT(slotVerifyCharset(QString&)) );
+           this, SLOT(slotVerifyCharset(QString&)) );
 }
 
 void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
@@ -2912,10 +2925,10 @@ void ComposerPage::CharsetTab::load() {
 
   QStringList charsets = composer.readListEntry( "pref-charsets" );
   for ( QStringList::Iterator it = charsets.begin() ;
-	it != charsets.end() ; ++it )
+        it != charsets.end() ; ++it )
       if ( (*it) == QString::fromLatin1("locale") )
-	(*it) = QString("%1 (locale)")
-	  .arg( QCString( kmkernel->networkCodec()->mimeName() ).lower() );
+        (*it) = QString("%1 (locale)")
+          .arg( QCString( kmkernel->networkCodec()->mimeName() ).lower() );
 
   mCharsetListEditor->setStringList( charsets );
   mKeepReplyCharsetCheck->setChecked( !composer.readBoolEntry( "force-reply-charset", false ) );
@@ -2931,7 +2944,7 @@ void ComposerPage::CharsetTab::save() {
       (*it) = "locale";
   composer.writeEntry( "pref-charsets", charsetList );
   composer.writeEntry( "force-reply-charset",
-		       !mKeepReplyCharsetCheck->isChecked() );
+                       !mKeepReplyCharsetCheck->isChecked() );
 }
 
 QString ComposerPage::HeadersTab::helpAnchor() const {
@@ -2965,15 +2978,15 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
     new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), this );
   mMessageIdSuffixEdit->setValidator( mMessageIdSuffixValidator );
   label = new QLabel( mMessageIdSuffixEdit,
-		      i18n("Custom message-&id suffix:"), this );
+                      i18n("Custom message-&id suffix:"), this );
   label->setEnabled( false ); // since !mCreateOwnMessageIdCheck->isChecked()
   mMessageIdSuffixEdit->setEnabled( false );
   hlay->addWidget( label );
   hlay->addWidget( mMessageIdSuffixEdit, 1 );
   connect( mCreateOwnMessageIdCheck, SIGNAL(toggled(bool) ),
-	   label, SLOT(setEnabled(bool)) );
+           label, SLOT(setEnabled(bool)) );
   connect( mCreateOwnMessageIdCheck, SIGNAL(toggled(bool) ),
-	   mMessageIdSuffixEdit, SLOT(setEnabled(bool)) );
+           mMessageIdSuffixEdit, SLOT(setEnabled(bool)) );
   connect( mMessageIdSuffixEdit, SIGNAL( textChanged( const QString& ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
@@ -2992,7 +3005,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   mTagList->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
   mTagList->setSorting( -1 );
   connect( mTagList, SIGNAL(selectionChanged()),
-	   this, SLOT(slotMimeHeaderSelectionChanged()) );
+           this, SLOT(slotMimeHeaderSelectionChanged()) );
   glay->addMultiCellWidget( mTagList, 0, 2, 0, 1 );
 
   // "new" and "remove" buttons:
@@ -3002,7 +3015,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   glay->addWidget( button, 0, 2 );
   mRemoveHeaderButton = new QPushButton( i18n("Re&move"), this );
   connect( mRemoveHeaderButton, SIGNAL(clicked()),
-	   this, SLOT(slotRemoveMimeHeader()) );
+           this, SLOT(slotRemoveMimeHeader()) );
   button->setAutoDefault( false );
   glay->addWidget( mRemoveHeaderButton, 1, 2 );
 
@@ -3014,7 +3027,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   glay->addWidget( mTagNameLabel, 3, 0 );
   glay->addWidget( mTagNameEdit, 3, 1 );
   connect( mTagNameEdit, SIGNAL(textChanged(const QString&)),
-	   this, SLOT(slotMimeHeaderNameChanged(const QString&)) );
+           this, SLOT(slotMimeHeaderNameChanged(const QString&)) );
 
   mTagValueEdit = new KLineEdit( this );
   mTagValueEdit->setEnabled( false );
@@ -3023,7 +3036,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   glay->addWidget( mTagValueLabel, 4, 0 );
   glay->addWidget( mTagValueEdit, 4, 1 );
   connect( mTagValueEdit, SIGNAL(textChanged(const QString&)),
-	   this, SLOT(slotMimeHeaderValueChanged(const QString&)) );
+           this, SLOT(slotMimeHeaderValueChanged(const QString&)) );
 }
 
 void ComposerPage::HeadersTab::slotMimeHeaderSelectionChanged()
@@ -3101,7 +3114,7 @@ void ComposerPage::HeadersTab::load() {
   QString suffix = general.readEntry( "myMessageIdSuffix" );
   mMessageIdSuffixEdit->setText( suffix );
   bool state = ( !suffix.isEmpty() &&
-	    general.readBoolEntry( "useCustomMessageIdSuffix", false ) );
+            general.readBoolEntry( "useCustomMessageIdSuffix", false ) );
   mCreateOwnMessageIdCheck->setChecked( state );
 
   mTagList->clear();
@@ -3113,7 +3126,7 @@ void ComposerPage::HeadersTab::load() {
   int count = general.readNumEntry( "mime-header-count", 0 );
   for( int i = 0 ; i < count ; i++ ) {
     KConfigGroup config( KMKernel::config(),
-			 QCString("Mime #") + QCString().setNum(i) );
+                         QCString("Mime #") + QCString().setNum(i) );
     QString name  = config.readEntry( "name" );
     QString value = config.readEntry( "value" );
     if( !name.isEmpty() )
@@ -3133,16 +3146,16 @@ void ComposerPage::HeadersTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   general.writeEntry( "useCustomMessageIdSuffix",
-		      mCreateOwnMessageIdCheck->isChecked() );
+                      mCreateOwnMessageIdCheck->isChecked() );
   general.writeEntry( "myMessageIdSuffix",
-		      mMessageIdSuffixEdit->text() );
+                      mMessageIdSuffixEdit->text() );
 
   int numValidEntries = 0;
   QListViewItem * item = mTagList->firstChild();
   for ( ; item ; item = item->itemBelow() )
     if( !item->text(0).isEmpty() ) {
       KConfigGroup config( KMKernel::config(), QCString("Mime #")
-			     + QCString().setNum( numValidEntries ) );
+                             + QCString().setNum( numValidEntries ) );
       config.writeEntry( "name",  item->text( 0 ) );
       config.writeEntry( "value", item->text( 1 ) );
       numValidEntries++;
@@ -3203,9 +3216,9 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
   vlay->addWidget( mAttachWordsListEditor );
 
   connect( mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool) ),
-	   label, SLOT(setEnabled(bool)) );
+           label, SLOT(setEnabled(bool)) );
   connect( mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool) ),
-	   mAttachWordsListEditor, SLOT(setEnabled(bool)) );
+           mAttachWordsListEditor, SLOT(setEnabled(bool)) );
 }
 
 void ComposerPage::AttachmentsTab::load() {
@@ -3327,64 +3340,64 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   // QWhat'sThis texts
   QString htmlWhatsThis = i18n( "<qt><p>Messages sometimes come in both formats. "
               "This option controls whether you want the HTML part or the plain "
-	      "text part to be displayed.</p>"
-	      "<p>Displaying the HTML part makes the message look better, "
-	      "but at the same time increases the risk of security holes "
-	      "being exploited.</p>"
-	      "<p>Displaying the plain text part loses much of the message's "
-	      "formatting, but makes it almost <em>impossible</em> "
-	      "to exploit security holes in the HTML renderer (Konqueror).</p>"
-	      "<p>The option below guards against one common misuse of HTML "
-	      "messages, but it cannot guard against security issues that were "
-	      "not known at the time this version of KMail was written.</p>"
-	      "<p>It is therefore advisable to <em>not</em> prefer HTML to "
-	      "plain text.</p>"
-	      "<p><b>Note:</b> You can set this option on a per-folder basis "
-	      "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
+              "text part to be displayed.</p>"
+              "<p>Displaying the HTML part makes the message look better, "
+              "but at the same time increases the risk of security holes "
+              "being exploited.</p>"
+              "<p>Displaying the plain text part loses much of the message's "
+              "formatting, but makes it almost <em>impossible</em> "
+              "to exploit security holes in the HTML renderer (Konqueror).</p>"
+              "<p>The option below guards against one common misuse of HTML "
+              "messages, but it cannot guard against security issues that were "
+              "not known at the time this version of KMail was written.</p>"
+              "<p>It is therefore advisable to <em>not</em> prefer HTML to "
+              "plain text.</p>"
+              "<p><b>Note:</b> You can set this option on a per-folder basis "
+              "from the <i>Folder</i> menu of KMail's main window.</p></qt>" );
 
   QString externalWhatsThis = i18n( "<qt><p>Some mail advertisements are in HTML "
               "and contain references to, for example, images that the advertisers"
-	      " employ to find out that you have read their message "
-	      "(&quot;web bugs&quot;).</p>"
-	      "<p>There is no valid reason to load images off the Internet like "
-	      "this, since the sender can always attach the required images "
-	      "directly to the message.</p>"
-	      "<p>To guard from such a misuse of the HTML displaying feature "
-	      "of KMail, this option is <em>disabled</em> by default.</p>"
-	      "<p>However, if you wish to, for example, view images in HTML "
-	      "messages that were not attached to it, you can enable this "
-	      "option, but you should be aware of the possible problem.</p></qt>" );
+              " employ to find out that you have read their message "
+              "(&quot;web bugs&quot;).</p>"
+              "<p>There is no valid reason to load images off the Internet like "
+              "this, since the sender can always attach the required images "
+              "directly to the message.</p>"
+              "<p>To guard from such a misuse of the HTML displaying feature "
+              "of KMail, this option is <em>disabled</em> by default.</p>"
+              "<p>However, if you wish to, for example, view images in HTML "
+              "messages that were not attached to it, you can enable this "
+              "option, but you should be aware of the possible problem.</p></qt>" );
 
   QString receiptWhatsThis = i18n( "<qt><h3>Message Disposition "
               "Notification Policy</h3>"
-	      "<p>MDNs are a generalization of what is commonly called <b>read "
- 	      "receipt</b>. The message author requests a disposition "
- 	      "notification to be sent and the receiver's mail program "
- 	      "generates a reply from which the author can learn what "
- 	      "happened to his message. Common disposition types include "
- 	      "<b>displayed</b> (i.e. read), <b>deleted</b> and <b>dispatched</b> "
- 	      "(e.g. forwarded).</p>"
- 	      "<p>The following options are available to control KMail's "
- 	      "sending of MDNs:</p>"
- 	      "<ul>"
- 	      "<li><em>Ignore</em>: Ignores any request for disposition "
- 	      "notifications. No MDN will ever be sent automatically "
- 	      "(recommended).</li>"
- 	      "<li><em>Ask</em>: Answers requests only after asking the user "
- 	      "for permission. This way, you can send MDNs for selected "
- 	      "messages while denying or ignoring them for others.</li>"
- 	      "<li><em>Deny</em>: Always sends a <b>denied</b> notification. This "
- 	      "is only <em>slightly</em> better than always sending MDNs. "
- 	      "The author will still know that the messages has been acted "
- 	      "upon, he just cannot tell whether it was deleted or read etc.</li>"
- 	      "<li><em>Always send</em>: Always sends the requested "
- 	      "disposition notification. That means that the author of the "
- 	      "message gets to know when the message was acted upon and, "
- 	      "in addition, what happened to it (displayed, deleted, "
- 	      "etc.). This option is strongly discouraged, but since it "
- 	      "makes much sense e.g. for customer relationship management, "
- 	      "it has been made available.</li>"
- 	      "</ul></qt>" );
+              "<p>MDNs are a generalization of what is commonly called <b>read "
+              "receipt</b>. The message author requests a disposition "
+              "notification to be sent and the receiver's mail program "
+              "generates a reply from which the author can learn what "
+              "happened to his message. Common disposition types include "
+              "<b>displayed</b> (i.e. read), <b>deleted</b> and <b>dispatched</b> "
+              "(e.g. forwarded).</p>"
+              "<p>The following options are available to control KMail's "
+              "sending of MDNs:</p>"
+              "<ul>"
+              "<li><em>Ignore</em>: Ignores any request for disposition "
+              "notifications. No MDN will ever be sent automatically "
+              "(recommended).</li>"
+              "<li><em>Ask</em>: Answers requests only after asking the user "
+              "for permission. This way, you can send MDNs for selected "
+              "messages while denying or ignoring them for others.</li>"
+              "<li><em>Deny</em>: Always sends a <b>denied</b> notification. This "
+              "is only <em>slightly</em> better than always sending MDNs. "
+              "The author will still know that the messages has been acted "
+              "upon, he just cannot tell whether it was deleted or read etc.</li>"
+              "<li><em>Always send</em>: Always sends the requested "
+              "disposition notification. That means that the author of the "
+              "message gets to know when the message was acted upon and, "
+              "in addition, what happened to it (displayed, deleted, "
+              "etc.). This option is strongly discouraged, but since it "
+              "makes much sense e.g. for customer relationship management, "
+              "it has been made available.</li>"
+              "</ul></qt>" );
 
 
   // "HTML Messages" group box:
@@ -3396,18 +3409,18 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   connect( mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
-					    "references from the Internet" ), group );
+                                            "references from the Internet" ), group );
   QWhatsThis::add( mExternalReferences, externalWhatsThis );
   connect( mExternalReferences, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
   label = new KActiveLabel( i18n("<b>WARNING:</b> Allowing HTML in email may "
-			   "increase the risk that your system will be "
-			   "compromised by present and anticipated security "
-			   "exploits. <a href=\"whatsthis:%1\">More about "
-			   "HTML mails...</a> <a href=\"whatsthis:%2\">More "
-			   "about external references...</a>")
-			   .arg(htmlWhatsThis).arg(externalWhatsThis),
-			   group );
+                           "increase the risk that your system will be "
+                           "compromised by present and anticipated security "
+                           "exploits. <a href=\"whatsthis:%1\">More about "
+                           "HTML mails...</a> <a href=\"whatsthis:%2\">More "
+                           "about external references...</a>")
+                           .arg(htmlWhatsThis).arg(externalWhatsThis),
+                           group );
 
   vlay->addWidget( group );
 
@@ -3472,10 +3485,10 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   // Warning label:
   label = new KActiveLabel( i18n("<b>WARNING:</b> Unconditionally returning "
-			   "confirmations undermines your privacy. "
-			   "<a href=\"whatsthis:%1\">More...</a>")
-			     .arg(receiptWhatsThis),
-			   group );
+                           "confirmations undermines your privacy. "
+                           "<a href=\"whatsthis:%1\">More...</a>")
+                             .arg(receiptWhatsThis),
+                           group );
 
   vlay->addWidget( group );
 
@@ -3674,7 +3687,7 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * n
   connect( mWidget->mWarnEncrRootCertExpiresSB, SIGNAL( valueChanged( int ) ), SLOT( slotEmitChanged() ) );
 
   connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()),
-	   SLOT(slotReenableAllWarningsClicked()) );
+           SLOT(slotReenableAllWarningsClicked()) );
 }
 
 void SecurityPage::WarningTab::load() {
@@ -3736,18 +3749,18 @@ void SecurityPage::WarningTab::save() {
 
   composer.writeEntry( "crypto-warn-when-near-expire", mWidget->warnGroupBox->isChecked() );
   composer.writeEntry( "crypto-warn-sign-key-near-expire-int",
-		       mWidget->mWarnSignKeyExpiresSB->value() );
+                       mWidget->mWarnSignKeyExpiresSB->value() );
   composer.writeEntry( "crypto-warn-sign-chaincert-near-expire-int",
-		       mWidget->mWarnSignChainCertExpiresSB->value() );
+                       mWidget->mWarnSignChainCertExpiresSB->value() );
   composer.writeEntry( "crypto-warn-sign-root-near-expire-int",
-		       mWidget->mWarnSignRootCertExpiresSB->value() );
+                       mWidget->mWarnSignRootCertExpiresSB->value() );
 
   composer.writeEntry( "crypto-warn-encr-key-near-expire-int",
-		       mWidget->mWarnEncrKeyExpiresSB->value() );
+                       mWidget->mWarnEncrKeyExpiresSB->value() );
   composer.writeEntry( "crypto-warn-encr-chaincert-near-expire-int",
-		       mWidget->mWarnEncrChainCertExpiresSB->value() );
+                       mWidget->mWarnEncrChainCertExpiresSB->value() );
   composer.writeEntry( "crypto-warn-encr-root-near-expire-int",
-		       mWidget->mWarnEncrRootCertExpiresSB->value() );
+                       mWidget->mWarnEncrRootCertExpiresSB->value() );
 }
 
 void SecurityPage::WarningTab::slotReenableAllWarningsClicked() {
@@ -4014,10 +4027,10 @@ void SecurityPage::SMimeTab::save() {
 bool SecurityPageSMimeTab::process(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData)
 {
     if ( fun == "load()" ) {
-	replyType = "void";
+        replyType = "void";
         load();
     } else {
-	return DCOPObject::process( fun, data, replyType, replyData );
+        return DCOPObject::process( fun, data, replyType, replyData );
     }
     return true;
 }
@@ -4175,7 +4188,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
   hlay->addWidget( mDelayedMarkAsRead );
   mDelayedMarkTime = new KIntSpinBox( 0 /*min*/, 60 /*max*/, 1/*step*/,
-				      0 /*init*/, 10 /*base*/, this);
+                                      0 /*init*/, 10 /*base*/, this);
   mDelayedMarkTime->setSuffix( i18n(" sec") );
   mDelayedMarkTime->setEnabled( false ); // since mDelayedMarkAsREad is off
   hlay->addWidget( mDelayedMarkTime );
@@ -4198,14 +4211,14 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mMailboxPrefCombo = new QComboBox( false, this );
   label = new QLabel( mMailboxPrefCombo,
-		      i18n("to be continued with \"flat files\" and "
-			   "\"directories\", resp.",
-			   "By default, &message folders on disk are:"), this );
+                      i18n("to be continued with \"flat files\" and "
+                           "\"directories\", resp.",
+                           "By default, &message folders on disk are:"), this );
   mMailboxPrefCombo->insertStringList( QStringList()
-	  << i18n("continuation of \"By default, &message folders on disk are\"",
-		  "Flat Files (\"mbox\" format)")
-	  << i18n("continuation of \"By default, &message folders on disk are\"",
-		  "Directories (\"maildir\" format)") );
+          << i18n("continuation of \"By default, &message folders on disk are\"",
+                  "Flat Files (\"mbox\" format)")
+          << i18n("continuation of \"By default, &message folders on disk are\"",
+                  "Directories (\"maildir\" format)") );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
   connect( mMailboxPrefCombo, SIGNAL( activated( int ) ),
@@ -4233,35 +4246,35 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 
   // and now: add QWhatsThis:
   QString msg = i18n( "what's this help",
-		      "<qt><p>This selects which mailbox format will be "
-		      "the default for local folders:</p>"
-		      "<p><b>mbox:</b> KMail's mail "
-		      "folders are represented by a single file each. "
-		      "Individual messages are separated from each other by a "
-		      "line starting with \"From \". This saves space on "
-		      "disk, but may be less robust, e.g. when moving messages "
-		      "between folders.</p>"
-		      "<p><b>maildir:</b> KMail's mail folders are "
-		      "represented by real folders on disk. Individual messages "
-		      "are separate files. This may waste a bit of space on "
-		      "disk, but should be more robust, e.g. when moving "
-		      "messages between folders.</p></qt>");
+                      "<qt><p>This selects which mailbox format will be "
+                      "the default for local folders:</p>"
+                      "<p><b>mbox:</b> KMail's mail "
+                      "folders are represented by a single file each. "
+                      "Individual messages are separated from each other by a "
+                      "line starting with \"From \". This saves space on "
+                      "disk, but may be less robust, e.g. when moving messages "
+                      "between folders.</p>"
+                      "<p><b>maildir:</b> KMail's mail folders are "
+                      "represented by real folders on disk. Individual messages "
+                      "are separate files. This may waste a bit of space on "
+                      "disk, but should be more robust, e.g. when moving "
+                      "messages between folders.</p></qt>");
   QWhatsThis::add( mMailboxPrefCombo, msg );
   QWhatsThis::add( label, msg );
   // @TODO: Till, move into .kcgc file
   msg = i18n( "what's this help",
-	    "<qt><p>When jumping to the next unread message, it may occur "
-	    "that no more unread messages are below the current message.</p>"
-	    "<p><b>Do not loop:</b> The search will stop at the last message in "
-	    "the current folder.</p>"
-	    "<p><b>Loop in current folder:</b> The search will continue at the "
-	    "top of the message list, but not go to another folder.</p>"
-	    "<p><b>Loop in all folders:</b> The search will continue at the top of "
-	    "the message list. If no unread messages are found it will then continue "
-	    "to the next folder.</p>"
-	    "<p>Similarly, when searching for the previous unread message, "
-	    "the search will start from the bottom of the message list and continue to "
-	    "the previous folder depending on which option is selected.</p></qt>" );
+            "<qt><p>When jumping to the next unread message, it may occur "
+            "that no more unread messages are below the current message.</p>"
+            "<p><b>Do not loop:</b> The search will stop at the last message in "
+            "the current folder.</p>"
+            "<p><b>Loop in current folder:</b> The search will continue at the "
+            "top of the message list, but not go to another folder.</p>"
+            "<p><b>Loop in all folders:</b> The search will continue at the top of "
+            "the message list. If no unread messages are found it will then continue "
+            "to the next folder.</p>"
+            "<p>Similarly, when searching for the previous unread message, "
+            "the search will start from the bottom of the message list and continue to "
+            "the previous folder depending on which option is selected.</p></qt>" );
   QWhatsThis::add( mLoopOnGotoUnread, msg );
 }
 
@@ -4271,7 +4284,7 @@ void MiscPage::FolderTab::load() {
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
   mExcludeImportantFromExpiry->setChecked( GlobalSettings::excludeImportantMailFromExpiry() );
   mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-						  kmkernel->inboxFolder()->idString() ) );
+                                                  kmkernel->inboxFolder()->idString() ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
 
@@ -4293,7 +4306,7 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->folder() ?
-				  mOnStartupOpenFolder->folder()->idString() : QString::null );
+                                  mOnStartupOpenFolder->folder()->idString() : QString::null );
 
   GlobalSettings::setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
   GlobalSettings::setDelayedMarkTime( mDelayedMarkTime->value() );
@@ -4332,7 +4345,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   QGridLayout* grid = new QGridLayout( mBox, 4, 2, 0, KDialog::spacingHint() );
   grid->setColStretch( 1, 1 );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
-	   mBox, SLOT( setEnabled(bool) ) );
+           mBox, SLOT( setEnabled(bool) ) );
 
   QLabel* storageFormatLA = new QLabel( i18n("&Format used for the groupware folders:"),
                                         mBox );
@@ -4423,7 +4436,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   mEnableGwCB = new QCheckBox( i18n("&Enable groupware functionality"), b1 );
   gBox->setSpacing( KDialog::spacingHint() );
   connect( mEnableGwCB, SIGNAL( toggled(bool) ),
-	   gBox, SLOT( setEnabled(bool) ) );
+           gBox, SLOT( setEnabled(bool) ) );
   connect( mEnableGwCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 #endif

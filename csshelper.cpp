@@ -101,8 +101,8 @@ namespace KMail {
   bool CSSHelper::Private::operator==( const Private & other ) const {
     for ( int i = 0 ; i < 3 ; ++i )
       if ( mQuoteFont[i] != other.mQuoteFont[i] ||
-	   mQuoteColor[i] != other.mQuoteColor[i] )
-	return false;
+           mQuoteColor[i] != other.mQuoteColor[i] )
+        return false;
     return // eeek!
       mBodyFont == other.mBodyFont &&
       mPrintFont == other.mPrintFont &&
@@ -182,8 +182,8 @@ namespace KMail {
       cPgpErrH  = reader.readColorEntry( "PGPMessageErr", &cPgpErrH );
       cHtmlWarning = reader.readColorEntry( "HTMLWarningColor", &cHtmlWarning );
       for ( int i = 0 ; i < 3 ; ++i ) {
-	const QString key = "QuotedText" + QString::number( i+1 );
-	mQuoteColor[i] = reader.readColorEntry( key, &mQuoteColor[i] );
+        const QString key = "QuotedText" + QString::number( i+1 );
+        mQuoteColor[i] = reader.readColorEntry( key, &mQuoteColor[i] );
       }
     }
 
@@ -242,15 +242,15 @@ namespace KMail {
       mFixedFont = KGlobalSettings::fixedFont();
       defaultFont.setItalic( true );
       for ( int i = 0 ; i < 3 ; ++i )
-	mQuoteFont[i] = defaultFont;
+        mQuoteFont[i] = defaultFont;
     } else {
       mBodyFont = fonts.readFontEntry(  "body-font",  &defaultFont);
       mPrintFont = fonts.readFontEntry( "print-font", &defaultFont);
       mFixedFont = fonts.readFontEntry( "fixed-font", &defaultFont);
       defaultFont.setItalic( true );
       for ( int i = 0 ; i < 3 ; ++i ) {
-	const QString key = QString( "quote%1-font" ).arg( i+1 );
-	mQuoteFont[i] = fonts.readFontEntry( key, &defaultFont );
+        const QString key = QString( "quote%1-font" ).arg( i+1 );
+        mQuoteFont[i] = fonts.readFontEntry( key, &defaultFont );
       }
     }
 
@@ -343,7 +343,7 @@ namespace KMail {
 
   QString CSSHelper::Private::printCssDefinitions() const {
     const QString headerFont = QString( "  font-family: \"%1\" ! important;\n"
-					"  font-size: %2pt ! important;\n" )
+                                        "  font-size: %2pt ! important;\n" )
                            .arg( mPrintFont.family() )
                            .arg( mPrintFont.pointSize() );
     const QColorGroup & cg = QApplication::palette().active();
@@ -358,49 +358,49 @@ namespace KMail {
 
     return
       QString( "body {\n"
-	       "  font-family: \"%1\" ! important;\n"
-	       "  font-size: %2pt ! important;\n"
-	       "  color: #000000 ! important;\n"
-	       "  background-color: #ffffff ! important\n"
-	       "}\n\n" )
+               "  font-family: \"%1\" ! important;\n"
+               "  font-size: %2pt ! important;\n"
+               "  color: #000000 ! important;\n"
+               "  background-color: #ffffff ! important\n"
+               "}\n\n" )
       .arg( mPrintFont.family(),
-	    QString::number( mPrintFont.pointSize() ) )
+            QString::number( mPrintFont.pointSize() ) )
       +
       QString( "tr.textAtmH,\n"
-	       "tr.rfc822H,\n"
-	       "tr.encrH,\n"
-	       "tr.signOkKeyOkH,\n"
-	       "tr.signOkKeyBadH,\n"
-	       "tr.signWarnH,\n"
-	       "tr.signErrH,\n"
-	       "div.header {\n"
-	       "%1"
-	       "}\n\n"
+               "tr.rfc822H,\n"
+               "tr.encrH,\n"
+               "tr.signOkKeyOkH,\n"
+               "tr.signOkKeyBadH,\n"
+               "tr.signWarnH,\n"
+               "tr.signErrH,\n"
+               "div.header {\n"
+               "%1"
+               "}\n\n"
 
-	       "div.fancy.header > div {\n"
-	       "  background-color: %2 ! important;\n"
-	       "  color: %3 ! important;\n"
-	       "  padding: 4px ! important;\n"
-	       "  border: solid %3 1px ! important;\n"
-	       "}\n\n"
+               "div.fancy.header > div {\n"
+               "  background-color: %2 ! important;\n"
+               "  color: %3 ! important;\n"
+               "  padding: 4px ! important;\n"
+               "  border: solid %3 1px ! important;\n"
+               "}\n\n"
 
-	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
+               "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
 
-	       "div.fancy.header > table.outer{\n"
-	       "  background-color: %2 ! important;\n"
-	       "  color: %3 ! important;\n"
-	       "  border-bottom: solid %3 1px ! important;\n"
-	       "  border-left: solid %3 1px ! important;\n"
-	       "  border-right: solid %3 1px ! important;\n"
-	       "}\n\n"
+               "div.fancy.header > table.outer{\n"
+               "  background-color: %2 ! important;\n"
+               "  color: %3 ! important;\n"
+               "  border-bottom: solid %3 1px ! important;\n"
+               "  border-left: solid %3 1px ! important;\n"
+               "  border-right: solid %3 1px ! important;\n"
+               "}\n\n"
 
                "div.spamheader {\n"
                "  display:none ! important;\n"
                "}\n\n"
 
-	       "div.htmlWarn {\n"
-	       "  border: 2px solid #ffffff ! important;\n"
-	       "}\n\n"
+               "div.htmlWarn {\n"
+               "  border: 2px solid #ffffff ! important;\n"
+               "}\n\n"
 
                "div.senderpic{\n"
                "  font-size:0.8em ! important;\n"
@@ -413,8 +413,8 @@ namespace KMail {
                "}\n\n"
             )
       .arg( headerFont,
-	    cg.background().name(),
-	    cg.foreground().name() )
+            cg.background().name(),
+            cg.foreground().name() )
       + quoteCSS;
   }
 
@@ -423,7 +423,7 @@ namespace KMail {
     const QString bgColor = c4.name();
     const QString linkColor = c2.name();
     const QString headerFont = QString("  font-family: \"%1\" ! important;\n"
-				       "  font-size: %2px ! important;\n")
+                                       "  font-size: %2px ! important;\n")
       .arg( mBodyFont.family() )
       .arg( pointsToPixel( helper->mMetrics, mBodyFont.pointSize() ) );
     const QString background = ( mBackingPixmapOn
@@ -444,145 +444,145 @@ namespace KMail {
 
     for ( int i = 0 ; i < 3 ; ++i ) {
       quoteCSS += QString( "div.quotelevel%1 {\n"
-			   "  color: %2 ! important;\n" )
-	.arg( QString::number(i+1), mQuoteColor[i].name() );
+                           "  color: %2 ! important;\n" )
+        .arg( QString::number(i+1), mQuoteColor[i].name() );
       if ( mQuoteFont[i].italic() )
-	quoteCSS += "  font-style: italic ! important;\n";
+        quoteCSS += "  font-style: italic ! important;\n";
       if ( mQuoteFont[i].bold() )
-	quoteCSS += "  font-weight: bold ! important;\n";
+        quoteCSS += "  font-weight: bold ! important;\n";
       quoteCSS += "}\n\n";
     }
 
     return
       QString( "body {\n"
-	       "  font-family: \"%1\" ! important;\n"
-	       "  font-size: %2 ! important;\n"
-	       "  color: %3 ! important;\n"
-	       "%4"
-	       "}\n\n" )
+               "  font-family: \"%1\" ! important;\n"
+               "  font-size: %2 ! important;\n"
+               "  color: %3 ! important;\n"
+               "%4"
+               "}\n\n" )
       .arg( bodyFont( fixed ).family(),
-	    bodyFontSize,
-	    fgColor,
-	    background )
+            bodyFontSize,
+            fgColor,
+            background )
       +
       QString( "a {\n"
-	       "  color: %1 ! important;\n"
-	       "  text-decoration: none ! important;\n"
-	       "}\n\n"
+               "  color: %1 ! important;\n"
+               "  text-decoration: none ! important;\n"
+               "}\n\n"
 
-	       "table.textAtm { background-color: %2 ! important; }\n\n"
+               "table.textAtm { background-color: %2 ! important; }\n\n"
 
-	       "tr.textAtmH {\n"
-	       "  background-color: %3 ! important;\n"
-	       "%4"
-	       "}\n\n"
+               "tr.textAtmH {\n"
+               "  background-color: %3 ! important;\n"
+               "%4"
+               "}\n\n"
 
-	       "tr.textAtmB {\n"
-	       "  background-color: %3 ! important;\n"
-	       "}\n\n"
+               "tr.textAtmB {\n"
+               "  background-color: %3 ! important;\n"
+               "}\n\n"
 
-	       "table.rfc822 {\n"
-	       "  background-color: %3 ! important;\n"
-	       "}\n\n"
+               "table.rfc822 {\n"
+               "  background-color: %3 ! important;\n"
+               "}\n\n"
 
-	       "tr.rfc822H {\n"
-	       "%4"
-	       "}\n\n" )
+               "tr.rfc822H {\n"
+               "%4"
+               "}\n\n" )
       .arg( linkColor, fgColor, bgColor, headerFont )
       +
       QString( "table.encr {\n"
-	       "  background-color: %1 ! important;\n"
-	       "}\n\n"
+               "  background-color: %1 ! important;\n"
+               "}\n\n"
 
-	       "tr.encrH {\n"
-	       "  background-color: %2 ! important;\n"
-	       "%3"
-	       "}\n\n"
+               "tr.encrH {\n"
+               "  background-color: %2 ! important;\n"
+               "%3"
+               "}\n\n"
 
-	       "tr.encrB { background-color: %4 ! important; }\n\n" )
+               "tr.encrB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpEncrF.name(),
-	    cPgpEncrH.name(),
-	    headerFont,
-	    cPgpEncrB.name() )
+            cPgpEncrH.name(),
+            headerFont,
+            cPgpEncrB.name() )
       +
       QString( "table.signOkKeyOk {\n"
-	       "  background-color: %1 ! important;\n"
-	       "}\n\n"
+               "  background-color: %1 ! important;\n"
+               "}\n\n"
 
-	       "tr.signOkKeyOkH {\n"
-	       "  background-color: %2 ! important;\n"
-	       "%3"
-	       "}\n\n"
+               "tr.signOkKeyOkH {\n"
+               "  background-color: %2 ! important;\n"
+               "%3"
+               "}\n\n"
 
-	       "tr.signOkKeyOkB { background-color: %4 ! important; }\n\n" )
+               "tr.signOkKeyOkB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpOk1F.name(),
-	    cPgpOk1H.name(),
-	    headerFont,
-	    cPgpOk1B.name() )
+            cPgpOk1H.name(),
+            headerFont,
+            cPgpOk1B.name() )
       +
       QString( "table.signOkKeyBad {\n"
-	       "  background-color: %1 ! important;\n"
-	       "}\n\n"
+               "  background-color: %1 ! important;\n"
+               "}\n\n"
 
-	       "tr.signOkKeyBadH {\n"
-	       "  background-color: %2 ! important;\n"
-	       "%3"
-	       "}\n\n"
+               "tr.signOkKeyBadH {\n"
+               "  background-color: %2 ! important;\n"
+               "%3"
+               "}\n\n"
 
-	       "tr.signOkKeyBadB { background-color: %4 ! important; }\n\n" )
+               "tr.signOkKeyBadB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpOk0F.name(),
-	    cPgpOk0H.name(),
-	    headerFont,
-	    cPgpOk0B.name() )
+            cPgpOk0H.name(),
+            headerFont,
+            cPgpOk0B.name() )
       +
       QString( "table.signWarn {\n"
-	       "  background-color: %1 ! important;\n"
-	       "}\n\n"
+               "  background-color: %1 ! important;\n"
+               "}\n\n"
 
-	       "tr.signWarnH {\n"
-	       "  background-color: %2 ! important;\n"
-	       "%3"
-	       "}\n\n"
+               "tr.signWarnH {\n"
+               "  background-color: %2 ! important;\n"
+               "%3"
+               "}\n\n"
 
-	       "tr.signWarnB { background-color: %4 ! important; }\n\n" )
+               "tr.signWarnB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpWarnF.name(),
-	    cPgpWarnH.name(),
-	    headerFont,
-	    cPgpWarnB.name() )
+            cPgpWarnH.name(),
+            headerFont,
+            cPgpWarnB.name() )
       +
       QString( "table.signErr {\n"
-	       "  background-color: %1 ! important;\n"
-	       "}\n\n"
+               "  background-color: %1 ! important;\n"
+               "}\n\n"
 
-	       "tr.signErrH {\n"
-	       "  background-color: %2 ! important;\n"
-	       "%3"
-	       "}\n\n"
+               "tr.signErrH {\n"
+               "  background-color: %2 ! important;\n"
+               "%3"
+               "}\n\n"
 
-	       "tr.signErrB { background-color: %4 ! important; }\n\n" )
+               "tr.signErrB { background-color: %4 ! important; }\n\n" )
       .arg( cPgpErrF.name(),
-	    cPgpErrH.name(),
-	    headerFont,
-	    cPgpErrB.name() )
+            cPgpErrH.name(),
+            headerFont,
+            cPgpErrB.name() )
       +
       QString( "div.htmlWarn {\n"
-	       "  border: 2px solid %1 ! important;\n"
-	       "}\n\n" )
+               "  border: 2px solid %1 ! important;\n"
+               "}\n\n" )
       .arg( cHtmlWarning.name() )
       +
       QString( "div.header {\n"
-	       "%1"
-	       "}\n\n"
+               "%1"
+               "}\n\n"
 
-	       "div.fancy.header > div {\n"
-	       "  background-color: %2 ! important;\n"
-	       "  color: %3 ! important;\n"
-	       "  border: solid %4 1px ! important;\n"
-	       "}\n\n"
+               "div.fancy.header > div {\n"
+               "  background-color: %2 ! important;\n"
+               "  color: %3 ! important;\n"
+               "  border: solid %4 1px ! important;\n"
+               "}\n\n"
 
-	       "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
+               "div.fancy.header > div a[href] { color: %3 ! important; }\n\n"
 
-	       "div.fancy.header > div a[href]:hover { text-decoration: underline ! important; }\n\n"
+               "div.fancy.header > div a[href]:hover { text-decoration: underline ! important; }\n\n"
 
                "div.fancy.header > div.spamheader {\n"
                "  background-color: #cdcdcd ! important;\n"
@@ -593,13 +593,13 @@ namespace KMail {
                "  font-size: smaller ! important;\n"
                "}\n\n"
 
-	       "div.fancy.header > table.outer {\n"
-	       "  background-color: %5 ! important;\n"
-	       "  color: %4 ! important;\n"
-	       "  border-bottom: solid %4 1px ! important;\n"
-	       "  border-left: solid %4 1px ! important;\n"
-	       "  border-right: solid %4 1px ! important;\n"
-	       "}\n\n"
+               "div.fancy.header > table.outer {\n"
+               "  background-color: %5 ! important;\n"
+               "  color: %4 ! important;\n"
+               "  border-bottom: solid %4 1px ! important;\n"
+               "  border-left: solid %4 1px ! important;\n"
+               "  border-right: solid %4 1px ! important;\n"
+               "}\n\n"
 
                "div.senderpic{\n"
                "  padding: 0px ! important;\n"
@@ -617,9 +617,9 @@ namespace KMail {
 
       .arg( headerFont )
       .arg( cg.highlight().name(),
-	    cg.highlightedText().name(),
-	    cg.foreground().name(),
-	    cg.background().name() )
+            cg.highlightedText().name(),
+            cg.foreground().name(),
+            cg.background().name() )
       + quoteCSS;
   }
 
@@ -702,6 +702,16 @@ namespace KMail {
       "  text-align: left ! important;\n"
       "  vertical-align: top ! important;\n"
       "  width: 100% ! important;\n"
+      "}\n\n"
+
+      "span.pimsmileytext {\n"
+      "  position: absolute;\n"
+      "  top: 0px;\n"
+      "  left: 0px;\n"
+      "  visibility: hidden;\n"
+      "}\n\n"
+
+      "img.pimsmileyimg {\n"
       "}\n\n"
       ;
   }

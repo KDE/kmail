@@ -40,6 +40,7 @@
 #include "kmmessage.h"
 #include "kmkernel.h"
 #include "spamheaderanalyzer.h"
+#include "globalsettings.h"
 
 #include <libemailfunctions/email.h>
 #include <libkdepim/kxface.h>
@@ -87,8 +88,9 @@ namespace KMail {
 #endif
 
   // ### tmp wrapper to make kmreaderwin code working:
-  static QString strToHtml( const QString & str, bool preserveBlanks=true ) {
-    return LinkLocator::convertToHtml( str, preserveBlanks );
+  static QString strToHtml( const QString & str,
+                            int flags = LinkLocator::PreserveSpaces ) {
+    return LinkLocator::convertToHtml( str, flags );
   }
 
   //
@@ -108,12 +110,12 @@ namespace KMail {
     const HeaderStyle * prev() const { return fancy(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-		    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing ) const;
   };
 
   QString BriefHeaderStyle::format( const KMMessage * message,
-				    const HeaderStrategy * strategy,
-				    const QString & vCardName, bool printing ) const {
+                                    const HeaderStrategy * strategy,
+                                    const QString & vCardName, bool printing ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::brief();
@@ -150,16 +152,16 @@ namespace KMail {
 
     if ( strategy->showHeader( "subject" ) )
       headerStr += "<div dir=\"" + subjectDir + "\">\n"
-	           "<b style=\"font-size:130%\">" +
-			   strToHtml( message->subject() ) +
-			   "</b></div>\n";
+                   "<b style=\"font-size:130%\">" +
+                           strToHtml( message->subject() ) +
+                           "</b></div>\n";
 
     QStringList headerParts;
 
     if ( strategy->showHeader( "from" ) ) {
       QString fromPart = KMMessage::emailAddrAsAnchor( message->from(), true );
       if ( !vCardName.isEmpty() )
-	fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
+        fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
       headerParts << fromPart;
     }
 
@@ -200,15 +202,15 @@ namespace KMail {
     const HeaderStyle * prev() const { return brief(); }
 
     QString format( const KMMessage * message, const HeaderStrategy * strategy,
-		    const QString & vCardName, bool printing ) const;
+                    const QString & vCardName, bool printing ) const;
 
   private:
     QString formatAllMessageHeaders( const KMMessage * message ) const;
   };
 
   QString PlainHeaderStyle::format( const KMMessage * message,
-				    const HeaderStrategy * strategy,
-				    const QString & vCardName, bool printing ) const {
+                                    const HeaderStrategy * strategy,
+                                    const QString & vCardName, bool printing ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -245,7 +247,7 @@ namespace KMail {
     QString headerStr = QString("<div class=\"header\" dir=\"%1\">").arg(dir);
 
     if ( strategy->headersToDisplay().isEmpty()
-	 && strategy->defaultPolicy() == HeaderStrategy::Display ) {
+         && strategy->defaultPolicy() == HeaderStrategy::Display ) {
       // crude way to emulate "all" headers:
       headerStr += formatAllMessageHeaders( message );
       return headerStr + "</div>";
@@ -254,7 +256,7 @@ namespace KMail {
     //case HdrLong:
     if ( strategy->showHeader( "subject" ) )
       headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
-			   strToHtml(message->subject()) + "</b></div>\n")
+                           strToHtml(message->subject()) + "</b></div>\n")
                         .arg(subjectDir);
 
     if ( strategy->showHeader( "date" ) )
@@ -276,7 +278,7 @@ namespace KMail {
 
     if ( strategy->showHeader( "from" ) ) {
       headerStr.append(i18n("From: ") +
-		       KMMessage::emailAddrAsAnchor(message->from(),FALSE));
+                       KMMessage::emailAddrAsAnchor(message->from(),FALSE));
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
@@ -294,7 +296,7 @@ namespace KMail {
 
     if ( strategy->showHeader( "to" ) )
       headerStr.append(i18n("To: ")+
-		       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>\n");
+                       KMMessage::emailAddrAsAnchor(message->to(),FALSE) + "<br>\n");
 
     if ( strategy->showHeader( "cc" ) && !message->cc().isEmpty() )
       headerStr.append(i18n("CC: ")+
@@ -400,8 +402,8 @@ namespace KMail {
 
 
   QString FancyHeaderStyle::format( const KMMessage * message,
-				    const HeaderStrategy * strategy,
-				    const QString & vCardName, bool printing ) const {
+                                    const HeaderStrategy * strategy,
+                                    const QString & vCardName, bool printing ) const {
     if ( !message ) return QString::null;
     if ( !strategy )
       strategy = HeaderStrategy::rich();
@@ -567,12 +569,16 @@ namespace KMail {
 
     //case HdrFancy:
     // the subject line and box below for details
-    if ( strategy->showHeader( "subject" ) )
+    if ( strategy->showHeader( "subject" ) ) {
+      const int flags = LinkLocator::PreserveSpaces |
+                        ( GlobalSettings::showEmoticons() ?
+                          LinkLocator::ReplaceSmileys : 0 );
       headerStr += QString("<div dir=\"%1\">%2</div>\n")
                         .arg(subjectDir)
-		        .arg(message->subject().isEmpty()?
-			     i18n("No Subject") :
-			     strToHtml(message->subject()));
+                        .arg(message->subject().isEmpty()?
+                             i18n("No Subject") :
+                             strToHtml( message->subject(), flags ));
+    }
     headerStr += "<table class=\"outer\"><tr><td width=\"100%\"><table>\n";
     //headerStr += "<table>\n";
     // from line
@@ -638,7 +644,7 @@ namespace KMail {
 
     if ( !spamHTML.isEmpty() )
       headerStr.append( QString( "<div class=\"spamheader\" dir=\"%1\"><b>%2</b>&nbsp;<span style=\"padding-left: 20px;\">%3</span></div>\n")
-			.arg( subjectDir, i18n("Spam Status:"), spamHTML ) );
+                        .arg( subjectDir, i18n("Spam Status:"), spamHTML ) );
 
     headerStr += "</div>\n\n";
     return headerStr;
@@ -673,7 +679,7 @@ namespace KMail {
     case Fancy:   return fancy();
     }
     kdFatal( 5006 ) << "HeaderStyle::create(): Unknown header style ( type == "
-		    << (int)type << " ) requested!" << endl;
+                    << (int)type << " ) requested!" << endl;
     return 0; // make compiler happy
   }
 
