@@ -223,11 +223,11 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
     if ((*it).data.size() > 0) {
       ulong uid = mMsg->UID();
       size = mMsg->msgSizeServer();
+      mMsg->setComplete( true );
       mMsg->fromByteArray( (*it).data );
       mMsg->setUID(uid);
       mMsg->setMsgSizeServer(size);
       mMsg->setTransferInProgress( false );
-      mMsg->setComplete( true );
       mFolder->addMsgInternal( mMsg, true );
       emit messageRetrieved( mMsg );
     } else {
