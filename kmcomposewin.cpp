@@ -5295,7 +5295,17 @@ void KMEdit::contentsDropEvent(QDropEvent *e)
 	    new KMForwardAttachedCommand(mComposer, messageList,
 					 identity, mComposer);
 	command->start();
-    } else {
+    }
+    else if( KURLDrag::canDecode( e ) ) {
+        KURL::List urlList;
+        if( KURLDrag::decode( e, urlList ) ) {
+            for( KURL::List::Iterator it = urlList.begin();
+                 it != urlList.end(); ++it ) {
+                mComposer->addAttach( *it );
+            }
+        }
+    }
+    else {
 	return KMEditInherited::dropEvent(e);
     }
 }
@@ -5712,17 +5722,6 @@ bool KMEdit::eventFilter(QObject*o, QEvent* e)
 	  return TRUE;
     }
 
-    }
-  }
-  else if (e->type() == QEvent::Drop)
-  {
-    KURL::List urlList;
-    QDropEvent *de = static_cast<QDropEvent*>(e);
-    if(KURLDrag::canDecode(de) && KURLDrag::decode( de, urlList ))
-    {
-      for (KURL::List::Iterator it = urlList.begin(); it != urlList.end(); ++it)
-        mComposer->addAttach(*it);
-      return TRUE;
     }
   }
 
