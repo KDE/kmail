@@ -139,6 +139,21 @@ private:
   QWidget *mParent;
 };
 
+class KMAddBookmarksCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMAddBookmarksCommand( const KURL &url, QWidget *parent );
+
+private:
+  virtual void execute();
+
+  KURL mUrl;
+  QWidget *mParent;
+};
+
+
 class KMMailtoOpenAddrBookCommand : public KMCommand
 {
   Q_OBJECT
@@ -410,7 +425,7 @@ class KMMetaFilterActionCommand : public QObject
   Q_OBJECT
 
 public:
-  KMMetaFilterActionCommand( KMFilter *filter, KMHeaders *headers, 
+  KMMetaFilterActionCommand( KMFilter *filter, KMHeaders *headers,
 			     KMMainWidget *main );
 
 public slots:
@@ -476,7 +491,7 @@ class KMMoveCommand : public KMMenuCommand
 public:
   KMMoveCommand( KMFolder* destFolder, const QPtrList<KMMsgBase> &msgList,
 		 KMHeaders* headers = 0 );
-		
+
 
 private:
   virtual void execute();
@@ -493,7 +508,7 @@ class KMDeleteMsgCommand : public KMCommand
 public:
   KMDeleteMsgCommand( KMFolder* srcFolder, const QPtrList<KMMsgBase> &msgList,
 		      KMHeaders* headers = 0 );
-		
+
   virtual void execute();
 };
 

@@ -79,7 +79,7 @@ public:
 
   /** tell KMReaderWin whether groupware functionality may be used */
   virtual void setUseGroupware( bool );
-  
+
   /** Read color settings and set palette */
   virtual void readColorConfig(void);
 
@@ -214,7 +214,7 @@ public:
   KAction *copyAction() { return mCopyAction; }
   KAction *urlOpenAction() { return mUrlOpenAction; }
   KAction *urlSaveAsAction() { return mUrlSaveAsAction; }
-
+    KAction *addBookmarksAction() { return mAddBookmarksAction;}
     // This function returns the complete data that were in this
     // message parts - *after* all encryption has been removed that
     // could be removed.
@@ -313,7 +313,7 @@ public slots:
   void slotUrlOpen();
   /** Save the page to a file */
   void slotUrlSave();
-
+    void slotAddBookmarks();
   void slotShowMsgSrc();
   void slotPrintMsg();
   void slotSaveMsg();
@@ -481,7 +481,7 @@ protected:
       *mListFilterAction, *mViewSourceAction, *mPrintAction,
       *mMailToComposeAction, *mMailToReplyAction, *mMailToForwardAction,
       *mAddAddrBookAction, *mOpenAddrBookAction, *mCopyAction,
-      *mUrlOpenAction, *mUrlSaveAsAction;
+      *mUrlOpenAction, *mUrlSaveAsAction, *mAddBookmarksAction;
 
   KToggleAction *mToggleFixFontAction;
   KURL mUrlClicked;

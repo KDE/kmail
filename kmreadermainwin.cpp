@@ -122,11 +122,11 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       // popup on a mailto URL
       mReaderWin->mailToComposeAction()->plug( menu );
       if ( mMsg ) {
-	mReaderWin->mailToReplyAction()->plug( menu );	
-	mReaderWin->mailToForwardAction()->plug( menu );	
+	mReaderWin->mailToReplyAction()->plug( menu );
+	mReaderWin->mailToForwardAction()->plug( menu );
         menu->insertSeparator();
       }
-      mReaderWin->addAddrBookAction()->plug( menu );	
+      mReaderWin->addAddrBookAction()->plug( menu );
       mReaderWin->openAddrBookAction()->plug( menu );
       mReaderWin->copyAction()->plug( menu );
     } else {
@@ -134,6 +134,7 @@ void KMReaderMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoi
       mReaderWin->urlOpenAction()->plug( menu );
       mReaderWin->urlSaveAsAction()->plug( menu );
       mReaderWin->copyAction()->plug( menu );
+      mReaderWin->addBookmarksAction()->plug( menu );
     }
   } else {
     // popup somewhere else (i.e., not a URL) on the message

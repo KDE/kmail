@@ -535,6 +535,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 			     SLOT(slotUrlCopy()), ac, "copy_url" );
   mUrlOpenAction = new KAction( i18n("Open URL"), 0, this,
 			     SLOT(slotUrlOpen()), ac, "open_url" );
+  mAddBookmarksAction = new KAction( i18n("Add Bookmarks..."), 0, this,
+			     SLOT(slotAddBookmarks()), ac, "add_bookmarks" );
   mUrlSaveAsAction = new KAction( i18n("Save Link As..."), 0, this,
 			     SLOT(slotUrlSave()), ac, "saveas_url" );
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
@@ -2558,7 +2560,7 @@ QString KMReaderWin::writeMessagePartToTempFile( KMMessagePart* aMsgPart,
     else
       fname = QString::null;
   }
-  
+
   return fname;
 }
 
@@ -3556,6 +3558,13 @@ void KMReaderWin::slotUrlOpen()
 {
   KMCommand *command = new KMUrlOpenCommand( mUrlClicked, this );
   command->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAddBookmarks()
+{
+    KMCommand *command = new KMAddBookmarksCommand( mUrlClicked, this );
+    command->start();
 }
 
 //-----------------------------------------------------------------------------

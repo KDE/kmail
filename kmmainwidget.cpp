@@ -1792,6 +1792,7 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
       mMsgView->urlOpenAction()->plug( menu );
       mMsgView->urlSaveAsAction()->plug( menu );
       mMsgView->copyAction()->plug( menu );
+      mMsgView->addBookmarksAction()->plug( menu );
     }
   }
   else

@@ -40,7 +40,8 @@
 #include <kparts/browserextension.h>
 #include <kprogress.h>
 #include <krun.h>
-
+#include <kbookmarkmanager.h>
+#include <kstandarddirs.h>
 #include "kbusyptr.h"
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
@@ -361,6 +362,22 @@ void KMMailtoForwardCommand::execute()
   win->show();
 }
 
+
+KMAddBookmarksCommand::KMAddBookmarksCommand( const KURL &url, QWidget *parent )
+  :mUrl( url ), mParent( parent )
+{
+}
+
+void KMAddBookmarksCommand::execute()
+{
+    QString filename = locateLocal( "data", QString::fromLatin1("konqueror/bookmarks.xml") );
+    KBookmarkManager *bookManager = KBookmarkManager::managerForFile( filename,false );
+    KBookmarkGroup group = bookManager->root();
+    group.addBookmark( bookManager, mUrl.path(), KURL( mUrl));
+    bookManager->save();
+
+    //KMAddrBookExternal::addEmail( KMMessage::decodeMailtoUrl( mUrl.path() ), mParent );
+}
 
 KMMailtoAddAddrBookCommand::KMMailtoAddAddrBookCommand( const KURL &url,
    QWidget *parent )
