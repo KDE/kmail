@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------------------
 
 // Current version of the .index.ids files
-#define IDS_VERSION 1000
+#define IDS_VERSION 1001
 
 // The asterisk at the end is important
 #define IDS_HEADER "# KMail-Index-IDs V%d\n*"
@@ -259,7 +259,7 @@ int KMMsgDict::readFolderIds(const KMFolder *folder)
   
   int version = 0;
   fscanf(fp, IDS_HEADER, &version);
-  if (version < IDS_VERSION) {
+  if (version != IDS_VERSION) {
     fclose(fp);
     return -1;
   }
