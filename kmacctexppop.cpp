@@ -577,7 +577,7 @@ void KMAcctExpPop::startJob() {
   slave = KIO::Scheduler::getConnectedSlave( url.url(), mSlaveConfig );
   if (!slave)
   {
-    slotSlaveError(0, KIO::ERR_COULD_NOT_CONNECT, "");
+    slotSlaveError(0, KIO::ERR_CANNOT_LAUNCH_PROCESS, url.protocol());
     return;
   }
   url.setPath(QString("/index"));
@@ -816,17 +816,9 @@ void KMAcctExpPop::slotSlaveError(KIO::Slave *aSlave, int error,
   const QString &errorMsg)
 {
   if (aSlave != slave) return;
+  if (error == KIO::ERR_SLAVE_DIED) slave = NULL;
   if (interactive)
-  {
-    if (error == KIO::ERR_SLAVE_DIED)
-    {
-      slave = NULL;
-      KMessageBox::error(0,
-      i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
-    } else
-      KMessageBox::error(0, i18n("Error connecting to %1:\n\n%2")
-        .arg(mHost).arg(errorMsg));
-  }
+    KMessageBox::error(0, KIO::buildErrorString(error, errorMsg));
   stage = Quit;
   slotCancel();
 }

@@ -319,7 +319,12 @@ bool KMAcctImap::makeConnection()
   }
   initSlaveConfig();
   mSlave = KIO::Scheduler::getConnectedSlave(getUrl(), mSlaveConfig);
-  if (!mSlave) return FALSE;
+  if (!mSlave)
+  {
+    KMessageBox::error(0, QString("Could not start process for %1.")
+      .arg(getUrl().protocol()));
+    return FALSE;
+  }
   return TRUE;
 }
  
@@ -329,14 +334,8 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   const QString &errorMsg)
 {
   if (aSlave != mSlave) return;
-  if (errorCode == KIO::ERR_SLAVE_DIED)
-  {
-    mSlave = NULL;
-    KMessageBox::error(0,
-    i18n("The process for \n%1\ndied unexpectedly").arg(errorMsg));
-  }
-  else KMessageBox::error(0, i18n("Error connecting to %1:\n%2")
-    .arg(mHost).arg(errorMsg));
+  if (errorCode == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+  KMessageBox::error(0, KIO::buildErrorString(errorCode, errorMsg));
   killAllJobs();
 }
 
