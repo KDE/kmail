@@ -181,7 +181,8 @@ void KMCommand::transferSelectedMsgs()
       // msg musn't be deleted
       thisMsg->setTransferInProgress(true);
     } else {
-      thisMsg->setTransferInProgress(true);
+	if (thisMsg->parent() && thisMsg->parent()->protocol() == "imap")
+	    thisMsg->setTransferInProgress(true);
       mRetrievedMsgs.append(thisMsg);
     }
   }
