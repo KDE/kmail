@@ -204,6 +204,7 @@ public:
     repaint();
   }
 
+  // Rikkus: Can't see any Qt code - removed ?
   // Begin this code may be relicensed by Troll Tech  
   void paintCell( QPainter * p, const QColorGroup & cg,
 				int column, int width, int align )
