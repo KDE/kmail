@@ -2218,7 +2218,11 @@ void ConfigureDialog::slotDoApply( bool everything )
     // Update accounts that have been modified
     QValueList<mModifiedAccountsType*>::Iterator j;
     for (j = mModifiedAccounts.begin(); j != mModifiedAccounts.end(); ++j )
+    {
       (*j)->oldAccount->pseudoAssign( (*j)->newAccount );
+      delete (*j)->newAccount;
+      delete (*j);
+    }
     mModifiedAccounts.clear();
 
     // Delete accounts marked for deletion
