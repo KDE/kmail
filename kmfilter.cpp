@@ -204,8 +204,9 @@ void KMFilter::readConfig(KConfig* config)
     mAction[j] = sActionDict->create(actName);
     if (!mAction[j])
     {
-      KMessageBox::information(0,i18n("Unknown filter action `%1'\n in filter rule `%2'."
-                   "\nIgnoring it.").arg(actName).arg(mName));
+      if  (actName != "skip rest")
+	KMessageBox::information(0,i18n("Unknown filter action `%1'\n in filter rule `%2'."
+					"\nIgnoring it.").arg(actName).arg(mName));
       continue;
     }
     mAction[j]->argsFromString(config->readEntry(argsName));
