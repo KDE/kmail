@@ -41,7 +41,7 @@ using namespace KMail;
 // Look at this number of messages in each slotDoWork call
 #define EXPIREJOB_NRMESSAGES 100
 // And wait this number of milliseconds before calling it again
-#define EXPIREJOB_TIMERINTERVAL 10 * 1000
+#define EXPIREJOB_TIMERINTERVAL 100
 
 /*
  Testcases for folder expiry:
