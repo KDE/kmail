@@ -224,7 +224,7 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
   // Convert messages with a binary body into a message with attachment.
   QCString ct = mMsg->Headers().ContentType().TypeStr().c_str();
   ct = ct.lower();
-  if (ct.isEmpty() || ct == "text" || ct == "message" || ct == "multipart")
+  if (ct.isEmpty() || ct == "text" || ct == "multipart")
     return;
   KMMessagePart textPart;
   textPart.setTypeStr("text");
