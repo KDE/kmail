@@ -466,8 +466,8 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString especials = "()<>@,;:\"/[]?.= \033";
-const QString dontQuote = "\"()<>,@";
+const QCString especials = "()<>@,;:\"/[]?.= \033";
+const QCString dontQuote = "\"()<>,@";
 
 QCString KMMsgBase::encodeRFC2047Quoted(const QCString& aStr, bool base64)
 {
