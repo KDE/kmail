@@ -469,14 +469,14 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
         mFolder->removeMsg(i);
      } else {
         // When removing+readding, no point in telling the imap resources about it
-       bool b = kmkernel->iCalIface().isResourceQuiet();
-       kmkernel->iCalIface().setResourceQuiet( true );
+        bool b = kmkernel->iCalIface().isResourceQuiet();
+        kmkernel->iCalIface().setResourceQuiet( true );
 
         mFolder->take( i );
         mFolder->addMsgKeepUID( mMsg );
         mMsg->setTransferInProgress( false );
 
-       kmkernel->iCalIface().setResourceQuiet( b );
+        kmkernel->iCalIface().setResourceQuiet( b );
      }
   }
   mMsg = NULL;
