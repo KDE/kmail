@@ -201,7 +201,7 @@ void KMFolderCachedImap::readConfig()
   kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
                 << " readConfig: mIncidencesFor=" << mIncidencesFor << endl;
 
-  mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know 
+  mUserRights = config->readNumEntry( "UserRights", 0 ); // default is we don't know
 
   KMFolderMaildir::readConfig();
 
@@ -1272,10 +1272,15 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
       setUidValidity((*it).cdata.mid(a + 17, b - a - 17));
     }
     a = (*it).cdata.find("\r\nX-Access:");
-    if (a != -1) {
+    // Only trust X-Access (i.e. the imap select info) if we don't know mUserRights.
+    // The latter is more accurate (checked on every sync) whereas X-Access is only
+    // updated when selecting the folder again, which might not happen if using
+    // RMB / Check Mail in this folder. We don't need two (potentially conflicting)
+    // sources for the readonly setting, in any case.
+    if (a != -1 && mUserRights == -1 ) {
       int b = (*it).cdata.find("\r\n", a + 12);
-      QString access = (*it).cdata.mid(a + 12, b - a - 12);
-      mReadOnly = access == "Read only";
+      const QString access = (*it).cdata.mid(a + 12, b - a - 12);
+      setReadOnly( access == "Read only" );
     }
     (*it).cdata.remove(0, pos);
   }
@@ -1651,9 +1656,18 @@ KMFolderCachedImap::slotReceivedUserRights( KMFolder* folder )
     if ( mUserRights == 0 ) // didn't work
       mUserRights = -1; // error code (used in folderdia)
     else
-      mReadOnly = ( mUserRights & KMail::ACLJobs::Insert ) == 0;
+      setReadOnly( ( mUserRights & KMail::ACLJobs::Insert ) == 0 );
     mProgress += 5;
     serverSyncInternal();
+  }
+}
+
+void
+KMFolderCachedImap::setReadOnly( bool readOnly )
+{
+  if ( readOnly != mReadOnly ) {
+    mReadOnly = readOnly;
+    emit readOnlyChanged( folder() );
   }
 }
 

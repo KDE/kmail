@@ -329,6 +329,7 @@ signals:
   void syncState( int state, int number );
 
 private:
+  void setReadOnly( bool readOnly );
   QString state2String( int state ) const;
 
   /** State variable for the synchronization mechanism */

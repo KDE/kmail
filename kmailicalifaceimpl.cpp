@@ -1256,14 +1256,18 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
                 this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
     disconnect( folder, SIGNAL( expunged( KMFolder* ) ),
                 this, SLOT( slotRefreshFolder( KMFolder* ) ) );
+    disconnect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
+                this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
 
-    // And listen to changes from it
+    // Listen to changes from the folder
     connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
              this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
     connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
              this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
     connect( folder, SIGNAL( expunged( KMFolder* ) ),
              this, SLOT( slotRefreshFolder( KMFolder* ) ) );
+    connect( folder->storage(), SIGNAL( readOnlyChanged( KMFolder* ) ),
+             this, SLOT( slotFolderPropertiesChanged( KMFolder* ) ) );
   }
 
   subresourceAdded( folderContentsType( contentsType ), location, folder->prettyURL(),
@@ -1381,6 +1385,25 @@ void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
   // "Fire and forget". No need for error handling, nor for explicit deletion.
   // Maybe we should try to prevent launching it if it's already running (for this URL) though.
   /*KIO::Job* job =*/ KIO::get( httpURL, false, false /*no progress info*/ );
+}
+
+void KMailICalIfaceImpl::slotFolderPropertiesChanged( KMFolder* folder )
+{
+  if ( isResourceImapFolder( folder ) ) {
+    const QString location = folder->location();
+    const QString contentsTypeStr = folderContentsType( folder->storage()->contentsType() );
+
+    // Emit deleted+added.
+    // It's necessary to reload all incidences to make them readonly (or readwrite).
+
+    subresourceDeleted( contentsTypeStr, location );
+
+    subresourceAdded( contentsTypeStr, location, folder->prettyURL(),
+                      !folder->isReadOnly(), folderIsAlarmRelevant( folder ) );
+
+    /* FIXME merge once we are back in HEAD. IMAP Resource still uses the other one. */
+    subresourceAdded( contentsTypeStr, location );
+  }
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
@@ -1580,14 +1603,6 @@ void KMailICalIfaceImpl::readConfig()
   mExtraFolders.remove( mNotes->location() );
 
 
-  // Make KOrganizer re-read everything
-#if 0 // old way, not enough finegrained (and most resources don't call doOpen, so they miss the subresources anyway)
-  slotRefresh( "Calendar" );
-  slotRefresh( "Task" );
-  slotRefresh( "Journal" );
-  slotRefresh( "Contact" );
-  slotRefresh( "Notes" );
-#else
   subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location(),
                     mCalendar->label(), true, true );
   subresourceAdded( folderContentsType( KMail::ContentsTypeCalendar ), mCalendar->location() );
@@ -1603,9 +1618,7 @@ void KMailICalIfaceImpl::readConfig()
   subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location(),
                     mNotes->label(), true, false );
   subresourceAdded( folderContentsType( KMail::ContentsTypeNote ), mNotes->location() );
-  // This also shows that we might even get rid of the mCalendar etc. special
-  // case and just use ExtraFolder for all
-#endif
+
   reloadFolderTree();
 }
 
