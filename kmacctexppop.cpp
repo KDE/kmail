@@ -117,9 +117,9 @@ void KMAcctExpPop::processNewMail(bool _interactive)
 {
   if (stage == Idle) {
 
-    if(mAskAgain || mPasswd.isEmpty() || mLogin.isEmpty()) {
-      QString passwd = decryptStr(mPasswd);
-      bool b = FALSE;
+    if(mAskAgain || passwd().isEmpty() || mLogin.isEmpty()) {
+      QString passwd = NetworkAccount::passwd();
+      bool b = storePasswd();
       if (KIO::PasswordDialog::getNameAndPassword(mLogin, passwd, &b,
         i18n("You need to supply a username and a password to access this "
         "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
@@ -128,7 +128,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
         checkDone( false, CheckAborted );
         return;
       } else {
-        mPasswd = encryptStr(passwd);
+        setPasswd( passwd, b );
         mAskAgain = FALSE;
       }
     }
