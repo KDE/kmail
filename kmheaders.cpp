@@ -407,7 +407,7 @@ public:
     } else if (column == paintInfo->subCol) {
       if (paintInfo->status)
         return ret + QString( QChar( (uint)msg->status() )) + sortArrival;
-      return ret + KMMsgBase::skipKeyword( msg->subject().lower() ) + ' ' + sortArrival;
+      return ret + KMMessage::stripOffPrefixes( msg->subject().lower() ) + ' ' + sortArrival;
     }
     else if (column == paintInfo->sizeCol) {
       QString len;
