@@ -1262,7 +1262,7 @@ void KMComposeWin::setFcc( const QString &idString )
     KMessageBox::sorry( this,
                         i18n("The sent-mail folder of the current identity "
                              "doesn't exist. Therefore the default sent-mail "
-                             "folder will be used.") );    
+                             "folder will be used.") );
     mFcc->setFolder( kernel->sentFolder() );
   }
 }
@@ -2465,7 +2465,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
     }
 
     delete[] certificate;
-	    
+	
 /* ----------------------------- */
 #ifdef DEBUG
     QString ds( "\n\nBEFORE calling cryptplug:" );
@@ -4647,7 +4647,7 @@ void KMLineEdit::doCompletion(bool ctrlT)
             box->popup();
         }
         else if (completions.count() == 1)
-            setText(prevAddr + box->text(0));
+            setText(prevAddr + completions.first());
         else
             box->hide();
 
