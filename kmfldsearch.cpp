@@ -422,7 +422,7 @@ void KMFldSearch::slotSearch()
 
     mPatternEdit->updateSearchPattern();
     KMSearchPattern *searchPattern = new KMSearchPattern();
-    searchPattern = mSearchPattern; //deep copy
+    ( *searchPattern ) = *mSearchPattern; //deep copy
     searchPattern->purify();
     search->setSearchPattern(searchPattern);
     mFolder->setSearch(search);
