@@ -171,20 +171,20 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
   QStringList str;
   if( !mFolder ) {
     // new folder can be subfolder of any other folder
-    kmkernel->folderMgr()->createFolderList( &str, &mFolders  );
+    kmkernel->folderMgr()->createI18nFolderList( &str, &mFolders  );
     kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
-    kmkernel->dimapFolderMgr()->createFolderList( &str, &mFolders  );
+    kmkernel->dimapFolderMgr()->createI18nFolderList( &str, &mFolders  );
   }
   else if( mFolder->folderType() != KMFolderTypeImap
            && mFolder->folderType() != KMFolderTypeCachedImap ) {
     // already existant local folder can only be moved locally
-    kmkernel->folderMgr()->createFolderList( &str, &mFolders  );
+    kmkernel->folderMgr()->createI18nFolderList( &str, &mFolders  );
   }
   else {
     // already existant IMAP folder can't be moved, but we add all
     // IMAP folders so that the correct parent folder can be shown
     kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
-    kmkernel->dimapFolderMgr()->createFolderList( &str, &mFolders );
+    kmkernel->dimapFolderMgr()->createI18nFolderList( &str, &mFolders );
   }
 
   // remove the local system folders from the list of parent folders because
@@ -413,7 +413,7 @@ void KMFolderDialog::createGeneralTab( const QString& aName )
 //----------------------------------------------------------------------------
 void KMFolderDialog::createMLTab()
 {
-  if ( mFolder->isSystemFolder() ) {
+  if ( !mFolder || mFolder->isSystemFolder() ) {
     return;
   }
 
