@@ -794,7 +794,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   if (aMsg)
       kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
         << aMsg->fromStrip() << ", complete " << (aMsg->isComplete()) << endl;
-  
+
   bool complete = true;
   if ( aMsg && !aMsg->isComplete() && (aMsg->getMsgSerNum() != mLastSerNum) )
     complete = false;
@@ -839,7 +839,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 
   if ( !complete ) {
     kdDebug(5006) << "msg incomplete, return" << endl;
-    return; 
+    return;
   }
 
   // Avoid flicker, somewhat of a cludge
@@ -1393,8 +1393,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
-//  mViewer->widget()->setGeometry(0, 0, width(), height());
-  mBox->setGeometry(0, 0, width(), height());
+  mSplitter->setGeometry(0, 0, width(), height());
 }
 
 
