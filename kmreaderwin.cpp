@@ -388,10 +388,15 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
+  if (aMsg)
+      kdDebug() << aMsg->subject() << " " << aMsg->fromStrip() << endl;
+	
   // If not forced and there is aMsg and aMsg is same as mMsg then return
   if (!force && aMsg && mMsg == aMsg)
     return;
 
+  kdDebug() << "Not equal" << endl;
+  
   mMsg = aMsg;
   if (mMsg) mMsg->setCodec(mCodec);
 
