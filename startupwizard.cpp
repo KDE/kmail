@@ -110,7 +110,7 @@ KMIdentity & WizardIdentityPage::identity() const {
 }
 
 WizardKolabPage::WizardKolabPage( QWidget * parent, const char * name )
-  : QWidget( parent, name ), mFolder(0), mAccount(0)
+  : QWidget( parent, name ), mFolder(0), mAccount(0), mTransport( 0 )
 {
   QGridLayout *grid = new QGridLayout( this, 7, 2, KDialog::marginHint(),
 				       KDialog::spacingHint() );
