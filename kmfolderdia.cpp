@@ -18,6 +18,7 @@
 #include "kmfoldermgr.h"
 #include "kmidentity.h"
 #include "kmfolderimap.h"
+#include "kmheaders.h"
 
 #include "kmfolderdia.moc"
 
@@ -89,7 +90,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ml->addStretch( 1 );
 
   QStringList str;
-  if (!folder) kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
+//  if (!folder) kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
+  kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
   kernel->folderMgr()->createFolderList( &str, &mFolders  );
   str.prepend( i18n( "Top Level" ));
   QGuardedPtr<KMFolder> curFolder;
@@ -207,6 +209,27 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mcLayout->addWidget( markAnyMessage );
   mcGroup->hide();
 
+  QGroupBox* senderGroup = new QGroupBox( i18n("Show Sender/Receiver"), page, "senderGroup" );
+  senderGroup->setColumnLayout( 0,  Qt::Vertical );
+
+  topLayout->addWidget( senderGroup );
+
+  QHBoxLayout *sl = new QHBoxLayout( senderGroup->layout() );
+  sl->setSpacing( 6 );
+
+  QLabel *sender_label = new QLabel( i18n("Show:" ), senderGroup );
+  sl->addWidget( sender_label );
+  senderType = new QComboBox(senderGroup);
+  senderType->insertItem(i18n("Sender"), 0);
+  senderType->insertItem(i18n("Receiver"), 1);
+  {
+		QString whoField = "From";
+		if (aFolder) whoField = aFolder->whoField();
+    senderType->setCurrentItem(whoField == "To"? 1 : 0);
+  }
+  sl->addWidget( senderType );
+  sl->addStretch( 1 );
+
   for( i = 1; mFolders.at(i - 1) != mFolders.end(); ++i ) {
     curFolder = *mFolders.at(i - 1);
     if (curFolder->child() == aFolderDir) {
@@ -254,26 +277,27 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
       unreadExpiryTime->setEnabled(false);
       unreadExpiryUnits->setEnabled(false);
     }
-	// Legal values for units are 1=days, 2=weeks, 3=months.
-	// Should really do something better than hardcoding this everywhere.
-	if (folder->getReadExpireUnits() >= 0 && folder->getReadExpireUnits() < expireMaxUnits) {
-      readExpiryUnits->setCurrentItem(folder->getReadExpireUnits());
-	}
-	if (folder->getUnreadExpireUnits() >= 0 && folder->getUnreadExpireUnits() < expireMaxUnits) {
-      unreadExpiryUnits->setCurrentItem(folder->getUnreadExpireUnits());
-	}
-	int age = folder->getReadExpireAge();
-	if (age >= 1 && age <= 500) {
-      readExpiryTime->setValue(age);
-	} else {
-	  readExpiryTime->setValue(7);
-    }
-	age = folder->getUnreadExpireAge();
-	if (age >= 1 && age <= 500) {
-      unreadExpiryTime->setValue(age);
-	} else {
-	  unreadExpiryTime->setValue(28);
-	}
+		// Legal values for units are 1=days, 2=weeks, 3=months.
+		// Should really do something better than hardcoding this everywhere.
+		if (folder->getReadExpireUnits() >= 0 && folder->getReadExpireUnits() < expireMaxUnits) {
+	      readExpiryUnits->setCurrentItem(folder->getReadExpireUnits());
+		}
+		if (folder->getUnreadExpireUnits() >= 0 && folder->getUnreadExpireUnits() < expireMaxUnits) {
+	      unreadExpiryUnits->setCurrentItem(folder->getUnreadExpireUnits());
+		}
+		int age = folder->getReadExpireAge();
+		if (age >= 1 && age <= 500) {
+	      readExpiryTime->setValue(age);
+		} else {
+		  readExpiryTime->setValue(7);
+	    }
+		age = folder->getUnreadExpireAge();
+		if (age >= 1 && age <= 500) {
+	      unreadExpiryTime->setValue(age);
+		} else {
+		  unreadExpiryTime->setValue(28);
+		}
+
   } else {
     // Default values for everything if there isn't a folder
 	// object yet.
@@ -293,6 +317,8 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   if (aFolder && aFolder->protocol() == "imap") {
     expGroup->hide();
     mtGroup->hide();
+		if (aFolder->isSystemFolder())
+			senderGroup->hide();
   }
   else if (folder && folder->isSystemFolder()) {
     fpGroup->hide();
@@ -300,6 +326,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
     mlGroup->hide();
     idGroup->hide();
     mcGroup->hide();
+		senderGroup->hide();
   }
 
   kdDebug(5006)<<"Exiting KMFolderDialog::KMFolderDialog()\n";
@@ -327,8 +354,9 @@ void KMFolderDialog::slotUpdateItems ( int current )
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotOk()
 {
-  if (!mFolder || (mFolder->protocol() != "imap"))
+  if (!mFolder)
   {
+		// we got no folder so create one
     QString acctName;
     QString fldName, oldFldName;
     KMFolderDir *selectedFolderDir = &(kernel->folderMgr()->dir());
@@ -386,28 +414,48 @@ void KMFolderDialog::slotOk()
 
     if (!folder) {
       if (selectedFolder && selectedFolder->protocol() == "imap")
+			{
+				/* create a temporary folder to save the settings in the config-file
+				 * when the folder is created successfully the settings are read
+				 * otherwise the entry is automatically deleted at the next startup
+				*/
+				KMFolder *temp = new KMFolderImap(mFolderDir, fldName);
+				if (senderType->currentItem() == 0)
+					temp->setWhoField("From");
+				else 
+					temp->setWhoField("To");
+    		temp->setMailingList( holdsMailingList->isChecked() );
+    		temp->setMailingListPostAddress( mailingListPostAddress->text() );
+    		temp->setMailingListAdminAddress( QString::null );
+    		temp->setIdentity( identity->currentText() );
+
+//				folder = static_cast<KMAcctFolder*>(temp);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
-      else if (mailboxType->currentItem() == 1)
+      } else if (mailboxType->currentItem() == 1) {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
-      else
+      } else {
         folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
+			}	
     }
     else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
     {
       if (folder->parent() != selectedFolderDir)
-	folder->rename(fldName, selectedFolderDir );
+				folder->rename(fldName, selectedFolderDir );
       else
-	folder->rename(fldName);
+				folder->rename(fldName);
+
       kernel->folderMgr()->contentsChanged();
     }
   }
 
   if (folder)
   {
+		// settings for mailingList
     folder->setMailingList( holdsMailingList->isChecked() );
     folder->setMailingListPostAddress( mailingListPostAddress->text() );
 //   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
     folder->setMailingListAdminAddress( QString::null );
+
     folder->setIdentity( identity->currentText() );
 // folder->setMarkAnyMessage( markAnyMessage->isChecked() );
 
@@ -417,7 +465,15 @@ void KMFolderDialog::slotOk()
     folder->setReadExpireAge(readExpiryTime->value());
     folder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
     folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
+
+		// set whoField
+		if (senderType->currentItem() == 0)
+			folder->setWhoField("From");
+		else 
+			folder->setWhoField("To");
   }
+	// reload the headers to show the changes
+	static_cast<KMHeaders*>(this->parentWidget()->child("headers"))->setFolder(folder);
 
   KDialogBase::slotOk();
 }

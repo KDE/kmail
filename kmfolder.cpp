@@ -1046,14 +1046,16 @@ void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx = -1)
 //-----------------------------------------------------------------------------
 const char* KMFolder::whoField() const
 {
-  return (mWhoField.isEmpty() ? "From" : mWhoField.latin1());
+ // return (mWhoField.isEmpty() ? "From" : mWhoField.latin1());
+  return mWhoField.latin1();
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFolder::setWhoField(const QString& aWhoField)
 {
-    mWhoField = aWhoField;
+	mWhoField = aWhoField;
+	writeConfig();
 }
 
 //-----------------------------------------------------------------------------
@@ -1090,6 +1092,8 @@ void KMFolder::readConfig()
   readExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
   unreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
   unreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
+	if ( mWhoField.isEmpty() )
+		mWhoField = config->readEntry("WhoField");
 }
 
 //-----------------------------------------------------------------------------
@@ -1108,7 +1112,7 @@ void KMFolder::writeConfig()
   config->writeEntry("ReadExpireUnits", readExpireUnits);
   config->writeEntry("UnreadExpireAge", unreadExpireAge);
   config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
-
+	if ( !mWhoField.isEmpty() ) config->writeEntry("WhoField", mWhoField);
 }
 
 //-----------------------------------------------------------------------------

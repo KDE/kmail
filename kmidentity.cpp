@@ -2,6 +2,9 @@
 
 #include "kmidentity.h"
 #include "kfileio.h"
+#include "kmfolder.h"
+#include "kmfoldermgr.h"
+#include <kdebug.h>
 
 #include <kconfig.h>
 #include <kapplication.h>
@@ -122,11 +125,20 @@ void KMIdentity::readConfig(void)
   mSignatureFile = config->readEntry("Signature File");
   mUseSignatureFile = config->readBoolEntry("UseSignatureFile", false);
   mSignatureInlineText = config->readEntry("Inline Signature");
+
   mFcc = config->readEntry("Fcc");
+	KMFolder* folder = kernel->folderMgr()->findIdString(mFcc);
+	if (!folder) folder = kernel->imapFolderMgr()->findIdString(mFcc);
+	if (folder && !folder->whoField()) folder->setWhoField("To");
+
   mDrafts = config->readEntry("Drafts");
-  if (mIdentity == i18n( "Default" ))
-    mTransport = QString::null;
-  else
+	folder = kernel->folderMgr()->findIdString(mDrafts);
+	if (!folder) folder = kernel->imapFolderMgr()->findIdString(mDrafts);
+	if (folder && !folder->whoField()) folder->setWhoField("To");
+
+//  if (mIdentity == i18n( "Default" ))
+//    mTransport = QString::null;
+//  else
     mTransport = config->readEntry("Transport");
 }
 

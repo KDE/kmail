@@ -285,7 +285,7 @@ public:
     and listbox. */
   const char* whoField() const;
 
-  /** Set contents of whoField. */
+  /** Set contents of whoField as QString (From / To). */
   void setWhoField(const QString&);
 
   /** A cludge to help make sure the count of unread messges is kept in sync */

@@ -182,10 +182,9 @@ public:
 	tmp = QString( QChar( (char)mMsgBase->status() ));
 
     } else if(col == headers->paintInfo()->senderCol) {
-      KMFolder *folder = headers->folder();
-      if (kernel->folderIsDraftOrOutbox(folder))
+			if (qstricmp(headers->folder()->whoField(), "To")==0)
         tmp = mMsgBase->toStrip();
-      else
+      else 
         tmp = mMsgBase->fromStrip();
       if (tmp.isEmpty())
         tmp = i18n("Unknown");
@@ -217,7 +216,6 @@ public:
       tmp.setNum(headers->messageScore(mMsgId));
 #endif
     }
-
     return tmp;
   }
 

@@ -560,8 +560,26 @@ void IdentityPage::saveActiveIdentity()
   entry.setReplyToAddress( mReplyToEdit->text() );
   entry.setTransport( ( mTransportCheck->isChecked() ) ?
 		      mTransportCombo->currentText() : QString::null );
+	if (!entry.fcc().isEmpty() && entry.fcc() != mFccCombo->getFolder()->idString())
+	{
+		// restore the previous setting
+		KMFolder* folder = kernel->folderMgr()->findIdString(entry.fcc());
+		if (!folder) folder = kernel->imapFolderMgr()->findIdString(entry.fcc());
+		if (folder && !folder->whoField()) folder->setWhoField("From");
+	}	
   entry.setFcc( mFccCombo->getFolder()->idString() );
+	if (!mFccCombo->getFolder()->whoField()) 
+		mFccCombo->getFolder()->setWhoField("To");
+	if (!entry.drafts().isEmpty() && entry.drafts() != mDraftsCombo->getFolder()->idString())
+	{
+		// restore the previous setting
+		KMFolder* folder = kernel->folderMgr()->findIdString(entry.drafts());
+		if (!folder) folder = kernel->imapFolderMgr()->findIdString(entry.drafts());
+		if (folder && !folder->whoField()) folder->setWhoField("From");
+	}	
   entry.setDrafts( mDraftsCombo->getFolder()->idString() );
+	if (!mDraftsCombo->getFolder()->whoField()) 
+		mDraftsCombo->getFolder()->setWhoField("To");	
   // "Signature" tab:
   if ( mSignatureEnabled->isChecked() ) {
     switch ( mSignatureSourceCombo->currentItem() ) {
