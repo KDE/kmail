@@ -1030,10 +1030,13 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     }
     else if (ch=='&') HTML_ADD("&amp;", 5);
     else if ((ch=='h' && strncmp(pos,"http:", 5)==0) ||
+	     (ch=='h' && strncmp(pos,"https:", 6)==0) ||
 	     (ch=='f' && strncmp(pos,"ftp:", 4)==0) ||
 	     (ch=='m' && strncmp(pos,"mailto:", 7)==0))
     {
-      for (i=0; *pos && *pos>' ' && i<255; i++, pos++)
+      for (i=0; *pos && *pos > ' ' &&
+                *pos != '<' &&		// handle cases like this: <link>http://foobar.org/</link>
+		i < 255; i++, pos++)
 	str[i] = *pos;
       pos--;
       while (i>0 && ispunct(str[i-1]) && str[i-1]!='/')
