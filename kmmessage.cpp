@@ -885,23 +885,29 @@ KMMessage* KMMessage::createRedirect(void)
 {
   KMMessage* msg = new KMMessage;
   KMMessagePart msgPart;
-  QCString str = "";
   int i;
 
   msg->initFromMessage(this);
-  str = asQuotedString(str, "", QString::null, FALSE, false, false);
 
   /// ### FIXME: The message should be redirected with the same Content-Type
   /// ###        as the original message
   /// ### FIXME: ??Add some Resent-* headers?? (c.f. RFC2822 3.6.6)
-  msg->setHeaderField("Content-Type","text/plain; charset=\"utf-8\"");
+
+  QString st = QString::fromUtf8(asQuotedString("", "", QString::null,
+    FALSE, false, false));
+  QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
+  if (encoding.isEmpty()) encoding = "utf-8";
+  QCString str = codecForName(encoding)->fromUnicode(st);
+
+  msg->setCharset(encoding);
   msg->setBody(str);
+
   if (numBodyParts() > 0)
   {
     msgPart.setBody(str);
     msgPart.setTypeStr("text");
     msgPart.setSubtypeStr("plain");
-    msgPart.setCharset("utf-8");
+    msgPart.setCharset(encoding);
     msg->addBodyPart(&msgPart);
 
     for (i = 0; i < numBodyParts(); i++)
@@ -920,6 +926,7 @@ KMMessage* KMMessage::createRedirect(void)
   msg->setHeaderField("X-KMail-Redirect-From", from());
   msg->setSubject(subject());
   msg->setFrom(from());
+  msg->cleanupHeader();
   
   // setStatus(KMMsgStatusForwarded);
   msg->link(this, KMMsgStatusForwarded);
@@ -1042,15 +1049,19 @@ KMMessage* KMMessage::createForward(void)
 
   msg->initFromMessage(this);
   
-  msg->setCharset("utf-8");
-  QCString str = createForwardBody();
+  QString st = QString::fromUtf8(createForwardBody());
+  QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
+  if (encoding.isEmpty()) encoding = "utf-8";
+  QCString str = codecForName(encoding)->fromUnicode(st);
+
+  msg->setCharset(encoding);
   msg->setBody(str);
 
   if (numBodyParts() > 0)
   {
     msgPart.setTypeStr("text");
     msgPart.setSubtypeStr("plain");
-    msgPart.setCharset("utf-8");
+    msgPart.setCharset(encoding);
     msgPart.setBody(str);
     msg->addBodyPart(&msgPart);
 
@@ -1090,6 +1101,7 @@ KMMessage* KMMessage::createForward(void)
   }
   if (!recognized)
     msg->setSubject("Fwd: " + subject());
+  msg->cleanupHeader();
 
   // setStatus(KMMsgStatusForwarded);
   msg->link(this, KMMsgStatusForwarded);
