@@ -99,7 +99,8 @@ void KMSystemTray::buildPopupMenu()
   getKMMainWidget()->action("new_message")->plug(mPopupMenu);
   getKMMainWidget()->action("kmail_configure_kmail")->plug(mPopupMenu);
   mPopupMenu->insertSeparator();
-  getKMMainWidget()->action("file_quit")->plug(mPopupMenu);
+  if (getKMMainWidget()->action("file_quit"))
+    getKMMainWidget()->action("file_quit")->plug(mPopupMenu);
 }
 
 KMSystemTray::~KMSystemTray()
@@ -348,7 +349,7 @@ KMMainWidget * KMSystemTray::getKMMainWidget()
 {
   QWidgetList *l = kapp->topLevelWidgets();
   QWidgetListIt it( *l );
-  QWidget *wid;
+  QWidget *wid;	
 
   while ( (wid = it.current()) != 0 ) {
     ++it;
