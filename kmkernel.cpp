@@ -10,6 +10,7 @@
 #include <knotifyclient.h>
 #include <klocale.h>
 #include <kstandarddirs.h>
+#include <qutf7codec.h>
 
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
@@ -49,6 +50,12 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   closed_by_user = true;
   the_msgDict = 0;
   new KMpgpWrap();
+  // register our own (libkdenetwork) utf-7 codec as long as Qt
+  // doesn't have it's own:
+  if ( !QTextCodec::codecForName("utf-7") ) {
+    kdDebug(5006) << "No Qt-native utf-7 codec found; registering QUtf7Codec from libkdenetwork" << endl;
+    (void) new QUtf7Codec();
+  }
 }
 
 KMKernel::~KMKernel ()
