@@ -1196,6 +1196,12 @@ void KMReaderWin::displayAboutPage()
 
   QString location = locate("data", "kmail/about/main.html");
   QString content = KPIM::kFileToString(location);
+  content = content.arg( locate( "data", "libkdepim/about/kde_infopage.css" ) );
+  if ( kapp->reverseLayout() )
+    content = content.arg( "@import \"%1\";" ).arg( locate( "data", "libkdepim/about/kde_infopage_rtl.css" ) );
+  else
+    content = content.arg( "" );
+
   mViewer->begin(KURL( location ));
   QString info =
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
