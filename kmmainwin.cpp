@@ -323,6 +323,7 @@ void KMMainWin::readConfig(void)
   mMsgView->readConfig();
   slotSetEncoding();
   mHeaders->readConfig();
+  mHeaders->restoreLayout(kapp->config(), "Header-Geometry");
   mFolderTree->readConfig();
 
   { // area for config group "General"
