@@ -54,8 +54,9 @@ using KMail::TeeHtmlWriter;
 #endif // !NDEBUG
 
 #include <kmime_mdn.h>
+#include <kmime_header_parsing.h>
+using KMime::Types::AddrSpecList;
 using namespace KMime;
-
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
 #include <kuserprofile.h>
@@ -2575,7 +2576,10 @@ void KMReaderWin::slotFromFilter()
   if (!msg)
     return;
 
-  KMCommand *command = new KMFilterCommand( "From",  msg->from() );
+  AddrSpecList al = msg->extractAddrSpecs( "From" );
+  if ( al.empty() )
+    return;
+  KMCommand *command = new KMFilterCommand( "From",  al.front().asString() );
   command->start();
 }
 
