@@ -1125,7 +1125,13 @@ int KMFolderMbox::compact()
   rc |= fclose(tmpfile);
   if (!rc) {
     bool autoCreate = mAutoCreateIndex;
-    ::rename(tempName.local8Bit(), location().local8Bit());
+    QFileInfo inf(location());
+    QString box;
+    if (inf.isSymLink())
+      box = inf.readLink();
+    if (!box)
+      box = location();
+    ::rename(tempName.local8Bit(), box.local8Bit());
     writeIndex();
     writeConfig();
     mAutoCreateIndex = false;
