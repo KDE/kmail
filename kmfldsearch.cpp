@@ -7,6 +7,7 @@
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
+#include "kmmsgpart.h"
 #include "kmmainwin.h"
 
 #include <qmessagebox.h>
@@ -477,14 +478,25 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   if (mField.isEmpty() || !aMsg) return true;
   if( mField == i18n("<complete message>") ) {
     value = aMsg->headerAsString();
-    QString charset = aMsg->charset();
+    QString charset;
+    QCString content;
+    if (aMsg->typeStr().lower().find("multipart/") != -1)
+    {
+      KMMessagePart mp;
+      aMsg->bodyPart(0,&mp);
+      charset = mp.charset();
+      content = mp.bodyDecoded();
+    } else {
+      charset = aMsg->charset();
+      content = aMsg->bodyDecoded();
+    }
     if (!mNonLatin || charset.isEmpty() || charset == "us-ascii"
       || charset == "iso-8859-1")         // Speedup
-        value += aMsg->bodyDecoded();  
+        value += content;  
     else {
-      QTextCodec *codec = KMMsgBase::codecForName(aMsg->charset());
-      if (codec) value += codec->toUnicode(aMsg->bodyDecoded());
-        else value += aMsg->bodyDecoded();
+      QTextCodec *codec = KMMsgBase::codecForName(charset);
+      if (codec) value += codec->toUnicode(content);
+        else value += content;
     }
   } else {
     value = aMsg->headerField(mField);
