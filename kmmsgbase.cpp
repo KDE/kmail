@@ -328,7 +328,7 @@ QCString KMMsgBase::encodeRFC2047Quoted(const QCString& aStr, bool base64)
   for (unsigned int i = 0; i < aStr.length(); i++)
   {
     ch = aStr.at(i);
-    if (ch >= 128 || especials.find(aStr.at(i)) != -1)
+    if (ch >= 128 || ch == '_' || especials.find(aStr.at(i)) != -1)
     {
       result += "=";
       hex = ((ch & 0xF0) >> 4) + 48;
