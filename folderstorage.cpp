@@ -427,12 +427,10 @@ void FolderStorage::take(QPtrList<KMMessage> msgList)
 //-----------------------------------------------------------------------------
 KMMessage* FolderStorage::getMsg(int idx)
 {
-  KMMsgBase* mb;
-
   if(!(idx >= 0 && idx <= count()))
     return 0;
 
-  mb = getMsgBase(idx);
+  KMMsgBase* mb = getMsgBase(idx);
   if (!mb) return 0;
 
 #if 0
@@ -464,8 +462,33 @@ KMMessage* FolderStorage::getMsg(int idx)
   msg->setComplete( true );
   return msg;
 #endif
+}
 
+//-----------------------------------------------------------------------------
+KMMessage* FolderStorage::readTemporaryMsg(int idx)
+{
+  if(!(idx >= 0 && idx <= count()))
+    return 0;
 
+  KMMsgBase* mb = getMsgBase(idx);
+  if (!mb) return 0;
+
+  KMMessage *msg = 0;
+  bool undo = mb->enableUndo();
+  if (mb->isMessage()) {
+    // the caller will delete it, so we must make a copy it
+    msg = new KMMessage(*(KMMessage*)mb);
+  } else {
+    // ## Those two lines need to be moved to a virtual method for KMFolderSearch, like readMsg
+    msg = new KMMessage(*(KMMsgInfo*)mb);
+    msg->fromDwString(getDwString(idx));
+  }
+  msg->setEnableUndo(undo);
+  if (msg->getMsgSerNum() == 0) {
+    msg->setMsgSerNum(kmkernel->msgDict()->insert(0, msg, idx));
+  }
+  msg->setComplete( true );
+  return msg;
 }
 
 
