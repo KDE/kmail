@@ -153,6 +153,7 @@ public:
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
+  KMFolderMgr *dimapFolderMgr() { return the_imapFolderMgr; }
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
   UndoStack *undoStack() { return the_undoStack; }
   KMAcctMgr *acctMgr() { return the_acctMgr; }
@@ -241,7 +242,10 @@ private:
   KMFolder *the_trashFolder;
   KMFolder *the_draftsFolder;
 
-  KMFolderMgr *the_folderMgr, *the_imapFolderMgr, *the_searchFolderMgr;
+  KMFolderMgr *the_folderMgr;
+  KMFolderMgr *the_imapFolderMgr;
+  KMFolderMgr *the_dimapFolderMgr;
+  KMFolderMgr *the_searchFolderMgr;
   UndoStack *the_undoStack;
   KMAcctMgr *the_acctMgr;
   KMFilterMgr *the_filterMgr;

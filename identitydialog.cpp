@@ -254,6 +254,8 @@ namespace KMail {
     KMFolder * folder = kmkernel->folderMgr()->findIdString( folderID );
     if ( !folder )
       folder = kmkernel->imapFolderMgr()->findIdString( folderID );
+    if ( !folder )
+      folder = kmkernel->dimapFolderMgr()->findIdString( folderID );
     if ( !folder ) {
       KMessageBox::sorry( this, msg );
       return false;

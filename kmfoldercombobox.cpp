@@ -35,6 +35,7 @@ void KMFolderComboBox::init()
   refreshFolders();
   connect( this, SIGNAL( activated(int) ), this, SLOT( slotActivated(int) ) );
   connect( kmkernel->folderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
+  connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
   if (mImapShown) connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), this, SLOT(refreshFolders()) );
 }
 
@@ -67,6 +68,7 @@ void KMFolderComboBox::createFolderList(QStringList *names,
   if (mImapShown)
     kmkernel->imapFolderMgr()->createI18nFolderList( names, folders );
 
+  kmkernel->dimapFolderMgr()->createFolderList( names, folders );
   kmkernel->folderMgr()->createFolderList( names, folders );
   uint i = 0;
   while (i < folders->count())
@@ -124,6 +126,7 @@ void KMFolderComboBox::setFolder( const QString &idString )
 {
   KMFolder *folder = kmkernel->folderMgr()->findIdString( idString );
   if (!folder) folder = kmkernel->imapFolderMgr()->findIdString( idString );
+  if (!folder) folder = kmkernel->dimapFolderMgr()->findIdString( idString );
   if (!folder && !idString.isEmpty())
   {
      if (mSpecialIdx >= 0)

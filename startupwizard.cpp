@@ -216,7 +216,7 @@ void WizardKolabPage::apply()
     if( child == 0 )
       child = mAccount->folder()->createChildFolder();
 
-    mFolder = kmkernel->imapFolderMgr()->
+    mFolder = kmkernel->dimapFolderMgr()->
       createFolder( "INBOX", false, KMFolderTypeCachedImap, child );
     static_cast<KMFolderCachedImap*>(mFolder)->setSilentUpload( true );
   }

@@ -166,6 +166,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     // new folder can be subfolder of any other folder
     kmkernel->folderMgr()->createFolderList( &str, &mFolders  );
     kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
+    kmkernel->dimapFolderMgr()->createFolderList( &str, &mFolders  );
   }
   else if( mFolder->folderType() != KMFolderTypeImap
            && mFolder->folderType() != KMFolderTypeCachedImap ) {
@@ -176,6 +177,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     // already existant IMAP folder can't be moved, but we add all
     // IMAP folders so that the correct parent folder can be shown
     kmkernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
+    kmkernel->dimapFolderMgr()->createFolderList( &str, &mFolders );
   }
 
   // remove the local system folders from the list of parent folders because
@@ -595,7 +597,7 @@ void KMFolderDialog::slotOk()
         mFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeImap, selectedFolderDir );
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
       } else if (selectedFolder && selectedFolder->folderType() == KMFolderTypeCachedImap){
-        mFolder = kmkernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
+        mFolder = kmkernel->dimapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
       } else if (mMailboxTypeComboBox->currentItem() == 2) {
         mFolder = kmkernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kmkernel->searchFolderMgr()->dir() );
       } else if (mMailboxTypeComboBox->currentItem() == 1) {

@@ -44,6 +44,8 @@ FolderIface::FolderIface( const QString& vpath )
     mFolder = kmkernel->folderMgr()->getFolderByURL( mPath );
     if ( !mFolder )
       mFolder = kmkernel->imapFolderMgr()->getFolderByURL( mPath );
+    if ( !mFolder )
+      mFolder = kmkernel->dimapFolderMgr()->getFolderByURL( mPath );
 }
 
 QString

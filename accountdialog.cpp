@@ -1420,7 +1420,7 @@ void AccountDialog::saveSettings()
     mAccount->setResource( mImap.resourceCheck->isChecked() );
     mAccount->setCheckExclude( mImap.excludeCheck->isChecked() );
     //mAccount->setFolder( NULL );
-    mAccount->setFolder( kmkernel->imapFolderMgr()->find(mAccount->name() ) );
+    mAccount->setFolder( kmkernel->dimapFolderMgr()->find(mAccount->name()) );
     kdDebug(5006) << mAccount->name() << endl;
     //kdDebug(5006) << "account for folder " << mAccount->folder()->name() << endl;
 

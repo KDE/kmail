@@ -96,7 +96,9 @@ bool KMSearch::read(QString location)
   QString rootString = config.readEntry("Base");
   mRoot = kmkernel->folderMgr()->findIdString(rootString);
   if (mRoot.isNull())
-      mRoot = kmkernel->imapFolderMgr()->findIdString(rootString);
+    mRoot = kmkernel->imapFolderMgr()->findIdString(rootString);
+  if (mRoot.isNull())
+    mRoot = kmkernel->dimapFolderMgr()->findIdString(rootString);
   mRecursive = config.readBoolEntry("Recursive");
   return true;
 }
@@ -374,6 +376,21 @@ KMFolderSearch::KMFolderSearch(KMFolderDir* parent, const QString& name)
     connect(kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
 	    this, SLOT(examineRemovedFolder(KMFolder*)));
     connect(kmkernel->imapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
+	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
+
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgAdded(KMFolder*, Q_UINT32)),
+	    this, SLOT(examineAddedMessage(KMFolder*, Q_UINT32)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgRemoved(KMFolder*, Q_UINT32)),
+	    this, SLOT(examineRemovedMessage(KMFolder*, Q_UINT32)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgChanged(KMFolder*, Q_UINT32, int)),
+	    this, SLOT(examineChangedMessage(KMFolder*, Q_UINT32, int)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(folderInvalidated(KMFolder*)),
+	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(folderAdded(KMFolder*)),
+	    this, SLOT(examineInvalidatedFolder(KMFolder*)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
+	    this, SLOT(examineRemovedFolder(KMFolder*)));
+    connect(kmkernel->dimapFolderMgr(), SIGNAL(msgHeaderChanged(KMFolder*,int)),
 	    this, SLOT(propagateHeaderChanged(KMFolder*,int)));
 
   mExecuteSearchTimer = new QTimer();

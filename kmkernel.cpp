@@ -88,6 +88,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
   the_folderMgr = 0;
   the_imapFolderMgr = 0;
+  the_dimapFolderMgr = 0;
   the_searchFolderMgr = 0;
   the_undoStack = 0;
   the_acctMgr = 0;
@@ -460,7 +461,7 @@ QStringList KMKernel::folderList() const
   QStringList folders;
   the_folderMgr->getFolderURLS( folders );
   the_imapFolderMgr->getFolderURLS( folders );
-
+  the_dimapFolderMgr->getFolderURLS( folders );
   return folders;
 }
 
@@ -469,6 +470,8 @@ DCOPRef KMKernel::getFolder( const QString& vpath )
   if ( the_folderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
+    return DCOPRef( new FolderIface( vpath ) );
+  else if ( the_dimapFolderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   return DCOPRef();
 }
@@ -734,6 +737,7 @@ void KMKernel::init()
   the_undoStack     = new UndoStack(20);
   the_folderMgr     = new KMFolderMgr(foldersPath);
   the_imapFolderMgr = new KMFolderMgr(locateLocal("data","kmail/imap"), KMImapDir);
+  the_dimapFolderMgr = new KMFolderMgr(locateLocal("data","kmail/dimap"), KMDImapDir);
   the_searchFolderMgr = new KMFolderMgr(locateLocal("data","kmail/search"), KMSearchDir);
   the_acctMgr       = new KMAcctMgr();
   the_filterMgr     = new KMFilterMgr();
@@ -801,7 +805,9 @@ void KMKernel::cleanupImapFolders()
     imapAcct->setImapFolder(fld);
     fld->close();
   }
+  the_imapFolderMgr->quiet(FALSE);
 
+  the_dimapFolderMgr->quiet( true );
   for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
   {
     KMFolderCachedImap *cfld;
@@ -810,10 +816,10 @@ void KMKernel::cleanupImapFolders()
     if (acct->type() != "cachedimap" ) continue;
     kdDebug(5006) << "findorCreating " << acct->name() << endl;
 
-    cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->find(acct->name()));
+    cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->find(acct->name()));
     if (cfld == 0) {
       // Folder doesn't exist yet
-      cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->createFolder(acct->name(), FALSE, KMFolderTypeCachedImap));
+      cfld = static_cast<KMFolderCachedImap*>(the_dimapFolderMgr->createFolder(acct->name(), FALSE, KMFolderTypeCachedImap));
       if (!cfld) {
 	KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_imapFolderMgr->basePath())));
 	exit(-1);
@@ -826,8 +832,7 @@ void KMKernel::cleanupImapFolders()
     cachedImapAcct->setImapFolder(cfld);
     cfld->close();
   }
-
-  the_imapFolderMgr->quiet(FALSE);
+  the_dimapFolderMgr->quiet( false );
 }
 
 bool KMKernel::doSessionManagement()
@@ -900,12 +905,15 @@ void KMKernel::notClosedByUser()
   }
   folderMgr()->writeMsgDict(msgDict());
   imapFolderMgr()->writeMsgDict(msgDict());
+  dimapFolderMgr()->writeMsgDict(msgDict());
   delete the_msgIndex;
   the_msgIndex = 0;
   delete the_folderMgr;
   the_folderMgr = 0;
   delete the_imapFolderMgr;
   the_imapFolderMgr = 0;
+  delete the_dimapFolderMgr;
+  the_dimapFolderMgr = 0;
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
   delete the_msgDict;
@@ -1082,6 +1090,7 @@ void KMKernel::cleanupLoop()
 
   folderMgr()->writeMsgDict(msgDict());
   imapFolderMgr()->writeMsgDict(msgDict());
+  dimapFolderMgr()->writeMsgDict(msgDict());
   QValueList<QGuardedPtr<KMFolder> > folders;
   QStringList strList;
   KMFolder *folder;
@@ -1098,6 +1107,8 @@ void KMKernel::cleanupLoop()
   the_folderMgr = 0;
   delete the_imapFolderMgr;
   the_imapFolderMgr = 0;
+  delete the_dimapFolderMgr;
+  the_dimapFolderMgr = 0;
   delete the_searchFolderMgr;
   the_searchFolderMgr = 0;
   delete the_msgDict;
@@ -1442,6 +1453,7 @@ KMMsgDict *KMKernel::msgDict()
     the_msgDict = new KMMsgDict;
     folderMgr()->readMsgDict(msgDict());
     imapFolderMgr()->readMsgDict(msgDict());
+    dimapFolderMgr()->readMsgDict(msgDict());
     return the_msgDict;
 }
 

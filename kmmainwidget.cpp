@@ -2973,6 +2973,8 @@ void KMMainWidget::slotShowStartupFolder()
     if (!startup)
       startup = kmkernel->imapFolderMgr()->findIdString(mStartupFolder);
     if (!startup)
+      startup = kmkernel->dimapFolderMgr()->findIdString(mStartupFolder);
+    if (!startup)
       startup = kmkernel->inboxFolder();
   } else {
     startup = kmkernel->inboxFolder();

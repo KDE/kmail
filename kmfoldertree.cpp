@@ -274,6 +274,12 @@ void KMFolderTree::connectSignals()
   connect(kmkernel->imapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
 
+  connect(kmkernel->dimapFolderMgr(), SIGNAL(changed()),
+          this, SLOT(doFolderListChanged()));
+
+  connect(kmkernel->dimapFolderMgr(), SIGNAL(folderRemoved(KMFolder*)),
+          this, SLOT(slotFolderRemoved(KMFolder*)));
+
   connect(kmkernel->searchFolderMgr(), SIGNAL(changed()),
           this, SLOT(doFolderListChanged()));
 
@@ -505,6 +511,10 @@ void KMFolderTree::reload(bool openFolders)
 
   fdir = &kmkernel->imapFolderMgr()->dir();
   // each imap-account creates it's own root
+  addDirectory(fdir, 0);
+
+  fdir = &kmkernel->dimapFolderMgr()->dir();
+  // each dimap-account creates it's own root
   addDirectory(fdir, 0);
 
   // construct the root of the search folder hierarchy:

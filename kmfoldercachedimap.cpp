@@ -311,8 +311,7 @@ void KMFolderCachedImap::removeMsg(int idx, bool imapQuiet)
   // Remove it from disk
   KMFolderMaildir::removeMsg(idx,imapQuiet);
 
-  // TODO (Bo): Shouldn't this be "emit changed();"?
-  kmkernel->imapFolderMgr()->contentsChanged();
+  kmkernel->dimapFolderMgr()->contentsChanged();
 }
 
 bool KMFolderCachedImap::canRemoveFolder() const {
@@ -1171,7 +1170,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
   mAccount->removeJob(it);
 
   if (!job->error()) {
-    kmkernel->imapFolderMgr()->quiet(TRUE);
+    kmkernel->dimapFolderMgr()->quiet(TRUE);
     createChildFolder();
 
     // Find all subfolders present on disk but not on the server
@@ -1195,7 +1194,7 @@ void KMFolderCachedImap::slotListResult(KIO::Job * job)
     }
     // Remove all folders
     for ( KMFolder* doomed=toRemove.first(); doomed; doomed = toRemove.next() )
-      kmkernel->imapFolderMgr()->remove( doomed );
+      kmkernel->dimapFolderMgr()->remove( doomed );
 
     mAccount->displayProgress();
     serverSyncInternal();
@@ -1233,7 +1232,7 @@ void KMFolderCachedImap::listDirectory2() {
 	if (folder) {
 	  folder->close();
 	  folder->setAccount(mAccount);
-	  kmkernel->imapFolderMgr()->contentsChanged();
+	  kmkernel->dimapFolderMgr()->contentsChanged();
 	} else {
 	  kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
 	}
@@ -1254,7 +1253,7 @@ void KMFolderCachedImap::listDirectory2() {
     }
   }
 
-  kmkernel->imapFolderMgr()->quiet(FALSE);
+  kmkernel->dimapFolderMgr()->quiet(FALSE);
   emit listComplete(this);
   serverSyncInternal();
 }

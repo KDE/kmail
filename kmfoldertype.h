@@ -15,6 +15,7 @@ typedef enum
 {
    KMStandardDir = 0,
    KMImapDir,
+   KMDImapDir,
    KMSearchDir
 } KMFolderDirType;
 

@@ -361,6 +361,8 @@ void KMailICalIfaceImpl::readConfig()
   KMFolderType folderType;
   KMFolder* folderParent = kmkernel->folderMgr()->findIdString( parentName );
   if( folderParent == 0 )
+    folderParent = kmkernel->dimapFolderMgr()->findIdString( parentName );
+  if( folderParent == 0 )
     folderParent = kmkernel->imapFolderMgr()->findIdString( parentName );
   if( folderParent == 0 ) {
     // Maybe nothing was configured?

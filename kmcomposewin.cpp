@@ -243,6 +243,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 					SLOT(slotFolderRemoved(KMFolder*)));
 	connect(kmkernel->imapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
+	connect(kmkernel->dimapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
+					SLOT(slotFolderRemoved(KMFolder*)));
 
   connect (mEditor, SIGNAL (spellcheck_done(int)),
     this, SLOT (slotSpellcheckDone (int)));
@@ -1422,6 +1424,8 @@ void KMComposeWin::setFcc( const QString &idString )
   KMFolder *folder = kmkernel->folderMgr()->findIdString( idString );
   if ( !folder )
     folder = kmkernel->imapFolderMgr()->findIdString( idString );
+  if ( !folder )
+    folder = kmkernel->dimapFolderMgr()->findIdString( idString );
   if ( folder )
     mFcc->setFolder( idString );
   else
@@ -4874,6 +4878,10 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
     if ( !mMsg->drafts().isEmpty() )
     {
       draftsFolder = kmkernel->folderMgr()->findIdString( mMsg->drafts() );
+      if ( draftsFolder == 0 )
+	// This is *NOT* supposed to be "imapDraftsFolder", because a
+	// dIMAP folder works like a normal folder
+	draftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
       if ( draftsFolder == 0 )
 	imapDraftsFolder = kmkernel->imapFolderMgr()->findIdString( mMsg->drafts() );
     }

@@ -90,6 +90,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
 
   connect( kmkernel->folderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->imapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
+  connect( kmkernel->dimapFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
   connect( kmkernel->searchFolderMgr(), SIGNAL(changed()), SLOT(foldersChanged()));
 }
 
@@ -232,6 +233,7 @@ void KMSystemTray::foldersChanged()
   QValueList<QGuardedPtr<KMFolder> > folderList;
   kmkernel->folderMgr()->createFolderList(&folderNames, &folderList);
   kmkernel->imapFolderMgr()->createFolderList(&folderNames, &folderList);
+  kmkernel->dimapFolderMgr()->createFolderList(&folderNames, &folderList);
   kmkernel->searchFolderMgr()->createFolderList(&folderNames, &folderList);
 
   QStringList::iterator strIt = folderNames.begin();
