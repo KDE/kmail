@@ -150,6 +150,11 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
   {
     fti->setExpandable( TRUE );
     fti->folder->setDir( TRUE );
+    if (readIsListViewItemOpen( fti ))
+    {
+      setOpen( fti, TRUE );
+      slotFolderExpanded( fti );
+    }
   }
   fti->folder->setAccount(item->folder->account());
   fti->folder->setImapPath( (noPrefix) ? ("/" + name) :
@@ -404,6 +409,11 @@ void KMFolderTree::reload(void)
       fti->folder->setDir( TRUE );
       fti->folder->setAccount( static_cast<KMAcctImap*>(a) );
       fti->folder->setImapPath( static_cast<KMAcctImap*>(a)->prefix() );
+      if (readIsListViewItemOpen( fti ))
+      {
+        setOpen( fti, TRUE );  // Does only emit a signal, when visible
+        slotFolderExpanded( fti );
+      }
     }
 
   QListViewItemIterator jt( this );
@@ -1108,7 +1118,8 @@ void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder && fti->folder->account())
+  if (!fti || fti->mImapState == KMFolderTreeItem::imapInProgress) return;
+  if (fti->folder && fti->folder->account())
     fti->folder->account()->listDirectory( fti );
 }
 

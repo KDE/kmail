@@ -185,6 +185,7 @@ void KMAcctImap::displayProgress()
 //-----------------------------------------------------------------------------
 void KMAcctImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
 {
+  fti->mImapState = KMFolderTreeItem::imapInProgress;
   jobData jd;
   jd.parent = fti;
   jd.total = 1; jd.done = 0;
@@ -215,6 +216,7 @@ void KMAcctImap::slotListResult(KIO::Job * job)
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
   } else if ((*it).inboxOnly) listDirectory((*it).parent, TRUE);
+  (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
   mapJobData.remove(it);
   displayProgress();
 }
