@@ -155,6 +155,7 @@ protected slots:
   void slotUrlClicked(const KURL &url, int button);
   void slotCopyText();
   void slotMarkAll();
+  void slotSelectText();
   void slotMemInfo();
   void slotSearch();
   void slotSearchClosed();

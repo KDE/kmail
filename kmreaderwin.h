@@ -83,6 +83,9 @@ public:
   /** Print current message. */
   virtual void printMsg(void);
 
+  /** Select message body. */
+  void selectAll();
+
   /** Return selected text */
   QString copyText();
 

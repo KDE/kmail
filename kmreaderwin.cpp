@@ -1724,6 +1724,11 @@ void KMReaderWin::slotTextSelected(bool)
   kapp->clipboard()->setText(temp);
 }
 
+//-----------------------------------------------------------------------------
+void KMReaderWin::selectAll()
+{
+  mViewer->selectAll();
+}
 
 //-----------------------------------------------------------------------------
 QString KMReaderWin::copyText()

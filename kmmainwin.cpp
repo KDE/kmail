@@ -1211,6 +1211,10 @@ void KMMainWin::slotMarkAll() {
     mHeaders->setSelected( item, TRUE );
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotSelectText() {
+  mMsgView->selectAll();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
@@ -1473,6 +1477,9 @@ void KMMainWin::setupMenuBar()
 
   (void) new KAction( i18n("Select all messages"), Key_K, this,
 		      SLOT(slotMarkAll()), actionCollection(), "mark_all_messages" );
+
+  (void) new KAction( i18n("Select message text"), CTRL+Key_A, this,
+		      SLOT(slotSelectText()), actionCollection(), "mark_all_text" );
 
   //----- Folder Menu
   (void) new KAction( i18n("&Create..."), 0, this,
