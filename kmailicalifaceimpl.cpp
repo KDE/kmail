@@ -999,8 +999,10 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       kdDebug(5006) << "Insert uid: " << uid << endl;
       mUIDToSerNum.insert( uid, sernum );
       // tell the resource if we didn't trigger this ourselves
-      if( !mInTransit.contains( uid ) )
+      if( !mInTransit.contains( uid ) ) {
         incidenceAdded( type, folder->location(), s );
+        incidenceAdded( type, folder->location(), sernum, format, s );
+      }
       else
         mInTransit.remove( uid );
 
