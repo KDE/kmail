@@ -79,6 +79,7 @@
 #include <fcntl.h>
 
 #include "kmglobal.h"
+#include "kmrecentaddr.h"
 
 #include "kmcomposewin.moc"
 
@@ -89,7 +90,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   mIdentity(&mMainWidget), mTransport(true, &mMainWidget),
   mEdtFrom(this,false,&mMainWidget), mEdtReplyTo(this,false,&mMainWidget),
   mEdtTo(this,true,&mMainWidget),  mEdtCc(this,true,&mMainWidget),
-  mEdtBcc(this,true,&mMainWidget), 
+  mEdtBcc(this,true,&mMainWidget),
   mEdtSubject(this,false,&mMainWidget, "subjectLine"),
   mLblIdentity(&mMainWidget), mLblTransport(&mMainWidget),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
@@ -1963,6 +1964,10 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
 
   if (sentOk)
   {
+    KMRecentAddresses::self()->add( bcc() );
+    KMRecentAddresses::self()->add( cc() );
+    KMRecentAddresses::self()->add( to() );
+
     mAutoDeleteMsg = FALSE;
     mFolder = NULL;
     close();
@@ -2354,12 +2359,12 @@ KCompletion * KMLineEdit::s_completion = 0L;
 bool KMLineEdit::s_addressesDirty = false;
 
 KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
-                       QWidget *parent, const char *name) 
+                       QWidget *parent, const char *name)
     : KMLineEditInherited(parent,name)
 {
   mComposer = composer;
   m_useCompletion = useCompletion;
-  
+
   if ( !s_completion ) {
       s_completion = new KCompletion();
       s_completion->setOrder( KCompletion::Sorted );
@@ -2377,11 +2382,10 @@ KMLineEdit::KMLineEdit(KMComposeWin* composer, bool useCompletion,
       connect (this, SIGNAL(completion()), this, SLOT(slotCompletion()));
 
       KCompletionBox *box = completionBox();
-      // ### this disconnect has to be fixed in kdeui
-      disconnect( box, SIGNAL( highlighted( const QString& )),
-                  this, SLOT( setText( const QString& )));
       connect( box, SIGNAL( highlighted( const QString& )),
                this, SLOT( slotPopupCompletion( const QString& ) ));
+      connect( completionBox(), SIGNAL( userCancelled( const QString& )),
+               SLOT( slotPopupCompletion( const QString& )));
 
 
       // Whenever a new KMLineEdit is created (== a new composer is created),
@@ -2592,6 +2596,11 @@ void KMLineEdit::loadAddresses()
     s_completion->clear();
     s_addressesDirty = false;
 
+    QStringList recent = KMRecentAddresses::self()->addresses();
+    QStringList::Iterator it = recent.begin();
+    for ( ; it != recent.end(); ++it )
+        s_completion->addItem( *it );
+    
     KMAddrBook adb;
     adb.readConfig();
 

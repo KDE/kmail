@@ -4,6 +4,8 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 #include "kmkernel.h"
+#include "kmrecentaddr.h"
+
 #include <assert.h>
 #include <kapp.h>
 #include <klocale.h>
@@ -11,24 +13,19 @@
 #include <kabapi.h>
 
 //-----------------------------------------------------------------------------
-KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
-  KMAddrBookSelDlgInherited(NULL, aCap, TRUE), mGrid(this, 2, 2),
+KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const QString& aCap):
+  KMAddrBookSelDlgInherited(0L, 0L, TRUE), mGrid(this, 2, 2),
   mListBox(this),
-  mBtnOk(i18n("OK"),this), 
+  mBtnOk(i18n("OK"),this),
   mBtnCancel(i18n("Cancel"),this)
 {
   QString addr;
 
-  setCaption(aCap ? QString(aCap) : i18n("Addressbook"));
+  setCaption(aCap.isNull() ? i18n("Addressbook") : aCap);
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;
   mAddress  = QString::null;
-
-  mBtnOk.adjustSize();
-  mBtnOk.setMinimumSize(mBtnOk.size());
-  mBtnCancel.adjustSize();
-  mBtnCancel.setMinimumSize(mBtnCancel.size());
 
   mGrid.addMultiCellWidget(&mListBox, 0, 0, 0, 1);
   mGrid.addWidget(&mBtnOk, 1, 0);
@@ -39,9 +36,10 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   mGrid.setColStretch(0,10);
   mGrid.setColStretch(1,10);
   mGrid.activate();
-  
-  mListBox.setSelectionMode(QListBox::Multi);
 
+  mListBox.setSelectionMode(QListBox::Multi);
+  mBtnOk.setDefault(true);
+  
   connect(&mBtnOk, SIGNAL(clicked()), SLOT(slotOk()));
   connect(&mListBox, SIGNAL(selected(int)), SLOT(slotOk()));
   connect(&mBtnCancel, SIGNAL(clicked()), SLOT(slotCancel()));
@@ -54,6 +52,9 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
     KabBridge::addresses(&addresses);
     mListBox.insertStringList(addresses);
   }
+
+  // insert all recent address on top
+  mListBox.insertStringList( KMRecentAddresses::self()->addresses(), 0 );
 
   resize(350, 450);
 }
@@ -100,7 +101,7 @@ void KMAddrBookSelDlg::slotCancel()
 //=============================================================================
 
 #include <qvbox.h>
-KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent, 
+KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent,
 				      const char *name, bool modal )
   :KDialogBase( parent, name, modal, i18n("Addressbook Manager"),
 		Ok|Cancel|User1|User2,Ok,false,i18n("&Add"),i18n("&Remove") )
@@ -109,25 +110,25 @@ KMAddrBookEditDlg::KMAddrBookEditDlg( KMAddrBook* aAddrBook, QWidget *parent,
   mAddrBook = aAddrBook;
   mIndex = -1;
 
-  enableButton( User1, false );  
-  enableButton( User2, false );  
+  enableButton( User1, false );
+  enableButton( User2, false );
 
   QVBox *vbox = makeVBoxMainWidget();
   mListBox    = new QListBox( vbox );
   mEdtAddress = new QLineEdit( vbox );
 
-  connect(mListBox, SIGNAL(selectionChanged()), 
+  connect(mListBox, SIGNAL(selectionChanged()),
 	  this, SLOT(slotEnableRemove()));
-  connect(mListBox, SIGNAL(highlighted(const QString&)), 
+  connect(mListBox, SIGNAL(highlighted(const QString&)),
 	  this, SLOT(slotLbxHighlighted(const QString&)));
-  connect(mEdtAddress, SIGNAL(textChanged(const QString&)), 
+  connect(mEdtAddress, SIGNAL(textChanged(const QString&)),
 	  this, SLOT(slotEnableAdd()));
   connect(this, SIGNAL(user1Clicked()), this, SLOT(slotAdd()) );
   connect(this, SIGNAL(user2Clicked()), this, SLOT(slotRemove()) );
 
   mAddresses = new QStringList();
   mKeys = new QValueList<KabKey>();
-  
+
   if (!KMAddrBookExternal::useKAB())
     for (QString addr=QString::fromLocal8Bit(mAddrBook->first()); addr; addr=QString::fromLocal8Bit(mAddrBook->next()))
       mListBox->insertItem(addr);
@@ -154,9 +155,9 @@ KMAddrBookEditDlg::~KMAddrBookEditDlg()
 void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
 {
   enableButton( User2, true ); // Remove
-  
+
   int oldIndex = mIndex;
-  disconnect( mListBox, SIGNAL(highlighted(const QString&)), 
+  disconnect( mListBox, SIGNAL(highlighted(const QString&)),
 	  this, SLOT(slotLbxHighlighted(const QString&)));
   mIndex = mListBox->currentItem();
 
@@ -171,7 +172,7 @@ void KMAddrBookEditDlg::slotLbxHighlighted(const QString& aItem)
   mListBox->setCurrentItem( mIndex );  // keep currentItem the same
   mEdtAddress->setText(aItem);
 
-  connect( mListBox, SIGNAL(highlighted(const QString&)), 
+  connect( mListBox, SIGNAL(highlighted(const QString&)),
 	  SLOT(slotLbxHighlighted(const QString&)));
 }
 
@@ -181,7 +182,7 @@ void KMAddrBookEditDlg::slotOk()
 {
   int idx, num;
   QString addr = mEdtAddress->text();
-  disconnect( mListBox, SIGNAL(highlighted(const QString&)), 
+  disconnect( mListBox, SIGNAL(highlighted(const QString&)),
 	  this, SLOT(slotLbxHighlighted(const QString&)));
 
   if (mIndex>=0) {
@@ -263,7 +264,7 @@ void KMAddrBookEditDlg::slotAdd()
 
   enableButton( User1, false ); // Add
   actionButton(User1)->setDefault(false);
-  actionButton(Ok)->setDefault(true);  
+  actionButton(Ok)->setDefault(true);
 }
 
 

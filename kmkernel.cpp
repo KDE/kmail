@@ -34,6 +34,7 @@
 #include "kfileio.h"
 #include "kmpgpwrap.h"
 #include "kmversion.h"
+#include "kmrecentaddr.h"
 #include <kabapi.h>
 #include <kwin.h>
 
@@ -579,6 +580,7 @@ void KMKernel::cleanup(void)
   if (the_kbp) delete the_kbp;
 
   //qInstallMsgHandler(oldMsgHandler);
+  KMRecentAddresses::self()->save( KGlobal::config() );
   kapp->config()->sync();
   //--- Sven's save attachments to /tmp start ---
   //kdDebug() << "cleaned" << endl;

@@ -24,7 +24,7 @@ class KMAddrBookSelDlg: public QDialog
 {
   Q_OBJECT
 public:
-  KMAddrBookSelDlg(KMAddrBook* addrBook, const char* caption=NULL);
+  KMAddrBookSelDlg(KMAddrBook* addrBook, const QString& caption=QString::null);
   virtual ~KMAddrBookSelDlg();
 
   /** returns selected address(es) or NULL if none was selected or the cancel

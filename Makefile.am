@@ -30,7 +30,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp \
 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
-		smtp.cpp mailinglist-magic.cpp
+		smtp.cpp mailinglist-magic.cpp kmrecentaddr.cpp
 
 
 include_HEADERS = kmailIface.h

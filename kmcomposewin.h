@@ -110,7 +110,7 @@ public:
   virtual ~KMLineEdit();
 
   virtual void setFont( const QFont& );
-    
+
 signals:
   /** Emitted when Ctrl-T is pressed. */
   void completion();
