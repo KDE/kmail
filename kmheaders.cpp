@@ -25,13 +25,14 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
 {
   QString kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
-  static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep, pixSent, pixQueued;
+  static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep, pixSent, pixQueued,
+                 pixFwd;
 
   mOwner  = aOwner;
   mFolder = NULL;
   getMsgIndex = -1;
 
-  setColumn(0, nls->translate("F"), 16, KMHeadersInherited::PixmapColumn);
+  setColumn(0, nls->translate("F"), 17, KMHeadersInherited::PixmapColumn);
   setColumn(1, nls->translate("Sender"), 200);
   setColumn(2, nls->translate("Subject"), 270);
   setColumn(3, nls->translate("Date"), 300);
@@ -44,12 +45,14 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
   pixRep   = loader->loadIcon("kmmsgreplied.xpm");
   pixQueued= loader->loadIcon("kmmsgqueued.xpm");
   pixSent  = loader->loadIcon("kmmsgsent.xpm");
+  pixFwd   = loader->loadIcon("kmmsgforwarded.xpm");
 
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusNew), &pixNew);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusUnread), &pixUns);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusDeleted), &pixDel);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusOld), &pixOld);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusReplied), &pixRep);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusForwarded), &pixFwd);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusQueued), &pixQueued);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusSent), &pixSent);
 

@@ -31,7 +31,7 @@ KMSender::KMSender()
 KMSender::~KMSender()
 {
   if (mMailerProc) delete mMailerProc;
-  writeConfig(TRUE);
+  writeConfig(FALSE);
 }
 
 
@@ -257,9 +257,8 @@ bool KMSender::sendMail(KMMessage* aMsg)
   assert(mMailerProc != NULL);
 
   mMailerProc->clearArguments();
-  *mMailerProc << aMsg->to();
+  *mMailerProc << mMailer << aMsg->to();
 
-  mMailerProc->setExecutable(mMailer);
   mMailerProc->start(KProcess::DontCare, KProcess::Stdin);
   if (!mMailerProc->writeStdin(msgstr.data(), msgstr.length()))
     return FALSE;

@@ -118,6 +118,7 @@ const QString KMMessage::id(void) const
       return "";
 }
 
+//-----------------------------------------------------------------------------
 #ifdef KRN
 const QString KMMessage::refsAsAnchor(const QString references)
 {
@@ -150,7 +151,6 @@ const QString KMMessage::refsAsAnchor(const QString references)
     return result.data();
 }
 #endif
-
 /* End of functions added by KRN */
 
 
@@ -312,7 +312,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createReply(bool replyToAll) const
+KMMessage* KMMessage::createReply(bool replyToAll)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, loopToStr, replyToStr, toStr;
@@ -348,12 +348,14 @@ KMMessage* KMMessage::createReply(bool replyToAll) const
     msg->setSubject("Re: " + subject());
   else msg->setSubject(subject());
 
+  setStatus(KMMsgStatusReplied);
+
   return msg;
 }
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMMessage::createForward(void) const
+KMMessage* KMMessage::createForward(void)
 {
   KMMessage* msg = new KMMessage;
   QString str;
@@ -370,6 +372,8 @@ KMMessage* KMMessage::createForward(void) const
   if (strnicmp(subject(), "Fwd:", 4)!=0)
     msg->setSubject("Fwd: " + subject());
   else msg->setSubject(subject());
+
+  setStatus(KMMsgStatusForwarded);
 
   return msg;
 }

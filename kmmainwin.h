@@ -62,6 +62,7 @@ protected slots:
   void slotNewMailReader();
   void slotSettings();
   void slotFilter();
+  void slotAddrBook();
   void slotUnimplemented();
   void slotViewChange();
   void slotAddFolder();

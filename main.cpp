@@ -15,6 +15,7 @@
 #include "kmversion.h"
 #include "kmmessage.h"
 #include "kmcomposewin.h"
+#include "kmaddrbook.h"
 
 #include <kapp.h>
 #include <stdio.h>
@@ -41,6 +42,8 @@ KMFolder* trashFolder = NULL;
 KStdAccel* keys = NULL;
 KMIdentity* identity = NULL;
 KMFilterActionDict* filterActionDict = NULL;
+KMAddrBook* addrBook = NULL;
+
 bool shuttingDown = FALSE;
 const char* aboutText = 
     "KMail [" KMAIL_VERSION "] by\n\n"
@@ -161,6 +164,7 @@ static void init(int argc, char *argv[])
   acctMgr   = new KMAcctMgr(acctPath);
   filterMgr = new KMFilterMgr;
   filterActionDict = new KMFilterActionDict;
+  addrBook  = new KMAddrBook;
 
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(
 				         cfg->readEntry("inboxFolder", "inbox"));
@@ -180,6 +184,8 @@ static void init(int argc, char *argv[])
 
   acctMgr->readConfig();
   filterMgr->readConfig();
+  addrBook->readConfig();
+  addrBook->load();
   KMMessage::readConfig();
 
   msgSender = new KMSender;
@@ -197,6 +203,7 @@ static void cleanup(void)
   if (trashFolder) trashFolder->close(TRUE);
 
   if (msgSender) delete msgSender;
+  if (addrBook) delete addrBook;
   if (filterMgr) delete filterMgr;
   if (acctMgr) delete acctMgr;
   if (folderMgr) delete folderMgr;
@@ -211,7 +218,6 @@ static void cleanup(void)
 main(int argc, char *argv[])
 {
   KMMainWin* mainWin;
-  KMComposeWin* comp;
 
   init(argc, argv);
 

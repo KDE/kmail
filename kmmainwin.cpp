@@ -20,6 +20,7 @@
 #include "kmfiltermgr.h"
 #include "kmversion.h"
 #include "kmsender.h"
+#include "kmaddrbookdlg.h"
 
 #include <qaccel.h>
 #include <qstring.h>
@@ -238,6 +239,14 @@ void KMMainWin::slotSettings()
 void KMMainWin::slotFilter()
 {
   filterMgr->openDialog();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotAddrBook()
+{
+  KMAddrBookEditDlg dlg(addrBook, nls->translate("Addressbook"));
+  dlg.exec();
 }
 
 
@@ -570,6 +579,8 @@ void KMMainWin::setupMenuBar()
 		       SLOT(slotSettings()));
   fileMenu->insertItem(nls->translate("&Filter..."), this, 
 		       SLOT(slotFilter()));
+  fileMenu->insertItem(nls->translate("&Addressbook..."), this, 
+		       SLOT(slotAddrBook()));
   fileMenu->insertSeparator();
   fileMenu->insertItem(nls->translate("&Close"), this, 
 		       SLOT(slotClose()), keys->close());

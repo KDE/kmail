@@ -1,5 +1,5 @@
 SUBDIRS = pics doc
-INCLUDES = $(all_includes) -g
+INCLUDES = $(all_includes)
 LDADD	= $(all_libraries) -lkhtmlw -ljscript -lkdeui -lkdecore -lqt -lXext -lX11 -lgif  $(LIBJPEG) -lmimelib $(LIBSOCKET)
 
 bin_PROGRAMS = kmail
@@ -17,7 +17,8 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp \
-		kfileio.cpp keditcl1.cpp keditcl2.cpp
+		kfileio.cpp keditcl1.cpp keditcl2.cpp kmaddrbook.cpp \
+		kmaddrbookdlg.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
@@ -26,7 +27,8 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc \
 		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
-		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc keditcl.moc
+		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc keditcl.moc \
+		kmaddrbookdlg.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -147,3 +149,7 @@ kmmsgpartdlg.moc: kmmsgpartdlg.h
 kpgp.cpp:kpgp.moc
 kpgp.moc: kpgp.h
 	$(MOC) kpgp.h -o kpgp.moc
+
+kmaddrbookdlg.cpp:kmaddrbookdlg.moc
+kmaddrbookdlg.moc: kmaddrbookdlg.h
+	$(MOC) kmaddrbookdlg.h -o kmaddrbookdlg.moc

@@ -205,15 +205,12 @@ void KMReaderWin::parseMsg(void)
       {
 	str = msgPart.bodyDecoded();
 	if (str.size() > 100 && i>0) writePartIcon(&msgPart, i);
-	else if (stricmp(subtype, "html")==0)
-	{
-	  if (i>0) mViewer->write("<BR><HR><BR>");
-	  mViewer->write(str);
-	}
 	else
 	{
 	  if (i>0) mViewer->write("<BR><HR><BR>");
-	  writeBodyStr(str);
+
+	  if (stricmp(subtype, "html")==0) mViewer->write(str);
+	  else writeBodyStr(str);
 	}
       }
       else
@@ -546,17 +543,34 @@ void KMReaderWin::slotUrlPopup(const char* aUrl, const QPoint& aPos)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmOpen()
 {
-  QString str, pname, cmd;
-  char* fileName;
+  QString str, pname, cmd, fileName;
+  char* tmpName;
+  int c;
 
   KMMessagePart msgPart;
   mMsg->bodyPart(mAtmCurrent, &msgPart);
 
   pname = msgPart.name();
   if (pname.isEmpty()) pname="unnamed";
-  fileName = tempnam("/tmp", NULL);
-  strcat(fileName, "-");
-  strcat(fileName, (const char*)pname);
+  tmpName = tempnam(NULL, NULL);
+  if (!tmpName)
+  {
+    warning(nls->translate("Could not create temporary file"));
+    return;
+  }
+  fileName = tmpName;
+  free(tmpName);
+  fileName += '-';
+  fileName += pname;
+
+  // remove quotes from the filename so that the shell does not get confused
+  c = 0;
+  while ((c = fileName.find('"', c)) >= 0)
+    fileName.remove(c, 1);
+
+  c = 0;
+  while ((c = fileName.find('\'', c)) >= 0)
+    fileName.remove(c, 1);
 
   kbp->busy();
   str = msgPart.bodyDecoded();
@@ -564,9 +578,9 @@ void KMReaderWin::slotAtmOpen()
     warning(nls->translate("Could not save temporary file %s"),
 	    (const char*)fileName);
   kbp->idle();
-  cmd = "kfmclient openURL \"";
+  cmd = "kfmclient openURL \'";
   cmd += fileName;
-  cmd += "\"";
+  cmd += "\'";
   debug(cmd);
   system(cmd);
 }

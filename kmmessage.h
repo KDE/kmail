@@ -44,13 +44,13 @@ public:
 
   /** Create a new message that is a reply to this message, filling all 
     required header fields with the proper values. The returned message
-    is not stored in any folder. */
-  virtual KMMessage* createReply(bool replyToAll=FALSE) const;
+    is not stored in any folder. Marks this message as replied. */
+  virtual KMMessage* createReply(bool replyToAll=FALSE);
 
   /** Create a new message that is a forward of this message, filling all 
     required header fields with the proper values. The returned message
-    is not stored in any folder. */
-  virtual KMMessage* createForward(void) const;
+    is not stored in any folder. Marks this message as forwarded. */
+  virtual KMMessage* createForward(void);
 
   /** Parse the string and create this message from it. */
   virtual void fromString(const QString str);

@@ -49,6 +49,10 @@ extern KStdAccel* keys;
 class KMFilterMgr;
 extern KMFilterMgr* filterMgr;
 
+/** Addressbook. */
+class KMAddrBook;
+extern KMAddrBook* addrBook;
+
 /** Dictionary of available mail filter actions. */
 class KMFilterActionDict;
 extern KMFilterActionDict* filterActionDict;

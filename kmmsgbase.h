@@ -16,6 +16,7 @@ typedef enum
     KMMsgStatusOld='O',
     KMMsgStatusDeleted='D',
     KMMsgStatusReplied='A',
+    KMMsgStatusForwarded='F',
     KMMsgStatusQueued='Q',
     KMMsgStatusSent='S'
 } KMMsgStatus;
