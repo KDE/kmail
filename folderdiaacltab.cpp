@@ -312,6 +312,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
   mStack->addWidget( mLabel );
 
   mACLWidget = new QHBox( mStack );
+  mACLWidget->setSpacing( KDialog::spacingHint() );
   mListView = new KListView( mACLWidget );
   mListView->setAllColumnsShowFocus( true );
   mStack->addWidget( mACLWidget );
@@ -326,6 +327,7 @@ KMail::FolderDiaACLTab::FolderDiaACLTab( KMFolderDialog* dlg, QWidget* parent, c
 	   SLOT(slotSelectionChanged(QListViewItem*)) );
 
   QVBox* buttonBox = new QVBox( mACLWidget );
+  buttonBox->setSpacing( KDialog::spacingHint() );
   mAddACL = new KPushButton( i18n( "Add Entry" ), buttonBox );
   mEditACL = new KPushButton( i18n( "Modify Entry" ), buttonBox );
   mRemoveACL = new KPushButton( i18n( "Remove Entry" ), buttonBox );
@@ -477,17 +479,19 @@ void KMail::FolderDiaACLTab::startListing()
            this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 }
 
-void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder*, KIO::Job* job, const KMail::ACLList& aclList )
+void KMail::FolderDiaACLTab::slotReceivedACL( KMFolder* folder, KIO::Job* job, const KMail::ACLList& aclList )
 {
-  disconnect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
-              this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
+  if ( folder == mDlg->folder() ? mDlg->folder() : mDlg->parentFolder() ) {
+    disconnect( mImapAccount, SIGNAL(receivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )),
+                this, SLOT(slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& )) );
 
-  if ( job && job->error() ) {
-    mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
-    return;
+    if ( job && job->error() ) {
+      mLabel->setText( i18n( "Error retrieving access control list (ACL) from server\n%1" ).arg( job->errorString() ) );
+      return;
+    }
+
+    loadFinished( aclList );
   }
-
-  loadFinished( aclList );
 }
 
 void KMail::FolderDiaACLTab::loadListView( const ACLList& aclList )
