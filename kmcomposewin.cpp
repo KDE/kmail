@@ -2448,7 +2448,7 @@ void KMComposeWin::slotSpellcheckConfig()
   QTabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);
 
-  qtd.addTab (&mKSpellConfig, "Spellchecker");
+  qtd.addTab (&mKSpellConfig, i18n("Spellchecker"));
   qtd.setCancelButton ();
 
   kwin.setIcons (qtd.winId(), kapp->icon(), kapp->miniIcon());
