@@ -338,6 +338,7 @@ protected slots:
   void slotToggleStatusBar();
   void slotEditToolbars();
   void slotUpdateToolbars();
+  void slotEditNotifications();
   void slotEditKeys();
 
   /** the msg has been transferred */

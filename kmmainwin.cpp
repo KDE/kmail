@@ -36,6 +36,9 @@
 #include <kio/netaccess.h>
 #include <kio/job.h>
 #include <ktip.h>
+#if KDE_VERSION >= 306
+#include <knotifydialog.h>
+#endif
 
 #include "configuredialog.h"
 #include "kmbroadcaststatus.h"
@@ -899,7 +902,7 @@ void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
   if (!newMail)
     return;
 
-  KNotifyClient::event("new-mail-arrived");
+  KNotifyClient::event("new-mail-arrived", i18n("New Mail arrived"));
   if (mBeepOnNew) {
     KNotifyClient::beep();
   }
@@ -3006,6 +3009,9 @@ void KMMainWin::setupMenuBar()
 
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+#if KDE_VERSION >= 306
+  KStdAction::configureNotifications(this, SLOT(slotEditNotifications()), actionCollection());
+#endif
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
 #if KDE_VERSION >= 305 // KDE 3.1
   KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
@@ -3080,6 +3086,13 @@ void KMMainWin::slotEditToolbars()
 	   SLOT(slotUpdateToolbars()) );
 
   dlg.exec();
+}
+
+void KMMainWin::slotEditNotifications()
+{
+#if KDE_VERSION >= 306
+  KNotifyDialog::configure(this);
+#endif
 }
 
 void KMMainWin::slotUpdateToolbars()
