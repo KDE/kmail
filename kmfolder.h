@@ -32,7 +32,10 @@ public:
   virtual const char* type(void) const;
 
   /** Returns full path to folder file */
-  const QString& location(void) const;
+  const QString location(void) const;
+
+  /** Returns full path to table of contents file */
+  const QString tocLocation(void) const;
 
   /** Read message at given index. Indexing starts at one to stay
     compatible with imap-lib */
@@ -108,8 +111,9 @@ public:
     process, whether there are others using it or not. */
   virtual int remove(void);
 
-  /** Delete contents of folder. Forces a close and does not open the
-    folder again. Returns errno(3) error code or zero on success. */
+  /** Delete contents of folder. Forces a close *but* opens the
+    folder again afterwards. Returns errno(3) error code or zero on 
+    success. */
   virtual int expunge(void);
 
   /** Sync all TOC-changes to file. Returns zero on success and an errno
@@ -194,9 +198,9 @@ protected:
   FILE* mStream;	// file with the messages
   FILE* mTocStream;	// table of contents file
   int mMsgs, mUnreadMsgs, mActiveMsgs;
-  KMMsgInfoList mMsgInfo;
+  KMMsgInfoList mMsgInfo; // list of toc entries, one per message
   int mOpenCount, mQuiet;
-  unsigned long mHeaderOffset;
+  unsigned long mHeaderOffset; // offset of header of toc file
   bool mAutoCreateToc;  // is the automatic creation of a toc file allowed ?
   bool mTocDirty; // if the Toc is dirty it will be recreated upon close()
 };

@@ -117,6 +117,9 @@ public:
   virtual void markItem (int idx, int colId=-1);
   virtual void unmarkItem (int idx);
 
+  /** Returns TRUE if item with given index is marked. */
+  virtual bool isMarked (int idx) const;
+
   /** Find item at given screen y position. */
   int findItem (int yPos) const { return (lbox.findRow(yPos)); }
 

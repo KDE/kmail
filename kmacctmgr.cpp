@@ -120,6 +120,8 @@ bool KMAcctMgr::reload(void)
       delete config;
       delete cStream;
       delete cFile;
+
+      unlink(mBasePath+"/"+acctName);
     }
   }
 

@@ -65,12 +65,26 @@ const char* KMFolder::type(void) const
 
 
 //-----------------------------------------------------------------------------
-const QString& KMFolder::location(void) const
+const QString KMFolder::location(void) const
 {
-  static QString sLocation;
+  QString sLocation;
 
-  sLocation = path();
-  sLocation += "/";
+  sLocation = path().copy();
+  if (!sLocation.isEmpty()) sLocation += '/';
+  sLocation += name();
+
+  return sLocation;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMFolder::tocLocation(void) const
+{
+  QString sLocation;
+
+  sLocation = path().copy();
+  if (!sLocation.isEmpty()) sLocation += '/';
+  sLocation += '.';
   sLocation += name();
 
   return sLocation;
@@ -80,33 +94,34 @@ const QString& KMFolder::location(void) const
 //-----------------------------------------------------------------------------
 int KMFolder::open(void)
 {
-  QString p = path();
-
   assert(name() != NULL);
 
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
-  mStream = fopen(p+"/"+name(), "r+"); // messages file
+  mStream = fopen(location(), "r+"); // messages file
   if (!mStream) return errno;
 
-  if (!p.isEmpty())
+  if (!path().isEmpty())
   {
     //#define TOC_DEBUG
 #ifdef TOC_DEBUG
     createTocFromContents();
 #else
-    mTocStream = fopen(p+"/."+name(), "r+"); // index file
+    mTocStream = fopen(tocLocation(), "r+"); // index file
     if (!mTocStream) return createTocFromContents();
     readToc();
 #endif
   }
   else
   {
-    debug("no path for folder "+name()+" -- Turning autoCreateToc off");
+    debug("No path specified for folder " + name() +
+	  " -- Turning autoCreateToc off");
     mAutoCreateToc = FALSE;
     createTocFromContents();
   }
+
+  mQuiet = 0;
 
   return 0;
 }
@@ -115,17 +130,15 @@ int KMFolder::open(void)
 //-----------------------------------------------------------------------------
 int KMFolder::create(void)
 {
-  QString p = path();
-  
   assert(name() != NULL);
   assert(mOpenCount == 0);
 
-  mStream = fopen(p+"/"+name(), "w");
+  mStream = fopen(location(), "w");
   if (!mStream) return errno;
 
-  if (!p.isEmpty())
+  if (!path().isEmpty())
   {
-    mTocStream = fopen(p+"/."+name(), "w");
+    mTocStream = fopen(tocLocation(), "w");
     if (!mTocStream) return errno;
   }
   else
@@ -136,20 +149,21 @@ int KMFolder::create(void)
   }
 
   mOpenCount++;
+  mQuiet = 0;
 
   return createTocHeader();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFolder::close(bool aForce)
+void KMFolder::close(bool aForced)
 {
   int i;
 
   if (mTocDirty && mAutoCreateToc) writeToc();
 
   if (mOpenCount > 0) mOpenCount--;
-  if (mOpenCount > 0 && !aForce) return;
+  if (mOpenCount > 0 && !aForced) return;
 
   if (mStream) fclose(mStream);
   if (mTocStream) fclose(mTocStream);
@@ -176,7 +190,6 @@ int KMFolder::createTocFromContents(void)
   char* msg;
   unsigned long offs, size, pos;
   int i, msgArrNum;
-  int rc;
   bool atEof = FALSE;
   KMMsgInfo* mi;
 
@@ -186,8 +199,7 @@ int KMFolder::createTocFromContents(void)
 
   rewind(mStream);
 
-  QString p=path()+"/."+name();
-  printf("*** creating toc for %s\n", (const char*)p);
+  debug("*** creating toc file %s\n", (const char*)tocLocation());
 
   offs = 0;
   size = 0;
@@ -196,8 +208,8 @@ int KMFolder::createTocFromContents(void)
   msg = re_comp(MSG_SEPERATOR_REGEX);
   if (msg)
   {
-    fatal("Error parsing bultin (kmfolder.cpp)\nregular expression\n'" +
-	  QString(MSG_SEPERATOR_REGEX) + "':\n" + msg);
+    fatal("Error in kmfolder.cpp\nwhile parsing bultin\n"
+	  "regular expression\n%s\n%s", MSG_SEPERATOR_REGEX, msg);
     return -1;
   }
 
@@ -279,7 +291,7 @@ int KMFolder::writeToc(void)
   int tocRecSize = KMMsgInfo::recSize();
 
   if (mTocStream) fclose(mTocStream);
-  mTocStream = fopen(path()+"/."+name(), "w");
+  mTocStream = fopen(tocLocation(), "w");
   if (!mTocStream) return errno;
 
   rc = createTocHeader();
@@ -325,7 +337,7 @@ int KMFolder::readHeader(void)
   assert(name() != NULL);
   assert(path() != NULL);
 
-  mTocStream = fopen(path()+"/."+name(), "r+");
+  mTocStream = fopen(tocLocation(), "r+");
   if (!mTocStream) return errno;
 
   readTocHeader();
@@ -345,9 +357,6 @@ void KMFolder::readToc(void)
 
   assert(mTocStream != NULL);
   rewind(mTocStream);
-
-  QString p=path()+"/."+name();
-  printf("*** reading toc for %s\n", (const char*)p);
 
   mMsgs       = 0;
   mUnreadMsgs = 0;
@@ -405,14 +414,14 @@ void KMFolder::quiet(bool beQuiet)
 void KMFolder::setMsgStatus(KMMessage* aMsg, KMMessage::Status aStatus)
 {
   int i = indexOfMsg(aMsg);
-  if (i < 0) 
+  if (i <= 0) 
   {
     debug("KMFolder::setMsgStatus() called for a message that is not in"
 	  "this folder !");
     return;
   }
 
-  mMsgInfo[i].setStatus(aStatus);
+  mMsgInfo[i-1].setStatus(aStatus);
   if (!mQuiet) emit msgHeaderChanged(i);
 }
 
@@ -596,8 +605,8 @@ int KMFolder::remove(void)
     close();
   }
 
-  unlink(path()+"/."+name());
-  rc = unlink(path()+"/"+name());
+  unlink(tocLocation());
+  rc = unlink(location());
   if (rc) return rc;
 
   mMsgInfo.truncate(INIT_MSGS);
@@ -617,21 +626,25 @@ int KMFolder::isValid(unsigned long)
 //-----------------------------------------------------------------------------
 int KMFolder::expunge(void)
 {
-  int rc;
-  QString p = path();
-  
+  int openCount = mOpenCount;
+
   assert(name() != NULL);
 
   close(TRUE);
 
-  if (mAutoCreateToc) truncate(p+"/."+name(), mHeaderOffset);
-  else unlink(p+"/."+name());
+  if (mAutoCreateToc) truncate(tocLocation(), mHeaderOffset);
+  else unlink(tocLocation());
 
-  rc = truncate(p+"/"+name(), 0);
-  if (rc) return rc;
+  if (truncate(location(), 0)) return errno;
 
   mMsgInfo.truncate(INIT_MSGS);
   mMsgs = 0;
+
+  if (openCount > 0)
+  {
+    open();
+    mOpenCount = openCount;
+  }
 
   if (!mQuiet) emit changed();
 
@@ -731,4 +744,6 @@ KMMessage::Status KMFolder::msgStatus(int msgId) const
   return mMsgInfo[msgId-1].status();
 }
 
+
+//-----------------------------------------------------------------------------
 #include "kmfolder.moc"

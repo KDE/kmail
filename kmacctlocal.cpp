@@ -4,6 +4,9 @@
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmacctfolder.h"
+#include "kmglobal.h"
+
+#include <klocale.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -68,7 +71,7 @@ bool KMAcctLocal::processNewMail(void)
   num = mailFolder.numMsgs();
   debug("%d messages in %s", num, (const char*)location());
 
-  for (i=num-1; i>=1; i--)
+  for (i=num; i>=1; i--)
   {
     debug("processing message %d", i);
     msg = mailFolder.getMsg(i);
@@ -82,8 +85,10 @@ bool KMAcctLocal::processNewMail(void)
   }
   debug("done, closing folders");
 
-  if (mailFolder.expunge())
-    warning("Cannot remove mail from\nsystem mail folder.\n");
+  rc = mailFolder.expunge();
+  if (rc)
+    warning(nls->translate("Cannot remove mail from\nmailbox `%s':\n%s"),
+	    (const char*)mailFolder.location(), sys_errlist[rc]);
 
   mailFolder.close();
   mFolder->close();

@@ -86,7 +86,6 @@ protected:
   unsigned long     mSize;
   KMMessage*        mMsg;
   char              mSubject[80], mFrom[60], mDate[60];
-  unsigned long	    mTocOffset; // offset of this record in toc file
   bool              mDirty;
 };
 

@@ -21,7 +21,8 @@ protected:
 
 public:
   typedef enum {
-    stUnknown=' ', stNew='N', stUnread='U', stOld='O', stDeleted='D' 
+    stUnknown=' ', stNew='N', stUnread='U', stOld='O', stDeleted='D',
+    stReplied='A'
   } Status; // see below for a conversion function to strings
 
   KMMessage();

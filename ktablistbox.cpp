@@ -368,6 +368,13 @@ void KTabListBox::setCurrentItem(int idx, int colId)
 
 
 //-----------------------------------------------------------------------------
+bool KTabListBox::isMarked(int idx) const
+{
+  return (itemList[idx].marked() >= -1);
+}
+
+
+//-----------------------------------------------------------------------------
 void KTabListBox::markItem(int idx, int colId)
 {
   if (itemList[idx].marked()==colId) return;

@@ -1,4 +1,4 @@
-// $Id$
+// kmheaders.cpp
 
 #include "kmcomposewin.h"
 #include "kmheaders.h"
@@ -15,11 +15,12 @@
 
 
 //-----------------------------------------------------------------------------
-KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent, name, 4)
+KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : 
+  KTabListBox(parent, name, 4)
 {
   QString kdir = app->kdedir();
   KIconLoader* loader = app->getIconLoader();
-  static QPixmap pixNew, pixUns, pixDel, pixOld;
+  static QPixmap pixNew, pixUns, pixDel, pixOld, pixRep;
 
   folder = NULL;
   getMsgIndex = -1;
@@ -35,11 +36,13 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
   pixUns = loader->loadIcon("kmmsgunseen.xpm");
   pixDel = loader->loadIcon("kmmsgdel.xpm");
   pixOld = loader->loadIcon("kmmsgold.xpm");
+  pixRep = loader->loadIcon("kmmsgreplied.xpm");
 
   dict().insert(KMMessage::statusToStr(KMMessage::stNew), &pixNew);
   dict().insert(KMMessage::statusToStr(KMMessage::stUnread), &pixUns);
   dict().insert(KMMessage::statusToStr(KMMessage::stDeleted), &pixDel);
   dict().insert(KMMessage::statusToStr(KMMessage::stOld), &pixOld);
+  dict().insert(KMMessage::statusToStr(KMMessage::stReplied), &pixRep);
 
   connect(this,SIGNAL(selected(int,int)),
 	  this,SLOT(selectMessage(int,int)));
@@ -126,6 +129,7 @@ void KMHeaders::setMsgRead (int msgId)
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
+    debug("setMsgRead(%d)", getMsgIndex);
     msg->touch();
     //changeItemPart(msg->status(), getMsgIndex, 0);
     //changeItemColor(black, getMsgIndex);
@@ -139,8 +143,16 @@ void KMHeaders::deleteMsg (int msgId)
   QList<KMMessage> msgList;
   KMMessage* msg;
   int rc, num;
+  int cur = currentItem();
+  bool curDeleted = (cur>=0 ? isMarked(cur) : FALSE);
 
   kbp->busy();
+
+  // getMsg gets confused when messages are removed while calling
+  // it repeatedly. To avoid this we create a temporary list of
+  // the messages that will be moved.
+  for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
+    msgList.append(msg);
 
   if (num > 3)
   {
@@ -148,18 +160,24 @@ void KMHeaders::deleteMsg (int msgId)
     setAutoUpdate(FALSE);
   }
 
-  for (num=0,msg=getMsg(msgId); msg; msg=getMsg(),num++)
-    msgList.append(msg);
   unmarkAll();
 
+  // now it is safe to move the messages.
   for (msg=msgList.first(); msg; msg=msgList.next())
     rc = trashFolder->moveMsg(msg);
 
   if (num > 3)
   {
-    folder->quiet(FALSE);
     setAutoUpdate(TRUE);
-    repaint();
+    folder->quiet(FALSE);
+    // repaint();
+  }
+
+  // display proper message if current message was deleted.
+  if (curDeleted)
+  {
+    if (cur >= folder->numMsgs()) cur = folder->numMsgs() - 1;
+    setCurrentItem(cur, -1);
   }
 
   kbp->idle();
