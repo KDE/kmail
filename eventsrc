@@ -1,9 +1,11 @@
 [!Global!]
 IconName=kmail
 Comment=KMail
+Comment[sv]=Kmail
 
 [new-mail-arrived]
 Name= New Mail arrived
 Comment=New Mail arrived
+Comment[sv]=Ny post har anlänt
 default_sound=
 default_presentation=0
