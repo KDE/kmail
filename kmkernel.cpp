@@ -49,6 +49,25 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   closed_by_user = true;
   the_firstInstance = true;
   the_msgDict = 0;
+
+  the_inboxFolder = 0;
+  the_outboxFolder = 0;
+  the_sentFolder = 0;
+  the_trashFolder = 0;
+  the_draftsFolder = 0;
+
+  the_kbp = 0;
+  the_folderMgr = 0;
+  the_imapFolderMgr = 0;
+  the_undoStack = 0;
+  the_acctMgr = 0;
+  the_filterMgr = 0;
+  the_popFilterMgr = 0;
+  the_filterActionDict = 0;
+  the_KAB_addrBook = 0;
+  the_msgSender = 0;
+  the_msgDict = 0;
+
   new KMpgpWrap();
   // register our own (libkdenetwork) utf-7 codec as long as Qt
   // doesn't have it's own:
