@@ -376,6 +376,7 @@ void KMFolderTree::reload(void)
 {
   KMFolderDir* fdir;
   QString str;
+  int top = contentsY();
 
   writeConfig();
 
@@ -410,6 +411,7 @@ void KMFolderTree::reload(void)
 	      this,SLOT(refresh(KMFolder*)));
     ++jt;
   }
+  ensureVisible(0, top + visibleHeight(), 0, 0);
   refresh(0);
 }
 
