@@ -151,6 +151,8 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id )
   //setCaption(i18n("KMail Composer"));
   setMinimumSize(200,200);
   
+  mBtnIdentity.setFocusPolicy(QWidget::NoFocus);
+  mBtnTransport.setFocusPolicy(QWidget::NoFocus);
   mBtnTo.setFocusPolicy(QWidget::NoFocus);
   mBtnCc.setFocusPolicy(QWidget::NoFocus);
   mBtnBcc.setFocusPolicy(QWidget::NoFocus);
