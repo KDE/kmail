@@ -125,10 +125,11 @@ class AccountDialog : public KDialogBase
       QLineEdit    *hostEdit;
       QLineEdit    *portEdit;
       QLineEdit    *prefixEdit;
-      QCheckBox    *autoExpungeCheck;
+      QCheckBox    *autoExpungeCheck;     // only used by normal (online) IMAP
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *subscribedFoldersCheck;
       QCheckBox    *storePasswordCheck;
+      QCheckBox    *progressDialogCheck;  // only used by Disconnected IMAP
       QCheckBox    *excludeCheck;
       QCheckBox    *intervalCheck;
       QLabel       *intervalLabel;
@@ -169,7 +170,7 @@ class AccountDialog : public KDialogBase
     void makeLocalAccountPage();
     void makeMaildirAccountPage();
     void makePopAccountPage();
-    void makeImapAccountPage();
+    void makeImapAccountPage( bool disconnected = false );
     void setupSettings();
     void saveSettings();
     void checkHighest(QButtonGroup *);

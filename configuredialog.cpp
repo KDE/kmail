@@ -50,6 +50,7 @@
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "identitylistview.h"
+#include "kmacctcachedimap.h"
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "identitydialog.h"
@@ -1203,10 +1204,11 @@ void NetworkPage::ReceivingTab::slotAddAccount() {
 
   const char *accountType = 0;
   switch ( accountSelectorDialog.selected() ) {
-    case 0: accountType = "local";   break;
-    case 1: accountType = "pop";     break;
-    case 2: accountType = "imap";    break;
-    case 3: accountType = "maildir"; break;
+    case 0: accountType = "local";      break;
+    case 1: accountType = "pop";        break;
+    case 2: accountType = "imap";       break;
+    case 3: accountType = "cachedimap"; break;
+    case 4: accountType = "maildir";    break;
 
     default:
       // ### FIXME: How should this happen???
@@ -1392,9 +1394,16 @@ void NetworkPage::ReceivingTab::setup() {
 
 void NetworkPage::ReceivingTab::apply() {
   // Add accounts marked as new
+  QValueList< QGuardedPtr<KMAccount> > newCachedImapAccounts;
   QValueList< QGuardedPtr<KMAccount> >::Iterator it;
-  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it )
+  for (it = mNewAccounts.begin(); it != mNewAccounts.end(); ++it ) {
     kernel->acctMgr()->add( *it );
+    // remember new Disconnected IMAP accounts because they are needed again
+    if( (*it)->isA( "KMAcctCachedImap" ) ) {
+      newCachedImapAccounts.append( *it );
+    }
+  }
+
   mNewAccounts.clear();
 
   // Update accounts that have been modified
@@ -1429,6 +1438,11 @@ void NetworkPage::ReceivingTab::apply() {
   general.writeEntry( "beep-on-mail", mBeepNewMailCheck->isChecked() );
   general.writeEntry( "systray-on-mail", mSystrayCheck->isChecked() );
   general.writeEntry( "systray-on-new", mSystrayOnNew->isChecked() );
+
+  // Sync new IMAP accounts ASAP:
+  for (it = newCachedImapAccounts.begin(); it != newCachedImapAccounts.end(); ++it ) {
+    (*it)->processNewMail(false);
+  }
 }
 
 void NetworkPage::ReceivingTab::dismiss() {
