@@ -876,17 +876,11 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	      QString postfix;
 	      // We let KMGroupware do most of our 'print formatting':
 	      // generates text preceding to and following to the vCal
-	      if ( KMGroupware::vPartToHTML( KMGroupware::NoUpdateCounter,
-					    vCal,
-					    fname,
-					    mReader->mUseGroupware,
-					    prefix, postfix ) ){
+	      if ( kernel->groupware().vPartToHTML( KMGroupware::NoUpdateCounter,
+						    vCal, fname, prefix,
+						    postfix ) )
+	      {
 		htmlWriter()->queue( prefix );
-		// ### Hmmm, writeBdoyString should escape html specials...
-		vCal.replace( '&',  "&amp;"  );
-		vCal.replace( '<',  "&lt;"   );
-		vCal.replace( '>',  "&gt;"   );
-		vCal.replace( '\"', "&quot;" );
 		htmlWriter()->queue( quotedHTML( vCal ) );
 		htmlWriter()->queue( postfix );
 	      }
@@ -1740,16 +1734,10 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       //    or preserves the old data (if no vPart can be created)
       // 2. generates text preceding to / following to the vPart
       bool bVPartCreated
-	= KMGroupware::msTNEFToHTML( mReader, vPart, fname,
-				     mReader && mReader->mUseGroupware,
-				     prefix, postfix );
+	= kernel->groupware().msTNEFToHTML( mReader, vPart, fname,
+					    prefix, postfix );
       if ( bVPartCreated && mReader && !showOnlyOneMimePart() ){
 	htmlWriter()->queue( prefix );
-	// ### writeBodyPart should already escape the html specials...
-	vPart.replace( '&',  "&amp;"  );
-	vPart.replace( '<',  "&lt;"   );
-	vPart.replace( '>',  "&gt;"   );
-	vPart.replace( '\"', "&quot;" );
 	writeBodyString( vPart.latin1(), curNode->trueFromAddress(),
 			 codecFor( curNode ), result );
 	htmlWriter()->queue( postfix );
