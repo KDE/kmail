@@ -1646,7 +1646,6 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
       // len is the length of the local part
       len = atpos - pos;
       iStr = aStr.mid( pos, len + 1 );
-      kdDebug(5006) << "local part of email address is: \"" << iStr << "\"\n";
       // remove the local part from the result (as '&'s have been expanded to
       // &amp; we have to take care of the 4 additional characters per '&')
       result.truncate(result.length() - len - (iStr.contains('&')*4));
