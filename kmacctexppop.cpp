@@ -351,9 +351,7 @@ void KMAcctExpPop::slotMsgRetrieved(KIO::Job*, const QString & infoMsg)
 {
   if (infoMsg != "message complete") return;
   KMMessage *msg = new KMMessage;
-  curMsgData.resize(curMsgData.size() + 1);
-  curMsgData[curMsgData.size() - 1] = '\0';
-  msg->fromString(QCString(curMsgData.data(), curMsgData.size()),TRUE);
+  msg->fromByteArray( curMsgData , true );
   if (stage == Head)
   {
     kdDebug(5006) << "Size of Message: " << (*lensOfMsgsPendingDownload.at(

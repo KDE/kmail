@@ -222,7 +222,7 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       QString uid = msg->headerField("X-UID");
       (*it).data.resize((*it).data.size() + 1);
       (*it).data[(*it).data.size() - 1] = '\0';
-      msg->fromString(QCString((*it).data.data(), (*it).data.size() + 1));
+      msg->fromByteArray( (*it).data );
       msg->setHeaderField("X-UID",uid);
       msg->setComplete( TRUE );
       emit messageRetrieved(msg);

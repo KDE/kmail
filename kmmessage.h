@@ -186,8 +186,9 @@ public:
 			QValueList<KMime::MDN::DispositionModifier> m=QValueList<KMime::MDN::DispositionModifier>() );
 
   /** Parse the string and create this message from it. */
-  virtual void fromDwString(const DwString& str, bool setStatus=FALSE);
-  virtual void fromString(const QCString& str, bool setStatus=FALSE);
+  void fromDwString(const DwString& str, bool setStatus=FALSE);
+  void fromString(const QCString& str, bool setStatus=FALSE);
+  void fromByteArray( const QByteArray & ba, bool setStatus=false );
 
   /** Return the entire message contents in the DwString. This function
       is *fast* even for large message since it does *not* involve a

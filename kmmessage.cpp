@@ -344,17 +344,14 @@ DwMediaType& KMMessage::dwContentType(void)
   return mMsg->Headers().ContentType();
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
-{
-  DwString dwStra( aStr.data() );
-  fromDwString( dwStra, aSetStatus );
-  return;
+void KMMessage::fromByteArray( const QByteArray & ba, bool setStatus ) {
+  return fromDwString( DwString( ba.data(), ba.size() ), setStatus );
 }
 
+void KMMessage::fromString( const QCString & str, bool aSetStatus ) {
+  return fromDwString( DwString( str.data() ), aSetStatus );
+}
 
-//-----------------------------------------------------------------------------
 void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
 {
   const char* strPos = str.data();

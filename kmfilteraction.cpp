@@ -481,7 +481,7 @@ KMFilterAction::ReturnCode KMFilterActionWithCommand::genericProcess(KMMessage* 
     QByteArray msgText = kernel->getCollectedStdOut( &shProc );
 
     if ( !msgText.isEmpty() )
-      aMsg->fromString( QCString( msgText.data(), msgText.size() ) );
+      aMsg->fromByteArray( msgText );
     else
       return ErrorButGoOn;
   }
