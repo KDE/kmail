@@ -1622,7 +1622,7 @@ void KMHeaders::moveSelectedToFolder( int menuId )
 //-----------------------------------------------------------------------------
 KMHeaderItem* KMHeaders::prepareMove( int *contentX, int *contentY )
 {
-  KMHeaderItem *ret;
+  KMHeaderItem *ret = 0;
   emit maybeDeleting();
 
   disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
