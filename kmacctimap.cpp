@@ -114,6 +114,10 @@ void KMAcctImap::init(void)
 //-----------------------------------------------------------------------------
 void KMAcctImap::pseudoAssign(KMAccount* account)
 {
+  mIdleTimer.stop();
+  killAllJobs();
+  if (mSlave) KIO::Scheduler::disconnectSlave(mSlave);
+  mSlave = NULL;
   assert(account->type() == "imap");
   KMAcctImap *acct = static_cast<KMAcctImap*>(account);
   setName(acct->name());

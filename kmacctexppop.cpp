@@ -129,6 +129,7 @@ KURL KMAcctExpPop::getUrl()
 void KMAcctExpPop::pseudoAssign(KMAccount* account)
 {
   assert(account->type() == "pop");
+  slotAbortRequested();
   KMAcctExpPop *acct = static_cast<KMAcctExpPop*>(account);
   setName(acct->name());
   setCheckInterval(acct->checkInterval());
