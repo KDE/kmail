@@ -70,7 +70,6 @@ protected slots:
 
 protected:
   virtual void paintEmptyArea( QPainter * p, const QRect & rect );
-  virtual void contentsMouseReleaseEvent( QMouseEvent* );
 
   // Updates the number of unread messages for all folders
   virtual void updateUnreadAll( );
@@ -113,6 +112,7 @@ public slots:
     void stopAutoScroll();
 protected slots:
     void autoScroll();
+    void rightButtonPressed( QListViewItem *, const QPoint &, int);
 };
 
 #endif

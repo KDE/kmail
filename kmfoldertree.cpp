@@ -200,6 +200,9 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
 
   connect( &autoscroll_timer, SIGNAL( timeout() ),
 	   this, SLOT( autoScroll() ) );
+
+  connect( this, SIGNAL( rightButtonPressed( QListViewItem*, const QPoint &, int)),
+	   this, SLOT( rightButtonPressed( QListViewItem*, const QPoint &, int)));
 }
 
 //-----------------------------------------------------------------------------
@@ -506,11 +509,8 @@ QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
 
 //-----------------------------------------------------------------------------
 // Handle RMB press, show pop up menu
-void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* event)
+void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
 {
-  if (!(event->button() & RightButton))
-    return;
-  QListViewItem *lvi = itemAt( contentsToViewport( event->pos()));
   if (!lvi)
     return;
   setCurrentItem( lvi );
@@ -538,7 +538,7 @@ void KMFolderTree::contentsMouseReleaseEvent(QMouseEvent* event)
   folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
 			 SLOT(slotRemoveFolder()));
   }
-  folderMenu->exec (QCursor::pos(), 0);
+  folderMenu->exec (p, 0);
   delete folderMenu;
 }
 
