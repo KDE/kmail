@@ -885,7 +885,7 @@ KpgpPass::KpgpPass(QWidget *parent, const QString &name, bool modal, const QStri
   if (keyID == QString::null)
     label = new QLabel(i18n("Please enter your OpenPGP passphrase"),rightArea);
   else
-    label = new QLabel(i18n("Please enter the OpenPGP passphrase for\n\"")+keyID+"\"",
+    label = new QLabel(i18n("Please enter the OpenPGP passphrase for\n\"%1\"").arg(keyID),
                        rightArea);
   lineedit = new QLineEdit( rightArea );
   lineedit->setEchoMode(QLineEdit::Password);
