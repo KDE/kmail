@@ -228,11 +228,11 @@ namespace KMail {
       u.setPass( a->passwd() );
       u.setPort( sieve.port() );
       u.setQuery( "x-mech=" + (a->auth() == "*" ? "PLAIN" : a->auth()) ); //translate IMAP LOGIN to PLAIN
-      u.setFileName( sieve.fileName() );
+      u.setFileName( sieve.vacationFileName() );
       return u;
     } else {
       KURL u = sieve.alternateURL();
-      u.setFileName( sieve.fileName() );
+      u.setFileName( sieve.vacationFileName() );
       return u;
     }
   }

@@ -40,7 +40,7 @@ namespace KMail {
     mPort = static_cast<unsigned short>( port );
 
     mAlternateURL = config.readEntry( "sieve-alternate-url" );
-    mFileName = config.readEntry( "sieve-filename", "kmail-vacation.siv" );
+    mVacationFileName = config.readEntry( "sieve-vacation-filename", "kmail-vacation.siv" );
   }
 
   void SieveConfig::writeConfig( KConfigBase & config ) const {
@@ -48,7 +48,7 @@ namespace KMail {
     config.writeEntry( "sieve-reuse-config", reuseConfig() );
     config.writeEntry( "sieve-port", port() );
     config.writeEntry( "sieve-alternate-url", mAlternateURL.url() );
-    config.writeEntry( "sieve-filename", mFileName );
+    config.writeEntry( "sieve-vacation-filename", mVacationFileName );
   }
 
 

@@ -69,7 +69,7 @@ namespace KMail {
       mAlternateURL = url;
     }
 
-    QString fileName() const { return mFileName; }
+    QString vacationFileName() const { return mVacationFileName; }
 
     void readConfig( const KConfigBase & config );
     void writeConfig( KConfigBase & config ) const;
@@ -79,7 +79,7 @@ namespace KMail {
     bool mReuseConfig;
     unsigned short mPort;
     KURL mAlternateURL;
-    QString mFileName;
+    QString mVacationFileName;
   };
 
   class SieveConfigEditor : public QWidget {
