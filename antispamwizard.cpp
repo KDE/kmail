@@ -601,8 +601,8 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
     "well as create filter rules to classify messages using these "
     "tools and to separate messages classified as spam, or which "
     "contain viruses. The wizard will not take any existing filter "
-    "rules into consideration but will append new rules in any"
-    "case.</p>"
+    "rules into consideration; it will always append new rules."
+    "</p>"
     ) );
   grid->addWidget( mIntroText, 0, 0 );
 
@@ -743,7 +743,7 @@ ASWizRulesPage::ASWizRulesPage( QWidget * parent, const char * name,
   mMoveVirusRules = new QCheckBox( i18n("Move detected viral messages to the selected folder"), this );
   QWhatsThis::add( mMoveVirusRules,
       i18n( "A filter to detect messages which contain a virus and to move "
-            "tose messages into a predefined folder is created. The "
+            "those messages into a predefined folder is created; the "
             "default folder is the trash folder, but you may change that "
             "in the folder view.") );
   grid->addWidget( mMoveVirusRules, 5, 0);

@@ -53,8 +53,8 @@
         <default>true</default>
         <label>Verbose new mail notification</label>
         <whatsthis>If this option is enabled then for each folder the number "
-          "of newly arrived messages is shown in the new mail notification. "
-          "Otherwise you'll only get a simple 'New mail arrived' message."
+          "of newly arrived messages is shown in the new mail notification; "
+          "otherwise, you will only get a simple 'New mail arrived' message."
           "</whatsthis>
       </entry>
     </group>

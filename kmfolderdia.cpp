@@ -464,9 +464,9 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
   mIgnoreNewMailCheckBox =
     new QCheckBox( i18n("Ignore new mail in this folder" ), notifyGroup );
   QWhatsThis::add( mIgnoreNewMailCheckBox,
-                   i18n( "Check this option if you don't want to be notified "
-                         "about new mail that is moved to this folder. This "
-                         "is for example useful for ignoring spam." ) );
+                   i18n( "Check this option if you do not want to be notified "
+                         "about new mail that is moved to this folder; this "
+                         "is useful, for example, for ignoring spam." ) );
   hbl->addWidget( mIgnoreNewMailCheckBox );
   hbl->addStretch( 1 );
 
