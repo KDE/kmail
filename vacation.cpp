@@ -17,21 +17,16 @@
 #include "vacationdialog.h"
 #include "sievejob.h"
 using KMail::SieveJob;
-#include "sieveconfig.h"
 #include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "kmacctimap.h"
 #include "kmmessage.h"
 
-#include <kglobal.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
 #include <qregexp.h>
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qtimer.h>
 
 #include <cassert>
 

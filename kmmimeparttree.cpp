@@ -12,17 +12,13 @@
 using KMail::ObjectTreeParser;
 
 #include <kdebug.h>
-#include <kconfig.h>
-#include <kapplication.h>
 #include <klocale.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <kmimetype.h>
 #include <kiconloader.h>
 
 #include <qheader.h>
 #include <qpopupmenu.h>
-#include <qfile.h>
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent,

@@ -33,9 +33,7 @@
 
 #include <khtml_part.h>
 #include <khtmlview.h>
-#include <kurl.h>
 
-#include <qstring.h>
 
 #include <cassert>
 

@@ -42,11 +42,9 @@ static const char * configKeyDefaultIdentity = "Default Identity";
 #include <kemailsettings.h> // for IdentityEntry::fromControlCenter()
 #include <kapplication.h>
 #include <klocale.h>
-#include <kconfig.h>
 #include <kdebug.h>
 
 #include <qregexp.h>
-#include <qtl.h>
 
 #include <pwd.h> // for struct pw;
 #include <unistd.h> // for getuid

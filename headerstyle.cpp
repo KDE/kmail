@@ -35,7 +35,6 @@
 #include "linklocator.h"
 #include "kmmessage.h"
 
-#include "interfaces/htmlwriter.h"
 
 #include <mimelib/string.h>
 #include <mimelib/field.h>
@@ -45,10 +44,8 @@
 #include <klocale.h>
 #include <kglobal.h>
 
-#include <qstring.h>
 #include <qdatetime.h>
 #include <qapplication.h>
-#include <qstringlist.h>
 #include <qregexp.h>
 
 namespace KMail {

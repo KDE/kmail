@@ -5,12 +5,9 @@
 #include "kmfoldertree.h"
 #include "kmmainwidget.h"
 
-#include <qlistbox.h>
-#include <qlayout.h>
 #include <qvbox.h>
 
 #include <assert.h>
-#include <qpushbutton.h>
 
 QString KMFolderSelDlg::oldSelection;
 

@@ -31,7 +31,6 @@
 #include "imapjob.h"
 using KMail::ImapJob;
 
-#include <kapplication.h>
 #include <kdebug.h>
 #include <kio/scheduler.h>
 

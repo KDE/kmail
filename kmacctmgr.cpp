@@ -12,16 +12,12 @@
 #include "kmacctimap.h"
 #include "kmacctcachedimap.h"
 #include "kmbroadcaststatus.h"
-#include "kmkernel.h"
 #include "kmfiltermgr.h"
-#include "kmmessage.h"
 
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kconfig.h>
 
-#include <qstringlist.h>
 #include <qregexp.h>
 
 //-----------------------------------------------------------------------------

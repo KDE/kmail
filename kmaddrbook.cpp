@@ -6,10 +6,8 @@
 #include <pwd.h>
 #include "kmaddrbook.h"
 #include "kcursorsaver.h"
-#include <kapplication.h>
 #include <kdebug.h>
 
-#include <qfile.h>
 #include <qregexp.h>
 #include <assert.h>
 #include <klocale.h>
@@ -17,7 +15,6 @@
 #include <kmessagebox.h>
 
 #include "kmkernel.h" // for KabcBridge
-#include "kmmessage.h" // for KabcBridge
 #include <krun.h> // for kmaddrbookexternal
 #include <kprocess.h>
 #include <kabc/stdaddressbook.h>

@@ -16,15 +16,12 @@
 
 #include "addressesdialog.h"
 using KPIM::AddressesDialog;
-#include "kmmessage.h"
 #include "kmsender.h"
-#include "kmkernel.h"
 #include "identitymanager.h"
 #include "identitycombo.h"
 #include "kmidentity.h"
 #include "kfileio.h"
 #include "kmmsgpartdlg.h"
-#include <kpgp.h>
 #include <kpgpblock.h>
 #include "kmaddrbook.h"
 #include "kmmsgdict.h"
@@ -35,18 +32,14 @@ using KPIM::AddressesDialog;
 #include "kmcommands.h"
 #include "kcursorsaver.h"
 
-#include <kaction.h>
 #include <kcharsets.h>
 #include <kcompletionbox.h>
 #include <kcursor.h>
 #include <kcombobox.h>
-#include <kservicetype.h>
 #include <kstdaccel.h>
-#include <kstdaction.h>
 #include <kedittoolbar.h>
 #include <kkeydialog.h>
 #include <kdebug.h>
-#include <kdeversion.h>
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
@@ -87,7 +80,6 @@ using KRecentAddress::RecentAddresses;
 #include <kstatusbar.h>
 #include <qpopupmenu.h>
 
-#include "cryptplugwrapperlist.h"
 #include "klistboxdialog.h"
 
 #include "kmcomposewin.moc"

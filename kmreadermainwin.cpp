@@ -9,23 +9,13 @@
 // widgets like a toolbar.
 
 #include <qaccel.h>
-#include <qimage.h>
-#include <qmultilineedit.h>
-#include <qtextcodec.h>
-#include <kaction.h>
 #include <kapplication.h>
-#include <kcharsets.h>
 #include <klocale.h>
-#include <kmessagebox.h>
 #include <kstdaccel.h>
 #include <kwin.h>
 
 #include "kmcommands.h"
-#include "kmdisplayvcard.h"
-#include "kmkernel.h"
 #include "kmenubar.h"
-#include "kmmessage.h"
-#include "kmmsgpart.h"
 #include "kpopupmenu.h"
 #include "kmreaderwin.h"
 #include "kmfolderindex.h"

@@ -33,7 +33,6 @@
 
 #include <kdebug.h>
 
-#include <qstring.h>
 
 namespace KMail {
 

@@ -26,7 +26,6 @@
 #include "networkaccount.h"
 
 #include <kconfig.h>
-#include <kurl.h>
 #include <kio/global.h>
 using KIO::MetaData;
 

@@ -9,7 +9,6 @@
 #include <kapplication.h>
 #include <kiconloader.h>
 #include <kmessagebox.h>
-#include <kaction.h>
 #include <kdebug.h>
 
 #include "kmfoldermgr.h"

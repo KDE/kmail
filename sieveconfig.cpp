@@ -16,7 +16,6 @@
 
 #include <knuminput.h>
 #include <klocale.h>
-#include <kurl.h>
 #include <kdialog.h>
 #include <kconfigbase.h>
 

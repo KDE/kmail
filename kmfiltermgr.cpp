@@ -4,20 +4,15 @@
 #include "kmfiltermgr.h"
 
 // other kmail headers
-#include "kmfilter.h"
 #include "kmfilterdlg.h"
 #include "kmfolderindex.h"
 
 // other KDE headers
-#include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
 
 // other Qt headers
 #include <qregexp.h>
-#include <qstringlist.h>
-#include <qstring.h>
-#include <qfile.h>
 
 // other headers
 #include <assert.h>

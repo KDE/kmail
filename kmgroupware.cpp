@@ -23,31 +23,20 @@
     Boston, MA 02111-1307, USA.
 */
 
-#include <klocale.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <klibloader.h>
-#include <kpopupmenu.h>
-#include <krfcdate.h>
 #include <kiconloader.h>
-#include <kapplication.h>
 #include <dcopclient.h>
 #include <kparts/part.h>
 
 #include "kmgroupware.h"
 #include "kfileio.h"
-#include "kmkernel.h"
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kmmsgpart.h"
-#include "kmfolder.h"
-#include "kmfolderdir.h"
 #include "kmfoldermgr.h"
 #include "kmfoldertree.h"
-#include "kmheaders.h"
-#include "kmreaderwin.h"
 #include "kmcomposewin.h"
-#include "kmmimeparttree.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "kmacctmgr.h"
@@ -59,8 +48,6 @@
 using KMail::ObjectTreeParser;
 
 #include <ktnef/ktnefparser.h>
-#include <ktnef/ktnefattach.h>
-#include <ktnef/ktnefproperty.h>
 #include <ktnef/ktnefmessage.h>
 #include <ktnef/ktnefdefs.h>
 
@@ -72,9 +59,6 @@ using KMail::ObjectTreeParser;
 
 #include <assert.h>
 
-#include <qdatetime.h>
-#include <qstring.h>
-#include <qsplitter.h>
 #include <qregexp.h>
 #include <qbuffer.h>
 #include <qfile.h>

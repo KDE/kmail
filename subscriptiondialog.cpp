@@ -16,7 +16,6 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <qpushbutton.h>
 
 namespace KMail {
 

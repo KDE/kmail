@@ -4,38 +4,29 @@
 #include <stdlib.h>
 #include <kiconloader.h>
 #include <qbuffer.h>
-#include <qpopupmenu.h>
-#include <qcursor.h>
 #include <qheader.h>
 #include <qptrstack.h>
 #include <qptrqueue.h>
 #include <qpainter.h>
 #include <qtextcodec.h>
-#include <qregexp.h>
 #include <qbitmap.h>
 
-#include <kaction.h>
 #include <kapplication.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kimageio.h>
 #include <kmessagebox.h>
-#include <kfiledialog.h>
 
 #include "kcursorsaver.h"
 #include "kmcommands.h"
 #include "kmfolderimap.h"
-#include "kmfoldermgr.h"
 #include "kmheaders.h"
 #include "kmmainwidget.h"
 #include "kmcomposewin.h"
 #include "kmfiltermgr.h"
-#include "kmsender.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
-#include "folderjob.h"
 using KMail::FolderJob;
-#include "mailinglist-magic.h"
 #include "kmbroadcaststatus.h"
 
 #include <mimelib/enum.h>

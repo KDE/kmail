@@ -6,7 +6,6 @@
 
 #include "kmacctlocal.h"
 #include "kmfoldermbox.h"
-#include "kmmessage.h"
 #include "kmacctfolder.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"

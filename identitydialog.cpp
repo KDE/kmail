@@ -32,10 +32,8 @@
 #include "identitydialog.h"
 
 // other KMail headers:
-#include "kmidentity.h"
 #include "signatureconfigurator.h"
 #include "kmfoldercombobox.h"
-#include "kmkernel.h"
 #include "kmfoldermgr.h"
 #include "transportmanager.h"
 
@@ -47,17 +45,10 @@
 #include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kconfig.h>
-#include <kapplication.h>
 
 // Qt headers:
 #include <qtabwidget.h>
-#include <qlayout.h>
 #include <qlabel.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
-#include <qstring.h>
-#include <qstringlist.h>
 #include <qwhatsthis.h>
 
 // other headers: (none)

@@ -2,22 +2,14 @@
 
 #include "kmidentity.h"
 #include "kfileio.h"
-#include "kmfolder.h"
-#include "kmfoldermgr.h"
 #include "kmkernel.h"
 
 #include <kdebug.h>
-#include <kapplication.h>
-#include <kurl.h>
 #include <klocale.h>
-#include <ktempfile.h>
 #include <kmessagebox.h>
 #include <kprocess.h>
-#include <kconfig.h>
 
-#include <qstringlist.h>
 #include <qfileinfo.h>
-#include <qdatastream.h>
 
 #include <pwd.h>
 #include <sys/types.h>

@@ -29,7 +29,6 @@ using KMail::SieveConfig;
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
-#include "kmfiltermgr.h"
 #include "kmmainwin.h"
 #include "imapjob.h"
 using KMail::ImapJob;

@@ -41,13 +41,11 @@
 #include <klocale.h>
 #include <khtml_part.h>
 #include <khtmlview.h>
-#include <kmessagebox.h>
 #include <ktempfile.h>
 
 // other Qt headers
 #include <qlabel.h>
 #include <qtextcodec.h>
-#include <qregexp.h>
 #include <qfile.h>
 #include <qapplication.h>
 

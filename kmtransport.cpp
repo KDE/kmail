@@ -31,7 +31,6 @@
 #include <qpushbutton.h>
 #include <qwhatsthis.h>
 
-#include <kapplication.h>
 #include <kfiledialog.h>
 #include <klocale.h>
 #include <kmessagebox.h>

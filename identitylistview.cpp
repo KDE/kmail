@@ -31,7 +31,6 @@
 
 #include "identitylistview.h"
 
-#include "kmidentity.h"
 #include "identitydrag.h"
 #include "identitymanager.h"
 #include "kmkernel.h"

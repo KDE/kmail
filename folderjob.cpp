@@ -29,8 +29,6 @@
  */
 #include "folderjob.h"
 
-#include "kmmessage.h"
-#include "kmfolder.h"
 
 #include <kdebug.h>
 

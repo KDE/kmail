@@ -20,31 +20,18 @@
     Boston, MA 02111-1307, USA.
 */
 
-#include <qlabel.h>
 #include <qvbox.h>
-#include <qhbox.h>
 #include <qvbuttongroup.h>
-#include <qradiobutton.h>
-#include <qpushbutton.h>
-#include <qcombobox.h>
 #include <qtextbrowser.h>
-#include <qlayout.h>
 #include <qwhatsthis.h>
-#include <qregexp.h>
 #include <qvalidator.h>
-#include <qcheckbox.h>
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kapplication.h>
-#include <kfoldertree.h>
 
 #include "kmfoldercombobox.h"
-#include "kmfolderdir.h"
-#include "kmfolder.h"
-#include "kmmessage.h"
-#include "configuredialog.h"
 #include "configuredialog_p.h"
 #include "kmacctmgr.h"
 #include "kmcomposewin.h"
@@ -55,7 +42,6 @@
 #include "identitymanager.h"
 #include "kmtransport.h"
 #include "kmsender.h"
-#include "kmmainwin.h"
 #include "kmgroupware.h"
 
 #include "startupwizard.h"

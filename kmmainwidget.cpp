@@ -9,33 +9,20 @@
 
 #undef Unsorted // X headers...
 #include <qaccel.h>
-#include <qregexp.h>
-#include <qmap.h>
-#include <qvaluelist.h>
-#include <qtextcodec.h>
-#include <qheader.h>
-#include <qguardedptr.h>
 
 #include <kopenwith.h>
 
 #include <kmessagebox.h>
 
-#include <kparts/browserextension.h>
 
-#include <kaction.h>
 #include <kstdaccel.h>
-#include <kstdaction.h>
 #include <kkeydialog.h>
 #include <kcharsets.h>
-#include <kmimetype.h>
 #include <knotifyclient.h>
 #include <kdebug.h>
 #include <kapplication.h>
 #include <kfiledialog.h>
-#include <kio/netaccess.h>
-#include <kio/job.h>
 #include <ktip.h>
-#include <kdeversion.h>
 #include <knotifydialog.h>
 
 #include "kcursorsaver.h"
@@ -45,11 +32,8 @@
 #include "kmacctmgr.h"
 #include "kmfilter.h"
 #include "kmfoldertree.h"
-#include "kmreaderwin.h"
 #include "kmreadermainwin.h"
-#include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
-#include "kmfoldertype.h"
 #include "kmacctcachedimap.h"
 #include "kmcomposewin.h"
 #include "kmfolderseldlg.h"
@@ -58,10 +42,7 @@
 #include "kmaddrbook.h"
 #include "kmversion.h"
 #include "kmfldsearch.h"
-#include "mailinglist-magic.h"
-#include "kmmsgdict.h"
 #include "kmacctfolder.h"
-#include "kmmimeparttree.h"
 #include "kmundostack.h"
 #include "kmcommands.h"
 #include "kmmainwidget.h"
@@ -77,13 +58,10 @@ using KMail::AttachmentStrategy;
 using KMail::HeaderStrategy;
 #include "headerstyle.h"
 using KMail::HeaderStyle;
-#include "folderjob.h"
 using KMail::FolderJob;
 
 #include <assert.h>
 #include <kstatusbar.h>
-#include <kpopupmenu.h>
-#include <kprogress.h>
 
 #include "kmmainwidget.moc"
 

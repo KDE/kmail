@@ -19,8 +19,6 @@
 #include "kmfiltermgr.h"
 #include "kmsender.h"
 #include "kmbroadcaststatus.h"
-#include "kmmessage.h"
-#include "folderjob.h"
 using KMail::FolderJob;
 
 //----------------------

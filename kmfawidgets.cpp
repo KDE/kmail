@@ -3,7 +3,6 @@
 // License: GNU Genaral Public License
 
 #include "kmfawidgets.h"
-#include "kmkernel.h"
 
 #include <kabc/addresseedialog.h> // for the button in KMFilterActionWithAddress
 #include <kiconloader.h>
@@ -14,8 +13,6 @@
 #include <kstandarddirs.h>
 
 #include <qlayout.h>
-#include <qpushbutton.h>
-#include <qfile.h>
 
 //=============================================================================
 //

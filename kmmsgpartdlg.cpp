@@ -8,16 +8,13 @@
 // other KMail includes:
 #include "kmmessage.h"
 #include "kmmsgpart.h"
-#include "kmglobal.h"
 #include "kcursorsaver.h"
 
 // other kdenetwork includes: (none)
 
 // other KDE includes:
-#include <kmessagebox.h>
 #include <kmimetype.h>
 #include <kapplication.h>
-#include <klocale.h>
 #include <kiconloader.h>
 #include <kaboutdata.h>
 #include <kstringvalidator.h>
@@ -25,10 +22,8 @@
 #include <kdebug.h>
 
 // other Qt includes:
-#include <qpushbutton.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qcombobox.h>
 #include <qwhatsthis.h>
 #include <klineedit.h>
 #include <qcheckbox.h>

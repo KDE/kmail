@@ -29,14 +29,12 @@
  */
 #include "maildirjob.h"
 
-#include "kmmessage.h"
 #include "kmfoldermaildir.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
 
 #include <qtimer.h>
-#include <qdatetime.h>
 
 namespace KMail {
 

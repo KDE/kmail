@@ -7,7 +7,6 @@
 #include <qfileinfo.h>
 #include "kmacctmaildir.h"
 #include "kmfoldermaildir.h"
-#include "kmmessage.h"
 #include "kmacctfolder.h"
 #include "kmbroadcaststatus.h"
 

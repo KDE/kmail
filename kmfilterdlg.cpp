@@ -11,7 +11,6 @@
 #include "kmfiltermgr.h"
 
 // other KDE headers:
-#include <kdeversion.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <klocale.h>

@@ -3,15 +3,11 @@
 
 //Factor byteswap stuff into one header file
 
-#include "kmfolderdir.h"
 #include "kmfoldersearch.h"
-#include "kmfolderindex.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
-#include "kmmessage.h"
 #include "kmsearchpattern.h"
 #include <qfileinfo.h>
-#include <qtimer.h>
 
 #include <kdebug.h>
 #include <klocale.h>

@@ -33,13 +33,10 @@
 
 #include <kio/scheduler.h>
 
-#include "kmmessage.h"
 #include "kmfolderimap.h"
-#include "kmacctimap.h"
 
 #include <kdebug.h>
 
-#include <qtimer.h>
 
 namespace KMail {
 

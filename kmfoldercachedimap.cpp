@@ -25,23 +25,18 @@
 #include <errno.h>
 
 #include "kmfoldercachedimap.h"
-#include "kmfolderimap.h"
 #include "kmundostack.h"
 #include "kmfoldermgr.h"
-#include "kmmessage.h"
 #include "kmacctcachedimap.h"
 #include "kmacctmgr.h"
 #include "imapprogressdialog.h"
-#include "cachedimapjob.h"
 using KMail::CachedImapJob;
-#include "imapaccountbase.h"
 using KMail::ImapAccountBase;
 
 #include <kapplication.h>
 #include <kmessagebox.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kio/global.h>
 #include <kio/scheduler.h>
 #include <qbuffer.h>
 #include <qfile.h>

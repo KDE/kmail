@@ -28,11 +28,8 @@
  *  your version.
  */
 #include "folderIface.h"
-#include "kmkernel.h"
 #include "kmfoldermgr.h"
-#include "kmfolderindex.h"
 #include "kmfolder.h"
-#include "kmmsgdict.h"
 
 #include <stdlib.h>
 

@@ -3,14 +3,10 @@
 #include <config.h>
 #include <kdebug.h>
 #include <kglobal.h>
-#include <klocale.h>
 #include <kcharsets.h>
 
-#include <kmime_util.h>
 #include <mimelib/mimepp.h>
-#include <qregexp.h>
 #include <qtextcodec.h>
-#include <qstringlist.h>
 #include "kmfolderindex.h"
 #include "kmheaders.h"
 #include "kmmsgdict.h"

@@ -20,7 +20,6 @@
 #include <qtextcodec.h>
 
 #include <assert.h>
-#include <qregexp.h>
 
 using namespace KMime;
 

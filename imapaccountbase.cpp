@@ -28,14 +28,10 @@ using KMail::SieveConfig;
 #include "kmfolder.h"
 #include "kmbroadcaststatus.h"
 #include "kmmainwin.h"
-#include "kmmessage.h"
 
-#include <kconfig.h>
-#include <kglobal.h>
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
-#include <kio/global.h>
 using KIO::MetaData;
 #include <kio/passdlg.h>
 using KIO::PasswordDialog;

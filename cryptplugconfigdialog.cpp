@@ -1,17 +1,14 @@
 
 #include "cryptplugconfigdialog.h"
 
-#include "certificatehandlingdialogimpl.h"
 #include "signatureconfigurationdialogimpl.h"
 #include "encryptionconfigurationdialogimpl.h"
 #include "directoryservicesconfigurationdialogimpl.h"
 
 #include <cryptplugwrapper.h>
 
-#include <kconfig.h>
 #include <klocale.h>
 #include <kdebug.h>
-#include <kapplication.h>
 #include <kprocess.h>
 #include <kmessagebox.h>
 

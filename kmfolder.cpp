@@ -2,27 +2,19 @@
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
 #include <config.h>
-#include "kmmessage.h"
-#include "kmfolderdir.h"
-#include "kmfolderindex.h"
 #include "kmfolderimap.h"
-#include "kmfolderdia.h"
 #include "kmundostack.h"
 #include "kmmsgdict.h"
-#include "kmkernel.h"
 #include "identitymanager.h"
 #include "kmidentity.h"
 #include "kmfoldermgr.h"
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
-#include <qtimer.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
-#include <kcursor.h>
 #include <errno.h>
 #include <klocale.h>
-#include <kapplication.h>
 
 //-----------------------------------------------------------------------------
 

@@ -2,7 +2,6 @@
 /* Author: Ronen Tzur <rtzur@shani.net> */
 
 #include "kmfolderindex.h"
-#include "kmfoldermgr.h"
 #include "kmmsgdict.h"
 #include "kmdict.h"
 

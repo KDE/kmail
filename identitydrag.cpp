@@ -31,7 +31,6 @@
 
 #include "identitydrag.h"
 
-#include <qdatastream.h>
 
 namespace KMail {
 

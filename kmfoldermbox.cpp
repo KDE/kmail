@@ -3,21 +3,17 @@
 
 #include <config.h>
 #include <qfileinfo.h>
-#include <qtimer.h>
 #include <qregexp.h>
 
 #include "kmfoldermbox.h"
 #include "kmfoldermgr.h"
-#include "kmmessage.h"
 #include "kmundostack.h"
-#include "mboxjob.h"
 #include "kcursorsaver.h"
 
 #include <kdebug.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
-#include <kapplication.h>
 #include <kprocess.h>
 
 #include <stdio.h>

@@ -5,12 +5,9 @@
 
 #define ALLOW_GUI 1
 #include "kmmessage.h"
-#include "kmmsgpart.h"
-#include "kmreaderwin.h"
 #include "mailinglist-magic.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
-#include <kpgp.h>
 #include <kpgpblock.h>
 #include <kdebug.h>
 
@@ -20,7 +17,6 @@ using KMail::ObjectTreeParser;
 #include "kmundostack.h"
 #include "kmversion.h"
 #include "kmidentity.h"
-#include "kmkernel.h"
 #include "identitymanager.h"
 #include "headerstrategy.h"
 using KMail::HeaderStrategy;
@@ -28,16 +24,13 @@ using KMail::HeaderStrategy;
 #include <kapplication.h>
 #include <kglobalsettings.h>
 #include <khtml_part.h>
-#include <kurl.h>
 #include <qcursor.h>
 
 #include <mimelib/body.h>
 #include <mimelib/field.h>
 
 #include <qtextcodec.h>
-#include <qstrlist.h>
 #include <qmessagebox.h>
-#include <qregexp.h>
 
 #include <kmime_util.h>
 #include <kmime_charfreq.h>
@@ -48,8 +41,6 @@ using KMail::HeaderStrategy;
 #include <unistd.h>
 #include <time.h>
 #include <klocale.h>
-#include <kglobal.h>
-#include <kwin.h>
 #include <stdlib.h>
 
 #if ALLOW_GUI

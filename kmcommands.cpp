@@ -28,13 +28,10 @@
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
-#include <qptrlist.h>
-#include <qregexp.h>
 #include <qtextcodec.h>
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kio/netaccess.h>
-#include <kio/job.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kparts/browserextension.h>
@@ -45,21 +42,15 @@
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
 #include "kmcomposewin.h"
-#include "kmfilter.h"
 #include "kmfiltermgr.h"
-#include "kmfolder.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmheaders.h"
-#include "kmkernel.h"
 #include "kmmainwidget.h"
-#include "kmmessage.h"
 #include "kmmsgdict.h"
-#include "kmreaderwin.h"
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kcursorsaver.h"
-#include "folderjob.h"
 using KMail::FolderJob;
 
 #include "kmcommands.h"

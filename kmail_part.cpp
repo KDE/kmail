@@ -23,30 +23,19 @@
     without including the source code for Qt in the source distribution.
 */
 
-#include <qlabel.h>
 #include <qlayout.h>
 
 #include <kapplication.h>
-#include <kinstance.h>
-#include <kstatusbar.h>
-#include <klocale.h>
 #include <kiconloader.h>
-#include <kaction.h>
 #include <kdebug.h>
 #include <kparts/genericfactory.h>
 
 #include "aboutdata.h"
-#include "kmkernel.h"
 #include "kmmainwin.h"
-#include "kmailIface.h"
 #include "kmail_part.h"
-#include <kglobal.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
-#include "kmreaderwin.h"
 #include "kmmainwidget.h"
-#include "kmfolder.h"
-#include "kmmessage.h"
 #include "kmfoldertree.h"
 #include "kmstartup.h"
 #include "kmbroadcaststatus.h"

@@ -4,8 +4,6 @@
 #include <qdir.h>
 
 #include "kmfolderdir.h"
-#include "kmfoldermaildir.h"
-#include "kmfolderimap.h"
 #include "kmfoldersearch.h"
 #include "kmfoldercachedimap.h"
 

@@ -20,17 +20,11 @@
 #endif
 
 #include <kapplication.h>
-#include <kpopupmenu.h>
 #include <kdebug.h>
 #include <kiconloader.h>
 #include <kwin.h>
 
-#include <qevent.h>
-#include <qfontmetrics.h>
-#include <qlistview.h>
-#include <qstring.h>
 #include <qtooltip.h>
-#include <qlabel.h>
 #include <qwidgetlist.h>
 
 #include <kglobalsettings.h>
@@ -39,11 +33,8 @@
 
 #include <math.h>
 
-#include "kaction.h"
 #include "kmsystemtray.h"
-#include "kmfolder.h"
 #include "kmfoldertree.h"
-#include "kmkernel.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
 #include "kmmainwidget.h"

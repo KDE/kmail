@@ -19,7 +19,6 @@
 #include "kfileio.h"
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
-#include "kmmessage.h"
 
 #include <kregexp3.h>
 #include <ktempfile.h>
@@ -29,13 +28,9 @@
 #include <kaudioplayer.h>
 #include <kurlrequester.h>
 
-#include <qtl.h>  // QT Template Library, needed for qHeapSort
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qcombobox.h>
-#include <klineedit.h>
 #include <qtextcodec.h>
-#include <qfile.h>
 #include <assert.h>
 
 

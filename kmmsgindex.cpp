@@ -5,13 +5,10 @@
 #include "kmfoldersearch.h"
 #include "kmmsgindex.h"
 #include "kmfoldermgr.h"
-#include "kmfolderdir.h"
 #include "kmmsgdict.h"
-#include "kmmessage.h"
 #include "kdebug.h"
 
 #include "mimelib/message.h"
-#include "mimelib/string.h"
 #include "mimelib/headers.h"
 #include "mimelib/utility.h"
 #include "mimelib/enum.h"
@@ -20,9 +17,6 @@
 #include "mimelib/field.h"
 
 #include <qdict.h>
-#include <qtimer.h>
-#include <qregexp.h>
-#include <qintdict.h>
 #include <qapplication.h>
 
 #include <stdio.h>

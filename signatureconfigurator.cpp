@@ -19,18 +19,13 @@
 #include <kdialog.h>
 #include <klineedit.h>
 #include <kurlrequester.h>
-#include <kurlcompletion.h>
 #include <kshellcompletion.h>
-#include <kglobalsettings.h>
 #include <krun.h>
 
 #include <qlabel.h>
-#include <qstring.h>
-#include <qstringlist.h>
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
-#include <qpushbutton.h>
 #include <qwidgetstack.h>
 #include <qtextedit.h>
 

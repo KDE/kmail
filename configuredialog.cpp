@@ -37,25 +37,16 @@
 #include "kmtopwidget.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
-#include "signatureconfigurationdialogimpl.h"
-#include "encryptionconfigurationdialogimpl.h"
-#include "directoryservicesconfigurationdialogimpl.h"
-#include "certificatehandlingdialogimpl.h"
-#include "cryptplugwrapperlist.h"
-#include "cryptplugwrapper.h"
 #include "cryptplugconfigdialog.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "identitylistview.h"
-#include "kmacctcachedimap.h"
 #include "kcursorsaver.h"
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "identitydialog.h"
 using KMail::IdentityDialog;
-#include "kmkernel.h"
-#include "kmmessage.h"
 
 // other kdenetwork headers:
 #include <kpgpui.h>
@@ -70,10 +61,7 @@ using KMime::DateFormatter;
 #include <kdebug.h>
 #include <knuminput.h>
 #include <kfontdialog.h>
-#include <klineedit.h>
-#include <klineeditdlg.h>
 #include <kmessagebox.h>
-#include <kglobalsettings.h>
 #include <kurlrequester.h>
 #include <kseparator.h>
 #include <kiconloader.h>
@@ -83,24 +71,15 @@ using KMime::DateFormatter;
 
 // Qt headers:
 #include <qvalidator.h>
-#include <qregexp.h>
-#include <qtabwidget.h>
 #include <qwhatsthis.h>
-#include <qwidgetstack.h>
 #include <qvgroupbox.h>
-#include <qhgroupbox.h>
 #include <qvbuttongroup.h>
 #include <qhbuttongroup.h>
 #include <qtooltip.h>
 #include <qlabel.h>
-#include <qlayout.h>
 #include <qtextcodec.h>
 #include <qheader.h>
 #include <qpopupmenu.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qpushbutton.h>
-#include <qradiobutton.h>
 
 // other headers:
 #include <assert.h>

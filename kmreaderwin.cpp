@@ -17,12 +17,9 @@
 
 #include <qclipboard.h>
 #include <qhbox.h>
-#include <qstyle.h>
 #include <qtextcodec.h>
 #include <qpaintdevicemetrics.h>
-#include <qstringlist.h>
 
-#include <kaction.h>
 #include <kapplication.h>
 #include <kcharsets.h>
 #include <kcursor.h>
@@ -31,12 +28,10 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kglobalsettings.h>
-#include <kpgp.h>
 #include <kpgpblock.h>
 #include <krun.h>
 #include <ktempfile.h>
 #include <kprocess.h>
-#include <kstdguiitem.h>
 
 // khtml headers
 #include <khtml_part.h>
@@ -53,7 +48,6 @@
 using namespace KMime;
 
 #include "kmversion.h"
-#include "kmglobal.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
 #include "kmgroupware.h"
@@ -61,8 +55,6 @@ using namespace KMime;
 #include "kfileio.h"
 #include "kmfolderindex.h"
 #include "kmcommands.h"
-#include "kmmessage.h"
-#include "kmmsgpart.h"
 #include "kmmsgpartdlg.h"
 #include "kmtextbrowser.h"
 #include "kmreaderwin.h"
@@ -94,7 +86,6 @@ using KMail::TeeHtmlWriter;
 #endif // !NDEBUG
 
 // for the MIME structure viewer (khz):
-#include "kmmimeparttree.h"
 
 
 // X headers...
@@ -112,10 +103,8 @@ using KMail::TeeHtmlWriter;
 // Do the tmp stuff correctly - thanks to Harri Porten for
 // reminding me (sven)
 
-#include "vcard.h"
 #include "kmdisplayvcard.h"
 #include <kpopupmenu.h>
-#include <qimage.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>

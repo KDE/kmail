@@ -30,14 +30,11 @@
 
 #include "mboxjob.h"
 
-#include "kmmessage.h"
 #include "kmfoldermbox.h"
 
 #include <kapplication.h>
 #include <kdebug.h>
-#include <qobject.h>
 #include <qtimer.h>
-#include <qdatetime.h>
 
 namespace KMail {
 

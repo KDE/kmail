@@ -29,20 +29,13 @@ using KMail::SieveConfig;
 using KMail::IMAPProgressDialog;
 
 #include "kmbroadcaststatus.h"
-#include "kmfoldertree.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
 #include "kmfoldercachedimap.h"
-#include "kmfolderimap.h"
-#include "kmmainwin.h"
-#include "cachedimapjob.h"
 
-#include <kio/passdlg.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
-#include <kmessagebox.h>
 #include <kdebug.h>
-#include <kstandarddirs.h>
 
 
 KMAcctCachedImap::KMAcctCachedImap(KMAcctMgr* aOwner, const QString& aAccountName):

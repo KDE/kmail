@@ -11,9 +11,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <kapplication.h>
 #include <klocale.h>
-#include <kglobal.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <knotifyclient.h>

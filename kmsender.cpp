@@ -19,7 +19,6 @@
 #include "kcursorsaver.h"
 #include "kmsender.h"
 #include "kmidentity.h"
-#include "kmkernel.h"
 #include "identitymanager.h"
 #include "kmbroadcaststatus.h"
 #include "kmaccount.h"
@@ -27,7 +26,6 @@
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
-#include "kmmessage.h"
 #include "kmmsgpart.h"
 #include <mimelib/mediatyp.h>
 

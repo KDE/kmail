@@ -9,23 +9,17 @@
 #include <qregexp.h>
 #include <qlabel.h>
 
-#include <kapplication.h>
 #include <klineedit.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 #include <kicondialog.h>
-#include <kiconloader.h>
 
-#include "kmmainwin.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
 #include "identitycombo.h"
-#include "kmkernel.h"
-#include "kmfoldertype.h"
 #include "kmfolderimap.h"
-#include "kmmessage.h"
 
 #include "kmfolderdia.moc"
 

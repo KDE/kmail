@@ -5,14 +5,12 @@
 #include <config.h>
 #endif
 #include <kuniqueapplication.h>
-#include <klocale.h>
 #include <kglobal.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
 #include "kmkernel.h" //control center
 
 #undef Status // stupid X headers
-#include "kmailIface.h" // to call control center of master kmail
 
 #include "aboutdata.h"
 

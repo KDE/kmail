@@ -34,8 +34,6 @@
 
 #include <kio/scheduler.h>
 
-#include "kmmessage.h"
-#include "kmfolderdir.h"
 #include "kmfoldermgr.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
@@ -44,7 +42,6 @@
 #include <klocale.h>
 #include <kdebug.h>
 
-#include <qtimer.h>
 
 namespace KMail {
 

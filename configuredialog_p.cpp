@@ -13,13 +13,11 @@
 #include "configuredialog_p.h"
 
 // other KMail headers:
-#include "identitymanager.h"
 #include "kmtransport.h"
 
 // other kdenetwork headers: (none)
 
 // other KDE headers:
-#include <klineedit.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <klocale.h>

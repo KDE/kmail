@@ -1,15 +1,11 @@
 #include "kmmainwin.h"
 #include "kmmainwidget.h"
-#include "kapplication.h"
 #include "kstatusbar.h"
 #include "kmkernel.h"
 #include "kmsender.h"
-#include "kmreaderwin.h"
 #include "kmbroadcaststatus.h"
 #include "klocale.h"
 #include <kedittoolbar.h>
-#include <kstdaction.h>
-#include <qlayout.h>
 
 #include "kmmainwin.moc"
 

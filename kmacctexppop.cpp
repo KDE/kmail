@@ -11,20 +11,14 @@
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
 #include "kmfiltermgr.h"
-#include "kmpopheaders.h"
 #include "kmpopfiltercnfrmdlg.h"
-#include "kmkernel.h"
 
 #include <kdebug.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
-#include <kconfig.h>
 #include <kmessagebox.h>
 #include <kio/scheduler.h>
 #include <kio/passdlg.h>
-#include <kio/job.h>
-#include <kio/slave.h>
-#include <kio/global.h>
 using KIO::MetaData;
 
 static const unsigned short int pop3DefaultPort = 110;

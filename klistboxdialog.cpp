@@ -3,17 +3,10 @@
 #include <config.h>
 #endif
 
-#include <klocale.h>
 #include "klistboxdialog.h"
 
-#include <qframe.h>
-#include <qlistbox.h>
 #include <qlabel.h>
-#include <qpushbutton.h>
 #include <qlayout.h>
-#include <qtooltip.h>
-#include <qwhatsthis.h>
-#include <qheader.h>
 
 KListBoxDialog::KListBoxDialog( QString& _selectedString,
                                 const QString& caption,

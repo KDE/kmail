@@ -34,10 +34,7 @@
 #include "kmkernel.h"
 
 #include <kdebug.h>
-#include <kconfig.h>
 
-#include <qstringlist.h>
-#include <qstring.h>
 
 namespace KMail {
 

@@ -7,12 +7,10 @@
 
 #include <qdir.h>
 #include <qregexp.h>
-#include <qtimer.h>
 
 #include "kfileio.h"
 #include "kmfoldermaildir.h"
 #include "kmfoldermgr.h"
-#include "kmmessage.h"
 #include "kmundostack.h"
 #include "maildirjob.h"
 #include "kcursorsaver.h"

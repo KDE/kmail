@@ -13,26 +13,20 @@
 
 #include <qvbox.h>
 
-#include <kpgp.h>
 #include <kaboutdata.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <knotifyclient.h>
 #include <kstaticdeleter.h>
-#include <klocale.h>
 #include <kstandarddirs.h>
 #include <qutf7codec.h>
-#include <kio/job.h>
-#include <kprocess.h>
 #include <kprogress.h>
 #include <kpassivepopup.h>
 
 #include "kmmsgindex.h"
-#include "kmreaderwin.h"
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmfoldermgr.h"
-#include "kmfolderimap.h"
 #include "kmfoldercachedimap.h"
 #include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
@@ -40,21 +34,16 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmacctmgr.h"
-#include "kmaddrbook.h"
 #include "kfileio.h"
 #include "kmversion.h"
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
 #include "kmmsgdict.h"
-#include "kmmessage.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "configuredialog.h"
 #include "startupwizard.h"
-#include "kmsystemtray.h"
 #include <kwin.h>
-#include <ktip.h>
-#include "kmmainwidget.h"
 #include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
 #include "folderIface.h"
@@ -66,7 +55,6 @@ using KMail::FolderIface;
 #include <kapplication.h>
 
 #include <qdir.h>
-#include <qfile.h>
 
 KMKernel *KMKernel::mySelf = 0;
 
