@@ -65,6 +65,8 @@ using KMail::FileHtmlWriter;
 using KMail::TeeHtmlWriter;
 #endif
 
+#include <kasciistringtools.h>
+
 #include <mimelib/mimepp.h>
 #include <mimelib/body.h>
 #include <mimelib/utility.h>
@@ -2019,10 +2021,10 @@ void KMReaderWin::openAttachment( int id, const QString & name )
     return;
   }
 
-  const QString contentTypeStr =
-    ( msgPart.typeStr() + '/' + msgPart.subtypeStr() ).lower();
+  QCString contentTypeStr( msgPart.typeStr() + '/' + msgPart.subtypeStr() );
+  KPIM::kAsciiToLower( contentTypeStr.data() );
 
-  if ( contentTypeStr == "text/x-vcard"  ) {
+  if ( qstrcmp( contentTypeStr, "text/x-vcard" ) == 0 ) {
     showVCard( &msgPart );
     return;
   }
@@ -2030,7 +2032,7 @@ void KMReaderWin::openAttachment( int id, const QString & name )
   // determine the MIME type of the attachment
   KMimeType::Ptr mimetype;
   // prefer the value of the Content-Type header
-  mimetype = KMimeType::mimeType( contentTypeStr );
+  mimetype = KMimeType::mimeType( QString::fromLatin1( contentTypeStr ) );
   if ( mimetype->name() == "application/octet-stream" ) {
     // consider the filename if Content-Type is application/octet-stream
     mimetype = KMimeType::findByPath( name, 0, true /* no disk access */ );
