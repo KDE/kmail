@@ -276,6 +276,7 @@ public:
 				int column, int width, int align )
   {
     KMHeaders *headers = static_cast<KMHeaders*>(listView());
+    if (!headers->folder()) return;
     QColorGroup _cg( cg );
     QColor c = _cg.text();
     QColor *color;
