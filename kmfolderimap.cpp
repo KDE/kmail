@@ -75,6 +75,26 @@ KMFolderImap::~KMFolderImap()
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderImap::readConfig()
+{
+  KMFolderImapInherited::readConfig();
+
+  KConfig* config = kapp->config();
+  KConfigGroupSaver saver(config, "Folder-" + idString());
+  mUidValidity = config->readEntry("UidValidity");
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::writeConfig()
+{
+  KMFolderImapInherited::writeConfig();
+
+  KConfig* config = kapp->config();
+  KConfigGroupSaver saver(config, "Folder-" + idString());
+  config->writeEntry("UidValidity", mUidValidity);
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderImap::removeMsg(int idx, bool quiet)
 {
   if (idx < 0)
@@ -370,7 +390,7 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
     int  b = cstr.find("\r\n", a);
-    if (it_parent_folder->account()->uidValidity() !=
+    if (it_parent_folder->uidValidity() !=
       QString(cstr.mid(a + 15, b - a - 15)))
     {
       it_parent_folder->expunge();
@@ -398,7 +418,7 @@ void KMFolderImap::getFolder(KMFolderTreeItem * fti)
 {
   KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
   fti->mImapState = KMFolderTreeItem::imapInProgress;
-  if (!folder->account()->uidValidity().isEmpty()) checkValidity(fti);
+  if (!folder->uidValidity().isEmpty()) checkValidity(fti);
   else reallyGetFolder(fti);
 }
 
@@ -630,7 +650,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
   {
     int p = (*it).cdata.find("\r\nX-uidValidity:");
     KMFolderImap *it_folder = static_cast<KMFolderImap*>((*it).parent->folder);
-    if (p != -1) it_folder->account()->setUidValidity((*it).cdata
+    if (p != -1) it_folder->setUidValidity((*it).cdata
       .mid(p + 17, (*it).cdata.find("\r\n", p+1) - p - 17));
     p = (*it).cdata.find("\r\nX-UidNext:");
     if (p != -1) it_folder->setUidNext((*it).cdata

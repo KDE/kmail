@@ -119,7 +119,6 @@ void KMAcctImap::readConfig(KConfig& config)
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
   mUseSSL = config.readBoolEntry("use-ssl", FALSE);
   mUseTLS = config.readBoolEntry("use-tls", FALSE);
-  mUidValidity = config.readEntry("UidValidity");
 }
 
 
@@ -141,7 +140,6 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("hidden-folders", mHiddenFolders);
   config.writeEntry("use-ssl", mUseSSL);
   config.writeEntry("use-tls", mUseTLS);
-  config.writeEntry("UidValidity", mUidValidity);
 }
 
 

@@ -101,10 +101,6 @@ public:
   bool useTLS() { return mUseTLS; }
   virtual void setUseTLS(bool);
 
-  /** The uidvalidity of the last update */
-  void setUidValidity(const QString &validity) { mUidValidity = validity; }
-  QString uidValidity() { return mUidValidity; }
-
   /**
    * Inherited methods.
    */
@@ -135,7 +131,6 @@ protected:
   bool    mUseSSL;
   bool    mUseTLS;
   bool    mHiddenFolders;
-  QString mUidValidity;
 };
 
 #endif /*KMAcctImap_h*/

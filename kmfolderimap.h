@@ -95,6 +95,10 @@ public:
   void setUidNext(const QString &uidNext) { mUidNext = uidNext; }
   QString uidNext() { return mUidNext; }
 
+  /** The uidvalidity of the last update */
+  void setUidValidity(const QString &validity) { mUidValidity = validity; }
+  QString uidValidity() { return mUidValidity; }
+
   /** The imap account associated with this folder */
   void setAccount(KMAcctImap *acct) { mAccount = acct; }
   KMAcctImap* account() { return mAccount; }
@@ -104,6 +108,12 @@ public:
 
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge() { return mAccount->autoExpunge(); }
+
+  /** Write the config file */
+  virtual void writeConfig();
+
+  /** Read the config file */
+  virtual void readConfig();
 
   /**
    * Initialize the slave configuration
@@ -238,6 +248,8 @@ protected:
   KIO::MetaData mSlaveConfig;
 
   QList<KMImapJob> mJobList;
+
+  QString mUidValidity;
 
 protected slots:
   /**
