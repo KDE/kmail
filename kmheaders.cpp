@@ -180,7 +180,7 @@ public:
       tmp = QString( ctime( &mDate )).stripWhiteSpace();
 	    } else if(col == headers->paintInfo()->sizeCol) {
 		if (headers->paintInfo()->showSize)
-      tmp.sprintf("%d", mMsgBase->msgSize());
+      tmp.sprintf("%ld", mMsgBase->msgSize());
     }
     return tmp;
   }
