@@ -727,7 +727,7 @@ protected:
           *attachRemoveAction, *attachSaveAction, *attachPropertiesAction;
 
   KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
-  KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;
+  KToggleAction *requestMDNAction, *urgentAction, *allFieldsAction, *fromAction;
   KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
   KToggleAction *identityAction, *transportAction, *fccAction;
   KToggleAction *toolbarAction, *statusbarAction;

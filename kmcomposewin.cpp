@@ -96,7 +96,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   // Initialize the plugin selection according to 'active' flag that
   // was set via the global configuration dialog.
   mSelectedCryptPlug = kernel->cryptPlugList() ? kernel->cryptPlugList()->active() : 0;
-  
+
   mIdentity = new IdentityCombo(mMainWidget);
   mFcc = new KMFolderComboBox(mMainWidget);
   mFcc->showOutboxFolder( FALSE );
@@ -242,7 +242,7 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
          "Settings->Configure KMail->Plug-In dialog.</li>"
          "<li><em>or</em> specify traditional OpenPGP settings on the same dialog's "
          "Identity->Advanced tab.</li></ul>");
-  
+
   if(getenv("KMAIL_DEBUG_COMPOSER_CRYPTO") != 0){
     QCString cE = getenv("KMAIL_DEBUG_COMPOSER_CRYPTO");
     mDebugComposerCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
@@ -339,7 +339,7 @@ bool KMComposeWin::event(QEvent *e)
   {
      readColorConfig();
   }
-  return KMTopLevelWidget::event(e);
+  return KMComposeWinInherited::event(e);
 }
 
 
@@ -855,7 +855,7 @@ void KMComposeWin::setupActions(void)
   confirmDeliveryAction =  new KToggleAction (i18n("&Confirm Delivery"), 0,
                                               actionCollection(),
                                               "confirm_delivery");
-  confirmReadAction = new KToggleAction (i18n("Confirm &Read"), 0,
+  requestMDNAction = new KToggleAction (i18n("Confirm &Read"), 0,
                                          actionCollection(), "confirm_read");
   //----- Message-Encoding Submenu
   encodingAction = new KSelectAction( i18n( "Se&t Encoding" ), "charset",
@@ -981,7 +981,7 @@ void KMComposeWin::setupActions(void)
                          SLOT(slotEncryptToggled( bool )));
   connect(signAction,    SIGNAL(toggled(bool)),
                          SLOT(slotSignToggled(    bool )));
-  
+
   if( kernel->cryptPlugList() && kernel->cryptPlugList()->count() ){
     QStringList lst;
     lst << i18n( "inline OpenPGP (built-in)" );
@@ -1161,18 +1161,28 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   // unless the identity is sticky
   if ( !mBtnIdentity->isChecked() ) {
     disconnect(mIdentity,SIGNAL(identityChanged(uint)),
-               this, SLOT(slotIdentityChanged(uint))); 
+               this, SLOT(slotIdentityChanged(uint)));
   }
   mIdentity->setCurrentIdentity( mId );
   if ( !mBtnIdentity->isChecked() ) {
     connect(mIdentity,SIGNAL(identityChanged(uint)),
-            this, SLOT(slotIdentityChanged(uint))); 
+            this, SLOT(slotIdentityChanged(uint)));
   }
 
-  const KMIdentity & ident =
-    kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
+  IdentityManager * im = kernel->identityManager();
+
+  const KMIdentity & ident = im->identityForUoid( mIdentity->currentIdentity() );
 
   mOldSigText = ident.signatureText();
+
+  // check for the presence of a DNT header, indicating that MDN's were
+  // requested
+  QString mdnAddr = newMsg->headerField("Disposition-Notification-To");
+  requestMDNAction->setChecked( !mdnAddr.isEmpty() &&
+				im->thatIsMe( mdnAddr ) );
+
+  // check for presence of a priority header, indicating urgent mail:
+  urgentAction->setChecked( newMsg->isUrgent() );
 
   // get PGP user id for the currently selected identity
   QString pgpUserId = ident.pgpIdentity();
@@ -1379,14 +1389,20 @@ bool KMComposeWin::applyChanges(void)
 
   if (confirmDeliveryAction->isChecked())
     mMsg->setHeaderField("Return-Receipt-To", replyAddr);
+  else
+    mMsg->removeHeaderField("Return-Receipt-To");
 
-  if (confirmReadAction->isChecked())
+  if (requestMDNAction->isChecked())
     mMsg->setHeaderField("Disposition-Notification-To", replyAddr);
+  else
+    mMsg->removeHeaderField("Disposition-Notification-To");
 
-  if (urgentAction->isChecked())
-  {
+  if (urgentAction->isChecked()) {
     mMsg->setHeaderField("X-PRIORITY", "2 (High)");
     mMsg->setHeaderField("Priority", "urgent");
+  } else {
+    mMsg->removeHeaderField("X-PRIORITY");
+    mMsg->removeHeaderField("Priority");
   }
 
   _StringPair *pCH;
@@ -2252,7 +2268,7 @@ kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type fr
                             ourFineBodyPart.contentDescription() );
       msg->setHeaderField( "Content-Disposition",
                             ourFineBodyPart.contentDisposition() );
-                            
+
 kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body adjusted" << endl;
 
       // set body content
@@ -3092,7 +3108,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
         QCString userKeyId = ident.pgpIdentity();
         Kpgp::Module *pgp = Kpgp::Module::getKpgp();
         Kpgp::KeyIDList encryptionKeyIds;
-    
+
         // temporarily set encrypt_to_self to the value specified in the
         // plugin configuration. this value is used implicitely by the
         // function which determines the encryption keys.
@@ -3120,7 +3136,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
           }
         }
         else {
-          bEncrypt = false; 
+          bEncrypt = false;
         }
       }
       else {
@@ -3131,7 +3147,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
              ( bEncrypt && it != allRecipients.end() );
              ++it ) {
           QCString certFingerprint = getEncryptionCertificate( *it );
-        
+
           bEncrypt = !certFingerprint.isEmpty();
 
           if( bEncrypt ) {
