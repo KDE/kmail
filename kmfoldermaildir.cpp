@@ -886,9 +886,22 @@ bool KMFolderMaildir::removeFile(const QString& filename)
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::removeContents()
 {
-    if (KIO::NetAccess::del(KURL::fromPathOrURL(location()), 0))
-        return 0;
-    return 1;
+    if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()+ "/new/"), 0))
+        return 1;
+    if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()+ "/cur/"), 0))
+        return 1;
+    if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()+ "/tmp/"), 0))
+        return 1;
+
+    /* The subdirs are removed now. Check if there is anything else in the dir
+     * and only if not delete the dir itself. The user could have data stored 
+     * that would otherwise be deleted. */
+    QDir *dir = new QDir(location());
+    if ( dir->count() == 2 ) { // only . and ..
+        if (!KIO::NetAccess::del(KURL::fromPathOrURL(location()), 0))
+            return 1;
+    }
+    return 0;
 }
 
 static QRegExp *suffix_regex = 0;
