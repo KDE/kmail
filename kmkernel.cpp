@@ -1387,6 +1387,22 @@ bool KMKernel::folderIsTrash(KMFolder * folder)
   return false;
 }
 
+bool KMKernel::folderIsSentMailFolder( const KMFolder * folder )
+{
+  assert( folder );
+  if ( folder == the_sentFolder )
+    return true;
+
+  QString idString = folder->idString();
+  if ( idString.isEmpty() ) return false;
+
+  // search the identities if the folder matches the sent-folder
+  const IdentityManager * im = identityManager();
+  for( IdentityManager::ConstIterator it = im->begin(); it != im->end(); ++it )
+    if ( (*it).fcc() == idString ) return true;
+  return false;
+}
+
 IdentityManager * KMKernel::identityManager() {
   if ( !mIdentityManager ) {
     kdDebug(5006) << "instantating IdentityManager" << endl;

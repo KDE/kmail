@@ -137,6 +137,10 @@ public:
 			     bool overwrite = FALSE);
   bool folderIsDraftOrOutbox(const KMFolder *);
   bool folderIsTrash(KMFolder *);
+  /**
+   * Returns true if the folder is one of the sent-mail folders.
+   */
+  bool folderIsSentMailFolder( const KMFolder * );
 
   KInstance *xmlGuiInstance() { return mXmlGuiInstance; }
   void setXmlGuiInstance( KInstance *instance ) { mXmlGuiInstance = instance; }
