@@ -1,3 +1,7 @@
+Around the 3.4 release
+TA: remove the disabled expiry tab code from kmfolderdia.cpp once it is clear
+    that it won't be used anymore
+
 Before the first 3.2 Beta
 MM: Write config upgrade script for
     - AttachmentStyle -> AttachmentStrategy change

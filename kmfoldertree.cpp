@@ -17,6 +17,7 @@
 #include "globalsettings.h"
 #include "kmcommands.h"
 #include "foldershortcutdialog.h"
+#include "expirypropertiesdialog.h"
 #include "acljobs.h"
 
 #include <maillistdrag.h>
@@ -236,6 +237,19 @@ bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
     return true;
   }
 }
+
+//-----------------------------------------------------------------------------
+void KMFolderTreeItem::slotShowExpiryProperties()
+{
+  if ( !mFolder )
+    return;
+
+  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
+  KMail::ExpiryPropertiesDialog *dlg = 
+    new KMail::ExpiryPropertiesDialog( tree, mFolder );
+  dlg->show();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMFolderTreeItem::properties()
@@ -954,7 +968,9 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
       mMainWidget->action("compact")->plug(folderMenu);
 
-      mMainWidget->action("expire")->plug(folderMenu);
+      //mMainWidget->action("expire")->plug(folderMenu);
+      folderMenu->insertItem( i18n("Expire..."), fti,
+                              SLOT( slotShowExpiryProperties() ) );
 
       folderMenu->insertSeparator();
 

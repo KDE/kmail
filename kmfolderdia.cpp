@@ -118,9 +118,11 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 
   if ( !mFolder || !mFolder->noContent() )
   {
+    /* This is in a separate dialog now
     box = addVBoxPage( i18n("Old Message Expiry") );
     tab = new FolderDiaExpiryTab( this, box );
     addTab( tab );
+    */
 
     box = addVBoxPage( i18n("Mailing List") );
     tab = new FolderDiaMailingListTab( this, box );

@@ -84,6 +84,7 @@ public slots:
   void properties();
   void assignShortcut();
   void slotRepaint();
+  void slotShowExpiryProperties();
   void slotNameChanged() { emit nameChanged( this ); }
 
 protected:
