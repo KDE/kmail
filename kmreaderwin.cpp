@@ -1200,7 +1200,9 @@ kdDebug(5006) << "* model *" << endl;
       }
 
       if( !bDone && reader &&
-          ( reader->mAttachmentStyle != HideAttmnt || showOneMimePart) ) {
+          ( reader->mAttachmentStyle != HideAttmnt || 
+            ( curNode && !curNode->isAttachment() ) || 
+            showOneMimePart ) ) {
         bool asIcon = true;
         if (showOneMimePart)
         {
@@ -1219,7 +1221,8 @@ kdDebug(5006) << "* model *" << endl;
             case SmartAttmnt:
               asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
             case HideAttmnt: {
-              // NOOP
+              // the node is the message! show it!
+              asIcon = false;
             }
           }
         }
