@@ -153,9 +153,12 @@ namespace KMail {
     QStringList headerParts;
 
     if ( strategy->showHeader( "from" ) ) {
-      QString fromPart = KMMessage::emailAddrAsAnchor( message->from(), true );
+      QString fromStr = message->from();
+      if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
+        fromStr = message->fromStrip(); // let's use that
+      QString fromPart = KMMessage::emailAddrAsAnchor( fromStr, true );
       if ( !vCardName.isEmpty() )
-	fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
+        fromPart += "&nbsp;&nbsp;<a href=\"" + vCardName + "\">" + i18n("[vCard]") + "</a>";
       headerParts << fromPart;
     }
 
@@ -269,8 +272,11 @@ namespace KMail {
     }
  
     if ( strategy->showHeader( "from" ) ) {
-      headerStr.append(i18n("From: ") +
-		       KMMessage::emailAddrAsAnchor(message->from(),FALSE));
+      QString fromStr = message->from();
+      if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
+        fromStr = message->fromStrip(); // let's use that
+      headerStr.append(i18n("From: ") + 
+          KMMessage::emailAddrAsAnchor( fromStr, false) );
       if ( !vCardName.isEmpty() )
         headerStr.append("&nbsp;&nbsp;<a href=\"" + vCardName +
               "\">" + i18n("[vCard]") + "</a>" );
@@ -470,11 +476,14 @@ namespace KMail {
     // from line
     // the mailto: URLs can contain %3 etc., therefore usage of multiple
     // QString::arg is not possible
-    if ( strategy->showHeader( "from" ) )
+    if ( strategy->showHeader( "from" ) ) {
+      QString fromStr = message->from();
+      if ( fromStr.isEmpty() ) // no valid email in from, maybe just a name
+        fromStr = message->fromStrip(); // let's use that
       headerStr += QString("<tr><th>%1</th>\n"
                            "<td>")
                            .arg(i18n("From: "))
-                 + KMMessage::emailAddrAsAnchor(message->from(),FALSE)
+                 + KMMessage::emailAddrAsAnchor( fromStr, false )
                  + ( !vCardName.isEmpty() ? "&nbsp;&nbsp;<a href=\"" + vCardName + "\">"
                                 + i18n("[vCard]") + "</a>"
                               : QString("") )
@@ -487,6 +496,7 @@ namespace KMail {
                                 + strToHtml(message->headerField("Organization"))
                                 + ")")
                  + "</td></tr>\n";
+    }
     // to line
     if ( strategy->showHeader( "to" ) )
       headerStr.append(QString("<tr><th>%1</th>\n"
