@@ -90,10 +90,6 @@ public:
   /** Emit progress info - calculates a percent value based on the amount of bytes sent */
   void emitProgressInfo( int currentFileProgress );
 
-signals:
-  /** Emitted regularly to inform the user of what is going on */
-  void statusMsg(const QString&);
-
 protected slots:
   /** Start sending */
   virtual void slotPrecommandFinished(bool);

@@ -253,9 +253,6 @@ signals:
       in unencrypted state in it's folder. */
   void replaceMsgByUnencryptedVersion();
 
-  /** Emitted to show a text on the status line. */
-  void statusMsg(const QString& text);
-
   /** The user presses the right mouse button. 'url' may be 0. */
   void popupMenu(KMMessage &msg, const KURL &url, const QPoint& mousePos);
 

@@ -9,6 +9,7 @@
 #include "kmsender.h"
 #include "progressdialog.h"
 #include "statusbarprogresswidget.h"
+#include "broadcaststatus.h"
 #include "kmglobal.h"
 #include "kmacctmgr.h"
 #include <kapplication.h>
@@ -46,12 +47,13 @@ KMMainWin::KMMainWin(QWidget *)
 
   conserveMemory();
   applyMainWindowSettings(KMKernel::config(), "Main Window");
-  connect(kmkernel->msgSender(), SIGNAL(statusMsg(const QString&)),
-	  this, SLOT(statusMsg(const QString&)));
+
+  connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
+           this, SLOT( displayStatusMsg(const QString&) ) );
+
   connect(kmkernel, SIGNAL(configChanged()),
     this, SLOT(slotConfigChanged()));
-  connect(mKMMainWidget->messageView(), SIGNAL(statusMsg(const QString&)),
-	  this, SLOT(htmlStatusMsg(const QString&)));
+
   connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
 	  SLOT(setCaption(const QString&)) );
   connect(mKMMainWidget, SIGNAL(modifiedToolBarConfig()),
@@ -88,18 +90,6 @@ KMMainWin::~KMMainWin()
       kmkernel->acctMgr()->cancelMailCheck();
     }
   }
-}
-
-void KMMainWin::statusMsg(const QString& aText)
-{
-  mLastStatusMsg = aText;
-  displayStatusMsg(aText);
-}
-
-void KMMainWin::htmlStatusMsg(const QString& aText)
-{
-  if (aText.isEmpty()) displayStatusMsg(mLastStatusMsg);
-  else displayStatusMsg(aText);
 }
 
 void KMMainWin::displayStatusMsg(const QString& aText)
@@ -177,7 +167,7 @@ void KMMainWin::slotConfigChanged()
 }
 
 //-----------------------------------------------------------------------------
-bool KMMainWin::queryClose() 
+bool KMMainWin::queryClose()
 {
   if ( kapp->sessionSaving() )
     writeConfig();

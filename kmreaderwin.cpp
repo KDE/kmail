@@ -54,6 +54,8 @@ using KMail::ISubject;
 using KMail::URLHandlerManager;
 #include "interfaces/observable.h"
 
+#include "broadcaststatus.h"
+
 #include <kmime_mdn.h>
 using namespace KMime;
 #ifdef KMAIL_READER_HTML_DEBUG
@@ -1476,7 +1478,7 @@ bool foundSMIMEData( const QString aUrl,
 void KMReaderWin::slotUrlOn(const QString &aUrl)
 {
   if ( aUrl.stripWhiteSpace().isEmpty() ) {
-    emit statusMsg( QString::null );
+    KPIM::BroadcastStatus::instance()->reset();
     return;
   }
 
@@ -1486,7 +1488,7 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
   const QString msg = URLHandlerManager::instance()->statusBarMessage( url, this );
 
   kdWarning( msg.isEmpty(), 5006 ) << "KMReaderWin::slotUrlOn(): Unhandled URL hover!" << endl;
-  emit statusMsg( msg );
+  KPIM::BroadcastStatus::instance()->setTransientStatusMsg( msg );
 }
 
 

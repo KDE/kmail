@@ -176,7 +176,6 @@ public slots:
   void startUpdateMessageActionsTimer();
   /** Update message actions */
   void updateMessageActions();
-  void statusMsg(const QString&);
 
   /** Launch subscription-dialog */
   void slotSubscriptionDialog();

@@ -154,8 +154,6 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
-  connect( BroadcastStatus::instance(), SIGNAL(statusMsg( const QString& )),
-      this, SLOT(statusMsg( const QString& )));
 
   if ( kmkernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
@@ -526,8 +524,6 @@ void KMMainWidget::createWidgets(void)
         mMsgView, SLOT(clearCache()));
     connect(mMsgView, SIGNAL(noDrag()),
         mHeaders, SLOT(slotNoDrag()));
-    connect(mMsgView, SIGNAL(statusMsg(const QString&)),
-        this, SLOT(statusMsg(const QString&)));
     accel->connectItem(accel->insertItem(Key_Up),
         mMsgView, SLOT(slotScrollUp()));
     accel->connectItem(accel->insertItem(Key_Down),
@@ -963,7 +959,8 @@ void KMMainWidget::slotEmptyFolder()
 
   if (mMsgView) mMsgView->clearCache();
 
-  if ( !isTrash ) statusMsg(i18n("Moved all messages to the trash"));
+  if ( !isTrash )
+    BroadcastStatus::instance()->setStatusMsg(i18n("Moved all messages to the trash"));
 
   updateMessageActions();
 }
@@ -3051,37 +3048,6 @@ void KMMainWidget::updateMessageActions()
     mApplyFiltersAction->setEnabled(count);
     mApplyFilterActionsMenu->setEnabled(count && (mApplyFilterActionsMenu->popupMenu()->count()>0));
 }
-
-
-//-----------------------------------------------------------------------------
-void KMMainWidget::statusMsg(const QString& message)
-{
-  KMMainWin *mainKMWin = dynamic_cast<KMMainWin*>(topLevelWidget());
-  if (mainKMWin)
-    return mainKMWin->statusMsg( message );
-
-  KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
-  if ( mainWin && mainWin->statusBar() ) {
-    // FIXME FIXME FIXME FIXME FIXME
-    // The following makes the status bar (and thus the window) grow so that
-    // the full message fits. What an insane behavior! In KMail we know
-    // the size of the text field in the status bar and can therefore
-    // use KStringHandler::rPixelSqueeze() to make the text fit into the
-    // status bar (cf. KMMainWin::displayStatusMsg()). But in Kontact
-    // we don't know the size because this stupid KStatusBar is not able
-    // to return the widget corresponding to id = 1.
-    // I guess we have to give the status message to Kontact and let Kontact
-    // take care of displaying the appropriately squeezed message.
-    //mainWin->statusBar()->changeItem( message, 1 );
-
-    // the following makes the status bar wobble in Kontact (try it for
-    // yourself if you don't understand what I mean). But wobbling is less
-    // annoying than an infinitely growing window.
-    mainWin->statusBar()->message( message );
-    // FIXME FIXME FIXME FIXME FIXME
-  }
-}
-
 
 // This needs to be updated more often, so it is in its method.
 void KMMainWidget::updateMarkAsReadAction()

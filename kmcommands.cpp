@@ -87,6 +87,8 @@ using KMail::SecondaryWindow;
 using KPIM::ProgressManager;
 using KPIM::ProgressItem;
 
+#include "broadcaststatus.h"
+
 #include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
@@ -513,16 +515,14 @@ KMCommand::Result KMUrlCopyCommand::execute()
     clip->setText( address );
     clip->setSelectionMode( false );
     clip->setText( address );
-    if (mMainWidget)
-      mMainWidget->statusMsg( i18n( "Address copied to clipboard." ));
+    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "Address copied to clipboard." ));
   } else {
     // put the url into the mouse selection and the clipboard
     clip->setSelectionMode( true );
     clip->setText( mUrl.url() );
     clip->setSelectionMode( false );
     clip->setText( mUrl.url() );
-    if ( mMainWidget )
-      mMainWidget->statusMsg( i18n( "URL copied to clipboard." ));
+    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n( "URL copied to clipboard." ));
   }
 
   return OK;
@@ -1938,8 +1938,7 @@ KMCommand::Result KMUrlClickedCommand::execute()
            (mUrl.protocol() == "help") || (mUrl.protocol() == "vnc") ||
            (mUrl.protocol() == "smb"))
   {
-    if (mMainWidget)
-      mMainWidget->statusMsg( i18n("Opening URL..."));
+    KPIM::BroadcastStatus::instance()->setStatusMsg( i18n("Opening URL..."));
     KMimeType::Ptr mime = KMimeType::findByURL( mUrl );
     if (mime->name() == "application/x-desktop" ||
         mime->name() == "application/x-executable" ||
