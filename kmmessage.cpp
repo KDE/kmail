@@ -228,19 +228,24 @@ const QString KMMessage::headerAsString(void)
 void KMMessage::fromString(const QString aStr, bool aSetStatus)
 {
   int i, j, len;
+  const char* strPos;
+  char* resultPos;
+  char ch;
 
   if (mMsg) delete mMsg;
   mMsg = new DwMessage;
 
   // copy string and throw out obsolete control characters
   len = aStr.length();
-  result.resize(len +1);
-  for (i=0,j=0; i<len; i++)
+  result.resize(len+1);
+  strPos = aStr.data();
+  resultPos = (char*)result.data();
+  if (strPos) for (; (ch=*strPos)!='\0'; strPos++)
   {
-    if (aStr[i]>=' ' || aStr[i]=='\t' || aStr[i]=='\n' || aStr[i]<='\0')
-      result[j++] = aStr[i];
+    if (ch>=' ' || ch=='\t' || ch=='\n' || ch<='\0')
+      *resultPos++ = ch;
   }
-  result[j++] = '\0'; // terminate zero for casting
+  *resultPos = '\0'; // terminate zero for casting
   mMsg->FromString((const char*)result);
   mMsg->Parse();
 

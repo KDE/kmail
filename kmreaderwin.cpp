@@ -455,6 +455,8 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   mViewer->write(htmlStr);
 }
 
+
+//-----------------------------------------------------------------------------
 QString KMReaderWin::quotedHTML(char * pos)
 {
   QString htmlStr, line;
@@ -511,7 +513,7 @@ QString KMReaderWin::quotedHTML(char * pos)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 {
-  QString iconName, href(255), label, comment;
+  QString iconName, href(255), label, comment, tmpStr;
 
   if(aMsgPart == NULL) {
     debug("writePartIcon: aMsgPart == NULL\n");
@@ -557,7 +559,8 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 	fname.remove(c, 1);
     }
 
-    if (!kStringToFile(aMsgPart->bodyDecoded(), fname, false, false, false))
+    tmpStr = aMsgPart->bodyDecoded();
+    if (!kStringToFile(tmpStr, fname, false, false, false))
       ok = false;
   }
   if (ok)
@@ -585,43 +588,56 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 				     bool aPreserveBlanks) const
 {
-  QString htmlStr, qpstr, iStr;
+  QString qpstr, iStr, result;
   char ch, *pos, str[256];
   int i, i1, x, len;
+  int maxLen = 30000;
+  char htmlStr[maxLen+256];
+  char* htmlPos;
 
   if (aDecodeQP) qpstr = KMMsgBase::decodeRFC1522String(aStr);
   else qpstr = aStr;
 
+#define HTML_ADD(str,len) strcpy(htmlPos,str),htmlPos+=len
+
+  htmlPos = htmlStr;
   for (pos=qpstr.data(),x=0; *pos; pos++,x++)
   {
+    if ((int)(htmlPos-htmlStr) >= maxLen)
+    {
+      *htmlPos = '\0';
+      result += htmlStr;
+      htmlPos = htmlStr;
+    }
+
     ch = *pos;
     if (aPreserveBlanks)
     {
       if (ch==' ' && pos[1]==' ')
       {
-	htmlStr += " &nbsp;";
+	HTML_ADD(" &nbsp;", 7);
 	for (pos++, x++; pos[1]==' '; pos++, x++)
-	  htmlStr += "&nbsp;";
+	  HTML_ADD(" &nbsp;", 7);
 	continue;
       }
       else if (ch=='\t')
       {
 	do
 	{
-	  htmlStr += "&nbsp;";
+	  HTML_ADD("&nbsp;", 6);
 	  x++;
 	}
 	while((x&7) != 0);
       }
       // else aPreserveBlanks = FALSE;
     }
-    if (ch=='<') htmlStr += "&lt;";
-    else if (ch=='>') htmlStr += "&gt;";
-    else if (ch=='\n') htmlStr += "<BR>";
-    else if (ch=='&') htmlStr += "&amp;";
-    else if ((ch=='h' && strncmp(pos,"http:",5)==0) ||
-	     (ch=='f' && strncmp(pos,"ftp:",4)==0) ||
-	     (ch=='m' && strncmp(pos,"mailto:",7)==0))
+    if (ch=='<') HTML_ADD("&lt;", 4);
+    else if (ch=='>') HTML_ADD("&gt;", 4);
+    else if (ch=='\n') HTML_ADD("<BR>", 4);
+    else if (ch=='&') HTML_ADD("&amp;", 5);
+    else if ((ch=='h' && strncmp(pos,"http:", 5)==0) ||
+	     (ch=='f' && strncmp(pos,"ftp:", 4)==0) ||
+	     (ch=='m' && strncmp(pos,"mailto:", 7)==0))
     {
       for (i=0; *pos && *pos>' ' && i<255; i++, pos++)
 	str[i] = *pos;
@@ -632,11 +648,11 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 	pos--;
       }
       str[i] = '\0';
-      htmlStr += "<A HREF=\"";
-      htmlStr += str;
-      htmlStr += "\">";
-      htmlStr += str;
-      htmlStr += "</A>";
+      HTML_ADD("<A HREF=\"", 9);
+      HTML_ADD(str, strlen(str));
+      HTML_ADD("\">", 2);
+      HTML_ADD(str, strlen(str));
+      HTML_ADD("</A>", 4);
     }
     else if (ch=='@')
     {
@@ -666,17 +682,19 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
       }
       iStr.truncate(len);
 
-      htmlStr.truncate(htmlStr.length() - i1 + 1);
-      if (iStr.length()>3) 
-	htmlStr += "<A HREF=\"mailto:" + iStr + "\">" + iStr + "</A>";
-      else htmlStr += iStr;
+      htmlPos -= (i1 - 1);
+      if (iStr.length()>3)
+	iStr = "<A HREF=\"mailto:" + iStr + "\">" + iStr + "</A>";
+      HTML_ADD(iStr.data(), iStr.length());
       iStr = "";
     }
 
-    else htmlStr += ch;
+    else *htmlPos++ = ch;
   }
 
-  return htmlStr;
+  *htmlPos = '\0';
+  result += htmlStr;
+  return result;
 }
 
 
@@ -840,8 +858,8 @@ void KMReaderWin::slotAtmOpen()
 {
   QString str, pname, cmd, fileName;
   KMMessagePart msgPart;
-  char* tmpName;
-  int old_umask;
+  // char* tmpName;
+  // int old_umask;
   int c;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);

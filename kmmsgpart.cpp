@@ -136,7 +136,10 @@ const QString KMMessagePart::bodyDecoded(void) const
   case DwMime::kCte7bit:
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
-    result = mBody;
+    len = mBody.length();
+    result.resize(len+1);
+    memcpy((void*)result.data(), (void*)mBody.data(), len);
+    result[len] = '\0';
     break;
   }
 

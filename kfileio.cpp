@@ -119,7 +119,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
   {
     if (aAskIfExists)
     {
-      QString str(256);
+      QString str;
       str.sprintf(i18n(
 		  "File %s exists.\nDo you want to replace it ?"),
 		  aFileName);
@@ -166,7 +166,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
   }
 
   len = aBuffer.size() - 1;
-  debug("kStringToFile: writing %d bytes", len);
+  debug("kStringToFile: writing %d bytes", len, aBuffer.length());
   writeLen = file.writeBlock(aBuffer.data(), len);
 
   if (writeLen < 0) 
@@ -176,7 +176,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
   }
   else if (writeLen < len)
   {
-    QString msg(256);
+    QString msg;
     msg.sprintf(i18n("Could only write %d bytes of %d."),
 		writeLen, len);
     msgDialog(msg);

@@ -313,7 +313,6 @@ void KMSettings::createTabAppearance(QWidget* parent)
   QGroupBox* grp;
   KConfig* config = app->getConfig();
   QPushButton* btn;
-  QLabel* lbl;
   QFont fnt;
 
   //----- group: fonts
