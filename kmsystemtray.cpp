@@ -63,6 +63,7 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name) : KSystemTray(pare
   setPixmap(mDefaultIcon);
   mParentVisible = true;
   mStep = 0;
+  mMode = OnNewMail;
 
   /** Initiate connections between folders and this object */
   foldersChanged();
