@@ -1,5 +1,4 @@
 // kmheaders.cpp
-
 #include <qstrlist.h>
 #include <qpalette.h>
 #include <qcolor.h>
@@ -697,6 +696,8 @@ void KMHeaders::applyFiltersOnMsg(int /*msgId*/)
   int topX = contentsX();
   int topY = contentsY();
 
+  if (msgList->isEmpty())
+    return;
   QListViewItem *qlvi = currentItem();
   QListViewItem *next = qlvi;
   while (next && next->isSelected())
@@ -808,12 +809,10 @@ void KMHeaders::saveMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::resendMsg (int msgId)
+void KMHeaders::resendMsg ()
 {
   KMComposeWin *win;
-  KMMessage *msg, *newMsg;
-
-  msg = getMsg(msgId);
+  KMMessage *newMsg, *msg = currentMsg();
   if (!msg) return;
 
   kernel->kbp()->busy();
@@ -831,16 +830,15 @@ void KMHeaders::resendMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::bounceMsg (int msgId)
+void KMHeaders::bounceMsg ()
 {
-  KMMessage *msg, *newMsg;
   KMMessage bounceMsg;
   QString str, fromStr;
   int i;
   const char* fromFields[] = { "Errors-To", "Return-Path", "Resent-From",
 			       "Resent-Sender", "From", "Sender", 0 };
+  KMMessage *newMsg, *msg = currentMsg();
 
-  msg = getMsg(msgId);
   if (!msg) return;
 
   // Find email address of sender
@@ -903,12 +901,11 @@ void KMHeaders::bounceMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::forwardMsg (int msgId)
+void KMHeaders::forwardMsg ()
 {
   KMComposeWin *win;
-  KMMessage *msg;
+  KMMessage *msg = currentMsg();
 
-  msg = getMsg(msgId);
   if (!msg) return;
 
   kernel->kbp()->busy();
@@ -920,12 +917,11 @@ void KMHeaders::forwardMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyToMsg (int msgId)
+void KMHeaders::replyToMsg ()
 {
   KMComposeWin *win;
-  KMMessage *msg;
+  KMMessage *msg = currentMsg();
 
-  msg = getMsg(msgId);
   if (!msg) return;
 
   kernel->kbp()->busy();
@@ -937,12 +933,11 @@ void KMHeaders::replyToMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::replyAllToMsg (int msgId)
+void KMHeaders::replyAllToMsg ()
 {
   KMComposeWin *win;
-  KMMessage *msg;
+  KMMessage *msg = currentMsg();
 
-  msg = getMsg(msgId);
   if (!msg) return;
 
   kernel->kbp()->busy();
@@ -1124,7 +1119,7 @@ int KMHeaders::firstSelectedMsg() const
 {
   int selectedMsg = -1;
   QListViewItem *item;
-  for (item = firstChild(); item; item = item->nextSibling())
+  for (item = firstChild(); item; item = item->itemBelow())
     if (item->isSelected()) {
       selectedMsg = (static_cast<KMHeaderItem*>(item))->msgId();
       break;
@@ -1154,10 +1149,10 @@ KMMessage* KMHeaders::getMsg (int msgId)
   if (msgId == -1)
   {
     getMsgMulti = TRUE;
-    getMsgIndex = currentItemIndex();
-    getMsgItem = static_cast<KMHeaderItem*>(currentItem());
+    getMsgIndex = -1;
+    getMsgItem = 0;
     QListViewItem *qitem;
-    for (qitem = firstChild(); qitem; qitem = qitem->nextSibling())
+    for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
       if (qitem->isSelected()) {
 	KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
 	getMsgIndex = item->msgId();
@@ -1172,7 +1167,7 @@ KMMessage* KMHeaders::getMsg (int msgId)
 
   if (getMsgMulti)
   {
-    QListViewItem *qitem = getMsgItem->nextSibling();
+    QListViewItem *qitem = getMsgItem->itemBelow();
     for (; qitem; qitem = qitem->nextSibling())
       if (qitem->isSelected()) {
 	KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
@@ -1680,7 +1675,7 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 void KMHeaders::clearSelectionExcept( QListViewItem *exception )
 {
   QListViewItem *item;
-  for (item = firstChild(); item; item = item->nextSibling())
+  for (item = firstChild(); item; item = item->itemBelow())
     if (item->isSelected() && (item != exception))
       setSelected( item, FALSE );
 }
@@ -1745,6 +1740,16 @@ void KMHeaders::slotRMB()
 
   menu->exec (QCursor::pos(), 0);
   delete menu;
+}
+
+//-----------------------------------------------------------------------------
+KMMessage* KMHeaders::currentMsg()
+{
+  KMHeaderItem *hi = currentHeaderItem();
+  if (!hi)
+    return 0;
+  else
+    return mFolder->getMsg(hi->msgId());
 }
 
 //-----------------------------------------------------------------------------

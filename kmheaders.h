@@ -77,14 +77,14 @@ public:
   virtual void setMsgStatus(KMMsgStatus status, int msgId=-1);
   virtual void setMsgRead(int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
-  virtual void undo();
-  virtual void forwardMsg(int msgId=-1);
-  virtual void bounceMsg(int msgId=-1);
-  virtual void replyToMsg(int msgId=-1);
-  virtual void replyAllToMsg(int msgId=-1);
-  virtual void resendMsg(int msgId=-1);
-  virtual void saveMsg(int msgId=-1);
   virtual void applyFiltersOnMsg(int msgId=-1);
+  virtual void saveMsg(int msgId = -1);
+  virtual void undo();
+  virtual void forwardMsg();
+  virtual void bounceMsg();
+  virtual void replyToMsg();
+  virtual void replyAllToMsg();
+  virtual void resendMsg();
 
   /** If destination==NULL the messages are deleted, otherwise
     they are moved to this folder. */
@@ -118,6 +118,8 @@ public:
   // Scroll to show new mail
   void showNewMail();
 
+  // Return the current message
+  virtual KMMessage* currentMsg();
   // Return the current list view item
   virtual KMHeaderItem* currentHeaderItem();
   // Return the index of the message corresponding to the current item
