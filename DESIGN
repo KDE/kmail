@@ -28,6 +28,51 @@ FOLDER
 ACCOUNT
 =======
 
+IDENTITY
+========
+
+Files: identity*, kmidentity.{h,cpp}, configuredialog.cpp,
+       signatureconfigurator.{h,cpp}
+
+Contact Marc Mutz <mutz@kde.org> on questions...
+
+Identities consists of various fields represented by
+QStrings. Currently, those fileds are hardcoded, but free free to
+implement a KMIdentity as a map from strings to QVariants or somesuch.
+
+One part of identities are signatures. They can represent four modes
+(Signature::Type) of operation: Disabled, Text from file or command
+and inline text, which correspond to the combo box in the
+identitydialog.
+
+KMIdentities are designed to be used through the IdenityManager:
+const KMIdentity & ident =
+	 kernel->identityManager()->identityForUoidOrDefault(...)
+Make sure you assign to a _const_ reference, since the identityForFoo
+methods are overloaded with non-const methods that access a different
+list of identities in the manager that is used while configuring. That
+is known source of errors when you use identityForFoo() as a parameter
+to a method taking const KMIdentity &.
+
+Thus, in the ConfigureDialog, you will see non-const KMIdentity
+references being used, while everywhere else (KMMessage,
+IdentityCombo) const references are used.
+
+The IdentityCombo is what you see in the composer. It's a
+self-updating combo box of KMIdentity's. Use this if you want the user
+to choose an identity, e.g. in the folder dialog.
+
+Ihe IdentityListView is what you see in the config dialog's identity
+management page. It's not meant to be used elsewhere, but is DnD
+enabled (well, at the time of this writing, only drag-enabled). This
+is going to be used to dnd identities around between KNode and KMail,
+e.g.
+
+The SignatureConfigurator is the third tab in the identity
+dialog. It's separate since it is used by the identity manager to
+request a new file/command if the current value somehow fails.
+
+
 
 FILTER
 =======
