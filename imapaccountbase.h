@@ -207,6 +207,11 @@ namespace KMail {
     void processNewMailSingleFolder(KMFolder* folder);
 
     /**
+     * Return true if we are processing a mailcheck for a single folder
+     */
+    bool checkingSingleFolder() { return mCheckingSingleFolder; }
+
+    /**
      * Called when we're completely done checking mail for this account
      * When @p setStatusMsg is true a status msg is shown
      */

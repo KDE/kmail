@@ -781,8 +781,10 @@ void KMFolderImap::checkValidity()
   }
   // otherwise we already are inside a mailcheck
   if ( !mMailCheckProgressItem ) {
+    ProgressItem* parent = ( account()->checkingSingleFolder() ? 0 :
+        account()->mailCheckProgressItem() );
     mMailCheckProgressItem = ProgressManager::createProgressItem(
-              account()->mailCheckProgressItem(),
+              parent,
               "MailCheck" + folder()->prettyURL(),
               folder()->prettyURL(),
               i18n("checking"),
@@ -1033,10 +1035,9 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   if ( mMailCheckProgressItem )
   {
     // next step for the progressitem
-//    mMailCheckProgressItem->setTotalItems( jd.total );
-//    mMailCheckProgressItem->setCompletedItems( 0 );
-//    mMailCheckProgressItem->setProgress( 50 );
-//    mMailCheckProgressItem->updateProgress();
+    mMailCheckProgressItem->setCompletedItems( 0 );
+    mMailCheckProgressItem->setTotalItems( jd.total );
+    mMailCheckProgressItem->setProgress( 0 );
     mMailCheckProgressItem->setStatus( i18n("Retrieving messages") );
   }
 
@@ -1187,7 +1188,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
         int delta = exists - count();
         if ( mMailCheckProgressItem ) {
           mMailCheckProgressItem->setTotalItems( delta );
-          mMailCheckProgressItem->setStatus( i18n("Retrieving message list") );
         }
       }
     }
