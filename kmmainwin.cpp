@@ -120,8 +120,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   connect(kernel->msgSender(), SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
-  connect(kernel->acctMgr(), SIGNAL( checkedMail(bool)),
-          SLOT( slotMailChecked(bool)));
+  connect(kernel->acctMgr(), SIGNAL( checkedMail(bool, bool)),
+          SLOT( slotMailChecked(bool, bool)));
 
   setCaption( i18n("KDE Mail Client") );
 
@@ -683,8 +683,9 @@ void KMMainWin::slotCheckOneAccount(int item)
   kernel->setCheckingMail(false);
 }
 
-void KMMainWin::slotMailChecked(bool newMail) {
-  if(mSendOnCheck)
+void KMMainWin::slotMailChecked(bool newMail, bool sendOnCheck)
+{
+  if(mSendOnCheck && sendOnCheck)
     slotSendQueued();
 
   if (!newMail)

@@ -68,7 +68,7 @@ public slots:
 
 signals:
   /** emitted if new mail has been collected */
-  void checkedMail(bool);
+  void checkedMail(bool, bool);
 
 private:
   KMAcctList   mAcctList;

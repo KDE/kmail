@@ -118,7 +118,7 @@ protected:
 
 protected slots:
   void slotCheckOneAccount(int);
-  void slotMailChecked(bool newMail);
+  void slotMailChecked(bool newMail, bool sendOnCheck);
   void getAccountMenu();
   void slotClose();
   void slotHelp();
