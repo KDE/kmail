@@ -144,7 +144,7 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     // allowed to have a ZERO number of mailboxes in the "mailbox-list".
     aMsg->setTo("Undisclosed.Recipients: ;");
   }
-  
+
 
   QString msgId = KMMessage::generateMessageId( aMsg->sender() );
   //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
@@ -364,6 +364,31 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
 
   // See if there is another queued message
   mCurrentMsg = kmkernel->outboxFolder()->getMsg(mFailedMessages);
+  if ( mCurrentMsg && !mCurrentMsg->transferInProgress() &&
+       mCurrentMsg->sender().isEmpty() ) {
+    // if we do not have a sender address then use the email address of the
+    // message's identity or of the default identity unless those two are also
+    // empty
+    const KPIM::Identity & id = kmkernel->identityManager()
+      ->identityForUoidOrDefault( mCurrentMsg->headerField( "X-KMail-Identity" ).stripWhiteSpace().toUInt() );
+    if ( !id.emailAddr().isEmpty() ) {
+      mCurrentMsg->setFrom( id.fullEmailAddr() );
+    }
+    else if ( !kmkernel->identityManager()->defaultIdentity().emailAddr().isEmpty() ) {
+      mCurrentMsg->setFrom( kmkernel->identityManager()->defaultIdentity().fullEmailAddr() );
+    }
+    else {
+      KMessageBox::sorry( 0, i18n( "It's not possible to send messages "
+                                   "without specifying a sender address.\n"
+                                   "Please set the email address of "
+                                   "identity '%1' in the Identities "
+                                   "section of the configuration dialog "
+                                   "and then try again." )
+                             .arg( id.identityName() ) );
+      kmkernel->outboxFolder()->unGetMsg( mFailedMessages );
+      mCurrentMsg = 0;
+    }
+  }
   if (!mCurrentMsg || mCurrentMsg->transferInProgress())
   {
     // a message is locked finish the send
