@@ -60,8 +60,7 @@ void partNode::buildObjectTree( bool processSiblings )
 
 KMMsgEncryptionState partNode::overallEncryptionState() const
 {
-    KMMsgEncryptionState otherState;
-    KMMsgEncryptionState myState;
+    KMMsgEncryptionState myState = KMMsgEncryptionStateUnknown;
     if( mIsEncrypted )
         myState = KMMsgFullyEncrypted;
     else {
@@ -73,7 +72,7 @@ KMMsgEncryptionState partNode::overallEncryptionState() const
     }
     // siblings are tested allways
     if( mNext )
-        otherState = mNext->overallEncryptionState(); {
+        KMMsgEncryptionState otherState = mNext->overallEncryptionState(); {
         switch( otherState ) {
         case KMMsgEncryptionStateUnknown:
             break;
@@ -101,8 +100,7 @@ kdDebug(5006) << "\n\n  KMMsgEncryptionState: " << myState << endl;
 
 KMMsgSignatureState  partNode::overallSignatureState() const
 {
-    KMMsgSignatureState otherState;
-    KMMsgSignatureState myState;
+    KMMsgSignatureState myState  KMMsgSignatureState
     if( mIsSigned )
         myState = KMMsgFullySigned;
     else {
@@ -114,7 +112,7 @@ KMMsgSignatureState  partNode::overallSignatureState() const
     }
     // siblings are tested allways
     if( mNext ) {
-        otherState = mNext->overallSignatureState();
+        KMMsgSignatureState otherState = mNext->overallSignatureState();
         switch( otherState ) {
         case KMMsgSignatureStateUnknown:
             break;
