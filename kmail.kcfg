@@ -62,8 +62,8 @@
 
     <group name="FolderSelectionDialog">
       <entry name="LastSelectedFolder" type="String">
-        <default>inbox</default>
         <whatsthis>The most recently selected folder in the folder selection dialog.</whatsthis>
+        <default>inbox</default>
       </entry>
     </group>
 
@@ -81,9 +81,9 @@
         <default>ShowOnUnread</default>
       </entry>
       <entry name="VerboseNewMailNotification" type="Bool">
-        <default>true</default>
         <label>Verbose new mail notification</label>
         <whatsthis>If this option is enabled then for each folder the number of newly arrived messages is shown in the new mail notification; otherwise, you will only get a simple 'New mail arrived' message.</whatsthis>
+        <default>true</default>
       </entry>
       <entry name="ExternalEditor" type="String" key="external-editor">
         <label>Specify e&amp;ditor:</label>
@@ -139,37 +139,37 @@
 
     <group name="IMAP Resource">
       <entry name="TheIMAPResourceEnabled" type="Bool">
-        <default>false</default>
         <whatsthis>&lt;p&gt;Enabling this makes it possible to store the entries from the Kontact applications (KOrganizer, KAddressBook, and KNotes.)&lt;/p&gt;&lt;p&gt;If you want to set this option you must also set the applications to use the IMAP resource; this is done in the KDE Control Center.&lt;/p&gt;</whatsthis>
+        <default>false</default>
       </entry>
 
       <entry name="HideGroupwareFolders" type="Bool">
-        <default>true</default>
         <whatsthis>&lt;p&gt;Usually you will not have any reason to see the folders that hold the IMAP resources. But if you need to see them, you can set that here.&lt;/p&gt;</whatsthis>
+        <default>true</default>
       </entry>
 
       <entry name="TheIMAPResourceStorageFormat" type="Enum">
+        <whatsthis>&lt;p&gt;Choose the storage format of the groupware folders. &lt;ul&gt;&lt;li&gt;The default format is to use the ical (for calendar folders) and vcard (for addressbook folders) standards. This format makes all Kontact features available.&lt;/li&gt;&lt;li&gt;The Kolab XML format uses a custom model that matches more closely the one used in Outlook. This format gives better Outlook compatibility, when using a Kolab server or a compatible solution.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</whatsthis>
         <choices>
           <choice name="IcalVcard"/>
           <choice name="XML"/>
         </choices>
         <default>IcalVcard</default>
-        <whatsthis>&lt;p&gt;Choose the storage format of the groupware folders. &lt;ul&gt;&lt;li&gt;The default format is to use the ical (for calendar folders) and vcard (for addressbook folders) standards. This format makes all Kontact features available.&lt;/li&gt;&lt;li&gt;The Kolab XML format uses a custom model that matches more closely the one used in Outlook. This format gives better Outlook compatibility, when using a Kolab server or a compatible solution.&lt;/li&gt;&lt;/ul&gt;&lt;/p&gt;</whatsthis>
       </entry>
 
       <entry name="TheIMAPResourceFolderParent" type="String">
-        <default>inbox</default>
         <whatsthis>&lt;p&gt;This chooses the parent of the IMAP resource folders.&lt;/p&gt;&lt;p&gt;By default, the Kolab server sets the IMAP inbox to be the parent.&lt;/p&gt;</whatsthis>
+        <default>inbox</default>
       </entry>
 
       <entry name="TheIMAPResourceAccount" type="Int">
-        <default></default>
         <whatsthis>&lt;p&gt;This is the ID of the account holding the IMAP resource folders.&lt;/p&gt;</whatsthis>
+        <default></default>
       </entry>
 
       <entry name="TheIMAPResourceFolderLanguage" type="Int">
-        <default>0</default>
         <whatsthis>&lt;p&gt;If you want to set the folder names of the IMAP storage to your local language, you can choose between these available languages.&lt;/p&gt;&lt;p&gt; Please note, that the only reason to do so is for compatibility with Microsoft Outlook. It is considered a bad idea to set this, since it makes changing languages impossible. &lt;/p&gt;&lt;p&gt;So do not set this unless you have to.&lt;/p&gt;</whatsthis>
+        <default>0</default>
       </entry>
     </group>
 
@@ -178,17 +178,17 @@
         <default>9973</default>
       </entry>
       <entry name="PreviousNewFeaturesMD5" type="String" hidden="true">
-        <default></default>
         <whatsthis>This value is used to decide whether the KMail Introduction should be displayed.</whatsthis>
+        <default></default>
       </entry>
     </group>
 
     <group name="Network">
       <entry name="MaxConnectionsPerHost" type="Int">
-        <default>0</default>
-        <min>0</min>
         <label>Maximal number of connections per host</label>
         <whatsthis>This can be used to restrict the number of connections per host while checking for new mail. By default the number of connections is unlimited (0).</whatsthis>
+        <default>0</default>
+        <min>0</min>
       </entry>
     </group>
 
@@ -246,8 +246,8 @@
       </entry>
       <entry name="OutlookCompatibleAttachments" type="Bool" key="outlook-compatible-attachments">
         <label>Outlook-compatible attachment naming</label>
-        <default>false</default>
         <whatsthis>Turn this option on to make Outlook &#8482; understand attachment names containing non-English characters</whatsthis>
+        <default>false</default>
       </entry>
       <entry name="UseHtmlMarkup" type="Bool" key="html-markup">
         <default>false</default>
@@ -267,7 +267,7 @@
       </entry>
       <entry name="RequestMDN" type="Bool" key="request-mdn">
         <label>Automatically request &amp;message disposition notifications</label>
-        <whatsthis><qt><p>Enable this option if you want KMail to request Message Disposition Notifications (MDNs) for each of your outgoing messages.</p> <p>This option only affects the default; you can still enable or disable MDN requesting on a per-message basis in the composer, menu item<em>Options</em>->&gt;<em>Request Disposition Notification</em>.</p></qt></whatsthis>
+        <whatsthis>&lt;qt&gt;&lt;p&gt;Enable this option if you want KMail to request Message Disposition Notifications (MDNs) for each of your outgoing messages.&lt;/p&gt;&lt;p&gt;This option only affects the default; you can still enable or disable MDN requesting on a per-message basis in the composer, menu item &lt;em&gt;Options&lt;/em&gt;-&gt;&lt;em&gt;Request Disposition Notification&lt;/em&gt;.&lt;/p&gt;&lt;/qt&gt;</whatsthis>
         <default>false</default>
       </entry>
       <entry name="Headers" type="Int" key="headers">
