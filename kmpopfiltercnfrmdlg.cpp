@@ -394,8 +394,8 @@ KMPopFilterCnfrmDlg::KMPopFilterCnfrmDlg(QPtrList<KMPopHeaders> *aHeaders, const
   connect(cb, SIGNAL(toggled(bool)),
       this, SLOT(slotToggled(bool)));
 
-  w->setMinimumSize(w->sizeHint());
   adjustSize();
+  QTimer::singleShot(0, this, SLOT(slotUpdateMinimumSize()));
 }
 
 KMPopFilterCnfrmDlg::~KMPopFilterCnfrmDlg()
