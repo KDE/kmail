@@ -51,7 +51,7 @@ uninstall-local:
 	rm -f $(appsdir)/KMail.kdelnk
 	rm -f $(kde_icondir)/kmail.xpm
 	rm -f $(kde_minidir)/kmail.xpm
-	
+
 messages:
 	@XGETTEXT@ -ki18n -C -x../../kdelibs/po/kde.pot $(kmail_SOURCES) && mv messages.po ../po/kmail.pot 
 

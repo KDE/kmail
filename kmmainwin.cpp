@@ -18,7 +18,6 @@
 #include "kmglobal.h"
 #include "kmfolderseldlg.h"
 #include "kmfiltermgr.h"
-#include "kmversion.h"
 #include "kmsender.h"
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
@@ -324,10 +323,22 @@ void KMMainWin::slotModifyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotEmptyFolder()
 {
-  kbp->busy();
-  mFolder->expunge();
-  mHeaders->setFolder(mFolder);
-  kbp->idle();
+  QString str(256);
+
+  if (!mFolder) return;
+
+  str.sprintf(i18n("Are you sure you want to discard the\n"
+		   "contents of the folder \"%s\" ?"),
+	      (const char*)mFolder->label());
+  if ((KMsgBox::yesNo(this,i18n("Confirmation"),str))==1)
+  {
+    kbp->busy();
+    mHeaders->setFolder(NULL);
+    mMsgView->clear();
+    mFolder->expunge();
+    mHeaders->setFolder(mFolder);
+    kbp->idle();
+  }
 }
 
 
@@ -350,6 +361,7 @@ void KMMainWin::slotRemoveFolder()
   if ((KMsgBox::yesNo(this,i18n("Confirmation"),str))==1)
   {
     mHeaders->setFolder(NULL);
+    mMsgView->clear();
     folderMgr->remove(mFolder);
   }
 }

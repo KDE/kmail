@@ -32,7 +32,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mOwner  = aOwner;
   mFolder = NULL;
   getMsgIndex = -1;
-  mSortField = KMMsgList::sfDate;
+  mSortCol = KMMsgList::sfDate;
 
   setColumn(0, i18n("F"), 17, KMHeadersInherited::PixmapColumn);
   setColumn(1, i18n("Sender"), 200);
@@ -88,9 +88,8 @@ void KMHeaders::readFolderConfig (void)
   setColumnWidth(1, config->readNumEntry("SenderWidth", 200));
   setColumnWidth(2, config->readNumEntry("SubjectWidth", 270));
   setColumnWidth(3, config->readNumEntry("DateWidth", 300));
-  mSortField = (KMMsgList::SortField)
-		config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
-  mFolder->sort(mSortField);
+  mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
+  mFolder->sort((KMMsgList::SortField)mSortCol);
 }
 
 
@@ -104,7 +103,7 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("SenderWidth", columnWidth(1));
   config->writeEntry("SubjectWidth", columnWidth(2));
   config->writeEntry("DateWidth", columnWidth(3));
-  config->writeEntry("SortColumn", (int)mSortField);
+  config->writeEntry("SortColumn", mSortCol);
 }
 
 
@@ -208,14 +207,10 @@ void KMHeaders::headerClicked(int column)
   if (idx >= 0) cur = (*mFolder)[idx];
   else cur = NULL;
 
-  if (column==0)      mSortField = KMMsgList::sfStatus;
-  else if (column==1) mSortField = KMMsgList::sfFrom;
-  else if (column==2) mSortField = KMMsgList::sfSubject;
-  else if (column==3) mSortField = KMMsgList::sfDate;
-  else return;
+  mSortCol = column;
 
   kbp->busy();
-  mFolder->sort(mSortField);
+  mFolder->sort((KMMsgList::SortField)mSortCol);
   kbp->idle();
 
   if (cur) idx = mFolder->find(cur);
@@ -604,7 +599,8 @@ void KMHeaders::updateMessageList(void)
     assert(mb != NULL); // otherwise using count() above is wrong
 
     flag = mb->status();
-    hdr.sprintf("%c\n%s\n %s\n%s", (char)flag, (const char*)mb->from(),
+    hdr.sprintf("%c\n%s\n %s\n%s", (char)flag, 
+		(const char*)KMMessage::stripEmailAddr(mb->from()),
 		(const char*)mb->subject(), (const char*)mb->dateStr());
     insertItem(hdr);
 

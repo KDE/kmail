@@ -16,6 +16,7 @@
 #include <qpalette.h>
 #include <kmsgbox.h>
 #include "kmmsgpart.h"
+#include <keditcl.h>
 #ifdef HAS_KSPELL
 #include <kspell.h>
 #endif
@@ -34,8 +35,24 @@ class QPushButton;
 class QCloseEvent;
 class KSpell;
 class KSpellConfig;
+class KMComposeWin;
 
 typedef QList<KMMessagePart> KMMsgPartList;
+
+
+//-----------------------------------------------------------------------------
+#define KMEditInherited KEdit
+class KMEdit: public KEdit
+{
+  Q_OBJECT
+public:
+  KMEdit(KApplication *a=NULL,QWidget *parent=NULL, const char *name=NULL, 
+	 const char *filename=NULL);
+  KMComposeWin* parent(void) const
+    { return (KMComposeWin*)KMEditInherited::parent(); }
+protected:
+  virtual void keyPressEvent(QKeyEvent*);
+};
 
 
 //-----------------------------------------------------------------------------
@@ -51,8 +68,6 @@ public slots:
   void cut();
   void paste();
   void markAll();
-
-private:
 
 protected:
   virtual void mousePressEvent(QMouseEvent *);
@@ -165,11 +180,14 @@ public slots:
   /** Append current message to ~/dead.letter */
   virtual void deadLetter(void);
 
-   void updateCursorPosition();
+  void updateCursorPosition();
 
-   void slotConfigureCharsets();
-   void slotSetCharsets(const char *message,const char *composer,
-                        bool ascii,bool quote,bool def);
+  void slotConfigureCharsets();
+  void slotSetCharsets(const char *message,const char *composer,
+		       bool ascii,bool quote,bool def);
+
+  /** Move focus to next/prev edit widget */
+  virtual void focusNextPrevEdit(const QLineEdit* current, bool next);
 
 protected:
   /** Install grid management and header fields. If fields exist that
@@ -250,7 +268,7 @@ protected:
   /* end Added for KRN */
   
   QPopupMenu *mMnuView, *mMnuOptions;
-  KEdit* mEditor;
+  KMEdit* mEditor;
   QGridLayout* mGrid;
   KDNDDropZone *mDropZone;
   KMMessage *mMsg;
@@ -269,6 +287,7 @@ protected:
   short mBtnIdSign, mBtnIdEncrypt;
   short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
   QString mForeColor, mBackColor;
+  QList<QLineEdit> mEdtList;
 #ifdef HAS_KSPELL
   KSpell* mKSpell;
   KSpellConfig* mKSpellConfig;

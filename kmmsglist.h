@@ -14,7 +14,7 @@ class KMMsgList: public QArray<KMMsgBasePtr>
 {
 public:
   /** Valid parameters for sort() */
-  typedef enum { sfStatus=0, sfSubject=1, sfFrom=2, sfDate=3 } SortField;
+  typedef enum { sfStatus=0, sfFrom=1, sfSubject=2, sfDate=3 } SortField;
 
   /** Constructor with optional initial size. */
   KMMsgList(int initialSize=32);

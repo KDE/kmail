@@ -108,7 +108,6 @@ private:
   int getMsgIndex;
   bool getMsgMulti;
   KMMessageList mSelMsgList;
-  KMMsgList::SortField mSortField;
 };
 
 #endif

@@ -2,7 +2,6 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 // This code is published under the GPL.
 
-#include <keditcl.h>
 #include "kmcomposewin.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
@@ -329,6 +328,7 @@ void KMComposeWin::rethinkFields(void)
   mGrid->setColStretch(2, 1);
   mGrid->setRowStretch(mNumHeaders, 100);
 
+  mEdtList.clear();
   row = 0;
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
 		    &mLblFrom, &mEdtFrom, &mBtnFrom);
@@ -379,7 +379,9 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
     aEdt->show();
     aEdt->setMinimumSize(100, aLbl->height()+2);
     aEdt->setMaximumSize(1000, aLbl->height()+2);
-    aEdt->setFocusPolicy(QWidget::StrongFocus);
+    aEdt->setFocusPolicy(QWidget::ClickFocus);
+    //aEdt->setFocusPolicy(QWidget::StrongFocus);
+    mEdtList.append(aEdt);
 
     if (aBtn)
     {
@@ -613,8 +615,9 @@ void KMComposeWin::updateCursorPosition() {
 void KMComposeWin::setupEditor(void)
 {
   QPopupMenu* menu;
-  mEditor = new KEdit(kapp, &mMainWidget);
+  mEditor = new KMEdit(kapp, &mMainWidget);
   mEditor->toggleModified(FALSE);
+  mEditor->setFocusPolicy(QWidget::ClickFocus);
 
   // Word wrapping setup
   if(mWordWrap) 
@@ -964,6 +967,7 @@ void KMComposeWin::addAttach(const QString aUrl)
 
   // add the new attachment to the list
   addAttach(msgPart);
+  rethinkFields(); //work around initial-size bug in Qt-1.32
 }
 
 
@@ -1743,8 +1747,27 @@ void KMComposeWin::setEditCharset(){
   cout<<"Setting font to: "<<kcharset.name()<<"\n";
   mEditor->setFont(kcharset.setQFont(fnt));
 }
-
 #endif //CHARSETS
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
+{
+  QLineEdit* cur;
+
+  if (!aCur) cur=mEdtList.last();
+  else
+  {
+    for (cur=mEdtList.first(); aCur!=cur && cur; cur=mEdtList.next())
+      ;
+    if (!cur) return;
+    if (aNext) cur = mEdtList.next();
+    else cur = mEdtList.prev();
+  }
+  if (!cur) return;
+  cur->setFocus();
+}
+
 
 
 //=============================================================================
@@ -1794,7 +1817,7 @@ void KMLineEdit::cut()
   if(hasMarkedText())
   {
     QString t = markedText();
-    QKeyEvent k( Event_KeyPress, Key_D , 0 , ControlButton);
+    QKeyEvent k(Event_KeyPress, Key_D, 0, ControlButton);
     keyPressEvent(&k);
     QApplication::clipboard()->setText(t);
   }
@@ -1803,7 +1826,7 @@ void KMLineEdit::cut()
 //-----------------------------------------------------------------------------
 void KMLineEdit::paste()
 {
-  QKeyEvent k( Event_KeyPress, Key_V , 0 , ControlButton);
+  QKeyEvent k(Event_KeyPress, Key_V, 0, ControlButton);
   keyPressEvent(&k);
 }
 
@@ -1815,7 +1838,26 @@ void KMLineEdit::markAll()
 
 
 
+//=============================================================================
+//
+//   Class  KMEdit
+//
+//=============================================================================
+KMEdit::KMEdit(KApplication *a,QWidget *parent, const char *name, 
+	       const char *filename):
+  KMEditInherited(a, parent, name, filename)
+{
+  initMetaObject();
+}
 
 
-
-
+//-----------------------------------------------------------------------------
+void KMEdit::keyPressEvent(QKeyEvent* e)
+{
+  if (e->key()==Key_Tab && (e->state() & ShiftButton))
+  {
+    printf("shift-tab\n");
+    parent()->focusNextPrevEdit(NULL,FALSE);
+  }
+  else KMEditInherited::keyPressEvent(e);
+}
