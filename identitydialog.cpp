@@ -56,6 +56,8 @@
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
+#include <kfileitem.h>
+#include <kurl.h>
 
 // Qt headers:
 #include <qtabwidget.h>
@@ -430,38 +432,58 @@ namespace KMail {
     const std::vector<GpgME::Key> & smimeSigningKeys = mSMIMESigningKeyRequester->keys();
     const std::vector<GpgME::Key> & smimeEncryptionKeys = mSMIMEEncryptionKeyRequester->keys();
     QString msg;
+    bool err = false;
     if ( std::find_if( pgpSigningKeys.begin(), pgpSigningKeys.end(),
-		       DoesntMatchEMailAddress( email ) ) != pgpSigningKeys.end() )
+		       DoesntMatchEMailAddress( email ) ) != pgpSigningKeys.end() ) {
       msg = i18n("One of the configured OpenPGP signing keys does not contain "
 		 "any user ID with the configured email address for this "
 		 "identity (%1).\n"
 		 "This might result in warning messages on the receiving side "
 		 "when trying to verify signatures made with this configuration.");
+      err = true;
+    }
     else if ( std::find_if( pgpEncryptionKeys.begin(), pgpEncryptionKeys.end(),
-			    DoesntMatchEMailAddress( email ) ) != pgpEncryptionKeys.end() )
+			    DoesntMatchEMailAddress( email ) ) != pgpEncryptionKeys.end() ) {
       msg = i18n("One of the configured OpenPGP encryption keys does not contain "
 		 "any user ID with the configured email address for this "
 		 "identity (%1).");
+      err = true;
+    }
     else if ( std::find_if( smimeSigningKeys.begin(), smimeSigningKeys.end(),
-			    DoesntMatchEMailAddress( email ) ) != smimeSigningKeys.end() )
+			    DoesntMatchEMailAddress( email ) ) != smimeSigningKeys.end() ) {
       msg = i18n("One of the configured S/MIME signing certificates does not contain "
 		 "the configured email address for this "
 		 "identity (%1).\n"
 		 "This might result in warning messages on the receiving side "
 		 "when trying to verify signatures made with this configuration.");
+      err = true;
+    }
     else if ( std::find_if( smimeEncryptionKeys.begin(), smimeEncryptionKeys.end(),
-			    DoesntMatchEMailAddress( email ) ) != smimeEncryptionKeys.end() )
+			    DoesntMatchEMailAddress( email ) ) != smimeEncryptionKeys.end() ) {
       msg = i18n("One of the configured S/MIME encryption certificates does not contain "
 		 "the configured email address for this "
 		 "identity (%1).");
-    else
-      return KDialogBase::slotOk();
+      err = true;
+    }
 
-    if ( KMessageBox::warningContinueCancel( this, msg.arg( email ),
-					     i18n("Email Address Not Found in Key/Certificates"),
-					     KStdGuiItem::cont(), "warn_email_not_in_certificate" )
-	 == KMessageBox::Continue )
-      return KDialogBase::slotOk();
+    if ( err )
+      if ( KMessageBox::warningContinueCancel( this, msg.arg( email ),
+                                          i18n("Email Address Not Found in Key/Certificates"),
+                                          KStdGuiItem::cont(), "warn_email_not_in_certificate" )
+	 != KMessageBox::Continue)
+        return;
+
+
+    if ( mSignatureConfigurator->isSignatureEnabled() ) {
+      KURL url( mSignatureConfigurator->fileURL() );
+      KFileItem signatureFile( KFileItem::Unknown, KFileItem::Unknown, url );
+      if ( !signatureFile.isFile() || !signatureFile.isReadable() || !signatureFile.isLocalFile() ) {
+        KMessageBox::error( this, i18n( "The signature file is not valid" ) );
+        return;
+      }
+    }
+
+    return KDialogBase::slotOk();
   }
 
   bool IdentityDialog::checkFolderExists( const QString & folderID,
