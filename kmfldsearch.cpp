@@ -348,7 +348,6 @@ void KMFldSearch::slotSearch()
 void KMFldSearch::slotClose()
 {
   accept();
-  delete this;
 }
 
 
