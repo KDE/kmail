@@ -415,19 +415,20 @@ void KMAcctExpPop::slotProcessPendingMsgs()
   if ((stage != Idle) && (stage != Quit))
     KMBroadcastStatus::instance()->setStatusMsg( i18n("Message ") + QString("%1/%2 (%3/%4 KB)").arg(indexOfCurrentMsg+1).arg(numMsgs).arg(numBytesRead/1024).arg(numBytes/1024) );
 
-  QString prefix;
   bool addedOk;
   QValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
   QStringList::Iterator curId = msgIdsAwaitingProcessing.begin();
   QStringList::Iterator curUid = msgUidsAwaitingProcessing.begin();
 
-  prefix = KURL::encode_string( mLogin ) + ":" +
-	   KURL::encode_string(decryptStr(mPasswd)) + "@" + mHost  + ":" +
-	   QString("%1").arg(mPort);
+  KURL url;
   if (mUseSSL)
-      prefix = "pop3s://" + prefix;
+        url.setProtocol(QString("pop3s"));
   else
-      prefix = "pop3://" + prefix;
+        url.setProtocol(QString("pop3"));
+  url.setUser(mLogin);
+  url.setPass(decryptStr(mPasswd));
+  url.setHost(mHost);
+  url.setPort(mPort);
 
   while (cur != msgsAwaitingProcessing.end()) {
     // note we can actually end up processing events in processNewMsg
@@ -452,7 +453,8 @@ void KMAcctExpPop::slotProcessPendingMsgs()
       break;
     }
     else {
-      idsOfMsgsToDelete.append(prefix + QString("/%1").arg(*curId));
+      url.setPath(QString("/%1").arg(*curId));
+      idsOfMsgsToDelete.append(url.url());
       uidsOfNextSeenMsgs.append( *curUid );
     }
     ++cur;
@@ -480,7 +482,6 @@ void KMAcctExpPop::slotAbortRequested()
 
 //-----------------------------------------------------------------------------
 void KMAcctExpPop::startJob() {
-  QString text;
 
   // Run the precommand
   if (!runPrecommand(precommand()))
@@ -493,14 +494,17 @@ void KMAcctExpPop::startJob() {
     }
   // end precommand code
 
-  if (mUseSSL) {
-    text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-            mHost + ":" + QString("%1").arg(mPort) + "/index";
-  } else {
-    text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-            mHost + ":" + QString("%1").arg(mPort) + "/index";
-  }
-  KURL url = text;
+  KURL url;
+  if (mUseSSL)
+        url.setProtocol(QString("pop3s"));
+  else
+        url.setProtocol(QString("pop3"));
+  url.setUser(mLogin);
+  url.setPass(decryptStr(mPasswd));
+  url.setHost(mHost);
+  url.setPort(mPort);
+  url.setPath(QString("/index"));
+
   if ( url.isMalformed() ) {
     KMessageBox::error(0, i18n("Source URL is malformed"), 
                           i18n("Kioslave Error Message") );
@@ -523,7 +527,7 @@ void KMAcctExpPop::startJob() {
   numBytes = 0;
   numBytesRead = 0;
   stage = List;
-  job = KIO::get( text, false, false );
+  job = KIO::get( url.url(), false, false );
   connectJob();
 }
 
@@ -531,15 +535,17 @@ void KMAcctExpPop::slotJobFinished() {
   QStringList emptyList;
   if (stage == List) {
     kdDebug() << "stage == List" << endl;
-    QString command;
-    if (mUseSSL) {
-      command = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
-        + ":" + QString("%1/uidl").arg(mPort);
-    } else {
-      command = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
-        + ":" + QString("%1/uidl").arg(mPort);
-    }
-    job = KIO::get( command, false, false );
+    KURL url;
+    if (mUseSSL)
+        url.setProtocol(QString("pop3s"));
+    else
+        url.setProtocol(QString("pop3"));
+    url.setUser(mLogin);
+    url.setPass(decryptStr(mPasswd));
+    url.setHost(mHost);
+    url.setPort(mPort);
+    url.setPath(QString("/uidl"));
+    job = KIO::get( url.url(), false, false );
     connectJob();
     stage = Uidl;
   }
@@ -566,15 +572,17 @@ void KMAcctExpPop::slotJobFinished() {
   }
   else if (stage == Dele) {
     kdDebug() << "stage == Dele" << endl;
-    QString prefix;
-    if (mUseSSL) {
-      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-                mHost + ":" + QString("%1").arg(mPort);
-    } else {
-      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-                mHost + ":" + QString("%1").arg(mPort);
-    }
-    job = KIO::get(  prefix + "/commit", false, false );
+    KURL url;
+    if (mUseSSL)
+        url.setProtocol(QString("pop3s"));
+    else
+        url.setProtocol(QString("pop3"));
+    url.setUser(mLogin);
+    url.setPass(decryptStr(mPasswd));
+    url.setHost(mHost);
+    url.setPort(mPort);
+    url.setPath(QString("/commit"));
+    job = KIO::get(  url.url(), false, false );
     connectJob();
     stage = Quit;
   }
@@ -586,7 +594,7 @@ void KMAcctExpPop::slotJobFinished() {
     if( idsOfMsgs.count() > 0 ) {
       KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB)...").arg(idsOfMsgs.count()).arg(numBytesRead/1024));
     } else {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed..." ));	
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed..." ));
     }
     kapp->processEvents(200);
     KMBroadcastStatus::instance()->setStatusProgressEnable( false );
@@ -632,17 +640,21 @@ void KMAcctExpPop::slotGetNextMsg()
 
   if (next == idsOfMsgsPendingDownload.end()) {
     processRemainingQueuedMessagesAndSaveUidList();
-    QString prefix;
-    if (mUseSSL) {
-      prefix = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-                mHost + ":" + QString("%1").arg(mPort);
-    } else {
-      prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-                mHost + ":" + QString("%1").arg(mPort);
-    }
 
-    if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty())
-      job = KIO::get(  prefix + "/commit", false, false );
+
+    if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty()) {
+      KURL url;
+      if (mUseSSL)
+        url.setProtocol(QString("pop3s"));
+      else
+        url.setProtocol(QString("pop3"));
+      url.setUser(mLogin);
+      url.setPass(decryptStr(mPasswd));
+      url.setHost(mHost);
+      url.setPort(mPort);
+      url.setPath(QString("/commit"));
+      job = KIO::get(url.url(), false, false );
+    }
     else {
       stage = Dele;
       job = KIO::del( idsOfMsgsToDelete, false, false );
@@ -689,14 +701,16 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
   QString qdata = data;
   int spc = qdata.find( ' ' );
   if (spc > 0) {
-    QString text;
-    if (mUseSSL) {
-      text = "pop3s://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-              mHost + ":" + QString("%1/download/").arg(mPort);
-    } else {
-      text = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" +
-              mHost + ":" + QString("%1/download/").arg(mPort);
-    }
+    KURL url;
+    if (mUseSSL)
+        url.setProtocol(QString("pop3s"));
+    else
+        url.setProtocol(QString("pop3"));
+    url.setUser(mLogin);
+    url.setPass(decryptStr(mPasswd));
+    url.setHost(mHost);
+    url.setPort(mPort);
+
     if (stage == List) {
       QString length = qdata.mid(spc+1);
       int len = length.toInt();
@@ -704,7 +718,8 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       QString id = qdata.left(spc);
       idsOfMsgs.append( id );
       lensOfMsgsPendingDownload.append( len );
-      idsOfMsgsPendingDownload.append( text + id );
+      url.setPath(QString("/download/%1").arg(id));
+      idsOfMsgsPendingDownload.append(url.url());
     }
     else { // stage == Uidl
       QString uid = qdata.mid(spc + 1);
@@ -712,11 +727,12 @@ void KMAcctExpPop::slotData( KIO::Job* job, const QByteArray &data)
       if (uidsOfSeenMsgs.contains(uid)) {
 	if (!mRetrieveAll) {
 	  QString id = qdata.left(spc);
-	  int idx = idsOfMsgsPendingDownload.findIndex( text + id );
+           url.setPath(QString("/download/%1").arg(id));
+	  int idx = idsOfMsgsPendingDownload.findIndex(url.url());
 	  if (idx != -1) {
 	    lensOfMsgsPendingDownload.remove( lensOfMsgsPendingDownload
 					      .at( idx ));
-	    idsOfMsgsPendingDownload.remove( text + id );
+	    idsOfMsgsPendingDownload.remove(url.url());
 	    idsOfMsgs.remove( id );
 	    uidsOfMsgs.remove( uid );
 	  }
