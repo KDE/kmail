@@ -13,6 +13,7 @@ typedef enum
     KMMsgStatusUnknown=' ',
     KMMsgStatusNew='N',
     KMMsgStatusUnread='U',
+    KMMsgStatusRead='R',
     KMMsgStatusOld='O',
     KMMsgStatusDeleted='D',
     KMMsgStatusReplied='A',

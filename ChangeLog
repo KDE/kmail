@@ -1,3 +1,12 @@
+1998-07-23  Stefan Taferner  <taferner@kde.org>
+
+	* Added message status "Read". This status is set to
+	messages which are loaded with check-mail that have
+	status set to "R".
+	
+	These messages appear whith blue text, but without
+	the green ball to the left, in the message list.
+
 1998-07-22  Markus Wuebben  <markus@kde.org>
 
 	* main.cpp Applied session management patch.

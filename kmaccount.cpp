@@ -131,16 +131,18 @@ void KMAccount::processNewMsg(KMMessage* aMsg)
   QString receiptTo;
   int rc;
 
-  //assert(aMsg != NULL);
-  if(!aMsg)
-    return;
+  assert(aMsg != NULL);
 
   receiptTo = aMsg->headerField("Return-Receipt-To");
   if (!receiptTo.isEmpty()) sendReceipt(aMsg, receiptTo);
 
+  // Set status of new messages that are marked as old to read, otherwise
+  // the user won't see which messages newly arrived.
+  if (aMsg->status()==KMMsgStatusOld)
+    aMsg->setStatus(KMMsgStatusRead);
+
   if (filterMgr->process(aMsg))
   {
-    debug("adding msg to inbox");
     rc = mFolder->addMsg(aMsg);
     if (rc) perror("failed to add message");
     if (rc) warning(i18n("Failed to add message:")+

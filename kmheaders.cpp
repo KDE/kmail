@@ -53,6 +53,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusNew), &pixNew);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusUnread), &pixUns);
+  dict().insert(KMMsgBase::statusToStr(KMMsgStatusRead), &pixOld);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusDeleted), &pixDel);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusOld), &pixOld);
   dict().insert(KMMsgBase::statusToStr(KMMsgStatusReplied), &pixRep);
@@ -256,8 +257,15 @@ void KMHeaders::msgHeaderChanged(int msgId)
   changeItem(msgAsLbxString(mb), msgId);
 
   flag = mb->status();
-  if (flag==KMMsgStatusNew) changeItemColor(darkRed, msgId);
-  else if(flag==KMMsgStatusUnread) changeItemColor(darkBlue, msgId);
+  if (flag==KMMsgStatusNew)
+  {
+    changeItemColor(darkRed, msgId);
+  }
+  else if(flag==KMMsgStatusUnread ||
+	  flag==KMMsgStatusRead)
+  {
+    changeItemColor(darkBlue, msgId);
+  }
 }
 
 
@@ -752,8 +760,15 @@ void KMHeaders::updateMessageList(void)
     insertItem(msgAsLbxString(mb));
 
     flag = mb->status();
-    if (flag==KMMsgStatusNew) changeItemColor(darkRed);
-    else if(flag==KMMsgStatusUnread) changeItemColor(darkBlue);
+    if (flag==KMMsgStatusNew)
+    {
+      changeItemColor(darkRed);
+    }
+    else if(flag==KMMsgStatusUnread ||
+	    flag==KMMsgStatusRead)
+    {
+      changeItemColor(darkBlue);
+    }
   }
 
   setAutoUpdate(autoUpd);
