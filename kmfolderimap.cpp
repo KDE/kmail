@@ -76,7 +76,8 @@ KMFolderImap::~KMFolderImap()
 KMMessage* KMFolderImap::getMsg(int idx)
 {
     KMMessage* msg = KMFolder::getMsg( idx );
-    msg->setComplete( false );
+    if ( msg )
+      msg->setComplete( false );
     return msg;
 }
 
