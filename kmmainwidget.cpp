@@ -75,11 +75,11 @@ using KMime::Types::AddrSpecList;
 
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
-			   KActionCollection *actionCollection ) :
+			   KActionCollection *actionCollection, KConfig* config ) :
     QWidget(parent, name)
 {
   // must be the first line of the constructor:
-  searchWin = 0;
+  mSearchWin = 0;
   mStartupDone = FALSE;
   mIntegrated  = TRUE;
   mFolder = 0;
@@ -96,6 +96,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mFilterActions.setAutoDelete(true);
   mFilterCommands.setAutoDelete(true);
   mJob = 0;
+  mConfig = config;
 
   mPanner1Sep << 1 << 1;
   mPanner2Sep << 1 << 1;
@@ -148,8 +149,8 @@ void KMMainWidget::destruct()
 {
   if (mDestructed)
     return;
-  if (searchWin)
-    searchWin->close();
+  if (mSearchWin)
+    mSearchWin->close();
   writeConfig();
   writeFolderConfig();
   delete mHeaders;
@@ -617,26 +618,26 @@ void KMMainWidget::show()
 //-------------------------------------------------------------------------
 void KMMainWidget::slotSearch()
 {
-  if(!searchWin)
+  if(!mSearchWin)
   {
-    searchWin = new KMFldSearch(this, "Search", mFolder, false);
-    connect(searchWin, SIGNAL(destroyed()),
+    mSearchWin = new KMFldSearch(this, "Search", mFolder, false);
+    connect(mSearchWin, SIGNAL(destroyed()),
 	    this, SLOT(slotSearchClosed()));
   }
   else
   {
-    searchWin->activateFolder(mFolder);
+    mSearchWin->activateFolder(mFolder);
   }
 
-  searchWin->show();
-  KWin::setActiveWindow(searchWin->winId());
+  mSearchWin->show();
+  KWin::setActiveWindow(mSearchWin->winId());
 }
 
 
 //-------------------------------------------------------------------------
 void KMMainWidget::slotSearchClosed()
 {
-  searchWin = 0;
+  mSearchWin = 0;
 }
 
 
@@ -1049,7 +1050,7 @@ void KMMainWidget::slotOverrideThread()
 {
   mFolderThreadPref = !mFolderThreadPref;
   mHeaders->setNestedOverride(mFolderThreadPref);
-  threadBySubjectAction->setEnabled(threadMessagesAction->isChecked());
+  mThreadBySubjectAction->setEnabled(mThreadMessagesAction->isChecked());
 }
 
 //-----------------------------------------------------------------------------
@@ -1732,8 +1733,8 @@ void KMMainWidget::slotSetThreadStatusSent()
 void KMMainWidget::slotSetThreadStatusWatched()
 {
   mHeaders->setThreadStatus(KMMsgStatusWatched, true);
-  if (watchThreadAction->isChecked()) {
-    ignoreThreadAction->setChecked(false);
+  if (mWatchThreadAction->isChecked()) {
+    mIgnoreThreadAction->setChecked(false);
   }
 }
 
@@ -1741,8 +1742,8 @@ void KMMainWidget::slotSetThreadStatusWatched()
 void KMMainWidget::slotSetThreadStatusIgnored()
 {
   mHeaders->setThreadStatus(KMMsgStatusIgnored, true);
-  if (ignoreThreadAction->isChecked()) {
-    watchThreadAction->setChecked(false);
+  if (mIgnoreThreadAction->isChecked()) {
+    mWatchThreadAction->setChecked(false);
   }
 }
 
@@ -1847,27 +1848,27 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
 
     bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
     if ( out_folder ) {
-      editAction->plug(menu);
+      mEditAction->plug(menu);
     }
     else {
-      replyAction()->plug(menu);
-      replyAllAction()->plug(menu);
-      forwardMenu()->plug(menu);
-      bounceAction()->plug(menu);
+      mReplyAction->plug(menu);
+      mReplyAllAction->plug(menu);
+      mForwardActionMenu->plug(menu);
+      mBounceAction->plug(menu);
     }
     menu->insertSeparator();
     if ( !out_folder ) {
-      //   filterMenu()->plug( menu );
-      statusMenu->plug( menu );
-      threadStatusMenu->plug( menu );
+      //   mFilterMenu()->plug( menu );
+      mStatusMenu->plug( menu );
+      mThreadStatusMenu->plug( menu );
     }
 
-    copyActionMenu->plug( menu );
-    moveActionMenu->plug( menu );
+    mCopyActionMenu->plug( menu );
+    mMoveActionMenu->plug( menu );
 
     menu->insertSeparator();
-    watchThreadAction->plug( menu );
-    ignoreThreadAction->plug( menu );
+    mWatchThreadAction->plug( menu );
+    mIgnoreThreadAction->plug( menu );
 
     menu->insertSeparator();
 
@@ -1879,12 +1880,12 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
     }
 
     menu->insertSeparator();
-    printAction()->plug( menu );
-    saveAsAction->plug( menu );
-    saveAttachments->plug( menu );
+    mPrintAction->plug( menu );
+    mSaveAsAction->plug( menu );
+    mSaveAttachmentsAction->plug( menu );
     menu->insertSeparator();
-    trashAction->plug( menu );
-    deleteAction->plug( menu );
+    mTrashAction->plug( menu );
+    mDeleteAction->plug( menu );
   }
   menu->exec(aPoint, 0);
   delete menu;
@@ -1895,12 +1896,12 @@ void KMMainWidget::getAccountMenu()
 {
   QStringList actList;
 
-  actMenu->clear();
+  mActMenu->clear();
   actList = kmkernel->acctMgr()->getAccounts(false);
   QStringList::Iterator it;
   int id = 0;
   for(it = actList.begin(); it != actList.end() ; ++it, id++)
-    actMenu->insertItem((*it).replace("&", "&&"), id);
+    mActMenu->insertItem((*it).replace("&", "&&"), id);
 }
 
 // little helper function
@@ -1950,7 +1951,7 @@ void KMMainWidget::setupActions()
 		      this, SLOT(slotNewMailReader()),
 		      actionCollection(), "new_mail_client" );
 
-  saveAsAction = new KAction( i18n("Save &As..."), "filesave",
+  mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
     KStdAccel::shortcut(KStdAccel::Save),
     this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
 
@@ -1977,9 +1978,9 @@ void KMMainWidget::setupActions()
 
   connect(actActionMenu,SIGNAL(activated()),this,SLOT(slotCheckMail()));
 
-  actMenu = actActionMenu->popupMenu();
-  connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
-  connect(actMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
+  mActMenu = actActionMenu->popupMenu();
+  connect(mActMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
+  connect(mActMenu,SIGNAL(aboutToShow()),this,SLOT(getAccountMenu()));
 
   (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
@@ -1998,18 +1999,18 @@ void KMMainWidget::setupActions()
 		      actionCollection(), "tools_edit_vacation" );
 
   //----- Edit Menu
-  trashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
+  mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
                                        i18n("Move message to trashcan") ),
                              Key_Delete, this, SLOT(slotTrashMsg()),
                              actionCollection(), "move_to_trash" );
 
-  deleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
+  mDeleteAction = new KAction( i18n("&Delete"), "editdelete", SHIFT+Key_Delete, this,
                               SLOT(slotDeleteMsg()), actionCollection(), "delete" );
 
   (void) new KAction( i18n("&Find Messages..."), "mail_find", Key_S, this,
 		      SLOT(slotSearch()), actionCollection(), "search_messages" );
 
-  findInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
+  mFindInMessageAction = new KAction( i18n("&Find in Message..."), "find", KStdAccel::shortcut(KStdAccel::Find), this,
 		      SLOT(slotFind()), actionCollection(), "find_in_messages" );
 
   (void) new KAction( i18n("Select &All Messages"), KStdAccel::selectAll(), this,
@@ -2023,35 +2024,35 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&New Folder..."), "folder_new", 0, this,
 		      SLOT(slotAddFolder()), actionCollection(), "new_folder" );
 
-  modifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
+  mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
-  markAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
+  mMarkAllAsReadAction = new KAction( i18n("Mark All Messages as &Read"), "goto", 0, this,
 		      SLOT(slotMarkAllAsRead()), actionCollection(), "mark_all_as_read" );
 
-  expireFolderAction = new KAction(i18n("&Expire"), 0, this, SLOT(slotExpireFolder()),
+  mExpireFolderAction = new KAction(i18n("&Expire"), 0, this, SLOT(slotExpireFolder()),
 				   actionCollection(), "expire");
 
-  compactFolderAction = new KAction( i18n("&Compact"), 0, this,
+  mCompactFolderAction = new KAction( i18n("&Compact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
 
-  refreshFolderAction = new KAction( i18n("&Refresh"), "reload", Key_F5 , this,
+  mRefreshFolderAction = new KAction( i18n("&Refresh"), "reload", Key_F5 , this,
                      SLOT(slotRefreshFolder()), actionCollection(), "refresh_folder" );
 
-  emptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
+  mEmptyFolderAction = new KAction( i18n("&Move All Messages to Trash"),
                                    "edittrash", 0, this,
 		      SLOT(slotEmptyFolder()), actionCollection(), "empty" );
 
-  removeFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
+  mRemoveFolderAction = new KAction( i18n("&Delete Folder"), "editdelete", 0, this,
 		      SLOT(slotRemoveFolder()), actionCollection(), "delete_folder" );
 
-  preferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
+  mPreferHtmlAction = new KToggleAction( i18n("Prefer &HTML to Plain Text"), 0, this,
 		      SLOT(slotOverrideHtml()), actionCollection(), "prefer_html" );
 
-  threadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
+  mThreadMessagesAction = new KToggleAction( i18n("&Thread Messages"), 0, this,
 		      SLOT(slotOverrideThread()), actionCollection(), "thread_messages" );
 
-  threadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
+  mThreadBySubjectAction = new KToggleAction( i18n("Thread Messages also by &Subject"), 0, this,
 		      SLOT(slotToggleSubjectThreading()), actionCollection(), "thread_messages_by_subject" );
 
 
@@ -2079,7 +2080,7 @@ void KMMainWidget::setupActions()
   
   mForwardActionMenu->insert( forwardAction() );
 
-  sendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
+  mSendAgainAction = new KAction( i18n("Send A&gain..."), 0, this,
 		      SLOT(slotResendMsg()), actionCollection(), "send_again" );
  
   mReplyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
@@ -2149,122 +2150,122 @@ void KMMainWidget::setupActions()
     i++;
   }
 
-  editAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
+  mEditAction = new KAction( i18n("&Edit Message"), "edit", Key_T, this,
                             SLOT(slotEditMsg()), actionCollection(), "edit" );
 
   //----- "Mark Message" submenu
-  statusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
+  mStatusMenu = new KActionMenu ( i18n( "Mar&k Message" ),
                                  actionCollection(), "set_status" );
 
-  statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
+  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &New"), "kmmsgnew",
                                           i18n("Mark selected messages as new")),
                                  0, this, SLOT(slotSetMsgStatusNew()),
                                  actionCollection(), "status_new" ));
 
-  statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Unread"), "kmmsgunseen",
+  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Unread"), "kmmsgunseen",
                                           i18n("Mark selected messages as unread")),
                                  0, this, SLOT(slotSetMsgStatusUnread()),
                                  actionCollection(), "status_unread"));
 
-  statusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
+  mStatusMenu->insert(new KAction(KGuiItem(i18n("Mark Message as &Read"), "kmmsgread",
                                           i18n("Mark selected messages as read")),
                                  0, this, SLOT(slotSetMsgStatusRead()),
                                  actionCollection(), "status_read"));
 
   // -------- Toggle Actions
-  toggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
+  mToggleRepliedAction = new KToggleAction(i18n("Mark Message as Re&plied"), "kmmsgreplied",
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied");
 
-  statusMenu->insert( toggleRepliedAction );
-  toggleForwardedAction = new KToggleAction(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
+  mStatusMenu->insert( mToggleRepliedAction );
+  mToggleForwardedAction = new KToggleAction(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
                                  0, this, SLOT(slotSetMsgStatusForwarded()),
                                  actionCollection(), "status_forwarded");
-  statusMenu->insert( toggleForwardedAction );
+  mStatusMenu->insert( mToggleForwardedAction );
 
-  toggleQueuedAction = new KToggleAction(i18n("Mark Message as &Queued"), "kmmsgqueued",
+  mToggleQueuedAction = new KToggleAction(i18n("Mark Message as &Queued"), "kmmsgqueued",
                                  0, this, SLOT(slotSetMsgStatusQueued()),
                                  actionCollection(), "status_queued");
-  statusMenu->insert( toggleQueuedAction );
+  mStatusMenu->insert( mToggleQueuedAction );
 
-  toggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
+  mToggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
                                  0, this, SLOT(slotSetMsgStatusSent()),
                                  actionCollection(), "status_sent");
-  statusMenu->insert( toggleSentAction );
+  mStatusMenu->insert( mToggleSentAction );
 
-  toggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "kmmsgflag",
+  mToggleFlagAction = new KToggleAction(i18n("Mark Message as &Important"), "kmmsgflag",
                                  0, this, SLOT(slotSetMsgStatusFlag()),
                                  actionCollection(), "status_flag");
-  statusMenu->insert( toggleFlagAction );
+  mStatusMenu->insert( mToggleFlagAction );
 
   //----- "Mark Thread" submenu
-  threadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
+  mThreadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
 
-  markThreadAsNewAction = new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
+  mMarkThreadAsNewAction = new KAction(KGuiItem(i18n("Mark Thread as &New"), "kmmsgnew",
                                                i18n("Mark all messages in the selected thread as new")),
                                                0, this, SLOT(slotSetThreadStatusNew()),
                                                actionCollection(), "thread_new");
-  threadStatusMenu->insert( markThreadAsNewAction );
+  mThreadStatusMenu->insert( mMarkThreadAsNewAction );
 
-  markThreadAsUnreadAction = new KAction(KGuiItem(i18n("Mark Thread as &Unread"), "kmmsgunseen",
+  mMarkThreadAsUnreadAction = new KAction(KGuiItem(i18n("Mark Thread as &Unread"), "kmmsgunseen",
                                                 i18n("Mark all messages in the selected thread as unread")),
                                                 0, this, SLOT(slotSetThreadStatusUnread()),
                                                 actionCollection(), "thread_unread");
-  threadStatusMenu->insert( markThreadAsUnreadAction );
+  mThreadStatusMenu->insert( mMarkThreadAsUnreadAction );
 
-  markThreadAsReadAction = new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
+  mMarkThreadAsReadAction = new KAction(KGuiItem(i18n("Mark Thread as &Read"), "kmmsgread",
                                                 i18n("Mark all messages in the selected thread as read")),
                                                 0, this, SLOT(slotSetThreadStatusRead()),
                                                 actionCollection(), "thread_read");
-  threadStatusMenu->insert( markThreadAsReadAction );
+  mThreadStatusMenu->insert( mMarkThreadAsReadAction );
 
   //----- "Mark Thread" toggle actions
-  toggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
+  mToggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
                                        0, this, SLOT(slotSetThreadStatusReplied()),
                                        actionCollection(), "thread_replied");
-  threadStatusMenu->insert( toggleThreadRepliedAction );
-  toggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
+  mThreadStatusMenu->insert( mToggleThreadRepliedAction );
+  mToggleThreadForwardedAction = new KToggleAction(i18n("Mark Thread as &Forwarded"), "kmmsgforwarded",
                                        0, this, SLOT(slotSetThreadStatusForwarded()),
                                        actionCollection(), "thread_forwarded");
-  threadStatusMenu->insert( toggleThreadForwardedAction );
-  toggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
+  mThreadStatusMenu->insert( mToggleThreadForwardedAction );
+  mToggleThreadQueuedAction = new KToggleAction(i18n("Mark Thread as &Queued"), "kmmsgqueued",
                                        0, this, SLOT(slotSetThreadStatusQueued()),
                                        actionCollection(), "thread_queued");
-  threadStatusMenu->insert( toggleThreadQueuedAction );
-  toggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
+  mThreadStatusMenu->insert( mToggleThreadQueuedAction );
+  mToggleThreadSentAction = new KToggleAction(i18n("Mark Thread as &Sent"), "kmmsgsent",
                                        0, this, SLOT(slotSetThreadStatusSent()),
                                        actionCollection(), "thread_sent");
-  threadStatusMenu->insert( toggleThreadSentAction );
-  toggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "kmmsgflag",
+  mThreadStatusMenu->insert( mToggleThreadSentAction );
+  mToggleThreadFlagAction = new KToggleAction(i18n("Mark Thread as &Important"), "kmmsgflag",
                                        0, this, SLOT(slotSetThreadStatusFlag()),
                                        actionCollection(), "thread_flag");
-  threadStatusMenu->insert( toggleThreadFlagAction );
+  mThreadStatusMenu->insert( mToggleThreadFlagAction );
   //------- "Watch and ignore thread" actions
-  watchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
+  mWatchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
                                        0, this, SLOT(slotSetThreadStatusWatched()),
                                        actionCollection(), "thread_watched");
 
-  ignoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "kmmsgignored",
+  mIgnoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "kmmsgignored",
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
 
-  saveAttachments = new KAction( i18n("Save A&ttachments..."), "attach",
+  mSaveAttachmentsAction = new KAction( i18n("Save A&ttachments..."), "attach",
                                 0, this, SLOT(slotSaveAttachments()),
                                 actionCollection(), "file_save_attachments" );
 
-  moveActionMenu = new KActionMenu( i18n("&Move To" ),
+  mMoveActionMenu = new KActionMenu( i18n("&Move To" ),
                                     actionCollection(), "move_to" );
 
-  copyActionMenu = new KActionMenu( i18n("&Copy To" ),
+  mCopyActionMenu = new KActionMenu( i18n("&Copy To" ),
                                     actionCollection(), "copy_to" );
 
-  applyFiltersAction = new KAction( i18n("Appl&y Filters"), "filter",
+  mApplyFiltersAction = new KAction( i18n("Appl&y Filters"), "filter",
 				    CTRL+Key_J, this,
 				    SLOT(slotApplyFilters()),
 				    actionCollection(), "apply_filters" );
 
-  applyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter Actions" ),
+  mApplyFilterActionsMenu = new KActionMenu( i18n("A&pply Filter Actions" ),
 					    actionCollection(),
 					    "apply_filter_actions" );
 
@@ -2368,27 +2369,27 @@ void KMMainWidget::setupActions()
 		     actionCollection(), "view_unread" );
   unreadMenu->setToolTip( i18n("Choose how to display the count of unread messages") );
 
-  unreadColumnToggle = new KRadioAction( i18n("View->Unread Count", "View in &Separate Column"), 0, this,
+  mUnreadColumnToggle = new KRadioAction( i18n("View->Unread Count", "View in &Separate Column"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_column" );
-  unreadColumnToggle->setExclusiveGroup( "view_unread_group" );
-  unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
-  unreadMenu->insert( unreadColumnToggle );
+  mUnreadColumnToggle->setExclusiveGroup( "view_unread_group" );
+  mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+  unreadMenu->insert( mUnreadColumnToggle );
 
-  unreadTextToggle = new KRadioAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
+  mUnreadTextToggle = new KRadioAction( i18n("View->Unread Count", "View After &Folder Name"), 0, this,
 			       SLOT(slotToggleUnread()),
 			       actionCollection(), "view_unread_text" );
-  unreadTextToggle->setExclusiveGroup( "view_unread_group" );
-  unreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
-  unreadMenu->insert( unreadTextToggle );
+  mUnreadTextToggle->setExclusiveGroup( "view_unread_group" );
+  mUnreadTextToggle->setChecked( !mFolderTree->isUnreadActive() );
+  unreadMenu->insert( mUnreadTextToggle );
 
   // toggle for total column
-  totalColumnToggle = new KToggleAction( i18n("View->", "&Total Column"), 0, this,
+  mTotalColumnToggle = new KToggleAction( i18n("View->", "&Total Column"), 0, this,
 			       SLOT(slotToggleTotalColumn()),
 			       actionCollection(), "view_columns_total" );
-  totalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
+  mTotalColumnToggle->setToolTip( i18n("Toggle display of column showing the "
                                       "total number of messages in folders.") );
-  totalColumnToggle->setChecked( mFolderTree->isTotalActive() );
+  mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
 
   (void)new KAction( KGuiItem( i18n("View->","&Expand Thread"), QString::null,
 			       i18n("Expand the current thread") ),
@@ -2622,8 +2623,8 @@ void KMMainWidget::copySelectedToFolder(int menuId )
 void KMMainWidget::updateMessageMenu()
 {
     mMenuToFolder.clear();
-    KMMenuCommand::folderToPopupMenu( true, this, &mMenuToFolder, moveActionMenu->popupMenu() );
-    KMMenuCommand::folderToPopupMenu( false, this, &mMenuToFolder, copyActionMenu->popupMenu() );
+    KMMenuCommand::folderToPopupMenu( true, this, &mMenuToFolder, mMoveActionMenu->popupMenu() );
+    KMMenuCommand::folderToPopupMenu( false, this, &mMenuToFolder, mCopyActionMenu->popupMenu() );
     updateMessageActions();
 }
 
@@ -2670,50 +2671,50 @@ void KMMainWidget::updateMessageActions()
     bool thread_actions = mass_actions &&
            allSelectedInCommonThread &&
            mHeaders->isThreaded();
-    statusMenu->setEnabled( mass_actions );
-    threadStatusMenu->setEnabled( thread_actions );
+    mStatusMenu->setEnabled( mass_actions );
+    mThreadStatusMenu->setEnabled( thread_actions );
     // these need to be handled individually, the user might have them 
     // in the toolbar
-    watchThreadAction->setEnabled( thread_actions );
-    ignoreThreadAction->setEnabled( thread_actions );
-    markThreadAsNewAction->setEnabled( thread_actions );
-    markThreadAsReadAction->setEnabled( thread_actions );
-    markThreadAsUnreadAction->setEnabled( thread_actions );
-    toggleThreadRepliedAction->setEnabled( thread_actions );
-    toggleThreadForwardedAction->setEnabled( thread_actions );
-    toggleThreadQueuedAction->setEnabled( thread_actions );
-    toggleThreadSentAction->setEnabled( thread_actions );
-    toggleThreadFlagAction->setEnabled( thread_actions );
+    mWatchThreadAction->setEnabled( thread_actions );
+    mIgnoreThreadAction->setEnabled( thread_actions );
+    mMarkThreadAsNewAction->setEnabled( thread_actions );
+    mMarkThreadAsReadAction->setEnabled( thread_actions );
+    mMarkThreadAsUnreadAction->setEnabled( thread_actions );
+    mToggleThreadRepliedAction->setEnabled( thread_actions );
+    mToggleThreadForwardedAction->setEnabled( thread_actions );
+    mToggleThreadQueuedAction->setEnabled( thread_actions );
+    mToggleThreadSentAction->setEnabled( thread_actions );
+    mToggleThreadFlagAction->setEnabled( thread_actions );
 
     if (mFolder && mHeaders && mHeaders->currentMsg()) {
-      toggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
-      toggleForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
-      toggleQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
-      toggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
-      toggleFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
+      mToggleRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
+      mToggleForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
+      mToggleQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
+      mToggleSentAction->setChecked(mHeaders->currentMsg()->isSent());
+      mToggleFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
       if (thread_actions) {
-        toggleThreadRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
-        toggleThreadForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
-        toggleThreadQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
-        toggleThreadSentAction->setChecked(mHeaders->currentMsg()->isSent());
-        toggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
-        watchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());
-        ignoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
+        mToggleThreadRepliedAction->setChecked(mHeaders->currentMsg()->isReplied());
+        mToggleThreadForwardedAction->setChecked(mHeaders->currentMsg()->isForwarded());
+        mToggleThreadQueuedAction->setChecked(mHeaders->currentMsg()->isQueued());
+        mToggleThreadSentAction->setChecked(mHeaders->currentMsg()->isSent());
+        mToggleThreadFlagAction->setChecked(mHeaders->currentMsg()->isFlag());
+        mWatchThreadAction->setChecked( mHeaders->currentMsg()->isWatched());
+        mIgnoreThreadAction->setChecked( mHeaders->currentMsg()->isIgnored());
       }
     }
 
-    moveActionMenu->setEnabled( mass_actions );
-    copyActionMenu->setEnabled( mass_actions );
-    trashAction->setEnabled( mass_actions );
-    deleteAction->setEnabled( mass_actions );
-    findInMessageAction->setEnabled( mass_actions );
-    forwardAction()->setEnabled( mass_actions );
-    forwardAttachedAction()->setEnabled( mass_actions );
+    mMoveActionMenu->setEnabled( mass_actions );
+    mCopyActionMenu->setEnabled( mass_actions );
+    mTrashAction->setEnabled( mass_actions );
+    mDeleteAction->setEnabled( mass_actions );
+    mFindInMessageAction->setEnabled( mass_actions );
+    mForwardAction->setEnabled( mass_actions );
+    mForwardAttachedAction->setEnabled( mass_actions );
 
     forwardMenu()->setEnabled( mass_actions );
 
     bool single_actions = count == 1;
-    editAction->setEnabled( single_actions &&
+    mEditAction->setEnabled( single_actions &&
     kmkernel->folderIsDraftOrOutbox(mFolder));
    
     filterMenu()->setEnabled( single_actions );
@@ -2728,9 +2729,9 @@ void KMMainWidget::updateMessageActions()
       viewSourceAction()->setEnabled( single_actions );
     }
       
-    sendAgainAction->setEnabled( single_actions &&
+    mSendAgainAction->setEnabled( single_actions &&
           mHeaders->currentMsg()->isSent() );
-    saveAsAction->setEnabled( mass_actions );
+    mSaveAsAction->setEnabled( mass_actions );
     bool mails = mFolder && mFolder->count();
     bool enable_goto_unread = mails || (mHeaders->loopOnGotoUnread() == LoopInAllFolders);
     actionCollection()->action( "go_next_message" )->setEnabled( mails );
@@ -2750,11 +2751,11 @@ void KMMainWidget::updateMessageActions()
         return;
 
       if (mFolder == kmkernel->outboxFolder())
-        editAction->setEnabled( !msg->transferInProgress() );
+        mEditAction->setEnabled( !msg->transferInProgress() );
     }
 
-    applyFiltersAction->setEnabled(count);
-    applyFilterActionsMenu->setEnabled(count && (applyFilterActionsMenu->popupMenu()->count()>0));
+    mApplyFiltersAction->setEnabled(count);
+    mApplyFilterActionsMenu->setEnabled(count && (mApplyFilterActionsMenu->popupMenu()->count()>0));
 }
 
 
@@ -2774,26 +2775,26 @@ void KMMainWidget::statusMsg(const QString& message)
 //-----------------------------------------------------------------------------
 void KMMainWidget::updateFolderMenu()
 {
-  modifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  compactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  refreshFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
-  emptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
+  mModifyFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  mCompactFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  mRefreshFolderAction->setEnabled( mFolder ? !mFolder->noContent() : false );
+  mEmptyFolderAction->setEnabled( mFolder ? ( !mFolder->noContent()
                                              && ( mFolder->count() > 0 ) )
                                          : false );
-  emptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
+  mEmptyFolderAction->setText( (mFolder && kmkernel->folderIsTrash(mFolder))
     ? i18n("&Empty Trash") : i18n("&Move All Messages to Trash") );
-  removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
-  expireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
-  markAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
-  preferHtmlAction->setEnabled( mFolder ? true : false );
-  threadMessagesAction->setEnabled( mFolder ? true : false );
+  mRemoveFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
+  mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
+  mMarkAllAsReadAction->setEnabled( mFolder && (mFolder->countUnread() > 0) );
+  mPreferHtmlAction->setEnabled( mFolder ? true : false );
+  mThreadMessagesAction->setEnabled( mFolder ? true : false );
 
-  preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
-  threadMessagesAction->setChecked(
+  mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
+  mThreadMessagesAction->setChecked(
       mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
-  threadBySubjectAction->setEnabled(
-      mFolder ? (threadMessagesAction->isChecked()) : false );
-  threadBySubjectAction->setChecked( mFolderThreadSubjPref );
+  mThreadBySubjectAction->setEnabled(
+      mFolder ? ( mThreadMessagesAction->isChecked()) : false );
+  mThreadBySubjectAction->setChecked( mFolderThreadSubjPref );
 }
 
 
@@ -2981,8 +2982,8 @@ void KMMainWidget::initializeFilterActions()
       mFilterActions.append(filterAction);
     }
 
-  applyFilterActionsMenu->popupMenu()->clear();
-  plugFilterActions(applyFilterActionsMenu->popupMenu());
+  mApplyFilterActionsMenu->popupMenu()->clear();
+  plugFilterActions(mApplyFilterActionsMenu->popupMenu());
 }
 
 
@@ -3023,8 +3024,8 @@ void KMMainWidget::slotSubscriptionDialog()
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotFolderTreeColumnsChanged()
 {
-  totalColumnToggle->setChecked( mFolderTree->isTotalActive() );
-  unreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
+  mTotalColumnToggle->setChecked( mFolderTree->isTotalActive() );
+  mUnreadColumnToggle->setChecked( mFolderTree->isUnreadActive() );
 }
 
 void KMMainWidget::toggleSystray(bool enabled, int mode)

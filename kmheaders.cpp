@@ -932,7 +932,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = TRUE;
-    mOwner->editAction->setEnabled(mFolder ?  (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
+    mOwner->editAction()->setEnabled(mFolder ?  (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
     mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingList() :
       false);
     if (mFolder)
@@ -2425,7 +2425,7 @@ void KMHeaders::slotRMB()
 
   bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )
-     mOwner->editAction->plug(menu);
+     mOwner->editAction()->plug(menu);
   else {
      // show most used actions
      mOwner->replyAction()->plug(menu);
@@ -2433,7 +2433,7 @@ void KMHeaders::slotRMB()
      mOwner->replyListAction()->plug(menu);
      mOwner->forwardMenu()->plug(menu);
      mOwner->bounceAction()->plug(menu);
-     mOwner->sendAgainAction->plug(menu);
+     mOwner->sendAgainAction()->plug(menu);
   }
   menu->insertSeparator();
 
@@ -2441,24 +2441,24 @@ void KMHeaders::slotRMB()
   menu->insertItem(i18n("&Move To"), msgMoveMenu);
 
   if ( !out_folder ) {
-    mOwner->statusMenu->plug( menu ); // Mark Message menu
-    if ( mOwner->threadStatusMenu->isEnabled() ) {
-      mOwner->threadStatusMenu->plug( menu ); // Mark Thread menu
+    mOwner->statusMenu()->plug( menu ); // Mark Message menu
+    if ( mOwner->threadStatusMenu()->isEnabled() ) {
+      mOwner->threadStatusMenu()->plug( menu ); // Mark Thread menu
     }
   }
 
-  if (mOwner->watchThreadAction->isEnabled() ) {
+  if (mOwner->watchThreadAction()->isEnabled() ) {
     menu->insertSeparator();
-    mOwner->watchThreadAction->plug(menu);
-    mOwner->ignoreThreadAction->plug(menu);
+    mOwner->watchThreadAction()->plug(menu);
+    mOwner->ignoreThreadAction()->plug(menu);
   }
   menu->insertSeparator();
-  mOwner->trashAction->plug(menu);
-  mOwner->deleteAction->plug(menu);
+  mOwner->trashAction()->plug(menu);
+  mOwner->deleteAction()->plug(menu);
 
   menu->insertSeparator();
-  mOwner->saveAsAction->plug(menu);
-  mOwner->saveAttachments->plug(menu);
+  mOwner->saveAsAction()->plug(menu);
+  mOwner->saveAttachmentsAction()->plug(menu);
   mOwner->printAction()->plug(menu);
 
   if ( !out_folder ) {

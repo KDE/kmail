@@ -11,35 +11,39 @@
 #include <qlistview.h>
 
 #include "kmreaderwin.h" //for inline actions
+#include "kmkernel.h" // for access to config
 #include <kaction.h>
+
+class QVBoxLayout;
+class QSplitter;
+class QTextCodec;
+
+class KActionMenu;
+class KActionCollection;
+class KConfig;
+class KSelectAction;
+class KRadioAction;
+class KToggleAction;
+class KProgressDialog;
+class KMenuBar;
 
 class KMFolder;
 class KMFolderDir;
 class KMFolderTree;
 class KMFolderTreeItem;
 class KMHeaders;
-class QVBoxLayout;
-class QSplitter;
-class QTextCodec;
-class KMenuBar;
 class KMCommand;
 class KMMetaFilterActionCommand;
 class KMMessage;
 class KMFolder;
 class KMAccount;
 class KMFldSearch;
-class KToggleAction;
-class KActionMenu;
-class KActionCollection;
-class KSelectAction;
-class KRadioAction;
-class KProgressDialog;
 class KMLittleProgressDlg;
 class KMSystemTray;
+
 template <typename T> class QValueList;
 template <typename T, typename S> class QMap;
 template <typename T> class QGuardedPtr;
-
 
 namespace KIO {
   class Job;
@@ -62,7 +66,8 @@ class KMMainWidget : public QWidget
 
 public:
   KMMainWidget(QWidget *parent, const char *name,
-	       KActionCollection *actionCollection );
+	       KActionCollection *actionCollection, 
+         KConfig*config = KMKernel::config() );
   virtual ~KMMainWidget();
   void destruct();
 
@@ -101,54 +106,35 @@ public:
   KAction *noQuoteReplyAction() { return mNoQuoteReplyAction; }
   KActionMenu *filterMenu() { return mFilterMenu; }
   KAction *printAction() { return mPrintAction; }
+  KAction *trashAction() { return mTrashAction; }
+  KAction *deleteAction() { return mDeleteAction; }
+  KAction *saveAsAction() { return mSaveAsAction; }
+  KAction *editAction() { return mEditAction; }
+  KAction *sendAgainAction() { return mSendAgainAction; }
+  KAction *applyFiltersAction() { return mSendAgainAction; }
+  KAction *findInMessageAction() { return mFindInMessageAction; }
+  KAction *saveAttachmentsAction() { return mSaveAttachmentsAction; }
+
+  KActionMenu *statusMenu() { return mStatusMenu; }
+  KActionMenu *threadStatusMenu() { return mThreadStatusMenu; }
+  KActionMenu *moveActionMenu() { return mMoveActionMenu; }
+  KActionMenu *mopyActionMenu() { return mCopyActionMenu; }
+  KActionMenu *applyFilterActionsMenu() { return mApplyFilterActionsMenu; }
+
+  KToggleAction *watchThreadAction() { return mWatchThreadAction; }
+  KToggleAction *ignoreThreadAction() { return mIgnoreThreadAction; }
 
   // Forwarded to the reader window.
   KToggleAction *toggleFixFontAction() { return mMsgView->toggleFixFontAction(); }
   KAction *viewSourceAction() { return mMsgView->viewSourceAction(); }
-
-  //FIXME: wtf? member variables in the public interface:
-  KAction *trashAction, *deleteAction, *saveAsAction, *editAction,
-    *sendAgainAction, *applyFiltersAction, *findInMessageAction, *saveAttachments;
-  // Composition actions
-  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyListAction,
-      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
-      *mBounceAction, *mNoQuoteReplyAction;
-  KActionMenu *mForwardActionMenu;
-  // Filter actions
-  KActionMenu *mFilterMenu;
-  KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
-      *mListFilterAction;
-
-  void updateListFilterAction();
-  
-  KActionMenu *statusMenu, *threadStatusMenu,
-    *moveActionMenu, *copyActionMenu, *applyFilterActionsMenu;
-  KAction *markThreadAsNewAction;
-  KAction *markThreadAsReadAction;
-  KAction *markThreadAsUnreadAction;
-  KToggleAction *toggleThreadRepliedAction;
-  KToggleAction *toggleThreadForwardedAction;
-  KToggleAction *toggleThreadQueuedAction;
-  KToggleAction *toggleThreadSentAction;
-  KToggleAction *toggleThreadFlagAction;
-  KToggleAction *toggleRepliedAction;
-  KToggleAction *toggleForwardedAction;
-  KToggleAction *toggleQueuedAction;
-  KToggleAction *toggleSentAction;
-  KToggleAction *toggleFlagAction;
-
-  KToggleAction *watchThreadAction, *ignoreThreadAction;
-
-  /** we need to access those KToggleActions from the foldertree-popup */
-  KRadioAction* unreadColumnToggle;
-  KRadioAction* unreadTextToggle;
-  KToggleAction* totalColumnToggle;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
   KMHeaders *headers() const { return mHeaders; }
   KMLittleProgressDlg* progressDialog() const;
 
   void toggleSystray(bool enabled, int mode);
+
+  void updateListFilterAction();
 
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
@@ -186,12 +172,27 @@ public slots:
   /** The columns of the foldertree changed */
   void slotFolderTreeColumnsChanged();
 
+signals:
+  void messagesTransfered(bool);
+  void captionChangeRequest( const QString & caption );
+
 protected:
   void setupActions();
   void setupStatusBar();
   void createWidgets();
   void activatePanners();
   void showMsg(KMReaderWin *win, KMMessage *msg);
+
+  KActionCollection * actionCollection() { return mActionCollection; }
+
+  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
+                                       const KMail::HeaderStrategy * );
+  KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
+
+  /** @return the correct config dialog depending on whether the parent of the mainWidget
+   *          is a KPart or a KMMainWindow. When dealing with geometries, use this pointer
+   */
+  KConfig * config();
 
 protected slots:
   void slotCheckOneAccount(int);
@@ -336,14 +337,45 @@ protected slots:
   void slotToFilter();
   void slotPrintMsg();
 
-protected:
-  KActionCollection * actionCollection() { return mActionCollection; }
+private:
+  // Message actions
+  KAction *mTrashAction, *mDeleteAction, *mSaveAsAction, *mEditAction,
+    *mSendAgainAction, *mApplyFiltersAction, *mFindInMessageAction,
+    *mSaveAttachmentsAction;
+  // Composition actions
+  KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyListAction,
+      *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
+      *mBounceAction, *mNoQuoteReplyAction;
+  KActionMenu *mForwardActionMenu;
+  // Filter actions
+  KActionMenu *mFilterMenu;
+  KAction *mSubjectFilterAction, *mFromFilterAction, *mToFilterAction,
+      *mListFilterAction;
 
-  KRadioAction * actionForHeaderStyle( const KMail::HeaderStyle *,
-				       const KMail::HeaderStrategy * );
-  KRadioAction * actionForAttachmentStrategy( const KMail::AttachmentStrategy * );
+  KActionMenu *mStatusMenu, *mThreadStatusMenu,
+    *mMoveActionMenu, *mCopyActionMenu, *mApplyFilterActionsMenu;
+  KAction *mMarkThreadAsNewAction;
+  KAction *mMarkThreadAsReadAction;
+  KAction *mMarkThreadAsUnreadAction;
+  KToggleAction *mToggleThreadRepliedAction;
+  KToggleAction *mToggleThreadForwardedAction;
+  KToggleAction *mToggleThreadQueuedAction;
+  KToggleAction *mToggleThreadSentAction;
+  KToggleAction *mToggleThreadFlagAction;
+  KToggleAction *mToggleRepliedAction;
+  KToggleAction *mToggleForwardedAction;
+  KToggleAction *mToggleQueuedAction;
+  KToggleAction *mToggleSentAction;
+  KToggleAction *mToggleFlagAction;
 
-protected:
+  KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
+
+  /** we need to access those KToggleActions from the foldertree-popup */
+  KRadioAction* mUnreadColumnToggle;
+  KRadioAction* mUnreadTextToggle;
+  KToggleAction* mTotalColumnToggle;
+
+private:
   KMFolderTree *mFolderTree;
   KMReaderWin  *mMsgView;
   QSplitter    *mPanner1, *mPanner2;
@@ -364,8 +396,8 @@ protected:
   QValueList<int> mPanner1Sep, mPanner2Sep;
   KMMessage     *mMsgCurrent;
   KURL          mUrlCurrent;
-  QPopupMenu	*actMenu;
-  QPopupMenu	*fileMenu;
+  QPopupMenu	*mActMenu;
+  QPopupMenu	*mFileMenu;
 
   bool mLongFolderList;
 
@@ -375,15 +407,15 @@ protected:
   bool mHtmlPref, mThreadPref, mFolderHtmlPref, mFolderThreadPref, 
        mFolderThreadSubjPref, mReaderWindowActive, mReaderWindowBelow;
   
-  QPopupMenu *messageMenu;
-  KMFldSearch *searchWin;
+//  QPopupMenu *mMessageMenu;
+  KMFldSearch *mSearchWin;
 
-  KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction,
-      *compactFolderAction, *refreshFolderAction, *emptyFolderAction,
-      *markAllAsReadAction;
-  KToggleAction *preferHtmlAction, *threadMessagesAction;
-  KToggleAction *threadBySubjectAction;
-  KToggleAction *folderAction, *headerAction, *mimeAction;
+  KAction *mModifyFolderAction, *mRemoveFolderAction, *mExpireFolderAction,
+      *mCompactFolderAction, *mRefreshFolderAction, *mEmptyFolderAction,
+      *mMarkAllAsReadAction;
+  KToggleAction *mPreferHtmlAction, *mThreadMessagesAction;
+  KToggleAction *mThreadBySubjectAction;
+  KToggleAction *mFolderAction, *mHeaderAction, *mMimeAction;
 
   QTimer *menutimer;
 
@@ -403,9 +435,8 @@ protected:
   QGuardedPtr <KMail::FolderJob> mJob;
 
   KMSystemTray  *mSystemTray;
-signals:
-  void messagesTransfered(bool);
-  void captionChangeRequest( const QString & caption );
+  KConfig *mConfig;
+
 };
 
 #endif

@@ -33,11 +33,8 @@
 #include "aboutdata.h"
 #include "kmkernel.h"
 #include "kmfolder.h"
-#if KDE_IS_VERSION( 3, 1, 90 )
 #include "sidebarextension.h"
 #include "infoextension.h"
-#endif
-
 
 #include <kapplication.h>
 #include <kparts/genericfactory.h>
@@ -124,7 +121,7 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   setXMLFile( "kmmainwin.rc" );
   kmkernel->inboxFolder()->close();
 #else
-  mainWidget = new KMMainWidget( canvas, "mainWidget", actionCollection());
+  mainWidget = new KMMainWidget( canvas, "mainWidget", actionCollection(), kapp->config());
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
