@@ -43,8 +43,8 @@ public:
   virtual void setProtocol(short);
 
   virtual const char* type(void) const;
-  virtual void readConfig(void);
-  virtual void writeConfig(void);
+  virtual void readConfig(KConfig&);
+  virtual void writeConfig(KConfig&);
   virtual bool processNewMail(void);
 
   

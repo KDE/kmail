@@ -11,6 +11,8 @@
 #ifndef kmglobal_h
 #define kmglobal_h
 
+extern bool shuttingDown;
+
 class KBusyPtr;
 extern KBusyPtr* kbp;
 
@@ -33,6 +35,11 @@ class KShortCut;
 extern KShortCut* keys;
 
 class KMFolder;
+class KMAcctFolder;
+extern KMAcctFolder* inboxFolder;
+extern KMFolder* outboxFolder;
+extern KMFolder* sentFolder;
+extern KMFolder* queuedFolder;
 extern KMFolder* trashFolder;
 
 #endif /*kmglobal_h*/

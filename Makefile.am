@@ -3,6 +3,8 @@ SUBDIRS = pics doc
 INCLUDES=	-I.. @all_includes@
 LDADD	=	@all_libraries@ -lkdeui -lkdecore -lkhtmlw -ljscript -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib
 MOC	=	@MOC@
+CXXFLAGS = -g
+LDFLAGS  =
 
 bin_PROGRAMS = kmail
 

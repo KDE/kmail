@@ -216,7 +216,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
   grid = new QGridLayout(grp, 5, 2, 20, 8);
 
   label = new QLabel(grp);
-  label->setText(nls->translate("Accounts"));
+  label->setText(nls->translate("Accounts:   (add at least one account!)"));
   label->setMinimumSize(label->size());
   grid->addMultiCellWidget(label, 0, 0, 0, 1);
 
@@ -317,7 +317,7 @@ void KMSettings::addAccount()
     fatal("KMSettings: unsupported account type selected");
   }
 
-  acct = acctMgr->create(acctType, nls->translate("unnamed"));
+  acct = acctMgr->create(acctType, nls->translate("Unnamed"));
   assert(acct != NULL);
 
   acct->init(); // fill the account fields with good default values
@@ -382,7 +382,7 @@ void KMSettings::removeAccount()
   QString acctName, txt;
   KMAccount* acct;
 
-  acctName = accountList->text(accountList->currentItem(),0).copy();
+  acctName = accountList->text(accountList->currentItem(),0);
 
   txt = nls->translate("Are you sure you want to remove the account");
   txt.detach();
@@ -392,9 +392,9 @@ void KMSettings::removeAccount()
   if ((KMsgBox::yesNo(this,nls->translate("Confirmation"), txt))==1)
   {
     acct = acctMgr->find(acctName);
-    assert(acct != NULL);
-    acct->writeConfig();
+    if (acct != NULL) return;
     acctMgr->remove(acct);
+    delete acct;
     accountList->removeItem(accountList->currentItem());
     if (!accountList->count())
     {
@@ -603,7 +603,7 @@ void KMAccountSettings::accept()
     ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
   }
 
-  mAcct->writeConfig();
+  acctMgr->sync();
 
   QDialog::accept();
 }

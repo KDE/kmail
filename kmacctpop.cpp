@@ -36,7 +36,6 @@ KMAcctPop::KMAcctPop(KMAcctMgr* aOwner, const char* aAccountName):
 //-----------------------------------------------------------------------------
 KMAcctPop::~KMAcctPop()
 {
-  writeConfig();
 }
 
 
@@ -297,40 +296,44 @@ void KMPasswdDialog::slotCancelPressed()
 }
 
 //-----------------------------------------------------------------------------
-void KMAcctPop::readConfig(void)
+void KMAcctPop::readConfig(KConfig& config)
 {
-  mConfig->setGroup("Account");
-  mLogin = mConfig->readEntry("login");
-  mStorePasswd = mConfig->readNumEntry("store-passwd");
+  KMAcctPopInherited::readConfig(config);
+
+  mLogin = config.readEntry("login", "");
+  mStorePasswd = config.readNumEntry("store-passwd", 1);
   if (mStorePasswd) 
-    mPasswd = mConfig->readEntry("passwd");
+    mPasswd = config.readEntry("passwd");
   else 
-    mPasswd="?";
-  mHost = mConfig->readEntry("host");
-  mPort = mConfig->readNumEntry("port");
-  mProtocol = mConfig->readNumEntry("protocol");
+    mPasswd = "?";
+  mHost = config.readEntry("host");
+  mPort = config.readNumEntry("port");
+  mProtocol = config.readNumEntry("protocol");
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctPop::writeConfig(void)
+void KMAcctPop::writeConfig(KConfig& config)
 {
-  //char *buf;
-  mConfig->setGroup("Account");
-  mConfig->writeEntry("type", "pop");
-  mConfig->writeEntry("login", mLogin);
-  if (mStorePasswd) 
-    {/*buf = crypt(mPasswd.data(),"AA");
-    mPasswd.sprintf("%s",buf);*/
-    mConfig->writeEntry("password", mPasswd);}
-    
-  else 
-    mConfig->writeEntry("passwd", "");
-  mConfig->writeEntry("store-passwd", mStorePasswd);
-  mConfig->writeEntry("host", mHost);
-  mConfig->writeEntry("port", mPort);
-  mConfig->writeEntry("protocol", mProtocol);
-  mConfig->sync();
+  QString cryptPasswd;
+  int i;
+
+  KMAcctPopInherited::readConfig(config);
+
+  config.writeEntry("login", mLogin);
+  config.writeEntry("store-passwd", mStorePasswd);
+  if (mStorePasswd)
+  {
+    // very primitive password encryption
+    for (i=0; i<mPasswd.length(); i++)
+      cryptPasswd[i] = (char)((int)mPasswd[i] ^ 'F');
+    config.writeEntry("passwd", cryptPasswd);
+  }
+  else config.writeEntry("passwd", "");
+
+  config.writeEntry("host", mHost);
+  config.writeEntry("port", mPort);
+  config.writeEntry("protocol", mProtocol);
 }
 
 

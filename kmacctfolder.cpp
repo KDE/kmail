@@ -24,6 +24,8 @@ KMAcctFolder::~KMAcctFolder()
 //-----------------------------------------------------------------------------
 const char* KMAcctFolder::type(void) const
 {
+  debug("KMAcctFolder: folder %s has %d accounts", (const char*)name(),
+	mAcctList.count());
   if (!mAcctList.isEmpty()) return "in";
   return KMAcctFolderInherited::type();
 }
@@ -59,6 +61,8 @@ void KMAcctFolder::addAccount(KMAccount* aAcct)
   mAcctList.append(aAcct);
   aAcct->setFolder(this);
   mTocDirty = TRUE;
+  debug("KMAcctFolder: adding account `%s' to folder `%s'",
+	(const char*)aAcct->name(), (const char*)name());
 }
 
 
@@ -90,16 +94,17 @@ void KMAcctFolder::removeAccount(KMAccount* aAcct)
 int KMAcctFolder::createTocHeader(void)
 {
   KMAccount* act;
-  int i;
+  int i, num;
 
   if (!mAutoCreateToc) return 0;
 
-  fprintf(mTocStream, "%d %c\n", MAX_ACCOUNTS, mIsSystemFolder ? 'S' : 'U');
-  for (i=0,act=account(); act && i<MAX_ACCOUNTS; act=nextAccount(), i++)
+  num = mAcctList.count();
+  fprintf(mTocStream, "%d %c\n", num, mIsSystemFolder ? 'S' : 'U');
+  for (i=0,act=account(); act && i<num; act=nextAccount(), i++)
   {
     fprintf(mTocStream, "%.64s\n", (const char*)act->name());
   }
-  while (i<MAX_ACCOUNTS)
+  while (i < num)
   {
     fprintf(mTocStream, "%.64s\n", "");
     i++;
@@ -116,7 +121,9 @@ void KMAcctFolder::readTocHeader(void)
   int  numAcct, i;
   KMAccount* act;
 
+#ifdef OBSOLETE
   clearAccountList();
+#endif
 
   fgets(line, 255, mTocStream);
 
@@ -137,8 +144,10 @@ void KMAcctFolder::readTocHeader(void)
     if (i < 0) continue;
     line[i+1] = '\0';
 
+#ifdef OBSOLETE
     act = acctMgr->find(line);
     if (act) addAccount(act);
+#endif
   }
 }
 

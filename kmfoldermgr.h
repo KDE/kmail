@@ -36,8 +36,7 @@ public:
 
   /** Create a mail folder in the root folder directory dir()
     with given name. Returns Folder on success. */
-  KMAcctFolder* createFolder(const char* fName, bool sysFldr=FALSE) 
-    { return mDir.createFolder(fName, sysFldr); }
+  KMAcctFolder* createFolder(const char* fName, bool sysFldr=FALSE);
 
 protected:
   QString mBasePath;

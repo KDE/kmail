@@ -13,6 +13,7 @@ class KMHeaders : public KTabListBox {
   Q_OBJECT
 public:
   KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
+  virtual ~KMHeaders();
   
   virtual void setFolder(KMFolder *);
   KMFolder* folder(void) { return mFolder; }

@@ -26,8 +26,8 @@ public:
 
   virtual const char* type(void) const;
   virtual bool processNewMail(void);
-  virtual void readConfig(void);
-  virtual void writeConfig(void);
+  virtual void readConfig(KConfig&);
+  virtual void writeConfig(KConfig&);
 
 protected:
   QString mLocation;

@@ -36,27 +36,12 @@ KMSender::KMSender(KMFolderMgr* aFolderMgr)
   mCfg->setGroup("Identity");
   mEmailAddr= mCfg->readEntry("Email Address", "");
   mUserName = mCfg->readEntry("Name", "");
-
-  mCfg->setGroup("General");
-  outboxName = mCfg->readEntry("outbox", QString("outbox"));
-  mQueue = mFolderMgr->findOrCreate(outboxName);
-  mQueue->setType("out");
-  mQueue->setLabel(nls->translate("outbox"));
-  mQueue->open();
-
-  sentName = mCfg->readEntry("sent", QString("sent"));
-  mSent = mFolderMgr->findOrCreate(sentName);
-  mSent->setType("st");
-  mSent->setLabel(nls->translate("sent"));
-  mSent->open();
 }
 
 
 //-----------------------------------------------------------------------------
 KMSender::~KMSender()
 {
-  if (mQueue) mQueue->close();
-  if (mSent)  mSent->close();
   if (mMailerProc) delete mMailerProc;
 }
 
@@ -77,14 +62,14 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
-  if (!sendNow) return (mQueue->addMsg(aMsg)==0);
+  if (!sendNow) return (queuedFolder->addMsg(aMsg)==0);
 
   if (mMethod == smSMTP) sendOk = sendSMTP(aMsg);
   else if (mMethod == smMail) sendOk = sendMail(aMsg);
   else warning(nls->translate("Please specify a send\nmethod in the settings\n"
 			      "and try again."));
 
-  if (sendOk) mSent->addMsg(aMsg);
+  if (sendOk) sentFolder->addMsg(aMsg);
   return sendOk;
 }
 
@@ -250,7 +235,7 @@ bool KMSender::sendMail(KMMessage* aMsg)
   mMailerProc->start(KProcess::Block);
   debug("sending done");
 
-  unlink(msgFileName);
+  //unlink(msgFileName);
   return true;
 }
 

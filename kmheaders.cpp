@@ -56,10 +56,18 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0, const char *name=0) :
 
 
 //-----------------------------------------------------------------------------
+KMHeaders::~KMHeaders ()
+{
+  if (mFolder) mFolder->close(TRUE);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMHeaders::setFolder (KMFolder *aFolder)
 {
   if (mFolder) 
   {
+    mFolder->close();
     disconnect(mFolder, SIGNAL(msgHeaderChanged(int)),
 	       this, SLOT(msgHeaderChanged(int)));
     disconnect(mFolder, SIGNAL(msgAdded(int)),
@@ -86,9 +94,12 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	    this, SLOT(msgChanged()));
     connect(mFolder, SIGNAL(statusMsg(const char*)),
 	    mOwner, SLOT(statusMsg(const char*)));
+    mFolder->open();
   }
 
   updateMessageList();
+
+  if (mFolder) highlightMessage(0,3);
 }
 
 
@@ -389,6 +400,8 @@ void KMHeaders::changeItemPart (char c, int itemIndex, int column)
 //-----------------------------------------------------------------------------
 void KMHeaders::highlightMessage(int idx, int/*colId*/)
 {
+  if (idx >= numRows()) return;
+
   kbp->busy();
   mOwner->statusMsg("");
   emit messageSelected(mFolder->getMsg(idx+1));

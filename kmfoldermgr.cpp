@@ -7,6 +7,12 @@
 #include "kmglobal.h"
 #include <klocale.h>
 
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <fcntl.h>
+#include <unistd.h>
+
+
 //-----------------------------------------------------------------------------
 KMFolderMgr::KMFolderMgr(const char* aBasePath)
 {
@@ -72,6 +78,13 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
 
 
 //-----------------------------------------------------------------------------
+KMAcctFolder* KMFolderMgr::createFolder(const char* fName, bool sysFldr)
+{
+  return mDir.createFolder(fName, sysFldr);
+}
+
+
+//-----------------------------------------------------------------------------
 KMAcctFolder* KMFolderMgr::find(const char* folderName, bool foldersOnly)
 {
   KMFolderNode* node;
@@ -95,8 +108,8 @@ KMAcctFolder* KMFolderMgr::findOrCreate(const char* aFolderName)
     warning(nls->translate("Creating missing folder\n`%s'"), aFolderName);
 
     folder = createFolder(aFolderName, TRUE);
-    if (!folder) fatal(nls->translate("Cannot create folder `%s'."),
-		       aFolderName);
+    if (!folder) fatal(nls->translate("Cannot create folder `%s'\nin %s"),
+		       aFolderName, (const char*)mBasePath);
   }
   return folder;
 }

@@ -9,13 +9,16 @@
 #include <qfile.h>
 #include <assert.h>
 #include <kconfig.h>
-#include <qobject.h>
+#include <klocale.h>
 
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmaccount.h"
-#include "kmaccount.moc"
+#include "kmglobal.h"
+#include "kmfoldermgr.h"
 
+//----------------------
+#include "kmaccount.moc"
 
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
@@ -26,22 +29,19 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
   mOwner   = aOwner;
   mName    = aName;
   mFolder  = NULL;
-  mConfig  = NULL;
 }
 
 
 //-----------------------------------------------------------------------------
 KMAccount::~KMAccount() 
 {
-  if (mConfig)  delete mConfig;
-  if (mFolder) mFolder->removeAccount(this);
+  if (!shuttingDown && mFolder) mFolder->removeAccount(this);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMAccount::setName(const QString& aName)
 {
-  mOwner->rename(this, aName);
   mName = aName;
 }
 
@@ -50,26 +50,40 @@ void KMAccount::setName(const QString& aName)
 void KMAccount::setFolder(KMAcctFolder* aFolder)
 {
   mFolder = aFolder;
+  debug("setFolder of %s to %s", (const char*)name(),
+	aFolder ? (const char*)aFolder->name() : "(null)");
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::openConfig(void)
+void KMAccount::readConfig(KConfig& config)
 {
-  QString acctPath;
+  KMAcctFolder* folder;
+  QString folderName;
 
-  if (mConfig) return;
+  mFolder = NULL;
+  mName   = config.readEntry("Name", nls->translate("Unnamed"));
+  folderName = config.readEntry("Folder", "");
 
-  acctPath = mOwner->basePath() + "/" + mName;
-  mConfig  = new KConfig(acctPath);
+  if (!folderName.isEmpty())
+  {
+    folder = folderMgr->find(folderName);
+    if (folder) 
+    {
+      mFolder = folder;
+      mFolder->addAccount(this);
+    }
+    else debug("Cannot find folder `%s' for account `%s'.", 
+	       (const char*)folderName, (const char*)mName);
+  }
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::takeConfig(KConfig* aConfig)
+void KMAccount::writeConfig(KConfig& config)
 {
-  assert(aConfig != NULL);
-
-  mConfig  = aConfig;
-  readConfig();
+  config.writeEntry("Type", type());
+  config.writeEntry("Name", mName);
+  config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
 }
+

@@ -36,14 +36,6 @@ public:
   /** Send all queued messages. Returns TRUE on success. */
   virtual bool sendQueued(void);
 
-  /** Provides direct access to the folder where the messages
-    are queued. */
-  KMAcctFolder* outboxQueue(void) const { return mQueue; }
-
-  /** Provides direct access to the folder where sent messages
-    are stored. */
-  KMAcctFolder* sentFolder(void) const { return mSent; }
-
   /** Method the sender shall use: either SMTP or local mail program */
   Method method(void) const { return mMethod; }
   virtual void setMethod(Method);
@@ -89,8 +81,6 @@ private:
   bool mSendImmediate;
   KConfig* mCfg;
   KMFolderMgr* mFolderMgr;
-  KMAcctFolder* mQueue;    // folder where outgoing mail is queued
-  KMAcctFolder* mSent;     // folder where sent mail is kept
   KProcess* mMailerProc;
   QString mMailer;
   QString mSmtpHost;

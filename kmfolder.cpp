@@ -54,14 +54,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const char* aName) :
 //-----------------------------------------------------------------------------
 KMFolder :: ~KMFolder()
 {
-  if (mStream) close();
-}
-
-
-//-----------------------------------------------------------------------------
-const char* KMFolder::type(void) const
-{
-  return "plain";
+  if (mOpenCount>0) close(TRUE);
 }
 
 
@@ -103,7 +96,11 @@ int KMFolder::open(void)
   if (mOpenCount > 1) return 0;  // already open
 
   mStream = fopen(location(), "r+"); // messages file
-  if (!mStream) return errno;
+  if (!mStream) 
+  {
+    debug("Cannot open folder `%s': %s", (const char*)location(), sys_errlist[errno]);
+    return errno;
+  }
 
   if (!path().isEmpty())
   {
@@ -591,9 +588,9 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   }
 
   if (aIndex_ret) *aIndex_ret = mMsgs;
-  if (!mQuiet) emit msgAdded(mMsgs);
-
   mMsgs++;
+
+  if (!mQuiet) emit msgAdded(mMsgs);
 
   return 0;
 } 

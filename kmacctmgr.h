@@ -26,12 +26,15 @@ public:
   /** Returns path to directory where the accounts' configuration is stored. */
   const QString& basePath(void) const { return mBasePath; }
 
-  /** Set base path. Calls reload(). A tilde (~) as the first character is
-    expanded to the contents of the HOME environment variable. */
+  /** Set base path. Does *not* call reload(). A tilde (~) as the first
+    character is expanded to the contents of the HOME environment variable. */
   virtual void setBasePath(const char* aBasePath);
 
   /** Completely reload accounts from disk. Returns TRUE on success. */
   virtual bool reload(void);
+
+  /** Write accounts to disk. */
+  virtual void sync(void);
 
   /** Create a new account of given type with given name. Currently
    the types "local" for local mail folders and "pop" are supported. */
@@ -58,12 +61,6 @@ public:
 signals:
   /** emitted if new mail arrived in the account */
   void newMail(KMAccount* inAccount);
-
-protected:
-  /** Physically rename given account. Returns FALSE if the account
-      cannot be renamed. The name of the account is not changed
-      because this method shall only be called from KMAccount::setName */
-  virtual bool rename(const KMAccount*, const char* newName);
 
 private:
   QString      mBasePath;

@@ -43,31 +43,19 @@ public:
 
   /** Read config file entries. This method is called by the account
     manager when a new account is created. */
-  virtual void readConfig(void) = 0;
+  virtual void readConfig(KConfig& config);
 
-  /** Set config entries and save them to the config file. This method
-   is called before the account is deleted in the destructor. */
-  virtual void writeConfig(void) = 0;
+  /** Write all account information to given config file. The config group
+      is already properly set by the caller. */
+  virtual void writeConfig(KConfig& config);
 
-  /** For compatibility this method allows access to the config
-    object. DO NOT USE THIS METHOD IN NEW CODE. It will go away soon. */
-  KConfig* config(void) { return mConfig; }
 
 protected:
   KMAccount(KMAcctMgr* owner, const char* accountName);
 
-  /** Create Config object and open config file for writing. */
-  virtual void openConfig(void);
-
-  /** Takes ownership of given, already opened, config object and calls
-    readConfig() which sets the field necessary for the specific type of
-    account. There is usually no need to inherit this method. */
-  virtual void takeConfig(KConfig*);
-
   QString       mName;
   KMAcctMgr*    mOwner;
   KMAcctFolder* mFolder;
-  KConfig*      mConfig;
 };
 
 typedef QList<KMAccount> KMAcctList;

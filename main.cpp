@@ -24,8 +24,13 @@ KMAcctMgr* acctMgr = NULL;
 KMFolderMgr* folderMgr = NULL;
 KMSender* msgSender = NULL;
 KLocale* nls = NULL;
+KMAcctFolder* inboxFolder = NULL;
+KMFolder* outboxFolder = NULL;
+KMFolder* queuedFolder = NULL;
+KMFolder* sentFolder = NULL;
 KMFolder* trashFolder = NULL;
 KShortCut* keys = NULL;
+bool shuttingDown = FALSE;
 
 static msg_handler oldMsgHandler = NULL;
 
@@ -48,8 +53,8 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
     break;
 
   case QtFatalMsg:
-    fprintf(stderr, appName+" "+nls->translate("fatal")+": %s\n", aMsg);
-    KMsgBox::message(NULL, appName+nls->translate("fatal"),
+    fprintf(stderr, appName+" "+nls->translate("fatal error")+": %s\n", aMsg);
+    KMsgBox::message(NULL, appName+" "+nls->translate("fatal error"),
 		     aMsg, KMsgBox::STOP);
     abort();
   }
@@ -75,9 +80,8 @@ void testDir( const char *_name )
 //-----------------------------------------------------------------------------
 static void init(int argc, char *argv[])
 {
-  QString  fname, trashName;
+  QString  acctPath, foldersPath, trashName;
   KConfig* cfg;
-  KMAcctFolder* fld;
 
   app = new KApplication(argc, argv, "kmail");
   nls = app->getLocale();
@@ -89,42 +93,38 @@ static void init(int argc, char *argv[])
 
   oldMsgHandler = qInstallMsgHandler(kmailMsgHandler);
 
-  cfg->setGroup("General");
-
-  // Torben
   testDir( "/.kde" );
   testDir( "/.kde/share" );  
   testDir( "/.kde/share/config" );  
   testDir( "/.kde/share/apps" );
   testDir( "/.kde/share/apps/kmail" );
 
-  fname = QDir::homeDirPath() + 
-    cfg->readEntry("accounts", QString("/.kde/share/apps/kmail/mail-accounts"));
-  acctMgr = new KMAcctMgr(fname);
+  cfg->setGroup("General");
+  foldersPath = cfg->readEntry("folders", 
+			       QDir::homeDirPath() + QString("/KMail"));
+  acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
 
-  fname = QDir::homeDirPath() + 
-    cfg->readEntry("folders", QString("/.kde/share/apps/kmail/mail-folders"));
-  folderMgr = new KMFolderMgr(fname);
+  acctMgr   = new KMAcctMgr(acctPath);
+  folderMgr = new KMFolderMgr(foldersPath);
 
-  trashName   = cfg->readEntry("trashFolder", QString("trash"));
-  fld = folderMgr->find(trashName);
+  inboxFolder  = (KMAcctFolder*)folderMgr->findOrCreate(
+				         cfg->readEntry("inboxFolder", "inbox"));
+  outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
+  outboxFolder->setType("out");
+  outboxFolder->open();
 
-  if (!fld)
-  {
-    warning(nls->translate("The folder `%s'\ndoes not exist in the\n"
-			   "mail folder directory\nbut will be created now."),
-	    (const char*)trashName);
+  queuedFolder = folderMgr->findOrCreate(cfg->readEntry("queuedFolder", "queued"));
+  queuedFolder->open();
 
-    fld = folderMgr->createFolder(trashName, TRUE);
-    if (!fld) fatal(nls->translate("Cannot create trash folder '%s'"),
-		    (const char*)trashName);
-  }
-  fld->setLabel(nls->translate("trash"));
-  trashFolder = (KMFolder*)fld;
-  trashFolder->setAutoCreateToc(FALSE);
-  trashFolder->open(); // otherwise we have to open/close the folder for
-                       // each and every delete.
+  sentFolder   = folderMgr->findOrCreate(cfg->readEntry("sentFolder", "sent_mail"));
+  sentFolder->setType("st");
+  sentFolder->open();
 
+  trashFolder  = folderMgr->findOrCreate(cfg->readEntry("trashFolder", "trash"));
+  trashFolder->setType("tr");
+  trashFolder->open();
+
+  acctMgr->reload();
   msgSender = new KMSender(folderMgr);
 }
 
@@ -132,7 +132,7 @@ static void init(int argc, char *argv[])
 //-----------------------------------------------------------------------------
 static void cleanup(void)
 {
-  trashFolder->close();
+  shuttingDown = TRUE;
 
   if (msgSender) delete msgSender;
   if (acctMgr) delete acctMgr;
@@ -151,8 +151,8 @@ main(int argc, char *argv[])
 
   init(argc, argv);
 
-    mainWin = new KMMainWin;
-    mainWin->show();
+  mainWin = new KMMainWin;
+  mainWin->show();
     
   app->exec();
 

@@ -30,11 +30,7 @@ KMAcctMgr::KMAcctMgr(const char* aBasePath): KMAcctMgrInherited()
 //-----------------------------------------------------------------------------
 KMAcctMgr::~KMAcctMgr()
 {
-  KMAccount* cur;
-
-  for (cur=mAcctList.first(); cur; cur=mAcctList.next())
-    cur->writeConfig();
-
+  sync();
   mAcctList.clear();
 }
 
@@ -53,68 +49,52 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
   else mBasePath = aBasePath;
 
   mBasePath.detach();
-  reload();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctMgr::sync(void)
+{
+  KConfig config(mBasePath);
+  KMAccount* acct;
+  QString groupName;
+  int i;
+
+  config.setGroup("General");
+  config.writeEntry("Accounts", mAcctList.count());
+
+  for (i=1,acct=mAcctList.first(); acct; acct=mAcctList.next(),i++)
+  {
+    groupName.sprintf("Account %d", i);
+    config.setGroup(groupName);
+    acct->writeConfig(config);
+  }
+  config.sync();
 }
 
 
 //-----------------------------------------------------------------------------
 bool KMAcctMgr::reload(void)
 {
-  QDir         dir;
-  QStrList*    list;  // Qt1.2 has non-const QList::first()  X-)
-                      // I understand why, but that does not make it better.
-  QString      acctName, acctPath;
-  KConfig*     config;
-  KMAccount*   act;
+  KConfig config(mBasePath);
+  KMAccount* acct;
+  QString groupName, acctType, acctName;
+  int i, num;
 
   mAcctList.clear();
 
-  dir.setFilter(QDir::Files | QDir::Hidden);
-  dir.setNameFilter("*");
-  
-  dir.setPath(mBasePath);
-  if (!dir.exists())
+  config.setGroup("General");
+  num = config.readNumEntry("Accounts", 0);
+
+  for (i=1; i<=num; i++)
   {
-    warning(nls->translate("Directory\n%s\ndoes not exist.\n\n"
-	    "KMail will create it now."), (const char*)mBasePath);
-    // dir.mkdir(mBasePath, TRUE);
-    // Stephan: mkdir without right permissions is dangerous
-    // and is for sure a port from Windows ;)
-    mkdir(mBasePath.data(), 0700);
-  }
-
-  if (!dir.cd(mBasePath, TRUE))
-  {
-    warning(nls->translate("Cannot enter directory:\n%s"), 
-	    (const char*)mBasePath);
-    return FALSE;
-  }
-
-  if (!(list=(QStrList*)dir.entryList()))
-  {
-    warning(nls->translate("Directory is unreadable:\n%s"), 
-	    (const char*)mBasePath);
-    return FALSE;
-  }
-
-  for (acctName=list->first(); acctName; acctName=list->next())
-  {
-    acctPath = mBasePath+"/"+acctName;
-    config  = new KConfig(acctPath);
-
-    config->setGroup("Account");
-    act = create(config->readEntry("type"), acctName);
-    if (act) act->takeConfig(config);
-    else
-    {
-      warning(nls->translate("Cannot read configuration of account '%s'\n"
-			     "from broken file %s\nAccount type: %s\n"),
-	      (const char*)acctName, acctPath.data(), 
-	      (const char*)config->readEntry("type"));
-
-      delete config;
-      unlink(mBasePath+"/"+acctName);
-    }
+    groupName.sprintf("Account %d", i);
+    config.setGroup(groupName);
+    acctType = config.readEntry("Type");
+    acctName = config.readEntry("Name");
+    acct = create(acctType, acctName);
+    if (!acct) continue;
+    acct->readConfig(config);
   }
 
   return TRUE;
@@ -134,9 +114,10 @@ KMAccount* KMAcctMgr::create(const QString& aType, const QString& aName)
 
   if (act) 
   {
-    act->openConfig();
     mAcctList.append(act);
+    act->setFolder(inboxFolder);
   }
+
   return act;
 }
 
@@ -172,50 +153,10 @@ KMAccount* KMAcctMgr::next(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMAcctMgr::rename(const KMAccount* acct, const char* newName) 
-{
-  QDir dir;
-
-  assert(acct != NULL);
-  assert(newName != NULL);
-
-  if (!dir.cd(mBasePath))
-  {
-    warning(nls->translate("Cannot enter directory:\n%s"), 
-	    (const char*)mBasePath);
-    return FALSE;
-  }
-
-  if (!dir.rename(acct->name(), newName, FALSE))
-  {
-    warning(nls->translate("Cannot rename account file\n%s to %s\nin directory %s"),
-	    (const char*)acct->name(), newName, (const char*)mBasePath);
-    return FALSE;
-  }
-
-  return TRUE;
-}
-
-
-//-----------------------------------------------------------------------------
 bool KMAcctMgr::remove(KMAccount* acct)
 {
-  QDir dir;
-  QString acctName;
-
   assert(acct != NULL);
-
-  acctName = acct->name();
-
-  if (!dir.cd(mBasePath))
-  {
-    warning(nls->translate("Cannot enter directory:\n%s"), (const char*)mBasePath);
-    return FALSE;
-  }
-
   mAcctList.remove(acct);
-   dir.remove(acctName);
-
   return TRUE;
 }
 

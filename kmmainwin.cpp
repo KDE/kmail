@@ -70,6 +70,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   setupStatusBar();
 
   windowCount++;
+
+  folderSelected(inboxFolder);
 }
 
 

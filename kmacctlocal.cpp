@@ -25,7 +25,6 @@ KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
 //-----------------------------------------------------------------------------
 KMAcctLocal::~KMAcctLocal()
 {
-  writeConfig();
   mLocation = NULL;
 }
 
@@ -101,23 +100,22 @@ bool KMAcctLocal::processNewMail(void)
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::readConfig(void)
+void KMAcctLocal::readConfig(KConfig& config)
 {
   QString defaultPath("/var/spool/mail/");
-
   defaultPath += getenv("USER");
 
-  mLocation = mConfig->readEntry("location", defaultPath);
+  KMAcctLocalInherited::readConfig(config);
+  mLocation = config.readEntry("Location", defaultPath);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMAcctLocal::writeConfig(void)
+void KMAcctLocal::writeConfig(KConfig& config)
 {
-  mConfig->setGroup("Account");
-  mConfig->writeEntry("type", "local");
-  mConfig->writeEntry("location", mLocation);
-  mConfig->sync();
+  KMAcctLocalInherited::writeConfig(config);
+
+  config.writeEntry("Location", mLocation);
 }
 
 

@@ -102,12 +102,8 @@ void KMFolderTree::reload(void)
 
     if (folder->isDir()) str += "{dir} ";
     else if (folder->account()) str += "{in} ";
-    else 
-    {
-      if (folder->name()=="trash") str += "{tr} ";
-      else if (folder->name()=="outbox") str += "{out} ";
-      else str += QString("{") + folder->type() + "} ";
-    }
+    else str += QString("{") + folder->type() + "} ";
+
     str += folder->name();
     insertItem(str);
 
@@ -128,7 +124,12 @@ void KMFolderTree::doFolderSelected(int index, int)
   if (index < 0) return;
 
   folder = (KMFolder*)mList.at(index);
-  if (folder->isDir()) emit folderSelected(NULL);
+  if (folder->isDir()) 
+  {
+    debug("Folder `%s' is a directory -> ignoring it.",
+	  (const char*)folder->name());
+    emit folderSelected(NULL);
+  }
   else emit folderSelected(folder);
 }
 
