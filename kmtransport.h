@@ -27,6 +27,7 @@ class QLabel;
 class QLineEdit;
 class QRadioButton;
 class KMServerTest;
+class QButtonGroup;
 
 class KMTransportInfo : public QObject
 {
