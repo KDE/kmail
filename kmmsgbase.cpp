@@ -185,10 +185,7 @@ QString KMMsgBase::skipKeyword(const QString& aStr, QChar sepChar,
 QTextCodec* KMMsgBase::codecForName(const QCString& _str)
 {
   if (_str.isEmpty()) return NULL;
-  if (_str.lower() == "shift_jis" || _str.lower() == "shift-jis")
-    return QTextCodec::codecForName("sjis");
-  return QTextCodec::codecForName(_str.lower().replace(
-    QRegExp("windows"), "cp") );
+  return KGlobal::charsets()->codecForName(_str.lower());
 }
 
 
