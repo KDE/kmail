@@ -1,4 +1,6 @@
 // kmheaders.cpp
+//#define sanders 
+
 #include <qstrlist.h>
 #include <qpalette.h>
 #include <qcolor.h>
@@ -689,10 +691,13 @@ void KMHeaders::msgHeaderChanged(int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 {
-  KMMessage* msg;
-
-  for (msg=getMsg(msgId); msg; msg=getMsg())
-    msg->setStatus(status);
+  QListViewItem *qitem;
+  for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
+    if (qitem->isSelected()) {
+      KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
+      KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
+      msgBase->setStatus(status);
+    }
 }
 
 
