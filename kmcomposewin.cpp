@@ -1613,6 +1613,7 @@ void KMComposeWin::doSend(int aSendNow)
 
   kbp->busy();
   //applyChanges();  // is called twice otherwise. Lars
+  mMsg->setDateToday();
   sentOk = (applyChanges() && msgSender->send(mMsg, aSendNow));
   kbp->idle();
 
