@@ -1118,7 +1118,7 @@ void KMMainWidget::slotMessageQueuedOrDrafted()
 void KMMainWidget::slotForwardMsg()
 {
   KMCommand *command =
-    new KMForwardCommand( this, *mHeaders->selectedMsgs() );
+    new KMForwardCommand( this, *mHeaders->selectedMsgs(), mFolder->identity() );
   command->start();
 }
 
