@@ -96,13 +96,6 @@ public:
   virtual void killAllJobs( bool disconnectSlave=false );
 
   /**
-   * Set the account idle or busy
-   */
-  void setIdle(bool aIdle) { mIdle = aIdle; }
-
-  void slaveDied() { mSlave = 0; killAllJobs(); }
-
-  /**
    * Set the top level pseudo folder
    */
   virtual void setImapFolder(KMFolderCachedImap *);

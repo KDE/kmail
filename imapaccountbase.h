@@ -62,6 +62,10 @@ namespace KMail {
     /** A weak assignment operator */
     virtual void pseudoAssign( const KMAccount * a );
 
+   /**
+    * Set the account idle or busy
+    */
+   void setIdle(bool aIdle) { mIdle = aIdle; }
 
     /** IMAP folder prefix */
     QString prefix() const { return mPrefix; }
