@@ -135,7 +135,7 @@ QByteArray KMMessagePart::bodyDecodedBinary(void) const
     result = KCodecs::quotedPrintableDecode(QCString(mBody.data(), mBody.size() + 1));
     break;
   case DwMime::kCteBase64:
-    result = KCodecs::base64Decode(QCString(mBody.data(), mBody.size() + 1));
+    KCodecs::base64Decode(mBody, result);
     break;
   default:
     kdDebug(5006) << "WARNING -- unknown encoding `" << (const char*)cteStr() << "'. Assuming 8bit." << endl;
