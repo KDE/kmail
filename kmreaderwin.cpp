@@ -784,9 +784,9 @@ void KMReaderWin::initHtmlWidget(void)
           SLOT(slotUrlOn(const QString &)));
   connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
           SLOT(slotUrlPopup(const QString &, const QPoint &)));
-  connect( kmkernel->imProxy(), SIGNAL( sigContactPresenceChanged( const QString & ) ), 
+  connect( kmkernel->imProxy(), SIGNAL( sigContactPresenceChanged( const QString & ) ),
           this, SLOT( contactStatusChanged( const QString & ) ) );
-  connect( kmkernel->imProxy(), SIGNAL( sigPresenceInfoExpired() ), 
+  connect( kmkernel->imProxy(), SIGNAL( sigPresenceInfoExpired() ),
           this, SLOT( updateReaderWin() ) );
 }
 
@@ -1122,9 +1122,9 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 {
 #ifndef NDEBUG
   kdDebug( 5006 )
-    << "\n#######\n#######\n#######  parseMsg(KMMessage* aMsg "
+    << "parseMsg(KMMessage* aMsg "
     << ( aMsg == message() ? "==" : "!=" )
-    << " aMsg )\n#######\n#######\n";
+    << " aMsg )";
 #endif
 
   KMMessagePart msgPart;

@@ -215,10 +215,10 @@ namespace KMail {
 //-----------------------------------------------------------------------------
 
   void ObjectTreeParser::parseObjectTree( partNode * node ) {
-    kdDebug(5006) << "\n**\n** ObjectTreeParser::parseObjectTree( "
+    kdDebug(5006) << "ObjectTreeParser::parseObjectTree( "
                   << (node ? "node OK, " : "no node, ")
                   << "showOnlyOneMimePart: " << (showOnlyOneMimePart() ? "TRUE" : "FALSE")
-                  << " ) **\n**" << endl;
+                  << " )" << endl;
 
     if ( !node )
       return;
