@@ -86,7 +86,8 @@ namespace {
 
  private:
     KMSearchRule::Function currentFunction( const QWidgetStack *functionStack ) const;
-    QString currentValue( const QWidgetStack *valueStack, KMSearchRule::Function func ) const;
+    QString currentValue( const QWidgetStack *valueStack,
+                          KMSearchRule::Function func ) const;
   };
 
   class StatusRuleWidgetHandler : public KMail::RuleWidgetHandler {
@@ -378,7 +379,7 @@ namespace {
     { KMSearchRule::FuncIsNotInAddressbook, I18N_NOOP( "is not in address book" ) },
     { KMSearchRule::FuncIsInCategory,       I18N_NOOP( "is in category" ) },
     { KMSearchRule::FuncIsNotInCategory,    I18N_NOOP( "is not in category" ) }
-    
+
   };
   static const int TextFunctionCount =
     sizeof( TextFunctions ) / sizeof( *TextFunctions );
@@ -420,12 +421,12 @@ namespace {
     if ( number == 1 ) {
       return new QLabel( valueStack, "textRuleValueHider" );
     }
-    
+
     if ( number == 2 ) {
       QComboBox *combo =  new QComboBox( valueStack, "categoryCombo" );
-      QStringList categories =   KabcBridge::categories(); 
+      QStringList categories = KabcBridge::categories();
       combo->insertStringList( categories );
-      QObject::connect(combo, SIGNAL( activated( int ) ),
+      QObject::connect( combo, SIGNAL( activated( int ) ),
                         receiver, SLOT( slotValueChanged() ) );
       return combo;
     }
@@ -462,30 +463,31 @@ namespace {
 
   //---------------------------------------------------------------------------
 
-  QString TextRuleWidgetHandler::currentValue( const QWidgetStack *valueStack, KMSearchRule::Function func ) const
+  QString TextRuleWidgetHandler::currentValue( const QWidgetStack *valueStack,
+                                               KMSearchRule::Function func ) const
   {
-    // here we gotta check the comobox which contains the categories
-    if ( func  == KMSearchRule::FuncIsInCategory ||   
-          func  == KMSearchRule::FuncIsNotInCategory ) {
+    // here we gotta check the combobox which contains the categories
+    if ( func  == KMSearchRule::FuncIsInCategory ||
+         func  == KMSearchRule::FuncIsNotInCategory ) {
       const QComboBox *combo=
-      dynamic_cast<QComboBox*>( QObject_child_const( valueStack,
-                                                          "categoryCombo" ) ); 
+        dynamic_cast<QComboBox*>( QObject_child_const( valueStack,
+                                                       "categoryCombo" ) );
     // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
     //  dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
     //                                                    0, false ) );
-      if ( combo) {
+      if ( combo ) {
         return combo->currentText();
-      }    
+      }
       else {
         kdDebug(5006) << "TextRuleWidgetHandler::currentValue: "
-                        "categoryCombo not found." << endl;
+                         "categoryCombo not found." << endl;
         return QString::null;
       }
     }
-    
+
     //in other cases of func it is a lineedit
     const RegExpLineEdit *lineEdit =
-     dynamic_cast<RegExpLineEdit*>( QObject_child_const( valueStack,
+      dynamic_cast<RegExpLineEdit*>( QObject_child_const( valueStack,
                                                           "regExpLineEdit" ) );
     // FIXME (Qt >= 4.0): Use the following when QObject::child() is const.
     //  dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
@@ -493,12 +495,12 @@ namespace {
     if ( lineEdit ) {
       return lineEdit->text();
       }
-      else
-        kdDebug(5006) << "TextRuleWidgetHandler::currentValue: "
-                        "regExpLineEdit not found." << endl;
-                        
-      // or anything else, like addressbook
-      return QString::null;
+    else
+      kdDebug(5006) << "TextRuleWidgetHandler::currentValue: "
+                       "regExpLineEdit not found." << endl;
+
+    // or anything else, like addressbook
+    return QString::null;
   }
 
   //---------------------------------------------------------------------------
@@ -564,16 +566,15 @@ namespace {
       lineEdit->showEditButton( false );
       valueStack->raiseWidget( lineEdit );
     }
-    
+
     QComboBox *combo =
-      dynamic_cast<QComboBox*>( valueStack->child("categoryCombo",
-                                                        0, false ) );
+      dynamic_cast<QComboBox*>( valueStack->child( "categoryCombo",
+                                                   0, false ) );
     if (combo) {
       combo->blockSignals( true );
       combo->setCurrentItem( 0 );
       combo->blockSignals( false );
     }
-    
   }
 
   //---------------------------------------------------------------------------
@@ -616,24 +617,23 @@ namespace {
                                                   0, false ) );
       valueStack->raiseWidget( w );
     }
-    else
-      if ( func == KMSearchRule::FuncIsInCategory ||
-            func == KMSearchRule::FuncIsNotInCategory) {
-        QComboBox *combo = 
-          static_cast<QComboBox*>( valueStack->child("categoryCombo",
+    else if ( func == KMSearchRule::FuncIsInCategory ||
+              func == KMSearchRule::FuncIsNotInCategory) {
+      QComboBox *combo =
+        static_cast<QComboBox*>( valueStack->child( "categoryCombo",
                                                     0, false ) );
-        combo->blockSignals( true );
-        for ( i = 0; i < combo->count(); i++ )
-          if ( rule->contents() == combo->text( i ) ) {
-            combo->setCurrentItem( i );
-            break;
-          }
-        if (i == combo->count() )
-          combo->setCurrentItem( 0 );
-        
-        combo->blockSignals( false );
-        valueStack->raiseWidget( combo );
-      }
+      combo->blockSignals( true );
+      for ( i = 0; i < combo->count(); ++i )
+        if ( rule->contents() == combo->text( i ) ) {
+          combo->setCurrentItem( i );
+          break;
+        }
+      if ( i == combo->count() )
+        combo->setCurrentItem( 0 );
+
+      combo->blockSignals( false );
+      valueStack->raiseWidget( combo );
+    }
     else {
       RegExpLineEdit *lineEdit =
         dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
@@ -670,13 +670,12 @@ namespace {
         static_cast<QWidget*>( valueStack->child( "textRuleValueHider",
                                                   0, false ) ) );
     }
-    else
-      if ( func == KMSearchRule::FuncIsInCategory ||
-            func == KMSearchRule::FuncIsNotInCategory) {
-            valueStack->raiseWidget(
-              static_cast<QWidget*>( valueStack->child("categoryCombo", 
-                                                        0, false ) ) );
-      }
+    else if ( func == KMSearchRule::FuncIsInCategory ||
+              func == KMSearchRule::FuncIsNotInCategory) {
+      valueStack->raiseWidget(
+        static_cast<QWidget*>( valueStack->child( "categoryCombo",
+                                                  0, false ) ) );
+    }
     else {
       RegExpLineEdit *lineEdit =
         dynamic_cast<RegExpLineEdit*>( valueStack->child( "regExpLineEdit",
@@ -902,7 +901,7 @@ namespace {
     const QString value = rule->contents();
     int valueIndex = 0;
     for ( ; valueIndex < KMail::StatusValueCount; ++valueIndex )
-      if ( value == QString::fromLatin1( 
+      if ( value == QString::fromLatin1(
                KMail::StatusValues[valueIndex] ) )
         break;
     QComboBox *statusCombo =
