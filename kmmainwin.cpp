@@ -1585,7 +1585,21 @@ void KMMainWin::slotSaveMsg()
 {
   if(mHeaders->currentItemIndex() == -1)
     return;
-  mHeaders->saveMsg(-1);
+  if (mFolder->protocol() == "imap")
+  {
+    connect(this, SIGNAL(messagesTransfered(bool)),
+          this, SLOT(slotReallySaveMsg(bool)));
+    transferSelectedMsgs();
+  } else {
+    mHeaders->saveMsg(-1);
+  }
+}
+
+void KMMainWin::slotReallySaveMsg(bool success)
+{
+  disconnect(this, SIGNAL(messagesTransfered(bool)),
+      this, SLOT(slotReallySaveMsg(bool)));
+  if (success) mHeaders->saveMsg(-1, &mSelectedMsgs);
 }
 
 

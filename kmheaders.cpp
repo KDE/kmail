@@ -1358,11 +1358,12 @@ void KMHeaders::deleteMsg (int msgId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::saveMsg (int msgId)
+void KMHeaders::saveMsg (int msgId, QPtrList<KMMessage>* msgList)
 {
   KMMessage* msg;
   QCString str;
-  KMMessageList *msgList = selectedMsgs();
+  if (!msgList)
+    msgList = selectedMessages();
   QString subject;
   if (msgList->count() == 1) subject = msgList->first()->subject();
   while (subject.find(':') != -1)

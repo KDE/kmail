@@ -69,7 +69,7 @@ public:
   virtual void setMsgRead(int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
   virtual void applyFiltersOnMsg(int msgId=-1);
-  virtual void saveMsg(int msgId = -1);
+  virtual void saveMsg(int msgId = -1, QPtrList<KMMessage>* msgList = NULL);
   virtual void undo();
   virtual bool canUndo() const;
   virtual void forwardMsg(QPtrList<KMMessage>* msgList = NULL);

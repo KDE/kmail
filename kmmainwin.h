@@ -207,6 +207,7 @@ protected slots:
   void slotReallyForwardAttachedMsg(bool);
   void slotReallyRedirectMsg(bool);
   void slotReallyBounceMsg(bool);
+  void slotReallySaveMsg(bool);
 
   void slotMessageQueuedOrDrafted();
   void slotEditMsg();
