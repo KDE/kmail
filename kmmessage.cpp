@@ -155,6 +155,7 @@ QCString KMMessage::asSendableString()
   msg.removeHeaderField("X-KMail-Transport");
   msg.removeHeaderField("X-KMail-Identity");
   msg.removeHeaderField("X-KMail-Fcc");
+  msg.removeHeaderField("X-KMail-Redirect-From");
   msg.removeHeaderField("Bcc");
   return msg.asString();
 }

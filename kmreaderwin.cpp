@@ -448,11 +448,11 @@ void KMReaderWin::displayAboutPage()
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
-  if (mMsgBuf && mMsg &&
+/*  if (mMsgBuf && mMsg &&
       !mMsg->msgIdMD5().isEmpty() &&
       (mMsgBufMD5 == mMsg->msgIdMD5()) &&
       ((unsigned)mMsgBufSize == mMsg->msgSize()))
-    return;
+    return; */
 
   mMsgBuf = mMsg;
   if (mMsgBuf) {
@@ -464,8 +464,8 @@ void KMReaderWin::updateReaderWin()
     mMsgBufSize = -1;
   }
 
-  if (mMsg && !mMsg->msgIdMD5().isEmpty())
-    updateReaderWinTimer.start( delay, TRUE );
+/*  if (mMsg && !mMsg->msgIdMD5().isEmpty())
+    updateReaderWinTimer.start( delay, TRUE ); */
 
   if (!mMsgDisplay) return;
 
