@@ -244,6 +244,7 @@ void KMAcctImap::processNewMail(bool interactive)
     if( mMailCheckFolders.isEmpty() )
     {
       checkDone( false, CheckOK );
+      return;
     }
   }
   // Ok, we're really checking, get a progress item;
@@ -301,6 +302,10 @@ void KMAcctImap::processNewMail(bool interactive)
             // there was an error so cancel
             mCountRemainChecks--;
             gotError = true;
+            if ( mMailCheckProgressItem ) {
+              mMailCheckProgressItem->incCompletedItems();
+              mMailCheckProgressItem->updateProgress();
+            }
           }
         }
       }
@@ -308,6 +313,13 @@ void KMAcctImap::processNewMail(bool interactive)
   } // end for
   if ( gotError )
     slotUpdateFolderList();
+  // for the case the account is down and all folders report errors
+  if ( mCountRemainChecks == 0 )
+  {
+    mCountLastUnread = 0; // => mCountUnread - mCountLastUnread == new count
+    ImapAccountBase::postProcessNewMail();
+    mUnreadBeforeCheck.clear();
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -351,9 +363,11 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder ) {
 //-----------------------------------------------------------------------------
 void KMAcctImap::slotUpdateFolderList()
 {
-  if (!mFolder || !mFolder->folder() || !mFolder->folder()->child() ||
-      makeConnection() != ImapAccountBase::Connected)
+  if ( !mFolder || !mFolder->folder() || !mFolder->folder()->child() )
+  {
+    kdWarning(5006) << "KMAcctImap::slotUpdateFolderList return" << endl;
     return;
+  }
   QStringList strList;
   mMailCheckFolders.clear();
   kmkernel->imapFolderMgr()->createFolderList(&strList, &mMailCheckFolders,

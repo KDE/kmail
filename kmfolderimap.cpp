@@ -1538,16 +1538,18 @@ bool KMFolderImap::processNewMail(bool)
     url.setPath(imapPath() + ";SECTION=UIDNEXT");
   else
     url.setPath(imapPath() + ";SECTION=UNSEEN");
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
-    kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
-    return false;
-  }
+
   mMailCheckProgressItem = ProgressManager::createProgressItem(
               "MailCheckAccount" + account()->name(),
               "MailCheck" + folder()->prettyURL(), folder()->prettyURL(),
               i18n("updating message counts"),
               false,
               account()->useSSL() || account()->useTLS() );
+
+  if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
+    kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
+    return false;
+  }
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd(url.url(), folder() );
