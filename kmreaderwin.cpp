@@ -113,7 +113,7 @@ public:
 };
 KMReaderWin::PartMetaData::PartMetaData()
 {
-    sigStatusFlags = (CryptPlugWrapper::SigStatusFlags)0;
+    sigStatusFlags = CryptPlugWrapper::SigStatus_UNKNOWN;
     isSigned = false;
     isGoodSignature = false;
     isEncrypted = false;
@@ -2078,8 +2078,9 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 
         CryptPlugWrapper::SignatureMetaDataExtendedInfo& ext = sigMeta.extended_info[0];
         if( messagePart.status.isEmpty() )
-            messagePart.status = ext.status_text;
-        messagePart.keyId = ext.keyid;
+          messagePart.status = ext.status_text;
+        if( ext.keyid && *ext.keyid )
+            messagePart.keyId = ext.keyid;
         if( messagePart.keyId.isEmpty() )
             messagePart.keyId = ext.fingerprint; // take fingerprint if no id found (e.g. for S/MIME)
     // ### Ugh. We depend on two enums being in sync:
@@ -2878,84 +2879,89 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
             // process status bits according to SigStatus_...
             // definitions in kdenetwork/libkdenetwork/cryptplug.h
             
-            if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
-                result = i18n("GOOD signature!");
-                // Note:
-                // Here we are work differently than KMail did before!
-                //
-                // The GOOD case ( == sig matching and the complete
-                // certificate chain was verified and is valid today )
-                // by definition does *not* show any key
-                // information but just states that things are OK.
-                //           (khz, according to LinuxTag 2002 meeting)
+            if( CryptPlugWrapper::SigStatus_UNKNOWN == statusFlags ) {
+                result = i18n("Sorry, no status information available.");
                 showKeyInfos = false;
-            }
-            else {
-                QString result2;
-                if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags )
-                    result2 = i18n("One key has been revoked.");
-                if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags )
-                    result2 = i18n("One key has expired.");
-                if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags )
-                    result2 = i18n("The signature has expired.");
-                if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
-                    result2 = i18n("Can't verify: key missing.");
-                    // if the signature certificate is missing
-                    // we cannot show infos on it
+            } else {
+                if( CryptPlugWrapper::SigStatus_VALID & statusFlags ) {
+                    result = i18n("GOOD signature!");
+                    // Note:
+                    // Here we are work differently than KMail did before!
+                    //
+                    // The GOOD case ( == sig matching and the complete
+                    // certificate chain was verified and is valid today )
+                    // by definition does *not* show any key
+                    // information but just states that things are OK.
+                    //           (khz, according to LinuxTag 2002 meeting)
                     showKeyInfos = false;
                 }
-                if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags )
-                    result2 = i18n("CRL not available.");
-                if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags )
-                    result2 = i18n("Available CRL is too old.");
-                if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags )
-                    result2 = i18n("A policy was not met.");
-                if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ) {
-                    result2 = i18n("A system error occured.");
-                    // if a system error occured
-                    // we cannot trust any information
-                    // that was given back by the plug-in
-                    showKeyInfos = false;
-                }
-                if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
-                    result2 = i18n("Internal system error #%1 occured.")
-                              .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
-                    // if an unsupported internal error occured
-                    // we cannot trust any information
-                    // that was given back by the plug-in
-                    showKeyInfos = false;
-                }
-                
-                if( CryptPlugWrapper::SigStatus_GREEN & statusFlags ) {
-                    if( result2.isEmpty() )
-                        result = i18n("GOOD signature!");
-                    else
-                        result = i18n("Good signature.");
-                }
-                else if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
-                    if( result2.isEmpty() ) {
-                        result = i18n("BAD signature!");
-                        // Note:
-                        // Here we are work differently than KMail did before!
-                        //
-                        // The BAD case ( == sig *not* matching )
-                        // by definition does *not* show any key
-                        // information but just states that things are BAD.
-                        //
-                        // The reason for this: In this case ALL information
-                        // might be falsificated, we can NOT trust the data
-                        // in the body NOT the signature - so we don't show
-                        // any key/signature information at all!
-                        //         (khz, according to LinuxTag 2002 meeting)
+                else {
+                    QString result2;
+                    if( CryptPlugWrapper::SigStatus_KEY_REVOKED & statusFlags )
+                        result2 = i18n("One key has been revoked.");
+                    if( CryptPlugWrapper::SigStatus_KEY_EXPIRED & statusFlags )
+                        result2 = i18n("One key has expired.");
+                    if( CryptPlugWrapper::SigStatus_SIG_EXPIRED & statusFlags )
+                        result2 = i18n("The signature has expired.");
+                    if( CryptPlugWrapper::SigStatus_KEY_MISSING & statusFlags ) {
+                        result2 = i18n("Can't verify: key missing.");
+                        // if the signature certificate is missing
+                        // we cannot show infos on it
                         showKeyInfos = false;
                     }
+                    if( CryptPlugWrapper::SigStatus_CRL_MISSING & statusFlags )
+                        result2 = i18n("CRL not available.");
+                    if( CryptPlugWrapper::SigStatus_CRL_TOO_OLD & statusFlags )
+                        result2 = i18n("Available CRL is too old.");
+                    if( CryptPlugWrapper::SigStatus_BAD_POLICY & statusFlags )
+                        result2 = i18n("A policy was not met.");
+                    if( CryptPlugWrapper::SigStatus_SYS_ERROR & statusFlags ) {
+                        result2 = i18n("A system error occured.");
+                        // if a system error occured
+                        // we cannot trust any information
+                        // that was given back by the plug-in
+                        showKeyInfos = false;
+                    }
+                    if( CryptPlugWrapper::SigStatus_NUMERICAL_CODE & statusFlags ) {
+                        result2 = i18n("Internal system error #%1 occured.")
+                                .arg( statusFlags - CryptPlugWrapper::SigStatus_NUMERICAL_CODE );
+                        // if an unsupported internal error occured
+                        // we cannot trust any information
+                        // that was given back by the plug-in
+                        showKeyInfos = false;
+                    }
+
+                    if( CryptPlugWrapper::SigStatus_GREEN & statusFlags ) {
+                        if( result2.isEmpty() )
+                            result = i18n("GOOD signature!");
+                        else
+                            result = i18n("Good signature.");
+                    }
+                    else if( CryptPlugWrapper::SigStatus_RED & statusFlags ) {
+                        if( result2.isEmpty() ) {
+                            result = i18n("BAD signature!");
+                            // Note:
+                            // Here we are work differently than KMail did before!
+                            //
+                            // The BAD case ( == sig *not* matching )
+                            // by definition does *not* show any key
+                            // information but just states that things are BAD.
+                            //
+                            // The reason for this: In this case ALL information
+                            // might be falsificated, we can NOT trust the data
+                            // in the body NOT the signature - so we don't show
+                            // any key/signature information at all!
+                            //         (khz, according to LinuxTag 2002 meeting)
+                            showKeyInfos = false;
+                        }
+                        else
+                            result = i18n("Bad signature.");
+                    }
                     else
-                        result = i18n("Bad signature.");
+                        result = "";
+                    if( !result2.isEmpty() )
+                        result += "<br />" + result2;
                 }
-                else
-                    result = "";
-                if( !result2.isEmpty() )
-                    result += "<br />" + result2;
             }
             // return the appropriate frame color
             if( CryptPlugWrapper::SigStatus_RED & statusFlags )
