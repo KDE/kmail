@@ -185,7 +185,7 @@ namespace {
 
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal )
-  : KCMultiDialog( KDialogBase::IconList, KGuiItem( i18n( "&Load Profile..." ) ), 
+  : KCMultiDialog( KDialogBase::IconList, KGuiItem( i18n( "&Load Profile..." ) ),
                    KGuiItem(), User2, i18n( "Configure" ), parent, name, modal )
   , mProfileDialog( 0 )
 {
@@ -1098,7 +1098,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   bgroupLayout->setAlignment( Qt::AlignTop );
   bgroupLayout->setSpacing( 6 );
   bgroupLayout->setMargin( 11 );
-  
+
   mBlinkingSystray = new QRadioButton( i18n("Alwa&ys show system tray"), bgroup);
   bgroupLayout->addWidget(mBlinkingSystray, 0, 0);
   connect( mBlinkingSystray, SIGNAL( stateChanged( int ) ),
@@ -1271,7 +1271,7 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
   listItem->setText( 1, account->type() );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
-  
+
   emit changed( true );
 }
 
@@ -1317,7 +1317,7 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
 
   if ( item )
     mAccountList->setSelected( item, true );
-  
+
   emit changed( true );
 }
 
@@ -1434,7 +1434,7 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   // "Colors" tab:
   //
   mColorsTab = new ColorsTab();
-  addTab( mColorsTab, i18n("Colo&rs") );
+  addTab( mColorsTab, i18n("Color&s") );
 
   //
   // "Layout" tab:
@@ -1908,11 +1908,11 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   group = new QVButtonGroup( i18n( "General Options" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
-  mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"), group );
+  mMessageSizeCheck = new QCheckBox( i18n("Display messa&ge sizes"), group );
 
   mCryptoIconsCheck = new QCheckBox( i18n( "Show crypto &icons" ), group );
 
-  mAttachmentCheck = new QCheckBox( i18n("&Display attachment icon"), group );
+  mAttachmentCheck = new QCheckBox( i18n("Show attachment icon"), group );
 
   mNestedMessagesCheck =
     new QCheckBox( i18n("&Thread list of message headers"), group );
@@ -1926,7 +1926,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   connect( mNestedMessagesCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  
+
   vlay->addWidget( group );
 
   // "Message Header Threading Options" group:
@@ -1941,7 +1941,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
     new QRadioButton( i18n("Threads default to o&pen"),
 		      mNestingPolicy ), 1 );
   mNestingPolicy->insert(
-    new QRadioButton( i18n("Threads default to clo&sed"),
+    new QRadioButton( i18n("Threads default to closed"),
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
     new QRadioButton( i18n("Open threads that contain ne&w, unread "
@@ -3368,7 +3368,7 @@ SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * n
 
   mNeverSignWhenSavingInDraftsCheck =
     new QCheckBox( i18n("Never sign when saving as draft"), group );
-  mNeverEncryptWhenSavingInDraftsCheck = 
+  mNeverEncryptWhenSavingInDraftsCheck =
     new QCheckBox( i18n("Never encrypt when saving as draft"), group );
 
   vlay->addWidget( mPgpConfig );
@@ -3641,7 +3641,7 @@ void SecurityPage::CryptPlugTab::slotActivatePlugIn()
     mActivateButton->setText( i18n("Deac&tivate")  );
   else
     mActivateButton->setText( i18n("Ac&tivate") );
-  
+
   emit changed( true );
 }
 
@@ -3743,9 +3743,9 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   hlay->addStretch( 1 );
   connect( mDelayedMarkTime, SIGNAL( valueChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
-  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)), 
+  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)),
            mDelayedMarkTime, SLOT(setEnabled(bool)));
-  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)), 
+  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)),
            this , SLOT(slotEmitChanged( void )));
 
   // "show popup after Drag'n'Drop" checkbox: stretch 0
@@ -3846,7 +3846,7 @@ void MiscPage::FolderTab::load() {
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
-  
+
   mLoopOnGotoUnread->setCurrentItem( GlobalSettings::loopOnGotoUnread() );
   mJumpToUnread->setChecked( GlobalSettings::jumpToUnread() );
   mDelayedMarkAsRead->setChecked( GlobalSettings::delayedMarkAsRead() );
@@ -3868,15 +3868,15 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
 				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
- 
+
   GlobalSettings::setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
   GlobalSettings::setDelayedMarkTime( mDelayedMarkTime->value() );
   GlobalSettings::setJumpToUnread( mJumpToUnread->isChecked() );
   GlobalSettings::setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
   GlobalSettings::setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
-  GlobalSettings::setExcludeImportantMailFromExpiry( 
+  GlobalSettings::setExcludeImportantMailFromExpiry(
         mExcludeImportantFromExpiry->isChecked() );
-  
+
   if ( mExpireAtExit->isChecked() )
     general.writeEntry( "when-to-expire", expireAtExit );
   else
@@ -3947,7 +3947,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
            this, SLOT( slotEmitChanged( void ) ) );
   connect( mAutoResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
- 
+
   // Open space padding at the end
   new QLabel( this );
 }
@@ -3960,7 +3960,7 @@ void MiscPage::GroupwareTab::load() {
   mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
   mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
   mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
- 
+
   // Read the IMAP resource config
   KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
   mEnableImapResCB->setChecked( irOptions.readBoolEntry( "Enabled", false ) );
@@ -4003,7 +4003,7 @@ void MiscPage::GroupwareTab::save() {
 #undef DIM
 
 //----------------------------
-// KCM stuff 
+// KCM stuff
 //----------------------------
 extern "C"
 {
@@ -4018,7 +4018,7 @@ extern "C"
 {
   KCModule *create_kmail_config_appearance( QWidget *parent, const char * )
   {
-    AppearancePage *page = 
+    AppearancePage *page =
        new AppearancePage( parent, "kcmkmail_config_appearance" );
     return page;
   }
