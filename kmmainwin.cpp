@@ -1279,12 +1279,20 @@ void KMMainWin::setupMenuBar()
 
   //----- Edit Menu
   QPopupMenu *editMenu = new QPopupMenu();
-  editMenu->insertItem(i18n("&Copy"), this, SLOT(slotCopyText()),
+  editMenu->insertItem(i18n("&Undo"), this,
+                       SLOT(slotUndo()), KStdAccel::key(KStdAccel::Undo));
+  editMenu->insertItem(i18n("&Copy text"), this, SLOT(slotCopyText()),
 			   KStdAccel::key(KStdAccel::Copy));
+  // GS - should we put menu items to copy, cut & paste emails?
   editMenu->insertSeparator();
+  editMenu->insertItem(i18n("&Search"), this,
+                       SLOT(slotSearch()), Key_S);
+  editMenu->insertSeparator();
+  editMenu->insertItem(i18n("Mar&k all messages"), this,
+	               SLOT(slotMarkAll()), Key_K);
 #ifdef BROKEN
   editMenu->insertItem(i18n("&Find..."), this,
-			   SLOT(slotUnimplemented()), KStdAccel::key(KStdAccel::Find));
+		       SLOT(slotUnimplemented()), KStdAccel::key(KStdAccel::Find));
 #endif
   //----- Folder Menu
   mFolderMenu = new QPopupMenu();
@@ -1326,9 +1334,6 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertItem(i18n("New &Message"), this,
 			  SLOT(slotCompose()), KStdAccel::key(KStdAccel::New));
   messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("&Search"), this,
-			  SLOT(slotSearch()), Key_S);
-  messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Next"), mHeaders,
 			  SLOT(nextMessage()), Key_N);
   messageMenu->insertItem(i18n("Next unread"), mHeaders,
@@ -1354,17 +1359,12 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("&Set Status"), msgStatusMenu);
   messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("Mar&k all"), this,
-			  SLOT(slotMarkAll()), Key_K);
   moveId = messageMenu->insertItem(i18n("&Move..."), this,
 			  SLOT(slotMoveMsg()));
   copyId = messageMenu->insertItem(i18n("&Copy..."), this,
 			  SLOT(slotCopyMsg()));
   messageMenu->insertItem(i18n("&Delete"), this,
 			  SLOT(slotDeleteMsg()), Key_D);
-  messageMenu->insertSeparator();
-  messageMenu->insertItem(i18n("&Undo"), this,
-			  SLOT(slotUndo()), KStdAccel::key(KStdAccel::Undo));
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("Send again..."), this,
 			  SLOT(slotResendMsg()));
