@@ -22,11 +22,14 @@
 #include <qpushbutton.h>
 #include <qcombobox.h>
 #include <qwidgetstack.h>
+#ifndef QTOOLTIP_H
+#include <qtooltip.h>
+#endif
 
 #include <assert.h>
 
 // The anchor of the filter dialog's help.
-const QString KMFilterDlgHelpAnchor( "FILTERS_ID" );
+const char * KMFilterDlgHelpAnchor =  "FILTERS_ID" ;
 
 //=============================================================================
 //
@@ -114,6 +117,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
 
   //----------- the list box
   mListBox = new QListBox(this);
+  QToolTip::add(mListBox,i18n("Shows all the defined filter rules.\n"
+  	"Rules are applied from top to bottom,\n"
+	"the first rule that applies is used."));
   
   //----------- the first row of buttons
   QHBox *hb = new QHBox(this);
@@ -123,6 +129,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDown = new QPushButton( QString::null, hb );
   mBtnDown->setPixmap( BarIcon( "down", KIcon::SizeSmall ) );
   mBtnDown->setMinimumSize( mBtnDown->sizeHint() * 1.2 );
+  QToolTip::add(mBtnUp,i18n("Move the selected filter rule up in the list,\n"
+    "which gives it priority over lower rules."));
+  QToolTip::add(mBtnDown,i18n("Move the selected filter rule down in the list."));
   
   //----------- the second row of buttons
   hb = new QHBox(this);
@@ -133,6 +142,9 @@ KMFilterListBox::KMFilterListBox( const QString & title, QWidget *parent, const 
   mBtnDelete->setPixmap( BarIcon( "editdelete", KIcon::SizeSmall ) );
   mBtnDelete->setMinimumSize( mBtnDelete->sizeHint() * 1.2 );
   mBtnRename = new QPushButton( i18n("Rename"), hb );
+  QToolTip::add(mBtnNew,i18n("Add a new filter rule to the list."));
+  QToolTip::add(mBtnDelete,i18n("Delete the selected filter rule."));
+  QToolTip::add(mBtnRename,i18n("Rename the selected filter rule."));
 
   //----------- now connect everything
   connect( mListBox, SIGNAL(highlighted(int)),
