@@ -1356,7 +1356,7 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
   }
   if ( !acct ) {
     // ### FIXME: see above
-    KMessageBox::sorry( this, i18n("Unable to locate account %1")
+    KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
 			.arg(listItem->text(0)) );
     return;
   }
@@ -1434,7 +1434,7 @@ void NetworkPage::ReceivingTab::apply() {
     (*it)->clearPasswd();
     kernel->acctMgr()->writeConfig( true );
     if ( !(*it) || !kernel->acctMgr()->remove(*it) )
-      KMessageBox::sorry( this, i18n("Unable to locate account %1")
+      KMessageBox::sorry( this, i18n("<qt>Unable to locate account <b>%1</b>.</qt>")
 			  .arg( (*it)->name() ) );
   }
   mAccountsToDelete.clear();
@@ -1879,7 +1879,7 @@ static const char * windowLayoutToolTips[numWindowLayouts] = {
 	    "<ul>"
 	    "<li>Short folder list</li>"
 	    "<li>MIME tree (if visible) between message list / folder tree "
-	    "    and reader pane</li>"
+	    "and reader pane</li>"
 	    "<li>Full width reader pane and MIME tree</li>"
 	    "</ul>"
 	    "</qt>")
@@ -3342,34 +3342,33 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   QWhatsThis::add( mSendReceivedReceiptCheck, msg );
 
   msg = i18n( "<qt><h3>Message Disposition Notification Policy</h3>"
-	      "<p>MDNs are a generalization of what is commonly called \"read"
- 	      "   receipt\". The message author requests a disposition"
- 	      "   notification to be sent and the receiver's mail program"
- 	      "   generates a reply from which the author can learn what"
- 	      "   happened to his message. Common disposition types include"
- 	      "   \"displayed\" (i.e. read), \"deleted\" and \"dispatched\""
- 	      "   (e.g. forwarded).</p>"
- 	      "<p>The following options are available to control KMail's"
- 	      "   sending of MDNs:</p>"
+	      "<p>MDNs are a generalization of what is commonly called <b>read "
+ 	      "receipt</b>. The message author requests a disposition "
+ 	      "notification to be sent and the receiver's mail program "
+ 	      "generates a reply from which the author can learn what "
+ 	      "happened to his message. Common disposition types include "
+ 	      "<b>displayed</b> (i.e. read), <b>deleted</b> and <b>dispatched</b> "
+ 	      "(e.g. forwarded).</p>"
+ 	      "<p>The following options are available to control KMail's "
+ 	      "sending of MDNs:</p>"
  	      "<ul>"
- 	      "<li><em>Ignore</em>: Ignores any request for disposition"
- 	      "    notifications. No MDN will ever be sent automatically"
- 	      "    (recommended).</li>"
- 	      "<li><em>Ask</em>: Answers requests only after asking the user"
- 	      "    for permission. This way, you can send MDNs for selected"
- 	      "    messages while denying or ignoring them for others.</li>"
- 	      "<li><em>Deny</em>: Always sends a \"denied\" notification. This"
- 	      "    is only <em>slightly</em> better than always sending MDNs."
- 	      "    The author will still know that the messages has been acted"
- 	      "    upon, he just cannot tell whether it was deleted or read"
- 	      "    etc.</li>"
- 	      "<li><em>Always send</em>: Always sends the requested"
- 	      "    disposition notification. That means that the author of the"
- 	      "    message gets to know when the message was acted upon and,"
- 	      "    in addition, what happened to it (displayed, deleted,"
- 	      "    etc.). This option is strongly discouraged, but since it"
- 	      "    makes much sense e.g. for customer relationship management,"
- 	      "    it has been made available.</li>"
+ 	      "<li><em>Ignore</em>: Ignores any request for disposition "
+ 	      "notifications. No MDN will ever be sent automatically "
+ 	      "(recommended).</li>"
+ 	      "<li><em>Ask</em>: Answers requests only after asking the user "
+ 	      "for permission. This way, you can send MDNs for selected "
+ 	      "messages while denying or ignoring them for others.</li>"
+ 	      "<li><em>Deny</em>: Always sends a <b>denied</b> notification. This "
+ 	      "is only <em>slightly</em> better than always sending MDNs. "
+ 	      "The author will still know that the messages has been acted "
+ 	      "upon, he just cannot tell whether it was deleted or read etc.</li>"
+ 	      "<li><em>Always send</em>: Always sends the requested "
+ 	      "disposition notification. That means that the author of the "
+ 	      "message gets to know when the message was acted upon and, "
+ 	      "in addition, what happened to it (displayed, deleted, "
+ 	      "etc.). This option is strongly discouraged, but since it "
+ 	      "makes much sense e.g. for customer relationship management, "
+ 	      "it has been made available.</li>"
  	      "</ul></qt>" );
   for ( int i = 0 ; i < mMDNGroup->count() ; ++i )
       QWhatsThis::add( mMDNGroup->find( i ), msg );

@@ -13,7 +13,7 @@
         </rect>
     </property>
     <property name="caption">
-        <string>Address  Selection</string>
+        <string>Address Selection</string>
     </property>
     <hbox>
         <property name="name">

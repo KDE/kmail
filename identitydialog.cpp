@@ -136,11 +136,11 @@ namespace KMail {
     label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
     glay->addWidget( label, row, 0 );
     msg = i18n("<qt><h3>BCC (Blind Carbon Copy) addresses</h3>"
-	       "<p>The addresses that you enter here will be added to each"
-	       "   outgoing mail that is sent with this identity. They will not"
-	       "   be visible to other recipients.</p>"
-	       "<p>This is commonly used to send a copy of each sent message to"
-	       "   another account of yours.</p>"
+	       "<p>The addresses that you enter here will be added to each "
+	       "outgoing mail that is sent with this identity. They will not "
+	       "be visible to other recipients.</p>"
+	       "<p>This is commonly used to send a copy of each sent message to "
+	       "another account of yours.</p>"
 	       "<p>If in doubt, leave this field blank.</p></qt>");
     QWhatsThis::add( label, msg );
     QWhatsThis::add( mBccEdit, msg );
