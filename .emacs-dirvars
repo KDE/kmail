@@ -3,8 +3,6 @@
 ;; This file is processed by the dirvars emacs package.  Each variable
 ;; setting below is performed when this dirvars file is loaded.
 ;;
-;; Get dirvars at http://blackie.dk/~dfaure/dirvars.el
-;;
 indent-tabs-mode: nil
 tab-width: 8
 c-basic-offset: 2
@@ -71,4 +69,4 @@ c-offsets-alist: ((string . c-lineup-dont-change)
 	       (arglist-intro . +)
 	       (arglist-close . +)
 	       (inline-open . +)
-	       (brace-list-open . 0)))
+	       (brace-list-open . 0))
