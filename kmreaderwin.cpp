@@ -1072,6 +1072,13 @@ void KMReaderWin::clearCache()
   mMessage = 0;
 }
 
+// enter items for the "Important changes" list here:
+static const char * const kmailChanges[] = {
+  I18N_NOOP("Operations on the parent of a closed thread are now performed on all messages of that thread. That means it is now possible for example to delete a whole thread or subthread by closing it and deleting the parent.")
+};
+static const int numKMailChanges =
+  sizeof kmailChanges / sizeof *kmailChanges;
+
 // enter items for the "new features" list here, so the main body of
 // the welcome page can be left untouched (probably much easier for
 // the translators). Note that the <li>...</li> tags are added
@@ -1095,8 +1102,7 @@ static const char * const kmailNewFeatures[] = {
   I18N_NOOP("You can select your startup folder."),
   I18N_NOOP("A system tray applet has been implemented."),
   I18N_NOOP("As-you-type spell checking is supported."),
-  I18N_NOOP("Improved threading; in particular, threading by subject."),
-  I18N_NOOP("Operations on the parent of a closed thread are now performed on all messages of that thread. That means it is now possible for example to delete a whole thread or subthread by closing it and deleting the parent.")
+  I18N_NOOP("Improved threading; in particular, threading by subject.")
 };
 static const int numKMailNewFeatures =
   sizeof kmailNewFeatures / sizeof *kmailNewFeatures;
@@ -1114,7 +1120,9 @@ void KMReaderWin::displayAboutPage()
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
 	 "%4: prior KMail version; %5: prior KDE version; "
 	 "%6: generated list of new features; "
-	 "%7: First-time user text (only shown on first start)"
+	 "%7: First-time user text (only shown on first start); "
+	 "%8: prior KMail version; "
+         "%9: generated list of important changes; "
 	 "--- end of comment ---",
 	 "<h2>Welcome to KMail %1</h2><p>KMail is the email client for the K "
 	 "Desktop Environment. It is designed to be fully compatible with "
@@ -1124,6 +1132,9 @@ void KMReaderWin::displayAboutPage()
 	 "<a href=\"%2\">documentation</a></li>\n"
 	 "<li>The <a href=\"%3\">KMail homepage</A> offers information about "
 	 "new versions of KMail</li></ul>\n"
+         "<p><span style='font-size:125%; font-weight:bold;'>"
+         "Important changes</span> (compared to KMail %8):</p>\n"
+	 "<ul>\n%9</ul>\n"
 	 "<p>Some of the new features in this release of KMail include "
 	 "(compared to KMail %4, which is part of KDE %5):</p>\n"
 	 "<ul>\n%6</ul>\n"
@@ -1152,6 +1163,13 @@ void KMReaderWin::displayAboutPage()
   } else {
     info = info.arg( QString::null );
   }
+
+  QString changesItems;
+  for ( int i = 0 ; i < numKMailChanges ; i++ )
+    changesItems += i18n("<li>%1</li>\n").arg( i18n( kmailChanges[i] ) );
+
+  info = info.arg("1.5").arg( changesItems );
+
   mViewer->write(content.arg(pointsToPixel( mBodyFont.pointSize() )).arg(info));
   mViewer->end();
 }
