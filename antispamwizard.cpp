@@ -386,7 +386,7 @@ void AntiSpamWizard::checkToolAvailability()
   QValueListIterator<SpamToolConfig> it = mToolList.begin();
   while ( it != mToolList.end() )
   {
-    QString text( i18n("Scanning for ") + (*it).getId() + " ..." );
+    QString text( i18n("Scanning for %1...").arg( (*it).getId() ) );
     mInfoPage->setScanProgressText( text );
     KApplication::kApplication()->processEvents( 200 );
     int rc = checkForProgram( (*it).getExecutable() );
