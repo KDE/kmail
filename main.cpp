@@ -11,6 +11,8 @@
 #include "kmkernel.h" //control center
 #include "kmail_options.h"
 
+#include <kdebug.h>
+
 #undef Status // stupid X headers
 
 #include "aboutdata.h"
@@ -50,6 +52,7 @@ void KMailApplication::commitData(QSessionManager& sm) {
 
 int KMailApplication::newInstance()
 {
+  kdDebug(5006) << "KMailApplication::newInstance()" << endl;
   if (!kmkernel)
      return 0;
 
@@ -82,9 +85,9 @@ int main(int argc, char *argv[])
   // using KMail without KDE)
   KNotifyClient::startDaemon();
 
-  KMail::lockOrDie();
-
   kapp->dcopClient()->suspend(); // Don't handle DCOP requests yet
+
+  KMail::lockOrDie();
 
   //local, do the init
   KMKernel kmailKernel;
