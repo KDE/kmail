@@ -4010,7 +4010,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   if (slash == -1) slash = (*it).mimeType.length();
   msgPart->setTypeStr((*it).mimeType.left(slash));
   msgPart->setSubtypeStr((*it).mimeType.mid(slash+1));
-  msgPart->setContentDisposition(QCString("attachment; filename")
+  msgPart->setContentDisposition(QCString("attachment;\n\tfilename")
     + ((RFC2231encoded) ? "*" : "") +  "=\"" + encName + "\"");
 
   mapAtmLoadData.remove(it);
@@ -4204,7 +4204,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   msgPart->setSubtypeStr("pgp-keys");
   QValueList<int> dummy;
   msgPart->setBodyAndGuessCte(armoredKey, dummy, false);
-  msgPart->setContentDisposition("attachment; filename=public_key.asc");
+  msgPart->setContentDisposition("attachment;\n\tfilename=public_key.asc");
 
   // add the new attachment to the list
   addAttach(msgPart);
@@ -4237,7 +4237,7 @@ void KMComposeWin::slotInsertPublicKey()
     msgPart->setSubtypeStr("pgp-keys");
     QValueList<int> dummy;
     msgPart->setBodyAndGuessCte(armoredKey, dummy, false);
-    msgPart->setContentDisposition("attachment; filename=0x" + keyID + ".asc");
+    msgPart->setContentDisposition("attachment;\n\tfilename=0x" + keyID + ".asc");
 
     // add the new attachment to the list
     addAttach(msgPart);
