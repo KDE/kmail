@@ -153,7 +153,7 @@ public:
 
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
-  KMFolderMgr *dimapFolderMgr() { return the_imapFolderMgr; }
+  KMFolderMgr *dimapFolderMgr() { return the_dimapFolderMgr; }
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
   UndoStack *undoStack() { return the_undoStack; }
   KMAcctMgr *acctMgr() { return the_acctMgr; }
