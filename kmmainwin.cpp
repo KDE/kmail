@@ -1619,7 +1619,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("Address &Book..."), "contents", 0, this,
 		      SLOT(slotAddrBook()), actionCollection(), "addressbook" );
 
-  (void) new KAction( i18n("&Import..."), "kmailcvt", 0, this,
+  (void) new KAction( i18n("&Import..."), "fileopen", 0, this,
 		      SLOT(slotImport()), actionCollection(), "import" );
 
   KStdAction::close( this, SLOT(slotClose()), actionCollection());
