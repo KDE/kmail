@@ -401,7 +401,7 @@ void KMFldSearch::slotSearch()
         folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
             &mgr->dir());
 
-      mFolder = (KMFolderSearch*)folder;
+      mFolder = dynamic_cast<KMFolderSearch*>( folder->storage() );
     }
     mFolder->stopSearch();
     disconnect(mFolder, SIGNAL(msgAdded(int)),
