@@ -400,7 +400,14 @@ void KMMainWin::activatePanners(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::statusMsg(const QString& aText)
 {
-  mStatusBar->changeItem(" " + aText + " ", mMessageStatusId);
+  QString text = " " + aText + " ";
+  int statusWidth = mStatusBar->width() - littleProgress->width()
+    - fontMetrics().maxWidth();
+
+  while (!text.isEmpty() && fontMetrics().width( text ) >= statusWidth)
+    text.truncate( text.length() - 1);
+
+  mStatusBar->changeItem( text, mMessageStatusId); 
 }
 
 
