@@ -56,6 +56,6 @@ KDE_ICON = AUTO
 rcdir = $(kde_datadir)/kmail
 rc_DATA = kmcomposerui.rc
 
-messages:
+messages: rc.cpp
 	$(XGETTEXT) rc.cpp $(kmail_SOURCES) -o $(podir)/kmail.pot
 
