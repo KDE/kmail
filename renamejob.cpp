@@ -262,6 +262,7 @@ void RenameJob::slotMoveCompleted( KMCommand* command )
     mNewFolder->readConfig( config );
       
     // delete the old folder
+    mStorage->blockSignals( false );
     if ( mStorage->folderType() == KMFolderTypeImap )
     {
       kmkernel->imapFolderMgr()->remove( mStorage->folder() );
