@@ -121,6 +121,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mPopup->setCheckable(true);
   mPopup->insertItem(i18n("Status"),          KPaintInfo::COL_STATUS);
   mPopup->insertItem(i18n("Important"),       KPaintInfo::COL_IMPORTANT);
+  mPopup->insertItem(i18n("Todo"),            KPaintInfo::COL_TODO);
   mPopup->insertItem(i18n("Attachment"),      KPaintInfo::COL_ATTACHMENT);
   mPopup->insertItem(i18n("Spam/Ham"),        KPaintInfo::COL_SPAM_HAM);
   mPopup->insertItem(i18n("Watched/Ignored"), KPaintInfo::COL_WATCHED_IGNORED);
@@ -179,6 +180,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
 
   mPaintInfo.statusCol         = addColumn( *pixNew           , "", 0 );
   mPaintInfo.importantCol      = addColumn( *pixFlag          , "", 0 );
+  mPaintInfo.todoCol           = addColumn( *pixTodo          , "", 0 );
   mPaintInfo.attachmentCol     = addColumn( *pixAttachment    , "", 0 );
   mPaintInfo.spamHamCol        = addColumn( *pixSpam          , "", 0 );
   mPaintInfo.watchedIgnoredCol = addColumn( *pixWatched       , "", 0 );
@@ -269,6 +271,13 @@ void KMHeaders::slotToggleColumn(int id, int mode)
       show  = &mPaintInfo.showImportant;
       col   = &mPaintInfo.importantCol;
       width = pixFlag->width();
+      break;
+    }
+    case KPaintInfo::COL_TODO:
+    {
+      show  = &mPaintInfo.showTodo;
+      col   = &mPaintInfo.todoCol;
+      width = pixTodo->width();
       break;
     }
     case KPaintInfo::COL_SPAM_HAM:
@@ -384,8 +393,9 @@ void KMHeaders::readColorConfig (void)
   QColor c3=QColor("blue");
   QColor c4=QColor(kapp->palette().active().base());
   QColor c5=QColor(0,0x7F,0);
-  QColor c6=KGlobalSettings::alternateBackgroundColor();
-
+  QColor c6=QColor(0,0x98,0);
+  QColor c7=KGlobalSettings::alternateBackgroundColor();
+  
   if (!config->readBoolEntry("defaultColors",true)) {
     mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
     mPaintInfo.colBack = config->readColorEntry("BackgroundColor",&c4);
@@ -396,7 +406,8 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colNew = config->readColorEntry("NewMessage",&c2);
     mPaintInfo.colUnread = config->readColorEntry("UnreadMessage",&c3);
     mPaintInfo.colFlag = config->readColorEntry("FlagMessage",&c5);
-    c6 = config->readColorEntry("AltBackgroundColor",&c6);
+    mPaintInfo.colTodo = config->readColorEntry("TodoMessage",&c6);
+    c7 = config->readColorEntry("AltBackgroundColor",&c7);
   }
   else {
     mPaintInfo.colFore = c1;
@@ -408,8 +419,9 @@ void KMHeaders::readColorConfig (void)
     mPaintInfo.colNew = c2;
     mPaintInfo.colUnread = c3;
     mPaintInfo.colFlag = c5;
+    mPaintInfo.colTodo = c6;
   }
-  setAlternateBackground(c6);
+  setAlternateBackground(c7);
 }
 
 //-----------------------------------------------------------------------------
@@ -438,6 +450,9 @@ void KMHeaders::readConfig (void)
 
     show = config->readBoolEntry("showImportantColumn");
     slotToggleColumn(KPaintInfo::COL_IMPORTANT, show);
+
+    show = config->readBoolEntry("showTodoColumn");
+    slotToggleColumn(KPaintInfo::COL_TODO, show);
 
     show = config->readBoolEntry("showSpamHamColumn");
     slotToggleColumn(KPaintInfo::COL_SPAM_HAM, show);
@@ -479,10 +494,11 @@ void KMHeaders::readConfig (void)
       mNewFont = config->readFontEntry( "list-new-font", &listFont );
       mUnreadFont = config->readFontEntry( "list-unread-font", &listFont );
       mImportantFont = config->readFontEntry( "list-important-font", &listFont );
+      mTodoFont = config->readFontEntry( "list-todo-font", &listFont );
       mDateFont = KGlobalSettings::fixedFont();
       mDateFont = config->readFontEntry( "list-date-font", &mDateFont );
     } else {
-      mNewFont= mUnreadFont = mImportantFont = mDateFont =
+      mNewFont= mUnreadFont = mImportantFont = mDateFont = mTodoFont =
         KGlobalSettings::generalFont();
       setFont( mDateFont );
     }
@@ -590,6 +606,7 @@ void KMHeaders::writeConfig (void)
   config->writeEntry("showMessageSize"         , mPaintInfo.showSize);
   config->writeEntry("showAttachmentColumn"    , mPaintInfo.showAttachment);
   config->writeEntry("showImportantColumn"     , mPaintInfo.showImportant);
+  config->writeEntry("showTodoColumn"          , mPaintInfo.showTodo);
   config->writeEntry("showSpamHamColumn"       , mPaintInfo.showSpamHam);
   config->writeEntry("showWatchedIgnoredColumn", mPaintInfo.showWatchedIgnored);
   config->writeEntry("showStatusColumn"        , mPaintInfo.showStatus);

@@ -429,7 +429,7 @@ private:
   KFontChooser *mFontChooser;
 
   int          mActiveFontIndex;
-  QFont        mFont[13];
+  QFont        mFont[14];
 };
 
 class AppearancePageColorsTab : public ConfigModuleTab {

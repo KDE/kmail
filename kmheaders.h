@@ -178,6 +178,7 @@ public:
   QFont newFont() const { return mNewFont; }
   QFont unreadFont() const { return mUnreadFont; }
   QFont importantFont() const { return mImportantFont; }
+  QFont todoFont() const { return mTodoFont; }
   QFont dateFont() const { return mDateFont; }
 
 signals:
@@ -413,7 +414,7 @@ private:
   /** Current colours and backing pixmap */
   KPaintInfo mPaintInfo;
 
-  QFont mNewFont, mUnreadFont, mImportantFont, mDateFont;
+  QFont mNewFont, mUnreadFont, mImportantFont, mDateFont,mTodoFont;
 
   /** Icons shown in header */
   static QIconSet *up, *down;

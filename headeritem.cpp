@@ -97,7 +97,7 @@ void HeaderItem::irefresh()
 
   KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
   if (mMsgBase->isNew() || mMsgBase->isUnread()
-      || mMsgBase->isImportant() || mMsgBase->isWatched() ) {
+      || mMsgBase->isImportant() || mMsgBase->isTodo() || mMsgBase->isWatched() ) {
     setOpen(true);
     HeaderItem * topOfThread = this;
     while(topOfThread->parent())
@@ -247,7 +247,6 @@ const QPixmap *HeaderItem::statusIcon(KMMsgBase *msgBase) const
 
   // a queued or sent mail is usually also read
   if ( msgBase->isQueued() ) return KMHeaders::pixQueued;
-  if ( msgBase->isTodo()   ) return KMHeaders::pixTodo;
   if ( msgBase->isSent()   ) return KMHeaders::pixSent;
 
   if ( msgBase->isNew()                      ) return KMHeaders::pixNew;
@@ -303,6 +302,9 @@ const QPixmap *HeaderItem::pixmap(int col) const
     if ( !headers->mPaintInfo.showImportant )
       if ( msgBase->isImportant() ) pixmaps << *KMHeaders::pixFlag;
 
+    if ( !headers->mPaintInfo.showTodo )
+      if ( msgBase->isTodo() ) pixmaps << *KMHeaders::pixTodo;
+
     static QPixmap mergedpix;
     mergedpix = pixmapMerge( pixmaps );
     return &mergedpix;
@@ -317,6 +319,10 @@ const QPixmap *HeaderItem::pixmap(int col) const
   else if ( col == headers->paintInfo()->importantCol ) {
     if ( msgBase->isImportant() )
       return KMHeaders::pixFlag;
+  }
+  else if ( col == headers->paintInfo()->todoCol ) {
+    if ( msgBase->isTodo() )
+      return KMHeaders::pixTodo;
   }
   else if ( col == headers->paintInfo()->spamHamCol ) {
     if ( msgBase->isSpam() ) return KMHeaders::pixSpam;
@@ -350,8 +356,13 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
   QFont font = p->font();
   int weight = font.weight();
 
-  // for color and font family "important" overrides "new" overrides "unread",
-  // for the weight we use the maximal weight
+  // for color and font family "important" overrides "new" overrides "unread"
+  // overrides "todo" for the weight we use the maximal weight
+  if ( mMsgBase->isTodo() ) {
+    color = const_cast<QColor*>( &headers->paintInfo()->colTodo );
+    font = headers->todoFont();
+    weight = QMAX( weight, font.weight() );
+  }
   if ( mMsgBase->isUnread() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colUnread );
     font = headers->unreadFont();
@@ -362,6 +373,7 @@ void HeaderItem::paintCell( QPainter * p, const QColorGroup & cg,
     font = headers->newFont();
     weight = QMAX( weight, font.weight() );
   }
+
   if ( mMsgBase->isImportant() ) {
     color = const_cast<QColor*>( &headers->paintInfo()->colFlag );
     font = headers->importantFont();
@@ -461,6 +473,10 @@ QString HeaderItem::generate_key( KMHeaders *headers,
     QString s(msg->isImportant() ? "1" : "0");
     return ret + s + sortArrival;
   }
+  else if ( column == paintInfo->todoCol ) {
+    QString s( msg->isTodo() ? "1": "0" );
+    return ret + s + sortArrival;
+  }
   else if (column == paintInfo->spamHamCol) {
     QString s((msg->isSpam() || msg->isHam()) ? "1" : "0");
     return ret + s + sortArrival;
@@ -527,6 +543,7 @@ int HeaderItem::compare( QListViewItem *i, int col, bool ascending ) const
       ( col == headers->paintInfo()->sizeCol           ) ||
       ( col == headers->paintInfo()->attachmentCol     ) ||
       ( col == headers->paintInfo()->importantCol      ) ||
+      ( col == headers->paintInfo()->todoCol           ) ||
       ( col == headers->paintInfo()->spamHamCol        ) ||
       ( col == headers->paintInfo()->signedCol         ) ||
       ( col == headers->paintInfo()->cryptoCol         ) ||
