@@ -2,6 +2,8 @@
 #define __KMFOLDERDIA
 
 #include <kdialogbase.h>
+#include <qlist.h>
+#include <knuminput.h>
 
 class KMAcctFolder;
 class QCheckBox;
@@ -24,6 +26,7 @@ public:
 protected slots:
   virtual void slotOk( void );
   virtual void slotHoldsML( bool );
+  virtual void slotExpireFolder( bool );
 
 protected:
   QComboBox *fileInFolder;
@@ -34,11 +37,13 @@ protected:
   KMFolderDir* mFolderDir;
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 
-  QCheckBox *holdsMailingList, *markAnyMessage;
+  QCheckBox *holdsMailingList, *markAnyMessage, *expireFolder;
   QLineEdit *mailingListPostAddress;
   QComboBox *identity;
 //   QLineEdit *mailingListAdminAddress;
 
+  KIntNumInput *readExpiryTime, *unreadExpiryTime;
+  QComboBox    *readExpiryUnits, *unreadExpiryUnits;
 };
 
 #endif /*__KMFOLDERDIA*/

@@ -778,10 +778,12 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
   {
     folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                            SLOT(addChildFolder()));
-    if (!fti->folder)
+    if (!fti->folder) {
       folderMenu->insertItem(i18n("Compact All &Folders"),
                      kernel->folderMgr(), SLOT(compactAll()));
-    else if (fti->folder->protocol() == "imap")
+      folderMenu->insertItem(i18n("Expire All Folders"),
+			     kernel->folderMgr(), SLOT(expireAll()));
+    } else if (fti->folder->protocol() == "imap")
       folderMenu->insertItem(i18n("Check &Mail"),
         static_cast<KMFolderImap*>(fti->folder)->account(),
         SLOT(processNewMail()));
@@ -793,9 +795,17 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
     {
       folderMenu->insertItem(i18n("&Create Child Folder..."), this,
                              SLOT(addChildFolder()));
-      folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
-                             SLOT(slotModifyFolder()));
     }
+
+    // Want to be able to display properties for ALL folders,
+    // so we can edit expiry properties.
+    // -- smp.
+    folderMenu->insertItem(i18n("&Properties..."), topLevelWidget(),
+                         SLOT(slotModifyFolder()));
+
+    if (fti->folder->protocol() != "imap" && fti->folder->isAutoExpire())
+      folderMenu->insertItem(i18n("E&xpire"), topLevelWidget(),
+                             SLOT(slotExpireFolder()));
 
     folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
                            SLOT(slotCompactFolder()));

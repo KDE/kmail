@@ -81,6 +81,11 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mIndexStreamPtrLength = 0;
   mCompactable     = TRUE;
   mNoContent      = FALSE;
+  expireMessages = FALSE;
+  unreadExpireAge = 28;
+  unreadExpireUnits = expireNever;
+  readExpireAge = 14;
+  readExpireUnits = expireNever;
 }
 
 
@@ -523,6 +528,88 @@ int KMFolder::expungeOldMsg(int days)
   }
   return msgnb;
 }
+
+
+//-----------------------------------------------------------------------------
+/**
+ * Return the number of days given some value, and the units for that
+ * value. Currently, supported units are days, weeks and months.
+ */
+int
+KMFolder::daysToExpire(int number, ExpireUnits units) {
+  switch (units) {
+  case expireDays: // Days
+    return number;
+  case expireWeeks: // Weeks
+    return number * 7;
+  case expireMonths: // Months - this could be better rather than assuming 31day months.
+    return number * 31;
+  }
+
+  return -1;
+
+}
+
+//-----------------------------------------------------------------------------
+/**
+ * Expire old messages from this folder. Read and unread messages have
+ * different expiry times. An expiry time of 0 or less is considered to
+ * mean no-expiry. Also check the general 'expire' flag as well.
+ */
+void KMFolder::expireOldMessages() {
+  int             days = 0;
+  int             maxUnreadTime = 0;
+  int             maxReadTime = 0;
+  KMMsgBase       *mb = NULL;
+  QValueList<int> rmvMsgList;
+  int             i = 0;
+  time_t          msgTime, maxTime = 0;
+
+  kdDebug(5006) << "expireOldMessages " << name() << endl;
+
+  if (protocol() == "imap") {
+    return;
+  }
+
+  days = daysToExpire(getUnreadExpireAge(), getUnreadExpireUnits());
+  if (days > 0) {
+    kdDebug(5006) << "deleting unread older than "<< days << " days" << endl;
+    maxUnreadTime = time(0L) - days * 3600 * 24;
+  }
+
+  days = daysToExpire(getReadExpireAge(), getReadExpireUnits());
+  if (days > 0) {
+    kdDebug(5006) << "deleting read older than "<< days << " days" << endl;
+    maxReadTime = time(0L) - days * 3600 * 24;
+  }
+
+  if ((maxUnreadTime == 0) && (maxReadTime == 0)) {
+    return;
+  }
+  open();
+  for (i=mMsgList.count()-1; i>=0; i--) {
+    mb = getMsgBase(i);
+    if (mb == NULL) {
+	  continue;
+    }
+    msgTime = mb->date();
+
+	if (mb->isUnread()) {
+	  maxTime = maxUnreadTime;
+	} else {
+	  maxTime = maxReadTime;
+	}
+
+    if (msgTime < maxTime) {
+      removeMsg( i );
+    }
+  }
+  close();
+  
+  return;
+}
+
+
 
 
 //-----------------------------------------------------------------------------
@@ -982,6 +1069,12 @@ void KMFolder::readConfig()
   if ( mIdentity.isEmpty() ) // backward compatiblity
       mIdentity = config->readEntry("MailingListIdentity");
   mCompactable = config->readBoolEntry("Compactable", TRUE);
+
+  expireMessages = config->readBoolEntry("ExpireMessages", FALSE);
+  readExpireAge = config->readNumEntry("ReadExpireAge", 3);
+  readExpireUnits = (ExpireUnits)config->readNumEntry("ReadExpireUnits", expireMonths);
+  unreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
+  unreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
 }
 
 //-----------------------------------------------------------------------------
@@ -995,6 +1088,12 @@ void KMFolder::writeConfig()
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Compactable", mCompactable);
+  config->writeEntry("ExpireMessages", expireMessages);
+  config->writeEntry("ReadExpireAge", readExpireAge);
+  config->writeEntry("ReadExpireUnits", readExpireUnits);
+  config->writeEntry("UnreadExpireAge", unreadExpireAge);
+  config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
+
 }
 
 //-----------------------------------------------------------------------------

@@ -78,9 +78,13 @@ public:
   /** fsync all open folders to disk */
   virtual void syncAllFolders( KMFolderDir *adir = 0 );
 
+  /** Expire old messages in all folders */
+  virtual void expireAllFolders( KMFolderDir *adir = 0 );
+
 public slots:
   /** Compacts all folders (they know is it needed) */
   void compactAll();
+  void expireAll(); 
 
 signals:
   /** Emitted when the list of folders has changed. This signal is a hook

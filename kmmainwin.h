@@ -114,7 +114,9 @@ protected:
   void setupMenuBar();
   void setupStatusBar();
   void createWidgets();
-  void activatePanners();  void showMsg(KMReaderWin *win, KMMessage *msg);
+  void activatePanners();
+  void showMsg(KMReaderWin *win, KMMessage *msg);
+  virtual bool queryClose();
 
 protected slots:
   void slotCheckOneAccount(int);
@@ -131,6 +133,8 @@ protected slots:
   void slotAddFolder();
   void slotCompose();
   void slotModifyFolder();
+  void slotExpireFolder();
+  void slotExpireAll();
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
@@ -253,7 +257,7 @@ protected:
   ConfigureDialog *mConfigureDialog;
   bool mbNewMBVisible;
 
-  KAction *modifyFolderAction, *removeFolderAction;
+  KAction *modifyFolderAction, *removeFolderAction, *expireFolderAction;
   KToggleAction *preferHtmlAction, *threadMessagesAction;
   KToggleAction *toolbarAction, *statusbarAction;
 

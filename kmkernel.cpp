@@ -607,45 +607,25 @@ void KMKernel::cleanup(void)
   else if (the_trashFolder) {
 
     the_trashFolder->close(TRUE);
+
     if (config->readBoolEntry("empty-trash-on-exit", true))
       the_trashFolder->expunge();
 
-    // Phil add on
-    if (config->readBoolEntry("remove-old-mail-from-trash", true)
-		|| (config->readBoolEntry("keep-small-trash", true)) ) {
-      the_trashFolder->open();
-      the_trashFolder->quiet(true);
-    }
+  } 
 
-    if (config->readBoolEntry("remove-old-mail-from-trash", true)) {
-      int age;
-      int old_age = config->readNumEntry("old-mail-age", 1);
-      int age_unit = config->readNumEntry("old-mail-age-unit", 1);
-      if (age_unit == 0) { // month
-        age = 31 * old_age;
-      } else if (age_unit == 1) { // week
-        age = 7 * old_age;
-      } else if (age_unit == 2) { // day
-        age = old_age;
-      } else {
-        kdDebug(5006) << "Unknown unit for mail age : " << old_age << endl;
-        age = old_age;
+  // Expire old messages in all folders.
+  if (closed_by_user) {
+    if (config->readNumEntry("when-to-expire")==expireAtExit) {
+      bool  expire = true;
+
+      if (config->readBoolEntry("warn-before-expire")) {
+	expire = canExpire();
       }
-      kdDebug(5006) << "Removing mail older than " << age << " days" << endl;
-
-	  the_trashFolder->expungeOldMsg( age );
+      if (expire) {
+	the_folderMgr->expireAllFolders(NULL);
+      }
     }
-
-    if (config->readBoolEntry("keep-small-trash", true)) {
-      int size = config->readNumEntry("small-trash-size", 10);
-      the_trashFolder->reduceSize( size );
-    }
-
-    the_trashFolder->close();
-    the_trashFolder->compact();
-    kdDebug(5006) << "trash clean-up done." << endl;
   }
-
 
   if (closed_by_user && the_folderMgr) {
     if (config->readBoolEntry("compact-all-on-exit", true))
@@ -840,6 +820,27 @@ void KMKernel::emergencyExit( const QString& reason )
   KNotifyClient::userEvent( mesg, KNotifyClient::Messagebox, KNotifyClient::Error );
 
   ::exit(1);
+}
+
+/**
+ * Sets whether the user wants to expire old email on exit.
+ * When last main window is closed, user can be presented with
+ * a dialog asking them whether they want to expire old email.
+ * This is used to keep track of the answer for when cleanup
+ * occurs.
+ */
+void
+KMKernel::setCanExpire(bool expire) {
+  allowedToExpire = expire;
+}
+
+/**
+ * Returns true or false depending on whether user has given
+ * their consent to old email expiry for this session.
+ */
+bool
+KMKernel::canExpire() {
+  return allowedToExpire;
 }
 
 #include "kmkernel.moc"

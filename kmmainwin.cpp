@@ -115,7 +115,7 @@ KMMainWin::~KMMainWin()
     searchWin->close();
   writeConfig();
   writeFolderConfig();
-
+  
   saveMainWindowSettings(kapp->config(), "Main Window");
   kapp->config()->sync();
 
@@ -739,6 +739,38 @@ void KMMainWin::slotModifyFolder()
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotExpireFolder()
+{
+  QString     str;
+  bool        canBeExpired = true;
+
+  if (!mFolder) return;
+
+  if (!mFolder->isAutoExpire()) {
+    canBeExpired = false;
+  } else if (mFolder->getUnreadExpireUnits()==expireNever &&
+	     mFolder->getReadExpireUnits()==expireNever) {
+    canBeExpired = false;
+  }
+
+  if (!canBeExpired) {
+    str = i18n("This folder does not have any expiry options set");
+    KMessageBox::information(this, str);
+    return;
+  }
+  KConfig           *config = kapp->config();
+  KConfigGroupSaver saver(config, "General");
+
+  if (config->readBoolEntry("warn-before-expire")) {
+    str = i18n("Are you sure you want to expire this folder \"%1\"?").arg(mFolder->label());
+    if (KMessageBox::warningContinueCancel(this, str, i18n("Expire folder"),
+					   i18n("&Expire"))
+	!= KMessageBox::Continue) return;
+  }
+
+  mFolder->expireOldMessages();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotEmptyFolder()
@@ -848,6 +880,25 @@ void KMMainWin::slotCompactFolder()
   mHeaders->setCurrentItemByIndex(idx);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotExpireAll() {
+  KConfig    *config = kapp->config();
+  int        ret = 0;
+
+  KConfigGroupSaver saver(config, "General");
+
+  if (config->readBoolEntry("warn-before-expire")) {
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),     
+			 i18n("Are you sure you want to expire all old messages?"),
+			 i18n("Expire old messages?"), i18n("Expire"));
+    if (ret != KMessageBox::Continue) {
+      return;
+    }
+  }
+
+  kernel->folderMgr()->expireAllFolders();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCompactAll()
@@ -1650,6 +1701,10 @@ void KMMainWin::setupMenuBar()
 		      this, SLOT(slotCompactAll()),
 		      actionCollection(), "compact_all_folders" );
 
+  (void) new KAction( i18n("&Expire all folders"), 0,
+		      this, SLOT(slotExpireAll()),
+		      actionCollection(), "expire_all_folders" );
+
   (void) new KAction( i18n("Check &Mail"), "mail_get", CTRL+Key_L,
 		      this, SLOT(slotCheckMail()),
 		      actionCollection(), "check_mail" );
@@ -1704,6 +1759,9 @@ void KMMainWin::setupMenuBar()
 
   modifyFolderAction = new KAction( i18n("&Properties..."), 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
+
+  expireFolderAction = new KAction(i18n("E&xpire"), 0, this, SLOT(slotExpireFolder()),
+				   actionCollection(), "expire");
 
   (void) new KAction( i18n("C&ompact"), 0, this,
 		      SLOT(slotCompactFolder()), actionCollection(), "compact" );
@@ -2161,9 +2219,10 @@ void KMMainWin::updateMessageActions()
 //-----------------------------------------------------------------------------
 void KMMainWin::updateFolderMenu()
 {
-  modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
-    : false );
+  //  modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder(): false );
   removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
+  expireFolderAction->setEnabled( mFolder && mFolder->protocol() != "imap"
+    && mFolder->isAutoExpire() );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( true );
   threadMessagesAction->setEnabled( mFolder ? true : false );
@@ -2206,3 +2265,41 @@ void KMMainWin::slotMemInfo() {
 }
 
 
+//-----------------------------------------------------------------------------
+bool KMMainWin::queryClose() {
+  int      ret = 0;
+  QString  str = i18n("Expire old messages from all folders? "
+		      "Expired messages are permanently deleted.");
+  KConfig *config = kapp->config();
+
+  // Make sure this is the last window.
+  KMainWindow   *kmWin = NULL;
+  int           num = 0;
+
+  kernel->setCanExpire(false);
+  for (kmWin = KMainWindow::memberList->first(); kmWin; 
+       kmWin = KMainWindow::memberList->next()) {
+    if (kmWin->isA("KMMainWin")) {
+      num++;
+    }
+  }
+  // If this isn't the last open window, don't do anything.
+  if (num > 1) {
+    return true;
+  }
+
+  KConfigGroupSaver saver(config, "General");
+  if (config->readNumEntry("when-to-expire", 0) != expireAtExit) {
+    return true;
+  }
+
+  if (config->readBoolEntry("warn-before-expire")) {
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),     
+			 str, i18n("Expire old messages?"), i18n("Expire"));
+    if (ret == KMessageBox::Continue) {
+      kernel->setCanExpire(true);
+    }
+  }
+
+  return true;
+}

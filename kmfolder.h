@@ -295,6 +295,94 @@ public:
 
     uchar *indexStreamBasePtr() { return mIndexStreamPtr; }
 
+  /**
+   * Set whether this folder automatically expires messages.
+   */
+  void
+  setAutoExpire(bool enabled) {
+    expireMessages = enabled;
+    writeConfig();
+  }
+
+  /**
+   * Does this folder automatically expire old messages?
+   */
+  bool    isAutoExpire() { return expireMessages; }
+
+  /**
+   * Set the maximum age for unread messages in this folder.
+   * Age should not be negative. Units are set using
+   * setUnreadExpireUnits().
+   */
+  void
+  setUnreadExpireAge(int age) {
+    if (age >= 0) {
+      unreadExpireAge = age;
+      writeConfig();
+    }
+  }
+
+  /**
+   * Set units to use for expiry of unread messages.
+   * Values are 1 = days, 2 = weeks, 3 = months.
+   */
+  void
+  setUnreadExpireUnits(ExpireUnits units) {
+    if (units >= expireNever && units < expireMaxUnits) {
+      unreadExpireUnits = units;
+    }
+  }
+
+  /**
+   * Set the maximum age for read messages in this folder.
+   * Age should not be negative. Units are set using
+   * setReadExpireUnits().
+   */
+  void
+  setReadExpireAge(int age) {
+    if (age >= 0) {
+      readExpireAge = age;
+      writeConfig();
+    }
+  }
+
+  /**
+   * Set units to use for expiry of read messages.
+   * Values are 1 = days, 2 = weeks, 3 = months.
+   */
+  void
+  setReadExpireUnits(ExpireUnits units) {
+    if (units >= expireNever && units <= expireMaxUnits) {
+      readExpireUnits = units;
+    }
+  }
+
+  /**
+   * Get the age at which unread messages are expired.
+   * Units are determined by getUnreadExpireUnits().
+   */
+  int getUnreadExpireAge() { return unreadExpireAge; }
+
+  /**
+   * Get the age at which read messages are expired.
+   * Units are determined by getReadExpireUnits().
+   */
+  int getReadExpireAge() { return readExpireAge; }
+
+  /**
+   * Units getUnreadExpireAge() is returned in.
+   * 1 = days, 2 = weeks, 3 = months.
+   */
+  ExpireUnits getUnreadExpireUnits() { return unreadExpireUnits; }
+
+  /**
+   * Units getReadExpireAge() is returned in.
+   * 1 = days, 2 = weeks, 3 = months.
+   */
+  ExpireUnits getReadExpireUnits() { return readExpireUnits; }
+
+  void expireOldMessages();
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -398,6 +486,16 @@ protected:
   bool mConvertToUtf8;
   uchar *mIndexStreamPtr;
   int mIndexStreamPtrLength, mIndexId;
+
+  /** Support for automatic expiry of old messages */
+  bool         expireMessages;          // TRUE if old messages are expired
+  int          unreadExpireAge;         // Given in unreadExpireUnits
+  int          readExpireAge;           // Given in readExpireUnits
+  ExpireUnits  unreadExpireUnits;
+  ExpireUnits  readExpireUnits;
+
+  int          daysToExpire(int num, ExpireUnits units);
+
 };
 
 #endif /*kmfolder_h*/

@@ -400,11 +400,6 @@ private:
     {
       int         pageIndex;
       QCheckBox   *emptyTrashCheck;
-      QCheckBox   *keepSmallTrashCheck;
-      KIntNumInput *smallTrashSizeSpin;
-      QCheckBox   *removeOldMailCheck;
-      KIntNumInput *oldMailAgeSpin;
-      QComboBox   *timeUnitCombo;
       QCheckBox   *sendOutboxCheck;
       QCheckBox   *compactOnExitCheck;
       QCheckBox   *emptyFolderConfirmCheck;
@@ -414,6 +409,13 @@ private:
       QLineEdit   *mailCommandEdit;
       QPushButton *mailCommandChooseButton;
       QLabel      *mailCommandLabel;
+      QButtonGroup *expBGroup;
+      QRadioButton *manualExpiry;
+      QRadioButton *expireAtExit;
+      QRadioButton *expireAtStart;
+      QRadioButton *expireDaily;
+      QRadioButton *expireWeekly;
+      QCheckBox   *warnBeforeExpire;
     };
 
     enum EPage
@@ -518,7 +520,6 @@ private:
     void slotMailCommandSelectionChanged( void );
     void slotExternalEditorChooser( void );
     void slotMailCommandChooser( void );
-    void slotEmptyTrashState( int );
 
   private:
     IdentityWidget   mIdentity;

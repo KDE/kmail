@@ -131,6 +131,56 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   mlLayout->addWidget( mailingListPostAddress, 1, 1 );
   mailingListPostAddress->setEnabled(false);
 
+  //
+  // Expiry data.
+  //
+  QGroupBox *expGroup = new QGroupBox(i18n("Old Message Expiry"), page);
+  expGroup->setColumnLayout(0, Qt::Vertical);
+  QGridLayout *expLayout = new QGridLayout(expGroup->layout());
+  expLayout->setSpacing(6);
+
+  // Checkbox for setting whether expiry is enabled on this folder.
+  expireFolder = new QCheckBox(i18n("Expire old messages in this folder"), expGroup);
+  QObject::connect(expireFolder, SIGNAL(toggled(bool)), SLOT(slotExpireFolder(bool)));
+  topLayout->addWidget(expGroup);
+  expLayout->addMultiCellWidget(expireFolder, 0, 0, 0, 1);
+
+  // Expiry time for read documents.
+  label = new QLabel(i18n("Expire read email after"), expGroup);
+  expLayout->addWidget(label, 1, 0);
+  readExpiryTime = new KIntNumInput(expGroup);
+  readExpiryTime->setRange(1, 500, 1, false);
+  label->setBuddy(readExpiryTime);
+  expLayout->addWidget(readExpiryTime, 1, 1);
+
+  readExpiryUnits = new QComboBox(expGroup);
+  readExpiryUnits->insertItem(i18n("Never"));
+  readExpiryUnits->insertItem(i18n("day(s)"));
+  readExpiryUnits->insertItem(i18n("week(s)"));
+  readExpiryUnits->insertItem(i18n("month(s)"));
+  expLayout->addWidget(readExpiryUnits, 1, 2);
+
+
+  // Expiry time for unread documents.
+  label = new QLabel(i18n("Expire unread email after"), expGroup);
+  expLayout->addWidget(label, 2, 0);
+  unreadExpiryTime = new KIntNumInput(expGroup);
+  unreadExpiryTime->setRange(1, 500, 1, false);
+  label->setBuddy(unreadExpiryTime);
+  expLayout->addWidget(unreadExpiryTime, 2, 1);
+
+  unreadExpiryUnits = new QComboBox(expGroup);
+  unreadExpiryUnits->insertItem(i18n("Never"));
+  unreadExpiryUnits->insertItem(i18n("day(s)"));
+  unreadExpiryUnits->insertItem(i18n("week(s)"));
+  unreadExpiryUnits->insertItem(i18n("month(s)"));
+  expLayout->addWidget(unreadExpiryUnits, 2, 2);
+
+
+  expLayout->setColStretch(0, 3);
+  expLayout->setColStretch(0, 100);
+
+
   QGroupBox *idGroup = new QGroupBox(  i18n("Identity" ), page );
   idGroup->setColumnLayout( 0, Qt::Vertical );
   QHBoxLayout *idLayout = new QHBoxLayout(idGroup->layout());
@@ -182,6 +232,61 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
          identity->setCurrentItem(i);
          break;
       }
+
+    // Set the status of widgets to represent the folder
+	// properties for auto expiry of old email.
+    expireFolder->setChecked(folder->isAutoExpire());
+    if (!folder->isAutoExpire()) {
+      readExpiryTime->setEnabled(false);
+      readExpiryUnits->setEnabled(false);
+      unreadExpiryTime->setEnabled(false);
+      unreadExpiryUnits->setEnabled(false);
+    }
+	// Legal values for units are 1=days, 2=weeks, 3=months.
+	// Should really do something better than hardcoding this everywhere.
+	if (folder->getReadExpireUnits() >= 0 && folder->getReadExpireUnits() < expireMaxUnits) {
+      readExpiryUnits->setCurrentItem(folder->getReadExpireUnits());
+	}
+	if (folder->getUnreadExpireUnits() >= 0 && folder->getUnreadExpireUnits() < expireMaxUnits) {
+      unreadExpiryUnits->setCurrentItem(folder->getUnreadExpireUnits());
+	}
+	int age = folder->getReadExpireAge();
+	if (age >= 1 && age <= 500) {
+      readExpiryTime->setValue(age);
+	} else {
+	  readExpiryTime->setValue(7);
+    }
+	age = folder->getUnreadExpireAge();
+	if (age >= 1 && age <= 500) {
+      unreadExpiryTime->setValue(age);
+	} else {
+	  unreadExpiryTime->setValue(28);
+	}
+  } else {
+    // Default values for everything if there isn't a folder
+	// object yet.
+    readExpiryTime->setEnabled(false);
+    readExpiryUnits->setEnabled(false);
+    unreadExpiryTime->setEnabled(false);
+    unreadExpiryUnits->setEnabled(false);
+    readExpiryTime->setValue(7);
+    unreadExpiryTime->setValue(28);
+
+  }
+
+  // Musn't be able to edit details for a system folder.
+  // Make sure we don't bomb out if there isn't a folder
+  // object yet (i.e. just about to create new folder).
+
+  if (aFolder && aFolder->protocol() == "imap") {
+    expGroup->hide();
+  }
+  else if (folder && folder->isSystemFolder()) {
+    fpGroup->hide();
+    mtGroup->hide();
+    mlGroup->hide();
+    idGroup->hide();
+    mcGroup->hide();
   }
 
   kdDebug(5006)<<"Exiting KMFolderDialog::KMFolderDialog()\n";
@@ -274,6 +379,13 @@ void KMFolderDialog::slotOk()
     folder->setMailingListAdminAddress( QString::null );
     folder->setIdentity( identity->currentText() );
 // folder->setMarkAnyMessage( markAnyMessage->isChecked() );
+
+    // Settings for auto expiry of old email messages.
+    folder->setAutoExpire(expireFolder->isChecked());
+    folder->setUnreadExpireAge(unreadExpiryTime->value());
+    folder->setReadExpireAge(readExpiryTime->value());
+    folder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
+    folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
   }
 
   KDialogBase::slotOk();
@@ -296,3 +408,21 @@ void KMFolderDialog::slotHoldsML( bool holdsML )
 //  mailingListIdentity->setEnabled(holdsML);
 }
 
+/**
+ * Called when the 'auto expire' toggle is clicked.
+ * Enables/disables all widgets related to this.
+ */
+void KMFolderDialog::slotExpireFolder(bool expire)
+{
+  if (expire) {
+    readExpiryTime->setEnabled(true);
+    readExpiryUnits->setEnabled(true);
+    unreadExpiryTime->setEnabled(true);
+    unreadExpiryUnits->setEnabled(true);
+  } else {
+    readExpiryTime->setEnabled(false);
+    readExpiryUnits->setEnabled(false);
+    unreadExpiryTime->setEnabled(false);
+    unreadExpiryUnits->setEnabled(false);
+  }
+}

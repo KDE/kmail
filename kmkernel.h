@@ -33,6 +33,10 @@ public:
   KMKernel (QObject *parent=0, const char *name=0);
   ~KMKernel ();
 
+  /** true if user has requested to expire all messages on exit */
+  void setCanExpire(bool expire);
+  bool canExpire();
+
   /** dcop calable stuff */
 
   void checkMail ();
@@ -153,6 +157,7 @@ private:
   bool the_server_is_ready;
   /** true unles kmail is closed by session management */
   bool closed_by_user;
+  bool allowedToExpire;
   static KMKernel *mySelf;
 };
 

@@ -21,6 +21,8 @@
 
 #include <klocale.h>
 #include <kmessagebox.h>
+#include <kmmainwin.h>
+#include <kapplication.h>
 
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
@@ -47,6 +49,24 @@ KMFolderMgr::~KMFolderMgr()
 void KMFolderMgr::compactAll()
 {
   compactAllAux( &mDir );
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMgr::expireAll() {
+  KConfig             *config = kapp->config();
+  KConfigGroupSaver   saver(config, "General");
+  int                 ret = KMessageBox::Continue;
+
+  if (config->readBoolEntry("warn-before-expire")) {
+    ret = KMessageBox::warningContinueCancel(KMainWindow::memberList->first(),     
+			 i18n("Are you sure you want to expire old messages?"),
+			 i18n("Expire old messages?"), i18n("Expire"));
+  }
+     
+  if (ret == KMessageBox::Continue) {
+    expireAllFolders(NULL);
+  }
+    
 }
 
 
@@ -308,6 +328,33 @@ void KMFolderMgr::syncAllFolders( KMFolderDir *adir )
 	folder->sync();
     if (folder->child())
       syncAllFolders( folder->child() );
+  }
+}
+
+
+//-----------------------------------------------------------------------------
+/**
+ * Check each folder in turn to see if it is configured to
+ * AutoExpire. If so, expire old messages.
+ *
+ * Should be called with NULL first time around.
+ */
+void KMFolderMgr::expireAllFolders(KMFolderDir *adir) {
+  KMFolderNode  *cur = NULL;
+  KMFolderDir   *fdir = adir ? adir : &mDir;
+
+  for (cur = fdir->first(); cur; cur = fdir->next()) {
+    if (cur->isDir()) {
+	  continue;
+    }
+
+    KMFolder *folder = static_cast<KMFolder*>(cur);
+    if (folder->isAutoExpire()) {
+      folder->expireOldMessages();
+    }
+    if (folder->child()) {
+      expireAllFolders( folder->child() );
+    }
   }
 }
 

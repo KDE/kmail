@@ -1510,38 +1510,39 @@ void ConfigureDialog::makeMiscPage( void )
   tvlay->addSpacing( fontMetrics().lineSpacing() );
   mMisc.emptyTrashCheck =
     new QCheckBox(i18n("&Empty trash on exit"), tgroup );
-  connect( mMisc.emptyTrashCheck, SIGNAL(stateChanged(int)),
-		  this, SLOT(slotEmptyTrashState(int)) );
   tvlay->addWidget( mMisc.emptyTrashCheck );
   QHBoxLayout *stlay = new QHBoxLayout( spacingHint() ,"hly1");
   stlay->setMargin(0);
   tvlay->addLayout( stlay );
-  mMisc.keepSmallTrashCheck =
-    new QCheckBox(i18n("&Keep trash size below "), tgroup );
-  stlay->addWidget( mMisc.keepSmallTrashCheck );
-  mMisc.smallTrashSizeSpin = new KIntNumInput( tgroup );
-  mMisc.smallTrashSizeSpin->setRange(1, 500, 1, false);
-  //mFolder.smallTrashSizeSpin->setMinValue(1);
-  stlay->addWidget( mMisc.smallTrashSizeSpin );
-  stlay->addWidget( new QLabel( i18n("MB"), tgroup ) );
-  stlay->addStretch( 100 );
 
-  QHBoxLayout *rmvlay = new QHBoxLayout( spacingHint(),"hly2" );
-  rmvlay->setMargin(0);
-  tvlay->addLayout( rmvlay );
-  mMisc.removeOldMailCheck =
-    new QCheckBox(i18n("&In trash, on exit, remove messages older than"), tgroup );
-  rmvlay->addWidget( mMisc.removeOldMailCheck );
-  mMisc.oldMailAgeSpin = new KIntNumInput( tgroup );
-  mMisc.oldMailAgeSpin->setValue(1);
-  mMisc.oldMailAgeSpin->setRange(1, 500, 1, false);
-  rmvlay->addWidget( mMisc.oldMailAgeSpin );
-  mMisc.timeUnitCombo = new QComboBox( tgroup );
-  mMisc.timeUnitCombo->insertItem(i18n("month(s)"));
-  mMisc.timeUnitCombo->insertItem(i18n("week(s)"));
-  mMisc.timeUnitCombo->insertItem(i18n("day(s)"));
-  rmvlay->addWidget( mMisc.timeUnitCombo );
-  rmvlay->addStretch( 100 );
+  //---------- group: Housekeeping
+  // In this group is verything to do with general housekeeping,
+  // such as message expiry.
+  QGroupBox *hkGroup = new QGroupBox(i18n("Automatic message expiry"), page);
+  topLevel->addWidget(hkGroup);
+  QVBoxLayout *hklay = new QVBoxLayout(hkGroup, spacingHint());
+  hklay->addSpacing(fontMetrics().lineSpacing());
+
+  mMisc.expBGroup = new QButtonGroup(page);
+  mMisc.expBGroup->hide();
+  mMisc.manualExpiry = new QRadioButton(i18n("Manual expiry"), hkGroup);
+  mMisc.expBGroup->insert(mMisc.manualExpiry, expireManual);
+  hklay->addWidget(mMisc.manualExpiry);
+  mMisc.expireAtExit = new QRadioButton(i18n("Expire old messages on exit"), hkGroup);
+  mMisc.expBGroup->insert(mMisc.expireAtExit, expireAtExit);
+  hklay->addWidget(mMisc.expireAtExit);
+  //mMisc.expireAtStart = new QRadioButton(i18n("Expire old messages on startup"), hkGroup);
+  //mMisc.expBGroup->insert(mMisc.expireAtStart, expireAtStart);
+  //hklay->addWidget(mMisc.expireAtStart);
+//  mMisc.expireDaily = new QRadioButton(i18n("Expire old messages daily (at midnight)"),
+//				       hkGroup);
+//  mMisc.expBGroup->insert(mMisc.expireDaily, expireDaily);
+//  hklay->addWidget(mMisc.expireDaily);
+//  mMisc.expireDaily->setEnabled(false); // Not currently implemented!
+
+  mMisc.warnBeforeExpire = new QCheckBox(i18n("Warn before expiring messages"), hkGroup);
+  hklay->addWidget(mMisc.warnBeforeExpire);
+
 
 
   //---------- group: folders
@@ -1998,19 +1999,16 @@ void ConfigureDialog::setupMiscPage( void )
 {
   KConfig *config = kapp->config();
   KConfigGroupSaver saver(config, "General");
+  int num = 0;
 
   bool state = config->readBoolEntry("empty-trash-on-exit",false);
   mMisc.emptyTrashCheck->setChecked( state );
-  state = config->readBoolEntry("keep-small-trash", true);
-  mMisc.keepSmallTrashCheck->setChecked( state );
-  int num = config->readNumEntry("small-trash-size", 10);
-  mMisc.smallTrashSizeSpin->setValue( num );
-  state = config->readBoolEntry("remove-old-mail-from-trash", true);
-  mMisc.removeOldMailCheck->setChecked( state );
-  num = config->readNumEntry("old-mail-age", 1);
-  mMisc.oldMailAgeSpin->setValue( num );
-  num = config->readNumEntry("old-mail-age-unit", 1);
-  mMisc.timeUnitCombo->setCurrentItem( num );
+
+  num = config->readNumEntry("when-to-expire", 0);
+  mMisc.expBGroup->setButton(num);
+  state = config->readBoolEntry("warn-before-expire", true);
+  mMisc.warnBeforeExpire->setChecked(state);
+
   state = config->readBoolEntry("sendOnCheck", false);
   mMisc.sendOutboxCheck->setChecked( state );
   state = config->readBoolEntry("compact-all-on-exit", true );
@@ -2457,16 +2455,6 @@ void ConfigureDialog::slotDoApply( bool everything )
     KConfigGroupSaver saver(config, "General");
     config->writeEntry( "empty-trash-on-exit",
 			mMisc.emptyTrashCheck->isChecked() );
-    config->writeEntry( "keep-small-trash",
-			mMisc.keepSmallTrashCheck->isChecked() );
-    config->writeEntry( "small-trash-size",
-			mMisc.smallTrashSizeSpin->value() );
-    config->writeEntry( "remove-old-mail-from-trash",
-			mMisc.removeOldMailCheck->isChecked() );
-    config->writeEntry( "old-mail-age",
-			mMisc.oldMailAgeSpin->value() );
-    config->writeEntry( "old-mail-age-unit",
-			mMisc.timeUnitCombo->currentItem() );
     config->writeEntry( "sendOnCheck",
 			mMisc.sendOutboxCheck->isChecked() );
     config->writeEntry( "compact-all-on-exit",
@@ -2482,6 +2470,24 @@ void ConfigureDialog::slotDoApply( bool everything )
 			mMisc.mailCommandCheck->isChecked() );
     config->writeEntry( "exec-on-mail-cmd",
 			mMisc.mailCommandEdit->text() );
+
+    // There's got to be a better way to handle radio buttons...
+    if (mMisc.manualExpiry->isChecked()) {
+      config->writeEntry("when-to-expire", expireManual);
+    } else if (mMisc.expireAtExit->isChecked()) {
+      config->writeEntry("when-to-expire", expireAtExit);
+    } else if (mMisc.expireAtStart->isChecked()) {
+      config->writeEntry("when-to-expire", expireAtStart);
+    } else if (mMisc.expireDaily->isChecked()) {
+      config->writeEntry("when-to-expire", expireDaily);
+    } else if (mMisc.expireWeekly->isChecked()) {
+      config->writeEntry("when-to-expire", expireWeekly);
+    } else {
+      // If we don't know, make expiry manual (just in case).
+      config->writeEntry("when-to-expire", expireManual);
+    }
+    config->writeEntry("warn-before-expire", mMisc.warnBeforeExpire->isChecked());
+
   }
 
 #ifdef SCORING
@@ -3654,16 +3660,6 @@ void ConfigureDialog::slotMailCommandChooser( void )
 
     mMisc.mailCommandEdit->setText( url.path() );
   }
-}
-
-void ConfigureDialog::slotEmptyTrashState( int state)
-{
-  bool on = ( state == 0 ); // button not checked
-  mMisc.removeOldMailCheck->setEnabled( on );
-  mMisc.oldMailAgeSpin->setEnabled( on );
-  mMisc.timeUnitCombo->setEnabled( on );
-  mMisc.keepSmallTrashCheck->setEnabled( on );
-  mMisc.smallTrashSizeSpin->setEnabled( on );
 }
 
 IdentityEntry::IdentityEntry( void )

@@ -26,6 +26,33 @@ typedef enum
     None
 } LockType;
 
+/*
+ * Define the possible units to use for measuring message expiry.
+ * expireNever is used to switch off message expiry, and expireMaxUnits
+ * must always be the last in the list (for bounds checking).
+ */
+typedef enum {
+  expireNever,
+  expireDays,
+  expireWeeks,
+  expireMonths,
+  expireMaxUnits
+} ExpireUnits;
+
+/*
+ * Enumeration to define when expiry occurs. The idea is for
+ * expireDaily to happen each night, and expireWeekly each
+ * week.
+ */
+typedef enum {
+  expireManual,
+  expireAtExit,
+  expireAtStart,
+  expireDaily,
+  expireWeekly
+} ExpireWhen;
+
+
 #define HDR_FROM     0x01
 #define HDR_REPLY_TO 0x02
 #define HDR_TO       0x04
