@@ -596,64 +596,62 @@ void KMComposeWin::setupMenuBar(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupToolBar(void)
 {
-  KIconLoader* loader = KGlobal::iconLoader();
-
   mToolBar = new KToolBar(this);
 
-  mToolBar->insertButton(loader->loadIcon("send"),0,
+  mToolBar->insertButton(BarIcon("send"),0,
 			SIGNAL(clicked()),this,
 			SLOT(slotSend()),TRUE,i18n("Send message"));
   mToolBar->insertSeparator();
-  mToolBar->insertButton(loader->loadIcon("filenew"), 0,
+  mToolBar->insertButton(BarIcon("filenew"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotNewComposer()), TRUE,
 			i18n("Compose new message"));
 
   if (msgSender->sendImmediate())
-  mToolBar->insertButton(loader->loadIcon("filefloppy"), 0,
+  mToolBar->insertButton(BarIcon("filefloppy"), 0,
 			SIGNAL(clicked()), this,
 			 SLOT(slotSendLater()), TRUE,
 			 i18n("send later")); //grr translations!!!
 
-  mToolBar->insertButton(loader->loadIcon("fileprint"), 0,
+  mToolBar->insertButton(BarIcon("fileprint"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotPrint()), TRUE,
 			i18n("Print message"));
   mToolBar->insertSeparator();
 #ifdef BROKEN
-  mToolBar->insertButton(loader->loadIcon("reload"),2,
+  mToolBar->insertButton(BarIcon("reload"),2,
 			SIGNAL(clicked()),this,
 			SLOT(slotCopyText()),TRUE,"Undo last change");
 #endif
-  mToolBar->insertButton(loader->loadIcon("editcut"),4,
+  mToolBar->insertButton(BarIcon("editcut"),4,
 			SIGNAL(clicked()),this,
 			SLOT(slotCut()),TRUE,i18n("Cut selection"));
-  mToolBar->insertButton(loader->loadIcon("editcopy"),3,
+  mToolBar->insertButton(BarIcon("editcopy"),3,
 			SIGNAL(clicked()),this,
 			SLOT(slotCopy()),TRUE,i18n("Copy selection"));
-  mToolBar->insertButton(loader->loadIcon("editpaste"),5,
+  mToolBar->insertButton(BarIcon("editpaste"),5,
 			SIGNAL(clicked()),this,
 			SLOT(slotPaste()),TRUE,i18n("Paste clipboard contents"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("attach"),8,
+  mToolBar->insertButton(BarIcon("attach"),8,
 			 SIGNAL(clicked()),this,
 			 SLOT(slotAttachFile()),TRUE,i18n("Attach file"));
-  mToolBar->insertButton(loader->loadIcon("openbook"),7,
+  mToolBar->insertButton(BarIcon("openbook"),7,
 			 SIGNAL(clicked()),this,
 			 SLOT(slotAddrBook()),TRUE,
 			 i18n("Open addressbook..."));
-  mToolBar->insertButton(loader->loadIcon("spellcheck"),7,
+  mToolBar->insertButton(BarIcon("spellcheck"),7,
 			SIGNAL(clicked()),this,
 			SLOT(slotSpellcheck()),TRUE,"Spellcheck message");
   mToolBar->insertSeparator();
   mBtnIdSign = 9;
-  mToolBar->insertButton(loader->loadIcon("feather_white"), mBtnIdSign,
+  mToolBar->insertButton(BarIcon("feather_white"), mBtnIdSign,
 			 TRUE, i18n("sign message"));
   mToolBar->setToggle(mBtnIdSign);
   mToolBar->setButton(mBtnIdSign, mAutoPgpSign);
   mBtnIdEncrypt = 10;
-  mToolBar->insertButton(loader->loadIcon("pub_key_red"), mBtnIdEncrypt,
+  mToolBar->insertButton(BarIcon("pub_key_red"), mBtnIdEncrypt,
 			 TRUE, i18n("encrypt message"));
   mToolBar->setToggle(mBtnIdEncrypt);
   // these buttons should only be enabled, if pgp is actually installed

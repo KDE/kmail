@@ -1222,55 +1222,53 @@ void KMMainWin::setupMenuBar()
 //-----------------------------------------------------------------------------
 void KMMainWin::setupToolBar()
 {
-  KIconLoader* loader = KGlobal::iconLoader();
-
   mToolBar = new KToolBar(this);
 
-  mToolBar->insertButton(loader->loadIcon("filenew"), 0, 
+  mToolBar->insertButton(BarIcon("filenew"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotCompose()), TRUE, 
 			i18n("Compose new message"));
 
-  mToolBar->insertButton(loader->loadIcon("filefloppy"), 0, 
+  mToolBar->insertButton(BarIcon("filefloppy"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotSaveMsg()), TRUE,
 			i18n("Save message to file"));
 
-  mToolBar->insertButton(loader->loadIcon("fileprint"), 0, 
+  mToolBar->insertButton(BarIcon("fileprint"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotPrintMsg()), TRUE,
 			i18n("Print message"));
 
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("checkmail"), 0, 
+  mToolBar->insertButton(BarIcon("checkmail"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotCheckMail()), TRUE,
 			i18n("Get new mail"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(loader->loadIcon("filereply"), 0, 
+  mToolBar->insertButton(BarIcon("filereply"), 0, 
 			SIGNAL(clicked()), this, 
 			SLOT(slotReplyToMsg()), TRUE,
 			i18n("Reply to author"));
 
-  mToolBar->insertButton(loader->loadIcon("filereplyall"), 0, 
+  mToolBar->insertButton(BarIcon("filereplyall"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyAllToMsg()), TRUE,
 			i18n("Reply to all recipients"));
 
-  mToolBar->insertButton(loader->loadIcon("fileforward"), 0, 
+  mToolBar->insertButton(BarIcon("fileforward"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotForwardMsg()), TRUE,
 			i18n("Forward message"));
 
-  mToolBar->insertButton(loader->loadIcon("filedel2"), 0, 
+  mToolBar->insertButton(BarIcon("filedel2"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotDeleteMsg()), TRUE,
 			i18n("Delete message"));
 
   mToolBar->insertSeparator();
-  mToolBar->insertButton(loader->loadIcon("openbook"), 0, 
+  mToolBar->insertButton(BarIcon("openbook"), 0, 
 			SIGNAL(clicked()), this,
 			SLOT(slotAddrBook()), TRUE,
 			i18n("Open addressbook..."));

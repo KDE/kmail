@@ -159,7 +159,6 @@ void KMFolderTree::drawContentsOffset( QPainter * p, int ox, int oy,
 KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   : QListView( parent, name ), mList()
 {
-  KIconLoader* loader = KGlobal::iconLoader();
   static bool pixmapsLoaded = FALSE;
 
   initMetaObject();
@@ -179,15 +178,15 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   {
     pixmapsLoaded = TRUE;
 
-    pixDir   = new QPixmap( loader->loadIcon("closed"));
-    pixNode  = new QPixmap( loader->loadIcon("green-bullet"));
-    pixPlain = new QPixmap( loader->loadIcon("kmfolder"));
-    pixFld   = new QPixmap( loader->loadIcon("kmfolder"));
-    pixFull  = new QPixmap( loader->loadIcon("kmfolderfull"));
-    pixIn    = new QPixmap( loader->loadIcon("kmfldin"));
-    pixOut   = new QPixmap( loader->loadIcon("kmfldout"));
-    pixSent  = new QPixmap( loader->loadIcon("kmfldsent"));
-    pixTr    = new QPixmap( loader->loadIcon("kmtrash"));
+    pixDir   = new QPixmap( BarIcon("closed"));
+    pixNode  = new QPixmap( BarIcon("green-bullet"));
+    pixPlain = new QPixmap( BarIcon("kmfolder"));
+    pixFld   = new QPixmap( BarIcon("kmfolder"));
+    pixFull  = new QPixmap( BarIcon("kmfolderfull"));
+    pixIn    = new QPixmap( BarIcon("kmfldin"));
+    pixOut   = new QPixmap( BarIcon("kmfldout"));
+    pixSent  = new QPixmap( BarIcon("kmfldsent"));
+    pixTr    = new QPixmap( BarIcon("kmtrash"));
   }
   setUpdatesEnabled(TRUE);
   reload();

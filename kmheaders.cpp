@@ -254,7 +254,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 		     const char *name) :
   KMHeadersInherited(parent, name)
 {
-  KIconLoader* loader = KGlobal::iconLoader();
   static bool pixmapsLoaded = FALSE;
   //qInitImageIO();
   kimgioRegister();
@@ -277,14 +276,14 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   if (!pixmapsLoaded)
   {
     pixmapsLoaded = TRUE;
-    pixNew   = new QPixmap( loader->loadIcon("kmmsgnew") );
-    pixUns   = new QPixmap( loader->loadIcon("kmmsgunseen") );
-    pixDel   = new QPixmap( loader->loadIcon("kmmsgdel") );
-    pixOld   = new QPixmap( loader->loadIcon("kmmsgold") );
-    pixRep   = new QPixmap( loader->loadIcon("kmmsgreplied") );
-    pixQueued= new QPixmap( loader->loadIcon("kmmsgqueued") );
-    pixSent  = new QPixmap( loader->loadIcon("kmmsgsent") );
-    pixFwd   = new QPixmap( loader->loadIcon("kmmsgforwarded") );
+    pixNew   = new QPixmap( BarIcon("kmmsgnew") );
+    pixUns   = new QPixmap( BarIcon("kmmsgunseen") );
+    pixDel   = new QPixmap( BarIcon("kmmsgdel") );
+    pixOld   = new QPixmap( BarIcon("kmmsgold") );
+    pixRep   = new QPixmap( BarIcon("kmmsgreplied") );
+    pixQueued= new QPixmap( BarIcon("kmmsgqueued") );
+    pixSent  = new QPixmap( BarIcon("kmmsgsent") );
+    pixFwd   = new QPixmap( BarIcon("kmmsgforwarded") );
     up = new QIconSet( BarIcon("abup" ), QIconSet::Small );
     down = new QIconSet( BarIcon("abdown" ), QIconSet::Small );
   }

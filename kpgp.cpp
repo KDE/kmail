@@ -737,7 +737,6 @@ Kpgp::canonicalAdress(QString _adress)
 KpgpPass::KpgpPass(QWidget *parent, const char *name)
   : QDialog(parent, 0, TRUE)
 {
-  KIconLoader* loader = KGlobal::iconLoader();
   QPixmap pixm;
 
   setCaption(name);
@@ -750,7 +749,7 @@ KpgpPass::KpgpPass(QWidget *parent, const char *name)
   text->move(56,4);
   text->setAutoResize(TRUE);
   QLabel *icon = new QLabel(this);
-  pixm = loader->loadIcon("pgp-keys");
+  pixm = BarIcon("pgp-keys");
   icon->setPixmap(pixm);
   icon->move(4,8);
   icon->resize(48,48);
@@ -789,7 +788,6 @@ KpgpPass::getPhrase()
 KpgpKey::KpgpKey(QWidget *parent, const char *name, const QStrList *keys)
   : QDialog(parent, 0, TRUE)
 {
-  KIconLoader* loader = KGlobal::iconLoader();
   QPixmap pixm;
 
   setCaption(name);
@@ -802,7 +800,7 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, const QStrList *keys)
   text->move(56,4);
   text->setAutoResize(TRUE);
   QLabel *icon = new QLabel(this);
-  pixm = loader->loadIcon("pgp-keys");
+  pixm = BarIcon("pgp-keys");
   icon->setPixmap(pixm);
   icon->move(4,8);
   icon->resize(48,48);
