@@ -289,7 +289,17 @@ void KMReaderWin::readConfig(void)
 							   SmartAttmnt);
   mLoadExternal = config->readBoolEntry( "htmlLoadExternal", false );
   mViewer->setOnlyLocalReferences( !mLoadExternal );
-  mShowColorbar = config->readBoolEntry( "showColorbar", false );
+  // if the user uses OpenPGP then the color bar defaults to enabled
+  // else it defaults to disabled
+  if( Kpgp::Module::getKpgp()->usePGP() )
+    mShowColorbar = true;
+  else
+    mShowColorbar = false;
+  mShowColorbar = config->readBoolEntry( "showColorbar", mShowColorbar );
+  // if the value defaults to enabled and KMail (with color bar) is used for
+  // the first time the config dialog doesn't know this if we don't save the
+  // value now
+  config->writeEntry( "showColorbar", mShowColorbar );
   }
 
   {
