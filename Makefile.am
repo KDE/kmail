@@ -3,8 +3,10 @@ KDE_CXXFLAGS = $(USE_RTTI)
 
 SUBDIRS = interfaces . about pics profiles avscripts
 
-INCLUDES = -I$(top_srcdir)/libkdenetwork \
+INCLUDES = -I$(top_srcdir)/libkmime \
+	-I$(top_srcdir)/libkpgp \
 	-I$(top_srcdir)/libkdepim \
+	-I$(top_srcdir)/libkdenetwork \
 	-I$(top_srcdir)/libkpimidentities \
 	-I$(top_srcdir)/libksieve \
 	-I$(top_srcdir)/mimelib \
@@ -16,7 +18,7 @@ INCLUDES = -I$(top_srcdir)/libkdenetwork \
 lib_LTLIBRARIES = libkmailprivate.la
 libkmailprivate_la_LDFLAGS = $(all_libraries) -version-info 0:0:0 -no-undefined
 libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
-	../libkdenetwork/libkdenetwork.la ../libkdepim/libkdepim.la \
+	../libkmime/libkmime.la ../libkpgp/libkpgp.la ../libkdepim/libkdepim.la \
 	../libkpimidentities/libkpimidentities.la ../mimelib/libmimelib.la \
 	../libksieve/libksieve.la \
 	../certmanager/lib/libkleopatra.la
