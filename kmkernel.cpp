@@ -1051,15 +1051,17 @@ void KMKernel::dumpDeadLetters()
 {
   mDeadLetterTimer->stop();
   QWidget *win;
-  QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
   QDir dir = QDir::home();
   QString fname = dir.path();
   QFile::remove(fname + "/dead.letter.tmp");
+  if (KMainWindow::memberList) {
+    QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
 
-  while ((win = it.current()) != 0) {
-    ++it;
-    if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
-//    delete win; // WABA: Don't delete, we might crash in there!
+    while ((win = it.current()) != 0) {
+      ++it;
+      if (win->inherits("KMComposeWin")) ((KMComposeWin*)win)->deadLetter();
+      //    delete win; // WABA: Don't delete, we might crash in there!
+    }
   }
   QFile::remove(fname + "/dead.letter");
   dir.rename("dead.letter.tmp","dead.letter");
