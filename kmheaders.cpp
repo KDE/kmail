@@ -2696,13 +2696,6 @@ void KMHeaders::appendItemToSortFile(KMHeaderItem *khi)
     fwrite(&appended, sizeof(appended), 1, sortStream);
     fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
 
-    Q_INT32 sorted_count = 0;
-    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 24, SEEK_SET);
-    fread(&sorted_count, sizeof(sorted_count), 1, sortStream);
-    sorted_count++;
-    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 24, SEEK_SET);
-    fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
-
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
 	unlink(QFile::encodeName(sortFile));
