@@ -24,6 +24,7 @@
 #include <assert.h>
 #include "kmfiltermgr.h"
 #include "kmfoldermgr.h"
+#include "kmundostack.h"
 #include "kmfolder.h"
 #include "kmglobal.h"
 #include <kapp.h>
@@ -43,6 +44,7 @@ KMFolderMgr::KMFolderMgr(const QString& aBasePath):
 //-----------------------------------------------------------------------------
 KMFolderMgr::~KMFolderMgr()
 {
+  undoStack->clear(); // Speed things up a bit.
   mBasePath = QString::null;;
 }
 

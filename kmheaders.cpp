@@ -30,6 +30,7 @@
 #include "kfontutils.h"
 #include "kmfoldermgr.h"
 #include "kmsender.h"
+#include "kmundostack.h"
 
 QPixmap* KMHeaders::pixNew = 0;
 QPixmap* KMHeaders::pixUns = 0;
@@ -766,7 +767,6 @@ void KMHeaders::deleteMsg (int msgId)
   }
 }
 
-
 //-----------------------------------------------------------------------------
 void KMHeaders::saveMsg (int msgId)
 {
@@ -982,6 +982,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 
   for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
   {
+    undoStack->pushAction( msg, mFolder );
     if (destFolder) {
       // "deleting" messages means moving them into the trash folder
       rc = destFolder->moveMsg(msg);
@@ -1021,6 +1022,21 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   kbp->idle();
 }
 
+//-----------------------------------------------------------------------------
+void KMHeaders::undo()
+{
+  KMMessage *msg;
+  KMFolder *folder;
+  if (undoStack->popAction(msg, folder))
+  {
+     folder->moveMsg( msg );     
+  }
+  else 
+  {
+    // Sorry.. stack is empty..
+    KMessageBox::sorry(this, i18n("I can't undo anything, sorry!"));
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::copySelectedToFolder(int menuId ) 

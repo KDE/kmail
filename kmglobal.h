@@ -37,6 +37,10 @@ extern KMAcctMgr* acctMgr;
 class KMFolderMgr;
 extern KMFolderMgr* folderMgr;
 
+/** Undo stack: stores undo information. */
+class KMUndoStack;
+extern KMUndoStack* undoStack;
+
 /** Sender: handles sending of messages. */
 class KMSender;
 extern KMSender* msgSender;

@@ -671,6 +671,11 @@ void KMMainWin::slotDeleteMsg()
   mHeaders->deleteMsg();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWin::slotUndo()
+{ 
+  mHeaders->undo();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotShowMsgSrc()
@@ -1160,6 +1165,9 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotCopyMsg()), Key_S);
   messageMenu->insertItem(i18n("&Delete"), this, 
 			  SLOT(slotDeleteMsg()), Key_D);
+  messageMenu->insertSeparator();
+  messageMenu->insertItem(i18n("&Undo"), this, 
+			  SLOT(slotUndo()), CTRL+Key_Z);
   messageMenu->insertSeparator();
   messageMenu->insertItem(i18n("Send again..."), this, 
 			  SLOT(slotResendMsg()));

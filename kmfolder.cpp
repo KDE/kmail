@@ -8,6 +8,7 @@
 #include "kmmessage.h"
 #include "kmfolderdir.h"
 #include "kbusyptr.h"
+#include "kmundostack.h"
 
 #include <kapp.h>
 #include <kconfig.h>
@@ -99,6 +100,7 @@ KMFolder :: ~KMFolder()
   /* Well, this is a problem. If I add the above line then kmfolder depends
    * on kmaccount and is then not that portable. Hmm.
    */
+  undoStack->folderDestroyed(this);
 }
 
 

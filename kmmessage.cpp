@@ -10,6 +10,7 @@
 #include "kpgp.h"
 #ifndef KRN
 #include "kmfolder.h"
+#include "kmundostack.h"
 #include "kmversion.h"
 #endif
 #include "kmidentity.h"
@@ -39,6 +40,8 @@
 
 // Originally in kmglobal.h, but we want to avoid to depend on it here
 extern KMIdentity* identity;
+extern KMUndoStack* undoStack; //WABA: Why not?
+
 
 
 static DwString emptyString("");
@@ -183,6 +186,7 @@ KMMessage::KMMessage(const KMMsgInfo& msgInfo): KMMessageInherited()
 KMMessage::~KMMessage()
 {
   if (mMsg) delete mMsg;
+  undoStack->msgDestroyed( this );
 }
 
 

@@ -48,6 +48,7 @@
 #include "kmsettings.h"
 #include "kmreaderwin.h"
 #include "kmidentity.h"
+#include "kmundostack.h"
 
 #include "kfileio.h"
 #include "kwm.h"
@@ -57,6 +58,7 @@ KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
 KMAcctMgr* acctMgr = NULL;
 KMFolderMgr* folderMgr = NULL;
+KMUndoStack* undoStack = NULL;
 KMFilterMgr* filterMgr = NULL;
 KMSender* msgSender = NULL;
 KMFolder* inboxFolder = NULL;
@@ -485,6 +487,7 @@ static void init(int& argc, char *argv[])
   }
 
   folderMgr = new KMFolderMgr(foldersPath);
+  undoStack = new KMUndoStack(20);
   acctMgr   = new KMAcctMgr(acctPath);
   filterMgr = new KMFilterMgr;
   filterActionDict = new KMFilterActionDict;

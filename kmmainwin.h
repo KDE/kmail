@@ -108,6 +108,7 @@ protected slots:
   void slotBounceMsg();
   void slotEditMsg();
   void slotDeleteMsg();
+  void slotUndo();
   void slotSaveMsg();
   void slotPrintMsg();
   void slotMoveMsg();
