@@ -36,20 +36,11 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		charsetsDlg.moc kmtopwidget.moc 
 
 appsdir = $(kde_appsdir)/Internet/
+apps_DATA = KMail.desktop
 
-EXTRA_DIST = KMail.desktop kmail.xpm mini-kmail.xpm
+EXTRA_DIST = KMail.desktop 
 
-kde_icon_DATA = kmail.xpm
-
-install-data-local:
-	$(mkinstalldirs) $(appsdir)
-	$(INSTALL_DATA) $(srcdir)/KMail.desktop $(appsdir)
-	$(mkinstalldirs) $(kde_minidir)
-	$(INSTALL_DATA) $(srcdir)/mini-kmail.xpm $(kde_minidir)/kmail.xpm
-
-uninstall-local:
-	rm -f $(appsdir)/KMail.desktop
-	rm -f $(kde_minidir)/kmail.xpm
+KDE_ICON = kmail
 
 messages:
 	$(XGETTEXT) -C -ki18n -x $(includedir)/kde.pot $(kmail_SOURCES) && mv messages.po ../po/kmail.pot 
