@@ -41,8 +41,8 @@ using namespace KMail;
 
 
 FilterLogDialog::FilterLogDialog( QWidget * parent )
-: KDialogBase(parent, "FilterLogDlg", false, i18n( "KMail Filter Log Viewer" ),
-              Close, Close )
+: KDialogBase( parent, "FilterLogDlg", false, i18n( "KMail Filter Log Viewer" ),
+              User1|Close, Close, true, i18n("C&lear") )
 {
   textEdit = new KTextEdit( this );
   setMainWidget( textEdit );
@@ -65,6 +65,13 @@ FilterLogDialog::FilterLogDialog( QWidget * parent )
 void FilterLogDialog::slotLogEntryAdded( QString logEntry )
 {
   textEdit->append( logEntry );
+}
+
+
+void FilterLogDialog::slotUser1()
+{
+  FilterLog::instance()->clear();
+  textEdit->clear();
 }
 
 

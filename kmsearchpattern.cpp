@@ -699,9 +699,11 @@ void KMSearchPattern::init() {
 }
 
 QString KMSearchPattern::asString() const {
-  QString result = "(match ";
-  result += ( mOperator == OpOr ) ? "any" : "all";
-  result += " of the following)\n";
+  QString result = "\t";
+  if ( mOperator == OpOr )
+    result += i18n("(match any of the following)") + "\n";
+  else
+    result += i18n("(match all of the following)") + "\n";
 
   for ( QPtrListIterator<KMSearchRule> it( *this ) ; it.current() ; ++it )
     result += (*it)->asString() + '\n';

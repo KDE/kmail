@@ -57,11 +57,6 @@ void FilterLog::add( QString logEntry )
   {
     logEntries.append( logEntry );
     emit logEntryAdded( logEntry );
-// FIXME to be removed
-#ifndef NDEBUG
-    //if ( !(logEntries.size() % 10) )
-    //  dump();
-#endif
   }
 }
 

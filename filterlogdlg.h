@@ -54,6 +54,7 @@ namespace KMail {
       void slotLogEntryAdded( QString logEntry );
       
     protected:
+      virtual void slotUser1();
       KTextEdit * textEdit;
   };
 
