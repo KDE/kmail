@@ -691,13 +691,14 @@ void KMKernel::init()
   the_popFilterMgr     = new KMFilterMgr(true);
   the_filterActionDict = new KMFilterActionDict;
 
+  // moved up here because KMMessage::stripOffPrefixes is used below -ta
+  KMMessage::readConfig();
   initFolders(cfg);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();
   the_popFilterMgr->readConfig();
   cleanupImapFolders();
 
-  KMMessage::readConfig();
   the_msgSender = new KMSender;
   the_server_is_ready = true;
 

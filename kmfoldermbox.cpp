@@ -527,7 +527,7 @@ int KMFolderMbox::createIndexFromContents()
   char line[MAX_LINE];
   char status[8], xstatus[8];
   QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
-  QCString replyToIdStr, referencesStr, msgIdStr;
+  QCString replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
   bool atEof = FALSE;
   bool inHeader = TRUE;
   KMMsgInfo* mi;
@@ -554,6 +554,8 @@ int KMFolderMbox::createIndexFromContents()
   *xstatus = '\0';
   xmarkStr = "";
   replyToIdStr = "";
+  replyToAuxIdStr = "";
+  referencesStr = "";
   msgIdStr = "";
   needStatus = 3;
 
@@ -583,11 +585,16 @@ int KMFolderMbox::createIndexFromContents()
 	{
 	  if ((replyToIdStr.isEmpty() || (replyToIdStr[0] != '<'))  &&
 	      !referencesStr.isEmpty() && referencesStr[0] == '<') {
-	    replyToIdStr = referencesStr;
+	      // use the last reference, instead of missing In-Reply-To
+	      int leftAngle = referencesStr.findRev( '<' );
+	      if (leftAngle != -1)
+		  replyToIdStr = referencesStr.mid(leftAngle);
 	  }
+
 	  mi = new KMMsgInfo(this);
-	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr, replyToIdStr, msgIdStr,
-		   KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown, 
+	  mi->init(subjStr, fromStr, toStr, 0, KMMsgStatusNew, xmarkStr,
+		   replyToIdStr, replyToAuxIdStr, msgIdStr,
+		   KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
 		   KMMsgMDNStateUnknown, offs, size);
 	  mi->setStatus("RO","O");
 	  mi->setDate(dateStr);
@@ -599,6 +606,7 @@ int KMFolderMbox::createIndexFromContents()
 	  needStatus = 3;
 	  xmarkStr = "";
 	  replyToIdStr = "";
+         replyToAuxIdStr = "";
 	  referencesStr = "";
 	  msgIdStr = "";
 	  dateStr = "";
@@ -658,11 +666,22 @@ int KMFolderMbox::createIndexFromContents()
       int leftAngle, rightAngle;
       referencesStr = QCString(line+12);
       leftAngle = referencesStr.findRev( '<' );
+      leftAngle = referencesStr.findRev( '<', leftAngle-1);
       if (leftAngle != -1)
 	referencesStr = referencesStr.mid( leftAngle );
-      rightAngle = referencesStr.find( '>' );
+      rightAngle = referencesStr.findRev( '>' );
       if (rightAngle != -1)
 	referencesStr.truncate( rightAngle + 1 );
+
+      // Store the second to last reference in the replyToAuxIdStr
+      // It is a good candidate for threading the message below if the
+      // message In-Reply-To points to is not kept in this folder,
+      // but e.g. in an Outbox
+      replyToAuxIdStr = referencesStr;
+      rightAngle = referencesStr.find( '>' );
+      if (rightAngle != -1)
+         replyToAuxIdStr.truncate( rightAngle + 1 );
+
     }
     else if (strncasecmp(line,"Message-Id:",11)==0 && isblank(line[11])) {
       int rightAngle;

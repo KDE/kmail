@@ -1047,6 +1047,13 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   STORE_DATA(MsgCryptoStatePart, tmp);
   tmp = mdnSentState();
   STORE_DATA(MsgMDNSentPart, tmp);
+
+  tmp_str = replyToAuxIdMD5().stripWhiteSpace();
+  STORE_DATA_LEN(MsgReplyToAuxIdMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
+
+  tmp_str = strippedSubjectMD5().stripWhiteSpace();
+  STORE_DATA_LEN(MsgStrippedSubjectMD5Part, tmp_str.unicode(), tmp_str.length() * 2, true);
+
 #undef STORE_DATA_LEN
   return ret;
 }

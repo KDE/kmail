@@ -333,6 +333,9 @@ public:
   virtual QString subject(void) const;
   virtual void setSubject(const QString& aStr);
 
+  /** Calculate strippedSubject */
+  virtual void initStrippedSubjectMD5() {};
+
   /** Check for prefixes @p prefixRegExps in @p str. If none
       is found, @p newPrefix + ' ' is prepended to @p str and the
       resulting string is returned. If @p replace is true, any
@@ -352,7 +355,7 @@ public:
       is found, @p newPrefix + ' ' is prepended to the subject and the
       resulting string is returned. If @p replace is true, any
       sequence of whitespace-delimited prefixes at the beginning of
-      @ref #subject() is replaced by @p newPrefix.
+      @ref #subject() is replaced by @p newPrefix
   **/
   QString cleanSubject(const QStringList& prefixRegExps, bool replace,
 		       const QString& newPrefix) const;
@@ -376,12 +379,38 @@ public:
   virtual void setReplyToId(const QString& aStr);
   virtual QString replyToIdMD5(void) const;
 
+  /** Get the second to last id from the References header
+      field. If outgoing messages are not kept in the same
+      folder as incoming ones, this will be a good place to
+      thread the message beneath.
+      bob               <- second to last reference points to this
+       |_kmailuser      <- not in our folder, but Outbox
+           |_bob        <- In-Reply-To points to our mail above
+
+      Thread like this:
+      bob
+       |_bob
+
+      using replyToAuxIdMD5
+    */
+  virtual QString replyToAuxIdMD5(void) const;
+
+  /**
+    Get a hash of the subject with all prefixes such as Re: removed.
+    Used for threading.
+  */
+  virtual QString strippedSubjectMD5(void) const;
+
+  /** Is the subject prefixed by Re: or similar? */
+  virtual bool subjectIsPrefixed(void) const;
+  
   /** Get or set the 'Message-Id' header field */
   virtual QString msgId(void) const;
   virtual void setMsgId(const QString& aStr);
   virtual QString msgIdMD5(void) const;
 
-  /** Set the references for this message */
+  /** Get or set the references for this message */
+  virtual QString references(void) const;
   virtual void setReferences(const QCString& aStr);
 
   /** Returns the message ID, useful for followups */

@@ -558,7 +558,7 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 
   QCString dateStr, fromStr, toStr, subjStr;
   QCString xmarkStr, replyToIdStr, msgIdStr, referencesStr;
-  QCString statusStr;
+  QCString statusStr, replyToAuxIdStr;
 
   // iterate through this file until done
   while (!atEof)
@@ -574,7 +574,10 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       if ((replyToIdStr.isEmpty() || (replyToIdStr[0] != '<'))  &&
           !referencesStr.isEmpty() && referencesStr[0] == '<')
       {
-        replyToIdStr = referencesStr;
+	// use the last reference, instead of missing In-Reply-To
+	int leftAngle = referencesStr.findRev( '<' );
+	if (leftAngle != -1)
+	  replyToIdStr = referencesStr.mid(leftAngle);
       }
 
       if (!statusStr.isEmpty())
@@ -593,9 +596,10 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       }
 
       KMMsgInfo *mi = new KMMsgInfo(this);
-      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr, 
-	       msgIdStr, file.local8Bit(), KMMsgEncryptionStateUnknown, 
-	       KMMsgSignatureStateUnknown, KMMsgMDNStateUnknown, f.size());
+      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr,
+              replyToAuxIdStr, msgIdStr, file.local8Bit(),
+              KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
+              KMMsgMDNStateUnknown, f.size());
       if (!dateStr.isEmpty())
         mi->setDate(dateStr);
       mi->setDirty(false);
@@ -658,12 +662,21 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       referencesStr = QCString(line+12);
 
       leftAngle = referencesStr.findRev('<');
+      leftAngle = referencesStr.findRev( '<', leftAngle-1);
       if (leftAngle != -1)
         referencesStr = referencesStr.mid(leftAngle);
+      rightAngle = referencesStr.findRev( '>' );
+      if (rightAngle != -1)
+       referencesStr.truncate( rightAngle + 1 );
 
+      // Store the second to last reference in the replyToAuxIdStr
+      // It is a good candidate for threading the message below if the
+      // message In-Reply-To points to is not kept in this folder,
+      // but e.g. in an Outbox
+      replyToAuxIdStr = referencesStr;
       rightAngle = referencesStr.find('>');
       if (rightAngle != -1)
-        referencesStr.truncate(rightAngle + 1);
+         replyToAuxIdStr.truncate( rightAngle + 1 );
     }
     else if (strncasecmp(line, "Message-Id:", 11) == 0 && isblank(line[11]))
     {
