@@ -134,7 +134,7 @@ namespace KMail {
       dateString = message->dateStr();
     }
 
-    QString headerStr = "<div dir=\"" + dir + "\">\n";
+    QString headerStr = "<div class=\"header\" dir=\"" + dir + "\">\n";
 
     if ( strategy->showHeader( "subject" ) )
       headerStr += "<div dir=\"" + subjectDir + "\">\n"
@@ -230,7 +230,7 @@ namespace KMail {
       dateString = message->dateStr();
     }
 
-    QString headerStr = QString("<div dir=\"%1\">").arg(dir);
+    QString headerStr = QString("<div class=\"header\" dir=\"%1\">").arg(dir);
 
     if ( strategy->headersToDisplay().isEmpty()
 	 && strategy->defaultPolicy() == HeaderStrategy::Display ) {
@@ -327,7 +327,7 @@ namespace KMail {
     // of the application layout.
 
     QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
-    QString headerStr = QString("<div dir=\"%1\">").arg(dir);
+    QString headerStr = QString("<div class=\"header\" dir=\"%1\">").arg(dir);
 
     // However, the direction of the message subject within the header is
     // determined according to the contents of the subject itself. Since
