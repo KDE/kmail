@@ -65,6 +65,9 @@ public:
   /** Create a new unique ID */
   uint createId();
 
+  /// Called on exit (KMMainWin::queryExit)
+  void cancelMailCheck();
+
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);
   virtual void singleInvalidateIMAPFolders(KMAccount *);

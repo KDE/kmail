@@ -172,6 +172,7 @@ void CachedImapJob::listMessages()
   KIO::SimpleJob *job = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+  jd.cancellable = true;
   mAccount->insertJob( job, jd );
   connect( job, SIGNAL( result(KIO::Job *) ),
            this, SLOT( slotListMessagesResult( KIO::Job* ) ) );
@@ -281,6 +282,7 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   url.setPath(mFolder->imapPath() + QString(";UID=%1;SECTION=BODY.PEEK[]").arg(mfd.uid));
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+  jd.cancellable = true;
   mMsg->setTransferInProgress(true);
   KIO::SimpleJob *simpleJob = KIO::get(url, false, false);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), simpleJob);
@@ -536,6 +538,7 @@ void CachedImapJob::checkUidValidity()
   url.setPath( mFolder->imapPath() + ";UID=0:0" );
 
   ImapAccountBase::jobData jd( url.url(), mFolder->folder() );
+  jd.cancellable = true;
 
   KIO::SimpleJob *job = KIO::get( url, false, false );
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );

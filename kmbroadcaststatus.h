@@ -68,7 +68,12 @@ public:
   bool abortRequested();
   /**  Set the state of the abort requested variable to false */
   void reset();
-
+  /**  Set the state of the abort requested variable to true,
+   * without emitting the signal.
+   * (to let the current jobs run, but stop when possible).
+   * This is only for exiting gracefully, don't use.
+   */
+  void setAbortRequested();
 signals:
 
   /** Emitted when setStatusMsg is called. */

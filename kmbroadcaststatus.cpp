@@ -180,6 +180,11 @@ bool KMBroadcastStatus::abortRequested()
   return abortRequested_;
 }
 
+void KMBroadcastStatus::setAbortRequested()
+{
+  abortRequested_ = true;
+}
+
 void KMBroadcastStatus::requestAbort()
 {
   abortRequested_ = true;

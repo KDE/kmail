@@ -110,12 +110,12 @@ namespace KMail {
     struct jobData
     {
       // Needed by QMap, don't use
-      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), inboxOnly(false), quiet(false) {}
+      jobData() : url(QString::null), parent(0), total(1), done(0), offset(0), inboxOnly(false), quiet(false), cancellable(false) {}
       // Real constructor
       jobData( const QString& _url, KMFolder *_parent = 0,
           int _total = 1, int _done = 0, bool _quiet = false, bool _inboxOnly = false )
         : url(_url), parent(_parent), total(_total), done(_done), offset(0),
-      inboxOnly(_inboxOnly), quiet(_quiet)
+      inboxOnly(_inboxOnly), quiet(_quiet), cancellable(false)
       {}
       // Return "url" in a form that can be displayed in HTML (w/o password)
       QString htmlURL() const;
@@ -128,7 +128,7 @@ namespace KMail {
       KMFolder *parent;
       QPtrList<KMMessage> msgList;
       int total, done, offset;
-      bool inboxOnly, quiet, onlySubscribed;
+      bool inboxOnly, quiet, onlySubscribed, cancellable;
     };
 
     typedef QMap<KIO::Job *, jobData>::Iterator JobIterator;
@@ -209,6 +209,11 @@ namespace KMail {
      * Kill the slave if any jobs are active
      */
     void killAllJobs( bool disconnectSlave=false ) = 0;
+
+    /**
+     * Abort all running mail checks. Used when exiting.
+     */
+    virtual void cancelMailCheck();
 
     /**
      * Init a new-mail-check for a single folder

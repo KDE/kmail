@@ -9,11 +9,13 @@
 #include "kmsender.h"
 #include "kmbroadcaststatus.h"
 #include "kmglobal.h"
-#include "kapplication.h"
+#include "kmacctmgr.h"
+#include <kapplication.h>
 #include <klocale.h>
 #include <kedittoolbar.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kdebug.h>
 
 #include "kmmainwin.moc"
 
@@ -51,6 +53,9 @@ KMMainWin::KMMainWin(QWidget *)
 	  SLOT(setCaption(const QString&)) );
   connect(mKMMainWidget, SIGNAL(modifiedToolBarConfig()),
 	   SLOT(slotUpdateToolbars()) );
+
+  // Enable mail checks again (see destructor)
+  KMBroadcastStatus::instance()->reset();
 }
 
 KMMainWin::~KMMainWin()
@@ -58,6 +63,28 @@ KMMainWin::~KMMainWin()
   saveMainWindowSettings(KMKernel::config(), "Main Window");
   KMKernel::config()->sync();
   kapp->deref();
+
+  if ( !kmkernel->haveSystemTrayApplet() ) {
+    // Check if this was the last KMMainWin
+    int not_withdrawn = 0;
+    QPtrListIterator<KMainWindow> it(*KMainWindow::memberList);
+    for (it.toFirst(); it.current(); ++it){
+      if ( !it.current()->isHidden() &&
+           it.current()->isTopLevel() &&
+           it.current() != this &&
+           ::qt_cast<KMMainWin *>( it.current() )
+        )
+        not_withdrawn++;
+    }
+
+    if ( not_withdrawn == 0 ) {
+      kdDebug(5006) << "Closing last KMMainWin: stopping mail check" << endl;
+      // Running KIO jobs prevent kapp from exiting, so we need to kill them
+      // if they are only about checking mail (not important stuff like moving messages)
+      KMBroadcastStatus::instance()->setAbortRequested();
+      kmkernel->acctMgr()->cancelMailCheck();
+    }
+  }
 }
 
 void KMMainWin::statusMsg(const QString& aText)

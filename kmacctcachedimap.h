@@ -96,6 +96,11 @@ public:
   virtual void killAllJobs( bool disconnectSlave=false );
 
   /**
+   * Abort running mail checks
+   */
+  virtual void cancelMailCheck();
+
+  /**
    * Set the top level pseudo folder
    */
   virtual void setImapFolder(KMFolderCachedImap *);

@@ -47,6 +47,7 @@
 #include "kmfolder.h"
 #include "kmdict.h"
 #include "acljobs.h"
+#include "kmbroadcaststatus.h"
 
 using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
@@ -451,6 +452,9 @@ void KMFolderCachedImap::serverSync( bool suppressDialog )
   assert( account() );
 
   // Connect to the imap progress dialog
+  // ### This code is broken. If the kmmainwin is closed, the progressdialog is closed,
+  // and if recreating a kmmainwin, we won't connect to the new progressdialog.
+  // To be redone differently with the new progress info stuff.
   mSuppressDialog = suppressDialog;
   if( mIsConnected != mAccount->isProgressDialogEnabled() &&
       suppressDialog )
@@ -511,6 +515,15 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
+  // This is used to stop processing when we're about to exit
+  // and the current job wasn't cancellable.
+  // For user-requested abort, we'll use signalAbortRequested instead.
+  if( KMBroadcastStatus::instance()->abortRequested() ) {
+    resetSyncState();
+    emit folderComplete( this, false );
+    return;
+  }
+
   //kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:

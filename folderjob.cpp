@@ -49,6 +49,7 @@ FolderJob::FolderJob( KMMessage *msg, JobType jt, KMFolder* folder,
     mMsgList.append(msg);
     mSets = msg->headerField("X-UID");
   }
+  init();
 }
 
 //----------------------------------------------------------------------------
@@ -59,6 +60,7 @@ FolderJob::FolderJob( const QPtrList<KMMessage>& msgList, const QString& sets,
     mErrorCode( 0 ),
     mPassiveDestructor( false ), mStarted( false )
 {
+  init();
 }
 
 //----------------------------------------------------------------------------
@@ -67,6 +69,22 @@ FolderJob::FolderJob( JobType jt )
     mErrorCode( 0 ),
     mPassiveDestructor( false ), mStarted( false )
 {
+  init();
+}
+
+//----------------------------------------------------------------------------
+void FolderJob::init()
+{
+  switch ( mType ) {
+  case tListMessages:
+  case tGetFolder:
+  case tGetMessage:
+  case tCheckUidValidity:
+    mCancellable = true;
+    break;
+  default:
+    mCancellable = false;
+  }
 }
 
 //----------------------------------------------------------------------------

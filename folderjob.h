@@ -81,6 +81,22 @@ public:
    */
   int error() const { return mErrorCode; }
 
+  /**
+   * @return true if this job can be cancelled, e.g. to exit the application
+   */
+  bool isCancellable() const { return mCancellable; }
+
+  /**
+   * Call this to change the "cancellable" property of this job.
+   * By default, tListMessages, tGetMessage, tGetFolder and tCheckUidValidity
+   * are cancellable, the others are not. But when copying, a non-cancellable
+   * tGetMessage is needed.
+   */
+  void setCancellable( bool b ) { mCancellable = b; }
+
+  void setPassiveDestructor( bool passive ) { mPassiveDestructor = passive; }
+  bool passiveDestructor() { return mPassiveDestructor; }
+
 signals:
   /**
    * Emitted whenever a KMMessage has been completely
@@ -133,6 +149,9 @@ signals:
    */
   void progress( unsigned long bytesDownloaded, unsigned long bytesTotal );
 
+private:
+  void init();
+
 protected:
   /**
    * Has to be reimplemented. It's called by the start() method. Should
@@ -156,6 +175,7 @@ protected:
   //finished() won't be emitted when this is set
   bool                mPassiveDestructor;
   bool                mStarted;
+  bool                mCancellable;
 };
 
 }

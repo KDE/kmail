@@ -237,6 +237,7 @@ void KMCommand::transferSelectedMsgs()
       complete = false;
       KMCommand::mCountJobs++;
       FolderJob *job = thisMsg->parent()->createJob(thisMsg);
+      job->setCancellable( false );
       // emitted when the message was transferred successfully
       connect(job, SIGNAL(messageRetrieved(KMMessage*)),
               this, SLOT(slotMsgTransfered(KMMessage*)));
@@ -678,6 +679,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
       // retrieve Message first
       if (msg->parent()  && !msg->isComplete() ) {
         FolderJob *job = msg->parent()->createJob(msg);
+        job->setCancellable( false );
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             this, SLOT(slotMessageRetrievedForSaving(KMMessage*)));
         job->start();
@@ -1496,6 +1498,7 @@ void KMCopyCommand::execute()
       {
         newMsg->setParent(msg->parent());
         FolderJob *job = srcFolder->createJob(newMsg);
+        job->setCancellable( false );
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
                 mDestFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
         // msg musn't be deleted
@@ -2019,6 +2022,7 @@ void KMLoadPartsCommand::start()
       {
         FolderJob *job = curFolder->createJob( mMsg, FolderJob::tGetMessage,
             0, it.current()->msgPart().partSpecifier() );
+        job->setCancellable( false );
         connect( job, SIGNAL(messageUpdated(KMMessage*, QString)),
             this, SLOT(slotPartRetrieved(KMMessage*, QString)) );
         job->start();

@@ -328,6 +328,7 @@ namespace KMail {
     jobData jd;
     jd.total = 1; jd.done = 0;
     jd.path = path;
+    jd.cancellable = true;
     // reset for a new listing
     if (reset)
       mHasInbox = false;
@@ -491,6 +492,7 @@ namespace KMail {
     ACLJobs::GetUserRightsJob* job = ACLJobs::getUserRights( mSlave, url );
 
     jobData jd( url.url(), parent );
+    jd.cancellable = true;
     insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
@@ -532,6 +534,7 @@ namespace KMail {
 
     ACLJobs::GetACLJob* job = ACLJobs::getACL( mSlave, url );
     jobData jd( url.url(), parent );
+    jd.cancellable = true;
     insertJob(job, jd);
 
     connect(job, SIGNAL(result(KIO::Job *)),
@@ -676,6 +679,34 @@ namespace KMail {
     if ( job && !jobsKilled )
       removeJob( job );
     return !jobsKilled; // jobsKilled==false -> continue==true
+  }
+
+  //-----------------------------------------------------------------------------
+  void ImapAccountBase::cancelMailCheck()
+  {
+    QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+    while ( it != mapJobData.end() ) {
+      kdDebug(5006) << "cancelMailCheck: job is cancellable: " << (*it).cancellable << endl;
+      if ( (*it).cancellable ) {
+        it.key()->kill();
+        QMap<KIO::Job*, jobData>::Iterator rmit = it;
+        ++it;
+        mapJobData.remove( rmit );
+        // We killed a job -> this kills the slave
+        mSlave = 0;
+      } else
+        ++it;
+    }
+
+    for( QPtrListIterator<FolderJob> it( mJobList ); it.current(); ++it ) {
+      if ( it.current()->isCancellable() ) {
+        FolderJob* job = it.current();
+        job->setPassiveDestructor( true );
+        mJobList.remove( job );
+        delete job;
+      } else
+        ++it;
+    }
   }
 
 

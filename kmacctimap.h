@@ -64,7 +64,7 @@ public:
   /**
    * Kill the slave if any jobs are active
    */
-  void killAllJobs( bool disconnectSlave=false );
+  virtual void killAllJobs( bool disconnectSlave=false );
 
   /**
    * Set the top level pseudo folder

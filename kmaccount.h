@@ -191,6 +191,13 @@ public:
    */
   void checkDone( bool newmails, int newmailCount );
 
+  /**
+   * Abort all running mail checks. Used when closing the last KMMainWin.
+   * Ensure that mail check can be restarted later, e.g. if reopening a mainwindow
+   * from a composer window.
+   */
+  virtual void cancelMailCheck() {}
+
 signals:
   virtual void finishedCheck(bool newMail);
   virtual void newMailsProcessed(int numberOfNewMails);

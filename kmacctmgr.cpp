@@ -385,4 +385,12 @@ uint KMAcctMgr::createId()
 }
 
 //-----------------------------------------------------------------------------
+void KMAcctMgr::cancelMailCheck()
+{
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ;
+	it.current() ; ++it ) {
+    it.current()->cancelMailCheck();
+  }
+}
+
 #include "kmacctmgr.moc"

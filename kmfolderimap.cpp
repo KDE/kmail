@@ -678,6 +678,7 @@ void KMFolderImap::checkValidity()
     return;
   }
   ImapAccountBase::jobData jd( url.url(), folder() );
+  jd.cancellable = true;
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   mAccount->insertJob(job, jd);
@@ -797,6 +798,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
     KIO::SimpleJob *job = KIO::listDir(url, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
     ImapAccountBase::jobData jd( url.url(), folder() );
+    jd.cancellable = true;
     mAccount->insertJob(job, jd);
     connect(job, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotListFolderResult(KIO::Job *)));
@@ -809,6 +811,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
     KIO::Scheduler::assignJobToSlave(mAccount->slave(), newJob);
     ImapAccountBase::jobData jd( url.url(), folder() );
+    jd.cancellable = true;
     mAccount->insertJob(newJob, jd);
     connect(newJob, SIGNAL(result(KIO::Job *)),
             this, SLOT(slotGetLastMessagesResult(KIO::Job *)));

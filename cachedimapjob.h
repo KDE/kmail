@@ -94,8 +94,6 @@ public:
 
   virtual ~CachedImapJob();
 
-  void setPassiveDestructor( bool passive ) { mPassiveDestructor = passive; }
-  bool passiveDestructor() { return mPassiveDestructor; }
   void setParentFolder( const KMFolderCachedImap* parent );
 
 protected:

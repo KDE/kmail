@@ -191,7 +191,7 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
     mSlave = 0;
   }
   // make sure that no new-mail-check is blocked
-  if (mCountRemainChecks > 0)
+  if (mCountRemainChecks > 0) // #### This is unused in cached imap
   {
     checkDone(false, 0);
     mCountRemainChecks = 0;
@@ -205,6 +205,28 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctCachedImap::cancelMailCheck()
+{
+  // Make list of folders to reset, like in killAllJobs
+  QValueList<KMFolderCachedImap*> folderList;
+  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  for (; it != mapJobData.end(); ++it) {
+    if ( (*it).cancellable && (*it).parent )
+      folderList << static_cast<KMFolderCachedImap*>((*it).parent->storage());
+  }
+  // Kill jobs
+  ImapAccountBase::cancelMailCheck();
+  // Reset sync states and emit folderComplete, this is important for
+  // KMAccount::checkingMail() to be reset, in case we restart checking mail later.
+  for( QValueList<KMFolderCachedImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+    KMFolderCachedImap *fld = *it;
+    fld->resetSyncState();
+    fld->setContentState(KMFolderCachedImap::imapNoInformation);
+    fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
+    fld->sendFolderComplete(FALSE);
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctCachedImap::killJobsForItem(KMFolderTreeItem * fti)
