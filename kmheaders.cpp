@@ -2310,33 +2310,54 @@ void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 {
-  // This slot isn't called anymore if the RMB is pressed (Qt 3.0.1)
-  //kdDebug(5006) << "MB pressed: " << e->button() << endl;
   mPressPos = e->pos();
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
-  if (lvi) {
-    // Check if our item is the parent of a closed thread and if so, if the root
-    // decoration of the item was clicked (i.e. the +/- sign) which would expand
-    // the thread. In that case, deselect all children, so opening the thread
-    // doesn't cause a flicker.
-    if (e->button() == LeftButton && !lvi->isOpen()) {
-      bool rootDecoClicked =
-        ( mPressPos.x() <= header()->cellPos( header()->mapToActual( 0 ) ) +
-          treeStepSize() * ( lvi->depth() + ( rootIsDecorated() ? 1 : 0) ) + itemMargin() )
-        && ( mPressPos.x() >= header()->cellPos( header()->mapToActual( 0 ) ) );
-      if (rootDecoClicked) {
-        clearSelection();
-        lvi->setSelected( true );
-      }
-    }
+  bool wasSelected;
+  if (lvi) wasSelected = lvi->isSelected();
+  
+  bool rootDecoClicked =
+       (  mPressPos.x() <= header()->cellPos(  header()->mapToActual(  0 ) ) +
+         treeStepSize() * (  lvi->depth() + (  rootIsDecorated() ? 1 : 0 ) ) + itemMargin() )
+    && (  mPressPos.x() >= header()->cellPos(  header()->mapToActual(  0 ) ) );
+  
+  if ( rootDecoClicked ) {
+     // Check if our item is the parent of a closed thread and if so, if the root
+     // decoration of the item was clicked (i.e. the +/- sign) which would expand
+     // the thread. In that case, deselect all children, so opening the thread
+     // doesn't cause a flicker.
+     if ( lvi && !lvi->isOpen() && lvi->firstChild() ) {
+        QListViewItem *nextRoot = lvi->itemBelow();
+        QListViewItemIterator it( lvi->firstChild() );
+        for( ; (*it) != nextRoot; ++it )
+           (*it)->setSelected( false );
+     }
+  }
+  
+  // let klistview do it's thing, expanding/collapsing, selection/deselection
+  KListView::contentsMousePressEvent(e);
+  
+  if ( rootDecoClicked ) {
+      // select the thread's children after closing if the parent is selected
+     if ( lvi && !lvi->isOpen() && lvi->isSelected() )
+        setSelected( lvi, true );
+  }
+  
+  if ( lvi && !rootDecoClicked ) {
     if ( lvi != currentItem() )
       highlightMessage( lvi );
+    /* Explicitely set selection state. This is necessary because we want to
+     * also select all children of closed threads when the parent is selected. */
+    
+    // unless ctrl mask, set selected if it isn't already
+    if ( !( e->state() & ControlButton ) && !wasSelected )
+      setSelected( lvi, true );
+    // if ctrl mask, toggle selection
+    if ( e->state() & ControlButton )
+      setSelected( lvi, !wasSelected );
+    
     if ((e->button() == LeftButton) )
       mMousePressed = true;
   }
-  KListView::contentsMousePressEvent(e);
-  if ( lvi )
-    setSelected( lvi, true );
 }
 
 //-----------------------------------------------------------------------------
