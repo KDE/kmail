@@ -340,6 +340,7 @@ class ConfigureDialog : public KDialogBase
     virtual void slotDefault( void );
     virtual void slotOk( void );
     virtual void slotApply( void );
+    virtual void slotDoApply( bool everything );
     void setup( void );
 
   private:

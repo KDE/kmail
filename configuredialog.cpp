@@ -2144,7 +2144,7 @@ void ConfigureDialog::slotCancelOrClose( void )
 
 void ConfigureDialog::slotOk( void )
 {
-  slotApply();
+  slotDoApply(true);
   mModifiedAccounts.clear();
   mAccountsToDelete.clear();
   mNewAccounts.clear();
@@ -2154,15 +2154,21 @@ void ConfigureDialog::slotOk( void )
 
 void ConfigureDialog::slotApply( void )
 {
+  slotDoApply(false);
+}
+
+
+void ConfigureDialog::slotDoApply( bool everything )
+{
   KConfig &config = *kapp->config();
 
   int activePage = activePageIndex();
-  if( activePage == mIdentity.pageIndex )
+  if( activePage == mIdentity.pageIndex || everything )
   {
     saveActiveIdentity(); // Copy from textfields into list
     mIdentityList.exportData();
   }
-  else if( activePage == mNetwork.pageIndex )
+  if( activePage == mNetwork.pageIndex || everything )
   {
     // Sending mail
     if( mNetwork.sendmailRadio->isChecked() )
@@ -2210,7 +2216,7 @@ void ConfigureDialog::slotApply( void )
     // Incoming mail
     kernel->acctMgr()->writeConfig(FALSE);
   }
-  else if( activePage == mAppearance.pageIndex )
+  if( activePage == mAppearance.pageIndex || everything )
   {
     //
     // Fake a selector change. It will save the current selector setting
@@ -2274,7 +2280,7 @@ void ConfigureDialog::slotApply( void )
     config.writeEntry( "showMessageSize", messageSize );
     config.writeEntry( "addressbook", mAppearance.addressbookCombo->currentItem() );
   }
-  else if( activePage == mComposer.pageIndex )
+  if( activePage == mComposer.pageIndex || everything )
   {
     config.setGroup("KMMessage");
     config.writeEntry("phrase-reply",
@@ -2295,7 +2301,7 @@ void ConfigureDialog::slotApply( void )
     config.writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
     config.writeEntry("break-at", mComposer.wrapColumnSpin->value() );
   }
-  else if( activePage == mMime.pageIndex )
+  if( activePage == mMime.pageIndex || everything )
   {
     int numValidEntry = 0;
     int numEntry = mMime.tagList->childCount();
@@ -2313,11 +2319,11 @@ void ConfigureDialog::slotApply( void )
     config.setGroup("General");
     config.writeEntry("mime-header-count", numValidEntry );
   }
-  else if( activePage == mSecurity.pageIndex )
+  if( activePage == mSecurity.pageIndex || everything )
   {
     mSecurity.pgpConfig->applySettings();
   }
-  else if( activePage == mMisc.pageIndex )
+  if( activePage == mMisc.pageIndex || everything )
   {
     config.setGroup("General");
     config.writeEntry( "empty-trash-on-exit",
