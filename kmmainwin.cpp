@@ -3199,7 +3199,15 @@ QPopupMenu* KMMainWin::folderToPopupMenu(bool move,
       menu->removeItemAt( 0 );
   }
 
-  for (QListViewItem *item = mFolderTree->firstChild();
+  QListViewItem *startItem = mFolderTree->firstChild();
+  if (!startItem->nextSibling())
+  {
+     makeFolderMenu(dynamic_cast<KMFolderTreeItem*>(startItem),
+        move, receiver, aMenuToFolder, menu);
+     return menu;
+  }
+
+  for (QListViewItem *item = startItem;
      item; item = item->nextSibling())
   {
     // operate on top-level items
