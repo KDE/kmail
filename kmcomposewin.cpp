@@ -208,7 +208,11 @@ void KMComposeWin::readConfig(void)
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
-  mLineBreak = config->readNumEntry("break-at", 80);
+  mLineBreak = config->readNumEntry("break-at", 78);
+  if ((mLineBreak == 0) || (mLineBreak > 78))
+    mLineBreak = 78;
+  if (mLineBreak < 60)
+    mLineBreak = 60;
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
 
   config->setGroup("Reader");
@@ -696,14 +700,10 @@ void KMComposeWin::setupEditor(void)
   mEditor->setModified(FALSE);
   //mEditor->setFocusPolicy(QWidget::ClickFocus);
 
-  if (mWordWrap && (mLineBreak > 0))
+  if (mWordWrap)
   {
     mEditor->setWordWrap( QMultiLineEdit::FixedColumnWidth );
     mEditor->setWrapColumnOrWidth(mLineBreak);
-  }
-  else if (mWordWrap)
-  {
-    mEditor->setWordWrap( QMultiLineEdit::WidgetWidth );
   }
   else
   {

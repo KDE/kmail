@@ -86,6 +86,9 @@ public:
    * Tells sender to quit application when finished.
    */
   void quitWhenFinished();
+
+  /** sets a status msg and emits statusMsg() */  
+  void setStatusMsg(const QString&);
   
 signals:
   /** Emitted regularly to inform the user of what is going on */

@@ -70,7 +70,7 @@ private:
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
   QLineEdit *indentPrefixEdit, *wrapColumnEdit;
-  QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign;
+  QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign, *smartQuote;
   QCheckBox *emptyTrashOnExit, *sendOnCheck, *longFolderList, *sendReceipts,
     *compactOnExit;
   QRadioButton *smtpRadio, *sendmailRadio, *sendNow, *sendLater;

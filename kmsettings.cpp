@@ -495,7 +495,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   //---------- group appearance
   grp = new QGroupBox(i18n("Appearance"), tab);
   box->addWidget(grp);
-  grid = new QGridLayout(grp, 8, 3, 20, 4);
+  grid = new QGridLayout(grp, 8, 5, 20, 4);
 
   autoAppSignFile=new QCheckBox(
 	      i18n("Automatically append signature"), grp);
@@ -525,9 +525,17 @@ void KMSettings::createTabComposer(QWidget *parent)
   monospFont->setMinimumSize(monospFont->sizeHint());
   grid->addMultiCellWidget(monospFont, 3, 3, 0, 1);
 
+  smartQuote = new QCheckBox(i18n("Smart quoting"), grp);
+  smartQuote->adjustSize();
+  smartQuote->setMinimumSize(smartQuote->sizeHint());
+  grid->addWidget(smartQuote, 0, 3);
+
   grid->setColStretch(0,1);
   grid->setColStretch(1,1);
-  grid->setColStretch(2,10);
+  grid->setColStretch(2,1);
+  grid->addColSpacing(2,20);
+  grid->setColStretch(3,1);
+  grid->setColStretch(4,10);
   grid->activate();
 
   //---------- group sending
@@ -564,9 +572,17 @@ void KMSettings::createTabComposer(QWidget *parent)
   config->setGroup("Composer");
   autoAppSignFile->setChecked(stricmp(config->readEntry("signature"),"auto")==0);
   wordWrap->setChecked(config->readBoolEntry("word-wrap",true));
-  wrapColumnEdit->setText(config->readEntry("break-at","80"));
+  wrapColumnEdit->setText(config->readEntry("break-at","78"));
+#if 0
+  // Limit break between 60 and 78
+  if ((mLineBreak == 0) || (mLineBreak > 78))
+    mLineBreak = 78;
+  if (mLineBreak < 60)
+    mLineBreak = 60;
+#endif
   monospFont->setChecked(stricmp(config->readEntry("font","variable"),"fixed")==0);
   pgpAutoSign->setChecked(config->readBoolEntry("pgp-auto-sign",false));
+  smartQuote->setChecked(config->readBoolEntry("smart-quote",true));
 
   i = msgSender->sendImmediate();
   sendNow->setChecked(i);
@@ -918,6 +934,7 @@ void KMSettings::doApply()
   config->writeEntry("phrase-reply-all", phraseReplyAllEdit->text());
   config->writeEntry("phrase-forward", phraseForwardEdit->text());
   config->writeEntry("indent-prefix", indentPrefixEdit->text());
+  config->writeEntry("smart-quote", smartQuote->isChecked());
 
   //----- composer appearance
   config->setGroup("Composer");

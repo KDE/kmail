@@ -50,7 +50,7 @@ extern KMIdentity *identity;
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
 {
-  initMetaObject();
+//  initMetaObject();
   mSendDlg = NULL;
   mSendProc = NULL;
   mSendProcStarted = FALSE;
@@ -62,8 +62,6 @@ KMSender::KMSender()
   //label->setAutoResize(true);
   label->setCaption("KMail");
   label->setIcon(kapp->miniIcon());
-  connect (this, SIGNAL(statusMsg(const QString&)),
-           label, SLOT(setText(const QString&)));
 }
 
 
@@ -75,6 +73,13 @@ KMSender::~KMSender()
   if (label) delete label;
 }
 
+//-----------------------------------------------------------------------------
+void
+KMSender::setStatusMsg(const QString &msg)
+{
+   label->setText( msg );
+   emit statusMsg( msg);
+}
 
 //-----------------------------------------------------------------------------
 void KMSender::readConfig(void)
@@ -254,7 +259,7 @@ void KMSender::doSendMsg()
     label->resize(400, label->sizeHint().height());
     label->show();
     //kapp->processEvents();
-    emit statusMsg(i18n("Initiating sender process..."));
+    setStatusMsg(i18n("Initiating sender process..."));
     if (!mSendProc->start())
     {
       cleanup();
@@ -270,7 +275,7 @@ void KMSender::doSendMsg()
 
   // start sending the current message
   mSendProc->preSendInit();
-  emit statusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
+  setStatusMsg(i18n("Sending message: ")+mCurrentMsg->subject());
   if (!mSendProc->send(mCurrentMsg))
   {
     cleanup();
@@ -298,7 +303,7 @@ void KMSender::cleanup(void)
 
   else outboxFolder->compact();
 
-  emit statusMsg(i18n("Done sending messages."));
+  setStatusMsg(i18n("Done sending messages."));
   serverReady(true); // sven - enable ipc
   label->hide();
   if (quitOnDone)
@@ -460,7 +465,7 @@ const QString KMSendProc::prepareStr(const QString aStr, bool toCRLF)
 //-----------------------------------------------------------------------------
 void KMSendProc::statusMsg(const QString& aMsg)
 {
-  if (mSender) emit mSender->statusMsg(aMsg);
+  if (mSender) mSender->setStatusMsg(aMsg);
   app->processEvents(500);
 }
 

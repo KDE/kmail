@@ -46,7 +46,8 @@ static QCString result;
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyStr, sForwardStr, sReplyAllStr, sIndentPrefixStr;
-
+static bool sSmartQuote;
+static int sWrapCol;
 
 /* Start functions added for KRN */
 
@@ -263,7 +264,6 @@ const QString KMMessage::formatString(const QString aStr) const
   QString result, str;
   const char* pos;
   char ch, cstr[64];
-  QDateTime datetime;
   time_t tm;
   int i;
 
@@ -282,6 +282,7 @@ const QString KMMessage::formatString(const QString aStr) const
 	   to have a long form of the date used? I don't
 	   like this change to a short XX/XX/YY date format.
 	   At least not for the default. -sanders
+        QDateTime datetime;
 	datetime.setTime_t(date());
         result += KGlobal::locale()->formatDate(datetime.date());
 	*/
@@ -322,6 +323,227 @@ const QString KMMessage::formatString(const QString aStr) const
   return result;
 }
 
+static void removeTrailingSpace( QString &line )
+{
+   int i = line.length()-1;
+   while( (i >= 0) && ((line[i] == ' ') || (line[i] == '\t')))
+      i--;
+   line.truncate( i+1);
+}
+
+static QString splitLine( QString &line)
+{
+    removeTrailingSpace( line );
+    int i = 0;
+    int j = -1;
+    int l = line.length();
+
+    // TODO: Replace tabs with spaces first.
+
+    while(i < l)
+    {
+       QChar c = line[i];
+       if ((c == '>') || (c == ':') || (c == '|'))
+          j = i+1;  
+       else if ((c != ' ') && (c != '\t'))
+          break;
+       i++;
+    }
+
+    if ( i == 0 )
+    {
+       return "";
+    }
+    if ( i == l )
+    {
+       QString result = line;
+       line = QString::null;
+       return result;
+    }
+
+    QString result = line.left(j);
+    line = line.mid(j);
+    return result;
+}
+
+static QString flowText(QString &text, const QString &indent, int maxLength)
+{
+// printf("flowText: \"%s\"\n", text.ascii());
+   maxLength--; 
+   if (text.isEmpty())
+   {
+      return indent+"<NULL>\n";
+   }
+   QString result;
+   while (1)
+   {
+      int i;
+      if ((int) text.length() > maxLength)
+      {
+         i = maxLength;
+         while( (i >= 0) && (text[i] != ' '))
+            i--;
+         if (i <= 0)
+         {
+            // Couldn't break before maxLength.
+            i = maxLength;
+//            while( (i < (int) text.length()) && (text[i] != ' '))
+//               i++;
+         }
+      }
+      else
+      {
+         i = text.length();
+      }
+
+      QString line = text.left(i);
+      if (i < (int) text.length())
+         text = text.mid(i);
+      else 
+         text = QString::null;
+
+      result += indent + line + '\n';
+      
+      if (text.isEmpty()) 
+         return result;
+   }
+}
+
+static bool flushPart(QString &msg, QStringList &part, 
+                      const QString &indent, int maxLength)
+{
+   maxLength -= indent.length();
+   if (maxLength < 20) maxLength = 20;
+
+   // Remove empty lines at end of quote
+   while ((part.begin() != part.end()) && part.last().isEmpty())
+   {
+      part.remove(part.fromLast());
+   }
+ 
+//printf("Start of part.\n");
+      
+   QString text;
+   for(QStringList::Iterator it2 = part.begin();
+       it2 != part.end();
+       it2++)
+   {
+      QString line = (*it2);
+
+      if (line.isEmpty())
+      {
+         if (!text.isEmpty())
+            msg += flowText(text, indent, maxLength);
+         msg += indent + "\n";
+      }
+      else
+      {
+         if (text.isEmpty())
+            text = line;
+         else
+            text += " "+line.stripWhiteSpace();
+
+         if (((int) text.length() < maxLength) || ((int) line.length() < (maxLength-10)))
+            msg += flowText(text, indent, maxLength);
+      }
+   }
+   if (!text.isEmpty())
+      msg += flowText(text, indent, maxLength);
+//printf("End of of part.\n");
+
+   bool appendEmptyLine = true;
+   if (!part.count())
+     appendEmptyLine = false;
+
+   part.clear();
+   return appendEmptyLine;
+}
+
+
+static void smartQuote( QString &msg, const QString &ownIndent, int maxLength )
+{
+  QStringList part;
+  QString startOfSig1;
+  QString startOfSig2 = ownIndent+"--";
+  QString oldIndent;
+  int i = 0;
+  int l = 0;
+
+  while( startOfSig2.left(1) == "\n") 
+     startOfSig2 = startOfSig2.mid(1);
+  startOfSig1 = startOfSig2 + ' ';
+
+  QStringList lines;
+  while ((i = msg.find('\n', l)) != -1)
+  {
+     if (i == l)
+        lines.append( QString::null);
+     else
+        lines.append( msg.mid(l, i-l));
+     l = i+1;
+  }
+  if (l <= (int) msg.length());
+     lines.append( msg.mid(l));
+  msg = QString::null;
+  for(QStringList::Iterator it = lines.begin();
+      it != lines.end();
+      it++)
+  {
+     QString line = *it;
+
+     if (line == startOfSig1) break; // Start of signature 
+     if (line == startOfSig2) break; // Start of malformed signature 
+
+     QString indent = splitLine( line );
+
+//     printf("Quoted Line = \"%s\" \"%s\"\n", line.ascii(), indent.ascii());
+     if ( line.isEmpty()) 
+     {
+        if (!oldIndent.isEmpty())
+           part.append(QString::null);
+        continue;
+     };
+ 
+     if (oldIndent.isNull())
+     {
+        oldIndent = indent;
+     }
+
+     if (oldIndent != indent)
+     {
+        QString fromLine;
+        // Search if the last non-blank line could be "From" line
+        if (part.count() && (oldIndent.length() < indent.length()))
+        {
+           QStringList::Iterator it2 = part.fromLast();
+           while( (it2 != part.end()) && (*it2).isEmpty())
+             it2--;
+
+           if ((it2 != part.end()) && ((*it2).right(1) == ":"))
+           {
+              fromLine = oldIndent + (*it2) + "\n";
+              part.remove(it2);
+           }
+        }
+        if (flushPart( msg, part, oldIndent, maxLength))
+        {
+           if (oldIndent.length() > indent.length())
+              msg += indent + "\n";
+           else
+              msg += oldIndent + "\n";  
+        }
+        if (!fromLine.isEmpty())
+        {
+           msg += fromLine;
+//printf("From = %s", fromLine.ascii());
+        }
+        oldIndent = indent;
+     }
+     part.append(line);
+  }
+  flushPart( msg, part, oldIndent, maxLength);
+}
+
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::asQuotedString(const QString aHeaderStr,
@@ -354,8 +576,10 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
      } else {
        result = result.stripWhiteSpace();
      }
-     
-     result.replace(reNL,nlIndentStr) + '\n';
+     result.replace(reNL,nlIndentStr);
+     result = formatString(aIndentStr) + result + '\n';
+     if (sSmartQuote)
+        smartQuote(result, nlIndentStr, sWrapCol);
   }
   else
   {
@@ -381,15 +605,17 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
               (pgp->decrypt()))
 	  {
 	    part = QString(pgp->message());
-	    part = part.replace(reNL,nlIndentStr);
 	  }
           else
 	  {
 	    part = QString(msgPart.bodyDecoded());
 	    //	    debug ("part\n" + part ); inexplicably crashes -sanders
-	    part = part.replace(reNL,nlIndentStr);
 	  }
-	  result += part + '\n';
+          part.replace(reNL,nlIndentStr);
+          part = formatString(aIndentStr) + part + '\n';
+          if (sSmartQuote)
+             smartQuote(part, nlIndentStr, sWrapCol);
+          result += part;
 	}
 	else isInline = FALSE;
       }
@@ -408,7 +634,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
     }
   }
 
-  return headerStr + nlIndentStr + result;
+  return headerStr + "\n" + result;
 }
 
 
@@ -1449,6 +1675,14 @@ void KMMessage::readConfig(void)
   sReplyAllStr = config->readEntry("phrase-reply-all",i18n("On %D, %F wrote:"));
   sForwardStr = config->readEntry("phrase-forward",i18n("Forwarded Message"));
   sIndentPrefixStr = config->readEntry("indent-prefix",">%_");
+
+  config->setGroup("Composer");
+  sSmartQuote = config->readBoolEntry("smart-quote", true);
+  sWrapCol = config->readNumEntry("break-at", 78);
+  if ((sWrapCol == 0) || (sWrapCol > 78))
+     sWrapCol = 78;
+  if (sWrapCol < 60)
+     sWrapCol = 60;
 }
 
 #if defined CHARSETS
