@@ -2320,10 +2320,10 @@ void KMHeaders::rightButtonPressed( QListViewItem *lvi, const QPoint &, int )
   if (!lvi)
     return;
 
-  if (!(lvi->isSelected())) {
+  if ((lvi->isSelected())) {
     clearSelection();
-    setSelected( lvi, TRUE );
   }
+  setSelected( lvi, TRUE );
   slotRMB();
 }
 
