@@ -22,12 +22,11 @@
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 
-
+#include "kcursorsaver.h"
 #include "kmcommands.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmheaders.h"
-#include "kbusyptr.h"
 #include "kmmainwidget.h"
 #include "kmcomposewin.h"
 #include "kmfiltermgr.h"
@@ -1195,7 +1194,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       if (mMsgSubjects[strippedSubjMD5] == removedItem) {
         mMsgSubjects.remove(strippedSubjMD5);
         if (removedItem->firstChild()) {
-          KMHeaderItem *kiddo = 
+          KMHeaderItem *kiddo =
             static_cast<KMHeaderItem*> (removedItem->firstChild());
 
           int id = kiddo->msgId();
@@ -1238,7 +1237,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       myParent->takeItem(lvi);
       if (parent && parent != item)
           parent->insertItem(lvi);
-      else 
+      else
         insertItem(lvi);
 
       if (!parent || (!perfectParent && !mImperfectlyThreadedList.containsRef(item)))
@@ -1509,7 +1508,7 @@ void KMHeaders::resendMsg ()
   KMMessage *newMsg, *msg = currentMsg();
   if (!msg || !msg->codec()) return;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   newMsg = new KMMessage;
   newMsg->fromString(msg->asString());
   newMsg->initFromMessage(msg, true);
@@ -1522,7 +1521,6 @@ void KMHeaders::resendMsg ()
   win = new KMComposeWin();
   win->setMsg(newMsg, FALSE, true);
   win->show();
-  kernel->kbp()->idle();
 }
 
 

@@ -16,6 +16,7 @@
 #include <kdebug.h>
 #include "kmfiltermgr.h"
 
+#include "kcursorsaver.h"
 #include "kmsender.h"
 #include "kmidentity.h"
 #include "kmkernel.h"
@@ -26,7 +27,6 @@
 #include "kmfolderindex.h"
 #include "kmfoldermgr.h"
 #include "kmmsgdict.h"
-#include "kbusyptr.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include <mimelib/mediatyp.h>
@@ -1017,12 +1017,10 @@ bool KMSendSMTP::send(KMMessage *aMsg)
       bool b = FALSE;
       int result;
 
-      bool busy = kernel->kbp()->isBusy(); // hackish, but used elsewhere
-      if (busy) kernel->kbp()->idle();
+      KCursorSaver idle(KBusyPtr::idle());
       result = KIO::PasswordDialog::getNameAndPassword(ti->user, ti->pass,
 	&b, i18n("You need to supply a username and a password to use this "
 	     "SMTP server."), FALSE, QString::null, ti->name, QString::null);
-      if (busy) kernel->kbp()->busy();
 
       if ( result != QDialog::Accepted )
       {

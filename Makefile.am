@@ -27,7 +27,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfolderdia.cpp kmfoldertree.cpp kmtransport.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
-		kmreaderwin.cpp kbusyptr.cpp kmmsgdict.cpp \
+		kmreaderwin.cpp kmmsgdict.cpp \
 		kmgroupware.cpp kmgroupwarefuncs.cpp startupwizard.cpp \
 		klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
@@ -40,8 +40,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmacctseldlg.cpp kmfiltermgr.cpp kmsearchpatternedit.cpp \
 		kmfilteraction.cpp kmsearchpattern.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
-		kmmsgbase.cpp kmmsglist.cpp kmpgpwrap.cpp \
-		kfileio.cpp kmaddrbook.cpp  \
+		kmmsgbase.cpp kmmsglist.cpp kfileio.cpp kmaddrbook.cpp  \
 		signatureconfigurator.cpp \
 		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
 		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \

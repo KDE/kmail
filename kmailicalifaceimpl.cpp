@@ -29,8 +29,8 @@
 #include "kmgroupware.h"
 
 KMailICalIfaceImpl::KMailICalIfaceImpl( KMGroupware* gw )
-  : QObject( gw, "KMailICalIfaceImpl"),
-    DCOPObject( "KMailICalIface" ),
+  : DCOPObject( "KMailICalIface" ),
+    QObject( gw, "KMailICalIfaceImpl"),
     mGroupware(gw)
 {
   connect( gw, SIGNAL( incidenceAdded( const QString&, const QString& ) ),
@@ -42,8 +42,8 @@ KMailICalIfaceImpl::KMailICalIfaceImpl( KMGroupware* gw )
 	   this, SLOT( slotRefresh( const QString& ) ) );
 }
 
-bool KMailICalIfaceImpl::addIncidence( const QString& folder, 
-				       const QString& uid, 
+bool KMailICalIfaceImpl::addIncidence( const QString& folder,
+				       const QString& uid,
 				       const QString& ical )
 {
   kdDebug() << "KMailICalIfaceImpl::addIncidence( " << folder << ", "
@@ -52,7 +52,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& folder,
   return rc;
 }
 
-bool KMailICalIfaceImpl::deleteIncidence( const QString& folder, 
+bool KMailICalIfaceImpl::deleteIncidence( const QString& folder,
 					  const QString& uid )
 {
   kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << folder << ", "

@@ -42,7 +42,6 @@
 #include <krun.h>
 #include <kbookmarkmanager.h>
 #include <kstandarddirs.h>
-#include "kbusyptr.h"
 #include "mailinglist-magic.h"
 #include "kmaddrbook.h"
 #include "kmcomposewin.h"
@@ -59,6 +58,7 @@
 #include "kmreaderwin.h"
 #include "kmsender.h"
 #include "kmundostack.h"
+#include "kcursorsaver.h"
 #include "folderjob.h"
 using KMail::FolderJob;
 
@@ -571,14 +571,13 @@ KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMsgBase *msgBase,
 
 void KMReplyToCommand::execute()
 {
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( FALSE, FALSE, mSelection );
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
   win->setReplyFocus();
   win->show();
-  kernel->kbp()->idle();
 }
 
 
@@ -590,14 +589,13 @@ KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
 
 void KMNoQuoteReplyToCommand::execute()
 {
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply(FALSE, FALSE, "", TRUE);
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
   win->show();
-  kernel->kbp()->idle();
 }
 
 
@@ -609,14 +607,13 @@ KMReplyListCommand::KMReplyListCommand( QWidget *parent,
 
 void KMReplyListCommand::execute()
 {
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply(false, true, mSelection);
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
   win->show();
-  kernel->kbp()->idle();
 }
 
 
@@ -628,14 +625,13 @@ KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
 
 void KMReplyToAllCommand::execute()
 {
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   KMMessage *msg = retrievedMessage();
   KMMessage *reply = msg->createReply( TRUE, FALSE, mSelection );
   KMComposeWin *win = new KMComposeWin( reply );
   win->setCharset( msg->codec()->mimeName(), TRUE );
   win->setReplyFocus();
   win->show();
-  kernel->kbp()->idle();
 }
 
 
@@ -709,11 +705,10 @@ void KMForwardCommand::execute()
       msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
       // THIS HAS TO BE AFTER setCte()!!!!
       msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
-      kernel->kbp()->busy();
+      KCursorSaver busy(KBusyPtr::busy());
       win = new KMComposeWin(fwdMsg, id);
       win->addAttach(msgPart);
       win->show();
-      kernel->kbp()->idle();
       return;
     } else {            // NO MIME DIGEST, Multiple forward
       uint id = 0;
@@ -737,11 +732,10 @@ void KMForwardCommand::execute()
       for (KMMessage *msg = linklist.first(); msg; msg = linklist.next())
         fwdMsg->link(msg, KMMsgStatusForwarded);
 
-      kernel->kbp()->busy();
+      KCursorSaver busy(KBusyPtr::busy());
       win = new KMComposeWin(fwdMsg, id);
       win->setCharset("");
       win->show();
-      kernel->kbp()->idle();
       return;
     }
   }
@@ -751,11 +745,10 @@ void KMForwardCommand::execute()
   KMMessage *msg = msgList.getFirst();
   if (!msg || !msg->codec()) return;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   win = new KMComposeWin(msg->createForward());
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
-  kernel->kbp()->idle();
 }
 
 
@@ -784,7 +777,7 @@ void KMForwardAttachedCommand::execute()
 
   fwdMsg->setAutomaticFields(true);
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   if (!mWin)
     mWin = new KMComposeWin(fwdMsg, mIdentity);
 
@@ -808,7 +801,6 @@ void KMForwardAttachedCommand::execute()
   }
 
   mWin->show();
-  kernel->kbp()->idle();
 }
 
 
@@ -825,12 +817,11 @@ void KMRedirectCommand::execute()
   KMMessage *msg = retrievedMessage();
   if (!msg || !msg->codec()) return;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   win = new KMComposeWin();
   win->setMsg(msg->createRedirect(), FALSE);
   win->setCharset(msg->codec()->mimeName());
   win->show();
-  kernel->kbp()->idle();
 }
 
 
@@ -1069,7 +1060,7 @@ void KMCopyCommand::execute()
   bool isMessage;
   QPtrList<KMMessage> list;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   mDestFolder->open();
 
   for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
@@ -1136,7 +1127,6 @@ void KMCopyCommand::execute()
   }
 
   mDestFolder->close();
-  kernel->kbp()->idle();
 }
 
 
@@ -1156,7 +1146,7 @@ void KMMoveCommand::execute()
 
   if (mDestFolder && mDestFolder->open() != 0)
     return;
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   // used for remembering the message to select afterwards
   int nextId;
   int contentX, contentY;
@@ -1223,7 +1213,6 @@ void KMMoveCommand::execute()
      mDestFolder->sync();
      mDestFolder->close();
   }
-  kernel->kbp()->idle();
 }
 
 

@@ -5,6 +5,7 @@
 #include <config.h>
 #include <pwd.h>
 #include "kmaddrbook.h"
+#include "kcursorsaver.h"
 #include <kapplication.h>
 #include <kdebug.h>
 
@@ -16,7 +17,6 @@
 #include <kmessagebox.h>
 
 #include "kmkernel.h" // for KabcBridge
-#include "kbusyptr.h"
 #include "kmmessage.h" // for KabcBridge
 #include <krun.h> // for kmaddrbookexternal
 #include <kprocess.h>
@@ -25,7 +25,7 @@
 
 void KabcBridge::addresses(QStringList* result) // includes lists
 {
-  kernel->kbp()->busy(); // loading might take a while
+  KCursorSaver busy(KBusyPtr::busy()); // loading might take a while
 
   KABC::AddressBook *addressBook = KABC::StdAddressBook::self();
   KABC::AddressBook::Iterator it;
@@ -75,8 +75,6 @@ void KabcBridge::addresses(QStringList* result) // includes lists
   for ( jt = names.begin(); jt != names.end(); ++jt)
     result->append( *jt );
   result->sort();
-
-  kernel->kbp()->idle();
 }
 
 QStringList KabcBridge::addresses()

@@ -6,7 +6,6 @@
 
 #include <config.h>
 #include <mimelib/boyermor.h>
-#include "kbusyptr.h"
 #include "kmcommands.h"
 #include "kmcomposewin.h"
 #include "kmfldsearch.h"

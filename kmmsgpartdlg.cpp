@@ -9,7 +9,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmglobal.h"
-#include "kbusyptr.h"
+#include "kcursorsaver.h"
 
 // other kdenetwork includes: (none)
 
@@ -414,7 +414,7 @@ void KMMsgPartDialogCompat::applyChanges()
 {
   if (!mMsgPart) return;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
 
   // apply Content-Disposition:
   QCString cDisp;
@@ -460,7 +460,7 @@ void KMMsgPartDialogCompat::applyChanges()
   // apply Content-Transfer-Encoding:
   QCString cte;
   if (subtype == "rfc822" && type == "message")
-    kdWarning( encoding() != SevenBit && encoding() != EightBit, 5006 ) 
+    kdWarning( encoding() != SevenBit && encoding() != EightBit, 5006 )
       << "encoding on rfc822/message must be \"7bit\" or \"8bit\"" << endl;
   switch ( encoding() ) {
   case SevenBit:        cte = "7bit";             break;
@@ -473,9 +473,6 @@ void KMMsgPartDialogCompat::applyChanges()
     mMsgPart->setCteStr( cte );
     mMsgPart->setBodyEncodedBinary( body );
   }
-
-
-  kernel->kbp()->idle();
 }
 
 

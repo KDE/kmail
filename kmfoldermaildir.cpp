@@ -14,8 +14,8 @@
 #include "kmfoldermgr.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
-#include "kbusyptr.h"
 #include "maildirjob.h"
+#include "kcursorsaver.h"
 using KMail::MaildirJob;
 #include <kio/netaccess.h>
 #include <kapplication.h>
@@ -91,13 +91,11 @@ int KMFolderMaildir::open()
   assert(!name().isEmpty());
 
   if (canAccess() != 0) {
-    bool busy = kernel->kbp()->isBusy();
-    if (busy) kernel->kbp()->idle();
-    KMessageBox::sorry(0, i18n("Error opening %1. Either this is not a valid "
-      "maildir folder or you don't have sufficient access permissions.")
-      .arg(name()));
-    if (busy) kernel->kbp()->busy();
-    return EPERM;
+      KCursorSaver idle(KBusyPtr::idle());
+      KMessageBox::sorry(0, i18n("Error opening %1. Either this is not a valid "
+                                 "maildir folder or you don't have sufficient access permissions.")
+                         .arg(name()));
+      return EPERM;
   }
 
   if (!path().isEmpty())
@@ -596,9 +594,9 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       }
 
       KMMsgInfo *mi = new KMMsgInfo(this);
-      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr, 
-               replyToAuxIdStr, msgIdStr, file.local8Bit(), 
-               KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown, 
+      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr,
+               replyToAuxIdStr, msgIdStr, file.local8Bit(),
+               KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
                KMMsgMDNStateUnknown, f.size());
       if (!dateStr.isEmpty())
         mi->setDate(dateStr);

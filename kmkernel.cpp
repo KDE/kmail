@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <kpgp.h>
 
 #include "kmkernel.h"
 
@@ -13,6 +14,7 @@
 
 #include <qvbox.h>
 
+#include <kpgp.h>
 #include <kaboutdata.h>
 #include <kdebug.h>
 #include <kmessagebox.h>
@@ -39,10 +41,8 @@
 #include "kmsender.h"
 #include "kmundostack.h"
 #include "kmacctmgr.h"
-#include "kbusyptr.h"
 #include "kmaddrbook.h"
 #include "kfileio.h"
-#include "kmpgpwrap.h"
 #include "kmversion.h"
 #include "recentaddresses.h"
 using KRecentAddress::RecentAddresses;
@@ -75,7 +75,7 @@ KMKernel *KMKernel::mySelf = 0;
 /*                     Constructor and destructor                   */
 /********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
-  QObject(parent, name),  DCOPObject("KMailIface"),
+  DCOPObject("KMailIface"), QObject(parent, name),
   mIdentityManager(0), mProgress(0), mConfigureDialog(0)
 {
   //kdDebug(5006) << "KMKernel::KMKernel" << endl;
@@ -92,7 +92,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_trashFolder = 0;
   the_draftsFolder = 0;
 
-  the_kbp = 0;
   the_folderMgr = 0;
   the_imapFolderMgr = 0;
   the_searchFolderMgr = 0;
@@ -114,7 +113,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mDeadLetterTimer = 0;
   mDeadLetterInterval = 1000*120; // 2 minutes
 
-  new KMpgpWrap();
+  new Kpgp::Module();
+
   // register our own (libkdenetwork) utf-7 codec as long as Qt
   // doesn't have it's own:
   if ( !QTextCodec::codecForName("utf-7") ) {
@@ -683,7 +683,6 @@ void KMKernel::init()
   the_shuttingDown = false;
   the_server_is_ready = false;
 
-  the_kbp = new KBusyPtr;
   cfg = KMKernel::config();
 
   mCryptPlugList.loadFromConfig( cfg );
@@ -999,8 +998,6 @@ void KMKernel::cleanupLoop()
   the_searchFolderMgr = 0;
   delete the_msgDict;
   the_msgDict = 0;
-  delete the_kbp;
-  the_kbp = 0;
   delete mConfigureDialog;
   mConfigureDialog = 0;
   delete mWin;
@@ -1280,8 +1277,6 @@ void KMKernel::notClosedByUser()
   the_searchFolderMgr = 0;
   delete the_msgDict;
   the_msgDict = 0;
-  delete the_kbp;
-  the_kbp = 0;
   delete mConfigureDialog;
   mConfigureDialog = 0;
   delete mWin;

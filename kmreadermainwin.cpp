@@ -20,7 +20,6 @@
 #include <kstdaccel.h>
 #include <kwin.h>
 
-#include "kbusyptr.h"
 #include "kmcommands.h"
 #include "kmdisplayvcard.h"
 #include "kmkernel.h"

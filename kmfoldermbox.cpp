@@ -10,8 +10,8 @@
 #include "kmfoldermgr.h"
 #include "kmmessage.h"
 #include "kmundostack.h"
-#include "kbusyptr.h"
 #include "mboxjob.h"
+#include "kcursorsaver.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -130,12 +130,10 @@ int KMFolderMbox::open()
         }
         else
         {
-          bool busy = kernel->kbp()->isBusy();
-          if (busy) kernel->kbp()->idle();
-          KMessageBox::information( 0, msg, i18n("Index Out of Date"),
-                                    "showIndexRegenerationMessage",
-                                    KMessageBox::AllowLink );
-          if (busy) kernel->kbp()->busy();
+            KCursorSaver idle(KBusyPtr::idle());
+            KMessageBox::information( 0, msg, i18n("Index Out of Date"),
+                                      "showIndexRegenerationMessage",
+                                      KMessageBox::AllowLink );
         }
        }
        QString str;

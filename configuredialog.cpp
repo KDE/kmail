@@ -21,9 +21,7 @@
  */
 
 // This must be first
-#ifdef HAVE_CONFIG_H
 #include <config.h>
-#endif
 
 // my headers:
 #include "configuredialog.h"
@@ -33,7 +31,6 @@
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
 #include "colorlistbox.h"
-#include "kbusyptr.h"
 #include "kmacctmgr.h"
 #include "kmacctseldlg.h"
 #include "kmsender.h"
@@ -51,6 +48,8 @@
 #include "identitymanager.h"
 #include "identitylistview.h"
 #include "kmacctcachedimap.h"
+#include "kcursorsaver.h"
+
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
 #include "identitydialog.h"
@@ -279,13 +278,12 @@ void ConfigureDialog::apply( bool everything ) {
   // Make other components read the new settings
   //
   KMMessage::readConfig();
-  kernel->kbp()->busy(); // this can take some time when a large folder is open
+  KCursorSaver busy(KBusyPtr::busy()); // this can take some time when a large folder is open
   QPtrListIterator<KMainWindow> it( *KMainWindow::memberList );
   for ( it.toFirst() ; it.current() ; ++it )
     // ### FIXME: use dynamic_cast.
     if ( (*it)->inherits( "KMTopLevelWidget" ) )
       ((KMTopLevelWidget*)(*it))->readConfig();
-  kernel->kbp()->idle();
 }
 
 
@@ -1023,7 +1021,7 @@ void NetworkPage::SendingTab::setup() {
 
   mConfirmSendCheck->setChecked( composer.readBoolEntry( "confirm-before-send",
 							 false ) );
-  QString str = general.readEntry( "Default domain", "" );
+  QString str = general.readEntry( "Default domain" );
   if( str.isEmpty() )
   {
     //### FIXME: Use the global convenience function instead of the homebrewed

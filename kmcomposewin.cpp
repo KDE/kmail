@@ -19,11 +19,11 @@ using KPIM::AddressesDialog;
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmkernel.h"
+#include "kcursorsaver.h"
 #include "identitymanager.h"
 #include "identitycombo.h"
 #include "kmidentity.h"
 #include "kfileio.h"
-#include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
 #include <kpgp.h>
 #include <kpgpblock.h>
@@ -34,6 +34,7 @@ using KPIM::AddressesDialog;
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
 #include "kmcommands.h"
+#include "kcursorsaver.h"
 
 #include <kaction.h>
 #include <kcharsets.h>
@@ -94,9 +95,8 @@ using KRecentAddress::RecentAddresses;
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
-  : KMTopLevelWidget("kmail-composer#"), MailComposerIface(),
+  : MailComposerIface(), KMTopLevelWidget("kmail-composer#"),
     mId( id ), mNeverSign( false ), mNeverEncrypt( false )
-
 {
   if (kernel->xmlGuiInstance())
     setInstance( kernel->xmlGuiInstance() );
@@ -1580,7 +1580,7 @@ bool KMComposeWin::applyChanges(void)
 	}
 	else if( 2 == status ) {
 	  // the user wants to be asked or has to be asked
-	  kernel->kbp()->idle();
+          KCursorSaver idle(KBusyPtr::idle());
 	  int ret;
 	  if( doSign )
 	    ret = KMessageBox::questionYesNoCancel( this,
@@ -1600,7 +1600,6 @@ bool KMComposeWin::applyChanges(void)
 						    i18n("Encrypt Message?"),
 						    KGuiItem( i18n("&Encrypt") ),
 						    KGuiItem( i18n("&Don't Encrypt") ) );
-	  kernel->kbp()->busy();
 	  if( KMessageBox::Cancel == ret )
 	    return false;
 	  else if( KMessageBox::Yes == ret ) {
@@ -1610,7 +1609,9 @@ bool KMComposeWin::applyChanges(void)
 	  }
 	}
 	else if( status == -1 )
-	{ // warn the user that there are conflicting encryption preferences
+	{
+          // warn the user that there are conflicting encryption preferences
+          KCursorSaver idle(KBusyPtr::idle());
 	  int ret =
 	    KMessageBox::warningYesNoCancel( this,
 					     i18n("<qt><p>There are conflicting encryption "
@@ -2769,12 +2770,12 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
     {
       QString oldText = mEditor->text();
       mEditor->setText(newText);
-      kernel->kbp()->idle();
+      KCursorSaver idle(KBusyPtr::idle());
       bool anyway = (KMessageBox::warningYesNo(0,
-      i18n("<qt>Not all characters fit into the chosen"
-      " encoding.<br><br>Send the message anyway?</qt>"),
-      i18n("Some characters will be lost"),
-      i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
+                                               i18n("<qt>Not all characters fit into the chosen"
+                                                    " encoding.<br><br>Send the message anyway?</qt>"),
+                                               i18n("Some characters will be lost"),
+                                               i18n("Yes"), i18n("No, let me change the encoding") ) == KMessageBox::Yes);
       if (!anyway)
       {
         mEditor->setText(oldText);
@@ -3978,7 +3979,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   KMMessagePart* msgPart;
   int i;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   i = urlStr.findRev('/');
   name = (i>=0 ? urlStr.mid(i+1, 256) : urlStr);
 
@@ -4004,7 +4005,6 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
 
   mapAtmLoadData.remove(it);
 
-  kernel->kbp()->idle();
   msgPart->setCharset(mCharset);
 
   // show message part dialog, if not configured away (default):
@@ -4173,7 +4173,7 @@ void KMComposeWin::slotInsertMyPublicKey()
 {
   KMMessagePart* msgPart;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
 
   // get PGP user id for the chosen identity
   QCString pgpUserId =
@@ -4182,7 +4182,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   QCString armoredKey = Kpgp::Module::getKpgp()->getAsciiPublicKey(pgpUserId);
   if (armoredKey.isEmpty())
   {
-    kernel->kbp()->idle();
+    KCursorSaver idle(KBusyPtr::idle());
     KMessageBox::sorry( 0, i18n("Unable to obtain your public key.") );
     return;
   }
@@ -4199,8 +4199,6 @@ void KMComposeWin::slotInsertMyPublicKey()
   // add the new attachment to the list
   addAttach(msgPart);
   rethinkFields(); //work around initial-size bug in Qt-1.32
-
-  kernel->kbp()->idle();
 }
 
 //-----------------------------------------------------------------------------
@@ -4718,7 +4716,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
      }
   }
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   mMsg->setDateToday();
 
   // If a user sets up their outgoing messages preferences wrong and then
@@ -4754,10 +4752,7 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
   disableBreaking = false;
 
   if (!sentOk)
-  {
-     kernel->kbp()->idle();
-     return false;
-  }
+      return false;
 
   if (saveInDrafts)
   {
@@ -4814,8 +4809,6 @@ bool KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
       sentOk &= kernel->msgSender()->send(msg, aSendNow);
     }
   }
-
-  kernel->kbp()->idle();
 
   if (!sentOk)
      return false;

@@ -38,11 +38,11 @@
 #include <kdeversion.h>
 #include <knotifydialog.h>
 
+#include "kcursorsaver.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
 #include "kmfolderdia.h"
 #include "kmacctmgr.h"
-#include "kbusyptr.h"
 #include "kmfilter.h"
 #include "kmfoldertree.h"
 #include "kmreaderwin.h"
@@ -1004,7 +1004,7 @@ void KMMainWidget::slotEmptyFolder()
 
   mMsgView->clearCache();
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
 
   // begin of critical part
   // from here to "end..." no signal may change to another mFolder, otherwise
@@ -1030,7 +1030,6 @@ void KMMainWidget::slotEmptyFolder()
     statusMsg(i18n("Moved all messages to the trash"));
 
   mHeaders->setFolder(mFolder);
-  kernel->kbp()->idle();
   updateMessageActions();
 }
 
@@ -1087,9 +1086,8 @@ void KMMainWidget::slotCompactFolder()
   int idx = mHeaders->currentItemIndex();
   if (mFolder)
   {
-    kernel->kbp()->busy();
-    mFolder->compact();
-    kernel->kbp()->idle();
+      KCursorSaver busy(KBusyPtr::busy());
+      mFolder->compact();
   }
   mHeaders->setCurrentItemByIndex(idx);
 }
@@ -1131,7 +1129,7 @@ void KMMainWidget::slotExpireAll() {
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotCompactAll()
 {
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   QStringList strList;
   QValueList<QGuardedPtr<KMFolder> > folders;
   KMFolder *folder;
@@ -1142,7 +1140,6 @@ void KMMainWidget::slotCompactAll()
     if (!folder || folder->isDir()) continue;
     folder->compact();
   }
-  kernel->kbp()->idle();
 }
 
 
@@ -1467,7 +1464,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   if( aFolder && mFolder == aFolder )
     return;
 
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
 
   mMsgView->clear(true);
   if( !aFolder || aFolder->noContent() ||
@@ -1500,7 +1497,6 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   updateMessageActions();
   if (!aFolder)
     slotIntro();
-  kernel->kbp()->idle();
 }
 
 //-----------------------------------------------------------------------------

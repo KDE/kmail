@@ -48,7 +48,6 @@
 #include "configuredialog_p.h"
 #include "kmacctmgr.h"
 #include "kmcomposewin.h"
-#include "kbusyptr.h"
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "kmfoldercachedimap.h"
@@ -412,7 +411,7 @@ QWidget* StartupWizard::createLanguagePage()
   top->addWidget( text );
 
   QVBox* rightSide = new QVBox( page );
-  top->addWidget( rightSide, 1 );  
+  top->addWidget( rightSide, 1 );
 
   mLanguageLabel = new QLabel( rightSide );
 
@@ -432,7 +431,7 @@ QWidget* StartupWizard::createFolderSelectionPage()
   QWidget* page = new QWidget(this, "foldersel_page");
   QBoxLayout* top = new QHBoxLayout( page );
   QTextBrowser* text = new QTextBrowser( page );
-  text->setText(i18n("The groupware functions need some special folders to store " 
+  text->setText(i18n("The groupware functions need some special folders to store "
 		   "the contents of the calendar, contacts, tasks etc.<br>"
 		   "Please select the folder that the groupware folders should "
 		   "be subfolders of."));
@@ -457,7 +456,7 @@ void StartupWizard::slotUpdateParentFolderName()
 		    "they do not already exist").arg( fldrName ));
 }
 
-void StartupWizard::setLanguage( int language, bool guessed ) 
+void StartupWizard::setLanguage( int language, bool guessed )
 {
   mLanguageCombo->setCurrentItem( language );
   if( guessed ) {

@@ -21,8 +21,6 @@ namespace KIO {
 class KMMsgIndex;
 class QLabel;
 class KMFolder;
-class KBusyPtr;
-class KBusyPtr;
 class KMFolderMgr;
 class KMUndoStack;
 class KMAcctMgr;
@@ -142,7 +140,6 @@ public:
   KMFolder *trashFolder() { return the_trashFolder; }
   KMFolder *draftsFolder() { return the_draftsFolder; }
 
-  KBusyPtr *kbp() { return the_kbp; }
   KMFolderMgr *folderMgr() { return the_folderMgr; }
   KMFolderMgr *imapFolderMgr() { return the_imapFolderMgr; }
   KMFolderMgr *searchFolderMgr() { return the_searchFolderMgr; }
@@ -232,7 +229,6 @@ private:
   KMFolder *the_draftsFolder;
 
   KMSystemTray  *mSystemTray;
-  KBusyPtr *the_kbp;
   KMFolderMgr *the_folderMgr, *the_imapFolderMgr, *the_searchFolderMgr;
   KMUndoStack *the_undoStack;
   KMAcctMgr *the_acctMgr;

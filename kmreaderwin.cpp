@@ -58,7 +58,6 @@ using namespace KMime;
 #include "kmreadermainwin.h"
 #include "kmgroupware.h"
 
-#include "kbusyptr.h"
 #include "kfileio.h"
 #include "kmfolderindex.h"
 #include "kmcommands.h"
@@ -71,6 +70,7 @@ using namespace KMime;
 #include "linklocator.h"
 #include "kmmsgdict.h"
 #include "kmsender.h"
+#include "kcursorsaver.h"
 #include "mailinglist-magic.h"
 #include "objecttreeparser.h"
 using KMail::ObjectTreeParser;
@@ -2990,7 +2990,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
     const QTextCodec *aCodec )
 {
   QString str;
-  kernel->kbp()->busy();
+  KCursorSaver busy(KBusyPtr::busy());
   if (qstricmp(aMsgPart->typeStr(), "message")==0) {
       // if called from compose win
       KMMessage* msg = new KMMessage;
@@ -3008,14 +3008,13 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 	if (!vc) {
           QString errstring = i18n("Error reading in vCard:\n");
 	  errstring += VCard::getError(vcerr);
-          kernel->kbp()->idle();
+          // force idling, not just restore
+          KCursorSaver idle(KBusyPtr::idle());
 	  KMessageBox::error(0, errstring, i18n("vCard error"));
-	  kernel->kbp()->idle();
 	  return;
 	}
 
 	vcdlg = new KMDisplayVCard(vc);
-        kernel->kbp()->idle();
 	vcdlg->show();
 	return;
       }
@@ -3047,10 +3046,9 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
              (qstricmp(aMsgPart->typeStr(), "application")==0 &&
               qstricmp(aMsgPart->subtypeStr(), "postscript")))
   {
-      if (aFileName.isEmpty()) {
-	  kernel->kbp()->idle();
+      if (aFileName.isEmpty())
 	  return;  // prevent crash
-      }
+
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
       QImageIO *iio = new QImageIO();
@@ -3102,7 +3100,6 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       browser->show();
   }
   // ---Sven's view text, html and image attachments in html widget end ---
-  kernel->kbp()->idle();
 }
 
 
@@ -3270,18 +3267,16 @@ void KMReaderWin::slotAtmSave()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotAtmProperties()
 {
-  KMMsgPartDialogCompat dlg(0,TRUE);
+    KMMsgPartDialogCompat dlg(0,TRUE);
 
-  kernel->kbp()->busy();
-  partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
-  if( node ) {
-    KMMessagePart& msgPart = node->msgPart();
+    KCursorSaver busy(KBusyPtr::busy());
+    partNode* node = mRootNode ? mRootNode->findId( mAtmCurrent ) : 0;
+    if( node ) {
+        KMMessagePart& msgPart = node->msgPart();
 
-    dlg.setMsgPart(&msgPart);
-    kernel->kbp()->idle();
-
-    dlg.exec();
-  }
+        dlg.setMsgPart(&msgPart);
+        dlg.exec();
+    }
 }
 
 
