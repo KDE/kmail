@@ -106,7 +106,7 @@ const char * KMPopFilterDlgHelpAnchor =  "popfilters-id" ;
 //
 //=============================================================================
 
-KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
+KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter, bool createDummyFilter )
   : KDialogBase( parent, name, FALSE /* modality */,
 		 (popFilter)? i18n("POP3 Filter Rules"): i18n("Filter Rules") /* caption*/,
 		 Help|Ok|Apply|Cancel /* button mask */,
@@ -264,7 +264,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name, bool popFilter)
     adjustSize();
 
   // load the filter list (emits filterSelected())
-  mFilterList->loadFilterList();
+  mFilterList->loadFilterList( createDummyFilter );
 }
 
 void KMFilterDlg::slotFinished() {
@@ -765,7 +765,7 @@ void KMFilterListBox::enableControls()
     mListBox->ensureCurrentVisible();
 }
 
-void KMFilterListBox::loadFilterList()
+void KMFilterListBox::loadFilterList( bool createDummyFilter )
 {
   assert(mListBox);
   setEnabled(FALSE);
@@ -800,11 +800,11 @@ void KMFilterListBox::loadFilterList()
   // create an empty filter when there's none, to avoid a completely
   // disabled dialog (usability tests indicated that the new-filter
   // button is too hard to find that way):
-  if ( !mListBox->count() )
+  if ( !mListBox->count() && createDummyFilter )
     slotNew();
 
-  assert( mListBox->count() > 0 );
-  mListBox->setSelected( 0, true );
+  if ( mListBox->count() > 0 )
+    mListBox->setSelected( 0, true );
 
   enableControls();
 }

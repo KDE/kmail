@@ -300,7 +300,7 @@ int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::openDialog( QWidget * )
+void KMFilterMgr::openDialog( QWidget *, bool checkForEmptyFilterList )
 {
   if( !mEditDialog )
   {
@@ -308,7 +308,8 @@ void KMFilterMgr::openDialog( QWidget * )
     // We can't use the parent as long as the dialog is modeless
     // and there is one shared dialog for all top level windows.
     //
-    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter );
+    mEditDialog = new KMFilterDlg( 0, "filterdialog", bPopFilter, 
+                                   checkForEmptyFilterList );
   }
   mEditDialog->show();
 }
@@ -317,7 +318,7 @@ void KMFilterMgr::openDialog( QWidget * )
 //-----------------------------------------------------------------------------
 void KMFilterMgr::createFilter( const QCString & field, const QString & value )
 {
-  openDialog( 0 );
+  openDialog( 0, false );
   mEditDialog->createFilter( field, value );
 }
 

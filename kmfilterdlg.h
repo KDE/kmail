@@ -72,8 +72,10 @@ public:
   void createFilter( const QCString & field, const QString & value );
 
   /** Loads the filter list and selects the first filter. Should be
-      called when all signals are connected properly. */
-  void loadFilterList();
+      called when all signals are connected properly. If createDummyFilter
+      is true, an empty filter is created to improve the usability of the
+      dialog in case no filter has been defined so far.*/
+  void loadFilterList( bool createDummyFilter );
 
   /** Returns wheather the global option 'Show Later Msgs' is set or not */
   bool showLaterMsgs();
@@ -318,7 +320,8 @@ public:
   /** Create the filter dialog. The only class which should be able to
       do this is @see KMFilterMgr. This ensures that there is only a
       single filter dialog */
-  KMFilterDlg(QWidget* parent=0, const char* name=0, bool popFilter=false);
+  KMFilterDlg( QWidget* parent=0, const char* name=0, bool popFilter=false, 
+               bool createDummyFilter=true );
 
   /** Called from @see KMFilterMgr. Creates a new filter and presets
       the first rule with "field equals value". Internally forwarded

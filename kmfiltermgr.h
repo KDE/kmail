@@ -33,8 +33,10 @@ public:
   /** Store filter rules in config file. */
   void writeConfig(bool withSync=TRUE);
 
-  /** Open an edit dialog. */
-  void openDialog( QWidget *parent );
+  /** Open an edit dialog. If checkForEmptyFilterList is true, an empty filter 
+      is created to improve the visibility of the dialog in case no filter
+      has been defined so far. */
+  void openDialog( QWidget *parent, bool checkForEmptyFilterList = true );
 
   /** Open an edit dialog, create a new filter and preset the first
       rule with "field equals value" */
