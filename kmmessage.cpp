@@ -1225,6 +1225,11 @@ KMMessage* KMMessage::createForward()
 
   if (numBodyParts() > 0)
   {
+    msg->setType( DwMime::kTypeMultipart );
+    msg->setSubtype( DwMime::kSubtypeMixed );
+    msg->headers().ContentType().CreateBoundary( 0 );
+    msg->headers().ContentType().Assemble();
+
     msgPart.setTypeStr("text");
     msgPart.setSubtypeStr("plain");
     msgPart.setCharset(encoding);
