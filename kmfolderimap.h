@@ -475,8 +475,6 @@ private:
   QGuardedPtr<ProgressItem> mMailCheckProgressItem;
   ProgressItem *mListDirProgressItem;
   QStringList mFoldersPendingCreation;
-  // remember the SearchPattern
-  KMSearchPattern* mLastSearchPattern;
   // saves the patterns that are used for local search
   KMSearchPattern* mLocalSearchPattern;
   // saves the results of the imap search
