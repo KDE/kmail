@@ -688,7 +688,7 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 QStringList KMKernel::folderList() const
 {
   QStringList folders;
-  const QString localPrefix = i18n( "/Local" );
+  const QString localPrefix = "/Local";
   folders << localPrefix;
   the_folderMgr->getFolderURLS( folders, localPrefix );
   the_imapFolderMgr->getFolderURLS( folders );
@@ -698,7 +698,7 @@ QStringList KMKernel::folderList() const
 
 DCOPRef KMKernel::getFolder( const QString& vpath )
 {
-  const QString localPrefix = i18n( "/Local" );
+  const QString localPrefix = "/Local";
   if ( the_folderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   else if ( vpath.startsWith( localPrefix ) &&
@@ -1651,7 +1651,7 @@ KMailICalIfaceImpl& KMKernel::iCalIface()
 void KMKernel::selectFolder( QString folderPath )
 {
   kdDebug(5006)<<"Selecting a folder "<<folderPath<<endl;
-  const QString localPrefix = i18n( "/Local" );
+  const QString localPrefix = "/Local";
   KMFolder *folder = kmkernel->folderMgr()->getFolderByURL( folderPath );
   if ( !folder && folderPath.startsWith( localPrefix ) )
     folder = the_folderMgr->getFolderByURL( folderPath.mid( localPrefix.length() ) );
