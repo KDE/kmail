@@ -1389,14 +1389,14 @@ void KMailICalIfaceImpl::readConfig()
 
       GlobalSettings::setTheIMAPResourceEnabled( false );
       mUseResourceIMAP = false;
-      mFolderParent = 0;
+      mFolderParentDir = 0;
       reloadFolderTree();
       return;
     }
   }
 
   // Check if something changed
-  if( mUseResourceIMAP && !makeSubFolders && mFolderParent == folderParentDir
+  if( mUseResourceIMAP && !makeSubFolders && mFolderParentDir == folderParentDir
       && mFolderType == folderType ) {
     // Nothing changed
     if ( hideFolders != mHideFolders ) {
@@ -1410,7 +1410,7 @@ void KMailICalIfaceImpl::readConfig()
   // Make the new settings work
   mUseResourceIMAP = true;
   mFolderLanguage = folderLanguage;
-  mFolderParent = folderParentDir;
+  mFolderParentDir = folderParentDir;
   mFolderType = folderType;
   mHideFolders = hideFolders;
 
@@ -1520,12 +1520,12 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
 
   // Find the folder
   KMFolder* folder = 0;
-  KMFolderNode* node = mFolderParent->hasNamedFolder( folderName( itemType ) );
+  KMFolderNode* node = mFolderParentDir->hasNamedFolder( folderName( itemType ) );
   if( node && !node->isDir() ) folder = static_cast<KMFolder*>(node);
   if( !folder ) {
     // The folder isn't there yet - create it
     folder =
-      mFolderParent->createFolder( folderName( itemType ), false, type );
+      mFolderParentDir->createFolder( folderName( itemType ), false, type );
     if( mFolderType == KMFolderTypeImap )
       static_cast<KMFolderImap*>( folder->storage() )->
         createFolder( folderName( itemType ) );
