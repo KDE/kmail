@@ -22,15 +22,15 @@ Files: identity*, kmidentity.{h,cpp}, configuredialog.cpp,
 Contact Marc Mutz <mutz@kde.org> on questions...
 
 Identities consists of various fields represented by
-QStrings. Currently, those fileds are hardcoded, but free free to
-implement a KMIdentity as a map from strings to QVariants or somesuch.
+QStrings. Currently, those fields are hardcoded, but feel free to
+implement KMIdentity as a map from strings to QVariants or somesuch.
 
 One part of identities are signatures. They can represent four modes
-(Signature::Type) of operation: Disabled, Text from file or command
-and inline text, which correspond to the combo box in the
+(Signature::Type) of operation (disabled, text from file or command
+and inline text), which correspond to the combo box in the
 identitydialog.
 
-KMIdentities are designed to be used through the IdenityManager:
+KMIdentities are designed to be used through the IdentityManager:
 const KMIdentity & ident =
 	 kernel->identityManager()->identityForUoidOrDefault(...)
 Make sure you assign to a _const_ reference, since the identityForFoo
@@ -38,6 +38,15 @@ methods are overloaded with non-const methods that access a different
 list of identities in the manager that is used while configuring. That
 is known source of errors when you use identityForFoo() as a parameter
 to a method taking const KMIdentity &.
+
+WARNING: Don't hold the reference longer than the current functions
+scope or next return to the event loop. That's b/c the config dialog
+is not modal and the user may hit apply/ok anytime between calls to
+function that want to use the identity reference. Store the UOID
+instead if you need to keep track of the identity. You may also want
+to connect to one of the IdentityManager::changed() or :;deleted()
+signals, if you want to do special processing in case the identity
+changes.
 
 Thus, in the ConfigureDialog, you will see non-const KMIdentity
 references being used, while everywhere else (KMMessage,
