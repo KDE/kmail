@@ -668,32 +668,32 @@ void KMComposeWin::setupActions(void)
   if (kernel->msgSender()->sendImmediate()) //default == send now?
   {
     //default = send now, alternative = queue
-    (void) new KAction (i18n("&Send"), QIconSet(BarIcon("send")), CTRL+Key_Return,
+    (void) new KAction (i18n("&Send"), "send", CTRL+Key_Return,
                         this, SLOT(slotSendNow()), actionCollection(),
                         "send_default");
-    (void) new KAction (i18n("&Queue"), QIconSet(BarIcon("filemail")), 0,
+    (void) new KAction (i18n("&Queue"), "filemail", 0,
                         this, SLOT(slotSendLater()),
                         actionCollection(), "send_alternative");
   }
   else //no, default = send later
   {
     //default = queue, alternative = send now
-    (void) new KAction (i18n("&Queue"), QIconSet(BarIcon("filemail")),
+    (void) new KAction (i18n("&Queue"), "filemail",
                         CTRL+Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),
                         "send_default");
-    (void) new KAction (i18n("S&end now"), QIconSet(BarIcon("send")), 0,
+    (void) new KAction (i18n("S&end now"), "send", 0,
                         this, SLOT(slotSendNow()),
                         actionCollection(), "send_alternative");
   }
 
-  (void) new KAction (i18n("&Insert File..."), QIconSet(BarIcon("fileopen")), 0,
+  (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
-  (void) new KAction (i18n("&Addressbook..."), QIconSet(BarIcon("contents")),0,
+  (void) new KAction (i18n("&Addressbook..."), "contents",0,
                       this, SLOT(slotAddrBook()),
                       actionCollection(), "addresbook");
-  (void) new KAction (i18n("&New Composer..."), QIconSet(BarIcon("filenew")),
+  (void) new KAction (i18n("&New Composer..."), "filenew",
                       KStdAccel::key(KStdAccel::New),
                       this, SLOT(slotNewComposer()),
                       actionCollection(), "new_composer");
@@ -779,7 +779,7 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("Append S&ignature"), 0, this,
                       SLOT(slotAppendSignature()),
                       actionCollection(), "append_signature");
-  (void) new KAction (i18n("&Attach..."), QIconSet(UserIcon("attach")),
+  (void) new KAction (i18n("&Attach..."), "attach",
                       0, this, SLOT(slotAttachFile()),
                       actionCollection(), "attach");
   (void) new KAction (i18n("Attach &Public Key"), 0, this,
@@ -791,7 +791,7 @@ void KMComposeWin::setupActions(void)
   KAction *attachPK = new KAction (i18n("&Remove"), 0, this,
                                    SLOT(slotAttachRemove()),
                                    actionCollection(), "remove");
-  (void) new KAction (i18n("&Save..."), QIconSet(BarIcon("filesave")),0,
+  (void) new KAction (i18n("&Save..."), "filesave",0,
                       this, SLOT(slotAttachSave()),
                       actionCollection(), "attach_save");
   (void) new KAction (i18n("Pr&operties..."), 0, this,
@@ -802,10 +802,10 @@ void KMComposeWin::setupActions(void)
 
   
   encryptAction = new KToggleAction (i18n("Encrypt message"),
-                                     QIconSet(UserIcon("pub_key_red")), 0,
+                                     "pub_key_red", 0,
                                      actionCollection(), "encrypt_message");
   signAction = new KToggleAction (i18n("Sign message"),
-                                  QIconSet(UserIcon("feather_white")), 0,
+                                  "feather_white", 0,
                                   actionCollection(), "sign_message");
 
   if(!Kpgp::getKpgp()->havePGP())
