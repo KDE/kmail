@@ -3882,17 +3882,18 @@ void SecurityPage::CryptPlugTab::apply() {
 
   CryptPlugWrapperList * cpl = kernel->cryptPlugList();
 
-  int i = 0;
+  int cryptPlugCount = 0;
   for ( QListViewItemIterator it( mPlugList ) ; it.current() ; ++it ) {
     if ( it.current()->text( 0 ).isEmpty() )
       continue;
-    KConfigGroup config( KMKernel::config(), QString("CryptPlug #%1").arg( i ) );
+    KConfigGroup config( KMKernel::config(),
+                         QString("CryptPlug #%1").arg( cryptPlugCount ) );
     config.writeEntry( "name", it.current()->text( 0 ) );
     config.writeEntry( "location", it.current()->text( 1 ) );
     config.writeEntry( "updates", it.current()->text( 2 ) );
     config.writeEntry( "active", !it.current()->text( 3 ).isEmpty() );
 
-    CryptPlugWrapper * wrapper = cpl->at( i );
+    CryptPlugWrapper * wrapper = cpl->at( cryptPlugCount );
     if ( wrapper ) {
       wrapper->setDisplayName( it.current()->text( 0 ) );
       if ( wrapper->libName() != it.current()->text( 1 ) ) {
@@ -3909,10 +3910,23 @@ void SecurityPage::CryptPlugTab::apply() {
       wrapper->setUpdateURL( it.current()->text( 2 ) );
       wrapper->setActive( !it.current()->text( 3 ).isEmpty() );
     }
-    ++i; // only counts _taken_ plugins!
+    ++cryptPlugCount; // only counts _taken_ plugins!
   }
 
-  general.writeEntry("crypt-plug-count", i );
+  // remove surplus items from the crypt plug list
+  while( cpl->count() > cryptPlugCount ) {
+    CryptPlugWrapper* wrapper = cpl->take( cryptPlugCount );
+    if( wrapper ) {
+      QString dummy;
+      if ( wrapper->initStatus( &dummy ) == CryptPlugWrapper::InitStatus_Ok ) {
+	wrapper->deinitialize();
+      }
+    }
+    delete wrapper;
+    wrapper = 0;
+  }
+
+  general.writeEntry("crypt-plug-count", cryptPlugCount );
 }
 
 void SecurityPage::CryptPlugTab::slotPlugNameChanged( const QString & text )
@@ -3947,13 +3961,15 @@ void SecurityPage::CryptPlugTab::slotNewPlugIn()
   QListViewItem * item = new QListViewItem( mPlugList, mPlugList->lastItem() );
   mPlugList->setCurrentItem( item );
   mPlugList->setSelected( item, true );
+  mNameEdit->setText( i18n("Unnamed") );
+  mNameEdit->selectAll();
+  mNameEdit->setFocus();
 
   //slotPlugSelectionChanged();// ### ???
 }
 
 void SecurityPage::CryptPlugTab::slotDeletePlugIn()
 {
-  // PENDING(kalle) Delete from cryptPlugList as well.
   QListViewItem * item = mPlugList->selectedItem();
   if ( !item ) return;
 
