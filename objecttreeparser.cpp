@@ -866,7 +866,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	} else {
 	  mReader->writeHTMLStr(QString("<div style=\"margin:0px 5%;"
 					"border:2px solid %1;padding:10px;"
-					"text-align:left;font-size:90%\">")
+					"text-align:left;\">")
 				.arg( mReader->cHtmlWarning.name() ) );
 	  mReader->writeHTMLStr(i18n("<b>Note:</b> This is an HTML message. For "
 				     "security reasons, only the raw HTML code "
@@ -875,8 +875,8 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 				     //"HTML display by enabling <em>Prefer HTML "
 				     //"to Plain Text</em> in the <em>Folder</em> "
 				     //"menu."));
-				     "HTML display for this message by clicking "
-				     "<a href=\"kmail:showHTML\">here</a>."));
+				     "HTML display for this message "
+				     "<a href=\"kmail:showHTML\">by clicking here</a>."));
 	  mReader->writeHTMLStr(     "</div><br /><br />");
 	}
 	mReader->writeHTMLStr(mReader->mCodec->toUnicode( mReader->htmlMail() ? cstr : KMMessage::html2source( cstr )));
