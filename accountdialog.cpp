@@ -662,7 +662,7 @@ void AccountDialog::makeImapAccountPage()
   mImap.hostEdit = new QLineEdit( page1 );
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
-  mPop.hostEdit->setValidator(
+  mImap.hostEdit->setValidator(
     new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 ) );
   label->setBuddy( mImap.hostEdit );
   grid->addWidget( mImap.hostEdit, 3, 1 );
