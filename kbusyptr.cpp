@@ -7,8 +7,8 @@
 #include <qcursor.h>
 #include <qtimer.h>
 #include <assert.h>
-#include <stdio.h>
 #include <kstddirs.h>
+#include <kdebug.h>
 
 //-----------------------------------------------------------------------------
 KBusyPtr :: KBusyPtr ()
@@ -124,7 +124,7 @@ bool KBusyPtr :: loadBitmap (QBitmap& bm, const QString& filename)
     f = locate("data", "kmail/pics/" + filename);
   }
   rc = bm.load(f);
-  if (!rc) printf ("ERROR: cannot load bitmap %s\n", f.data());
+  if (!rc) kdDebug() << "ERROR: cannot load bitmap %s\n" << f << endl;
   return rc;
 }
 
