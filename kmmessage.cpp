@@ -237,7 +237,7 @@ void KMMessage::fromString(const QString aStr, bool aSetStatus)
   result.resize(len +1);
   for (i=0,j=0; i<len; i++)
   {
-    if (aStr[i]>=' ' || aStr[i]=='\t' || aStr[i]=='\n')
+    if (aStr[i]>=' ' || aStr[i]=='\t' || aStr[i]=='\n' || aStr[i]<='\0')
       result[j++] = aStr[i];
   }
   result[j++] = '\0'; // terminate zero for casting
