@@ -142,9 +142,11 @@ KMailPart::~KMailPart()
 KAboutData *KMailPart::createAboutData()
 {
   KAboutData *about = new KAboutData("kmail", I18N_NOOP("KMail"),
-                                     KMAIL_VERSION, I18N_NOOP("A KDE Email Client"),
+                                     KMAIL_VERSION, I18N_NOOP("The KDE Email Client"),
                                      KAboutData::License_GPL,
-                                     I18N_NOOP("(c) 1997-2002, The KMail Team"));
+                                     I18N_NOOP("(c) 1997-2003, The KMail developers"),
+				     0,
+				     "http://kmail.kde.org");
   about->addAuthor("The KMail Team",I18N_NOOP("Original author and maintainer"));
   return about;
 }
