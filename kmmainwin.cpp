@@ -1,3 +1,4 @@
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -119,9 +120,6 @@ void KMMainWin::displayStatusMsg(const QString& aText)
 
 void KMMainWin::slotEditToolbars()
 {
-  // remove dynamically created actions before editing
-  mKMMainWidget->clearFilterActions();
-
   saveMainWindowSettings(KMKernel::config(), "Main Window");
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
@@ -129,14 +127,18 @@ void KMMainWin::slotEditToolbars()
 	   SLOT(slotUpdateToolbars()) );
 
   dlg.exec();
-  // plug dynamically created actions again
-  mKMMainWidget->initializeFilterActions();
 }
 
 void KMMainWin::slotUpdateToolbars()
 {
+  // remove dynamically created actions before editing
+  mKMMainWidget->clearFilterActions();
+
   createGUI("kmmainwin.rc", false);
   applyMainWindowSettings(KMKernel::config(), "Main Window");
+
+  // plug dynamically created actions again
+  mKMMainWidget->initializeFilterActions();
 }
 
 void KMMainWin::setupStatusBar()
