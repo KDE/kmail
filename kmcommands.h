@@ -647,14 +647,16 @@ public:
   KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
 
 protected slots:
-  void slotMsgAdded();
+  void slotMsgAdded( KMFolder*, Q_UINT32 );
 
 private:
   virtual Result execute();
 
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
-  int mWaitingForMsgs;
+  // List of serial numbers that need to be loaded
+  // Ticked off as they come in via msgAdded signals.
+  QValueList<Q_UINT32> mWaitingForMsgs;
 };
 
 namespace KPIM {
