@@ -180,6 +180,12 @@ protected slots:
   void slotFind();
   void slotUpdateImapMessage(KMMessage *msg);
 
+  /** Message navigation */
+  void slotNextMessage();
+  void slotNextUnreadMessage();
+  void slotPrevMessage();
+  void slotPrevUnreadMessage();
+
   /** etc. */
   void slotMsgActivated(KMMessage*);
   void quit();

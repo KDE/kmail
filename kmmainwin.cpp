@@ -1295,6 +1295,12 @@ void KMMainWin::slotSetMsgStatusSent()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotNextMessage()       { mHeaders->nextMessage(); }
+void KMMainWin::slotNextUnreadMessage() { mHeaders->nextUnreadMessage(); }
+void KMMainWin::slotPrevMessage()       { mHeaders->prevMessage(); }
+void KMMainWin::slotPrevUnreadMessage() { mHeaders->prevUnreadMessage(); }
+
+//-----------------------------------------------------------------------------
 //called from heders. Message must not be deleted on close
 void KMMainWin::slotMsgActivated(KMMessage *msg)
 {
@@ -1706,17 +1712,17 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("New Message..."), "filenew", KStdAccel::key(KStdAccel::New), this,
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
-  (void) new KAction( i18n("&Next"), Key_N, mHeaders,
-		      SLOT(nextMessage()), actionCollection(), "next" );
+  (void) new KAction( i18n("&Next"), Key_N, this,
+		      SLOT(slotNextMessage()), actionCollection(), "next" );
 
-  (void) new KAction( i18n("Next unread"), "next", Key_Plus, mHeaders,
-		      SLOT(nextUnreadMessage()), actionCollection(), "next_unread" );
+  (void) new KAction( i18n("Next unread"), "next", Key_Plus, this,
+		      SLOT(slotNextUnreadMessage()), actionCollection(), "next_unread" );
 
-  (void) new KAction( i18n("&Previous"), Key_P, mHeaders,
-		      SLOT(prevMessage()), actionCollection(), "previous" );
+  (void) new KAction( i18n("&Previous"), Key_P, this,
+		      SLOT(slotPrevMessage()), actionCollection(), "previous" );
 
-  (void) new KAction( i18n("Previous unread"), "previous", Key_Minus, mHeaders,
-		      SLOT(prevUnreadMessage()), actionCollection(), "previous_unread" );
+  (void) new KAction( i18n("Previous unread"), "previous", Key_Minus, this,
+		      SLOT(slotPrevUnreadMessage()), actionCollection(), "previous_unread" );
 
   replyAction = new KAction( i18n("&Reply..."), "mail_reply", Key_R, this,
 		      SLOT(slotReplyToMsg()), actionCollection(), "reply" );
