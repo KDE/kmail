@@ -2192,7 +2192,8 @@ QString KMHeaders::formatDate( time_t time, KMDateDisplay option)
     {
         QDateTime tmp;
         tmp.setTime_t( time );
-        return KGlobal::locale()->formatDateTime( tmp );
+	// format date according to locale: short format, show secs
+        return KGlobal::locale()->formatDateTime( tmp, true, true );
     }
     }
     return QString::null;
