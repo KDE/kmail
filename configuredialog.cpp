@@ -3810,6 +3810,15 @@ SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name 
   bgHTTPProxy->hide();
   bgHTTPProxy->insert( mWidget->honorHTTPProxyRB );
   bgHTTPProxy->insert( mWidget->useCustomHTTPProxyRB );
+
+  if ( !connectDCOPSignal( 0, "KPIM::CryptoConfig", "changed()",
+                           "load()", false ) )
+    kdError(5650) << "SecurityPageSMimeTab: connection to CryptoConfig's changed() failed" << endl;
+
+}
+
+SecurityPageSMimeTab::~SecurityPageSMimeTab()
+{
 }
 
 static void disableDirmngrWidget( QWidget* w ) {
@@ -3825,64 +3834,105 @@ static void initializeDirmngrCheckbox( QCheckBox* cb, Kleo::CryptoConfigEntry* e
     disableDirmngrWidget( cb );
 }
 
+struct SMIMECryptoConfigEntries {
+  SMIMECryptoConfigEntries( Kleo::CryptoConfig* config )
+    : mConfig( config ) {
+
+    // Checkboxes
+    mCheckUsingOCSPConfigEntry = configEntry( "gpgsm", "Security", "enable-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mEnableOCSPsendingConfigEntry = configEntry( "dirmngr", "OCSP", "allow-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mDoNotCheckCertPolicyConfigEntry = configEntry( "gpgsm", "Security", "disable-policy-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mNeverConsultConfigEntry = configEntry( "gpgsm", "Security", "disable-crl-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mFetchMissingConfigEntry = configEntry( "gpgsm", "Security", "auto-issuer-key-retrieve", Kleo::CryptoConfigEntry::ArgType_None, false );
+    // dirmngr-0.9.0 options
+    mIgnoreServiceURLEntry = configEntry( "dirmngr", "OCSP", "ignore-ocsp-service-url", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mIgnoreHTTPDPEntry = configEntry( "dirmngr", "HTTP", "ignore-http-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mDisableHTTPEntry = configEntry( "dirmngr", "HTTP", "disable-http", Kleo::CryptoConfigEntry::ArgType_None, false );
+
+    mIgnoreLDAPDPEntry = configEntry( "dirmngr", "LDAP", "ignore-ldap-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
+    mDisableLDAPEntry = configEntry( "dirmngr", "LDAP", "disable-ldap", Kleo::CryptoConfigEntry::ArgType_None, false );
+    // Other widgets
+    mOCSPResponderURLConfigEntry = configEntry( "dirmngr", "OCSP", "ocsp-responder", Kleo::CryptoConfigEntry::ArgType_String, false );
+    mOCSPResponderSignature = configEntry( "dirmngr", "OCSP", "ocsp-signer", Kleo::CryptoConfigEntry::ArgType_String, false );
+    mCustomHTTPProxy = configEntry( "dirmngr", "HTTP", "http-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
+    mCustomLDAPProxy = configEntry( "dirmngr", "LDAP", "ldap-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
+  }
+
+  Kleo::CryptoConfigEntry* configEntry( const char* componentName,
+                                        const char* groupName,
+                                        const char* entryName,
+                                        int argType,
+                                        bool isList );
+
+  // Checkboxes
+  Kleo::CryptoConfigEntry* mCheckUsingOCSPConfigEntry;
+  Kleo::CryptoConfigEntry* mEnableOCSPsendingConfigEntry;
+  Kleo::CryptoConfigEntry* mDoNotCheckCertPolicyConfigEntry;
+  Kleo::CryptoConfigEntry* mNeverConsultConfigEntry;
+  Kleo::CryptoConfigEntry* mFetchMissingConfigEntry;
+  Kleo::CryptoConfigEntry* mIgnoreServiceURLEntry;
+  Kleo::CryptoConfigEntry* mIgnoreHTTPDPEntry;
+  Kleo::CryptoConfigEntry* mDisableHTTPEntry;
+  Kleo::CryptoConfigEntry* mIgnoreLDAPDPEntry;
+  Kleo::CryptoConfigEntry* mDisableLDAPEntry;
+  // Other widgets
+  Kleo::CryptoConfigEntry* mOCSPResponderURLConfigEntry;
+  Kleo::CryptoConfigEntry* mOCSPResponderSignature;
+  Kleo::CryptoConfigEntry* mCustomHTTPProxy;
+  Kleo::CryptoConfigEntry* mCustomLDAPProxy;
+
+  Kleo::CryptoConfig* mConfig;
+};
+
 void SecurityPage::SMimeTab::load() {
   if ( !mConfig ) {
     setEnabled( false );
     return;
   }
-  // Checkboxes
-  mCheckUsingOCSPConfigEntry = configEntry( "gpgsm", "Security", "enable-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
-  mEnableOCSPsendingConfigEntry = configEntry( "dirmngr", "OCSP", "allow-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
-  mDoNotCheckCertPolicyConfigEntry = configEntry( "gpgsm", "Security", "disable-policy-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
-  mNeverConsultConfigEntry = configEntry( "gpgsm", "Security", "disable-crl-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
-  mFetchMissingConfigEntry = configEntry( "gpgsm", "Security", "auto-issuer-key-retrieve", Kleo::CryptoConfigEntry::ArgType_None, false );
-  // dirmngr-0.9.0 options
-  mIgnoreServiceURLEntry = configEntry( "dirmngr", "OCSP", "ignore-ocsp-service-url", Kleo::CryptoConfigEntry::ArgType_None, false );
-  mIgnoreHTTPDPEntry = configEntry( "dirmngr", "HTTP", "ignore-http-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
-  mDisableHTTPEntry = configEntry( "dirmngr", "HTTP", "disable-http", Kleo::CryptoConfigEntry::ArgType_None, false );
 
-  mIgnoreLDAPDPEntry = configEntry( "dirmngr", "LDAP", "ignore-ldap-dp", Kleo::CryptoConfigEntry::ArgType_None, false );
-  mDisableLDAPEntry = configEntry( "dirmngr", "LDAP", "disable-ldap", Kleo::CryptoConfigEntry::ArgType_None, false );
-  // Other widgets
-  mOCSPResponderURLConfigEntry = configEntry( "dirmngr", "OCSP", "ocsp-responder", Kleo::CryptoConfigEntry::ArgType_String, false );
-  mOCSPResponderSignature = configEntry( "dirmngr", "OCSP", "ocsp-signer", Kleo::CryptoConfigEntry::ArgType_String, false );
-  mCustomHTTPProxy = configEntry( "dirmngr", "HTTP", "http-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
-  mCustomLDAPProxy = configEntry( "dirmngr", "LDAP", "ldap-proxy", Kleo::CryptoConfigEntry::ArgType_String, false );
+  // Force re-parsing gpgconf data, in case e.g. kleopatra or "configure backend" was used
+  // (which ends up calling us via dcop)
+  mConfig->clear();
+
+  // Create config entries
+  // Don't keep them around, they'll get deleted by clear(), which could be
+  // done by the "configure backend" button even before we save().
+  SMIMECryptoConfigEntries e( mConfig );
 
   // Initialize GUI items from the config entries
 
-  if ( mCheckUsingOCSPConfigEntry ) {
-    bool b = mCheckUsingOCSPConfigEntry->boolValue();
+  if ( e.mCheckUsingOCSPConfigEntry ) {
+    bool b = e.mCheckUsingOCSPConfigEntry->boolValue();
     mWidget->OCSPRB->setChecked( b );
     mWidget->CRLRB->setChecked( !b );
     mWidget->OCSPGroupBox->setEnabled( b );
   } else {
     mWidget->OCSPGroupBox->setEnabled( false );
   }
-  if ( mDoNotCheckCertPolicyConfigEntry )
-    mWidget->doNotCheckCertPolicyCB->setChecked( mDoNotCheckCertPolicyConfigEntry->boolValue() );
-  if ( mNeverConsultConfigEntry )
-    mWidget->neverConsultCB->setChecked( mNeverConsultConfigEntry->boolValue() );
-  if ( mFetchMissingConfigEntry )
-    mWidget->fetchMissingCB->setChecked( mFetchMissingConfigEntry->boolValue() );
+  if ( e.mDoNotCheckCertPolicyConfigEntry )
+    mWidget->doNotCheckCertPolicyCB->setChecked( e.mDoNotCheckCertPolicyConfigEntry->boolValue() );
+  if ( e.mNeverConsultConfigEntry )
+    mWidget->neverConsultCB->setChecked( e.mNeverConsultConfigEntry->boolValue() );
+  if ( e.mFetchMissingConfigEntry )
+    mWidget->fetchMissingCB->setChecked( e.mFetchMissingConfigEntry->boolValue() );
 
-  if ( mOCSPResponderURLConfigEntry )
-    mWidget->OCSPResponderURL->setText( mOCSPResponderURLConfigEntry->stringValue() );
-  if ( mOCSPResponderSignature ) {
-    mWidget->OCSPResponderSignature->setFingerprint( mOCSPResponderSignature->stringValue() );
+  if ( e.mOCSPResponderURLConfigEntry )
+    mWidget->OCSPResponderURL->setText( e.mOCSPResponderURLConfigEntry->stringValue() );
+  if ( e.mOCSPResponderSignature ) {
+    mWidget->OCSPResponderSignature->setFingerprint( e.mOCSPResponderSignature->stringValue() );
   }
 
   // dirmngr-0.9.0 options
-  initializeDirmngrCheckbox( mWidget->ignoreServiceURLCB, mIgnoreServiceURLEntry );
-  initializeDirmngrCheckbox( mWidget->ignoreHTTPDPCB, mIgnoreHTTPDPEntry );
-  initializeDirmngrCheckbox( mWidget->disableHTTPCB, mDisableHTTPEntry );
-  initializeDirmngrCheckbox( mWidget->ignoreLDAPDPCB, mIgnoreLDAPDPEntry );
-  initializeDirmngrCheckbox( mWidget->disableLDAPCB, mDisableLDAPEntry );
-  if ( mCustomHTTPProxy ) {
+  initializeDirmngrCheckbox( mWidget->ignoreServiceURLCB, e.mIgnoreServiceURLEntry );
+  initializeDirmngrCheckbox( mWidget->ignoreHTTPDPCB, e.mIgnoreHTTPDPEntry );
+  initializeDirmngrCheckbox( mWidget->disableHTTPCB, e.mDisableHTTPEntry );
+  initializeDirmngrCheckbox( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
+  initializeDirmngrCheckbox( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
+  if ( e.mCustomHTTPProxy ) {
     const QString systemProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
     if ( !systemProxy.isEmpty() )
       mWidget->systemHTTPProxy->setText( systemProxy );
-    const QString currentProxy = mCustomHTTPProxy->stringValue();
+    const QString currentProxy = e.mCustomHTTPProxy->stringValue();
     const bool honor = ( systemProxy == currentProxy );
     mWidget->honorHTTPProxyRB->setChecked( honor );
     mWidget->useCustomHTTPProxyRB->setChecked( !honor );
@@ -3893,8 +3943,8 @@ void SecurityPage::SMimeTab::load() {
     disableDirmngrWidget( mWidget->systemHTTPProxy );
     disableDirmngrWidget( mWidget->customHTTPProxy );
   }
-  if ( mCustomLDAPProxy )
-    mWidget->customLDAPProxy->setText( mCustomLDAPProxy->stringValue() );
+  if ( e.mCustomLDAPProxy )
+    mWidget->customLDAPProxy->setText( e.mCustomLDAPProxy->stringValue() );
   else {
     disableDirmngrWidget( mWidget->customLDAPProxy );
     disableDirmngrWidget( mWidget->customLDAPLabel );
@@ -3914,53 +3964,82 @@ void SecurityPage::SMimeTab::save() {
   if ( !mConfig ) {
     return;
   }
-  bool b = mWidget->OCSPRB->isChecked();
-  if ( mCheckUsingOCSPConfigEntry && mCheckUsingOCSPConfigEntry->boolValue() != b )
-    mCheckUsingOCSPConfigEntry->setBoolValue( b );
-  // Set allow-ocsp together with enable-ocsp
-  if ( mEnableOCSPsendingConfigEntry && mEnableOCSPsendingConfigEntry->boolValue() != b )
-    mEnableOCSPsendingConfigEntry->setBoolValue( b );
+  // Create config entries
+  // Don't keep them around, they'll get deleted by clear(), which could be done by the
+  // "configure backend" button.
+  SMIMECryptoConfigEntries e( mConfig );
 
-  saveCheckBoxToKleoEntry( mWidget->doNotCheckCertPolicyCB, mDoNotCheckCertPolicyConfigEntry );
-  saveCheckBoxToKleoEntry( mWidget->neverConsultCB, mNeverConsultConfigEntry );
-  saveCheckBoxToKleoEntry( mWidget->fetchMissingCB, mFetchMissingConfigEntry );
+  bool b = mWidget->OCSPRB->isChecked();
+  if ( e.mCheckUsingOCSPConfigEntry && e.mCheckUsingOCSPConfigEntry->boolValue() != b )
+    e.mCheckUsingOCSPConfigEntry->setBoolValue( b );
+  // Set allow-ocsp together with enable-ocsp
+  if ( e.mEnableOCSPsendingConfigEntry && e.mEnableOCSPsendingConfigEntry->boolValue() != b )
+    e.mEnableOCSPsendingConfigEntry->setBoolValue( b );
+
+  saveCheckBoxToKleoEntry( mWidget->doNotCheckCertPolicyCB, e.mDoNotCheckCertPolicyConfigEntry );
+  saveCheckBoxToKleoEntry( mWidget->neverConsultCB, e.mNeverConsultConfigEntry );
+  saveCheckBoxToKleoEntry( mWidget->fetchMissingCB, e.mFetchMissingConfigEntry );
 
   QString txt = mWidget->OCSPResponderURL->text();
-  if ( mOCSPResponderURLConfigEntry && mOCSPResponderURLConfigEntry->stringValue() != txt )
-    mOCSPResponderURLConfigEntry->setStringValue( txt );
+  if ( e.mOCSPResponderURLConfigEntry && e.mOCSPResponderURLConfigEntry->stringValue() != txt )
+    e.mOCSPResponderURLConfigEntry->setStringValue( txt );
 
   txt = mWidget->OCSPResponderSignature->fingerprint();
-  if ( mOCSPResponderSignature && mOCSPResponderSignature->stringValue() != txt ) {
-    mOCSPResponderSignature->setStringValue( txt );
+  if ( e.mOCSPResponderSignature && e.mOCSPResponderSignature->stringValue() != txt ) {
+    e.mOCSPResponderSignature->setStringValue( txt );
   }
 
   //dirmngr-0.9.0 options
-  saveCheckBoxToKleoEntry( mWidget->ignoreServiceURLCB, mIgnoreServiceURLEntry );
-  saveCheckBoxToKleoEntry( mWidget->ignoreHTTPDPCB, mIgnoreHTTPDPEntry );
-  saveCheckBoxToKleoEntry( mWidget->disableHTTPCB, mDisableHTTPEntry );
-  saveCheckBoxToKleoEntry( mWidget->ignoreLDAPDPCB, mIgnoreLDAPDPEntry );
-  saveCheckBoxToKleoEntry( mWidget->disableLDAPCB, mDisableLDAPEntry );
-  if ( mCustomHTTPProxy ) {
+  saveCheckBoxToKleoEntry( mWidget->ignoreServiceURLCB, e.mIgnoreServiceURLEntry );
+  saveCheckBoxToKleoEntry( mWidget->ignoreHTTPDPCB, e.mIgnoreHTTPDPEntry );
+  saveCheckBoxToKleoEntry( mWidget->disableHTTPCB, e.mDisableHTTPEntry );
+  saveCheckBoxToKleoEntry( mWidget->ignoreLDAPDPCB, e.mIgnoreLDAPDPEntry );
+  saveCheckBoxToKleoEntry( mWidget->disableLDAPCB, e.mDisableLDAPEntry );
+  if ( e.mCustomHTTPProxy ) {
     QString chosenProxy;
     if ( mWidget->honorHTTPProxyRB->isChecked() )
       chosenProxy = QString::fromLocal8Bit( getenv( "http_proxy" ) );
     else
       chosenProxy = mWidget->customHTTPProxy->text();
-    if ( chosenProxy != mCustomHTTPProxy->stringValue() )
-      mCustomHTTPProxy->setStringValue( chosenProxy );
+    if ( chosenProxy != e.mCustomHTTPProxy->stringValue() )
+      e.mCustomHTTPProxy->setStringValue( chosenProxy );
   }
   txt = mWidget->customLDAPProxy->text();
-  if ( mCustomLDAPProxy && mCustomLDAPProxy->stringValue() != txt )
-    mCustomLDAPProxy->setStringValue( mWidget->customLDAPProxy->text() );
+  if ( e.mCustomLDAPProxy && e.mCustomLDAPProxy->stringValue() != txt )
+    e.mCustomLDAPProxy->setStringValue( mWidget->customLDAPProxy->text() );
 
   mConfig->sync( true );
 }
 
-Kleo::CryptoConfigEntry* SecurityPage::SMimeTab::configEntry( const char* componentName,
-                                                              const char* groupName,
-                                                              const char* entryName,
-                                                              int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
-                                                              bool isList )
+bool SecurityPageSMimeTab::process(const QCString &fun, const QByteArray &data, QCString& replyType, QByteArray &replyData)
+{
+    if ( fun == "load()" ) {
+	replyType = "void";
+        load();
+    } else {
+	return DCOPObject::process( fun, data, replyType, replyData );
+    }
+    return true;
+}
+
+QCStringList SecurityPageSMimeTab::interfaces()
+{
+  QCStringList ifaces = DCOPObject::interfaces();
+  ifaces += "SecurityPageSMimeTab";
+  return ifaces;
+}
+
+QCStringList SecurityPageSMimeTab::functions()
+{
+  // Hide our slot, just because it's simpler to do so.
+  return DCOPObject::functions();
+}
+
+Kleo::CryptoConfigEntry* SMIMECryptoConfigEntries::configEntry( const char* componentName,
+                                                                const char* groupName,
+                                                                const char* entryName,
+                                                                int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
+                                                                bool isList )
 {
     Kleo::CryptoConfigEntry* entry = mConfig->entry( componentName, groupName, entryName );
     if ( !entry ) {
@@ -3973,6 +4052,8 @@ Kleo::CryptoConfigEntry* SecurityPage::SMimeTab::configEntry( const char* compon
     }
     return entry;
 }
+
+////
 
 QString SecurityPage::CryptPlugTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-crypto-backends");

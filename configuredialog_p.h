@@ -12,6 +12,7 @@
 #include <qstring.h>
 #include <qvaluelist.h>
 #include <qstringlist.h>
+#include <dcopobject.h>
 
 #include <kdialogbase.h>
 #include <klistview.h>
@@ -769,44 +770,24 @@ protected:
   WarningConfiguration* mWidget;
 };
 
-class SecurityPageSMimeTab : public ConfigModuleTab {
+class SecurityPageSMimeTab : public ConfigModuleTab, public DCOPObject {
   Q_OBJECT
+  K_DCOP
 public:
   SecurityPageSMimeTab( QWidget * parent=0, const char * name=0 );
+  ~SecurityPageSMimeTab();
 
   QString helpAnchor() const;
 
+  // Can't use k_dcop here. dcopidl can't parse this file, dcopidlng has a namespace bug.
   void load();
+
   void save();
   void defaults() {}
   void installProfile( KConfig * profile );
 
-protected:
-  Kleo::CryptoConfigEntry* configEntry( const char* componentName,
-                                        const char* groupName,
-                                        const char* entryName,
-                                        int argType,
-                                        bool isList );
-
 private:
   SMimeConfiguration* mWidget;
-  // Checkboxes
-  Kleo::CryptoConfigEntry* mCheckUsingOCSPConfigEntry;
-  Kleo::CryptoConfigEntry* mEnableOCSPsendingConfigEntry;
-  Kleo::CryptoConfigEntry* mDoNotCheckCertPolicyConfigEntry;
-  Kleo::CryptoConfigEntry* mNeverConsultConfigEntry;
-  Kleo::CryptoConfigEntry* mFetchMissingConfigEntry;
-  Kleo::CryptoConfigEntry* mIgnoreServiceURLEntry;
-  Kleo::CryptoConfigEntry* mIgnoreHTTPDPEntry;
-  Kleo::CryptoConfigEntry* mDisableHTTPEntry;
-  Kleo::CryptoConfigEntry* mIgnoreLDAPDPEntry;
-  Kleo::CryptoConfigEntry* mDisableLDAPEntry;
-  // Other widgets
-  Kleo::CryptoConfigEntry* mOCSPResponderURLConfigEntry;
-  Kleo::CryptoConfigEntry* mOCSPResponderSignature;
-  Kleo::CryptoConfigEntry* mCustomHTTPProxy;
-  Kleo::CryptoConfigEntry* mCustomLDAPProxy;
-
   Kleo::CryptoConfig* mConfig;
 };
 
