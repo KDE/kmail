@@ -634,7 +634,7 @@ KMFilterActionWidget::KMFilterActionWidget( QWidget *parent, const char* name )
   //   the parameter widget should grow instead.
   // o the whole widget takes all space horizontally, but is fixed vertically.
   mComboBox->adjustSize();
-  mComboBox->setSizePolicy( QSizePolicy( QSizePolicy::Maximum, QSizePolicy::Fixed ) );
+  mComboBox->setSizePolicy( QSizePolicy( QSizePolicy::Fixed, QSizePolicy::Fixed ) );
   setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Fixed ) );
   updateGeometry();
 
