@@ -2321,13 +2321,13 @@ void AppearancePage::ProfileTab::setup() {
 	it != mProfileList.end() ; ++it ) {
     KConfig profile( (*it), true /* read-only */, false /* no KDE global */ );
     profile.setGroup("KMail Profile");
-    QString name = profile.readEntry( "name" );
+    QString name = profile.readEntry( "Name" );
     if ( name.isEmpty() ) {
       kdWarning(5006) << "File \"" << (*it)
 		      << "\" doesn't provide a profile name!" << endl;
       name = i18n("Unnamed");
     }
-    QString desc = profile.readEntry( "desc" );
+    QString desc = profile.readEntry( "Comment" );
     if ( desc.isEmpty() ) {
       kdWarning(5006) << "File \"" << (*it)
 		      << "\" doesn't provide a description!" << endl;

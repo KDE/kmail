@@ -1,8 +1,8 @@
 [KMail Profile]
-name=Purist
-name[xx]=xx
-desc=Most features turned off, KDE global settings are used
-desc[xx]=xx
+Name=Purist
+Name[xx]=xx
+Comment=Most features turned off, KDE global settings are used
+Comment[xx]=xx
 
 [Reader]
 defaultColors=true

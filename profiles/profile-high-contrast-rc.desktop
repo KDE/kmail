@@ -1,11 +1,11 @@
 [KMail Profile]
-name=Default
-name[xx]=xx
-desc=Standard profile
-desc[xx]=xx
+Name=High contrast
+Name[xx]=xx
+Comment=Increased font sizes for visually impaired users
+Comment[xx]=xx
 
 [Reader]
-BackgroundColor=255,255,255
+BackgroundColor=250,235,215
 ColorbarHTML=255,64,64
 ColorbarPGP=128,255,128
 ColorbarPlain=255,255,128
@@ -29,15 +29,16 @@ showColorbar=false
 htmlMail=false
 
 [Fonts]
-body-font=Helvetica,10,-1,5,50,0,0,0,0,0
+body-font=Helvetica,14,-1,5,75,0,0,0,0,0
 defaultFonts=false
-folder-font=Helvetica,10,-1,5,50,0,0,0,0,0
-list-date-font=Helvetica,10,-1,5,50,0,0,0,0,0
-list-font=Helvetica,10,-1,5,50,0,0,0,0,0
-quote1-font=Helvetica,10,-1,5,50,0,0,0,0,0
-quote2-font=Helvetica,10,-1,5,50,0,0,0,0,0
-quote3-font=Helvetica,10,-1,5,50,0,0,0,0,0
+folder-font=Helvetica,14,-1,5,75,0,0,0,0,0
+list-date-font=Helvetica,14,-1,5,75,0,0,0,0,0
+list-font=Helvetica,14,-1,5,75,0,0,0,0,0
+quote1-font=Helvetica,14,-1,5,75,0,0,0,0,0
+quote2-font=Helvetica,14,-1,5,75,0,0,0,0,0
+quote3-font=Helvetica,14,-1,5,75,0,0,0,0,0
 
+# should this profile be restricted to font and color changes?
 [Geometry]
 nestedMessages=true
 longFolderList=true

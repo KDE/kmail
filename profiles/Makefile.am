@@ -1,10 +1,14 @@
+profiles = default html high-contrast purist secure
 
-data_DATA = profile-default-rc \
-	profile-html-rc \
-	profile-high-contrast-rc \
-	profile-purist-rc \
-	profile-secure-rc
+# remove the .desktop suffix on install (which is needed for translation)
+install-data-local:
+	$(mkinstalldirs) $(DESTDIR)$(kde_datadir)/kmail
+	for profile in $(profiles); do \
+		$(INSTALL_DATA) $(srcdir)/profile-$$profile-rc.desktop \
+			$(DESTDIR)$(kde_datadir)/kmail/profile-$$profile-rc; \
+	done
 
-datadir = $(kde_datadir)/kmail
-
-EXTRA_DIST = $(data_DATA)
+uninstall-local:
+	-for profile in $(profiles); do \
+		rm -f $(DESTDIR)$(kde_datadir)/kmail/profile-$$profile-rc; \
+	done

@@ -1,8 +1,8 @@
 [KMail Profile]
-name=HTML
-name[xx]=xx
-desc=Standard profile with HTML preview enabled - less secure!
-desc[xx]=xx
+Name=HTML
+Name[xx]=xx
+Comment=Standard profile with HTML preview enabled - less secure!
+Comment[xx]=xx
 
 [Reader]
 BackgroundColor=255,255,255
