@@ -1,3 +1,8 @@
+1998-11-15  Alex Zepeda  <garbanzo@hooked.net>
+
+	* kfontutils.cpp (kfontToStr): Cast two const char *'s to char *'s as
+	egcs seems to barf without the casts.
+
 1998-11-10  Harri Porten  <porten@kde.org>
 
 	* Removed hardcoded localkdedir()

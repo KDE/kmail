@@ -48,7 +48,7 @@ const char* kfontToStr(const QFont& aFont)
   else if (weight == QFont::Black) weightStr = "black";
   else weightStr = "normal";
 
-  slantStr = aFont.italic() ? "i" : "r";
+  slantStr = aFont.italic() ? (char *)"i" : (char *)"r";
 
   charset = aFont.charSet();
   if (charset == QFont::AnyCharSet)
