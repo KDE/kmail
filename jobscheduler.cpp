@@ -111,47 +111,46 @@ void JobScheduler::interruptCurrentTask()
 
 void JobScheduler::slotRunNextJob()
 {
+  while ( !mCurrentJob ) {
 #ifdef DEBUG_SCHEDULER
-  kdDebug(5006) << "JobScheduler: slotRunNextJob" << endl;
+    kdDebug(5006) << "JobScheduler: slotRunNextJob" << endl;
 #endif
-  Q_ASSERT( mCurrentTask == 0 );
-  ScheduledTask* task = 0;
-  // Find a task suitable for being run
-  for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
-    // Remove if folder died
-    if ( (*it)->folder() == 0 ) {
+    Q_ASSERT( mCurrentTask == 0 );
+    ScheduledTask* task = 0;
+    // Find a task suitable for being run
+    for( QValueList<ScheduledTask *>::Iterator it = mTaskList.begin(); it != mTaskList.end(); ++it ) {
+      // Remove if folder died
+      if ( (*it)->folder() == 0 ) {
 #ifdef DEBUG_SCHEDULER
-      kdDebug(5006) << "   folder for task " << (*it) << " was deleted" << endl;
+        kdDebug(5006) << "   folder for task " << (*it) << " was deleted" << endl;
 #endif
-      mTaskList.remove( it );
-      if ( !mTaskList.isEmpty() )
-        slotRunNextJob(); // to avoid the mess with invalid iterators :)
-      else
-        mTimer.stop();
-      return;
+        mTaskList.remove( it );
+        if ( !mTaskList.isEmpty() )
+          slotRunNextJob(); // to avoid the mess with invalid iterators :)
+        else
+          mTimer.stop();
+        return;
+      }
+      // The condition is that the folder must be unused (not open)
+      // But first we ask search folders to release their access to it
+      kmkernel->searchFolderMgr()->tryReleasingFolder( (*it)->folder() );
+#ifdef DEBUG_SCHEDULER
+      kdDebug(5006) << "   looking at folder " << (*it)->folder()->label()
+                    << " " << (*it)->folder()->location()
+                    << "  isOpened=" << (*it)->folder()->isOpened() << endl;
+#endif
+      if ( !(*it)->folder()->isOpened() ) {
+        task = *it;
+        mTaskList.remove( it );
+        break;
+      }
     }
-    // The condition is that the folder must be unused (not open)
-    // But first we ask search folders to release their access to it
-    kmkernel->searchFolderMgr()->tryReleasingFolder( (*it)->folder() );
-#ifdef DEBUG_SCHEDULER
-    kdDebug(5006) << "   looking at folder " << (*it)->folder()->label()
-                  << " " << (*it)->folder()->location()
-                  << "  isOpened=" << (*it)->folder()->isOpened() << endl;
-#endif
-    if ( !(*it)->folder()->isOpened() ) {
-      task = *it;
-      mTaskList.remove( it );
-      break;
-    }
-  }
 
-  if ( !task ) // found nothing to run, i.e. folder was opened
-    return; // Timer keeps running, i.e. try again in 1 minute
+    if ( !task ) // found nothing to run, i.e. folder was opened
+      return; // Timer keeps running, i.e. try again in 1 minute
 
-  runTaskNow( task );
-
-  if ( !mCurrentJob ) // nothing to do for that task
-    slotRunNextJob(); // find another one
+    runTaskNow( task );
+  } // If nothing to do for that task, loop and find another one to run
 }
 
 void JobScheduler::restartTimer()
