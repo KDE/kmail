@@ -285,7 +285,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << attachments << " )" << endl;
 
-  Q_UINT32 rc = 0;
+  Q_UINT32 sernum = 0;
   bool bAttachOK = true;
   bool quiet = mResourceQuiet;
   mResourceQuiet = true;
@@ -312,11 +312,15 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
   if( bAttachOK ){
     // Mark the message as read and store it in the folder
     msg->touch();
-    rc = folder.addMsg( msg );
-  }
+    if ( folder.addMsg( msg ) )
+      sernum = msg->getMsgSerNum();
+    kdDebug(5006) << "addIncidence: Message done and saved. Sernum: "
+                  << sernum << endl;
+  } else
+    kdError(5006) << "addIncidence: Message *NOT* saved!\n";
 
   mResourceQuiet = quiet;
-  return rc;
+  return sernum;
 }
 
 
