@@ -40,6 +40,9 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
+
 const int KMFldSearch::MSGID_COLUMN = 4;
 
 //-----------------------------------------------------------------------------
@@ -58,6 +61,12 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   mLastFocus(0),
   mKMMainWidget(w)
 {
+#if !KDE_IS_VERSION( 3, 2, 91 )
+  // HACK - KWin keeps all dialogs on top of their mainwindows, but that's probably
+  // wrong (#76026), and should be done only for modals. CVS HEAD should get
+  // proper fix in KWin (l.lunak@kde.org)
+  XDeleteProperty( qt_xdisplay(), winId(), XA_WM_TRANSIENT_FOR );
+#endif
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 
   KConfig* config = KMKernel::config();
