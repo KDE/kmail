@@ -1,7 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
 
 #include <config.h>
 #include <stdlib.h>
@@ -1129,10 +1129,11 @@ kdDebug(5006) << "* model *" << endl;
 // - This is used to store the message in decrypted form.
 void KMReaderWin::objectTreeToDecryptedMsg( partNode* node,
                                             NewByteArray& resultingData,
-                                            DwHeaders& topHeaders,
+                                            DwHeaders& rootHeaders,
+                                            bool weAreReplacingTheRootNode,
                                             int recCount )
 {
-  kdDebug(5006) << QString("\nKMReaderWin::objectTreeToDecryptedMsg( %1 )  START").arg( recCount ) << endl;
+  kdDebug(5006) << QString("KMReaderWin::objectTreeToDecryptedMsg( %1 )  START").arg( recCount ) << endl;
   if( node ) {
     partNode* curNode = node;
     partNode* dataNode = curNode;
@@ -1279,65 +1280,82 @@ kdDebug(5006) << "* model *" << endl;
     }
     
     DwBodyPart * part = dataNode->dwPart() ? dataNode->dwPart() : 0;
-    DwHeaders * headers(   (part && part->hasHeaders()) 
-                         ? &part->Headers()
-                         : dataNode->mRoot ? 0 : &topHeaders );
+    DwHeaders * headers( 
+        (part && part->hasHeaders()) 
+        ? &part->Headers()
+        : (  (weAreReplacingTheRootNode || !dataNode->mRoot)
+            ? &rootHeaders
+            : 0 ) );
     if( dataNode == curNode ) {     
-kdDebug(5006) << "dataNode == curNode" << endl;
-      if( bIsMultipart && curNode->mChild )  {
-kdDebug(5006) << "is valid Multipart, processing children:" << endl;
-        if( headers ) {
-          // store headers of multipart if curNode is not the root node
-          if( curNode->mRoot )
-            resultingData += headers->AsString().c_str();
-          QCString boundary = headers->ContentType().Boundary().c_str();
-          curNode = curNode->mChild;
-          // store children of multipart
-          while( curNode ) {
-kdDebug(5006) << "*" << endl;
-            resultingData += QCString( "\n\n" );
-            resultingData += "--";
-            resultingData += boundary;
-            resultingData += "\n";
-            objectTreeToDecryptedMsg( curNode,
-                                      resultingData,
-                                      topHeaders,
-                                      recCount + 1 );
-            curNode = curNode->mNext;
-          }
-kdDebug(5006) << "Multipart processing children - DONE" << endl;
-          resultingData += "\n--";
-          resultingData += boundary;
-          resultingData += "--\n\n";
-        }
-      } else if( part ){
-        // store simple part
-kdDebug(5006) << "is NOT a Multipart, adding data" << endl;
-        if( curNode->mRoot )
-          resultingData += part->AsString().c_str();
-        else {
-          // if we are the root node we should not store the headers
-          // since they are copied into the new mail by c'tor
-          resultingData += part->Body().AsString().c_str();
+kdDebug(5006) << "dataNode == curNode:  Save curNode without replacing it." << endl;
+
+      // A) Store the headers of this part IF curNode is not the root node
+      //    AND we are not replacing a node that allready *has* replaced
+      //    the root node in previous recursion steps of this function...
+      if( headers ) {
+        if( dataNode->mRoot && !weAreReplacingTheRootNode ) {
+kdDebug(5006) << "dataNode is NOT replacing the root node:  Store the headers." << endl;
+          resultingData += headers->AsString().c_str();
+        } else if( weAreReplacingTheRootNode && part->hasHeaders() ){
+kdDebug(5006) << "dataNode replace the root node:  Do NOT store the headers but change" << endl;
+kdDebug(5006) << "                                 the Message's headers accordingly." << endl;
+          rootHeaders.ContentType()             = headers->ContentType();
+          rootHeaders.ContentTransferEncoding() = headers->ContentTransferEncoding();
+          rootHeaders.ContentDescription()      = headers->ContentDescription();
+          rootHeaders.ContentDisposition()      = headers->ContentDisposition();
         }
       }
+
+      // B) Store the body of this part.        
+      if( headers && bIsMultipart && dataNode->mChild )  {
+kdDebug(5006) << "is valid Multipart, processing children:" << endl;
+        QCString boundary = headers->ContentType().Boundary().c_str();
+        curNode = dataNode->mChild;
+        // store children of multipart
+        while( curNode ) {
+kdDebug(5006) << "--boundary" << endl;
+          if( resultingData.size() &&
+              ( '\n' != resultingData.at( resultingData.size()-1 ) ) )
+            resultingData += QCString( "\n" );
+          resultingData += QCString( "\n" );
+          resultingData += "--";
+          resultingData += boundary;
+          resultingData += "\n";
+          // note: We are processing a harmless multipart that is *not*
+          //       to be replaced by one of it's children, therefor
+          //       we set their doStoreHeaders to true.
+          objectTreeToDecryptedMsg( curNode,
+                                    resultingData,
+                                    rootHeaders,
+                                    false,
+                                    recCount + 1 );
+          curNode = curNode->mNext;
+        }
+kdDebug(5006) << "--boundary--" << endl;
+        resultingData += "\n--";
+        resultingData += boundary;
+        resultingData += "--\n\n";
+kdDebug(5006) << "Multipart processing children - DONE" << endl;
+      } else if( part ){
+        // store simple part
+kdDebug(5006) << "is Simple part or invalid Multipart, storing body data .. DONE" << endl;
+        resultingData += part->Body().AsString().c_str();
+      }
     } else {
-kdDebug(5006) << "dataNode != curNode" << endl;
+kdDebug(5006) << "dataNode != curNode:  Replace curNode by dataNode." << endl;
+      bool rootNodeReplaceFlag = weAreReplacingTheRootNode || !curNode->mRoot;
+      if( rootNodeReplaceFlag ) {
+kdDebug(5006) << "                      Root node will be replaced." << endl;
+      } else {
+kdDebug(5006) << "                      Root node will NOT be replaced." << endl;
+      }
       // store special data to replace the current part
       // (e.g. decrypted data or embedded RfC 822 data)
       objectTreeToDecryptedMsg( dataNode,
                                 resultingData,
-                                topHeaders,
+                                rootHeaders,
+                                rootNodeReplaceFlag,
                                 recCount + 1 );
-      // if we are the root node and have been decrypted
-      // then we adjust the main header entries
-      if( headers && !curNode->mRoot ) {
-        DwHeaders& newHeaders( part->Headers() );
-        topHeaders.ContentType()             = newHeaders.ContentType();
-        topHeaders.ContentTransferEncoding() = newHeaders.ContentTransferEncoding();
-        topHeaders.ContentDescription()      = newHeaders.ContentDescription();
-        topHeaders.ContentDisposition()      = newHeaders.ContentDisposition();
-      }
     }
   }
   kdDebug(5006) << QString("\nKMReaderWin::objectTreeToDecryptedMsg( %1 )  END").arg( recCount ) << endl;
@@ -2790,11 +2808,19 @@ kdDebug(5006) << "KMReaderWin  -  calling objectTreeToDecryptedMsg()" << endl;
     // add a NULL to the data
     decryptedData.appendNULL();
     QCString resultString( decryptedData.data() );
-kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
-    KMMessage* unencryptedMessage = new KMMessage( *mMsg );
 kdDebug(5006) << "KMReaderWin  -  resulting data:" << resultString << endl;
     if( !resultString.isEmpty() ) {
-      unencryptedMessage->setBody( resultString );
+kdDebug(5006) << "KMReaderWin  -  composing unencrypted message" << endl;
+      // try this:
+      mMsg->setBody( resultString );
+      KMMessage* unencryptedMessage = new KMMessage( *mMsg );
+      // because this did not work:
+      /*
+      DwMessage dwMsg( DwString( mMsg->asString() ) );
+      dwMsg.Body() = DwBody( DwString( resultString.data() ) );
+      dwMsg.Body().Parse();
+      KMMessage* unencryptedMessage = new KMMessage( &dwMsg );
+      */
 kdDebug(5006) << "KMReaderWin  -  resulting message:" << unencryptedMessage->asString() << endl;
 kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to mMsg" << endl;
       mMsg->setUnencryptedMsg( unencryptedMessage );

@@ -203,7 +203,8 @@ public:
     // - This is used to store the message in decrypted form.
     void objectTreeToDecryptedMsg( partNode* node,
                                    NewByteArray& resultingData,
-                                   DwHeaders& topHeaders,
+                                   DwHeaders& rootHeaders,
+                                   bool weAreReplacingTheRootNode = false,
                                    int recCount = 0 );
 
     /** if data is 0:
