@@ -105,7 +105,7 @@ public:
   //FIXME: wtf? member variables in the public interface:
   KAction *trashAction, *deleteAction, *saveAsAction, *editAction,
     *sendAgainAction, *mForwardAction, *mForwardAttachedAction,
-    *applyFiltersAction, *findInMessageAction;
+    *applyFiltersAction, *findInMessageAction, *saveAttachments;
   KActionMenu *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu, *mForwardActionMenu,
     *applyFilterActionsMenu;
@@ -119,9 +119,9 @@ public:
   KToggleAction *toggleQueuedAction;
   KToggleAction *toggleSentAction;
   KToggleAction *toggleFlagAction;
-  
+
   KToggleAction *watchThreadAction, *ignoreThreadAction;
-  
+
   /** we need to access those KToggleActions from the foldertree-popup */
   KRadioAction* unreadColumnToggle;
   KRadioAction* unreadTextToggle;
@@ -212,6 +212,7 @@ protected slots:
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();
+  void slotSaveAttachments();
   void slotMoveMsg();
   //void slotMoveMsgToFolder( KMFolder *dest);
   void slotCopyMsgToFolder( KMFolder *dest);

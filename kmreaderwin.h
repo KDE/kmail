@@ -312,6 +312,7 @@ public slots:
   void slotShowMsgSrc();
   void slotPrintMsg();
   void slotSaveMsg();
+  void slotSaveAttachments();
 
 protected slots:
   /** Returns the current message or 0 if none. */
@@ -351,7 +352,7 @@ protected:
 
   /** show window containing infos about a vCard. */
   void showVCard(KMMessagePart *msgPart);
-  
+
   /** HTML initialization. */
   virtual void initHtmlWidget(void);
 

@@ -553,7 +553,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
                                   ac, "message_forward_inline" );
   }
   mForwardActionMenu->insert( mForwardAction );
-  
+
   mForwardAttachedAction = ac->action( "message_forward_as_attachment" );
   if (!mForwardAttachedAction) {
     mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
@@ -1716,8 +1716,8 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart, bool aHTML,
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
       if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
-        str += QString::fromLatin1("\n") + i18n("[KMail: Attachment contains binary data. Trying to show first character.]", 
-                    "[KMail: Attachment contains binary data. Trying to show first %n characters.]", 
+        str += QString::fromLatin1("\n") + i18n("[KMail: Attachment contains binary data. Trying to show first character.]",
+                    "[KMail: Attachment contains binary data. Trying to show first %n characters.]",
                     str.length());
       }
       viewer->setText(str);
@@ -2247,6 +2247,15 @@ void KMReaderWin::slotSaveMsg()
     delete saveCommand;
   else
     saveCommand->start();
+}
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotSaveAttachments()
+{
+  KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand( mMainWindow,
+                                                                        message() );
+  kdDebug()<<"Starting saving"<<endl;
+  saveCommand->start();
 }
 
 //-----------------------------------------------------------------------------

@@ -139,7 +139,7 @@ public:
     }
 
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
-    if (mMsgBase->isNew() || mMsgBase->isUnread() 
+    if (mMsgBase->isNew() || mMsgBase->isUnread()
         || mMsgBase->isFlag() || mMsgBase->isWatched() ) {
       setOpen(true);
       KMHeaderItem * topOfThread = this;
@@ -273,7 +273,7 @@ public:
       // Have the watched/ignored icons first, I guess.
       if(mMsgBase->isIgnored()) pixmaps << *KMHeaders::pixIgnored;
       if(mMsgBase->isWatched()) pixmaps << *KMHeaders::pixWatched;
-      
+
       if(mMsgBase->isNew()) pixmaps << *KMHeaders::pixNew;
       if(mMsgBase->isRead() || mMsgBase->isOld()) pixmaps << *KMHeaders::pixRead;
       if(mMsgBase->isUnread()) pixmaps << *KMHeaders::pixUns;
@@ -283,7 +283,7 @@ public:
       if(mMsgBase->isForwarded()) pixmaps << *KMHeaders::pixFwd;
       if(mMsgBase->isQueued()) pixmaps << *KMHeaders::pixQueued;
       if(mMsgBase->isSent()) pixmaps << *KMHeaders::pixSent;
- 
+
       // Only merge the crypto icons in if that is configured.
       if( headers->paintInfo()->showCryptoIcons ) {
           if( mMsgBase->encryptionState() == KMMsgFullyEncrypted )
@@ -327,8 +327,8 @@ public:
     QColor *color;
 
     KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
-    if (!mMsgBase) return;    
-	
+    if (!mMsgBase) return;
+
     color = (QColor *)(&headers->paintInfo()->colFore);
     // new overrides unread, and flagged overrides new.
     if (mMsgBase->isUnread()) color = (QColor*)(&headers->paintInfo()->colUnread);
@@ -1252,7 +1252,7 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   } else {
     emit selected(0);
   }
-  
+
   mImperfectlyThreadedList.removeRef(removedItem);
   delete removedItem;
   END_TIMER(msgRemoved);
@@ -1350,7 +1350,7 @@ int KMHeaders::slotFilterMsg(KMMessage *msg)
     p->unGetMsg( idx );
     p->close();
   }
-  
+
   return filterResult;
 }
 
@@ -2312,6 +2312,7 @@ void KMHeaders::slotRMB()
 
   menu->insertSeparator();
   mOwner->saveAsAction->plug(menu);
+  mOwner->saveAttachments->plug(menu);
   mOwner->printAction()->plug(menu);
 
   if ( !out_folder ) {
@@ -3072,7 +3073,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		parent->addUnsortedChild((*it));
 		if(sortStream)
 		    (*it)->updateSortFile(sortStream, mFolder);
-                // If the parent is watched or ignored, propagate that to it's 
+                // If the parent is watched or ignored, propagate that to it's
                 // children
                 if (mFolder->getMsgBase(parent->id())->isWatched())
                   msg->setStatus(KMMsgStatusWatched);

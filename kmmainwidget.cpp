@@ -1320,6 +1320,17 @@ void KMMainWidget::slotSaveMsg()
     saveCommand->start();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSaveAttachments()
+{
+  KMMessage *msg = mHeaders->currentMsg();
+  if (!msg)
+    return;
+  KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand( this,
+                                                                        *mHeaders->selectedMsgs() );
+  saveCommand->start();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSendQueued()
@@ -1726,7 +1737,7 @@ void KMMainWidget::slotNextImportantMessage() {
 }
 void KMMainWidget::slotPrevMessage()       { mHeaders->prevMessage(); }
 void KMMainWidget::slotPrevUnreadMessage()
-{ 
+{
   if ( !mHeaders->prevUnreadMessage() )
     if ( mHeaders->loopOnGotoUnread() == LoopInAllFolders )
       mFolderTree->prevUnreadFolder();
@@ -1832,17 +1843,18 @@ void KMMainWidget::slotMsgPopup(KMMessage&, const KURL &aUrl, const QPoint& aPoi
      menu->insertSeparator();
      watchThreadAction->plug( menu );
      ignoreThreadAction->plug( menu );
-     
+
      menu->insertSeparator();
      toggleFixFontAction()->plug(menu);
      viewSourceAction()->plug(menu);
 
      menu->insertSeparator();
-     printAction()->plug(menu);
-     saveAsAction->plug(menu);
+     printAction()->plug( menu );
+     saveAsAction->plug( menu );
+     saveAttachments->plug( menu );
      menu->insertSeparator();
-     trashAction->plug(menu);
-     deleteAction->plug(menu);
+     trashAction->plug( menu );
+     deleteAction->plug( menu );
   }
   menu->exec(aPoint, 0);
   delete menu;
@@ -2025,7 +2037,7 @@ void KMMainWidget::setupActions()
 					"message_forward" );
   connect( mForwardActionMenu, SIGNAL(activated()), this,
 	   SLOT(slotForwardMsg()) );
-  
+
   mForwardAttachedAction = actionCollection()->action ( "message_forward_as_attachment" );
   if (!mForwardAttachedAction) {
     mForwardAttachedAction = new KAction( i18n("Message->Forward->","As &Attachment..."),
@@ -2089,11 +2101,11 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusRead()),
                                  actionCollection(), "status_read"));
 
-  // -------- Toggle Actions 
+  // -------- Toggle Actions
   toggleRepliedAction = new KToggleAction(i18n("Mark Message as &Replied"), "kmmsgreplied",
                                  0, this, SLOT(slotSetMsgStatusReplied()),
                                  actionCollection(), "status_replied");
-  
+
   statusMenu->insert( toggleRepliedAction );
   toggleForwardedAction = new KToggleAction(i18n("Mark Message as &Forwarded"), "kmmsgforwarded",
                                  0, this, SLOT(slotSetMsgStatusForwarded()),
@@ -2104,7 +2116,7 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusQueued()),
                                  actionCollection(), "status_queued");
   statusMenu->insert( toggleQueuedAction );
-    
+
   toggleSentAction = new KToggleAction(i18n("Mark Message as &Sent"), "kmmsgsent",
                                  0, this, SLOT(slotSetMsgStatusSent()),
                                  actionCollection(), "status_sent");
@@ -2114,7 +2126,7 @@ void KMMainWidget::setupActions()
                                  0, this, SLOT(slotSetMsgStatusFlag()),
                                  actionCollection(), "status_flag");
   statusMenu->insert( toggleFlagAction );
-  
+
   //----- "Mark Thread" submenu
   threadStatusMenu = new KActionMenu ( i18n( "Mark &Thread" ),
                                        actionCollection(), "thread_status" );
@@ -2134,7 +2146,7 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotSetThreadStatusRead()),
                                        actionCollection(), "thread_read"));
 
-  //----- "Mark Thread" toggle actions 
+  //----- "Mark Thread" toggle actions
   toggleThreadRepliedAction = new KToggleAction(i18n("Mark Thread as R&eplied"), "kmmsgreplied",
                                        0, this, SLOT(slotSetThreadStatusReplied()),
                                        actionCollection(), "thread_replied");
@@ -2159,10 +2171,14 @@ void KMMainWidget::setupActions()
   watchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
                                        0, this, SLOT(slotSetThreadStatusWatched()),
                                        actionCollection(), "thread_watched");
-  
+
   ignoreThreadAction = new KToggleAction(i18n("&Ignore Thread"), "kmmsgignored",
                                        0, this, SLOT(slotSetThreadStatusIgnored()),
                                        actionCollection(), "thread_ignored");
+
+  saveAttachments = new KAction( i18n("Save A&ttachments..."), "attach",
+                                0, this, SLOT(slotSaveAttachments()),
+                                actionCollection(), "file_save_attachments" );
 
   moveActionMenu = new KActionMenu( i18n("&Move To" ),
                                     actionCollection(), "move_to" );
@@ -2578,12 +2594,12 @@ void KMMainWidget::updateMessageActions()
     statusMenu->setEnabled( mass_actions );
     threadStatusMenu->setEnabled( thread_actions );
     watchThreadAction->setEnabled( thread_actions );
-    if (mFolder && mHeaders && 
+    if (mFolder && mHeaders &&
         watchThreadAction->isEnabled() &&
         mHeaders->currentMsg()->isWatched())
       watchThreadAction->setChecked(true);
     ignoreThreadAction->setEnabled( thread_actions );
-    if (mFolder && mHeaders && 
+    if (mFolder && mHeaders &&
         ignoreThreadAction->isEnabled() &&
         mHeaders->currentMsg()->isIgnored())
       ignoreThreadAction->setChecked(true);

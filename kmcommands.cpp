@@ -50,6 +50,7 @@
 #include "kmmsgdict.h"
 #include "kmsender.h"
 #include "undostack.h"
+#include "partNode.h"
 #include "kcursorsaver.h"
 using KMail::FolderJob;
 #include "mailsourceviewer.h"
@@ -559,8 +560,8 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     return;
   setDeletesItself( true );
   KMMsgBase *msgBase = msgList.getFirst();
- 
-  // We operate on serNums and not the KMMsgBase pointers, as those can 
+
+  // We operate on serNums and not the KMMsgBase pointers, as those can
   // change, or become invalid when changing the current message, switching
   // folders, etc.
   QPtrListIterator<KMMsgBase> it(msgList);
@@ -599,7 +600,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
     // eat leftovers first
     if ( remainingBytes > MAX_CHUNK_SIZE )
       remainingBytes = MAX_CHUNK_SIZE;
-    
+
     QByteArray data;
     data.duplicate( mData + mOffset, remainingBytes );
     mJob->sendAsyncData( mData );
@@ -615,12 +616,12 @@ void KMSaveMsgCommand::slotSaveDataReq()
     assert( p );
     assert( idx >= 0 );
     msg = p->getMsg(idx);
-    
+
     if (msg->transferInProgress()) {
       QByteArray data = QByteArray();
       mJob->sendAsyncData( data );
     }
-    msg->setTransferInProgress( true );  
+    msg->setTransferInProgress( true );
     if (msg->isComplete() ) {
       slotMessageRetrievedForSaving(msg);
     } else {
@@ -630,7 +631,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
         connect(job, SIGNAL(messageRetrieved(KMMessage*)),
             this, SLOT(slotMessageRetrievedForSaving(KMMessage*)));
         job->start();
-      } 
+      }
     }
   } else {
     // No more messages. Tell the putjob we are done.
@@ -641,7 +642,7 @@ void KMSaveMsgCommand::slotSaveDataReq()
 
 void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
 {
-  QCString str;    
+  QCString str;
   str += "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
   str += msg->asString();
   str += "\n";
@@ -655,7 +656,7 @@ void KMSaveMsgCommand::slotMessageRetrievedForSaving(KMMessage *msg)
   // Unless it is great than 64 k send the whole message. kio buffers for us.
   if( mData.size() > (unsigned int) MAX_CHUNK_SIZE )
     size = MAX_CHUNK_SIZE;
-  else 
+  else
     size = mData.size();
 
   data.duplicate( mData, size );
@@ -684,7 +685,7 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
         .arg(mUrl.prettyURL()), i18n("Save to file"), i18n("&Replace"))
         == KMessageBox::Continue) {
         mMsgListIndex = 0;
-        
+
         mJob = KIO::put( mUrl, -1, true, false );
         mJob->slotTotalSize( mTotalSize );
         mJob->setAsyncDataEnabled( true );
@@ -695,13 +696,13 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
             SLOT(slotSaveResult(KIO::Job*)));
       }
     }
-    else 
+    else
     {
       job->showErrorDialog();
-      delete this; 
+      delete this;
     }
   } else {
-    delete this; 
+    delete this;
   }
 }
 
@@ -1026,9 +1027,9 @@ void KMSetStatusCommand::execute()
   int idx = -1;
   KMFolder *folder = 0;
   bool parentStatus;
-  
+
   // Toggle actions on threads toggle the whole thread
-  // depending on the state of the parent. 
+  // depending on the state of the parent.
   if (mToggle) {
     KMMsgBase *msg;
     kernel->msgDict()->getLocation( *mSerNums.begin(), &folder, &idx );
@@ -1037,7 +1038,7 @@ void KMSetStatusCommand::execute()
       if (msg && (msg->status()&mStatus))
         parentStatus = true;
       else
-        parentStatus = false;  
+        parentStatus = false;
     }
   }
   for ( it = mSerNums.begin(); it != mSerNums.end(); ++it ) {
@@ -1050,7 +1051,7 @@ void KMSetStatusCommand::execute()
           bool myStatus;
           if (msg->status()&mStatus)
             myStatus = true;
-          else 
+          else
             myStatus = false;
           if (myStatus != parentStatus)
             continue;
@@ -1523,5 +1524,138 @@ void KMUrlClickedCommand::execute()
         .arg( mUrl.prettyURL() ) ) != KMessageBox::Yes) return;
     }
     (void) new KRun( mUrl );
+  }
+}
+
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg )
+  : KMCommand( parent, msg ), mParent( parent )
+{
+}
+
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs )
+  : KMCommand( parent, msgs ), mParent( parent )
+{
+}
+
+void KMSaveAttachmentsCommand::execute()
+{
+  KMMessage *msg = 0;
+  QPtrList<KMMessage> lst = retrievedMsgs();
+  QPtrListIterator<KMMessage> itr( lst );
+
+  while ( itr.current() ) {
+    msg = itr.current();
+    ++itr;
+    QCString type = msg->typeStr();
+
+    int mainType    = msg->type();
+    int mainSubType = msg->subtype();
+    DwBodyPart* mainBody = 0;
+    DwBodyPart* firstBodyPart = msg->getFirstDwBodyPart();
+    if( !firstBodyPart ) {
+      // ATTENTION: This definitely /should/ be optimized.
+      //            Copying the message text into a new body part
+      //            surely is not the most efficient way to go.
+      //            I decided to do so for being able to get a
+      //            solution working for old style (== non MIME)
+      //            mails without spending much time on implementing.
+      //            During code revisal when switching to KMime
+      //            all this will probably disappear anyway (or it
+      //            will be optimized, resp.).       (khz, 6.12.2001)
+      kdDebug(5006) << "*no* first body part found, creating one from Message" << endl;
+      mainBody = new DwBodyPart( msg->asDwString(), 0 );
+      mainBody->Parse();
+    }
+    partNode *rootNode = new partNode( mainBody, mainType, mainSubType, true );
+    rootNode->setFromAddress( msg->from() );
+
+    if ( firstBodyPart ) {
+      partNode* curNode = rootNode->setFirstChild( new partNode(firstBodyPart) );
+      curNode->buildObjectTree();
+    }
+    parse( rootNode );
+  }
+}
+
+void KMSaveAttachmentsCommand::parse( partNode *rootNode )
+{
+  QPtrList<partNode> attachments;
+  for( partNode *child = rootNode; child; child = child->mChild ) {
+    for( partNode *tmp = child; tmp; tmp = tmp->mNext ) {
+      //Check if it has the Content-Disposition... filename: header
+      //to make sure it's an actual attachment
+      if ( tmp->msgPart().fileName().isNull() )
+        continue;
+      attachments.append( tmp );
+    }
+  }
+  saveAll( attachments );
+}
+
+void KMSaveAttachmentsCommand::saveAll( const QPtrList<partNode>& attachments )
+{
+  if ( attachments.isEmpty() ) {
+    return;
+  }
+  QPtrListIterator<partNode> itr( attachments );
+
+  KFileDialog fdlg( QString::null, QString::null, mParent, 0, true );
+  fdlg.setMode( KFile::Directory );
+  if ( !fdlg.exec() ) return;
+  QString dir = fdlg.selectedURL().path();
+
+  while ( itr.current() ) {
+    QString s = itr.current()->msgPart().fileName();
+
+    QString filename = dir + "/" + s;
+
+    if( !filename.isEmpty() ) {
+      if( QFile::exists( filename ) ) {
+        // Unlike slotSaveAs, we're saving multiple files, so show which one creates trouble
+        if( KMessageBox::warningYesNo( mParent,
+                                       i18n( "A file named %1 already exists. Do you want to overwrite it?" ).arg( s ),
+                                       i18n( "KMail Warning" ) ) ==
+            KMessageBox::No ) {
+          ++itr;
+          continue;
+        }
+      }
+      saveItem( itr.current(), filename );
+    }
+    ++itr;
+  }
+}
+
+void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename )
+{
+  if ( node && !filename.isEmpty() ) {
+    bool bSaveEncrypted = false;
+    bool bEncryptedParts = node->encryptionState() != KMMsgNotEncrypted;
+    if( bEncryptedParts )
+      if( KMessageBox::questionYesNo( mParent,
+                                      i18n( "This part of the message is encrypted. Do you want to keep the encryption when saving?" ),
+                                      i18n( "KMail Question" ) ) ==
+          KMessageBox::Yes )
+        bSaveEncrypted = true;
+
+    bool bSaveWithSig = true;
+    if( node->signatureState() != KMMsgNotSigned )
+      if( KMessageBox::questionYesNo( mParent,
+                                      i18n( "This part of the message is signed. Do you want to keep the signature when saving?" ),
+                                      i18n( "KMail Question" ) ) !=
+          KMessageBox::Yes )
+        bSaveWithSig = false;
+
+    QFile file( filename );
+    if( file.open( IO_WriteOnly ) ) {
+      QDataStream ds( &file );
+      if( (bSaveEncrypted || !bEncryptedParts) && bSaveWithSig ) {
+        QByteArray cstr = node->msgPart().bodyDecodedBinary();
+        ds.writeRawBytes( cstr, cstr.size() );
+      }
+      file.close();
+    } else
+      KMessageBox::error( mParent, i18n( "Could not write the file" ),
+                          i18n( "KMail Error" ) );
   }
 }

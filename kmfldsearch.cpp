@@ -242,7 +242,10 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
 					"search_message_forward_as_attachment" );
   mForwardActionMenu->insert( mForwardAttachedAction );
   mSaveAsAction = new KAction( i18n("Save &As..."), "filesave", 0,
-    this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
+                               this, SLOT(slotSaveMsg()), ac, "search_file_save_as" );
+  mSaveAtchAction = new KAction( i18n("Save Attachments..."), "attach", 0,
+                                 this, SLOT(slotSaveAttachments()), ac, "search_save_attachments" );
+
   mPrintAction = new KAction( i18n( "&Print..." ), "fileprint", 0, this,
 			      SLOT(slotPrintMsg()), ac, "search_print" );
   mClearAction = new KAction( i18n("Clear Selection"), 0, 0, this,
@@ -673,6 +676,7 @@ void KMFldSearch::slotContextMenuRequested( QListViewItem *lvi, const QPoint &, 
     menu->insertItem(i18n("&Copy To"), msgCopyMenu);
     menu->insertItem(i18n("&Move To"), msgMoveMenu);
     mSaveAsAction->plug(menu);
+    mSaveAtchAction->plug(menu);
     mPrintAction->plug(menu);
     menu->insertSeparator();
     mClearAction->plug(menu);
@@ -731,6 +735,14 @@ void KMFldSearch::slotSaveMsg()
     else
 	saveCommand->start();
 }
+//-----------------------------------------------------------------------------
+void KMFldSearch::slotSaveAttachments()
+{
+    KMSaveAttachmentsCommand *saveCommand = new KMSaveAttachmentsCommand(this,
+                                                                         selectedMessages());
+    saveCommand->start();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMFldSearch::slotPrintMsg()

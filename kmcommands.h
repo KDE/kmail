@@ -20,6 +20,7 @@ class KMMainWidget;
 class KMMessage;
 class KMMsgBase;
 class KMReaderWin;
+class partNode;
 namespace KIO { class Job; }
 
 typedef QMap<int,KMFolder*> KMMenuToFolder;
@@ -40,9 +41,9 @@ public:
   virtual ~KMCommand();
 
   bool deletesItself () { return mDeletesItself; }
-  void setDeletesItself( bool deletesItself ) 
+  void setDeletesItself( bool deletesItself )
   { mDeletesItself = deletesItself; }
-  
+
 
 public slots:
   // Retrieve messages then calls execute
@@ -261,7 +262,7 @@ private slots:
   void slotSaveResult(KIO::Job *job);
   /** the message has been transferred for saving */
   void slotMessageRetrievedForSaving(KMMessage *msg);
-  
+
 private:
   static const int MAX_CHUNK_SIZE = 64*1024;
   KURL mUrl;
@@ -271,6 +272,23 @@ private:
   int mOffset;
   size_t mTotalSize;
   KIO::TransferJob *mJob;
+};
+
+class KMSaveAttachmentsCommand : public KMCommand
+{
+  Q_OBJECT
+public:
+  KMSaveAttachmentsCommand( QWidget *parent, KMMessage *msg  );
+  KMSaveAttachmentsCommand( QWidget *parent, const QPtrList<KMMsgBase>& msgs );
+
+private:
+  virtual void execute();
+private:
+  void parse( partNode *rootNode );
+  void saveAll( const QPtrList<partNode>& attachments );
+  void saveItem( partNode *node, const QString& filename );
+private:
+  QWidget *mParent;
 };
 
 class KMReplyToCommand : public KMCommand
@@ -402,7 +420,7 @@ class KMSetStatusCommand : public KMCommand
 
 public:
   // Serial numbers
-  KMSetStatusCommand( KMMsgStatus status, const QValueList<Q_UINT32> &, 
+  KMSetStatusCommand( KMMsgStatus status, const QValueList<Q_UINT32> &,
                       bool toggle=false );
 
 private:
