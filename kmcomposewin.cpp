@@ -3442,16 +3442,18 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if ( from().isEmpty() )
     mShowHeaders |= HDR_FROM;
   mEdtReplyTo->setText(ident.replyToAddr());
-  // don't overwrite the BCC field when the user has edited it and the
-  // BCC field of the new identity is not empty
+  // don't overwrite the BCC field under certain circomstances
+  // NOT edited and preset BCC from the identity
   if( !mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
-    if( mEdtBcc->text().isEmpty() ) {
+    // BCC NOT empty AND contains a diff adress then the preset BCC
+    // of the new identity
+    if( !mEdtBcc->text().isEmpty() && mEdtBcc->text() != ident.bcc() && !mEdtBcc->edited() ) {
       mEdtBcc->setText( ident.bcc() );
     } else {
       // user type into the editbox an address that != to the preset bcc
       // of the identity, we assume that since the user typed it
       // they want to keep it
-      if ( mEdtBcc->text() != ident.bcc() ) {
+      if ( mEdtBcc->text() != ident.bcc() && !mEdtBcc->text().isEmpty() ) {
         QString temp_string( mEdtBcc->text() + QString::fromLatin1(",") + ident.bcc() );
         mEdtBcc->setText( temp_string );
       } else {
