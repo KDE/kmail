@@ -21,7 +21,7 @@ lib_LTLIBRARIES = libkmailpart.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
 libkmailpart_la_LIBADD	= $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 			../libkdenetwork/libkdenetwork.la \
-			../mimelib/libmimelib.la
+			../mimelib/libmimelib.la ../ktnef/lib/libktnef.la
 libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
 		simplestringlisteditor.cpp kmmsgindex.cpp \
@@ -31,6 +31,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfoldercombobox.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmreaderwin.cpp kbusyptr.cpp kmmsgdict.cpp \
+		kmgroupware.cpp kmgroupwarefuncs.cpp \
 		klistboxdialog.cpp \
 		signatureconfigurationdialog.ui \
 		encryptionconfigurationdialog.ui \
@@ -46,9 +47,10 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kfileio.cpp kmaddrbook.cpp kmaddrbookdlg.cpp \
 		signatureconfigurator.cpp \
 		networkaccount.cpp imapaccountbase.cpp imapprogressdialog.cpp \
-		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp \
+		kmtopwidget.cpp kmservertest.cpp kmacctimap.cpp kmacctcachedimap.cpp \
 		kmundostack.cpp kmbroadcaststatus.cpp \
 		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
+		kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
                 kmkernel.cpp kmailpartIface.skel kmailIface.skel main.cpp \
 		accountdialog.cpp kmfldsearch.cpp \
@@ -69,7 +71,8 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmcommands.cpp kmreadermainwin.cpp \
 		kmail_part.cpp kmstartup.cpp kmmainwidget.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
-		kmfoldersearch.cpp transportmanager.cpp
+		kmfoldersearch.cpp transportmanager.cpp \
+		folderjob.cpp cachedimapjob.cpp
 
 METASOURCES = AUTO
 

@@ -51,6 +51,7 @@ using namespace KMime;
 #include "kmglobal.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
+#include "kmgroupware.h"
 
 #include "kbusyptr.h"
 #include "kfileio.h"
@@ -298,6 +299,11 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
                 << "showOneMimePart: " << (showOneMimePart ? "TRUE" : "FALSE")
                 << " ) **\n**" << endl;
 
+  // make widgets visible that might have been hidden by
+  // previous groupware activation
+  if( reader && reader->mUseGroupware )
+    emit reader->signalGroupwareShow( false );
+
   // Use this string to return the first readable part's content.
   // - This is used to retrieve the quotable text for reply-to...
   QCString dummyStr;
@@ -489,6 +495,57 @@ kdDebug(5006) << "* text *" << endl;
               bDone = true;
             }
             break;
+	  }
+          case DwMime::kSubtypeVCal: {
+kdDebug(5006) << "calendar" << endl;
+            DwMediaType ct = curNode->dwPart()->Headers().ContentType();
+            DwParameter* param = ct.FirstParameter();
+            QCString method( "" );
+            while( param && !bDone ) {
+              if( DwStrcasecmp(param->Attribute(), "method") == 0 ){
+                // Method parameter found, here we are!
+                bDone = true;
+                method = QCString( param->Value().c_str() ).lower();
+kdDebug(5006) << "         method=" << method << endl;
+                if( method == "request" || // an invitation to a meeting *or*
+                    method == "reply" ||   // a reply to an invitation we sent
+		    method == "cancel" ) { // Outlook uses this when cancelling
+                  QCString vCal( curNode->msgPart().bodyDecoded() );
+                  if( reader ){
+                    QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
+                    QString fname( reader->byteArrayToTempFile( reader,
+                                                                "groupware",
+                                                                "vCal_request.raw",
+                                                                theBody ) );
+                    if( !fname.isEmpty() && !showOneMimePart ){
+                      QString prefix;
+                      QString postfix;
+                      // We let KMGroupware do most of our 'print formatting':
+                      // generates text preceeding to and following to the vCal
+                      if( KMGroupware::vPartToHTML( KMGroupware::NoUpdateCounter,
+                                                    vCal,
+                                                    fname,
+                                                    reader->mUseGroupware,
+                                                    prefix, postfix ) ){
+                        reader->queueHtml( prefix );
+                        vCal.replace( '&',  "&amp;"  );
+                        vCal.replace( '<',  "&lt;"   );
+                        vCal.replace( '>',  "&gt;"   );
+                        vCal.replace( '\"', "&quot;" );
+                        reader->writeBodyStr( vCal,
+                                              reader->mCodec,
+                                              curNode->trueFromAddress(),
+                                              &isInlineSigned, &isInlineEncrypted );
+                        reader->queueHtml( postfix );
+                      }
+                    }
+                  }
+                  resultString = vCal;
+                }
+              }
+              param = param->Next();
+            }
+            break;
           }
           case DwMime::kSubtypeXVCard: {
 kdDebug(5006) << "v-card" << endl;
@@ -664,15 +721,56 @@ kdDebug(5006) << "* multipart *" << endl;
           switch( curNode_replacedSubType ){
           case DwMime::kSubtypeMixed: {
 kdDebug(5006) << "mixed" << endl;
-              if( curNode->mChild )
-                parseObjectTree( reader,
-                                 &resultString,
-                                 useThisCryptPlug,
-                                 curNode->mChild,
-                                 false,
-                                 keepEncryptions,
-                                 includeSignatures );
-              bDone = true;
+              if( curNode->mChild ){
+
+                // Might be a Kroupware message,
+                // let's look for the parts contained in the mixture:
+                partNode* dataPlain =
+                  curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
+                if( dataPlain ) {
+                  partNode* dataCal =
+                    curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeVCal, false, true );
+                  if( dataCal ){
+                    // Kroupware message found,
+                    // we ignore the plain text but process the calendar part.
+                    dataPlain->mWasProcessed = true;
+                    parseObjectTree( reader,
+                                     &resultString,
+                                     useThisCryptPlug,
+                                     dataCal,
+                                     false,
+                                     keepEncryptions,
+                                     includeSignatures );
+                    bDone = true;
+                  }else {
+                    partNode* dataTNEF =
+                      curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeMsTNEF, false, true );
+                    if( dataTNEF ){
+                      // encoded Kroupware message found,
+                      // we ignore the plain text but process the MS-TNEF part.
+                      dataPlain->mWasProcessed = true;
+                      parseObjectTree( reader,
+                                       &resultString,
+                                       useThisCryptPlug,
+                                       dataTNEF,
+                                       false,
+                                       keepEncryptions,
+                                       includeSignatures );
+                      bDone = true;
+                    }
+                  }
+                }
+                if( !bDone ) {
+                  parseObjectTree( reader,
+                                   &resultString,
+                                   useThisCryptPlug,
+                                   curNode->mChild,
+                                   false,
+                                   keepEncryptions,
+                                   includeSignatures );
+                  bDone = true;
+                }
+              }
             }
             break;
           case DwMime::kSubtypeAlternative: {
@@ -1292,6 +1390,42 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
               }
             }
             break;
+          case DwMime::kSubtypeMsTNEF: {
+kdDebug(5006) << "MS TNEF encoded" << endl;
+              QString vPart( curNode->msgPart().bodyDecoded() );
+              QByteArray theBody( curNode->msgPart().bodyDecodedBinary() );
+              QString fname( KMReaderWin::byteArrayToTempFile( reader,
+                                                               "groupware",
+                                                               "msTNEF.raw",
+                                                               theBody ) );
+              if( !fname.isEmpty() ){
+                QString prefix;
+                QString postfix;
+                // We let KMGroupware do most of our 'print formatting':
+                // 1. decodes the TNEF data and produces a vPart
+                //    or preserves the old data (if no vPart can be created)
+                // 2. generates text preceeding to / following to the vPart
+                bool bVPartCreated
+                  = KMGroupware::msTNEFToHTML( reader, vPart, fname,
+                                               reader && reader->mUseGroupware,
+                                               prefix, postfix );
+                if( bVPartCreated && reader && !showOneMimePart ){
+                  reader->queueHtml( prefix );
+                  vPart.replace( '&',  "&amp;"  );
+                  vPart.replace( '<',  "&lt;"   );
+                  vPart.replace( '>',  "&gt;"   );
+                  vPart.replace( '\"', "&quot;" );
+                  reader->writeBodyStr( vPart.latin1(),
+                                        reader->mCodec,
+                                        curNode->trueFromAddress(),
+                                        &isInlineSigned, &isInlineEncrypted );
+                  reader->queueHtml( postfix );
+                }
+              }
+              resultString = vPart.latin1();
+              bDone = true;
+            }
+            break;
           }
         }
         break;
@@ -1718,6 +1852,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mMainWindow( mainWindow ),
     mActionCollection( actionCollection )
 {
+  mUseGroupware = false;
   mAutoDelete = false;
   mLastSerNum = 0;
   mMessage = 0;
@@ -1863,6 +1998,13 @@ void KMReaderWin::setMimePartTree( KMMimePartTree* mimePartTree )
 {
   mMimePartTree = mimePartTree;
 }
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::setUseGroupware( bool on )
+{
+  mUseGroupware = on;
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::removeTempFiles()
 {
@@ -2402,13 +2544,16 @@ void KMReaderWin::updateReaderWin()
   }
   mHtmlQueue.clear();
 
-  if (message())
+  KMFolder* folder;
+  if (message(&folder))
   {
-    if ( mShowColorbar )
-      mColorBar->show();
-    else
-      mColorBar->hide();
-    parseMsg();
+    if( !kernel->groupware().isGroupwareFolder( folder ) ){
+      if ( mShowColorbar )
+	mColorBar->show();
+      else
+	mColorBar->hide();
+      parseMsg();
+    }
   }
   else
   {
@@ -4611,6 +4756,45 @@ QString KMReaderWin::quotedHTML(const QString& s)
 }
 
 
+//-----------------------------------------------------------------------------
+QString KMReaderWin::byteArrayToTempFile( KMReaderWin* reader,
+                                          const QString& dirExt,
+                                          const QString& orgName,
+                                          const QByteArray& theBody )
+{
+  KTempFile *tempFile = new KTempFile( QString::null, "." + dirExt );
+  tempFile->setAutoDelete(true);
+  QString fname = tempFile->name();
+  delete tempFile;
+
+  bool bOk = true;
+
+  if (access(QFile::encodeName(fname), W_OK) != 0) // Not there or not writable
+    if (mkdir(QFile::encodeName(fname), 0) != 0
+      || chmod (QFile::encodeName(fname), S_IRWXU) != 0)
+        bOk = false; //failed create
+
+  if( bOk )
+  {
+    QString fileName( orgName );
+    if( reader )
+      reader->mTempDirs.append(fname);
+    //fileName.replace(QRegExp("[/\"\']"),"");
+    // strip of a leading path
+    int slashPos = fileName.findRev( '/' );
+    if ( -1 != slashPos )
+      fileName = fileName.mid( slashPos + 1 );
+    if (fileName.isEmpty()) fileName = "unnamed";
+    fname += "/" + fileName;
+
+    if (!kByteArrayToFile(theBody, fname, false, false, false))
+      bOk = false;
+    if( reader )
+      reader->mTempFiles.append(fname);
+  }
+  return bOk ? fname : QString();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum,
@@ -4822,6 +5006,9 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
 
   QString dummyStr;
   QString keyId;
+  QString gwType;
+  QString gwAction;
+  QString gwAction2;
 
   KURL url(aUrl);
   mUrlClicked = url;
@@ -4848,10 +5035,22 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
     emit statusMsg(i18n("Show certificate 0x%1").arg(keyId));
     bOk = true;
   }
+  else if( KMGroupware::foundGroupwareLink( aUrl,
+                                            gwType,
+                                            gwAction,
+                                            gwAction2,
+                                            dummyStr ) )
+  {
+    dummyStr = gwType+" "+gwAction;
+    if( !gwAction2.isEmpty() )
+      dummyStr.append(" "+gwAction2);
+    emit statusMsg(i18n("Groupware:\"%1\"").arg(dummyStr));
+    bOk = true;
+  }
   else if( aUrl.startsWith( "mailto:" ) )
   {
-      emit statusMsg( KMMessage::decodeMailtoUrl( aUrl ) );
-      bOk = true;
+    emit statusMsg( KMMessage::decodeMailtoUrl( aUrl ) );
+    bOk = true;
   }
 
   if( !bOk )
@@ -4886,6 +5085,12 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
     // out of scope here, since it is started in DontCare run mode.
     return;
   }
+
+  if( aUrl.hasRef() )
+    kdDebug(5006) << QString(aUrl.path()+"#"+aUrl.ref()) << endl;
+
+  if( mUseGroupware && kernel->groupware().handleLink( aUrl, message() ) )
+    return;
 
   if (!aUrl.hasHost() && aUrl.path() == "/" && aUrl.hasRef())
   {
@@ -5377,12 +5582,14 @@ void KMReaderWin::update( bool force )
 
 
 //-----------------------------------------------------------------------------
-KMMessage* KMReaderWin::message() const
+KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
 {
+  KMFolder*  tmpFolder;
+  KMFolder*& folder = aFolder ? *aFolder : tmpFolder;
+  folder = 0;
   if (mMessage)
       return mMessage;
   if (mLastSerNum) {
-    KMFolder *folder;
     KMMessage *message = 0;
     int index;
     kernel->msgDict()->getLocation( mLastSerNum, &folder, &index );

@@ -994,7 +994,7 @@ QString KMMessage::cleanSubject( const QStringList & prefixRegExps, bool replace
 
 //-----------------------------------------------------------------------------
 KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
-  QString selection, bool noQuote, bool allowDecryption)
+  QString selection, bool noQuote, bool allowDecryption, bool selectionIsBody)
 {
   KMMessage* msg = new KMMessage;
   QString str, replyStr, mailingListStr, replyToStr, toStr;
@@ -1103,8 +1103,15 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   else replyStr = sReplyStr;
   replyStr += "\n";
 
-  if (!noQuote)
-  msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection, sSmartQuote, allowDecryption));
+  if (!noQuote) {
+    if( selectionIsBody ){
+      QCString cStr = selection.latin1();
+      msg->setBody( cStr );
+    }else{
+      msg->setBody(asQuotedString(replyStr, sIndentPrefixStr, selection,
+				  sSmartQuote, allowDecryption));
+    }
+  }
 
   msg->setSubject(cleanSubject(sReplySubjPrefixes, sReplaceSubjPrefix, "Re:"));
 

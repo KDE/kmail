@@ -11,10 +11,8 @@
 #include "kmfolderimap.h"
 #include "kmacctimap.h"
 #include "kmfoldertype.h"
+#include "folderjob.h"
 
-namespace KMail {
-  class FolderJob;
-}
 using KMail::FolderJob;
 class KMAcctCachedImap;
 

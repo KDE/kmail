@@ -66,6 +66,9 @@ public:
   /** assign a KMMimePartTree to this KMReaderWin */
   virtual void setMimePartTree( KMMimePartTree* mimePartTree );
 
+  /** tell KMReaderWin whether groupware functionality may be used */
+  virtual void setUseGroupware( bool );
+  
   /** Read color settings and set palette */
   virtual void readColorConfig(void);
 
@@ -274,6 +277,17 @@ public:
                                bool& passphraseError,
                                QString& aErrorText );
 
+    /** Save a QByteArray into a new temp. file using the extention
+        given in dirExt to compose the directory name and
+        the name given in fileName as file name
+        and return the path+filename.
+        If parameter reader is valid the directory and file names are added
+        to the reader's temp directories and temp files lists. */
+    static QString byteArrayToTempFile( KMReaderWin* reader,
+                                        const QString& dirExt,
+                                        const QString& fileName,
+                                        const QByteArray& theBody );
+
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -290,6 +304,9 @@ signals:
 
   /** Pgp displays a password dialog */
   void noDrag(void);
+
+  /** Show/hide Groupware */
+  void signalGroupwareShow(bool);
 
 public slots:
 
@@ -369,7 +386,7 @@ public slots:
 
 protected slots:
   /** Returns the current message or 0 if none. */
-  KMMessage* message(void) const;
+  KMMessage* message(KMFolder** folder=0) const;
 
   /** Some attachment operations. */
   void slotAtmOpen();
@@ -480,6 +497,7 @@ private:
   QString writeSigstatFooter(PartMetaData& part);
 
 protected:
+  bool mUseGroupware;
   bool mHtmlMail, mHtmlOverride;
   int mAtmInline;
   int mAtmCurrent;

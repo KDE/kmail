@@ -57,3 +57,8 @@ DS: Use takeitem to hide read messages, with special behavior
     in threaded mode
 DS: Support for multipart/related mails
 DS: Propoganda: Analysis Articles, head-to-head comparisons
+
+
+Groupware:
+KHZ: Make groupware use a real vCal parser
+??: Implement generic viewer plugin

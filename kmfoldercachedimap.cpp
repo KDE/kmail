@@ -659,8 +659,11 @@ bool KMFolderCachedImap::deleteMessages()
   if( !msgsForDeletion.isEmpty() ) {
     emit statusMsg( i18n("%1: Deleting removed messages from cache").arg(name()) );
     open();
-    for( KMMsgBase *msg = msgsForDeletion.first(); msg; msg = msgsForDeletion.next() )
-      KMFolder::removeMsg( msg );
+    for( KMMsgBase *msg = msgsForDeletion.first(); msg; msg = msgsForDeletion.next() ) {
+      int idx = find(msg);
+      assert( idx != -1);
+      removeMsg(idx);
+    }
     compact();
     close();
 

@@ -123,7 +123,7 @@ public:
       is not stored in any folder. Marks this message as replied. */
   virtual KMMessage* createReply(bool replyToAll=FALSE, bool replyToList=FALSE,
 				 QString selection=QString::null, bool noQuote=FALSE,
-				 bool allowDecryption=TRUE);
+				 bool allowDecryption=TRUE, bool selectionIsBody=FALSE);
 
   /** Create a new message that is a redirect to this message, filling all
     required header fields with the proper values. The returned message

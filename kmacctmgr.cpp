@@ -10,6 +10,7 @@
 #include "kmacctlocal.h"
 #include "kmacctexppop.h"
 #include "kmacctimap.h"
+#include "kmacctcachedimap.h"
 #include "kmkernel.h"
 #include "kmbroadcaststatus.h"
 #include "kmfiltermgr.h"
@@ -196,6 +197,9 @@ KMAccount* KMAcctMgr::create(const QString &aType, const QString &aName)
 
   else if (aType == "imap")
     act = new KMAcctImap(this, aName);
+
+  else if (aType == "cachedimap")
+    act = new KMAcctCachedImap(this, aName);
 
   if (act)
   {

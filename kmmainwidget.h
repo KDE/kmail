@@ -110,8 +110,12 @@ public:
   KToggleAction* totalColumnToggle;
 
   void folderSelected(KMFolder*, bool jumpToUnread);
+  KMHeaders *headers() { return mHeaders; }
 
 public slots:
+  void slotMoveMsgToFolder( KMFolder *dest);
+  void slotTrashMsg();   // move to trash
+
   virtual void show();
   virtual void hide();
   /** sven: moved here as public */
@@ -173,13 +177,13 @@ protected slots:
   void slotForwardMsg();
   void slotForwardAttachedMsg();
   void slotEditMsg();
-  void slotTrashMsg();   // move to trash
+  //void slotTrashMsg();   // move to trash
   void slotDeleteMsg();  // completely delete message
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();
   void slotMoveMsg();
-  void slotMoveMsgToFolder( KMFolder *dest);
+  //void slotMoveMsgToFolder( KMFolder *dest);
   void slotCopyMsgToFolder( KMFolder *dest);
   void slotCopyMsg();
   void slotResendMsg();

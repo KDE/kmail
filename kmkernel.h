@@ -9,6 +9,9 @@
 #include <kconfig.h>
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
+
+#include "kmgroupware.h"
+
 #include <cryptplugwrapperlist.h>
 
 #define kernel KMKernel::self()
@@ -151,6 +154,8 @@ public:
   IdentityManager *identityManager();
   CryptPlugWrapperList * cryptPlugList() { return &mCryptPlugList; }
 
+  KMGroupware& groupware() { return mGroupware; }
+
   bool firstStart() { return the_firstStart; }
   QString previousVersion() { return the_previousVersion; }
   bool startingUp() { return the_startingUp; }
@@ -272,6 +277,7 @@ private:
   ConfigureDialog *mConfigureDialog;
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
+  KMGroupware mGroupware;
   // temporary mainwin
   KMMainWin *mWin;
 };
