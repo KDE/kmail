@@ -85,7 +85,7 @@ bool HeaderListQuickSearch::itemMatches(const QListViewItem *item, const QString
   if ( mStatus != 0 ) {
     KMHeaders *headers = static_cast<KMHeaders*>( item->listView() );
     const KMMsgBase *msg = headers->getMsgBaseForItem( item );
-    if ( ! ( msg->status() & mStatus ) )
+    if ( !msg || ! ( msg->status() & mStatus ) )
       return false;
   }
   return KListViewSearchLine::itemMatches(item, s);
