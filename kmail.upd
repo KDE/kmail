@@ -72,10 +72,28 @@ Script=kmail-3.2-update-loop-on-goto-unread-settings.sh,bash
 Id=3.1.4-dont-use-UOID-0-for-any-identity
 File=kmailrc
 Script=kmail-3.1.4-dont-use-UOID-0-for-any-identity.pl,perl
+Id=3.2-misc
+########## W A R N I N G #### W A R N I N G #### W A R N I N G #######
+# collection of small adjustments. Since updates will be added to this
+# script during the pre-3.2 development, HEAD users should regularly
+# remove the "3.2-{misc,moves}-xx" keys from their kmailrc and kconf_updaterc.
+# For this to work, the script MUST be idempotent, ie. be robust
+# against being run multiple times.
+######################################################################
+File=kmailrc
+Script=kmail-3.2-misc.sh,bash
+#
+# reuse this section to add trivial stuff!
+#
+Id=3.2-moves
+File=kmailrc
+Group=Geometry,Reader
+Key=MimePaneHeight
 #
 # Important notice:
 # If you add updates here, keep this text below them.
 # Make sure your updates can be safely run twice and add any new Id
 # to the QStringList in kmail/kmstartup.cpp:checkConfigUpdates().
+# Collect smaller stuff in kmail-<version>-misc and <version>-moves!
 # (mmutz)
 #

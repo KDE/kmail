@@ -24,44 +24,52 @@
 
 #include <kdialogbase.h>
 #include <qptrlist.h>
-class QWidget;
-class KConfig;
+#include <qguardedptr.h>
 
+class KConfig;
 class ConfigurationPage;
+class ProfileDialog;
 
 class ConfigureDialog : public KDialogBase
 {
   Q_OBJECT
 
-  public:
-    ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
-    ~ConfigureDialog();
-    virtual void show();
+public:
+  ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
+  ~ConfigureDialog();
 
-  protected slots:
-    virtual void slotOk();
-    virtual void slotApply();
-    virtual void slotHelp();
-    /** Installs a new profile (in the dislog's widgets; to apply, the
-        user has to hit the apply button). Profiles are normal kmail
-        config files which hae an additonal group "KMail Profile"
-        containing keys "name" and "desc" for the name and
-        description, resp. Only keys that this profile is supposed to
-        alter should be included in the file.
-    */
-    virtual void slotInstallProfile( KConfig * profile );
+public slots:
+  /** @reimplemented */
+  void show();
 
+protected slots:
+  /** @reimplemented */
+  void slotOk();
+  /** @reimplemented */
+  void slotApply();
+  /** @reimplemented */
+  void slotHelp();
+  /** @reimplemented */
+  void slotUser1();
+  /** Installs a new profile (in the dislog's widgets; to apply, the
+      user has to hit the apply button). Profiles are normal kmail
+      config files which have an additonal group "KMail Profile"
+      containing keys "Name" and "Comment" for the name and description,
+      resp. Only keys that this profile is supposed to alter should be
+      included in the file.
+  */
+  void slotInstallProfile( KConfig * profile );
 
-  private slots:
-    void slotCancelOrClose();
+private slots:
+  void slotCancelOrClose();
 
-  protected:
-    void setup();
-    void apply(bool);
+private:
+  void setup();
+  void apply(bool);
 
-  protected:
-    QPtrList<ConfigurationPage> mPages;
-    ConfigurationPage * mPageWithProfiles;
+private:
+  QPtrList<ConfigurationPage> mPages;
+  QGuardedPtr<ProfileDialog>  mProfileDialog;
 };
 
 #endif

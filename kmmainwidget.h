@@ -11,12 +11,12 @@
 #include <qlistview.h>
 
 #include "kmreaderwin.h" //for inline actions
+#include <kaction.h>
 
 class KMFolder;
 class KMFolderDir;
 class KMFolderTree;
 class KMFolderTreeItem;
-class KMMimePartTree;
 class KMHeaders;
 class QVBoxLayout;
 class QSplitter;
@@ -30,6 +30,7 @@ class KMAccount;
 class KMFldSearch;
 class KToggleAction;
 class KActionMenu;
+class KActionCollection;
 class KSelectAction;
 class KRadioAction;
 class KProgressDialog;
@@ -295,13 +296,6 @@ protected slots:
   virtual void updateFolderMenu();
 
 
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  /*
-  void updateSettingsMenu();
-  */
-  // (khz, 19.04.2002)
-
-
   /** XML-GUI stuff */
   void slotEditNotifications();
   void slotEditKeys();
@@ -323,9 +317,8 @@ protected:
 
 protected:
   KMFolderTree *mFolderTree;
-  KMMimePartTree* mMimePartTree;
   KMReaderWin  *mMsgView;
-  QSplitter    *mPanner1, *mPanner2, *mPanner3;
+  QSplitter    *mPanner1, *mPanner2;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
   const QTextCodec   *mCodec;
@@ -340,14 +333,13 @@ protected:
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;
-  QValueList<int> mPanner1Sep, mPanner2Sep, mPanner3Sep;
+  QValueList<int> mPanner1Sep, mPanner2Sep;
   KMMessage     *mMsgCurrent;
   KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
 
-  int mWindowLayout;
-  int mShowMIMETreeMode;
+  bool mLongFolderList;
 
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;

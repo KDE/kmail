@@ -1,7 +1,7 @@
 /*
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, espen@kde.org
- *              Copyright (C) 2001-2002 Marc Mutz, mutz@kde.org
+ *              Copyright (C) 2001-2003 Marc Mutz, mutz@kde.org
  *   Contains code segments and ideas from earlier kmail dialog code.
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -93,18 +93,106 @@ using KMime::DateFormatter;
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"
 #endif
 
+#ifdef DIM
+#undef DIM
+#endif
+#define DIM(x) sizeof(x) / sizeof(*x)
 
-// little helper:
-static inline QPixmap loadIcon( const char * name ) {
-  return KGlobal::instance()->iconLoader()
-    ->loadIcon( QString::fromLatin1(name), KIcon::NoGroup, KIcon::SizeMedium );
+namespace {
+
+  struct EnumConfigEntryItem {
+    const char * key; // config key value, as appears in config file
+    const char * desc; // description, to be i18n()ized
+  };
+  struct EnumConfigEntry {
+    const char * group;
+    const char * key;
+    const char * desc;
+    const EnumConfigEntryItem * items;
+    int numItems;
+    int defaultItem;
+  };
+  struct BoolConfigEntry {
+    const char * group;
+    const char * key;
+    const char * desc;
+    bool defaultValue;
+  };
+
+  static const char * lockedDownWarning =
+    I18N_NOOP("<qt><p>This setting has been fixed by your administrator.</p>"
+	      "<p>If you think this is an error, please contact him.</p></qt>");
+
+  void checkLockDown( QWidget * w, const KConfigBase & c, const char * key ) {
+    if ( c.entryIsImmutable( key ) ) {
+      w->setEnabled( false );
+      QToolTip::add( w, i18n( lockedDownWarning ) );
+    } else {
+      QToolTip::remove( w );
+    }
+  }
+
+  void populate( QButtonGroup * g, const EnumConfigEntry & e ) {
+    g->setTitle( i18n( e.desc ) );
+    g->layout()->setSpacing( KDialog::spacingHint() );
+    for ( int i = 0 ; i < e.numItems ; ++i )
+      g->insert( new QRadioButton( i18n( e.items[i].desc ), g ), i );
+  }
+
+  void populate( QCheckBox * b, const BoolConfigEntry & e ) {
+    b->setText( i18n( e.desc ) );
+  }
+
+  void load( QCheckBox * b, const KConfigBase & c, const BoolConfigEntry & e ) {
+    Q_ASSERT( c.group() == e.group );
+    checkLockDown( b, c, e.key );
+    b->setChecked( c.readBoolEntry( e.key, e.defaultValue ) );
+  }
+
+  void load( QButtonGroup * g, const KConfigBase & c, const EnumConfigEntry & e ) {
+    Q_ASSERT( c.group() == e.group );
+    Q_ASSERT( g->count() == e.numItems );
+    checkLockDown( g, c, e.key );
+    const QString s = c.readEntry( e.key, e.items[e.defaultItem].key );
+    for ( int i = 0 ; i < e.numItems ; ++i )
+      if ( s == e.items[i].key ) {
+	g->setButton( i );
+	return;
+      }
+    g->setButton( e.defaultItem );
+  }
+
+  void save( QCheckBox * b, KConfigBase & c, const BoolConfigEntry & e ) {
+    Q_ASSERT( c.group() == e.group );
+    c.writeEntry( e.key, b->isChecked() );
+  }
+
+  void save( QButtonGroup * g, KConfigBase & c, const EnumConfigEntry & e ) {
+    Q_ASSERT( c.group() == e.group );
+    Q_ASSERT( g->count() == e.numItems );
+    c.writeEntry( e.key, e.items[ g->id( g->selected() ) ].key );
+  }
+
+  template <typename T_Widget, typename T_Entry>
+  inline void loadProfile( T_Widget * g, const KConfigBase & c, const T_Entry & e ) {
+    if ( c.hasKey( e.key ) )
+      load( g, c, e );
+  }
+
+  // little helper:
+  inline QPixmap loadIcon( const char * name ) {
+    return KGlobal::instance()->iconLoader()
+      ->loadIcon( QString::fromLatin1(name), KIcon::NoGroup, KIcon::SizeMedium );
+  }
+
 }
 
 
 ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
                                   bool modal )
-  : KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel,
-                 Ok, parent, name, modal, true )
+  : KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel|User1,
+                 Ok, parent, name, modal, true, i18n("&Load Profile...") ),
+    mProfileDialog( 0 )
 {
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
   // setHelp() not needed, since we override slotHelp() anyway...
@@ -150,12 +238,6 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   configPage->setPageIndex( pageIndex( page ) );
   mPages.append( configPage );
 
-  // ### FIXME: Extract profile managing out of the normal config
-  // pages system...
-  mPageWithProfiles = configPage;
-  connect( configPage, SIGNAL(profileSelected(KConfig*)),
-	   this, SLOT(slotInstallProfile(KConfig*)) );
-
   // Composer Page:
   page = addPage( ComposerPage::iconLabel(), ComposerPage::title(),
 		  loadIcon( ComposerPage::iconName() ) );
@@ -174,47 +256,34 @@ ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
   configPage->setPageIndex( pageIndex( page ) );
   mPages.append( configPage );
 
-  // Folder Page:
-  page = addPage( FolderPage::iconLabel(), FolderPage::title(),
-		  loadIcon( FolderPage::iconName() ) );
+  // Misc Page:
+  page = addPage( MiscPage::iconLabel(), MiscPage::title(),
+		  loadIcon( MiscPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new FolderPage( page );
-  vlay->addWidget( configPage );
-  configPage->setPageIndex( pageIndex( page ) );
-  mPages.append( configPage );
-
-  // Groupware Page:
-  page = addPage( GroupwarePage::iconLabel(), GroupwarePage::title(),
-		  loadIcon( FolderPage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new GroupwarePage( page );
+  configPage = new MiscPage( page );
   vlay->addWidget( configPage );
   configPage->setPageIndex( pageIndex( page ) );
   mPages.append( configPage );
 }
 
 
-ConfigureDialog::~ConfigureDialog()
-{
+ConfigureDialog::~ConfigureDialog() {
 }
 
 
-void ConfigureDialog::show()
-{
+void ConfigureDialog::show() {
   // ### try to move the setup into the *Page::show() methods?
   if( !isVisible() )
     setup();
   KDialogBase::show();
 }
 
-void ConfigureDialog::slotCancelOrClose()
-{
+void ConfigureDialog::slotCancelOrClose() {
   for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
     it.current()->dismiss();
 }
 
-void ConfigureDialog::slotOk()
-{
+void ConfigureDialog::slotOk() {
   apply( true );
   accept();
 }
@@ -225,16 +294,26 @@ void ConfigureDialog::slotApply() {
 }
 
 void ConfigureDialog::slotHelp() {
-  int activePage = activePageIndex();
-  if ( activePage >= 0 && activePage < (int)mPages.count() )
+  const int activePage = activePageIndex();
+  if ( activePage >= 0 && (unsigned int)activePage < mPages.count() )
     kapp->invokeHelp( mPages.at( activePage )->helpAnchor() );
   else
     kdDebug(5006) << "ConfigureDialog::slotHelp(): no page selected???"
 		  << endl;
 }
 
-void ConfigureDialog::setup()
-{
+void ConfigureDialog::slotUser1() {
+  if ( mProfileDialog ) {
+    mProfileDialog->raise();
+    return;
+  }
+  mProfileDialog = new ProfileDialog( this, "mProfileDialog" );
+  connect( mProfileDialog, SIGNAL(profileSelected(KConfig*)),
+	   SLOT(slotInstallProfile(KConfig*)) );
+  mProfileDialog->show();
+}
+
+void ConfigureDialog::setup() {
   for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
     it.current()->setup();
 }
@@ -245,18 +324,13 @@ void ConfigureDialog::slotInstallProfile( KConfig * profile ) {
 }
 
 void ConfigureDialog::apply( bool everything ) {
-  int activePage = activePageIndex();
+  const int activePage = activePageIndex();
 
   if ( !everything )
     mPages.at( activePage )->apply();
-  else {
-    // must be fiirst since it may install profiles!
-    mPageWithProfiles->apply();
-    // loop through the rest:
+  else
     for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
-      if ( it.current() != mPageWithProfiles )
-        it.current()->apply();
-  }
+      it.current()->apply();
 
   //
   // Make other components read the new settings
@@ -1511,25 +1585,7 @@ AppearancePage::AppearancePage( QWidget * parent, const char * name )
   //
   mHeadersTab = new HeadersTab();
   addTab( mHeadersTab, mHeadersTab->title() );
-
-  //
-  // "Profile" tab:
-  //
-  mProfileTab = new ProfileTab();
-  addTab( mProfileTab, mProfileTab->title() );
-
-  connect( mProfileTab, SIGNAL(profileSelected(KConfig*)),
-	   this, SIGNAL(profileSelected(KConfig*)) );
 }
-
-void AppearancePage::apply() {
-  mProfileTab->apply(); // must be first, since it may install profiles!
-  mFontsTab->apply();
-  mColorsTab->apply();
-  mLayoutTab->apply();
-  mHeadersTab->apply();
-}
-
 
 QString AppearancePage::FontsTab::title() {
   return i18n("&Fonts");
@@ -1831,171 +1887,94 @@ QString AppearancePage::LayoutTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-layout");
 }
 
-static const int numWindowLayouts = 5;
+static const EnumConfigEntryItem folderListModes[] = {
+  { "long", I18N_NOOP("&Long folder list") },
+  { "short", I18N_NOOP("&Short folder list" ) }
+};
+static const EnumConfigEntry folderListMode = {
+  "Geometry", "FolderList", I18N_NOOP("Folder List"),
+  folderListModes, DIM(folderListModes), 0
+};
 
-static const char * windowLayoutToolTips[numWindowLayouts] = {
-  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
-	    "<ul>"
-	    "<li>Long folder list</li>"
-	    "<li>MIME tree (if visible) between message list and reader pane</li>"
-	    "</ul>"
-	    "</qt>"),
-  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
-	    "<ul>"
-	    "<li>Long folder list</li>"
-	    "<li>MIME tree (if visible) below reader pane</li>"
-	    "</ul>"
-	    "</qt>"),
-  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
-	    "<ul>"
-	    "<li>Basically long folder list</li>"
-	    "<li>MIME tree (if visible) below folder list</li>"
-	    "</ul>"
-	    "</qt>"),
-  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
-	    "<ul>"
-	    "<li>Medium folder list</li>"
-	    "<li>MIME tree (if visible) between message list and reader pane</li>"
-	    "<li>Full width reader pane</li>"
-	    "</ul>"
-	    "</qt>"),
-  I18N_NOOP("<qt><h3>KMail Window Layout</h3>"
-	    "<ul>"
-	    "<li>Short folder list</li>"
-	    "<li>MIME tree (if visible) between message list / folder tree "
-	    "and reader pane</li>"
-	    "<li>Full width reader pane and MIME tree</li>"
-	    "</ul>"
-	    "</qt>")
+
+static const EnumConfigEntryItem mimeTreeLocations[] = {
+  { "top", I18N_NOOP("At &top") },
+  { "bottom", I18N_NOOP("At &bottom") }
+};
+static const EnumConfigEntry mimeTreeLocation = {
+  "Reader", "MimeTreeLocation", I18N_NOOP("MIME Tree Location"),
+  mimeTreeLocations, DIM(mimeTreeLocations), 1
+};
+
+static const EnumConfigEntryItem mimeTreeModes[] = {
+  { "never", I18N_NOOP("&Never show") },
+  { "smart", I18N_NOOP("Show only for non-plaintext &messages") },
+  { "always", I18N_NOOP("Alwa&ys show") }
+};
+static const EnumConfigEntry mimeTreeMode = {
+  "Reader", "MimeTreeMode", I18N_NOOP("MIME Tree Display"),
+  mimeTreeModes, DIM(mimeTreeModes), 1
+};
+
+static const BoolConfigEntry showColorbarMode = {
+  "Reader", "showColorbar", I18N_NOOP("Sho&w HTML status bar"), false
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name ),
-    mShowMIMETreeModeLastValue( -1 )
+  : ConfigurationPage( parent, name )
 {
   // tmp. vars:
   QVBoxLayout * vlay;
-  QPushButton * button;
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // "show colorbar" check box:
-  mShowColorbarCheck = new QCheckBox( i18n("Show HTML status &bar"), this );
+  populate( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
   vlay->addWidget( mShowColorbarCheck );
-  vlay->addWidget( new QLabel( i18n("<qt><p>Below, you can change the "
-				    "arrangement of KMail's window components "
-				    "(folder list, message list, reader pane "
-				    "and the optional MIME tree).</p></qt>"),
-			       this ) );
-  // The window layout
-  mWindowLayoutBG = new QHButtonGroup( i18n("&Window Layout"), this );
-  mWindowLayoutBG->layout()->setSpacing( KDialog::spacingHint() );
-  mWindowLayoutBG->setExclusive( true );
 
-  for ( int i = 0 ; i < numWindowLayouts ; ++i ) {
-    button = new QPushButton( mWindowLayoutBG );
-    mWindowLayoutBG->insert( button, i );
-    button->setPixmap( pixmapFor( i, 2 /* never */ ) );
-    button->setFixedSize( button->sizeHint() );
-    button->setAutoDefault( false );
-    button->setToggleButton( true );
-    QToolTip::add( button, i18n( windowLayoutToolTips[i] ) );
-  }
+  // "folder list" radio buttons:
+  populate( mFolderListGroup = new QHButtonGroup( this ), folderListMode );
+  vlay->addWidget( mFolderListGroup );
 
-  vlay->addWidget( mWindowLayoutBG );
+  // "MIME Tree Location" radio buttons:
+  populate( mMIMETreeLocationGroup = new QHButtonGroup( this ), mimeTreeLocation );
+  vlay->addWidget( mMIMETreeLocationGroup );
 
-  // the MIME Tree Viewer
-  mShowMIMETreeMode = new QVButtonGroup( i18n("Show MIME Tree"), this );
-  mShowMIMETreeMode->layout()->setSpacing( KDialog::spacingHint() );
-
-  mShowMIMETreeMode->insert(
-    new QRadioButton( i18n("&Never"),  mShowMIMETreeMode ), 0 );
-  mShowMIMETreeMode->insert(
-    new QRadioButton( i18n("&Smart"),  mShowMIMETreeMode ), 1 );
-  mShowMIMETreeMode->insert(
-    new QRadioButton( i18n("Alwa&ys"), mShowMIMETreeMode ), 2 );
-
-  vlay->addWidget( mShowMIMETreeMode );
-
-  connect( mShowMIMETreeMode, SIGNAL(clicked(int)),
-	   this, SLOT(showMIMETreeClicked(int)) );
+  // "Show MIME Tree" radio buttons:
+  populate( mMIMETreeModeGroup = new QVButtonGroup( this ), mimeTreeMode );
+  vlay->addWidget( mMIMETreeModeGroup );
 
   vlay->addStretch( 10 ); // spacer
 }
 
-QPixmap AppearancePage::LayoutTab::pixmapFor( int layout, int mode ) {
-  QString suffix;
-  switch( mode ) {
-  case 0: // Never
-    suffix = "_no_mime";
-    break;
-  case 1: // Smart
-    suffix = "_smart_mime";
-    break;
-  default: ;
-  }
-
-  // the icon files are numbered 1..5 !
-  return UserIcon( QString("kmailwindowlayout%1").arg( layout+1 ) + suffix );
-}
-
-void AppearancePage::LayoutTab::showMIMETreeClicked( int mode )
-{
-  if ( mShowMIMETreeModeLastValue == mode ) return;
-
-  mShowMIMETreeModeLastValue = mode;
-  for ( int i = 0 ; i < numWindowLayouts ; ++i )
-    mWindowLayoutBG->find( i )->setPixmap( pixmapFor( i, mode ) );
-}
-
 void AppearancePage::LayoutTab::setup() {
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-  KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
+  const KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
-
-  int windowLayout = geometry.readNumEntry( "windowLayout", 1 );
-  if( windowLayout < 0 || windowLayout > 4 )
-      windowLayout = 1;
-  mWindowLayoutBG->setButton( windowLayout );
-
-  int num = geometry.readNumEntry( "showMIME", 1 );
-  if ( num < 0 || num > 2 ) num = 1;
-  mShowMIMETreeMode->setButton( num );
-  showMIMETreeClicked( num );
+  load( mShowColorbarCheck, reader, showColorbarMode );
+  load( mFolderListGroup, geometry, folderListMode );
+  load( mMIMETreeLocationGroup, reader, mimeTreeLocation );
+  load( mMIMETreeModeGroup, reader, mimeTreeMode );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
-  KConfigGroup reader( profile, "Reader" );
-  KConfigGroup geometry( profile, "Geometry" );
+  const KConfigGroup reader( profile, "Reader" );
+  const KConfigGroup geometry( profile, "Geometry" );
 
-  if ( reader.hasKey( "showColorbar" ) )
-    mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar" ) );
-
-  if( geometry.hasKey( "windowLayout" ) ) {
-      int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
-      if( windowLayout < 0 || windowLayout > 4 )
-          windowLayout = 0;
-      mWindowLayoutBG->setButton( windowLayout );
-  }
-
-  if( geometry.hasKey( "showMIME" ) ) {
-    int num = geometry.readNumEntry( "showMIME" );
-    if ( num < 0 || num > 2 ) num = 1;
-    mShowMIMETreeMode->setButton( num );
-  }
+  loadProfile( mShowColorbarCheck, reader, showColorbarMode );
+  loadProfile( mFolderListGroup, geometry, folderListMode );
+  loadProfile( mMIMETreeLocationGroup, reader, mimeTreeLocation );
+  loadProfile( mMIMETreeModeGroup, reader, mimeTreeMode );
 }
 
 void AppearancePage::LayoutTab::apply() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  reader.writeEntry( "showColorbar", mShowColorbarCheck->isChecked() );
-
-  geometry.writeEntry( "windowLayout",
-                       mWindowLayoutBG->id( mWindowLayoutBG->selected() ) );
-  geometry.writeEntry( "showMIME",
-                       mShowMIMETreeMode->id( mShowMIMETreeMode->selected()));
+  save( mShowColorbarCheck, reader, showColorbarMode );
+  save( mFolderListGroup, geometry, folderListMode );
+  save( mMIMETreeLocationGroup, reader, mimeTreeLocation );
+  save( mMIMETreeModeGroup, reader, mimeTreeMode );
 }
 
 QString AppearancePage::HeadersTab::title() {
@@ -2211,93 +2190,6 @@ void AppearancePage::HeadersTab::apply() {
   general.writeEntry( "dateFormat",
 		      dateDisplayConfig[ dateDisplayID ].dateDisplay );
   general.writeEntry( "customDateFormat", mCustomDateFormatEdit->text() );
-}
-
-
-QString AppearancePage::ProfileTab::title() {
-  return i18n("&Profiles");
-}
-
-QString AppearancePage::ProfileTab::helpAnchor() const {
-  return QString::fromLatin1("configure-appearance-profiles");
-}
-
-AppearancePageProfileTab::AppearancePageProfileTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
-{
-  // tmp. vars:
-  QVBoxLayout *vlay;
-
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-
-  mListView = new KListView( this, "mListView" );
-  mListView->addColumn( i18n("Available Profiles") );
-  mListView->addColumn( i18n("Description") );
-  mListView->setFullWidth();
-  mListView->setAllColumnsShowFocus( true );
-  mListView->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
-  mListView->setSorting( -1 );
-
-  vlay->addWidget( new QLabel( mListView,
-			       i18n("&Select a profile and click 'Apply' to take "
-				    "on its settings:"), this ) );
-  vlay->addWidget( mListView, 1 );
-
-  /* not implemented (yet?)
-  hlay = new QHBoxLayout( vlay );
-  QPushButton *pushButton = new QPushButton(i18n("&New"), page4 );
-  pushButton->setAutoDefault( false );
-  hlay->addWidget( pushButton );
-  mAppearance.profileDeleteButton = new QPushButton(i18n("Dele&te"), page4 );
-  mAppearance.profileDeleteButton->setAutoDefault( false );
-  hlay->addWidget( mAppearance.profileDeleteButton );
-  hlay->addStretch(10);
-  */
-}
-
-void AppearancePage::ProfileTab::setup() {
-  mListView->clear();
-  // find all profiles (config files named "profile-xyz-rc"):
-  QString profileFilenameFilter = QString::fromLatin1("profile-*-rc");
-  mProfileList = KGlobal::dirs()->findAllResources( "data", "kmail/"+
-						    profileFilenameFilter );
-
-  kdDebug(5006) << "Profile manager: found " << mProfileList.count()
-		<< " profiles:" << endl;
-
-  // build the list and populate the list view:
-  QListViewItem * listItem = 0;
-  for ( QStringList::Iterator it = mProfileList.begin() ;
-	it != mProfileList.end() ; ++it ) {
-    KConfig profile( (*it), true /* read-only */, false /* no KDE global */ );
-    profile.setGroup("KMail Profile");
-    QString name = profile.readEntry( "Name" );
-    if ( name.isEmpty() ) {
-      kdWarning(5006) << "File \"" << (*it)
-		      << "\" doesn't provide a profile name!" << endl;
-      name = i18n("Unnamed");
-    }
-    QString desc = profile.readEntry( "Comment" );
-    if ( desc.isEmpty() ) {
-      kdWarning(5006) << "File \"" << (*it)
-		      << "\" doesn't provide a description!" << endl;
-      desc = i18n("Not available");
-    }
-    listItem = new QListViewItem( mListView, listItem, name, desc );
-  }
-}
-
-
-void AppearancePage::ProfileTab::apply() {
-  if ( !this->isVisible() ) return; // don't apply when not currently shown
-
-  int index = mListView->itemIndex( mListView->selectedItem() );
-  if ( index < 0 ) return; // non selected
-
-  assert( index < (int)mProfileList.count() );
-
-  KConfig profile( *mProfileList.at(index), true, false );
-  emit profileSelected( &profile );
 }
 
 
@@ -2614,13 +2506,8 @@ void ComposerPage::PhrasesTab::saveActiveLanguageItem() {
 
 void ComposerPage::PhrasesTab::slotNewLanguage()
 {
-  QWidget* w = dynamic_cast<QWidget*>(parent());
-
-  if ( !w ) return;
-
-  NewLanguageDialog dialog( mLanguageList, w , "New", true );
-  int result = dialog.exec();
-  if ( result == QDialog::Accepted ) slotAddNewLanguage( dialog.language() );
+  NewLanguageDialog dialog( mLanguageList, parentWidget(), "New", true );
+  if ( dialog.exec() == QDialog::Accepted ) slotAddNewLanguage( dialog.language() );
 }
 
 void ComposerPage::PhrasesTab::slotAddNewLanguage( const QString& lang )
@@ -3541,204 +3428,6 @@ void SecurityPage::OpenPgpTab::apply() {
   composer.writeEntry( "pgp-auto-encrypt", mPgpAutoEncryptCheck->isChecked() );
 }
 
-
-// *************************************************************
-// *                                                           *
-// *                       FolderPage                          *
-// *                                                           *
-// *************************************************************
-
-
-QString FolderPage::iconLabel() {
-  return i18n("Folders");
-}
-
-const char * FolderPage::iconName() {
-  return "folder";
-}
-
-QString FolderPage::title() {
-  return i18n("Settings for Folders");
-}
-
-QString FolderPage::helpAnchor() const {
-  return QString::fromLatin1("configure-misc-folders");
-}
-
-FolderPage::FolderPage( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
-{
-  // temp. vars:
-  QVBoxLayout *vlay;
-  QHBoxLayout *hlay;
-  QGroupBox   *group;
-  QLabel      *label;
-
-  vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
-
-  // "confirm before emptying folder" check box: stretch 0
-  mEmptyFolderConfirmCheck =
-    new QCheckBox( i18n("Corresponds to Folder->Move All Messages to Trash",
-                        "Ask for co&nfirmation before moving all messages to "
-                        "trash"),
-                   this );
-  vlay->addWidget( mEmptyFolderConfirmCheck );
-  mWarnBeforeExpire =
-    new QCheckBox( i18n("&Warn before expiring messages"), this );
-  vlay->addWidget( mWarnBeforeExpire );
-  // "when trying to find unread messages" combo + label: stretch 0
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mLoopOnGotoUnread = new QComboBox( false, this );
-  label = new QLabel( mLoopOnGotoUnread,
-           i18n("to be continued with \"don't loop\", \"loop in current folder\", "
-                "and \"loop in all folders\".",
-                "When trying to find unread messages:"), this );
-  mLoopOnGotoUnread->insertStringList( QStringList()
-      << i18n("continuation of \"When trying to find unread messages:\"",
-              "Don't loop")
-      << i18n("continuation of \"When trying to find unread messages:\"",
-              "Loop in current folder")
-      << i18n("continuation of \"When trying to find unread messages:\"",
-              "Loop in all folders"));
-  hlay->addWidget( label );
-  hlay->addWidget( mLoopOnGotoUnread, 1 );
-  mJumpToUnread =
-    new QCheckBox( i18n("&Jump to first unread message when entering a "
-			"folder"), this );
-  vlay->addWidget( mJumpToUnread );
-
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
-  hlay->addWidget( mDelayedMarkAsRead );
-  mDelayedMarkTime = new KIntSpinBox( 0 /*min*/, 60 /*max*/, 1/*step*/,
-				      0 /*init*/, 10 /*base*/, this);
-  mDelayedMarkTime->setSuffix( i18n(" sec") );
-  mDelayedMarkTime->setEnabled( false ); // since mDelayedMarkAsREad is off
-  hlay->addWidget( mDelayedMarkTime );
-  hlay->addStretch( 1 );
-
-  connect(mDelayedMarkAsRead, SIGNAL(toggled(bool)), mDelayedMarkTime,
-  	SLOT(setEnabled(bool)));
-
-  // "show popup after Drag'n'Drop" checkbox: stretch 0
-  mShowPopupAfterDnD =
-    new QCheckBox( i18n("Ask for action after &dragging messages to another folder"), this );
-  vlay->addWidget( mShowPopupAfterDnD );
-
-  // "default mailbox format" combo + label: stretch 0
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mMailboxPrefCombo = new QComboBox( false, this );
-  label = new QLabel( mMailboxPrefCombo,
-		      i18n("to be continued with \"flat files\" and "
-			   "\"directories\", resp.",
-			   "By default, &message folders on disk are:"), this );
-  mMailboxPrefCombo->insertStringList( QStringList()
-	  << i18n("continuation of \"By default, &message folders on disk are\"",
-		  "Flat Files (\"mbox\" format)")
-	  << i18n("continuation of \"By default, &message folders on disk are\"",
-		  "Directories (\"maildir\" format)") );
-  hlay->addWidget( label );
-  hlay->addWidget( mMailboxPrefCombo, 1 );
-
-  // "On startup..." option:
-  hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mOnStartupOpenFolder = new KMFolderComboBox( this );
-  label = new QLabel( mOnStartupOpenFolder,
-                      i18n("Open this folder on startup:"), this );
-  hlay->addWidget( label );
-  hlay->addWidget( mOnStartupOpenFolder, 1 );
-
-  // "On exit..." groupbox:
-  group = new QVGroupBox( i18n("On Program Exit, "
-			       "Perform Following Tasks"), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-  mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
-  mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
-  mExpireAtExit = new QCheckBox( i18n("&Expire old messages"), group );
-
-  vlay->addWidget( group );
-  vlay->addStretch( 1 );
-
-  // and now: add QWhatsThis:
-  QString msg = i18n( "what's this help",
-		      "<qt><p>This selects which mailbox format will be "
-		      "the default for local folders:</p>"
-		      "<p><b>mbox:</b> KMail's mail "
-		      "folders are represented by a single file each. "
-		      "Individual messages are separated from each other by a "
-		      "line starting with \"From \". This saves space on "
-		      "disk, but may be less robust, e.g. when moving messages "
-		      "between folders.</p>"
-		      "<p><b>maildir:</b> KMail's mail folders are "
-		      "represented by real folders on disk. Individual messages "
-		      "are separate files. This may waste a bit of space on "
-		      "disk, but should be more robust, e.g. when moving "
-		      "messages between folders.</p></qt>");
-  QWhatsThis::add( mMailboxPrefCombo, msg );
-  QWhatsThis::add( label, msg );
-
-  msg = i18n( "what's this help",
-	    "<qt><p>When jumping to the next unread message, it may occur "
-	    "that no more unread messages are below the current message.</p>"
-	    "<p><b>Don't loop:</b> The search will stop at the last message in "
-	    "the current folder.</p>"
-	    "<p><b>Loop in current folder:</b> The search will continue at the "
-	    "top of the message list, but not go to another folder.</p>"
-	    "<p><b>Loop in all folders:</b> The search will continue at the top of "
-	    "the message list. If no unread messages are found it will then continue "
-	    "to the next folder.</p>"
-	    "<p>Similarly, when searching for the previous unread message, "
-	    "the search will start from the bottom of the message list and continue to "
-	    "the previous folder depending on which option is selected.</p></qt>" );
-  QWhatsThis::add( mLoopOnGotoUnread, msg );
-}
-
-void FolderPage::setup() {
-  KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
-
-  mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", false ) );
-  mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
-  mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
-  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
-						  kernel->inboxFolder()->idString() ) );
-  mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
-  mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
-  // default = "Loop in current folder"
-  mLoopOnGotoUnread->setCurrentItem( behaviour.readNumEntry( "LoopOnGotoUnread", 1 ) );
-  mJumpToUnread->setChecked( behaviour.readBoolEntry( "JumpToUnread", false ) );
-  mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", true ) );
-  mDelayedMarkTime->setValue( behaviour.readNumEntry( "DelayedMarkTime", 0 ) );
-  mShowPopupAfterDnD->setChecked( behaviour.readBoolEntry( "ShowPopupAfterDnD", true ) );
-
-  int num = general.readNumEntry("default-mailbox-format", 1 );
-  if ( num < 0 || num > 1 ) num = 1;
-  mMailboxPrefCombo->setCurrentItem( num );
-}
-
-void FolderPage::apply() {
-  KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
-
-  general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
-  general.writeEntry( "compact-all-on-exit", mCompactOnExitCheck->isChecked() );
-  general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
-  general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
-  general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
-  general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
-				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
-  behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->currentItem() );
-  behaviour.writeEntry( "JumpToUnread", mJumpToUnread->isChecked() );
-  behaviour.writeEntry( "DelayedMarkAsRead", mDelayedMarkAsRead->isChecked() );
-  behaviour.writeEntry( "DelayedMarkTime", mDelayedMarkTime->value() );
-  behaviour.writeEntry( "ShowPopupAfterDnD", mShowPopupAfterDnD->isChecked() );
-
-  if ( mExpireAtExit->isChecked() )
-    general.writeEntry( "when-to-expire", expireAtExit );
-  else
-    general.writeEntry( "when-to-expire", expireManual );
-}
-
 QString SecurityPage::CryptPlugTab::title() {
   return i18n("Crypto Plugi&ns");
 }
@@ -4084,31 +3773,231 @@ void SecurityPage::CryptPlugTab::slotActivatePlugIn()
     mActivateButton->setText( i18n("Ac&tivate") );
 }
 
-
 // *************************************************************
 // *                                                           *
-// *                      GroupwarePage                        *
+// *                        MiscPage                           *
 // *                                                           *
 // *************************************************************
 
-QString GroupwarePage::iconLabel() {
-  return i18n("Groupware");
+QString MiscPage::iconLabel() {
+  return i18n("Misc");
 }
 
-QString GroupwarePage::title() {
-  return i18n("Configure Groupware");
+const char * MiscPage::iconName() {
+  return "misc";
 }
 
-const char * GroupwarePage::iconName() {
-  return "groupware";
+QString MiscPage::title() {
+  return i18n("Setting that don't fit elsewhere");
 }
 
-QString GroupwarePage::helpAnchor() const {
-  return QString::fromLatin1("configure-groupware");
+QString MiscPage::helpAnchor() const {
+  return QString::fromLatin1("configure-misc");
 }
 
-GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
-    : ConfigurationPage( parent, name )
+MiscPage::MiscPage( QWidget * parent, const char * name )
+  : TabbedConfigurationPage( parent, name )
+{
+  mFolderTab = new FolderTab();
+  addTab( mFolderTab, mFolderTab->title() );
+
+  mGroupwareTab = new GroupwareTab();
+  addTab( mGroupwareTab, mGroupwareTab->title() );
+}
+  
+QString MiscPage::FolderTab::title() {
+  return i18n("&Folders");
+}
+
+QString MiscPage::FolderTab::helpAnchor() const {
+  return QString::fromLatin1("configure-misc-folders");
+}
+
+MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
+  : ConfigurationPage( parent, name )
+{
+  // temp. vars:
+  QVBoxLayout *vlay;
+  QHBoxLayout *hlay;
+  QGroupBox   *group;
+  QLabel      *label;
+
+  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // "confirm before emptying folder" check box: stretch 0
+  mEmptyFolderConfirmCheck =
+    new QCheckBox( i18n("Corresponds to Folder->Move All Messages to Trash",
+                        "Ask for co&nfirmation before moving all messages to "
+                        "trash"),
+                   this );
+  vlay->addWidget( mEmptyFolderConfirmCheck );
+  mWarnBeforeExpire =
+    new QCheckBox( i18n("&Warn before expiring messages"), this );
+  vlay->addWidget( mWarnBeforeExpire );
+  // "when trying to find unread messages" combo + label: stretch 0
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mLoopOnGotoUnread = new QComboBox( false, this );
+  label = new QLabel( mLoopOnGotoUnread,
+           i18n("to be continued with \"don't loop\", \"loop in current folder\", "
+                "and \"loop in all folders\".",
+                "When trying to find unread messages:"), this );
+  mLoopOnGotoUnread->insertStringList( QStringList()
+      << i18n("continuation of \"When trying to find unread messages:\"",
+              "Don't loop")
+      << i18n("continuation of \"When trying to find unread messages:\"",
+              "Loop in current folder")
+      << i18n("continuation of \"When trying to find unread messages:\"",
+              "Loop in all folders"));
+  hlay->addWidget( label );
+  hlay->addWidget( mLoopOnGotoUnread, 1 );
+  mJumpToUnread =
+    new QCheckBox( i18n("&Jump to first unread message when entering a "
+			"folder"), this );
+  vlay->addWidget( mJumpToUnread );
+
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
+  hlay->addWidget( mDelayedMarkAsRead );
+  mDelayedMarkTime = new KIntSpinBox( 0 /*min*/, 60 /*max*/, 1/*step*/,
+				      0 /*init*/, 10 /*base*/, this);
+  mDelayedMarkTime->setSuffix( i18n(" sec") );
+  mDelayedMarkTime->setEnabled( false ); // since mDelayedMarkAsREad is off
+  hlay->addWidget( mDelayedMarkTime );
+  hlay->addStretch( 1 );
+
+  connect(mDelayedMarkAsRead, SIGNAL(toggled(bool)), mDelayedMarkTime,
+  	SLOT(setEnabled(bool)));
+
+  // "show popup after Drag'n'Drop" checkbox: stretch 0
+  mShowPopupAfterDnD =
+    new QCheckBox( i18n("Ask for action after &dragging messages to another folder"), this );
+  vlay->addWidget( mShowPopupAfterDnD );
+
+  // "default mailbox format" combo + label: stretch 0
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mMailboxPrefCombo = new QComboBox( false, this );
+  label = new QLabel( mMailboxPrefCombo,
+		      i18n("to be continued with \"flat files\" and "
+			   "\"directories\", resp.",
+			   "By default, &message folders on disk are:"), this );
+  mMailboxPrefCombo->insertStringList( QStringList()
+	  << i18n("continuation of \"By default, &message folders on disk are\"",
+		  "Flat Files (\"mbox\" format)")
+	  << i18n("continuation of \"By default, &message folders on disk are\"",
+		  "Directories (\"maildir\" format)") );
+  hlay->addWidget( label );
+  hlay->addWidget( mMailboxPrefCombo, 1 );
+
+  // "On startup..." option:
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
+  mOnStartupOpenFolder = new KMFolderComboBox( this );
+  label = new QLabel( mOnStartupOpenFolder,
+                      i18n("Open this folder on startup:"), this );
+  hlay->addWidget( label );
+  hlay->addWidget( mOnStartupOpenFolder, 1 );
+
+  // "On exit..." groupbox:
+  group = new QVGroupBox( i18n("On Program Exit, "
+			       "Perform Following Tasks"), this );
+  group->layout()->setSpacing( KDialog::spacingHint() );
+  mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
+  mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
+  mExpireAtExit = new QCheckBox( i18n("&Expire old messages"), group );
+
+  vlay->addWidget( group );
+  vlay->addStretch( 1 );
+
+  // and now: add QWhatsThis:
+  QString msg = i18n( "what's this help",
+		      "<qt><p>This selects which mailbox format will be "
+		      "the default for local folders:</p>"
+		      "<p><b>mbox:</b> KMail's mail "
+		      "folders are represented by a single file each. "
+		      "Individual messages are separated from each other by a "
+		      "line starting with \"From \". This saves space on "
+		      "disk, but may be less robust, e.g. when moving messages "
+		      "between folders.</p>"
+		      "<p><b>maildir:</b> KMail's mail folders are "
+		      "represented by real folders on disk. Individual messages "
+		      "are separate files. This may waste a bit of space on "
+		      "disk, but should be more robust, e.g. when moving "
+		      "messages between folders.</p></qt>");
+  QWhatsThis::add( mMailboxPrefCombo, msg );
+  QWhatsThis::add( label, msg );
+
+  msg = i18n( "what's this help",
+	    "<qt><p>When jumping to the next unread message, it may occur "
+	    "that no more unread messages are below the current message.</p>"
+	    "<p><b>Don't loop:</b> The search will stop at the last message in "
+	    "the current folder.</p>"
+	    "<p><b>Loop in current folder:</b> The search will continue at the "
+	    "top of the message list, but not go to another folder.</p>"
+	    "<p><b>Loop in all folders:</b> The search will continue at the top of "
+	    "the message list. If no unread messages are found it will then continue "
+	    "to the next folder.</p>"
+	    "<p>Similarly, when searching for the previous unread message, "
+	    "the search will start from the bottom of the message list and continue to "
+	    "the previous folder depending on which option is selected.</p></qt>" );
+  QWhatsThis::add( mLoopOnGotoUnread, msg );
+}
+
+void MiscPage::FolderTab::setup() {
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
+
+  mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", false ) );
+  mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
+  mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
+  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
+						  kernel->inboxFolder()->idString() ) );
+  mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
+  mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
+  // default = "Loop in current folder"
+  mLoopOnGotoUnread->setCurrentItem( behaviour.readNumEntry( "LoopOnGotoUnread", 1 ) );
+  mJumpToUnread->setChecked( behaviour.readBoolEntry( "JumpToUnread", false ) );
+  mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", true ) );
+  mDelayedMarkTime->setValue( behaviour.readNumEntry( "DelayedMarkTime", 0 ) );
+  mShowPopupAfterDnD->setChecked( behaviour.readBoolEntry( "ShowPopupAfterDnD", true ) );
+
+  int num = general.readNumEntry("default-mailbox-format", 1 );
+  if ( num < 0 || num > 1 ) num = 1;
+  mMailboxPrefCombo->setCurrentItem( num );
+}
+
+void MiscPage::FolderTab::apply() {
+  KConfigGroup general( KMKernel::config(), "General" );
+  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
+
+  general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
+  general.writeEntry( "compact-all-on-exit", mCompactOnExitCheck->isChecked() );
+  general.writeEntry( "confirm-before-empty", mEmptyFolderConfirmCheck->isChecked() );
+  general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
+  general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
+  general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
+				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
+  behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->currentItem() );
+  behaviour.writeEntry( "JumpToUnread", mJumpToUnread->isChecked() );
+  behaviour.writeEntry( "DelayedMarkAsRead", mDelayedMarkAsRead->isChecked() );
+  behaviour.writeEntry( "DelayedMarkTime", mDelayedMarkTime->value() );
+  behaviour.writeEntry( "ShowPopupAfterDnD", mShowPopupAfterDnD->isChecked() );
+
+  if ( mExpireAtExit->isChecked() )
+    general.writeEntry( "when-to-expire", expireAtExit );
+  else
+    general.writeEntry( "when-to-expire", expireManual );
+}
+
+
+QString MiscPage::GroupwareTab::title() {
+  return i18n("&Groupware");
+}
+
+QString MiscPage::GroupwareTab::helpAnchor() const {
+  return QString::fromLatin1("configure-misc-groupware");
+}
+
+MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name )
+  : ConfigurationPage( parent, name )
 {
   QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
@@ -4157,8 +4046,7 @@ GroupwarePage::GroupwarePage( QWidget * parent, const char * name )
   vlay->addWidget( dummy, 2 );
 }
 
-void GroupwarePage::setup()
-{
+void MiscPage::GroupwareTab::setup() {
   // Read the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
   mEnableGwCB->setChecked( options.readBoolEntry( "Enabled", true ) );
@@ -4180,13 +4068,7 @@ void GroupwarePage::setup()
   }
 }
 
-void GroupwarePage::installProfile( KConfig * /*profile*/ )
-{
-  kdDebug(5006) << "NYI: void GroupwarePage::installProfile( KConfig * /*profile*/ )" << endl;
-}
-
-void GroupwarePage::apply()
-{
+void MiscPage::GroupwareTab::apply() {
   // Write the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
   options.writeEntry( "Enabled", mEnableGwCB->isChecked() );
@@ -4209,6 +4091,7 @@ void GroupwarePage::apply()
 }
 
 
+#undef DIM
 
 //----------------------------
 #include "configuredialog.moc"

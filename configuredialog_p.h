@@ -120,6 +120,33 @@ class LanguageComboBox : public QComboBox
 
 //
 //
+// Profile dialog
+//
+//
+
+class ProfileDialog : public KDialogBase {
+  Q_OBJECT
+public:
+  ProfileDialog( QWidget * parent=0, const char * name=0, bool modal=false );
+
+signals:
+  void profileSelected( KConfig * profile );
+
+private slots:
+  void slotSelectionChanged( QListViewItem * );
+  void slotOk();
+
+private:
+  void setup();
+
+private:
+  KListView   *mListView;
+  QStringList mProfileList;
+};
+
+
+//
+//
 // basic ConfigurationPage (inherit pages from this)
 //
 //
@@ -440,20 +467,11 @@ public:
   void apply();
   void installProfile( KConfig * profile );
 
-
-protected slots:
-  /** Used to switch the Layout preview items if Mime Tree Viewer is enabled
-      or disabled */
-  void showMIMETreeClicked( int id );
-
-protected: // methods
-  QPixmap pixmapFor( int num, int type );
-
 protected: // data
   QCheckBox    *mShowColorbarCheck;
-  QButtonGroup *mShowMIMETreeMode;
-  QButtonGroup *mWindowLayoutBG;
-  int mShowMIMETreeModeLastValue;
+  QButtonGroup *mFolderListGroup;
+  QButtonGroup *mMIMETreeLocationGroup;
+  QButtonGroup *mMIMETreeModeGroup;
 };
 
 class AppearancePageHeadersTab : public ConfigurationPage {
@@ -484,29 +502,6 @@ protected: // data
   QLineEdit    *mCustomDateFormatEdit;
 };
 
-class AppearancePageProfileTab : public ConfigurationPage {
-  Q_OBJECT
-public:
-  AppearancePageProfileTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
-  QString helpAnchor() const;
-
-  void setup();
-  void apply();
-
-signals:
-  void profileSelected( KConfig * profile );
-
-protected:
-  KListView   *mListView;
-  QStringList mProfileList;
-};
-
 class AppearancePage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
@@ -517,26 +512,17 @@ public:
   static const char * iconName();
   QString helpAnchor() const;
 
-  void apply(); // is special
-
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef AppearancePageFontsTab FontsTab;
   typedef AppearancePageColorsTab ColorsTab;
   typedef AppearancePageLayoutTab LayoutTab;
   typedef AppearancePageHeadersTab HeadersTab;
-  typedef AppearancePageProfileTab ProfileTab;
-
-signals:
-  /** Used to route @p mProfileTab's signal on to the
-      configuredialog's slotInstallProfile() */
-  void profileSelected( KConfig * profile );
 
 protected:
   FontsTab   *mFontsTab;
   ColorsTab  *mColorsTab;
   LayoutTab  *mLayoutTab;
   HeadersTab *mHeadersTab;
-  ProfileTab *mProfileTab;
 };
 
 //
@@ -842,17 +828,19 @@ protected:
 
 //
 //
-// FolderPage
+// MiscPage
 //
 //
 
-class FolderPage : public ConfigurationPage {
+class MiscPageFolderTab : public ConfigurationPage {
   Q_OBJECT
 public:
-  FolderPage( QWidget * parent=0, const char * name=0 );
+  MiscPageFolderTab( QWidget * parent=0, const char * name=0 );
 
-  static QString iconLabel();
-  static const char * iconName();
+  // no icons:
+  static QString iconLabel() { return QString::null; }
+  static const char * iconName() { return 0; }
+
   static QString title();
   QString helpAnchor() const;
 
@@ -872,6 +860,54 @@ protected:
   KIntSpinBox  *mDelayedMarkTime;
   QCheckBox    *mShowPopupAfterDnD;
   KMFolderComboBox *mOnStartupOpenFolder;
+};
+
+class MiscPageGroupwareTab : public ConfigurationPage  {
+  Q_OBJECT
+public:
+  MiscPageGroupwareTab( QWidget * parent=0, const char * name=0 );
+
+  // no icons:
+  static QString iconLabel() { return QString::null; }
+  static const char * iconName() { return 0; }
+
+  static QString title();
+  QString helpAnchor() const;
+
+  void setup();
+  void apply();
+private:
+  QCheckBox* mEnableGwCB;
+  QCheckBox* mEnableImapResCB;
+
+  QVGroupBox* mBox;
+
+  QComboBox* mLanguageCombo;
+  KMFolderComboBox* mFolderCombo;
+
+  QCheckBox* mAutoResCB;
+  QCheckBox* mAutoDeclConflCB;
+  QCheckBox* mAutoDeclRecurCB;
+
+  QCheckBox* mLegacyMangleFromTo;
+};
+
+class MiscPage : public TabbedConfigurationPage {
+  Q_OBJECT
+public:
+  MiscPage( QWidget * parent=0, const char * name=0 );
+
+  static QString iconLabel();
+  static QString title();
+  static const char * iconName();
+  QString helpAnchor() const;
+
+  typedef MiscPageFolderTab FolderTab;
+  typedef MiscPageGroupwareTab GroupwareTab;
+
+private:
+  FolderTab * mFolderTab;
+  GroupwareTab * mGroupwareTab;
 };
 
 //
@@ -895,59 +931,6 @@ protected:
 
 private:
   int mVisibleItem;
-};
-
-//
-//
-// Groupware config page
-//
-//
-
-class GroupwarePage: public ConfigurationPage  {
-  Q_OBJECT
-public:
-  GroupwarePage( QWidget * parent=0, const char * name=0 );
-  ~GroupwarePage() {};
-
-  static QString iconLabel();
-  static const char * iconName();
-
-  static QString title();
-
-  /** Should return the help anchor for this page or tab */
-  virtual QString helpAnchor() const;
-
-  /** Should set the page up (ie. read the setting from the @ref
-      KConfig object into the widgets) after creating it in the
-      constructor. Called from @ref ConfigureDialog. */
-  virtual void setup();
-  /** Called when the installation of a profile is
-      requested. Reimplemenations of this method should do the
-      equivalent of a @ref setup(), but with the given @ref KConfig
-      object instead of KMKernel::config() and only for those entries that
-      really have keys defined in the profile.
-
-      The default implementation does nothing.
-  */
-  virtual void installProfile( KConfig * profile );
-  /** Should apply the changed settings (ie. read the settings from
-      the widgets into the @ref KConfig object). Called from @ref
-      ConfigureDialog. */
-  virtual void apply();
-private:
-  QCheckBox* mEnableGwCB;
-  QCheckBox* mEnableImapResCB;
-
-  QVGroupBox* mBox;
-
-  QComboBox* mLanguageCombo;
-  KMFolderComboBox* mFolderCombo;
-
-  QCheckBox* mAutoResCB;
-  QCheckBox* mAutoDeclConflCB;
-  QCheckBox* mAutoDeclRecurCB;
-
-    QCheckBox* mLegacyMangleFromTo;
 };
 
 

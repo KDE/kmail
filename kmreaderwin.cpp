@@ -63,6 +63,21 @@ using KMail::TeeHtmlWriter;
 #include <kmime_header_parsing.h>
 using KMime::Types::AddrSpecList;
 using namespace KMime;
+
+#include <mimelib/mimepp.h>
+#include <mimelib/body.h>
+#include <mimelib/utility.h>
+
+// KABC includes
+#include <kabc/addressee.h>
+#include <kabc/vcardconverter.h>
+
+// khtml headers
+#include <khtml_part.h>
+#include <khtmlview.h> // So that we can get rid of the frames
+#include <dom/html_element.h>
+#include <dom/html_block.h>
+
 #include <kapplication.h>
 // for the click on attachment stuff (dnaber):
 #include <kuserprofile.h>
@@ -79,16 +94,7 @@ using namespace KMime;
 #include <ktempfile.h>
 #include <kprocess.h>
 #include <kdialog.h>
-
-// KABC includes
-#include <kabc/addressee.h>
-#include <kabc/vcardconverter.h>
-
-// khtml headers
-#include <khtml_part.h>
-#include <khtmlview.h> // So that we can get rid of the frames
-#include <dom/html_element.h>
-#include <dom/html_block.h>
+#include <kaction.h>
 
 #include <qclipboard.h>
 #include <qhbox.h>
@@ -96,10 +102,7 @@ using namespace KMime;
 #include <qpaintdevicemetrics.h>
 #include <qlayout.h>
 #include <qlabel.h>
-
-#include <mimelib/mimepp.h>
-#include <mimelib/body.h>
-#include <mimelib/utility.h>
+#include <qsplitter.h>
 
 // X headers...
 #undef Never
@@ -450,7 +453,17 @@ kdDebug(5006) << "                      Root node will NOT be replaced." << endl
 
 
 
-
+void KMReaderWin::createWidgets() {
+  QVBoxLayout * vlay = new QVBoxLayout( this );
+  mSplitter = new QSplitter( Qt::Vertical, this, "mSplitter" );
+  vlay->addWidget( mSplitter );
+  mMimePartTree = new KMMimePartTree( this, mSplitter, "mMimePartTree" );
+  mBox = new QHBox( mSplitter, "mBox" );
+  mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
+  mViewer = new KHTMLPart( mBox, "mViewer" );
+  mSplitter->setOpaqueResize( true );
+  mSplitter->setResizeMode( mMimePartTree, QSplitter::KeepSize );
+}
 
 const int KMReaderWin::delay = 150;
 
@@ -458,8 +471,6 @@ const int KMReaderWin::delay = 150;
 KMReaderWin::KMReaderWin(QWidget *aParent,
 			 QWidget *mainWindow,
 			 KActionCollection* actionCollection,
-			 KMMimePartTree* mimePartTree,
-                         int* showMIMETreeMode,
                          const char *aName,
                          int aFlags )
   : KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose),
@@ -468,14 +479,13 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mHeaderStyle( 0 ),
     mOverrideCodec( 0 ),
     mCSSHelper( 0 ),
-    //mShowCompleteMessage( false ),
-    mMimePartTree( mimePartTree ),
-    mShowMIMETreeMode( showMIMETreeMode ),
     mRootNode( 0 ),
     mMainWindow( mainWindow ),
-    mActionCollection( actionCollection ),
     mHtmlWriter( 0 )
 {
+  mSplitterSizes << 180 << 100;
+  mMimeTreeMode = 1;
+  mMimeTreeAtBottom = true;
   mAutoDelete = false;
   mLastSerNum = 0;
   mMessage = 0;
@@ -485,8 +495,10 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mShowColorbar = false;
   mAtmUpdate = false;
 
+  createWidgets();
   initHtmlWidget();
   readConfig();
+
   mHtmlOverride = false;
 
   connect( &updateReaderWinTimer, SIGNAL(timeout()),
@@ -496,18 +508,12 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   connect( &mDelayedMarkTimer, SIGNAL(timeout()),
            this, SLOT(slotTouchMessage()) );
 
-  if(getenv("KMAIL_DEBUG_READER_CRYPTO") != 0){
-    QCString cE = getenv("KMAIL_DEBUG_READER_CRYPTO");
-    mDebugReaderCrypto = cE == "1" || cE.upper() == "ON" || cE.upper() == "TRUE";
-    kdDebug(5006) << "KMAIL_DEBUG_READER_CRYPTO = TRUE" << endl;
-  }else{
-    mDebugReaderCrypto = false;
-    kdDebug(5006) << "KMAIL_DEBUG_READER_CRYPTO = FALSE" << endl;
-  }
+  createActions( actionCollection );
+}
 
-  if (!mActionCollection)
+void KMReaderWin::createActions( KActionCollection * ac ) {
+  if ( !ac )
       return;
-  KActionCollection *ac = mActionCollection;
 
   mMailToComposeAction = new KAction( i18n("Send To..."), 0, this,
 				    SLOT(slotMailtoCompose()), ac,
@@ -652,12 +658,6 @@ bool KMReaderWin::update( KMail::ISubject * subject )
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMimePartTree( KMMimePartTree* mimePartTree )
-{
-  mMimePartTree = mimePartTree;
-}
-
-//-----------------------------------------------------------------------------
 void KMReaderWin::removeTempFiles()
 {
   for (QStringList::Iterator it = mTempFiles.begin(); it != mTempFiles.end();
@@ -694,78 +694,111 @@ bool KMReaderWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
-  KConfig *config = KMKernel::config();
+  const KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
+  /*should be: const*/ KConfigGroup reader( KMKernel::config(), "Reader" );
 
   delete mCSSHelper;
   mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
 
-  { // must be done before setHeaderStyleAndStrategy
-    KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
-    mDelayedMarkAsRead = behaviour.readBoolEntry( "DelayedMarkAsRead", true );
-    mDelayedMarkTimeout = behaviour.readNumEntry( "DelayedMarkTime", 0 );
-  }
+  // must be done before setHeaderStyleAndStrategy
+  mDelayedMarkAsRead = behaviour.readBoolEntry( "DelayedMarkAsRead", true );
+  mDelayedMarkTimeout = behaviour.readNumEntry( "DelayedMarkTime", 0 );
 
-  {
-  KConfigGroupSaver saver(config, "Reader");
   // initialize useFixedFont from the saved value; the corresponding toggle
   // action is initialized in the main window
-  mUseFixedFont = config->readBoolEntry( "useFixedFont", false );
-  mHtmlMail = config->readBoolEntry( "htmlMail", false );
-  setHeaderStyleAndStrategy( HeaderStyle::create( config->readEntry( "header-style", "fancy" ) ),
-			     HeaderStrategy::create( config->readEntry( "header-set-displayed", "rich" ) ) );
+  mUseFixedFont = reader.readBoolEntry( "useFixedFont", false );
+  mHtmlMail = reader.readBoolEntry( "htmlMail", false );
+  setHeaderStyleAndStrategy( HeaderStyle::create( reader.readEntry( "header-style", "fancy" ) ),
+			     HeaderStrategy::create( reader.readEntry( "header-set-displayed", "rich" ) ) );
 
   mAttachmentStrategy =
-    AttachmentStrategy::create( config->readEntry( "attachment-strategy" ) );
+    AttachmentStrategy::create( reader.readEntry( "attachment-strategy" ) );
 
-  mViewer->setOnlyLocalReferences( !config->readBoolEntry( "htmlLoadExternal", false ) );
+  mViewer->setOnlyLocalReferences( !reader.readBoolEntry( "htmlLoadExternal", false ) );
 
   // if the user uses OpenPGP then the color bar defaults to enabled
   // else it defaults to disabled
-  if( Kpgp::Module::getKpgp()->usePGP() )
-    mShowColorbar = true;
-  else
-    mShowColorbar = false;
-  mShowColorbar = config->readBoolEntry( "showColorbar", mShowColorbar );
+  mShowColorbar = reader.readBoolEntry( "showColorbar", Kpgp::Module::getKpgp()->usePGP() );
   // if the value defaults to enabled and KMail (with color bar) is used for
   // the first time the config dialog doesn't know this if we don't save the
   // value now
-  config->writeEntry( "showColorbar", mShowColorbar );
-  }
+  reader.writeEntry( "showColorbar", mShowColorbar );
 
-  if (message()) {
+  mMimeTreeAtBottom = reader.readEntry( "MimeTreeLocation", "bottom" ) != "top";
+  const QString s = reader.readEntry( "MimeTreeMode", "smart" );
+  if ( s == "never" )
+    mMimeTreeMode = 0;
+  else if ( s == "always" )
+    mMimeTreeMode = 2;
+  else
+    mMimeTreeMode = 1;
+
+  const int mimeH = reader.readNumEntry( "MimePaneHeight", 100 );
+  const int messageH = reader.readNumEntry( "MessagePaneHeight", 180 );
+  mSplitterSizes.clear();
+  if ( mMimeTreeAtBottom )
+    mSplitterSizes << messageH << mimeH;
+  else
+    mSplitterSizes << mimeH << messageH;
+
+  adjustLayout();
+
+  if (message())
     update();
-    message()->readConfig();
-  }
+  KMMessage::readConfig();
 }
 
 
+void KMReaderWin::adjustLayout() {
+  if ( mMimeTreeAtBottom )
+    mSplitter->moveToLast( mMimePartTree );
+  else
+    mSplitter->moveToFirst( mMimePartTree );
+  mSplitter->setSizes( mSplitterSizes );
+
+  if ( mMimeTreeMode == 2 && mMsgDisplay )
+    mMimePartTree->show();
+  else
+    mMimePartTree->hide();
+
+  if ( mShowColorbar && mMsgDisplay )
+    mColorBar->show();
+  else
+    mColorBar->hide();
+}
+
+
+void KMReaderWin::saveSplitterSizes( KConfigBase & c ) const {
+  if ( !mSplitter || !mMimePartTree )
+    return;
+  if ( mMimePartTree->isHidden() )
+    return; // don't rely on QSplitter maintaining sizes for hidden widgets.
+
+  c.writeEntry( "MimePaneHeight", mSplitter->sizes()[ mMimeTreeAtBottom ? 1 : 0 ] );
+  c.writeEntry( "MessagePaneHeight", mSplitter->sizes()[ mMimeTreeAtBottom ? 0 : 1 ] );
+}
+
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeConfig(bool aWithSync)
-{
-  KConfig *config = KMKernel::config();
-  KConfigGroupSaver saver(config, "Reader");
-  config->writeEntry( "useFixedFont", mUseFixedFont );
+void KMReaderWin::writeConfig( bool sync ) const {
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+
+  reader.writeEntry( "useFixedFont", mUseFixedFont );
   if ( headerStyle() )
-    config->writeEntry( "header-style", headerStyle()->name() );
+    reader.writeEntry( "header-style", headerStyle()->name() );
   if ( headerStrategy() )
-    config->writeEntry( "header-set-displayed", headerStrategy()->name() );
+    reader.writeEntry( "header-set-displayed", headerStrategy()->name() );
   if ( attachmentStrategy() )
-    config->writeEntry("attachment-strategy",attachmentStrategy()->name());
-  if (aWithSync) config->sync();
+    reader.writeEntry( "attachment-strategy", attachmentStrategy()->name() );
+
+  saveSplitterSizes( reader );
+
+  if ( sync )
+    kernel->slotRequestConfigSync();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
-  mBox = new QHBox(this);
-
-  mColorBar = new HtmlStatusBar( mBox );
-
-  if ( !mShowColorbar )
-    mColorBar->hide();
-
-
-  mViewer = new KHTMLPart(mBox, "khtml");
   mViewer->widget()->setFocusPolicy(WheelFocus);
   // Let's better be paranoid and disable plugins (it defaults to enabled):
   mViewer->setPluginsEnabled(false);
@@ -929,8 +962,9 @@ static const int numKMailNewFeatures =
 //-----------------------------------------------------------------------------
 void KMReaderWin::displayAboutPage()
 {
-  mColorBar->hide();
-  mMsgDisplay = FALSE;
+  mMsgDisplay = false;
+  adjustLayout();
+
   QString location = locate("data", "kmail/about/main.html");
   QString content = kFileToString(location);
   mViewer->begin(location);
@@ -992,6 +1026,11 @@ void KMReaderWin::displayAboutPage()
   mViewer->end();
 }
 
+void KMReaderWin::enableMsgDisplay() {
+  mMsgDisplay = true;
+  adjustLayout();
+}
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
@@ -1008,17 +1047,17 @@ void KMReaderWin::updateReaderWin()
 	mColorBar->show();
       else
 	mColorBar->hide();
-      parseMsg();
+      displayMessage();
     }
   }
   else
   {
     mColorBar->hide();
+    mMimePartTree->hide();
+    mMimePartTree->clear();
     htmlWriter()->begin();
     htmlWriter()->write( mCSSHelper->htmlHead( isFixedFont() ) + "</body></html>" );
     htmlWriter()->end();
-    if( mMimePartTree )
-      mMimePartTree->clear();
   }
 }
 
@@ -1031,29 +1070,28 @@ int KMReaderWin::pointsToPixel(int pointSize) const
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::showHideMimeTree( bool showIt )
-{
-  if( mMimePartTree && ( !mShowMIMETreeMode || (0 != *mShowMIMETreeMode) ) ){
-    if( showIt || (mShowMIMETreeMode && (*mShowMIMETreeMode == 2)) )
-      mMimePartTree->show();
-    else
-      mMimePartTree->hide();
+void KMReaderWin::showHideMimeTree( bool isPlainTextTopLevel ) {
+  if ( mMimeTreeMode == 2 ||
+       ( mMimeTreeMode == 1 && !isPlainTextTopLevel ) )
+    mMimePartTree->show();
+  else {
+    // don't rely on QSplitter maintaining sizes for hidden widgets:
+    KConfigGroup reader( KMKernel::config(), "Reader" );
+    saveSplitterSizes( reader );
+    mMimePartTree->hide();
   }
 }
 
-void KMReaderWin::parseMsg(void)
-{
-  KMMessage *msg = message();
-  if ( msg == 0 )
+void KMReaderWin::displayMessage() {
+  KMMessage * msg = message();
+
+  mMimePartTree->clear();
+  showHideMimeTree( !msg || // treat no message as "text/plain"
+		    ( msg->type() == DwMime::kTypeText
+		      && msg->subtype() == DwMime::kSubtypePlain ) );
+
+  if ( !msg )
     return;
-
-  if( mMimePartTree )
-    mMimePartTree->clear();
-
-  int mainType = msg->type();
-  bool isMultipart = ( DwMime::kTypeMultipart == mainType );
-
-  showHideMimeTree( isMultipart );
 
   msg->setOverrideCodec( overrideCodec() );
 
@@ -1149,14 +1187,13 @@ kdDebug(5006) << "\n     ----->  First body part *was* found, filling the Mime P
     partNode* curNode = mRootNode->setFirstChild( new partNode(firstBodyPart) );
     curNode->buildObjectTree();
     // fill the MIME part tree viewer
-    if( mMimePartTree )
-      mRootNode->fillMimePartTree( 0,
-                                   mMimePartTree,
-                                   cntDesc,
-                                   mainCntTypeStr,
-                                   cntEnc,
-                                   cntSize );
-  } else if( mMimePartTree ) {
+    mRootNode->fillMimePartTree( 0,
+				 mMimePartTree,
+				 cntDesc,
+				 mainCntTypeStr,
+				 cntEnc,
+				 cntSize );
+  } else {
 kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" << endl;
     mRootNode->fillMimePartTree( 0,
                                  mMimePartTree,
@@ -1165,8 +1202,6 @@ kdDebug(5006) << "\n     ----->  Inserting Root Node into the Mime Part Tree" <<
                                  cntEnc,
                                  cntSize );
 kdDebug(5006) << "\n     <-----  Finished inserting Root Node into Mime Part Tree" << endl;
-  } else {
-kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root Node!" << endl;
   }
 
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
@@ -1269,20 +1304,19 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
 #endif
 
   // save current main Content-Type before deleting mRootNode
-  int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeUnknown;
+  const int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeText;
+  const int rootNodeCntSubtype = mRootNode ? mRootNode->subType() : DwMime::kSubtypePlain;
 
   // store message id to avoid endless recursions
   setIdOfLastViewedMessage( aMsg->msgId() );
 
   if( emitReplaceMsgByUnencryptedVersion ) {
-kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
+    kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
     emit replaceMsgByUnencryptedVersion();
   } else {
-kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." << endl;
-      showHideMimeTree( (DwMime::kTypeMultipart   == rootNodeCntType) ||
-                        (DwMime::kTypeApplication == rootNodeCntType) ||
-                        (DwMime::kTypeMessage     == rootNodeCntType) ||
-                        (DwMime::kTypeModel       == rootNodeCntType) );
+    kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." << endl;
+    showHideMimeTree( rootNodeCntType == DwMime::kTypeText &&
+		      rootNodeCntSubtype == DwMime::kSubtypePlain );
   }
 }
 
@@ -1298,9 +1332,7 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
   if (hasVCard)
     href = QString("file:") + KURL::encode_string( mTempFiles.last() );
 
-  return headerStyle()->format( aMsg, headerStrategy(),
-				hasVCard ? href : QString::null,
-				mPrinting );
+  return headerStyle()->format( aMsg, headerStrategy(), href, mPrinting );
 }
 
 

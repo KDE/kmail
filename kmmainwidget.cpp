@@ -88,9 +88,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mFilterCommands.setAutoDelete(true);
 
   mPanner1Sep << 1 << 1;
-  mPanner2Sep << 1 << 1 << 1;
-  mPanner3Sep << 1 << 1;
-
+  mPanner2Sep << 1 << 1;
 
   setMinimumSize(400, 300);
 
@@ -154,17 +152,11 @@ void KMMainWidget::destruct()
 //-----------------------------------------------------------------------------
 void KMMainWidget::readPreConfig(void)
 {
-  KConfig *config = KMKernel::config();
+  const KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  const KConfigGroup general( KMKernel::config(), "General" );
 
-
-  { // area for config group "Geometry"
-    KConfigGroupSaver saver(config, "Geometry");
-    mWindowLayout = config->readNumEntry( "windowLayout", 1 );
-    mShowMIMETreeMode = config->readNumEntry( "showMIME", 1 );
-  }
-
-  KConfigGroupSaver saver(config, "General");
-  mEncodingStr = config->readEntry("encoding", "").latin1();
+  mLongFolderList = geometry.readEntry( "FolderList", "long" ) != "short";
+  mEncodingStr = general.readEntry("encoding", "").latin1();
 }
 
 
@@ -202,8 +194,7 @@ void KMMainWidget::readConfig(void)
   KConfig *config = KMKernel::config();
 
 
-  int oldWindowLayout = 1;
-  int oldShowMIMETreeMode = 1;
+  bool oldLongFolderList = true;
 
   QString str;
   QSize siz;
@@ -213,16 +204,13 @@ void KMMainWidget::readConfig(void)
     writeConfig();
 
 
-    oldWindowLayout = mWindowLayout;
-    oldShowMIMETreeMode = mShowMIMETreeMode;
+    oldLongFolderList = mLongFolderList;
 
     readPreConfig();
     mHeaders->refreshNestedState();
 
 
-    if(oldWindowLayout != mWindowLayout ||
-       oldShowMIMETreeMode != mShowMIMETreeMode )
-    {
+    if( oldLongFolderList != mLongFolderList ) {
       hide();
       // delete all panners
       delete mPanner1; // will always delete the others
@@ -239,10 +227,7 @@ void KMMainWidget::readConfig(void)
   toggleFixFontAction()->setChecked( readerConfig.readBoolEntry( "useFixedFont",
                                                                false ) );
 
-  { // area for config group "Reader"
-    KConfigGroupSaver saver(config, "Reader");
-    mHtmlPref = config->readBoolEntry( "htmlMail", false );
-  }
+  mHtmlPref = readerConfig.readBoolEntry( "htmlMail", false );
 
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
@@ -253,52 +238,22 @@ void KMMainWidget::readConfig(void)
     if (!siz.isEmpty())
       resize(siz);
     // default width of the foldertree
-    uint folderpanewidth = 250;
+    static const int folderpanewidth = 250;
 
-    // the default sizes are dependent on the actual layout
-    switch( mWindowLayout ) {
-    case 0:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
-        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
-        mPanner2Sep[0] = config->readNumEntry( "HeaderPaneHeight", 180 );
-        mPanner2Sep[1] = config->readNumEntry( "MimePaneHeight", 100 );
-        mPanner2Sep[2] = config->readNumEntry( "MessagePaneHeight", 280 );
-        break;
-    case 1:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
-        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
-        mPanner2Sep[0] = config->readNumEntry( "HeaderPaneHeight", 180 );
-        mPanner2Sep[1] = config->readNumEntry( "MessagePaneHeight", 280 );
-        mPanner2Sep[2] = config->readNumEntry( "MimePaneHeight", 100 );
-        break;
-    case 2:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
-        mPanner1Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
-        mPanner2Sep[0] = config->readNumEntry( "FolderPaneHeight", 380 );
-        mPanner2Sep[1] = config->readNumEntry( "MimePaneHeight", 180 );
-        mPanner3Sep[0] = config->readNumEntry( "HeaderPaneHeight", 180 );
-        mPanner3Sep[1] = config->readNumEntry( "MessagePaneHeight", 380 );
-        break;
-    case 3:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneHeight", 280 );
-        mPanner1Sep[1] = config->readNumEntry( "MessagePaneHeight", 280 );
-        mPanner2Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
-        mPanner2Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
-        mPanner3Sep[0] = config->readNumEntry( "HeaderPaneHeight", 140 );
-        mPanner3Sep[1] = config->readNumEntry( "MimePaneHeight", 140 );
-        break;
-    case 4:
-        mPanner1Sep[0] = config->readNumEntry( "FolderPaneHeight", 180 );
-        mPanner1Sep[1] = config->readNumEntry( "MimePaneHeight", 100 );
-        mPanner1Sep[2] = config->readNumEntry( "MessagePaneHeight", 280 );
-        mPanner2Sep[0] = config->readNumEntry( "FolderPaneWidth", folderpanewidth );
-        mPanner2Sep[1] = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth );
-        break;
-    }
+    const int folderW = config->readNumEntry( "FolderPaneWidth", folderpanewidth ); 
+    const int headerW = config->readNumEntry( "HeaderPaneWidth", width()-folderpanewidth ); 
+    const int headerH = config->readNumEntry( "HeaderPaneHeight", 180 );
+    const int readerH = config->readNumEntry( "ReaderPaneHeight", 280 );
 
-    if (!mStartupDone ||
-        oldWindowLayout != mWindowLayout ||
-        oldShowMIMETreeMode != mShowMIMETreeMode )
+    mPanner1Sep.clear();
+    mPanner2Sep.clear();
+    QValueList<int> & widths = mLongFolderList ? mPanner1Sep : mPanner2Sep ;
+    QValueList<int> & heights = mLongFolderList ? mPanner2Sep : mPanner1Sep ;
+
+    widths << folderW << headerW;
+    heights << headerH << readerH;
+
+    if (!mStartupDone)
     {
       /** unread / total columns
        * as we have some dependencies in this widget
@@ -353,8 +308,7 @@ void KMMainWidget::readConfig(void)
     // Update systray
     toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
-    if (oldWindowLayout != mWindowLayout ||
-        oldShowMIMETreeMode != mShowMIMETreeMode )
+    if ( oldLongFolderList != mLongFolderList )
       activatePanners();
 
     //    kernel->kbp()->busy(); //Crashes KMail
@@ -386,69 +340,27 @@ void KMMainWidget::writeConfig(void)
 {
   QString s;
   KConfig *config = KMKernel::config();
-
-
-  QRect r = geometry();
-
+  KConfigGroup geometry( config, "Geometry" );
+  KConfigGroup general( config, "General" );
 
   mMsgView->writeConfig();
   mFolderTree->writeConfig();
 
-  { // area for config group "Geometry"
-    KConfigGroupSaver saver(config, "Geometry");
+  geometry.writeEntry( "MainWin", this->geometry().size() );
 
-    config->writeEntry("MainWin", r.size());
+  const QValueList<int> widths = ( mLongFolderList ? mPanner1 : mPanner2 )->sizes();
+  const QValueList<int> heights = ( mLongFolderList ? mPanner2 : mPanner1 )->sizes();
 
-    // Save the dimensions of the folder, header and message pane;
-    // this is dependent on the layout style.
-    switch( mWindowLayout ) {
-    case 0:
-        config->writeEntry( "FolderPaneWidth", mPanner1->sizes()[0] );
-        config->writeEntry( "HeaderPaneWidth", mPanner1->sizes()[1] );
-        config->writeEntry( "HeaderPaneHeight", mPanner2->sizes()[0] );
-        config->writeEntry( "MimePaneHeight", mPanner2->sizes()[1] );
-        config->writeEntry( "MessagePaneHeight", mPanner2->sizes()[2] );
-        break;
-    case 1:
-        config->writeEntry( "FolderPaneWidth", mPanner1->sizes()[0] );
-        config->writeEntry( "HeaderPaneWidth", mPanner1->sizes()[1] );
-        config->writeEntry( "HeaderPaneHeight", mPanner2->sizes()[0] );
-        config->writeEntry( "MessagePaneHeight", mPanner2->sizes()[1] );
-        config->writeEntry( "MimePaneHeight", mPanner2->sizes()[2] );
-        break;
-    case 2:
-        config->writeEntry( "FolderPaneWidth", mPanner1->sizes()[0] );
-        config->writeEntry( "HeaderPaneWidth", mPanner1->sizes()[1] );
-        config->writeEntry( "FolderPaneHeight", mPanner2->sizes()[0] );
-        config->writeEntry( "MimePaneHeight", mPanner2->sizes()[1] );
-        config->writeEntry( "HeaderPaneHeight", mPanner3->sizes()[0] );
-        config->writeEntry( "MessagePaneHeight", mPanner3->sizes()[1] );
-        break;
-    case 3:
-        config->writeEntry( "FolderPaneHeight", mPanner1->sizes()[0] );
-        config->writeEntry( "MessagePaneHeight", mPanner1->sizes()[1] );
-        config->writeEntry( "FolderPaneWidth", mPanner2->sizes()[0] );
-        config->writeEntry( "HeaderPaneWidth", mPanner2->sizes()[1] );
-        config->writeEntry( "HeaderPaneHeight", mPanner3->sizes()[0] );
-        config->writeEntry( "MimePaneHeight", mPanner3->sizes()[1] );
-        break;
-    case 4:
-        config->writeEntry( "FolderPaneHeight", mPanner1->sizes()[0] );
-        config->writeEntry( "MimePaneHeight", mPanner1->sizes()[1] );
-        config->writeEntry( "MessagePaneHeight", mPanner1->sizes()[2] );
-        config->writeEntry( "FolderPaneWidth", mPanner2->sizes()[0] );
-        config->writeEntry( "HeaderPaneWidth", mPanner2->sizes()[1] );
-        break;
-    }
+  geometry.writeEntry( "FolderPaneWidth", widths[0] );
+  geometry.writeEntry( "HeaderPaneWidth", widths[1] );
+  geometry.writeEntry( "HeaderPaneHeight", heights[0] );
+  geometry.writeEntry( "ReaderPaneHeight", heights[1] );
 
-    // save the state of the unread/total-columns
-    config->writeEntry("UnreadColumn", mFolderTree->unreadIndex());
-    config->writeEntry("TotalColumn", mFolderTree->totalIndex());
-  }
+  // save the state of the unread/total-columns
+  geometry.writeEntry( "UnreadColumn", mFolderTree->unreadIndex() );
+  geometry.writeEntry( "TotalColumn", mFolderTree->totalIndex() );
 
-
-  KConfigGroupSaver saver(config, "General");
-  config->writeEntry("encoding", QString(mEncodingStr));
+  general.writeEntry("encoding", QString(mEncodingStr));
 }
 
 
@@ -460,59 +372,31 @@ void KMMainWidget::createWidgets(void)
   // Create the splitters according to the layout settings
   QWidget *headerParent = 0, *folderParent = 0,
             *mimeParent = 0, *messageParent = 0;
-  switch( mWindowLayout ) {
-  case 0:
-  case 1:
-      mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
-      mPanner1->setOpaqueResize( true );
-      mPanner2 = new QSplitter( Qt::Vertical, mPanner1, "panner 2" );
-      mPanner2->setOpaqueResize( true );
-      mPanner3 = 0;
-      headerParent = mPanner2;
-      folderParent = mPanner1;
-      mimeParent = mPanner2;
-      messageParent = mPanner2;
-      break;
-  case 2:
-      mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
-      mPanner1->setOpaqueResize( true );
-      mPanner2 = new QSplitter( Qt::Vertical, mPanner1, "panner 2" );
-      mPanner2->setOpaqueResize( true );
-      mPanner3 = new QSplitter( Qt::Vertical, mPanner1, "panner 3" );
-      mPanner3->setOpaqueResize( true );
-      headerParent = mPanner3;
-      folderParent = mPanner2;
-      mimeParent = mPanner2;
-      messageParent = mPanner3;
-      break;
-  case 3:
-      mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
-      mPanner1->setOpaqueResize( true );
-      mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
-      mPanner2->setOpaqueResize( true );
-      mPanner3 = new QSplitter( Qt::Vertical, mPanner2, "panner 3" );
-      mPanner3->setOpaqueResize( true );
-      headerParent = mPanner3;
-      folderParent = mPanner2;
-      mimeParent = mPanner3;
-      messageParent = mPanner1;
-      break;
-  case 4:
-      mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
-      mPanner1->setOpaqueResize( true );
-      mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
-      mPanner2->setOpaqueResize( true );
-      mPanner3 = 0;
-      headerParent = mPanner2;
-      folderParent = mPanner2;
-      mimeParent = mPanner1;
-      messageParent = mPanner1;
-      break;
+
+  if ( mLongFolderList ) {
+    // superior splitter: folder tree vs. rest
+    // inferior splitter: headers vs. message vs. mime tree
+    mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
+    mPanner1->setOpaqueResize( true );
+    mPanner2 = new QSplitter( Qt::Vertical, mPanner1, "panner 2" );
+    mPanner2->setOpaqueResize( true );
+    folderParent = mPanner1;
+    headerParent = mimeParent = messageParent = mPanner2;
+  } else /* !mLongFolderList */ {
+    // superior splitter: ( folder tree + headers ) vs. message vs. mime
+    // inferior splitter: folder tree vs. headers
+    mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
+    mPanner1->setOpaqueResize( true );
+    mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
+    mPanner2->setOpaqueResize( true );
+    headerParent = folderParent = mPanner2;
+    mimeParent = messageParent = mPanner1;
   }
 
+#ifndef NDEBUG
   if( mPanner1 ) mPanner1->dumpObjectTree();
   if( mPanner2 ) mPanner2->dumpObjectTree();
-  if( mPanner3 ) mPanner3->dumpObjectTree();
+#endif
 
   mTopLayout->add( mPanner1 );
 
@@ -521,7 +405,9 @@ void KMMainWidget::createWidgets(void)
   // Probably need to disconnect them first.
 
   // create list of messages
+#ifndef NDEBUG
   headerParent->dumpObjectTree();
+#endif
   mHeaders = new KMHeaders(this, headerParent, "headers");
   connect(mHeaders, SIGNAL(selected(KMMessage*)),
 	  this, SLOT(slotMsgSelected(KMMessage*)));
@@ -539,8 +425,7 @@ void KMMainWidget::createWidgets(void)
   else mCodec = 0;
 
 
-  mMsgView = new KMReaderWin(messageParent, this, actionCollection(),
-			     0, &mShowMIMETreeMode );
+  mMsgView = new KMReaderWin(messageParent, this, actionCollection(), 0 );
 
   connect(mMsgView, SIGNAL(replaceMsgByUnencryptedVersion()),
 	  this, SLOT(slotReplaceMsgByUnencryptedVersion()));
@@ -588,10 +473,6 @@ void KMMainWidget::createWidgets(void)
   connect(mFolderTree, SIGNAL(columnsChanged()),
           this, SLOT(slotFolderTreeColumnsChanged()));
 
-  // create a mime part tree and store it's pointer in the reader win
-  mMimePartTree = new KMMimePartTree( mMsgView, mimeParent, "mMimePartTree" );
-  mMsgView->setMimePartTree( mMimePartTree );
-
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
     i18n("Remove Duplicate Messages"), CTRL+Key_Asterisk, this,
@@ -626,80 +507,36 @@ void KMMainWidget::createWidgets(void)
 //-----------------------------------------------------------------------------
 void KMMainWidget::activatePanners(void)
 {
-    QObject::disconnect( actionCollection()->action( "kmail_copy" ),
-			 SIGNAL( activated() ),
-			 mMsgView, SLOT( slotCopySelectedText() ));
-  // glue everything together
-    switch( mWindowLayout ) {
-    case 0:
-    case 1:
-        mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mMimePartTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        if( mWindowLayout )
-          mPanner2->moveToLast( mMimePartTree );
-        else
-          mPanner2->moveToLast( mMsgView );
-        mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
-        mPanner1->moveToLast( mPanner2 );
-        mPanner1->setSizes( mPanner1Sep );
-        mPanner1->setResizeMode( mFolderTree, QSplitter::KeepSize );
-        mPanner2->setSizes( mPanner2Sep );
-        mPanner2->setResizeMode( mHeaders, QSplitter::KeepSize );
-        mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
-        break;
-    case 2:
-        mHeaders->reparent( mPanner3, 0, QPoint( 0, 0 ) );
-        mMsgView->reparent( mPanner3, 0, QPoint( 0, 0 ) );
-        mPanner3->moveToLast( mMsgView );
-        mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mMimePartTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mPanner2->moveToLast( mMimePartTree );
-        mPanner1->setSizes( mPanner1Sep );
-        mPanner2->setSizes( mPanner2Sep );
-        mPanner3->setSizes( mPanner3Sep );
-        mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
-        mPanner3->setResizeMode( mHeaders, QSplitter::KeepSize );
-        break;
-    case 3:
-        mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mPanner2->moveToFirst( mFolderTree );
-        mHeaders->reparent( mPanner3, 0, QPoint( 0, 0 ) );
-        mMimePartTree->reparent( mPanner3, 0, QPoint( 0, 0 ) );
-        mPanner3->moveToLast( mMimePartTree );
-        mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
-        mPanner1->moveToLast( mMsgView );
-        mPanner1->setSizes( mPanner1Sep );
-        mPanner2->setSizes( mPanner2Sep );
-        mPanner3->setSizes( mPanner3Sep );
-        mPanner1->setResizeMode( mPanner2, QSplitter::KeepSize );
-        mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
-        mPanner3->setResizeMode( mMimePartTree, QSplitter::KeepSize );
-        break;
-    case 4:
-        mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
-        mPanner2->moveToLast( mHeaders );
-        mMimePartTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
-        mPanner1->moveToFirst( mPanner2 );
-        mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
-        mPanner1->moveToLast( mMsgView );
-        mPanner1->setSizes( mPanner1Sep );
-        mPanner2->setSizes( mPanner2Sep );
-        mPanner1->setResizeMode( mPanner2, QSplitter::KeepSize );
-        mPanner1->setResizeMode( mMimePartTree, QSplitter::KeepSize );
-        mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
-        break;
-    }
+  QObject::disconnect( actionCollection()->action( "kmail_copy" ),
+		       SIGNAL( activated() ),
+		       mMsgView, SLOT( slotCopySelectedText() ));
 
-    if( 1 < mShowMIMETreeMode )
-        mMimePartTree->show();
-    else
-        mMimePartTree->hide();
+  if ( mLongFolderList ) {
+    mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mPanner2->moveToLast( mMsgView );
+    mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+    mPanner1->moveToLast( mPanner2 );
+    mPanner1->setSizes( mPanner1Sep );
+    mPanner1->setResizeMode( mFolderTree, QSplitter::KeepSize );
+    mPanner2->setSizes( mPanner2Sep );
+    mPanner2->setResizeMode( mHeaders, QSplitter::KeepSize );
+  } else /* !mLongFolderList */ {
+    mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+    mPanner2->moveToLast( mHeaders );
+    mPanner1->moveToFirst( mPanner2 );
+    mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+    mPanner1->moveToLast( mMsgView );
+    mPanner1->setSizes( mPanner1Sep );
+    mPanner2->setSizes( mPanner2Sep );
+    mPanner1->setResizeMode( mPanner2, QSplitter::KeepSize );
+    mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
+  }
 
-    QObject::connect( actionCollection()->action( "kmail_copy" ),
-		      SIGNAL( activated() ),
-		      mMsgView, SLOT( slotCopySelectedText() ));
+  QObject::connect( actionCollection()->action( "kmail_copy" ),
+		    SIGNAL( activated() ),
+		    mMsgView, SLOT( slotCopySelectedText() ));
 }
 
 
@@ -730,7 +567,6 @@ void KMMainWidget::show()
 {
   if( mPanner1 ) mPanner1->setSizes( mPanner1Sep );
   if( mPanner2 ) mPanner2->setSizes( mPanner2Sep );
-  if( mPanner3 ) mPanner3->setSizes( mPanner3Sep );
   QWidget::show();
 }
 
@@ -1475,15 +1311,7 @@ void KMMainWidget::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   KCursorSaver busy(KBusyPtr::busy());
 
   mMsgView->clear(true);
-  if( !aFolder || aFolder->noContent() ||
-      aFolder->count() == 0 )
-  {
-    if( mMimePartTree )
-      mMimePartTree->hide();
-  } else {
-    if( mMimePartTree && (1 < mShowMIMETreeMode) )
-      mMimePartTree->show();
-  }
+
   if( !mFolder ) {
     mMsgView->enableMsgDisplay();
     mMsgView->clear(true);
@@ -2795,11 +2623,8 @@ void KMMainWidget::slotIntro()
 
   mMsgView->clear( true );
   // hide widgets that are in the way:
-  if ( mHeaders && mWindowLayout < 3 )
+  if ( mHeaders && mLongFolderList )
     mHeaders->hide();
-  if ( mMimePartTree && mShowMIMETreeMode > 0 &&
-       mWindowLayout != 2 && mWindowLayout != 3 )
-    mMimePartTree->hide();
 
   mMsgView->displayAboutPage();
 

@@ -40,6 +40,8 @@
 #include <kpgp.h>
 #include <linklocator.h>
 
+#include <cryptplugwrapperlist.h>
+
 // other KDE headers
 #include <kdebug.h>
 #include <klocale.h>
@@ -125,8 +127,7 @@ namespace KMail {
 						     bool append )
   {
     //  DwBodyPart* myBody = new DwBodyPart( DwString( content ), node.dwPart() );
-    DwString cntStr( content );
-    DwBodyPart* myBody = new DwBodyPart( cntStr, 0 );
+    DwBodyPart* myBody = new DwBodyPart( DwString( content ), 0 );
     myBody->Parse();
 
     if ( myBody->hasHeaders() ) {
@@ -781,7 +782,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if ( reader )
       reader->mTempFiles.append(fname);
   }
-  return bOk ? fname : QString();
+  return bOk ? fname : QString::null;
 }
 
   bool ObjectTreeParser::processTextType( int subtype, partNode * curNode,
@@ -2703,9 +2704,6 @@ QString ObjectTreeParser::quotedHTML(const QString& s)
 #ifndef NDEBUG
   void ObjectTreeParser::dumpToFile( const char * filename, const char * start,
 				     size_t len ) {
-    if ( !mReader || !mReader->mDebugReaderCrypto )
-      return;
-
     assert( filename );
 
     QFile f( filename );

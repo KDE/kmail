@@ -6,28 +6,27 @@
 
 #include <qwidget.h>
 #include <qtimer.h>
-#include <qcolor.h>
 #include <qstringlist.h>
-#include <kaction.h>
 #include <kurl.h>
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
 #include "iobserver.h"
-#include <cryptplugwrapper.h>
-#include <cryptplugwrapperlist.h>
 
 class QFrame;
+class QSplitter;
 class QHBox;
 class QListViewItem;
 class QScrollBar;
 class QString;
-class QStringList;
 class QTabDialog;
 class QTextCodec;
-class CryptPlugWrapperList;
 class DwHeaders;
 class DwMediaType;
 class KActionCollection;
+class KAction;
+class KActionMenu;
+class KToggleAction;
+class KConfigBase;
 class KHTMLPart;
 class KURL;
 class KMFolder;
@@ -72,22 +71,17 @@ public:
   KMReaderWin( QWidget *parent,
 	       QWidget *mainWindow,
 	       KActionCollection *actionCollection,
-	       KMMimePartTree* mimePartTree=0,
-               int* showMIMETreeMode=0,
                const char *name=0,
 	       int f=0 );
   virtual ~KMReaderWin();
 
   virtual bool update( KMail::ISubject * );
 
-  /** assign a KMMimePartTree to this KMReaderWin */
-  virtual void setMimePartTree( KMMimePartTree* mimePartTree );
-
   /** Read settings from app's config file. */
-  virtual void readConfig(void);
+  void readConfig();
 
   /** Write settings to app's config file. Calls sync() if withSync is TRUE. */
-  virtual void writeConfig(bool withSync=TRUE);
+  void writeConfig( bool withSync=true ) const;
 
   const KMail::HeaderStyle * headerStyle() const {
     return mHeaderStyle;
@@ -135,7 +129,7 @@ public:
 
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
-  void showHideMimeTree( bool showIt );
+  void showHideMimeTree( bool isPlainTextTopLevel );
 
   /** Store message id of last viewed message,
       normally no need to call this function directly,
@@ -171,7 +165,7 @@ public:
   void displayAboutPage();
 
   /** Enable the displaying of messages again after an URL was displayed */
-  void enableMsgDisplay() { mMsgDisplay = TRUE; }
+  void enableMsgDisplay();
 
   /** View message part of type message/RFC822 in extra viewer window. */
   void atmViewMsg(KMMessagePart* msgPart);
@@ -349,7 +343,7 @@ protected:
 
   /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
-  virtual void parseMsg(void);
+  void displayMessage();
 
   /** Parse given message and add it's contents to the reader window. */
   virtual void parseMsg( KMMessage* msg  );
@@ -379,14 +373,24 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
-protected:
+private:
+  void adjustLayout();
+  void createWidgets();
+  void createActions( KActionCollection * ac );
+  void saveSplitterSizes( KConfigBase & c ) const;
+
+private:
   bool mHtmlMail, mHtmlOverride;
   int mAtmCurrent;
   QString mAtmCurrentName;
   KMMessage *mMessage;
+  // widgets:
+  QSplitter * mSplitter;
   QHBox *mBox;
   KMail::HtmlStatusBar *mColorBar;
+  KMMimePartTree* mMimePartTree;
   KHTMLPart *mViewer;
+
   const KMail::AttachmentStrategy * mAttachmentStrategy;
   const KMail::HeaderStrategy * mHeaderStrategy;
   const KMail::HeaderStyle * mHeaderStyle;
@@ -412,12 +416,12 @@ protected:
   uint mDelayedMarkTimeout;
   QStringList mTempFiles;
   QStringList mTempDirs;
-  KMMimePartTree* mMimePartTree;
-  int* mShowMIMETreeMode;
+  int mMimeTreeMode;
+  bool mMimeTreeAtBottom;
+  QValueList<int> mSplitterSizes;
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   QWidget *mMainWindow;
-  KActionCollection *mActionCollection;
   // Composition actions
   KAction *mReplyAction, *mReplyAllAction, *mReplyListAction,
       *mForwardAction, *mForwardAttachedAction, *mRedirectAction,
@@ -437,9 +441,6 @@ protected:
   // an attachment should be updated
   bool mAtmUpdate;
   QPoint mPos;
-
-public:
-  bool mDebugReaderCrypto;
 };
 
 

@@ -276,6 +276,89 @@ void LanguageComboBox::setLanguage( const QString & language )
     }
 }
 
+//
+//
+//  ProfileDialog
+//
+//
+
+ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
+  : KDialogBase( parent, name, modal, i18n("Load Profile"), Ok|Cancel, Ok, true )
+{
+  // tmp. vars:
+  QWidget * page = makeMainWidget();
+  QVBoxLayout * vlay = new QVBoxLayout( page, 0, spacingHint() );
+
+  mListView = new KListView( page, "mListView" );
+  mListView->addColumn( i18n("Available Profiles") );
+  mListView->addColumn( i18n("Description") );
+  mListView->setFullWidth();
+  mListView->setAllColumnsShowFocus( true );
+  mListView->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
+  mListView->setSorting( -1 );
+
+  vlay->addWidget( new QLabel( mListView,
+			       i18n("&Select a profile and click 'Ok' to "
+				    "load its settings:"), page ) );
+  vlay->addWidget( mListView, 1 );
+
+  setup();
+
+  connect( mListView, SIGNAL(selectionChanged(QListViewItem*)),
+	   SLOT(slotSelectionChanged(QListViewItem*)) );
+  connect( this, SIGNAL(finished()), SLOT(delayedDestruct()) );
+
+  enableButtonOK( false );
+}
+
+void ProfileDialog::slotSelectionChanged( QListViewItem * item ) {
+  enableButtonOK( item );
+}
+
+void ProfileDialog::setup() {
+  mListView->clear();
+  // find all profiles (config files named "profile-xyz-rc"):
+  const QString profileFilenameFilter = QString::fromLatin1("kmail/profile-*-rc");
+  mProfileList = KGlobal::dirs()->findAllResources( "data", profileFilenameFilter );
+
+  kdDebug(5006) << "Profile manager: found " << mProfileList.count()
+		<< " profiles:" << endl;
+
+  // build the list and populate the list view:
+  QListViewItem * listItem = 0;
+  for ( QStringList::const_iterator it = mProfileList.begin() ;
+	it != mProfileList.end() ; ++it ) {
+    KConfig profile( *it, true /* read-only */, false /* no KDE global */ );
+    profile.setGroup("KMail Profile");
+    QString name = profile.readEntry( "Name" );
+    if ( name.isEmpty() ) {
+      kdWarning(5006) << "File \"" << (*it)
+		      << "\" doesn't provide a profile name!" << endl;
+      name = i18n("Missing profile name placeholder","Unnamed");
+    }
+    QString desc = profile.readEntry( "Comment" );
+    if ( desc.isEmpty() ) {
+      kdWarning(5006) << "File \"" << (*it)
+		      << "\" doesn't provide a description!" << endl;
+      desc = i18n("Missing profile description placeholder","Not available");
+    }
+    listItem = new QListViewItem( mListView, listItem, name, desc );
+  }
+}
+
+void ProfileDialog::slotOk() {
+  const int index = mListView->itemIndex( mListView->selectedItem() );
+  if ( index < 0 )
+    return; // none selected
+
+  assert( (unsigned int)index < mProfileList.count() );
+
+  KConfig profile( *mProfileList.at(index), true, false );
+  emit profileSelected( &profile );
+  KDialogBase::slotOk();
+}
+
+
 /********************************************************************
  *
  *     *ConfigurationPage classes
