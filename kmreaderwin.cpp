@@ -2161,6 +2161,17 @@ void KMReaderWin::slotSaveAttachments()
 }
 
 //-----------------------------------------------------------------------------
+void KMReaderWin::slotSaveMsg()
+{
+  KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( mMainWindow, message() );
+
+  if (saveCommand->url().isEmpty())
+    delete saveCommand;
+  else
+    saveCommand->start();
+}
+
+//-----------------------------------------------------------------------------
 #include "kmreaderwin.moc"
 
 

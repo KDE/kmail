@@ -575,6 +575,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
     mTotalSize( msg ? msg->msgSize() : 0 )
 {
   if ( !msg ) return;
+  setDeletesItself( true );
   mMsgList.append( msg->getMsgSerNum() );
   mUrl = subjectToUrl( msg->subject() );
 }

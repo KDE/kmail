@@ -308,6 +308,7 @@ public slots:
   void slotUrlSave();
   void slotAddBookmarks();
   void slotShowMsgSrc();
+  void slotSaveMsg();
   void slotSaveAttachments();
 
 protected slots:
