@@ -29,7 +29,9 @@ class KWindowPositioner : public QObject
 {
     Q_OBJECT
   public:
-    KWindowPositioner( QWidget *master, QWidget *slave );
+    enum Mode { Right, Bottom };
+
+    KWindowPositioner( QWidget *master, QWidget *slave, Mode mode = Bottom );
 
     bool eventFilter( QObject *watched, QEvent *e );
 
@@ -38,6 +40,8 @@ class KWindowPositioner : public QObject
   private:
     QWidget *mMaster;
     QWidget *mSlave;
+    
+    Mode mMode;
 };
 
 #endif

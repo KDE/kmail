@@ -25,8 +25,9 @@
 
 #include <qwidget.h>
 
-KWindowPositioner::KWindowPositioner( QWidget *master, QWidget *slave )
-  : QObject( master ), mMaster( master ), mSlave( slave )
+KWindowPositioner::KWindowPositioner( QWidget *master, QWidget *slave,
+  Mode mode )
+  : QObject( master ), mMaster( master ), mSlave( slave ), mMode( mode )
 {
   master->topLevelWidget()->installEventFilter( this );
 }
@@ -42,7 +43,16 @@ bool KWindowPositioner::eventFilter( QObject *, QEvent *e )
 
 void KWindowPositioner::reposition()
 {
-  QPoint pos = mMaster->mapToGlobal( QPoint( mMaster->width(), -100 ) );
+  QPoint relativePos;
+  if ( mMode == Right ) {
+    relativePos = QPoint( mMaster->width(), -100 );
+  } else if ( mMode == Bottom ) {
+    relativePos = QPoint( 100 - mSlave->width() + mMaster->width(),
+      mMaster->height() );
+  } else {
+    kdError() << "KWindowPositioner: Illegal mode" << endl;
+  }
+  QPoint pos = mMaster->mapToGlobal( relativePos );
   mSlave->move( pos );
   mSlave->raise();
 }
