@@ -197,7 +197,7 @@ const QString KMMsgBase::asIndexString(void) const
   QString b((const char*)decodeQuotedPrintableString(fromStrip()));
   b.truncate(50);
   QString c((const char*)decodeQuotedPrintableString(toStrip()));
-  c.truncate(50);
+  c.truncate(47);
   QString d((const char*)replyToIdMD5());
   d.truncate(22);
   QString e((const char*)msgIdMD5());
