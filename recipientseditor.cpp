@@ -339,7 +339,7 @@ void RecipientsView::slotDeleteDueLine()
      RecipientLine *line = mLines.at( i );
      moveChild( line, childX( line ), childY( line ) - mLineHeight );
    }
-
+   resizeContents( viewport()->width(), mLines.count() * mLineHeight );
    setFixedHeight( mLines.count() * mLineHeight );
 }
 
