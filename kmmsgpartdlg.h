@@ -16,6 +16,7 @@ class QCheckBox;
 class QLabel;
 class QLineEdit;
 
+#undef None
 
 /** @short GUI for KMMsgPartDialog
     @author Marc Mutz <mutz@kde.org>
