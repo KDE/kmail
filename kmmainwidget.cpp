@@ -2439,6 +2439,14 @@ void KMMainWidget::setupActions()
                                  actionCollection(), "status_sent");
   mStatusMenu->insert( mToggleSentAction );
 
+#if KDE_IS_VERSION(3,2,90)
+  mToggleFlagAction->setCheckedState( i18n("Unmark Message as &Important") );
+  mToggleRepliedAction->setCheckedState( i18n("Unmark Message as Re&plied") );
+  mToggleForwardedAction->setCheckedState( i18n("Unmark Message as &Forwarded") );
+  mToggleQueuedAction->setCheckedState( i18n("Unmark Message as &Queued") );
+  mToggleSentAction->setCheckedState( i18n("Unmark Message as &Sent") );
+#endif
+
   mStatusMenu->insert( new KActionSeparator( this ) );
 
   mMarkAsSpamAction = new KAction(i18n("Mark Message as Spa&m"), "mark_as_spam",
@@ -2502,6 +2510,14 @@ void KMMainWidget::setupActions()
   mThreadStatusMenu->insert( mToggleThreadSentAction );
 
   mThreadStatusMenu->insert( new KActionSeparator( this ) );
+
+#if KDE_IS_VERSION(3,2,90)
+  mToggleThreadFlagAction->setCheckedState( i18n("Unmark Thread as &Important") );
+  mToggleThreadRepliedAction->setCheckedState( i18n("Unmark Thread as R&eplied") );
+  mToggleThreadForwardedAction->setCheckedState( i18n("Unmark Thread as &Forwarded") );
+  mToggleThreadQueuedAction->setCheckedState( i18n("Unmark Thread as &Queued") );
+  mToggleThreadSentAction->setCheckedState( i18n("Unmark Thread as &Sent") );
+#endif
 
   //------- "Watch and ignore thread" actions
   mWatchThreadAction = new KToggleAction(i18n("&Watch Thread"), "kmmsgwatched",
