@@ -435,9 +435,10 @@ KpgpBaseG::encsign(const QStrList *_recipients, const char *passphrase,
       //debug("KpgpBase: Good Passphrase!");
       status |= SIGNED;
     }
-    if( info.find("Bad pass phrase") != -1)
+    if( info.find("bad passphrase") != -1)
     {
       errMsg = i18n("Bad pass Phrase; couldn't sign");
+      status |= BADPHRASE;
       status |= ERR_SIGNING;
       status |= ERROR;
     }
@@ -484,7 +485,7 @@ KpgpBaseG::decrypt(const char *passphrase)
     // FIXME: should do something with it...
   }
 
-  if(info.find("secret key not available") != -1)
+  if(info.find("key not found") != -1)
   {
     //debug("kpgpbase: message is encrypted");
     status |= ENCRYPTED;
@@ -503,8 +504,8 @@ KpgpBaseG::decrypt(const char *passphrase)
       // no secret key fitting this message
       status |= NO_SEC_KEY;
       status |= ERROR;
-      errMsg = i18n("Do not have the secret key for this message");
-      debug("KpgpBase: no secret key for this message");
+      errMsg = i18n("Do not have the public key for this message");
+      debug("KpgpBase: no public key for this message");
     }
     // check for persons
     index = info.find("can only be read by:");
