@@ -66,6 +66,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		mailinglist-magic.cpp recentaddresses.cpp kmacctmaildir.cpp \
 		linklocator.cpp spellingfilter.cpp attachmentstrategy.cpp \
 		headerstrategy.cpp headerstyle.cpp khtmlparthtmlwriter.cpp \
+		filehtmlwriter.cpp teehtmlwriter.cpp \
                 mailcomposerIface.skel objecttreeparser.cpp \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
 		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
