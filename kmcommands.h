@@ -349,10 +349,12 @@ class KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, KMMsgBase *msgBase );
+  KMPrintCommand( QWidget *parent, KMMsgBase *msgBase, bool htmlOverride=false );
 
 private:
   virtual void execute();
+
+  bool mHtmlOverride;
 };
 
 class KMSetStatusCommand : public KMCommand

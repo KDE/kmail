@@ -155,6 +155,7 @@ public:
   void setAutoDelete(bool f) { mAutoDelete=f; }
 
   /** Override default html mail setting */
+  bool htmlOverride() const { return mHtmlOverride; }
   void setHtmlOverride( bool override );
 
   /** Is html mail to be supported? Takes into account override */

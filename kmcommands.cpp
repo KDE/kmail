@@ -830,8 +830,8 @@ void KMBounceCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMsgBase *msgBase )
-  : KMCommand( parent, msgBase)
+  KMMsgBase *msgBase, bool htmlOverride )
+  : KMCommand( parent, msgBase), mHtmlOverride( htmlOverride )
 {
 }
 
@@ -840,6 +840,7 @@ void KMPrintCommand::execute()
   KMReaderWin printWin( 0, 0, 0 );
   printWin.setPrinting(TRUE);
   printWin.readConfig();
+  printWin.setHtmlOverride( mHtmlOverride );
   printWin.setMsg(retrievedMessage(), TRUE);
   printWin.printMsg();
 }
