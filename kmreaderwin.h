@@ -180,7 +180,6 @@ protected slots:
   void slotAtmSave();
   void slotAtmProperties();
   void slotDelayedResize();
-  void updateHeader(int);
 
 protected:
   /** Watch for palette changes */
@@ -196,7 +195,6 @@ protected:
   /** Creates a nice mail header depending on the current selected
     header style. */
   virtual QString writeMsgHeader();
-  QString statusIconPath();
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */

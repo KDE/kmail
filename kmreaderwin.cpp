@@ -484,8 +484,6 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   {
     mMsg->setCodec(mCodec);
     mMsg->setDecodeHTML(htmlMail());
-    connect(mMsg->parent(), SIGNAL(msgHeaderChanged(int)),
-            this, SLOT(updateHeader(int)));
   }
 
   // Avoid flicker, somewhat of a cludge
@@ -916,74 +914,6 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   }
 }
 
-//-----------------------------------------------------------------------------
-QString KMReaderWin::statusIconPath()
-{
-  if (!mMsg)
-  {
-    return locate("data", "kmail/pics/kmmsgold.png");
-  }
-  
-  switch (mMsg->status())
-  {
-    case KMMsgStatusNew:
-      return locate("data", "kmail/pics/kmmsgnew.png");
-      break;
-    case KMMsgStatusUnread:
-      return locate("data", "kmail/pics/kmmsgunseen.png");
-      break;
-    case KMMsgStatusDeleted:
-      return locate("data", "kmail/pics/kmmsgdel.png");
-      break;
-    case KMMsgStatusReplied:
-      return locate("data", "kmail/pics/kmmsgreplied.png");
-      break;
-    case KMMsgStatusForwarded:
-      return locate("data", "kmail/pics/kmmsgforwarded.png");
-      break;
-    case KMMsgStatusQueued:
-      return locate("data", "kmail/pics/kmmsgqueued.png");
-      break;
-    case KMMsgStatusSent:
-      return locate("data", "kmail/pics/kmmsgsent.png");
-      break;
-    case KMMsgStatusFlag:
-      return locate("data", "kmail/pics/kmmsgflag.png");
-      break;
-  }
-  
-  return locate("data", "kmail/pics/kmmsgold.png");
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::updateHeader(int messageIndex)
-{
-  /*
-   * TODO: mess around with KHTML DOM some more and figure out how to
-   * replace the entire header div w/out flickering to hell and back
-   *
-   * DOM::NodeList divs(mViewer->document().documentElement().getElementsByTagName("div"));
-   * static_cast<DOM::HTMLDivElement>(divs.item(0)).setInnerHTML(writeMsgHeader());
-   */
-  if (mMsg &&
-      mHeaderStyle == HdrFancy &&
-      mMsg->parent() && 
-      mMsg == mMsg->parent()->getMsg(messageIndex))
-  {
-    DOM::NodeList imgs(mViewer->document().documentElement().getElementsByTagName("img"));
-    int numImages = imgs.length();
-    for (int i = 0; i < numImages; ++i)
-    {
-      DOM::Element elem = static_cast<DOM::Element>(imgs.item(i));
-      if (elem.getAttribute("name") == "statusIcon")
-      {
-        elem.setAttribute("src", statusIconPath());
-        elem.applyChanges();
-        break;
-      }
-    }
-  }
-}
 
 //-----------------------------------------------------------------------------
 QString KMReaderWin::writeMsgHeader()
@@ -1055,16 +985,15 @@ QString KMReaderWin::writeMsgHeader()
                                 .arg(cg.background().blue());
 
 
-    // the subject line and status icon
+    // the subject line
     headerStr = QString("<div name=\"foo\" style=\"background: %1; "
                         "color: %2; padding: 4px; "
                         "border: solid %3 1px;\">"
-                        "<b><img name=\"statusIcon\" height=\"12\" width=\"12\" src=\"%6\"> %5</b></div>")
+                        "<b>%5</b></div>")
                        .arg((mPrinting) ? background : highlight)
                        .arg((mPrinting) ? foreground : highlightedText)
                        .arg(foreground)
-                       .arg(strToHtml(mMsg->subject()))
-                       .arg(statusIconPath());
+                       .arg(strToHtml(mMsg->subject()));
 
     // the box with details below the subject
     headerStr.append(QString("<div style=\"background: %1; color: %2; "
