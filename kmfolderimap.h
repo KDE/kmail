@@ -104,6 +104,9 @@ public:
   /** Remove (first occurance of) given message from the folder. */
   virtual void removeMsg(int i, bool quiet = FALSE);
 
+  /** Remove the IMAP folder on the server and if successful also locally */
+  virtual void removeOnServer();
+
   /** Automatically expunge deleted messages when leaving the folder */
   bool autoExpunge() { return mAccount->autoExpunge(); }
 
@@ -243,6 +246,11 @@ protected slots:
    * Only delete information about the job and ignore write errors
    */
   void slotSetStatusResult(KIO::Job * job);
+
+  /**
+   * Remove the folder also locally, if removing on the server succeeded
+   */
+  void slotRemoveFolderResult(KIO::Job *job);
 
 protected:
   QString     mImapPath;

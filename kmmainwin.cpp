@@ -783,7 +783,10 @@ void KMMainWin::slotRemoveFolder()
       ==
       KMessageBox::Continue)
   {
-    kernel->folderMgr()->remove(mFolder);
+    if (mFolder->protocol() == "imap")
+      static_cast<KMFolderImap*>(mFolder)->removeOnServer();
+    else
+      kernel->folderMgr()->remove(mFolder);
   }
 }
 
@@ -2172,8 +2175,7 @@ void KMMainWin::updateFolderMenu()
 {
   modifyFolderAction->setEnabled( mFolder ? !mFolder->isSystemFolder()
     : false );
-  removeFolderAction->setEnabled( (mFolder && mFolder->protocol() != "imap")
-    ? !mFolder->isSystemFolder() : false );
+  removeFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   preferHtmlAction->setEnabled( mFolder ? true : false );
   threadMessagesAction->setEnabled( true );
   threadMessagesAction->setEnabled( mFolder ? true : false );

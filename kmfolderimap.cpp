@@ -100,6 +100,38 @@ void KMFolderImap::writeConfig()
 }
 
 //-----------------------------------------------------------------------------
+void KMFolderImap::removeOnServer()
+{
+  KURL url = mAccount->getUrl();
+  url.setPath(imapPath());
+  mAccount->makeConnection();
+  KIO::SimpleJob *job = KIO::file_delete(url);
+  KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
+  KMAcctImap::jobData jd;
+  KMAcctImap::initJobData(jd);
+  mAccount->mapJobData.insert(job, jd);
+  mAccount->displayProgress();
+  connect(job, SIGNAL(result(KIO::Job *)),
+          this, SLOT(slotRemoveFolderResult(KIO::Job *)));
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
+{
+  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
+    mAccount->mapJobData.find(job);
+  if (it == mAccount->mapJobData.end()) return;
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
+  }
+  mAccount->mapJobData.remove(it);
+  mAccount->displayProgress();
+  if (!job->error()) kernel->imapFolderMgr()->remove(this);
+}
+
+//-----------------------------------------------------------------------------
 void KMFolderImap::removeMsg(int idx, bool quiet)
 {
   if (idx < 0)

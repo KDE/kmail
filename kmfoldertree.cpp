@@ -815,7 +815,7 @@ void KMFolderTree::rightButtonPressed(QListViewItem *lvi, const QPoint &p, int)
      folderMenu->insertSeparator();
      folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
                             SLOT(slotEmptyFolder()));
-  if ( (!fti->folder->isSystemFolder()) && (fti->folder->protocol() != "imap"))
+  if ( !fti->folder->isSystemFolder() )
         folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
                                      SLOT(slotRemoveFolder()));
      }
