@@ -104,7 +104,7 @@ public:
 
   int sendCertificate( const QString& to, const QByteArray& certData );
 
-  void openReader();
+  void openReader() { openReader( false ); }
   void compactAllFolders();
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
@@ -256,6 +256,8 @@ signals:
   void configChanged();
 
 private:
+  void openReader( bool onlyCheck );
+
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
   KMFolder *the_sentFolder;
