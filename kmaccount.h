@@ -11,6 +11,7 @@
 #include <qtimer.h>
 #include <qsignal.h>
 #include <qguardedptr.h>
+#include <kprocess.h>
 #include "kmnewiostatuswdg.h"
 
 // The defualt check interval
@@ -21,7 +22,28 @@ class KMFolder;
 class KMAcctFolder;
 class KConfig;
 class KMMessage;
-class KProcess;
+
+
+class KMPrecommand : public QObject
+{
+  Q_OBJECT
+
+public:
+  KMPrecommand(const QString &precommand, QObject *parent = 0);
+  virtual ~KMPrecommand();
+  bool start();
+
+protected slots:
+  void precommandExited(KProcess *);
+
+signals:
+  void finished(bool);
+
+protected:
+  KShellProcess mPrecommandProcess;
+  QString mPrecommand;
+};
+
 
 class KMAccount: public QObject
 {

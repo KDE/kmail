@@ -1,26 +1,12 @@
 // kmsender.cpp
 
 
-#include "kmfoldermgr.h"
-#include "kmfiltermgr.h"
-#include "kmglobal.h"
-#include "kmfolder.h"
-
-#include "kmsender.h"
-#include "kmmessage.h"
-#include "kmidentity.h"
-#include "kmiostatusdlg.h"
-#include "kbusyptr.h"
-#include "kmaccount.h"
-#include "kmtransport.h"
-
 #include <kdebug.h>
 #include <kconfig.h>
 #include <kio/global.h>
 #include <kio/job.h>
 #include <kio/scheduler.h>
 #include <kio/slave.h>
-#include <kprocess.h>
 #include <kapp.h>
 #include <kmessagebox.h>
 #include <kmainwindow.h>
@@ -37,6 +23,19 @@
 #include <sys/wait.h>
 #include <klocale.h>
 
+#include "kmfoldermgr.h"
+#include "kmfiltermgr.h"
+#include "kmglobal.h"
+#include "kmfolder.h"
+
+#include "kmsender.h"
+#include "kmmessage.h"
+#include "kmidentity.h"
+#include "kmiostatusdlg.h"
+#include "kbusyptr.h"
+#include "kmaccount.h"
+#include "kmtransport.h"
+
 #ifdef HAVE_PATHS_H
 #include <paths.h>
 #endif
@@ -50,6 +49,7 @@
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
 {
+  mPrecommand = NULL;
   mSendDlg = NULL;
   mSendProc = NULL;
   mSendProcStarted = FALSE;
@@ -68,6 +68,7 @@ KMSender::~KMSender()
 {
   writeConfig(FALSE);
   if (mSendProc) delete mSendProc;
+  if (mPrecommand) delete mPrecommand;
   delete labelDialog;
   delete mTransportInfo;
 }
@@ -297,15 +298,6 @@ void KMSender::doSendMsg()
       labelDialog->show();
     }
 
-    // Run the precommand if there is one
-    setStatusMsg(i18n("Executing precommand %1")
-    .arg(mTransportInfo->precommand));
-    if (!KMAccount::runPrecommand(mTransportInfo->precommand))
-      {
-	KMessageBox::error(0, i18n("Couldn't execute precommand:\n%1")
-          .arg(mTransportInfo->precommand));
-      }
-
     setStatusMsg(i18n("Initiating sender process..."));
   }
 
@@ -329,6 +321,23 @@ void KMSender::doSendMsg()
     else {
       connect(mSendProc, SIGNAL(idle()), SLOT(slotIdle()));
       connect(mSendProc, SIGNAL(started(bool)), SLOT(sendProcStarted(bool)));
+
+      // Run the precommand if there is one
+      if (!mTransportInfo->precommand.isEmpty())
+      {
+        setStatusMsg(i18n("Executing precommand %1")
+          .arg(mTransportInfo->precommand));
+        mPrecommand = new KMPrecommand(mTransportInfo->precommand);
+        connect(mPrecommand, SIGNAL(finished(bool)),
+          SLOT(slotPrecommandFinished(bool)));
+        if (!mPrecommand->start())
+        {
+          delete mPrecommand;
+          mPrecommand = NULL;
+        }
+        return;
+      }
+
       mSendProc->start();
     }
   }
@@ -423,10 +432,11 @@ void KMSender::quitWhenFinished()
 //-----------------------------------------------------------------------------
 void KMSender::slotAbortSend()
 {
-    labelDialog = 0;
-    mSendAborted = true;
-    if (mSendProc)
-	mSendProc->abort();
+  labelDialog = 0;
+  mSendAborted = true;
+  if (mPrecommand) delete mPrecommand;
+  mPrecommand = NULL;
+  if (mSendProc) mSendProc->abort();
 }
 
 //-----------------------------------------------------------------------------
@@ -464,6 +474,16 @@ void KMSender::slotIdle()
   mSendProcStarted = false;
 
   cleanup();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMSender::slotPrecommandFinished(bool normalExit)
+{
+  delete mPrecommand;
+  mPrecommand = NULL;
+  if (normalExit) mSendProc->start();
+  else slotIdle();
 }
 
 

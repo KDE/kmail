@@ -21,6 +21,7 @@ class KMSendProc;
 class QStrList;
 class KMainWindow;
 class KMTransportInfo;
+class KMPrecommand;
 
 namespace KIO
 {
@@ -86,6 +87,9 @@ signals:
   void statusMsg(const QString&);
 
 protected slots:
+  /** Start sending */
+  virtual void slotPrecommandFinished(bool);
+
   virtual void slotIdle();
 
   /** abort sending of the current message */
@@ -117,6 +121,7 @@ private:
   bool mSendImmediate;
   bool mSendQuotedPrintable;
   KMTransportInfo *mTransportInfo;
+  KMPrecommand *mPrecommand;
 
   bool mSentOk, mSendAborted;
   QString mErrorMsg;

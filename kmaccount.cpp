@@ -13,7 +13,6 @@
 #include <qregexp.h>
 
 #include <klocale.h>
-#include <kprocess.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
 
@@ -29,6 +28,48 @@
 
 //----------------------
 #include "kmaccount.moc"
+
+//-----------------------------------------------------------------------------
+KMPrecommand::KMPrecommand(const QString &precommand, QObject *parent)
+ : QObject(parent)
+{
+  mPrecommand = precommand;
+  KMBroadcastStatus::instance()->setStatusMsg(
+      i18n("Executing precommand %1").arg(precommand ));
+
+  mPrecommandProcess << precommand;
+
+  connect(&mPrecommandProcess, SIGNAL(processExited(KProcess *)),
+          SLOT(precommandExited(KProcess *)));
+}
+
+
+//-----------------------------------------------------------------------------
+KMPrecommand::~KMPrecommand()
+{
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMPrecommand::start()
+{
+  bool ok = mPrecommandProcess.start( KProcess::NotifyOnExit );
+  if (!ok) KMessageBox::error(0, i18n("Couldn't execute precommand '%1'.")
+    .arg(mPrecommand));
+  return ok;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMPrecommand::precommandExited(KProcess *p)
+{
+  int exitCode = p->normalExit() ? p->exitStatus() : -1;
+  if (exitCode)
+    KMessageBox::error(0, i18n("The precommand exited with code %1:\n%2")
+      .arg(exitCode).arg(strerror(exitCode)));
+  emit finished(!exitCode);
+}
+
 
 //-----------------------------------------------------------------------------
 KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
