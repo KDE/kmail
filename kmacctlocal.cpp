@@ -85,8 +85,11 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
     //break;
     statusWdg->updateProgressBar(i,num);
     msg = mailFolder.take(0);
-    msg->setStatus(msg->headerField("Status"), msg->headerField("X-Status"));
-    if (msg) processNewMsg(msg);
+    if (msg)
+    {
+      msg->setStatus(msg->headerField("Status"), msg->headerField("X-Status"));
+      processNewMsg(msg);
+    }
     app->processEvents();
   }
 

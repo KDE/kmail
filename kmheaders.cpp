@@ -353,8 +353,11 @@ void KMHeaders::setMsgRead (int msgId)
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
     st = msg->status();
-    if (st==KMMsgStatusNew || st==KMMsgStatusUnread)
+    if (st==KMMsgStatusNew || st==KMMsgStatusUnread ||
+	st==KMMsgStatusRead)
+    {
       msg->setStatus(KMMsgStatusOld);
+    }
   }
 }
 
