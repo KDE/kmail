@@ -1,4 +1,4 @@
-/*  -*- c++ -*-
+/*  -*- mode: C++; c-file-style: "gnu" -*-
     identitymanager.cpp
 
     This file is part of KMail, the KDE mail client.
@@ -45,11 +45,10 @@ static const char * configKeyDefaultIdentity = "Default Identity";
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
+#include <kuser.h>
 
 #include <qregexp.h>
 
-#include <pwd.h> // for struct pw;
-#include <unistd.h> // for getuid
 #include <assert.h>
 
 IdentityManager::IdentityManager( QObject * parent, const char * name )
@@ -370,32 +369,37 @@ KMIdentity & IdentityManager::newFromExisting( const KMIdentity & other,
 }
 
 void IdentityManager::createDefaultIdentity() {
-  struct passwd * pw = getpwuid( getuid() );
+  KUser user;
+  QString fullName = user.fullName();
 
-  QString fullName/*, emailAddr*/;
-  if ( pw ) {
-    // extract possible full name from /etc/passwd
-    fullName = QString::fromLocal8Bit( pw->pw_gecos );
-    int i = fullName.find(',');
-    if ( i > 0 ) fullName.truncate( i );
-
-/* ### This code is commented out because the guessed email address
-   ### is most likely anyway wrong (because it contains the full hostname).
-   ### Marc wanted to keep this stuff in the code for a future Config Wizard.
-    // extract login name from /etc/passwd and get hostname to form an
-    // educated guess about the possible email address:
-    char str[256];
-    if ( !gethostname( str, 255 ) )
-      // str need not be NUL-terminated if it has full length:
-      str[255] = 0;
-    else
-      str[0] = 0;
-    emailAddr = QString::fromLatin1("%1@%2")
-      .arg( QString::fromLocal8Bit( pw->pw_name ) )
-      .arg( QString::fromLatin1( *str ? str : "localhost" ) );
-*/
+  QString emailAddress = user.loginName();
+  if ( !emailAddress.isEmpty() ) {
+    KConfigGroup general( KMKernel::config(), "General" );
+    QString defaultdomain = general.readEntry( "Default domain" );
+    if( !defaultdomain.isEmpty() ) {
+      emailAddress += '@' + defaultdomain;
+    }
+    else {
+      /* ### This code is commented out because the guessed email address
+         ### is most likely anyway wrong (because it contains the full
+         ### hostname while most email addresses only contain the domain name).
+         ### Marc wanted to keep this stuff in the code for a future Config
+         ### Wizard.
+      // get hostname to form an educated guess about the possible email
+      // address:
+      char str[256];
+      if ( !gethostname( str, 255 ) )
+        // str need not be NUL-terminated if it has full length:
+        str[255] = 0;
+      else
+        str[0] = 0;
+      emailAddress += '@' + QString::fromLatin1( *str ? str : "localhost" );
+      */
+      // since we can't guess the domain part (see above) we clear the address
+      emailAddress = QString::null;
+    }
   }
-  mShadowIdentities << KMIdentity( i18n("Default"), fullName/*, emailAddr*/ );
+  mShadowIdentities << KMIdentity( i18n("Default"), fullName, emailAddress );
   mShadowIdentities.last().setIsDefault( true );
   mShadowIdentities.last().setUoid( newUoid() );
 }
