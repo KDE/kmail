@@ -211,7 +211,7 @@ void KMMainWin::readConfig(void)
   mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
   mBoxOnNew = config->readBoolEntry("msgbox-on-mail", false);
   mExecOnNew = config->readBoolEntry("exec-on-mail", false);
-  mNewMailCmd = config->readEntry("mail-notify-cmd", "");
+  mNewMailCmd = config->readEntry("exec-on-mail-cmd", "");
 
   // Re-activate panners
   if (mStartupDone)
