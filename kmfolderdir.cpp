@@ -7,12 +7,14 @@
 #include "kmfoldermaildir.h"
 #include "kmfolderimap.h"
 #include "kmfoldersearch.h"
+#include "kmfoldercachedimap.h"
 
 #include <assert.h>
 #include <errno.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kdebug.h>
+#include <kstandarddirs.h>
 
 
 //=============================================================================
@@ -83,7 +85,9 @@ KMFolder* KMFolderDir::createFolder(const QString& aFolderName, bool aSysFldr, K
   int rc;
 
   assert(!aFolderName.isEmpty());
-  if (mDirType == KMImapDir)
+  if (aFolderType == KMFolderTypeCachedImap )
+    fld = new KMFolderCachedImap(this, aFolderName);
+  else if (mDirType == KMImapDir)
     fld = new KMFolderImap(this, aFolderName);
   else if (aFolderType == KMFolderTypeMaildir)
     fld = new KMFolderMaildir(this, aFolderName);
@@ -183,9 +187,19 @@ bool KMFolderDir::reload(void)
     else if (fileInfo->isDir()) // a directory
     {
       QString maildir(fname + "/new");
-      // see if this is a maildir before assuming a subdir
-      if ((mDirType != KMImapDir) && dir.exists(maildir))
+      QString imapcachefile = QString::fromLatin1(".%1.uidcache").arg(fname);
+
+      // For this to be a cached IMAP folder, it must be in the KMail imap
+      // subdir and must be have a uidcache file or be a maildir folder
+      if( path().startsWith( locateLocal("appdata", "imap") )
+	  && ( dir.exists( imapcachefile) || dir.exists( maildir ) ) )
       {
+	kdDebug() << "KMFolderDir creating new CachedImap folder with name " << fname << endl;
+	folder = new KMFolderCachedImap(this, fname);
+        append(folder);
+        folderList.append(folder);
+      } else if ((mDirType != KMImapDir) && dir.exists(maildir)) {
+	// see if this is a maildir before assuming a subdir
         folder = new KMFolderMaildir(this, fname);
         append(folder);
         folderList.append(folder);

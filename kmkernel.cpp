@@ -31,6 +31,8 @@
 #include "kmcomposewin.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
+#include "kmfoldercachedimap.h"
+#include "kmacctcachedimap.h"
 #include "kmfiltermgr.h"
 #include "kmfilteraction.h"
 #include "kmsender.h"
@@ -688,6 +690,7 @@ void KMKernel::init()
       cfg->writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }
   }
+  mGroupware.readConfig();
   // filterMgr->dump();
 #if 0 //disbabled for now..
   the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
@@ -701,7 +704,7 @@ void KMKernel::cleanupImapFolders()
   while (node)
   {
     if (node->isDir() || ((acct = the_acctMgr->find(node->name()))
-        && acct->type() == "imap"))
+			  && ( acct->type() == "imap" || acct->type() == "cachedimap" )) )
     {
       node = the_imapFolderMgr->dir().next();
     } else {
@@ -709,11 +712,13 @@ void KMKernel::cleanupImapFolders()
       node = the_imapFolderMgr->dir().first();
     }
   }
-  KMFolderImap *fld;
-  KMAcctImap *imapAcct;
+
   the_imapFolderMgr->quiet(TRUE);
   for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
   {
+    KMFolderImap *fld;
+    KMAcctImap *imapAcct;
+
     if (acct->type() != "imap") continue;
     fld = static_cast<KMFolderImap*>(the_imapFolderMgr
       ->findOrCreate(acct->name(), FALSE));
@@ -723,6 +728,32 @@ void KMKernel::cleanupImapFolders()
     imapAcct->setImapFolder(fld);
     fld->close();
   }
+
+  for (acct = the_acctMgr->first(); acct; acct = the_acctMgr->next())
+  {
+    KMFolderCachedImap *cfld;
+    KMAcctCachedImap *cachedImapAcct;
+
+    if (acct->type() != "cachedimap" ) continue;
+    kdDebug() << "findorCreating " << acct->name() << endl;
+
+    cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->find(acct->name()));
+    if (cfld == 0) {
+      // Folder doesn't exist yet
+      cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->createFolder(acct->name(), FALSE, KMFolderTypeCachedImap));
+      if (!cfld) {
+	KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_imapFolderMgr->basePath())));
+	exit(-1);
+      }
+    }
+
+    //cfld->setNoContent(TRUE);
+    cachedImapAcct = static_cast<KMAcctCachedImap*>(acct);
+    cfld->setAccount(cachedImapAcct);
+    cachedImapAcct->setImapFolder(cfld);
+    cfld->close();
+  }
+
   the_imapFolderMgr->quiet(FALSE);
 }
 
@@ -878,6 +909,8 @@ void KMKernel::cleanupLoop()
   if (the_outboxFolder) the_outboxFolder->close(TRUE);
   if (the_sentFolder) the_sentFolder->close(TRUE);
   if (the_draftsFolder) the_draftsFolder->close(TRUE);
+
+  mGroupware.cleanup();
 
   folderMgr()->writeMsgDict(msgDict());
   imapFolderMgr()->writeMsgDict(msgDict());
