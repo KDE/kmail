@@ -54,6 +54,7 @@ using KIO::MetaData;
 #include <kio/passdlg.h>
 using KIO::PasswordDialog;
 #include <kio/scheduler.h>
+#include <kio/slave.h>
 #include <mimelib/bodypart.h>
 #include <mimelib/body.h>
 #include <mimelib/headers.h>
@@ -268,6 +269,11 @@ namespace KMail {
       KMessageBox::error(0, i18n("Could not start process for %1.")
 			 .arg( getUrl().protocol() ) );
       return Error;
+    }
+    if ( mSlave && mSlave->isConnected() )
+    {
+      mSlaveConnected = true;
+      return Connected;
     }
 
     return Connecting;

@@ -403,6 +403,11 @@ protected slots:
    */
   void slotCompleteMailCheckProgress();
 
+  /**
+   * Is called when the slave is connected and triggers a newmail check
+   */ 
+  void slotProcessNewMail( int errorCode, const QString& errorMsg );
+
 protected:
   QString     mImapPath;
   ulong       mLastUid;

@@ -536,7 +536,10 @@ bool KMFolderImap::listDirectory(bool secondStep)
 {
   if ( !mAccount ||
        ( mAccount && mAccount->makeConnection() == ImapAccountBase::Error ) )
+  {
+    kdWarning(5006) << "KMFolderImap::listDirectory - got no connection" << endl;
     return false;
+  }
 
   // reset
   if ( this == mAccount->rootFolder() )
@@ -1519,6 +1522,16 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder, bool quiet)
           mAccount, SLOT(slotSimpleResult(KIO::Job *)));
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderImap::slotProcessNewMail( int errorCode, const QString &errorMsg )
+{
+  disconnect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+      this, SLOT( slotProcessNewMail(int, const QString&) ) );
+  if ( !errorCode )
+    processNewMail( false );
+  else
+    emit numUnreadMsgsChanged( folder() );
+}
 
 //-----------------------------------------------------------------------------
 bool KMFolderImap::processNewMail(bool)
@@ -1533,6 +1546,18 @@ bool KMFolderImap::processNewMail(bool)
     kmkernel->imapFolderMgr()->remove( folder() );
     return false;
   }
+  // check the connection
+  if ( mAccount->makeConnection() == ImapAccountBase::Error ) {
+    kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
+    return false;
+  } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting )
+  {
+    // wait
+    kdDebug(5006) << "KMFolderImap::processNewMail - waiting for connection" << endl;
+    connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+        this, SLOT( slotProcessNewMail(int, const QString&) ) );
+    return true;
+  }
   KURL url = mAccount->getUrl();
   if (mReadOnly)
     url.setPath(imapPath() + ";SECTION=UIDNEXT");
@@ -1546,10 +1571,6 @@ bool KMFolderImap::processNewMail(bool)
               false,
               account()->useSSL() || account()->useTLS() );
 
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected ) {
-    kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
-    return false;
-  }
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd(url.url(), folder() );
