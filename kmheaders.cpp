@@ -725,7 +725,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
     pixRead                  = new QPixmap( UserIcon( "kmmsgread"                  ) );
     pixRep                   = new QPixmap( UserIcon( "kmmsgreplied"               ) );
     pixQueued                = new QPixmap( UserIcon( "kmmsgqueued"                ) );
-    pixTodo                  = new QPixmap( UserIcon( "kontact_todo"               ) );
+    pixTodo                  = new QPixmap( UserIcon( "kmmsgtodo"                  ) );
     pixSent                  = new QPixmap( UserIcon( "kmmsgsent"                  ) );
     pixFwd                   = new QPixmap( UserIcon( "kmmsgforwarded"             ) );
     pixFlag                  = new QPixmap( UserIcon( "kmmsgflag"                  ) );
