@@ -27,7 +27,6 @@ class partNode;
 namespace KMail {
 
   class ObjectTreeParser {
-  public:
     /** 1. Create a new partNode using 'content' data and Content-Description
             found in 'cntDesc'.
         2. Make this node the child of 'node'.
@@ -41,6 +40,7 @@ namespace KMail {
                                             const char * content,
                                             const char * cntDesc,
                                             bool append=false );
+  public:
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
     //  Function is called internally by "parseMsg(KMMessage* msg)"
@@ -50,6 +50,8 @@ namespace KMail {
 				 bool showOneMimePart=false,
 				 bool keepEncryptions=false,
 				 bool includeSignatures=true );
+
+  private:
     /** if data is 0:
 	Feeds the HTML widget with the contents of the opaque signed
             data found in partNode 'sign'.
