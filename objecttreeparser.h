@@ -200,6 +200,12 @@ namespace KMail {
 
     bool processMailmanMessage( partNode * node );
 
+    /** Checks whether @p str contains external references. To be precise,
+        we only check whether @p str contains 'xxx="http[s]:' where xxx is
+        not href. Obfuscated external references are ignored on purpose.
+    */
+    static bool containsExternalReferences( const QCString & str );
+
   public:// (during refactoring)
 
     bool processTextHtmlSubtype( partNode * node, ProcessResult & result );

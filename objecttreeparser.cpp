@@ -240,7 +240,7 @@ namespace KMail {
       if ( const Interface::BodyPartFormatter * formatter
            = BodyPartFormatterFactory::instance()->createFor( node->typeString(), node->subTypeString() ) ) {
         PartNodeBodyPart part( *node, codecFor( node ) );
-        // Set the default display strategy for this body part relying on the 
+        // Set the default display strategy for this body part relying on the
         // identity of KMail::Interface::BodyPart::Display and AttachmentStrategy::Display
         part.setDefaultDisplay( (KMail::Interface::BodyPart::Display) attachmentStrategy()->defaultDisplay( node ) );
         const Interface::BodyPartFormatter::Result result = formatter->format( &part, htmlWriter() );
@@ -745,6 +745,37 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
   return bDecryptionOk;
 }
 
+  //static
+  bool ObjectTreeParser::containsExternalReferences( const QCString & str )
+  {
+    int httpPos = str.find( "\"http:", 0, true );
+    int httpsPos = str.find( "\"https:", 0, true );
+
+    while ( httpPos >= 0 || httpsPos >= 0 ) {
+      // pos = index of next occurrence of "http: or "https: whichever comes first
+      int pos = ( httpPos < httpsPos )
+                ? ( ( httpPos >= 0 ) ? httpPos : httpsPos )
+                : ( ( httpsPos >= 0 ) ? httpsPos : httpPos );
+      // look backwards for "href"
+      if ( pos > 5 ) {
+        int hrefPos = str.findRev( "href", pos - 5, true );
+        // if no 'href' is found or the distance between 'href' and '"http[s]:'
+        // is larger than 7 (7 is the distance in 'href = "http[s]:') then
+        // we assume that we have found an external reference
+        if ( ( hrefPos == -1 ) || ( pos - hrefPos > 7 ) )
+          return true;
+      }
+      // find next occurrence of "http: or "https:
+      if ( pos == httpPos ) {
+        httpPos = str.find( "\"http:", httpPos + 6, true );
+      }
+      else {
+        httpsPos = str.find( "\"https:", httpsPos + 7, true );
+      }
+    }
+    return false;
+  }
+
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
     QCString cstr( curNode->msgPart().bodyDecoded() );
 
@@ -775,7 +806,14 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
           if ( 0 <= i ) cstr.truncate(i);
         }
         // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-        if ( !mReader->htmlLoadExternal() ) {
+        // Show the "external references" warning (with possibility to load
+        // external references only if loading external references is disabled
+        // and the HTML code contains obvious external references). For
+        // messages where the external references are obfuscated the user won't
+        // have an easy way to load them but that shouldn't be a problem
+        // because only spam contains obfuscated external references.
+        if ( !mReader->htmlLoadExternal() &&
+             containsExternalReferences( cstr ) ) {
           htmlWriter()->queue( "<div class=\"htmlWarn\">\n" );
           htmlWriter()->queue( i18n("<b>Note:</b> This HTML message may contain external "
                                     "references to images etc. For security/privacy reasons "
