@@ -2786,7 +2786,7 @@ void KMMainWidget::initializeFilterActions()
 	if (!(*it)->isEmpty() && (*it)->configureShortcut()) {
 	    filterName = QString("Filter Action %1").arg((*it)->name());
 	    normalizedName = filterName.replace(" ", "_");
-	    if (action(normalizedName.local8Bit()))
+	    if (action(normalizedName.utf8()))
 		continue;
 	    filterCommand = new KMMetaFilterActionCommand(*it, mHeaders, this);
 	    mFilterCommands.append(filterCommand);
