@@ -1108,7 +1108,7 @@ void KMFolderTree::cleanupConfigFile()
   {
     fti = static_cast<KMFolderTreeItem*>(fldIt.current());
     if (fti && fti->folder())
-      folderMap.insert(fti->folder()->idString(), fti->isExpandable());
+      folderMap.insert(fti->folder()->idString(), true);
   }
   QStringList groupList = config->groupList();
   QString name;
@@ -1119,6 +1119,11 @@ void KMFolderTree::cleanupConfigFile()
     name = (*grpIt).mid(7);
     if (folderMap.find(name) == folderMap.end())
     {
+      KMFolder* folder = kmkernel->findFolderById( name );
+      Q_ASSERT( folder );
+      if ( kmkernel->iCalIface().hideResourceImapFolder( folder ) )
+        continue; // hidden IMAP resource folder, don't delete info
+
       config->deleteGroup(*grpIt, TRUE);
       kdDebug(5006) << "Deleting information about folder " << name << endl;
     }
