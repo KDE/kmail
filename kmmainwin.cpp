@@ -1048,8 +1048,8 @@ void KMMainWin::slotEmptyFolder()
   {
     str = i18n("Are you sure you want to empty the folder \"%1\"?").arg(mFolder->label());
 
-    if (KMessageBox::warningContinueCancel(this, str,
-                                          i18n("Empty Folder"), i18n("&Empty") )
+    if (KMessageBox::warningYesNo(this, str, i18n("Empty Folder"),
+				  i18n("&Empty"), KStdGuiItem::cancel() )
        !=KMessageBox::Continue) return;
   }
 
