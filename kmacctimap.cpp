@@ -425,69 +425,77 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
   if (it == mapJobData.end()) return;
   assert(it != mapJobData.end());
-  if (job->error())
-  {
-    job->showErrorDialog();
-    if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
-    emit folderComplete((*it).parent, FALSE);
-    mapJobData.remove(it);
-    return;
-  }
   QString uids;
-  QStringList::Iterator uid;
-  (*it).parent->folder->quiet(TRUE);
-  // Check for already retrieved headers
-  if ((*it).parent->folder->count())
-  {
-    QCString cstr;
-    KMFolder *folder = (*it).parent->folder;
-    int idx = 0, a, b;
-    long int mailUid, serverUid;
-    uid = (*it).items.begin();
-    while (idx < folder->count() && uid != (*it).items.end())
-    {
-      folder->getMsgString(idx, cstr);
-      a = cstr.find("X-UID: ");
-      b = cstr.find("\n", a);
-      if (a == -1 || b == -1) mailUid = -1;
-      else mailUid = cstr.mid(a + 7, b - a - 7).toLong();
-      serverUid = (*uid).toLong();
-      if (mailUid < serverUid) folder->removeMsg(idx, TRUE);
-      else if (mailUid == serverUid) { idx++; uid = (*it).items.remove(uid); }
-      else break;  // happens only, if deleted mails reappear on the server
-    }
-    while (idx < folder->count()) folder->removeMsg(idx, TRUE);
-  }
   jobData jd;
   jd.parent = (*it).parent;
-//  jd.items = (*it).items;
-  jd.total = (*it).items.count(); jd.done = 0;
-  uid = (*it).items.begin();
-  if (jd.total == 0)
+  jd.done = 0;
+  if (job->error() == KIO::ERR_UNSUPPORTED_ACTION)
   {
-    (*it).parent->folder->quiet(FALSE);
-    (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
-    emit folderComplete((*it).parent, TRUE);
-    mapJobData.remove(it);
-    displayProgress();
-    return;
-  }
-  // Force digest mode, even if there is only one message in the folder
-  if (jd.total == 1) uids = *uid + ":" + *uid;
-  else while (uid != (*it).items.end())
-  {
-    int first = (*uid).toInt();
-    int last = first - 1;
-    while (uid != (*it).items.end() && (*uid).toInt() == last + 1)
+    (*it).parent->folder->expunge();
+    uids = "1:*";
+    jd.total = 1;
+  } else {
+    if (job->error())
     {
-      last = (*uid).toInt();
-      uid++;
+      job->showErrorDialog();
+      if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+      emit folderComplete((*it).parent, FALSE);
+      mapJobData.remove(it);
+      return;
     }
-    if (!uids.isEmpty()) uids += ",";
-    if (first == last)
-      uids += QString::number(first);
-    else
-      uids += QString::number(first) + ":" + QString::number(last);
+    QStringList::Iterator uid;
+    (*it).parent->folder->quiet(TRUE);
+    // Check for already retrieved headers
+    if ((*it).parent->folder->count())
+    {
+      QCString cstr;
+      KMFolder *folder = (*it).parent->folder;
+      int idx = 0, a, b;
+      long int mailUid, serverUid;
+      uid = (*it).items.begin();
+      while (idx < folder->count() && uid != (*it).items.end())
+      {
+        folder->getMsgString(idx, cstr);
+        a = cstr.find("X-UID: ");
+        b = cstr.find("\n", a);
+        if (a == -1 || b == -1) mailUid = -1;
+        else mailUid = cstr.mid(a + 7, b - a - 7).toLong();
+        serverUid = (*uid).toLong();
+        if (mailUid < serverUid) folder->removeMsg(idx, TRUE);
+        else if (mailUid == serverUid) { idx++; uid = (*it).items.remove(uid); }
+        else break;  // happens only, if deleted mails reappear on the server
+      }
+      while (idx < folder->count()) folder->removeMsg(idx, TRUE);
+    }
+//  jd.items = (*it).items;
+    jd.total = (*it).items.count();
+    uid = (*it).items.begin();
+    if (jd.total == 0)
+    {
+      (*it).parent->folder->quiet(FALSE);
+      (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+      emit folderComplete((*it).parent, TRUE);
+      mapJobData.remove(it);
+      displayProgress();
+      return;
+    }
+    // Force digest mode, even if there is only one message in the folder
+    if (jd.total == 1) uids = *uid + ":" + *uid;
+    else while (uid != (*it).items.end())
+    {
+      int first = (*uid).toInt();
+      int last = first - 1;
+      while (uid != (*it).items.end() && (*uid).toInt() == last + 1)
+      {
+        last = (*uid).toInt();
+        uid++;
+      }
+      if (!uids.isEmpty()) uids += ",";
+      if (first == last)
+        uids += QString::number(first);
+      else
+        uids += QString::number(first) + ":" + QString::number(last);
+    }
   }
   KURL url = getUrl();
   url.setPath((*it).parent->folder->imapPath() + ";UID=" + uids
