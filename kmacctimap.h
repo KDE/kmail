@@ -156,6 +156,10 @@ public:
   /** Update the progress bar */
   void displayProgress();
 
+  /** Get the Slave used for the account */
+  KIO::Slave * slave() { return mSlave; }
+  void slaveDied() { mSlave = NULL; }
+
 protected:
   enum Stage { Idle, List, Uidl, Retr, Dele, Quit };
   friend class KMAcctMgr;
@@ -177,6 +181,9 @@ protected:
       for this user/server */
   void processRemainingQueuedMessagesAndSaveUidList();
 
+  /** Connect to the IMAP server, if no connection is active */
+  bool makeConnection();
+
   QString mLogin, mPasswd;
   QString mHost, mAuth;
   QString mPrefix;
@@ -187,6 +194,7 @@ protected:
   bool    mProgressEnabled;
 
   KIO::Job *job;
+  KIO::Slave *mSlave;
 
   QStringList idsOfMsgsPendingDownload;
   QValueList<int> lensOfMsgsPendingDownload;
@@ -249,6 +257,12 @@ protected slots:
   /** For deleting messages and changing the status */
   void nextStatusAction();
   void slotStatusResult(KIO::Job * job);
+
+  /** Don't try to connect with the given slave anymore */
+  void slotSlaveDied(KIO::Slave * aSlave);
+
+  /** Display an error message, that connecting failed */
+  void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
 
 public slots:
   /** Add the data a KIO::Job retrieves to the buffer */

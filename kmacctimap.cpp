@@ -39,6 +39,8 @@
 #include <qdatastream.h>
 #include <qbuffer.h>
 #include <qqueue.h>
+#include <kio/scheduler.h>
+#include <kio/slave.h>
 
 #include "kmacctimap.h"
 #include "kalarmtimer.h"
@@ -63,7 +65,8 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const char* aAccountName):
   initMetaObject();
 
   init();
-  job = 0L;
+  job = NULL;
+  mSlave = NULL;
   stage = Idle;
   indexOfCurrentMsg = -1;
   curMsgStrm = 0;
@@ -71,6 +74,9 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const char* aAccountName):
   mProcessing = false;
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
+  KIO::Scheduler::connect(
+    SIGNAL(slaveError(KIO::Slave *, int, const QString &)),
+    this, SLOT(slotSlaveError(KIO::Slave *, int, const QString &)));
 }
 
 
@@ -145,6 +151,34 @@ KURL KMAcctImap::getUrl()
   
 
 //-----------------------------------------------------------------------------
+bool KMAcctImap::makeConnection()
+{
+  if (mSlave) return TRUE;
+  mSlave = KIO::Scheduler::getConnectedSlave(getUrl());
+  if (!mSlave) return FALSE;
+  connect(mSlave, SIGNAL(slaveDied(KIO::Slave *)),
+    SLOT(slotSlaveDied(KIO::Slave *)));
+  return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int, 
+  const QString &errorMsg)
+{
+  if (aSlave == mSlave) KMessageBox::error(0, errorMsg);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotSlaveDied(KIO::Slave *aSlave)
+{
+kdDebug() << "Slave died." << endl;
+  if (aSlave == mSlave) mSlave = NULL;
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAcctImap::displayProgress()
 {
   if (mProgressEnabled == mapJobData.isEmpty())
@@ -178,7 +212,9 @@ void KMAcctImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
     && fti->folder->imapPath() == mPrefix;
   KURL url = getUrl();
   url.setPath((jd.inboxOnly) ? QString("/") : fti->folder->imapPath());
-  KIO::Job *job = KIO::listDir(url, FALSE);
+  makeConnection();
+  KIO::SimpleJob *job = KIO::listDir(url, FALSE);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
   mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotListResult(KIO::Job *)));
@@ -242,7 +278,9 @@ void KMAcctImap::getFolder(KMFolderTreeItem * fti)
   KURL url = getUrl();
   url.setPath(fti->folder->imapPath());
   url.setQuery("UNDELETED");
-  KIO::Job *job = KIO::listDir(url, FALSE);
+  makeConnection();
+  KIO::SimpleJob *job = KIO::listDir(url, FALSE);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
   mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotListFolderResult(KIO::Job *)));
@@ -267,7 +305,9 @@ void KMAcctImap::getNextMessage(jobData & jd)
   url.setPath(jd.parent->folder->imapPath() + ";UID=" + *jd.items.begin() +
     ";SECTION=ENVELOPE");
   jd.items.remove(jd.items.begin());
-  KIO::Job *job = KIO::get(url, FALSE, FALSE);
+  makeConnection();
+  KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
   mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotGetMessageResult(KIO::Job *)));
@@ -309,7 +349,9 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   url.setPath((*it).parent->folder->imapPath() + ";UID=" + uids
     + ";SECTION=ENVELOPE");
   (*it).parent->folder->quiet(TRUE);
-  KIO::Job *newJob = KIO::get(url, FALSE, FALSE);
+  makeConnection();
+  KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
+  KIO::Scheduler::assignJobToSlave(mSlave, newJob);
   mapJobData.insert(newJob, jd);
   connect(newJob, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotGetMessagesResult(KIO::Job *)));
@@ -391,7 +433,9 @@ void KMAcctImap::createFolder(KMFolderTreeItem * fti, const QString &name)
 {
   KURL url = getUrl();
   url.setPath(fti->folder->imapPath() + name);
-  KIO::Job *job = KIO::mkdir(url);
+  makeConnection();
+  KIO::SimpleJob *job = KIO::mkdir(url);
+  KIO::Scheduler::assignJobToSlave(mSlave, job);
   jobData jd;
   jd.parent = fti;
   jd.items = name;
@@ -460,7 +504,10 @@ void KMImapJob::slotGetNextMessage()
   KMAcctImap::jobData jd;
   jd.parent = NULL;
   jd.total = mMsgList.count(); jd.done = mMsgList.findRef(mMsgList.current());
-  mJob = KIO::get(url, FALSE, FALSE);
+  account->makeConnection();
+  KIO::SimpleJob *simpleJob = KIO::get(url, FALSE, FALSE);
+  KIO::Scheduler::assignJobToSlave(account->slave(), simpleJob);
+  mJob = simpleJob;
   account->mapJobData.insert(mJob, jd);
   connect(mJob, SIGNAL(result(KIO::Job *)),
           this, SLOT(slotGetMessageResult(KIO::Job *)));
@@ -519,6 +566,7 @@ void KMImapJob::killJobsForMessage(KMMessage *msg)
       account->mapJobData.remove( (*it).mJob );
       account->mJobList.remove( it );
       delete it;
+      account->slaveDied();
     }
   }
 }
@@ -536,10 +584,12 @@ void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
       it2 = it;
       it++;
       mapJobData.remove( it2 );
+      slaveDied();
     }
     else it++;
   }
   displayProgress();
+  mSlave = NULL;
 }
 
 
@@ -567,7 +617,9 @@ void KMAcctImap::nextStatusAction()
   statusData *data = mStatusQueue.dequeue();
   if (data->Delete)
   {
+    makeConnection();
     KIO::Job *job = KIO::del(data->url, FALSE, FALSE);
+//    KIO::Scheduler::assignJobToSlave(mSlave, job);
     jobData jd;
     jd.total = 0; jd.done = 0; jd.parent = NULL;
     mapJobData.insert(job, jd);
@@ -601,6 +653,7 @@ void KMAcctImap::slotAbortRequested()
     it.key()->kill( TRUE );
     mapJobData.remove( it );
     it = mapJobData.begin();
+    mSlave = NULL;
   }                                                                             
   displayProgress();
 }
