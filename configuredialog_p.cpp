@@ -169,87 +169,86 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 				      QWidget *parent, const char *name,
 				      bool modal )
   : KDialogBase( parent, name, modal, i18n("New Identity"),
-		 Ok|Cancel|Help, Ok, true ), mDuplicateMode( Empty )
+		 Ok|Cancel|Help, Ok, true )
 {
   setHelp( QString::fromLatin1("configure-identity-newidentitydialog") );
-  QWidget *page = makeMainWidget();
-  QVBoxLayout *vlay = new QVBoxLayout( page, marginHint(), spacingHint() );
-  QGridLayout *glay = new QGridLayout( vlay, 5, 2 );
-  vlay->addStretch( 1 );
+  QWidget * page = makeMainWidget();
+  QVBoxLayout * vlay = new QVBoxLayout( page, 0, spacingHint() );
 
   // row 0: line edit with label
+  QHBoxLayout * hlay = new QHBoxLayout( vlay ); // inherits spacing
   mLineEdit = new QLineEdit( page );
   mLineEdit->setFocus();
-  glay->addWidget( new QLabel( mLineEdit, i18n("&New Identity:"), page ), 0, 0 );
-  glay->addWidget( mLineEdit, 0, 1 );
+  hlay->addWidget( new QLabel( mLineEdit, i18n("&New Identity:"), page ) );
+  hlay->addWidget( mLineEdit, 1 );
+  connect( mLineEdit, SIGNAL(textChanged(const QString&)),
+	   this, SLOT(slotEnableOK(const QString&)) );
 
-  QButtonGroup *buttonGroup = new QButtonGroup( page );
-  buttonGroup->hide();
-  connect( buttonGroup, SIGNAL(clicked(int)),
-	   this, SLOT(slotRadioClicked(int)) ); // keep track of DuplicateMode
+  mButtonGroup = new QButtonGroup( page );
+  mButtonGroup->hide();
 
   // row 1: radio button
   QRadioButton *radio = new QRadioButton( i18n("&With empty fields"), page );
   radio->setChecked( true );
-  buttonGroup->insert( radio, Empty );
-  glay->addMultiCellWidget( radio, 1, 1, 0, 1 );
+  mButtonGroup->insert( radio, Empty );
+  vlay->addWidget( radio );
 
   // row 2: radio button
   radio = new QRadioButton( i18n("&Use Control Center settings"), page );
-  buttonGroup->insert( radio, ControlCenter );
-  glay->addMultiCellWidget( radio, 2, 2, 0, 1 );
+  mButtonGroup->insert( radio, ControlCenter );
+  vlay->addWidget( radio );
 
   // row 3: radio button
   radio = new QRadioButton( i18n("&Duplicate existing identity"), page );
-  buttonGroup->insert( radio, ExistingEntry );
-  glay->addMultiCellWidget( radio, 3, 3, 0, 1 );
+  mButtonGroup->insert( radio, ExistingEntry );
+  vlay->addWidget( radio );
 
   // row 4: combobox with existing identities and label
+  hlay = new QHBoxLayout( vlay ); // inherits spacing
   mComboBox = new QComboBox( false, page );
   mComboBox->insertStringList( identities );
   mComboBox->setEnabled( false );
   QLabel *label = new QLabel( mComboBox, i18n("&Existing identities:"), page );
   label->setEnabled( false );
-  glay->addWidget( label, 4, 0 );
-  glay->addWidget( mComboBox, 4, 1 );
+  hlay->addWidget( label );
+  hlay->addWidget( mComboBox, 1 );
+
+  vlay->addStretch( 1 ); // spacer
+
   // enable/disable combobox and label depending on the third radio
   // button's state:
   connect( radio, SIGNAL(toggled(bool)),
 	   label, SLOT(setEnabled(bool)) );
   connect( radio, SIGNAL(toggled(bool)),
 	   mComboBox, SLOT(setEnabled(bool)) );
+
+  enableButtonOK( false ); // since line edit is empty
 }
 
+NewIdentityDialog::DuplicateMode NewIdentityDialog::duplicateMode() const {
+  int id = mButtonGroup->id( mButtonGroup->selected() );
+  assert( id == (int)Empty
+	  || id == (int)ControlCenter
+	  || id == (int)ExistingEntry );
+  return static_cast<DuplicateMode>( id );
+}
 
-void NewIdentityDialog::slotOk()
-{
-  QString identity = identityName().stripWhiteSpace();
-
-  if( identity.isEmpty() ) {
-    KMessageBox::error( this, i18n("You must specify an identity name!") );
-    return; // don't leave the dialog
+void NewIdentityDialog::slotEnableOK( const QString & proposedIdentityName ) {
+  // OK button is disabled if
+  QString name = proposedIdentityName.stripWhiteSpace();
+  // name isn't empty
+  if ( name.isEmpty() ) {
+    enableButtonOK( false );
+    return;
   }
-
-  for( int i=0 ; i < mComboBox->count() ; i++ )
-    if( identity == mComboBox->text( i ) ) {
-      QString message = i18n("An identity named \"%1\" already exists!\n"
-			     "Please choose another name.").arg(identity);
-      KMessageBox::error( this, message );
-      return; // don't leave the dialog
+  // or name doesn't yet exist.
+  for ( int i = 0 ; i < mComboBox->count() ; i++ )
+    if ( mComboBox->text(i) == name ) {
+      enableButtonOK( false );
+      return;
     }
-
-  accept();
+  enableButtonOK( true );
 }
-
-
-void NewIdentityDialog::slotRadioClicked( int which )
-{
-  assert( which == (int)Empty ||
-	  which == (int)ControlCenter ||
-	  which == (int)ExistingEntry );
-  mDuplicateMode = static_cast<DuplicateMode>( which );
-}
-
 
 void ApplicationLaunch::doIt()
 {

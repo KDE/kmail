@@ -182,16 +182,15 @@ public:
   
   QString identityName() const { return mLineEdit->text(); }
   int duplicateIdentity() const { return mComboBox->currentItem(); }
-  DuplicateMode duplicateMode() const { return mDuplicateMode; }
+  DuplicateMode duplicateMode() const;
   
 protected slots:
-  virtual void slotOk();
-  virtual void slotRadioClicked( int which );
+  virtual void slotEnableOK( const QString & ); 
 
 private:
   QLineEdit  *mLineEdit;
   QComboBox  *mComboBox;
-  DuplicateMode mDuplicateMode;
+  QButtonGroup *mButtonGroup;
 };
 
 

@@ -700,41 +700,40 @@ void IdentityPage::slotNewIdentity()
 
   if( dialog.exec() == QDialog::Accepted ) {
     QString identityName = dialog.identityName().stripWhiteSpace();
-    if( !identityName.isEmpty() )
-    {
-      if ( mIdentities.count() == 1 )
-	mSecondIdentity = true;
+    assert( !identityName.isEmpty() );
 
-      //
-      // Construct a new IdentityEntry:
-      //
-      IdentityEntry entry;
-      switch ( dialog.duplicateMode() ) {
-      case NewIdentityDialog::ExistingEntry:
-	// this uses operator=
-	entry = mIdentities[ dialog.duplicateIdentity() ];
-	break;
-      case NewIdentityDialog::ControlCenter:
-	entry = IdentityEntry::fromControlCenter();
-	break;
-      case NewIdentityDialog::Empty:
-      default: ;
-      }
-      entry.setIdentityName( identityName );
-      // add the new entry and sort the list:
-      mIdentities << entry;
-      mIdentities.sort();
-
-      //
-      // Set the modified identity list as the valid list in the
-      // identity combo and make the new identity the current item.
-      //
-      mIdentityCombo->clear();
-      mIdentityCombo->insertStringList( mIdentities.names() );
-      mIdentityCombo->setCurrentItem( mIdentities.names().findIndex( identityName ) );
-
-      slotIdentitySelectorChanged();
+    if ( mIdentities.count() == 1 )
+      mSecondIdentity = true;
+    
+    //
+    // Construct a new IdentityEntry:
+    //
+    IdentityEntry entry;
+    switch ( dialog.duplicateMode() ) {
+    case NewIdentityDialog::ExistingEntry:
+      // this uses operator=
+      entry = mIdentities[ dialog.duplicateIdentity() ];
+      break;
+    case NewIdentityDialog::ControlCenter:
+      entry = IdentityEntry::fromControlCenter();
+      break;
+    case NewIdentityDialog::Empty:
+    default: ;
     }
+    entry.setIdentityName( identityName );
+    // add the new entry and sort the list:
+    mIdentities << entry;
+    mIdentities.sort();
+
+    //
+    // Set the modified identity list as the valid list in the
+    // identity combo and make the new identity the current item.
+    //
+    mIdentityCombo->clear();
+    mIdentityCombo->insertStringList( mIdentities.names() );
+    mIdentityCombo->setCurrentItem( mIdentities.names().findIndex( identityName ) );
+    
+    slotIdentitySelectorChanged();
   }
 }
 
