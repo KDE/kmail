@@ -1788,8 +1788,25 @@ QValueList<ulong> KMFolderImap::splitSets(const QString uids)
 //-----------------------------------------------------------------------------
 int KMFolderImap::expungeContents()
 {
+  // nuke the local cache
   int rc = KMFolderMbox::expungeContents();
-  if (autoExpunge())
+
+  // set the deleted flag for all messages in the folder
+  KURL url = mAccount->getUrl();
+  url.setPath( imapPath() + ";UID=1:*");
+  if ( mAccount->makeConnection() == ImapAccountBase::Connected ) {
+    KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
+    KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
+    ImapAccountBase::jobData jd( url.url(), 0 );
+    jd.quiet = true;
+    mAccount->insertJob(job, jd);
+    connect(job, SIGNAL(result(KIO::Job *)),
+            mAccount, SLOT(slotSimpleResult(KIO::Job *)));
+  }
+  /* Is the below correct? If we are expunging (in the folder sense, not the imap sense),
+     why delete but not (imap-)expunge? Since the folder is not active there is no concept
+     of "leaving the folder", so the setting really has little to do with it. */
+  // if ( autoExpunge() )
     expungeFolder(this, true);
   getFolder();
 
