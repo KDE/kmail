@@ -3104,7 +3104,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
         reader->showMessageAndSetData( errorContentCouldNotBeDecrypted,
           i18n("Crypto Plug-In %1 could not decrypt the data.")
             .arg(cryptPlug->libName()),
-          i18n("Error: %2")
+          i18n("Error: %1")
             .arg( aErrorText ),
           passphraseError
           ? ""
@@ -3499,18 +3499,21 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
 			     strToHtml(aMsg->subject()));
 
     // from line
-    headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2%3%4</td></tr>")
-                            .arg(i18n("From: "))
-                            .arg(KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE))
-                            .arg(hasVCard ?
-                                 "&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>"
-                                 : "")
-                            .arg((aMsg->headerField("Organization").isEmpty()) ?
-                                 ""
-                                 : "&nbsp;&nbsp;(" +
-                                   strToHtml(aMsg->headerField("Organization")) +
-                                   ")"));
-
+    // the mailto: URLs can contain %3 etc., therefore usage of multiple
+    // QString::arg is not possible
+    headerStr += QString("<tr><th class=\"fancyHeaderDtls\">%1</th>"
+                         "<td class=\"fancyHeaderDtls\">")
+                         .arg(i18n("From: "))
+                 + KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE)
+                 + ( hasVCard ? "&nbsp;&nbsp;<a href=\""+vcname+"\">"
+                                + i18n("[vCard]") + "</a>"
+                              : "" )
+                 + ( aMsg->headerField("Organization").isEmpty()
+                              ? ""
+                              : "&nbsp;&nbsp;("
+                                + strToHtml(aMsg->headerField("Organization"))
+                                + ")")
+                 + "</td></tr>";
     // to line
     headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td class=\"fancyHeaderDtls\">%2</td></tr>")
                             .arg(i18n("To: "))
@@ -4033,10 +4036,10 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                                     htmlStr += i18n( "Message was signed with key %1." )
                                             .arg( keyWithWithoutURL );
                                 else
-                                    htmlStr += i18n( "Message was signed by %1 with key %2, created %3." )
-                                            .arg( signer )
+                                    htmlStr += i18n( "Message was signed by %3 with key %1, created %2." )
                                             .arg( keyWithWithoutURL )
-                                            .arg( created.toString( Qt::LocalDate ) );
+                                            .arg( created.toString( Qt::LocalDate ) )
+                                            .arg( signer );
                             }
                         }
                         else {
@@ -4044,9 +4047,9 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                                 htmlStr += i18n( "Message was signed with key %1." )
                                         .arg( keyWithWithoutURL );
                             else
-                                htmlStr += i18n( "Message was signed by %1 with key %2." )
-                                        .arg( signer )
-                                        .arg( keyWithWithoutURL );
+                                htmlStr += i18n( "Message was signed by %2 with key %1." )
+                                        .arg( keyWithWithoutURL )
+                                        .arg( signer );
                         }
                     }
                 }
@@ -4115,9 +4118,9 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %1 (Key ID: %2)." )
-                        .arg( signer )
-                        .arg( keyWithWithoutURL );
+                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
+                                   .arg( keyWithWithoutURL )
+                                   .arg( signer );
                     else
                         htmlStr += i18n( "Message was signed by %1." ).arg( signer );
                     htmlStr += "<br />";
@@ -4154,9 +4157,9 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                         "class=\"" + block.signClass + "\">"
                         "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
                     if( !block.keyId.isEmpty() )
-                        htmlStr += i18n( "Message was signed by %1 (Key ID: %2)." )
-                        .arg( signer )
-                        .arg( keyWithWithoutURL );
+                        htmlStr += i18n( "Message was signed by %2 (Key ID: %1)." )
+                        .arg( keyWithWithoutURL )
+                        .arg( signer );
                     else
                         htmlStr += i18n( "Message was signed by %1." ).arg( signer );
                     htmlStr += "<br />";
@@ -4980,8 +4983,8 @@ void KMReaderWin::slotAtmOpen()
   QString filenameText = msgPart.fileName();
   if (filenameText.isEmpty()) filenameText = msgPart.name();
   if ( offer ) {
-    question = i18n("Open attachment '%1' using '%2'?").arg(filenameText)
-      .arg(offer->name());
+    question = i18n("Open attachment '%2' using '%1'?")
+      .arg(offer->name()).arg(filenameText);
   } else {
     question = i18n("Open attachment '%1'?").arg(filenameText);
     open_text = i18n("&Open With...");
