@@ -3,7 +3,6 @@ DS: Consider Carstens unintegrated patch
 DS: Implement Folder ids
 DS: Apply chosen filter, high wish, 44429
 DS: Remove obsolete files
-DS: Create package
 
 Level 2: High priority (this month)
 DS: XML GUI context menus to support KMail plugins
@@ -18,6 +17,7 @@ DS: Zero-copy downloading from pop server
 DS: Status filtering
 DS: Set color action
 DS: Dock Windows
+DS: Search folders are invalidated on outbox expunging, fix this.
 
 Level 4: Needs more planning
 ??: Incremental spell checking
