@@ -34,6 +34,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
   mName   = aName;
   mFolder = NULL;
   mTimer  = NULL;
+  mInterval = 0;
 }
 
 
@@ -41,6 +42,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
 KMAccount::~KMAccount() 
 {
   if (!shuttingDown && mFolder) mFolder->removeAccount(this);
+  if (mTimer) deinstallTimer();
 }
 
 
@@ -67,6 +69,7 @@ void KMAccount::readConfig(KConfig& config)
   mFolder = NULL;
   mName   = config.readEntry("Name", i18n("Unnamed"));
   folderName = config.readEntry("Folder", "");
+  setCheckInterval(config.readNumEntry("check-interval", 0));
 
   if (!folderName.isEmpty())
   {
@@ -88,6 +91,7 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("Type", type());
   config.writeEntry("Name", mName);
   config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
+  config.writeEntry("CheckInterval", mInterval);
 }
 
 
@@ -138,19 +142,35 @@ void KMAccount::processNewMsg(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
+void KMAccount::setCheckInterval(int aInterval)
+{
+  if (aInterval <= 0)
+  {
+    mInterval = 0;
+    deinstallTimer();
+  }
+  else
+  {
+    mInterval = aInterval;
+    installTimer();
+  }
+}
+
+
+//-----------------------------------------------------------------------------
 void KMAccount::installTimer()
 {
-  if(!mTimer) {
+  if (mInterval <= 0) return;
+  if(!mTimer)
+  {
     mTimer = new QTimer();
     connect(mTimer,SIGNAL(timeout()),SLOT(mailCheck()));
-    connect(this,SIGNAL(requestCheck(KMAccount *)),
-	      acctMgr,SLOT(singleCheckMail(KMAccount *)));
-    printf("Starting new Timer with interval: %d\n",mInterval*1000*60);
     mTimer->start(mInterval*1000*60);
   }
-  else {
+  else
+  {
     mTimer->stop();
-    printf("Starting old Timer with interval: %d\n",mInterval*1000*60);
+    printf("Starting old Timer with interval: %ld\n",mInterval*1000*60);
     mTimer->start(mInterval*1000*60);
   }   
 }
@@ -163,9 +183,8 @@ void KMAccount::deinstallTimer()
   if(mTimer) {
     mTimer->stop();
     disconnect(mTimer);
-    disconnect(this);
     delete mTimer;
-    mTimer = 0L;
+    mTimer = NULL;
   }
 }
 
@@ -173,17 +192,5 @@ void KMAccount::deinstallTimer()
 //-----------------------------------------------------------------------------
 void KMAccount::mailCheck()
 {
-  printf("Emitting signal\n");
-  emit requestCheck(this);
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAccount::stateChanged()
-{
-  printf("stateChanged called\n");
-  if(timerRequested())
-    installTimer();
-  else
-    deinstallTimer();
+  acctMgr->singleCheckMail(this);
 }

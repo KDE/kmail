@@ -569,7 +569,6 @@ void KMSettings::modifyAccount(int index,int)
   d->exec();
   delete d;
 
-  acct->stateChanged();
   accountList->changeItem(tabNetworkAcctStr(acct), index);
   accountList->setCurrentItem(index);
 }
@@ -835,12 +834,12 @@ void KMAccountSettings::accept()
   else fld = NULL;
   mAcct->setFolder((KMFolder*)fld);
 
+  // Waiting for GUI
+  //((KMAcctPop*)mAcct)->setCheckInterval(...);
+
   if (acctType == "local")
   {
     ((KMAcctLocal*)mAcct)->setLocation(mEdtLocation->text());
-
-    // Wainting for GUI
-    //((KMAcctLocal*)mAcct)->setTimerRequested(false);
   }
 
   else if (acctType == "pop")
@@ -850,9 +849,6 @@ void KMAccountSettings::accept()
     ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
     ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
     ((KMAcctPop*)mAcct)->setLeaveOnServer(!chk->isChecked());
-
-    // Waiting for GUI
-    //((KMAcctPop*)mAcct)->setTimerRequested(false);
   }
 
   acctMgr->writeConfig(TRUE);

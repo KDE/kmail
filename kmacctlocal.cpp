@@ -19,8 +19,6 @@ KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctLocalInherited(aOwner, aAccountName)
 {
   initMetaObject();
-  mRTimer = FALSE;
-  mInterval = 0;
 }
 
 
@@ -103,8 +101,6 @@ void KMAcctLocal::readConfig(KConfig& config)
 
   KMAcctLocalInherited::readConfig(config);
   mLocation = config.readEntry("Location", defaultPath);
-  mRTimer = config.readNumEntry("timer",FALSE);
-  mInterval = config.readNumEntry("interval",0);
 }
 
 
@@ -114,8 +110,6 @@ void KMAcctLocal::writeConfig(KConfig& config)
   KMAcctLocalInherited::writeConfig(config);
 
   config.writeEntry("Location", mLocation);
-  config.writeEntry("timer",mRTimer);
-  config.writeEntry("interval",mInterval);
 }
 
 

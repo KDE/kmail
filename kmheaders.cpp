@@ -655,7 +655,7 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
       break;
     }
   }
-  for (i=high-1, to=-1; i>=0; i--)
+  for (i=high, to=-1; i>=0; i--)
   {
     if (itemList[i]->isMarked())
     {

@@ -95,10 +95,6 @@ void KMAcctMgr::readConfig(void)
     acct = create(acctType, acctName);
     if (!acct) continue;
     acct->readConfig(*config);
-    if(acct->timerRequested()) 
-      acct->installTimer();
-    else 
-      acct->deinstallTimer();
   }
 }
 
