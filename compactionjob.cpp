@@ -258,6 +258,8 @@ void MaildirCompactionJob::done( int rc )
   mErrorCode = rc;
   storage->setNeedsCompacting( false );
   storage->close();
+  if ( storage->isOpened() )
+    storage->updateIndex();
   if ( !mSilent )
     KMBroadcastStatus::instance()->setStatusMsg( str );
 
