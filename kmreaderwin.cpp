@@ -1317,12 +1317,12 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
   if( isPgpMessage )
   {
     mColorBar->setEraseColor( cCBpgp );
-    mColorBar->setText(i18n("\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne"));
+    mColorBar->setText(i18n("\nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
   }
   else
   {
     mColorBar->setEraseColor( cCBplain );
-    mColorBar->setText(i18n("\nN\no\n\nP\nG\nP\n\nM\ne\ns\ns\na\ng\ne"));
+    mColorBar->setText(i18n("\nN\no\n \nP\nG\nP\n \nM\ne\ns\ns\na\ng\ne"));
   }
   queueHtml(htmlStr);
 }
@@ -1332,7 +1332,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
 void KMReaderWin::writeHTMLStr(const QString& aStr)
 {
   mColorBar->setEraseColor( cCBhtml );
-  mColorBar->setText(i18n("\nH\nT\nM\nL\n\nM\ne\ns\ns\na\ng\ne"));
+  mColorBar->setText(i18n("\nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
   queueHtml(aStr);
 }
 
