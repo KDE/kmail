@@ -1,5 +1,5 @@
-#include "subject.h"
-#include "observer.h"
+#include "isubject.h"
+#include "iobserver.h"
 #include <kdebug.h>
 
 namespace KMail {

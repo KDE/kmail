@@ -1,4 +1,4 @@
-#include "observer.h"
+#include "iobserver.h"
 
 namespace KMail {
 
