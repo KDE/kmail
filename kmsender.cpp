@@ -438,13 +438,15 @@ void KMSender::slotIdle()
   // sending of message failed
   QString msg;
   msg = i18n("Sending failed:\n%1\n"
-        "The message will stay in the 'outbox' folder and will be resent.\n"
-        "Please remove it from there if you do not want the message to\n"
-		"be resent.\n\n"
+        "The message will stay in the 'outbox' folder until you either\n"
+        "fix the problem (e.g. a broken address) or remove the message\n"
+	"from the 'outbox' folder.\n\n"
+	"Note: other messages will also be blocked by this message, as\n"
+	"long as it is in the 'outbox' folder\n\n"
 	"The following transport protocol was used:\n  %2")
     .arg(mSendProc->message())
     .arg(mMethodStr);
-  KMessageBox::information(0,msg);
+  KMessageBox::error(0,msg);
 
   if (mMsgSendProc) {
     mMsgSendProc->finish();
