@@ -1974,6 +1974,7 @@ void KMFolder::readConfig()
   if ( mIdentity.isEmpty() ) // backward compatiblity
       mIdentity = config->readEntry("MailingListIdentity");
   mConsistent = config->readBoolEntry("Consistent", TRUE);
+  mUidValidity = config->readEntry("UidValidity");
 }
 
 //-----------------------------------------------------------------------------
@@ -1987,6 +1988,7 @@ void KMFolder::writeConfig()
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
   config->writeEntry("Identity", mIdentity);
   config->writeEntry("Consistent", mConsistent);
+  if (mAccount) config->writeEntry("UidValidity", mUidValidity);
 }
 
 //-----------------------------------------------------------------------------

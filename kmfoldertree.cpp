@@ -50,7 +50,6 @@ KMFolderTreeItem::~KMFolderTreeItem()
   {
     folder->account()->killJobsForItem(this);
     folder->close();
-    folder->remove();
     delete folder;
   }
 }
@@ -143,12 +142,7 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
   }
   KMFolderTreeItem *fti = new KMFolderTreeItem( item,
     new KMFolder(item->folder->createChildFolder(), name), &mPaintInfo );
-  if (fti->folder->create(TRUE))
-  {
-    fti->folder->remove();
-    fti->folder->create(TRUE);
-  }
-  fti->folder->close();
+  if (fti->folder->create(TRUE) == 0) fti->folder->close();
   fti->folder->setAccount(item->folder->account());
   fti->folder->setImapPath( url );
   if ((noPrefix || item->folder->imapPath() == "/") && name == "INBOX")
@@ -462,10 +456,9 @@ void KMFolderTree::reload(void)
     if (a->type() == QString("imap"))
     {
       KMFolderTreeItem* fti = new KMFolderTreeItem( root,
-        new KMFolder(new KMFolderRootDir(locateLocal("tmp","")), a->name()
+        new KMFolder(new KMFolderRootDir(locateLocal("appdata","")), a->name()
         + ".imap"), &mPaintInfo );
-      fti->folder->create();
-      fti->folder->close();
+      if (fti->folder->create() == 0) fti->folder->close();
       fti->setText(0,a->name());
       fti->setExpandable( TRUE );
       fti->folder->setDir( TRUE );

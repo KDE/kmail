@@ -292,6 +292,10 @@ public:
   void setUidValidity(const QString &validity) { mUidValidity = validity; }
   QString uidValidity() { return mUidValidity; }
 
+  /** The next predicted UID of the folder */
+  void setUidNext(const QString &uidNext) { mUidNext = uidNext; }
+  QString uidNext() { return mUidNext; }
+
   /** The imap account the folder belongs to */
   void setAccount(KMAcctImap *acct) { mAccount = acct; }
   KMAcctImap* account() { return mAccount; }
@@ -406,6 +410,7 @@ protected:
 
   QString    mImapPath;
   QString    mUidValidity;
+  QString    mUidNext;
   KMAcctImap *mAccount;
 
   /** number of unread messages, -1 if not yet set */

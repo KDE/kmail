@@ -261,6 +261,12 @@ protected:
   QString decryptStr(const QString &inStr) const;
 
   /**
+   * Convert IMAP flags to a message status
+   * @param newMsg specifies whether unseen messages are new or unread
+   */
+  KMMsgStatus flagsToStatus(int flags, bool newMsg = TRUE);
+
+  /**
    * Connect to the IMAP server, if no connection is active
    */
   bool makeConnection();
@@ -315,7 +321,8 @@ protected slots:
   /**
    * Get the folder now (internal)
    */
-  void reallyGetFolder(KMFolderTreeItem * fti);
+  void reallyGetFolder(KMFolderTreeItem * fti,
+                       const QString &startUid = QString::null);
 
   /**
    * Retrieve the next message
