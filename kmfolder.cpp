@@ -355,6 +355,8 @@ bool KMFolder::canAddMsgNow(KMMessage* aMsg, int* aIndex_ret)
 //-----------------------------------------------------------------------------
 void KMFolder::reallyAddMsg(KMMessage* aMsg)
 {
+  if (!aMsg) // the signal that is connected can call with aMsg=0
+    return;
   aMsg->setTransferInProgress(FALSE);
   KMFolder *folder = aMsg->parent();
   int index;
