@@ -112,9 +112,10 @@ int KMFolderMaildir::open()
       emit statusMsg(str);
     } else {
       mIndexStream = fopen(QFile::encodeName(indexLocation()), "r+"); // index file
-      if ( mIndexStream )
+      if ( mIndexStream ) {
         fcntl(fileno(mIndexStream), F_SETFD, FD_CLOEXEC);
-      updateIndexStreamPtr();
+        updateIndexStreamPtr();
+      }
     }
 
     if (!mIndexStream)
