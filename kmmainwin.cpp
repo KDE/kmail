@@ -620,8 +620,10 @@ void KMMainWin::slotEmptyFolder()
   {
     // FIXME: If we run out of disk space mail may be lost rather
     // than moved into the trash -sanders
-    while ((msg = mFolder->take(0)) != NULL)
+    while ((msg = mFolder->take(0)) != NULL) {
       kernel->trashFolder()->addMsg(msg);
+      kernel->trashFolder()->unGetMsg(kernel->trashFolder()->count()-1);
+    }
   }
 
   mFolder->close();
