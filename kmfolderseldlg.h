@@ -6,7 +6,7 @@
 #define kmfolderseldlg_h
 
 #include <qdialog.h>
-#include <qlist.h>
+#include <qvaluelist.h>
 #include <qguardedptr.h>
 
 class QListBox;

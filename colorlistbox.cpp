@@ -18,12 +18,13 @@
  *
  */
 
+#include <qpainter.h>
+
 #include <kapp.h>
 #include <kcolordlg.h>
 #include <kcolordrag.h>
 
 #include "colorlistbox.h"
-#include "colorlistbox.moc"
 
 ColorListBox::ColorListBox( QWidget *parent, const char *name, WFlags f )
   :KListBox( parent, name, f ), mCurrentOnDragEnter(-1)
@@ -189,3 +190,5 @@ int ColorListItem::width(const QListBox *lb ) const
 {
   return( mBoxWidth + lb->fontMetrics().width( text() ) + 6 );
 }
+
+#include "colorlistbox.moc"

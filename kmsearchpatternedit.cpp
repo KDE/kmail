@@ -1,4 +1,4 @@
-// kmfilterrulesedit.cpp
+// kmsearchpatternedit.cpp
 // Author: Marc Mutz <Marc@Mutz.com>
 // This code is under GPL
 
@@ -15,6 +15,7 @@
 #include <qlineedit.h>
 #include <qcombobox.h>
 #include <qbuttongroup.h>
+#include <qstringlist.h>
 
 #include <assert.h>
 

@@ -1,7 +1,12 @@
 // kmfoldermbox.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
 #include <qfileinfo.h>
+#include <qregexp.h>
 
 #include "kmglobal.h"
 #include "kmfoldermbox.h"
@@ -17,10 +22,6 @@
 #include <assert.h>
 #include <unistd.h>
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #if HAVE_FCNTL_H
 #include <fcntl.h>
 #endif
@@ -29,7 +30,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/file.h>
-#include <klocale.h>
 
 #ifndef isblank
 #  define isblank(x) ((x)==' '||(x)=='\t')

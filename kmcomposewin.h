@@ -13,6 +13,7 @@
 #include <qclipboard.h>
 #include <qpalette.h>
 #include <qfont.h>
+
 #include <keditcl.h>
 #include <klineedit.h>
 #include <kio/job.h>

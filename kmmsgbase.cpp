@@ -14,6 +14,10 @@
 #include <ctype.h>
 #include <stdlib.h>
 
+#if QT_VERSION < 300
+#  define Q_ASSERT ASSERT
+#endif
+
 #define NUM_STATUSLIST 10
 static KMMsgStatus sStatusList[NUM_STATUSLIST] =
 {
@@ -588,8 +592,8 @@ static uchar *g_chunk = NULL;
         memcpy(x, g_chunk+g_chunk_offset, length); \
 	g_chunk_offset += length; \
      } } while(0)
-#define COPY_HEADER_TYPE(x) ASSERT(sizeof(x) == sizeof(MsgPartType)); COPY_DATA(&x, sizeof(x))
-#define COPY_HEADER_LEN(x)  ASSERT(sizeof(x) == sizeof(short)); COPY_DATA(&x, sizeof(x));
+#define COPY_HEADER_TYPE(x) Q_ASSERT(sizeof(x) == sizeof(MsgPartType)); COPY_DATA(&x, sizeof(x))
+#define COPY_HEADER_LEN(x)  Q_ASSERT(sizeof(x) == sizeof(short)); COPY_DATA(&x, sizeof(x));
 //-----------------------------------------------------------------------------
 QString KMMsgBase::getStringPart(MsgPartType t) const
 {
@@ -672,7 +676,7 @@ unsigned long KMMsgBase::getLongPart(MsgPartType t) const
       break;
     }
     if(type == t) {
-      ASSERT(l == sizeof(unsigned long));
+      Q_ASSERT(l == sizeof(unsigned long));
       COPY_DATA(&ret, sizeof(ret));
       break;
     }
@@ -743,7 +747,7 @@ bool KMMsgBase::syncIndexString() const
   int len;
   const uchar *buffer = asIndexString(len);
   if (len == mIndexLength) {
-    ASSERT(mParent->mIndexStream);
+    Q_ASSERT(mParent->mIndexStream);
     fseek(mParent->mIndexStream, mIndexOffset, SEEK_SET);
     fwrite( buffer, len, 1, mParent->mIndexStream);
     return TRUE;

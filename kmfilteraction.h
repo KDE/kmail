@@ -8,6 +8,7 @@
 #define kmfilteraction_h
 
 #include <qstring.h>
+#include <qstringlist.h>
 #include <qdict.h>
 #include <qlist.h>
 #include <qvaluelist.h>
@@ -16,7 +17,6 @@
 class KMMessage;
 class QWidget;
 class KMFolder;
-class QStringList;
 class KTempFile;
 
 

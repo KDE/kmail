@@ -10,6 +10,7 @@
 
 #include <qfile.h>
 #include <qtextstream.h>
+#include <qregexp.h>
 #include <assert.h>
 #include <klocale.h>
 #include <kstddirs.h>

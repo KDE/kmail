@@ -17,6 +17,7 @@
 #include <qcombobox.h>
 #include <qlineedit.h>
 #include <qstring.h>
+#include <qregexp.h>
 #include <qlayout.h>
 #include <qlabel.h>
 #include <assert.h>

@@ -2,7 +2,6 @@
 //#define MALLOC_DEBUG 1
 
 #include <kwin.h>
-#include <kmfldsearch.h>
 
 #ifdef MALLOC_DEBUG
 #include <malloc.h>
@@ -18,7 +17,7 @@
 #include <qtextstream.h>
 #include <qsplitter.h>
 #include <qtimer.h>
-#include "mailinglist-magic.h"
+#include <qregexp.h>
 
 #include <kconfig.h>
 #include <kapp.h>
@@ -66,6 +65,9 @@
 #include "kmaddrbook.h"
 #include "kmversion.h"
 #include "kwin.h"
+#include "kmfldsearch.h"
+#include "mailinglist-magic.h"
+
 
 #include <assert.h>
 #include <klocale.h>

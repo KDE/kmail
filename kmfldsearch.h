@@ -6,6 +6,8 @@
 #define kmfldsearch_h
 
 #include <qdialog.h>
+#include <qvaluelist.h>
+#include <qstringlist.h>
 #include <qguardedptr.h>
 
 class QLineEdit;

@@ -21,24 +21,6 @@
 
 #include "kmacctimap.moc"
 
-#include <netdb.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <signal.h>
-#include <netinet/in.h>
-
-#include <kmfolderimap.h>
-#include <kmmessage.h>
-#include <kconfig.h>
-#include <qpushbutton.h>
-#include <qlineedit.h>
-#include <kapp.h>
-#include <klocale.h>
-#include <kio/scheduler.h>
-#include <kio/slave.h>
-#include <kmessagebox.h>
-#include <kdebug.h>
-
 #include "kmacctimap.h"
 #include "kmglobal.h"
 #include "kbusyptr.h"
@@ -46,13 +28,33 @@
 #include "kmbroadcaststatus.h"
 #include "kmfoldertree.h"
 #include "kmfoldermgr.h"
-#include <kprocess.h>
-#include <qtooltip.h>
-#include <qlayout.h>
 
+#include <kmfolderimap.h>
+#include <kmmessage.h>
+#include <kconfig.h>
+#include <kapp.h>
+#include <klocale.h>
+#include <kio/scheduler.h>
+#include <kio/slave.h>
+#include <kmessagebox.h>
+#include <kprocess.h>
 #include <kwin.h>
 #include <kbuttonbox.h>
 #include <kstddirs.h>
+#include <kdebug.h>
+
+#include <qpushbutton.h>
+#include <qlineedit.h>
+#include <qtooltip.h>
+#include <qlayout.h>
+#include <qregexp.h>
+
+#include <netdb.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <signal.h>
+#include <netinet/in.h>
+
 
 //-----------------------------------------------------------------------------
 KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const QString& aAccountName):

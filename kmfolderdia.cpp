@@ -15,6 +15,7 @@
 #include <qvbox.h>
 #include <qcombobox.h>
 #include <qgroupbox.h>
+#include <qregexp.h>
 
 #include <klocale.h>
 #include <kmessagebox.h>

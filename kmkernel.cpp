@@ -8,6 +8,10 @@
 #include <qdir.h>
 #include <qstring.h>
 
+#if QT_VERSION < 300
+#  define Q_CHECK_PTR CHECK_PTR
+#endif
+
 #include <kdebug.h>
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -834,7 +838,7 @@ KabAPI* KMKernel::KABaddrBook()
     return the_KAB_addrBook;
 
   the_KAB_addrBook = new KabAPI; // KabApi is a dialog;
-  CHECK_PTR(the_KAB_addrBook);
+  Q_CHECK_PTR(the_KAB_addrBook);
   if(KABaddrBook()->init()!=AddressBook::NoError)
   { // this connects to the default address book and opens it:
     kdDebug(5006) << "Error initializing the connection to your KAB address book." << endl;

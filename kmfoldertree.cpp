@@ -2,8 +2,15 @@
 #include <qdragobject.h>
 #include <qheader.h>
 #include <qbitmap.h>
+#include <qpainter.h>
+
 #include <unistd.h>
 #include <assert.h>
+
+#if QT_VERSION < 300
+#  define Q_ASSERT ASSERT
+#endif
+
 #include <kapp.h>
 #include <kconfig.h>
 #include <ksimpleconfig.h>
@@ -438,7 +445,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, QListViewItem* parent )
        folderNode = fdir->next())
     if (!folderNode->isDir()) {
       folder = static_cast<KMFolder*>(folderNode);
-      ASSERT(parent);
+      Q_ASSERT(parent);
       fti = new KMFolderTreeItem( parent, folder, &mPaintInfo );
 
       if (folder->label() == i18n("inbox"))

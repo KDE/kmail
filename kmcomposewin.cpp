@@ -2841,9 +2841,10 @@ QString KMEdit::brokenText() const
 {
     QString temp;
 
-    for (int i = 0; i < numLines(); ++i) {
-      temp += *getString(i);
-      if (i + 1 < numLines())
+    int num_lines = numLines();
+    for (int i = 0; i < num_lines; ++i) {
+      temp += textLine(i);
+      if (i + 1 < num_lines)
 	temp += '\n';
     }
 

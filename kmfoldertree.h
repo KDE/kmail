@@ -13,6 +13,7 @@
 
 class QDropEvent;
 class QPixmap;
+class QPainter;
 class KMFolderImap;
 
 class KMFolderTreeItem : public QListViewItem
@@ -51,11 +52,19 @@ public:
     {}
  
   virtual ~KMFolderTreeItem();
+#if QT_VERSION < 300
   void paintBranches( QPainter * p, const QColorGroup & cg,
                       int w, int y, int h, GUIStyle s )
   {
     QListViewItem::paintBranches( p, cg, w, y, h, s);
   }
+#else
+  void paintBranches( QPainter * p, const QColorGroup & cg,
+                      int w, int y, int h)
+  {
+    QListViewItem::paintBranches( p, cg, w, y, h);
+  }
+#endif
 
   void paintCell( QPainter * p, const QColorGroup & cg,
                   int column, int width, int align ); 
