@@ -179,7 +179,7 @@ namespace KMail {
     kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
     ObjectTreeParser otp( mReader, cryptPlugWrapper() );
     otp.parseObjectTree( newNode );
-    mResultString += otp.resultString();
+    mRawReplyString += otp.rawReplyString();
     kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
   }
 
@@ -598,7 +598,7 @@ namespace KMail {
 
       ObjectTreeParser otp( mReader, cryptPlug );
       otp.parseObjectTree( data );
-      mResultString += otp.resultString();
+      mRawReplyString += otp.rawReplyString();
 
       if ( mReader )
         htmlWriter()->queue( writeSigstatFooter( messagePart ) );
@@ -772,7 +772,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
   bool ObjectTreeParser::processTextHtmlSubtype( partNode * curNode, ProcessResult & ) {
     QCString cstr( curNode->msgPart().bodyDecoded() );
 
-    mResultString = cstr;
+    mRawReplyString = cstr;
     if ( !mReader )
       return true;
 
@@ -1001,7 +1001,7 @@ namespace KMail {
   bool ObjectTreeParser::processTextPlainSubtype( partNode * curNode, ProcessResult & result ) {
     const QCString cstr = curNode->msgPart().bodyDecoded();
     if ( !mReader ) {
-      mResultString = cstr;
+      mRawReplyString = cstr;
       return true;
     }
 
@@ -1011,7 +1011,7 @@ namespace KMail {
 	 !showOnlyOneMimePart() )
       return false;
 
-    mResultString = cstr;
+    mRawReplyString = cstr;
 
     QString label = curNode->msgPart().fileName().stripWhiteSpace();
     if ( label.isEmpty() )
@@ -1067,7 +1067,7 @@ namespace KMail {
     ObjectTreeParser otp( *this );
     otp.setShowOnlyOneMimePart( false );
     otp.parseObjectTree( child );
-    mResultString += otp.resultString();
+    mRawReplyString += otp.rawReplyString();
   }
 
   bool ObjectTreeParser::processMultiPartMixedSubtype( partNode * curNode,
@@ -1217,7 +1217,7 @@ namespace KMail {
       if ( mReader )
 	writeBodyString( cstr, curNode->trueFromAddress(),
 			 codecFor( data ), result );
-      mResultString += cstr;
+      mRawReplyString += cstr;
       bDone = true;
     } else if ( sign && data ) {
       // Set the signature node to done to prevent it from being processed
@@ -1247,7 +1247,7 @@ namespace KMail {
       if ( mReader )
 	writeBodyString ( cstr, curNode->trueFromAddress(),
 			  codecFor( curNode ), result );
-      mResultString += cstr;
+      mRawReplyString += cstr;
       return true;
     }
 
@@ -1346,7 +1346,7 @@ namespace KMail {
 				      "encrypted data" );
 	}
       } else {
-	mResultString += decryptedData;
+	mRawReplyString += decryptedData;
 	if ( mReader ) {
 	  // print the error message that was returned in decryptedData
 	  // (utf8-encoded)
@@ -1374,7 +1374,7 @@ namespace KMail {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
       otp.parseObjectTree( curNode->mChild );
-      mResultString += otp.resultString();
+      mRawReplyString += otp.rawReplyString();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
@@ -1429,7 +1429,7 @@ namespace KMail {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
       otp.parseObjectTree( curNode->mChild );
-      mResultString += otp.resultString();
+      mRawReplyString += otp.rawReplyString();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }
@@ -1446,7 +1446,7 @@ namespace KMail {
 	if ( mReader )
 	  writeBodyString( cstr, curNode->trueFromAddress(),
 			   codecFor( curNode ), result );
-	mResultString += cstr;
+	mRawReplyString += cstr;
       } else {
 	/*
 	  ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
@@ -1486,7 +1486,7 @@ namespace KMail {
 				      &*decryptedData,
 				      "encrypted data" );
 	} else {
-	  mResultString += decryptedData;
+	  mRawReplyString += decryptedData;
 	  if ( mReader ) {
 	    // print the error message that was returned in decryptedData
 	    // (utf8-encoded)
@@ -1508,7 +1508,7 @@ namespace KMail {
       kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
       ObjectTreeParser otp( mReader, cryptPlugWrapper() );
       otp.parseObjectTree( curNode->mChild );
-      mResultString += otp.resultString();
+      mRawReplyString += otp.rawReplyString();
       kdDebug(5006) << "\n<-----  Returning from parseObjectTree( curNode->mChild )\n" << endl;
       return true;
     }

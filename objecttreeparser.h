@@ -80,7 +80,7 @@ namespace KMail {
   class ObjectTreeParser {
     class CryptPlugWrapperSaver;
     /** Internal. Copies the context of @p other, but not it's @ref
-	resultString() */
+	rawReplyString() */
     ObjectTreeParser( const ObjectTreeParser & other );
   public:
     ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0,
@@ -91,7 +91,7 @@ namespace KMail {
 		      KMail::CSSHelper * cssHelper=0 );
     virtual ~ObjectTreeParser();
 
-    QCString resultString() const { return mResultString; }
+    QCString rawReplyString() const { return mRawReplyString; }
 
     void setCryptPlugWrapper( CryptPlugWrapper * wrapper ) {
       mCryptPlugWrapper = wrapper;
@@ -253,7 +253,7 @@ namespace KMail {
 
   private:
     KMReaderWin * mReader;
-    QCString mResultString;
+    QCString mRawReplyString;
     CryptPlugWrapper * mCryptPlugWrapper;
     bool mShowOnlyOneMimePart;
     bool mKeepEncryptions;

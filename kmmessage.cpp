@@ -699,7 +699,7 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart * mainBody,
     // now parse the TEXT message part we want to quote
     ObjectTreeParser otp( 0, 0, true, false, true );
     otp.parseObjectTree( curNode );
-    parsedString = otp.resultString();
+    parsedString = otp.rawReplyString();
     codec = curNode->msgPart().codec();
   }
 }
