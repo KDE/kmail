@@ -1052,7 +1052,6 @@ void KMMainWin::slotMarkAll() {
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 {
-  /*
   KMComposeWin *win;
   KMMessage* msg;
 
@@ -1079,7 +1078,6 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
       (void) new KFileOpenWithHandler();
     (void) new KRun( aUrl );
   }
-  */
 }
 
 
