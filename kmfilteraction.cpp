@@ -1342,6 +1342,11 @@ KMFilterAction::ReturnCode KMFilterActionForward::process(KMMessage* aMsg) const
   if ( mParameter.isEmpty() )
     return ErrorButGoOn;
 
+  // avoid endless loops when this action is used in a filter 
+  // which applies to sent messages
+  if ( KMMessage::addressIsInAddressList( mParameter, aMsg->to() ) )
+    return ErrorButGoOn;
+
   // Create the forwarded message by hand to make forwarding of messages with
   // attachments work.
   // Note: This duplicates a lot of code from KMMessage::createForward() and
