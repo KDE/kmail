@@ -142,14 +142,13 @@ KMFolderCachedImap::~KMFolderCachedImap()
 {
   if( !mFolderRemoved ) {
     // Only write configuration when the folder haven't been deleted
-    KConfig* config = KMKernel::config();
-    KConfigGroupSaver saver( config, "Folder-" + folder()->idString() );
-    config->writeEntry( "ImapPath", mImapPath );
-    config->writeEntry( "NoContent", mNoContent );
-    config->writeEntry( "ReadOnly", mReadOnly );
-    config->writeEntry( "StatusChangedLocally", mStatusChangedLocally );
-    config->writeEntry( "AnnotationFolderTypeChanged", mAnnotationFolderTypeChanged );
-    config->writeEntry( "Annotation-FolderType", mAnnotationFolderType );
+    // Why isn't this in writeConfig?
+    KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
+    configGroup.writeEntry( "ImapPath", mImapPath );
+    configGroup.writeEntry( "NoContent", mNoContent );
+    configGroup.writeEntry( "ReadOnly", mReadOnly );
+    configGroup.writeEntry( "StatusChangedLocally", mStatusChangedLocally );
+    writeAnnotationConfig();
 
     writeUidCache();
   }
@@ -180,7 +179,11 @@ void KMFolderCachedImap::readConfig()
   mNoContent = config->readBoolEntry( "NoContent", false );
   mReadOnly = config->readBoolEntry( "ReadOnly", false );
 
-  mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
+  if ( mAnnotationFolderType != "FROMSERVER" ) {
+    mAnnotationFolderType = config->readEntry( "Annotation-FolderType" );
+    kdDebug(5006) << ( mImapPath.isEmpty() ? label() : mImapPath )
+                  << " readConfig: mAnnotationFolderType=" << mAnnotationFolderType << endl;
+  }
   if ( !mAnnotationFolderType.isEmpty() )
     kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
 
@@ -190,6 +193,13 @@ void KMFolderCachedImap::readConfig()
     config->readBoolEntry( "StatusChangedLocally", false );
 
   mAnnotationFolderTypeChanged = config->readBoolEntry( "AnnotationFolderTypeChanged", false );
+}
+
+void KMFolderCachedImap::writeAnnotationConfig()
+{
+  KConfigGroup configGroup( KMKernel::config(), "Folder-" + folder()->idString() );
+  configGroup.writeEntry( "AnnotationFolderTypeChanged", mAnnotationFolderTypeChanged );
+  configGroup.writeEntry( "Annotation-FolderType", mAnnotationFolderType );
 }
 
 void KMFolderCachedImap::remove()
@@ -592,7 +602,7 @@ void KMFolderCachedImap::serverSyncInternal()
   }
 
   case SYNC_STATE_GET_USERRIGHTS:
-    //kdDebug(5006) << "Syncing " << label() << endl;
+    //kdDebug(5006) << "===== Syncing " << ( mImapPath.isEmpty() ? label() : mImapPath ) << endl;
 
     mSyncState = SYNC_STATE_RENAME_FOLDER;
 
@@ -653,7 +663,7 @@ void KMFolderCachedImap::serverSyncInternal()
            uploadFlags();
            break;
          } else {
-           kdDebug(5006) << "Skipping flags upload, folder unchanged: " << label() << endl;
+           //kdDebug(5006) << "Skipping flags upload, folder unchanged: " << label() << endl;
          }
        }
     }
@@ -775,7 +785,13 @@ void KMFolderCachedImap::serverSyncInternal()
 //#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
     mSyncState = SYNC_STATE_SET_ANNOTATIONS;
 
-    updateAnnotationFolderType();
+    if ( !noContent() ) {
+      // for a folder we didn't create ourselves: get annotation from server
+      if ( mAnnotationFolderType == "FROMSERVER" )
+        mAnnotationFolderType = QString::null;
+      else
+        updateAnnotationFolderType();
+    }
 
     // First retrieve the annotation, so that we know we have to set it if it's not set.
     // On the other hand, if the user changed the contentstype, there's no need to get first.
@@ -802,7 +818,7 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_SET_ANNOTATIONS:
 
     mSyncState = SYNC_STATE_SET_ACLS;
-    if ( mAccount->hasAnnotationSupport() &&
+    if ( !noContent() && mAccount->hasAnnotationSupport() &&
          ( mUserRights <= 0 || ( mUserRights & ACLJobs::Administer ) ) ) {
       newState( mProgress, i18n("Setting annotations"));
       // If in the future we want to set more annotations, we should then write
@@ -915,7 +931,7 @@ void KMFolderCachedImap::serverSyncInternal()
         connect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
                  this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
 
-        // kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
+        //kdDebug(5006) << "Sync'ing subfolder " << mCurrentSubfolder->imapPath() << endl;
         assert( !mCurrentSubfolder->imapPath().isEmpty() );
         mCurrentSubfolder->setAccount( account() );
         mCurrentSubfolder->serverSync( mRecurse /*which is true*/ );
@@ -1501,6 +1517,8 @@ void KMFolderCachedImap::listDirectory2() {
           f->close();
           f->setAccount(mAccount);
           kmkernel->dimapFolderMgr()->contentsChanged();
+          f->mAnnotationFolderType = "FROMSERVER";
+          //kdDebug(5006) << subfolderPath << ": mAnnotationFolderType set to FROMSERVER" << endl;
         } else {
           kdDebug(5006) << "can't create folder " << mSubfolderNames[i] <<endl;
         }
@@ -1731,10 +1749,13 @@ void KMFolderCachedImap::updateAnnotationFolderType()
   }
   else
     mAnnotationFolderType = QString::null;
-  kdDebug(5006) << "updateAnnotationFolderType: " << mAnnotationFolderType << endl;
+  //kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: " << mAnnotationFolderType << endl;
   if ( mAnnotationFolderType != oldAnnotation ) {
     mAnnotationFolderTypeChanged = true; // force a "set annotation" on next sync
+    kdDebug(5006) << mImapPath << ": updateAnnotationFolderType: '" << mAnnotationFolderType << "', was '" << oldAnnotation << "' => mAnnotationFolderTypeChanged set to TRUE" << endl;
   }
+  // Ensure that further readConfig()s don't lose mAnnotationFolderType
+  writeAnnotationConfig();
 }
 
 void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
@@ -1764,7 +1785,7 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
     // 4) different unknown content-type on server, probably some older version -> set it
     bool foundContentType = !lst.isEmpty();
     for ( unsigned int i = 0 ; i < lst.size() ; ++ i ) {
-      kdDebug(5006) << "Found annotation: " << lst[i].name << " = " << lst[i].value << endl;
+      kdDebug(5006) << mImapPath << ": found annotation " << lst[i].name << " = " << lst[i].value << endl;
       if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
         QString value = lst[i].value;
         QString type = value;
@@ -1779,12 +1800,21 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
           FolderContentsType contentsType = static_cast<KMail::FolderContentsType>( i );
           if ( type == KMailICalIfaceImpl::annotationForContentsType( contentsType ) ) {
             // Case 3: known content-type on server, get it
-            //kdDebug(5006) << "slotGetAnnotationResult: found known type of annotation, OK" << endl;
+            //kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: found known type of annotation" << endl;
             kmkernel->iCalIface().setStorageFormat( folder(), KMailICalIfaceImpl::StorageXML );
+            if ( kmkernel->iCalIface().standardResourceFolderParent() != folder()->parent()
+                 && subtype == "default" ) {
+              // Truncate subtype if this folder can't be a default resource folder for us,
+              // although it apparently is for someone else.
+              value = type;
+              kdDebug(5006) << mImapPath << ": slotGetAnnotationResult: truncating annotation to " << value << endl;
+            }
             setContentsType( contentsType );
             mAnnotationFolderType = value;
             mAnnotationFolderTypeChanged = false; // we changed it, not the user
             foundKnownType = true;
+            // Ensure that further readConfig()s don't lose mAnnotationFolderType
+            writeAnnotationConfig();
             break;
           }
         }

@@ -91,6 +91,8 @@ public:
 
   virtual void readConfig();
 
+  void writeAnnotationConfig();
+
   /** Returns the type of this folder */
   virtual KMFolderType folderType() const { return KMFolderTypeCachedImap; }
 
