@@ -57,8 +57,11 @@ KMAcctExpPop::KMAcctExpPop(KMAcctMgr* aOwner, const char* aAccountName):
 //-----------------------------------------------------------------------------
 KMAcctExpPop::~KMAcctExpPop()
 {
-  if (job)
+  if (job) {
     job->kill();
+    idsOfMsgsPendingDownload.clear();
+    processRemainingQueuedMessagesAndSaveUidList();
+  }
 }
 
 
