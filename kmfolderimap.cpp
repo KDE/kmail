@@ -150,13 +150,9 @@ void KMFolderImap::removeMsg(int idx, bool quiet)
   if (idx < 0)
     return;
 
-  KMMsgBase* mb = mMsgList[idx];
-  if (!quiet && !mb->isMessage())
-    readMsg(idx);
-
   if (!quiet)
   {
-    KMMessage *msg = static_cast<KMMessage*>(mb);
+    KMMessage *msg = getMsg(idx);
     deleteMessage(msg);
   }
 
