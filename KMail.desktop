@@ -27,7 +27,6 @@ Name[sv]=E-post-klient
 Type=Application
 Exec=kmail -caption "%c" %i %m
 Icon=kmail
-MiniIcon=kmail
 DocPath=kmail/index.html
 Comment=Mail Client
 Comment[ca]=Programari de correu electrònic
