@@ -1402,7 +1402,7 @@ void KMHeaders::resendMsg ()
   kernel->kbp()->busy();
   newMsg = new KMMessage;
   newMsg->fromString(msg->asString());
-  newMsg->initHeader();
+  newMsg->initFromMessage(msg, true);
   newMsg->setCharset(msg->codec()->mimeName());
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
