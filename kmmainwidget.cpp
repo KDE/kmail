@@ -1231,10 +1231,6 @@ void KMMainWidget::slotEditMsg()
 {
   KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
   command->start();
-
-  mHeaders->setSelected(mHeaders->currentItem(), true);
-  mHeaders->highlightMessage(mHeaders->currentItem(), true);
-
 }
 
 //-----------------------------------------------------------------------------
