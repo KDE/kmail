@@ -58,7 +58,7 @@ public:
   virtual ~KMFolder();
 
   /** Returns the type of this folder */
-  virtual KMFolderType folderType() const = 0;
+  virtual KMFolderType folderType() const { return KMFolderTypeUnknown; }
 
   /** Returns the filename of the folder (reimplemented in KMFolderImap) */
   virtual QString fileName() const { return name(); }
