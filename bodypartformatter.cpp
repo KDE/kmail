@@ -120,6 +120,11 @@ namespace {
 
   CREATE_BODY_PART_FORMATTER(MessageRfc822)
 
+  CREATE_BODY_PART_FORMATTER(MultiPartMixed)
+  CREATE_BODY_PART_FORMATTER(MultiPartAlternative)
+  CREATE_BODY_PART_FORMATTER(MultiPartSigned)
+  CREATE_BODY_PART_FORMATTER(MultiPartEncrypted)
+
   typedef TextPlainBodyPartFormatter TextEnrichedBodyPartFormatter;
   typedef TextPlainBodyPartFormatter ApplicationPgpBodyPartFormatter;
 
@@ -154,13 +159,13 @@ static const SubtypeBuiltin textSubtypeBuiltins[] = {
 };
 
 static const SubtypeBuiltin multipartSubtypeBuiltins[] = {
-  //{ "mixed", &MultiPartMixedFormatter::create },
-  //{ "alternative", &MultiPartAlternativeFormatter::create },
+  { "mixed", &MultiPartMixedBodyPartFormatter::create },
+  { "alternative", &MultiPartAlternativeBodyPartFormatter::create },
   //{ "digest", &MultiPartDigestFormatter::create },
   //{ "parallel", &MultiPartParallelFormatter::create },
   //{ "related", &MultiPartRelatedFormatter::create },
-  //{ "signed", &MultiPartSignedFormatter::create },
-  //{ "encrypted", &MultiPartEncryptedFormatter::create },
+  { "signed", &MultiPartSignedBodyPartFormatter::create },
+  { "encrypted", &MultiPartEncryptedBodyPartFormatter::create },
   //{ "report", &MultiPartReportFormatter::create },
 };
 
@@ -269,8 +274,27 @@ namespace {
     return AnyTypeBodyPartFormatter::create();
   }
 
-  const KMail::BodyPartFormatter * createForMultiPart( const char * ) {
-    return 0;
+  const KMail::BodyPartFormatter * createForMultiPart( const char * subtype ) {
+    if ( subtype && *subtype )
+      switch ( subtype[0] ) {
+      case 'a':
+      case 'A':
+	if ( qstricmp( subtype, "alternative" ) == 0 )
+	  return MultiPartAlternativeBodyPartFormatter::create();
+	break;
+      case 'e':
+      case 'E':
+	if ( qstricmp( subtype, "encrypted" ) == 0 )
+	  return MultiPartEncryptedBodyPartFormatter::create();
+	break;
+      case 's':
+      case 'S':
+	if ( qstricmp( subtype, "signed" ) == 0 )
+	  return MultiPartSignedBodyPartFormatter::create();
+	break;
+      }
+
+    return MultiPartMixedBodyPartFormatter::create();
   }
 
   const KMail::BodyPartFormatter * createForApplication( const char * subtype ) {

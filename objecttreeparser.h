@@ -141,6 +141,10 @@ namespace KMail {
                                         const QByteArray& theBody );
 
   private:
+    /** Standard children handling a.k.a. multipart/mixed (w/o
+	kroupware hacks) */
+    void stdChildHandling( partNode * child );
+
     /** 1. Create a new partNode using 'content' data and Content-Description
             found in 'cntDesc'.
         2. Make this node the child of 'node'.
@@ -179,7 +183,9 @@ namespace KMail {
 			bool& passphraseError,
 			QString& aErrorText );
 
-  public:// (during refectoring)
+    bool processMailmanMessage( partNode * node );
+
+  public:// (during refactoring)
 
     bool processTextHtmlSubtype( partNode * node, ProcessResult & result );
     bool processTextVCalSubtype( partNode * node, ProcessResult & result );
@@ -187,8 +193,6 @@ namespace KMail {
     bool processTextRtfSubtype( partNode * node, ProcessResult & result );
     bool processTextEnrichedSubtype( partNode * node, ProcessResult & result );
     bool processTextPlainSubtype( partNode * node, ProcessResult & result );
-
-    bool processMultiPartType( int subtype, partNode * node, ProcessResult & result );
 
     bool processMultiPartMixedSubtype( partNode * node, ProcessResult & result );
     bool processMultiPartAlternativeSubtype( partNode * node, ProcessResult & result );

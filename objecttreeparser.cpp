@@ -231,41 +231,13 @@ namespace KMail {
 
     // process all mime parts that are not covered by one of the CRYPTPLUGs
     if ( !node->mWasProcessed ) { // ### (mmutz) this conditional screams to be a guard clause!
-      bool bDone = false;
 
-      if ( const BodyPartFormatter * bpf
-	   = BodyPartFormatter::createFor( node->type(), node->subType() ) ) {
-	kdDebug() << "Hit BodyPartFormatter!" << endl;
-	bDone = bpf->process( this, node, processResult );
-      } else {
-	switch ( node->type() ){ // this is going to die soon! (mmutz)
-	case DwMime::kTypeText:
-	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (text/*)!!!" << endl;
-	  break;
-	case DwMime::kTypeMultipart:
-	  bDone = processMultiPartType( node->subType(), node,
-					processResult );
-	  break;
-	case DwMime::kTypeMessage:
-	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (message/*)!!!" << endl;
-	  break;
-	case DwMime::kTypeApplication:
-	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (application/*)!!!" << endl;
-	  break;
-	case DwMime::kTypeImage:
-	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (image/*)!!!" << endl;
-	  break;
-	case DwMime::kTypeAudio:
-	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (audio/*)!!!" << endl;
-	  break;
-	case DwMime::kTypeVideo:
-	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (video/*)!!!" << endl;
-	  break;
-	case DwMime::kTypeModel:
-	  kdFatal( 5006 ) << "THIS SHOULD NO LONGER HAPPEN (model/*)!!!" << endl;
-	  break;
-	}
-      }
+      const BodyPartFormatter * bpf
+	= BodyPartFormatter::createFor( node->type(), node->subType() );
+	kdFatal( !bpf, 5006 ) << "THIS SHOULD NO LONGER HAPPEN ("
+			      << node->typeString() << '/' << node->subTypeString()
+			      << ')' << endl;
+      bool bDone = bpf->process( this, node, processResult );
 
       // ### (mmutz) default handling should go into the respective
       // ### bodypartformatters.
@@ -804,11 +776,9 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     if ( !mReader )
       return true;
 
-    if ( mIsFirstTextPart
-	|| attachmentStrategy() == AttachmentStrategy::inlined()
-	|| ( attachmentStrategy() == AttachmentStrategy::smart()
-	     && curNode->hasContentDispositionInline() )
-	|| showOnlyOneMimePart() )
+    if ( mIsFirstTextPart ||
+	 attachmentStrategy()->defaultDisplay( curNode ) == AttachmentStrategy::Inline ||
+	 showOnlyOneMimePart() )
     {
       mIsFirstTextPart = false;
       if ( mReader->htmlMail() ) {
@@ -905,266 +875,235 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     return processTextPlainSubtype( node, result );
   }
 
+} // namespace KMail
+
+namespace {
+  bool isMailmanMessage( partNode * curNode ) {
+    if ( !curNode->dwPart() || !curNode->dwPart()->hasHeaders() )
+      return false;
+    DwHeaders & headers = curNode->dwPart()->Headers();
+    if ( headers.HasField("X-Mailman-Version") )
+      return true;
+    if ( headers.HasField("X-Mailer") &&
+	 0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
+	      .find("MAILMAN", 0, false) )
+      return true;
+    return false;
+  }
+}
+
+namespace KMail {
+
+  bool ObjectTreeParser::processMailmanMessage( partNode * curNode ) {
+    const QCString cstr = curNode->msgPart().bodyDecoded();
+
+    //###
+    const QCString delim1( "--__--__--\n\nMessage:");
+    const QCString delim2( "--__--__--\r\n\r\nMessage:");
+    const QCString delimZ2("--__--__--\n\n_____________");
+    const QCString delimZ1("--__--__--\r\n\r\n_____________");
+    QCString partStr, digestHeaderStr;
+    int thisDelim = cstr.find(delim1, 0, false);
+    if ( thisDelim == -1 )
+      thisDelim = cstr.find(delim2, 0, false);
+    if ( thisDelim == -1 ) {
+      kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter found." << endl;
+      return false;
+    }
+
+    int nextDelim = cstr.find(delim1, thisDelim+1, false);
+    if ( -1 == nextDelim )
+      nextDelim = cstr.find(delim2, thisDelim+1, false);
+    if ( -1 == nextDelim )
+      nextDelim = cstr.find(delimZ1, thisDelim+1, false);
+    if ( -1 == nextDelim )
+      nextDelim = cstr.find(delimZ2, thisDelim+1, false);
+    if ( nextDelim < 0)
+      return false;
+
+    kdDebug(5006) << "        processing old style Mailman digest" << endl;
+    //if ( curNode->mRoot )
+    //  curNode = curNode->mRoot;
+
+    // at least one message found: build a mime tree
+    digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
+    digestHeaderStr += cstr.mid( 0, thisDelim );
+    insertAndParseNewChildNode( *curNode,
+				&*digestHeaderStr,
+				"Digest Header", true );
+    //mReader->queueHtml("<br><hr><br>");
+    // temporarily change curent node's Content-Type
+    // to get our embedded RfC822 messages properly inserted
+    curNode->setType(    DwMime::kTypeMultipart );
+    curNode->setSubType( DwMime::kSubtypeDigest );
+    while( -1 < nextDelim ){
+      int thisEoL = cstr.find("\nMessage:", thisDelim, false);
+      if ( -1 < thisEoL )
+	thisDelim = thisEoL+1;
+      else{
+	thisEoL = cstr.find("\n_____________", thisDelim, false);
+	if ( -1 < thisEoL )
+	  thisDelim = thisEoL+1;
+      }
+      thisEoL = cstr.find('\n', thisDelim);
+      if ( -1 < thisEoL )
+	thisDelim = thisEoL+1;
+      else
+	thisDelim = thisDelim+1;
+      //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
+      //  ++thisDelim;
+
+      partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
+      partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
+      QCString subject("embedded message");
+      QCString subSearch("\nSubject:");
+      int subPos = partStr.find(subSearch, 0, false);
+      if ( -1 < subPos ){
+	subject = partStr.mid(subPos+subSearch.length());
+	thisEoL = subject.find('\n');
+	if ( -1 < thisEoL )
+	  subject.truncate( thisEoL );
+      }
+      kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
+      insertAndParseNewChildNode( *curNode,
+				  &*partStr,
+				  subject, true );
+      //mReader->queueHtml("<br><hr><br>");
+      thisDelim = nextDelim+1;
+      nextDelim = cstr.find(delim1, thisDelim, false);
+      if ( -1 == nextDelim )
+	nextDelim = cstr.find(delim2, thisDelim, false);
+      if ( -1 == nextDelim )
+	nextDelim = cstr.find(delimZ1, thisDelim, false);
+      if ( -1 == nextDelim )
+	nextDelim = cstr.find(delimZ2, thisDelim, false);
+    }
+    // reset curent node's Content-Type
+    curNode->setType(    DwMime::kTypeText );
+    curNode->setSubType( DwMime::kSubtypePlain );
+    int thisEoL = cstr.find("_____________", thisDelim);
+    if ( -1 < thisEoL ){
+      thisDelim = thisEoL;
+      thisEoL = cstr.find('\n', thisDelim);
+      if ( -1 < thisEoL )
+	thisDelim = thisEoL+1;
+    }
+    else
+      thisDelim = thisDelim+1;
+    partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
+    partStr += cstr.mid( thisDelim );
+    insertAndParseNewChildNode( *curNode,
+				&*partStr,
+				"Digest Footer", true );
+    return true;
+  }
+
   bool ObjectTreeParser::processTextPlainSubtype( partNode * curNode, ProcessResult & result ) {
-    bool bDone = false;
-    QCString cstr( curNode->msgPart().bodyDecoded() );
+    const QCString cstr = curNode->msgPart().bodyDecoded();
+    if ( !mReader ) {
+      mResultString = cstr;
+      return true;
+    }
+
+    //resultingRawData += cstr;
+    if ( !mIsFirstTextPart &&
+	 attachmentStrategy()->defaultDisplay( curNode ) != AttachmentStrategy::Inline &&
+	 !showOnlyOneMimePart() )
+      return false;
+
+    mResultString = cstr;
+
     QString label = curNode->msgPart().fileName().stripWhiteSpace();
     if ( label.isEmpty() )
       label = curNode->msgPart().name().stripWhiteSpace();
-    //resultingRawData += cstr;
-    if ( !mReader
-	|| mIsFirstTextPart
-	|| attachmentStrategy() == AttachmentStrategy::inlined()
-	|| ( attachmentStrategy() == AttachmentStrategy::smart()
-	     && ( curNode->hasContentDispositionInline() || label.isEmpty() ) )
-	|| showOnlyOneMimePart() )
-    {
-      if ( mReader ) {
-	bool bDrawFrame = !mIsFirstTextPart
+
+    const bool bDrawFrame = !mIsFirstTextPart
                           && !showOnlyOneMimePart()
                           && !label.isEmpty();
-	if ( bDrawFrame ) {
-	  label = KMMessage::quoteHtmlChars( label, true );
+    if ( bDrawFrame ) {
+      label = KMMessage::quoteHtmlChars( label, true );
 
-	  QString comment = curNode->msgPart().contentDescription();
-	  comment = KMMessage::quoteHtmlChars( comment, true );
+      const QString comment =
+	KMMessage::quoteHtmlChars( curNode->msgPart().contentDescription(), true );
 
-	  QString fileName =
-	    mReader->writeMessagePartToTempFile( &curNode->msgPart(),
-						 curNode->nodeId() );
+      const QString fileName =
+	mReader->writeMessagePartToTempFile( &curNode->msgPart(),
+					     curNode->nodeId() );
 
-	  QString htmlStr;
-	  QString dir = ( QApplication::reverseLayout() ? "rtl" : "ltr" );
+      const QString dir = QApplication::reverseLayout() ? "rtl" : "ltr" ;
 
-	  htmlStr += "<table cellspacing=\"1\" class=\"textAtm\">"
-                     "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
-	  if ( !fileName.isEmpty() )
-	    htmlStr += "<a href=\"" + QString("file:")
-	      + KURL::encode_string( fileName ) + "\">"
-	      + label + "</a>";
-	  else
-	    htmlStr += label;
-	  if ( !comment.isEmpty() )
-	    htmlStr += "<br>" + comment;
-	  htmlStr += "</td></tr><tr class=\"textAtmB\"><td>";
+      QString htmlStr = "<table cellspacing=\"1\" class=\"textAtm\">"
+                 "<tr class=\"textAtmH\"><td dir=\"" + dir + "\">";
+      if ( !fileName.isEmpty() )
+	htmlStr += "<a href=\"" + QString("file:")
+	  + KURL::encode_string( fileName ) + "\">"
+	  + label + "</a>";
+      else
+	htmlStr += label;
+      if ( !comment.isEmpty() )
+	htmlStr += "<br>" + comment;
+      htmlStr += "</td></tr><tr class=\"textAtmB\"><td>";
 
-	  htmlWriter()->queue( htmlStr );
-	}
-	// process old style not-multipart Mailman messages to
-	// enable verification of the embedded messages' signatures
-	if ( /* subtype == DwMime::kSubtypePlain && */
-	     curNode->dwPart() &&
-	     curNode->dwPart()->hasHeaders() ) {
-	  DwHeaders& headers( curNode->dwPart()->Headers() );
-	  bool bIsMailman = headers.HasField("X-Mailman-Version");
-	  if ( !bIsMailman ) {
-	    if ( headers.HasField("X-Mailer") )
-	      bIsMailman =
-		( 0 == QCString( headers.FieldBody("X-Mailer").AsString().c_str() )
-		  .find("MAILMAN", 0, false) );
-	  }
-	  if ( bIsMailman ) {
-	    const QCString delim1( "--__--__--\n\nMessage:");
-	    const QCString delim2( "--__--__--\r\n\r\nMessage:");
-	    const QCString delimZ2("--__--__--\n\n_____________");
-	    const QCString delimZ1("--__--__--\r\n\r\n_____________");
-	    QCString partStr, digestHeaderStr;
-	    int thisDelim = cstr.find(delim1, 0, false);
-	    if ( -1 == thisDelim )
-	      thisDelim = cstr.find(delim2, 0, false);
-	    if ( -1 == thisDelim ) {
-	      kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter found." << endl;
-	    } else {
-	      int nextDelim = cstr.find(delim1, thisDelim+1, false);
-	      if ( -1 == nextDelim )
-		nextDelim = cstr.find(delim2, thisDelim+1, false);
-	      if ( -1 == nextDelim )
-		nextDelim = cstr.find(delimZ1, thisDelim+1, false);
-	      if ( -1 == nextDelim )
-		nextDelim = cstr.find(delimZ2, thisDelim+1, false);
-	      if ( -1 < nextDelim ){
-		kdDebug(5006) << "        processing old style Mailman digest" << endl;
-		//if ( curNode->mRoot )
-		//  curNode = curNode->mRoot;
-
-		// at least one message found: build a mime tree
-		digestHeaderStr = "Content-Type=text/plain\nContent-Description=digest header\n\n";
-		digestHeaderStr += cstr.mid( 0, thisDelim );
-		insertAndParseNewChildNode( *curNode,
-					    &*digestHeaderStr,
-					    "Digest Header", true );
-		//mReader->queueHtml("<br><hr><br>");
-		// temporarily change curent node's Content-Type
-		// to get our embedded RfC822 messages properly inserted
-		curNode->setType(    DwMime::kTypeMultipart );
-		curNode->setSubType( DwMime::kSubtypeDigest );
-		while( -1 < nextDelim ){
-		  int thisEoL = cstr.find("\nMessage:", thisDelim, false);
-		  if ( -1 < thisEoL )
-		    thisDelim = thisEoL+1;
-		  else{
-		    thisEoL = cstr.find("\n_____________", thisDelim, false);
-		    if ( -1 < thisEoL )
-		      thisDelim = thisEoL+1;
-		  }
-		  thisEoL = cstr.find('\n', thisDelim);
-		  if ( -1 < thisEoL )
-		    thisDelim = thisEoL+1;
-		  else
-		    thisDelim = thisDelim+1;
-		  //while( thisDelim < cstr.size() && '\n' == cstr[thisDelim] )
-		  //  ++thisDelim;
-
-		  partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
-		  partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
-		  QCString subject("embedded message");
-		  QCString subSearch("\nSubject:");
-		  int subPos = partStr.find(subSearch, 0, false);
-		  if ( -1 < subPos ){
-		    subject = partStr.mid(subPos+subSearch.length());
-		    thisEoL = subject.find('\n');
-		    if ( -1 < thisEoL )
-		      subject.truncate( thisEoL );
-		  }
-		  kdDebug(5006) << "        embedded message found: \"" << subject << "\"" << endl;
-		  insertAndParseNewChildNode( *curNode,
-					      &*partStr,
-					      subject, true );
-		  //mReader->queueHtml("<br><hr><br>");
-		  thisDelim = nextDelim+1;
-		  nextDelim = cstr.find(delim1, thisDelim, false);
-		  if ( -1 == nextDelim )
-		    nextDelim = cstr.find(delim2, thisDelim, false);
-		  if ( -1 == nextDelim )
-		    nextDelim = cstr.find(delimZ1, thisDelim, false);
-		  if ( -1 == nextDelim )
-		    nextDelim = cstr.find(delimZ2, thisDelim, false);
-		}
-		// reset curent node's Content-Type
-		curNode->setType(    DwMime::kTypeText );
-		curNode->setSubType( DwMime::kSubtypePlain );
-		int thisEoL = cstr.find("_____________", thisDelim);
-		if ( -1 < thisEoL ){
-		  thisDelim = thisEoL;
-		  thisEoL = cstr.find('\n', thisDelim);
-		  if ( -1 < thisEoL )
-		    thisDelim = thisEoL+1;
-		}
-		else
-		  thisDelim = thisDelim+1;
-		partStr = "Content-Type=text/plain\nContent-Description=digest footer\n\n";
-		partStr += cstr.mid( thisDelim );
-		insertAndParseNewChildNode( *curNode,
-					    &*partStr,
-					    "Digest Footer", true );
-		bDone = true;
-	      }
-	    }
-	  }
-	}
-	if ( !bDone )
-	  writeBodyString( cstr, curNode->trueFromAddress(),
-			   codecFor( curNode ), result );
-	if ( bDrawFrame ) {
-	  htmlWriter()->queue( "</td></tr></table>" );
-	}
-	mIsFirstTextPart = false;
-      }
-      mResultString = cstr;
-      bDone = true;
+      htmlWriter()->queue( htmlStr );
     }
-    return bDone;
+    // process old style not-multipart Mailman messages to
+    // enable verification of the embedded messages' signatures
+    bool bDone = false;
+    if ( isMailmanMessage( curNode ) )
+      bDone = processMailmanMessage( curNode );
+    if ( !bDone )
+      writeBodyString( cstr, curNode->trueFromAddress(),
+		       codecFor( curNode ), result );
+    if ( bDrawFrame )
+      htmlWriter()->queue( "</td></tr></table>" );
+
+    mIsFirstTextPart = false;
+      
+    return true;
   }
 
-  bool ObjectTreeParser::processMultiPartType( int subtype, partNode * curNode,
-					       ProcessResult & result ) {
-    bool bDone = false;
-    kdDebug(5006) << "* multipart *" << endl;
-    switch ( subtype ){
-    case DwMime::kSubtypeMixed:
-      kdDebug(5006) << "mixed" << endl;
-      bDone = processMultiPartMixedSubtype( curNode, result );
-      break;
-    case DwMime::kSubtypeAlternative:
-      kdDebug(5006) << "alternative" << endl;
-      bDone = processMultiPartAlternativeSubtype( curNode, result );
-      break;
-    case DwMime::kSubtypeDigest:
-      kdDebug(5006) << "digest" << endl;
-      break;
-    case DwMime::kSubtypeParallel:
-      kdDebug(5006) << "parallel" << endl;
-      break;
-    case DwMime::kSubtypeSigned:
-      kdDebug(5006) << "signed" << endl;
-      bDone = processMultiPartSignedSubtype( curNode, result );
-      break;
-    case DwMime::kSubtypeEncrypted:
-      kdDebug(5006) << "encrypted" << endl;
-      bDone = processMultiPartEncryptedSubtype( curNode, result );
-      break;
-    default:
-      kdDebug(5006) << "(  unknown subtype  )" << endl;
-      break;
-    }
-    //  Multipart object not processed yet?  Just parse the children!
-    if ( !bDone ){
-      if ( curNode && curNode->mChild ) {
-	ObjectTreeParser otp( *this );
-	otp.setShowOnlyOneMimePart( false );
-	otp.parseObjectTree( curNode->mChild );
-	mResultString += otp.resultString();
-	bDone = true;
-      }
-    }
+  void ObjectTreeParser::stdChildHandling( partNode * child ) {
+    if ( !child )
+      return;
 
-    return bDone;
+    ObjectTreeParser otp( *this );
+    otp.setShowOnlyOneMimePart( false );
+    otp.parseObjectTree( child );
+    mResultString += otp.resultString();
   }
 
   bool ObjectTreeParser::processMultiPartMixedSubtype( partNode * curNode, ProcessResult & ) {
-    bool bDone = false;
-    if ( curNode->mChild ){
+    if ( !curNode->mChild )
+      return false;
 
-      // Might be a Kroupware message,
-      // let's look for the parts contained in the mixture:
-      partNode* dataPlain =
-	curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
-      if ( dataPlain ) {
-	partNode* dataCal =
-	  curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeVCal, false, true );
-	if ( dataCal ){
-	  // Kroupware message found,
-	  // we ignore the plain text but process the calendar part.
+    // Might be a Kroupware message,
+    // let's look for the parts contained in the mixture:
+    partNode* dataPlain =
+      curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypePlain, false, true );
+    if ( dataPlain ) {
+      partNode* dataCal =
+	curNode->mChild->findType( DwMime::kTypeText, DwMime::kSubtypeVCal, false, true );
+      if ( dataCal ) {
+	// Kroupware message found,
+	// we ignore the plain text but process the calendar part.
+	dataPlain->mWasProcessed = true;
+	stdChildHandling( dataCal );
+	return true;
+      } else {
+	partNode* dataTNEF =
+	  curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeMsTNEF, false, true );
+	if ( dataTNEF ){
+	  // encoded Kroupware message found,
+	  // we ignore the plain text but process the MS-TNEF part.
 	  dataPlain->mWasProcessed = true;
-	  ObjectTreeParser otp( *this );
-	  otp.setShowOnlyOneMimePart( false );
-	  otp.parseObjectTree( dataCal );
-	  mResultString += otp.resultString();
-	  bDone = true;
-	}else {
-	  partNode* dataTNEF =
-	    curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeMsTNEF, false, true );
-	  if ( dataTNEF ){
-	    // encoded Kroupware message found,
-	    // we ignore the plain text but process the MS-TNEF part.
-	    dataPlain->mWasProcessed = true;
-	    ObjectTreeParser otp( *this );
-	    otp.setShowOnlyOneMimePart( false );
-	    otp.parseObjectTree( dataTNEF );
-	    mResultString += otp.resultString();
-	    bDone = true;
-	  }
+	  stdChildHandling( dataTNEF );
+	  return true;
 	}
       }
-      if ( !bDone ) {
-	ObjectTreeParser otp( *this );
-	otp.setShowOnlyOneMimePart( false );
-	otp.parseObjectTree( curNode->mChild );
-	mResultString += otp.resultString();
-	bDone = true;
-      }
     }
-    return bDone;
+
+    stdChildHandling( curNode->mChild );
+    return true;
   }
 
   bool ObjectTreeParser::processMultiPartAlternativeSubtype( partNode * curNode, ProcessResult & ) {
@@ -1180,23 +1119,18 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
          (dataHtml && dataPlain && dataPlain->msgPart().body().isEmpty()) ) {
       if ( dataPlain )
         dataPlain->mWasProcessed = true;
-      ObjectTreeParser otp( *this );
-      otp.setShowOnlyOneMimePart( false );
-      otp.parseObjectTree( dataHtml );
-      mResultString += otp.resultString();
-    } else if ( !mReader || (!mReader->htmlMail() && dataPlain) ) {
+      stdChildHandling( dataHtml );
+      return true;
+    }
+
+    if ( !mReader || (!mReader->htmlMail() && dataPlain) ) {
       if ( dataHtml )
         dataHtml->mWasProcessed = true;
-      ObjectTreeParser otp( *this );
-      otp.setShowOnlyOneMimePart( false );
-      otp.parseObjectTree( dataPlain );
-      mResultString += otp.resultString();
-    } else {
-      ObjectTreeParser otp( *this );
-      otp.setShowOnlyOneMimePart( false );
-      otp.parseObjectTree( curNode->mChild );
-      mResultString += otp.resultString();
+      stdChildHandling( dataPlain );
+      return true;
     }
+
+    stdChildHandling( curNode->mChild );
     return true;
   }
 
@@ -1284,11 +1218,18 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       bDone = true;
     }
     setCryptPlugWrapper( oldUseThisCryptPlug );
+    if ( !bDone ) {
+      stdChildHandling( curNode->mChild );
+      bDone = true;
+    }
     return bDone;
   }
 
   bool ObjectTreeParser::processMultiPartEncryptedSubtype( partNode * curNode,
 							   ProcessResult & result ) {
+    if ( !curNode->mChild )
+      return false;
+
     if ( keepEncryptions() ) {
       curNode->setEncryptionState( KMMsgFullyEncrypted );
       QCString cstr( curNode->msgPart().bodyDecoded() );
@@ -1298,9 +1239,6 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       mResultString += cstr;
       return true;
     }
-
-    if ( !curNode->mChild )
-      return false;
 
     bool bDone = false;
     CryptPlugWrapper* oldUseThisCryptPlug = cryptPlugWrapper();
@@ -1329,87 +1267,86 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
       ---------------------------------------------------------------------------------------------------------------
     */
 
-    if ( data ) {
-      if ( data->mChild ) {
-	kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
-	ObjectTreeParser otp( *this );
-	otp.setShowOnlyOneMimePart( false );
-	otp.parseObjectTree( data->mChild );
-	mResultString += otp.resultString();
-	bDone = true;
-	kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+    if ( !data ) {
+      stdChildHandling( curNode->mChild );
+      return true;
+    }
+
+    if ( data->mChild ) {
+      kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
+      stdChildHandling( data->mChild );
+      bDone = true;
+      kdDebug(5006) << "\n----->  Returning from parseObjectTree( curNode->mChild )\n" << endl;
+    } else {
+      kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
+      PartMetaData messagePart;
+      curNode->setEncryptionState( KMMsgFullyEncrypted );
+      QCString decryptedData;
+      bool signatureFound;
+      struct CryptPlugWrapper::SignatureMetaData sigMeta;
+      sigMeta.status              = 0;
+      sigMeta.extended_info       = 0;
+      sigMeta.extended_info_count = 0;
+      sigMeta.nota_xml            = 0;
+      bool passphraseError;
+
+      bool bOkDecrypt = okDecryptMIME( *data,
+				       decryptedData,
+				       signatureFound,
+				       sigMeta,
+				       true,
+				       passphraseError,
+				       messagePart.errorText );
+
+      // paint the frame
+      if ( mReader ) {
+	messagePart.isDecryptable = bOkDecrypt;
+	messagePart.isEncrypted = true;
+	messagePart.isSigned = false;
+	htmlWriter()->queue( writeSigstatHeader( messagePart,
+						 cryptPlugWrapper(),
+						 curNode->trueFromAddress() ) );
       }
-      else {
-	kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
-	PartMetaData messagePart;
-	curNode->setEncryptionState( KMMsgFullyEncrypted );
-	QCString decryptedData;
-	bool signatureFound;
-	struct CryptPlugWrapper::SignatureMetaData sigMeta;
-	sigMeta.status              = 0;
-	sigMeta.extended_info       = 0;
-	sigMeta.extended_info_count = 0;
-	sigMeta.nota_xml            = 0;
-	bool passphraseError;
 
-	bool bOkDecrypt = okDecryptMIME( *data,
-					 decryptedData,
-					 signatureFound,
-					 sigMeta,
-					 true,
-					 passphraseError,
-					 messagePart.errorText );
-
-	// paint the frame
-	if ( mReader ) {
-	  messagePart.isDecryptable = bOkDecrypt;
-	  messagePart.isEncrypted = true;
-	  messagePart.isSigned = false;
-	  htmlWriter()->queue( writeSigstatHeader( messagePart,
-						   cryptPlugWrapper(),
-						   curNode->trueFromAddress() ) );
-	}
-
-	if ( bOkDecrypt ) {
-	  // Note: Multipart/Encrypted might also be signed
-	  //       without encapsulating a nicely formatted
-	  //       ~~~~~~~                 Multipart/Signed part.
-	  //                               (see RFC 3156 --> 6.2)
-	  // In this case we paint a _2nd_ frame inside the
-	  // encryption frame, but we do _not_ show a respective
-	  // encapsulated MIME part in the Mime Tree Viewer
-	  // since we do want to show the _true_ structure of the
-	  // message there - not the structure that the sender's
-	  // MUA 'should' have sent.  :-D       (khz, 12.09.2002)
-	  //
-	  if ( signatureFound ) {
-	    writeOpaqueOrMultipartSignedData( 0,
-					      *curNode,
-					      curNode->trueFromAddress(),
-					      false,
-					      &decryptedData,
-					      &sigMeta,
-					      false );
-	    curNode->setSignatureState( KMMsgFullySigned );
-	  } else {
-	    insertAndParseNewChildNode( *curNode,
-					&*decryptedData,
-					"encrypted data" );
-	  }
+      if ( bOkDecrypt ) {
+	// Note: Multipart/Encrypted might also be signed
+	//       without encapsulating a nicely formatted
+	//       ~~~~~~~                 Multipart/Signed part.
+	//                               (see RFC 3156 --> 6.2)
+	// In this case we paint a _2nd_ frame inside the
+	// encryption frame, but we do _not_ show a respective
+	// encapsulated MIME part in the Mime Tree Viewer
+	// since we do want to show the _true_ structure of the
+	// message there - not the structure that the sender's
+	// MUA 'should' have sent.  :-D       (khz, 12.09.2002)
+	//
+	if ( signatureFound ) {
+	  writeOpaqueOrMultipartSignedData( 0,
+					    *curNode,
+					    curNode->trueFromAddress(),
+					    false,
+					    &decryptedData,
+					    &sigMeta,
+					    false );
+	  curNode->setSignatureState( KMMsgFullySigned );
 	} else {
-	  mResultString += decryptedData;
-	  if ( mReader ) {
-	    // print the error message that was returned in decryptedData
-	    // (utf8-encoded)
-	    htmlWriter()->queue( QString::fromUtf8( decryptedData.data() ) );
-	  }
+	  insertAndParseNewChildNode( *curNode,
+				      &*decryptedData,
+				      "encrypted data" );
 	}
-
-	if ( mReader )
-	  htmlWriter()->queue( writeSigstatFooter( messagePart ) );
-	data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
-	bDone = true;
+      } else {
+	mResultString += decryptedData;
+	if ( mReader ) {
+	  // print the error message that was returned in decryptedData
+	  // (utf8-encoded)
+	  htmlWriter()->queue( QString::fromUtf8( decryptedData.data() ) );
+	}
       }
+
+      if ( mReader )
+	htmlWriter()->queue( writeSigstatFooter( messagePart ) );
+      data->mWasProcessed = true; // Set the data node to done to prevent it from being processed
+      bDone = true;
     }
     setCryptPlugWrapper( oldUseThisCryptPlug );
     return bDone;    
