@@ -268,6 +268,24 @@ void KMMessage::fromString(const QString& aStr, bool aSetStatus)
 
   mNeedsAssembly = FALSE;
   KMMessageInherited::setDate(date());
+
+  // Convert messages with a binary body into a message with attachment.
+  QString ct = mMsg->Headers().ContentType().TypeStr().c_str();
+  if (ct.isEmpty() || ct == "text" || ct == "message" || ct == "multipart")
+    return;
+  KMMessagePart textPart;
+  textPart.setTypeStr("text");
+  textPart.setSubtypeStr("plain");
+  textPart.setBody("\n");
+  KMMessagePart bodyPart;
+  bodyPart.setTypeStr(ct);
+  bodyPart.setSubtypeStr(subtypeStr());
+  bodyPart.setContentDisposition(headerField("Content-Disposition"));
+  bodyPart.setCteStr(contentTransferEncodingStr());
+  bodyPart.setContentDisposition(headerField("Content-Disposition"));
+  bodyPart.setBodyEncodedBinary(bodyDecodedBinary());
+  addBodyPart(&textPart);
+  addBodyPart(&bodyPart);
 }
 
 
