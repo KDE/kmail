@@ -121,8 +121,10 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
     // That is an arbitrary restriction on my part. HAR HAR HAR :) -till 
     if (aStatus == KMMsgStatusWatched)
       mStatus &= ~KMMsgStatusIgnored;
-    if (aStatus == KMMsgStatusIgnored)
+    if (aStatus == KMMsgStatusIgnored) {
       mStatus &= ~KMMsgStatusWatched;
+      setStatus(KMMsgStatusRead, idx);
+    }
   }
 }
  

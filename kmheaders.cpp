@@ -1050,8 +1050,10 @@ void KMHeaders::msgAdded(int id)
 
     if (parent && mFolder->getMsgBase(parent->msgId())->isWatched())
       mFolder->getMsgBase(id)->setStatus( KMMsgStatusWatched );
-    else if (parent && mFolder->getMsgBase(parent->msgId())->isIgnored())
+    else if (parent && mFolder->getMsgBase(parent->msgId())->isIgnored()) {
       mFolder->getMsgBase(id)->setStatus( KMMsgStatusIgnored );
+      mFolder->getMsgBase(id)->setStatus( KMMsgStatusRead );
+    }
 
     // Update and resize the id trees.
     mItems.resize( mFolder->count() );
@@ -3052,8 +3054,10 @@ bool KMHeaders::readSortOrder(bool set_selection)
                 // children
                 if (mFolder->getMsgBase(parent->id())->isWatched())
                   msg->setStatus(KMMsgStatusWatched);
-                if (mFolder->getMsgBase(parent->id())->isIgnored())
+                if (mFolder->getMsgBase(parent->id())->isIgnored()) {
                   msg->setStatus(KMMsgStatusIgnored);
+                  msg->setStatus(KMMsgStatusRead);
+                }
 	    } else {
 		//oh well we tried, to the root with you!
 		root.addUnsortedChild((*it));
