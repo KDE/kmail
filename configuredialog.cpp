@@ -1153,6 +1153,7 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mSystrayOnNew = new QRadioButton( i18n("Show system tray on new mail"), bgroup);
   bgroupLayout->addWidget(mSystrayOnNew, 0, 1);
 
+  bgroup->setEnabled( false ); // since !mSystrayCheck->isChecked()
   connect( mSystrayCheck, SIGNAL(toggled(bool)),
            bgroup, SLOT(setEnabled(bool)) );
 

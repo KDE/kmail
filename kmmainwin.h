@@ -347,7 +347,8 @@ protected:
   QCString	mEncodingStr;
   bool		mIntegrated;
   bool          mSendOnCheck;
-  bool          mBeepOnNew;
+  bool          mBeepOnNew, mSystemTrayOnNew;
+  int           mSystemTrayMode;
   bool          mConfirmEmpty;
   QString       mStartupFolder;
   int		mMessageStatusId;

@@ -63,6 +63,7 @@
 #include "kmacctfolder.h"
 #include "kmmimeparttree.h"
 #include "kmundostack.h"
+#include "kmsystemtray.h"
 #include "vacation.h"
 using KMail::Vacation;
 
@@ -138,6 +139,8 @@ KMMainWin::KMMainWin(QWidget *) :
 
   if ( kernel->firstInstance() )
     QTimer::singleShot( 200, this, SLOT(slotShowTipOnStart()) );
+
+  kernel->toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
   // must be the last line of the constructor:
   mStartupDone = TRUE;
@@ -333,6 +336,10 @@ void KMMainWin::readConfig(void)
     KConfigGroupSaver saver(config, "General");
     mSendOnCheck = config->readBoolEntry("sendOnCheck",false);
     mBeepOnNew = config->readBoolEntry("beep-on-mail", false);
+    mSystemTrayOnNew = config->readBoolEntry("systray-on-mail", false);
+    mSystemTrayMode = config->readBoolEntry("systray-on-new", false) ?
+      KMSystemTray::OnNewMail :
+      KMSystemTray::AlwaysOn;
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
     // startup-Folder, defaults to system-inbox
     mStartupFolder = config->readEntry("startupFolder", kernel->inboxFolder()->idString());
@@ -341,6 +348,9 @@ void KMMainWin::readConfig(void)
   // Re-activate panners
   if (mStartupDone)
   {
+
+    // Update systray
+    kernel->toggleSystray(mSystemTrayOnNew, mSystemTrayMode);
 
     if (oldWindowLayout != mWindowLayout ||
         oldShowMIMETreeMode != mShowMIMETreeMode )

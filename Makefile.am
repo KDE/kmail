@@ -25,7 +25,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		directoryservicesconfigurationdialog.ui \
 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp kmacctfolder.cpp kmdict.cpp \
-		kmacctlocal.cpp kmfolderdir.cpp \
+		kmsystemtray.cpp kmacctlocal.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
 		kmacctseldlg.cpp kmfiltermgr.cpp kmsearchpatternedit.cpp \
 		kmfilteraction.cpp kmsearchpattern.cpp kmidentity.cpp \
@@ -54,6 +54,8 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
 		transportmanager.cpp
 
+METASOURCES = AUTO
+
 noinst_HEADERS = directoryservicesconfigurationdialogimpl.h \
 		 adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 kmmainwin.h certificatehandlingdialogimpl.h \
@@ -66,8 +68,6 @@ check_PROGRAMS = dcoptest
 dcoptest_SOURCES = dcoptest.cpp kmailIface.stub mailcomposerIface.stub
 
 include_HEADERS = kmailIface.h
-
-kmail_METASOURCES = AUTO
 
 appsdir = $(kde_appsdir)/Internet
 apps_DATA = KMail.desktop

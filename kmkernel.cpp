@@ -49,6 +49,7 @@
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "configuredialog.h"
+#include "kmsystemtray.h"
 #include <kwin.h>
 #include <ktip.h>
 
@@ -94,6 +95,8 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_msgDict = 0;
   mWin = 0;
 
+  mSystemTray = 0;
+
   new KMpgpWrap();
   // register our own (libkdenetwork) utf-7 codec as long as Qt
   // doesn't have it's own:
@@ -118,6 +121,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
 
 KMKernel::~KMKernel ()
 {
+  delete mSystemTray;
+  mSystemTray = 0;
+
   QMap<KIO::Job*, putData>::Iterator it = mPutJobs.begin();
   while ( it != mPutJobs.end() )
   {
@@ -133,7 +139,6 @@ KMKernel::~KMKernel ()
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
-
 
 /********************************************************************/
 /*             DCOP-callable, and command line actions              */
@@ -279,6 +284,29 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!hidden) cWin->show();
 
   return DCOPRef(cWin);
+}
+
+void KMKernel::toggleSystray(bool enabled, int mode)
+{
+  kdDebug(5006) << "setupSystray called" << endl;
+  if (enabled && !mSystemTray)
+  {
+    mSystemTray = new KMSystemTray();
+  }
+  else if (!enabled && mSystemTray)
+  {
+    /** Get rid of system tray on user's request */
+    kdDebug(5006) << "deleting systray" << endl;
+    delete mSystemTray;
+    mSystemTray = 0;
+  }
+
+  /** Set mode of systemtray.  If mode has changed, tray will handle this */
+  if(mSystemTray)
+  {
+    kdDebug(5006) << "Setting system tray mode" << endl;
+    mSystemTray->setMode(mode);
+  }
 }
 
 
@@ -485,7 +513,7 @@ void KMKernel::testDir(const char *_name)
   {
       KMessageBox::sorry(0, i18n("$HOME is not set!\n"
                                  "KMail cannot start without it.\n"));
-      exit(-1);
+      ::exit(-1);
   }
 
   c += _name;
@@ -552,7 +580,7 @@ void KMKernel::initFolders(KConfig* cfg)
 
   if (the_inboxFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your inbox folder.") );
-    exit(1);
+    ::exit(1);
   }
 
   the_inboxFolder->setSystemFolder(TRUE);
@@ -561,7 +589,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_outboxFolder = the_folderMgr->findOrCreate(cfg->readEntry("outboxFolder", I18N_NOOP("outbox")));
   if (the_outboxFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your outbox folder.") );
-    exit(1);
+    ::exit(1);
   }
 
   the_outboxFolder->setType("Out");
@@ -571,7 +599,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_sentFolder = the_folderMgr->findOrCreate(cfg->readEntry("sentFolder", I18N_NOOP("sent-mail")));
   if (the_sentFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your sent-mail folder.") );
-    exit(1);
+    ::exit(1);
   }
   the_sentFolder->setType("St");
   the_sentFolder->setSystemFolder(TRUE);
@@ -580,7 +608,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_trashFolder  = the_folderMgr->findOrCreate(cfg->readEntry("trashFolder", I18N_NOOP("trash")));
   if (the_trashFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your trash folder.") );
-    exit(1);
+    ::exit(1);
   }
   the_trashFolder->setType("Tr");
   the_trashFolder->setSystemFolder(TRUE);
@@ -589,7 +617,7 @@ void KMKernel::initFolders(KConfig* cfg)
   the_draftsFolder = the_folderMgr->findOrCreate(cfg->readEntry("draftsFolder", I18N_NOOP("drafts")));
   if (the_draftsFolder->canAccess() != 0) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your drafts folder.") );
-    exit(1);
+    ::exit(1);
   }
   the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
@@ -610,7 +638,6 @@ void KMKernel::init()
 
   the_kbp = new KBusyPtr;
   cfg = KMKernel::config();
-  //kdDebug(5006) << "1" << endl;
 
   mCryptPlugList.loadFromConfig( cfg );
 
@@ -700,7 +727,7 @@ void KMKernel::cleanupImapFolders()
 	cfld = static_cast<KMFolderCachedImap*>(the_imapFolderMgr->createFolder(acct->name(), FALSE, KMFolderTypeCachedImap));
 	if (!cfld) {
 	  KMessageBox::error(0,(i18n("Cannot create file `%1' in %2.\nKMail cannot start without it.").arg(acct->name()).arg(the_imapFolderMgr->basePath())));
-	  exit(-1);
+	  ::exit(-1);
 	}
       }
 
