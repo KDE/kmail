@@ -25,18 +25,15 @@
 
 
 /* TODO :
-  -- Convert '<', '>' characters to &lt; and &gt; in mail reading window
-     when displaying signature (the HTML parser takes this like a
-     HTML tag
   -- Make 2.xxx to use pipes instead of /tmp/.kmail-* files too, because
      1.) pipes are safer (there is no decrypted mail stored on the same
          disk
      2.) What if two kmails were running at the same time ? They would
          like to create /tmp/.kmail-* files both and it would probably
          cause problems.
-     3.) When there is no output from PGP, a warning dialog should
-         appear (when there's a problem now, the MESSAGE IS SENT
-         UNENCRYPTED AND/OR UNSIGNED !)
+  --  When there is no output from PGP, a warning dialog should
+      appear (when there's a problem now, the MESSAGE IS SENT
+      UNENCRYPTED AND/OR UNSIGNED !)
 */ 
 
 static void
@@ -756,7 +753,7 @@ bool Kpgp::parseInfo(int action)
       // FIXME: should do something with it...
     }
 
-    if( (info.find("Bad pass phrase") != -1) || (info.find("Bad passphrase") != -1))
+    if( (info.find("Bad pass phrase") != -1) || (info.find("Need a pass phrase") != -1))
     {
       //	       debug("Kpgp: isEncrypted");
       if(action == DECRYPT) 
@@ -767,7 +764,9 @@ bool Kpgp::parseInfo(int action)
       }
       flagEncrypted = TRUE;
       // check for persons
-      index = info.find("can only be read by:");
+      if (flagPgp50)
+        index = info.find("can only be decrypted by:"); else
+        index = info.find("can only be read by:");
       if(index != -1) 
       {
 	index = info.find("\n",index);
@@ -822,6 +821,8 @@ bool Kpgp::parseInfo(int action)
     }
     if(info.find("Pass phrase is good") != -1)
       flagEncrypted = FALSE;
+    if(info.find("Message is encrypted") != -1)
+      flagEncrypted = TRUE;
     break;
 
   case ENCRYPT:
@@ -855,7 +856,7 @@ bool Kpgp::parseInfo(int action)
     {
       flagEncrypted = TRUE;
     }
-    if( info.find("Bad pass phrase") != -1)
+    if( (info.find("Bad pass phrase") != -1) || (info.find("Need a pass phrase") != -1))
     {
       errMsg = i18n("Bad pass Phrase; couldn't sign");
       returnFlag = FALSE;
