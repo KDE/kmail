@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // kmfolder.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
@@ -1085,7 +1086,7 @@ void KMFolder::ignoreJobsForMessage( KMMessage *msg )
     //FIXME: the questions is : should we iterate through all
     //messages in jobs? I don't think so, because it would
     //mean canceling the jobs that work with other messages
-    if ( it.current()->msgList().first() == msg ) 
+    if ( it.current()->msgList().first() == msg )
     {
       FolderJob* job = it.current();
       mJobList.remove( job );
@@ -1109,6 +1110,34 @@ void KMFolder::removeJobs()
   mJobList.setAutoDelete( true );
   mJobList.clear();
   mJobList.setAutoDelete( false );
+}
+
+//-----------------------------------------------------------------------------
+size_t KMFolder::crlf2lf( char* str, const size_t strLen )
+{
+  const char* source = str;
+  const char* sourceEnd = source + strLen;
+
+  // search the first occurrence of "\r\n"
+  for ( ; source < sourceEnd - 1; ++source ) {
+    if ( *source == '\r' && *( source + 1 ) == '\n' )
+      break;
+  }
+
+  if ( source == sourceEnd - 1 ) {
+    // no "\r\n" found
+    return strLen;
+  }
+
+  // replace all occurrences of "\r\n" with "\n" (in place)
+  char* target = const_cast<char*>( source ); // target points to '\r'
+  ++source; // source points to '\n'
+  for ( ; source < sourceEnd; ++source ) {
+    if ( *source != '\r' || *( source + 1 ) != '\n' )
+      *target++ = *source;
+  }
+  *target = '\0'; // terminate result
+  return target - str;
 }
 
 #include "kmfolder.moc"
