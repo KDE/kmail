@@ -91,7 +91,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
       secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
       korganizeriface.stub \
-      globalsettings.kcfgc globalsettings.cpp
+      globalsettings.kcfgc
 
 kmail_SOURCES = main.cpp
 
