@@ -57,6 +57,29 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
+void KMMessagePart::clear()
+{
+  mOriginalContentTypeStr = QCString();
+  mType = "text";
+  mSubtype = "plain";
+  mCte = "7bit";
+  mContentDescription = QCString();
+  mContentDisposition = QCString();
+  mBody.truncate( 0 );
+  mAdditionalCTypeParamStr = QCString();
+  mName = QString::null;
+  mParameterAttribute = QCString();
+  mParameterValue = QString::null;
+  mCharset = QCString();
+  mPartSpecifier = QString::null;
+  mBodyDecodedSize = 0;
+  mParent = 0;
+  mLoadHeaders = false;
+  mLoadPart = false;
+}
+
+
+//-----------------------------------------------------------------------------
 int KMMessagePart::decodedSize(void) const
 {
   if (mBodyDecodedSize < 0)

@@ -2883,6 +2883,8 @@ void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
   if ( !aPart )
     return;
 
+  aPart->clear();
+
   if( aDwBodyPart && aDwBodyPart->hasHeaders()  ) {
     // This must not be an empty string, because we'll get a
     // spurious empty Subject: line in some of the parts.
