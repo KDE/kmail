@@ -286,6 +286,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
   //connect(mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
   connect(mIdentity,SIGNAL(identityChanged(uint)),
           SLOT(slotIdentityChanged(uint)));
+  connect( kmkernel->identityManager(), SIGNAL(changed(uint)),
+          SLOT(slotIdentityChanged(uint)));
 
   connect(mEdtTo,SIGNAL(completionModeChanged(KGlobalSettings::Completion)),
           SLOT(slotCompletionModeChanged(KGlobalSettings::Completion)));
