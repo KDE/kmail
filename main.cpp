@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 // KMail startup and initialize code
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
@@ -45,7 +46,9 @@ static KCmdLineOptions kmoptions[] =
   { "attach <url>",             I18N_NOOP("Add an attachment to the mail. This can be repeated."), 0 },
   { "check",			I18N_NOOP("Only check for new mail."), 0 },
   { "composer",			I18N_NOOP("Only open composer window."), 0 },
-  { "+[address]",		I18N_NOOP("Send message to 'address'."), 0 },
+  { "+[address|URL]",		I18N_NOOP("Send message to 'address' resp. "
+                                          "attach the file the 'URL' points "
+                                          "to."), 0 },
 //  { "+[file]",                  I18N_NOOP("Show message from file 'file'."), 0 },
   { 0, 0, 0}
 };
@@ -83,7 +86,7 @@ int KMailApplication::newInstance()
     QTimer::singleShot( 100, this, SLOT(newInstance()) );
     return 0;
   }
-  
+
   // process args:
   KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   if (args->getOption("subject"))
@@ -133,13 +136,21 @@ int KMailApplication::newInstance()
 
   for(int i= 0; i < args->count(); i++)
   {
-    if (!to.isEmpty())
-      to += ", ";
-     if (strncasecmp(args->arg(i),"mailto:",7)==0)
-       to += args->url(i).path();
-     else
-       to += QString::fromLocal8Bit( args->arg(i) );
-     mailto = true;
+    if (strncasecmp(args->arg(i),"mailto:",7)==0)
+      to += args->url(i).path() + ", ";
+    else {
+      QString tmpArg = QString::fromLocal8Bit( args->arg(i) );
+      KURL url( tmpArg );
+      if ( url.isValid() )
+        attachURLs += url;
+      else
+        to += tmpArg + ", ";
+    }
+    mailto = true;
+  }
+  if ( !to.isEmpty() ) {
+    // cut off the superfluous trailing ", "
+    to.truncate( to.length() - 2 );
   }
 
   args->clear();
