@@ -66,6 +66,7 @@ void KMAcctPop::init(void)
 bool KMAcctPop::processNewMail(void)
 {
   void (*oldHandler)(int);
+  void (*pipeHandler)(int);
   bool result;
 
   kbp->idle();
@@ -76,8 +77,13 @@ bool KMAcctPop::processNewMail(void)
   // This signal somehow interrupts the network functions and messed up
   // DwPopClient::Open().
   oldHandler = signal(SIGALRM, SIG_IGN);
+  // Another one of those nice little SIGNALS which default action is to 
+  // abort the app when received. SIGPIPE is send when e.g the client attempts
+  // to write to a TCP socket when the connection was shutdown by the server.
+  pipeHandler = signal(SIGPIPE, SIG_IGN);
   result = doProcessNewMail();
   signal(SIGALRM, oldHandler);
+  signal(SIGPIPE, pipeHandler);
 
   return result;
 }
@@ -95,6 +101,7 @@ bool KMAcctPop::doProcessNewMail(void)
   char dummyStr[32];
   KMMessage* msg;
   bool gotMsgs = FALSE;
+
 
   // is everything specified ?
   if (mHost.isEmpty() || mPort<=0 || mLogin.isEmpty())
@@ -164,10 +171,30 @@ bool KMAcctPop::doProcessNewMail(void)
 bool KMAcctPop::popError(const QString aStage, DwPopClient& aClient) const
 {
   kbp->idle();
-  KMsgBox::message(0, "Pop-Mail Error", nls->translate("In ")+aStage+":\n"+
+  // First we assume the worst: A network error
+  if(aClient.LastFailure() != DwProtocolClient::kFailNoFailure) {
+    KMsgBox::message(0, "Pop-Mail Network Error:","Account: " + name() + 
+		     "\n" + nls->translate("In ")+
+		      aStage+":\n"+ aClient.LastFailureStr());
+    kbp->busy();
+    return FALSE;}
+
+  // Maybe it is an app specific error
+  if(aClient.LastError() != DwProtocolClient::kErrNoError) {
+    KMsgBox::message(0, "Pop-Mail Error","Account: " + name() +  
+		     "\n" + nls->translate("In ")+aStage+":\n"+
+		      aClient.LastErrorStr());
+    kbp->busy();
+    return  FALSE;}
+  
+  // Negative response by the server e.g STAT responses '- ....'
+  KMsgBox::message(0, "Pop-Mail Error","Account: " + name() + 
+		   "\n" + nls->translate("In ")+aStage+":\n"+
 		   aClient.MultiLineResponse().c_str());
   kbp->busy();
   return FALSE;
+  
+
 }
 
 
@@ -277,15 +304,17 @@ void KMAcctPop::setProtocol(short aProtocol)
 //
 //=============================================================================
 
-KMPasswdDialog::KMPasswdDialog(QWidget *parent , const char *name ,
-			       const char *caption, const char *login,
-			       const char *passwd)
+KMPasswdDialog::KMPasswdDialog(QWidget *parent, const char *name, 
+			       KMAcctPop *account , const char *caption, 
+			       const char *login,const char *passwd)
   :QDialog(parent,name,true)
 {
   // This function pops up a little dialog which asks you 
   // for a new username and password if one of them was wrong.
 
   kbp->idle();
+
+  act = account;
   setMaximumSize(300,180);
   setMinimumSize(300,180);
   setCaption(caption);
@@ -324,6 +353,8 @@ KMPasswdDialog::KMPasswdDialog(QWidget *parent , const char *name ,
 void KMPasswdDialog::slotOkPressed()
 {
   kbp->busy();
+  act->setLogin(usernameLEdit->text());
+  act->setPasswd(usernameLEdit->text());
   done(1);
 }
 

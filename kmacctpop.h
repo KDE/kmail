@@ -80,13 +80,13 @@ class KMPasswdDialog : public QDialog
   Q_OBJECT
 
 public:
-  KMPasswdDialog(QWidget *p=0, const char *n=0, const char *m="",
-		 const char *login="", const char *pass = "");
+  KMPasswdDialog(QWidget * a = 0,const char *n= 0,KMAcctPop *p=0, const char *m="",const char *login="", const char *pass = "");
 private:
   QLineEdit *usernameLEdit;
   QLineEdit *passwdLEdit;
   QPushButton *ok;
   QPushButton *cancel;
+  KMAcctPop *act;
 
 private slots:
   void slotOkPressed();
