@@ -694,7 +694,7 @@ void KMHeaders::readConfig (void)
     KConfigGroupSaver saver(config, "General");
     mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
     mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize); 
-    mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", true );
+    mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", false );
 
     KMime::DateFormatter::FormatType t =
       (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;

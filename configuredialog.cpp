@@ -2410,7 +2410,7 @@ void AppearancePage::LayoutTab::setup() {
   mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
   mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages", false ) );
   mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize", false ) );
-  mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons", true ) );
+  mCryptoIconsCheck->setChecked( general.readBoolEntry( "showCryptoIcons", false ) );
 
 
   int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
