@@ -2752,8 +2752,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // row 0: help text:
-  label = new QLabel( i18n("Recognize the following prefixes "
-			   "(matching is case-insensitive):"), group );
+  label = new QLabel( i18n("Recognize any sequence of the following prefixes\n"
+			   "(entries are case-insensitive regular expressions):"), group );
   label->setAlignment( AlignLeft|WordBreak );
 
   // row 1, string list editor:
@@ -2767,7 +2767,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 
   // row 2: "replace [...]" check box:
   mReplaceReplyPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefi&x with Re:"), group );
+     new QCheckBox( i18n("Replace recognized prefi&x with \"Re:\""), group );
 
   vlay->addWidget( group );
 
@@ -2776,8 +2776,8 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
   group->layout()->setSpacing( KDialog::marginHint() );
 
   // row 0: help text:
-  label= new QLabel( i18n("Recognize the following prefixes "
-			  "(matching is case-insensitive):"), group );
+  label= new QLabel( i18n("Recognize any sequence of the following prefixes\n"
+			  "(entries are case-insensitive regular expressions):"), group );
   label->setAlignment( AlignLeft|WordBreak );
 
   // row 1: string list editor
@@ -2789,7 +2789,7 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 
   // row 3: "replace [...]" check box:
   mReplaceForwardPrefixCheck =
-     new QCheckBox( i18n("Replace recognized prefix with &Fwd:"), group );
+     new QCheckBox( i18n("Replace recognized prefix with \"&Fwd:\""), group );
 
   vlay->addWidget( group );
 }
@@ -2799,7 +2799,9 @@ void ComposerPage::SubjectTab::setup() {
 
   QStringList prefixList = composer.readListEntry( "reply-prefixes", ',' );
   if ( prefixList.isEmpty() )
-    prefixList << QString::fromLatin1("Re:");
+    prefixList << QString::fromLatin1("Re\\s*:")
+	       << QString::fromLatin1("Re\\[\\d+\\]:")
+	       << QString::fromLatin1("Re\\d+:");
   mReplyListEditor->setStringList( prefixList );
 
   mReplaceReplyPrefixCheck->setChecked( composer.readBoolEntry("replace-reply-prefix", true ) );
