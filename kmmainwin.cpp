@@ -857,7 +857,7 @@ void KMMainWin::slotCompactAll()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotOverrideHtml()
 {
-  if( !mFolderHtmlPref ) {
+  if( mHtmlPref == mFolderHtmlPref ) {
     int result = KMessageBox::warningContinueCancel( this,
       // the warning text is taken from configuredialog.cpp:
       i18n( "Use of HTML in mail will make you more vulnerable to\n"
