@@ -1555,7 +1555,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   if( !aFolder || aFolder->noContent() ||
       aFolder->count() == 0 )
   {
-    if( mMimePartTree )
+    if( mMimePartTree && (mShowMIMETreeMode != 2) )
       mMimePartTree->hide();
   } else {
     if( mMimePartTree && (1 < mShowMIMETreeMode) )
