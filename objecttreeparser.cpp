@@ -1645,9 +1645,8 @@ public:
 	if( cleartextData || new_cleartext ) {
 	  if( mReader )
             mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-							     // ### why not cryptPlug local var?
-                                                           cryptPlugWrapper(),
-                                                           fromAddress ) );
+							     cryptPlug,
+							     fromAddress ) );
 	  bIsOpaqueSigned = true;
 
 	  if( doCheck ){
@@ -1657,10 +1656,12 @@ public:
 	    deb += "\"  <--  E N D    O F    N E W    C O N T E N T\n\n";
 	    kdDebug(5006) << deb << endl;
 	  }
-	  // ### this uses mCryptPlugWrapper, if any. What about our local cryptPlug?
+	  CryptPlugWrapper * oldCryptPlug = cryptPlugWrapper();
+	  setCryptPlugWrapper( cryptPlug );
 	  insertAndParseNewChildNode( sign,
 				      doCheck ? new_cleartext : cleartextData->data(),
 				      "opaqued signed data" );
+	  setCryptPlugWrapper( oldCryptPlug );
 	  if( doCheck )
 	    delete new_cleartext;
 
@@ -1691,11 +1692,13 @@ public:
       {
 	if( mReader )
 	  mReader->queueHtml( mReader->writeSigstatHeader( messagePart,
-							   // ### (s.a.) local cryptPlug?
-							 cryptPlugWrapper(),
-							 fromAddress ) );
-	// ### this uses mCryptPlugWrapper internally. Why not our local cryptPlug?
+							   cryptPlug,
+							   fromAddress ) );
+	CryptPlugWrapper * oldCryptPlug = cryptPlugWrapper();
+	setCryptPlugWrapper( cryptPlug );
 	parseObjectTree( data );
+	setCryptPlugWrapper( oldCryptPlug );
+	
 	if( mReader )
 	  mReader->queueHtml( mReader->writeSigstatFooter( messagePart ) );
       }
