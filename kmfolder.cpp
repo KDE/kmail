@@ -551,8 +551,14 @@ KMMsgInfo* KMFolder::unGetMsg(int idx)
   mb = getMsgBase(idx);
   if (!mb) return 0;
 
-  if (mb->isMessage())
-    return setIndexEntry( idx, (KMMessage*)mb );
+
+  if (mb->isMessage()) {
+    // Remove this message from all jobs' list it might still be on.
+    // setIndexEntry deletes the message.
+    KMMessage *msg = static_cast<KMMessage*>(mb); 
+    ignoreJobsForMessage( msg );
+    return setIndexEntry( idx, msg );
+  }
 
   return 0;
 }
