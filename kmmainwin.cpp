@@ -1232,6 +1232,9 @@ void KMMainWin::slotPrintMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyToMsg()
 {
+  if (!mHeaders->currentMsg())
+    return;
+
   KMCommand *command = new KMReplyToCommand( this, mHeaders->currentMsg(),
                                             mMsgView->copyText() );
   command->start();
@@ -1241,6 +1244,9 @@ void KMMainWin::slotReplyToMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotNoQuoteReplyToMsg()
 {
+  if (!mHeaders->currentMsg())
+    return;
+
   KMCommand *command = new KMNoQuoteReplyToCommand( this,
                                                     mHeaders->currentMsg() );
   command->start();
@@ -1250,6 +1256,8 @@ void KMMainWin::slotNoQuoteReplyToMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyAllToMsg()
 {
+  if (!mHeaders->currentMsg())
+	return;
   KMCommand *command = new KMReplyToAllCommand( this,  mHeaders->currentMsg(),
                                                mMsgView->copyText() );
   command->start();
@@ -1259,6 +1267,8 @@ void KMMainWin::slotReplyAllToMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotReplyListToMsg()
 {
+  if (!mHeaders->currentMsg())
+	return;
   KMCommand *command = new KMReplyListCommand( this, mHeaders->currentMsg(),
                                               mMsgView->copyText() );
   command->start();
@@ -1274,6 +1284,9 @@ void KMMainWin::slotForward() {
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardMsg()
 {
+  if (!mHeaders->selectedMsgs())
+    return;
+
   KMCommand *command = new KMForwardCommand( this, *mHeaders->selectedMsgs(),
                                              mFolder );
   command->start();
@@ -1283,6 +1296,9 @@ void KMMainWin::slotForwardMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotForwardAttachedMsg()
 {
+  if (!mHeaders->selectedMsgs())
+    return;
+
   KMCommand *command = new KMForwardAttachedCommand( this,
     *mHeaders->selectedMsgs(), mFolder );
   command->start();
@@ -1292,6 +1308,9 @@ void KMMainWin::slotForwardAttachedMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotRedirectMsg()
 {
+  if (!mHeaders->currentMsg())
+    return;
+
   KMCommand *command = new KMRedirectCommand( this, mHeaders->currentMsg() );
   command->start();
 }
@@ -1300,6 +1319,9 @@ void KMMainWin::slotRedirectMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotBounceMsg()
 {
+  if (!mHeaders->currentMsg())
+    return;
+
   KMCommand *command = new KMBounceCommand( this, mHeaders->currentMsg() );
   command->start();
 }
@@ -1317,6 +1339,9 @@ void KMMainWin::slotMessageQueuedOrDrafted()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotEditMsg()
 {
+  if (!mHeaders->currentMsg())
+    return;
+
   KMCommand *command = new KMEditMsgCommand( this, mHeaders->currentMsg() );
   command->start();
 }
@@ -1353,6 +1378,8 @@ void KMMainWin::slotUndo()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotShowMsgSrc()
 {
+  if (!mHeaders->currentMsg())
+    return;
   KMCommand *command = new KMShowMsgSrcCommand( this, mHeaders->currentMsg(),
     mCodec, mMsgView->isfixedFont() );
   command->start();
