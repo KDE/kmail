@@ -206,7 +206,6 @@ void KMComposeWin::readConfig(void)
   config->setGroup("Composer");
   mAutoSign = (stricmp(config->readEntry("signature","manual"),"auto")==0);
   mShowToolBar = config->readNumEntry("show-toolbar", 1);
-  mSendImmediate = config->readNumEntry("send-immediate", -1);
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
@@ -258,7 +257,6 @@ void KMComposeWin::writeConfig(void)
   config->setGroup("Composer");
   config->writeEntry("signature", mAutoSign?"auto":"manual");
   config->writeEntry("show-toolbar", mShowToolBar);
-  config->writeEntry("send-immediate", mSendImmediate);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
 #ifdef CHARSETS  
@@ -863,6 +861,7 @@ bool KMComposeWin::applyChanges(void)
     bodyPart.setTypeStr("text");
     bodyPart.setSubtypeStr("plain");
     str = pgpProcessedMsg();
+    if (str.isNull()) return FALSE;
 #ifdef CHARSETS      
     str=convertToSend(str);
     cout<<"Setting charset to: "<<mCharset<<"\n";
@@ -1498,13 +1497,13 @@ void KMComposeWin::slotDropAction()
 
 
 //----------------------------------------------------------------------------
-void KMComposeWin::slotSend()
+void KMComposeWin::doSend(int aSendNow)
 {
   bool sentOk;
 
   kbp->busy();
   applyChanges();
-  sentOk = msgSender->send(mMsg);
+  sentOk = (applyChanges() && msgSender->send(mMsg, aSendNow));
   kbp->idle();
 
   if (sentOk)
@@ -1512,34 +1511,27 @@ void KMComposeWin::slotSend()
     mAutoDeleteMsg = FALSE;
     close();
   }
-  else warning("Failed to send message.");
+}
+
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotSend()
+{
+  doSend();
 }
 
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendLater()
 {
-  kbp->busy();
-  applyChanges();
-  if(msgSender->send(mMsg,FALSE))
-  {
-    mAutoDeleteMsg = FALSE;
-    close();
-  }
-  kbp->idle();
+  doSend(FALSE);
 }
 
 
 //----------------------------------------------------------------------------
 void KMComposeWin::slotSendNow()
 {
-  kbp->busy();
-  if(applyChanges() && msgSender->send(mMsg,TRUE))
-  {
-    mAutoDeleteMsg = FALSE;
-    close();
-  }
-  kbp->idle();
+  doSend(TRUE);
 }
 
 
@@ -1553,7 +1545,7 @@ void KMComposeWin::slotAppendSignature()
   if (sigFileName.isEmpty())
   {
     // open a file dialog and let the user choose manually
-    KFileDialog dlg(getenv("HOME"));
+    KFileDialog dlg(getenv("HOME"),0,this,0,TRUE,FALSE);
     dlg.setCaption(i18n("Choose Signature File"));
     if (!dlg.exec()) return;
     sigFileName = dlg.selectedFile();

@@ -1,3 +1,17 @@
+1998-06-30  Stefan Taferner  <taferner@kde.org> (KMail-0.7.9)
+
+	* PGP: removed dialog asking for pass phrase when only
+	signed message was given, added missing asking for pass
+	phrase when encrypted/signed message is sent.
+
+	* Composer: fixed bug that showed busy pointer all the
+	time with auto-append-signature set and no signature file
+	given.
+
+	* Composer: removed mSendImmediate which seems unused
+	in the composer nowadays. Simplified code of slotSend,
+	slotSendNow, and slotSendLater (to be easier consistent).
+
 1998-06-29  Stefan Taferner  <taferner@kde.org> (KMail-0.7.8)
 
 	* Config: writeConfig() was not called when windows

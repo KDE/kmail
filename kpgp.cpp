@@ -95,6 +95,7 @@ bool
 Kpgp::setMessage(const QString mess)
 {
   int index;
+  bool isSigned;
 
   clear();
   input = mess;
@@ -111,13 +112,17 @@ Kpgp::setMessage(const QString mess)
 			 "Please check your PATH is set correctly.");
       return FALSE;
     }
+
+    // test if the message is encrypted or signed
+    isSigned = (strcmp(input.data() + index + 15, "SIGNED ")==0);
+
     // front and backmatter...
     front = input.left(index);
     index = input.find("-----END PGP",index);
     index = input.find("\n",index+1);
     back  = input.right(input.size() - index - 1);
 
-    prepare(TRUE);
+    prepare(isSigned);
     runPGP(DECRYPT);
     return TRUE;
   }
@@ -198,6 +203,17 @@ Kpgp::decrypt(void)
 }
 
 bool 
+Kpgp::testSign(void)
+{
+  bool retval;
+
+  // everything prepared?
+  if(!prepare(FALSE)) return FALSE;
+  // ok now try to decrypt the message.
+  return runPGP(ENCSIGN);
+}
+
+bool 
 Kpgp::encryptFor(const QStrList& aPers, bool sign)
 {
   int action = ENCRYPT;
@@ -205,7 +221,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   QStrList* pl;
   char* pers;
 
-  if(!prepare(FALSE)) return FALSE;
+  if(!prepare(TRUE)) return FALSE;
 
   persons.clear();
   pl = (QStrList*)&aPers;
@@ -246,7 +262,7 @@ Kpgp::havePublicKey(QString _person)
 bool 
 Kpgp::sign(void)
 {
-  if (!prepare(FALSE)) return FALSE;
+  if (!prepare(TRUE)) return FALSE;
   return runPGP(SIGN);
 }
 
@@ -415,25 +431,37 @@ const QString
 Kpgp::decode(const QString text, bool returnHTML)
 {
   QString deciphered;
+  bool isSigned, decryptOk;
+  int i = text.find("-----BEGIN PGP ");
+  if (i == -1) return text;
 
-  if(text.find("-----BEGIN PGP") == -1) return text;
+  // test if the message is encrypted or signed
+  isSigned = (strcmp(((const char*)text)+i+15, "SIGNED ")==0);
+
   Kpgp* pgp=Kpgp::getKpgp();
   pgp->setMessage(text);
+
   // first check if text is encrypted
   if(!pgp->isEncrypted()) return text;
 
   //need to decrypt it...
-  if(!pgp->havePassPhrase) pgp->askForPass();
-  pgp->decrypt();
+  if(!isSigned && !pgp->havePassPhrase) pgp->askForPass();
+  decryptOk = pgp->decrypt();
 
   // o.k. put it together...
   deciphered = pgp->frontmatter();
 
+  if(returnHTML) deciphered += "<B>";
+  else deciphered += "----- ";
+
   if(!pgp->isSigned()) {
-    deciphered += pgp->message();
+    if (decryptOk) deciphered += i18n("Encrypted message");
+    else {
+      deciphered +=  i18n("Cannot decrypt message:");
+      deciphered += " ";
+      deciphered += pgp->lastErrorMsg();
+    }
   } else {
-    if(returnHTML) deciphered += "<B>";
-    else deciphered += "----- ";
     if(pgp->goodSignature()){
       deciphered += i18n("Message signed by");
     } else {
@@ -442,15 +470,21 @@ Kpgp::decode(const QString text, bool returnHTML)
       deciphered += i18n("Message has a bad signature from");
     }
     deciphered += " " + pgp->signedBy();
-    if(returnHTML) deciphered += "</B><BR>";
-    else deciphered += " -----\n\n";
-    deciphered += pgp->message();
-    if(returnHTML) deciphered += "<B><BR>";
-    else deciphered += "\n\n----- ";
-    deciphered += i18n("End PGP signed message"); 
-    if(returnHTML) deciphered += "</B><BR>";
-    else deciphered += " -----\n";
   }
+
+  if(returnHTML) deciphered += "</B><BR>";
+  else deciphered += " -----\n\n";
+  
+  deciphered += pgp->message();
+
+  if(returnHTML) deciphered += "<B><BR>";
+  else deciphered += "\n\n----- ";
+
+  if (pgp->isSigned()) deciphered += i18n("End PGP signed message");
+  else deciphered += i18n("Encrypted message");
+
+  if(returnHTML) deciphered += "</B><BR>";
+  else deciphered += " -----\n";
 
   //add backmatter
   deciphered += pgp->backmatter();

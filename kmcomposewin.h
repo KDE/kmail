@@ -280,6 +280,9 @@ private:
   void setEditCharset();
 #endif  
 
+  /** Send the message */
+  void doSend(int sendNow=-1);
+
 protected:
   QWidget   mMainWidget;
   KMLineEdit mEdtFrom, mEdtReplyTo, mEdtTo, mEdtCc, mEdtBcc, mEdtSubject;
@@ -301,7 +304,6 @@ protected:
   KTabListBox *mAtmListBox;
   KMMsgPartList mAtmList;
   bool mAutoSign, mAutoPgpSign, mShowToolBar, mAutoDeleteMsg;
-  int  mSendImmediate;
   long mShowHeaders;
   QString mDefEncoding;
   int mNumHeaders;

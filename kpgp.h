@@ -55,6 +55,8 @@ public:
   /** decrypts the message if the passphrase is good.
     returns false otherwise */
   bool decrypt(void);
+  /** test the signature. */
+  bool testSign(void);
   /** encrypt the message for a list of persons. */
   bool encryptFor(const QStrList& receivers, bool sign = TRUE);
   /** sign the message. */

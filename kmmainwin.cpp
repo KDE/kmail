@@ -323,10 +323,8 @@ void KMMainWin::slotCompose()
   KMMessage* msg = new KMMessage;
   msg->initHeader();
 
-  kbp->busy();
   win = new KMComposeWin(msg);
   win->show();
-  kbp->idle();
 }
 
 
@@ -658,10 +656,8 @@ void KMMainWin::slotMailtoCompose()
   msg->initHeader();
   msg->setTo(mUrlCurrent.mid(7,255));
 
-  kbp->busy();
   win = new KMComposeWin(msg);
   win->show();
-  kbp->idle(); 
 }
 
 
@@ -675,10 +671,8 @@ void KMMainWin::slotMailtoReply()
   msg = msg->createReply(FALSE);
   msg->setTo(mUrlCurrent.mid(7,255));
 
-  kbp->busy();
   win = new KMComposeWin(msg);
   win->show();
-  kbp->idle(); 
 }
 
 
@@ -692,10 +686,8 @@ void KMMainWin::slotMailtoForward()
   msg = msg->createForward();
   msg->setTo(mUrlCurrent.mid(7,255));
 
-  kbp->busy();
   win = new KMComposeWin(msg);
   win->show();
-  kbp->idle(); 
 }
 
 
