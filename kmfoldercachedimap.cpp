@@ -126,7 +126,8 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mSubfolderState( imapNoInformation ), mIsSelected( false ),
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     uidWriteTimer( -1 ), mLastUid( 0 ), mTentativeHighestUid( 0 ),
-    mUserRights( 0 ), mFolderRemoved( false ), mResync( false ),
+    mUserRights( 0 ), mSilentUpload( false ),
+    mFolderRemoved( false ), mResync( false ),
     /*mHoldSyncs( false ),*/ mRecurse( true ),
     mStatusChangedLocally( false )
 {
