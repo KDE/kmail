@@ -762,7 +762,9 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     }
 
     deleteMsg( msg );
-    rc = f->addMsg( newMsg );
+    if ( f->addMsg( newMsg ) == 0 )
+      // Message stored
+      rc = newMsg->getMsgSerNum();
 
   }else{
     // Message not found - store it newly
