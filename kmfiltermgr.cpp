@@ -76,14 +76,16 @@ int KMFilterMgr::process(KMMessage* msg)
 {
   KMFilter* filter;
   bool stopIt = FALSE;
-  int status = 0;
+  int status = -1;
   int result;
 
   for (filter=first(); !stopIt && filter; filter=next())
   {
     if (!filter->matches(msg)) continue;
     //    debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
-    //	  msg->subject().data());
+    //    msg->subject().data());
+    if (status < 0)
+      status = 0;
     result = filter->execActions(msg, stopIt);
     if (result == 2) { // Critical error
       status = 2;
@@ -92,6 +94,9 @@ int KMFilterMgr::process(KMMessage* msg)
     else if (result == 1) // Small problem encountered, keep copy of message
       status = 1;
   }
+
+  if (status < 0) // No filters matched, keep copy of message
+    status = 1;
 
   return status;
 }

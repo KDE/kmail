@@ -768,7 +768,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder)
 
   kbp->busy();
   mFolder = (KMFolder*)aFolder;
-  mMsgView->clear();
+  //  mMsgView->clear();
   mHeaders->setFolder(mFolder);
   kbp->idle();
 }

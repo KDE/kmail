@@ -159,9 +159,10 @@ bool KMFolderDir::reload(void)
     fname = fileInfo->fileName();
 
     if ((fname[0]=='.') && 
-	!(fname.right(10)==".directory")) // skip table of contents files
+	!(fname.right(10)==".directory"))
       continue;
-    
+    else if (fname == ".directory")
+      continue;    
     else if (fileInfo->isDir()) // a directory
       diList.append(fname);
     

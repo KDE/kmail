@@ -285,7 +285,15 @@ void KMReaderWin::updateReaderWin()
   else
   {
     mViewer->begin();
-    mViewer->write("<HTML><BODY></BODY></HTML>");
+    mViewer->write("<HTML><BODY" +
+		   QString(" TEXT=#%1").arg(colorToString(c1)) +
+		   QString(" LINK=#%1").arg(colorToString(c2)) +
+		   QString(" VLINK=#%1").arg(colorToString(c3)) +
+		   QString(" BGCOLOR=#%1").arg(colorToString(c4)));
+
+    if (mBackingPixmapOn)
+      mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
+    mViewer->write("></BODY></HTML>");
     mViewer->end();
   }
 
