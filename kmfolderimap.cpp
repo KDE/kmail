@@ -1007,11 +1007,7 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
     // download complete message or part (attachment)
     if ( partSpecifier == "STRUCTURE" ) // hide from outside
       partSpecifier = QString::null;
-    if ( !partSpecifier.isEmpty() )
-    {
-      ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier+".MIME" );
-      job->start();
-    }
+
     ImapJob *job = new ImapJob( msg, jt, kmfi, partSpecifier );
     return job;
   }

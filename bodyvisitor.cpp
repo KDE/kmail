@@ -105,10 +105,12 @@ namespace KMail {
           // load the part itself
           part->setLoadPart( true );
         }
-        selected.append( part );
       }
-      if ( parentNeedsLoading( part ) )
+      if ( !part->partSpecifier().endsWith(".HEADER") )
         part->setLoadHeaders( true ); // load MIME header
+      
+      if ( part->loadHeaders() || part->loadPart() )
+        selected.append( part );
     }
     return selected;
   }
