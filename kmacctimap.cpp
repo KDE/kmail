@@ -86,7 +86,7 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 
 //-----------------------------------------------------------------------------
 
-void KMAcctImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Job* /*job*/, const QString& /*context*/, bool /*abortSync*/ )
+bool KMAcctImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Job* /*job*/, const QString& /*context*/, bool /*abortSync*/ )
 {
   if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
@@ -94,7 +94,7 @@ void KMAcctImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Jo
   {
     // folder is gone, so reload the folderlist
     if (mFolder) mFolder->listDirectory();
-    return;
+    return true;
   }
   // killAllJobs needs to disconnect the slave explicitely if the connection
   // went down.
@@ -115,6 +115,7 @@ void KMAcctImap::handleJobError( int errorCode, const QString &errorMsg, KIO::Jo
      if ( mFolder )
         mFolder->listDirectory( );
   }
+  return false; // abort
 }
 
 

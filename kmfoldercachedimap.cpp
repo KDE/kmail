@@ -511,7 +511,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
-  //kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
+  kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
   {
@@ -888,23 +888,25 @@ void KMFolderCachedImap::uploadFlags()
     }
     // FIXME END DUPLICATED FROM KMFOLDERIMAP
 
-    connect( mAccount, SIGNAL( imapStatusChanged(KMFolder*, const QString&, bool) ),
-             this, SLOT( slotImapStatusChanged(KMFolder*, const QString&, bool) ) );
-  } else {
-    emit newState( label(), mProgress, i18n("No messages to upload to server"));
-    serverSyncInternal();
+    if ( mStatusFlagsJobs ) {
+      connect( mAccount, SIGNAL( imapStatusChanged(KMFolder*, const QString&, bool) ),
+               this, SLOT( slotImapStatusChanged(KMFolder*, const QString&, bool) ) );
+      return;
+    }
   }
+  emit newState( label(), mProgress, i18n("No messages to upload to server"));
+  serverSyncInternal();
 }
 
-void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&, bool)
+void KMFolderCachedImap::slotImapStatusChanged(KMFolder* folder, const QString&, bool cont)
 {
   if ( folder->storage() == this ) {
     --mStatusFlagsJobs;
-    if ( mStatusFlagsJobs == 0 ) {
+    if ( mStatusFlagsJobs == 0 || !cont ) // done or aborting
       disconnect( mAccount, SIGNAL( imapStatusChanged(KMFolder*, const QString&, bool) ),
                   this, SLOT( slotImapStatusChanged(KMFolder*, const QString&, bool) ) );
+    if ( mStatusFlagsJobs == 0 && cont )
       serverSyncInternal();
-    }
   }
 }
 
@@ -1335,6 +1337,7 @@ void KMFolderCachedImap::listDirectory2() {
 
 void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool success)
 {
+  Q_UNUSED(sub);
   //kdDebug(5006) << label() << " slotSubFolderComplete: " << sub->label() << endl;
   if ( success )
     serverSyncInternal();
@@ -1342,6 +1345,7 @@ void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool suc
   {
     // success == false means the sync was aborted.
     if ( mCurrentSubfolder ) {
+      Q_ASSERT( sub == mCurrentSubfolder );
       disconnect( mCurrentSubfolder, SIGNAL( folderComplete(KMFolderCachedImap*, bool) ),
                   this, SLOT( slotSubFolderComplete(KMFolderCachedImap*, bool) ) );
       mCurrentSubfolder = 0;

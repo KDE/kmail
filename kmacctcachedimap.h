@@ -131,7 +131,7 @@ public:
    * Handle an error coming from a KIO job
    * See ImapAccountBase::handleJobError for details.
    */
-  virtual void handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
+  virtual bool handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
 public slots:
   void processNewMail() { processNewMail( mFolder, true ); }

@@ -265,8 +265,9 @@ namespace KMail {
      *
      * @param context a sentence that gives some context to the error, e.g. i18n("Error while uploading message [...]")
      * @param abortSync if true, abort sync in all cases (see above). If false, ask the user (when possible).
+     * @return false when aborting, true when continuing
      */
-    virtual void handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false ) = 0;
+    virtual bool handleJobError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false ) = 0;
 
   public slots:
     /**
@@ -391,9 +392,9 @@ namespace KMail {
     /**
      * Emitted upon completion of the job for setting the status for a group of UIDs,
      * as a result of a setImapStatus call.
-     * If the job succeeded, success is true.
+     * On error, if the user chooses abort (not continue), cont is set to false.
      */
-    void imapStatusChanged( KMFolder*, const QString& imapPath, bool success );
+    void imapStatusChanged( KMFolder*, const QString& imapPath, bool cont );
 
     /**
      * Emitted when the get-user-rights job is done,

@@ -795,8 +795,8 @@ namespace KMail {
      int errorCode = job->error();
      if (errorCode && errorCode != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
      {
-       emit imapStatusChanged( (*it).parent, (*it).path, false );
-       handleJobError( errorCode, job->errorText(), job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
+       bool cont = handleJobError( errorCode, job->errorText(), job, i18n( "Error while uploading status of messages to server: " ) + '\n' );
+       emit imapStatusChanged( (*it).parent, (*it).path, cont );
      }
      else
      {
