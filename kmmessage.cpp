@@ -2451,6 +2451,52 @@ QString KMMessage::generateMessageId( const QString& addr )
 
 
 //-----------------------------------------------------------------------------
+QCString KMMessage::html2source( const QCString & src )
+{
+  QCString result( 1 + 4*src.length() );  // maximal possible length
+
+  QCString::ConstIterator s = src.begin();
+  QCString::Iterator d = result.begin();
+  while ( *s ) {
+    switch ( *s ) {
+    case '<': {
+        *d++ = '&';
+        *d++ = 'l';
+        *d++ = 't';
+        *d++ = ';';
+        ++s;
+      }
+      break;
+    case '\r': {
+        ++s;
+      }
+      break;
+    case '\n': {
+        *d++ = '<';
+        *d++ = 'b';
+        *d++ = 'r';
+        *d++ = '>';
+        ++s;
+      }
+      break;
+    case '>': {
+        *d++ = '&';
+        *d++ = 'g';
+        *d++ = 't';
+        *d++ = ';';
+        ++s;
+      }
+      break;
+    default:
+        *d++ = *s++;
+    }
+  }
+  result.truncate( d - result.begin() ); // adds trailing NUL
+  return result;
+}
+
+
+//-----------------------------------------------------------------------------
 QCString KMMessage::lf2crlf( const QCString & src )
 {
   QCString result( 1 + 2*src.length() );  // maximal possible length

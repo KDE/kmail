@@ -140,6 +140,7 @@ void KMReaderWin::parseObjectTree( partNode* node, bool showOneMimePart,
     }
   }
 
+  bool isImage = false;
 
   if( node ) {
     partNode* curNode = node;
@@ -219,12 +220,9 @@ kdDebug(5006) << "html" << endl;
                 if( 0 <= i ) cstr.truncate(i);
               }
               // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-              
-              if( !htmlMail() )
-                writeHTMLStr( "<pre>" );
-              writeHTMLStr(mCodec->toUnicode( cstr ));
-              if( !htmlMail() )
-                writeHTMLStr( "</pre>" );
+
+              writeHTMLStr(mCodec->toUnicode(
+                htmlMail() ? cstr : KMMessage::html2source( cstr ) ) );
               bDone = true;
             }
             break;
@@ -671,6 +669,7 @@ kdDebug(5006) << "pkcs7 mime     ==      S/MIME TYPE: signed-data" << endl;
         break;
       case DwMime::kTypeImage: {
 kdDebug(5006) << "* image *" << endl;
+
           switch( curNode->subType() ){
           case DwMime::kSubtypeJpeg: {
 kdDebug(5006) << "JPEG" << endl;
@@ -681,6 +680,7 @@ kdDebug(5006) << "GIF" << endl;
             }
             break;
           }
+          isImage = true;
         }
         break;
       case DwMime::kTypeAudio: {
@@ -691,6 +691,11 @@ kdDebug(5006) << "basic" << endl;
             }
             break;
           }
+          // We allways show audio as icon.
+          /*
+          writePartIcon(&curNode->msgPart(), aMsg->partNumber( curNode->dwPart() ));
+          bDone = true;
+          */
         }
         break;
       case DwMime::kTypeVideo: {
@@ -710,8 +715,29 @@ kdDebug(5006) << "* model *" << endl;
         break;
       }
       if( !bDone ) {
-        QCString cstr( curNode->msgPart().bodyDecoded() );
-        writeBodyStr(cstr, mCodec);
+      /*
+        bool asIcon = true;
+        switch (mAttachmentStyle)
+        {
+        case IconicAttmnt:
+          asIcon = TRUE;
+          break;
+        case InlineAttmnt:
+          asIcon = FALSE;
+          break;
+        case SmartAttmnt:
+          asIcon = ( curNode->msgPart().contentDisposition().find("inline") < 0 );
+        }
+        if( asIcon ) {
+          if( isImage )
+            inlineImage = true;
+          writePartIcon(&curNode->msgPart(), 1);//aMsg->partNumber( curNode->dwPart() ));
+          if( isImage )
+            inlineImage = false;
+        } else */{
+          QCString cstr( curNode->msgPart().bodyDecoded() );
+          writeBodyStr(cstr, mCodec);
+        }
       }
       curNode->mWasProcessed = true;
     }

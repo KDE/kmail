@@ -366,6 +366,13 @@ public:
    */
   static QString generateMessageId( const QString& addr );
 
+  /** Convert '<' into "&lt;" resp. '>' into "&gt;" in order to
+    * prevent their interpretation by KHTML.
+    * Does *not* use the Qt replace function but runs a very fast C code
+    * the same way as lf2crlf() does.
+   */
+  static QCString html2source( const QCString & src );
+
   /** Convert LF line-ends to CRLF
    */
   static QCString lf2crlf( const QCString & src );
