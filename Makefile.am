@@ -8,7 +8,7 @@ bin_PROGRAMS = kmail
 
 kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
-		ktablistbox.cpp kmcomposewin.cpp kmfolder.cpp \
+		kmcomposewin.cpp kmfolder.cpp \
 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
 		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp main.cpp kmmainview.cpp kmacctfolder.cpp \
@@ -18,7 +18,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
-		ktablistbox.moc kmcomposewin.moc kbusyptr.moc \
+		kmcomposewin.moc kbusyptr.moc \
 		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
 		kmmainview.moc kmacctmgr.moc kmfolderdir.moc \
 		kmfoldernode.moc kmacctseldlg.moc kshortcut.moc \
@@ -94,10 +94,6 @@ kmfolderdir.moc: kmfolderdir.h
 kmcomposewin.cpp:kmcomposewin.moc
 kmcomposewin.moc: kmcomposewin.h
 	$(MOC) kmcomposewin.h -o kmcomposewin.moc
-
-ktablistbox.cpp:ktablistbox.moc
-ktablistbox.moc: ktablistbox.h
-	$(MOC) ktablistbox.h -o ktablistbox.moc
 
 kbusyptr.cpp:kbusyptr.moc
 kbusyptr.moc: kbusyptr.h
