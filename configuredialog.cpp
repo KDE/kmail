@@ -336,7 +336,7 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 
   button = new QPushButton( i18n("&New..."), this );
   mRenameButton = new QPushButton( i18n("&Rename..."), this);
-  mRemoveButton = new QPushButton( i18n("Re&move"), this );
+  mRemoveButton = new QPushButton( i18n("Re&move..."), this );
   button->setAutoDefault( false );
   mRenameButton->setAutoDefault( false );
   mRemoveButton->setAutoDefault( false );
@@ -1440,15 +1440,13 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   // "beep on new mail" check box:
-  mBeepNewMailCheck = new QCheckBox(i18n("&Beep on new mail"), group );
+  mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
 
   // "display message box" check box:
-  mShowMessageBoxCheck =
-    new QCheckBox(i18n("Display message box on &new mail"), group );
+  mShowMessageBoxCheck = new QCheckBox(i18n("Dis&play message box"), group );
 
   // "Execute command" check box:
-  mMailCommandCheck =
-    new QCheckBox( i18n("E&xecute command line on new mail"), group );
+  mMailCommandCheck = new QCheckBox( i18n("E&xecute command line"), group );
 
   // HBox layout for the "specify command" line:
   QHBox *hbox = new QHBox( group );
