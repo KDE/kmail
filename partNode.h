@@ -70,10 +70,11 @@ private:
     int calcNodeIdOrFindNode( int& curId, const partNode* calcNode,
                               int findId, partNode** findNode );
 
-public:                      
+public:
     partNode( DwBodyPart* dwPart,
               int explicitType    = DwMime::kTypeUnknown,
-              int explicitSubType = DwMime::kSubtypeUnknown ) :
+              int explicitSubType = DwMime::kSubtypeUnknown,
+	      bool deleteDwBodyPart = false ) :
         mRoot(      0 ),
         mPrev(      0 ),
         mNext(      0 ),
@@ -85,7 +86,7 @@ public:
         mIsSigned(     false ),
         mMsgPartOk(    false ),
         mEncodedOk(    false ),
-        mDeleteDwBodyPart( false ),
+        mDeleteDwBodyPart( deleteDwBodyPart ),
         mMimePartTreeItem( 0 ) {
         if( explicitType != DwMime::kTypeUnknown ) {
             mType    = explicitType;     // this happens e.g. for the Root Node
@@ -187,15 +188,15 @@ public:
     void setCryptoType( CryptoType cryptoType ) {
         mCryptoType = cryptoType;
     }
-    
+
     CryptoType cryptoType() const {
         return mCryptoType;
     }
-    
+
     // return first not-unknown and not-none crypto type
     // or return none (or unknown, resp.) if no other crypto type set
     CryptoType firstCryptoType() const ;
-    
+
     void setEncrypted( bool isEncrypted ) {
         mIsEncrypted = isEncrypted;
     }

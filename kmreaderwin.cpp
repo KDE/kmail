@@ -1868,7 +1868,6 @@ void KMReaderWin::initHtmlWidget(void)
 
   // Espen 2000-05-14: Getting rid of thick ugly frames
   mViewer->view()->setLineWidth(0);
-
   connect(mViewer->browserExtension(),
           SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
           SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
@@ -1967,10 +1966,12 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   else
     updateReaderWinTimer.start( 0, TRUE );
 
-  if (mDelayedMarkAsRead && (mDelayedMarkTimeout != 0))
-    mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
-  else
-    slotTouchMessage();
+  if (mDelayedMarkAsRead) {
+    if ( mDelayedMarkTimeout == 0 )
+    	slotTouchMessage();
+    else
+        mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2898,7 +2899,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
   else
     s += "false";
   s += "\n#######\n#######";
-kdDebug(5006) << s << endl;
+  kdDebug(5006) << s << endl;
 
   mColorBar->setEraseColor( QColor( "white" ) );
   mColorBar->setText("");
@@ -2915,7 +2916,6 @@ kdDebug(5006) << s << endl;
 
   type = aMsg->typeStr();
   numParts = aMsg->numBodyParts();
-
 
   int mainType    = aMsg->type();
   int mainSubType = aMsg->subtype();
@@ -2954,16 +2954,12 @@ kdDebug(5006) << s << endl;
     mainBody->Parse();
   }
 
-  if( mRootNode ) {
-    if( onlyProcessHeaders )
-      savedRootNode = mRootNode;
-    else
-      delete mRootNode;
-  }
-  mRootNode = new partNode( mainBody ? mainBody : 0,
-                            mainType,
-                            mainSubType );
+  if( onlyProcessHeaders )
+    savedRootNode = mRootNode;
+  else
+    delete mRootNode;
 
+  mRootNode = new partNode( mainBody, mainType, mainSubType, true );
   mRootNode->setFromAddress( aMsg->from() );
 
   QString cntDesc, cntSize, cntEnc;
@@ -3018,7 +3014,6 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
       writePartIcon(&vCardNode->msgPart(), aMsg->partNumber(vCardNode->dwPart()), TRUE );
     }
   }
-
   queueHtml("<div id=\"header\">"
           + (writeMsgHeader(aMsg, hasVCard))
           + "</div><div><br></div>");
@@ -3041,7 +3036,6 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   aMsg->setSignatureState(  signatureState  );
 
   bool emitReplaceMsgByUnencryptedVersion = false;
-
 // note: The following define is specified on top of this file. To compile
 //       a less strict version of KMail just comment it out there above.
 #ifdef STRICT_RULES_OF_GERMAN_GOVERNMENT_02
@@ -3117,14 +3111,11 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
 
   // save current main Content-Type before deleting mRootNode
   int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeUnknown;
-
   // if necessary restore original mRootNode
-  if( savedRootNode ) {
-    if( mRootNode )
-      delete mRootNode;
+  if(onlyProcessHeaders) {
+    delete mRootNode;
     mRootNode = savedRootNode;
   }
-
   // store message id to avoid endless recursions
   setIdOfLastViewedMessage( aMsg->msgId() );
 
@@ -4337,7 +4328,7 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
-  //mViewer->widget()->setGeometry(0, 0, width(), height());
+//  mViewer->widget()->setGeometry(0, 0, width(), height());
   mBox->setGeometry(0, 0, width(), height());
 }
 
@@ -4887,7 +4878,6 @@ void KMReaderWin::slotDocumentChanged()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotTextSelected(bool)
 {
-
   QString temp = mViewer->selectedText();
   kapp->clipboard()->setText(temp);
 }
