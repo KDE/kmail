@@ -1,6 +1,6 @@
 SUBDIRS = pics doc
-INCLUDES = $(all_includes)
-LDADD	= $(all_libraries) -lkhtmlw -ljscript -lkdeui -lkdecore -lqt -lXext -lX11 -lgif $(LIBJPEG) -lmimelib $(LIBSOCKET)
+INCLUDES = $(all_includes) -g
+LDADD	= $(all_libraries) -lkhtmlw -ljscript -lkdeui -lkdecore -lqt -lXext -lX11 -lgif  $(LIBJPEG) -lmimelib $(LIBSOCKET)
 
 bin_PROGRAMS = kmail
 
@@ -9,7 +9,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmsettings.cpp kmaccount.cpp kmheaders.cpp \
 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp \
 		kmmessage.cpp kmreaderwin.cpp kbusyptr.cpp \
-		kalarmtimer.cpp KEdit.cpp kmmsgpart.cpp kmmsginfo.cpp \
+		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp \
 		kmacctmgr.cpp main.cpp kmacctfolder.cpp \
 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp \
 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp \
@@ -17,16 +17,16 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
 		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp \
-		kfileio.cpp
+		kfileio.cpp keditcl1.cpp keditcl2.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmfoldertree.moc kmsettings.moc kmheaders.moc \
 		kmcomposewin.moc kbusyptr.moc kmfoldermgr.moc \
-		kalarmtimer.moc KEdit.moc kmreaderwin.moc \
+		kalarmtimer.moc kmreaderwin.moc \
 		kmacctmgr.moc kmfolderdir.moc kmfilteraction.moc \
 		kmfoldernode.moc kmacctseldlg.moc kmmsgpartdlg.moc \
 		kmimemagic.moc kmacctpop.moc kmaccount.moc \
-		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc
+		kmfolderseldlg.moc kmfilterdlg.moc kpgp.moc keditcl.moc
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
@@ -76,9 +76,10 @@ kmsettings.cpp:kmsettings.moc
 kmsettings.moc: kmsettings.h
 	$(MOC) kmsettings.h -o kmsettings.moc
 
-KEdit.cpp:KEdit.moc
-KEdit.moc: KEdit.h
-	$(MOC) KEdit.h -o KEdit.moc
+keditcl1.cpp: keditcl.moc
+keditcl2.cpp: keditcl.moc
+keditcl.moc: keditcl.h
+	$(MOC) keditcl.h -o keditcl.moc
 
 kmreaderwin.cpp:kmreaderwin.moc
 kmreaderwin.moc: kmreaderwin.h

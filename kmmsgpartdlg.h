@@ -19,7 +19,7 @@ class KMMsgPartDlg: public QDialog
   Q_OBJECT
 
 public:
-  KMMsgPartDlg(const char* caption=NULL);
+  KMMsgPartDlg(const char* caption=NULL, bool readOnly=FALSE);
   virtual ~KMMsgPartDlg();
   
   /** Display this message part. */

@@ -1,12 +1,10 @@
 /*
   $Id$
  
-  kedit, a simple text editor for the KDE project
+  KEdit, a simple text editor for the KDE project
 
   Copyright (C) 1996 Bernd Johannes Wuebben   
                      wuebben@math.cornell.edu
-  
-  Parts: Alexander Sanda <alex@darkstar.ping.at>
   
   This program is free software; you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -30,9 +28,11 @@
 
 #include <qpopmenu.h>
 #include <qmenubar.h>
+#include <qstrlist.h>
 #include <qapp.h>
 #include <qkeycode.h>
 #include <qaccel.h>
+#include <qregexp.h> 
 #include <qobject.h>
 #include <qmlined.h>
 #include <qlined.h>
@@ -67,7 +67,7 @@
 ///
 class KIntLineEdit : public QLineEdit
 {
-  Q_OBJECT
+  Q_OBJECT;
 
 public:
   KIntLineEdit( QWidget *parent = 0, const char *name = 0 ) 
@@ -97,7 +97,7 @@ protected:
 ///
 class KEdGotoLine : public QDialog
 {
-	Q_OBJECT
+	Q_OBJECT;
 
 public:
 
@@ -120,7 +120,7 @@ public slots:
 ///
 class KEdSrch : public QDialog
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
 
@@ -158,7 +158,7 @@ public slots:
 ///
 class KEdReplace : public QDialog
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
 
@@ -206,7 +206,7 @@ public slots:
 ///
 class KEdit : public QMultiLineEdit
 {
-    Q_OBJECT
+    Q_OBJECT;
     
 public:
 
@@ -394,7 +394,7 @@ public:
 	        be broken automatically at column col, when a character is 
 		inserted past column col..
 		*/
-    void 	setFillColumnMode(int col );
+    void  	setFillColumnMode(int line, bool set);
 
     /// save a backup copy
 	  /** If copy is TRUE KEdit will make a backup copy of the document that
@@ -402,7 +402,29 @@ public:
 	      suffix ~. The default is TRUE.
 	    */
     void       saveBackupCopy(bool copy);
-    
+
+    /// set the name of the file 
+	  /** Sets the name of the file if a file is open.
+	    */
+    void       setFileName(char* name);
+
+    /// save the current file as 'name'
+	  /** saves the current file as 'name'
+	    */
+
+
+    void       saveasfile(char* name);
+
+    /// remove tabs and whitespace on the end of lines during a justify operation
+	  /** remove tabs and whitespace on the end of lines during a justify operation
+	    */
+    void       setReduceWhiteOnJustify(bool reduce);
+
+    bool 	format(QStrList& );
+    bool 	format2(QStrList& par, int& upperbound);
+    void 	getpar(int line,QStrList& par);
+    void 	getpar2(int line,QStrList& par,int& upperbound,QString &prefix);
+
 signals:
 
     /// This signal is emitted when the document in the textwidget has changed
@@ -436,6 +458,8 @@ signals:
 	     He can do so by pressing the "Insert" Button on a PC keyboard.
 	     */
     void 	toggle_overwrite_signal();
+
+
 
 
 public slots:
@@ -488,6 +512,7 @@ private:
 
 private:
 
+    QString	killbufferstring;
     QWidget     *p_parent;
     QFileDialog *fbox;
     KEdSrch 	*srchdialog;
@@ -496,6 +521,7 @@ private:
     QPopupMenu  *rb_popup;
     KApplication* mykapp;
     QFileDialog *file_dialog;
+    QStrList	par;
 
     QString 	filename;
     QString     pattern;
@@ -504,7 +530,11 @@ private:
     bool 	modified;
     bool 	autoIndentMode;
     bool 	can_replace;
-
+    bool	killing;
+    bool 	killtrue;
+    bool 	lastwasanewline;
+    bool        reduce_white_on_justify;
+    int		cursor_offset;
     int 	edit_mode;
     int 	last_search;
     int 	last_replace;

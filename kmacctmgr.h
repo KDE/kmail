@@ -8,6 +8,9 @@
 #include <qobject.h>
 #include <qlist.h>
 #include <qstring.h>
+#include <qdir.h>
+#include <qfile.h>
+#include <qmsgbox.h>
 #include "kmaccount.h"
 
 #define KMAcctMgrInherited QObject

@@ -6,9 +6,6 @@
 #include "kmglobal.h"
 
 #include <assert.h>
-#include <qdir.h>
-#include <qfile.h>
-#include <qmsgbox.h>
 #include <kconfig.h>
 #include <kapp.h>
 #include <klocale.h>

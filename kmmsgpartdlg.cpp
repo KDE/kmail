@@ -15,7 +15,7 @@
 
 
 //-----------------------------------------------------------------------------
-KMMsgPartDlg::KMMsgPartDlg(const char* aCaption): 
+KMMsgPartDlg::KMMsgPartDlg(const char* aCaption, bool readOnly): 
   KMMsgPartDlgInherited(NULL, "msgpartdlg", TRUE), mIconPixmap()
 {
   QGridLayout* grid = new QGridLayout(this, 6, 4, 8, 8);
@@ -81,6 +81,14 @@ KMMsgPartDlg::KMMsgPartDlg(const char* aCaption):
   mCbxEncoding->setMinimumSize(100, h);
   mCbxEncoding->setMaximumSize(1024, h);
   grid->addMultiCellWidget(mCbxEncoding, 4, 4, 1, 2);
+
+  if(readOnly)
+    {mEdtMimetype->setEnabled(FALSE);
+     mEdtName->setEnabled(FALSE);
+     mEdtComment->setEnabled(FALSE);
+     mCbxEncoding->setEnabled(FALSE);
+    }
+	
 
   //-----
   btnOk = new QPushButton(nls->translate("Ok"), this);

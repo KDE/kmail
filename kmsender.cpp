@@ -167,6 +167,7 @@ bool KMSender::doSendSMTP(KMMessage* msg)
     warning((const char*)str);
     return FALSE;
   }
+  app->processEvents(1000);
   
   replyCode = client.Helo(); // Send HELO command
   if(replyCode != 250) return smtpFailed(client, "HELO", replyCode);
@@ -191,6 +192,8 @@ bool KMSender::doSendSMTP(KMMessage* msg)
     if(replyCode != 250 && replyCode != 251)
       return smtpFailed(client, "RCPT", replyCode);
   }
+
+  app->processEvents(1000);
 
   replyCode = client.Data(); // Send DATA command
   if(replyCode != 354) 

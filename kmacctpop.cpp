@@ -198,7 +198,7 @@ bool KMAcctPop::doProcessNewMail(void)
   while (id <= num)
   {
     debug("processing message %d", id);
-
+    app->processEvents(1000);
     if (client.List(id) != '+')
       return popError("LIST", client);
     response = client.SingleLineResponse().c_str();

@@ -401,7 +401,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
 {
   QString htmlStr, qpstr, iStr,tStr;
   char ch, *pos, str[256];
-  int i,t,i1;
+  int i,i1;
 
   if (aDecodeQP) qpstr = KMMsgBase::decodeQuotedPrintableString(aStr);
   else qpstr = aStr;
@@ -430,10 +430,10 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP) const
       {
 	for (i=0; *pos && *pos > ' ' && i<255; i++, pos--);
 	i1 = i;
-	t = *pos++; // t is used to make the compiler shut up!
+	pos++; 
 	for (i=0; *pos && *pos > ' ' && i<255; i++, pos++)
 	  iStr += *pos;
-	t = *pos--; // t is used to make the compiler shut up!  
+	pos--; 
 	tStr = iStr.copy();
 	tStr.prepend("<A HREF=\"mailto:");
 	tStr += "\">";
@@ -606,7 +606,7 @@ void KMReaderWin::slotAtmPrint()
 void KMReaderWin::slotAtmProperties()
 {
   KMMessagePart msgPart;
-  KMMsgPartDlg  dlg;
+  KMMsgPartDlg  dlg(0,TRUE);
 
   kbp->busy();
   mMsg->bodyPart(mAtmCurrent, &msgPart);

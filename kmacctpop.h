@@ -5,10 +5,11 @@
 #define kmacctpop_h
 
 #include "kmaccount.h"
-
+#include <kapp.h>
 class QLineEdit;
 class QPushButton;
 class DwPopClient;
+class KApplication;
 
 #define KMAcctPopInherited KMAccount
 

@@ -2,7 +2,7 @@
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
 #include "kmcomposewin.h"
-#include "KEdit.h"
+#include "keditcl.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmsender.h"
@@ -154,6 +154,8 @@ void KMComposeWin::readConfig(void)
   mSendImmediate = config->readNumEntry("send-immediate", -1);
   mDefEncoding = config->readEntry("encoding", "base64");
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
+  mWordWrap = config->readNumEntry("word-wrap", 1);
+  mLineBreak = config->readNumEntry("break-at", 80);
 
   config->setGroup("Geometry");
   str = config->readEntry("composer", "480 510");
@@ -176,6 +178,8 @@ void KMComposeWin::writeConfig(bool aWithSync)
   config->writeEntry("send-immediate", mSendImmediate);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
+  config->writeEntry("word-wrap",mWordWrap);
+  config->writeEntry("break-at", mLineBreak);
 
   config->setGroup("Geometry");
   str.sprintf("%d %d", width(), height());
@@ -457,6 +461,14 @@ void KMComposeWin::setupEditor(void)
   //QPopupMenu* popup;
   mEditor = new KEdit(kapp, &mMainWidget);
   mEditor->toggleModified(FALSE);
+  if(mWordWrap) {
+    mEditor->setWordWrap(TRUE);
+    mEditor->setFillColumnMode(mLineBreak,TRUE);    
+  }
+  else
+    mEditor->setWordWrap(TRUE);
+    mEditor->setFillColumnMode(0, false);  
+
 
 #ifdef BROKEN
   popup = new QPopupMenu();

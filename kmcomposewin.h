@@ -185,6 +185,8 @@ protected:
   long mShowHeaders;
   QString mDefEncoding;
   int mNumHeaders;
+  int mLineBreak;
+  int mWordWrap;
 };
 #endif
 
