@@ -635,31 +635,94 @@ bool KMSendProc::finish(bool destructive)
 QCString KMSendProc::prepareStr(const QCString &aStr, bool toCRLF,
  bool noSingleDot)
 {
-  QString str;
-  int pos = 0;
-  int len = aStr.length();
+  int tlen;
+  const int len = aStr.length();
+
   if (aStr.isEmpty()) return QCString();
 
-  // Convert LF to CR+LF and handle dots at beginning of line.
+  QCString target( "" );
 
-  for (pos=0; pos < len; ++pos)
-  {
-    QChar c = aStr[pos];
-    if (c=='\n')
-    {
-      if (toCRLF) str += '\r';
-      str += c;
+  if ( toCRLF ) {
+    // (mmutz) headroom so we actually don't need to resize the target
+    // array. Five percent should suffice. I measured a mean line
+    // length of 42 (no joke) over the my last month's worth of mails.
+    tlen = int(len * 1.05);
+    target.resize( tlen );
 
-      if (noSingleDot && aStr[pos+1]=='.')
-      {
-	pos++;
-	str += "..";
+    QCString::Iterator t = target.begin();
+    QCString::Iterator te = target.end();
+    te -= 5; // 4 is the max. #(chars) appended in one round, plus one for the \0.
+    QCString::ConstIterator s = aStr.begin();
+    while( (*s) ) {
+
+      char c = *s++;
+      
+      if ( c == '\n' ) {
+	*t++ = '\r';
+	*t++ = c;
+	
+	if ( noSingleDot && (*s) == '.' ) {
+	  s++;
+	  *t++ = '.';
+	  *t++ = '.';
+	}
+      } else
+	*t++ = c;
+
+      if ( t >= te ) { // nearing the end of the target buffer.
+	int tskip = t - target.begin();
+	tlen += QMAX( len/128, 128 );
+	if ( !target.resize( tlen ) )
+	  // OOM, what else can we do?
+	  return aStr;
+	t = target.begin() + tskip;
       }
     }
-    else str += c;
+    *t = '\0';
+  } else {
+    if ( !noSingleDot ) return aStr;
+
+    tlen = 0;
+
+    QCString::Iterator t = target.begin();
+    QCString::ConstIterator olds = aStr.begin();
+    QCString::ConstIterator s = aStr.begin();
+
+    while ( (*s) ) {
+      if ( *s++ == '\n' && *s == '.' ) {
+
+	int skip = s - olds + 1;
+
+	if ( tlen ) {
+	  if ( tlen + skip >= (int)target.size() ) {
+	    // resize to 128 + <currently used> + <yet to be copied>
+	    target.resize( 128 + tlen + len - ( olds - aStr.begin() ) );
+	    t = target.begin() + tlen;
+	  }
+	} else {
+	  target.resize( int( len * 1.02 ) );
+	  t = target.begin();
+	}
+
+	memcpy( t, olds, skip );
+	tlen += skip; // incl. '.'
+	t += skip;
+	olds = s; // *olds == '.', thus we double the dot in the next round
+      }
+    }
+    // *s == \0 here.
+
+    if ( !tlen ) return aStr; // didn't change anything
+
+    // copy last chunk.
+    if ( tlen + s - olds + 1 /* incl. \0 */ >= (int)target.size() ) {
+      target.resize( tlen + s - olds + 1 );
+      t = target.begin() + tlen;
+    }
+    memcpy( t, olds, s - olds + 1 );
   }
 
-  return str.latin1();
+  return target;
 }
 
 //-----------------------------------------------------------------------------
