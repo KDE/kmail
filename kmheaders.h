@@ -192,6 +192,13 @@ signals:
   /** emitted when the list of messages has been completely rebuilt */
   virtual void messageListUpdated();
 
+  /** emitted after a new item has been fully built and added to the 
+   * list view. We can't use KListView::itemAdded, as that is emitted
+   * from the ctor of the item, at which point the building of the item
+   * is not yet far enough along to update the quick search, which is 
+   * what is connected to this signal. */
+  virtual void msgAddedToListView( KMail::HeaderItem* );
+
 public slots:
   /** For when a list view item has been double clicked */
   void selectMessage(QListViewItem*);
