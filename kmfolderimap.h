@@ -439,7 +439,7 @@ protected slots:
    * account is still connecting. Once the account emits the connected
    * signal this slot is called and the folders created.
    */
-  void slotCreatePendingFolders();
+  void slotCreatePendingFolders( int errorCode, const QString& errorMsg );
 
 protected:
   QString     mImapPath;

@@ -1364,8 +1364,8 @@ void KMFolderImap::createFolder(const QString &name)
 
     if ( mFoldersPendingCreation.isEmpty() ) {
       // first folder, connect
-      connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
-               this, SLOT( slotCreatePendingFolders() ) );
+      connect( mAccount, SIGNAL( connectionResult( int, const QString& ) ),
+               this, SLOT( slotCreatePendingFolders( int, const QString& ) ) );
     }
     mFoldersPendingCreation << name;
     return;
@@ -1902,11 +1902,16 @@ void KMFolderImap::setAlreadyRemoved( bool removed )
   }
 }
 
-void KMFolderImap::slotCreatePendingFolders()
+void KMFolderImap::slotCreatePendingFolders( int errorCode, const QString &errorMsg )
 {
-  QStringList::Iterator it = mFoldersPendingCreation.begin();
-  for ( ; it != mFoldersPendingCreation.end(); ++it ) {
-    createFolder( *it );
+  Q_UNUSED( errorMsg );
+  disconnect( mAccount, SIGNAL( connectionResult( int, const QString& ) ),
+              this, SLOT( slotCreatePendingFolders( int, const QString& ) ) );
+  if ( !errorCode ) {
+    QStringList::Iterator it = mFoldersPendingCreation.begin();
+    for ( ; it != mFoldersPendingCreation.end(); ++it ) {
+      createFolder( *it );
+    }
   }
   mFoldersPendingCreation.clear();
 }
