@@ -543,7 +543,7 @@ void KMComposeWin::setupToolBar(void)
 
   mToolBar->insertButton(loader->loadIcon("send.xpm"),0,
 			SIGNAL(clicked()),this,
-			SLOT(slotSend()),TRUE,"Send message");
+			SLOT(slotSend()),TRUE,i18n("Send message"));
   mToolBar->insertSeparator();
   mToolBar->insertButton(loader->loadIcon("filenew.xpm"), 0, 
 			SIGNAL(clicked()), this,
