@@ -243,7 +243,7 @@ void KMFolderMbox::close(bool aForced)
   }
 
   if (!noContent()) {
-    unlock();
+    if (mStream) unlock();
     mMsgList.clear(TRUE);
 
     if (mStream) fclose(mStream);
