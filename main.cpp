@@ -30,6 +30,8 @@
 #include <kstdaccel.h>
 
 #include <kmessagebox.h>
+#include <kcmdlineargs.h>
+#include <kaboutdata.h>
 
 #include "kmglobal.h"
 #include "kmmainwin.h"
@@ -88,6 +90,21 @@ const char* aboutText =
     "This program is covered by the GPL.\n\n"
     "Please send bugreports to taferner@kde.org";
 
+static const char *description = I18N_NOOP("A KDE E-Mail client."); 
+
+static KCmdLineOptions options[] =
+{
+  { "s <subject>",		I18N_NOOP("Set subject of msg."), 0 },
+  { "c <address>",		I18N_NOOP("Send CC: to 'address'."), 0 },
+  { "b <address>",		I18N_NOOP("Send BCC: to 'addres'."), 0 },
+  { "h <header>",		I18N_NOOP("Add 'header' to msg."), 0 },
+  { "msg <file>",		I18N_NOOP("Read msg-body from 'file."), 0 },
+  { "check",			I18N_NOOP("Check for new mail only."), 0 },
+  { "+[address]",		I18N_NOOP("Send msg to 'address'."), 0 },
+  { 0, 0, 0}
+};
+
+
 static msg_handler oldMsgHandler = NULL;
 
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg);
@@ -95,11 +112,11 @@ static void signalHandler(int sigId);
 static void testDir(const char *_name);
 static void transferMail(void);
 static void initFolders(KConfig* cfg);
-static void init(int& argc, char *argv[]);
+static void init();
 static void cleanup(void);
 static void setSignalHandler(void (*handler)(int));
 static void recoverDeadLetters(void);
-static void processArgs(int argc, char *argv[]);
+static void processArgs(KCmdLineArgs *args);
 static void checkMessage(void);
 static void writePid(bool ready);
 
@@ -453,14 +470,14 @@ static void initFolders(KConfig* cfg)
 
 
 //-----------------------------------------------------------------------------
-static void init(int& argc, char *argv[])
+static void init()
 {
   QCString  acctPath, foldersPath;
   KConfig* cfg;
   //--- Sven's pseudo IPC&locking start ---
   if (!app) // because we might have constructed it before to remove KDE args
   //--- Sven's pseudo IPC&locking end ---
-  app = new KApplication(argc, argv, "kmail");
+  app = new KApplication();
   kbp = new KBusyPtr;
   cfg = app->config();
 
@@ -567,63 +584,44 @@ static void cleanup(void)
 //-----------------------------------------------------------------------------
 
 // Sven: new from Jens Kristian Soegard:
-static void processArgs(int argc, char *argv[])
+static void processArgs(KCmdLineArgs *args)
 {
   KMComposeWin* win;
   KMMessage* msg = new KMMessage;
   QString to, cc, bcc, subj;
-  int i, x=0;
  
   msg->initHeader();
- 
-  for (i=0; i<argc; i++)
+
+  // process args:
+
+  if (args->getOption("s"))
   {
-      if (strcmp(argv[i],"-s")==0)
-      {
-          if (i<argc-1) subj = argv[++i];
-          mailto = TRUE;
-      }
-      else if (strcmp(argv[i],"-c")==0)
-      {
-          if (i<argc-1) cc = argv[++i];
-          mailto = TRUE;
-      }
-      else if (strcmp(argv[i],"-b")==0)
-      {
-          if (i<argc-1) bcc = argv[++i];
-          mailto = TRUE;
-      }
-      else if (strcmp(argv[i],"-h")==0)
-      {
-          if (i<argc-1) {
-              QString headerString = argv[++i];
-              if( (x = headerString.find( '=' )) != -1 )
-                  msg->setHeaderField( headerString.left( x ), headerString.right( headerString.length()-x-1 ) );
-          } 
-          mailto = TRUE;
-      }
-      else if(strcmp(argv[i],"-msg")==0)
-      {
-          if(i<argc-1)
-              msg->setBodyEncoded( argv[++i] );
-          mailto = TRUE;
-      }
-      else if (strcmp(argv[i],"-check")==0)
-          checkNewMail = TRUE;
-      else if (argv[i][0]=='-')
-      {
-          warning(i18n("Unknown command line option: %s"), argv[i]);
-          // unknown parameter
-      }
-      else
-      {
-          if (!to.isEmpty()) to += ", ";
-          if (strncasecmp(argv[i],"mailto:",7)==0) to += argv[i]+7;
-          else to += argv[i];
-          mailto = TRUE;
-      }
+     mailto = true;
+     subj = args->getOption("s");
   }
- 
+
+  if (args->getOption("c"))
+  {
+     mailto = true;
+     cc = args->getOption("c");
+  }
+
+  if (args->getOption("b"))
+  {
+     mailto = true;
+     bcc = args->getOption("b");
+  }
+
+  for(int i= 0; i < args->count(); i++)
+  {
+     if (!to.isEmpty()) to += ", ";
+     if (strncasecmp(args->arg(i),"mailto:",7)==0) to += args->arg(i);
+     else to += args->arg(i);
+     mailto = true;
+  }
+
+  delete args;
+
   if (mailto)
   {
       if (!cc.isEmpty()) msg->setCc(cc);
@@ -637,18 +635,21 @@ static void processArgs(int argc, char *argv[])
   }
 }
 
-
-//-----------------------------------------------------------------------------
-void version() 
-{
-  printf("%s\n",aboutText);
-}
-
-
 //-----------------------------------------------------------------------------
 int
 main(int argc, char *argv[])
 {
+  KAboutData about("kmail", I18N_NOOP("KMail"), 
+                   KMAIL_VERSION, 
+                   description,
+		   KAboutData::GPL,
+                   "(c) 1997-2000, The KMail developers" );
+
+  KCmdLineArgs::init(argc, argv, &about);
+  KCmdLineArgs::addCmdLineOptions( options ); // Add kmail options
+
+  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+
   //--- Sven's pseudo IPC&locking start ---
   app=0;
   {
@@ -677,53 +678,34 @@ main(int argc, char *argv[])
       sprintf (lf, "%s.kmail%d.msg", _PATH_TMP, getuid());
       unlink (lf); // In case of socket, link...
       msg = fopen (lf, "w");
-      int i;
-      app = new KApplication(argc, argv, "kmail"); // clear arg list
-      KGlobal::dirs()->
-	addResourceType("kmail_pic", 
-			KStandardDirs::kde_default("data") + "kmail/pics/");
-      argc--;
-      argv++;
 
       // process args:
       QString to, cc, bcc, subj;
 
-      for (i=0; i<argc; i++)
+      if (args->getOption("s"))
       {
-        if (strcmp(argv[i],"-s")==0)
-        {
-          if (i<argc-1) subj = argv[++i];
-          mailto = TRUE;
-        }
-	else if (strcmp(argv[i],"-v")==0)
-        {
-	  version();
-	  exit(0);
-	}
-        else if (strcmp(argv[i],"-c")==0)
-        {
-          if (i<argc-1) cc = argv[++i];
-          mailto = TRUE;
-        }
-        else if (strcmp(argv[i],"-b")==0)
-        {
-          if (i<argc-1) bcc = argv[++i];
-          mailto = TRUE;
-        }
-        else if (strcmp(argv[i],"-check")==0)
-          checkNewMail = TRUE;
-        else if (argv[i][0]=='-')
-        {
-          warning(i18n("Unknown command line option: %s"), argv[i]);
-          // unknown parameter
-        }
-        else
-        {
-          if (!to.isEmpty()) to += ", ";
-          if (strncasecmp(argv[i],"mailto:",7)==0) to += argv[i]+7;
-          else to += argv[i];
-          mailto = TRUE;
-        }
+         mailto = true;
+         subj = args->getOption("s");
+      }
+
+      if (args->getOption("c"))
+      {
+         mailto = true;
+         cc = args->getOption("c");
+      }
+
+      if (args->getOption("b"))
+      {
+         mailto = true;
+         bcc = args->getOption("b");
+      }
+
+      for(int i= 0; i < args->count(); i++)
+      {
+        if (!to.isEmpty()) to += ", ";
+        if (strncasecmp(args->arg(i),"mailto:",7)==0) to += args->arg(i);
+        else to += args->arg(i);
+        mailto = true;
       }
 
       if (checkNewMail)
@@ -771,11 +753,10 @@ main(int argc, char *argv[])
 
   KMMainWin* mainWin;
 
-  init(argc, argv);
+  init();
   // filterMgr->dump();
 
-  if (argc > 1)
-    processArgs(argc-1, argv+1);
+  processArgs(args);
 
   if (!mailto)
   {
