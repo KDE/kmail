@@ -3823,11 +3823,11 @@ void MiscPage::GroupwareTab::save() {
 
   // If there is a leftover folder in the foldercombo, getFolder can
   // return 0. In that case we really don't have it enabled
-  bool enabled = mEnableImapResCB->isChecked() &&
-    mFolderCombo->getFolder();
+  KMFolder *folder = mFolderCombo->getFolder();
+  bool enabled = mEnableImapResCB->isChecked() && folder;
   irOptions.writeEntry( "Enabled", enabled );
   irOptions.writeEntry( "Folder Language", mLanguageCombo->currentItem() );
-  irOptions.writeEntry( "Folder Parent", mFolderCombo->getFolder()->idString() );
+  irOptions.writeEntry( "Folder Parent", folder? folder->idString(): "" );
 }
 
 
