@@ -155,7 +155,7 @@ protected:
 
   /** Creates a nice mail header depending on the current selected
     header style. */
-  virtual void writeMsgHeader(void);
+  virtual void writeMsgHeader(int vcpartnum = -1);
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */

@@ -461,6 +461,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   QString type, subtype, str, contDisp;
   bool asIcon = false;
   inlineImage = false;
+  VCard *vc;
 
   assert(aMsg!=NULL);
   type = aMsg->typeStr();
@@ -468,15 +469,24 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
   // Hrm we have to iterate this twice with the current design.  This
   // should really be fixed.  (FIXME)
+  int vcnum = -1;
   for (int j = 0; j < aMsg->numBodyParts(); j++) {
     aMsg->bodyPart(j, &msgPart);
     if (!stricmp(msgPart.typeStr(), "text")
        && !stricmp(msgPart.subtypeStr(), "x-vcard")) {
-      debug("FOUND A VCARD");
+        int vcerr;
+        vc = VCard::parseVCard(msgPart.body(), &vcerr);
+ 
+        if (vc) {
+          delete vc;
+          debug("FOUND A VALID VCARD");
+          vcnum = j;
+          break;
+        }
     }
   }
 
-  writeMsgHeader();
+  writeMsgHeader(vcnum);
 
   if (numParts > 0)
   {
@@ -591,9 +601,30 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeMsgHeader(void)
+void KMReaderWin::writeMsgHeader(int vcpartnum)
 {
   QString str;
+  QString vcname;
+  KMMessagePart aMsgPart;
+  QString vcFileName;
+
+  if (vcpartnum >= 0) {
+    mMsg->bodyPart(vcpartnum, &aMsgPart);
+    vcFileName = aMsgPart.fileName();
+    if (vcFileName.isEmpty()) {
+      vcFileName = "/unnamed";
+    } else {
+      // remove quotes from the filename so that the shell does not get confused
+      int c = 0;
+      while ((c = vcFileName.find('"', c)) >= 0)
+        vcFileName.remove(c, 1);
+ 
+      c = 0;
+      while ((c = vcFileName.find('\'', c)) >= 0)
+        vcFileName.remove(c, 1);
+    }
+    vcname = QString("%1part%2/%3").arg(mAttachDir).arg(vcpartnum+1).arg(vcFileName);
+  }
 
   switch (mHeaderStyle)
   {
@@ -604,14 +635,22 @@ void KMReaderWin::writeMsgHeader(void)
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
                      KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
-    mViewer->write(strToHtml(mMsg->dateShortStr()) + ")<br>\n");
+    mViewer->write("&nbsp;"+strToHtml(mMsg->dateShortStr()) + ")");
+    if (vcpartnum >= 0) {
+      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    }
+    mViewer->write("<br>\n");
     break;
 
   case HdrStandard:
     mViewer->write("<font size=\"+1\"><b>" +
                    strToHtml(mMsg->subject()) + "</b></font><br>\n");
     mViewer->write(i18n("From: ") +
-                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<br>\n");
+                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
+    if (vcpartnum >= 0) {
+      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    }
+    mViewer->write("<br>\n");
     mViewer->write(i18n("To: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
     if (!mMsg->cc().isEmpty())
@@ -631,7 +670,11 @@ void KMReaderWin::writeMsgHeader(void)
                    "></td><td hspace=\"50\"><b><font size=\"+2\">");
     mViewer->write(strToHtml(mMsg->subject()) + "</font></b><br>");
     mViewer->write(i18n("From: ")+
-                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<br>\n");
+                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
+    if (vcpartnum >= 0) {
+      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    }
+    mViewer->write("<br>\n");
     mViewer->write(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>\n");
     if (!mMsg->cc().isEmpty())
@@ -652,7 +695,11 @@ void KMReaderWin::writeMsgHeader(void)
                    strToHtml(mMsg->subject()) + "</B></font><br>");
     mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<br>");
     mViewer->write(i18n("From: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<br>");
+		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE));
+    if (vcpartnum >= 0) {
+      mViewer->write("&nbsp;&nbsp;<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    }
+    mViewer->write("<br>\n");
     mViewer->write(i18n("To: ")+
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<br>");
     if (!mMsg->cc().isEmpty())
@@ -677,6 +724,10 @@ void KMReaderWin::writeMsgHeader(void)
   case HdrAll:
     str = strToHtml(mMsg->headerAsString());
     mViewer->write(str);
+    mViewer->write("\n<br>\n");
+    if (vcpartnum >= 0) {
+      mViewer->write("<a href=\""+vcname+"\">"+i18n("[vCard]")+"</a>");
+    }
     mViewer->write("\n<br>\n");
     break;
 
