@@ -28,17 +28,16 @@
 #include <kapplication.h>
 #include <kinstance.h>
 #include <klocale.h>
-#include <kaboutdata.h>
 #include <kiconloader.h>
 #include <kaction.h>
 #include <kdebug.h>
 #include <kparts/genericfactory.h>
 
+#include "aboutdata.h"
 #include "kmkernel.h"
 #include "kmmainwin.h"
 #include "kmailIface.h"
 #include "kmail_part.h"
-#include "kmversion.h"
 #include <kglobal.h>
 #include <knotifyclient.h>
 #include <dcopclient.h>
@@ -141,14 +140,7 @@ KMailPart::~KMailPart()
 
 KAboutData *KMailPart::createAboutData()
 {
-  KAboutData *about = new KAboutData("kmail", I18N_NOOP("KMail"),
-                                     KMAIL_VERSION, I18N_NOOP("The KDE Email Client"),
-                                     KAboutData::License_GPL,
-                                     I18N_NOOP("(c) 1997-2003, The KMail developers"),
-				     0,
-				     "http://kmail.kde.org");
-  about->addAuthor("The KMail Team",I18N_NOOP("Original author and maintainer"));
-  return about;
+  return new KMail::AboutData();
 }
 
 bool KMailPart::openFile()
