@@ -1412,12 +1412,15 @@ void KMHeaders::updateMessageList(void)
 // Ctrl+Key_Next, Ctrl+Key_Prior, these events change the current item but do 
 // not change the selection state.
 //
-//
 // See contentsMousePressEvent below for a description of mouse selection
 // behaviour.
+//
+// Exception: When shift selecting either with mouse or key press the reader 
+// window is updated regardless of whether of not the selection has changed.
 void KMHeaders::keyPressEvent( QKeyEvent * e )
 {
     bool cntrl = (e->state() & ControlButton );
+    bool shft = (e->state() & ShiftButton );
     QListViewItem *cur = currentItem();
 
     if (!e || !firstChild())
@@ -1437,18 +1440,22 @@ void KMHeaders::keyPressEvent( QKeyEvent * e )
     }
 
     if (cntrl) {
-      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-		 this,SLOT(highlightMessage(QListViewItem*)));
+      if (shft)
+	disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+		   this,SLOT(highlightMessage(QListViewItem*)));
       switch (e->key()) {
       case Key_Down:
       case Key_Up:
+      case Key_Home:
       case Key_End:
       case Key_Next:
       case Key_Prior:
+      case Key_Escape:
 	KMHeadersInherited::keyPressEvent( e );
       }
-      connect(this,SIGNAL(currentChanged(QListViewItem*)),
-	      this,SLOT(highlightMessage(QListViewItem*)));
+      if (shft)
+	connect(this,SIGNAL(currentChanged(QListViewItem*)),
+		this,SLOT(highlightMessage(QListViewItem*)));
     }
 }
 

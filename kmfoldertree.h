@@ -96,6 +96,11 @@ protected:
   void contentsDragLeaveEvent( QDragLeaveEvent *e );
   void contentsDropEvent( QDropEvent *e );
 
+  // Navigation/Selection methods
+  virtual void keyPressEvent( QKeyEvent * e );
+  virtual void contentsMousePressEvent( QMouseEvent * e );
+  virtual void contentsMouseReleaseEvent( QMouseEvent * e );
+
   //Drag and drop variables
   QListViewItem *oldCurrent;
   QListViewItem *dropItem;

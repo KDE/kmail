@@ -163,6 +163,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   initMetaObject();
 
   mUpdateTimer = NULL;
+  setSelectionMode( Extended );
 
   connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	  this, SLOT(doFolderSelected(QListViewItem*)));
@@ -765,6 +766,75 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	    this, SLOT(doFolderSelected(QListViewItem*)));
     // End this wasn't necessary in QT 2.0.2
+}
+
+//-----------------------------------------------------------------------------
+// Navigation/Selection support
+void KMFolderTree::keyPressEvent( QKeyEvent * e )
+{
+    bool cntrl = (e->state() & ControlButton );
+    QListViewItem *cur = currentItem();
+
+    if (!e || !firstChild())
+      return;
+
+    // If no current item, make some first item current when a key is pressed
+    if (!cur) {
+      clearSelection();
+      setCurrentItem( firstChild() );
+      return;
+    }
+
+    // Handle space key press
+    if (cur->isSelectable() && e->ascii() == ' ' ) {
+      clearSelection();
+      setSelected( cur, !cur->isSelected() );
+      doFolderSelected( cur );
+      return;
+    }
+
+    //Seems to behave sensibly even if ShiftButton is down, suprising
+    if (cntrl) {  
+      disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+		 this,SLOT(doFolderSelected(QListViewItem*)));
+      switch (e->key()) {
+      case Key_Down:
+      case Key_Up:
+      case Key_Home:
+      case Key_End:
+      case Key_Next:
+      case Key_Prior:
+      case Key_Plus:
+      case Key_Minus:
+      case Key_Escape:
+	KMFolderTreeInherited::keyPressEvent( e );
+      }
+      connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	      this,SLOT(doFolderSelected(QListViewItem*)));
+    }
+}
+
+void KMFolderTree::contentsMousePressEvent( QMouseEvent * e )
+{
+  int b = e->state() & !ShiftButton & !ControlButton;
+  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonPress,
+				    e->pos(),
+				    e->globalPos(),
+				    e->button(),
+				    b );
+  clearSelection();
+  KMFolderTreeInherited::contentsMousePressEvent( f );
+}
+
+void KMFolderTree::contentsMouseReleaseEvent( QMouseEvent * e )
+{
+  int b = e->state() & !ShiftButton & !ControlButton;
+  QMouseEvent *f = new QMouseEvent( QEvent::MouseButtonRelease,
+				    e->pos(),
+				    e->globalPos(),
+				    e->button(),
+				    b );
+  KMFolderTreeInherited::contentsMouseReleaseEvent( f );
 }
 
 #include "kmfoldertree.moc"
