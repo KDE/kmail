@@ -863,8 +863,10 @@ bool KMGroupware::vPartToHTML( int aUpdateCounter, const QString& vCal, QString 
   CalendarLocal cl;
   ICalFormat format;
   format.fromString(&cl, vCal);
+  // make a shallow copy of the event list
   QPtrList<Event> eventList = cl.events();
-  eventList.setAutoDelete(true);
+  // the events will be deleted automatically when cl is destroyed
+  eventList.setAutoDelete(false);
 
   Q_ASSERT(eventList.count() != 0);
 
