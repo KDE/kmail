@@ -112,7 +112,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   KMMessage *msg = kmkernel->inboxFolder()->getMsg(0);
   mReaderWin->setMsg( msg, true );
   mReaderWin->setFocusPolicy(QWidget::ClickFocus);
-  m_extension = new KMailBrowserExtension(this);
   mStatusBar  = new KMailStatusBarExtension(this);
   //new KParts::SideBarExtension( kmkernel->mainWin()-mainKMWidget()->leftFrame(), this );
   KGlobal::iconLoader()->addAppDir("kmail");
@@ -124,7 +123,6 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
   QVBoxLayout *topLayout = new QVBoxLayout(canvas);
   topLayout->addWidget(mainWidget);
   mainWidget->setFocusPolicy(QWidget::ClickFocus);
-  m_extension = new KMailBrowserExtension(this);
   mStatusBar  = new KMailStatusBarExtension(this);
   new KParts::SideBarExtension( mainWidget->folderTree(),
                                 this,
@@ -228,15 +226,6 @@ QWidget* KMailPart::parentWidget() const
   return mParentWidget;
 }
 
-
-KMailBrowserExtension::KMailBrowserExtension(KMailPart *parent) :
-  KParts::BrowserExtension(parent, "KMailBrowserExtension")
-{
-}
-
-KMailBrowserExtension::~KMailBrowserExtension()
-{
-}
 
 KMailStatusBarExtension::KMailStatusBarExtension( KMailPart *parent )
   : KParts::StatusBarExtension( parent ), mParent( parent )

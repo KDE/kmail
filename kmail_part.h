@@ -39,7 +39,6 @@
 
 class KInstance;
 class KAboutData;
-class KMailBrowserExtension;
 class KMailStatusBarExtension;
 class KMKernel;
 class KMMainWidget;
@@ -82,18 +81,8 @@ class KDE_EXPORT KMailPart: public KParts::ReadOnlyPart, virtual public KMailPar
     KMKernel *kmailKernel;
     KMMainWidget *mainWidget;
     ActionManager *mActionManager;
-    KMailBrowserExtension *m_extension;
     KMailStatusBarExtension *mStatusBar;
     QWidget *mParentWidget;
-};
-
-class KMailBrowserExtension : public KParts::BrowserExtension
-{
-    Q_OBJECT
-    friend class KMailPart;
-  public:
-    KMailBrowserExtension(KMailPart *parent);
-    virtual ~KMailBrowserExtension();
 };
 
 class KMailStatusBarExtension : public KParts::StatusBarExtension
