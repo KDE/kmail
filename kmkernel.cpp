@@ -574,9 +574,9 @@ int KMKernel::dcopAddMessage(const QString & foldername,const KURL & msgUrl)
 QStringList KMKernel::folderList() const
 {
   QStringList folders;
-  QString localPrefix = i18n( "/Local" );
+  const QString localPrefix = i18n( "/Local" );
   folders << localPrefix;
-  the_folderMgr->getFolderURLS( folders, localPrefix);
+  the_folderMgr->getFolderURLS( folders, localPrefix );
   the_imapFolderMgr->getFolderURLS( folders );
   the_dimapFolderMgr->getFolderURLS( folders );
   return folders;
@@ -584,14 +584,12 @@ QStringList KMKernel::folderList() const
 
 DCOPRef KMKernel::getFolder( const QString& vpath )
 {
-  QString localPrefix = i18n( "/Local" );
-  // Strip the Local prefix off, when asking the folder manager
-  if ( vpath.startsWith( localPrefix ) ) {
-    QString localPath = QString( vpath );
-    localPath = localPath.remove( 0, localPrefix.length() );
-    if ( the_folderMgr->getFolderByURL( localPath ) )
-      return DCOPRef( new FolderIface( localPath ) );
-  }
+  const QString localPrefix = i18n( "/Local" );
+  if ( the_folderMgr->getFolderByURL( vpath ) )
+    return DCOPRef( new FolderIface( vpath ) );
+  else if ( vpath.startsWith( localPrefix ) &&
+            the_folderMgr->getFolderByURL( vpath.mid( localPrefix.length() ) ) )
+    return DCOPRef( new FolderIface( vpath.mid( localPrefix.length() ) ) );
   else if ( the_imapFolderMgr->getFolderByURL( vpath ) )
     return DCOPRef( new FolderIface( vpath ) );
   else if ( the_dimapFolderMgr->getFolderByURL( vpath ) )
@@ -846,7 +844,7 @@ void KMKernel::init()
 
   the_shuttingDown = false;
   the_server_is_ready = false;
-  
+
   cfg = KMKernel::config();
 
   QDir dir;
