@@ -343,26 +343,8 @@ int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
   QString tmp_file(location() + "/tmp/");
   tmp_file += filename;
 
-#if 0
-  if (name() == "trash")
-  {
-    filename += ".lzo";
-    tmp_file += filename;
-kdDebug(0) << "Writing to " << tmp_file << endl;
-    if (!kCStringToFile(msgText, tmp_file, false, false, true, true))
-     return 0;
-    else
-kdDebug(0) << "Write succeeded" << endl;
-  }
-  else
-  {
-  tmp_file += filename;
-#endif
   if (!kCStringToFile(msgText, tmp_file, false, false, false))
     return 0;
-#if 0
-  }
-#endif
 
   QFile file(tmp_file);
   size = msgText.length();
@@ -739,6 +721,14 @@ bool KMFolderMaildir::isIndexOutdated()
 
   return ((new_info.lastModified() > index_info.lastModified()) || 
           (cur_info.lastModified() > index_info.lastModified()));
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderMaildir::removeMsg(int idx, bool)
+{
+  // removeMsg is *essentially* just a 'take' only it doesn't return
+  // the deleted message.  so we'll use it and ignore the result!
+  take(idx);
 }
 
 //-----------------------------------------------------------------------------

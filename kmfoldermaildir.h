@@ -30,6 +30,9 @@ public:
     takes ownership of the message (deleting it in the destructor).*/
   virtual int addMsg(KMMessage* msg, int* index_return = NULL);
 
+  /** Remove (first occurance of) given message from the folder. */
+  virtual void removeMsg(int i, bool imapQuiet = FALSE);
+
   // Called by KMMsgBase::setStatus when status of a message has changed
   // required to keep the number unread messages variable current.
   virtual void msgStatusChanged( const KMMsgStatus oldStatus,
