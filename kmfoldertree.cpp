@@ -71,7 +71,8 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
   setPixmap( 0, normalIcon() );
 }
 
-KMFolderTreeItem::~KMFolderTreeItem() {
+KMFolderTreeItem::~KMFolderTreeItem() 
+{
 }
 
 static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
@@ -104,17 +105,20 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       default:
         icon = "folder";break;
     }
-  } else if ( mFolder->isSystemFolder() ) {
+  } else {
+    // special folders
     switch ( type() ) {
       case Inbox: icon = "folder_inbox"; break;
       case Outbox: icon = "folder_outbox"; break;
       case SentMail: icon = "folder_sent_mail"; break;
       case Trash: icon = "trashcan_empty"; break;
-      default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
       case Drafts: icon = "edit";break;
+      default: icon = kmkernel->iCalIface().folderPixmap( type() ); break;
     }
-  } else if ( protocol() == KMFolderTreeItem::Search) {
-    icon = "mail_find";
+    // non-root search folders
+    if ( protocol() == KMFolderTreeItem::Search) {
+      icon = "mail_find";
+    }
   }
 
   if ( icon.isEmpty() )
@@ -138,7 +142,9 @@ QPixmap KMFolderTreeItem::unreadIcon(int size) const
 {
   QPixmap pm;
 
-  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder() )
+  if ( !mFolder || depth() == 0 || mFolder->isSystemFolder()
+    || kmkernel->folderIsTrash( mFolder )
+    || kmkernel->folderIsDraftOrOutbox( mFolder ) )
     pm = normalIcon( size );
 
   KIconLoader * il = KGlobal::instance()->iconLoader();
@@ -165,23 +171,34 @@ void KMFolderTreeItem::init()
 
   if ( depth() == 0 )
     setType(Root);
-  else if (mFolder->isSystemFolder()) {
-    if (mFolder == kmkernel->inboxFolder()
-        || mFolder->folderType() == KMFolderTypeImap
-        || mFolder->folderType() == KMFolderTypeCachedImap)
-      setType(Inbox);
-    else if (mFolder == kmkernel->outboxFolder())
-      setType(Outbox);
-    else if (mFolder == kmkernel->sentFolder())
-      setType(SentMail);
-    else if (mFolder == kmkernel->draftsFolder())
-      setType(Drafts);
-    else if (mFolder == kmkernel->trashFolder())
-      setType(Trash);
-    else if(kmkernel->iCalIface().isResourceImapFolder(mFolder))
-      setType(kmkernel->iCalIface().folderType(mFolder));
-  } else
-    setRenameEnabled(0, false);
+  else {
+    if ( mFolder == kmkernel->inboxFolder() )
+      setType( Inbox );
+    else if ( kmkernel->folderIsDraftOrOutbox( mFolder ) ) {
+      if ( mFolder == kmkernel->outboxFolder() )
+        setType( Outbox );
+      else
+        setType( Drafts );
+    }
+    else if ( kmkernel->folderIsSentMailFolder( mFolder ) )
+      setType( SentMail );
+    else if ( kmkernel->folderIsTrash( mFolder ) )
+      setType( Trash );
+    else if( kmkernel->iCalIface().isResourceImapFolder(mFolder) )
+      setType( kmkernel->iCalIface().folderType(mFolder) );
+    // System folders on dimap or imap which are not resource folders are
+    // inboxes. Urgs.
+    if ( mFolder->isSystemFolder() &&
+        !kmkernel->iCalIface().isResourceImapFolder( mFolder) &&
+         ( mFolder->folderType() == KMFolderTypeImap
+        || mFolder->folderType() == KMFolderTypeCachedImap ) )
+      setType( Inbox );
+  }
+  if ( !mFolder->isSystemFolder() )
+    setRenameEnabled( 0, false );
+
+  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
+  tree->insertIntoFolderToItemMap( mFolder, this );
 }
 
 void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
@@ -224,13 +241,9 @@ void KMFolderTreeItem::properties()
   if ( !mFolder )
     return;
 
-  KMFolderDialog *props;
-
-  props = new KMFolderDialog( mFolder, mFolder->parent(), static_cast<KMFolderTree *>( listView() ),
-                              i18n("Properties of Folder %1").arg( mFolder->label() ) );
-  props->exec();
-  //Nothing here the above exec() may actually delete this KMFolderTreeItem
-  return;
+  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
+  tree->mainWidget()->modifyFolder( this );
+  //Nothing here the above may actually delete this KMFolderTreeItem
 }
 
 //=============================================================================
@@ -244,6 +257,7 @@ KMFolderTree::KMFolderTree( KMMainWidget *mainWidget, QWidget *parent,
   oldCurrent = 0;
   mLastItem = 0;
   mMainWidget = mainWidget;
+  mReloading = false;
 
   addAcceptableDropMimetype(MailListDrag::format(), false);
 
@@ -299,9 +313,6 @@ void KMFolderTree::connectSignals()
 
   connect( &autoopen_timer, SIGNAL( timeout() ),
            this, SLOT( openFolder() ) );
-
-  connect( &autoscroll_timer, SIGNAL( timeout() ),
-           this, SLOT( autoScroll() ) );
 
   connect( this, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint &, int ) ),
            this, SLOT( slotContextMenuRequested( QListViewItem*, const QPoint & ) ) );
@@ -423,12 +434,29 @@ void KMFolderTree::updateUnreadAll()
 // Reload the tree of items in the list view
 void KMFolderTree::reload(bool openFolders)
 {
+  if ( mReloading ) {
+    // no parallel reloads are allowed
+    kdDebug(5006) << "KMFolderTree::reload - already reloading" << endl;
+    return;
+  }
+  mReloading = true;
+  
   int top = contentsY();
   mLastItem = 0;
+  // invalidate selected drop item
+  oldSelected = 0;
+  // remember last
+  KMFolder* last = currentFolder();
+  KMFolder* selected = 0;
+  KMFolder* oldCurrentFolder = 
+    ( oldCurrent ? static_cast<KMFolderTreeItem*>(oldCurrent)->folder(): 0 );
   for ( QListViewItemIterator it( this ) ; it.current() ; ++it ) {
     KMFolderTreeItem * fti = static_cast<KMFolderTreeItem*>(it.current());
     writeIsListViewItemOpen( fti );
+    if ( fti->isSelected() )
+      selected = fti->folder();
   }
+  mFolderToItem.clear();
   clear();
 
   // construct the root of the local folders
@@ -505,7 +533,28 @@ void KMFolderTree::reload(bool openFolders)
       slotUpdateCounts(fti->folder());
   }
   ensureVisible(0, top + visibleHeight(), 0, 0);
-  refresh();
+  // if current and selected folder did not change set it again
+  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
+  {
+    if ( last && 
+        static_cast<KMFolderTreeItem*>( it.current() )->folder() == last )
+    {
+      mLastItem = static_cast<KMFolderTreeItem*>( it.current() );
+      setCurrentItem( it.current() );
+    }
+    if ( selected && 
+        static_cast<KMFolderTreeItem*>( it.current() )->folder() == selected )
+    {
+      setSelected( it.current(), true );
+    }
+    if ( oldCurrentFolder && 
+        static_cast<KMFolderTreeItem*>( it.current() )->folder() == oldCurrentFolder )
+    {
+      oldCurrent = it.current();
+    }
+  }
+  refresh();  
+  mReloading = false;
 }
 
 //-----------------------------------------------------------------------------
@@ -610,14 +659,7 @@ void KMFolderTree::delayedUpdate()
 // Folders have been added/deleted update the tree of folders
 void KMFolderTree::doFolderListChanged()
 {
-  KMFolderTreeItem* fti = static_cast< KMFolderTreeItem* >(currentItem());
-  KMFolder* folder = (fti) ? fti->folder() : 0;
   reload();
-  QListViewItem *qlvi = indexOfFolder(folder);
-  if (qlvi) {
-    setCurrentItem( qlvi );
-    setSelected( qlvi, TRUE );
-  }
 }
 
 //-----------------------------------------------------------------------------
@@ -638,6 +680,7 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
     if (!qlvi) qlvi = fti->itemBelow();
     doFolderSelected( qlvi );
   }
+  removeFromFolderToItemMap( aFolder );
   delete fti;
 }
 
@@ -810,17 +853,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   }
   else {
     emit folderSelected(folder);
-    if (folder->folderType() == KMFolderTypeImap)
-    {
-      KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder->storage());
-      imap_folder->setSelected(TRUE);
-      if (imap_folder->getContentState() != KMFolderImap::imapInProgress)
-        imap_folder->getAndCheckFolder();
-    } else {
-      // we don't need this for imap-folders because
-      // they're updated with the folderComplete-signal
-      slotUpdateCounts(folder);
-    }
+    slotUpdateCounts(folder);
   }
 }
 
@@ -833,15 +866,6 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   conf->writeEntry(name(), size().width());
 
   KListView::resizeEvent(e);
-}
-
-//-----------------------------------------------------------------------------
-QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
-{
-  for ( QListViewItemIterator it( this ) ; it.current() ; ++it )
-    if ( static_cast<KMFolderTreeItem*>(it.current())->folder() == folder )
-      return it.current();
-  return 0;
 }
 
 //-----------------------------------------------------------------------------
@@ -915,7 +939,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
       itemId = folderMenu->insertItem(i18n("&Expire"), mMainWidget,
                                       SLOT(slotExpireFolder()));
-      folderMenu->setItemEnabled( itemId, fti->folder()->isAutoExpire() );
+      folderMenu->setItemEnabled( itemId, fti->folder()->isAutoExpire() && !fti->folder()->isReadOnly() );
 
 
       folderMenu->insertSeparator();
@@ -924,7 +948,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         (kmkernel->folderIsTrash(fti->folder())) ? i18n("&Empty") :
                              i18n("&Move All Messages to Trash"), mMainWidget,
                              SLOT(slotEmptyFolder()));
-      folderMenu->setItemEnabled( itemId, fti->folder()->count() > 0 );
+      folderMenu->setItemEnabled( itemId, fti->folder()->count() > 0 && !fti->folder()->isReadOnly() );
     }
     if ( !fti->folder()->isSystemFolder() )
       folderMenu->insertItem(SmallIcon("editdelete"),
@@ -943,11 +967,15 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
     if (!fti->folder()->noContent())
     {
-      folderMenu->insertItem(SmallIcon("kmmsgnew"), i18n("Check Mail in This Folder"), mMainWidget,
-          SLOT(slotRefreshFolder()));
+      int id = folderMenu->insertItem(SmallIcon("kmmsgnew"), i18n("Check Mail in This Folder"), mMainWidget,
+                                      SLOT(slotRefreshFolder()));
       if ( fti->folder()->folderType() == KMFolderTypeImap ) {
         folderMenu->insertItem(SmallIcon("reload"), i18n("Refresh Folder List"), this,
             SLOT(slotResetFolderList()));
+      } else {
+        bool knownImapPath = !static_cast<KMFolderCachedImap*>( fti->folder()->storage() )->imapPath().isEmpty();
+        folderMenu->setItemEnabled( id, knownImapPath );
+
       }
     }
     if ( fti->folder()->folderType() == KMFolderTypeCachedImap ) {
@@ -1105,6 +1133,8 @@ void KMFolderTree::writeIsListViewItemOpen(KMFolderTreeItem *fti)
 //-----------------------------------------------------------------------------
 void KMFolderTree::cleanupConfigFile()
 {
+  if ( childCount() == 0 )
+    return; // just in case reload wasn't called before
   KConfig* config = KMKernel::config();
   QStringList existingFolders;
   QListViewItemIterator fldIt(this);
@@ -1114,7 +1144,7 @@ void KMFolderTree::cleanupConfigFile()
   {
     fti = static_cast<KMFolderTreeItem*>(fldIt.current());
     if (fti && fti->folder())
-      folderMap.insert(fti->folder()->idString(), fti->isExpandable());
+      folderMap.insert(fti->folder()->idString(), true);
   }
   QStringList groupList = config->groupList();
   QString name;
@@ -1125,6 +1155,10 @@ void KMFolderTree::cleanupConfigFile()
     name = (*grpIt).mid(7);
     if (folderMap.find(name) == folderMap.end())
     {
+      KMFolder* folder = kmkernel->findFolderById( name );
+      if ( folder && kmkernel->iCalIface().hideResourceImapFolder( folder ) )
+        continue; // hidden IMAP resource folder, don't delete info
+
       config->deleteGroup(*grpIt, TRUE);
       kdDebug(5006) << "Deleting information about folder " << name << endl;
     }
@@ -1174,85 +1208,26 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
   e->accept( acceptDrag(e) );
 }
 
-static const int autoscroll_margin = 16;
-static const int initialScrollTime = 30;
-static const int initialScrollAccel = 5;
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::startAutoScroll()
-{
-    if ( !autoscroll_timer.isActive() ) {
-        autoscroll_time = initialScrollTime;
-        autoscroll_accel = initialScrollAccel;
-        autoscroll_timer.start( autoscroll_time );
-    }
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::stopAutoScroll()
-{
-    autoscroll_timer.stop();
-}
-
-//-----------------------------------------------------------------------------
-void KMFolderTree::autoScroll()
-{
-    QPoint p = viewport()->mapFromGlobal( QCursor::pos() );
-
-    if ( autoscroll_accel-- <= 0 && autoscroll_time ) {
-        autoscroll_accel = initialScrollAccel;
-        autoscroll_time--;
-        autoscroll_timer.start( autoscroll_time );
-    }
-    int l = QMAX(1,(initialScrollTime-autoscroll_time));
-
-    int dx=0,dy=0;
-    if ( p.y() < autoscroll_margin ) {
-        dy = -l;
-    } else if ( p.y() > visibleHeight()-autoscroll_margin ) {
-        dy = +l;
-    }
-    if ( p.x() < autoscroll_margin ) {
-        dx = -l;
-    } else if ( p.x() > visibleWidth()-autoscroll_margin ) {
-        dx = +l;
-    }
-    if ( dx || dy ) {
-        scrollBy(dx,dy);
-    } else {
-        stopAutoScroll();
-    }
-}
-
 //-----------------------------------------------------------------------------
 void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
 {
     QPoint vp = contentsToViewport(e->pos());
-    QRect inside_margin((contentsX() > 0) ? autoscroll_margin : 0,
-                        (contentsY() > 0) ? autoscroll_margin : 0,
-      visibleWidth() - ((contentsX() + visibleWidth() < contentsWidth())
-        ? autoscroll_margin*2 : 0),
-      visibleHeight() - ((contentsY() + visibleHeight() < contentsHeight())
-        ? autoscroll_margin*2 : 0));
     QListViewItem *i = itemAt( vp );
     if ( i ) {
         bool dragAccepted = acceptDrag( e );
         if ( dragAccepted ) {
             setCurrentItem( i );
         }
-        if ( !inside_margin.contains(vp) ) {
-            startAutoScroll();
-            e->accept(QRect(0,0,0,0)); // Keep sending move events
+
+        if ( i != dropItem ) {
             autoopen_timer.stop();
-        } else {
-            e->accept( dragAccepted );
-            if ( i != dropItem ) {
-                autoopen_timer.stop();
-                dropItem = i;
-                autoopen_timer.start( autoopenTime );
-            }
+            dropItem = i;
+            autoopen_timer.start( autoopenTime );
         }
+
         if ( dragAccepted ) {
+            e->accept( itemRect(i) );
+
             switch ( e->action() ) {
                 case QDropEvent::Copy:
                 break;
@@ -1265,6 +1240,8 @@ void KMFolderTree::contentsDragMoveEvent( QDragMoveEvent *e )
                 default:
                 ;
             }
+        } else {
+            e->accept( false );
         }
     } else {
         e->accept( false );
@@ -1279,11 +1256,10 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
     if (!oldCurrent) return;
 
     autoopen_timer.stop();
-    stopAutoScroll();
     dropItem = 0;
 
     setCurrentItem( oldCurrent );
-    if (oldSelected)
+    if ( oldSelected )
       setSelected( oldSelected, TRUE );
 }
 
@@ -1291,7 +1267,6 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
 void KMFolderTree::contentsDropEvent( QDropEvent *e )
 {
     autoopen_timer.stop();
-    stopAutoScroll();
 
     QListViewItem *item = itemAt( contentsToViewport(e->pos()) );
     KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
@@ -1334,10 +1309,13 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 
     dropItem = 0;
 
-    clearSelection();
     setCurrentItem( oldCurrent );
+    if ( oldCurrent) mLastItem = static_cast<KMFolderTreeItem*>(oldCurrent);
     if ( oldSelected )
+    {
+      clearSelection();
       setSelected( oldSelected, TRUE );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -1366,7 +1344,7 @@ void KMFolderTree::slotFolderExpanded( QListViewItem * item )
       // the tree will be reloaded after that
       bool success = folder->listDirectory();
       if (!success) fti->setOpen( false );
-      if ( fti->childCount() == 0 )
+      if ( fti->childCount() == 0 && fti->parent() )
         fti->setExpandable( false );
     }
   }
@@ -1604,6 +1582,18 @@ void KMFolderTree::slotResetFolderList( QListViewItem* item, bool startList )
     folder->setSubfolderState( KMFolderImap::imapNoInformation );
     if ( startList )
       folder->listDirectory();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::showFolder( KMFolder* folder )
+{
+  if ( !folder ) return;
+  QListViewItem* item = indexOfFolder( folder );
+  if ( item )
+  {
+    doFolderSelected( item );
+    ensureItemVisible( item );
   }
 }
 

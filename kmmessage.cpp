@@ -3,6 +3,9 @@
 
 // if you do not want GUI elements in here then set ALLOW_GUI to 0.
 #include <config.h>
+// needed temporarily until KMime is replacing the partNode helper class:
+#include "partNode.h"
+
 
 #define ALLOW_GUI 1
 #include "kmmessage.h"
@@ -16,11 +19,13 @@ using KMail::ObjectTreeParser;
 #include "kmversion.h"
 #include <libkpimidentities/identity.h>
 #include <libkpimidentities/identitymanager.h>
-#include <libkdepim/email.h>
+#include <libemailfunctions/email.h>
 #include "kmkernel.h"
 #include "headerstrategy.h"
+#include "globalsettings.h"
 using KMail::HeaderStrategy;
 #include "kmaddrbook.h"
+#include "kcursorsaver.h"
 
 #include <cryptplugwrapperlist.h>
 #include <kpgpblock.h>
@@ -33,6 +38,7 @@ using KMail::HeaderStrategy;
 #include <khtml_part.h>
 #include <kuser.h>
 #include <kidna.h>
+#include <kasciistricmp.h>
 
 #include <qcursor.h>
 #include <qtextcodec.h>
@@ -59,19 +65,15 @@ using namespace KMime::Types;
 #include <kmessagebox.h>
 #endif
 
-// needed temporarily until KMime is replacing the partNode helper class:
-#include "partNode.h"
-
 using namespace KMime;
 
 static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
-static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix,
+static bool sSmartQuote,
   sWordWrap;
 static int sWrapCol;
-static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 static QStringList sPrefCharsets;
 
 QString KMMessage::sForwardStr;
@@ -159,8 +161,6 @@ void KMMessage::assign( const KMMessage& other )
     mMsg = new DwMessage( *(other.mMsg) );
   mOverrideCodec = other.mOverrideCodec;
   mDecodeHTML = other.mDecodeHTML;
-  Q_UINT32 otherTransfer = MessageProperty::transferInProgress( &other );
-  MessageProperty::setTransferInProgress( this, otherTransfer );
   mMsgSize = other.mMsgSize;
   mMsgLength = other.mMsgLength;
   mFolderOffset = other.mFolderOffset;
@@ -173,6 +173,7 @@ void KMMessage::assign( const KMMessage& other )
     mUnencryptedMsg = new KMMessage( *other.unencryptedMsg() );
   else
     mUnencryptedMsg = 0;
+  setDrafts( other.drafts() );
   //mFileName = ""; // we might not want to copy the other messages filename (?)
   //KMMsgBase::assign( &other );
 }
@@ -206,6 +207,10 @@ QCString KMMessage::id() const
 
 
 //-----------------------------------------------------------------------------
+//WARNING: This method updates the memory resident cache of serial numbers
+//WARNING: held in MessageProperty, but it does not update the persistent
+//WARNING: store of serial numbers on the file system that is managed by
+//WARNING: KMMsgDict
 void KMMessage::setMsgSerNum(unsigned long newMsgSerNum)
 {
   MessageProperty::setSerialCache( this, newMsgSerNum );
@@ -323,9 +328,9 @@ QString KMMessage::headerAsString() const
 {
   DwHeaders& header = mMsg->Headers();
   header.Assemble();
-  if(header.AsString() != "")
-    return header.AsString().c_str();
-  return "";
+  if ( header.AsString().empty() )
+    return QString::null;
+  return QString::fromLatin1( header.AsString().c_str() );
 }
 
 
@@ -374,7 +379,8 @@ QString KMMessage::formatString(const QString& aStr) const
   if (aStr.isEmpty())
     return aStr;
 
-  for (uint i=0; i<aStr.length();) {
+  unsigned int strLength(aStr.length());
+  for (uint i=0; i<strLength;) {
     ch = aStr[i++];
     if (ch == '%') {
       ch = aStr[i++];
@@ -394,11 +400,13 @@ QString KMMessage::formatString(const QString& aStr) const
         result += fromStrip();
         break;
       case 'f':
+		{
         str = fromStrip();
 
         for (j=0; str[j]>' '; j++)
           ;
-        for (; j < str.length() && str[j] <= ' '; j++)
+		unsigned int strLength(str.length());
+        for (; j < strLength && str[j] <= ' '; j++)
           ;
         result += str[0];
         if (str[j]>' ')
@@ -406,6 +414,7 @@ QString KMMessage::formatString(const QString& aStr) const
         else
           if (str[1]>' ')
             result += str[1];
+		}
         break;
       case 'T':
         result += toStrip();
@@ -783,64 +792,6 @@ QString KMMessage::asQuotedString( const QString& aHeaderStr,
 }
 
 //-----------------------------------------------------------------------------
-// static
-QString KMMessage::stripOffPrefixes( const QString& str )
-{
-  return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
-                          true, QString::null ).stripWhiteSpace();
-}
-
-//-----------------------------------------------------------------------------
-// static
-QString KMMessage::replacePrefixes( const QString& str,
-                                    const QStringList& prefixRegExps,
-                                    bool replace,
-                                    const QString& newPrefix )
-{
-  bool recognized = false;
-  // construct a big regexp that
-  // 1. is anchored to the beginning of str (sans whitespace)
-  // 2. matches at least one of the part regexps in prefixRegExps
-  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
-                      .arg( prefixRegExps.join(")|(?:") );
-  QRegExp rx( bigRegExp, false /*case insens.*/ );
-  if ( !rx.isValid() ) {
-    kdWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
-                    << bigRegExp << "\"\n"
-                    << "prefix regexp is invalid!" << endl;
-    // try good ole Re/Fwd:
-    recognized = str.startsWith( newPrefix );
-  } else { // valid rx
-    QString tmp = str;
-    if ( rx.search( tmp ) == 0 ) {
-      recognized = true;
-      if ( replace )
-	return tmp.replace( 0, rx.matchedLength(), newPrefix + ' ' );
-    }
-  }
-  if ( !recognized )
-    return newPrefix + ' ' + str;
-  else
-    return str;
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::cleanSubject() const
-{
-  return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
-		       true, QString::null ).stripWhiteSpace();
-}
-
-//-----------------------------------------------------------------------------
-QString KMMessage::cleanSubject( const QStringList & prefixRegExps,
-                                 bool replace,
-                                 const QString & newPrefix ) const
-{
-  return KMMessage::replacePrefixes( subject(), prefixRegExps, replace,
-                                     newPrefix );
-}
-
-//-----------------------------------------------------------------------------
 KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
                                    QString selection /* = QString::null */,
                                    bool noQuote /* = false */,
@@ -1044,7 +995,7 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
     }
   }
 
-  msg->setSubject(cleanSubject(sReplySubjPrefixes, sReplaceSubjPrefix, "Re:"));
+  msg->setSubject( replySubject() );
 
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
@@ -1091,53 +1042,52 @@ QCString KMMessage::getRefStr() const
 }
 
 
-KMMessage* KMMessage::createRedirect()
+KMMessage* KMMessage::createRedirect( const QString &toStr )
 {
   KMMessage* msg = new KMMessage;
   KMMessagePart msgPart;
-  int i;
 
-  msg->initFromMessage(this);
+  // copy the message 1:1
+  msg->fromDwString(this->asDwString());
 
-  /// ### FIXME: The message should be redirected with the same Content-Type
-  /// ###        as the original message
-  /// ### FIXME: ??Add some Resent-* headers?? (c.f. RFC2822 3.6.6)
+  uint id = 0;
+  QString strId = msg->headerField( "X-KMail-Identity" ).stripWhiteSpace();
+  if ( !strId.isEmpty())
+    id = strId.toUInt();
+  const KPIM::Identity & ident =
+    kmkernel->identityManager()->identityForUoidOrDefault( id );
 
-  QString st = asQuotedString("", "", QString::null, false, false);
-  QCString encoding = autoDetectCharset(charset(), sPrefCharsets, st);
-  if (encoding.isEmpty()) encoding = "utf-8";
-  QCString str = codecForName(encoding)->fromUnicode(st);
+  // X-KMail-Redirect-From: content
+  QString strByWayOf = QString("%1 (by way of %2 <%3>)")
+    .arg( from() )
+    .arg( ident.fullName() )
+    .arg( ident.emailAddr() );
 
-  msg->setCharset(encoding);
-  msg->setBody(str);
+  // Resent-From: content
+  QString strFrom = QString("%1 <%2>")
+    .arg( ident.fullName() )
+    .arg( ident.emailAddr() );
 
-  if (numBodyParts() > 0)
-  {
-    msgPart.setBody(str);
-    msgPart.setTypeStr("text");
-    msgPart.setSubtypeStr("plain");
-    msgPart.setCharset(encoding);
-    msg->addBodyPart(&msgPart);
+  // format the current date to be used in Resent-Date:
+  QString origDate = msg->headerField( "Date" );
+  msg->setDateToday();
+  QString newDate = msg->headerField( "Date" );
+  // make sure the Date: header is valid
+  if ( origDate.isEmpty() )
+    msg->removeHeaderField( "Date" );
+  else
+    msg->setHeaderField( "Date", origDate );
 
-    for (i = 0; i < numBodyParts(); i++)
-    {
-      bodyPart(i, &msgPart);
-      if ((qstricmp(msgPart.contentDisposition(),"inline")!=0 && i > 0) ||
-	  (qstricmp(msgPart.typeStr(),"text")!=0 &&
-	   qstricmp(msgPart.typeStr(),"message")!=0))
-      {
-	msg->addBodyPart(&msgPart);
-      }
-    }
-  }
+  // prepend Resent-*: headers (c.f. RFC2822 3.6.6)
+  msg->setHeaderField( "Resent-Message-ID", generateMessageId( msg->sender() ),
+                       Structured, true);
+  msg->setHeaderField( "Resent-Date", newDate, Structured, true );
+  msg->setHeaderField( "Resent-To",   toStr,   Address, true );
+  msg->setHeaderField( "Resent-From", strFrom, Address, true );
 
-//TODO: insert sender here
-  msg->setHeaderField("X-KMail-Redirect-From", from());
-  msg->setSubject(subject());
-  msg->setFrom(from());
-  msg->cleanupHeader();
+  msg->setHeaderField( "X-KMail-Redirect-From", strByWayOf );
+  msg->setHeaderField( "X-KMail-Recipients", toStr );
 
-  // setStatus(KMMsgStatusForwarded);
   msg->link(this, KMMsgStatusForwarded);
 
   return msg;
@@ -1164,10 +1114,12 @@ KMMessage* KMMessage::createBounce( bool )
   if (senderStr.isEmpty())
   {
 #if ALLOW_GUI
-    if ( withUI )
+    if ( withUI ) {
+      const KCursorSaver saver( QCursor::ArrowCursor );
       KMessageBox::sorry(0 /*app-global modal*/,
 			 i18n("The message has no sender set"),
 			 i18n("Bounce Message"));
+    }
 #endif
     return 0;
   }
@@ -1183,7 +1135,8 @@ KMMessage* KMMessage::createBounce( bool )
   else receiver = KPIM::getEmailAddr(to());
 
 #if ALLOW_GUI
-  if ( withUI )
+  if ( withUI ) {
+    const KCursorSaver saver( QCursor::ArrowCursor );
     // No composer appears. So better ask before sending.
     if (KMessageBox::warningContinueCancel(0 /*app-global modal*/,
         i18n("Return the message to the sender as undeliverable?\n"
@@ -1195,6 +1148,7 @@ KMMessage* KMMessage::createBounce( bool )
     {
       return 0;
     }
+  }
 #endif
 
   KMMessage *msg = new KMMessage;
@@ -1288,7 +1242,7 @@ KMMessage* KMMessage::createForward()
       // don't add the detached signature as attachment when forwarding a
       // PGP/MIME signed message inline
       if( mimeType != "application/pgp-signature" && outsideRfc822 ) {
-        if (i > 0 || qstricmp(msgPart.typeStr(),"text") != 0)
+        if (i > 0 || kasciistricmp(msgPart.typeStr(),"text") != 0)
           msg->addBodyPart(&msgPart);
       }
       // avoid kind of recursive attaching of rfc822 parts
@@ -1297,7 +1251,7 @@ KMMessage* KMMessage::createForward()
     }
   }
 
-  msg->setSubject(cleanSubject(sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:"));
+  msg->setSubject( forwardSubject() );
 
   msg->cleanupHeader();
 
@@ -1354,12 +1308,14 @@ static int requestAdviceOnMDN( const char * what ) {
   for ( int i = 0 ; i < numMdnMessageBoxes ; ++i )
     if ( !qstrcmp( what, mdnMessageBoxes[i].dontAskAgainID ) )
       if ( mdnMessageBoxes[i].canDeny ) {
+	const KCursorSaver saver( QCursor::ArrowCursor );
 	int answer = QMessageBox::information( 0,
 			 i18n("Message Disposition Notification Request"),
 			 i18n( mdnMessageBoxes[i].text ),
 			 i18n("&Ignore"), i18n("Send \"&denied\""), i18n("&Send") );
 	return answer ? answer + 1 : 0 ; // map to "mode" in createMDN
       } else {
+	const KCursorSaver saver( QCursor::ArrowCursor );
 	int answer = QMessageBox::information( 0,
 			 i18n("Message Disposition Notification Request"),
 			 i18n( mdnMessageBoxes[i].text ),
@@ -1406,7 +1362,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 
   MDN::SendingMode s = MDN::SentAutomatically; // set to manual if asked user
   QString special; // fill in case of error, warning or failure
-  KConfigGroup mdnConfig( KGlobal::config(), "MDN" );
+  KConfigGroup mdnConfig( KMKernel::config(), "MDN" );
 
   // default:
   int mode = mdnConfig.readNumEntry( "default-policy", 0 );
@@ -1596,14 +1552,6 @@ QString KMMessage::replaceHeadersInString( const QString & s ) const {
   return result;
 }
 
-QString KMMessage::forwardSubject() const {
-  return cleanSubject( sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
-}
-
-QString KMMessage::replySubject() const {
-  return cleanSubject( sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
-}
-
 KMMessage* KMMessage::createDeliveryReceipt() const
 {
   QString str, receiptTo;
@@ -1630,8 +1578,8 @@ KMMessage* KMMessage::createDeliveryReceipt() const
   return receipt;
 }
 
-//-----------------------------------------------------------------------------
-void KMMessage::initHeader( uint id )
+
+void KMMessage::applyIdentity( uint id )
 {
   const KPIM::Identity & ident =
     kmkernel->identityManager()->identityForUoidOrDefault( id );
@@ -1675,7 +1623,12 @@ void KMMessage::initHeader( uint id )
     setDrafts( QString::null );
   else
     setDrafts( ident.drafts() );
+}
 
+//-----------------------------------------------------------------------------
+void KMMessage::initHeader( uint id )
+{
+  applyIdentity( id );
   setTo("");
   setSubject("");
   setDateToday();
@@ -2276,11 +2229,13 @@ void KMMessage::removeHeaderField(const QCString& aName)
 
 //-----------------------------------------------------------------------------
 void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
-                                HeaderFieldType type )
+                                HeaderFieldType type, bool prepend )
 {
+#if 0
   if ( type != Unstructured )
     kdDebug(5006) << "KMMessage::setHeaderField( \"" << aName << "\", \""
                 << bValue << "\", " << type << " )" << endl;
+#endif
   if (aName.isEmpty()) return;
 
   DwHeaders& header = mMsg->Headers();
@@ -2293,14 +2248,18 @@ void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
     QString value = bValue;
     if ( type == Address )
       value = normalizeAddressesAndEncodeIDNs( value );
-if ( type != Unstructured )
-kdDebug(5006) << "value: \"" << value << "\"" << endl;
+#if 0
+    if ( type != Unstructured )
+      kdDebug(5006) << "value: \"" << value << "\"" << endl;
+#endif
     QCString encoding = autoDetectCharset( charset(), sPrefCharsets, value );
     if (encoding.isEmpty())
        encoding = "utf-8";
     aValue = encodeRFC2047String( value, encoding );
-if ( type != Unstructured )
-kdDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
+#if 0
+    if ( type != Unstructured )
+      kdDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
+#endif
   }
   str = aName;
   if (str[str.length()-1] != ':') str += ": ";
@@ -2312,7 +2271,10 @@ kdDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
   field = new DwField(str, mMsg);
   field->Parse();
 
-  header.AddOrReplaceField(field);
+  if ( prepend )
+    header.AddFieldAt( 1, field );
+  else
+    header.AddOrReplaceField( field );
   mNeedsAssembly = TRUE;
 }
 
@@ -2398,7 +2360,7 @@ void KMMessage::setDwMediaTypeParam( DwMediaType &mType,
   mType.Parse();
   DwParameter *param = mType.FirstParameter();
   while(param) {
-    if (!qstricmp(param->Attribute().c_str(), attr))
+    if (!kasciistricmp(param->Attribute().c_str(), attr))
       break;
     else
       param = param->Next();
@@ -2886,96 +2848,99 @@ DwBodyPart * KMMessage::findDwBodyPart( int type, int subtype ) const
 void KMMessage::bodyPart(DwBodyPart* aDwBodyPart, KMMessagePart* aPart,
 			 bool withBody)
 {
-  if( aPart ) {
-    if( aDwBodyPart && aDwBodyPart->hasHeaders()  ) {
-      // This must not be an empty string, because we'll get a
-      // spurious empty Subject: line in some of the parts.
-      //aPart->setName(" ");
-      // partSpecifier
-      QString partId( aDwBodyPart->partId() );
-      aPart->setPartSpecifier( partId );
+  if ( !aPart )
+    return;
 
-      DwHeaders& headers = aDwBodyPart->Headers();
-      // Content-type
-      QCString additionalCTypeParams;
-      if (headers.HasContentType())
+  aPart->clear();
+
+  if( aDwBodyPart && aDwBodyPart->hasHeaders()  ) {
+    // This must not be an empty string, because we'll get a
+    // spurious empty Subject: line in some of the parts.
+    //aPart->setName(" ");
+    // partSpecifier
+    QString partId( aDwBodyPart->partId() );
+    aPart->setPartSpecifier( partId );
+
+    DwHeaders& headers = aDwBodyPart->Headers();
+    // Content-type
+    QCString additionalCTypeParams;
+    if (headers.HasContentType())
+    {
+      DwMediaType& ct = headers.ContentType();
+      aPart->setOriginalContentTypeStr( ct.AsString().c_str() );
+      aPart->setTypeStr(ct.TypeStr().c_str());
+      aPart->setSubtypeStr(ct.SubtypeStr().c_str());
+      DwParameter *param = ct.FirstParameter();
+      while(param)
       {
-        DwMediaType& ct = headers.ContentType();
-        aPart->setOriginalContentTypeStr( ct.AsString().c_str() );
-        aPart->setTypeStr(ct.TypeStr().c_str());
-        aPart->setSubtypeStr(ct.SubtypeStr().c_str());
-        DwParameter *param = ct.FirstParameter();
-        while(param)
-        {
-          if (!qstricmp(param->Attribute().c_str(), "charset"))
-            aPart->setCharset(QCString(param->Value().c_str()).lower());
-          else if (param->Attribute().c_str()=="name*")
-            aPart->setName(KMMsgBase::decodeRFC2231String(
-              param->Value().c_str()));
-          else {
-            additionalCTypeParams += ';';
-            additionalCTypeParams += param->AsString().c_str();
-          }
-          param=param->Next();
+        if (!kasciistricmp(param->Attribute().c_str(), "charset"))
+          aPart->setCharset(QCString(param->Value().c_str()).lower());
+        else if (param->Attribute().c_str()=="name*")
+          aPart->setName(KMMsgBase::decodeRFC2231String(
+            param->Value().c_str()));
+        else {
+          additionalCTypeParams += ';';
+          additionalCTypeParams += param->AsString().c_str();
         }
+        param=param->Next();
       }
-      else
-      {
-        aPart->setTypeStr("text");      // Set to defaults
-        aPart->setSubtypeStr("plain");
-      }
-      aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
-      // Modification by Markus
-      if (aPart->name().isEmpty())
-      {
-	if (headers.HasContentType() && !headers.ContentType().Name().empty()) {
-	  aPart->setName(KMMsgBase::decodeRFC2047String(headers.
-							ContentType().Name().c_str()) );
-	} else if (headers.HasSubject() && !headers.Subject().AsString().empty()) {
-	  aPart->setName( KMMsgBase::decodeRFC2047String(headers.
-							 Subject().AsString().c_str()) );
-	}
-      }
-
-      // Content-transfer-encoding
-      if (headers.HasContentTransferEncoding())
-        aPart->setCteStr(headers.ContentTransferEncoding().AsString().c_str());
-      else
-        aPart->setCteStr("7bit");
-
-      // Content-description
-      if (headers.HasContentDescription())
-        aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
-      else
-        aPart->setContentDescription("");
-
-      // Content-disposition
-      if (headers.HasContentDisposition())
-        aPart->setContentDisposition(headers.ContentDisposition().AsString().c_str());
-      else
-        aPart->setContentDisposition("");
-
-      // Body
-      if (withBody)
-        aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
-      else
-        aPart->setBody( "" );
-
     }
-    // If no valid body part was given,
-    // set all MultipartBodyPart attributes to empty values.
     else
     {
-      aPart->setTypeStr("");
-      aPart->setSubtypeStr("");
-      aPart->setCteStr("");
-      // This must not be an empty string, because we'll get a
-      // spurious empty Subject: line in some of the parts.
-      //aPart->setName(" ");
-      aPart->setContentDescription("");
-      aPart->setContentDisposition("");
-      aPart->setBody("");
+      aPart->setTypeStr("text");      // Set to defaults
+      aPart->setSubtypeStr("plain");
     }
+    aPart->setAdditionalCTypeParamStr( additionalCTypeParams );
+    // Modification by Markus
+    if (aPart->name().isEmpty())
+    {
+      if (headers.HasContentType() && !headers.ContentType().Name().empty()) {
+        aPart->setName(KMMsgBase::decodeRFC2047String(headers.
+      						ContentType().Name().c_str()) );
+      } else if (headers.HasSubject() && !headers.Subject().AsString().empty()) {
+        aPart->setName( KMMsgBase::decodeRFC2047String(headers.
+      						 Subject().AsString().c_str()) );
+      }
+    }
+
+    // Content-transfer-encoding
+    if (headers.HasContentTransferEncoding())
+      aPart->setCteStr(headers.ContentTransferEncoding().AsString().c_str());
+    else
+      aPart->setCteStr("7bit");
+
+    // Content-description
+    if (headers.HasContentDescription())
+      aPart->setContentDescription(headers.ContentDescription().AsString().c_str());
+    else
+      aPart->setContentDescription("");
+
+    // Content-disposition
+    if (headers.HasContentDisposition())
+      aPart->setContentDisposition(headers.ContentDisposition().AsString().c_str());
+    else
+      aPart->setContentDisposition("");
+
+    // Body
+    if (withBody)
+      aPart->setBody( aDwBodyPart->Body().AsString().c_str() );
+    else
+      aPart->setBody( "" );
+
+  }
+  // If no valid body part was given,
+  // set all MultipartBodyPart attributes to empty values.
+  else
+  {
+    aPart->setTypeStr("");
+    aPart->setSubtypeStr("");
+    aPart->setCteStr("");
+    // This must not be an empty string, because we'll get a
+    // spurious empty Subject: line in some of the parts.
+    //aPart->setName(" ");
+    aPart->setContentDescription("");
+    aPart->setContentDisposition("");
+    aPart->setBody("");
   }
 }
 
@@ -3737,7 +3702,8 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
   int commentLevel = 0;
 
   QChar ch;
-  for ( uint index = 0; index < aStr.length(); ++index ) {
+  unsigned int strLength(aStr.length());
+  for ( uint index = 0; index < strLength; ++index ) {
     ch = aStr[index];
     switch ( context ) {
     case TopLevel : {
@@ -3880,9 +3846,10 @@ QString KMMessage::stripEmailAddr( const QString& aStr )
 QString KMMessage::quoteHtmlChars( const QString& str, bool removeLineBreaks )
 {
   QString result;
-  result.reserve( 6*str.length() ); // maximal possible length
 
-  for( unsigned int i = 0; i < str.length(); ++i )
+  unsigned int strLength(str.length());
+  result.reserve( 6*strLength ); // maximal possible length
+  for( unsigned int i = 0; i < strLength; ++i )
     switch ( str[i].latin1() ) {
     case '<':
       result += "&lt;";
@@ -4085,6 +4052,8 @@ QString KMMessage::guessEmailAddressFromLoginName( const QString& loginName )
 //-----------------------------------------------------------------------------
 void KMMessage::readConfig()
 {
+  KMMsgBase::readConfig();
+
   KConfig *config=KMKernel::config();
   KConfigGroupSaver saver(config, "General");
 
@@ -4106,18 +4075,9 @@ void KMMessage::readConfig()
 
   { // area for config group "Composer"
     KConfigGroupSaver saver(config, "Composer");
-    sReplySubjPrefixes = config->readListEntry("reply-prefixes", ',');
-    if (sReplySubjPrefixes.count() == 0)
-      sReplySubjPrefixes << "Re\\s*:" << "Re\\[\\d+\\]:" << "Re\\d+:";
-    sReplaceSubjPrefix = config->readBoolEntry("replace-reply-prefix", true);
-    sForwardSubjPrefixes = config->readListEntry("forward-prefixes", ',');
-    if (sForwardSubjPrefixes.count() == 0)
-      sForwardSubjPrefixes << "Fwd:" << "FW:";
-    sReplaceForwSubjPrefix = config->readBoolEntry("replace-forward-prefix", true);
-
-    sSmartQuote = config->readBoolEntry("smart-quote", true);
-    sWordWrap = config->readBoolEntry( "word-wrap", true );
-    sWrapCol = config->readNumEntry("break-at", 78);
+    sSmartQuote = GlobalSettings::smartQuote();
+    sWordWrap = GlobalSettings::wordWrap();
+    sWrapCol = GlobalSettings::lineWrapWidth();
     if ((sWrapCol == 0) || (sWrapCol > 78))
       sWrapCol = 78;
     if (sWrapCol < 30)
@@ -4159,7 +4119,7 @@ QCString KMMessage::charset() const
   mType.Parse();
   DwParameter *param=mType.FirstParameter();
   while(param){
-    if (!qstricmp(param->Attribute().c_str(), "charset"))
+    if (!kasciistricmp(param->Attribute().c_str(), "charset"))
       return param->Value().c_str();
     else param=param->Next();
   }
@@ -4183,7 +4143,7 @@ void KMMessage::setCharset(const QCString& bStr)
   DwParameter *param=mType.FirstParameter();
   while(param)
     // FIXME use the mimelib functions here for comparison.
-    if (!qstricmp(param->Attribute().c_str(), "charset")) break;
+    if (!kasciistricmp(param->Attribute().c_str(), "charset")) break;
     else param=param->Next();
   if (!param){
     param=new DwParameter;
@@ -4226,31 +4186,37 @@ void KMMessage::setSignatureState(KMMsgSignatureState s, int idx)
 void KMMessage::setMDNSentState( KMMsgMDNSentState status, int idx ) {
   if ( mMDNSentState == status )
     return;
+  if ( status == 0 )
+    status = KMMsgMDNStateUnknown;
   mMDNSentState = status;
   mDirty = true;
   KMMsgBase::setMDNSentState( status, idx );
 }
 
 //-----------------------------------------------------------------------------
-void KMMessage::link(const KMMessage *aMsg, KMMsgStatus aStatus)
+void KMMessage::link( const KMMessage *aMsg, KMMsgStatus aStatus )
 {
-  Q_ASSERT(aStatus == KMMsgStatusReplied || aStatus == KMMsgStatusForwarded);
+  Q_ASSERT( aStatus == KMMsgStatusReplied
+      || aStatus == KMMsgStatusForwarded
+      || aStatus == KMMsgStatusDeleted );
 
-  QString message = headerField("X-KMail-Link-Message");
-  if (!message.isEmpty())
+  QString message = headerField( "X-KMail-Link-Message" );
+  if ( !message.isEmpty() )
     message += ',';
-  QString type = headerField("X-KMail-Link-Type");
-  if (!type.isEmpty())
+  QString type = headerField( "X-KMail-Link-Type" );
+  if ( !type.isEmpty() )
     type += ',';
 
-  message += QString::number(aMsg->getMsgSerNum());
-  if (aStatus == KMMsgStatusReplied)
+  message += QString::number( aMsg->getMsgSerNum() );
+  if ( aStatus == KMMsgStatusReplied )
     type += "reply";
-  else if (aStatus == KMMsgStatusForwarded)
+  else if ( aStatus == KMMsgStatusForwarded )
     type += "forward";
+  else if ( aStatus == KMMsgStatusDeleted )
+    type += "deleted";
 
-  setHeaderField("X-KMail-Link-Message", message);
-  setHeaderField("X-KMail-Link-Type", type);
+  setHeaderField( "X-KMail-Link-Message", message );
+  setHeaderField( "X-KMail-Link-Type", type );
 }
 
 //-----------------------------------------------------------------------------
@@ -4264,12 +4230,14 @@ void KMMessage::getLink(int n, ulong *retMsgSerNum, KMMsgStatus *retStatus) cons
   message = message.section(',', n, n);
   type = type.section(',', n, n);
 
-  if (!message.isEmpty() && !type.isEmpty()) {
+  if ( !message.isEmpty() && !type.isEmpty() ) {
     *retMsgSerNum = message.toULong();
-    if (type == "reply")
+    if ( type == "reply" )
       *retStatus = KMMsgStatusReplied;
-    else if (type == "forward")
+    else if ( type == "forward" )
       *retStatus = KMMsgStatusForwarded;
+    else if ( type == "deleted" )
+      *retStatus = KMMsgStatusDeleted;
   }
 }
 
@@ -4353,7 +4321,7 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
     mMsg->Body().Parse();
   }
   mNeedsAssembly = true;
-  if (!( partSpecifier.endsWith(".HEADER") || partSpecifier.endsWith(".MIME") ))
+  if (! partSpecifier.endsWith(".HEADER") )
   {
     // notify observers
     notify();
@@ -4363,6 +4331,8 @@ void KMMessage::updateBodyPart(const QString partSpecifier, const QByteArray & d
 //-----------------------------------------------------------------------------
 void KMMessage::updateAttachmentState( DwBodyPart* part )
 {
+  static const char cSMIMEData[] = "smime.p7s";
+
   if ( !part )
     part = getFirstDwBodyPart();
   if ( !part )
@@ -4373,7 +4343,8 @@ void KMMessage::updateAttachmentState( DwBodyPart* part )
 
   if ( part->hasHeaders() &&
        part->Headers().HasContentDisposition() &&
-       !part->Headers().ContentDisposition().Filename().empty() )
+       !part->Headers().ContentDisposition().Filename().empty() &&
+       0 != kasciistricmp(part->Headers().ContentDisposition().Filename().c_str(), cSMIMEData ))
   {
     setStatus( KMMsgStatusHasAttach );
     return;

@@ -22,6 +22,7 @@ using KMail::MessageProperty;
 
 #include <qtextcodec.h>
 #include <qdeepcopy.h>
+#include <qregexp.h>
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -68,8 +69,8 @@ using KMail::MessageProperty;
 
 //-----------------------------------------------------------------------------
 KMMsgBase::KMMsgBase(KMFolder* aParentFolder)
-  : mParent( aParentFolder ), mDirty( false), mIndexOffset( 0 ),
-    mIndexLength( 0 ), mEnableUndo( false ), mStatus( KMMsgStatusUnknown )
+  : mParent( aParentFolder ), mIndexOffset( 0 ),
+    mIndexLength( 0 ), mDirty( false ), mEnableUndo( false ), mStatus( KMMsgStatusUnknown )
 {
 }
 
@@ -97,8 +98,8 @@ void KMMsgBase::assign(const KMMsgBase* other)
   mIndexOffset = other->mIndexOffset;
   mIndexLength = other->mIndexLength;
   MessageProperty::forget( this );
-  bool otherTransfer = MessageProperty::transferInProgress( other );
-  MessageProperty::setTransferInProgress( this, otherTransfer );
+  //bool otherTransfer = MessageProperty::transferInProgress( other );
+  //MessageProperty::setTransferInProgress( this, otherTransfer );
 }
 
 
@@ -137,7 +138,11 @@ void KMMsgBase::toggleStatus(const KMMsgStatus aStatus, int idx)
       mStatus &= ~KMMsgStatusIgnored;
     if (aStatus == KMMsgStatusIgnored) {
       mStatus &= ~KMMsgStatusWatched;
-      setStatus(KMMsgStatusRead, idx);
+      // Set to read. Don't use setStatus, that emits msgStatusChanged
+      // and we only want to do that once.
+      mStatus &= ~KMMsgStatusUnread;
+      mStatus &= ~KMMsgStatusNew;
+      mStatus |= KMMsgStatusRead;
     }
     if (aStatus == KMMsgStatusSpam)
       mStatus &= ~KMMsgStatusHam;
@@ -714,9 +719,11 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
   invalid_encoded_word:
     // invalid encoding, keep separating LWSP.
     pos = beg;
-    result += LWSP_buffer;
+    if ( !LWSP_buffer.isNull() )
+      result += LWSP_buffer;
     result += "=?";
     lastWasEncodedWord = false;
+    ++pos; // eat '?' (for loop eats '=')
     LWSP_buffer = 0;
   }
   return result;
@@ -1351,4 +1358,89 @@ bool KMMsgBase::syncIndexString() const
     return TRUE;
   }
   return FALSE;
+}
+
+static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
+static bool sReplaceSubjPrefix, sReplaceForwSubjPrefix;
+
+//-----------------------------------------------------------------------------
+void KMMsgBase::readConfig()
+{
+  KConfigGroup composerGroup( KMKernel::config(), "Composer" );
+  sReplySubjPrefixes = composerGroup.readListEntry("reply-prefixes", ',');
+  if (sReplySubjPrefixes.isEmpty())
+    sReplySubjPrefixes << "Re\\s*:" << "Re\\[\\d+\\]:" << "Re\\d+:";
+  sReplaceSubjPrefix = composerGroup.readBoolEntry("replace-reply-prefix", true);
+  sForwardSubjPrefixes = composerGroup.readListEntry("forward-prefixes", ',');
+  if (sForwardSubjPrefixes.isEmpty())
+    sForwardSubjPrefixes << "Fwd:" << "FW:";
+  sReplaceForwSubjPrefix = composerGroup.readBoolEntry("replace-forward-prefix", true);
+}
+
+//-----------------------------------------------------------------------------
+// static
+QString KMMsgBase::stripOffPrefixes( const QString& str )
+{
+  return replacePrefixes( str, sReplySubjPrefixes + sForwardSubjPrefixes,
+                          true, QString::null ).stripWhiteSpace();
+}
+
+//-----------------------------------------------------------------------------
+// static
+QString KMMsgBase::replacePrefixes( const QString& str,
+                                    const QStringList& prefixRegExps,
+                                    bool replace,
+                                    const QString& newPrefix )
+{
+  bool recognized = false;
+  // construct a big regexp that
+  // 1. is anchored to the beginning of str (sans whitespace)
+  // 2. matches at least one of the part regexps in prefixRegExps
+  QString bigRegExp = QString::fromLatin1("^(?:\\s+|(?:%1))+\\s*")
+                      .arg( prefixRegExps.join(")|(?:") );
+  QRegExp rx( bigRegExp, false /*case insens.*/ );
+  if ( !rx.isValid() ) {
+    kdWarning(5006) << "KMMessage::replacePrefixes(): bigRegExp = \""
+                    << bigRegExp << "\"\n"
+                    << "prefix regexp is invalid!" << endl;
+    // try good ole Re/Fwd:
+    recognized = str.startsWith( newPrefix );
+  } else { // valid rx
+    QString tmp = str;
+    if ( rx.search( tmp ) == 0 ) {
+      recognized = true;
+      if ( replace )
+	return tmp.replace( 0, rx.matchedLength(), newPrefix + ' ' );
+    }
+  }
+  if ( !recognized )
+    return newPrefix + ' ' + str;
+  else
+    return str;
+}
+
+//-----------------------------------------------------------------------------
+QString KMMsgBase::cleanSubject() const
+{
+  return cleanSubject( sReplySubjPrefixes + sForwardSubjPrefixes,
+		       true, QString::null ).stripWhiteSpace();
+}
+
+//-----------------------------------------------------------------------------
+QString KMMsgBase::cleanSubject( const QStringList & prefixRegExps,
+                                 bool replace,
+                                 const QString & newPrefix ) const
+{
+  return KMMsgBase::replacePrefixes( subject(), prefixRegExps, replace,
+                                     newPrefix );
+}
+
+//-----------------------------------------------------------------------------
+QString KMMsgBase::forwardSubject() const {
+  return cleanSubject( sForwardSubjPrefixes, sReplaceForwSubjPrefix, "Fwd:" );
+}
+
+//-----------------------------------------------------------------------------
+QString KMMsgBase::replySubject() const {
+  return cleanSubject( sReplySubjPrefixes, sReplaceSubjPrefix, "Re:" );
 }

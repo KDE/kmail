@@ -1,5 +1,5 @@
 [General]
-tools=7
+tools=5
 
 [Spamtool #1]
 Ident=spamassassin
@@ -15,11 +15,10 @@ DetectionHeader=X-Spam-Flag
 DetectionPattern=yes
 UseRegExp=0
 SupportsBayes=1
-Type=spam
 
 [Spamtool #2]
 Ident=bogofilter
-Version=1
+Version=2
 VisibleName=&Bogofilter
 Executable=bogofilter -V
 URL=http://bogofilter.sourceforge.net
@@ -28,10 +27,9 @@ PipeCmdDetect=bogofilter -p -e -u
 ExecCmdSpam=bogofilter -N -s
 ExecCmdHam=bogofilter -S -n
 DetectionHeader=X-Bogosity
-DetectionPattern=yes
-UseRegExp=0
+DetectionPattern=(yes)|(\bspam\b)
+UseRegExp=1
 SupportsBayes=1
-Type=spam
 
 [Spamtool #3]
 Ident=annoyance-filter
@@ -47,68 +45,36 @@ DetectionHeader=X-Annoyance-Filter-Classification
 DetectionPattern=Junk
 UseRegExp=0
 SupportsBayes=1
-Type=spam
 
 [Spamtool #4]
-Ident=ClamAV
+Ident=gmx-antispam
 Version=1
-VisibleName=&Clam Anti-Virus
-Executable=clamscan -V
-URL=http://clamav.sf.net
-PipeFilterName=Clam Anti-Virus Check
-PipeCmdDetect=kmail_clamav.sh
+VisibleName=&GMX Spam Filter
+Executable=echo
+URL=http://www.gmx.net/de/produkte/virenschutz/index.html
+PipeFilterName=
+PipeCmdDetect=
 ExecCmdSpam=
 ExecCmdHam=
-DetectionHeader=X-Virus-Flag
-DetectionPattern=yes
-UseRegExp=0
+DetectionHeader=X-GMX-Antispam
+DetectionPattern=^[2345]
+DetectionOnly=1
+UseRegExp=1
 SupportsBayes=0
-Type=av
 
 [Spamtool #5]
-Ident=SophosAV
+Ident=spambayes
 Version=1
-VisibleName=Sophos Anti&Virus
-Executable=sweep -v
-URL=http://www.sophos.com
-PipeFilterName=Sophos Anti-Virus Check
-PipeCmdDetect=kmail_sav.sh
-ExecCmdSpam=
-ExecCmdHam=
-DetectionHeader=X-Virus-Flag
-DetectionPattern=yes
+VisibleName=S&pamBayes
+Executable=sb_filter.py
+URL=http://spambayes.sourceforge.net
+PipeFilterName=SpamBayes Check
+PipeCmdDetect=sb_filter.py
+ExecCmdSpam=sb_filter.py -s
+ExecCmdHam=sb_filter.py -g
+DetectionHeader=X-Spambayes-Classification
+DetectionPattern=spam
+DetectionOnly=0
 UseRegExp=0
-SupportsBayes=0
-Type=av
+SupportsBayes=1
 
-[Spamtool #6]
-Ident=FProt
-Version=1
-VisibleName=&F-Prot AntiVirus
-Executable=f-prot -verno
-URL=http://www.f-prot.com
-PipeFilterName=F-Prot Anti-Virus Check
-PipeCmdDetect=kmail_fprot.sh
-ExecCmdSpam=
-ExecCmdHam=
-DetectionHeader=X-Virus-Flag
-DetectionPattern=yes
-UseRegExp=0
-SupportsBayes=0
-Type=av
-
-[Spamtool #7]
-Ident=AntiVir
-Version=1
-VisibleName=H+BEDV AntiVir
-Executable= antivir --version
-URL=http://www.antivir.de
-PipeFilterName=AntiVir Anti-Virus Check
-PipeCmdDetect=kmail_antivir.sh
-ExecCmdSpam=
-ExecCmdHam=
-DetectionHeader=X-Virus-Flag
-DetectionPattern=yes
-UseRegExp=0
-SupportsBayes=0
-Type=av

@@ -35,12 +35,14 @@ using namespace KMime::Types;
 #include "kmmsgdict.h"
 #include "kmmsgpart.h"
 #include "protocols.h"
+#include "kmcommands.h"
 #include <mimelib/mediatyp.h>
 
 #define SENDER_GROUP "sending mail"
 
 //-----------------------------------------------------------------------------
 KMSender::KMSender()
+  : mOutboxFolder( 0 ), mSentFolder( 0 )
 {
   mPrecommand = 0;
   mSendProc = 0;
@@ -147,25 +149,21 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     aMsg->setTo("Undisclosed.Recipients: ;");
   }
 
+  aMsg->removeHeaderField( "X-KMail-CryptoFormat" );
 
-  QString msgId = KMMessage::generateMessageId( aMsg->sender() );
-  //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
-  aMsg->setMsgId( msgId );
+  // Handle redirections
+  QString from  = aMsg->headerField("X-KMail-Redirect-From");
+  QString msgId = aMsg->msgId();
+  if( from.isEmpty() || msgId.isEmpty() ) {
+    msgId = KMMessage::generateMessageId( aMsg->sender() );
+    //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
+    aMsg->setMsgId( msgId );
+  }
 
   if (sendNow==-1) sendNow = mSendImmediate;
 
   kmkernel->outboxFolder()->open();
   aMsg->setStatus(KMMsgStatusQueued);
-
-  // Handle redirections
-  QString f = aMsg->headerField("X-KMail-Redirect-From");
-  if(!f.isEmpty()) {
-    uint id = aMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
-    const KPIM::Identity & ident =
-      kmkernel->identityManager()->identityForUoidOrDefault( id );
-    aMsg->setFrom(f + QString(" (by way of %1 <%2>)")
-      .arg(ident.fullName()).arg(ident.emailAddr()));
-  }
 
   rc = kmkernel->outboxFolder()->addMsg(aMsg);
   if (rc)
@@ -207,23 +205,25 @@ bool KMSender::sendQueued(void)
   }
 
   // open necessary folders
-  KMFolder* outbox = kmkernel->outboxFolder();
-  outbox->open();
-  mTotalMessages = outbox->count();
+  mOutboxFolder = kmkernel->outboxFolder();
+  mOutboxFolder->open();
+  mTotalMessages = mOutboxFolder->count();
   if (mTotalMessages == 0) {
     // Nothing in the outbox. We are done.
-    outbox->close();
+    mOutboxFolder->close();
+    mOutboxFolder = 0;
     return TRUE;
   }
   mTotalBytes = 0;
   for( int i = 0 ; i<mTotalMessages ; ++i )
-      mTotalBytes += outbox->getMsgBase(i)->msgSize();
+      mTotalBytes += mOutboxFolder->getMsgBase(i)->msgSize();
 
-  connect(outbox, SIGNAL(msgAdded(int)),
-          this, SLOT(outboxMsgAdded(int)));
+  connect( mOutboxFolder, SIGNAL(msgAdded(int)),
+           this, SLOT(outboxMsgAdded(int)) );
   mCurrentMsg = 0;
 
-  kmkernel->sentFolder()->open();
+  mSentFolder = kmkernel->sentFolder();
+  mSentFolder->open();
   kmkernel->filterMgr()->ref();
 
   // start sending the messages
@@ -346,7 +346,12 @@ void KMSender::doSendMsg()
         cleanup();
         return;
       }
-      if (imapSentFolder) imapSentFolder->moveMsg(mCurrentMsg);
+      if (imapSentFolder) {
+        // Does proper folder refcounting and message locking
+        KMCommand *command = new KMMoveCommand( imapSentFolder, mCurrentMsg );
+        command->keepFolderOpen( sentFolder ); // will open it, and close it once done
+        command->start();
+      }
     default:
       break;
     }
@@ -364,7 +369,7 @@ void KMSender::doSendMsg()
   }
 
   // See if there is another queued message
-  mCurrentMsg = kmkernel->outboxFolder()->getMsg(mFailedMessages);
+  mCurrentMsg = mOutboxFolder->getMsg(mFailedMessages);
   if ( mCurrentMsg && !mCurrentMsg->transferInProgress() &&
        mCurrentMsg->sender().isEmpty() ) {
     // if we do not have a sender address then use the email address of the
@@ -386,7 +391,7 @@ void KMSender::doSendMsg()
                                    "section of the configuration dialog "
                                    "and then try again." )
                              .arg( id.identityName() ) );
-      kmkernel->outboxFolder()->unGetMsg( mFailedMessages );
+      mOutboxFolder->unGetMsg( mFailedMessages );
       mCurrentMsg = 0;
     }
   }
@@ -520,6 +525,7 @@ void KMSender::doSendMsgAux()
 //-----------------------------------------------------------------------------
 void KMSender::cleanup(void)
 {
+  kdDebug(5006) << k_funcinfo << endl;
   if (mSendProc && mSendProcStarted) mSendProc->finish(true);
   mSendProc = 0;
   mSendProcStarted = FALSE;
@@ -530,15 +536,22 @@ void KMSender::cleanup(void)
     mCurrentMsg->setTransferInProgress( FALSE );
     mCurrentMsg = 0;
   }
-  KMFolder* outboxFolder = kmkernel->outboxFolder();
-  disconnect(outboxFolder, SIGNAL(msgAdded(int)),
-             this, SLOT(outboxMsgAdded(int)));
-  kmkernel->sentFolder()->close();
-  outboxFolder->close();
-  if ( outboxFolder->count() == 0 )
-    outboxFolder->expunge();
-  else if ( outboxFolder->needsCompacting() )
-    outboxFolder->compact( KMFolder::CompactSilentlyNow );
+  if ( mSentFolder ) {
+    mSentFolder->close();
+    mSentFolder = 0;
+  }
+  if ( mOutboxFolder ) {
+    disconnect( mOutboxFolder, SIGNAL(msgAdded(int)),
+                this, SLOT(outboxMsgAdded(int)) );
+    mOutboxFolder->close();
+    if ( mOutboxFolder->count( true ) == 0 ) {
+      mOutboxFolder->expunge();
+    }
+    else if ( mOutboxFolder->needsCompacting() ) {
+      mOutboxFolder->compact( KMFolder::CompactSilentlyNow );
+    }
+    mOutboxFolder = 0;
+  }
 
   mSendAborted = false;
   mSentMessages = 0;
@@ -729,14 +742,22 @@ void KMSender::setStatusByLink(const KMMessage *aMsg)
       break;
     n++;
 
-    KMFolder *folder;
-    int index;
+    KMFolder *folder = 0;
+    int index = -1;
     kmkernel->msgDict()->getLocation(msn, &folder, &index);
-
-    if (folder) {
+    if (folder && index != -1) {
       folder->open();
-      folder->setStatus(index, status);
+      if ( status == KMMsgStatusDeleted ) {
+        // Move the message to the trash folder
+        KMDeleteMsgCommand *cmd = 
+          new KMDeleteMsgCommand( folder, folder->getMsg( index ) ); 
+        cmd->start();
+      } else {
+        folder->setStatus(index, status);
+      }
       folder->close();
+    } else {
+      kdWarning(5006) << k_funcinfo << "Cannot update linked message, it could not be found!" << endl;
     }
   }
 }
@@ -870,6 +891,8 @@ bool KMSendSendmail::send(KMMessage* aMsg)
   mMailerProc->clearArguments();
   *mMailerProc << mSender->transportInfo()->host;
   *mMailerProc << "-i";
+  *mMailerProc << "-f";
+  *mMailerProc << aMsg->sender().latin1();
 
   if( !aMsg->headerField("X-KMail-Recipients").isEmpty() ) {
     // extended BCC handling to prevent TOs and CCs from seeing

@@ -31,20 +31,20 @@ enum MsgStatus
     KMMsgStatusQueued =            0x00000080,
     KMMsgStatusSent =              0x00000100,
     KMMsgStatusFlag =              0x00000200, // important
-    KMMsgStatusWatched =           0x00000400, 
-    KMMsgStatusIgnored =           0x00000800, 
+    KMMsgStatusWatched =           0x00000400,
+    KMMsgStatusIgnored =           0x00000800,
     KMMsgStatusTodo =              0x00001000,
     KMMsgStatusSpam =              0x00002000,
-    KMMsgStatusHam =               0x00004000, 
-    KMMsgStatusHasAttach =         0x00008000, 
-    KMMsgStatusHasNoAttach =       0x00010000 
+    KMMsgStatusHam =               0x00004000,
+    KMMsgStatusHasAttach =         0x00008000,
+    KMMsgStatusHasNoAttach =       0x00010000
 };
 
 typedef uint KMMsgStatus;
 
-/** The old status format, only one at a time possible. Needed 
+/** The old status format, only one at a time possible. Needed
     for upgrade path purposes. */
-  
+
 typedef enum
 {
     KMLegacyMsgStatusUnknown=' ',
@@ -130,7 +130,7 @@ public:
 
   /** Convert the given message status to a string. */
   static QCString statusToStr(const KMMsgStatus status);
-  
+
   /** Convert the given message status to a string. */
   QString statusToSortRank();
 
@@ -179,7 +179,7 @@ public:
   /** Returns TRUE if status is spam. */
   virtual bool isSpam(void) const;
 
-  /** Returns TRUE if status is spam. */
+  /** Returns TRUE if status is not spam. */
   virtual bool isHam(void) const;
 
 
@@ -373,11 +373,49 @@ public:
   /** Return if the message has at least one attachment */
   virtual KMMsgAttachmentState attachmentState() const;
 
+  /** Check for prefixes @p prefixRegExps in @p str. If none
+      is found, @p newPrefix + ' ' is prepended to @p str and the
+      resulting string is returned. If @p replace is true, any
+      sequence of whitespace-delimited prefixes at the beginning of
+      @p str is replaced by @p newPrefix.
+  **/
+  static QString replacePrefixes( const QString& str,
+                                  const QStringList& prefixRegExps,
+                                  bool replace,
+                                  const QString& newPrefix );
+
+  /** Returns @p str with all "forward" and "reply" prefixes stripped off.
+   **/
+  static QString stripOffPrefixes( const QString& str );
+
+  /** Check for prefixes @p prefixRegExps in @ref #subject(). If none
+      is found, @p newPrefix + ' ' is prepended to the subject and the
+      resulting string is returned. If @p replace is true, any
+      sequence of whitespace-delimited prefixes at the beginning of
+      @ref #subject() is replaced by @p newPrefix
+  **/
+  QString cleanSubject(const QStringList& prefixRegExps, bool replace,
+		       const QString& newPrefix) const;
+
+  /** Return this mails subject, with all "forward" and "reply"
+      prefixes removed */
+  QString cleanSubject() const;
+
+  /** Return this mails subject, formatted for "forward" mails */
+  QString forwardSubject() const;
+
+  /** Return this mails subject, formatted for "reply" mails */
+  QString replySubject() const;
+
+  /** Reads config settings from group "Composer" and sets all internal
+   * variables (e.g. indent-prefix, etc.) */
+  static void readConfig();
+
 protected:
   KMFolder* mParent;
-  bool mDirty;
   off_t mIndexOffset;
   short mIndexLength;
+  bool mDirty;
   bool mEnableUndo;
   mutable KMMsgStatus mStatus;
   // This is kept to provide an upgrade path from the the old single status

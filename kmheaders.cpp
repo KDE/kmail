@@ -16,7 +16,8 @@
 #include "kmkernel.h"
 #include "kmdebug.h"
 using KMail::FolderJob;
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include <maillistdrag.h>
@@ -43,6 +44,7 @@ using namespace KPIM;
 #include <qbitmap.h>
 #include <qstyle.h>
 #include <qlistview.h>
+#include <qregexp.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -280,16 +282,17 @@ public:
       if (tmp.isEmpty())
         tmp = i18n("No Subject");
       else
-        tmp = tmp.simplifyWhiteSpace();
+        tmp.remove(QRegExp("[\r\n]"));
 
     } else if(col == headers->paintInfo()->dateCol) {
-        tmp = headers->mDate.dateString( mMsgBase->date() );
+      tmp = headers->mDate.dateString( mMsgBase->date() );
     } else if(col == headers->paintInfo()->sizeCol
       && headers->paintInfo()->showSize) {
-        if ( mMsgBase->parent()->folderType() == KMFolderTypeImap )
-        {
-          tmp = KIO::convertSize( mMsgBase->msgSizeServer() );
-        } else tmp = KIO::convertSize(mMsgBase->msgSize());
+      if ( mMsgBase->parent()->folderType() == KMFolderTypeImap ) {
+        tmp = KIO::convertSize( mMsgBase->msgSizeServer() );
+      } else {
+        tmp = KIO::convertSize( mMsgBase->msgSize() );
+      }
     }
     return tmp;
   }
@@ -425,7 +428,7 @@ public:
     _cg.setColor( QColorGroup::Text, c );
   }
 
-  static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder)
+  static QString generate_key( KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder )
   {
     // It appears, that QListView in Qt-3.0 asks for the key
     // in QListView::clear(), which is called from
@@ -434,8 +437,7 @@ public:
 
     int column = sortOrder & ((1 << 5) - 1);
     QString ret = QChar( (char)sortOrder );
-    QString sortArrival = QString( "%1" )
-      .arg( kmkernel->msgDict()->getMsgSerNum(headers->folder(), id), 0, 36 );
+    QString sortArrival = QString( "%1" ).arg( msg->getMsgSerNum(), 0, 36 );
     while (sortArrival.length() < 7) sortArrival = '0' + sortArrival;
 
     if (column == paintInfo->dateCol) {
@@ -488,9 +490,9 @@ public:
     //columns put them in generate_key
     if(mKey.isEmpty() || mKey[0] != (char)sortOrder) {
       KMHeaders *headers = static_cast<KMHeaders*>(listView());
+      KMMsgBase *msgBase = headers->folder()->getMsgBase( mMsgId );
       return ((KMHeaderItem *)this)->mKey =
-        generate_key(mMsgId, headers, headers->folder()->getMsgBase( mMsgId ),
-                     headers->paintInfo(), sortOrder);
+        generate_key( headers, msgBase, headers->paintInfo(), sortOrder );
     }
     return mKey;
   }
@@ -535,7 +537,7 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
                      const char *name) :
   KListView(parent, name)
 {
-    static bool pixmapsLoaded = false;
+  static bool pixmapsLoaded = false;
   //qInitImageIO();
   KImageIO::registerFormats();
   mOwner  = aOwner;
@@ -827,8 +829,8 @@ void KMHeaders::refreshNestedState(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readFolderConfig (void)
 {
+  if (!mFolder) return;
   KConfig* config = KMKernel::config();
-  assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   mNestedOverride = config->readBoolEntry( "threadMessagesOverride", false );
@@ -857,17 +859,19 @@ void KMHeaders::readFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeFolderConfig (void)
 {
+  if (!mFolder) return;
   KConfig* config = KMKernel::config();
   int mSortColAdj = mSortCol + 1;
-
-  assert(mFolder!=0);
 
   KConfigGroupSaver saver(config, "Folder-" + mFolder->idString());
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
   KMHeaderItem* current = currentHeaderItem();
-  config->writeEntry("CurrentSerialNum", current ? mFolder->getMsgBase( current->msgId() )->getMsgSerNum() : 0 );
+  ulong sernum = 0;
+  if ( current && mFolder->getMsgBase( current->msgId() ) )
+    sernum = mFolder->getMsgBase( current->msgId() )->getMsgSerNum();
+  config->writeEntry("CurrentSerialNum", sernum);
 
   config->writeEntry("OrderOfArrival", mPaintInfo.orderOfArrival);
   config->writeEntry("Status", mPaintInfo.status);
@@ -883,7 +887,7 @@ void KMHeaders::writeConfig (void)
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
+void KMHeaders::setFolder( KMFolder *aFolder, bool forceJumpToUnread )
 {
   CREATE_TIMER(set_folder);
   START_TIMER(set_folder);
@@ -892,14 +896,12 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
   QString str;
 
   mSortInfo.fakeSort = 0;
-  // carsten: really needed?
-//  setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
-  if (mFolder && mFolder==aFolder) {
+  if ( mFolder && static_cast<KMFolder*>(mFolder) == aFolder ) {
     int top = topItemIndex();
     id = currentItemIndex();
     writeFolderConfig();
     readFolderConfig();
-    updateMessageList();
+    updateMessageList(); // do not change the selection
     setCurrentMsg(id);
     setTopItemByIndex(top);
   } else {
@@ -923,10 +925,10 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
                  this, SLOT(msgChanged()));
       disconnect(mFolder, SIGNAL(cleared()),
                  this, SLOT(folderCleared()));
-      disconnect(mFolder, SIGNAL(expunged()),
+      disconnect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
-      disconnect(mFolder, SIGNAL(statusMsg(const QString&)),
-                 mOwner, SLOT(statusMsg(const QString&)));
+      disconnect( mFolder, SIGNAL( statusMsg( const QString& ) ),
+                  BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       writeSortOrder();
       mFolder->close();
       // System folders remain open but we also should write the index from
@@ -937,9 +939,10 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
     mSortInfo.removed = 0;
     mFolder = aFolder;
     mSortInfo.dirty = true;
-    mOwner->editAction()->setEnabled(mFolder ?  (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
-    mOwner->replyListAction()->setEnabled(mFolder ? mFolder->isMailingListEnabled() :
-      false);
+    mOwner->editAction()->setEnabled(mFolder ?
+        (kmkernel->folderIsDraftOrOutbox(mFolder)): false );
+    mOwner->replyListAction()->setEnabled(mFolder ?
+        mFolder->isMailingListEnabled() : false);
     if (mFolder)
     {
       connect(mFolder, SIGNAL(msgHeaderChanged(KMFolder*,int)),
@@ -952,10 +955,10 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
               this, SLOT(msgChanged()));
       connect(mFolder, SIGNAL(cleared()),
               this, SLOT(folderCleared()));
-      connect(mFolder, SIGNAL(expunged()),
+      connect(mFolder, SIGNAL(expunged( KMFolder* )),
                  this, SLOT(folderCleared()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
-              mOwner, SLOT(statusMsg(const QString&)));
+              BroadcastStatus::instance(), SLOT( setStatusMsg( const QString& ) ) );
       connect(mFolder, SIGNAL(numUnreadMsgsChanged(KMFolder*)),
           this, SLOT(setFolderInfoStatus()));
 
@@ -984,17 +987,16 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
         mItems.resize( 0 );
       }
     }
+
+    CREATE_TIMER(updateMsg);
+    START_TIMER(updateMsg);
+    updateMessageList(true, forceJumpToUnread);
+    END_TIMER(updateMsg);
+    SHOW_TIMER(updateMsg);
+    makeHeaderVisible();
   }
-
-  CREATE_TIMER(updateMsg);
-  START_TIMER(updateMsg);
-  updateMessageList(!jumpToFirst); // jumpToFirst seem inverted - don
-  END_TIMER(updateMsg);
-  SHOW_TIMER(updateMsg);
-  makeHeaderVisible();
-
-  if (mFolder)
-    setFolderInfoStatus();
+  /* Doesn't the below only need to be done when the folder changed? - till */
+  setFolderInfoStatus();
 
   QString colText = i18n( "Sender" );
   if (mFolder && (mFolder->whoField().lower() == "to"))
@@ -1018,7 +1020,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
-  emit maybeDeleting();
+ // emit maybeDeleting();
   if (mFolder->count() == 0) { // Folder cleared
     clear();
     return;
@@ -1040,7 +1042,8 @@ void KMHeaders::msgChanged()
              this,SLOT(highlightMessage(QListViewItem*)));
   // remember all selected messages
   QValueList<int> curItems = selectedItems();
-  updateMessageList();
+  updateMessageList(); // do not change the selection
+  // restore the old state
   setTopItemByIndex( i );
   setCurrentMsg( cur );
   setSelectedByIndex( curItems, true );
@@ -1078,7 +1081,7 @@ void KMHeaders::msgAdded(int id)
   CREATE_TIMER(msgAdded);
   START_TIMER(msgAdded);
 
-  assert( mFolder->getMsgBase( id ) ); // otherwise using count() above is wrong
+  assert( mFolder->getMsgBase( id ) ); // otherwise using count() is wrong
 
   /* Create a new KMSortCacheItem to be used for threading. */
   KMSortCacheItem *sci = new KMSortCacheItem;
@@ -1087,7 +1090,8 @@ void KMHeaders::msgAdded(int id)
     // make sure the id and subject dicts grow, if necessary
     if (mSortCacheItems.count() == (uint)mFolder->count()
         || mSortCacheItems.count() == 0) {
-      kdDebug (5006) << "KMHeaders::msgAdded: Resizing id and subject trees." << endl;
+      kdDebug (5006) << "KMHeaders::msgAdded - Resizing id and subject trees of " << mFolder->label()
+       << ": before=" << mSortCacheItems.count() << " ,after=" << (mFolder->count()*2) << endl;
       mSortCacheItems.resize(mFolder->count()*2);
       mSubjectLists.resize(mFolder->count()*2);
     }
@@ -1226,7 +1230,6 @@ void KMHeaders::msgAdded(int id)
     // o/` ... my buddy and me .. o/`
     hi->setSortCacheItem(sci);
     sci->setItem(hi);
-
   }
   if (mSortInfo.fakeSort) {
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
@@ -1347,15 +1350,25 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   mImperfectlyThreadedList.removeRef(removedItem);
   delete removedItem;
   // we might have rethreaded it, in which case its current state will be lost
-  if ( curItem && curItem != removedItem ) {
-    setCurrentItem( curItem );
-    setSelectionAnchor( currentItem() );
+  if ( curItem ) {
+    if ( curItem != removedItem ) {
+      setCurrentItem( curItem );
+      setSelectionAnchor( currentItem() );
+    } else {
+      // We've removed the current item, which means it was removed from
+      // something other than a user move or copy, which would have selected
+      // the next logical mail. This can happen when the mail is deleted by
+      // a filter, or some other behind the scenes action. Select something
+      // sensible, then, and make sure the reader window is cleared.
+      emit maybeDeleting();
+      int contentX, contentY;
+      KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
+      finalizeMove( nextItem, contentX, contentY );
+    }
   }
-
   /* restore signal */
   connect( this, SIGNAL(currentChanged(QListViewItem*)),
            this, SLOT(highlightMessage(QListViewItem*)));
-
 }
 
 
@@ -1376,7 +1389,7 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, bool toggle)
 {
   SerNumList serNums;
   for (QListViewItemIterator it(this); it.current(); ++it)
-    if (it.current()->isSelected()) {
+    if ( it.current()->isSelected() && it.current()->isVisible() ) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
       serNums.append( msgBase->getMsgSerNum() );
@@ -1518,14 +1531,15 @@ void KMHeaders::styleChange( QStyle& oldStyle )
 //-----------------------------------------------------------------------------
 void KMHeaders::setFolderInfoStatus ()
 {
-  QString str = ( mFolder == kmkernel->outboxFolder() )
+  if ( !mFolder ) return;
+  QString str = ( static_cast<KMFolder*>(mFolder) == kmkernel->outboxFolder() )
                 ? i18n( "1 unsent", "%n unsent", mFolder->countUnread() )
                 : i18n( "1 unread", "%n unread", mFolder->countUnread() );
   str = i18n( "1 message, %1.", "%n messages, %1.", mFolder->count() )
         .arg( str );
   if ( mFolder->isReadOnly() )
     str = i18n("%1 = n messages, m unread.", "%1 Folder is read-only.").arg( str );
-  KMBroadcastStatus::instance()->setStatusMsg(str);
+  BroadcastStatus::instance()->setStatusMsg(str);
 }
 
 //-----------------------------------------------------------------------------
@@ -1546,27 +1560,17 @@ void KMHeaders::applyFiltersOnMsg()
   for (KMMsgBase *msg = msgList.first(); msg; msg = msgList.next())
     scheduler->execFilters( msg );
 #else
-  emit maybeDeleting();
+  int contentX, contentY;
+  KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
 
-  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
-             this,SLOT(highlightMessage(QListViewItem*)));
   KMMessageList* msgList = selectedMsgs();
-  int topX = contentsX();
-  int topY = contentsY();
-
   if (msgList->isEmpty())
     return;
-  QListViewItem *qlvi = currentItem();
-  QListViewItem *next = qlvi;
-  while (next && next->isSelected())
-    next = next->itemBelow();
-  if (!next || (next && next->isSelected())) {
-    next = qlvi;
-    while (next && next->isSelected())
-      next = next->itemAbove();
-  }
+  finalizeMove( nextItem, contentX, contentY );
 
-  clearSelection();
+  CREATE_TIMER(filter);
+  START_TIMER(filter);
+
   for (KMMsgBase* msgBase=msgList->first(); msgBase; msgBase=msgList->next()) {
     int idx = msgBase->parent()->find(msgBase);
     assert(idx != -1);
@@ -1583,26 +1587,8 @@ void KMHeaders::applyFiltersOnMsg()
       if (slotFilterMsg(msg) == 2) break;
     }
   }
-
-  setContentsPos( topX, topY );
-  emit selected( 0 );
-  if (next) {
-    setCurrentItem( next );
-    setSelected( next, true );
-    setSelectionAnchor( currentItem() );
-    highlightMessage( next );
-  }
-  else if (currentItem()) {
-    setSelected( currentItem(), true );
-    setSelectionAnchor( currentItem() );
-    highlightMessage( currentItem() );
-  }
-  else
-    emit selected( 0 );
-
-  makeHeaderVisible();
-  connect(this,SIGNAL(currentChanged(QListViewItem*)),
-          this,SLOT(highlightMessage(QListViewItem*)));
+  END_TIMER(filter);
+  SHOW_TIMER(filter);
 #endif
 }
 
@@ -1641,7 +1627,7 @@ void KMHeaders::deleteMsg ()
            this, SLOT( slotMoveCompleted( KMCommand * ) ) );
   command->start();
 
-  KMBroadcastStatus::instance()->setStatusMsg("");
+  BroadcastStatus::instance()->setStatusMsg("");
   //  triggerUpdate();
 }
 
@@ -1704,6 +1690,8 @@ void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation )
 {
+  if ( destFolder == mFolder ) return; // Catch the noop case
+
   KMMessageList msgList = *selectedMsgs();
   if ( !destFolder && askForConfirmation &&    // messages shall be deleted
        KMessageBox::warningContinueCancel(this,
@@ -1711,7 +1699,7 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
               "Once deleted, it cannot be restored.</qt>",
               "<qt>Do you really want to delete the %n selected messages?<br>"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
-         i18n("Delete Messages"), i18n("De&lete"), "NoConfirmDelete") == KMessageBox::Cancel )
+         i18n("Delete Messages"), KGuiItem(i18n("De&lete"),"editdelete"), "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 
   // remember the message to select afterwards
@@ -1730,8 +1718,16 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
 void KMHeaders::slotMoveCompleted( KMCommand *command )
 {
   kdDebug(5006) << k_funcinfo << command->result() << endl;
+  bool deleted = static_cast<KMMoveCommand *>( command )->destFolder() == 0;
   if ( command->result() == KMCommand::OK ) {
-    KMBroadcastStatus::instance()->setStatusMsg(i18n("Messages moved successfully."));
+    // make sure the current item is shown
+    makeHeaderVisible();
+#if 0 // enable after the message-freeze
+    BroadcastStatus::instance()->setStatusMsg(
+       deleted ? i18nTODO("Messages deleted successfully.") : i18nTODO("Messages moved successfully") );
+#else
+    if ( !deleted ) BroadcastStatus::instance()->setStatusMsg( i18n( "Messages moved successfully" ) );
+#endif
   } else {
     /* The move failed or the user canceled it; reset the state of all
      * messages involved and repaint.
@@ -1752,10 +1748,21 @@ void KMHeaders::slotMoveCompleted( KMCommand *command )
       }
     }
     triggerUpdate();
+#if 0 // enable after the message-freeze
     if ( command->result() == KMCommand::Failed )
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages failed."));
+      BroadcastStatus::instance()->setStatusMsg(
+           deleted ? i18nTODO("Deleting messages failed.") : i18nTODO("Moving messages failed.") );
     else
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Moving messages canceled."));
+      BroadcastStatus::instance()->setStatusMsg(
+           deleted ? i18nTODO("Deleting messages canceled.") : i18nTODO("Moving messages canceled.") );
+#else
+    if ( !deleted ) {
+      if ( command->result() == KMCommand::Failed )
+        BroadcastStatus::instance()->setStatusMsg( i18n("Moving messages failed.") );
+      else
+        BroadcastStatus::instance()->setStatusMsg( i18n("Moving messages canceled.") );
+    }
+#endif
   }
 }
 
@@ -2159,7 +2166,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
 
   KMHeaderItem *item = static_cast<KMHeaderItem*>(lvi);
   if (lvi != mPrevCurrent) {
-    if (mPrevCurrent)
+    if (mPrevCurrent && mFolder)
     {
       KMMessage *prevMsg = mFolder->getMsg(mPrevCurrent->msgId());
       if (prevMsg && mReaderWindowActive)
@@ -2189,7 +2196,7 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
     }
   }
 
-  KMBroadcastStatus::instance()->setStatusMsg("");
+  BroadcastStatus::instance()->setStatusMsg("");
   if (markitread && idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
@@ -2223,19 +2230,19 @@ void KMHeaders::selectMessage(QListViewItem* lvi)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::updateMessageList(bool set_selection)
+void KMHeaders::updateMessageList( bool set_selection, bool forceJumpToUnread )
 {
   mPrevCurrent = 0;
+  noRepaint = true;
+  clear();
+  noRepaint = false;
   KListView::setSorting( mSortCol, !mSortDescending );
   if (!mFolder) {
-    noRepaint = true;
-    clear();
-    noRepaint = false;
     mItems.resize(0);
     repaint();
     return;
   }
-  readSortOrder(set_selection);
+  readSortOrder( set_selection, forceJumpToUnread );
   emit messageListUpdated();
 }
 
@@ -2442,11 +2449,6 @@ void KMHeaders::slotRMB()
 
   mOwner->updateMessageMenu();
 
-  QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-  KMMoveCommand::folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
-  QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-  KMCopyCommand::folderToPopupMenu( false, this, &mMenuToFolder, msgCopyMenu );
-
   bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )
      mOwner->editAction()->plug(menu);
@@ -2462,8 +2464,18 @@ void KMHeaders::slotRMB()
   }
   menu->insertSeparator();
 
+  QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
+  KMCopyCommand::folderToPopupMenu( false, this, &mMenuToFolder, msgCopyMenu );
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
-  menu->insertItem(i18n("&Move To"), msgMoveMenu);
+
+  if ( mFolder->isReadOnly() ) {
+    int id = menu->insertItem( i18n("&Move To") );
+    menu->setItemEnabled( id, false );
+  } else {
+    QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
+    KMMoveCommand::folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
+    menu->insertItem(i18n("&Move To"), msgMoveMenu);
+  }
 
   if ( !out_folder ) {
     mOwner->statusMenu()->plug( menu ); // Mark Message menu
@@ -2989,8 +3001,9 @@ KMSortCacheItem* KMHeaders::findParentBySubject(KMSortCacheItem *item)
         for (QPtrListIterator<KMSortCacheItem> it2(*mSubjectLists[subjMD5]);
                 it2.current(); ++it2) {
             KMMsgBase *mb = mFolder->getMsgBase((*it2)->id());
+            if ( !mb ) return parent;
             // make sure it's not ourselves
-            if ( item == (*it2)) continue;
+            if ( item == (*it2) ) continue;
             int delta = msg->date() - mb->date();
             // delta == 0 is not allowed, to avoid circular threading
             // with duplicates.
@@ -3005,12 +3018,14 @@ KMSortCacheItem* KMHeaders::findParentBySubject(KMSortCacheItem *item)
     return parent;
 }
 
-bool KMHeaders::readSortOrder(bool set_selection)
+bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
 {
     //all cases
     Q_INT32 column, ascending, threaded, discovered_count, sorted_count, appended;
     Q_INT32 deleted_count = 0;
     bool unread_exists = false;
+    bool jumpToUnread = GlobalSettings::jumpToUnread() ||
+                        forceJumpToUnread;
     QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
     KMSortCacheItem root;
     root.setId(-666); //mark of the root!
@@ -3021,10 +3036,6 @@ bool KMHeaders::readSortOrder(bool set_selection)
     mImperfectlyThreadedList.clear();
 
     //cleanup
-    noRepaint = true;
-    clear();
-    noRepaint = false;
-
     mItems.fill( 0, mFolder->count() );
     sortCache.fill( 0 );
 
@@ -3184,7 +3195,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
                 if (mPaintInfo.status)
                     sortOrder |= (1 << 5);
                 sortCache[x] = new KMSortCacheItem(
-                    x, KMHeaderItem::generate_key(x, this, msg, &mPaintInfo, sortOrder));
+                    x, KMHeaderItem::generate_key( this, msg, &mPaintInfo, sortOrder ));
                 if(threaded)
                     unparented.append(sortCache[x]);
                 else
@@ -3246,7 +3257,6 @@ bool KMHeaders::readSortOrder(bool set_selection)
         SHOW_TIMER(reparent);
     }
     //create headeritems
-    int first_unread = -1;
     CREATE_TIMER(header_creation);
     START_TIMER(header_creation);
     KMHeaderItem *khi;
@@ -3309,9 +3319,13 @@ bool KMHeaders::readSortOrder(bool set_selection)
             new_kci->setItem(mItems[new_kci->id()] = khi);
             if(new_kci->hasChildren())
                 s.enqueue(new_kci);
-            if(set_selection && mFolder->getMsgBase(new_kci->id())->isNew() ||
-                set_selection && mFolder->getMsgBase(new_kci->id())->isUnread() )
-                unread_exists = true;
+            // we always jump to new messages, but we only jump to
+            // unread messages if we are told to do so
+            if ( mFolder->getMsgBase(new_kci->id())->isNew() ||
+                 ( jumpToUnread &&
+                   mFolder->getMsgBase(new_kci->id())->isUnread() ) ) {
+              unread_exists = true;
+            }
         }
         // If we are sorting by date and ascending the top level items are sorted
         // ascending and the threads themselves are sorted descending. One wants
@@ -3365,19 +3379,17 @@ bool KMHeaders::readSortOrder(bool set_selection)
     CREATE_TIMER(selection);
     START_TIMER(selection);
     if(set_selection) {
+        int first_unread = -1;
         if (unread_exists) {
             KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
             while (item) {
-                bool isUnread = false;
-                if ( GlobalSettings::jumpToUnread() ) // search unread messages
-                    if (mFolder->getMsgBase(item->msgId())->isUnread())
-                        isUnread = true;
-
-                if (mFolder->getMsgBase(item->msgId())->isNew() || isUnread) {
-                    first_unread = item->msgId();
-                    break;
-                }
-                item = static_cast<KMHeaderItem*>(item->itemBelow());
+              if ( mFolder->getMsgBase( item->msgId() )->isNew() ||
+                   ( jumpToUnread &&
+                     mFolder->getMsgBase( item->msgId() )->isUnread() ) ) {
+                first_unread = item->msgId();
+                break;
+              }
+              item = static_cast<KMHeaderItem*>(item->itemBelow());
             }
         }
 
@@ -3426,13 +3438,18 @@ void KMHeaders::setCurrentItemBySerialNum( unsigned long serialNum )
   for (int i = 0; i < (int)mItems.size() - 1; ++i) {
     KMMsgBase *mMsgBase = mFolder->getMsgBase( i );
     if ( mMsgBase->getMsgSerNum() == serialNum ) {
+      bool unchanged = (currentItem() == mItems[i]);
       setCurrentItem( mItems[i] );
       setSelected( mItems[i], true );
       setSelectionAnchor( currentItem() );
+      if ( unchanged )
+        highlightMessage( currentItem(), false );
+      ensureCurrentItemVisible();
       return;
     }
   }
   // Not found. Maybe we should select the last item instead?
+  kdDebug(5006) << "KMHeaders::setCurrentItem item with serial number " << serialNum << " NOT FOUND" << endl;
 }
 
 #include "kmheaders.moc"

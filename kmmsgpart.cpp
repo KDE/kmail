@@ -57,6 +57,38 @@ KMMessagePart::~KMMessagePart()
 
 
 //-----------------------------------------------------------------------------
+void KMMessagePart::clear()
+{
+  mOriginalContentTypeStr = QCString();
+  mType = "text";
+  mSubtype = "plain";
+  mCte = "7bit";
+  mContentDescription = QCString();
+  mContentDisposition = QCString();
+  mBody.truncate( 0 );
+  mAdditionalCTypeParamStr = QCString();
+  mName = QString::null;
+  mParameterAttribute = QCString();
+  mParameterValue = QString::null;
+  mCharset = QCString();
+  mPartSpecifier = QString::null;
+  mBodyDecodedSize = 0;
+  mParent = 0;
+  mLoadHeaders = false;
+  mLoadPart = false;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessagePart::duplicate( const KMMessagePart & msgPart )
+{
+  // copy the data of msgPart
+  *this = msgPart;
+  // detach the explicitely shared QByteArray
+  mBody.detach();
+}
+
+//-----------------------------------------------------------------------------
 int KMMessagePart::decodedSize(void) const
 {
   if (mBodyDecodedSize < 0)
@@ -108,12 +140,13 @@ QString KMMessagePart::bodyToUnicode(const QTextCodec* codec) const {
 }
 
 void KMMessagePart::setCharset( const QCString & c ) {
-  kdWarning( type() != DwMime::kTypeText )
-    << "KMMessagePart::setCharset(): trying to set a charset for a non-textual mimetype." << endl
-    << "Fix this caller:" << endl
-    << "====================================================================" << endl
-    << kdBacktrace( 5 ) << endl
-    << "====================================================================" << endl;
+  if ( type() != DwMime::kTypeText )
+    kdWarning()
+      << "KMMessagePart::setCharset(): trying to set a charset for a non-textual mimetype." << endl
+      << "Fix this caller:" << endl
+      << "====================================================================" << endl
+      << kdBacktrace( 5 ) << endl
+      << "====================================================================" << endl;
   mCharset = c;
 }
 
@@ -239,21 +272,23 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
   if (mBody.isEmpty()) return QByteArray();
   QByteArray result;
 
-  if ( const Codec * codec = Codec::codecForName( cteStr() ) )
-    // Nice: we can use the convenience function :-)
-    result = codec->decode( mBody );
-  else
-    switch (cte())
-    {
-    default:
-      kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
-		      << "'. Assuming binary." << endl;
+  switch (cte())
+  {
     case DwMime::kCte7bit:
     case DwMime::kCte8bit:
     case DwMime::kCteBinary:
       result.duplicate(mBody);
       break;
-    }
+    default:
+      if ( const Codec * codec = Codec::codecForName( cteStr() ) )
+        // Nice: we can use the convenience function :-)
+        result = codec->decode( mBody );
+      else {
+        kdWarning(5006) << "bodyDecodedBinary: unknown encoding '" << cteStr()
+                        << "'. Assuming binary." << endl;
+        result.duplicate(mBody);
+      }
+  }
 
   assert( mBodyDecodedSize < 0
 	  || (unsigned int)mBodyDecodedSize == result.size() );
@@ -266,44 +301,52 @@ QByteArray KMMessagePart::bodyDecodedBinary() const
 QCString KMMessagePart::bodyDecoded(void) const
 {
   if (mBody.isEmpty()) return QCString("");
+  bool decodeBinary = false;
   QCString result;
   int len;
 
-  if ( const Codec * codec = Codec::codecForName( cteStr() ) ) {
-    // We can't use the codec convenience functions, since we must
-    // return a QCString, not a QByteArray:
-    int bufSize = codec->maxDecodedSizeFor( mBody.size() ) + 1; // trailing NUL
-    result.resize( bufSize );
-    QByteArray::ConstIterator iit = mBody.begin();
-    QCString::Iterator oit = result.begin();
-    QCString::ConstIterator oend = result.begin() + bufSize;
-    if ( !codec->decode( iit, mBody.end(), oit, oend ) )
-      kdWarning(5006) << codec->name()
-		      << " lies about it's maxDecodedSizeFor( "
-		      << mBody.size() << " ). Result truncated!" << endl;
-    len = oit - result.begin();
-    result.truncate( len ); // adds trailing NUL
-  } else
-    switch (cte())
-    {
-    default:
-      kdWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
-		      << "'. Assuming binary." << endl;
+  switch (cte())
+  {
     case DwMime::kCte7bit:
     case DwMime::kCte8bit:
     case DwMime::kCteBinary:
     {
-      len = mBody.size();
-      result.resize( len+1 /* trailing NUL */ );
-      memcpy(result.data(), mBody.data(), len);
-      result[len] = 0;
+      decodeBinary = true;
       break;
     }
+    default:
+      if ( const Codec * codec = Codec::codecForName( cteStr() ) ) {
+        // We can't use the codec convenience functions, since we must
+        // return a QCString, not a QByteArray:
+        int bufSize = codec->maxDecodedSizeFor( mBody.size() ) + 1; // trailing NUL
+        result.resize( bufSize );
+        QByteArray::ConstIterator iit = mBody.begin();
+        QCString::Iterator oit = result.begin();
+        QCString::ConstIterator oend = result.begin() + bufSize;
+        if ( !codec->decode( iit, mBody.end(), oit, oend ) )
+          kdWarning(5006) << codec->name()
+                          << " lies about it's maxDecodedSizeFor( "
+                          << mBody.size() << " ). Result truncated!" << endl;
+        len = oit - result.begin();
+        result.truncate( len ); // adds trailing NUL
+      } else {
+        kdWarning(5006) << "bodyDecoded: unknown encoding '" << cteStr()
+                        << "'. Assuming binary." << endl;
+        decodeBinary = true;
+      }
   }
-  result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
+
+  if ( decodeBinary ) {
+    len = mBody.size();
+    result.resize( len+1 /* trailing NUL */ );
+    memcpy(result.data(), mBody.data(), len);
+    result[len] = 0;
+  }
 
   kdWarning( result.length() != (unsigned int)len, 5006 )
     << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
+
+  result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
 
   assert( mBodyDecodedSize < 0 || mBodyDecodedSize == len );
   if ( mBodyDecodedSize < 0 )
