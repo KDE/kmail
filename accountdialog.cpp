@@ -597,7 +597,7 @@ void AccountDialog::makePopAccountPage()
 
   QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
   mPop.checkCapabilities =
-    new QPushButton( i18n("Check &what the server supports"), page2 );
+    new QPushButton( i18n("Check &What the Server Supports"), page2 );
   connect(mPop.checkCapabilities, SIGNAL(clicked()),
     SLOT(slotCheckPopCapabilities()));
   buttonLay->addStretch();
@@ -744,7 +744,7 @@ void AccountDialog::makeImapAccountPage()
 
   QHBoxLayout *buttonLay = new QHBoxLayout( vlay );
   mImap.checkCapabilities =
-    new QPushButton( i18n("Check &what the server supports"), page2 );
+    new QPushButton( i18n("Check &What the Server Supports"), page2 );
   connect(mImap.checkCapabilities, SIGNAL(clicked()),
     SLOT(slotCheckImapCapabilities()));
   buttonLay->addStretch();

@@ -441,7 +441,7 @@ void KMMainWin::createWidgets(void)
 		   SLOT(slotCollapseAllThreads()),
 		   actionCollection(), "collapse_all_threads" );
 
-  new KAction( i18n( "Move to the next unread text" ),
+  new KAction( i18n( "Move to the Next Unread Text" ),
                                        Key_Space, this,  SLOT( slotReadOn() ),
                                        actionCollection(), "read_on" );
   connect( kernel->outboxFolder(), SIGNAL( msgRemoved(int, QString) ),
