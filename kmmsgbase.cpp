@@ -787,6 +787,7 @@ QCString KMMsgBase::encodeRFC2231String(const QString& _str,
   l = latin.data();
   while (*l)
   {
+#warning "This code is wrong.  char is unsigned on my platform."
     quote = *l < 0;
     for (i = 0; i < 17; i++) if (*l == especials[i]) quote = true;
     if (quote)
