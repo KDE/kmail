@@ -778,7 +778,7 @@ void KMHeaders::reset(void)
 //-----------------------------------------------------------------------------
 void KMHeaders::refreshNestedState(void)
 {
-  bool oldState = mNested != mNestedOverride;
+  bool oldState = isThreaded();
   NestingPolicy oldNestPolicy = nestingPolicy;
   KConfig* config = KMKernel::config();
   KConfigGroupSaver saver(config, "Geometry");
@@ -786,9 +786,9 @@ void KMHeaders::refreshNestedState(void)
 
   nestingPolicy = (NestingPolicy)config->readNumEntry( "nestingPolicy", OpenUnread );
   if ((nestingPolicy != oldNestPolicy) ||
-    (oldState != (mNested != mNestedOverride)))
+    (oldState != isThreaded()))
   {
-    setRootIsDecorated( nestingPolicy != AlwaysOpen && mNested != mNestedOverride );
+    setRootIsDecorated( nestingPolicy != AlwaysOpen && isThreaded() );
     reset();
   }
 
@@ -818,7 +818,7 @@ void KMHeaders::readFolderConfig (void)
     nestingPolicy = (NestingPolicy)config->readNumEntry( "nestingPolicy", OpenUnread );
   }
 
-  setRootIsDecorated( nestingPolicy != AlwaysOpen && mNested != mNestedOverride );
+  setRootIsDecorated( nestingPolicy != AlwaysOpen && isThreaded() );
   mSubjThreading = config->readBoolEntry( "threadMessagesBySubject", true );
 }
 
@@ -921,7 +921,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       // Not very nice, but if we go from nested to non-nested
       // in the folderConfig below then we need to do this otherwise
       // updateMessageList would do something unspeakable
-      if (mNested != mNestedOverride) {
+      if (isThreaded()) {
         noRepaint = TRUE;
         clear();
         noRepaint = FALSE;
@@ -936,7 +936,7 @@ void KMHeaders::setFolder (KMFolder *aFolder, bool jumpToFirst)
       END_TIMER(kmfolder_open);
       SHOW_TIMER(kmfolder_open);
 
-      if (mNested != mNestedOverride) {
+      if (isThreaded()) {
         noRepaint = TRUE;
 	clear();
         noRepaint = FALSE;
@@ -1067,7 +1067,7 @@ void KMHeaders::msgAdded(int id)
 
   assert( mFolder->getMsgBase( id ) ); // otherwise using count() above is wrong
 
-  if (mNested != mNestedOverride) {
+  if (isThreaded()) {
     // make sure the id and subject dicts grow, if necessary
     if (mSortCacheItems.count() == (uint)mFolder->count()
      || mSortCacheItems.count() == 0) {
@@ -1218,17 +1218,16 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   CREATE_TIMER(msgRemoved);
   START_TIMER(msgRemoved);
 
-  bool threaded = mNested != mNestedOverride;
   KMHeaderItem *removedItem = mItems[id];
   QListViewItem *next = removedItem->itemBelow();
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
-    if (threaded)
+    if (isThreaded())
       mItems[i]->sortCacheItem()->setId( i );
   }
   mItems.resize( mItems.size() - 1 );
-  if (threaded && mFolder->count()) {
+  if (isThreaded() && mFolder->count()) {
     if (mSortCacheItems[msgId]) {
       if (mSortCacheItems[msgId] == removedItem->sortCacheItem()) 
         mSortCacheItems.remove(msgId);
@@ -1707,7 +1706,7 @@ void KMHeaders::setSelected( QListViewItem *item, bool selected )
   KMHeadersInherited::setSelected( item, selected );
   // If the item is the parent of a closed thread recursively select
   // children .
-  if ( mNested != mNestedOverride && !item->isOpen() && item->firstChild() ) {
+  if ( isThreaded() && !item->isOpen() && item->firstChild() ) {
       QListViewItem *nextRoot = item->itemBelow();
       QListViewItemIterator it( item->firstChild() );
       for( ; (*it) != nextRoot; ++it )
@@ -2440,7 +2439,7 @@ void KMHeaders::setNestedOverride( bool override )
   mSortInfo.dirty = TRUE;
   mNestedOverride = override;
   setRootIsDecorated( nestingPolicy != AlwaysOpen
-		      && mNested != mNestedOverride );
+		      && isThreaded() );
   QString sortFile = mFolder->indexLocation() + ".sorted";
   unlink(QFile::encodeName(sortFile));
   reset();
@@ -2568,7 +2567,7 @@ bool KMHeaders::writeSortOrder()
     Q_INT32 byteOrder = 0x12345678;
     Q_INT32 column = mSortCol;
     Q_INT32 ascending= !mSortDescending;
-    Q_INT32 threaded = (mNested != mNestedOverride);
+    Q_INT32 threaded = isThreaded();
     Q_INT32 appended=0;
     Q_INT32 discovered_count = 0;
     Q_INT32 sorted_count=0;
@@ -3011,7 +3010,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	mSortInfo.dirty = TRUE;
 	mSortInfo.column = column = mSortCol;
 	mSortInfo.ascending = ascending = !mSortDescending;
-	threaded = (mNested != mNestedOverride);
+	threaded = (isThreaded());
 	sorted_count = discovered_count = appended = 0;
 	KMHeadersInherited::setSorting( mSortCol, !mSortDescending );
     }
