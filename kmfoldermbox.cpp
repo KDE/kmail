@@ -108,7 +108,7 @@ int KMFolderMbox::open()
                            "of KMail</a> for "
                            "information about how to prevent this "
                            "problem from happening again.</p></qt>")
-                      .arg("help:/kmail/faq.html")
+                      .arg("help:/kmail/faq.html#faq-index-regeneration")
                       .arg(name());
         // When KMail is starting up we have to show a non-blocking message
         // box so that the initialization can continue. We don't show a
@@ -119,26 +119,10 @@ int KMFolderMbox::open()
           KConfigGroup configGroup( kapp->config(), "Notification Messages" );
           bool showMessage =
             configGroup.readBoolEntry( "showIndexRegenerationMessage", true );
-// ######### FIXME: Delete this when links can be made active in queued message boxes
-          msg = i18n("<qt><p>The index of folder '%1' seems "
-                     "to be out of date. To prevent message "
-                     "corruption the index will be "
-                     "regenerated. As a result deleted "
-                     "messages might reappear and status "
-                     "flags might be lost.</p>"
-                     "<p>Please read the corresponding entry "
-                     "in the FAQ section of the manual of "
-                     "KMail for "
-                     "information about how to prevent this "
-                     "problem from happening again.</p></qt>")
-                .arg(name());
-// ######### end of FIXME: Delete this when links can be made active in queued message boxes
           if (showMessage)
             KMessageBox::queuedMessageBox( 0, KMessageBox::Information,
-                                           msg, i18n("Index Out of Date") );
-// FIXME: Make the link clickable when my patch has gone into kdelibs, IK 2002-10-07
-//                                            msg, i18n("Index Out of Date"),
-//                                            KMessageBox::AllowLink );
+                                           msg, i18n("Index Out of Date"),
+                                           KMessageBox::AllowLink );
         }
         else
         {
