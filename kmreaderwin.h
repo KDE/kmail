@@ -135,6 +135,7 @@ public slots:
 protected slots:
   /** Some attachment operations. */
   void slotAtmOpen();
+  void slotAtmOpenWith();
   void slotAtmView();
   void slotAtmPrint();
   void slotAtmSave();
@@ -191,6 +192,7 @@ protected:
 
 protected:
   QString colorToString(const QColor&);
+  QString getAtmFilename(QString pname, QString msgpartname);
 
   bool mHtmlMail, mHtmlOverride;
   int mAtmInline;

@@ -1149,6 +1149,7 @@ void KMReaderWin::slotUrlPopup(const QString &aUrl, const QPoint& aPos)
     mAtmCurrent = id-1;
     KPopupMenu *menu = new KPopupMenu();
     menu->insertItem(i18n("Open..."), this, SLOT(slotAtmOpen()));
+    menu->insertItem(i18n("Open with..."), this, SLOT(slotAtmOpenWith()));
     menu->insertItem(i18n("View..."), this, SLOT(slotAtmView()));
     menu->insertItem(i18n("Save as..."), this, SLOT(slotAtmSave()));
     //menu->insertItem(i18n("Print..."), this, SLOT(slotAtmPrint()));
@@ -1245,7 +1246,6 @@ void KMReaderWin::slotAtmOpen()
 {
   QString str, pname, cmd, fileName;
   KMMessagePart msgPart;
-  int c;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   if (stricmp(msgPart.typeStr(), "message")==0)
@@ -1253,31 +1253,16 @@ void KMReaderWin::slotAtmOpen()
     atmViewMsg(&msgPart);
     return;
   }
-
-  pname = msgPart.fileName();
-  if (pname.isEmpty()) pname=msgPart.name();
-  if (pname.isEmpty()) pname="unnamed";
-  fileName = QString("%1part%2/%3")
-             .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
-
-  // remove quotes from the filename so that the shell does not get confused
-  c = 0;
-  while ((c = fileName.find('"', c)) >= 0)
-    fileName.remove(c, 1);
-
-  c = 0;
-  while ((c = fileName.find('\'', c)) >= 0)
-    fileName.remove(c, 1);
+  fileName = getAtmFilename(msgPart.fileName(), msgPart.name());
 
   // What to do when user clicks on an attachment --dnaber, 2000-06-01
-  // TODO: add "Open with..." to RMB menu
   // TODO: use KTempFile?
   // TODO: show full path for Service, not only name
   QString mimetype = KMimeType::findByURL(KURL(fileName))->name();
   KService::Ptr offer = KServiceTypeProfile::preferredService(mimetype, true);
   QString question;
   if ( offer ) {
-    question = i18n("Open attachment using '%1'?").arg(offer->name());
+    question = i18n("Open attachment '%1' using '%2'?").arg(msgPart.fileName()).arg(offer->name());
   } else {
     question = i18n("Open attachment?\n");
     question += i18n("You will be able to choose the application that opens the attachment.");
@@ -1307,6 +1292,44 @@ void KMReaderWin::slotAtmOpen()
     debug("Cancelled opening attachment");
   }
   
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::slotAtmOpenWith()
+{
+  // It makes sense to have an extra "Open with..." entry in the menu
+  // so the user can change filetype associations.
+  
+  KMMessagePart msgPart;
+
+  mMsg->bodyPart(mAtmCurrent, &msgPart);
+  QString fileName = getAtmFilename(msgPart.fileName(), msgPart.name());
+
+  KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
+  KURL::List *lst;
+  lst = new KURL::List(fileName);
+  openhandler->displayOpenWithDialog(*lst);
+}
+
+
+//-----------------------------------------------------------------------------
+QString KMReaderWin::getAtmFilename(QString pname, QString msgpartname) {
+  if (pname.isEmpty()) pname=msgpartname;
+  if (pname.isEmpty()) pname="unnamed";
+  QString fileName = QString("%1part%2/%3")
+             .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
+
+  // remove quotes from the filename so that the shell does not get confused
+  int c = 0;
+  while ((c = fileName.find('"', c)) >= 0)
+    fileName.remove(c, 1);
+
+  c = 0;
+  while ((c = fileName.find('\'', c)) >= 0)
+    fileName.remove(c, 1);
+    
+  return fileName;
 }
 
 
