@@ -1,7 +1,7 @@
 
 SUBDIRS = pics
 INCLUDES = $(all_includes)
-LDADD	= $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE) -ldl
+LDADD	= $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE)
 
 bin_PROGRAMS = kmail
 
