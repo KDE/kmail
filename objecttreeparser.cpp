@@ -976,23 +976,19 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
     default: {
       kdDebug(5006) << "default " << endl;
       QCString cstr( curNode->msgPart().bodyDecoded() );
+      QString label = curNode->msgPart().fileName().stripWhiteSpace();
+      if ( label.isEmpty() )
+	label = curNode->msgPart().name().stripWhiteSpace();
       //resultingRawData += cstr;
       if( !mReader
           || mReader->mIsFirstTextPart
           || attachmentStrategy() == AttachmentStrategy::inlined()
           || ( attachmentStrategy() == AttachmentStrategy::smart()
-               && curNode->hasContentDispositionInline() )
+               && ( curNode->hasContentDispositionInline() || label.isEmpty() ) )
           || showOnlyOneMimePart() )
 	{
 	  if( mReader ) {
-            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() ) {
-              QString label = curNode->msgPart().fileName();
-              if (label.isEmpty())
-                label = curNode->msgPart().name();
-              if( label.isEmpty() )
-                label = "unnamed";
-              label = KMMessage::quoteHtmlChars( label, true );
-
+            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() && !label.isEmpty() ) {
               QString comment = curNode->msgPart().contentDescription();
               comment = KMMessage::quoteHtmlChars( comment, true );
 
@@ -1010,7 +1006,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
                          + KURL::encode_string( fileName ) + "\">"
                          + label + "</a>";
               else
-                htmlStr += label;
+                htmlStr += KMMessage::quoteHtmlChars( label, true );
               if( !comment.isEmpty() )
                 htmlStr += "<br>" + comment;
               htmlStr += "</td></tr><tr class=\"textAtmB\"><td>";
@@ -1132,7 +1128,7 @@ QString ObjectTreeParser::byteArrayToTempFile( KMReaderWin* reader,
 	    if( !bDone )
 	      writeBodyString( cstr, curNode->trueFromAddress(),
 			       codecFor( curNode ), result );
-            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() ) {
+            if( !mReader->mIsFirstTextPart && !showOnlyOneMimePart() && !label.isEmpty() ) {
               htmlWriter()->queue( "</td></tr></table>" );
             }
             mReader->mIsFirstTextPart = false;
