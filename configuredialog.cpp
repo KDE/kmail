@@ -1778,6 +1778,7 @@ static const struct {
   { "QuotedText3", I18N_NOOP("Quoted text - third level") },
   { "LinkColor", I18N_NOOP("Link") },
   { "FollowedColor", I18N_NOOP("Followed link") },
+  { "MisspelledColor", I18N_NOOP("Misspelled words") },
   { "NewMessage", I18N_NOOP("New message") },
   { "UnreadMessage", I18N_NOOP("Unread message") },
   { "FlagMessage", I18N_NOOP("Important message") },
@@ -1841,6 +1842,7 @@ void AppearancePage::ColorsTab::setup() {
     QColor( 0x00, 0x60, 0x00 ), // quoted l3
     KGlobalSettings::linkColor(), // link
     KGlobalSettings::visitedLinkColor(), // visited link
+    Qt::red, // misspelled words
     Qt::red, // new msg
     Qt::blue, // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
