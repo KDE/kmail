@@ -279,16 +279,16 @@ QString DictSpellChecker::spellKey()
     return key;
 }
 
-void DictSpellChecker::timerEvent(QTimerEvent*)
-{
-    if (mSpell && mSpellKey != spellKey()) {
-	mSpellKey = spellKey();
-	DictSpellChecker::dictionaryChanged();
-    }
-}
-
 bool DictSpellChecker::eventFilter(QObject* o, QEvent* e)
 {
+    //TODO mouse moves, pgup, home ctrl etc.
+    if (o == textEdit() && (e->type() == QEvent::FocusIn)) {
+	if (mSpell && mSpellKey != spellKey()) {
+	    mSpellKey = spellKey();
+	    DictSpellChecker::dictionaryChanged();
+	}
+    }
+    
     if (o == textEdit() && (e->type() == QEvent::KeyPress)) {
 	QKeyEvent *k = (QKeyEvent*)e;
 	if (k->key() == Key_Enter ||

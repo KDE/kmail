@@ -79,7 +79,6 @@ public:
     static void dictionaryChanged();
 
 protected:
-    void timerEvent(QTimerEvent *);
     QString spellKey();
     bool eventFilter(QObject* o, QEvent* e);
 
