@@ -179,7 +179,7 @@ public:
   static KMMessage* findMessageBySerNum( Q_UINT32 serNum, KMFolder* folder );
 
   /** Convenience function to delete a message. */
-  static void deleteMsg( KMMessage* msg );
+  void deleteMsg( KMMessage* msg );
 
   bool isEnabled() const { return mUseResourceIMAP; }
 
@@ -192,6 +192,10 @@ public:
   void setStorageFormat( KMFolder* folder, StorageFormat format );
 
   static const char* annotationForContentsType( KMail::FolderContentsType type );
+
+  // Called after a folder was synced with the server
+  void folderSynced( KMFolder* folder, const KURL& folderURL );
+  void addFolderChange( KMFolder* folder, FolderChanges changes );
 
 public slots:
   /* (Re-)Read configuration file */
@@ -231,6 +235,12 @@ private:
   static bool kolabXMLFoundAndDecoded( const KMMessage& msg, const QString& mimetype, QString& s );
   void loadPixmaps() const;
 
+  void handleFolderSynced( KMFolder* folder,
+                           const KURL& folderURL,
+                           int _changes );
+  void triggerKolabFreeBusy( const KURL& folderURL );
+
+private:
   QGuardedPtr<KMFolder> mContacts;
   QGuardedPtr<KMFolder> mCalendar;
   QGuardedPtr<KMFolder> mNotes;
@@ -243,8 +253,14 @@ private:
   // used for collecting incidences during async loading
   QDict<Accumulator> mAccumulators;
   // More info for each folder we care about (mContacts etc. as well as the extra folders)
+  // The reason for storing it here is that it can be shared between
+  // kmfoldercachedimap and kmfolderimap, and that it's groupware data anyway.
   struct FolderInfo {
+    FolderInfo() {} // for QMap
+    FolderInfo( StorageFormat f, FolderChanges c ) :
+      mStorageFormat( f ), mChanges( c ) {}
     StorageFormat mStorageFormat;
+    FolderChanges mChanges;
   };
   // The storage format used for each folder that we care about
   typedef QMap<KMFolder*, FolderInfo> FolderInfoMap;

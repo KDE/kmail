@@ -115,6 +115,9 @@ k_dcop:
   enum StorageFormat { StorageIcalVcard, StorageXML };
 
 
+  /// This bitfield indicates which changes have been made in a folder, at syncing time.
+  enum FolderChanges { NoChange = 0, Contents = 1, ACL = 2 };
+
 k_dcop_signals:
   // For vcard/ical type storage (imap resource)
   void incidenceAdded( const QString& type, const QString& folder,
@@ -142,7 +145,6 @@ inline QDataStream& operator<<( QDataStream& str, const KMailICalIface::SubResou
   str << subResource.location << subResource.label << subResource.writable;
   return str;
 }
-
 inline QDataStream& operator>>( QDataStream& str, KMailICalIface::SubResource& subResource )
 {
   str >> subResource.location >> subResource.label >> subResource.writable;

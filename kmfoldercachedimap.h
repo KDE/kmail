@@ -90,6 +90,7 @@ public:
   void initializeFrom( KMFolderCachedImap* parent );
 
   virtual void readConfig();
+  virtual void writeConfig();
 
   void writeAnnotationConfig();
 

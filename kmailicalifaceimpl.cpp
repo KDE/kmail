@@ -139,7 +139,7 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
                                        const QString& ical )
 {
   kdDebug(5006) << "KMailICalIfaceImpl::addIncidence( " << type << ", "
-            << uid << ", " << ical << " )" << endl;
+                << uid << ", " << ical << " )" << endl;
 
   if( !mUseResourceIMAP )
     return false;
@@ -176,6 +176,8 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
     rc = true;
   } else
     kdError(5006) << "Not an IMAP resource folder" << endl;
+
+  addFolderChange( f, Contents );
 
   return rc;
 }
@@ -374,7 +376,7 @@ Q_UINT32 KMailICalIfaceImpl::addIncidenceKolab( KMFolder& folder,
   msg->setSubject( subject );
   msg->setAutomaticFields( true );
   // add a first body part to be displayed by all mailer
-  // than cn NOT display Kolab data: no matter if these
+  // than can NOT display Kolab data: no matter if these
   // mailers are MIME compliant or not
   KMMessagePart firstPart;
   firstPart.setType(    DwMime::kTypeText     );
@@ -444,7 +446,7 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   kdDebug(5006) << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
             << uid << " )" << endl;
 
-  // Find the folder and the incidence in it
+  // Find the folder
   KMFolder* f = folderFromType( type, folder );
 
   if( !f ) {
@@ -465,8 +467,8 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
     rc = true;
     mUIDToSerNum.remove( uid );
   } else
-      kdDebug(5006) << type << " not found, cannot remove uid " << uid << endl;
-    return rc;
+    kdDebug(5006) << type << " not found, cannot remove uid " << uid << endl;
+  return rc;
 }
 
 
@@ -548,7 +550,6 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   }
   return ilist;
 }
-
 
 QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mimetype,
                                                              const QString& resource )
@@ -692,7 +693,6 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
     kdDebug(5006) << "subresourcesKolab: No folder found for " << contentsType << endl;
   return subResources;
 }
-
 
 bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
                                            const QString& resource )
@@ -877,7 +877,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
   }
 
   f->close();
-
+  addFolderChange( f, Contents );
   return rc;
 }
 
@@ -955,7 +955,7 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
   if( !mUseResourceIMAP )
     return;
 
-  QString type = folderContentsType(  folder->storage()->contentsType() );
+  QString type = folderContentsType( folder->storage()->contentsType() );
   if( !type.isEmpty() ) {
     // Get the index of the mail
     int i = 0;
@@ -963,7 +963,6 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
     kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
     assert( folder == aFolder );
 
-    // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
     QString s;
     QString uid( "UID" );
@@ -1073,6 +1072,7 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
                     if ( e.tagName() == "uid" ) {
                         uid = e.text();
                         ok = true;
+                        break;
                     }
                 }
             }
@@ -1180,7 +1180,6 @@ KFolderTreeItem::Type KMailICalIfaceImpl::folderType( KMFolder* folder ) const
   return KFolderTreeItem::Other;
 }
 
-
 // Global tables of foldernames is different languages
 // For now: 0->English, 1->German, 2->French, 3->Dutch
 static QMap<KFolderTreeItem::Type,QString> folderNames[4];
@@ -1265,7 +1264,6 @@ KMMessage *KMailICalIfaceImpl::findMessageBySerNum( Q_UINT32 serNum, KMFolder* f
   return message;
 }
 
-
 void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
 {
   if( !msg ) return;
@@ -1276,6 +1274,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
   assert(idx != -1);
   srcFolder->removeMsg(idx);
   delete msg;
+  addFolderChange( srcFolder, Contents );
 }
 
 void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
@@ -1286,6 +1285,7 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
   kdDebug(5006) << "folderContentsTypeChanged( " << folder->name()
                 << ", " << contentsType << ")\n";
 
+  // The builtins can't change type
   if ( isStandardResourceFolder( folder ) )
     return;
 
@@ -1304,13 +1304,12 @@ void KMailICalIfaceImpl::folderContentsTypeChanged( KMFolder* folder,
     }
     // So the type changed to another groupware type, ok.
   } else {
-    if (  ef && !ef->folder ) // deleted folder, clean up
-      mExtraFolders.remove(  location );
-    if (  contentsType == 0 )
-      return;
+    if ( ef && !ef->folder ) // deleted folder, clean up
+      mExtraFolders.remove( location );
+    if ( contentsType == 0 )
+        return;
 
-
-    kdDebug( 5006 ) << "registering " << location << " as extra folder" << endl;
+    kdDebug(5006) << "registering " << location << " as extra folder" << endl;
     // Make a new entry for the list
     ef = new ExtraFolder( folder );
     mExtraFolders.insert( location, ef );
@@ -1365,16 +1364,87 @@ KMailICalIfaceImpl::StorageFormat KMailICalIfaceImpl::storageFormat( KMFolder* f
 void KMailICalIfaceImpl::setStorageFormat( KMFolder* folder, StorageFormat format )
 {
   FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
-  if ( it != mFolderInfoMap.end() )
+  if ( it != mFolderInfoMap.end() ) {
     (*it).mStorageFormat = format;
-  else {
-    FolderInfo info;
-    info.mStorageFormat = format;
+  } else {
+    FolderInfo info( format, NoChange );
     mFolderInfoMap.insert( folder, info );
   }
   KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
   configGroup.writeEntry( folder->idString() + "-storageFormat",
                           format == StorageXML ? "xml" : "icalvcard" );
+}
+
+void KMailICalIfaceImpl::addFolderChange( KMFolder* folder, FolderChanges changes )
+{
+  FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() ) {
+    (*it).mChanges = static_cast<FolderChanges>( (*it).mChanges | changes );
+  } else { // Otherwise, well, it's a folder we don't care about.
+    kdDebug(5006) << "addFolderChange: nothing known about folder " << folder->location() << endl;
+  }
+  KConfigGroup configGroup( kmkernel->config(), "GroupwareFolderInfo" );
+  configGroup.writeEntry( folder->idString() + "-changes", (*it).mChanges );
+}
+
+void KMailICalIfaceImpl::folderSynced( KMFolder* folder, const KURL& folderURL )
+{
+  FolderInfoMap::Iterator it = mFolderInfoMap.find( folder );
+  if ( it != mFolderInfoMap.end() && (*it).mChanges ) {
+    handleFolderSynced( folder, folderURL, (*it).mChanges );
+    (*it).mChanges = NoChange;
+  }
+}
+
+void KMailICalIfaceImpl::handleFolderSynced( KMFolder* folder,
+                                             const KURL& folderURL,
+                                             int _changes )
+{
+  // This is done here instead of in the resource, because
+  // there could be 0, 1, or N kolab resources at this point.
+  // We can hack the N case, but not the 0 case.
+  // So the idea of a DCOP signal for this wouldn't work.
+  if ( ( _changes & KMailICalIface::Contents ) ||
+       ( _changes & KMailICalIface::ACL ) ) {
+    if ( storageFormat( folder ) == StorageXML && folder->storage()->contentsType() == KMail::ContentsTypeCalendar )
+      triggerKolabFreeBusy( folderURL );
+  }
+}
+
+void KMailICalIfaceImpl::triggerKolabFreeBusy( const KURL& folderURL )
+{
+  /* Steffen said: you must issue an authenticated HTTP GET request to
+     https://kolabserver/freebusy/trigger/user@domain/Folder/NestedFolder.pfb
+     (replace .pfb with .xpfb for extended fb lists). */
+  KURL httpURL( folderURL );
+  // Keep username ("user@domain"), pass, and host from the imap url
+  httpURL.setProtocol( "https" );
+  httpURL.setPort( 0 ); // remove imap port
+
+  // IMAP path is either /INBOX/<path> or /user/someone/<path>
+  QString path = folderURL.path( -1 );
+  Q_ASSERT( path.startsWith( "/" ) );
+  int secondSlash = path.find( '/', 1 );
+  if ( secondSlash == -1 ) {
+    kdWarning() << "KCal::ResourceKolab::fromKMailFolderSynced path is too short: " << path << endl;
+    return;
+  }
+  if ( path.startsWith( "/INBOX/", false ) ) {
+    // If INBOX, replace it with the username (which is user@domain)
+    path = path.mid( secondSlash );
+    path.prepend( folderURL.user() );
+  } else {
+    // If user, just remove it. So we keep the IMAP-returned username.
+    // This assumes it's a known user on the same domain.
+    path = path.mid( secondSlash );
+  }
+
+  httpURL.setPath( "/freebusy/trigger/" + path + ".pfb" );
+  httpURL.setQuery( QString::null );
+  kdDebug() << "Triggering PFB update for " << folderURL << " : getting " << httpURL << endl;
+  // "Fire and forget". No need for error handling, nor for explicit deletion.
+  // Maybe we should try to prevent launching it if it's already running (for this URL) though.
+  /*KIO::Job* job =*/ KIO::get( httpURL, false, false /*no progress info*/ );
 }
 
 KMFolder* KMailICalIfaceImpl::findResourceFolder( const QString& resource )
@@ -1786,7 +1856,6 @@ static void vPartMicroParser( const QString& str, QString& s )
   // Not found. Clear it
   s.truncate(0);
 }
-
 
 KMFolder* KMailICalIfaceImpl::findStandardResourceFolder( KMFolderDir* folderParentDir, KMail::FolderContentsType contentsType )
 {
