@@ -175,7 +175,7 @@ void KMSearchRuleWidget::initLists() const
 //=============================================================================
 
 KMSearchRuleWidgetLister::KMSearchRuleWidgetLister( QWidget *parent, const char* name )
-  : KWidgetLister( 1, FILTER_MAX_RULES, parent, name )
+  : KWidgetLister( 2, FILTER_MAX_RULES, parent, name )
 {
   mRuleList = 0;
 }
@@ -221,6 +221,8 @@ void KMSearchRuleWidgetLister::setRuleList( QList<KMSearchRule> *aList )
 	rIt.current() && wIt.current() ; ++rIt, ++wIt ) {
     ((KMSearchRuleWidget*)(*wIt))->setRule( (*rIt) );
   }
+  for ( ; wIt.current() ; ++wIt )
+    ((KMSearchRuleWidget*)(*wIt))->reset();
 
   assert( mWidgetList.first() );
   mWidgetList.first()->blockSignals(FALSE);
