@@ -3698,11 +3698,11 @@ Kleo::CryptoConfigEntry* SecurityPage::SMimeTab::configEntry( const char* compon
 {
     Kleo::CryptoConfigEntry* entry = mConfig->entry( componentName, groupName, entryName );
     if ( !entry ) {
-        KMessageBox::error( this, i18n( "Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName ) );
+        kdWarning(5006) << QString( "Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName ) << endl;
         return 0;
     }
     if( entry->argType() != argType || entry->isList() != isList ) {
-        KMessageBox::error( this, i18n( "Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() ) );
+        kdWarning(5006) << QString( "Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() ) << endl;
         return 0;
     }
     return entry;
