@@ -2,6 +2,7 @@
 [KDE Desktop Entry]
 Name=Mail client
 Name[de]=Email Programm
+Name[no]=Epostprogram
 Name[fr]=Messagerie
 Name[pl]=Klient Email
 Name[fi]=Sähköposti
@@ -18,6 +19,7 @@ DocPath=kmail.html
 Comment=Mail Client
 Comment[fr]=Emission et réception de messages électroniques
 Comment[de]=Programm zum Lesen und Verschicken von Emails
+Comment[no]=Program for å lese og sende eposter
 Comment[pl]=Program do wysy³ania i odbierania poczty elektronicznej
 Comment[fi]=Ohjelma sähköpostien lukemiseen
 Comment[hu]=E-mail levelezõ program
