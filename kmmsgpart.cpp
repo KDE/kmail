@@ -144,15 +144,20 @@ QByteArray KMMessagePart::bodyDecoded(void) const
 //-----------------------------------------------------------------------------
 void KMMessagePart::magicSetType(bool aAutoDecode)
 {
-  QString mimetype, bod;
+  QString mimetype;
+  QByteArray body;
+  KMimeMagicResult *result;
   int sep;
 
   KMimeMagic::self()->setFollowLinks(TRUE); // is it necessary ?
 
-  if (aAutoDecode) bod = QCString(bodyDecoded());
-  else bod = mBody;
+  if (aAutoDecode) 
+    body = QCString(bodyDecoded());
+  else 
+    body = mBody;
 
-  mimetype = KMimeMagic::self()->findBufferType(bod, bod.length())->mimeType();
+  result = KMimeMagic::self()->findBufferType( body );
+  mimetype = result->mimeType();
   sep = mimetype.find('/');
   mType = mimetype.left(sep);
   mSubtype = mimetype.mid(sep+1, 64);
@@ -363,6 +368,7 @@ void KMMessagePart::setCharset(const QString aStr)
   mCharset=aStr;
 }
 #endif
+
 
 
 
