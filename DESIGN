@@ -10,6 +10,7 @@ Contents:
 - Identity
 - Filters
 - ConfigureDialog
+- MDNs
 
 TODO: reader, composer, messages, folder, accounts, ...
 
@@ -160,3 +161,35 @@ TabbedConfigurationPage, which (as of this writing only offers the
 addTab() convenience method. It is planned to also provide
 reimplemenations of setup, dismiss, apply and installProfile that just
 call the same functions for each tab.
+
+MDNs
+====
+
+Files: libkdenetwork/kmime_mdn.{h,cpp} and kmmessage.{h,cpp}, mostly
+
+Contact Marc Mutz <mutz@kde.org> on questions...
+
+MDNs (Message Disposition Notifications; RFC 2298) are a way to send
+back information regarding received messages back to their
+sender. Examples include "message read/deleted/forwarded/processed".
+
+The code in kmime_mdn.{h,cpp} is responsible for creating the
+message/disposition-notification body part (2nd child of
+multipart/report that makes the MDN) and for providing the template
+for human-readable text that goes into the text/plain part (1st child
+of the multipart/report).
+
+The code in KMMessage::createMDN() actually constructs a message
+containing a MDN for this message, using the kmime_mdn helper
+functions. It starts by checking the index for an already sent MDN,
+since the RFC demands that MDNs be sent only once for every
+message. If that test succeeds, it goes on to check various other
+constraints as per RFC and if all goes well the message containing the
+multipart/report is created.
+
+If you need to use this functionality, see KMReaderWin::touchMsg() and
+KMFilterAction::sendMDN() for examples. The touchMsg() code is invoked
+on display of a message and sends a "displayed" MDN back (if so
+configured), whereas the KMFilterAction method is a convenience helper
+for the various filter actions that can provoke a MDN (move to trash,
+redirect, forward, ...).
