@@ -697,6 +697,8 @@ void KMailICalIfaceImpl::readConfig()
                                             " as subfolders of %1; if you do not want this, press \"No\","
                                             " and the IMAP resource will be disabled").arg(folderParent!=0?folderParent->name():folderParentDir->name()),
                                     i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
+
+      GlobalSettings::setTheIMAPResourceEnabled( false );
       mUseResourceIMAP = false;
       mFolderParentDir = 0;
       mFolderParent = 0;
