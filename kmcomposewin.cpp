@@ -1847,6 +1847,7 @@ bool KMComposeWin::isModified() const
            ( mEdtTo && mEdtTo->edited() ) ||
            ( mEdtCc && mEdtCc->edited() ) ||
            ( mEdtBcc && mEdtBcc->edited() ) ||
+           ( mRecipientsEditor && mRecipientsEditor->isModified() ) ||
            mEdtSubject->edited() ||
            mAtmModified ||
            ( mTransport->lineEdit() && mTransport->lineEdit()->edited() ) );
@@ -1863,6 +1864,7 @@ void KMComposeWin::setModified( bool modified )
     if ( mEdtTo ) mEdtTo->setEdited( false );
     if ( mEdtCc ) mEdtCc->setEdited( false );
     if ( mEdtBcc ) mEdtBcc->setEdited( false );
+    if ( mRecipientsEditor ) mRecipientsEditor->clearModified();
     mEdtSubject->setEdited( false );
     mAtmModified =  false ;
     if ( mTransport->lineEdit() )
