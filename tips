@@ -70,8 +70,8 @@ in the first edit field of a search rule?</p>
 <html>
 <p>...that when replying, only the selected part of the message is quoted?</p>
 <p>If nothing is selected, the full message is quoted.</p>
-<p>This even works with text of attachments when you selected
-<em>View-&gt;Attachmens-&gt;Inline</em>.</p>
+<p>This even works with text of attachments when
+<em>View-&gt;Attachments-&gt;Inline</em> is selected.</p>
 <p>This feature is available with all reply commands except
 <em>Message-&gt;Reply Without Quote</em>.</p>
 <p align="right"><em>contributed by David F. Newman</em></p>
