@@ -6,10 +6,8 @@
 
 #include <qguardedptr.h>
 
-#include <kparts/mainwindow.h>
 #include <kfoldertree.h>
 
-#include "kmaccount.h"
 #include "kmfoldertype.h"
 
 class QSplitter;
@@ -21,12 +19,17 @@ class KMKernel;
 class KMFolder;
 class KMFolderDir;
 class KMFolderTreeItem;
+class KMAccount;
 class KMMainWin;
 class KMMessage;
 class KMHeaders;
 class KMReaderWin;
 class KMMimePartTree;
 class KMMsgBase;
+
+namespace KParts {
+  class ReadOnlyPart;
+};
 
 
 class KMGroupware : public QObject
@@ -73,8 +76,13 @@ public:
   bool folderSelected( KMFolder* folder );
   bool isContactsFolder( KMFolder* folder ) const;
   bool checkFolders() const;
+
+  /** Initialize all folders. */
   void initFolders();
+
+  /** Disconnect all slots and close the dirs. */
   void cleanup();
+
   bool setFolderPixmap(const KMFolder& folder, KMFolderTreeItem& fti) const;
   void setupKMReaderWin(KMReaderWin* reader);
   void setMimePartTree(KMMimePartTree* mimePartTree);
@@ -87,11 +95,6 @@ public:
                            QString& choice );
   void processVCalReply( const QCString& receiver, const QString& vCalIn,
                          QString& choice );
-
-  /* Read config at app startup
-     The difference between this and readConfig()
-     is that we might get a wizard here*/
-  void readConfigStartup();
 
   /* (Re-)Read configuration file */
   void readConfig();
@@ -187,7 +190,6 @@ public slots:
 
 protected:
   void saveActionEnable( const QString& name, bool on ) const;
-  void readConfigInternal();
 
   // Figure out if a vCal is a todo, event or neither
   enum VCalType { vCalEvent, vCalTodo, vCalUnknown };
@@ -207,6 +209,9 @@ protected:
 
 signals:
   void signalSetKroupwareCommunicationEnabled( QObject* );
+
+  // Make KOrganizer read everything from scratch
+  void signalRefreshAll();
 
   /** Initialize Groupware with a list of Calendar events */
   void signalRefreshEvents( const QStringList& );
@@ -260,6 +265,9 @@ signals:
   void signalMenusChanged();
 
 private:
+  /** Helper function for initFolders. Initializes a single folder. */
+  KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString );
+
   void internalCreateKOrgPart();
   void loadPixmaps() const;
   void setEnabled( bool b );

@@ -51,6 +51,7 @@ using KMail::RecentAddresses;
 #include "kmidentity.h"
 #include "identitymanager.h"
 #include "configuredialog.h"
+#include "kmgroupwarewizard.h"
 #include "kmsystemtray.h"
 #include <kwin.h>
 #include <ktip.h>
@@ -729,7 +730,7 @@ void KMKernel::init()
       cfg->writeEntry("pref-charsets", "us-ascii,iso-8859-1,locale,utf-8");
     }
   }
-  mGroupware->readConfigStartup();
+  mGroupware->readConfig();
   // filterMgr->dump();
 #if 0 //disabled for now..
   the_msgIndex = new KMMsgIndex(this, "the_index"); //create the indexer
@@ -1114,6 +1115,9 @@ void KMKernel::action(bool mailto, bool check, const QString &to,
                       const KURL &messageFile,
                       const KURL::List &attachURLs)
 {
+  // Run the groupware setup wizard. It doesn't do anything if this isn't
+  // the first run. Replace this with a general wizard later
+  KMGroupwareWizard::run();
 
   if (mailto)
     openComposer (to, cc, bcc, subj, body, 0, messageFile, attachURLs);

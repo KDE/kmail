@@ -43,7 +43,6 @@ public:
   void init( const QString &userEmail );
   KMFolder *folder() const { return mFolder; }
 
-private:
   QLineEdit    *loginEdit;
   QLineEdit    *passwordEdit;
   QLineEdit    *hostEdit;
@@ -62,6 +61,18 @@ private:
 class KMGroupwareWizard : public QWizard {
   Q_OBJECT
 public:
+  // Call this to execute the thing
+  static void run();
+
+private slots:
+  virtual void back();
+  virtual void next();
+
+  void slotGroupwareEnabled( int );
+  void slotServerSettings( int i );
+  void slotUpdateParentFolderName();
+
+private:
   KMGroupwareWizard( QWidget* parent = 0, const char* name = 0, bool modal = FALSE );
 
   int language() const;
@@ -70,18 +81,28 @@ public:
   bool groupwareEnabled() const { return mGroupwareEnabled; }
   bool useDefaultKolabSettings() const { return mUseDefaultKolabSettings; }
 
-protected slots:
-  virtual void back();
-  virtual void next();
-private slots:
-  void slotGroupwareEnabled( int );
-  void slotServerSettings( int i );
-  void slotUpdateParentFolderName();
-private:
+  QString name() const;
+  QString login() const;
+  QString host() const;
+  QString email() const;
+  QString passwd() const;
+  bool storePasswd() const;
+
   void setAppropriatePages();
   void guessExistingFolderLanguage();
   void setLanguage( int, bool );
-  KMIdentity &userIdentity();
+
+  // Write the KOrganizer settings
+  static void writeKOrganizerConfig( const KMGroupwareWizard& );
+
+  // Write the KABC settings
+  static void writeKAbcConfig();
+
+  // Write the KAddressbook settings
+  static void writeKAddressbookConfig( const KMGroupwareWizard& );
+
+  KMIdentity& userIdentity();
+  const KMIdentity& userIdentity() const;
 
   QWidget* createIntroPage();
   QWidget* createIdentityPage();

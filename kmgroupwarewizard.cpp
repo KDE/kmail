@@ -17,6 +17,7 @@
 #include <klocale.h>
 #include <knuminput.h>
 #include <kapplication.h>
+#include <kfoldertree.h>
 
 #include "kmfoldercombobox.h"
 #include "kmfolderdir.h"
@@ -25,6 +26,8 @@
 #include "configuredialog.h"
 #include "configuredialog_p.h"
 #include "kmacctmgr.h"
+#include "kmcomposewin.h"
+#include "kbusyptr.h"
 #include "kmfoldermgr.h"
 #include "kmacctcachedimap.h"
 #include "kmfoldercachedimap.h"
@@ -33,7 +36,6 @@
 #include "kmtransport.h"
 #include "kmsender.h"
 #include "kmmainwin.h"
-#include "kmfoldertree.h"
 #include "kmgroupware.h"
 
 #include "kmgroupwarewizard.h"
@@ -62,7 +64,7 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
   QLabel *label = new QLabel( i18n("&Your name:"), this );
   QWhatsThis::add( label, i18n("Write your name here.") );
   grid->addWidget( label, 0, 0 );
-  nameEdit = new KLineEdit( ident.fullName(), this );
+  nameEdit = new QLineEdit( ident.fullName(), this );
   nameEdit->setFocus();
   label->setBuddy( nameEdit );
   grid->addWidget( nameEdit, 0, 1 );
@@ -70,13 +72,13 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
   label = new QLabel( i18n("Organi&zation:"), this );
   QWhatsThis::add( label, i18n("You can write the company or organization you work for.") );
   grid->addWidget( label, 1, 0 );
-  orgEdit = new KLineEdit( ident.organization(), this );
+  orgEdit = new QLineEdit( ident.organization(), this );
   label->setBuddy( orgEdit );
   grid->addWidget( orgEdit, 1, 1 );
 
   label = new QLabel( i18n("&Email address:"), this );
   grid->addWidget( label, 2, 0 );
-  emailEdit = new KLineEdit( ident.emailAddr(), this );
+  emailEdit = new QLineEdit( ident.emailAddr(), this );
   label->setBuddy( emailEdit );
   grid->addWidget( emailEdit, 2, 1 );
 }
@@ -87,14 +89,6 @@ void WizardIdentityPage::apply() const {
   ident.setFullName( nameEdit->text().stripWhiteSpace() );
   ident.setOrganization( orgEdit->text().stripWhiteSpace() );
   ident.setEmailAddr( emailEdit->text().stripWhiteSpace() );
-
-  kdDebug(5006) << "Writing identity: " << ident.identityName() << ", full name: "
-	    << ident.fullName() << ", uoid: " << ident.uoid() << ", org:"
-	    << ident.organization() << ", email: " << ident.emailAddr() << endl;
-
-  kdDebug(5006) << ", Identitylist: " << kernel->identityManager()->identities().count()
-	    << ", " << kernel->identityManager()->identities()[0] << endl;
-
   kernel->identityManager()->sort();
   kernel->identityManager()->commit();
 }
@@ -115,20 +109,20 @@ WizardKolabPage::WizardKolabPage( QWidget * parent, const char * name )
   QLabel *label = new QLabel( i18n("&Login:"), this );
   QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
   grid->addWidget( label, 0, 0 );
-  loginEdit = new KLineEdit( this );
+  loginEdit = new QLineEdit( this );
   label->setBuddy( loginEdit );
   grid->addWidget( loginEdit, 0, 1 );
 
   label = new QLabel( i18n("P&assword:"), this );
   grid->addWidget( label, 1, 0 );
-  passwordEdit = new KLineEdit( this );
+  passwordEdit = new QLineEdit( this );
   passwordEdit->setEchoMode( QLineEdit::Password );
   label->setBuddy( passwordEdit );
   grid->addWidget( passwordEdit, 1, 1 );
 
   label = new QLabel( i18n("Ho&st:"), this );
   grid->addWidget( label, 2, 0 );
-  hostEdit = new KLineEdit( this );
+  hostEdit = new QLineEdit( this );
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
   hostEdit->setValidator(new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 ) );
@@ -215,7 +209,7 @@ void WizardKolabPage::apply()
       child = mAccount->folder()->createChildFolder();
 
     mFolder = kernel->imapFolderMgr()->
-      createFolder( "INBOX", true, KMFolderTypeCachedImap, child );
+      createFolder( "INBOX", false, KMFolderTypeCachedImap, child );
     static_cast<KMFolderCachedImap*>(mFolder)->setSilentUpload( true );
   }
   mAccount->processNewMail(false);
@@ -250,20 +244,6 @@ void WizardKolabPage::apply()
   // Save common options:
   general.writeEntry( "sendOnCheck", false );
   kernel->msgSender()->setSendImmediate( true );
-
-  //
-  // Make other components read the new settings
-  //
-  KMMessage::readConfig();
-  // kernel->kbp()->busy(); // this can take some time when a large folder is open
-  if ( KMainWindow::memberList ) {
-    QPtrListIterator<KMainWindow> it( *KMainWindow::memberList );
-    for ( it.toFirst() ; it.current() ; ++it )
-      // ### FIXME: use dynamic_cast.
-      if(      (*it)->isA("KMMainWin") )
-	((KMMainWin*)(*it))->readConfig();
-  }
-  // kernel->kbp()->idle();
 }
 
 
@@ -406,7 +386,7 @@ QWidget* KMGroupwareWizard::createLanguagePage()
   QTextBrowser* text = new QTextBrowser(  page );
   text->setText( i18n("If you want to make your groupware folders work with other "
 		    "applications, you might want to select a different language "
-		    "than English.<br>"
+		    "than english.<br>"
 		    "If this is not an issue, leave the language as it is."));
   top->addWidget( text );
 
@@ -535,10 +515,10 @@ void KMGroupwareWizard::guessExistingFolderLanguage()
   KMFolderDir* dir = folder()->child();
   KMGroupware* gw = &(KMKernel::self()->groupware());
 
-  if( dir && checkSubfolders( dir, gw, 0 ) ) {
+  if(  checkSubfolders( dir, gw, 0 ) ) {
     // Check English
     setLanguage( 0, true );
-  } else if( dir && checkSubfolders( dir, gw, 1 ) ) {
+  } else if( checkSubfolders( dir, gw, 1 ) ) {
     // Check German
     setLanguage( 1, true );
   } else {
@@ -546,8 +526,204 @@ void KMGroupwareWizard::guessExistingFolderLanguage()
   }
 }
 
-KMIdentity &KMGroupwareWizard::userIdentity() {
+KMIdentity &KMGroupwareWizard::userIdentity()
+{
   return mIdentityWidget->identity();
 }
+
+const KMIdentity &KMGroupwareWizard::userIdentity() const
+{
+  return mIdentityWidget->identity();
+}
+
+QString KMGroupwareWizard::name() const
+{
+  return userIdentity().fullName();
+}
+
+QString KMGroupwareWizard::login() const
+{
+  return mKolabWidget->loginEdit->text().stripWhiteSpace();
+}
+
+QString KMGroupwareWizard::host() const
+{
+  return mKolabWidget->hostEdit->text().stripWhiteSpace();
+}
+
+QString KMGroupwareWizard::email() const
+{
+  return userIdentity().emailAddr();
+}
+
+QString KMGroupwareWizard::passwd() const
+{
+  return KMAccount::encryptStr( mKolabWidget->passwordEdit->text() );
+}
+
+bool KMGroupwareWizard::storePasswd() const
+{
+  return mKolabWidget->storePasswordCheck->isChecked();
+}
+
+
+void KMGroupwareWizard::run()
+{
+  KConfigGroup options( KMKernel::config(), "Groupware" );
+
+  // Check if this wizard was previously run
+  if( options.readEntry( "Enabled", "notset" ) != "notset" )
+    return;
+
+  KMGroupwareWizard wiz(0, "groupware wizard", TRUE );
+  int rc = wiz.exec();
+
+  options.writeEntry( "Enabled", rc == QDialog::Accepted && wiz.groupwareEnabled() );
+  if( rc == QDialog::Accepted ) {
+    options.writeEntry( "FolderLanguage", wiz.language() );
+    options.writeEntry( "GroupwareFolder", wiz.folder()->idString() );
+
+    kernel->groupware().readConfig();
+
+    if( wiz.groupwareEnabled() && wiz.useDefaultKolabSettings() ) {
+      // Write the apps configs
+      writeKOrganizerConfig( wiz );
+      writeKAbcConfig();
+      writeKAddressbookConfig( wiz );
+    }
+  }
+}
+
+
+// Write the KOrganizer settings
+void KMGroupwareWizard::writeKOrganizerConfig( const KMGroupwareWizard& wiz ) {
+  KConfig config( "korganizerrc" );
+
+  KConfigGroup optionsKOrgGeneral( &config, "Personal Settings" );
+  optionsKOrgGeneral.writeEntry( "user_name", wiz.name() );
+  optionsKOrgGeneral.writeEntry( "user_email", wiz.email() );
+
+  KConfigGroup optionsKOrgGroupware( &config, "Groupware" );
+  optionsKOrgGroupware.writeEntry( "Publish FreeBusy lists", true );
+  optionsKOrgGroupware.writeEntry( "Publish FreeBusy days", 60 );
+  optionsKOrgGroupware.writeEntry( "Publish to Kolab server", true );
+  optionsKOrgGroupware.writeEntry( "Publish to Kolab server name", wiz.host() );
+  optionsKOrgGroupware.writeEntry( "Publish user name", wiz.login() );
+  optionsKOrgGroupware.writeEntry( "Remember publish password", wiz.storePasswd() );
+  if( wiz.storePasswd() ) {
+    optionsKOrgGroupware.writeEntry( "Publish Server Password", wiz.passwd() );
+    optionsKOrgGroupware.writeEntry( "Retrieve Server Password", wiz.passwd() );
+  }
+  optionsKOrgGroupware.writeEntry( "Retrieve FreeBusy lists", true );
+  optionsKOrgGroupware.writeEntry( "Retrieve from Kolab server", true );
+  optionsKOrgGroupware.writeEntry( "Retrieve from Kolab server name", wiz.host() );
+  optionsKOrgGroupware.writeEntry( "Retrieve user name", wiz.login() );
+  optionsKOrgGroupware.writeEntry( "Remember retrieve password", wiz.storePasswd() );
+
+  config.sync();
+}
+
+
+// Write the KABC settings
+void KMGroupwareWizard::writeKAbcConfig() {
+  KConfig config( "kabcrc" );
+  KConfigGroup optionsKAbcGeneral( &config, "General" );
+  QString standardKey = optionsKAbcGeneral.readEntry( "Standard" );
+  QString newStandardKey;
+
+  QStringList activeKeys = optionsKAbcGeneral.readListEntry( "ResourceKeys" );
+  QStringList passiveKeys = optionsKAbcGeneral.readListEntry( "PassiveResourceKeys" );
+  QStringList keys = activeKeys + passiveKeys;
+  for ( QStringList::Iterator it = keys.begin(); it != keys.end(); ++it ) {
+    KConfigGroup entry( &config, "Resource_" + (*it) );
+    if( entry.readEntry( "ResourceType" ) == "imap" && newStandardKey.isNull() ) {
+      // This is the IMAP resource that must now be the standard
+      newStandardKey = *it;
+
+      // We want to be able to write to this
+      entry.writeEntry( "ResourceIsReadOnly", false );
+    } else
+      // Not an IMAP resource, so don't write to it anymore
+      entry.writeEntry( "ResourceIsReadOnly", true );
+  }
+
+  if( newStandardKey.isNull() ) {
+    // No IMAP resource was found, make one
+    newStandardKey = KApplication::randomString( 10 );
+    KConfigGroup entry( &config, "Resource_" + newStandardKey );
+    entry.writeEntry( "ResourceName", "imap-resource" );
+    entry.writeEntry( "ResourceType", "imap" );
+    entry.writeEntry( "ResourceIsReadOnly", false );
+    entry.writeEntry( "ResourceIsFast", true );
+    activeKeys += newStandardKey;
+  } else if( passiveKeys.remove( newStandardKey ) > 0 )
+    // This used to be passive. Make it active
+    activeKeys += newStandardKey;
+
+  // Set the keys
+  optionsKAbcGeneral.writeEntry( "ResourceKeys", activeKeys );
+  optionsKAbcGeneral.writeEntry( "PassiveResourceKeys", passiveKeys );
+  optionsKAbcGeneral.writeEntry( "Standard", newStandardKey );
+
+  config.sync();
+}
+
+
+// Write the KAddressbook settings
+void KMGroupwareWizard::writeKAddressbookConfig( const KMGroupwareWizard& wiz ) {
+  KConfig config( "kaddressbookrc" );
+  KConfigGroup options( &config, "LDAP" );
+
+  QString hostBase = QString( "dc=" ) + wiz.host();
+  hostBase.replace( '.', ",dc=" );
+
+  // Read all servers and try finding one that matches us
+  uint count = options.readUnsignedNumEntry( "NumSelectedHosts");
+  for ( uint i = 0; i < count; ++i ) {
+    QString host = options.readEntry( QString( "SelectedHost%1").arg( i ) );
+    int port = options.readUnsignedNumEntry( QString( "SelectedPort%1" ).arg( i ) );
+    QString base = options.readEntry( QString( "SelectedBase%1" ).arg( i ) );
+
+    if( host == wiz.host() && port == 389 && base == hostBase )
+      // We found a match, and it's selected
+      return;
+  }
+
+  // No match among the selected ones, try the unselected
+  count = options.readUnsignedNumEntry( "NumHosts" );
+  for ( uint i = 0; i < count; ++i ) {
+    QString host = options.readEntry( QString( "SelectedHost%1").arg( i ) );
+    int port = options.readUnsignedNumEntry( QString( "SelectedPort%1" ).arg( i ) );
+    QString base = options.readEntry( QString( "SelectedBase%1" ).arg( i ) );
+
+    if( host == wiz.host() && port == 389 && base == hostBase ) {
+      // We found a match. Remove it from this list
+      for( ++i; i < count; ++i ) {
+	host = options.readEntry( QString( "Host%1" ).arg( i ) );
+	port = options.readUnsignedNumEntry( QString( "Port%1" ).arg( i ) );
+	base = options.readEntry( QString( "Base%1" ).arg( i ) );
+	options.writeEntry( QString( "Host%1" ).arg( i-1 ), host );
+	options.writeEntry( QString( "Port%1" ).arg( i-1 ), port );
+	options.writeEntry( QString( "Base%1" ).arg( i-1 ), base );
+      }
+
+      // Now all the previous ones were overwritten, so remove the last one
+      --count;
+      options.deleteEntry( QString( "Host%1" ).arg( count ) );
+      options.deleteEntry( QString( "Port%1" ).arg( count ) );
+      options.deleteEntry( QString( "Base%1" ).arg( count ) );
+      options.writeEntry( "NumHosts", count );
+      break;
+    }
+  }
+
+  // Now write the selected ldap server
+  count = options.readUnsignedNumEntry( "NumSelectedHosts");
+  options.writeEntry( QString( "SelectedHost%1" ).arg( count ), wiz.host() );
+  options.writeEntry( QString( "SelectedPort%1" ).arg( count ), 389 );
+  options.writeEntry( QString( "SelectedBase%1" ).arg( count ), hostBase );
+  options.writeEntry( "NumSelectedHosts", count+1 );
+}
+
 
 #include "kmgroupwarewizard.moc"

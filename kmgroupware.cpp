@@ -10,6 +10,7 @@
 #include <kiconloader.h>
 #include <kapplication.h>
 #include <dcopclient.h>
+#include <kparts/part.h>
 
 #include "kmgroupware.h"
 #include "kfileio.h"
@@ -27,7 +28,6 @@
 #include "kmmimeparttree.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
-#include "kmgroupwarewizard.h"
 #include "kmacctmgr.h"
 #include "kmgroupwarefuncs.h"
 #include "kmcommands.h"
@@ -75,7 +75,7 @@ static QMap<KFolderTreeItem::Type,QString> folderNames[2];
 KMGroupware::KMGroupware( QObject* parent, const char* name ) :
     QObject(parent, name),
     mMainWin(0),
-    mUseGroupware(true),
+    mUseGroupware(false),
     mGroupwareIsHidingMimePartTree(false),
     mFolderLanguage(0),
     mKOrgPart(0),
@@ -85,70 +85,42 @@ KMGroupware::KMGroupware( QObject* parent, const char* name ) :
     mContacts(0),
     mCalendar(0),
     mNotes(0),
-    mTasks(0),
-    mWizardRunning(false)
+    mTasks(0)
 {
-}
-
-void KMGroupware::readConfigStartup()
-{
-  readConfigInternal();
-
-  if( !checkFolders() ) {
-    mWizardRunning = true;
-    KMGroupwareWizard wiz(0, "groupware wizard", TRUE );
-    int rc = wiz.exec();
-    mWizardRunning = false;
-
-    if( rc == QDialog::Accepted ) {
-      mUseGroupware = wiz.groupwareEnabled();
-      KConfigGroup options( KMKernel::config(), "Groupware" );
-      options.writeEntry( "Enabled", isEnabled() );
-      if( isEnabled() ) {
-	mFolderParent = wiz.folder()->child();
-	mFolderType = wiz.folder()->folderType();
-	mFolderLanguage = wiz.language();
-	options.writeEntry( "FolderLanguage", mFolderLanguage );
-	options.writeEntry( "GroupwareFolder", wiz.folder()->idString() );
-      } else
-	return;
-
-      readConfigInternal();
-    } else {
-      // Just disable everything if the user cancels/closes the dialog
-      KConfigGroup options( KMKernel::config(), "Groupware" );
-      options.writeEntry( "Enabled", false );
-      return;
-    }
-  }
-
-  initFolders();
 }
 
 void KMGroupware::readConfig()
 {
-  if (mWizardRunning)
-    // This was called by the configuration dialog. But the wizard takes care of all config stuff, so don't do it now
+  KConfigGroup options( KMKernel::config(), "Groupware" );
+
+  // Do not read the config for this, if it's not setup at all
+  if( options.readEntry( "Enabled", "notset" ) == "notset" )
     return;
 
-  readConfigInternal();
-  if( !checkFolders() ) {
-    assert( mFolderParent );
-    if( KMessageBox::questionYesNo( 0, i18n("<qt>KMail will now create the required groupware folders"
-					    " as subfolders of <b>%1</b>. If you don't want this, press <b>No</b>,"
-					    " and the groupware functions will be disabled.</qt>").arg(mFolderParent->name()),
-				    i18n("Groupware Folders") ) == KMessageBox::No ) {
-      mUseGroupware = false;
-    }
-  }
-  initFolders();
-}
-
-void KMGroupware::readConfigInternal()
-{
-  KConfigGroup options( KMKernel::config(), "Groupware" );
   bool enabled = options.readBoolEntry( "Enabled", true );
-  setEnabled( enabled );
+
+  mUseGroupware = enabled;
+
+  // Set the menus on the main window
+  setupActions();
+
+  // Make the folder tree show the icons or not
+  if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
+    mMainWin->mainKMWidget()->folderTree()->reload();
+
+  if( !mUseGroupware ) {
+    slotGroupwareHide();
+
+    // FIXME: This doesn't work :-(
+    // delete (KParts::ReadOnlyPart*)mKOrgPart;
+    // mKOrgPart = 0;
+
+    if( mContacts ) mContacts->setType("øh");
+    mContacts = mCalendar = mNotes = mTasks = 0;
+    if( mReader ) mReader->setUseGroupware( false );
+
+    return;
+  }
 
   mFolderLanguage = options.readNumEntry( "FolderLanguage", 0 );
   if( mFolderLanguage > 1 ) mFolderLanguage = 0; // Just for safety
@@ -163,49 +135,39 @@ void KMGroupware::readConfigInternal()
     mFolderParent = &(kernel->folderMgr()->dir());
     mFolderType = KMFolderTypeMaildir;
   } else {
+    KMFolderDir* oldParent = mFolderParent;
+
     mFolderParent = folderParent->createChildFolder();
     mFolderType = folderParent->folderType();
+
+    if( oldParent && oldParent != mFolderParent ) {
+      // Some other folder was previously set as the parent
+      // TODO: Do something!
+    }
   }
+
+  if( !checkFolders() ) {
+    assert( mFolderParent );
+    if( KMessageBox::questionYesNo( 0, i18n("KMail will now create the required groupware folders"
+					    " as subfolders of %1. If you dont want this, press \"No\","
+					    " and the groupware functions will be disabled").arg(mFolderParent->name()),
+				    i18n("Groupware Folders") ) == KMessageBox::No ) {
+      mUseGroupware = false;
+    }
+  }
+
+  initFolders();
+
+  internalCreateKOrgPart();
+
+  // Make KOrganizer re-read everything
+  emit signalRefreshAll();
 }
 
 //-----------------------------------------------------------------------------
 KMGroupware::~KMGroupware()
 {
-  delete (KParts::ReadOnlyPart*)mKOrgPart;
-}
-
-void KMGroupware::setEnabled( bool b )
-{
-  if( b == mUseGroupware )
-    return;
-
-  mUseGroupware = b;
-
-  // Set the menus on the main window
-  setupActions();
-
-  if( mUseGroupware ) {
-    // FIXME (Bo): Create this (see FIXME just below)
-    // internalCreateKOrgPart();
-    
-    // ?? Not even this makes the widgets show the real content :-(
-    slotCalendarFolderChanged();
-    slotNotesFolderChanged();
-    slotTasksFolderChanged();
-  } else {
-    slotGroupwareHide();
-
-    // FIXME (Bo): If the part is deleted here, kmail crashes if groupware
-    // mode is later enabled again. Workaround is simply not deleting it
-    // delete (KParts::ReadOnlyPart*)mKOrgPart;
-    // mKOrgPart = 0;
-
-    if( mContacts ) mContacts->setType("øh");
-    mContacts = mCalendar = mNotes = mTasks = 0;
-    if( mReader ) mReader->setUseGroupware( false );
-    if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
-      mMainWin->mainKMWidget()->folderTree()->reload();
-  }
+  delete mKOrgPart;
 }
 
 //-----------------------------------------------------------------------------
@@ -289,108 +251,77 @@ bool KMGroupware::checkFolders() const
 }
 
 //-----------------------------------------------------------------------------
+KMFolder* KMGroupware::initFolder( KFolderTreeItem::Type itemType, const char* typeString )
+{
+  // Figure out what type of folder this is supposed to be
+  KMFolderType type = mFolderType;
+  if( type == KMFolderTypeUnknown ) type = KMFolderTypeMaildir;
+
+  KMFolder* folder = 0;
+
+  KMFolderNode* node = mFolderParent->hasNamedFolder( folderName( itemType ) );
+  if( node && !node->isDir() ) folder = static_cast<KMFolder*>(node);
+  if( !folder ) folder = mFolderParent->createFolder( folderName( itemType ), false, type );
+  if( folder->canAccess() != 0 ) {
+    KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.")
+		       .arg( folderName( itemType ) ) );
+    return 0;
+  }
+  folder->setType( typeString );
+  folder->setSystemFolder( true );
+  folder->open();
+
+  return folder;
+}
+
 void KMGroupware::initFolders()
 {
-  if( mUseGroupware && mFolderParent ){
-    KMFolderType type = mFolderType;
-    if( type == KMFolderTypeUnknown )
-      type = KMFolderTypeMaildir;
-    KMFolderNode* node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Contacts ) );
-    if( node && !node->isDir() ) mContacts = static_cast<KMFolder*>(node);
-    if( !mContacts ) mContacts = mFolderParent->createFolder( folderName( KFolderTreeItem::Contacts ), false, type );
-    if (mContacts->canAccess() != 0) {
-      KMessageBox::sorry(0, i18n("You do not have read/write permission to your Contacts folder.") );
-      exit(1);
-    }
-    mContacts->setType("GCo");
-    mContacts->setSystemFolder(TRUE);
-    mContacts->open();
-    connect( mContacts, SIGNAL( changed() ),
-	     this, SLOT( slotContactsFolderChanged() ) );
-    connect( mContacts, SIGNAL( msgAdded(int) ),
-	     this, SLOT( slotContactsFolderChanged() ) );
-    connect( mContacts, SIGNAL( msgRemoved(int, QString) ),
-	     this, SLOT( slotContactsFolderChanged() ) );
+  // Close the previous folders
+  cleanup();
 
-    node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Calendar ) );
-    if( node && !node->isDir() ) mCalendar = static_cast<KMFolder*>(node);
-    if( !mCalendar ) mCalendar = mFolderParent->createFolder( folderName( KFolderTreeItem::Calendar ), false, type );
-    if (mCalendar->canAccess() != 0) {
-      KMessageBox::sorry(0, i18n("You do not have read/write permission to your Calendar folder.") );
-      exit(1);
-    }
-    mCalendar->setType("GCa");
-    mCalendar->setSystemFolder(TRUE);
-    mCalendar->open();
-    connect( mCalendar, SIGNAL( changed() ),
-	     this, SLOT( slotCalendarFolderChanged() ) );
-    connect( mCalendar, SIGNAL( msgAdded(int) ),
-	     this, SLOT( slotCalendarFolderChanged() ) );
-//     connect( mCalendar, SIGNAL( msgRemoved(int, QString) ),
-// 	     this, SLOT( slotCalendarFolderChanged() ) );
+  if( mUseGroupware && mFolderParent ) {
+    mContacts = initFolder( KFolderTreeItem::Contacts, "GCo" );
+    mCalendar = initFolder( KFolderTreeItem::Calendar, "GCa" );
+    mNotes = initFolder( KFolderTreeItem::Notes, "GNo" );
+    mTasks = initFolder( KFolderTreeItem::Tasks, "GTa" );
 
+    // TODO: Change Notes and Contacts to work like calendar and tasks and add Journals
+    // Connect the notes folder. This is the old way to do it :-(
+    connect( mNotes, SIGNAL( changed() ), this, SLOT( slotNotesFolderChanged() ) );
+    connect( mNotes, SIGNAL( msgAdded(int) ), this, SLOT( slotNotesFolderChanged() ) );
+    connect( mNotes, SIGNAL( msgRemoved(int, QString) ), this, SLOT( slotNotesFolderChanged() ) );
+    slotNotesFolderChanged();
 
-    node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Notes ) );
-    if( node && !node->isDir() ) mNotes = static_cast<KMFolder*>(node);
-    if( !mNotes ) mNotes = mFolderParent->createFolder( folderName( KFolderTreeItem::Notes ), false, type );
+    connect( mCalendar, SIGNAL( msgAdded( KMFolder*, int ) ), this, SLOT( slotIncidenceAdded( KMFolder*, int ) ) );
+    connect( mCalendar, SIGNAL( expunged() ), this, SIGNAL( signalCalendarFolderExpunged() ) );
+    connect( mTasks, SIGNAL( msgAdded( KMFolder*, int ) ), this, SLOT( slotIncidenceAdded( KMFolder*, int ) ) );
+    connect( mTasks, SIGNAL( expunged() ), this, SIGNAL( signalTasksFolderExpunged() ) );
 
-    if (mNotes->canAccess() != 0) {
-      KMessageBox::sorry(0, i18n("You do not have read/write permission to your Notes folder.") );
-      exit(1);
-    }
-    mNotes->setType("GNo");
-    mNotes->setSystemFolder(TRUE);
-    mNotes->open();
-    connect( mNotes, SIGNAL( changed() ),
-	     this, SLOT( slotNotesFolderChanged() ) );
-    connect( mNotes, SIGNAL( msgAdded(int) ),
-	     this, SLOT( slotNotesFolderChanged() ) );
-    connect( mNotes, SIGNAL( msgRemoved(int, QString) ),
-	     this, SLOT( slotNotesFolderChanged() ) );
-
-    node = mFolderParent->hasNamedFolder( folderName( KFolderTreeItem::Tasks ) );
-    if( node && !node->isDir() ) mTasks = static_cast<KMFolder*>(node);
-    if( !mTasks ) mTasks = mFolderParent->createFolder( folderName( KFolderTreeItem::Tasks ), false, type );
-
-    if (mTasks->canAccess() != 0) {
-      KMessageBox::sorry(0, i18n("You do not have read/write permission to your Tasks folder.") );
-      exit(1);
-    }
-    mTasks->setType("GTa");
-    mTasks->setSystemFolder(TRUE);
-    mTasks->open();
-    connect( mTasks, SIGNAL( changed() ),
-	     this, SLOT( slotTasksFolderChanged() ) );
-    connect( mTasks, SIGNAL( msgAdded(int) ),
-	     this, SLOT( slotTasksFolderChanged() ) );
-    connect( mTasks, SIGNAL( msgRemoved(int, QString) ),
-	     this, SLOT( slotTasksFolderChanged() ) );
-
-    // New interface:
-    connect( mContacts, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-    connect( mCalendar, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-    connect( mTasks, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-    connect( mNotes, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
-
-    connect( mContacts, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-    connect( mCalendar, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-    connect( mTasks, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-    connect( mNotes, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-	     this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
-
-    if( mMainWin && mMainWin->mainKMWidget()->folderTree() ) {
+    // Make the folder tree show the icons or not
+    if( mMainWin && mMainWin->mainKMWidget()->folderTree() )
       mMainWin->mainKMWidget()->folderTree()->reload();
-    }
-  } else {
-    cleanup();
   }
+}
+
+
+static void cleanupFolder( KMFolder* folder, KMGroupware* gw )
+{
+  if( folder ) {
+    folder->setType( "plain" );
+    folder->setSystemFolder( false );
+    folder->disconnect( gw );
+    folder->close( true );
+  }
+}
+
+void KMGroupware::cleanup()
+{
+  cleanupFolder( mContacts, this );
+  cleanupFolder( mCalendar, this );
+  cleanupFolder( mNotes, this );
+  cleanupFolder( mTasks, this );
+
+  mContacts = mCalendar = mNotes = mTasks = 0;
 }
 
 
@@ -512,27 +443,6 @@ void KMGroupware::slotInvalidateIMAPFolders()
     kernel->acctMgr()->invalidateIMAPFolders();
 }
 
-void KMGroupware::cleanup()
-{
-  if( mContacts ) {
-    mContacts->disconnect( this );
-    mContacts->close(TRUE);
-  }
-  if( mCalendar ) {
-    mCalendar->disconnect( this );
-    mCalendar->close(TRUE);
-  }
-  if( mNotes ) {
-    mNotes->disconnect( this );
-    mNotes->close(TRUE);
-  }
-  if( mTasks ) {
-    mTasks->disconnect( this );
-    mTasks->close(TRUE);
-  }
-  //if( mFolderParent ) mFolderParent->close( TRUE );
-}
-
 //-----------------------------------------------------------------------------
 bool KMGroupware::setFolderPixmap(const KMFolder& folder, KMFolderTreeItem& fti) const
 {
@@ -590,7 +500,7 @@ void KMGroupware::setMimePartTree(KMMimePartTree* mimePartTree)
 //-----------------------------------------------------------------------------
 void KMGroupware::createKOrgPart(QWidget* parent)
 {
-  if( mKOrgPart )
+  if( mKOrgPart && mKOrgPartParent.operator->() == parent )
     // The part is already set up.
     return;
 
@@ -607,6 +517,10 @@ void KMGroupware::createKOrgPart(QWidget* parent)
 
 void KMGroupware::internalCreateKOrgPart()
 {
+  if( !mKOrgPartParent || mKOrgPart )
+    // Don't set this up before the parent is set or if the parent is destructed
+    return;
+
   // create a KOrganizer KPart and embedd it into the messageParent
   KLibFactory *factory = KLibLoader::self()->factory( "libkorganizer" );
   if( !factory ) {
@@ -758,8 +672,9 @@ void KMGroupware::setupActions()
 		 mMainWin->actionCollection(), "view_korganizertodo_list" );
     new KAction( i18n("Notes"), "notes", 0, mKOrgPart, SLOT(slotShowNotesView()),
 		 mMainWin->actionCollection(), "view_korganizernotes" );
-    new KAction( i18n("Journal"), 0, mKOrgPart, SLOT(slotShowJournalView()),
-		 mMainWin->actionCollection(), "view_korganizerjournal" );
+    // FIXME (Bo): Disable Journals for now
+//     new KAction( i18n("Journal"), 0, mKOrgPart, SLOT(slotShowJournalView()),
+// 		 mMainWin->actionCollection(), "view_korganizerjournal" );
     new KAction( i18n("Update"), 0, mKOrgPart, SLOT(slotUpdate()),
 		 mMainWin->actionCollection(), "view_korganizerupdate" );
     // FIXME (Bo): IMHO this doesn't make sense
