@@ -140,6 +140,13 @@ KURL KMAcctImap::getUrl()
 bool KMAcctImap::makeConnection()
 {
   if (mSlave) return TRUE;
+  if(mPasswd.isEmpty() || mLogin.isEmpty())
+  {
+    QString passwd = decryptStr(mPasswd);
+    QString msg = i18n("Please set Password and Username");
+    KMImapPasswdDialog dlg(NULL, NULL, this, msg, mLogin, passwd);
+    if (!dlg.exec()) return FALSE;
+  }
   mSlave = KIO::Scheduler::getConnectedSlave(getUrl());
   if (!mSlave) return FALSE;
   return TRUE;
