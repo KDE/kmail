@@ -496,6 +496,9 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
 	   widgetStack, SLOT(setEnabled(bool)) );
   connect( mSignatureEnabled, SIGNAL(toggled(bool)),
 	   label, SLOT(setEnabled(bool)) );
+  // The focus might be still in the widget that is disabled
+  connect( mSignatureEnabled, SIGNAL(clicked()),
+           mSignatureEnabled, SLOT(setFocus()) );
 
   // page 0: "signature file" requester, label, "edit file" button:
   page = new QWidget( widgetStack );
