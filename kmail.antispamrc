@@ -45,3 +45,36 @@ DetectionHeader=X-Annoyance-Filter-Classification
 DetectionPattern=Junk
 UseRegExp=0
 SupportsBayes=1
+
+[Spamtool #4]
+Ident=gmx-antispam
+Version=1
+VisibleName=&GMX Spam Filter
+Executable=echo
+URL=http://www.gmx.net/de/produkte/virenschutz/index.html
+PipeFilterName=
+PipeCmdDetect=
+ExecCmdSpam=
+ExecCmdHam=
+DetectionHeader=X-GMX-Antispam
+DetectionPattern=^[2345]
+DetectionOnly=1
+UseRegExp=1
+SupportsBayes=0
+
+[Spamtool #5]
+Ident=spambayes
+Version=1
+VisibleName=S&pamBayes
+Executable=sb_filter.py
+URL=http://spambayes.sourceforge.net
+PipeFilterName=SpamBayes Check
+PipeCmdDetect=sb_filter.py
+ExecCmdSpam=sb_filter.py -s
+ExecCmdHam=sb_filter.py -g
+DetectionHeader=X-Spambayes-Classification
+DetectionPattern=spam
+DetectionOnly=0
+UseRegExp=0
+SupportsBayes=1
+
