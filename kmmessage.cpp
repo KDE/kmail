@@ -36,6 +36,7 @@
 #include <kglobal.h>
 #include <kcharsets.h>
 #include <kwin.h>
+#include <qstringlist.h>
 
 #include "kmmsgpart.h" // for encodeBase64
 
@@ -702,71 +703,66 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   }
   else if (replyToAll)
   {
-    int i;
-    // sanders only include the replyTo address if it's != to the from address
-    QString rep = replyToStr;
-    if((i = rep.find("<")) != -1) // just keep <foo@bar.com>
-      rep = rep.right(rep.length() + 1 -i );
-    if(!replyToStr.isEmpty() && (rep.isEmpty() || from().find(rep) == -1))
-      toStr += replyToStr + ", ";
+    QStringList recipients;
 
-    if (!from().isEmpty()) toStr += from() + ", ";
+    // add addresses from the Reply-To header to the list of recipients
+    if (!replyToStr.isEmpty())
+      recipients += splitEmailAddrList(replyToStr);
 
-    // -sanders only include the to address if it's != replyTo address
-    if(!to().isEmpty() && (rep.isEmpty() || to().find(rep) == -1))
-      toStr += to() + ", ";
-
-    toStr = toStr.simplifyWhiteSpace() + " ";
-
-    // now try to strip my own e-mail adress:
-    QString f = msg->from();
-    if((i = f.find("<")) != -1) // just keep <foo@bar.com>
-      f = f.right(f.length() + 1 -i );
-    if((i = toStr.find(f)) != -1)
-    {
-      int pos1, pos2, quot;
-      quot = toStr.findRev("\"", i);
-      pos1 = toStr.findRev(", ", i);
-      if (pos1 < quot)
-      {
-        quot = toStr.findRev("\"", quot - 1);
-        pos1 = toStr.findRev(", ", quot);
+    // add From address to the list of recipients if it's not already there
+    if (!from().isEmpty())
+      if (recipients.grep(getEmailAddr(from()), false).isEmpty()) {
+        recipients += from();
+        kdDebug(5006) << "Added " << from() << " to the list of recipients"
+                      << endl;
       }
-      if( pos1 == -1 ) pos1 = 0;
-      pos2 = toStr.find(", ", i);
-      toStr = toStr.left(pos1) + toStr.right(toStr.length() - pos2);
+
+    // add only new addresses from the To header to the list of recipients
+    if (!to().isEmpty()) {
+      QStringList list = splitEmailAddrList(to());
+      for (QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
+        if (recipients.grep(getEmailAddr(*it), false).isEmpty()) {
+          recipients += *it;
+          kdDebug(5006) << "Added " << *it << " to the list of recipients"
+                        << endl;
+        }
+      }
+    }    
+
+    // strip my own address from the list of recipients
+    QString myAddr = getEmailAddr(msg->from());
+    for (QStringList::Iterator it = recipients.begin();
+         it != recipients.end(); ) {
+      if ((*it).find(myAddr,0,false) != -1) {
+        kdDebug(5006) << "Removing " << *it << " from the list of recipients"
+                      << endl;
+        it = recipients.remove(it);
+      }
+      else
+        ++it;
     }
-    else
-      toStr.truncate(toStr.length()-2);
-    // same for the cc field
-    QString ccStr = cc().simplifyWhiteSpace() + ", ";
-    if((i = ccStr.find(f)) != -1)
-    {
-      int pos1, pos2, quot;
-      quot = ccStr.findRev("\"", i);
-      pos1 = ccStr.findRev(", ", i);
-      if (pos1 < quot)
-      {
-        quot = ccStr.findRev("\"", quot - 1);
-        pos1 = ccStr.findRev(", ", quot);
-      }
-      if( pos1 == -1 ) pos1 = 0;
-      pos2 = ccStr.find(", ", i);
-      ccStr = ccStr.left(pos1) + ccStr.right(ccStr.length() - pos2 - 1); //Daniel
-    }
-    else
-      ccStr.truncate(ccStr.length()-2);
 
-    // remove leading or trailing "," and spaces - might confuse some MTAs
-    if (!ccStr.isEmpty())
-      {
-        ccStr = ccStr.stripWhiteSpace(); //from start and end
-        if (ccStr[0] == ',')  ccStr[0] = ' ';
-        ccStr = ccStr.simplifyWhiteSpace(); //mAybe it was ",  "
-        if (ccStr[ccStr.length()-1] == ',')
-          ccStr.truncate(ccStr.length()-1);
-        msg->setCc(ccStr);
+    toStr = recipients.join(", ");
+
+    // the same for the cc field
+    if (!cc().isEmpty()) {
+      recipients = splitEmailAddrList(cc());
+
+      // strip my own address
+      for (QStringList::Iterator it = recipients.begin();
+           it != recipients.end(); ) {
+        if ((*it).find(myAddr,0,false) != -1) {
+          kdDebug(5006) << "Removing " << *it << " from the cc recipients"
+                        << endl;
+          it = recipients.remove(it);
+        }
+        else
+          ++it;
       }
+
+      msg->setCc(recipients.join(", "));
+    }
+    
   }
   else
   {
@@ -774,16 +770,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
     else if (!from().isEmpty()) toStr = from();
   }
 
-  // remove leading or trailing "," and spaces - might confuse some MTAs
-  if (!toStr.isEmpty())
-    {
-      toStr = toStr.stripWhiteSpace(); //from start and end
-      if (toStr[0] == ',')  toStr[0] = ' ';
-      toStr = toStr.simplifyWhiteSpace(); //maybe it was ",  "
-      if (toStr[toStr.length()-1] == ',')
-	toStr.truncate(toStr.length()-1);
-      msg->setTo(toStr);
-    }
+  msg->setTo(toStr);
 
   refStr = getRefStr();
   if (!refStr.isEmpty())
@@ -2156,6 +2143,80 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
     }
   }
   return QString::fromUtf8(result);
+}
+
+
+//-----------------------------------------------------------------------------
+QStringList KMMessage::splitEmailAddrList(const QString& aStr)
+{
+  // Features:
+  // - always ignores quoted characters
+  // - ignores everything (including parentheses and commas)
+  //   inside quoted strings
+  // - supports nested comments
+  // - ignores everything (including double quotes and commas)
+  //   inside comments
+
+  QStringList list;
+
+  if (aStr.isEmpty())
+    return list;
+
+  QString addr;
+  int addrstart = 0;
+  int commentlevel = 0;
+  bool insidequote = false;
+  
+  for (int index=0; index<aStr.length(); index++) {
+    // the following conversion to latin1 is o.k. because
+    // we can safely ignore all non-latin1 characters
+    switch (aStr[index].latin1()) {
+    case '"' : // start or end of quoted string
+      if (commentlevel == 0)
+        insidequote = !insidequote;
+      break;
+    case '(' : // start of comment
+      if (!insidequote)
+        commentlevel++;
+      break;
+    case ')' : // end of comment
+      if (!insidequote) {
+        if (commentlevel > 0)
+          commentlevel--;
+        else {
+          kdDebug(5006) << "Error in address splitting: Unmatched ')'"
+                        << endl;
+          return list;
+        }
+      }
+      break;
+    case '\\' : // quoted character
+      index++; // ignore the quoted character
+      break;
+    case ',' : 
+      if (!insidequote && (commentlevel == 0)) {
+        addr = aStr.mid(addrstart, index-addrstart);
+        kdDebug(5006) << "Found address: " << addr << endl;
+        if (!addr.isEmpty())
+          list += addr.simplifyWhiteSpace();
+        addrstart = index+1;
+      }
+      break;
+    }
+  }
+  // append the last address to the list
+  if (!insidequote && (commentlevel == 0)) {
+    addr = aStr.mid(addrstart, aStr.length()-addrstart);
+    kdDebug(5006) << "Found address: " << addr << endl;
+    if (!addr.isEmpty())
+      list += addr.simplifyWhiteSpace();
+  }
+  else
+    kdDebug(5006) << "Error in address splitting: "
+                  << "Unexpected end of address list"
+                  << endl;
+
+  return list;
 }
 
 

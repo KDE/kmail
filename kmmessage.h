@@ -9,6 +9,8 @@
 #include <qstrlist.h>
 #include <qtextcodec.h>
 
+class QStringList;
+
 class KMFolder;
 class DwMessage;
 class KMMessagePart;
@@ -289,6 +291,9 @@ public:
    * only the name part and not the given emailAddr. */
   static QString emailAddrAsAnchor(const QString& emailAddr,
 					 bool stripped=TRUE);
+
+  /** Split a comma separated list of email addresses. */
+  static QStringList splitEmailAddrList(const QString&);
 
   /** Get the message charset.*/
   virtual QCString charset(void) const;
