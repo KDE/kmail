@@ -12,6 +12,7 @@
 #include "kmidentity.h"
 #include "kmfoldermgr.h"
 #include "kmkernel.h"
+#include "kmcommands.h"
 
 #include <kmessagebox.h>
 #include <klocale.h>
@@ -183,7 +184,6 @@ void KMFolder::setIdentity( uint identity ) {
   kernel->slotRequestConfigSync();
 }
 
-
 //-----------------------------------------------------------------------------
 void KMFolder::markNewAsUnread()
 {
@@ -204,7 +204,7 @@ void KMFolder::markNewAsUnread()
 void KMFolder::markUnreadAsRead()
 {
   const KMMsgBase* msgBase;
-  QValueList<int> items;
+  SerNumList serNums;
 
   for (int i=count()-1; i>=0; --i)
   {
@@ -212,13 +212,14 @@ void KMFolder::markUnreadAsRead()
     assert(msgBase);
     if (msgBase->status() == KMMsgStatusNew || msgBase->status() == KMMsgStatusUnread)
     {
-      items += i;
+      serNums.append( msgBase->getMsgSerNum() );
     }
   }
+  if (serNums.empty())
+    return;
 
-  if (items.count() > 0)
-    setStatus(items, KMMsgStatusRead);
-  emit numUnreadMsgsChanged( this );
+  KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
