@@ -20,7 +20,7 @@
 #include "kmfoldertree.moc"
 
 //-----------------------------------------------------------------------------
-KMFolderTree::KMFolderTree(QWidget *parent,const char *name) : 
+KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   KMFolderTreeInherited(parent, name, 1), mList()
 {
   KConfig* conf = app->getConfig();
@@ -135,7 +135,7 @@ void KMFolderTree::reload(void)
 
   fdir = &folderMgr->dir();
 
-  for (folder = (KMFolder*)fdir->first(); 
+  for (folder = (KMFolder*)fdir->first();
        folder != NULL;
        folder = (KMFolder*)fdir->next())
   {
@@ -202,12 +202,13 @@ void KMFolderTree::doFolderListChanged()
 //-----------------------------------------------------------------------------
 void KMFolderTree::dropEvent(QDropEvent * event)
 {
+#if 0
   KMFolder *toFld, *fromFld;
   KMDragData* dd;
   KMMessage* msg;
   QPoint pos;
   int i;
-  
+
   if (aDropZone!=mDropZone) return;
   if (aDropZone->getDataType() != DndRawData) return; //sven
 
@@ -232,6 +233,7 @@ void KMFolderTree::dropEvent(QDropEvent * event)
 
   fromFld->close();
   toFld->close();
+#endif
 }
 
 
@@ -270,13 +272,13 @@ void KMFolderTree::doFolderSelected(int index, int)
   folder = (KMFolder*)mList.at(index);
   if(folder)
   {
-    if (folder->isDir()) 
+    if (folder->isDir())
     {
       debug("Folder `%s' is a directory -> ignoring it.",
 	    (const char*)folder->name());
       emit folderSelected(NULL);
     }
-    
+
     else emit folderSelected(folder);
   }
 }

@@ -195,7 +195,7 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       if (id >= 0)
         setMsgRead(id);
       else
-        setMsgRead(mCurrentItem);                     
+        setMsgRead(mCurrentItem);
     }
     updateMessageList();
 
@@ -377,7 +377,7 @@ void KMHeaders::headerClicked(int column)
   working = FALSE;
   kbp->idle();
 }
-                                                               //-----------------------------------------------------------------------------                 
+                                                               //-----------------------------------------------------------------------------
 void KMHeaders::sortAndShow()
 {
   int idx = currentItem();
@@ -392,15 +392,15 @@ void KMHeaders::sortAndShow()
 
   if (idx >= 0) cur = (*mFolder)[idx];
   else cur = NULL;
- 
+
   sort();
- 
+
   if (cur) idx = mFolder->find(cur);
   else idx = 0;
 
   if (idx < 0) idx = 0;
   setCurrentMsg(idx);
-                                                                                
+
   mFolder->quiet( false );
   kapp->processEvents(200);
   working = FALSE;
@@ -738,7 +738,7 @@ void KMHeaders::nextMessageMark()
   int idx = currentItem();
   if (idx < mFolder->count()) setCurrentMsg(idx+1);
 }
- 
+
 //-----------------------------------------------------------------------------
 void KMHeaders::prevMessageMark()
 {
@@ -921,6 +921,7 @@ void KMHeaders::mouseReleaseEvent(QMouseEvent* e)
 bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
 				  int* size, int* type)
 {
+#if 0
   static KMDragData dd;
   int i, from, to, high;
 
@@ -949,6 +950,9 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
   *type = DndRawData;
 
   return TRUE;
+#endif
+  
+  return FALSE;
 }
 
 

@@ -21,6 +21,8 @@
 #include <qcheckbox.h>
 #include <qgroupbox.h>
 #include <qlayout.h>
+#include <qpushbutton.h>
+#include <qmessagebox.h>
 
 #include <kapp.h>
 #include <ksimpleconfig.h>
@@ -49,7 +51,7 @@ Kpgp::~Kpgp()
 
 // ----------------- public methods -------------------------
 
-void 
+void
 Kpgp::init()
 {
   havePassPhrase = FALSE;
@@ -79,7 +81,7 @@ Kpgp::init()
   publicKeys = pgp->pubKeys();
 }
 
-void 
+void
 Kpgp::readConfig()
 {
   storePass = config->readBoolEntry("storePass");
@@ -102,38 +104,38 @@ Kpgp::setUser(const QString aUser)
   pgp->setUser(aUser);
 }
 
-const QString 
-Kpgp::user(void) const 
-{ 
-  return pgp->user(); 
+const QString
+Kpgp::user(void) const
+{
+  return pgp->user();
 }
 
-void 
+void
 Kpgp::setEncryptToSelf(bool flag)
 {
   pgp->setEncryptToSelf(flag);
 }
 
-bool 
+bool
 Kpgp::encryptToSelf(void) const
 {
   return pgp->encryptToSelf();
 }
 
-bool 
+bool
 Kpgp::storePassPhrase(void) const
 {
   return storePass;
 }
 
-void 
+void
 Kpgp::setStorePassPhrase(bool flag)
 {
   storePass = flag;
 }
 
 
-bool 
+bool
 Kpgp::setMessage(const QString mess)
 {
   int index;
@@ -166,7 +168,7 @@ Kpgp::setMessage(const QString mess)
   return FALSE;
 }
 
-const QString 
+const QString
 Kpgp::frontmatter(void) const
 {
   return front;
@@ -184,7 +186,7 @@ Kpgp::message(void) const
   return pgp->message();
 }
 
-bool 
+bool
 Kpgp::prepare(bool needPassPhrase)
 {
   if(!havePgp)
@@ -221,7 +223,7 @@ Kpgp::cleanupPass(void)
   }
 }
 
-bool 
+bool
 Kpgp::decrypt(void)
 {
   int retval;
@@ -241,7 +243,7 @@ Kpgp::decrypt(void)
     havePassPhrase = false;
   }
 
-  if(retval & KpgpBase::ERROR) 
+  if(retval & KpgpBase::ERROR)
   {
     errMsg = pgp->lastErrorMessage();
     return false;
@@ -249,13 +251,13 @@ Kpgp::decrypt(void)
   return true;
 }
 
-bool 
+bool
 Kpgp::sign(void)
 {
   return encryptFor(0, true);
 }
 
-bool 
+bool
 Kpgp::encryptFor(const QStrList& aPers, bool sign)
 {
   QStrList persons, noKeyFor;
@@ -268,13 +270,13 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   persons.clear();
   noKeyFor.clear();
 
-  if(!aPers.isEmpty()) 
+  if(!aPers.isEmpty())
   {
     QStrListIterator it(aPers);
     while((pers = it.current()))
     {
       QString aStr = getPublicKey(pers);
-      if(!aStr.isEmpty()) 
+      if(!aStr.isEmpty())
         persons.append(aStr);
       else
 	noKeyFor.append(pers);
@@ -283,7 +285,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     if(persons.isEmpty())
     {
       int ret = QMessageBox::warning(0,i18n("PGP Warning"),
-			       i18n("Could not find the public keys for the\n" 
+			       i18n("Could not find the public keys for the\n"
 				    "recipients of this mail.\n"
 				    "Message will not be encrypted."),
 				     i18n("Continue"), i18n("Cancel"));
@@ -321,7 +323,7 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
     havePassPhrase = false;
     ret = QMessageBox::information(0,i18n("PGP Warning"),
 				   i18n("You just entered an invalid passphrase.\n"
-					"Do you wan't to try again, continue and\n" 
+					"Do you wan't to try again, continue and\n"
 					"leave the message unsigned, "
 					"or cancel sending the message?"),
 				   i18n("Retry"), i18n("Continue"), i18n("Cancel"));
@@ -335,13 +337,13 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   {
     aStr = pgp->lastErrorMessage();
     aStr += "\n";
-    aStr += i18n("Do you wan't to encrypt anyway, leave the\n" 
+    aStr += i18n("Do you wan't to encrypt anyway, leave the\n"
 		 "message as is, or cancel the message?");
     ret = QMessageBox::warning(0,i18n("PGP Warning"),
-			      aStr, i18n("Encrypt"), 
+			      aStr, i18n("Encrypt"),
 			       i18n("Continue"), i18n("Cancel"));
     if(ret == 3) return false;
-    if(ret == 2) 
+    if(ret == 2)
     {
       pgp->clearOutput();
       return true;
@@ -352,12 +354,12 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   {
     aStr = pgp->lastErrorMessage();
     aStr += "\n";
-    aStr += i18n("Do you wan't to leave the message as is,\n" 
+    aStr += i18n("Do you wan't to leave the message as is,\n"
 		 "or cancel the message?");
-    ret = KMsgBox::yesNo(0,i18n("PGP Warning"),
-			      aStr, KMsgBox::EXCLAMATION,
-			      i18n("Continue"), i18n("Cancel"));
-    if(ret == 2) return false;
+    ret = QMessageBox::information(0,i18n("PGP Warning"),
+				   aStr,	
+				   i18n("Continue"), i18n("Cancel"));
+    if(ret == 1) return false;
     pgp->clearOutput();
     return true;
   }
@@ -366,10 +368,10 @@ Kpgp::encryptFor(const QStrList& aPers, bool sign)
   // in case of other errors we end up here.
   errMsg = pgp->lastErrorMessage();
   return false;
-  
+
 }
 
-int 
+int
 Kpgp::doEncSign(QStrList persons, bool sign, bool ignoreUntrusted)
 {
   int retval;
@@ -382,7 +384,7 @@ Kpgp::doEncSign(QStrList persons, bool sign, bool ignoreUntrusted)
   {
     if(!prepare(TRUE)) return KpgpBase::ERROR;
     retval = pgp->encsign(&persons, passphrase, ignoreUntrusted);
-  }  
+  }
   else
   {
     if(!prepare(FALSE)) return KpgpBase::ERROR;
@@ -394,7 +396,7 @@ Kpgp::doEncSign(QStrList persons, bool sign, bool ignoreUntrusted)
   return retval;
 }
 
-bool 
+bool
 Kpgp::signKey(QString _key)
 {
   if (!prepare(TRUE)) return FALSE;
@@ -416,7 +418,7 @@ Kpgp::keys(void)
   return &publicKeys;
 }
 
-bool 
+bool
 Kpgp::havePublicKey(QString _person)
 {
   if(!havePgp) return true;
@@ -443,7 +445,7 @@ Kpgp::havePublicKey(QString _person)
   return FALSE;
 }
 
-QString 
+QString
 Kpgp::getPublicKey(QString _person)
 {
   // just to avoid some error messages
@@ -452,7 +454,7 @@ Kpgp::getPublicKey(QString _person)
   // do the search case insensitive, but return the correct key.
   QString adress,str;
   adress = _person.lower();
-  
+
   // first try the canonical mail adress.
   adress = canonicalAdress(adress);
   for(str=publicKeys.first(); str!=0; str=publicKeys.next())
@@ -462,19 +464,19 @@ Kpgp::getPublicKey(QString _person)
   adress = _person.lower();
   for(str=publicKeys.first(); str!=0; str=publicKeys.next())
     if(str.contains(adress)) return str;
-  
+
   // FIXME: let user set the key/ get from keyserver
 
   return QString::null;
 }
 
-QString 
+QString
 Kpgp::getAsciiPublicKey(QString _person)
 {
   return pgp->getAsciiPublicKey(_person);
 }
 
-bool 
+bool
 Kpgp::isEncrypted(void) const
 {
   return pgp->isEncrypted();
@@ -486,7 +488,7 @@ Kpgp::receivers(void) const
   return pgp->receivers();
 }
 
-const QString 
+const QString
 Kpgp::KeyToDecrypt(void) const
 {
   //FIXME
@@ -499,25 +501,25 @@ Kpgp::isSigned(void) const
   return pgp->isSigned();
 }
 
-QString 
+QString
 Kpgp::signedBy(void) const
 {
   return pgp->signedBy();
 }
 
-QString 
+QString
 Kpgp::signedByKey(void) const
 {
   return pgp->signedByKey();
 }
 
-bool 
+bool
 Kpgp::goodSignature(void) const
 {
   return pgp->isSigGood();
 }
 
-void 
+void
 Kpgp::setPassPhrase(const QString aPass)
 {
   if (!aPass.isEmpty())
@@ -534,8 +536,8 @@ Kpgp::setPassPhrase(const QString aPass)
   }
 }
 
-bool 
-Kpgp::changePassPhrase(const QString /*oldPass*/, 
+bool
+Kpgp::changePassPhrase(const QString /*oldPass*/,
 		       const QString /*newPass*/)
 {
   //FIXME...
@@ -543,7 +545,7 @@ Kpgp::changePassPhrase(const QString /*oldPass*/,
   return FALSE;
 }
 
-void 
+void
 Kpgp::clear(bool erasePassPhrase)
 {
   if(erasePassPhrase && havePassPhrase && !passphrase.isEmpty())
@@ -555,13 +557,13 @@ Kpgp::clear(bool erasePassPhrase)
   back = QString::null;
 }
 
-const QString 
+const QString
 Kpgp::lastErrorMsg(void) const
 {
   return errMsg;
 }
 
-bool 
+bool
 Kpgp::havePGP(void) const
 {
   return havePgp;
@@ -598,7 +600,7 @@ Kpgp::askForPass(QWidget *parent)
 
 // check if pgp 2.6.x or 5.0 is installed
 // kpgp will prefer to user pgp 5.0
-bool 
+bool
 Kpgp::checkForPGP(void)
 {
   // get path
@@ -650,12 +652,12 @@ Kpgp::checkForPGP(void)
        }
        ++it;
   }
-  
+
   debug("Kpgp: no pgp found");
   return FALSE;
 }
 
-QString 
+QString
 Kpgp::canonicalAdress(QString _adress)
 {
   int index,index2;
@@ -668,9 +670,9 @@ Kpgp::canonicalAdress(QString _adress)
     if((index2 = _adress.find("@",index+1)) != -1)
       if((index2 = _adress.find(">",index2+1)) != -1)
 	return _adress.mid(index,index2-index);
-  
+
   if((index = _adress.find("@")) == -1)
-  { 
+  {
     // local address
     char hostname[1024];
     gethostname(hostname,1024);
@@ -725,7 +727,7 @@ KpgpPass::KpgpPass(QWidget *parent, const char *name)
   lineedit->resize(200, lineedit->size().height());
   lineedit->setFocus();
 
-  connect(lineedit,SIGNAL(returnPressed()),this,SLOT(accept()) );  
+  connect(lineedit,SIGNAL(returnPressed()),this,SLOT(accept()) );
 }
 
 KpgpPass::~KpgpPass()
@@ -734,7 +736,7 @@ KpgpPass::~KpgpPass()
     kapp->restoreOverrideCursor();
 }
 
-QString 
+QString
 KpgpPass::getPassphrase(QWidget *parent)
 {
   KpgpPass kpgppass(parent, i18n("PGP Security Check"));
@@ -781,7 +783,7 @@ KpgpKey::KpgpKey(QWidget *parent, const char *name, const QStrList *keys)
   button = new QPushButton(i18n("&Insert"),this);
   button->move(145,75);
 
-  connect(button,SIGNAL(clicked()),this,SLOT(accept()) );  
+  connect(button,SIGNAL(clicked()),this,SLOT(accept()) );
 }
 
 KpgpKey::~KpgpKey()
@@ -790,7 +792,7 @@ KpgpKey::~KpgpKey()
     kapp->restoreOverrideCursor();
 }
 
-QString 
+QString
 KpgpKey::getKeyName(QWidget *parent, const QStrList *keys)
 {
   KpgpKey pgpkey(parent, i18n("Select key"), keys);
@@ -807,10 +809,10 @@ KpgpKey::getKey()
 
 // ------------------------------------------------------------------------
 
-static QLineEdit* 
+static QLineEdit*
 createLabeledEntry(QWidget* parent, QGridLayout* grid,
 			       const char* aLabel,
-			       const char* aText, 
+			       const char* aText,
 			       int gridy, int gridx)
 {
   QLabel* label = new QLabel(parent);
@@ -878,7 +880,7 @@ KpgpConfig::KpgpConfig(QWidget *parent, const char *name)
 
   // set default values
   pgpUserEdit->setText(pgp->user());
-  storePass->setChecked(pgp->storePassPhrase()); 
+  storePass->setChecked(pgp->storePassPhrase());
   encToSelf->setChecked(pgp->encryptToSelf());
 
 }
@@ -887,7 +889,7 @@ KpgpConfig::~KpgpConfig()
 {
 }
 
-void 
+void
 KpgpConfig::applySettings()
 {
   pgp->setUser(pgpUserEdit->text());

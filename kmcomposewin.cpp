@@ -97,9 +97,9 @@ QString KMComposeWin::mPathAttach = QString::null;
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
-  mMainWidget(this), 
-  mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget), 
-  mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget), 
+  mMainWidget(this),
+  mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget),
+  mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget),
   mEdtBcc(this,&mMainWidget), mEdtSubject(this,&mMainWidget, "subjectLine"),
   mLblFrom(&mMainWidget), mLblReplyTo(&mMainWidget), mLblTo(&mMainWidget),
   mLblCc(&mMainWidget), mLblBcc(&mMainWidget), mLblSubject(&mMainWidget),
@@ -143,7 +143,6 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 
   readConfig();
 
-  setupMenuBar();
   setupStatusBar();
   setupEditor();
   setupMenuBar();
@@ -159,15 +158,17 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   connect(&mBtnReplyTo,SIGNAL(clicked()),SLOT(slotAddrBookReplyTo()));
   connect(&mBtnFrom,SIGNAL(clicked()),SLOT(slotAddrBookFrom()));
 
+#if 0
   mDropZone = new KDNDDropZone(mEditor, DndURL);
-  connect(mDropZone, SIGNAL(dropAction(KDNDDropZone *)), 
+  connect(mDropZone, SIGNAL(dropAction(KDNDDropZone *)),
 	  SLOT(slotDropAction()));
-
+#endif
+  
   mMainWidget.resize(480,510);
   setView(&mMainWidget, FALSE);
   rethinkFields();
 
-#if defined CHARSETS  
+#if defined CHARSETS
   // As family may change with charset, we must save original settings
   mSavedEditorFont=mEditor->font();
 #endif
@@ -189,7 +190,9 @@ KMComposeWin::~KMComposeWin()
   writeConfig();
 
   if (mAutoDeleteMsg && mMsg) delete mMsg;
+#if 0
   delete mDropZone;
+#endif
   delete mMenuBar;
   delete mToolBar;
 }
@@ -217,24 +220,24 @@ void KMComposeWin::readConfig(void)
   mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
   if (mEditor) mEditor->setFont(kstrToFont(mBodyFont));
 
-#if defined CHARSETS  
+#if defined CHARSETS
   m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
   mQuoteUnknownCharacters = config->readNumEntry("quote-unknown",0);
-  
+
   str = config->readEntry("default-charset", "");
   if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
       mDefaultCharset="default";
   else
       mDefaultCharset=str;
-      
+
   debug("Default charset: %s", (const char*)mDefaultCharset);
-      
+
   str = config->readEntry("composer-charset", "");
   if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
       mDefComposeCharset="default";
   else
       mDefComposeCharset=str;
-      
+
   debug("Default composer charset: %s", (const char*)mDefComposeCharset);
 #endif
 
@@ -258,12 +261,12 @@ void KMComposeWin::writeConfig(void)
   config->writeEntry("show-toolbar", mShowToolBar);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
-#if defined CHARSETS  
+#if defined CHARSETS
   config->writeEntry("7bit-is-ascii",m7BitAscii);
   config->writeEntry("quote-unknown",mQuoteUnknownCharacters);
   config->writeEntry("default-charset",mDefaultCharset);
   config->writeEntry("composer-charset",mDefComposeCharset);
-#endif  
+#endif
 
   config->writeEntry("Fore-Color",mForeColor);
   config->writeEntry("Back-Color",mBackColor);
@@ -373,8 +376,8 @@ void KMComposeWin::rethinkFields(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow, 
-				     const QString aLabelStr, QLabel* aLbl, 
+void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
+				     const QString aLabelStr, QLabel* aLbl,
 				     QLineEdit* aEdt, QPushButton* aBtn)
 {
   if (aValue & aMask)
@@ -421,7 +424,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 void KMComposeWin::setupMenuBar(void)
 {
   QPopupMenu *menu;
-  mMenuBar = new KMenuBar(this);
+  mMenuBar = menuBar();// new KMenuBar(this);
 
 
   //---------- Menu: File
@@ -439,13 +442,13 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertSeparator();
   menu->insertItem(i18n("&Addressbook..."),this,
 		   SLOT(slotAddrBook()));
-  menu->insertItem(i18n("&Print..."),this, 
+  menu->insertItem(i18n("&Print..."),this,
 		   SLOT(slotPrint()), keys->print());
   menu->insertSeparator();
   menu->insertItem(i18n("&New Composer..."),this,
                    SLOT(slotNewComposer()), keys->openNew());
 #ifndef KRN
-  menu->insertItem(i18n("New Mailreader"), this, 
+  menu->insertItem(i18n("New Mailreader"), this,
 		   SLOT(slotNewMailReader()));
 #endif
   menu->insertSeparator();
@@ -453,7 +456,7 @@ void KMComposeWin::setupMenuBar(void)
 		   SLOT(slotClose()), keys->close());
   mMenuBar->insertItem(i18n("&File"),menu);
 
-  
+
   //---------- Menu: Edit
   menu = new QPopupMenu();
 #ifdef BROKEN
@@ -489,10 +492,10 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertSeparator();
   menu->insertItem(i18n("&Spellchecker..."), this,
 		   SLOT (slotSpellcheckConfig()));
-#if defined CHARSETS				    
+#if defined CHARSETS				
   mMnuIdConfRead = menu->insertItem(i18n("&Charsets..."), this,
 				    SLOT(slotConfigureCharsets()));
-#endif				    
+#endif				
   mMenuBar->insertItem(i18n("&Options"),menu);
   mMnuOptions = menu;
 
@@ -500,7 +503,7 @@ void KMComposeWin::setupMenuBar(void)
   menu = new QPopupMenu();
   mMnuView = menu;
   menu->setCheckable(TRUE);
-  connect(menu, SIGNAL(activated(int)), 
+  connect(menu, SIGNAL(activated(int)),
 	  this, SLOT(slotMenuViewActivated(int)));
 
   menu->insertItem(i18n("&All Fields"), 0);
@@ -519,7 +522,7 @@ void KMComposeWin::setupMenuBar(void)
 
   //---------- Menu: Attach
   menu = new QPopupMenu();
-  menu->insertItem(i18n("Append S&ignature"), this, 
+  menu->insertItem(i18n("Append S&ignature"), this,
 		   SLOT(slotAppendSignature()));
   menu->insertItem(i18n("&Insert File"), this,
 		   SLOT(slotInsertFile()));
@@ -540,7 +543,7 @@ void KMComposeWin::setupMenuBar(void)
   menu->insertSeparator();
   menu->insertItem(i18n("&Remove"), this, SLOT(slotAttachRemove()));
   menu->insertItem(i18n("&Save..."), this, SLOT(slotAttachSave()));
-  menu->insertItem(i18n("Pr&operties..."), 
+  menu->insertItem(i18n("Pr&operties..."),
 		   this, SLOT(slotAttachProperties()));
   mMenuBar->insertItem(i18n("&Attach"), menu);
 
@@ -549,7 +552,7 @@ void KMComposeWin::setupMenuBar(void)
   mMenuBar->insertSeparator();
   mMenuBar->insertItem(i18n("&Help"), menu);
 
-  setMenu(mMenuBar);
+  //setMenu(mMenuBar);
 }
 
 //-----------------------------------------------------------------------------
@@ -563,19 +566,19 @@ void KMComposeWin::setupToolBar(void)
 			SIGNAL(clicked()),this,
 			SLOT(slotSend()),TRUE,i18n("Send message"));
   mToolBar->insertSeparator();
-  mToolBar->insertButton(loader->loadIcon("filenew.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("filenew.xpm"), 0,
 			SIGNAL(clicked()), this,
-			SLOT(slotNewComposer()), TRUE, 
+			SLOT(slotNewComposer()), TRUE,
 			i18n("Compose new message"));
 
 #ifdef BROKEN
-  mToolBar->insertButton(loader->loadIcon("filefloppy.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("filefloppy.xpm"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotToDo()), TRUE,
 			i18n("Save message to file"));
 #endif
 
-  mToolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0, 
+  mToolBar->insertButton(loader->loadIcon("fileprint.xpm"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotPrint()), TRUE,
 			i18n("Print message"));
@@ -662,7 +665,7 @@ void KMComposeWin::setupEditor(void)
 
   // Word wrapping setup
   mEditor->setWordWrap(mWordWrap);
-  if (mWordWrap && (mLineBreak > 0)) 
+  if (mWordWrap && (mLineBreak > 0))
     mEditor->setFillColumnMode(mLineBreak,TRUE);
   else mEditor->setFillColumnMode(0,FALSE);
 
@@ -687,7 +690,7 @@ void KMComposeWin::setupEditor(void)
 
   mEditor->setPalette(myPalette);
   mEditor->setBackgroundColor(backColor);
-  
+
 
   menu = new QPopupMenu();
 #ifdef BROKEN
@@ -738,7 +741,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
   {
     mMsg->bodyPart(0, &bodyPart);
 
-#if defined CHARSETS    
+#if defined CHARSETS
     mCharset=bodyPart.charset();
     cout<<"Charset: "<<mCharset<<"\n";
     if (mCharset==""){
@@ -747,7 +750,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
                         && KGlobal::charsets()->isAvailable(mDefaultCharset))
         mComposeCharset=mDefaultCharset;
     }	
-    else if (KGlobal::charsets()->isAvailable(mCharset)) 
+    else if (KGlobal::charsets()->isAvailable(mCharset))
       mComposeCharset=mCharset;
     else mComposeCharset=mDefComposeCharset;
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
@@ -764,7 +767,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
       addAttach(msgPart);
     }
   }
-#if defined CHARSETS  
+#if defined CHARSETS
   else{
     mCharset=mMsg->charset();
     cout<<"mCharset: "<<mCharset<<"\n";
@@ -774,23 +777,23 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
                         && KGlobal::charsets()->isAvailable(mDefaultCharset))
         mComposeCharset=mDefaultCharset;
     }	
-    else if (KGlobal::charsets()->isAvailable(mCharset)) 
+    else if (KGlobal::charsets()->isAvailable(mCharset))
       mComposeCharset=mCharset;
     else mComposeCharset=mDefComposeCharset;
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
     // FIXME: QTextCodec needed?
     mEditor->setText(QString(mMsg->bodyDecoded()));
-  }  
-#else  
+  }
+#else
   else mEditor->setText(QString(mMsg->bodyDecoded()));
 #endif
 
   if (mAutoSign && mayAutoSign) slotAppendSignature();
   mEditor->toggleModified(FALSE);
- 
-#if defined CHARSETS 
+
+#if defined CHARSETS
   setEditCharset();
-#endif  
+#endif
 }
 
 
@@ -838,7 +841,7 @@ bool KMComposeWin::applyChanges(void)
   {
     mMsg->setAutomaticFields(FALSE);
 
-    // If there are no attachments in the list waiting it is a simple 
+    // If there are no attachments in the list waiting it is a simple
     // text message.
     if (msgSender->sendQuotedPrintable())
     {
@@ -847,7 +850,7 @@ bool KMComposeWin::applyChanges(void)
       mMsg->setCteStr("quoted-printable");
       str = pgpProcessedMsg();
       if (str.isNull()) return FALSE;
-#if defined CHARSETS      
+#if defined CHARSETS
       convertToSend(str);
       cout<<"Setting charset to: "<<mCharset<<"\n";
       mMsg->setCharset(mCharset);
@@ -861,7 +864,7 @@ bool KMComposeWin::applyChanges(void)
       mMsg->setCteStr("8bit");
       str = pgpProcessedMsg();
       if (str.isNull()) return FALSE;
-#if defined CHARSETS      
+#if defined CHARSETS
       convertToSend(str);
       cout<<"Setting charset to: "<<mCharset<<"\n";
       mMsg->setCharset(mCharset);
@@ -869,8 +872,8 @@ bool KMComposeWin::applyChanges(void)
       mMsg->setBody(str);
     }
   }
-  else 
-  { 
+  else
+  {
     mMsg->deleteBodyParts();
     mMsg->setAutomaticFields(TRUE);
 
@@ -881,16 +884,16 @@ bool KMComposeWin::applyChanges(void)
     // create bodyPart for editor text.
     if (msgSender->sendQuotedPrintable())
          bodyPart.setCteStr("quoted-printable");
-    else bodyPart.setCteStr("8bit"); 
+    else bodyPart.setCteStr("8bit");
     bodyPart.setTypeStr("text");
     bodyPart.setSubtypeStr("plain");
     str = pgpProcessedMsg();
     if (str.isNull()) return FALSE;
-#if defined CHARSETS      
+#if defined CHARSETS
     convertToSend(str);
     cout<<"Setting charset to: "<<mCharset<<"\n";
     mMsg->setCharset(mCharset);
-#endif      
+#endif
     str.truncate(str.length()); // to ensure str.size()==str.length()+1
     bodyPart.setBodyEncoded(QCString(str.ascii()));
     mMsg->addBodyPart(&bodyPart);
@@ -936,7 +939,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   QString _to, receiver;
   int index, lastindex;
   QStrList persons;
-  
+
   if (!doSign && !doEncrypt) return mEditor->text();
 
   pgp->setMessage(mEditor->text());
@@ -944,9 +947,9 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   if (!doEncrypt)
   {
     if(pgp->sign()) return pgp->message();
-  } 
+  }
   else
-  { 
+  {
     // encrypting
     _to = to().copy();
     if(!cc().isEmpty()) _to += "," + cc();
@@ -969,13 +972,13 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   }
 
   // in case of an error we end up here
-  //warning(i18n("Error during PGP:") + QString("\n") + 
+  //warning(i18n("Error during PGP:") + QString("\n") +
   //	  pgp->lastErrorMsg());
 
   return QString::null;
 }
 
- 
+
 //-----------------------------------------------------------------------------
 void KMComposeWin::addAttach(const QString aUrl)
 {
@@ -1061,7 +1064,7 @@ void KMComposeWin::removeAttach(const QString aUrl)
   int idx;
   KMMessagePart* msgPart;
 
-  for(idx=0,msgPart=mAtmList.first(); msgPart; 
+  for(idx=0,msgPart=mAtmList.first(); msgPart;
       msgPart=mAtmList.next(),idx++) {
     if (msgPart->name() == aUrl) {
       removeAttach(idx);
@@ -1181,12 +1184,12 @@ void KMComposeWin::slotAddrBookBcc()
 void KMComposeWin::slotAttachFile()
 {
   // Create File Dialog and return selected file
-  // We will not care about any permissions, existence or whatsoever in 
+  // We will not care about any permissions, existence or whatsoever in
   // this function.
   QString fileName;
 
   if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
-  
+
   KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
 
   fdlg.setCaption(i18n("Attach File"));
@@ -1207,7 +1210,7 @@ void KMComposeWin::slotInsertFile()
 {
   QString fileName, str;
   int col, line;
-  
+
   if (mPathAttach.isEmpty()) mPathAttach = QDir::currentDirPath();
 
   KFileDialog fdlg(mPathAttach, "*", this, NULL, TRUE);
@@ -1224,7 +1227,7 @@ void KMComposeWin::slotInsertFile()
 
   mEditor->getCursorPosition(&line, &col);
   mEditor->insertAt(str, line, col);
-}  
+}
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertMyPublicKey()
@@ -1265,7 +1268,7 @@ void KMComposeWin::slotInsertPublicKey()
   Kpgp *pgp;
 
   pgp=Kpgp::getKpgp();
-  
+
   str=pgp->getAsciiPublicKey(
          KpgpKey::getKeyName(this, pgp->keys()));
 
@@ -1294,7 +1297,7 @@ void KMComposeWin::slotAttachPopupMenu(int index, int)
 
   menu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
   menu->insertItem(i18n("Save..."), this, SLOT(slotAttachSave()));
-  menu->insertItem(i18n("Properties..."), 
+  menu->insertItem(i18n("Properties..."),
 		   this, SLOT(slotAttachProperties()));
   menu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
   menu->insertSeparator();
@@ -1354,7 +1357,7 @@ void KMComposeWin::slotAttachSave()
 {
   KMMessagePart* msgPart;
   QString fileName, pname;
-  
+
   int idx = mAtmListBox->currentItem();
   if (idx < 0) return;
 
@@ -1563,6 +1566,7 @@ void KMComposeWin::slotPrint()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotDropAction()
 {
+#if 0
   QString  file;
   QStrList *fileList;
 
@@ -1573,6 +1577,7 @@ void KMComposeWin::slotDropAction()
     file.replace(QRegExp("file:"),"");
     addAttach(file);
   }
+#endif
 }
 
 
@@ -1667,7 +1672,7 @@ void KMComposeWin::slotSpellcheck()
     connect (mEditor, SIGNAL (spellcheck_done()),
 	     this, SLOT (slotSpellcheckDone ()));
     mEditor->spellcheck();
-  }                                 
+  }
 }
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotSpellcheckDone()
@@ -1687,7 +1692,7 @@ void KMComposeWin::slotConfigureCharsets()
    connect(dlg,SIGNAL( setCharsets(const char *,const char *,bool,bool,bool) )
            ,this,SLOT(slotSetCharsets(const char *,const char *,bool,bool,bool)));
    dlg->show();
-   delete dlg;	   
+   delete dlg;	
 #endif
 }
 
@@ -1712,8 +1717,8 @@ void KMComposeWin::slotSetCharsets(const char *message,const char *composer,
   {
     mDefaultCharset=message;
     mDefComposeCharset=composer;
-  }  
-  setEditCharset();  
+  }
+  setEditCharset();
 #endif
 }
 
@@ -1730,9 +1735,9 @@ bool KMComposeWin::is8Bit(const QString str)
     {
       int code=atoi(ptr+2);
       if (code>0x7f) return TRUE;
-    }  
+    }
     ptr++;
-  }   
+  }
   return FALSE;
 }
 
@@ -1741,16 +1746,16 @@ void KMComposeWin::convertToSend(const QString str)
 {
   cout<<"Converting to send...\n";
   if (m7BitAscii && !is8Bit(str))
-  { 
+  {
     mCharset="us-ascii";
     return;
   }
   if (mCharset=="")
   {
-     if (mDefaultCharset=="default") 
+     if (mDefaultCharset=="default")
           mCharset=KGlobal::charsets()->charsetForLocale();
      else mCharset=mDefaultCharset;
-  }   
+  }
   cout<<"mCharset: "<<mCharset<<"\n";
 }
 
@@ -1758,7 +1763,7 @@ void KMComposeWin::convertToSend(const QString str)
 void KMComposeWin::setEditCharset()
 {
   QFont fnt=mSavedEditorFont;
-  if (mComposeCharset=="default") 
+  if (mComposeCharset=="default")
     mComposeCharset=KGlobal::charsets()->charsetForLocale();
   cout<<"Setting font to: "<<mComposeCharset<<"\n";
   KGlobal::charsets()->setQFont(fnt, mComposeCharset);
@@ -1795,13 +1800,13 @@ void KMComposeWin::focusNextPrevEdit(const QLineEdit* aCur, bool aNext)
 //   Class  KMLineEdit
 //
 //=============================================================================
-KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent, 
+KMLineEdit::KMLineEdit(KMComposeWin* composer, QWidget *parent,
 		       const char *name): KMLineEditInherited(parent,name)
 {
   mComposer = composer;
 
   installEventFilter(this);
-  
+
   connect (this, SIGNAL(completion()), this, SLOT(slotCompletion()));
 }
 
@@ -1937,10 +1942,10 @@ void KMLineEdit::slotCompletion()
 
     return;
   }
-  
+
   QPopupMenu pop;
   int n;
-  
+
   KMAddrBook adb;
   adb.readConfig();
 
@@ -1957,7 +1962,7 @@ void KMLineEdit::slotCompletion()
   }
   //s.append("*");
   //QRegExp regexp(s.data(), FALSE, TRUE);
-  
+
   n=0;
   for (const char *a=adb.first(); a; a=adb.next())
   {
@@ -1969,14 +1974,14 @@ void KMLineEdit::slotCompletion()
       n++;
     }
   }
-  
+
   if (n > 1)
   {
     int id;
     pop.popup(parentWidget()->mapToGlobal(QPoint(x(), y()+height())));
     pop.setActiveItem(pop.idAt(0));
     id = pop.exec();
-    
+
     if (id!=-1)
     {
       setText(prevAddr + pop.text(id));
@@ -1998,7 +2003,7 @@ void KMComposeWin::slotSpellcheckConfig()
 {
 
   KWM kwm;
-  QTabDialog qtd (this, "tabdialog", true);        
+  QTabDialog qtd (this, "tabdialog", true);
   KSpellConfig mKSpellConfig (&qtd);
 
   qtd.addTab (&mKSpellConfig, "Spellchecker");
@@ -2078,12 +2083,12 @@ void KMEdit::slotSpellcheck2(KSpell*)
   if (mKSpell->isOk())
   {
     setReadOnly (TRUE);
-    
+
     connect (mKSpell, SIGNAL (misspelling (char *, QStrList *, unsigned)),
 	     this, SLOT (slotSpellMisspelling (char *, QStrList *, unsigned)));
     connect (mKSpell, SIGNAL (corrected (char *, char *, unsigned)),
 	     this, SLOT (slotSpellCorrected (char *, char *, unsigned)));
-    connect (mKSpell, SIGNAL (done(char *)), 
+    connect (mKSpell, SIGNAL (done(char *)),
 	     this, SLOT (slotSpellResult (char *)));
 
     //we're going to want to ignore quoted-message lines...
@@ -2119,7 +2124,7 @@ void KMEdit::slotSpellDone()
 }
 
 //-----------------------------------------------------------------------------
-void KMEdit::slotSpellCorrected(char *originalword, 
+void KMEdit::slotSpellCorrected(char *originalword,
 				      char *newword, unsigned pos)
 {
   //we'll reselect the original word in case the user has played with
@@ -2146,7 +2151,7 @@ void KMEdit::slotSpellCorrected(char *originalword,
       insertAt (newword, line, cnt);
     }
 
-  deselect();               
+  deselect();
 
 }
 
@@ -2169,7 +2174,7 @@ void KMEdit::slotSpellMisspelling(char *word, QStrList *, unsigned pos)
   //but that doesn't seem to work.
   for(l = 0 ; l < (unsigned) strlen(word); l++)
     cursorRight(TRUE);
-  
+
   if (cursorPoint().y()>height()/2)
     mKSpell->moveDlg(10, height()/2 - mKSpell->heightDlg()-15);
   else
