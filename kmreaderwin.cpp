@@ -1,9 +1,14 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
+#include <stdlib.h>
+
+#ifndef KRN
 #include "kmglobal.h"
-#include "kmimemagic.h"
 #include "kmmainwin.h"
+#endif
+
+#include "kmimemagic.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
@@ -36,6 +41,11 @@ static unsigned char hand_mask_bits[] = {
         0x3f,0xfc,0x7f,0xf8,0xff,0xf0,0x7f,0xe0,0x3f,0xc0,0x1f,0x80,0x0f,0x00,0x07,
         0x00,0x02};
 
+#ifdef KRN
+extern KApplication *app;
+extern KLocale *nls;
+extern KBusyPtr *kbp;
+#endif
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
