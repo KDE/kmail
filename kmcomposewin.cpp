@@ -1500,9 +1500,28 @@ bool KMComposeWin::applyChanges(void)
       else if( status == 2 )
       { // the user wants to be asked or has to be asked
         kernel->kbp()->idle();
-        int ret = KMessageBox::questionYesNo( this,
-                                      i18n("Should this message be encrypted?") );
+        int ret;
+        if( doSign )
+          ret = KMessageBox::questionYesNoCancel( this,
+                        i18n("<qt><p>All recipients of this message have a "
+                             "trusted OpenPGP key and the message will be "
+                             "signed.</p>"
+                             "<p>Should this message also be "
+                             "encrypted?</p></qt>"),
+                        i18n("Encrypt Message?"),
+                        KGuiItem( i18n("Sign and &Encrypt") ),
+                        KGuiItem( i18n("&Sign Only") ) );
+        else
+          ret = KMessageBox::questionYesNoCancel( this,
+                        i18n("<qt><p>All recipients of this message have a "
+                             "trusted OpenPGP key.</p>"
+                             "<p>Should this message be encrypted?</p></qt>"),
+                        i18n("Encrypt Message?"),
+                        KGuiItem( i18n("&Encrypt") ),
+                        KGuiItem( i18n("&Don't Encrypt") ) );
         kernel->kbp()->busy();
+        if( KMessageBox::Cancel == ret )
+          return false;
         doEncrypt = ( KMessageBox::Yes == ret );
       }
       else if( status == -1 )
