@@ -420,7 +420,7 @@ public:
   { mCodec = aCodec; }
 
   /** Allow decoding of HTML for quoting */
-  virtual void setDecodeHTML(bool aDecodeHTML)
+  void setDecodeHTML(bool aDecodeHTML)
   { mDecodeHTML = aDecodeHTML; }
 
   /** Return if the message is complete and not only the header of a message
