@@ -1508,19 +1508,20 @@ void KMComposeWin::slotInsertPublicKey()
   str=pgp->getAsciiPublicKey(
          KpgpKey::getKeyName(this, pgp->keys()));
 
-  // create message part
-  msgPart = new KMMessagePart;
-  msgPart->setName(i18n("pgp key"));
-  msgPart->setCteStr(mDefEncoding);
-  msgPart->setTypeStr("application");
-  msgPart->setSubtypeStr("pgp-keys");
-  msgPart->setBodyEncoded(QCString(str.ascii()));
-  msgPart->setContentDisposition("attachment; filename=public_key.asc");
+  if( str ) {
+    // create message part
+    msgPart = new KMMessagePart;
+    msgPart->setName(i18n("pgp key"));
+    msgPart->setCteStr(mDefEncoding);
+    msgPart->setTypeStr("application");
+    msgPart->setSubtypeStr("pgp-keys");
+    msgPart->setBodyEncoded(QCString(str.ascii()));
+    msgPart->setContentDisposition("attachment; filename=public_key.asc");
 
-  // add the new attachment to the list
-  addAttach(msgPart);
-  rethinkFields(); //work around initial-size bug in Qt-1.32
-
+    // add the new attachment to the list
+    addAttach(msgPart);
+    rethinkFields(); //work around initial-size bug in Qt-1.32
+  }
 }
 
 
