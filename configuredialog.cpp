@@ -937,7 +937,7 @@ ConfigureDialog::~ConfigureDialog( void )
 void ConfigureDialog::makeIdentityPage( void )
 {
   QFrame *page = addPage( i18n("Identity"), i18n("Personal information"),
-			  QPixmap(user_xpm) /*ListIcon("user")*/ );
+			  QPixmap(user_xpm) /*UserIcon("user")*/ );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mIdentity.pageIndex = pageIndex(page);
 
@@ -1032,7 +1032,7 @@ void ConfigureDialog::makeNetworkPage( void )
 {
   QFrame *page = addPage( i18n("Network"),
 			  i18n("Setup for sending and receiving messages"),
-			  QPixmap(network_xpm) /*ListIcon("network")*/ );
+			  QPixmap(network_xpm) /*UserIcon("network")*/ );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mNetwork.pageIndex = pageIndex(page);
 
@@ -1163,7 +1163,7 @@ void ConfigureDialog::makeNetworkPage( void )
 {
   QFrame *page = addPage( i18n("Network"),
 			  i18n("Setup for sending and receiving messages"),
-			  QPixmap(network_xpm) /*ListIcon("network")*/ );
+			  QPixmap(network_xpm) /*UserIcon("network")*/ );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mNetwork.pageIndex = pageIndex(page);
 
@@ -1520,7 +1520,7 @@ void ConfigureDialog::makeSecurityPage( void )
 {
   QVBox *vbox = addVBoxPage( i18n("Security"), 
 			     i18n("Security Settings"),
-			     QPixmap(security_xpm) /*ListIcon("security")*/ );
+			     QPixmap(security_xpm) /*UserIcon("security")*/ );
   mSecurity.pageIndex = pageIndex(vbox);
 
   QTabWidget *tabWidget = new QTabWidget( vbox, "tab" );
@@ -1533,7 +1533,7 @@ void ConfigureDialog::makeSecurityPage( void )
 void ConfigureDialog::makeMiscPage( void )
 {
   QFrame *page = addPage( i18n("Miscellaneous"), i18n("Various settings"),
-			  ListIcon("misc") );
+			  UserIcon("misc") );
   QVBoxLayout *topLevel = new QVBoxLayout( page, 0, spacingHint() );
   mMisc.pageIndex = pageIndex(page);
 
