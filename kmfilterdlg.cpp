@@ -655,7 +655,7 @@ void KMFilterDlg::closeEvent( QCloseEvent *e )
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnHelp()
 {
-  kapp->invokeHelp("filters");
+  kapp->invokeHelp("FILTERS_ID");
 }
 
 //-----------------------------------------------------------------------------
