@@ -18,15 +18,21 @@
  */
 #include "kmtopwidget.h"
 
+#include <kapplication.h>
+
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::KMTopLevelWidget(const char* aName):
   KMainWindow(0, aName)
-{}
+{
+  kapp->ref();
+}
 
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::~KMTopLevelWidget()
-{}
+{
+  kapp->deref();
+}
 
 
 //-----------------------------------------------------------------------------
