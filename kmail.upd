@@ -114,7 +114,7 @@ Key=showKeysForApproval,crypto-show-keys-for-approval
 Id=3.3-aegypten-kpgprc-to-libkleopatrarc
 File=kpgprc,libkleopatrarc
 Group=,Backends
-Script=kmail-3.3-aegypten.sh
+Script=kmail-3.3-aegypten.pl,perl
 
 Id=3.3-aegypten-emailidentities-split-sign-encr-keys
 File=emailidentities
