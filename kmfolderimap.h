@@ -169,11 +169,10 @@ public:
   QStringList makeSets(QStringList&, bool sort = true);
 
   /** gets the uids of the given ids */ 
-  void getUids(QValueList<int>& ids, QValueList<int>& uids, bool unget = false);
+  void getUids(QValueList<int>& ids, QValueList<int>& uids);
  
-  /** same as above but accepts a Message-List
-   * if unget is true the messages are unget'ted */ 
-  void getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, bool unget = false, KMFolder* msgParent = NULL);
+  /** same as above but accepts a Message-List */
+  void getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent = NULL);
 
   /**
    * Expunge deleted messages from the folder

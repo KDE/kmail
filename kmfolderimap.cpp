@@ -164,7 +164,7 @@ void KMFolderImap::removeMsg(QPtrList<KMMessage> msgList, bool quiet)
 void KMFolderImap::addMsgQuiet(KMMessage* aMsg)
 {
   KMFolder *folder = aMsg->parent();
-  kernel->undoStack()->pushAction( aMsg->getMsgSerNum(), folder, this );
+  if (folder) kernel->undoStack()->pushAction( aMsg->getMsgSerNum(), folder, this );
   if (folder) folder->take(folder->find(aMsg));
   delete aMsg;
   if (mIsSelected) getFolder();
@@ -1305,7 +1305,7 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status)
 
   // get the uids 
   QValueList<int> uids;
-  getUids(ids, uids, true);
+  getUids(ids, uids);
 
   // get the flags
   QCString flags = statusToFlags(status);
@@ -1384,39 +1384,32 @@ QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::getUids(QValueList<int>& ids, QValueList<int>& uids, bool unget)
+void KMFolderImap::getUids(QValueList<int>& ids, QValueList<int>& uids)
 {
   KMMessage *msg = NULL;
-
   // get the uids
   for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )	
   {
+    bool unget = !isMessage(*it);
     msg = getMsg(*it);
     if (!msg) continue;
     uids.append(msg->headerField("X-UID").toInt());
     if (unget) unGetMsg(*it);
   }
-
 }
 
-void KMFolderImap::getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, bool unget, KMFolder* msgParent)
+void KMFolderImap::getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent)
 {
   int idx = -1;
   KMMessage *msg = NULL;
+
   if (!msgParent) msgParent = msgList.first()->parent();
   if (!msgParent) return;
 
   for ( msg = msgList.first(); msg; msg = msgList.next() )
   {
-    if (!msg->isMessage())
-    {
-      idx = msgParent->find(msg);
-      assert(idx != -1);
-      msg = msgParent->getMsg(idx);
-    }
     if ( !msg->headerField("X-UID").isEmpty() )
       uids.append(msg->headerField("X-UID").toInt());
-    if (unget && idx != -1) unGetMsg(idx);
   }
 }
 
