@@ -873,13 +873,13 @@ void KMComposeWin::setupActions(void)
   KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
   KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
-  (void) new KAction (i18n("Paste as &Quotation"),0,this,SLOT( slotPasteAsQuotation()),
+  (void) new KAction (i18n("Pa&ste as Quotation"),0,this,SLOT( slotPasteAsQuotation()),
                       actionCollection(), "paste_quoted");
 
   (void) new KAction(i18n("Add &Quote Characters"), 0, this,
               SLOT(slotAddQuotes()), actionCollection(), "tools_quote");
 
-  (void) new KAction(i18n("&Remove Quote Characters"), 0, this,
+  (void) new KAction(i18n("Re&move Quote Characters"), 0, this,
               SLOT(slotRemoveQuotes()), actionCollection(), "tools_unquote");
 
 
