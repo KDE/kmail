@@ -4,11 +4,6 @@
 #include <assert.h>
 #include <stdlib.h>
 
-// we need this for sorting.
-static KMMsgList::SortField sortCriteria;
-static int* sortIndex;
-static KMMsgList* sortList;
-static bool sortDescending;
 
 //-----------------------------------------------------------------------------
 KMMsgList::KMMsgList(int initSize): KMMsgListInherited(initSize)

@@ -295,7 +295,7 @@ protected:
   int mWordWrap;
   short mBtnIdSign, mBtnIdEncrypt;
   short mMnuIdUrgent, mMnuIdConfDeliver, mMnuIdConfRead;
-  QString mForeColor, mBackColor;
+  QString mForeColor, mBackColor, mBodyFont;
   QList<QLineEdit> mEdtList;
 #ifdef HAS_KSPELL
   KSpell* mKSpell;

@@ -197,7 +197,7 @@ KMComposeWin::~KMComposeWin()
 void KMComposeWin::readConfig(void)
 {
   KConfig *config = kapp->getConfig();
-  QString str, bodyFont;
+  QString str;
   int w, h;
 
   config->setGroup("Composer");
@@ -214,8 +214,7 @@ void KMComposeWin::readConfig(void)
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
 
   config->setGroup("Fonts");
-  bodyFont = config->readEntry("body-font", "helvetica");
-  mEditor->setFont(QFont(bodyFont));
+  mBodyFont = config->readEntry("body-font", "helvetica");
 
 #ifdef CHARSETS  
   m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
@@ -647,7 +646,7 @@ void KMComposeWin::setupEditor(void)
 
 
   // Font setup
-
+  mEditor->setFont(QFont(mBodyFont));
 
   // Color setup
   if( mForeColor.isEmpty())

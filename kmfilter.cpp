@@ -32,13 +32,8 @@ static int findInStrList(const char* strList[], const char* str)
   if (!str) return -1;
 
   for (i=0; strList[i]; i++)
-    if (strcasecmp(strList[i], str)==0) 
-    {
-      debug("findInStrList: %s is at %d", str, i);
-      return i;
-    }
+    if (strcasecmp(strList[i], str)==0) return i;
 
-  debug("findInStrList: %s not found", str);
   return -1;
 }
 
