@@ -542,7 +542,7 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   KMMessagePart msgPart;
   int i, numParts;
   QString type, subtype, contDisp;
-  QCString str;
+  QByteArray str;
   bool asIcon = false;
   inlineImage = false;
   VCard *vc;
@@ -637,21 +637,25 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	if ((type == "") || (stricmp(type, "text")==0))
 	{
 	  str = msgPart.bodyDecoded();
+	  QCString cstr;
+	  cstr.duplicate( str.data(), str.count() );
+	  cstr += '\0';
+	  
 	  if (i>0)
-      mViewer->write("<br><hr><br>");
+	      mViewer->write("<br><hr><br>");
 
 	  if (htmlMail() && (stricmp(subtype, "html")==0))
           {
             // ---Sven's strip </BODY> and </HTML> from end of attachment start-
             // We must fo this, or else we will see only 1st inlined html attachment
             // It is IMHO enough to search only for </BODY> and put \0 there.
-            int i;
-            i = str.findRev("</body>", -1, false); //case insensitive
+	    int i;
+            i = cstr.findRev("</body>", -1, false); //case insensitive
             if (i>0)
               str.truncate(i);
             else // just in case - search for </html>
             {
-              i = str.findRev("</html>", -1, false); //case insensitive
+              i = cstr.findRev("</html>", -1, false); //case insensitive
               if (i>0) str.truncate(i);
             }
             // ---Sven's strip </BODY> and </HTML> from end of attachment end-
