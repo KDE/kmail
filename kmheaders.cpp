@@ -314,13 +314,16 @@ public:
 
   static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KMPaintInfo *paintInfo, int sortOrder)
   {
-    if (!msg) return QString::null;  // It appears, that QListView in Qt-3.0 asks for the key
-                       // in QListView::clear(), which is called from
-                       // readSortOrder()
+    // It appears, that QListView in Qt-3.0 asks for the key
+    // in QListView::clear(), which is called from
+    // readSortOrder()
+    if (!msg) return QString::null;
+
     int column = sortOrder & ((1 << 5) - 1);
     QString ret = QString("%1") .arg( (char)sortOrder );
-    QString sortArrival = QString( "%1" ).arg( id, 0, 36 );
-    while (sortArrival.length() < 8) sortArrival = "0" + sortArrival;
+    QString sortArrival = QString( "%1" )
+      .arg( kernel->msgDict()->getMsgSerNum(headers->folder(), id), 0, 36 );
+    while (sortArrival.length() < 7) sortArrival = "0" + sortArrival;
 
     if (column == paintInfo->dateCol) {
       if (paintInfo->orderOfArrival)
