@@ -65,12 +65,7 @@ class KMMsgIndex : public QObject
 	int timer_id;
 	bool reading_processed, restart_index;
     } restore;
-    struct {
-	int timer_id;
-	int create_id;
-	int restore_id;
-	int counter;
-    } delay;
+    int delay_cnt;
     QTime mLastSearch; //when last index lookup was performed
     QIntDict<KMIndexSearchTarget> mActiveSearches; //for async search
 

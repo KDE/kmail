@@ -210,14 +210,9 @@ enum {
 static int kmindex_grow_increment = 40960; //grow this many buckets at a time
 
 KMMsgIndex::KMMsgIndex(QObject *o, const char *n) :
-    QObject(o, n), mIndexState(INDEX_IDLE), mLastSearch()
+    QObject(o, n), mIndexState(INDEX_IDLE), delay_cnt(0), mLastSearch()
 {
     mActiveSearches.setAutoDelete(TRUE);
-    create.timer_id = -1;
-    restore.timer_id = -1;
-    delay.timer_id = -1;
-    delay.create_id = -1;
-    delay.restore_id = -1;
     reset(FALSE);
     mTermIndex.loc = kernel->folderMgr()->basePath() + "/.kmmsgindex_search";
     mTermTOC.loc = kernel->folderMgr()->basePath() + "/.kmmsgindex_toc";
@@ -249,11 +244,6 @@ KMMsgIndex::reset(bool clean)
 	if(clean)
 	    killTimer(restore.timer_id);
 	restore.timer_id = -1;
-    }
-    if(delay.timer_id != -1) {
-	if(clean)
-	    killTimer(delay.timer_id);
-	delay.timer_id = -1;
     }
     //TOC
     if(clean)
@@ -650,40 +640,11 @@ KMMsgIndex::slotAddMsg(KMFolder *, Q_UINT32 serNum)
 void
 KMMsgIndex::timerEvent(QTimerEvent *e)
 {
-    if (e->timerId() == delay.timer_id) {
-	if(qApp->hasPendingEvents()) {
-	    delay.counter = 10;
-	    return;
-	}
-	--delay.counter;
-	if (delay.counter > 0)
-	    return;
-	killTimer(delay.timer_id);
-	if (delay.create_id != -1)
-	    create.timer_id = startTimer(0);
-	if (delay.restore_id != -1)
-	    restore.timer_id = startTimer(0);
-	delay.timer_id = -1;
-	delay.create_id = -1;
-	delay.restore_id = -1;
-    }
-    if (delay.timer_id != -1)
-	return;	
-    if(qApp->hasPendingEvents()) //nah, next time..
-    {
-	delay.timer_id = startTimer(1000);
-	delay.counter = 10;
-	delay.create_id = create.timer_id;
-	delay.restore_id = restore.timer_id;
-	if (create.timer_id != -1)
-	    killTimer( create.timer_id );
-	create.timer_id = -1;
-	if (restore.timer_id != -1)
-	    killTimer( restore.timer_id );
-	restore.timer_id = -1;
-	return;
-    }
-    if(mIndexState == INDEX_CREATE && e->timerId() == create.timer_id)
+    if(qApp->hasPendingEvents()) //nah, some other time..
+	delay_cnt = 10;
+    else if(delay_cnt)
+	--delay_cnt;
+    else if(mIndexState == INDEX_CREATE && e->timerId() == create.timer_id)
 	createState(FALSE);
     else if(mIndexState == INDEX_RESTORE && e->timerId() == restore.timer_id)
 	restoreState(FALSE);
