@@ -114,8 +114,8 @@ void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 {
   if ( ev->key() == Key_Backspace  &&  text().isEmpty() )
   {
-      ev->accept();
-      emit deleteMe(); 
+    ev->accept();
+    emit deleteMe(); 
   }
   else
     KMLineEdit::keyPressEvent( ev );
