@@ -74,6 +74,7 @@ class AccountDialog : public KDialogBase
       QRadioButton *authAuto;
       QRadioButton *authUser;
       QRadioButton *authPlain;
+      QRadioButton *authLogin;
       QRadioButton *authCRAM_MD5;
       QRadioButton *authAPOP;
       QCheckBox    *storePasswordCheck;

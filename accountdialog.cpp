@@ -486,6 +486,8 @@ void AccountDialog::makePopAccountPage()
   mPop.authUser = new QRadioButton( i18n("Clear text") , group );
   mPop.authPlain = new QRadioButton( i18n("Please translate this "
   "authentification method only, if you have a good reason", "PLAIN"), group );
+  mPop.authLogin = new QRadioButton( i18n("Please translate this "
+  "authentification method only, if you have a good reason", "LOGIN"), group );
   mPop.authCRAM_MD5 = new QRadioButton( i18n("CRAM-MD5"), group );
   mPop.authAPOP = new QRadioButton( i18n("APOP"), group );
   vlay->addWidget( group );
@@ -654,6 +656,8 @@ void AccountDialog::setupSettings()
       mPop.authUser->setChecked( TRUE );
     else if (ap.auth() == "PLAIN")
       mPop.authPlain->setChecked( TRUE );
+    else if (ap.auth() == "LOGIN")
+      mPop.authLogin->setChecked( TRUE );
     else if (ap.auth() == "CRAM-MD5")
       mPop.authCRAM_MD5->setChecked( TRUE );
     else if (ap.auth() == "APOP")
@@ -861,6 +865,8 @@ void AccountDialog::saveSettings()
       epa.setAuth("USER");
     else if (mPop.authPlain->isChecked())
       epa.setAuth("PLAIN");
+    else if (mPop.authLogin->isChecked())
+      epa.setAuth("LOGIN");
     else if (mPop.authCRAM_MD5->isChecked())
       epa.setAuth("CRAM-MD5");
     else if (mPop.authAPOP->isChecked())

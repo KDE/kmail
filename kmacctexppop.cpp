@@ -557,7 +557,7 @@ void KMAcctExpPop::startJob() {
   mSlaveConfig.clear();
   mSlaveConfig.insert("progress", "off");
   mSlaveConfig.insert("tls", (mUseTLS) ? "on" : "off");
-  if (mAuth == "PLAIN" || mAuth == "CRAM-MD5")
+  if (mAuth == "PLAIN" || mAuth == "LOGIN" || mAuth == "CRAM-MD5")
   {
     mSlaveConfig.insert("auth", "SASL");
     mSlaveConfig.insert("sasl", mAuth);
