@@ -402,7 +402,7 @@ NewLanguageDialog::NewLanguageDialog( QWidget *parent, const char *name,
     if (!l)
     {
       QString output = name + " (" + path + ")";
-      QPixmap flag( locate("locale", path + "/flag.png") );
+      QPixmap flag( locate("locale", path + "/flag.png"));
       mComboBox->insertItem( flag, output );
     }
   }
@@ -886,10 +886,6 @@ void ConfigureDialog::makeAppearancePage( void )
   tabWidget->addTab( page3, i18n("&Layout") );
   vlay = new QVBoxLayout( page3, spacingHint() );
 
-  mAppearance.longFolderCheck =
-    new QCheckBox( i18n("&Show long folder list"), page3 );
-  vlay->addWidget( mAppearance.longFolderCheck );
-
   mAppearance.messageSizeCheck =
     new QCheckBox( i18n("&Display message sizes"), page3 );
   vlay->addWidget( mAppearance.messageSizeCheck );
@@ -897,6 +893,43 @@ void ConfigureDialog::makeAppearancePage( void )
    mAppearance.nestedMessagesCheck =
     new QCheckBox( i18n("&Thread list of message headers"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
+
+  mAppearance.grpFolderLayout =
+    new QButtonGroup( i18n("Layout"), page3 );
+    vlay->addWidget( mAppearance.grpFolderLayout );
+
+  QVBoxLayout *vboxlay =
+      new QVBoxLayout( mAppearance.grpFolderLayout,
+                       KDialogBase::spacingHint() );
+  vboxlay->addSpacing( fontMetrics().lineSpacing() );
+
+  mAppearance.longFolderRadio =
+    new QRadioButton( i18n("&Show long folder list"),
+                      mAppearance.grpFolderLayout );
+  mAppearance.smallFolderRadio =
+    new QRadioButton( i18n("&Show small folder list"),
+                      mAppearance.grpFolderLayout );
+
+  QImage preLong( locate("data", "kmail/pics/kmlongfolder.png") );
+  QImage preSmall( locate("data", "kmail/pics/kmsmallfolder.png") );
+
+  QMimeSourceFactory::defaultFactory()->setImage( "longfoldimg", preLong );
+  QMimeSourceFactory::defaultFactory()->setImage( "smallfoldimg", preSmall );
+
+  QWhatsThis::add(mAppearance.longFolderRadio,
+                  i18n("<qt>Changes the layout of KMail's main window "
+                       "so the folder view will use the whole space "
+                       "on the left appearing as a panel.<br>"
+                       "<center><img source=\"longfoldimg\"></center></qt>") );
+
+  QWhatsThis::add(mAppearance.smallFolderRadio,
+                  i18n("<qt>Changes the layout of KMail's main window"
+                       "so the message view will use the whole space"
+                       "on the bottom leaving less space for the folder view."
+                       "<br><center><img source=\"smallfoldimg\"></center></qt>") );
+
+  vboxlay->addWidget( mAppearance.longFolderRadio );
+  vboxlay->addWidget( mAppearance.smallFolderRadio );
 
   QButtonGroup *threadGroup = new QButtonGroup( i18n("Message header threading options"), page3 );
   vlay->addWidget( threadGroup );
@@ -1723,7 +1756,7 @@ void ConfigureDialog::setupAppearancePage( void )
   {
     KConfigGroupSaver saver(config, "Geometry");
     state = config->readBoolEntry( "longFolderList", false );
-    mAppearance.longFolderCheck->setChecked( state );
+    mAppearance.longFolderRadio->setChecked( state );
 
     state = config->readBoolEntry( "nestedMessages", false );
     mAppearance.nestedMessagesCheck->setChecked( state );
@@ -2007,7 +2040,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderRadio->setChecked( false );
+
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2034,7 +2068,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderRadio->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
@@ -2060,7 +2094,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderRadio->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.rdDateLocalized->setChecked( true );
@@ -2072,7 +2106,7 @@ void ConfigureDialog::installProfile( void )
 
     mAppearance.customColorCheck->setChecked( false );
 
-    mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.longFolderRadio->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
     mAppearance.rdDateCtime->setChecked( true );
@@ -2266,7 +2300,7 @@ void ConfigureDialog::slotDoApply( bool everything )
 
     {
       KConfigGroupSaver saver(config, "Geometry");
-      bool longFolderList = mAppearance.longFolderCheck->isChecked();
+      bool longFolderList = mAppearance.longFolderRadio->isChecked();
       config->writeEntry( "longFolderList", longFolderList );
 
       bool nestedMessages = mAppearance.nestedMessagesCheck->isChecked();
