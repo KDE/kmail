@@ -1450,11 +1450,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
   // extract where to send to:
   QString receiptTo = headerField("Disposition-Notification-To");
   if ( receiptTo.stripWhiteSpace().isEmpty() ) return 0;
-#if QT_VERSION >= 0x030100
   receiptTo.remove( '\n' );
-#else
-  receiptTo.replace(QRegExp("\\n"),"");
-#endif
 
 
   MDN::SendingMode s = MDN::SentAutomatically; // set to manual if asked user
