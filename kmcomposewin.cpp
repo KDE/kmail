@@ -799,7 +799,7 @@ void KMComposeWin::setupActions(void)
                         CTRL+Key_Return,
                         this, SLOT(slotSendLater()), actionCollection(),
                         "send_default");
-    (void) new KAction (i18n("S&end Now"), "mail_send", 0,
+    (void) new KAction (i18n("&Send Now"), "mail_send", 0,
                         this, SLOT(slotSendNow()),
                         actionCollection(), "send_alternative");
   }
@@ -810,13 +810,17 @@ void KMComposeWin::setupActions(void)
   (void) new KAction (i18n("&Insert File..."), "fileopen", 0,
                       this,  SLOT(slotInsertFile()),
                       actionCollection(), "insert_file");
-  (void) new KAction (i18n("Address &Book..."), "contents",0,
+  (void) new KAction (i18n("&Address Book..."), "contents",0,
                       this, SLOT(slotAddrBook()),
-                      actionCollection(), "addresbook");
+                      actionCollection(), "addressbook");
   (void) new KAction (i18n("&New Composer..."), "mail_new",
                       KStdAccel::shortcut(KStdAccel::New),
                       this, SLOT(slotNewComposer()),
                       actionCollection(), "new_composer");
+  (void) new KAction (i18n("New Main &Window..."), "window_new", 0,
+                      this, SLOT(slotNewMailReader()),
+                      actionCollection(), "open_mailreader");
+
 
   //KStdAction::save(this, SLOT(), actionCollection(), "save_message");
   KStdAction::print (this, SLOT(slotPrint()), actionCollection());
