@@ -133,6 +133,10 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
   mAccumulators.setAutoDelete( true );
 }
 
+
+/* libkcal part of the interface, called from the resources using this
+ * when incidences are added or deleted */
+
 // Receive an iCal or vCard from the resource
 bool KMailICalIfaceImpl::addIncidence( const QString& type,
                                        const QString& folder,
@@ -636,6 +640,9 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
   return aMap;
 }
 
+
+/* Called when a message that was downloaded from an online imap folder
+ * arrives. Needed when listing incidences on online account folders. */
 void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
 {
   if( !msg ) return;
@@ -675,6 +682,7 @@ void KMailICalIfaceImpl::slotMessageRetrieved( KMMessage* msg )
   }
 }
 
+/* ical/vcard version of listing all available subresources */
 QStringList KMailICalIfaceImpl::subresources( const QString& type )
 {
   QStringList lst;
@@ -697,6 +705,7 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
   return lst;
 }
 
+/* kolab/xml version of listing all available subresources */
 QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKolab( const QString& contentsType )
 {
   QValueList<SubResource> subResources;
@@ -727,6 +736,7 @@ QValueList<KMailICalIfaceImpl::SubResource> KMailICalIfaceImpl::subresourcesKola
   return subResources;
 }
 
+/* Used by the resource to query whether folders are writable. */
 bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
                                            const QString& resource )
 {
@@ -738,6 +748,7 @@ bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
   return !f->isReadOnly();
 }
 
+/* update a list of uid/content pairs of a given type in a given folder. */
 bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
                                  const QStringList& entries )
 {
@@ -769,6 +780,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   return true;
 }
 
+/* ical/vcard version */
 bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
                                  const QString& uid, const QString& entry )
 {
@@ -806,6 +818,7 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   return rc;
 }
 
+/* kolab version */
 Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
                                      Q_UINT32 sernum,
                                      const QString& subject,
@@ -980,6 +993,12 @@ KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
   mResourceQuiet = quiet;
   return url;
 }
+
+// ============================================================================
+
+/* KMail part of the interface. These slots are connected to the resource
+ * folders and inform us of folders or incidences in them changing, being 
+ * added or going away. */
 
 void KMailICalIfaceImpl::slotFolderRemoved( KMFolder* folder )
 {
