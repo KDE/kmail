@@ -2642,7 +2642,9 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   // row 0: help text
   glay->addMultiCellWidget( new QLabel( i18n("The following placeholders are "
 					     "supported in the reply phrases:\n"
-					     "%D=date, %S=subject, %F=sender, "
+					     "%D=date, %S=subject, \n"
+                                             "%e=sender's address, %F=sender's name, %f=sender's initials,\n"
+                                             "%T=recipient's name, %t=recipient's name and address\n"
 					     "%%=percent sign, %_=space, "
 					     "%L=linebreak"), this ),
 			    0, 0, 0, 2 ); // row 0; cols 0..2
