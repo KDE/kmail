@@ -1364,7 +1364,9 @@ void KMFolder::setStatus(int idx, KMMsgStatus status)
 }
 
 void KMFolder::setRDict(KMMsgDictREntry *rentry) {
-  assert(!mRDict);
+  if (rentry == mRDict)
+	return;
+  KMMsgDict::deleteRentry(mRDict);
   mRDict = rentry; 
 }
 

@@ -519,11 +519,7 @@ bool KMMsgDict::hasFolderIds(const KMFolder *folder)
 
 bool KMMsgDict::removeFolderIds(KMFolder *folder)
 {
-  KMMsgDictREntry *rentry = folder->rDict();
-  if (rentry) {
-    folder->setRDict(0);
-    delete rentry;
-  }
+  folder->setRDict(0);
   QString filename = getFolderIdsLocation(folder);
   return unlink(filename.local8Bit());
 }
