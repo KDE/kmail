@@ -180,6 +180,11 @@ int main(int argc, char *argv[])
   // import i18n data from libraries:
   KMail::insertLibraryCatalogues();
 
+#if !KDE_IS_VERSION( 3, 1, 92 ) // replacement is now in KMKernel::config()
+  // Check that all updates have been run on the config file:
+  KMail::checkConfigUpdates();
+#endif
+
   // Make sure that the KNotify Daemon is running (this is necessary for people
   // using KMail without KDE)
   KNotifyClient::startDaemon();

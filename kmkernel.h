@@ -7,6 +7,7 @@
 #include <qstring.h>
 
 #include <kconfig.h>
+#include <kdeversion.h>
 
 #include "kmailIface.h"
 
@@ -270,7 +271,11 @@ private:
   bool allowedToExpire;
   bool the_firstInstance;
   static KMKernel *mySelf;
+#if KDE_IS_VERSION( 3, 2, 0 )
   KSharedConfig::Ptr mConfig;
+#else
+  static KConfig * myConfig;
+#endif
   QTextCodec *netCodec;
   KProgress *mProgress;
   KPassivePopup *mCleanupPopup;
