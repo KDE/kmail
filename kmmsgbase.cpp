@@ -564,9 +564,10 @@ namespace {
     char * d = result.data();
 
     for ( const char * s = header.data() ; *s ; )
-      if ( *s == '\r' ) // ignore
+      if ( *s == '\r' ) { // ignore
+	++s;
 	continue;
-      else if ( *s == '\n' ) { // unfold
+      } else if ( *s == '\n' ) { // unfold
 	while ( isBlank( *++s ) );
 	*d++ = ' ';
       } else
