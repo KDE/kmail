@@ -44,11 +44,15 @@ namespace KMail {
 
 SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
     KAccount * acct )
-  : KSubscription( parent, caption, acct, User1, QString::null, false )
+  : KSubscription( parent, caption, acct, User1, QString::null, true )
 {
   // hide unneeded checkboxes
   hideTreeCheckbox();
   hideNewOnlyCheckbox();
+
+  // hide the description column
+  groupView->setColumnWidthMode(mDescrColumn, QListView::Manual);
+  groupView->hideColumn(mDescrColumn);
 
   // connect to folderlisting
   ImapAccountBase* iaccount = static_cast<ImapAccountBase*>(acct);
@@ -76,52 +80,33 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
   bool onlySubscribed = jobData.onlySubscribed;
   ImapAccountBase::ListType type = onlySubscribed ? 
     ImapAccountBase::ListSubscribedNoCheck : ImapAccountBase::List;
-  mLoading = true;
   ImapAccountBase* ai = static_cast<ImapAccountBase*>(mAcct);
-  QString text;
-  for (uint i = 0; i < mSubfolderNames.count(); i++)
+  GroupItem *tmp = 0;
+  for (uint i = 0; i < mSubfolderNames.count(); ++i)
   {
     GroupItem *item = 0;
     if (!onlySubscribed && mSubfolderPaths.size() > 0)
     {
-      GroupItem *parent = 0;
-      // we need to find our root-item
-      // remove the name (and the separator) from the path 
-      int start = mSubfolderPaths[i].length() - (mSubfolderNames[i].length()+2);
-      int length = mSubfolderNames[i].length()+1;
-      if (start < 0) start = 0;
-      QString compare = mSubfolderPaths[i];
-      compare.remove(start, length);
-
-      QListViewItemIterator it( groupView );
-      GroupItem *tmp = 0;
-      GroupItem *oldItem = 0;
-      bool create = true;
-      while ( it.current() != 0 )
+      // the account does not know the delimiter
+      if (mDelimiter.isEmpty())
       {
-        // compare it with each item to find the current root
-        tmp = static_cast<GroupItem*>(it.current());
-        if (tmp->info().path == mSubfolderPaths[i]) {
-          // this item already exists
-          create = false;
-          oldItem = tmp;
-        }
-        if (tmp->info().path == compare) {
-          parent = tmp;
-        }
-        ++it;
-      }
-      if (!parent && compare != "/")
-      {
-        // the parent is not available
-        // this happens when the folders do not arrive in hierarchical order
-
-        // the account does not know the delimiter so we have to reconstruct it
-        // we assume that is has length 1
         int start = mSubfolderPaths[i].findRev(mSubfolderNames[i]);
-        QString delimiter = mSubfolderPaths[i].mid(start-1, 1);
-        // create each parent in advance
-        QStringList folders = QStringList::split(delimiter, compare);
+        if (start > 1)
+          mDelimiter = mSubfolderPaths[i].mid(start-1, 1);
+      }
+
+      // get the parent
+      GroupItem *parent = 0;
+      GroupItem *oldItem = 0;
+      QString parentPath;
+      findParentItem( mSubfolderNames[i], mSubfolderPaths[i], parentPath, &parent, &oldItem );
+
+      if (!parent && parentPath != "/")
+      {
+        // the parent is not available and it's no root-item
+        // this happens when the folders do not arrive in hierarchical order
+        // so we create each parent in advance
+        QStringList folders = QStringList::split(mDelimiter, parentPath);
         uint i = 0;
         for ( QStringList::Iterator it = folders.begin(); it != folders.end(); ++it ) 
         {
@@ -141,18 +126,21 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
           QStringList tmpPath;
           for ( uint j = 0; j <= i; ++j )
             tmpPath << folders[j];
-          QString path = tmpPath.join(delimiter);
+          QString path = tmpPath.join(mDelimiter);
           if (!path.startsWith("/"))
             path = "/" + path;
           if (!path.endsWith("/"))
             path = path + "/";
           info.path = path;
+          info.description = path;
           item = 0;
           if (folders.count() > 1)
           {
             // we have to create more then one level, so better check if this
             // folder already exists somewhere
             QListViewItemIterator it( groupView );
+            if (parent) 
+              it = (QListViewItemIterator( parent ));
             while ( it.current() != 0 )
             {
               tmp = static_cast<GroupItem*>(it.current());
@@ -183,6 +171,7 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
         info.name = i18n("inbox");
       info.subscribed = false;
       info.path = mSubfolderPaths[i];
+      info.description = mSubfolderPaths[i];
       // only checkable when the folder is selectable
       bool checkable = ( mSubfolderMimeTypes[i] == "inode/directory" ) ? false : true;
       // create a new item
@@ -191,7 +180,7 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
       else
         item = new GroupItem(folderTree(), info, this, checkable);
 
-      if (!create && oldItem)
+      if (oldItem)
       {
         // move the old childs to the new item
         QPtrList<QListViewItem> itemsToMove;
@@ -216,17 +205,9 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
     } else if (onlySubscribed)
     {
       // find the item
-      QListViewItemIterator it( groupView );
-      while ( it.current() != 0 )
-      {
-        item = static_cast<GroupItem*>(it.current());
-        if (item->info().path == mSubfolderPaths[i])
-        {
-          // subscribed
-          item->setOn(true);
-        }
-        ++it;
-      }
+      QListViewItem *item = groupView->findItem(mSubfolderPaths[i], 1);
+      if (item)
+        static_cast<GroupItem*>(item)->setOn(true);
     }
   }
   if ( jobData.inboxOnly ) {
@@ -236,6 +217,34 @@ void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames,
     // activate buttons and stuff
     slotLoadingComplete();
   }
+}
+
+//------------------------------------------------------------------------------
+void SubscriptionDialog::findParentItem( QString &name, QString &path, QString &parentPath,
+    GroupItem **parent, GroupItem **oldItem )
+{
+  // remove the name (and the separator) from the path to get the parent path
+  int start = path.length() - (name.length()+2);
+  int length = name.length()+1;
+  if (start < 0) start = 0;
+  parentPath = path;
+  parentPath.remove(start, length);
+
+  if (mDelimiter.isEmpty())
+    return;
+  
+  // find the parent by it's path
+  if (path.find(mDelimiter) != -1)
+  {
+    QListViewItem *possibleParent = groupView->findItem(parentPath, 1);
+    if (possibleParent)
+      *parent = static_cast<GroupItem*>(possibleParent);
+  }
+
+  // now we have to check if the item already exists
+  QListViewItem *possibleItem = groupView->findItem(path, 1);
+  if (possibleItem)
+    *oldItem = static_cast<GroupItem*>(possibleItem);
 }
 
 //------------------------------------------------------------------------------

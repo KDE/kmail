@@ -46,6 +46,10 @@ namespace KMail {
     public:
       SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct );
 
+    protected:
+      void findParentItem ( QString &name, QString &path, QString &compare,
+                       GroupItem **parent, GroupItem **oldItem );
+
     public slots:
       /**
        * get the listing from the imap-server
@@ -68,6 +72,9 @@ namespace KMail {
        * Reimplemented to cancel remaining jobs
        */ 
       virtual void slotCancel();    
+
+    private:
+      QString mDelimiter;
 
   };
 
