@@ -231,18 +231,34 @@ public:
   virtual void paintCell( QPainter * p, const QColorGroup & cg,
                           int column, int width, int align );
 
+  void setUncompressedMimeType( QCString type, QCString subtype );
+  void uncompressedMimeType( QCString &type, QCString &subtype );
+  void setUncompressedCodec( QCString codec );
+  QCString uncompressedCodec();
+  
+signals:
+  void compress( int );
+  void uncompress( int );
+                            
 protected:
   void enableCryptoCBs(bool on);
   void setEncrypt(bool on);
   bool isEncrypt();
   void setSign(bool on);
   bool isSign();
+  void setCompress(bool on);
+  bool isCompress();
 
+private slots:
+  void slotCompress();
+  
 private:
   QListView* mListview;
   QCheckBox* mCBEncrypt;
   QCheckBox* mCBSign;
+  QCheckBox* mCBCompress;
   bool mCBSignEnabled, mCBEncryptEnabled;
+  QCString mType, mSubtype, mCodec;
 };
 
 
@@ -689,7 +705,8 @@ protected:
    /**
     * Updates an item in the QListView to represnet a given message part
     */
-   void msgPartToItem(const KMMessagePart* msgPart, KMAtmListViewItem *lvi);
+   void msgPartToItem(const KMMessagePart* msgPart, KMAtmListViewItem *lvi,
+        bool loadDefaults = true );
 
   /**
    * Open addressbook and append selected addresses to the given
@@ -742,6 +759,13 @@ private:
    */
   void doSend(int sendNow=-1, bool saveInDrafts = false);
 
+protected slots:
+   /**
+    * Compress an attachemnt with the given index
+    */
+    void compressAttach(int idx);
+    void uncompressAttach(int idx);
+
 protected:
   QWidget   *mMainWidget;
   QComboBox *mTransport;
@@ -766,8 +790,10 @@ protected:
   KMail::AttachmentListView* mAtmListView;
   int mAtmColEncrypt;
   int mAtmColSign;
+  int mAtmColCompress;
   int mAtmEncryptColWidth;
   int mAtmSignColWidth;
+  int mAtmCompressColWidth;
   QPtrList<QListViewItem> mAtmItemList;
   QPtrList<KMMessagePart> mAtmList;
   QPopupMenu *mAttachMenu;
