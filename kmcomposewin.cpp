@@ -1708,7 +1708,11 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
       if( ourFineBodyPart.originalContentTypeStr() ) {
         msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
         msg->headers().Parse();
-      }
+kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from originalContentTypeStr()" << endl;
+      } else {
+        msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
+kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from typeStr()/subtypeStr()" << endl;
+      }    
       msg->setHeaderField( "Content-Transfer-Encoding",
                             ourFineBodyPart.contentTransferEncodingStr() );
       msg->setHeaderField( "Content-Description",
@@ -1716,6 +1720,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
       msg->setHeaderField( "Content-Disposition",
                             ourFineBodyPart.contentDisposition() );
       msg->setBody( ourFineBodyPart.body() );
+kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body adjusted" << endl;
     }
     else
     {
