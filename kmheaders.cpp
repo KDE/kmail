@@ -1964,6 +1964,7 @@ int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew, bool accept
 //-----------------------------------------------------------------------------
 void KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
+    if ( !mFolder->countUnread() ) return;
     int i = findUnread(TRUE, -1, false, acceptCurrent);
     if ( i < 0 && mLoopOnGotoUnread )
       // this assumes that (0 == firstChild()->msgId()) !
@@ -1982,11 +1983,12 @@ void KMHeaders::ensureCurrentItemVisible()
 //-----------------------------------------------------------------------------
 void KMHeaders::prevUnreadMessage()
 {
+  if ( !mFolder->countUnread() ) return;
   int i = findUnread(FALSE);
   if ( i < 0 && mLoopOnGotoUnread ) {
-    KMHeaderItem * lastItem = static_cast<KMHeaderItem*>(lastChild());
-    if ( lastItem )
-      i = findUnread(FALSE, lastItem->msgId() ); // from bottom
+    KMHeaderItem * last = static_cast<KMHeaderItem*>(lastItem());
+    if ( last )
+      i = findUnread(FALSE, last->msgId() ); // from bottom
   }
   setCurrentMsg(i);
   ensureCurrentItemVisible();
