@@ -7,7 +7,9 @@
 #include "kstatusbar.h"
 #include "kmkernel.h"
 #include "kmsender.h"
+#include "progressdialog.h"
 #include "statusbarprogresswidget.h"
+#include "broadcaststatus.h"
 #include "kmglobal.h"
 #include "kmacctmgr.h"
 #include <kapplication.h>
@@ -15,6 +17,7 @@
 #include <kedittoolbar.h>
 #include <kconfig.h>
 #include <kmessagebox.h>
+#include <kstringhandler.h>
 #include <kdebug.h>
 
 #include "kmmainwin.moc"
@@ -23,8 +26,12 @@ KMMainWin::KMMainWin(QWidget *)
     : KMainWindow( 0, "kmail-mainwindow#" ),
       mReallyClose( false )
 {
+  // Set this to be the group leader for all subdialogs - this means
+  // modal subdialogs will only affect this dialog, not the other windows
+  setWFlags( getWFlags() | WGroupLeader );
+
   kapp->ref();
-  mKMMainWidget = new KMMainWidget( this, "KMMainWidget", actionCollection() );
+  mKMMainWidget = new KMMainWidget( this, "KMMainWidget", this, actionCollection() );
   mKMMainWidget->resize( 450, 600 );
   setCentralWidget(mKMMainWidget);
   setupStatusBar();
@@ -41,19 +48,19 @@ KMMainWin::KMMainWin(QWidget *)
 
   KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
   createGUI( "kmmainwin.rc", false );
+  // Don't use conserveMemory() because this renders dynamic plugging
+  // of actions unusable!
 
-  conserveMemory();
   applyMainWindowSettings(KMKernel::config(), "Main Window");
-  connect(kmkernel->msgSender(), SIGNAL(statusMsg(const QString&)),
-	  this, SLOT(statusMsg(const QString&)));
+
+  connect( KPIM::BroadcastStatus::instance(), SIGNAL( statusMsg( const QString& ) ),
+           this, SLOT( displayStatusMsg(const QString&) ) );
+
   connect(kmkernel, SIGNAL(configChanged()),
     this, SLOT(slotConfigChanged()));
-  connect(mKMMainWidget->messageView(), SIGNAL(statusMsg(const QString&)),
-	  this, SLOT(htmlStatusMsg(const QString&)));
+
   connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
 	  SLOT(setCaption(const QString&)) );
-  connect(mKMMainWidget, SIGNAL(modifiedToolBarConfig()),
-	   SLOT(slotUpdateToolbars()) );
 
   // Enable mail checks again (see destructor)
   kmkernel->enableMailCheck();
@@ -88,27 +95,13 @@ KMMainWin::~KMMainWin()
   }
 }
 
-void KMMainWin::statusMsg(const QString& aText)
-{
-  mLastStatusMsg = aText;
-  displayStatusMsg(aText);
-}
-
-void KMMainWin::htmlStatusMsg(const QString& aText)
-{
-  if (aText.isEmpty()) displayStatusMsg(mLastStatusMsg);
-  else displayStatusMsg(aText);
-}
-
 void KMMainWin::displayStatusMsg(const QString& aText)
 {
-  if ( !statusBar() || !littleProgress) return;
-  QString text = " " + aText + " ";
-  int statusWidth = statusBar()->width() - littleProgress->width()
-    - fontMetrics().maxWidth();
-
-  while (!text.isEmpty() && fontMetrics().width( text ) >= statusWidth)
-    text.truncate( text.length() - 1);
+  if ( !statusBar() || !mLittleProgress) return;
+  int statusWidth = statusBar()->width() - mLittleProgress->width()
+                    - fontMetrics().maxWidth();
+  QString text = KStringHandler::rPixelSqueeze( " " + aText, fontMetrics(),
+                                                statusWidth );
 
   // ### FIXME: We should disable richtext/HTML (to avoid possible denial of service attacks),
   // but this code would double the size of the satus bar if the user hovers
@@ -122,6 +115,9 @@ void KMMainWin::displayStatusMsg(const QString& aText)
 
 void KMMainWin::slotEditToolbars()
 {
+  // remove dynamically created actions before editing
+  mKMMainWidget->clearFilterActions();
+
   saveMainWindowSettings(KMKernel::config(), "Main Window");
   KEditToolbar dlg(actionCollection(), "kmmainwin.rc");
 
@@ -129,6 +125,8 @@ void KMMainWin::slotEditToolbars()
 	   SLOT(slotUpdateToolbars()) );
 
   dlg.exec();
+  // plug dynamically created actions again
+  mKMMainWidget->initializeFilterActions();
 }
 
 void KMMainWin::slotUpdateToolbars()
@@ -140,12 +138,18 @@ void KMMainWin::slotUpdateToolbars()
 void KMMainWin::setupStatusBar()
 {
   mMessageStatusId = 1;
-  littleProgress = mainKMWidget()->progressWidget();
 
-  statusBar()->addWidget( littleProgress, 0 , true );
+  /* Create a progress dialog and hide it. */
+  mProgressDialog = new KPIM::ProgressDialog( statusBar(), this );
+  mProgressDialog->hide();
+
+  mLittleProgress = new StatusbarProgressWidget( mProgressDialog, statusBar() );
+  mLittleProgress->show();
+
+  statusBar()->addWidget( mLittleProgress, 0 , true );
   statusBar()->insertItem(i18n(" Initializing..."), 1, 1 );
   statusBar()->setItemAlignment( 1, AlignLeft | AlignVCenter );
-  littleProgress->show();
+  mLittleProgress->show();
 }
 
 /** Read configuration options after widgets are created. */
@@ -171,7 +175,11 @@ void KMMainWin::slotConfigChanged()
 }
 
 //-----------------------------------------------------------------------------
-bool KMMainWin::queryClose() {
+bool KMMainWin::queryClose()
+{
+  if ( kapp->sessionSaving() )
+    writeConfig();
+
   if ( kmkernel->shuttingDown() || kapp->sessionSaving() || mReallyClose )
     return true;
   return kmkernel->canQueryClose();

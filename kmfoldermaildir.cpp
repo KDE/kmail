@@ -66,17 +66,29 @@ int KMFolderMaildir::canAccess()
 
   assert(!folder()->name().isEmpty());
 
-  if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0)
-    return 1;
+  QString sBadFolderName;
+  if (access(QFile::encodeName(location()), R_OK | W_OK | X_OK) != 0) {
+    sBadFolderName = location();
+  } else if (access(QFile::encodeName(location() + "/new"), R_OK | W_OK | X_OK) != 0) {
+    sBadFolderName = location() + "/new";
+  } else if (access(QFile::encodeName(location() + "/cur"), R_OK | W_OK | X_OK) != 0) {
+    sBadFolderName = location() + "/cur";
+  } else if (access(QFile::encodeName(location() + "/tmp"), R_OK | W_OK | X_OK) != 0) {
+    sBadFolderName = location() + "/tmp";
+  }
 
-  if (access(QFile::encodeName(location() + "/new"), R_OK | W_OK | X_OK) != 0)
-    return 1;
-
-  if (access(QFile::encodeName(location() + "/cur"), R_OK | W_OK | X_OK) != 0)
-    return 1;
-
-  if (access(QFile::encodeName(location() + "/tmp"), R_OK | W_OK | X_OK) != 0)
-    return 1;
+  if ( !sBadFolderName.isEmpty() ) {
+    int nRetVal = QFile::exists(sBadFolderName) ? EPERM : ENOENT;
+    KCursorSaver idle(KBusyPtr::idle());
+    if ( nRetVal == ENOENT )
+      KMessageBox::sorry(0, i18n("Error opening %1; this folder is missing.")
+                         .arg(sBadFolderName));
+    else
+      KMessageBox::sorry(0, i18n("Error opening %1; either this is not a valid "
+                                 "maildir folder, or you do not have sufficient access permissions.")
+                         .arg(sBadFolderName));
+    return nRetVal;
+  }
 
   return 0;
 }
@@ -93,12 +105,9 @@ int KMFolderMaildir::open()
 
   assert(!folder()->name().isEmpty());
 
-  if (canAccess() != 0) {
-      KCursorSaver idle(KBusyPtr::idle());
-      KMessageBox::sorry(0, i18n("Error opening %1; either this is not a valid "
-                                 "maildir folder or you do not have sufficient access permissions.")
-                         .arg(name()));
-      return EPERM;
+  rc = canAccess();
+  if ( rc != 0 ) {
+      return rc;
   }
 
   if (!folder()->path().isEmpty())
@@ -509,10 +518,9 @@ if( fileD1.open( IO_WriteOnly ) ) {
 KMMessage* KMFolderMaildir::readMsg(int idx)
 {
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
-  KMMessage *msg = new KMMessage(*mi);
-
+  KMMessage *msg = new KMMessage(*mi); // note that mi is deleted by the line below
+  mMsgList.set(idx,&msg->toMsgBase()); // done now so that the serial number can be computed
   msg->fromDwString(getDwString(idx));
-  mMsgList.set(idx,&msg->toMsgBase());
   return msg;
 }
 
@@ -586,7 +594,13 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
 
   // open the file and get a pointer to it
   QFile f(file);
-  if (f.open(IO_ReadOnly) == false) return;
+  if ( f.open( IO_ReadOnly ) == false ) {
+    kdWarning(5006) << "The file '" << QFile::encodeName(dir) << "/" << file
+                    << "' could not be opened for reading the message. "
+                       "Please check ownership and permissions."
+                    << endl;
+    return;
+  }
 
   char line[MAX_LINE];
   bool atEof    = false;

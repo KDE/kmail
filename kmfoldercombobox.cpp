@@ -65,31 +65,25 @@ void KMFolderComboBox::showImapFolders(bool shown)
 void KMFolderComboBox::createFolderList(QStringList *names,
                                         QValueList<QGuardedPtr<KMFolder> > *folders)
 {
+  kmkernel->folderMgr()->createI18nFolderList( names, folders );
+  if ( !mOutboxShown ) {
+    QValueList< QGuardedPtr<KMFolder> >::iterator folderIt = folders->begin();
+    QStringList::iterator namesIt = names->begin();
+    for ( ; folderIt != folders->end(); ++folderIt, ++namesIt ) {
+      KMFolder *folder = *folderIt;
+      if ( folder == kmkernel->outboxFolder() )
+        break;
+    }
+    if ( folderIt != folders->end() ) {
+      folders->remove( folderIt );
+      names->remove( namesIt );
+    }
+  }
+
   if (mImapShown)
     kmkernel->imapFolderMgr()->createI18nFolderList( names, folders );
 
   kmkernel->dimapFolderMgr()->createI18nFolderList( names, folders );
-  kmkernel->folderMgr()->createFolderList( names, folders );
-  uint i = 0;
-  while (i < folders->count())
-  {
-    if ((*(folders->at(i)))->isSystemFolder()
-	&& (*(folders->at(i)))->folderType() != KMFolderTypeImap
-	&& (*(folders->at(i)))->folderType() != KMFolderTypeCachedImap)
-    {
-      folders->remove(folders->at(i));
-      names->remove(names->at(i));
-    }
-    else i++;
-  }
-
-  folders->prepend(kmkernel->draftsFolder());
-  folders->prepend(kmkernel->trashFolder());
-  folders->prepend(kmkernel->sentFolder());
-  if (mOutboxShown) folders->prepend(kmkernel->outboxFolder());
-  folders->prepend(kmkernel->inboxFolder());
-  for (int i = ((mOutboxShown) ? 4 : 3); i >= 0; i--)
-    names->prepend((*(folders->at(i)))->label());
 }
 
 //-----------------------------------------------------------------------------
