@@ -333,6 +333,7 @@ void KMKernel::init()
   the_addrBook  = new KMAddrBook;
 
   initFolders(cfg);
+  the_folderMgr->setBasePath(foldersPath);
   the_acctMgr->readConfig();
   the_filterMgr->readConfig();
   the_addrBook->readConfig();
