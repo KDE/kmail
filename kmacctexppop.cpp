@@ -349,7 +349,7 @@ void KMAcctExpPop::slotCancel()
 
 void KMAcctExpPop::slotProcessPendingMsgs()
 {
-  QString prefix = "pop:3//" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
+  QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + mHost
     + ":" + QString("%1").arg(mPort);
   bool addedOk;
   QValueList<KMMessage*>::Iterator cur = msgsAwaitingProcessing.begin();
@@ -430,6 +430,14 @@ void KMAcctExpPop::slotJobFinished() {
     // one job->get call.
     ss->start( 0, true );
   }
+  else if (stage == Dele) {
+    debug( "stage == Dele" );
+    QString prefix = "pop3://" + mLogin + ":" + decryptStr(mPasswd) + "@" + 
+      mHost + ":" + QString("%1").arg(mPort);
+    job = KIO::get(  prefix + "/commit" );
+    connectJob();
+    stage = Quit;
+  }
   else if (stage == Quit) {
     debug( "stage == Quit" );
     job = 0L;
@@ -476,9 +484,8 @@ void KMAcctExpPop::slotGetNextMsg()
     if (mLeaveOnServer || idsOfMsgsToDelete.isEmpty())
       job = KIO::get(  prefix + "/commit" );
     else {
-      // sanders: TODO: Reimplement this properly
-      //      job->del( idsOfMsgsToDelete );
-      job = KIO::get(  prefix + "/commit" );
+      stage = Dele;
+      job = KIO::del( idsOfMsgsToDelete );
     }
   }
   else {

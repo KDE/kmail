@@ -20,6 +20,7 @@ class KApplication;
 class DwPopClient;
 class KMMessage;
 class QTimer;
+class KURL::List;
 
 #define KMAcctExpPopInherited KMAccount
 
@@ -72,7 +73,7 @@ public:
 
   
 protected:
-  enum Stage { Idle, List, Uidl, Retr, Quit };
+  enum Stage { Idle, List, Uidl, Retr, Dele, Quit };
   friend class KMAcctMgr;
   friend class KMPasswdDialog;
   KMAcctExpPop(KMAcctMgr* owner, const char* accountName);
@@ -107,7 +108,7 @@ protected:
   QStringList uidsOfMsgs;
   QStringList uidsOfSeenMsgs;
   QStringList uidsOfNextSeenMsgs;
-  QStringList idsOfMsgsToDelete;
+  KURL::List idsOfMsgsToDelete;
   int indexOfCurrentMsg;
   QValueList<KMMessage*> msgsAwaitingProcessing;
   QStringList msgIdsAwaitingProcessing;
