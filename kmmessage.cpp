@@ -1829,7 +1829,10 @@ void KMMessage::removeHeaderField(const QCString& aName)
 //-----------------------------------------------------------------------------
 void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
 {
+  if (aName.isEmpty()) return;
+
   DwHeaders& header = mMsg->Headers();
+
   DwString str;
   DwField* field;
   QCString aValue = "";
@@ -1840,9 +1843,6 @@ void KMMessage::setHeaderField(const QCString& aName, const QString& bValue)
        encoding = "utf-8";
     aValue = encodeRFC2047String(bValue, encoding);
   }
-
-  if (aName.isEmpty()) return;
-
   str = aName;
   if (str[str.length()-1] != ':') str += ": ";
   else str += " ";

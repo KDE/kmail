@@ -1343,6 +1343,7 @@ bool KMComposeWin::applyChanges(void)
   }
   mMsg->setCharset(mCharset);
 
+//  kdDebug(5006) << "\n\n\n\nKMComposeWin::applyChanges: 1" << endl;
   mMsg->setTo(to());
   mMsg->setFrom(from());
   mMsg->setCc(cc());
@@ -1352,7 +1353,7 @@ bool KMComposeWin::applyChanges(void)
 
   const KMIdentity & id
     = kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
-  kdDebug(5006) << "KMComposeWin::applyChanges: " << mFcc->currentText() << "=="
+  kdDebug(5006) << "\n\n\n\nKMComposeWin::applyChanges: " << mFcc->currentText() << "=="
             << id.fcc() << "?" << endl;
 
   KMFolder *f = mFcc->getFolder();
@@ -1550,7 +1551,6 @@ bool KMComposeWin::applyChanges(void)
       }
     }
   }
-
   // This c-string (init empty here) is set by *first* testing of expiring
   // signature certificate and stops us from repeatedly asking same questions.
   QCString signCertFingerprint;
@@ -1562,7 +1562,6 @@ bool KMComposeWin::applyChanges(void)
     bOk = (composeMessage( pgpUserId,
                            *mMsg, doSign, doEncrypt, false,
                            signCertFingerprint ) == Kpgp::Ok);
-
   if( bOk ) {
     bool saveMessagesEncrypted = mSelectedCryptPlug ? mSelectedCryptPlug->saveMessagesEncrypted()
                                                     : true;
@@ -1596,17 +1595,16 @@ bool KMComposeWin::applyChanges(void)
 
         if( KMessageBox::Yes == KMessageBox::warningYesNo(this,
                  "<qt><p><b>" + headTxt + "</b><br>" + encrTxt + "</p><p>"
-                 + footTxt + "</p><p><b>" + question + "</b></p></qt>"),
+                 + footTxt + "</p><p><b>" + question + "</b></p></qt>",
                  i18n("Unsafe S/MIME Configuration"),
                  KGuiItem( i18n("Save &Unencrypted") ),
-                 KGuiItem( i18n("Save &Encrypted") ) ) {
+                 KGuiItem( i18n("Save &Encrypted") ) ) ) {
             saveMessagesEncrypted = false;
         }
       }
     }
     kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Send encrypted=" << doEncrypt << "  Store encrypted=" << saveMessagesEncrypted << endl;
 #endif
-
     if( doEncrypt && ! saveMessagesEncrypted ){
       if( mSelectedCryptPlug ){
         for( KMAtmListViewItem* entry = (KMAtmListViewItem*)mAtmItemList.first();
@@ -1625,7 +1623,6 @@ kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypte
       mMsg->setUnencryptedMsg( extraMessage );
     }
   }
-
   if( bOk ) {
     if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
     mEdtFrom->setEdited(FALSE);
@@ -1675,10 +1672,9 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
   theMessage.removeHeaderField("Content-Type");
   theMessage.removeHeaderField("Content-Transfer-Encoding");
   theMessage.setAutomaticFields(TRUE); // == multipart/mixed
-
+  
   // this is our *final* body part
   KMMessagePart newBodyPart;
-
 
   // this is the boundary depth of the surrounding MIME part
   int previousBoundaryLevel = 0;
@@ -1912,7 +1908,9 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
     }
 
     // run encrypting for public recipient(s)
-    if( result == Kpgp::Ok )
+    if( result == Kpgp::Ok ){
+      if( mSelectedCryptPlug->allwaysEncryptToSelf() )
+        recipientsWithoutBcc << from();
       result = encryptMessage( &theMessage,
                             recipientsWithoutBcc,
                             doSign, doEncrypt, encodedBody,
@@ -1921,6 +1919,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
                             earlyAddAttachments, allAttachmentsAreInBody,
                             newBodyPart,
                                signCertFingerprint );
+    }
     //        kdDebug(5006) << "###AFTER ENCRYPTION\"" << theMessage.asString() << "\""<<endl;
   }
   return result;
@@ -2176,23 +2175,40 @@ kdDebug(5006) << "                                 " << idx << ". attachment was
       }
     } else {
       if( ourFineBodyPart.originalContentTypeStr() ) {
+        //msg->headers().Assemble();
+        //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      A.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
         msg->headers().ContentType().FromString( ourFineBodyPart.originalContentTypeStr() );
-        msg->headers().Parse();
+        //msg->headers().Assemble();
+        //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      B.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
+        msg->headers().ContentType().Parse();
+        //msg->headers().Assemble();
+        //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      C.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
 kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from originalContentTypeStr()" << endl;
       } else {
         msg->headers().ContentType().FromString( ourFineBodyPart.typeStr() + "/" + ourFineBodyPart.subtypeStr() );
 kdDebug(5006) << "KMComposeWin::encryptMessage() : set top level Content-Type from typeStr()/subtypeStr()" << endl;
       }
+      //msg->headers().Assemble();
+      //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      D.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
       msg->setCharset( ourFineBodyPart.charset() );
+      //msg->headers().Assemble();
+      //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      E.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
       msg->setHeaderField( "Content-Transfer-Encoding",
                             ourFineBodyPart.contentTransferEncodingStr() );
+      //msg->headers().Assemble();
+      //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      F.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
       msg->setHeaderField( "Content-Description",
                             ourFineBodyPart.contentDescription() );
       msg->setHeaderField( "Content-Disposition",
                             ourFineBodyPart.contentDisposition() );
+                            
 kdDebug(5006) << "KMComposeWin::encryptMessage() : top level headers and body adjusted" << endl;
+
       // set body content
       msg->setBody( ourFineBodyPart.body() );
+      //kdDebug(5006) << "\n\n\n\n\n\n\nKMComposeWin::composeMessage():\n      99.:\n\n\n\n|||" << msg->asString() << "|||\n\n\n\n\n\n" << endl;
+      //msg->headers().Assemble();
+      //kdDebug(5006) << "\n\n\nKMComposeWin::composeMessage():\n      Z.:\n\n" << msg->headerAsString() << "|||\n\n\n\n\n" << endl;
     }
 
   }
