@@ -17,6 +17,7 @@
    <Action name="check_mail" />
    <Action name="check_mail_in" />
    <Action name="send_queued" />
+   <Action name="send_queued_via" />
    <Separator/>
    <Action name="file_quit" />
   </Menu>

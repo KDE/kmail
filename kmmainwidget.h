@@ -243,6 +243,7 @@ protected slots:
   void slotMailChecked( bool newMail, bool sendOnCheck,
                         const QMap<QString, int> & newInFolder );
   void getAccountMenu();
+  void getTransportMenu();
   void slotHelp();
   void slotNewMailReader();
   void slotFilter();
@@ -321,6 +322,7 @@ protected slots:
   void slotToggleTotalColumn();
   void slotSetEncoding();
   void slotSendQueued();
+  void slotSendQueuedVia( int item );
   void slotMsgPopup(KMMessage &msg, const KURL &aUrl, const QPoint&);
   void slotMarkAll();
   void slotMemInfo();
@@ -461,6 +463,7 @@ private:
   QValueList<int> mPanner1Sep, mPanner2Sep;
   KURL          mUrlCurrent;
   QPopupMenu	*mActMenu;
+  QPopupMenu    *mSendMenu;
   QPopupMenu	*mFileMenu;
 
   bool mLongFolderList;

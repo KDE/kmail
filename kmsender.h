@@ -72,7 +72,7 @@ public:
   virtual bool send(KMMessage* msg, short sendNow=-1);
 
   /** Start sending all queued messages. Returns TRUE on success. */
-  virtual bool sendQueued();
+  virtual bool sendQueued( const QString &customTransport = QString() );
 
   /** Returns TRUE if sending is in progress. */
   bool sending(void) const { return mSendInProgress; }
@@ -145,6 +145,7 @@ private:
   KMTransportInfo *mTransportInfo;
   KMPrecommand *mPrecommand;
 
+  QString mCustomTransport;
   bool mSentOk, mSendAborted;
   QString mErrorMsg;
   KMSendProc *mSendProc;

@@ -64,6 +64,7 @@ using KPIM::BroadcastStatus;
 #include "kmmainwin.h"
 #include "kmsystemtray.h"
 #include "imapaccountbase.h"
+#include "transportmanager.h"
 using KMail::ImapAccountBase;
 #include "vacation.h"
 using KMail::Vacation;
@@ -1608,7 +1609,14 @@ void KMMainWidget::slotSendQueued()
 {
   kmkernel->msgSender()->sendQueued();
 }
+ 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotSendQueuedVia( int item )
+{
+  QString customTransport = mSendMenu->text( item );
 
+  kmkernel->msgSender()->sendQueued( customTransport );
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotViewChange()
@@ -2163,6 +2171,19 @@ void KMMainWidget::getAccountMenu()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::getTransportMenu()
+{
+  QStringList availTransports;
+
+  mSendMenu->clear();
+  availTransports = KMail::TransportManager::transportNames();
+  QStringList::Iterator it;
+  int id = 0;
+  for(it = availTransports.begin(); it != availTransports.end() ; ++it, id++)
+    mSendMenu->insertItem((*it).replace("&", "&&"), id);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::setupActions()
 {
   //----- File Menu
@@ -2210,6 +2231,16 @@ void KMMainWidget::setupActions()
 
   (void) new KAction( i18n("&Send Queued Messages"), "mail_send", 0, this,
 		     SLOT(slotSendQueued()), actionCollection(), "send_queued");
+
+  KActionMenu *sendActionMenu = new
+    KActionMenu( i18n("Send Queued Messages via"), "mail_send_via", actionCollection(),
+                                       "send_queued_via" );
+  sendActionMenu->setDelayed(true);
+
+  mSendMenu = sendActionMenu->popupMenu();
+  connect(mSendMenu,SIGNAL(activated(int)), this, SLOT(slotSendQueuedVia(int)));
+  connect(mSendMenu,SIGNAL(aboutToShow()),this,SLOT(getTransportMenu()));
+
   KAction *act;
   //----- Tools menu
   if (parent()->inherits("KMMainWin")) {
@@ -2995,6 +3026,7 @@ void KMMainWidget::updateMessageActions()
     actionCollection()->action( "go_prev_message" )->setEnabled( mails );
     actionCollection()->action( "go_prev_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "send_queued" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
+    actionCollection()->action( "send_queued_via" )->setEnabled( kmkernel->outboxFolder()->count() > 0 );
     if (action( "edit_undo" ))
       action( "edit_undo" )->setEnabled( mHeaders->canUndo() );
 

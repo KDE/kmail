@@ -194,7 +194,7 @@ void KMSender::outboxMsgAdded(int idx)
 
 
 //-----------------------------------------------------------------------------
-bool KMSender::sendQueued(void)
+bool KMSender::sendQueued( const QString &customTransport )
 {
   if (!settingsOk()) return FALSE;
 
@@ -226,6 +226,7 @@ bool KMSender::sendQueued(void)
   kmkernel->filterMgr()->ref();
 
   // start sending the messages
+  mCustomTransport = customTransport;
   doSendMsg();
   return TRUE;
 }
@@ -433,12 +434,15 @@ void KMSender::doSendMsg()
     mSendInProgress = TRUE;
   }
 
-  QString msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
-  if (msgTransport.isEmpty())
-  {
+  QString msgTransport = mCustomTransport;
+  if (msgTransport.isEmpty()) { 
+    msgTransport = mCurrentMsg->headerField("X-KMail-Transport");
+  } 
+  if (msgTransport.isEmpty()) {
     QStringList sl = KMTransportInfo::availableTransports();
     if (!sl.isEmpty()) msgTransport = sl[0];
   }
+
   if (!mSendProc || msgTransport != mMethodStr) {
     if (mSendProcStarted && mSendProc) {
       mSendProc->finish(true);
@@ -448,8 +452,23 @@ void KMSender::doSendMsg()
     mSendProc = createSendProcFromString(msgTransport);
     mMethodStr = msgTransport;
 
-    if( mTransportInfo->encryption == "TLS" || mTransportInfo->encryption == "SSL" )
+    if( mTransportInfo->encryption == "TLS" || mTransportInfo->encryption == "SSL" ) {
       mProgressItem->setUsesCrypto( true );
+    } else if ( !mCustomTransport.isEmpty() ) {
+        int result = KMessageBox::warningContinueCancel( 0,
+        i18n( "You have chosen to send all queued email using an unencrypted transport, do you want to continue? "),
+        i18n( "Security Warning" ),
+        i18n( "Send unencrypted" ),
+        "useCustomTransportWithoutAsking", false);
+
+      if( result == KMessageBox::Cancel ) {
+        mProgressItem->cancel();
+        mProgressItem->setComplete();
+        slotAbortSend();
+        cleanup();
+        return;
+      }
+    }
 
     if (!mSendProc)
       sendProcStarted(false);
