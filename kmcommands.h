@@ -46,11 +46,6 @@ public:
   KMCommand( QWidget *parent, KMMessage *message );
   virtual ~KMCommand();
 
-  bool deletesItself () { return mDeletesItself; }
-  void setDeletesItself( bool deletesItself )
-  { mDeletesItself = deletesItself; }
-
-
 public slots:
   // Retrieve messages then calls execute
   void start();
@@ -63,9 +58,28 @@ protected:
   // Returns the parent widget
   QWidget *parentWidget() const;
 
+  bool deletesItself() { return mDeletesItself; }
+  /** Specify whether the subclass takes care of the deletion of the object.
+      By default the base class will delete the object.
+      @param deletesItself true if the subclass takes care of deletion, false
+                           if the base class should take care of deletion
+  */
+  void setDeletesItself( bool deletesItself )
+  { mDeletesItself = deletesItself; }
+
+  bool emitsCompletedItself() { return mEmitsCompletedItself; }
+  /** Specify whether the subclass takes care of emitting the completed()
+      signal. By default the base class will emit this signal.
+      @param emitsCompletedItself true if the subclass emits the completed
+                                  signal, false if the base class should emit
+                                  the signal
+  */
+  void setEmitsCompletedItself( bool emitsCompletedItself )
+  { mEmitsCompletedItself = emitsCompletedItself; }
+
 private:
   // execute should be implemented by derived classes
-  virtual void execute() = 0;
+  virtual Result execute() = 0;
 
   void preTransfer();
 
@@ -74,7 +88,7 @@ private:
   void transferSelectedMsgs();
 
 private slots:
-  void slotPostTransfer(bool);
+  void slotPostTransfer( KMCommand::Result result );
   /** the msg has been transferred */
   void slotMsgTransfered(KMMessage* msg);
   /** the KMImapJob is finished */
@@ -82,9 +96,9 @@ private slots:
   /** the transfer was canceled */
   void slotTransferCancelled();
 signals:
-  void messagesTransfered(bool);
+  void messagesTransfered( KMCommand::Result result );
   /** Emitted when the command has completed.
-   * @success Success or error. */
+   * @param result The status of the command. */
   void completed( KMCommand::Result result );
 
 private:
@@ -93,7 +107,8 @@ private:
   //Currently only one async command allowed at a time
   static int mCountJobs;
   int mCountMsgs;
-  bool mDeletesItself;
+  bool mDeletesItself : 1;
+  bool mEmitsCompletedItself : 1;
 
   QWidget *mParent;
   QPtrList<KMMessage> mRetrievedMsgs;
@@ -109,7 +124,7 @@ public:
   KMMailtoComposeCommand( const KURL &url, KMMessage *msg=0 );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
   KMMessage *mMessage;
@@ -124,7 +139,7 @@ public:
 			KMMessage *msg, const QString &selection );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
   QString mSelection;
@@ -139,7 +154,7 @@ public:
 			  KMMessage *msg );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
 };
@@ -152,7 +167,7 @@ public:
   KMMailtoAddAddrBookCommand( const KURL &url, QWidget *parent );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
 };
@@ -165,7 +180,7 @@ public:
   KMAddBookmarksCommand( const KURL &url, QWidget *parent );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
 };
@@ -179,7 +194,7 @@ public:
   KMMailtoOpenAddrBookCommand( const KURL &url, QWidget *parent );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
 };
@@ -192,7 +207,7 @@ public:
   KMUrlCopyCommand( const KURL &url, KMMainWidget *mainWidget = 0 );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
   KMMainWidget *mMainWidget;
@@ -206,7 +221,7 @@ public:
   KMUrlOpenCommand( const KURL &url, KMReaderWin *readerWin );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
   KMReaderWin *mReaderWin;
@@ -223,7 +238,7 @@ private slots:
   void slotUrlSaveResult( KIO::Job *job );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
 };
@@ -236,7 +251,7 @@ public:
   KMEditMsgCommand( QWidget *parent, KMMessage *msg );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 };
 
 class KMShowMsgSrcCommand : public KMCommand
@@ -246,7 +261,7 @@ class KMShowMsgSrcCommand : public KMCommand
 public:
   KMShowMsgSrcCommand( QWidget *parent, KMMessage *msg,
 		       bool fixedFont );
-  virtual void execute();
+  virtual Result execute();
 
 private:
   bool mFixedFont;
@@ -262,7 +277,7 @@ public:
   KURL url();
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
 private slots:
   void slotSaveDataReq();
@@ -289,7 +304,7 @@ public:
   KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL() );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
 private slots:
   void slotDataArrived( KIO::Job *job, const QByteArray & data );
@@ -315,11 +330,11 @@ protected slots:
   void slotSaveAll();
 
 private:
-  virtual void execute();
+  virtual Result execute();
 private:
   void parse( partNode *rootNode );
   void saveAll( const QPtrList<partNode>& attachments );
-  void saveItem( partNode *node, const KURL& url );
+  Result saveItem( partNode *node, const KURL& url );
 private:
   QPtrList<partNode> mAttachments;
   bool mEncoded;
@@ -334,7 +349,7 @@ public:
                     const QString &selection = QString::null );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
 private:
   QString mSelection;
@@ -348,7 +363,7 @@ public:
   KMNoQuoteReplyToCommand( QWidget *parent, KMMessage *msg );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 };
 
 class KMReplyListCommand : public KMCommand
@@ -360,7 +375,7 @@ public:
 		      const QString &selection = QString::null );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
 private:
   QString mSelection;
@@ -375,7 +390,7 @@ public:
 		       const QString &selection = QString::null );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
 private:
   QString mSelection;
@@ -390,7 +405,7 @@ public:
                         const QString &selection = QString::null );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
 private:
   QString mSelection;
@@ -407,7 +422,7 @@ public:
                     uint identity = 0 );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
 private:
   uint mIdentity;
@@ -424,7 +439,7 @@ public:
 			    uint identity = 0, KMComposeWin *win = 0 );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   uint mIdentity;
   QGuardedPtr<KMComposeWin> mWin;
@@ -438,7 +453,7 @@ public:
   KMRedirectCommand( QWidget *parent, KMMessage *msg );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 };
 
 class KMBounceCommand : public KMCommand
@@ -449,7 +464,7 @@ public:
   KMBounceCommand( QWidget *parent, KMMessage *msg );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 };
 
 class KMPrintCommand : public KMCommand
@@ -460,7 +475,7 @@ public:
   KMPrintCommand( QWidget *parent, KMMessage *msg, bool htmlOverride=false );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   bool mHtmlOverride;
 };
@@ -475,7 +490,7 @@ public:
                       bool toggle=false );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KMMsgStatus mStatus;
   QValueList<Q_UINT32> mSerNums;
@@ -491,7 +506,7 @@ public:
   KMFilterCommand( const QCString &field, const QString &value );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   QCString mField;
   QString mValue;
@@ -508,7 +523,7 @@ public:
 			 KMFilter *filter );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KMFilter *mFilter;
 };
@@ -540,7 +555,7 @@ public:
   KMMailingListFilterCommand( QWidget *parent, KMMessage *msg );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 };
 
 
@@ -573,7 +588,7 @@ public:
   KMCopyCommand( KMFolder* destFolder, KMMessage *msg );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KMFolder *mDestFolder;
   QPtrList<KMMsgBase> mMsgList;
@@ -597,7 +612,7 @@ public slots:
   void slotMoveCanceled();
 
 private:
-  virtual void execute();
+  virtual Result execute();
   void completeMove( Result result );
 
   KMFolder *mDestFolder;
@@ -629,7 +644,7 @@ public:
     KMReaderWin *readerWin, bool mHtmlPref, KMMainWidget *mainWidget = 0 );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
   uint mIdentity;
@@ -655,7 +670,7 @@ signals:
   void partsRetrieved();
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   QPtrList<partNode> mParts;
   int mNeedsRetrieval;
@@ -670,20 +685,22 @@ public:
   KMResendMessageCommand( QWidget *parent, KMMessage *msg=0 );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 };
 
 class KMMailingListCommand : public KMCommand
 {
-    Q_OBJECT
+  Q_OBJECT
 public:
-    KMMailingListCommand( QWidget *parent, KMFolder *parent );
+  KMMailingListCommand( QWidget *parent, KMFolder *parent );
 private:
-    virtual void execute();
+  virtual Result execute();
+private slots:
+  void commandCompleted( KMCommand::Result );
 protected:
-    virtual KURL::List urls() const =0;
+  virtual KURL::List urls() const =0;
 protected:
-    KMFolder *mFolder;
+  KMFolder *mFolder;
 };
 
 class KMMailingListPostCommand : public KMMailingListCommand
@@ -739,7 +756,7 @@ public:
   KMIMChatCommand( const KURL &url, KMMessage *msg=0 );
 
 private:
-  virtual void execute();
+  virtual Result execute();
 
   KURL mUrl;
   KMMessage *mMessage;
