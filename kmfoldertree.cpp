@@ -71,7 +71,8 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
   setPixmap( 0, normalIcon() );
 }
 
-KMFolderTreeItem::~KMFolderTreeItem() {
+KMFolderTreeItem::~KMFolderTreeItem() 
+{
 }
 
 static KFolderTreeItem::Protocol protocolFor( KMFolderType t ) {
@@ -195,6 +196,9 @@ void KMFolderTreeItem::init()
   }
   if ( !mFolder->isSystemFolder() )
     setRenameEnabled( 0, false );
+
+  KMFolderTree* tree = static_cast<KMFolderTree*>( listView() );
+  tree->insertIntoFolderToItemMap( mFolder, this );
 }
 
 void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
@@ -459,6 +463,7 @@ void KMFolderTree::reload(bool openFolders)
     if ( fti->isSelected() )
       selected = fti->folder();
   }
+  mFolderToItem.clear();
   clear();
 
   // construct the root of the local folders
@@ -682,6 +687,7 @@ void KMFolderTree::slotFolderRemoved(KMFolder *aFolder)
     if (!qlvi) qlvi = fti->itemBelow();
     doFolderSelected( qlvi );
   }
+  removeFromFolderToItemMap( aFolder );
   delete fti;
 }
 
@@ -867,18 +873,6 @@ void KMFolderTree::resizeEvent(QResizeEvent* e)
   conf->writeEntry(name(), size().width());
 
   KListView::resizeEvent(e);
-}
-
-//-----------------------------------------------------------------------------
-QListViewItem* KMFolderTree::indexOfFolder(const KMFolder* folder)
-{
-   QListViewItem *i  = firstChild();
-   while ( i ) {
-      if ( static_cast<KMFolderTreeItem*>(i)->folder() == folder )
-         return i;
-      i = i->itemBelow();
-   }
-   return 0;
 }
 
 //-----------------------------------------------------------------------------
