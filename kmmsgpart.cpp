@@ -301,7 +301,7 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
 //-----------------------------------------------------------------------------
 const QString KMMessagePart::contentDescription(void) const
 {
-  return KMMsgBase::decodeRFC1522String(mContentDescription);
+  return KMMsgBase::decodeRFC2047String(mContentDescription);
 }
 
 

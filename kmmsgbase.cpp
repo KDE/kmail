@@ -279,7 +279,7 @@ QString KMMsgBase::skipKeyword(const QString& aStr, char sepChar,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeRFC1522String(const QString& _str)
+const QString KMMsgBase::decodeRFC2047String(const QString& _str)
 {
   QCString aStr = _str.ascii();
   QCString result;
@@ -553,7 +553,7 @@ const QString KMMsgBase::decodeQuotedPrintableString(const QString& aStr)
   }
   return result;
 #else
-  return decodeRFC1522String(aStr);
+  return decodeRFC2047String(aStr);
 #endif
 }
 

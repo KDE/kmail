@@ -125,7 +125,7 @@ public:
 
   /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
-  static const QString decodeRFC1522String(const QString& aStr);
+  static const QString decodeRFC2047String(const QString& aStr);
 
   /** Encode given string as described in RFC2047: 
     using quoted-printable. */

@@ -58,14 +58,14 @@ void KMMsgInfo::init(const QString& aSubject, const QString& aFrom,
 		     const QString& replyToId, const QString& msgId,
 		     unsigned long aFolderOffset, unsigned long aMsgSize)
 {
-  mSubject   = decodeRFC1522String(aSubject).copy();
-  mFromStrip = KMMessage::stripEmailAddr( decodeRFC1522String(aFrom) );
-  mToStrip   = KMMessage::stripEmailAddr( decodeRFC1522String(aTo) );
+  mSubject   = decodeRFC2047String(aSubject).copy();
+  mFromStrip = KMMessage::stripEmailAddr( decodeRFC2047String(aFrom) );
+  mToStrip   = KMMessage::stripEmailAddr( decodeRFC2047String(aTo) );
   mDate      = aDate;
   mXMark     = aXMark;
-  //  mReplyToIdMD5 =  KMMessagePart::encodeBase64( decodeRFC1522String(replyToId) );
+  //  mReplyToIdMD5 =  KMMessagePart::encodeBase64( decodeRFC2047String(replyToId) );
   mReplyToIdMD5 =  KMMessagePart::encodeBase64( replyToId );
-  //  mMsgIdMD5  = KMMessagePart::encodeBase64( decodeRFC1522String(msgId) );
+  //  mMsgIdMD5  = KMMessagePart::encodeBase64( decodeRFC2047String(msgId) );
   mMsgIdMD5  = KMMessagePart::encodeBase64( msgId );
   mStatus    = aStatus;
   mMsgSize   = aMsgSize;

@@ -1072,7 +1072,7 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
   char* htmlPos;
   bool startOfLine = true;
 
-  if (aDecodeQP) qpstr = KMMsgBase::decodeRFC1522String(aStr);
+  if (aDecodeQP) qpstr = KMMsgBase::decodeRFC2047String(aStr);
   else qpstr = aStr;
 
 #define HTML_ADD(str,len) strcpy(htmlPos,str),htmlPos+=len

@@ -70,11 +70,11 @@ const QString KMMessage::followup(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if (header.HasFollowupTo())
-    return decodeRFC1522String(header.FollowupTo().AsString().c_str());
+    return decodeRFC2047String(header.FollowupTo().AsString().c_str());
   else
   {
     if (header.HasNewsgroups())
-      return decodeRFC1522String(header.Newsgroups().AsString().c_str());
+      return decodeRFC2047String(header.Newsgroups().AsString().c_str());
     else return "";
   }
 }
@@ -1134,7 +1134,7 @@ void KMMessage::setTo(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::toStrip(void) const
 {
-  return stripEmailAddr(decodeRFC1522String(headerField("To")));
+  return stripEmailAddr(decodeRFC2047String(headerField("To")));
 }
 
 //-----------------------------------------------------------------------------
@@ -1219,13 +1219,13 @@ void KMMessage::setFrom(const QString& bStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::fromStrip(void) const
 {
-  return stripEmailAddr(decodeRFC1522String(headerField("From")));
+  return stripEmailAddr(decodeRFC2047String(headerField("From")));
 }
 
 //-----------------------------------------------------------------------------
 const QString KMMessage::fromEmail(void) const
 {
-  return getEmailAddr(decodeRFC1522String(headerField("From")));
+  return getEmailAddr(decodeRFC2047String(headerField("From")));
 }
 
 
@@ -1289,7 +1289,7 @@ const QString KMMessage::replyToId(void) const
 //-----------------------------------------------------------------------------
 const QString KMMessage::replyToIdMD5(void) const
 {
-  //  QString result = KMMessagePart::encodeBase64( decodeRFC1522String(replyToId()) );
+  //  QString result = KMMessagePart::encodeBase64( decodeRFC2047String(replyToId()) );
   QString result = KMMessagePart::encodeBase64( replyToId() );
   return result;
 }
@@ -1319,7 +1319,7 @@ const QString KMMessage::msgId(void) const
 //-----------------------------------------------------------------------------
 const QString KMMessage::msgIdMD5(void) const
 {
-  //  QString result = KMMessagePart::encodeBase64(  decodeRFC1522String(msgId()) );
+  //  QString result = KMMessagePart::encodeBase64(  decodeRFC2047String(msgId()) );
   QString result = KMMessagePart::encodeBase64( msgId() );
   return result;
 }
@@ -1348,7 +1348,7 @@ const QStrList KMMessage::headerAddrField(const QString& aName) const
   resultList.clear();
   for (addr=addrList->FirstAddress(); addr; addr=addr->Next())
   {
-    resultList.append(decodeRFC1522String(addr->AsString().c_str()));
+    resultList.append(decodeRFC2047String(addr->AsString().c_str()));
   }
 
   if (resultList.count()==0)
@@ -1371,7 +1371,7 @@ const QString KMMessage::headerField(const QString& aName) const
   if (aName.isEmpty() || !(field = header.FindField((const char*)aName)))
     result = "";
   else
-    result = decodeRFC1522String(header.FieldBody((const char*)aName).
+    result = decodeRFC2047String(header.FieldBody((const char*)aName).
                     AsString().c_str());
   return result;
 }
@@ -1973,7 +1973,7 @@ const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
   const char *pos;
   char ch;
   bool insideQuote = false;
-  QString email = decodeRFC1522String(aEmail);
+  QString email = decodeRFC2047String(aEmail);
 
   if (email.isEmpty()) return email;
 
