@@ -3206,7 +3206,7 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
   }
   if( mColorBar->text().isEmpty() ) {
     mColorBar->setEraseColor( cCBplain );
-    mColorBar->setText(i18n("\nI\nn\ns\ne\nc\nu\nr\ne\n \nM\ne\ns\ns\na\ng\ne"));
+    mColorBar->setText(i18n("\nU\nn\ns\ni\ng\nn\ne\nd\n \nM\ne\ns\ns\na\ng\ne"));
   }
 }
 
