@@ -15,7 +15,7 @@ static const QString _KM_WelcomeMsg =
 i18n(
 "Welcome to KMail!\n"
 "\n"
-"KMail is the built-in e-mail client for the K Desktop Environment.  "
+"KMail is an e-mail client for the K Desktop Environment.  "
 "It is designed to be fully compatible with Internet mailing standards "
 "including MIME, SMTP and POP3.\n"
 "\n"
@@ -34,6 +34,9 @@ i18n(
 "   + Enhanced PGP/GPG support\n"
 "   + Numerous minor enhancements and bugfixes\n"
 "\n"
+"Please take a moment to fill in the KMail configuration panel at "
+"File->Settings.  You need to at least create a primary identity and "
+" setup a mail spool/POP3 account.\n\n"
 "We hope that you will enjoy KMail.\n"
 "\n"
 "Thank you,\n"
