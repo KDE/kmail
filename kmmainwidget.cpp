@@ -2239,7 +2239,8 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("&New Message..."), "mail_new", KStdAccel::shortcut(KStdAccel::New), this,
 		      SLOT(slotCompose()), actionCollection(), "new_message" );
 
-  (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to", 0, this,
+  (void) new KAction( i18n("New Message t&o Mailing-List..."), "mail_post_to",
+                      CTRL+SHIFT+Key_N, this,
 		      SLOT(slotPostToML()), actionCollection(), "post_message" );
 
   mForwardActionMenu = new KActionMenu( i18n("Message->","&Forward"),
