@@ -306,7 +306,8 @@ void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
   KURL::List list;
   if (ab == 3) {
     KURL::List list;
-    KRun::run( "abbrowser -a \"" + addr + "\"", list );
+    KRun::run( "abbrowser -a \"" + addr.replace(QRegExp("\""), "") + "\"",
+      list );
     return;
   }
   if (!KMAddrBookExternal::useKAB()) {

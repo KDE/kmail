@@ -1951,38 +1951,39 @@ const QString KMMessage::getEmailAddr(const QString& aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
 {
-  QString result, addr, tmp, tmp2;
+  QString result, addr, tmp2;
   const char *pos;
   char ch;
+  bool insideQuote = false;
   QString email = decodeRFC1522String(aEmail);
 
   if (email.isEmpty()) return email;
 
-  result = "<a href=\"mailto:";
+  result = "<a href='mailto:";
   for (pos=email.data(); *pos; pos++)
   {
     ch = *pos;
+    if (ch == '"') insideQuote = !insideQuote;
     if (ch == '<') addr += "&lt;";
     else if (ch == '>') addr += "&gt;";
     else if (ch == '&') addr += "&amp;";
-    else if (ch != ',') addr += ch;
+    else if (ch != ',' || insideQuote) addr += ch;
 
-    if (ch != ',')
+    if (ch != ',' || insideQuote)
       tmp2 += ch;
 
-    if (ch == ',' || !pos[1])
+    if ((ch == ',' && !insideQuote) || !pos[1])
     {
-      tmp = addr.copy();
-      result += tmp.replace(QRegExp("\""),"");
+      result += addr;
       result = result.replace(QRegExp("\n"),"");
-      result += "\">";
+      result += "'>";
       if (stripped) result += KMMessage::stripEmailAddr(tmp2);
       else result += addr;
       tmp2 = "";
       result += "</a>";
       if (ch == ',')
       {
-	result += ", <a href=\"mailto:";
+	result += ", <a href='mailto:";
 	while (pos[1]==' ') pos++;
       }
       addr = "";
