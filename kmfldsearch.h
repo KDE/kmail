@@ -28,7 +28,7 @@ class KMFldSearch: public QDialog
   Q_OBJECT
 public:
   KMFldSearch(KMMainWin* parent, const char* name=NULL,
-	       QString currentfolder = "", bool modal=FALSE, WFlags f=0);
+	       KMFolder *curFolder=NULL, bool modal=FALSE, WFlags f=0);
   virtual ~KMFldSearch();
 
 protected slots:
@@ -43,7 +43,7 @@ protected:
   void enableGUI();
 
   /** Create combo-box with list of folders */
-  virtual QComboBox* createFolderCombo(const QString curFolder=0);
+  virtual QComboBox* createFolderCombo(KMFolder *curFolder);
 
   /** Test if message matches. */
   virtual bool searchInMessage(KMMessage*, const QCString&);

@@ -32,7 +32,7 @@
 
 //-----------------------------------------------------------------------------
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
-  QString curFolder, bool modal, WFlags f):
+  KMFolder *curFolder, bool modal, WFlags f):
   KMFldSearchInherited(NULL, name, modal, f | Qt::WDestructiveClose)
 {
   KButtonBox* bbox;
@@ -149,24 +149,18 @@ KMFldSearch::~KMFldSearch()
 
 
 //-----------------------------------------------------------------------------
-QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
+QComboBox* KMFldSearch::createFolderCombo(KMFolder *curFolder)
 {
- QComboBox* cbx = new QComboBox(false, this);
+  QComboBox* cbx = new QComboBox(false, this);
 
- mMainWin->folderTree()->createFolderList( &mFolderNames, &mFolders );
- cbx->setFixedHeight(cbx->sizeHint().height());
+  mMainWin->folderTree()->createFolderList( &mFolderNames, &mFolders );
+  cbx->setFixedHeight(cbx->sizeHint().height());
 
- cbx->insertItem(i18n("<Search all local folders>"));
- QStringList::Iterator st;
- int i = 1;
- for( st = mFolderNames.begin(); st != mFolderNames.end(); ++st, ++i) {
-   cbx->insertItem(*st);
-   QString fname = *st;
-   if( fname.stripWhiteSpace() == curFolder ) {		// preselect current folder
-     cbx->setCurrentItem(i);
-   }
- }
- return cbx;
+  cbx->insertItem(i18n("<Search all local folders>"));
+  cbx->insertStringList(mFolderNames); 
+  if (curFolder && !curFolder->isDir())
+    cbx->setCurrentItem(mFolders.findIndex(curFolder) + 1);
+  return cbx;
 }
 
 
