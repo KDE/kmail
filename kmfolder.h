@@ -51,7 +51,6 @@ class KMFolder: public KMFolderNode
 {
   Q_OBJECT
   friend class KMMsgBase;
-  friend class KMMessage;
 
 public:
 

@@ -8,34 +8,33 @@
 #include <qtimer.h>
 #include <qcolor.h>
 #include <qstringlist.h>
-#include <cryptplugwrapper.h>
 #include "kmmsgbase.h"
 #include "kmmimeparttree.h" // Needed for friend declaration.
+#include <cryptplugwrapper.h>
+#include <cryptplugwrapperlist.h>
 
-class KHTMLPart;
-class KMFolder;
-class KMMessage;
-class KMMessagePart;
-class KURL;
 class QFrame;
-class QMultiLineEdit;
+class QHBox;
+class QLabel;
+class QListViewItem;
 class QScrollBar;
 class QString;
 class QTabDialog;
-class QLabel;
-class QHBox;
 class QTextCodec;
-class DwMediaType;
 class CryptPlugWrapperList;
-class KMMessagePart;
+class DwHeaders;
+class DwMediaType;
+class KHTMLPart;
 class KURL;
-class QListViewItem;
+class KMainWindow;
+class KMFolder;
+class KMMessage;
+class KMMessagePart;
 
 class partNode; // might be removed when KMime is used instead of mimelib
                 //                                      (khz, 29.11.2001)
 
 class NewByteArray; // providing operator+ on a QByteArray (khz, 21.06.2002)
-class DwHeaders;
 
 namespace KParts
 {
@@ -52,9 +51,10 @@ class KMReaderWin: public QWidget
   friend void KMMimePartTree::slotSaveAs();
 
 public:
-  KMReaderWin( KMMimePartTree* mimePartTree=0,
+  KMReaderWin( QWidget *parent=0,
+	       KMainWindow *mainWindow=0,
+	       KMMimePartTree* mimePartTree=0,
                int* showMIMETreeMode=0,
-               QWidget *parent=0,
                const char *name=0,
                int f=0 );
   virtual ~KMReaderWin();
@@ -93,8 +93,8 @@ public:
   virtual void setAttachmentStyle(int style);
 
   /** Get/set codec for reader win. */
-  QTextCodec *codec(void) const { return mCodec; }
-  virtual void setCodec(QTextCodec *codec);
+  const QTextCodec *codec(void) const { return mCodec; }
+  virtual void setCodec(const QTextCodec *codec);
 
   /** Set printing mode */
   virtual void setPrinting(bool enable) { mPrinting = enable; }
@@ -102,6 +102,12 @@ public:
   /** Set the message that shall be shown. If NULL, an empty page is
       displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
+
+  /** Instead of settings a message to be shown sets a message part
+      to be shown */
+  virtual void setMsgPart( KMMessagePart* aMsgPart,
+    bool aHTML, const QString& aFileName, const QString& pname,
+    const QTextCodec *codec );
 
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
@@ -128,9 +134,6 @@ public:
 
   /** Print current message. */
   virtual void printMsg(void);
-
-  /** Select message body. */
-  void selectAll();
 
   /** Return selected text */
   QString copyText();
@@ -163,14 +166,6 @@ public:
 
 
 // static functions:
-
-    /** Display an attachment */
-    static void atmView(KMReaderWin* aReaderWin,
-                        KMMessagePart* aMsgPart,
-                        bool aHTML,
-                        const QString& aFileName,
-                        const QString& pname,
-                        QTextCodec *codec);
 
     /** find a plugin matching a given libName */
     static bool foundMatchingCryptPlug( QString libName,
@@ -240,9 +235,6 @@ public:
                                bool& passphraseError,
                                QString& aErrorText );
 
-    /** Delete all KMReaderWin's that do not have a parent. */
-    static void deleteAllStandaloneWindows();
-
 signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
@@ -257,13 +249,13 @@ signals:
   /** The user has clicked onto an URL that is no attachment. */
   void urlClicked(const KURL &url, int button);
 
-  /** The user wants to see the attachment which is message */
-  void showAtmMsg (KMMessage *msg);
-
   /** Pgp displays a password dialog */
   void noDrag(void);
 
 public slots:
+
+  /** Select message body. */
+  void selectAll();
 
   /** Force update even if message is the same */
   void clearCache();
@@ -296,10 +288,16 @@ public slots:
   /** The user toggled the "Fixed Font" flag from the view menu. */
   void slotToggleFixedFont();
 
+  /** Copy the selected text to the clipboard */
+  void slotCopySelectedText();
+
   /** Starts sending the queued HTML code to khtml */
   void sendNextHtmlChunk();
 
 protected slots:
+  /** Returns the current message or NULL if none. */
+  KMMessage* message(void) const;
+
   /** Some attachment operations. */
   void slotAtmOpen();
   void slotAtmOpenWith();
@@ -310,9 +308,6 @@ protected slots:
   void slotTouchMessage();
 
 protected:
-  /** Returns the current message or NULL if none. */
-  KMMessage* message(void) const;
-
   /** Watch for palette changes */
   virtual bool event(QEvent *e);
 
@@ -345,7 +340,8 @@ protected:
 
   /** Feeds the HTML widget with the contents of the given message-body
     string. May contain body parts. */
-  virtual void writeBodyStr( const QCString bodyString, QTextCodec *aCodec,
+  virtual void writeBodyStr( const QCString bodyString,
+			     const QTextCodec *aCodec,
                              const QString& fromAddress,
                              bool* isSigned = 0,
                              bool* isEncrypted = 0 );
@@ -422,7 +418,7 @@ protected:
   QTimer mHtmlTimer;
   QTimer mDelayedMarkTimer;
   QStringList mHtmlQueue;
-  QTextCodec *mCodec;
+  const QTextCodec *mCodec;
   bool mAutoDetectEncoding;
   bool mMsgDisplay;
   bool mDelayedMarkAsRead;
@@ -454,6 +450,7 @@ protected:
   int* mShowMIMETreeMode;
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
+  KMainWindow *mMainWindow;
   static QPtrList<KMReaderWin> mStandaloneWindows;
 };
 

@@ -9,6 +9,7 @@
 #include <kfiledialog.h>
 #include <qfile.h>
 #include <kmessagebox.h>
+#include "kmkernel.h"
 
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,

@@ -3523,8 +3523,7 @@ QString PluginPage::helpAnchor() {
 }
 
 PluginPage::PluginPage( QWidget * parent, const char * name )
-    : TabbedConfigurationPage( parent, name ),
-      mCryptPlugList( kernel->cryptPlugList() )
+    : TabbedConfigurationPage( parent, name )
 {
     _generalPage = new GeneralPage( this );
     addTab( _generalPage, i18n( "&General") );
@@ -3617,7 +3616,7 @@ void PluginPage::slotCurrentPlugInTabPageChanged( QWidget * page )
             if( -1 < curI ) {
                 pCBox->setCurrentItem( curI );
                 // Changes made?
-                CryptPlugWrapper* wrapper = mCryptPlugList->at( curI );
+                CryptPlugWrapper* wrapper = kernel->cryptPlugList()->at( curI );
                 if( ! ( wrapper &&
                         (wrapper->displayName() == _generalPage->currentPlugItem->text(0)) &&
                         (wrapper->libName()     == _generalPage->currentPlugItem->text(1)) &&
@@ -3662,7 +3661,7 @@ void PluginPage::slotPlugSelectionChanged()
             }
 
             // Changes made?
-            CryptPlugWrapper* wrapper = mCryptPlugList->at( pos );
+            CryptPlugWrapper* wrapper = kernel->cryptPlugList()->at( pos );
             if( ! ( wrapper &&
                     (wrapper->displayName() == _generalPage->currentPlugItem->text(0)) &&
                     (wrapper->libName()     == _generalPage->currentPlugItem->text(1)) &&
@@ -3717,7 +3716,7 @@ void PluginPage::slotPlugSelectionChanged()
 
             if( i < numEntry ) {
                 // i contains the position of the plugin
-                CryptPlugWrapper* wrapper = mCryptPlugList->at( i );
+                CryptPlugWrapper* wrapper = kernel->cryptPlugList()->at( i );
                 Q_ASSERT( wrapper );
                 if( !wrapper ) return;
 
@@ -3948,9 +3947,9 @@ void PluginPage::slotPlugSelectionChanged()
 
 bool PluginPage::isPluginConfigEqual( int pluginno ) const
 {
-    if ( mCryptPlugList->isEmpty() ) // happens initially
+    if ( kernel->cryptPlugList()->isEmpty() ) // happens initially
         return true;
-    CryptPlugWrapper* wrapper = mCryptPlugList->at( pluginno );
+    CryptPlugWrapper* wrapper = kernel->cryptPlugList()->at( pluginno );
     Q_ASSERT( wrapper );
     if( !wrapper ) {
       // No wrapper? Better not annoy the user...
@@ -4214,9 +4213,9 @@ bool PluginPage::isPluginConfigEqual( int pluginno ) const
 
 void PluginPage::savePluginConfig( int pluginno )
 {
-    if ( mCryptPlugList->isEmpty() )
+    if ( kernel->cryptPlugList()->isEmpty() )
         return;
-    CryptPlugWrapper* wrapper = mCryptPlugList->at( pluginno );
+    CryptPlugWrapper* wrapper = kernel->cryptPlugList()->at( pluginno );
     Q_ASSERT( wrapper );
     if( !wrapper )
         return;
@@ -4235,7 +4234,7 @@ void PluginPage::savePluginConfig( int pluginno )
             int curI = -1;
             for (i = 0; i < numEntry; ++i) {
                 QString itemTxt( pluginNameToNumberedItem( item->text(0), 1+i ) );
-         wrapper = _pluginPage->mCryptPlugList->next(), ++i ) {
+         wrapper = _pluginPage->kernel->cryptPlugList()->next(), ++i ) {
         if( ! wrapper->displayName().isEmpty() ) {
             QString item = pluginNameToNumberedItem( wrapper->displayName(), 1+i );
             _pluginPage->_certificatesPage->plugListBoxCertConf->insertItem( item );
@@ -4615,8 +4614,8 @@ void GeneralPage::setup()
     _pluginPage->_dirservicesPage->plugListBoxDirServConf->clear();
 
     int i = 0;
-    for( CryptPlugWrapper* wrapper = _pluginPage->mCryptPlugList->first(); wrapper;
-         wrapper = _pluginPage->mCryptPlugList->next(), ++i ) {
+    for( CryptPlugWrapper* wrapper = kernel->cryptPlugList()->first(); wrapper;
+         wrapper = kernel->cryptPlugList()->next(), ++i ) {
         if( ! wrapper->displayName().isEmpty() ) {
             QString item = pluginNameToNumberedItem( wrapper->displayName(), 1+i );
             _pluginPage->_certificatesPage->plugListBoxCertConf->insertItem( item );
@@ -4632,7 +4631,7 @@ void GeneralPage::setup()
         }
     }
 
-    if( _pluginPage->mCryptPlugList->count() )
+    if( kernel->cryptPlugList()->count() )
         _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( true );
     else
         _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( false );
@@ -4677,8 +4676,8 @@ void GeneralPage::savePluginsConfig( bool silent )
             config->writeEntry( "location", item->text(1) );
             config->writeEntry( "updates",  item->text(2) );
             config->writeEntry( "active",   isActive ? "1" : "0" );
-            if( _pluginPage && _pluginPage->mCryptPlugList ) {
-                CryptPlugWrapper* wrapper = _pluginPage->mCryptPlugList->at( numValidEntry );
+            if( _pluginPage && kernel->cryptPlugList() ) {
+                CryptPlugWrapper* wrapper = kernel->cryptPlugList()->at( numValidEntry );
                 if( wrapper ) {
                     wrapper->setDisplayName( item->text(0) );
                     if( wrapper->libName() != item->text(1) ) {
@@ -4689,7 +4688,7 @@ void GeneralPage::savePluginsConfig( bool silent )
                         wrapper->initialize(&status, &errorMsg);
                         if( CryptPlugWrapper::InitStatus_Ok != status ) {
                             if( !silent )
-                                _pluginPage->mCryptPlugList->showPluginInitError( wrapper, status, errorMsg );
+                                kernel->cryptPlugList()->showPluginInitError( wrapper, status, errorMsg );
                             currentPlugItem->setText(4, "");
                         } else {
                             currentPlugItem->setText(4, "*");
@@ -4746,7 +4745,7 @@ void GeneralPage::slotPlugUpdateURLChanged( const QString &text )
 void GeneralPage::slotNewPlugIn( void )
 {
     CryptPlugWrapper* newWrapper = new CryptPlugWrapper( this, "", "", "" );
-    _pluginPage->mCryptPlugList->append( newWrapper );
+    kernel->cryptPlugList()->append( newWrapper );
 
     QListViewItem *listItem = new QListViewItem( plugList,
                                                  plugList->lastItem(),
@@ -4765,7 +4764,7 @@ void GeneralPage::slotNewPlugIn( void )
 
 void GeneralPage::slotDeletePlugIn( void )
 {
-    // PENDING(kalle) Delete from mCryptPlugList as well.
+    // PENDING(kalle) Delete from kernel->cryptPlugList() as well.
     if( currentPlugItem != 0 )
   {
     QListViewItem *next = currentPlugItem->itemAbove();
@@ -4804,7 +4803,7 @@ void GeneralPage::slotActivatePlugIn( void )
     int pos = 0;
     while( ( current = lvit.current() ) )
     {
-        CryptPlugWrapper* plug = _pluginPage->mCryptPlugList->at( pos );
+        CryptPlugWrapper* plug = kernel->cryptPlugList()->at( pos );
         if( plug ) {
             if(  current == currentPlugItem )
             {
@@ -4868,8 +4867,8 @@ void CertificatesPage::slotStartCertManager()
 	    KProcess certManagerProc; // save to create on the heap, since
                               // there is no parent
     	certManagerProc << "kgpgcertmanager";
-    	certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->displayName();
-    	certManagerProc << _pluginPage->mCryptPlugList->at( plugListBoxCertConf->currentItem() )->libName();
+    	certManagerProc << kernel->cryptPlugList()->at( plugListBoxCertConf->currentItem() )->displayName();
+    	certManagerProc << kernel->cryptPlugList()->at( plugListBoxCertConf->currentItem() )->libName();
 
 	    if( !certManagerProc.start( KProcess::DontCare ) )
     	    KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),

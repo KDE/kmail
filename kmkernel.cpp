@@ -601,7 +601,6 @@ void KMKernel::initFolders(KConfig* cfg)
   the_draftsFolder->setType("Df");
   the_draftsFolder->setSystemFolder(TRUE);
   the_draftsFolder->open();
-
 }
 
 
@@ -666,6 +665,7 @@ void KMKernel::init()
     }
   }
   // filterMgr->dump();
+
   kdDebug(5006) << "exiting KMKernel::init()" << endl;
 }
 
@@ -734,8 +734,6 @@ void KMKernel::cleanup(void)
   the_undoStack = 0;
   delete the_popFilterMgr;
   the_popFilterMgr = 0;
-
-  KMReaderWin::deleteAllStandaloneWindows();
 
   // Since the application has already quit we can't use
   // kapp->processEvents() because it will return immediately:

@@ -184,6 +184,12 @@ unsigned long KMMsgDict::insert(unsigned long msgSerNum,
     folder->setDirty( true ); // rewrite id file
   }
   
+  // Should not happen, indicates id file corruption
+  while (dict->find((long)msn)) {
+    msn = getNextMsgSerNum();
+    folder->setDirty( true ); // rewrite id file
+  }
+  
   KMMsgDictEntry *entry = new KMMsgDictEntry(folder, index);
   dict->replace((long)msn, entry);
   

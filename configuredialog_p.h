@@ -924,7 +924,6 @@ private:
   SignaturePage* _signaturePage;
   EncryptionPage* _encryptionPage;
   DirServicesPage* _dirservicesPage;
-  CryptPlugWrapperList* mCryptPlugList;
 };
 
 //

@@ -69,18 +69,11 @@ public:
   virtual void setMsgRead(int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
   virtual void applyFiltersOnMsg(int msgId=-1);
-  virtual void saveMsg(int msgId = -1, QPtrList<KMMessage>* msgList = NULL);
   virtual void undo();
   virtual bool canUndo() const;
-  virtual void forwardMsg(QPtrList<KMMessage>* msgList = NULL);
-  virtual void forwardAttachedMsg(QPtrList<KMMessage>* msgList = NULL);
-  virtual void bounceMsg(KMMessage* msg = NULL);
-  virtual void replyToMsg(QString selection=QString::null, KMMessage* msg = NULL);
-  virtual void noQuoteReplyToMsg(KMMessage* msg = NULL);
-  virtual void redirectMsg(KMMessage* msg = NULL);
-  virtual void replyAllToMsg(QString selection=QString::null, KMMessage* msg = NULL);
-  virtual void replyListToMsg(QString selection=QString::null, KMMessage* msg = NULL);
   virtual void resendMsg();
+  virtual void prepareMove( KMMsgBase **curMsg, int *contentX, int *contentY );
+  virtual void finalizeMove( KMMsgBase *curMsg, int contentX, int contentY );
 
   /** If destination==NULL the messages are deleted, otherwise
     they are moved to this folder. */
@@ -95,9 +88,6 @@ public:
  /** Returns list of selected messages or a list with the message with
     the given Id if msgId >= 0. Do not delete the returned list. */
   virtual KMMessageList* selectedMsgs(int msgId=-1);
-
- /** Returns list of selected KMMessages */
-  virtual QPtrList<KMMessage>* selectedMessages();
 
   /** Returns message with given id or current message if no
     id is given. First call with msgId==-1 returns first

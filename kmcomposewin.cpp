@@ -14,6 +14,7 @@
 #include <qtextcodec.h>
 #include <qheader.h>
 
+#include "cryptplugwrapperlist.h"
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmkernel.h"
@@ -31,6 +32,7 @@
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
+#include "kmcommands.h"
 
 #include <kaction.h>
 #include <kcharsets.h>
@@ -47,6 +49,7 @@
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
+#include "kmreadermainwin.h"
 
 #include <assert.h>
 #include <mimelib/mimepp.h>
@@ -78,7 +81,6 @@
 #include <kstatusbar.h>
 #include <qpopupmenu.h>
 
-#include "cryptplugwrapperlist.h"
 #include "klistboxdialog.h"
 
 #include "kmcomposewin.moc"
@@ -2575,7 +2577,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
   QByteArray signature;
 
   // we call the cryptplug for signing
-  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
+  CryptPlugWrapper* cryptPlug = kernel->cryptPlugList()->active();
   if( cryptPlug ) {
     kdDebug(5006) << "\nKMComposeWin::pgpSignedMsg calling CRYPTPLUG "
                   << cryptPlug->libName() << endl;
@@ -2864,7 +2866,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
   QByteArray encoding;
 
   // we call the cryptplug
-  CryptPlugWrapper* cryptPlug = mCryptPlugList->active();
+  CryptPlugWrapper* cryptPlug = kernel->cryptPlugList()->active();
   if( cryptPlug ) {
     kdDebug(5006) << "\nKMComposeWin::pgpEncryptedMsg: going to call CRYPTPLUG "
                   << cryptPlug->libName() << endl;
@@ -3851,8 +3853,9 @@ void KMComposeWin::slotAttachView()
   atmTempFile->setAutoDelete( true );
   kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
-  KMReaderWin::atmView(NULL, msgPart, false, atmTempFile->name(), pname,
-    KMMsgBase::codecForName(mCharset));
+  KMReaderMainWin *win = new KMReaderMainWin(msgPart, false, 
+    atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
+  win->show();
 }
 
 
@@ -4112,10 +4115,9 @@ void KMComposeWin::slotWordWrapToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
-  KMReaderWin rw;
   applyChanges();
-  rw.setMsg(mMsg, true);
-  rw.printMsg();
+  KMCommand *command = new KMPrintCommand( this, mMsg );
+  command->start();
 }
 
 
@@ -4296,10 +4298,10 @@ void KMComposeWin::slotSelectCrypto()
   dialog.resize( 350, 200 );
   dialog.entriesLB->clear();
 
-  CryptPlugWrapper* activeCryptPlug = mCryptPlugList->active();
+  CryptPlugWrapper* activeCryptPlug = kernel->cryptPlugList()->active();
 
   CryptPlugWrapper* current;
-  QPtrListIterator<CryptPlugWrapper> it( *mCryptPlugList );
+  QPtrListIterator<CryptPlugWrapper> it( *(kernel->cryptPlugList()) );
   int idx=-1;
   int i=0;
   while( ( current = it.current() ) ) {

@@ -9,7 +9,6 @@
 #include <kconfig.h>
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
-
 #include <cryptplugwrapperlist.h>
 
 #define kernel KMKernel::self()
@@ -32,6 +31,8 @@ class KMMsgDict;
 class IdentityManager;
 class KProcess;
 class KProgressDialog;
+class CryptPlugWrapperList;
+
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -184,7 +185,7 @@ protected slots:
   void slotResult(KIO::Job*);
   void cleanupLoop();
   void cleanupProgress();
-  
+
 private:
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;
