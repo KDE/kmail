@@ -78,7 +78,7 @@ void MaildirJob::startJob()
   switch( mType ) {
   case tGetMessage:
     {
-      KMMessage* msg = mParentFolder->getMsg( mParentFolder->find( mMsgList.first() ) );
+      KMMessage* msg = mMsgList.first();
       if ( msg ) {
         msg->setComplete( true );
         emit messageRetrieved( msg );
