@@ -451,7 +451,7 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
 
   unsigned int start, stop, p, pos = 0, encLength;
   QCString result;
-  bool breakLine;
+  bool breakLine = FALSE;
   const unsigned int maxLen = 75 - 7 - cset.length();
 
   while (pos < _str.length())
@@ -459,11 +459,12 @@ QCString KMMsgBase::encodeRFC2047String(const QString& _str,
     start = pos; p = pos;
     while (p < _str.length())
     {
-      if (_str.at(p) == ' ' || dontQuote.find(_str.at(p)) != -1) start = p + 1;
+      if (!breakLine && (_str.at(p) == ' ' || dontQuote.find(_str.at(p)) != -1))
+        start = p + 1;
       if (_str.at(p).unicode() >= 128 || _str.at(p) < ' ') break;
       p++;
     }
-    if (p < _str.length())
+    if (breakLine || p < _str.length())
     {
       while (dontQuote.find(_str.at(start)) != -1) start++;
       stop = start;
