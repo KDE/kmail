@@ -223,9 +223,12 @@ namespace KMail {
   {
     public:
       ASWizInfoPage( QWidget *parent, const char *name );
+      
+      void setScanProgressText( const QString &toolName );
 
     private:
       QLabel *introText;
+      QLabel *scanProgressText;
   };
 
   //---------------------------------------------------------------------------

@@ -108,10 +108,11 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
   connect( this, SIGNAL( helpClicked( void) ),
             this, SLOT( slotHelpClicked( void ) ) );
 
+  setNextEnabled( infoPage, false );
   setNextEnabled( programsPage, false );
   setNextEnabled( rulesPage, false );
 
-  QTimer::singleShot( 1000, this, SLOT( checkToolAvailability( void ) ) );
+  QTimer::singleShot( 500, this, SLOT( checkToolAvailability( void ) ) );
 }
 
 
@@ -385,10 +386,15 @@ void AntiSpamWizard::checkToolAvailability()
   QValueListIterator<SpamToolConfig> it = toolList.begin();
   while ( it != toolList.end() )
   {
+    QString text( i18n("Scanning for ") + (*it).getId() + " ..." );
+    infoPage->setScanProgressText( text );
+    KApplication::kApplication()->processEvents( 200 );
     int rc = checkForProgram( (*it).getExecutable() );
     programsPage->setProgramAsFound( (*it).getVisibleName(), !rc );
     it++;
   }
+  infoPage->setScanProgressText( i18n("Scanning for anti spam tools finished.") );
+  setNextEnabled( infoPage, true );
 }
 
 
@@ -405,10 +411,7 @@ int AntiSpamWizard::checkForProgram( QString executable )
 
 void AntiSpamWizard::slotHelpClicked()
 {
-  KApplication::kApplication()->invokeHelp();
-// FIXME Here we need to specify the anchor and perhaps explicitly kmail
-// as application if it is necessary when running in Kontact
-//  KApplication::kApplication()->invokeHelp( "using-kmail", "kmail" );
+  KApplication::kApplication()->invokeHelp( "the-anti-spam-wizard", "kmail" );
 }
 
 
@@ -540,7 +543,7 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
                                         KDialog::spacingHint() );
   grid->setColStretch( 1, 10 );
 
-  QLabel *introText = new QLabel( this );
+  introText = new QLabel( this );
   introText->setText( i18n(
     "<p>Here you get some assistance in setting up KMail's filter "
     "rules to use some commonly known anti spam tools.</p>"
@@ -551,6 +554,24 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
     "consideration but will append new rules in any case.</p>"
     ) );
   grid->addWidget( introText, 0, 0 );
+
+  scanProgressText = new QLabel( this );
+  scanProgressText->setText( "" ) ;
+  grid->addWidget( scanProgressText, 1, 0 );
+}
+
+void ASWizInfoPage::setScanProgressText( const QString &toolName )
+{
+  scanProgressText->setText( toolName );
+/* FIXME
+  if ( toolName.isEmpty() )
+    scanProgressText->setText( "" );
+  else
+  {
+    QString text( i18n("Scanning for ") + toolName + " ..." );
+    scanProgressText->setText( text );
+  }
+*/
 }
 
 //---------------------------------------------------------------------------
