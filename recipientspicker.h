@@ -79,7 +79,7 @@ class RecipientsCollection
     RecipientItem::List mItems;
 };
 
-class RecipientsPicker : public KDialogBase 
+class RecipientsPicker : public QWidget 
 {
     Q_OBJECT
   public:
@@ -93,6 +93,8 @@ class RecipientsPicker : public KDialogBase
   protected:
     void initCollections();
     void insertCollection( RecipientsCollection *coll, int index );
+
+    void keyPressEvent( QKeyEvent *ev );
 
   protected slots:
     void updateList();

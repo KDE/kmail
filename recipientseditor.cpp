@@ -438,7 +438,7 @@ void SideWidget::initRecipientPicker()
 {
   if ( mRecipientPicker ) return;
 
-  mRecipientPicker = new RecipientsPicker( 0 );
+  mRecipientPicker = new RecipientsPicker( this );
   connect( mRecipientPicker, SIGNAL( pickedRecipient( const QString & ) ),
     SIGNAL( pickedRecipient( const QString & ) ) );
 
@@ -466,8 +466,8 @@ void SideWidget::pickRecipient()
 #else
   mRecipientPicker->setRecipients( mView->recipients() );
   mRecipientPicker->show();
-  mRecipientPicker->raise();
   mPickerPositioner->reposition();
+  mRecipientPicker->raise();
 #endif
 }
 
