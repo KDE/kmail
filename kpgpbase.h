@@ -63,6 +63,7 @@ public:
   int getStatus() const;
   QString signedBy() const;
   QString signedByKey() const;
+  QString encryptedFor() const;
   const QStrList *receivers() const;
 
   virtual QString lastErrorMessage() const;
@@ -90,6 +91,7 @@ protected:
   QString pgpUser;
   QString signature;
   QString signatureID;
+  QString requiredID;
   QStrList recipients;
 
   bool flagEncryptToSelf;
@@ -246,10 +248,16 @@ KpgpBase::signedBy(void) const
   return signature;
 }
 
-inline QString 
+inline QString
 KpgpBase::signedByKey(void) const
 {
   return signatureID;
+}
+
+inline QString
+KpgpBase::encryptedFor(void) const
+{
+  return requiredID;
 }
 
 #endif
