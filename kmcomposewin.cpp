@@ -2370,26 +2370,18 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
     mMapAtmLoadData.remove(it);
     return;
   }
-  QString name;
-  const QString urlStr = (*it).url.prettyURL();
   const QCString partCharset = (*it).url.fileEncoding().isEmpty()
                              ? mCharset
                              : QCString((*it).url.fileEncoding().latin1());
 
   KMMessagePart* msgPart;
-  int i;
 
   KCursorSaver busy(KBusyPtr::busy());
-
+  QString name( (*it).url.fileName() );
   // ask the job for the mime type of the file
   QString mimeType = static_cast<KIO::MimetypeJob*>(job)->mimetype();
 
-  i = urlStr.findRev('/');
-  if( i == -1 )
-    name = urlStr;
-  else if( i + 1 < int( urlStr.length() ) )
-    name = urlStr.mid( i + 1, 256 );
-  else {
+  if ( name.isEmpty() ) {
     // URL ends with '/' (e.g. http://www.kde.org/)
     // guess a reasonable filename
     if( mimeType == "text/html" )
@@ -2409,6 +2401,8 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
       name = QString("unknown") += ext;
     }
   }
+
+  name.truncate( 256 ); // is this needed?
 
   QCString encoding = KMMsgBase::autoDetectCharset(partCharset,
     KMMessage::preferredCharsets(), name);
