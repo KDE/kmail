@@ -116,6 +116,11 @@ void paintCell( QPainter * p, const QColorGroup & cg,
 
   QString t = text( column );
   if ( !t.isEmpty() ) {
+    if( folder && folder->countUnread() > 0 ) {
+      QFont f = p->font();
+      f.setWeight(QFont::Bold);
+      p->setFont(f);
+    }
     QRect br;
     p->drawText( r, 0, width-marg-r, height(),
 		 align | AlignVCenter, t, -1, &br );
