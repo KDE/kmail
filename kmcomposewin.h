@@ -309,6 +309,7 @@ protected:
   QString mComposeCharset; 
   int mQuoteUnknownCharacters;
   QFont mSavedEditorFont;
+  QString mPathAttach;
 #endif  
 
 private:

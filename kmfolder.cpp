@@ -141,7 +141,8 @@ int KMFolder::open(void)
     {
       QString str;
       mIndexStream = NULL;
-      str.sprintf(i18n("Folder `%s' changed. Recreating index."), name());
+      str.sprintf(i18n("Folder `%s' changed. Recreating index."), 
+		  (const char*)name());
       emit statusMsg(str);
     }
     else mIndexStream = fopen(indexLocation(), "r+"); // index file
