@@ -594,12 +594,12 @@ void KMFolderCachedImap::uploadNewMessages()
   if( !newMsgs.isEmpty() ) {
     emit statusMsg( i18n("%1: Uploading messages to server").arg(name()) );
 
-    emit newState( i18n("%1").arg(name()) , mProgress, i18n("Uploading messages to server"));
+    emit newState( name(), mProgress, i18n("Uploading messages to server"));
     CachedImapJob *job = new CachedImapJob( newMsgs, CachedImapJob::tPutMessage, this );
     connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
     job->start();
   } else {
-    emit newState( i18n("%1").arg(name()) , mProgress, i18n("No messages to upload to server"));
+    emit newState( name(), mProgress, i18n("No messages to upload to server"));
 
     serverSyncInternal();
   }
@@ -613,7 +613,7 @@ void KMFolderCachedImap::createNewFolders()
   mProgress += 10;
   if( !newFolders.isEmpty() ) {
     emit statusMsg( i18n("%1: Creating subfolders on server").arg(name()) );
-    emit newState( i18n("%1").arg(name()) , mProgress, i18n("Creating subfolders on server"));
+    emit newState( name(), mProgress, i18n("Creating subfolders on server"));
     CachedImapJob *job = new CachedImapJob( newFolders, CachedImapJob::tAddSubfolders, this );
     connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
     job->start();
@@ -678,7 +678,7 @@ bool KMFolderCachedImap::deleteMessages()
   //emit syncState( SYNC_STATE_DELETE_MESSAGES, uidsForDeletionOnServer.count() );
 
   mProgress += 10;
-  emit newState( i18n("%1").arg(name()) , mProgress, i18n("Deleting removed messages from server"));
+  emit newState( name(), mProgress, i18n("Deleting removed messages from server"));
 
   /* Delete messages from the server that we dont have anymore */
   if( !uidsForDeletionOnServer.isEmpty() ) {
@@ -707,7 +707,7 @@ void KMFolderCachedImap::checkUidValidity() {
     serverSyncInternal();
   else {
     mProgress += 10;
-    emit newState( i18n("%1").arg(name()) , mProgress, i18n("Checking folder validity"));
+    emit newState( name(), mProgress, i18n("Checking folder validity"));
     emit statusMsg( i18n("%1: Checking folder validity").arg(name()) );
     CachedImapJob *job = new CachedImapJob( FolderJob::tCheckUidValidity, this );
     connect( job, SIGNAL( finished() ), this, SLOT( serverSyncInternal() ) );
