@@ -1,3 +1,10 @@
+2000-05-12  George Staikos <staikos@0wned.org>
+
+        * Added an optional column for message size
+        * Created a context menu item for "Save As"
+        * Fixed various typos
+        * Created welcome message on inbox creation
+
 2000-03-25  Sven Radej <radej@kde.org>
 
         * Removed old signal-driven "IPC" and introduced DCOP interface
