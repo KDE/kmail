@@ -135,7 +135,7 @@ void KMMainWin::slotEditToolbars()
 
 void KMMainWin::slotUpdateToolbars()
 {
-  createGUI("kmmainwin.rc");
+  createGUI("kmmainwin.rc", false);
   applyMainWindowSettings(KMKernel::config(), "Main Window");
 }
 
