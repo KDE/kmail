@@ -15,10 +15,11 @@
 #include "kmmessage.h"
 #include "kmundostack.h"
 #include "kbusyptr.h"
-
+#include <kio/netaccess.h>
 #include <kapplication.h>
 #include <kdebug.h>
 #include <klocale.h>
+#include <kstaticdeleter.h>
 #include <kmessagebox.h>
 
 #include <dirent.h>
@@ -39,8 +40,6 @@
 #ifndef INIT_MSGS
 #define INIT_MSGS 8
 #endif
-
-static QRegExp SUFFIX_REGEX(":2,?R?S?$");
 
 //-----------------------------------------------------------------------------
 KMFolderMaildir::KMFolderMaildir(KMFolderDir* aParent, const QString& aName)
@@ -109,7 +108,7 @@ int KMFolderMaildir::open()
     } else {
       mIndexStream = fopen(indexLocation().local8Bit(), "r+"); // index file
       updateIndexStreamPtr();
-    }	
+    }
 
     if (!mIndexStream)
       rc = createIndexFromContents();
@@ -312,7 +311,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
-*/  
+*/
   if (!canAddMsgNow(aMsg, index_return)) return 0;
 
   long len;
@@ -409,7 +408,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
     clearerr(mIndexStream);
     fseek(mIndexStream, 0, SEEK_END);
     off_t revert = ftell(mIndexStream);
-	
+
     int len;
     const uchar *buffer = aMsg->asIndexString(len);
     fwrite(&len,sizeof(len), 1, mIndexStream);
@@ -466,7 +465,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
     ds.writeRawBytes( aMsg->asString(), aMsg->asString().length() );
     fileD1.close();  // If data is 0 we just create a zero length file.
 }
-*/  
+*/
   return 0;
 }
 
@@ -568,8 +567,8 @@ void KMFolderMaildir::readFileHeaderIntern(const QString& dir, const QString& fi
       }
 
       KMMsgInfo *mi = new KMMsgInfo(this);
-      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr, 
-	       msgIdStr, file.local8Bit(), KMMsgEncryptionStateUnknown, 
+      mi->init(subjStr, fromStr, toStr, 0, status, xmarkStr, replyToIdStr,
+	       msgIdStr, file.local8Bit(), KMMsgEncryptionStateUnknown,
 	       KMMsgSignatureStateUnknown, f.size());
       if (!dateStr.isEmpty())
         mi->setDate(dateStr);
@@ -819,14 +818,13 @@ bool KMFolderMaildir::removeFile(const QString& filename)
 //-----------------------------------------------------------------------------
 int KMFolderMaildir::removeContents()
 {
-  // it would be nice if QDir could delete recursively.. but since it
-  // doesn't, we have to do this hack
-  QCString cmd;
-  cmd.sprintf("rm -rf '%s'", QFile::encodeName(location()).data());
-  system(cmd.data());
-
-  return 0;
+    if (KIO::NetAccess::del(KURL::fromPathOrURL(location())))
+        return 0;
+    return 1;
 }
+
+static QRegExp *suffix_regex = 0;
+static KStaticDeleter<QRegExp> suffix_regex_sd;
 
 //-----------------------------------------------------------------------------
 QString KMFolderMaildir::constructValidFileName(QString& aFileName, KMMsgStatus status)
@@ -837,7 +835,10 @@ QString KMFolderMaildir::constructValidFileName(QString& aFileName, KMMsgStatus 
     aFileName += KApplication::randomString(5);
   }
 
-  aFileName.truncate(aFileName.findRev(SUFFIX_REGEX));
+  if (!suffix_regex)
+      suffix_regex = suffix_regex_sd.setObject(new QRegExp(":2,?R?S?$"));
+
+  aFileName.truncate(aFileName.findRev(*suffix_regex));
 
   QString suffix;
   if ((status != KMMsgStatusNew) && (status != KMMsgStatusUnread))
