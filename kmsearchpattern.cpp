@@ -327,6 +327,8 @@ KMSearchPattern::KMSearchPattern( const KConfig * config )
 
 
 bool KMSearchPattern::matches( const KMMessage * msg ) const {
+  if ( isEmpty() )
+    return false;
   QPtrListIterator<KMSearchRule> it( *this );
   switch ( mOperator ) {
   case OpAnd: // all rules must match
@@ -346,6 +348,8 @@ bool KMSearchPattern::matches( const KMMessage * msg ) const {
 
 bool KMSearchPattern::matches( const DwString & aStr ) const
 {
+  if ( isEmpty() )
+    return false;
   KMMessage msg;
   QPtrListIterator<KMSearchRule> it( *this );
   switch ( mOperator ) {
