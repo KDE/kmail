@@ -265,14 +265,20 @@ kdDebug(5006) << "html" << endl;
                 }
                 // ---Sven's strip </BODY> and </HTML> from end of attachment end-
               } else {
-                writeHTMLStr(     "<table border=1 cellpadding=10><tr><td align=center>");
-                writeHTMLStr(i18n("<b>HTML source</b> shown because mail contains <i>no plain text</i> data."));
-                writeHTMLStr(     "<br>");
-                writeHTMLStr(i18n("This is the default - and safe - behavior of KMail."));
-                writeHTMLStr(     "<br><font size=-1>");
-                writeHTMLStr(i18n("To enable HTML rendering (at your own risk) "
-                                  "use &quot;Folder&quot; menu option."));
-                writeHTMLStr(     " </font></td></tr></table>&nbsp;<br>&nbsp;<br>");
+                writeHTMLStr(QString("<div style=\"margin:0px 5%;"
+                                  "border:2px solid %1;padding:10px;"
+                                  "text-align:left;font-size:90%\">")
+                                  .arg( cCBhtml.name() ) );
+                writeHTMLStr(i18n("<b>Note:</b> This is a HTML message. For "
+                                  "security reasons, only the raw HTML code "
+                                  "is shown. If you trust the sender of this "
+                                  "message then you can activate formatted "
+                                  //"HTML display by enabling <em>Prefer HTML "
+                                  //"to Plain Text</em> in the <em>Folder</em> "
+                                  //"menu."));
+                                  "HTML display for this message by clicking "
+                                  "<a href=\"kmail:showHTML\">here</a>."));
+                writeHTMLStr(     "</div><br /><br />");
               }
               writeHTMLStr(mCodec->toUnicode( htmlMail() ? cstr : KMMessage::html2source( cstr )));
               bDone = true;
@@ -2653,7 +2659,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 	    htmlStr.append( quoteEnd );
 
 	if ( paragState == New )
-            htmlStr += "<br>";
+	    htmlStr += "<br>";
 
 	/* start new quotelevel */
 	currQuoteLevel = actQuoteLevel;
@@ -2857,6 +2863,11 @@ void KMReaderWin::slotUrlOn(const QString &aUrl)
       emit statusMsg(i18n("Attachment: ") + str);
       bOk = true;
     }
+  }
+  else if( aUrl == "kmail:showHTML" )
+  {
+    emit statusMsg( i18n("Turn on HTML rendering for this message.") );
+    bOk = true;
   }
   if( !bOk )
     emit statusMsg(aUrl);

@@ -1674,6 +1674,8 @@ void KMMainWin::slotMsgSelected(KMMessage *msg)
   } else {
     mMsgView->setMsg(msg);
   }
+  // reset HTML override to the folder setting
+  mMsgView->setHtmlOverride(mFolderHtmlPref);
 }
 
 //-----------------------------------------------------------------------------
@@ -1979,6 +1981,15 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
         " '%1' ? " ).arg( aUrl.prettyURL() ) ) != KMessageBox::Yes) return;
     }
     (void) new KRun( aUrl );
+  }
+  // handle own links
+  else if( aUrl.protocol() == "kmail" )
+  {
+    if( aUrl.path() == "showHTML" )
+    {
+      mMsgView->setHtmlOverride(!mFolderHtmlPref);
+      mMsgView->setMsg( mMsgView->msg(), TRUE );
+    }
   }
 }
 
