@@ -1046,6 +1046,9 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
   // setStatus(KMMsgStatusReplied);
   msg->link(this, KMMsgStatusReplied);
 
+  if ( parent() && parent()->putRepliesInSameFolder() )
+    msg->setFcc( parent()->idString() );
+
   // replies to an encrypted message should be encrypted as well
   if ( encryptionState() == KMMsgPartiallyEncrypted ||
        encryptionState() == KMMsgFullyEncrypted ) {
@@ -1658,7 +1661,7 @@ void KMMessage::initHeader( uint id )
     setFcc( QString::null );
   else
     setFcc( ident.fcc() );
-
+  
   if (ident.drafts().isEmpty())
     setDrafts( QString::null );
   else

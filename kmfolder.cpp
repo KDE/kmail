@@ -112,6 +112,7 @@ void KMFolder::readConfig( KConfig* config )
 
   setUserWhoField( config->readEntry("WhoField"), false );
   mId = config->readUnsignedNumEntry("Id", 0);
+  mPutRepliesInSameFolder = config->readBoolEntry( "PutRepliesInSameFolder", false );
 
   if ( mUseCustomIcons )
     emit iconsChanged();
@@ -137,6 +138,7 @@ void KMFolder::writeConfig( KConfig* config ) const
 
   config->writeEntry("WhoField", mUserWhoField);
   config->writeEntry("Id", mId);
+  config->writeEntry( "PutRepliesInSameFolder", mPutRepliesInSameFolder );
 }
 
 KMFolderType KMFolder::folderType() const

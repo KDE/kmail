@@ -462,6 +462,13 @@ public:
    */
   KMFolder* trashFolder() const;
 
+  /**
+   * Returns true if the replies to mails from this folder should be
+   * put in the same folder.
+   */
+  bool putRepliesInSameFolder() const { return mPutRepliesInSameFolder; }
+  void setPutRepliesInSameFolder( bool b ) { mPutRepliesInSameFolder = b; }
+
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -552,6 +559,9 @@ private:
 
   /** name of the field that is used for "From" in listbox */
   QString mWhoField, mUserWhoField;
+
+  /** Should replies to messages in this folder be put in here? */
+  bool mPutRepliesInSameFolder;
 };
 
 #endif /*kmfolder_h*/
