@@ -6,9 +6,9 @@
 #define kmaddrbookdlg_h
 
 #include <qdialog.h>
-#include <qpushbt.h>
+#include <qpushbutton.h>
 #include <qlistbox.h>
-#include <qlined.h>
+#include <qlineedit.h>
 #include <qlayout.h>
 
 class KMAddrBook;

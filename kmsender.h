@@ -212,7 +212,7 @@ protected slots:
 protected:
   virtual bool addOneRecipient(const QString aRecipient);
 
-  QString mMsgStr;
+  QCString mMsgStr;
   char* mMsgPos;
   int mMsgRest;
   KProcess* mMailerProc;

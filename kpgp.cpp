@@ -17,9 +17,9 @@
 #include <qregexp.h>
 #include <qcursor.h>
 #include <qlabel.h>
-#include <qlined.h>
-#include <qchkbox.h>
-#include <qgrpbox.h>
+#include <qlineedit.h>
+#include <qcheckbox.h>
+#include <qgroupbox.h>
 #include <qlayout.h>
 
 #include <kapp.h>
@@ -159,7 +159,7 @@ Kpgp::setMessage(const QString mess)
     front = mess.left(index);
     index = mess.find("-----END PGP",index);
     index = mess.find("\n",index+1);
-    back  = mess.right(mess.size() - index - 1);
+    back  = mess.right(mess.length() - index);
 
     return TRUE;
   }
@@ -451,7 +451,7 @@ QString
 Kpgp::getPublicKey(QString _person)
 {
   // just to avoid some error messages
-  if(!havePgp) return true;
+  if(!havePgp) return QString::null;
 
   // do the search case insensitive, but return the correct key.
   QString adress,str;
@@ -469,7 +469,7 @@ Kpgp::getPublicKey(QString _person)
   
   // FIXME: let user set the key/ get from keyserver
 
-  return 0;
+  return QString::null;
 }
 
 QString 
@@ -494,7 +494,7 @@ const QString
 Kpgp::KeyToDecrypt(void) const
 {
   //FIXME
-  return 0;
+  return QString::null;
 }
 
 bool
@@ -619,8 +619,8 @@ Kpgp::checkForPGP(void)
     pSearchPaths.append(path.mid(lastindex+1,index-lastindex-1));
     lastindex = index;
   }
-  if(lastindex != (int)path.size() - 2)
-    pSearchPaths.append( path.mid(lastindex+1,path.size()-lastindex-1) );
+  if(lastindex != (int)path.length() - 1)
+    pSearchPaths.append( path.mid(lastindex+1,path.length()-lastindex) );
 
   QStrListIterator it(pSearchPaths);
 
@@ -678,7 +678,7 @@ Kpgp::canonicalAdress(QString _adress)
     // local adress
     char* hostname = (char *)malloc(1024*sizeof(char));
     gethostname(hostname,1024);
-    QString adress = '<';
+    QString adress = "<";
     adress += _adress;
     adress += '@';
     adress += hostname;

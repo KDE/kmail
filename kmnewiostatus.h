@@ -8,7 +8,7 @@
 #include <qwidget.h>
 #include <qstring.h>
 #include <qlabel.h>
-#include <qpushbt.h>
+#include <qpushbutton.h>
 
 class KMIOStatus : public QWidget
 {

@@ -61,7 +61,7 @@ void KMMessagePart::setBody(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setBodyEncoded(const QString aStr)
+void KMMessagePart::setBodyEncoded(const QCString aStr)
 {
   DwString dwResult, dwSrc;
   int encoding = contentTransferEncoding();
@@ -103,10 +103,10 @@ void KMMessagePart::setBodyEncoded(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMMessagePart::bodyDecoded(void) const
+const QCString KMMessagePart::bodyDecoded(void) const
 {
   DwString dwResult, dwSrc;
-  QString result;
+  QCString result;
   int encoding = contentTransferEncoding();
   int len;
 
@@ -163,7 +163,7 @@ void KMMessagePart::magicSetType(bool aAutoDecode)
   if (aAutoDecode) bod = bodyDecoded();
   else bod = mBody;
 
-  mimetype = sMagic->findBufferType(bod, bod.size()-1)->getContent();
+  mimetype = sMagic->findBufferType(bod, bod.length())->getContent();
   sep = mimetype.find('/');
   mType = mimetype.left(sep);
   mSubtype = mimetype.mid(sep+1, 64);
@@ -225,7 +225,7 @@ void KMMessagePart::setType(int aType)
   DwString dwType;
   DwTypeEnumToStr(aType, dwType);
   mType = dwType.c_str();
-  mType.detach();
+  
 }
 
 
@@ -258,7 +258,7 @@ void KMMessagePart::setSubtype(int aSubtype)
   DwString dwSubtype;
   DwSubtypeEnumToStr(aSubtype, dwSubtype);
   mSubtype = dwSubtype.c_str();
-  mSubtype.detach();
+  
 }
 
 
@@ -290,7 +290,7 @@ void KMMessagePart::setContentTransferEncoding(int aCte)
   DwString dwCte;
   DwCteEnumToStr(aCte, dwCte);
   mCte = dwCte.c_str();
-  mCte.detach();
+  
 }
 
 
@@ -315,7 +315,7 @@ const QString KMMessagePart::fileName(void) const
   QString str;
 
   i = mContentDisposition.find("filename=", 0, FALSE);
-  if (i < 0) return 0;
+  if (i < 0) return QString::null;
   j = mContentDisposition.find(';', i+9);
 
   if (j < 0) j = 32767;

@@ -13,7 +13,7 @@ KMFolderNode::KMFolderNode(KMFolderDir* aParent, const char* aName):
 
   mType = "node";
   mName = aName;
-  mName.detach();
+  
   setName(mName);
 }
 

@@ -7,7 +7,7 @@
 #include "kmfolderdir.h"
 
 #include <kapp.h>
-#include <qpushbt.h>
+#include <qpushbutton.h>
 #include <qlistbox.h>
 #include <qlayout.h>
 #include <unistd.h>

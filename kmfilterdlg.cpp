@@ -1,6 +1,6 @@
 // kmfilterdlg.cpp
 
-#include <qfiledlg.h>
+#include <qfiledialog.h>
 
 #include "kmfilterdlg.h"
 #include "kmfilter.h"
@@ -14,16 +14,16 @@
 #include <kmsgbox.h>
 #include <ktablistbox.h>
 #include <kbuttonbox.h>
-#include <qbttngrp.h>
+#include <qbuttongroup.h>
 #include <qframe.h>
-#include <qgrpbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlistbox.h>
-#include <qpushbt.h>
-#include <qradiobt.h>
-#include <qcombo.h>
-#include <qlined.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qcombobox.h>
+#include <qlineedit.h>
 #include <assert.h>
 #include <qstrlist.h>
 

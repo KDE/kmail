@@ -10,10 +10,10 @@
 #include <mimelib/mimepp.h>
 #include <kmfolder.h>
 #include <kmmessage.h>
-#include <qtstream.h>
+#include <qtextstream.h>
 #include <kconfig.h>
-#include <qlined.h>
-#include <qpushbt.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
 #include <kapp.h>
 
 #include "kmacctpop.h"
@@ -100,7 +100,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
     msg = i18n("Please set Password and Username");
 
   passwd = decryptStr(mPasswd);
-  passwd.detach();
+  
 
   while (1)
   {
@@ -141,7 +141,7 @@ bool KMAcctPop::authenticate(DwPopClient& client)
 
     // Send password
     passwd = decryptStr(mPasswd);
-    passwd.detach();
+    
     replyCode = client.Pass((const char*)passwd);
     if (replyCode == '-')
     {
@@ -169,7 +169,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   int id, i;		// id of message to read
   int dummy;
   char dummyStr[32];
-  int replyCode; // ReplyCode need from User & Passwd call.
+  // int replyCode; // ReplyCode need from User & Passwd call.
   KMMessage* msg;
   gotMsgs = FALSE;
   bool doFetchMsg;
@@ -359,7 +359,8 @@ const QString KMAcctPop::encryptStr(const QString aStr)
 {
   unsigned int i, val;
   unsigned int len = aStr.length();
-  QString result(len+1);
+  QCString result;
+  result.resize(len+1);
 
   for (i=0; i<len; i++)
   {

@@ -30,7 +30,7 @@
 #include <time.h>
 
 #if ALLOW_GUI
-#include <qmlined.h>
+#include <qmultilinedit.h>
 #endif
 
 
@@ -41,7 +41,7 @@ extern KLocale* nls;
 
 
 static DwString emptyString("");
-static QString result;
+static QCString result;
 
 // Values that are set from the config file with KMMessage::readConfig()
 static QString sReplyStr, sForwardStr, sReplyAllStr, sIndentPrefixStr;
@@ -319,7 +319,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
 					const QString aIndentStr,
 					bool aIncludeAttach) const
 {
-  QString headerStr(256);
+  QString headerStr;
   KMMessagePart msgPart;
   QRegExp reNL("\\n");
   QString nlIndentStr;
@@ -394,7 +394,7 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
     }
   }
 
-  result = headerStr + nlIndentStr + result;
+  result = headerStr + nlIndentStr + result.data();
   return result;
 }
 
@@ -422,14 +422,14 @@ KMMessage* KMMessage::createReply(bool replyToAll)
     // now try to strip my own e-mail adress:
     QString f = msg->from();
     if((i = f.find("<")) != -1) // just keep <foo@bar.com>
-      f = f.right(f.size() - i);
+      f = f.right(f.length() + 1 -i );
     if((i = toStr.find(f)) != -1)
     {
       int pos1, pos2;
       pos1 = toStr.findRev(", ", i);
       if( pos1 == -1 ) pos1 = 0;
       pos2 = toStr.find(", ", i);
-      toStr = toStr.left(pos1) + toStr.right(toStr.size() - pos2 - 1); 
+      toStr = toStr.left(pos1) + toStr.right(toStr.length() - pos2); 
     }
     toStr.truncate(toStr.length()-2);
     // same for the cc field
@@ -440,7 +440,7 @@ KMMessage* KMMessage::createReply(bool replyToAll)
       pos1 = ccStr.findRev(", ", i);
       if( pos1 == -1 ) pos1 = 0;
       pos2 = ccStr.find(", ", i);
-      ccStr = ccStr.left(pos1) + toStr.right(toStr.size() - pos2 - 1);
+      ccStr = ccStr.left(pos1) + toStr.right(toStr.length() - pos2);
     }
     ccStr.truncate(ccStr.length()-2);
     msg->setCc(ccStr);
@@ -620,9 +620,9 @@ const QString KMMessage::dateShortStr(void) const
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
 
-  result.detach();
+  
   result = ctime(&unixTime);
-  result.detach();
+  
   if (result[result.length()-1]=='\n')
     result.truncate(result.length()-1);
 
@@ -832,7 +832,7 @@ const QString KMMessage::headerField(const QString aName) const
   else 
     result = decodeRFC1522String(header.FieldBody((const char*)aName).
                                  AsString().c_str());
-  result.detach();
+  
   return result;
 }
 

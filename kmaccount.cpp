@@ -5,7 +5,7 @@
 
 #include <qdir.h>
 #include <qstrlist.h>
-#include <qtstream.h>
+#include <qtextstream.h>
 #include <qfile.h>
 #include <assert.h>
 #include <kconfig.h>

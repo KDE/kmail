@@ -48,7 +48,7 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
   }
   else mBasePath = aBasePath;
 
-  mBasePath.detach();
+  
   
 }
 
@@ -58,7 +58,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 {
   KConfig* config = app->getConfig();
   KMAccount* acct;
-  QString groupName(256);
+  QString groupName;
   int i;
 
   config->setGroup("General");
@@ -79,7 +79,7 @@ void KMAcctMgr::readConfig(void)
 {
   KConfig* config = app->getConfig();
   KMAccount* acct;
-  QString groupName(256), acctType, acctName;
+  QString groupName, acctType, acctName;
   int i, num;
 
   mAcctList.clear();
@@ -107,12 +107,12 @@ bool KMAcctMgr::singleCheckMail(KMAccount *account)
   serverReady(false);
   bool hasNewMail = FALSE;
   //kbp->busy();
-  KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
+  KMIOStatusWdg *wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
   wid->show();
 
   if (account->folder() == 0)
   {
-    QString tmp(1024); //Unsafe
+    QString tmp; //Unsafe
     tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
  	        "Mail checking aborted\n"
 	        "Check your account settings!"), account->name().data());
@@ -212,14 +212,14 @@ bool KMAcctMgr::checkMail(void)
 
   debug ("checking mail, server busy");
   serverReady(false);
-  KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
+  KMIOStatusWdg *wid = new KMIOStatusWdg(0,QString::null,KMIOStatus::RETRIEVE);
   wid->show();
   
   for (cur=mAcctList.first(); cur; cur=mAcctList.next())
   {
     if (cur->folder() == 0)
     {
-      QString tmp(1024); // Unsafe
+      QString tmp; 
       tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
                        "Mail checking aborted\n"
                        "Check your account settings!"), cur->name().data());
@@ -281,7 +281,7 @@ bool KMAcctMgr::intCheckMail(int item) {
 
   if (cur->folder() == 0)
   {
-    QString tmp(1024); // Unsafe
+    QString tmp; 
     tmp.sprintf(i18n("Account %s has no mailbox defined!\n"
                      "Mail checking aborted\n"
                      "Check your account settings!"), cur->name().data());

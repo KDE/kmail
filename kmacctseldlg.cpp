@@ -1,9 +1,9 @@
 // kmacctseldlg.cpp
 
-#include <qpushbt.h>
-#include <qradiobt.h>
-#include <qbttngrp.h>
-#include <qradiobt.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qbuttongroup.h>
+#include <qradiobutton.h>
 #include <kapp.h>
 #include <qlayout.h>
 

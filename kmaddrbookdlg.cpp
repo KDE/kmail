@@ -17,7 +17,7 @@ KMAddrBookSelDlg::KMAddrBookSelDlg(KMAddrBook* aAddrBook, const char* aCap):
   const char* addr;
 
   initMetaObject();
-  setCaption(aCap ? aCap : i18n("Addressbook"));
+  setCaption(aCap ? QString(aCap) : i18n("Addressbook"));
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;
@@ -92,7 +92,7 @@ KMAddrBookEditDlg::KMAddrBookEditDlg(KMAddrBook* aAddrBook, const char* aCap):
   const char* addr;
 
   initMetaObject();
-  setCaption(aCap ? aCap : i18n("Addressbook Manager"));
+  setCaption(aCap ? QString(aCap) : i18n("Addressbook Manager"));
 
   assert(aAddrBook != NULL);
   mAddrBook = aAddrBook;

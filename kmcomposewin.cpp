@@ -36,7 +36,7 @@
 #include <html.h>
 #include <kfiledialog.h>
 #include <kwm.h>
-#include <qtabdlg.h>
+#include <qtabdialog.h>
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qlist.h>
@@ -95,7 +95,7 @@ WindowList* windowList=new WindowList;
 #define HDR_STANDARD (HDR_SUBJECT|HDR_TO|HDR_CC)
 #endif
 
-QString KMComposeWin::mPathAttach = 0;
+QString KMComposeWin::mPathAttach = QString::null;
 
 //-----------------------------------------------------------------------------
 KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
@@ -108,12 +108,11 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mBtnTo("...",&mMainWidget), mBtnCc("...",&mMainWidget), 
   mBtnBcc("...",&mMainWidget),  mBtnFrom("...",&mMainWidget),
   mBtnReplyTo("...",&mMainWidget)
-#ifdef KRN
+
   /* start added for KRN */
   ,mEdtNewsgroups(this,&mMainWidget),mEdtFollowupTo(this,&mMainWidget),
   mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
   /* end added for KRN */
-#endif
 {
 
   mGrid = NULL;
@@ -253,7 +252,7 @@ void KMComposeWin::readConfig(void)
 void KMComposeWin::writeConfig(void)
 {
   KConfig *config = kapp->getConfig();
-  QString str(32);
+  QString str;
 
   config->setGroup("Composer");
   config->writeEntry("signature", mAutoSign?"auto":"manual");
@@ -649,9 +648,9 @@ void KMComposeWin::updateCursorPosition()
   QString temp;
   line = mEditor->currentLine();
   col = mEditor->currentColumn();
-  temp.sprintf("%s: %i", i18n("Line"), (line+1));
+  temp.sprintf("%s: %i", i18n("Line").ascii(), (line+1));
   mStatusBar->changeItem(temp,1);
-  temp.sprintf("%s: %i", i18n("Column"), (col+1));
+  temp.sprintf("%s: %i", i18n("Column").ascii(), (col+1));
   mStatusBar->changeItem(temp,2);
 }
 
@@ -895,7 +894,7 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setCharset(mCharset);
 #endif      
     str.truncate(str.length()); // to ensure str.size()==str.length()+1
-    bodyPart.setBodyEncoded(str);
+    bodyPart.setBodyEncoded(str.ascii());
     mMsg->addBodyPart(&bodyPart);
 
     // Since there is at least one more attachment create another bodypart
@@ -974,7 +973,7 @@ const QString KMComposeWin::pgpProcessedMsg(void)
   //warning(i18n("Error during PGP:") + QString("\n") + 
   //	  pgp->lastErrorMsg());
 
-  return 0;
+  return QString::null;
 }
 
  
@@ -1001,7 +1000,7 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
-  msgPart->setBodyEncoded(str);
+  msgPart->setBodyEncoded(str.ascii());
   msgPart->magicSetType();
   msgPart->setContentDisposition("attachment; filename=\""+name+"\"");
 
@@ -1043,7 +1042,7 @@ void KMComposeWin::addAttach(const KMMessagePart* msgPart)
 const QString KMComposeWin::msgPartLbxString(const KMMessagePart* msgPart) const
 {
   unsigned int len;
-  QString lenStr(32);
+  QString lenStr;
 
   assert(msgPart != NULL);
 
@@ -1105,7 +1104,7 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
   txt = QString(aLineEdit->text()).stripWhiteSpace();
   if (!txt.isEmpty())
   {
-    if (txt.right(1)!=',') txt += ", ";
+    if (txt.right(1).at(0)!=',') txt += ", ";
     else txt += ' ';
   }
   aLineEdit->setText(txt + dlg.address());
@@ -1249,7 +1248,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   msgPart->setCteStr(mDefEncoding);
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
-  msgPart->setBodyEncoded(str);
+  msgPart->setBodyEncoded(str.ascii());
   msgPart->setContentDisposition("attachment; filename=public_key.asc");
 
   // add the new attachment to the list
@@ -1277,7 +1276,7 @@ void KMComposeWin::slotInsertPublicKey()
   msgPart->setCteStr(mDefEncoding);
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
-  msgPart->setBodyEncoded(str);
+  msgPart->setBodyEncoded(str.ascii());
   msgPart->setContentDisposition("attachment; filename=public_key.asc");
 
   // add the new attachment to the list
@@ -1447,7 +1446,11 @@ void KMComposeWin::slotCopy()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  QKeyEvent k(Event_KeyPress, Key_C , 0 , ControlButton);
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
+  QKeyEvent k(QEvent::KeyPress, Key_C , 0 , ControlButton);
   app->notify(fw, &k);
 }
 
@@ -1458,7 +1461,11 @@ void KMComposeWin::slotPaste()
   QWidget* fw = focusWidget();
   if (!fw) return;
 
-  QKeyEvent k(Event_KeyPress, Key_V , 0 , ControlButton);
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
+  QKeyEvent k(QEvent::KeyPress, Key_V , 0 , ControlButton);
   app->notify(fw, &k);
 }
 
@@ -1564,7 +1571,7 @@ void KMComposeWin::slotDropAction()
 
   for (file=fileList->first(); !file.isEmpty() ; file=fileList->next())
   {
-    file.replace("file:","");
+    file.replace(QRegExp("file:"),"");
     addAttach(file);
   }
 }
@@ -1619,7 +1626,7 @@ void KMComposeWin::slotAppendSignature()
   if (sigFileName.isEmpty())
   {
     // open a file dialog and let the user choose manually
-    KFileDialog dlg(getenv("HOME"),0,this,0,TRUE,FALSE);
+    KFileDialog dlg(getenv("HOME"),QString::null,this,0,TRUE,FALSE);
     dlg.setCaption(i18n("Choose Signature File"));
     if (!dlg.exec()) return;
     sigFileName = dlg.selectedFile();
@@ -1864,7 +1871,11 @@ KMLineEdit::~KMLineEdit()
 //-----------------------------------------------------------------------------
 bool KMLineEdit::eventFilter(QObject*, QEvent* e)
 {
-  if (e->type() == Event_KeyPress)
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
+  if (e->type() == QEvent::KeyPress)
   {
     QKeyEvent* k = (QKeyEvent*)e;
 
@@ -1875,13 +1886,13 @@ bool KMLineEdit::eventFilter(QObject*, QEvent* e)
       return TRUE;
     }
   }
-  else if (e->type() == Event_MouseButtonPress)
+  else if (e->type() == QEvent::MouseButtonPress)
   {
     QMouseEvent* me = (QMouseEvent*)e;
     if (me->button() == MidButton)
     {
       setFocus();
-      QKeyEvent ev(Event_KeyPress, Key_V, 0 , ControlButton);
+      QKeyEvent ev(QEvent::KeyPress, Key_V, 0 , ControlButton);
       keyPressEvent(&ev);
       return TRUE;
     }
@@ -1904,7 +1915,7 @@ bool KMLineEdit::eventFilter(QObject*, QEvent* e)
 //-----------------------------------------------------------------------------
 void KMLineEdit::cursorAtEnd()
 {
-  QKeyEvent ev( Event_KeyPress, Key_End, 0, 0 );
+  QKeyEvent ev( QEvent::KeyPress, Key_End, 0, 0 );
   QLineEdit::keyPressEvent( &ev );
 }
 
@@ -1922,7 +1933,7 @@ void KMLineEdit::cut()
   if(hasMarkedText())
   {
     QString t = markedText();
-    QKeyEvent k(Event_KeyPress, Key_D, 0, ControlButton);
+    QKeyEvent k(QEvent::KeyPress, Key_D, 0, ControlButton);
     keyPressEvent(&k);
     QApplication::clipboard()->setText(t);
   }
@@ -1931,7 +1942,7 @@ void KMLineEdit::cut()
 //-----------------------------------------------------------------------------
 void KMLineEdit::paste()
 {
-  QKeyEvent k(Event_KeyPress, Key_V, 0, ControlButton);
+  QKeyEvent k(QEvent::KeyPress, Key_V, 0, ControlButton);
   keyPressEvent(&k);
 }
 
@@ -2056,7 +2067,7 @@ KMEdit::~KMEdit()
 //-----------------------------------------------------------------------------
 bool KMEdit::eventFilter(QObject*, QEvent* e)
 {
-  if (e->type() == Event_KeyPress)
+  if (e->type() == QEvent::KeyPress)
   {
     QKeyEvent *k = (QKeyEvent*)e;
 

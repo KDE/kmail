@@ -47,7 +47,7 @@ const char* KMAcctLocal::type(void) const
 void KMAcctLocal::init(void)
 {
   mLocation = _PATH_MAILDIR;
-  mLocation.detach();
+  
   mLocation += "/";
   mLocation += getenv("USER");
 }

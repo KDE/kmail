@@ -60,12 +60,12 @@ KMSender::KMSender()
   mCurrentMsg = NULL;
   readConfig();
   quitOnDone = false;
-  label = new QLabel;
+  label = new QLabel(0);
   //label->setAutoResize(true);
   label->setCaption("KMail");
   label->setIcon(kapp->getMiniIcon());
-  connect (this, SIGNAL(statusMsg(const char *)),
-           label, SLOT(setText(const char*)));
+  connect (this, SIGNAL(statusMsg(const QString&)),
+           label, SLOT(setText(const QString&)));
 }
 
 
@@ -654,7 +654,7 @@ bool KMSendSMTP::start(void)
   mClient->Open(mSender->smtpHost(), mSender->smtpPort()); // Open connection
   if(!mClient->IsOpen()) // Check if connection succeded
   {
-    QString str(256);
+    QString str;
     str.sprintf(i18n("Cannot open SMTP connection to\n"
 			       "host %s for sending:\n%s"), 
 		(const char*)mSender->smtpHost(),
@@ -764,7 +764,7 @@ bool KMSendSMTP::addOneRecipient(const QString aRcpt)
 bool KMSendSMTP::smtpFailed(const char* inCommand,
 			  int replyCode)
 {
-  QString str(256);
+  QString str;
   const char* errorStr = mClient->Response().c_str();
 
   if (replyCode==0 && (!errorStr || !*errorStr))

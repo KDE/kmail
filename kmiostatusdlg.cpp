@@ -5,7 +5,7 @@
 #include "kmiostatusdlg.h"
 
 #include <qlabel.h>
-#include <qpushbt.h>
+#include <qpushbutton.h>
 #include <kapp.h>
 #include <kapp.h>
 

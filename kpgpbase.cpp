@@ -787,7 +787,7 @@ QString KpgpBase5::getAsciiPublicKey(QString _person) {
   toexec.sprintf("pgpk -xa \"%s\"", _person.data());
 
   status = run(toexec.data());
-  if(status == RUN_ERR) return 0;
+  if(status == RUN_ERR) return QString::null;
 
   return output;
 }
@@ -798,7 +798,7 @@ QString KpgpBase2::getAsciiPublicKey(QString _person) {
   toexec.sprintf("pgp -kxaf \"%s\"", _person.data());
 
   status = run(toexec.data());
-  if(status == RUN_ERR) return 0;
+  if(status == RUN_ERR) return QString::null;
 
   return output;
 }

@@ -5,14 +5,14 @@
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qframe.h>
-#include <qchkbox.h>
-#include <qpushbt.h>
+#include <qcheckbox.h>
+#include <qpushbutton.h>
 
 #include <kapp.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kcharsets.h>
-#include <qcombo.h>
+#include <qcombobox.h>
 
 #include <qlayout.h>
 

@@ -16,10 +16,10 @@ extern KBusyPtr *kbp;
 
 #include "kbusyptr.h"
 #include <kapp.h>
-#include <qcombo.h>
-#include <qpushbt.h>
+#include <qcombobox.h>
+#include <qpushbutton.h>
 #include <qlabel.h>
-#include <qlined.h>
+#include <qlineedit.h>
 #include <qlayout.h>
 #include <unistd.h>
 #include <assert.h>
@@ -142,7 +142,7 @@ KMMsgPartDlg::~KMMsgPartDlg()
 void KMMsgPartDlg::setMsgPart(KMMessagePart* aMsgPart)
 {
   unsigned int len, idx;
-  QString lenStr(32), iconName, enc;
+  QString lenStr, iconName, enc;
 
   mMsgPart = aMsgPart;
   assert(mMsgPart!=NULL);
@@ -207,7 +207,7 @@ void KMMsgPartDlg::applyChanges(void)
   {
     body = mMsgPart->bodyDecoded();
     mMsgPart->setCteStr(str);
-    mMsgPart->setBodyEncoded(body);
+    mMsgPart->setBodyEncoded(body.ascii());
   }
   kbp->idle();
 }

@@ -36,7 +36,7 @@
 #include <qbitmap.h>
 #include <qclipboard.h>
 #include <qcursor.h>
-#include <qmlined.h>
+#include <qmultilinedit.h>
 #include <qregexp.h>
 
 // for selection
@@ -394,7 +394,7 @@ void KMReaderWin::writeMsgHeader(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeBodyStr(const QString aStr)
 {
-  QString line(256), sig, htmlStr = "";
+  QString line, sig, htmlStr = "";
   Kpgp* pgp = Kpgp::getKpgp();
   assert(pgp != NULL);
   assert(!aStr.isNull());
@@ -515,7 +515,7 @@ QString KMReaderWin::quotedHTML(char * pos)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 {
-  QString iconName, href(255), label, comment, tmpStr, contDisp;
+  QString iconName, href, label, comment, tmpStr, contDisp;
   QString fileName;
 
   if(aMsgPart == NULL) {

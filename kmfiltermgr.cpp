@@ -31,7 +31,7 @@ void KMFilterMgr::readConfig(void)
 {
   KConfig* config = kapp->getConfig();
   int i, numFilters;
-  QString grpName(64);
+  QString grpName;
   KMFilter* filter;
 
   clear();
@@ -53,7 +53,7 @@ void KMFilterMgr::readConfig(void)
 void KMFilterMgr::writeConfig(bool withSync)
 {
   KConfig* config = kapp->getConfig();
-  QString grpName(64);
+  QString grpName;
   KMFilter* filter;
   int i;
 

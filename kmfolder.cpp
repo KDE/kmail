@@ -1,7 +1,7 @@
 // kmfolder.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
-#include <qfileinf.h>
+#include <qfileinfo.h>
 
 #include "kmglobal.h"
 #include "kmfolder.h"
@@ -340,7 +340,7 @@ int KMFolder::createIndexFromContents(void)
   bool atEof = FALSE;
   bool inHeader = TRUE;
   KMMsgInfo* mi;
-  QString msgStr(256);
+  QString msgStr;
   QRegExp regexp(MSG_SEPERATOR_REGEX);
   int i, num, numStatus, whoFieldLen;
   short needStatus;
@@ -678,7 +678,7 @@ KMMessage* KMFolder::readMsg(int idx)
 {
   KMMessage* msg;
   unsigned long msgSize;
-  QString msgText;
+  QCString msgText;
   KMMsgInfo* mi = (KMMsgInfo*)mMsgList[idx];
 
   assert(mi!=NULL && !mi->isMessage());
@@ -900,7 +900,7 @@ int KMFolder::compact(void)
   int num, numStatus;
 
   tempName = "." + name();
-  tempName.detach();
+  
   tempName += ".compacted";
   unlink(tempName);
   tempFolder = parent()->createFolder(tempName);

@@ -64,7 +64,7 @@ void KMFolderMgr::setBasePath(const char* aBasePath)
     mBasePath = "";
     mBasePath.append(aBasePath);
   }
-  mBasePath.detach();
+  
 
   dir.setPath(mBasePath);
   if (!dir.exists())

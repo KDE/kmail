@@ -8,7 +8,7 @@
 
 #include <assert.h>
 #include <qfile.h>
-#include <qfileinf.h>
+#include <qfileinfo.h>
 #include <errno.h>
 
 
@@ -27,7 +27,7 @@ KMFolderRootDir::KMFolderRootDir(const char* path):
 void KMFolderRootDir::setPath(const char* aPath)
 {
   mPath = aPath;
-  mPath.detach();
+  
 }
 
 

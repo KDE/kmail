@@ -8,7 +8,7 @@
 #include <qwidget.h>
 #include <qstring.h>
 #include <qlabel.h>
-#include <qpushbt.h>
+#include <qpushbutton.h>
 #include <kprogress.h>
 #include "kmnewiostatus.h"
 
@@ -18,7 +18,7 @@ class KMIOStatusWdg : public KMIOStatus
  public:
   
   KMIOStatusWdg(QWidget *parent = 0, const char * name = 0,
-		task type = SEND, QString host = 0 );
+		task type = SEND, QString host = QString::null );
   ~KMIOStatusWdg();
 
 

@@ -46,7 +46,7 @@ void KMIdentity::readConfig(void)
     if (pw)
     {
       mFullName = pw->pw_gecos;
-      mFullName.detach();
+      
       i = mFullName.find(',');
       if (i>0) mFullName.truncate(i);
     }
@@ -61,7 +61,7 @@ void KMIdentity::readConfig(void)
     {
       gethostname(str, 79);
       mEmailAddr = QString(pw->pw_name) + "@" + str;
-      mEmailAddr.detach();
+      
     }
   }
 
@@ -146,7 +146,7 @@ const QString KMIdentity::signature(void) const
   QString result, sigcmd;
   char tmpf[256];
 
-  if (mSignatureFile.isEmpty()) return 0;
+  if (mSignatureFile.isEmpty()) return QString::null;
 
   if (mSignatureFile.right(1)=="|")
   {
@@ -161,7 +161,7 @@ const QString KMIdentity::signature(void) const
     {
       warning(i18n("Failed to execute signature script\n%s\n%s"),
 	      sigcmd.data(), strerror(errno));
-      return 0;
+      return QString::null;
     }
     result = kFileToString(tmpf, TRUE, FALSE);
     unlink(tmpf);

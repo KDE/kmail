@@ -11,7 +11,7 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qstrlist.h>
-#include <qmsgbox.h>
+#include <qmessagebox.h>
 #include "kmnewiostatuswdg.h"
 #include "kmaccount.h"
 

@@ -259,7 +259,7 @@ void KMHeaders::msgRemoved(int id)
 //-----------------------------------------------------------------------------
 QString KMHeaders::msgAsLbxString(KMMsgBase* aMsg) const
 {
-  QString result(256);
+  QString result;
   KMMsgStatus flag;
   QString fromStr, subjStr;
 

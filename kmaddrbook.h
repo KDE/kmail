@@ -50,7 +50,7 @@ public:
   virtual bool modified(void) const { return mModified; }
 
 protected:
-  virtual int compareItems(GCI item1, GCI item2);
+  virtual int compareItems(Item item1, Item item2);
 
   /** Displays a detailed message box and returns 'status' */
   virtual int KMAddrBook::fileError(int status) const;

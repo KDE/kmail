@@ -1,9 +1,9 @@
 #ifndef __KMSETTINGS
 #define __KMSETTINGS
 
-#include <qtabdlg.h>
+#include <qtabdialog.h>
 #include <qstring.h>
-#include <qchkbox.h>
+#include <qcheckbox.h>
 
 class KMAccount;
 class KMAccountSettings;

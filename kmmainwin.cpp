@@ -22,12 +22,12 @@
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
 
-#include <qclipbrd.h>
+#include <qclipboard.h>
 #include <qaccel.h>
 #include <qstring.h>
 #include <qpixmap.h>
 #include <qfile.h>
-#include <qtstream.h>
+#include <qtextstream.h>
 #include <kmsgbox.h>
 #include <kconfig.h>
 #include <kapp.h>
@@ -159,7 +159,7 @@ void KMMainWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::writeConfig(void)
 {
-  QString s(32);
+  QString s;
   KConfig *config = app->getConfig();
   QRect r = geometry();
 
@@ -471,7 +471,7 @@ void KMMainWin::slotModifyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotEmptyFolder()
 {
-  QString str(256);
+  QString str;
   KMMessage* msg;
 
   if (!mFolder) return;
@@ -497,7 +497,7 @@ void KMMainWin::slotEmptyFolder()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotRemoveFolder()
 {
-  QString str(256);
+  QString str;
   QDir dir;
 
   if (!mFolder) return;
@@ -877,7 +877,7 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
   QPopupMenu* menu = new QPopupMenu;
 
   mUrlCurrent = aUrl;
-  mUrlCurrent.detach();
+  
 
   if (aUrl)
   {

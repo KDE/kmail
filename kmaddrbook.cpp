@@ -167,7 +167,7 @@ int KMAddrBook::fileError(int status) const
 
 
 //-----------------------------------------------------------------------------
-int KMAddrBook::compareItems(GCI aItem1, GCI aItem2)
+int KMAddrBook::compareItems(Item aItem1, Item aItem2)
 {
   return strcasecmp((const char*)aItem1, (const char*)aItem2);
 }

@@ -46,7 +46,7 @@ public:
 		      bool = false) { return OK; };
   virtual int decrypt(const char * = 0) { return OK; };
   virtual QStrList pubKeys() { return OK; };
-  virtual QString getAsciiPublicKey(QString _person) { return OK; };
+  virtual QString getAsciiPublicKey(QString _person) { return QString::null; };
   virtual int signKey(const char *, const char *) { return OK; };
 
   /** various functions to get the status of a message */

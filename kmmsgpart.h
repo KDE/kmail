@@ -20,10 +20,10 @@ public:
 
   /** Returns body as decoded string. Assumes that content-transfer-encoding
     contains the correct encoding. */
-  virtual const QString bodyDecoded(void) const;
+  virtual const QCString bodyDecoded(void) const;
 
   /** Sets body, encoded according to the content-transfer-encoding. */
-  virtual void setBodyEncoded(const QString aStr);
+  virtual void setBodyEncoded(const QCString aStr);
 
   /** Returns decoded length of body. */
   virtual int size(void) const;
@@ -96,7 +96,7 @@ protected:
   QString mCte;
   QString mContentDescription;
   QString mContentDisposition;
-  QString mBody;
+  QCString mBody;
   QString mName;
 #if defined CHARSETS   
   QString mCharset;

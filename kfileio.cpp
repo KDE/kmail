@@ -4,13 +4,13 @@
 #include <kapp.h>
 #include <kapp.h>
 #include <kmsgbox.h>
-#include <qmsgbox.h>
+#include <qmessagebox.h>
 #include <qstring.h>
 #include <unistd.h>
 #include <string.h>
 #include <assert.h>
 #include <qfile.h>
-#include <qfileinf.h>
+#include <qfileinfo.h>
 
 #include "kfileio.h"
 
@@ -18,7 +18,7 @@
 //-----------------------------------------------------------------------------
 static void msgDialog(const char* msg, const char* arg=NULL)
 {
-  QString str(256);
+  QString str;
 
   if (arg) str.sprintf(msg, arg);
   else str = msg;
@@ -31,7 +31,7 @@ static void msgDialog(const char* msg, const char* arg=NULL)
 //-----------------------------------------------------------------------------
 QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 {
-  QString result;
+  QCString result;
   QFileInfo info(aFileName);
   unsigned int readLen;
   unsigned int len = info.size();
@@ -46,23 +46,23 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     if (aVerbose)
       msgDialog(i18n("The specified file does not exist:\n%s"),
 		aFileName);
-    return 0;
+    return QString::null;
   }
   if (info.isDir())
   {
     if (aVerbose)
       msgDialog(i18n("This is a directory and not a file:\n%s"),
 		aFileName);
-    return 0;
+    return QString::null;
   }
   if (!info.isReadable())
   {
     if (aVerbose)
       msgDialog(i18n("You do not have read permissions "
 				   "to the file:\n%s"), aFileName);
-    return 0;
+    return QString::null;
   }
-  if (len <= 0) return 0;
+  if (len <= 0) return QString::null;
 
   if (!file.open(IO_Raw|IO_ReadOnly))
   {
@@ -77,7 +77,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     default:
       msgDialog(i18n("Error while reading file:\n%s"),aFileName);
     }
-    return 0;
+    return QString::null;
   }
 
   result.resize(len + (int)aEnsureNL + 1);
@@ -91,11 +91,11 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 
   if (readLen < len)
   {
-    QString msg(256);
+    QString msg;
     msg.sprintf(i18n("Could only read %u bytes of %u."),
 		readLen, len);
     msgDialog(msg);
-    return 0;
+    return QString::null;
   }
 
   debug("kFileToString: %d bytes read", readLen);
@@ -125,7 +125,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
 		  aFileName);
       rc = QMessageBox::information(NULL, i18n("Information"),
 	   str, i18n("&OK"), i18n("&Cancel"),
-	   0, 1);
+	   QString::null, 1);
       if (rc != 0) return FALSE;
     }
     if (aBackup)
@@ -142,7 +142,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
 	rc = QMessageBox::warning(NULL, i18n("Warning"),
 	     i18n(
              "Failed to make a backup copy of %s.\nContinue anyway ?"),
-	     i18n("&OK"), i18n("&Cancel"), 0, 1);
+	     i18n("&OK"), i18n("&Cancel"), QString::null, 1);
 	if (rc != 0) return FALSE;
       }
     }
@@ -165,7 +165,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
     return FALSE;
   }
 
-  len = aBuffer.size() - 1;
+  len = aBuffer.length();
   // This has to many arguments in format warning so I commented it out (sven)
   //debug("kStringToFile: writing %d bytes", len, aBuffer.length());
   writeLen = file.writeBlock(aBuffer.data(), len);

@@ -184,7 +184,7 @@ const QString KMMsgBase::dateStr(void) const
 const QString KMMsgBase::asIndexString(void) const
 {
   int i, len;
-  QString str(356); // Sven is blind.
+  QString str; 
 
   // don't forget to change indexStringLength() below !!
   str.sprintf("%c %-.9lu %-.9lu %-.9lu %-3.3s %-100.100s %-100.100s %-100.100s",
@@ -307,8 +307,9 @@ const char* KMMsgBase::skipKeyword(const QString aStr, char sepChar,
 
 
 //-----------------------------------------------------------------------------
-const QString KMMsgBase::decodeRFC1522String(const QString aStr)
+const QString KMMsgBase::decodeRFC1522String(const QString _str)
 {
+  QCString aStr = _str.ascii();
   static QString result;
   char *pos, *dest, *beg, *end, *mid;
   QString str;
@@ -482,7 +483,7 @@ const QString KMMsgBase::decodeBase64(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMsgBase::encodeBase64(const QString aStr)
 {
-  DwString dwsrc(aStr.data(), aStr.size()-1);
+  DwString dwsrc(aStr.data(), aStr.length());
   DwString dwdest;
   QString result;
 

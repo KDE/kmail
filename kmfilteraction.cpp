@@ -8,7 +8,7 @@
 #include "kmglobal.h"
 #include <kapp.h>
 #include <kconfig.h>
-#include <qcombo.h>
+#include <qcombobox.h>
 
 static QString resultStr;
 

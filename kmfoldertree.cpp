@@ -1,7 +1,7 @@
 // kmfoldertree.cpp
 
 #include <stdlib.h>
-#include <qfileinf.h>
+#include <qfileinfo.h>
 #include <qpixmap.h>
 #include <kapp.h>
 #include <kiconloader.h>
@@ -136,7 +136,7 @@ void KMFolderTree::doDropAction(KDNDDropZone* aDropZone)
   if (aDropZone!=mDropZone) return;
   if (aDropZone->getDataType() != DndRawData) return; //sven
 
-  dd = (KMDragData*)aDropZone->getData();
+  dd = (KMDragData*)aDropZone->getData().ascii();
   if (!dd || sizeof(*dd)!=sizeof(KMDragData)) return;
   fromFld = dd->folder();
 

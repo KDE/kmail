@@ -2090,10 +2090,10 @@ KMimeMagic::findBufferType(const char * buffer, int nbytes)
 {
 	unsigned char buf[HOWMANY + 1];	/* one extra for terminating '\0' */
 
-	resultBuf.resize(0);
+	resultBuf = QString::null;
 	if (magicResult) {
-		magicResult->setContent(QString(0));
-		magicResult->setEncoding(QString(0));
+		magicResult->setContent(QString());
+		magicResult->setEncoding(QString());
 	} else
 	  magicResult = new KMimeMagicResult();
 	accuracy = 100;
@@ -2146,10 +2146,10 @@ KMimeMagic::findBufferFileType( const char * buffer, int nbytes,
 const KMimeMagicResult *
 KMimeMagic::findFileType(const char *fn)
 {
-        resultBuf.resize(0);
+        resultBuf = QString::null;
         if (magicResult) {
-                magicResult->setContent(QString(0));
-                magicResult->setEncoding(QString(0));
+                magicResult->setContent(QString());
+                magicResult->setEncoding(QString());
         } else
                 magicResult = new KMimeMagicResult();
 	accuracy = 100;

@@ -25,10 +25,10 @@
 
 static QFont::CharSet encIso8859[] = 
 {
-  QFont::AnyCharSet, QFont::Latin1,  QFont::Latin2,
-  QFont::Latin3,  QFont::Latin4,  QFont::Latin5, 
-  QFont::Latin6,  QFont::Latin7,  QFont::Latin8, 
-  QFont::Latin9, (QFont::CharSet)-1
+  QFont::AnyCharSet, QFont::ISO_8859_1,  QFont::ISO_8859_2,
+  QFont::ISO_8859_3,  QFont::ISO_8859_4,  QFont::ISO_8859_5, 
+  QFont::ISO_8859_6,  QFont::ISO_8859_7,  QFont::ISO_8859_8, 
+  QFont::ISO_8859_9, (QFont::CharSet)-1
 };
 static char fontStr[256];
 
@@ -63,7 +63,7 @@ const char* kfontToStr(const QFont& aFont)
       if (encIso8859[i] == charset) enc=i;
   }
 
-  sprintf(fontStr, "%s-%s-%s-%d-%s-%d", aFont.family(), weightStr, slantStr,
+  sprintf(fontStr, "%s-%s-%s-%d-%s-%d", aFont.family().ascii(), weightStr, slantStr,
 	  aFont.pointSize(), charsetStr, enc);
 
   return fontStr;

@@ -7,7 +7,7 @@
 
 #include "kmfilteraction.h"
 #include "kmfilter.h"
-#include <qcombo.h>
+#include <qcombobox.h>
 
 class QBoxLayout;
 class QListBox;

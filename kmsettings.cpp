@@ -23,15 +23,15 @@
 #include <kmsgbox.h>
 #include <kfiledialog.h>
 #include <ktablistbox.h>
-#include <qbttngrp.h>
-#include <qfiledlg.h>
+#include <qbuttongroup.h>
+#include <qfiledialog.h>
 #include <qframe.h>
-#include <qgrpbox.h>
+#include <qgroupbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qpushbt.h>
-#include <qradiobt.h>
-#include <qchkbox.h>
+#include <qpushbutton.h>
+#include <qradiobutton.h>
+#include <qcheckbox.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -906,7 +906,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     mEdtHost = createLabeledEntry(this, grid, i18n("Host:"),
 				  ((KMAcctPop*)mAcct)->host(), 4, 0);
 
-    QString tmpStr(32);
+    QString tmpStr;
     tmpStr.sprintf("%d",((KMAcctPop*)mAcct)->port());
     mEdtPort = createLabeledEntry(this, grid, i18n("Port:"),
 				  tmpStr, 5, 0);

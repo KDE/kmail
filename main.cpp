@@ -103,7 +103,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
   QString appName = app->appName();
   QString msg = aMsg;
-  msg.detach();
+  
 
   switch (aType)
   {

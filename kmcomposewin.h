@@ -6,13 +6,13 @@
 
 
 #include <qstring.h>
-#include <qlined.h>
+#include <qlineedit.h>
 #include <qlabel.h>
 #include <qlist.h>
 #include <qevent.h>
 #include <qwidget.h>
-#include <qpushbt.h>
-#include <qclipbrd.h>
+#include <qpushbutton.h>
+#include <qclipboard.h>
 #include <qpalette.h>
 #include <keditcl.h>
 
@@ -20,7 +20,7 @@
 #include "kmmsgpart.h"
 
 
-#include <qlined.h>
+#include <qlineedit.h>
 #include "kmtopwidget.h"
 
 #include <kspell.h>

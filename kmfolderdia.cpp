@@ -4,11 +4,11 @@
 #include <qlabel.h>
 #include <qdir.h>
 #include <qfile.h>
-#include <qtstream.h>
+#include <qtextstream.h>
 #include <kmsgbox.h>
 #include <kapp.h>
-#include <qlined.h>
-#include <qpushbt.h>
+#include <qlineedit.h>
+#include <qpushbutton.h>
 #include <qlistbox.h>
 
 #include "kmmainwin.h"
@@ -42,7 +42,7 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, QWidget *parent,
   nameEdit = new QLineEdit(this);
   nameEdit->setGeometry(90,20,320,25);
   nameEdit->setFocus();
-  nameEdit->setText(folder ? folder->name().data() : i18n("unnamed"));
+  nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
 
   if (folder)
   {
