@@ -4,3 +4,5 @@ data_DATA = attach.xpm filedel2.xpm filereply.xpm send.xpm \
 
 datadir = $(kde_datadir)/kmail/pics
 
+EXTRA_DIST = $(data_DATA)
+

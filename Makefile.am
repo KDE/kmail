@@ -35,9 +35,13 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 		kmnewiostatus.moc kmnewiostatuswdg.moc \
 		charsetsDlg.moc kmtopwidget.moc
 
+noinst_HEADERS = *.h
+
 DISTCLEANFILES = $(BUILT_SOURCES)
 
 appsdir = $(kde_appsdir)/Internet/
+
+EXTRA_DIST = KMail.kdelnk kmail.xpm mini-kmail.xpm
 
 install-data-local:
 	$(mkinstalldirs) $(appsdir)

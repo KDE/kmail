@@ -11,3 +11,5 @@ data_DATA = green-bullet.xpm kmfldin.xpm kmfldout.xpm kmfolder.xpm \
 
 datadir = $(kde_datadir)/kmail/pics
 
+EXTRA_DIST = $(data_DATA)
+
