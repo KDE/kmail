@@ -53,6 +53,7 @@
 #include <dcopclient.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
+#include <kurl.h>
 #include <qmap.h>
 
 // Local helper methods
@@ -165,6 +166,9 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
                                           const QString& folder,
                                           const QString& uid )
 {
+  // TODO: If this is a Kolab folder, then uid is actually the
+  // serial number. Find the message from this and delete it.
+
   if( !mUseResourceIMAP )
     return false;
 
@@ -176,7 +180,9 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   // Find the folder and the incidence in it
   KMFolder* f = folderFromType( type, folder );
   if( f ) {
-    KMMessage* msg = findMessageByUID( uid, f );
+    KMMessage* msg = /*isResourceImapFolder( f )
+                   ? findMessageBySerialNumber( uid, f );
+                   : */findMessageByUID( uid, f );
     if( msg ) {
       // Message found - delete it and return happy
       deleteMsg( msg );
@@ -189,10 +195,20 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
   return rc;
 }
 
+bool KMailICalIfaceImpl::deleteIncidenceKolab( const QString& resource,
+                                               const QString& sernum )
+{
+  // TODO: khz
+  return false;
+}
+
 // The resource asks for a full list of incidences
 QStringList KMailICalIfaceImpl::incidences( const QString& type,
                                             const QString& folder )
 {
+  // TODO: If the folder is a Kolab storage folder, then return the
+  // XML file, and the serial number of the mail (for easier later update)
+
   if( !mUseResourceIMAP )
     return QStringList();
 
@@ -215,6 +231,22 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type,
   return ilist;
 }
 
+QMap<QString, QString> KMailICalIfaceImpl::incidencesKolab( const QString& type,
+                                          const QString& resource )
+{
+  // TODO: khz
+  QMap<QString, QString> dummy;
+  return dummy;
+}
+
+KURL KMailICalIfaceImpl::getAttachment( const QString& resource,
+                                        const QString& sernum,
+                                        const QString& filename )
+{
+  // TODO: khz
+  return KURL();
+}
+
 QStringList KMailICalIfaceImpl::subresources( const QString& type )
 {
   QStringList lst;
@@ -232,6 +264,13 @@ QStringList KMailICalIfaceImpl::subresources( const QString& type )
       lst << it.current()->folder->location();
 
   return lst;
+}
+
+QMap<QString, bool> KMailICalIfaceImpl::subresourcesKolab( const QString& annotation )
+{
+  // TODO: khz
+  QMap<QString, bool> dummy;
+  return dummy;
 }
 
 bool KMailICalIfaceImpl::isWritableFolder( const QString& type,
@@ -305,6 +344,49 @@ bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
   }
 
   return rc;
+}
+
+bool KMailICalIfaceImpl::update( const QString& type, const QString& folder,
+                                 const QString& id, const QString& xml,
+                                 const QStringList& attachments,
+                                 const QStringList& deletedAttachments )
+{
+  kdError(5006) << "NYI: KMailICalIfaceImpl::update()\n";
+
+  // TODO: This should find the message with serial number "id", set the
+  // xml attachment to hold the contents of "xml", and update all
+  // attachments.
+  // The mail can have additional attachments, and these are not to be
+  // touched! They belong to other clients - like Outlook
+  // The best is to delete all the attachments listed in the
+  // "deletedAttachments" arg, and then update/add all the attachments
+  // given by the urllist attachments.
+
+  // If the mail does not already exist, id will not be a valid serial
+  // number, and the mail should just be added instead. In this case
+  // the deletedAttachments can be forgotten.
+
+  return false;
+}
+
+bool KMailICalIfaceImpl::update( const QString& resource,
+                                 const QString& sernum,
+                                 const QStringList& attachments,
+                                 const QStringList& deletedAttachments )
+{
+  // TODO: khz
+  return false;
+}
+  
+QString KMailICalIfaceImpl::getAttachment( const QString& filename )
+{
+  kdError(5006) << "NYI: KMailICalIfaceImpl::getAttachment()\n";
+
+  // TODO: Find the attachment with the filename, save it to /tmp
+  // and return a URL to it. It's up to the resource to delete the
+  // tmp file later.
+
+  return QString::null;
 }
 
 // KMail added a file to one of the groupware folders

@@ -34,6 +34,8 @@
 
 #include <dcopobject.h>
 #include <qstringlist.h>
+#include <kurl.h>
+
 
 class KMailICalIface : virtual public DCOPObject
 {
@@ -49,6 +51,10 @@ k_dcop:
   virtual bool isWritableFolder( const QString& type,
                                  const QString& resource ) = 0;
 
+  virtual KURL getAttachment( const QString& resource,
+                              const QString& sernum,
+                              const QString& filename ) = 0;
+  
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...
   virtual bool update( const QString& type, const QString& folder,
@@ -57,7 +63,17 @@ k_dcop:
   // Update a single entry in the storage layer
   virtual bool update( const QString& type, const QString& folder,
                        const QString& uid, const QString& entry ) = 0;
+  virtual bool update( const QString& resource,
+                       const QString& sernum,
+                       const QStringList& attachments,
+                       const QStringList& deletedAttachments ) = 0;
 
+  virtual bool deleteIncidenceKolab( const QString& resource,
+                                     const QString& sernum ) = 0;
+  virtual QMap<QString, QString> incidencesKolab( const QString& type,
+                                                  const QString& resource ) = 0;
+  virtual QMap<QString, bool> subresourcesKolab( const QString& annotation ) = 0;
+  
 k_dcop_signals:
   void incidenceAdded( const QString& type, const QString& folder,
                        const QString& entry );
