@@ -682,6 +682,7 @@ protected:
   QPopupMenu *mAttachMenu;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   bool mLastSignActionState, mLastEncryptActionState;
+  bool mLastIdentityHasOpenPgpKey;
   KMFolder *mFolder;
   long mShowHeaders;
   QString mExtEditor;

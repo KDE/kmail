@@ -968,7 +968,8 @@ void KMComposeWin::setupActions(void)
   // get PGP user id for the chosen identity
   const KMIdentity & ident =
     kernel->identityManager()->identityForUoidOrDefault( mIdentity->currentIdentity() );
-  QString pgpUserId = ident.pgpIdentity();
+  QCString pgpUserId = ident.pgpIdentity();
+  mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
 
   mLastEncryptActionState =
     ( mSelectedCryptPlug && EncryptEmail_EncryptAll == mSelectedCryptPlug->encryptEmail() );
@@ -1219,7 +1220,8 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign, bool allowDecrypt
   urgentAction->setChecked( newMsg->isUrgent() );
 
   // get PGP user id for the currently selected identity
-  QString pgpUserId = ident.pgpIdentity();
+  QCString pgpUserId = ident.pgpIdentity();
+  mLastIdentityHasOpenPgpKey = !pgpUserId.isEmpty();
 
   if( mSelectedCryptPlug || Kpgp::Module::getKpgp()->usePGP() )
   {
@@ -4496,12 +4498,10 @@ void KMComposeWin::slotEncryptToggled(bool on)
       entry->setEncrypt( on );
   }
   else if( on ) {
-    KMIdentity& identity =
-      kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
     // check if the user wants to encrypt messages to himself and if he defined
     // an encryption key for the current identity
     if( Kpgp::Module::getKpgp()->encryptToSelf()
-        && identity.pgpIdentity().isEmpty() ) {
+        && !mLastIdentityHasOpenPgpKey ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to encrypt "
                                "this message you first have to "
@@ -4530,10 +4530,8 @@ void KMComposeWin::slotSignToggled(bool on)
       entry->setSign( on );
   }
   else if( on ) {
-    KMIdentity& identity =
-      kernel->identityManager()->identityForUoid( mIdentity->currentIdentity() );
     // check if the user defined a signing key for the current identity
-    if( identity.pgpIdentity().isEmpty() ) {
+    if( !mLastIdentityHasOpenPgpKey ) {
       KMessageBox::sorry( this,
                           i18n("<qt><p>In order to be able to sign "
                                "this message you first have to "
@@ -4961,10 +4959,11 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
 
   // disable certain actions if there is no PGP user identity set
   // for this profile
-  if( !mSelectedCryptPlug && ident.pgpIdentity().isEmpty() )
+  bool bNewIdentityHasOpenPgpKey = !ident.pgpIdentity().isEmpty();
+  if( !mSelectedCryptPlug && !bNewIdentityHasOpenPgpKey )
   {
     attachMPK->setEnabled(false);
-    if (signAction->isEnabled())
+    if( mLastIdentityHasOpenPgpKey )
     { // save the state of the sign and encrypt button
       mLastEncryptActionState = encryptAction->isChecked();
       encryptAction->setChecked(false);
@@ -4975,12 +4974,13 @@ void KMComposeWin::slotIdentityChanged(uint uoid)
   else
   {
     attachMPK->setEnabled(true);
-    if( !signAction->isEnabled() )
+    if( !mLastIdentityHasOpenPgpKey )
     { // restore the last state of the sign and encrypt button
       encryptAction->setChecked(mLastEncryptActionState);
       signAction->setChecked(mLastSignActionState);
     }
   }
+  mLastIdentityHasOpenPgpKey = bNewIdentityHasOpenPgpKey;
 
   mEditor->setModified(TRUE);
   mId = uoid;
