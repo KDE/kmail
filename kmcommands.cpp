@@ -508,7 +508,7 @@ void KMEditMsgCommand::execute()
   // edit is discarded, for n > 1.
   KMFolder *parent = msg->parent();
   if ( parent )
-    parent->take( parent->find( msg ) );
+    parent->removeMsg( parent->find( msg ) );
 #if 0
   // Useful?
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
