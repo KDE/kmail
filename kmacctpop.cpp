@@ -197,7 +197,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   sscanf(response.data(), "%3s %d %d", dummyStr, &num, &size);
 
 #warning "*** If client.Last() cannot be found then install the latest kdesupport"
-  if (client.Last() == '+')
+  if (client.Last() == '+' && !mRetrieveAll)
   {
     response = client.SingleLineResponse().c_str();
     sscanf(response.data(), "%3s %d", dummyStr, &id);

@@ -140,6 +140,7 @@ void KMAccount::processNewMsg(KMMessage* aMsg)
   // the user won't see which messages newly arrived.
   if (aMsg->status()==KMMsgStatusOld)
     aMsg->setStatus(KMMsgStatusRead);
+  else aMsg->setStatus(KMMsgStatusNew);
 
   if (filterMgr->process(aMsg))
   {

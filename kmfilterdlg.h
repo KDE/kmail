@@ -66,7 +66,7 @@ protected:
 
   KMFilter* mFilter;
   QGridLayout *mGrid;
-  int mGridRow;
+  int mGridRow, mCbxHeight, mCbxWidth;
   int mActLineHeight;
   int mCurFilterIdx;
   QListBox *mFilterList;

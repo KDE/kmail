@@ -32,7 +32,7 @@ static QStrList sFilterOpList, sFilterFuncList, sFilterFieldList,
 
 //=============================================================================
 KMFaComboBox::KMFaComboBox(QWidget* p, const char* n):
-  KMFaComboBoxInherited(p, n)
+  KMFaComboBoxInherited(false, p, n)
 {
   initMetaObject();
   connect(this, SIGNAL(activated(int)), SLOT(slotSelected(int)));
@@ -56,7 +56,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
 
   initMetaObject();
 
-  grid  = new QGridLayout(this, 3, 2, 4, 4);
+  grid  = new QGridLayout(this, 4, 2, 4, 4);
   mFilter = NULL;
 
   setCaption(i18n("Filter Rules"));
@@ -65,7 +65,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
 
   mFilterList = new QListBox(this);
   mFilterList->setMinimumSize(100, 200);
-  grid->addMultiCellWidget(mFilterList, 0, 1, 0, 0);
+  grid->addMultiCellWidget(mFilterList, 0, 2, 0, 0);
   connect(mFilterList,SIGNAL(highlighted(int)),SLOT(slotFilterSelected(int)));
 
   initLists();
@@ -73,32 +73,34 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   //---------- static filter fields
   fgrid = new QGridLayout(3, 3, 4);
   grid->addLayout(fgrid, 0, 1);
-  mRuleFieldA = new QComboBox(TRUE, this);
-  mRuleFieldA->insertStrList(&sFilterFieldList);
-  sz = mRuleFieldA->sizeHint();
+
+  mRuleFuncA = new QComboBox(false, this);
+  sz = mRuleFuncA->sizeHint();
   w = sz.width();
   h = sz.height();
-  mRuleFieldA->setMinimumSize(50, h);
-  mRuleFieldA->setMaximumSize(32767, h);
-  fgrid->addWidget(mRuleFieldA, 0, 0);
-
-  mRuleFieldB = new QComboBox(TRUE, this);
-  mRuleFieldB->insertStrList(&sFilterFieldList);
-  mRuleFieldB->setMinimumSize(50, h);
-  mRuleFieldB->setMaximumSize(32767, h);
-  fgrid->addWidget(mRuleFieldB, 2, 0);
-
-  mRuleFuncA = new QComboBox(this);
+  mCbxHeight = h;
   mRuleFuncA->setMinimumSize(40, h);
   mRuleFuncA->setMaximumSize(32767, h);
   mRuleFuncA->insertStrList(&sFilterFuncList);
   fgrid->addWidget(mRuleFuncA, 0, 1);
 
-  mRuleFuncB = new QComboBox(this);
+  mRuleFuncB = new QComboBox(false, this);
   mRuleFuncB->setMinimumSize(40, h);
   mRuleFuncB->setMaximumSize(32767, h);
   mRuleFuncB->insertStrList(&sFilterFuncList);
   fgrid->addWidget(mRuleFuncB, 2, 1);
+
+  mRuleFieldA = new QComboBox(true, this);
+  mRuleFieldA->insertStrList(&sFilterFieldList);
+  mRuleFieldA->setMinimumSize(50, h);
+  mRuleFieldA->setMaximumSize(32767, h);
+  fgrid->addWidget(mRuleFieldA, 0, 0);
+
+  mRuleFieldB = new QComboBox(true, this);
+  mRuleFieldB->insertStrList(&sFilterFieldList);
+  mRuleFieldB->setMinimumSize(50, h);
+  mRuleFieldB->setMaximumSize(32767, h);
+  fgrid->addWidget(mRuleFieldB, 2, 0);
 
   mRuleValueA = new QLineEdit(this);
   mRuleValueA->adjustSize();
@@ -110,7 +112,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   mRuleValueB->setMinimumSize(80, mRuleValueB->sizeHint().height());
   fgrid->addWidget(mRuleValueB, 2, 2);
 
-  mRuleOp = new QComboBox(this);
+  mRuleOp = new QComboBox(false, this);
   mRuleOp->insertStrList(&sFilterOpList);
   mRuleOp->setMinimumSize(50, h);
   mRuleOp->setMaximumSize(32767, h);
@@ -136,7 +138,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
 
   //---------- button area
   buttonBox = new KButtonBox(this, KButtonBox::HORIZONTAL, 0, 2);
-  grid->addMultiCellWidget(buttonBox, 2, 2, 0, 1);
+  grid->addMultiCellWidget(buttonBox, 3, 3, 0, 1);
 
   mBtnUp = buttonBox->addButton(i18n("Up"));
   connect(mBtnUp,SIGNAL(clicked()),SLOT(slotBtnUp()));
@@ -163,6 +165,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
 
   buttonBox->layout();
   buttonBox->setMaximumSize(32767, buttonBox->sizeHint().height());
+  buttonBox->setMinimumSize(buttonBox->sizeHint());
 
   //----------
   grid->setRowStretch(0, 2);
@@ -170,7 +173,11 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   grid->setRowStretch(2, 2);
   grid->setColStretch(0, 10);
   grid->setColStretch(1, 20);
+  grid->setRowStretch(3, 100);
   grid->activate();
+
+  resize(buttonBox->sizeHint().width()*1.2, sizeHint().height());
+  show();
 
   reloadFilterList();
   if(mFilterList->count() > 0)
@@ -338,14 +345,15 @@ QPushButton* KMFilterDlg::createDetailsButton(void)
 //-----------------------------------------------------------------------------
 QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
 {
-  QComboBox* cbx = new QComboBox(this);
+  QComboBox* cbx = new QComboBox(false, this);
   KMFolderDir* fdir = &(folderMgr->dir());
   KMFolder* cur;
   int i, idx=-1;
 
+  cbx->setFixedHeight(mCbxHeight);
+
   for (i=0,cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next(), i++)
   {
-    printf("Name: %s\n",cur->name().data());
     cbx->insertItem(cur->name());
     if (cur->name() == curFolder) idx=i;
   }
@@ -360,7 +368,8 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   KMFilterAction* action;
   QWidget* widg;
   QPoint pos;
-  int i;
+  QSize sz;
+  int i, w;
 
   if (!mFilter) return;
 
@@ -389,6 +398,11 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   pos = mFaType[i]->pos();
   pos.setX(pos.x() + mFaType[idx]->width() + 4);
   widg->move(pos);
+  w = width() - pos.x();
+  if (w > 300) w = 300;
+  sz.setWidth(w);
+  sz.setHeight(widg->height());
+  widg->resize(sz);
   widg->show();
 }
 

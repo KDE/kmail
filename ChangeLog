@@ -1,3 +1,18 @@
+1999-01-21  Stefan Taferner  <taferner@kde.org> (KMail-1.0.13)
+
+	* Filter Dialog: changed combo box style to new style.
+	Now it is possible to have more folders than the screen
+	is high and still select them in the filter dialog.
+	* Filter Dialog: changed folder combo box to (semi) auto
+	resize. Changed layout of dialog to better display all
+	elements. Also enabled vertical resizing of dialog.
+
+1999-01-17  Stefan Taferner  <taferner@kde.org> (KMail-1.0.12)
+
+        Patches from Michael Teske <mteske@c-s-k.de>:
+	* Fixed broken retrieve-all for pop accounts.
+	* Fixed broken marking of new mails as New.
+
 1999-01-01  Stefan Taferner  <taferner@kde.org> (KMail-1.0.11)
 
 	* Hopefully pgp zombies are fixed now.

@@ -163,7 +163,7 @@ KpgpBase::run(const char *cmd, const char *passphrase)
   //printf("info = %s\n",info.data());
 
   // we don't want a zombie, do we?  ;-)
-  rc = waitpid(-1/*child_pid*/, &status, 0);
+  rc = waitpid(0/*child_pid*/, &status, 0);
   if (rc==-1) printf("waitpid: %s\n", strerror(errno));
   
   return OK;
