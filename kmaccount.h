@@ -12,7 +12,6 @@
 #include <qsignal.h>
 #include <qguardedptr.h>
 #include <kprocess.h>
-#include "kmnewiostatuswdg.h"
 
 class KMAcctMgr;
 class KMFolder;

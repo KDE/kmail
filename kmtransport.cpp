@@ -26,6 +26,8 @@
 #include <qradiobutton.h>
 #include <qtabwidget.h>
 #include <qvalidator.h>
+#include <qlabel.h>
+#include <qpushbutton.h>
 
 #include <kapplication.h>
 #include <kfiledialog.h>

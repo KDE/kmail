@@ -71,6 +71,7 @@
 #include <qvgroupbox.h>
 #include <qvbuttongroup.h>
 #include <qtooltip.h>
+#include <qlabel.h>
 
 // other headers:
 

@@ -13,6 +13,8 @@
 #include <qlayout.h>
 #include <assert.h>
 #include <qcheckbox.h>
+#include <qlabel.h>
+#include <qpushbutton.h>
 
 #include <kdebug.h>
 #include <kapplication.h>

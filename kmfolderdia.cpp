@@ -7,6 +7,7 @@
 #include <qlineedit.h>
 #include <qgroupbox.h>
 #include <qregexp.h>
+#include <qlabel.h>
 
 #include <kapplication.h>
 #include <klocale.h>

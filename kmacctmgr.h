@@ -11,7 +11,6 @@
 #include <qdir.h>
 #include <qfile.h>
 #include <qstringlist.h>
-#include "kmnewiostatuswdg.h"
 #include "kmaccount.h"
 
 #define KMAcctMgrInherited QObject
