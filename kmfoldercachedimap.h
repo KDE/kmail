@@ -279,11 +279,6 @@ public slots:
    */
   void slotTroubleshoot();
 
-  /**
-   * Sync this folder and it's subfolders.
-   */
-  void processNewMail();
-
 private slots:
   void serverSyncInternal();
   void slotIncreaseProgress();

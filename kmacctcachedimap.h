@@ -76,9 +76,9 @@ public:
    * Inherited methods.
    */
   virtual QString type() const;
-  virtual void processNewMail( bool i ) { processNewMail( mFolder, i ); }
+  virtual void processNewMail( bool interactive ) { processNewMail( mFolder, interactive ); }
 
-  void processNewMail( KMFolderCachedImap*, bool );
+  void processNewMail( KMFolderCachedImap* folder, bool interactive );
 
   /**
    * Update the progress bar
@@ -151,9 +151,6 @@ public:
    * Remove folder from the "deleted folders" list
    */
   void removeDeletedFolder( const QString& subFolderPath );
-
-public slots:
-  void processNewMail() { processNewMail( mFolder, true ); }
 
 protected:
   friend class KMAcctMgr;

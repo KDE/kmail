@@ -93,8 +93,6 @@ public:
   virtual void readConfig(KConfig& config);
 
 public slots:
-  void processNewMail() { processNewMail(TRUE); }
-
   /**
    * updates the new-mail-check folderlist
    */

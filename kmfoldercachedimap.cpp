@@ -441,12 +441,6 @@ void KMFolderCachedImap::slotTroubleshoot()
   }
 }
 
-void KMFolderCachedImap::processNewMail()
-{
-  if( account() )
-    account()->processNewMail( this, true );
-}
-
 void KMFolderCachedImap::serverSync( bool suppressDialog )
 {
   if( mSyncState != SYNC_STATE_INITIAL ) {
