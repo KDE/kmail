@@ -349,7 +349,7 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
 kdDebug(5006) << "      Inserting one item into MimePartTree" << endl;
 kdDebug(5006) << "                Content-Type: " << cntType << endl;
     if( parentItem )
-      mMimePartTreeItem = new KMMimePartTreeItem( *parentItem,
+      mMimePartTreeItem = new KMMimePartTreeItem( parentItem,
                                                   this,
                                                   cntDesc,
                                                   cntType,
@@ -357,7 +357,7 @@ kdDebug(5006) << "                Content-Type: " << cntType << endl;
                                                   cntSize,
                                                   revertOrder );
     else if( mimePartTree )
-      mMimePartTreeItem = new KMMimePartTreeItem( *mimePartTree,
+      mMimePartTreeItem = new KMMimePartTreeItem( mimePartTree,
                                                   this,
                                                   cntDesc,
                                                   cntType,

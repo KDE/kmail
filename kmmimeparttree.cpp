@@ -298,13 +298,13 @@ void KMMimePartTree::slotSaveSelected()
 }
 
 
-KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree& parent,
+KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree * parent,
                                         partNode* node,
                                         const QString & description,
                                         const QString & mimetype,
                                         const QString & encoding,
                                         KIO::filesize_t size )
-  : QListViewItem( &parent, description,
+  : QListViewItem( parent, description,
 		   QString::null, // set by setIconAndTextForType()
 		   encoding,
 		   KIO::convertSize( size ) ),
@@ -315,14 +315,14 @@ KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTree& parent,
   setIconAndTextForType( mimetype );
 }
 
-KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem& parent,
+KMMimePartTreeItem::KMMimePartTreeItem( KMMimePartTreeItem * parent,
                                         partNode* node,
                                         const QString & description,
                                         const QString & mimetype,
                                         const QString & encoding,
                                         KIO::filesize_t size,
                                         bool revertOrder )
-  : QListViewItem( &parent, description,
+  : QListViewItem( parent, description,
 		   QString::null, // set by setIconAndTextForType()
 		   encoding,
 		   KIO::convertSize( size ) ),
@@ -345,6 +345,9 @@ void KMMimePartTreeItem::setIconAndTextForType( const QString & mime )
   if ( mimetype.startsWith( "multipart/" ) ) {
     setText( 1, mimetype );
     setPixmap( 0, SmallIcon("folder") );
+  } else if ( mimetype == "application/octet-stream" ) {
+    setText( 1, i18n("Unspecified Binary Data") ); // don't show "Unknown"...
+    setPixmap( 0, SmallIcon("unknown") );
   } else {
     KMimeType::Ptr mtp = KMimeType::mimeType( mimetype );
     setText( 1, mtp ? mtp->comment() : mimetype );

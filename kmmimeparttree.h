@@ -41,13 +41,13 @@ protected:
 class KMMimePartTreeItem :public QListViewItem
 {
 public:
-  KMMimePartTreeItem( KMMimePartTree& parent,
+  KMMimePartTreeItem( KMMimePartTree * parent,
                       partNode* node,
                       const QString & labelDescr,
                       const QString & labelCntType  = QString::null,
                       const QString & labelEncoding = QString::null,
                       KIO::filesize_t size=0 );
-  KMMimePartTreeItem( KMMimePartTreeItem& parent,
+  KMMimePartTreeItem( KMMimePartTreeItem * parent,
                       partNode* node,
                       const QString & labelDescr,
                       const QString & labelCntType  = QString::null,
