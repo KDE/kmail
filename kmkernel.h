@@ -73,7 +73,7 @@ public:
   inline KMFilterMgr *filterMgr() { return the_filterMgr; }
   inline KMFilterActionDict *filterActionDict() { return the_filterActionDict; }
   inline KMAddrBook *addrBook() { return the_addrBook; }
-  inline KabAPI *KABaddrBook() { return the_KAB_addrBook; }
+  KabAPI *KABaddrBook();
   inline bool useKAB() { return mUseKAB; }
   inline void setUseKAB( bool useKAB ) { mUseKAB = useKAB; }
   inline KMSender *msgSender() { return the_msgSender; }

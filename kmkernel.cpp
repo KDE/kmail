@@ -333,16 +333,7 @@ void KMKernel::init()
   the_filterMgr = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
   the_addrBook  = new KMAddrBook;
-  the_KAB_addrBook = new KabAPI; // KabApi is a dialog;
-  CHECK_PTR(the_KAB_addrBook);
-  if(KABaddrBook()->init()!=AddressBook::NoError)
-  { // this connects to the default address book and opens it:
-      debug( "Error initializing the connection to your KAB address book." );
-      the_KAB_addrBook=0;
-  } 
-  else {
-      debug ("KMKernel::init: KabApi initialized.");
-  }
+  the_KAB_addrBook=0;
   
   initFolders(cfg);
   the_acctMgr->readConfig();
@@ -523,5 +514,25 @@ void KMKernel::action(bool mailto, bool check, QString to, QString cc,
     checkMail();
   //Anything else?
 }
+
+KabAPI* KMKernel::KABaddrBook() 
+{ 
+  if (the_KAB_addrBook)
+    return the_KAB_addrBook;
+
+  the_KAB_addrBook = new KabAPI; // KabApi is a dialog;
+  CHECK_PTR(the_KAB_addrBook);
+  if(KABaddrBook()->init()!=AddressBook::NoError)
+  { // this connects to the default address book and opens it:
+    debug( "Error initializing the connection to your KAB address book." );
+    the_KAB_addrBook=0;
+  } 
+  else {
+    debug ("KMKernel::init: KabApi initialized.");
+  }
+  
+  return the_KAB_addrBook; 
+}
+
 
 #include "kmkernel.moc"
