@@ -298,7 +298,7 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   mListView->setSorting( -1 );
 
   vlay->addWidget( new QLabel( mListView,
-			       i18n("&Select a profile and click 'Ok' to "
+			       i18n("&Select a profile and click 'OK' to "
 				    "load its settings:"), page ) );
   vlay->addWidget( mListView, 1 );
 

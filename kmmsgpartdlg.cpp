@@ -35,10 +35,10 @@ static const struct {
   KMMsgPartDialog::Encoding encoding;
   const char * displayName;
 } encodingTypes[] = {
-  { KMMsgPartDialog::SevenBit, I18N_NOOP("none (7-bit text)") },
-  { KMMsgPartDialog::EightBit, I18N_NOOP("none (8-bit text)") },
-  { KMMsgPartDialog::QuotedPrintable, I18N_NOOP("quoted printable") },
-  { KMMsgPartDialog::Base64, I18N_NOOP("base 64") },
+  { KMMsgPartDialog::SevenBit, I18N_NOOP("None (7-bit text)") },
+  { KMMsgPartDialog::EightBit, I18N_NOOP("None (8-bit text)") },
+  { KMMsgPartDialog::QuotedPrintable, I18N_NOOP("Quoted Printable") },
+  { KMMsgPartDialog::Base64, I18N_NOOP("Base 64") },
 };
 static const int numEncodingTypes =
   sizeof encodingTypes / sizeof *encodingTypes;

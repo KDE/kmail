@@ -433,7 +433,7 @@ void AccountDialog::makeLocalAccountPage()
 
   //mLocal.identityCombo->setEnabled(false);
 
-  label = new QLabel( i18n("&Pre-Command:"), page );
+  label = new QLabel( i18n("&Pre-command:"), page );
   topLayout->addWidget( label, 10, 0 );
   mLocal.precommand = new KLineEdit( page );
   label->setBuddy( mLocal.precommand );
@@ -527,7 +527,7 @@ void AccountDialog::makeMaildirAccountPage()
 
   mMaildir.precommand = new KLineEdit( page );
   topLayout->addWidget( mMaildir.precommand, 9, 1 );
-  label = new QLabel( mMaildir.precommand, i18n("&Pre-Command:"), page );
+  label = new QLabel( mMaildir.precommand, i18n("&Pre-command:"), page );
   topLayout->addWidget( label, 9, 0 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
