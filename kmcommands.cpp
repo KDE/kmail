@@ -1247,7 +1247,9 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
       menu->removeItemAt( 0 );
   }
 
-  if (!kmkernel->imapFolderMgr()->dir().first()) {
+  if (!kmkernel->imapFolderMgr()->dir().first() &&
+      !kmkernel->dimapFolderMgr()->dir().first()) 
+  {
     KMMenuCommand::makeFolderMenu(  &kmkernel->folderMgr()->dir(), move,
       receiver, aMenuToFolder, menu );
   } else {
@@ -1257,6 +1259,14 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
         move, receiver, aMenuToFolder, subMenu );
     menu->insertItem( i18n( "Local Folders" ), subMenu );
     KMFolderDir* fdir = &kmkernel->imapFolderMgr()->dir();
+    for (KMFolderNode *node = fdir->first(); node; node = fdir->next()) {
+      if (node->isDir())
+        continue;
+      subMenu = new QPopupMenu(menu);
+      subMenu = makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
+      menu->insertItem( node->label(), subMenu );
+    }
+    fdir = &kmkernel->dimapFolderMgr()->dir();
     for (KMFolderNode *node = fdir->first(); node; node = fdir->next()) {
       if (node->isDir())
         continue;
