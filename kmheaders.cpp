@@ -13,6 +13,7 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kiconloader.h>
+#include <kstdaccel.h>
 
 #include <kimageio.h>
 #include <kmessagebox.h>
@@ -86,6 +87,7 @@ public:
   KMHeaderItem( QListViewItem* parent, KMFolder* folder, int msgId, 
 		KMPaintInfo *aPaintInfo )
     : QListViewItem( parent ), 
+
       mFolder( folder ),
       mMsgId( msgId ),
       mPaintInfo( aPaintInfo )
@@ -135,6 +137,17 @@ public:
 
     time_t mDate = mMsgBase->date();
     setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
+
+    kapp->config()->setGroup("General");
+    if (kapp->config()->readBoolEntry("showMessageSize", false)) {
+      QString msz;
+      QString blanks = " ";
+      long lmsz = mMsgBase->msgSize();
+      for(long i = lmsz; i < 100000000; i *= 10) 
+        blanks += " ";
+      msz.sprintf("%s%ld", blanks.ascii(), lmsz);
+      setText( mPaintInfo->sizeCol, msz);
+    }
 
     mColor = &mPaintInfo->colFore;
     switch (flag)
@@ -267,11 +280,15 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.subCol = mPaintInfo.flagCol + 1;
   mPaintInfo.senderCol = mPaintInfo.subCol + 1;
   mPaintInfo.dateCol = mPaintInfo.senderCol + 1;
+  mPaintInfo.sizeCol = mPaintInfo.dateCol + 1;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
   addColumn( i18n("Subject"), 310 );
   addColumn( i18n("Sender"), 170 );
   addColumn( i18n("Date"), 170 );
+  if (mShowSize) {
+    addColumn( i18n("Size"), 80 );
+  }
 
   if (!pixmapsLoaded)
   {
@@ -337,6 +354,9 @@ void KMHeaders::readConfig (void)
     mPaintInfo.pixmapOn = TRUE;
     mPaintInfo.pixmap = QPixmap( pixmapFile );
   }
+
+  config->setGroup("General");
+  mShowSize = config->readBoolEntry("showMessageSize");
 
   // Custom/System colors
   config->setGroup("Reader");
@@ -413,6 +433,8 @@ void KMHeaders::readFolderConfig (void)
   setColumnWidth(mPaintInfo.subCol, config->readNumEntry("SubjectWidth", 310));
   setColumnWidth(mPaintInfo.senderCol, config->readNumEntry("SenderWidth", 170));
   setColumnWidth(mPaintInfo.dateCol, config->readNumEntry("DateWidth", 170));
+  if (mShowSize)
+    setColumnWidth(mPaintInfo.sizeCol, config->readNumEntry("SizeWidth", 80));
 
   mSortCol = config->readNumEntry("SortColumn", (int)KMMsgList::sfDate);
   mSortDescending = (mSortCol < 0);
@@ -445,6 +467,7 @@ void KMHeaders::writeFolderConfig (void)
   config->writeEntry("SenderWidth", columnWidth(mPaintInfo.senderCol));
   config->writeEntry("SubjectWidth", columnWidth(mPaintInfo.subCol));
   config->writeEntry("DateWidth", columnWidth(mPaintInfo.dateCol));
+  config->writeEntry("SizeWidth", columnWidth(mPaintInfo.sizeCol));
   config->writeEntry("SortColumn", (mSortDescending ? -mSortColAdj : mSortColAdj));
   config->writeEntry("Top", topItemIndex());
   config->writeEntry("Current", currentItemIndex());
@@ -579,6 +602,11 @@ void KMHeaders::setFolder (KMFolder *aFolder)
   if (mPaintInfo.status)
     colText = colText + i18n( " (Status)" );
   setColumnText( mPaintInfo.subCol, colText);
+
+  if (mShowSize) {
+    colText = i18n( "Size" );
+    setColumnText( mPaintInfo.sizeCol, colText);
+  }
 
   if (!mSortDescending)
     setColumnText( mSortCol, *up, columnText( mSortCol ));
@@ -1748,6 +1776,8 @@ void KMHeaders::slotRMB()
   menu->insertItem(i18n("&Forward..."), topLevelWidget(),
 		   SLOT(slotForwardMsg()), Key_F);
   menu->insertSeparator();
+  menu->insertItem(i18n("&Save As..."), topLevelWidget(), 
+                   SLOT(slotSaveMsg()), KStdAccel::key(KStdAccel::Save));
   menu->insertItem(i18n("&Move to"), msgMoveMenu);
   menu->insertItem(i18n("&Copy to"), msgCopyMenu);
   menu->insertItem(i18n("&Delete"), topLevelWidget(),

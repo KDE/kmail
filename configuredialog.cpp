@@ -1295,6 +1295,10 @@ void ConfigureDialog::makeAppearancePage( void )
     new QCheckBox( i18n("Show long folder list"), page3 );
   vlay->addWidget( mAppearance.longFolderCheck );
 
+  mAppearance.messageSizeCheck = 
+    new QCheckBox( i18n("Display message sizes"), page3 );
+  vlay->addWidget( mAppearance.messageSizeCheck );
+
   mAppearance.nestedMessagesCheck = 
     new QCheckBox( i18n("Thread list of message headers"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
@@ -1736,6 +1740,11 @@ void ConfigureDialog::setupAppearancePage( void )
   config.setGroup("Reader");
   state = config.readBoolEntry( "htmlMail", true );
   mAppearance.htmlMailCheck->setChecked( !state );
+
+  config.setGroup("General");
+  state = config.readBoolEntry( "showMessageSize", false );
+  mAppearance.messageSizeCheck->setChecked( state );
+
 }
 
 
@@ -1866,6 +1875,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
     
     mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
     mAppearance.htmlMailCheck->setChecked( true );
   }
@@ -1890,6 +1900,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
     
     mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.htmlMailCheck->setChecked( false );
   }
@@ -1914,6 +1925,7 @@ void ConfigureDialog::installProfile( void )
     mAppearance.customColorCheck->setChecked( true );
     
     mAppearance.longFolderCheck->setChecked( false );
+    mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( true );
     mAppearance.htmlMailCheck->setChecked( false );
   }
@@ -2022,7 +2034,8 @@ void ConfigureDialog::slotApply( void )
     config.writeEntry( "quote1-font", mAppearance.fontString[3] );
     config.writeEntry( "quote2-font", mAppearance.fontString[4] );
     config.writeEntry( "quote3-font", mAppearance.fontString[5] );
-    printf("WRITE: %s\n", mAppearance.fontString[3].latin1() );
+//  GS - should this be here?
+//    printf("WRITE: %s\n", mAppearance.fontString[3].latin1() );
 
     config.setGroup("Reader");
     bool defaultColors = !mAppearance.customColorCheck->isChecked();
@@ -2049,6 +2062,11 @@ void ConfigureDialog::slotApply( void )
     config.setGroup("Reader");
     bool htmlMail = mAppearance.htmlMailCheck->isChecked();
     config.writeEntry( "htmlMail", !htmlMail );
+
+    config.setGroup("General");
+    bool messageSize = mAppearance.messageSizeCheck->isChecked();
+    config.writeEntry( "showMessageSize", messageSize );
+
   }
   else if( activePage == mComposer.pageIndex )
   {
