@@ -67,7 +67,7 @@ extern KBusyPtr *kbp;
 #endif
 
 QString KMReaderWin::mAttachDir;
-const int KMReaderWin::delay = 100;
+const int KMReaderWin::delay = 150;
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
@@ -392,6 +392,10 @@ void KMReaderWin::parseMsg(void)
   if(mMsg == NULL)
     return;
 
+  QString bkgrdStr = "";
+  if (mBackingPixmapOn)
+    bkgrdStr = " background=\"file://" + mBackingPixmapStr + "\"";
+
   mViewer->begin( KURL( "file:/" ) );
   mViewer->write("<html><head><style type=\"text/css\">" +
 		 QString("a { color: #%1;").arg(colorToString(c2)) +
@@ -399,13 +403,8 @@ void KMReaderWin::parseMsg(void)
 		 "</style></head><body " +
 		 // TODO: move these to stylesheet, too:
                  QString(" text=\"#%1\"").arg(colorToString(c1)) +
-		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)));
-
-  if (mBackingPixmapOn)
-    mViewer->write(" background=\"file://" + mBackingPixmapStr + "\"");
-
-  // TODO: move this to stylesheet, too:
-  mViewer->write("><font face=\"" + mBodyFont +"\">");
+  		 QString(" bgcolor=\"#%1\"").arg(colorToString(c4)) + 
+                 bkgrdStr + ">" );
 
 #if defined CHARSETS
   printf("Setting viewer charset to %s\n",(const char *)mMsg->charset());
@@ -414,7 +413,7 @@ void KMReaderWin::parseMsg(void)
 
   parseMsg(mMsg);
 
-  mViewer->write("</font></body></html>");
+  mViewer->write("</body></html>");
   mViewer->end();
 }
 
