@@ -789,6 +789,12 @@ void KMReaderWin::readConfig(void)
     mBackingPixmapOn = TRUE;
   }
 
+  { // must be done before setHeaderStyleAndStrategy
+    KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
+    mDelayedMarkAsRead = behaviour.readBoolEntry( "DelayedMarkAsRead", true );
+    mDelayedMarkTimeout = behaviour.readNumEntry( "DelayedMarkTime", 0 );
+  }
+
   {
   KConfigGroupSaver saver(config, "Reader");
   // initialize useFixedFont from the saved value; the corresponding toggle
@@ -829,12 +835,6 @@ void KMReaderWin::readConfig(void)
     setFont(KGlobalSettings::generalFont());
   }
   mViewer->setStandardFont( bodyFontFamily() );
-  }
-
-  {
-    KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
-    mDelayedMarkAsRead = behaviour.readBoolEntry( "DelayedMarkAsRead", true );
-    mDelayedMarkTimeout = behaviour.readNumEntry( "DelayedMarkTime", 0 );
   }
 
   readColorConfig();
