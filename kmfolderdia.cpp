@@ -401,8 +401,8 @@ KMail::FolderDiaGeneralTab::FolderDiaGeneralTab( KMFolderDialog* dlg,
         "dialog. (Settings -> Configure KMail)") );
 
 
-  if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() &&
-       !kmkernel->iCalIface().isResourceFolder( mDlg->folder() ) ) {
+  if ( !mIsLocalSystemFolder && kmkernel->iCalIface().isEnabled() /* &&
+       !kmkernel->iCalIface().isResourceFolder( mDlg->folder() )*/ ) {
     // Only do make this settable, if the IMAP resource is enabled
     // and it's not the personal folders (those must not be changed)
   
