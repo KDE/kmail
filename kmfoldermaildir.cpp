@@ -356,6 +356,14 @@ KMFolderMaildir::doCreateJob( QPtrList<KMMessage>& msgList, const QString& sets,
 //-------------------------------------------------------------
 int KMFolderMaildir::addMsg(KMMessage* aMsg, int* index_return)
 {
+  if (!canAddMsgNow(aMsg, index_return)) return 0;
+  return addMsgInternal( aMsg, index_return );
+}
+
+//-------------------------------------------------------------
+int KMFolderMaildir::addMsgInternal( KMMessage* aMsg, int* index_return, 
+                                     bool stripUid )
+{
 /*
 QFile fileD0( "testdat_xx-kmfoldermaildir-0" );
 if( fileD0.open( IO_WriteOnly ) ) {
@@ -364,8 +372,6 @@ if( fileD0.open( IO_WriteOnly ) ) {
     fileD0.close();  // If data is 0 we just create a zero length file.
 }
 */
-  if (!canAddMsgNow(aMsg, index_return)) return 0;
-
   long len;
   unsigned long size;
   bool opened = FALSE;
@@ -388,8 +394,19 @@ if( fileD0.open( IO_WriteOnly ) ) {
   aMsg->setStatusFields();
   if (aMsg->headerField("Content-Type").isEmpty())  // This might be added by
     aMsg->removeHeaderField("Content-Type");        // the line above
+
+
+  const QString uidHeader = aMsg->headerField( "X-UID" );
+  if ( !uidHeader.isEmpty() && stripUid )
+    aMsg->removeHeaderField( "X-UID" );
+
   msgText = aMsg->asString();
   len = msgText.length();
+
+  // Re-add the uid so that the take can make use of it, in case the
+  // message is currently in an imap folder
+  if ( !uidHeader.isEmpty() && stripUid )
+    aMsg->setHeaderField( "X-UID", uidHeader );
 
   if (len <= 0)
   {
@@ -430,6 +447,9 @@ if( fileD0.open( IO_WriteOnly ) ) {
 
   if (msgParent)
     if (idx >= 0) msgParent->take(idx);
+
+  // just to be sure it does not end up in the index
+  if ( stripUid ) aMsg->setUID( 0 ); 
 
   if (filename != aMsg->fileName())
     aMsg->setFileName(filename);

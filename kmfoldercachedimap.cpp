@@ -349,12 +349,10 @@ int KMFolderCachedImap::addMsgInternal( KMMessage* msg, bool newMail,
 /* Reimplemented from KMFolderMaildir */
 int KMFolderCachedImap::addMsg(KMMessage* msg, int* index_return)
 {
-  // Strip the IMAP UID
-  msg->removeHeaderField( "X-UID" );
-  msg->setUID( 0 );
-
+  if ( !canAddMsgNow( msg, index_return ) ) return 0;
   // Add it to storage
-  return addMsgInternal( msg, false, index_return );
+  int rc = KMFolderMaildir::addMsgInternal(msg, index_return, true /*stripUID*/);
+  return rc;
 }
 
 
