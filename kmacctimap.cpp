@@ -885,7 +885,7 @@ void KMAcctImap::readConfig(KConfig& config)
   KMAcctImapInherited::readConfig(config);
 
   mLogin = config.readEntry("login", "");
-  mStorePasswd = config.readNumEntry("store-passwd", TRUE);
+  mStorePasswd = config.readNumEntry("store-passwd", FALSE);
   if (mStorePasswd) mPasswd = config.readEntry("passwd");
   else mPasswd = "";
   mHost = config.readEntry("host");
