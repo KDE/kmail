@@ -27,6 +27,7 @@
 #include <kconfig.h>
 #include <kcursor.h>
 #include <krun.h>
+#include <kopenwith.h>
 #include <kmessagebox.h>
 #include <mimelib/mimepp.h>
 #include <qstring.h>
@@ -1114,6 +1115,8 @@ void KMReaderWin::slotAtmOpen()
   //--- Sven's save attachments to /tmp end ---
 
   // -- David : replacement for KFM::openURL
+  if ( !KOpenWithHandler::exists() )
+    (void) new KFileOpenWithHandler();
   (void) new KRun(fileName);
 }
 

@@ -19,6 +19,7 @@
 #include <kstdaccel.h>
 
 #include <krun.h>
+#include <kopenwith.h>
 
 #include <kmenubar.h>
 #include <kmessagebox.h>
@@ -917,6 +918,8 @@ void KMMainWin::slotUrlClicked(const char* aUrl, int)
     statusMsg(i18n("Opening URL..."));
     // -- David : replacement for KFM::openURL
     KURL kURL( aUrl );
+    if ( !KOpenWithHandler::exists() )
+      (void) new KFileOpenWithHandler();
     (void) new KRun( kURL );
   }
 }
