@@ -52,9 +52,14 @@ KpgpBase::writeConfig(bool sync)
 bool
 KpgpBase::setMessage(const QString mess)
 {
+  int index;
+
   clear();
   input = mess;
-  if(input.find("-----BEGIN PGP") != -1) {
+
+  // "-----BEGIN PGP" must be at the beginning of a line
+  if(((index = input.find("-----BEGIN PGP")) != -1) && 
+     ((index == 0) || (input[index-1] == '\n'))) {
     decrypt();
     return true;
   }
@@ -569,7 +574,7 @@ KpgpBaseG::decrypt(const char *passphrase)
       index = info.find("key ID ",index2);
       signatureID = info.mid(index+7,8);
     }
-    else if( info.find("CRC error") != -1 )
+    else if( info.find("BAD signature") != -1 )
     {
       //kdDebug() << "BAD signature" << endl;
       status |= SIGNED;
