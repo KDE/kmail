@@ -1263,7 +1263,10 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   if (next && removedItem == static_cast<KMHeaderItem*>(currentItem()) ) {
     setCurrentItem( next );
     setSelected( next, TRUE );
+  } else {
+    emit selected(0);
   }
+  
   mImperfectlyThreadedList.removeRef(removedItem);
   delete removedItem;
   END_TIMER(msgRemoved);
