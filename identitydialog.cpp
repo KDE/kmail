@@ -205,6 +205,9 @@ namespace KMail {
   }
 
   void IdentityDialog::setIdentity( KMIdentity & ident ) {
+
+    setCaption( i18n("Edit Identity \"%1\"").arg( ident.identityName() ) );
+
     // "General" tab:
     mNameEdit->setText( ident.fullName() );
     mOrganizationEdit->setText( ident.organization() );
