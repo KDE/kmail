@@ -37,18 +37,18 @@ METASOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 
 appsdir = $(kde_appsdir)/Internet/
 
-EXTRA_DIST = KMail.kdelnk kmail.xpm mini-kmail.xpm
+EXTRA_DIST = KMail.desktop kmail.xpm mini-kmail.xpm
 
 kde_icon_DATA = kmail.xpm
 
 install-data-local:
 	$(mkinstalldirs) $(appsdir)
-	$(INSTALL_DATA) $(srcdir)/KMail.kdelnk $(appsdir)
+	$(INSTALL_DATA) $(srcdir)/KMail.desktop $(appsdir)
 	$(mkinstalldirs) $(kde_minidir)
 	$(INSTALL_DATA) $(srcdir)/mini-kmail.xpm $(kde_minidir)/kmail.xpm
 
 uninstall-local:
-	rm -f $(appsdir)/KMail.kdelnk
+	rm -f $(appsdir)/KMail.desktop
 	rm -f $(kde_minidir)/kmail.xpm
 
 messages:
