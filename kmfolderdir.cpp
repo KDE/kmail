@@ -117,7 +117,7 @@ const QString KMFolderDir::path() const
   {
     p = parent()->path();
     p.append("/");
-    p.append(name());
+    p.append(QString::fromLocal8Bit(name()));
   }
   else p = "";
 
