@@ -302,6 +302,9 @@ namespace KMail {
     if ( !result.isImage()
          && node->type() != DwMime::kTypeText )
       asIcon = true;
+    // if the image is not complete do not try to show it inline
+    if ( result.isImage() && !node->msgPart().isComplete() )
+      asIcon = true;
     if ( asIcon ) {
       if ( attachmentStrategy() != AttachmentStrategy::hidden()
            || showOnlyOneMimePart() )
