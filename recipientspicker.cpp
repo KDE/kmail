@@ -27,6 +27,7 @@
 #include <kabc/stdaddressbook.h>
 #include <kabc/resource.h>
 #include <kdialogbase.h>
+#include <kiconloader.h>
 
 #include <qlayout.h>
 #include <qcombobox.h>
@@ -73,6 +74,13 @@ RecipientViewItem::RecipientViewItem( RecipientItem *item, KListView *listView )
   setText( 0, item->recipientType() );
   setText( 1, a.formattedName() );
   setText( 2, a.preferredEmail() );
+
+  QPixmap icon;
+  if ( !item->addressee().photo().data().isNull() )
+    icon = item->addressee().photo().data().smoothScale( 16, 16 );
+  else
+    icon = KGlobal::iconLoader()->loadIcon( "personal", KIcon::Small );
+  setPixmap( 1, icon );
 }
 
 RecipientItem *RecipientViewItem::recipientItem() const
