@@ -164,7 +164,8 @@ bool FilterLog::saveToFile( QString fileName )
 
 QString & FilterLog::recode( QString s )
 {
-  return s.replace( "<", "&lt;" ).replace( ">", "&gt;" );
+  return s.replace( "<", QString::fromLatin1("&lt;") )
+	  .replace( ">", QString::fromLatin1("&gt;") );
 }
 
 
