@@ -1188,6 +1188,9 @@ void KMHeaders::moveSelectedToFolder( int menuId )
 //-----------------------------------------------------------------------------
 void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
+  if (destFolder == mFolder)
+    return;
+
   KMMessageList* msgList;
   KMMessage *msg;
   KMMsgBase *msgBase, *curMsg = 0;

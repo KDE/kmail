@@ -152,6 +152,8 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name)
   : QListView( parent, name ), mList()
 {
   static bool pixmapsLoaded = FALSE;
+  oldSelected = 0;
+  oldCurrent = 0;
 
   initMetaObject();
 
@@ -650,6 +652,13 @@ void KMFolderTree::contentsDragEnterEvent( QDragEnterEvent *e )
   }
 
   oldCurrent = currentItem();
+  oldSelected = 0;
+  QListViewItemIterator it( this );
+  while (it.current()) {
+    if (it.current()->isSelected())
+      oldSelected = it.current();
+    ++it;
+  }
   setFocus();
 
   QListViewItem *i = itemAt( contentsToViewport(e->pos()) );
@@ -759,8 +768,9 @@ void KMFolderTree::contentsDragLeaveEvent( QDragLeaveEvent * )
     stopAutoScroll();
     dropItem = 0L;
 
-    //    setCurrentItem( oldCurrent );
-    //    setSelected( oldCurrent, TRUE );
+    setCurrentItem( oldCurrent );
+    if (oldSelected)
+      setSelected( oldSelected, TRUE );
     connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	    this, SLOT(doFolderSelected(QListViewItem*)));
 }
@@ -774,7 +784,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
     if ( item ) {
         QString str;
 	KMFolderTreeItem *fti = dynamic_cast<KMFolderTreeItem*>(item);
-	if (fti && (fti != oldCurrent) && (fti->folder))
+	if (fti && (fti != oldSelected) && (fti->folder))
 	  emit folderDrop(fti->folder);
 	e->accept();
     } else
@@ -785,7 +795,8 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
 
     clearSelection();
     setCurrentItem( oldCurrent );
-    setSelected( oldCurrent, TRUE );
+    if ( oldSelected )
+      setSelected( oldSelected, TRUE );
     connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	    this, SLOT(doFolderSelected(QListViewItem*)));
     // End this wasn't necessary in QT 2.0.2
@@ -849,6 +860,7 @@ void KMFolderTree::contentsMousePressEvent( QMouseEvent * e )
   KMFolderTreeInherited::contentsMousePressEvent( f );
   // Force current item to be selected for some reason in certain weird
   // circumstances this is not always the case
+
   if (currentItem())
     setSelected( currentItem(), true );
 }

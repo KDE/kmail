@@ -109,7 +109,7 @@ protected:
   virtual void contentsMouseMoveEvent( QMouseEvent* e );
 
   //Drag and drop variables
-  QListViewItem *oldCurrent;
+  QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;
   QTimer autoopen_timer;
   KMPaintInfo mPaintInfo;
