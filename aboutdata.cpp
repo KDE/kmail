@@ -151,6 +151,8 @@ namespace KMail {
   };
 
   static const about_data credits[] = {
+    { "Joern Ahrens", 0, 0, 0 }, // implement wish 77182 (Add some separators to "Mark Message as" popup menu)
+    { "Sandro Giessl", 0, 0, 0 }, // frame width fixes for widget styles
     { "Severin Greimel", 0, 0, 0 }, // several patches
     { "Shaheed Haque", 0, 0, 0 }, // fix for bug:69744 (Resource folders: "Journals" should be "Journal")
     { "Heiko Hund", I18N_NOOP("POP filters"),
@@ -158,6 +160,8 @@ namespace KMail {
     { "Torsten Kasch", 0, 0, 0 }, // crash fix for Solaris (cf. bug:68801)
     { "Volker Krause", 0, 0, 0 }, // fix for bug:67017 (new mail notification in Kontact)
     { "Jeffrey McGee", 0, 0, 0 }, // fix for bug:64251
+    { "Dirk M\303\274ller", 0, 0, 0 }, // KURL() fixes and qt_cast optimizations
+    { "Simon Perreault", 0, 0, 0 }, // make the composer remember its "Use Fixed Font" setting (bug 49481)
     { "Bernhard Reiter", I18N_NOOP("\xC3\x84gypten and Kroupware project management"),
       "bernhard@intevation.de", 0 },
     { "Jan Simonson", I18N_NOOP("beta testing of PGP 6 support"),
