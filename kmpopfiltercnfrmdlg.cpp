@@ -22,7 +22,6 @@
 #include <qvgroupbox.h>
 #include <qtimer.h>
 
-#include <klistview.h>
 #include <klocale.h>
 
 ////////////////////////////////////////
@@ -33,8 +32,8 @@ KMPopHeadersView::KMPopHeadersView(QWidget *aParent)
   mColumnOf[Down] = addColumn(QIconSet(QPixmap(mDown)), QString::null, 24);
   mColumnOf[Later] = addColumn(QIconSet(QPixmap(mLater)), QString::null, 24);
   mColumnOf[Delete] = addColumn(QIconSet(QPixmap(mDel)), QString::null, 24);
-  int subjCol = addColumn(i18n("Subject"), 180);
-  int sendCol = addColumn(i18n("Sender"), 150);
+  /*int subjCol =*/ addColumn(i18n("Subject"), 180);
+  /*int sendCol =*/ addColumn(i18n("Sender"), 150);
   int dateCol = addColumn(i18n("Date"), 120);
   int sizeCol = addColumn(i18n("Size"), 80);
 
@@ -78,13 +77,14 @@ KMPopFilterAction KMPopHeadersView::mapToAction(int aColumn)
 }
 
 /** No descriptions */
-void KMPopHeadersView::slotPressed(QListViewItem* aItem, const QPoint& aPoint,
+void KMPopHeadersView::slotPressed(QListViewItem* aItem, const QPoint&,
         int aColumn) {
-  KMPopHeadersViewItem *item = (KMPopHeadersViewItem*) aItem;
+  KMPopHeadersViewItem *item = dynamic_cast<KMPopHeadersViewItem*>(aItem);
+  assert( item );
   item->check(mapToAction(aColumn));
 }
 
-void KMPopHeadersView::slotIndexChanged(int aSection, int aFromIndex, int aToIndex)
+void KMPopHeadersView::slotIndexChanged(int, int aFromIndex, int aToIndex)
 {
   if(aFromIndex < aToIndex)
       --aToIndex;
@@ -267,7 +267,7 @@ void KMPopHeadersViewItem::check(KMPopFilterAction aAction)
   }
 }
 
-void KMPopHeadersViewItem::paintFocus(QPainter * aQp, const QColorGroup & aCg, const QRect &aR)
+void KMPopHeadersViewItem::paintFocus(QPainter *, const QColorGroup &, const QRect &)
 {
 }
 
@@ -279,7 +279,7 @@ int KMPopHeadersViewItem::compare(QListViewItem *i, int col, bool ascending)
 		unsigned int thisSize = text(col).toUInt();
 		unsigned int thatSize = i->text(col).toUInt();
 		if(thisSize < thatSize) return -1;
-		if(thisSize = thatSize) return  0;
+		if(thisSize == thatSize) return  0;
 		if(thisSize > thatSize) return  1;
 	}
 
@@ -411,7 +411,7 @@ KMPopFilterCnfrmDlg::~KMPopFilterCnfrmDlg()
   click happened over a radio button column.
   Of course the radio button state is changed as well if the above is true.
 */
-void KMPopFilterCnfrmDlg::slotPressed(QListViewItem *aItem, const QPoint &aPnt, int aColumn)
+void KMPopFilterCnfrmDlg::slotPressed(QListViewItem *aItem, const QPoint &, int aColumn)
 {
   switch(aColumn)
   {

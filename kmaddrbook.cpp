@@ -387,7 +387,7 @@ QString KabcBridge::expandDistributionLists(QString recipients)
   QStringList recpList, names = manager.listNames();
   QStringList::Iterator it, jt;
   QString receiver, expRecipients;
-  int begin = 0, count = 0, quoteDepth = 0;
+  unsigned int begin = 0, count = 0, quoteDepth = 0;
   for (; begin + count < recipients.length(); ++count) {
     if (recipients[begin + count] == '"')
       ++quoteDepth;

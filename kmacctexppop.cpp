@@ -542,7 +542,8 @@ void KMAcctExpPop::slotJobFinished() {
           int idx = idsOfMsgsPendingDownload.findIndex(*hids);
           kdDebug(5006) << "Length: " << *(lensOfMsgsPendingDownload.at(idx)) << endl;
           //check for mails bigger mFilterOnServerCheckSize
-          if (*(lensOfMsgsPendingDownload.at(idx)) >= mFilterOnServerCheckSize) {
+          if ((unsigned int)*(lensOfMsgsPendingDownload.at(idx))
+	      >= mFilterOnServerCheckSize) {
             kdDebug(5006) << "bigger than " << mFilterOnServerCheckSize << endl;
             headersOnServer.append(new KMPopHeaders(*idsOfMsgsPendingDownload.at(idx),
                                                     *uidsOfMsgs.at(idx),

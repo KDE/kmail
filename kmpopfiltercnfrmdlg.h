@@ -23,11 +23,12 @@
 #include <kdialogbase.h>
 #include <klistview.h>
 
-#include <qwidget.h>
 #include <qptrlist.h>
 #include <qmap.h>
-#include <qvgroupbox.h>
-#include <qstring.h>
+
+class QWidget;
+class QString;
+
 /**
   * @author Heiko Hund
   */
@@ -40,12 +41,12 @@ public:
   ~KMPopHeadersView();
   int mapToColumn(KMPopFilterAction aAction);
   KMPopFilterAction mapToAction(int aColumn);
-  const static char *mUnchecked[26];
-  const static char *mChecked[26];
+  static const char *mUnchecked[26];
+  static const char *mChecked[26];
 protected:
-  const static char *mLater[25];
-  const static char *mDown[20];
-  const static char *mDel[19];
+  static const char *mLater[25];
+  static const char *mDown[20];
+  static const char *mDel[19];
   QMap<KMPopFilterAction, int> mColumnOf;
   QMap<int, KMPopFilterAction> mActionAt;
 

@@ -11,7 +11,13 @@
 #include "kmpopheaders.h"
 #include <kdebug.h>
 
-KMPopHeaders::KMPopHeaders(){
+KMPopHeaders::KMPopHeaders()
+  : mAction(NoAction),
+    mId(),
+    mUid(),
+    mRuleMatched(false),
+    mHeader(0)
+{
 }
 
 KMPopHeaders::~KMPopHeaders(){
@@ -21,11 +27,11 @@ KMPopHeaders::~KMPopHeaders(){
 
 /** No descriptions */
 KMPopHeaders::KMPopHeaders(QString aId, QString aUid, KMPopFilterAction aAction)
-  : mId(aId),
+  : mAction(aAction),
+    mId(aId),
     mUid(aUid),
     mRuleMatched(false),
-    mHeader(0),
-    mAction(aAction)
+    mHeader(0)
 {
 }
 

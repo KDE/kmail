@@ -964,7 +964,7 @@ int KMFolderMbox::compact()
 	}
 	if(last_crlf != -1) {
 	  int size = folder_offset - (i + last_crlf+1);
-	  if (mtext.size() < size)
+	  if ((int)mtext.size() < size)
 	      mtext.resize(size);
 	  if(fseek(mStream, i + last_crlf+1, SEEK_SET) == -1 ||
 	     !fread(mtext.data(), size, 1, mStream) ||

@@ -161,7 +161,7 @@ void KMMsgList::remove(int idx)
       dict->remove(at(idx));
   }
   
-  unsigned long msn;
+  unsigned long msn = 0;
   mHigh--;
   for (i=idx; i<mHigh; i++) {
     if (dict)

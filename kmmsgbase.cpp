@@ -238,9 +238,9 @@ QString KMMsgBase::decodeRFC2047String(const QCString& aStr)
 {
   QString result;
   QCString charset;
-  char *pos, *beg, *end, *mid;
+  char *pos, *beg, *end, *mid=0;
   QCString str, cstr, LWSP_buffer;
-  char encoding, ch;
+  char encoding='Q', ch;
   bool valid, lastWasEncodedWord=FALSE;
   const int maxLen=200;
   int i;

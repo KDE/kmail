@@ -237,7 +237,7 @@ void KMFldSearch::slotFolderComplete(KMFolderImap *folder, bool success)
 //-----------------------------------------------------------------------------
 void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum, bool recursive)
 {
-  KMMessage* msg;
+  KMMessage* msg=0;
   int i, num, upd;
   QString str;
   QCString cStr;
@@ -613,7 +613,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
     }
   } else {
     int start, stop;
-    char ch;
+    char ch = '\0';
     start = aMsgStr.find(mHeaderField);
     if (start == -1) return false;
     if (aMsgStr.find("\n\n") < start) return false;

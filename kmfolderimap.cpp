@@ -618,7 +618,7 @@ void KMFolderImap::slotListFolderEntries(KIO::Job * job,
   if (it == mAccount->mapJobData.end()) return;
   assert(it != mAccount->mapJobData.end());
   QString mimeType, name;
-  long int flags;
+  long int flags = 0;
   for (KIO::UDSEntryList::ConstIterator udsIt = uds.begin();
     udsIt != uds.end(); udsIt++)
   {
