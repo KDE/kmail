@@ -262,12 +262,18 @@ namespace KMail {
     /**
      * Returns the root folder of this account
      */
-    virtual FolderStorage* rootFolder() = 0;
+    virtual FolderStorage* const rootFolder() const = 0;
 
     /**
      * Progress item for listDir
      */
     ProgressItem* listDirProgressItem();
+
+    /**
+     * @return the number of (subscribed, if applicable) folders in this
+     * account.
+     */
+    virtual unsigned int folderCount() const;
 
   private slots:
     /**

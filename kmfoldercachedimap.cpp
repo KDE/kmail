@@ -46,7 +46,8 @@
 #include "kmfolder.h"
 #include "kmdict.h"
 #include "acljobs.h"
-#include "kmbroadcaststatus.h"
+#include "broadcaststatus.h"
+using KPIM::BroadcastStatus;
 #include "progressmanager.h"
 
 using KMail::CachedImapJob;
@@ -201,8 +202,9 @@ void KMFolderCachedImap::remove()
   KIO::del( KURL::fromPathOrURL( part1 + ".directory" ) );
 
   // Tell the account (see listDirectory2)
-  if (mAccount)
+  if (mAccount) {
     mAccount->addDeletedFolder( imapPath() );
+  }
 
   FolderStorage::remove();
 }
