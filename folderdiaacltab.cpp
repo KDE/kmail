@@ -37,6 +37,8 @@
 #include "kmacctcachedimap.h"
 #include "kmfolder.h"
 
+#include <kabc/addresseedialog.h>
+#include <kabc/addresseelist.h>
 #include <kpushbutton.h>
 #include <kdebug.h>
 
@@ -70,13 +72,15 @@ static const struct {
 };
 
 
-KMail::ACLEntryDialog::ACLEntryDialog( const QString& caption, QWidget* parent, const char* name )
+KMail::ACLEntryDialog::ACLEntryDialog( DialogType dialogType, IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name )
   : KDialogBase( parent, name, true /*modal*/, caption,
                  KDialogBase::Ok|KDialogBase::Cancel, KDialogBase::Ok, true /*sep*/ )
+  , mUserIdFormat( userIdFormat )
+  , mDialogType( dialogType )
 {
   QWidget *page = new QWidget( this );
   setMainWidget(page);
-  QGridLayout *topLayout = new QGridLayout( page, 3, 2, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page, 3 /*rows*/, 3 /*cols*/, 0, spacingHint() );
 
   QLabel *label = new QLabel( i18n( "&User Identifier" ), page );
   topLayout->addWidget( label, 0, 0 );
@@ -86,8 +90,11 @@ KMail::ACLEntryDialog::ACLEntryDialog( const QString& caption, QWidget* parent, 
   label->setBuddy( mUserIdLineEdit );
   QWhatsThis::add( mUserIdLineEdit, i18n( "The User Identifier is the login of the user on the IMAP server. This can be a simple user name or the full email address of the user; the login for your own account on the server will tell you which one it is." ) );
 
+  QPushButton* kabBtn = new QPushButton( "...", page );
+  topLayout->addWidget( kabBtn, 0, 2 );
+
   mButtonGroup = new QVButtonGroup( i18n( "Permissions" ), page );
-  topLayout->addMultiCellWidget( mButtonGroup, 1, 1, 0, 1 );
+  topLayout->addMultiCellWidget( mButtonGroup, 1, 1, 0, 2 );
 
   for ( unsigned int i = 0;
         i < sizeof( standardPermissions ) / sizeof( *standardPermissions );
@@ -99,15 +106,49 @@ KMail::ACLEntryDialog::ACLEntryDialog( const QString& caption, QWidget* parent, 
   topLayout->setRowStretch(2, 10);
 
   connect( mUserIdLineEdit, SIGNAL( textChanged( const QString& ) ), SLOT( slotChanged() ) );
+  connect( kabBtn, SIGNAL( clicked() ), SLOT( slotSelectAddresses() ) );
   connect( mButtonGroup, SIGNAL( clicked( int ) ), SLOT( slotChanged() ) );
   enableButtonOK( false );
 
   mUserIdLineEdit->setFocus();
+  // Ensure the lineedit is rather wide so that email addresses can be read in it
+  incInitialSize( QSize( 200, 0 ) );
 }
 
 void KMail::ACLEntryDialog::slotChanged()
 {
   enableButtonOK( !mUserIdLineEdit->text().isEmpty() && mButtonGroup->selected() != 0 );
+}
+
+static QString addresseeToUserId( const KABC::Addressee& addr, IMAPUserIdFormat userIdFormat )
+{
+  QString email = addr.preferredEmail();
+  if ( userIdFormat == FullEmail )
+    return email;
+  else { // mUserIdFormat == UserName
+    email.truncate( email.find( '@' ) );
+    return email;
+  }
+}
+
+void KMail::ACLEntryDialog::slotSelectAddresses()
+{
+  if ( mDialogType == SingleUser ) {
+    const KABC::Addressee addr = KABC::AddresseeDialog::getAddressee( this );
+    if ( !addr.isEmpty() )
+      mUserIdLineEdit->setText( addresseeToUserId( addr, mUserIdFormat ) );
+  } else {
+    const KABC::Addressee::List lst = KABC::AddresseeDialog::getAddressees( this );
+    if ( !lst.isEmpty() ) {
+      QString txt;
+      for( QValueList<KABC::Addressee>::ConstIterator it = lst.begin(); it != lst.end(); ++it ) {
+        if ( !txt.isEmpty() )
+          txt += ", ";
+        txt += addresseeToUserId( *it, mUserIdFormat );
+      }
+      mUserIdLineEdit->setText( txt );
+    }
+  }
 }
 
 void KMail::ACLEntryDialog::setValues( const QString& userId, unsigned int permissions )
@@ -119,7 +160,19 @@ void KMail::ACLEntryDialog::setValues( const QString& userId, unsigned int permi
 
 QString KMail::ACLEntryDialog::userId() const
 {
+  Q_ASSERT( mDialogType == SingleUser );
   return mUserIdLineEdit->text();
+}
+
+QStringList KMail::ACLEntryDialog::userIds() const
+{
+  Q_ASSERT( mDialogType == MultiUser );
+  QStringList lst = QStringList::split( ",", mUserIdLineEdit->text() );
+  for( QStringList::Iterator it = lst.begin(); it != lst.end(); ++it ) {
+    // Strip white space (in particular, due to ", ")
+    *it = (*it).stripWhiteSpace();
+  }
+  return lst;
 }
 
 unsigned int KMail::ACLEntryDialog::permissions() const
@@ -282,6 +335,21 @@ void KMail::FolderDiaACLTab::load()
     initializeWithValuesFromFolder( mDlg->parentFolder() );
   }
 
+  // KABC knows email addresses.
+  // We want LDAP userids.
+  // Depending on the IMAP server setup, the userid can be the full email address,
+  // or just the username part of it.
+  // To know which one it is, we currently have a hidden config option,
+  // but the default value is determined from the current user's own id.
+  QString defaultFormat = "fullemail";
+  if ( mImapAccount->login().find('@') == -1 )
+    defaultFormat = "username"; // no @ found, so we assume it's just the username
+  KConfigGroup configGroup( kmkernel->config(), "IMAP" );
+  QString str = configGroup.readEntry( "UserIdFormat", defaultFormat );
+  mUserIdFormat = FullEmail;
+  if ( str == "username" )
+    mUserIdFormat = UserName;
+
   if ( mFolderType == KMFolderTypeCachedImap ) {
     KMFolder* folder = mDlg->folder() ? mDlg->folder() : mDlg->parentFolder();
     KMFolderCachedImap* folderImap = static_cast<KMFolderCachedImap*>( folder->storage() );
@@ -390,7 +458,7 @@ void KMail::FolderDiaACLTab::slotEditACL(QListViewItem* item)
 {
   if ( !item ) return;
   ListViewItem* ACLitem = static_cast<ListViewItem *>( mListView->currentItem() );
-  ACLEntryDialog dlg( i18n( "Modify Permissions" ), this );
+  ACLEntryDialog dlg( ACLEntryDialog::SingleUser, mUserIdFormat, i18n( "Modify Permissions" ), this );
   dlg.setValues( ACLitem->userId(), ACLitem->permissions() );
   if ( dlg.exec() == QDialog::Accepted ) {
     ACLitem->setUserId( dlg.userId() );
@@ -407,12 +475,15 @@ void KMail::FolderDiaACLTab::slotEditACL()
 
 void KMail::FolderDiaACLTab::slotAddACL()
 {
-  ACLEntryDialog dlg( i18n( "Add Permissions" ), this );
+  ACLEntryDialog dlg( ACLEntryDialog::MultiUser, mUserIdFormat, i18n( "Add Permissions" ), this );
   if ( dlg.exec() == QDialog::Accepted ) {
-    ListViewItem* ACLitem = new ListViewItem( mListView );
-    ACLitem->setUserId( dlg.userId() );
-    ACLitem->setPermissions( dlg.permissions() );
-    ACLitem->setModified( true );
+    const QStringList userIds = dlg.userIds();
+    for( QStringList::const_iterator it = userIds.begin(); it != userIds.end(); ++it ) {
+      ListViewItem* ACLitem = new ListViewItem( mListView );
+      ACLitem->setUserId( *it );
+      ACLitem->setPermissions( dlg.permissions() );
+      ACLitem->setModified( true );
+    }
     emit changed(true);
   }
 }

@@ -44,6 +44,8 @@ namespace KIO { class Job; }
 
 namespace KMail {
 
+enum IMAPUserIdFormat { FullEmail, UserName };
+
 struct ACLListEntry;
 typedef QValueVector<KMail::ACLListEntry> ACLList;
 
@@ -57,19 +59,24 @@ class ACLEntryDialog :public KDialogBase {
   Q_OBJECT
 
 public:
-  ACLEntryDialog( const QString& caption, QWidget* parent, const char* name = 0 );
+  enum DialogType { SingleUser, MultiUser };
+  ACLEntryDialog( DialogType dialogType, IMAPUserIdFormat userIdFormat, const QString& caption, QWidget* parent, const char* name = 0 );
 
   void setValues( const QString& userId, unsigned int permissions );
 
   QString userId() const;
+  QStringList userIds() const;
   unsigned int permissions() const;
 
 private slots:
+  void slotSelectAddresses();
   void slotChanged();
 
 private:
   QVButtonGroup* mButtonGroup;
   KLineEdit* mUserIdLineEdit;
+  IMAPUserIdFormat mUserIdFormat;
+  DialogType mDialogType;
 };
 
 /**
@@ -128,6 +135,7 @@ private:
   int mUserRights;
   KMFolderType mFolderType;
   ACLList mInitialACLList;
+  IMAPUserIdFormat mUserIdFormat;
 
   QLabel* mLabel;
   QWidgetStack* mStack;
