@@ -1985,7 +1985,8 @@ void KMHeaders::moveMsgToFolder ( KMFolder* destFolder, bool askForConfirmation 
               "Once deleted, it cannot be restored.</qt>",
               "<qt>Do you really want to delete the %n selected messages?<br>"
               "Once deleted, they cannot be restored.</qt>", msgList.count() ),
-         i18n("Delete Messages"), KGuiItem(i18n("De&lete"),"editdelete"), "NoConfirmDelete") == KMessageBox::Cancel )
+	 i18n("Delete Message","Delete Messages",msgList.count()), KStdGuiItem::del(),
+	 "NoConfirmDelete") == KMessageBox::Cancel )
     return;  // user canceled the action
 
   // remember the message to select afterwards
