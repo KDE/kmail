@@ -1946,7 +1946,7 @@ void KMMainWin::setupMenuBar()
   replyAllAction = new KAction( i18n("Reply &All..."), "mail_replyall",
      Key_A, this, SLOT(slotReplyAllToMsg()), actionCollection(), "reply_all" );
 
-  replyListAction = new KAction( i18n("Reply &List..."),
+  replyListAction = new KAction( i18n("Reply &List..."), "mail_replylist",
      Key_L, this, SLOT(slotReplyListToMsg()), actionCollection(), "reply_list" );
 
   forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
