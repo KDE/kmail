@@ -557,9 +557,8 @@ void KMMainWin::slotNewMail() {
   }
 
   if (mBoxOnNew) {
-    KMessageBox::information(this, QString(i18n("New Mail")),
-                                   QString(i18n("You have new mail!")),
-                                   QString(i18n("&Ok")));
+    KMessageBox::information(this, QString(i18n("You have new mail!")),
+                                   QString(i18n("New Mail")));
   }
 
   // Todo:
