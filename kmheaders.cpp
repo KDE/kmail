@@ -59,7 +59,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent=0,
 //-----------------------------------------------------------------------------
 KMHeaders::~KMHeaders ()
 {
-  if (mFolder) mFolder->close(TRUE);
+  if (mFolder) mFolder->close();
 }
 
 
@@ -106,8 +106,12 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgChanged()
 {
+  int i;
   debug("msgChanged() called");
+
+  i = topItem();
   updateMessageList();
+  setTopItem(i);
 }
 
 
@@ -264,15 +268,15 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
   QList<KMMessage> msgList;
   KMMessage* msg;
-  int rc, num;
+  int rc, num, top;
   int cur = currentItem();
   bool curMoved = (cur>=0 ? isMarked(cur) : FALSE);
 
   assert(destFolder != NULL);
 
   kbp->busy();
-  mFolder->quiet(TRUE);
   setAutoUpdate(FALSE);
+  top = topItem();
 
   destFolder->open();
   // getMsg gets confused when messages are removed while calling
@@ -287,8 +291,8 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   for (msg=msgList.first(); msg; msg=msgList.next())
     rc = destFolder->moveMsg(msg);
 
+  setTopItem(top);
   setAutoUpdate(TRUE);
-  mFolder->quiet(FALSE);
 
   // display proper message if current message was moved.
   if (curMoved)

@@ -11,6 +11,7 @@
 #include <kapp.h>
 #include <kprocess.h>
 #include <klocale.h>
+#include <qregexp.h>
 
 #include <assert.h>
 #include <stdio.h>
@@ -115,59 +116,39 @@ bool KMSender::sendSMTP(KMMessage* msg)
   // This code just must be stable. I checked every darn return code!
   // Date: 24. Sept. 97
   
-  QString str, fromStr;
+  QString str, msgStr;
   int replyCode;
   DwSmtpClient client;
-  DwString dwString;
-  DwString dwSrc;
 
   assert(msg != NULL);
 
-  debug("Msg has %i parts\n",msg->numBodyParts());
-  // Now we check if message is multipart.
-  if(msg->numBodyParts() != 0) // If message is not a simple text message
-  {
-  }
-  else
-  {
-    dwSrc = msg->body();
-    DwToCrLfEol(dwSrc,dwString); // Convert to CRLF 
-  }
+  msgStr = prepareStr(msg->asString(), TRUE);
 
-  cout << mSmtpHost << endl;
-  cout << mSmtpPort << endl;
   client.Open(mSmtpHost,mSmtpPort); // Open connection
-  cout << client.Response().c_str();
   if(!client.IsOpen) // Check if connection succeded
   {
     QString str;
     str.sprintf(nls->translate("Cannot open SMTP connection to\n"
-			       "host %s for sending."), 
-		(const char*)mSmtpHost);
+			       "host %s for sending:\n%s"), 
+		(const char*)mSmtpHost,(const char*)client.Response().c_str());
     warning((const char*)str);
-    return false;
+    return FALSE;
   }
   
   replyCode = client.Helo(); // Send HELO command
-  cout << client.Response().c_str();
-  if(replyCode != 250)
-    return smtpFailed(client, "HELO", replyCode);
+  if(replyCode != 250) return smtpFailed(client, "HELO", replyCode);
 
   replyCode = client.Mail(identity->emailAddr());
-  cout << client.Response().c_str();
-  if(replyCode != 250) 
-    return smtpFailed(client, "FROM", replyCode);
+  if(replyCode != 250) return smtpFailed(client, "FROM", replyCode);
 
   replyCode = client.Rcpt(msg->to()); // Send RCPT command
-  cout << client.Response().c_str();
   if(replyCode != 250 && replyCode != 251) 
     return smtpFailed(client, "RCPT", replyCode);
 
   str = msg->cc();
-  if(!str.isEmpty())  // Check if cc is set.
+  if(*msg->cc())  // Check if cc is set.
   {
     replyCode = client.Rcpt(msg->cc()); // Send RCPT command
-    cout << client.Response().c_str();
     if(replyCode != 250 && replyCode != 251)
       return smtpFailed(client, "RCPT", replyCode);
   }
@@ -176,27 +157,23 @@ bool KMSender::sendSMTP(KMMessage* msg)
   if(!str.isEmpty())
   {
     replyCode = client.Rcpt(msg->bcc()); // Send RCPT command
-    cout << client.Response().c_str();
     if(replyCode != 250 && replyCode != 251)
       return smtpFailed(client, "RCPT", replyCode);
   }
 
   replyCode = client.Data(); // Send DATA command
-  cout << client.Response().c_str();
   if(replyCode != 354) 
     return smtpFailed(client, "DATA", replyCode);
 
-  replyCode = client.SendData(dwString);
-  cout << client.Response().c_str();
+  replyCode = client.SendData((const char*)msgStr);
   if(replyCode != 250 && replyCode != 251)
     return smtpFailed(client, "<body>", replyCode);
 
   replyCode = client.Quit(); // Send QUIT command
-  cout << client.Response().c_str();
   if(replyCode != 221)
     return smtpFailed(client, "QUIT", replyCode);
 
-  return true;
+  return TRUE;
 }
 
 
@@ -205,13 +182,13 @@ bool KMSender::smtpFailed(DwSmtpClient& client, const char* inCommand,
 			  int replyCode)
 {
   QString str;
-  const char* errorStr = client.LastErrorStr();
+  const char* errorStr = client.Response().c_str();
 
   str.sprintf(nls->translate("Failed to send mail message\n"
 			     "because a SMTP error occured\n"
 			     "during the \"%s\" command.\n\n"
 			     "Return code: %d\n"
-			     "Message: `%s'"), 
+			     "Response: `%s'"), 
 	      inCommand, replyCode, errorStr ? errorStr : "(NULL)");
   warning((const char*)str);
 
@@ -231,11 +208,12 @@ void KMSender::smtpClose(DwSmtpClient& client)
 //-----------------------------------------------------------------------------
 bool KMSender::sendMail(KMMessage* aMsg)
 {
-  const char* msgstr = aMsg->asString();
+  QString msgstr = prepareStr(aMsg->asString());
 
   if (mMailer.isEmpty())
   {
-    warning(nls->translate("Please specify a mailer program\nin the settings."));
+    warning(nls->translate("Please specify a mailer program\n"
+			   "in the settings."));
     return FALSE;
   }
 
@@ -247,10 +225,24 @@ bool KMSender::sendMail(KMMessage* aMsg)
 
   mMailerProc->setExecutable(mMailer);
   mMailerProc->start(KProcess::DontCare, KProcess::Stdin);
-  if (!mMailerProc->writeStdin((char*)msgstr, strlen(msgstr))) return FALSE;
+  if (!mMailerProc->writeStdin(msgstr.data(), msgstr.length()))
+    return FALSE;
   if (!mMailerProc->closeStdin()) return FALSE;
-
   return TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMSender::prepareStr(QString src, bool toCRLF)
+{
+  QString msgstr;
+
+  msgstr = src.copy();
+  msgstr.replace(QRegExp("\\n\\."), "\n ."); 
+  msgstr.replace(QRegExp("\\nFrom "), "\n>From "); 
+  if (toCRLF) msgstr.replace(QRegExp("\\n"), "\r\n");
+
+  return msgstr;
 }
 
 

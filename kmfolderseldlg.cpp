@@ -29,7 +29,7 @@ KMFolderSelDlg::KMFolderSelDlg(const char* caption):
 
   btnCancel = new QPushButton(nls->translate("Cancel"), this, "Cancel");
   btnCancel->setMinimumSize(btnCancel->size());
-  connect(btnCancel, SIGNAL(pressed()), this, SLOT(slotCancel()));
+  connect(btnCancel, SIGNAL(clicked()), this, SLOT(slotCancel()));
   box->addWidget(btnCancel, 1);
 
   resize(100, 300);
@@ -63,6 +63,7 @@ KMFolder* KMFolderSelDlg::folder(void)
 void KMFolderSelDlg::slotSelect(int)
 {
   done(1);
+  sleep(1); // dumb method to catch the button-up event X-)
 }
 
 

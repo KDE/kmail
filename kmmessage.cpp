@@ -78,7 +78,7 @@ const char* KMMessage::asString(void)
   }
 
   // We have to work around a nasty bug in mimelib that causes a 
-  // misplaced '\r' at the end of the header section where a '\n' should 
+  // misplaced '\r' around the end of the header section where a '\n' should 
   // be. This seems to happen when mMsg->Parse() is called.
   str = (char*)mMsg->AsString().c_str();
   len = mMsg->Headers().AsString().length();

@@ -143,6 +143,8 @@ static void cleanup(void)
 {
   shuttingDown = TRUE;
 
+  if (inboxFolder) inboxFolder->close(TRUE);
+
   if (msgSender) delete msgSender;
   if (filterMgr) delete filterMgr;
   if (acctMgr) delete acctMgr;

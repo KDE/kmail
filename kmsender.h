@@ -67,6 +67,9 @@ public:
 
 
 protected:
+  // Prepare message for sending.
+  virtual const QString prepareStr(const QString msgText, bool toCRLF=FALSE);
+
   // Send given message via SMTP.
   virtual bool sendSMTP(KMMessage*);
   virtual bool smtpFailed(DwSmtpClient& cl, const char* op, int rc);
@@ -74,7 +77,6 @@ protected:
 
   // Send given message via local mailer
   virtual bool sendMail(KMMessage*);
-
 
 private:
   Method mMethod;
