@@ -1220,6 +1220,7 @@ bool KMComposeWin::applyChanges(void)
 
     mMsg->deleteBodyParts();
     mMsg->removeHeaderField("Content-Type");
+    mMsg->removeHeaderField("Content-Transfer-Encoding");
     mMsg->setAutomaticFields(TRUE);
 
     // create informative header for those that have no mime-capable
