@@ -539,13 +539,13 @@ kdDebug(5006) << "default " << endl;
                       if( -1 == thisDelim ){
 kdDebug(5006) << "        Sorry: Old style Mailman message but no delimiter found." << endl;
                       }else{
-                        int nextDelim = cstr.find(delim1, thisDelim, false);
+                        int nextDelim = cstr.find(delim1, thisDelim+1, false);
                         if( -1 == nextDelim )
-                          nextDelim = cstr.find(delim2, thisDelim, false);
+                          nextDelim = cstr.find(delim2, thisDelim+1, false);
                         if( -1 == nextDelim )
-                          nextDelim = cstr.find(delimZ1, thisDelim, false);
+                          nextDelim = cstr.find(delimZ1, thisDelim+1, false);
                         if( -1 == nextDelim )
-                          nextDelim = cstr.find(delimZ2, thisDelim, false);
+                          nextDelim = cstr.find(delimZ2, thisDelim+1, false);
                         if( -1 < nextDelim ){
 kdDebug(5006) << "        processing old style Mailman digest" << endl;
                           // at least one message found: build a mime tree
@@ -557,6 +557,7 @@ kdDebug(5006) << "        processing old style Mailman digest" << endl;
                                                       *curNode,
                                                       &*digestHeaderStr,
                                                       "Digest Header", true );
+                          reader->queueHtml("<br><hr><br>");
                           while( -1 < nextDelim ){
 kdDebug(5006) << "        embedded message found" << endl;
                             int thisEoL = cstr.find("\nMessage:", thisDelim, false);
@@ -576,12 +577,14 @@ kdDebug(5006) << "        embedded message found" << endl;
                             //  ++thisDelim;
                             partStr = "Content-Type=message/rfc822\nContent-Description=embedded message\n";
                             partStr += cstr.mid( thisDelim, nextDelim-thisDelim );
+kdDebug(5006) << "\nEMBEDDED MESSAGE:  thisDelim=" << thisDelim << "nextDelim=" << nextDelim << "  END OF EMBEDDED MESSAGE." << endl;                            
                             insertAndParseNewChildNode( reader,
                                                         &resultString,
                                                         useThisCryptPlug,
                                                         *curNode,
                                                         &*partStr,
                                                         "embedded message", true );
+                            reader->queueHtml("<br><hr><br>");
                             thisDelim = nextDelim+1;
                             nextDelim = cstr.find(delim1, thisDelim, false);
                             if( -1 == nextDelim )
