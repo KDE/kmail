@@ -47,7 +47,6 @@
 KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   : KMFolderImapInherited(aParent, aName)
 {
-  setAutoCreateIndex(false);
 }
 
 KMFolderImap::~KMFolderImap()
@@ -455,7 +454,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
       jd2.total = 0;
       mAccount->mapJobData.insert(newJob, jd2);
       connect(newJob, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotSimpleResult(KIO::Job *)));
+          mAccount, SLOT(slotSimpleResult(KIO::Job *)));
       connect(newJob, SIGNAL(data(KIO::Job *, const QByteArray &)),
           this, SLOT(slotGetMessagesData(KIO::Job *, const QByteArray &)));
       uids = "";
@@ -879,7 +878,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
   jd.total = 1; jd.done = 0; jd.parent = NULL;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotSimpleResult(KIO::Job *)));
+          mAccount, SLOT(slotSimpleResult(KIO::Job *)));
   mAccount->displayProgress();
 }
 
@@ -923,7 +922,7 @@ void KMFolderImap::setStatus(KMMessage * msg, KMMsgStatus status)
   jd.total = 1; jd.done = 0; jd.parent = NULL;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotSimpleResult(KIO::Job *)));
+          mAccount, SLOT(slotSimpleResult(KIO::Job *)));
   mAccount->displayProgress();
 }
 
@@ -942,22 +941,7 @@ void KMFolderImap::expungeFolder(KMFolderImap * aFolder)
   jd.total = 1; jd.done = 0;
   mAccount->mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotSimpleResult(KIO::Job *)));
-  mAccount->displayProgress();
-}
-
-
-//-----------------------------------------------------------------------------
-void KMFolderImap::slotSimpleResult(KIO::Job * job)
-{
-  QMap<KIO::Job *, KMAcctImap::jobData>::Iterator it =
-    mAccount->mapJobData.find(job);
-  if (it != mAccount->mapJobData.end()) mAccount->mapJobData.remove(it);
-  if (job->error())
-  {
-    job->showErrorDialog();
-    if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
-  }
+          mAccount, SLOT(slotSimpleResult(KIO::Job *)));
   mAccount->displayProgress();
 }
 

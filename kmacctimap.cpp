@@ -442,6 +442,20 @@ void KMAcctImap::killJobsForItem(KMFolderTreeItem * fti)
 }
 
 
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotSimpleResult(KIO::Job * job)
+{
+  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
+  if (it != mapJobData.end()) mapJobData.remove(it);
+  if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+  }
+  displayProgress();
+}
+
+
 //=============================================================================
 //
 //  Class  KMImapPasswdDialog

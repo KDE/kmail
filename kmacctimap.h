@@ -218,6 +218,11 @@ protected slots:
   void slotAbortRequested();
 
   /**
+   * Only delete information about the job
+   */
+  void slotSimpleResult(KIO::Job * job);
+
+  /**
    * Display an error message, that connecting failed
    */
   void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);

@@ -25,7 +25,7 @@
 #define kmfolderimap_h
 
 #include "kmacctimap.h"
-#include "kmfoldermaildir.h"
+#include "kmfoldermbox.h"
 #include "kmmsgbase.h"
 
 #include "kio/job.h"
@@ -33,7 +33,6 @@
 
 class KMFolderTreeItem;
 class KMFolderImap;
-class KMFolderMaildir;
 
 class KMImapJob : public QObject
 {
@@ -66,9 +65,9 @@ private:
   int mTotal, mDone, mOffset;
 };
 
-#define KMFolderImapInherited KMFolderMaildir
+#define KMFolderImapInherited KMFolderMbox
 
-class KMFolderImap : public KMFolderMaildir
+class KMFolderImap : public KMFolderMbox
 {
   Q_OBJECT
   friend class KMImapJob;
@@ -236,11 +235,6 @@ protected slots:
    * For creating a new subfolder
    */
   void slotCreateFolderResult(KIO::Job * job);
-
-  /**
-   * Only delete information about the job
-   */
-  void slotSimpleResult(KIO::Job * job);
 
   /**
    * Only delete information about the job and ignore write errors
