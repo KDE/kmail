@@ -24,7 +24,8 @@ KMFilterMgr::KMFilterMgr( bool popFilter )
   : QPtrList<KMFilter>(),
     mEditDialog( 0 ),
     bPopFilter( popFilter ),
-    mShowLater( false )
+    mShowLater( false ),
+    mRefCount( 0 )
 {
   if (bPopFilter)
     kdDebug(5006) << "pPopFilter set" << endl;
