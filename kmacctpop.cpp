@@ -106,6 +106,9 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   wid->setHost(host());
 
   // is everything specified ?
+
+  app->processEvents();
+
   if (mHost.isEmpty() || mPort<=0)
   {
     warning(i18n("Please specify Host, Port  and\n"
@@ -137,6 +140,8 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   // we end up with a lock up! Certainly not desirable!
   if (client.Open(mHost,mPort) != '+')
     return popError("OPEN", client);
+  
+  app->processEvents();
 
   // It might not necessarly be a network error if User & Pass
   // reply != +. It's more likely that the username or the passwd is wrong
@@ -200,7 +205,7 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
     }
     wid->updateProgressBar(id,num);
     debug("processing message %d", id);
-    app->processEvents(1000);
+    app->processEvents();
     if (client.List(id) != '+')
       return popError("LIST", client);
     response = client.SingleLineResponse().c_str();
