@@ -72,7 +72,7 @@ namespace KMail {
     setAcceptDrops( true );
     setDropVisualizer( true );
     addColumn( i18n("Identity Name") );
-    addColumn( i18n("EMail Address") );
+    addColumn( i18n("Email Address") );
     setRootIsDecorated( false );
     setRenameable( 0 );
     setItemsRenameable( true );
