@@ -3610,7 +3610,7 @@ FolderPage::FolderPage( QWidget * parent, const char * name )
   // "On startup..." option:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mOnStartupOpenFolder = new KMFolderComboBox( this );
-  label = new QLabel( mOnStartupOpenFolder, 
+  label = new QLabel( mOnStartupOpenFolder,
                       i18n("Open this folder on startup"), this );
   hlay->addWidget( label );
   hlay->addWidget( mOnStartupOpenFolder, 1 );
@@ -3662,7 +3662,7 @@ void FolderPage::setup() {
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", false ) );
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
   mWarnBeforeExpire->setChecked( general.readBoolEntry( "warn-before-expire", true ) );
-  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder", 
+  mOnStartupOpenFolder->setFolder( general.readEntry( "startupFolder",
 						  kernel->inboxFolder()->idString() ) );
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
@@ -3687,7 +3687,7 @@ void FolderPage::apply() {
   general.writeEntry( "default-mailbox-format", mMailboxPrefCombo->currentItem() );
   general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
-				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );  
+				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
   behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->isChecked() );
   behaviour.writeEntry( "JumpToUnread", mJumpToUnread->isChecked() );
   behaviour.writeEntry( "DelayedMarkAsRead", mDelayedMarkAsRead->isChecked() );
@@ -4101,11 +4101,13 @@ void GroupwarePage::apply()
   KConfigGroup options( KMKernel::config(), "Groupware" );
 
   options.writeEntry( "Enabled", mEnableGwCB->isChecked() );
-  options.writeEntry( "FolderLanguage", mLanguageCombo->currentItem() );
-  options.writeEntry( "GroupwareFolder", mFolderCombo->getFolder()->idString() );
-  options.writeEntry( "AutoAccept", mAutoResCB->isChecked() );
-  options.writeEntry( "AutoDeclConflict", mAutoDeclConflCB->isChecked() );
-  options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
+  if ( mEnableGwCB->isChecked() ) {
+    options.writeEntry( "FolderLanguage", mLanguageCombo->currentItem() );
+    options.writeEntry( "GroupwareFolder", mFolderCombo->getFolder()->idString() );
+    options.writeEntry( "AutoAccept", mAutoResCB->isChecked() );
+    options.writeEntry( "AutoDeclConflict", mAutoDeclConflCB->isChecked() );
+    options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
+  }
 
 #if 0
   kernel->groupware().readConfig();
