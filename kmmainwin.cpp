@@ -1238,7 +1238,7 @@ void KMMainWin::slotSubjectFilter()
 {
   KMMessage* msg = mHeaders->getMsg(-1);
   if (msg)
-    kernel->filterMgr()->createFilter( "Subject", msg->headerField( "Subject" ));
+    kernel->filterMgr()->createFilter( "Subject", msg->subject());
 }
 
 void KMMainWin::slotMailingListFilter()
@@ -1257,7 +1257,7 @@ void KMMainWin::slotFromFilter()
 {
   KMMessage* msg = mHeaders->getMsg(-1);
   if (msg)
-    kernel->filterMgr()->createFilter( "From", msg->headerField( "From" ));
+    kernel->filterMgr()->createFilter( "From", msg->from());
 }
 
 //-----------------------------------------------------------------------------
@@ -1265,7 +1265,7 @@ void KMMainWin::slotToFilter()
 {
   KMMessage* msg = mHeaders->getMsg(-1);
   if (msg)
-    kernel->filterMgr()->createFilter( "To", msg->headerField( "To" ));
+    kernel->filterMgr()->createFilter( "To", msg->to());
 }
 
 //-----------------------------------------------------------------------------
