@@ -38,6 +38,7 @@ static const char * configKeyDefaultIdentity = "Default Identity";
 #ifndef KMAIL_TESTING
 #include "kmkernel.h"
 #endif
+#include "kmmessage.h" // for static KMMessage helper functions
 
 #include <kemailsettings.h> // for IdentityEntry::fromControlCenter()
 #include <kapplication.h>
@@ -251,11 +252,20 @@ const KMIdentity & IdentityManager::identityForUoidOrDefault( uint uoid ) const
     return ident;
 }
 
-const KMIdentity & IdentityManager::identityForAddress( const QString & addressList ) const
+const KMIdentity & IdentityManager::identityForAddress( const QString & addresses ) const
 {
-  for ( ConstIterator it = begin() ; it != end() ; ++it )
-    if ( addressList.find( (*it).emailAddr(), 0, false ) != -1 )
-      return (*it);
+  QStringList addressList = KMMessage::splitEmailAddrList( addresses );
+  for ( ConstIterator it = begin() ; it != end() ; ++it ) {
+    for( QStringList::ConstIterator addrIt = addressList.begin();
+         addrIt != addressList.end(); ++addrIt ) {
+      // I use QString::utf8() instead of QString::latin1() because I want
+      // a QCString and not a char*. It doesn't matter because emailAddr()
+      // returns a 7-bit string.
+      if( (*it).emailAddr().utf8().lower() ==
+          KMMessage::getEmailAddr( *addrIt ).lower() )
+        return (*it);
+    }
+  }
   return KMIdentity::null;
 }
 

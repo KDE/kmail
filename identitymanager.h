@@ -83,10 +83,10 @@ public:
   **/
   void sort();
 
-  /** @return an identity whose address matches any in @p addressList
+  /** @return an identity whose address matches any in @p addresses
       or @ref KMIdentity::null if no such identity exists.
   **/
-  const KMIdentity & identityForAddress( const QString & addressList ) const;
+  const KMIdentity & identityForAddress( const QString & addresses ) const;
 
   /** @return true if @p addressList contains any of our addresses,
       false otherwise.
