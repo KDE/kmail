@@ -73,6 +73,8 @@ QPixmap* KMHeaders::pixFullyEncrypted = 0;
 QPixmap* KMHeaders::pixPartiallyEncrypted = 0;
 QPixmap* KMHeaders::pixFiller = 0;
 QPixmap* KMHeaders::pixUndefined = 0;
+QPixmap* KMHeaders::pixEncryptionProblematic = 0;
+QPixmap* KMHeaders::pixSignatureProblematic = 0;
 QIconSet* KMHeaders::up = 0;
 QIconSet* KMHeaders::down = 0;
 bool KMHeaders::mTrue = true;
@@ -315,6 +317,8 @@ public:
               pixmaps << *KMHeaders::pixPartiallyEncrypted;
           else if( mMsgBase->encryptionState() == KMMsgEncryptionStateUnknown )
               pixmaps << *KMHeaders::pixUndefined;
+          else if( mMsgBase->encryptionState() == KMMsgEncryptionProblematic )
+              pixmaps << *KMHeaders::pixEncryptionProblematic;
           else
               pixmaps << *KMHeaders::pixFiller;
 
@@ -324,6 +328,8 @@ public:
               pixmaps << *KMHeaders::pixPartiallySigned;
           else if( mMsgBase->signatureState() == KMMsgSignatureStateUnknown )
               pixmaps << *KMHeaders::pixUndefined;
+          else if( mMsgBase->signatureState() == KMMsgSignatureProblematic )
+              pixmaps << *KMHeaders::pixSignatureProblematic;
           else
               pixmaps << *KMHeaders::pixFiller;
       }
@@ -560,6 +566,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     pixPartiallyEncrypted = new QPixmap( UserIcon( "kmmsgpartiallyencrypted" ) );
     pixFiller = new QPixmap( UserIcon( "kmmsgfiller" ) );
     pixUndefined = new QPixmap( UserIcon( "kmundefined" ) );
+    pixEncryptionProblematic = new QPixmap( UserIcon( "kmmsgencryptionproblematic" ) );
+    pixSignatureProblematic = new QPixmap( UserIcon( "kmmsgsignatureproblematic" ) );
     up = new QIconSet( UserIcon("abup" ), QIconSet::Small );
     down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
