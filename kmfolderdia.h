@@ -2,9 +2,7 @@
 #define __KMFOLDERDIA
 
 #include <kdialogbase.h>
-#include <qptrlist.h>
 
-class KMAcctFolder;
 class QCheckBox;
 class QPushButton;
 class QLineEdit;
@@ -26,8 +24,9 @@ class KMFolderDialog : public KDialogBase
   Q_OBJECT
 
 public:
-  KMFolderDialog(KMFolder *folder, KMFolderDir *aFolderDir,
-		 QWidget *parent, const QString& caption, const QString& name = "");
+  KMFolderDialog( KMFolder *folder, KMFolderDir *aFolderDir,
+		  QWidget *parent, const QString& caption,
+                  const QString& name = QString::null );
 
 protected slots:
   virtual void slotOk( void );
@@ -45,10 +44,8 @@ protected:
   QComboBox *fileInFolder;
   QComboBox *mailboxType, *senderType;
   QLineEdit *nameEdit;
-  QGuardedPtr<KMAcctFolder> folder;
   QGuardedPtr<KMFolder> mFolder;
   QGuardedPtr<KMFolderDir> mFolderDir;
-  QGuardedPtr<KMFolderTreeItem> mFolderItem;
   KIconButton *mNormalIconButton;
   KIconButton *mUnreadIconButton;
   QCheckBox   *mIconsCheckBox;

@@ -35,10 +35,9 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   KDialogBase( KDialogBase::Plain,
                aCap, KDialogBase::Ok|KDialogBase::Cancel,
                KDialogBase::Ok, aParent, "KMFolderDialog", TRUE ),
+  mFolder( aFolder ),
   mFolderDir( aFolderDir )
 {
-  folder = static_cast<KMAcctFolder*>( aFolder );
-  mFolder = aFolder;
   kdDebug(5006)<<"KMFolderDialog::KMFolderDialog()" << endl;
 
   QFrame *page = plainPage();
@@ -58,9 +57,9 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   hl->addWidget( label );
 
   nameEdit = new KLineEdit( fpGroup );
-  if( !folder )
+  if( !mFolder )
     nameEdit->setFocus();
-  nameEdit->setText(folder ? folder->label() : i18n("unnamed"));
+  nameEdit->setText( mFolder ? mFolder->label() : i18n("unnamed") );
   if (!aName.isEmpty())
       nameEdit->setText(aName);
   nameEdit->setMinimumSize(nameEdit->sizeHint());
@@ -75,8 +74,8 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   label2->setBuddy( fileInFolder );
 
   //start icons group
-  QString normalIcon = (mFolder ? mFolder->normalIconPath() : QString("") );
-  QString unreadIcon = (mFolder ? mFolder->unreadIconPath() : QString("") );
+  QString normalIcon = ( mFolder ? mFolder->normalIconPath() : QString::null );
+  QString unreadIcon = ( mFolder ? mFolder->unreadIconPath() : QString::null );
   QGroupBox *iconGroup = new QGroupBox( i18n("Folder Icons"), page, "iconGroup" );
   iconGroup->setColumnLayout( 0,  Qt::Vertical );
 
@@ -87,7 +86,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 
   QHBoxLayout *ihl = new QHBoxLayout( ivl );
   mIconsCheckBox = new QCheckBox( i18n("Use custom &icons"), iconGroup );
-  mIconsCheckBox->setChecked( mFolder ? mFolder->useCustomIcons() : false );
+  mIconsCheckBox->setChecked( mFolder && mFolder->useCustomIcons() );
   ihl->addWidget( mIconsCheckBox );
 
   ihl = new QHBoxLayout( ivl );
@@ -162,27 +161,58 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     if ( type < 0 || type > 1 ) type = 1;
     mailboxType->setCurrentItem( type );
   }
-  if (mFolder) mailboxType->setEnabled(false);
+  mailboxType->setEnabled( !mFolder );
   ml->addWidget( mailboxType );
   ml->addStretch( 1 );
 
   QStringList str;
-//  if (!folder) kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
-  kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
-  kernel->folderMgr()->createFolderList( &str, &mFolders  );
-  str.prepend( i18n( "Top Level" ));
-  QGuardedPtr<KMFolder> curFolder;
-  int i = 1;
-  while (mFolders.at(i - 1) != mFolders.end()) {
-    curFolder = *mFolders.at(i - 1);
-    if (curFolder->isSystemFolder() && curFolder->protocol() != "imap" &&
-	curFolder->protocol() != "cachedimap")
-    {
-      mFolders.remove(mFolders.at(i-1));
-      str.remove(str.at(i));
-    } else
-      ++i;
+  if( !mFolder ) {
+    // new folder can be subfolder of any other folder
+    kernel->folderMgr()->createFolderList( &str, &mFolders  );
+    kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
   }
+  else if( mFolder->protocol() != "imap"
+           && mFolder->protocol() != "cachedimap" ) {
+    // already existant local folder can only be moved locally
+    kernel->folderMgr()->createFolderList( &str, &mFolders  );
+  }
+  else {
+    // already existant IMAP folder can't be moved, but we add all
+    // IMAP folders so that the correct parent folder can be shown
+    kernel->imapFolderMgr()->createI18nFolderList( &str, &mFolders );
+  }
+
+  // remove the local system folders from the list of parent folders because
+  // they can't have child folders
+  if( !mFolder || ( mFolder->protocol() != "imap"
+                    && mFolder->protocol() != "cachedimap" ) ) {
+    QGuardedPtr<KMFolder> curFolder;
+    QValueListIterator<QGuardedPtr<KMFolder> > folderIt = mFolders.begin();
+    QStringList::Iterator strIt = str.begin();
+    while( folderIt != mFolders.end() ) {
+      curFolder = *folderIt;
+      kdDebug(5006) << "Looking at folder '" << curFolder->label() << "'"
+                    << " and corresponding string '" << (*strIt) << "'"
+                    << endl;
+      if( curFolder->isSystemFolder()
+          && curFolder->protocol() != "imap"
+          && curFolder->protocol() != "cachedimap" ) {
+        kdDebug(5006) << "Removing folder '" << curFolder->label() << "'"
+                      << endl;
+        folderIt = mFolders.remove( folderIt );
+        kdDebug(5006) << "Removing string '" << (*strIt) << "'"
+                      << endl;
+        strIt = str.remove( strIt );
+      }
+      else {
+        ++folderIt;
+        ++strIt;
+      }
+    }
+  }
+
+  str.prepend( i18n( "Top Level" ) );
+
   fileInFolder->insertStringList( str );
   // we want to know if the activated changes
   connect( fileInFolder, SIGNAL(activated(int)), SLOT(slotUpdateItems(int)) );
@@ -347,69 +377,64 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
     nml->addStretch( 1 );
   }
 
-  for( i = 1; mFolders.at(i - 1) != mFolders.end(); ++i ) {
-    curFolder = *mFolders.at(i - 1);
-    if (curFolder->child() == aFolderDir) {
-      fileInFolder->setCurrentItem( i );
-      slotUpdateItems( i );
+  if( mFolder ) {
+    // search the parent folder of the folder
+    kdDebug(5006) << "search the parent folder of the folder" << endl;
+    QValueListConstIterator<QGuardedPtr<KMFolder> > it;
+    int i = 1;
+    for( it = mFolders.begin(); it != mFolders.end(); ++it, ++i ) {
+      kdDebug(5006) << "checking folder '" << (*it)->label() << "'" << endl;
+      if( (*it)->child() == aFolderDir ) {
+        fileInFolder->setCurrentItem( i );
+        slotUpdateItems( i );
+        break;
+      }
     }
   }
 
-//   hl = new QHBoxLayout();
-//   topLayout->addLayout( hl );
+  if( mFolder ) {
+    mailingListPostAddress->setText( mFolder->mailingListPostAddress() );
+    mailingListPostAddress->setEnabled( mFolder->isMailingList() );
+    holdsMailingList->setChecked( mFolder->isMailingList() );
 
-//   label = new QLabel( i18n("Admin Address:"), page );
-//   hl->addWidget( label );
-//   mailingListAdminAddress = new KLineEdit( page );
-//   mailingListAdminAddress->setMinimumSize(mailingListAdminAddress->sizeHint());
-//   hl->addWidget( mailingListAdminAddress );
-
-  if (folder)
-  {
-    mailingListPostAddress->setText(folder->mailingListPostAddress());
-//     mailingListAdminAddress->setText(folder->mailingListAdminAddress());
-    mailingListPostAddress->setEnabled(folder->isMailingList());
-//     mailingListAdminAddress->setEnabled(folder->isMailingList());
-    // mailingListIdentity->setEnabled(folder->isMailingList());
-    holdsMailingList->setChecked(folder->isMailingList());
-    // markAnyMessage->setChecked( folder->isAnyMessageMarked() );
-
-    if (folder->protocol() == "search") {
+    if( mFolder->protocol() == "search" ) {
       mailboxType->setCurrentItem(2);
       label2->hide();
       fileInFolder->hide();
-    } else if (folder->protocol() == "maildir") {
+    } else if( mFolder->protocol() == "maildir" ) {
       mailboxType->setCurrentItem(1);
     } else {
       mailboxType->setCurrentItem(0);
     }
 
-    identity->setCurrentIdentity( folder->identity() );
+    identity->setCurrentIdentity( mFolder->identity() );
 
     // Set the status of widgets to represent the folder
     // properties for auto expiry of old email.
-    expireFolder->setChecked(folder->isAutoExpire());
+    expireFolder->setChecked( mFolder->isAutoExpire() );
     // Legal values for units are 0=never, 1=days, 2=weeks, 3=months.
     // Should really do something better than hardcoding this everywhere.
-    if (folder->getReadExpireUnits() >= 0 && folder->getReadExpireUnits() < expireMaxUnits) {
-      readExpiryUnits->setCurrentItem(folder->getReadExpireUnits());
+    if( mFolder->getReadExpireUnits() >= 0
+         && mFolder->getReadExpireUnits() < expireMaxUnits) {
+      readExpiryUnits->setCurrentItem( mFolder->getReadExpireUnits() );
     }
-    if (folder->getUnreadExpireUnits() >= 0 && folder->getUnreadExpireUnits() < expireMaxUnits) {
-      unreadExpiryUnits->setCurrentItem(folder->getUnreadExpireUnits());
+    if( mFolder->getUnreadExpireUnits() >= 0
+        && mFolder->getUnreadExpireUnits() < expireMaxUnits ) {
+      unreadExpiryUnits->setCurrentItem( mFolder->getUnreadExpireUnits() );
     }
-    int age = folder->getReadExpireAge();
+    int age = mFolder->getReadExpireAge();
     if (age >= 1 && age <= 500) {
       readExpiryTime->setValue(age);
     } else {
       readExpiryTime->setValue(7);
     }
-    age = folder->getUnreadExpireAge();
+    age = mFolder->getUnreadExpireAge();
     if (age >= 1 && age <= 500) {
       unreadExpiryTime->setValue(age);
     } else {
       unreadExpiryTime->setValue(28);
     }
-    if (!folder->isAutoExpire()) {
+    if( !mFolder->isAutoExpire() ) {
       readExpiryTime->setEnabled(false);
       readExpiryUnits->setEnabled(false);
       unreadExpiryTime->setEnabled(false);
@@ -436,20 +461,18 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   // Make sure we don't bomb out if there isn't a folder
   // object yet (i.e. just about to create new folder).
 
-  if (mFolder && mFolder->folderType() == KMFolderTypeImap) {
+  if( mFolder && ( mFolder->folderType() == KMFolderTypeImap
+                   || mFolder->folderType() == KMFolderTypeCachedImap ) ) {
     expGroup->hide();
     mtGroup->hide();
-    if (mFolder->isSystemFolder())
-      senderGroup->hide();
   }
-  else if (folder && folder->isSystemFolder()) {
+  else if( mFolder && mFolder->isSystemFolder() ) {
     fpGroup->hide();
     iconGroup->hide();
     mtGroup->hide();
     mlGroup->hide();
     idGroup->hide();
     mcGroup->hide();
-    senderGroup->hide();
   }
 
   kdDebug(5006)<<"Exiting KMFolderDialog::KMFolderDialog()\n";
@@ -478,8 +501,9 @@ void KMFolderDialog::slotUpdateItems ( int current )
 //-----------------------------------------------------------------------------
 void KMFolderDialog::slotOk()
 {
+  bool bIsNewFolder = ( !mFolder );
   // moving of IMAP folders is not yet supported
-  if (!mFolder ||  !mFolder->isSystemFolder())
+  if ( bIsNewFolder || !mFolder->isSystemFolder() )
   {
     QString acctName;
     QString fldName, oldFldName;
@@ -487,7 +511,7 @@ void KMFolderDialog::slotOk()
     KMFolder *selectedFolder = 0;
     int curFolder = fileInFolder->currentItem();
 
-    if (folder) oldFldName = folder->name();
+    if( !bIsNewFolder ) oldFldName = mFolder->name();
     if (!nameEdit->text().isEmpty()) fldName = nameEdit->text();
     else fldName = oldFldName;
     fldName.replace("/", "");
@@ -504,10 +528,10 @@ void KMFolderDialog::slotOk()
     }
 
     QString message = i18n( "<qt>Failed to create folder <b>%1</b>, folder already exists.</qt>" ).arg(fldName);
-    if ((selectedFolderDir->hasNamedFolder(fldName)) &&
-      (!((folder) &&
-      (selectedFolderDir == folder->parent()) &&
-      (folder->name() == fldName))))
+    if( selectedFolderDir->hasNamedFolder( fldName )
+        && ( !( mFolder
+                && ( selectedFolderDir == mFolder->parent() )
+                && ( mFolder->name() == fldName ) ) ) )
     {
       KMessageBox::error( this, message );
       return;
@@ -518,10 +542,10 @@ void KMFolderDialog::slotOk()
 
 
     // Buggy?
-    if (folder && folder->child())
-      while ((folderDir != &kernel->folderMgr()->dir()) &&
-        (folderDir != folder->parent())){
-        if (folderDir->findRef( folder ) != -1) {
+    if( mFolder && mFolder->child() )
+      while( ( folderDir != &kernel->folderMgr()->dir() )
+             && ( folderDir != mFolder->parent() ) ) {
+        if( folderDir->findRef( mFolder ) != -1 ) {
           KMessageBox::error( this, message );
           return;
         }
@@ -530,84 +554,86 @@ void KMFolderDialog::slotOk()
     // End buggy?
 
 
-    if (folder && folder->child() && (selectedFolderDir) &&
-      (selectedFolderDir->path().find( folder->child()->path() + "/" ) == 0)) {
+    if( mFolder && mFolder->child() && selectedFolderDir &&
+        ( selectedFolderDir->path().find( mFolder->child()->path() + "/" ) == 0 ) ) {
       KMessageBox::error( this, message );
       return;
     }
 
-    if (folder && folder->child() && (selectedFolderDir == folder->child())) {
+    if( mFolder && mFolder->child()
+        && ( selectedFolderDir == mFolder->child() ) ) {
       KMessageBox::error( this, message );
       return;
     }
 
-    if (!folder) {
+    if( bIsNewFolder ) {
       if (selectedFolder && selectedFolder->protocol() == "imap")
       {
-        folder = (KMAcctFolder*) new KMFolderImap(mFolderDir, fldName);
+        mFolder = new KMFolderImap(mFolderDir, fldName);
         static_cast<KMFolderImap*>(selectedFolder)->createFolder(fldName);
       } else if (selectedFolder && selectedFolder->protocol() == "cachedimap"){
-        folder = (KMAcctFolder*)kernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
+        mFolder = kernel->imapFolderMgr()->createFolder( fldName, FALSE, KMFolderTypeCachedImap, selectedFolderDir );
       } else if (mailboxType->currentItem() == 2) {
-        folder = (KMAcctFolder*)kernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kernel->searchFolderMgr()->dir() );
+        mFolder = kernel->searchFolderMgr()->createFolder(fldName, FALSE, KMFolderTypeSearch, &kernel->searchFolderMgr()->dir() );
       } else if (mailboxType->currentItem() == 1) {
-        folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
+        mFolder = kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMaildir, selectedFolderDir );
       } else {
-        folder = (KMAcctFolder*)kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
+        mFolder = kernel->folderMgr()->createFolder(fldName, FALSE, KMFolderTypeMbox, selectedFolderDir );
       }
     }
-    else if ((oldFldName != fldName) || (folder->parent() != selectedFolderDir))
+    else if( ( oldFldName != fldName )
+             || ( mFolder->parent() != selectedFolderDir ) )
     {
-      if (folder->parent() != selectedFolderDir) {
-        if (folder->protocol() == "cachedimap") {
+      if( mFolder->parent() != selectedFolderDir ) {
+        if( mFolder->protocol() == "cachedimap" ) {
           QString message = i18n("Moving IMAP folders is not supported");
           KMessageBox::error( this, message );
         } else
-          folder->rename(fldName, selectedFolderDir );
+          mFolder->rename(fldName, selectedFolderDir );
       } else
-        folder->rename(fldName);
+        mFolder->rename(fldName);
 
       kernel->folderMgr()->contentsChanged();
     }
   }
 
-  if (folder)
+  if( mFolder )
   {
 		// settings for mailingList
-    folder->setMailingList( holdsMailingList->isChecked() );
-    folder->setMailingListPostAddress( mailingListPostAddress->text() );
-//   folder->setMailingListAdminAddress( mailingListAdminAddress->text() );
-    folder->setMailingListAdminAddress( QString::null );
+    mFolder->setMailingList( holdsMailingList->isChecked() );
+    mFolder->setMailingListPostAddress( mailingListPostAddress->text() );
+    mFolder->setMailingListAdminAddress( QString::null );
 
-    folder->setIdentity( identity->currentIdentity() );
-// folder->setMarkAnyMessage( markAnyMessage->isChecked() );
+    mFolder->setIdentity( identity->currentIdentity() );
 
     // Settings for auto expiry of old email messages.
-    folder->setAutoExpire(expireFolder->isChecked());
-    folder->setUnreadExpireAge(unreadExpiryTime->value());
-    folder->setReadExpireAge(readExpiryTime->value());
-    folder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
-    folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
+    mFolder->setAutoExpire(expireFolder->isChecked());
+    mFolder->setUnreadExpireAge(unreadExpiryTime->value());
+    mFolder->setReadExpireAge(readExpiryTime->value());
+    mFolder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
+    mFolder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
     //update the tree iff new icon paths are different and not empty
-    folder->setUseCustomIcons( mIconsCheckBox->isChecked() );
-    if ( (( mNormalIconButton->icon() != folder->normalIconPath() ) &&
+    mFolder->setUseCustomIcons( mIconsCheckBox->isChecked() );
+    if ( (( mNormalIconButton->icon() != mFolder->normalIconPath() ) &&
 	  ( !mNormalIconButton->icon().isEmpty())) ||
-	 (( mUnreadIconButton->icon() != folder->unreadIconPath() ) &&
+	 (( mUnreadIconButton->icon() != mFolder->unreadIconPath() ) &&
 	  ( !mUnreadIconButton->icon().isEmpty())) )
-      folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
+      mFolder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
 
     // set whoField
     if (senderType->currentItem() == 1)
-      folder->setUserWhoField("From");
+      mFolder->setUserWhoField("From");
     else if (senderType->currentItem() == 2)
-      folder->setUserWhoField("To");
+      mFolder->setUserWhoField("To");
     else
-      folder->setUserWhoField(QString());
-    if (!mFolder) folder->close();
+      mFolder->setUserWhoField(QString());
 
-    if (folder->protocol() == "imap")
+    if( bIsNewFolder )
+      mFolder->close();
+
+    if( mFolder->protocol() == "imap" )
     {
-      KMFolderImap* imapFolder = static_cast<KMFolderImap*>((KMFolder*)folder);
+      KMFolderImap* imapFolder = static_cast<KMFolderImap*>( (KMFolder*) mFolder );
       imapFolder->setIncludeInMailCheck(
           mNewMailCheckBox->isChecked() );
       kernel->imapFolderMgr()->contentsChanged();
