@@ -1759,6 +1759,17 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
    } else
       subjectDir = i18n("No Subject").isRightToLeft() ? "rtl" : "ltr";
 
+   // Prepare the date string (when printing always use the localized date)
+   QString dateString;
+   if( mPrinting ) {
+     QDateTime dateTime;
+     KLocale* locale = KGlobal::locale();
+     dateTime.setTime_t( aMsg->date() );
+     dateString = locale->formatDateTime( dateTime );
+   }
+   else {
+     dateString = aMsg->dateStr();
+   }
 
   if (hasVCard) vcname = mTempFiles.last();
 
@@ -1875,20 +1886,6 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     }
     headerStr.append(visibleHeadersToString(aMsg, "<tr><th class=\"fancyHeaderDtls\">%2</th><td class=\"fancyHeaderDtls\">%3</td></tr>", ignoreFieldsList));
 
-    // the date
-    QString dateString;
-    if (mPrinting)
-    {
-        QDateTime dateTime;
-        KLocale* locale = KGlobal::locale();
-        dateTime.setTime_t(aMsg->date());
-        dateString = locale->formatDateTime(dateTime);
-    }
-    else
-    {
-        dateString = aMsg->dateStr();
-    }
-
     headerStr.append(QString("<tr><th class=\"fancyHeaderDtls\">%1</th><td dir=\"%2\" class=\"fancyHeaderDtls\">%3</td></tr>")
                             .arg(i18n("Date: "))
 			    .arg(aMsg->dateStr().isRightToLeft() ? "rtl" : "ltr")
@@ -1900,7 +1897,8 @@ QString KMReaderWin::writeMsgHeader(KMMessage* aMsg, bool hasVCard)
     headerStr += QString("<div dir=\"%1\"><b style=\"font-size:130%\">" +
                         strToHtml(aMsg->subject()) + "</b></div>")
                         .arg(subjectDir);
-    headerStr.append(i18n("Date: ") + strToHtml(aMsg->dateStr())+"<br>");
+
+    headerStr.append(i18n("Date: ") + strToHtml(dateString)+"<br>");
     headerStr.append(i18n("From: ") +
                      KMMessage::emailAddrAsAnchor(aMsg->from(),FALSE));
     if (hasVCard)
