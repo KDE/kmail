@@ -21,8 +21,12 @@ class KMAcctFolder;
 class KConfig;
 class KMMessage;
 class KMFolderJob;
-namespace  KMail { class FolderJob; }
+namespace  KMail {
+  class FolderJob;
+  class ProgressItem;
+}
 using KMail::FolderJob;
+using KMail::ProgressItem;
 
 class KMPrecommand : public QObject
 {
@@ -198,6 +202,14 @@ public:
    */
   virtual void cancelMailCheck() {}
 
+  /**
+   * Call ->progress( int foo ) on this to update the account's progress
+   * indicators.
+   */
+  ProgressItem *mailCheckProgressItem() const {
+    return mMailCheckProgressItem;
+  }
+
 signals:
   virtual void finishedCheck(bool newMail);
   virtual void newMailsProcessed(int numberOfNewMails);
@@ -244,6 +256,7 @@ protected:
   QValueList<KMMessage*> mReceipts;
   QPtrList<FolderJob>  mJobList;
   bool mHasInbox : 1;
+  ProgressItem *mMailCheckProgressItem;
 
 private:
     /**

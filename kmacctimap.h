@@ -107,6 +107,7 @@ protected:
    * See ImapAccountBase::handleJobError for details.
    */
   virtual bool handleError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
+  virtual void cancelMailCheck();
 
   QPtrList<KMail::ImapJob> mJobList;
   QGuardedPtr<KMFolderImap> mFolder;
@@ -119,6 +120,12 @@ protected slots:
    * numUnreadMsgsChanged)
    */
   void postProcessNewMail( KMFolder * f );
+
+  /**
+   * hooked up to the progress item signaling cancellation.
+   * Cleanup and reset state.
+   */
+  void slotMailCheckCanceled();
 
 private:
   int mCountRemainChecks;

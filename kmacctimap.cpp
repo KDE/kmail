@@ -33,7 +33,9 @@ using KMail::SieveConfig;
 #include "kmmainwin.h"
 #include "imapjob.h"
 using KMail::ImapJob;
-
+#include "progressmanager.h"
+using KMail::ProgressItem;
+using KMail::ProgressManager;
 #include <kio/scheduler.h>
 #include <kio/slave.h>
 #include <kmessagebox.h>
@@ -162,7 +164,7 @@ void KMAcctImap::ignoreJobsForMessage( KMMessage* msg )
       if ( job->mJob )
         removeJob( job->mJob );
       mJobList.remove( job );
-      delete job;
+      job->kill();
     }
   }
 }
@@ -180,7 +182,7 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
       if ( job->mJob )
         removeJob( job->mJob );
       mJobList.remove( job );
-      delete job;
+      job->kill();
     }
   }
 }
@@ -201,6 +203,28 @@ void KMAcctImap::removeSlaveJobsForFolder( KMFolder* folder )
   }
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctImap::cancelMailCheck()
+{
+  // Make list of folders to reset, like in killAllJobs
+  QValueList<KMFolderImap*> folderList;
+  QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
+  for (; it != mapJobData.end(); ++it) {
+    if ( (*it).cancellable && (*it).parent ) {
+      folderList << static_cast<KMFolderImap*>((*it).parent->storage());
+    }
+  }
+  // Kill jobs
+  // FIXME
+  // ImapAccountBase::cancelMailCheck();
+  killAllJobs( true );
+  // emit folderComplete, this is important for
+  // KMAccount::checkingMail() to be reset, in case we restart checking mail later.
+  for( QValueList<KMFolderImap*>::Iterator it = folderList.begin(); it != folderList.end(); ++it ) {
+    KMFolderImap *fld = *it;
+    fld->sendFolderComplete(FALSE);
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
@@ -222,6 +246,17 @@ void KMAcctImap::processNewMail(bool interactive)
       checkDone(false, 0);
     }
   }
+  // Ok, we're really checking, get a progress item;
+  mMailCheckProgressItem =
+    ProgressManager::createProgressItem( "MailCheckAccount" + name(),
+          i18n("Checking account: " ) + name() );
+
+  mMailCheckProgressItem->setTotalItems( mMailCheckFolders.count() );
+  connect ( mMailCheckProgressItem,
+            SIGNAL( progressItemCanceled( ProgressItem*) ),
+            this,
+            SLOT( slotMailCheckCanceled() ) );
+
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   // first get the current count of unread-messages
   mCountRemainChecks = 0;
@@ -282,6 +317,11 @@ void KMAcctImap::postProcessNewMail( KMFolder * folder ) {
   disconnect( folder->storage(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
               this, SLOT(postProcessNewMail(KMFolder*)) );
 
+  if ( mMailCheckProgressItem ) {
+    mMailCheckProgressItem->incCompletedItems();
+    mMailCheckProgressItem->updateProgress();
+    mMailCheckProgressItem->setStatus( folder->prettyURL() + i18n(" completed") );
+  }
   mCountRemainChecks--;
 
   // count the unread messages
@@ -342,6 +382,12 @@ void KMAcctImap::readConfig(KConfig& config)
     disconnect(kmkernel->imapFolderMgr(), SIGNAL(changed()),
         this, SLOT(slotUpdateFolderList()));
   }
+}
+
+void KMAcctImap::slotMailCheckCanceled()
+{
+  mMailCheckProgressItem->setComplete();
+  cancelMailCheck();
 }
 
 #include "kmacctimap.moc"

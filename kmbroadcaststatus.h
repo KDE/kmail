@@ -18,8 +18,10 @@ class QBoxLayout;
 class QLabel;
 namespace KMail {
   class SSLLabel;
+  class ProgressItem;
 }
 using KMail::SSLLabel;
+using KMail::ProgressItem;
 #undef None
 
 /** When KMail is running it is possible to have multiple KMMainWin open
@@ -118,6 +120,10 @@ public slots:
   virtual void slotClean();
   virtual void slotSetSSL( bool );
 
+  virtual void slotProgressItemAdded( ProgressItem *i );
+  virtual void slotProgressItemCompleted( ProgressItem *i );
+  virtual void slotProgressItemProgress( ProgressItem *i, unsigned int value );
+
 protected:
   KProgress* m_pProgressBar;
   QLabel* m_pLabel;
@@ -134,6 +140,7 @@ protected:
   virtual bool eventFilter( QObject *, QEvent * );
   QBoxLayout *box;
   QWidgetStack *stack;
+  ProgressItem *mCurrentItem;
 };
 
 #endif

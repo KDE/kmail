@@ -44,10 +44,12 @@ namespace KMail {
   class FolderJob;
   class ImapJob;
   class AttachmentStrategy;
+  class ProgressItem;
 }
 using KMail::FolderJob;
 using KMail::ImapJob;
 using KMail::AttachmentStrategy;
+using KMail::ProgressItem;
 
 class KMMsgMetaData
 {
@@ -395,6 +397,12 @@ protected slots:
    */
   void slotStatResult(KIO::Job *job);
 
+  /**
+   * notify the progress item that the mail check for this folder is
+   * done.
+   */
+  void slotCompleteMailCheckProgress();
+
 protected:
   QString     mImapPath;
   ulong       mLastUid;
@@ -413,6 +421,7 @@ private:
   bool        mCheckingValidity;
   QDict<KMMsgMetaData> mMetaDataMap;
   bool        mAlreadyRemoved;
+  ProgressItem *mMailCheckProgressItem;
 };
 
 #endif // kmfolderimap_h

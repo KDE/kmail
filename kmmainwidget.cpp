@@ -2765,8 +2765,10 @@ void KMMainWidget::setupStatusBar()
   KMainWindow *mainWin = dynamic_cast<KMainWindow*>(topLevelWidget());
   KStatusBar *bar =  mainWin ? mainWin->statusBar() : 0;
   mLittleProgress = new KMLittleProgressDlg( bar );
+  mLittleProgress->show();
 
-  //mLittleProgress->show();
+  /* TODO remove old cruft */
+  /*
   connect( KMBroadcastStatus::instance(), SIGNAL(statusProgressEnable( bool )),
            mLittleProgress, SLOT(slotEnable( bool )));
   connect( KMBroadcastStatus::instance(),
@@ -2779,6 +2781,7 @@ void KMMainWidget::setupStatusBar()
            SLOT(slotSetSSL(bool)) );
   connect( KMBroadcastStatus::instance(), SIGNAL(resetRequested()),
            mLittleProgress, SLOT(slotClean()));
+  */
 }
 
 

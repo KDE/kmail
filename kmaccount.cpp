@@ -12,6 +12,10 @@
 #include "kmbroadcaststatus.h"
 #include "kmfoldercachedimap.h"
 
+#include "progressmanager.h"
+using KMail::ProgressItem;
+using KMail::ProgressManager;
+
 using KMail::FolderJob;
 
 #include <kapplication.h>
@@ -83,7 +87,8 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName, uint id)
     mExclude(false),
     mCheckingMail(false),
     mPrecommandSuccess(true),
-    mHasInbox(false)
+    mHasInbox(false),
+    mMailCheckProgressItem(0)
 {
   assert(aOwner != 0);
 
@@ -427,6 +432,11 @@ void KMAccount::checkDone( bool newmail, int newmailCount )
   // triggered the check manually.
   if (mTimer)
     mTimer->start(mInterval*60000);
+
+  if ( mMailCheckProgressItem ) {
+    mMailCheckProgressItem->setComplete(); // that will delete it
+    mMailCheckProgressItem = 0;
+  }
   emit newMailsProcessed(newmailCount);
   emit finishedCheck(newmail);
 }

@@ -48,6 +48,7 @@ namespace KMail {
   typedef QValueVector<KMail::ACLListEntry> ACLList;
 
   class AttachmentStrategy;
+  class ProgressItem;
 
   class ImapAccountBase : public KMail::NetworkAccount {
     Q_OBJECT
@@ -382,6 +383,8 @@ namespace KMail {
     QPtrList<KMMessagePart> mBodyPartList;
     // the current message for the bodystructure
     KMMessage* mCurrentMsg;
+
+    ProgressItem* mProgressItem;
 
   signals:
     /**

@@ -41,6 +41,9 @@ using KMail::BodyVisitor;
 #include "imapjob.h"
 using KMail::ImapJob;
 #include "protocols.h"
+#include "progressmanager.h"
+using KMail::ProgressManager;
+using KMail::ProgressItem;
 
 #include <kapplication.h>
 #include <kdebug.h>
@@ -86,7 +89,8 @@ namespace KMail {
       mErrorDialogIsActive( false ),
       mPasswordDialogIsActive( false ),
       mACLSupport( true ),
-      mCreateInbox( false )
+      mCreateInbox( false ),
+      mProgressItem( 0 )
   {
     mPort = imapDefaultPort;
     mBodyPartList.setAutoDelete(true);
@@ -280,6 +284,19 @@ namespace KMail {
     if (mProgressEnabled == mapJobData.isEmpty())
     {
       mProgressEnabled = !mapJobData.isEmpty();
+      if ( !mProgressItem ) {
+        mProgressItem = ProgressManager::createProgressItem(
+          "Account" + name(), i18n("Data transmission: " ) + name() );
+        connect ( mProgressItem,
+                  SIGNAL( progressItemCanceled( ProgressItem *) ),
+                  ProgressManager::instance(),
+                  SLOT ( slotStandardCancelHandler( ProgressItem *) ) );
+        connect ( mProgressItem, SIGNAL( progressItemCanceled( ProgressItem *) ),
+                  this, SLOT ( slotAbortRequested() ));
+      } else {
+        mProgressItem->setComplete();
+        mProgressItem = 0;
+      }
       KMBroadcastStatus::instance()->setStatusProgressEnable( "I" + mName,
           mProgressEnabled );
     }
@@ -302,6 +319,10 @@ namespace KMail {
     }
     if (total > mTotal) mTotal = total;
     done += mTotal - total;
+
+    if ( mProgressItem ) {
+      mProgressItem->setProgress( 100*done/mTotal );
+    }
     KMBroadcastStatus::instance()->setStatusProgressPercent( "I" + mName,
         100*done / mTotal );
   }

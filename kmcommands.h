@@ -83,7 +83,7 @@ signals:
   void messagesTransfered(bool);
   /** Emitted when the command has completed.
    * @success Success or error. */
-  void completed( bool success);
+  void completed( bool success );
 
 private:
   // ProgressDialog for transferring messages
@@ -577,6 +577,9 @@ private:
   QPtrList<KMMsgBase> mMsgList;
 };
 
+namespace KMail {
+  class ProgressItem;
+}
 class KMMoveCommand : public KMMenuCommand
 {
   Q_OBJECT
@@ -589,6 +592,7 @@ public:
 public slots:
   void slotImapFolderCompleted(KMFolderImap *folder, bool success);
   void slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum);
+  void slotMoveCompleted();
 
 private:
   virtual void execute();
@@ -598,6 +602,7 @@ private:
   // List of serial numbers that have to be transferred to a host.
   // Ticked off as they come in via msgAdded signals.
   QValueList<Q_UINT32> mLostBoys;
+  KMail::ProgressItem *mProgressItem;
 };
 
 class KMDeleteMsgCommand : public KMMoveCommand

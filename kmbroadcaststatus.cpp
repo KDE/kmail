@@ -16,10 +16,14 @@
 
 #include "ssllabel.h"
 using KMail::SSLLabel;
+#include "progressmanager.h"
+using KMail::ProgressItem;
+using KMail::ProgressManager;
 
 #include <kprogress.h>
 #include <kiconloader.h>
 #include <kdebug.h>
+
 
 #include <qlabel.h>
 #include <qpushbutton.h>
@@ -28,6 +32,7 @@ using KMail::SSLLabel;
 #include <qlayout.h>
 #include <qwidgetstack.h>
 #include <qdatetime.h>
+#include <kmkernel.h> // for the progress dialog
 
 //-----------------------------------------------------------------------------
 KMBroadcastStatus* KMBroadcastStatus::instance_ = 0;
@@ -194,7 +199,7 @@ void KMBroadcastStatus::requestAbort()
 
 //-----------------------------------------------------------------------------
 KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
-  : QFrame( parent )
+  : QFrame( parent ), mCurrentItem( 0 )
 {
   m_bShowButton = button;
   int w = fontMetrics().width( " 999.9 kB/s 00:00:01 " ) + 8;
@@ -203,7 +208,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   m_pButton = new QPushButton( this );
   m_pButton->setSizePolicy( QSizePolicy( QSizePolicy::Minimum,
                                          QSizePolicy::Minimum ) );
-  m_pButton->setPixmap( SmallIcon( "cancel" ) );
+  m_pButton->setPixmap( SmallIcon( "up" ) );
   box->addWidget( m_pButton  );
   stack = new QWidgetStack( this );
   stack->setMaximumHeight( fontMetrics().height() );
@@ -212,7 +217,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   m_sslLabel = new SSLLabel( this );
   box->addWidget( m_sslLabel );
 
-  QToolTip::add( m_pButton, i18n("Cancel job") );
+  QToolTip::add( m_pButton, i18n("Open detailed progress dialog") );
 
   m_pProgressBar = new KProgress( this );
   m_pProgressBar->setLineWidth( 1 );
@@ -233,7 +238,40 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   setMode();
 
   connect( m_pButton, SIGNAL( clicked() ),
-           KMBroadcastStatus::instance(), SLOT( requestAbort() ));
+           kmkernel, SLOT( slotShowProgressDialog() ) );
+          // KMBroadcastStatus::instance(), SLOT( requestAbort() ));
+
+  connect ( ProgressManager::instance(), SIGNAL( progressItemAdded( ProgressItem * ) ),
+            this, SLOT( slotProgressItemAdded( ProgressItem * ) ) );
+  connect ( ProgressManager::instance(), SIGNAL( progressItemCompleted( ProgressItem * ) ),
+            this, SLOT( slotProgressItemCompleted( ProgressItem * ) ) );
+}
+
+void KMLittleProgressDlg::slotProgressItemAdded( ProgressItem *item )
+{
+  slotEnable(true);
+  if ( item->parent() ) return; // we are only interested in top level items
+  if ( mCurrentItem ) {
+    disconnect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
+                 this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
+  }
+  mCurrentItem = item;
+  connect ( mCurrentItem, SIGNAL( progressItemProgress( ProgressItem *, unsigned int ) ),
+            this, SLOT( slotProgressItemProgress( ProgressItem *, unsigned int ) ) );
+}
+
+void KMLittleProgressDlg::slotProgressItemCompleted( ProgressItem *item )
+{
+  if ( mCurrentItem && mCurrentItem == item ) {
+    slotClean();
+    mCurrentItem = 0;
+  }
+}
+
+void KMLittleProgressDlg::slotProgressItemProgress( ProgressItem *item, unsigned int value )
+{
+  Q_ASSERT( item == mCurrentItem); // the only one we should be connected to
+  m_pProgressBar->setValue( value );
 }
 
 void KMLittleProgressDlg::slotEnable( bool enabled )
@@ -286,6 +324,9 @@ void KMLittleProgressDlg::setMode() {
     }
     m_sslLabel->setState( m_sslLabel->lastState() );
     stack->show();
+    /* FIXME Shoud we maybe hook this up to the status signal of the current item? */
+    if ( mCurrentItem )
+      m_pLabel->setText( mCurrentItem->label() );
     stack->raiseWidget( m_pLabel );
     break;
 

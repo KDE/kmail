@@ -33,6 +33,9 @@
 using KMail::ImapJob;
 #include "attachmentstrategy.h"
 using KMail::AttachmentStrategy;
+#include "progressmanager.h"
+using KMail::ProgressItem;
+using KMail::ProgressManager;
 
 #include <kdebug.h>
 #include <kio/scheduler.h>
@@ -56,6 +59,10 @@ KMFolderImap::KMFolderImap(KMFolder* folder, const char* aName)
   mCheckingValidity = FALSE;
   mUserRights = 0;
   mAlreadyRemoved = false;
+  mMailCheckProgressItem = 0;
+
+  connect (this, SIGNAL( folderComplete( KMFolderImap*, bool ) ),
+           this, SLOT( slotCompleteMailCheckProgress()) );
 }
 
 KMFolderImap::~KMFolderImap()
@@ -678,8 +685,20 @@ void KMFolderImap::checkValidity()
     kdDebug(5006) << "KMFolderImap::checkValidity - already checking" << endl;
     return;
   }
-  ImapAccountBase::jobData jd( url.url(), folder() );
-  jd.cancellable = true;
+  // otherwise we already are inside a mailcheck
+  if ( !mMailCheckProgressItem ) {
+    mMailCheckProgressItem = ProgressManager::createProgressItem(
+              account()->mailCheckProgressItem(),
+              "MailCheck" + folder()->prettyURL(),
+              folder()->prettyURL(),
+              "checking", false);
+  } else {
+    mMailCheckProgressItem->setProgress(0);
+  }
+  if ( account()->mailCheckProgressItem() ) {
+    account()->mailCheckProgressItem()->setStatus( folder()->prettyURL() );
+  }
+  ImapAccountBase::jobData jd( url.url() );
   KIO::SimpleJob *job = KIO::get(url, FALSE, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   mAccount->insertJob(job, jd);
@@ -689,7 +708,6 @@ void KMFolderImap::checkValidity()
           SLOT(slotSimpleData(KIO::Job *, const QByteArray &)));
   // Only check once at a time.
   mCheckingValidity = true;
-
 }
 
 
@@ -745,6 +763,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
         startUid = QString::number(lastUid() + 1);
     }
     mAccount->removeJob(it);
+    if ( mMailCheckProgressItem ) mMailCheckProgressItem->setProgress( 50 );
     reallyGetFolder(startUid);
   }
 }
@@ -830,7 +849,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   QString uids;
   if (job->error())
   {
-    mAccount->handleJobError( job, 
+    mAccount->handleJobError( job,
         i18n("Error while listing the contents of the folder %1.").arg( label() ) );
     quiet( false );
     emit folderComplete(this, FALSE);
@@ -1055,7 +1074,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       }
     }
     // deleted flag
-    if ( flags & 8 ) 
+    if ( flags & 8 )
       ok = false;
     if ( !ok )
     {
@@ -1171,6 +1190,7 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
   }
 
   mAccount->displayProgress();
+
 }
 
 
@@ -1495,9 +1515,14 @@ bool KMFolderImap::processNewMail(bool)
     kdWarning(5006) << "KMFolderImap::processNewMail - got no connection!" << endl;
     return false;
   }
+  mMailCheckProgressItem = ProgressManager::createProgressItem(
+              "MailCheckAccount" + account()->name(),
+              "MailCheck" + folder()->prettyURL(), folder()->prettyURL(),
+              i18n("updating message counts"), false);
   KIO::SimpleJob *job = KIO::stat(url, FALSE);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
-  ImapAccountBase::jobData jd(url.url());
+  ImapAccountBase::jobData jd(url.url(), folder() );
+  jd.cancellable = true;
   mAccount->insertJob(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
           SLOT(slotStatResult(KIO::Job *)));
@@ -1533,6 +1558,8 @@ void KMFolderImap::slotStatResult(KIO::Job * job)
     emit numUnreadMsgsChanged( folder() );
   }
   mAccount->displayProgress();
+
+  slotCompleteMailCheckProgress();
 }
 
 //-----------------------------------------------------------------------------
@@ -1610,6 +1637,14 @@ KMFolderImap::setUserRights( unsigned int userRights )
 {
   mUserRights = userRights;
   kdDebug(5006) << imapPath() << " setUserRights: " << userRights << endl;
+}
+
+void KMFolderImap::slotCompleteMailCheckProgress()
+{
+  if ( mMailCheckProgressItem ) {
+    mMailCheckProgressItem->setComplete();
+    mMailCheckProgressItem = 0;
+  }
 }
 
 #include "kmfolderimap.moc"

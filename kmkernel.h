@@ -23,10 +23,12 @@ namespace KMail {
   class MailServiceImpl;
   class UndoStack;
   class JobScheduler;
+  class ProgressDialog;
 }
 using KMail::MailServiceImpl;
 using KMail::UndoStack;
 using KMail::JobScheduler;
+using KMail::ProgressDialog;
 class KMMsgIndex;
 class QLabel;
 class KMFolder;
@@ -234,6 +236,7 @@ public slots:
   void slotEmptyTrash();
 
   void slotShowConfigurationDialog();
+  void slotShowProgressDialog();
 
 protected slots:
   void slotDataReq(KIO::Job*,QByteArray&);
@@ -298,6 +301,7 @@ private:
   QLabel *mCleanupLabel;
   KInstance* mXmlGuiInstance;
   ConfigureDialog *mConfigureDialog;
+  ProgressDialog *mProgressDialog;
   QTimer *mDeadLetterTimer;
   int mDeadLetterInterval;
   QTimer *mExpireFoldersTimer;

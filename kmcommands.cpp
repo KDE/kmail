@@ -79,6 +79,10 @@ using KMail::MailSourceViewer;
 #include "secondarywindow.h"
 using KMail::SecondaryWindow;
 
+#include "progressmanager.h"
+using KMail::ProgressManager;
+using KMail::ProgressItem;
+
 #include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
@@ -1586,6 +1590,14 @@ void KMMoveCommand::execute()
     return;
   KCursorSaver busy(KBusyPtr::busy());
 
+  // TODO connect cancel
+  mProgressItem =
+     ProgressManager::createProgressItem (
+         "move"+ProgressManager::getUniqueID(),
+         "Moving messages" );
+  connect( this, SIGNAL(completed( bool )),
+           this, SLOT( slotMoveCompleted()));
+
   KMMessage *msg;
   KMMsgBase *msgBase;
   int rc = 0;
@@ -1598,9 +1610,10 @@ void KMMoveCommand::execute()
              this, SLOT(slotMsgAddedToDestFolder(KMFolder*, Q_UINT32)));
 
   }
-   for ( msgBase=mMsgList.first(); msgBase; msgBase=mMsgList.next() ) {
-     mLostBoys.append( msgBase->getMsgSerNum() );
-   }
+  for ( msgBase=mMsgList.first(); msgBase; msgBase=mMsgList.next() ) {
+    mLostBoys.append( msgBase->getMsgSerNum() );
+  }
+  mProgressItem->setTotalItems( mMsgList.count() );
 
   for (msgBase=mMsgList.first(); msgBase && !rc; msgBase=mMsgList.next()) {
     KMFolder *srcFolder = msgBase->parent();
@@ -1719,6 +1732,7 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
                      "folder or invalid serial number." << endl;
     return;
   }
+
   mLostBoys.remove(serNum);
   if ( mLostBoys.isEmpty() ) {
     // we are done. All messages transferred to the host succesfully
@@ -1727,8 +1741,18 @@ void KMMoveCommand::slotMsgAddedToDestFolder(KMFolder *folder, Q_UINT32 serNum)
     }
     emit completed( true );
     deleteLater();
+  } else {
+    mProgressItem->incCompletedItems();
+    mProgressItem->updateProgress();
   }
 }
+
+void KMMoveCommand::slotMoveCompleted( )
+{
+  if ( mProgressItem )
+    mProgressItem->setComplete();
+}
+
 
 // srcFolder doesn't make much sense for searchFolders
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
