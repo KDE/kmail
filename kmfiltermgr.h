@@ -1,7 +1,21 @@
-/* Mail Filter Manager
+/*
+ * kmail: KDE mail client
+ * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * Author: Stefan Taferner <taferner@kde.org>
- * This code is under GPL
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
  */
 #ifndef kmfiltermgr_h
 #define kmfiltermgr_h
@@ -33,7 +47,7 @@ public:
   /** Store filter rules in config file. */
   void writeConfig(bool withSync=TRUE);
 
-  /** Open an edit dialog. If checkForEmptyFilterList is true, an empty filter 
+  /** Open an edit dialog. If checkForEmptyFilterList is true, an empty filter
       is created to improve the visibility of the dialog in case no filter
       has been defined so far. */
   void openDialog( QWidget *parent, bool checkForEmptyFilterList = true );
@@ -45,12 +59,12 @@ public:
   bool beginFiltering(KMMsgBase *msgBase) const;
   int moveMessage(KMMessage *msg) const;
   void endFiltering(KMMsgBase *msgBase) const;
-  
-  /** Check for existing filters with the &p name and extend the 
+
+  /** Check for existing filters with the &p name and extend the
       "name" to "name (i)" until no match is found for i=1..n */
   const QString createUniqueName( const QString & name );
 
-  /** Append the list of filters to the current list of filters and 
+  /** Append the list of filters to the current list of filters and
       write everything back into the configuration.*/
   void appendFilters( const QPtrList<KMFilter> filters );
 

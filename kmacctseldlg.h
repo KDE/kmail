@@ -2,7 +2,7 @@
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, <espen@kde.org>
  *   Contains code segments and ideas from earlier kmail dialog code
- *   by Stefan Taferner <taferner@alpin.or.at>
+ *   by Stefan Taferner <taferner@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -34,9 +34,9 @@ class KMAcctSelDlg: public KDialogBase
   public:
     KMAcctSelDlg( QWidget *parent=0, const char *name=0, bool modal=true );
 
-    /** 
+    /**
      * Returns selected button from the account selection group:
-     * 0=local mail, 1=pop3. 
+     * 0=local mail, 1=pop3.
      */
     int selected(void) const;
 

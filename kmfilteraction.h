@@ -1,8 +1,21 @@
-/* Mail Filter Action: a filter action has one method that processes the
- * given mail message.
+/*
+ * kmail: KDE mail client
+ * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * Author: Stefan Taferner <taferner@kde.org>
- * This code is under GPL
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ *
  */
 #ifndef kmfilteraction_h
 #define kmfilteraction_h
@@ -119,7 +132,7 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const = 0;
 
-  /** Returns a translated string describing this filter for visualization 
+  /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */
   virtual const QString displayString() const = 0;
 
@@ -180,7 +193,7 @@ public:
       return @see QString::null, because we have no parameter. */
   virtual const QString argsAsString() const { return QString::null; }
 
-  /** Returns a translated string describing this filter for visualization 
+  /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */
   virtual const QString displayString() const;
 };
@@ -242,7 +255,7 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
-  /** Returns a translated string describing this filter for visualization 
+  /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */
   virtual const QString displayString() const;
 
@@ -289,7 +302,7 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
-  /** Returns a translated string describing this filter for visualization 
+  /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */
   virtual const QString displayString() const;
 
@@ -412,7 +425,7 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
-  /** Returns a translated string describing this filter for visualization 
+  /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */
   virtual const QString displayString() const;
 
@@ -534,7 +547,7 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
-  /** Returns a translated string describing this filter for visualization 
+  /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */
   virtual const QString displayString() const;
 
@@ -615,7 +628,7 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
-  /** Returns a translated string describing this filter for visualization 
+  /** Returns a translated string describing this filter for visualization
       purposes, e.g. in the filter log. */
   virtual const QString displayString() const;
 

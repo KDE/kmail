@@ -2,7 +2,7 @@
  *   kmail: KDE mail client
  *   This file: Copyright (C) 2000 Espen Sand, <espen@kde.org>
  *   Contains code segments and ideas from earlier kmail dialog code
- *   by Stefan Taferner <taferner@alpin.or.at>
+ *   by Stefan Taferner <taferner@kde.org>
  *
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by

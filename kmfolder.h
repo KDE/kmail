@@ -1,8 +1,20 @@
 /* -*- mode: C++ -*-
- * Virtual base class for mail folder
+ * kmail: KDE mail client
+ * Copyright (c) 1996-1998 Stefan Taferner <taferner@kde.org>
  *
- * Author: Stefan Taferner <taferner@kde.org>
- * This code is under GPL
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
 #ifndef kmfolder_h
@@ -177,9 +189,9 @@ public:
       header from the mail. */
   int addMsgKeepUID(KMMessage* msg, int* index_return = 0);
 
-  /** 
-   * Adds the given messages to the folder. Behaviour is identical 
-   * to addMsg(msg) 
+  /**
+   * Adds the given messages to the folder. Behaviour is identical
+   * to addMsg(msg)
    */
   int addMsg(QPtrList<KMMessage>&, QValueList<int>& index_return);
 
