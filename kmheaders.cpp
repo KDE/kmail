@@ -1214,15 +1214,17 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
   CREATE_TIMER(msgRemoved);
   START_TIMER(msgRemoved);
 
+  bool threaded = mNested != mNestedOverride;
   KMHeaderItem *removedItem = mItems[id];
   QListViewItem *next = removedItem->itemBelow();
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
     mItems[i]->setMsgId( i );
-    mItems[i]->sortCacheItem()->setId( i );
+    if (threaded)
+      mItems[i]->sortCacheItem()->setId( i );
   }
   mItems.resize( mItems.size() - 1 );
-  if (mNested != mNestedOverride && mFolder->count()) {
+  if (threaded && mFolder->count()) {
     if (mSortCacheItems[msgId] == removedItem->sortCacheItem())
       mSortCacheItems.remove(msgId);
 
