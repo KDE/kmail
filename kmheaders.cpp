@@ -2116,10 +2116,10 @@ void KMHeaders::highlightMessage(QListViewItem* lvi, bool markitread)
   }
 
   mOwner->statusMsg("");
-  emit selected(mFolder->getMsg(idx));
   if (markitread && idx >= 0) setMsgRead(idx);
   mItems[idx]->irefresh();
   mItems[idx]->repaint();
+  emit selected(mFolder->getMsg(idx));
   setFolderInfoStatus();
 }
 
