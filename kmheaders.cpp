@@ -2313,23 +2313,25 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   mPressPos = e->pos();
   QListViewItem *lvi = itemAt( contentsToViewport( e->pos() ));
   bool wasSelected = false;
-  if (lvi) wasSelected = lvi->isSelected();
-  
-  bool rootDecoClicked =
-       (  mPressPos.x() <= header()->cellPos(  header()->mapToActual(  0 ) ) +
-         treeStepSize() * (  lvi->depth() + (  rootIsDecorated() ? 1 : 0 ) ) + itemMargin() )
-    && (  mPressPos.x() >= header()->cellPos(  header()->mapToActual(  0 ) ) );
-  
-  if ( rootDecoClicked ) {
-     // Check if our item is the parent of a closed thread and if so, if the root
-     // decoration of the item was clicked (i.e. the +/- sign) which would expand
-     // the thread. In that case, deselect all children, so opening the thread
-     // doesn't cause a flicker.
-     if ( lvi && !lvi->isOpen() && lvi->firstChild() ) {
-        QListViewItem *nextRoot = lvi->itemBelow();
-        QListViewItemIterator it( lvi->firstChild() );
-        for( ; (*it) != nextRoot; ++it )
-           (*it)->setSelected( false );
+  bool rootDecoClicked = false;
+  if (lvi) {
+     wasSelected = lvi->isSelected();
+     rootDecoClicked =
+        (  mPressPos.x() <= header()->cellPos(  header()->mapToActual(  0 ) ) +
+           treeStepSize() * (  lvi->depth() + (  rootIsDecorated() ? 1 : 0 ) ) + itemMargin() )
+        && (  mPressPos.x() >= header()->cellPos(  header()->mapToActual(  0 ) ) );
+
+     if ( rootDecoClicked ) {
+        // Check if our item is the parent of a closed thread and if so, if the root
+        // decoration of the item was clicked (i.e. the +/- sign) which would expand
+        // the thread. In that case, deselect all children, so opening the thread
+        // doesn't cause a flicker.
+        if ( !lvi->isOpen() && lvi->firstChild() ) {
+           QListViewItem *nextRoot = lvi->itemBelow();
+           QListViewItemIterator it( lvi->firstChild() );
+           for( ; (*it) != nextRoot; ++it )
+              (*it)->setSelected( false );
+        }
      }
   }
   
