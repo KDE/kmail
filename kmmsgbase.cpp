@@ -9,6 +9,7 @@
 #include <qtextcodec.h>
 #include <qregexp.h>
 #include <kmfolder.h>
+#include <kmheaders.h>
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -180,7 +181,7 @@ time_t KMMsgBase::date(void) const
 //-----------------------------------------------------------------------------
 QString KMMsgBase::dateStr(void) const
 {
-  return ctime(&mDate);
+  return KMHeaders::fancyDate(mDate);
 }
 
 
