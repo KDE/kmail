@@ -245,7 +245,7 @@ namespace KMail {
           mTextEdit->setText( xf.fromImage( photo ) );
         }
         else
-          KMessageBox::information( this, "No picture set for your adress book entry.", "No picture" );
+          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No picture") );
 
       }
       else
@@ -254,11 +254,11 @@ namespace KMail {
         if( !url.isEmpty() )
           setXfaceFromFile( url );
         else
-          KMessageBox::information( this, "No picture set for your adress book entry.", "No picture" );
+          KMessageBox::information( this, i18n("No picture set for your adress book entry."), i18n("No picture") );
       }
     }
     else
-      KMessageBox::information( this, "You don't have your own contact defined in the address book.", "No picture" );
+      KMessageBox::information( this, i18n("You don't have your own contact defined in the address book."), i18n("No picture") );
   }
 
   void XFaceConfigurator::slotUpdateXFace()
