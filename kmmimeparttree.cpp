@@ -21,6 +21,7 @@ using KMail::ObjectTreeParser;
 
 #include <qheader.h>
 #include <qpopupmenu.h>
+#include <qstyle.h>
 
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent,
@@ -28,7 +29,13 @@ KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
     : KListView(  parent, name ),
       mReaderWin( readerWin )
 {
-    setLineWidth(0); // don't draw ugly frame
+    // determine a reasonable line width for the frame
+    int frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+    if ( frameWidth < 0 )
+      frameWidth = 0;
+    setLineWidth( frameWidth );
+    kdDebug(5006) << "KMMimePartTree::frameStyle() returns " << frameStyle()
+                  << endl;
     addColumn( i18n("Description") );
     addColumn( i18n("Type") );
     addColumn( i18n("Encoding") );

@@ -99,6 +99,7 @@ using KMail::TeeHtmlWriter;
 #include <qlayout.h>
 #include <qlabel.h>
 #include <qsplitter.h>
+#include <qstyle.h>
 
 // X headers...
 #undef Never
@@ -455,6 +456,12 @@ void KMReaderWin::createWidgets() {
   vlay->addWidget( mSplitter );
   mMimePartTree = new KMMimePartTree( this, mSplitter, "mMimePartTree" );
   mBox = new QHBox( mSplitter, "mBox" );
+  // determine a reasonable line width for the frame
+  int frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+  if ( frameWidth < 0 )
+    frameWidth = 0;
+  mBox->setLineWidth( frameWidth );
+  mBox->setFrameStyle( mMimePartTree->frameStyle() );
   mColorBar = new HtmlStatusBar( mBox, "mColorBar" );
   mViewer = new KHTMLPart( mBox, "mViewer" );
   mSplitter->setOpaqueResize( true );

@@ -33,6 +33,7 @@ using KMail::FolderJob;
 #include <qpainter.h>
 #include <qtextcodec.h>
 #include <qbitmap.h>
+#include <qstyle.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -553,7 +554,11 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mSortInfo.ascending = false;
   mJumpToUnread = false;
   mReaderWindowActive = false;
-  setLineWidth(0);
+  // determine a reasonable line width for the frame
+  int frameWidth = style().pixelMetric( QStyle::PM_DefaultFrameWidth ) - 1;
+  if ( frameWidth < 0 )
+    frameWidth = 0;
+  setLineWidth( frameWidth );
   // popup-menu
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
