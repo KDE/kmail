@@ -67,6 +67,7 @@ using KMail::FolderIface;
 #include <X11/Xlib.h>
 #include <fixx11h.h>
 #include <kcmdlineargs.h>
+#include <kstartupinfo.h>
 
 KMKernel *KMKernel::mySelf = 0;
 
@@ -277,13 +278,17 @@ void KMKernel::openReader()
 
   if (ktmw) {
     mWin = (KMMainWin *) ktmw;
-    mWin->show();
-    KWin::activateWindow(mWin->winId());
   }
   else {
     mWin = new KMMainWin;
-    mWin->show();
   }
+
+  mWin->show();
+  // Activate window - doing this instead of KWin::activateWindow(mWin->winId());
+  // so that it also works when called from KMailApplication::newInstance()
+#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+  KStartupInfo::setNewStartupId( mWin, kapp->startupId() );
+#endif
 }
 
 int KMKernel::openComposer (const QString &to, const QString &cc,
@@ -316,8 +321,11 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     cWin->addAttach((*it));
   if (hidden == 0) {
     cWin->show();
-    // This is called via DCOP, so ensure the new window appears on top
-    KWin::activateWindow( cWin->winId() );
+    // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
+    // so that it also works when called from KMailApplication::newInstance()
+#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+    KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
+#endif
   }
   return 1;
 }
@@ -362,8 +370,11 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   if (hidden == 0) {
     cWin->show();
-    // This is called via DCOP, so ensure the new window appears on top
-    KWin::activateWindow( cWin->winId() );
+    // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
+    // so that it also works when called from KMailApplication::newInstance()
+#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+    KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
+#endif
   }
   return 1;
 }
@@ -385,8 +396,11 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   cWin->setCharset("", TRUE);
   if (!hidden) {
     cWin->show();
-    // This is called via DCOP, so ensure the new window appears on top
-    KWin::activateWindow( cWin->winId() );
+    // Activate window - doing this instead of KWin::activateWindow(cWin->winId());
+    // so that it also works when called from KMailApplication::newInstance()
+#if defined Q_WS_X11 && ! defined K_WS_QTONLY
+    KStartupInfo::setNewStartupId( cWin, kapp->startupId() );
+#endif
   }
 
   return DCOPRef(cWin);
