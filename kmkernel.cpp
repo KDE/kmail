@@ -1017,7 +1017,8 @@ void KMKernel::closeAllKMailWindows()
   KMainWindow *window = 0;
   while ((window = it.current()) != 0) {
     ++it;
-    if (window->isA("KMMainWindow") || window->inherits("SecondaryWindow"))
+    if (window->isA("KMMainWindow") || 
+	window->inherits("KMail::SecondaryWindow"))
       window->close( true ); // close and delete the window
   }
 }
