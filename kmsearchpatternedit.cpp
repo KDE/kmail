@@ -73,7 +73,7 @@ void KMSearchRuleWidget::editRegExp()
   if ( mRegExpEditDialog == 0 )
     mRegExpEditDialog = KParts::ComponentFactory::createInstanceFromQuery<QDialog>( "KRegExpEditor/KRegExpEditor", QString::null, this );
 
-  KRegExpEditorInterface *iface = dynamic_cast<KRegExpEditorInterface *>( mRegExpEditDialog );
+  KRegExpEditorInterface *iface = static_cast<KRegExpEditorInterface *>( mRegExpEditDialog->qt_cast( "KRegExpEditorInterface" ) );
   if( iface ) {
     iface->setRegExp( mRuleValue->text() );
     if( mRegExpEditDialog->exec() == QDialog::Accepted )
