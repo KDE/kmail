@@ -172,13 +172,7 @@ void KMMainWin::slotConfigChanged()
 
 //-----------------------------------------------------------------------------
 bool KMMainWin::queryClose() {
-  if ( !kmkernel->canQueryClose() && !mReallyClose ) {
-    return false;
-  }
-#if 0
-  if (kmkernel->shuttingDown() || kapp->sessionSaving())
+  if ( kmkernel->shuttingDown() || kapp->sessionSaving() || mReallyClose )
     return true;
-  // ask questions here, if any
-#endif
-  return true;
+  return kmkernel->canQueryClose();
 }
