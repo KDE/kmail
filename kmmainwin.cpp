@@ -573,6 +573,7 @@ void KMMainWin::slotAddFolder()
   }
 }
 
+
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCheckMail()
 {
@@ -781,6 +782,27 @@ void KMMainWin::slotCompactFolder()
     }
   }
   mHeaders->setCurrentItemByIndex(idx);
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMainWin::slotCompactAll()
+{
+  kernel->kbp()->busy();
+  QStringList strList;
+  QValueList<QGuardedPtr<KMFolder> > folders;
+  KMFolder *folder;
+  mFolderTree->createFolderList(&strList, &folders);
+  for (int i = 0; folders.at(i) != folders.end(); i++)
+  {
+    folder = *folders.at(i);
+    if (!folder || folder->isDir()) continue;
+    if (folder->account())
+      folder->account()->expungeFolder(folder);
+    else
+      folder->compact();
+  }
+  kernel->kbp()->idle();
 }
 
 
@@ -1449,7 +1471,7 @@ void KMMainWin::setupMenuBar()
   printAction = KStdAction::print (this, SLOT(slotPrintMsg()), actionCollection());
 
   (void) new KAction( i18n("Compact all &folders"), 0,
-		      kernel->folderMgr(), SLOT(compactAll()),
+		      this, SLOT(slotCompactAll()),
 		      actionCollection(), "compact_all_folders" );
 
   (void) new KAction( i18n("Check &Mail"), "mail_get", CTRL+Key_L,

@@ -121,6 +121,7 @@ protected slots:
   void slotRemoveFolder();
   void slotEmptyFolder();
   void slotCompactFolder();
+  void slotCompactAll();
   void slotOverrideHtml();
   void slotOverrideThread();
   void slotReplyToMsg();
