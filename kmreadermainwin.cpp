@@ -39,7 +39,6 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
   mReaderWin->setHtmlOverride( htmlOverride );
   setCentralWidget( mReaderWin );
   setupAccel();
-  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
@@ -53,7 +52,6 @@ KMReaderMainWin::KMReaderMainWin( char *name )
   mReaderWin->setAutoDelete( true );
   setCentralWidget( mReaderWin );
   setupAccel();
-  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
@@ -70,7 +68,6 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
   setCentralWidget( mReaderWin );
   setupAccel();
-  applyMainWindowSettings( KMKernel::config(), "Separate Reader Window" );
 
   connect( kmkernel, SIGNAL( configChanged() ),
            this, SLOT( slotConfigChanged() ) );
