@@ -346,8 +346,12 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
 
   if (aSetStatus) {
     setStatus(headerField("Status").latin1(), headerField("X-Status").latin1());
-    setEncryptionState(headerField("X-KMail-EncryptionState").latin1());
-    setSignatureState(headerField("X-KMail-SignatureState").latin1());
+    char* c = (char*)headerField("X-KMail-EncryptionState").latin1();
+    if( c )
+      setEncryptionState( c );
+    c = (char*)headerField("X-KMail-SignatureState").latin1();
+    if( c )
+      setSignatureState( c );
   }
 
   mNeedsAssembly = FALSE;
