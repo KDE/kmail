@@ -601,10 +601,10 @@ class KMMenuCommand : public KMCommand
   Q_OBJECT
 
 public:
-  static QPopupMenu* folderToPopupMenu(bool move, QObject *receiver,
+  static void folderToPopupMenu(bool move, QObject *receiver,
     KMMenuToFolder *aMenuToFolder, QPopupMenu *menu );
 
-  static QPopupMenu* makeFolderMenu(KMFolderNode* item, bool move,
+  static void makeFolderMenu(KMFolderNode* item, bool move,
     QObject *receiver, KMMenuToFolder *aMenuToFolder, QPopupMenu *menu );
 };
 

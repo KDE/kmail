@@ -1456,7 +1456,7 @@ KMCommand::Result KMMailingListFilterCommand::execute()
 }
 
 
-QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
+void KMMenuCommand::folderToPopupMenu(bool move,
   QObject *receiver, KMMenuToFolder *aMenuToFolder, QPopupMenu *menu )
 {
   while ( menu->count() )
@@ -1470,21 +1470,21 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
 
   if (!kmkernel->imapFolderMgr()->dir().first() &&
       !kmkernel->dimapFolderMgr()->dir().first())
-  {
-    KMMenuCommand::makeFolderMenu(  &kmkernel->folderMgr()->dir(), move,
-      receiver, aMenuToFolder, menu );
+  { // only local folders
+    makeFolderMenu( &kmkernel->folderMgr()->dir(), move,
+                    receiver, aMenuToFolder, menu );
   } else {
     // operate on top-level items
     QPopupMenu* subMenu = new QPopupMenu(menu);
-    subMenu = KMMenuCommand::makeFolderMenu(  &kmkernel->folderMgr()->dir(),
-        move, receiver, aMenuToFolder, subMenu );
+    makeFolderMenu( &kmkernel->folderMgr()->dir(),
+                    move, receiver, aMenuToFolder, subMenu );
     menu->insertItem( i18n( "Local Folders" ), subMenu );
     KMFolderDir* fdir = &kmkernel->imapFolderMgr()->dir();
     for (KMFolderNode *node = fdir->first(); node; node = fdir->next()) {
       if (node->isDir())
         continue;
       subMenu = new QPopupMenu(menu);
-      subMenu = makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
+      makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
       menu->insertItem( node->label(), subMenu );
     }
     fdir = &kmkernel->dimapFolderMgr()->dir();
@@ -1492,15 +1492,13 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
       if (node->isDir())
         continue;
       subMenu = new QPopupMenu(menu);
-      subMenu = makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
+      makeFolderMenu( node, move, receiver, aMenuToFolder, subMenu );
       menu->insertItem( node->label(), subMenu );
     }
   }
-
-  return menu;
 }
 
-QPopupMenu* KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
+void KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
   QObject *receiver, KMMenuToFolder *aMenuToFolder, QPopupMenu *menu )
 {
   // connect the signals
@@ -1534,11 +1532,12 @@ QPopupMenu* KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
     else
       menuId = menu->insertItem(i18n("Copy to This Folder"));
     aMenuToFolder->insert( menuId, folder );
+    menu->setItemEnabled( menuId, !folder->isReadOnly() );
     menu->insertSeparator();
   }
 
   if (!folderDir)
-    return menu;
+    return;
 
   for (KMFolderNode *it = folderDir->first(); it; it = folderDir->next() ) {
     if (it->isDir())
@@ -1548,16 +1547,18 @@ QPopupMenu* KMMenuCommand::makeFolderMenu(KMFolderNode* node, bool move,
     label.replace("&","&&");
     if (child->child() && child->child()->first()) {
       // descend
-      QPopupMenu *subMenu = makeFolderMenu(child, move, receiver,
-        aMenuToFolder, new QPopupMenu(menu, "subMenu"));
-      menu->insertItem(label, subMenu);
+      QPopupMenu *subMenu = new QPopupMenu(menu, "subMenu");
+      makeFolderMenu( child, move, receiver,
+                      aMenuToFolder, subMenu );
+      menu->insertItem( label, subMenu );
     } else {
       // insert an item
-      int menuId = menu->insertItem(label);
+      int menuId = menu->insertItem( label );
       aMenuToFolder->insert( menuId, child );
+      menu->setItemEnabled( menuId, !child->isReadOnly() );
     }
   }
-  return menu;
+  return;
 }
 
 
