@@ -1020,8 +1020,13 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 //-----------------------------------------------------------------------------
 void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg)
 {
+  if (mQuiet)
+  {
+    mChanged = TRUE;
+    return;
+  }
   int idx = mMsgList.find((KMMsgBasePtr)aMsg);
-  if (idx >= 0 && !mQuiet)
+  if (idx >= 0)
     emit msgHeaderChanged(idx);
   else
     mChanged = TRUE;

@@ -447,6 +447,7 @@ int KMFolderMbox::createIndexFromContents()
   int i, num, numStatus, whoFieldLen;
   short needStatus;
 
+  quiet(TRUE);
   assert(mStream != NULL);
   rewind(mStream);
 
@@ -613,6 +614,7 @@ int KMFolderMbox::createIndexFromContents()
   }
   else mHeaderOffset = 0;
 
+  quiet(FALSE);
   correctUnreadMsgsCount();
 
   if (kernel->outboxFolder() == this && count() > 0)
