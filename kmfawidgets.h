@@ -5,7 +5,7 @@
 #ifndef _kmfawidgets_h_
 #define _kmfawidgets_h_
 
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qstring.h>
 
 /** The param widget for @ref KMFilterActionWithAddress..

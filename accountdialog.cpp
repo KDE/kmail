@@ -21,7 +21,7 @@
 #include <config.h>
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qlayout.h>
 #include <qtabwidget.h>
 #include <qradiobutton.h>
@@ -297,7 +297,7 @@ void AccountDialog::makeLocalAccountPage()
 
   QLabel *label = new QLabel( i18n("&Name:"), page );
   topLayout->addWidget( label, 2, 0 );
-  mLocal.nameEdit = new QLineEdit( page );
+  mLocal.nameEdit = new KLineEdit( page );
   label->setBuddy( mLocal.nameEdit );
   topLayout->addWidget( mLocal.nameEdit, 2, 1 );
 
@@ -413,7 +413,7 @@ void AccountDialog::makeLocalAccountPage()
 
   label = new QLabel( i18n("&Pre-Command:"), page );
   topLayout->addWidget( label, 10, 0 );
-  mLocal.precommand = new QLineEdit( page );
+  mLocal.precommand = new KLineEdit( page );
   label->setBuddy( mLocal.precommand );
   topLayout->addWidget( mLocal.precommand, 10, 1 );
 
@@ -439,7 +439,7 @@ void AccountDialog::makeMaildirAccountPage()
   hline->setFrameStyle( QFrame::Sunken | QFrame::HLine );
   topLayout->addMultiCellWidget( hline, 1, 1, 0, 2 );
 
-  mMaildir.nameEdit = new QLineEdit( page );
+  mMaildir.nameEdit = new KLineEdit( page );
   topLayout->addWidget( mMaildir.nameEdit, 2, 1 );
   QLabel *label = new QLabel( mMaildir.nameEdit, i18n("&Name:"), page );
   topLayout->addWidget( label, 2, 0 );
@@ -503,7 +503,7 @@ void AccountDialog::makeMaildirAccountPage()
 		      i18n("&Destination folder:"), page );
   topLayout->addWidget( label, 8, 0 );
 
-  mMaildir.precommand = new QLineEdit( page );
+  mMaildir.precommand = new KLineEdit( page );
   topLayout->addWidget( mMaildir.precommand, 9, 1 );
   label = new QLabel( mMaildir.precommand, i18n("&Pre-Command:"), page );
   topLayout->addWidget( label, 9, 0 );
@@ -539,27 +539,27 @@ void AccountDialog::makePopAccountPage()
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
   grid->addWidget( label, 0, 0 );
-  mPop.nameEdit = new QLineEdit( page1 );
+  mPop.nameEdit = new KLineEdit( page1 );
   label->setBuddy( mPop.nameEdit );
   grid->addWidget( mPop.nameEdit, 0, 1 );
 
   label = new QLabel( i18n("&Login:"), page1 );
   QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
   grid->addWidget( label, 1, 0 );
-  mPop.loginEdit = new QLineEdit( page1 );
+  mPop.loginEdit = new KLineEdit( page1 );
   label->setBuddy( mPop.loginEdit );
   grid->addWidget( mPop.loginEdit, 1, 1 );
 
   label = new QLabel( i18n("P&assword:"), page1 );
   grid->addWidget( label, 2, 0 );
-  mPop.passwordEdit = new QLineEdit( page1 );
+  mPop.passwordEdit = new KLineEdit( page1 );
   mPop.passwordEdit->setEchoMode( QLineEdit::Password );
   label->setBuddy( mPop.passwordEdit );
   grid->addWidget( mPop.passwordEdit, 2, 1 );
 
   label = new QLabel( i18n("Ho&st:"), page1 );
   grid->addWidget( label, 3, 0 );
-  mPop.hostEdit = new QLineEdit( page1 );
+  mPop.hostEdit = new KLineEdit( page1 );
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
   mPop.hostEdit->setValidator(
@@ -569,7 +569,7 @@ void AccountDialog::makePopAccountPage()
 
   label = new QLabel( i18n("&Port:"), page1 );
   grid->addWidget( label, 4, 0 );
-  mPop.portEdit = new QLineEdit( page1 );
+  mPop.portEdit = new KLineEdit( page1 );
   mPop.portEdit->setValidator( new QIntValidator(this) );
   label->setBuddy( mPop.portEdit );
   grid->addWidget( mPop.portEdit, 4, 1 );
@@ -651,7 +651,7 @@ void AccountDialog::makePopAccountPage()
 
   label = new QLabel( i18n("Precom&mand:"), page1 );
   grid->addWidget( label, 13, 0 );
-  mPop.precommand = new QLineEdit( page1 );
+  mPop.precommand = new KLineEdit( page1 );
   label->setBuddy(mPop.precommand);
   grid->addWidget( mPop.precommand, 13, 1 );
 
@@ -739,7 +739,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
   grid->addWidget( label, row, 0 );
-  mImap.nameEdit = new QLineEdit( page1 );
+  mImap.nameEdit = new KLineEdit( page1 );
   label->setBuddy( mImap.nameEdit );
   grid->addWidget( mImap.nameEdit, row, 1 );
 
@@ -747,14 +747,14 @@ void AccountDialog::makeImapAccountPage( bool connected )
   label = new QLabel( i18n("&Login:"), page1 );
   QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
   grid->addWidget( label, row, 0 );
-  mImap.loginEdit = new QLineEdit( page1 );
+  mImap.loginEdit = new KLineEdit( page1 );
   label->setBuddy( mImap.loginEdit );
   grid->addWidget( mImap.loginEdit, row, 1 );
 
   ++row;
   label = new QLabel( i18n("P&assword:"), page1 );
   grid->addWidget( label, row, 0 );
-  mImap.passwordEdit = new QLineEdit( page1 );
+  mImap.passwordEdit = new KLineEdit( page1 );
   mImap.passwordEdit->setEchoMode( QLineEdit::Password );
   label->setBuddy( mImap.passwordEdit );
   grid->addWidget( mImap.passwordEdit, row, 1 );
@@ -762,7 +762,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   label = new QLabel( i18n("Ho&st:"), page1 );
   grid->addWidget( label, row, 0 );
-  mImap.hostEdit = new QLineEdit( page1 );
+  mImap.hostEdit = new KLineEdit( page1 );
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
   mImap.hostEdit->setValidator(
@@ -773,7 +773,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   label = new QLabel( i18n("&Port:"), page1 );
   grid->addWidget( label, row, 0 );
-  mImap.portEdit = new QLineEdit( page1 );
+  mImap.portEdit = new KLineEdit( page1 );
   mImap.portEdit->setValidator( new QIntValidator(this) );
   label->setBuddy( mImap.portEdit );
   grid->addWidget( mImap.portEdit, row, 1 );
@@ -781,7 +781,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
   ++row;
   label = new QLabel( i18n("Prefix to &folders:"), page1 );
   grid->addWidget( label, row, 0 );
-  mImap.prefixEdit = new QLineEdit( page1 );
+  mImap.prefixEdit = new KLineEdit( page1 );
   label->setBuddy( mImap.prefixEdit );
   grid->addWidget( mImap.prefixEdit, row, 1 );
 

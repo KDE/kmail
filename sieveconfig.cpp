@@ -23,7 +23,7 @@
 #include <qlayout.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 
 
 namespace KMail {
@@ -85,7 +85,7 @@ namespace KMail {
 
     // "Alternate URL" lineedit and label:
     ++row;
-    mAlternateURLEdit = new QLineEdit( this );
+    mAlternateURLEdit = new KLineEdit( this );
     mAlternateURLEdit->setEnabled( false );
     glay->addWidget( new QLabel( mAlternateURLEdit, i18n("&Alternate URL:"), this ), row, 0 );
     glay->addWidget( mAlternateURLEdit, row, 1 );

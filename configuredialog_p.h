@@ -5,7 +5,7 @@
 #ifndef _CONFIGURE_DIALOG_PRIVATE_H_
 #define _CONFIGURE_DIALOG_PRIVATE_H_
 
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qcombobox.h>
 #include <qguardedptr.h>
 #include <qptrlist.h>

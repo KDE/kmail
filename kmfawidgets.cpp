@@ -23,7 +23,7 @@ KMFilterActionWithAddressWidget::KMFilterActionWithAddressWidget( QWidget* paren
 {
   QHBoxLayout *hbl = new QHBoxLayout(this);
   hbl->setSpacing(4);
-  mLineEdit = new QLineEdit(this);
+  mLineEdit = new KLineEdit(this);
   hbl->addWidget( mLineEdit, 1 /*stretch*/ );
   mBtn = new QPushButton( QString::null ,this );
   mBtn->setPixmap( BarIcon( "contents", KIcon::SizeSmall ) );

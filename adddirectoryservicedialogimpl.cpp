@@ -1,7 +1,7 @@
 #include "adddirectoryservicedialogimpl.h"
 
 #include <qvalidator.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 
 /*
  *  Constructs a AddDirectoryServiceDialogImpl which is a child of 'parent', with the

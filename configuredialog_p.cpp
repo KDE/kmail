@@ -19,6 +19,7 @@
 // other kdenetwork headers: (none)
 
 // other KDE headers:
+#include <klineedit.h>
 #include <ksimpleconfig.h>
 #include <kstandarddirs.h>
 #include <klocale.h>
@@ -48,7 +49,7 @@ NewIdentityDialog::NewIdentityDialog( const QStringList & identities,
 
   // row 0: line edit with label
   QHBoxLayout * hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mLineEdit = new QLineEdit( page );
+  mLineEdit = new KLineEdit( page );
   mLineEdit->setFocus();
   hlay->addWidget( new QLabel( mLineEdit, i18n("&New identity:"), page ) );
   hlay->addWidget( mLineEdit, 1 );

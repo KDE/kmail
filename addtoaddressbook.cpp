@@ -23,7 +23,7 @@
  * $Revision$
  */
 
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qlayout.h>
 
 #include <klocale.h>
@@ -184,7 +184,7 @@ void AddToKabDialog::newEntry()
   for(count=0; count<Size; ++count)
     {
       layout.addWidget(new QLabel(texts[count], mainwidget), row, 0);
-      lineedits[count]=new QLineEdit(mainwidget);
+      lineedits[count]=new KLineEdit(mainwidget);
       layout.addWidget(lineedits[count], row, 1);
       ++row;
     }

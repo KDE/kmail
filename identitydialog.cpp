@@ -28,6 +28,7 @@
 #include <kpgpui.h>
 
 // other KDE headers:
+#include <klineedit.h>
 #include <klocale.h>
 #include <kmessagebox.h>
 #include <kconfig.h>
@@ -37,7 +38,7 @@
 #include <qtabwidget.h>
 #include <qlayout.h>
 #include <qlabel.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
 #include <qstring.h>
@@ -75,13 +76,13 @@ namespace KMail {
 
     // "Name" line edit and label:
     ++row;
-    mNameEdit = new QLineEdit( tab );
+    mNameEdit = new KLineEdit( tab );
     glay->addWidget( mNameEdit, row, 1 );
     glay->addWidget( new QLabel( mNameEdit, i18n("&Your name:"), tab ), row, 0 );
 
     // "Organization" line edit and label:
     ++row;
-    mOrganizationEdit = new QLineEdit( tab );
+    mOrganizationEdit = new KLineEdit( tab );
     glay->addWidget( mOrganizationEdit, row, 1 );
     glay->addWidget( new QLabel( mOrganizationEdit,
 				 i18n("Organi&zation:"), tab ), row, 0 );
@@ -89,7 +90,7 @@ namespace KMail {
     // "Email Address" line edit and label:
     // (row 3: spacer)
     ++row;
-    mEmailEdit = new QLineEdit( tab );
+    mEmailEdit = new KLineEdit( tab );
     glay->addWidget( mEmailEdit, row, 1 );
     glay->addWidget( new QLabel( mEmailEdit, i18n("&Email address:"), tab ),
 		     row, 0 );
@@ -107,14 +108,14 @@ namespace KMail {
 
     // "Reply-To Address" line edit and label:
     ++row;
-    mReplyToEdit = new QLineEdit( tab );
+    mReplyToEdit = new KLineEdit( tab );
     glay->addWidget( mReplyToEdit, row, 1 );
     glay->addWidget( new QLabel( mReplyToEdit,
 				 i18n("&Reply-To address:"), tab ), row, 0 );
 
     // "BCC addresses" line edit and label:
     ++row;
-    mBccEdit = new QLineEdit( tab );
+    mBccEdit = new KLineEdit( tab );
     glay->addWidget( mBccEdit, row, 1 );
     label = new QLabel( mBccEdit, i18n("&BCC addresses:"), tab );
     glay->addWidget( label, row, 0 );

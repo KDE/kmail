@@ -33,7 +33,7 @@
 #include <qheader.h>
 #include <qlabel.h>
 #include <qlayout.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qobjectlist.h>
 #include <qpopupmenu.h>
 #include <qpushbutton.h>
@@ -166,7 +166,7 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   QHBoxLayout *hbl2 = new QHBoxLayout( vbl, spacingHint(), "kmfs_hbl2" );
   mSearchFolderLbl = new QLabel(i18n("Search folder name:"), searchWidget);
   hbl2->addWidget(mSearchFolderLbl);
-  mSearchFolderEdt = new QLineEdit(searchWidget);
+  mSearchFolderEdt = new KLineEdit(searchWidget);
   hbl2->addWidget(mSearchFolderEdt);
   mSearchFolderBtn = new QPushButton(i18n("Create"), searchWidget);
   mSearchFolderBtn->setEnabled(false);

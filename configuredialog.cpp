@@ -71,6 +71,7 @@ using KMime::DateFormatter;
 #include <kdebug.h>
 #include <knuminput.h>
 #include <kfontdialog.h>
+#include <klineedit.h>
 #include <klineeditdlg.h>
 #include <kmessagebox.h>
 #include <kglobalsettings.h>
@@ -96,7 +97,7 @@ using KMime::DateFormatter;
 #include <qlayout.h>
 #include <qtextcodec.h>
 #include <qheader.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qpopupmenu.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
@@ -735,7 +736,7 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   glay->addWidget( mMessagePropertyCombo, 3, 1 );
 
   // "default domain" input field:
-  mDefaultDomainEdit = new QLineEdit( group );
+  mDefaultDomainEdit = new KLineEdit( group );
   glay->addMultiCellWidget( mDefaultDomainEdit, 4, 4, 1, 2 );
 
   // labels:
@@ -2083,7 +2084,7 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
     radio = new QRadioButton( buttonLabel, mDateDisplay );
     mDateDisplay->insert( radio, i );
     if ( dateDisplayConfig[i].dateDisplay == DateFormatter::Custom ) {
-      mCustomDateFormatEdit = new QLineEdit( mDateDisplay );
+      mCustomDateFormatEdit = new KLineEdit( mDateDisplay );
       mCustomDateFormatEdit->setEnabled( false );
       connect( radio, SIGNAL(toggled(bool)),
 	       mCustomDateFormatEdit, SLOT(setEnabled(bool)) );
@@ -2551,25 +2552,25 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
            this, SLOT(slotRemoveLanguage()) );
 
   // row 3: "reply to sender" line edit and label:
-  mPhraseReplyEdit = new QLineEdit( this );
+  mPhraseReplyEdit = new KLineEdit( this );
   glay->addWidget( new QLabel( mPhraseReplyEdit,
 			       i18n("Repl&y to sender:"), this ), 3, 0 );
   glay->addMultiCellWidget( mPhraseReplyEdit, 3, 3, 1, 2 ); // cols 1..2
 
   // row 4: "reply to all" line edit and label:
-  mPhraseReplyAllEdit = new QLineEdit( this );
+  mPhraseReplyAllEdit = new KLineEdit( this );
   glay->addWidget( new QLabel( mPhraseReplyAllEdit,
 			       i18n("Reply &to all:"), this ), 4, 0 );
   glay->addMultiCellWidget( mPhraseReplyAllEdit, 4, 4, 1, 2 ); // cols 1..2
 
   // row 5: "forward" line edit and label:
-  mPhraseForwardEdit = new QLineEdit( this );
+  mPhraseForwardEdit = new KLineEdit( this );
   glay->addWidget( new QLabel( mPhraseForwardEdit,
 			       i18n("&Forward:"), this ), 5, 0 );
   glay->addMultiCellWidget( mPhraseForwardEdit, 5, 5, 1, 2 ); // cols 1..2
 
   // row 6: "quote indicator" line edit and label:
-  mPhraseIndentPrefixEdit = new QLineEdit( this );
+  mPhraseIndentPrefixEdit = new KLineEdit( this );
   glay->addWidget( new QLabel( mPhraseIndentPrefixEdit,
 			       i18n("&Quote indicator:"), this ), 6, 0 );
   glay->addMultiCellWidget( mPhraseIndentPrefixEdit, 6, 6, 1, 2 );
@@ -2930,7 +2931,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
 
   // "Message-Id suffix" line edit and label:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
-  mMessageIdSuffixEdit = new QLineEdit( this );
+  mMessageIdSuffixEdit = new KLineEdit( this );
   // only ASCII letters, digits, plus, minus and dots are allowed
   mMessageIdSuffixValidator =
     new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), this );
@@ -2976,7 +2977,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   glay->addWidget( mRemoveHeaderButton, 1, 2 );
 
   // "name" and "value" line edits and labels:
-  mTagNameEdit = new QLineEdit( this );
+  mTagNameEdit = new KLineEdit( this );
   mTagNameEdit->setEnabled( false );
   mTagNameLabel = new QLabel( mTagNameEdit, i18n("&Name:"), this );
   mTagNameLabel->setEnabled( false );
@@ -2985,7 +2986,7 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   connect( mTagNameEdit, SIGNAL(textChanged(const QString&)),
 	   this, SLOT(slotMimeHeaderNameChanged(const QString&)) );
 
-  mTagValueEdit = new QLineEdit( this );
+  mTagValueEdit = new KLineEdit( this );
   mTagValueEdit->setEnabled( false );
   mTagValueLabel = new QLabel( mTagValueEdit, i18n("&Value:"), this );
   mTagValueLabel->setEnabled( false );
@@ -3724,7 +3725,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
 
   // "name" line edit and label:
   ++row;
-  mNameEdit = new QLineEdit( this );
+  mNameEdit = new KLineEdit( this );
   mNameEdit->setEnabled( false ); // since no item is selected in mPlugList
   glay->addWidget( new QLabel( mNameEdit, i18n("Na&me:"), this ), row, 0 );
   glay->addWidget( mNameEdit, row, 1 );
@@ -3744,7 +3745,7 @@ SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char
 
   // "Update URL" line edit and label:
   ++row;
-  mUpdateURLEdit = new QLineEdit( this );
+  mUpdateURLEdit = new KLineEdit( this );
   mUpdateURLEdit->setEnabled( false ); // since no item is sel'd in mPlugList
   glay->addWidget( new QLabel( mUpdateURLEdit, i18n("&Update URL:"), this ), row, 0 );
   glay->addWidget( mUpdateURLEdit, row, 1 );

@@ -5,12 +5,12 @@
 
 #include <qcheckbox.h>
 #include <qlayout.h>
-#include <qlineedit.h>
 #include <qgroupbox.h>
 #include <qregexp.h>
 #include <qlabel.h>
 
 #include <kapplication.h>
+#include <klineedit.h>
 #include <klocale.h>
 #include <knuminput.h>
 #include <kmessagebox.h>
@@ -58,7 +58,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   QLabel *label = new QLabel( i18n("&Name:"), fpGroup );
   hl->addWidget( label );
 
-  nameEdit = new QLineEdit( fpGroup );
+  nameEdit = new KLineEdit( fpGroup );
   if( !folder )
     nameEdit->setFocus();
   nameEdit->setText(folder ? folder->label() : i18n("unnamed"));
@@ -213,7 +213,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
   QObject::connect( holdsMailingList, SIGNAL(toggled(bool)),
 		    label, SLOT(setEnabled(bool)) );
   mlLayout->addWidget( label, 1, 0 );
-  mailingListPostAddress = new QLineEdit( mlGroup );
+  mailingListPostAddress = new KLineEdit( mlGroup );
   label->setBuddy( mailingListPostAddress );
   mlLayout->addWidget( mailingListPostAddress, 1, 1 );
   mailingListPostAddress->setEnabled(false);
@@ -338,7 +338,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 
 //   label = new QLabel( i18n("Admin Address:"), page );
 //   hl->addWidget( label );
-//   mailingListAdminAddress = new QLineEdit( page );
+//   mailingListAdminAddress = new KLineEdit( page );
 //   mailingListAdminAddress->setMinimumSize(mailingListAdminAddress->sizeHint());
 //   hl->addWidget( mailingListAdminAddress );
 

@@ -5,7 +5,7 @@
 
 #include <qlistview.h>
 #include <qpushbutton.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qbuttongroup.h>
 
 /*

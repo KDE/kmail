@@ -31,7 +31,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qcombobox.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qtextcodec.h>
 
 #include <assert.h>
@@ -142,7 +142,7 @@ KMFilterActionWithString::KMFilterActionWithString( const char* aName, const QSt
 
 QWidget* KMFilterActionWithString::createParamWidget( QWidget* parent ) const
 {
-  QLineEdit *le = new QLineEdit(parent);
+  QLineEdit *le = new KLineEdit(parent);
   le->setText( mParameter );
   return le;
 }
@@ -989,7 +989,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   QLabel *l = new QLabel( i18n("with value"), w );
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
-  QLineEdit *le = new QLineEdit( w, "ledit" );
+  QLineEdit *le = new KLineEdit( w, "ledit" );
   hbl->addWidget( le, 1 );
   setParamWidgetValue( w );
   return w;
@@ -1131,14 +1131,14 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
-  QLineEdit *le = new QLineEdit( w, "search" );
+  QLineEdit *le = new KLineEdit( w, "search" );
   hbl->addWidget( le, 1 );
 
   l = new QLabel( i18n("with"), w );
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
-  le = new QLineEdit( w, "replace" );
+  le = new KLineEdit( w, "replace" );
   hbl->addWidget( le, 1 );
 
   setParamWidgetValue( w );

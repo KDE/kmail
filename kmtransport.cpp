@@ -23,7 +23,7 @@
 #include <qbuttongroup.h>
 #include <qcheckbox.h>
 #include <qlayout.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qradiobutton.h>
 #include <qtabwidget.h>
 #include <qvalidator.h>
@@ -212,13 +212,13 @@ void KMTransportDialog::makeSendmailPage()
 
   QLabel *label = new QLabel( i18n("&Name:"), page );
   grid->addWidget( label, 0, 0 );
-  mSendmail.nameEdit = new QLineEdit( page );
+  mSendmail.nameEdit = new KLineEdit( page );
   label->setBuddy( mSendmail.nameEdit );
   grid->addWidget( mSendmail.nameEdit, 0, 1 );
 
   label = new QLabel( i18n("&Location:"), page );
   grid->addWidget( label, 1, 0 );
-  mSendmail.locationEdit = new QLineEdit( page );
+  mSendmail.locationEdit = new KLineEdit( page );
   label->setBuddy(mSendmail.locationEdit);
   grid->addWidget( mSendmail.locationEdit, 1, 1 );
   mSendmail.chooseButton =
@@ -266,7 +266,7 @@ void KMTransportDialog::makeSmtpPage()
 
   QLabel *label = new QLabel( i18n("&Name:"), page1 );
   grid->addWidget( label, 0, 0 );
-  mSmtp.nameEdit = new QLineEdit( page1 );
+  mSmtp.nameEdit = new KLineEdit( page1 );
   QWhatsThis::add(mSmtp.nameEdit,
                   i18n("The name that KMail will use when "
                        "referring to this server."));
@@ -275,7 +275,7 @@ void KMTransportDialog::makeSmtpPage()
 
   label = new QLabel( i18n("&Host:"), page1 );
   grid->addWidget( label, 3, 0 );
-  mSmtp.hostEdit = new QLineEdit( page1 );
+  mSmtp.hostEdit = new KLineEdit( page1 );
   QWhatsThis::add(mSmtp.hostEdit,
                   i18n("The domain name or numerical address "
                        "of the SMTP server."));
@@ -284,7 +284,7 @@ void KMTransportDialog::makeSmtpPage()
 
   label = new QLabel( i18n("&Port:"), page1 );
   grid->addWidget( label, 4, 0 );
-  mSmtp.portEdit = new QLineEdit( page1 );
+  mSmtp.portEdit = new KLineEdit( page1 );
   mSmtp.portEdit->setValidator( new QIntValidator(this) );
   QWhatsThis::add(mSmtp.portEdit,
                   i18n("The port number that the SMTP server "
@@ -294,7 +294,7 @@ void KMTransportDialog::makeSmtpPage()
 
   label = new QLabel( i18n("Preco&mmand:"), page1 );
   grid->addWidget( label, 5, 0 );
-  mSmtp.precommand = new QLineEdit( page1 );
+  mSmtp.precommand = new KLineEdit( page1 );
   QWhatsThis::add(mSmtp.precommand,
                   i18n("A command to run locally, prior "
                        "to sending email. This can be used "
@@ -320,7 +320,7 @@ void KMTransportDialog::makeSmtpPage()
 
   mSmtp.loginLabel = new QLabel( i18n("&Login:"), page1 );
   grid->addWidget( mSmtp.loginLabel, 8, 0 );
-  mSmtp.loginEdit = new QLineEdit( page1 );
+  mSmtp.loginEdit = new KLineEdit( page1 );
   mSmtp.loginLabel->setBuddy( mSmtp.loginEdit );
   QWhatsThis::add(mSmtp.loginEdit,
                   i18n("The user name to send to the server "
@@ -329,7 +329,7 @@ void KMTransportDialog::makeSmtpPage()
 
   mSmtp.passwordLabel = new QLabel( i18n("P&assword:"), page1 );
   grid->addWidget( mSmtp.passwordLabel, 9, 0 );
-  mSmtp.passwordEdit = new QLineEdit( page1 );
+  mSmtp.passwordEdit = new KLineEdit( page1 );
   mSmtp.passwordEdit->setEchoMode( QLineEdit::Password );
   mSmtp.passwordLabel->setBuddy( mSmtp.passwordEdit );
   QWhatsThis::add(mSmtp.passwordEdit,
@@ -365,7 +365,7 @@ void KMTransportDialog::makeSmtpPage()
 
   label = new QLabel( i18n("H&ostname:"), page1 );
   grid->addWidget( label, 13, 0);
-  mSmtp.localHostnameEdit = new QLineEdit( page1 );
+  mSmtp.localHostnameEdit = new KLineEdit( page1 );
   QWhatsThis::add(mSmtp.localHostnameEdit,
                   i18n("Enter the hostname KMail should use when "
                        "identifying itself to the server."));

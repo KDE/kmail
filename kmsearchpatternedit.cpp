@@ -9,7 +9,7 @@
 #include <kdebug.h>
 
 #include <qradiobutton.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qcombobox.h>
 #include <qbuttongroup.h>
 #include <qstringlist.h>
@@ -48,7 +48,7 @@ void KMSearchRuleWidget::initWidget()
 
   mRuleField = new QComboBox( true, this, "mRuleField" );
   mRuleFunc = new QComboBox( false, this, "mRuleFunc" );
-  mRuleValue = new QLineEdit( this, "mRuleValue" );
+  mRuleValue = new KLineEdit( this, "mRuleValue" );
 
   if( !KTrader::self()->query("KRegExpEditor/KRegExpEditor").isEmpty() ) {
     mRuleEditBut = new QPushButton( i18n("Edit..."), this, "mRuleEditBut" );

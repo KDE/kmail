@@ -62,7 +62,7 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
   QLabel *label = new QLabel( i18n("&Your name:"), this );
   QWhatsThis::add( label, i18n("Write your name here.") );
   grid->addWidget( label, 0, 0 );
-  nameEdit = new QLineEdit( ident.fullName(), this );
+  nameEdit = new KLineEdit( ident.fullName(), this );
   nameEdit->setFocus();
   label->setBuddy( nameEdit );
   grid->addWidget( nameEdit, 0, 1 );
@@ -70,13 +70,13 @@ WizardIdentityPage::WizardIdentityPage( QWidget * parent, const char * name )
   label = new QLabel( i18n("Organi&zation:"), this );
   QWhatsThis::add( label, i18n("You can write the company or organization you work for.") );
   grid->addWidget( label, 1, 0 );
-  orgEdit = new QLineEdit( ident.organization(), this );
+  orgEdit = new KLineEdit( ident.organization(), this );
   label->setBuddy( orgEdit );
   grid->addWidget( orgEdit, 1, 1 );
 
   label = new QLabel( i18n("&Email address:"), this );
   grid->addWidget( label, 2, 0 );
-  emailEdit = new QLineEdit( ident.emailAddr(), this );
+  emailEdit = new KLineEdit( ident.emailAddr(), this );
   label->setBuddy( emailEdit );
   grid->addWidget( emailEdit, 2, 1 );
 }
@@ -115,20 +115,20 @@ WizardKolabPage::WizardKolabPage( QWidget * parent, const char * name )
   QLabel *label = new QLabel( i18n("&Login:"), this );
   QWhatsThis::add( label, i18n("Your Internet Service Provider gave you a <em>user name</em> which is used to authenticate you with their servers. It usually is the first part of your email address (the part before <em>@</em>).") );
   grid->addWidget( label, 0, 0 );
-  loginEdit = new QLineEdit( this );
+  loginEdit = new KLineEdit( this );
   label->setBuddy( loginEdit );
   grid->addWidget( loginEdit, 0, 1 );
 
   label = new QLabel( i18n("P&assword:"), this );
   grid->addWidget( label, 1, 0 );
-  passwordEdit = new QLineEdit( this );
+  passwordEdit = new KLineEdit( this );
   passwordEdit->setEchoMode( QLineEdit::Password );
   label->setBuddy( passwordEdit );
   grid->addWidget( passwordEdit, 1, 1 );
 
   label = new QLabel( i18n("Ho&st:"), this );
   grid->addWidget( label, 2, 0 );
-  hostEdit = new QLineEdit( this );
+  hostEdit = new KLineEdit( this );
   // only letters, digits, '-', '.', ':' (IPv6) and '_' (for Windows
   // compatibility) are allowed
   hostEdit->setValidator(new QRegExpValidator( QRegExp( "[A-Za-z0-9-_:.]*" ), 0 ) );

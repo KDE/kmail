@@ -30,7 +30,7 @@
 #include <qlayout.h>
 #include <qcombobox.h>
 #include <qwhatsthis.h>
-#include <qlineedit.h>
+#include <klineedit.h>
 #include <qcheckbox.h>
 
 // other includes:
@@ -118,7 +118,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   QWhatsThis::add( mSize, msg );
 
   // row 2: "Name" lineedit and label:
-  mFileName = new QLineEdit( plainPage() );
+  mFileName = new KLineEdit( plainPage() );
   label = new QLabel( mFileName, i18n("&Name:"), plainPage() );
   glay->addWidget( label, 2, 0 );
   glay->addWidget( mFileName, 2, 1 );
@@ -132,7 +132,7 @@ KMMsgPartDialog::KMMsgPartDialog( const QString & caption,
   QWhatsThis::add( mFileName, msg );
 
   // row 3: "Description" lineedit and label:
-  mDescription = new QLineEdit( plainPage() );
+  mDescription = new KLineEdit( plainPage() );
   label = new QLabel( mDescription, i18n("&Description:"), plainPage() );
   glay->addWidget( label, 3, 0 );
   glay->addWidget( mDescription, 3, 1 );
