@@ -1313,8 +1313,17 @@ void KMReaderWin::slotAtmView()
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     } else {
-      kernel->kbp()->idle();
-      KMessageBox::sorry( 0L, i18n("Cannot view attachment. It is not HTML, image or text.") );
+      QMultiLineEdit *medit = new QMultiLineEdit();
+      QString str = msgPart.bodyDecoded();
+      // A QString cannot handle binary data. So if it's shorter than the
+      // attachment, we assume the attachment is binary:
+      if( str.length() < msgPart.size() ) {
+        str += i18n("\n[KMail: Attachment contains binary data. Trying to show first %1 characters.]").arg(str.length());
+      }
+      medit->setText(str);
+      medit->setReadOnly(true);
+      medit->resize(500, 550);
+      medit->show();
     }
   }
   // ---Sven's view text, html and image attachments in html widget end ---
