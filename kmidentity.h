@@ -86,7 +86,7 @@ public:
   /** The transport that is set for this identity. Used to link a
       transport with an identity. */
   const QString transport(void) { return mTransport; }
-  virtual void setTransport(QString);
+  virtual void setTransport(const QString);
 
 protected:
   QString mIdentity, mFullName, mOrganization, mPgpIdentity, mEmailAddr;
