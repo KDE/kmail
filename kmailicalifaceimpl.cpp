@@ -736,6 +736,7 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     // Message found - make a copy and update it:
     KMMessage* newMsg = new KMMessage( *msg );
     newMsg->setSubject( subject );
+    newMsg->setParent( 0 ); // workaround strange line in KMMsgBase::assign. newMsg is not in any folder yet.
 
     // Delete some attachments according to list
     for( QStringList::ConstIterator it = deletedAttachments.begin();
@@ -762,9 +763,11 @@ Q_UINT32 KMailICalIfaceImpl::update( const QString& resource,
     }
 
     deleteMsg( msg );
-    if ( f->addMsg( newMsg ) == 0 )
+    if ( f->addMsg( newMsg ) == 0 ) {
       // Message stored
       rc = newMsg->getMsgSerNum();
+      kdDebug(5006) << "forget about " << sernum << ", it's " << rc << " now" << endl;
+    }
 
   }else{
     // Message not found - store it newly
