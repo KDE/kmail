@@ -37,14 +37,14 @@
 #include <qpushbutton.h>
 
 namespace KMail {
-  
+
   //---------------------------------------------------------------------------
   /**
     @short KMail message redirection dialog.
     @author Andreas Gungl <a.gungl@gmx.de>
 
     The dialog is used to collect redirect addresses when
-    manually redirecting messages. Only Redirect-To is 
+    manually redirecting messages. Only Redirect-To is
     supported so far.
 
   */
@@ -53,19 +53,22 @@ namespace KMail {
     Q_OBJECT
 
     public:
-      /** Constructor 
-        @param immediate True, if the Send Now button should be default 
+      /** Constructor
+        @param parent parent QWidget
+        @param name dialog name
+        @param modal dialog modal type
+        @param immediate True, if the Send Now button should be default
                          or false if the Queue button should be default
       */
-      RedirectDialog( QWidget *parent=0, const char *name=0, 
+      RedirectDialog( QWidget *parent=0, const char *name=0,
                       bool modal=false, bool immediate=true );
-      
+
       /** Return the addresses for the redirection */
       QString to() { return mResentTo; };
-    
+
       /** Returns the send mode */
       bool sendImmediate() { return mImmediate; };
-    
+
     protected:
       /** Evaluate the settings, an empty To field is not allowed. */
       void accept();
@@ -73,7 +76,7 @@ namespace KMail {
     protected slots:
       /** Open addressbook editor dialog. */
       void slotAddrBook();
-      
+
       void slotUser1();
       void slotUser2();
 
@@ -84,7 +87,7 @@ namespace KMail {
       QString     mResentTo;
       bool        mImmediate;
   };
-  
+
 } // namespace KMail
 
 #endif // KMAIL_REDIRECTDIALOG_H
