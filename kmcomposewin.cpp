@@ -343,7 +343,7 @@ void KMComposeWin::readConfig(void)
   mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
-  mWordWrap = config->readNumEntry("word-wrap", 1);
+  mWordWrap = config->readBoolEntry("word-wrap", true);
   mLineBreak = config->readNumEntry("break-at", 78);
   mBtnIdentity->setChecked(config->readBoolEntry("sticky-identity", false));
   if (mBtnIdentity->isChecked())
