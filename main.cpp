@@ -135,6 +135,8 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 	strncmp(aMsg,"QPainter:",9) != 0 &&
 	strncmp(aMsg,"Could not load", 14) != 0 &&
 	strncmp(aMsg,"QPixmap:",8) != 0 &&
+	strncmp(aMsg,"stripping",9) != 0 &&
+	strncmp(aMsg,"QCache:",7) != 0 &&
 	!recurse)
     {
       ungrabPtrKb();
