@@ -142,7 +142,7 @@ private:
 	MAILSTREAM *stream;
 
 public:
-	Folder(){};
+	Folder() { stream=NULL; };
 	~Folder();
 	long open(CCHAR);
 	void close(long = CL_EXPUNGE);
