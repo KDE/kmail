@@ -11,7 +11,7 @@
  	that receive old messages are not marked.
 
 	* Fixed problems in pop code downloading old messages
-	also. The "download" dialog is a bit misleading 'cause
+	also. The "download" dialog is a bit misleading because
 	it should say now "checking message:" instead of
 	"downloading message:" because old messages are counted
 	here also.
