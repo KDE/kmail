@@ -353,6 +353,9 @@ public:
   /** Escape a leading dot */
   static QString dotEscape(const QString&);
 
+  /** Read the config file */
+  virtual void readConfig();
+
   /** Write the config file */
   virtual void writeConfig();
 
@@ -452,9 +455,6 @@ protected:
     At the time of the call the folder has already been closed, and
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents() = 0;
-
-  /** Read the config file */
-  virtual void readConfig();
 
   virtual KMMsgBase* takeIndexEntry( int idx ) = 0;
   virtual KMMsgInfo* setIndexEntry( int idx, KMMessage *msg ) = 0;

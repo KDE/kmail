@@ -79,6 +79,9 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
            SIGNAL( numUnreadMsgsChanged( KMFolder* ) ) );
   connect( mStorage, SIGNAL( syncRunning( KMFolder*, bool ) ),
            SIGNAL( syncRunning( KMFolder*, bool ) ) );
+
+  //FIXME: Centralize all the readConfig calls somehow - Zack
+  mStorage->readConfig();
 }
 
 KMFolder::~KMFolder()

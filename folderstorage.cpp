@@ -77,9 +77,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
-
-  //FIXME: Centralize all the readConfig calls somehow - Zack
-  readConfig();
 }
 
 
