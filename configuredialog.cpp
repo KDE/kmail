@@ -3559,7 +3559,10 @@ FolderPage::FolderPage( QWidget * parent, const char * name )
 
   // "confirm before emptying folder" check box: stretch 0
   mEmptyFolderConfirmCheck =
-    new QCheckBox( i18n("Co&nfirm before emptying folders"), this );
+    new QCheckBox( i18n("Corresponds to Folder->Move All Messages to Trash",
+                        "Ask for co&nfirmation before moving all messages to "
+                        "trash"),
+                   this );
   vlay->addWidget( mEmptyFolderConfirmCheck );
   mWarnBeforeExpire =
     new QCheckBox( i18n("&Warn before expiring messages"), this );
