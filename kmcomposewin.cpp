@@ -1513,7 +1513,7 @@ bool KMComposeWin::applyChanges(void)
   
   // This c-string (init empty here) is set by *first* testing of expiring
   // signature certificate and stops us from repeatedly asking same questions.
-  QCString certFingerprint;
+  QCString signCertFingerprint;
   
   // note: Must create extra message *before* calling compose on mMsg.
   KMMessage* extraMessage = new KMMessage( *mMsg );
@@ -1521,7 +1521,7 @@ bool KMComposeWin::applyChanges(void)
   if( bOk )
     bOk = composeMessage( cryptPlug, pgpUserId,
                           *mMsg, doSign, doEncrypt, false,
-                          certFingerprint );
+                          signCertFingerprint );
     
   if( bOk ) {
     bool saveSentSignatures = cryptPlug ? cryptPlug->saveSentSignatures()
@@ -1589,7 +1589,7 @@ bool KMComposeWin::applyChanges(void)
                             doSign    && saveSentSignatures,
                             doEncrypt && saveMessagesEncrypted,
                             true,
-                            certFingerprint );
+                            signCertFingerprint );
 kdDebug(5006) << "KMComposeWin::applyChanges(void)  -  Store message in decrypted form." << endl;
       extraMessage->cleanupHeader();
       mMsg->setUnencryptedMsg( extraMessage );
@@ -1625,7 +1625,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                                    bool doSign,
                                    bool doEncrypt,
                                    bool ignoreBcc,
-                                   QCString& certFingerprint )
+                                   QCString& signCertFingerprint )
 {
   bool bOk = true;  
   // create informative header for those that have no mime-capable
@@ -1796,7 +1796,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
 
       QByteArray signature = pgpSignedMsg( encodedBody,
                                            structuring,
-                                           certFingerprint );
+                                           signCertFingerprint );
       kdDebug(5006) << "                           size of signature: " << signature.count() << "\n" << endl;
       bOk = !signature.isEmpty();
       if( bOk ) {
@@ -1871,7 +1871,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                               oldBodyPart,
                               earlyAddAttachments, allAttachmentsAreInBody,
                               tmpNewBodyPart,
-                              certFingerprint );
+                              signCertFingerprint );
         if( bOk ){
           yetAnotherMessageForBCC->setHeaderField( "X-KMail-Recipients", *it );
           bccMsgList.append( yetAnotherMessageForBCC );
@@ -1890,7 +1890,7 @@ bool KMComposeWin::composeMessage( CryptPlugWrapper* cryptPlug,
                             oldBodyPart,
                             earlyAddAttachments, allAttachmentsAreInBody,
                             newBodyPart,
-                            certFingerprint );
+                            signCertFingerprint );
     //        kdDebug(5006) << "###AFTER ENCRYPTION\"" << theMessage.asString() << "\""<<endl;
   }
   return bOk;
@@ -1913,13 +1913,17 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
                                    bool earlyAddAttachments,
                                    bool allAttachmentsAreInBody,
                                    KMMessagePart newBodyPart,
-                                   QCString& certFingerprint )
+                                   QCString& signCertFingerprint )
 {
   if(!msg)
   {
     kdDebug(5006) << "KMComposeWin::encryptMessage() : msg == NULL!\n" << endl;
     return FALSE;
   }
+  
+  // This c-string (init empty here) is set by *first* testing of expiring
+  // encryption certificate: stops us from repeatedly asking same questions.
+  QCString encryptCertFingerprints;
   
   bool bOk = true;
   // encrypt message
@@ -1949,7 +1953,8 @@ bool KMComposeWin::encryptMessage( KMMessage* msg,
 
         QByteArray encryptedBody = pgpEncryptedMsg( innerContent,
                                                     recipients,
-                                                    structuring );
+                                                    structuring,
+                                                    encryptCertFingerprints );
 
         bOk = ! (encryptedBody.isNull() || encryptedBody.isEmpty());
 
@@ -2063,7 +2068,7 @@ kdDebug(5006) << "                                 sign " << idx << ". attachmen
 
               QByteArray signature = pgpSignedMsg( encodedAttachment,
                                                    structuring,
-                                                   certFingerprint );
+                                                   signCertFingerprint );
               bOk = !signature.isEmpty();
               if( bOk ) {
                 bOk = processStructuringInfo( QString::fromUtf8( cryptPlug->bugURL() ),
@@ -2100,7 +2105,8 @@ kdDebug(5006) << "                                 encrypt " << idx << ". attach
               StructuringInfoWrapper structuring( cryptPlug );
               QByteArray encryptedBody = pgpEncryptedMsg( encodedAttachment,
                                                           recipients,
-                                                          structuring );
+                                                          structuring,
+                                                          encryptCertFingerprints );
 
               bOk = ! (encryptedBody.isNull() || encryptedBody.isEmpty());
 
@@ -2574,7 +2580,7 @@ QCString KMComposeWin::breakLinesAndApplyCodec()
 //-----------------------------------------------------------------------------
 QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                                        StructuringInfoWrapper& structuring,
-                                       QCString& certFingerprint )
+                                       QCString& signCertFingerprint )
 {
   QByteArray signature;
 
@@ -2586,10 +2592,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                   
     bool bSign = true;
     
-    if( certFingerprint.isEmpty() ){
+    if( signCertFingerprint.isEmpty() ){
         int certSize = 0;
         QByteArray certificate;
-        QCString certFingerprints;
         QString selectedCert;
         KListBoxDialog dialog( selectedCert, "", i18n( "&Select certificate:") );
         dialog.resize( 700, 200 );
@@ -2650,12 +2655,12 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
             }
 
             if (bSign) {
-                certFingerprint = selectedCert.utf8();
-                certFingerprint.remove( 0, certFingerprint.findRev( '(' )+1 );
-                certFingerprint.truncate( certFingerprint.length()-1 );
+                signCertFingerprint = selectedCert.utf8();
+                signCertFingerprint.remove( 0, signCertFingerprint.findRev( '(' )+1 );
+                signCertFingerprint.truncate( signCertFingerprint.length()-1 );
                 kdDebug(5006) << "\n\n                      Signer: " << from()
-                              <<   "\nFingerprint of signature key: " << QString( certFingerprint ) << "\n\n" << endl;
-                if( certFingerprint.isEmpty() )
+                              <<   "\nFingerprint of signature key: " << QString( signCertFingerprint ) << "\n\n" << endl;
+                if( signCertFingerprint.isEmpty() )
                     bSign = false;
             }
         }
@@ -2687,9 +2692,9 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
         // Check for expiry of the signer, CA, and Root certificate.
         // Only do the expiry check if the plugin has this feature
-        // and if there in *no* fingerprint in certFingerprint already.
+        // and if there in *no* fingerprint in signCertFingerprint already.
         if( cryptPlug->hasFeature( Feature_WarnSignCertificateExpiry ) ){
-            int sigDaysLeft = cryptPlug->signatureCertificateDaysLeftToExpiry( certFingerprint );
+            int sigDaysLeft = cryptPlug->signatureCertificateDaysLeftToExpiry( signCertFingerprint );
             if( cryptPlug->signatureCertificateExpiryNearWarning() &&
                 sigDaysLeft <
                 cryptPlug->signatureCertificateExpiryNearInterval() ) {
@@ -2701,7 +2706,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
             }
 
             if( bSign ) {
-                int rootDaysLeft = cryptPlug->rootCertificateDaysLeftToExpiry( certFingerprint );
+                int rootDaysLeft = cryptPlug->rootCertificateDaysLeftToExpiry( signCertFingerprint );
                 if( cryptPlug->rootCertificateExpiryNearWarning() &&
                     rootDaysLeft <
                     cryptPlug->rootCertificateExpiryNearInterval() ) {
@@ -2715,7 +2720,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
 
             if( bSign ) {
-                int caDaysLeft = cryptPlug->caCertificateDaysLeftToExpiry( certFingerprint );
+                int caDaysLeft = cryptPlug->caCertificateDaysLeftToExpiry( signCertFingerprint );
                 if( cryptPlug->caCertificateExpiryNearWarning() &&
                     caDaysLeft <
                     cryptPlug->caCertificateExpiryNearInterval() ) {
@@ -2731,7 +2736,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
         // the certificate, but only do this if the plugin has this feature.
         if( cryptPlug->hasFeature( Feature_WarnSignEmailNotInCertificate ) ) {
             if( bSign && cryptPlug->warnNoCertificate() &&
-                !cryptPlug->isEmailInCertificate( QString( KMMessage::getEmailAddr( from() ) ).utf8(), certFingerprint ) )  {
+                !cryptPlug->isEmailInCertificate( QString( KMMessage::getEmailAddr( from() ) ).utf8(), signCertFingerprint ) )  {
                 int ret = KMessageBox::warningYesNo( this,
                                                     i18n( "<qt>The certificate does not contain your sender email address.<br>This means that it is not possible for the recipients to check whether the email really came from you.<br>Do you still want to use this signature?</qt>" ),
                                                     i18n( "Certificate Warning" ) );
@@ -2739,7 +2744,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
                     bSign = false;
             }
         }
-    } // if( certFingerprint.isEmpty() )
+    } // if( signCertFingerprint.isEmpty() )
 
 
     // Finally sign the message, but only if the plugin has this feature.
@@ -2763,7 +2768,7 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
             char* errTxt = 0;
             if ( cryptPlug->signMessage( cleartext,
                                          &ciphertext, &cipherLen,
-                                         certFingerprint,
+                                         signCertFingerprint,
                                          structuring,
                                          &errId,
                                          &errTxt ) ){
@@ -2842,7 +2847,8 @@ QByteArray KMComposeWin::pgpSignedMsg( QCString cText,
 
 //-----------------------------------------------------------------------------
 QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& recipients,
-                                          StructuringInfoWrapper& structuring )
+                                          StructuringInfoWrapper& structuring,
+                                          QCString& encryptCertFingerprints )
 {
   QByteArray encoding;
 
@@ -2856,7 +2862,8 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
     bool bEncrypt = true;
     // Check for CRL expiry, but only if the plugin has this
     // feature.
-    if( cryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) &&
+    if( encryptCertFingerprints.isEmpty() &&
+        cryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) &&
         cryptPlug->hasFeature( Feature_EncryptionCRLs ) ) {
         int crlDaysLeft = cryptPlug->encryptionCRLsDaysLeftToExpiry();
         if( cryptPlug->encryptionUseCRLs() &&
@@ -2880,200 +2887,204 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
     const char* cleartext  = cText;
     const char* ciphertext = 0;
 
-    QCString certFingerprints;
+    
+    if( encryptCertFingerprints.isEmpty() ){
 
-    QString selectedCert;
-    KListBoxDialog dialog( selectedCert, "", i18n( "&Select certificate:" ) );
-    dialog.resize( 700, 200 );
-    bool useDialog;
-    int certSize = 0;
-    QByteArray certificateList;
+      QString selectedCert;
+      KListBoxDialog dialog( selectedCert, "", i18n( "&Select certificate:" ) );
+      dialog.resize( 700, 200 );
+      bool useDialog;
+      int certSize = 0;
+      QByteArray certificateList;
 
-    for( QStringList::ConstIterator it = recipients.begin(); it != recipients.end(); ++it ) {
-      QCString addressee = (*it).utf8();
-      addressee.replace(QRegExp("\\x0001"), " ");
-      kdDebug(5006) << "\n\n1st try:  Retrieving keys for: " << *it << endl;
-      
-      
-      bool askForDifferentSearchString = false;
-      do {
-        
-        certSize = 0;
-        char* certificatePtr = 0;
-        bool findCertsOk;
-        if( askForDifferentSearchString )
-          findCertsOk = false;
-        else {
-          findCertsOk = cryptPlug->findCertificates( &(*addressee),
-                                                     &certificatePtr,
-                                                     &certSize,
-                                                     false )
-                        && (0 < certSize);
-          kdDebug(5006) << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-          qDebug( "findCertificates() 1st try returned %s", certificatePtr );
-          if( findCertsOk )
-            certificateList.assign( certificatePtr, certSize );
-        }
-        while( !findCertsOk ) {
-          bool bOk = false;
-          addressee = KLineEditDlg::getText(
-                        askForDifferentSearchString
-                        ? i18n("Look for other certificates")
-                        : i18n("No certificate found"),
-                        i18n("Enter different address for recipient %1 "
-                             "or enter \" * \" to see all certificates:").arg(*it),
-                        addressee, &bOk, this ).stripWhiteSpace().utf8();
-          askForDifferentSearchString = false;
-          if( bOk ) {
-            addressee = addressee.simplifyWhiteSpace();
-            if( ("\"*\"" == addressee) ||
-                ("\" *\"" == addressee) ||
-                ("\"* \"" == addressee) ||
-                ("\" * \"" == addressee))  // You never know what users type.  :-)
-              addressee = "*";
-            kdDebug(5006) << "\n\nnext try: Retrieving keys for: " << addressee << endl;
-            certSize = 0;
-            char* certificatePtr = 0;
-            findCertsOk = cryptPlug->findCertificates( 
-                                          &(*addressee),
-                                          &certificatePtr,
-                                          &certSize,
-                                          false )
+      for( QStringList::ConstIterator it = recipients.begin(); it != recipients.end(); ++it ) {
+        QCString addressee = (*it).utf8();
+        addressee.replace(QRegExp("\\x0001"), " ");
+        kdDebug(5006) << "\n\n1st try:  Retrieving keys for: " << *it << endl;
+
+
+        bool askForDifferentSearchString = false;
+        do {
+
+          certSize = 0;
+          char* certificatePtr = 0;
+          bool findCertsOk;
+          if( askForDifferentSearchString )
+            findCertsOk = false;
+          else {
+            findCertsOk = cryptPlug->findCertificates( &(*addressee),
+                                                      &certificatePtr,
+                                                      &certSize,
+                                                      false )
                           && (0 < certSize);
             kdDebug(5006) << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
-            qDebug( "findCertificates() 2nd try returned %s", certificatePtr );
+            qDebug( "findCertificates() 1st try returned %s", certificatePtr );
             if( findCertsOk )
               certificateList.assign( certificatePtr, certSize );
-          } else {
-            bEncrypt = false;
-            break;
           }
-        }
-        if( bEncrypt && findCertsOk ) {
+          while( !findCertsOk ) {
+            bool bOk = false;
+            addressee = KLineEditDlg::getText(
+                          askForDifferentSearchString
+                          ? i18n("Look for other certificates")
+                          : i18n("No certificate found"),
+                          i18n("Enter different address for recipient %1 "
+                              "or enter \" * \" to see all certificates:").arg(*it),
+                          addressee, &bOk, this ).stripWhiteSpace().utf8();
+            askForDifferentSearchString = false;
+            if( bOk ) {
+              addressee = addressee.simplifyWhiteSpace();
+              if( ("\"*\"" == addressee) ||
+                  ("\" *\"" == addressee) ||
+                  ("\"* \"" == addressee) ||
+                  ("\" * \"" == addressee))  // You never know what users type.  :-)
+                addressee = "*";
+              kdDebug(5006) << "\n\nnext try: Retrieving keys for: " << addressee << endl;
+              certSize = 0;
+              char* certificatePtr = 0;
+              findCertsOk = cryptPlug->findCertificates( 
+                                            &(*addressee),
+                                            &certificatePtr,
+                                            &certSize,
+                                            false )
+                            && (0 < certSize);
+              kdDebug(5006) << "         keys retrieved successfully: " << findCertsOk << "\n" << endl;
+              qDebug( "findCertificates() 2nd try returned %s", certificatePtr );
+              if( findCertsOk )
+                certificateList.assign( certificatePtr, certSize );
+            } else {
+              bEncrypt = false;
+              break;
+            }
+          }
+          if( bEncrypt && findCertsOk ) {
 
-          // fill selection dialog listbox
-          dialog.entriesLB->clear();
-          // show dialog even if only one entry to allow specifying of
-          // another search string _instead_of_ the recipients address
-          bool bAllwaysShowDialog = true;
+            // fill selection dialog listbox
+            dialog.entriesLB->clear();
+            // show dialog even if only one entry to allow specifying of
+            // another search string _instead_of_ the recipients address
+            bool bAllwaysShowDialog = true;
 
-          useDialog = false;
-          int iA = 0;
-          int iZ = 0;
-          while( iZ < certSize ) {
-            if( (certificateList.at(iZ) == '\1') || (certificateList.at(iZ) == '\0') ) {
-              kdDebug(5006) << "iA=" << iA << " iZ=" << iZ << endl;
-              char c = certificateList.at(iZ);
-              if( (bAllwaysShowDialog || (c == '\1')) && !useDialog ) {
-                // set up selection dialog
-                useDialog = true;
-                QString caption( i18n( "Select certificate for encryption" ));
-                caption += " [";
-                caption += *it;
-                caption += "]";
-                dialog.setCaption( caption );
-                dialog.setLabelAbove(
-                  i18n( "&Select certificate for recipient %1:" )
-                  .arg( *it ) );
+            useDialog = false;
+            int iA = 0;
+            int iZ = 0;
+            while( iZ < certSize ) {
+              if( (certificateList.at(iZ) == '\1') || (certificateList.at(iZ) == '\0') ) {
+                kdDebug(5006) << "iA=" << iA << " iZ=" << iZ << endl;
+                char c = certificateList.at(iZ);
+                if( (bAllwaysShowDialog || (c == '\1')) && !useDialog ) {
+                  // set up selection dialog
+                  useDialog = true;
+                  QString caption( i18n( "Select certificate for encryption" ));
+                  caption += " [";
+                  caption += *it;
+                  caption += "]";
+                  dialog.setCaption( caption );
+                  dialog.setLabelAbove(
+                    i18n( "&Select certificate for recipient %1:" )
+                    .arg( *it ) );
+                }
+                certificateList.at(iZ) = '\0';
+                QString s = QString::fromUtf8( &certificateList.at(iA) );
+                certificateList.at(iZ) = c;
+                if( useDialog )
+                  dialog.entriesLB->insertItem( s );
+                else
+                  selectedCert = s;
+                ++iZ;
+                iA = iZ;
               }
-              certificateList.at(iZ) = '\0';
-              QString s = QString::fromUtf8( &certificateList.at(iA) );
-              certificateList.at(iZ) = c;
-              if( useDialog )
-                dialog.entriesLB->insertItem( s );
-              else
-                selectedCert = s;
               ++iZ;
-              iA = iZ;
             }
-            ++iZ;
+            // run selection dialog and retrieve user choice
+            // OR take the single entry (if only one was found)
+            if( useDialog ) {
+              dialog.setCommentBelow(
+                i18n("(Certificates matching address \"%1\", "
+                    " press [Cancel] to use different address for recipient %2.)")
+                .arg(addressee)
+                .arg(*it) );
+              dialog.entriesLB->setFocus();
+              dialog.entriesLB->setSelected( 0, true );
+              askForDifferentSearchString = (dialog.exec() != QDialog::Accepted);
+            }
           }
-          // run selection dialog and retrieve user choice
-          // OR take the single entry (if only one was found)
-          if( useDialog ) {
-            dialog.setCommentBelow(
-              i18n("(Certificates matching address \"%1\", "
-                  " press [Cancel] to use different address for recipient %2.)")
-              .arg(addressee)
-              .arg(*it) );
-            dialog.entriesLB->setFocus();
-            dialog.entriesLB->setSelected( 0, true );
-            askForDifferentSearchString = (dialog.exec() != QDialog::Accepted);
-          }
-        }
-      } while ( askForDifferentSearchString );
-        
+        } while ( askForDifferentSearchString );
 
-      if( bEncrypt ) {
-        QCString certFingerprint = selectedCert.utf8();
-        certFingerprint.remove( 0, certFingerprint.findRev( '(' )+1 );
-        certFingerprint.truncate( certFingerprint.length()-1 );
-        kdDebug(5006) << "\n\n                    Recipient: " << *it
-                  <<   "\nFingerprint of encryption key: " << QString( certFingerprint ) << "\n\n" << endl;
-
-        // Check for expiry of various certificates, but only if the
-        // plugin supports this.
-        if( cryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) ) {
-            QString captionWarn( i18n( "Certificate Warning" ) );
-            captionWarn += " [";
-            captionWarn += *it;
-            captionWarn += "]";
-            if( bEncrypt ) {
-                int encRecvDaysLeft = cryptPlug->receiverCertificateDaysLeftToExpiry( certFingerprint );
-                if( cryptPlug->receiverCertificateExpiryNearWarning() &&
-                    encRecvDaysLeft <
-                    cryptPlug->receiverCertificateExpiryNearWarningInterval() ) {
-                    int ret = KMessageBox::warningYesNo( this,
-                                                        i18n( "<qt>The certificate of the recipient you want to use expires in %1 days.<br>This means that after this period, the recipient will not be able to read your message any longer.\n\nDo you still want to use this certificate?</qt>" ).arg( encRecvDaysLeft ),
-                                                        captionWarn );
-                    if( ret == KMessageBox::No )
-                        bEncrypt = false;
-                }
-            }
-
-            if( bEncrypt ) {
-                int certInChainDaysLeft = cryptPlug->certificateInChainDaysLeftToExpiry( certFingerprint );
-                if( cryptPlug->certificateInChainExpiryNearWarning() &&
-                    certInChainDaysLeft <
-                    cryptPlug->certificateInChainExpiryNearWarningInterval() ) {
-                    int ret = KMessageBox::warningYesNo( this,
-                                                        i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expires in %1 days.\nThis means that after this period, the recipient will not be able to read your message any longer.\n\nDo you still want to use this certificate?" ).arg( certInChainDaysLeft ),
-                                                        captionWarn );
-                    if( ret == KMessageBox::No )
-                        bEncrypt = false;
-                }
-            }
-
-            /*  The following test is not neccessary, since we _got_ the certificate
-                by looking for all certificates of our addressee - so it _must_ be valid
-                for the respective address!
-
-                // Check whether the receiver address is contained in
-                // the certificate.
-                if( bEncrypt && cryptPlug->receiverEmailAddressNotInCertificateWarning() &&
-                !cryptPlug->isEmailInCertificate( QString( KMMessage::getEmailAddr( recipient ) ).utf8(),
-                certFingerprint ) )  {
-                int ret = KMessageBox::warningYesNo( this,
-                i18n( "The certificate does not contain the email address of the sender.\nThis means that it will not be possible for the recipient to read this message.\n\nDo you still want to use this certificate?" ),
-                captionWarn );
-                if( ret == KMessageBox::No )
-                bEncrypt = false;
-                }
-            */
-        }
 
         if( bEncrypt ) {
-          if( !certFingerprints.isEmpty() )
-            certFingerprints += '\1';
-          certFingerprints += certFingerprint;
+          QCString certFingerprint = selectedCert.utf8();
+          certFingerprint.remove( 0, certFingerprint.findRev( '(' )+1 );
+          certFingerprint.truncate( certFingerprint.length()-1 );
+          kdDebug(5006) << "\n\n                    Recipient: " << *it
+                    <<   "\nFingerprint of encryption key: " << QString( certFingerprint ) << "\n\n" << endl;
+
+          // Check for expiry of various certificates, but only if the
+          // plugin supports this.
+          if( cryptPlug->hasFeature( Feature_WarnEncryptCertificateExpiry ) ) {
+              QString captionWarn( i18n( "Certificate Warning" ) );
+              captionWarn += " [";
+              captionWarn += *it;
+              captionWarn += "]";
+              if( bEncrypt ) {
+                  int encRecvDaysLeft = cryptPlug->receiverCertificateDaysLeftToExpiry( certFingerprint );
+                  if( cryptPlug->receiverCertificateExpiryNearWarning() &&
+                      encRecvDaysLeft <
+                      cryptPlug->receiverCertificateExpiryNearWarningInterval() ) {
+                      int ret = KMessageBox::warningYesNo( this,
+                                                          i18n( "<qt>The certificate of the recipient you want to use expires in %1 days.<br>This means that after this period, the recipient will not be able to read your message any longer.\n\nDo you still want to use this certificate?</qt>" ).arg( encRecvDaysLeft ),
+                                                          captionWarn );
+                      if( ret == KMessageBox::No )
+                          bEncrypt = false;
+                  }
+              }
+
+              if( bEncrypt ) {
+                  int certInChainDaysLeft = cryptPlug->certificateInChainDaysLeftToExpiry( certFingerprint );
+                  if( cryptPlug->certificateInChainExpiryNearWarning() &&
+                      certInChainDaysLeft <
+                      cryptPlug->certificateInChainExpiryNearWarningInterval() ) {
+                      int ret = KMessageBox::warningYesNo( this,
+                                                          i18n( "One of the certificates in the chain of the certificate of the recipient you want to send this message to expires in %1 days.\nThis means that after this period, the recipient will not be able to read your message any longer.\n\nDo you still want to use this certificate?" ).arg( certInChainDaysLeft ),
+                                                          captionWarn );
+                      if( ret == KMessageBox::No )
+                          bEncrypt = false;
+                  }
+              }
+
+              /*  The following test is not neccessary, since we _got_ the certificate
+                  by looking for all certificates of our addressee - so it _must_ be valid
+                  for the respective address!
+
+                  // Check whether the receiver address is contained in
+                  // the certificate.
+                  if( bEncrypt && cryptPlug->receiverEmailAddressNotInCertificateWarning() &&
+                  !cryptPlug->isEmailInCertificate( QString( KMMessage::getEmailAddr( recipient ) ).utf8(),
+                  certFingerprint ) )  {
+                  int ret = KMessageBox::warningYesNo( this,
+                  i18n( "The certificate does not contain the email address of the sender.\nThis means that it will not be possible for the recipient to read this message.\n\nDo you still want to use this certificate?" ),
+                  captionWarn );
+                  if( ret == KMessageBox::No )
+                  bEncrypt = false;
+                  }
+              */
+          }
+
+          if( bEncrypt ) {
+            if( !encryptCertFingerprints.isEmpty() )
+              encryptCertFingerprints += '\1';
+            encryptCertFingerprints += certFingerprint;
+          }
+          else
+            break;
         }
-        else
-          break;
+
+        if( !bEncrypt )  break;
+
       }
-
-      if( !bEncrypt )  break;
-
-    }
+    
+    } // if( encryptCertFingerprints.isEmpty() )
+    
       
     // Actually do the encryption, if the plugin supports this
     size_t cipherLen;
@@ -3083,7 +3094,7 @@ QByteArray KMComposeWin::pgpEncryptedMsg( QCString cText, const QStringList& rec
       if( cryptPlug->hasFeature( Feature_EncryptMessages ) &&
           cryptPlug->encryptMessage( cleartext,
                                      &ciphertext, &cipherLen,
-                                     certFingerprints,
+                                     encryptCertFingerprints,
                                      structuring,
                                      &errId,
                                      &errTxt )

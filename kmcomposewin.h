@@ -268,7 +268,7 @@ public:
                         bool doSign,
                         bool doEncrypt,
                         bool ignoreBcc,
-                        QCString& certFingerprint );
+                        QCString& signCertFingerprint );
 
   /**
    * If this flag is set the message of the composer is deleted when
@@ -572,7 +572,7 @@ private:
    */
   QByteArray pgpSignedMsg( QCString cText,
                            StructuringInfoWrapper& structuring,
-                           QCString& certFingerprint );
+                           QCString& signCertFingerprint );
 
   /**
    * Get encrypted message.
@@ -580,7 +580,8 @@ private:
    *
    */
   QByteArray pgpEncryptedMsg( QCString cText, const QStringList& recipients,
-                              StructuringInfoWrapper& structuring );
+                              StructuringInfoWrapper& structuring,
+                              QCString& encryptCertFingerprints );
 
   /**
    * Build a MIME object (or a flat text resp.) based upon
@@ -626,7 +627,7 @@ private:
                        const KMMessagePart& oldBodyPart,
                        bool earlyAddAttachments, bool allAttachmentsAreInBody,
                        KMMessagePart newBodyPart,
-                       QCString& certFingerprint );
+                       QCString& signCertFingerprint );
 
   /**
    * Decrypt an OpenPGP block or strip off the OpenPGP envelope of a text
