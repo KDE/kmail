@@ -156,19 +156,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 
   case QtWarningMsg:
     fprintf(stderr, "%s: %s\n", (const char*)app->name(), msg.data());
-    if (strncmp(aMsg,"KCharset:",9) != 0 &&
-	strncmp(aMsg,"QGManager:",10) != 0 &&
-	strncmp(aMsg,"QPainter:",9) != 0 &&
-	strncmp(aMsg,"Could not load", 14) != 0 &&
-	strncmp(aMsg,"QPixmap:",8) != 0 &&
-	strncmp(aMsg,"stripping",9) != 0 &&
-	strncmp(aMsg,"Cache:",6) != 0 &&
-	!recurse)
-    {
-      ungrabPtrKb();
-      KMessageBox::sorry(0, msg, i18n("Internal Problem"));
-    }
-    else kdebug(KDEBUG_INFO, 0, msg);
+    kdebug(KDEBUG_INFO, 0, msg);
     break;
 
   case QtFatalMsg:
