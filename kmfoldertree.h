@@ -20,8 +20,6 @@ public:
   KMFolder* folder;
   QString unread;
   KMPaintInfo *mPaintInfo;
-  enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
-  imapState mImapState;
  
   /** Construct the root item */
   KMFolderTreeItem( QListView *parent,
@@ -29,8 +27,7 @@ public:
     : QListViewItem( parent, i18n("Mail") ),
       folder( 0 ),
       unread( QString::null ),
-      mPaintInfo( aPaintInfo ),
-      mImapState( imapNoInformation )
+      mPaintInfo( aPaintInfo )
     {}
   KMFolderTreeItem( QListView *parent,
                     KMFolder* folder,
@@ -38,8 +35,7 @@ public:
     : QListViewItem( parent, i18n("Mail") ),
       folder( folder ),
       unread( QString::null ),
-      mPaintInfo( aPaintInfo ),
-      mImapState( imapNoInformation )
+      mPaintInfo( aPaintInfo )
     {}
  
   /** Construct a child item */
@@ -49,8 +45,7 @@ public:
     : QListViewItem( parent, (folder) ? folder->label() : QString::null ),
       folder( folder ),
       unread( QString::null ),
-      mPaintInfo( aPaintInfo ),
-      mImapState( imapNoInformation )
+      mPaintInfo( aPaintInfo )
     {}
  
   virtual ~KMFolderTreeItem();

@@ -375,17 +375,22 @@ void KMFldSearch::slotSearch()
     if (str[mCbxFolders->currentItem()-1] == mCbxFolders->currentText()) {
       KMFolder *folder = *folders.at(mCbxFolders->currentItem()-1);
       KMFolderTreeItem *fti;
-      if ((folder->protocol() == "imap") && (fti = static_cast<KMFolderTreeItem*>
-        (mMainWin->folderTree()->indexOfFolder(folder)))
-        ->mImapState == KMFolderTreeItem::imapNoInformation)
+      if (folder->protocol() == "imap")
       {
+        fti = static_cast<KMFolderTreeItem*>(mMainWin->folderTree()
+          ->indexOfFolder(folder));
         KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
-        imap_folder->open();
-        connect(imap_folder,
-          SIGNAL(folderComplete(KMFolderTreeItem *, bool)),
-          SLOT(slotFolderComplete(KMFolderTreeItem *, bool)));
-        imap_folder->getFolder(fti);
-        return;
+        if (fti && imap_folder && imap_folder->getImapState()
+          == KMFolderImap::imapNoInformation)
+        {
+          KMFolderImap *imap_folder = static_cast<KMFolderImap*>(folder);
+          imap_folder->open();
+          connect(imap_folder,
+            SIGNAL(folderComplete(KMFolderTreeItem *, bool)),
+            SLOT(slotFolderComplete(KMFolderTreeItem *, bool)));
+          imap_folder->getFolder(fti);
+          return;
+        }
       }
       searchInFolder(folder, mCbxFolders->currentItem()-1);
     }

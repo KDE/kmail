@@ -73,6 +73,10 @@ class KMFolderImap : public KMFolderMbox
   friend class KMImapJob;
 
 public:
+  enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
+  virtual imapState getImapState() { return mImapState; }
+  virtual void setImapState(imapState state) { mImapState = state; }
+
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
@@ -252,6 +256,7 @@ protected slots:
 protected:
   QString    mImapPath;
   QString    mUidNext;
+  imapState  mImapState;
   KMAcctImap *mAccount;
 };
 

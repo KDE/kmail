@@ -771,11 +771,11 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
   else {
     QString extendedName;
     emit folderSelected(folder);
-    if ((fti->folder->protocol() == "imap") && fti->mImapState
-      != KMFolderTreeItem::imapInProgress)
+    if (fti->folder->protocol() == "imap")
     {
       KMFolderImap *imap_folder = static_cast<KMFolderImap*>(fti->folder);
-      imap_folder->getFolder(fti);
+      if (imap_folder->getImapState() != KMFolderImap::imapInProgress)
+        imap_folder->getFolder(fti);
     }
     if (folder && (folder->countUnread() > 0) ) {
       QString num;
@@ -1267,11 +1267,10 @@ void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->mImapState == KMFolderTreeItem::imapNoInformation
-    && fti->folder && (fti->folder->protocol() == "imap"))
+  if (fti && fti->folder && fti->folder->protocol() == "imap")
   {
     KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
-    if (folder)
+    if (folder->getImapState() == KMFolderImap::imapNoInformation)
       folder->listDirectory( fti );
   }
 }
@@ -1295,7 +1294,7 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
     KMFolderImap *fti_folder = static_cast<KMFolderImap*>(fti->folder);
     fti_folder->account()->displayProgress();
     fti_folder->account()->setIdle(TRUE);
-    fti->mImapState = KMFolderTreeItem::imapNoInformation;
+    fti_folder->setImapState(KMFolderImap::imapNoInformation);
   }
 }
 

@@ -47,6 +47,7 @@
 KMFolderImap::KMFolderImap(KMFolderDir* aParent, const QString& aName)
   : KMFolderImapInherited(aParent, aName)
 {
+  mImapState = imapNoInformation;
 }
 
 KMFolderImap::~KMFolderImap()
@@ -181,7 +182,7 @@ KMMessage* KMFolderImap::take(int idx)
 void KMFolderImap::listDirectory(KMFolderTreeItem * fti, bool secondStep)
 {
   KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
-  fti->mImapState = KMFolderTreeItem::imapInProgress;
+  mImapState = imapInProgress;
   KMAcctImap::jobData jd;
   jd.parent = fti;
   jd.total = 1; jd.done = 0;
@@ -218,7 +219,7 @@ void KMFolderImap::slotListResult(KIO::Job * job)
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   } else if ((*it).inboxOnly) listDirectory((*it).parent, TRUE);
-  (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+  mImapState = imapFinished;
   mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
 }
@@ -320,7 +321,7 @@ kdDebug(5006) << "uidnext = " << it_parent_folder->uidNext() << endl;
     if (startUid.isEmpty() || startUid != it_parent_folder->uidNext())
       reallyGetFolder(fti, startUid);
     else {
-      fti->mImapState = KMFolderTreeItem::imapFinished;
+      mImapState = imapFinished;
       mAccount->displayProgress();
     }
   }
@@ -331,7 +332,7 @@ kdDebug(5006) << "uidnext = " << it_parent_folder->uidNext() << endl;
 void KMFolderImap::getFolder(KMFolderTreeItem * fti)
 {
   KMFolderImap *folder = static_cast<KMFolderImap*>(fti->folder);
-  fti->mImapState = KMFolderTreeItem::imapInProgress;
+  mImapState = imapInProgress;
   if (!folder->uidValidity().isEmpty()) checkValidity(fti);
   else reallyGetFolder(fti);
 }
@@ -379,7 +380,7 @@ void KMFolderImap::getNextMessage(KMAcctImap::jobData & jd)
 {
   if (jd.items.isEmpty())
   {
-    jd.parent->mImapState = KMFolderTreeItem::imapFinished;
+    mImapState = imapFinished;
     return;
   }
   KURL url = mAccount->getUrl();
@@ -455,8 +456,8 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   uid = (*it).items.begin();
   if (jd.total == 0)
   {
-    (*it).parent->folder->quiet(FALSE);
-    (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+    quiet(FALSE);
+    mImapState = imapFinished;
     emit folderComplete((*it).parent, TRUE);
     mAccount->mapJobData.remove(it);
     mAccount->displayProgress();
@@ -608,10 +609,10 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
-    (*it).parent->mImapState = KMFolderTreeItem::imapNoInformation;
+    mImapState = imapNoInformation;
     emit folderComplete((*it).parent, FALSE);
-  } else (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
-  (*it).parent->folder->quiet(FALSE);
+  } else mImapState = imapFinished;
+  quiet(FALSE);
   KMFolderTreeItem *fti = (*it).parent;
   mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
