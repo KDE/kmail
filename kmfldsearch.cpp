@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 // kmfldsearch.cpp
 // TODO: Add search in subfolder checkbox
 // TODO: Use msgIdMD5 in MSGID_COLUMN
@@ -250,12 +249,12 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
 
   assert(!aFld.isNull());
 
-  if (aFld->isSystemFolder()) mSearchFolder = i18n(aFld->name());
+  if (aFld->isSystemFolder()) mSearchFolder = i18n(aFld->name().utf8());
     else mSearchFolder = aFld->name();
   kapp->processEvents();
   if (aFld->open() != 0)
   {
-    kdDebug() << "Cannot open folder '" << (const char*)aFld->name() << "'" << endl;
+    kdDebug() << "Cannot open folder '" << aFld->name() << "'" << endl;
     return;
   }
 
@@ -553,7 +552,7 @@ void KMFldSearchRule::prepare(void)
 {
   mFieldIdx = mCbxField->currentItem();
   mField = mCbxField->currentText();
-  mHeaderField = "\n" + mField + ": ";
+  mHeaderField = QString("\n" + mField + ": ").latin1();
   mFieldLength = mField.length() + 3;
   mFunc = mCbxFunc->currentItem();
   mValue = mEdtValue->text();
@@ -613,9 +612,9 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg, const QCString& aMsgStr)
   switch(mFunc)
   {
   case Equal:
-    return (qstricmp(value, mValue) == 0);
+    return (value == mValue);
   case NotEqual:
-    return (qstricmp(value, mValue) != 0);
+    return (value != mValue);
   case Contains:
     return value.contains(mValue, FALSE);
   case NotContains:

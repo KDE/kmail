@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 #undef QT_NO_COMPAT
 // kmidentity.cpp
 
@@ -245,7 +244,7 @@ QString KMIdentity::signature(void) const
     sigcmd = mSignatureFile.left(mSignatureFile.length()-1);
     sigcmd += " >";
     sigcmd += tmpf.name();
-    rc = system(sigcmd);
+    rc = system(sigcmd.local8Bit());
 
     if (rc != 0)
     {

@@ -22,7 +22,7 @@ static void msgDialog(const QString &msg)
 
 
 //-----------------------------------------------------------------------------
-QString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
+QCString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
 {
   QCString result;
   QFileInfo info(aFileName);
@@ -38,22 +38,22 @@ QString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
   {
     if (aVerbose)
       msgDialog(i18n("The specified file does not exist:\n%1").arg(aFileName));
-    return QString::null;
+    return QCString();
   }
   if (info.isDir())
   {
     if (aVerbose)
       msgDialog(i18n("This is a directory and not a file:\n%1").arg(aFileName));
-    return QString::null;
+    return QCString();
   }
   if (!info.isReadable())
   {
     if (aVerbose)
       msgDialog(i18n("You do not have read permissions "
 				   "to the file:\n%1").arg(aFileName));
-    return QString::null;
+    return QCString();
   }
-  if (len <= 0) return QString::null;
+  if (len <= 0) return QCString();
 
   if (!file.open(IO_Raw|IO_ReadOnly))
   {
@@ -68,7 +68,7 @@ QString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
     default:
       msgDialog(i18n("Error while reading file:\n%1").arg(aFileName));
     }
-    return QString::null;
+    return QCString();
   }
 
   result.resize(len + (int)aEnsureNL + 1);
@@ -85,7 +85,7 @@ QString kFileToString(const QString &aFileName, bool aEnsureNL, bool aVerbose)
     QString msg = i18n("Could only read %1 bytes of %2.")
 		.arg(readLen).arg(len);
     msgDialog(msg);
-    return QString::null;
+    return QCString();
   }
 
   return result;

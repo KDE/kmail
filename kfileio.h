@@ -16,7 +16,7 @@
  * byte longer than the file itself.
  * If ensureNewline is TRUE the string will always have a trailing newline.
  */
-QString kFileToString(const QString &fileName, bool ensureNewline=TRUE,
+QCString kFileToString(const QString &fileName, bool ensureNewline=TRUE,
 		      bool withDialogs=TRUE);
 
 QByteArray kFileToBytes(const QString &fileName, bool withDialogs=TRUE);

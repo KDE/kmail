@@ -1,4 +1,3 @@
-#undef QT_NO_ASCII_CAST
 #undef QT_NO_COMPAT
 #include <sys/types.h>
 #include <dirent.h>
@@ -131,7 +130,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
 
   if (!messageFile.isEmpty() && messageFile.isLocalFile())
-    msg->setBody( kFileToString( messageFile.path(), true, false ).local8Bit() );
+    msg->setBody( kFileToString( messageFile.path(), true, false ) );
 
   if (!body.isEmpty()) msg->setBody(body.local8Bit() );
 
@@ -376,7 +375,7 @@ void KMKernel::recoverDeadLetters(void)
   rc = folder.open();
   if (rc)
   {
-    perror("cannot open file "+fname);
+    perror(QString("cannot open file "+fname).latin1());
     return;
   }
 
@@ -395,7 +394,7 @@ void KMKernel::recoverDeadLetters(void)
     }
   }
   folder.close();
-  unlink(fname);
+  QFile::remove(fname);
 }
 
 void KMKernel::initFolders(KConfig* cfg)
@@ -461,12 +460,13 @@ void KMKernel::init()
   the_firstStart = cfg->readBoolEntry("first-start", true);
   the_previousVersion = cfg->readEntry("previous-version", "");
   cfg->writeEntry("previous-version", KMAIL_VERSION);
-  foldersPath = cfg->readEntry("folders", "");
-  acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts");
+  foldersPath = cfg->readEntry("folders", "").local8Bit();
+  acctPath = cfg->readEntry("accounts", foldersPath + "/.kmail-accounts")
+    .local8Bit();
 
   if (foldersPath.isEmpty())
   {
-    foldersPath = QDir::homeDirPath() + QString("/Mail");
+    foldersPath = QString(QDir::homeDirPath() + QString("/Mail")).local8Bit();
     transferMail();
   }
 
@@ -599,7 +599,7 @@ void KMKernel::cleanup(void)
   // left behind.
   if (!KMReaderWin::attachDir().isEmpty())
   {
-    cmd.sprintf("rm -rf '%s'", (const char*)KMReaderWin::attachDir());
+    cmd.sprintf("rm -rf '%s'", KMReaderWin::attachDir().local8Bit());
     system (cmd.data()); // delete your owns only
   }
   //--- Sven's save attachments to /tmp end ---
@@ -671,7 +671,7 @@ void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
 
   case QtFatalMsg:
     ungrabPtrKb();
-    fprintf(stderr, appName+" "+i18n("fatal error")+": %s\n", msg.data());
+    kdDebug() << appName << " " << i18n("fatal error") << " " << msg.data() << endl;
     KMessageBox::error(0, aMsg);
     abort();
   }
