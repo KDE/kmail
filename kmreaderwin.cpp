@@ -901,7 +901,6 @@ void KMReaderWin::displayAboutPage()
 
   QString location = locate("data", "kmail/about/main.html");
   QString content = kFileToString(location);
-  mViewer->setStandardFont( mCSSHelper->bodyFont().family() );
   mViewer->begin(location);
   QString info =
     i18n("%1: KMail version; %2: help:// URL; %3: homepage URL; "
@@ -973,9 +972,6 @@ void KMReaderWin::updateReaderWin()
   if (!mMsgDisplay) return;
 
   htmlWriter()->reset();
-
-  if ( mViewer )
-    mViewer->setStandardFont( mCSSHelper->bodyFont().family() );
 
   KMFolder* folder;
   if (message(&folder))
