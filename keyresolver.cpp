@@ -881,6 +881,8 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
 
   CryptoMessageFormat commonFormat = AutoFormat;
   for ( unsigned int i = 0 ; i < numFormats ; ++i ) {
+    if ( !( formats[i] & mCryptoMessageFormats ) )
+      continue;
     if ( signingRequested && signingKeysFor( formats[i] ).empty() )
       continue;
     if ( encryptToSelf() && encryptToSelfKeysFor( formats[i] ).empty() )
