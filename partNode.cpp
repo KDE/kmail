@@ -12,6 +12,7 @@
 #include <kdebug.h>
 #include "kmmimeparttree.h"
 #include <mimelib/utility.h>
+#include <qregexp.h>
 
 /*
   ===========================================================================
@@ -329,6 +330,8 @@ void partNode::fillMimePartTree( KMMimePartTreeItem* parentItem,
         cntEnc  = labelEncoding;
         cntSize = size;
     }
+    // remove linebreak+whitespace from folded Content-Description
+    cntDesc.replace( QRegExp("\\n\\s*"), " " );
 
 kdDebug(5006) << "      Inserting one item into MimePartTree" << endl;
 kdDebug(5006) << "                Content-Type: " << cntType << endl;
