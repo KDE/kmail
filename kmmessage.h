@@ -292,7 +292,7 @@ public:
   /** @return the UOID of the identity for this message.
       Searches the "x-kmail-identity" header and if that fails,
       searches with @ref IdentityManager::identityForAddress()
-      and if that fails queries the @ref #parent() folde for a default.
+      and if that fails queries the @ref #parent() folder for a default.
    **/
   uint identityUoid() const;
 
@@ -688,6 +688,11 @@ public:
   */
   static QStringList stripAddressFromAddressList( const QString& address,
                                                   const QStringList& addresses );
+
+  /** Strips all the user's addresses from an address list. This is used
+      when replying.
+  */
+  static QStringList stripMyAddressesFromAddressList( const QStringList& list );
 
   /** Returns true if the given address is contained in the given address list.
   */

@@ -1000,9 +1000,9 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
       // the mailing list address has to be in the To header
       toStr = to();
     }
-    // strip my own address from the list of recipients
+    // strip all my addresses from the list of recipients
     QStringList recipients = splitEmailAddrList( toStr );
-    toStr = stripAddressFromAddressList( msg->from(), recipients ).join(", ");
+    toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
 
     if ( toStr.isEmpty() ) {
       // fallback to From if everything else fails
@@ -1053,8 +1053,8 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
       }
     }
 
-    // strip my own address from the list of recipients
-    toStr = stripAddressFromAddressList( msg->from(), recipients ).join(", ");
+    // strip all my addresses from the list of recipients
+    toStr = stripMyAddressesFromAddressList( recipients ).join(", ");
 
     // the same for the cc field
     if( !cc().isEmpty() ) {
@@ -1071,8 +1071,8 @@ KMMessage* KMMessage::createReply( bool replyToAll /* = false */,
     }
 
     if ( !ccRecipients.isEmpty() ) {
-      // strip my own address from the list of CC recipients
-      ccRecipients = stripAddressFromAddressList( msg->from(), ccRecipients );
+      // strip all my addresses from the list of CC recipients
+      ccRecipients = stripMyAddressesFromAddressList( ccRecipients );
       msg->setCc( ccRecipients.join(", ") );
     }
   }
@@ -3797,6 +3797,27 @@ QStringList KMMessage::stripAddressFromAddressList( const QString& address,
   for( QStringList::Iterator it = addresses.begin();
        it != addresses.end(); ) {
     if( addrSpec == getEmailAddr( *it ).lower() ) {
+      kdDebug(5006) << "Removing " << *it << " from the address list"
+                    << endl;
+      it = addresses.remove( it );
+    }
+    else
+      ++it;
+  }
+  return addresses;
+}
+
+
+//-----------------------------------------------------------------------------
+//static
+QStringList KMMessage::stripMyAddressesFromAddressList( const QStringList& list )
+{
+  QStringList addresses = list;
+  for( QStringList::Iterator it = addresses.begin();
+       it != addresses.end(); ) {
+    kdDebug(5006) << "Check whether " << *it << " is one of my addresses"
+                  << endl;
+    if( kernel->identityManager()->thatIsMe( getEmailAddr( *it ).lower() ) ) {
       kdDebug(5006) << "Removing " << *it << " from the address list"
                     << endl;
       it = addresses.remove( it );
