@@ -1617,9 +1617,7 @@ void KMReaderWin::slotAtmSave()
 {
   KMMessagePart msgPart;
   QString fileName;
-  fileName = QDir::currentDirPath();
-  fileName.append("/");
-
+  fileName = mSaveAttachDir;
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   if (!msgPart.fileName().isEmpty())
@@ -1639,6 +1637,7 @@ void KMReaderWin::slotAtmSave()
   }
 
   fileName = url.path();
+  mSaveAttachDir = url.directory() + "/";
 
   kernel->kbp()->busy();
   if (!kByteArrayToFile(msgPart.bodyDecodedBinary(), fileName, TRUE))

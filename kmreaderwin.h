@@ -231,6 +231,7 @@ protected:
   QFont mBodyFont;
   bool inlineImage;
   static QString mAttachDir;
+  QString mSaveAttachDir;	// where did the user save the attachment last time
   static const int delay;
   bool mBackingPixmapOn;
   QString mBackingPixmapStr;
