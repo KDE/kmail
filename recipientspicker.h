@@ -24,12 +24,17 @@
 #include "recipientseditor.h"
 
 #include <klistview.h>
+#include <klistviewsearchline.h>
 #include <kabc/addressee.h>
 
 #include <qwidget.h>
 
-class KListViewSearchLine;
 class QComboBox;
+
+namespace KABC {
+class DistributionList;
+class DistributionListManager;
+}
 
 class RecipientItem
 {
@@ -37,18 +42,25 @@ class RecipientItem
     typedef QValueList<RecipientItem *> List;
   
     RecipientItem();
-    
+
+    void setDistributionList( KABC::DistributionList * );
     void setAddressee( const KABC::Addressee & );
-    KABC::Addressee addressee() const;
 
     void setRecipientType( const QString &type );
     QString recipientType() const;
 
     QString recipient() const;
     
+    QPixmap icon() const;
+    QString name() const;
+    QString email() const;
+    
   private:
     KABC::Addressee mAddressee;
+    KABC::DistributionList *mDistributionList;
     QString mType;
+    
+    QPixmap mIcon;
 };
 
 class RecipientViewItem : public KListViewItem
@@ -79,11 +91,25 @@ class RecipientsCollection
     RecipientItem::List mItems;
 };
 
+class SearchLine : public KListViewSearchLine
+{
+    Q_OBJECT
+  public:
+    SearchLine( QWidget *parent, KListView *listView );
+    
+  signals:
+    void downPressed();
+    
+  protected:
+    void keyPressEvent( QKeyEvent * );
+};
+
 class RecipientsPicker : public QWidget 
 {
     Q_OBJECT
   public:
     RecipientsPicker( QWidget *parent );
+    ~RecipientsPicker();
 
     void setRecipients( const Recipient::List & );
 
@@ -92,14 +118,20 @@ class RecipientsPicker : public QWidget
 
   protected:
     void initCollections();
-    void insertCollection( RecipientsCollection *coll, int index );
+    void insertDistributionLists();
+    void insertRecentAddresses();
+    void insertCollection( RecipientsCollection *coll );
 
     void keyPressEvent( QKeyEvent *ev );
+
+    void readConfig();
+    void writeConfig();
 
   protected slots:
     void updateList();
     void slotOk();
     void slotPicked( QListViewItem * );
+    void setFocusList();
   
   private:
     QComboBox *mCollectionCombo;
@@ -108,6 +140,8 @@ class RecipientsPicker : public QWidget
   
     QMap<int,RecipientsCollection *> mCollectionMap;
     RecipientsCollection *mAllRecipients;
+
+    KABC::DistributionListManager *mDistributionListManager;
 };
 
 #endif

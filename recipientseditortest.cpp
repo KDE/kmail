@@ -102,7 +102,11 @@ int main( int argc, char **argv )
   
   wid->show();
 
-  return app.exec();
+  int ret = app.exec();
+  
+  delete wid;
+  
+  return ret;
 }
 
 #include "recipientseditortest.moc"

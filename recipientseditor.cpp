@@ -182,6 +182,16 @@ Recipient RecipientLine::recipient() const
     Recipient::idToType( mCombo->currentItem() ) );
 }
 
+void RecipientLine::setRecipientType( Recipient::Type type )
+{
+  mCombo->setCurrentItem( Recipient::typeToId( type ) );
+}
+
+Recipient::Type RecipientLine::recipientType() const
+{
+  return Recipient::idToType( mCombo->currentItem() );
+}
+
 void RecipientLine::activate()
 {
   mEdit->setFocus();
@@ -256,6 +266,10 @@ RecipientLine *RecipientsView::addLine()
   connect( line, SIGNAL( deleteLine( RecipientLine * ) ),
     SLOT( slotDecideLineDeletion( RecipientLine * ) ) );
   connect( line, SIGNAL( emptyChanged() ), SLOT( calculateTotal() ) );
+
+  if ( mLines.last() ) {
+    line->setRecipientType( mLines.last()->recipientType() );
+  }
 
   mLines.append( line );
 
@@ -434,6 +448,10 @@ SideWidget::SideWidget( RecipientsView *view, QWidget *parent )
   initRecipientPicker();
 }
 
+SideWidget::~SideWidget()
+{
+}
+
 void SideWidget::initRecipientPicker()
 {
   if ( mRecipientPicker ) return;
@@ -490,6 +508,10 @@ RecipientsEditor::RecipientsEditor( QWidget *parent )
 
   connect( mRecipientsView, SIGNAL( totalChanged( int, int ) ),
     side, SLOT( setTotal( int, int ) ) );
+}
+
+RecipientsEditor::~RecipientsEditor()
+{
 }
 
 void RecipientsEditor::slotPickedRecipient( const QString &rec )

@@ -90,6 +90,9 @@ class RecipientLine : public QWidget
     void setRecipient( const Recipient & );
     Recipient recipient() const;
 
+    void setRecipientType( Recipient::Type );
+    Recipient::Type recipientType() const;
+
     void setRecipient( const QString & );
 
     void activate();
@@ -173,6 +176,7 @@ class SideWidget : public QWidget
     Q_OBJECT
   public:
     SideWidget( RecipientsView *view, QWidget *parent );
+    ~SideWidget();
 
   public slots:
     void setTotal( int recipients, int lines );
@@ -198,6 +202,7 @@ class RecipientsEditor : public QWidget
     Q_OBJECT
   public:
     RecipientsEditor( QWidget *parent );
+    ~RecipientsEditor();
 
     void clear();
 

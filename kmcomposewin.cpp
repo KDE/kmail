@@ -3894,7 +3894,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   if ( mEdtReplyTo ) mEdtReplyTo->setText(ident.replyToAddr());
   // don't overwrite the BCC field under certain circomstances
   // NOT edited and preset BCC from the identity
-  if( !mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
+  if( mEdtBcc && !mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
     // BCC NOT empty AND contains a diff adress then the preset BCC
     // of the new identity
     if( !mEdtBcc->text().isEmpty() && mEdtBcc->text() != ident.bcc() && !mEdtBcc->edited() ) {
@@ -3916,7 +3916,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   // user edited the bcc box and has a preset bcc in the identity
   // we will append whatever the user typed to the preset address
   // allowing the user to keep all addresses
-  if( mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
+  if( mEdtBcc && mEdtBcc->edited() && !ident.bcc().isEmpty() ) {
     if( !mEdtBcc->text().isEmpty() ) {
       QString temp_string ( mEdtBcc->text() + QString::fromLatin1(",") + ident.bcc() );
       mEdtBcc->setText( temp_string );
@@ -3927,7 +3927,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   // user typed nothing and the identity does not have a preset bcc
   // we then reset the value to get rid of any previous
   // values if the user changed identity mid way through.
-  if( !mEdtBcc->edited() && ident.bcc().isEmpty() ) {
+  if( mEdtBcc && !mEdtBcc->edited() && ident.bcc().isEmpty() ) {
     mEdtBcc->setText( ident.bcc() );
   }
   // make sure the BCC field is shown because else it's ignored
