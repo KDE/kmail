@@ -1309,7 +1309,18 @@ void KMailICalIfaceImpl::readConfig()
 
   // Bad hack
   connect( mNotes,    SIGNAL( changed() ),  this, SLOT( slotRefreshNotes() ) );
+
+  kdDebug() << k_funcinfo << "mCalendar=" << mCalendar << " " << mCalendar->location() << endl;
   kdDebug() << k_funcinfo << "mNotes=" << mNotes << " " << mNotes->location() << endl;
+
+  // If we just created them, they might have been registered as extra folders temporarily.
+  // -> undo that.
+  mExtraFolders.remove( mCalendar->location() );
+  mExtraFolders.remove( mTasks->location() );
+  mExtraFolders.remove( mJournals->location() );
+  mExtraFolders.remove( mContacts->location() );
+  mExtraFolders.remove( mNotes->location() );
+
 
   // Make KOrganizer re-read everything
   slotRefresh( "Calendar" );
