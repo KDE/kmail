@@ -1,6 +1,3 @@
-/* KMail list that manages the contents of one directory that may
- * contain folders and/or other directories.
- */
 #ifndef kmfolderdir_h
 #define kmfolderdir_h
 
@@ -9,6 +6,9 @@
 
 class KMFolder;
 
+/** KMail list that manages the contents of one directory that may
+ * contain folders and/or other directories.
+ */
 class KMFolderDir: public KMFolderNode, public KMFolderNodeList
 {
   Q_OBJECT
@@ -48,7 +48,7 @@ public:
   virtual ~KMFolderRootDir();
   virtual QString path() const;
 
-  // set the absolute path
+  /** set the absolute path */
   virtual void setPath(const QString&);
 
 protected:

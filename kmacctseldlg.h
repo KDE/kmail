@@ -20,13 +20,13 @@
  *
  */
 
-// Select account from given list of account types
 
 #ifndef kmacctseldlg_h
 #define kmacctseldlg_h
 
 #include <kdialogbase.h>
 
+/** Select account from given list of account types */
 class KMAcctSelDlg: public KDialogBase
 {
   Q_OBJECT

@@ -9,6 +9,7 @@
 #include <qstring.h>
 #include <qstringlist.h>
 
+/** User identity information */
 class KMIdentity
 {
 public:

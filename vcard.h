@@ -127,34 +127,35 @@ class VCard {
  friend class VCardLine;
 
  public:
-  VCard();       // create a new, blank vCard
+  /** create a new, blank vCard */
+  VCard();
   ~VCard();
 
-  // this parses a vcard in a string and if it's valid, returns
-  // a new VCard object, else returns NULL and sets err if it is not NULL
+  /** this parses a vcard in a string and if it's valid, returns
+      a new VCard object, else returns NULL and sets err if it is not NULL */
   static VCard *parseVCard(const QString& vc, int *err = NULL);
   static QString getError(int err);
   
-  // these add a new entry with a single value
+  /** these add a new entry with a single value */
   int addLine(const QString& name, const QString& value);
   int addQualifiedLine(const QString& name, const QString& qualifier, const QString& value);
-  // these add a new entry with multiple values (ie first;last;initial)
+  /** these add a new entry with multiple values (ie first;last;initial) */
   int addLine(const QString& name, const QValueList<QString>& value);
   int addQualifiedLine(const QString& name, const QString& qualifier, const QValueList<QString>& value);
-  // these remove an entry from the vCard
+  /** these remove an entry from the vCard */
   bool removeLine(const QString& name);
   bool removeQualifiedLine(const QString& name, const QString& qualifier);
 
-  // these query the card values
+  /** these query the card values */
   QString getValue(const QString& name, const QString& qualifier);
   QString getValue(const QString& name);
   QValueList<QString> getValues(const QString& name, const QString& qualifier);
   QValueList<QString> getValues(const QString& name);
 
-  // this clears all entries
+  /** this clears all entries */
   void clean();
 
-  // this returns the vCard as a string
+  /** this returns the vCard as a string */
   QString getVCard() const;
   inline QString operator()() const { return getVCard(); }
 

@@ -24,7 +24,7 @@ class KMScoringManager;
 typedef QList<KMMsgBase> KMMessageList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
-// A special drag class for header list to folder tree DnD operations
+/** A special drag class for header list to folder tree DnD operations */
 class KMHeaderToFolderDrag: public QStoredDrag {
 public:
     KMHeaderToFolderDrag( QWidget * parent = 0, const char * name = 0 );
@@ -39,7 +39,7 @@ typedef enum  {
       FancyDate
 } KMDateDisplay;
 
-// Information shared by all items in a list view
+/** Information shared by all items in a list view */
 struct KMPaintInfo {
   bool pixmapOn;
   QPixmap pixmap;
@@ -61,6 +61,7 @@ struct KMPaintInfo {
   KMDateDisplay dateDisplay;
 };
 
+/** The widget that shows the contents of folders */
 #define KMHeadersInherited QListView
 class KMHeaders : public QListView
 {
@@ -71,20 +72,20 @@ public:
   KMHeaders(KMMainWin *owner, QWidget *parent=0, const char *name=0);
   virtual ~KMHeaders();
 
-  // A new folder has been selected update the list of headers shown
+  /** A new folder has been selected update the list of headers shown */
   virtual void setFolder(KMFolder *, bool jumpToFirst = false);
 
-  // Return the folder whose message headers are being displayed
+  /** Return the folder whose message headers are being displayed */
   KMFolder* folder(void) { return mFolder; }
 
-  // read the config file and update nested state if necessary
+  /** read the config file and update nested state if necessary */
   void refreshNestedState(void);
 
   /** Set current message. If id<0 then the first message is shown,
     if id>count() the last message is shown. */
   virtual void setCurrentMsg(int msgId);
 
-  // Provide information about number of messages in a folder
+  /** Provide information about number of messages in a folder */
   void setFolderInfoStatus();
 
   /** The following methods process the message in the folder with
@@ -139,27 +140,27 @@ public:
   /** Read color options and set palette. */
   virtual void readColorConfig(void);
 
-  // Refresh the list of message headers shown
+  /** Refresh the list of message headers shown */
   virtual void reset(void);
 
-  // Scroll to show new mail
+  /** Scroll to show new mail */
   void showNewMail();
 
-  // Return the current message
+  /** Return the current message */
   virtual KMMessage* currentMsg();
-  // Return the current list view item
+  /** Return the current list view item */
   virtual KMHeaderItem* currentHeaderItem();
-  // Return the index of the message corresponding to the current item
+  /** Return the index of the message corresponding to the current item */
   virtual int currentItemIndex();
-  // Set the current item to the one corresponding to the given msg id
+  /** Set the current item to the one corresponding to the given msg id */
   virtual void setCurrentItemByIndex( int msgIdx );
-  // Return the message id of the top most visible item
+  /** Return the message id of the top most visible item */
   virtual int topItemIndex();
-  // Make the item corresponding to the message with the given id the
-  // top most visible item.
+  /** Make the item corresponding to the message with the given id the
+      top most visible item. */
   virtual void setTopItemByIndex( int aMsgIdx );
   virtual void setNestedOverride( bool override );
-  // Double force items to always be open
+  /* Double force items to always be open */
   virtual void setOpen ( QListViewItem *, bool );
 
   int getNestingPolicy(){ return nestingPolicy; }
@@ -170,51 +171,51 @@ public:
 
   void highlightMessage(QListViewItem*, bool markitread);
 
-  // return a string relativ to the current time
+  /** return a string relativ to the current time */
   static QString fancyDate( time_t otime );
 
   static QString formatDate( time_t otime, KMDateDisplay date );
 
 signals:
-  // emitted when the list view item corresponding to this message
-  // has been selected
+  /** emitted when the list view item corresponding to this message
+      has been selected */
   virtual void selected(KMMessage *);
-  // emitted when the list view item corresponding to this message
-  // has been double clicked
+  /** emitted when the list view item corresponding to this message
+      has been double clicked */
   virtual void activated(KMMessage *);
-  // emitted when we might be about to delete messages
+  /** emitted when we might be about to delete messages */
   virtual void maybeDeleting();
 
 public slots:
   void workAroundQListViewLimitation();
 
-  // For when a list view item has been double clicked
+  /** For when a list view item has been double clicked */
   void selectMessage(QListViewItem*);
-  // For nested message view, recusively add all children of a message
+  /** For nested message view, recusively add all children of a message */
   void recursivelyAddChildren( int i, KMHeaderItem *parent );
-  // For when a list view item has been selected
+  /** For when a list view item has been selected */
   void highlightMessage(QListViewItem*);
-  // For when righ mouse button is pressed
+  /** For when righ mouse button is pressed */
   void slotRMB();
-  // Refresh list view item corresponding to the messae with the given id
+  /** Refresh list view item corresponding to the messae with the given id */
   void msgHeaderChanged(int msgId);
-  // For when the list of messages in a folder has changed
+  /** For when the list of messages in a folder has changed */
   void msgChanged();
-  // For when the message with the given message id has been added to a folder
+  /** For when the message with the given message id has been added to a folder */
   void msgAdded(int);
-  // For when the message with the given id has been removed for a folder
+  /** For when the message with the given id has been removed for a folder */
   void msgRemoved(int,QString);
-  // Make the next header visible scrolling if necessary
+  /** Make the next header visible scrolling if necessary */
   void nextMessage();
-  // Make the previous header visible scrolling if necessary
+  /** Make the previous header visible scrolling if necessary */
   void prevMessage();
-  // Make the nextUnread message header visible scrolling if necessary
+  /** Make the nextUnread message header visible scrolling if necessary */
   void nextUnreadMessage(bool acceptCurrent = false);
-  // Make the previous message header visible scrolling if necessary
+  /** Make the previous message header visible scrolling if necessary */
   void prevUnreadMessage();
-  // Don't show a drag cursor
+  /** Don't show a drag cursor */
   void slotNoDrag();
-  // timer function to set the current time regularly
+  /** timer function to set the current time regularly */
   void resetCurrentTime();
 
   virtual void ensureCurrentItemVisible();
@@ -223,13 +224,13 @@ protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent,
     *pixQueued, *pixFwd, *pixFlag;
 
-  // Look for color changes
+  /** Look for color changes */
   virtual bool event(QEvent *e);
 
-  // Overrided to support backing pixmap
+  /** Overridden to support backing pixmap */
   virtual void paintEmptyArea( QPainter * p, const QRect & rect );
 
-  // Ensure the current item is visible
+  /** Ensure the current item is visible */
   void makeHeaderVisible();
 
   /** Auxillary method to findUnread */
@@ -247,47 +248,51 @@ protected:
   /** Write per-folder config options. */
   virtual void writeFolderConfig(void);
 
-  /* Handle shift and control selection */
+  /** Handle shift and control selection */
   virtual void contentsMousePressEvent(QMouseEvent*);
   virtual void contentsMouseReleaseEvent(QMouseEvent* e);
   virtual void keyPressEvent( QKeyEvent * e );
 
-  /* Unselect all items except one */
+  /** Unselect all items except one */
   virtual void clearSelectionExcept( QListViewItem *exception );
 
-  /* Select all items in list from begin to end, return FALSE
+  /** Select all items in list from begin to end, return FALSE
      if end occurs before begin in the list */
   virtual bool shiftSelection( QListViewItem *begin, QListViewItem *end );
 
   /** Called when a header is clicked */
   virtual void setSorting( int column, bool ascending = TRUE);
 
-  // To initiate a drag operation
+  /** To initiate a drag operation */
   void contentsMouseMoveEvent( QMouseEvent *e );
 
 protected slots:
-  // Move messages corresponding to the selected items to the folder
-  // corresponding to the given menuId
+  /** Move messages corresponding to the selected items to the folder
+      corresponding to the given menuId */
   virtual void moveSelectedToFolder( int menuId );
-  // Same thing but copy
+  /** Same thing but copy */
   virtual void copySelectedToFolder( int menuId );
-  // Apply the filter Rules to a single message
+  /** Apply the filter Rules to a single message */
   virtual int slotFilterMsg( KMMessage * );
-  //dirties the sort order
+  /** dirties the sort order */
   void dirtySortOrder(int);
 
 private:
-  // Is equivalent to clearing the list and inserting an item for
-  // each message in the current folder
+  /** Is equivalent to clearing the list and inserting an item for
+      each message in the current folder */
   virtual void updateMessageList(bool set_selection=FALSE);
   virtual int  messageScore(int msgId);
 
-  KMFolder* mFolder;            // Currently associated folder
-  KMMainWin* mOwner;            // The KMMainWin for status bar updates
-
-  int mTopItem;                 // Top most visible item
-  int mCurrentItem;             // Current item
-  QArray<KMHeaderItem*> mItems; // Map messages ids into KMHeaderItems
+  /** Currently associated folder */
+  KMFolder* mFolder;
+  /** The KMMainWin for status bar updates */
+  KMMainWin* mOwner;
+  /** Top most visible item */
+  int mTopItem;
+  /** Current item */
+  int mCurrentItem;
+  /** Map messages ids into KMHeaderItems */
+  QArray<KMHeaderItem*> mItems;
   QDict< KMHeaderItem > mIdTree;
   QDict< KMHeaderItem > mPhantomIdTree;
   QDict< QValueList< int > > mTree;
@@ -296,30 +301,42 @@ private:
   bool mNested, mNestedOverride;
   int nestingPolicy;
 
-  static bool mTrue, mFalse;    // These must replaced by something better!
+  /** These must replaced by something better! */
+  static bool mTrue, mFalse;
 
-  bool showingSize;             // are we currently showing the size field?
+  /** are we currently showing the size field? */
+  bool showingSize;
+  /** are we currently showing the score field? */
   bool showingScore;
-  int getMsgIndex;              // Updated as side effect of KMHeaders::getMsg
-  bool getMsgMulti;             // ditto
-  KMHeaderItem* getMsgItem;     // ditto
-  KMMessageList mSelMsgList;    // KMHeaders::selectedMsgs isn't reentrant
+  /** Updated as side effect of KMHeaders::getMsg */
+  int getMsgIndex;
+  /** ditto */
+  bool getMsgMulti;
+  /** ditto */
+  KMHeaderItem* getMsgItem;
+  /** @ref KMHeaders::selectedMsgs isn't reentrant */
+  KMMessageList mSelMsgList;
   KMHeaderItem* mPrevCurrent;
 
-  QListViewItem *beginSelection, *endSelection; // For shift selection
-
-  KMPaintInfo mPaintInfo;       // Current colours and backing pixmap
+  /** For shift selection */
+  QListViewItem *beginSelection, *endSelection;
+  /** Current colours and backing pixmap */
+  KMPaintInfo mPaintInfo;
 
   KMScoringManager *mScoringManager;
 
   int mSortCol;
   bool mSortDescending;
 
-  static QIconSet *up, *down;   // Icons shown in header
-  KMMenuToFolder mMenuToFolder; // Map menu id into a folder
+  /** Icons shown in header */
+  static QIconSet *up, *down;
+  /** Map menu id into a folder */
+  KMMenuToFolder mMenuToFolder;
 
-  bool mousePressed;             // Drag and drop support
-  QPoint presspos;              // ditto
+  /** Drag and drop support */
+  bool mousePressed;
+  /** ditto */
+  QPoint presspos;
 
   struct {
       uint ascending : 1;
@@ -332,7 +349,7 @@ private:
   bool writeSortOrder();
   bool readSortOrder(bool set_selection=FALSE);
 
-  // cached values for fancyDate
+  /** cached values for fancyDate */
   static QDateTime *now;
   static time_t now_time;
 

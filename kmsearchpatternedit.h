@@ -58,12 +58,12 @@ public:
   void reset();
 
 signals:
-  /* This signal is emitted whenever the user alters the field.  The
+  /** This signal is emitted whenever the user alters the field.  The
      pseudo-headers <...> are returned in their i18n form, but stored
      in their english form in the rule. */
   void fieldChanged( const QString & );
  
-  /* This signal is emitted whenever the user alters the
+  /** This signal is emitted whenever the user alters the
      contents/value of the rule. */
   void contentsChanged( const QString & );
   

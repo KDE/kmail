@@ -33,14 +33,14 @@ public:
   KMKernel (QObject *parent=0, const char *name=0);
   ~KMKernel ();
 
-// dcop calable stuff
+  /** dcop calable stuff */
 
   void checkMail ();
-  //returns id of composer if more are opened
+  /** returns id of composer if more are opened */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
                     const KURL &messageFile, const KURL &attachURL);
-  // For backward compatibility
+  /** For backward compatibility */
   int openComposer (const QString &to, const QString &cc, const QString &bcc,
                     const QString &subject, const QString &body, int hidden,
                     const KURL &messageFile)
@@ -66,7 +66,7 @@ public:
   void compactAllFolders();
   int dcopAddMessage(const QString & foldername, const QString & messageFile);
   int dcopAddMessage(const QString & foldername, const KURL & messageFile);
-  // normal control stuff
+  /** normal control stuff */
 
   static KMKernel *self() { return mySelf; }
 
@@ -134,13 +134,17 @@ private:
     QByteArray data;
   };
   QMap<KIO::Job *, putData> mPutJobs;
-
-  QString the_previousVersion;  // previous KMail version. If different from current, 
-                                // the user has just updated. read from config
-  bool the_firstStart;          // is this the first start?  read from config
-  bool the_shuttingDown;        // are we going down? set from here
-  bool the_checkingMail;        // are we checking mail? set from... where the mail is checked
-  bool the_server_is_ready;     // are we in the middle of network operations (needed?)
+  /** previous KMail version. If different from current, 
+      the user has just updated. read from config */
+  QString the_previousVersion;
+  /** is this the first start?  read from config */
+  bool the_firstStart;
+  /** are we going down? set from here */
+  bool the_shuttingDown;
+  /** are we checking mail? set from... where the mail is checked */
+  bool the_checkingMail;
+  /** are we in the middle of network operations (needed?) */
+  bool the_server_is_ready;
 
   static KMKernel *mySelf;
 };

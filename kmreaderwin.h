@@ -52,7 +52,7 @@ public:
   /** Style of the message header. */
   enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
                      HdrAll=5 };
-  //** Stype of attachments. */
+  /** Style of attachments. */
   enum AttachmentStyle {IconicAttmnt=1, SmartAttmnt =2, InlineAttmnt = 3};
 
   /** Get/set the message header style. */
@@ -140,10 +140,10 @@ signals:
 
 public slots:
 
-  /* Force update even if message is the same */
+  /** Force update even if message is the same */
   void clearCache();
 
-  /* Refresh the reader window */
+  /** Refresh the reader window */
   void updateReaderWin();
 
   /** HTML Widget scrollbar and layout handling. */
@@ -221,7 +221,7 @@ protected:
   /** Returns id of message part from given URL or -1 if invalid. */
   virtual int msgPartFromUrl(const KURL &url);
 
- /** Create directory for attachments */
+  /** Create directory for attachments */
   virtual void makeAttachDir(void);
 
 protected:
@@ -241,7 +241,8 @@ protected:
   QFont mBodyFont;
   bool inlineImage;
   static QString mAttachDir;
-  QString mSaveAttachDir;	// where did the user save the attachment last time
+  /** where did the user save the attachment last time */
+  QString mSaveAttachDir;
   static const int delay;
   bool mBackingPixmapOn;
   QString mBackingPixmapStr;

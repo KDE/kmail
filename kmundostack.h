@@ -27,7 +27,7 @@
 class KMFolder;
 class KMMsgBase;
 
-// A class for storing Undo information.
+/** A class for storing Undo information. */
 class KMUndoInfo
 {
 public:

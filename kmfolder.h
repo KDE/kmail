@@ -33,10 +33,10 @@ class KMAcctImap;
 
 #define KMFolderInherited KMFolderNode
 
-/* Mail folder.
+/** Mail folder.
  * (description will be here).
  *
- * Accounts:
+ * @sect Accounts:
  *   The accounts (of KMail) that are fed into the folder are
  *   represented as the children of the folder. They are only stored here
  *   during runtime to have a reference for which accounts point to a
@@ -72,7 +72,7 @@ public:
   virtual KMFolderDir* child() const
     { return mChild; }
 
-  /* Create a child folder directory and associates it with this folder */
+  /** Create a child folder directory and associates it with this folder */
   virtual KMFolderDir* createChildFolder();
 
   /** Set the folder directory associated with this node */
@@ -151,8 +151,8 @@ public:
       contained by this folder */
   virtual int countUnreadRecursive();
 
-  // Called by KMMsgBase::setStatus when status of a message has changed
-  // required to keep the number unread messages variable current.
+  /** Called by KMMsgBase::setStatus when status of a message has changed
+      required to keep the number unread messages variable current. */
   virtual void msgStatusChanged( const KMMsgStatus oldStatus,
                                  const KMMsgStatus newStatus);
 
@@ -167,7 +167,7 @@ public:
     others still use it (e.g. other mail reader windows). */
   virtual void close(bool force=FALSE);
 
-  /* fsync buffers to disk */
+  /** fsync buffers to disk */
   virtual void sync();
 
   /** Test if folder is opened. */
@@ -218,7 +218,7 @@ public:
   bool needsCompacting() const { return needsCompact; }
   virtual void setNeedsCompacting(bool f) { needsCompact = f; }
 
-  /* Registered unique serial number for the index file */
+  /** Registered unique serial number for the index file */
   int serialIndexId() const { return mIndexId; }
 
   /** If set to quiet the folder will not emit signals. */
@@ -370,23 +370,32 @@ protected:
     TRUE if there is no contents (file). */
   virtual bool isIndexOutdated();
 
-  /* Write the config file */
+  /** Write the config file */
   virtual void writeConfig();
 
-  /* Read the config file */
+  /** Read the config file */
   virtual void readConfig();
 
-  FILE* mStream; // file with the messages
-  FILE* mIndexStream; // table of contents file
-  KMMsgList mMsgList; // list of index entries or messages
+  /** file with the messages */
+  FILE* mStream; 
+  /** table of contents file */
+  FILE* mIndexStream;
+  /** list of index entries or messages */
+  KMMsgList mMsgList;
   int mOpenCount, mQuiet;
   bool mChanged;
-  unsigned long mHeaderOffset; // offset of header of index file
-  bool mAutoCreateIndex;  // is the automatic creation of a index file allowed ?
-  bool mDirty; // if the index is dirty it will be recreated upon close()
-  bool mFilesLocked; // TRUE if the files of the folder are locked (writable)
-  QString mLabel; // nationalized label or NULL (then name() should be used)
-  QString mWhoField; // name of the field that is used for "From" in listbox
+  /** offset of header of index file */
+  unsigned long mHeaderOffset;
+  /** is the automatic creation of a index file allowed ? */
+  bool mAutoCreateIndex;
+  /** if the index is dirty it will be recreated upon close() */
+  bool mDirty;
+  /** TRUE if the files of the folder are locked (writable) */
+  bool mFilesLocked;
+  /** nationalized label or NULL (then name() should be used) */
+  QString mLabel;
+  /** name of the field that is used for "From" in listbox */
+  QString mWhoField;
   bool mIsSystemFolder;
   KMAcctList* mAcctList;
 
@@ -399,10 +408,13 @@ protected:
   QString    mUidValidity;
   KMAcctImap *mAccount;
 
-  int mUnreadMsgs; // number of unread messages, -1 if not yet set
+  /** number of unread messages, -1 if not yet set */
+  int mUnreadMsgs;
   bool mWriteConfigEnabled;
-  bool needsCompact; //sven: true if on destruct folder needs to be compacted.
-  bool mConsistent; // false if index file is out of sync with mbox file
+  /** sven: true if on destruct folder needs to be compacted. */
+  bool needsCompact;
+  /** false if index file is out of sync with mbox file */
+  bool mConsistent;
   KMFolderDir* mChild;
   LockType mLockType;
   QString mProcmailLockFileName;

@@ -62,13 +62,13 @@ public:
   KStatusBar* statusBar(void) const   { return mStatusBar; }
   KMFolderTree* folderTree(void) const  { return mFolderTree; }
 
-  // Returns a popupmenu containing a hierarchy of folder names
-  // starting at the given (aFolderDir) folder directory
-  // Each item in the popupmenu is connected to a slot, if
-  // move is TRUE this slot will cause all selected messages to
-  // be moved into the given folder, otherwise messages will be
-  // copied.
-  // Am empty KMMenuToFolder must be passed in.
+  /** Returns a popupmenu containing a hierarchy of folder names
+      starting at the given (@p aFolderDir) folder directory
+      Each item in the popupmenu is connected to a slot, if
+      move is TRUE this slot will cause all selected messages to
+      be moved into the given folder, otherwise messages will be
+      copied.
+      Am empty @ref KMMenuToFolder must be passed in. */
   virtual QPopupMenu* folderToPopupMenu(KMFolderTreeItem* fti,
 					bool move,
 					QObject *receiver,
@@ -87,8 +87,10 @@ public:
 public slots:
   virtual void show();
   virtual void hide();
-  void slotCheckMail(); // sven moved here as public
-  void slotAtmMsg(KMMessage *msg); //sven: called from reader
+  /** sven: moved here as public */
+  void slotCheckMail();
+  /** sven: called from reader */
+  void slotAtmMsg(KMMessage *msg);
 
   /** Output given message in the statusbar message field. */
   void statusMsg(const QString& text);
@@ -101,9 +103,9 @@ public slots:
   void slotSelectFolder(KMFolder*);
   void slotSelectMessage(KMMessage*);
 
-  // sets the timer for the message menu update
+  /** sets the timer for the message menu update */
   void updateMessageMenu();
-  // Update the "Move to" and "Copy to" popoutmenus in the Messages menu.
+  /** Update the "Move to" and "Copy to" popoutmenus in the Messages menu. */
   void slotUpdateMessageMenu();
 
 protected:
@@ -203,14 +205,14 @@ protected slots:
       beginning of URL before copying. */
   void slotUrlCopy();
 
-  // Move selected messages to folder with corresponding to given menuid
+  /** Move selected messages to folder with corresponding to given menuid */
   virtual void moveSelectedToFolder( int menuId );
-  // Copy selected messages to folder with corresponding to given menuid
+  /** Copy selected messages to folder with corresponding to given menuid */
   virtual void copySelectedToFolder( int menuId );
-  // Update html and threaded messages preferences in Folder menu.
+  /** Update html and threaded messages preferences in Folder menu. */
   virtual void updateFolderMenu();
 
-  // XML-GUI stuff
+  /** XML-GUI stuff */
   void slotToggleToolBar();
   void slotToggleStatusBar();
   void slotEditToolbars();

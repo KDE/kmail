@@ -17,7 +17,7 @@ public:
   KMMsgInfo(KMFolder* parent, long off=0, short len=0);
   virtual ~KMMsgInfo();
 
-  /* left for old style index files */
+  /** left for old style index files */
   void compat_fromOldIndexString(const QCString& str, bool toUtf8);
 
 
@@ -28,7 +28,7 @@ public:
 		    const QCString& replyToId, const QCString& msgId,
 		    unsigned long folderOffset=0, unsigned long msgSize=0);
 
-  /** Inherited methods (see KMMsgBase for description): */
+  /** Inherited methods (see @ref KMMsgBase for description): */
   virtual QString subject(void) const;
   virtual QString fromStrip(void) const;
   virtual QString toStrip(void) const;
@@ -48,7 +48,7 @@ public:
   virtual void setReplyToIdMD5(const QString&);
   virtual void setMsgIdMD5(const QString&);
 
-  //Grr.. c++!
+  /** Grr.. c++! */
   virtual void setStatus(const char* s1, const char* s2=0) { return KMMsgBase::setStatus(s1, s2); }
   virtual void setDate(const char* s1) { return KMMsgBase::setDate(s1); }
 

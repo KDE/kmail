@@ -1,13 +1,3 @@
-/* kalarmtimer: timeout handler using the system's alarm timer
- *
- * The alarm timer uses the alarm signal for timeout events. The
- * advantage of this signal is that the event will also occur when
- * the application is busy. Qt's timer events only occur when
- * the application is idle.
- *
- * Author: Stefan Taferner <taferner@salzburg.co.at>
- * This code is under GPL.
- */
 #ifndef kalarmtimer_h_
 #define kalarmtimer_h_
 
@@ -15,6 +5,15 @@
 
 typedef unsigned long KAlarmTimerId;
 
+/**
+ * The alarm timer uses the alarm signal for timeout events. The
+ * advantage of this signal is that the event will also occur when
+ * the application is busy. Qt's timer events only occur when
+ * the application is idle.
+ *
+ * @author: Stefan Taferner <taferner@salzburg.co.at>, This code is under GPL.
+ *  @short kalarmtimer: timeout handler using the system's alarm timer
+ */
 class KAlarmTimer: public QObject
 {
   Q_OBJECT
@@ -42,7 +41,7 @@ protected:
    methods. */
   virtual void timerEvent(void);
 
-  // avoid warning about hidden virtual
+  /** avoid warning about hidden virtual */
   virtual void timerEvent(QTimerEvent *e) { QObject::timerEvent( e ); }
 
 private:

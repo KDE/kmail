@@ -100,10 +100,12 @@ public:
     in another message of for replies, forwards. The header string is
     a template where the following fields are replaced with the
     corresponding values:
+    <pre>
 	%D: date of this message
 	%S: subject of this message
 	%F: sender (from) of this message
 	%%: a single percent sign
+    </pre>
     No attachments are handled if includeAttach is false.
     The signature is stripped if aStripSignature is true and
     smart quoting is turned on. Signed or encrypted texts
@@ -215,7 +217,7 @@ public:
   virtual int type(void) const;
   virtual void setTypeStr(const QCString& aStr);
   virtual void setType(int aType);
-  // Subtype
+  /** Subtype */
   virtual QCString subtypeStr(void) const;
   virtual int subtype(void) const;
   virtual void setSubtypeStr(const QCString& aStr);

@@ -28,7 +28,7 @@ class MailComposerIface : virtual public DCOPObject
       Set message body.
     */
     virtual void setBody (QString body) = 0;
-    /*
+    /**
       Add attachment.
 
       @param name Name of Attachment

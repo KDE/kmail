@@ -52,7 +52,7 @@ public:
   int type(void) const;
   void setTypeStr(const QCString &aStr);
   void setType(int aType);
-  // Subtype
+  /** Subtype */
   QCString subtypeStr(void) const;
   int subtype(void) const;
   void setSubtypeStr(const QCString &aStr);
@@ -90,12 +90,12 @@ public:
   void setCte(int aCte) { setContentTransferEncoding(aCte); }
 
 
-  // Get or set the 'Content-Description' header field
+  /** Get or set the 'Content-Description' header field */
   QString contentDescription() const;
   QCString contentDescriptionEncoded() const { return mContentDescription; }
   void setContentDescription(const QString &aStr);
 
-  // Get or set the 'Content-Disposition' header field
+  /** Get or set the 'Content-Disposition' header field */
   QCString contentDisposition() const;
   void setContentDisposition(const QCString &aStr);
 
@@ -115,10 +115,11 @@ protected:
   QCString mCte;
   QCString mContentDescription;
   QCString mContentDisposition;
-  QByteArray mBody;  // keep it null terminated since some callers
-                     // misuse it as a QCString. Really the callers
-                     // should be fixed like in kmreaderwin.cpp.
-                     // mBody should not be QCString since it can be binary.
+  /** keep it null terminated since some callers
+      misuse it as a QCString. Really the callers
+      should be fixed like in kmreaderwin.cpp.
+      mBody should not be QCString since it can be binary. */
+  QByteArray mBody;
   QString mName;
   QCString mParameterAttribute;
   QString mParameterValue;

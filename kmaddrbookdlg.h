@@ -78,7 +78,7 @@ protected:
   KLineEdit* mEdtAddress;
   int mIndex;
 
-  //kab specific
+  /** kab specific */
   QValueList<KabKey> *mKeys;
 };
 

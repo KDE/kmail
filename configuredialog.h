@@ -157,8 +157,10 @@ class IdentityList
     IdentityEntry *get( const QString &identity );
     IdentityEntry *get( uint index );
 
-    void importData( void ); // Load system settings
-    void exportData( void ); // Save state to system
+    /** Load system settings */
+    void importData( void );
+    /** Save state to system */
+    void exportData( void );
 
     void add( const IdentityEntry &entry );
     void add( const QString &identity, const QString &copyFrom );

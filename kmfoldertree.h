@@ -23,7 +23,7 @@ public:
   enum imapState { imapNoInformation=0, imapInProgress=1, imapFinished=2 };
   imapState mImapState;
  
-  /* Construct the root item */
+  /** Construct the root item */
   KMFolderTreeItem( QListView *parent,
                     KMPaintInfo *aPaintInfo )
     : QListViewItem( parent, i18n("Mail") ),
@@ -42,7 +42,7 @@ public:
       mImapState( imapNoInformation )
     {}
  
-  /* Construct a child item */
+  /** Construct a child item */
   KMFolderTreeItem( QListViewItem* parent,
                     KMFolder* folder,
                     KMPaintInfo *aPaintInfo )
@@ -115,41 +115,41 @@ public:
   /** Remove information about not existing folders from the config file */
   void cleanupConfigFile();
 
-  /* Select the next folder with unread messages */
+  /** Select the next folder with unread messages */
   void nextUnreadFolder(bool confirm);
 
-  /* Check folder for unread messages (which isn't trash)*/
+  /** Check folder for unread messages (which isn't trash)*/
   bool checkUnreadFolder(KMFolderTreeItem* ftl, bool confirm);
 
   KMFolder *currentFolder() const;
 
 signals:
-  /* The selected folder has changed */
+  /** The selected folder has changed */
   void folderSelected(KMFolder*);
 
-  /* The selected folder has changed to go to an unread message */
+  /** The selected folder has changed to go to an unread message */
   void folderSelectedUnread( KMFolder * );
 
-  /* Messages have been dropped onto a folder */
+  /** Messages have been dropped onto a folder */
   void folderDrop(KMFolder*);
 
-  /* Messages have been dropped onto a folder with Ctrl */
+  /** Messages have been dropped onto a folder with Ctrl */
   void folderDropCopy(KMFolder*);
 
 protected:
-  /* open ancestors and ensure item is visible  */
+  /** open ancestors and ensure item is visible  */
   void prepareItem( KMFolderTreeItem* );
 
 public slots:
-  /* Select the next folder with unread messages */
+  /** Select the next folder with unread messages */
   void nextUnreadFolder();
-  /* Select the previous folder with unread messages */
+  /** Select the previous folder with unread messages */
   void prevUnreadFolder();
-  /* Increment current folder */
+  /** Increment current folder */
   void incCurrentFolder();
-  /* Decrement current folder */
+  /** Decrement current folder */
   void decCurrentFolder();
-  /* Select the current folder */
+  /** Select the current folder */
   void selectCurrentFolder();
   /** Executes delayed update of folder tree */
   void delayedUpdate();
@@ -166,30 +166,30 @@ protected slots:
   /** Updates the folder tree only if some folder lable has changed */
   void refresh(KMFolder*);
 
-  /* Create a child folder */
+  /** Create a child folder */
   void addChildFolder();
 
-  /* Open a folder */
+  /** Open a folder */
   void openFolder();
 
-  /* Expand an IMAP folder */
+  /** Expand an IMAP folder */
   void slotFolderExpanded( QListViewItem * item );
 
-  /* Delete all child items on collapse */
+  /** Delete all child items on collapse */
   void slotFolderCollapsed( QListViewItem * item );
 
 protected:
-  // Catch palette changes
+  /** Catch palette changes */
   virtual bool event(QEvent *e);
 
   virtual void paintEmptyArea( QPainter * p, const QRect & rect );
 
-  // Updates the number of unread messages for all folders
+  /** Updates the number of unread messages for all folders */
   virtual void updateUnreadAll( );
 
   virtual void resizeEvent(QResizeEvent*);
 
-  // Read/Save open/close state indicator for an item in folderTree list view
+  /** Read/Save open/close state indicator for an item in folderTree list view */
   bool readIsListViewItemOpen(KMFolderTreeItem *fti);
   void writeIsListViewItemOpen(KMFolderTreeItem *fti);
 
@@ -198,23 +198,23 @@ protected:
   static QPixmap *pixDir, *pixNode, *pixPlain, *pixFld, *pixFull, *pixIn,
     *pixOut, *pixTr, *pixSent;
 
-  // We need out own root, otherwise the QListView will create its own
-  // root of type QListViewItem, hence no overriding paintBranches
-  // and no backing pixmap
+  /** We need out own root, otherwise the @ref QListView will create
+      its own root of type @ref QListViewItem, hence no overriding
+      paintBranches and no backing pixmap */
   QListViewItem *root;
 
-  //Drag and drop methods
+  /** Drag and drop methods */
   void contentsDragEnterEvent( QDragEnterEvent *e );
   void contentsDragMoveEvent( QDragMoveEvent *e );
   void contentsDragLeaveEvent( QDragLeaveEvent *e );
   void contentsDropEvent( QDropEvent *e );
 
-  // Navigation/Selection methods
+  /** Navigation/Selection methods */
   virtual void keyPressEvent( QKeyEvent * e );
   virtual void contentsMousePressEvent( QMouseEvent * e );
   virtual void contentsMouseReleaseEvent( QMouseEvent * e );
   virtual void contentsMouseMoveEvent( QMouseEvent* e );
-  //Drag and drop variables
+  /** Drag and drop variables */
   QListViewItem *oldCurrent, *oldSelected;
   QListViewItem *dropItem;
   KMFolderTreeItem *mLastItem;

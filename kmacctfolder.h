@@ -1,8 +1,3 @@
-/* Simple wrapper class that contains the kmail account handling
- * stuff that is usually not required outside kmail.
- *
- * Author: Stefan Taferner <taferner@alpin.or.at>
- */
 #ifndef kmacctfolder_h
 #define kmacctfolder_h
 
@@ -10,9 +5,13 @@
 
 class KMAccount;
 
-/** WARNING: do not add virtual methods in this class. This class is
-  * used as a typecast for KMFolder only !!
-  */
+/** Simple wrapper class that contains the kmail account handling
+ * stuff that is usually not required outside kmail.
+ *
+ * WARNING: do not add virtual methods in this class. This class is
+ * used as a typecast for KMFolder only !!
+ * @author Stefan Taferner <taferner@alpin.or.at>
+ */
 class KMAcctFolder: public KMFolder
 {
 public:

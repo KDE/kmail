@@ -10,6 +10,7 @@
 class QLabel;
 class QPushButton;
 
+/** I/O Status Dialog, e.g. for sending and receiving mails */
 #define KMIOStatusDlgInherited QDialog
 class KMIOStatusDlg: public QDialog
 {
@@ -20,7 +21,7 @@ public:
   virtual void setTask(const QString &msg);
   virtual void setStatus(const QString &msg);
 
-  // return from exec() loop with result 0
+  /** return from exec() loop with result 0 */
   virtual void done(void);
 
 protected:

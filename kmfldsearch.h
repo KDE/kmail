@@ -110,7 +110,7 @@ public:
   virtual void updateFunctions(QComboBox *cbx,
     const QValueList<QGuardedPtr<KMFolder> > &folders);
 
-  /* Fill in the header fiels where to search */
+  /** Fill in the header fiels where to search */
   virtual void insertFieldItems(bool all);
 
   enum Func { Contains=0, NotContains, Equal, NotEqual, 

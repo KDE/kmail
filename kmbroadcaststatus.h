@@ -51,15 +51,15 @@ public:
 
 signals:
 
-  /* Emitted when setStatusMsg is called. */
+  /** Emitted when setStatusMsg is called. */
   void statusMsg( const QString& );
-  /* Emitted when setStatusProgressEnable is called. */
+  /** Emitted when setStatusProgressEnable is called. */
   void statusProgressEnable( bool );
-  /* Emitted when setStatusProgressPercent is called. */
+  /** Emitted when setStatusProgressPercent is called. */
   void statusProgressPercent( unsigned long );
-  /* Emitted when reset is called. */
+  /** Emitted when reset is called. */
   void resetRequested();
-  /* Emitted when user wants to abort the connection. */
+  /** Emitted when user wants to abort the connection. */
   void signalAbortRequested();
 
 public slots:

@@ -1,5 +1,3 @@
-/* Dialog for handling the properties of a mail folder
- */
 #ifndef __KMFOLDERDIA
 #define __KMFOLDERDIA
 
@@ -14,6 +12,8 @@ class QListBox;
 class QComboBox ;
 class KMFolder;
 
+/** Dialog for handling the properties of a mail folder
+ */
 class KMFolderDialog : public KDialogBase
 {
   Q_OBJECT

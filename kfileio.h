@@ -30,7 +30,7 @@ QByteArray kFileToBytes(const QString &fileName, bool withDialogs=TRUE);
 bool kCStringToFile(const QCString& buffer, const QString &fileName, 
 		   bool askIfExists=FALSE, bool createBackup=TRUE,
 		   bool withDialogs=TRUE);
-// Does not stop at NUL
+/** Does not stop at NUL */
 bool kByteArrayToFile(const QByteArray& buffer, const QString &fileName, 
 		   bool askIfExists=FALSE, bool createBackup=TRUE,
 		   bool withDialogs=TRUE);

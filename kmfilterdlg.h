@@ -54,7 +54,7 @@ class KMFilterListBox : public QGroupBox
 {
   Q_OBJECT
 public:
-  /* Constuctor. */
+  /** Constuctor. */
   KMFilterListBox( const QString & title, QWidget* parent=0, const char* name=0 );
 
   /** Called from @ref KMFilterDlg. Creates a new filter and presets

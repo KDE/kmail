@@ -66,7 +66,7 @@ public:
   virtual void createI18nFolderList( QStringList *str,
 				 QValueList<QGuardedPtr<KMFolder> > *folders );
 
-  /* fsync all open folders to disk */
+  /** fsync all open folders to disk */
   virtual void syncAllFolders( KMFolderDir *adir = 0 );
 
 public slots:
@@ -82,17 +82,17 @@ signals:
 
 protected:
 
-  /* Auxillary function to faciliate compaction of folders */
+  /** Auxillary function to faciliate compaction of folders */
   void compactAllAux(KMFolderDir* dir);
 
-  /* Auxillary function to facilitate removal of a folder */
+  /** Auxillary function to facilitate removal of a folder */
   void removeFolderAux(KMFolder* aFolder);
 
-  /* Auxillary function to facilitate removal of a folder directory */
+  /** Auxillary function to facilitate removal of a folder directory */
   void removeDirAux(KMFolderDir* aFolderDir);
 
-  /* Auxillary function to facilitate creating a list of formatted
-     folder names, suitable for showing in QComboBox */
+  /** Auxillary function to facilitate creating a list of formatted
+      folder names, suitable for showing in @ref QComboBox */
   virtual void createFolderList( QStringList *str,
  				 QValueList<QGuardedPtr<KMFolder> > *folders,
   				 KMFolderDir *adir,

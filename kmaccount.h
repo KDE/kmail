@@ -169,7 +169,8 @@ class KMAcctList: public QList<KMAccount>
 {
 public:
   virtual ~KMAcctList() {}
-  short _dummy; // some compilers fail otherwise
+  /** some compilers fail otherwise */
+  short _dummy;
 };
 
 class KMAccountPrivate : public QObject

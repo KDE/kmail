@@ -24,8 +24,8 @@ class KMIOStatusWdg : public KMIOStatus
 
  public slots:
 
- /**update the ProgressBar. index is current message, message is 
-    number of all messages **/
+  /** update the ProgressBar. index is current message, message is 
+      number of all messages **/
   void updateProgressBar(int index, int messages );
 
   /** Prepare transmission **/

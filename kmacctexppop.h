@@ -1,6 +1,3 @@
-/* KMail account for experimental pop mail account
- *
- */
 #ifndef KMAcctExpPop_h
 #define KMAcctExpPop_h
 
@@ -26,6 +23,9 @@ class QDataStream;
 
 #define KMAcctExpPopInherited KMAccount
 
+/** KMail account for experimental pop mail account
+ *
+ */
 class KMAcctExpPop: public KMAccount
 {
   Q_OBJECT

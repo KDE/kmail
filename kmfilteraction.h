@@ -502,7 +502,7 @@ public:
   const QList<KMFilterActionDesc>& list() const { return mList; }
 
 protected:
-  /* Populate the dictionary with all known @ref KMFilterAction
+  /** Populate the dictionary with all known @ref KMFilterAction
      types. Called automatically from the constructor. */
   virtual void init(void);
 

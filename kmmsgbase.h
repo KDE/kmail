@@ -93,11 +93,11 @@ public:
   virtual unsigned long msgSize(void) const = 0;
   virtual void setMsgSize(unsigned long sz) = 0;
 
-  //offset into index file
+  /** offset into index file */
   virtual void setIndexOffset(long off) { mIndexOffset = off; }
   virtual long indexOffset() const { return mIndexOffset; }
 
-  //size in index file
+  /** size in index file */
   virtual void setIndexLength(short len) { mIndexLength = len; }
   virtual short indexLength() const { return mIndexLength; }
 
@@ -172,9 +172,11 @@ public:
 	MsgSizePart = 9,
 	MsgDatePart = 10
     };
-    unsigned long getLongPart(MsgPartType) const; //access to long msgparts
-    QString getStringPart(MsgPartType) const; //access to string msgparts
-    //sync'ing just one KMMsgBase
+    /** access to long msgparts */
+    unsigned long getLongPart(MsgPartType) const; 
+    /** access to string msgparts */
+    QString getStringPart(MsgPartType) const;
+    /** sync'ing just one KMMsgBase */
     bool syncIndexString() const;
 
 };
