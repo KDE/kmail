@@ -74,6 +74,10 @@ public:
   /** Read passwords of all accounts from the wallet */
   void readPasswords();
 
+  /** Reset connection list for the account */
+  void resetConnectionList( KMAccount* acct ) { 
+    mServerConnections[ hostForAccount( acct ) ] = 0; }
+
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);
   virtual void singleInvalidateIMAPFolders(KMAccount *);

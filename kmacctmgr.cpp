@@ -146,7 +146,8 @@ void KMAcctMgr::processNextCheck(bool _newMail)
                   this, SLOT( processNextCheck( bool ) ) );
       QString hostname = hostForAccount( acct );
       if ( !hostname.isEmpty() ) {
-        if ( mServerConnections.find( hostname ) != mServerConnections.end() ) {
+        if ( mServerConnections.find( hostname ) != mServerConnections.end() &&
+             mServerConnections[hostname] > 0 ) {
           mServerConnections[hostname] -= 1;
           kdDebug(5006) << "connections to server " << hostname
                         << " now " << mServerConnections[hostname] << endl;

@@ -495,8 +495,10 @@ namespace KMail {
       if ( mAskAgain )
         makeConnection();
       else {
-        if ( !mSlaveConnected )
+        if ( !mSlaveConnected ) {
           mSlaveConnectionError = true;
+          mOwner->resetConnectionList( this );
+        }
         emit connectionResult( errorCode, errorMsg );
       }
   }
