@@ -1304,10 +1304,72 @@ void KMHeaders::forwardMsg ()
   KMMessage *msg = currentMsg();
   if (!msg) return;
 
+  QString id = msg->headerField( "X-KMail-Identity" );
+  if (id.isEmpty() && mFolder->isMailingList())
+    id = mFolder->mailingListIdentity();
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createForward(),
-                         msg->headerField( "X-KMail-Identity" ));
+  win = new KMComposeWin(msg->createForward(), id);
   win->setCharset(msg->codec()->name(), TRUE);
+  win->show();
+  kernel->kbp()->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::forwardAttachedMsg ()
+{
+  KMComposeWin *win;
+  KMMessageList* msgList = selectedMsgs();
+  QString id;
+
+  if (msgList->count() >= 2) {
+    // don't respect X-KMail-Identity headers because they might differ for
+    // the selected mails
+    if (mFolder->isMailingList())
+      id = mFolder->mailingListIdentity();
+    else
+      id = "";
+  }
+  else if (msgList->count() == 1) {
+    KMMessage *msg = currentMsg();
+    id = msg->headerField( "X-KMail-Identity" );
+    if (id.isEmpty() && mFolder->isMailingList())
+      id = mFolder->mailingListIdentity();
+  }
+      
+  KMMessage *fwdMsg = new KMMessage;
+
+  fwdMsg->initHeader(id);
+  fwdMsg->setAutomaticFields(true);
+
+  kdDebug() << "Launching composer window\n" << endl;
+  kernel->kbp()->busy();
+  win = new KMComposeWin(fwdMsg, id);
+
+  kdDebug() << "Doing forward as attachment\n" << endl;
+  // iterate through all the messages to be forwarded
+  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
+    int idx = mFolder->find(mb);
+    if (idx < 0) continue;
+    KMMessage *thisMsg = mFolder->getMsg(idx);
+    if (!thisMsg) continue;
+    // set the part
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setTypeStr("message");
+    msgPart->setSubtypeStr("rfc822");
+    msgPart->setCharset(thisMsg->charset());
+    msgPart->setName("forwarded message");
+    msgPart->setCte(DwMime::kCte8bit);   // is 8bit O.K.?
+    msgPart->setContentDescription(thisMsg->from()+": "+thisMsg->subject());
+    // THIS HAS TO BE AFTER setCte()!!!!
+    msgPart->setBodyEncoded(QCString(thisMsg->asString()));
+    msgPart->setCharset("");
+    
+    thisMsg->setStatus(KMMsgStatusForwarded);
+
+    win->addAttach(msgPart);
+  }
+
   win->show();
   kernel->kbp()->idle();
 }
@@ -2445,6 +2507,7 @@ void KMHeaders::slotRMB()
      mOwner->replyAction->plug(menu);
      mOwner->replyAllAction->plug(menu);
      mOwner->forwardAction->plug(menu);
+     mOwner->forwardAttachedAction->plug(menu);
      mOwner->redirectAction->plug(menu);
      mOwner->bounceAction->plug(menu);
        }

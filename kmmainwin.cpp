@@ -898,6 +898,13 @@ void KMMainWin::slotForwardMsg()
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotForwardAttachedMsg()
+{
+  mHeaders->forwardAttachedMsg();
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotRedirectMsg()
 {
   mHeaders->redirectMsg();
@@ -1510,6 +1517,7 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
                 replyAction->plug(menu);
                 replyAllAction->plug(menu);
                 forwardAction->plug(menu);
+                forwardAttachedAction->plug(menu);
                 redirectAction->plug(menu);
                 bounceAction->plug(menu);
            }
@@ -1660,6 +1668,9 @@ void KMMainWin::setupMenuBar()
 
   forwardAction = new KAction( i18n("&Forward..."), "mail_forward", Key_F, this,
 		      SLOT(slotForwardMsg()), actionCollection(), "forward" );
+
+  forwardAttachedAction = new KAction( i18n("&Forward as attachment"), "mail_forward_attached", SHIFT+Key_F, this,
+		      SLOT(slotForwardAttachedMsg()), actionCollection(), "forward_attached" );
 
   redirectAction = new KAction( i18n("R&edirect..."), Key_E, this,
 		      SLOT(slotRedirectMsg()), actionCollection(), "redirect" );
@@ -2014,6 +2025,7 @@ void KMMainWin::updateMessageMenu()
     copyActionMenu->setEnabled( mass_actions );
     deleteAction->setEnabled( mass_actions );
     forwardAction->setEnabled( mass_actions );
+    forwardAttachedAction->setEnabled( mass_actions );
     action( "apply_filters" )->setEnabled( mass_actions );
 
     bool single_actions = count == 1;

@@ -98,6 +98,7 @@ public:
   virtual void undo();
   virtual bool canUndo() const;
   virtual void forwardMsg();
+  virtual void forwardAttachedMsg();
   virtual void bounceMsg();
   virtual void replyToMsg(QString selection=QString::null);
   virtual void noQuoteReplyToMsg();

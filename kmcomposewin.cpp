@@ -1302,7 +1302,10 @@ void KMComposeWin::msgPartToItem(const KMMessagePart* msgPart,
   if (len > 9999) lenStr.sprintf("%uK", (len>>10));
   else lenStr.sprintf("%u", len);
 
-  lvi->setText(0, msgPart->fileName());
+  if (!msgPart->fileName().isEmpty())
+    lvi->setText(0, msgPart->fileName());
+  else
+    lvi->setText(0, msgPart->name());
   lvi->setText(1, lenStr);
   lvi->setText(2, msgPart->contentTransferEncodingStr());
   lvi->setText(3, msgPart->typeStr() + "/" + msgPart->subtypeStr());

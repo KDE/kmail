@@ -77,7 +77,7 @@ public:
 
   static void cleanup();
   KAction *replyAction, *noQuoteReplyAction, *replyAllAction, *replyListAction,
-    *forwardAction, *redirectAction,
+    *forwardAction, *forwardAttachedAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
     *printAction, *sendAgainAction;
   KActionMenu *filterMenu, *statusMenu, *moveActionMenu, *copyActionMenu;
@@ -137,6 +137,7 @@ protected slots:
   void slotReplyAllToMsg();
   void slotReplyListToMsg();
   void slotForwardMsg();
+  void slotForwardAttachedMsg();
   void slotRedirectMsg();
   void slotBounceMsg();
   void slotMessageQueuedOrDrafted();
