@@ -451,7 +451,7 @@ QCString KMMsgBase::statusToStr(const KMMsgStatus status)
   if (status & KMMsgStatusWatched) sstr += 'W';
   if (status & KMMsgStatusIgnored) sstr += 'I';
   if (status & KMMsgStatusSpam) sstr += 'P';
-  if (status & KMMsgStatusSpam) sstr += 'H';
+  if (status & KMMsgStatusHam) sstr += 'H';
 
   return sstr;
 }
