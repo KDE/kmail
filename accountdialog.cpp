@@ -942,9 +942,11 @@ void AccountDialog::makeImapAccountPage( bool connected )
   buttonLay->addStretch();
   buttonLay->addWidget( mImap.checkCapabilities );
 
+#if 0 // ### (marc) this isn't ready for prime-time yet... Reactivate post-3.2.
   mSieveConfigEditor = new SieveConfigEditor( tabWidget );
   mSieveConfigEditor->layout()->setMargin( KDialog::marginHint() );
   tabWidget->addTab( mSieveConfigEditor, i18n("&Filtering") );
+#endif
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }

@@ -2088,9 +2088,11 @@ void KMMainWidget::setupActions()
 		     SLOT(slotImport()), actionCollection(), "import" );
   if (KStandardDirs::findExe("kmailcvt").isEmpty()) act->setEnabled(false);
 
+#if 0 // ### (marc) this isn't ready for prime-time yet - reactivate post 3.2
   (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
 		      "configure", 0, this, SLOT(slotEditVacation()),
 		      actionCollection(), "tools_edit_vacation" );
+#endif
 
   //----- Edit Menu
   mTrashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
