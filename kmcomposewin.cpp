@@ -550,7 +550,7 @@ void KMComposeWin::setupMenuBar(void)
   mMenuBar->insertItem(i18n("&Attach"), menu);
 
   //---------- Menu: Help
-  menu = app->helpMenu(TRUE, aboutText);
+  menu = helpMenu(aboutText);
   mMenuBar->insertSeparator();
   mMenuBar->insertItem(i18n("&Help"), menu);
 

@@ -1154,7 +1154,7 @@ void KMMainWin::setupMenuBar()
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
   //----- Help Menu
-  QPopupMenu *helpMenu = kapp->helpMenu(TRUE, aboutText);
+  QPopupMenu *mHelpMenu = helpMenu(aboutText);
 
   //----- Menubar
   mMenuBar  = new KMenuBar(this);
@@ -1164,7 +1164,7 @@ void KMMainWin::setupMenuBar()
   mMenuBar->insertItem(i18n("&Message"), messageMenu);
   mMenuBar->insertItem(i18n("&View"), mViewMenu);
   mMenuBar->insertSeparator();
-  mMenuBar->insertItem(i18n("&Help"), helpMenu);
+  mMenuBar->insertItem(i18n("&Help"), mHelpMenu);
 
   setMenu(mMenuBar);
 }
