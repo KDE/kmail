@@ -299,8 +299,14 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
       }
     }
 
-    // 0==processed ok, 1==no filter matched, 2==critical error, abort!
+    // Disable the emitting of msgAdded signal, because the message is taken out of the 
+    // current folder (outbox) and re-added, to make filter actions changing the message
+    // work. We don't want that to screw up message counts.
+    if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( true );
     int processResult = kmkernel->filterMgr()->process(mCurrentMsg,KMFilterMgr::Outbound);
+    if ( mCurrentMsg->parent() ) mCurrentMsg->parent()->quiet( false );
+    
+    // 0==processed ok, 1==no filter matched, 2==critical error, abort!
     switch (processResult) {
     case 2:
       perror("Critical error: Unable to process sent mail (out of space?)");
