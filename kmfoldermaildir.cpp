@@ -772,6 +772,7 @@ int KMFolderMaildir::createIndexFromContents()
     return 1;
   }
   QDir newDir(location() + "/new");
+  newDir.setFilter(QDir::Files);
 
   dirinfo.setFile(location() + "/cur");
   if (!dirinfo.exists() || !dirinfo.isDir())
@@ -780,6 +781,7 @@ int KMFolderMaildir::createIndexFromContents()
     return 1;
   }
   QDir curDir(location() + "/cur");
+  curDir.setFilter(QDir::Files);
 
   // then, we look for all the 'cur' files
   const QFileInfoList *list = curDir.entryInfoList();
