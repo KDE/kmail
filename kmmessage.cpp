@@ -757,8 +757,8 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
   curNode->buildObjectTree( false );
   // initialy parse the complete message to decrypt any encrypted parts
   {
-    ObjectTreeParser otp( 0 );
-    otp.parseObjectTree( 0, &rootNode, true, false, true );
+    ObjectTreeParser otp;
+    otp.parseObjectTree( &rootNode, true, false, true );
   }
   curNode = curNode->findType( DwMime::kTypeText,
                                DwMime::kSubtypeUnknown,
@@ -769,8 +769,8 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
   if( curNode ) {
     isHTML = DwMime::kSubtypeHtml == curNode->type();
     // now parse the TEXT message part we want to quote
-    ObjectTreeParser otp( 0 );
-    otp.parseObjectTree( 0, curNode, true, false, true );
+    ObjectTreeParser otp;
+    otp.parseObjectTree( curNode, true, false, true );
     parsedString = otp.resultString();
   }
   kdDebug(5006) << "\n\n======= KMMessage::parseTextStringFromDwPart()   -    parsed string:\n\""

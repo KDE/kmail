@@ -165,8 +165,7 @@ void KMMimePartTree::slotSaveAs()
                     ds.writeRawBytes( cstr, cstr.size() );
                 } else {
                     ObjectTreeParser otp( mReaderWin );
-		    otp.parseObjectTree( 0,
-					 mCurrentContextMenuItem->node(),
+		    otp.parseObjectTree( mCurrentContextMenuItem->node(),
 					 true,
 					 bSaveEncrypted,
 					 bSaveWithSig );

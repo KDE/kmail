@@ -29,16 +29,23 @@ namespace KMail {
 
   class ObjectTreeParser {
   public:
-    ObjectTreeParser( KMReaderWin * reader );
+    ObjectTreeParser( KMReaderWin * reader=0, CryptPlugWrapper * wrapper=0 );
     virtual ~ObjectTreeParser();
 
     QCString resultString() const { return mResultString; }
+
+    void setCryptPlugWrapper( CryptPlugWrapper * wrapper ) {
+      mCryptPlugWrapper = wrapper;
+    }
+    CryptPlugWrapper * cryptPlugWrapper() const {
+      return mCryptPlugWrapper;
+    }
 
     /** Parse beginning at a given node and recursively parsing
         the children of that node and it's next sibling. */
     //  Function is called internally by "parseMsg(KMMessage* msg)"
     //  and it will be replaced once KMime is alive.
-    void parseObjectTree( CryptPlugWrapper * useThisCryptPlug, partNode * node,
+    void parseObjectTree( partNode * node,
 			  bool showOneMimePart=false,
 			  bool keepEncryptions=false,
 			  bool includeSignatures=true );
@@ -61,8 +68,7 @@ namespace KMail {
         3. Insert the respective entries in the Mime Tree Viewer.
         3. Parse the 'node' to display the content. */
     //  Function will be replaced once KMime is alive.
-    void insertAndParseNewChildNode( CryptPlugWrapper * useThisCryptPlug,
-				     partNode & node,
+    void insertAndParseNewChildNode( partNode & node,
 				     const char * content,
 				     const char * cntDesc,
 				     bool append=false );
@@ -76,8 +82,7 @@ namespace KMail {
 
         Returns whether a signature was found or not: use this to
         find out if opaque data is signed or not. */
-    bool writeOpaqueOrMultipartSignedData( CryptPlugWrapper * useThisCryptPlug,
-					   partNode * data,
+    bool writeOpaqueOrMultipartSignedData( partNode * data,
 					   partNode & sign,
 					   const QString & fromAddress,
 					   bool doCheck=true,
@@ -85,15 +90,14 @@ namespace KMail {
 					   struct CryptPlugWrapper::SignatureMetaData * paramSigMeta=0,
 					   bool hideErrors=false );
 
-    /** find a plugin matching a given libName */
+    /** find a plugin matching a given libName.
+	Sets mCryptPlugWrapper */
     bool foundMatchingCryptPlug( const QString & libName,
-				 CryptPlugWrapper** useThisCryptPlug_ref,
 				 const QString & verboseName=QString::null );
 
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
-    bool okDecryptMIME( CryptPlugWrapper*     useThisCryptPlug,
-			partNode& data,
+    bool okDecryptMIME( partNode& data,
 			QCString& decryptedData,
 			bool& signatureFound,
 			struct CryptPlugWrapper::SignatureMetaData& sigMeta,
@@ -104,6 +108,7 @@ namespace KMail {
   private:
     KMReaderWin * mReader;
     QCString mResultString;
+    CryptPlugWrapper * mCryptPlugWrapper;
   };
 
 }; // namespace KMail
