@@ -366,6 +366,12 @@ void KMAcctImap::slotSlaveError(KIO::Slave *aSlave, int errorCode,
   if (aSlave != mSlave) return;
   if (errorCode == KIO::ERR_SLAVE_DIED) slaveDied();
   if (errorCode == KIO::ERR_COULD_NOT_LOGIN && !mStorePasswd) mAskAgain = TRUE;
+  if (errorCode == KIO::ERR_DOES_NOT_EXIST)
+  {
+    // folder is gone, so reload the folderlist
+    if (mFolder) mFolder->listDirectory();
+    return;
+  }
   // check if we still display an error
   killAllJobs();
   if ( !errorDialogIsActive )
