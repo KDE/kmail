@@ -1557,8 +1557,7 @@ void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
   assert(msg != 0);
   // some information that is needed for imap messages with LOD
   msg->setParent( message()->parent() );
-  if ( !message()->headerField("X-UID").isEmpty() )
-    msg->setHeaderField("X-UID", message()->headerField("X-UID"));
+  msg->setUID(message()->UID());
   msg->setReadyToShow(true);
   KMReaderMainWin *win = new KMReaderMainWin();
   win->showMsg( overrideCodec(), msg );

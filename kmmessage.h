@@ -759,6 +759,14 @@ public:
     { return (mMsgLength) ? mMsgLength : mMsgSize; }
   void setMsgLength(size_t sz) { mMsgLength = sz; }
 
+  /** Get/set size on server */
+  size_t msgSizeServer() const;
+  void setMsgSizeServer(size_t sz);
+
+  /** Get/set UID */
+  ulong UID() const;
+  void setUID(ulong uid);
+
   /** Status of the message. */
   KMMsgStatus status() const { return mStatus; }
   /** Set status and mark dirty. */

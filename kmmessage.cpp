@@ -2148,6 +2148,31 @@ void KMMessage::setMsgId(const QString& aStr)
   mDirty = TRUE;
 }
 
+//-----------------------------------------------------------------------------
+size_t KMMessage::msgSizeServer() const {
+  return headerField( "X-Length" ).toULong();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setMsgSizeServer(size_t size)
+{
+  setHeaderField("X-Length", QCString().setNum(size));
+  mDirty = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+ulong KMMessage::UID() const {
+  return headerField( "X-UID" ).toULong();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setUID(ulong uid)
+{
+  setHeaderField("X-UID", QCString().setNum(uid));
+  mDirty = TRUE;
+}
 
 //-----------------------------------------------------------------------------
 AddressList KMMessage::headerAddrField( const QCString & aName ) const {

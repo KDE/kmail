@@ -19,22 +19,23 @@ class KMMsgInfo::KMMsgInfoPrivate
 public:
     enum {
 	SUBJECT_SET = 0x01, TO_SET = 0x02, REPLYTO_SET = 0x04, MSGID_SET=0x08,
-	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40,
+	DATE_SET = 0x10, OFFSET_SET = 0x20, SIZE_SET = 0x40, SIZESERVER_SET = 0x80,
 	XMARK_SET=0x100, FROM_SET=0x200, FILE_SET=0x400, ENCRYPTION_SET=0x800,
 	SIGNATURE_SET=0x1000, MDN_SET=0x2000, REPLYTOAUX_SET = 0x4000,
-	STRIPPEDSUBJECT_SET = 0x8000,
+	STRIPPEDSUBJECT_SET = 0x8000,  UID_SET = 0x10000,
 
-	ALL_SET = 0xFFFF, NONE_SET = 0x0000
+	ALL_SET = 0xFFFFFF, NONE_SET = 0x000000
     };
     uint modifiers;
     QString subject, from, to, replyToIdMD5, replyToAuxIdMD5,
             strippedSubjectMD5, msgIdMD5, xmark, file;
     off_t folderOffset;
-    size_t msgSize;
+    size_t msgSize, msgSizeServer;
     time_t date;
     KMMsgEncryptionState encryptionState;
     KMMsgSignatureState signatureState;
     KMMsgMDNSentState mdnSentState;
+    ulong UID;
 
     KMMsgInfoPrivate() : modifiers(NONE_SET) { }
     KMMsgInfoPrivate& operator=(const KMMsgInfoPrivate& other) {
@@ -96,17 +97,17 @@ public:
 	    modifiers |= SIGNATURE_SET;
 	    signatureState = other.signatureState;
 	}
-	if(other.modifiers & ENCRYPTION_SET) {
-	    modifiers |= ENCRYPTION_SET;
-	    encryptionState = other.encryptionState;
-	}
-	if(other.modifiers & SIGNATURE_SET) {
-	    modifiers |= SIGNATURE_SET;
-	    signatureState = other.signatureState;
-	}
 	if(other.modifiers & MDN_SET) {
 	    modifiers |= MDN_SET;
 	    mdnSentState = other.mdnSentState;
+	}
+	if(other.modifiers & SIZESERVER_SET) {
+	    modifiers |= SIZESERVER_SET;
+	    msgSizeServer = other.msgSizeServer;
+	}
+	if(other.modifiers & UID_SET) {
+	    modifiers |= UID_SET;
+	    UID = other.UID;
 	}
 	return *this;
     }
@@ -170,6 +171,8 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
     kd->encryptionState = msg.encryptionState();
     kd->signatureState = msg.signatureState();
     kd->mdnSentState = msg.mdnSentState();
+    kd->msgSizeServer = msg.msgSizeServer();
+    kd->UID = msg.UID();
     return *this;
 }
 
@@ -182,7 +185,8 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
 		     KMMsgMDNSentState mdnSentState,
-                     off_t aFolderOffset, size_t aMsgSize)
+             off_t aFolderOffset, size_t aMsgSize,
+             size_t aMsgSizeServer, ulong aUID)
 {
     mIndexOffset = 0;
     mIndexLength = 0;
@@ -205,6 +209,8 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
     kd->encryptionState = encryptionState;
     kd->signatureState = signatureState;
     kd->mdnSentState = mdnSentState;
+    kd->msgSizeServer = aMsgSizeServer;
+    kd->UID = aUID;
     mDirty     = FALSE;
 }
 
@@ -217,12 +223,13 @@ void KMMsgInfo::init(const QCString& aSubject, const QCString& aFrom,
 		     KMMsgEncryptionState encryptionState,
 		     KMMsgSignatureState signatureState,
 		     KMMsgMDNSentState mdnSentState,
-		     unsigned long aMsgSize)
+		     size_t aMsgSize,
+             size_t aMsgSizeServer, ulong aUID)
 {
   // use the "normal" init for most stuff
   init( aSubject, aFrom, aTo, aDate, aStatus, aXMark, replyToId, replyToAuxId,
         msgId, encryptionState, signatureState, mdnSentState,
-        (unsigned long)0, aMsgSize );
+        (unsigned long)0, aMsgSize, aMsgSizeServer, aUID );
   kd->file = aFileName;
 }
 
@@ -545,6 +552,22 @@ time_t KMMsgInfo::date(void) const
 }
 
 //-----------------------------------------------------------------------------
+size_t KMMsgInfo::msgSizeServer(void) const
+{
+    if (kd && kd->modifiers & KMMsgInfoPrivate::SIZESERVER_SET) 
+      return kd->msgSizeServer; 
+    return getLongPart(MsgSizeServerPart);
+}
+
+//-----------------------------------------------------------------------------
+ulong KMMsgInfo::UID(void) const
+{
+    if (kd && kd->modifiers & KMMsgInfoPrivate::UID_SET)
+      return kd->UID;
+    return getLongPart(MsgUIDPart);
+}
+
+//-----------------------------------------------------------------------------
 void KMMsgInfo::setMsgSize(size_t sz)
 {
     if (sz == msgSize())
@@ -554,6 +577,32 @@ void KMMsgInfo::setMsgSize(size_t sz)
 	kd = new KMMsgInfoPrivate;
     kd->modifiers |= KMMsgInfoPrivate::SIZE_SET;
     kd->msgSize = sz;
+    mDirty = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::setMsgSizeServer(size_t sz)
+{
+    if (sz == msgSizeServer())
+      return;
+
+    if(!kd)
+      kd = new KMMsgInfoPrivate;
+    kd->modifiers |= KMMsgInfoPrivate::SIZESERVER_SET;
+    kd->msgSizeServer = sz;
+    mDirty = TRUE;
+}
+
+//-----------------------------------------------------------------------------
+void KMMsgInfo::setUID(ulong uid)
+{
+    if (uid == UID())
+      return;
+
+    if(!kd)
+      kd = new KMMsgInfoPrivate;
+    kd->modifiers |= KMMsgInfoPrivate::UID_SET;
+    kd->UID = uid;
     mDirty = TRUE;
 }
 

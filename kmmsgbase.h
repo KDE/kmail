@@ -260,6 +260,14 @@ public:
   virtual size_t msgSize(void) const = 0;
   virtual void setMsgSize(size_t sz) = 0;
 
+  /** Get/set size of message on server */
+  virtual size_t msgSizeServer(void) const = 0;
+  virtual void setMsgSizeServer(size_t sz) = 0;
+
+  /** Get/set UID for IMAP */
+  virtual ulong UID(void) const = 0;
+  virtual void setUID(ulong uid) = 0;
+
   /** offset into index file */
   virtual void setIndexOffset(off_t off) { mIndexOffset = off; }
   virtual off_t indexOffset() const { return mIndexOffset; }
@@ -387,7 +395,9 @@ public:
     MsgReplyToAuxIdMD5Part = 14,
     MsgStrippedSubjectMD5Part = 15,
     // and another unsigned long
-    MsgStatusPart = 16
+    MsgStatusPart = 16,
+    MsgSizeServerPart = 17,
+    MsgUIDPart = 18
   };
   /** access to long msgparts */
   off_t getLongPart(MsgPartType) const;

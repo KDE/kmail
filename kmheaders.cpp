@@ -286,13 +286,7 @@ public:
       && headers->paintInfo()->showSize) {
         if ( mMsgBase->parent()->folderType() == KMFolderTypeImap )
         {
-          QCString cstr;
-          headers->folder()->getMsgString(mMsgId, cstr);
-          int a = cstr.find("\nX-Length: ") + 11;
-          if(a != 10) {
-            int b = cstr.find('\n', a);
-            tmp = KIO::convertSize(cstr.mid(a, b-a).toULong());
-          }
+          tmp = KIO::convertSize( mMsgBase->msgSizeServer() );
         } else tmp = KIO::convertSize(mMsgBase->msgSize());
     }
     return tmp;
@@ -463,11 +457,7 @@ public:
       QString len;
       if ( msg->parent()->folderType() == KMFolderTypeImap )
       {
-        QCString cstr;
-        headers->folder()->getMsgString(id, cstr);
-        int a = cstr.find("\nX-Length: ") + 11;
-        int b = cstr.find('\n', a);
-        len = QString::fromLatin1( cstr.data() + a, b - a );
+        len = QString::number( msg->msgSizeServer() );
       } else {
         len = QString::number( msg->msgSize() );
       }

@@ -507,6 +507,7 @@ int KMFolderMbox::createIndexFromContents()
   char status[8], xstatus[8];
   QCString subjStr, dateStr, fromStr, toStr, xmarkStr, *lastStr=0;
   QCString replyToIdStr, replyToAuxIdStr, referencesStr, msgIdStr;
+  QCString sizeServerStr, uidStr;
   bool atEof = false;
   bool inHeader = true;
   KMMsgInfo* mi;
@@ -536,6 +537,8 @@ int KMFolderMbox::createIndexFromContents()
   referencesStr = "";
   msgIdStr = "";
   needStatus = 3;
+  size_t sizeServer = 0;
+  ulong uid = 0;
 
 
   while (!atEof)
@@ -613,7 +616,7 @@ int KMFolderMbox::createIndexFromContents()
                     xmarkStr.stripWhiteSpace(),
                     replyToIdStr, replyToAuxIdStr, msgIdStr,
                     KMMsgEncryptionStateUnknown, KMMsgSignatureStateUnknown,
-                    KMMsgMDNStateUnknown, offs, size );
+                    KMMsgMDNStateUnknown, offs, size, sizeServer, uid );
           mi->setStatus(status, xstatus);
           mi->setDate( dateStr.stripWhiteSpace() );
           mi->setDirty(false);
@@ -630,6 +633,8 @@ int KMFolderMbox::createIndexFromContents()
           dateStr = "";
           fromStr = "";
           subjStr = "";
+          sizeServer = 0;
+          uid = 0;
         }
         else num--,numStatus++;
       }
@@ -704,6 +709,19 @@ int KMFolderMbox::createIndexFromContents()
     {
       subjStr = QCString(line+8);
       lastStr = &subjStr;
+    }
+    else if (strncasecmp(line,"X-Length:",9)==0)
+    {
+      sizeServerStr = QCString(line+9);
+      sizeServer = sizeServerStr.toULong();
+      kdDebug() << "mbox got length " << sizeServer << endl;
+      lastStr = &sizeServerStr;
+    }
+    else if (strncasecmp(line,"X-UID:",6)==0)
+    {
+      uidStr = QCString(line+6);
+      uid = uidStr.toULong();
+      lastStr = &uidStr;
     }
   }
 

@@ -212,10 +212,11 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
 
     ulong size = 0;
     if ((*it).data.size() > 0) {
-      QString uid = mMsg->headerField("X-UID");
-      size = mMsg->headerField("X-Length").toULong();
+      ulong uid = mMsg->UID();
+      size = mMsg->msgSizeServer();
       mMsg->fromByteArray( (*it).data );
-      mMsg->setHeaderField("X-UID",uid);
+      mMsg->setUID(uid);
+      mMsg->setMsgSizeServer(size);
       mMsg->setTransferInProgress( false );
       mMsg->setComplete( true );
       mFolder->addMsgInternal( mMsg, true );
@@ -238,8 +239,8 @@ void CachedImapJob::slotGetNextMessage(KIO::Job * job)
   MsgForDownload mfd = mMsgsForDownload.front(); mMsgsForDownload.pop_front();
 
   mMsg = new KMMessage;
-  mMsg->setHeaderField("X-UID",QString::number(mfd.uid));
-  mMsg->setHeaderField("X-Length",QString::number(mfd.size));
+  mMsg->setUID(mfd.uid);
+  mMsg->setMsgSizeServer(mfd.size);
   if( mfd.flags > 0 )
     KMFolderCachedImap::flagsToStatus(mMsg, mfd.flags);
   KURL url = mAccount->getUrl();

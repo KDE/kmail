@@ -31,7 +31,8 @@ public:
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,
-		    off_t folderOffset=0, size_t msgSize=0);
+		    off_t folderOffset=0, size_t msgSize=0,
+            size_t msgSizeServer = 0, ulong UID = 0);
 
   /** Initialize with given values and set dirty flag to FALSE. */
   virtual void init(const QCString& subject, const QCString& from,
@@ -44,7 +45,8 @@ public:
 		    KMMsgEncryptionState encryptionState,
 		    KMMsgSignatureState signatureState,
 		    KMMsgMDNSentState mdnSentState,
-		    unsigned long msgSize=0);
+		    size_t msgSize=0,
+            size_t msgSizeServer = 0, ulong UID = 0);
 
   /** Inherited methods (see @ref KMMsgBase for description): */
   virtual QString subject(void) const;
@@ -63,8 +65,11 @@ public:
   virtual KMMsgMDNSentState mdnSentState() const;
   virtual off_t folderOffset(void) const;
   virtual size_t msgSize(void) const;
+  virtual size_t msgSizeServer(void) const;
   virtual time_t date(void) const;
+  virtual ulong UID(void) const;
   void setMsgSize(size_t sz);
+  void setMsgSizeServer(size_t sz);
   void setFolderOffset(off_t offs);
   void setFileName(const QString& file);
   virtual void setStatus(const KMMsgStatus status, int idx = -1);
@@ -78,6 +83,7 @@ public:
   virtual void setEncryptionState( const KMMsgEncryptionState, int idx = -1 );
   virtual void setSignatureState( const KMMsgSignatureState, int idx = -1 );
   virtual void setMDNSentState( const KMMsgMDNSentState, int idx = -1 );
+  virtual void setUID(ulong);
 
   /** Grr.. c++! */
   virtual void setStatus(const char* s1, const char* s2=0) { KMMsgBase::setStatus(s1, s2); }

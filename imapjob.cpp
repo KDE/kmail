@@ -109,9 +109,9 @@ void ImapJob::init( JobType jt, QString sets, KMFolderImap* folder,
     jd.total = 1; jd.done = 0;
     jd.msgList.append(msg);
     QCString cstr( msg->asString() );
-    int a = cstr.find( "\nX-UID: " );
-    int b = cstr.find( "\n", a );
-    if ( a != -1 && b != -1 && cstr.find( "\n\n" ) > a ) cstr.remove( a, b-a );
+    int a = cstr.find("\nX-UID: ");
+    int b = cstr.find('\n', a);
+    if (a != -1 && b != -1 && cstr.find("\n\n") > a) cstr.remove(a, b-a);
     mData.resize( cstr.length() + cstr.contains( "\n" ) - cstr.contains( "\r\n" ) );
     unsigned int i = 0;
     char prevChar = '\0';
@@ -222,7 +222,7 @@ void ImapJob::slotGetNextMessage()
   KMMessage *msg = mMsgList.first();
   KMFolderImap *msgParent = static_cast<KMFolderImap*>(msg->storage());
   KMAcctImap *account = msgParent->account();
-  if ( msg->headerField("X-UID").isEmpty() )
+  if ( msg->UID() == 0 )
   {
     emit messageRetrieved( msg );
     account->mJobList.remove( this );
@@ -230,7 +230,7 @@ void ImapJob::slotGetNextMessage()
     return;
   }
   KURL url = account->getUrl();
-  QString path = msgParent->imapPath() + ";UID=" + msg->headerField("X-UID");
+  QString path = msgParent->imapPath() + ";UID=" + QString::number(msg->UID());
   ImapAccountBase::jobData jd;
   jd.parent = 0; jd.offset = 0;
   jd.total = 1; jd.done = 0;
@@ -248,8 +248,8 @@ void ImapJob::slotGetNextMessage()
     }
   } else {
       path += ";SECTION=BODY.PEEK[]";
-      uint size = msg->headerField("X-Length").toUInt();
-      if (size > 0) jd.total = size;      
+      if (msg->msgSizeServer() > 0) 
+        jd.total = msg->msgSizeServer();      
   }  
   url.setPath( path );
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;
@@ -308,14 +308,16 @@ void ImapJob::slotGetMessageResult( KIO::Job * job )
       if ( mPartSpecifier.isEmpty() ||
            mPartSpecifier == "HEADER" )
       {
-        uint size = msg->headerField("X-Length").toUInt();
+        uint size = msg->msgSizeServer();
         if ( size > 0 && mPartSpecifier.isEmpty() )
           (*it).done = size;
-        QString uid = msg->headerField("X-UID");
+        ulong uid = msg->UID();
         msg->fromByteArray( (*it).data );
-        msg->setHeaderField("X-UID",uid);
-        // set correct size
-        if ( size > 0 ) msg->setMsgLength(size);
+        // reconstruct as it may be overwritten above
+        msg->setUID(uid);
+        if ( size > 0 && msg->msgSizeServer() == 0 ) 
+          msg->setMsgSizeServer(size);
+
         if ( mPartSpecifier.isEmpty() ) 
           msg->setComplete( true );
         else
@@ -473,7 +475,7 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
       KMMessage * msg;
       for ( msg = (*it).msgList.first(); msg; msg = (*it).msgList.next() )
       {
-        uint uid = msg->headerField("X-UID").toInt();
+        ulong uid = msg->UID();
         index = olduids.findIndex(uid);
         if (index > -1)
         {
@@ -483,7 +485,7 @@ void ImapJob::slotCopyMessageInfoData(KIO::Job * job, const QString & data)
         }
       }
     } else if (mMsgList.first()) {
-      uint uid = mMsgList.first()->headerField("X-UID").toInt();
+      ulong uid = mMsgList.first()->UID();
       index = olduids.findIndex(uid);
       if (index > -1)
       {

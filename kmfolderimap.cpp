@@ -464,7 +464,7 @@ QPtrList<KMMessage> KMFolderImap::splitMessageList(QString set, QPtrList<KMMessa
     {
       // append the msg to the new list and delete it from the old
       temp_msgs.append(msg);
-      uid = msg->headerField("X-UID");
+      uid = msg->UID();
       // remove modifies the current
       msgList.remove(msg);
       if (uid == last_uid) break;
@@ -672,10 +672,8 @@ ulong KMFolderImap::lastUid()
   open();
   if (count() > 0)
   {
-    bool unget = !isMessage(count() - 1);
-    KMMessage *msg = getMsg(count() - 1);
-    mLastUid = msg->headerField("X-UID").toULong();
-    if (unget) unGetMsg(count() - 1);
+    KMMsgBase * base = getMsgBase(count()-1);
+    mLastUid = base->UID();
   }
   close();
   return mLastUid;
@@ -1002,7 +1000,7 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     KMMessage *msg = new KMMessage;
     msg->fromString((*it).cdata.mid(16, pos - 16));
     flags = msg->headerField("X-Flags").toInt();
-    ulong uid = msg->headerField("X-UID").toULong();
+    ulong uid = msg->UID();
     if (flags & 8 || uid <= lastUid()) {
       delete msg;
       msg = 0;
@@ -1031,7 +1029,8 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       // Merge with the flags from the server.
       flagsToStatus((KMMsgBase*)msg, flags);
       // set the correct size
-      msg->setMsgLength( msg->headerField("X-Length").toUInt() );
+      msg->setMsgSizeServer( msg->headerField("X-Length").toUInt() );
+      msg->setUID(uid);
       close();
 
       if (count() > 1) unGetMsg(count() - 1);
@@ -1053,6 +1052,7 @@ KMFolderImap::doCreateJob( KMMessage *msg, FolderJob::JobType jt,
   KMFolderImap* kmfi = folder? dynamic_cast<KMFolderImap*>(folder->storage()) : 0;
   if ( jt == FolderJob::tGetMessage && partSpecifier == "STRUCTURE" &&
        mAccount && mAccount->loadOnDemand() &&
+       ( msg->msgSizeServer() > 5000 || msg->msgSizeServer() == 0 ) &&
        ( msg->signatureState() == KMMsgNotSigned || 
          msg->signatureState() == KMMsgSignatureStateUnknown ) )
   {
@@ -1212,16 +1212,16 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
 {
   KURL url = mAccount->getUrl();
   KMFolderImap *msg_parent = static_cast<KMFolderImap*>(msg->storage());
-  QString uid = msg->headerField("X-UID");
+  ulong uid = msg->UID();
   /* If the uid is empty the delete job below will nuke all mail in the 
      folder, so we better safeguard against that. See ::expungeFolder, as
      to why. :( */
-  if ( uid.isEmpty() ) {
+  if ( uid == 0 ) {
      kdDebug( 5006 ) << "KMFolderImap::deleteMessage: Attempt to delete "
                         "an empty UID. Aborting."  << endl;
      return;
   }
-  url.setPath(msg_parent->imapPath() + ";UID=" + uid );
+  url.setPath(msg_parent->imapPath() + ";UID=" + QString::number(uid) );
   if ( mAccount->makeConnection() != ImapAccountBase::Connected )
     return;
   KIO::SimpleJob *job = KIO::file_delete(url, FALSE);
@@ -1288,7 +1288,7 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
     if (!msg) continue;
     QString flags = statusToFlags(msg->status());
     // Collect uids for each type of flags.
-    groups[flags].append(msg->headerField("X-UID"));
+    groups[flags].append(QString::number(msg->UID()));
     if (unget) unGetMsg(*it);
   }
   QMapIterator< QString, QStringList > dit;
@@ -1369,15 +1369,13 @@ QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
 //-----------------------------------------------------------------------------
 void KMFolderImap::getUids(QValueList<int>& ids, QValueList<int>& uids)
 {
-  KMMessage *msg = 0;
+  KMMsgBase *msg = 0;
   // get the uids
   for ( QValueList<int>::Iterator it = ids.begin(); it != ids.end(); ++it )
   {
-    bool unget = !isMessage(*it);
-    msg = getMsg(*it);
+    msg = getMsgBase(*it);
     if (!msg) continue;
-    uids.append(msg->headerField("X-UID").toInt());
-    if (unget) unGetMsg(*it);
+    uids.append(msg->UID());
   }
 }
 
@@ -1390,8 +1388,7 @@ void KMFolderImap::getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, 
   if (!msgParent) return;
 
   for ( msg = msgList.first(); msg; msg = msgList.next() )
-    if ( !msg->headerField("X-UID").isEmpty() )
-      uids.append(msg->headerField("X-UID").toInt());
+    uids.append(msg->UID());
 }
 
 //-----------------------------------------------------------------------------

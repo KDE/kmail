@@ -1303,6 +1303,11 @@ const uchar *KMMsgBase::asIndexString(int &length) const
   tmp = status();
   STORE_DATA(MsgStatusPart, tmp);
 
+  tmp = msgSizeServer();
+  STORE_DATA(MsgSizeServerPart, tmp);
+  tmp = UID();
+  STORE_DATA(MsgUIDPart, tmp);
+
   return ret;
 }
 #undef STORE_DATA_LEN
