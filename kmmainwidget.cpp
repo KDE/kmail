@@ -1078,7 +1078,7 @@ void KMMainWidget::slotRemoveFolder()
       KMFolderCachedImap* storage = static_cast<KMFolderCachedImap*>( mFolder->storage() );
       KMAcctCachedImap* acct = storage->account();
       if ( acct )
-        acct->addDeletedFolder( storage->imapPath() );
+        acct->addDeletedFolder( mFolder );
 
       kmkernel->dimapFolderMgr()->remove(mFolder);
     }
