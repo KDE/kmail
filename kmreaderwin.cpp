@@ -472,7 +472,6 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mActionCollection( actionCollection ),
     mHtmlWriter( 0 )
 {
-  mUseGroupware = false;
   mAutoDelete = false;
   mLastSerNum = 0;
   mMessage = 0;
@@ -624,12 +623,6 @@ KMReaderWin::~KMReaderWin()
 void KMReaderWin::setMimePartTree( KMMimePartTree* mimePartTree )
 {
   mMimePartTree = mimePartTree;
-}
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::setUseGroupware( bool on )
-{
-  mUseGroupware = on;
 }
 
 //-----------------------------------------------------------------------------

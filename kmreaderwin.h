@@ -78,9 +78,6 @@ public:
   /** assign a KMMimePartTree to this KMReaderWin */
   virtual void setMimePartTree( KMMimePartTree* mimePartTree );
 
-  /** tell KMReaderWin whether groupware functionality may be used */
-  virtual void setUseGroupware( bool );
-
   /** Read settings from app's config file. */
   virtual void readConfig(void);
 
@@ -369,7 +366,6 @@ protected:
   virtual void removeTempFiles();
 
 protected:
-  bool mUseGroupware;
   bool mHtmlMail, mHtmlOverride;
   int mAtmCurrent;
   QString mAtmCurrentName;

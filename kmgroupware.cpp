@@ -177,7 +177,6 @@ void KMGroupware::slotInvalidateIMAPFolders()
 void KMGroupware::setupKMReaderWin(KMReaderWin* reader)
 {
   mReader = reader;
-  mReader->setUseGroupware( mUseGroupware );
 
   // connect KMReaderWin's signals to our slots
   connect( mReader, SIGNAL( signalGroupwareShow( bool ) ),
@@ -232,7 +231,6 @@ void KMGroupware::internalCreateKOrgPart()
   if( !factory ) {
     KMessageBox::error(mMainWin, "No libkorganizer found !");
     mUseGroupware = false;
-    mReader->setUseGroupware( false );
     return;
   }
 
