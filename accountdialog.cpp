@@ -1393,7 +1393,11 @@ void AccountDialog::saveSettings()
     epa.setLoadOnDemand( mImap.loadOnDemandCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
-    epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+    KMFolder *t = mImap.trashCombo->getFolder();
+    if ( t )
+      epa.setTrash( mImap.trashCombo->getFolder()->idString() );
+    else
+      epa.setTrash( kmkernel->trashFolder()->idString() );
     epa.setResource( mImap.resourceCheck->isChecked() );
     epa.setCheckExclude( mImap.excludeCheck->isChecked() );
     epa.setUseSSL( mImap.encryptionSSL->isChecked() );
