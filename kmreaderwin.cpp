@@ -444,9 +444,16 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       sdata->replace(QRegExp("\""), "&quot;");
       sdata->replace(QRegExp("<"), "&lt;");
       sdata->replace(QRegExp(">"), "&gt;");
-      
+
+      if (sdata->contains(QRegExp("unknown key ID")))
+      {
+      sdata->replace(QRegExp("unknown key ID"), i18n("unknown key ID"));
+      line.sprintf("<B>%s %s</B><BR>",sig.data(), sdata->data());
+      } 
+      else
       line.sprintf("<B>%s <A HREF=\"mailto:%s\">%s</A></B><BR>", sig.data(), 
 		   sdata->data(),sdata->data());
+
       delete sdata;
       htmlStr += line;
     }
