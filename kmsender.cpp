@@ -995,11 +995,14 @@ bool KMSendSMTP::send(KMMessage *aMsg)
     }
   }
 
-  if(!aMsg->subject().isEmpty())
-    mQuery += QString("&subject=") + KURL::encode_string(aMsg->subject());
-
   if (ti->specifyHostname)
     mQuery += "&hostname=" + KURL::encode_string(ti->localHostname);
+
+  if ( !kernel->msgSender()->sendQuotedPrintable() )
+    mQuery += "&body=8bit";
+
+  if ( aMsg->msgLength() )
+    mQuery += "&size=" + QString::number( aMsg->msgLength() );
 
   KURL destination;
 
