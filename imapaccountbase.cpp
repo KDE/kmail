@@ -338,10 +338,10 @@ namespace KMail {
       if ((mimeType == "inode/directory" || mimeType == "message/digest"
             || mimeType == "message/directory")
           && name != ".." && (hiddenFolders() || name.at(0) != '.')
-          && (!(*it).inboxOnly || name == "INBOX"))
+          && (!(*it).inboxOnly || name.upper() == "INBOX"))
       {
         if (((*it).inboxOnly ||
-              url.path() == "/INBOX/") && name == "INBOX")
+              url.path() == "/INBOX/") && name.upper() == "INBOX")
           mHasInbox = TRUE; // INBOX-only
 
         // Some servers send _lots_ of duplicates
