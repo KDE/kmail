@@ -1454,6 +1454,7 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.profileList->setSorting( -1 );
   vlay->addWidget( mAppearance.profileList, 1 );
 
+  /* not implemented (yet?)
   hlay = new QHBoxLayout( vlay );
   QPushButton *pushButton = new QPushButton(i18n("&New"), page4 );
   pushButton->setAutoDefault( false );
@@ -1462,7 +1463,8 @@ void ConfigureDialog::makeAppearancePage( void )
   mAppearance.profileDeleteButton->setAutoDefault( false );
   hlay->addWidget( mAppearance.profileDeleteButton );
   hlay->addStretch(10);
-
+  */
+  
   mAppearance.mListItemDefault =
     new QListViewItem( mAppearance.profileList,
     i18n("KMail Classic - KMail as you know it") );
