@@ -272,15 +272,13 @@ int KMFolderImap::rename( const QString& newName, KMFolderDir */*aParent*/ )
     return 0;
 
   QString path = imapPath();
-  int i = path.findRev( '.' );
-  path = path.left( i );
-  path += "." + newName;
+  path.replace( name(), newName );
   KURL src( mAccount->getUrl() );
   src.setPath( imapPath() );
   KURL dst( mAccount->getUrl() );
   dst.setPath( path );
   KIO::SimpleJob *job = KIO::rename( src, dst, true );
-  kdDebug(5006)<< "### Rename : " << src.prettyURL()
+  kdDebug(5006)<< "KMFolderImap::rename - " << src.prettyURL()
            << " |=> " << dst.prettyURL()
            << endl;
   KIO::Scheduler::assignJobToSlave( mAccount->slave(), job );
