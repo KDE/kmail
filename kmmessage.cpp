@@ -426,7 +426,7 @@ void KMMessage::fromDwString(const DwString& str, bool aSetStatus)
   if (   ct.isEmpty()
       || ct == "text"
       || ct == "multipart"
-      || (    ct == "application" 
+      || (    ct == "application"
            && (st == "pkcs7-mime" || st == "x-pkcs7-mime" || st == "pgp") ) )
     return;
   KMMessagePart textPart;
@@ -1984,7 +1984,7 @@ void KMMessage::setDrafts(const QString& aStr)
 //-----------------------------------------------------------------------------
 QString KMMessage::who(void) const
 {
-  if (mParent) 
+  if (mParent)
 	return headerField(mParent->whoField().utf8());
   return headerField("From");
 }
@@ -3232,8 +3232,21 @@ QString KMMessage::stripEmailAddr(const QString& aStr)
   for (QStringList::Iterator it = list.begin(); it != list.end(); ++it)
   {
     char endCh = '>';
+    i = -1;
 
-    i = (*it).find('<');
+    //if format is something like "--<King>-- John King" <john@someemail.com>
+    if ( (*it)[0] == '"' )
+    {
+      i = 0;
+      endCh = '"';
+    }
+
+    if (i<0)
+    {
+      i = (*it).find('<');
+      endCh = '>';
+    }
+
     if (i<0)
     {
       i = (*it).find('(');
@@ -3249,6 +3262,7 @@ QString KMMessage::stripEmailAddr(const QString& aStr)
 
         if (partA.find('@') >= 0 && !partB.isEmpty()) result = partB;
         else if (!partA.isEmpty()) result = partA;
+        else if (endCh == '"') result = partB;
         else result = (*it);
 
         len = result.length();
