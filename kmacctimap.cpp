@@ -105,6 +105,7 @@ void KMAcctImap::init(void)
   mPrefix = "/";
   mAutoExpunge = TRUE;
   mHiddenFolders = FALSE;
+  mUseSSL = FALSE;
 }
 
 //-----------------------------------------------------------------------------
@@ -125,6 +126,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
   setHiddenFolders(acct->hiddenFolders());
   setStorePasswd(acct->storePasswd());
   setPasswd(acct->passwd(), acct->storePasswd());
+  setUseSSL(acct->useSSL());
 }
 
 
@@ -132,7 +134,7 @@ void KMAcctImap::pseudoAssign(KMAccount* account)
 KURL KMAcctImap::getUrl()
 {
   KURL url;
-  url.setProtocol(QString("imap"));
+  url.setProtocol(mUseSSL ? QString("imaps") : QString("imap"));
   url.setUser(mLogin + ";AUTH=" + mAuth);
   url.setPass(decryptStr(mPasswd));
   url.setHost(mHost);
@@ -970,6 +972,7 @@ void KMAcctImap::readConfig(KConfig& config)
   mPrefix = config.readEntry("prefix", "/");
   mAutoExpunge = config.readBoolEntry("auto-expunge", TRUE);
   mHiddenFolders = config.readBoolEntry("hidden-folders", FALSE);
+  mUseSSL = config.readBoolEntry("use-ssl", FALSE);
 }
 
 
@@ -989,6 +992,7 @@ void KMAcctImap::writeConfig(KConfig& config)
   config.writeEntry("prefix", mPrefix);
   config.writeEntry("auto-expunge", mAutoExpunge);
   config.writeEntry("hidden-folders", mHiddenFolders);
+  config.writeEntry("use-ssl", mUseSSL);
 }
 
 
@@ -1023,6 +1027,13 @@ QString KMAcctImap::decryptStr(const QString &aStr) const
 void KMAcctImap::setStorePasswd(bool b)
 {
   mStorePasswd = b;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::setUseSSL(bool b)
+{
+  mUseSSL = b;
 }
 
 

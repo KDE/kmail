@@ -475,7 +475,7 @@ void AccountDialog::makePopAccountPage()
 void AccountDialog::makeImapAccountPage()
 {
   QFrame *page = makeMainWidget();
-  QGridLayout *topLayout = new QGridLayout( page, 13, 2, 0, spacingHint() );
+  QGridLayout *topLayout = new QGridLayout( page, 14, 2, 0, spacingHint() );
   topLayout->addColSpacing( 1, fontMetrics().maxWidth()*15 );
   topLayout->setRowStretch( 12, 10 );
   topLayout->setColStretch( 1, 10 );
@@ -533,6 +533,11 @@ void AccountDialog::makeImapAccountPage()
     new QCheckBox( i18n("Store IMAP password in configuration file"), page );
   topLayout->addMultiCellWidget( mImap.storePasswordCheck, 10, 10, 0, 1 );
 
+  mImap.useSSLCheck =
+    new QCheckBox( i18n("Use SSL for secure mail download"), page );
+  topLayout->addMultiCellWidget( mImap.useSSLCheck, 11, 11, 0, 1 );
+  connect(mImap.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotImapSSLChanged()));
+
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentication method"), page );
   mImap.authAuto = new QRadioButton( i18n("Clear text"), group );
@@ -540,7 +545,7 @@ void AccountDialog::makeImapAccountPage()
   "authentification method only, if you have a good reason", "LOGIN"), group );
   mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), group );
   mImap.authAnonymous = new QRadioButton( i18n("Anonymous"), group );
-  topLayout->addMultiCellWidget( group, 11, 11, 0, 1 );
+  topLayout->addMultiCellWidget( group, 12, 12, 0, 1 );
 
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
@@ -614,6 +619,7 @@ void AccountDialog::setupSettings()
     mImap.autoExpungeCheck->setChecked( ai.autoExpunge() );
     mImap.hiddenFoldersCheck->setChecked( ai.hiddenFolders() );
     mImap.storePasswordCheck->setChecked( ai.storePasswd() );
+    mImap.useSSLCheck->setChecked( ai.useSSL() );
     if (ai.auth() == "CRAM-MD5")
       mImap.authCramMd5->setChecked( TRUE );
     else if (ai.auth() == "ANONYMOUS")
@@ -661,6 +667,30 @@ void AccountDialog::setupSettings()
     // -sanders hack for startup users. Must investigate this properly
     if (folderCombo->count() == 0)
       folderCombo->insertItem( i18n("inbox") );
+  }
+}
+
+
+void AccountDialog::slotImapSSLChanged()
+{
+  if (mImap.useSSLCheck->isChecked()) {
+    struct servent *serv = getservbyname("imaps", "tcp");
+    if (serv) {
+      QString x;
+      x.sprintf("%u", ntohs(serv->s_port));
+      mImap.portEdit->setText(x);
+    } else {
+      mImap.portEdit->setText("995");
+    }
+  } else {
+    struct servent *serv = getservbyname("imap", "tcp");
+    if (serv) {
+      QString x;
+      x.sprintf("%u", ntohs(serv->s_port));
+      mImap.portEdit->setText(x);
+    } else {
+      mImap.portEdit->setText("110");
+    }
   }
 }
 
@@ -771,6 +801,7 @@ void AccountDialog::saveSettings()
     epa.setLogin( mImap.loginEdit->text() );
     epa.setAutoExpunge( mImap.autoExpungeCheck->isChecked() );
     epa.setHiddenFolders( mImap.hiddenFoldersCheck->isChecked() );
+    epa.setUseSSL( mImap.useSSLCheck->isChecked() );
     epa.setStorePasswd( mImap.storePasswordCheck->isChecked() );
     epa.setPasswd( mImap.passwordEdit->text(), epa.storePasswd() );
 

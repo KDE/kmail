@@ -92,6 +92,7 @@ class AccountDialog : public KDialogBase
       QCheckBox    *autoExpungeCheck;
       QCheckBox    *hiddenFoldersCheck;
       QCheckBox    *storePasswordCheck;
+      QCheckBox    *useSSLCheck;
       QRadioButton *authAuto;
       QRadioButton *authLogin;
       QRadioButton *authCramMd5;
@@ -105,6 +106,7 @@ class AccountDialog : public KDialogBase
     void slotEnableLocalInterval( bool state );
     void slotFontChanged();
     void slotSSLChanged();
+    void slotImapSSLChanged();
     
   private:
     void makeLocalAccountPage();

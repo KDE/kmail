@@ -120,6 +120,10 @@ public:
   bool hiddenFolders() { return mHiddenFolders; }
   virtual void setHiddenFolders(bool);
 
+  /** Use SSL or not */
+  bool useSSL() { return mUseSSL; }
+  virtual void setUseSSL(bool);
+
   /** List a directory and add the contents to a KMFolderTreeItem */
   void listDirectory(KMFolderTreeItem * fti, bool secondStep = FALSE);
 
@@ -200,6 +204,7 @@ protected:
   unsigned short int mPort;
   bool    mStorePasswd;
   bool    mAutoExpunge;
+  bool    mUseSSL;
   bool    mHiddenFolders;
   bool    gotMsgs;
   bool    mProgressEnabled;
