@@ -32,7 +32,6 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   KMFolderNode(aParent, aName)
 {
   mOpenCount      = 0;
-  mQuiet          = 0;
   mChanged        = FALSE;
   mAutoCreateIndex= TRUE;
   mIsSystemFolder = FALSE;
@@ -225,24 +224,6 @@ void KMFolder::markUnreadAsRead()
 }
 
 //-----------------------------------------------------------------------------
-void KMFolder::quiet(bool beQuiet)
-{
-  if (beQuiet)
-    mQuiet++;
-  else {
-    mQuiet--;
-    if (mQuiet <= 0)
-    {
-      mQuiet = 0;
-      if (mChanged)
-	emit changed();
-      mChanged = FALSE;
-    }
-  }
-}
-
-
-//-----------------------------------------------------------------------------
 
 // Needed to use QSortedList in reduceSize()
 
@@ -321,12 +302,9 @@ void KMFolder::expireOldMessages() {
 //-----------------------------------------------------------------------------
 void KMFolder::emitMsgAddedSignals(int idx)
 {
-  if (!mQuiet) {
-    Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
-    emit msgAdded(idx);
-    emit msgAdded(this, serNum);
-  } else
-    mChanged = TRUE;
+  Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
+  emit msgAdded(idx);
+  emit msgAdded(this, serNum);
 }
 
 //-----------------------------------------------------------------------------
@@ -406,7 +384,7 @@ void KMFolder::removeMsg(int idx, bool)
   KMMsgBase* mb = getMsgBase(idx);
 
   Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
-  if (!mQuiet && serNum != 0)
+  if (serNum != 0)
     emit msgRemoved(this, serNum);
   mb = takeIndexEntry( idx );
 
@@ -420,18 +398,14 @@ void KMFolder::removeMsg(int idx, bool)
   }
   --mTotalMsgs;
 
-  if (!mQuiet) {
-    QString msgIdMD5 = mb->msgIdMD5();
-    QString strippedSubjMD5 = mb->strippedSubjectMD5();
-    if (strippedSubjMD5.isEmpty()) {
-       mb->initStrippedSubjectMD5();
-       strippedSubjMD5 = mb->strippedSubjectMD5();
-    }
-    emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
-    emit msgRemoved(this);
-  } else {
-    mChanged = TRUE;
+  QString msgIdMD5 = mb->msgIdMD5();
+  QString strippedSubjMD5 = mb->strippedSubjectMD5();
+  if (strippedSubjMD5.isEmpty()) {
+     mb->initStrippedSubjectMD5();
+     strippedSubjMD5 = mb->strippedSubjectMD5();
   }
+  emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
+  emit msgRemoved(this);
 }
 
 
@@ -447,8 +421,7 @@ KMMessage* KMFolder::take(int idx)
   if (!mb) return 0;
   if (!mb->isMessage()) readMsg(idx);
   Q_UINT32 serNum = kmkernel->msgDict()->getMsgSerNum(this, idx);
-  if (!mQuiet)
-    emit msgRemoved(this,serNum);
+  emit msgRemoved(this,serNum);
 
   msg = (KMMessage*)takeIndexEntry(idx);
 
@@ -461,18 +434,14 @@ KMMessage* KMFolder::take(int idx)
   msg->setParent(0);
   setDirty( true );
   needsCompact=true; // message is taken from here - needs to be compacted
-  if (!mQuiet) {
-    QString msgIdMD5 = msg->msgIdMD5();
-    QString strippedSubjMD5 = msg->strippedSubjectMD5();
-    if (strippedSubjMD5.isEmpty()) {
-       msg->initStrippedSubjectMD5();
-       strippedSubjMD5 = msg->strippedSubjectMD5();
-    }
-    emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
-    emit msgRemoved(this);
-  } else {
-    mChanged = TRUE;
+  QString msgIdMD5 = msg->msgIdMD5();
+  QString strippedSubjMD5 = msg->strippedSubjectMD5();
+  if (strippedSubjMD5.isEmpty()) {
+     msg->initStrippedSubjectMD5();
+     strippedSubjMD5 = msg->strippedSubjectMD5();
   }
+  emit msgRemoved(idx, msgIdMD5, strippedSubjMD5);
+  emit msgRemoved(this);
 
   return msg;
 }
@@ -772,10 +741,7 @@ int KMFolder::expunge()
   emit numUnreadMsgsChanged( this );
   if (mAutoCreateIndex)
     writeConfig();
-  if (!mQuiet)
-    emit changed();
-  else
-    mChanged = TRUE;
+  emit changed();
   emit expunged();
 
   return 0;
@@ -873,12 +839,6 @@ void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
 //-----------------------------------------------------------------------------
 void KMFolder::headerOfMsgChanged(const KMMsgBase* aMsg, int idx)
 {
-  if (mQuiet)
-  {
-    mChanged = TRUE;
-    return;
-  }
-
   if (idx < 0)
     idx = aMsg->parent()->find( aMsg );
   if (idx >= 0)

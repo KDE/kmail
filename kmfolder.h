@@ -259,9 +259,6 @@ public:
   bool needsCompacting() const { return needsCompact; }
   virtual void setNeedsCompacting(bool f) { needsCompact = f; }
 
-  /** If set to quiet the folder will not emit signals. */
-  virtual void quiet(bool beQuiet);
-
   /** Is the folder read-only? */
   virtual bool isReadOnly() const = 0;
 
@@ -555,7 +552,7 @@ protected:
   */
   static size_t crlf2lf( char* str, const size_t strLen );
 
-  int mOpenCount, mQuiet;
+  int mOpenCount;
   bool mChanged;
   /** is the automatic creation of a index file allowed ? */
   bool mAutoCreateIndex;

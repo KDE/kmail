@@ -133,7 +133,6 @@ void KMAcctMaildir::processNewMail(bool)
     return;
   }
 
-  mFolder->quiet(TRUE);
   mFolder->open();
 
 
@@ -199,7 +198,6 @@ void KMAcctMaildir::processNewMail(bool)
 
   mailFolder.close();
   mFolder->close();
-  mFolder->quiet(FALSE);
 
   checkDone(hasNewMail, num);
 

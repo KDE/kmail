@@ -118,7 +118,6 @@ int KMFolderMaildir::open()
     rc = createIndexFromContents();
   }
 
-  mQuiet = 0;
   mChanged = FALSE;
 
   //readConfig();
@@ -173,7 +172,6 @@ int KMFolderMaildir::create(bool imap)
   }
 
   mOpenCount++;
-  mQuiet = 0;
   mChanged = FALSE;
   if (imap) {
     readConfig();

@@ -297,15 +297,12 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
       KMessageBox::information(0, i18n("Critical error: "
 				       "Unable to process sent mail (out of space?)"
 				       "Moving failing message to \"sent-mail\" folder."));
-      sentFolder->quiet(TRUE);
       sentFolder->moveMsg(mCurrentMsg);
       if ( sentFolder != kmkernel->sentFolder() )
           sentFolder->close();
       cleanup();
-      sentFolder->quiet(FALSE);
       return;
     case 1:
-      sentFolder->quiet(TRUE);
       if (sentFolder->moveMsg(mCurrentMsg) != 0)
       {
         KMessageBox::error(0, i18n("Moving the sent message \"%1\" from the "
@@ -314,11 +311,9 @@ kdDebug(5006) << "KMSender::doSendMsg() post-processing: replace mCurrentMsg bod
           "Please try to fix the problem and move the message manually.")
           .arg(mCurrentMsg->subject()));
         cleanup();
-        sentFolder->quiet(FALSE);
         return;
       }
       if (imapSentFolder) imapSentFolder->moveMsg(mCurrentMsg);
-      sentFolder->quiet(FALSE);
     default:
       break;
     }

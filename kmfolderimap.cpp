@@ -732,7 +732,6 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
             this, SLOT(slotListFolderEntries(KIO::Job *,
             const KIO::UDSEntryList &)));
   } else {
-    quiet(TRUE);
     url.setPath(imapPath() + ";UID=" + startUid
       + ":*;SECTION=ENVELOPE");
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
@@ -764,7 +763,6 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   }
   mCheckFlags = FALSE;
   QStringList::Iterator uid;
-  quiet(TRUE);
   // Check for already retrieved headers
   if (count())
   {
@@ -801,7 +799,6 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   jd.total = (*it).items.count();
   if (jd.total == 0)
   {
-    quiet(FALSE);
     mContentState = imapFinished;
     emit folderComplete(this, TRUE);
     mAccount->removeJob(it);
@@ -821,7 +818,6 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     url.setPath(imapPath() + ";UID=" + *i + ";SECTION=ENVELOPE");
     if (!mAccount->makeConnection())
     {
-      quiet(FALSE);
       emit folderComplete(this, FALSE);
       return;
     }
@@ -971,11 +967,6 @@ void KMFolderImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
       }
       open();
       KMFolderMbox::addMsg(msg, 0);
-      /* The above calls emitMsgAddedSignals, but since we are in quiet mode,
-         that has no effect. To get search folders to update on arrival of new
-         messages explicitly emit the signal below on its own, so the folder
-         manager realizes there is a new message. */
-      emit msgAdded(this, msg->getMsgSerNum());
       // Transfer the status, if it is cached.
       QString id = msg->msgIdMD5();
       if ( mMetaDataMap.find( id ) ) {
@@ -1048,7 +1039,6 @@ void KMFolderImap::getMessagesResult(KIO::Job * job, bool lastSet)
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else if (lastSet) mContentState = imapFinished;
-  if (lastSet) quiet(FALSE);
   mAccount->removeJob(it);
   if (!job->error() && lastSet)
       emit folderComplete(this, TRUE);

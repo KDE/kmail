@@ -620,7 +620,6 @@ int KMFolderSearch::create(bool)
     }
     mSearch->write(location());
     mOpenCount++;
-    mQuiet = 0;
     mChanged = false;
     mUnreadMsgs = 0;
     mTotalMsgs = 0;

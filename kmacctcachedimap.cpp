@@ -224,7 +224,6 @@ void KMAcctCachedImap::killAllJobs( bool disconnectSlave )
       fld->setContentState(KMFolderCachedImap::imapNoInformation);
       fld->setSubfolderState(KMFolderCachedImap::imapNoInformation);
       fld->sendFolderComplete(FALSE);
-      fld->quiet(FALSE);
     }
   if (mSlave && mapJobData.begin() != mapJobData.end())
   {

@@ -1051,7 +1051,6 @@ void KMFolderCachedImap::slotGetMessagesData(KIO::Job * job, const QByteArray & 
 
 void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
 {
-  if( lastSet ) quiet( false );
 
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
   if ( it == mAccount->jobsEnd() ) { // Shouldn't happen
@@ -1066,7 +1065,6 @@ void KMFolderCachedImap::getMessagesResult( KIO::Job * job, bool lastSet )
     mContentState = imapNoInformation;
     emit folderComplete(this, FALSE);
   } else if (lastSet) mContentState = imapFinished;
-
   mAccount->removeJob(it);
   if( lastSet )
     emit listMessagesComplete();

@@ -344,9 +344,7 @@ void CachedImapJob::slotPutMessageResult(KIO::Job *job)
   emit messageStored( mMsg );
   int i;
   if( ( i = mFolder->find(mMsg) ) != -1 ) {
-    mFolder->quiet( true );
     mFolder->removeMsg(i);
-    mFolder->quiet( false );
   }
   mMsg = NULL;
   mAccount->removeJob( it );

@@ -629,7 +629,6 @@ void KMKernel::recoverDeadLetters(void)
     return;
   }
 
-  folder.quiet(TRUE);
   folder.open();
 
   num = folder.count();

@@ -132,7 +132,6 @@ void KMAcctLocal::processNewMail(bool)
     return;
   }
 
-  mFolder->quiet(TRUE);
   mFolder->open();
 
   num = mailFolder.count();
@@ -210,7 +209,6 @@ void KMAcctLocal::processNewMail(bool)
 
   mailFolder.close();
   mFolder->close();
-  mFolder->quiet(FALSE);
 
   checkDone(hasNewMail, num);
 

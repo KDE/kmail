@@ -152,7 +152,6 @@ int KMFolderMbox::open()
     rc = createIndexFromContents();
   }
 
-  mQuiet = 0;
   mChanged = FALSE;
 
   return rc;
@@ -210,7 +209,6 @@ int KMFolderMbox::create(bool imap)
   }
 
   mOpenCount++;
-  mQuiet = 0;
   mChanged = FALSE;
 
   rc = writeIndex();
@@ -515,7 +513,6 @@ int KMFolderMbox::createIndexFromContents()
   int i, num, numStatus;
   short needStatus;
 
-  quiet(TRUE);
   assert(mStream != 0);
   rewind(mStream);
 
@@ -715,7 +712,6 @@ int KMFolderMbox::createIndexFromContents()
   }
   else mHeaderOffset = 0;
 
-  quiet(FALSE);
   correctUnreadMsgsCount();
 
   if (kmkernel->outboxFolder() == this && count() > 0)
@@ -1190,11 +1186,7 @@ int KMFolderMbox::compact()
     open();
     mOpenCount = openCount;
   }
-  quiet(FALSE);
-  if (!mQuiet)
-    emit changed();
-  else
-    mChanged = TRUE;
+  emit changed();
   needsCompact = false;             // We are clean now
   return 0;
 
