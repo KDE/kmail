@@ -31,6 +31,7 @@
 
 #include <qobject.h>
 #include <qstringlist.h>
+#include <qstylesheet.h>
 
 namespace KMail {
 
@@ -123,7 +124,7 @@ namespace KMail {
       /** destructor */
       virtual ~FilterLog();
       
-      static QString & recode( QString s );
+      static QString recode( const QString & plain ) { return QStyleSheet::escape(plain); };
       
     signals:
       void logEntryAdded( QString );
