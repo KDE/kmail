@@ -357,10 +357,12 @@ void KMMessage::fromString(const QCString& aStr, bool aSetStatus)
   QCString ct = dwContentType().TypeStr().c_str();
   QCString st = dwContentType().SubtypeStr().c_str();
   ct = ct.lower();
+  st = st.lower();
   if (   ct.isEmpty()
       || ct == "text"
       || ct == "multipart"
-      || (ct == "application" && (st == "pkcs7-mime" || st == "x-pkcs7-mime")) )
+      || (    ct == "application" 
+           && (st == "pkcs7-mime" || st == "x-pkcs7-mime" || st == "pgp") ) )
     return;
   KMMessagePart textPart;
   textPart.setTypeStr("text");

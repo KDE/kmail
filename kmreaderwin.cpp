@@ -406,20 +406,23 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
     if( !curNode->mWasProcessed ) {
       bool bDone = false;
 
+      int curNode_replacedType    = curNode->type();
+      int curNode_replacedSubType = curNode->subType();
       // In order to correctly recognoze clearsigned data we threat the old
       // "Content-Type=application/pgp" like plain text.
       // Note: This does not cover "application/pgp-signature" nor
       //                    "application/pgp-encrypted".  (khz, 2002/08/28)
-      const int curNode_replacedType
-        = ( DwMime::kTypeApplication       == curNode->type() &&
-            DwMime::kSubtypePgpClearsigned == curNode->subType() )
-        ? DwMime::kTypeText
-        : curNode->type();
+      if( DwMime::kTypeApplication       == curNode->type() &&
+          DwMime::kSubtypePgpClearsigned == curNode->subType() ){
+        curNode_replacedType    = DwMime::kTypeText;
+        curNode_replacedSubType = DwMime::kSubtypePlain;
+      }
+        
 
       switch( curNode_replacedType ){
       case DwMime::kTypeText: {
 kdDebug(5006) << "* text *" << endl;
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypeHtml: {
             if( reader )
               kdDebug(5006) << "html, attachmentstyle = " << reader->mAttachmentStyle << endl;
@@ -515,7 +518,7 @@ kdDebug(5006) << "default " << endl;
         break;
       case DwMime::kTypeMultipart: {
 kdDebug(5006) << "* multipart *" << endl;
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypeMixed: {
 kdDebug(5006) << "mixed" << endl;
               if( curNode->mChild )
@@ -829,7 +832,7 @@ kdDebug(5006) << "(  unknown subtype  )" << endl;
         break;
       case DwMime::kTypeMessage: {
 kdDebug(5006) << "* message *" << endl;
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypeRfc822: {
 kdDebug(5006) << "RfC 822" << endl;
               if( reader->mAttachmentStyle != InlineAttmnt &&
@@ -885,7 +888,7 @@ kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822mess
         break;
       /*
       case DwMime::kType..WhatTheHellIsThis: {
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypePartial: {
             }
             break;
@@ -898,7 +901,7 @@ kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822mess
       */
       case DwMime::kTypeApplication: {
 kdDebug(5006) << "* application *" << endl;
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypePostscript: {
 kdDebug(5006) << "postscript" << endl;
               isImage = true;
@@ -1152,7 +1155,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
       case DwMime::kTypeImage: {
 kdDebug(5006) << "* image *" << endl;
 
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypeJpeg: {
 kdDebug(5006) << "JPEG" << endl;
             }
@@ -1167,7 +1170,7 @@ kdDebug(5006) << "GIF" << endl;
         break;
       case DwMime::kTypeAudio: {
 kdDebug(5006) << "* audio *" << endl;
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypeBasic: {
 kdDebug(5006) << "basic" << endl;
             }
@@ -1181,7 +1184,7 @@ kdDebug(5006) << "basic" << endl;
         break;
       case DwMime::kTypeVideo: {
 kdDebug(5006) << "* video *" << endl;
-          switch( curNode->subType() ){
+          switch( curNode_replacedSubType ){
           case DwMime::kSubtypeMpeg: {
 kdDebug(5006) << "mpeg" << endl;
             }
@@ -3032,6 +3035,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
     mainType    = DwMime::kTypeText;
     mainSubType = DwMime::kSubtypePlain;
     mainCntTypeStr = "text/plain";
+  }else if(    DwMime::kTypeApplication       == mainType
+            && DwMime::kSubtypePgpClearsigned == mainSubType ){
+    mainType    = DwMime::kTypeText;
+    mainSubType = DwMime::kSubtypePlain;
+    mainCntTypeStr = "text/plain";
   } else {
     mainCntTypeStr = aMsg->typeStr();
     int scpos = mainCntTypeStr.find(';');
@@ -3219,6 +3227,10 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
 
   // save current main Content-Type before deleting mRootNode
   int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeUnknown;
+  if( mRootNode && DwMime::kTypeApplication       == rootNodeCntType
+                && DwMime::kSubtypePgpClearsigned == mRootNode->subType() )
+    rootNodeCntType = DwMime::kTypeText;
+    
   // if necessary restore original mRootNode
   if(onlyProcessHeaders) {
     delete mRootNode;
@@ -4665,7 +4677,16 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
   kernel->kbp()->busy();
   {
     KMReaderWin* win = new KMReaderWin; //new reader
-    if (qstricmp(aMsgPart->typeStr(), "message")==0)
+    
+    QString partTypeStr    = aMsgPart->typeStr().lower();
+    QString partSubtypeStr = aMsgPart->subtypeStr().lower();
+    if(    DwMime::kTypeApplication       == aMsgPart->type()
+        && DwMime::kSubtypePgpClearsigned == aMsgPart->subtype() ){
+      partTypeStr    = "text";
+      partSubtypeStr = "plain";
+    }
+    
+    if (partTypeStr == "message")
     {               // if called from compose win
       KMMessage* msg = new KMMessage;
       assert(aMsgPart!=NULL);
@@ -4674,9 +4695,9 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->setMsg(msg, true);
       win->show();
     }
-    else if (qstricmp(aMsgPart->typeStr(), "text")==0)
+    else if (partTypeStr == "text")
     {
-      if (qstricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
+      if (partSubtypeStr == "x-vcard") {
         KMDisplayVCard *vcdlg;
 	int vcerr;
 	VCard *vc = VCard::parseVCard(codec->toUnicode(aMsgPart
@@ -4712,7 +4733,7 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
 		 ">" );
 
       QCString str = aMsgPart->bodyDecoded();
-      if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
+      if (aHTML && (partSubtypeStr == "html"))  // HTML
         //win->mViewer->write(win->codec()->toUnicode(str));
 	win->writeHTMLStr(win->codec()->toUnicode(str));
       else // plain text
@@ -4724,9 +4745,9 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->setCaption(i18n("View Attachment: ") + pname);
       win->show();
     }
-    else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
-             (qstricmp(aMsgPart->typeStr(), "application")==0 &&
-              qstricmp(aMsgPart->subtypeStr(), "postscript")))
+    else if (    partTypeStr == "image"
+              || (    partTypeStr    == "application"
+                   && partSubtypeStr == "postscript" ) )
     {
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
