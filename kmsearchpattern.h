@@ -233,7 +233,7 @@ namespace KMail {
     { I18N_NOOP( "Ignored" ),          "kmmsgignored"   },
     { I18N_NOOP( "Spam" ),             "mark_as_spam"   },
     { I18N_NOOP( "Ham" ),              "mark_as_ham"    },
-    { I18N_NOOP( "Has an Attachment"), "attach"         },
+    { I18N_NOOP( "Has Attachment"),    "attach"         },
     { I18N_NOOP( "To Do" ),            "kontact_todo"   }
   };
 

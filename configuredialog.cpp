@@ -1912,7 +1912,7 @@ static const struct {
   { I18N_NOOP("Sta&ndard format (%1)"), KMime::DateFormatter::CTime },
   { I18N_NOOP("Locali&zed format (%1)"), KMime::DateFormatter::Localized },
   { I18N_NOOP("Fancy for&mat (%1)"), KMime::DateFormatter::Fancy },
-  { I18N_NOOP("C&ustom format (Shift+F1 for help)"),
+  { I18N_NOOP("C&ustom format (Shift+F1 for help):"),
     KMime::DateFormatter::Custom }
 };
 static const int numDateDisplayConfig =
@@ -4183,11 +4183,11 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
                 "When entering a folder:"), this );
   mActionEnterFolder->insertStringList( QStringList()
       << i18n("continuation of \"When entering a folder:\"",
-              "Jump to first new message")
+              "Jump to First New Message")
       << i18n("continuation of \"When entering a folder:\"",
-              "Jump to first unread or new message")
+              "Jump to First Unread or New Message")
       << i18n("continuation of \"When entering a folder:\"",
-              "Jump to last selected message"));
+              "Jump to Last Selected Message"));
   hlay->addWidget( label );
   hlay->addWidget( mActionEnterFolder, 1 );
   connect( mActionEnterFolder, SIGNAL( activated( int ) ),

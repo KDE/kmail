@@ -94,7 +94,7 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   actionsGroup->insert( moveToRB );
   connect( moveToRB, SIGNAL( toggled( bool ) ),
            this, SLOT( slotUpdateControls() ) );
-  moveToRB->setText( i18n( "Move To" ) );
+  moveToRB->setText( i18n( "Move to:" ) );
   moveToHBox->addWidget( moveToRB );
 
   folderSelector = new KMail::FolderRequester( privateLayoutWidget, tree );

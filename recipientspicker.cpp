@@ -257,7 +257,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
 
   QBoxLayout *resLayout = new QHBoxLayout( topLayout );
 
-  QLabel *label = new QLabel( i18n("AddressBook:"), this );
+  QLabel *label = new QLabel( i18n("Address book:"), this );
   resLayout->addWidget( label );
 
   mCollectionCombo = new QComboBox( this );

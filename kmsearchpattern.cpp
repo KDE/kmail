@@ -614,7 +614,7 @@ KMMsgStatus KMSearchRuleStatus::statusFromEnglishName(
     status = KMMsgStatusSpam;
   if ( ! aStatusString.compare("Ham") )
      status = KMMsgStatusHam;
-  if ( ! aStatusString.compare("Has an Attachment") )
+  if ( ! aStatusString.compare("Has Attachment") )
      status = KMMsgStatusHasAttach;
 
   return status;
