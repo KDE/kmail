@@ -61,6 +61,7 @@ protected slots:
   virtual void slotStop();
   void updateCreateButton( const QString &);
   void renameSearchFolder();
+  void openSearchFolder();
   void folderInvalidated(KMFolder *);
   virtual bool slotShowMsg(QListViewItem *);
   virtual void updateContextMenuActions();
@@ -109,6 +110,7 @@ protected:
   QLabel *mSearchFolderLbl;
   QLineEdit *mSearchFolderEdt;
   QPushButton *mSearchFolderBtn;
+  QPushButton *mSearchFolderOpenBtn;
   KStatusBar* mStatusBar;
   QWidget* mLastFocus; // to remember the position of the focus
   QMap<int,KMFolder*> mMenuToFolder;

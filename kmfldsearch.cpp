@@ -179,17 +179,24 @@ KMFldSearch::KMFldSearch(KMMainWidget* w, const char* name,
   vbl->addWidget(mLbxMatches);
 
   QHBoxLayout *hbl2 = new QHBoxLayout( vbl, spacingHint(), "kmfs_hbl2" );
-  mSearchFolderLbl = new QLabel(i18n("Search folder name:"), searchWidget);
+  mSearchFolderLbl = new QLabel(i18n("Search folder &name:"), searchWidget);
   hbl2->addWidget(mSearchFolderLbl);
   mSearchFolderEdt = new KLineEdit(searchWidget);
+  mSearchFolderEdt->setText("search");
+  mSearchFolderLbl->setBuddy(mSearchFolderEdt);
   hbl2->addWidget(mSearchFolderEdt);
-  mSearchFolderBtn = new QPushButton(i18n("Create"), searchWidget);
+  mSearchFolderBtn = new QPushButton(i18n("&Rename..."), searchWidget);
   mSearchFolderBtn->setEnabled(false);
   hbl2->addWidget(mSearchFolderBtn);
+  mSearchFolderOpenBtn = new QPushButton(i18n("&Open"), searchWidget);
+  mSearchFolderOpenBtn->setEnabled(false);
+  hbl2->addWidget(mSearchFolderOpenBtn);
   connect( mSearchFolderEdt, SIGNAL( textChanged( const QString &)),
 	   this, SLOT( updateCreateButton( const QString & )));
   connect( mSearchFolderBtn, SIGNAL( clicked() ),
 	   this, SLOT( renameSearchFolder() ));
+  connect( mSearchFolderOpenBtn, SIGNAL( clicked() ),
+	   this, SLOT( openSearchFolder() ));
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
   mStatusBar->changeItem(i18n("Ready."), 0);
@@ -350,6 +357,7 @@ void KMFldSearch::slotSearch()
     mStopped = false;
     mFetchingInProgress = 0;
 
+    mSearchFolderOpenBtn->setEnabled(true);
     mBtnSearch->setEnabled(false);
     mBtnStop->setEnabled(true);
 
@@ -494,7 +502,7 @@ void KMFldSearch::closeEvent(QCloseEvent *e)
 //-----------------------------------------------------------------------------
 void KMFldSearch::updateCreateButton( const QString &s)
 {
-    mSearchFolderBtn->setEnabled(!s.isEmpty());
+    mSearchFolderBtn->setEnabled(s != "search" && mSearchFolderOpenBtn->isEnabled());
 }
 
 //-----------------------------------------------------------------------------
@@ -508,6 +516,16 @@ void KMFldSearch::renameSearchFolder()
 				    mSearchFolderEdt->text() );
 	props->exec();
 	kernel->searchFolderMgr()->contentsChanged();
+    }
+}
+
+void KMFldSearch::openSearchFolder()
+{
+    KMFolderTree *folderTree = mKMMainWidget->folderTree();
+    QListViewItem *index = folderTree->indexOfFolder((KMFolder*)mFolder);
+    if (index) {
+	folderTree->doFolderSelected(index);
+	slotClose();
     }
 }
 
