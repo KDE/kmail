@@ -116,12 +116,10 @@ static inline QPixmap loadIcon( const char * name ) {
 }
 
 
-ConfigureDialog::ConfigureDialog( CryptPlugWrapperList* cryptpluglist,
-                                  QWidget *parent, const char *name,
+ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
                                   bool modal )
   : KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel,
-                 Ok, parent, name, modal, true ),
-    mCryptPlugList( cryptpluglist )
+                 Ok, parent, name, modal, true )
 {
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
   // setHelp() not needed, since we override slotHelp() anyway...
@@ -195,7 +193,7 @@ ConfigureDialog::ConfigureDialog( CryptPlugWrapperList* cryptpluglist,
   page = addPage( PluginPage::iconLabel(), PluginPage::title(),
 		  loadIcon( PluginPage::iconName() ) );
   vlay = new QVBoxLayout( page, 0, spacingHint() );
-  mPluginPage = new PluginPage( mCryptPlugList, page );
+  mPluginPage = new PluginPage( page );
   vlay->addWidget( mPluginPage );
   mPluginPage->setPageIndex( pageIndex( page ) );
 }
@@ -3524,10 +3522,9 @@ QString PluginPage::helpAnchor() {
   return QString::fromLatin1("configure-plugins");
 }
 
-PluginPage::PluginPage( CryptPlugWrapperList* cryptPlugList,
-                        QWidget * parent, const char * name )
+PluginPage::PluginPage( QWidget * parent, const char * name )
     : TabbedConfigurationPage( parent, name ),
-      mCryptPlugList( cryptPlugList )
+      mCryptPlugList( kernel->cryptPlugList() )
 {
     _generalPage = new GeneralPage( this );
     addTab( _generalPage, i18n( "&General") );

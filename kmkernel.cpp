@@ -139,7 +139,7 @@ void KMKernel::checkMail () //might create a new reader but won´t show!!
 
 QStringList KMKernel::accounts()
 {
-  return kernel->acctMgr()->getAccounts();      
+  return kernel->acctMgr()->getAccounts();
 }
 
 void KMKernel::checkAccount (const QString &account) //might create a new reader but won´t show!!
@@ -151,7 +151,7 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
   for (kmWin = KMainWindow::memberList->first(); kmWin;
     kmWin = KMainWindow::memberList->next())
       if (kmWin->isA("KMMainWin")) break;
-      
+
   bool deleteWin = false;
   if (kmWin && kmWin->isA("KMMainWin")) {
     mWin = (KMMainWin *) kmWin;
@@ -163,14 +163,14 @@ void KMKernel::checkAccount (const QString &account) //might create a new reader
   if (!checkingMail())
   {
     setCheckingMail(true);
-    
+
     KMAccount* acct = kernel->acctMgr()->find(account);
     if (acct)
        kernel->acctMgr()->singleCheckMail(acct, false);
-          
+
     setCheckingMail(false);
   }
-            
+
   if (deleteWin)
     delete mWin;
 }
@@ -219,7 +219,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
 
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(0, msg);
+  KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
   for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach((*it));
@@ -252,7 +252,7 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(0, msg);
+  KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
   if (!attachData.isEmpty()) {
     KMMessagePart *msgPart = new KMMessagePart;
@@ -284,7 +284,7 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
   if (!to.isEmpty()) msg->setTo(to);
   if (!body.isEmpty()) msg->setBody(body.utf8());
 
-  KMComposeWin *cWin = new KMComposeWin(0, msg);
+  KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
   if (!hidden) cWin->show();
 
@@ -301,7 +301,7 @@ int KMKernel::sendCertificate( const QString& to, const QByteArray& certData )
   if (!to.isEmpty()) msg->setTo(to);
   msg->setBody( i18n( "Please sign this certificate and return to sender." ).utf8() );
 
-  KMComposeWin *cWin = new KMComposeWin(0, msg);
+  KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
   cWin->slotSetAlwaysSend( true );
   if (!certData.isEmpty()) {
@@ -534,7 +534,7 @@ void KMKernel::recoverDeadLetters(void)
     msg = folder.take(0);
     if (msg)
     {
-      win = new KMComposeWin(0);
+      win = new KMComposeWin();
       win->setMsg(msg, FALSE);
       win->show();
     }
@@ -618,6 +618,8 @@ void KMKernel::init()
   the_kbp = new KBusyPtr;
   cfg = kapp->config();
   //kdDebug(5006) << "1" << endl;
+
+  mCryptPlugList.loadFromConfig( cfg );
 
   QDir dir;
   QString d = locateLocal("data", "kmail/");
@@ -734,19 +736,19 @@ void KMKernel::cleanup(void)
   the_popFilterMgr = 0;
 
   KMReaderWin::deleteAllStandaloneWindows();
-  
+
   // Since the application has already quit we can't use
   // kapp->processEvents() because it will return immediately:
-  // We first have to fire up a new event loop. 
+  // We first have to fire up a new event loop.
   // We use the timer to transfer control to the cleanupLoop function
   // once the event loop is running.
-  
+
   // Don't handle DCOP requests from the event loop
-  kapp->dcopClient()->suspend();   
-  
+  kapp->dcopClient()->suspend();
+
   // Schedule execution of cleanupLoop
   QTimer::singleShot(0, this, SLOT(cleanupLoop()));
-  
+
   // Start new event loop
   kapp->enter_loop();
 }

@@ -86,19 +86,11 @@
 
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin( CryptPlugWrapperList * cryptPlugList,
-                            KMMessage *aMsg, uint id )
+KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id )
   : KMTopLevelWidget(), MailComposerIface(),
-    mId( id ), mCryptPlugList( cryptPlugList )
+    mId( id ), mCryptPlugList( kernel->cryptPlugList() )
 
 {
-  // make sure we have a valid CryptPlugList
-  mTmpPlugList = (mCryptPlugList == 0L);
-  if( mTmpPlugList ) {
-    mCryptPlugList = new CryptPlugWrapperList();
-    mCryptPlugList->loadFromConfig( KGlobal::config() );
-  }
-
   mMainWidget = new QWidget(this);
 
   mIdentity = new IdentityCombo(mMainWidget);
@@ -269,8 +261,6 @@ KMComposeWin::~KMComposeWin()
     it = mapAtmLoadData.begin();
   }
   bccMsgList.clear();
-  if( mTmpPlugList )
-    delete mCryptPlugList;
 }
 
 //-----------------------------------------------------------------------------
@@ -3988,7 +3978,7 @@ void KMComposeWin::slotNewComposer()
 
   msg->initHeader();
   // never pass our temporary cryptPlugList to someone else
-  win = new KMComposeWin(mTmpPlugList ? 0L : mCryptPlugList, msg);
+  win = new KMComposeWin(msg);
   win->show();
 }
 

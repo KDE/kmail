@@ -10,6 +10,8 @@
 #include <kcmdlineargs.h>
 #include <kmailIface.h>
 
+#include <cryptplugwrapperlist.h>
+
 #define kernel KMKernel::self()
 
 namespace KIO {
@@ -43,7 +45,7 @@ public:
   void setCanExpire(bool expire);
   bool canExpire();
 
-  /** dcop calable stuff */
+  /** dcop callable stuff */
 
   void checkMail ();
   QStringList accounts();
@@ -131,6 +133,7 @@ public:
 
   /** return the pointer to the identity manager */
   IdentityManager *identityManager();
+  CryptPlugWrapperList * cryptPlugList() { return &mCryptPlugList; }
 
   bool firstStart() { return the_firstStart; }
   QString previousVersion() { return the_previousVersion; }
@@ -226,6 +229,8 @@ private:
   static KMKernel *mySelf;
   QTextCodec *netCodec;
   KProgressDialog *mProgress;
+
+  CryptPlugWrapperList mCryptPlugList;
 };
 
 #endif

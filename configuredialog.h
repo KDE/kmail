@@ -34,7 +34,6 @@ class ComposerPage;
 class SecurityPage;
 class FolderPage;
 class PluginPage;
-class CryptPlugWrapperList;
 class SignatureConfigurationDialogImpl;
 class EncryptionConfigurationDialogImpl;
 class DirectoryServicesConfigurationDialogImpl;
@@ -44,8 +43,7 @@ class ConfigureDialog : public KDialogBase
   Q_OBJECT
 
   public:
-    ConfigureDialog( CryptPlugWrapperList* cryptpluglist,
-                     QWidget *parent=0, const char *name=0, bool modal=true );
+    ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
     ~ConfigureDialog();
     virtual void show();
 
@@ -78,7 +76,6 @@ class ConfigureDialog : public KDialogBase
     SecurityPage   *mSecurityPage;
     FolderPage     *mFolderPage;
     PluginPage     *mPluginPage;
-    CryptPlugWrapperList* mCryptPlugList;
 };
 
 #endif

@@ -604,9 +604,9 @@ bool KMHeaders::eventFilter ( QObject *o, QEvent *e )
 void KMHeaders::slotToggleSizeColumn ()
 {
   mPaintInfo.showSize = !mPaintInfo.showSize;
-  mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize); 
+  mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize);
 
-  // we need to write it back so that 
+  // we need to write it back so that
   // the configure-dialog knows the correct status
   KConfig* config = kapp->config();
   KConfigGroupSaver saver(config, "General");
@@ -697,7 +697,7 @@ void KMHeaders::readConfig (void)
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
     mPaintInfo.showSize = config->readBoolEntry("showMessageSize");
-    mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize); 
+    mPopup->setItemChecked(mSizeColumn, mPaintInfo.showSize);
     mPaintInfo.showCryptoIcons = config->readBoolEntry( "showCryptoIcons", false );
 
     KMime::DateFormatter::FormatType t =
@@ -1333,11 +1333,11 @@ void KMHeaders::setMsgRead (int msgId)
 void KMHeaders::deleteMsg (int msgId)
 {
   KMFolder* folder = NULL;
-  
-  //make sure we have an associated folder (root of folder tree does not).  
+
+  //make sure we have an associated folder (root of folder tree does not).
   if (!mFolder)
     return;
-  
+
   if (mFolder->protocol() == "imap")
   {
     KMFolderImap* fi = static_cast<KMFolderImap*> (mFolder);
@@ -1411,7 +1411,7 @@ void KMHeaders::resendMsg ()
   newMsg->setTo(msg->to());
   newMsg->setSubject(msg->subject());
 
-  win = new KMComposeWin(&mOwner->mCryptPlugList);
+  win = new KMComposeWin();
   win->setMsg(newMsg, FALSE);
   win->show();
   kernel->kbp()->idle();
@@ -1421,7 +1421,7 @@ void KMHeaders::resendMsg ()
 //-----------------------------------------------------------------------------
 void KMHeaders::bounceMsg (KMMessage* msg)
 {
-  KMMessage *newMsg; 
+  KMMessage *newMsg;
   if (!msg)
    msg = currentMsg();
 
@@ -1505,7 +1505,7 @@ void KMHeaders::forwardMsg (QPtrList<KMMessage>* msgList)
       msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
       kdDebug(5006) << "Launching composer window\n" << endl;
       kernel->kbp()->busy();
-      win = new KMComposeWin(&mOwner->mCryptPlugList, fwdMsg, id);
+      win = new KMComposeWin(fwdMsg, id);
       win->addAttach(msgPart);
       win->show();
       kernel->kbp()->idle();
@@ -1540,7 +1540,7 @@ void KMHeaders::forwardMsg (QPtrList<KMMessage>* msgList)
       }
 
       kernel->kbp()->busy();
-      win = new KMComposeWin(&mOwner->mCryptPlugList, fwdMsg, id);
+      win = new KMComposeWin(fwdMsg, id);
       win->setCharset("");
       win->show();
       kernel->kbp()->idle();
@@ -1554,7 +1554,7 @@ void KMHeaders::forwardMsg (QPtrList<KMMessage>* msgList)
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createForward());
+  win = new KMComposeWin(msg->createForward());
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
   kernel->kbp()->idle();
@@ -1585,7 +1585,7 @@ void KMHeaders::forwardAttachedMsg (QPtrList<KMMessage>* msgList)
 
   kdDebug(5006) << "Launching composer window\n" << endl;
   kernel->kbp()->busy();
-  win = new KMComposeWin(&mOwner->mCryptPlugList, fwdMsg, id);
+  win = new KMComposeWin(fwdMsg, id);
 
   kdDebug(5006) << "Doing forward as attachment" << endl;
   // iterate through all the messages to be forwarded
@@ -1625,7 +1625,7 @@ void KMHeaders::redirectMsg(KMMessage* msg)
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(&mOwner->mCryptPlugList);
+  win = new KMComposeWin();
   win->setMsg(msg->createRedirect(), FALSE);
   win->setCharset(msg->codec()->mimeName());
   win->show();
@@ -1645,7 +1645,7 @@ void KMHeaders::noQuoteReplyToMsg(KMMessage* msg)
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(FALSE, FALSE, "", TRUE));
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus(false);
   win->show();
@@ -1664,7 +1664,7 @@ void KMHeaders::replyToMsg (QString selection, KMMessage *msg)
     return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(FALSE, FALSE, selection));
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1683,7 +1683,7 @@ void KMHeaders::replyAllToMsg (QString selection, KMMessage* msg)
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(TRUE, FALSE, selection));
+  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1701,7 +1701,7 @@ void KMHeaders::replyListToMsg (QString selection, KMMessage* msg)
   if (!msg || !msg->codec()) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(&mOwner->mCryptPlugList, msg->createReply(true, true, selection));
+  win = new KMComposeWin(msg->createReply(true, true, selection));
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
   win->show();
@@ -1892,7 +1892,7 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
 
   if (!destFolder) return;
 
-    
+
   bool useParam_aMsg = (NULL != aMsg);
 
   kernel->kbp()->busy();
@@ -1936,7 +1936,7 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
 		destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
       } else {
 	rc = destFolder->addMsg(newMsg, &index);
-    
+
 	if (rc == 0 && index != -1)
 	    destFolder->unGetMsg( destFolder->count() - 1 );
       }
@@ -1947,11 +1947,11 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
       assert(idx != -1);
       mFolder->unGetMsg( idx );
     }
-    
+
     // To process only one single message?
     if( useParam_aMsg )
       break;
-      
+
   } // end for
 
   if (!list.isEmpty())
@@ -2598,7 +2598,7 @@ void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 //-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 {
-  if (mousePressed && 
+  if (mousePressed &&
       (e->pos() - presspos).manhattanLength() > KGlobalSettings::dndEventDelay()) {
     mousePressed = FALSE;
     QListViewItem *item = itemAt( contentsToViewport(presspos) );
@@ -2958,7 +2958,7 @@ bool KMHeaders::writeSortOrder()
 	unlink(sortFile.local8Bit());
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-	KMKernel::self()->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     fclose(sortStream);
     ::rename(tempName.local8Bit(), sortFile.local8Bit());
@@ -2991,7 +2991,7 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
 	unlink(sortFile.local8Bit());
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-	KMKernel::self()->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     fclose(sortStream);
   } else {
@@ -3419,7 +3419,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 	unlink(sortFile.local8Bit());
 	kdWarning(5006) << "Error: Failure modifying " << sortFile << " (No space left on device?)" << endl;
 	kdWarning(5006) << __FILE__ << ":" << __LINE__ << endl;
-	KMKernel::self()->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
+	kernel->emergencyExit( i18n("Failure modifying %1\n(No space left on device?)").arg( sortFile ));
     }
     if(sortStream)
 	fclose(sortStream);

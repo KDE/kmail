@@ -17,7 +17,6 @@ class QPixmap;
 class QPainter;
 class KMFolderImap;
 class KMFolderTree;
-class CryptPlugWrapperList;
 
 class KMFolderTreeItem : public KFolderTreeItem
 {
@@ -25,10 +24,10 @@ public:
   /** Construct a root item _without_ folder */
   KMFolderTreeItem( KFolderTree *parent, QString name );
 
-  /** Construct a root item _with_ folder */    
+  /** Construct a root item _with_ folder */
   KMFolderTreeItem( KFolderTree *parent, QString name,
                     KMFolder* folder );
- 
+
   /** Construct a child item */
   KMFolderTreeItem( KFolderTreeItem* parent, QString name,
                     KMFolder* folder );
@@ -54,8 +53,7 @@ class KMFolderTree : public KFolderTree
   Q_OBJECT
 
 public:
-  KMFolderTree( CryptPlugWrapperList * cryptPlugList,
-                QWidget *parent=0, const char *name=0 );
+  KMFolderTree( QWidget *parent=0, const char *name=0 );
 
   /** Save config options */
   void writeConfig();
@@ -118,19 +116,19 @@ public slots:
 
   /** Select the previous folder with unread messages */
   void prevUnreadFolder();
-  
+
   /** Increment current folder */
   void incCurrentFolder();
-  
+
   /** Decrement current folder */
   void decCurrentFolder();
-  
+
   /** Select the current folder */
   void selectCurrentFolder();
-  
+
   /** Executes delayed update of folder tree */
   void delayedUpdate();
-  
+
   /** Remove all items associated with the given IMAP account */
   void slotAccountDeleted(KMFolderImap*);
 
@@ -174,7 +172,7 @@ protected slots:
   void slotToggleTotalColumn();
 
   void autoScroll();
- 
+
   /** right and middle mouse button */
   void rightButtonPressed( QListViewItem *, const QPoint &, int);
   void mouseButtonPressed( int btn, QListViewItem *, const QPoint &, int);
@@ -228,7 +226,6 @@ private:
   QTimer autoscroll_timer;
   int autoscroll_time;
   int autoscroll_accel;
-  CryptPlugWrapperList * mCryptPlugList;
 
   /** total column */
   QListViewItemIterator mUpdateIterator;

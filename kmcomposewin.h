@@ -198,8 +198,7 @@ class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
   friend class KMHeaders;         // needed for the digest forward
 
 public:
-  KMComposeWin( CryptPlugWrapperList * cryptPlugList,
-                KMMessage* msg=0, uint identity=0 );
+  KMComposeWin( KMMessage* msg=0, uint identity=0 );
   ~KMComposeWin();
 
   /**
@@ -742,7 +741,6 @@ private:
   bool mForceReplyCharset;
 
   CryptPlugWrapperList * mCryptPlugList;
-  bool mTmpPlugList;
   QString mErrorProcessingStructuringInfo;
   QString mErrorNoCryptPlugAndNoBuildIn;
 };

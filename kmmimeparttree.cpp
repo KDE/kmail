@@ -47,7 +47,6 @@ void KMMimePartTree::itemClicked( QListViewItem* item )
         else
           mReaderWin->parseObjectTree( mReaderWin,
                                        0,
-                                       mReaderWin->mCryptPlugList,
                                        0,
                                        i->node(),
                                        true );
@@ -129,7 +128,6 @@ void KMMimePartTree::slotSaveAs()
 
                     mReaderWin->parseObjectTree( mReaderWin,
                                                  0,
-                                                 mReaderWin->mCryptPlugList,
                                                  0,
                                                  mCurrentContextMenuItem->node(),
                                                  true,

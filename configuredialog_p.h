@@ -899,8 +899,7 @@ private:
 class PluginPage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
-  PluginPage( CryptPlugWrapperList* cryptPlugList,
-              QWidget * parent=0, const char * name=0 );
+  PluginPage( QWidget * parent=0, const char * name=0 );
 
   static QString iconLabel();
   static const char * iconName();

@@ -335,9 +335,6 @@ void KMMainWin::readConfig(void)
     mConfirmEmpty = config->readBoolEntry("confirm-before-empty", true);
   }
 
-  // Load crypto plugins
-  mCryptPlugList.loadFromConfig( config );
-
   // Re-activate panners
   if (mStartupDone)
   {
@@ -536,7 +533,7 @@ void KMMainWin::createWidgets(void)
   else mCodec = 0;
 
 
-  mMsgView = new KMReaderWin(&mCryptPlugList, 0, &mShowMIMETreeMode, messageParent);
+  mMsgView = new KMReaderWin(0, &mShowMIMETreeMode, messageParent);
 
   connect(mMsgView, SIGNAL(replaceMsgByUnencryptedVersion()),
 	  this, SLOT(slotReplaceMsgByUnencryptedVersion()));
@@ -569,8 +566,7 @@ void KMMainWin::createWidgets(void)
                "copy_message_to_folder" );
 
   // create list of folders
-  mFolderTree  = new KMFolderTree(&mCryptPlugList,
-                                  folderParent, "folderTree");
+  mFolderTree  = new KMFolderTree(folderParent, "folderTree");
 
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
@@ -804,8 +800,7 @@ void KMMainWin::slotSettings()
 {
   if( mConfigureDialog == 0 )
   {
-      mConfigureDialog = new ConfigureDialog( &mCryptPlugList,
-                                              this, "configure", false );
+      mConfigureDialog = new ConfigureDialog( this, "configure", false );
   }
   mConfigureDialog->show();
 }
@@ -946,10 +941,10 @@ void KMMainWin::slotCompose()
   if ( mFolder ) {
       msg->initHeader( mFolder->identity() );
 
-      win = new KMComposeWin(&mCryptPlugList, msg, mFolder->identity());
+      win = new KMComposeWin(msg, mFolder->identity());
   } else {
       msg->initHeader();
-      win = new KMComposeWin(&mCryptPlugList, msg);
+      win = new KMComposeWin(msg);
   }
 
   win->show();
@@ -971,10 +966,10 @@ void KMMainWin::slotPostToML()
 
           msg->setTo(mFolder->mailingListPostAddress());
       }
-      win = new KMComposeWin(&mCryptPlugList, msg, mFolder->identity());
+      win = new KMComposeWin(msg, mFolder->identity());
   } else {
       msg->initHeader();
-      win = new KMComposeWin(&mCryptPlugList, msg);
+      win = new KMComposeWin(msg);
   }
 
   win->show();
@@ -1474,7 +1469,7 @@ void KMMainWin::slotEditMsg(KMMessage* msg)
   mHeaders->setSelected(mHeaders->currentItem(), TRUE);
   mHeaders->highlightMessage(mHeaders->currentItem(), true);
 
-  KMComposeWin *win = new KMComposeWin(&mCryptPlugList);
+  KMComposeWin *win = new KMComposeWin();
   QObject::connect( win, SIGNAL( messageQueuedOrDrafted()),
 		    this, SLOT( slotMessageQueuedOrDrafted()) );
   win->setMsg(msg,FALSE, TRUE);
@@ -2160,7 +2155,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 	msg->setCc( KURL::decode_string(queryPart.mid(4)) );
     }
 
-    win = new KMComposeWin(&mCryptPlugList, msg, id);
+    win = new KMComposeWin(msg, id);
     win->setCharset("", TRUE);
     win->show();
   }
@@ -2213,7 +2208,7 @@ void KMMainWin::slotMailtoCompose()
   msg->setCharset("utf-8");
   msg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(&mCryptPlugList, msg, id);
+  win = new KMComposeWin(msg, id);
   win->setCharset("", TRUE);
   win->show();
 }
@@ -2231,9 +2226,9 @@ void KMMainWin::slotMailtoReply()
   rmsg->setTo(mUrlCurrent.path());
 
 #ifdef IDENTITY_UOIDs
-  win = new KMComposeWin(&mCryptPlugList, rmsg, 0);
+  win = new KMComposeWin(rmsg, 0);
 #else
-  win = new KMComposeWin(&mCryptPlugList, rmsg, QString::null);
+  win = new KMComposeWin(rmsg, QString::null);
 #endif
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->setReplyFocus();
@@ -2252,7 +2247,7 @@ void KMMainWin::slotMailtoForward()
   fmsg = msg->createForward();
   fmsg->setTo(mUrlCurrent.path());
 
-  win = new KMComposeWin(&mCryptPlugList, fmsg);
+  win = new KMComposeWin(fmsg);
   win->setCharset(msg->codec()->mimeName(), TRUE);
   win->show();
 }

@@ -52,6 +52,7 @@
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmmsgpartdlg.h"
+#include "kmtextbrowser.h"
 #include "kmreaderwin.h"
 #include "partNode.h"
 #include "linklocator.h"
@@ -193,12 +194,12 @@ QByteArray& NewByteArray::qByteArray()
 // TO BE REMOVED ONCE AUTOMATIC PLUG-IN DETECTION IS FULLY WORKING
 //
 // STATIC:
-bool KMReaderWin::foundMatchingCryptPlug( CryptPlugWrapperList* plugins,
-                                          QString libName,
+bool KMReaderWin::foundMatchingCryptPlug( QString libName,
                                           CryptPlugWrapper** useThisCryptPlug_ref,
                                           QWidget* parent,
                                           QString verboseName )
 {
+  CryptPlugWrapperList *plugins = kernel->cryptPlugList();
   if( plugins && useThisCryptPlug_ref ) {
     *useThisCryptPlug_ref = 0;
     CryptPlugWrapper* current;
@@ -226,7 +227,6 @@ bool KMReaderWin::foundMatchingCryptPlug( CryptPlugWrapperList* plugins,
 // this STATIC function will be replaced once KMime is alive (khz, 04.05.2001)
 void KMReaderWin::insertAndParseNewChildNode( KMReaderWin* reader,
                                               QCString* resultStringPtr,
-                                              CryptPlugWrapperList* cryptPlugList,
                                               CryptPlugWrapper*     useThisCryptPlug,
                                               partNode& node,
                                               const char* content,
@@ -267,7 +267,6 @@ kdDebug(5006) << "\n     ------  Sorry, node.mimePartTreeItem() returns ZERO so"
 kdDebug(5006) << "\n     ----->  Now parsing the MimePartTree\n" << endl;
   parseObjectTree( reader,
                    resultStringPtr,
-                   cryptPlugList,
                    useThisCryptPlug,
                    node.mChild );// showOneMimePart, keepEncryptions, includeSignatures );
 kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndParseNewChildNode()\n" << endl;
@@ -277,7 +276,6 @@ kdDebug(5006) << "\n     <-----  Finished parsing the MimePartTree in insertAndP
 // this STATIC function will be replaced once KMime is alive (khz, 29.11.2001)
 void KMReaderWin::parseObjectTree( KMReaderWin* reader,
                                    QCString* resultStringPtr,
-                                   CryptPlugWrapperList* cryptPlugList,
                                    CryptPlugWrapper*     useThisCryptPlug,
                                    partNode* node,
                                    bool showOneMimePart,
@@ -303,15 +301,6 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
   NewByteArray& resultingRawData( resultingRawDataPtr ? *resultingRawDataPtr
                                                       : dummyData );
 */
-
-  // make sure we have a valid CryptPlugList
-  bool tmpPlugList = !cryptPlugList;
-  if( tmpPlugList ) {
-    cryptPlugList = new CryptPlugWrapperList();
-    KConfig *config = KGlobal::config();
-    cryptPlugList->loadFromConfig( config );
-  }
-
 
   if( showOneMimePart && reader ) {
     // clear the viewer
@@ -412,17 +401,17 @@ void KMReaderWin::parseObjectTree( KMReaderWin* reader,
     // process all mime parts that are not covered by one of the CRYPTPLUGs
     if( !curNode->mWasProcessed ) {
       bool bDone = false;
-      
+
       // In order to correctly recognoze clearsigned data we threat the old
       // "Content-Type=application/pgp" like plain text.
-      // Note: This does not cover "application/pgp-signature" nor 
+      // Note: This does not cover "application/pgp-signature" nor
       //                    "application/pgp-encrypted".  (khz, 2002/08/28)
-      const int curNode_replacedType 
+      const int curNode_replacedType
         = ( DwMime::kTypeApplication       == curNode->type() &&
             DwMime::kSubtypePgpClearsigned == curNode->subType() )
         ? DwMime::kTypeText
         : curNode->type();
-        
+
       switch( curNode_replacedType ){
       case DwMime::kTypeText: {
 kdDebug(5006) << "* text *" << endl;
@@ -528,7 +517,6 @@ kdDebug(5006) << "mixed" << endl;
               if( curNode->mChild )
                 parseObjectTree( reader,
                                  &resultString,
-                                 cryptPlugList,
                                  useThisCryptPlug,
                                  curNode->mChild,
                                  false,
@@ -550,7 +538,6 @@ kdDebug(5006) << "alternative" << endl;
                         dataPlain->mWasProcessed = true;
                     parseObjectTree( reader,
                                      &resultString,
-                                     cryptPlugList,
                                      useThisCryptPlug,
                                      dataHtml,
                                      false,
@@ -562,7 +549,6 @@ kdDebug(5006) << "alternative" << endl;
                         dataHtml->mWasProcessed = true;
                     parseObjectTree( reader,
                                      &resultString,
-                                     cryptPlugList,
                                      useThisCryptPlug,
                                      dataPlain,
                                      false,
@@ -572,7 +558,6 @@ kdDebug(5006) << "alternative" << endl;
                 else
                     parseObjectTree( reader,
                                      &resultString,
-                                     cryptPlugList,
                                      useThisCryptPlug,
                                      curNode->mChild,
                                      true,
@@ -618,7 +603,7 @@ kdDebug(5006) << "       OpenPGP signature found" << endl;
                   data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePgpSignature, false, true );
                   if( data ){
                     curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-                    plugFound = foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
+                    plugFound = foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
                   }
                 }
                 else {
@@ -628,7 +613,7 @@ kdDebug(5006) << "       S/MIME signature found" << endl;
                     data = curNode->mChild->findTypeNot( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Signature, false, true );
                     if( data ){
                       curNode->setCryptoType( partNode::CryptoTypeSMIME );
-                      plugFound = foundMatchingCryptPlug( cryptPlugList, "smime", &useThisCryptPlug, reader, "S/MIME" );
+                      plugFound = foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" );
                     }
                   }
                   else
@@ -663,7 +648,6 @@ kdDebug(5006) << "       signed has data + signature" << endl;
                   sign->mWasProcessed = true;
                   writeOpaqueOrMultipartSignedData( reader,
                                                     &resultString,
-                                                    cryptPlugList,
                                                     useThisCryptPlug,
                                                     data,
                                                     *sign,
@@ -698,13 +682,13 @@ kdDebug(5006) << "encrypted" << endl;
                     curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypeOctetStream, false, true );
                   if( data ){
                     curNode->setCryptoType( partNode::CryptoTypeOpenPgpMIME );
-                    plugFound = foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
+                    plugFound = foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" );
                   }
                   if( !data ) {
                     data = curNode->mChild->findType( DwMime::kTypeApplication, DwMime::kSubtypePkcs7Mime, false, true );
                   if( data ){
                     curNode->setCryptoType( partNode::CryptoTypeSMIME );
-                    plugFound = foundMatchingCryptPlug( cryptPlugList, "smime", &useThisCryptPlug, reader, "S/MIME" );
+                    plugFound = foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" );
                   }
                 }
                 /*
@@ -716,7 +700,6 @@ kdDebug(5006) << "encrypted" << endl;
 kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
                     parseObjectTree( reader,
                                      &resultString,
-                                     cryptPlugList,
                                      useThisCryptPlug,
                                      data->mChild,
                                      false,
@@ -731,7 +714,7 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                     curNode->setEncrypted( true );
                     QCString decryptedData;
                     bool passphraseError;
-                    if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
+                    if( okDecryptMIME( reader, useThisCryptPlug,
                                        *data,
                                        decryptedData,
                                        true,
@@ -753,7 +736,6 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                       }
                       insertAndParseNewChildNode( reader,
                                                   &resultString,
-                                                  cryptPlugList,
                                                   useThisCryptPlug,
                                                   *curNode,
                                                   &*decryptedData,
@@ -796,7 +778,6 @@ kdDebug(5006) << "(  unknown subtype  )" << endl;
             if( curNode && curNode->mChild ) {
               parseObjectTree( reader,
                                &resultString,
-                               cryptPlugList,
                                useThisCryptPlug,
                                curNode->mChild,
                                false,
@@ -821,7 +802,6 @@ kdDebug(5006) << "RfC 822" << endl;
 kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
                 parseObjectTree( reader,
                                  &resultString,
-                                 cryptPlugList,
                                  useThisCryptPlug,
                                  curNode->mChild );
                 bDone = true;
@@ -851,7 +831,6 @@ kdDebug(5006) << "\n----->  Store RfC 822 message header \"From: " << rfc822mess
                 // display the body of the encapsulated message
                 insertAndParseNewChildNode( reader,
                                             &resultString,
-                                            cryptPlugList,
                                             useThisCryptPlug,
                                             *curNode,
                                             &*rfc822messageStr,
@@ -892,7 +871,6 @@ kdDebug(5006) << "octet stream" << endl;
 kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
                 parseObjectTree( reader,
                                  &resultString,
-                                 cryptPlugList,
                                  useThisCryptPlug,
                                  curNode->mChild );
                 bDone = true;
@@ -919,10 +897,10 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                         ATTENTION: This code is to be replaced by the planned 'auto-detect' feature.
                     */
                     PartMetaData messagePart;
-                    if( foundMatchingCryptPlug( cryptPlugList, "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
+                    if( foundMatchingCryptPlug( "openpgp", &useThisCryptPlug, reader, "OpenPGP" ) ) {
                       QCString decryptedData;
                       bool passphraseError;
-                      if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
+                      if( okDecryptMIME( reader, useThisCryptPlug,
                                          *curNode,
                                          decryptedData,
                                          true,
@@ -941,7 +919,6 @@ kdDebug(5006) << "\n----->  Initially processing encrypted data\n" << endl;
                         // fixing the missing attachments bug #1090-b
                         insertAndParseNewChildNode( reader,
                                                     &resultString,
-                                                    cryptPlugList,
                                                     useThisCryptPlug,
                                                     *curNode,
                                                     &*decryptedData,
@@ -988,7 +965,6 @@ kdDebug(5006) << "pkcs7 mime" << endl;
 kdDebug(5006) << "\n----->  Calling parseObjectTree( curNode->mChild )\n" << endl;
                 parseObjectTree( reader,
                                  &resultString,
-                                 cryptPlugList,
                                  useThisCryptPlug,
                                  curNode->mChild );
                 bDone = true;
@@ -999,7 +975,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                 if( curNode->dwPart() && curNode->dwPart()->hasHeaders() ) {
                   CryptPlugWrapper* oldUseThisCryptPlug = useThisCryptPlug;
 
-                  if( foundMatchingCryptPlug( cryptPlugList, "smime", &useThisCryptPlug, reader, "S/MIME" ) ) {
+                  if( foundMatchingCryptPlug( "smime", &useThisCryptPlug, reader, "S/MIME" ) ) {
 
                     DwHeaders& headers( curNode->dwPart()->Headers() );
                     QCString ctypStr( headers.ContentType().AsString().c_str() );
@@ -1027,7 +1003,7 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                       messagePart.isEncrypted = true;
                       messagePart.isSigned = false;
                       bool passphraseError;
-                      if( okDecryptMIME( reader, cryptPlugList, useThisCryptPlug,
+                      if( okDecryptMIME( reader, useThisCryptPlug,
                                          *curNode,
                                          decryptedData,
                                          false,
@@ -1045,7 +1021,6 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
                                                                          curNode->trueFromAddress() ) );
                         insertAndParseNewChildNode( reader,
                                                     &resultString,
-                                                    cryptPlugList,
                                                     useThisCryptPlug,
                                                     *curNode,
                                                     &*decryptedData,
@@ -1087,7 +1062,6 @@ kdDebug(5006) << "\n----->  Initially processing signed and/or encrypted data\n"
 
                       bool sigFound = writeOpaqueOrMultipartSignedData( reader,
                                         &resultString,
-                                        cryptPlugList,
                                         useThisCryptPlug,
                                         0,
                                         *signTestNode,
@@ -1208,7 +1182,6 @@ kdDebug(5006) << "* model *" << endl;
     if( !showOneMimePart && curNode && curNode->mNext )
       parseObjectTree( reader,
                        &resultString,
-                       cryptPlugList,
                        useThisCryptPlug,
                        curNode->mNext,
                        showOneMimePart,
@@ -1236,9 +1209,6 @@ kdDebug(5006) << "* model *" << endl;
     reader->mViewer->view()->setUpdatesEnabled( true );
     reader->mViewer->view()->viewport()->repaint( false );*/
   }
-  // remove temp. CryptPlugList
-  if( tmpPlugList )
-    delete cryptPlugList;
 }
 
 
@@ -1517,8 +1487,7 @@ kdDebug(5006) << "                      Root node will NOT be replaced." << endl
 const int KMReaderWin::delay = 150;
 
 //-----------------------------------------------------------------------------
-KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
-                         KMMimePartTree* mimePartTree,
+KMReaderWin::KMReaderWin(KMMimePartTree* mimePartTree,
                          int* showMIMETreeMode,
                          QWidget *aParent,
                          const char *aName,
@@ -1527,7 +1496,6 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
     mShowCompleteMessage( false ),
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
-    mCryptPlugList( cryptPlugList ),
     mRootNode( 0 ),
     mIdOfLastViewedMessage()
 {
@@ -1954,7 +1922,7 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
   if (aMsg)
-      kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " " 
+      kdDebug(5006) << "(" << aMsg->getMsgSerNum() << ", last " << mLastSerNum << ") " << aMsg->subject() << " "
         << aMsg->fromStrip() << endl;
 
   // If not forced and there is aMsg and aMsg is same as mMsg then return
@@ -2409,7 +2377,6 @@ void KMReaderWin::showMessageAndSetData( const QString& txt0,
 
 bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                     QCString* resultString,
-                                                    CryptPlugWrapperList* cryptPlugList,
                                                     CryptPlugWrapper*     useThisCryptPlug,
                                                     partNode* data,
                                                     partNode& sign,
@@ -2418,6 +2385,7 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
 {
   bool bIsOpaqueSigned = false;
 
+  CryptPlugWrapperList *cryptPlugList = kernel->cryptPlugList();
   CryptPlugWrapper* cryptPlug = useThisCryptPlug ? useThisCryptPlug : cryptPlugList->active();
   if( cryptPlug ) {
     if( data )
@@ -2621,7 +2589,6 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
         kdDebug(5006) << deb << endl;
         insertAndParseNewChildNode( reader,
                                     resultString,
-                                    cryptPlugList,
                                     useThisCryptPlug,
                                     sign,
                                     new_cleartext,
@@ -2659,7 +2626,6 @@ bool KMReaderWin::writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                        fromAddress ) );
       parseObjectTree( reader,
                        resultString,
-                       cryptPlugList,
                        useThisCryptPlug,
                        data );
       if( reader )
@@ -2817,7 +2783,6 @@ public:
 };
 
 bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
-                                 CryptPlugWrapperList* cryptPlugList,
                                  CryptPlugWrapper*     useThisCryptPlug,
                                  partNode& data,
                                  QCString& decryptedData,
@@ -2825,6 +2790,7 @@ bool KMReaderWin::okDecryptMIME( KMReaderWin* reader,
                                  bool& passphraseError,
                                  QString& aErrorText )
 {
+  CryptPlugWrapperList *cryptPlugList = kernel->cryptPlugList();
   passphraseError = false;
   aErrorText = "";
   const QString errorContentCouldNotBeDecrypted( i18n("Content could *not* be decrypted.") );
@@ -2970,14 +2936,6 @@ kdDebug(5006) << s << endl;
   VCard *vc = 0;
   bool hasVCard = false;
 
-  // make sure we have a valid CryptPlugList
-  bool tmpPlugList = !mCryptPlugList;
-  if( tmpPlugList ) {
-    mCryptPlugList = new CryptPlugWrapperList();
-    KConfig *config = KGlobal::config();
-    mCryptPlugList->loadFromConfig( config );
-  }
-
   // store message body in mRootNode if *no* body parts found
   // (please read the comment below before crying about me)  :-)
   DwBodyPart* mainBody = 0;
@@ -3072,7 +3030,6 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   if( !onlyProcessHeaders )
     parseObjectTree( this,
                      0,
-                     mCryptPlugList,
                      0,
                      mRootNode );
 
@@ -3158,10 +3115,6 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
     }
   }
 #endif
-
-  // remove temp. CryptPlugList
-  if( tmpPlugList )
-    delete mCryptPlugList;
 
   // save current main Content-Type before deleting mRootNode
   int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeUnknown;
@@ -4701,17 +4654,16 @@ void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
       win->setCaption(i18n("View Attachment: %1").arg(pname));
       win->show();
     } else {
-      QMultiLineEdit *medit = new QMultiLineEdit();
+      KMTextBrowser *browser = new KMTextBrowser(); // deletes itself
       QString str = aMsgPart->bodyDecoded();
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
       if( str.length() < (unsigned) aMsgPart->decodedSize() ) {
         str += i18n("\n[KMail: Attachment contains binary data. Trying to show first %1 characters.]").arg(str.length());
       }
-      medit->setText(str);
-      medit->setReadOnly(true);
-      medit->resize(500, 550);
-      medit->show();
+      browser->setText(str);
+      browser->resize(500, 550);
+      browser->show();
     }
   }
   // ---Sven's view text, html and image attachments in html widget end ---

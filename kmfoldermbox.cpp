@@ -232,7 +232,7 @@ void KMFolderMbox::sync()
   if (mOpenCount > 0)
     if (!mStream || fsync(fileno(mStream)) ||
 	!mIndexStream || fsync(fileno(mIndexStream))) {
-    KMKernel::self()->emergencyExit( i18n("Not enough free disk space." ));
+    kernel->emergencyExit( i18n("Not enough free disk space." ));
     }
 }
 
@@ -805,7 +805,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
       kdDebug(5006) << "Undoing changes" << endl;
       truncate( location().local8Bit(), revert );
     }
-    KMKernel::self()->emergencyExit( i18n("Not enough free disk space.") );
+    kernel->emergencyExit( i18n("Not enough free disk space.") );
 
     /* This code is not 100% reliable
     bool busy = kernel->kbp()->isBusy();
@@ -876,7 +876,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
 	kdWarning(5006) << "Undoing changes" << endl;
 	truncate( indexLocation().local8Bit(), revert );
       }
-      KMKernel::self()->emergencyExit( i18n("Not enough free disk space.") );
+      kernel->emergencyExit( i18n("Not enough free disk space.") );
 
       /* This code may not be 100% reliable
       bool busy = kernel->kbp()->isBusy();

@@ -52,8 +52,7 @@ class KMReaderWin: public QWidget
   friend void KMMimePartTree::slotSaveAs();
 
 public:
-  KMReaderWin( CryptPlugWrapperList *cryptPlugList=0,
-               KMMimePartTree* mimePartTree=0,
+  KMReaderWin( KMMimePartTree* mimePartTree=0,
                int* showMIMETreeMode=0,
                QWidget *parent=0,
                const char *name=0,
@@ -103,11 +102,11 @@ public:
   /** Set the message that shall be shown. If NULL, an empty page is
       displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
-  
+
   /** Show or hide the Mime Tree Viewer if configuration
       is set to smart mode.  */
   void showHideMimeTree( bool showIt );
-  
+
   /** Store message id of last viewed message,
       normally no need to call this function directly,
       since correct value is set automatically in
@@ -174,8 +173,7 @@ public:
                         QTextCodec *codec);
 
     /** find a plugin matching a given libName */
-    static bool foundMatchingCryptPlug( CryptPlugWrapperList* plugins,
-                                        QString libName,
+    static bool foundMatchingCryptPlug( QString libName,
                                         CryptPlugWrapper** useThisCryptPlug_ref,
                                         QWidget* parent = 0,
                                         QString verboseName = "" );
@@ -188,7 +186,6 @@ public:
     //  Function will be replaced once KMime is alive.
     static void insertAndParseNewChildNode( KMReaderWin* reader,
                                             QCString* resultString,
-                                            CryptPlugWrapperList* cryptPlugList,
                                             CryptPlugWrapper*     useThisCryptPlug,
                                             partNode& node,
                                             const char* content,
@@ -199,7 +196,6 @@ public:
     //  and it will be replaced once KMime is alive.
     static void parseObjectTree( KMReaderWin* reader,
                                  QCString* resultString,
-                                 CryptPlugWrapperList* cryptPlugList,
                                  CryptPlugWrapper*     useThisCryptPlug,
                                  partNode* node,
                                  bool showOneMimePart=false,
@@ -228,7 +224,6 @@ public:
         find out if opaque data is signed or not. */
     static bool writeOpaqueOrMultipartSignedData( KMReaderWin* reader,
                                                   QCString* resultString,
-                                                  CryptPlugWrapperList* cryptPlugList,
                                                   CryptPlugWrapper*     useThisCryptPlug,
                                                   partNode* data,
                                                   partNode& sign,
@@ -238,7 +233,6 @@ public:
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     static bool okDecryptMIME( KMReaderWin* reader,
-                               CryptPlugWrapperList* cryptPlugList,
                                CryptPlugWrapper*     useThisCryptPlug,
                                partNode& data,
                                QCString& decryptedData,
@@ -253,7 +247,7 @@ signals:
   /** Emitted after parsing of a message to have it stored
       in unencrypted state in it's folder. */
   void replaceMsgByUnencryptedVersion();
-  
+
   /** Emitted to show a text on the status line. */
   void statusMsg(const QString& text);
 
@@ -389,7 +383,7 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
- 
+
 private:
   /** extracted parts from writeBodyStr() */
   class PartMetaData;
@@ -458,7 +452,6 @@ protected:
   QStringList mTempDirs;
   KMMimePartTree* mMimePartTree;
   int* mShowMIMETreeMode;
-  CryptPlugWrapperList * mCryptPlugList;
   partNode* mRootNode;
   QString mIdOfLastViewedMessage;
   static QPtrList<KMReaderWin> mStandaloneWindows;

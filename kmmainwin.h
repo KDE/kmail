@@ -6,7 +6,6 @@
 #define __KMMAINWIN
 
 #include "kmtopwidget.h"
-#include "cryptplugwrapperlist.h"
 #include <kurl.h>
 #include <kdockwidget.h>
 #include <qlistview.h>
@@ -99,7 +98,6 @@ public:
   KToggleAction *toggleFixFontAction;
   KActionMenu *filterMenu, *statusMenu, *threadStatusMenu,
     *moveActionMenu, *copyActionMenu;
-  CryptPlugWrapperList mCryptPlugList;
 
   /** we need to access those KToggleActions from the foldertree-popup */
   KToggleAction* unreadColumnToggle;

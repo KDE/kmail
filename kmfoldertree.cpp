@@ -17,7 +17,6 @@
 #include "kmfolderdia.h"
 #include "kmcomposewin.h"
 #include "kmmainwin.h"
-#include "cryptplugwrapperlist.h"
 #include <X11/Xlib.h>
 
 QPixmap* KMFolderTree::pixDir = 0;
@@ -67,7 +66,7 @@ void KMFolderTreeItem::init()
 
   if (!parent())
     setType(Root);
-  else if (mFolder->isSystemFolder()) 
+  else if (mFolder->isSystemFolder())
   {
     if (mFolder == kernel->inboxFolder()
         || mFolder->protocol() == "imap")
@@ -86,7 +85,7 @@ void KMFolderTreeItem::init()
 //-----------------------------------------------------------------------------
 int KMFolderTreeItem::countUnreadRecursive()
 {
-  if (mFolder) 
+  if (mFolder)
     return mFolder->countUnreadRecursive();
   else
     return 0;
@@ -95,7 +94,7 @@ int KMFolderTreeItem::countUnreadRecursive()
 //-----------------------------------------------------------------------------
 bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
 {
-  if ( !mFolder || 
+  if ( !mFolder ||
       (mFolder->noContent() && childCount() == 0) ||
       (mFolder->noContent() && isOpen()) )
     return false;
@@ -107,10 +106,9 @@ bool KMFolderTreeItem::acceptDrag(QDropEvent*) const
 //=============================================================================
 
 
-KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
-                            QWidget *parent,
+KMFolderTree::KMFolderTree( QWidget *parent,
                             const char *name )
-  : KFolderTree( parent, name ), mCryptPlugList( cryptPlugList )
+  : KFolderTree( parent, name )
 {
   static bool pixmapsLoaded = FALSE;
   oldSelected = 0;
@@ -139,7 +137,7 @@ KMFolderTree::KMFolderTree( CryptPlugWrapperList * cryptPlugList,
   // connect
   connectSignals();
 
-  // popup to switch columns 
+  // popup to switch columns
   header()->setClickEnabled(true);
   header()->installEventFilter(this);
   mPopup = new KPopupMenu;
@@ -164,19 +162,19 @@ void KMFolderTree::connectSignals()
 {
   connect(&mUpdateTimer, SIGNAL(timeout()),
           this, SLOT(delayedUpdate()));
-  
+
   connect(this, SIGNAL(currentChanged(QListViewItem*)),
 	  this, SLOT(doFolderSelected(QListViewItem*)));
-  
+
   connect(kernel->folderMgr(), SIGNAL(changed()),
 	  this, SLOT(doFolderListChanged()));
-  
+
   connect(kernel->folderMgr(), SIGNAL(removed(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
-  
+
   connect(kernel->imapFolderMgr(), SIGNAL(changed()),
           this, SLOT(doFolderListChanged()));
-  
+
   connect(kernel->imapFolderMgr(), SIGNAL(removed(KMFolder*)),
           this, SLOT(slotFolderRemoved(KMFolder*)));
 
@@ -422,15 +420,15 @@ void KMFolderTree::reload(bool openFolders)
     mUpdateIterator = QListViewItemIterator (this);
     QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
   }
-  
+
   QListViewItemIterator jt( this );
 
-  while (jt.current()) 
+  while (jt.current())
   {
     KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(jt.current());
     if (fti && fti->folder())
     {
-      // first disconnect before each connect 
+      // first disconnect before each connect
       // to make sure we don't call it several times with each reload
       disconnect(fti->folder(),SIGNAL(numUnreadMsgsChanged(KMFolder*)),
 	      this,SLOT(refresh(KMFolder*)));
@@ -443,7 +441,7 @@ void KMFolderTree::reload(bool openFolders)
             this,SLOT(slotUpdateCounts(KMFolder*)));
         connect(fti->folder(), SIGNAL(numUnreadMsgsChanged(KMFolder*)),
             this,SLOT(slotUpdateCounts(KMFolder*)));
-        if (fti->folder()->protocol() == "imap") 
+        if (fti->folder()->protocol() == "imap")
         {
           // imap-only
           disconnect(fti->folder(), SIGNAL(folderComplete(KMFolderImap*, bool)),
@@ -472,7 +470,7 @@ void KMFolderTree::reload(bool openFolders)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderTree::slotUpdateOneCount() 
+void KMFolderTree::slotUpdateOneCount()
 {
   if ( !mUpdateIterator.current() ) return;
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(mUpdateIterator.current());
@@ -482,14 +480,14 @@ void KMFolderTree::slotUpdateOneCount()
     QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
     return;
   }
- 
+
   // open the folder and update the count
   bool open = fti->folder()->isOpened();
   if (!open) fti->folder()->open();
   slotUpdateCounts(fti->folder());
   // restore previous state
   if (!open) fti->folder()->close();
-  
+
   QTimer::singleShot( 0, this, SLOT(slotUpdateOneCount()) );
 }
 
@@ -510,7 +508,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       if (!parent)
       {
         // create new root-item
-        // it needs a folder e.g. to save it's state (open/close) 
+        // it needs a folder e.g. to save it's state (open/close)
         fti = new KMFolderTreeItem( this, folder->label(), folder );
         fti->setExpandable( true );
       } else {
@@ -519,7 +517,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
       }
       // restore last open-state
       fti->setOpen( readIsListViewItemOpen(fti) );
-      
+
       // assign icons
       if (folder->isSystemFolder())
       {
@@ -537,7 +535,7 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
 
       // add child-folders
       if (folder && folder->child())
-        addDirectory( folder->child(), fti );      
+        addDirectory( folder->child(), fti );
       // make sure that the folder-settings are correctly read on startup by calling listDirectory
       if (readIsListViewItemOpen(fti) &&
          folder && fti->folder()->protocol() == "imap")
@@ -574,7 +572,7 @@ void KMFolderTree::delayedUpdate()
     }
 
     int count = fti->folder()->countUnread();
-    if (count != fti->unreadCount()) 
+    if (count != fti->unreadCount())
       repaintRequired = true;
     fti->setUnreadCount(count);
     if (count > 0) {
@@ -815,7 +813,7 @@ void KMFolderTree::doFolderSelected( QListViewItem* qlvi )
       if (imap_folder->getContentState() != KMFolderImap::imapInProgress)
         imap_folder->getFolder();
     } else {
-      // we don't need this for imap-folders because 
+      // we don't need this for imap-folders because
       // they're updated with the folderComplete-signal
       slotUpdateCounts(folder);
     }
@@ -954,7 +952,7 @@ void KMFolderTree::mouseButtonPressed(int btn, QListViewItem *lvi, const QPoint 
   KMMessage *msg = new KMMessage;
   msg->initHeader(fti->folder()->identity());
   msg->setTo(fti->folder()->mailingListPostAddress());
-  KMComposeWin *win = new KMComposeWin(mCryptPlugList, msg, fti->folder()->identity());
+  KMComposeWin *win = new KMComposeWin(msg, fti->folder()->identity());
   win->show();
 
 }
@@ -1378,9 +1376,9 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
     // get the total-count
     if (fti->folder()->isOpened())
       count = fti->folder()->count();
-    else 
+    else
       count = fti->folder()->count(true); // count with caching
-    
+
     if (fti->folder()->noContent())
       count = -1;
 
@@ -1450,7 +1448,7 @@ void KMFolderTree::slotToggleTotalColumn()
 bool KMFolderTree::eventFilter( QObject *o, QEvent *e )
 {
   if ( e->type() == QEvent::MouseButtonPress &&
-      static_cast<QMouseEvent*>(e)->button() == RightButton && 
+      static_cast<QMouseEvent*>(e)->button() == RightButton &&
       o->isA("QHeader") )
   {
     mPopup->popup( static_cast<QMouseEvent*>(e)->globalPos() );

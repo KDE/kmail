@@ -49,8 +49,7 @@
 
 #if ALLOW_GUI
 #include <kmessagebox.h>
-#include <ktextbrowser.h>
-#include <qmultilineedit.h>
+#include <kmtextbrowser.h>
 #endif
 
 // needed temporarily until KMime is replacing the partNode helper class:
@@ -694,7 +693,6 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
   // initialy parse the complete message to decrypt any encrypted parts
   KMReaderWin::parseObjectTree( 0,
                                 0,
-                                &cryptPlugList,
                                 0,
                                 &rootNode,
                                 true,
@@ -711,7 +709,6 @@ void KMMessage::parseTextStringFromDwPart( DwBodyPart& dwPart,
     // now parse the TEXT message part we want to quote
     KMReaderWin::parseObjectTree( 0,
                                   &parsedString,
-                                  &cryptPlugList,
                                   0,
                                   curNode,
                                   true,
@@ -2521,13 +2518,8 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixe
     kernel->networkCodec()->toUnicode(asString());
 
 #if ALLOW_GUI
-  KTextBrowser *browser = new KTextBrowser();
-  browser->setTextFormat( Qt::PlainText );
-  browser->setWordWrap( KTextBrowser::NoWrap );
-
-  KWin::setIcons(browser->winId(), kapp->icon(), kapp->miniIcon());
+  KMTextBrowser *browser = new KMTextBrowser(); // deletes itself upon close
   if (!aCaption.isEmpty()) browser->setCaption(aCaption);
-
   browser->setText(str);
   if (fixedfont)
     browser->setFont(KGlobalSettings::fixedFont());

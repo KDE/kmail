@@ -226,7 +226,7 @@ void KMFolderMaildir::sync()
 {
   if (mOpenCount > 0)
     if (!mIndexStream || fsync(fileno(mIndexStream))) {
-    KMKernel::self()->emergencyExit( i18n("Couldn't sync maildir folder.") );
+    kernel->emergencyExit( i18n("Couldn't sync maildir folder.") );
     }
 }
 
@@ -426,7 +426,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
 	kdDebug(5006) << "Undoing changes" << endl;
 	truncate( QFile::encodeName(indexLocation()), revert );
       }
-      KMKernel::self()->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
+      kernel->emergencyExit(i18n("KMFolderMaildir::addMsg: abnormally terminating to prevent data loss."));
       // exit(1); // don't ever use exit(), use the above!
 
       /* This code may not be 100% reliable
