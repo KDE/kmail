@@ -189,6 +189,7 @@ protected:
   bool    mHiddenFolders;
   bool    gotMsgs;
   bool    mProgressEnabled;
+  int     mTotal;
 
   KIO::Slave *mSlave;
 

@@ -62,6 +62,7 @@ KMAcctImap::KMAcctImap(KMAcctMgr* aOwner, const char* aAccountName):
 
   init();
   mSlave = NULL;
+  mTotal = 0;
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotAbortRequested()));
   KIO::Scheduler::connect(
@@ -169,8 +170,14 @@ void KMAcctImap::displayProgress()
     total += (*it).total;
     done += (*it).done;
   } 
-  if (total == 0) return;
-  KMBroadcastStatus::instance()->setStatusProgressPercent( 100 * done / total );
+  if (total == 0)
+  {
+    mTotal = 0;
+    return;
+  }
+  if (total > mTotal) mTotal = total;
+  done += mTotal - total;
+  KMBroadcastStatus::instance()->setStatusProgressPercent( 100*done / mTotal );
 }
 
 
@@ -388,6 +395,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   uid = (*it).items.begin();
   if (jd.total == 0)
   {
+    (*it).parent->folder->quiet(FALSE);
     (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
     mapJobData.remove(it);
     displayProgress();
@@ -682,7 +690,7 @@ void KMAcctImap::slotSimpleData(KIO::Job * job, const QByteArray & data)
 //-----------------------------------------------------------------------------
 void KMImapJob::ignoreJobsForMessage(KMMessage *msg)
 {
-  if (msg->transferInProgress()) return;
+  if (!msg || msg->transferInProgress()) return;
   KMAcctImap *account;
   if (!msg->parent() || !(account = msg->parent()->account())) return;
   for (KMImapJob *it = account->mJobList.first(); it;
@@ -704,7 +712,11 @@ void KMAcctImap::killAllJobs()
 {
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
   for (it = mapJobData.begin(); it != mapJobData.end(); it++)
-    if ((*it).parent) (*it).parent->folder->quiet(FALSE);
+    if ((*it).parent)
+    {
+      (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+      (*it).parent->folder->quiet(FALSE);
+    }
   if (mapJobData.begin() != mapJobData.end())
   {
     mSlave->kill();
