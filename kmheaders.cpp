@@ -426,7 +426,7 @@ public:
     _cg.setColor( QColorGroup::Text, c );
   }
 
-  static QString generate_key( int id, KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder)
+  static QString generate_key( KMHeaders *headers, KMMsgBase *msg, const KPaintInfo *paintInfo, int sortOrder)
   {
     // It appears, that QListView in Qt-3.0 asks for the key
     // in QListView::clear(), which is called from
@@ -435,8 +435,7 @@ public:
 
     int column = sortOrder & ((1 << 5) - 1);
     QString ret = QChar( (char)sortOrder );
-    QString sortArrival = QString( "%1" )
-      .arg( kmkernel->msgDict()->getMsgSerNum(headers->folder(), id), 0, 36 );
+    QString sortArrival = QString( "%1" ).arg( msg->getMsgSerNum(), 0, 36 );
     while (sortArrival.length() < 7) sortArrival = '0' + sortArrival;
 
     if (column == paintInfo->dateCol) {
@@ -491,8 +490,7 @@ public:
       KMHeaders *headers = static_cast<KMHeaders*>(listView());
       KMMsgBase *msgBase = headers->folder()->getMsgBase( mMsgId );
       return ((KMHeaderItem *)this)->mKey =
-        generate_key(mMsgId, headers, msgBase,
-                     headers->paintInfo(), sortOrder);
+        generate_key( headers, msgBase, headers->paintInfo(), sortOrder );
     }
     return mKey;
   }
@@ -3210,7 +3208,7 @@ bool KMHeaders::readSortOrder( bool set_selection, bool forceJumpToUnread )
                 if (mPaintInfo.status)
                     sortOrder |= (1 << 5);
                 sortCache[x] = new KMSortCacheItem(
-                    x, KMHeaderItem::generate_key(x, this, msg, &mPaintInfo, sortOrder));
+                    x, KMHeaderItem::generate_key( this, msg, &mPaintInfo, sortOrder ) );
                 if(threaded)
                     unparented.append(sortCache[x]);
                 else
