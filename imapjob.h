@@ -53,7 +53,8 @@ class ImapJob : public FolderJob
 
 public:
   ImapJob( KMMessage *msg, JobType jt = tGetMessage, KMFolderImap *folder = 0 );
-  ImapJob( QPtrList<KMMessage>& msgList, QString sets, JobType jt = tGetMessage, KMFolderImap *folder = 0 );
+  ImapJob( QPtrList<KMMessage>& msgList, QString sets,
+           JobType jt = tGetMessage, KMFolderImap *folder = 0 );
   virtual ~ImapJob();
 
   static void ignoreJobsForMessage( KMMessage *msg );
@@ -67,11 +68,12 @@ private slots:
   void slotPutMessageInfoData(KIO::Job *, const QString &data);
   /** result of a copy-operation */
   void slotCopyMessageResult( KIO::Job *job );
-  void slotCopyMessageInfoData(KIO::Job *, const QString &data);
+  void slotCopyMessageInfoData( KIO::Job *, const QString &data );
 private:
   void execute();
   void expireMessages();
-  void init( JobType jt, QString sets, KMFolderImap *folder, QPtrList<KMMessage>& msgList );
+  void init( JobType jt, QString sets, KMFolderImap *folder,
+             QPtrList<KMMessage>& msgList );
   KIO::Job *mJob;
   QByteArray mData;
   QCString mStrData;

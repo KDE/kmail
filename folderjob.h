@@ -75,10 +75,10 @@ public:
   void start();
 
 signals:
-  void messageRetrieved(KMMessage *);
-  void messageStored(KMMessage *);
-  void messageCopied(KMMessage *);
-  void messageCopied(QPtrList<KMMessage>);
+  void messageRetrieved( KMMessage * );
+  void messageStored( KMMessage * );
+  void messageCopied( KMMessage * );
+  void messageCopied( QPtrList<KMMessage> );
   void finished();
 protected:
   virtual void execute()=0;
@@ -92,6 +92,6 @@ protected:
   bool                mPassiveDestructor;
 };
 
-};
+}
 
 #endif

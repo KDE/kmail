@@ -15,7 +15,7 @@
 #include <qheader.h>
 
 #include "addressesdialog.h"
-using KMail::AddressesDialog;
+using KPIM::AddressesDialog;
 #include "kmmessage.h"
 #include "kmsender.h"
 #include "kmkernel.h"
@@ -3831,6 +3831,8 @@ void KMComposeWin::addrBookSelInto()
       lst = KMMessage::splitEmailAddrList( txt );
       dlg.setSelectedBCC( lst );
   }
+
+  dlg.setRecentAddresses( RecentAddresses::self()->kabcAddresses() );
 
   if (dlg.exec()==QDialog::Rejected) return;
 

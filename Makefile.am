@@ -73,8 +73,7 @@ libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfoldersearch.cpp transportmanager.cpp \
 		folderjob.cpp cachedimapjob.cpp \
 		maildirjob.cpp mboxjob.cpp imapjob.cpp \
-		addressesdialog.cpp addresspicker.ui subscriptiondialog.cpp \
-		kmailicalifaceimpl.cpp aboutdata.cpp \
+		subscriptiondialog.cpp kmailicalifaceimpl.cpp aboutdata.cpp \
 		folderIface.cpp folderIface.skel 
 
 kmail_SOURCES = main.cpp
@@ -91,7 +90,7 @@ noinst_HEADERS = adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 kmgroupwarefuncs.h startupwizard.h \
 		 signatureconfigurationdialogimpl.h \
 		 encryptionconfigurationdialogimpl.h \
-		 signatureconfigurationdialogimpl.h addressesdialog.h \
+		 signatureconfigurationdialogimpl.h  \
 		 kmailicalifaceimpl.h
 
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
