@@ -173,6 +173,7 @@ public:
 
   /** Returns the index of the given message or -1 if not found. */
   virtual int find(const KMMsgBase* msg) const = 0;
+  int find( const KMMessage * msg ) const;
 
   /** Number of messages in this folder. */
   virtual int count(bool cache = false) const;

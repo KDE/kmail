@@ -43,6 +43,7 @@ public:
   virtual KMMsgBase* getMsgBase(int idx) { return mMsgList[idx]; }
 
   virtual int find(const KMMsgBase* msg) const { return mMsgList.find((KMMsgBase*)msg); }
+  int find( const KMMessage * msg ) const { return KMFolder::find( msg ); }
 
   /** Registered unique serial number for the index file */
   int serialIndexId() const { return mIndexId; }

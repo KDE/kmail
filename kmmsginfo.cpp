@@ -146,7 +146,7 @@ KMMsgInfo& KMMsgInfo::operator=(const KMMsgInfo& other)
 //-----------------------------------------------------------------------------
 KMMsgInfo& KMMsgInfo::operator=(const KMMessage& msg)
 {
-    KMMsgInfoInherited::assign(&msg);
+    KMMsgInfoInherited::assign(&msg.toMsgBase());
     if(!kd)
 	kd = new KMMsgInfoPrivate;
     kd->modifiers = KMMsgInfoPrivate::ALL_SET;

@@ -159,9 +159,6 @@ void KMReaderMainWin::copySelectedToFolder( int menuId )
   if (!mMenuToFolder[menuId])
     return;
 
-  KMFolder *destFolder = mMenuToFolder[menuId];
-  QPtrList<KMMsgBase> msgList;
-  msgList.append( mMsg );
-  KMCommand *command = new KMCopyCommand( destFolder, msgList );
+  KMCommand *command = new KMCopyCommand( mMenuToFolder[menuId], mMsg );
   command->start();
 }

@@ -71,9 +71,13 @@ KMCommand::KMCommand( QWidget *parent, const QPtrList<KMMsgBase> &msgList )
 KMCommand::KMCommand( QWidget *parent, KMMsgBase *msgBase )
   :mParent( parent )
 {
-  QPtrList< KMMsgBase > msgList;
-  msgList.append( msgBase );
-  mMsgList = msgList;
+  mMsgList.append( msgBase );
+}
+
+KMCommand::KMCommand( QWidget *parent, KMMessage *msg )
+  :mParent( parent )
+{
+  mMsgList.append( &msg->toMsgBase() );
 }
 
 KMCommand::~KMCommand()
@@ -292,8 +296,8 @@ void KMCommand::slotTransferCancelled()
 }
 
 KMMailtoComposeCommand::KMMailtoComposeCommand( const KURL &url,
-						KMMsgBase *msgBase )
-  :mUrl( url ), mMsgBase( msgBase )
+						KMMessage *msg )
+  :mUrl( url ), mMessage( msg )
 {
 }
 
@@ -303,8 +307,8 @@ void KMMailtoComposeCommand::execute()
   KMMessage *msg = new KMMessage;
   uint id = 0;
 
-  if ( mMsgBase && mMsgBase->parent() )
-    id = mMsgBase->parent()->identity();
+  if ( mMessage && mMessage->parent() )
+    id = mMessage->parent()->identity();
 
   msg->initHeader(id);
   msg->setCharset("utf-8");
@@ -317,8 +321,8 @@ void KMMailtoComposeCommand::execute()
 
 
 KMMailtoReplyCommand::KMMailtoReplyCommand( QWidget *parent,
-   const KURL &url, KMMsgBase *msgBase, const QString &selection )
-  :KMCommand( parent, msgBase ), mUrl( url ), mSelection( selection  )
+   const KURL &url, KMMessage *msg, const QString &selection )
+  :KMCommand( parent, msg ), mUrl( url ), mSelection( selection  )
 {
 }
 
@@ -338,8 +342,8 @@ void KMMailtoReplyCommand::execute()
 
 
 KMMailtoForwardCommand::KMMailtoForwardCommand( QWidget *parent,
-   const KURL &url, KMMsgBase *msgBase )
-  :KMCommand( parent, msgBase ), mUrl( url )
+   const KURL &url, KMMessage *msg )
+  :KMCommand( parent, msg ), mUrl( url )
 {
 }
 
@@ -466,8 +470,8 @@ void KMUrlSaveCommand::slotUrlSaveResult( KIO::Job *job )
 }
 
 
-KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMsgBase *msgBase )
-  :KMCommand( parent, msgBase )
+KMEditMsgCommand::KMEditMsgCommand( QWidget *parent, KMMessage *msg )
+  :KMCommand( parent, msg )
 {
 }
 
@@ -498,8 +502,8 @@ void KMEditMsgCommand::execute()
 
 
 KMShowMsgSrcCommand::KMShowMsgSrcCommand( QWidget *parent,
-  KMMsgBase *msgBase, bool fixedFont )
-  :KMCommand( parent, msgBase ), mFixedFont( fixedFont )
+  KMMessage *msg, bool fixedFont )
+  :KMCommand( parent, msg ), mFixedFont( fixedFont )
 {
 }
 
@@ -528,6 +532,25 @@ void KMShowMsgSrcCommand::execute()
   viewer->show();
 }
 
+namespace {
+  KURL subjectToUrl( const QString & subject ) {
+    return KFileDialog::getSaveURL( subject.mid( subject.findRev(':') + 1 )
+				            .stripWhiteSpace()
+				            .replace( QDir::separator(), '_' ),
+				    QString::null );
+  }
+}
+
+KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent, KMMessage * msg )
+  : KMCommand( parent ),
+    mMsgListIndex( 0 ),
+    mTotalSize( msg ? msg->msgSize() : 0 )
+{
+  if ( !msg ) return;
+  mMsgList.append( msg->getMsgSerNum() );
+  mUrl = subjectToUrl( msg->subject() );
+}
+
 KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList )
   :KMCommand( parent ), mTotalSize( 0 )
@@ -549,11 +572,7 @@ KMSaveMsgCommand::KMSaveMsgCommand( QWidget *parent,
     ++it;
   }
   mMsgListIndex = 0;
-  QString subject = msgBase->subject();
-  while (subject.find(':') != -1)
-    subject = subject.mid(subject.find(':') + 1).stripWhiteSpace();
-  subject.replace(QChar(QDir::separator()), "_");
-  mUrl = KFileDialog::getSaveURL(subject, QString::null);
+  mUrl = subjectToUrl( msgBase->subject() );
 }
 
 KURL KMSaveMsgCommand::url()
@@ -688,9 +707,9 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
 
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll are all similar
 //and should be factored
-KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMsgBase *msgBase,
+KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMessage *msg,
 				    const QString &selection )
-  : KMCommand( parent, msgBase ), mSelection( selection )
+  : KMCommand( parent, msg ), mSelection( selection )
 {
 }
 
@@ -707,8 +726,8 @@ void KMReplyToCommand::execute()
 
 
 KMNoQuoteReplyToCommand::KMNoQuoteReplyToCommand( QWidget *parent,
-						  KMMsgBase *msgBase )
-  : KMCommand( parent, msgBase )
+						  KMMessage *msg )
+  : KMCommand( parent, msg )
 {
 }
 
@@ -725,8 +744,8 @@ void KMNoQuoteReplyToCommand::execute()
 
 
 KMReplyListCommand::KMReplyListCommand( QWidget *parent,
-  KMMsgBase *msgBase, const QString &selection )
- : KMCommand( parent, msgBase ), mSelection( selection )
+  KMMessage *msg, const QString &selection )
+ : KMCommand( parent, msg ), mSelection( selection )
 {
 }
 
@@ -743,8 +762,8 @@ void KMReplyListCommand::execute()
 
 
 KMReplyToAllCommand::KMReplyToAllCommand( QWidget *parent,
-  KMMsgBase *msgBase, const QString &selection )
-  :KMCommand( parent, msgBase ), mSelection( selection )
+  KMMessage *msg, const QString &selection )
+  :KMCommand( parent, msg ), mSelection( selection )
 {
 }
 
@@ -763,6 +782,12 @@ void KMReplyToAllCommand::execute()
 KMForwardCommand::KMForwardCommand( QWidget *parent,
   const QPtrList<KMMsgBase> &msgList )
   : KMCommand( parent, msgList ),
+    mParent( parent )
+{
+}
+
+KMForwardCommand::KMForwardCommand( QWidget *parent, KMMessage *msg )
+  : KMCommand( parent, msg ),
     mParent( parent )
 {
 }
@@ -884,6 +909,13 @@ KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
 {
 }
 
+KMForwardAttachedCommand::KMForwardAttachedCommand( QWidget *parent,
+  KMMessage * msg, uint identity, KMComposeWin *win )
+  : KMCommand( parent, msg ), mIdentity( identity ),
+    mWin( QGuardedPtr< KMComposeWin >( win ))
+{
+}
+
 void KMForwardAttachedCommand::execute()
 {
   QPtrList<KMMessage> msgList = retrievedMsgs();
@@ -930,8 +962,8 @@ void KMForwardAttachedCommand::execute()
 
 
 KMRedirectCommand::KMRedirectCommand( QWidget *parent,
-  KMMsgBase *msgBase )
-  : KMCommand( parent, msgBase )
+  KMMessage *msg )
+  : KMCommand( parent, msg )
 {
 }
 
@@ -951,8 +983,8 @@ void KMRedirectCommand::execute()
 
 
 KMBounceCommand::KMBounceCommand( QWidget *parent,
-  KMMsgBase *msgBase )
-  : KMCommand( parent, msgBase )
+  KMMessage *msg )
+  : KMCommand( parent, msg )
 {
 }
 
@@ -966,8 +998,8 @@ void KMBounceCommand::execute()
 
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
-  KMMsgBase *msgBase, bool htmlOverride )
-  : KMCommand( parent, msgBase), mHtmlOverride( htmlOverride )
+  KMMessage *msg, bool htmlOverride )
+  : KMCommand( parent, msg ), mHtmlOverride( htmlOverride )
 {
 }
 
@@ -1013,8 +1045,8 @@ void KMFilterCommand::execute()
 
 
 KMMailingListFilterCommand::KMMailingListFilterCommand( QWidget *parent,
-  KMMsgBase *msgBase )
-  : KMCommand( parent, msgBase )
+  KMMessage *msg )
+  : KMCommand( parent, msg )
 {
 }
 
@@ -1176,6 +1208,12 @@ KMCopyCommand::KMCopyCommand( KMFolder* destFolder,
 {
 }
 
+KMCopyCommand::KMCopyCommand( KMFolder* destFolder, KMMessage * msg )
+  :mDestFolder( destFolder )
+{
+  mMsgList.append( &msg->toMsgBase() );
+}
+
 void KMCopyCommand::execute()
 {
   KMMsgBase *msgBase;
@@ -1263,6 +1301,15 @@ KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
 // TODO: mHeaders is optional ...
 }
 
+KMMoveCommand::KMMoveCommand( KMFolder* destFolder,
+			      KMMessage *msg,
+			      KMHeaders *headers )
+  :mDestFolder( destFolder ), mHeaders( headers )
+{
+  mMsgList.append( &msg->toMsgBase() );
+// TODO: mHeaders is optional ...
+}
+
 void KMMoveCommand::execute()
 {
   typedef QMap< KMFolder*, QPtrList<KMMessage>* > FolderToMessageListMap;
@@ -1346,27 +1393,40 @@ void KMMoveCommand::execute()
 KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
   const QPtrList<KMMsgBase> &msgList, KMHeaders *headers )
 {
-  KMFolder* folder = 0;
-  if (srcFolder->protocol() == "imap")
-  {
-    KMFolderImap* fi = static_cast<KMFolderImap*> (srcFolder);
-    QString trashStr = fi->account()->trash();
-    KMFolder* trash = kernel->imapFolderMgr()->findIdString( trashStr );
-    if (!trash) trash = kernel->trashFolder();
-    if (srcFolder != trash)
-      folder = trash;
-  } else {
-    if (srcFolder != kernel->trashFolder())
-    {
-      // move to trash folder
-      folder = kernel->trashFolder();
-    }
-  }
+  KMFolder* folder = findTrashFolder( srcFolder );
 
   if (folder) {
     KMCommand *command = new KMMoveCommand( folder, msgList, headers );
     command->start();
   }
+}
+
+KMDeleteMsgCommand::KMDeleteMsgCommand( KMFolder* srcFolder,
+  KMMessage * msg, KMHeaders *headers )
+{
+  KMFolder* folder = findTrashFolder( srcFolder );
+
+  if (folder) {
+    KMCommand *command = new KMMoveCommand( folder, msg, headers );
+    command->start();
+  }
+}
+
+KMFolder * KMDeleteMsgCommand::findTrashFolder( KMFolder * folder ) {
+  if (folder->protocol() == "imap")
+  {
+    KMFolderImap* fi = static_cast<KMFolderImap*> (folder);
+    QString trashStr = fi->account()->trash();
+    KMFolder* trash = kernel->imapFolderMgr()->findIdString( trashStr );
+    if (!trash) trash = kernel->trashFolder();
+    if (folder != trash)
+      return trash;
+  } else {
+    if (folder != kernel->trashFolder())
+      // move to trash folder
+      return kernel->trashFolder();
+  }
+  return 0;
 }
 
 void KMDeleteMsgCommand::execute()

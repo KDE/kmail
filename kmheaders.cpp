@@ -1291,7 +1291,7 @@ void KMHeaders::msgHeaderChanged(KMFolder*, int msgId)
 void KMHeaders::setMsgStatus (KMMsgStatus status)
 {
   SerNumList serNums;
-  for (QListViewItemIterator it(this); it.current(); it++)
+  for (QListViewItemIterator it(this); it.current(); ++it)
     if (it.current()->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
       KMMsgBase *msgBase = mFolder->getMsgBase(item->msgId());
@@ -1636,16 +1636,17 @@ void KMHeaders::copySelectedToFolder(int menuId )
 //-----------------------------------------------------------------------------
 void KMHeaders::copyMsgToFolder(KMFolder* destFolder, KMMessage* aMsg)
 {
-  KMMessageList msgList;
-  if (aMsg)
-    msgList.append( aMsg );
-  else
-    msgList = *selectedMsgs();
-
-  if (!destFolder)
+  if ( !destFolder )
     return;
 
-  KMCommand *command = new KMCopyCommand( destFolder, msgList );
+  KMCommand * command = 0;
+  if (aMsg)
+    command = new KMCopyCommand( destFolder, aMsg );
+  else {
+    KMMessageList msgList = *selectedMsgs();
+    command = new KMCopyCommand( destFolder, msgList );
+  }
+
   command->start();
 }
 

@@ -320,9 +320,7 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
 void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
 {
   if( !msg ) return;
-  QPtrList<KMMsgBase> mList;
-  mList.append(msg);
-  ( new KMDeleteMsgCommand( msg->parent(), mList ) )->start();
+  ( new KMDeleteMsgCommand( msg->parent(), msg ) )->start();
 }
 
 /****************************

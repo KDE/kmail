@@ -408,7 +408,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   // store information about the position in the folder file in the message
   aMsg->setParent(this);
   aMsg->setMsgSize(size);
-  idx = mMsgList.append(aMsg);
+  idx = mMsgList.append(&aMsg->toMsgBase());
   if (aMsg->getMsgSerNum() <= 0)
     aMsg->setMsgSerNum();
 
@@ -421,10 +421,11 @@ if( fileD0.open( IO_WriteOnly ) ) {
     off_t revert = ftell(mIndexStream);
 
     int len;
-    const uchar *buffer = aMsg->asIndexString(len);
+    KMMsgBase * mb = &aMsg->toMsgBase();
+    const uchar *buffer = mb->asIndexString(len);
     fwrite(&len,sizeof(len), 1, mIndexStream);
-    aMsg->setIndexOffset( ftell(mIndexStream) );
-    aMsg->setIndexLength( len );
+    mb->setIndexOffset( ftell(mIndexStream) );
+    mb->setIndexLength( len );
     if(fwrite(buffer, len, 1, mIndexStream) != 1)
     kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 
@@ -481,7 +482,7 @@ KMMessage* KMFolderMaildir::readMsg(int idx)
   KMMessage *msg = new KMMessage(*mi);
 
   msg->fromDwString(getDwString(idx));
-  mMsgList.set(idx,msg);
+  mMsgList.set(idx,&msg->toMsgBase());
   return msg;
 }
 

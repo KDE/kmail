@@ -156,6 +156,10 @@ void KMMsgDict::deleteRentry(KMMsgDictREntry *entry)
 }
 
 //-----------------------------------------------------------------------------
+unsigned long KMMsgDict::insert(unsigned long msn, const KMMessage * msg, int idx ) {
+  return insert( msn, &msg->toMsgBase(), idx );
+}
+
 
 unsigned long KMMsgDict::insert(unsigned long msgSerNum,
                                 const KMMsgBase *msg, int index)
@@ -262,6 +266,10 @@ void KMMsgDict::getLocation(const KMMsgBase *msg,
                             KMFolder **retFolder, int *retIndex)
 {
   getLocation(msg->getMsgSerNum(), retFolder, retIndex);
+}
+
+void KMMsgDict::getLocation( const KMMessage * msg, KMFolder * *retFolder, int * retIndex ) {
+  getLocation( msg->toMsgBase().getMsgSerNum(), retFolder, retIndex );
 }
 
 //-----------------------------------------------------------------------------

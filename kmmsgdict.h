@@ -8,6 +8,7 @@
 
 class KMFolder;
 class KMMsgBase;
+class KMMessage;
 class KMMsgDictEntry;
 class KMMsgDictREntry;
 class KMDict;
@@ -23,6 +24,7 @@ public:
    * @p msgSerNum and may be zero, in which case a new serial number is
    * generated.  Returns the message serial number. */
   unsigned long insert(unsigned long msgSerNum, const KMMsgBase *msg, int index = -1);
+  unsigned long insert(unsigned long msgSerNum, const KMMessage *msg, int index = -1);
 
   /** Insert a new message.  The message serial number is taken from
    * the message, and passed to the other insert().  Returns the message
@@ -41,6 +43,7 @@ public:
   /** Returns (folder,index) pair for a message. */
   void getLocation(unsigned long key, KMFolder **retFolder, int *retIndex);
   void getLocation(const KMMsgBase *msg, KMFolder **retFolder, int *retIndex);
+  void getLocation(const KMMessage *msg, KMFolder **retFolder, int *retIndex);
 
   /** Returns a message serial number for a (folder,index) pair.  Zero
     if no such message. */

@@ -2478,8 +2478,7 @@ KMMessage* KMReaderWin::message( KMFolder** aFolder ) const
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotReplyToMsg()
 {
-  KMMessage *msg = message();
-  KMCommand *command = new KMReplyToCommand( mMainWindow, msg, copyText() );
+  KMCommand *command = new KMReplyToCommand( mMainWindow, message(), copyText() );
   command->start();
 }
 
@@ -2487,8 +2486,7 @@ void KMReaderWin::slotReplyToMsg()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotReplyAllToMsg()
 {
-  KMMessage *msg = message();
-  KMCommand *command = new KMReplyToAllCommand( mMainWindow, msg, copyText() );
+  KMCommand *command = new KMReplyToAllCommand( mMainWindow, message(), copyText() );
   command->start();
 }
 
@@ -2504,9 +2502,7 @@ void KMReaderWin::slotForward() {
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotForwardMsg()
 {
-  QPtrList<KMMsgBase> msgList;
-  msgList.append( message() );
-  KMCommand *command = new KMForwardCommand( mMainWindow, msgList );
+  KMCommand *command = new KMForwardCommand( mMainWindow, message() );
   command->start();
 }
 
@@ -2514,9 +2510,7 @@ void KMReaderWin::slotForwardMsg()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotForwardAttachedMsg()
 {
-  QPtrList<KMMsgBase> msgList;
-  msgList.append( message() );
-  KMCommand *command = new KMForwardAttachedCommand( mMainWindow, msgList, 0 );
+  KMCommand *command = new KMForwardAttachedCommand( mMainWindow, message(), 0 );
   command->start();
 }
 
@@ -2556,40 +2550,44 @@ void KMReaderWin::slotNoQuoteReplyToMsg()
 void KMReaderWin::slotSubjectFilter()
 {
   KMMessage *msg = message();
-  if (msg) {
-    KMCommand *command = new KMFilterCommand( "Subject", msg->subject() );
-    command->start();
-  }
+  if (!msg)
+    return;
+
+  KMCommand *command = new KMFilterCommand( "Subject", msg->subject() );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotMailingListFilter()
 {
   KMMessage *msg = message();
-  if (msg) {
-    KMCommand *command = new KMMailingListFilterCommand( mMainWindow, msg );
-    command->start();
-  }
+  if (!msg)
+    return;
+
+  KMCommand *command = new KMMailingListFilterCommand( mMainWindow, msg );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotFromFilter()
 {
   KMMessage *msg = message();
-  if (msg) {
-    KMCommand *command = new KMFilterCommand( "From",  msg->from() );
-    command->start();
-  }
+  if (!msg)
+    return;
+
+  KMCommand *command = new KMFilterCommand( "From",  msg->from() );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToFilter()
 {
   KMMessage *msg = message();
-  if (msg) {
-    KMCommand *command = new KMFilterCommand( "To",  msg->to() );
-    command->start();
-  }
+  if (!msg)
+    return;
+
+  KMCommand *command = new KMFilterCommand( "To",  msg->to() );
+  command->start();
 }
 
 //-----------------------------------------------------------------------------
@@ -2711,10 +2709,8 @@ void KMReaderWin::slotPrintMsg()
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotSaveMsg()
 {
-  QPtrList<KMMsgBase> msgList;
-  msgList.append( message() );
   KMSaveMsgCommand *saveCommand = new KMSaveMsgCommand( mMainWindow,
-							msgList );
+							message() );
   if (saveCommand->url().isEmpty())
     delete saveCommand;
   else

@@ -381,6 +381,9 @@ void KMFolder::reallyAddCopyOfMsg(KMMessage* aMsg)
   close( );
 }
 
+int KMFolder::find( const KMMessage * msg ) const {
+  return find( &msg->toMsgBase() );
+}
 
 //-----------------------------------------------------------------------------
 void KMFolder::removeMsg(QPtrList<KMMessage> msgList, bool imapQuiet)

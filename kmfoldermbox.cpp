@@ -742,7 +742,7 @@ KMMessage* KMFolderMbox::readMsg(int idx)
   msg = new KMMessage(*mi);
   msg->fromString(msgText);
 
-  mMsgList.set(idx,msg);
+  mMsgList.set(idx,&msg->toMsgBase());
 
   return msg;
 }
@@ -938,7 +938,7 @@ if( fileD1.open( IO_WriteOnly ) ) {
   aMsg->setParent(this);
   aMsg->setFolderOffset(offs);
   aMsg->setMsgSize(size);
-  idx = mMsgList.append(aMsg);
+  idx = mMsgList.append(&aMsg->toMsgBase());
   if (aMsg->getMsgSerNum() <= 0)
     aMsg->setMsgSerNum();
 
@@ -957,11 +957,12 @@ if( fileD1.open( IO_WriteOnly ) ) {
     fseek(mIndexStream, 0, SEEK_END);
     revert = ftell(mIndexStream);
 
+    KMMsgBase * mb = &aMsg->toMsgBase();
 	int len;
-	const uchar *buffer = aMsg->asIndexString(len);
+	const uchar *buffer = mb->asIndexString(len);
 	fwrite(&len,sizeof(len), 1, mIndexStream);
-	aMsg->setIndexOffset( ftell(mIndexStream) );
-	aMsg->setIndexLength( len );
+	mb->setIndexOffset( ftell(mIndexStream) );
+	mb->setIndexLength( len );
 	if(fwrite(buffer, len, 1, mIndexStream) != 1)
 	    kdDebug(5006) << "Whoa! " << __FILE__ << ":" << __LINE__ << endl;
 

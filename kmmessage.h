@@ -47,11 +47,19 @@ class DwMediaType;
 class DwHeaders;
 
 #define KMMessageInherited KMMsgBase
-class KMMessage: public KMMsgBase
+class KMMessage: private KMMsgBase
 {
   friend class KMForwardCommand;    // needed for MIME Digest forward
 
 public:
+  // promote some of KMMsgBase's methods to public:
+  using KMMsgBase::parent;
+  using KMMsgBase::setParent;
+  using KMMsgBase::enableUndo; // KMFolder
+  using KMMsgBase::setEnableUndo; // dto.
+  using KMMsgBase::setEncryptionStateChar; // KMAcct*
+  using KMMsgBase::setSignatureStateChar; // dto.
+
   /** Straight forward initialization. */
   KMMessage(KMFolderIndex* parent=0);
 
@@ -87,6 +95,10 @@ public:
 
   /** Destructor. */
   virtual ~KMMessage();
+
+  /** Get KMMsgBase for this object */
+  KMMsgBase & toMsgBase() { return *this; }
+  const KMMsgBase & toMsgBase() const { return *this; }
 
   /** Returns TRUE if object is a real message (not KMMsgInfo or KMMsgBase) */
   bool isMessage(void) const;
@@ -755,12 +767,10 @@ public:
   /** Convert wildcards into normal string */
   QString formatString(const QString&) const;
 
-protected:
+private:
   void assign( const KMMessage& other );
 
   QString mDrafts;
-
-protected:
   mutable DwMessage* mMsg;
   mutable bool       mNeedsAssembly;
   bool mIsComplete, mDecodeHTML;
@@ -782,6 +792,5 @@ protected:
   KMMessage* mUnencryptedMsg;
 };
 
-typedef KMMessage* KMMessagePtr;
 
 #endif /*kmmessage_h*/
