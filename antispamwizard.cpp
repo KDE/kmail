@@ -89,10 +89,15 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
                       filterName, detectCmd, spamCmd, hamCmd,
                       header, pattern, useRegExp, supportsBayes ) );
   }
-#ifndef NDEBUG
+  
+  QStringList descriptionList;
+  QStringList whatsThisList;
   QValueListIterator<SpamToolConfig> it = toolList.begin();
   while ( it != toolList.end() )
   {
+    descriptionList.append( (*it).getVisibleName() );
+    whatsThisList.append( (*it).getWhatsThisText() );
+#ifndef NDEBUG
     kdDebug(5006) << "Predefined tool: " << (*it).getVisibleName() << endl;
     kdDebug(5006) << "Executable: " << (*it).getExecutable() << endl;
     kdDebug(5006) << "WhatsThis URL: " << (*it).getWhatsThisText() << endl;
@@ -104,16 +109,16 @@ AntiSpamWizard::AntiSpamWizard( QWidget* parent, KMFolderTree * mainFolderTree,
     kdDebug(5006) << "Detection pattern: " << (*it).getDetectionPattern() << endl;
     kdDebug(5006) << "Use as RegExp: " << (*it).isUseRegExp() << endl;
     kdDebug(5006) << "Supports Bayes Filter: " << (*it).useBayesFilter() << endl << endl;
+#endif
     it++;
   }
-#endif
 
   actionCollection = collection;
 
   setCaption( i18n( "Anti Spam Wizard" ));
   infoPage = new ASWizInfoPage( 0, "" );
   addPage( infoPage, i18n( "Welcome to the KMail Anti Spam Wizard!" ));
-  programsPage = new ASWizProgramsPage( 0, "", toolList );
+  programsPage = new ASWizProgramsPage( 0, "", descriptionList, whatsThisList );
   addPage( programsPage, i18n( "Please select the tools to be used by KMail." ));
   rulesPage = new ASWizRulesPage( 0, "", mainFolderTree );
   addPage( rulesPage, i18n( "Please select the filters to be created inside KMail." ));
@@ -209,23 +214,7 @@ void AntiSpamWizard::accept()
 
   if ( rulesPage->classifyRulesSelected() )
   {
-    // Match everything to create an end of the filter chain,
-    // filters accessible via menu to mark messages as spam / ham
-    // should be placed after this filter
-    KMFilter* stopFilter = new KMFilter();
-    KMSearchPattern* stopFilterPattern = stopFilter->pattern();
-    stopFilterPattern->setName( i18n( "Stopper Rule" ) );
-    stopFilterPattern->append( KMSearchRule::createInstance( "<size>",
-                               KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
-    stopFilter->setApplyOnOutbound();
-    stopFilter->setApplyOnInbound();
-    stopFilter->setApplyOnExplicit();
-    stopFilter->setStopProcessingHere( TRUE );
-    stopFilter->setConfigureShortcut( FALSE );
-    KMKernel::self()->filterMgr()->appendFilter( stopFilter );
-
-
-    // Filter 5: Classify messages manually as Spam
+    // Classify messages manually as Spam
     KMFilter* classSpamFilter = new KMFilter();
     classSpamFilter->setIcon( "mark_as_spam" );
     QPtrList<KMFilterAction>* classSpamFilterActions = classSpamFilter->actions();
@@ -254,12 +243,12 @@ void AntiSpamWizard::accept()
                                     KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
     classSpamFilter->setApplyOnOutbound( FALSE);
     classSpamFilter->setApplyOnInbound( FALSE );
-    classSpamFilter->setApplyOnExplicit();
+    classSpamFilter->setApplyOnExplicit( FALSE );
     classSpamFilter->setStopProcessingHere( TRUE );
     classSpamFilter->setConfigureShortcut( TRUE );
     KMKernel::self()->filterMgr()->appendFilter( classSpamFilter );
 
-    // Filter 6: Classify messages manually as not Spam / as Ham
+    // Classify messages manually as not Spam / as Ham
     KMFilter* classHamFilter = new KMFilter();
     QPtrList<KMFilterAction>* classHamFilterActions = classHamFilter->actions();
     KMFilterAction* classHamFilterActionFirst = dict["set status"]->create();
@@ -283,7 +272,7 @@ void AntiSpamWizard::accept()
                                    KMSearchRule::FuncIsGreaterOrEqual, "0" ) );
     classHamFilter->setApplyOnOutbound( FALSE);
     classHamFilter->setApplyOnInbound( FALSE );
-    classHamFilter->setApplyOnExplicit();
+    classHamFilter->setApplyOnExplicit( FALSE );
     classHamFilter->setStopProcessingHere( TRUE );
     classHamFilter->setConfigureShortcut( TRUE );
     KMKernel::self()->filterMgr()->appendFilter( classHamFilter );
@@ -441,8 +430,8 @@ int AntiSpamWizard::checkForProgram( QString executable )
 
 
 //---------------------------------------------------------------------------
-SpamToolConfig::SpamToolConfig(QString name, QString exec, QString url,
-      QString filter, QString detection, QString spam, QString ham,
+AntiSpamWizard::SpamToolConfig::SpamToolConfig(QString name, QString exec, 
+      QString url, QString filter, QString detection, QString spam, QString ham,
       QString header, QString pattern, bool regExp, bool bayesFilter)
   : visibleName( name ), executable( exec ), whatsThisText( url ),
     filterName( filter ), detectCmd( detection ), spamCmd( spam ),
@@ -474,23 +463,29 @@ ASWizInfoPage::ASWizInfoPage( QWidget * parent, const char * name )
 
 //---------------------------------------------------------------------------
 ASWizProgramsPage::ASWizProgramsPage( QWidget * parent, const char * name,
-                                      SpamToolConfigList &toolList )
+                                      QStringList &checkBoxTextList,
+                                      QStringList &checkBoxWhatsThisList )
   : QWidget( parent, name )
 {
   QGridLayout *grid = new QGridLayout( this, 3, 1, KDialog::marginHint(),
                                         KDialog::spacingHint() );
   // checkboxes for the tools
   int row = 0;
-  QValueListIterator<SpamToolConfig> it = toolList.begin();
-  while ( it != toolList.end() )
+  QStringList::Iterator it1 = checkBoxTextList.begin();
+  QStringList::Iterator it2 = checkBoxWhatsThisList.begin();
+  while ( it1 != checkBoxTextList.end() ) 
   {
-    QCheckBox *box = new QCheckBox( (*it).getVisibleName(), this );
-    QWhatsThis::add( box, (*it).getWhatsThisText() );
+    QCheckBox *box = new QCheckBox( *it1, this );
+    if ( it2 != checkBoxWhatsThisList.end() )
+    {
+      QWhatsThis::add( box, *it2 );
+      ++it2;
+    }
     grid->addWidget( box, row++, 0 );
     connect( box, SIGNAL(clicked()),
              this, SLOT(processSelectionChange(void)) );
-    programDict.insert( (*it).getVisibleName(), box );
-    it++;
+    programDict.insert( *it1, box );
+    ++it1;
   }
 
   // hint text

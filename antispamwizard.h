@@ -41,8 +41,6 @@ class QLabel;
 namespace KMail {
 
   class SimpleFolderTree;
-  class SpamToolConfig;
-  typedef QValueList<SpamToolConfig> SpamToolConfigList;
 
   class ASWizInfoPage;
   class ASWizProgramsPage;
@@ -108,6 +106,56 @@ namespace KMail {
       void accept();
       /** Check for the availability of an executible along the PATH */
       int checkForProgram( QString executable );
+      /**
+        Instances of this class store the settings for one tool as read from
+        the config file. Visible name and What's this text can not get
+        translated!
+      */
+      class SpamToolConfig
+      {
+        public:
+          SpamToolConfig() {};
+          SpamToolConfig(QString name, QString exec, QString url, QString filter,
+                        QString detection, QString spam, QString ham,
+                        QString header, QString pattern, bool regExp,
+                        bool bayesFilter );
+    
+          QString getVisibleName()  const { return visibleName; };
+          QString getExecutable() const { return executable; };
+          QString getWhatsThisText() const { return whatsThisText; };
+          QString getFilterName() const { return filterName; };
+          QString getDetectCmd() const { return detectCmd; };
+          QString getSpamCmd() const { return spamCmd; };
+          QString getHamCmd() const { return hamCmd; };
+          QString getDetectionHeader() const { return detectionHeader; };
+          QString getDetectionPattern() const { return detectionPattern; };
+          bool isUseRegExp() const { return useRegExp; };
+          bool useBayesFilter() const { return supportsBayesFilter; };
+    
+        private:
+          // the name as shown by the checkbox in the dialog page
+          QString visibleName;
+          // the command to check the existance of the tool
+          QString executable;
+          // the What's This help text (e.g. url for the tool)
+          QString whatsThisText;
+          // name for the created filter in the filter list
+          QString filterName;
+          // pipe through cmd used to detect spam messages
+          QString detectCmd;
+          // pipe through cmd to let the tool learn a spam message
+          QString spamCmd;
+          // pipe through cmd to let the tool learn a ham message
+          QString hamCmd;
+          // by which header are messages marked as spam
+          QString detectionHeader;
+          // what header pattern is used to mark spam messages
+          QString detectionPattern;
+          // filter searches for the pattern by regExp or contain rule
+          bool useRegExp;
+          // can the tool learn spam and ham, has it a bayesian algorithm
+          bool supportsBayesFilter;
+      };
 
     protected slots:
       /** Modify the status of the wizard to reflect the selection of spam tools. */
@@ -124,7 +172,7 @@ namespace KMail {
       ASWizRulesPage * rulesPage;
 
       /* The configured tools and it's settings to be used in the wizard. */
-      SpamToolConfigList toolList;
+      QValueList<SpamToolConfig> toolList;
 
       /* The action collection where the filter menu action is searched in */
       KActionCollection * actionCollection;
@@ -132,56 +180,6 @@ namespace KMail {
 
 
   //---------------------------------------------------------------------------
-  /*
-    Instances of this class store the settings for one tool as read from
-    the config file. Visible name and What's this text can not get
-    translated!
-  */
-  class SpamToolConfig
-  {
-    public:
-      SpamToolConfig() {};
-      SpamToolConfig(QString name, QString exec, QString url, QString filter,
-                     QString detection, QString spam, QString ham,
-                     QString header, QString pattern, bool regExp,
-                     bool bayesFilter );
-
-      QString getVisibleName()  const { return visibleName; };
-      QString getExecutable() const { return executable; };
-      QString getWhatsThisText() const { return whatsThisText; };
-      QString getFilterName() const { return filterName; };
-      QString getDetectCmd() const { return detectCmd; };
-      QString getSpamCmd() const { return spamCmd; };
-      QString getHamCmd() const { return hamCmd; };
-      QString getDetectionHeader() const { return detectionHeader; };
-      QString getDetectionPattern() const { return detectionPattern; };
-      bool isUseRegExp() const { return useRegExp; };
-      bool useBayesFilter() const { return supportsBayesFilter; };
-
-    private:
-      // the name as shown by the checkbox in the dialog page
-      QString visibleName;
-      // the command to check the existance of the tool
-      QString executable;
-      // the What's This help text (e.g. url for the tool)
-      QString whatsThisText;
-      // name for the created filter in the filter list
-      QString filterName;
-      // pipe through cmd used to detect spam messages
-      QString detectCmd;
-      // pipe through cmd to let the tool learn a spam message
-      QString spamCmd;
-      // pipe through cmd to let the tool learn a ham message
-      QString hamCmd;
-      // by which header are messages marked as spam
-      QString detectionHeader;
-      // what header pattern is used to mark spam messages
-      QString detectionPattern;
-      // filter searches for the pattern by regExp or contain rule
-      bool useRegExp;
-      // can the tool learn spam and ham, has it a bayesian algorithm
-      bool supportsBayesFilter;
-  };
 
   //---------------------------------------------------------------------------
   class ASWizInfoPage : public QWidget
@@ -200,7 +198,8 @@ namespace KMail {
 
     public:
       ASWizProgramsPage( QWidget *parent, const char *name,
-                         SpamToolConfigList &toolList );
+                         QStringList &checkBoxTextList,
+                         QStringList &checkBoxWhatsThisList );
 
       bool isProgramSelected( const QString &visibleName );
       void setProgramAsFound( const QString &visibleName, bool found );
