@@ -67,6 +67,8 @@ void KMFolderTreeItem::init()
 
   if (mFolder->protocol() == "imap")
     setProtocol(Imap);
+  else if (mFolder->protocol() == "cachedimap")
+    setProtocol(CachedImap);
   else if (mFolder->protocol() == "mbox" || mFolder->protocol() == "maildir")
     setProtocol(Local);
   else
