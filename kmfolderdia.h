@@ -40,27 +40,35 @@ protected slots:
    */
   void slotUpdateItems( int );
 
+private:
+  void initializeWithValuesFromFolder( KMFolder* folder );
+
 protected:
-  QComboBox *fileInFolder;
-  QComboBox *mailboxType, *senderType;
-  QLineEdit *nameEdit;
+  QComboBox *mBelongsToComboBox;
+  QComboBox *mMailboxTypeComboBox;
+  QComboBox *mShowSenderReceiverComboBox;
+  QLineEdit *mNameEdit;
   QGuardedPtr<KMFolder> mFolder;
   QGuardedPtr<KMFolderDir> mFolderDir;
+  QLabel      *mNormalIconLabel;
   KIconButton *mNormalIconButton;
+  QLabel      *mUnreadIconLabel;
   KIconButton *mUnreadIconButton;
   QCheckBox   *mIconsCheckBox;
   QCheckBox   *mNewMailCheckBox;
 
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 
-  QCheckBox *holdsMailingList, *markAnyMessage, *expireFolder;
-  QLineEdit *mailingListPostAddress;
-  IdentityCombo *identity;
-  QGroupBox *expGroup, *mtGroup;
+  QCheckBox *mHoldsMailingListCheckBox;
+  QCheckBox *mExpireFolderCheckBox;
+  QLineEdit *mMailingListPostAddressEdit;
+  IdentityCombo *mIdentityComboBox;
+  QGroupBox *mExpireGroupBox;
+  QGroupBox *mMailboxTypeGroupBox;
 //   QLineEdit *mailingListAdminAddress;
 
-  KIntNumInput *readExpiryTime, *unreadExpiryTime;
-  QComboBox    *readExpiryUnits, *unreadExpiryUnits;
+  KIntNumInput *mReadExpiryTimeNumInput, *mUnreadExpiryTimeNumInput;
+  QComboBox    *mReadExpiryUnitsComboBox, *mUnreadExpiryUnitsComboBox;
 };
 
 #endif /*__KMFOLDERDIA*/
