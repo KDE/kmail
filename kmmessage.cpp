@@ -2278,9 +2278,11 @@ void KMMessage::removeHeaderField(const QCString& aName)
 void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
                                 HeaderFieldType type )
 {
+#if 0
   if ( type != Unstructured )
     kdDebug(5006) << "KMMessage::setHeaderField( \"" << aName << "\", \""
                 << bValue << "\", " << type << " )" << endl;
+#endif
   if (aName.isEmpty()) return;
 
   DwHeaders& header = mMsg->Headers();
@@ -2293,14 +2295,18 @@ void KMMessage::setHeaderField( const QCString& aName, const QString& bValue,
     QString value = bValue;
     if ( type == Address )
       value = normalizeAddressesAndEncodeIDNs( value );
-if ( type != Unstructured )
-kdDebug(5006) << "value: \"" << value << "\"" << endl;
+#if 0
+    if ( type != Unstructured )
+      kdDebug(5006) << "value: \"" << value << "\"" << endl;
+#endif
     QCString encoding = autoDetectCharset( charset(), sPrefCharsets, value );
     if (encoding.isEmpty())
        encoding = "utf-8";
     aValue = encodeRFC2047String( value, encoding );
-if ( type != Unstructured )
-kdDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
+#if 0
+    if ( type != Unstructured )
+      kdDebug(5006) << "aValue: \"" << aValue << "\"" << endl;
+#endif
   }
   str = aName;
   if (str[str.length()-1] != ':') str += ": ";
