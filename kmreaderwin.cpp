@@ -915,7 +915,7 @@ void KMReaderWin::writeBodyStr(const QCString aStr, QTextCodec *aCodec)
       else
          sig = i18n("Warning: Bad signature from");
 
-      /* HTMLize signedBy data */
+      /* HTMLize signedBy data ### FIXME: use .arg()*/
       QString sdata=pgp->signedBy();
       sdata.replace(QRegExp("\""), "&quot;");
       sdata.replace(QRegExp("<"), "&lt;");
