@@ -28,9 +28,9 @@
 #include <stdlib.h>
 
 //-----------------------------------------------------------------------------
-KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, 
-  QString curFolder, bool modal, WFlags f): 
-  KMFldSearchInherited(NULL, name, modal, f)
+KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
+  QString curFolder, bool modal, WFlags f):
+  KMFldSearchInherited(NULL, name, modal, f | Qt::WDestructiveClose)
 {
   KButtonBox* bbox;
   QLabel* lbl;
@@ -143,10 +143,10 @@ QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
  QValueList<QGuardedPtr<KMFolder> > folders;
  QComboBox* cbx = new QComboBox(false, this);
  QStringList str;
- 
+
  kernel->folderMgr()->createI18nFolderList( &str, &folders );
  cbx->setFixedHeight(cbx->sizeHint().height());
- 
+
  cbx->insertItem(i18n("<Search all folders>"));
  QStringList::Iterator st;
  int i = 1;
@@ -158,7 +158,7 @@ QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
    }
  }
 
- return cbx; 
+ return cbx;
 }
 
 
@@ -187,7 +187,7 @@ void KMFldSearch::keyPressEvent(QKeyEvent *evt)
 
   if(!evt)
     return;
-    
+
   switch (evt->key()) {
       case Key_Return:
         KMFldSearchInherited::keyPressEvent(evt);
@@ -212,7 +212,7 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg)
   mCount++;
   updStatus();
   for(i=0; matches && i<mNumRules; i++)
-    if (!mRules[i]->matches(aMsg)) 
+    if (!mRules[i]->matches(aMsg))
       matches = false;
 
   return matches;
@@ -227,7 +227,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
   QString str;
 
   assert(!aFld.isNull());
-  
+
   mBtnSearch->setText("Stop");
   if (aFld->isSystemFolder()) mSearchFolder = i18n(aFld->name());
     else mSearchFolder = aFld->name();
@@ -245,7 +245,7 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, int fldNum)
     if (msg && searchInMessage(msg))
     {
       (void)new QListViewItem(mLbxMatches,
-			      msg->subject(), 
+			      msg->subject(),
 			      msg->from(),
 			      msg->dateIsoStr(),
 			      mSearchFolder,
@@ -302,13 +302,13 @@ void KMFldSearch::slotSearch()
   int i;
   mLastFocus = focusWidget();
   mBtnSearch->setFocus();	// set focus so we don't miss key event
-  
+
   if (mSearching)
   {
     mSearching = false;
     return;
   }
-  
+
   mCount = 0;
   mStopped = false;
   mNumMatches = 0;
@@ -321,8 +321,8 @@ void KMFldSearch::slotSearch()
 
   for (i=0; i<mNumRules; i++)
     mRules[i]->prepare();
-  
-  if (mCbxFolders->currentItem() <= 0) 
+
+  if (mCbxFolders->currentItem() <= 0)
     searchInAllFolders();
   else {
     QValueList<QGuardedPtr<KMFolder> > folders;
@@ -339,7 +339,7 @@ void KMFldSearch::slotSearch()
 
   mBtnSearch->setCaption(i18n("Search"));
   enableGUI();
-  if( mLastFocus ) 
+  if( mLastFocus )
     mLastFocus->setFocus();
 }
 
@@ -369,14 +369,14 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
   if (folders.at(idx) == folders.end())
     return;
   fld = *folders.at(idx);
-  if (!fld) 
+  if (!fld)
     return;
   // This could goto the wrong folder if the folder list has been modified
   kdDebug() << "fld " << endl;
 
   mMainWin->slotSelectFolder(fld);
   msg = fld->getMsg(item->text(MSGID_COLUMN).toInt());
-  if (!msg) 
+  if (!msg)
     return;
 
   mMainWin->slotSelectMessage(msg);
@@ -394,7 +394,7 @@ void KMFldSearch::enableGUI() {
 
 
 //=============================================================================
-KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid, 
+KMFldSearchRule::KMFldSearchRule(QWidget* aParent, QGridLayout* aGrid,
 				 int aRow, int aCol)
 {
   assert(aParent!=NULL);
@@ -466,7 +466,7 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
   // also see KMFilterRule::matches() for a similar function:
   switch(mFunc)
   {
-  case Equal: 
+  case Equal:
     return (stricmp(value, mValue) == 0);
   case NotEqual:
     return (stricmp(value, mValue) != 0);
