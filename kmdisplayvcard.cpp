@@ -205,7 +205,7 @@ QValueList<QString> values;
   addrGrid->addWidget(name, 4, 0);
   mAddr_country = new QLabel("", addrPage); 
   addrGrid->addWidget(mAddr_country, 4, 1);
-  name = new QLabel(i18n("Postal Code:"), addrPage); 
+  name = new QLabel(i18n("Postal code:"), addrPage); 
   addrGrid->addWidget(name, 4, 2);
   mAddr_postal = new QLabel("", addrPage); 
   addrGrid->addWidget(mAddr_postal, 4, 3);
@@ -246,7 +246,7 @@ QValueList<QString> values;
   slotChangeAddress();   // set the first one
 
   grid->addWidget(addrPage, 1, 1);
-  name = new QLabel(i18n("Phone Numbers:"), page);
+  name = new QLabel(i18n("Phone numbers:"), page);
   grid->addWidget(name, 2, 0);
   // try to add each type of phone number if we have them
   QString thisnum;
@@ -301,7 +301,7 @@ int row = 0;
   // note
   ADDENTRY(VCARD_MAILER, I18N_NOOP("Mailer:"));
   ADDENTRY(VCARD_PRODID, I18N_NOOP("vCard made by:"));
-  ADDENTRY(VCARD_VERSION, I18N_NOOP("vCard Version:"));
+  ADDENTRY(VCARD_VERSION, I18N_NOOP("vCard version:"));
   ADDENTRY(VCARD_REV, I18N_NOOP("Last revised:"));
   ADDENTRY(VCARD_CLASS, I18N_NOOP("Class:"));
   ADDENTRY(VCARD_ROLE, I18N_NOOP("Role:"));
