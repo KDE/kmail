@@ -442,7 +442,6 @@ namespace KMail {
                                                 .arg( userHTML )
                                                 .arg( kabcUid )
                                                 .arg( presence );
-              kdDebug() << endl << userHTML << endl;
             }
           }
         }
