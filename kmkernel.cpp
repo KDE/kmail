@@ -66,6 +66,7 @@ using KMail::FolderIface;
 
 #include <X11/Xlib.h>
 #include <fixx11h.h>
+#include <kcmdlineargs.h>
 
 KMKernel *KMKernel::mySelf = 0;
 
@@ -156,6 +157,89 @@ KMKernel::~KMKernel ()
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
 
+bool KMKernel::handleCommandLine( bool noArgsOpensReader )
+{
+  QString to, cc, bcc, subj, body;
+  KURL messageFile = QString::null;
+  KURL::List attachURLs;
+  bool mailto = false;
+  bool checkMail = false;
+  //bool viewOnly = false;
+
+  // process args:
+  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
+  if (args->getOption("subject"))
+  {
+     mailto = true;
+     subj = QString::fromLocal8Bit(args->getOption("subject"));
+  }
+
+  if (args->getOption("cc"))
+  {
+     mailto = true;
+     cc = QString::fromLocal8Bit(args->getOption("cc"));
+  }
+
+  if (args->getOption("bcc"))
+  {
+     mailto = true;
+     bcc = QString::fromLocal8Bit(args->getOption("bcc"));
+  }
+
+  if (args->getOption("msg"))
+  {
+     mailto = true;
+     messageFile.setPath( QString::fromLocal8Bit(args->getOption("msg")) );
+  }
+
+  if (args->getOption("body"))
+  {
+     mailto = true;
+     body = QString::fromLocal8Bit(args->getOption("body"));
+  }
+
+  QCStringList attachList = args->getOptionList("attach");
+  if (!attachList.isEmpty())
+  {
+     mailto = true;
+     for ( QCStringList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
+       if ( !(*it).isEmpty() )
+         attachURLs += KURL( QString::fromLocal8Bit( *it ) );
+  }
+
+  if (args->isSet("composer"))
+    mailto = true;
+
+  if (args->isSet("check"))
+    checkMail = true;
+
+  for(int i= 0; i < args->count(); i++)
+  {
+    if (strncasecmp(args->arg(i),"mailto:",7)==0)
+      to += args->url(i).path() + ", ";
+    else {
+      QString tmpArg = QString::fromLocal8Bit( args->arg(i) );
+      KURL url( tmpArg );
+      if ( url.isValid() )
+        attachURLs += url;
+      else
+        to += tmpArg + ", ";
+    }
+    mailto = true;
+  }
+  if ( !to.isEmpty() ) {
+    // cut off the superfluous trailing ", "
+    to.truncate( to.length() - 2 );
+  }
+
+  args->clear();
+
+  if (!noArgsOpensReader && !mailto && !checkMail)
+    return false;
+
+  action (mailto, checkMail, to, cc, bcc, subj, body, messageFile, attachURLs);
+  return true;
+}
 
 /********************************************************************/
 /*             DCOP-callable, and command line actions              */
@@ -230,8 +314,11 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   cWin->setCharset("", TRUE);
   for ( KURL::List::ConstIterator it = attachURLs.begin() ; it != attachURLs.end() ; ++it )
     cWin->addAttach((*it));
-  if (hidden == 0)
+  if (hidden == 0) {
     cWin->show();
+    // This is called via DCOP, so ensure the new window appears on top
+    KWin::activateWindow( cWin->winId() );
+  }
   return 1;
 }
 
@@ -273,8 +360,11 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
     cWin->addAttach(msgPart);
   }
 
-  if (hidden == 0)
+  if (hidden == 0) {
     cWin->show();
+    // This is called via DCOP, so ensure the new window appears on top
+    KWin::activateWindow( cWin->winId() );
+  }
   return 1;
 }
 
@@ -293,7 +383,11 @@ DCOPRef KMKernel::openComposer(const QString &to, const QString &cc,
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   cWin->setCharset("", TRUE);
-  if (!hidden) cWin->show();
+  if (!hidden) {
+    cWin->show();
+    // This is called via DCOP, so ensure the new window appears on top
+    KWin::activateWindow( cWin->winId() );
+  }
 
   return DCOPRef(cWin);
 }

@@ -102,6 +102,16 @@ k_dcop_signals:
 
 k_dcop_hidden:
   virtual bool showMail( Q_UINT32 serialNumber, QString messageId ) = 0;
+  /**
+   * DCOP-enabled for KMailUniqueAppHandler in the kontact plugin
+   * @param noArgsOpensReader true in the kmail process, meaning that launching "kmail"
+   * will open a reader window or bring to front an existing one.
+   * noArgsOpensReader is false when this is called from kontact, so that typing
+   * "kmail" doesn't open a window.
+   * Returns true if the command line was handled, false if it was empty and
+   * not handled (due to noArgsOpensReader==false).
+   */
+  virtual bool handleCommandLine( bool /*noArgsOpensReader*/ ) = 0;
 };
 
 #endif

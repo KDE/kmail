@@ -192,6 +192,8 @@ public:
   bool registerSystemTrayApplet( const KSystemTray* );
   bool unregisterSystemTrayApplet( const KSystemTray* );
 
+  /// Reimplemented from KMailIface
+  bool handleCommandLine( bool noArgsOpensReader );
   void emergencyExit( const QString& reason );
 
   /** Returns a message serial number that hasn't been used yet. */

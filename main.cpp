@@ -9,7 +9,7 @@
 #include <knotifyclient.h>
 #include <dcopclient.h>
 #include "kmkernel.h" //control center
-#include <kcmdlineargs.h>
+#include "kmail_options.h"
 #include <qtimer.h>
 
 #undef Status // stupid X headers
@@ -31,28 +31,6 @@
     "Please send bugreports to taferner@kde.org";
 */
 
-static KCmdLineOptions kmoptions[] =
-{
-  { "s", 0 , 0 },
-  { "subject <subject>",	I18N_NOOP("Set subject of message."), 0 },
-  { "c", 0 , 0 },
-  { "cc <address>",		I18N_NOOP("Send CC: to 'address'."), 0 },
-  { "b", 0 , 0 },
-  { "bcc <address>",		I18N_NOOP("Send BCC: to 'address'."), 0 },
-  { "h", 0 , 0 },
-  { "header <header>",		I18N_NOOP("Add 'header' to message."), 0 },
-  { "msg <file>",		I18N_NOOP("Read message body from 'file'."), 0 },
-  { "body <text>",              I18N_NOOP("Set body of message."), 0 },
-  { "attach <url>",             I18N_NOOP("Add an attachment to the mail. This can be repeated."), 0 },
-  { "check",			I18N_NOOP("Only check for new mail."), 0 },
-  { "composer",			I18N_NOOP("Only open composer window."), 0 },
-  { "+[address|URL]",		I18N_NOOP("Send message to 'address' resp. "
-                                          "attach the file the 'URL' points "
-                                          "to."), 0 },
-//  { "+[file]",                  I18N_NOOP("Show message from file 'file'."), 0 },
-  KCmdLineLastOption
-};
-
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KUniqueApplication
@@ -73,13 +51,6 @@ void KMailApplication::commitData(QSessionManager& sm) {
 
 int KMailApplication::newInstance()
 {
-  QString to, cc, bcc, subj, body;
-  KURL messageFile = QString::null;
-  KURL::List attachURLs;
-  bool mailto = false;
-  bool checkMail = false;
-  //bool viewOnly = false;
-
   if (dcopClient()->isSuspended())
   {
     // Try again later.
@@ -87,76 +58,8 @@ int KMailApplication::newInstance()
     return 0;
   }
 
-  // process args:
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-  if (args->getOption("subject"))
-  {
-     mailto = true;
-     subj = QString::fromLocal8Bit(args->getOption("subject"));
-  }
-
-  if (args->getOption("cc"))
-  {
-     mailto = true;
-     cc = QString::fromLocal8Bit(args->getOption("cc"));
-  }
-
-  if (args->getOption("bcc"))
-  {
-     mailto = true;
-     bcc = QString::fromLocal8Bit(args->getOption("bcc"));
-  }
-
-  if (args->getOption("msg"))
-  {
-     mailto = true;
-     messageFile.setPath( QString::fromLocal8Bit(args->getOption("msg")) );
-  }
-
-  if (args->getOption("body"))
-  {
-     mailto = true;
-     body = QString::fromLocal8Bit(args->getOption("body"));
-  }
-
-  QCStringList attachList = args->getOptionList("attach");
-  if (!attachList.isEmpty())
-  {
-     mailto = true;
-     for ( QCStringList::Iterator it = attachList.begin() ; it != attachList.end() ; ++it )
-       if ( !(*it).isEmpty() )
-         attachURLs += KURL( QString::fromLocal8Bit( *it ) );
-  }
-
-  if (args->isSet("composer"))
-    mailto = true;
-
-  if (args->isSet("check"))
-    checkMail = true;
-
-  for(int i= 0; i < args->count(); i++)
-  {
-    if (strncasecmp(args->arg(i),"mailto:",7)==0)
-      to += args->url(i).path() + ", ";
-    else {
-      QString tmpArg = QString::fromLocal8Bit( args->arg(i) );
-      KURL url( tmpArg );
-      if ( url.isValid() )
-        attachURLs += url;
-      else
-        to += tmpArg + ", ";
-    }
-    mailto = true;
-  }
-  if ( !to.isEmpty() ) {
-    // cut off the superfluous trailing ", "
-    to.truncate( to.length() - 2 );
-  }
-
-  args->clear();
-
   if (!kmkernel->firstInstance() || !kapp->isRestored())
-    kmkernel->action (mailto, checkMail, to, cc, bcc, subj, body, messageFile, attachURLs);
+    kmkernel->handleCommandLine( true );
   kmkernel->setFirstInstance(FALSE);
   return 0;
 }
@@ -171,7 +74,7 @@ int main(int argc, char *argv[])
   KMail::AboutData about;
 
   KCmdLineArgs::init(argc, argv, &about);
-  KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
+  KCmdLineArgs::addCmdLineOptions( kmail_options ); // Add kmail options
   if (!KMailApplication::start())
      return 0;
 
