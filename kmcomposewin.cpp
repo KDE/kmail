@@ -907,7 +907,7 @@ void KMComposeWin::setupActions(void)
   connect(wordWrapAction, SIGNAL(toggled(bool)), SLOT(slotWordWrapToggled(bool)));
 
   QStringList encodings = KMMsgBase::supportedEncodings(TRUE);
-  encodings.prepend( i18n("Auto-detect"));
+  encodings.prepend( i18n("Auto-Detect"));
   encodingAction->setItems( encodings );
   encodingAction->setCurrentItem( -1 );
 
@@ -6146,7 +6146,7 @@ void KMEdit::slotSpellDone()
           spellcheck();
 #if KDE_IS_VERSION( 3, 1, 90 )
       else if( status == KSpell::FinishedNoMisspellingsEncountered )
-          KMessageBox::information( this, i18n("No misspellings encountered"));
+          KMessageBox::information( this, i18n("No misspellings encountered."));
 #endif
   }
 }

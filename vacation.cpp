@@ -318,7 +318,7 @@ namespace KMail {
     }
 
     if ( !mDialog )
-      mDialog = new VacationDialog( i18n("Configure Out Of Office Replies"), 0, 0, false );
+      mDialog = new VacationDialog( i18n("Configure \"Out of Office\" Replies"), 0, 0, false );
 
     QString messageText = defaultMessageText();
     int notificationInterval = defaultNotificationInterval();

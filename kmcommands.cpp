@@ -1584,7 +1584,7 @@ KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, const QPtrL
 {
 }
 
-KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode>& attachments, 
+KMSaveAttachmentsCommand::KMSaveAttachmentsCommand( QWidget *parent, QPtrList<partNode>& attachments,
                                                     KMMessage *msg, bool encoded )
   : KMCommand( parent, msg ), mParent( parent ), mAttachments( attachments ), mEncoded( encoded )
 {
@@ -1652,7 +1652,7 @@ void KMSaveAttachmentsCommand::parse( partNode *rootNode )
 void KMSaveAttachmentsCommand::saveAll( const QPtrList<partNode>& attachments )
 {
   if ( attachments.isEmpty() ) {
-    KMessageBox::information( 0, i18n("Found no attachments to save") );
+    KMessageBox::information( 0, i18n("Found no attachments to save.") );
     return;
   }
   mAttachments = attachments;
@@ -1756,7 +1756,7 @@ void KMSaveAttachmentsCommand::saveItem( partNode *node, const QString& filename
       }
       file.close();
     } else
-      KMessageBox::error( mParent, i18n( "Could not write the file" ),
+      KMessageBox::error( mParent, i18n( "Could not write the file." ),
                           i18n( "KMail Error" ) );
   }
 }

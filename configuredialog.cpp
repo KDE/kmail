@@ -3953,11 +3953,11 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
                 "When trying to find unread messages:"), this );
   mLoopOnGotoUnread->insertStringList( QStringList()
       << i18n("continuation of \"When trying to find unread messages:\"",
-              "Don't loop")
+              "Don't Loop")
       << i18n("continuation of \"When trying to find unread messages:\"",
-              "Loop in current folder")
+              "Loop in Current Folder")
       << i18n("continuation of \"When trying to find unread messages:\"",
-              "Loop in all folders"));
+              "Loop in All Folders"));
   hlay->addWidget( label );
   hlay->addWidget( mLoopOnGotoUnread, 1 );
   mJumpToUnread =
