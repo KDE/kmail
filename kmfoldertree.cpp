@@ -19,7 +19,6 @@
 #include "kmmainwin.h"
 #include <X11/Xlib.h>
 
-QPixmap* KMFolderTree::pixNode = 0;
 QPixmap* KMFolderTree::pixPlain = 0;
 QPixmap* KMFolderTree::pixFld = 0;
 QPixmap* KMFolderTree::pixFull = 0;
@@ -125,13 +124,12 @@ KMFolderTree::KMFolderTree( QWidget *parent,
   {
     pixmapsLoaded = true;
 
-    pixNode  = new QPixmap( UserIcon("green-bullet"));
     pixPlain = new QPixmap( SmallIcon("folder"));
     pixFld   = new QPixmap( SmallIcon("folder"));
     pixFull  = new QPixmap( SmallIcon("folder_open"));
-    pixIn    = new QPixmap( UserIcon("kmfldin"));
-    pixOut   = new QPixmap( UserIcon("kmfldout"));
-    pixSent  = new QPixmap( UserIcon("kmfldsent"));
+    pixIn    = new QPixmap( SmallIcon("folder_inbox"));
+    pixOut   = new QPixmap( SmallIcon("folder_outbox"));
+    pixSent  = new QPixmap( SmallIcon("folder_sent-mail"));
     pixTr    = new QPixmap( SmallIcon("trashcan_empty"));
     pixCopy  = new QPixmap( SmallIcon("editcopy"));
     pixCancel= new QPixmap( SmallIcon("cancel"));
