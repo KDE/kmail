@@ -66,7 +66,7 @@ public:
   KURL getAttachment( const QString& resource,
                       const QString& sernum,
                       const QString& filename );
-  
+
   // This saves the iCals/vCards in the entries in the folder.
   // The format in the string list is uid, entry, uid, entry...
   bool update( const QString& type, const QString& folder,
@@ -85,13 +85,13 @@ public:
                const QString& sernum,
                const QStringList& attachments,
                const QStringList& deletedAttachments );
-  
+
   bool deleteIncidenceKolab( const QString& resource,
                              const QString& sernum );
   QMap<QString, QString> incidencesKolab( const QString& type,
                                           const QString& resource );
   QMap<QString, bool> subresourcesKolab( const QString& annotation );
-  
+
   // "Get" an attachment. This actually saves the attachment in a file
   // and returns a URL to it
   QString getAttachment( const QString& filename );
@@ -167,7 +167,8 @@ private slots:
 
 private:
   /** Helper function for initFolders. Initializes a single folder. */
-  KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString );
+  KMFolder* initFolder( KFolderTreeItem::Type itemType, const char* typeString,
+                        KMail::FolderContentsType contentsType );
 
   KMFolder* extraFolder( const QString& type, const QString& folder );
 

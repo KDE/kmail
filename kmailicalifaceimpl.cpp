@@ -384,7 +384,7 @@ bool KMailICalIfaceImpl::update( const QString& resource,
   // TODO: khz
   return false;
 }
-  
+
 QString KMailICalIfaceImpl::getAttachment( const QString& filename )
 {
   kdError(5006) << "NYI: KMailICalIfaceImpl::getAttachment()\n";
@@ -796,11 +796,11 @@ void KMailICalIfaceImpl::readConfig()
   cleanup();
 
   // Set the new folders
-  mCalendar = initFolder( KFolderTreeItem::Calendar, "GCa" );
-  mTasks    = initFolder( KFolderTreeItem::Tasks, "GTa" );
-  mJournals = initFolder( KFolderTreeItem::Journals, "GTa" );
-  mContacts = initFolder( KFolderTreeItem::Contacts, "GCo" );
-  mNotes    = initFolder( KFolderTreeItem::Notes, "GNo" );
+  mCalendar = initFolder( KFolderTreeItem::Calendar, "GCa", KMail::ContentsTypeCalendar );
+  mTasks    = initFolder( KFolderTreeItem::Tasks, "GTa", KMail::ContentsTypeTask );
+  mJournals = initFolder( KFolderTreeItem::Journals, "GTa", KMail::ContentsTypeJournal );
+  mContacts = initFolder( KFolderTreeItem::Contacts, "GCo", KMail::ContentsTypeContact );
+  mNotes    = initFolder( KFolderTreeItem::Notes, "GNo", KMail::ContentsTypeNote );
 
   // Connect the expunged signal
   connect( mCalendar, SIGNAL( expunged() ), this, SLOT( slotRefreshCalendar() ) );
@@ -829,7 +829,8 @@ void KMailICalIfaceImpl::slotRefreshContacts() { slotRefresh( "Contact" ); }
 void KMailICalIfaceImpl::slotRefreshNotes() { slotRefresh( "Notes" ); }
 
 KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
-                                          const char* typeString )
+                                          const char* typeString,
+                                          KMail::FolderContentsType contentsType )
 {
   // Figure out what type of folder this is supposed to be
   KMFolderType type = mFolderType;
@@ -854,6 +855,8 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
     return 0;
   }
   folder->setType( typeString );
+  folder->storage()->setContentsType( contentsType );
+
   folder->setSystemFolder( true );
   folder->open();
 

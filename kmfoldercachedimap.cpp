@@ -144,6 +144,7 @@ KMFolderCachedImap::~KMFolderCachedImap()
     config->writeEntry("ImapPath", mImapPath);
     config->writeEntry("NoContent", mNoContent);
     config->writeEntry("ReadOnly", mReadOnly);
+    config->writeEntry("ContentsTypeChanged", mContentsTypeChanged);
 
     writeUidCache();
   }
@@ -175,7 +176,9 @@ void KMFolderCachedImap::readConfig()
   mReadOnly = config->readBoolEntry( "ReadOnly", false );
 
   KMFolderMaildir::readConfig();
-  mContentsTypeChanged = false;
+
+  // Must be done afterwards since FolderStorage::readConfig sets mContentsTypeChanged
+  mContentsTypeChanged = config->readBoolEntry( "ContentsTypeChanged", false );
 }
 
 void KMFolderCachedImap::remove()
@@ -445,6 +448,17 @@ void KMFolderCachedImap::slotTroubleshoot()
                                        "recreated." ) );
   }
 }
+
+// Name used for the various folder-contents-types in the folder annotations
+// The index in this array is the KMail::FolderContentsType enum
+static const char* s_contentsType2Annotation[] = {
+  "mail",
+  "event",
+  "contact",
+  "note",
+  "task",
+  "journal"
+};
 
 void KMFolderCachedImap::serverSync( bool recurse )
 {
@@ -744,21 +758,16 @@ void KMFolderCachedImap::serverSyncInternal()
       serverSyncInternal();
       break;
     } else
-      mSyncState = SYNC_STATE_SET_ANNOTATIONS;
-
-  case SYNC_STATE_SET_ANNOTATIONS:
-#define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
-//#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
-
-    mSyncState = SYNC_STATE_GET_ANNOTATIONS;
-    if ( mContentsTypeChanged ) {
-      // TODO
-    }
+      mSyncState = SYNC_STATE_GET_ANNOTATIONS;
 
   case SYNC_STATE_GET_ANNOTATIONS:
-    mSyncState = SYNC_STATE_SET_ACLS;
+//#define KOLAB_FOLDERTYPE "/vendor/kolab/folder-type"
+#define KOLAB_FOLDERTYPE "/comment"  //for testing, while cyrus-imap doesn't support /vendor/*
+    mSyncState = SYNC_STATE_SET_ANNOTATIONS;
 
-    if( !noContent() && mAccount->hasAnnotationSupport() ) {
+    // First retrieve the annotation, so that we know we have to set it if it's not set.
+    // On the other hand, if the user changed the contentstype, there's no need to get first.
+    if( !noContent() && mAccount->hasAnnotationSupport() && !mContentsTypeChanged ) {
       newState( mProgress, i18n("Retrieving annotations"));
       // If in the future we want to retrieve more annotations, we should then write
       // a multiGetAnnotation job in annotationjobs.*
@@ -774,6 +783,30 @@ void KMFolderCachedImap::serverSyncInternal()
 
       connect(job, SIGNAL(result(KIO::Job *)),
               SLOT(slotGetAnnotationResult(KIO::Job *)));
+      break;
+    }
+
+  case SYNC_STATE_SET_ANNOTATIONS:
+
+    mSyncState = SYNC_STATE_SET_ACLS;
+    if( mAccount->hasAnnotationSupport() && mContentsTypeChanged ) {
+      newState( mProgress, i18n("Setting annotations"));
+      // If in the future we want to set more annotations, we should then write
+      // a multiSetAnnotation job in annotationjobs.*
+      KURL url = mAccount->getUrl();
+      url.setPath( imapPath() );
+      QMap<QString, QString> attributes;
+      QString annotation = s_contentsType2Annotation[mContentsType];
+      attributes.insert( "value.shared", annotation );
+      kdDebug(5006) << "Setting annotation for " << label() << " to " << annotation << endl;
+      KIO::SimpleJob* job =
+        AnnotationJobs::setAnnotation( mAccount->slave(), url, KOLAB_FOLDERTYPE, attributes );
+      ImapAccountBase::jobData jd( url.url(), folder() );
+      jd.cancellable = true; // we can always do so later
+      mAccount->insertJob(job, jd);
+
+      connect(job, SIGNAL(result(KIO::Job *)),
+              SLOT(slotSetAnnotationResult(KIO::Job *)));
       break;
     }
 
@@ -1637,22 +1670,12 @@ void KMFolderCachedImap::setContentsType( KMail::FolderContentsType type )
   }
 }
 
-// The index in this array is the KMail::FolderContentsType enum
-static const struct {
-  const char* annotation;
-} s_contentsType2Annotation[] = {
-  { "mail" },
-  { "event" },
-  { "contact" },
-  { "note" },
-  { "task" },
-  { "journal" }
-};
-
 void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
 {
   KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  Q_ASSERT( it != mAccount->jobsEnd() );
   if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  Q_ASSERT( (*it).parent == folder() );
   if ( (*it).parent != folder() ) return; // Shouldn't happen
   AnnotationJobs::GetAnnotationJob* annjob = static_cast<AnnotationJobs::GetAnnotationJob *>( job );
   if ( annjob->error() ) {
@@ -1662,8 +1685,14 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
       kdWarning(5006) << "slotGetAnnotationResult: " << job->errorString() << endl;
   } else {
     AnnotationList lst = annjob->annotations();
+    // There are four cases.
+    // 1) no content-type on server -> set it
+    // 2) different content-type on server, locally changed -> set it (we don't even come here)
+    // 3) different (known) content-type on server, no local change -> get it
+    // 4) different unknown content-type on server, probably some older version -> set it
+    bool foundContentType = !lst.isEmpty();
     for ( unsigned int i = 0 ; i < lst.size() ; ++ i ) {
-      //kdDebug(5006) << "Found annotation: " << lst[i].name << " = " << lst[i].value << endl;
+      kdDebug(5006) << "Found annotation: " << lst[i].name << " = " << lst[i].value << endl;
       if ( lst[i].name.startsWith( "value." ) ) { // value.priv or value.shared
         QString value = lst[i].value;
         QString type = value;
@@ -1673,21 +1702,51 @@ void KMFolderCachedImap::slotGetAnnotationResult( KIO::Job* job )
           type.truncate( dot );
           subtype = value.mid( dot + 1 );
         }
+        bool foundKnownType = false;
         for ( uint i = 0 ; i < sizeof s_contentsType2Annotation / sizeof *s_contentsType2Annotation; ++i ) {
-          if ( type == s_contentsType2Annotation[i].annotation ) {
+          if ( type == s_contentsType2Annotation[i] ) {
+            // Case 3: known content-type on server, get it
             setContentsType( static_cast<KMail::FolderContentsType>( i ) );
             mContentsTypeChanged = false; // we changed it, not the user
+            foundKnownType = true;
             break;
           }
         }
+        if ( !foundKnownType && !mReadOnly ) {
+          // Case 4: server has strange content-type, set it to what we need
+          mContentsTypeChanged = true;
+        }
+
         // TODO handle subtype (inbox, drafts, sentitems, junkemail)
       }
+    }
+    if ( !foundContentType && !mReadOnly ) {
+      // Case 1: server doesn't have content-type, set it
+      mContentsTypeChanged = true;
     }
   }
 
   if (mAccount->slave()) mAccount->removeJob(job);
   mProgress += 2;
   serverSyncInternal();
+}
+
+void
+KMFolderCachedImap::slotSetAnnotationResult(KIO::Job *job)
+{
+  KMAcctCachedImap::JobIterator it = mAccount->findJob(job);
+  if ( it == mAccount->jobsEnd() ) return; // Shouldn't happen
+  if ( (*it).parent != folder() ) return; // Shouldn't happen
+
+  bool cont = true;
+  if ( job->error() )
+    cont = mAccount->handleJobError( job, i18n( "Error while setting annotation: " ) + '\n' );
+  else {
+    mContentsTypeChanged = false;
+    if (mAccount->slave()) mAccount->removeJob(job);
+  }
+  if ( cont )
+    serverSyncInternal();
 }
 
 #include "kmfoldercachedimap.moc"

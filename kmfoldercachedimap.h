@@ -235,6 +235,7 @@ protected slots:
   void slotConnectionResult( int errorCode, const QString& errorMsg );
 
   void slotGetAnnotationResult( KIO::Job* );
+  void slotSetAnnotationResult(KIO::Job *job);
   void slotReceivedUserRights( KMFolder* );
   void slotReceivedACL( KMFolder*, KIO::Job*, const KMail::ACLList& );
 
