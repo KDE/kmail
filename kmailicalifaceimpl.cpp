@@ -569,9 +569,8 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
   f->open();
   QString s;
   for( int i=0; i<f->count(); ++i ) {
-    bool unget = !f->isMessage(i);
-    KMMessage* msg = f->getMsg( i );
-    if( msg ){
+    KMMessage* msg = f->storage()->readTemporaryMsg(i);
+    if ( msg ) {
       const int iSlash = mimetype.find('/');
       const QCString sType    = mimetype.left( iSlash   ).latin1();
       const QCString sSubtype = mimetype.mid(  iSlash+1 ).latin1();
@@ -588,7 +587,7 @@ QMap<Q_UINT32, QString> KMailICalIfaceImpl::incidencesKolab( const QString& mime
           // have a message part that is matching the wanted MIME type
         }
       }
-      if( unget ) f->unGetMsg(i);
+      delete msg;
     }
   }
   return aMap;
