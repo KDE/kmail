@@ -19,7 +19,7 @@ SupportsBayes=1
 
 [Spamtool #2]
 Ident=bogofilter
-Version=1
+Version=2
 VisibleName=&Bogofilter
 Executable=bogofilter -V
 URL=http://bogofilter.sourceforge.net
@@ -28,9 +28,9 @@ PipeCmdDetect=bogofilter -p -e -u
 ExecCmdSpam=bogofilter -N -s
 ExecCmdHam=bogofilter -S -n
 DetectionHeader=X-Bogosity
-DetectionPattern=yes
+DetectionPattern=(yes)|(spam)
 DetectionOnly=0
-UseRegExp=0
+UseRegExp=1
 SupportsBayes=1
 
 [Spamtool #3]
