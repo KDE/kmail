@@ -1773,19 +1773,19 @@ void AppearancePage::ColorsTab::setup() {
     QColor( 0x00, 0x60, 0x00 ), // quoted l3
     KGlobalSettings::linkColor(), // link
     KGlobalSettings::visitedLinkColor(), // visited link
-    QColor("red"), // new msg
-    QColor("blue"), // unread mgs
+    Qt::red, // new msg
+    Qt::blue, // unread mgs
     QColor( 0x00, 0x7F, 0x00 ), // important msg
     QColor( 0x00, 0x80, 0xFF ), // light blue // pgp encrypted
     QColor( 0x40, 0xFF, 0x40 ), // light green // pgp ok, trusted key
     QColor( 0xA0, 0xFF, 0x40 ), // light yellow // pgp ok, untrusted key
     QColor( 0xFF, 0xFF, 0x40 ), // light yellow // pgp unchk
-    QColor( 0xFF, 0x00, 0x00 ), // red // pgp bad
+    Qt::red, // pgp bad
     QColor( 0xFF, 0x40, 0x40 ), // warning text color: light red
-    QColor( "lightGray" ), // colorbar plain bg
-    QColor( "black" ),     // colorbar plain fg
-    QColor( "black" ),     // colorbar html  bg
-    QColor( "white" ),     // colorbar html  fg
+    Qt::lightGray, // colorbar plain bg
+    Qt::black,     // colorbar plain fg
+    Qt::black,     // colorbar html  bg
+    Qt::white,     // colorbar html  fg
   };
 
   for ( int i = 0 ; i < numColorNames ; i++ )
