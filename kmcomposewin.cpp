@@ -3780,7 +3780,9 @@ void KMComposeWin::slotEncryptChiasmusToggled( bool on ) {
   if ( !on )
     return;
 
+#ifdef KLEO_CHIASMUS
   KToggleActionResetter resetter( mEncryptChiasmusAction, false );
+#endif
 
 #ifndef KLEO_CHIASMUS
 
