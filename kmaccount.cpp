@@ -75,6 +75,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
     mFolder(0),
     mTimer(0),
     mInterval(0),
+    mResource(false),
     mExclude(false),
     mCheckingMail(false),
     mPrecommandSuccess(true)
@@ -86,6 +87,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const QString& aName)
 
 void KMAccount::init() {
   mTrash = kernel->trashFolder()->idString();
+  mResource = false;
   mExclude = false;
   mInterval = 0;
 }
@@ -134,12 +136,23 @@ void KMAccount::readConfig(KConfig& config)
   folderName = config.readEntry("Folder", "");
   setCheckInterval(config.readNumEntry("check-interval", 0));
   setTrash(config.readEntry("trash", kernel->trashFolder()->idString()));
+  setResource(config.readBoolEntry("resource", false) );
   setCheckExclude(config.readBoolEntry("check-exclude", false));
   setPrecommand(config.readEntry("precommand"));
 
   if (!folderName.isEmpty())
   {
     setFolder(kernel->folderMgr()->findIdString(folderName), true);
+  }
+
+  if( mResource ) {
+      int numResourceEntries = config.readNumEntry( "numResourceEntries", 0 );
+      int count = 0;
+      for( int i = 0; i < numResourceEntries; i++, count++ ) {
+          QDateTime start = config.readDateTimeEntry( QString( "resource%1-start" ).arg( i ) );
+          QDateTime end = config.readDateTimeEntry( QString( "resource%1-end" ).arg( i ) );
+          mIntervals.append( qMakePair(start,end) );
+      }
   }
 }
 
@@ -151,9 +164,22 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("Name", mName);
   config.writeEntry("Folder", mFolder ? mFolder->idString() : QString::null);
   config.writeEntry("check-interval", mInterval);
+  config.writeEntry("resource", mResource);
   config.writeEntry("check-exclude", mExclude);
   config.writeEntry("precommand", mPrecommand);
   config.writeEntry("trash", mTrash);
+  
+  // Write the resource management data
+  if( mResource ) {
+      config.writeEntry("numResourceEntries", mIntervals.count() );
+      int count = 0;
+      for( QValueList<QPair< QDateTime, QDateTime> >::Iterator it = mIntervals.begin(); it != mIntervals.end(); ++it, count++ ) {
+          config.writeEntry( QString( "resource%1-start" ).arg( count ),
+                             (*it).first );
+          config.writeEntry( QString( "resource%1-end" ).arg( count ),
+                             (*it).second );
+      }
+  }
 }
 
 
@@ -202,6 +228,16 @@ if( fileD0.open( IO_WriteOnly ) ) {
 }
 */
   // 0==message moved; 1==processing ok, no move; 2==critical error, abort!
+
+  // Automatic resource handling: Give the Groupware code a chance to
+  // answer this message automatically, but only if this is a resource
+  // account.
+  if( resource() ) {
+      if( kernel->groupware().incomingResourceMessage( this, aMsg ) )
+          // If it was a resource message, we have already answered it.
+          aMsg->setStatus( KMMsgStatusReplied );
+  }
+  
   processResult = kernel->filterMgr()->process(aMsg,KMFilterMgr::Inbound);
   if (processResult == 2) {
     perror("Critical error: Unable to collect mail (out of space?)");
@@ -275,6 +311,13 @@ void KMAccount::ignoreJobsForMessage( KMMessage* msg )
 void KMAccount::setCheckExclude(bool aExclude)
 {
   mExclude = aExclude;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAccount::setResource(bool aResource)
+{
+  mResource = aResource;
 }
 
 
@@ -384,11 +427,69 @@ QString KMAccount::importPassword(const QString &aStr)
   return encryptStr(result);
 }
 
+
+/*!
+  Registers a new allocated interval in which the resource represented
+  by this account is busy.
+*/
+
+void KMAccount::addInterval( const QPair<QDateTime,QDateTime>& iv )
+{
+    mIntervals.append( iv );
+}
+
+
+/*!
+  Returns the intervals in which this resource is busy
+*/
+QValueList<QPair<QDateTime, QDateTime> > KMAccount::intervals() const
+{
+    return mIntervals;
+}
+
+
+/*!     
+  Resets all intervals in which this resource is busy.
+*/
+
+void KMAccount::clearIntervals()
+{
+    mIntervals.clear();
+}
+
+
+/*!
+  Resets all intervals in which this resource is busy and which are
+  entirely in the past.
+*/
+void KMAccount::clearOldIntervals()
+{
+    QDateTime now = QDateTime::currentDateTime();
+    for( QValueList<QPair<QDateTime, QDateTime> >::iterator it = mIntervals.begin(); it != mIntervals.end(); ++it ) {
+        if( (*it).second < now )
+            mIntervals.erase( it );
+    }
+}
+
+
+void KMAccount::setIntervals( const QValueList<QPair<QDateTime, QDateTime> >& newIntervals )
+{
+    mIntervals = newIntervals;
+}
+
+
+void KMAccount::invalidateIMAPFolders()
+{
+  // Default: Don't do anything. The IMAP account will handle it
+}
+
 void KMAccount::pseudoAssign( const KMAccount * a ) {
   if ( !a ) return;
 
   setName( a->name() );
   setCheckInterval( a->checkInterval() );
+  setResource( a->resource() );
+  setIntervals( a->intervals() );
   setCheckExclude( a->checkExclude() );
   setFolder( a->folder() );
   setPrecommand( a->precommand() );

@@ -144,6 +144,12 @@ public:
   virtual void setCheckExclude(bool aExclude);
   bool checkExclude(void) const { return mExclude; }
 
+  /**
+   * Set/get whether the account is for a semi-automatically managed resource.
+   */
+  virtual void setResource(bool aResource);
+  bool resource(void) const { return mResource; }
+
    /**
     * Pre command
     */
@@ -167,6 +173,18 @@ public:
 
   static QString importPassword(const QString &);
 
+  /**
+   * If this account is a disconnected IMAP account, invalidate it.
+   */
+  virtual void invalidateIMAPFolders();
+    
+  // stuff for resource-handling
+  void addInterval( const QPair<QDateTime,QDateTime>& );
+  QValueList<QPair<QDateTime, QDateTime> > intervals() const;
+  void clearIntervals();
+  void clearOldIntervals();
+  void setIntervals( const QValueList<QPair<QDateTime, QDateTime> >& );
+    
 signals:
   virtual void finishedCheck(bool newMail);
   virtual void newMailsProcessed(int numberOfNewMails);
@@ -208,11 +226,15 @@ protected:
   QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer, mReceiptTimer;
   int mInterval;
+  bool mResource;
   bool mExclude;
   bool mCheckingMail;
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
   QPtrList<KMFolderJob>  mJobList;
+
+  // for resource handling
+  QValueList<QPair<QDateTime, QDateTime> > mIntervals;
 
 private:
     /**

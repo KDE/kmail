@@ -293,6 +293,26 @@ void KMAcctMgr::checkMail(bool _interactive)
 
 
 //-----------------------------------------------------------------------------
+void KMAcctMgr::singleInvalidateIMAPFolders(KMAccount *account) {
+  account->invalidateIMAPFolders();
+}
+
+
+void KMAcctMgr::invalidateIMAPFolders()
+{
+  if (mAcctList.isEmpty()) {
+    KMessageBox::information(0,i18n("You need to add an account in the network "
+				    "section of the settings in order to "
+				    "receive mail."));
+    return;
+  }
+
+  for ( QPtrListIterator<KMAccount> it(mAcctList) ; it.current() ; ++it )
+    singleInvalidateIMAPFolders(it.current());
+}
+
+
+//-----------------------------------------------------------------------------
 QStringList  KMAcctMgr::getAccounts(bool noImap) {
 
   KMAccount *cur;
