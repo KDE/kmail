@@ -210,7 +210,7 @@ void Signature::writeConfig( KConfigBase * config ) const
 }
 
 QDataStream & operator<<( QDataStream & stream, const Signature & sig ) {
-  return stream << Q_UINT8(sig.mType)
+  return stream << static_cast<Q_UINT8>(sig.mType)
 		<< sig.mUrl
 		<< sig.mText;
 }
