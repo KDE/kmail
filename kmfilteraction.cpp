@@ -20,7 +20,6 @@
 #include "kmfawidgets.h"
 #include "kmfoldercombobox.h"
 
-#include <kregexp3.h>
 #include <ktempfile.h>
 #include <kdebug.h>
 #include <klocale.h>
@@ -31,6 +30,7 @@
 #include <qlabel.h>
 #include <qlayout.h>
 #include <qtextcodec.h>
+#include <qregexp.h>
 #include <assert.h>
 
 
@@ -1083,7 +1083,7 @@ public:
     return (new KMFilterActionRewriteHeader);
   }
 private:
-  KRegExp3 mRegExp;
+  QRegExp mRegExp;
   QString mReplacementString;
 };
 
@@ -1105,10 +1105,7 @@ KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) 
   if ( mParameter.isEmpty() || !mRegExp.isValid() )
     return ErrorButGoOn;
 
-  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
-
-  QString newValue = rx.replace( msg->headerField( mParameter.latin1() ),
-				     mReplacementString );
+  QString newValue = msg->headerField( mParameter.latin1() ).replace( mRegExp, mReplacementString );
 
   msg->setHeaderField( mParameter.latin1(), newValue );
   return GoOn;
