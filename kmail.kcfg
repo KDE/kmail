@@ -50,4 +50,11 @@
       </entry>
     </group>
 
+    <group name="General">
+      <entry name="MsgDictSizeHint" type="Int">
+        <default>9973</default>
+      </entry>
+    </group>
+
+
 </kcfg>

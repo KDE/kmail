@@ -5,6 +5,7 @@
 #include "kmfolder.h"
 #include "kmmsgdict.h"
 #include "kmdict.h"
+#include "globalsettings.h"
 
 #include <qfileinfo.h>
 
@@ -128,11 +129,15 @@ public:
   off_t baseOffset;
 };
 
+
 //-----------------------------------------------------------------------------
 
 KMMsgDict::KMMsgDict()
 {
-  dict = new KMDict(9973);
+  int lastSizeOfDict = GlobalSettings::msgDictSizeHint();
+  lastSizeOfDict = ( lastSizeOfDict * 11 ) / 10;
+  GlobalSettings::setMsgDictSizeHint( 0 );
+  dict = new KMDict( lastSizeOfDict );
   nextMsgSerNum = 1;
 }
 
@@ -370,6 +375,9 @@ int KMMsgDict::readFolderIds(KMFolder *folder)
 
     rentry->set(index, entry);
   }
+  // Remember how many items we put into the dict this time so we can create 
+  // it with an appropriate size next time.
+  GlobalSettings::setMsgDictSizeHint( GlobalSettings::msgDictSizeHint() + count );
 
   fclose(fp);
   folder->setRDict(rentry);
