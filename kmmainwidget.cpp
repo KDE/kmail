@@ -1607,6 +1607,7 @@ void KMMainWidget::slotMsgActivated(KMMessage *msg)
   KMMessage *newMessage = new KMMessage();
   newMessage->fromString( msg->asString() );
   newMessage->setStatus( msg->status() );
+  newMessage->setParent( msg->parent() );
   win->showMsg( mCodec, newMessage );
   win->resize( 550, 600 );
   win->show();
