@@ -4039,10 +4039,8 @@ KMEdit::~KMEdit()
   removeEventFilter(this);
 
   delete mKSpell;
-  if ( textFormat() != Qt::RichText ) {
-    delete mSpellChecker;
-    mSpellChecker = 0;
-  }
+  delete mSpellChecker;
+  mSpellChecker = 0;
 
 }
 
