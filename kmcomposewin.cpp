@@ -448,7 +448,7 @@ void KMComposeWin::readConfig(void)
 
   { // area for config group "General"
     KConfigGroupSaver saver(config, "General");
-    mExtEditor = config->readEntry("external-editor", DEFAULT_EDITOR_STR);
+    mExtEditor = config->readPathEntry("external-editor", DEFAULT_EDITOR_STR);
     useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
 
     int headerCount = config->readNumEntry("mime-header-count", 0);
@@ -459,9 +459,9 @@ void KMComposeWin::readConfig(void)
       _StringPair *thisItem = new _StringPair;
       thisGroup.sprintf("Mime #%d", i);
       KConfigGroupSaver saver(config, thisGroup);
-      thisItem->name = config->readEntry("name", "");
+      thisItem->name = config->readEntry("name");
       if ((thisItem->name).length() > 0) {
-        thisItem->value = config->readEntry("value", "");
+        thisItem->value = config->readEntry("value");
         mCustHeaders.append(thisItem);
       } else {
         delete thisItem;

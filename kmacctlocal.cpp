@@ -237,7 +237,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
 void KMAcctLocal::readConfig(KConfig& config)
 {
   base::readConfig(config);
-  mLocation = config.readEntry("Location", mLocation);
+  mLocation = config.readPathEntry("Location", mLocation);
   QString locktype = config.readEntry("LockType", "procmail_lockfile" );
 
   if( locktype == "procmail_lockfile" ) {
@@ -259,7 +259,7 @@ void KMAcctLocal::writeConfig(KConfig& config)
 {
   base::writeConfig(config);
 
-  config.writeEntry("Location", mLocation);
+  config.writePathEntry("Location", mLocation);
 
   QString st = "fcntl";
   if (mLock == procmail_lockfile) st = "procmail_lockfile";

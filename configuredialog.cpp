@@ -2459,7 +2459,7 @@ void ComposerPage::GeneralTab::setup() {
 
   // editor group:
   mExternalEditorCheck->setChecked( general.readBoolEntry( "use-external-editor", false ) );
-  mEditorRequester->setURL( general.readEntry( "external-editor", "" ) );
+  mEditorRequester->setURL( general.readPathEntry( "external-editor" ) );
 }
 
 void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
@@ -2482,7 +2482,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   if ( general.hasKey( "use-external-editor" )
        && general.hasKey( "external-editor" ) ) {
     mExternalEditorCheck->setChecked( general.readBoolEntry( "use-external-editor" ) );
-    mEditorRequester->setURL( general.readEntry( "external-editor" ) );
+    mEditorRequester->setURL( general.readPathEntry( "external-editor" ) );
   }
 }
 
@@ -2492,7 +2492,7 @@ void ComposerPage::GeneralTab::apply() {
 
   general.writeEntry( "use-external-editor", mExternalEditorCheck->isChecked()
 		                         && !mEditorRequester->url().isEmpty() );
-  general.writeEntry( "external-editor", mEditorRequester->url() );
+  general.writePathEntry( "external-editor", mEditorRequester->url() );
 
   bool autoSignature = mAutoAppSignFileCheck->isChecked();
   composer.writeEntry( "signature", autoSignature ? "auto" : "manual" );
@@ -3073,7 +3073,7 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 void ComposerPage::HeadersTab::setup() {
   KConfigGroup general( KMKernel::config(), "General" );
 
-  QString suffix = general.readEntry( "myMessageIdSuffix", "" );
+  QString suffix = general.readEntry( "myMessageIdSuffix" );
   mMessageIdSuffixEdit->setText( suffix );
   bool state = ( !suffix.isEmpty() &&
 	    general.readBoolEntry( "useCustomMessageIdSuffix", false ) );
@@ -3889,7 +3889,7 @@ void SecurityPage::CryptPlugTab::apply() {
     KConfigGroup config( KMKernel::config(),
                          QString("CryptPlug #%1").arg( cryptPlugCount ) );
     config.writeEntry( "name", it.current()->text( 0 ) );
-    config.writeEntry( "location", it.current()->text( 1 ) );
+    config.writePathEntry( "location", it.current()->text( 1 ) );
     config.writeEntry( "updates", it.current()->text( 2 ) );
     config.writeEntry( "active", !it.current()->text( 3 ).isEmpty() );
 
@@ -4104,7 +4104,7 @@ void GroupwarePage::setup()
   int i = options.readNumEntry( "FolderLanguage", 0 );
   mLanguageCombo->setCurrentItem(i);
 
-  QString folderId = options.readEntry( "GroupwareFolder", QString::null );
+  QString folderId = options.readEntry( "GroupwareFolder" );
   if( !folderId.isNull() ) {
     mFolderCombo->setFolder( folderId );
   }

@@ -68,7 +68,7 @@ void KMTransportInfo::readConfig(int id)
   port = config->readEntry("port", "25");
   user = config->readEntry("user");
   pass = KMAccount::decryptStr(config->readEntry("pass"));
-  precommand = config->readEntry("precommand");
+  precommand = config->readPathEntry("precommand");
   encryption = config->readEntry("encryption");
   authType = config->readEntry("authtype");
   auth = config->readBoolEntry("auth");
@@ -89,7 +89,7 @@ void KMTransportInfo::writeConfig(int id)
   config->writeEntry("user", user);
   config->writeEntry("pass", (storePass) ? KMAccount::encryptStr(pass) :
                                            QString("") );
-  config->writeEntry("precommand", precommand);
+  config->writePathEntry("precommand", precommand);
   config->writeEntry("encryption", encryption);
   config->writeEntry("authtype", authType);
   config->writeEntry("auth", auth);

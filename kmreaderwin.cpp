@@ -774,7 +774,7 @@ void KMReaderWin::readConfig(void)
   { // block defines the lifetime of KConfigGroupSaver
   KConfigGroupSaver saver(config, "Pixmaps");
   mBackingPixmapOn = FALSE;
-  mBackingPixmapStr = config->readEntry("Readerwin","");
+  mBackingPixmapStr = config->readPathEntry("Readerwin");
   if (!mBackingPixmapStr.isEmpty())
     mBackingPixmapOn = TRUE;
   }

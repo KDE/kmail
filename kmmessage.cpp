@@ -3100,7 +3100,7 @@ QString KMMessage::generateMessageId( const QString& addr )
   KConfigGroup general( KMKernel::config(), "General" );
 
   if( general.readBoolEntry( "useCustomMessageIdSuffix", false ) )
-    msgIdSuffix = general.readEntry( "myMessageIdSuffix", "" );
+    msgIdSuffix = general.readEntry( "myMessageIdSuffix" );
 
   if( !msgIdSuffix.isEmpty() )
     msgIdStr += '@' + msgIdSuffix;

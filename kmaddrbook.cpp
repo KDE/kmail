@@ -129,7 +129,7 @@ QString KabcBridge::expandDistributionLists(const QString& recipients)
       if (receiver.find('@') == -1)
       {
         KConfigGroup general( KMKernel::config(), "General" );
-        QString defaultdomain = general.readEntry( "Default domain", "" );
+        QString defaultdomain = general.readEntry( "Default domain" );
         if( !defaultdomain.isEmpty() )
         {
           receiver += "@" + defaultdomain;

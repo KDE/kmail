@@ -125,7 +125,7 @@ namespace KMail {
   void NetworkAccount::readConfig( /*const*/ KConfig/*Base*/ & config ) {
     base::readConfig( config );
 
-    setLogin( config.readEntry( "login", "" ) );
+    setLogin( config.readEntry( "login" ) );
 
     if ( config.readNumEntry( "store-passwd", false ) ) { // ### s/Num/Bool/
       QString encpasswd = config.readEntry( "pass" );

@@ -664,7 +664,7 @@ void KMHeaders::readConfig (void)
   // Backing pixmap support
   { // area for config group "Pixmaps"
     KConfigGroupSaver saver(config, "Pixmaps");
-    QString pixmapFile = config->readEntry("Headers","");
+    QString pixmapFile = config->readEntry("Headers");
     mPaintInfo.pixmapOn = FALSE;
     if (!pixmapFile.isEmpty()) {
       mPaintInfo.pixmapOn = TRUE;
@@ -680,7 +680,7 @@ void KMHeaders::readConfig (void)
 
     KMime::DateFormatter::FormatType t =
       (KMime::DateFormatter::FormatType) config->readNumEntry("dateFormat", KMime::DateFormatter::Fancy ) ;
-    mDate.setCustomFormat( config->readEntry("customDateFormat", QString::null ) );
+    mDate.setCustomFormat( config->readEntry("customDateFormat") );
     mDate.setFormat( t );
   }
 

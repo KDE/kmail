@@ -158,14 +158,14 @@ void Signature::setUrl( const QString & url, bool isExecutable )
 }
 
 // config keys and values:
-static const char * sigTypeKey = "Signature Type";
-static const char * sigTypeInlineValue = "inline";
-static const char * sigTypeFileValue = "file";
-static const char * sigTypeCommandValue = "command";
-static const char * sigTypeDisabledValue = "disabled";
-static const char * sigTextKey = "Inline Signature";
-static const char * sigFileKey = "Signature File";
-static const char * sigCommandKey = "Signature Command";
+static const char sigTypeKey[] = "Signature Type";
+static const char sigTypeInlineValue[] = "inline";
+static const char sigTypeFileValue[] = "file";
+static const char sigTypeCommandValue[] = "command";
+static const char sigTypeDisabledValue[] = "disabled";
+static const char sigTextKey[] = "Inline Signature";
+static const char sigFileKey[] = "Signature File";
+static const char sigCommandKey[] = "Signature Command";
 
 void Signature::readConfig( const KConfigBase * config )
 {
@@ -175,10 +175,10 @@ void Signature::readConfig( const KConfigBase * config )
     mText = config->readEntry( sigTextKey );
   } else if ( sigType == sigTypeFileValue ) {
     mType = FromFile;
-    mUrl = config->readEntry( sigFileKey );
+    mUrl = config->readPathEntry( sigFileKey );
   } else if ( sigType == sigTypeCommandValue ) {
     mType = FromCommand;
-    mUrl = config->readEntry( sigCommandKey );
+    mUrl = config->readPathEntry( sigCommandKey );
   } else {
     mType = Disabled;
   }
@@ -193,11 +193,11 @@ void Signature::writeConfig( KConfigBase * config ) const
     break;
   case FromFile:
     config->writeEntry( sigTypeKey, sigTypeFileValue );
-    config->writeEntry( sigFileKey, mUrl );
+    config->writePathEntry( sigFileKey, mUrl );
     break;
   case FromCommand:
     config->writeEntry( sigTypeKey, sigTypeCommandValue );
-    config->writeEntry( sigCommandKey, mUrl );
+    config->writePathEntry( sigCommandKey, mUrl );
     break;
   case Disabled:
     config->writeEntry( sigTypeKey, sigTypeDisabledValue );
@@ -263,7 +263,7 @@ void KMIdentity::readConfig( const KConfigBase * config )
   mIdentity = config->readEntry("Identity");
   mFullName = config->readEntry("Name");
   mEmailAddr = config->readEntry("Email Address");
-  mVCardFile = config->readEntry("VCardFile");
+  mVCardFile = config->readPathEntry("VCardFile");
   mOrganization = config->readEntry("Organization");
   mPgpIdentity = config->readEntry("Default PGP Key").local8Bit();
   mReplyToAddr = config->readEntry("Reply-To Address");
@@ -293,7 +293,7 @@ void KMIdentity::writeConfig( KConfigBase * config ) const
   config->writeEntry("Email Address", mEmailAddr);
   config->writeEntry("Reply-To Address", mReplyToAddr);
   config->writeEntry("Bcc", mBcc);
-  config->writeEntry("VCardFile", mVCardFile);
+  config->writePathEntry("VCardFile", mVCardFile);
   config->writeEntry("Transport", mTransport);
   config->writeEntry("Fcc", mFcc);
   config->writeEntry("Drafts", mDrafts);

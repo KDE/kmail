@@ -656,9 +656,9 @@ void KMKernel::init()
   KConfigGroupSaver saver(cfg, "General");
   the_firstStart = cfg->readBoolEntry("first-start", true);
   cfg->writeEntry("first-start", false);
-  the_previousVersion = cfg->readEntry("previous-version", "");
+  the_previousVersion = cfg->readEntry("previous-version");
   cfg->writeEntry("previous-version", KMAIL_VERSION);
-  foldersPath = cfg->readEntry("folders", "");
+  foldersPath = cfg->readEntry("folders");
 
   if (foldersPath.isEmpty())
   {

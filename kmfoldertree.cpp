@@ -389,7 +389,7 @@ void KMFolderTree::readConfig (void)
   // Backing pixmap support
   { //area for config group "Pixmaps"
     KConfigGroupSaver saver(conf, "Pixmaps");
-    QString pixmapFile = conf->readEntry("FolderTree","");
+    QString pixmapFile = conf->readPathEntry("FolderTree");
     mPaintInfo.pixmapOn = FALSE;
     if (!pixmapFile.isEmpty()) {
       mPaintInfo.pixmapOn = TRUE;

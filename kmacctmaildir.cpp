@@ -207,7 +207,7 @@ void KMAcctMaildir::processNewMail(bool)
 void KMAcctMaildir::readConfig(KConfig& config)
 {
   base::readConfig(config);
-  mLocation = config.readEntry("Location", mLocation);
+  mLocation = config.readPathEntry("Location", mLocation);
 }
 
 
@@ -215,7 +215,7 @@ void KMAcctMaildir::readConfig(KConfig& config)
 void KMAcctMaildir::writeConfig(KConfig& config)
 {
   base::writeConfig(config);
-  config.writeEntry("Location", mLocation);
+  config.writePathEntry("Location", mLocation);
 }
 
 //-----------------------------------------------------------------------------

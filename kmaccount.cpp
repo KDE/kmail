@@ -137,12 +137,12 @@ void KMAccount::readConfig(KConfig& config)
   QString folderName;
 
   mFolder = 0;
-  folderName = config.readEntry("Folder", "");
+  folderName = config.readEntry("Folder");
   setCheckInterval(config.readNumEntry("check-interval", 0));
   setTrash(config.readEntry("trash", kernel->trashFolder()->idString()));
   setResource(config.readBoolEntry("resource", false) );
   setCheckExclude(config.readBoolEntry("check-exclude", false));
-  setPrecommand(config.readEntry("precommand"));
+  setPrecommand(config.readPathEntry("precommand"));
 
   if (!folderName.isEmpty())
   {
@@ -170,7 +170,7 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("resource", mResource);
   config.writeEntry("check-exclude", mExclude);
-  config.writeEntry("precommand", mPrecommand);
+  config.writePathEntry("precommand", mPrecommand);
   config.writeEntry("trash", mTrash);
 
   // Write the resource management data
