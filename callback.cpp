@@ -78,7 +78,13 @@ bool Callback::mailICal( const QString& to, const QString iCal,
   cWin->slotWordWrapToggled( false );
   cWin->mNeverSign = true;
   cWin->mNeverEncrypt = true;
-  // win.slotSendNow();
+
+  // This is commented out, since there is no other visual indication of
+  // the fact that a message has been sent. Also, there is no way
+  // to delete the mail and the composer window :-(
+  // TODO: Fix this somehow. Difficult because of the async readerwindow
+  // cWin->slotSendNow();
+  // Instead, we do this for now:
   cWin->show();
 
   return true;
