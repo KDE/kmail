@@ -1056,12 +1056,11 @@ void KMCopyCommand::execute()
 
   for (msgBase = mMsgList.first(); msgBase; msgBase = mMsgList.next() )
   {
-    KMFolder *srcFolder = 0;
+    KMFolder *srcFolder = msgBase->parent();
     if (isMessage = msgBase->isMessage())
     {
       msg = static_cast<KMMessage*>(msgBase);
     } else {
-      srcFolder = msgBase->parent();
       idx = srcFolder->find(msgBase);
       assert(idx != -1);
       msg = srcFolder->getMsg(idx);
