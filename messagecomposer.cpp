@@ -1627,7 +1627,8 @@ void MessageComposer::addBodyAndAttachments( KMMessage* msg,
       msg->headers().ContentType().SetBoundary( mSaveBoundary );
       msg->headers().ContentType().Assemble();
     }
-    msg->setBody(ourFineBodyPart.body() );
+    if ( !ourFineBodyPart.body().isNull() )
+      msg->setBody(ourFineBodyPart.body() );
 
     if ( mDebugComposerCrypto ) {
       kdDebug(5006) << "MessageComposer::addBodyAndAttachments():\n      Final message:\n|||" << msg->asString() << "|||\n\n" << endl;
