@@ -1277,8 +1277,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
         {
             int root_x, root_y, win_x, win_y;
             uint keybstate;
-            Window rootw;
-            Window childw;
+            Window rootw, childw;
             XQueryPointer( qt_xdisplay(), qt_xrootwin(), &rootw, &childw,
                            &root_x, &root_y, &win_x, &win_y, &keybstate );
 

@@ -390,6 +390,11 @@ private:
   KMime::DateFormatter mDate;
   /** value of config key Behaviour/LoopOnGotoUnread */
   bool mLoopOnGotoUnread;
+  // actions for D'n'D from Headers to Folder
+  int mActionWhenDnD;
+  int mActionWhenShiftDnD;
+  int mActionWhenCtrlDnD;
+
 };
 
 #endif

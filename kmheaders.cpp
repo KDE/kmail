@@ -702,6 +702,16 @@ void KMHeaders::readConfig (void)
   {
     KConfigGroupSaver saver(config, "Behaviour");
     mLoopOnGotoUnread = config->readBoolEntry( "LoopOnGotoUnread", true );
+    // read D'n'D behavior settings
+    mActionWhenDnD = config->readNumEntry("DnD_action_normal", KMMsgDnDActionASK );
+    if ( mActionWhenDnD < 0 || mActionWhenDnD > 2 )
+      mActionWhenDnD = KMMsgDnDActionASK;
+    mActionWhenShiftDnD = config->readNumEntry("DnD_action_SHIFT", KMMsgDnDActionMOVE );
+    if ( mActionWhenShiftDnD < 0 || mActionWhenShiftDnD > 2 )
+      mActionWhenShiftDnD = KMMsgDnDActionMOVE;
+    mActionWhenCtrlDnD = config->readNumEntry("DnD_action_CTRL", KMMsgDnDActionCOPY );
+    if ( mActionWhenCtrlDnD < 0 || mActionWhenCtrlDnD > 2 )
+      mActionWhenCtrlDnD = KMMsgDnDActionCOPY;
   }
 
 }
@@ -2554,7 +2564,29 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
     QListViewItem *item = itemAt( contentsToViewport(presspos) );
     if ( item ) {
       KMHeaderToFolderDrag* d = new KMHeaderToFolderDrag(viewport());
-      d->drag();
+
+      const ButtonState keybstate = e->state();
+      int actionSettings;
+      if ( keybstate & Qt::ControlButton )
+        actionSettings = mActionWhenCtrlDnD;
+      else if ( keybstate & Qt::ShiftButton )
+        actionSettings = mActionWhenShiftDnD;
+      else
+        actionSettings = mActionWhenDnD;
+      switch ( actionSettings ) {
+        case KMMsgDnDActionMOVE:
+          d->dragMove();
+          break;
+        case KMMsgDnDActionCOPY:
+          d->dragCopy();
+          break;
+        default:
+          // We will ASK the user via PopUp menu.
+          // But we _must_ call dragMove() since otherwise Qt will
+          // show the '+' indicator if CTRL key is hold down even if
+          // our KMail user has specified /not/ to copy via CRTL+D'n'D.
+          d->dragMove();
+      }
     }
   }
 }
