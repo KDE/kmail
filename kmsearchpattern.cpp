@@ -5,6 +5,7 @@
 #include "kmsearchpattern.h"
 #include "kmmessage.h"
 
+#include <kglobal.h>
 #include <klocale.h>
 #include <kdebug.h>
 #include <kconfig.h>
@@ -190,10 +191,13 @@ bool KMSearchRule::matches(const KMMessage* msg) const
 void KMSearchRule::readConfig( KConfig *config, int aIdx )
 {
   char cIdx = char( int('A') + aIdx );
+  static const QString& field = KGlobal::staticQString( "field" );
+  static const QString& func = KGlobal::staticQString( "func" );
+  static const QString& contents = KGlobal::staticQString( "contents" );
 
-  init( config->readEntry( QString("field") + cIdx  ),
-	config->readEntry( QString("func") + cIdx ).latin1(),
-	config->readEntry( QString("contents") + cIdx ) );
+  init( config->readEntry( field + cIdx  ),
+	config->readEntry( func + cIdx ).latin1(),
+	config->readEntry( contents + cIdx ) );
 }
 
 
@@ -201,18 +205,23 @@ void KMSearchRule::readConfig( KConfig *config, int aIdx )
 void KMSearchRule::writeConfig( KConfig *config, int aIdx ) const
 {
   char cIdx = char('A' + aIdx);
+  static const QString& field = KGlobal::staticQString( "field" );
+  static const QString& func = KGlobal::staticQString( "func" );
+  static const QString& contents = KGlobal::staticQString( "contents" );
 
-  config->writeEntry( QString("field") + cIdx, mField );
-  config->writeEntry( QString("func") + cIdx, funcConfigNames[(int)mFunction] );
-  config->writeEntry( QString("contents") + cIdx, mContents );
+  config->writeEntry( field + cIdx, mField );
+  config->writeEntry( func + cIdx, funcConfigNames[(int)mFunction] );
+  config->writeEntry( contents + cIdx, mContents );
 }
 
 //-----------------------------------------------------------------------------
 bool KMSearchRule::isEmpty() const
 {
   bool ok;
+  static const QString& size = KGlobal::staticQString( "<size>" );
+  static const QString& ageInDays = KGlobal::staticQString( "<age in days>" );
 
-  if ( mField == "<size>" || mField == "<age in days>" ) {
+  if ( mField == size|| mField == ageInDays ) {
     ok = FALSE;
     mContents.toULong(&ok);
   } else
