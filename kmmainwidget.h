@@ -366,15 +366,15 @@ private:
   KToggleAction *mToggleThreadQueuedAction;
   KToggleAction *mToggleThreadSentAction;
   KToggleAction *mToggleThreadFlagAction;
-  KToggleAction *mMarkThreadAsSpamAction;
-  KToggleAction *mMarkThreadAsHamAction;
+  KAction *mMarkThreadAsSpamAction;
+  KAction *mMarkThreadAsHamAction;
   KToggleAction *mToggleRepliedAction;
   KToggleAction *mToggleForwardedAction;
   KToggleAction *mToggleQueuedAction;
   KToggleAction *mToggleSentAction;
   KToggleAction *mToggleFlagAction;
-  KToggleAction *mToggleSpamAction;
-  KToggleAction *mToggleHamAction;
+  KAction *mMarkAsSpamAction;
+  KAction *mMarkAsHamAction;
 
   KToggleAction *mWatchThreadAction, *mIgnoreThreadAction;
 
