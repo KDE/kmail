@@ -780,7 +780,7 @@ unsigned long KMMsgBase::getMsgSerNum() const
 }
 
 //-----------------------------------------------------------------------------
-void swapEndian(QString &str)
+static void swapEndian(QString &str)
 {
   ushort us;
   uint len = str.length();

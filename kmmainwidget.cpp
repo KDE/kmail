@@ -1304,7 +1304,7 @@ void KMMainWidget::slotApplyFilters()
 }
 
 //-----------------------------------------------------------------------------
-void KMMainWidget::slotEditVacation() 
+void KMMainWidget::slotEditVacation()
 {
   if ( mVacation )
     return;
@@ -1319,7 +1319,7 @@ void KMMainWidget::slotEditVacation()
                       "You can do this on the \"Filtering\" tab of the IMAP "
                       "account configuration.");
     KMessageBox::sorry( this, msg, i18n("No Server-Side Filtering Configured") );
-                       
+
     delete mVacation; // QGuardedPtr sets itself to 0!
   }
 }
@@ -1936,7 +1936,7 @@ void KMMainWidget::setupActions()
   (void) new KAction( i18n("Edit \"Out of Office\" Replies..."),
 		      "configure", 0, this, SLOT(slotEditVacation()),
 		      mActionCollection, "tools_edit_vacation" );
- 
+
   //----- Edit Menu
   trashAction = new KAction( KGuiItem( i18n("&Move to Trash"), "edittrash",
                                        i18n("Move message to trashcan") ),
@@ -2602,7 +2602,7 @@ void KMMainWidget::updateFolderMenu()
 
 
 #ifdef MALLOC_DEBUG
-QString fmt(long n) {
+static QString fmt(long n) {
   char buf[32];
 
   if(n > 1024*1024*1024)
