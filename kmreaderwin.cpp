@@ -146,7 +146,19 @@ void KMReaderWin::setInlineAttach(int aAtmInline)
 //-----------------------------------------------------------------------------
 void KMReaderWin::setMsg(KMMessage* aMsg)
 {
+  if (!parent())
+  {
+    // do some additional work for a standalone window.
+    
+  }
+
   mMsg = aMsg;
+
+  if (!parent())
+  {
+    // do some additional work for a standalone window.
+    
+  }
 
   if (mMsg) parseMsg();
   else
@@ -174,7 +186,6 @@ void KMReaderWin::parseMsg(void)
   writeMsgHeader();
 
   numParts = mMsg->numBodyParts();
-  debug("KMReaderWin::parseMsg(): %d body parts", numParts);
   if (numParts > 0)
   {
     for (i=0; i<numParts; i++)
@@ -185,7 +196,6 @@ void KMReaderWin::parseMsg(void)
       if (stricmp(type, "text")==0)
       {
 	str = msgPart.bodyDecoded();
-	debug("body part %d: -----\n%s\n-----", i, (const char*)str);
 	if (str.size() > 100 && i>0) writePartIcon(&msgPart, i);
 	else if (stricmp(subtype, "html")==0)
 	{
@@ -235,10 +245,6 @@ void KMReaderWin::writeMsgHeader(void)
 		   KMMessage::emailAddrAsAnchor(mMsg->to()) + "<BR><BR>");
     break;
 
-  case HdrLong:
-    debug("long header style not yet implemented.");
-    break;
-
   case HdrFancy:
     mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") + mPicsDir +
 		   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+1>");
@@ -253,6 +259,14 @@ void KMReaderWin::writeMsgHeader(void)
     mViewer->write(nls->translate("Date: ") +
 		   strToHtml(mMsg->dateStr()) + "<BR>");
     mViewer->write("</B></TD></TR></TABLE><BR>");
+    break;
+
+  case HdrLong:
+    emit statusMsg("`long' header style not yet implemented.");
+    break;
+
+  case HdrAll:
+    emit statusMsg("`all' header style not yet implemented.");
     break;
 
   default:
@@ -337,14 +351,28 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 const QString KMReaderWin::strToHtml(const QString aStr) const
 {
   QString htmlStr;
-  char ch, *pos;
+  char ch, *pos, str[256];
+  int i;
 
   for (pos=aStr.data(); *pos; pos++)
   {
     ch = *pos;
     if (ch=='<') htmlStr += "&lt;";
     else if (ch=='>') htmlStr += "&gt;";
-    else if (ch=='&') htmlStr += "&am;";
+    else if (ch=='&') htmlStr += "&amp;";
+    else if ((ch=='h' && strncmp(pos,"http:",5)==0) ||
+	     (ch=='f' && strncmp(pos,"ftp:",4)==0))
+    {
+      for (i=0; *pos && *pos>' ' && i<255; i++, pos++)
+	str[i] = *pos;
+      str[i] = '\0';
+      pos--;
+      htmlStr += "<A HREF=\"";
+      htmlStr += str;
+      htmlStr += ">";
+      htmlStr += str;
+      htmlStr += "</A>";
+    }
     else htmlStr += ch;
   }
 

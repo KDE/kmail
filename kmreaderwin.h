@@ -36,7 +36,8 @@ public:
   virtual void setInlineAttach(int maxLines);
 
   /** Style of the message header. */
-  enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4 };
+  enum HeaderStyle { HdrFancy=1, HdrBrief=2, HdrStandard=3, HdrLong=4,
+                     HdrAll=5 };
 
   /** Get/set the message header style. */
   HeaderStyle headerStyle(void) const { return mHeaderStyle; }
@@ -80,31 +81,6 @@ public slots:
   /** The user presses the right mouse button over an URL. */
   void slotUrlPopup(const char* url, const QPoint& mousePos);
 
-
-protected://slots:
-#ifdef BROKEN
-  void toDo(); 
-  void clearCanvas();
-  void parseMessage(KMMessage*);
-  bool saveMail();
-  void printMail();
-  void copy();
-  void markAll();
-  void viewSource();
-
-  void slotOpenAtmnt();
-  bool slotSaveAtmnt();
-  bool slotPrintAtmnt();
-  void openURL(const char *, int);
-  void popupHeaderMenu(const char *, const QPoint &);
-  void popupMenu(const char *, const QPoint &);
-  QString parseEAddress(QString);
-  QString parseBodyPart(KMMessagePart *,int);
-  QString bodyPartIcon(QString type, QString subType,
-		       QString pnumstring, QString comment);
-  QString scanURL(QString);
-#endif //BROKEN
-
 protected:
   /** Feeds the HTML viewer with the contents of the current message. */
   virtual void parseMsg(void);
@@ -125,7 +101,7 @@ protected:
   /** Convert given string to HTML. */
   virtual const QString strToHtml(const QString str) const;
 
-  /** various initialization routines. */
+  /** HTML initialization. */
   virtual void initHtmlWidget(void);
 
   /** some necessary event handling. */

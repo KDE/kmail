@@ -364,7 +364,7 @@ void KMHeaders::nextMsg()
   idx = indexOfGetMsg();
   if(idx < mFolder->count()-1)
   {
-    emit messageSelected(mFolder->getMsg(idx+1));
+    emit selected(mFolder->getMsg(idx+1));
     if (idx >= 0) setMsgRead(idx+1);
   }
   kbp->idle();
@@ -379,7 +379,7 @@ void KMHeaders::previousMsg()
   kbp->busy();
   if((idx = indexOfGetMsg()) != 0)
   {
-    emit messageSelected(mFolder->getMsg(idx));
+    emit selected(mFolder->getMsg(idx));
     if (idx >= 0) setMsgRead(idx);
   }
   kbp->idle();
@@ -401,19 +401,26 @@ void KMHeaders::changeItemPart (char c, int itemIndex, int column)
 //-----------------------------------------------------------------------------
 void KMHeaders::highlightMessage(int idx, int/*colId*/)
 {
-  if (idx >= numRows()) return;
+  if (idx < 0 || idx >= numRows()) return;
 
   kbp->busy();
   mOwner->statusMsg("");
-  emit messageSelected(mFolder->getMsg(idx));
+  emit selected(mFolder->getMsg(idx));
   if (idx >= 0) setMsgRead(idx);
   kbp->idle();
 }
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::selectMessage(int/*idx*/, int/*colId*/)
+void KMHeaders::selectMessage(int idx, int/*colId*/)
 {
+  if (idx < 0 || idx >= numRows()) return;
+
+  kbp->busy();
+  mOwner->statusMsg("");
+  emit selected(mFolder->getMsg(idx));
+  if (idx >= 0) setMsgRead(idx);
+  kbp->idle();
 }
 
 

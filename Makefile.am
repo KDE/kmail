@@ -30,7 +30,7 @@ BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \
 
 CLEAN_FILES = $(BUILT_SOURCES)
 
-appsdir = $(kde_appsdir)/Utilities/
+appsdir = $(kde_appsdir)/Internet/
 
 install-data-local:
 	$(mkinstalldirs) $(appsdir)

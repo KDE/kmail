@@ -259,8 +259,6 @@ int KMFolder::createIndexFromContents(void)
   assert(mStream != NULL);
   rewind(mStream);
 
-  debug("*** creating index file %s\n", (const char*)indexLocation());
-
   mMsgList.clear();
 
   num     = -1;

@@ -49,7 +49,8 @@ public:
   KMMainWin* owner(void) const { return mOwner; }
 
 signals:
-  virtual void messageSelected(KMMessage *);
+  virtual void selected(KMMessage *);
+  virtual void activated(KMMessage *);
 
 
 protected slots:
