@@ -262,7 +262,7 @@ void KMSettings::createTabNetwork(QWidget* parent)
 
 
 //-----------------------------------------------------------------------------
-void KMSettings::createTabGeneral(QWidget *parent)
+void KMSettings::createTabGeneral(QWidget * /*parent*/ )
 {
 #ifdef MISSING
   QWidget *tab = new QWidget(parent);
