@@ -14,6 +14,7 @@
 #include "broadcaststatus.h"
 #include "kmglobal.h"
 #include "kmacctmgr.h"
+#include "kmtransport.h"
 
 #include <kapplication.h>
 #include <klocale.h>
