@@ -1277,7 +1277,6 @@ void ConfigureDialog::makeApperancePage( void )
   mAppearance.colorList->setCurrentItem(0);
 
 
-
   QWidget *page3 = new QWidget( tabWidget );
   tabWidget->addTab( page3, i18n("Layout") );
   vlay = new QVBoxLayout( page3, spacingHint() );
@@ -1285,13 +1284,12 @@ void ConfigureDialog::makeApperancePage( void )
   mAppearance.longFolderCheck = 
     new QCheckBox( i18n("Show long folder list"), page3 );
   vlay->addWidget( mAppearance.longFolderCheck );
-  vlay->addStretch(10);
 
   mAppearance.nestedMessagesCheck = 
-    new QCheckBox( i18n("Nested Messages"), page3 );
+    new QCheckBox( i18n("Collect replies in a nested treelist"), page3 );
   vlay->addWidget( mAppearance.nestedMessagesCheck );
-  vlay->addStretch(10);
 
+  vlay->addStretch(10); // Eat unused space a bottom
 }
 
 
