@@ -98,14 +98,6 @@ void KMAcctExpPop::init(void)
   mStorePasswd = FALSE;
   mLeaveOnServer = FALSE;
   mRetrieveAll = TRUE;
-  mPrecommand = "";
-}
-
-
-//-----------------------------------------------------------------------------
-void KMAcctExpPop::setPrecommand(const QString& cmd)
-{
-   mPrecommand = cmd;
 }
 
 //-----------------------------------------------------------------------------
@@ -155,7 +147,6 @@ void KMAcctExpPop::readConfig(KConfig& config)
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
   mRetrieveAll = config.readNumEntry("retrieve-all", FALSE);
-  mPrecommand = config.readEntry("precommand");
 }
 
 
@@ -175,7 +166,6 @@ void KMAcctExpPop::writeConfig(KConfig& config)
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server", mLeaveOnServer);
   config.writeEntry("retrieve-all", mRetrieveAll);
-  config.writeEntry("precommand", mPrecommand);
 }
 
 
@@ -444,10 +434,10 @@ void KMAcctExpPop::startJob() {
   QString text;
 
   // Run the precommand
-  if (!runPrecommand(mPrecommand))
+  if (!runPrecommand(precommand()))
     {
       QMessageBox::warning(0, i18n("Kmail Error Message"), 
-			    i18n(QString("Couldn't execute precommand:") + mPrecommand) );  
+			    i18n(QString("Couldn't execute precommand:") + precommand()) );  
       emit finishedCheck(idsOfMsgs.count() > 0);
       return;
     }

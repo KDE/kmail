@@ -142,8 +142,8 @@ bool KMAcctPop::authenticate(DwPopClient& client)
 
     // Run the pre command if there is one
     // Not sure if this should be outside the while loop or not - mpilone 
-    if (!runPrecommand(mPrecommand))
-      return popError(QString("Couldn't execute precommand:\n") + mPrecommand, client);
+    if (!runPrecommand(precommand()))
+      return popError(QString("Couldn't execute precommand:\n") + precommand(), client);
     
     // Open connection to server
     if (client.Open(mHost,mPort) != '+')
@@ -376,7 +376,6 @@ void KMAcctPop::readConfig(KConfig& config)
   mProtocol = config.readNumEntry("protocol");
   mLeaveOnServer = config.readNumEntry("leave-on-server", FALSE);
   mRetrieveAll = config.readNumEntry("retrieve-all", FALSE);
-  mPrecommand = config.readEntry("precommand");
 }
 
 
@@ -396,7 +395,6 @@ void KMAcctPop::writeConfig(KConfig& config)
   config.writeEntry("protocol", mProtocol);
   config.writeEntry("leave-on-server", mLeaveOnServer);
   config.writeEntry("retrieve-all", mRetrieveAll);
-  config.writeEntry("precommand", mPrecommand);
 }
 
 
@@ -496,11 +494,6 @@ bool KMAcctPop::setProtocol(short aProtocol)
   return true;
 }
 
-//-----------------------------------------------------------------------------
-void KMAcctPop::setPrecommand(const QString& cmd)
-{
-   mPrecommand = cmd;
-}
 
 //=============================================================================
 //

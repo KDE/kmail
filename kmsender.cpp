@@ -12,6 +12,7 @@
 #include "kmidentity.h"
 #include "kmiostatusdlg.h"
 #include "kbusyptr.h"
+#include "kmaccount.h"
 
 #include <kconfig.h>
 #include <kprocess.h>
@@ -290,18 +291,11 @@ void KMSender::doSendMsg()
     labelDialog->show();
 
     // Run the precommand if there is one
-    KProcess precommandProcess;
-    if (mPrecommand.length() != 0)
-    {
-      setStatusMsg(i18n(QString("Executing precommand ") + mPrecommand));
-      kapp->processEvents();
-      qDebug("Running precommand %s", mPrecommand.ascii());
-      precommandProcess << mPrecommand;
-      if (!precommandProcess.start(KProcess::Block))
-      {
+    setStatusMsg(i18n(QString("Executing precommand ") + mPrecommand));
+    if (!KMAccount::runPrecommand(mPrecommand))
+      {	
 	KMessageBox::error(0, QString("Couldn't execute precommand:\n") + mPrecommand);
       }
-    }
 
     //kapp->processEvents();
     setStatusMsg(i18n("Initiating sender process..."));

@@ -135,6 +135,11 @@ void AccountDialog::makeLocalAccountPage()
   label->setEnabled(false);
   //mLocal.identityCombo->setEnabled(false);
 
+  label = new QLabel( i18n("Precommand:"), page );
+  topLayout->addWidget( label, 8, 0 );
+  mLocal.precommand = new QLineEdit( page );
+  topLayout->addWidget( mLocal.precommand, 8, 1 );
+
   connect(kapp,SIGNAL(kdisplayFontChanged()),SLOT(slotFontChanged()));
 }
 
@@ -260,6 +265,7 @@ void AccountDialog::setupSettings()
     mLocal.intervalSpin->setValue( QMAX(1, interval) ); 
     mLocal.intervalCheck->setChecked( interval >= 1 );
     mLocal.excludeCheck->setChecked( mAccount->checkExclude() );
+    mLocal.precommand->setText( mAccount->precommand() );
 
     slotEnableLocalInterval( interval >= 1 );
     folderCombo = mLocal.folderCombo;
@@ -364,6 +370,8 @@ void AccountDialog::saveSettings()
 			     mLocal.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
  
+    mAccount->setPrecommand( mLocal.precommand->text() );
+
     KMFolder *folder 
       = kernel->folderMgr()->find( mLocal.folderCombo->currentText() );
     mAccount->setFolder( folder );

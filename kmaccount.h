@@ -69,6 +69,16 @@ public:
   virtual void setCheckExclude(bool aExclude);
   int checkExclude(void) const { return mExclude; }
 
+   /** Pre command */
+  const QString& precommand(void) const { return mPrecommand; }
+  virtual void setPrecommand(const QString &cmd) { mPrecommand = cmd; }
+
+  /** Runs the precommand. If the precommand is empty, the method
+   * will just return success and not actually do anything
+   *
+   * @return True if successful, false otherwise*/
+  static bool runPrecommand(const QString &precommand);
+
 signals:
   virtual void finishedCheck(bool newMail);
 
@@ -90,14 +100,9 @@ protected:
   virtual void installTimer();
   virtual void deinstallTimer();
 
-  /** Runs the precommand. If the precommand is empty, the method
-   * will just return success and not actually do anything
-   *
-   * @return True if successful, false otherwise*/
-  bool runPrecommand(const QString &precommand);
-
 protected:
   QString       mName;
+  QString       mPrecommand;
   KMAcctMgr*    mOwner;
   KMAcctFolder* mFolder;
   QTimer *mTimer;

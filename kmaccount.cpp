@@ -83,6 +83,7 @@ void KMAccount::readConfig(KConfig& config)
   folderName = config.readEntry("Folder", "");
   setCheckInterval(config.readNumEntry("check-interval", 0));
   setCheckExclude(config.readBoolEntry("check-exclude", false));
+  setPrecommand(config.readEntry("precommand"));
 
   if (!folderName.isEmpty())
   {
@@ -106,6 +107,7 @@ void KMAccount::writeConfig(KConfig& config)
   config.writeEntry("Folder", mFolder ? (const char*)mFolder->name() : "");
   config.writeEntry("check-interval", mInterval);
   config.writeEntry("check-exclude", mExclude);
+  config.writeEntry("precommand", mPrecommand);
 }
 
 

@@ -83,6 +83,13 @@ void KMAcctLocal::processNewMail(bool)
   KMBroadcastStatus::instance()->setStatusMsg( 
 	i18n("Preparing transmission from %1...").arg(mailFolder.name()));
 
+  // run the precommand
+  if (!runPrecommand(precommand()))
+    {
+        perror("cannot run precommand "+precommand());
+	emit finishedCheck(hasNewMail); 
+    }
+
   kapp->processEvents();
   mailFolder.setAutoCreateIndex(FALSE);
 

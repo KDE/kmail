@@ -43,6 +43,7 @@ class AccountDialog : public KDialogBase
       QLabel    *titleLabel;
       QLineEdit *nameEdit;
       QLineEdit *locationEdit;
+      QLineEdit *precommand;
       QCheckBox *excludeCheck;
       QCheckBox *intervalCheck;
       QLabel    *intervalLabel;
