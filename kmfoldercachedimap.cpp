@@ -1560,7 +1560,6 @@ void KMFolderCachedImap::resetSyncState()
   close();
   emit newState( label(), progress(), i18n("Aborted"));
   emit statusMsg( i18n("%1: Aborted").arg(label()) );
-  mAccount->mailCheckProgressItem()->setComplete();
 }
 
 void KMFolderCachedImap::slotIncreaseProgress()
@@ -1570,7 +1569,7 @@ void KMFolderCachedImap::slotIncreaseProgress()
 
 void KMFolderCachedImap::newState( const QString& folderName, int progressLevel, const QString& syncStatus )
 {
-  kdDebug() << k_funcinfo << folderName << " " << progressLevel << " " << syncStatus << endl;
+  //kdDebug() << k_funcinfo << folderName << " " << progressLevel << " " << syncStatus << endl;
   ProgressItem *progressItem = mAccount->mailCheckProgressItem();
   progressItem->setLabel( folderName );
   progressItem->setCompletedItems( progressLevel );

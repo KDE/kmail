@@ -301,6 +301,7 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
   mMailCheckProgressItem->setComplete();
+  mMailCheckProgressItem = 0;
 
   // We remove everything from the deleted folders list after a sync, unconditionally.
   // Even if it fails (no permission), because on the next sync we want the folder to reappear,
