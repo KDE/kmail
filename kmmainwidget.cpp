@@ -86,6 +86,7 @@ using KMail::HeaderListQuickSearch;
 
 #include <assert.h>
 #include <kstatusbar.h>
+#include <kstaticdeleter.h>
 
 #include <kmime_mdn.h>
 #include <kmime_header_parsing.h>
@@ -94,6 +95,9 @@ using KMime::Types::AddrSpecList;
 
 #include "kmmainwidget.moc"
 
+QPtrList<KMMainWidget>* KMMainWidget::s_mainWidgetList = 0;
+static KStaticDeleter<QPtrList<KMMainWidget> > mwlsd;
+
 //-----------------------------------------------------------------------------
 KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 			   KActionCollection *actionCollection, KConfig* config ) :
@@ -101,8 +105,8 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
     mQuickSearchLine( 0 )
 {
   // must be the first line of the constructor:
-  mSearchWin = 0;
   mStartupDone = FALSE;
+  mSearchWin = 0;
   mIntegrated  = TRUE;
   mFolder = 0;
   mFolderThreadPref = false;
@@ -118,6 +122,10 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   mFilterCommands.setAutoDelete(true);
   mJob = 0;
   mConfig = config;
+
+  if( !s_mainWidgetList )
+    mwlsd.setObject( s_mainWidgetList, new QPtrList<KMMainWidget>() );
+  s_mainWidgetList->append( this );
 
   mPanner1Sep << 1 << 1;
   mPanner2Sep << 1 << 1;
@@ -163,6 +171,7 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
 //perform all cleanup that requires the kernel in destruct()
 KMMainWidget::~KMMainWidget()
 {
+  s_mainWidgetList->remove( this );
   destruct();
 }
 

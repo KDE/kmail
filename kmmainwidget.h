@@ -140,6 +140,8 @@ public:
 
   void updateListFilterAction();
 
+  static QPtrList<KMMainWidget>* mainWidgetList() { return s_mainWidgetList; }
+
 public slots:
   void slotMoveMsgToFolder( KMFolder *dest);
   void slotTrashMsg();   // move to trash
@@ -456,10 +458,6 @@ private:
 
   QTimer *menutimer;
 
-  // ProgressDialog for transferring messages
-  //KProgressDialog* mProgressDialog;
-  //int mCountJobs, mCountMsgs;
-
   KMLittleProgressDlg *mLittleProgress;
   ProgressDialog *mProgressDialog;
 
@@ -475,6 +473,7 @@ private:
   KMSystemTray  *mSystemTray;
   KConfig *mConfig;
 
+  static QPtrList<KMMainWidget>* s_mainWidgetList;
 };
 
 #endif

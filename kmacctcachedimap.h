@@ -101,6 +101,7 @@ public:
    * Set the top level pseudo folder
    */
   virtual void setImapFolder(KMFolderCachedImap *);
+  KMFolderCachedImap* imapFolder() const { return mFolder; }
 
   bool isProgressDialogEnabled() const { return mProgressDialogEnabled; }
   void setProgressDialogEnabled( bool enable ) { mProgressDialogEnabled = enable; }
@@ -165,6 +166,8 @@ protected:
 protected slots:
   /** new-mail-notification for the current folder (is called via folderComplete) */
   void postProcessNewMail(KMFolderCachedImap*, bool);
+
+  void slotProgressItemCanceled( ProgressItem* );
 
   virtual void slotCheckQueuedFolders();
 

@@ -42,6 +42,7 @@ using KMail::SieveConfig;
 #include "kmfiltermgr.h"
 #include "kmfoldercachedimap.h"
 #include "kmmainwin.h"
+#include "kmmainwidget.h"
 #include "kmkernel.h"
 #include "kmacctmgr.h"
 #include "progressmanager.h"
@@ -273,10 +274,13 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mCountLastUnread = 0;
 
   if( interactive && isProgressDialogEnabled() ) {
-#if 0
-    // ### use the right mainwindow!!!
-    theMainWindow->showProgressDialog();
-#endif
+    // Show progress dialog in all kmail-mainwidgets.
+    QPtrList<KMMainWidget>* lst = KMMainWidget::mainWidgetList();
+    if ( lst ) {
+      for( QPtrListIterator<KMMainWidget> it( *lst ); *it; ++it ) {
+        (*it)->slotShowProgressDialog();
+      }
+    }
   }
 
   Q_ASSERT( !mMailCheckProgressItem );
@@ -284,6 +288,8 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
     "MailCheck" + QString::number( id() ),
     folder->label(), // will be changed immediately in serverSync anyway
     QString::null, false);
+  connect( mMailCheckProgressItem, SIGNAL( progressItemCanceled( ProgressItem* ) ),
+           this, SLOT( slotProgressItemCanceled( ProgressItem* ) ) );
 
   folder->setAccount(this);
   connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
@@ -407,6 +413,11 @@ void KMAcctCachedImap::removeDeletedFolder( const QString& subFolderPath )
 {
   mDeletedFolders.remove( subFolderPath );
   mPreviouslyDeletedFolders.remove( subFolderPath );
+}
+
+void KMAcctCachedImap::slotProgressItemCanceled( ProgressItem* )
+{
+  killAllJobs( false );
 }
 
 #include "kmacctcachedimap.moc"
