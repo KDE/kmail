@@ -2038,7 +2038,7 @@ void KMReaderWin::displayAboutPage()
   } else {
     info = info.arg( QString::null );
   }
-  mViewer->write(content.arg(pointsToPixel(fntSize), 0, 'f', 5).arg(info));
+  mViewer->write(content.arg(pointsToPixel(fntSize)).arg(info));
   mViewer->end();
 }
 
@@ -2116,13 +2116,14 @@ void KMReaderWin::sendNextHtmlChunk()
 }
 
 //-----------------------------------------------------------------------------
-double KMReaderWin::pointsToPixel(int pointSize)
+int KMReaderWin::pointsToPixel(int pointSize) const
 {
-  QPaintDeviceMetrics pdm(mViewer->view());
-  double pixelSize = pointSize;
-  return pixelSize * pdm.logicalDpiY() / 72;
+  QPaintDeviceMetrics const pdm(mViewer->view());
+
+  return (pointSize * pdm.logicalDpiY() + 36) / 72;
 }
 
+//-----------------------------------------------------------------------------
 void KMReaderWin::showHideMimeTree( bool showIt )
 {
   if( mMimePartTree && ( !mShowMIMETreeMode || (0 != *mShowMIMETreeMode) ) ){
@@ -2216,7 +2217,7 @@ void KMReaderWin::parseMsg(void)
         .arg( mBodyFamily ).arg( fntSize )
       : QString("body { font-family: \"%1\"; font-size: %2px; "
         "color: %3; background-color: %4; }\n")
-        .arg( mBodyFamily ).arg( pointsToPixel(fntSize), 0, 'f', 5 )
+        .arg( mBodyFamily ).arg( pointsToPixel(fntSize) )
         .arg( mPrinting ? "#000000" : c1.name() )
         .arg( mPrinting ? "#FFFFFF" : c4.name() ) ) +
     ((mPrinting) ? QString("a { color: #000000; text-decoration: none; }")

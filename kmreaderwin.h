@@ -323,7 +323,7 @@ protected:
   virtual bool event(QEvent *e);
 
   /** Calculate the pixel size */
-  double pointsToPixel(int pointSize);
+  int pointsToPixel(int pointSize) const;
 
   /** Feeds the HTML viewer with the contents of the given message.
     HTML begin/end parts are written around the message. */
