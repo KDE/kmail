@@ -228,6 +228,7 @@ void ConfigureDialog::hideEvent( QHideEvent * ) {
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
   geometry.writeEntry( "ConfigureDialogWidth", width() );
   geometry.writeEntry( "ConfigureDialogHeight",height() );
+  KDialogBase::hideEvent( ev );
 }
 
 ConfigureDialog::~ConfigureDialog() {
