@@ -73,6 +73,7 @@ namespace KMail {
     class Private;
     Private * d;
     Private * s;
+  public:
     const QPaintDeviceMetrics mMetrics;
   };
 
