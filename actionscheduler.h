@@ -32,13 +32,14 @@
 #ifndef actionscheduler_h
 #define actionscheduler_h
 
-#include "qobject.h"
-#include "qguardedptr.h"
-#include "qtimer.h"
 #include "kmfilteraction.h" // for KMFilterAction::ReturnCode
 #include "kmfilter.h"
 #include "kmfiltermgr.h" // KMFilterMgr::FilterSet
 #include "kmcommands.h"
+
+#include <qobject.h>
+#include <qguardedptr.h>
+#include <qtimer.h>
 
 class KMHeaders;
 

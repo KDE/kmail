@@ -3,18 +3,20 @@
 #ifndef __KMHEADERS
 #define __KMHEADERS
 
-#include <qwidget.h>
-#include <qstrlist.h>
+#include "kmmessage.h"
+#include "kmime_util.h"
+#include "kmcommands.h"
+
 #include <klistview.h>
 #include <kfoldertree.h>
+#include <kpopupmenu.h>
+
+#include <qwidget.h>
+#include <qstrlist.h>
 #include <qmemarray.h>
 #include <qmap.h>
 #include <qdragobject.h>
 #include <qdict.h>
-#include "kmmessage.h"
-#include "kmime_util.h"
-#include <kpopupmenu.h>
-#include "kmcommands.h"
 
 class KMFolder;
 class KMMessage;
