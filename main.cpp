@@ -199,6 +199,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Lars Knoll", QString::null, "knoll@kde.org" );
   about.addAuthor( "J. Nick Koston", QString::null, "bdraco@darkorb.net" );
   about.addAuthor( "Stephan Kulow", QString::null, "coolo@kde.org" );
+  about.addAuthor( "Marc Mutz", QString::null, "mutz@kde.org" );
   about.addAuthor( "Daniel Naber", QString::null, "daniel.naber@t-online.de" );
   about.addAuthor( "Sven Radej", QString::null, "radej@kde.org" );
   about.addAuthor( "Espen Sand", QString::null, "espen@kde.org" );
