@@ -26,7 +26,6 @@
 #include "mailcomposerIface.h"
 
 #include "cryptplugwrapper.h"
-#include <kabc/addresslineedit.h>
 
 class _StringPair {
  public:
@@ -117,18 +116,48 @@ private:
 
 
 //-----------------------------------------------------------------------------
-class KMLineEdit : public KABC::AddressLineEdit
+#define KMLineEditInherited KLineEdit
+class KMLineEdit : public KLineEdit
 {
   Q_OBJECT
-  typedef KABC::AddressLineEdit KMLineEditInherited;
+
 public:
   KMLineEdit(KMComposeWin* composer, bool useCompletion, QWidget *parent = 0L,
              const char *name = 0L);
+  virtual ~KMLineEdit();
+
+  virtual void setFont( const QFont& );
+
+public slots:
+  void undo();
+  /**
+   * Set cursor to end of line.
+   */
+  void cursorAtEnd();
+
 protected:
-  virtual void loadAddresses();
-  virtual void keyPressEvent(QKeyEvent*);
-private:
+  virtual bool eventFilter(QObject*, QEvent*);
+  virtual void dropEvent(QDropEvent *e);
+  virtual void paste();
+  virtual void insert(const QString &t);
+  virtual void mouseReleaseEvent( QMouseEvent * e );
+  void doCompletion(bool ctrlT);
   KMComposeWin* mComposer;
+
+private slots:
+  void slotCompletion() { doCompletion(false); }
+  void slotPopupCompletion( const QString& );
+
+private:
+  void loadAddresses();
+
+  QString m_previousAddresses;
+  bool m_useCompletion;
+  bool m_smartPaste;
+
+  static bool s_addressesDirty;
+  static KCompletion *s_completion;
+
 };
 
 
