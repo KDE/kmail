@@ -33,6 +33,7 @@
 #include "kmgroupwarefuncs.h"
 #include "kmcommands.h"
 #include "kmfolderindex.h"
+#include "kmmsgdict.h"
 
 #include <ktnef/ktnefparser.h>
 #include <ktnef/ktnefattach.h>
@@ -363,6 +364,25 @@ void KMGroupware::initFolders()
 	     this, SLOT( slotTasksFolderChanged() ) );
     connect( mTasks, SIGNAL( msgRemoved(int, QString) ),
 	     this, SLOT( slotTasksFolderChanged() ) );
+
+    // New interface:
+    connect( mContacts, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+    connect( mCalendar, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+    connect( mTasks, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+    connect( mNotes, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
+	     this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+
+    connect( mContacts, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
+    connect( mCalendar, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
+    connect( mTasks, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
+    connect( mNotes, SIGNAL( aboutToRemoveMsg( KMFolder*, int ) ),
+	     this, SLOT( slotIncidenceDeleted( KMFolder*, int ) ) );
 
     if( mMainWin && mMainWin->mainKMWidget()->folderTree() ) {
       mMainWin->mainKMWidget()->folderTree()->reload();
@@ -1017,6 +1037,124 @@ void internal_directlySendMessage(KMMessage* msg)
   //mMainWin->slotCompose( msgNew, 0 );
 }
 
+bool KMGroupware::addIncidence( const QString& type, 
+				const QString& uid, 
+				const QString& ical )
+{
+  KMFolder* folder = 0;
+
+  if( type == "Contact" ) {
+    folder = mCalendar;
+  } else if( type == "Calendar" ) {
+    folder = mCalendar;
+  } else if( type == "Note" ) {
+    folder = mNotes;
+  } else if( type == "Task" ) {
+    folder = mTasks;
+  } else {
+    assert(0);
+  }
+
+  // process a new event:
+  KMMessage* msg = new KMMessage(); // makes a "Content-Type=text/plain" message
+  msg->initHeader();
+  msg->setType(    DwMime::kTypeText );
+  msg->setSubtype( DwMime::kSubtypeVCal );
+  msg->setHeaderField("Content-Type",
+		      "text/calendar; method=REQUEST; charset=\"utf-8\"");
+  msg->setSubject( uid ); // we could use the uid as subj
+  msg->setTo( msg->from() );
+  msg->setBodyEncoded( ical.utf8() );
+
+  msg->touch();
+  folder->addMsg( msg );  
+  return true;
+}
+
+bool KMGroupware::deleteIncidence( const QString& type, const QString& uid )
+{
+  KMFolder* folder = 0;
+
+  if( type == "Contact" ) {
+    folder = mCalendar;
+  } else if( type == "Calendar" ) {
+    folder = mCalendar;
+  } else if( type == "Note" ) {
+    folder = mNotes;
+  } else if( type == "Task" ) {
+    folder = mTasks;
+  } else {
+    kdError() << "No such folder" << endl;
+    return;
+  }
+
+  KMMessage* msg = findMessageByUID( uid, folder, false );
+  if( !msg ) return false;
+  
+  deleteMsg( msg );
+  return true;
+}
+
+QStringList KMGroupware::incidences( const QString& type )
+{
+  KMFolder* folder = 0;
+
+  if( type == "Contact" ) {
+    folder = mCalendar;
+  } else if( type == "Calendar" ) {
+    folder = mCalendar;
+  } else if( type == "Note" ) {
+    folder = mNotes;
+  } else if( type == "Task" ) {
+    folder = mTasks;
+  } else {
+    assert(0);
+  }
+
+  QStringList ilist;
+  QString s;
+  int iDummy;  
+  for( int i=0; i<folder->count(); ++i ){
+    bool unget = !folder->isMessage(i);
+    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, &s, 0 ) )
+      ilist << s;
+    if( unget ) folder->unGetMsg(i);
+  }
+  return ilist;
+}
+
+void KMGroupware::slotIncidenceAdded( KMFolder* folder, Q_UINT32 sernum )
+{
+  QString type;
+  if( folder == mContacts ) {
+    type = "Contact";
+  } else if( folder == mCalendar ) {
+    type = "Calendar";
+  } else if( folder == mTasks ) {
+    type = "Task";
+  } else if( folder == mNotes ) {
+    type = "Note";
+  } else {
+    kdError() << "Not a groupware folder" << endl;
+    return;
+  }
+
+  int i = 0;
+  KMFolder* aFolder = 0;
+  KMKernel::self()->msgDict()->getLocation( sernum, &aFolder, &i );
+  assert( folder == aFolder );
+
+  bool unget = !folder->isMessage( i );
+  int iDummy;
+  QString s;
+  if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), iDummy, &s, 0 ) )
+    emit incidenceAdded( type, s );
+  if( unget ) folder->unGetMsg(i);
+}
+
+void KMGroupware::slotIncidenceDeleted( KMFolder* folder, int idx )
+{
+}
 
 void KMGroupware::slotNewOrUpdatedIncident( const QString& type,
                                             const QString& vCalNew,

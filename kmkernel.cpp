@@ -54,6 +54,7 @@
 #include <ktip.h>
 #include "kmmainwidget.h"
 #include "kmgroupware.h"
+#include "kmailicalifaceimpl.h"
 
 #include <X11/Xlib.h>
 #undef Unsorted
@@ -100,6 +101,9 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   mWin = 0;
 
   mGroupware = new KMGroupware( this );
+
+  // Set up DCOP interface
+  (void)new KMailICalIfaceImpl( mGroupware );
 
   mSystemTray = 0;
   mXmlGuiInstance = 0;

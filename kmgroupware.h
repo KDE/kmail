@@ -37,6 +37,26 @@ public:
   KMGroupware( QObject* parent = 0, const char* name = 0 );
   virtual ~KMGroupware();
 
+  ///////////////////////////////////
+  // New interface for storage!
+  bool addIncidence( const QString& type, 
+		     const QString& uid, 
+		     const QString& ical );
+  bool deleteIncidence( const QString& type, const QString& uid );
+  QStringList incidences( const QString& type );
+
+signals:
+  void incidenceAdded( const QString& type, const QString& ical );
+  void incidenceDeleted( const QString& type, const QString& uid );
+
+private slots:
+  // internal slots for new interface
+  void slotIncidenceAdded( KMFolder*, Q_UINT32 );
+  void slotIncidenceDeleted( KMFolder*, int );
+  
+  //////////////////////////////////
+public:
+
   /**
    * Returns true if groupware mode is enabled and folder is one of the
    * groupware folders.

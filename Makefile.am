@@ -52,7 +52,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
 		kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
-                kmkernel.cpp kmailpartIface.skel kmailIface.skel main.cpp \
+                kmkernel.cpp kmailpartIface.skel kmailIface.skel kmailicalIface.skel main.cpp \
 		accountdialog.cpp kmfldsearch.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
 		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
@@ -73,7 +73,8 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
 		kmfoldersearch.cpp transportmanager.cpp \
 		folderjob.cpp cachedimapjob.cpp addressesdialog.cpp \
-		addresspicker.ui subscriptiondialog.cpp		
+		addresspicker.ui subscriptiondialog.cpp \
+		kmailicalifaceimpl.cpp
 
 METASOURCES = AUTO
 
@@ -83,11 +84,12 @@ noinst_HEADERS = adddirectoryservicedialogimpl.h kmmimeparttree.h \
 		 kmgroupwarefuncs.h kmgroupwarewizard.h \
 		 signatureconfigurationdialogimpl.h \
 		 encryptionconfigurationdialogimpl.h \
-		 signatureconfigurationdialogimpl.h addressesdialog.h
+		 signatureconfigurationdialogimpl.h addressesdialog.h \
+		 kmailicalifaceimpl.h
 
 dcoptest_SOURCES = dcoptest.cpp kmailIface.skel mailcomposerIface.skel
 
-include_HEADERS = kmailIface.h kmailpartIface.h
+include_HEADERS = kmailIface.h kmailpartIface.h kmailicalIface.h
 
 appsdir = $(kde_appsdir)/Internet
 apps_DATA = KMail.desktop

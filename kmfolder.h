@@ -479,6 +479,10 @@ signals:
   /** Emitted when the icon paths are set. */
   void iconsChanged();
 
+  /** Emitted when a message is about to be removed from a folder
+   */
+  void aboutToRemoveMsg( KMFolder* fld, int idx );
+
   /** Emitted when a message is removed from the folder. */
   void msgRemoved(int,QString);
   void msgRemoved(KMFolder*, Q_UINT32);
