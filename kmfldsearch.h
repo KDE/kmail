@@ -32,7 +32,6 @@ public:
 protected slots:
   virtual void slotClose();
   virtual void slotSearch();
-  virtual void slotClear();
   virtual void slotShowMsg(QListViewItem *);
 
 protected:
@@ -60,15 +59,16 @@ protected:
 protected:
   QGridLayout* mGrid;
   QComboBox *mCbxFolders;
-  QPushButton *mBtnSearch, *mBtnClear, *mBtnClose;
+  QPushButton *mBtnSearch, *mBtnClose;
   KMFldSearchRule **mRules;
   QListView* mLbxMatches;
   QLabel* mLblStatus;
   int mNumRules, mNumMatches;
-  int count;
+  int mCount;
   QString mSearchFolder;
   bool mSearching, mStopped;
   KMMainWin* mMainWin;
+  QWidget* mLastFocus;
 };
 
 
@@ -80,15 +80,13 @@ public:
   KMFldSearchRule(QWidget* parent, QGridLayout* grid, int gridRow, int gridCol);
   virtual ~KMFldSearchRule();
 
-  /** Clear widget contents */
-  virtual void clear(void);
-
   /** Test if message matches rules. */
   virtual bool matches(const KMMessage*) const;
 
   /** Prepare for search run. */
   virtual void prepare(void);
 
+  /** Enable or disable all the push buttons */
   virtual void setEnabled(bool);
 
   enum Func { Contains=0, NotContains, Equal, NotEqual, LessEqual, 

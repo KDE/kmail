@@ -64,6 +64,8 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   lbl->setAlignment(AlignRight|AlignVCenter);
   mGrid->addWidget(lbl, 0, 0);
 
+  mLastFocus = new QWidget();	// to remeber the position of the focus
+
   mLbxMatches = new QListView(this, "Search in Folders");
   mLbxMatches->setSorting(-1);
   mLbxMatches->addColumn(i18n("Subject"), 150);
@@ -94,8 +96,6 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mBtnSearch = bbox->addButton(i18n("Search"));
   mBtnSearch->setDefault(true);
   connect(mBtnSearch, SIGNAL(clicked()), SLOT(slotSearch()));
-  mBtnClear  = bbox->addButton(i18n("Clear"));
-  connect(mBtnClear, SIGNAL(clicked()), SLOT(slotClear()));
   mBtnClose  = bbox->addButton(i18n("Close"));
   connect(mBtnClose, SIGNAL(clicked()), SLOT(slotClose()));
   bbox->layout();
@@ -143,7 +143,8 @@ QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
  int i = 1;
  for( st = str.begin(); st != str.end(); ++st, ++i) {
    cbx->insertItem(*st);
-   if( *st == curFolder ) {		// preselect current folder
+   QString fname = *st;
+   if( fname.stripWhiteSpace() == curFolder ) {		// preselect current folder
      cbx->setCurrentItem(i);
    }
  }
@@ -159,14 +160,14 @@ void KMFldSearch::updStatus(void)
 
   if (!mSearching) {
     if(!mStopped)
-      str = i18n("Done, %1 matches (%2 messages processed)").arg(mNumMatches).arg(count);
+      str = i18n("Done, %1 matches (%2 messages processed)").arg(mNumMatches).arg(mCount);
     else
-      str = i18n("Search cancelled, %1 matches so far (%3 messages processed)").arg(mNumMatches).arg(count);
+      str = i18n("Search cancelled, %1 matches so far (%3 messages processed)").arg(mNumMatches).arg(mCount);
   } else
     str = i18n("%1 matches, searching in %2 (message %3)")
 		.arg(mNumMatches)
 		.arg(mSearchFolder)
-		.arg(count);
+		.arg(mCount);
   mLblStatus->setText(str);
 }
 
@@ -183,7 +184,10 @@ void KMFldSearch::keyPressEvent(QKeyEvent *evt)
         KMFldSearchInherited::keyPressEvent(evt);
         break;
       case Key_Escape:
-        slotClose();
+        if( mSearching )
+          mSearching = false;
+	else
+          slotClose();
         break;
   }
 }
@@ -196,7 +200,7 @@ bool KMFldSearch::searchInMessage(KMMessage* aMsg)
 
   assert(aMsg!=NULL);
 
-  count++;
+  mCount++;
   updStatus();
   for(i=0; matches && i<mNumRules; i++)
     if (!mRules[i]->matches(aMsg)) 
@@ -292,14 +296,16 @@ void KMFldSearch::searchInAllFolders(void)
 void KMFldSearch::slotSearch()
 {
   int i;
-
+  mLastFocus = focusWidget();
+  mBtnSearch->setFocus();	// set focus so we don't miss key event
+  
   if (mSearching)
   {
     mSearching = false;
     return;
   }
   
-  count = 0;
+  mCount = 0;
   mStopped = false;
   mNumMatches = 0;
   mSearching  = true;
@@ -329,6 +335,8 @@ void KMFldSearch::slotSearch()
 
   mBtnSearch->setCaption(i18n("Search"));
   enableGUI();
+  if( mLastFocus ) 
+    mLastFocus->setFocus();
 }
 
 
@@ -371,19 +379,9 @@ void KMFldSearch::slotShowMsg(QListViewItem *item)
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearch::slotClear()
-{
-  int i;
-
-  for (i=0; i<mNumRules; i++)
-    mRules[i]->clear();
-
-  mLbxMatches->clear();
-}
 
 void KMFldSearch::enableGUI() {
   mBtnClose->setEnabled(!mSearching);
-  mBtnClear->setEnabled(!mSearching);
   mCbxFolders->setEnabled(!mSearching);
 
   for(int i = 0; i < mNumRules; i++)
@@ -484,15 +482,6 @@ bool KMFldSearchRule::matches(const KMMessage* aMsg) const
 
 
 //-----------------------------------------------------------------------------
-void KMFldSearchRule::clear(void)
-{
-  mCbxField->setCurrentItem(1);
-  mCbxField->setCurrentItem(0);
-  mCbxFunc->setCurrentItem(0);
-  mEdtValue->setText("");  
-}
-
-
 void KMFldSearchRule::setEnabled(bool b) {
   mCbxField->setEnabled(b);
   mCbxFunc->setEnabled(b);
