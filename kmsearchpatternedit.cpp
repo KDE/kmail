@@ -185,7 +185,7 @@ QCString KMSearchRuleWidget::statusToEnglish(const QString & i18nVal) {
   if (i18nVal == i18n("important")) return "important";
   if (i18nVal == i18n("watched")) return "watched";
   if (i18nVal == i18n("ignored")) return "ignored";
-  if (i18nVal == i18n("todo")) return "todo";
+  //if (i18nVal == i18n("todo")) return "todo";
   if (i18nVal == i18n("spam")) return "spam";
   return i18nVal.latin1();
 }
@@ -281,7 +281,7 @@ void KMSearchRuleWidget::initLists(bool headersOnly, bool absoluteDates)
     mStatiList.append( i18n( "important" ) );
     mStatiList.append( i18n( "watched" ) );
     mStatiList.append( i18n( "ignored" ) );
-    mStatiList.append( i18n( "todo" ) );
+    //mStatiList.append( i18n( "todo" ) );
     mStatiList.append( i18n( "spam" ) );
     mStatiList.append( i18n( "ham" ) );
   }
