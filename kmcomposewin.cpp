@@ -263,10 +263,14 @@ void KMComposeWin::readConfig(void)
   config->setGroup("Composer");
 
   str = config->readEntry("charset", "");
-  if (str.isNull() || str=="default" || !KGlobal::charsets()->isAvailable(str))
-      mDefCharset = "default";
+  if (str.isNull() || str.isEmpty() || str=="default")
+    mDefCharset = defaultCharset();
   else
-      mDefCharset = str;
+  {
+    mDefCharset = str;
+    if ( !KGlobal::charsets()->isAvailable(mDefCharset) )
+      mDefCharset = "default";
+  }
 
   kdDebug() << "Default charset: " << (const char*)mDefCharset << endl;
 
@@ -719,11 +723,12 @@ void KMComposeWin::setupActions(void)
   encodings.remove(QString("*-*"));  //this doesn't make sense
   encodings.prepend( "us-ascii" );
   encodingAction->setItems( encodings );
-  //guess default from font charset
+  //default is given by mDefCharset
   int i = 0;
   bool found = false;
+  QFont::CharSet defCharset = KGlobal::charsets()->nameToID(mDefCharset);
   for ( QStringList::Iterator it = encodings.begin(); it != encodings.end(); ++it, i++ )
-    if ((*it) == KGlobal::charsets()->xCharsetName(mBodyFont.charSet()))
+    if ((*it) == KGlobal::charsets()->xCharsetName(defCharset))
     {
       encodingAction->setCurrentItem(i);
       found = true;
@@ -2073,14 +2078,33 @@ void KMComposeWin::setEditCharset()
 //-----------------------------------------------------------------------------
 const QString KMComposeWin::defaultCharset(void)
 {
+  // first try
+  QString retval = KGlobal::locale()->charset();
+  // however KGlobal::locale->charset() has a fallback value of iso-8859-1,
+  // we try to be smarter
   QString aStr = QTextCodec::codecForLocale()->name();
-  // codecForLocale returns ISO 8859-1, we need iso-8859-1
-  QString bStr = "";
-  QChar spaceChar(' ');
-  for (int i = 0; i < (int)aStr.length(); i++)
-     if (aStr[i] != spaceChar)
-       bStr += aStr[i].lower();
-  return KGlobal::charsets()->name(KGlobal::charsets()->nameToID(bStr));
+  if ((retval == "iso-8859-1") && (aStr != "ISO 8859-1"))
+  {
+    // read locale if it really gives iso-8859-1
+    KConfig *globalConfig = KGlobal::instance()->config();
+    if (globalConfig)
+    {
+      KConfigGroupSaver saver(globalConfig, QString::fromLatin1("Locale"));
+      retval = globalConfig->readEntry(QString::fromLatin1("Charset"));
+      if (retval.isNull())  //this means iso-8859-1 was a fallback, make your own guess
+      {
+        //we basicly use LANG envvar here
+        QString bStr = "";
+        QChar spaceChar(' ');
+        for (int i = 0; i < (int)aStr.length(); i++)
+           if (aStr[i] != spaceChar)
+             bStr += aStr[i].lower();
+         retval = KGlobal::charsets()->name(KGlobal::charsets()->nameToID(bStr));
+      }
+    }
+    //we should be pretty safe: still if sth goes wrong we return iso-8859-1
+  }
+  return retval;
 }
 
 //-----------------------------------------------------------------------------
