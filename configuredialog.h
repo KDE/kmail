@@ -22,15 +22,14 @@
 #ifndef _CONFIGURE_DIALOG_H_
 #define _CONFIGURE_DIALOG_H_
 
-#include <kdialogbase.h>
 #include <qptrlist.h>
 #include <qguardedptr.h>
+#include <kcmultidialog.h>
 
 class KConfig;
-class ConfigurationPage;
 class ProfileDialog;
 
-class ConfigureDialog : public KDialogBase
+class ConfigureDialog : public KCMultiDialog
 {
   Q_OBJECT
 
@@ -38,19 +37,7 @@ public:
   ConfigureDialog( QWidget *parent=0, const char *name=0, bool modal=true );
   ~ConfigureDialog();
 
-public slots:
-  /** @reimplemented */
-  void show();
-
-protected slots:
-  /** @reimplemented */
-  void slotOk();
-  /** @reimplemented */
-  void slotApply();
-  /** @reimplemented */
-  void slotHelp();
-  /** @reimplemented */
-  void slotUser1();
+signals:
   /** Installs a new profile (in the dislog's widgets; to apply, the
       user has to hit the apply button). Profiles are normal kmail
       config files which have an additonal group "KMail Profile"
@@ -58,20 +45,16 @@ protected slots:
       resp. Only keys that this profile is supposed to alter should be
       included in the file.
   */
-  void slotInstallProfile( KConfig * profile );
-
-private slots:
-  void slotCancelOrClose();
-
-signals:
-  void configChanged();
-
+  void installProfile( KConfig *profile );
+  void configChanged( void );
+protected:
+  void hideEvent( QHideEvent *i );
+protected slots:
+  /** @reimplemented 
+   * Brings up the profile loading/editing dialog. We can't use User1, as
+   * KCMultiDialog uses that for "Reset". */
+  void slotUser2();
 private:
-  void setup();
-  void apply(bool);
-
-private:
-  QPtrList<ConfigurationPage> mPages;
   QGuardedPtr<ProfileDialog>  mProfileDialog;
 };
 

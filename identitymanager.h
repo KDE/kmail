@@ -181,6 +181,9 @@ signals:
   /** Emitted on @ref commit() for each new identity */
   void added( const KMIdentity & ident );
 
+protected slots:
+  void slotRollback() { rollback(); };
+
 protected:
   /** The list that will be seen by everyone */
   QValueList<KMIdentity> mIdentities;

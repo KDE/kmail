@@ -16,9 +16,14 @@ libkmailprivate_la_LIBADD  = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 	../mimelib/libmimelib.la \
 	../libksieve/libksieve.la
 
-kde_module_LTLIBRARIES = libkmailpart.la
+kde_module_LTLIBRARIES = kcm_kmail.la libkmailpart.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0 -no-undefined
 libkmailpart_la_LIBADD	= libkmailprivate.la
+
+kcm_kmail_la_SOURCES = configuredialog.cpp
+kcm_kmail_la_LDFLAGS = $(all_libraries) -module -avoid-version -no-undefined
+kcm_kmail_la_LIBADD = libkmailprivate.la $(LIB_KDECORE)
+
 
 bin_PROGRAMS = kmail
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
@@ -84,7 +89,7 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		iobserver.cpp isubject.cpp bodyvisitor.cpp antispamwizard.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
 		secondarywindow.cpp \
-		korganizeriface.stub
+      korganizeriface.stub \
 
 kmail_SOURCES = main.cpp
 
@@ -129,6 +134,11 @@ tip_DATA = tips
 servicetypedir = $(kde_servicetypesdir)
 servicetype_DATA = dcopmail.desktop
 
+kde_services_DATA = kmail_config_misc.desktop kmail_config_appearance.desktop \
+   kmail_config_identity.desktop kmail_config_network.desktop kmail_config_composer.desktop \
+   kmail_config_security.desktop
+
+ 
 messages: rc.cpp
 	rm -f tips.cpp
 	$(PREPARETIPS) > tips.cpp

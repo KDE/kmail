@@ -169,11 +169,6 @@ of which you have to reimplement at least the first two:
   Read the config from the widgets and write it into the config file
   or the corresponding config manager.
 
-- void dismiss()
-  Called on cancel. You should clean up any temporary stuff you
-  needed. If you work with a config-manager backed page, you want to
-  call ConfigManager::rollback() here.
-
 - void installProfile()
   This is called when the user selected a profile and hit apply. A
   profile is just another KConfig object. Therefore, this method

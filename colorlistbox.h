@@ -31,6 +31,8 @@ class ColorListBox : public KListBox
     ColorListBox( QWidget *parent=0, const char * name=0, WFlags f=0 );
     void setColor( uint index, const QColor &color );
     QColor color( uint index ) const;
+signals:
+    void changed();
 
   public slots:
     virtual void setEnabled( bool state );

@@ -71,6 +71,7 @@ using KMime::DateFormatter;
 #include <knotifydialog.h>
 #include <kconfig.h>
 #include <kactivelabel.h>
+#include <kcmultidialog.h>
 
 // Qt headers:
 #include <qvalidator.h>
@@ -131,24 +132,24 @@ namespace {
     }
   }
 
-  void populate( QButtonGroup * g, const EnumConfigEntry & e ) {
+  void populateButtonGroup( QButtonGroup * g, const EnumConfigEntry & e ) {
     g->setTitle( i18n( e.desc ) );
     g->layout()->setSpacing( KDialog::spacingHint() );
     for ( int i = 0 ; i < e.numItems ; ++i )
       g->insert( new QRadioButton( i18n( e.items[i].desc ), g ), i );
   }
 
-  void populate( QCheckBox * b, const BoolConfigEntry & e ) {
+  void populateCheckBox( QCheckBox * b, const BoolConfigEntry & e ) {
     b->setText( i18n( e.desc ) );
   }
 
-  void load( QCheckBox * b, const KConfigBase & c, const BoolConfigEntry & e ) {
+  void loadWidget( QCheckBox * b, const KConfigBase & c, const BoolConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     checkLockDown( b, c, e.key );
     b->setChecked( c.readBoolEntry( e.key, e.defaultValue ) );
   }
 
-  void load( QButtonGroup * g, const KConfigBase & c, const EnumConfigEntry & e ) {
+  void loadWidget( QButtonGroup * g, const KConfigBase & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     Q_ASSERT( g->count() == e.numItems );
     checkLockDown( g, c, e.key );
@@ -161,12 +162,12 @@ namespace {
     g->setButton( e.defaultItem );
   }
 
-  void save( QCheckBox * b, KConfigBase & c, const BoolConfigEntry & e ) {
+  void saveCheckBox( QCheckBox * b, KConfigBase & c, const BoolConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     c.writeEntry( e.key, b->isChecked() );
   }
 
-  void save( QButtonGroup * g, KConfigBase & c, const EnumConfigEntry & e ) {
+  void saveButtonGroup( QButtonGroup * g, KConfigBase & c, const EnumConfigEntry & e ) {
     Q_ASSERT( c.group() == e.group );
     Q_ASSERT( g->count() == e.numItems );
     c.writeEntry( e.key, e.items[ g->id( g->selected() ) ].key );
@@ -175,197 +176,66 @@ namespace {
   template <typename T_Widget, typename T_Entry>
   inline void loadProfile( T_Widget * g, const KConfigBase & c, const T_Entry & e ) {
     if ( c.hasKey( e.key ) )
-      load( g, c, e );
+      loadWidget( g, c, e );
   }
-
-  // little helper:
-  inline QPixmap loadIcon( const char * name ) {
-    return KGlobal::instance()->iconLoader()
-      ->loadIcon( QString::fromLatin1(name), KIcon::NoGroup, KIcon::SizeMedium );
-  }
-
 }
 
 
-ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name,
-                                  bool modal )
-  : KDialogBase( IconList, i18n("Configure"), Help|Apply|Ok|Cancel|User1,
-                 Ok, parent, name, modal, true, i18n("&Load Profile...") ),
-    mProfileDialog( 0 )
+ConfigureDialog::ConfigureDialog( QWidget *parent, const char *name, bool modal )
+  : KCMultiDialog( KDialogBase::IconList, KGuiItem( i18n( "&Load Profile..." ) ), 
+                   KGuiItem(), User2, i18n( "Configure" ), parent, name, modal )
+  , mProfileDialog( 0 )
 {
   KWin::setIcons( winId(), kapp->icon(), kapp->miniIcon() );
-  // setHelp() not needed, since we override slotHelp() anyway...
+  showButton( User1, true );
 
-  setIconListAllVisible( true );
+  addModule ( "kmail_config_identity", false );
+  addModule ( "kmail_config_network", false );
+  addModule ( "kmail_config_appearance", false );
+  addModule ( "kmail_config_composer", false );
+  addModule ( "kmail_config_security", false );
+  addModule ( "kmail_config_misc", false );
 
-  connect( this, SIGNAL(cancelClicked()), this, SLOT(slotCancelOrClose()) );
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  int width = geometry.readNumEntry( "ConfigureDialogWidth" );
+  int height = geometry.readNumEntry( "ConfigureDialogHeight" );
+  if ( width != 0 && height != 0 ) {
+     setMinimumSize( width, height );
+  }
 
-  QWidget *page;
-  QVBoxLayout *vlay;
-  ConfigurationPage *configPage;
-
-  // Identity Page:
-  page = addPage( IdentityPage::iconLabel(), IdentityPage::title(),
-		  loadIcon( IdentityPage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new IdentityPage( page );
-  vlay->addWidget( configPage );
-  configPage->setPageIndex( pageIndex( page ) );
-  mPages.append( configPage );
-
-  // Network Page:
-  page = addPage( NetworkPage::iconLabel(), NetworkPage::title(),
-		  loadIcon( NetworkPage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new NetworkPage( page );
-  vlay->addWidget( configPage );
-  configPage->setPageIndex( pageIndex( page ) );
-  mPages.append( configPage );
-
-  // ### FIXME: We need a KMTransportCombo...  It's also no good to
-  // allow non-applied transports to be presented in the identity
-  // settings...
-  connect( configPage, SIGNAL(transportListChanged(const QStringList &)),
-	   mPages.getFirst(), SLOT(slotUpdateTransportCombo(const QStringList &)) );
-
-  // Appearance Page:
-  page = addPage( AppearancePage::iconLabel(), AppearancePage::title(),
-		  loadIcon( AppearancePage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new AppearancePage( page );
-  vlay->addWidget( configPage );
-  configPage->setPageIndex( pageIndex( page ) );
-  mPages.append( configPage );
-
-  // Composer Page:
-  page = addPage( ComposerPage::iconLabel(), ComposerPage::title(),
-		  loadIcon( ComposerPage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new ComposerPage( page );
-  vlay->addWidget( configPage );
-  configPage->setPageIndex( pageIndex( page ) );
-  mPages.append( configPage );
-
-  // Security Page:
-  page = addPage( SecurityPage::iconLabel(), SecurityPage::title(),
-		  loadIcon( SecurityPage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new SecurityPage( page );
-  vlay->addWidget( configPage );
-  configPage->setPageIndex( pageIndex( page ) );
-  mPages.append( configPage );
-
-  // Misc Page:
-  page = addPage( MiscPage::iconLabel(), MiscPage::title(),
-		  loadIcon( MiscPage::iconName() ) );
-  vlay = new QVBoxLayout( page, 0, spacingHint() );
-  configPage = new MiscPage( page );
-  vlay->addWidget( configPage );
-  configPage->setPageIndex( pageIndex( page ) );
-  mPages.append( configPage );
 }
 
+void ConfigureDialog::hideEvent( QHideEvent * ) {
+  KConfigGroup geometry( KMKernel::config(), "Geometry" );
+  geometry.writeEntry( "ConfigureDialogWidth", width() );
+  geometry.writeEntry( "ConfigureDialogHeight",height() );
+}
 
 ConfigureDialog::~ConfigureDialog() {
 }
 
-
-void ConfigureDialog::show() {
-  // ### try to move the setup into the *Page::show() methods?
-  if( !isVisible() )
-    setup();
-  KDialogBase::show();
-}
-
-void ConfigureDialog::slotCancelOrClose() {
-  for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
-    it.current()->dismiss();
-}
-
-void ConfigureDialog::slotOk() {
-  apply( true );
-  accept();
-}
-
-
-void ConfigureDialog::slotApply() {
-  apply( false );
-}
-
-void ConfigureDialog::slotHelp() {
-  const int activePage = activePageIndex();
-  if ( activePage >= 0 && (unsigned int)activePage < mPages.count() )
-    kapp->invokeHelp( mPages.at( activePage )->helpAnchor() );
-  else
-    kdDebug(5006) << "ConfigureDialog::slotHelp(): no page selected???"
-		  << endl;
-}
-
-void ConfigureDialog::slotUser1() {
+void ConfigureDialog::slotUser2() {
   if ( mProfileDialog ) {
     mProfileDialog->raise();
     return;
   }
   mProfileDialog = new ProfileDialog( this, "mProfileDialog" );
   connect( mProfileDialog, SIGNAL(profileSelected(KConfig*)),
-	   SLOT(slotInstallProfile(KConfig*)) );
+	        this, SIGNAL(installProfile(KConfig*)) );
   mProfileDialog->show();
 }
-
-void ConfigureDialog::setup() {
-  for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
-    it.current()->setup();
-}
-
-void ConfigureDialog::slotInstallProfile( KConfig * profile ) {
-  for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
-    it.current()->installProfile( profile );
-}
-
-void ConfigureDialog::apply( bool everything ) {
-  const int activePage = activePageIndex();
-
-  if ( !everything )
-    mPages.at( activePage )->apply();
-  else
-    for ( QPtrListIterator<ConfigurationPage> it( mPages ) ; it.current() ; ++it )
-      it.current()->apply();
-
-  //
-  // Make other components read the new settings
-  //
-  KMMessage::readConfig();
-  KCursorSaver busy(KBusyPtr::busy()); // this can take some time when a large folder is open
-
-  emit configChanged();
-}
-
-
 
 // *************************************************************
 // *                                                           *
 // *                      IdentityPage                         *
 // *                                                           *
 // *************************************************************
-
-QString IdentityPage::iconLabel() {
-  return i18n("Identities");
-}
-
-QString IdentityPage::title() {
-  return i18n("Manage Identities");
-}
-
-const char * IdentityPage::iconName() {
-  return "identity";
-}
-
 QString IdentityPage::helpAnchor() const {
   return QString::fromLatin1("configure-identity");
 }
 
 IdentityPage::IdentityPage( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name ),
+  : ConfigModule( parent, name ),
     mIdentityDialog( 0 )
 {
   QHBoxLayout * hlay = new QHBoxLayout( this, 0, KDialog::spacingHint() );
@@ -415,11 +285,11 @@ IdentityPage::IdentityPage( QWidget * parent, const char * name )
   vlay->addWidget( mRemoveButton );
   vlay->addWidget( mSetAsDefaultButton );
   vlay->addStretch( 1 );
+  load();
 }
 
-void IdentityPage::setup()
+void IdentityPage::load()
 {
-  kdDebug(5006) << "IdentityPage::setup()" << endl;
   IdentityManager * im = kmkernel->identityManager();
   mOldNumberOfIdentities = im->shadowIdentities().count();
   // Fill the list:
@@ -431,7 +301,7 @@ void IdentityPage::setup()
   mIdentityList->setSelected( mIdentityList->currentItem(), true );
 }
 
-void IdentityPage::apply() {
+void IdentityPage::save() {
   assert( !mIdentityDialog );
 
   kmkernel->identityManager()->sort();
@@ -453,11 +323,6 @@ void IdentityPage::apply() {
     showHeaders &= ~HDR_IDENTITY;
     composer.writeEntry( "headers", showHeaders );
   }
-}
-
-void IdentityPage::dismiss() {
-  assert( !mIdentityDialog );
-  kmkernel->identityManager()->rollback();
 }
 
 void IdentityPage::slotNewIdentity()
@@ -517,6 +382,7 @@ void IdentityPage::slotModifyIdentity() {
   if ( mIdentityDialog->exec() == QDialog::Accepted ) {
     mIdentityDialog->updateIdentity( item->identity() );
     item->redisplay();
+    emit changed(true);
   }
 
   delete mIdentityDialog;
@@ -567,6 +433,7 @@ void IdentityPage::slotRenameIdentity( QListViewItem * i,
        !kmkernel->identityManager()->shadowIdentities().contains( newName ) ) {
     KMIdentity & ident = item->identity();
     ident.setIdentityName( newName );
+    emit changed(true);
   }
   item->redisplay();
 }
@@ -608,6 +475,7 @@ void IdentityPage::refreshList() {
     if ( item )
       item->redisplay();
   }
+  emit changed(true);
 }
 
 void IdentityPage::slotIdentitySelectionChanged( QListViewItem * i ) {
@@ -635,31 +503,18 @@ void IdentityPage::slotUpdateTransportCombo( const QStringList & sl )
 // *                       NetworkPage                         *
 // *                                                           *
 // *************************************************************
-
-QString NetworkPage::iconLabel() {
-  return i18n("Network");
-}
-
-QString NetworkPage::title() {
-  return i18n("Setup for Sending and Receiving Messages");
-}
-
-const char * NetworkPage::iconName() {
-  return "network";
-}
-
 QString NetworkPage::helpAnchor() const {
   return QString::fromLatin1("configure-network");
 }
 
 NetworkPage::NetworkPage( QWidget * parent, const char * name )
-  : TabbedConfigurationPage( parent, name )
+  : ConfigModuleWithTabs( parent, name )
 {
   //
   // "Sending" tab:
   //
   mSendingTab = new SendingTab();
-  addTab( mSendingTab, mSendingTab->title() );
+  addTab( mSendingTab, i18n( "&Sending" ) );
   connect( mSendingTab, SIGNAL(transportListChanged(const QStringList&)),
 	   this, SIGNAL(transportListChanged(const QStringList&)) );
 
@@ -667,22 +522,20 @@ NetworkPage::NetworkPage( QWidget * parent, const char * name )
   // "Receiving" tab:
   //
   mReceivingTab = new ReceivingTab();
-  addTab( mReceivingTab, mReceivingTab->title() );
+  addTab( mReceivingTab, i18n( "&Receiving" ) );
 
   connect( mReceivingTab, SIGNAL(accountListChanged(const QStringList &)),
 	   this, SIGNAL(accountListChanged(const QStringList &)) );
+  load();
 }
 
-QString NetworkPage::SendingTab::title() {
-  return i18n("&Sending");
-}
 
 QString NetworkPage::SendingTab::helpAnchor() const {
   return QString::fromLatin1("configure-network-sending");
 }
 
 NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   mTransportInfoList.setAutoDelete( true );
   // temp. vars:
@@ -776,11 +629,15 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
   // "confirm before send" check box:
   mConfirmSendCheck = new QCheckBox( i18n("Confirm &before send"), group );
   glay->addMultiCellWidget( mConfirmSendCheck, 0, 0, 0, 1 );
+  connect( mConfirmSendCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "send messages in outbox on check" check box:
   mSendOutboxCheck =
     new QCheckBox(i18n("Send messages in outbox &folder on check"), group );
   glay->addMultiCellWidget( mSendOutboxCheck, 1, 1, 0, 1 );
+  connect( mSendOutboxCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "default send method" combo:
   mSendMethodCombo = new QComboBox( false, group );
@@ -788,6 +645,9 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 				      << i18n("Send Now")
 				      << i18n("Send Later") );
   glay->addWidget( mSendMethodCombo, 2, 1 );
+  connect( mSendMethodCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
 
   // "message property" combo:
   // ### FIXME: remove completely?
@@ -796,10 +656,14 @@ NetworkPageSendingTab::NetworkPageSendingTab( QWidget * parent, const char * nam
 		     << i18n("Allow 8-bit")
 		     << i18n("MIME Compliant (Quoted Printable)") );
   glay->addWidget( mMessagePropertyCombo, 3, 1 );
+  connect( mMessagePropertyCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "default domain" input field:
   mDefaultDomainEdit = new KLineEdit( group );
   glay->addMultiCellWidget( mDefaultDomainEdit, 4, 4, 1, 2 );
+  connect( mDefaultDomainEdit, SIGNAL( textChanged( const QString& ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // labels:
   glay->addWidget( new QLabel( mSendMethodCombo, /*buddy*/
@@ -908,6 +772,7 @@ void NetworkPage::SendingTab::slotAddTransport()
 
   // notify anyone who cares:
   emit transportListChanged( transportNames );
+  emit changed( true );
 }
 
 void NetworkPage::SendingTab::slotModifySelectedTransport()
@@ -944,6 +809,7 @@ void NetworkPage::SendingTab::slotModifySelectedTransport()
   // strings; then broadcast the new list:
   transportNames.insert( transportNames.at( entryLocation ), (*it)->name );
   emit transportListChanged( transportNames );
+  emit changed( true );
 }
 
 
@@ -972,6 +838,7 @@ void NetworkPage::SendingTab::slotRemoveSelectedTransport()
   for ( it.toFirst() ; it.current() ; ++it )
     transportNames << (*it)->name;
   emit transportListChanged( transportNames );
+  emit changed( true );
 }
 
 
@@ -1010,6 +877,7 @@ void NetworkPage::SendingTab::slotTransportUp()
 
   mTransportList->setCurrentItem( above );
   mTransportList->setSelected( above, true );
+  emit changed( true );
 }
 
 
@@ -1045,9 +913,10 @@ void NetworkPage::SendingTab::slotTransportDown()
 
   mTransportList->setCurrentItem(below);
   mTransportList->setSelected(below, TRUE);
+  emit changed( true );
 }
 
-void NetworkPage::SendingTab::setup() {
+void NetworkPage::SendingTab::load() {
   KConfigGroup general( KMKernel::config(), "General");
   KConfigGroup composer( KMKernel::config(), "Composer");
 
@@ -1104,7 +973,7 @@ void NetworkPage::SendingTab::setup() {
 }
 
 
-void NetworkPage::SendingTab::apply() {
+void NetworkPage::SendingTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
@@ -1125,18 +994,12 @@ void NetworkPage::SendingTab::apply() {
   general.writeEntry( "Default domain", mDefaultDomainEdit->text() );
 }
 
-
-
-QString NetworkPage::ReceivingTab::title() {
-  return i18n("&Receiving");
-}
-
 QString NetworkPage::ReceivingTab::helpAnchor() const {
   return QString::fromLatin1("configure-network-receiving");
 }
 
 NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char * name )
-  : ConfigurationPage ( parent, name )
+  : ConfigModuleTab ( parent, name )
 {
   // temp. vars:
   QVBoxLayout *vlay;
@@ -1197,6 +1060,8 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
 
   mCheckmailStartupCheck = new QCheckBox( i18n("Chec&k mail on startup"), this );
   vlay->addWidget( mCheckmailStartupCheck );
+  connect( mCheckmailStartupCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "New Mail Notification" group box: stretch 0
   group = new QVGroupBox( i18n("New Mail Notification"), this );
@@ -1207,8 +1072,15 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   mBeepNewMailCheck = new QCheckBox(i18n("&Beep"), group );
   mBeepNewMailCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
                                                  QSizePolicy::Fixed ) );
+  connect( mBeepNewMailCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+
   // "Systray" notification check box
   mSystrayCheck = new QCheckBox( i18n("System &tray notification"), group );
+  connect( mSystrayCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
 
   // System tray modes
   QButtonGroup *bgroup = new QButtonGroup(i18n("System Tray Modes"), group);
@@ -1219,11 +1091,16 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   bgroupLayout->setAlignment( Qt::AlignTop );
   bgroupLayout->setSpacing( 6 );
   bgroupLayout->setMargin( 11 );
-
+  
   mBlinkingSystray = new QRadioButton( i18n("Alwa&ys show system tray"), bgroup);
   bgroupLayout->addWidget(mBlinkingSystray, 0, 0);
+  connect( mBlinkingSystray, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   mSystrayOnNew = new QRadioButton( i18n("Sho&w system tray on new mail"), bgroup);
+  connect( mSystrayOnNew, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   bgroupLayout->addWidget(mSystrayOnNew, 0, 1);
 
   bgroup->setEnabled( false ); // since !mSystrayCheck->isChecked()
@@ -1324,6 +1201,7 @@ void NetworkPage::ReceivingTab::slotAddAccount() {
     listItem->setText( 2, account->folder()->label() );
 
   mNewAccounts.append( account );
+  emit changed( true );
 }
 
 
@@ -1386,6 +1264,8 @@ void NetworkPage::ReceivingTab::slotModifySelectedAccount()
   listItem->setText( 1, account->type() );
   if( account->folder() )
     listItem->setText( 2, account->folder()->label() );
+  
+  emit changed( true );
 }
 
 
@@ -1430,6 +1310,8 @@ void NetworkPage::ReceivingTab::slotRemoveSelectedAccount() {
 
   if ( item )
     mAccountList->setSelected( item, true );
+  
+  emit changed( true );
 }
 
 void NetworkPage::ReceivingTab::slotEditNotifications()
@@ -1440,7 +1322,7 @@ void NetworkPage::ReceivingTab::slotEditNotifications()
     KNotifyDialog::configure(this);
 }
 
-void NetworkPage::ReceivingTab::setup() {
+void NetworkPage::ReceivingTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mAccountList->clear();
@@ -1468,7 +1350,7 @@ void NetworkPage::ReceivingTab::setup() {
   mCheckmailStartupCheck->setChecked( general.readBoolEntry("checkmail-startup", false) );
 }
 
-void NetworkPage::ReceivingTab::apply() {
+void NetworkPage::ReceivingTab::save() {
   // Add accounts marked as new
   QValueList< QGuardedPtr<KMAccount> > newCachedImapAccounts;
   QValueList< QGuardedPtr<KMAccount> >::Iterator it;
@@ -1523,81 +1405,44 @@ void NetworkPage::ReceivingTab::apply() {
   }
 }
 
-void NetworkPage::ReceivingTab::dismiss() {
-  // dismiss new accounts:
-  for ( QValueList< QGuardedPtr<KMAccount> >::Iterator
-	  it = mNewAccounts.begin() ;
-	it != mNewAccounts.end() ; ++it )
-    delete *it;
-
-  // dismiss modifications of accounts:
-  for ( QValueList< ModifiedAccountsType* >::Iterator
-	  it = mModifiedAccounts.begin() ;
-	it != mModifiedAccounts.end() ; ++it ) {
-    delete (*it)->newAccount;
-    delete (*it);
-  }
-
-  // cancel deletion of accounts:
-  mAccountsToDelete.clear();
-
-  mNewAccounts.clear(); // ### Why that? didn't we just delete all items?
-  mModifiedAccounts.clear(); // ### see above...
-}
-
 // *************************************************************
 // *                                                           *
 // *                     AppearancePage                        *
 // *                                                           *
 // *************************************************************
-
-QString AppearancePage::iconLabel() {
-  return i18n("Appearance");
-}
-
-QString AppearancePage::title() {
-  return i18n("Customize Visual Appearance");
-}
-
-const char * AppearancePage::iconName() {
-  return "looknfeel";
-}
-
 QString AppearancePage::helpAnchor() const {
   return QString::fromLatin1("configure-appearance");
 }
 
 AppearancePage::AppearancePage( QWidget * parent, const char * name )
-  : TabbedConfigurationPage( parent, name )
+  : ConfigModuleWithTabs( parent, name )
 {
   //
   // "Fonts" tab:
   //
   mFontsTab = new FontsTab();
-  addTab( mFontsTab, mFontsTab->title() );
+  addTab( mFontsTab, i18n("&Fonts") );
 
   //
   // "Colors" tab:
   //
   mColorsTab = new ColorsTab();
-  addTab( mColorsTab, mColorsTab->title() );
+  addTab( mColorsTab, i18n("Colo&rs") );
 
   //
   // "Layout" tab:
   //
   mLayoutTab = new LayoutTab();
-  addTab( mLayoutTab, mLayoutTab->title() );
+  addTab( mLayoutTab, i18n("La&yout") );
 
   //
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, mHeadersTab->title() );
+  addTab( mHeadersTab, i18n("H&eaders") );
+  load();
 }
 
-QString AppearancePage::FontsTab::title() {
-  return i18n("&Fonts");
-}
 
 QString AppearancePage::FontsTab::helpAnchor() const {
   return QString::fromLatin1("configure-appearance-fonts");
@@ -1623,7 +1468,7 @@ static const struct {
 static const int numFontNames = sizeof fontNames / sizeof *fontNames;
 
 AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name ), mActiveFontIndex( -1 )
+  : ConfigModuleTab( parent, name ), mActiveFontIndex( -1 )
 {
   assert( numFontNames == sizeof mFont / sizeof *mFont );
   // tmp. vars:
@@ -1636,6 +1481,8 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * n
   mCustomFontCheck = new QCheckBox( i18n("&Use custom fonts"), this );
   vlay->addWidget( mCustomFontCheck );
   vlay->addWidget( new KSeparator( KSeparator::HLine, this ) );
+  connect ( mCustomFontCheck, SIGNAL( stateChanged( int ) ),
+            this, SLOT( slotEmitChanged( void ) ) );
 
   // "font location" combo box and label:
   hlay = new QHBoxLayout( vlay ); // inherites spacing
@@ -1658,6 +1505,9 @@ AppearancePageFontsTab::AppearancePageFontsTab( QWidget * parent, const char * n
 				   false, 4 );
   mFontChooser->setEnabled( false ); // since !mCustomFontCheck->isChecked()
   vlay->addWidget( mFontChooser );
+  connect ( mFontChooser, SIGNAL( fontSelected( const QFont& ) ),
+            this, SLOT( slotEmitChanged( void ) ) );
+
 
   // {en,dis}able widgets depending on the state of mCustomFontCheck:
   connect( mCustomFontCheck, SIGNAL(toggled(bool)),
@@ -1694,16 +1544,22 @@ void AppearancePage::FontsTab::slotFontSelectorChanged( int index )
     mFont[ mActiveFontIndex ] = mFontChooser->font();
   mActiveFontIndex = index;
 
+  // Disonnect so the "Apply" button is not activated by the change
+  disconnect ( mFontChooser, SIGNAL( fontSelected( const QFont& ) ),
+            this, SLOT( slotEmitChanged( void ) ) );
 
   // Display the new setting:
   mFontChooser->setFont( mFont[index], fontNames[index].onlyFixed );
+
+  connect ( mFontChooser, SIGNAL( fontSelected( const QFont& ) ),
+            this, SLOT( slotEmitChanged( void ) ) );
 
   // Disable Family and Size list if we have selected a quote font:
   mFontChooser->enableColumn( KFontChooser::FamilyList|KFontChooser::SizeList,
 			      fontNames[ index ].enableFamilyAndSize );
 }
 
-void AppearancePage::FontsTab::setup() {
+void AppearancePage::FontsTab::load() {
   KConfigGroup fonts( KMKernel::config(), "Fonts" );
 
   mFont[0] = KGlobalSettings::generalFont();
@@ -1738,7 +1594,7 @@ void AppearancePage::FontsTab::installProfile( KConfig * profile ) {
     mCustomFontCheck->setChecked( !fonts.readBoolEntry( "defaultFonts" ) );
 }
 
-void AppearancePage::FontsTab::apply() {
+void AppearancePage::FontsTab::save() {
   KConfigGroup fonts( KMKernel::config(), "Fonts" );
 
   // read the current font (might have been modified)
@@ -1752,11 +1608,6 @@ void AppearancePage::FontsTab::apply() {
       // Don't write font info when we use default fonts, but write
       // if it's already there:
       fonts.writeEntry( fontNames[i].configName, mFont[i] );
-}
-
-
-QString AppearancePage::ColorsTab::title() {
-  return i18n("Colo&rs");
 }
 
 QString AppearancePage::ColorsTab::helpAnchor() const {
@@ -1794,7 +1645,7 @@ static const struct {
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
 AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -1803,6 +1654,8 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
   mCustomColorCheck = new QCheckBox( i18n("&Use custom colors"), this );
   vlay->addWidget( mCustomColorCheck );
+  connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // color list box:
   mColorList = new ColorListBox( this );
@@ -1817,15 +1670,19 @@ AppearancePageColorsTab::AppearancePageColorsTab( QWidget * parent, const char *
     new QCheckBox( i18n("Recycle colors on deep &quoting"), this );
   mRecycleColorCheck->setEnabled( false );
   vlay->addWidget( mRecycleColorCheck );
+  connect( mRecycleColorCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // {en,dir}able widgets depending on the state of mCustomColorCheck:
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
 	   mColorList, SLOT(setEnabled(bool)) );
   connect( mCustomColorCheck, SIGNAL(toggled(bool)),
 	   mRecycleColorCheck, SLOT(setEnabled(bool)) );
+  connect( mCustomColorCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 }
 
-void AppearancePage::ColorsTab::setup() {
+void AppearancePage::ColorsTab::load() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mCustomColorCheck->setChecked( !reader.readBoolEntry( "defaultColors", true ) );
@@ -1859,6 +1716,8 @@ void AppearancePage::ColorsTab::setup() {
   for ( int i = 0 ; i < numColorNames ; i++ )
     mColorList->setColor( i,
       reader.readColorEntry( colorNames[i].configName, &defaultColor[i] ) );
+  connect( mColorList, SIGNAL( changed( ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 }
 
 void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
@@ -1874,7 +1733,7 @@ void AppearancePage::ColorsTab::installProfile( KConfig * profile ) {
       mColorList->setColor( i, reader.readColorEntry( colorNames[i].configName ) );
 }
 
-void AppearancePage::ColorsTab::apply() {
+void AppearancePage::ColorsTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
 
   bool customColors = mCustomColorCheck->isChecked();
@@ -1887,10 +1746,6 @@ void AppearancePage::ColorsTab::apply() {
       reader.writeEntry( colorNames[i].configName, mColorList->color(i) );
 
   reader.writeEntry( "RecycleQuoteColors", mRecycleColorCheck->isChecked() );
-}
-
-QString AppearancePage::LayoutTab::title() {
-  return i18n("La&yout");
 }
 
 QString AppearancePage::LayoutTab::helpAnchor() const {
@@ -1942,7 +1797,7 @@ static const BoolConfigEntry showColorbarMode = {
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // tmp. vars:
   QVBoxLayout * vlay;
@@ -1950,37 +1805,47 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // "show colorbar" check box:
-  populate( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
+  populateCheckBox( mShowColorbarCheck = new QCheckBox( this ), showColorbarMode );
   vlay->addWidget( mShowColorbarCheck );
+  connect( mShowColorbarCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // "folder list" radio buttons:
-  populate( mFolderListGroup = new QHButtonGroup( this ), folderListMode );
+  populateButtonGroup( mFolderListGroup = new QHButtonGroup( this ), folderListMode );
   vlay->addWidget( mFolderListGroup );
+  connect( mFolderListGroup, SIGNAL ( clicked( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // "show reader window" radio buttons:
-  populate( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
+  populateButtonGroup( mReaderWindowModeGroup = new QVButtonGroup( this ), readerWindowMode );
   vlay->addWidget( mReaderWindowModeGroup );
+  connect( mReaderWindowModeGroup, SIGNAL ( clicked( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // "Show MIME Tree" radio buttons:
-  populate( mMIMETreeModeGroup = new QVButtonGroup( this ), mimeTreeMode );
+  populateButtonGroup( mMIMETreeModeGroup = new QVButtonGroup( this ), mimeTreeMode );
   vlay->addWidget( mMIMETreeModeGroup );
+  connect( mMIMETreeModeGroup, SIGNAL ( clicked( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   // "MIME Tree Location" radio buttons:
-  populate( mMIMETreeLocationGroup = new QHButtonGroup( this ), mimeTreeLocation );
+  populateButtonGroup( mMIMETreeLocationGroup = new QHButtonGroup( this ), mimeTreeLocation );
   vlay->addWidget( mMIMETreeLocationGroup );
+  connect( mMIMETreeLocationGroup, SIGNAL ( clicked( int ) ),
+           this, SLOT( slotEmitChanged() ) );
 
   vlay->addStretch( 10 ); // spacer
 }
 
-void AppearancePage::LayoutTab::setup() {
+void AppearancePage::LayoutTab::load() {
   const KConfigGroup reader( KMKernel::config(), "Reader" );
   const KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  load( mShowColorbarCheck, reader, showColorbarMode );
-  load( mFolderListGroup, geometry, folderListMode );
-  load( mMIMETreeLocationGroup, reader, mimeTreeLocation );
-  load( mMIMETreeModeGroup, reader, mimeTreeMode );
-  load( mReaderWindowModeGroup, geometry, readerWindowMode );
+  loadWidget( mShowColorbarCheck, reader, showColorbarMode );
+  loadWidget( mFolderListGroup, geometry, folderListMode );
+  loadWidget( mMIMETreeLocationGroup, reader, mimeTreeLocation );
+  loadWidget( mMIMETreeModeGroup, reader, mimeTreeMode );
+  loadWidget( mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
 void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
@@ -1994,19 +1859,15 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   loadProfile( mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
-void AppearancePage::LayoutTab::apply() {
+void AppearancePage::LayoutTab::save() {
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
-  save( mShowColorbarCheck, reader, showColorbarMode );
-  save( mFolderListGroup, geometry, folderListMode );
-  save( mMIMETreeLocationGroup, reader, mimeTreeLocation );
-  save( mMIMETreeModeGroup, reader, mimeTreeMode );
-  save( mReaderWindowModeGroup, geometry, readerWindowMode );
-}
-
-QString AppearancePage::HeadersTab::title() {
-  return i18n("H&eaders");
+  saveCheckBox( mShowColorbarCheck, reader, showColorbarMode );
+  saveButtonGroup( mFolderListGroup, geometry, folderListMode );
+  saveButtonGroup( mMIMETreeLocationGroup, reader, mimeTreeLocation );
+  saveButtonGroup( mMIMETreeModeGroup, reader, mimeTreeMode );
+  saveButtonGroup( mReaderWindowModeGroup, geometry, readerWindowMode );
 }
 
 QString AppearancePage::HeadersTab::helpAnchor() const {
@@ -2027,7 +1888,7 @@ static const int numDateDisplayConfig =
   sizeof dateDisplayConfig / sizeof *dateDisplayConfig;
 
 AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name ),
+  : ConfigModuleTab( parent, name ),
     mCustomDateFormatEdit( 0 )
 {
   // tmp. vars:
@@ -2047,6 +1908,14 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   mNestedMessagesCheck =
     new QCheckBox( i18n("&Thread list of message headers"), group );
 
+  connect( mMessageSizeCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mCryptoIconsCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mNestedMessagesCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
+  
   vlay->addWidget( group );
 
   // "Message Header Threading Options" group:
@@ -2069,6 +1938,9 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
                       mNestingPolicy ), 3 );
 
   vlay->addWidget( mNestingPolicy );
+
+  connect( mNestingPolicy, SIGNAL( clicked( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "Date Display" group:
   mDateDisplay = new QVButtonGroup( i18n("Date Display"), this );
@@ -2123,11 +1995,14 @@ AppearancePageHeadersTab::AppearancePageHeadersTab( QWidget * parent, const char
   } // end for loop populating mDateDisplay
 
   vlay->addWidget( mDateDisplay );
+  connect( mDateDisplay, SIGNAL( clicked( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
 
   vlay->addStretch( 10 ); // spacer
 }
 
-void AppearancePage::HeadersTab::setup() {
+void AppearancePage::HeadersTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
@@ -2186,7 +2061,7 @@ void AppearancePage::HeadersTab::installProfile( KConfig * profile ) {
 		   general.readEntry( "customDateFormat" ) );
 }
 
-void AppearancePage::HeadersTab::apply() {
+void AppearancePage::HeadersTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup geometry( KMKernel::config(), "Geometry" );
 
@@ -2228,75 +2103,57 @@ void AppearancePage::HeadersTab::apply() {
 // *                                                           *
 // *************************************************************
 
-
-
-QString ComposerPage::iconLabel() {
-  return i18n("Composer");
-}
-
-const char * ComposerPage::iconName() {
-  return "edit";
-}
-
-QString ComposerPage::title() {
-  return i18n("Phrases & General Behavior");
-}
-
 QString ComposerPage::helpAnchor() const {
   return QString::fromLatin1("configure-composer");
 }
 
 ComposerPage::ComposerPage( QWidget * parent, const char * name )
-  : TabbedConfigurationPage( parent, name )
+  : ConfigModuleWithTabs( parent, name )
 {
   //
   // "General" tab:
   //
   mGeneralTab = new GeneralTab();
-  addTab( mGeneralTab, mGeneralTab->title() );
+  addTab( mGeneralTab, i18n("&General") );
 
   //
   // "Phrases" tab:
   //
   mPhrasesTab = new PhrasesTab();
-  addTab( mPhrasesTab, mPhrasesTab->title() );
+  addTab( mPhrasesTab, i18n("&Phrases") );
 
   //
   // "Subject" tab:
   //
   mSubjectTab = new SubjectTab();
-  addTab( mSubjectTab, mSubjectTab->title() );
+  addTab( mSubjectTab, i18n("&Subject") );
 
   //
   // "Charset" tab:
   //
   mCharsetTab = new CharsetTab();
-  addTab( mCharsetTab, mCharsetTab->title() );
+  addTab( mCharsetTab, i18n("Cha&rset") );
 
   //
   // "Headers" tab:
   //
   mHeadersTab = new HeadersTab();
-  addTab( mHeadersTab, mHeadersTab->title() );
+  addTab( mHeadersTab, i18n("H&eaders") );
 
   //
   // "Attachments" tab:
   //
   mAttachmentsTab = new AttachmentsTab();
-  addTab( mAttachmentsTab, mAttachmentsTab->title() );
-}
-
-QString ComposerPage::GeneralTab::title() {
-  return i18n("&General");
+  addTab( mAttachmentsTab, i18n("Config->Composer->Attachments", "A&ttachments") );
+  load();
 }
 
 QString ComposerPage::GeneralTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-general");
 }
 
-
 ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -2311,21 +2168,33 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   mAutoAppSignFileCheck =
     new QCheckBox( i18n("A&utomatically append signature"), this );
   vlay->addWidget( mAutoAppSignFileCheck );
+  connect( mAutoAppSignFileCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   mSmartQuoteCheck = new QCheckBox( i18n("Use smart &quoting"), this );
   vlay->addWidget( mSmartQuoteCheck );
+  connect( mSmartQuoteCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   mAutoRequestMDNCheck = new QCheckBox( i18n("Automatically request &message disposition notifications"), this );
   vlay->addWidget( mAutoRequestMDNCheck );
+  connect( mAutoRequestMDNCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // a checkbutton for "word wrap" and a spinbox for the column in
   // which to wrap:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mWordWrapCheck = new QCheckBox( i18n("Word &wrap at column:"), this );
   hlay->addWidget( mWordWrapCheck );
+  connect( mWordWrapCheck, SIGNAL( stateChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mWrapColumnSpin = new KIntSpinBox( 30/*min*/, 78/*max*/, 1/*step*/,
 				     78/*init*/, 10 /*base*/, this );
   mWrapColumnSpin->setEnabled( false ); // since !mWordWrapCheck->isChecked()
+  connect( mWrapColumnSpin, SIGNAL( valueChanged(int) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   hlay->addWidget( mWrapColumnSpin );
   hlay->addStretch( 1 );
   // only enable the spinbox if the checkbox is checked:
@@ -2342,6 +2211,9 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   hbox = new QHBox( group );
   label = new QLabel( i18n("Specify e&ditor:"), hbox );
   mEditorRequester = new KURLRequester( hbox );
+  connect( mEditorRequester, SIGNAL( urlSelected(const QString&) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   hbox->setStretchFactor( mEditorRequester, 1 );
   label->setBuddy( mEditorRequester );
   label->setEnabled( false ); // since !mExternalEditorCheck->isChecked()
@@ -2375,7 +2247,7 @@ ComposerPageGeneralTab::ComposerPageGeneralTab( QWidget * parent, const char * n
   QWhatsThis::add( mAutoRequestMDNCheck, msg );
 }
 
-void ComposerPage::GeneralTab::setup() {
+void ComposerPage::GeneralTab::load() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
   KConfigGroup general( KMKernel::config(), "General" );
 
@@ -2416,7 +2288,7 @@ void ComposerPage::GeneralTab::installProfile( KConfig * profile ) {
   }
 }
 
-void ComposerPage::GeneralTab::apply() {
+void ComposerPage::GeneralTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
@@ -2433,17 +2305,12 @@ void ComposerPage::GeneralTab::apply() {
 }
 
 
-
-QString ComposerPage::PhrasesTab::title() {
-  return i18n("&Phrases");
-}
-
 QString ComposerPage::PhrasesTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-phrases");
 }
 
 ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // tmp. vars:
   QGridLayout *glay;
@@ -2489,24 +2356,32 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
 
   // row 3: "reply to sender" line edit and label:
   mPhraseReplyEdit = new KLineEdit( this );
+  connect( mPhraseReplyEdit, SIGNAL( textChanged( const QString& ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseReplyEdit,
 			       i18n("Reply to se&nder:"), this ), 3, 0 );
   glay->addMultiCellWidget( mPhraseReplyEdit, 3, 3, 1, 2 ); // cols 1..2
 
   // row 4: "reply to all" line edit and label:
   mPhraseReplyAllEdit = new KLineEdit( this );
+  connect( mPhraseReplyAllEdit, SIGNAL( textChanged( const QString& ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseReplyAllEdit,
 			       i18n("Repl&y to all:"), this ), 4, 0 );
   glay->addMultiCellWidget( mPhraseReplyAllEdit, 4, 4, 1, 2 ); // cols 1..2
 
   // row 5: "forward" line edit and label:
   mPhraseForwardEdit = new KLineEdit( this );
+  connect( mPhraseForwardEdit, SIGNAL( textChanged( const QString& ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseForwardEdit,
 			       i18n("&Forward:"), this ), 5, 0 );
   glay->addMultiCellWidget( mPhraseForwardEdit, 5, 5, 1, 2 ); // cols 1..2
 
   // row 6: "quote indicator" line edit and label:
   mPhraseIndentPrefixEdit = new KLineEdit( this );
+  connect( mPhraseIndentPrefixEdit, SIGNAL( textChanged( const QString& ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   glay->addWidget( new QLabel( mPhraseIndentPrefixEdit,
 			       i18n("&Quote indicator:"), this ), 6, 0 );
   glay->addMultiCellWidget( mPhraseIndentPrefixEdit, 6, 6, 1, 2 );
@@ -2576,6 +2451,7 @@ void ComposerPage::PhrasesTab::slotRemoveLanguage()
   mActiveLanguageItem = index;
   setLanguageItemInformation( index );
   mRemoveButton->setEnabled( mLanguageList.count() > 1 );
+  emit changed( true );
 }
 
 void ComposerPage::PhrasesTab::slotLanguageChanged( const QString& )
@@ -2585,10 +2461,11 @@ void ComposerPage::PhrasesTab::slotLanguageChanged( const QString& )
   saveActiveLanguageItem();
   mActiveLanguageItem = index;
   setLanguageItemInformation( index );
+  emit changed( true );
 }
 
 
-void ComposerPage::PhrasesTab::setup() {
+void ComposerPage::PhrasesTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   mLanguageList.clear();
@@ -2624,7 +2501,7 @@ void ComposerPage::PhrasesTab::setup() {
   mRemoveButton->setEnabled( mLanguageList.count() > 1 );
 }
 
-void ComposerPage::PhrasesTab::apply() {
+void ComposerPage::PhrasesTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   general.writeEntry( "reply-languages", mLanguageList.count() );
@@ -2643,18 +2520,12 @@ void ComposerPage::PhrasesTab::apply() {
   }
 }
 
-
-
-QString ComposerPage::SubjectTab::title() {
-  return i18n("&Subject");
-}
-
 QString ComposerPage::SubjectTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-subject");
 }
 
 ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -2680,10 +2551,14 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 				i18n("A&dd..."), i18n("Re&move"),
 				i18n("Mod&ify..."),
 				i18n("Enter new reply prefix:") );
+  connect( mReplyListEditor, SIGNAL( changed( void ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // row 2: "replace [...]" check box:
   mReplaceReplyPrefixCheck =
      new QCheckBox( i18n("Replace recognized prefi&x with \"Re:\""), group );
+  connect( mReplaceReplyPrefixCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   vlay->addWidget( group );
 
@@ -2703,15 +2578,19 @@ ComposerPageSubjectTab::ComposerPageSubjectTab( QWidget * parent, const char * n
 				i18n("Remo&ve"),
                                 i18n("Modify..."),
 				i18n("Enter new forward prefix:") );
+  connect( mForwardListEditor, SIGNAL( changed( void ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // row 3: "replace [...]" check box:
   mReplaceForwardPrefixCheck =
      new QCheckBox( i18n("Replace recognized prefix with \"&Fwd:\""), group );
+  connect( mReplaceForwardPrefixCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   vlay->addWidget( group );
 }
 
-void ComposerPage::SubjectTab::setup() {
+void ComposerPage::SubjectTab::load() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   QStringList prefixList = composer.readListEntry( "reply-prefixes", ',' );
@@ -2732,7 +2611,7 @@ void ComposerPage::SubjectTab::setup() {
   mReplaceForwardPrefixCheck->setChecked( composer.readBoolEntry( "replace-forward-prefix", true ) );
 }
 
-void ComposerPage::SubjectTab::apply() {
+void ComposerPage::SubjectTab::save() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
 
@@ -2744,18 +2623,12 @@ void ComposerPage::SubjectTab::apply() {
 		       mReplaceForwardPrefixCheck->isChecked() );
 }
 
-
-
-QString ComposerPage::CharsetTab::title() {
-  return i18n("Cha&rset");
-}
-
 QString ComposerPage::CharsetTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-charset");
 }
 
 ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -2773,11 +2646,16 @@ ComposerPageCharsetTab::ComposerPageCharsetTab( QWidget * parent, const char * n
     new SimpleStringListEditor( this, 0, SimpleStringListEditor::All,
 				i18n("A&dd..."), i18n("Remo&ve"),
 				i18n("&Modify"), i18n("Enter charset:") );
+  connect( mCharsetListEditor, SIGNAL( changed( void ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   vlay->addWidget( mCharsetListEditor, 1 );
 
   mKeepReplyCharsetCheck = new QCheckBox( i18n("&Keep original charset when "
 						"replying or forwarding (if "
 						"possible)."), this );
+  connect( mKeepReplyCharsetCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   vlay->addWidget( mKeepReplyCharsetCheck );
 
   connect( mCharsetListEditor, SIGNAL(aboutToAdd(QString&)),
@@ -2811,7 +2689,7 @@ void ComposerPage::CharsetTab::slotVerifyCharset( QString & charset ) {
   charset = QString::null;
 }
 
-void ComposerPage::CharsetTab::setup() {
+void ComposerPage::CharsetTab::load() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   QStringList charsets = composer.readListEntry( "pref-charsets" );
@@ -2825,7 +2703,7 @@ void ComposerPage::CharsetTab::setup() {
   mKeepReplyCharsetCheck->setChecked( !composer.readBoolEntry( "force-reply-charset", false ) );
 }
 
-void ComposerPage::CharsetTab::apply() {
+void ComposerPage::CharsetTab::save() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   QStringList charsetList = mCharsetListEditor->stringList();
@@ -2838,17 +2716,12 @@ void ComposerPage::CharsetTab::apply() {
 		       !mKeepReplyCharsetCheck->isChecked() );
 }
 
-
-QString ComposerPage::HeadersTab::title() {
-  return i18n("H&eaders");
-}
-
 QString ComposerPage::HeadersTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-headers");
 }
 
 ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -2862,6 +2735,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   // "Use custom Message-Id suffix" checkbox:
   mCreateOwnMessageIdCheck =
     new QCheckBox( i18n("&Use custom message-id suffix"), this );
+  connect( mCreateOwnMessageIdCheck, SIGNAL ( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   vlay->addWidget( mCreateOwnMessageIdCheck );
 
   // "Message-Id suffix" line edit and label:
@@ -2881,6 +2756,8 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
 	   label, SLOT(setEnabled(bool)) );
   connect( mCreateOwnMessageIdCheck, SIGNAL(toggled(bool) ),
 	   mMessageIdSuffixEdit, SLOT(setEnabled(bool)) );
+  connect( mMessageIdSuffixEdit, SIGNAL( textChanged( const QString& ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // horizontal rule and "custom header fields" label:
   vlay->addWidget( new KSeparator( KSeparator::HLine, this ) );
@@ -2956,6 +2833,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderNameChanged( const QString & text )
   QListViewItem * item = mTagList->selectedItem();
   if ( item )
     item->setText( 0, text );
+  emit changed( true );
 }
 
 
@@ -2965,6 +2843,7 @@ void ComposerPage::HeadersTab::slotMimeHeaderValueChanged( const QString & text 
   QListViewItem * item = mTagList->selectedItem();
   if ( item )
     item->setText( 1, text );
+  emit changed( true );
 }
 
 
@@ -2973,6 +2852,7 @@ void ComposerPage::HeadersTab::slotNewMimeHeader()
   QListViewItem *listItem = new QListViewItem( mTagList );
   mTagList->setCurrentItem( listItem );
   mTagList->setSelected( listItem, true );
+  emit changed( true );
 }
 
 
@@ -2994,9 +2874,10 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
     mTagList->setSelected( below, true );
   else if ( mTagList->lastItem() )
     mTagList->setSelected( mTagList->lastItem(), true );
+  emit changed( true );
 }
 
-void ComposerPage::HeadersTab::setup() {
+void ComposerPage::HeadersTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   QString suffix = general.readEntry( "myMessageIdSuffix" );
@@ -3030,7 +2911,7 @@ void ComposerPage::HeadersTab::setup() {
   }
 }
 
-void ComposerPage::HeadersTab::apply() {
+void ComposerPage::HeadersTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   general.writeEntry( "useCustomMessageIdSuffix",
@@ -3051,17 +2932,13 @@ void ComposerPage::HeadersTab::apply() {
   general.writeEntry( "mime-header-count", numValidEntries );
 }
 
-QString ComposerPage::AttachmentsTab::title() {
-  return i18n("Config->Composer->Attachments", "A&ttachments");
-}
-
 QString ComposerPage::AttachmentsTab::helpAnchor() const {
   return QString::fromLatin1("configure-composer-attachments");
 }
 
 ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
                                                         const char * name )
-  : ConfigurationPage( parent, name ) {
+  : ConfigModuleTab( parent, name ) {
   // tmp. vars:
   QVBoxLayout *vlay;
   QLabel      *label;
@@ -3072,6 +2949,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
   mMissingAttachmentDetectionCheck =
     new QCheckBox( i18n("E&nable detection of missing attachments"), this );
   mMissingAttachmentDetectionCheck->setChecked( true );
+  connect( mMissingAttachmentDetectionCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   vlay->addWidget( mMissingAttachmentDetectionCheck );
 
   // "Attachment key words" label and string list editor
@@ -3087,6 +2966,8 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
                                 i18n("A&dd..."), i18n("Re&move"),
                                 i18n("Mod&ify..."),
                                 i18n("Enter new key word:") );
+  connect( mAttachWordsListEditor, SIGNAL( changed( void ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   vlay->addWidget( mAttachWordsListEditor );
 
   connect( mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool) ),
@@ -3095,7 +2976,7 @@ ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
 	   mAttachWordsListEditor, SLOT(setEnabled(bool)) );
 }
 
-void ComposerPage::AttachmentsTab::setup() {
+void ComposerPage::AttachmentsTab::load() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mMissingAttachmentDetectionCheck->setChecked(
@@ -3115,7 +2996,7 @@ void ComposerPage::AttachmentsTab::setup() {
   mAttachWordsListEditor->setStringList( attachWordsList );
 }
 
-void ComposerPage::AttachmentsTab::apply() {
+void ComposerPage::AttachmentsTab::save() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
   composer.writeEntry( "showForgottenAttachmentWarning",
                        mMissingAttachmentDetectionCheck->isChecked() );
@@ -3128,71 +3009,37 @@ void ComposerPage::AttachmentsTab::apply() {
 // *                      SecurityPage                         *
 // *                                                           *
 // *************************************************************
-
-
-
-
-QString SecurityPage::iconLabel() {
-  return i18n("Security");
-}
-
-const char * SecurityPage::iconName() {
-  return "encrypted";
-}
-
-QString SecurityPage::title() {
-  return i18n("Security & Privacy Settings");
-}
-
 QString SecurityPage::helpAnchor() const {
   return QString::fromLatin1("configure-security");
 }
 
 SecurityPage::SecurityPage( QWidget * parent, const char * name )
-  : TabbedConfigurationPage( parent, name )
+  : ConfigModuleWithTabs( parent, name )
 {
   //
   // "General" tab:
   //
   mGeneralTab = new GeneralTab();
-  addTab( mGeneralTab, mGeneralTab->title() );
+  addTab( mGeneralTab, i18n("&General") );
 
   //
   // "PGP" tab:
   //
   mOpenPgpTab = new OpenPgpTab();
-  addTab( mOpenPgpTab, mOpenPgpTab->title() );
+  addTab( mOpenPgpTab, i18n("Open&PGP") );
 
   //
   // "CryptPlug" tab:
   //
   mCryptPlugTab = new CryptPlugTab();
-  addTab( mCryptPlugTab, mCryptPlugTab->title() );
+  addTab( mCryptPlugTab, i18n("Crypto Plugi&ns") );
+  load();
 }
 
-void SecurityPage::setup() {
-  mGeneralTab->setup();
-  mOpenPgpTab->setup();
-  mCryptPlugTab->setup();
-}
 
 void SecurityPage::installProfile( KConfig * profile ) {
   mGeneralTab->installProfile( profile );
   mOpenPgpTab->installProfile( profile );
-}
-
-void SecurityPage::apply() {
-  mGeneralTab->apply();
-  mOpenPgpTab->apply();
-  mCryptPlugTab->apply();
-}
-
-void SecurityPage::dismiss() {
-  mCryptPlugTab->dismiss();
-}
-
-QString SecurityPage::GeneralTab::title() {
-  return i18n("&General");
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const {
@@ -3200,7 +3047,7 @@ QString SecurityPage::GeneralTab::helpAnchor() const {
 }
 
 SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * name )
-  : ConfigurationPage ( parent, name )
+  : ConfigModuleTab ( parent, name )
 {
   // tmp. vars:
   QVBoxLayout  *vlay;
@@ -3293,9 +3140,13 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
   QWhatsThis::add( mHtmlMailCheck, htmlWhatsThis );
+  connect( mHtmlMailCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   mExternalReferences = new QCheckBox( i18n("Allow messages to load e&xternal "
 					    "references from the Internet" ), group );
   QWhatsThis::add( mExternalReferences, externalWhatsThis );
+  connect( mExternalReferences, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   label = new KActiveLabel( i18n("<b>WARNING:</b> Allowing HTML in email may "
 			   "increase the risk that your system will be "
 			   "compromised by present and anticipated security "
@@ -3313,7 +3164,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
   mSendReceivedReceiptCheck = new QCheckBox( i18n("Automatically &send delivery confirmations"), group );
   QWhatsThis::add( mSendReceivedReceiptCheck, confirmationWhatsThis );
-
+  connect( mSendReceivedReceiptCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   label = new KActiveLabel( i18n( "<b>WARNING:</b> Unconditionally returning "
 			    "confirmations undermines your privacy. "
 			    "<a href=\"whatsthis:%1\">More...</a>")
@@ -3330,7 +3182,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   // "ignore", "ask", "deny", "always send" radiobutton line:
   mMDNGroup = new QButtonGroup( group );
   mMDNGroup->hide();
-
+  connect( mMDNGroup, SIGNAL( clicked( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   hbox = new QHBox( group );
   hbox->setSpacing( KDialog::spacingHint() );
 
@@ -3357,6 +3210,8 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   // "Original Message quote" radiobutton line:
   mOrigQuoteGroup = new QButtonGroup( group );
   mOrigQuoteGroup->hide();
+  connect( mOrigQuoteGroup, SIGNAL( clicked( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   hbox = new QHBox( group );
   hbox->setSpacing( KDialog::spacingHint() );
@@ -3386,7 +3241,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   vlay->addStretch( 10 ); // spacer
 }
 
-void SecurityPage::GeneralTab::setup() {
+void SecurityPage::GeneralTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup reader( KMKernel::config(), "Reader" );
 
@@ -3426,7 +3281,7 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
   }
 }
 
-void SecurityPage::GeneralTab::apply() {
+void SecurityPage::GeneralTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup mdn( KMKernel::config(), "MDN" );
@@ -3463,16 +3318,12 @@ void SecurityPage::GeneralTab::apply() {
 }
 
 
-QString SecurityPage::OpenPgpTab::title() {
-  return i18n("Open&PGP");
-}
-
 QString SecurityPage::OpenPgpTab::helpAnchor() const {
   return QString::fromLatin1("configure-security-pgp");
 }
 
 SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * name )
-  : ConfigurationPage ( parent, name )
+  : ConfigModuleTab ( parent, name )
 {
   // tmp. vars:
   QVBoxLayout *vlay;
@@ -3484,15 +3335,21 @@ SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * n
   // Generic OpenPGP configuration
   mPgpConfig = new Kpgp::Config( this );
   group = mPgpConfig->optionsGroupBox();
+  connect( mPgpConfig, SIGNAL( changed( void ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // Add some custom OpenPGP options to the Options group box of Kpgp::Config
   mPgpAutoSignatureCheck =
     new QCheckBox( i18n("Automatically s&ign messages using OpenPGP"),
                    group );
+  connect( mPgpAutoSignatureCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   mPgpAutoEncryptCheck =
     new QCheckBox( i18n("Automatically encrypt messages &whenever possible"),
                    group );
+  connect( mPgpAutoEncryptCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   vlay->addWidget( mPgpConfig );
 
@@ -3511,7 +3368,7 @@ SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * n
   QWhatsThis::add( mPgpAutoEncryptCheck, msg );
 }
 
-void SecurityPage::OpenPgpTab::setup() {
+void SecurityPage::OpenPgpTab::load() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mPgpConfig->setValues();
@@ -3528,7 +3385,7 @@ void SecurityPage::OpenPgpTab::installProfile( KConfig * profile ) {
     mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt" ) );
 }
 
-void SecurityPage::OpenPgpTab::apply() {
+void SecurityPage::OpenPgpTab::save() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
   mPgpConfig->applySettings();
@@ -3536,16 +3393,12 @@ void SecurityPage::OpenPgpTab::apply() {
   composer.writeEntry( "pgp-auto-encrypt", mPgpAutoEncryptCheck->isChecked() );
 }
 
-QString SecurityPage::CryptPlugTab::title() {
-  return i18n("Crypto Plugi&ns");
-}
-
 QString SecurityPage::CryptPlugTab::helpAnchor() const {
   return QString::null;
 }
 
 SecurityPageCryptPlugTab::SecurityPageCryptPlugTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   mlistCryptoAdd = new CryptPlugWrapperList();
   mlistCryptoAdd->setAutoDelete( false );
@@ -3653,7 +3506,7 @@ SecurityPageCryptPlugTab::~SecurityPageCryptPlugTab()
   delete mlistCryptoAdd;
 }
 
-void SecurityPage::CryptPlugTab::setup()
+void SecurityPage::CryptPlugTab::load()
 {
   kdDebug(5006) << "CryptPlugTab::setup(): found "
 	    << kmkernel->cryptPlugList()->count()
@@ -3714,24 +3567,7 @@ void SecurityPage::CryptPlugTab::slotPlugSelectionChanged() {
   }
 }
 
-void SecurityPage::CryptPlugTab::dismiss() {
-  CryptPlugWrapperList * cpl = kmkernel->cryptPlugList();
-  for ( CryptPlugWrapperListIterator it( *(mlistCryptoAdd) );
-        it.current(); ++it ) {
-    CryptPlugWrapper* wrapper = cpl->take( cpl->find( *it ) );
-    if ( wrapper ) {
-      QString dummy;
-      if ( wrapper->initStatus( &dummy ) == CryptPlugWrapper::InitStatus_Ok ) {
-        wrapper->deinitialize();
-      }
-    }
-    delete wrapper;
-    wrapper = 0;
-  }
-  mlistCryptoAdd->clear();
-}
-
-void SecurityPage::CryptPlugTab::apply() {
+void SecurityPage::CryptPlugTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
 
   CryptPlugWrapperList * cpl = kmkernel->cryptPlugList();
@@ -3791,6 +3627,7 @@ void SecurityPage::CryptPlugTab::slotPlugNameChanged( const QString & text )
   if ( !item ) return;
 
   item->setText( 0, text );
+  emit changed( true );
 }
 
 void SecurityPage::CryptPlugTab::slotPlugLocationChanged( const QString & text )
@@ -3799,6 +3636,7 @@ void SecurityPage::CryptPlugTab::slotPlugLocationChanged( const QString & text )
   if ( !item ) return;
 
   item->setText( 1, text );
+  emit changed( true );
 }
 
 void SecurityPage::CryptPlugTab::slotPlugUpdateURLChanged( const QString & text )
@@ -3807,6 +3645,7 @@ void SecurityPage::CryptPlugTab::slotPlugUpdateURLChanged( const QString & text 
   if ( !item ) return;
 
   item->setText( 2, text );
+  emit changed( true );
 }
 
 void SecurityPage::CryptPlugTab::slotNewPlugIn()
@@ -3823,6 +3662,7 @@ void SecurityPage::CryptPlugTab::slotNewPlugIn()
   mNameEdit->setFocus();
 
   //slotPlugSelectionChanged();// ### ???
+  emit changed( true );
 }
 
 void SecurityPage::CryptPlugTab::slotDeletePlugIn()
@@ -3832,6 +3672,7 @@ void SecurityPage::CryptPlugTab::slotDeletePlugIn()
 
   delete item;
   mPlugList->setSelected( mPlugList->currentItem(), true );
+  emit changed( true );
 }
 
 void SecurityPage::CryptPlugTab::slotConfigurePlugIn() {
@@ -3847,6 +3688,7 @@ void SecurityPage::CryptPlugTab::slotConfigurePlugIn() {
       break;
     }
   }
+  emit changed( true );
 }
 
 void SecurityPage::CryptPlugTab::slotActivatePlugIn()
@@ -3879,6 +3721,8 @@ void SecurityPage::CryptPlugTab::slotActivatePlugIn()
     mActivateButton->setText( i18n("Deac&tivate")  );
   else
     mActivateButton->setText( i18n("Ac&tivate") );
+  
+  emit changed( true );
 }
 
 // *************************************************************
@@ -3886,35 +3730,19 @@ void SecurityPage::CryptPlugTab::slotActivatePlugIn()
 // *                        MiscPage                           *
 // *                                                           *
 // *************************************************************
-
-QString MiscPage::iconLabel() {
-  return i18n("Misc");
-}
-
-const char * MiscPage::iconName() {
-  return "misc";
-}
-
-QString MiscPage::title() {
-  return i18n("Settings that don't fit elsewhere");
-}
-
 QString MiscPage::helpAnchor() const {
   return QString::fromLatin1("configure-misc");
 }
 
 MiscPage::MiscPage( QWidget * parent, const char * name )
-  : TabbedConfigurationPage( parent, name )
+  : ConfigModuleWithTabs( parent, name )
 {
   mFolderTab = new FolderTab();
-  addTab( mFolderTab, mFolderTab->title() );
+  addTab( mFolderTab, i18n("&Folders") );
 
   mGroupwareTab = new GroupwareTab();
-  addTab( mGroupwareTab, mGroupwareTab->title() );
-}
-
-QString MiscPage::FolderTab::title() {
-  return i18n("&Folders");
+  addTab( mGroupwareTab, i18n("&Groupware") );
+  load();
 }
 
 QString MiscPage::FolderTab::helpAnchor() const {
@@ -3922,7 +3750,7 @@ QString MiscPage::FolderTab::helpAnchor() const {
 }
 
 MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   // temp. vars:
   QVBoxLayout *vlay;
@@ -3939,9 +3767,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
                         "trash"),
                    this );
   vlay->addWidget( mEmptyFolderConfirmCheck );
+  connect( mEmptyFolderConfirmCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   mWarnBeforeExpire =
     new QCheckBox( i18n("&Warn before expiring messages"), this );
   vlay->addWidget( mWarnBeforeExpire );
+  connect( mWarnBeforeExpire, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   // "when trying to find unread messages" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mLoopOnGotoUnread = new QComboBox( false, this );
@@ -3958,10 +3790,15 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
               "Loop in All Folders"));
   hlay->addWidget( label );
   hlay->addWidget( mLoopOnGotoUnread, 1 );
+  connect( mLoopOnGotoUnread, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+
   mJumpToUnread =
     new QCheckBox( i18n("&Jump to first unread message when entering a "
 			"folder"), this );
   vlay->addWidget( mJumpToUnread );
+  connect( mJumpToUnread, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mDelayedMarkAsRead = new QCheckBox( i18n("Mar&k selected message as read after"), this );
@@ -3972,14 +3809,19 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   mDelayedMarkTime->setEnabled( false ); // since mDelayedMarkAsREad is off
   hlay->addWidget( mDelayedMarkTime );
   hlay->addStretch( 1 );
-
-  connect(mDelayedMarkAsRead, SIGNAL(toggled(bool)), mDelayedMarkTime,
-  	SLOT(setEnabled(bool)));
+  connect( mDelayedMarkTime, SIGNAL( valueChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)), 
+           mDelayedMarkTime, SLOT(setEnabled(bool)));
+  connect( mDelayedMarkAsRead, SIGNAL(toggled(bool)), 
+           this , SLOT(slotEmitChanged( void )));
 
   // "show popup after Drag'n'Drop" checkbox: stretch 0
   mShowPopupAfterDnD =
     new QCheckBox( i18n("Ask for action after &dragging messages to another folder"), this );
   vlay->addWidget( mShowPopupAfterDnD );
+  connect( mShowPopupAfterDnD, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "default mailbox format" combo + label: stretch 0
   hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -3995,6 +3837,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 		  "Directories (\"maildir\" format)") );
   hlay->addWidget( label );
   hlay->addWidget( mMailboxPrefCombo, 1 );
+  connect( mMailboxPrefCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "On startup..." option:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
@@ -4003,6 +3847,8 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
                       i18n("Open this folder on startup:"), this );
   hlay->addWidget( label );
   hlay->addWidget( mOnStartupOpenFolder, 1 );
+  connect( mOnStartupOpenFolder, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // "On exit..." groupbox:
   group = new QVGroupBox( i18n("On Program Exit, "
@@ -4011,6 +3857,13 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   mCompactOnExitCheck = new QCheckBox( i18n("Com&pact all folders"), group );
   mEmptyTrashCheck = new QCheckBox( i18n("Empty &trash"), group );
   mExpireAtExit = new QCheckBox( i18n("&Expire old messages"), group );
+
+  connect( mCompactOnExitCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mEmptyTrashCheck, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mExpireAtExit, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   vlay->addWidget( group );
   vlay->addStretch( 1 );
@@ -4049,7 +3902,7 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
   QWhatsThis::add( mLoopOnGotoUnread, msg );
 }
 
-void MiscPage::FolderTab::setup() {
+void MiscPage::FolderTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
 
@@ -4072,7 +3925,7 @@ void MiscPage::FolderTab::setup() {
   mMailboxPrefCombo->setCurrentItem( num );
 }
 
-void MiscPage::FolderTab::apply() {
+void MiscPage::FolderTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
 
@@ -4095,17 +3948,12 @@ void MiscPage::FolderTab::apply() {
     general.writeEntry( "when-to-expire", expireManual );
 }
 
-
-QString MiscPage::GroupwareTab::title() {
-  return i18n("&Groupware");
-}
-
 QString MiscPage::GroupwareTab::helpAnchor() const {
   return QString::fromLatin1("configure-misc-groupware");
 }
 
 MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModuleTab( parent, name )
 {
   QBoxLayout* vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
   vlay->setAutoAdd( true );
@@ -4114,7 +3962,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   QVGroupBox* b1 = new QVGroupBox( i18n("&IMAP Resource Folder Options"), this );
 
   mEnableImapResCB = new QCheckBox( i18n("&Enable IMAP resource functionality"), b1 );
-
+  connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
   mBox = new QVBox( b1 );
   mBox->setSpacing( KDialog::spacingHint() );
   connect( mEnableImapResCB, SIGNAL( toggled(bool) ),
@@ -4126,11 +3975,15 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   QStringList lst;
   lst << i18n("English") << i18n("German") << i18n("French") << i18n("Dutch");
   mLanguageCombo->insertStringList( lst );
+  connect( mLanguageCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   QLabel* subfolderLA = new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
 
   mFolderCombo = new KMFolderComboBox( mBox );
   subfolderLA->setBuddy( mFolderCombo );
+  connect( mFolderCombo, SIGNAL( activated( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   // Groupware functionality setup
   b1 = new QVGroupBox( i18n("Groupware Options"), this );
@@ -4140,9 +3993,13 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   gBox->setSpacing( KDialog::spacingHint() );
   connect( mEnableGwCB, SIGNAL( toggled(bool) ),
 	   gBox, SLOT( setEnabled(bool) ) );
+  connect( mEnableGwCB, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   mLegacyMangleFromTo = new QCheckBox( i18n( "Legac&y mode: Mangle From:/To: headers in replies to invitations" ), gBox );
   QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
+  connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
 
   QVGroupBox* resourceVGB = new QVGroupBox( i18n( "Automatic &Resource Management" ), gBox );
   mAutoResCB = new QCheckBox( i18n( "&Automatically accept resource requests" ), resourceVGB );
@@ -4151,11 +4008,16 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget * parent, const char * name 
   connect( mAutoResCB, SIGNAL( toggled( bool ) ),
            mAutoDeclConflCB, SLOT( setEnabled( bool ) ) );
 
+  connect( mAutoDeclConflCB, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+  connect( mAutoResCB, SIGNAL( stateChanged( int ) ),
+           this, SLOT( slotEmitChanged( void ) ) );
+ 
   // Open space padding at the end
   new QLabel( this );
 }
 
-void MiscPage::GroupwareTab::setup() {
+void MiscPage::GroupwareTab::load() {
   // Read the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
   mEnableGwCB->setChecked( options.readBoolEntry( "Enabled", true ) );
@@ -4163,7 +4025,7 @@ void MiscPage::GroupwareTab::setup() {
   mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
   mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
   mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
-
+ 
   // Read the IMAP resource config
   KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
   mEnableImapResCB->setChecked( irOptions.readBoolEntry( "Enabled", false ) );
@@ -4178,7 +4040,7 @@ void MiscPage::GroupwareTab::setup() {
   }
 }
 
-void MiscPage::GroupwareTab::apply() {
+void MiscPage::GroupwareTab::save() {
   // Write the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
   options.writeEntry( "Enabled", mEnableGwCB->isChecked() );
@@ -4205,5 +4067,62 @@ void MiscPage::GroupwareTab::apply() {
 
 #undef DIM
 
+//----------------------------
+// KCM stuff 
+//----------------------------
+extern "C"
+{
+  KCModule *create_kmail_config_misc( QWidget *parent, const char * )
+  {
+    MiscPage *page = new MiscPage( parent, "kcmkmail_config_misc" );
+    return page;
+  }
+}
+
+extern "C"
+{
+  KCModule *create_kmail_config_appearance( QWidget *parent, const char * )
+  {
+    AppearancePage *page = 
+       new AppearancePage( parent, "kcmkmail_config_appearance" );
+    return page;
+  }
+}
+
+extern "C"
+{
+  KCModule *create_kmail_config_composer( QWidget *parent, const char * )
+  {
+    ComposerPage *page = new ComposerPage( parent, "kcmkmail_config_composer" );
+    return page;
+  }
+}
+
+extern "C"
+{
+  KCModule *create_kmail_config_identity( QWidget *parent, const char * )
+  {
+    IdentityPage *page = new IdentityPage( parent, "kcmkmail_config_identity" );
+    return page;
+  }
+}
+
+extern "C"
+{
+  KCModule *create_kmail_config_network( QWidget *parent, const char * )
+  {
+    NetworkPage *page = new NetworkPage( parent, "kcmkmail_config_network" );
+    return page;
+  }
+}
+
+extern "C"
+{
+  KCModule *create_kmail_config_security( QWidget *parent, const char * )
+  {
+    SecurityPage *page = new SecurityPage( parent, "kcmkmail_config_security" );
+    return page;
+  }
+}
 //----------------------------
 #include "configuredialog.moc"

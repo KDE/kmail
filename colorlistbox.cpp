@@ -59,6 +59,7 @@ void ColorListBox::setColor( uint index, const QColor &color )
     ColorListItem *colorItem = (ColorListItem*)item(index);
     colorItem->setColor(color);
     updateItem( colorItem );
+    emit changed();
   }
 }
 

@@ -15,6 +15,8 @@
 
 #include <kdialogbase.h>
 #include <klistview.h>
+#include <kcmodule.h>
+#include <klocale.h>
 
 class QPushButton;
 class QLabel;
@@ -144,75 +146,77 @@ private:
   QStringList mProfileList;
 };
 
-
-//
-//
-// basic ConfigurationPage (inherit pages from this)
-//
-//
-
-class ConfigurationPage : public QWidget {
+#include <kdialog.h>
+class ConfigModule : public KCModule {
   Q_OBJECT
 public:
-  ConfigurationPage( QWidget * parent=0, const char * name=0 )
-    : QWidget( parent, name ) {}
-  ~ConfigurationPage() {};
+  ConfigModule( QWidget * parent=0, const char * name=0 )
+     : KCModule ( parent, name )
+     { };
+  ~ConfigModule() {};
 
+  virtual void load() = 0;
+  virtual void save() = 0;
+  virtual void defaults() {};
+  
   /** Should return the help anchor for this page or tab */
   virtual QString helpAnchor() const = 0;
 
-  /** Should set the page up (ie. read the setting from the @ref
-      KConfig object into the widgets) after creating it in the
-      constructor. Called from @ref ConfigureDialog. */
-  virtual void setup() = 0;
-  /** Called when the installation of a profile is
-      requested. Reimplemenations of this method should do the
-      equivalent of a @ref setup(), but with the given @ref KConfig
-      object instead of KMKernel::config() and only for those entries that
+signals:
+  /** Emitted when the installation of a profile is
+      requested. All connected kcms should load the values
+      from the profile only for those entries that
       really have keys defined in the profile.
+   */
+   void installProfile( KConfig * profile );
 
-      The default implementation does nothing.
-  */
-  virtual void installProfile( KConfig * /*profile*/ ) {};
-  /** Should apply the changed settings (ie. read the settings from
-      the widgets into the @ref KConfig object). Called from @ref
-      ConfigureDialog. */
-  virtual void apply() = 0;
-  /** Should cleanup any temporaries after cancel. The default
-      implementation does nothing. Called from @ref ConfigureDialog. */
-  virtual void dismiss() {}
-
-  void setPageIndex( int aPageIndex ) { mPageIndex = aPageIndex; }
-  int pageIndex() const { return mPageIndex; }
-protected:
-  int mPageIndex;
 };
 
-//
-//
-// TabbedConfigurationPage
-//
-//
 
-class TabbedConfigurationPage : public ConfigurationPage {
+// Individual tab of a ConfigModuleWithTabs
+class ConfigModuleTab : public QWidget {
   Q_OBJECT
 public:
-  TabbedConfigurationPage( QWidget * parent=0, const char * name=0 );
+   ConfigModuleTab( QWidget *parent=0, const char* name=0 )
+      :QWidget( parent, name ) 
+      {};
+   ~ConfigModuleTab() {};
+  virtual void load() = 0;
+  virtual void save() = 0;
+  // the below are optional
+  virtual void defaults() {}; 
+  virtual void installProfile(){};
+signals:
+   // forwarded to the ConfigModule
+  void changed(bool);
+public slots:
+  void slotEmitChanged();
+};
 
-  void setup();
-  void dismiss();
-  void installProfile( KConfig * profile );
-  void apply();
+
+/*
+ * ConfigModuleWithTabs represents a kcm with several tabs.
+ * It simply forwards load and save operations to all tabs.
+ */
+class ConfigModuleWithTabs : public ConfigModule {
+  Q_OBJECT
+public:
+  ConfigModuleWithTabs( QWidget * parent=0, const char * name=0 );
+   ~ConfigModuleWithTabs() {};
+
+  virtual void load();
+  virtual void save();
+  virtual void defaults();
+  virtual void installProfile( KConfig * profile );
 
 protected:
-  void addTab( QWidget * tab, const QString & title );
+  void addTab( ConfigModuleTab* tab, const QString & title );
 
 private:
-  ConfigurationPage * configTab( int index, const char * debugMsg ) const;
-
   QTabWidget *mTabWidget;
 
 };
+
 
 //
 //
@@ -220,20 +224,16 @@ private:
 //
 //
 
-class IdentityPage : public ConfigurationPage {
+class IdentityPage : public ConfigModule {
   Q_OBJECT
 public:
   IdentityPage( QWidget * parent=0, const char * name=0 );
   ~IdentityPage() {};
 
-  static QString iconLabel();
-  static QString title();
-  static const char * iconName();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
-  void dismiss();
+  void load();
+  void save();
 
 public slots:
   void slotUpdateTransportCombo( const QStringList & );
@@ -264,7 +264,6 @@ protected: // data members
   QPushButton             * mRenameButton;
   QPushButton             * mRemoveButton;
   QPushButton             * mSetAsDefaultButton;
-
 };
 
 
@@ -275,20 +274,14 @@ protected: // data members
 //
 
 // subclasses: one class per tab:
-class NetworkPageSendingTab : public ConfigurationPage {
+class NetworkPageSendingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   NetworkPageSendingTab( QWidget * parent=0, const char * name=0 );
-
-  // no icon:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
-
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
 
 signals:
   void transportListChanged( const QStringList & );
@@ -314,25 +307,17 @@ protected:
   QLineEdit   *mDefaultDomainEdit;
 
   QPtrList< KMTransportInfo > mTransportInfoList;
-
 };
 
 
-class NetworkPageReceivingTab : public ConfigurationPage {
+class NetworkPageReceivingTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   NetworkPageReceivingTab( QWidget * parent=0, const char * name=0 );
-
-  // no icon:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
-
-  void setup();
-  void apply();
-  void dismiss(); // needed for account list cleanup
+  void load();
+  void save();
+  void defaults() {};
 
 signals:
   void accountListChanged( const QStringList & );
@@ -368,15 +353,12 @@ protected:
   QValueList< ModifiedAccountsType* >  mModifiedAccounts;
 };
 
-class NetworkPage : public TabbedConfigurationPage {
+class NetworkPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   NetworkPage( QWidget * parent=0, const char * name=0 );
-
-  static QString iconLabel();
-  static QString title();
-  static const char * iconName();
   QString helpAnchor() const;
+
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
   typedef NetworkPageSendingTab SendingTab;
@@ -398,20 +380,15 @@ protected:
 //
 //
 
-class AppearancePageFontsTab : public ConfigurationPage {
+class AppearancePageFontsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   AppearancePageFontsTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
+  void load();
+  void save();
+  void defaults() {};
 
-  void setup();
-  void apply();
   void installProfile( KConfig * profile );
 
 protected slots:
@@ -429,20 +406,15 @@ protected:
   QFont        mFont[10];
 };
 
-class AppearancePageColorsTab : public ConfigurationPage {
+class AppearancePageColorsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   AppearancePageColorsTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
+  void load();
+  void save();
+  void defaults() {};
 
-  void setup();
-  void apply();
   void installProfile( KConfig * profile );
 
 protected:
@@ -451,20 +423,15 @@ protected:
   QCheckBox    *mRecycleColorCheck;
 };
 
-class AppearancePageLayoutTab : public ConfigurationPage {
+class AppearancePageLayoutTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   AppearancePageLayoutTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
   void installProfile( KConfig * profile );
 
 protected: // data
@@ -475,20 +442,16 @@ protected: // data
   QButtonGroup *mReaderWindowModeGroup;
 };
 
-class AppearancePageHeadersTab : public ConfigurationPage {
+class AppearancePageHeadersTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   AppearancePageHeadersTab( QWidget * parent=0, const char * name=0 );
 
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
   void installProfile( KConfig * profile );
 
 protected: // methods
@@ -503,14 +466,11 @@ protected: // data
   QLineEdit    *mCustomDateFormatEdit;
 };
 
-class AppearancePage : public TabbedConfigurationPage {
+class AppearancePage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   AppearancePage( QWidget * parent=0, const char * name=0 );
 
-  static QString iconLabel();
-  static QString title();
-  static const char * iconName();
   QString helpAnchor() const;
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
@@ -532,20 +492,15 @@ protected:
 //
 //
 
-class ComposerPageGeneralTab : public ConfigurationPage {
+class ComposerPageGeneralTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   ComposerPageGeneralTab( QWidget * parent=0, const char * name=0 );
-
-  // no icon
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
   void installProfile( KConfig * profile );
 
 protected:
@@ -558,20 +513,15 @@ protected:
   KURLRequester *mEditorRequester;
 };
 
-class ComposerPagePhrasesTab : public ConfigurationPage {
+class ComposerPagePhrasesTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   ComposerPagePhrasesTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
 
 protected slots:
   void slotNewLanguage();
@@ -595,20 +545,15 @@ protected:
   LanguageItemList mLanguageList;
 };
 
-class ComposerPageSubjectTab : public ConfigurationPage {
+class ComposerPageSubjectTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   ComposerPageSubjectTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
 
 
 protected:
@@ -618,20 +563,15 @@ protected:
   QCheckBox              *mReplaceForwardPrefixCheck;
 };
 
-class ComposerPageCharsetTab : public ConfigurationPage {
+class ComposerPageCharsetTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   ComposerPageCharsetTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
 
 protected slots:
   void slotVerifyCharset(QString&);
@@ -641,20 +581,15 @@ protected:
   QCheckBox              *mKeepReplyCharsetCheck;
 };
 
-class ComposerPageHeadersTab : public ConfigurationPage {
+class ComposerPageHeadersTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   ComposerPageHeadersTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
 
 protected slots:
   void slotMimeHeaderSelectionChanged();
@@ -675,38 +610,26 @@ protected:
   QLabel      *mTagValueLabel;
 };
 
-class ComposerPageAttachmentsTab : public ConfigurationPage {
+class ComposerPageAttachmentsTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   ComposerPageAttachmentsTab( QWidget * parent=0, const char * name=0 );
-
-  // no icon
-  static QString iconLabel() {
-    return QString::null;
-  }
-  static const char * iconName() {
-    return 0;
-  }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
 
 protected:
   QCheckBox   *mMissingAttachmentDetectionCheck;
   SimpleStringListEditor *mAttachWordsListEditor;
 };
 
-class ComposerPage : public TabbedConfigurationPage {
+class ComposerPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   ComposerPage( QWidget * parent=0, const char * name=0 );
 
-  static QString iconLabel();
-  static QString title();
-  static const char * iconName();
   QString helpAnchor() const;
 
   // hrmpf. moc doesn't like nested classes with slots/signals...:
@@ -732,20 +655,15 @@ protected:
 //
 //
 
-class SecurityPageGeneralTab : public ConfigurationPage {
+class SecurityPageGeneralTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   SecurityPageGeneralTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
 
   void installProfile( KConfig * profile );
 
@@ -758,20 +676,15 @@ protected:
 };
 
 
-class SecurityPageOpenPgpTab : public ConfigurationPage {
+class SecurityPageOpenPgpTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   SecurityPageOpenPgpTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
+  void load();
+  void save();
+  void defaults() {};
   void installProfile( KConfig * profile );
 
 protected:
@@ -781,23 +694,18 @@ protected:
 };
 
 
-class SecurityPageCryptPlugTab : public ConfigurationPage
+class SecurityPageCryptPlugTab : public ConfigModuleTab
 {
   Q_OBJECT
 public:
   SecurityPageCryptPlugTab( QWidget * parent = 0, const char* name = 0 );
   ~SecurityPageCryptPlugTab();
 
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
   QString helpAnchor() const;
 
-  void setup();
-  void apply();
-  void dismiss();
+  void load();
+  void save();
+  void defaults() {};
   //void savePluginsConfig( bool silent );
 
 public slots:
@@ -826,20 +734,14 @@ private:
   CryptPlugWrapperList *mlistCryptoAdd;
 };
 
-class SecurityPage : public TabbedConfigurationPage {
+class SecurityPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   SecurityPage(	QWidget * parent=0, const char * name=0 );
 
-  static QString iconLabel();
-  static const char * iconName();
-  static QString title();
   QString helpAnchor() const;
 
   // OpenPGP tab is special:
-  void setup();
-  void apply();
-  void dismiss();
   void installProfile( KConfig * profile );
 
   typedef SecurityPageGeneralTab GeneralTab;
@@ -859,20 +761,15 @@ protected:
 //
 //
 
-class MiscPageFolderTab : public ConfigurationPage {
+class MiscPageFolderTab : public ConfigModuleTab {
   Q_OBJECT
 public:
   MiscPageFolderTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
-  QString helpAnchor() const;
-
-  void setup();
-  void apply();
+ 
+  void load();
+  void save();
+  void defaults() {};
+ QString helpAnchor() const;
 
 protected:
   QCheckBox    *mEmptyFolderConfirmCheck;
@@ -889,20 +786,14 @@ protected:
   KMFolderComboBox *mOnStartupOpenFolder;
 };
 
-class MiscPageGroupwareTab : public ConfigurationPage  {
+class MiscPageGroupwareTab : public ConfigModuleTab  {
   Q_OBJECT
 public:
   MiscPageGroupwareTab( QWidget * parent=0, const char * name=0 );
-
-  // no icons:
-  static QString iconLabel() { return QString::null; }
-  static const char * iconName() { return 0; }
-
-  static QString title();
+  void load();
+  void save();
+  void defaults() {};
   QString helpAnchor() const;
-
-  void setup();
-  void apply();
 private:
   QCheckBox* mEnableGwCB;
   QCheckBox* mEnableImapResCB;
@@ -920,14 +811,10 @@ private:
   QCheckBox* mLegacyMangleFromTo;
 };
 
-class MiscPage : public TabbedConfigurationPage {
+class MiscPage : public ConfigModuleWithTabs {
   Q_OBJECT
 public:
   MiscPage( QWidget * parent=0, const char * name=0 );
-
-  static QString iconLabel();
-  static QString title();
-  static const char * iconName();
   QString helpAnchor() const;
 
   typedef MiscPageFolderTab FolderTab;

@@ -362,66 +362,55 @@ void ProfileDialog::slotOk() {
 }
 
 
-/********************************************************************
- *
- *     *ConfigurationPage classes
- *
- ********************************************************************/
-
-TabbedConfigurationPage::TabbedConfigurationPage( QWidget * parent,
+ConfigModuleWithTabs::ConfigModuleWithTabs( QWidget * parent,
 						  const char * name )
-  : ConfigurationPage( parent, name )
+  : ConfigModule( parent, name )
 {
   QVBoxLayout *vlay = new QVBoxLayout( this, 0, KDialog::spacingHint() );
   mTabWidget = new QTabWidget( this );
   vlay->addWidget( mTabWidget );
 }
 
-void TabbedConfigurationPage::addTab( QWidget * tab, const QString & title ) {
+void ConfigModuleWithTabs::addTab( ConfigModuleTab* tab, const QString & title ) {
   mTabWidget->addTab( tab, title );
+  connect( tab, SIGNAL(changed( bool )),
+	        this, SIGNAL(changed( bool )) );
 }
 
-ConfigurationPage * TabbedConfigurationPage::configTab( int i, const char * func ) const {
-  ConfigurationPage * tab =
-    dynamic_cast<ConfigurationPage*>( mTabWidget->page( i ) );
-  kdWarning( !tab ) << "Tab with index " << i << " and label \""
-		    << mTabWidget->label( i )
-		    << "\" is not a ConfigurationPage." << endl
-		    << "Better overload " << func << "() in this page!"
-		    << endl;
-  return tab;
-}
-
-void TabbedConfigurationPage::setup() {
+void ConfigModuleWithTabs::load() {
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigurationPage * tab = configTab( i, "setup" );
+    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
     if ( tab )
-      tab->setup();
+      tab->load();
   }
 }
 
-void TabbedConfigurationPage::dismiss() {
-  for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigurationPage * tab = configTab( i, "dismiss" );
+void ConfigModuleWithTabs::save() {
+   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
+    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
     if ( tab )
-      tab->dismiss();
+      tab->save();
   }
 }
 
-void TabbedConfigurationPage::installProfile( KConfig * profile ) {
+void ConfigModuleWithTabs::defaults() {
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigurationPage * tab = configTab( i, "installProfile" );
+    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
     if ( tab )
-      tab->installProfile( profile );
+      tab->defaults();
   }
 }
 
-void TabbedConfigurationPage::apply() {
+void ConfigModuleWithTabs::installProfile(KConfig *profile) {
   for ( int i = 0 ; i < mTabWidget->count() ; ++i ) {
-    ConfigurationPage * tab = configTab( i, "apply" );
+    ConfigModuleTab *tab = dynamic_cast<ConfigModuleTab*>( mTabWidget->page(i) );
     if ( tab )
-      tab->apply();
+      tab->installProfile();
   }
+}
+
+void ConfigModuleTab::slotEmitChanged( void ) {
+   emit changed( true );
 }
 
 

@@ -79,6 +79,7 @@ signals:
       argument to QString::null to suppress adding.
   */
   void aboutToAdd(QString&);
+  void changed(void);
 
 protected slots:
   void slotAdd();

@@ -209,10 +209,12 @@ void SimpleStringListEditor::slotAdd() {
   emit aboutToAdd( newEntry );
   if ( ok && !newEntry.isEmpty() )
     mListBox->insertItem( newEntry );
+  emit changed();
 }
 
 void SimpleStringListEditor::slotRemove() {
   delete findSelectedItem( mListBox ); // delete 0 is well-behaved...
+  emit changed();
 }
 
 void SimpleStringListEditor::slotModify() {
@@ -230,6 +232,7 @@ void SimpleStringListEditor::slotModify() {
   delete item;
   mListBox->insertItem( newText, index );
   mListBox->setCurrentItem( index );
+  emit changed();
 }
 
 void SimpleStringListEditor::slotUp() {
@@ -253,6 +256,7 @@ void SimpleStringListEditor::slotUp() {
     mUpButton->setEnabled( item->prev() );
   if ( mDownButton )
     mDownButton->setEnabled( true );
+  emit changed();
 }
 
 void SimpleStringListEditor::slotDown() {
@@ -279,6 +283,7 @@ void SimpleStringListEditor::slotDown() {
     mUpButton->setEnabled( true );
   if ( mDownButton )
     mDownButton->setEnabled( item->next() );
+  emit changed();
 }
 
 void SimpleStringListEditor::slotSelectionChanged() {

@@ -1493,7 +1493,7 @@ void KMKernel::slotShowConfigurationDialog()
 {
   if( !mConfigureDialog ) {
     mConfigureDialog = new ConfigureDialog( 0, "configure", false );
-    connect( mConfigureDialog, SIGNAL( configChanged() ),
+    connect( mConfigureDialog, SIGNAL( configCommitted() ),
              this, SIGNAL( configChanged() ) );
   }
 
