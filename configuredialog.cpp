@@ -3735,8 +3735,8 @@ void ConfigureDialog::slotIdentityTransport(void)
   if (ctd.exec() == QDialog::Accepted) {
     id->setTransport(ctd.getTransport());
     if (ctd.getTransport().isEmpty())
-      mIdentity.transportButton->setText("Add Transport...");
+      mIdentity.transportButton->setText(i18n("Add Transport..."));
     else
-      mIdentity.transportButton->setText("Edit Transport...");
+      mIdentity.transportButton->setText(i18n("Edit Transport..."));
   }
 }
