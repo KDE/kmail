@@ -113,7 +113,8 @@ void KMFolderMgr::compactAllFolders(bool immediate, KMFolderDir* dir)
           compactAllFolders( immediate, child );
         },
         {
-          folder->compact( immediate ? KMFolder::CompactNow : KMFolder::CompactLater );
+          if ( folder->needsCompacting() )
+              folder->compact( immediate ? KMFolder::CompactNow : KMFolder::CompactLater );
         }
   )
 }
