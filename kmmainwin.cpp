@@ -223,14 +223,25 @@ void KMMainWin::readConfig(void)
     siz = config->readSizeEntry("MainWin", &defaultSize);
     if (!siz.isEmpty())
       resize(siz);
-    defaultSize = QSize(300,130);
-    siz = config->readSizeEntry("Panners", &defaultSize);
-    if (siz.isEmpty())
-      siz = QSize(100,100); // why not defaultSize?
-    (*mHorizPannerSep)[0] = siz.width();
-    (*mVertPannerSep)[0] = siz.height();
-    (*mHorizPannerSep)[1] = height() - siz.width();
-    (*mVertPannerSep)[1] = width() - siz.height();
+
+    // the default value for the FolderPaneWidth should be about 160 but the
+    // default is set to 0 to enable the workaround (see below)
+    (*mVertPannerSep)[0] = config->readNumEntry("FolderPaneWidth", 0);
+    (*mVertPannerSep)[1] = config->readNumEntry("HeaderPaneWidth", 600-160);
+    (*mHorizPannerSep)[0] = config->readNumEntry("HeaderPaneHeight", 300);
+    (*mHorizPannerSep)[1] = config->readNumEntry("MessagePaneHeight", 300);
+
+    // workaround to support the old buggy way of saving the dimensions of the panes
+    if ((*mVertPannerSep)[0] == 0) {
+      defaultSize = QSize(300,130);
+      siz = config->readSizeEntry("Panners", &defaultSize);
+      if (siz.isEmpty())
+        siz = QSize(100,100); // why not defaultSize?
+      (*mHorizPannerSep)[0] = siz.width();
+      (*mVertPannerSep)[0] = siz.height();
+      (*mHorizPannerSep)[1] = height() - siz.width();
+      (*mVertPannerSep)[1] = width() - siz.height();
+    }
   }
 
   mMsgView->readConfig();
@@ -297,13 +308,11 @@ void KMMainWin::writeConfig(void)
 
     config->writeEntry("MainWin", r.size());
 
-    // Get those panner sizes right!
-    config->writeEntry("Panners",
-        QSize( mHorizPanner->sizes()[0] * r.height() /
-	         (mHorizPanner->sizes()[0] + mHorizPanner->sizes()[1]),
-	       mVertPanner->sizes()[0] * r.width() /
-	         (mVertPanner->sizes()[0] + mVertPanner->sizes()[1])
-	       ) );
+    // save the dimensions of the folder, header and message pane
+    config->writeEntry("FolderPaneWidth", mVertPanner->sizes()[0]);
+    config->writeEntry("HeaderPaneWidth", mVertPanner->sizes()[1]);
+    config->writeEntry("HeaderPaneHeight", mHorizPanner->sizes()[0]);
+    config->writeEntry("MessagePaneHeight", mHorizPanner->sizes()[1]);
   }
 
   KConfigGroupSaver saver(config, "General");
