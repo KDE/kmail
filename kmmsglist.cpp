@@ -182,12 +182,18 @@ void KMMsgList::rethinkHigh(void)
 }
 
 void KMMsgList::qsort(int left, int right, SortField aField, bool aDescending) {
+  debug("KMmsgList::qsort()");
+
   if(right <= left)
     return;
 
   KMMsgBasePtr mb;
   int i = left;
   int j = right;
+  
+  // $markus: Yes, I am paranoid ;-)
+  if((i + j / 2) < 0 || (i +j / 2) > KMMsgListInherited::size())
+    return;
   KMMsgBasePtr pivot = KMMsgListInherited::at((int)((i + j) / 2));
 
   do {
@@ -210,6 +216,8 @@ void KMMsgList::qsort(int left, int right, SortField aField, bool aDescending) {
       this->qsort(left, j, aField, aDescending);
     if(i < right)
       this->qsort(i, right, aField, aDescending);
+
+    debug("KMsgList::qsort() leaving");
 }
 
 //-----------------------------------------------------------------------------
@@ -218,6 +226,7 @@ void KMMsgList::sort(SortField aField, bool aDescending)
 #ifndef SLOW_SORT
   qsort(0, mHigh-1, aField, aDescending);
 #else
+  debug("KMMsgList::sort()");
   int i, j;
   KMMsgBasePtr mb;
 

@@ -172,7 +172,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 
   updateMessageList();
 
-  setCurrentItem(-1);
+  if(count() > 0)
+    setCurrentItem(0);
   if (mFolder) nextUnreadMessage();
 
   setAutoUpdate(autoUpd);
@@ -654,6 +655,13 @@ void KMHeaders::nextUnreadMessage()
 
   idx = currentItem();
   cnt = mFolder->count();
+  if(!cnt)
+    {
+      debug("KMHeaders::nextUnreadMessage(): idx=%i", idx);
+      return;
+    }
+  if(idx < 0)
+    setCurrentItem(0);
   for (i=idx+1; i<cnt; i++)
   {
     msgBase = mFolder->getMsgBase(i);
@@ -833,6 +841,7 @@ bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data,
 //-----------------------------------------------------------------------------
 void KMHeaders::sort(void)
 {
+  debug("KMHeaders::sort()");
   mFolder->sort((KMMsgList::SortField)mSortCol, mSortDescending);
 }
 

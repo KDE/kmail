@@ -607,8 +607,14 @@ void KMMainWin::slotSetHeaderStyle(int id)
 //-----------------------------------------------------------------------------
 void KMMainWin::folderSelected(KMFolder* aFolder)
 {
+  cout << "Entering folderSelected\n";
+  if(!aFolder)
+    {
+      debug("KMMainWin::folderSelected(): aFolder == NULL");
+      return;
+    }
+    
   kbp->busy();
-
   mFolder = (KMFolder*)aFolder;
   mMsgView->clear();
   mHeaders->setFolder(mFolder);

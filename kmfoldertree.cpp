@@ -119,9 +119,9 @@ void KMFolderTree::reload(void)
 //-----------------------------------------------------------------------------
 void KMFolderTree::doFolderListChanged()
 {
-  int idx = currentItem();
+  uint idx = currentItem();
   reload();
-  if (idx >= 0) setCurrentItem(idx);
+  if (idx >= 0 && idx < count()) setCurrentItem(idx);
 }
 
 
@@ -192,13 +192,19 @@ void KMFolderTree::doFolderSelected(int index, int)
   mLastIdx = index;
 
   folder = (KMFolder*)mList.at(index);
-  if (folder->isDir()) 
-  {
-    debug("Folder `%s' is a directory -> ignoring it.",
-	  (const char*)folder->name());
-    emit folderSelected(NULL);
-  }
-  else emit folderSelected(folder);
+
+  printf("doFolderSelected\n");
+  if(folder)
+    {
+      if (folder->isDir()) 
+	{
+	  debug("Folder `%s' is a directory -> ignoring it.",
+		(const char*)folder->name());
+	  emit folderSelected(NULL);
+	}
+    
+      else emit folderSelected(folder);
+    }
 }
 
 

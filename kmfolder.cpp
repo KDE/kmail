@@ -705,6 +705,7 @@ int KMFolder::moveMsg(KMMessage* aMsg, int* aIndex_ret)
   rc = addMsg(aMsg, aIndex_ret);
   close();
 
+  debug("KMFolder::moveMsg() rc=%i",rc);
   return rc;
 }
 
@@ -882,7 +883,10 @@ int KMFolder::compact(void)
   tempName += ".compacted";
   unlink(tempName);
   tempFolder = parent()->createFolder(tempName);
-  assert(tempFolder!=NULL);
+  if(!tempFolder) {
+    debug("KMFolder::compact() Creating tempFolder failed!\n");
+    return 0;
+  }
 
   quiet(TRUE);
   tempFolder->open();
@@ -957,7 +961,9 @@ int KMFolder::sync(void)
 //-----------------------------------------------------------------------------
 void KMFolder::sort(KMMsgList::SortField aField, bool aDesc)
 {
+  debug("KMFolder::sort()");
   mMsgList.sort(aField, aDesc);
+  debug("KMFolder::sort() after");
   if (!mQuiet) emit changed();
   mDirty = TRUE;
 }

@@ -1,5 +1,5 @@
 SUBDIRS = pics doc
-INCLUDES = $(all_includes)
+INCLUDES = -g $(all_includes)
 LDADD	= $(all_libraries) -lkhtmlw -ljscript -lkfile -lkfm -lkdeui -lkdecore -lqt -lXext -lX11 $(LIBJPEG) -lmimelib -lstdc++ $(LIBSOCKET)
 #DEFS += -DCHARSETS
 
