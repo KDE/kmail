@@ -25,16 +25,22 @@
 
 
 /* TODO :
-  -- Make 2.xxx to use pipes instead of /tmp/.kmail-* files too, because
-     1.) pipes are safer (there is no decrypted mail stored on the same
-         disk
-     2.) What if two kmails were running at the same time ? They would
-         like to create /tmp/.kmail-* files both and it would probably
-         cause problems.
   --  When there is no output from PGP, a warning dialog should
       appear (when there's a problem now, the MESSAGE IS SENT
       UNENCRYPTED AND/OR UNSIGNED !)
+  --  Use sending of passphrase via pipe, rather than via -z,
+      because it can be listed with 'ps' then. -- not very safe
 */ 
+
+/* CHANGES by Juraj Bednar <bednar@isternet.sk>
+
+  -- Support for PGP 5.0 added. PGP 2.6.3 should work, but I have
+     no way to test it out
+  -- /tmp/.kmail-* files are no longer used. Instead we use pipes
+     (they are much safer and there will be no conflict with other
+     kmails running)
+
+*/
 
 static void
 pgpSigHandler(int)
@@ -518,35 +524,45 @@ Kpgp::decode(const QString text, bool returnHTML)
 // --------------------- private functions -------------------
 
 bool
-Kpgp::runPgp50(QString cmd, int *in, int *out)
+Kpgp::executePGP(QString cmd, int *in, int *out, int *err)
 {
-           int pin[2], pout[2], child_pid;
+           int pin[2], pout[2], perr[2], child_pid;
 
          pipe(pin);
          pipe(pout);
+         pipe(perr);
 
          if(!(child_pid = fork()))
          {
            /*We're the child.*/
-           close(pin[1]);
-           dup2(pin[0], 0);
+           close(pin[1]);    
+           dup2(pin[0], 0); /* pipe to stdin (0) */
            close(pin[0]);
 
            close(pout[0]);
-           dup2(pout[1], 1);
+           dup2(pout[1], 1); /* pipe to stdout (1) */
            close(pout[1]);
+
+           close(perr[0]);
+           dup2(perr[1], 2);  /* pipe to stderr (2) */
+           close(perr[1]);
 
            execl("/bin/sh", "sh", "-c", cmd.data(), NULL);
            _exit(127);
-         }                                   
+         }
+
          /*Only get here if we're the parent.*/
+
+         close(perr[1]);
+         *err = perr[0];
          close(pout[1]);
          *out = pout[0];
          close(pin[0]);
          *in = pin[1];
 
-         return TRUE;    
+         return TRUE;
 }
+
 // check if pgp installed
 // currently only supports 2.6.x
 // And now 5.x at alpha stage ;-). Please test ! I'll do too. - Juraj
@@ -573,10 +589,10 @@ Kpgp::checkForPGP(void)
 bool
 Kpgp::runPGP(int action, const char* args)
 {
-  int len, rc;
+  int len;
   char str[1024];
   bool addUserId = FALSE;
-  QString cmd, tmpName(256), inName, outName, errName;
+  QString cmd;
   int infd, outfd, errfd;
   void (*oldsig)(int);
 
@@ -667,38 +683,15 @@ Kpgp::runPGP(int action, const char* args)
   if (flagPgp50) 
     cmd += " +batchmode=1 +OutputInformationFD=2";
 
-  tmpName.sprintf("/tmp/.kmail-");
-  errName = tmpName + "err";
+  executePGP(cmd,&infd,&outfd,&errfd);
 
-  if (!flagPgp50) 
-  {
-  inName  = tmpName + "in";
-  outName = tmpName + "out";
-
-  cmd = cmd + " <"+inName+" >"+outName+" 2>"+errName;
-
-  infd = open(inName.data(), O_RDWR|O_CREAT|O_TRUNC,S_IREAD|S_IWRITE);
-  } else 
-  {
-  cmd = cmd + " 2>"+errName;
-  runPgp50(cmd,&infd,&outfd);
-  }
   if (!input.isEmpty()) {
     write(infd, input.data(), input.length());
     }
   close(infd);
 
-  if (!flagPgp50) {
-  oldsig = signal(SIGALRM,pgpSigHandler);
-  alarm(5);
-  rc = system(cmd.data());
-  alarm(0);
-  signal(SIGALRM,oldsig);
-  }
-
   output = 0;
-  if (!flagPgp50)
-     outfd = open(outName.data(), O_RDONLY);  
+
   if (outfd >= 0) 
   {
     while ((len=read(outfd,str,1023))>0)
@@ -706,20 +699,12 @@ Kpgp::runPGP(int action, const char* args)
       str[len] ='\0';
       output += str;
     }
-    if (flagPgp50) 
-      {
-        oldsig = signal(SIGALRM,pgpSigHandler);
-        alarm(5);
-        wait(NULL);
-        alarm(0);
-        signal(SIGALRM,oldsig);
-        unsetenv("PGPPASSFD");
-      }
-    close(outfd);
+   close(outfd);
   }
 
+
   info = 0;
-  errfd = open(errName.data(), O_RDONLY);  
+
   if (errfd >= 0) 
   {
     while ((len=read(errfd,str,1023))>0)
@@ -730,12 +715,16 @@ Kpgp::runPGP(int action, const char* args)
     close(errfd);
   }
 
-  if (!flagPgp50)
-  {
-  unlink(inName.data());
-  unlink(outName.data());
-  }
-  unlink(errName.data());
+
+  /* Clean up */
+  oldsig = signal(SIGALRM,pgpSigHandler);
+  alarm(5);
+  wait(NULL);
+  alarm(0);
+  signal(SIGALRM,oldsig);
+  unsetenv("PGPPASSFD");
+  debug("Okay !");
+
   return parseInfo(action);
 }
 

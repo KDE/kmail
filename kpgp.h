@@ -145,7 +145,7 @@ private:
 
   bool checkForPGP(void);
   bool runPGP(int action = TEST, const char *args = 0);
-  bool runPgp50(QString cmd, int *in, int *out);
+  bool executePGP(QString cmd, int *in, int *out, int *err);
   bool parseInfo(int action);
 
   static Kpgp *kpgpObject;
