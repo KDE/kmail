@@ -109,6 +109,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
 void KMLittleProgressDlg::slotEnable( bool enabled )
 {
   if (enabled) {
+    m_pButton->setDown( false );
     mode = Progress;
     kdDebug(5006) << "enable progress" << endl;
   }
