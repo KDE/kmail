@@ -21,7 +21,7 @@ class DwSmtpClient;
 class KMIOStatusDlg;
 class KMSendProc;
 class QStrList;
-class QDialog;
+class KMainWindow;
 class Smtp;
 
 class KMSender: public QObject
@@ -150,7 +150,7 @@ private:
   bool mSendInProgress;
   KMMessage * mCurrentMsg;
   bool quitOnDone;
-  QDialog *labelDialog;
+  KMainWindow *labelDialog;
   QLabel *label;
 };
 

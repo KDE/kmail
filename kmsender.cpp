@@ -19,6 +19,7 @@
 #include <kprocess.h>
 #include <kapp.h>
 #include <kmessagebox.h>
+#include <kmainwindow.h>
 #include <kwin.h>
 #include <qregexp.h>
 #include <qdialog.h>
@@ -312,12 +313,11 @@ void KMSender::doSendMsg()
     kernel->serverReady (false); //sven - stop IPC
 
     if (!labelDialog) {
-      labelDialog = new QDialog(0, "sendinglabel", false, WDestructiveClose );
+      labelDialog = new KMainWindow(0, "sendinglabel", WStyle_Dialog | WDestructiveClose );
       label = new QLabel(labelDialog);
-      labelDialog->setCaption("KMail");
-      KWin::setIcons( labelDialog->winId(), kapp->icon(), kapp->miniIcon() );
       connect(labelDialog,SIGNAL(destroyed()),this,SLOT(slotAbortSend()));
       label->resize(400, label->sizeHint().height());
+      labelDialog->resize(400, labelDialog->sizeHint().height());
       label->setText(i18n("Initiating sender process..."));
       labelDialog->show();
     }
@@ -442,9 +442,8 @@ void KMSender::cleanup(void)
   mSendAborted = false;
   if (labelDialog) {
       disconnect(labelDialog,SIGNAL(destroyed()),this,SLOT(slotAbortSend()));
-      delete labelDialog;
+      labelDialog->close();
       labelDialog = 0;
-      //      labelDialog->hide();
   }
   if (quitOnDone)
   {
