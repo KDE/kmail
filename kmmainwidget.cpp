@@ -3179,6 +3179,13 @@ void KMMainWidget::slotIntro()
 
 void KMMainWidget::slotShowStartupFolder()
 {
+  if ( mFolderTree ) {
+    mFolderTree->reload();
+    mFolderTree->readConfig();
+    // get rid of old-folders
+    mFolderTree->cleanupConfigFile();
+  }
+
   connect( kmkernel->filterMgr(), SIGNAL( filterListUpdated() ),
 	   this, SLOT( initializeFilterActions() ));
 
@@ -3201,12 +3208,8 @@ void KMMainWidget::slotShowStartupFolder()
   if ( !startup )
     startup = kmkernel->inboxFolder();
 
-  if ( mFolderTree )
-  {
-    mFolderTree->reload();
+  if ( mFolderTree ) {
     mFolderTree->showFolder( startup );
-    // get rid of old-folders
-    mFolderTree->cleanupConfigFile();
   }
 }
 
