@@ -366,7 +366,7 @@ void AccountDialog::saveSettings()
     mAccount->setName( mLocal.nameEdit->text() );
     ((KMAcctLocal*)mAccount)->setLocation( mLocal.locationEdit->text() );
     mAccount->setCheckInterval( mLocal.intervalCheck->isChecked() ? 
-			     mLocal.intervalSpin->value() : 0 );
+			     mLocal.intervalSpin->text().toInt() : 0 );
     mAccount->setCheckExclude( mLocal.excludeCheck->isChecked() );
  
     mAccount->setPrecommand( mLocal.precommand->text() );
@@ -380,7 +380,7 @@ void AccountDialog::saveSettings()
   {
     mAccount->setName( mPop.nameEdit->text() );
     mAccount->setCheckInterval( mPop.intervalCheck->isChecked() ? 
-			     mPop.intervalSpin->value() : 0 );
+			     mPop.intervalSpin->text().toInt() : 0 );
     mAccount->setCheckExclude( mPop.excludeCheck->isChecked() );
 
     KMFolder *folder 

@@ -1790,7 +1790,7 @@ void ConfigureDialog::slotDoApply( bool everything )
     config.writeEntry("pgp-auto-sign",
 		      mComposer.pgpAutoSignatureCheck->isChecked() );
     config.writeEntry("word-wrap", mComposer.wordWrapCheck->isChecked() );
-    config.writeEntry("break-at", mComposer.wrapColumnSpin->value() );
+    config.writeEntry("break-at", mComposer.wrapColumnSpin->text().toInt() );
   }
   if( activePage == mMime.pageIndex || everything )
   {
