@@ -1909,7 +1909,7 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
 
     // run encrypting for public recipient(s)
     if( result == Kpgp::Ok ){
-      if( mSelectedCryptPlug->alwaysEncryptToSelf() )
+      if( mSelectedCryptPlug && mSelectedCryptPlug->alwaysEncryptToSelf() )
         recipientsWithoutBcc << from();
       result = encryptMessage( &theMessage,
                             recipientsWithoutBcc,
