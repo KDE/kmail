@@ -1590,7 +1590,12 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 	pos--;
       }
       str.truncate(i);
-      result += "<a href=\"" + str + "\">" + str + "</a>";
+      // don't create link if url is empty
+      if( ( str == "http://" ) || ( str == "https://" ) ||
+          ( str == "ftp://" ) || ( str == "mailto" ) )
+        result += str;
+      else
+        result += "<a href=\"" + str + "\">" + str + "</a>";
     }
     else if (ch=='@')
     {
