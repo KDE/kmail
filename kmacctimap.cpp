@@ -86,7 +86,7 @@ void KMAcctImap::setImapFolder(KMFolderImap *aFolder)
 
 //-----------------------------------------------------------------------------
 
-bool KMAcctImap::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
+bool KMAcctImap::handleError( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
 {
   /* TODO check where to handle this one better. */
   if ( errorCode == KIO::ERR_DOES_NOT_EXIST ) {
@@ -95,7 +95,7 @@ bool KMAcctImap::handleJobErrorInternal( int errorCode, const QString &errorMsg,
       mFolder->listDirectory();
     return true;
   }
-  return ImapAccountBase::handleJobErrorInternal( errorCode, errorMsg, job, context, abortSync );
+  return ImapAccountBase::handleError( errorCode, errorMsg, job, context, abortSync );
 }
 
 

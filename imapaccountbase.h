@@ -247,11 +247,6 @@ namespace KMail {
     bool hasACLSupport() const { return mACLSupport; }
 
     /**
-     * Deprecated method for error handling. Please port to handleJobError.
-     */
-    void slotSlaveError(KIO::Slave *aSlave, int, const QString &errorMsg);
-
-    /**
      * React to an error from the job. Uses job->error and job->errorString and calls
      * the protected virtual handleJobError with them. See below for details.
      */
@@ -322,8 +317,8 @@ namespace KMail {
   protected:
 
   /**
-     * Handle an error coming from a KIO job
-     * and abort everything (in all cases) if abortSync is true [this is for slotSlaveError].
+     * Handle an error coming from a KIO job or from a KIO slave (via the scheduler)
+     * and abort everything (in all cases) if abortSync is true [this is for slotSchedulerSlaveError].
      * Otherwise (abortSync==false), dimap will only abort in case of severe errors (connection broken),
      * but on "normal" errors (no permission to delete, etc.) it will ask the user.
      *
@@ -337,7 +332,7 @@ namespace KMail {
      * @param abortSync if true, abort sync in all cases (see above). If false, ask the user (when possible).
      * @return false when aborting, true when continuing
      */
-    virtual bool handleJobErrorInternal( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
+    virtual bool handleError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
     virtual QString protocol() const;
     virtual unsigned short int defaultPort() const;

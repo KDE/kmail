@@ -108,7 +108,7 @@ protected:
    * Handle an error coming from a KIO job
    * See ImapAccountBase::handleJobError for details.
    */
-  virtual bool handleJobErrorInternal( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
+  virtual bool handleError( int error, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync = false );
 
   QPtrList<KMail::ImapJob> mJobList;
   QGuardedPtr<KMFolderImap> mFolder;

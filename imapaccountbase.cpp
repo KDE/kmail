@@ -258,15 +258,7 @@ namespace KMail {
 
   bool ImapAccountBase::handleJobError( KIO::Job *job, const QString& context, bool abortSync )
   {
-    return handleJobErrorInternal( job->error(), job->errorText(), job, context, abortSync );
-  }
-
-  // Deprecated method for error handling. Please port to handleJobError.
-  void ImapAccountBase::slotSlaveError(KIO::Slave *aSlave, int errorCode,
-                                       const QString &errorMsg )
-  {
-    if (aSlave != mSlave) return;
-    handleJobErrorInternal( errorCode, errorMsg, 0, QString::null, true );
+    return handleError( job->error(), job->errorText(), job, context, abortSync );
   }
 
   void ImapAccountBase::postProcessNewMail( KMFolder * folder ) {
@@ -335,6 +327,7 @@ namespace KMail {
     // create jobData
     jobData jd;
     jd.total = 1; jd.done = 0;
+    jd.path = path;
     // reset for a new listing
     if (reset)
       mHasInbox = false;
@@ -424,8 +417,7 @@ namespace KMail {
     if ( it == jobsEnd() ) return;
     if (job->error())
     {
-      // PENDING(dfaure) handleJobError
-      slotSlaveError( mSlave, job->error(), job->errorText() );
+       handleJobError( job, i18n( "Error while listing folder %1: " ).arg((*it).path) + '\n' );
     }
     else
     {
@@ -475,16 +467,18 @@ namespace KMail {
     // result of a subscription-job
     JobIterator it = findJob( job );
     if ( it == jobsEnd() ) return;
+    bool onlySubscribed = (*it).onlySubscribed;
+    QString path = static_cast<KIO::SimpleJob*>(job)->url().path();
     if (job->error())
     {
-      // PENDING(dfaure) handleJobError
-      slotSlaveError( mSlave, job->error(),
-          job->errorText() );
-    } else {
-      emit subscriptionChanged(
-          static_cast<KIO::SimpleJob*>(job)->url().path(), (*it).onlySubscribed );
+      handleJobError( job, i18n( "Error while trying to subscribe to %1:" ).arg( path ) + '\n' );
+      // ## emit subscriptionChanged here in case anyone needs it to support continue/cancel
     }
-    if (mSlave) removeJob(job);
+    else
+    {
+      emit subscriptionChanged( path, onlySubscribed );
+      if (mSlave) removeJob(job);
+    }
   }
 
   //-----------------------------------------------------------------------------
@@ -590,8 +584,7 @@ namespace KMail {
       const QString &errorMsg)
   {
       if (aSlave != mSlave) return;
-      // was: slotSlaveError( aSlave, errorCode, errorMsg );
-      handleJobErrorInternal( errorCode, errorMsg, 0, QString::null, true );
+      handleError( errorCode, errorMsg, 0, QString::null, true );
       emit connectionResult( errorCode );
   }
 
@@ -630,7 +623,7 @@ namespace KMail {
   }
 
   //-----------------------------------------------------------------------------
-  bool ImapAccountBase::handleJobErrorInternal( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
+  bool ImapAccountBase::handleError( int errorCode, const QString &errorMsg, KIO::Job* job, const QString& context, bool abortSync )
   {
     // Copy job's data before a possible killAllJobs
     QStringList errors;

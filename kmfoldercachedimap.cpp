@@ -511,7 +511,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
-  kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
+  //kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
   {
