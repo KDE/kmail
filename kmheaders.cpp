@@ -502,8 +502,6 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   }
 #endif
 
-  readConfig();
-
   mPaintInfo.flagCol = -1;
   mPaintInfo.subCol    = mPaintInfo.flagCol   + 1;
   mPaintInfo.senderCol = mPaintInfo.subCol    + 1;
@@ -513,6 +511,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   mPaintInfo.status = false;
   mSortCol = KMMsgList::sfDate;
   mSortDescending = FALSE;
+
+  readConfig();
   setShowSortIndicator(true);
   setFocusPolicy( WheelFocus );
 
