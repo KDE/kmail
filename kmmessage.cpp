@@ -860,7 +860,7 @@ KMMessage* KMMessage::createForward(void)
 
   if (sHdrStyle == KMReaderWin::HdrAll) {
     s = "\n\n----------  " + sForwardStr + "  ----------\n";
-    s += asString();
+    s += headerAsString();
     str = asQuotedString(s, "", QString::null, FALSE, false);
     str += "\n-------------------------------------------------------\n";
   } else {
