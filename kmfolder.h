@@ -78,6 +78,9 @@ public:
     compatible with imap-lib */
   virtual KMMessage* getMsg(int idx);
 
+  /** Replace KMMessage with KMMsgInfo and delete KMMessage  */
+  virtual KMMsgInfo* unGetMsg(int idx);
+
   /** Provides access to the basic message fields that are also stored
     in the index. Whenever you only need subject, from, date, status
     you should use this method instead of getMsg() because getMsg()
@@ -116,7 +119,7 @@ public:
   virtual int find(const KMMsgBasePtr msg) const { return mMsgList.find(msg); }
 
   /** Number of messages in this folder. */
-  virtual long count() const { return mMsgList.count(); }
+  virtual int count() const { return mMsgList.count(); }
 
   /** Number of new or unread messages in this folder. 
     Rather slow (count loop) */

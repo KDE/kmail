@@ -719,6 +719,8 @@ void KMFolder::removeMsg(KMMsgBasePtr aMsg)
 //-----------------------------------------------------------------------------
 void KMFolder::removeMsg(int idx)
 {
+  KMMsgBase* mb;
+
   //assert(idx>=0);
   if(idx < 0)
     {
@@ -726,8 +728,15 @@ void KMFolder::removeMsg(int idx)
       return;
     }
   QString msgId = mMsgList[idx]->msgId();
-  mMsgList.take(idx);
+  mb = mMsgList.take(idx);
   mDirty = TRUE;
+
+  if (mb->status()==KMMsgStatusUnread ||
+      mb->status()==KMMsgStatusNew) {
+    --unreadMsgs;
+    emit numUnreadMsgsChanged( this );
+  }
+
   if (!mQuiet) 
     emit msgRemoved(idx, msgId);
   else
@@ -781,6 +790,28 @@ KMMessage* KMFolder::getMsg(int idx)
 
   if (mb->isMessage()) return ((KMMessage*)mb);
   return readMsg(idx);
+}
+
+
+//-----------------------------------------------------------------------------
+KMMsgInfo* KMFolder::unGetMsg(int idx)
+{
+  KMMsgBase* mb;
+
+  if(!(idx >= 0 && idx <= mMsgList.high()))
+    return 0L;
+  
+  mb = mMsgList[idx];
+  if (!mb) return NULL;
+
+  if (mb->isMessage()) {
+    KMMsgInfo *msgInfo = new KMMsgInfo( this );
+    *msgInfo = *((KMMessage*)mb);
+    mMsgList.set( idx, msgInfo );
+    return msgInfo;
+  }
+
+  return 0L;
 }
 
 
@@ -1150,6 +1181,7 @@ int KMFolder::compact()
       rc = tempFolder->moveMsg(msg);
     if (rc)
       break;
+    tempFolder->unGetMsg(tempFolder->count() - 1);
   }
   tempName = tempFolder->location();
   tempFolder->close(TRUE);
