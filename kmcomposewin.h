@@ -16,7 +16,6 @@
 #include <keditcl.h>
 #include <qlineedit.h>
 #include <kio/job.h>
-#include <kurl.h>
 
 #include "kmmsgpart.h"
 #include "kmmsgbase.h"
@@ -52,6 +51,7 @@ class KStatusBar;
 class KTempFile;
 class KToolBar;
 class KToggleAction;
+class KURL;
 
 typedef QList<KMMessagePart> KMMsgPartList;
 
@@ -332,7 +332,7 @@ protected:
   virtual bool queryExit ();
 
   /** Add an attachment to the list. */
-   void addAttach(const QString url);
+   void addAttach(const KURL url);
    void addAttach(const KMMessagePart* msgPart);
 
   /** Remove an attachment from the list. */

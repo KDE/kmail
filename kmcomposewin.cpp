@@ -56,6 +56,7 @@
 #include <kwin.h>
 #include <kglobal.h>
 #include <kmessagebox.h>
+#include <kurldrag.h>
 
 #include <kspell.h>
 
@@ -1282,7 +1283,7 @@ const QCString KMComposeWin::pgpProcessedMsg(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::addAttach(const QString aUrl)
+void KMComposeWin::addAttach(const KURL aUrl)
 {
   KIO::Job *job = KIO::get(aUrl);
   atmLoadData ld;
@@ -1466,14 +1467,10 @@ void KMComposeWin::slotAttachFile()
   // We will not care about any permissions, existence or whatsoever in
   // this function.
 
-  KURL::List files = KFileDialog::getOpenURLs(QString::null, "*", this, i18n("Attach File"));
-  QStringList list = files.toStringList();
-  for ( QStringList::Iterator it = list.begin(); it != list.end(); ++it ) {
-    QString name = *it;
-    if(!name.isEmpty()) {
-      addAttach(name);
-    }
-  }
+  KURL::List files = KFileDialog::getOpenURLs(QString::null, "*", this,
+    i18n("Attach File"));
+  for (KURL::List::Iterator it = files.begin(); it != files.end(); ++it)
+    addAttach(*it);
 }
 
 
@@ -1933,11 +1930,11 @@ void KMComposeWin::slotPrint()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotDropAction(QDropEvent *e)
 {
-  QStrList fileStrList;
-  if(QUriDrag::canDecode(e) && QUriDrag::decode( e, fileStrList ))
+  KURL::List urlList;
+  if(QUriDrag::canDecode(e) && KURLDrag::decode( e, urlList ))
   {
-    for (QStrListIterator it(fileStrList); it; ++it)
-      addAttach(QString::fromUtf8(KURL(*it).prettyURL()));
+    for (KURL::List::Iterator it = urlList.begin(); it != urlList.end(); ++it)
+      addAttach(*it);
   }
   else
     KMessageBox::sorry( 0L, i18n( "Only local files are supported." ) );
