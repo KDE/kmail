@@ -42,6 +42,9 @@
 #include "identitylistview.h"
 #include "kcursorsaver.h"
 #include "kmkernel.h"
+#include <composercryptoconfiguration.h>
+#include <warningconfiguration.h>
+#include <smimeconfiguration.h>
 
 using KMail::IdentityListView;
 using KMail::IdentityListViewItem;
@@ -50,11 +53,12 @@ using KMail::IdentityDialog;
 
 // other kdenetwork headers:
 #include <libkdepim/identity.h>
-#include <kpgpui.h>
 #include <kmime_util.h>
 using KMime::DateFormatter;
+#include <kleo/cryptoconfig.h>
 #include <kleo/cryptobackendfactory.h>
 #include <ui/backendconfigwidget.h>
+#include <ui/keyrequester.h>
 
 // other KDE headers:
 #include <klocale.h>
@@ -86,6 +90,9 @@ using KMime::DateFormatter;
 #include <qtextcodec.h>
 #include <qheader.h>
 #include <qpopupmenu.h>
+#include <qradiobutton.h>
+#include <qlayout.h>
+#include <qcheckbox.h>
 
 // other headers:
 #include <assert.h>
@@ -3085,19 +3092,31 @@ SecurityPage::SecurityPage( QWidget * parent, const char * name )
   : ConfigModuleWithTabs( parent, name )
 {
   //
-  // "General" tab:
+  // "Reading" tab:
   //
-  mGeneralTab = new GeneralTab();
-  addTab( mGeneralTab, i18n("&General") );
+  mGeneralTab = new GeneralTab(); // ## TODO rename
+  addTab( mGeneralTab, i18n("&Reading") );
 
   //
-  // "PGP" tab:
+  // "Composing" tab:
   //
-  mOpenPgpTab = new OpenPgpTab();
-  addTab( mOpenPgpTab, i18n("Open&PGP") );
+  mComposerCryptoTab = new ComposerCryptoTab();
+  addTab( mComposerCryptoTab, i18n("Composing") );
 
   //
-  // "CryptPlug" tab:
+  // "Warnings" tab:
+  //
+  mWarningTab = new WarningTab();
+  addTab( mWarningTab, i18n("Warnings") );
+
+  //
+  // "S/MIME Validation" tab:
+  //
+  mSMimeTab = new SMimeTab();
+  addTab( mSMimeTab, i18n("S/MIME &Validation") );
+
+  //
+  // "Crypto Backends" tab:
   //
   mCryptPlugTab = new CryptPlugTab();
   addTab( mCryptPlugTab, i18n("Crypto Backe&nds") );
@@ -3107,7 +3126,9 @@ SecurityPage::SecurityPage( QWidget * parent, const char * name )
 
 void SecurityPage::installProfile( KConfig * profile ) {
   mGeneralTab->installProfile( profile );
-  mOpenPgpTab->installProfile( profile );
+  mComposerCryptoTab->installProfile( profile );
+  mWarningTab->installProfile( profile );
+  mSMimeTab->installProfile( profile );
 }
 
 QString SecurityPage::GeneralTab::helpAnchor() const {
@@ -3159,17 +3180,6 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 	      "messages that were not attached to it, you can enable this "
 	      "option, but you should be aware of the possible problem.</p></qt>" );
 
-  QString confirmationWhatsThis = i18n( "<qt><p>This option enables the "
-              "<em>unconditional</em> sending of delivery- and read confirmations "
-	      "(&quot;receipts&quot;).</p>"
-	      "<p>Returning these confirmations (so-called <em>receipts</em>) "
-	      "makes it easy for the sender to track whether and - more "
-	      "importantly - <em>when</em> you read his/her message.</p>"
-	      "<p>You can return <em>delivery</em> confirmations in a "
-	      "fine-grained manner using the &quot;confirm delivery&quot; filter "
-	      "action. We advise against issuing <em>read</em> confirmations "
-	      "at all.</p></qt>");
-
   QString receiptWhatsThis = i18n( "<qt><h3>Message Disposition "
               "Notification Policy</h3>"
 	      "<p>MDNs are a generalization of what is commonly called <b>read "
@@ -3203,7 +3213,7 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 
 
   // "HTML Messages" group box:
-  group = new QVGroupBox( i18n( "Reading HTML Messages" ), this );
+  group = new QVGroupBox( i18n( "HTML messages" ), this );
   group->layout()->setSpacing( KDialog::spacingHint() );
 
   mHtmlMailCheck = new QCheckBox( i18n("Prefer H&TML to plain text"), group );
@@ -3223,22 +3233,6 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 			   "about external references...</a>")
 			   .arg(htmlWhatsThis).arg(externalWhatsThis),
 			   group );
-
-  vlay->addWidget( group );
-
-  // "Delivery Confirmations" group box:
-  group = new QVGroupBox( i18n( "Delivery Confirmations" ), this );
-  group->layout()->setSpacing( KDialog::spacingHint() );
-
-  mSendReceivedReceiptCheck = new QCheckBox( i18n("Automatically &send delivery confirmations"), group );
-  QWhatsThis::add( mSendReceivedReceiptCheck, confirmationWhatsThis );
-  connect( mSendReceivedReceiptCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  label = new KActiveLabel( i18n( "<b>WARNING:</b> Unconditionally returning "
-			    "confirmations undermines your privacy. "
-			    "<a href=\"whatsthis:%1\">More...</a>")
-			      .arg(confirmationWhatsThis),
-			    group );
 
   vlay->addWidget( group );
 
@@ -3298,6 +3292,9 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
   w = new QWidget( hbox );
   hbox->setStretchFactor( w, 1 );
 
+  mNoMDNsWhenEncryptedCheck = new QCheckBox( i18n("Do not send MDNs in response to encrypted messages"), group );
+  connect( mNoMDNsWhenEncryptedCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+
   // Warning label:
   label = new KActiveLabel( i18n("<b>WARNING:</b> Unconditionally returning "
 			   "confirmations undermines your privacy. "
@@ -3306,37 +3303,50 @@ SecurityPageGeneralTab::SecurityPageGeneralTab( QWidget * parent, const char * n
 			   group );
 
   vlay->addWidget( group );
+
+  // "Attached keys" group box:
+  group = new QVGroupBox( i18n( "Certificate && Key Bundle Attachments" ), this );
+  group->layout()->setSpacing( KDialog::spacingHint() );
+
+  mAutomaticallyImportAttachedKeysCheck = new QCheckBox( i18n("Automatically import keys and certificates"), group );
+  connect( mAutomaticallyImportAttachedKeysCheck, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
+
+  vlay->addWidget( group );
+
+
+
   vlay->addStretch( 10 ); // spacer
 }
 
 void SecurityPage::GeneralTab::load() {
-  KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup reader( KMKernel::config(), "Reader" );
-
-  KConfigGroup mdn( KMKernel::config(), "MDN" );
+  const KConfigGroup reader( KMKernel::config(), "Reader" );
 
   mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail", false ) );
   mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal", false ) );
-  mSendReceivedReceiptCheck->setChecked( general.readBoolEntry( "send-receipts", false ) );
+  mAutomaticallyImportAttachedKeysCheck->setChecked( reader.readBoolEntry( "AutoImportKeys", false ) );
+
+  const KConfigGroup mdn( KMKernel::config(), "MDN" );
+
   int num = mdn.readNumEntry( "default-policy", 0 );
   if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
   mMDNGroup->setButton( num );
   num = mdn.readNumEntry( "quote-message", 0 );
   if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
   mOrigQuoteGroup->setButton( num );
+  mNoMDNsWhenEncryptedCheck->setChecked(mdn.readBoolEntry( "not-send-when-encrypted", true ));
 }
 
 void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
-  KConfigGroup general( profile, "General" );
-  KConfigGroup reader( profile, "Reader" );
-  KConfigGroup mdn( profile, "MDN" );
+  const KConfigGroup reader( profile, "Reader" );
+  const KConfigGroup mdn( profile, "MDN" );
 
   if ( reader.hasKey( "htmlMail" ) )
     mHtmlMailCheck->setChecked( reader.readBoolEntry( "htmlMail" ) );
   if ( reader.hasKey( "htmlLoadExternal" ) )
     mExternalReferences->setChecked( reader.readBoolEntry( "htmlLoadExternal" ) );
-  if ( general.hasKey( "send-receipts" ) )
-      mSendReceivedReceiptCheck->setChecked( general.readBoolEntry( "send-receipts" ) );
+  if ( reader.hasKey( "AutoImportKeys" ) )
+    mAutomaticallyImportAttachedKeysCheck->setChecked( reader.readBoolEntry( "AutoImportKeys" ) );
+
   if ( mdn.hasKey( "default-policy" ) ) {
       int num = mdn.readNumEntry( "default-policy" );
       if ( num < 0 || num >= mMDNGroup->count() ) num = 0;
@@ -3347,10 +3357,11 @@ void SecurityPage::GeneralTab::installProfile( KConfig * profile ) {
       if ( num < 0 || num >= mOrigQuoteGroup->count() ) num = 0;
       mOrigQuoteGroup->setButton( num );
   }
+  if ( mdn.hasKey( "not-send-when-encrypted" ) )
+      mNoMDNsWhenEncryptedCheck->setChecked(mdn.readBoolEntry( "not-send-when-encrypted" ));
 }
 
 void SecurityPage::GeneralTab::save() {
-  KConfigGroup general( KMKernel::config(), "General" );
   KConfigGroup reader( KMKernel::config(), "Reader" );
   KConfigGroup mdn( KMKernel::config(), "MDN" );
 
@@ -3380,98 +3391,279 @@ void SecurityPage::GeneralTab::save() {
     }
   }
   reader.writeEntry( "htmlLoadExternal", mExternalReferences->isChecked() );
-  general.writeEntry( "send-receipts", mSendReceivedReceiptCheck->isChecked() );
+  reader.writeEntry( "AutoImportKeys", mAutomaticallyImportAttachedKeysCheck->isChecked() );
   mdn.writeEntry( "default-policy", mMDNGroup->id( mMDNGroup->selected() ) );
   mdn.writeEntry( "quote-message", mOrigQuoteGroup->id( mOrigQuoteGroup->selected() ) );
+  mdn.writeEntry( "not-send-when-encrypted", mNoMDNsWhenEncryptedCheck->isChecked() );
 }
 
 
-QString SecurityPage::OpenPgpTab::helpAnchor() const {
-  return QString::fromLatin1("configure-security-pgp");
+QString SecurityPage::ComposerCryptoTab::helpAnchor() const {
+  return QString::fromLatin1("configure-security-pgp"); // change...
 }
 
-SecurityPageOpenPgpTab::SecurityPageOpenPgpTab( QWidget * parent, const char * name )
+SecurityPageComposerCryptoTab::SecurityPageComposerCryptoTab( QWidget * parent, const char * name )
   : ConfigModuleTab ( parent, name )
 {
-  // tmp. vars:
-  QVBoxLayout *vlay;
-  QGroupBox   *group;
-  QString     msg;
+  // the margins are inside mWidget itself
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
 
-  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
-
-  // Generic OpenPGP configuration
-  mPgpConfig = new Kpgp::Config( this );
-  group = mPgpConfig->optionsGroupBox();
-  connect( mPgpConfig, SIGNAL( changed( void ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  // Add some custom OpenPGP options to the Options group box of Kpgp::Config
-  mPgpAutoSignatureCheck =
-    new QCheckBox( i18n("Automatically s&ign messages using OpenPGP"),
-                   group );
-  connect( mPgpAutoSignatureCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  mPgpAutoEncryptCheck =
-    new QCheckBox( i18n("Automatically encrypt messages &whenever possible"),
-                   group );
-  connect( mPgpAutoEncryptCheck, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
-  mNeverSignWhenSavingInDraftsCheck =
-    new QCheckBox( i18n("Never sign when saving as draft"), group );
-  mNeverEncryptWhenSavingInDraftsCheck =
-    new QCheckBox( i18n("Never encrypt when saving as draft"), group );
-
-  vlay->addWidget( mPgpConfig );
-
-  vlay->addStretch( 10 ); // spacer
-
-  // and now: adding QWhat'sThis all over the place:
-  msg = i18n( "<qt><p>When this option is enabled, all messages you send "
-              "will be signed by default. Of course it's still possible to "
-              "disable signing for each message individually.</p></qt>" );
-  QWhatsThis::add( mPgpAutoSignatureCheck, msg );
-
-  msg = i18n( "<qt><p>When this option is enabled, every message you send "
-              "will be encrypted whenever encryption is possible and desired. "
-              "Of course it's still possible to disable the automatic "
-              "encryption for each message individually.</p></qt>" );
-  QWhatsThis::add( mPgpAutoEncryptCheck, msg );
+  mWidget = new ComposerCryptoConfiguration( this );
+  vlay->addWidget( mWidget );
 }
 
-void SecurityPage::OpenPgpTab::load() {
-  KConfigGroup composer( KMKernel::config(), "Composer" );
+void SecurityPage::ComposerCryptoTab::load() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
 
-  mPgpConfig->setValues();
-  mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign", false ) );
-  mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt", false ) );
-  mNeverSignWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-sign-drafts", true ) );
-  mNeverEncryptWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-encrypt-drafts", true ) );
+  // If you change default values, sync messagecomposer.cpp too
+
+  mWidget->mAutoSignature->setChecked( composer.readBoolEntry( "pgp-auto-sign", false ) );
+
+  mWidget->mEncToSelf->setChecked( composer.readBoolEntry( "crypto-encrypt-to-self", true ) );
+  mWidget->mShowEncryptionResult->setChecked( false ); //composer.readBoolEntry( "crypto-show-encryption-result", true ) );
+  mWidget->mShowEncryptionResult->hide();
+  mWidget->mShowKeyApprovalDlg->setChecked( composer.readBoolEntry( "crypto-show-keys-for-approval", true ) );
+
+  mWidget->mAutoEncrypt->setChecked( composer.readBoolEntry( "pgp-auto-encrypt", false ) );
+  mWidget->mNeverEncryptWhenSavingInDrafts->setChecked( composer.readBoolEntry( "never-encrypt-drafts", true ) );
+
+  mWidget->mStoreEncrypted->setChecked( composer.readBoolEntry( "crypto-store-encrypted", true ) );
 }
 
-void SecurityPage::OpenPgpTab::installProfile( KConfig * profile ) {
-  KConfigGroup composer( profile, "Composer" );
+void SecurityPage::ComposerCryptoTab::installProfile( KConfig * profile ) {
+  const KConfigGroup composer( profile, "Composer" );
 
   if ( composer.hasKey( "pgp-auto-sign" ) )
-    mPgpAutoSignatureCheck->setChecked( composer.readBoolEntry( "pgp-auto-sign" ) );
+    mWidget->mAutoSignature->setChecked( composer.readBoolEntry( "pgp-auto-sign" ) );
+
+  if ( composer.hasKey( "crypto-encrypt-to-self" ) )
+    mWidget->mEncToSelf->setChecked( composer.readBoolEntry( "crypto-encrypt-to-self" ) );
+  if ( composer.hasKey( "crypto-show-encryption-result" ) )
+    mWidget->mShowEncryptionResult->setChecked( composer.readBoolEntry( "crypto-show-encryption-result" ) );
+  if ( composer.hasKey( "crypto-show-keys-for-approval" ) )
+    mWidget->mShowKeyApprovalDlg->setChecked( composer.readBoolEntry( "crypto-show-keys-for-approval" ) );
   if ( composer.hasKey( "pgp-auto-encrypt" ) )
-    mPgpAutoEncryptCheck->setChecked( composer.readBoolEntry( "pgp-auto-encrypt" ) );
-  if ( composer.hasKey( "never-sign-drafts" ) )
-    mNeverSignWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-sign-drafts" ) );
+    mWidget->mAutoEncrypt->setChecked( composer.readBoolEntry( "pgp-auto-encrypt" ) );
   if ( composer.hasKey( "never-encrypt-drafts" ) )
-    mNeverEncryptWhenSavingInDraftsCheck->setChecked( composer.readBoolEntry( "never-encrypt-drafts" ) );
+    mWidget->mNeverEncryptWhenSavingInDrafts->setChecked( composer.readBoolEntry( "never-encrypt-drafts" ) );
+
+  if ( composer.hasKey( "crypto-store-encrypted" ) )
+    mWidget->mStoreEncrypted->setChecked( composer.readBoolEntry( "crypto-store-encrypted" ) );
 }
 
-void SecurityPage::OpenPgpTab::save() {
+void SecurityPage::ComposerCryptoTab::save() {
   KConfigGroup composer( KMKernel::config(), "Composer" );
 
-  mPgpConfig->applySettings();
-  composer.writeEntry( "pgp-auto-sign", mPgpAutoSignatureCheck->isChecked() );
-  composer.writeEntry( "pgp-auto-encrypt", mPgpAutoEncryptCheck->isChecked() );
-  composer.writeEntry( "never-sign-drafts", mNeverSignWhenSavingInDraftsCheck->isChecked() );
-  composer.writeEntry( "never-encrypt-drafts", mNeverEncryptWhenSavingInDraftsCheck->isChecked() );
+  composer.writeEntry( "pgp-auto-sign", mWidget->mAutoSignature->isChecked() );
+
+  composer.writeEntry( "crypto-encrypt-to-self", mWidget->mEncToSelf->isChecked() );
+  composer.writeEntry( "crypto-show-encryption-result", mWidget->mShowEncryptionResult->isChecked() );
+  composer.writeEntry( "crypto-show-keys-for-approval", mWidget->mShowKeyApprovalDlg->isChecked() );
+
+  composer.writeEntry( "pgp-auto-encrypt", mWidget->mAutoEncrypt->isChecked() );
+  composer.writeEntry( "never-encrypt-drafts", mWidget->mNeverEncryptWhenSavingInDrafts->isChecked() );
+
+  composer.writeEntry( "crypto-store-encrypted", mWidget->mStoreEncrypted->isChecked() );
+}
+
+QString SecurityPage::WarningTab::helpAnchor() const {
+  return QString::fromLatin1("configure-security-pgp"); // to be updated
+}
+
+SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * name )
+  : ConfigModuleTab( parent, name )
+{
+  // the margins are inside mWidget itself
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
+
+  mWidget = new WarningConfiguration( this );
+  vlay->addWidget( mWidget );
+
+  connect( mWidget->enableAllWarningsPB, SIGNAL(clicked()),
+	   SLOT(slotReenableAllWarningsClicked()) );
+}
+
+void SecurityPage::WarningTab::load() {
+  const KConfigGroup composer( KMKernel::config(), "Composer" );
+
+  mWidget->warnUnencryptedCB->setChecked( composer.readBoolEntry( "crypto-warning-unencrypted", true /*said marc*/ ) );
+  mWidget->mWarnUnsigned->setChecked( composer.readBoolEntry( "crypto-warning-unsigned", true ) );
+  mWidget->warnReceiverNotInCertificateCB->setChecked( composer.readBoolEntry( "crypto-warn-recv-not-in-cert", true ) );
+
+  mWidget->mWarnSignKeyExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-key-near-expire-int", 14 ) );
+  mWidget->mWarnSignChainCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 ) );
+  mWidget->mWarnSignRootCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-root-near-expire-int", 14 ) );
+
+  mWidget->mWarnEncrKeyExpiresSB->setValue( composer.readNumEntry( "crypto-warn-encr-key-near-expire-int", 14 ) );
+  mWidget->mWarnEncrChainCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-encr-chaincert-near-expire-int", 14 ) );
+  mWidget->mWarnEncrRootCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-encr-root-near-expire-int", 14 ) );
+
+  mWidget->enableAllWarningsPB->setEnabled( true );
+}
+
+void SecurityPage::WarningTab::installProfile( KConfig * profile ) {
+  const KConfigGroup composer( profile, "Composer" );
+
+  if ( composer.hasKey( "crypto-warning-unencrypted" ) )
+    mWidget->warnUnencryptedCB->setChecked( composer.readBoolEntry( "crypto-warning-unencrypted" ) );
+  if ( composer.hasKey( "crypto-warning-unsigned" ) )
+    mWidget->mWarnUnsigned->setChecked( composer.readBoolEntry( "crypto-warning-unsigned" ) );
+  if ( composer.hasKey( "crypto-warn-recv-not-in-cert" ) )
+    mWidget->warnReceiverNotInCertificateCB->setChecked( composer.readBoolEntry( "crypto-warn-recv-not-in-cert" ) );
+
+  if ( composer.hasKey( "crypto-warn-sign-key-near-expire-int" ) )
+    mWidget->mWarnSignKeyExpiresSB->setValue( composer.readBoolEntry( "crypto-warn-sign-key-near-expire-int" ) );
+  if ( composer.hasKey( "crypto-warn-sign-chaincert-near-expire-int" ) )
+    mWidget->mWarnSignChainCertExpiresSB->setValue( composer.readBoolEntry( "crypto-warn-sign-chaincert-near-expire-int" ) );
+  if ( composer.hasKey( "crypto-warn-sign-root-near-expire-int" ) )
+    mWidget->mWarnSignRootCertExpiresSB->setValue( composer.readBoolEntry( "crypto-warn-sign-root-near-expire-int" ) );
+
+  if ( composer.hasKey( "crypto-warn-encr-key-near-expire-int" ) )
+    mWidget->mWarnEncrKeyExpiresSB->setValue( composer.readNumEntry( "crypto-warn-encr-key-near-expire-int" ) );
+  if ( composer.hasKey( "crypto-warn-encr-chaincert-near-expire-int" ) )
+    mWidget->mWarnEncrChainCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-encr-chaincert-near-expire-int" ) );
+  if ( composer.hasKey( "crypto-warn-encr-root-near-expire-int" ) )
+    mWidget->mWarnEncrRootCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-encr-root-near-expire-int" ) );
+}
+
+void SecurityPage::WarningTab::save() {
+  KConfigGroup composer( KMKernel::config(), "Composer" );
+
+  composer.writeEntry( "crypto-warn-recv-not-in-cert", mWidget->warnReceiverNotInCertificateCB->isChecked() );
+  composer.writeEntry( "crypto-warning-unencrypted", mWidget->warnUnencryptedCB->isChecked() );
+  composer.writeEntry( "crypto-warning-unsigned", mWidget->mWarnUnsigned->isChecked() );
+
+  composer.writeEntry( "crypto-warn-sign-key-near-expire-int",
+		       mWidget->mWarnSignKeyExpiresSB->value() );
+  composer.writeEntry( "crypto-warn-sign-chaincert-near-expire-int",
+		       mWidget->mWarnSignChainCertExpiresSB->value() );
+  composer.writeEntry( "crypto-warn-sign-root-near-expire-int",
+		       mWidget->mWarnSignRootCertExpiresSB->value() );
+
+  composer.writeEntry( "crypto-warn-encr-key-near-expire-int",
+		       mWidget->mWarnEncrKeyExpiresSB->value() );
+  composer.writeEntry( "crypto-warn-encr-chaincert-near-expire-int",
+		       mWidget->mWarnEncrChainCertExpiresSB->value() );
+  composer.writeEntry( "crypto-warn-encr-root-near-expire-int",
+		       mWidget->mWarnEncrRootCertExpiresSB->value() );
+}
+
+void SecurityPage::WarningTab::slotReenableAllWarningsClicked() {
+  KMessageBox::enableAllMessages();
+  mWidget->enableAllWarningsPB->setEnabled( false );
+}
+
+////
+
+QString SecurityPage::SMimeTab::helpAnchor() const {
+  return QString::fromLatin1("configure-security-pgp"); // to be updated
+}
+
+SecurityPageSMimeTab::SecurityPageSMimeTab( QWidget * parent, const char * name )
+  : ConfigModuleTab( parent, name )
+{
+  // the margins are inside mWidget itself
+  QVBoxLayout* vlay = new QVBoxLayout( this, 0, 0 );
+
+  mWidget = new SMimeConfiguration( this );
+  vlay->addWidget( mWidget );
+
+  // Button-group for exclusive radiobuttons
+  QButtonGroup* bg = new QButtonGroup( mWidget );
+  bg->hide();
+  bg->insert( mWidget->CRLRB );
+  bg->insert( mWidget->OCSPRB );
+
+  // Settings for the keyrequester custom widget
+  mWidget->OCSPResponderSignature->setAllowedKeys( Kleo::SigningKeyRequester::SMIME );
+  mWidget->OCSPResponderSignature->setMultipleKeysEnabled( false );
+
+  mConfig = Kleo::CryptoBackendFactory::instance()->config();
+}
+
+void SecurityPage::SMimeTab::load() {
+  // Checkboxes
+  mCheckUsingOCSPConfigEntry = configEntry( "gpgsm", "Security", "enable-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
+  mEnableOCSPsendingConfigEntry = configEntry( "dirmngr", "OCSP", "allow-ocsp", Kleo::CryptoConfigEntry::ArgType_None, false );
+  mDoNotCheckCertPolicyConfigEntry = configEntry( "gpgsm", "Security", "disable-policy-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
+  mNeverConsultConfigEntry = configEntry( "gpgsm", "Security", "disable-crl-checks", Kleo::CryptoConfigEntry::ArgType_None, false );
+  mFetchMissingConfigEntry = configEntry( "gpgsm", "Security", "auto-issuer-key-retrieve", Kleo::CryptoConfigEntry::ArgType_None, false );
+  // Other widgets
+  mOCSPResponderURLConfigEntry = configEntry( "dirmngr", "OCSP", "ocsp-responder", Kleo::CryptoConfigEntry::ArgType_String, false );
+  mOCSPResponderSignature = configEntry( "dirmngr", "OCSP", "ocsp-signer", Kleo::CryptoConfigEntry::ArgType_String, false );
+
+  // Initialize GUI items from the config entries
+
+  if ( mCheckUsingOCSPConfigEntry ) {
+    bool b = mCheckUsingOCSPConfigEntry->boolValue();
+    mWidget->OCSPRB->setChecked( b );
+    mWidget->CRLRB->setChecked( !b );
+    mWidget->OCSPGroupBox->setEnabled( b );
+  }
+  if ( mDoNotCheckCertPolicyConfigEntry )
+    mWidget->doNotCheckCertPolicyCB->setChecked( mDoNotCheckCertPolicyConfigEntry->boolValue() );
+  if ( mNeverConsultConfigEntry )
+    mWidget->neverConsultCB->setChecked( mNeverConsultConfigEntry->boolValue() );
+  if ( mFetchMissingConfigEntry )
+    mWidget->fetchMissingCB->setChecked( mFetchMissingConfigEntry->boolValue() );
+
+  if ( mOCSPResponderURLConfigEntry )
+    mWidget->OCSPResponderURL->setText( mOCSPResponderURLConfigEntry->stringValue() );
+  if ( mOCSPResponderSignature ) {
+    mWidget->OCSPResponderSignature->setFingerprint( mOCSPResponderSignature->stringValue() );
+  }
+}
+
+void SecurityPage::SMimeTab::installProfile( KConfig * ) {
+}
+
+void SecurityPage::SMimeTab::save() {
+  bool b = mWidget->OCSPRB->isChecked();
+  if ( mCheckUsingOCSPConfigEntry && mCheckUsingOCSPConfigEntry->boolValue() != b )
+    mCheckUsingOCSPConfigEntry->setBoolValue( b );
+  // Set allow-ocsp together with enable-ocsp
+  if ( mEnableOCSPsendingConfigEntry && mEnableOCSPsendingConfigEntry->boolValue() != b )
+    mEnableOCSPsendingConfigEntry->setBoolValue( b );
+
+  b = mWidget->doNotCheckCertPolicyCB->isChecked();
+  if ( mDoNotCheckCertPolicyConfigEntry && mDoNotCheckCertPolicyConfigEntry->boolValue() != b )
+    mDoNotCheckCertPolicyConfigEntry->setBoolValue( b );
+
+  b = mWidget->neverConsultCB->isChecked();
+  if ( mNeverConsultConfigEntry && mNeverConsultConfigEntry->boolValue() != b )
+    mNeverConsultConfigEntry->setBoolValue( b );
+
+  b = mWidget->fetchMissingCB->isChecked();
+  if ( mFetchMissingConfigEntry && mFetchMissingConfigEntry->boolValue() != b )
+    mFetchMissingConfigEntry->setBoolValue( b );
+
+  QString txt = mWidget->OCSPResponderURL->text();
+  if ( mOCSPResponderURLConfigEntry && mOCSPResponderURLConfigEntry->stringValue() != txt )
+    mOCSPResponderURLConfigEntry->setStringValue( txt );
+
+  txt = mWidget->OCSPResponderSignature->fingerprint();
+  if ( mOCSPResponderSignature && mOCSPResponderSignature->stringValue() != txt ) {
+    mOCSPResponderSignature->setStringValue( txt );
+  }
+  mConfig->sync( true );
+}
+
+Kleo::CryptoConfigEntry* SecurityPage::SMimeTab::configEntry( const char* componentName,
+                                                              const char* groupName,
+                                                              const char* entryName,
+                                                              int /*Kleo::CryptoConfigEntry::ArgType*/ argType,
+                                                              bool isList )
+{
+    Kleo::CryptoConfigEntry* entry = mConfig->entry( componentName, groupName, entryName );
+    if ( !entry ) {
+        KMessageBox::error( this, i18n( "Backend error: gpgconf doesn't seem to know the entry for %1/%2/%3" ).arg( componentName, groupName, entryName ) );
+        return 0;
+    }
+    if( entry->argType() != argType || entry->isList() != isList ) {
+        KMessageBox::error( this, i18n( "Backend error: gpgconf has wrong type for %1/%2/%3: %4 %5" ).arg( componentName, groupName, entryName ).arg( entry->argType() ).arg( entry->isList() ) );
+        return 0;
+    }
+    return entry;
 }
 
 QString SecurityPage::CryptPlugTab::helpAnchor() const {

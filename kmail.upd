@@ -102,6 +102,25 @@ Id=3.3-move-identities-to-own-file
 File=kmailrc,emailidentities
 Script=kmail-3.3-move-identities.pl,perl
 #
+# aegypten: moving options from kpgprc to kmailrc
+#
+Id=3.3-aegypten-kpgprc-to-kmailrc
+File=kpgprc,kmailrc
+Group=,Composer
+Key=showEncryptionResult,crypto-show-encryption-result
+Key=encryptToSelf,crypto-encrypt-to-self
+Key=showKeysForApproval,crypto-show-keys-for-approval
+
+Id=3.3-aegypten-kpgprc-to-libkleopatrarc
+File=kpgprc,libkleopatrarc
+Group=,Backends
+Script=kmail-3.3-aegypten.sh
+
+Id=3.3-aegypten-emailidentities-split-sign-encr-keys
+File=emailidentities
+Script=kmail-3.3-split-sign-encr-keys.sh
+
+#
 # Important notice:
 # If you add updates here, keep this text below them.
 # Make sure your updates can be safely run twice and add any new Id

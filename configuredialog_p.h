@@ -41,7 +41,10 @@ class KIntSpinBox;
 class SimpleStringListEditor;
 class KConfig;
 class QPoint;
-class CryptPlugWrapperList;
+class ComposerCryptoConfiguration;
+class WarningConfiguration;
+class SMimeConfiguration;
+
 namespace Kpgp {
   class Config;
 }
@@ -51,6 +54,8 @@ namespace KMail {
 }
 namespace Kleo {
   class BackendConfigWidget;
+  class CryptoConfig;
+  class CryptoConfigEntry;
 }
 
 class NewIdentityDialog : public KDialogBase
@@ -679,16 +684,18 @@ public:
 protected:
   QCheckBox    *mExternalReferences;
   QCheckBox    *mHtmlMailCheck;
-  QCheckBox    *mSendReceivedReceiptCheck;
+  QCheckBox    *mNoMDNsWhenEncryptedCheck;
   QButtonGroup *mMDNGroup;
   QButtonGroup *mOrigQuoteGroup;
+  QCheckBox    *mAutomaticallyImportAttachedKeysCheck;
 };
 
 
-class SecurityPageOpenPgpTab : public ConfigModuleTab {
+class SecurityPageComposerCryptoTab : public ConfigModuleTab {
   Q_OBJECT
 public:
-  SecurityPageOpenPgpTab( QWidget * parent=0, const char * name=0 );
+  SecurityPageComposerCryptoTab( QWidget * parent=0, const char * name=0 );
+
   QString helpAnchor() const;
 
   void load();
@@ -697,11 +704,60 @@ public:
   void installProfile( KConfig * profile );
 
 protected:
-  Kpgp::Config *mPgpConfig;
-  QCheckBox    *mPgpAutoSignatureCheck;
-  QCheckBox    *mPgpAutoEncryptCheck;
-  QCheckBox    *mNeverSignWhenSavingInDraftsCheck;
-  QCheckBox    *mNeverEncryptWhenSavingInDraftsCheck;
+  ComposerCryptoConfiguration* mWidget;
+};
+
+class SecurityPageWarningTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  SecurityPageWarningTab( QWidget * parent=0, const char * name=0 );
+
+  QString helpAnchor() const;
+
+  void load();
+  void save();
+  void defaults() {}
+  void installProfile( KConfig * profile );
+
+private slots:
+  void slotReenableAllWarningsClicked();
+
+protected:
+  WarningConfiguration* mWidget;
+};
+
+class SecurityPageSMimeTab : public ConfigModuleTab {
+  Q_OBJECT
+public:
+  SecurityPageSMimeTab( QWidget * parent=0, const char * name=0 );
+
+  QString helpAnchor() const;
+
+  void load();
+  void save();
+  void defaults() {}
+  void installProfile( KConfig * profile );
+
+protected:
+  Kleo::CryptoConfigEntry* configEntry( const char* componentName,
+                                        const char* groupName,
+                                        const char* entryName,
+                                        int argType,
+                                        bool isList );
+
+private:
+  SMimeConfiguration* mWidget;
+  // Checkboxes
+  Kleo::CryptoConfigEntry* mCheckUsingOCSPConfigEntry;
+  Kleo::CryptoConfigEntry* mEnableOCSPsendingConfigEntry;
+  Kleo::CryptoConfigEntry* mDoNotCheckCertPolicyConfigEntry;
+  Kleo::CryptoConfigEntry* mNeverConsultConfigEntry;
+  Kleo::CryptoConfigEntry* mFetchMissingConfigEntry;
+  // Other widgets
+  Kleo::CryptoConfigEntry* mOCSPResponderURLConfigEntry;
+  Kleo::CryptoConfigEntry* mOCSPResponderSignature;
+
+  Kleo::CryptoConfig* mConfig;
 };
 
 class SecurityPageCryptPlugTab : public ConfigModuleTab
@@ -732,13 +788,17 @@ public:
   void installProfile( KConfig * profile );
 
   typedef SecurityPageGeneralTab GeneralTab;
-  typedef SecurityPageOpenPgpTab OpenPgpTab;
+  typedef SecurityPageComposerCryptoTab ComposerCryptoTab;
+  typedef SecurityPageWarningTab WarningTab;
+  typedef SecurityPageSMimeTab SMimeTab;
   typedef SecurityPageCryptPlugTab CryptPlugTab;
 
 protected:
-  GeneralTab   *mGeneralTab;
-  OpenPgpTab   *mOpenPgpTab;
-  CryptPlugTab *mCryptPlugTab;
+  GeneralTab    *mGeneralTab;
+  ComposerCryptoTab *mComposerCryptoTab;
+  WarningTab    *mWarningTab;
+  SMimeTab      *mSMimeTab;
+  CryptPlugTab  *mCryptPlugTab;
 };
 
 
