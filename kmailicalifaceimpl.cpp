@@ -2,7 +2,7 @@
     This file is part of KMail.
 
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
-    Copyright (c) 2003 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -56,13 +56,13 @@ KMailICalIfaceImpl::KMailICalIfaceImpl()
 {
 }
 
-// Receive an ical from libkcal
+// Receive an iCal or vCard from the resource
 bool KMailICalIfaceImpl::addIncidence( const QString& type, 
-				       const QString& uid, 
-				       const QString& ical )
+                                       const QString& uid, 
+                                       const QString& ical )
 {
-  kdDebug() << "KMailICalIfaceImpl::addIncidence( " << type << ", "
-	    << uid << ", " << ical << " )" << endl;
+  if( !mUseResourceIMAP )
+    return false;
 
   bool rc = false;
   bool quiet = mResourceQuiet;
@@ -70,36 +70,41 @@ bool KMailICalIfaceImpl::addIncidence( const QString& type,
 
   // Find the folder
   KMFolder* folder = folderFromType( type );
-  if( folder == mContacts ) {
-    // TODO
-  } else if( folder ) {
+  if( folder ) {
     // Make a new message for the incidence
     KMMessage* msg = new KMMessage();
     msg->initHeader();
-    msg->setType(    DwMime::kTypeText );
-    msg->setSubtype( DwMime::kSubtypeVCal );
-    msg->setHeaderField("Content-Type",
-			"text/calendar; method=REQUEST; charset=\"utf-8\"");
-    msg->setSubject( uid );
-    msg->setTo( msg->from() );
+    msg->setType( DwMime::kTypeText );
+    if( folder == mContacts ) {
+      msg->setSubtype( DwMime::kSubtypeXVCard );
+      msg->setHeaderField( "Content-Type", "Text/X-VCard; charset=\"utf-8\"" );
+      msg->setSubject( "vCard " + uid );
+    } else {
+      msg->setSubtype( DwMime::kSubtypeVCal );
+      msg->setHeaderField("Content-Type",
+                          "text/calendar; method=REQUEST; charset=\"utf-8\"");
+      msg->setSubject( "iCal " + uid );
+    }
     msg->setBodyEncoded( ical.utf8() );
 
+    // Mark the message as read and store it in the folder
     msg->touch();
     folder->addMsg( msg );  
 
     rc = true;
-  }
+  } else
+    kdError() << "Not an IMAP resource folder" << endl;
 
   mResourceQuiet = quiet;
-
   return false;
 }
 
-// libkcal orders a deletion
-bool KMailICalIfaceImpl::deleteIncidence( const QString& type, const QString& uid )
+// The resource orders a deletion
+bool KMailICalIfaceImpl::deleteIncidence( const QString& type,
+                                          const QString& uid )
 {
-  kdDebug() << "KMailICalIfaceImpl::deleteIncidence( " << type << ", "
-	    << uid << " )" << endl;
+  if( !mUseResourceIMAP )
+    return false;
 
   bool rc = false;
   bool quiet = mResourceQuiet;
@@ -107,25 +112,27 @@ bool KMailICalIfaceImpl::deleteIncidence( const QString& type, const QString& ui
 
   // Find the folder and the incidence in it
   KMFolder* folder = folderFromType( type );
-  if( folder == mContacts ) {
-    // TODO
-  } else if( folder ) {
+  if( folder ) {
     KMMessage* msg = findMessageByUID( uid, folder );
     if( msg ) {
       // Message found - delete it and return happy
       deleteMsg( msg );
       rc = true;
-    }
-  }
+    } else
+      kdDebug(5006) << type << " not found, cannot remove uid " << uid << endl;
+  } else
+    kdError() << "Not an IMAP resource folder" << endl;
 
   mResourceQuiet = quiet;
   return true;
 }
 
-// libkcal asks for a full list of incidences
+// The resource asks for a full list of incidences
 QStringList KMailICalIfaceImpl::incidences( const QString& type )
 {
-  kdDebug() << "KMailICalIfaceImpl::incidences( " << type << " )" << endl;
+  if( !mUseResourceIMAP )
+    return QStringList();
+
   QStringList ilist;
 
   KMFolder* folder = folderFromType( type );
@@ -135,16 +142,11 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
     } else {
       QString s;
       for( int i=0; i<folder->count(); ++i ) {
-	bool unget = !folder->isMessage(i);
-	if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
-	  if( folder == mContacts ) {
-	    // What what what???
-	    s.replace('\n', "\\n");
-	    s.truncate(65);
-	  }
-	  ilist << s;
-	}
-	if( unget ) folder->unGetMsg(i);
+        bool unget = !folder->isMessage(i);
+        if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
+          ilist << s;
+        }
+        if( unget ) folder->unGetMsg(i);
       }
     }
   } else
@@ -153,29 +155,92 @@ QStringList KMailICalIfaceImpl::incidences( const QString& type )
   return ilist;
 }
 
+bool KMailICalIfaceImpl::update( const QString& type,
+                                 const QStringList& entries )
+{
+  if( !mUseResourceIMAP )
+    return false;
+
+  if( entries.count() & 2 == 1 )
+    // Something is wrong - an odd amount of strings should not happen
+    return false;
+
+  QStringList::ConstIterator it = entries.begin();
+  while( true ) {
+    // Read them in pairs and call the single update method
+    QString uid, entry;
+    if( it == entries.end() )
+      break;
+    uid = *it;
+    ++it;
+    if( it == entries.end() )
+      break;
+    entry = *it;
+    ++it;
+
+    if( !update( type, uid, entry ) )
+      // Some error happened
+      return false;
+  }
+
+  return true;
+}
+
+bool KMailICalIfaceImpl::update( const QString& type, const QString& uid,
+                                 const QString& entry )
+{
+  if( !mUseResourceIMAP )
+    return false;
+
+  bool rc = true;
+  bool quiet = mResourceQuiet;
+  mResourceQuiet = true;
+
+  // Find the folder and the incidence in it
+  KMFolder* folder = folderFromType( type );
+  if( folder ) {
+    KMMessage* msg = findMessageByUID( uid, folder );
+    if( msg ) {
+      // Message found - update it
+      deleteMsg( msg );
+      addIncidence( type, uid, entry );
+      rc = true;
+    } else {
+      kdDebug(5006) << type << " not found, cannot update uid " << uid << endl;
+      // Since it doesn't seem to be there, save it instead
+      addIncidence( type, uid, entry );
+    }
+  } else {
+    kdError() << "Not an IMAP resource folder" << endl;
+    rc = false;
+  }
+
+  mResourceQuiet = quiet;
+  return rc;
+}
+
 // KMail added a file to one of the groupware folders
 void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
-					     Q_UINT32 sernum )
+                                             Q_UINT32 sernum )
 {
-  if( mResourceQuiet )
+  if( mResourceQuiet || !mUseResourceIMAP )
     return;
 
   QString type = icalFolderType( folder );
-  if( folder == mContacts ) {
-    // TODO: Fill this
-  } else if( !type.isEmpty() ) {
+  if( !type.isEmpty() ) {
+    // Get the index of the mail
     int i = 0;
     KMFolder* aFolder = 0;
     kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
     assert( folder == aFolder );
 
+    // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
-    QString ical;
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
+    QString s;
+    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
-      arg << type << ical;
-      kdDebug() << "Emitting DCOP signal incidenceAdded( " << type << ", " << ical << " )" << endl;
+      arg << type << s;
       emitDCOPSignal( "incidenceAdded(QString,QString)", data );
     }
     if( unget ) folder->unGetMsg(i);
@@ -185,29 +250,28 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
 
 // KMail deleted a file
 void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
-					       Q_UINT32 sernum )
+                                               Q_UINT32 sernum )
 {
-  if( mResourceQuiet )
+  if( mResourceQuiet || !mUseResourceIMAP )
     return;
 
   QString type = icalFolderType( folder );
-  if( folder == mContacts ) {
-    // TODO: Fill this
-  } else if( !type.isEmpty() ) {
+  if( !type.isEmpty() ) {
+    // Get the index of the mail
     int i = 0;
     KMFolder* aFolder = 0;
     kmkernel->msgDict()->getLocation( sernum, &aFolder, &i );
     assert( folder == aFolder );
 
+    // Read the iCal or vCard
     bool unget = !folder->isMessage( i );
-    QString ical;
-    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), ical ) ) {
+    QString s;
+    if( KMGroupware::vPartFoundAndDecoded( folder->getMsg( i ), s ) ) {
       QString uid( "UID" );
-      vPartMicroParser( ical.utf8(), uid );
+      vPartMicroParser( s.utf8(), uid );
       QByteArray data;
       QDataStream arg(data, IO_WriteOnly );
       arg << type << uid;
-      kdDebug() << "Emitting DCOP signal incidenceDeleted( " << type << ", " << uid << " )" << endl;
       emitDCOPSignal( "incidenceDeleted(QString,QString)", data );
     }
     if( unget ) folder->unGetMsg(i);
@@ -218,11 +282,12 @@ void KMailICalIfaceImpl::slotIncidenceDeleted( KMFolder* folder,
 // KMail orders a refresh
 void KMailICalIfaceImpl::slotRefresh( const QString& type )
 {
-  QByteArray data;
-  QDataStream arg(data, IO_WriteOnly );
-  arg << type;
-  kdDebug() << "Emitting DCOP signal signalRefresh( " << type << " )" << endl;
-  emitDCOPSignal( "signalRefresh(QString)", data );
+  if( mUseResourceIMAP ) {
+    QByteArray data;
+    QDataStream arg(data, IO_WriteOnly );
+    arg << type;
+    emitDCOPSignal( "signalRefresh(QString)", data );
+  }
 }
 
 
@@ -232,13 +297,16 @@ void KMailICalIfaceImpl::slotRefresh( const QString& type )
 
 KMFolder* KMailICalIfaceImpl::folderFromType( const QString& type )
 {
-  if( type == "Calendar" ) return mCalendar;
-  else if( type == "Contact" ) return mContacts;
-  else if( type == "Note" ) return mNotes;
-  else if( type == "Task" || type == "Todo" ) return mTasks;
-  else if( type == "Journal" ) return mJournals;
+  if( mUseResourceIMAP ) {
+    if( type == "Calendar" ) return mCalendar;
+    else if( type == "Contact" ) return mContacts;
+    else if( type == "Note" ) return mNotes;
+    else if( type == "Task" || type == "Todo" ) return mTasks;
+    else if( type == "Journal" ) return mJournals;
 
-  kdError() << "No folder type \"" << type << "\"" << endl;
+    kdError() << "No folder type \"" << type << "\"" << endl;
+  }
+
   return 0;
 }
 
@@ -349,10 +417,10 @@ KMMessage *KMailICalIfaceImpl::findMessageByUID( const QString& uid, KMFolder* f
     if( msg ) {
       QString vCal;
       if( KMGroupware::vPartFoundAndDecoded( msg, vCal ) ) {
-	QString msgUid( "UID" );
-	vPartMicroParser( vCal.utf8(), msgUid );
-	if( msgUid == uid )
-	  return msg;
+        QString msgUid( "UID" );
+        vPartMicroParser( vCal.utf8(), msgUid );
+        if( msgUid == uid )
+          return msg;
       }
     }
     if( unget ) folder->unGetMsg(i);
@@ -425,9 +493,9 @@ void KMailICalIfaceImpl::readConfig()
   if( makeSubFolders ) {
     // Not all subfolders were there, so ask if we can make them
     if( KMessageBox::questionYesNo( 0, i18n("KMail will now create the required folders for the IMAP resource"
-					    " as subfolders of %1. If you don't want this, press \"No\","
-					    " and the IMAP resource will be disabled").arg(folderParent!=0?folderParent->name():folderParentDir->name()),
-				    i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
+                                            " as subfolders of %1. If you don't want this, press \"No\","
+                                            " and the IMAP resource will be disabled").arg(folderParent!=0?folderParent->name():folderParentDir->name()),
+                                    i18n("IMAP Resource Folders") ) == KMessageBox::No ) {
       mUseResourceIMAP = false;
       mFolderParent = 0;
       kmkernel->groupware().reloadFolderTree();
@@ -483,7 +551,7 @@ void KMailICalIfaceImpl::slotRefreshContacts() { slotRefresh( "Contact" ); }
 void KMailICalIfaceImpl::slotRefreshNotes() { slotRefresh( "Notes" ); }
 
 KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
-					  const char* typeString )
+                                          const char* typeString )
 {
   // Figure out what type of folder this is supposed to be
   KMFolderType type = mFolderType;
@@ -497,7 +565,7 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
   if( !folder ) folder = mFolderParent->createFolder( folderName( itemType ), false, type );
   if( folder->canAccess() != 0 ) {
     KMessageBox::sorry(0, i18n("You do not have read/write permission to your %1 folder.")
-		       .arg( folderName( itemType ) ) );
+                       .arg( folderName( itemType ) ) );
     return 0;
   }
   folder->setType( typeString );
@@ -506,9 +574,9 @@ KMFolder* KMailICalIfaceImpl::initFolder( KFolderTreeItem::Type itemType,
 
   // Setup the signals to listen for changes
   connect( folder, SIGNAL( msgAdded( KMFolder*, Q_UINT32 ) ),
-	   this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
+           this, SLOT( slotIncidenceAdded( KMFolder*, Q_UINT32 ) ) );
   connect( folder, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
-	   this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
+           this, SLOT( slotIncidenceDeleted( KMFolder*, Q_UINT32 ) ) );
 
   return folder;
 }
@@ -529,10 +597,10 @@ void KMailICalIfaceImpl::cleanup()
   cleanupFolder( mCalendar, this );
   cleanupFolder( mNotes, this );
   cleanupFolder( mTasks, this );
+  cleanupFolder( mJournals, this );
 
   mContacts = mCalendar = mNotes = mTasks = mJournals = 0;
 }
-
 
 void KMailICalIfaceImpl::loadPixmaps() const
 {
@@ -547,8 +615,6 @@ void KMailICalIfaceImpl::loadPixmaps() const
   }
 }
 
-
-//-----------------------------------------------------------------------------
 QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
 {
   if( !mUseResourceIMAP )
@@ -568,55 +634,10 @@ QString KMailICalIfaceImpl::folderPixmap( KFolderTreeItem::Type type ) const
   return QString::null;
 }
 
-
-#if 0
-// These are all functions that are probably no longer necessary. But
-// Until this is verified, they're kept here
-
-//-----------------------------------------------------------------------------
-bool KMGroupware::isContactsFolder( KMFolder* folder ) const
-{
-  return mContacts && folder == mContacts;
-};
-
-
-/*!
-  This method checks whether the folder is one of Calendar, Notes, and
-  Tasks and informs KOrganizer accordingly about the deleted object.
-*/
-void KMGroupware::msgRemoved( KMFolder* folder, KMMessage* msg )
-{
-  assert( msg );
-  assert( msg->isMessage() );
-
-  QString vCal;
-
-  // Let's try for a note
-  QString noteId = msg->headerField( "X-KOrg-Note-Id" );
-  if( !noteId.isEmpty() ) {
-    kdDebug(5006) << "%%% Deleting note with id: " << noteId << endl;
-    emit signalNoteDeleted( noteId );
-  } if( vPartFoundAndDecoded( msg, vCal ) ) {
-    QString uid( "UID" );
-    vPartMicroParser( vCal.utf8(), uid );
-    if( !uid.isEmpty() ){
-      // We have found something with an UID, now tell KOrganizer if
-      // this was a relevant folder.
-      if( folder == mCalendar )
-	emit signalEventDeleted( uid );
-      else if( folder == mTasks )
-	emit signalTaskDeleted( uid );
-    }
-  } else
-    kdDebug(5006) << "%%% Unknown groupware deletion\n";
-}
-#endif
-
 QPixmap* KMailICalIfaceImpl::pixContacts;
 QPixmap* KMailICalIfaceImpl::pixCalendar;
 QPixmap* KMailICalIfaceImpl::pixNotes;
 QPixmap* KMailICalIfaceImpl::pixTasks;
-
 
 
 #include "kmailicalifaceimpl.moc"

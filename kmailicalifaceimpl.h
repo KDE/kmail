@@ -2,7 +2,7 @@
     This file is part of KMail.
 
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
-    Copyright (c) 2003 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -44,6 +44,14 @@ public:
 			     const QString& ical );
   virtual bool deleteIncidence( const QString& folder, const QString& uid );
   virtual QStringList incidences( const QString& folder );
+
+  // This saves the iCals/vCards in the entries in the folder.
+  // The format in the string list is uid, entry, uid, entry...
+  virtual bool update( const QString& folder, const QStringList& entries );
+
+  // Update a single entry in the storage layer
+  virtual bool update( const QString& folder, const QString& uid,
+		       const QString& entry );
 
   // tell KOrganizer about messages to be deleted
   void msgRemoved( KMFolder*, KMMessage* );

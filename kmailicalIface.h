@@ -1,6 +1,7 @@
 /*
     This file is part of KMail.
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
+    Copyright (c) 2003 - 2004 Bo Thorsen <bo@klaralvdalens-datakonsult.se>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -31,6 +32,15 @@ class KMailICalIface : virtual public DCOPObject
 			       const QString& ical ) = 0;
     virtual bool deleteIncidence( const QString& folder, const QString& uid ) = 0;
     virtual QStringList incidences( const QString& folder ) = 0;
+
+    // This saves the iCals/vCards in the entries in the folder.
+    // The format in the string list is uid, entry, uid, entry...
+    virtual bool update( const QString& folder,
+			 const QStringList& entries ) = 0;
+
+    // Update a single entry in the storage layer
+    virtual bool update( const QString& folder, const QString& uid,
+			 const QString& entry ) = 0;
 
   k_dcop_signals:
     void incidenceAdded( const QString& folder, const QString& ical );
