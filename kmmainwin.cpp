@@ -408,6 +408,10 @@ void KMMainWin::createWidgets(void)
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
 
   // GRMBL.. work around brokenness in KAction
+  // There are KActions created that defined the following
+  // four accelerators, but they were broken due to changes
+  // for KDE2.2
+  // This only affected some users not all.
   accel->connectItem(accel->insertItem(Key_Plus),
   		     this, SLOT(slotNextUnreadMessage()) );
   accel->connectItem(accel->insertItem(Key_Minus),
