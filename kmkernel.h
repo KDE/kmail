@@ -20,6 +20,9 @@
 namespace KIO {
   class Job;
 }
+namespace KWallet {
+  class Wallet;
+}
 namespace KMail {
   class MailServiceImpl;
   class UndoStack;
@@ -271,6 +274,9 @@ public:
    */
   void messageCountChanged();
 
+  /** Open KDE wallet and set it to kmail folder */
+  KWallet::Wallet *wallet();
+
 public slots:
 
   /// Save contents of all open composer widnows to ~/dead.letter
@@ -374,6 +380,8 @@ private:
   /* Weaver */
   KPIM::ThreadWeaver::Weaver *the_weaver;
   KPIM::ThreadWeaver::WeaverThreadLogger *the_weaverLogger;
+
+  KWallet::Wallet *mWallet;
 };
 
 #endif

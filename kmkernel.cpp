@@ -60,6 +60,8 @@ using KMail::FolderIface;
 #include <ksystemtray.h>
 #include <kpgp.h>
 #include <kdebug.h>
+#include <kwallet.h>
+using KWallet::Wallet;
 
 #include <qutf7codec.h>
 #include <qvbox.h>
@@ -88,7 +90,7 @@ KMKernel *KMKernel::mySelf = 0;
 KMKernel::KMKernel (QObject *parent, const char *name) :
   DCOPObject("KMailIface"), QObject(parent, name),
   mIdentityManager(0), mConfigureDialog(0),
-  mContextMenuShown( false )
+  mContextMenuShown( false ), mWallet( 0 )
 {
   kdDebug(5006) << "KMKernel::KMKernel" << endl;
   mySelf = this;
@@ -180,6 +182,8 @@ KMKernel::~KMKernel ()
   mMailService = 0;
 
   GlobalSettings::writeConfig();
+  delete mWallet;
+  mWallet = 0;
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }
@@ -1783,6 +1787,29 @@ void KMKernel::messageCountChanged()
 int KMKernel::timeOfLastMessageCountChange() const
 {
   return mTimeOfLastMessageCountChange;
+}
+
+Wallet *KMKernel::wallet() {
+  if ( mWallet && mWallet->isOpen() )
+    return mWallet;
+
+  if ( !Wallet::isEnabled() )
+    return 0;
+
+  delete mWallet;
+  mWallet = Wallet::openWallet( Wallet::NetworkWallet(),
+        getKMMainWidget() ? getKMMainWidget()->topLevelWidget()->winId() : 0 );
+
+  if ( !mWallet ) {
+    KMessageBox::error( getKMMainWidget(), i18n("The wallet could not be opened. "
+        "This error is most probably caused by providing a wrong password.") );
+    return 0;
+  }
+
+  if ( !mWallet->hasFolder( "kmail" ) )
+    mWallet->createFolder( "kmail" );
+  mWallet->setFolder( "kmail" );
+  return mWallet;
 }
 
 #include "kmkernel.moc"

@@ -1045,13 +1045,14 @@ bool KMSendSMTP::send(KMMessage *aMsg)
 
   if (ti->auth)
   {
-    if(ti->user.isEmpty() || ti->pass.isEmpty())
+    if(ti->user.isEmpty() || ti->passwd().isEmpty())
     {
       bool b = FALSE;
       int result;
 
       KCursorSaver idle(KBusyPtr::idle());
-      result = KIO::PasswordDialog::getNameAndPassword(ti->user, ti->pass,
+      QString passwd = ti->passwd();
+      result = KIO::PasswordDialog::getNameAndPassword(ti->user, passwd,
 	&b, i18n("You need to supply a username and a password to use this "
 	     "SMTP server."), FALSE, QString::null, ti->name, QString::null);
 
@@ -1060,11 +1061,13 @@ bool KMSendSMTP::send(KMMessage *aMsg)
         abort();
         return FALSE;
       }
-      if (int id = KMTransportInfo::findTransport(ti->name))
+      if (int id = KMTransportInfo::findTransport(ti->name)) {
+        ti->setPasswd( passwd );
         ti->writeConfig(id);
+      }
     }
     destination.setUser(ti->user);
-    destination.setPass(ti->pass);
+    destination.setPass(ti->passwd());
   }
 
   if (!mSlave || !mInProcess)

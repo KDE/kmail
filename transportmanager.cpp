@@ -20,6 +20,7 @@
 
 #include "kmtransport.h"
 #include "kmkernel.h"
+#include <kapplication.h>
 #include <kconfig.h>
 
 namespace KMail {
@@ -38,6 +39,30 @@ namespace KMail {
     }
 
     return transportNames;
+  }
+
+  // more or less copied from KMAcctMgr
+  uint TransportManager::createId()
+  {
+    QValueList<unsigned int> usedIds;
+
+    KConfigGroup general( KMKernel::config(), "General");
+    int numTransports = general.readNumEntry( "transports", 0 );
+
+    for ( int i = 1 ; i <= numTransports ; i++ ) {
+      KMTransportInfo ti;
+      ti.readConfig( i );
+      usedIds << ti.id();
+    }
+
+    usedIds << 0; // 0 is default for unknown
+    int newId;
+    do
+    {
+      newId = kapp->random();
+    } while ( usedIds.find(newId) != usedIds.end() );
+
+    return newId;
   }
 
 } // namespace KMail

@@ -25,13 +25,16 @@ namespace KMail {
    * @author Ingo Kloecker <kloecker@kde.org>
    **/
   class TransportManager {
-    
+
   public:
     TransportManager() {};
     virtual ~TransportManager() {};
-    
+
     /** Returns the list for transport names */
     static QStringList transportNames();
+
+    /** Create a unique id for a transport info item */
+    static unsigned int createId();
   };
 
 } // namespace KMail

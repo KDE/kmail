@@ -38,18 +38,22 @@
 #include <kmessagebox.h>
 #include <kseparator.h>
 #include <kdebug.h>
+#include <kwallet.h>
+using KWallet::Wallet;
 
 #include "kmservertest.h"
 #include "kmaccount.h"
 #include "kmkernel.h"
 #include "protocols.h"
+#include "transportmanager.h"
+using namespace KMail;
 
-KMTransportInfo::KMTransportInfo()
+KMTransportInfo::KMTransportInfo() : mPasswdDirty( false ),
+  mStorePasswd( false ), mId( 0 )
 {
   name = i18n("Unnamed");
   port = "25";
   auth = FALSE;
-  storePass = FALSE;
   specifyHostname = false;
 }
 
@@ -63,19 +67,33 @@ void KMTransportInfo::readConfig(int id)
 {
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Transport " + QString::number(id));
+  mId = config->readUnsignedNumEntry( "id", 0 );
   type = config->readEntry("type", "smtp");
   name = config->readEntry("name", i18n("Unnamed"));
   host = config->readEntry("host", "localhost");
   port = config->readEntry("port", "25");
   user = config->readEntry("user");
-  pass = KMAccount::decryptStr(config->readEntry("pass"));
+  mPasswd = KMAccount::decryptStr(config->readEntry("pass"));
   precommand = config->readPathEntry("precommand");
   encryption = config->readEntry("encryption");
   authType = config->readEntry("authtype");
   auth = config->readBoolEntry("auth");
-  storePass = config->readBoolEntry("storepass");
+  mStorePasswd = config->readBoolEntry("storepass");
   specifyHostname = config->readBoolEntry("specifyHostname", false);
   localHostname = config->readEntry("localHostname");
+
+  if ( !storePasswd() )
+    return;
+
+  if ( !mPasswd.isEmpty() ) {
+    // migration to kwallet
+    config->deleteEntry( "pass" );
+    mPasswdDirty = true;
+  } else {
+    // read password if wallet is open, defer otherwise
+    if ( Wallet::isOpen( Wallet::NetworkWallet() ) )
+      readPassword();
+  }
 }
 
 
@@ -83,20 +101,40 @@ void KMTransportInfo::writeConfig(int id)
 {
   KConfig *config = KMKernel::config();
   KConfigGroupSaver saver(config, "Transport " + QString::number(id));
+  if (!mId)
+    mId = TransportManager::createId();
+  config->writeEntry("id", mId);
   config->writeEntry("type", type);
   config->writeEntry("name", name);
   config->writeEntry("host", host);
   config->writeEntry("port", port);
   config->writeEntry("user", user);
-  config->writeEntry("pass", (storePass) ? KMAccount::encryptStr(pass) :
-                                           QString("") );
   config->writePathEntry("precommand", precommand);
   config->writeEntry("encryption", encryption);
   config->writeEntry("authtype", authType);
   config->writeEntry("auth", auth);
-  config->writeEntry("storepass", storePass);
+  config->writeEntry("storepass", storePasswd());
   config->writeEntry("specifyHostname", specifyHostname);
   config->writeEntry("localHostname", localHostname);
+
+  // write password to the wallet if necessary
+  if ( storePasswd() && auth && mPasswdDirty ) {
+    Wallet *wallet = kmkernel->wallet();
+    if ( !wallet || wallet->writePassword( "transport-" + QString::number(mId), passwd() ) ) {
+      KMessageBox::information(0, i18n("KWallet is not running. It is strongly recommend to use "
+          "KWallet for managing your password"),
+          i18n("KWallet is Not Running."), "KWalletWarning" );
+      config->writeEntry( "pass", KMAccount::encryptStr( passwd() ) );
+    }
+  }
+
+  // delete already stored password from the wallet if password storage is disabled
+  if ( !storePasswd() && !Wallet::keyDoesNotExist(
+       Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) ) {
+    Wallet *wallet = kmkernel->wallet();
+    if ( wallet )
+      wallet->removeEntry( "transport-" + QString::number(mId) );
+  }
 }
 
 
@@ -126,6 +164,45 @@ QStringList KMTransportInfo::availableTransports()
     result.append(config->readEntry("name"));
   }
   return result;
+}
+
+
+QString KMTransportInfo::passwd() const
+{
+  if ( auth && storePasswd() && mPasswd.isEmpty() )
+    readPassword();
+  return mPasswd;
+}
+
+
+void KMTransportInfo::setPasswd( const QString &passwd )
+{
+  if ( passwd != mPasswd ) {
+    mPasswd = passwd;
+    mPasswdDirty = true;
+  }
+}
+
+
+void KMTransportInfo::setStorePasswd( bool store )
+{
+  if ( mStorePasswd != store && store )
+    mPasswdDirty = true;
+  mStorePasswd = store;
+}
+
+
+void KMTransportInfo::readPassword() const
+{
+  if ( !storePasswd() || !auth )
+    return;
+
+  if ( Wallet::folderDoesNotExist(Wallet::NetworkWallet(), "kmail") ||
+       Wallet::keyDoesNotExist( Wallet::NetworkWallet(), "kmail", "transport-" + QString::number(mId) ) )
+    return;
+
+  if ( kmkernel->wallet() )
+    kmkernel->wallet()->readPassword( "transport-" + QString::number(mId), mPasswd );
 }
 
 
@@ -429,8 +506,8 @@ void KMTransportDialog::setupSettings()
     mSmtp.portEdit->setText(mTransportInfo->port);
     mSmtp.authCheck->setChecked(mTransportInfo->auth);
     mSmtp.loginEdit->setText(mTransportInfo->user);
-    mSmtp.passwordEdit->setText(mTransportInfo->pass);
-    mSmtp.storePasswordCheck->setChecked(mTransportInfo->storePass);
+    mSmtp.passwordEdit->setText(mTransportInfo->passwd());
+    mSmtp.storePasswordCheck->setChecked(mTransportInfo->storePasswd());
     mSmtp.precommand->setText(mTransportInfo->precommand);
     mSmtp.specifyHostnameCheck->setChecked(mTransportInfo->specifyHostname);
     mSmtp.localHostnameEdit->setText(mTransportInfo->localHostname);
@@ -468,8 +545,8 @@ void KMTransportDialog::saveSettings()
     mTransportInfo->port = mSmtp.portEdit->text().stripWhiteSpace();
     mTransportInfo->auth = mSmtp.authCheck->isChecked();
     mTransportInfo->user = mSmtp.loginEdit->text().stripWhiteSpace();
-    mTransportInfo->pass = mSmtp.passwordEdit->text();
-    mTransportInfo->storePass = mSmtp.storePasswordCheck->isChecked();
+    mTransportInfo->setPasswd( mSmtp.passwordEdit->text() );
+    mTransportInfo->setStorePasswd( mSmtp.storePasswordCheck->isChecked() );
     mTransportInfo->precommand = mSmtp.precommand->text().stripWhiteSpace();
     mTransportInfo->specifyHostname = mSmtp.specifyHostnameCheck->isChecked();
     mTransportInfo->localHostname = mSmtp.localHostnameEdit->text().stripWhiteSpace();

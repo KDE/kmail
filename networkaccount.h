@@ -110,6 +110,9 @@ namespace KMail {
     /** Kill all jobs that are currently in progress */
     virtual void killAllJobs( bool disconnectSlave = false ) = 0;
 
+    /** Read password from wallet, used for on-demand wallet opening */
+    void readPassword();
+
   protected:
     virtual QString protocol() const = 0;
     virtual unsigned short int defaultPort() const = 0;
@@ -123,6 +126,7 @@ namespace KMail {
     bool mUseSSL : 1;
     bool mUseTLS : 1;
     bool mAskAgain : 1;
+    bool mPasswdDirty;
 
   };
 

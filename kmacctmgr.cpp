@@ -458,4 +458,14 @@ QString KMAcctMgr::hostForAccount( const KMAccount *acct ) const
   return net_acct ? net_acct->host() : QString::null;
 }
 
+//-----------------------------------------------------------------------------
+void KMAcctMgr::readPasswords()
+{
+  for ( QPtrListIterator<KMAccount> it( mAcctList ); it.current(); ++it ) {
+    NetworkAccount *acct = dynamic_cast<NetworkAccount*>( it.current() );
+    if ( acct )
+      acct->readPassword();
+  }
+}
+
 #include "kmacctmgr.moc"

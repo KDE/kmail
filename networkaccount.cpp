@@ -28,10 +28,16 @@
 #endif
 
 #include "networkaccount.h"
+#include "kmacctmgr.h"
+#include "kmkernel.h"
 
 #include <kconfig.h>
 #include <kio/global.h>
+#include <klocale.h>
+#include <kmessagebox.h>
+#include <kwallet.h>
 using KIO::MetaData;
+using KWallet::Wallet;
 
 #include <climits>
 
@@ -45,7 +51,8 @@ namespace KMail {
       mStorePasswd( false ),
       mUseSSL( false ),
       mUseTLS( false ),
-      mAskAgain( false )
+      mAskAgain( false ),
+      mPasswdDirty( false )
   {
 
   }
@@ -80,11 +87,16 @@ namespace KMail {
   }
 
   QString NetworkAccount::passwd() const {
+    if ( storePasswd() && mPasswd.isEmpty() )
+      mOwner->readPasswords();
     return decryptStr( mPasswd );
   }
 
   void NetworkAccount::setPasswd( const QString & passwd, bool storeInConfig ) {
-    mPasswd = encryptStr( passwd );
+    if ( mPasswd != encryptStr( passwd ) ) {
+      mPasswd = encryptStr( passwd );
+      mPasswdDirty = true;
+    }
     setStorePasswd( storeInConfig );
   }
 
@@ -97,6 +109,8 @@ namespace KMail {
   }
 
   void NetworkAccount::setStorePasswd( bool store ) {
+    if( mStorePasswd != store && store )
+      mPasswdDirty = true;
     mStorePasswd = store;
   }
 
@@ -132,25 +146,39 @@ namespace KMail {
     setLogin( config.readEntry( "login" ) );
 
     if ( config.readNumEntry( "store-passwd", false ) ) { // ### s/Num/Bool/
+      mStorePasswd = true;
       QString encpasswd = config.readEntry( "pass" );
       if ( encpasswd.isEmpty() ) {
-	encpasswd = config.readEntry( "passwd" );
-	if ( !encpasswd.isEmpty() ) encpasswd = importPassword( encpasswd );
+        encpasswd = config.readEntry( "passwd" );
+        if ( !encpasswd.isEmpty() ) encpasswd = importPassword( encpasswd );
       }
-      setPasswd( decryptStr( encpasswd ), true );
-    } else
+
+      if ( !encpasswd.isEmpty() ) {
+        // migration to KWallet
+        setPasswd( decryptStr( encpasswd ), true );
+        config.deleteEntry( "pass" );
+        config.deleteEntry( "passwd" );
+        mPasswdDirty = true;
+      } else {
+        // read password if wallet is already open, otherwise defer to on-demand loading
+        if ( Wallet::isOpen( Wallet::NetworkWallet() ) )
+          readPassword();
+      }
+
+    } else {
       setPasswd( "", false );
-    
+    }
+
     setHost( config.readEntry( "host" ) );
 
     unsigned int port = config.readUnsignedNumEntry( "port", defaultPort() );
     if ( port > USHRT_MAX ) port = defaultPort();
     setPort( port );
-    
+
     setAuth( config.readEntry( "auth", "*" ) );
     setUseSSL( config.readBoolEntry( "use-ssl", false ) );
     setUseTLS( config.readBoolEntry( "use-tls", false ) );
-    
+
     mSieveConfig.readConfig( config );
   }
 
@@ -159,8 +187,25 @@ namespace KMail {
 
     config.writeEntry( "login", login() );
     config.writeEntry( "store-passwd", storePasswd() );
-    if ( storePasswd() ) config.writeEntry( "pass", mPasswd ); // NOT passwd()
-    else config.writeEntry( "passwd", "" ); // ### ???? why two different keys?
+
+    // write password to the wallet if necessary
+    if ( storePasswd() && mPasswdDirty ) {
+      Wallet *wallet = kmkernel->wallet();
+      if ( !wallet || wallet->writePassword( "account-" + QString::number(mId), passwd() ) ) {
+        KMessageBox::information( 0, i18n("KWallet is not running. It is strongly recommend to use "
+            "KWallet for managing your password"),
+            i18n("KWallet is Not Running."), "KWalletWarning" );
+        config.writeEntry( "pass", encryptStr( passwd() ) );
+      }
+    }
+
+    // delete password from the wallet if password storage is disabled
+    if (!storePasswd() && !Wallet::keyDoesNotExist(
+        Wallet::NetworkWallet(), "kmail", "account-" + QString::number(mId))) {
+      Wallet *wallet = kmkernel->wallet();
+      if (wallet)
+        wallet->removeEntry( "account-" + QString::number(mId) );
+    }
 
     config.writeEntry( "host", host() );
     config.writeEntry( "port", static_cast<unsigned int>( port() ) );
@@ -207,6 +252,22 @@ namespace KMail {
     setUseSSL( n->useSSL() );
     setUseTLS( n->useTLS() );
     setSieveConfig( n->sieveConfig() );
+  }
+
+  void NetworkAccount::readPassword() {
+    if ( !storePasswd() )
+      return;
+
+    if ( Wallet::folderDoesNotExist( Wallet::NetworkWallet(), "kmail" ) ||
+          Wallet::keyDoesNotExist( Wallet::NetworkWallet(), "kmail", "account-" + QString::number(mId) ) )
+      return;
+
+    if ( kmkernel->wallet() ) {
+      QString passwd;
+      kmkernel->wallet()->readPassword( "account-" + QString::number(mId), passwd );
+      setPasswd( passwd, true );
+      mPasswdDirty = false;
+    }
   }
 
 } // namespace KMail

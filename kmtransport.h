@@ -19,7 +19,7 @@
 
 #ifndef _KMTRANSPORT_H_
 #define _KMTRANSPORT_H_
- 
+
 #include <kdialogbase.h>
 
 class QCheckBox;
@@ -38,22 +38,40 @@ public:
   void writeConfig(int id);
   static int findTransport(const QString &name);
   static QStringList availableTransports();
-  QString type, name, host, port, user, pass, precommand, encryption, authType;
+  uint id() const { return mId; }
+
+  /** Get/set password for this account */
+  QString passwd() const;
+  void setPasswd( const QString& passwd );
+
+  /** Get/set password storage flag */
+  bool storePasswd() const { return mStorePasswd; }
+  void setStorePasswd( bool store );
+
+  /** Read password from wallet */
+  void readPassword() const;
+
+  QString type, name, host, port, user, precommand, encryption, authType;
   QString localHostname;
-  bool auth, storePass, specifyHostname;
+  bool auth, specifyHostname;
+
+  private:
+    mutable QString mPasswd;
+    bool mPasswdDirty, mStorePasswd;
+    uint mId;
 };
 
 class KMTransportSelDlg : public KDialogBase
 {
   Q_OBJECT
- 
+
 public:
   KMTransportSelDlg( QWidget *parent=0, const char *name=0, bool modal=TRUE );
   int selected() const;
- 
+
 private slots:
   void buttonClicked( int id );
- 
+
 private:
   int mSelectedButton;
 };
@@ -73,8 +91,8 @@ private slots:
   void slotRequiresAuthClicked();
   void slotSmtpEncryptionChanged(int);
   void slotCheckSmtpCapabilities();
-  void slotSmtpCapabilities( const QStringList &, const QStringList &, 
-                             const QString &, const QString &, 
+  void slotSmtpCapabilities( const QStringList &, const QStringList &,
+                             const QString &, const QString &,
                              const QString & );
   void slotSendmailEditPath(const QString &);
 private:

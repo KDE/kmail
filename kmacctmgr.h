@@ -70,6 +70,9 @@ public:
   /// Called on exit (KMMainWin::queryExit)
   void cancelMailCheck();
 
+  /** Read passwords of all accounts from the wallet */
+  void readPasswords();
+
 public slots:
   virtual void singleCheckMail(KMAccount *, bool _interactive = true);
   virtual void singleInvalidateIMAPFolders(KMAccount *);
