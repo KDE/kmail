@@ -449,6 +449,7 @@ void KMReaderWin::displayAboutPage()
     "<li>Multiple PGP identities</li>\n"
     "<li>Bind an SMTP server to an identity</li>\n"
     "<li>Better procmail support via the local account</li>\n"
+    "<li>Messages can be flagged</li>\n"
     "</ul>\n") +
     i18n("<p>Please take a moment to fill in the KMail configuration panel at "
     "Settings-&gt;Configuration.\n"

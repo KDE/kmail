@@ -52,6 +52,7 @@ QPixmap* KMHeaders::pixRep = 0;
 QPixmap* KMHeaders::pixQueued = 0;
 QPixmap* KMHeaders::pixSent = 0;
 QPixmap* KMHeaders::pixFwd = 0;
+QPixmap* KMHeaders::pixFlag = 0;
 QIconSet* KMHeaders::up = 0;
 QIconSet* KMHeaders::down = 0;
 bool KMHeaders::mTrue = true;
@@ -181,6 +182,10 @@ public:
       break;
     case KMMsgStatusSent:
       setPixmap( 0, *KMHeaders::pixSent );
+      break;
+    case KMMsgStatusFlag:
+      setPixmap( 0, *KMHeaders::pixFlag );
+      mColor = &mPaintInfo->colFlag;
       break;
     default:
       setPixmap( 0, *KMHeaders::pixOld );
@@ -347,6 +352,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
     pixQueued= new QPixmap( UserIcon("kmmsgqueued") );
     pixSent  = new QPixmap( UserIcon("kmmsgsent") );
     pixFwd   = new QPixmap( UserIcon("kmmsgforwarded") );
+    pixFlag  = new QPixmap( UserIcon("kmmsgflag") );
     up = new QIconSet( UserIcon("abup" ), QIconSet::Small );
     down = new QIconSet( UserIcon("abdown" ), QIconSet::Small );
   }
@@ -406,6 +412,7 @@ void KMHeaders::readColorConfig (void)
   QColor c2=QColor("red");
   QColor c3=QColor("blue");
   QColor c4=QColor(kapp->palette().normal().base());
+  QColor c5=QColor(0,0x7F,0);
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
     mPaintInfo.colFore = config->readColorEntry("ForegroundColor",&c1);
@@ -416,6 +423,7 @@ void KMHeaders::readColorConfig (void)
     setPalette( newPal );
     mPaintInfo.colNew = config->readColorEntry("NewMessage",&c2);
     mPaintInfo.colUnread = config->readColorEntry("UnreadMessage",&c3);
+    mPaintInfo.colFlag = config->readColorEntry("FlagMessage",&c5);
   }
   else {
     mPaintInfo.colFore = c1;
@@ -426,6 +434,7 @@ void KMHeaders::readColorConfig (void)
     setPalette( newPal );
     mPaintInfo.colNew = c2;
     mPaintInfo.colUnread = c3;
+    mPaintInfo.colFlag = c5;
   }
 }
 
@@ -2224,10 +2233,11 @@ void KMHeaders::slotRMB()
   menu->insertItem(i18n("&Set Status"), setStatusMenu);
   mOwner->newAction->plug(setStatusMenu);
   mOwner->unreadAction->plug(setStatusMenu);
-   mOwner->readAction->plug(setStatusMenu);
-   mOwner->repliedAction->plug(setStatusMenu);
-   mOwner->queueAction->plug(setStatusMenu);
-   mOwner->sentAction->plug(setStatusMenu);
+  mOwner->readAction->plug(setStatusMenu);
+  mOwner->repliedAction->plug(setStatusMenu);
+  mOwner->queueAction->plug(setStatusMenu);
+  mOwner->sentAction->plug(setStatusMenu);
+  mOwner->flagAction->plug(setStatusMenu);
        }
   menu->insertSeparator();
   mOwner->printAction->plug(menu);

@@ -1121,6 +1121,12 @@ void KMMainWin::slotSetMsgStatusUnread()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotSetMsgStatusFlag()
+{
+  mHeaders->setMsgStatus(KMMsgStatusFlag);
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotSetMsgStatusRead()
 {
   mHeaders->setMsgStatus(KMMsgStatusRead);
@@ -1432,6 +1438,7 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
            repliedAction->plug(setStatusMenu);
            queueAction->plug(setStatusMenu);
            sentAction->plug(setStatusMenu);
+           flagAction->plug(setStatusMenu);
            }
            menu->insertSeparator();
            printAction->plug(menu);
@@ -1613,6 +1620,9 @@ void KMMainWin::setupMenuBar()
     SLOT(slotSetMsgStatusQueued()), actionCollection(), "status_queued");
   sentAction=new KAction( i18n("Sent"), 0, this,
     SLOT(slotSetMsgStatusSent()), actionCollection(), "status_sent");
+  flagAction=new KAction( i18n("Flag"), 0, this,
+    SLOT(slotSetMsgStatusFlag()), actionCollection(), "status_flag");
+
 
   KActionMenu *moveActionMenu = new KActionMenu( i18n("&Move to" ),
 					     actionCollection(), "move_to" );

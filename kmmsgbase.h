@@ -20,7 +20,8 @@ typedef enum
     KMMsgStatusReplied='A',
     KMMsgStatusForwarded='F',
     KMMsgStatusQueued='Q',
-    KMMsgStatusSent='S'
+    KMMsgStatusSent='S',
+    KMMsgStatusFlag='G'
 } KMMsgStatus;
 
 class KMFolder;

@@ -40,6 +40,7 @@ struct KMPaintInfo {
   QColor colBack;
   QColor colNew;
   QColor colUnread;
+  QColor colFlag;
   bool showSize;      // Do we display the message size?
   bool orderOfArrival;
   bool status;
@@ -189,7 +190,7 @@ public slots:
  
 protected:
   static QPixmap *pixNew, *pixUns, *pixDel, *pixOld, *pixRep, *pixSent, 
-    *pixQueued, *pixFwd;
+    *pixQueued, *pixFwd, *pixFlag;
 
   // Look for color changes
   virtual bool event(QEvent *e);

@@ -80,7 +80,7 @@ public:
     *forwardAction, *redirectAction,
     *deleteAction, *saveAsAction, *bounceAction, *editAction,
     *newAction, *unreadAction, *readAction, *repliedAction, *queueAction,
-    *sentAction, *printAction;
+    *sentAction, *flagAction, *printAction;
 
 public slots:
   virtual void show();
@@ -150,6 +150,7 @@ protected slots:
   void slotSetMsgStatusReplied();
   void slotSetMsgStatusQueued();
   void slotSetMsgStatusSent();
+  void slotSetMsgStatusFlag();
   void slotShowMsgSrc();
   void slotSetHeaderStyle(int);
   void slotSetEncoding();

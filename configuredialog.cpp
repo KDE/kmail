@@ -856,6 +856,7 @@ void ConfigureDialog::makeAppearancePage( void )
   modeList.append( i18n("Followed URL Link") );
   modeList.append( i18n("New Message") );
   modeList.append( i18n("Unread Message") );
+  modeList.append( i18n("Flag Message") );
 
   mAppearance.colorList = new ColorListBox( page2 );
   vlay->addWidget( mAppearance.colorList, 10 );
@@ -1577,6 +1578,10 @@ void ConfigureDialog::setupAppearancePage( void )
   defaultColor = QColor("blue");
   mAppearance.colorList->setColor(
     8, config.readColorEntry("UnreadMessage",&defaultColor ) );
+
+  defaultColor = QColor(0,0x7F,0);
+  mAppearance.colorList->setColor(
+    9, config.readColorEntry("FlagMessage",&defaultColor ) );
 
   state = config.readBoolEntry("defaultColors", true );
   mAppearance.customColorCheck->setChecked( state == false ? true : false );
