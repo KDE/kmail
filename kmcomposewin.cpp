@@ -109,7 +109,7 @@ WindowList* windowList=new WindowList;
 QString KMComposeWin::mPathAttach = QString::null;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin(KMMessage *aMsg) : KTMainWindow (),
+KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMTopLevelWidget (),
   mMainWidget(this),
   mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget),
   mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget),

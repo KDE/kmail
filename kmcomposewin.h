@@ -4,23 +4,26 @@
 #ifndef __KMComposeWin
 #define __KMComposeWin
 
+#include "kmtopwidget.h"
 
-#include <qstring.h>
+//#include <qstring.h>
 #include <qlabel.h>
-#include <qlist.h>
-#include <qevent.h>
-#include <qwidget.h>
+
+//#include <qlist.h>
+//#include <qevent.h>
+//#include <qwidget.h>
+
 #include <qpushbutton.h>
 #include <qclipboard.h>
 #include <qpalette.h>
 #include <qfont.h>
 #include <keditcl.h>
-#include <ktmainwindow.h>
+#include <qlineedit.h>
+
 
 #include "kmmsgpart.h"
 
 
-#include <qlineedit.h>
 
 
 
@@ -132,7 +135,7 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-class KMComposeWin : public KTMainWindow
+class KMComposeWin : public KMTopLevelWidget
 {
   Q_OBJECT
 

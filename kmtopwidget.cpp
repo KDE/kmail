@@ -20,69 +20,41 @@
 #include <kapp.h>
 #include "kmsender.h"
 #include "kmglobal.h"
-int KMTopLevelWidget::sWindowCount = 0;
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::KMTopLevelWidget(const char* aName):
   KMTopLevelWidgetInherited(aName)
-{
-  initMetaObject();
-  sWindowCount++;
-}
+{}
 
 
 //-----------------------------------------------------------------------------
 KMTopLevelWidget::~KMTopLevelWidget()
-{
-  sWindowCount--;
-  if (sWindowCount <= 0) kapp->quit();
-}
+{}
 
 
 //-----------------------------------------------------------------------------
 void KMTopLevelWidget::closeEvent(QCloseEvent* e)
 {
-    writeConfig();
-    KMTopLevelWidgetInherited::closeEvent(e);
-
-//   if (e->isAccepted())
-//   {
-//     writeConfig();
-//     e->ignore();
-//     //delete this;
-//   }
-}
-
-
-//-----------------------------------------------------------------------------
-// bool KMTopLevelWidget::close(bool aForceKill)
-// {
-//   static bool rc;
-//   rc = KMTopLevelWidgetInherited::close(aForceKill);
-//   if (!rc) return FALSE;
-
-//   if (KMTopLevelWidgetInherited::memberList &&
-//       KMTopLevelWidgetInherited::memberList->isEmpty())
-//     kapp->quit();
-
-//   return TRUE;
-// }
-
-
-//-----------------------------------------------------------------------------
-void KMTopLevelWidget::forEvery(KForEvery func)
-{
-  KMTopLevelWidget* w;
-
-  if (KMTopLevelWidgetInherited::memberList)
+  // Almost verbatim from KTMainWindow
+  writeConfig();
+  if (queryClose())
   {
-    for (w=(KMTopLevelWidget*)KMTopLevelWidgetInherited::memberList->first();
-	 w;
-	 w=(KMTopLevelWidget*)KMTopLevelWidgetInherited::memberList->next())
+    e->accept();
+
+    int not_withdrawn = 0;
+    QListIterator<KTMainWindow> it(*KTMainWindow::memberList);
+    for (it.toFirst(); it.current(); ++it)
     {
-      if (w->inherits("KMTopLevelWidget")) (w->*func)();
+      if ( !it.current()->testWState( WState_ForceHide ) )
+        not_withdrawn++;
+    }
+
+    if ( not_withdrawn <= 1 ) { // last window close accepted?
+      kernel->quit();             // ...and quit aplication.
     }
   }
+  else
+    e->ignore();
 }
 
 
@@ -95,20 +67,6 @@ void KMTopLevelWidget::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMTopLevelWidget::writeConfig(void)
 {
-}
-
-
-//-----------------------------------------------------------------------------
-
-bool KMTopLevelWidget::queryExit()
-{
-  // sven - against quit while sending
-  if (kernel->msgSender() && kernel->msgSender()->sending()) // sender working?
-  {
-    kernel->msgSender()->quitWhenFinished();       // tell him to quit app when finished
-    return false;                        // don't quit now
-  }
-  return true;                           // sender not working, quit
 }
 
 #include "kmtopwidget.moc"

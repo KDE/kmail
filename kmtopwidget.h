@@ -23,8 +23,6 @@
 
 class KMTopLevelWidget;
 
-// easier declarations of function prototypes for forEvery type functions
-typedef void (KMTopLevelWidget::*KForEvery)(void);
 
 /** Top level window that offers methods to be called on every
  * existing top level window.
@@ -36,10 +34,7 @@ class KMTopLevelWidget: public KTMainWindow
 
 public:
   KMTopLevelWidget(const char *name = 0);
-  virtual ~KMTopLevelWidget();
-
-  /** Calls given method on every existing KMTopLevelWidget. */
-  static void forEvery(KForEvery func);
+  ~KMTopLevelWidget();
 
   /** Read configuration. Default implementation is empty. */
   virtual void readConfig(void);
@@ -47,22 +42,8 @@ public:
   /** Write configuration. Default implementation is empty. */
   virtual void writeConfig(void);
 
-  /** Closes the widget and the app if no other top level widget
-    is opened. Returns TRUE if the widget was closed, otherwise
-    FALSE. Call with forceKill==TRUE to delete the widget also. */
-    //  virtual bool close(bool forceKill=FALSE);
-
 protected:
   virtual void closeEvent(QCloseEvent*);
-  /**
-   * Accept quit if last window and we are not sending. Otherwise,
-   * wait till sender is finished. Called automatically from KTMW.
-   */
-  virtual bool queryExit();
-
-private:
-  // app->quit() is called when sWindowCount<=0 in destructor
-  static int sWindowCount;
 };
 
 #endif /*kmtopwidget_h*/

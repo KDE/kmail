@@ -1416,7 +1416,13 @@ void KMSettings::doApply()
   kernel->folderMgr()->contentsChanged();
   KMMessage::readConfig();
 
-  KMTopLevelWidget::forEvery(&KMTopLevelWidget::readConfig);
+  //KMTopLevelWidget::forEvery(&KMTopLevelWidget::readConfig);
+  QListIterator<KTMainWindow> it(*KTMainWindow::memberList);
+  for (it.toFirst(); it.current(); ++it)
+  {
+    if (it.current()->inherits("KMTopLevelWidget"))
+      ((KMTopLevelWidget*) it.current())->readConfig();
+  }
 }
 
 

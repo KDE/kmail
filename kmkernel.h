@@ -51,6 +51,7 @@ public:
   void recoverDeadLetters(void);
   void initFolders(KConfig* cfg);
   void cleanup(void);
+  void quit();
   void transferMail(void);
   void ungrabPtrKb(void);
   void kmailMsgHandler(QtMsgType aType, const char* aMsg);

@@ -34,6 +34,9 @@
 
 KMKernel *KMKernel::mySelf = 0;
 
+/********************************************************************/
+/*                     Constructor and destructor                   */
+/********************************************************************/
 KMKernel::KMKernel (QObject *parent, const char *name) :
   QObject(parent, name),  DCOPObject("KMailIface")
 {
@@ -47,8 +50,10 @@ KMKernel::~KMKernel ()
   debug ("KMKernel::~KMKernel");
 }
 
-// DCOP calable stuff, for local stuff look bellow
 
+/********************************************************************/
+/*             DCOP-callable, and command line actions              */
+/********************************************************************/
 void KMKernel::checkMail () //might create a new reader but won´t show!!
 {
   debug ("KMKernel::checkMail called");
@@ -129,10 +134,72 @@ int KMKernel::ready()
   return 1;
 }
 
+/********************************************************************/
+/*                        Kernel methods                            */
+/********************************************************************/
+
+void KMKernel::quit()
+{
+  // Called when all windows are closed. Will take care of compacting,
+  // sending... should handle session management too!!
+  
+  if (msgSender() && msgSender()->sending()) // sender working?
+  {
+    kernel->msgSender()->quitWhenFinished(); // tell him to quit app when finished
+    return;                        // don't quit now
+  }
+  kapp->quit();                           // sender not working, quit
+}
+  /* TODO later:
+   Asuming that:
+     - msgsender is nonblocking
+       (our own, QSocketNotifier based. Pops up errors and sends signal
+        senderFinished when done)
+     - compacting is non blocking (insert processEvents there)
+
+   o If we are getting mail, stop it (but don´t lose something!)
+   o If we are sending mail, go on UNLESS this was called by SM,
+       in which case stop ASAP that too (can we warn? should we continue
+       on next start?)
+   o If we are compacting, or expunging, go on UNLESS this was SM call.
+       In that case stop compacting ASAP and continue on next start, before
+       touching any folders.
+
+   KMKernel::quit ()
+   {
+     SM call?
+       if compacting, stop;
+       if sending, stop;
+       if receiving, stop;
+       Windows will take care of themselves (composer should dump
+        it´s messages, if any but not in deadMail)
+       declare us ready for the End of the Session
+
+     No, normal quit call
+       All windows are off. Anything to do, should compact or sender sends?
+         Yes, maybe put an icon in panel as a sign of life
+         Folder manager, go compacting (*except* outbox and sent-mail!)
+         if sender sending, connect us to his finished slot, declare us ready
+                            for quit and wait for senderFinished
+         if not, Folder manager, go compact sent-mail and outbox
+}                (= call slotFinished())
+
+void KMKernel::slotSenderFinished()
+{
+  good, Folder manager go compact sent-mail and outbox
+  clean up stage1 (release folders and config, unregister from dcop)
+    -- another kmail may start now ---
+  kapp->quit();
+}
+
+void KMKernel::
+void KMKernel::
+*/
 
 
-// Normal local stuff
-
+/********************************************************************/
+/*            Init, Exit, and handler  methods                      */
+/********************************************************************/
 void KMKernel::testDir(const char *_name)
 {
   DIR *dp;
@@ -227,8 +294,6 @@ void KMKernel::initFolders(KConfig* cfg)
 }
 
 
-//-----------------------------------------------------------------------------
-//to control
 void KMKernel::init()
 {
   debug ("entering KMKernel::init()");
@@ -391,7 +456,6 @@ void KMKernel::ungrabPtrKb(void)
 }
 
 
-//-----------------------------------------------------------------------------
 // Message handler
 void KMKernel::kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
