@@ -88,6 +88,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mLockType       = None;
   mConvertToUtf8  = FALSE;
   mAccount        = NULL;
+  mMailingListEnabled = FALSE;
 }
 
 
