@@ -2,7 +2,8 @@
 
 #include "kmcomposewin.h"
 #include "kmheaders.h"
-#include "mclass.h"
+#include "kmfolder.h"
+#include "kmmessage.h"
 #include "kbusyptr.h"
 #include "kmdragdata.h"
 #include <drag.h>
@@ -14,6 +15,7 @@
 
 extern KBusyPtr* kbp;
 
+
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent, name, 4)
 {
@@ -22,13 +24,16 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
 
   //setNumCols(4);
   setColumn(0, "F", 16, KTabListBox::PixmapColumn);
-  setColumn(1, "Sender", 100);
-  setColumn(2, "Subject", 200);
+  setColumn(1, "Sender", 150);
+  setColumn(2, "Subject", 250);
   setColumn(3, "Date", 100);
 
-  dict().insert("N", new QPixmap("pics/kmmsgnew.xpm"));
-  dict().insert("U", new QPixmap("pics/kmmsgunseen.xpm"));
-  dict().insert("D", new QPixmap("pics/kmmsgdel.xpm"));
+  dict().insert(KMMessage::statusToStr(KMMessage::stNew),
+		new QPixmap("pics/kmmsgnew.xpm"));
+  dict().insert(KMMessage::statusToStr(KMMessage::stUnread),
+		new QPixmap("pics/kmmsgunseen.xpm"));
+  dict().insert(KMMessage::statusToStr(KMMessage::stDeleted),
+		new QPixmap("pics/kmmsgdel.xpm"));
 
   connect(this,SIGNAL(selected(int,int)),
 	  this,SLOT(selectMessage(int,int)));
@@ -38,14 +43,8 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setFolder (Folder *f)
+void KMHeaders::setFolder (KMFolder *f)
 {
-  if (folder) 
-  {
-    folder->close();
-    delete folder;
-  }
-
   folder=f;
   updateMessageList();
 }
@@ -54,12 +53,12 @@ void KMHeaders::setFolder (Folder *f)
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgUnread (int msgId)
 {
-  Message* msg;
+  KMMessage* msg;
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    msg->clearFlag(F_SEEN);
-    changeItem(msg->getFlag(), getMsgIndex, 0);
+    //msg->clearStatus(F_SEEN);
+    changeItem(msg->status(), getMsgIndex, 0);
     changeItemColor(darkBlue, getMsgIndex);
   }
 }
@@ -68,12 +67,12 @@ void KMHeaders::setMsgUnread (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgRead (int msgId)
 {
-  Message* msg;
+  KMMessage* msg;
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    msg->setFlag(F_SEEN);
-    changeItem(msg->getFlag(), getMsgIndex, 0);
+    //msg->setStatus(F_SEEN);
+    changeItem(msg->status(), getMsgIndex, 0);
     changeItemColor(black, getMsgIndex);
   }
 }
@@ -82,12 +81,12 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
-  Message* msg;
+  KMMessage* msg;
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {    
-    msg->del();
-    changeItem(msg->getFlag(), getMsgIndex, 0);
+    //msg->del();
+    changeItem(msg->status(), getMsgIndex, 0);
   }
 }
 
@@ -95,12 +94,12 @@ void KMHeaders::deleteMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::undeleteMsg (int msgId)
 {
-  Message* msg;
+  KMMessage* msg;
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
   {
-    msg->undel();
-    changeItem(msg->getFlag(), getMsgIndex, 0);
+    //msg->undel();
+    changeItem(msg->status(), getMsgIndex, 0);
   }
 }
 
@@ -108,11 +107,11 @@ void KMHeaders::undeleteMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::toggleDeleteMsg (int msgId)
 {
-  Message* msg;
+  KMMessage* msg;
 
   if (!(msg=getMsg(msgId))) return;
 
-  if (msg->getFlag() != MFL_DEL) deleteMsg(msgId);
+  if (msg->status() != MFL_DEL) deleteMsg(msgId);
   else undeleteMsg(msgId);
 }
 
@@ -120,23 +119,15 @@ void KMHeaders::toggleDeleteMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::forwardMsg (int msgId)
 {
-  kbp->busy();
-  Message *msg = new Message();
-  if((msg = getMsg(-1)) == NULL) // First call
-	{kbp->idle();
-	return;
-	} 
-  else
-	{KMComposeWin *w0 = new KMComposeWin(0,0,0,msg,FORWARD);
-	w0->show();
-	w0->resize(w0->size());
-	}
+  KMComposeWin *w;
+  KMMessage *msg = new KMMessage();
 
-  while((msg = getMsg()) != NULL) // If more than 1 msg is selected
-       {KMComposeWin *w1 = new KMComposeWin(0,0,0,msg,FORWARD);
-       	w1->show();
-       	w1->resize(w1->size());
-	}
+  kbp->busy();
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    w = new KMComposeWin(0, 0, 0, msg, FORWARD);
+    w->show();
+  }
   kbp->idle(); 
 }
 
@@ -144,23 +135,15 @@ void KMHeaders::forwardMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::replyToMsg (int msgId)
 {
-  kbp->busy();
-  Message *msg = new Message();
-  if((msg = getMsg(-1)) == NULL) // First call
-	{kbp->idle();
-	return;
-	} 
-  else
-	{KMComposeWin *w0 = new KMComposeWin(0,0,0,msg,REPLY);
-	w0->show();
-	w0->resize(w0->size());
-	}
+  KMComposeWin *w;
+  KMMessage *msg = new KMMessage();
 
-  while((msg = getMsg()) != NULL) // If more than 1 msg is selected
-       {KMComposeWin *w1 = new KMComposeWin(0,0,0,msg,REPLY);
-       	w1->show();
-       	w1->resize(w1->size());
-	}
+  kbp->busy();
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    w = new KMComposeWin(0, 0, 0, msg, REPLY);
+    w->show();
+  }
   kbp->idle(); 
 }
 
@@ -168,35 +151,27 @@ void KMHeaders::replyToMsg (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::replyAllToMsg (int msgId)
 {
-  kbp->busy();
-  Message *msg = new Message();
-  if((msg = getMsg(-1)) == NULL) // First call
-	{kbp->idle();
-	return;
-	} 
-  else
-	{KMComposeWin *w0 = new KMComposeWin(0,0,0,msg,REPLYALL);
-	w0->show();
-	w0->resize(w0->size());
-	}
+  KMComposeWin *w;
+  KMMessage *msg = new KMMessage();
 
-  while((msg = getMsg()) != NULL) // If more than 1 msg is selected
-       {KMComposeWin *w1 = new KMComposeWin(0,0,0,msg,REPLYALL);
-       	w1->show();
-       	w1->resize(w1->size());
-	}
+  kbp->busy();
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    w = new KMComposeWin(0, 0, 0, msg, REPLYALL);
+    w->show();
+  }
   kbp->idle(); 
 }
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::moveMsgToFolder (Folder* destination, int msgId)
+void KMHeaders::moveMsgToFolder (KMFolder*/*destination*/, int /*msgId*/)
 {
 }
 
 
 //-----------------------------------------------------------------------------
-Message* KMHeaders::getMsg (int msgId)
+KMMessage* KMHeaders::getMsg (int msgId)
 {
   int i, high;
 
@@ -225,7 +200,7 @@ Message* KMHeaders::getMsg (int msgId)
       }
     }
  
-    return (getMsgIndex>=0 ? folder->getMsg(getMsgIndex+1) : NULL);
+    return (getMsgIndex>=0 ? folder->getMsg(getMsgIndex+1) : (KMMessage*)NULL);
   }
 
   if (getMsgIndex < 0) return NULL;
@@ -254,7 +229,7 @@ void KMHeaders::changeItem (char c, int itemIndex, int column)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::highlightMessage(int idx, int colId)
+void KMHeaders::highlightMessage(int idx, int/*colId*/)
 {
   kbp->busy();
   if (idx >= 0) setMsgRead(idx);
@@ -265,14 +240,14 @@ void KMHeaders::highlightMessage(int idx, int colId)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::selectMessage(int idx, int colId)
+void KMHeaders::selectMessage(int idx, int/*colId*/)
 {
-  Message* msg;
+  KMMessage* msg;
 
   if (idx >= 0)
   {
     msg = getMsg(idx);
-    if (msg->getFlag()=='D') undeleteMsg(idx);
+    if (msg->status()=='D') undeleteMsg(idx);
     else deleteMsg(idx);
   }
 }
@@ -281,31 +256,26 @@ void KMHeaders::selectMessage(int idx, int colId)
 //-----------------------------------------------------------------------------
 void KMHeaders::updateMessageList(void)
 {
-  unsigned long i;
+  long i;
   char hdr[256];
-  char sfrom[80];
-  char ssubject[80];
-  char sdate[32];
-  char flags;
-  Message* msg;
+  char flag;
+  KMMessage* msg;
 
   clear();
   if (!folder) return;
 
   kbp->busy();
   setAutoUpdate(FALSE);
-  for (i = (long)1; i <= folder->numMsg(); i++)
+  for (i = 1; i <= folder->numMsgs(); i++)
   {
-    msg = folder->getMsg(i);
-    flags = msg->getFlag();
-    msg->getFrom(sfrom);
-    msg->getSubject(ssubject);
-    msg->getDate(sdate);
-    sprintf(hdr, "%c\t%s\t%s\t%s", flags, sfrom, ssubject, sdate);
+    msg  = folder->getMsg(i);
+    flag = msg->status();
+    sprintf(hdr, "%c\n%s\n%s\n%s", flag, msg->from(), msg->subject(), 
+    	    msg->dateStr());
     insertItem(hdr);
-    //printf ("%s\n", hdr);
-    if (flags=='N') changeItemColor(darkRed);
-    else if(flags=='U') changeItemColor(darkBlue);
+
+    if (flag=='N') changeItemColor(darkRed);
+    else if(flag=='U') changeItemColor(darkBlue);
   }
   setAutoUpdate(TRUE);
   repaint();
@@ -314,10 +284,10 @@ void KMHeaders::updateMessageList(void)
 
 
 //-----------------------------------------------------------------------------
-bool KMHeaders :: prepareForDrag (int aCol, int aRow, char** data, 
+bool KMHeaders :: prepareForDrag (int /*aCol*/, int /*aRow*/, char** data, 
 				  int* size, int* type)
 {
-  static KmDragData dd;
+  static KMDragData dd;
   int i, from, to, high;
 
   high = numRows()-1;

@@ -23,11 +23,12 @@
 #include <kapp.h>
 #include <kmsgbox.h>
 #include "ktablistbox.h"
-#include "mclass.h"
 #include <qpainter.h>
 #define FORWARD 0
 #define REPLY 1
 #define REPLYALL 2
+
+class KMMessage;
 
 class KMAttachmentItem  // for Attachment Widget
 {
@@ -41,7 +42,7 @@ class KMComposeView : public QWidget
 {
 	Q_OBJECT
 public:
-	KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0, Message *message=0, int action =0);
+	KMComposeView(QWidget *parent=0,const char *name=0,QString emailAddress=0, KMMessage *message=0, int action =0);
 	~KMComposeView();
 	KEdit *editor;
 private:
@@ -49,7 +50,7 @@ private:
 	QLineEdit *toLEdit;
 	QLineEdit *subjLEdit;
 	QLineEdit *ccLEdit;
-	Message *currentMessage;
+	KMMessage *currentMessage;
 	KTabListBox *attWidget;
 	QString SMTPServer;
 	QString EMailAddress;
@@ -87,7 +88,9 @@ class KMComposeWin : public KTopLevelWidget
 	Q_OBJECT
 
 public:
-	KMComposeWin(QWidget *parent = 0, const char *name = 0, QString emailAddress=0, Message *message=0, int action = 0);
+	KMComposeWin(QWidget *parent = 0, const char *name = 0, QString emailAddress=0, KMMessage *message=0, int action = 0);
+        virtual void show();
+  
 private:
 	KToolBar *toolBar;
 	KMenuBar *menuBar;

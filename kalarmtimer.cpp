@@ -28,7 +28,6 @@ typedef struct _KATimeoutRec
 typedef KATimeoutRec* KATimeoutPtr;
 
 static KATimeoutPtr head = NULL;
-static KATimeoutPtr idleList = NULL;
 static KAlarmTimerId idCounter = 1;
 
 #define ONE_SECOND 1000000
@@ -102,7 +101,7 @@ void KAlarmTimer :: timerEvent (void)
 //-----------------------------------------------------------------------------
 void KAlarmTimeoutHandler(int)
 {
-  KATimeoutPtr		cur, next, todo, last;
+  KATimeoutPtr		cur, next, todo;
   struct timeval	outTime;
   struct itimerval	timerVal;
 

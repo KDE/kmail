@@ -12,7 +12,6 @@
 #include <qregexp.h>
 #include <qradiobt.h>
 #include <qbttngrp.h>
-#include <mclass.h>
 #undef write
 #include <html.h>
 #include <kapp.h>
@@ -22,26 +21,29 @@
 #include <kmsgbox.h>
 #include "kmcomposewin.h"
 
+class KMFolder;
+class KMMessage;
+
 class KMReaderView: public QWidget
 {
 Q_OBJECT
 public:
-	KMReaderView(QWidget *parent =0, const char *name=0, int msgno = 0, Folder *f =0);
+	KMReaderView(QWidget *parent=0, const char *name=0, int msgno=0, KMFolder *f=0);
 	KHTMLWidget *messageCanvas;
 	KHTMLWidget *headerCanvas;
 private:
-	Message *currentMessage;
+	KMMessage *currentMessage;
 	int currentIndex;
 	bool displayFull;
 	QScrollBar *vert;
 	QScrollBar *horz;
 	QFrame *separator;
-	Folder *currentFolder;
+	KMFolder *currentFolder;
 	long allMessages;
 public slots:
  	void updateDisplay();
 	void clearCanvas();
-	void parseMessage(Message*);
+	void parseMessage(KMMessage*);
 private slots:
 	void slotScrollVert(int);
 	void slotScrollHorz(int);
@@ -66,7 +68,8 @@ class KMReaderWin : public KTopLevelWidget
 {
 Q_OBJECT
 public:
-	KMReaderWin(QWidget *parent = 0, const char *name =0, int msgno = 0, Folder *f =0);
+	KMReaderWin(QWidget *parent=0, const char *name=0, int msgno=0, KMFolder *f=0);
+        virtual void show();
 	KMReaderView *newView;
 	KToolBar *toolBar;
 	KMenuBar *menuBar;
@@ -76,7 +79,7 @@ private:
 	QRadioButton *fullHeader;
 	QRadioButton *halfHeader;
 	QWidget *setWidget;
-	Folder *tempFolder;
+	KMFolder *tempFolder;
 public slots:
 	void parseConfiguration();
 private slots:

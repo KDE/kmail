@@ -1,74 +1,71 @@
 #include <stdlib.h>
 #include <qfileinf.h>
+#include <qpixmap.h>
+
 #include "util.h"
+#include "kmglobal.h"
+#include "kmfoldermgr.h"
+#include "kmfolderdir.h"
+#include "kmacctfolder.h"
+
+
 #include "kmfoldertree.moc"
 
-KMFolderTree::KMFolderTree(QWidget *parent=0,const char *name=0) : KTreeList(parent,name) {
-	connect(this,SIGNAL(highlighted(int)),this,SLOT(doFolderSelected(int)));
-	getList();
+//-----------------------------------------------------------------------------
+KMFolderTree::KMFolderTree(QWidget *parent=0,const char *name=0) : 
+  KMFolderTreeInherited(parent, name, 1)
+{
+  connect(this, SIGNAL(highlighted(int,int)),
+	  this, SLOT(doFolderSelected(int,int)));
+
+  clearTableFlags();
+  setTableFlags (Tbl_smoothVScrolling | Tbl_clipCellPainting);
+
+  setColumn(0, "Folders", 80, KTabListBox::MixedColumn);
+
+  dict().insert("dir", new QPixmap("pics/kmdirclosed.xpm"));
+  dict().insert("fld", new QPixmap("pics/flag.xpm"));
+  dict().insert("in", new QPixmap("pics/bottom.xpm"));
+
+  reload();
 }
 
-void KMFolderTree::cdFolder(QDir *dir,int index=-1) {
-	KPath p,q;
-	QString *s;
-	dir->cd(QDir::home().path());
-	dir->cd(".kmail/folders");
-	if (index==-1) {
-		index=currentItem();
-		if (index==-1) return;
-	}
-	p=*(itemPath(index));
-	while (!(p.isEmpty())) {
-		s=p.pop();      	// reverse the path order, so that I can cd with it
-		q.push(s);		// the treewidget needs a redesign :-(
-	}
-	q.pop();			// get rid of "/"
-	while (!(q.isEmpty())) dir->cd(*q.pop());
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::reload(void)
+{
+  KMFolderDir* fdir;
+  KMAcctFolder* folder;
+  QString str;
+  QString indent = "";
+
+  clear();
+  mList.clear();
+
+  fdir = &folderMgr->dir();
+
+  for (folder = (KMAcctFolder*)fdir->first(); 
+       folder != NULL;
+       folder = (KMAcctFolder*)fdir->next())
+  {
+    if (folder->isDir()) str = indent+"{dir} "+folder->name();
+    else if (folder->account()) str = indent+"{in} "+folder->name();
+    else str = indent+"{fld} "+folder->name();
+    insertItem(str);
+
+    mList.append(folder);
+  }
 }
 
-void KMFolderTree::getList() {
-	QDir *d;
-	KPath *p;
-	char buf[255];
-	strcpy(buf,QDir::home().path());
-	strcat(buf,"/.kmail/folders");
-	clear();
-	insertItem("/",NULL,-1);
-	d=new QDir(buf,NULL,QDir::Name,QDir::Dirs);
-	p=new KPath();
-	p->push(new QString("/"));
-	getListRecur(d,p);
-	delete p;
-	delete d;
-	setExpandLevel(10);
-}
+//-----------------------------------------------------------------------------
+void KMFolderTree::doFolderSelected(int index, int)
+{
+  KMFolder* folder;
 
-void KMFolderTree::getListRecur(QDir *d,KPath *p) {
-	QString s;
-	d->setFilter(QDir::Dirs | QDir::Hidden);
-	d->setNameFilter("*");
-	const QFileInfoList *list=d->entryInfoList();
-	QFileInfoListIterator it(*list);
-	QFileInfo *fi;
-	while ((fi=(it.current()))!=0) {
-		if ((fi->fileName()!=".") && (fi->fileName()!="..")) {
-			s=fi->fileName();
-			addChildItem(s,NULL,p);
-			QDir *e=new QDir(*d);
-			e->cd(s);
-			p->push(&s);
-			getListRecur(e,p);
-			p->pop();
-			delete e;
-		}
-		++it;
-	}
-}
+  printf("KMFolderTree::doFolderSelected(%d)\n", index);
 
-void KMFolderTree::doFolderSelected(int index) {
-	QDir d;
-	cdFolder(&d,index);
-	d.convertToAbs();
-	emit folderSelected(&d);
-}
+  if (index < 0) return;
 
+  folder = (KMFolder*)mList.at(index);
+  if (!folder->isDir()) emit folderSelected(folder);
+}

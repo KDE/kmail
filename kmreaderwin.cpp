@@ -1,18 +1,26 @@
+// kmreaderwin.cpp
+
+#include "kmreaderwin.h"
+#include "kmfolder.h"
+#include "kmmessage.h"
+#include "kmfoldermgr.h"
+#include "kmglobal.h"
 #include "kmreaderwin.moc"
+
 #define FORWARD 0
 #define REPLY 1
 #define REPLYALL 2
 #define PICS "file:$(KDEDIR)/lib/pics"
 
-KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno = 0,Folder *f = 0)
+KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno = 0,KMFolder *f = 0)
 	:QWidget(parent,name)
 {
 	printf("Entering view:  msgno = %i \n",msgno);
 
-	currentFolder = new Folder();
+	currentFolder = new KMFolder();
 	currentFolder = f;
 
-	currentMessage = new Message();
+	currentMessage = new KMMessage();
         currentIndex = msgno;
 
 	if(f !=0)
@@ -101,17 +109,15 @@ void KMReaderView::resizeEvent(QResizeEvent *)
 
 // ******************* Private slots ********************
 
-void KMReaderView::parseMessage(Message *message)
+void KMReaderView::parseMessage(KMMessage *message)
 {
 	QString fromStr;
 	QString subjStr;
 	QString text;
 	QString header;
-	char sfrom[256];
-	char ssubj[512];
-	ulong length;
-	const char *B[] = BODYTYPE;
-	const char *E[] = ENCODING;
+	QString dateStr;
+	QString ccStr;
+	long length;
 
 	currentMessage = message; // To make sure currentMessage is set.
 
@@ -123,16 +129,12 @@ void KMReaderView::parseMessage(Message *message)
 	else
 		displayFull = false;
 
-	int noAttach;
+	int noAttach = (message->numBodyParts() <= 1);
 
-	if(!(noAttach =message->numAttch()))
-		text = message->getText(&length);
-	else
-		{text = message->getText(&length);
-		text.truncate(length);	
-		}          	
+	text = message->body(&length);
+	if (noAttach) text.truncate(length);	
 
-	header = message->getHeader();
+	//header = message->getHeader();
 
 	// Ok. Convert the text to html
 	
@@ -143,18 +145,12 @@ void KMReaderView::parseMessage(Message *message)
 	headerCanvas->begin(PICS);
 	headerCanvas->write("<HTML><HEAD><TITLE></TITLE></HEAD>");
 	headerCanvas->write("<BODY BGCOLOR=WHITE>");
-	message->getFrom(sfrom);
-	message->getSubject(ssubj);
-	char sdate[256];
-	char scc[256];
-	QString dateStr;
-	QString ccStr;
-	message->getCc(scc);
-	message->getLongDate(sdate);
-	dateStr.sprintf("Date: %s<br>",sdate);
-	fromStr.sprintf("From: %s<br>",sfrom);
-	ccStr.sprintf("Cc: %s<br>",scc);
-        subjStr.sprintf("Subject: %s<br><P>",ssubj);
+
+	dateStr.sprintf("Date: %s<br>",message->dateStr());
+	fromStr.sprintf("From: %s<br>",message->from());
+	ccStr.sprintf("Cc: %s<br>",message->cc());
+        subjStr.sprintf("Subject: %s<br><P>",message->subject());
+
 	headerCanvas->write(dateStr);
 	headerCanvas->write(fromStr);
 	headerCanvas->write(ccStr);
@@ -169,7 +165,7 @@ void KMReaderView::parseMessage(Message *message)
 	messageCanvas->write("<BODY BGCOLOR=WHITE>");
 	messageCanvas->write(text);
 		
-
+#ifdef BROKEN
 	if(noAttach != 0)
 		{while(noAttach > 0)
 			{printf("Attach : %i\n",noAttach);
@@ -202,6 +198,8 @@ void KMReaderView::parseMessage(Message *message)
 			delete atmnt;
 			}
 		}		
+#endif
+
 	messageCanvas->write("</BODY></HTML>");
 	messageCanvas->end();
 	messageCanvas->parse();
@@ -268,6 +266,7 @@ void KMReaderView::saveMail()
   QString file;
   char buf[511];
 
+#ifdef BROKEN
   pwd.sprintf("%s",getcwd(buf,sizeof(buf)));
   file = QFileDialog::getSaveFileName(pwd,0,this);
 
@@ -279,12 +278,12 @@ void KMReaderView::saveMail()
     else
 	   f->close();
 
-     Folder *saveFolder = new Folder();
+     KMFolder *saveFolder = new KMFolder();
      if(!saveFolder->open(file))
 		{KMsgBox::message(0,"Ouch","SaveFile could not be opened\n");
 		return;
 		}
-    if(!saveFolder->putMsg(currentMessage))
+    if(!saveFolder->addMsg(currentMessage))
 		{KMsgBox::message(0,"Ouch","Could not save message\n");
 		saveFolder->close();
 		return;
@@ -294,7 +293,7 @@ void KMReaderView::saveMail()
 
   else
     {}
-
+#endif
 }
 
 
@@ -363,6 +362,8 @@ void KMReaderView::openURL(const char *url, int)
 void KMReaderView::saveURL(int num)
 {
 	printf("Entering saveURL()\n");
+
+#ifdef BROKEN
 	Attachment *a = new Attachment();
 	a = currentMessage->getAttch(num);
 
@@ -378,7 +379,7 @@ void KMReaderView::saveURL(int num)
 		}
 	else
 		{}
-
+#endif
 	return;
 
 }
@@ -387,11 +388,11 @@ void KMReaderView::saveURL(int num)
 
 
 
-KMReaderWin::KMReaderWin(QWidget *, const char *, int msgno = 0,Folder *f =0)
+KMReaderWin::KMReaderWin(QWidget *, const char *, int msgno = 0,KMFolder *f =0)
 	:KTopLevelWidget(NULL)
 {
 
-  tempFolder = new Folder();
+  tempFolder = new KMFolder();
   tempFolder = f;
   setCaption("KMail Reader");
 
@@ -409,6 +410,13 @@ KMReaderWin::KMReaderWin(QWidget *, const char *, int msgno = 0,Folder *f =0)
 
   resize(480, 510);
 }
+
+void KMReaderWin::show()
+{
+  KTopLevelWidget::show();
+  resize(size());
+}
+
 
 // ******************** Public slots ********************
 

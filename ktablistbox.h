@@ -19,7 +19,6 @@ class KTabListBoxItem;
 class KTabListBox;
 
 typedef QDict<QPixmap> KTabListBoxDict;
-//typedef void* KTabListBoxDict;
 
 //--------------------------------------------------
 #define KTabListBoxTableInherited QTableView
@@ -59,7 +58,7 @@ class KTabListBox : public KDNDWidget
   friend KTabListBoxColumn;
 
 public:
-  enum ColumnType { TextColumn, PixmapColumn };
+  enum ColumnType { TextColumn, PixmapColumn, MixedColumn };
 
   KTabListBox (QWidget *parent=0, const char *name=0, 
 	       int columns=1, WFlags f=0);
@@ -67,46 +66,63 @@ public:
 
   uint count (void) const { return numRows(); }
 
+  /** Insert a line before given index, using the separator character
+    to separate the fields. If no index is given the line is 
+    appended at the end. Returns index of inserted item. */
   virtual void insertItem (const char* string, int itemIndex=-1);
-	// Insert a line before given index, using the separator character
-	// to separate the fields. If no index is given the line is 
-        // appended at the end. Returns index of inserted item.
 
+  /** Change contents of a line using the separator character
+    to separate the fields. */
   virtual void changeItem (const char* string, int itemIndex);
-	// Change contents of a line using the separator character
-	// to separate the fields
 
+  /** Change part of the contents of a line. */
   virtual void changeItem (const char* string, int itemIndex, int column);
-	// Change part of the contents of a line
 
+  /** Change color of line. */
   virtual void changeItemColor (const QColor& color, int itemIndex=-1);
-	// change color of line
 
+  /** Set/get number of pixels one tab character stands for. Default: 10 */
+  int tabWidth(void) const { return tabPixels; }
+  virtual void setTabWidth(int);
+
+  /** Remove one item from the list. */
   virtual void removeItem (int itemIndex);
 
+  /** Remove contents of listbox */
   virtual void clear (void);
-	// remove contents of listbox
 
+  /** Return index of current item */
   int currentItem (void) const { return current; }
-  virtual void setCurrentItem (int idx, int colId=-1);
-	// set the current (selected) column. colId is the value that
-	// is transfered with the selected() signal that is emited.
 
+  /** Set the current (selected) column. colId is the value that
+    is transfered with the selected() signal that is emited. */
+  virtual void setCurrentItem (int idx, int colId=-1);
+
+  /** Unmark all items */
   virtual void unmarkAll (void);
-	// unmark all items
+
+  /** Mark/unmark item with index idx. */
   virtual void markItem (int idx, int colId=-1);
   virtual void unmarkItem (int idx);
 
+  /** Find item at given screen y position. */
   int findItem (int yPos) const { return (lbox.findRow(yPos)); }
 
+  /** Returns first item that is currently displayed in the widget. */
   int topItem (void) const { return (lbox.topCell()); }
+
+  /** Change first displayed item by repositioning the visible part
+    of the list. */
   void setTopItem (int idx) { lbox.setTopCell(idx); }
 
+  /** Set number of columns. Warning: this *deletes* the contents
+    of the listbox. */
   virtual void setNumCols (int);
-	// Set number of columns. Warning: this *deletes* the contents
-	// of the listbox.
 
+  /** Set number of rows in the listbox. The contents stays as it is. */
   virtual void setNumRows (int);
+
+  /** See QTableView for a description of the following methods. */
   int numRows (void) const { return lbox.numRows(); }
   int numCols (void) const { return lbox.numCols(); }
   int cellWidth (int col) { return lbox.cellWidth(col); }
@@ -119,40 +135,47 @@ public:
   int lastRowVisible (void) const { return lbox.lastRowVisible(); }
   bool autoUpdate (void) const { return lbox.autoUpdate(); }
   void setAutoUpdate (bool upd) { lbox.setAutoUpdate(upd); }
+  void clearTableFlags(uint f=~0) { lbox.clearTableFlags(f); }
+  uint tableFlags(void) { return lbox.tableFlags(); }
+  bool testTableFlags(uint f) { return lbox.testTableFlags(f); }
+  void setTableFlags(uint f) { lbox.setTableFlags(f); }
 
+  /** Set column caption, width, and type. */
   virtual void setColumn (int col, const char* caption, 
 			  int width=0, ColumnType type=TextColumn);
-	// set column caption and width
 
+  /** Set/get column width. */
   virtual void setColumnWidth (int col, int width=0);
   int columnWidth (int col) { return lbox.cellWidth(col); }
 
+  /** set separator character, e.g. '\t'. */
   virtual void setSeparator (char sep);
-	// set separator characters (maximum: 16 characters)
 
+  /** Return separator character. */
   virtual char separator (void) const { return sepChar; }
-	// returns string of separator characters
 
+  /** For convenient access to the dictionary of pictures that this
+   listbox understands. */
   KTabListBoxDict& dict (void) { return pixDict; }
 
   void repaint (void) { QWidget::repaint(); lbox.repaint(); }
 
+  /** Indicates that a drag has started with given item.
+    Returns TRUE if we are dragging, FALSE if drag-start failed. */
   bool startDrag(int col, int row, const QPoint& mousePos);
-	// Indicates that a drag has started with given item.
-	// Returns TRUE if we are dragging, FALSE if drag-start failed.
 
   QPixmap& dndPixmap(void) { return dndDefaultPixmap; }
 
 signals:
+  /** emited when the current item changes (either via setCurrentItem()
+    or via mouse single-click). */
   void highlighted (int Index, int column);
-	// emited when the current item changes (either via setCurrentItem()
-	// or via mouse single-click).
 
+  /** emitted when the user double-clicks into a line. */
   void selected (int Index, int column);
-	// emitted when the user double-clicks into a line
 
+  /** emitted when the user presses the right mouse button over a line */
   void popupMenu (int Index, int column);
-	// emitted when the user presses the right mouse button over a line
 
 protected slots:
   void horSbValue(int val);
@@ -168,13 +191,13 @@ protected:
   virtual void resizeEvent (QResizeEvent*);
   virtual void paintEvent (QPaintEvent*);
 
+  /** Resize item array. Per default enlarge it to double size. */
   virtual void resizeList (int newNumItems=-1);
-	// Resize item array. Per default enlarge it to double size
 
+  /** Called to set drag data, size, and type. If this method
+    returns FALSE then no drag occurs. */
   virtual bool prepareForDrag (int col, int row, char** data, int* size, 
 			       int* type);
-	// Called to set drag data, size, and type. If this method
-	// returns FALSE then no drag occurs.
 
   KTabListBoxColumn*	colList;
   KTabListBoxItem*	itemList;
@@ -187,8 +210,9 @@ protected:
   QPixmap		dndDefaultPixmap;
   int			columnPadding;
   QColor		highlightColor;
+  int			tabPixels;
 
-private:		// Disabled copy constructor and operator=
+private:  // Disabled copy constructor and operator=
   KTabListBox (const KTabListBox &) {}
   KTabListBox& operator= (const KTabListBox&) { return *this; }
 };

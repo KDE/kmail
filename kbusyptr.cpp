@@ -26,8 +26,8 @@ KBusyPtr :: KBusyPtr (KApplication* aApp)
 //-----------------------------------------------------------------------------
 KBusyPtr :: ~KBusyPtr()
 {
-  if (cursorList) delete cursorList;
-  if (bitmapList) delete bitmapList;
+  if (cursorList) delete[] cursorList;
+  if (bitmapList) delete[] bitmapList;
   cursorList = NULL;
   bitmapList = NULL;
 }

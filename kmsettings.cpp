@@ -5,6 +5,10 @@
 #include <kmsgbox.h>
 #include "util.h"
 #include "kmmainwin.h"
+#include "kmaccount.h"
+#include "kmacctmgr.h"
+#include "kmglobal.h"
+
 #include "kmsettings.moc"
 
 KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccount *a) : QDialog(parent,name,TRUE) {
@@ -22,7 +26,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 	nameEdit = new QLineEdit(this);
 	nameEdit->setGeometry(110,20,220,25);
 	nameEdit->setFocus();
-	if (a->name!=".temp") nameEdit->setText(a->name);
+	if (a->name()!=".temp") nameEdit->setText(a->name());
 
 	label = new QLabel(this);
 	label->setGeometry(20,55,80,25);
@@ -63,7 +67,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 	locationEdit = new QLineEdit(local);
 	locationEdit->setGeometry(70,20,315,25);
 	locationEdit->setFocus();
-	locationEdit->setText(a->config->readEntry("location"));
+	locationEdit->setText(a->config()->readEntry("location"));
 
 	button=new QPushButton(local);
 	button->setGeometry(390,20,30,25);
@@ -81,7 +85,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 	hostEdit = new QLineEdit(remote);
 	hostEdit->setGeometry(80,15,335,25);
 	hostEdit->setFocus();
-	hostEdit->setText(account->config->readEntry("host"));
+	hostEdit->setText(account->config()->readEntry("host"));
 
 	label = new QLabel(remote);
 	label->setGeometry(10,50,60,25);
@@ -90,7 +94,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 
 	portEdit = new QLineEdit(remote);
 	portEdit->setGeometry(80,50,70,25);
-	portEdit->setText(account->config->readEntry("port"));
+	portEdit->setText(account->config()->readEntry("port"));
 
 	label = new QLabel(remote);
 	label->setGeometry(20,95,50,25);
@@ -99,7 +103,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 
 	mailboxEdit = new QLineEdit(remote);
 	mailboxEdit->setGeometry(80,95,165,25);
-	mailboxEdit->setText(account->config->readEntry("mailbox"));
+	mailboxEdit->setText(account->config()->readEntry("mailbox"));
 
 	label = new QLabel(remote);
 	label->setGeometry(10,140,60,25);
@@ -108,7 +112,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 
 	loginEdit = new QLineEdit(remote);
 	loginEdit->setGeometry(80,140,165,25);
-	loginEdit->setText(account->config->readEntry("login"));
+	loginEdit->setText(account->config()->readEntry("login"));
 
 	label = new QLabel(remote);
 	label->setGeometry(10,175,60,25);
@@ -118,7 +122,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 	passEdit = new QLineEdit(remote);
 	passEdit->setGeometry(80,175,165,25);
 	passEdit->setEchoMode(QLineEdit::Password);
-	passEdit->setText(account->config->readEntry("password"));
+	passEdit->setText(account->config()->readEntry("password"));
 
 	QButtonGroup *buttonGroup = new QButtonGroup(remote);
 	buttonGroup->setGeometry(265,90,150,105);
@@ -139,17 +143,17 @@ KMAccountSettings::KMAccountSettings(QWidget *parent=0,const char *name,KMAccoun
 	accessMethod3->setText("copy messages");
 	buttonGroup->insert(accessMethod3);
 
-	if (account->config->readEntry("access method")=="maintain remotely")
+	if (account->config()->readEntry("access method")=="maintain remotely")
 	 accessMethod1->setChecked(TRUE); else
-	  if (account->config->readEntry("access method")=="move messages")
+	  if (account->config()->readEntry("access method")=="move messages")
 	   accessMethod2->setChecked(TRUE); else
-	    if (account->config->readEntry("access method")=="copy messages")
+	    if (account->config()->readEntry("access method")=="copy messages")
 	     accessMethod3->setChecked(TRUE); else
 	      accessMethod2->setChecked(TRUE);
 
 	resize(555,305);
 
-	s=a->config->readEntry("type");
+	s=a->config()->readEntry("type");
 	if (s=="inbox") i=0; else
 	 if (s=="imap") i=1; else
 	  if (s=="pop3") i=2; else i=0;
@@ -187,40 +191,39 @@ void KMAccountSettings::typeSelected(int index) {
 }
 
 void KMAccountSettings::accept() {
-	account->name=nameEdit->text();
+	account->setName(nameEdit->text());
 	switch (typeList->currentItem()) {
-		case 0 :	account->config->writeEntry("type","inbox");
+		case 0 :	account->config()->writeEntry("type","inbox");
 				break;
-		case 1 :	account->config->writeEntry("type","imap");
+		case 1 :	account->config()->writeEntry("type","imap");
 				break;
-		case 2 :	account->config->writeEntry("type","pop3");
+		case 2 :	account->config()->writeEntry("type","pop3");
 				break;
 	}
-	account->config->writeEntry("location",locationEdit->text());
-	account->config->writeEntry("host",hostEdit->text());
-	account->config->writeEntry("port",portEdit->text());
-	account->config->writeEntry("mailbox",mailboxEdit->text());
-	account->config->writeEntry("login",loginEdit->text());
-	account->config->writeEntry("password",passEdit->text());
+	account->config()->writeEntry("location",locationEdit->text());
+	account->config()->writeEntry("host",hostEdit->text());
+	account->config()->writeEntry("port",portEdit->text());
+	account->config()->writeEntry("mailbox",mailboxEdit->text());
+	account->config()->writeEntry("login",loginEdit->text());
+	account->config()->writeEntry("password",passEdit->text());
 	if (accessMethod1->isChecked())
-	 account->config->writeEntry("access method","maintain remotely"); else
+	 account->config()->writeEntry("access method","maintain remotely"); else
 	  if (accessMethod2->isChecked())
-	   account->config->writeEntry("access method","move messages"); else
+	   account->config()->writeEntry("access method","move messages"); else
 	    if (accessMethod3->isChecked())
-	     account->config->writeEntry("access method","copy messages");
+	     account->config()->writeEntry("access method","copy messages");
 
 	QDialog::accept();
 }
 
 KMSettings::KMSettings(QWidget *parent=0,const char *name=0) : QTabDialog(parent,name,TRUE) {
-	config=KApplication::getKApplication()->getConfig();
+	KMAccount* act;
+	config=app->getConfig();
 	setCaption("Settings");
 	resize(570,545);
 	setCancelButton();
 	setDefaultButton();
 	connect(this,SIGNAL(defaultButtonPressed()),this,SLOT(setDefaults()));
-
-	accountMan=new KMAccountMan();
 
 	identityTab=new QWidget(this);
 
@@ -338,8 +341,8 @@ KMSettings::KMSettings(QWidget *parent=0,const char *name=0) : QTabDialog(parent
 	accountList->setGeometry(35,280,355,160);
 	connect(accountList,SIGNAL(highlighted(int)),this,SLOT(accountSelected(int)));
 	connect(accountList,SIGNAL(selected(int)),this,SLOT(modifyAccount(int)));
-	for (unsigned int i=0;i<accountMan->count();i++)
-	  accountList->inSort(accountMan->at(i)->name);
+	for (act=acctMgr->first(); act; act=acctMgr->next())
+	  accountList->inSort(act->name());
 
 	addButton = new QPushButton(networkTab);
 	addButton->setGeometry(405,280,120,40);
@@ -369,7 +372,7 @@ KMSettings::KMSettings(QWidget *parent=0,const char *name=0) : QTabDialog(parent
 }
 
 KMSettings::~KMSettings() {
-	delete accountMan;
+	delete acctMgr;
 }
 
 void KMSettings::accountSelected(int) {
@@ -378,16 +381,18 @@ void KMSettings::accountSelected(int) {
 }
 
 void KMSettings::addAccount() {
-	KMAccount *a=accountMan->createAccount(QString(".temp"));
+#ifdef BROKEN
+	KMAccount *a=acctMgr->createAccount(".temp");
 	KMAccountSettings *d=new KMAccountSettings(this,NULL,a);
 	d->setCaption("Create Account");
 	if (d->exec()) {
 		QString s=a->name;
-		accountMan->renameAccount(QString(".temp"),s);
+		acctMgr->renameAccount(QString(".temp"),s);
 		// "a" is not longer valid here !!!
 		accountList->inSort(s);
-	} else accountMan->removeAccount(QString(".temp"));
+	} else acctMgr->removeAccount(QString(".temp"));
 	delete d;
+#endif
 }
 
 void KMSettings::chooseSendmailLocation() {
@@ -406,16 +411,12 @@ void KMSettings::chooseSigFile()
 }
 
 void KMSettings::modifyAccount(int index) {
-	KMAccount *a=accountMan->findAccount(accountList->text(index));
-	QString s=a->name;
+	KMAccount *a=acctMgr->find(accountList->text(index));
 	KMAccountSettings *d=new KMAccountSettings(this,NULL,a);
 	d->setCaption("Modify Account");
-	if ((d->exec()) && (s!=a->name)) {
-		QString t=a->name;
-		accountMan->renameAccount(s,t);
-		accountList->removeItem(index);
-		accountList->inSort(t);
-	}
+	d->exec();
+	accountList->removeItem(index);
+	accountList->inSort(a->name());
 	delete d;
 }
 
@@ -429,7 +430,7 @@ void KMSettings::removeAccount() {
 	t="Are you sure you want to remove the account \"";
 	t+=s; t+="\" ?";
 	if ((KMsgBox::yesNo(this,"Confirmation",t))==1) {
-		accountMan->removeAccount(s);
+		acctMgr->remove(acctMgr->find(s));
 		accountList->removeItem(accountList->currentItem());
 		if (!accountList->count()) {
 			modifyButton->setEnabled(FALSE);

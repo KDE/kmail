@@ -1,3 +1,12 @@
+//
+//  This file seems to be old and is no longer used !
+//  main.cpp contains now the main code.
+//
+//  --Stefan <taferner@alpin.or.at>
+//
+
+#ifdef OBSOLETE_CODE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -199,3 +208,5 @@ void main()
 	}
 	f.close(CL_EXPUNGE);
 }
+
+#endif /* OBSOLETE_CODE */

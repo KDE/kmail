@@ -4,21 +4,20 @@
 #include <qlabel.h>
 #include "kmcomposewin.moc"
 #include "kmmainwin.h"
+#include "kmmessage.h"
 #include <iostream.h>
 #include <qwidget.h>
 #include <sys/stat.h>
 #include <sys/types.h>
 
-KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress, Message *message, int action) : QWidget(parent,name)
+KMComposeView::KMComposeView(QWidget *parent, const char *name, QString emailAddress, KMMessage *message, int action) : QWidget(parent,name)
 {
 	printf("Entering composeView\n");
 	
 	attWidget = NULL;
-	currentMessage = new Message(); 
-	if(message !=0)
-		currentMessage = message;
+	if (message) currentMessage = message;
+	else currentMessage = new KMMessage(); 
 	indexAttachment =0;
-
 
 	toLEdit = new QLineEdit(this);
 	if (emailAddress) 
@@ -90,6 +89,7 @@ void KMComposeView::printIt()
 
 void KMComposeView::attachFile()
 {
+#ifdef BROKEN
 	QString atmntFile;
         const char *B[] = BODYTYPE;
 	struct stat atmntStat;
@@ -170,7 +170,7 @@ void KMComposeView::attachFile()
 			}
 		}
         delete d;
-
+#endif
 
 }
 
@@ -194,7 +194,7 @@ void KMComposeView::sendIt()
 
 void KMComposeView::sendNow()
 {
-	Message *msg = new Message();
+	KMMessage *msg = new KMMessage();
 	msg = currentMessage;
 
 	// Now all items in the attachment queue are being displayed.
@@ -206,7 +206,7 @@ void KMComposeView::sendNow()
 	printf("\nDone displaying list\n");
 
 	// All attachments in the queue are being attached here.
-
+#if 0
 	if(indexAttachment !=0)
 	        {int x;
 		QList<KMAttachmentItem> tempList;
@@ -223,7 +223,7 @@ void KMComposeView::sendNow()
 			}
 		printf("Attached files\n");
 		}
-
+#endif
 	QString temp=toLEdit->text();
 	if (temp.isEmpty()) {
 		KMsgBox::message(0,"Ouch","No recipients defined. aborting ....");
@@ -243,13 +243,15 @@ void KMComposeView::sendNow()
 	msg->setTo(toLEdit->text());
 	msg->setCc(ccLEdit->text());
 	msg->setSubject(subjLEdit->text());
-	msg->setText(temp);
-	msg->setCharset(C_USASCII);
+	msg->setBody(temp);
+	//msg->setCharset(C_USASCII);  // no such method in mimelib
+#ifdef BROKEN
 	if (!msg->sendSMTP(SMTPServer))
 		{KMsgBox::message(0,"Ouch","Trouble sending mail\nPlease check your mailserver configuration");
 		delete msg;
 		return;
 		}
+#endif
 	delete msg;
 	((KMComposeWin *)parentWidget())->close();
 }
@@ -281,41 +283,27 @@ void KMComposeView::parseConfiguration()
 void KMComposeView::forwardMessage()
 {
 	  printf("Entering forwarding message\n");
-          char subject[512];
-          char date[256];
-          char from[256];
-          char to[256];
-          char cc[256];
           QString temp;
-          ulong length;
-          currentMessage->getSubject(subject);
-          currentMessage->getLongDate(date);
-          currentMessage->getFrom(from);
-          currentMessage->getTo(to);
-          currentMessage->getCc(cc);
-          temp.sprintf("Fwd: %s",subject);
+          long length;
+          temp.sprintf("Fwd: %s",currentMessage->subject());
           subjLEdit->setText(temp);
           temp ="\n\n---------Forwarded message-----------";
           editor->append(temp);
-          temp.sprintf("Date: %s",date);
+          temp.sprintf("Date: %s",currentMessage->dateStr());
           editor->append(temp);
-          temp.sprintf("From: %s",from);
+          temp.sprintf("From: %s",currentMessage->from());
           editor->append(temp);
-          temp.sprintf("To: %s",to);
+          temp.sprintf("To: %s",currentMessage->to());
           editor->append(temp);
-          temp.sprintf("Cc: %s",cc);
+          temp.sprintf("Cc: %s",currentMessage->cc());
           editor->append(temp);
-          temp.sprintf("Subject: %s\n", subject);
+          temp.sprintf("Subject: %s\n", currentMessage->subject());
           editor->append(temp);
-          if(!currentMessage->numAttch())
-                  {temp = currentMessage->getText(&length);
-                  editor->append(temp);
-                  }
-        else
-		{temp = currentMessage->getText(&length);
-		temp.truncate(length);
-                editor->append(temp);
-                }
+
+	  temp = currentMessage->body(&length);
+          if (currentMessage->numBodyParts() > 1) temp.truncate(length);
+	  editor->append(temp);
+
           editor->update();
           editor->repaint();
 	
@@ -323,37 +311,22 @@ void KMComposeView::forwardMessage()
 
 void KMComposeView::replyAll()
 {
-          Message *msg = new Message();
-          char subject[512];
-          char from[256];
-          char date[256];
-	  char cc[512];
+          KMMessage *msg = new KMMessage();
           QString temp;
-          ulong length;
+          long length;
           int lines;
-          printf("before getFrom\n");
-          currentMessage->getReplyTo(from);
-	  currentMessage->getCc(cc);
-          currentMessage->getSubject(subject);
-          currentMessage->getDate(date);
-          printf("after getS\n");
-          temp.sprintf("Re: %s",subject);
-          toLEdit->setText(from);
-	  ccLEdit->setText(cc);
+          temp.sprintf("Re: %s",currentMessage->subject());
+          toLEdit->setText(currentMessage->from());
+	  ccLEdit->setText(currentMessage->cc());
           subjLEdit->setText(temp);
-          if(!currentMessage->numAttch())
-		  {temp.sprintf("\nOn %s %s wrote:\n",from ,date);
-                  editor->append(temp);
-                  temp = currentMessage->getText(&length);
-                  editor->append(temp);
-                  }
-	  else
-		{temp.sprintf("\nOn %s %s wrote:\n",from ,date);
-                 editor->append(temp);
-		temp = currentMessage->getText(&length);
-		temp.truncate(length);
-		editor->append(temp);
-		}
+
+	  temp.sprintf("\nOn %s %s wrote:\n", currentMessage->dateStr(), 
+		       currentMessage->from());
+	  editor->append(temp);
+
+	  temp = currentMessage->body(&length);
+          if (currentMessage->numBodyParts() > 1) temp.truncate(length);
+	  editor->append(temp);
 
           lines = editor->numLines();
           printf("We are here\n");
@@ -370,36 +343,23 @@ void KMComposeView::replyAll()
 
 void KMComposeView::replyMessage()
 {
-	  Message *msg = new Message();
-          char subject[512];
-          char from[256];
-	  char date[256];
+	  KMMessage *msg = new KMMessage();
           QString temp;
-          ulong length;
+          long length;
           int lines;
-          printf("before getFrom\n");
-          currentMessage->getReplyTo(from);
-          currentMessage->getSubject(subject);
-	  currentMessage->getDate(date);
-          printf("after getS\n");
-          temp.sprintf("Re: %s",subject);
-          toLEdit->setText(from);
-          subjLEdit->setText(temp);
-	  if(!currentMessage->numAttch())
-	          {temp.sprintf("\nOn %s %s wrote:\n",date ,from);
-		  editor->append(temp);
-		  temp =  currentMessage->getText(&length);
-        	  editor->append(temp);
-		  }
-	  else 
-		{temp.sprintf("\nOn %s %s wrote:\n",from ,date);
-                editor->append(temp);
-		temp = currentMessage->getText(&length);
-		temp.truncate(length);
-		editor->append(temp);
-		}
 
-		  
+          temp.sprintf("Re: %s",currentMessage->subject());
+          toLEdit->setText(currentMessage->from());
+          subjLEdit->setText(temp);
+
+	  temp.sprintf("\nOn %s %s wrote:\n", currentMessage->dateStr(), 
+		       currentMessage->from());
+	  editor->append(temp);
+
+	  temp = currentMessage->body(&length);
+          if (currentMessage->numBodyParts() > 1) temp.truncate(length);
+	  editor->append(temp);
+
           lines = editor->numLines();
           printf("We are here\n");
           for(int x=2;x < lines;x++)
@@ -615,7 +575,7 @@ void KMComposeWin::cancelSettings()
 
 */
 
-KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress, Message
+KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress, KMMessage
 *message, int action) : KTopLevelWidget(name)
 {
   setCaption("KMail Composer");
@@ -635,6 +595,13 @@ KMComposeWin::KMComposeWin(QWidget *, const char *name, QString emailAddress, Me
 	
   resize(480, 510);
 }
+
+void KMComposeWin::show()
+{
+  KTopLevelWidget::show();
+  resize(size());
+}
+
 
 void KMComposeWin::parseConfiguration()
 {

@@ -1,239 +1,30 @@
+// kmmainwin.cpp
+
 #include <qstring.h>
 #include <qpixmap.h>
 #include <qdir.h>
 #include <qfile.h>
 #include <qtstream.h>
-#include <kapp.h>
 #include <kmsgbox.h>
+#include <Kconfig.h>
+#include <kapp.h>
+
 #include "util.h"
 #include "kmcomposewin.h"
 #include "kmsettings.h"
 #include "kmfolderdia.h"
 #include "kmaccount.h"
-#include "kmmainwin.moc"
-#include "mclass.h"
+#include "kmacctmgr.h"
 #include "kbusyptr.h"
+#include "kmfolder.h"
+#include "kmmessage.h"
+#include "kmmainview.h"
 
-KBusyPtr* kbp;
-
-KMMainView::KMMainView(QWidget *parent, const char *name) : QWidget(parent,name)
-{
-        KConfig *config = new KConfig();
-        config = KApplication::getKApplication()->getConfig();
-        config->setGroup("Settings");
-        QString o;
-        o = config->readEntry("Reader");
-        if( !o.isEmpty() && o.find("separated",0,false) ==0)
-                initSeparated();
-        else
-                initIntegrated();
-
-        currentFolder = new Folder();
+#include "kmmainwin.moc"
 
 
-}
-
-
-void KMMainView::initSeparated()
-{
-        printf("initSeparated()\n");
-        vertPanner=new KPanner(this, NULL,KPanner::O_VERTICAL,30);
-        connect(vertPanner, SIGNAL(positionChanged()),this,SLOT(pannerHasChanged()));
-        folderTree = new KMFolderTree(vertPanner->child0());
-	connect(folderTree,SIGNAL(folderSelected(QDir*)),this,SLOT(folderSelected(QDir*)));
-        headers = new KMHeaders(vertPanner->child1());
-	connect(headers,SIGNAL(messageSelected(Message*)),this,SLOT(messageSelected(Message *)));
-        horzPanner = NULL;
-        printf("Leaving initSeparated()\n");
-        Integrated = 0;
-
-}
-
-
-void KMMainView::initIntegrated()
-{
-        printf("Entering initIntegrated()\n");
-        horzPanner=new KPanner(this, NULL,KPanner::O_HORIZONTAL,40);
-        connect(horzPanner, SIGNAL(positionChanged()),this,SLOT(pannerHasChanged()));
-        vertPanner=new KPanner(horzPanner->child0(), NULL,KPanner::O_VERTICAL,30);
-        connect(vertPanner, SIGNAL(positionChanged()),this,SLOT(pannerHasChanged()));
-        folderTree = new KMFolderTree(vertPanner->child0());
-        connect(folderTree,SIGNAL(folderSelected(QDir *)),this,SLOT(folderSelected(QDir *)));
-        headers = new KMHeaders(vertPanner->child1());
-	connect(headers,SIGNAL(messageSelected(Message*)),this,SLOT(messageSelected(Message*)));
-        messageView = new KMReaderView(horzPanner->child1());
-        printf("Leaving initIntegrated()\n");
-        Integrated =1;
-
-}
-
-void KMMainView::doAddFolder() {
-	KMFolderDialog *d=new KMFolderDialog(this);
-	d->setCaption("Create Folder");
-	if (d->exec()) {
-		QDir dir;
-		folderTree->cdFolder(&dir);
-		dir.mkdir(d->nameEdit->text());
-		folderTree->getList();
-	}
-	delete d;
-}
-
-void KMMainView::doCheckMail() {
-	unsigned int i,j;
-	QDir dir;
-	QFile *f;
-	QTextStream *g;
-	QString s;
-	KMAccount *a;
-	KMAccountMan *am;
-	Message *m;
-	int delmsgs;
-	Folder download,upload;
-	char buf[80];
-
-	am=new KMAccountMan();
-
-	for (i=1;i<folderTree->count();i++) {
-		folderTree->cdFolder(&dir,i);
-		if (!dir.exists("accounts")) continue;
-		f=new QFile(dir.absFilePath("accounts"));
-		if (!f->open(IO_ReadWrite)) { delete f; continue; }
-		g=new QTextStream(f);
-
-		while (!g->eof()) {
-
-			s=g->readLine();
-			strcpy(buf,s);
-			printf("account:\t%s\n",buf);
-
-			if ((a=am->findAccount(s))==NULL) continue;
-			if (a->config->readEntry("access method")=="maintain remotely") continue;
-
-			delmsgs=a->config->readEntry("access method")=="move messages";
-
-			a->getLocation(&s);
-			strcpy(buf,s);
-			printf("location:\t%s\n",buf);
-			download.open(s);
-			if (!dir.exists("contents"))
-			  createFolder((const char *)(QString(dir.path())+QString("/contents")));
-			upload.open(QString(dir.path())+QString("/contents"));
-
-			for (j=1;j<=download.numMsg();j++) {
-				m=download.getMsg(j);
-				upload.putMsg(m);
-				delete m;
-			}
-
-			download.close();
-			upload.close();
-		}
-		delete g;
-		delete f;
-	}
-	delete am;
-}
-
-void KMMainView::doCompose() {
-	KMComposeWin *d;
-	d = new KMComposeWin;
-	d->show();
-	d->resize(d->size());
-}
-
-void KMMainView::doModifyFolder() {
-	if ((folderTree->currentItem())<1) return; // make sure something is selected and it's not "/"
-
-	KMFolderDialog *d=new KMFolderDialog(this);
-	d->setCaption("Modify Folder");
-	d->nameEdit->setText(folderTree->getCurrentItem()->getText());
-	if (d->exec()) {
-		QDir dir;
-		folderTree->cdFolder(&dir);
-		dir.cdUp();
-		dir.rename(folderTree->getCurrentItem()->getText(),d->nameEdit->text());
-		folderTree->getList();
-	}
-	delete d;
-}
-
-void KMMainView::doRemoveFolder() {
-	if ((folderTree->currentItem())<1) return;
-
-	QString s;
-	QDir dir;
-	s.sprintf("Are you sure you want to remove the folder \"%s\"\n and all of its child folders?",
-	 folderTree->getCurrentItem()->getText());
-	if ((KMsgBox::yesNo(this,"Confirmation",s))==1) {
-		headers->clear();
-		if ( horzPanner) messageView->clearCanvas();
-		folderTree->cdFolder(&dir);
-		removeDirectory(dir.path());
-		folderTree->getList();
-	}
-}
-
-void KMMainView::folderSelected(QDir *d) {
-	QString s="";
-	s.append(d->path());
-	s.append("/contents");
-	if ((d->exists(s))==FALSE) {
-		headers->clear();
-		return;
-	}
-
-	Folder *f=new Folder();
-	f->open(s);
-	currentFolder = f;
-	headers->setFolder(f);
-	if (horzPanner) messageView->clearCanvas();
-}
-
-void KMMainView::doDeleteMessage() {
-	headers->toggleDeleteMsg();
-}
-
-void KMMainView::doForwardMessage() {
-	headers->forwardMsg();
-}
-
-void KMMainView::doReplyMessage() {
-	headers->replyToMsg();
-}
-
-void KMMainView::messageSelected(Message *m) {
-	if(horzPanner)
-		messageView->parseMessage(m);
-	else
-		{KMReaderWin *w = new KMReaderWin(0,0,headers->currentItem()+1,currentFolder);
-		w->show();
-		w->resize(w->size());	
-		}
-}
-
-void KMMainView::pannerHasChanged() {
-	resizeEvent(NULL);
-}
-
-void KMMainView::resizeEvent(QResizeEvent *e) {
-	QWidget::resizeEvent(e);
-	if(horzPanner)
-		{horzPanner->setGeometry(0, 0, width(), height());
-		vertPanner->resize(horzPanner->child0()->width(),horzPanner->child0()->height());
-		folderTree->resize(vertPanner->child0()->width(),vertPanner->child0()->height());
-		headers->resize(vertPanner->child1()->width(),vertPanner->child1()->height());
-		messageView->resize(horzPanner->child1()->width(), horzPanner->child1()->height());
-		}
-	else	
-	   {vertPanner->resize(width(), height());
-	   folderTree->resize(vertPanner->child0()->width(),vertPanner->child0()->height());
-	   headers->resize(vertPanner->child1()->width(), vertPanner->child1()->height());
-	  }
-
-}
-
-KMMainWin::KMMainWin(QWidget *, char *name) : KTopLevelWidget(name)
+KMMainWin::KMMainWin(QWidget *, char *name) :
+        KMMainWinInherited(name)
 {
 	mainView = new KMMainView(this);
 
@@ -324,48 +115,48 @@ void KMMainWin::setupToolBar()
 	QPixmap pixmap;
 
 	pixmap.load(pixdir+"kmnew.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), mainView,
 			    SLOT(doCompose()), TRUE, "compose message");
 
 	toolBar->insertSeparator();
 
 	pixmap.load(pixdir+"kmcheckmail.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), mainView,
 			    SLOT(doCheckMail()), TRUE, "check for new mail");
 
 	toolBar->insertSeparator();
 
 	pixmap.load(pixdir+"kmreply.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), mainView,
 			    SLOT(doReplyMessage()), TRUE, "reply to message");
 
 	pixmap.load(pixdir+"kmforward.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), mainView,
 			    SLOT(doForwardMessage()), TRUE, "forward message");
 
 	pixmap.load(pixdir+"kmdel.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), mainView,
 			    SLOT(doDeleteMessage()), TRUE, "delete message");
 
 	pixmap.load(pixdir+"kmsave.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), this,
 			    SLOT(doUnimplemented()), TRUE, "save message to file");
 
 	pixmap.load(pixdir+"kmprint.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), this,
 			    SLOT(doUnimplemented()), TRUE, "print message");
 
 	toolBar->insertSeparator();
 
 	pixmap.load(pixdir+"help.xpm");
-	toolBar->insertItem(pixmap, 0,
+	toolBar->insertButton(pixmap, 0,
 			    SIGNAL(clicked()), this,
 			    SLOT(doHelp()), TRUE, "Help");
 
@@ -418,9 +209,9 @@ void KMMainWin::doSettings()
 
 void KMMainWin::doUnimplemented()
 {
-	KMsgBox::message(this,"Ouch",
+	KMsgBox::message(this,"Oops",
 	 "Not yet implemented!\n"
-	 "We are sorry for the inconvenience :)",1);
+	 "We are sorry for the inconvenience.",1);
 }
 
 void KMMainWin::closeEvent(QCloseEvent *e)
@@ -437,18 +228,8 @@ void KMMainWin::closeEvent(QCloseEvent *e)
 	if (!(--windowCount)) qApp->quit();
 }
 
-main(int argc, char *argv[])
+void KMMainWin::show(void)
 {
-	KApplication *a;
-	KMMainWin *k;
-
-	initCC();
-	a = new KApplication(argc, argv, "kmail");
-	k = new KMMainWin();
-	kbp = new KBusyPtr(a);
-	k->show();
-	k->resize(k->size()); // necessary despite resize in constructor
-	a->exec();
-	delete a;
+	KMMainWinInherited::show();
+	resize(size());
 }
-

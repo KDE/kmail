@@ -99,7 +99,8 @@ void KTabListBoxColumn :: paintCell (QPainter* paint, int row,
 				     const QString& string, bool marked)
 {
   const QFontMetrics* fm = &paint->fontMetrics();
-  QPixmap* pix;
+  QPixmap* pix = NULL;
+  int beg, end, x;
 
   // p->fillRect (0, 0, cellWidth(col), cellHeight(row), bg);
   if (marked)
@@ -112,8 +113,6 @@ void KTabListBoxColumn :: paintCell (QPainter* paint, int row,
   {
   case KTabListBox::PixmapColumn:
     if (string) pix = parent->dict().find(string);
-    else pix = NULL;
-
     if (pix)
     {
       paint->drawPixmap (0, 0, *pix);
@@ -124,6 +123,35 @@ void KTabListBoxColumn :: paintCell (QPainter* paint, int row,
   case KTabListBox::TextColumn:
     paint->drawText (1, fm->ascent() + (fm->leading()), 
 		     (const char*)string); 
+    break;
+
+  case KTabListBox::MixedColumn:
+    QString pixName;
+    for (x=0, beg=0; string[beg] == '\t'; x+=parent->tabPixels, beg++)
+      ;
+    end = beg-1;
+
+    while (string[beg] == '{')
+    {
+      end = string.find('}', beg+1);
+      if (end >= 0)
+      {
+	pixName = string.mid(beg+1, end-beg-1);
+	pix = parent->dict().find(pixName);
+	if (!pix)
+	{
+	  warning("KTabListBox: no pixmap with name '"+pixName+
+		  "' registered. This is a program bug.\n");
+	} 
+	paint->drawPixmap (x, 0, *pix);
+	x += pix->width()+1;
+	beg = end+1;
+      }
+      else break;
+    }
+
+    paint->drawText (x+1, fm->ascent() + (fm->leading()), 
+		     (const char*)string.mid(beg+1, string.length()-beg+1)); 
     break;
   }
 
@@ -164,11 +192,12 @@ KTabListBox :: KTabListBox (QWidget *parent, const char *name, int columns,
   f += "/lib/pics/khtmlw_dnd.xpm";
   dndDefaultPixmap.load(f.data());
 
-  maxItems = 0;
-  current  = -1;
-  colList  = NULL;
-  itemList = NULL;
-  sepChar  = '\t';
+  tabPixels = 10;
+  maxItems  = 0;
+  current   = -1;
+  colList   = NULL;
+  itemList  = NULL;
+  sepChar   = '\n';
   labelHeight = fm->height() + 4;
   columnPadding = fm->height() / 2;
   highlightColor = g.mid();
@@ -193,6 +222,13 @@ KTabListBox :: ~KTabListBox ()
 void KTabListBox :: setNumRows (int aRows)
 {
   lbox.setNumRows(aRows);
+}
+
+
+//-----------------------------------------------------------------------------
+void KTabListBox :: setTabWidth (int aTabWidth)
+{
+  tabPixels = aTabWidth;
 }
 
 
@@ -518,15 +554,16 @@ bool KTabListBox :: startDrag (int aCol, int aRow, const QPoint& p)
 
 
 //-----------------------------------------------------------------------------
-bool KTabListBox :: prepareForDrag (int aCol, int aRow, char** data, 
-				    int* size, int* type)
+bool KTabListBox :: prepareForDrag (int /*aCol*/, int /*aRow*/, 
+				    char** /*data*/, int* /*size*/,
+				    int* /*type*/)
 {
   return FALSE;
 }
 
 
 //-----------------------------------------------------------------------------
-void KTabListBox :: horSbValue (int val)
+void KTabListBox :: horSbValue (int /*val*/)
 {
   update();
 }

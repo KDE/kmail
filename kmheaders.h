@@ -4,17 +4,17 @@
 #include <qwidget.h>
 #include <qstrlist.h>
 #include "ktablistbox.h"
-#include "mclass.h"
 
-class Folder;
+class KMFolder;
+class KMMessage;
 
 class KMHeaders : public KTabListBox {
   Q_OBJECT
 public:
   KMHeaders(QWidget *parent=0, const char *name=0);
   
-  virtual void setFolder(Folder *);
-  Folder* currentFolder(void) { return folder; }
+  virtual void setFolder(KMFolder *);
+  KMFolder* currentFolder(void) { return folder; }
 
   virtual void changeItem (char c, int itemIndex, int column);
 	// Change part of the contents of a line
@@ -29,12 +29,12 @@ public:
   virtual void forwardMsg(int msgId=-1);
   virtual void replyToMsg(int msgId=-1);
   virtual void replyAllToMsg(int msgId=-1);
-  virtual void moveMsgToFolder(Folder* destination, int msgId=-1);
+  virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
   virtual void toggleDeleteMsg(int msgId=-1);
 	// Delete/undelete message(s) depending on the flag of
 	// the first selected message.
 
-  Message* getMsg (int msgId=-2);
+  KMMessage* getMsg (int msgId=-2);
 	// Returns message with given id or current message if no
 	// id is given. First call with msgId==-1 returns first
 	// selected message, subsequent calls with no argument
@@ -44,7 +44,7 @@ public:
 	// Returns index of message returned by last getMsg() call
 
 signals:
-  virtual void messageSelected(Message *);
+  virtual void messageSelected(KMMessage *);
 
 
 protected slots:
@@ -57,7 +57,7 @@ protected:
 
 private:
   virtual void updateMessageList(void);
-  Folder *folder;
+  KMFolder *folder;
   int getMsgIndex;
   bool getMsgMulti;
 };

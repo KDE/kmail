@@ -2,21 +2,28 @@
 #define __KMFOLDERTREE
 
 #include <qwidget.h>
-#include <qdir.h>
-#include <ktreelist.h>
+#include "ktablistbox.h"
+#include "kmfolder.h"
 
-class KMFolderTree : public KTreeList {
-		Q_OBJECT
-	public:
-		KMFolderTree(QWidget *parent=0,const char *name=0);
-		void cdFolder(QDir *dir,int index=-1);	// cd's "dir" to the directory of folder "index"
-		void getList();				// get/refresh the folder tree
-	private:
-		void getListRecur(QDir *,KPath *);
-	signals:
-		void folderSelected(QDir *);		// path to folder
-	private slots:
-		void doFolderSelected(int);
+#define KMFolderTreeInherited KTabListBox
+
+class KMFolderTree : public KTabListBox
+{
+  Q_OBJECT
+public:
+  KMFolderTree(QWidget *parent=0, const char *name=0);
+
+  // get/refresh the folder tree
+  virtual void reload(void);
+
+signals:
+  void folderSelected(KMFolder*);
+
+private slots:
+ void doFolderSelected(int,int);
+
+protected:
+  KMFolderNodeList mList;
 };
 
 #endif

@@ -10,7 +10,8 @@
 #include <qcombo.h>
 #include <qpushbt.h>
 #include <kapp.h>
-#include "kmaccount.h"
+
+class KMAccount;
 
 class KMAccountSettings : public QDialog {
 		Q_OBJECT
@@ -44,7 +45,6 @@ class KMSettings : public QTabDialog {
 		QListBox *accountList;
 		QPushButton *addButton,*modifyButton,*removeButton;
 		KConfig *config;
-		KMAccountMan *accountMan;
 	private slots:
 		void accountSelected(int);
 		void addAccount();

@@ -5,11 +5,23 @@
 #include <qtstream.h>
 #include <kmsgbox.h>
 #include "kmmainwin.h"
+#include "kmglobal.h"
+#include "kmaccount.h"
+#include "kmacctmgr.h"
+#include "kmacctfolder.h"
+
+#include <assert.h>
+
 #include "kmfolderdia.moc"
 
-KMFolderDialog::KMFolderDialog(QWidget *parent,const char *name) : QDialog(parent,name,TRUE)
+KMFolderDialog::KMFolderDialog(KMAcctFolder* aFolder, QWidget *parent,
+			       const char *name) :
+  QDialog(parent,name,TRUE)
 {
-	accountMan=new KMAccountMan();
+	KMAccount* act;
+
+	assert(aFolder != NULL);
+	folder = aFolder;
 
 	QLabel *label;
 	label = new QLabel(this);
@@ -63,47 +75,30 @@ KMFolderDialog::KMFolderDialog(QWidget *parent,const char *name) : QDialog(paren
 
 	resize(430,340);
 
-// this code looks really ugly, but all it does is
-// grab the list of accounts for the folder and insert all
-// account names into either the assocList or accountList
-
-	QDir dir;
-	QFile *f;
-	QTextStream *g;
-	QString s;
-	QStrList l;
-	((KMMainView *)parentWidget())->folderTree->cdFolder(&dir);
-	if (dir.exists("accounts")) {
-		f=new QFile(dir.absFilePath("accounts"));
-		f->open(IO_ReadWrite);
-		g=new QTextStream(f);
-		while (!g->eof()) {
-			s=g->readLine();
-			if (accountMan->findAccount(s)!=NULL) {
-				assocList->inSort(s);
-				l.append(s);
-			}
-		}
-		delete g;
-		delete f;
+	// grab the list of accounts associated with the folder
+	for (act=folder->account(); act; act=folder->nextAccount())
+	{
+		assocList->inSort(act->name());
 	}
 
-	for (unsigned int i=0;i<accountMan->count();i++) {
-		s=accountMan->at(i)->name;
-		if (l.find(s)==-1)
-			accountList->inSort(s);
+	// insert list of available accounts
+	for (act=acctMgr->first(); act; act=acctMgr->next())
+	{
+		accountList->inSort(act->name());
 	}
 }
 
 KMFolderDialog::~KMFolderDialog() {
-	delete accountMan;
+	delete acctMgr;
 }
 
 void KMFolderDialog::doAccept() {
+
+#ifdef BROKEN
 	// test if account selection is correct
 	unsigned int i,a=0,b=0;
 	for (i=0;i<assocList->count();i++) {
-		if (accountMan->findAccount(QString(assocList->text(i)))->config->readEntry("access method")=="maintain remotely")
+		if (acctMgr->find(QString(assocList->text(i)))->config->readEntry("access method")=="maintain remotely")
 		 a++; else b++;
 	}
 	if (a && b)
@@ -112,6 +107,8 @@ void KMFolderDialog::doAccept() {
 	    if (a>1)
 	      KMsgBox::message(this,"Error",
 	       "You may not select more than one remotely maintained account.",1); else
+#endif //BROKEN
+
 		accept();
 }
 
@@ -140,7 +137,9 @@ void KMFolderDialog::doAssocSelected(int) {
 	doRemove();
 }
 
-void KMFolderDialog::doRemove() {
+//-----------------------------------------------------------------------------
+void KMFolderDialog::doRemove()
+{
 	int i;
 	QString s;
 	s=assocList->text(i=assocList->currentItem());
@@ -149,23 +148,22 @@ void KMFolderDialog::doRemove() {
 	accountList->inSort(s);
 }
 
-void KMFolderDialog::accept() {
-	QDir dir;
-	QFile *f;
-	QTextStream *s;
-	((KMMainView *)parentWidget())->folderTree->cdFolder(&dir);
-	dir.remove("accounts");
-	if (assocList->count()) {
-		f=new QFile(dir.absFilePath("accounts"));
-		f->open(IO_ReadWrite);
-		s=new QTextStream(f);
-		for (unsigned int i=0;i<assocList->count();i++) {
-			(*s)<<assocList->text(i);
-			(*s)<<"\n";
-		}
-		delete s;
-		delete f;
+//-----------------------------------------------------------------------------
+void KMFolderDialog::accept()
+{
+	QString acctName;
+	unsigned int i;
+	KMAccount* act;
+
+	folder->clearAccountList();
+
+	for (i=0; i<assocList->count(); i++)
+	{
+		acctName = assocList->text(i);
+		if (!(act = acctMgr->find(acctName))) continue;
+		folder->addAccount(act);
 	}
+
 	QDialog::accept();
 }
 

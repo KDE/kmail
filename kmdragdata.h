@@ -6,23 +6,23 @@
 
 #include <qlist.h>
 
-class Folder;
+class KMFolder;
 
-class KmDragData
+class KMDragData
 {
 public:
-  init (Folder* fld, int fromId, int toId);
+  void init (KMFolder* fld, int fromId, int toId);
 
-  Folder* folder(void) { return f; }
+  KMFolder* folder(void) { return f; }
   int from(void) { return fromId; }
   int to(void) { return toId; }
 
 protected:
-  Folder* f;
+  KMFolder* f;
   int fromId, toId;
 };
 
-inline KmDragData::init(Folder* fld, int from, int to)
+inline void KMDragData::init(KMFolder* fld, int from, int to)
 {
   f = fld;
   fromId = from;

@@ -5,19 +5,26 @@
 #include <qpushbt.h>
 #include <qlistbox.h>
 #include <qdialog.h>
-#include "kmaccount.h"
+
+class KMAccount;
+class KMAcctMgr;
+class KMAcctFolder;
 
 class KMFolderDialog : public QDialog
 {
 	Q_OBJECT
 public:
-	KMFolderDialog(QWidget *parent=0,const char *name=0);
+	KMFolderDialog(KMAcctFolder* folder, QWidget *parent=0, 
+		       const char *name=0);
 	~KMFolderDialog();
 
 	QLineEdit *nameEdit;
 	QPushButton *addButton,*removeButton;
 	QListBox *assocList,*accountList;
-	KMAccountMan *accountMan;
+	KMAcctMgr *acctMgr;
+protected:
+        KMAcctFolder* folder;
+
 private slots:
 	void doAccept();
 	void doAdd();
