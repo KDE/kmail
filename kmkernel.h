@@ -252,6 +252,7 @@ protected slots:
   void slotResult(KIO::Job*);
   void cleanupLoop();
   void cleanupProgress();
+  void slotFolderRemoved(KMFolder*);
 
 signals:
   void configChanged();

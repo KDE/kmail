@@ -307,7 +307,10 @@ bool KMFilterActionWithFolder::folderRemoved( KMFolder* aFolder, KMFolder* aNewF
 {
   if ( aFolder == mFolder ) {
     mFolder = aNewFolder;
-    mFolderName = QString::null;
+    if ( aNewFolder )
+      mFolderName = QString::null;
+    else
+      mFolderName = i18n( "<select a folder>" );
     return TRUE;
   } else
     return FALSE;

@@ -913,6 +913,8 @@ void KMKernel::init()
   the_weaverLogger->attach (the_weaver);
 #endif
 
+  connect( the_folderMgr, SIGNAL( folderRemoved(KMFolder*) ), 
+           this, SLOT( slotFolderRemoved(KMFolder*) ) );
 }
 
 void KMKernel::cleanupImapFolders()
@@ -1779,6 +1781,11 @@ KMMainWidget *KMKernel::getKMMainWidget()
   }
   delete l;
   return 0;
+}
+
+void KMKernel::slotFolderRemoved( KMFolder * aFolder )
+{
+  if ( the_filterMgr ) the_filterMgr->folderRemoved( aFolder, 0 );
 }
 
 #include "kmkernel.moc"

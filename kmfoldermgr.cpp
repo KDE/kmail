@@ -357,7 +357,6 @@ void KMFolderMgr::removeFolderAux(KMFolder* aFolder, bool success)
     contentsChanged();
     mRemoveOrig = 0;
   }
-  if (kmkernel->filterMgr()) kmkernel->filterMgr()->folderRemoved(aFolder,0);
 }
 
 void KMFolderMgr::removeDirAux(KMFolderDir* aFolderDir)
