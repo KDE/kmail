@@ -621,10 +621,8 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
   if ( it == mAccount->jobsEnd() ) return;
   if (job->error())
   {
-    mAccount->slotSlaveError( mAccount->slave(), job->error(),
-        job->errorText() );
+    mAccount->slotSlaveError(mAccount->slave(), job->error(), job->errorText());
     emit folderComplete(this, FALSE);
-    mAccount->removeJob(it);
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
     int a = cstr.find("X-uidValidity: ");
