@@ -1571,7 +1571,10 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
 
-  if (destFolder) destFolder->close();
+  if (destFolder) {
+      destFolder->sync();
+      destFolder->close();
+  }
   kernel->kbp()->idle();
 }
 
