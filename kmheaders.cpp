@@ -2444,11 +2444,6 @@ void KMHeaders::slotRMB()
 
   mOwner->updateMessageMenu();
 
-  QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-  KMMoveCommand::folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
-  QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-  KMCopyCommand::folderToPopupMenu( false, this, &mMenuToFolder, msgCopyMenu );
-
   bool out_folder = kmkernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )
      mOwner->editAction()->plug(menu);
@@ -2464,8 +2459,18 @@ void KMHeaders::slotRMB()
   }
   menu->insertSeparator();
 
+  QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
+  KMCopyCommand::folderToPopupMenu( false, this, &mMenuToFolder, msgCopyMenu );
   menu->insertItem(i18n("&Copy To"), msgCopyMenu);
-  menu->insertItem(i18n("&Move To"), msgMoveMenu);
+
+  if ( mFolder->isReadOnly() ) {
+    int id = menu->insertItem( i18n("&Move To") );
+    menu->setItemEnabled( id, false );
+  } else {
+    QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
+    KMMoveCommand::folderToPopupMenu( true, this, &mMenuToFolder, msgMoveMenu );
+    menu->insertItem(i18n("&Move To"), msgMoveMenu);
+  }
 
   if ( !out_folder ) {
     mOwner->statusMenu()->plug( menu ); // Mark Message menu

@@ -3025,10 +3025,10 @@ void KMMainWidget::updateMessageActions()
       }
     }
 
-    mMoveActionMenu->setEnabled( mass_actions );
+    mMoveActionMenu->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mCopyActionMenu->setEnabled( mass_actions );
-    mTrashAction->setEnabled( mass_actions );
-    mDeleteAction->setEnabled( mass_actions );
+    mTrashAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
+    mDeleteAction->setEnabled( mass_actions && !mFolder->isReadOnly() );
     mFindInMessageAction->setEnabled( mass_actions );
     mForwardAction->setEnabled( mass_actions );
     mForwardAttachedAction->setEnabled( mass_actions );

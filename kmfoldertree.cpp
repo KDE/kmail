@@ -905,7 +905,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
 
       itemId = folderMenu->insertItem(i18n("&Expire"), mMainWidget,
                                       SLOT(slotExpireFolder()));
-      folderMenu->setItemEnabled( itemId, fti->folder()->isAutoExpire() );
+      folderMenu->setItemEnabled( itemId, fti->folder()->isAutoExpire() && !fti->folder()->isReadOnly() );
 
 
       folderMenu->insertSeparator();
@@ -914,7 +914,7 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
         (kmkernel->folderIsTrash(fti->folder())) ? i18n("&Empty") :
                              i18n("&Move All Messages to Trash"), mMainWidget,
                              SLOT(slotEmptyFolder()));
-      folderMenu->setItemEnabled( itemId, fti->folder()->count() > 0 );
+      folderMenu->setItemEnabled( itemId, fti->folder()->count() > 0 && !fti->folder()->isReadOnly() );
     }
     if ( !fti->folder()->isSystemFolder() )
       folderMenu->insertItem(SmallIcon("editdelete"),
