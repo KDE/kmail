@@ -360,12 +360,13 @@ const QString KMAcctPop::encryptStr(const QString aStr)
 {
   unsigned int i, val;
   unsigned int len = aStr.length();
+  const char* asciiStr = aStr.ascii();
   QCString result;
   result.resize(len+1);
 
   for (i=0; i<len; i++)
   {
-    val = aStr[i] - ' ';
+    val = asciiStr[i] - ' ';
     val = (255-' ') - val;
     result[i] = (char)(val + ' ');
   }
