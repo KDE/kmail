@@ -584,11 +584,11 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
       if (mDecodeHTML && qstrnicmp(typeStr(),"text/html",9) == 0)
       {
         KHTMLPart htmlPart;
-        htmlPart.setOnlyLocalReferences(TRUE);
-        htmlPart.enableMetaRefresh(FALSE);
-        htmlPart.enablePlugins(false);
-        htmlPart.enableJScript(false);
-        htmlPart.enableJava(false);
+        htmlPart.setOnlyLocalReferences(true);
+        htmlPart.setMetaRefreshEnabled(false);
+        htmlPart.setPluginsEnabled(false);
+        htmlPart.setJScriptEnabled(false);
+        htmlPart.setJavaEnabled(false);
         htmlPart.begin();
         htmlPart.write(result);
         htmlPart.end();
