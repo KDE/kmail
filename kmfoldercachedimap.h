@@ -214,6 +214,9 @@ public:
   /// Reimplemented from FolderStorage
   void setContentsType( KMail::FolderContentsType type );
 
+  // Reimplemented so the mStatusChangedLocally bool can be set
+  virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle);
+
 protected slots:
   /**
    * Connected to ListJob::receivedFolders
@@ -373,6 +376,11 @@ private:
   bool mRecurse;
   bool mCreateInbox;
   bool mContentsTypeChanged;
+  /** Set to true by setStatus. Indicates that the client has changed
+      the status of at least one mail. The mail flags will therefore be
+      uploaded to the server, overwriting the server's notion of the status
+      of the mails in this folder. */
+  bool mStatusChangedLocally;
 };
 
 #endif /*kmfoldercachedimap_h*/
