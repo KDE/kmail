@@ -198,7 +198,7 @@ void AccountDialog::makePopAccountPage()
   topLayout->addMultiCellWidget( mPop.deleteMailCheck, 8, 8, 0, 1 );
 
   mPop.retriveAllCheck = 
-    new QCheckBox( i18n("Retrive all mail from server"), page );
+    new QCheckBox( i18n("Retrieve all mail from server"), page );
   topLayout->addMultiCellWidget( mPop.retriveAllCheck, 9, 9, 0, 1 );  
 
   mPop.excludeCheck = 
