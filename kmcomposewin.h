@@ -15,12 +15,13 @@
 #include <qpalette.h>
 #include <qfont.h>
 #include <keditcl.h>
+#include <ktmainwindow.h>
 
 #include "kmmsgpart.h"
 
 
 #include <qlineedit.h>
-#include "kmtopwidget.h"
+
 
 
 #ifndef KRN
@@ -48,6 +49,7 @@ class QCloseEvent;
 class KSpell;
 class KSpellConfig;
 class KMComposeWin;
+class KToggleAction;
 
 typedef QList<KMMessagePart> KMMsgPartList;
 
@@ -109,18 +111,18 @@ public:
   virtual ~KMLineEdit();
 
   /** Set cursor to end of line. */
-  virtual void cursorAtEnd();
+   void cursorAtEnd();
 
 signals:
   /** Emitted when Ctrl-. (period) is pressed. */
   void completion();
 
 public slots:
-  virtual void copy();
-  virtual void cut();
-  virtual void paste();
-  virtual void markAll();
-  virtual void slotCompletion();
+   void copy();
+   void cut();
+   void paste();
+   void markAll();
+   void slotCompletion();
 
 protected:
   virtual bool eventFilter(QObject*, QEvent*);
@@ -130,46 +132,42 @@ protected:
 
 
 //-----------------------------------------------------------------------------
-#define KMComposeWinInherited KMTopLevelWidget
-class KMComposeWin : public KMTopLevelWidget
+class KMComposeWin : public KTMainWindow
 {
   Q_OBJECT
 
 public:
   KMComposeWin(KMMessage* msg=NULL);
-  virtual ~KMComposeWin();
-
-  /** Read settings from app's config file. */
-  virtual void readConfig(void);
+  ~KMComposeWin();
 
   /** Write settings to app's config file. */
-  virtual void writeConfig(void);
+   void writeConfig(void);
 
   /** If necessary increases the word wrap of the editor so that it will
       not wrap the body string */
-  void verifyWordWrapLengthIsAdequate(const QString&);
+   void verifyWordWrapLengthIsAdequate(const QString&);
 
   /** Set the message the composer shall work with. This discards
     previous messages without calling applyChanges() on them before. */
-  virtual void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE);
+   void setMsg(KMMessage* newMsg, bool mayAutoSign=TRUE);
 
   /** Returns message of the composer. To apply the user changes to the
     message, call applyChanges() first. */
-  virtual KMMessage* msg(void) const { return mMsg; }
+   KMMessage* msg(void) const { return mMsg; }
 
   /** Applies the user changes to the message object of the composer
     and signs/encrypts the message if activated. Returns FALSE in
     case of an error (e.g. if PGP encryption fails). */
-  virtual bool applyChanges(void);
+   bool applyChanges(void);
 
   /** If this flag is set the message of the composer is deleted when
     the composer is closed and the message was not sent. Default: FALSE */
-  virtual void setAutoDelete(bool f);
+   inline void setAutoDelete(bool f) { mAutoDeleteMsg = f; }
 
 public slots:
+ //Actions:
   void slotPrint();
   void slotAttachFile();
-  void slotSend();
   void slotSendNow();
   void slotSendLater();
   void slotDropAction(QDropEvent *e);
@@ -178,24 +176,25 @@ public slots:
   void slotClose();
   void slotHelp();
 
-  /** editor functionality */
   void slotFind();
   void slotReplace();
-
-  /** Do cut/copy/paste on the active line-edit */
   void slotCut();
   void slotCopy();
   void slotPaste();
   void slotMarkAll();
+  void slotAddrBook(); // Open addressbook editor dialog.
+  void slotInsertFile(); // Insert a file to the end of the text in the editor.
 
-  /** Change window title to given string. */
-  void slotUpdWinTitle(const QString& );
+  void slotSpellcheck(); // Check spelling of text.
+  void slotSpellcheckConfig();
+  void slotEditToolbars();
+  void readConfig(void); // Read settings from app's config file.
+
+  
+  void slotUpdWinTitle(const QString& ); // Change window title to given string.
 
   /** Append signature file to the end of the text in the editor. */
   void slotAppendSignature();
-
-  /** Insert a file to the end of the text in the editor. */
-  void slotInsertFile();
 
   /** Insert sender's public key block in the editor. */
   void slotInsertMyPublicKey();
@@ -218,16 +217,6 @@ public slots:
   void slotAttachSave();
   void slotAttachProperties();
 
-  /** Message flags. */
-  void slotToggleConfirmDelivery();
-  void slotToggleConfirmRead();
-  void slotToggleUrgent();
-
-  /** Change visibility of a header field. */
-  void slotMenuViewActivated(int id);
-
-  /** Open addressbook editor dialog. */
-  void slotAddrBook();
 
   /** Select an email from the addressbook and add it to the line
     the pressed button belongs to. */
@@ -239,75 +228,76 @@ public slots:
 
   void slotCleanSpace();
 
-  /** Check spelling of text. */
-  void slotSpellcheck();
-  void slotSpellcheckConfig();
+  
 //  void slotSpellConfigure();
   void slotSpellcheckDone();
 
   /** Append current message to ~/dead.letter */
-  virtual void deadLetter(void);
+  void deadLetter(void);
 
   void updateCursorPosition();
 
   void slotConfigureCharsets();
   void slotSetCharsets(const char *message,const char *composer,
 		       bool ascii,bool quote,bool def);
-
+  void slotView();
+  
   /** Move focus to next/prev edit widget */
-  virtual void focusNextPrevEdit(const QLineEdit* current, bool next);
+  void focusNextPrevEdit(const QLineEdit* current, bool next);
 
 protected:
   /** Install grid management and header fields. If fields exist that
     should not be there they are removed. Those that are needed are
     created if necessary. */
-  virtual void rethinkFields(void);
+  void rethinkFields(bool fromslot=false);
 
   /** Show or hide header lines */
-  virtual void rethinkHeaderLine(int value, int mask, int& row,
+  void rethinkHeaderLine(int value, int mask, int& row,
 				 const QString labelStr, QLabel* lbl,
 				 QLineEdit* edt, QPushButton* btn=NULL);
+  
   /** Initialization methods */
-  virtual void setupMenuBar(void);
-  virtual void setupToolBar(void);
-  virtual void setupStatusBar(void);
-  virtual void setupEditor(void);
-
+  void setupActions();
+  void setupStatusBar();
+  void setupEditor();
+  
+  
   /** Header fields. */
-  virtual const QString subject(void) const { return mEdtSubject.text(); }
-  virtual const QString to(void) const { return mEdtTo.text(); }
-  virtual const QString cc(void) const { return mEdtCc.text(); }
-  virtual const QString bcc(void) const { return mEdtBcc.text(); }
-  virtual const QString from(void) const { return mEdtFrom.text(); }
-  virtual const QString replyTo(void) const { return mEdtReplyTo.text(); }
+   const QString subject(void) const { return mEdtSubject.text(); }
+   const QString to(void) const { return mEdtTo.text(); }
+   const QString cc(void) const { return mEdtCc.text(); }
+   const QString bcc(void) const { return mEdtBcc.text(); }
+   const QString from(void) const { return mEdtFrom.text(); }
+   const QString replyTo(void) const { return mEdtReplyTo.text(); }
 #ifdef KRN
-  virtual const QString newsgroups(void) const { return mEdtNewsgroups.text(); }
-  virtual const QString followupTo(void) const { return mEdtFollowupTo.text(); }
+   const QString newsgroups(void) const { return mEdtNewsgroups.text(); }
+   const QString followupTo(void) const { return mEdtFollowupTo.text(); }
 #endif
 
-  /** Ask for confirmation if the message was changed.
-    Save settings upon close. */
-  virtual void closeEvent(QCloseEvent*);
+  /** Ask for confirmation if the message was changed before close. */
+  virtual bool queryClose ();
+  /** prevent kmail from exiting when last window is deleted (kernel rules)*/
+  virtual bool queryExit ();
 
   /** Add an attachment to the list. */
-  virtual void addAttach(const QString url);
-  virtual void addAttach(const KMMessagePart* msgPart);
+   void addAttach(const QString url);
+   void addAttach(const KMMessagePart* msgPart);
 
   /** Remove an attachment from the list. */
-  virtual void removeAttach(const QString url);
-  virtual void removeAttach(int idx);
+   void removeAttach(const QString url);
+   void removeAttach(int idx);
 
   /** Returns a string suitable for the attachment listbox that describes
     the given message part. */
-  virtual const QString msgPartLbxString(const KMMessagePart* msgPart) const;
+   const QString msgPartLbxString(const KMMessagePart* msgPart) const;
 
   /** Open addressbook and append selected addresses to the given
     edit field. */
-  virtual void addrBookSelInto(KMLineEdit* destEdit);
+   void addrBookSelInto(KMLineEdit* destEdit);
 
 private:
   /** Get message including signing and encrypting it */
-  virtual const QString pgpProcessedMsg(void);
+   const QString pgpProcessedMsg(void);
 
 #if defined CHARSETS
   /** Converts message text for sending. */
@@ -334,14 +324,10 @@ protected:
   QLabel     mLblNewsgroups, mLblFollowupTo;
 #endif
 
-  QPopupMenu *mMnuView, *mMnuOptions;
   KMEdit* mEditor;
   QGridLayout* mGrid;
-  KDNDDropZone *mDropZone;
+  //KDNDDropZone *mDropZone;
   KMMessage *mMsg;
-  KToolBar *mToolBar;
-  KMenuBar *mMenuBar;
-  KStatusBar *mStatusBar;
   KTabListBox *mAtmListBox;
   KMMsgPartList mAtmList;
   bool mAutoSign, mAutoPgpSign, mShowToolBar, mAutoDeleteMsg;
@@ -362,6 +348,11 @@ protected:
   QList<QLineEdit> mEdtList;
   static QString mPathAttach;
   QPalette mPalette;
+
+  KToggleAction *signAction, *encryptAction, *confirmDeliveryAction;
+  KToggleAction *confirmReadAction, *urgentAction, *allFieldsAction, *fromAction;
+  KToggleAction *replyToAction, *toAction, *ccAction, *bccAction, *subjectAction;
+      
 
 #if defined CHARSETS
   int m7BitAscii;

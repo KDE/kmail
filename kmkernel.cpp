@@ -244,11 +244,11 @@ void KMKernel::init()
   //debug ("1");
   // Stefan: Yes, we really want this message handler. Without it,
   // kmail does not show vital warning() dialogs.
-  /* oldMsgHandler = */  //qInstallMsgHandler(KMKernel::kmailMsgHandler);
+  //qInstallMsgHandler(&kmailMsgHandler);
 
   QDir dir;
   QString d = locateLocal("data", "kmail/");
-  //debug ("2");
+
   the_identity = new KMIdentity;
 
   cfg->setGroup("General");
@@ -261,7 +261,7 @@ void KMKernel::init()
     foldersPath = QDir::homeDirPath() + QString("/Mail");
     transferMail();
   }
-  //debug ("3");
+
   the_folderMgr = new KMFolderMgr(foldersPath);
   the_undoStack = new KMUndoStack(20);
   the_acctMgr   = new KMAcctMgr(acctPath);
@@ -270,20 +270,14 @@ void KMKernel::init()
   the_addrBook  = new KMAddrBook;
 
   initFolders(cfg);
-  //debug ("4");
   the_acctMgr->readConfig();
-  //debug ("4.1");
   the_filterMgr->readConfig();
-  //debug ("4.2");
   the_addrBook->readConfig();
-  //debug ("4.3");
   if(the_addrBook->load() == IO_FatalError)
   {
       KMessageBox::sorry(0, i18n("The addressbook could not be loaded."));
   }
-  //debug ("4.4");
   KMMessage::readConfig();
-  //debug ("5");
   the_msgSender = new KMSender;
 
   

@@ -51,8 +51,11 @@ apps_DATA = KMail.desktop
 
 EXTRA_DIST = KMail.desktop
 
-KDE_ICON = kmail
+KDE_ICON = AUTO
+
+rcdir = $(kde_datadir)/kmail
+rc_DATA = kmcomposerui.rc
 
 messages:
-	$(XGETTEXT) $(kmail_SOURCES) -o $(podir)/kmail.pot
+	$(XGETTEXT) rc.cpp $(kmail_SOURCES) -o $(podir)/kmail.pot
 

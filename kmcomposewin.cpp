@@ -20,6 +20,10 @@
 #include "kmaddrbook.h"
 #include "kfontutils.h"
 
+#include <kaction.h>
+#include <kstdaction.h>
+#include <kedittoolbar.h>
+
 #ifndef KRN
 #include "kmmainwin.h"
 #include "kmsettings.h"
@@ -81,7 +85,6 @@ WindowList* windowList=new WindowList;
 /* end added for KRN */
 #else
 #include "kmglobal.h"
-#include "kmmainwin.h"
 #endif
 
 #include "kmcomposewin.moc"
@@ -106,7 +109,7 @@ WindowList* windowList=new WindowList;
 QString KMComposeWin::mPathAttach = QString::null;
 
 //-----------------------------------------------------------------------------
-KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
+KMComposeWin::KMComposeWin(KMMessage *aMsg) : KTMainWindow (),
   mMainWidget(this),
   mEdtFrom(this,&mMainWidget), mEdtReplyTo(this,&mMainWidget),
   mEdtTo(this,&mMainWidget),  mEdtCc(this,&mMainWidget),
@@ -122,7 +125,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   mLblNewsgroups(&mMainWidget),mLblFollowupTo(&mMainWidget)
 #endif
 {
-  setWFlags( WType_TopLevel | WStyle_Dialog );
+  //setWFlags( WType_TopLevel | WStyle_Dialog );
 
   mGrid = NULL;
   mAtmListBox = NULL;
@@ -133,9 +136,9 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 
   mSpellCheckInProgress=FALSE;
 
-  setCaption(i18n("KMail Composer"));
+  //setCaption(i18n("KMail Composer"));
   setMinimumSize(200,200);
-
+  
   mBtnTo.setFocusPolicy(QWidget::NoFocus);
   mBtnCc.setFocusPolicy(QWidget::NoFocus);
   mBtnBcc.setFocusPolicy(QWidget::NoFocus);
@@ -153,14 +156,14 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 	  SLOT(slotAttachPopupMenu(int,int)));
 
   readConfig();
-
   setupStatusBar();
   setupEditor();
-  setupMenuBar();
-  setupToolBar();
-
-  if(!mShowToolBar) enableToolBar(KToolBar::Hide);	
-
+  setupActions();
+  if(mShowToolBar)
+    toolBar()->show();
+  else
+    toolBar()->hide();
+  
   connect(&mEdtSubject,SIGNAL(textChanged(const QString&)),
 	  SLOT(slotUpdWinTitle(const QString&)));
   connect(&mBtnTo,SIGNAL(clicked()),SLOT(slotAddrBookTo()));
@@ -197,13 +200,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
 KMComposeWin::~KMComposeWin()
 {
   writeConfig();
-
   if (mAutoDeleteMsg && mMsg) delete mMsg;
-#if 0
-  delete mDropZone;
-#endif
-  delete mMenuBar;
-  delete mToolBar;
 }
 
 
@@ -376,30 +373,73 @@ void KMComposeWin::deadLetter(void)
 }
 
 
+
 //-----------------------------------------------------------------------------
-void KMComposeWin::setAutoDelete(bool f)
+void KMComposeWin::slotView(void)
 {
-  mAutoDeleteMsg = f;
+  int id;
+
+  //This sucks awfully, but no, I cannot get an activated(int id) from
+  // actionContainer()
+  if (!sender()->isA("KToggleAction"))
+    return;
+  KToggleAction *act = (KToggleAction *) sender();
+  
+  if (act == allFieldsAction)
+    id = 0;
+  else if (act == fromAction)
+    id = HDR_FROM;
+  else if (act == replyToAction)
+    id = HDR_REPLY_TO;
+  else if (act == toAction)
+    id = HDR_TO;
+  else if (act == ccAction)
+    id = HDR_CC;
+  else  if (act == bccAction)
+    id = HDR_BCC;
+  else if (act == subjectAction)
+    id = HDR_SUBJECT;
+#ifdef KRN
+   else if (act == newsgroupsAction)
+     id = HDR_NEWSGROUPS;
+   else if (act == followupToAction)
+     id = HDR_FOLLOWUP_TO;
+#endif
+   else
+   {
+     id = 0;
+     debug("Something is wrong (Oh, yeah?)");
+     return;
+   }
+
+  if (!act->isChecked())
+  {
+    // hide header
+    if (id > 0) mShowHeaders = mShowHeaders & ~id;
+    else mShowHeaders = abs(mShowHeaders);
+  }
+  else
+  {
+    // show header
+    if (id > 0) mShowHeaders |= id;
+    else mShowHeaders = -abs(mShowHeaders);
+  }
+  rethinkFields(true);
+
 }
 
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::rethinkFields(void)
+void KMComposeWin::rethinkFields(bool fromSlot)
 {
+
+  //This sucks even more but again no ids. sorry (sven)
   int mask, row, numRows;
   long showHeaders;
 
   if (mShowHeaders < 0)
-  {
     showHeaders = HDR_ALL;
-    mMnuView->setItemChecked(0, TRUE);
-  }
   else
-  {
     showHeaders = mShowHeaders;
-    mMnuView->setItemChecked(0, FALSE);
-  }
-
+  
   for (mask=1,mNumHeaders=0; mask<=showHeaders; mask<<=1)
     if ((showHeaders&mask) != 0) mNumHeaders++;
 
@@ -414,21 +454,29 @@ void KMComposeWin::rethinkFields(void)
 
   mEdtList.clear();
   row = 0;
+  if (!fromSlot) fromAction->setChecked(showHeaders&HDR_FROM);
   rethinkHeaderLine(showHeaders,HDR_FROM, row, i18n("&From:"),
 		    &mLblFrom, &mEdtFrom, &mBtnFrom);
+  if (!fromSlot) replyToAction->setChecked(showHeaders&HDR_REPLY_TO);
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
 		    &mLblReplyTo, &mEdtReplyTo, &mBtnReplyTo);
+  if (!fromSlot) toAction->setChecked(showHeaders&HDR_TO);
   rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("&To:"),
 		    &mLblTo, &mEdtTo, &mBtnTo);
+  if (!fromSlot) ccAction->setChecked(showHeaders&HDR_CC);
   rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&Cc:"),
 		    &mLblCc, &mEdtCc, &mBtnCc);
+  if (!fromSlot) bccAction->setChecked(showHeaders&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Bcc:"),
 		    &mLblBcc, &mEdtBcc, &mBtnBcc);
+  if (!fromSlot) subjectAction->setChecked(showHeaders&HDR_SUBJECT);
   rethinkHeaderLine(showHeaders,HDR_SUBJECT, row, i18n("&Subject:"),
 		    &mLblSubject, &mEdtSubject);
 #ifdef KRN
+  if (!fromSlot) newsgroupsAction->setChecked(showHeaders&HDR_NEWSGROUPS);
   rethinkHeaderLine(showHeaders,HDR_NEWSGROUPS, row, i18n("&Newsgroups:"),
 		    &mLblNewsgroups, &mEdtNewsgroups);
+  if (!fromSlot) followupToAction->setChecked(showHeaders&HDR_FOLLOWUP_TO);
   rethinkHeaderLine(showHeaders,HDR_FOLLOWUP_TO, row, i18n("&Followup-To:"),
 		    &mLblFollowupTo, &mEdtFollowupTo);
 #endif
@@ -443,6 +491,17 @@ void KMComposeWin::rethinkFields(void)
   repaint();
 
   mGrid->activate();
+
+  fromAction->setEnabled(!allFieldsAction->isChecked());
+  replyToAction->setEnabled(!allFieldsAction->isChecked());
+  toAction->setEnabled(!allFieldsAction->isChecked());
+  ccAction->setEnabled(!allFieldsAction->isChecked());
+  bccAction->setEnabled(!allFieldsAction->isChecked());
+  subjectAction->setEnabled(!allFieldsAction->isChecked());
+#ifdef KRN
+  newsgroupsAction->setEnabled(!allFieldsAction->isChecked());
+  followupToAction->setEnabled(!allFieldsAction->isChecked());
+#endif
 }
 
 
@@ -453,7 +512,7 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
 {
   if (aValue & aMask)
   {
-    mMnuView->setItemChecked(aMask, TRUE);
+    //mMnuView->setItemChecked(aMask, TRUE);
     aLbl->setText(aLabelStr);
     aLbl->adjustSize();
     aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
@@ -482,237 +541,174 @@ void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
   }
   else
   {
-    mMnuView->setItemChecked(aMask, FALSE);
     aLbl->hide();
     aEdt->hide();
     // aEdt->setFocusPolicy(QWidget::NoFocus);
     if (aBtn) aBtn->hide();
   }
-
-  mMnuView->setItemEnabled(aMask, (aValue!=HDR_ALL));
 }
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::setupMenuBar(void)
+void KMComposeWin::setupActions(void)
 {
-  QPopupMenu *menu;
-  mMenuBar = menuBar();// new KMenuBar(this);
+  if (kernel->msgSender()->sendImmediate()) //default == send now?
+  {
+    //default = send now, alternative = queue
+    (void) new KAction (i18n("&Send"), QIconSet(BarIcon("send")), CTRL+Key_Return,
+                        this, SLOT(slotSendNow()), actionCollection(),
+                        "send_default");
+    (void) new KAction (i18n("&Queue"), QIconSet(BarIcon("filemail")), 0,
+                        this, SLOT(slotSendLater()),
+                        actionCollection(), "send_alternative");
+  }
+  else //no, default = send later
+  {
+    //default = queue, alternative = send now
+    (void) new KAction (i18n("&Queue"), QIconSet(BarIcon("filemail")),
+                        CTRL+Key_Return,
+                        this, SLOT(slotSendLater()), actionCollection(),
+                        "send_default");
+    (void) new KAction (i18n("S&end now"), QIconSet(BarIcon("send")), 0,
+                        this, SLOT(slotSendNow()),
+                        actionCollection(), "send_alternative");
+  }
 
-
-  //---------- Menu: File
-  menu = new QPopupMenu();
-  menu->insertItem(i18n("&Send"),this, SLOT(slotSend()),
-		   CTRL+Key_Return);
-  if (kernel->msgSender()->sendImmediate())
-    menu->insertItem(i18n("S&end later"),this,SLOT(slotSendLater()));
-  else
-    menu->insertItem(i18n("S&end now"),this,SLOT(slotSendNow()));
-  menu->insertSeparator();
-  menu->insertItem(i18n("&Insert File..."), this,
-		    SLOT(slotInsertFile()));
-
-  menu->insertSeparator();
-  menu->insertItem(i18n("&Addressbook..."),this,
-		   SLOT(slotAddrBook()));
-  menu->insertItem(i18n("&Print..."),this,
-		   SLOT(slotPrint()), KStdAccel::key(KStdAccel::Print));
-  menu->insertSeparator();
-  menu->insertItem(i18n("&New Composer..."),this,
-           SLOT(slotNewComposer()), KStdAccel::key(KStdAccel::New));
+  (void) new KAction (i18n("&Insert File..."), QIconSet(BarIcon("fileopen")), 0,
+                      this,  SLOT(slotInsertFile()),
+                      actionCollection(), "insert_file");
+  (void) new KAction (i18n("&Addressbook..."), QIconSet(BarIcon("contents")),0,
+                      this, SLOT(slotAddrBook()),
+                      actionCollection(), "addresbook");
+  (void) new KAction (i18n("&New Composer..."), QIconSet(BarIcon("filenew")),
+                      KStdAccel::key(KStdAccel::New),
+                      this, SLOT(slotNewComposer()),
+                      actionCollection(), "new_composer");
 #ifndef KRN
-  menu->insertItem(i18n("New Mailreader"), this,
-		   SLOT(slotNewMailReader()));
+  (void) new KAction (i18n("Open Mailreader"), /*QIconSet(BarIcon("kmail")),*/
+                      0, this, SLOT(slotNewMailReader()),
+                      actionCollection(), "open_mailreader");
 #endif
-  menu->insertSeparator();
-  menu->insertItem(i18n("&Close"),this,
-		   SLOT(slotClose()), KStdAccel::key(KStdAccel::Close));
-  mMenuBar->insertItem(i18n("&File"),menu);
+  //KStdAction::save(this, SLOT(), actionCollection(), "save_message");
+  KStdAction::print (this, SLOT(slotPrint()), actionCollection());
+  KStdAction::close (this, SLOT(slotClose()), actionCollection());
 
+  KStdAction::undo (mEditor, SLOT(undo()), actionCollection());
+  KStdAction::redo (mEditor, SLOT(redo()), actionCollection());
+  KStdAction::cut (this, SLOT(slotCut()), actionCollection());
+  KStdAction::copy (this, SLOT(slotCopy()), actionCollection());
+  KStdAction::paste (this, SLOT(slotPaste()), actionCollection());
+  KStdAction::selectAll (this, SLOT(slotMarkAll()), actionCollection());
+  
+  KStdAction::find (this, SLOT(slotFind()), actionCollection());
+  KStdAction::replace (this, SLOT(slotReplace()), actionCollection());
+  KStdAction::spelling (this, SLOT(slotSpellcheck()), actionCollection(), "spellcheck");
 
-  //---------- Menu: Edit
-  menu = new QPopupMenu();
-#ifdef BROKEN
-  menu->insertItem(i18n("Undo"),this,
-		   SLOT(slotUndoEvent()), KStdAccel::key(KStdAccel::Undo));
-  menu->insertSeparator();
-#endif //BROKEN
-  menu->insertItem(i18n("Und&o"),mEditor,
-		   SLOT(undo()), KStdAccel::key(KStdAccel::Undo));
-  menu->insertItem(i18n("Re&do"),mEditor,
-				   SLOT(redo()), KStdAccel::key(KStdAccel::Redo));
-  menu->insertSeparator();
-  menu->insertItem(i18n("C&ut"), this, SLOT(slotCut()), KStdAccel::key(KStdAccel::Cut));
-  menu->insertItem(i18n("&Copy"), this, SLOT(slotCopy()), KStdAccel::key(KStdAccel::Copy));
-  menu->insertItem(i18n("&Paste"), this, SLOT(slotPaste()), KStdAccel::key(KStdAccel::Paste));
-  menu->insertItem(i18n("Select &All"),this,
-		   SLOT(slotMarkAll()));
-  menu->insertSeparator();
-  menu->insertItem(i18n("&Find..."), this,
-		   SLOT(slotFind()), KStdAccel::key(KStdAccel::Find));
-  menu->insertItem(i18n("&Replace..."), this,
-		   SLOT(slotReplace()), KStdAccel::key(KStdAccel::Replace));
-  menu->insertSeparator();
-  menu->insertItem(i18n("&Spellcheck..."), this,
-		   SLOT(slotSpellcheck()));
-  menu->insertItem(i18n("Cl&ean Spaces"), this,
-		   SLOT(slotCleanSpace()));
-  mMenuBar->insertItem(i18n("&Edit"),menu);
+  (void) new KAction (i18n("Cl&ean Spaces"), 0, this, SLOT(slotCleanSpace()),
+                      actionCollection(), "clean_spaces");
 
-  //---------- Menu: Options
-  menu = new QPopupMenu();
-  menu->setCheckable(TRUE);
+  //these are checkable!!!
+  urgentAction = new KToggleAction (i18n("&Urgent"), 0,
+                                    actionCollection(),
+                                    "urgent");
+  confirmDeliveryAction =  new KToggleAction (i18n("&Confirm delivery"), 0,
+                                              actionCollection(),
+                                              "confirm_delivery");
+  confirmReadAction = new KToggleAction (i18n("&Confirm read"), 0,
+                                         actionCollection(), "confirm_read");
+  (void) new KAction (i18n("&Spellchecker..."), 0, this, SLOT(slotSpellcheckConfig()),
+                      actionCollection(), "setup_spellchecker");
+#if defined CHARSETS
+  (void) new KAction (i18n("&Charsets..."), 0, this, SLOT(slotConfigureCharsets()),
+                      actionCollection(), "charsets");
+#endif
 
-  mMnuIdUrgent = menu->insertItem(i18n("&Urgent"), this,
-				  SLOT(slotToggleUrgent()));
-  mMnuIdConfDeliver=menu->insertItem(i18n("&Confirm delivery"), this,
-				     SLOT(slotToggleConfirmDelivery()));
-  mMnuIdConfRead = menu->insertItem(i18n("&Confirm read"), this,
-				    SLOT(slotToggleConfirmRead()));
-  menu->insertSeparator();
-  menu->insertItem(i18n("&Spellchecker..."), this,
-		   SLOT (slotSpellcheckConfig()));
-#if defined CHARSETS				
-  mMnuIdConfRead = menu->insertItem(i18n("&Charsets..."), this,
-				    SLOT(slotConfigureCharsets()));
-#endif				
-  mMenuBar->insertItem(i18n("&Options"),menu);
-  mMnuOptions = menu;
-
-  //---------- Menu: View
-  menu = new QPopupMenu();
-  mMnuView = menu;
-  menu->setCheckable(TRUE);
-  connect(menu, SIGNAL(activated(int)),
-	  this, SLOT(slotMenuViewActivated(int)));
-
-  menu->insertItem(i18n("&All Fields"), 0);
-  menu->insertSeparator();
-  menu->insertItem(i18n("&From"), HDR_FROM);
-  menu->insertItem(i18n("&Reply to"), HDR_REPLY_TO);
-  menu->insertItem(i18n("&To"), HDR_TO);
-  menu->insertItem(i18n("&Cc"), HDR_CC);
-  menu->insertItem(i18n("&Bcc"), HDR_BCC);
-  menu->insertItem(i18n("&Subject"), HDR_SUBJECT);
+  KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
+  //these are checkable!!!
+  allFieldsAction = new KToggleAction (i18n("&All Fields"), 0, this,
+                                       SLOT(slotView()),
+                                       actionCollection(), "show_all_fields");
+  fromAction = new KToggleAction (i18n("&From"), 0, this,
+                                  SLOT(slotView()),
+                                  actionCollection(), "show_from");
+  replyToAction = new KToggleAction (i18n("&Reply to"), 0, this,
+                                     SLOT(slotView()),
+                                     actionCollection(), "show_reply_to");
+  toAction = new KToggleAction (i18n("&To"), 0, this,
+                                SLOT(slotView()),
+                                actionCollection(), "show_to");
+  ccAction = new KToggleAction (i18n("&Cc"), 0, this,
+                                SLOT(slotView()),
+                                actionCollection(), "show_cc");
+  bccAction = new KToggleAction (i18n("&Bcc"), 0, this,
+                                 SLOT(slotView()),
+                                 actionCollection(), "show_bcc");
+  subjectAction = new KToggleAction (i18n("&Subject"), 0, this,
+                                     SLOT(slotView()),
+                                     actionCollection(), "show_subject");
 #ifdef KRN
-  menu->insertItem(i18n("&Newsgroups"), HDR_NEWSGROUPS); // for KRN
-  menu->insertItem(i18n("&Followup-To"), HDR_FOLLOWUP_TO); // for KRN
+  (void) new KToggleAction (i18n("&Newsgroups"), 0, this,
+                            SLOT(slotView()),
+                            actionCollection(), "show_newsgroups");
+  (void) new KToggleAction (i18n("&Followup-To"), 0, this,
+                            SLOT(slotView()),
+                            actionCollection(), "show_followup_to");
+
 #endif
-  mMenuBar->insertItem(i18n("&View"), menu);
+  //end of checkable
 
-  //---------- Menu: Attach
-  menu = new QPopupMenu();
-  menu->insertItem(i18n("Append S&ignature"), this,
-		   SLOT(slotAppendSignature()));
-  menu->insertItem(i18n("&Insert File"), this,
-		   SLOT(slotInsertFile()));
+  (void) new KAction (i18n("Append S&ignature"), 0, this,
+                      SLOT(slotAppendSignature()),
+                      actionCollection(), "append_signature");
+  (void) new KAction (i18n("&Attach..."), QIconSet(UserIcon("attach")),
+                      0, this, SLOT(slotAttachFile()),
+                      actionCollection(), "attach");
+  (void) new KAction (i18n("Attach &Public Key"), 0, this,
+                      SLOT(slotInsertPublicKey()),
+                      actionCollection(), "attach_public_key");
+  KAction *attachMPK = new KAction (i18n("Attach My &Public Key"), 0, this,
+                                    SLOT(slotInsertMyPublicKey()),
+                                    actionCollection(), "attach_my_public_key");
+  KAction *attachPK = new KAction (i18n("&Remove"), 0, this,
+                                   SLOT(slotAttachRemove()),
+                                   actionCollection(), "remove");
+  (void) new KAction (i18n("&Save..."), QIconSet(BarIcon("filesave")),0,
+                      this, SLOT(slotAttachSave()),
+                      actionCollection(), "attach_save");
+  (void) new KAction (i18n("Pr&operties..."), 0, this,
+                      SLOT(slotAttachProperties()),
+                      actionCollection(), "attach_properties");
 
-  menu->insertItem(i18n("&Attach..."), this, SLOT(slotAttachFile()));
-  menu->insertSeparator();
-  int id= menu->insertItem(i18n("Attach &Public Key"), this,
-		    SLOT(slotInsertPublicKey()));
-  int id1=menu->insertItem(i18n("Attach My &Public Key"), this,
-		    SLOT(slotInsertMyPublicKey()));
+  
+
+  
+  encryptAction = new KToggleAction (i18n("Encrypt message"),
+                                     QIconSet(UserIcon("pub_key_red")), 0,
+                                     actionCollection(), "encrypt_message");
+  signAction = new KToggleAction (i18n("Sign message"),
+                                  QIconSet(UserIcon("feather_white")), 0,
+                                  actionCollection(), "sign_message");
 
   if(!Kpgp::getKpgp()->havePGP())
   {
-      menu->setItemEnabled(id, false);
-      menu->setItemEnabled(id1, false);
+    attachPK->setEnabled(false);
+    attachMPK->setEnabled(false);
+    encryptAction->setEnabled(false);
+    signAction->setEnabled(false);
   }
 
-  menu->insertSeparator();
-  menu->insertItem(i18n("&Remove"), this, SLOT(slotAttachRemove()));
-  menu->insertItem(i18n("&Save..."), this, SLOT(slotAttachSave()));
-  menu->insertItem(i18n("Pr&operties..."),
-		   this, SLOT(slotAttachProperties()));
-  mMenuBar->insertItem(i18n("&Attach"), menu);
+  signAction->setChecked(mAutoPgpSign);
+  
 
-  //---------- Menu: Help
-  menu = helpMenu(aboutText);
-  mMenuBar->insertSeparator();
-  mMenuBar->insertItem(i18n("&Help"), menu);
-
-  //setMenu(mMenuBar);
+  createGUI("kmcomposerui.rc");
 }
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::setupToolBar(void)
-{
-  mToolBar = new KToolBar(this);
-
-  mToolBar->insertButton(UserIcon("send"),0,
-			SIGNAL(clicked()),this,
-			SLOT(slotSend()),TRUE,i18n("Send message"));
-  mToolBar->insertSeparator();
-  mToolBar->insertButton(BarIcon("filenew"), 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotNewComposer()), TRUE,
-			i18n("Compose new message"));
-
-  if (kernel->msgSender()->sendImmediate())
-  mToolBar->insertButton(BarIcon("filefloppy"), 0,
-			SIGNAL(clicked()), this,
-			 SLOT(slotSendLater()), TRUE,
-			 i18n("send later")); //grr translations!!!
-
-  mToolBar->insertButton(BarIcon("fileprint"), 0,
-			SIGNAL(clicked()), this,
-			SLOT(slotPrint()), TRUE,
-			i18n("Print message"));
-  mToolBar->insertSeparator();
-#ifdef BROKEN
-  mToolBar->insertButton(BarIcon("reload"),2,
-			SIGNAL(clicked()),this,
-			SLOT(slotCopyText()),TRUE,"Undo last change");
-#endif
-  mToolBar->insertButton(BarIcon("editcut"),4,
-			SIGNAL(clicked()),this,
-			SLOT(slotCut()),TRUE,i18n("Cut selection"));
-  mToolBar->insertButton(BarIcon("editcopy"),3,
-			SIGNAL(clicked()),this,
-			SLOT(slotCopy()),TRUE,i18n("Copy selection"));
-  mToolBar->insertButton(BarIcon("editpaste"),5,
-			SIGNAL(clicked()),this,
-			SLOT(slotPaste()),TRUE,i18n("Paste clipboard contents"));
-  mToolBar->insertSeparator();
-
-  mToolBar->insertButton(UserIcon("attach"),8,
-			 SIGNAL(clicked()),this,
-			 SLOT(slotAttachFile()),TRUE,i18n("Attach file"));
-  mToolBar->insertButton(UserIcon("openbook"),7,
-			 SIGNAL(clicked()),this,
-			 SLOT(slotAddrBook()),TRUE,
-			 i18n("Open addressbook..."));
-  mToolBar->insertButton(BarIcon("spellcheck"),7,
-			SIGNAL(clicked()),this,
-			SLOT(slotSpellcheck()),TRUE,"Spellcheck message");
-  mToolBar->insertSeparator();
-  mBtnIdSign = 9;
-  mToolBar->insertButton(UserIcon("feather_white"), mBtnIdSign,
-			 TRUE, i18n("sign message"));
-  mToolBar->setToggle(mBtnIdSign);
-  mToolBar->setButton(mBtnIdSign, mAutoPgpSign);
-  mBtnIdEncrypt = 10;
-  mToolBar->insertButton(UserIcon("pub_key_red"), mBtnIdEncrypt,
-			 TRUE, i18n("encrypt message"));
-  mToolBar->setToggle(mBtnIdEncrypt);
-  // these buttons should only be enabled, if pgp is actually installed
-  if(!Kpgp::getKpgp()->havePGP())
-  {
-    mToolBar->setItemEnabled(mBtnIdSign, false);
-    mToolBar->setItemEnabled(mBtnIdEncrypt, false);
-  }
-  addToolBar(mToolBar);
-}
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::setupStatusBar(void)
 {
-  mStatusBar = new KStatusBar(this);
-  mStatusBar->addWidget( new QLabel( mStatusBar, "" ), 1 );
-  mStatusBar->insertItem(QString(i18n(" Column"))+":     ",2,0,true);
-  mStatusBar->insertItem(QString(i18n(" Line"))+":     ",1,0,true);
-  setStatusBar(mStatusBar);
+  statusBar()->addWidget( new QLabel( statusBar(), "" ), 1 );
+  statusBar()->insertItem(QString(i18n(" Column"))+":     ",2,0,true);
+  statusBar()->insertItem(QString(i18n(" Line"))+":     ",1,0,true);
+  setStatusBar(statusBar());
 }
 
 
@@ -724,9 +720,9 @@ void KMComposeWin::updateCursorPosition()
   line = mEditor->currentLine();
   col = mEditor->currentColumn();
   temp = QString(" %1: %2 ").arg(i18n("Line")).arg(line+1);
-  mStatusBar->changeItem(temp,1);
+  statusBar()->changeItem(temp,1);
   temp = QString(" %1: %2 ").arg(i18n("Column")).arg(col+1);
-  mStatusBar->changeItem(temp,2);
+  statusBar()->changeItem(temp,2);
 }
 
 
@@ -917,13 +913,13 @@ bool KMComposeWin::applyChanges(void)
   if (!replyTo().isEmpty()) replyAddr = replyTo();
   else replyAddr = from();
 
-  if (mMnuOptions->isItemChecked(mMnuIdConfDeliver))
+  if (confirmDeliveryAction->isChecked())
     mMsg->setHeaderField("Return-Receipt-To", replyAddr);
 
-  if (mMnuOptions->isItemChecked(mMnuIdConfRead))
+  if (confirmReadAction->isChecked())
     mMsg->setHeaderField("X-Chameleon-Return-To", replyAddr);
 
-  if (mMnuOptions->isItemChecked(mMnuIdUrgent))
+  if (urgentAction->isChecked())
   {
     mMsg->setHeaderField("X-PRIORITY", "2 (High)");
     mMsg->setHeaderField("Priority", "urgent");
@@ -1013,9 +1009,9 @@ bool KMComposeWin::applyChanges(void)
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::closeEvent(QCloseEvent* e)
+bool KMComposeWin::queryClose ()
 {
-    int rc;
+  int rc;
 
   if(mEditor->isModified())
   {
@@ -1023,22 +1019,22 @@ void KMComposeWin::closeEvent(QCloseEvent* e)
            i18n("Close and discard\nedited message?"),
            i18n("Close message"), i18n("&Discard"));
     if (rc == KMessageBox::Cancel)
-    {
-       e->ignore();
-       return;
-    }
+      return false;
   }
-  delete this; // ugh
-  // KMComposeWinInherited::closeEvent(e);
+  return true;
 }
 
+bool KMComposeWin::queryExit ()
+{
+  return true;
+}
 
 //-----------------------------------------------------------------------------
 const QString KMComposeWin::pgpProcessedMsg(void)
 {
   Kpgp *pgp = Kpgp::getKpgp();
-  bool doSign = mToolBar->isButtonOn(mBtnIdSign);
-  bool doEncrypt = mToolBar->isButtonOn(mBtnIdEncrypt);
+  bool doSign = signAction->isChecked();
+  bool doEncrypt = encryptAction->isChecked();
   QString _to, receiver;
   int index, lastindex;
   QStrList persons;
@@ -1214,30 +1210,6 @@ void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
     else txt += ' ';
   }
   aLineEdit->setText(txt + dlg.address());
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotToggleConfirmDelivery()
-{
-  mMnuOptions->setItemChecked(mMnuIdConfDeliver,
-			      !mMnuOptions->isItemChecked(mMnuIdConfDeliver));
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotToggleConfirmRead()
-{
-  mMnuOptions->setItemChecked(mMnuIdConfRead,
-			      !mMnuOptions->isItemChecked(mMnuIdConfRead));
-}
-
-
-//-----------------------------------------------------------------------------
-void KMComposeWin::slotToggleUrgent()
-{
-  mMnuOptions->setItemChecked(mMnuIdUrgent,
-			      !mMnuOptions->isItemChecked(mMnuIdUrgent));
 }
 
 
@@ -1515,25 +1487,6 @@ void KMComposeWin::slotToggleToolBar()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotMenuViewActivated(int id)
-{
-  if (mMnuView->isItemChecked(id))
-  {
-    // hide header
-    if (id > 0) mShowHeaders = mShowHeaders & ~id;
-    else mShowHeaders = abs(mShowHeaders);
-  }
-  else
-  {
-    // show header
-    if (id > 0) mShowHeaders |= id;
-    else mShowHeaders = -abs(mShowHeaders);
-  }
-  rethinkFields();
-}
-
-
-//-----------------------------------------------------------------------------
 void KMComposeWin::slotFind()
 {
   mEditor->search();
@@ -1628,11 +1581,9 @@ void KMComposeWin::slotNewMailReader()
 {
 
 #ifndef KRN
-  KMMainWin *d;
-
-  d = new KMMainWin(NULL);
-  d->show();
-  d->resize(d->size());
+  KMMainWin *kmmwin = new KMMainWin(NULL);
+  kmmwin->show();
+  //d->resize(d->size());
 #endif
 
 }
@@ -1718,8 +1669,16 @@ void KMComposeWin::doSend(int aSendNow)
 }
 
 
+
 //----------------------------------------------------------------------------
-void KMComposeWin::slotSend()
+void KMComposeWin::slotSendLater()
+{
+  doSend(FALSE);
+}
+
+
+//----------------------------------------------------------------------------
+void KMComposeWin::slotSendNow()
 {
 #ifndef KRN
   if (mConfirmSend) {
@@ -1746,20 +1705,6 @@ void KMComposeWin::slotSend()
   }
 #endif
 
-  doSend();
-}
-
-
-//----------------------------------------------------------------------------
-void KMComposeWin::slotSendLater()
-{
-  doSend(FALSE);
-}
-
-
-//----------------------------------------------------------------------------
-void KMComposeWin::slotSendNow()
-{
   doSend(TRUE);
 }
 
@@ -1847,7 +1792,7 @@ void KMComposeWin::slotSpellcheckDone()
 {
   debug( "spell check complete" );
   mSpellCheckInProgress=FALSE;
-  mStatusBar->changeItem(i18n("Spellcheck complete."),0);
+  statusBar()->changeItem(i18n("Spellcheck complete."),0);
 
 }
 
@@ -2176,6 +2121,18 @@ void KMComposeWin::slotSpellcheckConfig()
   if (qtd.exec())
     mKSpellConfig.writeGlobalSettings();
 }
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::slotEditToolbars()
+{
+  KEditToolbar dlg(actionCollection(), "kmcomposerui.rc");
+
+  if (dlg.exec() == true)
+  {
+    createGUI("kmcomposerui.rc");
+  }
+}
+
 
 //=============================================================================
 //
