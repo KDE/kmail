@@ -2274,7 +2274,8 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
         lvi->setSelected( true );
       }
     }
-    highlightMessage( lvi );
+    if ( lvi != currentItem() )
+      highlightMessage( lvi );
     if ((e->button() == LeftButton) )
       mMousePressed = true;
   }
