@@ -674,6 +674,30 @@ protected:
   QLabel      *mTagValueLabel;
 };
 
+class ComposerPageAttachmentsTab : public ConfigurationPage {
+  Q_OBJECT
+public:
+  ComposerPageAttachmentsTab( QWidget * parent=0, const char * name=0 );
+
+  // no icon
+  static QString iconLabel() {
+    return QString::null;
+  }
+  static const char * iconName() {
+    return 0;
+  }
+
+  static QString title();
+  QString helpAnchor() const;
+
+  void setup();
+  void apply();
+
+protected:
+  QCheckBox   *mMissingAttachmentDetectionCheck;
+  SimpleStringListEditor *mAttachWordsListEditor;
+};
+
 class ComposerPage : public TabbedConfigurationPage {
   Q_OBJECT
 public:
@@ -690,6 +714,7 @@ public:
   typedef ComposerPageSubjectTab SubjectTab;
   typedef ComposerPageCharsetTab CharsetTab;
   typedef ComposerPageHeadersTab HeadersTab;
+  typedef ComposerPageAttachmentsTab AttachmentsTab;
 
 protected:
   GeneralTab  *mGeneralTab;
@@ -697,6 +722,7 @@ protected:
   SubjectTab  *mSubjectTab;
   CharsetTab  *mCharsetTab;
   HeadersTab  *mHeadersTab;
+  AttachmentsTab  *mAttachmentsTab;
 };
 
 //

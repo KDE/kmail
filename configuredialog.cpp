@@ -2251,6 +2251,12 @@ ComposerPage::ComposerPage( QWidget * parent, const char * name )
   //
   mHeadersTab = new HeadersTab();
   addTab( mHeadersTab, mHeadersTab->title() );
+
+  //
+  // "Attachments" tab:
+  //
+  mAttachmentsTab = new AttachmentsTab();
+  addTab( mAttachmentsTab, mAttachmentsTab->title() );
 }
 
 QString ComposerPage::GeneralTab::title() {
@@ -2436,7 +2442,7 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   // row 1: label and language combo box:
   mPhraseLanguageCombo = new LanguageComboBox( false, this );
   glay->addWidget( new QLabel( mPhraseLanguageCombo,
-			       i18n("&Language:"), this ), 1, 0 );
+			       i18n("Lang&uage:"), this ), 1, 0 );
   glay->addMultiCellWidget( mPhraseLanguageCombo, 1, 1, 1, 2 );
   connect( mPhraseLanguageCombo, SIGNAL(activated(const QString&)),
            this, SLOT(slotLanguageChanged(const QString&)) );
@@ -2457,13 +2463,13 @@ ComposerPagePhrasesTab::ComposerPagePhrasesTab( QWidget * parent, const char * n
   // row 3: "reply to sender" line edit and label:
   mPhraseReplyEdit = new KLineEdit( this );
   glay->addWidget( new QLabel( mPhraseReplyEdit,
-			       i18n("Repl&y to sender:"), this ), 3, 0 );
+			       i18n("Reply to se&nder:"), this ), 3, 0 );
   glay->addMultiCellWidget( mPhraseReplyEdit, 3, 3, 1, 2 ); // cols 1..2
 
   // row 4: "reply to all" line edit and label:
   mPhraseReplyAllEdit = new KLineEdit( this );
   glay->addWidget( new QLabel( mPhraseReplyAllEdit,
-			       i18n("Reply &to all:"), this ), 4, 0 );
+			       i18n("Repl&y to all:"), this ), 4, 0 );
   glay->addMultiCellWidget( mPhraseReplyAllEdit, 4, 4, 1, 2 ); // cols 1..2
 
   // row 5: "forward" line edit and label:
@@ -3017,6 +3023,80 @@ void ComposerPage::HeadersTab::apply() {
   general.writeEntry( "mime-header-count", numValidEntries );
 }
 
+QString ComposerPage::AttachmentsTab::title() {
+  return i18n("Config->Composer->Attachments", "A&ttachments");
+}
+
+QString ComposerPage::AttachmentsTab::helpAnchor() const {
+  return QString::fromLatin1("configure-composer-attachments");
+}
+
+ComposerPageAttachmentsTab::ComposerPageAttachmentsTab( QWidget * parent,
+                                                        const char * name )
+  : ConfigurationPage( parent, name ) {
+  // tmp. vars:
+  QVBoxLayout *vlay;
+  QLabel      *label;
+
+  vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
+
+  // "Enable detection of missing attachments" check box
+  mMissingAttachmentDetectionCheck =
+    new QCheckBox( i18n("Enable detection of missing attachments"), this );
+  mMissingAttachmentDetectionCheck->setChecked( true );
+  vlay->addWidget( mMissingAttachmentDetectionCheck );
+
+  // "Attachment key words" label and string list editor
+  label = new QLabel( i18n("Recognize any of the following key words as "
+                           "intention to attach a file:"), this );
+  label->setAlignment( AlignLeft|WordBreak );
+  vlay->addWidget( label );
+
+  SimpleStringListEditor::ButtonCode buttonCode =
+    static_cast<SimpleStringListEditor::ButtonCode>( SimpleStringListEditor::Add|SimpleStringListEditor::Remove );
+  mAttachWordsListEditor =
+    new SimpleStringListEditor( this, 0, buttonCode,
+                                i18n("A&dd..."), i18n("Re&move"),
+                                QString::null,
+                                i18n("Enter new key word:") );
+  vlay->addWidget( mAttachWordsListEditor );
+
+  connect( mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool) ),
+	   label, SLOT(setEnabled(bool)) );
+  connect( mMissingAttachmentDetectionCheck, SIGNAL(toggled(bool) ),
+	   mAttachWordsListEditor, SLOT(setEnabled(bool)) );
+}
+
+void ComposerPage::AttachmentsTab::setup() {
+  KConfigGroup composer( KMKernel::config(), "Composer" );
+
+  mMissingAttachmentDetectionCheck->setChecked(
+    composer.readBoolEntry( "showForgottenAttachmentWarning", true ) );
+  QStringList attachWordsList =
+    composer.readListEntry( "attachment-keywords" );
+  if ( attachWordsList.isEmpty() ) {
+    // default value
+    attachWordsList << QString::fromLatin1("attachment")
+                    << QString::fromLatin1("attached")
+                    << QString::fromLatin1("patch");
+    if ( QString::fromLatin1("attachment") != i18n("attachment") )
+      attachWordsList << i18n("attachment");
+    if ( QString::fromLatin1("attached") != i18n("attached") )
+      attachWordsList << i18n("attached");
+    if ( QString::fromLatin1("patch") != i18n("patch") )
+      attachWordsList << i18n("patch");
+  }
+
+  mAttachWordsListEditor->setStringList( attachWordsList );
+}
+
+void ComposerPage::AttachmentsTab::apply() {
+  KConfigGroup composer( KMKernel::config(), "Composer" );
+  composer.writeEntry( "showForgottenAttachmentWarning",
+                       mMissingAttachmentDetectionCheck->isChecked() );
+  composer.writeEntry( "attachment-keywords",
+                       mAttachWordsListEditor->stringList() );
+}
 
 // *************************************************************
 // *                                                           *

@@ -575,7 +575,7 @@ void KMComposeWin::deadLetter(void)
   // temporarily disable signing/encryption
   bool bSaveNeverSign    = mNeverSign;    mNeverSign    = true;
   bool bSaveNeverEncrypt = mNeverEncrypt; mNeverEncrypt = true;
-  applyChanges();
+  applyChanges( true );
   mNeverSign    = bSaveNeverSign;
   mNeverEncrypt = bSaveNeverEncrypt;
   QCString msgStr = mMsg->asString();
@@ -1413,7 +1413,80 @@ bool KMComposeWin::queryClose ()
 }
 
 //-----------------------------------------------------------------------------
-bool KMComposeWin::applyChanges(void)
+bool KMComposeWin::userForgotAttachment()
+{
+  KConfigGroup composer( KMKernel::config(), "Composer" );
+  bool checkForForgottenAttachments =
+    composer.readBoolEntry( "showForgottenAttachmentWarning", true );
+
+  if ( !checkForForgottenAttachments || ( mAtmList.count() > 0 ) )
+    return false;
+
+
+  QStringList attachWordsList =
+    composer.readListEntry( "attachment-keywords" );
+
+  if ( attachWordsList.isEmpty() ) {
+    // default value (FIXME: this is duplicated in configuredialog.cpp)
+    attachWordsList << QString::fromLatin1("attachment")
+                    << QString::fromLatin1("attached")
+                    << QString::fromLatin1("patch");
+    if ( QString::fromLatin1("attachment") != i18n("attachment") )
+      attachWordsList << i18n("attachment");
+    if ( QString::fromLatin1("attached") != i18n("attached") )
+      attachWordsList << i18n("attached");
+    if ( QString::fromLatin1("patch") != i18n("patch") )
+      attachWordsList << i18n("patch");
+  }
+
+  QRegExp rx ( QString::fromLatin1("\\b") +
+               attachWordsList.join("\\b|\\b") +
+               QString::fromLatin1("\\b") );
+  rx.setCaseSensitive( false );
+
+  bool gotMatch = false;
+
+  // check whether the subject contains one of the attachment key words
+  // unless the message is a reply or a forwarded message
+  QString subj = mEdtSubject->text();
+  gotMatch =    ( KMMessage::stripOffPrefixes( subj ) == subj )
+             && ( rx.search( subj ) >= 0 );
+
+  if ( !gotMatch ) {
+    // check whether the non-quoted text contains one of the attachment key
+    // words
+    QRegExp quotationRx ("^([ \\t]*([|>:}#]|[A-Za-z]+>))+");
+    for ( int i = 0; i < mEditor->numLines(); ++i ) {
+      QString line = mEditor->textLine( i );
+      gotMatch =    ( quotationRx.search( line ) < 0 )
+                 && ( rx.search( line ) >= 0 );
+      if ( gotMatch )
+        break;
+    }
+  }
+
+  if ( !gotMatch )
+    return false;
+
+  int rc = KMessageBox::warningYesNoCancel( this,
+             i18n("The message you have composed seems to refer to an "
+                  "attached file but you have not attached anything.\n"
+                  "Do you want to attach a file to your message?"),
+             i18n("File Attachment Reminder"),
+             i18n("&Attach file..."),
+             i18n("&Send as is") );
+  if ( rc == KMessageBox::Cancel )
+    return true;
+  if ( rc == KMessageBox::Yes ) {
+    slotAttachFile();
+    //preceed with editing
+    return true;
+  }
+  return false;
+}
+
+//-----------------------------------------------------------------------------
+bool KMComposeWin::applyChanges( bool backgroundMode )
 {
   QString str, atmntStr;
   QString temp, replyAddr;
@@ -1424,6 +1497,10 @@ bool KMComposeWin::applyChanges(void)
     kdDebug(5006) << "KMComposeWin::applyChanges() : mMsg == 0!\n" << endl;
     return FALSE;
   }
+
+  if ( !backgroundMode )
+    if ( userForgotAttachment() )
+      return false;
 
   bccMsgList.clear();
 

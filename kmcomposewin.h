@@ -281,8 +281,11 @@ public:
    * Applies the user changes to the message object of the composer
    * and signs/encrypts the message if activated. Returns FALSE in
    * case of an error (e.g. if PGP encryption fails).
+   * If backgroundMode is true then no functions which might require
+   * user interaction (like signing/encrypting/checking for missing
+   * attachments) are performed
    */
-   bool applyChanges(void);
+   bool applyChanges( bool backgroundMode = false );
 
   /**
    * Internal helper function called from applyChanges(void) to allow
@@ -599,6 +602,11 @@ protected:
   void addrBookSelInto();
 
 private:
+  /**
+     Returns true if the user forgot to attach something.
+  */
+  bool userForgotAttachment();
+
   /**
    * Get message ready for sending or saving.
    * This must be done _before_ signing and/or encrypting it.
