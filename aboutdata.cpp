@@ -46,6 +46,9 @@ namespace KMail {
     const char * web;
   };
 
+  // This file should not be changed by anybody other than the maintainer
+  // or the co-maintainer.
+
   static const about_data authors[] = {
     { "Ingo Kl\303\266cker", I18N_NOOP("Maintainer"),
       "kloecker@kde.org", 0 },
