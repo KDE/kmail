@@ -2995,9 +2995,12 @@ void ComposerPage::HeadersTab::slotRemoveMimeHeader()
 {
   // calling this w/o selection is a programming error:
   QListViewItem * item = mTagList->selectedItem();
-  if ( !item )
-      return;
-  //assert( item );
+  if ( !item ) {
+    kdDebug(5006) << "==================================================\n"
+                  << "Error: Remove button was pressed although no custom header was selected\n"
+                  << "==================================================\n";
+    return;
+  }
 
   QListViewItem * below = item->nextSibling();
   delete item;
@@ -3035,6 +3038,10 @@ void ComposerPage::HeadersTab::setup() {
   if ( mTagList->childCount() ) {
     mTagList->setCurrentItem( mTagList->firstChild() );
     mTagList->setSelected( mTagList->firstChild(), true );
+  }
+  else {
+    // disable the "Remove" button
+    mRemoveHeaderButton->setEnabled( false );
   }
 }
 
