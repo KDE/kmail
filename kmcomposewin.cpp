@@ -3242,7 +3242,12 @@ void KMComposeWin::toggleMarkup(bool markup)
     int paraFrom, indexFrom, paraTo, indexTo;
     mEditor->getSelection ( &paraFrom, &indexFrom, &paraTo, &indexTo);
     mEditor->selectAll();
+    // save the buttonstates because setColor calls fontChanged
+    bool _bold = textBoldAction->isChecked();
+    bool _italic = textItalicAction->isChecked();
     mEditor->setColor(QColor(0,0,0));
+    textBoldAction->setChecked(_bold);
+    textItalicAction->setChecked(_italic);
     mEditor->setSelection ( paraFrom, indexFrom, paraTo, indexTo);
 
     mEditor->setTextFormat(Qt::RichText);
@@ -3559,6 +3564,7 @@ void KMComposeWin::slotSetAlwaysSend( bool bAlways )
 
 void KMComposeWin::slotListAction( const QString& style )
 {
+    toggleMarkup(true);
     if ( style == i18n( "Standard" ) )
        mEditor->setParagType( QStyleSheetItem::DisplayBlock, QStyleSheetItem::ListDisc );
     else if ( style == i18n( "Bulleted List (Disc)" ) )
