@@ -134,7 +134,7 @@ public:
     setText( mPaintInfo->subCol, subjStr.simplifyWhiteSpace() );
 
     time_t mDate = mMsgBase->date();
-    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).simplifyWhiteSpace() );
+    setText( mPaintInfo->dateCol, QString( ctime( &mDate )).stripWhiteSpace() );
 
     if (mPaintInfo->showSize) {
       QString msz;
