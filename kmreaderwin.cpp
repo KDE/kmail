@@ -534,6 +534,7 @@ static const int numKMailNewFeatures =
 //-----------------------------------------------------------------------------
 void KMReaderWin::displayAboutPage()
 {
+  mColorBar->hide();
   mMsgDisplay = FALSE;
   QString location = locate("data", "kmail/about/main.html");
   QString content = kFileToString(location);
@@ -560,7 +561,7 @@ void KMReaderWin::displayAboutPage()
 	 "<p>Thank you,</p>\n"
 	 "<p>&nbsp; &nbsp; The KMail Team</p>")
     .arg(KMAIL_VERSION) // KMail version
-    .arg("help:/kmail") // KKmail help:// URL
+    .arg("help:/kmail/index.html") // KMail help:// URL
     .arg("http://kmail.kde.org/") // KMail homepage URL
     .arg("1.3").arg("2.2"); // prior KMail and KDE version
 
@@ -612,13 +613,17 @@ void KMReaderWin::updateReaderWin()
   mViewer->view()->setUpdatesEnabled( false );
   mViewer->view()->viewport()->setUpdatesEnabled( false );
   static_cast<QScrollView *>(mViewer->widget())->ensureVisible(0,0);
-  if ( mShowColorbar )
-    mColorBar->show();
-  else
-    mColorBar->hide();
-  if (mMsg) parseMsg();
+  if (mMsg)
+  { 
+    if ( mShowColorbar )
+      mColorBar->show();
+    else
+      mColorBar->hide();
+    parseMsg();
+  }
   else
   {
+    mColorBar->hide();
     mViewer->begin( KURL( "file:/" ) );
     mViewer->write("<html><body" +
 		   QString(" bgcolor=\"#%1\"").arg(colorToString(c4)));
