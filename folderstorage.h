@@ -460,13 +460,6 @@ public:
   /** Set the status of the message(s) in the QValueList @p ids to @p status. */
   virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle=false);
 
-  /** Icon related methods */
-  virtual bool useCustomIcons() const { return mUseCustomIcons; }
-  virtual void setUseCustomIcons(bool useCustomIcons) { mUseCustomIcons = useCustomIcons; }
-  virtual QString normalIconPath() const { return mNormalIconPath; }
-  virtual QString unreadIconPath() const { return mUnreadIconPath; }
-  virtual void setIconPaths(const QString &normalPath, const QString &unreadPath);
-
   void removeJobs();
 
   /** Convert "\r\n" line endings in "\n" line endings. The conversion
@@ -476,6 +469,9 @@ public:
 
   /** Escape a leading dot */
   static QString dotEscape(const QString&);
+
+  /** Write the config file */
+  virtual void writeConfig();
 
 signals:
   /** Emitted when the status, name, or associated accounts of this
@@ -489,9 +485,6 @@ signals:
   /** Emitted after an expunge. If not quiet, changed() will be
       emmitted first. */
   void expunged();
-
-  /** Emitted when the icon paths are set. */
-  void iconsChanged();
 
   /** Emitted when the name of the folder changes. */
   void nameChanged();
@@ -571,9 +564,6 @@ protected:
     the various index files deleted.  Returns 0 on success. */
   virtual int expungeContents() = 0;
 
-  /** Write the config file */
-  virtual void writeConfig();
-
   /** Read the config file */
   virtual void readConfig();
 
@@ -631,10 +621,6 @@ protected:
    */
   mutable QPtrList<FolderJob> mJobList;
 
-  /** Icon related variables */
-  bool mUseCustomIcons;
-  QString mNormalIconPath;
-  QString mUnreadIconPath;
   QTimer *mDirtyTimer;
   enum { mDirtyTimerInterval = 600000 }; // 10 minutes
 

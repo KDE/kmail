@@ -62,6 +62,12 @@ public:
             KMFolderType aFolderType );
   ~KMFolder();
 
+  /** This is used by the storage to read the folder specific configuration */
+  void readConfig( KConfig* config );
+
+  /** This is used by the storage to save the folder specific configuration */
+  void writeConfig( KConfig* config ) const;
+
   FolderStorage* storage() { return mStorage; }
 
   /** Returns the type of this folder */
@@ -423,10 +429,10 @@ public:
   void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle=false);
 
   /** Icon related methods */
-  bool useCustomIcons() const;
-  void setUseCustomIcons(bool useCustomIcons);
-  QString normalIconPath() const;
-  QString unreadIconPath() const;
+  bool useCustomIcons() const { return mUseCustomIcons; }
+  void setUseCustomIcons(bool useCustomIcons) { mUseCustomIcons = useCustomIcons; }
+  QString normalIconPath() const { return mNormalIconPath; }
+  QString unreadIconPath() const { return mUnreadIconPath; }
   void setIconPaths(const QString &normalPath, const QString &unreadPath);
 
   void removeJobs();
@@ -498,6 +504,11 @@ private:
   KMFolderDir* mParent;
   KMFolderDir* mChild;
   bool mIsSystemFolder;
+
+  /** Icon related variables */
+  bool mUseCustomIcons;
+  QString mNormalIconPath;
+  QString mUnreadIconPath;
 };
 
 #endif /*kmfolder_h*/

@@ -82,7 +82,6 @@ FolderStorage::FolderStorage( KMFolder* folder, const char* aName )
   readExpireAge = 14;
   readExpireUnits = expireNever;
   mRDict = 0;
-  mUseCustomIcons = false;
   mDirtyTimer = new QTimer(this);
   connect(mDirtyTimer, SIGNAL(timeout()),
 	  this, SLOT(updateIndex()));
@@ -867,11 +866,8 @@ void FolderStorage::readConfig()
   unreadExpireAge = config->readNumEntry("UnreadExpireAge", 12);
   unreadExpireUnits = (ExpireUnits)config->readNumEntry("UnreadExpireUnits", expireNever);
   setUserWhoField( config->readEntry("WhoField"), false );
-  mUseCustomIcons = config->readBoolEntry("UseCustomIcons", false );
-  mNormalIconPath = config->readEntry("NormalIconPath" );
-  mUnreadIconPath = config->readEntry("UnreadIconPath" );
-  if ( mUseCustomIcons )
-      emit iconsChanged();
+
+  if( folder() ) folder()->readConfig( config );
 }
 
 //-----------------------------------------------------------------------------
@@ -893,9 +889,8 @@ void FolderStorage::writeConfig()
   config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
   config->writeEntry("WhoField", mUserWhoField);
 
-  config->writeEntry("UseCustomIcons", mUseCustomIcons);
-  config->writeEntry("NormalIconPath", mNormalIconPath);
-  config->writeEntry("UnreadIconPath", mUnreadIconPath);
+  // Write the KMFolder parts
+  if( folder() ) folder()->writeConfig( config );
 }
 
 //-----------------------------------------------------------------------------
@@ -1036,14 +1031,6 @@ void FolderStorage::ignoreJobsForMessage( KMMessage *msg )
     } else
       ++it;
   }
-}
-
-void FolderStorage::setIconPaths(const QString &normalPath, const QString &unreadPath)
-{
-  mNormalIconPath = normalPath;
-  mUnreadIconPath = unreadPath;
-  writeConfig();
-  emit iconsChanged();
 }
 
 //-----------------------------------------------------------------------------

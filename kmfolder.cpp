@@ -21,7 +21,7 @@
 KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
                     KMFolderType aFolderType )
   : KMFolderNode( aParent, aFolderName ), mParent( aParent ), mChild( 0 ),
-                  mIsSystemFolder( false )
+    mIsSystemFolder( false ), mUseCustomIcons( false )
 {
 
   if( aFolderType == KMFolderTypeCachedImap )
@@ -50,7 +50,6 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
   connect( mStorage, SIGNAL( changed() ), SIGNAL( changed() ) );
   connect( mStorage, SIGNAL( cleared() ), SIGNAL( cleared() ) );
   connect( mStorage, SIGNAL( expunged() ), SIGNAL( expunged() ) );
-  connect( mStorage, SIGNAL( iconsChanged() ), SIGNAL( iconsChanged() ) );
   connect( mStorage, SIGNAL( nameChanged() ), SIGNAL( nameChanged() ) );
   connect( mStorage, SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ),
            SIGNAL( msgRemoved( KMFolder*, Q_UINT32 ) ) );
@@ -76,6 +75,23 @@ KMFolder::KMFolder( KMFolderDir* aParent, const QString& aFolderName,
 KMFolder::~KMFolder()
 {
   delete mStorage;
+}
+
+void KMFolder::readConfig( KConfig* config )
+{
+  mUseCustomIcons = config->readBoolEntry("UseCustomIcons", false );
+  mNormalIconPath = config->readEntry("NormalIconPath" );
+  mUnreadIconPath = config->readEntry("UnreadIconPath" );
+
+  if ( mUseCustomIcons )
+      emit iconsChanged();
+}
+
+void KMFolder::writeConfig( KConfig* config ) const
+{
+  config->writeEntry("UseCustomIcons", mUseCustomIcons);
+  config->writeEntry("NormalIconPath", mNormalIconPath);
+  config->writeEntry("UnreadIconPath", mUnreadIconPath);
 }
 
 KMFolderType KMFolder::folderType() const
@@ -604,30 +620,13 @@ void KMFolder::setStatus( QValueList<int>& ids, KMMsgStatus status,
   mStorage->setStatus( ids, status, toggle);
 }
 
-bool KMFolder::useCustomIcons() const
-{
-  return mStorage->useCustomIcons();
-}
-
-void KMFolder::setUseCustomIcons( bool useCustomIcons )
-{
-  mStorage->setUseCustomIcons( useCustomIcons );
-}
-
-QString KMFolder::normalIconPath() const
-{
-  return mStorage->normalIconPath();
-}
-
-QString KMFolder::unreadIconPath() const
-{
-  return mStorage->unreadIconPath();
-}
-
 void KMFolder::setIconPaths( const QString &normalPath,
                              const QString &unreadPath )
 {
-  mStorage->setIconPaths( normalPath, unreadPath );
+  mNormalIconPath = normalPath;
+  mUnreadIconPath = unreadPath;
+  mStorage->writeConfig();
+  emit iconsChanged();
 }
 
 void KMFolder::removeJobs()
