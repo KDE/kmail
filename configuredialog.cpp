@@ -1686,11 +1686,11 @@ static const struct {
   { "PGPMessageOkKeyBad", I18N_NOOP("OpenPGP message - valid signature with untrusted key") },
   { "PGPMessageWarn", I18N_NOOP("OpenPGP message - unchecked signature") },
   { "PGPMessageErr", I18N_NOOP("OpenPGP message - bad signature") },
-  { "HTMLWarningColor", I18N_NOOP("Border around HTML warning message") },
-  { "ColorbarBackgroundPlain", I18N_NOOP("Colorbar background - plain text message") },
-  { "ColorbarForegroundPlain", I18N_NOOP("Colorbar foreground - plain text message") },
-  { "ColorbarBackgroundHTML",  I18N_NOOP("Colorbar background - HTML message") },
-  { "ColorbarForegroundHTML",  I18N_NOOP("Colorbar foreground - HTML message") },
+  { "HTMLWarningColor", I18N_NOOP("Border around HTML message") },
+  { "ColorbarBackgroundPlain", I18N_NOOP("HTML status bar background - No HTML message") },
+  { "ColorbarForegroundPlain", I18N_NOOP("HTML status bar foreground - No HTML message") },
+  { "ColorbarBackgroundHTML",  I18N_NOOP("HTML status bar background - HTML message") },
+  { "ColorbarForegroundHTML",  I18N_NOOP("HTML status bar foreground - HTML message") },
 };
 static const int numColorNames = sizeof colorNames / sizeof *colorNames;
 
@@ -1846,7 +1846,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
   // "show colorbar" check box:
-  mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"), this );
+  mShowColorbarCheck = new QCheckBox( i18n("Show HTML status &bar"), this );
   vlay->addWidget( mShowColorbarCheck );
 
   vlay->addWidget( new QLabel( i18n("<qt><p>Below, you can change the "

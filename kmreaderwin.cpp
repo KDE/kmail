@@ -3264,7 +3264,7 @@ kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." <
     mColorBar->setEraseColor( cCBnoHtmlB );
     mColorBar->setPaletteForegroundColor( cCBnoHtmlF );
     mColorBar->setTextFormat( Qt::PlainText );
-    mColorBar->setText(i18n("\nn\no\n \nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
+    mColorBar->setText(i18n("\nN\no\n \nH\nT\nM\nL\n \nM\ne\ns\ns\na\ng\ne"));
   }
 }
 
