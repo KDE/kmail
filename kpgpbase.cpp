@@ -109,6 +109,7 @@ KpgpBase::run(const char *cmd, const char *passphrase)
   pipe(pout);
   pipe(perr);
      
+  QApplication::flushX();
   if(!(child_pid = fork()))
   {
     /*We're the child.*/
@@ -216,6 +217,7 @@ KpgpBase::runGpg(const char *cmd, const char *passphrase)
     }
 
 
+    QApplication::flushX();
   if(!(child_pid = fork()))
   {
     /*We're the child.*/
