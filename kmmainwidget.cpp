@@ -1638,6 +1638,7 @@ void KMMainWidget::folderSelectedUnread( KMFolder* aFolder )
 void KMMainWidget::folderSelected()
 {
   folderSelected( mFolder );
+  updateFolderMenu();
   // opened() before the getAndCheckFolder() in folderSelected
   if ( mFolder && mFolder->folderType() == KMFolderTypeImap )
     mFolder->close();
@@ -1694,6 +1695,7 @@ void KMMainWidget::folderSelected( KMFolder* aFolder, bool forceJumpToUnread )
           this, SLOT( folderSelected() ) );
       imap->getAndCheckFolder();
       mHeaders->setFolder( 0 );
+      updateFolderMenu();
       mForceJumpToUnread = forceJumpToUnread;
       return;
     } else {
@@ -3012,16 +3014,17 @@ void KMMainWidget::updateFolderMenu()
   mRemoveFolderAction->setEnabled( (mFolder && !mFolder->isSystemFolder()) );
   mExpireFolderAction->setEnabled( mFolder && mFolder->isAutoExpire() );
   updateMarkAsReadAction();
-  mPreferHtmlAction->setEnabled( mFolder ? true : false );
-  mPreferHtmlLoadExtAction->setEnabled( mFolder && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
-  mThreadMessagesAction->setEnabled( mFolder ? true : false );
+  // the visual ones only make sense if we are showing a message list
+  mPreferHtmlAction->setEnabled( mHeaders->folder() ? true : false );
+  mPreferHtmlLoadExtAction->setEnabled( mHeaders->folder() && (mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref) ? true : false );
+  mThreadMessagesAction->setEnabled( mHeaders->folder() ? true : false );
 
   mPreferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   mPreferHtmlLoadExtAction->setChecked( mHtmlLoadExtPref ? !mFolderHtmlLoadExtPref : mFolderHtmlLoadExtPref );
   mThreadMessagesAction->setChecked(
       mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
   mThreadBySubjectAction->setEnabled(
-      mFolder ? ( mThreadMessagesAction->isChecked()) : false );
+      mHeaders->folder() ? ( mThreadMessagesAction->isChecked()) : false );
   mThreadBySubjectAction->setChecked( mFolderThreadSubjPref );
 }
 
