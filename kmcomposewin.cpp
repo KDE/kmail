@@ -1594,7 +1594,7 @@ bool KMComposeWin::applyChanges(void)
             KMessageBox::sorry(this, mErrorProcessingStructuringInfo );
         }
       }
-      else {
+      else if ( !doEncrypt ) {
         // we try calling the *old* build-in code for OpenPGP clearsigning
         Kpgp::Block block;
         block.setText( encodedBody );
@@ -1699,7 +1699,7 @@ bool KMComposeWin::encryptMessage( KMMessage* msg, const QStringList& recipients
   // encrypt message
   if( doEncrypt ) {
     QCString innerContent;
-    if( doSign ) {
+    if( doSign && cryptPlug ) {
       DwBodyPart* dwPart = msg->createDWBodyPart( &newBodyPart );
       dwPart->Assemble();
       innerContent = dwPart->AsString().c_str();
