@@ -107,9 +107,6 @@ KDE_ICON = AUTO
 rcdir = $(kde_datadir)/kmail
 rc_DATA = kmcomposerui.rc kmmainwin.rc kmreadermainwin.rc eventsrc
 
-partdir   = $(kde_datadir)/kmail
-part_DATA = kmmainwin.rc
-
 updatedir = $(kde_datadir)/kconf_update
 update_DATA = kmail.upd upgrade-transport.pl kmail-pgpidentity.pl \
 		upgrade-signature.pl kmail-upd-identities.pl \
