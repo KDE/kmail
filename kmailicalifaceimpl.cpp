@@ -3,6 +3,7 @@
 
     Copyright (c) 2003 Steffen Hansen <steffen@klaralvdalens-datakonsult.se>
     Copyright (c) 2003 - 2004 Bo Thorsen <bo@sonofthor.dk>
+    Copyright (c) 2004 Till Adam <adam@kde.org>
 
     This library is free software; you can redistribute it and/or
     modify it under the terms of the GNU Library General Public
@@ -1045,11 +1046,13 @@ void KMailICalIfaceImpl::slotIncidenceAdded( KMFolder* folder,
       mUIDToSerNum.insert( uid, sernum );
       // tell the resource if we didn't trigger this ourselves
       if( !mInTransit.contains( uid ) ) {
-        incidenceAdded( type, folder->location(), s );
         incidenceAdded( type, folder->location(), sernum, format, s );
       }
       else
         mInTransit.remove( uid );
+      
+      // this one is for the imap resource FIXME
+      incidenceAdded( type, folder->location(), s );
 
       // Check if new updates have since arrived, if so, trigger them
       if ( mPendingUpdates.contains( uid ) ) {
