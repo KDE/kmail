@@ -6,13 +6,10 @@
 KMFolderNode::KMFolderNode(KMFolderDir* aParent, const QString& aName)
 //: KMFolderNodeInherited(aParent)
 {
-
   mType = "node";
   mName = aName;
   mParent = aParent;
   mDir = FALSE;
-
-  setName(mName);
 }
 
 
