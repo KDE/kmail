@@ -238,28 +238,39 @@ QString KabcBridge::expandDistributionLists(QString recipients)
     {
       if (receiver.find('@') == -1)
       {
-        char hostname[100];
-        gethostname(hostname, 100);
-        QString username = receiver;
-        receiver += "@";
-        receiver += QCString(hostname, 100);
-
-        passwd *pw;
-        setpwent();
-        while ((pw = getpwent()))
+        KConfigGroup general( kapp->config(), "General" );
+        QString defaultdomain = general.readEntry( "Default domain", "" );
+        if( !defaultdomain.isEmpty() )
         {
-          if (qstrcmp(pw->pw_name, username.local8Bit()) == 0)
-          {
-            QString fn = QString::fromLocal8Bit(pw->pw_gecos);
-            if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
-              receiver = "\"" + fn + "\" <" + receiver + ">";
-            else
-              receiver = fn + " <" + receiver + ">";
-          }
+          receiver += "@" + defaultdomain;
         }
-        endpwent();
+        else
+        {
+          char hostname[100];
+          gethostname(hostname, 100);
+          QString username = receiver;
+          receiver += "@";
+          receiver += QCString(hostname, 100);
+  
+          passwd *pw;
+          setpwent();
+          while ((pw = getpwent()))
+          {
+            if (qstrcmp(pw->pw_name, username.local8Bit()) == 0)
+            {
+              QString fn = QString::fromLocal8Bit(pw->pw_gecos);
+              if (fn.find(QRegExp("[^ 0-9A-Za-z\\x0080-\\xFFFF]")) != -1)
+                receiver = "\"" + fn + "\" <" + receiver + ">";
+              else
+                receiver = fn + " <" + receiver + ">";
+            }
+          }
+          endpwent();
+        }
         expRecipients += receiver;
-      } else {
+      }
+      else
+      {
         expRecipients += receiver;
       }
     }
