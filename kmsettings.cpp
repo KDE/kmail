@@ -106,7 +106,7 @@ static QLineEdit* createLabeledEntry(QWidget* parent, QGridLayout* grid,
   label->setMinimumSize(label->size());
   grid->addWidget(label, gridy, gridx++);
 
-  if (!aText.isEmpty()) edit->setText(aText);
+  if (!aText.isNull()) edit->setText(aText);
   edit->setMinimumSize(100, label->height()+2);
   edit->setMaximumSize(1000, label->height()+2);
   grid->addWidget(edit, gridy, gridx++);
