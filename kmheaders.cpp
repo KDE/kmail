@@ -25,7 +25,6 @@
 #include <kfiledialog.h>
 
 
-#include "kmcommands.h"
 #include "kmfolderimap.h"
 #include "kmfoldermgr.h"
 #include "kmheaders.h"
@@ -1135,14 +1134,14 @@ void KMHeaders::setMsgStatus (KMMsgStatus status, int /*msgId*/)
   for (qitem = firstChild(); qitem; qitem = qitem->itemBelow())
     if (qitem->isSelected()) {
       KMHeaderItem *item = static_cast<KMHeaderItem*>(qitem);
+      if (mFolder->protocol() == "imap")
         ids.append(item->msgId());
+      else
+        mFolder->setStatus(item->msgId(), status);
     }
 
-  if (ids.empty())
-    return;
-
-  KMCommand *command = new KMSetStatusCommand( status, ids, mFolder );
-  command->start();
+  if ( !ids.empty() )
+    mFolder->setStatus(ids, status);
 }
 
 
@@ -1176,12 +1175,8 @@ void KMHeaders::setThreadStatus(KMMsgStatus status)
   QValueList<int> ids;
   for ( it.toFirst() ; it.current() ; ++it )
     ids << static_cast<KMHeaderItem*>(*it)->msgId();
-
-  if (ids.empty())
-    return;
-
-  KMCommand *command = new KMSetStatusCommand( status, ids, mFolder );
-  command->start();
+  if ( !ids.isEmpty() )
+    mFolder->setStatus( ids, status );
 }
 
 //-----------------------------------------------------------------------------
@@ -1335,17 +1330,67 @@ void KMHeaders::setMsgRead (int msgId)
 //-----------------------------------------------------------------------------
 void KMHeaders::deleteMsg (int msgId)
 {
+  KMFolder* folder = NULL;
+
   //make sure we have an associated folder (root of folder tree does not).
   if (!mFolder)
     return;
 
-  KMMessageList msgList = *selectedMsgs(msgId);
-  KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList, this );
-  command->start();
+  if (mFolder->protocol() == "imap")
+  {
+    KMFolderImap* fi = static_cast<KMFolderImap*> (mFolder);
+    KMFolder* trash = kernel->imapFolderMgr()->findIdString(fi->account()->trash());
+    if (!trash) trash = kernel->trashFolder();
+    if (mFolder != trash)
+    {
+      folder = trash;
+    }
+
+  } else {
+
+    if (mFolder != kernel->trashFolder())
+    {
+      // move to trash folder
+      folder = kernel->trashFolder();
+    }
+  }
+
+  // move messages
+  moveMsgToFolder(folder, msgId);
 
   mSortInfo.dirty = TRUE;
   mOwner->statusMsg("");
   //  triggerUpdate();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::saveMsg (int msgId, QPtrList<KMMessage>* msgList)
+{
+  KMMessage* msg;
+  QCString str;
+  if (!msgList)
+    msgList = selectedMessages();
+  QString subject;
+  if (msgList->count() == 1) subject = msgList->first()->subject();
+  while (subject.find(':') != -1)
+    subject = subject.mid(subject.find(':') + 1).stripWhiteSpace();
+  subject.replace(QRegExp(QChar(QDir::separator())), "_");
+  KURL url = KFileDialog::getSaveURL(subject, QString::null);
+
+  if( url.isEmpty() )
+    return;
+
+  for (msg=getMsg(msgId); msg; msg=getMsg())
+  {
+    str += "From " + msg->fromEmail() + " " + msg->dateShortStr() + "\n";
+    str += msg->asString();
+    str += "\n";
+  }
+
+  QByteArray ba = str;
+  ba.resize(ba.size() - 1);
+  kernel->byteArrayToRemoteFile(ba, url);
 }
 
 
@@ -1372,6 +1417,296 @@ void KMHeaders::resendMsg ()
 
 
 //-----------------------------------------------------------------------------
+void KMHeaders::bounceMsg (KMMessage* msg)
+{
+  KMMessage *newMsg;
+  if (!msg)
+   msg = currentMsg();
+
+  if (!msg) return;
+
+  newMsg = msg->createBounce( TRUE /* with UI */);
+  if (newMsg)
+    kernel->msgSender()->send(newMsg, kernel->msgSender()->sendImmediate());
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::forwardMsg (QPtrList<KMMessage>* msgList)
+{
+  KMComposeWin *win;
+  if (!msgList)
+    msgList = selectedMessages();
+
+  if (msgList->count() >= 2) {
+    // ask if they want a mime digest forward
+
+    if (KMessageBox::questionYesNo(this, i18n("Forward selected messages as"
+                                              " a MIME digest?"))
+                                                      == KMessageBox::Yes) {
+      // we default to the first identity to save prompting the user
+      // (the messages could have different identities)
+      uint id = 0;
+      KMMessage *fwdMsg = new KMMessage;
+      KMMessagePart *msgPart = new KMMessagePart;
+      QString msgPartText;
+      int msgCnt = 0; // incase there are some we can't forward for some reason
+
+      fwdMsg->initHeader(id);
+      fwdMsg->setAutomaticFields(true);
+      fwdMsg->mMsg->Headers().ContentType().CreateBoundary(1);
+      msgPartText = i18n("\nThis is a MIME digest forward. The content of the"
+                         " message is contained in the attachment(s).\n\n\n"
+                         "--\n");
+      kdDebug(5006) << "Doing a mime digest forward\n" << endl;
+      // iterate through all the messages to be forwarded
+      for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
+        int idx = mFolder->find(mb);
+        if (idx < 0) continue;
+        KMMessage *thisMsg = mFolder->getMsg(idx);
+        if (!thisMsg) continue;
+        // set the identity
+        if (id == 0)
+          id = thisMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+        // set the part header
+        msgPartText += "--";
+        msgPartText += fwdMsg->mMsg->Headers().ContentType().Boundary().c_str();
+        msgPartText += "\nContent-Type: MESSAGE/RFC822";
+        msgPartText += QString("; CHARSET=%1").arg(thisMsg->charset());
+        msgPartText += "\n";
+        kdDebug(5006) << "Adding message ID " << thisMsg->id() << "\n" << endl;
+        DwHeaders dwh;
+        dwh.MessageId().CreateDefault();
+        msgPartText += QString("Content-ID: %1\n").arg(dwh.MessageId().AsString().c_str());
+        msgPartText += QString("Content-Description: %1").arg(thisMsg->subject());
+        if (!thisMsg->subject().contains("(fwd)"))
+          msgPartText += " (fwd)";
+        msgPartText += "\n\n";
+        // set the part
+        msgPartText += thisMsg->headerAsString();
+        msgPartText += "\n";
+        msgPartText += thisMsg->body();
+        msgPartText += "\n";     // eot
+        msgCnt++;
+        fwdMsg->link(thisMsg, KMMsgStatusForwarded);
+      }
+      kdDebug(5006) << "Done adding messages to the digest\n" << endl;
+      QCString tmp;
+      msgPart->setTypeStr("MULTIPART");
+      tmp.sprintf( "Digest; boundary=\"%s\"",
+		   fwdMsg->mMsg->Headers().ContentType().Boundary().c_str() );
+      msgPart->setSubtypeStr( tmp );
+      msgPart->setName("unnamed");
+      msgPart->setCte(DwMime::kCte7bit);   // does it have to be 7bit?
+      msgPart->setContentDescription(QString("Digest of %1 messages.").arg(msgCnt));
+      // THIS HAS TO BE AFTER setCte()!!!!
+      msgPart->setBodyEncoded(QCString(msgPartText.ascii()));
+      kdDebug(5006) << "Launching composer window\n" << endl;
+      kernel->kbp()->busy();
+      win = new KMComposeWin(fwdMsg, id);
+      win->addAttach(msgPart);
+      win->show();
+      kernel->kbp()->idle();
+      return;
+    } else {            // NO MIME DIGEST, Multiple forward
+      uint id = 0;
+      QCString msgText = "";
+      KMMessageList linklist;
+      for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
+        int idx = mFolder->find(mb);
+        if (idx < 0) continue;
+        KMMessage *thisMsg = mFolder->getMsg(idx);
+        if (!thisMsg) continue;
+
+        // set the identity
+        if (id == 0)
+          id = thisMsg->headerField("X-KMail-Identity").stripWhiteSpace().toUInt();
+
+        msgText += thisMsg->createForwardBody();
+        linklist.append(thisMsg);
+      }
+
+      KMMessage *fwdMsg = new KMMessage;
+      fwdMsg->initHeader(id);
+      fwdMsg->setAutomaticFields(true);
+      fwdMsg->setCharset("utf-8");
+      fwdMsg->setBody(msgText);
+
+      for (KMMsgBase *mb = linklist.first(); mb; mb = linklist.next()) {
+        KMMessage *thisMsg = static_cast<KMMessage *>(mb);
+        fwdMsg->link(thisMsg, KMMsgStatusForwarded);
+      }
+
+      kernel->kbp()->busy();
+      win = new KMComposeWin(fwdMsg, id);
+      win->setCharset("");
+      win->show();
+      kernel->kbp()->idle();
+      return;
+    }
+  }
+
+  // forward a single message at most.
+
+  KMMessage *msg = msgList->getFirst();
+  if (!msg || !msg->codec()) return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createForward());
+  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->show();
+  kernel->kbp()->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::forwardAttachedMsg (QPtrList<KMMessage>* msgList)
+{
+  KMComposeWin *win;
+  if (!msgList)
+    msgList = selectedMessages();
+  uint id = 0;
+  KMMessage *fwdMsg = new KMMessage;
+
+  if (msgList->count() >= 2) {
+    // don't respect X-KMail-Identity headers because they might differ for
+    // the selected mails
+    id = mFolder->identity();
+    fwdMsg->initHeader(id);
+  }
+  else if (msgList->count() == 1) {
+    KMMessage *msg = msgList->getFirst();
+    fwdMsg->initFromMessage(msg);
+  }
+
+  fwdMsg->setAutomaticFields(true);
+
+  kdDebug(5006) << "Launching composer window\n" << endl;
+  kernel->kbp()->busy();
+  win = new KMComposeWin(fwdMsg, id);
+
+  kdDebug(5006) << "Doing forward as attachment" << endl;
+  // iterate through all the messages to be forwarded
+  for (KMMsgBase *mb = msgList->first(); mb; mb = msgList->next()) {
+    int idx = mFolder->find(mb);
+    if (idx < 0) continue;
+    KMMessage *thisMsg = mFolder->getMsg(idx);
+    if (!thisMsg) continue;
+    // set the part
+    KMMessagePart *msgPart = new KMMessagePart;
+    msgPart->setTypeStr("message");
+    msgPart->setSubtypeStr("rfc822");
+    msgPart->setCharset(thisMsg->charset());
+    msgPart->setName("forwarded message");
+    msgPart->setCte(DwMime::kCte8bit);   // is 8bit O.K.?
+    msgPart->setContentDescription(thisMsg->from()+": "+thisMsg->subject());
+    // THIS HAS TO BE AFTER setCte()!!!!
+    msgPart->setBodyEncoded(thisMsg->asString());
+    msgPart->setCharset("");
+
+    fwdMsg->link(thisMsg, KMMsgStatusForwarded);
+    win->addAttach(msgPart);
+  }
+
+  win->show();
+  kernel->kbp()->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::redirectMsg(KMMessage* msg)
+{
+  KMComposeWin *win;
+  if (!msg)
+   msg = currentMsg();
+
+  if (!msg || !msg->codec()) return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin();
+  win->setMsg(msg->createRedirect(), FALSE);
+  win->setCharset(msg->codec()->mimeName());
+  win->show();
+  kernel->kbp()->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::noQuoteReplyToMsg(KMMessage* msg)
+{
+  KMComposeWin *win;
+  if (!msg)
+    msg = currentMsg();
+  QString id;
+
+  if (!msg || !msg->codec())
+    return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, "", TRUE));
+  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setReplyFocus(false);
+  win->show();
+  kernel->kbp()->idle();
+}
+
+//-----------------------------------------------------------------------------
+void KMHeaders::replyToMsg (QString selection, KMMessage *msg)
+{
+  KMComposeWin *win;
+  if (!msg)
+     msg = currentMsg();
+  QString id;
+
+  if (!msg || !msg->codec())
+    return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createReply(FALSE, FALSE, selection));
+  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setReplyFocus();
+  win->show();
+  kernel->kbp()->idle();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMHeaders::replyAllToMsg (QString selection, KMMessage* msg)
+{
+  KMComposeWin *win;
+  if (!msg)
+   msg = currentMsg();
+  QString id;
+
+  if (!msg || !msg->codec()) return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createReply(TRUE, FALSE, selection));
+  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setReplyFocus();
+  win->show();
+  kernel->kbp()->idle();
+}
+
+//-----------------------------------------------------------------------------
+void KMHeaders::replyListToMsg (QString selection, KMMessage* msg)
+{
+  KMComposeWin *win;
+  if (!msg)
+   msg = currentMsg();
+  QString id;
+
+  if (!msg || !msg->codec()) return;
+
+  kernel->kbp()->busy();
+  win = new KMComposeWin(msg->createReply(true, true, selection));
+  win->setCharset(msg->codec()->mimeName(), TRUE);
+  win->setReplyFocus();
+  win->show();
+  kernel->kbp()->idle();
+}
+
+//-----------------------------------------------------------------------------
 void KMHeaders::moveSelectedToFolder( int menuId )
 {
   if (mMenuToFolder[menuId])
@@ -1379,13 +1714,39 @@ void KMHeaders::moveSelectedToFolder( int menuId )
 }
 
 //-----------------------------------------------------------------------------
-void KMHeaders::prepareMove( KMMsgBase **curMsg, int *contentX, int *contentY )
+void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
+  if (destFolder == mFolder)
+    return;
+
+  KMMessageList* msgList = selectedMsgs(msgId);  // get list of selected messages
+
+  if ( !destFolder &&     // messages shall be deleted
+       KMessageBox::warningContinueCancel(this,
+         i18n("<qt>Do you really want to delete the selected message?<br>"
+              "Once deleted, it cannot be restored!</qt>",
+              "<qt>Do you really want to delete the %n selected messages?<br>"
+              "Once deleted, they cannot be restored!</qt>", msgList->count() ),
+         i18n("Delete Messages"), i18n("&Delete"), "NoConfirmDelete") == KMessageBox::Cancel )
+    return;  // user cancelled the action
+
+  KMMessage *msg;
+  KMMsgBase *msgBase, *curMsg = 0;
+  int rc;
+
   emit maybeDeleting();
 
-  disconnect( this, SIGNAL(currentChanged(QListViewItem*)),
- 	      this, SLOT(highlightMessage(QListViewItem*)));
+  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+	     this,SLOT(highlightMessage(QListViewItem*)));
+  kernel->kbp()->busy();
 
+  if (destFolder && destFolder->open() != 0)
+  {
+      kernel->kbp()->idle();
+      return;
+  }
+
+  int contentX, contentY;
   QListViewItem *curItem;
   KMHeaderItem *item;
   curItem = currentItem();
@@ -1395,9 +1756,9 @@ void KMHeaders::prepareMove( KMMsgBase **curMsg, int *contentX, int *contentY )
     curItem = curItem->itemAbove();
   item = static_cast<KMHeaderItem*>(curItem);
   if (item  && !item->isSelected())
-    *curMsg = mFolder->getMsgBase(item->msgId());
-  *contentX = contentsX();
-  *contentY = contentsY();
+    curMsg = mFolder->getMsgBase(item->msgId());
+  contentX = contentsX();
+  contentY = contentsY();
 
   // The following is a rather delicate process. We can't allow getMsg
   // to be called on messages in msgList as then we will try to operate on a
@@ -1411,42 +1772,69 @@ void KMHeaders::prepareMove( KMMsgBase **curMsg, int *contentX, int *contentY )
 
   blockSignals( true ); // don't emit signals when the current message is
 
-}
+  int index;
+  QPtrList<KMMessage> list;
+  for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
+  {
+    int idx = mFolder->find(msgBase);
+    assert(idx != -1);
+    msg = mFolder->getMsg(idx);
+    if (msg->transferInProgress()) continue;
 
-//-----------------------------------------------------------------------------
-void KMHeaders::finalizeMove( KMMsgBase *curMsg, int contentX, int contentY )
-{
+    if (destFolder) {
+      if (destFolder->protocol() == "imap")
+        list.append(msg);
+      else
+      {
+        rc = destFolder->moveMsg(msg, &index);
+        if (rc == 0 && index != -1) {
+          KMMsgBase *mb = destFolder->unGetMsg( destFolder->count() - 1 );
+          kernel->undoStack()->pushAction( mb->getMsgSerNum(), mFolder, destFolder );
+        }
+      }
+    }
+    else
+    {
+      // really delete messages that are already in the trash folder
+      if (mFolder->protocol() == "imap")
+        list.append(msg);
+      else
+      {
+        mFolder->removeMsg(msg);
+        delete msg;
+      }
+    }
+  }
+  if (!list.isEmpty())
+  {
+    if (destFolder)
+      destFolder->moveMsg(list, &index);
+    else
+      mFolder->removeMsg(list);
+  }
+
   blockSignals( false );
 
   emit selected( 0 );
   if (curMsg) {
+    kdDebug(5006) << "new message should be current!" << endl;
     setSelected( currentItem(), TRUE );
     setCurrentMsg( mFolder->find( curMsg ) );
     highlightMessage( currentItem(), false);
   }
+  else
+    emit selected( 0 );
 
   setContentsPos( contentX, contentY );
   makeHeaderVisible();
-  connect( this, SIGNAL(currentChanged(QListViewItem*)),
- 	   this, SLOT(highlightMessage(QListViewItem*)));
-}
+  connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	     this,SLOT(highlightMessage(QListViewItem*)));
 
-
-//-----------------------------------------------------------------------------
-void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
-{
-  KMMessageList msgList = *selectedMsgs(msgId);
-  if ( !destFolder &&     // messages shall be deleted
-       KMessageBox::warningContinueCancel(this,
-         i18n("<qt>Do you really want to delete the selected message?<br>"
-              "Once deleted, it cannot be restored!</qt>",
-              "<qt>Do you really want to delete the %n selected messages?<br>"
-              "Once deleted, they cannot be restored!</qt>", msgList.count() ),
-         i18n("Delete Messages"), i18n("&Delete"), "NoConfirmDelete") == KMessageBox::Cancel )
-    return;  // user cancelled the action
-
-  KMCommand *command = new KMMoveCommand( mFolder, destFolder, msgList, this );
-  command->start();
+  if (destFolder) {
+      destFolder->sync();
+      destFolder->close();
+  }
+  kernel->kbp()->idle();
 }
 
 bool KMHeaders::canUndo() const
@@ -1493,17 +1881,87 @@ void KMHeaders::copyMsgToFolder(KMFolder* destFolder,
                                 int msgId,
                                 KMMessage* aMsg)
 {
-  KMMessageList msgList;
-  if (aMsg)
-    msgList.append( aMsg );
-  else
-    msgList = *selectedMsgs(msgId);
+  KMMessageList* msgList;
+  KMMsgBase *msgBase;
+  KMMessage *msg, *newMsg;
+  int rc, index, idx = -1;
+  bool isMessage = false;
+  QPtrList<KMMessage> list;
 
-  if (!destFolder)
-    return;
+  if (!destFolder) return;
 
-  KMCommand *command = new KMCopyCommand( mFolder, destFolder, msgList );
-  command->start();
+
+  bool useParam_aMsg = (NULL != aMsg);
+
+  kernel->kbp()->busy();
+
+  destFolder->open();
+  msgList = useParam_aMsg ? NULL : selectedMsgs(msgId);
+  for ( rc=0, msgBase = (useParam_aMsg ? NULL : msgList->first());
+        useParam_aMsg || (msgBase && !rc);
+        msgBase = (useParam_aMsg ? NULL : msgList->next()) )
+  {
+    if( useParam_aMsg )
+      msg = aMsg;
+    else {
+      if (isMessage = msgBase->isMessage())
+      {
+        msg = static_cast<KMMessage*>(msgBase);
+      } else {
+        idx = mFolder->find(msgBase);
+        assert(idx != -1);
+        msg = mFolder->getMsg(idx);
+      }
+    }
+
+    if ((mFolder->protocol() == "imap") && (destFolder->protocol() == "imap") &&
+	(static_cast<KMFolderImap*>(mFolder)->account() ==
+	 static_cast<KMFolderImap*>(destFolder)->account()))
+    {
+      list.append(msg);
+    } else {
+      newMsg = new KMMessage;
+      newMsg->fromString(msg->asString());
+      newMsg->setStatus(msg->status());
+      newMsg->setComplete(msg->isComplete());
+
+      if ((mFolder->protocol() == "imap") && !newMsg->isComplete())
+      {
+        kernel->filterMgr()->tempOpenFolder(destFolder);
+	newMsg->setParent(msg->parent());
+        KMImapJob *imapJob = new KMImapJob(newMsg);
+        connect(imapJob, SIGNAL(messageRetrieved(KMMessage*)),
+		destFolder, SLOT(reallyAddCopyOfMsg(KMMessage*)));
+      } else {
+	rc = destFolder->addMsg(newMsg, &index);
+
+	if (rc == 0 && index != -1)
+	    destFolder->unGetMsg( destFolder->count() - 1 );
+      }
+    }
+
+    if (!isMessage && list.isEmpty())
+    {
+      assert(idx != -1);
+      mFolder->unGetMsg( idx );
+    }
+
+    // To process only one single message?
+    if( useParam_aMsg )
+      break;
+
+  } // end for
+
+  if (!list.isEmpty())
+  {
+    // copy the message(s); note: the list is empty afterwards!
+    KMFolderImap *imapDestFolder = static_cast<KMFolderImap*>(destFolder);
+    imapDestFolder->copyMsg(list);
+    imapDestFolder->getFolder();
+  }
+
+  destFolder->close();
+  kernel->kbp()->idle();
 }
 
 
@@ -1535,6 +1993,21 @@ KMMessageList* KMHeaders::selectedMsgs(int)
 
   return &mSelMsgBaseList;
 }
+
+//-----------------------------------------------------------------------------
+QPtrList<KMMessage>* KMHeaders::selectedMessages()
+{
+  mSelMsgList.clear();
+  for (QListViewItemIterator it(this); it.current(); it++)
+    if (it.current()->isSelected()) {
+      KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
+      KMMessage *msg = mFolder->getMsg(item->msgId());
+      mSelMsgList.append(msg);
+    }
+
+  return &mSelMsgList;
+}
+
 
 //-----------------------------------------------------------------------------
 int KMHeaders::firstSelectedMsg() const
@@ -2199,9 +2672,9 @@ void KMHeaders::slotRMB()
   mOwner->updateMessageMenu();
 
   QPopupMenu *msgMoveMenu = new QPopupMenu(menu);
-  KMMoveCommand::folderToPopupMenu( TRUE, this, &mMenuToFolder, msgMoveMenu );
+  mOwner->folderToPopupMenu( TRUE, this, &mMenuToFolder, msgMoveMenu );
   QPopupMenu *msgCopyMenu = new QPopupMenu(menu);
-  KMCopyCommand::folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
+  mOwner->folderToPopupMenu( FALSE, this, &mMenuToFolder, msgCopyMenu );
 
   bool out_folder = kernel->folderIsDraftOrOutbox(mFolder);
   if ( out_folder )

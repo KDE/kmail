@@ -391,9 +391,9 @@ void KMFolderMgr::readMsgDict(KMMsgDict *dict, KMFolderDir *dir, int pass)
                readMsgDict(dict, child, pass);
              },
              {
-	       if (pass == 1) {
+               if (pass == 1)
                  dict->readFolderIds(folder);
-               } else if (pass == 2) {
+               else if (pass == 2) {
                  if (!dict->hasFolderIds(folder)) {
                    folder->fillMsgDict(dict);
                    dict->writeFolderIds(folder);

@@ -1,7 +1,7 @@
 // kmreaderwin.cpp
 // Author: Markus Wuebben <markus.wuebben@kde.org>
 
-// #define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
+//#define STRICT_RULES_OF_GERMAN_GOVERNMENT_02
 
 #include <config.h>
 #include <stdlib.h>
@@ -30,7 +30,6 @@
 #include <krun.h>
 #include <ktempfile.h>
 #include <kprocess.h>
-#include <kmcommands.h>
 #include <kstdguiitem.h>
 
 // khtml headers
@@ -47,7 +46,6 @@
 #include "kmversion.h"
 #include "kmglobal.h"
 #include "kmmainwin.h"
-#include "kmreadermainwin.h"
 
 #include "kbusyptr.h"
 #include "kfileio.h"
@@ -95,6 +93,8 @@
 #ifdef HAVE_PATHS_H
 #include <paths.h>
 #endif
+
+QPtrList<KMReaderWin> KMReaderWin::mStandaloneWindows;
 
 class KMReaderWin::PartMetaData {
 public:
@@ -1483,10 +1483,9 @@ kdDebug(5006) << "                      Root node will NOT be replaced." << endl
 const int KMReaderWin::delay = 150;
 
 //-----------------------------------------------------------------------------
-KMReaderWin::KMReaderWin(QWidget *aParent,
-			 KMainWindow *mainWindow,
-			 KMMimePartTree* mimePartTree,
+KMReaderWin::KMReaderWin(KMMimePartTree* mimePartTree,
                          int* showMIMETreeMode,
+                         QWidget *aParent,
                          const char *aName,
                          int aFlags)
   : KMReaderWinInherited(aParent, aName, aFlags | Qt::WDestructiveClose),
@@ -1494,8 +1493,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
     mMimePartTree( mimePartTree ),
     mShowMIMETreeMode( showMIMETreeMode ),
     mRootNode( 0 ),
-    mIdOfLastViewedMessage(),
-    mMainWindow( mainWindow )
+    mIdOfLastViewedMessage()
 {
   mAutoDelete = false;
   mLastSerNum = 0;
@@ -1506,6 +1504,9 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
   mShowColorbar = false;
   mInlineImage = false;
   mIsFirstTextPart = true;
+
+  if (!aParent)
+     mStandaloneWindows.append(this);
 
   initHtmlWidget();
   readConfig();
@@ -1529,6 +1530,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  mStandaloneWindows.removeRef(this);
   delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete message();
   if (mRootNode) delete mRootNode;
@@ -1891,7 +1893,7 @@ void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setCodec(const QTextCodec *codec)
+void KMReaderWin::setCodec(QTextCodec *codec)
 {
   mCodec = codec;
   if(!codec) {
@@ -1959,10 +1961,12 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   else
     updateReaderWinTimer.start( 0, TRUE );
 
-  if (mDelayedMarkAsRead && (mDelayedMarkTimeout != 0))
-    mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
-  else
-    slotTouchMessage();
+  if (mDelayedMarkAsRead) {
+    if ( mDelayedMarkTimeout == 0 )
+    	slotTouchMessage();
+    else
+        mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -2993,7 +2997,7 @@ kdDebug(5006) << "\n     ------  Sorry, no Mime Part Tree - can NOT insert Root 
   partNode* vCardNode = mRootNode->findType( DwMime::kTypeText, DwMime::kSubtypeXVCard );
   if( vCardNode ) {
     int vcerr;
-    const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+    QTextCodec *atmCodec = (mAutoDetectEncoding) ?
       KMMsgBase::codecForName(vCardNode->msgPart().charset()) : mCodec;
     if (!atmCodec) atmCodec = mCodec;
     vc = VCard::parseVCard(atmCodec->toUnicode(
@@ -3059,7 +3063,6 @@ kdDebug(5006) << "|| (KMMsgPartiallyEncrypted == encryptionState) = " << (KMMsgP
   if(    !onlyProcessHeaders
          // only proceed if we were called the normal way - not by
          // double click on the message (==not running in a separate window)
-
       && (aMsg == message())
          // only proceed if this message was not saved encryptedly before
          // to make sure only *new* messages are saved in decrypted form
@@ -3955,7 +3958,7 @@ QString KMReaderWin::writeSigstatFooter( PartMetaData& block )
 }
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::writeBodyStr( const QCString aStr, const QTextCodec *aCodec,
+void KMReaderWin::writeBodyStr( const QCString aStr, QTextCodec *aCodec,
                                 const QString& fromAddress,
                                 bool* flagSigned, bool* flagEncrypted )
 {
@@ -4274,7 +4277,16 @@ QString KMReaderWin::strToHtml(const QString &aStr, bool aPreserveBlanks) const
 void KMReaderWin::printMsg(void)
 {
   if (!message()) return;
+
+  if (mPrinting)
     mViewer->view()->print();
+  else {
+    KMReaderWin printWin;
+    printWin.setPrinting(TRUE);
+    printWin.readConfig();
+    printWin.setMsg(message(), TRUE);
+    printWin.printMsg();
+  }
 }
 
 
@@ -4504,6 +4516,7 @@ void KMReaderWin::slotFind()
     act->activate();
 }
 
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotToggleFixedFont()
 {
@@ -4514,55 +4527,54 @@ void KMReaderWin::slotToggleFixedFont()
   update(true);
 }
 
-
-//-----------------------------------------------------------------------------
-void KMReaderWin::slotCopySelectedText()
-{
-  kapp->clipboard()->setText( mViewer->selectedText() );
-}
-
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::atmViewMsg(KMMessagePart* aMsgPart)
 {
   KMMessage* msg = new KMMessage;
   assert(aMsgPart!=NULL);
+
   msg->fromString(aMsgPart->bodyDecoded());
-  assert(msg != NULL);
-  KMReaderMainWin *win = new KMReaderMainWin();
-  win->showMsg( mCodec, msg );
-  win->resize(550,600);
-  win->show();
+  emit showAtmMsg(msg);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
-    bool aHTML, const QString& aFileName, const QString& pname,
-    const QTextCodec *aCodec )
+void KMReaderWin::atmView(KMReaderWin* aReaderWin, KMMessagePart* aMsgPart,
+    bool aHTML, const QString& aFileName, const QString& pname, QTextCodec *codec)
 {
   QString str;
+
+  if (aReaderWin && qstricmp(aMsgPart->typeStr(), "message")==0)
+  {
+    aReaderWin->atmViewMsg(aMsgPart);
+    return;
+  }
+
   kernel->kbp()->busy();
-  if (qstricmp(aMsgPart->typeStr(), "message")==0) {
-      // if called from compose win
+  {
+    KMReaderWin* win = new KMReaderWin; //new reader
+    if (qstricmp(aMsgPart->typeStr(), "message")==0)
+    {               // if called from compose win
       KMMessage* msg = new KMMessage;
       assert(aMsgPart!=NULL);
       msg->fromString(aMsgPart->bodyDecoded());
-      mMainWindow->setCaption(msg->subject());
-      setMsg(msg, true);
-      setAutoDelete(true);
-  } else if (qstricmp(aMsgPart->typeStr(), "text")==0) {
+      win->setCaption(msg->subject());
+      win->setMsg(msg, true);
+      win->show();
+    }
+    else if (qstricmp(aMsgPart->typeStr(), "text")==0)
+    {
       if (qstricmp(aMsgPart->subtypeStr(), "x-vcard") == 0) {
-	KMDisplayVCard *vcdlg;
+        KMDisplayVCard *vcdlg;
 	int vcerr;
-	VCard *vc = VCard::parseVCard(aCodec->toUnicode(
- 	aMsgPart->bodyDecoded()), &vcerr);
+	VCard *vc = VCard::parseVCard(codec->toUnicode(aMsgPart
+          ->bodyDecoded()), &vcerr);
+
 	if (!vc) {
           QString errstring = i18n("Error reading in vCard:\n");
 	  errstring += VCard::getError(vcerr);
           kernel->kbp()->idle();
 	  KMessageBox::error(NULL, errstring, i18n("vCard error"));
-	  kernel->kbp()->idle();
 	  return;
 	}
 
@@ -4571,63 +4583,63 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
 	vcdlg->show();
 	return;
       }
-      if ( aCodec )
-	setCodec( aCodec );
+      win->readConfig();
+      if ( codec )
+	win->setCodec( codec );
       else
-	setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
-      mViewer->begin( KURL( "file:/" ) );
-      queueHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
-		"Transitional//EN\">\n<html><head><title></title>"
-		"<style type=\"text/css\">" +
-		QString("a { color: %1;").arg(c2.name()) +		
-		"text-decoration: none; }" + // just playing
-		"</style></head><body " +
-		QString(" text=\"%1\"").arg(c1.name()) +
-		QString(" bgcolor=\"%1\"").arg(c4.name()) +
-		">" );
+	win->setCodec( KGlobal::charsets()->codecForName( "iso8859-1" ) );
+      win->mViewer->begin( KURL( "file:/" ) );
+      win->queueHtml("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+		     "Transitional//EN\">\n<html><head><title></title>"
+		     "<style type=\"text/css\">" +
+		 QString("a { color: %1;").arg(win->c2.name()) +
+		 "text-decoration: none; }" + // just playing
+		 "</style></head><body " +
+                 QString(" text=\"%1\"").arg(win->c1.name()) +
+  		 QString(" bgcolor=\"%1\"").arg(win->c4.name()) +
+		 ">" );
+
       QCString str = aMsgPart->bodyDecoded();
       if (aHTML && (qstricmp(aMsgPart->subtypeStr(), "html")==0))  // HTML
-	  writeHTMLStr(codec()->toUnicode(str));
+        //win->mViewer->write(win->codec()->toUnicode(str));
+	win->writeHTMLStr(win->codec()->toUnicode(str));
       else // plain text
-	  writeBodyStr( str,
-		    codec(),
-		    message() ? message()->from() : "" );
-      queueHtml("</body></html>");
-      sendNextHtmlChunk();
-      mMainWindow->setCaption(i18n("View Attachment: ") + pname);
-  } else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
+        win->writeBodyStr( str,
+                           win->codec(),
+                           win->message() ? win->message()->from() : "" );
+      win->queueHtml("</body></html>");
+      win->sendNextHtmlChunk();
+      win->setCaption(i18n("View Attachment: ") + pname);
+      win->show();
+    }
+    else if (qstricmp(aMsgPart->typeStr(), "image")==0 ||
              (qstricmp(aMsgPart->typeStr(), "application")==0 &&
               qstricmp(aMsgPart->subtypeStr(), "postscript")))
-  {
-      if (aFileName.isEmpty()) {
-	  kernel->kbp()->idle();
-	  return;  // prevent crash
-      }
+    {
       if (aFileName.isEmpty()) return;  // prevent crash
       // Open the window with a size so the image fits in (if possible):
       QImageIO *iio = new QImageIO();
       iio->setFileName(aFileName);
       if( iio->read() ) {
         QImage img = iio->image();
-	int scnum = QApplication::desktop()->screenNumber(mMainWindow);
+        int scnum = QApplication::desktop()->screenNumber(win);
 	if( img.width() > 50 && img.width() > 50	// avoid super small windows
 	    && img.width() < QApplication::desktop()->screen(scnum)->width()	// avoid super large windows
 	    && img.height() < QApplication::desktop()->screen(scnum)->height() ) {
-	
+	  win->resize(img.width()+10, img.height()+10);
 	}
-	mMainWindow->resize(img.width()+25, img.height()+25);
       }
       // Just write the img tag to HTML:
-      mViewer->begin( KURL( "file:/" ) );
-      mViewer->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
-		     "Transitional//EN\">\n<html><title></title><body>");
+      win->mViewer->begin( KURL( "file:/" ) );
+      win->mViewer->write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 "
+			  "Transitional//EN\">\n<html><title></title><body>");
       QString linkName = QString("<img src=\"file:%1\" border=0>").arg(aFileName);
-      mViewer->write(linkName);
-      mViewer->write("</body></html>");
-      mViewer->end();
-      setCaption(i18n("View Attachment: ") + pname);
-      show();
-  } else {
+      win->mViewer->write(linkName);
+      win->mViewer->write("</body></html>");
+      win->mViewer->end();
+      win->setCaption(i18n("View Attachment: %1").arg(pname));
+      win->show();
+    } else {
       KMTextBrowser *browser = new KMTextBrowser(); // deletes itself
       QString str = aMsgPart->bodyDecoded();
       // A QString cannot handle binary data. So if it's shorter than the
@@ -4638,6 +4650,7 @@ void KMReaderWin::setMsgPart( KMMessagePart* aMsgPart,
       browser->setText(str);
       browser->resize(500, 550);
       browser->show();
+    }
   }
   // ---Sven's view text, html and image attachments in html widget end ---
   kernel->kbp()->idle();
@@ -4655,16 +4668,10 @@ void KMReaderWin::slotAtmView()
     if (pname.isEmpty()) pname=msgPart.contentDescription();
     if (pname.isEmpty()) pname="unnamed";
     // image Attachment is saved already
-    const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+    QTextCodec *atmCodec = (mAutoDetectEncoding) ?
       KMMsgBase::codecForName(msgPart.charset()) : mCodec;
     if (!atmCodec) atmCodec = mCodec;
-    if (qstricmp(msgPart.typeStr(), "message")==0)
-      atmViewMsg(&msgPart);
-    else {
-      KMReaderMainWin *win = new KMReaderMainWin(&msgPart, htmlMail(),
-	mAtmCurrentName, pname, atmCodec );
-      win->show();
-    }
+    atmView(this, &msgPart, htmlMail(), mAtmCurrentName, pname, atmCodec);
   }
 }
 
@@ -4691,7 +4698,7 @@ void KMReaderWin::slotAtmOpen()
     if (qstricmp(msgPart.subtypeStr(), "x-vcard") == 0) {
       KMDisplayVCard *vcdlg;
       int vcerr;
-      const QTextCodec *atmCodec = (mAutoDetectEncoding) ?
+      QTextCodec *atmCodec = (mAutoDetectEncoding) ?
         KMMsgBase::codecForName(msgPart.charset()) : mCodec;
       if (!atmCodec) atmCodec = mCodec;
       VCard *vc = VCard::parseVCard(atmCodec->toUnicode(msgPart
@@ -4933,5 +4940,12 @@ KMMessage* KMReaderWin::message() const
   }
   return 0;
 }
+
+void KMReaderWin::deleteAllStandaloneWindows()
+{
+  mStandaloneWindows.setAutoDelete(true);
+  mStandaloneWindows.clear();
+}
+
 //-----------------------------------------------------------------------------
 #include "kmreaderwin.moc"

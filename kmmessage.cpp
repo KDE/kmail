@@ -733,7 +733,7 @@ QCString KMMessage::asQuotedString(const QString& aHeaderStr,
   int i;
   bool clearSigned = false;
 
-  const QTextCodec *codec = mCodec;
+  QTextCodec *codec = mCodec;
   if (!codec)
   {
     QCString cset = charset();
@@ -939,7 +939,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
 
   msg->setCharset("utf-8");
 
-  if (replyToList && parent() && parent()->isMailingList())
+  if (replyToList && parent()->isMailingList())
   {
     // Reply to mailing-list posting address
     toStr = parent()->mailingListPostAddress();
@@ -1022,7 +1022,7 @@ KMMessage* KMMessage::createReply(bool replyToAll, bool replyToList,
   msg->setReplyToId(msgId());
 
   if (replyToAll || replyToList || !mailingListStr.isEmpty()
-      || (parent() && parent()->isMailingList()))
+      || parent()->isMailingList())
     replyStr = sReplyAllStr;
   else replyStr = sReplyStr;
   replyStr += "\n";
@@ -2512,8 +2512,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
 
 
 //-----------------------------------------------------------------------------
-void KMMessage::viewSource(const QString& aCaption, const QTextCodec *codec, 
-			   bool fixedfont)
+void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixedfont)
 {
   QString str = (codec) ? codec->toUnicode(asString()) :
     kernel->networkCodec()->toUnicode(asString());

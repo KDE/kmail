@@ -29,7 +29,8 @@ class DwHeaders;
 #define KMMessageInherited KMMsgBase
 class KMMessage: public KMMsgBase
 {
-  friend class KMForwardCommand;    // needed for MIME Digest forward
+  friend class KMFolder;
+  friend class KMHeaders;    // needed for MIME Digest forward
 
 public:
   /** Straight forward initialization. */
@@ -421,7 +422,7 @@ public:
   virtual void deleteBodyParts(void);
 
   /** Open a window containing the complete, unparsed, message. */
-  virtual void viewSource(const QString& windowCaption, const QTextCodec *codec,
+  virtual void viewSource(const QString& windowCaption, QTextCodec *codec,
 					bool fixedfont);
 
   /** Set "Status" and "X-Status" fields of the message from the
@@ -480,11 +481,11 @@ public:
   virtual void setCharset(const QCString& aStr);
 
   /** Get the charset the user selected for the message to display */
-  virtual const QTextCodec* codec(void) const
+  virtual QTextCodec* codec(void) const
   { return mCodec; }
 
   /** Set the charset the user selected for the message to display */
-  virtual void setCodec(const QTextCodec* aCodec)
+  virtual void setCodec(QTextCodec* aCodec)
   { mCodec = aCodec; }
 
   /** Allow decoding of HTML for quoting */
@@ -583,7 +584,7 @@ protected:
   bool       mNeedsAssembly, mIsComplete, mTransferInProgress, mDecodeHTML;
   static int sHdrStyle;
   static QString sForwardStr;
-  const QTextCodec* mCodec;
+  QTextCodec* mCodec;
 
   QString mFileName;
   off_t mFolderOffset;

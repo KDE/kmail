@@ -47,8 +47,7 @@ kmail_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		linklocator.cpp spellingfilter.cpp \
                 mailcomposerIface.skel mailcomposerIface.stub \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
-		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
-		kmcommands.cpp kmreadermainwin.cpp
+		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp
 
 noinst_HEADERS = directoryservicesconfigurationdialogimpl.h \
 		 adddirectoryservicedialogimpl.h kmmimeparttree.h \

@@ -21,7 +21,6 @@
 #include <qpopupmenu.h>
 #include <qfile.h>
 
-
 KMMimePartTree::KMMimePartTree( KMReaderWin* readerWin,
                                 QWidget* parent,
                                 const char* name )

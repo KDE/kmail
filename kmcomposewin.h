@@ -60,8 +60,8 @@ class KToolBar;
 class KToggleAction;
 class KURL;
 class IdentityCombo;
+class CryptPlugWrapperList;
 class SpellingFilter;
-class  CryptPlugWrapperList;
 
 typedef QPtrList<KMMessagePart> KMMsgPartList;
 
@@ -195,6 +195,7 @@ class KMHeaders;
 class KMComposeWin : public KMTopLevelWidget, virtual public MailComposerIface
 {
   Q_OBJECT
+  friend class KMHeaders;         // needed for the digest forward
 
 public:
   KMComposeWin( KMMessage* msg=0, uint identity=0 );
@@ -336,7 +337,7 @@ public slots:
        simply be able to confirm the message and send it.
     */
     void slotSetAlwaysSend( bool bAlwaysSend );
-
+    
   /**
    * toggle fixed width font.
    */

@@ -31,7 +31,6 @@
 #include "kmfoldermgr.h"
 #include "kmfoldercombobox.h"
 #include "kmtransport.h"
-#include "kmcommands.h"
 
 #include <kaction.h>
 #include <kcharsets.h>
@@ -48,7 +47,6 @@
 
 #include "kmmainwin.h"
 #include "kmreaderwin.h"
-#include "kmreadermainwin.h"
 
 #include <assert.h>
 #include <mimelib/mimepp.h>
@@ -3853,9 +3851,8 @@ void KMComposeWin::slotAttachView()
   atmTempFile->setAutoDelete( true );
   kByteArrayToFile(msgPart->bodyDecodedBinary(), atmTempFile->name(), false, false,
     false);
-  KMReaderMainWin *win = new KMReaderMainWin(msgPart, false,
-    atmTempFile->name(), pname, KMMsgBase::codecForName(mCharset) );
-  win->show();
+  KMReaderWin::atmView(NULL, msgPart, false, atmTempFile->name(), pname,
+    KMMsgBase::codecForName(mCharset));
 }
 
 
@@ -4115,9 +4112,10 @@ void KMComposeWin::slotWordWrapToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
+  KMReaderWin rw;
   applyChanges();
-  KMCommand *command = new KMPrintCommand( this, mMsg );
-  command->start();
+  rw.setMsg(mMsg, true);
+  rw.printMsg();
 }
 
 
