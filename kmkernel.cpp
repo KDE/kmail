@@ -17,6 +17,7 @@
 #include <kprocess.h>
 
 #include "kmmainwin.h"
+#include "kmreaderwin.h"
 #include "kmcomposewin.h"
 #include "kmfoldermgr.h"
 #include "kmfolderimap.h"
@@ -679,6 +680,8 @@ void KMKernel::cleanup(void)
   the_shuttingDown = TRUE;
   KConfig* config =  kapp->config();
   KConfigGroupSaver saver(config, "General");
+
+  KMReaderWin::deleteAllStandaloneWindows();
 
   delete the_acctMgr;
   the_acctMgr = 0;

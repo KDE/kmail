@@ -221,7 +221,8 @@ public:
                                QCString& decryptedData,
                                bool showWarning = true );
 
-
+    /** Delete all KMReaderWin's that do not have a parent. */
+    static void deleteAllStandaloneWindows();
 
 signals:
   /** Emitted to show a text on the status line. */
@@ -355,6 +356,7 @@ protected:
   /** Cleanup the attachment temp files */
   virtual void removeTempFiles();
 
+ 
 private:
   /** extracted parts from writeBodyStr() */
   class PartMetaData;
@@ -419,6 +421,7 @@ protected:
   int* mShowMIMETreeMode;
   CryptPlugWrapperList * mCryptPlugList;
   partNode* mRootNode;
+  static QPtrList<KMReaderWin> mStandaloneWindows;
 };
 
 

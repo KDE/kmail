@@ -88,6 +88,8 @@
 #include <paths.h>
 #endif
 
+QPtrList<KMReaderWin> KMReaderWin::mStandaloneWindows;
+
 class KMReaderWin::PartMetaData {
 public:
     bool isSigned;
@@ -1081,6 +1083,9 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
   mMsgDisplay = true;
   mPrinting = false;
   mShowColorbar = false;
+  
+  if (!aParent)
+     mStandaloneWindows.append(this);
 
   initHtmlWidget();
   readConfig();
@@ -1104,6 +1109,7 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
 //-----------------------------------------------------------------------------
 KMReaderWin::~KMReaderWin()
 {
+  mStandaloneWindows.removeRef(this);
   delete mViewer;  //hack to prevent segfault on exit
   if (mAutoDelete) delete mMsg;
   if (mRootNode) delete mRootNode;
@@ -3963,6 +3969,12 @@ void KMReaderWin::setHtmlOverride(bool override)
 bool KMReaderWin::htmlMail()
 {
   return ((mHtmlMail && !mHtmlOverride) || (!mHtmlMail && mHtmlOverride));
+}
+
+void KMReaderWin::deleteAllStandaloneWindows()
+{
+  mStandaloneWindows.setAutoDelete(true);
+  mStandaloneWindows.clear();
 }
 
 //-----------------------------------------------------------------------------
