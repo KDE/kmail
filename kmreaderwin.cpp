@@ -717,8 +717,6 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if(!str.isEmpty()) htmlStr += quotedHTML(str);
   }
   else htmlStr += quotedHTML(aStr);
-  htmlStr += "<br>";
-
   mViewer->write(htmlStr);
 }
 
@@ -748,10 +746,11 @@ QString KMReaderWin::quotedHTML(const QString& s)
   while( pos < (int)s.length() )
   {
     ch = s[pos];
-    if( ch == '\n' )
+    if(( ch == '\n' ) || (pos == s.length() - 1))
     {
+      int adj = (ch == '\n') ? 0 : 1;
       newlineCount ++;
-      line = strToHtml(s.mid(beg,pos-beg),TRUE,TRUE);
+      line = strToHtml(s.mid(beg,pos-beg+adj),TRUE,TRUE);
       if( currQuoteLevel >= 0 )
       {
 	if( currQuoteLevel != prevQuoteLevel )
