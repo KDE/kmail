@@ -642,6 +642,7 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     if (uidValidity() != uidv)
     {
       // uidValidity changed
+      kdDebug(5006) << "KMFolderImap::slotCheckValidityResult uidValidty changed." << endl;
       expunge();
       mLastUid = 0;
       uidmap.clear();
