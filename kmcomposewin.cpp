@@ -2845,6 +2845,12 @@ void KMLineEdit::insert(const QString &t)
        KURL u(newText);
        newText = u.path();
     }
+    else if (newText.contains(" at "))
+    {
+       // Anti-spam stuff
+       newText.replace( QRegExp(" at "), "@" );
+       newText.replace( QRegExp(" dot "), "." );
+    }
     contents = contents.left(pos)+newText+contents.mid(pos);
     setText(contents);
     setCursorPosition(pos+newText.length());
