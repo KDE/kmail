@@ -1430,15 +1430,13 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
   if( !onlyProcessHeaders )
     removeTempFiles();
   KMMessagePart msgPart;
-  int numParts;
-  QCString type, subtype, contDisp;
+  QCString subtype, contDisp;
   QByteArray str;
   partNode* savedRootNode = 0;
 
   assert(aMsg!=0);
 
-  type = aMsg->typeStr();
-  numParts = aMsg->numBodyParts();
+  QCString type = aMsg->typeStr();
 
   int mainType    = aMsg->type();
   int mainSubType = aMsg->subtype();
@@ -1485,12 +1483,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg, bool onlyProcessHeaders)
   mRootNode = new partNode( mainBody, mainType, mainSubType, true );
   mRootNode->setFromAddress( aMsg->from() );
 
-  QString cntDesc, cntEnc;
-  KIO::filesize_t cntSize = 0;
-  cntDesc = aMsg->subject();
+  QString cntDesc = aMsg->subject();
   if( cntDesc.isEmpty() )
     cntDesc = i18n("( body part )");
-  cntSize = aMsg->msgSize();
+  KIO::filesize_t cntSize = aMsg->msgSize();
+  QString cntEnc;
   if( aMsg->contentTransferEncodingStr().isEmpty() )
     cntEnc = "7bit";
   else
@@ -2263,8 +2260,6 @@ void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
                                 KMMsgSignatureState&  inlineSignatureState,
                                 KMMsgEncryptionState& inlineEncryptionState )
 {
-  QString line, htmlStr;
-  QString signClass;
   bool goodSignature = false;
   Kpgp::Module* pgp = Kpgp::Module::getKpgp();
   assert(pgp != 0);
@@ -2291,6 +2286,7 @@ void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
 
       QStrListIterator npbit( nonPgpBlocks );
 
+      QString htmlStr;
       for( ; *pbit != 0; ++pbit, ++npbit )
       {
 	  // insert the next Non-OpenPGP block
@@ -2384,11 +2380,10 @@ void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
         if( inlineEncryptionState == KMMsgPartiallyEncrypted )
           inlineEncryptionState = KMMsgFullyEncrypted;
       }
+      htmlWriter()->queue( htmlStr );
   }
   else
-      htmlStr = quotedHTML( aCodec->toUnicode( aStr ) );
-
-  htmlWriter()->queue(htmlStr);
+    htmlWriter()->queue( quotedHTML( aCodec->toUnicode( aStr ) ) );
 }
 
 
