@@ -20,8 +20,8 @@
 #include <kdebug.h>
 #include <kfiledialog.h>
 #include <kmessagebox.h>
-#include <kopenwith.h>
 #include <kpgp.h>
+#include <krun.h>
 #include <ktempfile.h>
 
 // khtml headers
@@ -1915,12 +1915,11 @@ void KMReaderWin::slotAtmOpen()
     } else {
       // There's no know service that handles this type of file, so open
       // the "Open with..." dialog.
-      KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
       KURL::List lst;
       KURL url;
       url.setPath(mAtmCurrentName);
       lst.append(url);
-      openhandler->displayOpenWithDialog(lst);
+      KRun::displayOpenWithDialog(lst);
     }
   } else {					// Cancel
     kdDebug(5006) << "Canceled opening attachment" << endl;
@@ -1939,12 +1938,11 @@ void KMReaderWin::slotAtmOpenWith()
 
   mMsg->bodyPart(mAtmCurrent, &msgPart);
 
-  KFileOpenWithHandler *openhandler = new KFileOpenWithHandler();
   KURL::List lst;
   KURL url;
   url.setPath(mAtmCurrentName);
   lst.append(url);
-  openhandler->displayOpenWithDialog(lst);
+  KRun::displayOpenWithDialog(lst);
 }
 
 
