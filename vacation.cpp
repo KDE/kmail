@@ -13,6 +13,7 @@
 */
 
 #include "vacation.h"
+#include <limits.h>
 
 #include "vacationdialog.h"
 #include "sievejob.h"
@@ -90,7 +91,7 @@ namespace {
 		      << endl;
     }
     void finished() {}
-    
+
     void taggedArgument( const QString & tag ) {
       kdDebug( 5006 ) << "VacationDataExtractor::taggedArgument( \"" << tag << "\" )" << endl;
       if ( mContext != VacationCommand )
@@ -388,7 +389,7 @@ namespace KMail {
     mSieveJob = 0; // job deletes itself after returning from this slot!
     emit result( success );
   }
-  
+
 
 } // namespace KMail
 
