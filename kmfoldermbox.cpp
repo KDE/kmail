@@ -806,7 +806,8 @@ int KMFolderMbox::addMsg(KMMessage* aMsg, int* aIndex_ret)
 //  if (mAccount) aMsg->removeHeaderField("X-UID");
 
   if (aMsg->status()==KMMsgStatusUnread ||
-      aMsg->status()==KMMsgStatusNew) {
+      aMsg->status()==KMMsgStatusNew ||
+      ((aMsg->status()==KMMsgStatusQueued) && (this == kernel->outboxFolder()))) {
     if (mUnreadMsgs == -1) mUnreadMsgs = 1;
     else ++mUnreadMsgs;
     emit numUnreadMsgsChanged( this );

@@ -133,6 +133,16 @@ bool KMSender::send(KMMessage* aMsg, short sendNow)
     return FALSE;
   }
 
+  QString msgId = aMsg->msgId();
+  if( msgId.isEmpty() )
+  {
+    msgId = KMMessage::generateMessageId( aMsg->fromEmail() );
+    //kdDebug(5006) << "Setting Message-Id to '" << msgId << "'\n";
+    aMsg->setMsgId( msgId );
+  }
+  //else
+  //  kdDebug(5006) << "Message has already a Message-Id (" << msgId << ")\n";
+
   if (sendNow==-1) sendNow = mSendImmediate;
 
   kernel->outboxFolder()->open();

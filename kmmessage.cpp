@@ -42,8 +42,8 @@
 static DwString emptyString("");
 
 // Values that are set from the config file with KMMessage::readConfig()
-static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr, sMessageIdSuffix;
-static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix, sCreateOwnMessageIdHeaders;
+static QString sReplyLanguage, sReplyStr, sReplyAllStr, sIndentPrefixStr;
+static bool sSmartQuote, sReplaceSubjPrefix, sReplaceForwSubjPrefix;
 static int sWrapCol;
 static QStringList sReplySubjPrefixes, sForwardSubjPrefixes;
 static QStringList sPrefCharsets;
@@ -1141,39 +1141,6 @@ void KMMessage::initHeader( const QString & id )
   else
     setDrafts( ident.drafts() );
 
-  if ( !sCreateOwnMessageIdHeaders
-       || sMessageIdSuffix.isEmpty()
-       || sMessageIdSuffix.isNull() )
-    removeHeaderField("Message-Id");
-  else {
-    QDate date( QDate::currentDate() );
-    QTime time( QTime::currentTime() );
-    QString msgIdStr;
-    msgIdStr = "<";
-    msgIdStr += QString::number( date.year() );
-    if( 10 > date.month() ) msgIdStr += "0";
-    msgIdStr += QString::number( date.month() );
-    if( 10 > date.day() )   msgIdStr += "0";
-    msgIdStr += QString::number( date.day() );
-    if( 10 > time.hour() )  msgIdStr += "0";
-    msgIdStr += QString::number( time.hour() );
-    if( 10 > time.minute()) msgIdStr += "0";
-    msgIdStr += QString::number( time.minute() );
-    msgIdStr += ".";
-    if( 10 > time.second()) msgIdStr += "0";
-    msgIdStr += QString::number( time.second() );
-    if( 10 > time.msec() ) {
-      if(100 > time.msec() )  msgIdStr += "0";
-      msgIdStr += "0";
-    }
-    msgIdStr += QString::number( time.msec() );
-    msgIdStr += "@";
-    msgIdStr += sMessageIdSuffix;
-    msgIdStr += ">";
-    setHeaderField("Message-Id", msgIdStr );
-  }
-
-
   setTo("");
   setSubject("");
   setDateToday();
@@ -2152,6 +2119,31 @@ void KMMessage::viewSource(const QString& aCaption, QTextCodec *codec, bool fixe
 
 
 //-----------------------------------------------------------------------------
+QString KMMessage::generateMessageId( const QString& addr )
+{
+  QDateTime datetime = QDateTime::currentDateTime();
+  QString msgIdStr;
+
+  msgIdStr = "<" + datetime.toString( "yyyyMMddhhmm.sszzz" );
+
+  QString msgIdSuffix;
+  KConfigGroup general( kapp->config(), "General" );
+  
+  if( general.readBoolEntry( "useCustomMessageIdSuffix", false ) )
+    msgIdSuffix = general.readEntry( "myMessageIdSuffix", "" );
+
+  if( !msgIdSuffix.isEmpty() )
+    msgIdStr += "@" + msgIdSuffix;
+  else
+    msgIdStr += "." + addr;
+
+  msgIdStr += ">";
+
+  return msgIdStr;
+}
+
+
+//-----------------------------------------------------------------------------
 QString KMMessage::stripEmailAddr(const QString& aStr)
 {
   int i, j, len;
@@ -2341,10 +2333,6 @@ void KMMessage::readConfig(void)
   KConfigGroupSaver saver(config, "General");
 
   config->setGroup("General");
-
-  sCreateOwnMessageIdHeaders = config->readBoolEntry( "createOwnMessageIdHeaders",
-						      false );
-  sMessageIdSuffix = config->readEntry( "myMessageIdSuffix", "" );
 
   int languageNr = config->readNumEntry("reply-current-language",0);
 

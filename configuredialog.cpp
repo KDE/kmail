@@ -2155,8 +2155,8 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
     new QRadioButton( i18n("Threads default to clo&sed"),
 		      mNestingPolicy ), 2 );
   mNestingPolicy->insert(
-    new QRadioButton( i18n("Open threads that contain new or "
-			   "&unread messages"), mNestingPolicy ), 3 );
+    new QRadioButton( i18n("Open threads that contain new, &unread "
+			   "or important messages"), mNestingPolicy ), 3 );
   vlay->addWidget( mNestingPolicy );
 
   // a button group for three radiobuttons:
@@ -3005,34 +3005,24 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  // "create own message id"
+  // "Use custom Message-Id suffix" checkbox:
   mCreateOwnMessageIdCheck =
-    new QCheckBox( i18n("Create own Message-&ID headers "
-			"(see \"What's This\" (Shift-F1) help!)"), this );
+    new QCheckBox( i18n("&Use custom Message-Id suffix"), this );
   vlay->addWidget( mCreateOwnMessageIdCheck );
-  QWhatsThis::add( mCreateOwnMessageIdCheck,
-		   i18n("<qt><p>Check this option if your mail server doesn't "
-			"add a <i>Message-ID</i> header to your mails. "
-			"<i>Message-ID</i> headers are used to control the "
-			"grouping of mails that belong together "
-			"(\"threading\").</p>"
-			"<p>You can find out if your mail server adds a "
-			"<i>Message-ID</i> header to your mails by sending a "
-			"message to yourself and then choosing <i>View|All "
-			"headers</i> to see if the header includes such a "
-			"field.</p>"
-			"<p>If it doesn't, you should add a custom suffix in "
-			"the lineedit below. It must be unique and it must "
-			"consist of only latin letters, arabic numbers, \"-\" "
-			"and \".\".</p>"
-			"<p>Recommended values include the hostname of your "
-			"mail server or a domain name you control.</p></qt>") );
 
-  // "msg-id suffix" line edit and label:
+  // "Message-Id suffix" line edit and label:
   hlay = new QHBoxLayout( vlay ); // inherits spacing
   mMessageIdSuffixEdit = new QLineEdit( this );
+  // only ASCII letters, digits, plus, minus and dots are allowed
+  mMessageIdSuffixValidator =
+    // #### with the following validator it's not possible to enter a '.' at
+    // #### the end (as intermediate value) (Qt 3.0.1)
+    //new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*" ), 0 );
+    // #### therefore we use this as work around
+    new QRegExpValidator( QRegExp( "[a-zA-Z0-9+-]+(?:\\.[a-zA-Z0-9+-]+)*\\.?" ), 0 );
+  mMessageIdSuffixEdit->setValidator( mMessageIdSuffixValidator );
   label = new QLabel( mMessageIdSuffixEdit,
-		      i18n("&Use this Message-ID suffix:"), this );
+		      i18n("Custom Message-&Id suffix:"), this );
   label->setEnabled( false ); // since !mCreateOwnMessageIdCheck->isChecked()
   mMessageIdSuffixEdit->setEnabled( false );
   hlay->addWidget( label );
@@ -3157,7 +3147,7 @@ void ComposerPage::HeadersTab::setup() {
   QString suffix = general.readEntry( "myMessageIdSuffix", "" );
   mMessageIdSuffixEdit->setText( suffix );
   bool state = ( !suffix.isEmpty() &&
-	    general.readBoolEntry( "createOwnMessageIdHeaders", false ) );
+	    general.readBoolEntry( "useCustomMessageIdSuffix", false ) );
   mCreateOwnMessageIdCheck->setChecked( state );
 
   mTagList->clear();
@@ -3184,7 +3174,7 @@ void ComposerPage::HeadersTab::setup() {
 void ComposerPage::HeadersTab::apply() {
   KConfigGroup general( kapp->config(), "General" );
 
-  general.writeEntry( "createOwnMessageIdHeaders",
+  general.writeEntry( "useCustomMessageIdSuffix",
 		      mCreateOwnMessageIdCheck->isChecked() );
   general.writeEntry( "myMessageIdSuffix",
 		      mMessageIdSuffixEdit->text() );

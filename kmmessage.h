@@ -306,6 +306,12 @@ public:
    * internal message status. */
   virtual void setStatusFields(void);
 
+  /** Generates the Message-Id. It uses either the Message-Id suffix
+   * defined by the user or the given email address as suffix. The address
+   * must be given as addr-spec as defined in RFC 2822.
+   */
+  static QString generateMessageId( const QString& addr );
+
   /** Strip email address from string. Examples:
    * "Stefan Taferner <taferner@kde.org>" returns "Stefan Taferner"
    * "joe@nowhere.com" returns "joe@nowhere.com". Note that this only 

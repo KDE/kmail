@@ -127,7 +127,8 @@ public:
     if(threadingPolicy == 3) {
       KMMsgBase *mMsgBase = headers->folder()->getMsgBase( mMsgId );
       if (mMsgBase->status() == KMMsgStatusNew ||
-	  mMsgBase->status() == KMMsgStatusUnread)
+	  mMsgBase->status() == KMMsgStatusUnread ||
+          mMsgBase->status() == KMMsgStatusFlag)
         threadingPolicy = 1;
     }
     if (threadingPolicy < 2) {
@@ -1222,7 +1223,6 @@ void KMHeaders::resendMsg ()
   kernel->kbp()->busy();
   newMsg = new KMMessage;
   newMsg->fromString(msg->asString());
-  newMsg->removeHeaderField("Message-Id");
   newMsg->initHeader();
   newMsg->setCharset(msg->codec()->mimeName());
   newMsg->setTo(msg->to());

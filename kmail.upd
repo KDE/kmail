@@ -51,3 +51,8 @@ File=kmailrc
 Group=General
 RemoveKey=addressbook
 RemoveGroup=Addressbook
+# createOwnMessageIdHeaders -> useCustomMessageIdSuffix
+Id=7
+File=kmailrc
+Group=General
+Key=createOwnMessageIdHeaders,useCustomMessageIdSuffix

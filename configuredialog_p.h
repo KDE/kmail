@@ -35,6 +35,7 @@ class QListViewItem;
 class QTabWidget;
 class QListBox;
 class QButtonGroup;
+class QRegExpValidator;
 class KMFolderComboBox;
 class KMAccount;
 class KMTransportInfo;
@@ -781,6 +782,7 @@ protected slots:
 protected:
   QCheckBox   *mCreateOwnMessageIdCheck;
   QLineEdit   *mMessageIdSuffixEdit;
+  QRegExpValidator *mMessageIdSuffixValidator;
   QListView   *mTagList;
   QPushButton *mRemoveHeaderButton;
   QLineEdit   *mTagNameEdit;
