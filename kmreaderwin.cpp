@@ -48,6 +48,7 @@
 //--- Sven's save attachments to /tmp start ---
 #include <unistd.h>
 #include <klocale.h>
+#include <kglobal.h>
 #include <kstddirs.h>  // for access and getpid
 //--- Sven's save attachments to /tmp end ---
 
@@ -95,7 +96,10 @@ void KMReaderWin::makeAttachDir(void)
 
   QString directory;
   directory.sprintf("kmail/tmp/kmail%d/", getpid());
-  mAttachDir = locateLocal(directory, "");
+  KGlobal::dirs()->
+    addResourceType("kmail_tmp", 
+		    KStandardDirs::kde_default("data") + directory);
+  mAttachDir = locateLocal( "kmail_tmp", "/" );
 
   if (mAttachDir.isNull()) warning(i18n("Failed to create temporary "
 					"attachment directory '%s': %s"), 
