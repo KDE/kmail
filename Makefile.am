@@ -89,8 +89,9 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		attachmentlistview.cpp ssllabel.cpp \
 		iobserver.cpp isubject.cpp bodyvisitor.cpp antispamwizard.cpp \
 		urlhandlermanager.cpp dictionarycombobox.cpp \
-		secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
-		korganizeriface.stub
+      secondarywindow.cpp filterlog.cpp filterlogdlg.cpp \
+      korganizeriface.stub \
+      globalsettings.kcfgc globalsettings.cpp
 
 kmail_SOURCES = main.cpp
 
@@ -147,4 +148,6 @@ messages: rc.cpp
 	$(XGETTEXT) -ktranslate *.cpp *.h -o $(podir)/kmail.pot
 	rm -f tips.cpp
 
+kde_kcfg_DATA = kmail.kcfg
+   
 include ../admin/Doxyfile.am

@@ -28,7 +28,6 @@ typedef QPtrList<KMMsgBase> KMMessageList;
 typedef QValueList<Q_UINT32> SerNumList;
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 enum NestingPolicy { AlwaysOpen = 0, DefaultOpen, DefaultClosed, OpenUnread };
-enum LoopOnGotoUnreadValue { DontLoop = 0, LoopInCurrentFolder, LoopInAllFolders };
 
 /** The widget that shows the contents of folders */
 class KMHeaders : public KListView
@@ -136,9 +135,6 @@ public:
   /** Find next/prev unread message. Starts at currentItem() if startAt
     is unset. */
   virtual int findUnread(bool findNext, int startAt=-1, bool onlyNew = false, bool acceptCurrent = false);
-
-  /** Return the config option LoopOnGotoUnread */
-  LoopOnGotoUnreadValue loopOnGotoUnread() { return mLoopOnGotoUnread; }
 
   void highlightMessage(QListViewItem*, bool markitread);
   
@@ -371,9 +367,6 @@ private:
   QPoint mPressPos;
 
   KMime::DateFormatter mDate;
-  /** value of config key Behaviour/LoopOnGotoUnread */
-  LoopOnGotoUnreadValue mLoopOnGotoUnread;
-  bool mJumpToUnread;
   bool mReaderWindowActive;
 
   /** popup to switch columns */

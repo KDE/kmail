@@ -27,6 +27,8 @@
 #include "configuredialog.h"
 #include "configuredialog_p.h"
 
+#include "globalsettings.h"
+
 // other KMail headers:
 #include "simplestringlisteditor.h"
 #include "accountdialog.h"
@@ -3817,7 +3819,6 @@ MiscPageFolderTab::MiscPageFolderTab( QWidget * parent, const char * name )
 
 void MiscPage::FolderTab::load() {
   KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
 
   mEmptyTrashCheck->setChecked( general.readBoolEntry( "empty-trash-on-exit", true ) );
   mExpireAtExit->setChecked( general.readNumEntry( "when-to-expire", 0 ) ); // set if non-zero
@@ -3827,11 +3828,13 @@ void MiscPage::FolderTab::load() {
   mCompactOnExitCheck->setChecked( general.readBoolEntry( "compact-all-on-exit", true ) );
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
-  mLoopOnGotoUnread->setCurrentItem( behaviour.readNumEntry( "LoopOnGotoUnread", 1 ) );
-  mJumpToUnread->setChecked( behaviour.readBoolEntry( "JumpToUnread", false ) );
-  mDelayedMarkAsRead->setChecked( behaviour.readBoolEntry( "DelayedMarkAsRead", true ) );
-  mDelayedMarkTime->setValue( behaviour.readNumEntry( "DelayedMarkTime", 0 ) );
-  mShowPopupAfterDnD->setChecked( behaviour.readBoolEntry( "ShowPopupAfterDnD", true ) );
+  
+  GlobalSettings *k = GlobalSettings::self();
+  mLoopOnGotoUnread->setCurrentItem( k->loopOnGotoUnread() );
+  mJumpToUnread->setChecked( k->jumpToUnread() );
+  mDelayedMarkAsRead->setChecked( k->delayedMarkAsRead() );
+  mDelayedMarkTime->setValue( k->delayedMarkTime() );
+  mShowPopupAfterDnD->setChecked( k->showPopupAfterDnD() );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
@@ -3840,7 +3843,6 @@ void MiscPage::FolderTab::load() {
 
 void MiscPage::FolderTab::save() {
   KConfigGroup general( KMKernel::config(), "General" );
-  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
 
   general.writeEntry( "empty-trash-on-exit", mEmptyTrashCheck->isChecked() );
   general.writeEntry( "compact-all-on-exit", mCompactOnExitCheck->isChecked() );
@@ -3849,12 +3851,14 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "warn-before-expire", mWarnBeforeExpire->isChecked() );
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
 				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
-  behaviour.writeEntry( "LoopOnGotoUnread", mLoopOnGotoUnread->currentItem() );
-  behaviour.writeEntry( "JumpToUnread", mJumpToUnread->isChecked() );
-  behaviour.writeEntry( "DelayedMarkAsRead", mDelayedMarkAsRead->isChecked() );
-  behaviour.writeEntry( "DelayedMarkTime", mDelayedMarkTime->value() );
-  behaviour.writeEntry( "ShowPopupAfterDnD", mShowPopupAfterDnD->isChecked() );
-
+ 
+  GlobalSettings *k = GlobalSettings::self();
+  k->setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
+  k->setDelayedMarkTime( mDelayedMarkTime->value() );
+  k->setJumpToUnread( mJumpToUnread->isChecked() );
+  k->setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
+  k->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
+  
   if ( mExpireAtExit->isChecked() )
     general.writeEntry( "when-to-expire", expireAtExit );
   else

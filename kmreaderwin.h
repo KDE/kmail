@@ -395,7 +395,6 @@ private:
   QTimer mDelayedMarkTimer;
   const QTextCodec * mOverrideCodec;
   bool mMsgDisplay;
-  bool mDelayedMarkAsRead;
   unsigned long mLastSerNum;
   KMMsgStatus mLastStatus;
 
@@ -405,7 +404,6 @@ private:
 
   bool mShowColorbar;
   //bool mShowCompleteMessage;
-  uint mDelayedMarkTimeout;
   QStringList mTempFiles;
   QStringList mTempDirs;
   int mMimeTreeMode;

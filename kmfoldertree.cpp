@@ -14,6 +14,7 @@
 #include "kmailicalifaceimpl.h"
 #include "kmacctmgr.h"
 #include "kmkernel.h"
+#include "globalsettings.h"
 
 #include <maillistdrag.h>
 using namespace KPIM;
@@ -419,10 +420,6 @@ void KMFolderTree::readConfig (void)
     else
       setFont(KGlobalSettings::generalFont());
   }
-
-  // read D'n'D behaviour setting
-  KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
-  mShowPopupAfterDnD = behaviour.readBoolEntry( "ShowPopupAfterDnD", true );
 
   // restore the layout
   restoreLayout(conf, "Geometry");
@@ -1411,7 +1408,7 @@ void KMFolderTree::contentsDropEvent( QDropEvent *e )
       } else if ( keybstate & ShiftMask ) {
         emit folderDrop(fti->folder());
       } else {
-        if ( mShowPopupAfterDnD ) {
+        if ( GlobalSettings::self()->showPopupAfterDnD() ) {
           KPopupMenu *menu = new KPopupMenu( this );
           menu->insertItem( i18n("&Move Here"), DRAG_MOVE, 0 );
           menu->insertItem( SmallIcon("editcopy"), i18n("&Copy Here"), DRAG_COPY, 1 );

@@ -34,6 +34,7 @@
 #include <kstandarddirs.h>
 #include <dcopclient.h>
 
+#include "globalsettings.h"
 #include "kcursorsaver.h"
 #include "kmbroadcaststatus.h"
 #include "kmfoldermgr.h"
@@ -1904,7 +1905,7 @@ void KMMainWidget::slotNextMessage()       { mHeaders->nextMessage(); }
 void KMMainWidget::slotNextUnreadMessage()
 {
   if ( !mHeaders->nextUnreadMessage() )
-    if ( mHeaders->loopOnGotoUnread() == LoopInAllFolders )
+    if ( GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
       mFolderTree->nextUnreadFolder(true);
 }
 void KMMainWidget::slotNextImportantMessage() {
@@ -1914,7 +1915,7 @@ void KMMainWidget::slotPrevMessage()       { mHeaders->prevMessage(); }
 void KMMainWidget::slotPrevUnreadMessage()
 {
   if ( !mHeaders->prevUnreadMessage() )
-    if ( mHeaders->loopOnGotoUnread() == LoopInAllFolders )
+    if ( GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders )
       mFolderTree->prevUnreadFolder();
 }
 void KMMainWidget::slotPrevImportantMessage() {
@@ -2947,7 +2948,8 @@ void KMMainWidget::updateMessageActions()
              );
     mSaveAsAction->setEnabled( mass_actions );
     bool mails = mFolder && mFolder->count();
-    bool enable_goto_unread = mails || (mHeaders->loopOnGotoUnread() == LoopInAllFolders);
+    bool enable_goto_unread = mails 
+       || (GlobalSettings::self()->loopOnGotoUnread() == GlobalSettings::EnumLoopOnGotoUnread::LoopInAllFolders);
     actionCollection()->action( "go_next_message" )->setEnabled( mails );
     actionCollection()->action( "go_next_unread_message" )->setEnabled( enable_goto_unread );
     actionCollection()->action( "go_prev_message" )->setEnabled( mails );

@@ -20,6 +20,7 @@ using KMail::FolderJob;
 #include "actionscheduler.h"
 using KMail::ActionScheduler;
 #include <maillistdrag.h>
+#include "globalsettings.h"
 using namespace KPIM;
 
 #include <kapplication.h>
@@ -546,7 +547,6 @@ KMHeaders::KMHeaders(KMMainWidget *aOwner, QWidget *parent,
   mSortInfo.removed = 0;
   mSortInfo.column = 0;
   mSortInfo.ascending = false;
-  mJumpToUnread = false;
   mReaderWindowActive = false;
   setStyleDependantFrameWidth();
   // popup-menu
@@ -772,10 +772,7 @@ void KMHeaders::readConfig (void)
 
   // Behavior
   {
-    KConfigGroupSaver saver(config, "Behaviour");
-    mLoopOnGotoUnread = (LoopOnGotoUnreadValue)config->readNumEntry(
-            "LoopOnGotoUnread", LoopInAllFolders );
-    mJumpToUnread = config->readBoolEntry( "JumpToUnread", false );
+    KConfigGroupSaver saver(config, "Geometry");
     mReaderWindowActive = config->readEntry( "readerWindowMode", "below" ) != "hide";
   }
 }
@@ -2102,7 +2099,8 @@ bool KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(true, -1, false, acceptCurrent);
-  if ( i < 0 && mLoopOnGotoUnread != DontLoop )
+  GlobalSettings *k = GlobalSettings::self();
+  if ( i < 0 && k->loopOnGotoUnread() != GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
   {
     KMHeaderItem * first = static_cast<KMHeaderItem*>(firstChild());
     if ( first )
@@ -2127,7 +2125,9 @@ bool KMHeaders::prevUnreadMessage()
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(false);
-  if ( i < 0 && mLoopOnGotoUnread != DontLoop ) {
+  GlobalSettings *k = GlobalSettings::self();
+  if ( i < 0 && k->loopOnGotoUnread() != GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
+  {
     KMHeaderItem * last = static_cast<KMHeaderItem*>(lastItem());
     if ( last )
       i = findUnread(false, last->msgId() ); // from bottom
@@ -3350,7 +3350,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
             KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
             while (item) {
                 bool isUnread = false;
-                if (mJumpToUnread) // search unread messages
+                if ( GlobalSettings::self()->jumpToUnread() ) // search unread messages
                     if (mFolder->getMsgBase(item->msgId())->isUnread())
                         isUnread = true;
 

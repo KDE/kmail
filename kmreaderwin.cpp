@@ -12,6 +12,7 @@
 
 #include "kmreaderwin.h"
 
+#include "globalsettings.h"
 #include "kmversion.h"
 #include "kmmainwidget.h"
 #include "kmreadermainwin.h"
@@ -642,10 +643,6 @@ void KMReaderWin::readConfig(void)
   delete mCSSHelper;
   mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
 
-  // must be done before setHeaderStyleAndStrategy
-  mDelayedMarkAsRead = behaviour.readBoolEntry( "DelayedMarkAsRead", true );
-  mDelayedMarkTimeout = behaviour.readNumEntry( "DelayedMarkTime", 0 );
-
   // initialize useFixedFont from the saved value; the corresponding toggle
   // action is initialized in the main window
   mUseFixedFont = reader.readBoolEntry( "useFixedFont", false );
@@ -859,9 +856,9 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWinTimer.start( 0, TRUE );
   }
 
-  if (mDelayedMarkAsRead) {
-    if (mDelayedMarkTimeout != 0)
-      mDelayedMarkTimer.start( mDelayedMarkTimeout * 1000, TRUE );
+  if ( GlobalSettings::self()->delayedMarkAsRead() ) {
+    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
+      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, TRUE );
     else
       slotTouchMessage();
   }
