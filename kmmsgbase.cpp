@@ -839,17 +839,20 @@ QString KMMsgBase::decodeRFC2231String(const QCString& _str)
 }
 
 QString KMMsgBase::base64EncodedMD5( const QString & s, bool utf8 ) {
+  if (s.stripWhiteSpace().isEmpty()) return "";
   if ( utf8 )
-    return base64EncodedMD5( s.utf8() ); // QCString overload
+    return base64EncodedMD5( s.stripWhiteSpace().utf8() ); // QCString overload
   else
-    return base64EncodedMD5( s.latin1() ); // const char * overload
+    return base64EncodedMD5( s.stripWhiteSpace().latin1() ); // const char * overload
 }
 
 QString KMMsgBase::base64EncodedMD5( const QCString & s ) {
-  return base64EncodedMD5( s.data() );
+  if (s.stripWhiteSpace().isEmpty()) return "";
+  return base64EncodedMD5( s.stripWhiteSpace().data() );
 }  
 
 QString KMMsgBase::base64EncodedMD5( const char * s, int len ) {
+  if (!s || !len) return "";
   static const int Base64EncodedMD5Len = 22;
   KMD5 md5( s, len );
   return md5.base64Digest().left( Base64EncodedMD5Len );
