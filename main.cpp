@@ -48,14 +48,13 @@ const char *aboutText =
   "Michael Haeckel <michael@haeckel.net>,\n"
   "Lars Knoll <knoll@mpi-hd.mpg.de>,\n"
   "J. Nick Koston <bdraco@darkorb.net>,\n"
-  "Daniel Naber <dnaber@mini.gt.owl.de>,\n"
+  "Daniel Naber <daniel.naber@t-online.de>,\n"
   "Sven Radej <radej@kde.org>,\n"
   "Espen Sand <espen@kde.org>,\n"
   "George Staikos <staikos@kde.org>,\n"
   "Mario Weilguni <mweilguni@sime.com>,\n"
   "Robert D. Williams <rwilliams@kde.org>\n"
-  "Markus Wuebben <markus.wuebben@kde.org>\n\n"
-  "Please send bugreports to kmail@kde.org";
+  "Markus Wuebben <markus.wuebben@kde.org>\n";
 
 //static const char *description = I18N_NOOP("A KDE E-Mail client.");
 static const char *description = aboutText;
@@ -199,7 +198,8 @@ int main(int argc, char *argv[])
                    KMAIL_VERSION,
                    description,
 		   KAboutData::License_GPL,
-                   "(c) 1997-2000, The KMail developers" );
+                   "(c) 1997-2000, The KMail developers",
+		   I18N_NOOP("http://kmail.kde.org"));
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
