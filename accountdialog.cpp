@@ -352,7 +352,7 @@ void AccountDialog::makeLocalAccountPage()
   groupLayout->setSpacing( 6 );
   groupLayout->setMargin( 11 );
 
-  mLocal.lockProcmail = new QRadioButton( i18n("Procmail loc&kfile"), group);
+  mLocal.lockProcmail = new QRadioButton( i18n("Procmail loc&kfile:"), group);
   groupLayout->addWidget(mLocal.lockProcmail, 0, 0);
 
   mLocal.procmailLockFileName = new QComboBox( true, group );
@@ -856,7 +856,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
     ++row;
     mImap.loadOnDemandCheck = new QCheckBox(
         i18n("Load attach&ments on demand"), page1);
-    QWhatsThis::add( mImap.loadOnDemandCheck, 
+    QWhatsThis::add( mImap.loadOnDemandCheck,
         i18n("Activate this to load attachments not automatically when you select the email but only when you click on the attachment. This way also big emails are shown instantly.") );
     grid->addMultiCellWidget( mImap.loadOnDemandCheck, row, row, 0, 1 );
   }
@@ -866,7 +866,7 @@ void AccountDialog::makeImapAccountPage( bool connected )
     ++row;
     mImap.listOnlyOpenCheck = new QCheckBox(
         i18n("List only open folders"), page1);
-    QWhatsThis::add( mImap.listOnlyOpenCheck, 
+    QWhatsThis::add( mImap.listOnlyOpenCheck,
         i18n("Only folders that are open (expanded) in the folder tree are checked for subfolders. Use this if there are many folders on the server.") );
     grid->addMultiCellWidget( mImap.listOnlyOpenCheck, row, row, 0, 1 );
   }

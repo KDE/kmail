@@ -103,10 +103,10 @@ AntiSpamWizard::AntiSpamWizard( WizardMode mode,
   mInfoPage = new ASWizInfoPage( mMode, 0, "" );
   addPage( mInfoPage,
            ( mMode == AntiSpam )
-           ? i18n( "Welcome to the KMail Anti-Spam Wizard." )
-           : i18n( "Welcome to the KMail Anti-Virus Wizard." ) );
+           ? i18n( "Welcome to the KMail Anti-Spam Wizard" )
+           : i18n( "Welcome to the KMail Anti-Virus Wizard" ) );
   mProgramsPage = new ASWizProgramsPage( 0, "", descriptionList, whatsThisList );
-  addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail." ));
+  addPage( mProgramsPage, i18n( "Please select the tools to be used by KMail" ));
   connect( mProgramsPage, SIGNAL( selectionChanged( void ) ),
             this, SLOT( checkProgramsSelections( void ) ) );
 

@@ -547,7 +547,7 @@ KMFilterAction* KMFilterActionBounce::newAction(void)
 }
 
 KMFilterActionBounce::KMFilterActionBounce()
-  : KMFilterActionWithNone( "bounce", i18n("bounce") )
+  : KMFilterActionWithNone( "bounce", i18n("Bounce") )
 {
 }
 
@@ -582,7 +582,7 @@ KMFilterAction* KMFilterActionSendReceipt::newAction(void)
 }
 
 KMFilterActionSendReceipt::KMFilterActionSendReceipt()
-  : KMFilterActionWithNone( "confirm delivery", i18n("confirm delivery") )
+  : KMFilterActionWithNone( "confirm delivery", i18n("Confirm Delivery") )
 {
 }
 
@@ -618,7 +618,7 @@ KMFilterAction* KMFilterActionTransport::newAction(void)
 }
 
 KMFilterActionTransport::KMFilterActionTransport()
-  : KMFilterActionWithString( "set transport", i18n("set transport to") )
+  : KMFilterActionWithString( "set transport", i18n("Set Transport To") )
 {
 }
 
@@ -649,7 +649,7 @@ KMFilterAction* KMFilterActionReplyTo::newAction(void)
 }
 
 KMFilterActionReplyTo::KMFilterActionReplyTo()
-  : KMFilterActionWithString( "set Reply-To", i18n("set Reply-To to") )
+  : KMFilterActionWithString( "set Reply-To", i18n("Set Reply-To To") )
 {
   mParameter = "";
 }
@@ -685,7 +685,7 @@ KMFilterAction* KMFilterActionIdentity::newAction()
 }
 
 KMFilterActionIdentity::KMFilterActionIdentity()
-  : KMFilterActionWithUOID( "set identity", i18n("set identity to") )
+  : KMFilterActionWithUOID( "set identity", i18n("Set Identity To") )
 {
   mParameter = kmkernel->identityManager()->defaultIdentity().uoid();
 }
@@ -767,7 +767,7 @@ KMFilterAction* KMFilterActionSetStatus::newAction()
 }
 
 KMFilterActionSetStatus::KMFilterActionSetStatus()
-  : KMFilterActionWithStringList( "set status", i18n("mark as") )
+  : KMFilterActionWithStringList( "set status", i18n("Mark As") )
 {
   // if you change this list, also update
   // KMFilterActionSetStatus::stati above
@@ -859,7 +859,7 @@ static const int numMDNs = sizeof mdns / sizeof *mdns;
 
 
 KMFilterActionFakeDisposition::KMFilterActionFakeDisposition()
-  : KMFilterActionWithStringList( "fake mdn", i18n("send fake MDN") )
+  : KMFilterActionWithStringList( "fake mdn", i18n("Send Fake MDN") )
 {
   // if you change this list, also update
   // mdns above
@@ -933,7 +933,7 @@ KMFilterAction* KMFilterActionRemoveHeader::newAction()
 }
 
 KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
-  : KMFilterActionWithStringList( "remove header", i18n("remove header") )
+  : KMFilterActionWithStringList( "remove header", i18n("Remove Header") )
 {
   mParameterList << ""
                  << "Reply-To"
@@ -1004,7 +1004,7 @@ private:
 };
 
 KMFilterActionAddHeader::KMFilterActionAddHeader()
-  : KMFilterActionWithStringList( "add header", i18n("add header") )
+  : KMFilterActionWithStringList( "add header", i18n("Add Header") )
 {
   mParameterList << ""
                  << "Reply-To"
@@ -1031,7 +1031,7 @@ QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
   QComboBox *cb = new QComboBox( TRUE, w, "combo" );
   cb->setInsertionPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
-  QLabel *l = new QLabel( i18n("with value"), w );
+  QLabel *l = new QLabel( i18n("With value:"), w );
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
   QLineEdit *le = new KLineEdit( w, "ledit" );
@@ -1136,7 +1136,7 @@ private:
 };
 
 KMFilterActionRewriteHeader::KMFilterActionRewriteHeader()
-  : KMFilterActionWithStringList( "rewrite header", i18n("rewrite header") )
+  : KMFilterActionWithStringList( "rewrite header", i18n("Rewrite Header") )
 {
   mParameterList << ""
                  << "Subject"
@@ -1172,14 +1172,14 @@ QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
   cb->setInsertionPolicy( QComboBox::AtBottom );
   hbl->addWidget( cb, 0 /* stretch */ );
 
-  QLabel *l = new QLabel( i18n("replace"), w );
+  QLabel *l = new QLabel( i18n("Replace:"), w );
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
   QLineEdit *le = new KLineEdit( w, "search" );
   hbl->addWidget( le, 1 );
 
-  l = new QLabel( i18n("with"), w );
+  l = new QLabel( i18n("With:"), w );
   l->setFixedWidth( l->sizeHint().width() );
   hbl->addWidget( l, 0 );
 
@@ -1292,7 +1292,7 @@ KMFilterAction* KMFilterActionMove::newAction(void)
 }
 
 KMFilterActionMove::KMFilterActionMove()
-  : KMFilterActionWithFolder( "transfer", i18n("file into folder") )
+  : KMFilterActionWithFolder( "transfer", i18n("File into Folder") )
 {
 }
 
@@ -1328,7 +1328,7 @@ KMFilterAction* KMFilterActionForward::newAction(void)
 }
 
 KMFilterActionForward::KMFilterActionForward()
-  : KMFilterActionWithAddress( "forward", i18n("forward to") )
+  : KMFilterActionWithAddress( "forward", i18n("Forward To") )
 {
 }
 
@@ -1436,7 +1436,7 @@ KMFilterAction* KMFilterActionRedirect::newAction(void)
 }
 
 KMFilterActionRedirect::KMFilterActionRedirect()
-  : KMFilterActionWithAddress( "redirect", i18n("redirect to") )
+  : KMFilterActionWithAddress( "redirect", i18n("Redirect To") )
 {
 }
 
@@ -1477,7 +1477,7 @@ KMFilterAction* KMFilterActionExec::newAction(void)
 }
 
 KMFilterActionExec::KMFilterActionExec()
-  : KMFilterActionWithCommand( "execute", i18n("execute command") )
+  : KMFilterActionWithCommand( "execute", i18n("Execute Command") )
 {
 }
 
@@ -1558,7 +1558,7 @@ KMFilterAction* KMFilterActionExtFilter::newAction(void)
 }
 
 KMFilterActionExtFilter::KMFilterActionExtFilter()
-  : KMFilterActionWithCommand( "filter app", i18n("pipe through") )
+  : KMFilterActionWithCommand( "filter app", i18n("Pipe Through") )
 {
 }
 KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) const
@@ -1658,7 +1658,7 @@ const QString KMFilterActionWithTest::argsAsString() const
 
 
 KMFilterActionExecSound::KMFilterActionExecSound()
-  : KMFilterActionWithTest( "play sound", i18n("play a sound") )
+  : KMFilterActionWithTest( "play sound", i18n("Play Sound") )
 {
 }
 
