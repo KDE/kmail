@@ -53,7 +53,7 @@ protected:
   virtual int compareItems(Item item1, Item item2);
 
   /** Displays a detailed message box and returns 'status' */
-  virtual int KMAddrBook::fileError(int status) const;
+  virtual int fileError(int status) const;
 
   QString mDefaultFileName;
   bool mModified;

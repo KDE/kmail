@@ -7,6 +7,7 @@
 #include <qcursor.h>
 #include <qtimer.h>
 #include <assert.h>
+#include <stdio.h>
 
 //-----------------------------------------------------------------------------
 KBusyPtr :: KBusyPtr ()
