@@ -72,6 +72,7 @@ static void init(int argc, char *argv[]);
 static void cleanup(void);
 static void setSignalHandler(void (*handler)(int));
 static void recoverDeadLetters(void);
+static void mailto(int argc, char *argv[]);
 
 
 //-----------------------------------------------------------------------------
@@ -345,6 +346,47 @@ static void cleanup(void)
 
 
 //-----------------------------------------------------------------------------
+static void mailto(int argc, char *argv[])
+{
+  KMComposeWin* win;
+  KMMessage* msg = new KMMessage;
+  QString to, cc, bcc, subj;
+  int i;
+
+  for (i=0; i<argc; i++)
+  {
+    if (strcmp(argv[i],"-s")==0)
+    {
+      if (i<argc-1) subj = argv[++i];
+    }
+    else if (strcmp(argv[i],"-c")==0)
+    {
+      if (i<argc-1) cc = argv[++i];
+    }
+    else if (strcmp(argv[i],"-b")==0)
+    {
+      if (i<argc-1) bcc = argv[++i];
+    }
+    else
+    {
+      if (!to.isEmpty()) to += ", ";
+      if (strncasecmp(argv[i],"mailto:",7)==0) to += argv[i]+7;
+      else to += argv[i];
+    }
+  }
+
+  msg->initHeader();
+  if (!cc.isEmpty()) msg->setCc(cc);
+  if (!bcc.isEmpty()) msg->setBcc(bcc);
+  if (!subj.isEmpty()) msg->setSubject(subj);
+  if (!to.isEmpty()) msg->setTo(to);
+
+  win = new KMComposeWin(msg);
+  win->show();
+}
+
+
+//-----------------------------------------------------------------------------
 main(int argc, char *argv[])
 {
   KMMainWin* mainWin;
@@ -355,16 +397,8 @@ main(int argc, char *argv[])
   mainWin = new KMMainWin;
   mainWin->show();
 
-  if (argc > 1 && argv[1][0]!='-')
-  {
-    KMComposeWin *win;
-    KMMessage* msg = new KMMessage;
-    msg->initHeader();
-    msg->setTo(argv[1]);
-
-    win = new KMComposeWin(msg);
-    win->show();
-  }
+  if (argc > 1)
+    mailto(argc-1, argv+1);
 
   recoverDeadLetters();
   app->exec();
