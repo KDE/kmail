@@ -791,13 +791,17 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   rethinkHeaderLine(showHeaders,HDR_REPLY_TO,row,i18n("&Reply to:"),
                     mLblReplyTo, mEdtReplyTo, mBtnReplyTo);
   if (!fromSlot) mToAction->setChecked(abs(mShowHeaders)&HDR_TO);
-  rethinkHeaderLine(showHeaders,HDR_TO, row, i18n("To:"),
-                    mLblTo, mEdtTo, mBtnTo);
-  if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
-  rethinkHeaderLine(showHeaders,HDR_CC, row, i18n("&Copy to (CC):"),
-                    mLblCc, mEdtCc, mBtnCc,
+  rethinkHeaderLine(showHeaders, HDR_TO, row, i18n("To:"),
+                    mLblTo, mEdtTo, mBtnTo,
+                    i18n("Primary Recipients"),
                     i18n("<qt>The email addresses you put "
-                         "in this field receives a copy of the email. "
+                         "in this field receive a copy of the email.</qt>"));
+  if (!fromSlot) mCcAction->setChecked(abs(mShowHeaders)&HDR_CC);
+  rethinkHeaderLine(showHeaders, HDR_CC, row, i18n("&Copy to (CC):"),
+                    mLblCc, mEdtCc, mBtnCc,
+                    i18n("Additional Recipients"),
+                    i18n("<qt>The email addresses you put "
+                         "in this field receive a copy of the email. "
                          "Technically it is the same thing as putting all the "
                          "addresses in the <b>To:</b> field but differs in "
                          "that it usually symbolises the receiver of the "
@@ -806,6 +810,7 @@ void KMComposeWin::rethinkFields(bool fromSlot)
   if (!fromSlot) mBccAction->setChecked(abs(mShowHeaders)&HDR_BCC);
   rethinkHeaderLine(showHeaders,HDR_BCC, row, i18n("&Blind copy to (BCC):"),
                     mLblBcc, mEdtBcc, mBtnBcc,
+                    i18n("Hidden Recipients"),
                     i18n("<qt>Essentially the same thing "
                          "as the <b>Copy To:</b> field but differs in that "
                          "all other recipients do not see who receives a "
@@ -845,13 +850,15 @@ void KMComposeWin::rethinkFields(bool fromSlot)
 void KMComposeWin::rethinkHeaderLine(int aValue, int aMask, int& aRow,
                                      const QString &aLabelStr, QLabel* aLbl,
                                      QLineEdit* aEdt, QPushButton* aBtn,
-                                     const QString &toolTip )
+                                     const QString &toolTip, const QString &whatsThis )
 {
   if (aValue & aMask)
   {
     aLbl->setText(aLabelStr);
     if ( !toolTip.isEmpty() )
       QToolTip::add( aLbl, toolTip );
+    if ( !whatsThis.isEmpty() )
+      QWhatsThis::add( aLbl, whatsThis );
     aLbl->adjustSize();
     aLbl->resize((int)aLbl->sizeHint().width(),aLbl->sizeHint().height() + 6);
     aLbl->setMinimumSize(aLbl->size());
