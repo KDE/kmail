@@ -31,9 +31,9 @@ namespace KMail {
     
     QStringList transportNames;
     for ( int i = 1 ; i <= numTransports ; i++ ) {
-      KMTransportInfo *ti = new KMTransportInfo();
-      ti->readConfig(i);
-      transportNames << ti->name;
+      KMTransportInfo ti;
+      ti.readConfig(i);
+      transportNames << ti.name;
     }
     
     return transportNames;
