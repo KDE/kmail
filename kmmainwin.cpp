@@ -116,9 +116,9 @@ KMMainWin::~KMMainWin()
 {
   if (searchWin)
     delete searchWin;
-  writeConfig();      
+  writeConfig();
   writeFolderConfig();
-      
+
   if (mHeaders)    delete mHeaders;
   if (mToolBar)    delete mToolBar;
   if (mMenuBar)    delete mMenuBar;
@@ -389,7 +389,7 @@ void KMMainWin::activatePanners(void)
   mVertPanner->setResizeMode( mFolderTree, QSplitter::KeepSize);
   if( mLongFolderList )
   {
-    mHorizPanner->setResizeMode( mHeaders, QSplitter::KeepSize);    
+    mHorizPanner->setResizeMode( mHeaders, QSplitter::KeepSize);
   }
   else
   {
@@ -441,7 +441,7 @@ void KMMainWin::slotSearch()
     searchWin = new KMFldSearch(this, "Search", curFolder, false);
     connect(searchWin, SIGNAL(destroyed()),
 	    this, SLOT(slotSearchClosed()));
-  } 
+  }
 
   searchWin->show();
   KWin::setActiveWindow(searchWin->winId());
@@ -1071,7 +1071,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
       else
 	queryPart = query;
       query = query.mid(queryPart.length());
-      
+
       if (queryPart.left(9) == "?subject=")
 	msg->setSubject( KURL::decode_string(queryPart.mid(9)) );
       else if (queryPart.left(6) == "?body=")
@@ -1083,7 +1083,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
     win = new KMComposeWin(msg);
     win->show();
   }
-  else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") || 
+  else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") ||
 	   (aUrl.protocol() ==  "ftp") || (aUrl.protocol() == "file"))
   {
     statusMsg(i18n("Opening URL..."));
@@ -1335,7 +1335,7 @@ void KMMainWin::setupMenuBar()
 				  SLOT(slotOverrideHtml()));
   threadId = mFolderMenu->insertItem("", this,
 				    SLOT(slotOverrideThread()));
-  QObject::connect( mFolderMenu, SIGNAL( aboutToShow() ), 
+  QObject::connect( mFolderMenu, SIGNAL( aboutToShow() ),
 		    this, SLOT( updateFolderMenu() ));
 
   //----- Message-Status Submenu
@@ -1438,7 +1438,8 @@ void KMMainWin::setupMenuBar()
 void KMMainWin::setupToolBar()
 {
   mToolBar = new KToolBar(this);
-
+  mToolBar->setFullSize( TRUE );
+  
 #ifdef MALLOC_DEBUG
   mToolBar->insertButton(BarIcon("filenew"), 0,
 			SIGNAL(clicked()), this,
@@ -1612,7 +1613,7 @@ void KMMainWin::updateFolderMenu()
 
   mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text" ));
   mFolderMenu->setItemChecked(htmlId, mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref);
-  
+
   mFolderMenu->changeItem(threadId, i18n( "Thread messages" ));
   mFolderMenu->setItemChecked(threadId, mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
 }
