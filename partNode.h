@@ -57,7 +57,7 @@ private:
         mMimePartTreeItem( 0 ) {
         adjustDefaultType( this );
     }
-    
+
     int calcNodeIdOrFindNode( int oldId, const partNode* calcNode,
                               int findId, partNode** findNode );
 
@@ -84,7 +84,7 @@ public:
         } else {
             kdDebug(5006) << "\n        partNode::partNode()      explicitType == DwMime::kTypeUnknown\n" << endl;
             if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
-                mType    = dwPart->Headers().ContentType().Type();
+                mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
                 mSubType = dwPart->Headers().ContentType().Subtype();
             } else {
                 mType    = DwMime::kTypeUnknown;
@@ -116,7 +116,7 @@ public:
         mDeleteDwBodyPart( deleteDwBodyPart ),
         mMimePartTreeItem( 0 ) {
         if(dwPart && dwPart->hasHeaders() && dwPart->Headers().HasContentType()) {
-            mType    = dwPart->Headers().ContentType().Type();
+            mType    = (!dwPart->Headers().ContentType().Type())?DwMime::kTypeUnknown:dwPart->Headers().ContentType().Type();
             mSubType = dwPart->Headers().ContentType().Subtype();
         } else {
             mType    = DwMime::kTypeUnknown;
