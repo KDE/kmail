@@ -661,7 +661,7 @@ void KMReaderWin::readConfig(void)
   mCSSHelper = new CSSHelper( QPaintDeviceMetrics( mViewer->view() ), this );
 
   mNoMDNsWhenEncrypted = mdnGroup.readBoolEntry( "not-send-when-encrypted", true );
-  
+
   // initialize useFixedFont from the saved value; the corresponding toggle
   // action is initialized in the main window
   mUseFixedFont = reader.readBoolEntry( "useFixedFont", false );
@@ -1835,7 +1835,7 @@ void KMReaderWin::openAttachment( int id, const QString & name ) {
   if ( filenameText.isEmpty() )
     filenameText = msgPart.name();
   if ( offer ) {
-    open_text = i18n("&Open With '%1'").arg( offer->name() );
+    open_text = i18n("&Open with '%1'").arg( offer->name() );
   } else {
     open_text = i18n("&Open With...");
   }
@@ -1960,7 +1960,7 @@ void KMReaderWin::slotDoAtmOpen()
                .arg( mimetype->comment(), mimetype->name(), offer->name() );
       const int choice =
         KMessageBox::warningContinueCancel( this, text, QString::null,
-                                            i18n("&Open With '%1'")
+                                            i18n("&Open with '%1'")
                                             .arg( offer->name() ) );
       if( choice == KMessageBox::Cancel )
         return;
