@@ -1446,6 +1446,14 @@ void KMMainWidget::slotSaveMsg()
 }
 
 //-----------------------------------------------------------------------------
+void KMMainWidget::slotOpenMsg()
+{
+  KMOpenMsgCommand *openCommand = new KMOpenMsgCommand( this );
+
+  openCommand->start();
+}
+
+//-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveAttachments()
 {
   KMMessage *msg = mHeaders->currentMsg();
@@ -2115,6 +2123,9 @@ void KMMainWidget::setupActions()
   mSaveAsAction = new KAction( i18n("Save &As..."), "filesave",
     KStdAccel::shortcut(KStdAccel::Save),
     this, SLOT(slotSaveMsg()), actionCollection(), "file_save_as" );
+
+  mOpenAction = KStdAction::open( this, SLOT( slotOpenMsg() ),
+                                  actionCollection() );
 
   (void) new KAction( i18n("&Compact All Folders"), 0,
 		      this, SLOT(slotCompactAll()),

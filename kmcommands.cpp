@@ -25,6 +25,9 @@
 //
 // The type of async operation supported by KMCommand is retrieval
 // of messages from an IMAP server.
+
+#include "kmcommands.h"
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
@@ -33,6 +36,7 @@
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
 #include <mimelib/mimepp.h>
+#include <mimelib/string.h>
 
 #include <qtextcodec.h>
 
@@ -66,8 +70,8 @@ using KMail::ActionScheduler;
 using KMail::FolderJob;
 #include "mailsourceviewer.h"
 using KMail::MailSourceViewer;
+#include "kmreadermainwin.h"
 
-#include "kmcommands.h"
 #include "kmcommands.moc"
 
 KMCommand::KMCommand( QWidget *parent )
@@ -116,6 +120,11 @@ const QPtrList<KMMessage> KMCommand::retrievedMsgs() const
 KMMessage *KMCommand::retrievedMessage() const
 {
   return mRetrievedMsgs.getFirst();
+}
+
+QWidget *KMCommand::parentWidget() const
+{
+  return mParent;
 }
 
 int KMCommand::mCountJobs = 0;
@@ -745,6 +754,91 @@ void KMSaveMsgCommand::slotSaveResult(KIO::Job *job)
   }
 }
 
+//-----------------------------------------------------------------------------
+
+KMOpenMsgCommand::KMOpenMsgCommand( QWidget *parent, const KURL & url )
+  : KMCommand( parent ),
+    mUrl( url )
+{
+  setDeletesItself( true );
+}
+
+void KMOpenMsgCommand::execute()
+{
+  if ( mUrl.isEmpty() ) {
+    mUrl = KFileDialog::getOpenURL( ":OpenMessage", "message/rfc822",
+                                    parentWidget(), i18n("Open Message") );
+  }
+  if ( mUrl.isEmpty() ) {
+    setDeletesItself( false );
+    return;
+  }
+  mJob = KIO::get( mUrl, false, false );
+  mJob->setReportDataSent( true );
+  connect( mJob, SIGNAL( data( KIO::Job *, const QByteArray & ) ),
+           this, SLOT( slotDataArrived( KIO::Job*, const QByteArray & ) ) );
+  connect( mJob, SIGNAL( result( KIO::Job * ) ),
+           SLOT( slotResult( KIO::Job * ) ) );
+}
+
+void KMOpenMsgCommand::slotDataArrived( KIO::Job *, const QByteArray & data )
+{
+  if ( data.isEmpty() )
+    return;
+
+  mMsgString.append( data.data(), data.size() );
+}
+
+void KMOpenMsgCommand::slotResult( KIO::Job *job )
+{
+  if ( job->error() ) {
+    // handle errors
+    job->showErrorDialog();
+  }
+  else {
+    int startOfMessage = 0;
+    if ( mMsgString.compare( 0, 5, "From ", 5 ) == 0 ) {
+      startOfMessage = mMsgString.find( '\n' );
+      if ( startOfMessage == -1 ) {
+        KMessageBox::sorry( parentWidget(),
+                            i18n( "The file doesn't contain a message." ) );
+        return;
+      }
+      startOfMessage += 1; // the message starts after the '\n'
+    }
+    // check for multiple messages in the file
+    bool multipleMessages = true;
+    int endOfMessage = mMsgString.find( "\nFrom " );
+    if ( endOfMessage == -1 ) {
+      endOfMessage = mMsgString.length();
+      multipleMessages = false;
+    }
+    DwMessage *dwMsg = new DwMessage;
+    dwMsg->FromString( mMsgString.substr( startOfMessage,
+                                          endOfMessage - startOfMessage ) );
+    dwMsg->Parse();
+    // check whether we have a message ( no headers => this isn't a message )
+    if ( dwMsg->Headers().NumFields() == 0 ) {
+      KMessageBox::sorry( parentWidget(),
+                          i18n( "The file doesn't contain a message." ) );
+      delete dwMsg; dwMsg = 0;
+      return;
+    }
+    KMMessage *msg = new KMMessage( dwMsg );
+    msg->setReadyToShow( true );
+    KMReaderMainWin *win = new KMReaderMainWin();
+    win->showMsg( kmkernel->networkCodec(), msg );
+    win->show();
+    if ( multipleMessages )
+      KMessageBox::information( win,
+                                i18n( "The file contains multiple messages. "
+                                      "Only the first message is shown." ) );
+  }
+  delete this;
+}
+
+//-----------------------------------------------------------------------------
+
 //TODO: ReplyTo, NoQuoteReplyTo, ReplyList, ReplyToAll, ReplyAuthor
 //      are all similar and should be factored
 KMReplyToCommand::KMReplyToCommand( QWidget *parent, KMMessage *msg,
@@ -1248,7 +1342,7 @@ QPopupMenu* KMMenuCommand::folderToPopupMenu(bool move,
   }
 
   if (!kmkernel->imapFolderMgr()->dir().first() &&
-      !kmkernel->dimapFolderMgr()->dir().first()) 
+      !kmkernel->dimapFolderMgr()->dir().first())
   {
     KMMenuCommand::makeFolderMenu(  &kmkernel->folderMgr()->dir(), move,
       receiver, aMenuToFolder, menu );

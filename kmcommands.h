@@ -1,3 +1,5 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
+
 #ifndef KMCommands_h
 #define KMCommands_h
 
@@ -6,6 +8,7 @@
 #include <qvaluelist.h>
 #include <kio/job.h>
 #include "kmmsgbase.h" // for KMMsgStatus
+#include <mimelib/string.h>
 
 class QPopupMenu;
 class QTextCodec;
@@ -55,6 +58,8 @@ protected:
   const QPtrList<KMMessage> retrievedMsgs() const;
   // Returns the single message retrieved
   KMMessage *retrievedMessage() const;
+  // Returns the parent widget
+  QWidget *parentWidget() const;
 
 private:
   // execute should be implemented by derived classes
@@ -275,6 +280,27 @@ private:
   QByteArray mData;
   int mOffset;
   size_t mTotalSize;
+  KIO::TransferJob *mJob;
+};
+
+class KMOpenMsgCommand : public KMCommand
+{
+  Q_OBJECT
+
+public:
+  KMOpenMsgCommand( QWidget *parent, const KURL & url = KURL() );
+
+private:
+  virtual void execute();
+
+private slots:
+  void slotDataArrived( KIO::Job *job, const QByteArray & data );
+  void slotResult( KIO::Job *job );
+
+private:
+  static const int MAX_CHUNK_SIZE = 64*1024;
+  KURL mUrl;
+  DwString mMsgString;
   KIO::TransferJob *mJob;
 };
 

@@ -116,6 +116,7 @@ public:
   KAction *applyFiltersAction() { return mSendAgainAction; }
   KAction *findInMessageAction() { return mFindInMessageAction; }
   KAction *saveAttachmentsAction() { return mSaveAttachmentsAction; }
+  KAction *openAction() { return mOpenAction; }
 
   KActionMenu *statusMenu() { return mStatusMenu; }
   KActionMenu *threadStatusMenu() { return mThreadStatusMenu; }
@@ -231,6 +232,7 @@ protected slots:
   void slotUndo();
   void slotReadOn();
   void slotSaveMsg();
+  void slotOpenMsg();
   void slotSaveAttachments();
   void slotMoveMsg();
   //void slotMoveMsgToFolder( KMFolder *dest);
@@ -360,7 +362,7 @@ private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mSaveAsAction, *mEditAction,
     *mSendAgainAction, *mApplyFiltersAction, *mFindInMessageAction,
-    *mSaveAttachmentsAction;
+    *mSaveAttachmentsAction, *mOpenAction;
   // Composition actions
   KAction *mPrintAction, *mReplyAction, *mReplyAllAction, *mReplyAuthorAction,
       *mReplyListAction,
