@@ -948,7 +948,7 @@ void KMKernel::recoverDeadLetters()
 
   const int num = folder.count();
   for ( int i = 0; i < num; i++ ) {
-    KMMessage *msg = folder.getMsg( i );
+    KMMessage *msg = folder.take( 0 );
     if ( msg ) {
       KMComposeWin *win = new KMComposeWin();
       win->setMsg( msg, false, false, true );
