@@ -678,6 +678,7 @@ void KMMainWin::slotModifyFolder()
     if (qlvi) {
       qlvi->setOpen(TRUE);
       mFolderTree->setCurrentItem( qlvi );
+      mHeaders->msgChanged();
     }
   }
 }
