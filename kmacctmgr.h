@@ -101,7 +101,6 @@ private:
   bool newMailArrived;
   bool interactive;
   int  mTotalNewMailsArrived;
-  int  mMaxConnectionsPerHost;
 
   // for detailed (per folder) new mail notification
   QMap<QString, int> mTotalNewInFolder;
