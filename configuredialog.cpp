@@ -3829,12 +3829,11 @@ void MiscPage::FolderTab::load() {
   mEmptyFolderConfirmCheck->setChecked( general.readBoolEntry( "confirm-before-empty", true ) );
   // default = "Loop in current folder"
   
-  GlobalSettings *k = GlobalSettings::self();
-  mLoopOnGotoUnread->setCurrentItem( k->loopOnGotoUnread() );
-  mJumpToUnread->setChecked( k->jumpToUnread() );
-  mDelayedMarkAsRead->setChecked( k->delayedMarkAsRead() );
-  mDelayedMarkTime->setValue( k->delayedMarkTime() );
-  mShowPopupAfterDnD->setChecked( k->showPopupAfterDnD() );
+  mLoopOnGotoUnread->setCurrentItem( GlobalSettings::loopOnGotoUnread() );
+  mJumpToUnread->setChecked( GlobalSettings::jumpToUnread() );
+  mDelayedMarkAsRead->setChecked( GlobalSettings::delayedMarkAsRead() );
+  mDelayedMarkTime->setValue( GlobalSettings::delayedMarkTime() );
+  mShowPopupAfterDnD->setChecked( GlobalSettings::showPopupAfterDnD() );
 
   int num = general.readNumEntry("default-mailbox-format", 1 );
   if ( num < 0 || num > 1 ) num = 1;
@@ -3852,12 +3851,11 @@ void MiscPage::FolderTab::save() {
   general.writeEntry( "startupFolder", mOnStartupOpenFolder->getFolder() ?
 				  mOnStartupOpenFolder->getFolder()->idString() : QString::null );
  
-  GlobalSettings *k = GlobalSettings::self();
-  k->setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
-  k->setDelayedMarkTime( mDelayedMarkTime->value() );
-  k->setJumpToUnread( mJumpToUnread->isChecked() );
-  k->setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
-  k->setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
+  GlobalSettings::setDelayedMarkAsRead( mDelayedMarkAsRead->isChecked() );
+  GlobalSettings::setDelayedMarkTime( mDelayedMarkTime->value() );
+  GlobalSettings::setJumpToUnread( mJumpToUnread->isChecked() );
+  GlobalSettings::setLoopOnGotoUnread( mLoopOnGotoUnread->currentItem() );
+  GlobalSettings::setShowPopupAfterDnD( mShowPopupAfterDnD->isChecked() );
   
   if ( mExpireAtExit->isChecked() )
     general.writeEntry( "when-to-expire", expireAtExit );

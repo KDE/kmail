@@ -2099,8 +2099,8 @@ bool KMHeaders::nextUnreadMessage(bool acceptCurrent)
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(true, -1, false, acceptCurrent);
-  GlobalSettings *k = GlobalSettings::self();
-  if ( i < 0 && k->loopOnGotoUnread() != GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
+  if ( i < 0 && GlobalSettings::loopOnGotoUnread() !=
+        GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
   {
     KMHeaderItem * first = static_cast<KMHeaderItem*>(firstChild());
     if ( first )
@@ -2125,8 +2125,8 @@ bool KMHeaders::prevUnreadMessage()
 {
   if ( !mFolder || !mFolder->countUnread() ) return false;
   int i = findUnread(false);
-  GlobalSettings *k = GlobalSettings::self();
-  if ( i < 0 && k->loopOnGotoUnread() != GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
+  if ( i < 0 && GlobalSettings::loopOnGotoUnread() !=
+        GlobalSettings::EnumLoopOnGotoUnread::DontLoop )
   {
     KMHeaderItem * last = static_cast<KMHeaderItem*>(lastItem());
     if ( last )
@@ -3350,7 +3350,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
             KMHeaderItem *item = static_cast<KMHeaderItem*>(firstChild());
             while (item) {
                 bool isUnread = false;
-                if ( GlobalSettings::self()->jumpToUnread() ) // search unread messages
+                if ( GlobalSettings::jumpToUnread() ) // search unread messages
                     if (mFolder->getMsgBase(item->msgId())->isUnread())
                         isUnread = true;
 

@@ -637,7 +637,6 @@ bool KMReaderWin::event(QEvent *e)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
-  const KConfigGroup behaviour( KMKernel::config(), "Behaviour" );
   /*should be: const*/ KConfigGroup reader( KMKernel::config(), "Reader" );
 
   delete mCSSHelper;
@@ -856,9 +855,9 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
       updateReaderWinTimer.start( 0, TRUE );
   }
 
-  if ( GlobalSettings::self()->delayedMarkAsRead() ) {
-    if ( GlobalSettings::self()->delayedMarkTime() != 0 )
-      mDelayedMarkTimer.start( GlobalSettings::self()->delayedMarkTime() * 1000, TRUE );
+  if ( GlobalSettings::delayedMarkAsRead() ) {
+    if ( GlobalSettings::delayedMarkTime() != 0 )
+      mDelayedMarkTimer.start( GlobalSettings::delayedMarkTime() * 1000, TRUE );
     else
       slotTouchMessage();
   }

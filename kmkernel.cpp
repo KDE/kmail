@@ -9,6 +9,7 @@
 #include <weaver.h>
 #include <weaverlogger.h>
 
+#include "globalsettings.h"
 #include "kmstartup.h"
 #include "kmmsgindex.h"
 #include "kmmainwin.h"
@@ -32,6 +33,8 @@ using KRecentAddress::RecentAddresses;
 #include "identitymanager.h"
 #include "configuredialog.h"
 // #### disabled for now #include "startupwizard.h"
+
+
 #include <kwin.h>
 #include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
@@ -837,7 +840,7 @@ void KMKernel::init()
 
   the_shuttingDown = false;
   the_server_is_ready = false;
-
+  
   cfg = KMKernel::config();
 
   QDir dir;
@@ -1267,6 +1270,7 @@ void KMKernel::cleanupLoop()
   delete mWin;
   mWin = 0;
 
+  GlobalSettings::writeConfig();
   //qInstallMsgHandler(oldMsgHandler);
   RecentAddresses::self( KMKernel::config() )->save( KMKernel::config() );
   KMKernel::config()->sync();
