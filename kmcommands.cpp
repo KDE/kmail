@@ -1303,7 +1303,6 @@ void KMMoveCommand::execute()
 	folderDeleteList[srcFolder]->append( msg );
       } else {
         srcFolder->removeMsg(idx);
-        srcFolder->close();
         delete msg;
       }
     }
