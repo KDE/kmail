@@ -695,7 +695,7 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
                   << cryptPlugLibName << endl;
     int errId = 0;
     char* errTxt = 0;
-    bDecryptionOk = cryptPlug->decryptAndCheckMessage( cipherStr.data(),
+    bDecryptionOk = cryptPlug->decryptAndCheckMessage( ciphertext.data(),
                                                        cipherIsBinary,
                                                        cipherLen,
                                                        &cleartext,
