@@ -233,8 +233,10 @@ void ImapJob::slotGetNextMessage()
     } else if ( mPartSpecifier == "HEADER" ) {
       path += ";SECTION=HEADER";
     } else {
-      path += ";SECTION=" + mPartSpecifier;
+      path += ";SECTION=BODY.PEEK[" + mPartSpecifier +"]";
     }
+  } else {
+      path += ";SECTION=BODY.PEEK";
   }
   url.setPath( path );
 //  kdDebug(5006) << "ImapJob::slotGetNextMessage - retrieve " << url.path() << endl;

@@ -1407,15 +1407,17 @@ void KMReaderWin::slotTouchMessage()
 {
   if (message())
   {
-    if (message()->isNew() || message()->isUnread() || message()->isRead())
-      message()->setStatus(KMMsgStatusRead);
-    if ( message()->isNew() || message()->isUnread() ) {
+    SerNumList serNums;
+    if (message()->isNew() || message()->isUnread()) {
+      serNums.append( message()->getMsgSerNum() );
+      KMCommand *command = new KMSetStatusCommand( KMMsgStatusRead, serNums );
+      command->start();
       KMMessage * receipt = message()->createMDN( MDN::ManualAction,
-						  MDN::Displayed,
-						  true /* allow GUI */ );
+                                                  MDN::Displayed, 
+                                                  true /* allow GUI */ );
       if ( receipt )
-	if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
-	  KMessageBox::error( this, i18n("Couldn't send MDN!") );
+        if ( !kmkernel->msgSender()->send( receipt ) ) // send or queue
+          KMessageBox::error( this, i18n("Couldn't send MDN!") );
     }
   }
 }
