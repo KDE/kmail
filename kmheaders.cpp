@@ -42,6 +42,7 @@ using namespace KPIM;
 #include <qtextcodec.h>
 #include <qbitmap.h>
 #include <qstyle.h>
+#include <qlistview.h>
 
 #include <mimelib/enum.h>
 #include <mimelib/field.h>
@@ -2317,6 +2318,16 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
 
   // let klistview do it's thing, expanding/collapsing, selection/deselection
   KListView::contentsMousePressEvent(e);
+  /* QListView's shift-select selects also invisible items. Until that is
+     fixed, we shave to deselect hidden items here manually, so the quick
+     search doesn't mess things up. */
+  if ( e->state() & ShiftButton ) {
+    QListViewItemIterator it( this, QListViewItemIterator::Invisible );
+    while ( it.current() ) {
+      it.current()->setSelected( false );
+      ++it;
+    }
+  }
 
   if ( rootDecoClicked ) {
       // select the thread's children after closing if the parent is selected
