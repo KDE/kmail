@@ -261,7 +261,7 @@ private:
   static QIconSet *up, *down;   // Icons shown in header
   KMMenuToFolder mMenuToFolder; // Map menu id into a folder
 
-  int mousePressed;             // Drag and drop support
+  bool mousePressed;             // Drag and drop support
   QPoint presspos;              // ditto
 };
 
