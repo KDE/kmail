@@ -55,8 +55,8 @@ public:
                     KMFolder* folder );
   virtual ~KMFolderTreeItem();
 
-  QPixmap normalIcon(KIcon::StdSizes size=KIcon::SizeLarge) const;
-  QPixmap unreadIcon(KIcon::StdSizes size=KIcon::SizeLarge) const;
+  QPixmap normalIcon(KIcon::StdSizes size=KIcon::SizeSmall) const;
+  QPixmap unreadIcon(KIcon::StdSizes size=KIcon::SizeSmall) const;
 
   /** associated folder */
   KMFolder* folder() { return mFolder; }
