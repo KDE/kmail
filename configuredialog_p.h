@@ -579,7 +579,7 @@ protected:
   
   static const int numDateDisplayConfig = 3;
   static const struct dateDisplayConfigType {
-    char *        configName;
+    const char *  configName;
     QString       displayName;
     KMDateDisplay dateDisplay;
   } dateDisplayConfig[ numDateDisplayConfig ];

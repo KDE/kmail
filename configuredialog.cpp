@@ -1843,8 +1843,8 @@ QString AppearancePage::FontsTab::helpAnchor() {
 }
   
 static const struct {
-  char * configName;
-  char * displayName;
+  const char * configName;
+  const char * displayName;
   bool   enableFamilyAndSize;
 } fontNames[] = {
   { "body-font", I18N_NOOP("Message body"), true },
@@ -1997,8 +1997,8 @@ QString AppearancePage::ColorsTab::helpAnchor() {
 
   
 static const struct {
-  char * configName;
-  char * displayName;
+  const char * configName;
+  const char * displayName;
 } colorNames[] = { // adjust setup() if you change this:
   { "BackgroundColor", I18N_NOOP("Composer background") },
   { "ForegroundColor", I18N_NOOP("Normal text") },
@@ -3544,8 +3544,8 @@ QString MiscPage::AddressbookTab::helpAnchor() {
 
 
 static const struct {
-  char * label;
-  char * description;
+  const char * label;
+  const char * description;
 } addressBooks[] = {
   { I18N_NOOP("Traditional KMail"),
     I18N_NOOP("The traditional KMail graphical interface using the "
