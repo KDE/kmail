@@ -137,8 +137,12 @@ void lockOrDie() {
   if ( !first_instance ) {
     QString msg;
     if ( oldHostName == hostName ) {
+      // this can only happen if the user is running this application on 
+      // different displays on the same machine. All other cases will be
+      // taken care of by KUniqueApplication()
       if ( oldAppName == appName )
-        msg = i18n("%1 already seems to be running. Running %2 more than once "
+        msg = i18n("%1 already seems to be running on another display on "
+                   "this machine. Running %2 more than once "
                    "can cause the loss of mail. You should not start %1 "
                    "unless you are sure that it is not already running.")
               .arg( programName, programName );
@@ -147,7 +151,8 @@ void lockOrDie() {
               // of %1 with s1 and all occurrences of %2 with s2. So don't
               // even think about changing the above to .arg( programName ).
       else
-        msg = i18n("%1 seems to be running. Running %1 and %2 at the same "
+        msg = i18n("%1 seems to be running on another display on this "
+                   "machine. Running %1 and %2 at the same "
                    "time can cause the loss of mail. You should not start %2 "
                    "unless you are sure that %1 is not running.")
               .arg( oldProgramName, programName );
