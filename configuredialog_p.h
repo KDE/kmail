@@ -854,6 +854,7 @@ private:
     PluginPage* _pluginPage;
     QComboBox* plugListBoxCertConf;
     CertificateHandlingDialogImpl* certDialog;
+    QPushButton* startCertManagerPB;
 };
 
 class EncryptionPage : public ConfigurationPage

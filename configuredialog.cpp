@@ -4773,6 +4773,11 @@ void GeneralPage::setup()
         }
     }
 
+    if( _pluginPage->mCryptPlugList->count() )
+        _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( true );
+    else
+        _pluginPage->_certificatesPage->startCertManagerPB->setEnabled( false );
+    
     if( 0 < plugList->childCount() ) {
         plugList->setCurrentItem( plugList->firstChild());
         plugList->setSelected(   plugList->firstChild(), TRUE);
@@ -4945,7 +4950,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
 #else
   certDialog = 0;
 
-  QPushButton* startCertManagerPB = new QPushButton( i18n( "&Start certificate manager" ), this, "startcertmanagerpb" );
+  startCertManagerPB = new QPushButton( i18n( "&Start certificate manager" ), this, "startcertmanagerpb" );
   connect( startCertManagerPB, SIGNAL( clicked() ),
            this, SLOT( slotStartCertManager() ) );
   startCertManagerPB->setFixedSize( startCertManagerPB->sizeHint() );
@@ -4956,7 +4961,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
 
 void CertificatesPage::slotStartCertManager()
 {
-	if ( plugListBoxCertConf->currentItem() )
+	if ( plugListBoxCertConf->count() && plugListBoxCertConf->currentItem() )
 	{
 	    KProcess certManagerProc; // save to create on the heap, since
                               // there is no parent
