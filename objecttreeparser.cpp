@@ -529,7 +529,7 @@ namespace KMail {
                                             : cleartextData->data(),
                                     "opaqued signed data" );
         if ( doCheck )
-          delete new_cleartext;
+          free( new_cleartext );
 
         if ( mReader )
           htmlWriter()->queue( writeSigstatFooter( messagePart ) );
@@ -701,7 +701,8 @@ bool ObjectTreeParser::okDecryptMIME( partNode& data,
     }
     if ( errTxt )
       free( errTxt );
-    delete[] cleartext;
+    if ( cleartext )
+      free( cleartext );
   }
   else if ( !cryptPlug ) {
     decryptedData = "<div style=\"text-align:center; padding:20pt;\">"
