@@ -87,7 +87,7 @@ namespace KMail {
     }
 
     void adjustCryptoStatesOfNode( partNode * node ) const;
-    
+
   private:
     KMMsgSignatureState mInlineSignatureState;
     KMMsgEncryptionState mInlineEncryptionState;
@@ -239,7 +239,8 @@ namespace KMail {
 			       bool & showKeyInfos );
     QString writeSigstatHeader( KMail::PartMetaData & part,
 				CryptPlugWrapper * cryptPlug,
-				const QString & fromAddress );
+				const QString & fromAddress,
+                                const QString & filename = QString::null );
     QString writeSigstatFooter( KMail::PartMetaData & part );
 
     void writeBodyStr( const QCString & bodyString,

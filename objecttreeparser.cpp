@@ -1408,9 +1408,13 @@ namespace KMail {
       messagePart.isEncrypted = false;
       messagePart.isSigned = false;
       messagePart.isEncapsulatedRfc822Message = true;
+      QString filename =
+        mReader->writeMessagePartToTempFile( &node->msgPart(),
+                                            node->nodeId() );
       htmlWriter()->queue( writeSigstatHeader( messagePart,
 					       cryptPlugWrapper(),
-					       node->trueFromAddress() ) );
+					       node->trueFromAddress(),
+                                               filename ) );
     }
     QCString rfc822messageStr( node->msgPart().bodyDecoded() );
     // display the headers of the encapsulated message
@@ -1930,7 +1934,8 @@ QString ObjectTreeParser::sigStatusToString( CryptPlugWrapper* cryptPlug,
 
 QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
 					      CryptPlugWrapper * cryptPlug,
-					      const QString & fromAddress )
+					      const QString & fromAddress,
+                                              const QString & filename )
 {
     bool isSMIME = cryptPlug && (0 <= cryptPlug->libName().find( "smime",   0, false ));
     QString signer = block.signer;
@@ -1943,7 +1948,12 @@ QString ObjectTreeParser::writeSigstatHeader( PartMetaData & block,
     {
         htmlStr += "<table cellspacing=\"1\" "+cellPadding+" class=\"rfc822\">"
             "<tr class=\"rfc822H\"><td dir=\"" + dir + "\">";
-        htmlStr += i18n("Encapsulated message");
+        if( !filename.isEmpty() )
+            htmlStr += "<a href=\"" + QString("file:")
+                     + KURL::encode_string( filename ) + "\">"
+                     + i18n("Encapsulated message") + "</a>";
+        else
+            htmlStr += i18n("Encapsulated message");
         htmlStr += "</td></tr><tr class=\"rfc822B\"><td>";
     }
 
