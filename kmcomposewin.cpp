@@ -2822,18 +2822,28 @@ KMEdit::~KMEdit()
 
 
 //-----------------------------------------------------------------------------
-QString KMEdit::brokenText() const
+QString KMEdit::brokenText()
 {
-    QString temp;
+  QString temp, line;
 
-    int num_lines = numLines();
-    for (int i = 0; i < num_lines; ++i) {
-      temp += textLine(i);
-      if (i + 1 < num_lines)
-	temp += '\n';
+  int num_lines = numLines();
+  for (int i = 0; i < num_lines; ++i)
+  {
+    int lastLine = 0;
+    line = textLine(i);
+    for (int j = 0; j < (int)line.length(); ++j)
+    {
+      if (lineOfChar(i, j) > lastLine)
+      {
+        lastLine = lineOfChar(i, j);
+        temp += '\n';
+      }
+      temp += line[j];
     }
+    if (i + 1 < num_lines) temp += '\n';
+  }
 
-    return temp;
+  return temp;
 }
 
 //-----------------------------------------------------------------------------

@@ -74,7 +74,7 @@ public:
   /**
    * Text with lines breaks inserted after every row
    */
-  QString brokenText() const;
+  QString brokenText();
 
   /**
    * For the external editor
