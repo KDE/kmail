@@ -138,13 +138,15 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 
 void KMAcctMgr::processNextCheck(bool _newMail)
 {
+  KMAccount *curAccount = 0; 
   newMailArrived |= _newMail;
 
   if (lastAccountChecked)
     disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
 		this, SLOT(processNextCheck(bool)) );
 
-  if (mAcctChecking->isEmpty()) {
+  if (mAcctChecking->isEmpty() || 
+      (((curAccount = mAcctChecking->take(0)) == lastAccountChecked))) {
     kernel->filterMgr()->cleanup();
     kdDebug(5006) << "checked mail, server ready" << endl;
     kernel->serverReady (true);
@@ -152,9 +154,6 @@ void KMAcctMgr::processNextCheck(bool _newMail)
     emit checkedMail(newMailArrived);
     return;
   }
-
-  KMAccount *curAccount = mAcctChecking->take(0);
-  if (curAccount == lastAccountChecked) return;
 
   connect( curAccount, SIGNAL(finishedCheck(bool)),
 	   this, SLOT(processNextCheck(bool)) );
