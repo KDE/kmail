@@ -1377,7 +1377,7 @@ void KMMessage::readConfig(void)
   /* Default values added for KRN otherwise createReply() segfaults*/
   /* They are taken from kmail's dialog */
 
-  KConfig *config=kapp->getConfig();
+  KConfig *config=kapp->config();
     
   config->setGroup("KMMessage");
   sReplyStr = config->readEntry("phrase-reply",i18n("On %D, you wrote:"));

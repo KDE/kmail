@@ -109,7 +109,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
   KMMessage* newMsg = new KMMessage;
   QString str, receiptTo;
 
-  KConfig* cfg = app->getConfig();
+  KConfig* cfg = app->config();
   bool sendReceipts;
 
   cfg->setGroup("General");

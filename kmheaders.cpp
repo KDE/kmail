@@ -92,7 +92,7 @@ KMHeaders::~KMHeaders ()
 //-----------------------------------------------------------------------------
 void KMHeaders::readConfig (void)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   QString fntStr;
 
   config->setGroup("Fonts");
@@ -106,7 +106,7 @@ void KMHeaders::readConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::readFolderConfig (void)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   assert(mFolder!=NULL);
 
   config->setGroup("Folder-" + mFolder->name());
@@ -124,7 +124,7 @@ void KMHeaders::readFolderConfig (void)
 //-----------------------------------------------------------------------------
 void KMHeaders::writeFolderConfig (void)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   assert(mFolder!=NULL);
 
   config->setGroup("Folder-" + mFolder->name());

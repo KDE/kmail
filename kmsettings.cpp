@@ -312,7 +312,7 @@ void KMSettings::createTabAppearance(QWidget* parent)
   QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
   QGridLayout* grid;
   QGroupBox* grp;
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   QPushButton* btn;
   QFont fnt;
 
@@ -379,7 +379,7 @@ void KMSettings::createTabComposer(QWidget *parent)
   QGridLayout* grid;
   QGroupBox* grp;
   QLabel* lbl;
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   QString str;
   int i;
 
@@ -532,7 +532,7 @@ void KMSettings::createTabMisc(QWidget *parent)
   QGridLayout* grid;
   QGroupBox* grp;
 
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   QString str;
 
   //---------- group: folders
@@ -783,7 +783,7 @@ void KMSettings::doCancel()
 //-----------------------------------------------------------------------------
 void KMSettings::doApply()
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
 
   //----- identity
   identity->setFullName(nameEdit->text());

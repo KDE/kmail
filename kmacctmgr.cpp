@@ -57,7 +57,7 @@ void KMAcctMgr::setBasePath(const char* aBasePath)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::writeConfig(bool withSync)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   KMAccount* acct;
   QString groupName;
   int i;
@@ -78,7 +78,7 @@ void KMAcctMgr::writeConfig(bool withSync)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::readConfig(void)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   KMAccount* acct;
   QString groupName, acctType, acctName;
   int i, num;

@@ -104,7 +104,7 @@ KMMainWin::~KMMainWin()
 //-----------------------------------------------------------------------------
 void KMMainWin::readPreConfig(void)
 {
-  KConfig *config = app->getConfig();
+  KConfig *config = app->config();
   QString str;
 
   config->setGroup("Geometry");
@@ -115,7 +115,7 @@ void KMMainWin::readPreConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::readConfig(void)
 {
-  KConfig *config = app->getConfig();
+  KConfig *config = app->config();
   bool oldLongFolderList=false;
   int w, h, folderIdx=0;
   QString str;
@@ -172,7 +172,7 @@ void KMMainWin::readConfig(void)
 void KMMainWin::writeConfig(void)
 {
   QString s;
-  KConfig *config = app->getConfig();
+  KConfig *config = app->config();
   QRect r = geometry();
 
   mMsgView->writeConfig();
@@ -1093,7 +1093,7 @@ void KMMainWin::setupMenuBar()
   mViewMenu->setItemChecked((int)mMsgView->attachmentStyle()+5, TRUE);
 
   //----- Help Menu
-  QPopupMenu *helpMenu = kapp->getHelpMenu(TRUE, aboutText);
+  QPopupMenu *helpMenu = kapp->helpMenu(TRUE, aboutText);
 
   //----- Menubar
   mMenuBar  = new KMenuBar(this);

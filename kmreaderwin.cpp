@@ -110,7 +110,7 @@ void KMReaderWin::makeAttachDir(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
-  KConfig *config = kapp->getConfig();
+  KConfig *config = kapp->config();
 
   config->setGroup("Reader");
   mAtmInline = config->readNumEntry("attach-inline", 100);
@@ -169,7 +169,7 @@ void KMReaderWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeConfig(bool aWithSync)
 {
-  KConfig *config = kapp->getConfig();
+  KConfig *config = kapp->config();
 
   config->setGroup("Reader");
   config->writeEntry("attach-inline", mAtmInline);

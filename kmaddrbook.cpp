@@ -63,7 +63,7 @@ void KMAddrBook::clear(void)
 //-----------------------------------------------------------------------------
 void KMAddrBook::writeConfig(bool aWithSync)
 {
-  KConfig* config = kapp->getConfig();
+  KConfig* config = kapp->config();
 
   config->setGroup("Addressbook");
   config->writeEntry("default", mDefaultFileName);
@@ -75,7 +75,7 @@ void KMAddrBook::writeConfig(bool aWithSync)
 //-----------------------------------------------------------------------------
 void KMAddrBook::readConfig(void)
 {
-  KConfig* config = kapp->getConfig();
+  KConfig* config = kapp->config();
   config->setGroup("Addressbook");
 
   mDefaultFileName = config->readEntry("default");

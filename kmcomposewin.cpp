@@ -203,7 +203,7 @@ KMComposeWin::~KMComposeWin()
 //-----------------------------------------------------------------------------
 void KMComposeWin::readConfig(void)
 {
-  KConfig *config = kapp->getConfig();
+  KConfig *config = kapp->config();
   QString str;
   int w, h;
 
@@ -255,7 +255,7 @@ void KMComposeWin::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMComposeWin::writeConfig(void)
 {
-  KConfig *config = kapp->getConfig();
+  KConfig *config = kapp->config();
   QString str;
 
   config->setGroup("Composer");
@@ -550,7 +550,7 @@ void KMComposeWin::setupMenuBar(void)
   mMenuBar->insertItem(i18n("&Attach"), menu);
 
   //---------- Menu: Help
-  menu = app->getHelpMenu(TRUE, aboutText);
+  menu = app->helpMenu(TRUE, aboutText);
   mMenuBar->insertSeparator();
   mMenuBar->insertItem(i18n("&Help"), menu);
 
@@ -2012,7 +2012,7 @@ void KMComposeWin::slotSpellcheckConfig()
   qtd.addTab (&mKSpellConfig, "Spellchecker");
   qtd.setCancelButton ();
 
-  kwm.setMiniIcon (qtd.winId(), kapp->getMiniIcon());
+  kwm.setMiniIcon (qtd.winId(), kapp->miniIcon());
 
   if (qtd.exec())
     mKSpellConfig.writeGlobalSettings();

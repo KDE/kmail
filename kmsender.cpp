@@ -63,7 +63,7 @@ KMSender::KMSender()
   label = new QLabel(0);
   //label->setAutoResize(true);
   label->setCaption("KMail");
-  label->setIcon(kapp->getMiniIcon());
+  label->setIcon(kapp->miniIcon());
   connect (this, SIGNAL(statusMsg(const QString&)),
            label, SLOT(setText(const QString&)));
 }
@@ -82,7 +82,7 @@ KMSender::~KMSender()
 void KMSender::readConfig(void)
 {
   QString str;
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
 
   config->setGroup(SENDER_GROUP);
 
@@ -102,7 +102,7 @@ void KMSender::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMSender::writeConfig(bool aWithSync)
 {
-  KConfig* config = app->getConfig();
+  KConfig* config = app->config();
   config->setGroup(SENDER_GROUP);
 
   config->writeEntry("Immediate", mSendImmediate);

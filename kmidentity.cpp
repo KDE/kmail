@@ -33,7 +33,7 @@ KMIdentity::~KMIdentity()
 //-----------------------------------------------------------------------------
 void KMIdentity::readConfig(void)
 {
-  KConfig* config = kapp->getConfig();
+  KConfig* config = kapp->config();
   struct passwd* pw;
   char str[80];
   int i;
@@ -75,7 +75,7 @@ void KMIdentity::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMIdentity::writeConfig(bool aWithSync)
 {
-  KConfig* config = kapp->getConfig();
+  KConfig* config = kapp->config();
   config->setGroup("Identity");
 
   config->writeEntry("Name", mFullName);

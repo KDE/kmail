@@ -115,7 +115,7 @@ static void ungrabPtrKb(void)
 // Message handler
 static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 {
-  QString appName = app->getCaption();
+  QString appName = app->caption();
   QString msg = aMsg;
   static int recurse=-1;
 
@@ -137,7 +137,7 @@ static void kmailMsgHandler(QtMsgType aType, const char* aMsg)
 	!recurse)
     {
       ungrabPtrKb();
-      QMessageBox::warning(NULL, kapp->getCaption(), msg, i18n("OK"));
+      QMessageBox::warning(NULL, kapp->caption(), msg, i18n("OK"));
     }
     else kdebug(KDEBUG_INFO, 0, msg);
     break;
@@ -468,7 +468,7 @@ static void init(int& argc, char *argv[])
   //--- Sven's pseudo IPC&locking end ---
   app = new KApplication(argc, argv, "kmail");
   kbp = new KBusyPtr;
-  cfg = app->getConfig();
+  cfg = app->config();
 
   keys = new KStdAccel(cfg);
 
@@ -520,7 +520,7 @@ static void init(int& argc, char *argv[])
 //-----------------------------------------------------------------------------
 static void cleanup(void)
 {
-  KConfig* config =  kapp->getConfig();
+  KConfig* config =  kapp->config();
   shuttingDown = TRUE;
 
   if (trashFolder)
@@ -542,7 +542,7 @@ static void cleanup(void)
   if (kbp) delete kbp;
 
   //qInstallMsgHandler(oldMsgHandler);
-  app->getConfig()->sync();
+  app->config()->sync();
   //--- Sven's save attachments to /tmp start ---
   //debug ("cleaned");
   QString cmd;

@@ -23,7 +23,7 @@
 KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   KMFolderTreeInherited(parent, name, 1), mList()
 {
-  KConfig* conf = app->getConfig();
+  KConfig* conf = app->config();
   KIconLoader* loader = KGlobal::iconLoader();
   static QPixmap pixDir, pixNode, pixPlain, pixFld, pixIn, pixOut, pixTr,
 		 pixSent;
@@ -104,7 +104,7 @@ void KMFolderTree::updateUnreadAll()
 //-----------------------------------------------------------------------------
 KMFolderTree::~KMFolderTree()
 {
-  KConfig* conf = app->getConfig();
+  KConfig* conf = app->config();
 
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());
@@ -287,7 +287,7 @@ void KMFolderTree::doFolderSelected(int index, int)
 //-----------------------------------------------------------------------------
 void KMFolderTree::resizeEvent(QResizeEvent* e)
 {
-  KConfig* conf = app->getConfig();
+  KConfig* conf = app->config();
 
   conf->setGroup("Geometry");
   conf->writeEntry(name(), size().width());

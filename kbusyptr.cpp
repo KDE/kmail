@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 KBusyPtr :: KBusyPtr ()
 {
-  app = KApplication::getKApplication();
+  app = KApplication::kApplication();
 
   busyLevel  = 0;
   numCursors = 0;
