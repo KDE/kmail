@@ -255,7 +255,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
     return true;
 
   KMBroadcastStatus::instance()->setStatusMsg(
-      i18n( i18n("Executing precommand %1").arg(precommand )));
+      i18n("Executing precommand %1").arg(precommand ));
 
   QStringList args;
   // Tokenize on space
