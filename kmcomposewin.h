@@ -307,6 +307,16 @@ public:
    KMMessage* msg(void) const { return mMsg; }
 
   /**
+   * Returns true if the message was modified by the user.
+   */
+  bool isModified() const;
+
+  /**
+   * Set whether the message should be treated as modified or not.
+   */
+  void setModified( bool modified );
+
+  /**
    * If this flag is set the message of the composer is deleted when
    * the composer is closed and the message was not sent. Default: FALSE
    */
@@ -437,7 +447,7 @@ public slots:
    * Change crypto plugin to be used for signing/encrypting messages,
    * or switch to built-in OpenPGP code.
    */
-  void slotSelectCryptoModule();
+  void slotSelectCryptoModule( bool init = false );
 
   /**
    * XML-GUI stuff

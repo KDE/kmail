@@ -1123,7 +1123,7 @@ void KMComposeWin::setupActions(void)
 					   actionCollection(), "options_select_crypto" );
   mCryptoModuleAction->setItems( l );
   mCryptoModuleAction->setCurrentItem( format2cb( ident.preferredCryptoMessageFormat() ) );
-  slotSelectCryptoModule();
+  slotSelectCryptoModule( true /* initialize */ );
 
   QStringList styleItems;
   styleItems << i18n( "Standard" );
@@ -1588,7 +1588,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign,
     //
     QTimer::singleShot( 0, this, SLOT(slotAppendSignature()) );
   }
-  mEditor->setModified(isModified);
+  setModified( isModified );
 }
 
 
@@ -1600,7 +1600,40 @@ void KMComposeWin::setFcc( const QString &idString )
     mFcc->setFolder( idString );
   } else {
     mFcc->setFolder( kmkernel->sentFolder() );
+  }
 }
+
+
+//-----------------------------------------------------------------------------
+bool KMComposeWin::isModified() const
+{
+  return ( mEditor->isModified() ||
+           mEdtFrom->edited() ||
+           mEdtReplyTo->edited() ||
+           mEdtTo->edited() ||
+           mEdtCc->edited() ||
+           mEdtBcc->edited() ||
+           mEdtSubject->edited() ||
+           mAtmModified ||
+           ( mTransport->lineEdit() && mTransport->lineEdit()->edited() ) );
+}
+
+
+//-----------------------------------------------------------------------------
+void KMComposeWin::setModified( bool modified )
+{
+  mEditor->setModified( modified );
+  if ( !modified ) {
+    mEdtFrom->setEdited( false );
+    mEdtReplyTo->setEdited( false );
+    mEdtTo->setEdited( false );
+    mEdtCc->setEdited( false );
+    mEdtBcc->setEdited( false );
+    mEdtSubject->setEdited( false );
+    mAtmModified =  false ;
+    if ( mTransport->lineEdit() )
+      mTransport->lineEdit()->setEdited( false );
+  }
 }
 
 
@@ -1612,11 +1645,7 @@ bool KMComposeWin::queryClose ()
   if (kmkernel->shuttingDown() || kapp->sessionSaving())
     return true;
 
-  if(mEditor->isModified() || mEdtFrom->edited() || mEdtReplyTo->edited() ||
-     mEdtTo->edited() || mEdtCc->edited() || mEdtBcc->edited() ||
-     mEdtSubject->edited() || mAtmModified ||
-     (mTransport->lineEdit() && mTransport->lineEdit()->edited()))
-  {
+  if ( isModified() ) {
     const int rc = KMessageBox::warningYesNoCancel(this,
            i18n("Do you want to save the message for later or discard it?"),
            i18n("Close Composer"),
@@ -2232,8 +2261,11 @@ void KMComposeWin::slotSetCharset()
 
 
 //-----------------------------------------------------------------------------
-void KMComposeWin::slotSelectCryptoModule()
+void KMComposeWin::slotSelectCryptoModule( bool init )
 {
+  if ( !init ) {
+    setModified( true );
+  }
   if( canSignEncryptAttachments() ) {
     // if the encrypt/sign columns are hidden then show them
     if( 0 == mAtmListView->columnWidth( mAtmColEncrypt ) ) {
@@ -2596,7 +2628,7 @@ void KMComposeWin::slotAttachRemove()
   }
 
   if ( attachmentRemoved ) {
-    mEditor->setModified( true );
+    setModified( true );
     slotUpdateAttachActions();
   }
 }
@@ -2869,6 +2901,8 @@ void KMComposeWin::slotEncryptToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setEncryption( bool encrypt, bool setByUser )
 {
+  if ( setByUser )
+    setModified( true );
   if ( !mEncryptAction->isEnabled() )
     encrypt = false;
   // check if the user wants to encrypt messages to himself and if he defined
@@ -2917,6 +2951,8 @@ void KMComposeWin::slotSignToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::setSigning( bool sign, bool setByUser )
 {
+  if ( setByUser )
+    setModified( true );
   if ( !mSignAction->isEnabled() )
     sign = false;
 
@@ -2967,12 +3003,7 @@ void KMComposeWin::slotWordWrapToggled(bool on)
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotPrint()
 {
-  mMessageWasModified = ( mEditor->isModified() || mEdtFrom->edited() ||
-                          mEdtReplyTo->edited() || mEdtTo->edited() ||
-                          mEdtCc->edited() || mEdtBcc->edited() ||
-                          mEdtSubject->edited() || mAtmModified ||
-                          ( mTransport->lineEdit() &&
-                            mTransport->lineEdit()->edited() ) );
+  mMessageWasModified = isModified();
   connect( this, SIGNAL( applyChangesDone( bool ) ),
            this, SLOT( slotContinuePrint( bool ) ) );
   applyChanges( true );
@@ -2990,7 +3021,7 @@ void KMComposeWin::slotContinuePrint( bool rc )
     }
     KMCommand *command = new KMPrintCommand( this, mComposedMessages.first() );
     command->start();
-    mEditor->setModified( mMessageWasModified );
+    setModified( mMessageWasModified );
   }
 }
 
@@ -3112,16 +3143,6 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
     mDisableBreaking = false;
     return;
   }
-  if (!mAutoDeleteMsg) mEditor->setModified(FALSE);
-  mEdtFrom->setEdited(FALSE);
-  mEdtReplyTo->setEdited(FALSE);
-  mEdtTo->setEdited(FALSE);
-  mEdtCc->setEdited(FALSE);
-  mEdtBcc->setEdited(FALSE);
-  mEdtSubject->setEdited(FALSE);
-  if (mTransport->lineEdit())
-    mTransport->lineEdit()->setEdited(FALSE);
-  mAtmModified = FALSE;
 
   for ( QValueVector<KMMessage*>::iterator it = mComposedMessages.begin() ; it != mComposedMessages.end() ; ++it ) {
 
@@ -3200,6 +3221,7 @@ void KMComposeWin::slotContinueDoSend( bool sentOk )
   RecentAddresses::self( KMKernel::config() )->add( cc() );
   RecentAddresses::self( KMKernel::config() )->add( to() );
 
+  setModified( false );
   mAutoDeleteMsg = FALSE;
   mFolder = 0;
   close();
@@ -3580,7 +3602,7 @@ void KMComposeWin::slotIdentityChanged( uint uoid )
   mLastIdentityHasSigningKey = bNewIdentityHasSigningKey;
   mLastIdentityHasEncryptionKey = bNewIdentityHasEncryptionKey;
 
-  mEditor->setModified(TRUE);
+  setModified( true );
   mId = uoid;
 
   // make sure the From and BCC fields are shown if necessary
