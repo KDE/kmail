@@ -136,6 +136,9 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
     fti->folder->remove();
     fti->folder->create();
   }
+  fti->folder->close();
+  fti->folder->setAccount(item->folder->account());
+  fti->folder->setImapPath( url );
   if ((noPrefix || item->folder->imapPath() == "/") && name == "INBOX")
   {
     fti->folder->setLabel(i18n("inbox"));
@@ -150,14 +153,9 @@ void KMFolderTree::addImapChildFolder(KMFolderTreeItem *item,
   {
     fti->setExpandable( TRUE );
     fti->folder->setDir( TRUE );
-    if (readIsListViewItemOpen( fti ))
-    {
-      setOpen( fti, TRUE );
-      slotFolderExpanded( fti );
-    }
+    if (readIsListViewItemOpen( fti )) setOpen( fti, TRUE );
+    slotFolderExpanded( fti );
   }
-  fti->folder->setAccount(item->folder->account());
-  fti->folder->setImapPath( url );
 
   connect(fti->folder,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
           SLOT(refresh(KMFolder*)));
@@ -403,6 +401,7 @@ void KMFolderTree::reload(void)
         new KMFolder(new KMFolderRootDir(locateLocal("tmp","")), a->name()
         + ".imap"), &mPaintInfo );
       fti->folder->create();
+      fti->folder->close();
       fti->setText(0,a->name());
       fti->setExpandable( TRUE );
       fti->folder->setDir( TRUE );
@@ -1117,16 +1116,18 @@ void KMFolderTree::contentsMouseMoveEvent( QMouseEvent* e )
 void KMFolderTree::slotFolderExpanded( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (!fti || fti->mImapState == KMFolderTreeItem::imapInProgress) return;
-  if (fti->folder && fti->folder->account())
-    fti->folder->account()->listDirectory( fti );
+  if (fti && fti->mImapState == KMFolderTreeItem::imapNoInformation
+    && fti->folder && fti->folder->account())
+      fti->folder->account()->listDirectory( fti );
 }
 
 void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
 {
   KMFolderTreeItem *fti = static_cast<KMFolderTreeItem*>(item);
-  if (fti && fti->folder && fti->folder->account())
+  if (fti && fti->folder && fti->folder->account()
+    && fti->parent() && !fti->parent()->parent())
   {
+    writeConfig();
     QListViewItemIterator it(item);
     for (; it.current() != item->nextSibling(); it++)
       if ((it.current()) == currentItem()) { doFolderSelected(item); break; }
@@ -1137,6 +1138,7 @@ void KMFolderTree::slotFolderCollapsed( QListViewItem * item )
       delete ftic;
     }
     fti->folder->account()->displayProgress();
+    fti->mImapState = KMFolderTreeItem::imapNoInformation;
   }
 }
 

@@ -572,7 +572,7 @@ KMImapJob::KMImapJob(KMMessage *msg, bool put, KMFolder* folder)
     KURL url = account->getUrl();
     url.setPath(folder->imapPath());
     KMAcctImap::jobData jd;
-    jd.parent = NULL;
+    jd.parent = NULL; mOffset = 0;
     jd.total = 1; jd.done = 0;
     QCString cstr(msg->asString());
     int a = cstr.find("\nX-UID: ");
@@ -653,8 +653,16 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
 void KMImapJob::slotPutMessageDataReq(KIO::Job *job, QByteArray &data)
 {
   assert(mJob == job);
-  data = mData;
-  mData.resize(0);
+  if (mData.size() - mOffset > 0x8000)
+  {
+    data.duplicate(mData.data() + mOffset, 0x8000);
+    mOffset += 0x8000;
+  }
+  else if (mData.size() - mOffset > 0)
+  {
+    data.duplicate(mData.data() + mOffset, mData.size() - mOffset);
+    mOffset = mData.size();
+  } else data.resize(0);
 }
 
 

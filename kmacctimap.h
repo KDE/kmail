@@ -67,7 +67,7 @@ private:
   QByteArray mData;
   QCString mStrData;
   KMFolderTreeItem *mFti;
-  int mTotal, mDone;
+  int mTotal, mDone, mOffset;
 };
 
 
