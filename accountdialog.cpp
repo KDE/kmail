@@ -339,7 +339,9 @@ void AccountDialog::setupSettings()
       {
 	continue;
       }
-      folderCombo->insertItem( folder->name() );
+      if (folder->name() == "inbox")
+        folderCombo->insertItem( i18n("inbox") );
+      else folderCombo->insertItem( folder->name() );
       if( folder == acctFolder )
       {
 	folderCombo->setCurrentItem(i);
@@ -349,7 +351,7 @@ void AccountDialog::setupSettings()
 
     // -sanders hack for startup users. Must investigate this properly
     if (folderCombo->count() == 0)
-      folderCombo->insertItem( "inbox" );
+      folderCombo->insertItem( i18n("inbox") );
   }
 }
 
@@ -408,8 +410,11 @@ void AccountDialog::saveSettings()
  
     mAccount->setPrecommand( mLocal.precommand->text() );
 
-    KMFolder *folder 
-      = kernel->folderMgr()->find( mLocal.folderCombo->currentText() );
+    KMFolder *folder;
+    if (mLocal.folderCombo->currentText() == i18n("inbox"))
+      folder = kernel->folderMgr()->find("inbox");
+    else
+      folder = kernel->folderMgr()->find( mLocal.folderCombo->currentText() ); 
     mAccount->setFolder( folder );
 
   }
@@ -420,8 +425,11 @@ void AccountDialog::saveSettings()
 			     mPop.intervalSpin->value() : 0 );
     mAccount->setCheckExclude( mPop.excludeCheck->isChecked() );
 
-    KMFolder *folder 
-      = kernel->folderMgr()->find( mPop.folderCombo->currentText() );
+    KMFolder *folder;
+    if (mPop.folderCombo->currentText() == i18n("inbox"))
+      folder = kernel->folderMgr()->find("inbox");
+    else
+      folder = kernel->folderMgr()->find( mPop.folderCombo->currentText() );  
     mAccount->setFolder( folder );
     
     KMAcctExpPop &epa = *(KMAcctExpPop*)mAccount;
