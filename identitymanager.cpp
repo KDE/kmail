@@ -74,12 +74,12 @@ void IdentityManager::commit()
       kdDebug( 5006 ) << "emitting changed() for identity " << *uoid << endl;
       emit changed( *it );
       emit changed( *uoid );
+    	seenUOIDs.remove( uoid );
     } else {
       // new identity
       kdDebug( 5006 ) << "emitting added() for identity " << (*it).uoid() << endl;
       emit added( *it );
     }
-    seenUOIDs.remove( uoid );
   }
 
   // what's left are deleted identities:
