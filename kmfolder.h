@@ -230,7 +230,7 @@ signals:
   void changed();
 
   /** Emitted when a message is removed from the folder. */
-  void msgRemoved(int);
+  void msgRemoved(int,QString);
 
   /** Emitted when a message is added from the folder. */
   void msgAdded(int);

@@ -724,10 +724,11 @@ void KMFolder::removeMsg(int idx)
       debug("KMFolder::removeMsg() : idx < 0\n");
       return;
     }
+  QString msgId = mMsgList[idx]->msgId();
   mMsgList.take(idx);
   mDirty = TRUE;
   if (!mQuiet) 
-    emit msgRemoved(idx);
+    emit msgRemoved(idx, msgId);
   else
     mChanged = TRUE;
 }
@@ -746,6 +747,7 @@ KMMessage* KMFolder::take(int idx)
   if (!mb) return NULL;
   if (!mb->isMessage()) readMsg(idx);
 
+  QString msgId = mMsgList[idx]->msgId();
   msg = (KMMessage*)mMsgList.take(idx);
   if (msg->status()==KMMsgStatusUnread ||
       msg->status()==KMMsgStatusNew) {
@@ -756,7 +758,7 @@ KMMessage* KMFolder::take(int idx)
   mDirty = TRUE;
   needsCompact=true; // message is taken from here - needs to be compacted
   if (!mQuiet)
-    emit msgRemoved(idx);
+    emit msgRemoved(idx,msgId);
   else
     mChanged = TRUE;
 

@@ -226,13 +226,13 @@ public:
       else
 	return mSortDate;
     }
-    else if (column == mPaintInfo->subCol)
-      return mSortSubject;
-    else if (column == mPaintInfo->senderCol) {
+    else if (column == mPaintInfo->senderCol)
+      return mSortSender;
+    else if (column == mPaintInfo->subCol) {
       if (mPaintInfo->status)
 	return QString( QChar( (char)mFolder->getMsgBase( mMsgId )->status() ));
       else
-	return mSortSender;
+	return mSortSubject;
     }
     else
       return text(column);
@@ -481,8 +481,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 		 this, SLOT(msgHeaderChanged(int)));
       disconnect(mFolder, SIGNAL(msgAdded(int)),
 		 this, SLOT(msgAdded(int)));
-      disconnect(mFolder, SIGNAL(msgRemoved(int)),
-		 this, SLOT(msgRemoved(int)));
+      disconnect(mFolder, SIGNAL(msgRemoved(int,QString)),
+		 this, SLOT(msgRemoved(int,QString)));
       disconnect(mFolder, SIGNAL(changed()),
 		 this, SLOT(msgChanged()));
       disconnect(mFolder, SIGNAL(statusMsg(const QString&)),
@@ -498,8 +498,8 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 	      this, SLOT(msgHeaderChanged(int)));
       connect(mFolder, SIGNAL(msgAdded(int)),
 	      this, SLOT(msgAdded(int)));
-      connect(mFolder, SIGNAL(msgRemoved(int)),
-	      this, SLOT(msgRemoved(int)));
+      connect(mFolder, SIGNAL(msgRemoved(int,QString)),
+	      this, SLOT(msgRemoved(int,QString)));
       connect(mFolder, SIGNAL(changed()),
 	      this, SLOT(msgChanged()));
       connect(mFolder, SIGNAL(statusMsg(const QString&)),
@@ -556,18 +556,20 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     mOwner->statusMsg(str);
   }
 
-  QString colText = i18n( "Date" );
+  QString colText = i18n( "Sender" );
+  if (mFolder && (stricmp(mFolder->whoField(), "To")==0))
+    colText = i18n("Receiver");
+  setColumnText( mPaintInfo.senderCol, colText);
+ 
+  colText = i18n( "Date" );
   if (mPaintInfo.orderOfArrival)
     colText = i18n( "Date (Order of Arrival)" );
   setColumnText( mPaintInfo.dateCol, colText);
 
-  colText = i18n( "Sender" );
-  if (mFolder && (stricmp(mFolder->whoField(), "To")==0))
-    colText = i18n("Receiver");
-
+  colText = i18n( "Subject" );
   if (mPaintInfo.status)
     colText = colText + i18n( " (Status)" );
-  setColumnText( mPaintInfo.senderCol, colText);
+  setColumnText( mPaintInfo.subCol, colText);
 
   if (!mSortDescending)
     setColumnText( mSortCol, *up, columnText( mSortCol ));
@@ -639,12 +641,25 @@ void KMHeaders::msgAdded(int id)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::msgRemoved(int id)
+void KMHeaders::msgRemoved(int id, QString msgId)
 {
   if (!isUpdatesEnabled()) return;
 
   if ((id < 0) || (id >= (int)mItems.size()))
     return;
+
+  mIdTree.remove(msgId);
+
+  // Reparent children of item into top level
+  QListViewItem *myParent = mItems[id];
+  QListViewItem *myChild = myParent->firstChild();
+  while (myChild) {
+    QListViewItem *lastChild = myChild;
+    myChild = myChild->nextSibling();
+    myParent->takeItem(lastChild);
+    insertItem(lastChild);
+  }
+
   delete mItems[id];
   for (int i = id; i < (int)mItems.size() - 1; ++i) {
     mItems[i] = mItems[i+1];
@@ -658,8 +673,6 @@ void KMHeaders::msgRemoved(int id)
 //-----------------------------------------------------------------------------
 void KMHeaders::msgHeaderChanged(int msgId)
 {
-  QString fromStr, subjStr;
-
   if (msgId<0 || msgId >= (int)mItems.size() || !isUpdatesEnabled()) return;
   mItems[msgId]->irefresh();
   mItems[msgId]->repaint();
@@ -1794,6 +1807,7 @@ void KMHeaders::showNewMail()
    }
 }
 
+//-----------------------------------------------------------------------------
 void KMHeaders::setTopItemByIndex( int aMsgIdx)
 {
   int msgIdx = aMsgIdx;
@@ -1805,8 +1819,7 @@ void KMHeaders::setTopItemByIndex( int aMsgIdx)
     setContentsPos( 0, itemPos( mItems[msgIdx] ));
 }
 
-// Update the pixmap for list view header.
-// TODO: Implement support for order of arrival sorting
+//-----------------------------------------------------------------------------
 void KMHeaders::setSorting( int column, bool ascending )
 {
   if (column != -1) {
@@ -1818,7 +1831,7 @@ void KMHeaders::setSorting( int column, bool ascending )
     if (!ascending && (column == mPaintInfo.dateCol))
       mPaintInfo.orderOfArrival = !mPaintInfo.orderOfArrival;
 
-    if (!ascending && (column == mPaintInfo.senderCol))
+    if (!ascending && (column == mPaintInfo.subCol))
       mPaintInfo.status = !mPaintInfo.status;
 
     QString colText = i18n( "Date" );
@@ -1826,12 +1839,10 @@ void KMHeaders::setSorting( int column, bool ascending )
       colText = i18n( "Date (Order of Arrival)" );
     setColumnText( mPaintInfo.dateCol, colText);
 
-    colText = i18n( "Sender" );
-    if (mFolder && (stricmp(mFolder->whoField(), "To")==0))
-      colText = i18n("Receiver");
+    colText = i18n( "Subject" );
     if (mPaintInfo.status)
       colText = colText + i18n( " (Status)" );
-    setColumnText( mPaintInfo.senderCol, colText);
+    setColumnText( mPaintInfo.subCol, colText);
     
     if (ascending)
       setColumnText( column, *up, columnText(column));
