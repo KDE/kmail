@@ -42,7 +42,7 @@ void KMDict::clear()
       item = nextItem;
     }
   }
-  delete mVecs;
+  delete [] mVecs;
   mVecs = 0;
 }
 
