@@ -23,6 +23,14 @@ KMFolderRootDir::KMFolderRootDir(const char* path):
   setPath(path);
 }
 
+//-----------------------------------------------------------------------------
+KMFolderRootDir::~KMFolderRootDir()
+{
+  // WABA: We can't let KMFolderDir do this because by the time its
+  // desctructor gets called, KMFolderRootDir is already destructed
+  // Most notably the path.
+  clear();
+}
 
 //-----------------------------------------------------------------------------
 void KMFolderRootDir::setPath(const char* aPath)
