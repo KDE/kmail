@@ -511,7 +511,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 // the state that should be executed next
 void KMFolderCachedImap::serverSyncInternal()
 {
-  kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
+  //kdDebug(5006) << label() << ": " << state2String( mSyncState ) << endl;
   switch( mSyncState ) {
   case SYNC_STATE_INITIAL:
   {
@@ -1335,7 +1335,7 @@ void KMFolderCachedImap::listDirectory2() {
 
 void KMFolderCachedImap::slotSubFolderComplete(KMFolderCachedImap* sub, bool success)
 {
-  kdDebug(5006) << label() << " slotSubFolderComplete: " << sub->label() << endl;
+  //kdDebug(5006) << label() << " slotSubFolderComplete: " << sub->label() << endl;
   if ( success )
     serverSyncInternal();
   else
