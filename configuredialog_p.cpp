@@ -294,7 +294,6 @@ ProfileDialog::ProfileDialog( QWidget * parent, const char * name, bool modal )
   mListView->addColumn( i18n("Description") );
   mListView->setFullWidth( true );
   mListView->setAllColumnsShowFocus( true );
-  mListView->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mListView->setSorting( -1 );
 
   vlay->addWidget( new QLabel( mListView,

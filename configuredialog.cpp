@@ -592,7 +592,6 @@ AccountsPageSendingTab::AccountsPageSendingTab( QWidget * parent, const char * n
   mTransportList->addColumn( i18n("Name") );
   mTransportList->addColumn( i18n("Type") );
   mTransportList->setAllColumnsShowFocus( true );
-  mTransportList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mTransportList->setSorting( -1 );
   connect( mTransportList, SIGNAL(selectionChanged()),
            this, SLOT(slotTransportSelected()) );
@@ -1064,7 +1063,6 @@ AccountsPageReceivingTab::AccountsPageReceivingTab( QWidget * parent, const char
   mAccountList->addColumn( i18n("Type") );
   mAccountList->addColumn( i18n("Folder") );
   mAccountList->setAllColumnsShowFocus( true );
-  mAccountList->setFrameStyle( QFrame::WinPanel + QFrame::Sunken );
   mAccountList->setSorting( -1 );
   connect( mAccountList, SIGNAL(selectionChanged()),
            this, SLOT(slotAccountSelected()) );
@@ -3040,7 +3038,6 @@ ComposerPageHeadersTab::ComposerPageHeadersTab( QWidget * parent, const char * n
   mTagList->addColumn( i18n("Name") );
   mTagList->addColumn( i18n("Value") );
   mTagList->setAllColumnsShowFocus( true );
-  mTagList->setFrameStyle( QFrame::WinPanel | QFrame::Sunken );
   mTagList->setSorting( -1 );
   connect( mTagList, SIGNAL(selectionChanged()),
            this, SLOT(slotMimeHeaderSelectionChanged()) );
