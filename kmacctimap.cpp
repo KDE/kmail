@@ -499,6 +499,7 @@ void KMAcctImap::slotGetMessagesData(KIO::Job * job, const QByteArray & data)
     msg->fromString((*it).cdata.mid(16, pos - 16).
       replace(QRegExp("\r\n\r\n"),"\r\n"));
     int flags = msg->headerField("X-Flags").toInt();
+    if (flags & 4) msg->setStatus(KMMsgStatusFlag); else
     if (flags & 2) msg->setStatus(KMMsgStatusReplied); else
     if (flags & 1) msg->setStatus(KMMsgStatusOld);
     KMFolder *kf = (*it).parent->folder;
@@ -877,6 +878,9 @@ void KMAcctImap::setStatus(KMMessage * msg, KMMsgStatus status)
       break;
     case KMMsgStatusReplied:
       flags = "\\SEEN \\ANSWERED";
+      break;
+    case KMMsgStatusFlag:
+      flags = "\\SEEN \\FLAGGED";
       break;
     default:
       flags = "\\SEEN";

@@ -13,13 +13,14 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-#define NUM_STATUSLIST 9
+#define NUM_STATUSLIST 10
 static KMMsgStatus sStatusList[NUM_STATUSLIST] =
 {
   KMMsgStatusDeleted, KMMsgStatusNew,
   KMMsgStatusUnread,  KMMsgStatusOld,
   KMMsgStatusRead,    KMMsgStatusReplied,
   KMMsgStatusSent,    KMMsgStatusQueued,
+  KMMsgStatusFlag,
   KMMsgStatusUnknown /* "Unknown" must be at the *end* of the list */
 };
 
