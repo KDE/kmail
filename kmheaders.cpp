@@ -1152,8 +1152,11 @@ void KMHeaders::msgAdded(int id)
     }
     // The message we just added might be a better parent for one of the as of
     // yet imperfectly threaded messages. Let's find out.
-    for(QPtrListIterator<KMHeaderItem> it(mImperfectlyThreadedList); it.current(); ++it) {
-      int tryMe = (*it)->msgId();
+    QPtrListIterator<KMHeaderItem> it(mImperfectlyThreadedList);
+    KMHeaderItem *cur;
+    while ( (cur = it.current()) ) {
+      ++it;
+      int tryMe = cur->msgId();
       // Check, whether our message is the replyToId or replyToAuxId of
       // this one. If so, thread it below our message, unless it is already
       // correctly threaded by replyToId.
@@ -1183,7 +1186,7 @@ void KMHeaders::msgAdded(int id)
       makeHeaderVisible();
 
       if (perfectParent) {
-        mImperfectlyThreadedList.removeRef ((*it));
+        mImperfectlyThreadedList.removeRef (mItems[tryMe]);
         // The item was imperfectly thread before, now it's parent
         // is there. Update the .sorted file accordingly.
         QString sortFile = KMAIL_SORT_FILE(mFolder);
@@ -1203,7 +1206,7 @@ void KMHeaders::msgAdded(int id)
     mItems.resize( mFolder->count() );
     mItems[id] = hi;
   }
-
+  
   if (mSortInfo.fakeSort) {
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
     KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
@@ -1295,9 +1298,8 @@ void KMHeaders::msgRemoved(int id, QString msgId, QString strippedSubjMD5)
       else
         insertItem(lvi);
 
-      if (!parent 
-          ||
-          (sci->isImperfectlyThreaded() && !mImperfectlyThreadedList.containsRef(item)))
+      if (!parent || (sci->isImperfectlyThreaded() 
+                      && !mImperfectlyThreadedList.containsRef(item)))
         mImperfectlyThreadedList.append(item);
       if (parent && !sci->isImperfectlyThreaded() 
           && mImperfectlyThreadedList.containsRef(item))
@@ -2667,7 +2669,7 @@ bool KMHeaders::writeSortOrder()
 void KMHeaders::appendItemToSortFile(KMHeaderItem *khi)
 {
   QString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(QFile::encodeName(sortFile), "a+")) {
+  if(FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+")) {
     int parent_id = -1; //no parent, top level
     
     if (isThreaded()) {
