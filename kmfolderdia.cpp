@@ -1,17 +1,19 @@
 // kmfolderdia.cpp
 
-#include <qstring.h>
-#include <qlabel.h>
+#include <assert.h>
+
 #include <qdir.h>
 #include <qfile.h>
-#include <qtextstream.h>
-#include <kapp.h>
-#include <qlineedit.h>
-#include <qpushbutton.h>
-#include <qlistbox.h>
-#include <qmessagebox.h>
+#include <qlabel.h>
 #include <qlayout.h>
-#include <qhbox.h>
+#include <qlineedit.h>
+#include <qlistbox.h>
+#include <qpushbutton.h>
+#include <qstring.h>
+#include <qtextstream.h>
+
+#include <klocale.h>
+#include <kmessagebox.h>
 
 #include "kmmainwin.h"
 #include "kmglobal.h"
@@ -19,9 +21,6 @@
 #include "kmacctmgr.h"
 #include "kmacctfolder.h"
 #include "kmfoldermgr.h"
-
-#include <assert.h>
-#include <klocale.h>
 
 #include "kmfolderdia.moc"
 
@@ -31,31 +30,34 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
 			       QWidget *aParent, const QString& aCap):
   KMFolderDialogInherited( aParent, "KMFolderDialog", TRUE,
 			   aCap,  KDialogBase::Ok|KDialogBase::Cancel ),
-  mFolderDir( aFolderDir )
+  folder((KMAcctFolder*)aFolder),mFolderDir( aFolderDir )
 {
-  QLabel *label;
-  QString type;
+  QWidget *page = new QWidget(this);
+  setMainWidget( page );
+  QVBoxLayout *topLayout =  new QVBoxLayout( page, 0, spacingHint() );
 
-  folder = (KMAcctFolder*)aFolder;
-
-  QHBox *hb = new QHBox(this );
-  hb->setSpacing( 10 );
-  hb->setMargin( 10 );
-
-  label = new QLabel(hb);
-  label->setText(i18n("Name:"));
+  QHBoxLayout *hl = new QHBoxLayout();
+  topLayout->addSpacing( spacingHint()*2 );
+  topLayout->addLayout( hl );
+  topLayout->addSpacing( spacingHint()*2 );
   
-  nameEdit = new QLineEdit(hb);  
+  QLabel *label = new QLabel( i18n("Name:"), page );
+  hl->addWidget( label );
+  
+  nameEdit = new QLineEdit( page );  
   nameEdit->setFocus();
   nameEdit->setText(folder ? folder->name() : i18n("unnamed"));
   nameEdit->setMinimumSize(nameEdit->sizeHint());
+  hl->addWidget( nameEdit );
 
-  new QFrame( hb ); // Filler
+  hl->addSpacing( spacingHint() );
 
-  label = new QLabel(hb);
-  label->setText( i18n("File under:" ));
+  label = new QLabel( i18n("File under:" ), page );
+  hl->addWidget( label );
 
-  fileInFolder = new QComboBox(hb);
+  fileInFolder = new QComboBox(page);
+  hl->addWidget( fileInFolder );
+
   QStringList str;
   folderMgr->createFolderList( &str, &mFolders  );
   str.prepend( i18n( "Top Level" ));
@@ -64,15 +66,9 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   fileInFolder->insertStringList( str );
   for (curFolder = mFolders.first(); curFolder; curFolder = mFolders.next()) {
     if (curFolder->child() == aFolderDir)
-      fileInFolder->setCurrentItem( i  );
+      fileInFolder->setCurrentItem( i );
     ++i;
   }
-
-  setMainWidget( hb );
-  hb->setMinimumSize( hb->sizeHint() );
-
-  setInitialSize( hb->size(), true /* allow resizing */ );
-
 }
 
 
@@ -98,7 +94,7 @@ void KMFolderDialog::slotOk()
       (!((folder) && 
 	 (selectedFolderDir == folder->parent()) &&
 	 (folder->name() == fldName)))) {
-    QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+    KMessageBox::error( this, message );
     return;
   }
 
@@ -111,7 +107,7 @@ void KMFolderDialog::slotOk()
     while ((folderDir != &folderMgr->dir()) &&
 	   (folderDir != folder->parent())){
       if (folderDir->findRef( folder ) != -1) {
-	QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+	KMessageBox::error( this, message );
 	return;
       }
       folderDir = folderDir->parent();
@@ -121,12 +117,12 @@ void KMFolderDialog::slotOk()
 
   if (folder && folder->child() && (selectedFolderDir) &&
       (selectedFolderDir->path().find( folder->child()->path() + "/" ) == 0)) {
-    QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+    KMessageBox::error( this, message );
     return;
   }
 
   if (folder && folder->child() && (selectedFolderDir == folder->child())) {
-    QMessageBox::information(0, kapp->caption(), message, i18n("OK"));
+    KMessageBox::error( this, message );
     return;
   }
 
