@@ -1090,9 +1090,9 @@ NetworkPageReceivingTab::NetworkPageReceivingTab( QWidget * parent, const char *
   connect( mBeepNewMailCheck, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  // "Verbose new mail notification" check box
+  // "Detailed new mail notification" check box
   mVerboseNotificationCheck =
-    new QCheckBox( i18n( "&Verbose new mail notification" ), group );
+    new QCheckBox( i18n( "Deta&iled new mail notification" ), group );
   mVerboseNotificationCheck->setSizePolicy( QSizePolicy( QSizePolicy::MinimumExpanding,
                                                          QSizePolicy::Fixed ) );
   QToolTip::add( mVerboseNotificationCheck,
