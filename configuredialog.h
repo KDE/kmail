@@ -339,7 +339,6 @@ private:
       QRadioButton *rdDateCtime;
       QRadioButton *rdDateLocalized;
       QRadioButton *rdDateFancy;
-      QCheckBox     *htmlMailCheck;
       int           activeFontIndex;
       QFont         font[7];
       ListView      *profileList;
@@ -412,6 +411,7 @@ private:
     {
         int        pageIndex;
         KpgpConfig *pgpConfig;
+        QCheckBox  *htmlMailCheck;
         QCheckBox  *externalReferences;
     };
     struct MiscWidget

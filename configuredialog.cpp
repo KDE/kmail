@@ -931,22 +931,6 @@ void ConfigureDialog::makeAppearancePage( void )
                                               dateGroup );
   vthread->addWidget( mAppearance.rdDateFancy );
 
-  QButtonGroup *group = new QButtonGroup( i18n("HTML"), page3 );
-  vlay->addWidget( group );
-  QVBoxLayout *vlay2 = new QVBoxLayout( group, spacingHint() );
-  vlay2->addSpacing( fontMetrics().lineSpacing() );
-  mAppearance.htmlMailCheck =
-    new QCheckBox( i18n("Prefer HTML to plain text"), group );
-  vlay2->addWidget( mAppearance.htmlMailCheck );
-  QLabel *label = new QLabel( group );
-  label->setAlignment( WordBreak);
-  label->setTextFormat( RichText );
-  label->setText(i18n(
-    "<b>WARNING:</b> Use of HTML in mail will make you more vulnerable to "
-    "\"spam\" and may increase the likelihood that your system will be "
-    "compromised by other present and anticipated security exploits.") );
-  vlay2->addWidget( label );
-
   vlay->addStretch(10); // Eat unused space a bottom
 
 
@@ -954,7 +938,7 @@ void ConfigureDialog::makeAppearancePage( void )
   tabWidget->addTab( page4, i18n("Profiles") );
   vlay = new QVBoxLayout( page4, spacingHint() );
 
-  label = new QLabel( page4 );
+  QLabel *label = new QLabel( page4 );
   label->setText(i18n("Select a GUI profile"));
   vlay->addWidget( label );
 
@@ -1406,6 +1390,22 @@ void ConfigureDialog::makeSecurityPage( void )
     tabWidget->addTab( page, i18n("HTML") );
     vlay = new QVBoxLayout( page, spacingHint() );
 
+    QButtonGroup *group = new QButtonGroup( i18n("HTML"), page );
+    vlay->addWidget( group );
+    QVBoxLayout *vlay2 = new QVBoxLayout( group, spacingHint() );
+    vlay2->addSpacing( fontMetrics().lineSpacing() );
+    mSecurity.htmlMailCheck =
+      new QCheckBox( i18n("Prefer HTML to plain text"), group );
+    vlay2->addWidget( mSecurity.htmlMailCheck );
+    QLabel *label = new QLabel( group );
+    label->setAlignment( WordBreak);
+    label->setTextFormat( RichText );
+    label->setText(i18n(
+      "<b>WARNING:</b> Use of HTML in mail will make you more vulnerable to "
+      "\"spam\" and may increase the likelihood that your system will be "
+      "compromised by other present and anticipated security exploits.") );
+    vlay2->addWidget( label );
+
     QGroupBox *gb = new QGroupBox( i18n( "HTML Security" ), page );
     vlay->addWidget( gb );
     QVBoxLayout *glay = new QVBoxLayout( gb, KDialog::spacingHint() );
@@ -1723,12 +1723,6 @@ void ConfigureDialog::setupAppearancePage( void )
   }
 
   {
-    KConfigGroupSaver saver(config, "Reader");
-    state = config->readBoolEntry( "htmlMail", false );
-    mAppearance.htmlMailCheck->setChecked( state );
-  }
-
-  {
     KConfigGroupSaver saver(config, "General");
     state = config->readBoolEntry( "showMessageSize", false );
     mAppearance.messageSizeCheck->setChecked( state );
@@ -1909,6 +1903,14 @@ void ConfigureDialog::setupMimePage( void )
 void ConfigureDialog::setupSecurityPage( void )
 {
   mSecurity.pgpConfig->setValues();
+  {
+    KConfig *config = kapp->config();
+    KConfigGroupSaver saver(config, "Reader");
+    bool state = config->readBoolEntry( "htmlMail", false );
+    mSecurity.htmlMailCheck->setChecked( state );
+    state = config->readBoolEntry( "htmlLoadExternal", false );
+    mSecurity.externalReferences->setChecked( state );
+  }
 }
 
 
@@ -1982,8 +1984,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.htmlMailCheck->setChecked( false );
     mAppearance.rdDateFancy->setChecked( true );
+    mSecurity.htmlMailCheck->setChecked( false );
   }
   else if( item == mAppearance.mListItemDefaultHtml )
   {
@@ -2009,8 +2011,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.htmlMailCheck->setChecked( true );
     mAppearance.rdDateFancy->setChecked( true );
+    mSecurity.htmlMailCheck->setChecked( true );
   }
   else if( item == mAppearance.mListItemContrast )
   {
@@ -2035,8 +2037,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( true );
     mAppearance.nestedMessagesCheck->setChecked( true );
-    mAppearance.htmlMailCheck->setChecked( false );
     mAppearance.rdDateLocalized->setChecked( true );
+    mSecurity.htmlMailCheck->setChecked( false );
   }
   else if( item == mAppearance.mListItemPurist)
   {
@@ -2047,8 +2049,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.longFolderCheck->setChecked( false );
     mAppearance.messageSizeCheck->setChecked( false );
     mAppearance.nestedMessagesCheck->setChecked( false );
-    mAppearance.htmlMailCheck->setChecked( false );
     mAppearance.rdDateCtime->setChecked( true );
+    mSecurity.htmlMailCheck->setChecked( false );
   }
   else
   {
@@ -2234,11 +2236,6 @@ void ConfigureDialog::slotDoApply( bool everything )
       }
       bool recycleColors = mAppearance.recycleColorCheck->isChecked();
       config->writeEntry("RecycleQuoteColors", recycleColors );
-
-      bool htmlMail = mAppearance.htmlMailCheck->isChecked();
-      config->writeEntry( "htmlMail", htmlMail );
-      config->writeEntry( "htmlLoadExternal", mSecurity.
-                          externalReferences->isChecked() );
     }
     
     {
@@ -2372,6 +2369,13 @@ void ConfigureDialog::slotDoApply( bool everything )
   if( activePage == mSecurity.pageIndex || everything )
   {
     mSecurity.pgpConfig->applySettings();
+    {
+      KConfigGroupSaver saver(config, "Reader");
+      bool htmlMail = mSecurity.htmlMailCheck->isChecked();
+      config->writeEntry( "htmlMail", htmlMail );
+      config->writeEntry( "htmlLoadExternal", mSecurity.
+                          externalReferences->isChecked() );
+    }
   }
   if( activePage == mMisc.pageIndex || everything )
   {
