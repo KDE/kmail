@@ -520,24 +520,6 @@ void KMailICalIfaceImpl::folderPixmap( KMFolder* folder, QString& icon ) const
     icon = "kmgroupware_folder_tasks";
   else if( folder->label() == folderName( KFolderTreeItem::Journals ) )
     icon = "kmgroupware_folder_journals";
-
-#if 0
-  // Make sure they are set
-  loadPixmaps();
-
-  if( folder->label() == folderName( KFolderTreeItem::Contacts ) )
-    fti.setPixmap( 0, *pixContacts );
-  else if( folder->label() == folderName( KFolderTreeItem::Calendar ) )
-    fti.setPixmap( 0, *pixCalendar );
-  else if( folder.label() == folderName( KFolderTreeItem::Notes ) )
-    fti.setPixmap( 0, *pixNotes );
-  else if( folder.label() == folderName( KFolderTreeItem::Tasks ) )
-    fti.setPixmap( 0, *pixTasks );
-  else
-    return false;
-
-  return true;
-#endif
 }
 
 
