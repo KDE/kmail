@@ -619,6 +619,13 @@ const QCString KMMessage::asQuotedString(const QString& aHeaderStr,
         isInline = (stricmp(msgPart.contentDisposition(), "inline") == 0);
 
       if (isInline) {
+        if (cset.isEmpty()) {
+          cset = msgPart.charset();
+          if (!cset.isEmpty())
+            codec = KGlobal::charsets()->codecForName(charset());
+          else
+            codec = QTextCodec::codecForLocale();
+        }
         if (stricmp(msgPart.typeStr(),"text") == 0 ||
             stricmp(msgPart.typeStr(),"message") == 0) {
           Kpgp* pgp = Kpgp::getKpgp();
