@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
                    I18N_NOOP("(c) 1997-2001, The KMail developers"),
 		   0,
 		   "http://kmail.kde.org");
-  about.addAuthor( "Michael Haeckel", I18N_NOOP("Current maintainer"), "michael@haeckel.net" );
+  about.addAuthor( "Michael H\303\244ckel", I18N_NOOP("Current maintainer"), "michael@haeckel.net" );
   about.addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "sanders@kde.org" );
   about.addAuthor( "Stefan Taferner ", 0, "taferner@kde.org" );
   about.addAuthor( "Daniel Naber", I18N_NOOP("Documentation"), "daniel.naber@t-online.de" );
@@ -209,7 +209,7 @@ int main(int argc, char *argv[])
   about.addAuthor( "Igor Janssen", 0, "rm@linux.ru.net" );
   about.addAuthor( "Matt Johnston", 0, "matt@caifex.org" );
   about.addAuthor( "Christer Kaivo-oja", 0, "whizkid@telia.com" );
-  about.addAuthor( "Ingo Kloecker", 0, "ingo.kloecker@epost.de" );
+  about.addAuthor( "Ingo Kl\303\266cker", 0, "ingo.kloecker@epost.de" );
   about.addAuthor( "Lars Knoll", 0, "knoll@kde.org" );
   about.addAuthor( "J. Nick Koston", 0, "bdraco@darkorb.net" );
   about.addAuthor( "Stephan Kulow", 0, "coolo@kde.org" );
