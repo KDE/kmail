@@ -1719,6 +1719,7 @@ void KMReaderWin::slotToggleFixedFont()
   mUseFixedFont = !mUseFixedFont;
   mBodyFamily = (mUseFixedFont) ? mFixedFont.family() : mBodyFont.family();
   fntSize = (mUseFixedFont) ? mFixedFont.pointSize() : mBodyFont.pointSize();
+  mViewer->setStandardFont(mBodyFamily);
   update(true);  
 }
 
