@@ -7,16 +7,16 @@
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation; either version 2 of the License, or
     (at your option) any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
     GNU General Public License for more details.
-    
+
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-    
+
     As a special exception, permission is given to link this program
     with any edition of Qt, and distribute the resulting executable,
     without including the source code for Qt in the source distribution.
@@ -133,7 +133,7 @@ void RecipientLineEdit::keyPressEvent( QKeyEvent *ev )
 {
   if ( ev->key() == Key_Backspace  &&  text().isEmpty() ) {
     ev->accept();
-    emit deleteMe(); 
+    emit deleteMe();
   } else if ( ev->key() == Key_Left && cursorPosition() == 0 ) {
     emit leftPressed();
   } else if ( ev->key() == Key_Right && cursorPosition() == (int)text().length() ) {
@@ -148,7 +148,7 @@ RecipientLine::RecipientLine( QWidget *parent )
 {
   QBoxLayout *topLayout = new QHBoxLayout( this );
   topLayout->setSpacing( KDialog::spacingHint() );
-  
+
   QStringList recipientTypes = Recipient::allTypeLabels();
 
   mCombo = new RecipientComboBox( this );
@@ -248,7 +248,7 @@ void RecipientLine::slotReturnPressed()
 
 void RecipientLine::slotPropagateDeletion()
 {
-  emit deleteLine( this ); 
+  emit deleteLine( this );
 }
 
 void RecipientLine::keyPressEvent( QKeyEvent *ev )
@@ -302,7 +302,7 @@ RecipientLine *RecipientsView::emptyLine()
   for( line = mLines.first(); line; line = mLines.next() ) {
     if ( line->isEmpty() ) return line;
   }
-  
+
   return 0;
 }
 
@@ -354,7 +354,7 @@ void RecipientsView::calculateTotal()
   for( line = mLines.first(); line; line = mLines.next() ) {
     if ( !line->isEmpty() ) ++count;
   }
-  
+
   emit totalChanged( count, mLines.count() );
 }
 
@@ -411,9 +411,9 @@ void RecipientsView::slotDeleteDueLine()
      RecipientLine *line = mLines.at( i );
      moveChild( line, childX( line ), childY( line ) - mLineHeight );
    }
-   
+
    calculateTotal();
-   
+
    resizeView();
 }
 
@@ -449,9 +449,9 @@ QSize RecipientsView::sizeHint() const
 QSize RecipientsView::minimumSizeHint() const
 {
   int height;
-  
+
   uint numLines = 5;
-  
+
   if ( mLines.count() < numLines ) height = mLineHeight * mLines.count();
   else height = mLineHeight * numLines;
 
@@ -471,7 +471,7 @@ Recipient::List RecipientsView::recipients() const
 
     ++it;
   }
-  
+
   return recipients;
 }
 
@@ -617,7 +617,9 @@ void SideWidget::setTotal( int recipients, int lines )
     "  lines: " << lines << endl;
 #endif
 
-  mTotalLabel->setText( i18n("1 recipient","%n recipients", recipients ) );
+  mTotalLabel->setText( ( recipients == 0 )
+                        ? i18n("No recipient")
+                        : i18n("1 recipient", "%n recipients", recipients ) );
   if ( lines > 1 ) mTotalLabel->show();
   else mTotalLabel->hide();
 
@@ -729,7 +731,7 @@ QString RecipientsEditor::recipientString( Recipient::Type type )
       str.append( (*it).email() );
     }
   }
-  
+
   return str;
 }
 
