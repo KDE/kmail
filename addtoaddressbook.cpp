@@ -141,14 +141,14 @@ void AddToKabDialog::addToEntry()
 	} else {
 	  KMessageBox::information
 	    (this,
-	     i18n("Sorry - address database changed meanwhile.\n"
+	     i18n("Address database changed meanwhile.\n"
 		  "Try again."),
 	     i18n("Error"));
 	}
     } else {
       KMessageBox::information
 	(this,
-	 i18n("Sorry - address database changed meanwhile.\n"
+	 i18n("Address database changed meanwhile.\n"
 	      "Try again."),
 	     i18n("Error"));
     }

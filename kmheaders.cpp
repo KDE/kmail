@@ -1770,7 +1770,7 @@ void KMHeaders::undo()
   else
   {
     // Sorry.. stack is empty..
-    KMessageBox::sorry(this, i18n("I can't undo anything, sorry!"));
+    KMessageBox::sorry(this, i18n("There is nothing to undo!"));
   }
 }
 
