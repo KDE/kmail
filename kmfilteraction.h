@@ -101,7 +101,7 @@ class KMFilterActionDict: public QDict<KMFilterAction>
 {
 public:
   KMFilterActionDict();
-  ~KMFilterAction();
+  ~KMFilterActionDict();
 };
 
 #endif /*kmfilteraction_h*/
