@@ -789,6 +789,7 @@ void KMFolderDialog::slotHoldsML( bool holdsML )
 //----------------------------------------------------------------------------
 void KMFolderDialog::slotDetectMailingList()
 {
+  if ( !mFolder ) return; // in case the folder was just created
   int num = mFolder->count();
   const int checks = 5;
 
