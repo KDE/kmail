@@ -104,7 +104,10 @@ QPixmap KMFolderTreeItem::normalIcon(int size) const
       default:
       case Drafts: icon = "folder";break;
     }
-  } else if ( mFolder->useCustomIcons() ) {
+  } else if ( protocol() == KMFolderTreeItem::Search) {
+    icon = "mail_find";
+  }
+  if (mFolder && mFolder->useCustomIcons() ) {
     icon = mFolder->normalIconPath();
   }
   KIconLoader * il = KGlobal::instance()->iconLoader();

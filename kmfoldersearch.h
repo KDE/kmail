@@ -152,11 +152,6 @@ public:
   DwString getDwString(int idx);
   Q_UINT32 serNum(int idx) { return mSerNums[idx]; }
 
-  virtual bool useCustomIcons() { return true; }
-  virtual void setUseCustomIcons(bool) { }
-  virtual QString normalIconPath() { return "mail_find"; }
-  virtual QString unreadIconPath() { return "mail_find"; }
-
 protected:
   virtual FolderJob* doCreateJob(KMMessage *msg, FolderJob::JobType jt,
                                  KMFolder *folder ) const;
