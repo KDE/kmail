@@ -643,14 +643,15 @@ void KMFolderImap::slotCheckValidityResult(KIO::Job * job)
     {
       // uidValidity changed
       kdDebug(5006) << "KMFolderImap::slotCheckValidityResult uidValidty changed." << endl;
+      mAccount->ignoreJobsForFolder(this);
       expunge();
       mLastUid = 0;
       uidmap.clear();
     } else {
       if (!mCheckFlags)
         startUid = QString::number(lastUid() + 1);
+      mAccount->removeJob(it);
     }
-    mAccount->removeJob(it);
     reallyGetFolder(startUid);
   }
 }
