@@ -121,7 +121,7 @@ public:
    */
   bool checkExternalEditorFinished();
 
-  QPopupMenu* KMEdit::createPopupMenu(const QPoint&)
+  QPopupMenu* createPopupMenu(const QPoint&);
   void setSpellCheckingActive(bool spellCheckingActive);
 
   /** Drag and drop methods */

@@ -31,6 +31,7 @@
 */
 
 #include "interfaces/bodypartformatter.h"
+#include <kdemacros.h>
 
 namespace {
 
