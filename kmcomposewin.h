@@ -39,6 +39,7 @@ class _StringPair {
 namespace KMail {
   class DictSpellChecker;
 }
+using KMail::DictSpellChecker;
 
 class QCloseEvent;
 class QComboBox;
@@ -124,7 +125,7 @@ private:
   bool      extEditor;
   QString   mExtEditor;
   bool      mWasModifiedBeforeSpellCheck;
-  KMail::DictSpellChecker *mSpellChecker;
+  DictSpellChecker *mSpellChecker;
 };
 
 

@@ -5391,7 +5391,7 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   mTempFile = 0;
   mExtEditorProcess = 0;
   mWasModifiedBeforeSpellCheck = false;
-  mSpellChecker = new KMail::DictSpellChecker( this );
+  mSpellChecker = new DictSpellChecker( this );
 }
 
 //-----------------------------------------------------------------------------
@@ -5597,7 +5597,7 @@ void KMEdit::slotSpellResult(const QString &)
     setModified(mWasModifiedBeforeSpellCheck);
   }
   mKSpell->cleanUp();
-  KMail::DictSpellChecker::dictionaryChanged();
+  DictSpellChecker::dictionaryChanged();
 
   emit spellcheck_done( dlgResult );
 }
