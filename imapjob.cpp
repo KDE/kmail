@@ -236,6 +236,7 @@ void ImapJob::slotGetNextMessage()
   ImapAccountBase::jobData jd;
   jd.parent = 0; jd.offset = 0;
   jd.total = 1; jd.done = 0;
+  jd.msgList.append( msg );
   if ( !mPartSpecifier.isEmpty() )
   {
     if ( mPartSpecifier.find ("STRUCTURE", 0, false) != -1 ) {

@@ -161,7 +161,17 @@ void KMAcctImap::slotAbortRequested()
 void KMAcctImap::killAllJobs( bool disconnectSlave )
 {
   QMap<KIO::Job*, jobData>::Iterator it = mapJobData.begin();
-  for (it = mapJobData.begin(); it != mapJobData.end(); ++it)
+  for (it = mapJobData.begin(); it != mapJobData.end(); ++it) 
+  {
+    QPtrList<KMMessage> msgList = (*it).msgList;
+    QPtrList<KMMessage>::Iterator it2 = msgList.begin();
+    for ( it2 = msgList.begin() ; it2 != msgList.end(); ++it2 ) {
+       KMMessage *msg = *it2;
+       if ( msg->transferInProgress() ) {
+          kdDebug(5006) << "KMAcctImap::killAllJobs - resetting mail" << endl;
+          msg->setTransferInProgress( false );
+       }
+    }
     if ((*it).parent)
     {
       // clear folder state
@@ -172,6 +182,7 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
       fld->sendFolderComplete(FALSE);
       fld->removeJobs();
     }
+  }
   if (mSlave && mapJobData.begin() != mapJobData.end())
   {
     mSlave->kill();
