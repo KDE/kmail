@@ -10,7 +10,7 @@
 #include <paths.h>
 #endif
 
-#include <kapp.h>
+#include <kuniqueapp.h>
 #include <klocale.h>
 #include <kglobal.h>
 #include <dcopclient.h>
@@ -84,10 +84,6 @@ static KCmdLineOptions kmoptions[] =
 static void signalHandler(int sigId);
 static void setSignalHandler(void (*handler)(int));
 
-void remoteAction (bool mailto, bool check, QString to, QString cc,
-                   QString bcc, QString subj, KURL messageFile);
-void processArgs (KCmdLineArgs *args, bool remoteCall);
-
 //-----------------------------------------------------------------------------
 
 
@@ -122,8 +118,15 @@ static void setSignalHandler(void (*handler)(int))
 }
 //-----------------------------------------------------------------------------
 
-// Sven: new from Jens Kristian Soegard:
-void processArgs(KCmdLineArgs *args, bool remoteCall)
+class KMailApplication : public KUniqueApplication
+{
+public:
+  KMailApplication() : KUniqueApplication() { };
+
+  virtual int newInstance();
+};
+
+int KMailApplication::newInstance()
 {
   QString to, cc, bcc, subj;
   KURL messageFile = QString::null;
@@ -132,6 +135,7 @@ void processArgs(KCmdLineArgs *args, bool remoteCall)
   //bool viewOnly = false;
 
   // process args:
+  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
   if (args->getOption("subject"))
   {
      mailto = true;
@@ -169,51 +173,17 @@ void processArgs(KCmdLineArgs *args, bool remoteCall)
 
   args->clear();
 
-  if (remoteCall)
-    remoteAction (mailto, checkMail, to, cc, bcc, subj, messageFile);
-  else
-  {
-    if (kernel)
-      kernel->action (mailto, checkMail, to, cc, bcc, subj, messageFile);
-    else
-    {
-      debug (":-( Local call and no kmkernel. Ouch!");
-      ::exit (-1);
-    }
-  }
+  kernel->action (mailto, checkMail, to, cc, bcc, subj, messageFile);
+  return 0;
 }
 
-void remoteAction (bool mailto, bool check, QString to, QString cc,
-                   QString bcc, QString subj, KURL messageFile)
-{
-   KMailIface_stub *kmail = new KMailIface_stub("kmail", "KMailIface");
-
-   if (mailto)
-     kmail->openComposer (to, cc, bcc, subj, 0); //returns id but we don´t mind
-   else
-     kmail->openReader (messageFile);
-   if (check)
-     kmail->checkMail();    	
-}
-
-//-----------------------------------------------------------------------------
-
-/* TODO fix possible race condition
-   Master-kmail might take some time to a) register as kmail and b) to
-   create and init kmkernel object. If another kmail starts before completion of
-   a), it will attempt to become new master -> must check if registerAs("kmail")
-   worked. If another kmail starts before completion of b) it will try to call
-   uninitialized or nonexistant master´s kmkernel stuff which will lead to SEGV
-   or who knows what ->
-   
- 
-*/
 int main(int argc, char *argv[])
 {
-  bool remoteCall;
+  // WABA: KMail is a KUniqueApplication. Unfortunately this makes debugging
+  // a bit harder: You should pass --nofork as commandline argument when using
+  // a debugger. In gdb you can do this by typing "set args --nofork" before
+  // typing "run".
 
-  KMKernel *kmailKernel = 0;
-  
   KAboutData about("kmail", I18N_NOOP("KMail"), 
                    KMAIL_VERSION, 
                    description,
@@ -222,69 +192,28 @@ int main(int argc, char *argv[])
 
   KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
+
+  if (!KMailApplication::start())
+     exit(0);
   
-  KCmdLineArgs *args = KCmdLineArgs::parsedArgs();
-
-  // We must construct this in both cases thanks to fantastic
-  // design of KApplication and KCmdlineArgs. KUniqueApplication?
-  // naaah, it´s something different...
-  KApplication *app = new KApplication;
+  KMailApplication app;
   
-  // Shouldn´t it register by default with a name from kapp?
-  // register as "kmail" not "kmail-pid"
-  app->dcopClient()->registerAs ("kmail", false);       //register
-  if (app->dcopClient()->appId() == "kmail")            // success, we´re master?
-  {
-    remoteCall = false;
-  }
-  else
-  {
-    // Either we are not the first who registered as kmail
-    // (Another kmail exists/was faster -> we should be slave now)
-    // or there is dcop error.
-    
-    if (app->dcopClient()->isApplicationRegistered("kmail")) // master exists?
-    {
-      remoteCall = true;                                     //yes, we´re client
-    }
-    else
-    {
-      // we couldn´t register as "kmail" and no "kmail" registered at all
-      // this is an dcop error, so tell it to the user
-      debug( i18n("DCOP error\n KMail could not register at DCOP server.\n"));
-      //this was localized for possible messagebox later
-      exit(-1);
-    }
-  }
+  //local, do the init
+  KMKernel kmailKernel;
+  kmailKernel.init();
 
-  if (!remoteCall)
-  {
-    //local, do the init
-    kmailKernel = new KMKernel;
-    kmailKernel->init();
-
-    // and session management
-    if (!kmailKernel->doSessionManagement())
-      processArgs (args, false); //process args does everything
-  }
-  else
-  {
-    processArgs(args, true); // warning: no (unneded) kmkernel stuff!
-    ::exit (0);   //we´re done
-  }
-  //free memory
-  args->clear();
+  // and session management
+  kmailKernel.doSessionManagement();
   
   // any dead letters?
-  kmailKernel->recoverDeadLetters();
+  kmailKernel.recoverDeadLetters();
 
   setSignalHandler(signalHandler);
   
   // Go!
-  app->exec();
+  kapp->exec();
 
   // clean up
-  kmailKernel->cleanup();
-  delete kmailKernel;
+  kmailKernel.cleanup();
 }
 
