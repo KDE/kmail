@@ -308,7 +308,6 @@ void KMComposeWin::readConfig(void)
 
   mForceReplyCharset = config->readBoolEntry("force-reply-charset", false );
   mAutoSign = config->readEntry("signature","auto") == "auto";
-  mDefEncoding = config->readEntry("encoding", "base64").latin1();
   mShowHeaders = config->readNumEntry("headers", HDR_STANDARD);
   mWordWrap = config->readNumEntry("word-wrap", 1);
   mLineBreak = config->readNumEntry("break-at", 78);
@@ -413,7 +412,6 @@ void KMComposeWin::writeConfig(void)
   {
     KConfigGroupSaver saver(config, "Composer");
     config->writeEntry("signature", mAutoSign?"auto":"manual");
-    config->writeEntry("encoding", (const char*)mDefEncoding);
     config->writeEntry("headers", mShowHeaders);
     config->writeEntry("sticky-transport", mBtnTransport.isChecked());
     config->writeEntry("sticky-identity", mBtnIdentity.isChecked());
@@ -1569,7 +1567,7 @@ void KMComposeWin::slotAttachFileResult(KIO::Job *job)
   // create message part
   msgPart = new KMMessagePart;
   msgPart->setName(name);
-  msgPart->setCteStr(mDefEncoding);
+  msgPart->setCteStr("base64");
   msgPart->setBodyEncodedBinary((*it).data);
   msgPart->magicSetType();
   msgPart->setContentDisposition(QCString("attachment; filename")
@@ -1648,7 +1646,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   // create message part
   msgPart = new KMMessagePart;
   msgPart->setName(i18n("my pgp key"));
-  msgPart->setCteStr(mDefEncoding);
+  msgPart->setCteStr("base64");
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
   msgPart->setBodyEncoded(QCString(str.ascii()));
@@ -1677,7 +1675,7 @@ void KMComposeWin::slotInsertPublicKey()
     // create message part
     msgPart = new KMMessagePart;
     msgPart->setName(i18n("pgp key"));
-    msgPart->setCteStr(mDefEncoding);
+    msgPart->setCteStr("base64");
     msgPart->setTypeStr("application");
     msgPart->setSubtypeStr("pgp-keys");
     msgPart->setBodyEncoded(QCString(str.ascii()));

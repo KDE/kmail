@@ -385,7 +385,6 @@ protected:
   bool mAutoSign, mAutoPgpSign, mAutoDeleteMsg;
   KMFolder *mFolder;
   long mShowHeaders;
-  QCString mDefEncoding;
   QString mExtEditor;
   bool useExtEditor;
   QList<_StringPair> mCustHeaders;
