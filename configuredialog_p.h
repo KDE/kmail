@@ -827,6 +827,9 @@ public:
   void save();
   void installProfile( KConfig * profile );
 
+private slots:
+  void slotUpdateHTTPActions();
+
 private:
   //virtual void doLoadFromGlobalSettings();
   virtual void doLoadOther();
