@@ -136,7 +136,6 @@ void KMReaderWin::makeAttachDir(void)
 }
 
 
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::readConfig(void)
 {
@@ -167,14 +166,8 @@ void KMReaderWin::readConfig(void)
     c2 = config->readColorEntry("LinkColor",&c2);
     c3 = config->readColorEntry("FollowedColor",&c3);
     c4 = config->readColorEntry("BackgroundColor",&c4);
-    // ### FIXME: stylesheet
-    //        mViewer->setDefaultBGColor(c4);
-    //        mViewer->setDefaultTextColors(c1,c2,c3);
   }
   else {
-  // ### FIXME: stylesheet
-  //    mViewer->setDefaultBGColor(c4);
-  //    mViewer->setDefaultTextColors(c1,c2,c3);
   }
 
   mRecyleQouteColors = config->readBoolEntry( "RecycleQuoteColors", false );
@@ -226,7 +219,6 @@ void KMReaderWin::readConfig(void)
 }
 
 
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::writeConfig(bool aWithSync)
 {
@@ -241,8 +233,7 @@ void KMReaderWin::writeConfig(bool aWithSync)
 }
 
 
-
-
+//-----------------------------------------------------------------------------
 QString KMReaderWin::quoteFontTag( int quoteLevel )
 {
   KConfig &config = *kapp->config();
@@ -296,8 +287,6 @@ QString KMReaderWin::quoteFontTag( int quoteLevel )
 }
 
 
-
-
 //-----------------------------------------------------------------------------
 void KMReaderWin::initHtmlWidget(void)
 {
@@ -305,26 +294,16 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->widget()->resize(width()-16, height()-110);
   mViewer->setURLCursor(KCursor::handCursor());
 
-  //  mViewer->setDefaultBGColor(QColor("#ffffff"));
-  //  mViewer->setFollowsLinks( FALSE );
-
   // Espen 2000-05-14: Getting rid of thick ugly frames 
   mViewer->view()->setLineWidth(0);
 
-  // ### FIXME
-  connect(mViewer->browserExtension(),SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
+  connect(mViewer->browserExtension(),
+	  SIGNAL(openURLRequest(const KURL &, const KParts::URLArgs &)),this,
   	  SLOT(slotUrlOpen(const KURL &, const KParts::URLArgs &)));
   connect(mViewer,SIGNAL(onURL(const QString &)),this,
 	  SLOT(slotUrlOn(const QString &)));
     connect(mViewer,SIGNAL(popupMenu(const QString &, const QPoint &)),
 	    SLOT(slotUrlPopup(const QString &, const QPoint &)));
-  // ### FIXME
-  //  connect(mViewer,SIGNAL(textSelected(bool)),
-  //          SLOT(slotTextSelected(bool)));
-
-  // ### FIXME
-  //connect(mViewer, SIGNAL(documentChanged()), SLOT(slotDocumentChanged()));
-  //connect(mViewer, SIGNAL(documentDone()), SLOT(slotDocumentDone()));
 }
 
 
@@ -422,6 +401,8 @@ void KMReaderWin::updateReaderWin()
 
 }
 
+
+//-----------------------------------------------------------------------------
 QString KMReaderWin::colorToString(const QColor& c)
 {
   return QString::number(0x1000000 +
@@ -1152,13 +1133,11 @@ void KMReaderWin::resizeEvent(QResizeEvent *)
 }
 
 
+//-----------------------------------------------------------------------------
 void KMReaderWin::slotDelayedResize()
 {
   mViewer->widget()->setGeometry(0, 0, width(), height());
 }
-
-
-
 
 
 //-----------------------------------------------------------------------------
@@ -1514,6 +1493,7 @@ void KMReaderWin::slotAtmProperties()
 
   dlg.exec();
 }
+
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::slotScrollUp()

@@ -58,7 +58,8 @@ bool KMHeaders::mFalse = false;
 
 //-----------------------------------------------------------------------------
 // KMHeaderToFolderDrag method definitions
-KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent, const char * name )
+KMHeaderToFolderDrag::KMHeaderToFolderDrag( QWidget * parent, 
+					    const char * name )
     : QStoredDrag( "KMHeaderToFolderDrag/magic", parent, name )
 {
 }
@@ -182,13 +183,13 @@ public:
     mSortDate = cDate + mSortArrival;
   }
 
-  // Retrun the msgId of the message associated with this item
+  // Return the msgId of the message associated with this item
   int msgId()
   {
     return mMsgId;
   }
 
-  // Updte this item to summarise a new folder and message
+  // Update this item to summarise a new folder and message
   void reset( KMFolder *aFolder, int aMsgId )
   {
     mFolder = aFolder;
@@ -203,7 +204,7 @@ public:
     repaint();
   }
 
-// Begin this code may be relicensed by Troll Tech  
+  // Begin this code may be relicensed by Troll Tech  
   void paintCell( QPainter * p, const QColorGroup & cg,
 				int column, int width, int align )
   {
@@ -491,10 +492,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
 {
   int id;
   QString str;
-  //  bool autoUpd = isUpdatesEnabled();
-  //  setUpdatesEnabled(FALSE);
-  //  header()->setUpdatesEnabled(FALSE);
-  //  viewport()->setUpdatesEnabled(FALSE);
 
   setColumnText( mSortCol, QIconSet( QPixmap()), columnText( mSortCol ));
   if (mFolder && mFolder==aFolder)
@@ -644,12 +641,6 @@ void KMHeaders::setFolder (KMFolder *aFolder)
     }
   }
 
-  //  setUpdatesEnabled(autoUpd);
-  //  viewport()->setUpdatesEnabled(autoUpd);
-  //  header()->setUpdatesEnabled(autoUpd);
-  //  if (autoUpd) repaint();
-  //  if (autoUpd) viewport()->repaint();
-  //  if (autoUpd) header()->repaint();
 }
 
 // QListView::setContentsPos doesn't seem to work
@@ -869,6 +860,7 @@ void KMHeaders::deleteMsg (int msgId)
   }
   triggerUpdate();
 }
+
 
 //-----------------------------------------------------------------------------
 void KMHeaders::saveMsg (int msgId)
@@ -1183,7 +1175,6 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   KMMessage *msg;
   KMMsgBase *msgBase, *curMsg = 0;
   int top, rc;
-//  bool doUpd;
 
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
@@ -1619,10 +1610,6 @@ void KMHeaders::updateMessageList(void)
   // reuse list view items when possibly.
   //
 
-  //  kernel->kbp()->busy();
-  //x autoUpd = isUpdatesEnabled();
-  //x setUpdatesEnabled(FALSE);
-
   disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
 	     this,SLOT(highlightMessage(QListViewItem*)));
 
@@ -1762,35 +1749,6 @@ void KMHeaders::updateMessageList(void)
 
   connect(this,SIGNAL(currentChanged(QListViewItem*)),
 	  this,SLOT(highlightMessage(QListViewItem*)));
-
-  // Reggie: This is comment especially for you.
-  //
-  // Unless QListView::updateGeometries is called first my calls to
-  // setContentsPos (which calls QScrollView::setContentsPos)
-  // doesn't work. (The vertical scroll bar hasn't been updated
-  // I guess).
-  //
-  // I think you need to reimplement setContentsPos in QListView
-  // and make sure that updateGeometries has been called if necessary.
-  //
-  // I was calling QListView::updateContents in order for updateGeometries
-  // to be called (since the latter is private). But this was causing
-  // flicker as it forces an update even if I have setUpdatesEnabled(FALSE)
-  // (Things were ok in QT 2.0.2 but 2.1 forces an update).
-  //
-  // Now I call ensureItemVisible, because this will call updateGeometries
-  // if the maybeHeight of the Root QListViewItem is -1, which it seems
-  // to be (I guess it is marked as invalid after items are deleted/inserted).
-
-  // if (firstChild())
-  //   ensureItemVisible(firstChild());
-  //  updateContents(); // -sanders Started causing flicker in QT 2.1cvs :-(
-
-  //x  setUpdatesEnabled(autoUpd);
-  //x if (autoUpd) repaint();
-  // WABA: The following line is somehow necassery
-  // SANDERS: It shouldn't be necessary in a recent QT snapshot (Nov-26+) 
-  // highlightMessage(currentItem());
 }
 
 //-----------------------------------------------------------------------------
@@ -1898,6 +1856,7 @@ void KMHeaders::contentsMousePressEvent(QMouseEvent* e)
   }  
 }
 
+//-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
 {
   QListViewItem *endSelection = itemAt( contentsToViewport( e->pos() ));
@@ -1916,6 +1875,7 @@ void KMHeaders::contentsMouseReleaseEvent(QMouseEvent* e)
   mousePressed = FALSE;
 }
 
+//-----------------------------------------------------------------------------
 void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
 {
   if ( mousePressed && (e->pos() - presspos).manhattanLength() > 4 ) {
@@ -1928,6 +1888,7 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
   }
 }
 
+//-----------------------------------------------------------------------------
 void KMHeaders::clearSelectionExcept( QListViewItem *exception )
 {
   QListViewItem *item;
@@ -1936,6 +1897,7 @@ void KMHeaders::clearSelectionExcept( QListViewItem *exception )
       setSelected( item, FALSE );
 }
 
+//-----------------------------------------------------------------------------
 bool KMHeaders::shiftSelection( QListViewItem *begin, QListViewItem *end )
 {
   QListViewItem *search = begin;

@@ -132,8 +132,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 //-----------------------------------------------------------------------------
 KMFldSearch::~KMFldSearch()
 {
-#warning Save QListView layout
-  //  mLbxMatches->writeConfig();
+  //TODO Save QListView layout
 }
 
 

@@ -839,7 +839,7 @@ KMMessage* KMMessage::createRedirect(void)
     }
   }    
 
-//#warning TODO: insert sender here
+//TODO: insert sender here
   msg->setHeaderField("X-KMail-Redirect-From", from());
   msg->setSubject(subject());
   msg->setFrom(from());
