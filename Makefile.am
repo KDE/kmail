@@ -80,7 +80,6 @@ libkmailprivate_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		encryptionconfigurationdialogimpl.cpp mailsourceviewer.cpp \
 		kmcommands.cpp kmreadermainwin.cpp \
 		kmstartup.cpp kmmainwidget.cpp \
-	dcopproxy.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
 		kmfoldersearch.cpp transportmanager.cpp \
 		folderjob.cpp cachedimapjob.cpp \
