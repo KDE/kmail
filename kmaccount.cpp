@@ -261,19 +261,14 @@ bool KMAccount::runPrecommand(const QString &precommand)
   // Tokenize on space
   int left = 0;
   QString parseString = precommand;
+  left = parseString.find(' ', 0, false);
   while ((left <= (int)parseString.length()) && (left != -1))
-    {
-      left = parseString.find(' ', 0, false);
-      if (left == -1)
-	  args << parseString;
-      else
-	{
-	  //kdDebug() << "Adding arg: " << parseString.left(left) << endl;
-	  args << parseString.left(left);
-	  parseString = parseString.right(parseString.length() - (left+1));
-	  //kdDebug() << "ParseString: " << parseString << endl;
-	}
-    }
+  {
+    args << parseString.left(left);
+    parseString = parseString.right(parseString.length() - (left+1));
+    left = parseString.find(' ', 0, false);
+  }
+  args << parseString;    
 
   for (unsigned int i = 0; i < args.count(); i++)
     {
