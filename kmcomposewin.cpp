@@ -2816,8 +2816,8 @@ void KMLineEdit::doCompletion(bool ctrlT)
     if ( mode != KGlobalSettings::CompletionNone )
     {
         match = s_completion->makeCompletion( s );
-        if (match.isNull())
-            match = s_completion->makeCompletion( "\"" + s );
+        if (match.isNull() && mode == KGlobalSettings::CompletionPopup)
+          match = s_completion->makeCompletion( "\"" + s );
     }
 
     // kdDebug(5006) << "** completion for: " << s << " : " << match << endl;
