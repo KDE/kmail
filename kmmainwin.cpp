@@ -1091,7 +1091,7 @@ void KMMainWin::slotMailtoCompose()
   KMMessage *msg = new KMMessage;
 
   msg->initHeader();
-  msg->setTo(mUrlCurrent.mid(7,255));
+  msg->setTo(mUrlCurrent.path());
 
   win = new KMComposeWin(msg);
   win->show();
@@ -1106,7 +1106,7 @@ void KMMainWin::slotMailtoReply()
 
   if (!(msg = mHeaders->getMsg(-1))) return;
   msg = msg->createReply(FALSE);
-  msg->setTo(mUrlCurrent.mid(7,255));
+  msg->setTo(mUrlCurrent.path());
 
   win = new KMComposeWin(msg);
   win->show();
@@ -1121,7 +1121,7 @@ void KMMainWin::slotMailtoForward()
 
   if (!(msg = mHeaders->getMsg(-1))) return;
   msg = msg->createForward();
-  msg->setTo(mUrlCurrent.mid(7,255));
+  msg->setTo(mUrlCurrent.path());
 
   win = new KMComposeWin(msg);
   win->show();
@@ -1133,11 +1133,11 @@ void KMMainWin::slotMailtoAddAddrBook()
 {
   if (!kernel->useKAB()) {
     if (mUrlCurrent.isEmpty()) return;
-    kernel->addrBook()->insert(mUrlCurrent.mid(7,255));
+    kernel->addrBook()->insert(mUrlCurrent.path());
     statusMsg(i18n("Address added to addressbook."));
   }
   else {
-    AddToKabDialog dialog(mUrlCurrent, kernel->KABaddrBook(), this);
+    AddToKabDialog dialog(mUrlCurrent.url(), kernel->KABaddrBook(), this);
     dialog.exec();
   }
 }
@@ -1148,14 +1148,14 @@ void KMMainWin::slotUrlCopy()
 {
   QClipboard* clip = QApplication::clipboard();
 
-  if (strnicmp(mUrlCurrent,"mailto:",7)==0)
+  if (mUrlCurrent.protocol() == "mailto")
   {
-    clip->setText(mUrlCurrent.mid(7,255));
+    clip->setText(mUrlCurrent.path());
     statusMsg(i18n("Address copied to clipboard."));
   }
   else
   {
-    clip->setText(mUrlCurrent);
+    clip->setText(mUrlCurrent.url());
     statusMsg(i18n("URL copied to clipboard."));
   }
 }
@@ -1166,7 +1166,7 @@ void KMMainWin::slotUrlOpen()
 {
   if (mUrlCurrent.isEmpty()) return;
   //  mMsgView->slotUrlOpen(mUrlCurrent, QString::null, 0);
-  mMsgView->slotUrlOpen( KURL( mUrlCurrent ), KParts::URLArgs() );
+  mMsgView->slotUrlOpen( mUrlCurrent, KParts::URLArgs() );
 }
 
 
@@ -1175,7 +1175,7 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
 {
   KPopupMenu* menu = new KPopupMenu;
 
-  mUrlCurrent = aUrl.url();
+  mUrlCurrent = aUrl;
 
   if (!aUrl.isEmpty())
   {

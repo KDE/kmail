@@ -182,7 +182,7 @@ protected:
   QString       mNewMailCmd;
   int		mMessageStatusId;
   QValueList<int> *mHorizPannerSep, *mVertPannerSep;
-  QString       mUrlCurrent;
+  KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
   bool		mLongFolderList;
