@@ -1605,17 +1605,11 @@ void KMMainWin::updateFolderMenu()
   mFolderMenu->setItemEnabled(htmlId, mFolder ? true : false);
   mFolderMenu->setItemEnabled(threadId, mFolder ? true : false);
 
-  if (mHtmlPref)
-    mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text" ));
-  else
-    mFolderMenu->changeItem(htmlId, i18n( "Prefer plain text to HTML" ));
-  mFolderMenu->setItemChecked(htmlId, !mFolderHtmlPref);
+  mFolderMenu->changeItem(htmlId, i18n( "Prefer HTML to plain text" ));
+  mFolderMenu->setItemChecked(htmlId, mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref);
   
-  if (mThreadPref)
-    mFolderMenu->changeItem(threadId, i18n( "Thread messages" ));
-  else
-    mFolderMenu->changeItem(threadId, i18n( "Don't thread messages" ));
-  mFolderMenu->setItemChecked(threadId, !mFolderThreadPref);
+  mFolderMenu->changeItem(threadId, i18n( "Thread messages" ));
+  mFolderMenu->setItemChecked(threadId, mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
 }
 
 #ifdef MALLOC_DEBUG
