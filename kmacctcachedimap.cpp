@@ -272,7 +272,6 @@ void KMAcctCachedImap::processNewMail(bool interactive)
 
   // This assertion must hold, otherwise we have to search for the root folder
   // assert(mFolder && mFolder->imapPath() == "/");
-  emit newMailsProcessed(-1);
 
   if( interactive && isProgressDialogEnabled() ) {
     imapProgressDialog()->clear();
@@ -282,7 +281,7 @@ void KMAcctCachedImap::processNewMail(bool interactive)
 
   mFolder->setAccount(this);
   mFolder->serverSync();
-  emit finishedCheck(false);
+  checkDone(false, 0);
 }
 
 void KMAcctCachedImap::postProcessNewMail(KMFolderCachedImap* folder, bool)

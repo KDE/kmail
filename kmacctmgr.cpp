@@ -28,7 +28,8 @@
 KMAcctMgr::KMAcctMgr(): KMAcctMgrInherited()
 {
   mAcctList.setAutoDelete(TRUE);
-  lastAccountChecked = 0;
+  mAcctChecking.clear();  
+  mAcctTodo.clear();  
   mTotalNewMailsArrived=0;
 }
 
@@ -103,16 +104,17 @@ void KMAcctMgr::readConfig(void)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 {
-  kdDebug(5006) << "singleCheckMail " << account->name() << endl;
   newMailArrived = false;
   interactive = _interactive;
 
   // queue the account
-  mAcctChecking.append(account);
+  mAcctTodo.append(account);
 
-  if (account->checkingMail()) return;
-
-  lastAccountChecked = 0;
+  if (account->checkingMail()) 
+  {
+    kdDebug() << "account " << account->name() << " busy, queuing" << endl;
+    return;
+  }
 
   processNextCheck(false);
 }
@@ -120,32 +122,40 @@ void KMAcctMgr::singleCheckMail(KMAccount *account, bool _interactive)
 //-----------------------------------------------------------------------------
 void KMAcctMgr::processNextCheck(bool _newMail)
 {
-  kdDebug(5006) << "processNextCheck, remaining " << mAcctChecking.count() << endl;
+  kdDebug(5006) << "processNextCheck, remaining " << mAcctTodo.count() << endl;
   KMAccount *curAccount = 0;
   newMailArrived |= _newMail;
 
-  if (lastAccountChecked)
+  KMAccount* acct;
+  for ( acct = mAcctChecking.first(); acct; acct = mAcctChecking.next() )
   {
-    kdDebug(5006) << "checked mail for account " << lastAccountChecked->name() << endl;
-    disconnect( lastAccountChecked, SIGNAL(finishedCheck(bool)),
-		this, SLOT(processNextCheck(bool)) );
-    kernel->filterMgr()->cleanup();
-    lastAccountChecked->setCheckingMail(false);
-    if (mTotalNewMailsArrived > 0)
-      KMBroadcastStatus::instance()->setStatusMsg(
-      i18n("Transmission for account %1 completed, %n new message.",
-           "Transmission for account %1 completed, %n new messages.", mTotalNewMailsArrived)
-      .arg(lastAccountChecked->name()));
-    emit checkedMail(newMailArrived, interactive);
-    mTotalNewMailsArrived = 0;
+    if ( !acct->checkingMail() )
+    {
+      // check done
+      kdDebug(5006) << "account " << acct->name() << " finished check" << endl;
+      mAcctChecking.remove(acct);
+      disconnect( acct, SIGNAL(finishedCheck(bool)),
+          this, SLOT(processNextCheck(bool)) );
+      kernel->filterMgr()->cleanup();
+      if (mTotalNewMailsArrived > 0)
+      {  
+        KMBroadcastStatus::instance()->setStatusMsg(
+            i18n("Transmission for account %1 completed, %n new message.",
+              "Transmission for account %1 completed, %n new messages.", mTotalNewMailsArrived)
+            .arg(acct->name()));
+      } else if (mTotalNewMailsArrived == 0)
+      {
+        KMBroadcastStatus::instance()->setStatusMsg(
+            i18n("Transmission for account %1 completed, no new messages.")
+            .arg(acct->name()));
+      }
+      // if mTotalNewMailsArrived we do nothing
+      emit checkedMail(newMailArrived, interactive);
+      mTotalNewMailsArrived = 0;
+    }
   }
-  if (mAcctChecking.isEmpty()) return;
-  curAccount = mAcctChecking.take(0);
-
-  connect( curAccount, SIGNAL(finishedCheck(bool)),
-	   this, SLOT(processNextCheck(bool)) );
-
-  lastAccountChecked = curAccount;
+  if (mAcctTodo.isEmpty()) return;
+  curAccount = mAcctTodo.take(0);
 
   if (curAccount->type() != "imap" && curAccount->type() != "cachedimap" && 
       curAccount->folder() == 0)
@@ -155,14 +165,20 @@ void KMAcctMgr::processNextCheck(bool _newMail)
         "Check your account settings!")
       .arg(curAccount->name());
     KMessageBox::information(0,tmp);
-    processNextCheck(false);
+    emit checkedMail(false, interactive);
+    mTotalNewMailsArrived = 0;
+    return;
   }
+
+  connect( curAccount, SIGNAL(finishedCheck(bool)),
+	   this, SLOT(processNextCheck(bool)) );
 
   KMBroadcastStatus::instance()->setStatusMsg(
       i18n("Checking account %1 for new mail").arg(curAccount->name()));
   kdDebug(5006) << "processing next mail check for " << curAccount->name() << endl;
 
   curAccount->setCheckingMail(true);
+  mAcctChecking.append(curAccount);
   curAccount->processNewMail(interactive);
 }
 

@@ -92,8 +92,7 @@ void KMAcctLocal::processNewMail(bool)
     if ( fi.size() == 0 ) {
       QString statusMsg = i18n("Transmission complete. No new messages.");
       KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
-      emit finishedCheck(hasNewMail);
-      emit newMailsProcessed(0);
+      checkDone(hasNewMail, 0);
       return;
     }
   }
@@ -110,8 +109,7 @@ void KMAcctLocal::processNewMail(bool)
   bool addedOk;
 
   if (!mFolder) {
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
@@ -124,8 +122,7 @@ void KMAcctLocal::processNewMail(bool)
   if (!runPrecommand(precommand()))
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
   }
 
   mailFolder.setAutoCreateIndex(FALSE);
@@ -139,8 +136,7 @@ void KMAcctLocal::processNewMail(bool)
     KMessageBox::sorry(0, aStr);
     kdDebug(5006) << "cannot open file " << mailFolder.path() << "/"
       << mailFolder.name() << endl;
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
@@ -148,8 +144,7 @@ void KMAcctLocal::processNewMail(bool)
   if (mailFolder.isReadOnly()) { // mailFolder is locked
     kdDebug(5006) << "mailFolder could not be locked" << endl;
     mailFolder.close();
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
       .arg( mailFolder.location() );
     KMBroadcastStatus::instance()->setStatusMsg( errMsg );
@@ -235,8 +230,7 @@ if( fileD0.open( IO_WriteOnly ) ) {
   mFolder->close();
   mFolder->quiet(FALSE);
 
-  emit finishedCheck(hasNewMail);
-  emit newMailsProcessed(num);
+  checkDone(hasNewMail, num);
 
   return;
 }

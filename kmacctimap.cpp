@@ -188,8 +188,8 @@ void KMAcctImap::killAllJobs( bool disconnectSlave )
   // make sure that no new-mail-check is blocked
   if (mCountRemainChecks > 0)
   {
+    checkDone(false, 0);
     mCountRemainChecks = 0;
-    emit finishedCheck(false);
   }
   displayProgress();
 
@@ -253,12 +253,11 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMAcctImap::processNewMail(bool interactive)
 {
-  emit newMailsProcessed(0);
   if (!mFolder || !mFolder->child() ||
       !makeConnection())
   {
     mCountRemainChecks = 0;
-    emit finishedCheck(false);
+    checkDone(false, 0);
     return;
   }
   // if necessary then initialize the list of folders which should be checked
@@ -267,7 +266,9 @@ void KMAcctImap::processNewMail(bool interactive)
     slotUpdateFolderList();
     // if no folders should be checked then the check is finished
     if( mMailCheckFolders.isEmpty() )
-      emit finishedCheck(false);
+    {
+      checkDone(false, 0);
+    }
   }
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
   // first get the current count of unread-messages

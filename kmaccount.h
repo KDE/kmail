@@ -193,6 +193,11 @@ public:
    */ 
   bool checkingMail() { return mCheckingMail; }
   void setCheckingMail( bool checking ) { mCheckingMail = checking; }
+
+  /**
+   * Call this if the newmail-check ended
+   */
+  void checkDone( bool newmails, int newmailCount );   
     
 signals:
   virtual void finishedCheck(bool newMail);

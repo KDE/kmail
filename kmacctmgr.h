@@ -79,7 +79,7 @@ signals:
 private:
   KMAcctList   mAcctList;
   KMAcctList   mAcctChecking;
-  KMAccount *lastAccountChecked;
+  KMAcctList   mAcctTodo;
   bool newMailArrived;
   bool interactive;
   int  mTotalNewMailsArrived;

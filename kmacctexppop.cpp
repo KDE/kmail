@@ -125,9 +125,8 @@ void KMAcctExpPop::processNewMail(bool _interactive)
         "mailbox."), FALSE, QString::null, mName, i18n("Account:"))
         != QDialog::Accepted)
       {
-	emit finishedCheck(false);
-	emit newMailsProcessed(0);
-	return;
+        checkDone(false, 0);
+        return;
       } else {
         mPasswd = encryptStr(passwd);
         mAskAgain = FALSE;
@@ -146,8 +145,7 @@ void KMAcctExpPop::processNewMail(bool _interactive)
     startJob();
   }
   else {
-    emit finishedCheck(false);
-    emit newMailsProcessed(-1);
+    checkDone(false, -1);
     return;
   }
 }
@@ -291,8 +289,7 @@ void KMAcctExpPop::startJob() {
       KMessageBox::sorry(0,
                          i18n("Couldn't execute precommand: %1").arg(precommand()),
                          i18n("KMail Error Message"));
-      emit finishedCheck(idsOfMsgs.count() > 0);
-      emit newMailsProcessed(-1);
+      checkDone((idsOfMsgs.count() > 0), -1);
       return;
     }
   // end precommand code
@@ -631,8 +628,8 @@ void KMAcctExpPop::slotJobFinished() {
       false );
     KMBroadcastStatus::instance()->reset();
 
-    emit finishedCheck(numMessages > 0);
-    emit newMailsProcessed(numMessages);
+    // use -1 as newmail count to use our statusMsg
+    checkDone((numMessages > 0), -1);
   }
 }
 

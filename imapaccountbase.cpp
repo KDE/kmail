@@ -194,10 +194,9 @@ namespace KMail {
       if ( PasswordDialog::getNameAndPassword( log, pass, &store, msg, false,
 					       QString::null, name(),
 					       i18n("Account:") )
-	   != QDialog::Accepted ) {
-	emit finishedCheck( false );
-	emit newMailsProcessed( 0 ); // taken from kmacctexppop
-	return false;
+          != QDialog::Accepted ) {
+        checkDone(false, 0);
+        return false;
       }
       // The user has been given the chance to change login and
       // password, so copy both from the dialog:
@@ -228,12 +227,12 @@ namespace KMail {
     if (mCountRemainChecks == 0) {
       // all checks are done
       if (mCountUnread > 0 && mCountUnread > mCountLastUnread) {
-        emit newMailsProcessed( mCountUnread ); 
-        emit finishedCheck(true);
+        checkDone(true, mCountUnread);
         mCountLastUnread = mCountUnread;
       } else {
-        emit finishedCheck(false);
+        checkDone(false, 0);
       }
+      setCheckingMail(false);
       mCountUnread = 0;
     }
   }

@@ -80,8 +80,7 @@ void KMAcctMaildir::processNewMail(bool)
   if ( precommand().isEmpty() ) {
     QFileInfo fi( location() );
     if ( !fi.exists() ) {
-      emit finishedCheck(hasNewMail);
-      emit newMailsProcessed(0);
+      checkDone(hasNewMail, 0);
       QString statusMsg = i18n("Transmission completed, no new messages");
       KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
       return;
@@ -97,8 +96,7 @@ void KMAcctMaildir::processNewMail(bool)
   bool addedOk;
 
   if (!mFolder) {
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
@@ -111,8 +109,7 @@ void KMAcctMaildir::processNewMail(bool)
   if (!runPrecommand(precommand()))
   {
     kdDebug(5006) << "cannot run precommand " << precommand() << endl;
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
   }
 
   mailFolder.setAutoCreateIndex(FALSE);
@@ -123,16 +120,14 @@ void KMAcctMaildir::processNewMail(bool)
     QString aStr = i18n("<qt>Cannot open folder <b>%1</b>.</qt>").arg( mailFolder.location() );
     KMessageBox::sorry(0, aStr);
     kdDebug(5006) << "cannot open folder " << mailFolder.location() << endl;
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
     KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission failed." ));
     return;
   }
 
   if (mailFolder.isReadOnly()) { // mailFolder is locked
     mailFolder.close();
-    emit finishedCheck(hasNewMail);
-    emit newMailsProcessed(-1);
+    checkDone(hasNewMail, -1);
     QString errMsg = i18n( "Transmission failed: Could not lock %1." )
       .arg( mailFolder.location() );
     KMBroadcastStatus::instance()->setStatusMsg( errMsg );
@@ -207,8 +202,7 @@ void KMAcctMaildir::processNewMail(bool)
   mFolder->close();
   mFolder->quiet(FALSE);
 
-  emit finishedCheck(hasNewMail);
-  emit newMailsProcessed(num);
+  checkDone(hasNewMail, num);
 
   return;
 }

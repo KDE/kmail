@@ -496,3 +496,12 @@ void KMAccount::pseudoAssign( const KMAccount * a ) {
   setPrecommand( a->precommand() );
   setTrash( a->trash() );
 }
+
+//-----------------------------------------------------------------------------
+void KMAccount::checkDone( bool newmail, int newmailCount )
+{
+  mCheckingMail = false;
+  emit newMailsProcessed(newmailCount);
+  emit finishedCheck(newmail);
+}
+
