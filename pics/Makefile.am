@@ -1,13 +1,14 @@
 
 SUBDIRS = toolbar
 
-data_DATA = green-bullet.xpm kmfldin.xpm kmfldout.xpm kmfolder.xpm \
-	kminsorgmsg.xpm kmmsgdel.xpm kmmsgnew.xpm kmmsgunseen.xpm \
-	kmmsgold.xpm kmmsgreplied.xpm kmtrash.xpm red-bullet.xpm \
-	kmmsgforwarded.xpm kmmsgqueued.xpm kmmsgsent.xpm \
-	kmfldsent.xpm closed.xpm green-bullet.xpm kmflddir.xpm \
+data_DATA = green-bullet.png kmfldin.png kmfldout.png kmfolder.png \
+	kminsorgmsg.png kmmsgdel.png kmmsgnew.png kmmsgunseen.png \
+	kmmsgold.png kmmsgreplied.png kmtrash.png red-bullet.png \
+	kmmsgforwarded.png kmmsgqueued.png kmmsgsent.png \
+	kmfldsent.png closed.png green-bullet.png \
 	stopwatch.xbm stopwatchMask.xbm kdelogo.xpm \
-	feather_white.xpm pub_key_red.xpm pgp-keys.xpm
+	feather_white.png pub_key_red.png pgp-keys.png \
+	kmfolderfull.png abup.png abdown.png
 
 datadir = $(kde_datadir)/kmail/pics
 
