@@ -61,7 +61,7 @@ void KMMessagePart::setBody(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-void KMMessagePart::setBodyEncoded(const QCString aStr)
+void KMMessagePart::setBodyEncoded(const QByteArray& aStr)
 {
   DwString dwResult, dwSrc;
   int encoding = contentTransferEncoding();
@@ -103,10 +103,10 @@ void KMMessagePart::setBodyEncoded(const QCString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QCString KMMessagePart::bodyDecoded(void) const
+QByteArray KMMessagePart::bodyDecoded(void) const
 {
   DwString dwResult, dwSrc;
-  QCString result;
+  QByteArray result;
   int encoding = contentTransferEncoding();
   int len;
 
@@ -115,18 +115,14 @@ const QCString KMMessagePart::bodyDecoded(void) const
   case DwMime::kCteQuotedPrintable:
     dwSrc = DwString(mBody.data(), mBody.size());
     DwDecodeQuotedPrintable(dwSrc, dwResult);
-    len = dwResult.size() + 1;
+    len = dwResult.size();
     result.resize(len);
     memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
-#if 0
-    result = dwResult.c_str();
-    result.detach();
-#endif
     break;
   case DwMime::kCteBase64:
     dwSrc = DwString(mBody.data(), mBody.size());
     DwDecodeBase64(dwSrc, dwResult);
-    len = dwResult.size() + 1;
+    len = dwResult.size();
     result.resize(len);
     memcpy((void*)result.data(), (void*)dwResult.c_str(), len);
     break;
@@ -137,9 +133,8 @@ const QCString KMMessagePart::bodyDecoded(void) const
   case DwMime::kCte8bit:
   case DwMime::kCteBinary:
     len = mBody.length();
-    result.resize(len+1);
+    result.resize(len);
     memcpy((void*)result.data(), (void*)mBody.data(), len);
-    result[len] = '\0';
     break;
   }
 

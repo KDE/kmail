@@ -1012,7 +1012,9 @@ const QString KMMessage::bodyDecoded(void) const
     dwstr = dwsrc;
     break;
   }
-  return QString(dwstr.c_str(), dwstr.size()+1);
+  // Should probably be returning a QByteArray, if it may contain NUL
+  QCString ba(dwstr.c_str(), dwstr.size());
+  return QString((const QByteArray&)ba);
 }
 
 

@@ -207,7 +207,7 @@ void KMMsgPartDlg::applyChanges(void)
   {
     body = mMsgPart->bodyDecoded();
     mMsgPart->setCteStr(str);
-    mMsgPart->setBodyEncoded(body.ascii());
+    mMsgPart->setBodyEncoded(QCString(body.ascii()));
   }
   kbp->idle();
 }

@@ -104,12 +104,14 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 
 
 //-----------------------------------------------------------------------------
-bool kStringToFile(const QString aBuffer, const char* aFileName, 
+static
+bool kBytesToFile(const char* aBuffer, int len,
+		   const char* aFileName, 
 		   bool aAskIfExists, bool aBackup, bool aVerbose)
 {
   QFile file(aFileName);
   QFileInfo info(aFileName);
-  int writeLen, len, rc;
+  int writeLen, rc;
 
   //assert(aFileName!=NULL);
   if(aFileName == NULL)
@@ -165,10 +167,7 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
     return FALSE;
   }
 
-  len = aBuffer.length();
-  // This has to many arguments in format warning so I commented it out (sven)
-  //debug("kStringToFile: writing %d bytes", len, aBuffer.length());
-  writeLen = file.writeBlock(aBuffer.data(), len);
+  writeLen = file.writeBlock(aBuffer, len);
 
   if (writeLen < 0) 
   {
@@ -185,4 +184,18 @@ bool kStringToFile(const QString aBuffer, const char* aFileName,
   } 
 
   return TRUE;
+}
+
+bool kCStringToFile(const QCString& aBuffer, const char* aFileName, 
+		   bool aAskIfExists, bool aBackup, bool aVerbose)
+{
+    return kBytesToFile(aBuffer, aBuffer.length(), aFileName, aAskIfExists,
+	aBackup, aVerbose);
+}
+
+bool kByteArrayToFile(const QByteArray& aBuffer, const char* aFileName, 
+		   bool aAskIfExists, bool aBackup, bool aVerbose)
+{
+    return kBytesToFile(aBuffer, aBuffer.size(), aFileName, aAskIfExists,
+	aBackup, aVerbose);
 }

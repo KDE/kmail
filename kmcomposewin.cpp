@@ -753,7 +753,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     cout<<"Compose charset: "<<mComposeCharset<<"\n";
     mEditor->setText(convertToLocal(bodyPart.bodyDecoded()));
 #else   
-    mEditor->setText(bodyPart.bodyDecoded());
+    mEditor->setText(QString(bodyPart.bodyDecoded()));
 #endif
     mEditor->insertLine("\n", -1);
 
@@ -780,7 +780,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg, bool mayAutoSign)
     mEditor->setText(convertToLocal(mMsg->bodyDecoded()));
   }  
 #else  
-  else mEditor->setText(mMsg->bodyDecoded());
+  else mEditor->setText(QString(mMsg->bodyDecoded()));
 #endif
 
   if (mAutoSign && mayAutoSign) slotAppendSignature();
@@ -894,7 +894,7 @@ bool KMComposeWin::applyChanges(void)
     mMsg->setCharset(mCharset);
 #endif      
     str.truncate(str.length()); // to ensure str.size()==str.length()+1
-    bodyPart.setBodyEncoded(str.ascii());
+    bodyPart.setBodyEncoded(QCString(str.ascii()));
     mMsg->addBodyPart(&bodyPart);
 
     // Since there is at least one more attachment create another bodypart
@@ -1000,7 +1000,7 @@ void KMComposeWin::addAttach(const QString aUrl)
   msgPart = new KMMessagePart;
   msgPart->setName(name);
   msgPart->setCteStr(mDefEncoding);
-  msgPart->setBodyEncoded(str.ascii());
+  msgPart->setBodyEncoded(QCString(str.ascii()));
   msgPart->magicSetType();
   msgPart->setContentDisposition("attachment; filename=\""+name+"\"");
 
@@ -1248,7 +1248,7 @@ void KMComposeWin::slotInsertMyPublicKey()
   msgPart->setCteStr(mDefEncoding);
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
-  msgPart->setBodyEncoded(str.ascii());
+  msgPart->setBodyEncoded(QCString(str.ascii()));
   msgPart->setContentDisposition("attachment; filename=public_key.asc");
 
   // add the new attachment to the list
@@ -1276,7 +1276,7 @@ void KMComposeWin::slotInsertPublicKey()
   msgPart->setCteStr(mDefEncoding);
   msgPart->setTypeStr("application");
   msgPart->setSubtypeStr("pgp-keys");
-  msgPart->setBodyEncoded(str.ascii());
+  msgPart->setBodyEncoded(QCString(str.ascii()));
   msgPart->setContentDisposition("attachment; filename=public_key.asc");
 
   // add the new attachment to the list
@@ -1368,7 +1368,7 @@ void KMComposeWin::slotAttachSave()
   fileName = KFileDialog::getSaveFileName(mPathAttach, "*", NULL, pname);
   if (fileName.isEmpty()) return;
 
-  kStringToFile(msgPart->bodyDecoded(), fileName, TRUE);
+  kByteArrayToFile(msgPart->bodyDecoded(), fileName, TRUE);
 }
 
 

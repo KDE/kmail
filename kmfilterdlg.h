@@ -37,7 +37,7 @@ public:
 
   /** Methods for filter options, @see KMGFilterDlg */
   virtual QPushButton* createDetailsButton(void);
-  virtual QComboBox* createFolderCombo(const QString curFolder=NULL);
+  virtual QComboBox* createFolderCombo(const QString curFolder=QString::null);
 
 protected slots:
   void slotBtnUp();

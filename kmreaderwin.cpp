@@ -512,7 +512,7 @@ QString KMReaderWin::quotedHTML(const QString& s)
 //-----------------------------------------------------------------------------
 void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 {
-  QString iconName, href, label, comment, tmpStr, contDisp;
+  QString iconName, href, label, comment, contDisp;
   QString fileName;
 
   if(aMsgPart == NULL) {
@@ -562,8 +562,7 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
 	fname.remove(c, 1);
     }
 
-    tmpStr = aMsgPart->bodyDecoded();
-    if (!kStringToFile(tmpStr, fname, false, false, false))
+    if (!kByteArrayToFile(aMsgPart->bodyDecoded(), fname, false, false, false))
       ok = false;
   }
   if (ok)
@@ -907,9 +906,10 @@ void KMReaderWin::slotAtmOpen()
   
   // Sven commented out:
   //kbp->busy();
+  // NOTE: this next line will not work with Qt 2.0 - use a QByteArray str.
   //str = msgPart.bodyDecoded();
   //old_umask = umask(077);
-  //if (!kStringToFile(str, fileName, TRUE))
+  //if (!kCStringToFile(str, fileName, TRUE))
   //  warning(i18n("Could not save temporary file %s"),
   //	    (const char*)fileName);
   //umask(old_umask);
@@ -926,7 +926,7 @@ void KMReaderWin::slotAtmOpen()
 void KMReaderWin::slotAtmSave()
 {
   KMMessagePart msgPart;
-  QString fileName, str;
+  QString fileName;
   fileName = QDir::currentDirPath();
   fileName.append("/");
 
@@ -938,8 +938,7 @@ void KMReaderWin::slotAtmSave()
   if(fileName.isEmpty()) return;
 
   kbp->busy();
-  str = msgPart.bodyDecoded();
-  if (!kStringToFile(str, fileName, TRUE))
+  if (!kByteArrayToFile(msgPart.bodyDecoded(), fileName, TRUE))
     warning(i18n("Could not save file"));
   kbp->idle();
 }

@@ -433,7 +433,7 @@ void KMHeaders::deleteMsg (int msgId)
 void KMHeaders::saveMsg (int msgId)
 {
   KMMessage* msg;
-  QString str;
+  QCString str;
   QString fileName = KFileDialog::getSaveFileName(".", "*");
 
   if (fileName.isEmpty()) return;
@@ -445,7 +445,7 @@ void KMHeaders::saveMsg (int msgId)
     str += "\n";
   }
 
-  if (kStringToFile(str, fileName, TRUE))
+  if (kCStringToFile(str, fileName, TRUE))
     mOwner->statusMsg(i18n("Message(s) saved."));
   else
     mOwner->statusMsg(i18n("Failed to save message(s)."));
