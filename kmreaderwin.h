@@ -145,7 +145,7 @@ protected:
 
   /** Change the string to `quoted' html (meaning, that the quoted
     part of the message get italized */
-  QString quotedHTML(char * pos);
+  QString quotedHTML(const QString& pos);
 
   /** HTML initialization. */
   virtual void initHtmlWidget(void);

@@ -404,7 +404,7 @@ void KMReaderWin::writeBodyStr(const QString aStr)
   if (pgp->setMessage(aStr))
   {
     QString str = pgp->frontmatter();
-    if(!str.isEmpty()) htmlStr += quotedHTML(str.data());
+    if(!str.isEmpty()) htmlStr += quotedHTML(str);
     htmlStr += "<BR>";
     if (pgp->isEncrypted())
     {      
@@ -448,22 +448,23 @@ void KMReaderWin::writeBodyStr(const QString aStr)
       delete sdata;
       htmlStr += line;
     }
-    htmlStr += quotedHTML(pgp->message().data());
+    htmlStr += quotedHTML(pgp->message());
     if(pgpMessage) htmlStr += "<BR><B>End pgp message</B><BR><BR>";
     str = pgp->backmatter();
-    if(!str.isEmpty()) htmlStr += quotedHTML(str.data());
+    if(!str.isEmpty()) htmlStr += quotedHTML(str);
   }
-  else htmlStr += quotedHTML(aStr.data());
+  else htmlStr += quotedHTML(aStr);
 
   mViewer->write(htmlStr);
 }
 
 
 //-----------------------------------------------------------------------------
-QString KMReaderWin::quotedHTML(char * pos)
+QString KMReaderWin::quotedHTML(const QString& s)
 {
+  int pos = 0, beg = 0;
   QString htmlStr, line;
-  char ch, *beg;
+  QChar ch;
   bool quoted = FALSE;
   bool lastQuoted = FALSE;
   bool atStart = TRUE;
@@ -471,24 +472,20 @@ QString KMReaderWin::quotedHTML(char * pos)
   htmlStr = "";
 
   // skip leading empty lines
-  for (beg=pos; *pos && *pos<=' '; pos++)
-  {
-    if (*pos=='\n') beg = pos+1;
-  }
+  while ( pos < (int)s.length() && s[pos] <= ' ' )
+    pos++;
 
-  pos = beg;
+  beg = pos;
   int tcnt = 0;
   QString tmpStr;
 
-  while (1)
+  while (pos < (int)s.length())
   {
-    ch = *pos;
-    if (ch=='\n' || ch=='\0')
+    ch = s[pos];
+    if (ch=='\n')
     {
       tcnt ++;
-      *pos = '\0';
-      line = strToHtml(beg,TRUE,TRUE);
-      *pos = ch;
+      line = strToHtml(s.mid(beg,pos-beg),TRUE,TRUE);
       if (quoted && !lastQuoted) line.prepend("<I>");
       else if (!quoted && lastQuoted) line.prepend("</I>");
       tmpStr += line + "<BR>\n";
@@ -506,7 +503,6 @@ QString KMReaderWin::quotedHTML(char * pos)
       if (ch=='>' || /*ch==':' ||*/ ch=='|') quoted = TRUE;
       atStart = FALSE;
     }
-    if (!ch) break;
     pos++;
   }
   htmlStr += tmpStr;
@@ -596,7 +592,8 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
 				     bool aPreserveBlanks) const
 {
   QString qpstr, iStr, result;
-  char ch, *pos, str[256];
+  const char *pos;
+  char ch, str[256];
   int i, i1, x, len;
   int maxLen = 30000;
   char htmlStr[maxLen+256];
@@ -663,8 +660,8 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     }
     else if (ch=='@')
     {
-      char *startofstring = qpstr.data();
-      char *startpos = pos;
+      const char *startofstring = qpstr.data();
+      const char *startpos = pos;
       for (i=0; pos >= startofstring && *pos 
 	     && (isalnum(*pos) 
 		 || *pos=='@' || *pos=='.' || *pos=='_'||*pos=='-' 
