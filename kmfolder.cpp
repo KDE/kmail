@@ -124,6 +124,7 @@ int KMFolder::open(void)
   mOpenCount++;
   if (mOpenCount > 1) return 0;  // already open
 
+
   assert(name() != "");
 
   mFilesLocked = FALSE;
@@ -639,7 +640,9 @@ KMMessage* KMFolder::getMsg(int idx)
 {
   KMMsgBase* mb;
 
-  assert(idx>=0 && idx<=mMsgList.high());
+  // assert(idx>=0 && idx<=mMsgList.high());
+  if(!(idx >= 0 && idx <= mMsgList.high()))
+    return 0L;
 
   mb = mMsgList[idx];
   if (!mb) return NULL;
@@ -887,7 +890,8 @@ int KMFolder::compact(void)
     }
 
     msg = getMsg(0);
-    tempFolder->moveMsg(msg);
+    if(msg)
+      tempFolder->moveMsg(msg);
   }
   tempName = tempFolder->location();
   tempFolder->close(TRUE);

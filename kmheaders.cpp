@@ -472,10 +472,17 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   kbp->busy();
   top = topItem();
 
-  if (destFolder) destFolder->open();
+  if (destFolder) {
+    if(destFolder->open() != 0)
+      return;
+  }
+  cout << "****moveMsgToFolder::now?\n";
+
   msgList = selectedMsgs(msgId);
   doUpd = (msgList->count() > 1);
   if (doUpd) setAutoUpdate(FALSE);
+
+  cout << "***moveMsgToFolder::before\n";
   for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
   {
     if (destFolder) rc = destFolder->moveMsg(msg);
@@ -486,6 +493,8 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
       delete msg;
     }
   }
+
+  cout << "***moveMsgToFolder::after\n";
 
   if (doUpd)
   {

@@ -504,6 +504,8 @@ void KMMainWin::slotCopyMsg()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSaveMsg()
 {
+  if(mHeaders->currentItem() == -1)
+    return;
   mHeaders->saveMsg(-1);
 }
 
