@@ -241,10 +241,8 @@ QString KabcBridge::expandDistributionLists(QString recipients)
 
 //-----------------------------------------------------------------------------
 void KMAddrBookExternal::addEmail(QString addr, QWidget *parent) {
-  KConfig *config = kapp->config();
-  KConfigGroupSaver saver(config, "General");
-  int ab = config->readNumEntry("addressbook", 3);
-  if (ab == 3) {
+  if (useKABC())
+  {
     KRun::runCommand( "kaddressbook -a \"" + addr.replace(QRegExp("\""), "")
       + "\"" );
     return;
