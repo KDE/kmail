@@ -15,7 +15,7 @@ while read; do
 
     case "$GROUP/$KEY" in
         General/sendOnCheck)
-            delete_thisٍ_key;
+            delete_this_key;
             if [ "$VALUE" == "true" ] ; then
                 VALUE="SendOnManualCheck"
             else
