@@ -2139,12 +2139,9 @@ QString AppearancePage::LayoutTab::helpAnchor() {
 // hrmpf. Needed b/c I18N_NOOP can't take hints.
 const AppearancePage::LayoutTab::dateDisplayConfigType
 AppearancePage::LayoutTab::dateDisplayConfig[] = {
-  { "ctime", i18n( "Date format. %1: example date string",
-		   "Sta&ndard format (%1)" ), CTime },
-  { "localized", i18n( "Date format. %1: example date string",
-		       "Locali&zed format (%1)" ), Localized },
-  { "fancyDate", i18n( "Date format. %1: example date string",
-		       "Fanc&y format (%1)" ), FancyDate },
+  { "ctime", I18N_NOOP("Sta&ndard format (%1)"), CTime },
+  { "localized", I18N_NOOP("Locali&zed format (%1)"), Localized },
+  { "fancyDate", I18N_NOOP("Fanc&y format (%1)"), FancyDate },
 };
 
 AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char * name )
@@ -2193,7 +2190,7 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
   time_t currentTime;
   time( &currentTime );
   for ( int i = 0 ; i < numDateDisplayConfig ; i++ )
-    mDateDisplay->insert( new QRadioButton( dateDisplayConfig[i].displayName
+    mDateDisplay->insert( new QRadioButton( i18n(dateDisplayConfig[i].displayName)
 			         .arg( KMHeaders::formatDate( currentTime,
 				   dateDisplayConfig[i].dateDisplay ) ),
       mDateDisplay ), i );
