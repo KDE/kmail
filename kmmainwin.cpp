@@ -110,23 +110,25 @@ void KMMainWin::displayStatusMsg(const QString& aText)
   statusBar()->changeItem(text, mMessageStatusId);
 }
 
-#if !KDE_IS_VERSION( 3, 1, 90 )
 void KMMainWin::slotToggleToolBar()
 {
+#if !KDE_IS_VERSION( 3, 1, 90 )
   if(toolBar("mainToolBar")->isVisible())
     toolBar("mainToolBar")->hide();
   else
     toolBar("mainToolBar")->show();
+#endif
 }
 
 void KMMainWin::slotToggleStatusBar()
 {
+#if !KDE_IS_VERSION( 3, 1, 90 )
   if (statusBar()->isVisible())
     statusBar()->hide();
   else
     statusBar()->show();
-}
 #endif
+}
 
 void KMMainWin::slotEditToolbars()
 {

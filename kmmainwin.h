@@ -38,10 +38,10 @@ public slots:
   void statusMsg(const QString&);
   void htmlStatusMsg(const QString&);
   void displayStatusMsg(const QString&);
-#if !KDE_IS_VERSION( 3, 1, 90 )
+  // FIXME: Remove this if KMail requires KDE 3.2
   void slotToggleToolBar();
   void slotToggleStatusBar();
-#endif
+  // end of FIXME
   void slotEditToolbars();
   void slotUpdateToolbars();
   void setupStatusBar();
