@@ -157,7 +157,7 @@ const QString KMIdentity::signature(void) const
     if (errno)
     {
       warning(klocale->translate("Failed to execute signature script\n%s\n%s"),
-	      sigcmd.data(), sys_errlist[errno]);
+	      sigcmd.data(), strerror(errno));
       return 0;
     }
     result = kFileToString(tmpf, TRUE, FALSE);
