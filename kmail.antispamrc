@@ -1,5 +1,5 @@
 [General]
-tools=2
+tools=3
 
 [Spamtool #1]
 Ident=spamassassin
@@ -30,3 +30,19 @@ DetectionHeader=X-Bogosity
 DetectionPattern=yes
 UseRegExp=0
 SupportsBayes=1
+
+[Spamtool #3]
+Ident=annoyance-filter
+Version=1
+VisibleName=&Annoyance-Filter
+Executable=$HOME/.annoyance-filter/annoyance-filter --version
+URL=http://www.fourmilab.ch/annoyance-filter
+PipeFilterName=Annoyance-Filter Check
+PipeCmdDetect=$HOME/.annoyance-filter/annoyance-filter --fread $HOME/.annoyance-filter/FastDict.bin --phrasemin 1 --phrasemax 2 --transcript - --test -
+ExecCmdSpam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-filter/Dict.bin --phrasemin 1 --phrasemax 2 --junk - --prune --write $HOME/.annoyance-filter/Dict.bin --fwrite $HOME/.annoyance-filter/FastDict.bin
+ExecCmdHam=$HOME/.annoyance-filter/annoyance-filter --read $HOME/.annoyance-filter/Dict.bin --phrasemin 1 --phrasemax 2 --mail - --prune --write $HOME/.annoyance-filter/Dict.bin --fwrite $HOME/.annoyance-filter/FastDict.bin
+DetectionHeader=X-Annoyance-Filter-Classification
+DetectionPattern=Junk
+UseRegExp=0
+SupportsBayes=1
+
