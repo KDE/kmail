@@ -18,6 +18,7 @@
 #include "kfileio.h"
 #include "kmfawidgets.h"
 
+#include <kregexp3.h>
 #include <kstddirs.h>
 #include <kconfig.h>
 #include <ktempfile.h>
@@ -28,7 +29,19 @@
 #include <qcombobox.h>
 #include <qvaluelist.h>
 #include <qtl.h>  // QT Template Library, needed for qHeapSort
+#include <qlineedit.h>
+#include <qlabel.h>
+#include <qlayout.h>
 
+// Remove this stuff once Qt3.x becomes required.
+#ifndef Q_ASSERT
+#ifdef ASSERT
+#define Q_ASSERT ASSERT
+#else
+#include <assert.h>
+#define Q_ASSERT assert
+#endif
+#endif
 
 //=============================================================================
 //
@@ -616,6 +629,360 @@ const QString KMFilterActionSetStatus::argsAsString() const
   return QString( QChar( char(status) ) );
 }
 
+
+//=============================================================================
+// KMFilterActionRemoveHeader - remove header
+// Remove all instances of the given header field.
+//=============================================================================
+class KMFilterActionRemoveHeader: public KMFilterActionWithStringList
+{
+public:
+  KMFilterActionRemoveHeader();
+  virtual ReturnCode process(KMMessage* msg) const;
+  virtual QWidget* createParamWidget( QWidget* parent ) const;
+  virtual void setParamWidgetValue( QWidget* paramWidget ) const;
+
+  virtual void argsFromString( const QString argsStr );
+  
+  static KMFilterAction* newAction();
+};
+
+KMFilterAction* KMFilterActionRemoveHeader::newAction()
+{
+  return (new KMFilterActionRemoveHeader);
+}
+
+KMFilterActionRemoveHeader::KMFilterActionRemoveHeader()
+  : KMFilterActionWithStringList( "remove header", i18n("remove header") )
+{
+  mParameterList << ""
+		 << "Reply-To"
+		 << "Delivered-To"
+		 << "X-KDE-PR-Message"
+		 << "X-KDE-PR-Package"
+		 << "X-KDE-PR-Keywords";
+  mParameter = *mParameterList.at(0);
+}
+
+QWidget* KMFilterActionRemoveHeader::createParamWidget( QWidget* parent ) const
+{
+  QComboBox *cb = new QComboBox( TRUE/*editable*/, parent );
+  cb->setInsertionPolicy( QComboBox::AtBottom );
+  setParamWidgetValue( cb );
+  return cb;
+}
+
+KMFilterAction::ReturnCode KMFilterActionRemoveHeader::process(KMMessage* msg) const
+{
+  if ( mParameter.isEmpty() ) return ErrorButGoOn;
+
+  while ( !msg->headerField( mParameter ).isEmpty() )
+    msg->removeHeaderField( mParameter );
+  return GoOn;
+}
+
+void KMFilterActionRemoveHeader::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  ((QComboBox*)paramWidget)->clear();
+  ((QComboBox*)paramWidget)->insertStringList( mParameterList );
+  ((QComboBox*)paramWidget)->setCurrentItem( idx >= 0 ? idx : 0 );
+}
+
+void KMFilterActionRemoveHeader::argsFromString( const QString argsStr )
+{
+  int idx = mParameterList.findIndex( argsStr );
+  if ( idx < 0 ) {
+    mParameterList.insert( mParameterList.at(1), argsStr );
+    idx = 1;
+  }
+  mParameter = *mParameterList.at( idx );
+}
+
+//=============================================================================
+// KMFilterActionAddHeader - add header
+// Add a header with the given value.
+//=============================================================================
+class KMFilterActionAddHeader: public KMFilterActionWithStringList
+{
+public:
+  KMFilterActionAddHeader();
+  virtual ReturnCode process(KMMessage* msg) const;
+  virtual QWidget* createParamWidget( QWidget* parent ) const;
+  virtual void setParamWidgetValue( QWidget* paramWidget ) const;
+  virtual void applyParamWidgetValue( QWidget* paramWidget );
+  virtual void clearParamWidget( QWidget* paramWidget ) const;
+
+  virtual const QString argsAsString() const;
+  virtual void argsFromString( const QString argsStr );
+
+  static KMFilterAction* newAction()
+  {
+    return (new KMFilterActionAddHeader);
+  }
+private:
+  QString mValue;
+};
+
+KMFilterActionAddHeader::KMFilterActionAddHeader()
+  : KMFilterActionWithStringList( "add header", i18n("add header") )
+{
+  mParameterList << ""
+		 << "Reply-To"
+		 << "Delivered-To"
+		 << "X-KDE-PR-Message"
+		 << "X-KDE-PR-Package"
+		 << "X-KDE-PR-Keywords";
+  mParameter = *mParameterList.at(0);
+}
+
+KMFilterAction::ReturnCode KMFilterActionAddHeader::process(KMMessage* msg) const
+{
+  if ( mParameter.isEmpty() ) return ErrorButGoOn;
+
+  msg->setHeaderField( mParameter, mValue );
+  return GoOn;
+}
+
+QWidget* KMFilterActionAddHeader::createParamWidget( QWidget* parent ) const
+{
+  QWidget *w = new QWidget( parent );
+  QHBoxLayout *hbl = new QHBoxLayout( w );
+  hbl->setSpacing( 4 );
+  QComboBox *cb = new QComboBox( TRUE, w, "combo" );
+  cb->setInsertionPolicy( QComboBox::AtBottom );
+  hbl->addWidget( cb, 0 /* stretch */ );
+  QLabel *l = new QLabel( i18n("with value"), w );
+  l->setFixedWidth( l->sizeHint().width() );
+  hbl->addWidget( l, 0 );
+  QLineEdit *le = new QLineEdit( w, "ledit" );
+  hbl->addWidget( le, 1 );
+  setParamWidgetValue( w );
+  return w;
+}
+
+void KMFilterActionAddHeader::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  Q_ASSERT( cb );
+  cb->clear();
+  cb->insertStringList( mParameterList );
+  cb->setCurrentItem( idx >= 0 ? idx : 0 );
+  QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
+  Q_ASSERT( le );
+  le->setText( mValue );
+}
+
+void KMFilterActionAddHeader::applyParamWidgetValue( QWidget* paramWidget )
+{
+  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  Q_ASSERT( cb );
+  mParameter = cb->currentText();
+
+  QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
+  Q_ASSERT( le );
+  mValue = le->text();
+}
+
+void KMFilterActionAddHeader::clearParamWidget( QWidget* paramWidget ) const
+{
+  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  Q_ASSERT( cb );
+  cb->setCurrentItem(0);
+  QLineEdit *le = (QLineEdit*)paramWidget->child("ledit");
+  Q_ASSERT( le );
+  le->clear();
+}
+
+const QString KMFilterActionAddHeader::argsAsString() const
+{
+  QString result = mParameter;
+  result += '\t';
+  result += mValue;
+
+  return result;
+}
+
+void KMFilterActionAddHeader::argsFromString( const QString argsStr )
+{
+  QStringList l = QStringList::split( '\t', argsStr, TRUE /*allow empty entries*/ );
+  QString s;
+  if ( l.count() < 2 ) {
+    s = l[0];
+    mValue = "";
+  } else {
+    s = l[0];
+    mValue = l[1];
+  }
+
+  int idx = mParameterList.findIndex( s );
+  if ( idx < 0 ) {
+    mParameterList.insert( mParameterList.at(1), s );
+    idx = 1;
+  }
+  mParameter = *mParameterList.at( idx );
+}
+
+
+//=============================================================================
+// KMFilterActionRewriteHeader - add header
+// Add a header with the given value.
+//=============================================================================
+class KMFilterActionRewriteHeader: public KMFilterActionWithStringList
+{
+public:
+  KMFilterActionRewriteHeader();
+  virtual ReturnCode process(KMMessage* msg) const;
+  virtual QWidget* createParamWidget( QWidget* parent ) const;
+  virtual void setParamWidgetValue( QWidget* paramWidget ) const;
+  virtual void applyParamWidgetValue( QWidget* paramWidget );
+  virtual void clearParamWidget( QWidget* paramWidget ) const;
+
+  virtual const QString argsAsString() const;
+  virtual void argsFromString( const QString argsStr );
+
+  static KMFilterAction* newAction()
+  {
+    return (new KMFilterActionRewriteHeader);
+  }
+private:
+  KRegExp3 mRegExp;
+  QString mReplacementString;
+};
+
+KMFilterActionRewriteHeader::KMFilterActionRewriteHeader()
+  : KMFilterActionWithStringList( "rewrite header", i18n("rewrite header") )
+{
+  mParameterList << ""
+		 << "Subject"
+		 << "Reply-To"
+		 << "Delivered-To"
+		 << "X-KDE-PR-Message"
+		 << "X-KDE-PR-Package"
+		 << "X-KDE-PR-Keywords";
+  mParameter = *mParameterList.at(0);
+}
+
+KMFilterAction::ReturnCode KMFilterActionRewriteHeader::process(KMMessage* msg) const
+{
+  if ( mParameter.isEmpty() || !mRegExp.isValid() )
+    return ErrorButGoOn;
+
+  KRegExp3 rx = mRegExp; // KRegExp3::replace is not const.
+
+  QString newValue = rx.replace( msg->headerField( mParameter ),
+				     mReplacementString );
+
+  msg->setHeaderField( mParameter, newValue );
+  return GoOn;
+}
+
+QWidget* KMFilterActionRewriteHeader::createParamWidget( QWidget* parent ) const
+{
+  QWidget *w = new QWidget( parent );
+  QHBoxLayout *hbl = new QHBoxLayout( w );
+  hbl->setSpacing( 4 );
+
+  QComboBox *cb = new QComboBox( TRUE, w, "combo" );
+  cb->setInsertionPolicy( QComboBox::AtBottom );
+  hbl->addWidget( cb, 0 /* stretch */ );
+
+  QLabel *l = new QLabel( i18n("replace"), w );
+  l->setFixedWidth( l->sizeHint().width() );
+  hbl->addWidget( l, 0 );
+
+  QLineEdit *le = new QLineEdit( w, "search" );
+  hbl->addWidget( le, 1 );
+
+  l = new QLabel( i18n("with"), w );
+  l->setFixedWidth( l->sizeHint().width() );
+  hbl->addWidget( l, 0 );
+
+  le = new QLineEdit( w, "replace" );
+  hbl->addWidget( le, 1 );
+
+  setParamWidgetValue( w );
+  return w;
+}
+
+void KMFilterActionRewriteHeader::setParamWidgetValue( QWidget* paramWidget ) const
+{
+  int idx = mParameterList.findIndex( mParameter );
+  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  Q_ASSERT( cb );
+  cb->clear();
+  cb->insertStringList( mParameterList );
+  cb->setCurrentItem( idx >= 0 ? idx : 0 );
+
+  QLineEdit *le = (QLineEdit*)paramWidget->child("search");
+  Q_ASSERT( le );
+  le->setText( mRegExp.pattern() );
+
+  le = (QLineEdit*)paramWidget->child("replace");
+  Q_ASSERT( le );
+  le->setText( mReplacementString );
+}
+
+void KMFilterActionRewriteHeader::applyParamWidgetValue( QWidget* paramWidget )
+{
+  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  Q_ASSERT( cb );
+  mParameter = cb->currentText();
+
+  QLineEdit *le = (QLineEdit*)paramWidget->child("search");
+  Q_ASSERT( le );
+  mRegExp.setPattern( le->text() );
+
+  le = (QLineEdit*)paramWidget->child("replace");
+  Q_ASSERT( le );
+  mReplacementString = le->text();
+}
+
+void KMFilterActionRewriteHeader::clearParamWidget( QWidget* paramWidget ) const
+{
+  QComboBox *cb = (QComboBox*)paramWidget->child("combo");
+  Q_ASSERT( cb );
+  cb->setCurrentItem(0);
+
+  QLineEdit *le = (QLineEdit*)paramWidget->child("search");
+  Q_ASSERT( le );
+  le->clear();
+
+  le = (QLineEdit*)paramWidget->child("replace");
+  Q_ASSERT( le );
+  le->clear();
+}
+
+const QString KMFilterActionRewriteHeader::argsAsString() const
+{
+  QString result = mParameter;
+  result += '\t';
+  result += mRegExp.pattern();
+  result += '\t';
+  result += mReplacementString;
+
+  return result;
+}
+
+void KMFilterActionRewriteHeader::argsFromString( const QString argsStr )
+{
+  QStringList l = QStringList::split( '\t', argsStr, TRUE /*allow empty entries*/ );
+  QString s;
+
+  s = l[0];
+  mRegExp.setPattern( l[1] );
+  mReplacementString = l[2];
+
+  int idx = mParameterList.findIndex( s );
+  if ( idx < 0 ) {
+    mParameterList.insert( mParameterList.at(1), s );
+    idx = 1;
+  }
+  mParameter = *mParameterList.at( idx );
+}
+
+
 //=============================================================================
 // KMFilterActionMove - move to folder
 // Move message to another mail folder
@@ -764,7 +1131,7 @@ KMFilterAction::ReturnCode KMFilterActionExec::process(KMMessage *aMsg) const
   QList<KTempFile> atmList;
   atmList.setAutoDelete(TRUE);
 
-  assert( aMsg );
+  Q_ASSERT( aMsg );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg, atmList );
 
@@ -823,7 +1190,7 @@ KMFilterAction::ReturnCode KMFilterActionExtFilter::process(KMMessage* aMsg) con
   atmList.append( inFile );
   atmList.append( outFile );
 
-  assert( aMsg );
+  Q_ASSERT( aMsg );
 
   QString commandLine = substituteCommandLineArgsFor( aMsg , atmList );
   if ( commandLine.isEmpty() )
@@ -887,6 +1254,9 @@ void KMFilterActionDict::init(void)
   insert( KMFilterActionSendReceipt::newAction );
   insert( KMFilterActionExec::newAction );
   insert( KMFilterActionExtFilter::newAction );
+  insert( KMFilterActionRemoveHeader::newAction );
+  insert( KMFilterActionAddHeader::newAction );
+  insert( KMFilterActionRewriteHeader::newAction );
   // Register custom filter actions below this line.
 }
 // The int in the QDict constructor (23) must be a prime
