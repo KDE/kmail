@@ -22,8 +22,6 @@ class QRadioButton;
 class QPushButton;
 class KButtonBox;
 class QVBoxLayout;
-class QDialog;
-
 
 /** A widget to edit a single KMSearchRule.
     It consists of an editable @ref QComboBox for the field,
@@ -69,10 +67,6 @@ signals:
      contents/value of the rule. */
   void contentsChanged( const QString & );
   
-protected slots:
-  void slotEditRegExp();
-  void slotSetStateEditButton( int which );
-  
 protected:
   /** Used internally to translate i18n-ized pseudo-headers back to
       english */
@@ -88,8 +82,6 @@ private:
   QComboBox* mRuleField;
   QComboBox* mRuleFunc;
   QLineEdit* mRuleValue;
-  QPushButton* mEditButton;
-  QDialog* mEditorDialog;
 };
 
 
