@@ -20,6 +20,8 @@ class QFileDialog;
 class QLabel;
 class KpgpConfig;
 
+#define DEFAULT_EDITOR_STR       "kedit %f"
+
 class KMSettings : public QTabDialog
 {
   Q_OBJECT
@@ -66,15 +68,16 @@ private slots:
   void slotListFontSelect();
   void slotFolderlistFontSelect();
   void slotDefaultColorSelect();
+  void slotSigModify();
 
 private:
   QLineEdit *nameEdit,*orgEdit,*emailEdit,*replytoEdit,*sigEdit;
   QLineEdit *smtpServerEdit,*smtpPortEdit,*sendmailLocationEdit;
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
-  QLineEdit *indentPrefixEdit, *wrapColumnEdit;
+  QLineEdit *indentPrefixEdit, *wrapColumnEdit, *extEditorEdit;
   QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign, *smartQuote;
   QCheckBox *emptyTrashOnExit, *sendOnCheck, *longFolderList, *sendReceipts,
-    *compactOnExit;
+    *compactOnExit, *useExternalEditor;
   QRadioButton *smtpRadio, *sendmailRadio, *sendNow, *sendLater;
   QRadioButton *allow8Bit, *quotedPrintable;
   QButtonGroup *incomingGroup,*outgoingGroup;
@@ -84,6 +87,7 @@ private:
   QLabel *bodyFontLabel, *listFontLabel, *folderListFontLabel;
   QLabel *bodyFontLabel2, *listFontLabel2, *folderListFontLabel2;
   QPushButton *bodyFontButton, *listFontButton, *folderListFontButton;
+  QPushButton *sigModify;
   QColor cFore, cBack, cNew, cUnread;
   KColorButton *foregroundColorBtn, *backgroundColorBtn, *newColorBtn, 
     *unreadColorBtn;

@@ -61,6 +61,12 @@ public:
   // Text with lines breaks inserted after every row
   QString brokenText() const;
 
+#ifndef KRN
+  // For the external editor
+  inline void setExternalEditor(bool extEd) { extEditor=extEd; }
+  inline void setExternalEditorPath(QString path) { mExtEditor=path; }
+#endif
+
 signals:
   void spellcheck_done();
 public slots:
@@ -75,6 +81,10 @@ protected:
   KMComposeWin* mComposer;
 private:
   KSpell *mKSpell; 
+#ifndef KRN
+  bool extEditor;
+  QString mExtEditor;
+#endif
 };
 
 
@@ -328,6 +338,10 @@ protected:
   bool mAutoSign, mAutoPgpSign, mShowToolBar, mAutoDeleteMsg;
   long mShowHeaders;
   QString mDefEncoding;
+#ifndef KRN
+  QString mExtEditor;
+  bool useExtEditor;
+#endif
   int mNumHeaders;
   int mLineBreak;
   int mWordWrap;

@@ -21,6 +21,8 @@
 
 #ifndef KRN
 #include "kmmainwin.h"
+#include "kmsettings.h"
+#include <fstream.h>
 #endif
 
 #include <assert.h>
@@ -167,6 +169,13 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
   setView(&mMainWidget, FALSE);
   rethinkFields();
 
+#ifndef KRN
+  if (useExtEditor) {
+    mEditor->setExternalEditor(true);
+    mEditor->setExternalEditorPath(mExtEditor);
+  }
+#endif
+
 #if defined CHARSETS
   // As family may change with charset, we must save original settings
   mSavedEditorFont=mEditor->font();
@@ -244,6 +253,12 @@ void KMComposeWin::readConfig(void)
   mEdtCc.setPalette(mPalette);
   mEdtBcc.setPalette(mPalette);
   mEdtSubject.setPalette(mPalette);
+
+#ifndef KRN
+  config->setGroup("General");
+  mExtEditor = config->readEntry("external-editor", DEFAULT_EDITOR_STR);
+  useExtEditor = config->readBoolEntry("use-external-editor", FALSE);
+#endif
 
   config->setGroup("Fonts");
   if (!config->readBoolEntry("defaultFonts",TRUE)) {
@@ -2097,6 +2112,10 @@ KMEdit::KMEdit(QWidget *parent, KMComposeWin* composer,
   mComposer = composer;
   installEventFilter(this);
 
+#ifndef KRN
+  extEditor = false;     // the default is to use ourself
+#endif
+
   mKSpell = NULL;
 }
 
@@ -2133,6 +2152,52 @@ bool KMEdit::eventFilter(QObject*, QEvent* e)
   {
     QKeyEvent *k = (QKeyEvent*)e;
 
+#ifndef KRN
+    if (extEditor) {
+      if (k->key() == Key_Up)
+      {
+        mComposer->focusNextPrevEdit(0, false); //take me up
+        return TRUE;
+      }
+
+      QRegExp repFn("\\%f");
+      QString sysLine = mExtEditor;
+      char tmpFile[20] = "/tmp/kmailXXXXXX";
+      // make temporary file
+      mkstemp(tmpFile);
+
+      // write the data out to the file
+      fstream mailFile(tmpFile, ios::out);
+
+      mailFile << text();
+
+      mailFile.close();
+      // replace %f in the system line
+      sysLine.replace(repFn, QString(tmpFile));
+      system((const char *)sysLine);
+
+      setAutoUpdate(false);
+      clear();
+
+      // read data back in from file
+      mailFile.open(tmpFile, ios::in);
+
+      while (!mailFile.eof()) {
+         char tmpbuf[1025];
+         mailFile.getline(tmpbuf, 1024, '\n');
+         insertLine(tmpbuf, -1);
+      }
+      
+      setModified(true);
+      mailFile.close();
+
+      setAutoUpdate(true);
+      repaint();
+
+      unlink(tmpFile);
+      return TRUE;
+    } else {
+#endif
     if (k->key()==Key_Tab)
     {
       int col, row;
@@ -2149,6 +2214,9 @@ bool KMEdit::eventFilter(QObject*, QEvent* e)
       return TRUE;
     }
     // ---sven's Arrow key navigation end ---
+#ifndef KRN
+    }
+#endif
   }
   return FALSE;
 }

@@ -31,6 +31,7 @@
 #include <qradiobutton.h>
 #include <qcheckbox.h>
 #include <qvalidator.h>
+#include <qmessagebox.h>
 #include <klocale.h>
 #include <kconfig.h>
 #include <kcolorbtn.h>
@@ -38,6 +39,9 @@
 #ifdef HAVE_PATHS_H
 #include <paths.h>
 #endif
+
+#include <errno.h>
+#include <fcntl.h>
 
 #ifndef _PATH_SENDMAIL
 #define _PATH_SENDMAIL  "/usr/sbin/sendmail"
@@ -176,7 +180,7 @@ QPushButton* KMSettings::createPushButton(QWidget* parent, QGridLayout* grid,
 void KMSettings::createTabIdentity(QWidget* parent)
 {
   QWidget* tab = new QWidget(parent);
-  QGridLayout* grid = new QGridLayout(tab, 6, 3, 20, 6);
+  QGridLayout* grid = new QGridLayout(tab, 7, 3, 20, 6);
   QPushButton* button;
 
   nameEdit = createLabeledEntry(tab, grid, i18n("Name:"), 
@@ -191,6 +195,9 @@ void KMSettings::createTabIdentity(QWidget* parent)
   sigEdit = createLabeledEntry(tab, grid, i18n("Signature File:"),
 			       identity->signatureFile(), 4, 0, &button);
   connect(button,SIGNAL(clicked()),this,SLOT(chooseSigFile()));
+  sigModify = createPushButton(tab, grid, i18n("&Edit Signature File..."),
+                               5, 0);
+  connect(sigModify, SIGNAL(clicked()), this, SLOT(slotSigModify()));
 
   grid->setColStretch(0,0);
   grid->setColStretch(1,1);
@@ -622,8 +629,8 @@ void KMSettings::createTabMisc(QWidget *parent)
 {
   QWidget *tab = new QWidget(parent);
   QBoxLayout* box = new QBoxLayout(tab, QBoxLayout::TopToBottom, 4);
-  QGridLayout* grid;
-  QGroupBox* grp;
+  QGridLayout* grid, *grid2;
+  QGroupBox* grp, *grp2;
 
   KConfig* config = app->config();
   QString str;
@@ -651,12 +658,41 @@ void KMSettings::createTabMisc(QWidget *parent)
 
   grid->activate();
 
+  //---------- group: External editor
+  grp2 = new QGroupBox(i18n("External Editor"), tab);
+  box->addWidget(grp2);
+  grid2 = new QGridLayout(grp2, 3, 2, 20, 6);
+
+  // Checkbox: use external editor instead of composer?
+  useExternalEditor = 
+          new QCheckBox(i18n("Use external editor instead of composer"), grp2);
+  useExternalEditor->adjustSize();
+  useExternalEditor->setMinimumSize(useExternalEditor->sizeHint());
+  grid2->addMultiCellWidget(useExternalEditor, 1, 1, 0, 0);
+
+  QLabel *editorHowto = new QLabel(grp2);
+  editorHowto->setText(i18n("%f will be replaced with the filename to edit."));
+  editorHowto->setIndent(10);
+  editorHowto->adjustSize();
+  editorHowto->setMinimumSize(editorHowto->size());
+  editorHowto->resize(editorHowto->sizeHint().width(),
+                      editorHowto->sizeHint().height());
+
+  grid2->addWidget(editorHowto, 2, 0);
+  extEditorEdit = 
+              createLabeledEntry(grp2, grid2, i18n("External editor command:"),
+ 			         QString(""), 3, 0);
+  grid2->activate();
+  
+
   //---------- set values
   config->setGroup("General");
   emptyTrashOnExit->setChecked(config->readBoolEntry("empty-trash-on-exit",false));
   compactOnExit->setChecked(config->readNumEntry("compact-all-on-exit", 0));
   sendOnCheck->setChecked(config->readBoolEntry("sendOnCheck",false));
   sendReceipts->setChecked(config->readBoolEntry("send-receipts", true));
+  useExternalEditor->setChecked(config->readBoolEntry("use-external-editor", false));  
+  extEditorEdit->setText(config->readEntry("external-editor", ""));
 
   //---------- here we go
   box->addStretch(10);
@@ -792,6 +828,108 @@ void KMSettings::slotSendLater()
   sendLater->setChecked(TRUE);
 }
 
+
+//-----------------------------------------------------------------------------
+//-----------------  Utility class for the proceeding slot --------------------
+//-----------------------------------------------------------------------------
+
+//
+//  I tried to mimick QThread's interface here.
+//
+
+//
+//  FIXME:
+//  There is a problem here.  If an interactive console program is given,
+//  the program is stopped.  How do we work around this?
+//
+
+class ExtEditLaunch {
+private:
+   QString cmdline;
+
+public:
+  ExtEditLaunch(QString cmd) { cmdline=cmd; }
+  ~ExtEditLaunch()          {}
+  void run();
+  inline void setFile(QString cmd) {cmdline = cmd;}
+private:
+  void doIt();
+};
+
+void ExtEditLaunch::doIt() {
+   signal(SIGCHLD, SIG_IGN); // This isn't used anywhere else so
+                             // it should be safe to do this here.
+                             // I dont' see how we can cleanly wait
+                             // on all possible childs in this app so
+                             // I use this hack instead.  Another
+                             // alternative is to fork() twice, recursively,
+                             // but that is slower.
+   system((const char *)cmdline);
+}
+
+void ExtEditLaunch::run() {
+  signal(SIGCHLD, SIG_IGN);  // see comment above.
+
+  if (!fork()) {
+     doIt();
+     exit(0);
+  }
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+
+//-----------------------------------------------------------------------------
+void KMSettings::slotSigModify()
+{
+  struct stat sb;
+  int rc = stat((const char *)sigEdit->text(), &sb);
+
+  // verify: is valid file?
+  if (!rc && (S_ISREG(sb.st_mode) || 
+              S_ISCHR(sb.st_mode) ||
+              S_ISLNK(sb.st_mode)   )) {
+    // run external editor
+    QString cmdline(extEditorEdit->text());
+    if (cmdline.length() == 0)
+       cmdline = DEFAULT_EDITOR_STR;
+    QString fileName = "\"" + sigEdit->text() + "\"";
+    ExtEditLaunch kl(cmdline.replace(QRegExp("\\%f"), fileName));
+    kl.run();
+    
+  } else {
+    if (rc == -1 || errno == ENOENT) {
+      // Create the file and then edit
+      if ((sigEdit->text()).length() > 0 && 
+         (rc = creat((const char *)sigEdit->text(), S_IREAD|S_IWRITE)) != -1) {
+        close(rc);    // we don't need the fd anymore
+
+        // run external editor
+        QString cmdline(extEditorEdit->text());
+        if (cmdline.length() == 0)
+           cmdline = DEFAULT_EDITOR_STR;
+        QString fileName = "\"" + sigEdit->text() + "\"";
+        ExtEditLaunch kl(cmdline.replace(QRegExp("\\%f"), fileName));
+        kl.run();
+      } else {
+        // message box: permission denied
+        QMessageBox::warning(this, i18n("Error Opening Signature"),
+                                   i18n("Error creating new signature."),
+                                   i18n("Ok"));
+        return;
+      }
+    } else {
+      // message box: file no good
+      QMessageBox::warning(this, i18n("Error Opening Signature"),
+                                 i18n("File is invalid or permission denied."),
+                                 i18n("Ok"));
+      return;
+    }
+  }
+
+  
+}
 
 //-----------------------------------------------------------------------------
 void KMSettings::accountSelected(int,int)
@@ -998,6 +1136,8 @@ void KMSettings::doApply()
   config->writeEntry("first-start", false);
   config->writeEntry("sendOnCheck",sendOnCheck->isChecked());
   config->writeEntry("send-receipts", sendReceipts->isChecked());
+  config->writeEntry("external-editor", extEditorEdit->text());
+  config->writeEntry("use-external-editor", useExternalEditor->isChecked());
 
   //-----
   config->sync();
@@ -1112,6 +1252,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mChkInterval = new QCheckBox(i18n("Enable interval Mail checking"), this);
   mChkInterval->setMinimumSize(mChkInterval->sizeHint());
   mChkInterval->setChecked(mAcct->checkInterval() > 0);
+  connect(mChkInterval,SIGNAL(clicked()),SLOT(slotIntervalChange()));
   grid->addMultiCellWidget(mChkInterval, 10, 10, 1, 2);
 
   mChkExclude = new QCheckBox(i18n("Exclude from \"Check Mail\""), this);
@@ -1243,7 +1384,10 @@ void KMAccountSettings::accept()
 //-----------------------------------------------------------------------------
 void KMAccountSettings::slotIntervalChange()
 {
-   if (mChkInterval->isChecked())
+  if (mChkInterval->isChecked()) {
+      int _ChkInt = atoi(mChkInt->text());
+      if (_ChkInt < 1)
+         mChkInt->setText(QString("5"));      
       mChkInt->setEnabled(true);
-   else mChkInt->setEnabled(false);
+  } else mChkInt->setEnabled(false);
 }
