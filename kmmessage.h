@@ -106,6 +106,7 @@ public:
   /** Get or set the 'Date' header field */
   virtual const QString dateStr(void) const;
   virtual const QString dateShortStr(void) const;
+  virtual const QString dateIsoStr(void) const;
   virtual time_t date(void) const;
   virtual void setDate(const QString& str);
   virtual void setDate(time_t aUnixTime);

@@ -982,7 +982,6 @@ const QString KMMessage::dateShortStr(void) const
 
   if (!header.HasDate()) return "";
   unixTime = header.Date().AsUnixTime();
-
   
   result = ctime(&unixTime);
   
@@ -990,6 +989,21 @@ const QString KMMessage::dateShortStr(void) const
     result.truncate(result.length()-1);
 
   return result;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMessage::dateIsoStr(void) const
+{
+  DwHeaders& header = mMsg->Headers();
+  time_t unixTime;
+
+  if (!header.HasDate()) return "";
+  unixTime = header.Date().AsUnixTime();
+  
+  char cstr[64];
+  strftime(cstr, 63, "%Y-%m-%d %H:%M:%S", localtime(&unixTime)); 
+  return QString(cstr);
 }
 
 

@@ -1,5 +1,4 @@
 // kmfldsearch.cpp
-// TODO: really sort by date, not by the string that shows the date
 // TODO: Add search in subfolder checkbox
 // TODO: Use msgIdMD5 in MSGID_COLUMN
 
@@ -23,6 +22,7 @@
 #include <kapp.h>
 #include <kbuttonbox.h>
 #include <qlistview.h>
+#include <qheader.h>
 
 //-----------------------------------------------------------------------------
 KMFldSearch::KMFldSearch(KMMainWin* w, const char* name, 
@@ -74,6 +74,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   */
   mLbxMatches->setSorting(2);
   mLbxMatches->setShowSortIndicator(true);
+  mLbxMatches->setAllColumnsShowFocus(true);
   mLbxMatches->addColumn(i18n("Subject"), 150);
   mLbxMatches->addColumn(i18n("Sender"), 120);
   mLbxMatches->addColumn(i18n("Date"), 120);
@@ -82,16 +83,17 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 
 #define MSGID_COLUMN 4
   //TODO: Use msgIDMD5, and create KMFolder::findIdMD5(QString) method
-  mLbxMatches->addColumn("");
+  mLbxMatches->addColumn("");		// should be hidden
+  mLbxMatches->setColumnWidthMode( MSGID_COLUMN, QListView::Manual );
+  mLbxMatches->header()->setResizeEnabled(false, MSGID_COLUMN);
   mLbxMatches->setColumnWidth( MSGID_COLUMN, 0 );
 
 #define FOLDERID_COLUMN 5
-  mLbxMatches->addColumn("");
+  mLbxMatches->addColumn("");		// should be hidden
+  mLbxMatches->setColumnWidthMode( FOLDERID_COLUMN, QListView::Manual );
+  mLbxMatches->header()->setResizeEnabled(false, FOLDERID_COLUMN);
   mLbxMatches->setColumnWidth( FOLDERID_COLUMN, 0 );
 
-  mLbxMatches->setMinimumSize(300, 100);
-  mLbxMatches->setMaximumSize(2048, 2048);
-  mLbxMatches->resize(300, 400);
   connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
 	  this, SLOT(slotShowMsg(QListViewItem *)));
   //mLbxMatches->readConfig();
@@ -121,7 +123,6 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mGrid->setRowStretch(mNumRules+3, 0);
 
   mGrid->activate();
-
   resize(sizeHint());
 }
 
@@ -144,7 +145,7 @@ QComboBox* KMFldSearch::createFolderCombo(const QString curFolder)
  kernel->folderMgr()->createFolderList( &str, &folders );
  cbx->setFixedHeight(cbx->sizeHint().height());
  
- cbx->insertItem("Search all folders");
+ cbx->insertItem(i18n("<Search all folders>"));
  QStringList::Iterator st;
  int i = 1;
  for( st = str.begin(); st != str.end(); ++st, ++i) {
@@ -243,7 +244,7 @@ void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
       (void)new QListViewItem(mLbxMatches,
 			      msg->subject(), 
 			      msg->from(),
-			      msg->dateShortStr(),
+			      msg->dateIsoStr(),
 			      aFld->name(),
 			      QString("%1").arg(i),
 			      QString("%1").arg(fldNum)
@@ -266,7 +267,7 @@ void KMFldSearch::searchInFolder(KMFolder* aFld, int fldNum)
   updStatus();
 
   aFld->close();
-  mBtnSearch->setText("Search");
+  mBtnSearch->setText(i18n("Search"));
 }
 
 
