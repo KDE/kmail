@@ -21,6 +21,7 @@
 #define protected public
 #include <mimelib/body.h>
 #undef protected
+#include <mimelib/field.h>
 
 #include <mimelib/mimepp.h>
 #include <qregexp.h>
@@ -215,7 +216,7 @@ void KMMessage::setStatusFields(void)
 }
 
 //----------------------------------------------------------------------------
-const QString KMMessage::headerAsString(void)
+const QString KMMessage::headerAsString(void) const
 {
   DwHeaders& header = mMsg->Headers();
   if(header.AsString() != "")
@@ -335,16 +336,17 @@ const QString KMMessage::asQuotedString(const QString aHeaderStr,
   {
      Kpgp* pgp = Kpgp::getKpgp();
      assert(pgp != NULL);
-     if ( pgp->setMessage(bodyDecoded()) ) {
-	 if( pgp->isEncrypted() )
-	     pgp->decrypt();
-	 result = pgp->message();
+     result = bodyDecoded();
+     pgp->setMessage(result);
+     if(pgp->isEncrypted())
+     {
+       pgp->decrypt();
+       result = QString(pgp->message()).stripWhiteSpace();
      } else {
-	 result = bodyDecoded();
+       result = result.stripWhiteSpace();
      }
-     result = result.stripWhiteSpace();
-     result.replace(reNL,nlIndentStr);
-     result += '\n';
+     
+     result.replace(reNL,nlIndentStr) + '\n';
   }
   else
   {
@@ -768,7 +770,7 @@ void KMMessage::setFrom(const QString aStr)
 //-----------------------------------------------------------------------------
 const QString KMMessage::subject(void) const
 {
-  return headerField("Subject");
+  return headerField("Subject").simplifyWhiteSpace();
 }
 
 
@@ -827,13 +829,13 @@ const QStrList KMMessage::headerAddrField(const QString aName) const
 const QString KMMessage::headerField(const QString aName) const
 {
   DwHeaders& header = mMsg->Headers();
+  DwField* field;
 
-  if (aName.isEmpty())
+  if (aName.isEmpty() || !(field = header.FindField((const char*)aName)))
     result = "";
   else 
     result = decodeRFC1522String(header.FieldBody((const char*)aName).
-                                 AsString().c_str());
-  
+                    AsString().c_str());  
   return result;
 }
 

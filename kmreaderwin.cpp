@@ -50,10 +50,24 @@
 #include <klocale.h>  // for access and getpid
 //--- Sven's save attachments to /tmp end ---
 
+// Do the tmp stuff correctly - thanks to Harri Porten for
+// reminding me (sven)
+
+#ifdef HAVE_PATHS_H
+#include <paths.h>
+#endif
+
+#ifndef KMAIL_TMP
+// a '&' as first char in _PATH_TMP will be replaced with kapp->localkdedir()
+#define KMAIL_TMP "&/share/apps/kmail/tmp"
+#endif
+
 #ifdef KRN
 extern KApplication *app;
 extern KBusyPtr *kbp;
 #endif
+
+QString KMReaderWin::mAttachDir;
 
 //-----------------------------------------------------------------------------
 KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
@@ -67,6 +81,8 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 
   initHtmlWidget();
   readConfig();
+
+  if (mAttachDir.isNull()) makeAttachDir();
 }
 
 
@@ -74,6 +90,31 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
 KMReaderWin::~KMReaderWin()
 {
   if (mAutoDelete) delete mMsg;
+}
+
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::makeAttachDir(void)
+{
+  QString str;
+  bool ok = true;
+
+  str = KMAIL_TMP;
+  if (str[0] == '&') str = app->localkdedir() + str.mid(1,1023);
+  mAttachDir.sprintf("%s/kmail%d", (const char*)str, getpid());
+
+  if (access(mAttachDir, W_OK) != 0) // Not there or not writable
+  {
+    if (access(str, W_OK) != 0 &&
+        (mkdir(str, 0) != 0 || chmod(str, S_IRWXU) != 0))
+       ok=false; //failed create
+    else if (mkdir(mAttachDir, 0) != 0 || chmod(mAttachDir, S_IRWXU) != 0)
+       ok=false; //failed create
+  }
+
+  if (!ok) warning(i18n("Failed to create temporary "
+                        "attachment directory '%s': %s"), 
+                   (const char*)mAttachDir, strerror(errno));
 }
 
 
@@ -86,7 +127,7 @@ void KMReaderWin::readConfig(void)
   mAtmInline = config->readNumEntry("attach-inline", 100);
   mHeaderStyle = (HeaderStyle)config->readNumEntry("hdr-style", HdrFancy);
   mAttachmentStyle = (AttachmentStyle)config->readNumEntry("attmnt-style",
-							SmartAttmnt);
+                                                        SmartAttmnt);
 #ifdef KRN
   config->setGroup("ArticleListOptions");
 #endif
@@ -99,14 +140,36 @@ void KMReaderWin::readConfig(void)
   mViewer->setDefaultTextColors(config->readColorEntry("ForegroundColor",&c1)
                                 ,config->readColorEntry("LinkColor",&c2)
                                 ,config->readColorEntry("FollowedColor",&c3));
+  //moved to #ifdef KRN where it was before (sven):
   //mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
 
 #ifndef KRN
   config->setGroup("Fonts");
   mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
   mViewer->setStandardFont(kstrToFont(mBodyFont).family());
+  // --- sven's get them font sizes right! start ---
+  int i, fntSize=0, diff;
+  fntSize = kstrToFont(mBodyFont).pointSize();
+  //debug ("Fontsize: %d", fntSize);
+
+  int fontsizes[7];
+  mViewer->resetFontSizes();
+  mViewer->getFontSizes(fontsizes);
+  diff= fntSize - fontsizes[3];
+  if (fontsizes[0]+diff > 0)
+  {
+    for (i=0;i<7; i++)
+    {
+      //debug ("Old fontsize #%d: %d", i, fontsizes[i]);
+      fontsizes[i]+=diff;
+      //debug ("New fontsize #%d: %d", i, fontsizes[i]);
+    }
+  }
+  mViewer->setFontSizes(fontsizes);
+  // --- sven's get them font sizes right! end ---
   //mViewer->setFixedFont(mFixedFont);
 #else
+  mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
   mViewer->setStandardFont(config->readEntry("StandardFont","helvetica"));
   mViewer->setFixedFont(config->readEntry("FixedFont","courier"));
 #endif
@@ -144,18 +207,18 @@ void KMReaderWin::initHtmlWidget(void)
   mViewer->setDefaultTextColor(app->textColor, app->);
   */
   connect(mViewer,SIGNAL(URLSelected(const char *,int)),this,
-	  SLOT(slotUrlOpen(const char *,int)));
+          SLOT(slotUrlOpen(const char *,int)));
   connect(mViewer,SIGNAL(onURL(const char *)),this,
-	  SLOT(slotUrlOn(const char *)));
+          SLOT(slotUrlOn(const char *)));
   connect(mViewer,SIGNAL(popupMenu(const char *, const QPoint &)),  
-	  SLOT(slotUrlPopup(const char *, const QPoint &)));
+          SLOT(slotUrlPopup(const char *, const QPoint &)));
   connect(mViewer,SIGNAL(textSelected(bool)), 
-	  SLOT(slotTextSelected(bool)));
+          SLOT(slotTextSelected(bool)));
 
   mSbVert = new QScrollBar(0, 110, 12, height()-110, 0, 
-			   QScrollBar::Vertical, this);
+                           QScrollBar::Vertical, this);
   mSbHorz = new QScrollBar(0, 0, 24, width()-32, 0,
-			   QScrollBar::Horizontal, this);	
+                           QScrollBar::Horizontal, this);       
   connect(mViewer, SIGNAL(scrollVert(int)), SLOT(slotScrollVert(int)));
   connect(mViewer, SIGNAL(scrollHorz(int)), SLOT(slotScrollHorz(int)));
   connect(mSbVert, SIGNAL(valueChanged(int)), mViewer, SLOT(slotScrollVert(int)));
@@ -169,7 +232,7 @@ void KMReaderWin::initHtmlWidget(void)
 void KMReaderWin::setBodyFont(const QString aFont)
 {
   mBodyFont = aFont.copy();
-  update();
+  update(true);
 }
 
 
@@ -177,7 +240,7 @@ void KMReaderWin::setBodyFont(const QString aFont)
 void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 {
   mHeaderStyle = aHeaderStyle;
-  update();
+  update(true);
 }
 
 
@@ -185,20 +248,24 @@ void KMReaderWin::setHeaderStyle(KMReaderWin::HeaderStyle aHeaderStyle)
 void KMReaderWin::setAttachmentStyle(int aAttachmentStyle)
 {  
   mAttachmentStyle = (AttachmentStyle)aAttachmentStyle;
-  update();
+  update(true);
 }
 
 //-----------------------------------------------------------------------------
 void KMReaderWin::setInlineAttach(int aAtmInline)
 {
   mAtmInline = aAtmInline;
-  update();
+  update(true);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMReaderWin::setMsg(KMMessage* aMsg)
+void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
 {
+  // If not forced and there is aMsg and aMsg is same as mMsg then return
+  if (!force && aMsg && mMsg == aMsg)
+    return;
+
   mMsg = aMsg;
 
   mViewer->stopParser();
@@ -244,12 +311,43 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
   QString type, subtype, str, contDisp;
   bool asIcon = false;
 
+  inlineImage=false;
+  
   assert(aMsg!=NULL);
   writeMsgHeader();
 
   numParts = aMsg->numBodyParts();
   if (numParts > 0)
   {
+    // ---sven: handle multipart/alternative start ---
+    // This is for multipart/alternative messages WITHOUT attachments
+    // main header has type=multipart/alternative and one attachment is
+    // text/html
+    type = aMsg->typeStr();
+    if (type.find("multipart/alternative") != -1 && numParts == 2)
+    {
+      debug("Alternative message, type: %s",type.data());
+      //Now: Only two attachments one of them is html
+      for (i=0; i<2; i++)                   // count parts...
+      {
+        aMsg->bodyPart(i, &msgPart);        // set part...
+        subtype = msgPart.subtypeStr();     // get subtype...
+        if (stricmp(subtype, "html")==0)    // is it html?
+        {                                   // yes...
+          str = QCString(msgPart.bodyDecoded());      // decode it...
+          mViewer->write(str);              // write it...
+          return;                           // return, finshed.
+        }                                   // wasn't html ignore.
+      }                                     // end for.
+      // if we are here we didnt find any html part. Handle it normaly then
+    }
+    // This works only for alternative msgs without attachments. Alternative
+    // messages with attachments are broken with or without this. No need
+    // to bother with strib </body> or </html> here, because if any part
+    // follows this will not be shown correctly. You'll still be able to read the
+    // main message and deal with attachments. Nothing I can do now :-(
+    // ---sven: handle multipart/alternative end ---
+    
     for (i=0; i<numParts; i++)
     {
       aMsg->bodyPart(i, &msgPart);
@@ -264,11 +362,11 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
       else switch (mAttachmentStyle)
       {
       case IconicAttmnt: 
-	asIcon=TRUE; break;
+        asIcon=TRUE; break;
       case InlineAttmnt:
-	asIcon=FALSE; break;
+        asIcon=FALSE; break;
       case SmartAttmnt:
-	asIcon=(contDisp.find("inline")<0);
+        asIcon=(contDisp.find("inline")<0);
       }
 
       if (!asIcon)
@@ -278,14 +376,38 @@ void KMReaderWin::parseMsg(KMMessage* aMsg)
 	  str = QCString(msgPart.bodyDecoded());
 	  if (i>0) mViewer->write("<BR><HR><BR>");
 
-	  if (stricmp(subtype, "html")==0) mViewer->write(str);
-	  else writeBodyStr(str);
+	  if (stricmp(subtype, "html")==0) 
+          {
+            // ---Sven's strip </BODY> and </HTML> from end of attachment start-
+            // We must fo this, or else we will see only 1st inlined html attachment
+            // It is IMHO enough to search only for </BODY> and put \0 there.
+            int i;
+            i = str.findRev("</body>", -1, false); //case insensitive
+            if (i>0)
+              str.truncate(i);
+            else // just in case - search for </html>
+            {
+              i = str.findRev("</html>", -1, false); //case insensitive
+              if (i>0) str.truncate(i);
+            }
+            // ---Sven's strip </BODY> and </HTML> from end of attachment end-
+            mViewer->write(str);
+	  }
+          else writeBodyStr(str);
 	}
+        // ---Sven's view smart or inline image attachments in kmail start---
+        else if (stricmp(type, "image")==0)
+        {
+          inlineImage=true;
+          writePartIcon(&msgPart, i);
+          inlineImage=false;
+        }
+        // ---Sven's view smart or inline image attachments in kmail end---
 	else asIcon = TRUE;
       }
       if (asIcon)
       {
-	writePartIcon(&msgPart, i);
+        writePartIcon(&msgPart, i);
       }
     }
   }
@@ -305,24 +427,24 @@ void KMReaderWin::writeMsgHeader(void)
   {
   case HdrBrief:
     mViewer->write("<FONT SIZE=+1><B>" + strToHtml(mMsg->subject()) + 
-		   "</B></FONT>&nbsp; (" +
-		   KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
+                   "</B></FONT>&nbsp; (" +
+                   KMMessage::emailAddrAsAnchor(mMsg->from(),TRUE) + ", ");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
+                     KMMessage::emailAddrAsAnchor(mMsg->cc(),TRUE) + ", ");
     mViewer->write(strToHtml(mMsg->dateShortStr()) + ")<BR>\n");
     break;
 
   case HdrStandard:
     mViewer->write("<FONT SIZE=+1><B>" +
-		   strToHtml(mMsg->subject()) + "</B></FONT><BR>\n");
+                   strToHtml(mMsg->subject()) + "</B></FONT><BR>\n");
     mViewer->write(i18n("From: ") +
-		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>\n");
+                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>\n");
     mViewer->write(i18n("To: ") +
                    KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>\n");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>\n");
+                     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>\n");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(i18n("References: ") +
@@ -333,17 +455,17 @@ void KMReaderWin::writeMsgHeader(void)
 
   case HdrFancy:
     mViewer->write(QString("<TABLE><TR><TD><IMG SRC=") + mPicsDir +
-		   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+2>");
+                   "kdelogo.xpm></TD><TD HSPACE=50><B><FONT SIZE=+2>");
     mViewer->write(strToHtml(mMsg->subject()) + "</FONT></B><BR>");
     mViewer->write(i18n("From: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>\n");
+                   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>\n");
     mViewer->write(i18n("To: ")+
-		   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>\n");
+                   KMMessage::emailAddrAsAnchor(mMsg->to(),FALSE) + "<BR>\n");
     if (!mMsg->cc().isEmpty())
       mViewer->write(i18n("Cc: ")+
-		     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>\n");
+                     KMMessage::emailAddrAsAnchor(mMsg->cc(),FALSE) + "<BR>\n");
     mViewer->write(i18n("Date: ")+
-		   strToHtml(mMsg->dateStr()) + "<BR>\n");
+                   strToHtml(mMsg->dateStr()) + "<BR>\n");
 #ifdef KRN
     if (!mMsg->references().isEmpty())
         mViewer->write(i18n("References: ") +
@@ -354,7 +476,7 @@ void KMReaderWin::writeMsgHeader(void)
 
   case HdrLong:
     mViewer->write("<FONT SIZE=+1><B>" +
-		   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
+                   strToHtml(mMsg->subject()) + "</B></FONT><BR>");
     mViewer->write(i18n("Date: ")+strToHtml(mMsg->dateStr())+"<BR>");
     mViewer->write(i18n("From: ")+
 		   KMMessage::emailAddrAsAnchor(mMsg->from(),FALSE) + "<BR>");
@@ -529,21 +651,13 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   label = fileName;
 
 //--- Sven's save attachments to /tmp start ---
-  QString fname("/tmp/kmail");
-  fname.sprintf ("/tmp/kmail%d", getpid());
+  QString fname;
   bool ok = true;
 
+  fname.sprintf("%s/part%d", (const char*)mAttachDir, aPartNum+1);
   if (access(fname.data(), W_OK) != 0) // Not there or not writable
     if (mkdir(fname.data(), 0) != 0 || chmod (fname.data(), S_IRWXU) != 0)
-      ok=false; //failed create
-
-  if (ok)
-  {
-    fname.sprintf("%s/part%d", fname.data(), aPartNum+1);
-    if (access(fname.data(), W_OK) != 0) // Not there or not writable
-      if (mkdir(fname.data(), 0) != 0 || chmod (fname.data(), S_IRWXU) != 0)
-	ok = false; //failed create
-  }
+      ok = false; //failed create
 
   if (ok)
   {
@@ -573,8 +687,12 @@ void KMReaderWin::writePartIcon(KMMessagePart* aMsgPart, int aPartNum)
   else
 //--- Sven's save attachments to /tmp end ---
   href.sprintf("part://%i", aPartNum+1);
-  
-  iconName = aMsgPart->iconName();
+
+  // sven: for viewing images inline
+  if (inlineImage)
+    iconName = href;
+  else
+    iconName = aMsgPart->iconName();
   if (iconName.left(11)=="unknown.xpm")
   {
     aMsgPart->magicSetType();
@@ -616,12 +734,16 @@ const QString KMReaderWin::strToHtml(const QString aStr, bool aDecodeQP,
     ch = *pos;
     if (aPreserveBlanks)
     {
-      if (ch==' ' && pos[1]==' ')
+      if (ch==' ')
       {
-	HTML_ADD(" &nbsp;", 7);
-	for (pos++, x++; pos[1]==' '; pos++, x++)
-	  HTML_ADD(" &nbsp;", 7);
-	continue;
+        while (*pos==' ')
+        {
+          HTML_ADD("&nbsp;", 6);
+          pos++, x++;
+        }
+        pos--, x--;
+
+        continue;
       }
       else if (ch=='\t')
       {
@@ -712,23 +834,21 @@ void KMReaderWin::printMsg(void)
 //-----------------------------------------------------------------------------
 int KMReaderWin::msgPartFromUrl(const char* aUrl)
 {
-  //--- Sven's save attachments to /tmp start ---
+  QString url;
+
   if (!aUrl || !mMsg) return -1;
   
-  QString url;
-  url.sprintf("file:/tmp/kmail%d/part", getpid());
+  url.sprintf("file:%s/part", (const char*)mAttachDir);
   int s = url.length();
-  if (strncmp(aUrl, url.data(), s) == 0)
+  if (strncmp(aUrl, url, s) == 0)
   {
     url = aUrl;
-    int i = url.findRev('/');
-    url = url.mid(s,i-s);
+    int i = url.find('/', s);
+    url = url.mid(s, i-s);
     //debug ("Url num = %s", url.data());
     return atoi(url.data());
   }
-  //--- Sven's save attachments to /tmp end ---
-  if (!aUrl || !mMsg || strncmp(aUrl,"part://",7)) return -1;
-  return (aUrl ? atoi(aUrl+7) : 0);
+  return -1;
 }
 
 
@@ -834,8 +954,11 @@ void KMReaderWin::slotAtmView()
 {
   QString str, pname;
   KMMessagePart msgPart;
-  QMultiLineEdit* edt = new QMultiLineEdit;
-
+  // ---Sven's view text, html and image attachments in html widget start ---
+  // Sven commented out
+  //QMultiLineEdit* edt = new QMultiLineEdit;
+  // ---Sven's view text, html and image attachments in html widget end ---
+  
   mMsg->bodyPart(mAtmCurrent, &msgPart);
   pname = msgPart.fileName();
   if (pname.isEmpty()) pname=msgPart.name();
@@ -849,13 +972,53 @@ void KMReaderWin::slotAtmView()
   }
 
   kbp->busy();
-  str = QCString(msgPart.bodyDecoded());
+  // ---Sven's view text, html and image attachments in html widget start ---
+  // ***start commenting out old stuff
+  //  str = QCString(msgPart.bodyDecoded());
 
-  edt->setCaption(i18n("View Attachment: ") + pname);
-  edt->insertLine(str);
-  edt->setReadOnly(TRUE);
-  edt->show();
+  //edt->setCaption(i18n("View Attachment: ") + pname);
+  //edt->insertLine(str);
+  //edt->setReadOnly(TRUE);
+  //edt->show();
+  // *** end commenting out old stuff
+  {
 
+    KMReaderWin* win = new KMReaderWin; //new reader
+    
+    if (stricmp(msgPart.typeStr(), "text")==0)
+    {
+      win->mViewer->begin(mPicsDir);
+      win->mViewer->write("<HTML><BODY>");
+      QString str = msgPart.bodyDecoded();
+      if (stricmp(msgPart.subtypeStr(), "html")==0)
+        win->mViewer->write(str);
+      else  //plain text
+        win->writeBodyStr(str);
+      win->mViewer->write("</BODY></HTML>");
+      win->mViewer->end();
+      win->mViewer->parse();
+      win->setCaption(i18n("View Attachment: ") + pname);
+      win->show();
+    }
+    else if (stricmp(msgPart.typeStr(), "image")==0)
+    {
+      //image
+      QString linkName;
+      // Attachment is saved already; this is the file:
+      linkName.sprintf ("<img src=\"file:%s/part%d/%s\" border=0>",
+                        (const char*)mAttachDir, mAtmCurrent+1,
+                        pname.data()); // set linkname
+      win->mViewer->begin(mPicsDir);
+      win->mViewer->write("<HTML><BODY>");
+      win->mViewer->write(linkName.data());
+      win->mViewer->write("</BODY></HTML>");
+      win->mViewer->end();
+      win->mViewer->parse();
+      win->setCaption(i18n("View Attachment: ") + pname);
+      win->show();
+    }
+  }
+  // ---Sven's view text, html and image attachments in html widget end ---
   kbp->idle();
 }
 
@@ -882,7 +1045,8 @@ void KMReaderWin::slotAtmOpen()
   if (pname.isEmpty()) pname="unnamed";
   //--- Sven's save attachments to /tmp start ---
   // Sven added:
-  fileName.sprintf ("/tmp/kmail%d/part%d/%s", getpid(), mAtmCurrent+1, pname.data());
+  fileName.sprintf ("%s/part%d/%s", (const char*)mAttachDir, mAtmCurrent+1,
+                    pname.data());
   // Sven commented out:
   //tmpName = tempnam(NULL, NULL);
   //if (!tmpName)

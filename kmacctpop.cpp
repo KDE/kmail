@@ -168,12 +168,14 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   QString response, status;
   int num, size;	// number of all msgs / size of all msgs
   int id, i;		// id of message to read
+  int tmout;
   int dummy;
   char dummyStr[32];
   // int replyCode; // ReplyCode need from User & Passwd call.
   KMMessage* msg;
   gotMsgs = FALSE;
   bool doFetchMsg;
+  bool addedOk;   //Flag if msg was delivered succesfully
 
   wid->prepareTransmission(host(), KMIOStatus::RETRIEVE);
 
@@ -209,9 +211,14 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
   // workaround but still is no good. If msgs are too big in size
   // we will get a timeout.
   client.SetReceiveTimeout(40);
-	
-  while (id <= num)
+
+  addedOk = true;
+ 
+  // do while there are mesages to take and last msg wass added succesfully
+  while (id <= num && addedOk)
   {
+    client.SetReceiveTimeout(40);
+
     if(wid->abortRequested()) {
       client.Quit();
       return gotMsgs;
@@ -250,18 +257,24 @@ bool KMAcctPop::doProcessNewMail(KMIOStatus *wid)
 
     if (doFetchMsg)
     {
+      // set timeout depending on size
+      tmout = size >> 8;
+      if (tmout < 30) tmout = 30;
+      client.SetReceiveTimeout(tmout);
+
       if (client.Retr(id) != '+')
-	return popError("RETR", client);
+      return popError("RETR", client);
       response = client.MultiLineResponse().c_str();
 
       msg = new KMMessage;
       msg->fromString(response,TRUE);
       if (mRetrieveAll || msg->status()!=KMMsgStatusOld)
-	processNewMsg(msg);
+      addedOk = processNewMsg(msg); //added ok? Error displayed if not.
       else delete msg;
     }
 
-    if(!mLeaveOnServer)
+    // If we should delete from server _and_ we added ok then delete it
+    if(!mLeaveOnServer && addedOk)
     {
       if(client.Dele(id) != '+')
 	return popError("DELE",client);
@@ -358,7 +371,7 @@ void KMAcctPop::writeConfig(KConfig& config)
 
 
 //-----------------------------------------------------------------------------
-const QString KMAcctPop::encryptStr(const QString aStr)
+const QString KMAcctPop::encryptStr(const QString aStr) const
 {
   unsigned int i, val;
   unsigned int len = aStr.length();
@@ -378,11 +391,17 @@ const QString KMAcctPop::encryptStr(const QString aStr)
 
 
 //-----------------------------------------------------------------------------
-const QString KMAcctPop::decryptStr(const QString aStr)
+const QString KMAcctPop::decryptStr(const QString aStr) const
 {
   return encryptStr(aStr);
 }
 
+
+//-----------------------------------------------------------------------------
+void KMAcctPop::setStorePasswd(bool b)
+{
+  mStorePasswd = b;
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctPop::setLeaveOnServer(bool b)
@@ -403,7 +422,11 @@ void KMAcctPop::setLogin(const QString& aLogin)
 {
   mLogin = aLogin;
 }
-
+//-----------------------------------------------------------------------------
+const QString KMAcctPop::passwd(void) const
+{
+  return decryptStr(mPasswd);
+}
 
 //-----------------------------------------------------------------------------
 void KMAcctPop::setPasswd(const QString& aPasswd, bool aStoreInConfig)

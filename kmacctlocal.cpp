@@ -68,10 +68,11 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
   long i;
   int rc;
   KMMessage* msg;
+  bool addedOk;
 
   if (mFolder==NULL) return FALSE;
 
-  printf("processNewMail: %s\n", (const char*)location());
+  debug("processNewMail: %s", (const char*)location());
 
   statusWdg->prepareTransmission(location(), KMIOStatus::RETRIEVE);
   app->processEvents();
@@ -93,8 +94,13 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
 
   num = mailFolder.count();
 
+  addedOk = true;
+
   for (i=0; i<num; i++)
   {
+
+    if (!addedOk) break;
+
     //if(statusWdg->abortRequested())
     //break;
     statusWdg->updateProgressBar(i,num);
@@ -102,15 +108,19 @@ bool KMAcctLocal::processNewMail(KMIOStatus *statusWdg)
     if (msg)
     {
       msg->setStatus(msg->headerField("Status"), msg->headerField("X-Status"));
-      processNewMsg(msg);
+      addedOk = processNewMsg(msg);
     }
     app->processEvents();
   }
 
+  if (addedOk)
+  {
   rc = mailFolder.expunge();
   if (rc)
     warning(i18n("Cannot remove mail from\nmailbox `%s':\n%s"),
 	    (const char*)mailFolder.location(), strerror(rc));
+  }
+  // else warning is written already
 
   mailFolder.close();
   mFolder->close();

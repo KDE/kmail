@@ -67,8 +67,8 @@ protected:
 
   /** Does filtering and storing in a folder for the given message.
     Shall be called from within processNewMail() to process the new
-    messages. */
-  virtual void processNewMsg(KMMessage* msg);
+    messages. Returns false if failed to add new message. */
+  virtual bool processNewMsg(KMMessage* msg);
 
   /** Send receipt of message back to sender (confirming delivery). */
   virtual void sendReceipt(KMMessage* msg, const QString receiptTo) const;
@@ -83,6 +83,7 @@ protected:
   KMAcctFolder* mFolder;
   QTimer *mTimer;
   int mInterval;
+  bool mCheckingMail;
 };
 
 

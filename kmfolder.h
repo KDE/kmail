@@ -107,7 +107,11 @@ public:
 
   /** Number of new or unread messages in this folder. 
     Rather slow (count loop) */
-  virtual long countUnread(void) const;
+  virtual long countUnread(void);
+  // Called by KMMsgBase::setStatus when status of a message has changed
+  // required to keep the number unread messages variable current.
+  virtual void msgStatusChanged( const KMMsgStatus oldStatus,
+    const KMMsgStatus newStatus);
 
   /** Open folder for access. Does not work if the parent is not set.
     Does nothing if the folder is already opened. To reopen a folder
@@ -220,6 +224,8 @@ signals:
   /** Emmited to display a message somewhere in a status line. */
   void statusMsg(const QString&);
 
+ /** Emitted when number of unread messages has changed. */
+ void numUnreadMsgsChanged( KMFolder* );
 
 protected:
   /** Load message from file and store it at given index. Returns NULL
@@ -271,6 +277,7 @@ protected:
   QString mWhoField; // name of the field that is used for "From" in listbox
   bool mIsSystemFolder;
   KMAcctList* mAcctList;
+  long unreadMsgs; // number of unread messages, -1 if not yet set
 };
 
 #endif /*kmfolder_h*/

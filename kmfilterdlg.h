@@ -35,9 +35,10 @@ public:
   /** Apply changes in the edit fields to the current filter. */
   virtual void applyFilterChanges(void);
 
-  /** Methods for filter options, @see KMGFilterDlg */
+  /** Methods for filter options, @see KMGFilterDlg in kmfilteraction.h */
   virtual QPushButton* createDetailsButton(void);
   virtual QComboBox* createFolderCombo(const QString curFolder=QString::null);
+  virtual QLineEdit* createEdit(const QString txt=0);
 
 protected slots:
   void slotBtnUp();
@@ -78,6 +79,10 @@ protected:
   QComboBox   *mRuleFieldA, *mRuleFieldB;
   QLineEdit   *mRuleValueA, *mRuleValueB;
   QComboBox   *mRuleFuncA, *mRuleFuncB, *mRuleOp;
+
+private:
+  // ugly workaround against filter-up-down-move bug
+  bool updown_move_semaphore;
 };
 
 

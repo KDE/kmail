@@ -81,10 +81,8 @@ bool KMFilterMgr::process(KMMessage* msg)
   for (filter=first(); !stopIt && filter; filter=next())
   {
     if (!filter->matches(msg)) continue;
-#ifdef DEBUG
-    debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
-	  msg->subject().data());
-#endif
+    //    debug("KMFilterMgr: filter %s matches message %s", filter->name().data(),
+    //	  msg->subject().data());
     if (!filter->execActions(msg, stopIt)) stillOwner = FALSE;
   }
   return stillOwner;

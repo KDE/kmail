@@ -54,6 +54,7 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   QGridLayout *fgrid, *grid, *agrid;
   int h, w, i;
   QSize sz;
+  updown_move_semaphore = 1;
 
   initMetaObject();
 
@@ -80,26 +81,26 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
   w = sz.width();
   h = sz.height();
   mCbxHeight = h;
-  mRuleFuncA->setMinimumSize(40, h);
+  mRuleFuncA->setMinimumSize(110, h);
   mRuleFuncA->setMaximumSize(32767, h);
   mRuleFuncA->insertStrList(&sFilterFuncList);
   fgrid->addWidget(mRuleFuncA, 0, 1);
 
   mRuleFuncB = new QComboBox(false, this);
-  mRuleFuncB->setMinimumSize(40, h);
+  mRuleFuncB->setMinimumSize(110, h);
   mRuleFuncB->setMaximumSize(32767, h);
   mRuleFuncB->insertStrList(&sFilterFuncList);
   fgrid->addWidget(mRuleFuncB, 2, 1);
 
   mRuleFieldA = new QComboBox(true, this);
   mRuleFieldA->insertStrList(&sFilterFieldList);
-  mRuleFieldA->setMinimumSize(50, h);
+  mRuleFieldA->setMinimumSize(100, h);
   mRuleFieldA->setMaximumSize(32767, h);
   fgrid->addWidget(mRuleFieldA, 0, 0);
 
   mRuleFieldB = new QComboBox(true, this);
   mRuleFieldB->insertStrList(&sFilterFieldList);
-  mRuleFieldB->setMinimumSize(50, h);
+  mRuleFieldB->setMinimumSize(100, h);
   mRuleFieldB->setMaximumSize(32767, h);
   fgrid->addWidget(mRuleFieldB, 2, 0);
 
@@ -233,9 +234,10 @@ void KMFilterDlg::clear(void)
 //-----------------------------------------------------------------------------
 void KMFilterDlg::showFilter(KMFilter* aFilter)
 {
-  int i;
+  int i, w;
   KMFilterAction* action;
   QWidget* pwidg;
+  QSize sz;
 
   assert(aFilter!=NULL); // Important assert
   clear();
@@ -280,6 +282,11 @@ void KMFilterDlg::showFilter(KMFilter* aFilter)
       {
 	QPoint pos = mFaType[i]->pos();
 	pos.setX(pos.x() + mFaType[i]->width() + 4);
+        w = width() - pos.x();
+        if (w > 300) w = 300;
+        sz.setWidth(w);
+        sz.setHeight(pwidg->height());
+        pwidg->resize(sz);
 	pwidg->move(pos);
 	pwidg->show();
       }
@@ -297,7 +304,7 @@ void KMFilterDlg::applyFilterChanges(void)
   KMFilterAction* action;
   int i;
 
-  if (!mFilter) return;
+  if (!mFilter || !updown_move_semaphore) return;
 
   mFilter->ruleA().init(mRuleFieldA->currentText(), 
 			(KMFilterRule::Function)mRuleFuncA->currentItem(),
@@ -340,6 +347,15 @@ QPushButton* KMFilterDlg::createDetailsButton(void)
     mFaBtnDetails[mGridRow] = btn;
   }
   return btn;
+}
+
+//-----------------------------------------------------------------------------
+QLineEdit* KMFilterDlg::createEdit(const QString aTxt)
+{
+  QLineEdit* edt = new QLineEdit(this);
+
+  edt->setText(aTxt);
+  return edt;
 }
 
 
@@ -434,19 +450,21 @@ void KMFilterDlg::slotBtnUp()
   KMFilter* filter;
 
   if (idx < 1) return;
-
-  applyFilterChanges();
-  mFilter = NULL;
-
-  mFilterList->setSelected(idx, FALSE);
-  mFilterList->removeItem(idx);
+  updown_move_semaphore = 0;
 
   filter = filterMgr->take(idx);
   assert(filter != NULL);
   filterMgr->insert(idx-1, filter);
 
+  // This next line is to work around a QT 2.0 CVS bug
+  // If it is omitted the listbox is refreshed incorrectly
+  // and looks like it contains duplicate highlighted items
+  mFilterList->setCurrentItem(idx-1);
+  mFilterList->removeItem(idx);
   mFilterList->insertItem(filter->name(), idx-1);
   mFilterList->setCurrentItem(idx-1);
+
+  updown_move_semaphore = 1;
 }
 
 
@@ -458,17 +476,17 @@ void KMFilterDlg::slotBtnDown()
 
   if (idx < 0 || idx >= (int)mFilterList->count()-1) return;
 
-  applyFilterChanges();
-  mFilter = NULL;
+  updown_move_semaphore = 0;
 
   filter = filterMgr->take(idx);
   assert(filter != NULL);
   filterMgr->insert(idx+1, filter);
 
-  mFilterList->setSelected(idx, FALSE);
   mFilterList->removeItem(idx);
   mFilterList->insertItem(filter->name(), idx+1);
   mFilterList->setCurrentItem(idx+1);
+
+  updown_move_semaphore = 1;
 }
 
 
@@ -510,7 +528,12 @@ void KMFilterDlg::slotBtnDelete()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnOk()
 {
-  if (mFilter) applyFilterChanges();
+  if (mFilter) 
+  {
+    applyFilterChanges();
+    filterMgr->writeConfig();
+  }
+
   accept();
 }
 
@@ -518,6 +541,7 @@ void KMFilterDlg::slotBtnOk()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnCancel()
 {
+  filterMgr->readConfig();
   reject();
 }
 
@@ -525,6 +549,7 @@ void KMFilterDlg::slotBtnCancel()
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnHelp()
 {
+  app->invokeHTMLHelp( app->appName() + "/" + "index-3.html", "ss3.5" );
 }
 
 

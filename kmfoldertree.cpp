@@ -6,6 +6,8 @@
 #include <kapp.h>
 #include <kconfig.h>
 #include <kiconloader.h>
+#include <qtimer.h>
+#include <qpopupmenu.h>
 #include <drag.h>
 #include <klocale.h>
 #include <kglobal.h>
@@ -31,6 +33,8 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   initMetaObject();
 
+  mUpdateTimer = NULL;
+
   mDropZone = new KDNDDropZone(this, DndRawData);
   connect(mDropZone, SIGNAL(dropAction(KDNDDropZone*)),
 	  this, SLOT(doDropAction(KDNDDropZone*)));
@@ -39,6 +43,8 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 	  this, SLOT(doFolderSelected(int,int)));
   connect(folderMgr, SIGNAL(changed()),
 	  this, SLOT(doFolderListChanged()));
+ connect(this, SIGNAL(popupMenu(int,int)),
+          this, SLOT(slotRMB(int,int)));
 
   conf->setGroup("Geometry");
   width = conf->readNumEntry(name, 80);
@@ -73,9 +79,30 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   dict().insert("Tr", &pixTr);
 
   setAutoUpdate(TRUE);
+  updateUnreadAll( );
   reload();
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderTree::updateUnreadAll()
+{
+  KMFolderDir* fdir;
+  KMFolder* folder;
+  debug( "KMFolderTree::updateUnreadAll" );
+  bool upd = autoUpdate();
+  setAutoUpdate(FALSE);
+
+  fdir = &folderMgr->dir();
+  for (folder = (KMFolder*)fdir->first();
+    folder != NULL;
+    folder = (KMFolder*)fdir->next())
+  {
+    folder->open();
+    folder->countUnread();
+    folder->close();
+  }
+  setAutoUpdate(upd);
+}
 
 //-----------------------------------------------------------------------------
 KMFolderTree::~KMFolderTree()
@@ -88,6 +115,7 @@ KMFolderTree::~KMFolderTree()
   disconnect(folderMgr, SIGNAL(changed()), this, SLOT(doFolderListChanged()));
 
   if (mDropZone) delete mDropZone;
+  if (mUpdateTimer) delete mUpdateTimer;
 }
 
 
@@ -97,11 +125,16 @@ void KMFolderTree::reload(void)
   KMFolderDir* fdir;
   KMFolder* folder;
   QString str;
+  KMFolder* cur;
+  debug( "KMFolderTree::reload" );
   bool upd = autoUpdate();
 
   setAutoUpdate(FALSE);
 
   clear();
+  for (cur=(KMFolder*)mList.first(); cur; cur=(KMFolder*)mList.next())
+    disconnect(cur,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+      this,SLOT(refresh(KMFolder*)));
   mList.clear();
 
   fdir = &folderMgr->dir();
@@ -112,10 +145,53 @@ void KMFolderTree::reload(void)
   {
     inSort(folder);
   }
+  for (cur=(KMFolder*)mList.first(); cur; cur=(KMFolder*)mList.next())
+    connect(cur,SIGNAL(numUnreadMsgsChanged(KMFolder*)),
+        this,SLOT(refresh(KMFolder*)));
   setAutoUpdate(upd);
   if (upd) repaint();
 }
 
+//-----------------------------------------------------------------------------
+void KMFolderTree::refresh(KMFolder* aFolder)
+{
+  if (!mUpdateTimer)
+  {
+    mUpdateTimer = new QTimer(this);
+    connect(mUpdateTimer, SIGNAL(timeout()), this, SLOT(delayedUpdate()));
+  }
+  mUpdateTimer->changeInterval(200);
+}
+                                                               //-----------------------------------------------------------------------------
+void KMFolderTree::delayedUpdate()
+{
+  int i;
+  KMFolder* folder;
+  QString str;
+  bool upd = autoUpdate();
+  bool repaintRequired = false;
+
+  setAutoUpdate(FALSE);
+
+  for (i=0, folder = (KMFolder*)mList.first();
+    folder != NULL;
+    folder = (KMFolder*)mList.next(),i++)
+  {
+    str = QString("{") + folder->type() + "} " + folder->label();
+    if (text(i) != str) {
+       repaintRequired = true;
+       changeItem(str, i);
+    if (folder->countUnread()>0)
+       changeItemColor(darkRed, i);
+    else
+       changeItemColor(kapp->palette().normal().foreground(), i);
+    }
+  }
+  setAutoUpdate(upd);
+  if (upd && repaintRequired) repaint();
+
+  mUpdateTimer->stop();
+}
 
 //-----------------------------------------------------------------------------
 void KMFolderTree::doFolderListChanged()
@@ -181,8 +257,10 @@ void KMFolderTree::inSort(KMFolder* aFolder)
   insertItem(str, i);
   mList.insert(i, aFolder);
 
-  if (aFolder->isOpened() && aFolder->countUnread()>0)
-     changeItemColor(darkRed, i);
+  if (aFolder->countUnread()>0)
+    changeItemColor(darkRed, i);
+  else
+    changeItemColor(kapp->palette().normal().foreground(), i);
 }
 
 
@@ -234,3 +312,30 @@ int KMFolderTree::indexOfFolder(const KMFolder* folder) const
   }
   return -1;
 }
+
+//-----------------------------------------------------------------------------
+void KMFolderTree::slotRMB(int index, int)
+{
+  doFolderSelected(index, 0);
+  setCurrentItem(index);
+
+  if (!topLevelWidget()) return; // safe bet
+
+  QPopupMenu *folderMenu = new QPopupMenu;
+
+  folderMenu->insertItem(i18n("&Create..."), topLevelWidget(),
+              SLOT(slotAddFolder()));
+  folderMenu->insertItem(i18n("&Modify..."), topLevelWidget(),
+              SLOT(slotModifyFolder()));
+  folderMenu->insertItem(i18n("C&ompact"), topLevelWidget(),
+              SLOT(slotCompactFolder()));
+  folderMenu->insertSeparator();
+  folderMenu->insertItem(i18n("&Empty"), topLevelWidget(),
+              SLOT(slotEmptyFolder()));
+  folderMenu->insertItem(i18n("&Remove"), topLevelWidget(),
+              SLOT(slotRemoveFolder()));
+  folderMenu->exec (QCursor::pos(), 0);
+  delete folderMenu;
+}
+//-----------------------------------------------------------------------------
+

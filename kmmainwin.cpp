@@ -74,6 +74,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   connect(msgSender, SIGNAL(statusMsg(const QString&)),
 	  SLOT(statusMsg(const QString&)));
+  connect(acctMgr, SIGNAL( newMail(KMAccount *)),
+          SLOT( slotNewMail(KMAccount *)));
 
   // must be the last line of the constructor:
   mStartupDone = TRUE;
@@ -220,6 +222,10 @@ void KMMainWin::createWidgets(void)
 		     mHeaders, SLOT(prevMessage()));
   accel->connectItem(accel->insertItem(Key_Right), 
 		     mHeaders, SLOT(nextMessage()));
+  accel->connectItem(accel->insertItem(Key_Left+SHIFT),
+                     mHeaders, SLOT(prevMessageMark()));
+  accel->connectItem(accel->insertItem(Key_Right+SHIFT), 
+                     mHeaders, SLOT(nextMessageMark()));
 
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
@@ -442,6 +448,11 @@ void KMMainWin::slotCheckOneAccount(int item)
     slotSendQueued();
 
   checkingMail = FALSE; 
+
+}
+
+void KMMainWin::slotNewMail(KMAccount *) {
+  mHeaders->sortAndShow();
 }
 
 
@@ -705,13 +716,16 @@ void KMMainWin::slotSetHeaderStyle(int id)
 //-----------------------------------------------------------------------------
 void KMMainWin::folderSelected(KMFolder* aFolder)
 {
-  cout << "Entering folderSelected\n";
+  debug ("Entering folderSelected\n");
   if(!aFolder)
     {
       debug("KMMainWin::folderSelected(): aFolder == NULL");
       return;
     }
     
+  if (mFolder == aFolder)
+    return;
+
   kbp->busy();
   mFolder = (KMFolder*)aFolder;
   mMsgView->clear();

@@ -75,6 +75,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const char* aName) :
   mAcctList       = NULL;
   mDirty          = FALSE;
   // mWhoField       = QString::null; // default constructor value anyway (David)
+  unreadMsgs      = -1;
 }
 
 
@@ -649,6 +650,11 @@ KMMessage* KMFolder::take(int idx)
   if (!mb->isMessage()) readMsg(idx);
 
   msg = (KMMessage*)mMsgList.take(idx);
+  if (msg->status()==KMMsgStatusUnread ||
+      msg->status()==KMMsgStatusNew) {
+    --unreadMsgs;
+    emit numUnreadMsgsChanged( this );
+  }
   msg->setParent(NULL);
   mDirty = TRUE;
   if (!mQuiet) emit msgRemoved(idx);
@@ -756,6 +762,12 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
   aMsg->setStatusFields();
   msgText = aMsg->asString();
   len = msgText.length();
+
+  if (aMsg->status()==KMMsgStatusUnread ||
+      aMsg->status()==KMMsgStatusNew) {
+    ++unreadMsgs;
+    emit numUnreadMsgsChanged( this );
+  }
 
   assert(mStream != NULL);
   if (len <= 0)
@@ -886,6 +898,8 @@ int KMFolder::expunge(void)
     mOpenCount = openCount;
   }
 
+  unreadMsgs = 0;
+  emit numUnreadMsgsChanged( this );
   if (!mQuiet) emit changed();
   return 0;
 }
@@ -1003,24 +1017,51 @@ const char* KMFolder::type(void) const
 const QString KMFolder::label(void) const
 {
   if (mIsSystemFolder && !mLabel.isEmpty()) return mLabel;
-  return name();
+  if (unreadMsgs > 0) {
+    QString num;
+    num.setNum(unreadMsgs);
+    return (name() + " (" + num + ")");
+  }
+  else
+    return name();
 }
 
 
 //-----------------------------------------------------------------------------
-long KMFolder::countUnread(void) const
+long KMFolder::countUnread(void)
 {
   int  i;
-  long unread;
 
-  for (i=0, unread=0; i<mMsgList.high(); i++)
+  if (unreadMsgs != -1)
+    return unreadMsgs;
+  
+  for (i=0, unreadMsgs=0; i<mMsgList.high(); i++)
   {
     if (mMsgList[i]->status()==KMMsgStatusUnread ||
 	mMsgList[i]->status()==KMMsgStatusNew)
-      unread++;
+      unreadMsgs++;
   }
 
-  return unread;
+  return unreadMsgs;
+}
+
+//-----------------------------------------------------------------------------
+void KMFolder::msgStatusChanged(const KMMsgStatus oldStatus,
+  const KMMsgStatus newStatus)
+{
+  int oldUnread = 0;
+  int newUnread = 0;
+
+  if (oldStatus==KMMsgStatusUnread || oldStatus==KMMsgStatusNew)
+    oldUnread = 1;
+  if (newStatus==KMMsgStatusUnread || newStatus==KMMsgStatusNew)
+    newUnread = 1;
+  int deltaUnread = newUnread - oldUnread;
+
+  if (deltaUnread != 0) {
+     unreadMsgs += deltaUnread;
+     emit numUnreadMsgsChanged( this );
+  }
 }
 
 

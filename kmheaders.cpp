@@ -70,6 +70,8 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 	  this,SLOT(selectMessage(int,int)));
   connect(this,SIGNAL(highlighted(int,int)),
 	  this,SLOT(highlightMessage(int,int)));
+  connect(this,SIGNAL(popupMenu(int,int)),
+          this,SLOT(slotRMB(int,int)));
   connect(this,SIGNAL(headerClicked(int)),
 	  this,SLOT(headerClicked(int)));
 
@@ -188,21 +190,26 @@ void KMHeaders::setFolder (KMFolder *aFolder)
       sort();
     }
 
-    updateMessageList();
-
     if (mFolder)
     {
       id = findUnread(TRUE, 0, TRUE);
       if (id >= 0)
+        setMsgRead(id);
+      else
+        setMsgRead(mCurrentItem);                     
+    }
+    updateMessageList();
+
+    if (mFolder)
+    {
+      if (id >= 0)
       {
-	setMsgRead(id);
 	setCurrentItem(id);
 	makeHeaderVisible();
 	updateItem(id, TRUE);
       }
       else
       {
-	setMsgRead(mCurrentItem);
 	setTopItem(mTopItem);
 	setCurrentItem(mCurrentItem);
       }
@@ -318,7 +325,7 @@ void KMHeaders::headerClicked(int column)
 {
   int idx = currentItem();
   KMMsgBasePtr cur;
-  const char* sortStr = "(unknown)";
+  QString sortStr = "(unknown)";
   QString msg;
   static bool working = FALSE;
 
@@ -371,7 +378,35 @@ void KMHeaders::headerClicked(int column)
   working = FALSE;
   kbp->idle();
 }
+                                                               //-----------------------------------------------------------------------------                 
+void KMHeaders::sortAndShow()
+{
+  int idx = currentItem();
+  KMMsgBasePtr cur;
+  static bool working = FALSE;
 
+  if (working) return;
+  working = TRUE;
+
+  kbp->busy();
+  mFolder->quiet( true );
+
+  if (idx >= 0) cur = (*mFolder)[idx];
+  else cur = NULL;
+ 
+  sort();
+ 
+  if (cur) idx = mFolder->find(cur);
+  else idx = 0;
+
+  if (idx < 0) idx = 0;
+  setCurrentMsg(idx);
+                                                                                
+  mFolder->quiet( false );
+  kapp->processEvents(200);
+  working = FALSE;
+  kbp->idle();
+}
 
 //-----------------------------------------------------------------------------
 void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
@@ -548,10 +583,14 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 
   for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
   {
-    if (destFolder) rc = destFolder->moveMsg(msg);
+    if (destFolder) {
+      // "deleting" messages means moving them into the trash folder
+      rc = destFolder->moveMsg(msg);
+    }
     else
     {
-      if (!doUpd) removeItem(cur);
+      // really delete messages that are already in the trash folder
+      if (doUpd) removeItem(cur);
       mFolder->removeMsg(msg);
       delete msg;
     }
@@ -684,19 +723,29 @@ KMMessage* KMHeaders::getMsg (int msgId)
 void KMHeaders::nextMessage()
 {
   int idx = currentItem();
-
   if (idx < mFolder->count()) setCurrentMsg(idx+1);
 }
-
 
 //-----------------------------------------------------------------------------
 void KMHeaders::prevMessage()
 {
   int idx = currentItem();
-
-  if (idx > 0) setCurrentMsg(idx-1);
+   if (idx > 0) setCurrentMsg(idx-1);
 }
 
+//-----------------------------------------------------------------------------
+void KMHeaders::nextMessageMark()
+{
+  int idx = currentItem();
+  if (idx < mFolder->count()) setCurrentMsg(idx+1);
+}
+ 
+//-----------------------------------------------------------------------------
+void KMHeaders::prevMessageMark()
+{
+  int idx = currentItem();
+  if (idx > 0) setCurrentMsg(idx-1);
+}
 
 //-----------------------------------------------------------------------------
 int KMHeaders::findUnread(bool aDirNext, int aStartAt, bool onlyNew)
@@ -925,6 +974,47 @@ void KMHeaders::setPalette(const QPalette& p)
   lbox.repaint(TRUE);
 }
 
+//-----------------------------------------------------------------------------
+void KMHeaders::slotRMB(int idx, int colId)
+{
+  highlightMessage(idx, colId);
+  setCurrentItem(idx);
+
+  if (!topLevelWidget()) return; // safe bet
+
+  QPopupMenu *menu = new QPopupMenu;
+  if (colId == 0) // popup status menu
+  {
+    connect(menu, SIGNAL(activated(int)), topLevelWidget(),
+          SLOT(slotSetMsgStatus(int)));
+    menu->insertItem(i18n("New"), (int)KMMsgStatusNew);
+    menu->insertItem(i18n("Unread"), (int)KMMsgStatusUnread);
+    menu->insertItem(i18n("Read"), (int)KMMsgStatusOld);
+    menu->insertItem(i18n("Replied"), (int)KMMsgStatusReplied);
+    menu->insertItem(i18n("Queued"), (int)KMMsgStatusQueued);
+    menu->insertItem(i18n("Sent"), (int)KMMsgStatusSent);
+  }
+  else //else popup message menu
+  {
+    // no new strings here
+    menu->insertItem(i18n("&Reply..."), topLevelWidget(),
+             SLOT(slotReplyToMsg()));
+    menu->insertItem(i18n("Reply &All..."), topLevelWidget(),
+             SLOT(slotReplyAllToMsg()));
+    menu->insertItem(i18n("&Forward..."), topLevelWidget(),
+             SLOT(slotForwardMsg()), Key_F);
+    menu->insertSeparator();
+    menu->insertItem(i18n("&Move..."), topLevelWidget(),
+             SLOT(slotMoveMsg()), Key_M);
+    menu->insertItem(i18n("&Copy..."), topLevelWidget(),
+             SLOT(slotCopyText()), Key_S);
+    menu->insertItem(i18n("&Delete"), topLevelWidget(),
+             SLOT(slotDeleteMsg()), Key_D);
+  }
+
+  menu->exec (QCursor::pos(), 0);
+  delete menu;
+}
 
 //-----------------------------------------------------------------------------
 #include "kmheaders.moc"

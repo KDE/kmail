@@ -59,7 +59,7 @@ public:
   /** Return the entire message contents as a string. */
   virtual const QString asString(void);
   /** Return header as string. */
-  virtual const QString headerAsString(void);
+  virtual const QString headerAsString(void) const;
 
   /** Returns message body with quoting header and indented by the 
     given indentation string. This is suitable for including the message

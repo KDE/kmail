@@ -390,7 +390,7 @@ void KMSettings::createTabComposer(QWidget *parent)
 
   lbl = new QLabel(i18n(
         "The following placeholders are supported in the reply phrases:\n"
-	"%D=date, %S=subject, %F=sender, %%=percent sign"), grp);
+        "%D=date, %S=subject, %F=sender, %%=percent sign, %_=space"), grp);
   lbl->adjustSize();
   lbl->setMinimumSize(100,lbl->size().height());
   grid->setRowStretch(0,10);
@@ -538,7 +538,7 @@ void KMSettings::createTabMisc(QWidget *parent)
   //---------- group: folders
   grp = new QGroupBox(i18n("Folders"), tab);
   box->addWidget(grp);
-  grid = new QGridLayout(grp, 2, 3, 20, 4);
+  grid = new QGridLayout(grp, 3, 3, 20, 4);
 
   emptyTrashOnExit=new QCheckBox(i18n("empty trash on exit"),grp);
   emptyTrashOnExit->setMinimumSize(emptyTrashOnExit->sizeHint());
@@ -548,12 +548,17 @@ void KMSettings::createTabMisc(QWidget *parent)
   sendOnCheck->setMinimumSize(sendOnCheck->sizeHint());
   grid->addMultiCellWidget(sendOnCheck,1,1,0,2);
 
+  sendReceipts = new QCheckBox(i18n("Automatically send receive- and read confirmations"),grp);
+  sendReceipts->setMinimumSize(sendReceipts->sizeHint());
+  grid->addMultiCellWidget(sendReceipts, 2, 2, 0, 2);
+
   grid->activate();
 
   //---------- set values
   config->setGroup("General");
   emptyTrashOnExit->setChecked(config->readBoolEntry("empty-trash-on-exit",false));
   sendOnCheck->setChecked(config->readBoolEntry("sendOnCheck",false));
+  sendReceipts->setChecked(config->readBoolEntry("send-receipts", true));
 
   //---------- here we go
   box->addStretch(10);
@@ -833,6 +838,7 @@ void KMSettings::doApply()
   config->writeEntry("empty-trash-on-exit", emptyTrashOnExit->isChecked());
   config->writeEntry("first-start", false);
   config->writeEntry("sendOnCheck",sendOnCheck->isChecked());
+  config->writeEntry("send-receipts", sendReceipts->isChecked());
 
   //-----
   config->sync();
@@ -870,7 +876,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   acctType = mAcct->type();
 
   setCaption("Configure Account");
-  grid = new QGridLayout(this, 16, 3, 8, 4);
+  grid = new QGridLayout(this, 18, 3, 8, 4);
   grid->setColStretch(1, 5);
 
   lbl = new QLabel(i18n("Type:"), this);
@@ -912,15 +918,20 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
     mEdtPort = createLabeledEntry(this, grid, i18n("Port:"),
 				  tmpStr, 5, 0);
 
+    mStorePasswd = new QCheckBox(i18n("Store POP password in config file"), this);
+    mStorePasswd->setMinimumSize(mStorePasswd->sizeHint());
+    mStorePasswd->setChecked(((KMAcctPop*)mAcct)->storePasswd());
+    grid->addMultiCellWidget(mStorePasswd, 6, 6, 1, 2);
+
     mChkDelete = new QCheckBox(i18n("Delete mail from server"), this);
     mChkDelete->setMinimumSize(mChkDelete->sizeHint());
     mChkDelete->setChecked(!((KMAcctPop*)mAcct)->leaveOnServer());
-    grid->addMultiCellWidget(mChkDelete, 6, 6, 1, 2);
+    grid->addMultiCellWidget(mChkDelete, 7, 7, 1, 2);
 
     mChkRetrieveAll=new QCheckBox(i18n("Retrieve all mail from server"), this);
     mChkRetrieveAll->setMinimumSize(mChkRetrieveAll->sizeHint());
     mChkRetrieveAll->setChecked(((KMAcctPop*)mAcct)->retrieveAll());
-    grid->addMultiCellWidget(mChkRetrieveAll, 7, 7, 1, 2);
+    grid->addMultiCellWidget(mChkRetrieveAll, 8, 8, 1, 2);
 
   }
   else 
@@ -932,7 +943,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mChkInterval = new QCheckBox(i18n("Enable interval Mail checking"), this);
   mChkInterval->setMinimumSize(mChkInterval->sizeHint());
   mChkInterval->setChecked(mAcct->checkInterval() > 0);
-  grid->addMultiCellWidget(mChkInterval, 8, 8, 1, 2);
+  grid->addMultiCellWidget(mChkInterval, 9, 9, 1, 2);
 
   // label with "Local Account" or "Pop Account" created previously
   lbl->adjustSize();
@@ -942,7 +953,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   lbl = new QLabel(i18n("Store new mail in account:"), this);
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
-  grid->addMultiCellWidget(lbl, 10, 10, 0, 2);
+  grid->addMultiCellWidget(lbl, 11, 11, 0, 2);
 
   // combobox of all folders with current account folder selected
   acctFolder = mAcct->folder();
@@ -967,7 +978,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mFolders->adjustSize();
   mFolders->setMinimumSize(100, mEdtName->minimumSize().height());
   mFolders->setMaximumSize(500, mEdtName->minimumSize().height());
-  grid->addWidget(mFolders, 11, 1);
+  grid->addWidget(mFolders, 12, 1);
 
 
   // buttons at bottom
@@ -988,7 +999,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   btnBox->setMinimumSize(230, ok->size().height()+10);
   btnBox->setMaximumSize(2048, ok->size().height()+10);
-  grid->addMultiCellWidget(btnBox, 14, 14, 0, 2);
+  grid->addMultiCellWidget(btnBox, 15, 15, 0, 2);
 
   resize(350,350);
   grid->activate();
@@ -1037,6 +1048,9 @@ void KMAccountSettings::accept()
     ((KMAcctPop*)mAcct)->setPort(atoi(mEdtPort->text()));
     ((KMAcctPop*)mAcct)->setLogin(mEdtLogin->text());
     ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(), true);
+    ((KMAcctPop*)mAcct)->setStorePasswd(mStorePasswd->isChecked());
+    ((KMAcctPop*)mAcct)->setPasswd(mEdtPasswd->text(),
+                 ((KMAcctPop*)mAcct)->storePasswd());
     ((KMAcctPop*)mAcct)->setLeaveOnServer(!mChkDelete->isChecked());
     ((KMAcctPop*)mAcct)->setRetrieveAll(mChkRetrieveAll->isChecked());
   }

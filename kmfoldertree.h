@@ -6,6 +6,7 @@
 #include "kmfolder.h"
 
 class KDNDDropZone;
+class QTimer;
 
 #define KMFolderTreeInherited KTabListBox
 class KMFolderTree : public KTabListBox
@@ -27,13 +28,23 @@ signals:
 protected slots:
   void doFolderSelected(int,int);
 
+  void slotRMB(int, int);
   /** called by the folder-manager when the list of folders changed */
   void doFolderListChanged();
 
   /** called when a drop occurs. */
   void doDropAction(KDNDDropZone*);
 
+  /** Updates the folder tree only if some folder lable has changed */
+  void refresh(KMFolder*);
+
+  /** Executes delayed update of folder tree */
+  void delayedUpdate();
+
 protected:
+  // Updates the number of unread messages for all folders
+  virtual void KMFolderTree::updateUnreadAll( );
+
   // Insert folder sorted by type and name
   virtual void inSort(KMFolder*);
 
@@ -41,7 +52,7 @@ protected:
 
   KMFolderNodeList mList;
   KDNDDropZone* mDropZone;
+  QTimer* mUpdateTimer;
 };
 
 #endif
-

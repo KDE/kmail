@@ -69,7 +69,7 @@ private:
   QLineEdit *phraseReplyEdit, *phraseReplyAllEdit, *phraseForwardEdit;
   QLineEdit *indentPrefixEdit, *wrapColumnEdit;
   QCheckBox *autoAppSignFile, *wordWrap, *monospFont, *pgpAutoSign;
-  QCheckBox *emptyTrashOnExit, *sendOnCheck, *longFolderList;
+  QCheckBox *emptyTrashOnExit, *sendOnCheck, *longFolderList, *sendReceipts;
   QRadioButton *smtpRadio, *sendmailRadio, *sendNow, *sendLater;
   QRadioButton *allow8Bit, *quotedPrintable;
   QButtonGroup *incomingGroup,*outgoingGroup;
@@ -99,7 +99,7 @@ private:
   QLineEdit *mEdtPort;
   QComboBox *mFolders;
   KMAccount *mAcct;
-  QCheckBox *mChkDelete, *mChkInterval, *mChkRetrieveAll;
+  QCheckBox *mStorePasswd, *mChkDelete, *mChkInterval, *mChkRetrieveAll;
 };
 
 #endif

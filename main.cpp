@@ -18,6 +18,7 @@
 #include "kmaddrbook.h"
 #include "kcharsets.h"
 #include "kmsettings.h"
+#include "kmreaderwin.h"
 
 #include <kapp.h>
 #include <stdio.h>
@@ -37,6 +38,16 @@
 #include "kwm.h"
 #include <klocale.h>
 //--- Sven's pseudo IPC&locking end ---
+ // Do the tmp stuff correctly - thanks to Harri Porten for
+// reminding me (sven)
+#ifdef HAVE_PATHS_H
+#include <paths.h>
+#endif
+
+#ifndef _PATH_TMP
+#define _PATH_TMP "/tmp/"
+#endif
+
 KBusyPtr* kbp = NULL;
 KApplication* app = NULL;
 KMAcctMgr* acctMgr = NULL;
@@ -148,7 +159,7 @@ static void writePid (bool ready)
 {
   FILE* lck;
   char nlck[80];
-  sprintf (nlck, "/tmp/.kmail%d.lck", getuid());
+  sprintf (nlck, "%s.kmail%d.lck", _PATH_TMP, getuid());
   lck = fopen (nlck, "w");
   if (!ready)
     fprintf (lck, "%d", 0-getpid());
@@ -160,17 +171,19 @@ static void writePid (bool ready)
 static void checkMessage()
 {
   char lf[80];
-  sprintf (lf, "/tmp/.kmail%d.msg", getuid());
+  sprintf (lf, "%s.kmail%d.msg", _PATH_TMP, getuid());
   if (access(lf, F_OK) != 0)
   {
+    debug ("No message for me");
     printf ("No message for me\n");
     return;
   }
   QString cmd;
   QString delcmd;
   cmd = kFileToString(lf);
-  delcmd.sprintf("rm -rf /tmp/.kmail%d.msg", getuid());
-  system (delcmd.data()); // delete message if any
+  delcmd.sprintf("%s.kmail%d.msg", _PATH_TMP, getuid());
+  unlink (delcmd.data()); // unlink
+  //system (delcmd.data()); // delete message if any
   // find a KMMainWin
   KMMainWin *kmmWin = 0;
   if (kapp->topWidget() && kapp->topWidget()->isA("KMMainWin"))
@@ -527,19 +540,97 @@ static void cleanup(void)
   //--- Sven's save attachments to /tmp start ---
   //debug ("cleaned");
   QString cmd;
-  cmd.sprintf("rm -rf /tmp/kmail%d", getpid());
-  system (cmd.data()); // delete your owns only
+  // This is a dir with attachments and it is not critical if they are
+  // left behind.
+  if (!KMReaderWin::attachDir().isEmpty())
+  {
+    cmd.sprintf("rm -rf '%s'", (const char*)KMReaderWin::attachDir());
+    system (cmd.data()); // delete your owns only
+  }
   //--- Sven's save attachments to /tmp end ---
   //--- Sven's pseudo IPC&locking start ---
-  cmd.sprintf("rm -rf /tmp/.kmail%d.lck", getuid());
-  system (cmd.data()); // delete your owns only
-  cmd.sprintf("rm -rf /tmp/.kmail%d.msg", getuid());
-  system (cmd.data()); // delete your owns only
+  cmd.sprintf("%s.kmail%d.lck", _PATH_TMP, getuid());
+  unlink(cmd.data()); // delete your owns only
+  cmd.sprintf("%s.kmail%d.msg", _PATH_TMP, getuid());
+  unlink(cmd.data()); // delete your owns only
   //--- Sven's pseudo IPC&locking end ---
 }
 
-
 //-----------------------------------------------------------------------------
+
+// Sven: new from Jens Kristian Soegard:
+static void processArgs(int argc, char *argv[])
+{
+  KMComposeWin* win;
+  KMMessage* msg = new KMMessage;
+  QString to, cc, bcc, subj;
+  int i, x=0;
+ 
+  msg->initHeader();
+ 
+  for (i=0; i<argc; i++)
+  {
+      if (strcmp(argv[i],"-s")==0)
+      {
+          if (i<argc-1) subj = argv[++i];
+          mailto = TRUE;
+      }
+      else if (strcmp(argv[i],"-c")==0)
+      {
+          if (i<argc-1) cc = argv[++i];
+          mailto = TRUE;
+      }
+      else if (strcmp(argv[i],"-b")==0)
+      {
+          if (i<argc-1) bcc = argv[++i];
+          mailto = TRUE;
+      }
+      else if (strcmp(argv[i],"-h")==0)
+      {
+          if (i<argc-1) {
+              QString headerString = argv[++i];
+              if( (x = headerString.find( '=' )) != -1 )
+                  msg->setHeaderField( headerString.left( x ), headerString.right( headerString.length()-x-1 ) );
+          } 
+          mailto = TRUE;
+      }
+      else if(strcmp(argv[i],"-msg")==0)
+      {
+          if(i<argc-1)
+              msg->setBodyEncoded( argv[++i] );
+          mailto = TRUE;
+      }
+      else if (strcmp(argv[i],"-check")==0)
+          checkNewMail = TRUE;
+      else if (argv[i][0]=='-')
+      {
+          warning(i18n("Unknown command line option: %s"), argv[i]);
+          // unknown parameter
+      }
+      else
+      {
+          if (!to.isEmpty()) to += ", ";
+          if (strncasecmp(argv[i],"mailto:",7)==0) to += argv[i]+7;
+          else to += argv[i];
+          mailto = TRUE;
+      }
+  }
+ 
+  if (mailto)
+  {
+      if (!cc.isEmpty()) msg->setCc(cc);
+      if (!bcc.isEmpty()) msg->setBcc(bcc);
+      if (!subj.isEmpty()) msg->setSubject(subj);
+      if (!to.isEmpty()) msg->setTo(to);
+ 
+      win = new KMComposeWin(msg);
+      assert(win != NULL);
+      win->show();
+  }
+}
+
+// Old original
+/*
 static void processArgs(int argc, char *argv[])
 {
   KMComposeWin* win;
@@ -593,7 +684,7 @@ static void processArgs(int argc, char *argv[])
     win->show();
   }
 }
-
+*/
 
 //-----------------------------------------------------------------------------
 main(int argc, char *argv[])
@@ -604,7 +695,7 @@ main(int argc, char *argv[])
     int pId;
     
     char lf[80];
-    sprintf (lf, "/tmp/.kmail%d.lck", getuid());
+    sprintf (lf, "%s.kmail%d.lck", _PATH_TMP, getuid());
     if (access (lf, F_OK) != 0)
       writePid(true); // we are server and ready
     else
@@ -613,7 +704,17 @@ main(int argc, char *argv[])
       lock = fopen (lf, "r");
       fscanf (lock, "%d", &pId);
       fclose (lock);
-      sprintf (lf, "/tmp/.kmail%d.msg", getuid());
+      // Check if pid is 0 - this would kill everything
+      if (pId == 0)
+      {
+        debug ("\nAccording to %s.kmail%d.lck there is existing kmail", _PATH_TMP,
+               getuid());
+        debug ("process with pid 0, which is wrong. Please close running kmail");
+        debug ("(if any), and delete this file like this:\n rm -f %s.kmail*", _PATH_TMP);
+        debug ("Then restart kmail");
+        exit (0);
+      }
+      sprintf (lf, "%s.kmail%d.msg", _PATH_TMP, getuid());
       msg = fopen (lf, "w");
       int i;
       app = new KApplication(argc, argv, "kmail"); // clear arg list
@@ -674,12 +775,12 @@ main(int argc, char *argv[])
       {
         if (kill(0-pId, 0) != 0)      // try if it lives at all
         {
-          printf ("Server died while busy\n");
+          debug ("Server died whyle busy");
           writePid(true);             // he diedd and left his pid uncleaned
         }
         else
         {
-          printf ("Server is busy - message pending\n");
+          debug ("Server is busy - message pending");
           exit (0);                   // ok he lives but is busy
         }
       }
@@ -687,19 +788,19 @@ main(int argc, char *argv[])
       {
         if (kill (pId, SIGUSR1) != 0) // Dead?
         {
-          printf ("Server died while ready\n");
+          debug ("Server died whyle ready");
           writePid(true);             // then we are server
         }
         else
         {
-          printf ("Server is ready - message sent\n");
+          debug ("Server is ready - message sent");
           exit (0);
         }
       }
     }
-    printf ("We are starting normaly\n");
-    sprintf(lf, "rm -rf /tmp/.kmail%d.msg", getuid());
-    system (lf); // clear old mesage
+    debug ("We are starting normaly");
+    sprintf(lf, "%s.kmail%d.msg", _PATH_TMP, getuid());
+    unlink(lf); // clear old mesage
   }
   //--- Sven's pseudo IPC&locking end ---
 

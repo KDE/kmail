@@ -17,6 +17,7 @@ class KToolBar;
 class KStatusBar;
 class KMMessage;
 class KMFolder;
+class KMAccount;
 
 #define KMMainWinInherited KMTopLevelWidget
 
@@ -66,6 +67,7 @@ protected:
 
 protected slots:
   void slotCheckOneAccount(int);
+  void slotNewMail(KMAccount*);
   void getAccountMenu(); 
   void slotMenuActivated();
   void slotClose();

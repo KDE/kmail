@@ -36,6 +36,7 @@ KMAccount::KMAccount(KMAcctMgr* aOwner, const char* aName)
   mFolder = NULL;
   mTimer  = NULL;
   mInterval = 0;
+  mCheckingMail = FALSE;
 }
 
 
@@ -108,6 +109,13 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
   KMMessage* newMsg = new KMMessage;
   QString str, receiptTo;
 
+  KConfig* cfg = app->getConfig();
+  bool sendReceipts;
+
+  cfg->setGroup("General");
+  sendReceipts = cfg->readBoolEntry("send-receipts", true);
+  if (!sendReceipts) return;
+
   receiptTo = aReceiptTo;
   receiptTo.replace(QRegExp("\\n"),"");
 
@@ -127,7 +135,7 @@ void KMAccount::sendReceipt(KMMessage* aMsg, const QString aReceiptTo) const
 
 
 //-----------------------------------------------------------------------------
-void KMAccount::processNewMsg(KMMessage* aMsg)
+bool KMAccount::processNewMsg(KMMessage* aMsg)
 {
   QString receiptTo;
   int rc;
@@ -149,7 +157,11 @@ void KMAccount::processNewMsg(KMMessage* aMsg)
     if (rc) perror("failed to add message");
     if (rc) warning(i18n("Failed to add message:")+
 		    '\n' + QString(strerror(rc)));
+    if (rc) return false;
+    else return true;
   }
+  // What now -  are we owner or not?
+  return true; //Everything's fine - message has been added by filter  }
 }
 
 
@@ -189,7 +201,7 @@ void KMAccount::installTimer()
 //-----------------------------------------------------------------------------
 void KMAccount::deinstallTimer()
 {
-  printf("Calling deinstallTimer()\n");
+  debug("Calling deinstallTimer()");
   if(mTimer) {
     mTimer->stop();
     disconnect(mTimer);
@@ -202,5 +214,8 @@ void KMAccount::deinstallTimer()
 //-----------------------------------------------------------------------------
 void KMAccount::mailCheck()
 {
-  acctMgr->singleCheckMail(this);
+ if (mCheckingMail) return;
+ mCheckingMail = TRUE;
+ acctMgr->singleCheckMail(this);
+ mCheckingMail = FALSE;
 }
