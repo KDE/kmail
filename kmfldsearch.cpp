@@ -51,7 +51,6 @@
 
 #include <stdlib.h>
 
-const int KMFldSearch::FOLDER_COLUMN = 3;
 const int KMFldSearch::MSGID_COLUMN = 4;
 
 //-----------------------------------------------------------------------------
@@ -64,19 +63,19 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mSearching(false),
   mStopped(false),
   mCloseRequested(false),
-  mNumRules(2),
   mNumMatches(0),
   mCount(0),
   mLastFocus(0),
   mMainWin(w)
 {
+  int numRules = 2;
   KWin::setIcons(winId(), kapp->icon(), kapp->miniIcon());
 
   KConfig* config = KGlobal::config();
   config->setGroup("SearchDialog");
 
   QWidget* searchWidget = new QWidget(this);
-  mGrid = new QGridLayout(searchWidget, mNumRules+5, 5, 0, spacingHint());
+  mGrid = new QGridLayout(searchWidget, numRules+5, 5, 0, spacingHint());
 
   QButtonGroup * radioGroup = new QButtonGroup( searchWidget );
   radioGroup->hide();
@@ -97,14 +96,11 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   connect(mCbxFolders, SIGNAL(activated(int)),
           this, SLOT(slotFolderActivated(int)));
 
-  mRules = new KMFldSearchRule*[mNumRules];
-
-  KMFldSearchRule* rule = 0;
-  for (int i=0; i<mNumRules; ++i)
+  for (int i=0; i<numRules; ++i)
   {
-    rule = new KMFldSearchRule(searchWidget, mGrid, i+2, 0);
+    KMFldSearchRule* rule = new KMFldSearchRule(searchWidget, mGrid, i+2, 0);
     rule->updateFunctions(mCbxFolders->getFolder());
-    mRules[i] = rule;
+    mRules.append(rule);
   }
 
   mChkSubFolders = new QCheckBox(i18n("I&nclude sub-folders"), searchWidget);
@@ -141,7 +137,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
 
   connect(mLbxMatches, SIGNAL(doubleClicked(QListViewItem *)),
           this, SLOT(slotShowMsg(QListViewItem *)));
-  mGrid->addMultiCellWidget(mLbxMatches, mNumRules+2, mNumRules+2, 0, 3);
+  mGrid->addMultiCellWidget(mLbxMatches, numRules+2, numRules+2, 0, 3);
 
   mStatusBar = new KStatusBar(searchWidget);
   mStatusBar->insertFixedItem(i18n("AMiddleLengthText..."), 0, true);
@@ -149,7 +145,7 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mStatusBar->setItemAlignment(0, AlignLeft | AlignVCenter);
   mStatusBar->insertItem(QString::null, 1, 1, true);
   mStatusBar->setItemAlignment(1, AlignLeft | AlignVCenter);
-  mGrid->addMultiCellWidget(mStatusBar, mNumRules+4, mNumRules+4, 0, 3);
+  mGrid->addMultiCellWidget(mStatusBar, numRules+4, numRules+4, 0, 3);
 
   mGrid->setColStretch(0, 0);
   mGrid->setColStretch(1, 2);
@@ -157,11 +153,11 @@ KMFldSearch::KMFldSearch(KMMainWin* w, const char* name,
   mGrid->setColStretch(3, 100);
   mGrid->setColStretch(4, 0);
 
-  mGrid->setRowStretch(mNumRules+2, 100);
-  mGrid->setRowStretch(mNumRules+3, 0);
+  mGrid->setRowStretch(numRules+2, 100);
+  mGrid->setRowStretch(numRules+3, 0);
 
   mGrid->activate();
-  mRules[0]->setFocus();
+  mRules.at(0)->setFocus();
 
   int mainWidth = config->readNumEntry("SearchWidgetWidth", 0);
   int mainHeight = config->readNumEntry("SearchWidgetHeight", 0);
@@ -195,7 +191,6 @@ KMFldSearch::~KMFldSearch()
   config->writeEntry("SearchWidgetWidth", width());
   config->writeEntry("SearchWidgetHeight", height());
   config->sync();
-  delete [] mRules;
 }
 
 //-----------------------------------------------------------------------------
@@ -250,14 +245,15 @@ void KMFldSearch::keyPressEvent(QKeyEvent *evt)
 //-----------------------------------------------------------------------------
 bool KMFldSearch::searchInMessage(KMMessage* aMsg, const QCString& aMsgStr)
 {
-  int i;
   bool matches = true;
 
   mCount++;
   if (mCount % 100 == 0) updStatus();
-  for(i=0; matches && i<mNumRules; i++)
-    if (!mRules[i]->matches(aMsg, aMsgStr))
+  for(KMFldSearchRuleIt it(mRules); *it && matches; ++it)
+  {
+    if (!(*it)->matches(aMsg, aMsgStr))
       matches = false;
+  }
 
   return matches;
 }
@@ -324,8 +320,14 @@ void KMFldSearch::searchInFolder(QGuardedPtr<KMFolder> aFld, bool recursive,
     return;
   }
 
-  for(i=0; i<mNumRules; i++)
-    if (!mRules[i]->isHeaderField()) fastMode = false;
+  for(KMFldSearchRuleIt it(mRules); *it; ++it)
+  {
+    if (!(*it)->isHeaderField())
+    {
+      fastMode = false;
+      break;
+    }
+  }
 
   num = aFld->count();
   for (i=0, upd=0; i<num && mSearching; i++, upd++)
@@ -433,9 +435,9 @@ void KMFldSearch::slotFolderActivated(int /*nr*/)
   mChkbxSpecificFolders->setChecked(true);
   mBtnSearch->setEnabled(folder);
 
-  for (int i = 0; i < mNumRules; i++)
+  for(KMFldSearchRuleIt it(mRules); *it; ++it)
   {
-    mRules[i]->updateFunctions(folder);
+    (*it)->updateFunctions(folder);
   }
 }
 
@@ -445,7 +447,7 @@ void KMFldSearch::activateFolder(KMFolder *curFolder)
 {
   mChkbxSpecificFolders->setChecked(true);
   mCbxFolders->setFolder(curFolder);
-  mRules[0]->setFocus();
+  mRules.at(0)->setFocus();
 }
 
 //-----------------------------------------------------------------------------
@@ -467,8 +469,10 @@ void KMFldSearch::slotSearch()
   mLbxMatches->clear();
   kapp->processEvents();
 
-  for (int i = 0; i < mNumRules; ++i)
-    mRules[i]->prepare();
+  for(KMFldSearchRuleIt it(mRules); *it; ++it)
+  {
+    (*it)->prepare();
+  }
 
   if (mChkbxAllFolders->isChecked())
   {
@@ -573,8 +577,10 @@ void KMFldSearch::enableGUI()
   mChkbxAllFolders->setEnabled(!mSearching);
   mChkbxSpecificFolders->setEnabled(!mSearching);
 
-  for(int i = 0; i < mNumRules; i++)
-    mRules[i]->setEnabled(!mSearching);
+  for(KMFldSearchRuleIt it(mRules); *it; ++it)
+  {
+    (*it)->setEnabled(!mSearching);
+  }
 }
 
 

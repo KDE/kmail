@@ -6,6 +6,7 @@
 #define kmfldsearch_h
 
 #include <qvaluelist.h>
+#include <qptrlist.h>
 #include <qstringlist.h>
 #include <qguardedptr.h>
 
@@ -29,6 +30,9 @@ class KMFolderMgr;
 class KMMainWin;
 class KMMessage;
 class KStatusBar;
+
+typedef QPtrList<KMFldSearchRule> KMFldSearchRuleList;
+typedef QPtrListIterator<KMFldSearchRule> KMFldSearchRuleIt;
 
 class KMFldSearch: public KDialogBase
 {
@@ -83,13 +87,10 @@ protected:
   bool mStopped;
   bool mCloseRequested;
   int mFetchingInProgress;
-  int mNumRules;
   int mNumMatches;
   int mCount;
   QString mSearchFolder;
-
-  // Ours to delete
-  KMFldSearchRule **mRules;
+  KMFldSearchRuleList mRules;
 
   // GC'd by Qt
   QGridLayout* mGrid;
@@ -106,7 +107,6 @@ protected:
   // not owned by us
   KMMainWin* mMainWin;
   
-  static const int FOLDER_COLUMN;
   static const int MSGID_COLUMN;
 };
 
