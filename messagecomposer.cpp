@@ -434,14 +434,23 @@ void MessageComposer::adjustCryptFlags()
        !mAttachments.empty() &&
        ( mSigningRequested || mEncryptionRequested ) )
   {
-    int ret = KMessageBox::warningYesNoCancel( mComposeWin,
-                                               i18n("The inline OpenPGP crypto message format "
-                                                    "does not support encryption or signing "
-                                                    "of attachments.\n"
-                                                    "Really use deprecated inline OpenPGP?"),
-                                               i18n("Insecure Message Format"),
-                                               KStdGuiItem::yes(),
-                                               i18n("&No, Use OpenPGP/MIME") );
+    int ret;
+    if ( mAllowedCryptoMessageFormats == Kleo::InlineOpenPGPFormat ) {
+      ret = KMessageBox::warningYesNoCancel( mComposeWin,
+                                             i18n("The inline OpenPGP crypto message format "
+                                                  "does not support encryption or signing "
+                                                  "of attachments.\n"
+                                                  "Really use deprecated inline OpenPGP?"),
+                                             i18n("Insecure Message Format"),
+                                             KStdGuiItem::yes(),
+                                             i18n("&No, Use OpenPGP/MIME") );
+    }
+    else {
+      // if other crypto message formats are allowed then simply don't use
+      // inline OpenPGP
+      ret = KMessageBox::No;
+    }
+
     if ( ret == KMessageBox::Cancel ) {
       mRc = false;
       return;
