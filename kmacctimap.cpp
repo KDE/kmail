@@ -957,7 +957,7 @@ void KMAcctImap::setStatus(KMMessage * msg, KMMsgStatus status)
   jd.total = 1; jd.done = 0; jd.parent = NULL;
   mapJobData.insert(job, jd);
   connect(job, SIGNAL(result(KIO::Job *)),
-          this, SLOT(slotSimpleResult(KIO::Job *)));
+          this, SLOT(slotSetStatusResult(KIO::Job *)));
   displayProgress();
 }
 
@@ -988,6 +988,21 @@ void KMAcctImap::slotSimpleResult(KIO::Job * job)
   if (it == mapJobData.end()) return;
   mapJobData.remove(it);
   if (job->error())
+  {
+    job->showErrorDialog();
+    if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
+  }
+  displayProgress();
+}
+
+
+//-----------------------------------------------------------------------------
+void KMAcctImap::slotSetStatusResult(KIO::Job * job)
+{
+  QMap<KIO::Job *, jobData>::Iterator it = mapJobData.find(job);
+  if (it == mapJobData.end()) return;
+  mapJobData.remove(it);
+  if (job->error() && job->error() != KIO::ERR_CANNOT_OPEN_FOR_WRITING)
   {
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mSlave = NULL;
