@@ -20,6 +20,7 @@ class KMFolder;
 class KMAcctFolder;
 class KConfig;
 class KMMessage;
+class KMFolderJob;
 
 
 class KMPrecommand : public QObject

@@ -9,7 +9,6 @@
 
 class QPopupMenu;
 class QTextCodec;
-class KIO::Job;
 class KMainWindow;
 class KProgressDialog;
 class KMComposeWin;
@@ -21,6 +20,8 @@ class KMMainWidget;
 class KMMessage;
 class KMMsgBase;
 class KMReaderWin;
+namespace KIO { class Job; }
+
 typedef QMap<int,KMFolder*> KMMenuToFolder;
 
 class KMCommand : public QObject

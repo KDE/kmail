@@ -11,6 +11,8 @@
 
 #define KMFolderMboxInherited KMFolderIndex
 
+class KMFolderMbox;
+
 class KMMboxJob : public KMFolderJob
 {
   Q_OBJECT
