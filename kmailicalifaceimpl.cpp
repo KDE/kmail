@@ -312,9 +312,10 @@ Q_UINT32 KMailICalIfaceImpl::addIncidence( KMFolder& folder,
   if( bAttachOK ){
     // Mark the message as read and store it in the folder
     msg->touch();
-    if ( folder.addMsg( msg ) )
+    if ( folder.addMsg( msg ) == 0 )
+      // Message stored
       sernum = msg->getMsgSerNum();
-    kdDebug(5006) << "addIncidence: Message done and saved. Sernum: "
+    kdDebug(5006) << "addIncidence(): Message done and saved. Sernum: "
                   << sernum << endl;
   } else
     kdError(5006) << "addIncidence: Message *NOT* saved!\n";
