@@ -123,13 +123,14 @@ public:
   static const QString decodeBase64(const QString& str);
   static const QString encodeBase64(const QString& str);
 
-  /** This function handles both encodings described in RFC1522:
+  /** This function handles both encodings described in RFC2047:
     Base64 ("=?iso-8859-1?b?...?=") and quoted-printable */
   static const QString decodeRFC1522String(const QString& aStr);
 
-  /** Encode given string as described in RFC2047 (update for RFC1522)
+  /** Encode given string as described in RFC2047: 
     using quoted-printable. */
-  static const QString encodeRFC2047String(const QString& aStr);
+  static const QString encodeRFC2047String(const QString& aStr,
+    const QString& charset);
 
   /** Encode given string as described in RFC2231
     (parameters in MIME headers) */

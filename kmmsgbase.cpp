@@ -1,9 +1,12 @@
 // kmmsgbase.cpp
 
 #include <kdebug.h>
+#include <kglobal.h>
+#include <klocale.h>
 
 #include "kmmsgbase.h"
 #include <mimelib/mimepp.h>
+#include <qtextcodec.h>
 #include <qregexp.h>
 #ifndef KRN
 #include <kmfolder.h>
@@ -365,10 +368,17 @@ const QString KMMsgBase::decodeRFC1522String(const QString& _str)
 //-----------------------------------------------------------------------------
 const char especials[17] = "()<>@,;:\"/[]?.= ";
 
-const QString KMMsgBase::encodeRFC2047String(const QString& _str)
+const QString KMMsgBase::encodeRFC2047String(const QString& _str,
+  const QString& charset)
 {
   if (_str.isEmpty()) return _str;
-  QCString latin = _str.local8Bit();
+  QString cset;
+  if (charset.isEmpty()) cset = KGlobal::locale()->charset();
+    else cset = charset;
+  QTextCodec *codec = QTextCodec::codecForName(cset);
+  QCString latin;
+  if (codec) latin = codec->fromUnicode(_str);
+    else latin = _str.local8Bit();
   int cr, start, stop, pos = 0;
   int latinLen = latin.length();
   char hexcode;
@@ -403,7 +413,7 @@ const QString KMMsgBase::encodeRFC2047String(const QString& _str)
         if (stop <= start) stop = cr;
       } else stop = cr;
       while (pos < start) { result += latin[pos]; pos++; }
-      result += QString("=?iso-8859-1?q?");
+      result += QString("=?%1?q?").arg(cset);
       while (pos < stop)
       {
         numQuotes = 0;

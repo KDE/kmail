@@ -1399,7 +1399,7 @@ void KMMessage::setHeaderField(const QString& aName, const QString& bValue)
   DwField* field;
   QString aValue = "";
   if (!bValue.isEmpty())
-    aValue = encodeRFC2047String(bValue);
+    aValue = encodeRFC2047String(bValue, charset());
 
   if (aName.isEmpty()) return;
 
@@ -1829,7 +1829,7 @@ void KMMessage::addBodyPart(const KMMessagePart* aPart)
   QString subtype  = aPart->subtypeStr();
   QString cte      = aPart->cteStr();
   QString contDesc = KMMsgBase::encodeRFC2047String(aPart->
-    contentDescription());
+    contentDescription(), charset());
   QString contDisp = aPart->contentDisposition();
   QString name     = KMMsgBase::encodeRFC2231String(aPart->name());
   bool RFC2231encoded = aPart->name() != name;
