@@ -140,6 +140,8 @@ private:
   QString mMethodStr;
   bool mSendProcStarted;
   bool mSendInProgress;
+  KMFolder *mOutboxFolder;
+  KMFolder *mSentFolder;
   KMMessage * mCurrentMsg;
   KPIM::ProgressItem* mProgressItem;
   int mSentMessages, mTotalMessages;
