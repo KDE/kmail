@@ -2649,6 +2649,12 @@ void KMComposeWin::slotPasteAsQuotation()
 
 void KMComposeWin::slotPasteAsAttachment()
 {
+  KURL url( QApplication::clipboard()->text( QClipboard::Clipboard ) );
+  if ( url.isValid() ) {
+    addAttach(QApplication::clipboard()->text( QClipboard::Clipboard ) );
+    return;
+  }
+
   if ( QApplication::clipboard()->image().isNull() )  {
     bool ok;
     QString attName = KInputDialog::getText( "KMail", i18n("Name of the attachment:"), QString::null, &ok, this );
