@@ -85,6 +85,8 @@ void KMFolderTreeItem::init()
       setType(Drafts);
     else if (mFolder == kernel->trashFolder())
       setType(Trash);
+    else if(kernel->groupware().isGroupwareFolder(mFolder))
+      setType(kernel->groupware().folderType(mFolder));
   }
   else
 	  setRenameEnabled(0, false);
@@ -579,7 +581,8 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
           fti->setPixmap( 0, SmallIcon("trashcan_empty") );
           break;
         default:
-          fti->setPixmap( 0, SmallIcon("folder") );
+          if( !kernel->groupware().setFolderPixmap( *folder, *fti ) )
+	    fti->setPixmap( 0, SmallIcon("folder") );
         }
 
       } else fti->setPixmap( 0, (fti->normalIcon()) ? *(fti->normalIcon()) : SmallIcon("folder") );
