@@ -1892,7 +1892,9 @@ Kpgp::Result KMComposeWin::composeMessage( QCString pgpUserId,
         // e.g. 7 bit encoded shell scripts unusuable because of the CRs.
         if( bSign || bEncrypt ) {
           QCString cte = attachPart->cteStr().lower();
-          if( ( "7bit" == cte ) || ( "8bit" == cte ) ) {
+          if( ( "8bit" == cte )
+              || ( ( attachPart->type() == DwMime::kTypeText )
+                   && ( "7bit" == cte ) ) ) {
             QByteArray body = attachPart->bodyDecodedBinary();
             QValueList<int> dummy;
             attachPart->setBodyAndGuessCte(body, dummy, false, bSign);
@@ -2232,7 +2234,9 @@ kdDebug(5006) << "                                 processing " << idx << ". att
             // prepare the attachment's content
             // signed/encrypted body parts must be either QP or base64 encoded
             QCString cte = attachPart->cteStr().lower();
-            if( ( "7bit" == cte ) || ( "8bit" == cte ) ) {
+            if( ( "8bit" == cte )
+                || ( ( attachPart->type() == DwMime::kTypeText )
+                     && ( "7bit" == cte ) ) ) {
               QByteArray body = attachPart->bodyDecodedBinary();
               QValueList<int> dummy;
               attachPart->setBodyAndGuessCte(body, dummy, false, true);
