@@ -53,6 +53,8 @@ KMail::HtmlStatusBar::HtmlStatusBar( QWidget * parent, const char * name, WFlags
     mMode( Normal )
 {
   setAlignment( AlignHCenter|AlignTop );
+  // Don't force a minimum height to the reader widget
+  setSizePolicy( QSizePolicy( QSizePolicy::Preferred, QSizePolicy::Ignored ) );
   upd();
 }
 
