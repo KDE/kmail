@@ -601,7 +601,6 @@ public:
   /** Return extra arguments as string. Must not contain newlines. */
   virtual const QString argsAsString() const;
 
-    virtual void testFile() {};
 protected:
   QString mParameter;
 };
