@@ -16,6 +16,7 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
   KMFolderTreeInherited(parent, name, 1)
 {
   KConfig* conf = app->getConfig();
+  QString  kdir = app->kdedir();
   int width;
 
   initMetaObject();
@@ -32,9 +33,11 @@ KMFolderTree::KMFolderTree(QWidget *parent,const char *name) :
 
   setColumn(0, "Folders", 400, KTabListBox::MixedColumn);
 
-  dict().insert("dir", new QPixmap("pics/kmdirclosed.xpm"));
-  dict().insert("fld", new QPixmap("pics/flag.xpm"));
-  dict().insert("in", new QPixmap("pics/bottom.xpm"));
+  dict().insert("dir", new QPixmap(kdir+"/lib/pics/closed.xpm"));
+  dict().insert("fld", new QPixmap(kdir+"/lib/pics/kmfolder.xpm"));
+  dict().insert("in", new QPixmap(kdir+"/lib/pics/kmfldin.xpm"));
+  dict().insert("out", new QPixmap(kdir+"/lib/pics/kmfldout.xpm"));
+  dict().insert("tr", new QPixmap(kdir+"/lib/pics/kmtrash.xpm"));
 
   setAutoUpdate(TRUE);
   reload();
@@ -71,9 +74,18 @@ void KMFolderTree::reload(void)
        folder != NULL;
        folder = (KMAcctFolder*)fdir->next())
   {
-    if (folder->isDir()) str = indent+"{dir} "+folder->name();
-    else if (folder->account()) str = indent+"{in} "+folder->name();
-    else str = indent+"{fld} "+folder->name();
+    str = indent.copy();
+
+    if (folder->isDir()) str += "{dir} ";
+    else if (folder->account()) str += "{in} ";
+    else 
+    {
+      if (folder->name()=="trash") str += "{tr} ";
+      else if (folder->name()=="outbox") str += "{out} ";
+      else str += "{fld} ";
+    }
+    str += folder->name();
+    str.detach();
     insertItem(str);
 
     mList.append(folder);

@@ -31,6 +31,7 @@
 //------
 #include "kmsettings.moc"
 
+
 //-----------------------------------------------------------------------------
 KMSettings::KMSettings(QWidget *parent, const char *name) :
   QTabDialog(parent, name, TRUE)
@@ -286,7 +287,7 @@ void KMSettings::addAccount()
   KMAcctSelDlg acctSel(this, nls->translate("Select Account"));
   KMAccount* acct;
   KMAccountSettings* acctSettings;
-  const char* acctType;
+  const char* acctType = NULL;
 
   if (!acctSel.exec()) return;
 

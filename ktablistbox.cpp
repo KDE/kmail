@@ -568,11 +568,13 @@ bool KTabListBox::startDrag(int aCol, int aRow, const QPoint& p)
 {
   int       dx = -(dndDefaultPixmap.width() >> 1);
   int       dy = -(dndDefaultPixmap.height() >> 1);
-  KDNDIcon* icon = new KDNDIcon(dndDefaultPixmap, p.x()+dx, p.y()+dy);
+  KDNDIcon* icon;
   int       size, type;
   char*	    data;
 
   if (!prepareForDrag(aCol,aRow, &data, &size, &type)) return FALSE;
+
+  icon = new KDNDIcon(dndDefaultPixmap, p.x()+dx, p.y()+dy);
 
   KTabListBoxInherited::startDrag(icon, data, size, type, dx, dy);
   return TRUE;

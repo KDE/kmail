@@ -16,6 +16,8 @@
 //-----------------------------------------------------------------------------
 KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent, name, 4)
 {
+  QString kdir = app->kdedir();
+
   folder = NULL;
   getMsgIndex = -1;
 
@@ -26,13 +28,13 @@ KMHeaders::KMHeaders(QWidget *parent=0, const char *name=0) : KTabListBox(parent
   setColumn(3, nls->translate("Date"), 100);
 
   dict().insert(KMMessage::statusToStr(KMMessage::stNew),
-		new QPixmap("pics/kmmsgnew.xpm"));
+		new QPixmap(kdir+"/lib/pics/kmmsgnew.xpm"));
   dict().insert(KMMessage::statusToStr(KMMessage::stUnread),
-		new QPixmap("pics/kmmsgunseen.xpm"));
+		new QPixmap(kdir+"/lib/pics/kmmsgunseen.xpm"));
   dict().insert(KMMessage::statusToStr(KMMessage::stDeleted),
-		new QPixmap("pics/kmmsgdel.xpm"));
+		new QPixmap(kdir+"/lib/pics/kmmsgdel.xpm"));
   dict().insert(KMMessage::statusToStr(KMMessage::stOld),
-		new QPixmap("pics/kmmsgold.xpm"));
+		new QPixmap(kdir+"/lib/pics/kmmsgold.xpm"));
 
   connect(this,SIGNAL(selected(int,int)),
 	  this,SLOT(selectMessage(int,int)));
