@@ -483,7 +483,7 @@ void KMAcctImap::processNewMail(bool interactive)
   for (it = folderList.begin(); it != folderList.end(); it++)
   {
     KMFolder *folder = *it;
-    if (folder)
+    if (folder && !folder->noContent())
     {
       KMFolderImap *imapFolder = static_cast<KMFolderImap*>(folder);
       if (imapFolder->getImapState() != KMFolderImap::imapInProgress)
