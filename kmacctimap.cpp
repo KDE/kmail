@@ -221,13 +221,10 @@ void KMAcctImap::ignoreJobsForFolder( KMFolder* folder )
   {
     ImapJob *job = it.current();
     ++it;
-    if ( job->msgList().first()->parent() == folder ) 
+    if ( !job->msgList().isEmpty() && job->msgList().first()->parent() == folder ) 
     {
       if ( job->mJob )
-      {
-        job->mJob->disconnect();
         removeJob( job->mJob );
-      }
       mJobList.remove( job );
       delete job;
     }
