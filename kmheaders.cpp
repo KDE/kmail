@@ -78,6 +78,13 @@ QPixmap* KMHeaders::pixSignatureProblematic = 0;
 bool KMHeaders::mTrue = true;
 bool KMHeaders::mFalse = false;
 
+#define KMAIL_SORT_VERSION 1012
+#define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
+#define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
+#define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
+#define KMAIL_MAX_KEY_LEN 16384
+#define KMAIL_RESERVED 3
+
 // Placed before KMHeaderItem because it is used there.
 class KMSortCacheItem {
     KMHeaderItem *mItem;
@@ -137,7 +144,9 @@ public:
     int offset() const { return mSortOffset; }
     void setOffset(int x) { mSortOffset = x; }
 
-    void updateSortFile(FILE *, KMFolder *folder, bool = FALSE);
+    void updateSortFile( FILE *sortStream, KMFolder *folder, 
+                         bool waiting_for_parent = false, 
+                         bool update_discovered_count = false);
 };
 
 
@@ -1173,8 +1182,17 @@ void KMHeaders::msgAdded(int id)
 
       makeHeaderVisible();
 
-      if (perfectParent)
-        mImperfectlyThreadedList.remove ((*it));
+      if (perfectParent) {
+        mImperfectlyThreadedList.removeRef ((*it));
+        // The item was imperfectly thread before, now it's parent
+        // is there. Update the .sorted file accordingly.
+        QString sortFile = KMAIL_SORT_FILE(mFolder);
+        FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+");
+        if (sortStream) {
+          mItems[tryMe]->sortCacheItem()->updateSortFile( sortStream, mFolder );
+          fclose (sortStream);
+        }
+      }
     }
     // Add ourselves only now, to avoid circularity above.
     if (hi && hi->sortCacheItem()->isImperfectlyThreaded())
@@ -1186,12 +1204,12 @@ void KMHeaders::msgAdded(int id)
     mItems[id] = hi;
   }
 
-  appendUnsortedItem(hi); //inserted into sorted list
   if (mSortInfo.fakeSort) {
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
     KMHeadersInherited::setSorting(mSortCol, !mSortDescending );
     mSortInfo.fakeSort = 0;
   }
+  appendItemToSortFile(hi); //inserted into sorted list
 
   msgHeaderChanged(mFolder,id);
 
@@ -2497,12 +2515,6 @@ void KMHeaders::setSorting( int column, bool ascending )
 }
 
 //Flatten the list and write it to disk
-#define KMAIL_SORT_VERSION 1012
-#define KMAIL_SORT_FILE(x) x->indexLocation() + ".sorted"
-#define KMAIL_SORT_HEADER "## KMail Sort V%04d\n\t"
-#define KMAIL_MAGIC_HEADER_OFFSET 21 //strlen(KMAIL_SORT_HEADER)
-#define KMAIL_MAX_KEY_LEN 16384
-#define KMAIL_RESERVED 3
 static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
 			      int parent_id, QString key,
 			      bool update_discover=TRUE)
@@ -2525,10 +2537,10 @@ static void internalWriteItem(FILE *sortStream, KMFolder *folder, int msgid,
   if (update_discover) {
     //update the discovered change count
       Q_INT32 discovered_count = 0;
-      fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
+      fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET);
       fread(&discovered_count, sizeof(discovered_count), 1, sortStream);
       discovered_count++;
-      fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
+      fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 20, SEEK_SET);
       fwrite(&discovered_count, sizeof(discovered_count), 1, sortStream);
   }
 }
@@ -2652,10 +2664,10 @@ bool KMHeaders::writeSortOrder()
   return TRUE;
 }
 
-void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
+void KMHeaders::appendItemToSortFile(KMHeaderItem *khi)
 {
   QString sortFile = KMAIL_SORT_FILE(mFolder);
-  if(FILE *sortStream = fopen(QFile::encodeName(sortFile), "r+")) {
+  if(FILE *sortStream = fopen(QFile::encodeName(sortFile), "a+")) {
     int parent_id = -1; //no parent, top level
     
     if (isThreaded()) {
@@ -2668,13 +2680,22 @@ void KMHeaders::appendUnsortedItem(KMHeaderItem *khi)
            && !kmb->subjectIsPrefixed())
         parent_id = -2;
     }
-    internalWriteItem(sortStream, mFolder, khi->mMsgId, parent_id,
-		      khi->key(mSortCol, !mSortDescending));
 
-    //update the appended flag
+    internalWriteItem(sortStream, mFolder, khi->mMsgId, parent_id,
+		      khi->key(mSortCol, !mSortDescending), false);
+
+    //update the appended flag FIXME obsolete?
     Q_INT32 appended = 1;
     fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
     fwrite(&appended, sizeof(appended), 1, sortStream);
+    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 16, SEEK_SET);
+
+    Q_INT32 sorted_count = 0;
+    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 24, SEEK_SET);
+    fread(&sorted_count, sizeof(sorted_count), 1, sortStream);
+    sorted_count++;
+    fseek(sortStream, KMAIL_MAGIC_HEADER_OFFSET + 24, SEEK_SET);
+    fwrite(&sorted_count, sizeof(sorted_count), 1, sortStream);
 
     if (sortStream && ferror(sortStream)) {
 	fclose(sortStream);
@@ -2695,7 +2716,8 @@ void KMHeaders::dirtySortOrder(int column)
     QObject::disconnect(header(), SIGNAL(clicked(int)), this, SLOT(dirtySortOrder(int)));
     setSorting(column, mSortInfo.column == column ? !mSortInfo.ascending : TRUE);
 }
-void KMSortCacheItem::updateSortFile(FILE *sortStream, KMFolder *folder, bool waiting_for_parent)
+void KMSortCacheItem::updateSortFile( FILE *sortStream, KMFolder *folder, 
+                                      bool waiting_for_parent, bool update_discover)
 {
     if(mSortOffset == -1) {
 	fseek(sortStream, 0, SEEK_END);
@@ -2709,7 +2731,7 @@ void KMSortCacheItem::updateSortFile(FILE *sortStream, KMFolder *folder, bool wa
 	if(mParent && !isImperfectlyThreaded())
 	    parent_id = mParent->id();
     }
-    internalWriteItem(sortStream, folder, mId, parent_id, mKey);
+    internalWriteItem(sortStream, folder, mId, parent_id, mKey, update_discover);
 }
 
 static bool compare_ascending = FALSE;
@@ -2851,7 +2873,6 @@ bool KMHeaders::readSortOrder(bool set_selection)
     bool unread_exists = false;
     QMemArray<KMSortCacheItem *> sortCache(mFolder->count());
     KMSortCacheItem root;
-    QString replyToIdMD5;
     root.setId(-666); //mark of the root!
     bool error = false;
 
@@ -2969,9 +2990,6 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		    if(parent == -1) {
 			unparented.append(item);
 			root.addUnsortedChild(item);
-                        // Abuse appended for signaling that messages need to
-                        // threaded.
-                        appended = 1;
 		    } else {
 			if( ! sortCache[parent] )
 			    sortCache[parent] = new KMSortCacheItem;
@@ -2986,7 +3004,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		}
 	    }
 	    if (error || (x != sorted_count + discovered_count)) {// sanity check
-		kdDebug(5006) << "Whoa: x " << x << ", sorted_count " << sorted_count << ", discovered_count " << discovered_count << ", count " << mFolder->count() << endl;
+		kdDebug(5006) << endl << "Whoa: x " << x << ", sorted_count " << sorted_count << ", discovered_count " << discovered_count << ", count " << mFolder->count() << endl << endl;
 		fclose(sortStream);
 		sortStream = 0;
 	    }
@@ -3033,7 +3051,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
 		else
 		    root.addUnsortedChild(sortCache[x]);
 		if(sortStream)
-		    sortCache[x]->updateSortFile(sortStream, mFolder, TRUE);
+		    sortCache[x]->updateSortFile(sortStream, mFolder, true, true);
 		discovered_count++;
 		appended = 1;
 	    }
@@ -3047,7 +3065,7 @@ bool KMHeaders::readSortOrder(bool set_selection)
     if (threaded) buildThreadingTree( sortCache );
     QPtrList<KMSortCacheItem> toBeSubjThreaded;
 
-    if (appended && threaded && !unparented.isEmpty()) {
+    if (threaded && !unparented.isEmpty()) {
 	CREATE_TIMER(reparent);
 	START_TIMER(reparent);
        

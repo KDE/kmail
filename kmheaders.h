@@ -352,7 +352,7 @@ private:
       uint fakeSort : 1;
       uint removed : 1;
   } mSortInfo;
-  void appendUnsortedItem(KMHeaderItem *);
+  void appendItemToSortFile(KMHeaderItem *);
   bool writeSortOrder();
   bool readSortOrder(bool set_selection=FALSE);
 
