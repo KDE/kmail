@@ -1,0 +1,10 @@
+Sat Feb 14 10:03:09 1998  Stefan Taferner  <stefan@idefix.home.org>
+
+	* Startup: when recovering dead letters the auto signature was 
+	appended twice. Fixed now.
+
+	* Composer: fixed broken inserting of files.
+
+	* kFileToString(): fixed handling of files with zero length.
+
+Initial version: 0.5.7

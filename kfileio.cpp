@@ -60,6 +60,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
 				   "to the file:\n%s"), aFileName);
     return 0;
   }
+  if (len <= 0) return 0;
 
   if (!file.open(IO_Raw|IO_ReadOnly))
   {
@@ -77,7 +78,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     return 0;
   }
 
-  result.resize(len+1 + (int)aEnsureNL);
+  result.resize(len + (int)aEnsureNL);
   readLen = file.readBlock(result.data(), len);
   if (aEnsureNL && result[len-1]!='\n')
   {

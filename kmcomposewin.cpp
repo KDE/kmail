@@ -1040,35 +1040,21 @@ void KMComposeWin::slotAttachFile()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotInsertFile()
 {
-  // Create File Dialog and return selected file
-
-  QString fileName;
-  QString strCopy;
-  char temp[256];
+  QString fileName, str;
   int col, line;
-  QFileDialog fdlg(".","*",this,NULL,TRUE);
 
-  fdlg.setCaption(i18n("Attach File"));
+  QFileDialog fdlg(".", "*", this, NULL, TRUE);
+  fdlg.setCaption(i18n("Include File"));
   if (!fdlg.exec()) return;
 
-  fileName = fdlg.selectedFile();		
-  if(fileName.isEmpty()) return;
+  fileName = fdlg.selectedFile();
+  if (fileName.isEmpty()) return;
 
-  cout << fileName << endl;
-  QFile *f = new QFile(fileName);
+  str = kFileToString(fileName, TRUE, TRUE);
+  if (str.isEmpty()) return;
 
-  if(!f->open(IO_ReadOnly))
-    return;
-
-  f->at(0);
-  while(!f->atEnd()) {
-    f->readLine(temp,255);
-    strCopy.append(temp);
-  }
-
-  mEditor->getCursorPosition(&line,&col);
-  mEditor->insertAt(strCopy, line ,col);
-  f->close();
+  mEditor->getCursorPosition(&line, &col);
+  mEditor->insertAt(str, line, col);
 }  
 
 

@@ -192,7 +192,7 @@ static void recoverDeadLetters(void)
     if (msg)
     {
       win = new KMComposeWin;
-      win->setMsg(msg);
+      win->setMsg(msg, FALSE);
       win->show();
     }
   }
