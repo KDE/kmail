@@ -17,6 +17,15 @@
 
 #include "kmkernel.h"
 
+typedef enum 
+{
+    FCNTL,
+    procmail_lockfile,
+    mutt_dotlock,
+    mutt_dotlock_privileged,
+    None
+} LockType;
+
 /** The "about KMail" text. */
 extern const char* aboutText;
 #endif

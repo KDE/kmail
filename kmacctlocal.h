@@ -5,6 +5,7 @@
 #define kmacctlocal_h
 
 #include "kmaccount.h"
+#include "kmglobal.h"
 
 #define KMAcctLocalInherited KMAccount
 
@@ -33,6 +34,7 @@ public:
 protected:
   QString mLocation;
   bool hasNewMail;
+  LockType mLock;
 };
 
 #endif /*kmacctlocal_h*/

@@ -83,6 +83,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mUnreadMsgs      = -1;
   needsCompact    = FALSE;
   mChild          = 0;
+  mLockType       = FCNTL;
 }
 
 
@@ -304,15 +305,20 @@ int KMFolder::lock()
   fl.l_whence=0;
   fl.l_start=0;
   fl.l_len=0;
-
+  fl.l_pid=-1;
+  QString cmd_str; 
   assert(mStream != NULL);
   mFilesLocked = FALSE;
 
-  rc = fcntl(fileno(mStream), F_SETLK, &fl);
+  switch( mLockType )
+  {
+    case FCNTL:
+      rc = fcntl(fileno(mStream), F_SETLKW, &fl);
 
   if (rc < 0)
   {
-    kdDebug() << "Cannot lock folder `" << (const char*)location() << "': " << strerror(errno) << " (" << errno << ")" << endl;
+        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+                  << strerror(errno) << " (" << errno << ")" << endl;
     return errno;
   }
 
@@ -322,13 +328,87 @@ int KMFolder::lock()
 
     if (rc < 0)
     {
-      kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': " << strerror(errno) << endl;
+          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+                    << strerror(errno) << " (" << errno << ")" << endl;
       rc = errno;
       fl.l_type = F_UNLCK;
       rc = fcntl(fileno(mIndexStream), F_SETLK, &fl);
       return rc;
     }
   }
+      break;
+
+    case procmail_lockfile:
+      cmd_str = "lockfile " + location() + ".lock";
+      rc = system( cmd_str.latin1() );
+      if( rc != 0 )
+      {
+        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+                  << strerror(rc) << " (" << rc << ")" << endl;
+        return rc;
+      }
+      if( mIndexStream )
+      {
+        cmd_str = "lockfile " + indexLocation() + ".lock";
+        rc = system( cmd_str.latin1() );
+        if( rc != 0 )
+        {
+          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+                    << strerror(rc) << " (" << rc << ")" << endl;
+          return rc;
+        }
+      }
+      break;
+
+    case mutt_dotlock:
+      cmd_str = "mutt_dotlock " + location();
+      rc = system( cmd_str.latin1() );
+      if( rc != 0 )
+      {
+        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+                  << strerror(rc) << " (" << rc << ")" << endl;
+        return rc;
+      }
+      if( mIndexStream )
+      {
+        cmd_str = "mutt_dotlock " + indexLocation();
+        rc = system( cmd_str.latin1() );
+        if( rc != 0 )
+        {
+          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+                    << strerror(rc) << " (" << rc << ")" << endl;
+          return rc;
+        }
+      }
+      break;
+
+    case mutt_dotlock_privileged:
+      cmd_str = "mutt_dotlock -p " + location();
+      rc = system( cmd_str.latin1() );
+      if( rc != 0 )
+      {
+        kdDebug() << "Cannot lock folder `" << (const char*)location() << "': "
+                  << strerror(rc) << " (" << rc << ")" << endl;
+        return rc;
+      }
+      if( mIndexStream )
+      {
+        cmd_str = "mutt_dotlock -p " + indexLocation();
+        rc = system( cmd_str.latin1() );
+        if( rc != 0 )
+        {
+          kdDebug() << "Cannot lock index of folder `" << (const char*)location() << "': "
+                    << strerror(rc) << " (" << rc << ")" << endl;
+          return rc;
+        }
+      }
+      break;
+
+    case None:
+    default:
+      break;
+  }
+
 
   mFilesLocked = TRUE;
   return 0;
@@ -344,14 +424,56 @@ int KMFolder::unlock()
   fl.l_whence=0;
   fl.l_start=0;
   fl.l_len=0;
+  QString cmd_str;
 
   assert(mStream != NULL);
   mFilesLocked = FALSE;
 
+  switch( mLockType )
+  {
+    case FCNTL:
   if (mIndexStream) fcntl(fileno(mIndexStream), F_SETLK, &fl);
-  rc = fcntl(fileno(mStream), F_SETLK, F_UNLCK);
+      fcntl(fileno(mStream), F_SETLK, F_UNLCK);
+      rc = errno;
+      break;
 
-  return errno;
+    case procmail_lockfile:
+      cmd_str = "rm -f " + location() + ".lock";
+      rc = system( cmd_str.latin1() );
+      if( mIndexStream )
+      {
+        cmd_str = "rm -f " + indexLocation() + ".lock";
+        rc = system( cmd_str.latin1() );
+}
+      break;
+
+    case mutt_dotlock:
+      cmd_str = "mutt_dotlock -u " + location();
+      rc = system( cmd_str.latin1() );
+      if( mIndexStream )
+      {
+        cmd_str = "mutt_dotlock -u " + indexLocation();
+        rc = system( cmd_str.latin1() );
+      }
+      break;
+
+    case mutt_dotlock_privileged:
+      cmd_str = "mutt_dotlock -p -u " + location();
+      rc = system( cmd_str.latin1() );
+      if( mIndexStream )
+      {
+        cmd_str = "mutt_dotlock -p -u " + indexLocation();
+        rc = system( cmd_str.latin1() );
+      }
+      break;
+
+    case None:
+    default:
+      rc = 0;
+      break;
+  }
+
+  return rc;
 }
 
 
@@ -1385,4 +1507,9 @@ void KMFolder::correctUnreadMsgsCount()
 }
 
 //-----------------------------------------------------------------------------
+void KMFolder::setLockType( LockType ltype )
+{
+  mLockType = ltype;
+}
+
 #include "kmfolder.moc"

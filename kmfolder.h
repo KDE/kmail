@@ -21,6 +21,7 @@
 #include "kmfoldernode.h"
 #include "kmmsginfo.h"
 #include "kmmsglist.h"
+#include "kmglobal.h"
 
 #include <stdio.h>
 #include <qvector.h>
@@ -47,6 +48,8 @@ class KMFolder: public KMFolderNode
   friend class KMMessage;
 
 public:
+  
+  
   /** Usually a parent is given. But in some cases there is no
     fitting parent object available. Then the name of the folder
     is used as the absolute path to the folder file. */
@@ -230,6 +233,8 @@ public:
   /* Returns a string that can be used to identify this folder */
   virtual QString idString();
 
+  void setLockType( LockType ltype=FCNTL );
+  
 signals:
   /** Emitted when the status, name, or associated accounts of this
     folder changed. */
@@ -309,6 +314,7 @@ protected:
   int mUnreadMsgs; // number of unread messages, -1 if not yet set
   bool needsCompact; //sven: true if on destruct folder needs to be compacted.
   KMFolderDir* mChild;
+  LockType mLockType;
 };
 
 #endif /*kmfolder_h*/

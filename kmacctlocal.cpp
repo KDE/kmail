@@ -36,6 +36,7 @@ KMAcctLocal::KMAcctLocal(KMAcctMgr* aOwner, const char* aAccountName):
   KMAcctLocalInherited(aOwner, aAccountName)
 {
   initMetaObject();
+  mLock = FCNTL;
 }
 
 
@@ -83,6 +84,7 @@ void KMAcctLocal::processNewMail(bool)
 {
   QTime t;
   KMFolder mailFolder(NULL, location());
+  mailFolder.setLockType( mLock );
   long num = 0;
   long i;
   int rc;
@@ -118,6 +120,7 @@ void KMAcctLocal::processNewMail(bool)
     KMessageBox::sorry(0, aStr);
     perror("cannot open file "+mailFolder.path()+"/"+mailFolder.name());
     emit finishedCheck(hasNewMail);
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed..." ));
     return;
   }
 
@@ -125,6 +128,7 @@ void KMAcctLocal::processNewMail(bool)
     kdDebug() << "mailFolder could not be locked" << endl;
     mailFolder.close();
     emit finishedCheck(hasNewMail);
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed..." ));
     return;
   }
 
@@ -171,8 +175,7 @@ void KMAcctLocal::processNewMail(bool)
   rc = mailFolder.expunge();
   if (rc)
     KMessageBox::information( 0, i18n("Cannot remove mail from\nmailbox `%1':\n%2").arg(mailFolder.location().arg(strerror(rc))));
-  KMBroadcastStatus::instance()->setStatusMsg(
-		     i18n( "Transmission completed..." ));
+    KMBroadcastStatus::instance()->setStatusMsg( i18n( "Transmission completed..." ));
   }
   // else warning is written already
 
@@ -195,6 +198,17 @@ void KMAcctLocal::readConfig(KConfig& config)
 
   KMAcctLocalInherited::readConfig(config);
   mLocation = config.readEntry("Location", defaultPath);
+  QString locktype = config.readEntry("LockType", "fcntl" );
+
+  if( locktype == "procmail_lockfile" )
+    mLock = procmail_lockfile;
+  else if( locktype == "mutt_dotlock" )
+    mLock = mutt_dotlock;
+  else if( locktype == "mutt_dotlock_privileged" )
+    mLock = mutt_dotlock_privileged;
+  else if( locktype == "none" )
+    mLock = None;
+  else mLock = FCNTL;
 }
 
 
