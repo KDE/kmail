@@ -127,6 +127,13 @@ void KMCommand::slotPostTransfer(bool success)
 	     this, SLOT(slotPostTransfer(bool)));
   if (success)
     execute();
+  QPtrListIterator<KMMessage> it( mRetrievedMsgs );
+  KMMessage* msg;
+  while ( (msg = it.current()) != 0 )
+  {
+    ++it;
+    msg->setTransferInProgress(false);
+  }
   delete this;
 }
 
@@ -174,6 +181,7 @@ void KMCommand::transferSelectedMsgs()
       // msg musn't be deleted
       thisMsg->setTransferInProgress(true);
     } else {
+      thisMsg->setTransferInProgress(true);
       mRetrievedMsgs.append(thisMsg);
     }
   }
@@ -192,7 +200,6 @@ void KMCommand::transferSelectedMsgs()
 
 void KMCommand::slotMsgTransfered(KMMessage* msg)
 {
-  msg->setTransferInProgress(false);
   if (mProgressDialog->wasCancelled()) {
     emit messagesTransfered(false);
     return;
@@ -251,19 +258,11 @@ void KMCommand::slotTransferCancelled()
   while ( (msg = it.current()) != 0 )
   {
     ++it;
+    msg->setTransferInProgress(false);
     int idx = mFolder->find(msg);
     if (idx > 0) mFolder->unGetMsg(idx);
   }
   mRetrievedMsgs.clear();
-  // unget the selected messages
-  for (KMMsgBase *mb = mMsgList.first(); mb; mb = mMsgList.next())
-  {
-    if (mb->isMessage())
-    {
-      int idx = mFolder->find(mb);
-      if (idx > 0) mFolder->unGetMsg(idx);
-    }
-  }
   emit messagesTransfered(false);
 }
 
@@ -449,7 +448,7 @@ void KMEditMsgCommand::execute()
 
   if (msg->parent() == kernel->outboxFolder() && msg->transferInProgress())
     return;
-  
+
   msg->parent()->removeMsg(msg);
 #if 0
   // Useful?
