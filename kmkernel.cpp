@@ -424,9 +424,15 @@ int KMKernel::openComposer (const QString &to, const QString &cc,
   bool iCalAutoSend = false;
   bool noWordWrap = false;
   KConfigGroup options( config(), "Groupware" );
-  if (  !attachData.isEmpty() ) {
-    if ( attachName == "cal.ics" && attachType == "text" &&
-	attachSubType == "calendar" && attachParamAttr == "method" &&
+  if ( !attachData.isEmpty() ) {
+    bool isICalInvitation = attachName == "cal.ics" &&
+      attachType == "text" &&
+      attachSubType == "calendar" &&
+      attachParamAttr == "method";
+    // Remove BCC from identity on ical invitations (https://intevation.de/roundup/kolab/issue474)
+    if ( isICalInvitation && bcc.isEmpty() )
+      msg->setBcc( "" );
+    if ( isICalInvitation &&
 	options.readBoolEntry( "LegacyBodyInvites", false ) ) {
       // KOrganizer invitation caught and to be sent as body instead
       msg->setBody( attachData );
