@@ -37,6 +37,7 @@
 #include "kmtopwidget.h"
 #include "kmtransport.h"
 #include "kmfoldermgr.h"
+#include "kmgroupware.h"
 #include "cryptplugconfigdialog.h"
 #include "kmidentity.h"
 #include "identitymanager.h"
@@ -4134,9 +4135,7 @@ void GroupwarePage::apply()
     options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
   }
 
-#if 0
   kernel->groupware().readConfig();
-#endif
 }
 
 
