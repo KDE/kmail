@@ -531,8 +531,7 @@ Kpgp::receivers(void) const
 const QString
 Kpgp::KeyToDecrypt(void) const
 {
-  //FIXME
-  return QString::null;
+  return pgp->encryptedFor();
 }
 
 bool
