@@ -508,7 +508,9 @@ QString KMFolder::mailingListPostAddress() const
     KURL::List::const_iterator it;
     KURL::List post = mMailingList.postURLS();
     for( it = post.begin(); it != post.end(); ++it ) {
-      if ( (*it).protocol() == "mailto" )
+      // We check for isEmpty because before 3.3 postAddress was just an
+      // email@kde.org and that leaves protocol() field in the kurl class
+      if ( (*it).protocol() == "mailto" || (*it).protocol().isEmpty() )
         return (*it).path();
     }
   }
