@@ -36,6 +36,9 @@ Key=createOwnMessageIdHeaders,useCustomMessageIdSuffix
 Id=8
 File=kmailrc
 Script=kmail-pgpidentity.pl,perl
+#
+# KDE 3.0 released
+#
 # Uppgrade the signature config options (where a trailing pipe (|) meant
 # to interpret the filename as a command (KDE 3.0 -> KDE 3.1)
 Id=9
