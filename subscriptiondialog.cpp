@@ -10,7 +10,7 @@
     Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, US
 */
 
-#include "subscription.h"
+#include "subscriptiondialog.h"
 #include "kmmessage.h"
 
 #include <klocale.h>
@@ -20,7 +20,7 @@
 
 namespace KMail {
 
-Subscription::Subscription( QWidget *parent, const QString &caption,
+SubscriptionDialog::SubscriptionDialog( QWidget *parent, const QString &caption,
     KAccount * acct )
   : KSubscription( parent, caption, acct, User1, QString::null, false )
 {
@@ -46,7 +46,7 @@ Subscription::Subscription( QWidget *parent, const QString &caption,
 }
 
 //------------------------------------------------------------------------------
-void Subscription::slotListDirectory( QStringList mSubfolderNames, 
+void SubscriptionDialog::slotListDirectory( QStringList mSubfolderNames, 
                                         QStringList mSubfolderPaths, 
                                         QStringList mSubfolderMimeTypes,
                                         KMAcctImap::jobData jobData )
@@ -141,7 +141,7 @@ void Subscription::slotListDirectory( QStringList mSubfolderNames,
 }
 
 //------------------------------------------------------------------------------
-void Subscription::slotSave()
+void SubscriptionDialog::slotSave()
 {
   // subscribe
   QListViewItemIterator it(subView);
@@ -161,7 +161,7 @@ void Subscription::slotSave()
 }
 
 //------------------------------------------------------------------------------
-void Subscription::slotLoadFolders()
+void SubscriptionDialog::slotLoadFolders()
 {
   folderTree()->clear();
   KMAcctImap* ai = static_cast<KMAcctImap*>(account());
@@ -172,4 +172,4 @@ void Subscription::slotLoadFolders()
 
 };
 
-#include "subscription.moc"
+#include "subscriptiondialog.moc"

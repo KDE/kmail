@@ -15,8 +15,8 @@
    the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
    Boston, MA 02111-1307, USA.
 */
-#ifndef __SUBSCRIPTION
-#define __SUBSCRIPTION
+#ifndef __SUBSCRIPTIONDIALOG
+#define __SUBSCRIPTIONDIALOG
 
 #include <ksubscription.h>
 
@@ -26,12 +26,12 @@ class KMMessage;
 
 namespace KMail {
 
-  class Subscription : public KSubscription
+  class SubscriptionDialog : public KSubscription
   {
     Q_OBJECT
 
     public:
-      Subscription( QWidget *parent, const QString &caption, KAccount* acct );
+      SubscriptionDialog( QWidget *parent, const QString &caption, KAccount* acct );
 
       public slots:
         /**
