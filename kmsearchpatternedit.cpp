@@ -136,7 +136,7 @@ KMSearchRule* KMSearchRuleWidget::rule() const {
   QCString ruleField = ruleFieldToEnglish( mRuleField->currentText() );
   QString text = 0;
   if ( ruleField == "<status>" )
-    text = mStati->currentText();
+    text = statusToEnglish( mStati->currentText() );
   else
     text = mRuleValue->text();
 
