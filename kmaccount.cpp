@@ -18,6 +18,8 @@ using KMail::FolderJob;
 #include <kdebug.h>
 #include <kconfig.h>
 
+#include <qeventloop.h>
+
 #include <stdlib.h>
 #include <unistd.h>
 
@@ -368,7 +370,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
   kdDebug(5006) << "Running precommand " << precommand << endl;
   if (!precommandProcess.start()) return false;
 
-  kapp->enter_loop();
+  kapp->eventLoop()->enterLoop();
 
   return mPrecommandSuccess;
 }
@@ -377,7 +379,7 @@ bool KMAccount::runPrecommand(const QString &precommand)
 void KMAccount::precommandExited(bool success)
 {
   mPrecommandSuccess = success;
-  kapp->exit_loop();
+  kapp->eventLoop()->exitLoop();
 }
 
 //-----------------------------------------------------------------------------
