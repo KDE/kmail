@@ -19,19 +19,6 @@
 
 #include "kmstartup.h"
 
-// OLD about text.  This is horrbly outdated.
-/*const char* aboutText =
-    "KMail [" KMAIL_VERSION "] by\n\n"
-    "Stefan Taferner <taferner@kde.org>,\n"
-    "Markus Wübben <markus.wuebben@kde.org>\n\n"
-    "based on the work of:\n"
-    "Lynx <lynx@topaz.hknet.com>,\n"
-    "Stephan Meyer <Stephan.Meyer@pobox.com>,\n"
-    "and the above authors.\n\n"
-    "This program is covered by the GPL.\n\n"
-    "Please send bugreports to taferner@kde.org";
-*/
-
 //-----------------------------------------------------------------------------
 
 class KMailApplication : public KUniqueApplication
