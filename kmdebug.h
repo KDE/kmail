@@ -5,6 +5,9 @@
 
 #include <kdebug.h>
 
+// Enable this to debug timing
+// #define DEBUG_TIMING
+
 // return type of kmDebug() depends on NDEBUG define:
 #ifdef NDEBUG
 # define kmail_dbgstream kndbgstream
@@ -27,7 +30,8 @@ static inline kdbgstream kmError( bool cond ) { return kdError( cond, kmail_debu
 static inline kdbgstream kmFatal() { return kdFatal( kmail_debug_area ); }
 static inline kdbgstream kmFatal( bool cond ) { return kdFatal( cond, kmail_debug_area ); }
 
-#ifndef NDEBUG //timing utilities
+// timing utilities
+#if !defined( NDEBUG ) && defined( DEBUG_TIMING )
 #include <qdatetime.h>
 #define CREATE_TIMER(x) int x=0, x ## _tmp=0; QTime x ## _tmp2
 #define START_TIMER(x) x ## _tmp2 = QTime::currentTime()

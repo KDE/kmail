@@ -3937,8 +3937,8 @@ QString KMMessage::emailAddrAsAnchor(const QString& aEmail, bool stripped)
   // cut of the trailing ", "
   result.truncate( result.length() - 2 );
 
-  kdDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail
-                << "') returns:\n-->" << result << "<--" << endl;
+  //kdDebug(5006) << "KMMessage::emailAddrAsAnchor('" << aEmail
+  //              << "') returns:\n-->" << result << "<--" << endl;
   return result;
 }
 
