@@ -71,11 +71,11 @@ Message &amp;Options</text>
 <Action name="new_composer" />
 <Separator/>
 <Action name="file_print" />
+<Action name="edit_undo" />
+<Action name="edit_redo" />
 <Action name="edit_cut" />
 <Action name="edit_copy" />
 <Action name="edit_paste" />
-<Action name="edit_undo" />
-<Action name="edit_redo" />
 <Separator />
 <Action name="addresbook" />
 <Action name="attach" />
