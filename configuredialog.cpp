@@ -3785,18 +3785,6 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
-  QVGroupBox* resourceVGB = new QVGroupBox( i18n( "Automatic &Resource Management" ), gBox );
-  mAutoResCB = new QCheckBox( i18n( "&Automatically accept resource requests" ), resourceVGB );
-  mAutoDeclConflCB = new QCheckBox( i18n( "A&utomatically decline conflicting requests" ), resourceVGB );
-  mAutoDeclConflCB->setEnabled( false );
-  connect( mAutoResCB, SIGNAL( toggled( bool ) ),
-           mAutoDeclConflCB, SLOT( setEnabled( bool ) ) );
-
-  connect( mAutoDeclConflCB, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-  connect( mAutoResCB, SIGNAL( stateChanged( int ) ),
-           this, SLOT( slotEmitChanged( void ) ) );
-
   // Open space padding at the end
   new QLabel( this );
 }
@@ -3806,8 +3794,6 @@ void MiscPage::GroupwareTab::load() {
   KConfigGroup options( KMKernel::config(), "Groupware" );
   mEnableGwCB->setChecked( options.readBoolEntry( "Enabled", true ) );
   gBox->setEnabled( mEnableGwCB->isChecked() );
-  mAutoResCB->setChecked( options.readBoolEntry( "AutoAccept", false ) );
-  mAutoDeclConflCB->setChecked( options.readBoolEntry( "AutoDeclConflict", false ) );
   mLegacyMangleFromTo->setChecked( options.readBoolEntry( "LegacyMangleFromToHeaders", false ) );
 
   // Read the IMAP resource config
@@ -3829,11 +3815,7 @@ void MiscPage::GroupwareTab::save() {
   // Write the groupware config
   KConfigGroup options( KMKernel::config(), "Groupware" );
   options.writeEntry( "Enabled", mEnableGwCB->isChecked() );
-  if ( mEnableGwCB->isChecked() ) {
-    options.writeEntry( "AutoAccept", mAutoResCB->isChecked() );
-    options.writeEntry( "AutoDeclConflict", mAutoDeclConflCB->isChecked() );
-    options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
-  }
+  options.writeEntry( "LegacyMangleFromToHeaders", mLegacyMangleFromTo->isChecked() );
 
   // Write the IMAP resource config
   KConfigGroup irOptions( KMKernel::config(), "IMAP Resource" );
@@ -3844,10 +3826,8 @@ void MiscPage::GroupwareTab::save() {
   bool enabled = mEnableImapResCB->isChecked() &&
     mFolderCombo->getFolder();
   irOptions.writeEntry( "Enabled", enabled );
-  if ( enabled ) {
-    irOptions.writeEntry( "Folder Language", mLanguageCombo->currentItem() );
-    irOptions.writeEntry( "Folder Parent", mFolderCombo->getFolder()->idString() );
-  }
+  irOptions.writeEntry( "Folder Language", mLanguageCombo->currentItem() );
+  irOptions.writeEntry( "Folder Parent", mFolderCombo->getFolder()->idString() );
 }
 
 

@@ -70,7 +70,7 @@ public:
 
   /**
    * Account name (reimpl because of ambiguous QObject::name())
-   */ 
+   */
   virtual QString name() const { return KAccount::name(); }
 
   /**
@@ -148,12 +148,6 @@ public:
   virtual void setCheckExclude(bool aExclude);
   bool checkExclude(void) const { return mExclude; }
 
-  /**
-   * Set/get whether the account is for a semi-automatically managed resource.
-   */
-  virtual void setResource(bool aResource);
-  bool resource(void) const { return mResource; }
-
    /**
     * Pre command
     */
@@ -185,13 +179,6 @@ public:
    * If this account is a disconnected IMAP account, invalidate it.
    */
   virtual void invalidateIMAPFolders();
-
-  // stuff for resource-handling
-  void addInterval( const QPair<QDateTime,QDateTime>& );
-  QValueList<QPair<QDateTime, QDateTime> > intervals() const;
-  void clearIntervals();
-  void clearOldIntervals();
-  void setIntervals( const QValueList<QPair<QDateTime, QDateTime> >& );
 
   /**
    * Set/Get if this account is currently checking mail
@@ -244,16 +231,12 @@ protected:
   QGuardedPtr<KMAcctFolder> mFolder;
   QTimer *mTimer, mReceiptTimer;
   int mInterval;
-  bool mResource;
   bool mExclude;
   bool mCheckingMail : 1;
   bool mPrecommandSuccess;
   QValueList<KMMessage*> mReceipts;
   QPtrList<FolderJob>  mJobList;
   bool mHasInbox : 1;
-
-  // for resource handling
-  QValueList<QPair<QDateTime, QDateTime> > mIntervals;
 
 private:
     /**

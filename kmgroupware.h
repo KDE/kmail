@@ -58,7 +58,7 @@ public:
   /**
      Retrieve matching body part (either text/vCal (or vCard) or
      application/ms-tnef) and decode it.
-  
+
      If return value is true, s holds a readable vPart.
   */
   static bool vPartFoundAndDecoded( KMMessage* msg, QString& s );
@@ -72,11 +72,6 @@ public:
      url was handled.
   */
   bool handleLink( const KURL &aUrl, KMMessage* msg );
-
-  /**
-     This method handles incoming resource requests.
-  */
-  bool incomingResourceMessage( KMAccount*, KMMessage* );
 
 public slots:
   /* (Re-)Read configuration file */

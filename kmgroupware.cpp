@@ -362,54 +362,6 @@ bool KMGroupware::handleLink( const KURL &url, KMMessage* msg )
   return true;
 }
 
-
-/*
- * Automatic resource handling
- */
-bool KMGroupware::incomingResourceMessage( KMAccount* /*acct*/, KMMessage* /*msg*/ )
-{
-#if 0
-  // TODO: Reimplement with DCOP
-
-  if( !mUseGroupware)
-    return false;
-
-  QString vCalIn;
-  if( vPartFoundAndDecoded( msg, vCalIn ) )
-    return false;
-
-  bool vCalInOK, vCalOutOK, isFree;
-  QString vCalOut;
-  QDateTime start, end;
-  emit( signalResourceRequest( acct->intervals(), KMMessage::getEmailAddr( msg->to() ),
-                               vCalIn, vCalInOK, vCalOut, vCalOutOK, isFree, start, end ) );
-  if( !vCalInOK || !vCalOutOK )
-    return false; // parsing or generation error somewhere
-
-  // Check whether we are supposed to answer automatically at all
-  KConfigGroup options( KMKernel::config(), "Groupware" );
-  if( isFree && options.readBoolEntry( "AutoAccept", false ) )
-    return false;
-  if( !isFree && options.readBoolEntry( "AutoDeclConflict", false ) )
-    return false;
-
-  // Everything went fine so far, now attach the answer
-  KMMessage* msgNew = 0;
-  if( msg ){
-    msgNew = msg->createReply( KMail::ReplyAuthor, vCalOut, false, true, TRUE );
-    msgNew->setType( DwMime::kTypeText );
-    msgNew->setSubtype( DwMime::kSubtypeVCal );
-    msgNew->setHeaderField("Content-Type", "text/calendar; method=REPLY; charset=\"utf-8\"");
-    internal_directlySendMessage( msgNew );
-  }
-
-  // And also record in the account.
-  acct->addInterval( qMakePair( start, end ) );
-#endif
-
-  return true;
-}
-
 /*
  * Handle connection to KOrganizer.
  */
