@@ -816,7 +816,6 @@ void FolderStorage::readConfig()
   int type = config->readNumEntry( "ContentsType", 0 );
   if ( type < 0 || type > KMail::ContentsTypeLast ) type = 0;
   setContentsType( static_cast<KMail::FolderContentsType>( type ) );
-  mContentsTypeChanged = false;
 
   if( folder() ) folder()->readConfig( config );
 }

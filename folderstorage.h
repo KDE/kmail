@@ -523,7 +523,6 @@ protected:
   bool mNoContent;
   bool mNoChildren;
   bool mConvertToUtf8;
-  bool mContentsTypeChanged;
 
   /** Points at the reverse dictionary for this folder. */
   KMMsgDictREntry *mRDict;
