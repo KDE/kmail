@@ -450,7 +450,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   if( !fldr ||
       fldr->folderType() == KMFolderTypeSearch )
   {
-    kdDebug(5006) << "Null or a search folder, can't mess with that" << endl;
+    // kdDebug(5006) << "Null or a search folder, can't mess with that" << endl;
     return;
   }
 
