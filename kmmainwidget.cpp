@@ -476,6 +476,7 @@ void KMMainWidget::createWidgets(void)
   searchToolBar->setStretchableWidget(quickSearchLine);
   connect( mHeaders, SIGNAL( messageListUpdated() ),
            quickSearchLine, SLOT( updateSearch() ) );
+  if ( !GlobalSettings::quickSearchLineEdit() ) searchToolBar->hide();
 
   new QLabel(i18n("Show only mail with status:"), searchToolBar, "kde toolbar widget");
 
