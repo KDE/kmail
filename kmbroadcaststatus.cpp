@@ -233,7 +233,7 @@ KMLittleProgressDlg::KMLittleProgressDlg( QWidget* parent, bool button )
   setMode();
 
   connect( m_pButton, SIGNAL( clicked() ),
-	   KMBroadcastStatus::instance(), SLOT( requestAbort() ));
+           KMBroadcastStatus::instance(), SLOT( requestAbort() ));
 }
 
 void KMLittleProgressDlg::slotEnable( bool enabled )
@@ -323,9 +323,9 @@ bool KMLittleProgressDlg::eventFilter( QObject *, QEvent *ev )
 
     if ( e->button() == LeftButton ) {    // toggle view on left mouse button
       if ( mode == Label ) {
-	mode = Progress;
+        mode = Progress;
       } else if ( mode == Progress ) {
-	mode = Label;
+        mode = Label;
       }
       setMode();
       return true;
