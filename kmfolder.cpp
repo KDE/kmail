@@ -772,6 +772,7 @@ int KMFolder::writeIndex()
   }
   if (ferror(tmpIndexStream)) return ferror(tmpIndexStream);
   if (fflush(tmpIndexStream) != 0) return errno;
+  if (fsync(fileno(tmpIndexStream)) != 0) return errno;
   if (fclose(tmpIndexStream) != 0) return errno;
 
   _rename(tempName.local8Bit(), indexLocation().local8Bit());
@@ -1442,7 +1443,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
   size = ftell(mStream) - offs;
 
   error = ferror(mStream);
-  if (error) {
+  if (error || fsync( fileno( mStream ))) {
     kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
     if (ftell(mStream) > revert) {
       kdDebug(5006) << "Undoing changes" << endl;
@@ -1507,7 +1508,7 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret, bool imapQuiet)
 
     fflush(mIndexStream);
     error = ferror(mIndexStream);
-    if (error) {
+    if (error || fsync( fileno( mIndexStream ))) {
       kdDebug(5006) << "Error: Could not add message to folder (No space left on device?)" << endl;
       if (ftell(mIndexStream) > revert) {
 	kdDebug(5006) << "Undoing changes" << endl;
@@ -1752,8 +1753,11 @@ int KMFolder::compact()
     mi->setFolderOffset(offs);
     offs += msize;
   }
-  fclose(tmpfile);
-
+  if (!rc)
+      rc = fflush(tmpfile);
+  if (!rc)
+      rc = fsync(fileno(tmpfile));
+  rc |= fclose(tmpfile);
   if (!rc) {
     writeIndex();
     close(TRUE);
