@@ -33,6 +33,8 @@
 #include "kmtransport.h"
 #include "kmsender.h"
 #include "kmmainwin.h"
+#include "kmfoldertree.h"
+#include "kmgroupware.h"
 
 #include "kmgroupwarewizard.h"
 
