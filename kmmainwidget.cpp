@@ -676,7 +676,7 @@ void KMMainWidget::activatePanners(void)
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSetEncoding()
 {
-  GlobalSettings::setOverrideCharacterEncoding( 
+  GlobalSettings::setOverrideCharacterEncoding(
       KGlobal::charsets()->encodingForName( mEncoding->currentText() ) );
     if (mEncoding->currentItem() == 0) // Auto
     {
@@ -1542,10 +1542,13 @@ void KMMainWidget::slotPrintMsg()
 {
   bool htmlOverride = mMsgView ? mMsgView->htmlOverride() : false;
   bool htmlLoadExtOverride = mMsgView ? mMsgView->htmlLoadExtOverride() : false;
+  KConfigGroup reader( KMKernel::config(), "Reader" );
+  bool useFixedFont = mMsgView ? mMsgView->isFixedFont()
+                               : reader.readBoolEntry( "useFixedFont", false );
   KMCommand *command =
     new KMPrintCommand( this, mHeaders->currentMsg(),
                         htmlOverride, htmlLoadExtOverride,
-                        mCodec );
+                        useFixedFont, mCodec );
   command->start();
 }
 
@@ -2262,8 +2265,8 @@ void KMMainWidget::setupActions()
   mModifyFolderAction = new KAction( i18n("&Properties"), "configure", 0, this,
 		      SLOT(slotModifyFolder()), actionCollection(), "modify" );
 
-  mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"), 
-      "folder_mailinglist_properties", 0, this, SLOT( slotFolderMailingListProperties() ), 
+  mFolderMailingListPropertiesAction = new KAction( i18n("&Mailing List Management"),
+      "folder_mailinglist_properties", 0, this, SLOT( slotFolderMailingListProperties() ),
       actionCollection(), "folder_mailinglist_properties" );
 
 
@@ -2843,9 +2846,9 @@ void KMMainWidget::copySelectedToFolder(int menuId )
 void KMMainWidget::updateMessageMenu()
 {
   mMenuToFolder.clear();
-  folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this, 
+  folderTree()->folderToPopupMenu( KMFolderTree::MoveMessage, this,
       &mMenuToFolder, mMoveActionMenu->popupMenu() );
-  folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this, 
+  folderTree()->folderToPopupMenu( KMFolderTree::CopyMessage, this,
       &mMenuToFolder, mCopyActionMenu->popupMenu() );
   updateMessageActions();
 }
@@ -2867,7 +2870,7 @@ void KMMainWidget::updateMessageActions()
           selectedItems.append(item);
       if ( selectedItems.isEmpty() && mFolder->count() ) // there will always be one in mMsgView
         count = 1;
-      else 
+      else
         count = selectedItems.count();
     }
 

@@ -1302,9 +1302,10 @@ KMCommand::Result KMRedirectCommand::execute()
 
 KMPrintCommand::KMPrintCommand( QWidget *parent,
   KMMessage *msg, bool htmlOverride, bool htmlLoadExtOverride,
-  const QTextCodec *codec )
+  bool useFixedFont, const QTextCodec *codec )
   : KMCommand( parent, msg ), mHtmlOverride( htmlOverride ),
-    mHtmlLoadExtOverride( htmlLoadExtOverride ), mCodec( codec )
+    mHtmlLoadExtOverride( htmlLoadExtOverride ),
+    mUseFixedFont( useFixedFont ), mCodec( codec )
 {
 }
 
@@ -1315,6 +1316,7 @@ KMCommand::Result KMPrintCommand::execute()
   printWin.readConfig();
   printWin.setHtmlOverride( mHtmlOverride );
   printWin.setHtmlLoadExtOverride( mHtmlLoadExtOverride );
+  printWin.setUseFixedFont( mUseFixedFont );
   printWin.setOverrideCodec( mCodec );
   printWin.setMsg( retrievedMessage(), true );
   printWin.printMsg();
@@ -1712,7 +1714,7 @@ KMCommand::Result KMCopyCommand::execute()
       mDestFolder->unGetMsg( *it );
     }
   }
-  
+
   // only close the folder if we're done
   if ( mWaitingForMsgs.isEmpty() )
     mDestFolder->close();
@@ -2622,10 +2624,10 @@ KMCommand::Result KMIMChatCommand::execute()
   }
 }
 
-KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node, 
-     KMMessage* msg, int atmId, const QString& atmName, 
+KMHandleAttachmentCommand::KMHandleAttachmentCommand( partNode* node,
+     KMMessage* msg, int atmId, const QString& atmName,
      AttachmentAction action, KService::Ptr offer )
-: mNode( node ), mMsg( msg ), mAtmId( atmId ), mAtmName( atmName ), 
+: mNode( node ), mMsg( msg ), mAtmId( atmId ), mAtmName( atmName ),
   mAction( action ), mOffer( offer )
 {
 }

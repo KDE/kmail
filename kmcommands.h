@@ -506,9 +506,10 @@ class KDE_EXPORT KMPrintCommand : public KMCommand
   Q_OBJECT
 
 public:
-  KMPrintCommand( QWidget *parent, KMMessage *msg, 
-                  bool htmlOverride=false, 
-                  bool htmlLoadExtOverride=false, 
+  KMPrintCommand( QWidget *parent, KMMessage *msg,
+                  bool htmlOverride=false,
+                  bool htmlLoadExtOverride=false,
+                  bool useFixedFont = false,
                   const QTextCodec *codec = 0 );
 
 private:
@@ -516,6 +517,7 @@ private:
 
   bool mHtmlOverride;
   bool mHtmlLoadExtOverride;
+  bool mUseFixedFont;
   const QTextCodec *mCodec;
 };
 
@@ -595,7 +597,7 @@ public:
 
 public slots:
   void start();
-  /** Assign a KActio to the command which is used to trigger it. This 
+  /** Assign a KActio to the command which is used to trigger it. This
    * action will be deleted along with the command, so you don't need to
    * keep track of it separately. */
   void setAction( KAction* );
@@ -850,8 +852,8 @@ class KDE_EXPORT KMHandleAttachmentCommand : public KMCommand
   Q_OBJECT
 
 public:
-  /** Supported types of attachment handling */  
-  enum AttachmentAction 
+  /** Supported types of attachment handling */
+  enum AttachmentAction
   {
     Open = 1,
     OpenWith = 2,
@@ -859,7 +861,7 @@ public:
     Save = 4,
     Properties = 5
   };
-  /** 
+  /**
    * Construct a new command
    * @p node the partNode
    * @p msg the KMMessage
@@ -867,15 +869,15 @@ public:
    * @p atmName the name of the attachment
    * @p action what to do with the attachment
    * @p offer specify a KService that should handle the "open" action
-   */ 
-  KMHandleAttachmentCommand( partNode* node, KMMessage* msg, int atmId, 
+   */
+  KMHandleAttachmentCommand( partNode* node, KMMessage* msg, int atmId,
       const QString& atmName, AttachmentAction action, KService::Ptr offer = 0 );
 
 private slots:
   /** Called from start() via a single shot timer. */
   virtual void slotStart();
 
-  /** 
+  /**
    * Called when the part was downloaded
    * Calls execute
    */
@@ -898,8 +900,8 @@ private:
   /** Display an open-with dialog */
   void atmOpenWith();
 
-  /** 
-   * Viewing is not supported by this command 
+  /**
+   * Viewing is not supported by this command
    * so it just emits showAttachment
    */
   void atmView();

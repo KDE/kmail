@@ -196,6 +196,7 @@ public:
   bool atBottom() const;
 
   bool isFixedFont() { return mUseFixedFont; }
+  void setUseFixedFont( bool useFixedFont ) { mUseFixedFont = useFixedFont; }
 
   /** Return the @see HtmlWriter connected to the @see KHTMLPart we use */
   KMail::HtmlWriter * htmlWriter() { return mHtmlWriter; }
