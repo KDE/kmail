@@ -5,6 +5,8 @@
 #include "kmfoldermgr.h"
 #include "kmglobal.h"
 #include "kmfolderdir.h"
+#include "kmfoldertree.h"
+#include "kmmainwin.h"
 
 #include <qpushbutton.h>
 #include <qlistbox.h>
@@ -13,12 +15,15 @@
 #include <qaccel.h>
 #include <kbuttonbox.h>
 #include <klocale.h>
+#include <kdebug.h>
+
+#include <assert.h>
 
 QString KMFolderSelDlg::oldSelection;
 
 //-----------------------------------------------------------------------------
-KMFolderSelDlg::KMFolderSelDlg(QString caption):
-  KMFolderSelDlgInherited(0, 0, TRUE) // no parent, no name, but modal
+KMFolderSelDlg::KMFolderSelDlg(QWidget * parent, QString caption):
+  KMFolderSelDlgInherited(parent, 0, TRUE) // mainwin as parent, no name, but modal
 {
   QPushButton *btnCancel, *btnOk;
   QBoxLayout* box = new QVBoxLayout(this, 2, 0);
@@ -51,13 +56,21 @@ KMFolderSelDlg::KMFolderSelDlg(QString caption):
   box->activate();
 
   QStringList str;
-  kernel->folderMgr()->createFolderList( &str, &mFolder  );
-  int i = 1;
+  KMMainWin * mw = dynamic_cast<KMMainWin*>( parent );
+  assert( mw );
+  KMFolderTree * ft = mw->folderTree();
+  assert( ft );
+  ft->createFolderList( &str, &mFolder  );
   mListBox->insertStringList( str );
-  while (mFolder.at(i - 1) != mFolder.end()) {
-    cur = *mFolder.at(i - 1);
-    if(!oldSelection.isNull() && oldSelection == cur->label())
-      mListBox->setCurrentItem(i - 1);
+  int i = 0;
+  while (mFolder.at(i) != mFolder.end()) {
+    cur = *mFolder.at(i);
+    // cur will be NULL for accounts. Don't crash on that,
+    // but ignore them for now.
+    if(!cur)
+      mListBox->item(i)->setSelectable(false);
+    else if (!oldSelection.isNull() && oldSelection == cur->label())
+      mListBox->setCurrentItem(i);
     ++i;
   }
 

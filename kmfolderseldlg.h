@@ -18,7 +18,9 @@ class KMFolderSelDlg: public QDialog
   Q_OBJECT
 
 public:
-  KMFolderSelDlg(QString caption);
+  /** Constructor. @p parent @em must be a @ref KMMainWin, because we
+      need it's foldertree. */
+  KMFolderSelDlg(QWidget * parent, QString caption);
   virtual ~KMFolderSelDlg();
 
   /** Returns selected folder */
