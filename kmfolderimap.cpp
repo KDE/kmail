@@ -362,7 +362,7 @@ int KMFolderImap::addMsg(QPtrList<KMMessage>& msgList, int* aIndex_ret)
         } else {
 
           // get the messages and the uids
-          QValueList<int> uids;
+          QValueList<ulong> uids;
           getUids(msgList, uids);
 
           // get the sets (do not sort the uids)
@@ -429,7 +429,7 @@ void KMFolderImap::copyMsg(QPtrList<KMMessage>& msgList)
     // Remember the status, so it can be transfered to the new message.
     mMetaDataMap.insert(msg->msgIdMD5(), new KMMsgMetaData(msg->status()));
   }
-  QValueList<int> uids;
+  QValueList<ulong> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids, false);
   for ( QStringList::Iterator it = sets.begin(); it != sets.end(); ++it )
@@ -815,14 +815,14 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
   {
     QCString cstr;
     int idx = 0, a, b, c, serverFlags;
-    long int mailUid, serverUid;
+    ulong mailUid, serverUid;
     uid = (*it).items.begin();
     while (idx < count() && uid != (*it).items.end())
     {
       getMsgString(idx, cstr);
       a = cstr.find("X-UID: ");
       b = cstr.find("\n", a);
-      if (a == -1 || b == -1) mailUid = -1;
+      if (a == -1 || b == -1) mailUid = 0;
       else mailUid = cstr.mid(a + 7, b - a - 7).toLong();
       c = (*uid).find(",");
       serverUid = (*uid).left(c).toLong();
@@ -1234,7 +1234,7 @@ void KMFolderImap::deleteMessage(KMMessage * msg)
 
 void KMFolderImap::deleteMessage(QPtrList<KMMessage> msgList)
 {
-  QValueList<int> uids;
+  QValueList<ulong> uids;
   getUids(msgList, uids);
   QStringList sets = makeSets(uids);
 
@@ -1305,15 +1305,15 @@ void KMFolderImap::setStatus(QValueList<int>& ids, KMMsgStatus status, bool togg
 }
 
 //-----------------------------------------------------------------------------
-QStringList KMFolderImap::makeSets(QStringList& uids, bool sort)
+QStringList KMFolderImap::makeSets(const QStringList& uids, bool sort)
 {
-  QValueList<int> tmp;
-  for ( QStringList::Iterator it = uids.begin(); it != uids.end(); ++it )
+  QValueList<ulong> tmp;
+  for ( QStringList::ConstIterator it = uids.begin(); it != uids.end(); ++it )
     tmp.append( (*it).toInt() );
   return makeSets(tmp, sort);
 }
 
-QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
+QStringList KMFolderImap::makeSets( QValueList<ulong>& uids, bool sort )
 {
   QStringList sets;
   QString set;
@@ -1326,11 +1326,11 @@ QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
 
   if (sort) qHeapSort(uids);
 
-  int last = 0;
+  ulong last = 0;
   // needed to make a uid like 124 instead of 124:124
   bool inserted = false;
   /* iterate over uids and build sets like 120:122,124,126:150 */
-  for ( QValueList<int>::Iterator it = uids.begin(); it != uids.end(); ++it )
+  for ( QValueList<ulong>::Iterator it = uids.begin(); it != uids.end(); ++it )
   {
     if (it == uids.begin() || set.isEmpty()) {
       set = QString::number(*it);
@@ -1367,7 +1367,7 @@ QStringList KMFolderImap::makeSets(QValueList<int>& uids, bool sort)
 }
 
 //-----------------------------------------------------------------------------
-void KMFolderImap::getUids(QValueList<int>& ids, QValueList<int>& uids)
+void KMFolderImap::getUids(QValueList<int>& ids, QValueList<ulong>& uids)
 {
   KMMsgBase *msg = 0;
   // get the uids
@@ -1379,7 +1379,7 @@ void KMFolderImap::getUids(QValueList<int>& ids, QValueList<int>& uids)
   }
 }
 
-void KMFolderImap::getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent)
+void KMFolderImap::getUids(QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent)
 {
   KMMessage *msg = 0;
 
@@ -1480,9 +1480,9 @@ int KMFolderImap::create(bool imap)
   return KMFolderMbox::create(imap);
 }
 
-QValueList<int> KMFolderImap::splitSets(QString uids)
+QValueList<ulong> KMFolderImap::splitSets(const QString uids)
 {
-  QValueList<int> uidlist;
+  QValueList<ulong> uidlist;
 
   // ex: 1205,1204,1203,1202,1236:1238
   QString buffer = QString::null;

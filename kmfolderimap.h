@@ -173,14 +173,14 @@ public:
   virtual void setStatus(QValueList<int>& ids, KMMsgStatus status, bool toggle);
 
   /** generates sets of uids */
-  QStringList makeSets(QValueList<int>&, bool sort = true);
-  QStringList makeSets(QStringList&, bool sort = true);
+  static QStringList makeSets( QValueList<ulong>&, bool sort = true);
+  static QStringList makeSets(const QStringList&, bool sort = true);
 
   /** gets the uids of the given ids */
-  void getUids(QValueList<int>& ids, QValueList<int>& uids);
+  void getUids(QValueList<int>& ids, QValueList<ulong>& uids);
 
   /** same as above but accepts a Message-List */
-  void getUids(QPtrList<KMMessage>& msgList, QValueList<int>& uids, KMFolder* msgParent = 0);
+  void getUids(QPtrList<KMMessage>& msgList, QValueList<ulong>& uids, KMFolder* msgParent = 0);
 
   /**
    * Expunge deleted messages from the folder
@@ -234,7 +234,7 @@ public:
   /**
    * Splits a uid-set into single uids
    */
-  static QValueList<int> splitSets(QString);
+  static QValueList<ulong> splitSets(const QString);
 
   virtual void ignoreJobsForMessage( KMMessage* );
 
