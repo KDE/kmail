@@ -3695,10 +3695,10 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
                                           "the Kontact applications" ) );
   QWhatsThis::add( mEnableImapResCB,
                    i18n( "<p>Enabling this makes it possible to store the "
-                         "entries from the Kontact applications KOrganizer, "
-                         "KAddressBook, and KNotes.</p><p>In addition to "
-                         "this, you must set the applications to use the "
-                         "IMAP resource. This is done in the KDE Control "
+                         "entries from the Kontact applications (KOrganizer, "
+                         "KAddressBook, and KNotes.)</p><p>If you want to set "
+                         "this option you must also set the applications to use the "
+                         "IMAP resource; this is done in the KDE Control "
                          "Center." ) );
   connect( mEnableImapResCB, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
@@ -3711,7 +3711,7 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   QLabel* languageLA = new QLabel( i18n("&Language of the groupware folders:"),
                                    mBox );
   QString toolTip = i18n( "Set the language of the folder names" );
-  QString whatsThis = i18n( "<p>If you want to set the foldernames of the "
+  QString whatsThis = i18n( "<p>If you want to set the folder names of the "
                             "IMAP storage to your local language, you can "
                             "choose between these available languages.</p>"
                             "<p>Please note, that the only reason to do so "
@@ -3737,8 +3737,8 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
     new QLabel( i18n("Resource folders are &subfolders of:"), mBox );
   toolTip = i18n( "Set the parent of the resource folders" );
   whatsThis = i18n( "<p>This chooses the parent of the IMAP resource "
-                    "folders.</p><p>The standard of the Kolab server is "
-                    "to set the IMAP inbox as the parent.</p>" );
+                    "folders.</p><p>By default, the Kolab server sets "
+                    "the IMAP inbox to be the parent.</p>" );
   grid->addWidget( subfolderLA, 1, 0 );
   QToolTip::add( subfolderLA, toolTip );
   QWhatsThis::add( subfolderLA, whatsThis );
@@ -3778,10 +3778,10 @@ MiscPageGroupwareTab::MiscPageGroupwareTab( QWidget* parent, const char* name )
   QToolTip::add( mLegacyMangleFromTo, i18n( "Turn this option on in order to make Outlook(tm) understand your answers to invitations" ) );
   QWhatsThis::add( mLegacyMangleFromTo,
                    i18n( "Microsoft Outlook has a number of shortcomings "
-                         "in it's implementation of the iCalendar standard. "
-                         "This option works around one of them. If you have "
+                         "in its implementation of the iCalendar standard; "
+                         "this option works around one of them. If you have "
                          "problems with Outlook users not being able to "
-                         "get your replies, try setting this option" ) );
+                         "get your replies, try setting this option." ) );
   connect( mLegacyMangleFromTo, SIGNAL( stateChanged( int ) ),
            this, SLOT( slotEmitChanged( void ) ) );
 
