@@ -1037,12 +1037,12 @@ namespace KMail {
     if ( !child )
       return false;
 
+#if 0
     // Might be a Kroupware message,
     // let's look for the parts contained in the mixture:
     partNode * dataPlain = child->findType( DwMime::kTypeText,
                                             DwMime::kSubtypePlain, false, true );
 
-#if 0
     // special treatment of vCal attachment (might be invitation or similar)
     partNode * dataCal = child->findType( DwMime::kTypeText,
                                           DwMime::kSubtypeVCal, false, true );
