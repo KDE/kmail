@@ -83,7 +83,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mIndexId        = -1;
   mIndexStreamPtr = NULL;
   mIndexStreamPtrLength = 0;
-  mConsistent     = TRUE;
+  mCompactable     = TRUE;
 }
 
 
@@ -620,10 +620,10 @@ KMMessage* KMFolder::getMsg(int idx)
       time_t mbDate = mb->date();
       msg = readMsg(idx);
       // sanity check
-      if (mConsistent && (!msg || (msg->date() != mbDate) || (msg->subject() != mbSubject))) {
+      if (mCompactable && (!msg || (msg->subject().isEmpty() != mbSubject.isEmpty()))) {
 	  kdDebug(5006) << "Error: " << location() <<
 	  " Index file is inconsistent with folder file. This should never happen." << endl;
-	  mConsistent = FALSE; // Don't compact
+	  mCompactable = FALSE; // Don't compact
 	  writeConfig();
       }
   }
@@ -945,7 +945,7 @@ void KMFolder::readConfig()
   mIdentity = config->readEntry("Identity");
   if ( mIdentity.isEmpty() ) // backward compatiblity
       mIdentity = config->readEntry("MailingListIdentity");
-  mConsistent = config->readBoolEntry("Consistent", TRUE);
+  mCompactable = config->readBoolEntry("Compactable", TRUE);
 }
 
 //-----------------------------------------------------------------------------
@@ -958,7 +958,7 @@ void KMFolder::writeConfig()
   config->writeEntry("MailingListPostingAddress", mMailingListPostingAddress);
   config->writeEntry("MailingListAdminAddress", mMailingListAdminAddress);
   config->writeEntry("Identity", mIdentity);
-  config->writeEntry("Consistent", mConsistent);
+  config->writeEntry("Compactable", mCompactable);
 }
 
 //-----------------------------------------------------------------------------

@@ -372,7 +372,7 @@ protected:
   /** sven: true if on destruct folder needs to be compacted. */
   bool needsCompact;
   /** false if index file is out of sync with mbox file */
-  bool mConsistent;
+  bool mCompactable;
   KMFolderDir* mChild;
   bool mConvertToUtf8;
   uchar *mIndexStreamPtr;

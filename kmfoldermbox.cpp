@@ -880,7 +880,7 @@ int KMFolderMbox::compact()
   if (!needsCompact)
     return 0;
 
-  if (!mConsistent) {
+  if (!mCompactable) {
     kdDebug(5006) << location() << " compaction skipped." << endl;
     return 0;
   }
