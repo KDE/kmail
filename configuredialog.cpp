@@ -3564,6 +3564,7 @@ SecurityPageWarningTab::SecurityPageWarningTab( QWidget * parent, const char * n
   mWidget = new WarningConfiguration( this );
   vlay->addWidget( mWidget );
 
+  connect( mWidget->warnGroupBox, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->mWarnUnsigned, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->warnUnencryptedCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
   connect( mWidget->warnReceiverNotInCertificateCB, SIGNAL(toggled(bool)), SLOT(slotEmitChanged()) );
@@ -3586,6 +3587,10 @@ void SecurityPage::WarningTab::load() {
   mWidget->mWarnUnsigned->setChecked( composer.readBoolEntry( "crypto-warning-unsigned", false ) );
   mWidget->warnReceiverNotInCertificateCB->setChecked( composer.readBoolEntry( "crypto-warn-recv-not-in-cert", true ) );
 
+  // The "-int" part of the key name is because there used to be a separate boolean
+  // config entry for enabling/disabling. This is done with the single bool value now.
+  mWidget->warnGroupBox->setChecked( composer.readBoolEntry( "crypto-warn-when-near-expire", true ) );
+
   mWidget->mWarnSignKeyExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-key-near-expire-int", 14 ) );
   mWidget->mWarnSignChainCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-chaincert-near-expire-int", 14 ) );
   mWidget->mWarnSignRootCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-root-near-expire-int", 14 ) );
@@ -3607,12 +3612,15 @@ void SecurityPage::WarningTab::installProfile( KConfig * profile ) {
   if ( composer.hasKey( "crypto-warn-recv-not-in-cert" ) )
     mWidget->warnReceiverNotInCertificateCB->setChecked( composer.readBoolEntry( "crypto-warn-recv-not-in-cert" ) );
 
+  if ( composer.hasKey( "crypto-warn-when-near-expire" ) )
+    mWidget->warnGroupBox->setChecked( composer.readBoolEntry( "crypto-warn-when-near-expire" ) );
+
   if ( composer.hasKey( "crypto-warn-sign-key-near-expire-int" ) )
-    mWidget->mWarnSignKeyExpiresSB->setValue( composer.readBoolEntry( "crypto-warn-sign-key-near-expire-int" ) );
+    mWidget->mWarnSignKeyExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-key-near-expire-int" ) );
   if ( composer.hasKey( "crypto-warn-sign-chaincert-near-expire-int" ) )
-    mWidget->mWarnSignChainCertExpiresSB->setValue( composer.readBoolEntry( "crypto-warn-sign-chaincert-near-expire-int" ) );
+    mWidget->mWarnSignChainCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-chaincert-near-expire-int" ) );
   if ( composer.hasKey( "crypto-warn-sign-root-near-expire-int" ) )
-    mWidget->mWarnSignRootCertExpiresSB->setValue( composer.readBoolEntry( "crypto-warn-sign-root-near-expire-int" ) );
+    mWidget->mWarnSignRootCertExpiresSB->setValue( composer.readNumEntry( "crypto-warn-sign-root-near-expire-int" ) );
 
   if ( composer.hasKey( "crypto-warn-encr-key-near-expire-int" ) )
     mWidget->mWarnEncrKeyExpiresSB->setValue( composer.readNumEntry( "crypto-warn-encr-key-near-expire-int" ) );
@@ -3629,6 +3637,7 @@ void SecurityPage::WarningTab::save() {
   composer.writeEntry( "crypto-warning-unencrypted", mWidget->warnUnencryptedCB->isChecked() );
   composer.writeEntry( "crypto-warning-unsigned", mWidget->mWarnUnsigned->isChecked() );
 
+  composer.writeEntry( "crypto-warn-when-near-expire", mWidget->warnGroupBox->isChecked() );
   composer.writeEntry( "crypto-warn-sign-key-near-expire-int",
 		       mWidget->mWarnSignKeyExpiresSB->value() );
   composer.writeEntry( "crypto-warn-sign-chaincert-near-expire-int",
