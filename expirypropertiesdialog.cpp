@@ -119,11 +119,15 @@ ExpiryPropertiesDialog::ExpiryPropertiesDialog( KMFolderTree* tree, KMFolder* fo
   int daysToExpireRead, daysToExpireUnread;
   mFolder->daysToExpire( daysToExpireRead, daysToExpireUnread );
 
-  if ( expiryGloballyOn && daysToExpireRead > 0 ) {
+  if ( expiryGloballyOn 
+      && mFolder->getReadExpireUnits() != expireNever 
+      && daysToExpireRead >= 0 ) {
     expireReadMailCB->setChecked( true );
     expireReadMailSB->setValue( daysToExpireRead );
   }
-  if ( expiryGloballyOn && daysToExpireUnread > 0 ) {
+  if ( expiryGloballyOn
+      && mFolder->getUnreadExpireUnits() != expireNever 
+      && daysToExpireUnread >= 0 ) {
     expireUnreadMailCB->setChecked( true );
     expireUnreadMailSB->setValue( daysToExpireUnread );
   }
@@ -164,8 +168,8 @@ void ExpiryPropertiesDialog::slotOk()
   // we always write out days now
   mFolder->setReadExpireAge( expireReadMailSB->value() );
   mFolder->setUnreadExpireAge( expireUnreadMailSB->value() );
-  mFolder->setReadExpireUnits( expireDays );
-  mFolder->setUnreadExpireUnits( expireDays );
+  mFolder->setReadExpireUnits( expireReadMailCB->isChecked()? expireDays : expireNever );
+  mFolder->setUnreadExpireUnits( expireUnreadMailCB->isChecked()? expireDays : expireNever );
 
   if ( deletePermanentlyRB->isChecked() )
     mFolder->setExpireAction( KMFolder::ExpireDelete );
