@@ -342,9 +342,9 @@ QDataStream & operator>>( QDataStream & stream, KMIdentity & i ) {
 }
 
 //-----------------------------------------------------------------------------
-bool KMIdentity::mailingAllowed(void) const
+bool KMIdentity::mailingAllowed() const
 {
-  return (!mFullName.isEmpty() && !mEmailAddr.isEmpty());
+  return !mEmailAddr.isEmpty();
 }
 
 
