@@ -2212,6 +2212,7 @@ void KMComposeWin::doSend(int aSendNow, bool saveInDrafts)
      mMsg->setTo( KabcBridge::expandDistributionLists( to() ));
      mMsg->setCc( KabcBridge::expandDistributionLists( cc() ));
      mMsg->setBcc( KabcBridge::expandDistributionLists( bcc() ));
+     mMsg->cleanupHeader();
      sentOk = kernel->msgSender()->send(mMsg, aSendNow);
   }
 
