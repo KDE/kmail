@@ -155,8 +155,6 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   }
   mMailService =  new MailServiceImpl();
 
-  mKIMProxy = KIMProxy::instance( kapp->dcopClient() );
-
   connectDCOPSignal( 0, 0, "kmailSelectFolder(QString)",
                      "selectFolder(QString)", false );
 }
@@ -176,8 +174,6 @@ KMKernel::~KMKernel ()
   mICalIface = 0;
   delete mMailService;
   mMailService = 0;
-  delete mKIMProxy;
-  mKIMProxy = 0;
 
   GlobalSettings::writeConfig();
   mySelf = 0;
@@ -1690,7 +1686,7 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
 
 ::KIMProxy* KMKernel::imProxy()
 {
-  return mKIMProxy;
+  return KIMProxy::instance( kapp->dcopClient() );
 }
 
 void KMKernel::enableMailCheck()

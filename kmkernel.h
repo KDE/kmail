@@ -362,8 +362,6 @@ private:
   // need to be updated (e.g. in the Summary in Kontact)
   int mTimeOfLastMessageCountChange;
 
-  // KIMProxy provides access to up to date instant messaging presence data
-  ::KIMProxy *mKIMProxy;
   // true if the context menu of KMFolderTree or KMHeaders is shown
   // this is necessary to know in order to prevent a dead lock between the
   // context menus and the pinentry program
