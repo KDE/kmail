@@ -2426,12 +2426,12 @@ void KMHeaders::contentsMouseMoveEvent( QMouseEvent* e )
       for( QListViewItemIterator it(this); it.current(); it++ )
         if( it.current()->isSelected() ) {
           KMHeaderItem *item = static_cast<KMHeaderItem*>(it.current());
- 	  KMMsgBase *msg = mFolder->getMsgBase(item->msgId());
- 	  MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
- 				   msg->subject(), msg->fromStrip(),
- 				   msg->toStrip(), msg->date() );
- 	  mailList.append( mailSummary );
- 	  ++count;
+          KMMsgBase *msg = mFolder->getMsgBase(item->msgId());
+          MailSummary mailSummary( msg->getMsgSerNum(), msg->msgIdMD5(),
+                                   msg->subject(), msg->fromStrip(),
+                                   msg->toStrip(), msg->date() );
+          mailList.append( mailSummary );
+          ++count;
         }
       MailListDrag *d = new MailListDrag( mailList, viewport() );
 
