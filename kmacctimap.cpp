@@ -267,7 +267,7 @@ void KMAcctImap::processNewMail(bool interactive)
   mCountRemainChecks = 0;
   mCountUnread = 0;
   mUnreadBeforeCheck.clear();
-  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
+  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it)
   {
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
@@ -277,7 +277,7 @@ void KMAcctImap::processNewMail(bool interactive)
   }
   bool gotError = false;
   // then check for new mails
-  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
+  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it)
   {
     KMFolder *folder = *it;
     if (folder && !folder->noContent())
@@ -375,7 +375,7 @@ void KMAcctImap::slotUpdateFolderList()
   QValueList<QGuardedPtr<KMFolder> > includedFolders;
   // check for excluded folders
   QValueList<QGuardedPtr<KMFolder> >::Iterator it;
-  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); it++)
+  for (it = mMailCheckFolders.begin(); it != mMailCheckFolders.end(); ++it)
   {
     KMFolderImap* folder = static_cast<KMFolderImap*>(((KMFolder*)(*it))->storage());
     if (folder->includeInMailCheck())
