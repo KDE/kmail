@@ -12,7 +12,6 @@
 #else
 #endif
 
-#include "kmimemagic.h"
 #include "kmmessage.h"
 #include "kmmsgpart.h"
 #include "kmreaderwin.h"
