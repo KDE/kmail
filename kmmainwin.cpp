@@ -578,11 +578,7 @@ void KMMainWin::createWidgets(void)
   // create a mime part tree and store it's pointer in the reader win
   mMimePartTree = new KMMimePartTree( mMsgView, mimeParent, "mMimePartTree" );
   mMsgView->setMimePartTree( mMimePartTree );
-  if( 1 < mShowMIMETreeMode )
-      mMimePartTree->show();
-  else
-      mMimePartTree->hide();
-
+  
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
    i18n("Focus on Next Folder"), CTRL+Key_Right, mFolderTree,
@@ -602,8 +598,8 @@ void KMMainWin::createWidgets(void)
            SLOT( startUpdateMessageActionsTimer() ) );
 }
 
-//-----------------------------------------------------------------------------
 
+//-----------------------------------------------------------------------------
 void KMMainWin::activatePanners(void)
 {
   // glue everything together
@@ -1718,7 +1714,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
     mMsgView->clear( TRUE );
     if( mHeaders )
       mHeaders->show();
-    if( mMimePartTree && (0 < mShowMIMETreeMode) )
+    if( mMimePartTree && (1 < mShowMIMETreeMode) )
       mMimePartTree->show();
   } else
     mMsgView->clear();

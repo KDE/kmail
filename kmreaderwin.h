@@ -104,6 +104,10 @@ public:
       displayed. */
   virtual void setMsg(KMMessage* msg, bool force = false);
   
+  /** Show or hide the Mime Tree Viewer if configuration
+      is set to smart mode.  */
+  void showHideMimeTree( bool showIt );
+  
   /** Store message id of last viewed message,
       normally no need to call this function directly,
       since correct value is set automatically in

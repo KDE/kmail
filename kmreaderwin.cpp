@@ -1432,6 +1432,7 @@ kdDebug(5006) << "                      Root node will NOT be replaced." << endl
   kdDebug(5006) << QString("\nKMReaderWin::objectTreeToDecryptedMsg( %1 )  END").arg( recCount ) << endl;
 }
 
+
 /*
  ===========================================================================
 
@@ -2100,6 +2101,16 @@ double KMReaderWin::pointsToPixel(int pointSize)
   return pixelSize * pdm.logicalDpiY() / 72;
 }
 
+void KMReaderWin::showHideMimeTree( bool showIt )
+{
+  if( mMimePartTree && ( !mShowMIMETreeMode || (0 != *mShowMIMETreeMode) ) ){
+    if( showIt )
+      mMimePartTree->show();
+    else
+      mMimePartTree->hide();
+  }
+}
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::parseMsg(void)
 {
@@ -2109,17 +2120,11 @@ void KMReaderWin::parseMsg(void)
 
   if( mMimePartTree )
     mMimePartTree->clear();
-
-  QString type = msg->typeStr().lower();
-
-  bool isMultipart = (type.find("multipart/") != -1);
-
-  if( mMimePartTree && mShowMIMETreeMode && (1 == *mShowMIMETreeMode) ) {
-    if( isMultipart )
-      mMimePartTree->show();
-    else
-      mMimePartTree->hide();
-  }
+  
+  int mainType = msg->type();
+  bool isMultipart = ( DwMime::kTypeMultipart == mainType );
+  
+  showHideMimeTree( isMultipart );
 
   QString bkgrdStr = "";
   if (mBackingPixmapOn)
@@ -2130,7 +2135,7 @@ void KMReaderWin::parseMsg(void)
   if (mAutoDetectEncoding) {
     mCodec = 0;
     QCString encoding;
-    if (type.find("text/") != -1)
+    if( DwMime::kTypeText == mainType )
       encoding = msg->charset();
     else if ( isMultipart ) {
       if (msg->numBodyParts() > 0) {
@@ -3064,6 +3069,9 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
   if( tmpPlugList )
     delete mCryptPlugList;
 
+  // save current main Content-Type before deleting mRootNode
+  int rootNodeCntType = mRootNode ? mRootNode->type() : DwMime::kTypeUnknown;
+  
   // if necessary restore original mRootNode
   if( savedRootNode ) {
     if( mRootNode )
@@ -3077,134 +3085,14 @@ kdDebug(5006) << "KMReaderWin  -  attach unencrypted message to aMsg" << endl;
   if( emitReplaceMsgByUnencryptedVersion ) {
 kdDebug(5006) << "KMReaderWin  -  invoce saving in decrypted form:" << endl;
     emit replaceMsgByUnencryptedVersion();
+  } else {
+kdDebug(5006) << "KMReaderWin  -  finished parsing and displaying of message." << endl;
+    showHideMimeTree( (DwMime::kTypeMultipart   == rootNodeCntType) ||
+                      (DwMime::kTypeApplication == rootNodeCntType) ||
+                      (DwMime::kTypeMessage     == rootNodeCntType) ||
+                      (DwMime::kTypeModel       == rootNodeCntType) );
   }
 }
-
-
-
-/*
-  old code *before* AEGYPTEN_BRANCH merger:
-
-
-  if (numParts > 0)
-  {
-    // ---sven: handle multipart/alternative start ---
-    // This is for multipart/alternative messages WITHOUT attachments
-    // main header has type=multipart/alternative and one attachment is
-    // text/html
-    if (type.find("multipart/alternative") != -1 && numParts == 2)
-    {
-      kdDebug(5006) << "Alternative message, type: " << type << endl;
-      //Now: Only two attachments one of them is html
-      for (i=0; i<2; i++)                   // count parts...
-      {
-        aMsg->bodyPart(i, &msgPart);        // set part...
-        subtype = msgPart.subtypeStr();     // get subtype...
-        if (htmlMail() && qstricmp(subtype, "html")==0)    // is it html?
-        {                                   // yes...
-          str = msgPart.bodyDecoded();      // decode it...
-          //mViewer->write(mCodec->toUnicode(str.data()));    // write it...
-          writeHTMLStr(mCodec->toUnicode(str.data()));
-          return;                           // return, finshed.
-        }
-	else if (!htmlMail() && (qstricmp(subtype, "plain")==0))
-	                                    // wasn't html show only if
-	{                                   // support for html is turned off
-          str = msgPart.bodyDecoded();      // decode it...
-          writeBodyStr(str.data(), mCodec);
-          return;
-	}
-      }
-      // if we are here we didnt find any html part. Handle it normaly then
-    }
-    // This works only for alternative msgs without attachments. Alternative
-    // messages with attachments are broken with or without this. No need
-    // to bother with strib </body> or </html> here, because if any part
-    // follows this will not be shown correctly. You'll still be able to read the
-    // main message and deal with attachments. Nothing I can do now :-(
-    // ---sven: handle multipart/alternative end ---
-
-    for (i=0; i<numParts; i++)
-    {
-      aMsg->bodyPart(i, &msgPart);
-      type = msgPart.typeStr();
-      subtype = msgPart.subtypeStr();
-      contDisp = msgPart.contentDisposition();
-      kdDebug(5006) << "type: " << type.data() << endl;
-      kdDebug(5006) << "subtye: " << subtype.data() << endl;
-      kdDebug(5006) << "contDisp " << contDisp.data() << endl;
-
-      if (i <= 0) asIcon = FALSE;
-      else switch (mAttachmentStyle)
-      {
-      case IconicAttmnt:
-        asIcon=TRUE; break;
-      case InlineAttmnt:
-        asIcon=FALSE; break;
-      case SmartAttmnt:
-        asIcon=(contDisp.find("inline")<0);
-      }
-
-      if (!asIcon)
-      {
-//	if (i<=0 || qstricmp(type, "text")==0)//||qstricmp(type, "message")==0)
-//	if (qstricmp(type, "text")==0)//||qstricmp(type, "message")==0)
-	if ((type == "") || (qstricmp(type, "text")==0))
-	{
-          QCString cstr(msgPart.bodyDecoded());
-	  if (i>0)
-	      queueHtml("<br><hr><br>");
-
-          QTextCodec *atmCodec = (mAutoDetectEncoding) ?
-            KMMsgBase::codecForName(msgPart.charset()) : mCodec;
-          if (!atmCodec) atmCodec = mCodec;
-
-	  if (htmlMail() && (qstricmp(subtype, "html")==0))
-          {
-            // ---Sven's strip </BODY> and </HTML> from end of attachment start-
-            // We must fo this, or else we will see only 1st inlined html attachment
-            // It is IMHO enough to search only for </BODY> and put \0 there.
-            int i;
-            i = cstr.findRev("</body>", -1, false); //case insensitive
-            if (i>0)
-              cstr.truncate(i);
-            else // just in case - search for </html>
-            {
-              i = cstr.findRev("</html>", -1, false); //case insensitive
-              if (i>0) cstr.truncate(i);
-            }
-            // ---Sven's strip </BODY> and </HTML> from end of attachment end-
-            //mViewer->write(atmCodec->toUnicode(cstr.data()));
-            writeHTMLStr(atmCodec->toUnicode(cstr.data()));
-	  }
-          else writeBodyStr(cstr, atmCodec);
-	}
-        // ---Sven's view smart or inline image attachments in kmail start---
-        else if (qstricmp(type, "image")==0)
-        {
-          mInlineImage=true;
-          writePartIcon(&msgPart, i);
-          mInlineImage=false;
-        }
-        // ---Sven's view smart or inline image attachments in kmail end---
-	else asIcon = TRUE;
-      }
-      if (asIcon)
-      {
-        writePartIcon(&msgPart, i);
-      }
-    }
-  }
-  else // if numBodyParts <= 0
-  {
-    if (htmlMail() && ((type == "text/html") || (type.find("text/html") != -1)))
-      //mViewer->write(mCodec->toUnicode(aMsg->bodyDecoded().data()));
-      writeHTMLStr(mCodec->toUnicode(aMsg->bodyDecoded().data()));
-    else
-      writeBodyStr(aMsg->bodyDecoded(), mCodec);
-  }
-*/
-
 
 
 //-----------------------------------------------------------------------------
