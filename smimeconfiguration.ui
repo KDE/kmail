@@ -403,12 +403,6 @@ The syntax is "HOST" or "HOST:PORT". If PORT is omitted, port 389 (standard LDAP
         <slot>setDisabled(bool)</slot>
     </connection>
     <connection>
-        <sender>disableHTTPCB</sender>
-        <signal>toggled(bool)</signal>
-        <receiver>frameHTTP</receiver>
-        <slot>setDisabled(bool)</slot>
-    </connection>
-    <connection>
         <sender>disableLDAPCB</sender>
         <signal>toggled(bool)</signal>
         <receiver>frameLDAP</receiver>
