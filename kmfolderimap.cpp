@@ -1317,10 +1317,24 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
 //-----------------------------------------------------------------------------
 void KMFolderImap::createFolder(const QString &name)
 {
+  if ( mAccount->makeConnection() == ImapAccountBase::Error ) {
+    kdWarning(5006) << "KMFolderImap::createFolder - got no connection" << endl;
+    return;
+  } else if ( mAccount->makeConnection() == ImapAccountBase::Connecting ) {
+    // We'll wait for the connectionResult signal from the account.
+    kdDebug(5006) << "KMFolderImap::createFolder - waiting for connection" << endl;
+
+    if ( mFoldersPendingCreation.isEmpty() ) {
+      // first folder, connect
+      connect( mAccount, SIGNAL( connectionResult(int, const QString&) ),
+               this, SLOT( slotCreatePendingFolders() ) );
+    }
+    mFoldersPendingCreation << name;
+    return;
+  }
   KURL url = mAccount->getUrl();
   url.setPath(imapPath() + name);
-  if ( mAccount->makeConnection() != ImapAccountBase::Connected )
-    return;
+
   KIO::SimpleJob *job = KIO::mkdir(url);
   KIO::Scheduler::assignJobToSlave(mAccount->slave(), job);
   ImapAccountBase::jobData jd( url.url(), folder() );
@@ -1826,6 +1840,14 @@ void KMFolderImap::setAlreadyRemoved( bool removed )
       KMFolder *folder = static_cast<KMFolder*>(node);
       static_cast<KMFolderImap*>(folder->storage())->setAlreadyRemoved( removed );
     }
+  }
+}
+
+void KMFolderImap::slotCreatePendingFolders()
+{
+  QStringList::Iterator it = mFoldersPendingCreation.begin();
+  for ( ; it != mFoldersPendingCreation.end(); ++it ) {
+    createFolder( *it );
   }
 }
 

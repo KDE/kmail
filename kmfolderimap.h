@@ -409,6 +409,13 @@ protected slots:
    */
   void slotProcessNewMail( int errorCode, const QString& errorMsg );
 
+  /**
+   * Is connected when there are folders to be created on startup and the
+   * account is still connecting. Once the account emits the connected
+   * signal this slot is called and the folders created.
+   */
+  void slotCreatePendingFolders();
+
 protected:
   QString     mImapPath;
   ulong       mLastUid;
@@ -428,6 +435,7 @@ private:
   bool        mAlreadyRemoved;
   ProgressItem *mMailCheckProgressItem;
   ProgressItem *mListDirProgressItem;
+  QStringList mFoldersPendingCreation;
 };
 
 #endif // kmfolderimap_h
