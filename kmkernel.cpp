@@ -47,6 +47,8 @@ using KRecentAddress::RecentAddresses;
 #include <kwin.h>
 #include "kmgroupware.h"
 #include "kmailicalifaceimpl.h"
+#include "mailserviceimpl.h"
+using KMail::MailServiceImpl;
 #include "folderIface.h"
 #include "cryptplugwrapperlist.h"
 
@@ -124,6 +126,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   } else {
     netCodec = QTextCodec::codecForLocale();
   }
+  mMailService =  new MailServiceImpl();
 }
 
 KMKernel::~KMKernel ()
@@ -136,6 +139,7 @@ KMKernel::~KMKernel ()
     job->kill();
     it = mPutJobs.begin();
   }
+  delete mMailService;
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
 }

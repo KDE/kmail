@@ -14,6 +14,10 @@
 namespace KIO {
   class Job;
 }
+namespace KMail {
+  class MailServiceImpl;
+}
+using KMail::MailServiceImpl;
 class KConfig;
 class KMMsgIndex;
 class QLabel;
@@ -271,6 +275,7 @@ private:
   KMGroupware * mGroupware;
   // temporary mainwin
   KMMainWin *mWin;
+  MailServiceImpl *mMailService;
 };
 
 #endif

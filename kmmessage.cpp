@@ -570,7 +570,6 @@ static QString splitLine( QString &line)
 
 static QString flowText(QString &text, const QString& indent, int maxLength)
 {
-// printf("flowText: \"%s\"\n", text.ascii());
    maxLength--;
    if (text.isEmpty())
    {
@@ -623,8 +622,6 @@ static bool flushPart(QString &msg, QStringList &part,
       part.remove(part.fromLast());
    }
 
-//printf("Start of part.\n");
-
    QString text;
    for(QStringList::Iterator it2 = part.begin();
        it2 != part.end();
@@ -651,7 +648,6 @@ static bool flushPart(QString &msg, QStringList &part,
    }
    if (!text.isEmpty())
       msg += flowText(text, indent, maxLength);
-//printf("End of of part.\n");
 
    bool appendEmptyLine = true;
    if (!part.count())
@@ -679,8 +675,6 @@ static void smartQuote( QString &msg, int maxLength )
   QString oldIndent;
   bool firstPart = true;
 
-//printf("Smart Quoting.\n");
-
 
   QStringList lines = QStringList::split('\n', msg, true);
 
@@ -693,7 +687,6 @@ static void smartQuote( QString &msg, int maxLength )
 
      QString indent = splitLine( line );
 
-//     printf("Quoted Line = \"%s\" \"%s\"\n", line.ascii(), indent.ascii());
      if ( line.isEmpty())
      {
         if (!firstPart)
@@ -733,7 +726,6 @@ static void smartQuote( QString &msg, int maxLength )
         if (!fromLine.isEmpty())
         {
            msg += fromLine;
-//printf("From = %s", fromLine.ascii());
         }
         oldIndent = indent;
      }
@@ -844,7 +836,7 @@ QCString KMMessage::asQuotedString( const QString& aHeaderStr,
 
     if( !parsedString.isEmpty() ) {
       Kpgp::Module* pgp = Kpgp::Module::getKpgp();
-      assert(pgp != 0);
+      Q_ASSERT(pgp != 0);
 
       QPtrList<Kpgp::Block> pgpBlocks;
       QStrList nonPgpBlocks;
@@ -1625,7 +1617,7 @@ KMMessage* KMMessage::createMDN( MDN::ActionMode a,
 QString KMMessage::replaceHeadersInString( const QString & s ) const {
   QString result = s;
   QRegExp rx( "\\$\\{([a-z0-9-]+)\\}", false );
-  assert( rx.isValid() );
+  Q_ASSERT( rx.isValid() );
   int idx = 0;
   while ( ( idx = rx.search( result, idx ) ) != -1 ) {
     QString replacement = headerField( rx.cap(1).latin1() );
@@ -3521,7 +3513,7 @@ QStringList KMMessage::splitEmailAddrList(const QString& aStr)
 void KMMessage::setTransferInProgress(bool value)
 {
   value ? ++mTransferInProgress : --mTransferInProgress;
-  assert(mTransferInProgress >= 0 && mTransferInProgress <= 1);
+  Q_ASSERT(mTransferInProgress >= 0 && mTransferInProgress <= 1);
 }
 
 

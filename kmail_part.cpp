@@ -138,10 +138,10 @@ KMailPart::KMailPart(QWidget *parentWidget, const char *widgetName,
 
   // Get to know when the user clicked on a folder in the KMail part and update the headerWidget of Kontact
   KParts::InfoExtension *ie = new KParts::InfoExtension( this, "KMailInfo" );
-  connect (mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT( exportFolder(KMFolder*) ) );
-  connect (this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)));
+  connect( mainWidget->folderTree(), SIGNAL(folderSelected(KMFolder*)), this, SLOT(exportFolder(KMFolder*)) );
+  connect( this, SIGNAL(textChanged(const QString&)), ie, SIGNAL(textChanged(const QString&)) );
 #endif
-  KGlobal::iconLoader()->addAppDir("kmail");
+  KGlobal::iconLoader()->addAppDir( "kmail" );
   setXMLFile( "kmmainwin.rc" );
   mainWidget->show();
 #endif
@@ -178,7 +178,7 @@ bool KMailPart::openFile()
 
 void KMailPart::exportFolder( KMFolder *folder )
 {
-	emit textChanged( folder->label() );
+  emit textChanged( folder->label() );
 }
 
 void KMailPart::guiActivateEvent(KParts::GUIActivateEvent *e)
