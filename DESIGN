@@ -504,21 +504,21 @@ Contact Till Adam <till@adam-lilienthal.de> or
 	Don Sanders <sanders@kde.org>
 with questions...
 
-Threading and sorting is implemented in kmheaders.[cpp|h] and involves a 
-handfull of players, namely:
+Threading and sorting is implemented in kmheaders.[cpp|h] and headeritem.[cpp|h] 
+and involves a handfull of players, namely:
 
 class KMHeaders: 
   this is the listview that contains the subject, date etc of each mail. 
   It's a singleton, which means there is only one, per mainwidget headers 
   list. It is actually a member of KMMainwidget and accessible there.
 
-class KMHeaderItem: 
+class HeaderItem: 
   these are the [Q|K]ListViewItem descendend items the KMHeaders listview 
   consists of. There's one for each message.
 
-class KMSortCacheItem: 
+class SortCacheItem: 
   these are what the threading and sorting as well as the caching of those
-  operate on. Each is paired with a KMHeaderItem, such that each holds a
+  operate on. Each is paired with a HeaderItem, such that each holds a
   pointer to one, and vice versa, each header item holds a pointer to it's
   associated sort cache item.
   
@@ -565,11 +565,11 @@ Strategy:
   order to figure out the state in which this .sorted file was written. This
   means the sort direction, whether the folder is threaded or not etc. 
   FIXME: is there currently sanity checking going on?
-  Now the file is parsed and for each message in the file a KMSortCacheItem is
+  Now the file is parsed and for each message in the file a SortCacheItem is
   created, which holds the offset in the .sorted file for this message as well
   as it's sort key as read from the file. That sort cache item is entered into
   the global mSortCache structure (member of the KMHeaders instance), which is
-  a  QMemArray<KMSortCacheItem *> of the size mFolder->count(). Note that this
+  a  QMemArray<SortCacheItem *> of the size mFolder->count(). Note that this
   is the size reported by the folder, not as read from the .sorted file. The
   mSortCache (along with some other structures) is updated when messages are
   added or removed. More on that further down.
@@ -605,7 +605,7 @@ Strategy:
   Now, what happens when messages have been added to the store since the last
   update of the .sorted file? Right, they don't have a sort cache item yet, 
   and would be overlooked. Consequently all message ids in the folder from 0
-  to mFolder->count() are looked at and a KMSortCacheItem is created for the
+  to mFolder->count() are looked at and a SortCacheItem is created for the
   ones that do not have one yet. This is where all sort cache items are created
   if there was no sorted file. The items created here are by definition un-
   sorted as well as unparented. On creation their sort key is figured out as
@@ -644,7 +644,7 @@ Strategy:
 
   On this first pass, no subject threading is attempted yet. Once it is done,
   the messages that are now top-level, the current thread heads, so to speak, 
-  are collected into a second dict ( QDict< QPtrList< KMSortCacheItem > > )
+  are collected into a second dict ( QDict< QPtrList< SortCacheItem > > )
   that contains for each different subject an entry holding a list of (so far
   top level) messages with that subject, that are potential parents for 
   threading by subjects. These lists are sorted by date, so the parent closest
@@ -670,7 +670,7 @@ Strategy:
 
   Ok, so far we have only operated on sort cache items, nothing ui wise has
   happened yet. Now that we have established the parent/child relations of all
-  messages, it's time to create KMHeaderItems for them for use in the header
+  messages, it's time to create HeaderItems for them for use in the header
   list. But wait, you say, what about sorting? Wouldn't it make sense to do
   that first? Exactly, you're a clever bugger, ey? Here, have a cookie. ;)
   Both creation of header items and sorting of the as of yet unsorted sort
@@ -689,7 +689,7 @@ Strategy:
   node.
  
   What follows is another iteration over all message ids in the folder, to
-  make sure that there are KMHeaderItems for each now. Should that not be the
+  make sure that there are HeaderItems for each now. Should that not be the
   case, top level emergency items are created. This loop is also used to add
   all header items that are imperfectly threaded to a list so they can be
   reevalutated when a new message arrives. Here the reverse mapping from
@@ -748,8 +748,8 @@ What happens when a message is removed from the folder?
   imperfectly threaded in the process, it is added to the corresponding list.
 
   The message itself is removed from the list of imperfectly threaded messages
-  and its header item is finally deleted. The KMHeaderItem destructor destroys
-  the KMSortCacheItem as well, which is hopefully no longer referenced anywhere
+  and its header item is finally deleted. The HeaderItem destructor destroys
+  the SortCacheItem as well, which is hopefully no longer referenced anywhere
   at this point.
 
 
