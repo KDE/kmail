@@ -80,7 +80,9 @@ KMAccount* AccountComboBox::currentAccount() const
     ++it;
     ++i;
   }
-  return *it;
+  if ( it != lst.end() )
+    return *it;
+  return 0;
 }
 
 QValueList<KMAccount *> KMail::AccountComboBox::applicableAccounts() const
