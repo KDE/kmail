@@ -927,8 +927,8 @@ void KMComposeWin::setupStatusBar(void)
   statusBar()->insertItem("", 0, 1);
   statusBar()->setItemAlignment(0, AlignLeft | AlignVCenter);
   
-  statusBar()->insertItem(QString(i18n(" Column"))+":     ",2,0,true);
-  statusBar()->insertItem(QString(i18n(" Line"))+":     ",1,0,true);
+  statusBar()->insertItem(i18n(" Column: %1 ").arg("     "),2,0,true);
+  statusBar()->insertItem(i18n(" Line: %1 ").arg("     "),1,0,true);
 }
 
 
@@ -939,9 +939,9 @@ void KMComposeWin::updateCursorPosition()
   QString temp;
   line = mEditor->currentLine();
   col = mEditor->currentColumn();
-  temp = QString(" %1: %2 ").arg(i18n("Line")).arg(line+1);
+  temp = i18n(" Line: %1 ").arg(line+1);
   statusBar()->changeItem(temp,1);
-  temp = QString(" %1: %2 ").arg(i18n("Column")).arg(col+1);
+  temp = i18n(" Column: %1 ").arg(col+1);
   statusBar()->changeItem(temp,2);
 }
 
@@ -1551,7 +1551,6 @@ void KMComposeWin::removeAttach(int idx)
     resize(size());
   }
 }
-
 
 //-----------------------------------------------------------------------------
 void KMComposeWin::addrBookSelInto(KMLineEdit* aLineEdit)
@@ -2605,7 +2604,7 @@ void KMComposeWin::slotEditToolbars()
 
 void KMComposeWin::slotEditKeys()
 {
-  KKeyDialog::configureKeys(actionCollection(), xmlFile(), true, this);
+  KKeyDialog::configure(actionCollection(), this, true);
 }
 
 void KMComposeWin::setReplyFocus( bool hasMessage )
