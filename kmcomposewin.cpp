@@ -44,14 +44,14 @@ KMComposeView::KMComposeView(QWidget *parent, const char *name,
   toLEdit->setMinimumSize(sz);
   grid->addWidget(toLEdit,0,1);
 
-  subjLEdit = new QLineEdit(this);
-  label = new QLabel(subjLEdit, nls->translate("&Cc:"), this);
+  ccLEdit = new QLineEdit(this);
+  label = new QLabel(ccLEdit, nls->translate("&Cc:"), this);
   label->adjustSize();
   label->setMinimumSize(label->size());
   grid->addWidget(label,1,0);
 
-  ccLEdit = new QLineEdit(this);
-  label = new QLabel(ccLEdit, nls->translate("&Subject:"), this);
+  subjLEdit = new QLineEdit(this);
+  label = new QLabel(subjLEdit, nls->translate("&Subject:"), this);
   label->adjustSize();
   label->setMinimumSize(label->size());
   grid->addWidget(label,2,0);
