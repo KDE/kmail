@@ -1528,7 +1528,11 @@ bool KMComposeWin::applyChanges(void)
       else {
         // we try calling the *old* build-in code for OpenPGP clearsigning
         Kpgp::Block block;
-        block.setText( encodedBody );
+	// (mutz) don't use the constructed body part, but only the
+	//        text. It's an ugly hack, but makes Kpgp usable again
+	//        for me. This screams for a better solution, though. ###
+	// block.setText( encodedBody );
+        block.setText( breakLinesAndApplyCodec() );
 
         // get PGP user id for the chosen identity
         const KMIdentity & ident =
