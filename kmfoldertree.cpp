@@ -42,7 +42,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                                     KFolderTreeItem::Protocol protocol )
   : QObject( parent, name.latin1() ),
     KFolderTreeItem( parent, name, protocol, Root ),
-    mFolder( 0 ), mNeedsRepaint( false )
+    mFolder( 0 ), mNeedsRepaint( true )
 {
   init();
   setPixmap( 0, normalIcon() );
@@ -53,7 +53,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTree *parent, const QString & name,
                     KMFolder* folder )
   : QObject( parent, name.latin1() ),
     KFolderTreeItem( parent, name ),
-    mFolder( folder ), mNeedsRepaint( false )
+    mFolder( folder ), mNeedsRepaint( true )
 {
   init();
   setPixmap( 0, normalIcon() );
@@ -64,7 +64,7 @@ KMFolderTreeItem::KMFolderTreeItem( KFolderTreeItem *parent, const QString & nam
                     KMFolder* folder )
   : QObject( 0, name.latin1() ),
     KFolderTreeItem( parent, name ),
-    mFolder( folder ), mNeedsRepaint( false )
+    mFolder( folder ), mNeedsRepaint( true )
 {
   init();
   setPixmap( 0, normalIcon() );
