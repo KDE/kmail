@@ -433,20 +433,34 @@ void MessageComposer::adjustCryptFlags()
        mAllowedCryptoMessageFormats & Kleo::InlineOpenPGPFormat &&
        !mAttachments.empty() &&
        ( mSigningRequested || mEncryptionRequested ) )
-    if ( KMessageBox::warningContinueCancel( mComposeWin,
-					     i18n("The inline OpenPGP crypto message format "
-						  "does not support encryption or signing "
-						  "of attachments.\n"
-						  "Use OpenPGP/MIME instead?"),
-					     i18n("Insecure Message Format"),
-					     i18n("&Use OpenPGP/MIME") )
-	 == KMessageBox::Cancel ) {
+  {
+    int ret = KMessageBox::warningYesNoCancel( mComposeWin,
+                                               i18n("The inline OpenPGP crypto message format "
+                                                    "does not support encryption or signing "
+                                                    "of attachments.\n"
+                                                    "Really use deprecated inline OpenPGP?"),
+                                               i18n("Insecure Message Format"),
+                                               KStdGuiItem::yes(),
+                                               i18n("&No, use OpenPGP/MIME") );
+    if ( ret == KMessageBox::Cancel ) {
       mRc = false;
       return;
-    } else {
+    } else if ( ret == KMessageBox::No ) {
       mAllowedCryptoMessageFormats &= ~Kleo::InlineOpenPGPFormat;
       mAllowedCryptoMessageFormats |= Kleo::OpenPGPMIMEFormat;
+      if ( mSigningRequested ) {
+        // The composer window disabled signing on the attachments, re-enable it
+        for ( unsigned int idx = 0 ; idx < mAttachments.size() ; ++idx )
+          mAttachments[idx].sign = true;
+      }
+      if ( mEncryptionRequested ) {
+        // The composer window disabled encrypting on the attachments, re-enable it
+        // We assume this is what the user wants - after all he chose OpenPGP/MIME for this.
+        for ( unsigned int idx = 0 ; idx < mAttachments.size() ; ++idx )
+          mAttachments[idx].encrypt = true;
+      }
     }
+  }
 
   mKeyResolver =
     new Kleo::KeyResolver( encryptToSelf(), showKeyApprovalDialog(),
@@ -1117,11 +1131,12 @@ void MessageComposer::composeMessage( KMMessage& theMessage,
   // test whether there ARE attachments that can be included into the body
   if( mEarlyAddAttachments ) {
     bool someOk = false;
-    for ( QValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it )
+    for ( QValueVector<Attachment>::const_iterator it = mAttachments.begin() ; it != mAttachments.end() ; ++it ) {
       if ( it->encrypt == doEncrypt && it->sign == doSign )
         someOk = true;
       else
         mAllAttachmentsAreInBody = false;
+    }
     if( !mAllAttachmentsAreInBody && !someOk )
       mEarlyAddAttachments = false;
   }
