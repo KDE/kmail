@@ -12,7 +12,7 @@
 #include <kconfig.h>
 #include <kiconloader.h>
 
-#include <kimgio.h>
+#include <kimageio.h>
 #include <kmessagebox.h>
 #include <kfiledialog.h>
 
@@ -248,7 +248,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
 {
   static bool pixmapsLoaded = FALSE;
   //qInitImageIO();
-  kimgioRegister();
+  KImageIO::registerFormats();
 
   mOwner  = aOwner;
   mFolder = NULL;
