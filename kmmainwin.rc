@@ -1,5 +1,5 @@
 <!DOCTYPE kpartgui>
-<kpartgui version="65" name="kmmainwin" >
+<kpartgui version="66" name="kmmainwin" >
  <MenuBar>
   <Menu noMerge="1" name="file" >
    <text>&amp;File</text>
@@ -125,7 +125,7 @@
    <Separator/>
    <Action name="options_configure_keybinding"/>
    <Action name="kmail_configure_notifications" />
-   <Action name="kmail_configure_toolbars" />
+   <Action name="options_configure_toolbars" />
    <Action name="kmail_configure_kmail" />
   </Menu>
   <Menu name="help">

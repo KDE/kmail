@@ -27,7 +27,7 @@ KMMainWin::KMMainWin(QWidget *)
 #endif
 
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()),
-				actionCollection(), "kmail_configure_toolbars" );
+				actionCollection());
 
   KStdAction::keyBindings(mKMMainWidget, SLOT(slotEditKeys()),
                           actionCollection());
