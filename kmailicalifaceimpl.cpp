@@ -44,6 +44,7 @@
 #include "kmfolderindex.h"
 #include "kmmsgdict.h"
 #include "kmfolderimap.h"
+#include "globalsettings.h"
 
 #include <mimelib/enum.h>
 
@@ -481,9 +482,7 @@ void KMailICalIfaceImpl::deleteMsg( KMMessage *msg )
 
 void KMailICalIfaceImpl::readConfig()
 {
-  // Read the options
-  KConfigGroup options( KMKernel::config(), "IMAP Resource" );
-  bool enabled = options.readBoolEntry( "Enabled", false );
+  bool enabled = GlobalSettings::theIMAPResourceEnabled();
 
   if( !enabled ) {
     if( mUseResourceIMAP == true ) {
@@ -496,10 +495,10 @@ void KMailICalIfaceImpl::readConfig()
   }
 
   // Read remaining options
-  const bool hideFolders = options.readBoolEntry( "HideGroupwareFolders", true );
-  unsigned int folderLanguage = options.readNumEntry( "Folder Language", 0 );
+  const bool hideFolders = GlobalSettings::hideGroupwareFolders();
+  unsigned int folderLanguage = GlobalSettings::theIMAPResourceFolderLanguage();
   if( folderLanguage > 3 ) folderLanguage = 0;
-  QString parentName = options.readEntry("Folder Parent");
+  QString parentName = GlobalSettings::theIMAPResourceFolderParent();
 
   // Find the folder parent
   KMFolderDir* folderParentDir;

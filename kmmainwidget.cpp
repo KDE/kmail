@@ -2701,6 +2701,8 @@ void KMMainWidget::setupActions()
                                        0, this, SLOT(slotToggleShowQuickSearch()),
                                        actionCollection(), "show_quick_search");
   mToggleShowQuickSearchAction->setChecked( GlobalSettings::quickSearchActive() );
+  mToggleShowQuickSearchAction->setWhatsThis( 
+        i18n( GlobalSettings::self()->quickSearchActiveItem()->whatsThis().utf8() ) );
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
  		      SLOT(slotFilter()), actionCollection(), "filter" );

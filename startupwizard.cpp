@@ -51,6 +51,7 @@
 #include "kmgroupware.h"
 #include "kmkernel.h"
 #include "kmailicalifaceimpl.h"
+#include "globalsettings.h"
 
 #include <kdebug.h>
 #include <klocale.h>
@@ -592,6 +593,15 @@ bool StartupWizard::storePasswd() const
 
 void StartupWizard::run()
 {
+  /* 
+   *
+   * FIXME the below is no longer up to date. If you, dear reader are here
+   * because you want to fix it, know this:
+   *
+   * 1 ) I applaud your efforts : )
+   * 2 ) please look in kmail.kcfg and use KConfigXT
+   * 
+   */
   KConfigGroup options( KMKernel::config(), "Groupware" );
 
   // Check if this wizard was previously run

@@ -2,3 +2,5 @@ File=kmail.kcfg
 ClassName=GlobalSettings
 Mutators=true
 Singleton=true
+ItemAccessors=true
+SetUserTexts=true

@@ -43,9 +43,7 @@
     <group name="UserInterface">
       <entry name="QuickSearchActive" type="Bool">
         <label>Show quick search line edit</label>
-        <whatsthis>This option enabled or disables the search line edit above
-        the message list which can be used to quickly search the information
-        shown in the message list.</whatsthis>
+        <whatsthis>This option enabled or disables the search line edit above the message list which can be used to quickly search the information shown in the message list.</whatsthis>
         <default>true</default>
       </entry>
     </group>
@@ -56,5 +54,60 @@
       </entry>
     </group>
 
+    <group name="IMAP Resource">
+      <entry name="TheIMAPResourceEnabled" type="Bool">
+        <default>false</default>
+        <whatsthis>&lt;p&gt;Enabling this makes it possible to store the "
+        "entries from the Kontact applications (KOrganizer, "
+        "KAddressBook, and KNotes.)&lt;/p&gt;&lt;p&gt;If you want to set "
+        "this option you must also set the applications to use the "
+        "IMAP resource; this is done in the KDE Control "
+        "Center.&lt;/p&gt;</whatsthis>
+      </entry>
+
+      <entry name="HideGroupwareFolders" type="Bool">
+        <default>true</default>
+        <whatsthis>&lt;p&gt;Usually you will not have any reason to see the "
+          "folders that hold the IMAP resources. But if you "
+          "need to see them, you can set that here.&lt;/p&gt;</whatsthis>
+      </entry>
+
+      <entry name="TheIMAPResourceFolderParent" type="String">
+        <default>inbox</default>
+        <whatsthis>&lt;p&gt;This chooses the parent of the IMAP resource "
+          "folders.&lt;p&gt;&lt;/p&gt;By default, the Kolab server sets "
+          "the IMAP inbox to be the parent.&lt;/p&gt;</whatsthis>
+      </entry>
+
+      <entry name="TheIMAPResourceFolderLanguage" type="Int">
+        <default>0</default>
+        <whatsthis>&lt;p&gt;If you want to set the folder names of the "
+          "IMAP storage to your local language, you can "
+          "choose between these available languages.&lt;/p&gt;"
+          "&lt;p&gt; Please note, that the only reason to do so "
+          "is for compatibility with Microsoft Outlook. It "
+          "is considered a bad idea to set this, since it "
+          "makes changing languages impossible. &lt;/p&gt;&lt;p&gt;So "
+          "do not set this unless you have to.&lt;/p&gt;</whatsthis>
+      </entry>
+    </group>
+
+    <group name="Groupware">
+      <entry name="GroupwareEnabled" type="Bool">
+        <label>Enable groupware functionality</label>
+        <whatsthis></whatsthis>
+        <default>true</default>
+      </entry>
+
+      <entry name="GroupwareLegacyMangleFromToHeaders" type="Bool">
+        <label>Legacy mode: Mangle From:/To: headers in replies to invitations</label>
+        <whatsthis>Microsoft Outlook has a number of shortcomings "
+                  "in its implementation of the iCalendar standard; "
+                  "this option works around one of them. If you have "
+                  "problems with Outlook users not being able to "
+                  "get your replies, try setting this option.</whatsthis>
+        <default>false</default>
+      </entry>
+    </group>
 
 </kcfg>
