@@ -198,6 +198,11 @@ KMFilterDlg::KMFilterDlg(QWidget* parent, const char* name):
 //-----------------------------------------------------------------------------
 KMFilterDlg::~KMFilterDlg()
 {
+  //
+  // Espen 2000-05-21: Would be better to send a signal but I can't
+  // get it to work here.
+  //
+  kernel->filterMgr()->dialogDestroyed();
 }
 
 

@@ -82,6 +82,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   setMinimumSize(400, 300);
 
+  mConfigureDialog = 0;
+
   readPreConfig();
   createWidgets();
   readConfig();
@@ -467,39 +469,12 @@ void KMMainWin::slotNewMailReader()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotSettings()
 {
-  //
-  // 2000-03-12 Espen Sand
-  // New Settings Dialog
-  //
-  static ConfigureDialog *dialog = 0;
-  if( dialog == 0 )
+  if( mConfigureDialog == 0 )
   {
-    dialog = new ConfigureDialog( this, "configure", false );
+    mConfigureDialog = new ConfigureDialog( this, "configure", false );
   }
-  dialog->show();
+  mConfigureDialog->show();
 }
-
-
-void KMMainWin::slotOldSettings()
-{
-  // markus: we write the Config here cause otherwise the
-  // geometry will be set to the value in the config.
-  // Problem arises when we change the geometry during the
-  // session are press the OK button in the settings. Then we
-  // lose the current geometry! Not anymore ;-)
-  //  writeConfig();
-  //  KMSettings dlg(this);
-  //  dlg.exec();
-}
-
-
-
-
-
-
-
-
-
 
 
 
@@ -507,7 +482,7 @@ void KMMainWin::slotOldSettings()
 //-----------------------------------------------------------------------------
 void KMMainWin::slotFilter()
 {
-  kernel->filterMgr()->openDialog();
+  kernel->filterMgr()->openDialog( this );
 }
 
 
@@ -1072,6 +1047,7 @@ void KMMainWin::slotMarkAll() {
 //-----------------------------------------------------------------------------
 void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
 {
+  /*
   KMComposeWin *win;
   KMMessage* msg;
 
@@ -1098,6 +1074,7 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
       (void) new KFileOpenWithHandler();
     (void) new KRun( aUrl );
   }
+  */
 }
 
 
@@ -1292,8 +1269,6 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertSeparator();
   fileMenu->insertItem("Settings...", this,
 		       SLOT(slotSettings()));
-  //fileMenu->insertItem(i18n("&Settings (old dialog)..."), this,
-  //		       SLOT(slotOldSettings()));
   fileMenu->insertItem(i18n("&Addressbook..."), this,
 		       SLOT(slotAddrBook()));
   mUseKabId = fileMenu->insertItem(i18n("Use KAB"), this,

@@ -10,6 +10,7 @@
 #include <qmap.h>
 #include <kurl.h>
 
+class ConfigureDialog;
 class KMFolder;
 class KMFolderDir;
 class KMFolderTree;
@@ -103,7 +104,6 @@ protected slots:
   void slotHelp();
   void slotNewMailReader();
   void slotSettings();
-  void slotOldSettings(); // To be removed
   void slotFilter();
   void slotAddrBook();
   void slotUseKab();
@@ -199,6 +199,7 @@ protected:
   KMFldSearch *searchWin;
   bool mUseKab;
   int mUseKabId;
+  ConfigureDialog *mConfigureDialog;
 };
 
 #endif

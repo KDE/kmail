@@ -132,28 +132,25 @@ int KMFilterMgr::tempOpenFolder(KMFolder* aFolder)
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::dialogClosed(void)
+void KMFilterMgr::dialogDestroyed()
 {
   mEditDialog = NULL;
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFilterMgr::openDialog(void)
+void KMFilterMgr::openDialog( QWidget *parent )
 {
-
-  // This only makes problems.....has to be changed later on
-/*  if (mEditDialog)
+  if( !mEditDialog )
   {
-    mEditDialog->show();
-    mEditDialog->raise();
+    //
+    // We can't use the parent as long as the dialog is modeless 
+    // and there is one shared dialog for all top level windows.
+    //
+    (void)parent;
+    mEditDialog = new KMFilterDlg( 0, "filterdialog" );
   }
-  else
-  {*/
-    mEditDialog = new KMFilterDlg;
-    mEditDialog->show();
-    debug( "openDialog" );
-  //}
+  mEditDialog->show();
 }
 
 

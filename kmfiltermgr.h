@@ -26,7 +26,7 @@ public:
   virtual void writeConfig(bool withSync=TRUE);
 
   /** Open an edit dialog. */
-  virtual void openDialog(void);
+  virtual void openDialog( QWidget *parent );
 
   /** Process given message by applying the filter rules one by one.
     Returns 2 if a critical error occurred (eg out of disk space) 
@@ -59,8 +59,10 @@ public:
 protected:
   friend class KMFilterMgrDlg;
 
-  /** Called from the dialog to signal that it is gone. */
-  void dialogClosed(void);
+
+public slots:
+    /** Connected to the dialog to detect when it ha been destroyed */
+    void dialogDestroyed();
 
 private:
   KMFilterDlg* mEditDialog;

@@ -86,10 +86,12 @@ GLLIB = @GLLIB@
 GMSGFMT = @GMSGFMT@
 IDL = @IDL@
 IDL_DEPENDENCIES = @IDL_DEPENDENCIES@
+KDB2HTML = @KDB2HTML@
 KDE_CXXFLAGS = @KDE_CXXFLAGS@
 KDE_EXTRA_RPATH = @KDE_EXTRA_RPATH@
 KDE_INCLUDES = @KDE_INCLUDES@
 KDE_LDFLAGS = @KDE_LDFLAGS@
+KDE_PLUGIN = @KDE_PLUGIN@
 KDE_RPATH = @KDE_RPATH@
 KDE_USE_CLOSURE_FALSE = @KDE_USE_CLOSURE_FALSE@
 KDE_USE_CLOSURE_TRUE = @KDE_USE_CLOSURE_TRUE@
@@ -182,6 +184,7 @@ kde_minidir = @kde_minidir@
 kde_servicesdir = @kde_servicesdir@
 kde_servicetypesdir = @kde_servicetypesdir@
 kde_sounddir = @kde_sounddir@
+kde_templatesdir = @kde_templatesdir@
 kde_toolbardir = @kde_toolbardir@
 kde_wallpaperdir = @kde_wallpaperdir@
 micodir = @micodir@
@@ -195,12 +198,12 @@ x_libraries = @x_libraries@
 
 SUBDIRS = pics
 INCLUDES = $(all_includes)
-LDADD = $(LIB_KHTML) -lkspell -lmimelib $(LIB_KFILE)
+LDADD = $(LIB_KHTML) -lkspell -lmimelib -lkab $(LIB_KFILE)
 
 bin_PROGRAMS = kmail
 
 kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kmail_SOURCES = kmmessage.cpp kmmainwin.cpp 		kmfolderdia.cpp kmfoldertree.cpp 		kmaccount.cpp kmheaders.cpp 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp 		kmreaderwin.cpp kbusyptr.cpp 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp 		kmacctmgr.cpp kmacctfolder.cpp 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp 		kmacctseldlg.cpp kmfiltermgr.cpp 		kmfilteraction.cpp kmidentity.cpp 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp 		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp 		kfileio.cpp kmaddrbook.cpp 		kmaddrbookdlg.cpp kmiostatusdlg.cpp 		kmnewiostatus.cpp kmnewiostatuswdg.cpp 		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp 		kmundostack.cpp kmbroadcaststatus.cpp 		kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp 		accountdialog.cpp
+kmail_SOURCES = kmmessage.cpp kmmainwin.cpp 		kmfolderdia.cpp kmfoldertree.cpp 		kmaccount.cpp kmheaders.cpp 		kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp 		kmreaderwin.cpp kbusyptr.cpp 		kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp 		kmacctmgr.cpp kmacctfolder.cpp 		kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp 		kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp 		kmacctseldlg.cpp kmfiltermgr.cpp 		kmfilteraction.cpp kmidentity.cpp 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp 		kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp 		kfileio.cpp kmaddrbook.cpp 		kmaddrbookdlg.cpp kmiostatusdlg.cpp 		kmnewiostatus.cpp kmnewiostatuswdg.cpp 		charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp 		kmundostack.cpp kmbroadcaststatus.cpp 		kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp                 kmkernel.cpp kmailIface.skel kmailIface.stub main.cpp 		accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp 		md5.c
 
 
 #>- METASOURCES = AUTO
@@ -243,8 +246,9 @@ LIBS = @LIBS@
 #>- kmnewiostatuswdg.$(OBJEXT) charsetsDlg.$(OBJEXT) kfontutils.$(OBJEXT) \
 #>- kmtopwidget.$(OBJEXT) kmundostack.$(OBJEXT) kmbroadcaststatus.$(OBJEXT) \
 #>- kmacctexppop.$(OBJEXT) configuredialog.$(OBJEXT) colorlistbox.$(OBJEXT) \
-#>- kmkernel.$(OBJEXT) main.$(OBJEXT) accountdialog.$(OBJEXT)
-#>+ 19
+#>- kmkernel.$(OBJEXT) main.$(OBJEXT) accountdialog.$(OBJEXT) \
+#>- kmfldsearch.$(OBJEXT) addtoaddressbook.$(OBJEXT) md5.$(OBJEXT)
+#>+ 21
 @KDE_USE_FINAL_FALSE@kmail_OBJECTS = kmmessage.$(OBJEXT) kmmainwin.$(OBJEXT) \
 kmfolderdia.$(OBJEXT) kmfoldertree.$(OBJEXT) kmaccount.$(OBJEXT) \
 kmheaders.$(OBJEXT) kmcomposewin.$(OBJEXT) kmfolder.$(OBJEXT) \
@@ -261,9 +265,11 @@ kmaddrbookdlg.$(OBJEXT) kmiostatusdlg.$(OBJEXT) kmnewiostatus.$(OBJEXT) \
 kmnewiostatuswdg.$(OBJEXT) charsetsDlg.$(OBJEXT) kfontutils.$(OBJEXT) \
 kmtopwidget.$(OBJEXT) kmundostack.$(OBJEXT) kmbroadcaststatus.$(OBJEXT) \
 kmacctexppop.$(OBJEXT) configuredialog.$(OBJEXT) colorlistbox.$(OBJEXT) \
-kmkernel.$(OBJEXT) main.$(OBJEXT) accountdialog.$(OBJEXT) kmailIface_skel.$(OBJEXT) kmailIface_stub.$(OBJEXT)
-@KDE_USE_FINAL_TRUE@kmail_OBJECTS = kmail.all_cpp.o 
-kmail_final_OBJECTS = kmail.all_cpp.o 
+kmkernel.$(OBJEXT) main.$(OBJEXT) accountdialog.$(OBJEXT) \
+kmfldsearch.$(OBJEXT) addtoaddressbook.$(OBJEXT) md5.$(OBJEXT)\
+addtoaddressbook.moc.o  kmailIface_skel.$(OBJEXT) kmailIface_stub.$(OBJEXT)
+@KDE_USE_FINAL_TRUE@kmail_OBJECTS = md5.o kmail.all_cpp.o 
+kmail_final_OBJECTS = md5.o kmail.all_cpp.o 
 kmail_LDADD = $(LDADD)
 kmail_DEPENDENCIES = 
 CXXFLAGS = @CXXFLAGS@
@@ -277,6 +283,11 @@ CXXLD = $(CXX)
 #>- CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(LDFLAGS) -o $@
 #>+ 1
 CXXLINK = $(LIBTOOL) --mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(KDE_CXXFLAGS) $(LDFLAGS) -o $@
+CFLAGS = @CFLAGS@
+COMPILE = $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(LDFLAGS) -o $@
 DATA =  $(apps_DATA) $(rc_DATA)
 
 HEADERS =  $(include_HEADERS)
@@ -288,56 +299,59 @@ DISTFILES = $(DIST_COMMON) $(SOURCES) $(HEADERS) $(TEXINFOS) $(EXTRA_DIST)
 
 TAR = tar
 GZIP_ENV = --best
-#>- DEP_FILES =  .deps/accountdialog.P .deps/charsetsDlg.P \
-#>- .deps/colorlistbox.P .deps/configuredialog.P .deps/kalarmtimer.P \
-#>- .deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P .deps/kmaccount.P \
-#>- .deps/kmacctexppop.P .deps/kmacctfolder.P .deps/kmacctlocal.P \
-#>- .deps/kmacctmgr.P .deps/kmacctpop.P .deps/kmacctseldlg.P \
-#>- .deps/kmaddrbook.P .deps/kmaddrbookdlg.P .deps/kmbroadcaststatus.P \
-#>- .deps/kmcomposewin.P .deps/kmfilter.P .deps/kmfilteraction.P \
-#>- .deps/kmfilterdlg.P .deps/kmfiltermgr.P .deps/kmfolder.P \
-#>- .deps/kmfolderdia.P .deps/kmfolderdir.P .deps/kmfoldermgr.P \
-#>- .deps/kmfoldernode.P .deps/kmfolderseldlg.P .deps/kmfoldertree.P \
-#>- .deps/kmheaders.P .deps/kmidentity.P .deps/kmiostatusdlg.P \
-#>- .deps/kmkernel.P .deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsgbase.P \
-#>- .deps/kmmsginfo.P .deps/kmmsglist.P .deps/kmmsgpart.P \
-#>- .deps/kmmsgpartdlg.P .deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P \
-#>- .deps/kmreaderwin.P .deps/kmsender.P .deps/kmtopwidget.P \
-#>- .deps/kmundostack.P .deps/kpgp.P .deps/kpgpbase.P .deps/main.P
-#>+ 34
-@KDE_USE_FINAL_TRUE@DEP_FILES =   $(DEPDIR)/kmail.all_cpp.P \
-	  .deps/accountdialog.P .deps/charsetsDlg.P \
-.deps/colorlistbox.P .deps/configuredialog.P .deps/kalarmtimer.P \
-.deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P .deps/kmaccount.P \
-.deps/kmacctexppop.P .deps/kmacctfolder.P .deps/kmacctlocal.P \
-.deps/kmacctmgr.P .deps/kmacctpop.P .deps/kmacctseldlg.P \
-.deps/kmaddrbook.P .deps/kmaddrbookdlg.P .deps/kmbroadcaststatus.P \
-.deps/kmcomposewin.P .deps/kmfilter.P .deps/kmfilteraction.P \
-.deps/kmfilterdlg.P .deps/kmfiltermgr.P .deps/kmfolder.P \
-.deps/kmfolderdia.P .deps/kmfolderdir.P .deps/kmfoldermgr.P \
-.deps/kmfoldernode.P .deps/kmfolderseldlg.P .deps/kmfoldertree.P \
-.deps/kmheaders.P .deps/kmidentity.P .deps/kmiostatusdlg.P \
-.deps/kmkernel.P .deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsgbase.P \
-.deps/kmmsginfo.P .deps/kmmsglist.P .deps/kmmsgpart.P \
-.deps/kmmsgpartdlg.P .deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P \
-.deps/kmreaderwin.P .deps/kmsender.P .deps/kmtopwidget.P \
-.deps/kmundostack.P .deps/kpgp.P .deps/kpgpbase.P .deps/main.P
-@KDE_USE_FINAL_FALSE@DEP_FILES =    .deps/accountdialog.P .deps/charsetsDlg.P \
-.deps/colorlistbox.P .deps/configuredialog.P .deps/kalarmtimer.P \
-.deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P .deps/kmaccount.P \
-.deps/kmacctexppop.P .deps/kmacctfolder.P .deps/kmacctlocal.P \
-.deps/kmacctmgr.P .deps/kmacctpop.P .deps/kmacctseldlg.P \
-.deps/kmaddrbook.P .deps/kmaddrbookdlg.P .deps/kmbroadcaststatus.P \
-.deps/kmcomposewin.P .deps/kmfilter.P .deps/kmfilteraction.P \
-.deps/kmfilterdlg.P .deps/kmfiltermgr.P .deps/kmfolder.P \
-.deps/kmfolderdia.P .deps/kmfolderdir.P .deps/kmfoldermgr.P \
-.deps/kmfoldernode.P .deps/kmfolderseldlg.P .deps/kmfoldertree.P \
-.deps/kmheaders.P .deps/kmidentity.P .deps/kmiostatusdlg.P \
-.deps/kmkernel.P .deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsgbase.P \
-.deps/kmmsginfo.P .deps/kmmsglist.P .deps/kmmsgpart.P \
-.deps/kmmsgpartdlg.P .deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P \
-.deps/kmreaderwin.P .deps/kmsender.P .deps/kmtopwidget.P \
-.deps/kmundostack.P .deps/kpgp.P .deps/kpgpbase.P .deps/main.P
+#>- DEP_FILES =  .deps/accountdialog.P .deps/addtoaddressbook.P \
+#>- .deps/charsetsDlg.P .deps/colorlistbox.P .deps/configuredialog.P \
+#>- .deps/kalarmtimer.P .deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P \
+#>- .deps/kmaccount.P .deps/kmacctexppop.P .deps/kmacctfolder.P \
+#>- .deps/kmacctlocal.P .deps/kmacctmgr.P .deps/kmacctpop.P \
+#>- .deps/kmacctseldlg.P .deps/kmaddrbook.P .deps/kmaddrbookdlg.P \
+#>- .deps/kmbroadcaststatus.P .deps/kmcomposewin.P .deps/kmfilter.P \
+#>- .deps/kmfilteraction.P .deps/kmfilterdlg.P .deps/kmfiltermgr.P \
+#>- .deps/kmfldsearch.P .deps/kmfolder.P .deps/kmfolderdia.P \
+#>- .deps/kmfolderdir.P .deps/kmfoldermgr.P .deps/kmfoldernode.P \
+#>- .deps/kmfolderseldlg.P .deps/kmfoldertree.P .deps/kmheaders.P \
+#>- .deps/kmidentity.P .deps/kmiostatusdlg.P .deps/kmkernel.P \
+#>- .deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsgbase.P .deps/kmmsginfo.P \
+#>- .deps/kmmsglist.P .deps/kmmsgpart.P .deps/kmmsgpartdlg.P \
+#>- .deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P .deps/kmreaderwin.P \
+#>- .deps/kmsender.P .deps/kmtopwidget.P .deps/kmundostack.P .deps/kpgp.P \
+#>- .deps/kpgpbase.P .deps/main.P .deps/md5.P
+#>+ 36
+@KDE_USE_FINAL_TRUE@DEP_FILES =  $(DEPDIR)/addtoaddressbook.moc.P  $(DEPDIR)/kmail.all_cpp.P \
+	  .deps/accountdialog.P .deps/addtoaddressbook.P \
+.deps/charsetsDlg.P .deps/colorlistbox.P .deps/configuredialog.P \
+.deps/kalarmtimer.P .deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P \
+.deps/kmaccount.P .deps/kmacctexppop.P .deps/kmacctfolder.P \
+.deps/kmacctlocal.P .deps/kmacctmgr.P .deps/kmacctpop.P \
+.deps/kmacctseldlg.P .deps/kmaddrbook.P .deps/kmaddrbookdlg.P \
+.deps/kmbroadcaststatus.P .deps/kmcomposewin.P .deps/kmfilter.P \
+.deps/kmfilteraction.P .deps/kmfilterdlg.P .deps/kmfiltermgr.P \
+.deps/kmfldsearch.P .deps/kmfolder.P .deps/kmfolderdia.P \
+.deps/kmfolderdir.P .deps/kmfoldermgr.P .deps/kmfoldernode.P \
+.deps/kmfolderseldlg.P .deps/kmfoldertree.P .deps/kmheaders.P \
+.deps/kmidentity.P .deps/kmiostatusdlg.P .deps/kmkernel.P \
+.deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsgbase.P .deps/kmmsginfo.P \
+.deps/kmmsglist.P .deps/kmmsgpart.P .deps/kmmsgpartdlg.P \
+.deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P .deps/kmreaderwin.P \
+.deps/kmsender.P .deps/kmtopwidget.P .deps/kmundostack.P .deps/kpgp.P \
+.deps/kpgpbase.P .deps/main.P .deps/md5.P
+@KDE_USE_FINAL_FALSE@DEP_FILES =  $(DEPDIR)/addtoaddressbook.moc.P   .deps/accountdialog.P .deps/addtoaddressbook.P \
+.deps/charsetsDlg.P .deps/colorlistbox.P .deps/configuredialog.P \
+.deps/kalarmtimer.P .deps/kbusyptr.P .deps/kfileio.P .deps/kfontutils.P \
+.deps/kmaccount.P .deps/kmacctexppop.P .deps/kmacctfolder.P \
+.deps/kmacctlocal.P .deps/kmacctmgr.P .deps/kmacctpop.P \
+.deps/kmacctseldlg.P .deps/kmaddrbook.P .deps/kmaddrbookdlg.P \
+.deps/kmbroadcaststatus.P .deps/kmcomposewin.P .deps/kmfilter.P \
+.deps/kmfilteraction.P .deps/kmfilterdlg.P .deps/kmfiltermgr.P \
+.deps/kmfldsearch.P .deps/kmfolder.P .deps/kmfolderdia.P \
+.deps/kmfolderdir.P .deps/kmfoldermgr.P .deps/kmfoldernode.P \
+.deps/kmfolderseldlg.P .deps/kmfoldertree.P .deps/kmheaders.P \
+.deps/kmidentity.P .deps/kmiostatusdlg.P .deps/kmkernel.P \
+.deps/kmmainwin.P .deps/kmmessage.P .deps/kmmsgbase.P .deps/kmmsginfo.P \
+.deps/kmmsglist.P .deps/kmmsgpart.P .deps/kmmsgpartdlg.P \
+.deps/kmnewiostatus.P .deps/kmnewiostatuswdg.P .deps/kmreaderwin.P \
+.deps/kmsender.P .deps/kmtopwidget.P .deps/kmundostack.P .deps/kpgp.P \
+.deps/kpgpbase.P .deps/main.P .deps/md5.P
 
 SOURCES = $(kmail_SOURCES)
 OBJECTS = $(kmail_OBJECTS)
@@ -809,6 +823,10 @@ $(srcdir)/kmfilteraction.cpp: kmfilteraction.moc
 kmfilteraction.moc: $(srcdir)/kmfilteraction.h
 	$(MOC) $(srcdir)/kmfilteraction.h -o kmfilteraction.moc
 
+#>+ 3
+addtoaddressbook.moc.cpp: $(srcdir)/addtoaddressbook.h
+	$(MOC) $(srcdir)/addtoaddressbook.h -o addtoaddressbook.moc.cpp
+
 #>+ 4
 $(srcdir)/accountdialog.cpp: accountdialog.moc
 accountdialog.moc: $(srcdir)/accountdialog.h
@@ -915,6 +933,16 @@ kmaddrbookdlg.moc: $(srcdir)/kmaddrbookdlg.h
 	$(MOC) $(srcdir)/kmaddrbookdlg.h -o kmaddrbookdlg.moc
 
 #>+ 4
+$(srcdir)/kmsender.cpp: kmsender.moc
+kmsender.moc: $(srcdir)/kmsender.h
+	$(MOC) $(srcdir)/kmsender.h -o kmsender.moc
+
+#>+ 4
+$(srcdir)/kmreaderwin.cpp: kmreaderwin.moc
+kmreaderwin.moc: $(srcdir)/kmreaderwin.h
+	$(MOC) $(srcdir)/kmreaderwin.h -o kmreaderwin.moc
+
+#>+ 4
 $(srcdir)/kalarmtimer.cpp: kalarmtimer.moc
 kalarmtimer.moc: $(srcdir)/kalarmtimer.h
 	$(MOC) $(srcdir)/kalarmtimer.h -o kalarmtimer.moc
@@ -923,16 +951,6 @@ kalarmtimer.moc: $(srcdir)/kalarmtimer.h
 $(srcdir)/kmkernel.cpp: kmkernel.moc
 kmkernel.moc: $(srcdir)/kmkernel.h
 	$(MOC) $(srcdir)/kmkernel.h -o kmkernel.moc
-
-#>+ 4
-$(srcdir)/kmreaderwin.cpp: kmreaderwin.moc
-kmreaderwin.moc: $(srcdir)/kmreaderwin.h
-	$(MOC) $(srcdir)/kmreaderwin.h -o kmreaderwin.moc
-
-#>+ 4
-$(srcdir)/kmsender.cpp: kmsender.moc
-kmsender.moc: $(srcdir)/kmsender.h
-	$(MOC) $(srcdir)/kmsender.h -o kmsender.moc
 
 #>+ 4
 $(srcdir)/kmfoldermgr.cpp: kmfoldermgr.moc
@@ -946,7 +964,7 @@ kmfoldernode.moc: $(srcdir)/kmfoldernode.h
 
 #>+ 3
 clean-metasources:
-	-rm -f  kmfldsearch.moc colorlistbox.moc kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc accountdialog.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmtopwidget.moc kmacctexppop.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kalarmtimer.moc kmkernel.moc kmreaderwin.moc kmsender.moc kmfoldermgr.moc kmfoldernode.moc
+	-rm -f  kmfldsearch.moc colorlistbox.moc kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc addtoaddressbook.moc.cpp accountdialog.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmtopwidget.moc kmacctexppop.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kmsender.moc kmreaderwin.moc kalarmtimer.moc kmkernel.moc kmfoldermgr.moc kmfoldernode.moc
 
 #>+ 10
 kmailIface.kidl: $(srcdir)/kmailIface.h $(DCOPIDL_DEPENDENCIES)
@@ -992,11 +1010,11 @@ force-reedit:
 
 
 #>+ 11
-kmail.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kmmessage.cpp $(srcdir)/kmmainwin.cpp $(srcdir)/kmfolderdia.cpp $(srcdir)/kmfoldertree.cpp $(srcdir)/kmaccount.cpp $(srcdir)/kmheaders.cpp $(srcdir)/kmcomposewin.cpp $(srcdir)/kmfolder.cpp $(srcdir)/kmmsgpartdlg.cpp $(srcdir)/kmreaderwin.cpp $(srcdir)/kbusyptr.cpp $(srcdir)/kalarmtimer.cpp $(srcdir)/kmmsgpart.cpp $(srcdir)/kmmsginfo.cpp $(srcdir)/kmacctmgr.cpp $(srcdir)/kmacctfolder.cpp $(srcdir)/kmacctlocal.cpp $(srcdir)/kmacctpop.cpp $(srcdir)/kmfolderdir.cpp $(srcdir)/kmfoldermgr.cpp $(srcdir)/kmfoldernode.cpp $(srcdir)/kmsender.cpp $(srcdir)/kmacctseldlg.cpp $(srcdir)/kmfiltermgr.cpp $(srcdir)/kmfilteraction.cpp $(srcdir)/kmidentity.cpp $(srcdir)/kmfolderseldlg.cpp $(srcdir)/kmfilter.cpp $(srcdir)/kmfilterdlg.cpp $(srcdir)/kmmsgbase.cpp $(srcdir)/kmmsglist.cpp $(srcdir)/kpgp.cpp $(srcdir)/kpgpbase.cpp $(srcdir)/kfileio.cpp $(srcdir)/kmaddrbook.cpp $(srcdir)/kmaddrbookdlg.cpp $(srcdir)/kmiostatusdlg.cpp $(srcdir)/kmnewiostatus.cpp $(srcdir)/kmnewiostatuswdg.cpp $(srcdir)/charsetsDlg.cpp $(srcdir)/kfontutils.cpp $(srcdir)/kmtopwidget.cpp $(srcdir)/kmundostack.cpp $(srcdir)/kmbroadcaststatus.cpp $(srcdir)/kmacctexppop.cpp $(srcdir)/configuredialog.cpp $(srcdir)/colorlistbox.cpp $(srcdir)/kmkernel.cpp $(srcdir)/main.cpp $(srcdir)/accountdialog.cpp $(srcdir)/kmailIface_skel.cpp $(srcdir)/kmailIface_stub.cpp   kmfldsearch.moc colorlistbox.moc kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc accountdialog.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmtopwidget.moc kmacctexppop.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kalarmtimer.moc kmkernel.moc kmreaderwin.moc kmsender.moc kmfoldermgr.moc kmfoldernode.moc 
+kmail.all_cpp.cpp: $(srcdir)/Makefile.in $(srcdir)/kmmessage.cpp $(srcdir)/kmmainwin.cpp $(srcdir)/kmfolderdia.cpp $(srcdir)/kmfoldertree.cpp $(srcdir)/kmaccount.cpp $(srcdir)/kmheaders.cpp $(srcdir)/kmcomposewin.cpp $(srcdir)/kmfolder.cpp $(srcdir)/kmmsgpartdlg.cpp $(srcdir)/kmreaderwin.cpp $(srcdir)/kbusyptr.cpp $(srcdir)/kalarmtimer.cpp $(srcdir)/kmmsgpart.cpp $(srcdir)/kmmsginfo.cpp $(srcdir)/kmacctmgr.cpp $(srcdir)/kmacctfolder.cpp $(srcdir)/kmacctlocal.cpp $(srcdir)/kmacctpop.cpp $(srcdir)/kmfolderdir.cpp $(srcdir)/kmfoldermgr.cpp $(srcdir)/kmfoldernode.cpp $(srcdir)/kmsender.cpp $(srcdir)/kmacctseldlg.cpp $(srcdir)/kmfiltermgr.cpp $(srcdir)/kmfilteraction.cpp $(srcdir)/kmidentity.cpp $(srcdir)/kmfolderseldlg.cpp $(srcdir)/kmfilter.cpp $(srcdir)/kmfilterdlg.cpp $(srcdir)/kmmsgbase.cpp $(srcdir)/kmmsglist.cpp $(srcdir)/kpgp.cpp $(srcdir)/kpgpbase.cpp $(srcdir)/kfileio.cpp $(srcdir)/kmaddrbook.cpp $(srcdir)/kmaddrbookdlg.cpp $(srcdir)/kmiostatusdlg.cpp $(srcdir)/kmnewiostatus.cpp $(srcdir)/kmnewiostatuswdg.cpp $(srcdir)/charsetsDlg.cpp $(srcdir)/kfontutils.cpp $(srcdir)/kmtopwidget.cpp $(srcdir)/kmundostack.cpp $(srcdir)/kmbroadcaststatus.cpp $(srcdir)/kmacctexppop.cpp $(srcdir)/configuredialog.cpp $(srcdir)/colorlistbox.cpp $(srcdir)/kmkernel.cpp $(srcdir)/main.cpp $(srcdir)/accountdialog.cpp $(srcdir)/kmfldsearch.cpp $(srcdir)/addtoaddressbook.cpp $(srcdir)/kmailIface_skel.cpp $(srcdir)/kmailIface_stub.cpp  addtoaddressbook.moc.cpp kmfldsearch.moc colorlistbox.moc kmsettings.moc kmmsgpartdlg.moc kmbroadcaststatus.moc kmfolder.moc kmfilterdlg.moc kmacctmgr.moc kmcomposewin.moc kmfilteraction.moc accountdialog.moc kmnewiostatus.moc kmnewiostatuswdg.moc kmacctpop.moc kmfolderdia.moc kbusyptr.moc kmfoldertree.moc kmaccount.moc ktablistbox.moc kmiostatusdlg.moc kmmainwin.moc kmacctseldlg.moc kmtopwidget.moc kmacctexppop.moc kmfolderseldlg.moc kpgp.moc configuredialog.moc kmfolderdir.moc charsetsDlg.moc kmheaders.moc kmaddrbookdlg.moc kmsender.moc kmreaderwin.moc kalarmtimer.moc kmkernel.moc kmfoldermgr.moc kmfoldernode.moc 
 	@echo 'creating kmail.all_cpp.cpp ...'; \
 	rm -f kmail.all_cpp.files kmail.all_cpp.final; \
 	echo "#define KDE_USE_FINAL 1" >> kmail.all_cpp.final; \
-	for file in kmmessage.cpp kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp kmaccount.cpp kmheaders.cpp kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp kmreaderwin.cpp kbusyptr.cpp kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp kmacctmgr.cpp kmacctfolder.cpp kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp kmacctseldlg.cpp kmfiltermgr.cpp kmfilteraction.cpp kmidentity.cpp kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp kfileio.cpp kmaddrbook.cpp kmaddrbookdlg.cpp kmiostatusdlg.cpp kmnewiostatus.cpp kmnewiostatuswdg.cpp charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp kmundostack.cpp kmbroadcaststatus.cpp kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp kmkernel.cpp main.cpp accountdialog.cpp kmailIface_skel.cpp kmailIface_stub.cpp ; do \
+	for file in kmmessage.cpp kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp kmaccount.cpp kmheaders.cpp kmcomposewin.cpp kmfolder.cpp kmmsgpartdlg.cpp kmreaderwin.cpp kbusyptr.cpp kalarmtimer.cpp kmmsgpart.cpp kmmsginfo.cpp kmacctmgr.cpp kmacctfolder.cpp kmacctlocal.cpp kmacctpop.cpp kmfolderdir.cpp kmfoldermgr.cpp kmfoldernode.cpp kmsender.cpp kmacctseldlg.cpp kmfiltermgr.cpp kmfilteraction.cpp kmidentity.cpp kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp kmmsgbase.cpp kmmsglist.cpp kpgp.cpp kpgpbase.cpp kfileio.cpp kmaddrbook.cpp kmaddrbookdlg.cpp kmiostatusdlg.cpp kmnewiostatus.cpp kmnewiostatuswdg.cpp charsetsDlg.cpp kfontutils.cpp kmtopwidget.cpp kmundostack.cpp kmbroadcaststatus.cpp kmacctexppop.cpp configuredialog.cpp colorlistbox.cpp kmkernel.cpp main.cpp accountdialog.cpp kmfldsearch.cpp addtoaddressbook.cpp kmailIface_skel.cpp kmailIface_stub.cpp  addtoaddressbook.moc.cpp; do \
 	  echo "#include \"$$file\"" >> kmail.all_cpp.files; \
 	  test ! -f $(srcdir)/$$file || egrep '^#pragma +implementation' $(srcdir)/$$file >> kmail.all_cpp.final; \
 	done; \
