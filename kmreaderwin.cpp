@@ -1725,8 +1725,8 @@ QString KMReaderWin::sigStatusToString( CryptPlugWrapper* cryptPlug,
                 result = "";   // do *not* return a default text here !
                 break;
             }
-        } else
-        if( 0 <= cryptPlug->libName().find( "gpgme-smime",   0, false ) ) {
+        }
+        else if( 0 <= cryptPlug->libName().find( "gpgme-smime", 0, false ) ) {
             // process status bits according to SigStatus_...
             // definitions in kdenetwork/libkdenetwork/cryptplug.h
 
@@ -1887,16 +1887,14 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         if( block.isDecryptable )
             htmlStr += i18n("Encrypted message");
         else {
-            htmlStr +=
-                QString("%1<br />%2 <i>%3</i>")
-                .arg( i18n("Cannot decrypt message.") )
-                .arg( block.errorText.isEmpty() ? QString("") : i18n("Error: ") )
-                .arg( block.errorText );
+            htmlStr += i18n("Encrypted message (decryption not possible)");
+            if( !block.errorText.isEmpty() )
+                htmlStr += "<br />" + i18n("Reason: %1").arg( block.errorText );
         }
         htmlStr += "</td></tr><tr class=\"encrB\"><td>";
     }
 
-    if (block.isSigned) {
+    if( block.isSigned ) {
         QStringList& blockAddrs( block.signerMailAddresses );
         // note: At the moment frameColor and showKeyInfos are
         //       used for CMS only but not for PGP signatures
@@ -1914,6 +1912,8 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         // that was reported by the plugin
         if( statusStr.isEmpty() )
             statusStr = block.status;
+        if( block.technicalProblem )
+            frameColor = SIG_FRAME_COL_YELLOW;
 
         switch( frameColor ){
             case SIG_FRAME_COL_RED:
@@ -1931,7 +1931,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
         // either as URL or not linked (for PGP)
         // note: Once we can start PGP key manager programs
         //       from within KMail we could change this and
-        //       allways show the URL.    (khz, 2002/06/27)
+        //       always show the URL.    (khz, 2002/06/27)
         QString startKeyHREF;
         if( isSMIME )
             startKeyHREF =
@@ -1947,7 +1947,7 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
             : "0x" + QString::fromUtf8( block.keyId );
 
 
-        // temporary hack: allways show key infos!
+        // temporary hack: always show key infos!
         showKeyInfos = true;
 
         // Sorry for using 'black' as null color but .isValid()
@@ -1963,73 +1963,75 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
             }
 
             // special color handling: S/MIME uses only green/yellow/red.
-            switch( frameColor ){
+            switch( frameColor ) {
                 case SIG_FRAME_COL_RED:
                     block.signClass = "signErr";//"signCMSRed";
                     onlyShowKeyURL = true;
                     break;
                 case SIG_FRAME_COL_YELLOW:
-                    block.signClass = "signOkKeyBad";//"signCMSYellow";
+                    if( block.technicalProblem )
+                        block.signClass = "signWarn";
+                    else
+                        block.signClass = "signOkKeyBad";//"signCMSYellow";
                     break;
-                case SIG_FRAME_COL_GREEN: {
-                        block.signClass = "signOkKeyOk";//"signCMSGreen";
-                        // extra hint for green case
-                        // that email addresses in DN do not match fromAddress
-                        QString greenCaseWarning;
-                        QString msgFrom( KMMessage::getEmailAddr(fromAddress) );
-                        QString certificate;
-                        if( block.keyId.isEmpty() )
-                            certificate = "certificate";
-                        else
-                            certificate = QString("%1%2</a>")
-                                          .arg( startKeyHREF )
-                                          .arg( "certificate" );
-                        if( blockAddrs.count() ){
-                            if( blockAddrs.grep(
-                                    msgFrom,
-                                    false ).isEmpty() ) {
-                                greenCaseWarning =
-                                    "<u>" +
-                                    i18n("Warning:") +
-                                    "</u> " +
-                                    i18n("Sender's mail address is not stored "
-                                         "in the %1 used for signing.").arg(certificate) +
-                                    "<br />" +
-                                    i18n("sender: ") +
-                                    "&lt;" +
-                                    msgFrom +
-                                    "&gt;<br />" +
-                                    i18n("stored: ") +
-                                    "&lt;";
-                                // We cannot use Qt's join() function here but
-                                // have to join the addresses manually to
-                                // extract the mail addresses (without '<''>')
-                                // before including it into our string:
-                                bool bStart = true;
-                                for(QStringList::ConstIterator it = blockAddrs.begin();
-                                    it != blockAddrs.end(); ++it ){
-                                    if( !bStart )
-                                        greenCaseWarning.append("&gt;, <br />&nbsp; &nbsp;&lt;");
-                                    bStart = false;
-                                    greenCaseWarning.append( KMMessage::getEmailAddr(*it) );
-                                }
-                                greenCaseWarning.append( "&gt;" );
-                            }
-                        } else {
+                case SIG_FRAME_COL_GREEN:
+                    block.signClass = "signOkKeyOk";//"signCMSGreen";
+                    // extra hint for green case
+                    // that email addresses in DN do not match fromAddress
+                    QString greenCaseWarning;
+                    QString msgFrom( KMMessage::getEmailAddr(fromAddress) );
+                    QString certificate;
+                    if( block.keyId.isEmpty() )
+                        certificate = "certificate";
+                    else
+                        certificate = QString("%1%2</a>")
+                                      .arg( startKeyHREF )
+                                      .arg( "certificate" );
+                    if( blockAddrs.count() ){
+                        if( blockAddrs.grep(
+                                msgFrom,
+                                false ).isEmpty() ) {
                             greenCaseWarning =
                                 "<u>" +
                                 i18n("Warning:") +
                                 "</u> " +
-                                i18n("No mail address is stored in the %1 used for signing, "
-                                     "so we cannot compare it to the sender's address &lt;%2&gt;.")
-                                .arg(certificate)
-                                .arg(msgFrom);
+                                i18n("Sender's mail address is not stored "
+                                     "in the %1 used for signing.").arg(certificate) +
+                                "<br />" +
+                                i18n("sender: ") +
+                                "&lt;" +
+                                msgFrom +
+                                "&gt;<br />" +
+                                i18n("stored: ") +
+                                "&lt;";
+                            // We cannot use Qt's join() function here but
+                            // have to join the addresses manually to
+                            // extract the mail addresses (without '<''>')
+                            // before including it into our string:
+                            bool bStart = true;
+                            for(QStringList::ConstIterator it = blockAddrs.begin();
+                                it != blockAddrs.end(); ++it ){
+                                if( !bStart )
+                                    greenCaseWarning.append("&gt;, <br />&nbsp; &nbsp;&lt;");
+                                bStart = false;
+                                greenCaseWarning.append( KMMessage::getEmailAddr(*it) );
+                            }
+                            greenCaseWarning.append( "&gt;" );
                         }
-                        if( !greenCaseWarning.isEmpty() ) {
-                            if( !statusStr.isEmpty() )
-                                statusStr.append("<br />&nbsp;<br />");
-                            statusStr.append( greenCaseWarning );
-                        }
+                    } else {
+                        greenCaseWarning =
+                            "<u>" +
+                            i18n("Warning:") +
+                            "</u> " +
+                            i18n("No mail address is stored in the %1 used for signing, "
+                                 "so we cannot compare it to the sender's address &lt;%2&gt;.")
+                            .arg(certificate)
+                            .arg(msgFrom);
+                    }
+                    if( !greenCaseWarning.isEmpty() ) {
+                        if( !statusStr.isEmpty() )
+                            statusStr.append("<br />&nbsp;<br />");
+                        statusStr.append( greenCaseWarning );
                     }
                     break;
             }
@@ -2037,8 +2039,10 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
             htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
                 "class=\"" + block.signClass + "\">"
                 "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
-            if( showKeyInfos ) {
-
+            if( block.technicalProblem ) {
+                htmlStr += block.errorText;
+            }
+            else if( showKeyInfos ) {
                 if( cannotCheckSignature ) {
                     htmlStr += i18n( "Not enough information to check "
                                      "signature. %1" )
@@ -2114,12 +2118,16 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
 
             // old frame settings for PGP:
 
-            if (block.signer.isEmpty()) {
+            if( block.signer.isEmpty() || block.technicalProblem ) {
                 block.signClass = "signWarn";
                 htmlStr += "<table cellspacing=\"1\" "+cellPadding+" "
                     "class=\"" + block.signClass + "\">"
                     "<tr class=\"" + block.signClass + "H\"><td dir=\"" + dir + "\">";
-                if( !block.keyId.isEmpty() ) {
+                if( block.technicalProblem ) {
+                    htmlStr += block.errorText;
+                }
+                else {
+                  if( !block.keyId.isEmpty() ) {
                     bool dateOK = (0 < block.creationTime.tm_year);
                     QDate created( 1900 + block.creationTime.tm_year,
                                   block.creationTime.tm_mon,
@@ -2130,18 +2138,19 @@ QString KMReaderWin::writeSigstatHeader( PartMetaData& block,
                     else
                         htmlStr += i18n( "Message was signed with unknown key %1." )
                                 .arg( keyWithWithoutURL );
-                }
-                else
+                  }
+                  else
                     htmlStr += i18n( "Message was signed with unknown key." );
-                htmlStr += "<br />";
-                htmlStr += i18n( "The validity of the signature cannot be "
-                        "verified." );
-                if( !statusStr.isEmpty() ) {
+                  htmlStr += "<br />";
+                  htmlStr += i18n( "The validity of the signature cannot be "
+                                   "verified." );
+                  if( !statusStr.isEmpty() ) {
                     htmlStr += "<br />";
                     htmlStr += i18n( "Status: " );
                     htmlStr += "<i>";
                     htmlStr += statusStr;
                     htmlStr += "</i>";
+                  }
                 }
                 htmlStr += "</td></tr><tr class=\"" + block.signClass + "B\"><td>";
             }
@@ -2347,6 +2356,7 @@ void KMReaderWin::writeBodyStr( const QCString& aStr, const QTextCodec *aCodec,
 	      PartMetaData messagePart;
 
 	      messagePart.isSigned = isSigned;
+	      messagePart.technicalProblem = false;
 	      messagePart.isGoodSignature = goodSignature;
 	      messagePart.isEncrypted = isEncrypted;
 	      messagePart.isDecryptable = couldDecrypt;

@@ -162,11 +162,6 @@ namespace KMail {
 					   struct CryptPlugWrapper::SignatureMetaData * paramSigMeta=0,
 					   bool hideErrors=false );
 
-    /** find a plugin matching a given libName.
-	Sets mCryptPlugWrapper */
-    bool foundMatchingCryptPlug( const QString & libName,
-				 const QString & verboseName=QString::null );
-
     /** Returns the contents of the given multipart/encrypted
         object. Data is decypted.  May contain body parts. */
     bool okDecryptMIME( partNode& data,
@@ -206,17 +201,6 @@ namespace KMail {
 #else
     void dumpToFile( const char *, const char *, size_t ) {}
 #endif
-
-    /** Processed the txt strings and composed an appropriate
-	HTML string that is stored into data for displaying it
-	instead of the mail part's decrypted content.
-	Also used these texts for displaying a Sorry message box.
-	This method was implemented for being called
-	by writeSignedMIME and by okDecryptMIME. */
-    void showMessageAndSetData( const QString & summary, const QString & reason,
-				const QString & proposal, const QString & txt2b,
-				QCString & returnValueUtf8,
-				bool showMessageBox=true );
 
   private:
     KMReaderWin * mReader;
