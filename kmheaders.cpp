@@ -1577,16 +1577,15 @@ void KMHeaders::deleteMsg ()
 
   int contentX, contentY;
   KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
-
   KMMessageList msgList = *selectedMsgs(true);
+  finalizeMove( nextItem, contentX, contentY );
+
   KMCommand *command = new KMDeleteMsgCommand( mFolder, msgList );
   connect (command, SIGNAL(completed( bool)),
            this, SLOT(slotMoveCompleted( bool)));
   connect(KMBroadcastStatus::instance(), SIGNAL(signalAbortRequested()),
           this, SLOT(slotMoveAborted()));
   command->start();
-  
-  finalizeMove( nextItem, contentX, contentY );
 
   KMBroadcastStatus::instance()->setStatusMsg("");
   //  triggerUpdate();
@@ -1641,18 +1640,6 @@ KMHeaderItem* KMHeaders::prepareMove( int *contentX, int *contentY )
   *contentX = contentsX();
   *contentY = contentsY();
 
-  // The following is a rather delicate process. We can't allow getMsg
-  // to be called on messages in msgList as then we will try to operate on a
-  // dangling pointer below (assuming a KMMsgInfo* is deleted and a KMMessage*
-  // is created when getMsg is called).
-  //
-  // But KMMainWidget was modified recently so that exactly that happened
-  // (a slot was connected to the selectionChanged signal.
-  //
-  // So we block all signals for awhile to avoid this.
-
-  blockSignals( true ); // don't emit signals when the current message is
-
   if (item  && !item->isSelected())
     ret = item;
 
@@ -1662,13 +1649,13 @@ KMHeaderItem* KMHeaders::prepareMove( int *contentX, int *contentY )
 //-----------------------------------------------------------------------------
 void KMHeaders::finalizeMove( KMHeaderItem *item, int contentX, int contentY )
 {
-  blockSignals( false );
   emit selected( 0 );
 
   if ( item ) {
     clearSelection();
     setCurrentItem( item );
     setSelected( item, TRUE );
+    mPrevCurrent = 0;
     highlightMessage( item, false);
   }
 
@@ -1696,8 +1683,8 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
   // remember the message to select afterwards
   int contentX, contentY;
   KMHeaderItem *nextItem = prepareMove( &contentX, &contentY );
-  
   msgList = *selectedMsgs(true);
+  finalizeMove( nextItem, contentX, contentY );
 
   KMCommand *command = new KMMoveCommand( destFolder, msgList );
   connect (command, SIGNAL(completed( bool)),
@@ -1708,7 +1695,6 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder)
  
   command->start();
 
-  finalizeMove( nextItem, contentX, contentY );
 }
 
 void KMHeaders::slotMoveAborted( )
