@@ -250,9 +250,11 @@ void Kleo::KeyResolver::SigningPreferenceCounter::operator()( const Kleo::KeyRes
 
 
 class Kleo::KeyResolver::EncryptionPreferenceCounter : public std::unary_function<Item,void> {
+  const Kleo::KeyResolver * _this;
 public:
-  EncryptionPreferenceCounter( EncryptionPreference defaultPreference )
-    : mDefaultPreference( defaultPreference ),
+  EncryptionPreferenceCounter( const Kleo::KeyResolver * kr, EncryptionPreference defaultPreference )
+    : _this( kr ),
+      mDefaultPreference( defaultPreference ),
       mTotal( 0 ),
       mNoKey( 0 ),
       mNeverEncrypt( 0 ),
@@ -285,6 +287,8 @@ private:
 };
 
 void Kleo::KeyResolver::EncryptionPreferenceCounter::operator()( Item & item ) {
+  if ( item.needKeys )
+    item.keys = _this->getEncryptionKeys( item.address, true );
   if ( item.keys.empty() ) {
     ++mNoKey;
     return;
@@ -702,7 +706,7 @@ std::vector<Kleo::KeyResolver::Item> Kleo::KeyResolver::getEncryptionItems( cons
     QString addr = canonicalAddress( *it ).lower();
     ContactPreferences& pref = lookupContactPreferences( addr );
 
-    items.push_back( Item( *it, getEncryptionKeys( *it, true ),
+    items.push_back( Item( *it, /*getEncryptionKeys( *it, true ),*/
 			   pref.encryptionPreference,
 			   pref.signingPreference,
 			   pref.cryptoMessageFormat ) );
@@ -759,7 +763,7 @@ Kleo::Action Kleo::KeyResolver::checkEncryptionPreferences( bool encryptionReque
        d->mOpenPGPEncryptToSelfKeys.empty() && d->mSMIMEEncryptToSelfKeys.empty() )
     return Impossible;
 
-  EncryptionPreferenceCounter count( mOpportunisticEncyption ? AskWheneverPossible : UnknownPreference );
+  EncryptionPreferenceCounter count( this, mOpportunisticEncyption ? AskWheneverPossible : UnknownPreference );
   count = std::for_each( d->mPrimaryEncryptionKeys.begin(), d->mPrimaryEncryptionKeys.end(),
 			 count );
   count = std::for_each( d->mSecondaryEncryptionKeys.begin(), d->mSecondaryEncryptionKeys.end(),
@@ -777,7 +781,7 @@ Kleo::Action Kleo::KeyResolver::checkEncryptionPreferences( bool encryptionReque
   if ( act != Ask ||
        std::for_each( d->mPrimaryEncryptionKeys.begin(), d->mPrimaryEncryptionKeys.end(),
        std::for_each( d->mSecondaryEncryptionKeys.begin(), d->mSecondaryEncryptionKeys.end(),
-		      EncryptionPreferenceCounter( UnknownPreference ) ) ).numAlwaysAskForEncryption() )
+		      EncryptionPreferenceCounter( this, UnknownPreference ) ) ).numAlwaysAskForEncryption() )
     return act;
   else
     return AskOpportunistic;
@@ -818,7 +822,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
   //
 
   for ( std::vector<Item>::iterator it = d->mPrimaryEncryptionKeys.begin() ; it != d->mPrimaryEncryptionKeys.end() ; ++it ) {
-    if ( !it->keys.empty() )
+    if ( !it->needKeys )
       continue;
     it->keys = getEncryptionKeys( it->address, false );
     if ( it->keys.empty() )
@@ -831,7 +835,7 @@ Kpgp::Result Kleo::KeyResolver::resolveEncryptionKeys( bool signingRequested ) {
   }
 
   for ( std::vector<Item>::iterator it = d->mSecondaryEncryptionKeys.begin() ; it != d->mSecondaryEncryptionKeys.end() ; ++it ) {
-    if ( !it->keys.empty() )
+    if ( !it->needKeys )
       continue;
     it->keys = getEncryptionKeys( it->address, false );
     if ( it->keys.empty() )
