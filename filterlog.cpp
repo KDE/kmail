@@ -71,7 +71,7 @@ FilterLog * FilterLog::instance()
 void FilterLog::add( QString logEntry, ContentType contentType )
 {
 #ifndef NDEBUG
-  kdDebug(5006) << "New filter log entry: " << logEntry << endl;
+  //kdDebug(5006) << "New filter log entry: " << logEntry << endl;
 #endif
   if ( isLogging() && ( mAllowedTypes & contentType ) )
   {

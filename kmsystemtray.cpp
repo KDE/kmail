@@ -475,7 +475,7 @@ void KMSystemTray::updateNewMessageNotification(KMFolder * fldr)
   {
     /** Add folder to our internal store, or update unread count if already mapped */
     mFoldersWithUnread.insert(fldr, unread);
-    kdDebug(5006) << "There are now " << mFoldersWithUnread.count() << " folders with unread" << endl;
+    //kdDebug(5006) << "There are now " << mFoldersWithUnread.count() << " folders with unread" << endl;
   }
 
   /**
