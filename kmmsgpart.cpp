@@ -118,19 +118,35 @@ void KMMessagePart::setBodyAndGuessCte(const QByteArray& aBuf,
     if ( allow8Bit )
       allowedCte << DwMime::kCte8bit;
   case CharFreq::SevenBitData:
-    allowedCte << DwMime::kCteQp;
-    allowedCte << DwMime::kCteBase64;
+    if ( cf.printableRatio() > 5.0/6.0 ) {
+      // let n the length of data and p the number of printable chars.
+      // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
+      // => qp < base64 iff p > 5n/6.
+      allowedCte << DwMime::kCteQp;
+      allowedCte << DwMime::kCteBase64;
+    } else {
+      allowedCte << DwMime::kCteBase64;
+      allowedCte << DwMime::kCteQp;
+    }
     break;
   case CharFreq::EightBitText:
     if ( allow8Bit ) 
       allowedCte << DwMime::kCte8bit;
-    allowedCte << DwMime::kCteQp;
+    if ( cf.printableRatio() > 5.0/6.0 ) {
+      allowedCte << DwMime::kCteQp;
+      allowedCte << DwMime::kCteBase64;
+    } else {
+      allowedCte << DwMime::kCteBase64;
+      allowedCte << DwMime::kCteQp;
+    }
+    break;
   case CharFreq::EightBitData:
     allowedCte << DwMime::kCteBase64;
     break;
   }
 
-  kdDebug() << "CharFreq returned " << cf.type() << " and I chose "
+  kdDebug() << "CharFreq returned " << cf.type() << "/"
+	    << cf.printableRatio() << " and I chose "
 	    << allowedCte[0] << endl;
   setCte( allowedCte[0] ); // choose best fitting
   setBodyEncodedBinary( aBuf );
@@ -152,18 +168,36 @@ void KMMessagePart::setBodyAndGuessCte(const QCString& aBuf,
     if ( allow8Bit )
       allowedCte << DwMime::kCte8bit;
   case CharFreq::SevenBitData:
-    allowedCte << DwMime::kCteQp;
-    allowedCte << DwMime::kCteBase64;
+    if ( cf.printableRatio() > 5.0/6.0 ) {
+      // let n the length of data and p the number of printable chars.
+      // Then base64 \approx 4n/3; qp \approx p + 3(n-p)
+      // => qp < base64 iff p > 5n/6.
+      allowedCte << DwMime::kCteQp;
+      allowedCte << DwMime::kCteBase64;
+    } else {
+      allowedCte << DwMime::kCteBase64;
+      allowedCte << DwMime::kCteQp;
+    }
     break;
   case CharFreq::EightBitText:
     if ( allow8Bit ) 
       allowedCte << DwMime::kCte8bit;
-    allowedCte << DwMime::kCteQp;
+    if ( cf.printableRatio() > 5.0/6.0 ) {
+      allowedCte << DwMime::kCteQp;
+      allowedCte << DwMime::kCteBase64;
+    } else {
+      allowedCte << DwMime::kCteBase64;
+      allowedCte << DwMime::kCteQp;
+    }
+    break;
   case CharFreq::EightBitData:
     allowedCte << DwMime::kCteBase64;
     break;
   }
 
+  kdDebug() << "CharFreq returned " << cf.type() << "/"
+	    << cf.printableRatio() << " and I chose "
+	    << allowedCte[0] << endl;
   setCte( allowedCte[0] ); // choose best fitting
   setBodyEncoded( aBuf );
 }
