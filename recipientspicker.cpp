@@ -196,7 +196,7 @@ RecipientsPicker::RecipientsPicker( QWidget *parent )
   searchLayout->addWidget( label );
 
   mRecipientList = new KListView( this );
-  mRecipientList->setSelectionMode( QListView::Multi );
+  mRecipientList->setSelectionMode( QListView::Extended );
   mRecipientList->setAllColumnsShowFocus( true );
   topLayout->addWidget( mRecipientList );
   mRecipientList->addColumn( i18n("->") );
@@ -397,7 +397,7 @@ void RecipientsPicker::setDefaultButton( QPushButton *button )
 void RecipientsPicker::setDefaultType( Recipient::Type type )
 {
   mDefaultType = type;
-  
+
   if ( type == Recipient::To ) {
     setDefaultButton( mToButton );
   } else if ( type == Recipient::Cc ) {
