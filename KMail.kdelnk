@@ -14,6 +14,7 @@ Name[cs]=Po¹tovní klient
 Name[sv]=Email-klient
 Name[hr]=Elektronska po¹ta
 Name[ro]=Program de Poºtã
+Name[ca]=Correu electrònic
 Type=Application
 Exec=kmail -caption "%c" %i %m
 Icon=kmail.xpm
@@ -32,4 +33,6 @@ Comment[cs]=Klient pro ètení elektronické po¹ty
 Comment[sv]=Program för att läsa elektronisk post
 Comment[hr]=Program za èitanje elektronske po¹te
 Comment[ro]=Program de Poºtã Electronicã
+Comment[ca]=Programari de correu electrònic
 Terminal=0
+
