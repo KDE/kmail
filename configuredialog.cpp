@@ -52,7 +52,7 @@
 #include <kpgp.h>
 #include <ksimpleconfig.h>
 #include <kstddirs.h>
-
+#include <kglobalsettings.h>
 
 
 #include "accountdialog.h"
@@ -1389,7 +1389,6 @@ void ConfigureDialog::makeAppearancePage( void )
     ColorListItem *listItem = new ColorListItem( modeList[i] );
     mAppearance.colorList->insertItem( listItem );
   }
-  mAppearance.colorList->setCurrentItem(0);
 
   mAppearance.recycleColorCheck = 
     new QCheckBox( i18n("Recycle colors on deep quoting"), page2 );
@@ -1831,11 +1830,11 @@ void ConfigureDialog::setupAppearancePage( void )
   mAppearance.colorList->setColor( 
     4, config.readColorEntry("QuoutedText3",&defaultColor ) );
 
-  defaultColor = QColor("blue");
+  defaultColor = KGlobalSettings::linkColor();
   mAppearance.colorList->setColor( 
     5, config.readColorEntry("LinkColor",&defaultColor ) );
 
-  defaultColor = QColor("red");
+  defaultColor = KGlobalSettings::visitedLinkColor();
   mAppearance.colorList->setColor(
     6, config.readColorEntry("FollowedColor",&defaultColor ) );
 
@@ -1847,7 +1846,7 @@ void ConfigureDialog::setupAppearancePage( void )
   mAppearance.colorList->setColor(
     8, config.readColorEntry("UnreadMessage",&defaultColor ) );
 
-  state = config.readBoolEntry("defaultColors", false );
+  state = config.readBoolEntry("defaultColors", true );
   mAppearance.customColorCheck->setChecked( state == false ? true : false );
   slotCustomColorSelectionChanged();
 
@@ -1992,8 +1991,8 @@ void ConfigureDialog::installProfile( void )
     mAppearance.colorList->setColor( 2, kapp->palette().normal().text() );
     mAppearance.colorList->setColor( 3, kapp->palette().normal().text() );
     mAppearance.colorList->setColor( 4, kapp->palette().normal().text() );
-    mAppearance.colorList->setColor( 5, blue );
-    mAppearance.colorList->setColor( 6, red );
+    mAppearance.colorList->setColor( 5, KGlobalSettings::linkColor() );
+    mAppearance.colorList->setColor( 6, KGlobalSettings::visitedLinkColor() );
     mAppearance.colorList->setColor( 7, blue );
     mAppearance.colorList->setColor( 8, red );
     mAppearance.customColorCheck->setChecked( true );
@@ -2165,15 +2164,19 @@ void ConfigureDialog::slotApply( void )
     config.setGroup("Reader");
     bool defaultColors = !mAppearance.customColorCheck->isChecked();
     config.writeEntry("defaultColors", defaultColors );
-    config.writeEntry("BackgroundColor", mAppearance.colorList->color(0) );
-    config.writeEntry("ForegroundColor", mAppearance.colorList->color(1) );
-    config.writeEntry("QuoutedText1",    mAppearance.colorList->color(2) );
-    config.writeEntry("QuoutedText2",    mAppearance.colorList->color(3) );
-    config.writeEntry("QuoutedText3",    mAppearance.colorList->color(4) );
-    config.writeEntry("LinkColor",       mAppearance.colorList->color(5) );
-    config.writeEntry("FollowedColor",   mAppearance.colorList->color(6) );
-    config.writeEntry("NewMessage",      mAppearance.colorList->color(7) );
-    config.writeEntry("UnreadMessage",   mAppearance.colorList->color(8) );
+    if (!defaultColors)
+    {
+       // Don't write color info when we use default colors.
+       config.writeEntry("BackgroundColor", mAppearance.colorList->color(0) );
+       config.writeEntry("ForegroundColor", mAppearance.colorList->color(1) );
+       config.writeEntry("QuoutedText1",    mAppearance.colorList->color(2) );
+       config.writeEntry("QuoutedText2",    mAppearance.colorList->color(3) );
+       config.writeEntry("QuoutedText3",    mAppearance.colorList->color(4) );
+       config.writeEntry("LinkColor",       mAppearance.colorList->color(5) );
+       config.writeEntry("FollowedColor",   mAppearance.colorList->color(6) );
+       config.writeEntry("NewMessage",      mAppearance.colorList->color(7) );
+       config.writeEntry("UnreadMessage",   mAppearance.colorList->color(8) );
+    }
     bool recycleColors = mAppearance.recycleColorCheck->isChecked();
     config.writeEntry("RecycleQuoteColors", recycleColors );
 
@@ -2831,6 +2834,8 @@ void ConfigureDialog::slotCustomColorSelectionChanged( void )
 {
   bool state = mAppearance.customColorCheck->isChecked();
   mAppearance.colorList->setEnabled( state );
+  if (state && (mAppearance.colorList->currentItem() < 0))
+     mAppearance.colorList->setCurrentItem(0);
   mAppearance.recycleColorCheck->setEnabled( state );
 }
 

@@ -39,6 +39,7 @@
 #include <klocale.h>
 #include <kconfig.h>
 #include <kcolorbtn.h>
+#include <kglobalsettings.h>
 
 #ifdef HAVE_PATHS_H
 #include <paths.h>
@@ -478,8 +479,8 @@ void KMSettings::createTabAppearance(QWidget* parent)
   config->setGroup("Reader");
 
   QColor c1=QColor(kapp->palette().normal().text());
-  QColor c2=QColor("blue");
-  QColor c3=QColor("red");
+  QColor c2=KGlobalSettings::linkColor();
+  QColor c3=KGlobalSettings::visitedLinkColor();
   QColor c4=QColor(kapp->palette().normal().base());
 
   QColor cFore = config->readColorEntry("ForegroundColor",&c1);

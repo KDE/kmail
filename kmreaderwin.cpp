@@ -158,8 +158,8 @@ void KMReaderWin::readConfig(void)
   config->setGroup("ArticleListOptions");
 #endif
   c1 = QColor(kapp->palette().normal().text());
-  c2 = QColor("blue");
-  c3 = QColor("red");
+  c2 = KGlobalSettings::linkColor();
+  c3 = KGlobalSettings::visitedLinkColor();
   c4 = QColor(kapp->palette().normal().base());
 
   if (!config->readBoolEntry("defaultColors",TRUE)) {
