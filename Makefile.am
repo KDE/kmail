@@ -5,24 +5,21 @@ SUBDIRS =  . about pics profiles
 
 INCLUDES = -I$(top_srcdir)/libkdenetwork -I$(top_srcdir)/mimelib -I$(top_srcdir)/ktnef -I$(top_srcdir) $(all_includes)
 
-bin_PROGRAMS = kmail
+noinst_LTLIBRARIES = libkmailcommon.la
 
-kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
-kmail_LDADD   = libkmailpart.la
-kmail_SOURCES = dummy.cpp
-
-dummy.cpp:
-	echo > $@
-
-check_PROGRAMS = dcoptest
-
-lib_LTLIBRARIES = libkmailpart.la
-
+kde_module_LTLIBRARIES = libkmailpart.la
 libkmailpart_la_LDFLAGS = $(all_libraries) $(KDE_RPATH) -version-info 1:0
 libkmailpart_la_LIBADD	= $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
 			../libkdenetwork/libkdenetwork.la \
-			../mimelib/libmimelib.la ../ktnef/lib/libktnef.la
-libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
+			../mimelib/libmimelib.la ../ktnef/lib/libktnef.la libkmailcommon.la
+
+bin_PROGRAMS = kmail
+kmail_LDFLAGS = $(all_libraries) $(KDE_RPATH)
+kmail_LDADD   = $(LIB_KHTML) $(LIB_KSPELL) $(LIB_KABC) \
+		../libkdenetwork/libkdenetwork.la \
+		../mimelib/libmimelib.la ../ktnef/lib/libktnef.la libkmailcommon.la
+
+libkmailcommon_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		configuredialog_p.cpp cryptplugconfigdialog.cpp \
 		simplestringlisteditor.cpp kmmsgindex.cpp \
 		configmanager.cpp identitymanager.cpp identitycombo.cpp \
@@ -52,7 +49,7 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		kmfawidgets.cpp kmfoldermbox.cpp kmfolderimap.cpp \
 		kmfoldercachedimap.cpp \
 		kmfoldermaildir.cpp kmacctexppop.cpp colorlistbox.cpp \
-                kmkernel.cpp kmailpartIface.skel kmailIface.skel kmailicalIface.skel main.cpp \
+                kmkernel.cpp kmailIface.skel kmailicalIface.skel \
 		accountdialog.cpp kmfldsearch.cpp \
 		kmdisplayvcard.cpp vcard.cpp \
 		vacationdialog.cpp vacation.cpp sieveconfig.cpp sievejob.cpp \
@@ -71,12 +68,18 @@ libkmailpart_la_SOURCES = kmmessage.cpp kmmainwin.cpp configuredialog.cpp \
 		partNode.cpp signatureconfigurationdialogimpl.cpp \
 		encryptionconfigurationdialogimpl.cpp kmtextbrowser.cpp \
 		kmcommands.cpp kmreadermainwin.cpp \
-		kmail_part.cpp kmstartup.cpp kmmainwidget.cpp \
+		kmstartup.cpp kmmainwidget.cpp \
                 folderpropertiesdialog.ui kmfolderindex.cpp \
 		kmfoldersearch.cpp transportmanager.cpp \
 		folderjob.cpp cachedimapjob.cpp addressesdialog.cpp \
 		addresspicker.ui subscriptiondialog.cpp \
 		kmailicalifaceimpl.cpp
+
+kmail_SOURCES = main.cpp
+
+libkmailpart_la_SOURCES =  kmailpartIface.skel 	kmail_part.cpp
+
+check_PROGRAMS = dcoptest
 
 METASOURCES = AUTO
 
