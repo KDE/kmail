@@ -339,11 +339,8 @@ void ConfigureDialog::apply( bool everything ) {
   //
   KMMessage::readConfig();
   KCursorSaver busy(KBusyPtr::busy()); // this can take some time when a large folder is open
-  QPtrListIterator<KMainWindow> it( *KMainWindow::memberList );
-  for ( it.toFirst() ; it.current() ; ++it )
-    // ### FIXME: use dynamic_cast.
-    if ( (*it)->inherits( "KMTopLevelWidget" ) )
-      ((KMTopLevelWidget*)(*it))->readConfig();
+
+  emit configChanged();
 }
 
 

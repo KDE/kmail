@@ -63,6 +63,9 @@ protected slots:
 private slots:
   void slotCancelOrClose();
 
+signals:
+  void configChanged();
+
 private:
   void setup();
   void apply(bool);

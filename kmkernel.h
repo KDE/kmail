@@ -235,6 +235,9 @@ protected slots:
   void cleanupLoop();
   void cleanupProgress();
 
+signals:
+  void configChanged();
+
 private:
   KMFolder *the_inboxFolder;
   KMFolder *the_outboxFolder;

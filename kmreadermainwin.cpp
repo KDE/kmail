@@ -34,6 +34,9 @@ KMReaderMainWin::KMReaderMainWin( bool htmlOverride, char *name )
   mReaderWin->setHtmlOverride( htmlOverride );
   setCentralWidget( mReaderWin );
   setupAccel();
+
+  connect( kmkernel, SIGNAL( configChanged() ),
+           this, SLOT( slotConfigChanged() ) );
 }
 
 
@@ -44,6 +47,9 @@ KMReaderMainWin::KMReaderMainWin( char *name )
   mReaderWin->setAutoDelete( true );
   setCentralWidget( mReaderWin );
   setupAccel();
+
+  connect( kmkernel, SIGNAL( configChanged() ),
+           this, SLOT( slotConfigChanged() ) );
 }
 
 
@@ -58,6 +64,9 @@ KMReaderMainWin::KMReaderMainWin(KMMessagePart* aMsgPart,
   mReaderWin->setMsgPart( aMsgPart, aHTML, aFileName, pname );
   setCentralWidget( mReaderWin );
   setupAccel();
+
+  connect( kmkernel, SIGNAL( configChanged() ),
+           this, SLOT( slotConfigChanged() ) );
 }
 
 
@@ -131,6 +140,11 @@ void KMReaderMainWin::slotBounceMsg()
   command->start();
 }
 
+//-----------------------------------------------------------------------------
+void KMReaderMainWin::slotConfigChanged()
+{
+  readConfig();
+}
 
 void KMReaderMainWin::setupAccel()
 {

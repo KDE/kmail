@@ -1361,8 +1361,11 @@ void KMKernel::slotRequestConfigSync() {
 
 void KMKernel::slotShowConfigurationDialog()
 {
-  if( !mConfigureDialog )
+  if( !mConfigureDialog ) {
     mConfigureDialog = new ConfigureDialog( 0, "configure", false );
+    connect( mConfigureDialog, SIGNAL( configChanged() ),
+             this, SIGNAL( configChanged() ) );
+  }
 
   if( mConfigureDialog->isHidden() )
     mConfigureDialog->show();

@@ -40,6 +40,8 @@ private slots:
   void slotRedirectMsg();
   void slotBounceMsg();
 
+  void slotConfigChanged();
+
 private:
   void setupAccel();
 

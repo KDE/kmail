@@ -50,6 +50,7 @@ protected:
 
 protected slots:
   void slotQuit();
+  void slotConfigChanged();
 
 private:
 #if !KDE_IS_VERSION( 3, 1, 90 )

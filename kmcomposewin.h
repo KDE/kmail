@@ -828,6 +828,7 @@ protected:
 
 private slots:
   void slotCompletionModeChanged( KGlobalSettings::Completion );
+  void slotConfigChanged();
 
 private:
   QColor mForeColor,mBackColor;

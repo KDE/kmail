@@ -49,10 +49,14 @@ KMMainWin::KMMainWin(QWidget *)
   applyMainWindowSettings(KMKernel::config(), "Main Window");
   connect(kmkernel->msgSender(), SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(statusMsg(const QString&)));
+  connect(kmkernel, SIGNAL(configChanged()),
+    this, SLOT(slotConfigChanged()));
   connect(mKMMainWidget->messageView(), SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(htmlStatusMsg(const QString&)));
   connect(mKMMainWidget, SIGNAL(captionChangeRequest(const QString&)),
 	  SLOT(setCaption(const QString&)) );
+
+  mKMMainWidget->readConfig();
 }
 
 KMMainWin::~KMMainWin()
@@ -147,7 +151,6 @@ void KMMainWin::setupStatusBar()
 /** Read configuration options after widgets are created. */
 void KMMainWin::readConfig(void)
 {
-  mKMMainWidget->readConfig();
 }
 
 /** Write configuration options. */
@@ -159,6 +162,11 @@ void KMMainWin::writeConfig(void)
 void KMMainWin::slotQuit()
 {
     close();
+}
+
+void KMMainWin::slotConfigChanged()
+{
+  readConfig();
 }
 
 //-----------------------------------------------------------------------------

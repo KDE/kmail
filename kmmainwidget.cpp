@@ -122,6 +122,9 @@ KMMainWidget::KMMainWidget(QWidget *parent, const char *name,
   connect(kmkernel->acctMgr(), SIGNAL( checkedMail(bool, bool)),
           SLOT( slotMailChecked(bool, bool)));
 
+  connect(kmkernel, SIGNAL( configChanged() ),
+          this, SLOT( slotConfigChanged() ));
+
   // display the full path to the folder in the caption
   connect(mFolderTree, SIGNAL(currentChanged(QListViewItem*)),
       this, SLOT(slotChangeCaption(QListViewItem*)));
@@ -1365,6 +1368,11 @@ void KMMainWidget::slotPrintMsg()
   command->start();
 }
 
+//-----------------------------------------------------------------------------
+void KMMainWidget::slotConfigChanged()
+{
+  readConfig();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWidget::slotSaveMsg()

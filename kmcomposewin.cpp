@@ -245,6 +245,8 @@ KMComposeWin::KMComposeWin( KMMessage *aMsg, uint id  )
 					SLOT(slotFolderRemoved(KMFolder*)));
 	connect(kmkernel->dimapFolderMgr(),SIGNAL(folderRemoved(KMFolder*)),
 					SLOT(slotFolderRemoved(KMFolder*)));
+  connect( kmkernel, SIGNAL( configChanged() ),
+           this, SLOT( slotConfigChanged() ) );
 
   connect (mEditor, SIGNAL (spellcheck_done(int)),
     this, SLOT (slotSpellcheckDone (int)));
@@ -5303,6 +5305,11 @@ void KMComposeWin::slotCompletionModeChanged( KGlobalSettings::Completion mode)
     mEdtTo->setCompletionMode( mode );
     mEdtCc->setCompletionMode( mode );
     mEdtBcc->setCompletionMode( mode );
+}
+
+void KMComposeWin::slotConfigChanged()
+{
+    readConfig();
 }
 
 /*

@@ -343,6 +343,8 @@ protected slots:
   void slotToFilter();
   void slotPrintMsg();
 
+  void slotConfigChanged();
+
 private:
   // Message actions
   KAction *mTrashAction, *mDeleteAction, *mSaveAsAction, *mEditAction,
