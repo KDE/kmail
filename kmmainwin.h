@@ -136,7 +136,7 @@ protected slots:
   void slotCheckOneAccount(int);
   void slotMailChecked(bool newMail, bool sendOnCheck);
   void getAccountMenu();
-  void slotClose();
+  void slotQuit();
   void slotHelp();
   void slotNewMailReader();
   void slotSettings();
@@ -225,7 +225,6 @@ protected slots:
 
   /** etc. */
   void slotMsgActivated(KMMessage*);
-  void quit();
 
   /** Operations on mailto: URLs. */
   void slotMailtoCompose();

@@ -546,13 +546,6 @@ void KMMainWin::show()
   KMMainWinInherited::show();
 }
 
-
-//-----------------------------------------------------------------------------
-void KMMainWin::slotClose()
-{
-  close(TRUE);
-}
-
 //-------------------------------------------------------------------------
 void KMMainWin::slotSearch()
 {
@@ -1934,8 +1927,7 @@ void KMMainWin::setupMenuBar()
   (void) new KAction( i18n("&Import..."), "fileopen", 0, this,
 		      SLOT(slotImport()), actionCollection(), "import" );
 
-  KStdAction::close( this, SLOT(slotClose()), actionCollection());
-  //KStdAction::quit( this, SLOT(quit()), actionCollection());
+  KStdAction::quit( this, SLOT(slotQuit()), actionCollection());
 
   //----- Edit Menu
   KStdAction::undo( this, SLOT(slotUndo()), actionCollection(), "edit_undo");
@@ -2315,9 +2307,9 @@ void KMMainWin::setupStatusBar()
   setStatusBar(mStatusBar);
 }
 
-void KMMainWin::quit()
+void KMMainWin::slotQuit()
 {
-  qApp->quit();
+    close();
 }
 
 void KMMainWin::slotReadOn()
