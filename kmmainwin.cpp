@@ -2786,7 +2786,15 @@ void KMMainWin::setupMenuBar()
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
+#if KDE_VERSION >= 305 // KDE 3.1
   KStdAction::tipOfDay( this, SLOT( slotShowTip() ), actionCollection() );
+#else
+  (void) new KAction( KGuiItem( i18n("Tip of the &Day..."), 0,
+				i18n("Show \"Tip of the Day\"") ),
+		      0, this, SLOT(slotShowTip()),
+		      actionCollection(), "help_show_tip" );
+#endif
+
 
 
   (void) new KAction( i18n("Configure &Filters..."), 0, this,
