@@ -31,7 +31,6 @@ KMBroadcastStatus* KMBroadcastStatus::instance()
 
 KMBroadcastStatus::KMBroadcastStatus()
 {
-  reset();
 }
 
 void KMBroadcastStatus::setStatusMsg( const QString& message )
@@ -159,26 +158,4 @@ void KMBroadcastStatus::setStatusProgressPercent( const QString &id,
   emit statusProgressPercent( count ? (sum / count) : sum );
 }
 
-void KMBroadcastStatus::reset()
-{
-  abortRequested_ = false;
-  if (ids.isEmpty())
-    emit resetRequested();
-}
-
-bool KMBroadcastStatus::abortRequested()
-{
-  return abortRequested_;
-}
-
-void KMBroadcastStatus::setAbortRequested()
-{
-  abortRequested_ = true;
-}
-
-void KMBroadcastStatus::requestAbort()
-{
-  abortRequested_ = true;
-}
 #include "kmbroadcaststatus.moc"
-

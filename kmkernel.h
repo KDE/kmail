@@ -220,16 +220,32 @@ public:
   // ### again.
   void setContextMenuShown( bool flag ) { mContextMenuShown = flag; }
   bool contextMenuShown() const { return mContextMenuShown; }
-  
+
   /**
    * Get a reference to KMail's KIMProxy instance
-   * @return a pointer to a valid KIMProxy 
+   * @return a pointer to a valid KIMProxy
    */
   ::KIMProxy* imProxy();
 
+  /**
+   * Returns true IFF the user has requested that the current mail checks
+   * should be aborted. Needs to be periodically polled.
+   */
+  bool mailCheckAborted() const;
+  /**  Set the state of the abort requested variable to false,
+   * i.e. enable mail checking again
+   */
+  void enableMailCheck();
+  /**
+   * Set the state of the abort requested variable to true,
+   * (to let the current jobs run, but stop when possible).
+   * This is used to cancel mail checks when closing the last mainwindow
+   */
+  void abortMailCheck();
+
 public slots:
 
-  //Save contents of all open composer widnows to ~/dead.letter
+  /// Save contents of all open composer widnows to ~/dead.letter
   void dumpDeadLetters();
 
   /** Call this slot instead of directly @ref KConfig::sync() to
@@ -299,6 +315,7 @@ private:
   /** true unles kmail is closed by session management */
   bool closed_by_user;
   bool the_firstInstance;
+  bool mMailCheckAborted;
   static KMKernel *mySelf;
   KSharedConfig::Ptr mConfig;
   QTextCodec *netCodec;
@@ -316,7 +333,7 @@ private:
   // temporary mainwin
   KMMainWin *mWin;
   MailServiceImpl *mMailService;
-  
+
   // KIMProxy provides access to up to date instant messaging presence data
   ::KIMProxy *mKIMProxy;
   // true if the context menu of KMFolderTree or KMHeaders is shown

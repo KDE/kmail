@@ -100,7 +100,7 @@ void KMAcctMaildir::processNewMail(bool)
     return;
   }
 
-  KMBroadcastStatus::instance()->reset();
+  //KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
 
@@ -149,7 +149,7 @@ void KMAcctMaildir::processNewMail(bool)
   for (i=0; i<num; i++)
   {
 
-    if( KMBroadcastStatus::instance()->abortRequested() ) {
+    if( kmkernel->mailCheckAborted() ) {
       KMBroadcastStatus::instance()->setStatusMsg( i18n("Transmission aborted.") );
       num = i;
       addedOk = false;
@@ -181,7 +181,7 @@ void KMAcctMaildir::processNewMail(bool)
 
   }
   KMBroadcastStatus::instance()->setStatusProgressEnable( "M" + mName, false );
-  KMBroadcastStatus::instance()->reset();
+  //KMBroadcastStatus::instance()->reset();
 
   if (addedOk)
   {

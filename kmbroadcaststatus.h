@@ -56,19 +56,6 @@ public:
   /** Emit an update progress widget(s) percent completed signal */
   void setStatusProgressPercent( const QString& id, unsigned long percent );
 
-  /** Returns true IFF the user has requested the current operation
-      (the one whose progress is being shown) should be aborted.
-      Needs to be periodically polled in the implementation of the
-      operation. */
-  bool abortRequested();
-  /**  Set the state of the abort requested variable to false */
-  void reset();
-  /**  Set the state of the abort requested variable to true,
-   * without emitting the signal.
-   * (to let the current jobs run, but stop when possible).
-   * This is only for exiting gracefully, don't use.
-   */
-  void setAbortRequested();
 signals:
 
   /** Emitted when setStatusMsg is called. */
@@ -77,19 +64,11 @@ signals:
   void statusProgressEnable( bool );
   /** Emitted when setStatusProgressPercent is called. */
   void statusProgressPercent( unsigned long );
-  /** Emitted when reset is called. */
-  void resetRequested();
-
-public slots:
-
-  /** Set the state of the abort requested variable to return */
-  void requestAbort();
 
 protected:
 
   KMBroadcastStatus();
   static KMBroadcastStatus* instance_;
-  bool abortRequested_;
   QMap<QString,unsigned long> ids;
 };
 

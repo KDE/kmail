@@ -94,6 +94,9 @@ using KMail::HeaderListQuickSearch;
 using namespace KMime;
 using KMime::Types::AddrSpecList;
 
+#include "progressmanager.h"
+using KMail::ProgressManager;
+
 #include "kmmainwidget.moc"
 
 QPtrList<KMMainWidget>* KMMainWidget::s_mainWidgetList = 0;
@@ -584,10 +587,10 @@ void KMMainWidget::createWidgets(void)
                      mFolderTree, SLOT(incCurrentFolder()));
 
   new KAction(
-    i18n("Abort Current Operation"), Key_Escape, KMBroadcastStatus::instance(),
-    SLOT(requestAbort()), actionCollection(), "cancel" );
+    i18n("Abort Current Operation"), Key_Escape, ProgressManager::instance(),
+    SLOT(slotAbortAll()), actionCollection(), "cancel" );
   accel->connectItem(accel->insertItem(Key_Escape),
-                     KMBroadcastStatus::instance(), SLOT(requestAbort()));
+                     ProgressManager::instance(), SLOT(slotAbortAll()));
 
   new KAction(
    i18n("Focus on Previous Folder"), CTRL+Key_Left, mFolderTree,

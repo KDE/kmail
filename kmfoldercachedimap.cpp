@@ -530,7 +530,7 @@ void KMFolderCachedImap::serverSyncInternal()
   // This is used to stop processing when we're about to exit
   // and the current job wasn't cancellable.
   // For user-requested abort, we'll use signalAbortRequested instead.
-  if( KMBroadcastStatus::instance()->abortRequested() ) {
+  if( kmkernel->mailCheckAborted() ) {
     resetSyncState();
     emit folderComplete( this, false );
     return;

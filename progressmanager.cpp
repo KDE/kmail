@@ -87,7 +87,7 @@ void ProgressItem::removeChild( ProgressItem *kiddo )
 
 void ProgressItem::cancel()
 {
-   if ( mCanceled ) return;
+   if ( mCanceled || !mCanBeCanceled ) return;
    kdDebug(5006) << "ProgressItem::cancel() - " << label() << endl;
    mCanceled = true;
    // Cancel all children.
@@ -204,6 +204,14 @@ ProgressItem* ProgressManager::singleItem() const
   if ( mTransactions.count() == 1 )
     return QDictIterator< ProgressItem >( mTransactions ).current();
   return 0;
+}
+
+void ProgressManager::slotAbortAll()
+{
+  QDictIterator< ProgressItem > it( mTransactions );
+  for ( ; it.current(); ++it ) {
+    it.current()->cancel();
+  }
 }
 
 } // namespace

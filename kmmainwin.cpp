@@ -7,7 +7,6 @@
 #include "kstatusbar.h"
 #include "kmkernel.h"
 #include "kmsender.h"
-#include "kmbroadcaststatus.h"
 #include "statusbarprogresswidget.h"
 #include "kmglobal.h"
 #include "kmacctmgr.h"
@@ -56,7 +55,7 @@ KMMainWin::KMMainWin(QWidget *)
 	   SLOT(slotUpdateToolbars()) );
 
   // Enable mail checks again (see destructor)
-  KMBroadcastStatus::instance()->reset();
+  kmkernel->enableMailCheck();
 }
 
 KMMainWin::~KMMainWin()
@@ -82,7 +81,7 @@ KMMainWin::~KMMainWin()
       kdDebug(5006) << "Closing last KMMainWin: stopping mail check" << endl;
       // Running KIO jobs prevent kapp from exiting, so we need to kill them
       // if they are only about checking mail (not important stuff like moving messages)
-      KMBroadcastStatus::instance()->setAbortRequested();
+      kmkernel->abortMailCheck();
       kmkernel->acctMgr()->cancelMailCheck();
     }
   }

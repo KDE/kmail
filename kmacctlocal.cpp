@@ -95,7 +95,7 @@ void KMAcctLocal::processNewMail(bool)
     return;
   }
 
-  KMBroadcastStatus::instance()->reset();
+  //KMBroadcastStatus::instance()->reset();
   KMBroadcastStatus::instance()->setStatusMsg(
 	i18n("Preparing transmission from \"%1\"...").arg(mName));
 
@@ -150,7 +150,7 @@ void KMAcctLocal::processNewMail(bool)
     if (!addedOk) break;
 
     /* This causes mail eating
-    if (KMBroadcastStatus::instance()->abortRequested()) break; */
+    if (kmkernel->mailCheckAborted()) break; */
 
     QString statusMsg = statusMsgStub.arg(i);
     KMBroadcastStatus::instance()->setStatusMsg( statusMsg );
@@ -193,7 +193,7 @@ void KMAcctLocal::processNewMail(bool)
 
   }
   KMBroadcastStatus::instance()->setStatusProgressEnable( "L" + mName, false );
-  KMBroadcastStatus::instance()->reset();
+  //KMBroadcastStatus::instance()->reset();
 
   if (addedOk)
   {

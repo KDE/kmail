@@ -114,6 +114,7 @@ KMKernel::KMKernel (QObject *parent, const char *name) :
   the_filterActionDict = 0;
   the_msgSender = 0;
   mWin = 0;
+  mMailCheckAborted = false;
 
   // make sure that we check for config updates before doing anything else
   KMKernel::config();
@@ -175,7 +176,7 @@ KMKernel::~KMKernel ()
   mMailService = 0;
   delete mKIMProxy;
   mKIMProxy = 0;
-  
+
   GlobalSettings::writeConfig();
   mySelf = 0;
   kdDebug(5006) << "KMKernel::~KMKernel" << endl;
@@ -1796,6 +1797,21 @@ KMFolder* KMKernel::findFolderById( const QString& idString )
 ::KIMProxy* KMKernel::imProxy()
 {
   return mKIMProxy;
+}
+
+void KMKernel::enableMailCheck()
+{
+  mMailCheckAborted = false;
+}
+
+bool KMKernel::mailCheckAborted() const
+{
+  return mMailCheckAborted;
+}
+
+void KMKernel::abortMailCheck()
+{
+  mMailCheckAborted = true;
 }
 
 #include "kmkernel.moc"

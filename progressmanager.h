@@ -352,6 +352,11 @@ class ProgressManager : public QObject
      */
     void slotStandardCancelHandler( ProgressItem* item );
 
+    /**
+     * Aborts all running jobs. Bound to "Esc"
+     */
+    void slotAbortAll();
+
   private slots:
     void slotTransactionCompleted( ProgressItem *item );
 
