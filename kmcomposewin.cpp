@@ -1476,8 +1476,7 @@ bool KMComposeWin::userForgotAttachment()
                   "Do you want to attach a file to your message?"),
              i18n("File Attachment Reminder"),
              i18n("&Attach file..."),
-             i18n("&Send as is"),
-             "WarnAddAttachment" );
+             i18n("&Send as is") );
   if ( rc == KMessageBox::Cancel )
     return true;
   if ( rc == KMessageBox::Yes ) {
