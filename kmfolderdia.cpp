@@ -82,52 +82,46 @@ KMFolderDialog::KMFolderDialog(KMFolder* aFolder, KMFolderDir *aFolderDir,
   ivl->setSpacing( 6 );
 
   QHBoxLayout *ihl = new QHBoxLayout( ivl );
-  
+  mIconsCheckBox = new QCheckBox( i18n("Use custom icons"), iconGroup );
+  mIconsCheckBox->setChecked( folder ? folder->useCustomIcons() : false );
+  ihl->addWidget( mIconsCheckBox );
+
+  ihl = new QHBoxLayout( ivl );
   QLabel *ilabel = new QLabel( i18n("Normal:"), iconGroup );
-  if ( !normalIcon.isEmpty() ) {
-    mLineEdit1 = new QLineEdit( KGlobal::iconLoader()->iconPath( normalIcon, 0 ) , iconGroup );
-  } else {
-    mLineEdit1 = new QLineEdit( i18n("[default]"), iconGroup );
-  }
   ihl->addWidget( ilabel );
-  ihl->addWidget( mLineEdit1 );
 
   mNormalIconButton = new KIconButton( iconGroup );
   mNormalIconButton->setIconType( KIcon::NoGroup , KIcon::Any, true );
   mNormalIconButton->setIconSize( 16 );
   mNormalIconButton->setStrictIconSize( true );
   mNormalIconButton->setFixedSize( 28, 28 );
-  if ( folder && folder->normalIcon() ) {
-    mNormalIconButton->setIcon ( folder->normalIconPath() );
-  }
+  if ( folder ) {
+    mNormalIconButton->setIcon( (!normalIcon.isEmpty())?normalIcon:"folder" );
+  } 
   ihl->addWidget( mNormalIconButton );
-
+  ihl->addStretch( 1 );
+  
   ihl = new QHBoxLayout( ivl );
   QLabel *ilabel2 = new QLabel( i18n("Unread:"), iconGroup );
-  if ( !unreadIcon.isEmpty() ) {
-    mLineEdit2 = new QLineEdit( KGlobal::iconLoader()->iconPath( unreadIcon, 0 ) , iconGroup );
-  } else {
-    mLineEdit2 = new QLineEdit( i18n("[default]"), iconGroup );
-  }
   ihl->addWidget( ilabel2 );
-  ihl->addWidget( mLineEdit2 );
 
   mUnreadIconButton = new KIconButton( iconGroup );
   mUnreadIconButton->setIconType( KIcon::NoGroup, KIcon::Any, true );
   mUnreadIconButton->setIconSize( 16 );
   mUnreadIconButton->setStrictIconSize( true );
-   mUnreadIconButton->setFixedSize( 28, 28 );
-  if ( folder && folder->unreadIcon() ) {
-    mUnreadIconButton->setIcon( folder->unreadIconPath() );
+  mUnreadIconButton->setFixedSize( 28, 28 );
+  if ( folder ) {
+    mUnreadIconButton->setIcon( (!unreadIcon.isEmpty())?unreadIcon:"folder_open" );
   }
   ihl->addWidget( mUnreadIconButton );
+  ihl->addStretch( 1 );
   
-  connect( mLineEdit1, SIGNAL(returnPressed()), SLOT(slotChangeFirstButtonIcon()));
-  connect( mLineEdit2, SIGNAL(returnPressed()), SLOT(slotChangeSecondButtonIcon()));
-  connect( mNormalIconButton, SIGNAL(iconChanged(QString)), this, SLOT(slotEmitFirstIconPath(QString)) );
-  connect( mUnreadIconButton, SIGNAL(iconChanged(QString)), this, SLOT(slotEmitSecondIconPath(QString)) );
-  connect( this, SIGNAL(firstIconPathChanged(const QString&)), mLineEdit1, SLOT(setText(const QString&)) );
-  connect( this, SIGNAL(secondIconPathChanged(const QString&)), mLineEdit2, SLOT(setText(const QString&)) );
+  if ( !mIconsCheckBox->isChecked() ) {
+    mNormalIconButton->setEnabled( false );
+    mUnreadIconButton->setEnabled( false );
+  }
+
+  connect( mIconsCheckBox, SIGNAL(toggled(bool)), this, SLOT(slotEnableIcons(bool)) );
 
   //end icons group
   
@@ -533,6 +527,7 @@ void KMFolderDialog::slotOk()
     folder->setUnreadExpireUnits((ExpireUnits)unreadExpiryUnits->currentItem());
     folder->setReadExpireUnits((ExpireUnits)readExpiryUnits->currentItem());
     //update the tree iff new icon paths are different and not empty
+    folder->setUseCustomIcons( mIconsCheckBox->isChecked() );
     if ( (( mNormalIconButton->icon() != folder->normalIconPath() ) && ( !mNormalIconButton->icon().isEmpty())) || 
 	 (( mUnreadIconButton->icon() != folder->unreadIconPath() ) && ( !mUnreadIconButton->icon().isEmpty())) ) {
       folder->setIconPaths( mNormalIconButton->icon(), mUnreadIconButton->icon() );
@@ -589,28 +584,11 @@ void KMFolderDialog::slotExpireFolder(bool expire)
   }
 }
 
-//----------------------------------------------------
-void KMFolderDialog::slotEmitFirstIconPath( QString icon )
+void 
+KMFolderDialog::slotEnableIcons( bool yes)
 {
-  QString path = KGlobal::iconLoader()->iconPath( icon, 0 );
-  emit firstIconPathChanged( (!path.isEmpty()) ? path : i18n("[default]") );
-}
-
-void KMFolderDialog::slotEmitSecondIconPath( QString icon )
-{
-
-  QString path = KGlobal::iconLoader()->iconPath( icon, 0);
-  emit secondIconPathChanged( (!path.isEmpty()) ? path : i18n("[default]") );
-}
-
-void KMFolderDialog::slotChangeFirstButtonIcon()
-{
-  QString text = mLineEdit1->text().stripWhiteSpace();
-  mNormalIconButton->setIcon( text );
-}
-
-void KMFolderDialog::slotChangeSecondButtonIcon()
-{
-  QString text = mLineEdit2->text().stripWhiteSpace();
-  mUnreadIconButton->setIcon( text );
+  mNormalIconButton->setEnabled( yes );
+  mUnreadIconButton->setEnabled( yes );
+  if ( folder ) 
+    folder->setUseCustomIcons( yes );
 }

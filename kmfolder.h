@@ -287,17 +287,19 @@ public:
   QString identity() const
   { return mIdentity; }
 
+  bool useCustomIcons() const { return mUseCustomIcons; }
+  void setUseCustomIcons( bool yes ) { mUseCustomIcons = yes; }
   void setIconPaths(const QString &normal, const QString &unread)
   { mNormalIconPath = normal; mUnreadIconPath = unread; iconsFromPath(); 
-    writeConfig(); mNeedsRepainting = true; }
+    writeConfig(); if (mUseCustomIcons) mNeedsRepainting = true; }
   QString normalIconPath() const 
   { return mNormalIconPath; }
   QString unreadIconPath() const
   { return mUnreadIconPath; }
   QPixmap* normalIcon() const 
-  { return mNormalIcon; }
+  { if ( mUseCustomIcons ) return mNormalIcon; else return 0; }
   QPixmap* unreadIcon() const
-  { return mUnreadIcon; }
+  { if ( mUseCustomIcons ) return mUnreadIcon; else return 0; }
   
   /** Tell the folder tree if repainting is required */
   bool needsRepainting() const 
@@ -557,6 +559,7 @@ protected:
   QPixmap *mUnreadIcon;
   QString mNormalIconPath;
   QString mUnreadIconPath;
+  bool    mUseCustomIcons;
   bool    mNeedsRepainting;
   
   /** number of unread messages, -1 if not yet set */

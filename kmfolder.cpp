@@ -114,6 +114,7 @@ KMFolder :: KMFolder(KMFolderDir* aParent, const QString& aName) :
   mRDict = 0;
   mNormalIcon = 0;
   mUnreadIcon = 0;
+  mUseCustomIcons = 0;
   mNeedsRepainting = false;
 }
 
@@ -1273,6 +1274,7 @@ void KMFolder::readConfig()
       mIdentity = config->readEntry("MailingListIdentity");
   mCompactable = config->readBoolEntry("Compactable", TRUE);
 
+  mUseCustomIcons = config->readBoolEntry("UseCustomIcons", FALSE );
   mNormalIconPath = config->readEntry("NormalIconPath");
   mUnreadIconPath = config->readEntry("UnreadIconPath");
   iconsFromPath();
@@ -1301,6 +1303,7 @@ void KMFolder::writeConfig()
   config->writeEntry("ReadExpireUnits", readExpireUnits);
   config->writeEntry("UnreadExpireAge", unreadExpireAge);
   config->writeEntry("UnreadExpireUnits", unreadExpireUnits);
+  config->writeEntry("UseCustomIcons", mUseCustomIcons);
   config->writeEntry("NormalIconPath", mNormalIconPath);
   config->writeEntry("UnreadIconPath", mUnreadIconPath);
 	config->writeEntry("WhoField", mUserWhoField);

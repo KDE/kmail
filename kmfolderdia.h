@@ -32,19 +32,12 @@ protected slots:
   virtual void slotOk( void );
   virtual void slotHoldsML( bool );
   virtual void slotExpireFolder( bool );
-  virtual void slotEmitFirstIconPath( QString );
-  virtual void slotEmitSecondIconPath( QString );
-  virtual void slotChangeFirstButtonIcon();
-  virtual void slotChangeSecondButtonIcon();
-  /*
+  virtual void slotEnableIcons( bool );
+  /* 
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities
    */
   void slotUpdateItems( int );
-
-signals:
-  void firstIconPathChanged( const QString& );
-  void secondIconPathChanged( const QString& );
 
 protected:
   QComboBox *fileInFolder;
@@ -55,8 +48,7 @@ protected:
   KMFolderDir *mFolderDir;
   KIconButton *mNormalIconButton;
   KIconButton *mUnreadIconButton;
-  QLineEdit   *mLineEdit1;
-  QLineEdit   *mLineEdit2;
+  QCheckBox   *mIconsCheckBox;
   
   QValueList<QGuardedPtr<KMFolder> > mFolders;
 
