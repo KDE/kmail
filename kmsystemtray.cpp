@@ -1,3 +1,4 @@
+// -*- mode: C++; c-file-style: "gnu" -*-
 /***************************************************************************
                           kmsystemtray.cpp  -  description
                              -------------------
@@ -85,6 +86,9 @@ KMSystemTray::KMSystemTray(QWidget *parent, const char *name)
     }
   }
 
+  // register the applet with the kernel
+  kmkernel->registerSystemTrayApplet( this );
+
   /** Initiate connections between folders and this object */
   foldersChanged();
 
@@ -117,6 +121,9 @@ void KMSystemTray::buildPopupMenu()
 
 KMSystemTray::~KMSystemTray()
 {
+  // unregister the applet
+  kmkernel->unregisterSystemTrayApplet( this );
+
   delete mPopupMenu;
   mPopupMenu = 0;
 }

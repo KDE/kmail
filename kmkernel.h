@@ -50,6 +50,7 @@ class KMainWindow;
 class KMGroupware;
 class KMailICalIfaceImpl;
 class KMReaderWin;
+class KSystemTray;
 
 class KMKernel : public QObject, virtual public KMailIface
 {
@@ -181,6 +182,15 @@ public:
   bool shuttingDown() { return the_shuttingDown; }
   void setShuttingDown(bool flag) { the_shuttingDown = flag; }
   void serverReady (bool flag) { the_server_is_ready = flag; }
+
+  /** Returns true if we have a system tray applet. This is needed in order
+   *  to know whether the application should be allowed to exit in case the
+   *  last visible composer or separate message window is closed.
+   */
+  bool haveSystemTrayApplet();
+
+  bool registerSystemTrayApplet( const KSystemTray* );
+  bool unregisterSystemTrayApplet( const KSystemTray* );
 
   void emergencyExit( const QString& reason );
 
@@ -314,6 +324,8 @@ private:
   // this is necessary to know in order to prevent a dead lock between the
   // context menus and the pinentry program
   bool mContextMenuShown;
+
+  QValueList<const KSystemTray*> systemTrayApplets;
 
   /* Weaver */
   KPIM::ThreadWeaver::Weaver *the_weaver;

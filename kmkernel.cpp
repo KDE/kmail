@@ -47,6 +47,7 @@ using KMail::FolderIface;
 #include <kprogress.h>
 #include <kpassivepopup.h>
 #include <dcopclient.h>
+#include <ksystemtray.h>
 
 #include <kdebug.h>
 
@@ -1372,6 +1373,33 @@ void KMKernel::slotShowConfigurationDialog()
     mConfigureDialog->show();
   else
     mConfigureDialog->raise();
+}
+
+bool KMKernel::haveSystemTrayApplet()
+{
+  return !systemTrayApplets.isEmpty();
+}
+
+bool KMKernel::registerSystemTrayApplet( const KSystemTray* applet )
+{
+  if ( systemTrayApplets.findIndex( applet ) == -1 ) {
+    systemTrayApplets.append( applet );
+    return true;
+  }
+  else
+    return false;
+}
+
+bool KMKernel::unregisterSystemTrayApplet( const KSystemTray* applet )
+{
+  QValueList<const KSystemTray*>::iterator it =
+    systemTrayApplets.find( applet );
+  if ( it != systemTrayApplets.end() ) {
+    systemTrayApplets.remove( it );
+    return true;
+  }
+  else
+    return false;
 }
 
 void KMKernel::emergencyExit( const QString& reason )
