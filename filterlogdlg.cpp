@@ -142,14 +142,14 @@ void FilterLogDialog::slotUser2()
   fdlg.setOperationMode( KFileDialog::Saving );
   if ( fdlg.exec() )
   {
-    fileName = "/home/domino/kmail-filter.log";
-    if ( !FilterLog::instance()->saveToFile( fdlg.selectedFile() ) )
+    fileName = fdlg.selectedFile();
+    if ( !FilterLog::instance()->saveToFile( fileName ) )
     {
       KMessageBox::error( this,
                           i18n( "Could not write the file %1:\n"
                                 "\"%2\" is the detailed error description." )
-                          .arg( fileName )
-                          .arg( QString::fromLocal8Bit( strerror( errno ) ) ),
+                          .arg( fileName,
+                                QString::fromLocal8Bit( strerror( errno ) ) ),
                           i18n( "KMail Error" ) );
     }
   }
