@@ -1,6 +1,6 @@
 KDE_CXXFLAGS = $(USE_RTTI) -UQT_NO_ASCII_CAST -UQT_NO_COMPAT
 
-SUBDIRS = pics
+SUBDIRS = about pics
 INCLUDES = $(all_includes)
 LDADD	= $(LIB_KHTML) -lkspell -lmimelib -lkab $(LIB_KFILE)
 

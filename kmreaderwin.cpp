@@ -98,6 +98,7 @@ KMReaderWin::KMReaderWin(QWidget *aParent, const char *aName, int aFlags)
   mMsgBuf = 0;
   mMsgBufMD5 = "";
   mMsgBufSize = -1;
+  mMsgDisplay = TRUE;
 
   initHtmlWidget();
   readConfig();
@@ -443,6 +444,44 @@ void KMReaderWin::clearCache()
   mMsg = 0;
 }
 
+
+//-----------------------------------------------------------------------------
+void KMReaderWin::displayAboutPage()
+{
+  mMsgDisplay = FALSE;
+  QString location = locate("data", "kmail/about/main.html");
+  QString content = kFileToString(location);
+  mViewer->closeURL();
+  mViewer->begin(location);
+  mViewer->setCharset(KGlobal::locale()->charset(), true);
+  mViewer->write(content.arg(
+    i18n("<h2>Welcome to KMail 1.2</h2><p>KMail is an email client for the K "
+    "Desktop Environment. It is designed to be fully compatible with Internet "
+    "mailing standards including MIME, SMTP and POP3.</p>\n"
+    "<ul><li>KMail has many powerful features which are described in the "
+    "<A HREF=\"%2\">documentation</A></li>\n"
+    "<li>You can find news and updates at the <A HREF=\"%3\">KMail homepage"
+    "</A></li></ul>\n"
+    "<p>Some of the new features in this release of KMail include "
+    "(compared to KMail 1.1.99, which is part of KDE 2.0):</p>\n"
+    "<ul><li>Full support for mails in all languages and charsets supported "
+    "by Qt</li>\n"
+    "<li>Drafts folder</li>\n"
+    "<li>Mailinglist aware folders</li>\n"
+    "<li>GUI configuration of preferred PGP tool</li>\n"
+    "<li>Lots of other enhancements and bugfixes</li></ul>\n"
+    "<p>Please take a moment to fill in the KMail configuration panel at "
+    "Settings-&gt;Configuration.\n"
+    "You need to at least create a primary identity and setup a mail "
+    "spool/POP3 account.</p>\n"
+    "<p>We hope that you will enjoy KMail.</p>\n"
+    "<p>Thank you,</p>\n"
+    "<p>&nbsp; &nbsp; The KMail Team</p>")).arg("help:kmail")
+    .arg("http://kmail.kde.org/"));
+  mViewer->end();
+}
+
+
 //-----------------------------------------------------------------------------
 void KMReaderWin::updateReaderWin()
 {
@@ -464,6 +503,8 @@ void KMReaderWin::updateReaderWin()
 
   if (mMsg && !mMsg->msgIdMD5().isEmpty())
     updateReaderWinTimer.start( delay, TRUE );
+
+  if (!mMsgDisplay) return;
 
   if (mMsg) parseMsg();
   else
@@ -1316,8 +1357,8 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
     slotAtmOpen();
   }
   else {
-      if (aUrl.protocol().isEmpty() || (aUrl.protocol() == "file"))
-	  return;
+//      if (aUrl.protocol().isEmpty() || (aUrl.protocol() == "file"))
+//	  return;
       emit urlClicked(aUrl,/* aButton*/LeftButton); //### FIXME: add button to URLArgs!
   }
 }

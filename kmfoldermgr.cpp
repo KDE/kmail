@@ -182,7 +182,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       exit(-1);
     }
 
-    if (aFolderName == "inbox") {
+/*  if (aFolderName == "inbox") {
       KMMessage *welcomeMessage;
 
       welcomeMessage = new KMMessage;
@@ -213,7 +213,7 @@ KMFolder* KMFolderMgr::findOrCreate(const QString& aFolderName)
       default:
         break;
       }
-    }
+    } */
   }
   return folder;
 }

@@ -104,6 +104,12 @@ public:
   /** Is html mail to be supported? Takes into account override */
   bool htmlMail();
 
+  /** Display the about page instead of a message */
+  void displayAboutPage();
+
+  /** Enable the displaying of messages again after an URL was displayed */
+  void enableMsgDisplay() { mMsgDisplay = TRUE; }
+
   /** View message part of type message/RFC822 in extra viewer window. */
   void atmViewMsg(KMMessagePart* msgPart);
 
@@ -239,6 +245,7 @@ protected:
   QTimer mResizeTimer;
   QTextCodec *mCodec;
   bool mAutoDetectEncoding;
+  bool mMsgDisplay;
 
   int fntSize;
   QString mBodyFamily;

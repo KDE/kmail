@@ -103,7 +103,8 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   readConfig();
   activatePanners();
 
-  idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
+  if (kernel->firstStart()) idx = mFolderTree->firstChild(); else
+    idx = mFolderTree->indexOfFolder(kernel->inboxFolder());
   if (idx!=0) {
     mFolderTree->setCurrentItem(idx);
     mFolderTree->setSelected(idx,TRUE);
@@ -1037,10 +1038,22 @@ void KMMainWin::slotSetHeaderStyle(int id)
 //-----------------------------------------------------------------------------
 void KMMainWin::folderSelected(KMFolder* aFolder)
 {
-  if (mFolder == aFolder)
+  if (mFolder == aFolder && aFolder)
     return;
 
   kernel->kbp()->busy();
+  if (!aFolder)
+  {
+    mMsgView->setMsg(0,TRUE);
+    if (mLongFolderList) mHeaders->hide();
+    mMsgView->displayAboutPage();
+  }
+  else if (!mFolder)
+  {
+    mMsgView->enableMsgDisplay();
+    mMsgView->setMsg(0,TRUE);
+    mHeaders->show();
+  }
   writeFolderConfig();
   mFolder = (KMFolder*)aFolder;
   readFolderConfig();
@@ -1218,7 +1231,8 @@ void KMMainWin::slotUrlClicked(const KURL &aUrl, int)
     win->show();
   }
   else if ((aUrl.protocol() == "http") || (aUrl.protocol() == "https") ||
-	   (aUrl.protocol() ==  "ftp") || (aUrl.protocol() == "file"))
+	   (aUrl.protocol() ==  "ftp") || (aUrl.protocol() == "file") ||
+           (aUrl.protocol() == "help"))
   {
     statusMsg(i18n("Opening URL..."));
     KMimeType::Ptr mime = KMimeType::findByURL( aUrl );
