@@ -136,7 +136,8 @@ Kpgp::setMessage(const QString mess)
     index = input.find("\n",index+1);
     back  = input.right(input.size() - index - 1);
 
-    prepare(isSigned);
+    if (!flagPgp50)
+    prepare(isSigned); else prepare(1);
     runPGP(DECRYPT);
     return TRUE;
   }
