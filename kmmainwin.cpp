@@ -1266,28 +1266,28 @@ void KMMainWin::setupToolBar()
 
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(BarIcon("checkmail"), 0,
+  mToolBar->insertButton(UserIcon("checkmail"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotCheckMail()), TRUE,
 			i18n("Get new mail"));
   mToolBar->insertSeparator();
 
-  mToolBar->insertButton(BarIcon("filereply"), 0,
+  mToolBar->insertButton(UserIcon("filereply"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyToMsg()), TRUE,
 			i18n("Reply to author"));
 
-  mToolBar->insertButton(BarIcon("filereplyall"), 0,
+  mToolBar->insertButton(UserIcon("filereplyall"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotReplyAllToMsg()), TRUE,
 			i18n("Reply to all recipients"));
 
-  mToolBar->insertButton(BarIcon("fileforward"), 0,
+  mToolBar->insertButton(UserIcon("fileforward"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotForwardMsg()), TRUE,
 			i18n("Forward message"));
 
-  mToolBar->insertButton(BarIcon("filedel2"), 0,
+  mToolBar->insertButton(UserIcon("filedel2"), 0,
 			SIGNAL(clicked()), this,
 			SLOT(slotDeleteMsg()), TRUE,
 			i18n("Delete message"));
@@ -1405,3 +1405,5 @@ void KMMainWin::updateMessageMenu()
   copyId = messageMenu->insertItem(i18n("&Copy to"), msgCopyMenu, -1,
 				   copyIndex );
 }
+
+
