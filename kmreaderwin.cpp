@@ -20,6 +20,7 @@
 #include "kbusyptr.h"
 #include "kmmsgpartdlg.h"
 #include "kpgp.h"
+#include "kfontutils.h"
 
 #include <html.h>
 #include <kapp.h>
@@ -102,8 +103,8 @@ void KMReaderWin::readConfig(void)
   mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
 
   config->setGroup("Fonts");
-  mBodyFont = config->readEntry("body-font", "helvetica");
-  mViewer->setStandardFont(mBodyFont);
+  mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
+  mViewer->setStandardFont(kstrToFont(mBodyFont).family());
   //mViewer->setFixedFont(mFixedFont);
 
   update();

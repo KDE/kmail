@@ -18,6 +18,7 @@
 #include "kmmainwin.h"
 #include "kfileio.h"
 #include "kmfiltermgr.h"
+#include "kfontutils.h"
 
 
 //-----------------------------------------------------------------------------
@@ -88,10 +89,10 @@ void KMHeaders::readConfig (void)
   QString fntStr;
 
   config->setGroup("Fonts");
-  fntStr = config->readEntry("list-font", "helvetica");
+  fntStr = config->readEntry("list-font", "helvetica-medium-r-12");
 
   // You need kdelibs package newer than 11-06-98 for this:
-  setTableFont(QFont(fntStr));
+  setTableFont(kstrToFont(fntStr));
 }
 
 

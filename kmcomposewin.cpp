@@ -14,6 +14,7 @@
 #include "kpgp.h"
 #include "kmaddrbookdlg.h"
 #include "kmaddrbook.h"
+#include "kfontutils.h"
 
 #include <assert.h>
 #include <drag.h>
@@ -214,7 +215,7 @@ void KMComposeWin::readConfig(void)
   mAutoPgpSign = config->readNumEntry("pgp-auto-sign", 0);
 
   config->setGroup("Fonts");
-  mBodyFont = config->readEntry("body-font", "helvetica");
+  mBodyFont = config->readEntry("body-font", "helvetica-medium-r-12");
 
 #ifdef CHARSETS  
   m7BitAscii = config->readNumEntry("7bit-is-ascii",1);
@@ -646,7 +647,7 @@ void KMComposeWin::setupEditor(void)
 
 
   // Font setup
-  mEditor->setFont(QFont(mBodyFont));
+  mEditor->setFont(kstrToFont(mBodyFont));
 
   // Color setup
   if( mForeColor.isEmpty())

@@ -1,3 +1,10 @@
+1998-06-12  Stefan Taferner  <taferner@kde.org>
+
+	* Fonts: improved font settings. The HTML widget
+	unfortunately only honors the font family. Added new
+	functions (kfontutils.h) for easy font to/from string
+	conversion.
+
 1998-06-12  Mario Weilguni   <mweilguni@kde.org> (KMail-0.7.1)
 	* new sort algorithm - quicksort instead of bubble-sort
 
