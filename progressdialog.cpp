@@ -164,10 +164,6 @@ void TransactionItem::slotItemCanceled()
   item()->cancel();
 }
 
-void TransactionItem::slotDelete()
-{
-  delete this;
-}
 
 
 
@@ -276,7 +272,7 @@ void ProgressDialog::slotTransactionCompleted( ProgressItem *item )
    if ( ti ) {
      ti->setStatus(i18n("Completed"));
      mTransactionsToListviewItems.remove( item );
-     QTimer::singleShot( 5000, ti, SLOT( slotDelete() ) );
+     QTimer::singleShot( 5000, ti, SLOT( deleteLater() ) );
    }
    mListView->slotAdjustGeometry();
    // This was the last item, hide.
