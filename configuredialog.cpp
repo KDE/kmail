@@ -815,6 +815,7 @@ void ConfigureDialog::makeAppearancePage( void )
   QStringList fontStringList;
   fontStringList.append( i18n("Message Body") );
   fontStringList.append( i18n("Message List") );
+  fontStringList.append( i18n("Message List - Date Field") );
   fontStringList.append( i18n("Folder List") );
   fontStringList.append( i18n("Quoted text - First level") );
   fontStringList.append( i18n("Quoted text - Second level") );
@@ -1519,12 +1520,14 @@ void ConfigureDialog::setupAppearancePage( void )
   mAppearance.font[1] =
     config.readFontEntry("list-font", &mAppearance.font[0]);
   mAppearance.font[2] =
-    config.readFontEntry("folder-font", &mAppearance.font[0]);
+    config.readFontEntry("list-date-font", &mAppearance.font[0]);
   mAppearance.font[3] =
-    config.readFontEntry("quote1-font", &mAppearance.font[0]);
+    config.readFontEntry("folder-font", &mAppearance.font[0]);
   mAppearance.font[4] =
-    config.readFontEntry("quote2-font", &mAppearance.font[0]);
+    config.readFontEntry("quote1-font", &mAppearance.font[0]);
   mAppearance.font[5] =
+    config.readFontEntry("quote2-font", &mAppearance.font[0]);
+  mAppearance.font[6] =
     config.readFontEntry("quote3-font", &mAppearance.font[0]);
 
   bool state = config.readBoolEntry("defaultFonts", false );
@@ -2059,10 +2062,11 @@ void ConfigureDialog::slotDoApply( bool everything )
       isChecked());
     config.writeEntry( "body-font",   mAppearance.font[0] );
     config.writeEntry( "list-font",   mAppearance.font[1] );
-    config.writeEntry( "folder-font", mAppearance.font[2] );
-    config.writeEntry( "quote1-font", mAppearance.font[3] );
-    config.writeEntry( "quote2-font", mAppearance.font[4] );
-    config.writeEntry( "quote3-font", mAppearance.font[5] );
+    config.writeEntry( "list-date-font", mAppearance.font[2] );
+    config.writeEntry( "folder-font", mAppearance.font[3] );
+    config.writeEntry( "quote1-font", mAppearance.font[4] );
+    config.writeEntry( "quote2-font", mAppearance.font[5] );
+    config.writeEntry( "quote3-font", mAppearance.font[6] );
 //  GS - should this be here?
 //    printf("WRITE: %s\n", mAppearance.fontString[3].latin1() );
 
@@ -2911,7 +2915,7 @@ void ConfigureDialog::slotFontSelectorChanged( int index )
   //
   // Disable Family and Size list if we have selected a qoute font
   //
-  bool enable = index != 3 && index != 4 && index != 5;
+  bool enable = index != 4 && index != 5 && index != 6;
   mAppearance.fontChooser->enableColumn(
     KFontChooser::FamilyList|KFontChooser::SizeList, enable );
 }

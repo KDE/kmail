@@ -1,5 +1,4 @@
 // kmheaders.cpp
-// #define fixedfont
 
 #include <stdlib.h>
 
@@ -243,14 +242,16 @@ public:
 
     _cg.setColor( QColorGroup::Text, *mColor );
 
-#ifdef fixedfont
+    KConfig *conf = kapp->config();
+    conf->setGroup("Fonts");
     if( column == mPaintInfo->dateCol ) {
-      QFont f = p->font();
-      f.setFamily("Courier");
-      f.setPointSize( f.pointSize() + 2 );
-      p->setFont(f);
+      if (!conf->readBoolEntry("defaultFonts",TRUE)) {
+        QFont folderFont = QFont("courier");
+        p->setFont(conf->readFontEntry("list-date-font", &folderFont));
+      } else {
+        p->setFont(KGlobalSettings::generalFont());
+      }
     }
-#endif
 
     QListViewItem::paintCell( p, _cg, column, width, align );
 
