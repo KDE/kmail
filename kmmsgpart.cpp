@@ -315,6 +315,7 @@ QCString KMMessagePart::bodyDecoded(void) const
 			<< mBody.size() << " ). Result truncated!" << endl;
       len = oit - result.begin();
       result.truncate( len ); // adds trailing NUL
+      result = result.replace( "\r\n", "\n" );
       break;
     }
   default:
