@@ -177,33 +177,34 @@ int main(int argc, char *argv[])
   // a debugger. In gdb you can do this by typing "set args --nofork" before
   // typing "run".
 
-  KAboutData *about = new KAboutData("kmail", I18N_NOOP("KMail"),
+  KAboutData about("kmail", I18N_NOOP("KMail"),
                    KMAIL_VERSION,
 		   I18N_NOOP("A KDE E-Mail client."),
 		   KAboutData::License_GPL,
                    I18N_NOOP("(c) 1997-2001, The KMail developers"),
 		   0,
 		   "http://kmail.kde.org");
-  about->addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "don@sanders.org" );
-  about->addAuthor( "Waldo Bastian", QString::null, "bastian@kde.org" );
-  about->addAuthor( "Andreas Gungl", QString::null, "a.gungl@gmx.de" );
-  about->addAuthor( "Michael Haeckel", QString::null, "michael@haeckel.net" );
-  about->addAuthor( "Lars Knoll", QString::null, "knoll@kde.org" );
-  about->addAuthor( "J. Nick Koston", QString::null, "bdraco@darkorb.net" );
-  about->addAuthor( "Daniel Naber", QString::null, "daniel.naber@t-online.de" );
-  about->addAuthor( "Sven Radej", QString::null, "radej@kde.org" );
-  about->addAuthor( "Espen Sand", QString::null, "espen@kde.org" );
-  about->addAuthor( "George Staikos", QString::null, "staikos@kde.org" );
-  about->addAuthor( "Stefan Taferner ", QString::null, "taferner@kde.org" );
-  about->addAuthor( "Mario Weilguni", QString::null, "mweilguni@sime.com" );
-  about->addAuthor( "Robert D. Williams", QString::null, "rwilliams@kde.org" );
-  about->addAuthor( "Markus Wuebben", QString::null, "markus.wuebben@kde.org" );
+  about.addAuthor( "Don Sanders", I18N_NOOP("Current maintainer"), "don@sanders.org" );
+  about.addAuthor( "Waldo Bastian", QString::null, "bastian@kde.org" );
+  about.addAuthor( "Andreas Gungl", QString::null, "a.gungl@gmx.de" );
+  about.addAuthor( "Michael Haeckel", QString::null, "michael@haeckel.net" );
+  about.addAuthor( "Lars Knoll", QString::null, "knoll@kde.org" );
+  about.addAuthor( "J. Nick Koston", QString::null, "bdraco@darkorb.net" );
+  about.addAuthor( "Stephan Kulow", QString::null, "coolo@kde.org" );
+  about.addAuthor( "Daniel Naber", QString::null, "daniel.naber@t-online.de" );
+  about.addAuthor( "Sven Radej", QString::null, "radej@kde.org" );
+  about.addAuthor( "Espen Sand", QString::null, "espen@kde.org" );
+  about.addAuthor( "George Staikos", QString::null, "staikos@kde.org" );
+  about.addAuthor( "Stefan Taferner ", QString::null, "taferner@kde.org" );
+  about.addAuthor( "Mario Weilguni", QString::null, "mweilguni@sime.com" );
+  about.addAuthor( "Robert D. Williams", QString::null, "rwilliams@kde.org" );
+  about.addAuthor( "Markus Wuebben", QString::null, "markus.wuebben@kde.org" );
 
-  KCmdLineArgs::init(argc, argv, about);
+  KCmdLineArgs::init(argc, argv, &about);
   KCmdLineArgs::addCmdLineOptions( kmoptions ); // Add kmail options
 
   if (!KMailApplication::start())
-     exit(0);
+     return 0;
 
   KMailApplication app;
   KGlobal::locale()->insertCatalogue("libkdenetwork");
