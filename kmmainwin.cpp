@@ -1693,7 +1693,7 @@ void KMMainWin::slotUrlOpen()
 void KMMainWin::slotMsgPopup(KMMessage &aMsg, const KURL &aUrl, const QPoint& aPoint)
 {
   KPopupMenu * menu = new KPopupMenu;
-  updateMessageActions();
+  updateMessageMenu();
 
   mMsgCurrent = jumpToMessage(&aMsg);
   mUrlCurrent = aUrl;
