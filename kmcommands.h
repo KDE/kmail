@@ -81,13 +81,14 @@ private:
   // execute should be implemented by derived classes
   virtual Result execute() = 0;
 
-  void preTransfer();
-
   /** transfers the list of (imap)-messages
    *  this is a necessary preparation for e.g. forwarding */
   void transferSelectedMsgs();
 
 private slots:
+  /** Called from start() via a single shot timer. */
+  virtual void slotStart();
+
   void slotPostTransfer( KMCommand::Result result );
   /** the msg has been transferred */
   void slotMsgTransfered(KMMessage* msg);
@@ -662,14 +663,15 @@ public:
   KMLoadPartsCommand( partNode* node, KMMessage* msg );
 
 public slots:
-  // Retrieve parts then calls execute
-  void start();
   void slotPartRetrieved( KMMessage* msg, QString partSpecifier );
 
 signals:
   void partsRetrieved();
 
 private:
+  // Retrieve parts then calls execute
+  virtual void slotStart();
+
   virtual Result execute();
 
   QPtrList<partNode> mParts;

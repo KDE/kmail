@@ -127,7 +127,7 @@ KMCommand::~KMCommand()
 
 void KMCommand::start()
 {
-  preTransfer();
+  QTimer::singleShot( 0, this, SLOT( slotStart() ) );
 }
 
 
@@ -148,7 +148,7 @@ QWidget *KMCommand::parentWidget() const
 
 int KMCommand::mCountJobs = 0;
 
-void KMCommand::preTransfer()
+void KMCommand::slotStart()
 {
   connect( this, SIGNAL( messagesTransfered( KMCommand::Result ) ),
            this, SLOT( slotPostTransfer( KMCommand::Result ) ) );
@@ -2213,7 +2213,7 @@ KMLoadPartsCommand::KMLoadPartsCommand( partNode* node, KMMessage *msg )
   mParts.append( node );
 }
 
-void KMLoadPartsCommand::start()
+void KMLoadPartsCommand::slotStart()
 {
   QPtrListIterator<partNode> it( mParts );
   while ( it.current() )
