@@ -436,8 +436,15 @@ void KMReaderWin::writeBodyStr(const QString aStr)
     if (pgp->goodSignature()) sig = i18n("Message was signed by");
     else sig = i18n("Warning: Bad signature from");
     
-    line.sprintf("<B>%s %s</B><BR>", sig.data(), 
-		 pgp->signedBy().data());
+    /* HTMLize signedBy data */
+    QString *sdata=new QString(pgp->signedBy());
+    sdata->replace(QRegExp("\""), "&quot;");
+    sdata->replace(QRegExp("<"), "&lt;");
+    sdata->replace(QRegExp(">"), "&gt;");
+
+    line.sprintf("<B>%s <A HREF=\"mailto:%s\">%s</A></B><BR>", sig.data(), 
+		 sdata->data(),sdata->data());
+    delete sdata;
     htmlStr += line;
   }
 
