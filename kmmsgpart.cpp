@@ -25,7 +25,7 @@ using namespace KMime;
 
 //-----------------------------------------------------------------------------
 KMMessagePart::KMMessagePart()
-  : mType("text"), mSubtype("plain"), mCte("7bit"), mBodyDecodedSize(0), 
+  : mType("text"), mSubtype("plain"), mCte("7bit"), mBodyDecodedSize(0),
     mParent(0), mLoadHeaders(false), mLoadPart(false)
 {
 }
@@ -35,17 +35,17 @@ KMMessagePart::KMMessagePart( QDataStream & stream )
   : mParent(0), mLoadHeaders(false), mLoadPart(false)
 {
   unsigned long size;
-  stream >> mOriginalContentTypeStr >> mName >> mContentDescription 
+  stream >> mOriginalContentTypeStr >> mName >> mContentDescription
     >> mContentDisposition >> mCte >> size >> mPartSpecifier;
-  
+
   mContentDisposition = mContentDisposition.lower();
   mOriginalContentTypeStr = mOriginalContentTypeStr.upper();
- 
-  // set the type 
+
+  // set the type
   int sep = mOriginalContentTypeStr.find('/');
   mType = mOriginalContentTypeStr.left(sep);
   mSubtype = mOriginalContentTypeStr.mid(sep+1);
-   
+
   mBodyDecodedSize = size;
 }
 
@@ -273,7 +273,6 @@ QCString KMMessagePart::bodyDecoded(void) const
 		      << mBody.size() << " ). Result truncated!" << endl;
     len = oit - result.begin();
     result.truncate( len ); // adds trailing NUL
-    result = result.replace( "\r\n", "\n" );
   } else
     switch (cte())
     {
@@ -291,6 +290,7 @@ QCString KMMessagePart::bodyDecoded(void) const
       break;
     }
   }
+  result = result.replace( "\r\n", "\n" ); // CRLF -> LF conversion
 
   kdWarning( result.length() != (unsigned int)len, 5006 )
     << "KMMessagePart::bodyDecoded(): body is binary but used as text!" << endl;
