@@ -219,6 +219,7 @@ void AccountDialog::makePopAccountPage()
       i18n("(experimental)"), page);
   topLayout->addMultiCellWidget( mPop.useSSLCheck, 7, 7, 0, 1);
   connect(mPop.useSSLCheck, SIGNAL(clicked()), this, SLOT(slotSSLChanged()));
+  mPop.useSSLCheck->hide();
 
   mPop.storePasswordCheck = 
     new QCheckBox( i18n("Store POP password in configuration file"), page );
@@ -438,7 +439,8 @@ void AccountDialog::saveSettings()
     epa.setPort( mPop.portEdit->text().toInt() );
     epa.setLogin( mPop.loginEdit->text() );
     epa.setPasswd( mPop.passwordEdit->text(), true );
-    epa.setUseSSL( mPop.useSSLCheck->isChecked() );
+//    epa.setUseSSL( mPop.useSSLCheck->isChecked() );
+    epa.setUseSSL( FALSE );
     epa.setStorePasswd( mPop.storePasswordCheck->isChecked() );
     epa.setPasswd( mPop.passwordEdit->text(), epa.storePasswd() );
     epa.setLeaveOnServer( !mPop.deleteMailCheck->isChecked() );
