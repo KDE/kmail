@@ -2003,6 +2003,12 @@ void KMComposeWin::addrBookSelInto()
 
   mEdtBcc->setText( dlg.bcc().join(", ") );
   mEdtBcc->setEdited( true );
+
+  //Make sure BCC field is shown if needed
+  if ( !mEdtBcc->text().isEmpty() ) {
+    mShowHeaders |= HDR_BCC;
+    rethinkFields( false );
+  }
 }
 
 
