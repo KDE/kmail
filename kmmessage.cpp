@@ -624,8 +624,23 @@ const QString KMMessage::subject(void) const
 //-----------------------------------------------------------------------------
 void KMMessage::setSubject(const QString aStr)
 {
-  if (!aStr) return;
   mMsg->Headers().Subject().FromString(aStr);
+  mNeedsAssembly = TRUE;
+  mDirty = TRUE;
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMMessage::xmark(void) const
+{
+  return headerField("X-KMail-Mark");
+}
+
+
+//-----------------------------------------------------------------------------
+void KMMessage::setXMark(const QString aStr)
+{
+  setHeaderField("X-KMail-Mark", aStr);
   mNeedsAssembly = TRUE;
   mDirty = TRUE;
 }
@@ -636,7 +651,8 @@ const QString KMMessage::headerField(const QString aName) const
 {
   DwHeaders& header = mMsg->Headers();
 
-  result = header.FieldBody((const char*)aName).AsString().c_str();
+  if (aName.isEmpty()) result = "";
+  else result = header.FieldBody((const char*)aName).AsString().c_str();
   result.detach();
   return result;
 }

@@ -54,6 +54,7 @@ public:
   virtual const QString from(void) const = 0;
   virtual time_t date(void) const;
   virtual const QString dateStr(void) const;
+  virtual const QString xmark(void) const = 0;
 
   /** Set date. */
   virtual void setDate(const char* aStrDate);
@@ -65,9 +66,10 @@ public:
   /** Change dirty flag. */
   void setDirty(bool d) { mDirty=d; }
 
-  /** Set subject/from/date and mark dirty. */
+  /** Set subject/from/date and xmark. */
   virtual void setSubject(const QString) = 0;
   virtual void setFrom(const QString) = 0;
+  virtual void setXMark(const QString) = 0;
 
   /** Return contents as index string. This string is of fixed size
     that can be read with indexStringLength(). */

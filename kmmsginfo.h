@@ -22,21 +22,23 @@ public:
 
   /** Initialize with given values and set dirty flag to FALSE. */
   virtual void init(const QString subject, const QString from, time_t date,
-		    KMMsgStatus status, unsigned long folderOffset=0,
-		    unsigned long msgSize=0);
+		    KMMsgStatus status, const QString xmark,
+		    unsigned long folderOffset=0, unsigned long msgSize=0);
 
   /** Inherited methods (see KMMsgBase for description): */
   virtual const QString subject(void) const;
   virtual const QString from(void) const;
+  virtual const QString xmark(void) const;
   virtual void setSubject(const QString);
   virtual void setFrom(const QString);
+  virtual void setXMark(const QString);
 
   /** Copy operators. */
   KMMsgInfo& operator=(const KMMessage&);
   KMMsgInfo& operator=(const KMMsgInfo&);
 
 protected:
-  QString mSubject, mFrom;
+  QString mSubject, mFrom, mXMark;
 };
 
 typedef KMMsgInfo* KMMsgInfoPtr;

@@ -164,6 +164,11 @@ void KMHeaders::msgHeaderChanged(int msgId)
 void KMHeaders::headerClicked(int column)
 {
   KMMsgList::SortField sortField;
+  int idx = currentItem();
+  KMMsgBasePtr cur;
+  
+  if (idx >= 0) cur = (*mFolder)[idx];
+  else cur = NULL;
 
   if (column==0)      sortField = KMMsgList::sfStatus;
   else if (column==1) sortField = KMMsgList::sfFrom;
@@ -174,6 +179,14 @@ void KMHeaders::headerClicked(int column)
   kbp->busy();
   mFolder->sort(sortField);
   kbp->idle();
+
+  if (cur) idx = mFolder->find(cur);
+  else idx = 0;
+
+  setCurrentItem(idx);
+  idx -= 3;
+  if (idx < 0) idx = 0;
+  setTopItem(idx);
 }
 
 

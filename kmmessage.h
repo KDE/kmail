@@ -123,6 +123,10 @@ public:
   virtual const QString subject(void) const;
   virtual void setSubject(const QString aStr);
 
+  /** Get or set the 'X-Mark' header field */
+  virtual const QString xmark(void) const;
+  virtual void setXMark(const QString aStr);
+
   /** Get the groups it should be posted to (Added for krn)*/
   virtual const QString groups(void) const;
 

@@ -72,9 +72,7 @@ bool KMAcctPop::processNewMail(void)
   void (*pipeHandler)(int);
   bool result;
 
-  kbp->idle();
-  warning("POP support is still experimental\nand may not work.");
-  kbp->busy();
+  debug("POP support is still experimental\nand may not work.");
 
   // Before we do anything else let's ignore the friggin' SIGALRM signal
   // This signal somehow interrupts the network functions and messed up
