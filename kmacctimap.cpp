@@ -304,6 +304,7 @@ void KMAcctImap::slotListFolderResult(KIO::Job * job)
   KURL url = getUrl();
   url.setPath((*it).parent->folder->imapPath() + ";UID=" + uids
     + ";SECTION=ENVELOPE");
+  (*it).parent->folder->quiet(TRUE);
   KIO::Job *newJob = KIO::get(url, FALSE, FALSE);
   mapJobData.insert(newJob, jd);
   connect(newJob, SIGNAL(result(KIO::Job *)),
@@ -374,6 +375,7 @@ void KMAcctImap::slotGetMessagesResult(KIO::Job * job)
   assert(it != mapJobData.end());
   if (job->error()) job->showErrorDialog();
   (*it).parent->mImapState = KMFolderTreeItem::imapFinished;
+  (*it).parent->folder->quiet(FALSE);
   mapJobData.remove(it);
   displayProgress();
 }
