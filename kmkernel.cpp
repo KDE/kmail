@@ -775,7 +775,7 @@ void KMKernel::cleanupLoop()
   int nrFolders = the_folderMgr->folderCount();
   if (closed_by_user)
   {
-    mProgress = new KProgressDialog(0, 0, i18n("Cleaning Up"), i18n("Cleaning up..."), true);
+    mProgress = new KProgressDialog(0, "kmail-cleanupProgressDlg", i18n("Cleaning Up"), i18n("Cleaning up..."), true);
     mProgress->setAutoClose(false);
     mProgress->setAllowCancel(false);
     mProgress->setInitialSize(QSize(350,130), true);

@@ -48,7 +48,9 @@ class KMMainWin : public KMTopLevelWidget
   Q_OBJECT
 
 public:
-  KMMainWin(QWidget *parent = 0, char *name = 0);
+  // the main window needs to have a name since else restoring the window
+  // settings by kwin doesn't work
+  KMMainWin(QWidget *parent = 0);
   virtual ~KMMainWin();
 
   /** Read configuration options before widgets are created. */

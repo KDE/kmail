@@ -71,8 +71,8 @@
 #include "kmmainwin.moc"
 
 //-----------------------------------------------------------------------------
-KMMainWin::KMMainWin(QWidget *, char *name) :
-    KMMainWinInherited(name)
+KMMainWin::KMMainWin(QWidget *) :
+    KMMainWinInherited("kmail-mainwindow")
 {
   // must be the first line of the constructor:
   searchWin = 0;
