@@ -448,6 +448,7 @@ void KMReaderWin::displayAboutPage()
     "<li>Collapsable threads</li>\n"
     "<li>Multiple PGP identities</li>\n"
     "<li>Bind an SMTP server to an identity</li>\n"
+    "<li>Use a specified identity for a mailing list</li>\n"
     "<li>Better procmail support via the local account</li>\n"
     "<li>Messages can be flagged</li>\n"
     "<li>Read the new messages by only hitting the space key</li>\n"
