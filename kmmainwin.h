@@ -350,6 +350,7 @@ protected:
   KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
+  QString	mStartupFolder;
 
   int mWindowLayout;
   int mShowMIMETreeMode;
