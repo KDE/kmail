@@ -20,7 +20,6 @@
 #include "kmmainwin.h"
 #include "kmcomposewin.h"
 #include "kmmessage.h"
-#include "kmserial.h"
 #include "kmfoldermgr.h"
 #include "kmfolder.h"
 #include "kmfiltermgr.h"
@@ -456,7 +455,6 @@ void KMKernel::init()
 
   the_undoStack = new KMUndoStack(20);
   the_folderMgr = new KMFolderMgr(foldersPath);
-  the_serial = new KMSerial();
   the_acctMgr   = new KMAcctMgr(acctPath);
   the_filterMgr = new KMFilterMgr;
   the_filterActionDict = new KMFilterActionDict;
