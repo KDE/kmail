@@ -437,7 +437,7 @@ void KMAcctImap::killAllJobs()
       fld->sendFolderComplete(FALSE);
       fld->quiet(FALSE);
     }
-  if (mapJobData.begin() != mapJobData.end())
+  if (mSlave && mapJobData.begin() != mapJobData.end())
   {
     mSlave->kill();
     mSlave = NULL;

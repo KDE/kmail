@@ -180,7 +180,7 @@ public:
    * Get the Slave used for the account
    */
   KIO::Slave * slave() { return mSlave; }
-  void slaveDied() { mSlave = NULL; }
+  void slaveDied() { mSlave = NULL; killAllJobs(); }
 
   /**
    * Set the top level pseudo folder

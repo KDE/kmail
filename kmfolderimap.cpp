@@ -125,7 +125,7 @@ void KMFolderImap::slotRemoveFolderResult(KIO::Job *job)
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
   }
-  mAccount->mapJobData.remove(it);
+  if (mAccount->slave()) mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
   if (!job->error()) kernel->imapFolderMgr()->remove(this);
 }
@@ -398,7 +398,7 @@ void KMFolderImap::slotListResult(KIO::Job * job)
   }
   mSubfolderState = imapFinished;
   bool it_inboxOnly = (*it).inboxOnly;
-  mAccount->mapJobData.remove(it);
+  if (mAccount->slave()) mAccount->mapJobData.remove(it);
   if (!job->error())
   {
     kernel->imapFolderMgr()->quiet(TRUE);
@@ -572,7 +572,7 @@ kdDebug(5006) << "KMFolderImap::slotCheckValidityResult" << endl;
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     emit folderComplete(this, FALSE);
-    mAccount->mapJobData.remove(it);
+    if (mAccount->slave()) mAccount->mapJobData.remove(it);
     mAccount->displayProgress();
   } else {
     QCString cstr((*it).data.data(), (*it).data.size() + 1);
@@ -638,6 +638,7 @@ void KMFolderImap::reallyGetFolder(const QString &startUid)
             this, SLOT(slotListFolderEntries(KIO::Job *,
             const KIO::UDSEntryList &)));
   } else {
+    quiet(TRUE);
     url.setPath(imapPath() + ";UID=" + startUid
       + ":*;SECTION=ENVELOPE");
     KIO::SimpleJob *newJob = KIO::get(url, FALSE, FALSE);
@@ -668,7 +669,7 @@ void KMFolderImap::slotListFolderResult(KIO::Job * job)
     job->showErrorDialog();
     if (job->error() == KIO::ERR_SLAVE_DIED) mAccount->slaveDied();
     emit folderComplete(this, FALSE);
-    mAccount->mapJobData.remove(it);
+    if (mAccount->slave()) mAccount->mapJobData.remove(it);
     return;
   }
   mCheckFlags = FALSE;
@@ -842,7 +843,7 @@ void KMFolderImap::slotGetMessagesResult(KIO::Job * job)
     emit folderComplete(this, FALSE);
   } else mContentState = imapFinished;
   quiet(FALSE);
-  mAccount->mapJobData.remove(it);
+  if (mAccount->slave()) mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
   if (!job->error()) emit folderComplete(this, TRUE);
 }
@@ -880,7 +881,7 @@ void KMFolderImap::slotCreateFolderResult(KIO::Job * job)
   } else {
     listDirectory(NULL);
   }
-  mAccount->mapJobData.remove(it);
+  if (mAccount->slave()) mAccount->mapJobData.remove(it);
   mAccount->displayProgress();
 }
 
@@ -1074,9 +1075,9 @@ void KMImapJob::slotGetMessageResult(KIO::Job * job)
     emit messageRetrieved(mMsg);
     mMsg = NULL;
   }
-  account->mapJobData.remove(it);
+  if (account->slave()) account->mapJobData.remove(it);
   account->displayProgress();
-  account->mJobList.remove(this);
+  if (account->slave()) account->mJobList.remove(this);
   delete this;
 }
 
@@ -1124,9 +1125,9 @@ void KMImapJob::slotPutMessageResult(KIO::Job *job)
     }
     mMsg = NULL;
   }
-  account->mapJobData.remove(it);
+  if (account->slave()) account->mapJobData.remove(it);
   account->displayProgress();
-  account->mJobList.remove(this);
+  if (account->slave()) account->mJobList.remove(this);
   delete this;
 }
 
@@ -1152,9 +1153,9 @@ void KMImapJob::slotCopyMessageResult(KIO::Job *job)
       mMsg = NULL;
     }
   }
-  account->mapJobData.remove(it);
+  if (account->slave()) account->mapJobData.remove(it);
   account->displayProgress();
-  account->mJobList.remove(this);
+  if (account->slave()) account->mJobList.remove(this);
   delete this;
 }
 
