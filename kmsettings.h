@@ -27,6 +27,7 @@ public:
 protected:
   virtual void createTabIdentity(QWidget*);
   virtual void createTabNetwork(QWidget*);
+  virtual void createTabGeneral(QWidget*);
 
   // Create a button in given grid. The name is internationalized.
   virtual QPushButton* createPushButton(QWidget* parent, QGridLayout* grid,

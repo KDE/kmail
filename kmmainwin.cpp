@@ -32,11 +32,10 @@ static int windowCount = 0;
 KMMainWin::KMMainWin(QWidget *, char *name) :
   KMMainWinInherited(name)
 {
+  parseConfiguration();
   mainView = new KMMainView(this);
 
   setView(mainView);
-
-  parseConfiguration();
 
   setupMenuBar();
   setupToolBar();
@@ -69,6 +68,14 @@ void KMMainWin::parseConfiguration()
     sscanf(s,"%d,%d,%d,%d",&x,&y,&w,&h);
     setGeometry(x,y,w,h);
   }
+
+ config->setGroup("Settings");
+  s = config->readEntry("Inline");
+  if((!s.isEmpty() && s.find("false",0,false)) == 0)
+	showInline = false;
+  else
+	showInline  = true;
+
 }
 
 
@@ -107,10 +114,10 @@ void KMMainWin::setupMenuBar()
 
   //----- Message Menu
   QPopupMenu *messageMenu = new QPopupMenu();
-  messageMenu->insertItem(nls->translate("&Next"), this, 
-			  SLOT(doUnimplemented()), Key_N);
-  messageMenu->insertItem(nls->translate("&Previous"), this, 
-			  SLOT(doUnimplemented()), Key_P);
+  messageMenu->insertItem(nls->translate("&Next"), mainView, 
+			  SLOT(doNextMsg()), Key_N);
+  messageMenu->insertItem(nls->translate("&Previous"), mainView, 
+			  SLOT(doPreviousMsg()), Key_P);
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("Toggle All &Headers"), this, 
 			  SLOT(doUnimplemented()), Key_H);
@@ -131,6 +138,22 @@ void KMMainWin::setupMenuBar()
   messageMenu->insertItem(nls->translate("&Undelete"), this,
 			  SLOT(doUnimplemented()), Key_U);
   messageMenu->insertSeparator();
+
+  bodyParts = new QPopupMenu();
+  bodyParts->setCheckable(TRUE);
+  bodyParts->insertItem(nls->translate("Inline"), this,
+			SLOT(doViewChange()));
+  bodyParts->insertItem(nls->translate("Separate"), this,
+			SLOT(doViewChange()));
+
+  printf("mainwin %i\n",showInline);
+  if(showInline)
+    bodyParts->setItemChecked(bodyParts->idAt(0),TRUE);
+  else
+    bodyParts->setItemChecked(bodyParts->idAt(1),TRUE);
+
+  messageMenu->insertItem(nls->translate("View Body Parts..."),bodyParts);
+
   messageMenu->insertItem(nls->translate("&Export..."), this, 
 			  SLOT(doUnimplemented()), Key_E);
   messageMenu->insertItem(nls->translate("Pr&int..."), mainView, 
@@ -294,10 +317,31 @@ void KMMainWin::closeEvent(QCloseEvent *e)
   config=KApplication::getKApplication()->getConfig();
   config->setGroup("Geometry");
   config->writeEntry("Main",s);
+
+  config->setGroup("Settings");
+  if(mainView->isInline())
+    {printf("isInline %i\n",mainView->isInline()); 
+    config->writeEntry("Inline","true");}
+  else
+    config->writeEntry("Inline","false");
+  config->sync();
   delete this;
   if (!(--windowCount)) qApp->quit();
 }
 
+void KMMainWin::doViewChange()
+{
+  if(bodyParts->isItemChecked(bodyParts->idAt(0)))
+    {bodyParts->setItemChecked(bodyParts->idAt(0),FALSE);
+    bodyParts->setItemChecked(bodyParts->idAt(1),TRUE);
+    }
+  else
+    if(bodyParts->isItemChecked(bodyParts->idAt(1)))
+      {bodyParts->setItemChecked(bodyParts->idAt(1),FALSE);
+      bodyParts->setItemChecked(bodyParts->idAt(0),TRUE);
+      }
+  mainView->slotViewChange();
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::show(void)

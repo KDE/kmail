@@ -337,6 +337,32 @@ KMMessage* KMHeaders::getMsg (int msgId)
 }
 
 
+void KMHeaders::nextMsg()
+{
+  kbp->busy();
+  int idx;
+  long numMsg;
+  KMFolder *cF = new KMFolder();
+  cF = currentFolder();
+  numMsg = cF->numMsgs();
+  if((idx = indexOfGetMsg()) == numMsg-1)
+    return;
+  emit messageSelected(folder->getMsg(idx+2));
+  if (idx >= 0) setMsgRead(idx+1);
+  kbp->idle();
+}
+
+void KMHeaders::previousMsg()
+{
+  kbp->busy();
+  int idx; 
+  if((idx = indexOfGetMsg()) == 0)
+    return;
+  emit messageSelected(folder->getMsg(idx));
+  if (idx >= 0) setMsgRead(idx);
+  kbp->idle();
+}  
+
 //-----------------------------------------------------------------------------
 void KMHeaders::changeItemPart (char c, int itemIndex, int column)
 {

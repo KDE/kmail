@@ -50,6 +50,7 @@ KMSettings::KMSettings(QWidget *parent, const char *name) :
 
   createTabIdentity(this);
   createTabNetwork(this);
+  createTabGeneral(this);
 }
 
 
@@ -259,6 +260,13 @@ void KMSettings::createTabNetwork(QWidget* parent)
   tab->adjustSize();
 }
 
+
+void KMSettings::createTabGeneral(QWidget *parent)
+{
+  QWidget *tab = new QWidget(parent);
+  addTab(tab,"General");
+
+}
 
 //-----------------------------------------------------------------------------
 void KMSettings::tabNetworkAddAcct(KTabListBox* actList, KMAccount* act, 

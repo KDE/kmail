@@ -32,8 +32,10 @@ public:
   /** Delete/undelete message(s) depending on the flag of
     the first selected message. */
   virtual void toggleDeleteMsg(int msgId=-1);
-
-
+  /** Returns next message in the current Folder. */
+  virtual void nextMsg();
+  /** Returns previous message in the current Folder. */ 
+  virtual void previousMsg();
   /** Returns message with given id or current message if no
     id is given. First call with msgId==-1 returns first
     selected message, subsequent calls with no argument

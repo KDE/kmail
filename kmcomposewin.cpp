@@ -140,6 +140,8 @@ void KMComposeView::attachFile()
   if (d->exec()) 
     atmntFile = d->selectedFile();		
   delete d;
+  if(atmntFile.isEmpty())
+	return;
   urlList->append(atmntFile);
   if(urlList->count() == 1)// Create attachmentWidget
     {createAttachmentWidget();
@@ -753,7 +755,7 @@ void KMComposeWin::setupMenuBar()
 		    SLOT(appendSignature()),ALT+Key_G);
 
   menu = new QPopupMenu();
-  menu->setCheckable(TRUE);
+ menu->setCheckable(TRUE);
   menu->insertItem(nls->translate("Base 64"),this,
 		    SLOT(slotEncodingChanged()));
   menu->insertItem(nls->translate("Quoted Printable"),this,

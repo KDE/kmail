@@ -20,6 +20,8 @@ public:
   KMMainWin(QWidget *parent = 0, char *name = 0);
   virtual ~KMMainWin();
   virtual void show();
+  bool showInline;
+  QPopupMenu *bodyParts;
 
 protected:
   virtual void closeEvent(QCloseEvent *);
@@ -42,7 +44,7 @@ private slots:
   void doNewMailReader();
   void doSettings();
   void doUnimplemented();
-
+  void doViewChange();
 };
 
 #endif

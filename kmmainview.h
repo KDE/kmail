@@ -23,6 +23,10 @@ public:
   KMMainView(QWidget *parent=0, const char *name=0);
   KMFolderTree *folderTree;
 
+public slots:
+  void slotViewChange(); 
+  bool isInline();
+ 
 private slots:
   void doAddFolder();
   void doCheckMail();
@@ -41,6 +45,8 @@ private slots:
   void doPrintMessage();
   void initIntegrated();
   void initSeparated();
+  void doNextMsg();
+  void doPreviousMsg();
 
 private:
   KMReaderView *messageView;

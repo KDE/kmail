@@ -23,6 +23,7 @@
 #include "kmheaders.h"
 #include "kmreaderwin.h"
 #include "kmacctfolder.h"
+#include "kmmainwin.h"
 
 #include "kmmainview.moc"
 
@@ -94,6 +95,12 @@ void KMMainView::initIntegrated()
 	  this, SLOT(messageSelected(KMMessage*)));
 
   messageView = new KMReaderView(horzPanner->child1());
+
+  if(((KMMainWin*)parentWidget())->showInline == true)
+    messageView->showInline = true;
+  else
+    messageView->showInline = false;
+
   Integrated = TRUE;
 }
 
@@ -232,6 +239,21 @@ void KMMainView::doReplyAllToMessage()
   headers->replyAllToMsg();
 }
 
+void KMMainView::doNextMsg()
+{
+  if(headers->currentItem() < 0 )
+    return;
+  headers->nextMsg();
+}
+
+void KMMainView::doPreviousMsg()
+{
+  if(headers->currentItem() < 0 )
+    return;
+  headers->previousMsg();
+}
+
+
 void KMMainView::doPrintMessage()
 { 
   if(headers->currentItem() < 0)
@@ -286,4 +308,22 @@ void KMMainView::resizeEvent(QResizeEvent *e)
     headers->resize(vertPanner->child1()->width(),
 		    vertPanner->child1()->height());
   }
+}
+
+
+void KMMainView::slotViewChange()
+{
+  if(messageView->showInline)
+    messageView->showInline = false;
+  else
+    messageView->showInline = true;
+  messageView->updateDisplay();  
+}
+
+bool KMMainView::isInline()
+{
+  if(messageView->showInline)
+    return true;
+  else
+    return false;
 }

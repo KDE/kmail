@@ -19,6 +19,7 @@
 #include <kmenubar.h>
 #include <kmsgbox.h>
 #include "kmcomposewin.h"
+#include "kmimemagic.h"
 #include <mimelib/utility.h>
 #include <mimelib/string.h>
 
@@ -34,9 +35,10 @@ public:
 	KMReaderView(QWidget *p=0,const char *n=0, int n=0, KMFolder *f=0);
         KHTMLWidget *messageCanvas;
         QString selectedText;
-	                        
+	bool showInline;
+
 private:
-        KMMessage *currentMessage;
+	KMMessage *currentMessage;
         KMFolder *currentFolder;
         QScrollBar *vert;
         QScrollBar *horz;
@@ -46,7 +48,10 @@ private:
         long allMessages;
         int currentAtmnt;
         int currentIndex;
-                                              
+	void initKMimeMagic();                                              
+	void parseConfiguration();
+	KMimeMagic *magic;
+	int MAX_LINES;
 	
 public slots:
 	void clearCanvas();
@@ -57,7 +62,7 @@ public slots:
 	void copy();
 	void markAll();
 	void viewSource();
-		                                                
+
 private slots:
 	void replyMessage();
 	void replyAll();
@@ -71,6 +76,10 @@ private slots:
         void slotScrollLeRi();
         void slotDocumentChanged();
         void slotDocumentDone();
+	void slotOpenAtmnt();
+	void slotSaveAtmnt();
+	void slotPrintAtmnt();
+	void slotViewAtmnt();
         void openURL(const char *, int);
         void popupHeaderMenu(const char *, const QPoint &);
         void popupMenu(const char *, const QPoint &);
@@ -100,11 +109,11 @@ private:
                                         
 public slots:
 	void parseConfiguration();
+        void toDo(); 
 private slots:
 	void setupToolBar();
 	void setupMenuBar();
 	void invokeHelp();
-	void toDo();
 	void newComposer();
 	void newReader();
 	void about();

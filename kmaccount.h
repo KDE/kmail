@@ -8,6 +8,7 @@
 #include <qstring.h>
 #include <qlist.h>
 #include <Kconfig.h>
+#include <kmsgbox.h>
 
 class QFile;
 class QTextStream;

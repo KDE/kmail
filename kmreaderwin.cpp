@@ -7,6 +7,7 @@
 #include "kmglobal.h"
 #include "kmreaderwin.h"
 #include "kmreaderwin.moc"
+#include "kmimemagic.h"
 #include <kiconloader.h>
 
 #define FORWARD 0
@@ -25,7 +26,6 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
 
  picsDir.append(kdeDir);
  picsDir +="/share/apps/kmail/pics"; 
- // picsDir +="/lib/pics/"; 
 
  currentFolder = new KMFolder();
  currentFolder = f;
@@ -74,7 +74,22 @@ KMReaderView::KMReaderView(QWidget *parent =0, const char *name = 0, int msgno =
     parseMessage(currentMessage);
   else
    clearCanvas();
+
+  initKMimeMagic();
+
+  parseConfiguration();
 }
+
+void  KMReaderView::parseConfiguration()
+{
+  QString o;
+  KConfig *config = new KConfig();
+  config = KApplication::getKApplication()->getConfig();
+  config->setGroup("Settings");
+  MAX_LINES = config->readNumEntry("Lines");
+}
+
+
 
 
 // *********************** Public slots *******************
@@ -90,6 +105,10 @@ void KMReaderView::clearCanvas()
 
 void KMReaderView::updateDisplay()
 {
+  if(currentMessage != 0)
+    {clearCanvas();
+    parseMessage(currentMessage);
+    }
 }
 
 
@@ -200,18 +219,139 @@ void KMReaderView::parseMessage(KMMessage *message)
 
 QString KMReaderView::parseBodyPart(KMMessagePart *p)
 {
-	QString text;
-	text = decodeString(p->body(),p->cteStr());
-	printf("Returned from decoding\n");
-	text +="<br><hr><br>";
-	return text;
-	// Later on when we have Torben's mimestuff 
-	// we can determine of which mimetype 
-	// the bodypart is. Very very usefull.
-	// -> Ask if we want to display text more the configured length etc.
-	// Eventually we will include the kpart thought.
+  QString text;
+  QString type;
+  QString subType;
+       
+  QString temp;
+  int pos;
 
+  KMimeMagicResult *result = new KMimeMagicResult();
+  text = decodeString(p->body(),p->cteStr());
+  result = magic->findBufferType(text,text.length()-1);	
+  temp =  result->getContent(); // Determine Content Type
+  pos = temp.find("/",0,0);
+  cout << "pos:" << pos << endl << "temp: "<< temp << endl;
+  type = temp.copy();
+  subType = temp.copy();
+  type.truncate(pos);
+  subType = subType.remove(0,pos+1); 
+  cout << "Type:" << type << endl << "SubType:" << subType <<endl;
+
+  printf("Debug :%i\n",showInline);
+  if(showInline == false) // If we do not want 
+                          //the attachments to be displayed inline
+    {QString icon;
+     QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
+			     + type + subType); // Search for mimetype.
+     if(file->open(IO_ReadOnly)) // if mimetype exists                        
+        {QTextStream pstream(file);         
+	KConfig config(&pstream);
+	config.setGroup("KDE Desktop Entry");
+	icon = config.readEntry("Icon");
+	if(icon.isEmpty()) // If no icon specified.
+	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
+	else
+	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
+	QString comment = config.readEntry("Comment");
+	file->close();
+	text = "<A HREF=""><IMG SRC=" + icon + ">" + comment + "</A>";
+	text += "<br><hr><br>";
+	return text;
+	}
+     else
+       {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
+	printf("Not a registered mimetype\n");
+	text = "<A HREF=""><IMG SRC=" + icon + ">Unknown content</A>";
+	text += "<br><hr><br>";
+	return text;	
+       }
+    }
+
+  if(type == "text")  // If content type is text.
+    {cout << "isText\n";
+    if(text.length()/80 > MAX_LINES) // Check for max_lines.
+      {temp.sprintf("The text attachment has more than %i lines.\n",MAX_LINES); 
+       temp += "Do you wish the attachment to be displayed inline?";
+	if(KMsgBox::yesNo(0,"?",temp) == 1)
+	  {text += "<br><hr><br>";  // Return text.
+	  return text;}
+	else // We want the icon to be displayed 
+	  {QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
+				   + type + subType); // Search for mimetype.
+	  if(!file->open(IO_ReadOnly)) // if does not exist 
+	    {file = new QFile(KApplication::kdedir()+"/share/mimelnk" 
+			      + "/text/plain.kdelnk" ); // use text/plain  
+	    assert(file->open(IO_ReadOnly));
+	    printf("Not a  registered mimetype\n");
+	    }
+	  
+	  QTextStream pstream(file);
+	  KConfig config(&pstream);
+	  config.setGroup("KDE Desktop Entry");
+	  QString icon = config.readEntry("Icon");
+	  if(icon.isEmpty())
+	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
+	  else
+	    icon.prepend(KApplication::kdedir()+ "/share/icons/");
+	  QString comment = config.readEntry("Comment");
+	  file->close();
+	  text = "<A HREF=""><IMG SRC=" + icon + ">"+ comment +"</A>";
+	  text += "<br><hr><br>";
+	  return text;
+	  }
+      }
+    else
+      {text += "<br><hr><br>";
+      return text;}
+    
+    }
+  else if(type == "message")// If content type is message just display the text.
+    {text += "<br><hr><br>";
+    return text;
+    }
+
+  else
+    {QString icon;
+     QFile *file = new QFile(KApplication::kdedir()+"/share/mimelnk/" 
+			     + type + subType); // Search for mimetype.
+     if(file->open(IO_ReadOnly)) // if mimetype exists                        
+        {QTextStream pstream(file);         
+	KConfig config(&pstream);
+	config.setGroup("KDE Desktop Entry");
+	icon = config.readEntry("Icon");
+	if(icon.isEmpty()) // If no icon specified.
+	  icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
+	else
+	  icon.prepend(KApplication::kdedir()+ "/share/icons/"); // take it
+	QString comment = config.readEntry("Comment");
+	file->close();
+	text = "<A HREF=""><IMG SRC=" + icon + ">" + comment + "</A>";
+	text += "<br><hr><br>";
+	return text;
+	}
+     else
+       {icon = KApplication::kdedir()+ "/share/icons/unknown.xpm";
+	printf("Not a registered mimetype\n");
+	text = "<A HREF=""><IMG SRC=" + icon + ">Unknown</A>";
+	text += "<br><hr><br>";
+	return text;
+       }
+    }
+
+  return "";
+    
 }
+
+void KMReaderView::initKMimeMagic()
+{
+    // Magic file detection init
+    QString mimefile = kapp->kdedir();
+    mimefile += "/share/magic";
+    magic = new KMimeMagic( mimefile );
+    magic->setFollowLinks( TRUE );
+}
+
 
 QString KMReaderView::decodeString(const char* data, QString type)
 {
@@ -410,6 +550,26 @@ void KMReaderView::slotDocumentDone()
                 vert->setValue( 0 );
 }
 
+void KMReaderView::slotOpenAtmnt()
+{
+  ((KMReaderWin*)parentWidget())->toDo();
+}
+
+void KMReaderView::slotSaveAtmnt()
+{
+  ((KMReaderWin*)parentWidget())->toDo();
+}
+
+void KMReaderView::slotPrintAtmnt()
+{
+  ((KMReaderWin*)parentWidget())->toDo();
+}
+
+void KMReaderView::slotViewAtmnt()
+{
+  ((KMReaderWin*)parentWidget())->toDo();
+}
+
 
 void KMReaderView::openURL(const char *url, int)
 {
@@ -486,10 +646,10 @@ void KMReaderView::popupMenu(const char *_url, const QPoint &cords)
 	       	printf("Attachment : %i",number);
         	currentAtmnt = number;
 	       	QPopupMenu *p = new QPopupMenu();
-        	p->insertItem("Open...",this,SLOT(openAtmnt()));
-	       	p->insertItem("Print...",this,SLOT(printAtmnt()));
-        	p->insertItem("Save as...",this,SLOT(saveAtmnt()));
-	       	p->insertItem("Quick View...",this,SLOT(viewAtmnt()));
+        	p->insertItem("Open...",this,SLOT(slotOpenAtmnt()));
+	       	p->insertItem("Print...",this,SLOT(slotPrintAtmnt()));
+        	p->insertItem("Save as...",this,SLOT(slotSaveAtmnt()));
+	       	p->insertItem("Quick View...",this,SLOT(slotViewAtmnt()));
 	       	p->popup(cords,0);}
 
 } 
@@ -566,11 +726,8 @@ void KMReaderWin::parseConfiguration()
   o = config->readEntry("Reader ShowToolBar");
   if((!o.isEmpty() && o.find("no",0,false)) == 0)
 	showToolBar = 0;
-
   else
 	showToolBar = 1;
-
-
 }
 
 // ***************** Private slots ********************

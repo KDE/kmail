@@ -50,9 +50,21 @@ bool KMAcctPop::processNewMail(void)
 {
   debug("processNewMail");
   DwPopClient client;
-  client.Open(mHost, mPort);
-  client.User(mLogin);
-  client.Pass(mPasswd);
+  cout << mHost << endl;
+  cout << mPort << endl;
+  if(!client.Open(mHost, mPort))
+    {KMsgBox::message(0,"Network Error!","Could not open connection to Pop Server");
+    return;}
+  if(!client.User(mLogin))
+     {KMsgBox::message(0,"Username Error!",
+		       client.SingleLineResponse().c_str());
+    return;}
+  
+  if(!client.Pass(mPasswd))
+     {KMsgBox::message(0,"Password Error!",
+		       client.SingleLineResponse().c_str());
+     return;}
+
   client.Stat();
   int num, size;
   QString status, response = client.SingleLineResponse().c_str();
