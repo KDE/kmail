@@ -537,8 +537,9 @@ void AccountDialog::makeImapAccountPage()
 
   QButtonGroup *group = new QButtonGroup( 1, Qt::Horizontal,
     i18n("Authentification method"), page );
-  mImap.authAuto = new QRadioButton( i18n("Plain text"), group );
-  mImap.authLogin = new QRadioButton( i18n("Login"), group );
+  mImap.authAuto = new QRadioButton( i18n("Clear text"), group );
+  mImap.authLogin = new QRadioButton( i18n("Please translate this "
+  "authentification method only, if you have a good reason", "LOGIN"), group );
   mImap.authCramMd5 = new QRadioButton( i18n("CRAM-MD5"), group );
   mImap.authAnonymous = new QRadioButton( i18n("Anonymous"), group );
   topLayout->addMultiCellWidget( group, 11, 11, 0, 1 );
