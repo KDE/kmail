@@ -1772,6 +1772,7 @@ void ConfigureDialog::setupIdentityPage( void )
   mIdentityList.importData();
   mIdentity.identityCombo->clear();
   mIdentity.identityCombo->insertStringList( mIdentityList.identities() );
+  mIdentity.mActiveIdentity = "";
   slotIdentitySelectorChanged(); // This will trigger an update
 }
 
@@ -3362,6 +3363,7 @@ void IdentityList::remove( const QString &identity )
 
 void IdentityList::importData()
 {
+  mList.clear();
   IdentityEntry entry;
   QStringList identities = KMIdentity::identities();
   QStringList::Iterator it;
