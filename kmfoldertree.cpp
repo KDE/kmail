@@ -953,6 +953,13 @@ void KMFolderTree::slotContextMenuRequested( QListViewItem *lvi,
     }
   }
 
+  if ( fti->folder() && fti->folder()->isMailingListEnabled() ) {
+    folderMenu->insertSeparator();
+    folderMenu->insertItem( i18n("New message to Mailing-List..."),
+			    mMainWidget,
+			    SLOT( slotPostToML() ) );
+  }
+
   if (fti->folder() && fti->parent())
   {
     folderMenu->insertSeparator();
