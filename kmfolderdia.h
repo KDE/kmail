@@ -34,7 +34,7 @@ protected slots:
   virtual void slotExpireFolder( bool );
   void slotReadExpiryUnitChanged( int );
   void slotUnreadExpiryUnitChanged( int );
-  virtual void slotChangeIcon( const QString& icon );
+  void slotChangeIcon( QString icon );
   /*
    * is called if the folder dropdown changes
    * then we update the other items to reflect the capabilities

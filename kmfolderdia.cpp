@@ -134,7 +134,7 @@ KMFolderDialog::KMFolderDialog(KMFolder *aFolder, KMFolderDir *aFolderDir,
 	   ilabel2, SLOT(setEnabled(bool)) );
 
   connect( mNormalIconButton, SIGNAL(iconChanged(QString)),
-	   this, SLOT(slotChangeIcon(const QString&)) );
+	   this, SLOT(slotChangeIcon(QString)) );
 
   //end icons group
 
@@ -624,7 +624,7 @@ KMFolderDialog::slotUnreadExpiryUnitChanged( int value )
 
 
 void
-KMFolderDialog::slotChangeIcon( const QString& icon )
+KMFolderDialog::slotChangeIcon( QString icon ) // can't use a const-ref here, due to KIconButton's signal
 {
     mUnreadIconButton->setIcon( icon );
 }
