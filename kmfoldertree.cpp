@@ -190,7 +190,7 @@ void KMFolderTreeItem::adjustUnreadCount( int newUnreadCount ) {
     setPixmap( 0, unreadIcon() );
   if ( unreadCount() != 0 && newUnreadCount == 0 )
     setPixmap( 0, normalIcon() );
-  
+
   setUnreadCount( newUnreadCount );
 }
 
@@ -567,25 +567,6 @@ void KMFolderTree::addDirectory( KMFolderDir *fdir, KMFolderTreeItem* parent )
            this, SLOT( slotFolderExpanded( QListViewItem* ) ) );
    }
   } // for-end
-}
-//-----------------------------------------------------------------------------
-// The folder needs a refresh!
-void KMFolderTree::refresh(KMFolder* folder, bool doUpdate)
-{
-  reload();
-  QListViewItem *qlvi = indexOfFolder( folder );
-  if (qlvi)
-  {
-    qlvi->setOpen(true);
-    setCurrentItem( qlvi );
-    mMainWidget->slotMsgChanged();
-
-    // FIXME: fugly, fugly hack that shows a deffinite design problem
-    // this came over from kmoflderdia
-    static_cast<KMHeaders*>(mMainWidget->child("headers"))->setFolder(folder);
-  }
-  if ( doUpdate )
-    refresh();
 }
 
 //-----------------------------------------------------------------------------
@@ -1433,9 +1414,9 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
 {
   QListViewItem * current;
 
-  if (folder) 
+  if (folder)
     current = indexOfFolder(folder);
-  else 
+  else
     current = currentItem();
 
   KMFolderTreeItem* fti = static_cast<KMFolderTreeItem*>(current);
@@ -1453,7 +1434,7 @@ void KMFolderTree::slotUpdateCounts(KMFolder * folder)
   // set it
   bool repaint = false;
   if (fti->unreadCount() != count) {
-     fti->adjustUnreadCount( count ); 
+     fti->adjustUnreadCount( count );
      repaint = true;
   }
 
@@ -1583,7 +1564,7 @@ void KMFolderTree::createFolderList( QStringList *str,
     KMFolder* folder = fti->folder();
     if (!imapFolders && folder->folderType() == KMFolderTypeImap) continue;
     if (!dimapFolders && folder->folderType() == KMFolderTypeCachedImap) continue;
-    if (!localFolders && (folder->folderType() == KMFolderTypeMbox || 
+    if (!localFolders && (folder->folderType() == KMFolderTypeMbox ||
                           folder->folderType() == KMFolderTypeMaildir)) continue;
     if (!searchFolders && folder->folderType() == KMFolderTypeSearch) continue;
     if (!includeNoContent && folder->noContent()) continue;

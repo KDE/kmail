@@ -66,7 +66,7 @@ public:
   KMFolder* folder() const { return mFolder; }
   QListViewItem* parent() const { return KFolderTreeItem::parent(); }
 
-  /** Adjust the unread count from the folder and update the 
+  /** Adjust the unread count from the folder and update the
    * pixmaps accordingly. */
   void adjustUnreadCount( int newUnreadCount );
 
@@ -78,7 +78,7 @@ signals:
   void iconChanged( KMFolderTreeItem * );
   /** Our name changed */
   void nameChanged( KMFolderTreeItem * );
-  
+
 public slots:
   void properties();
   void slotRepaint();
@@ -165,13 +165,13 @@ signals:
 
   /** unread/total column has changed */
   void columnsChanged();
-  
+
   /** an icon of one of our folders changed */
   void iconChanged( KMFolderTreeItem * );
-  
+
   /** the name of one of our folders changed */
   void nameChanged( KMFolderTreeItem * );
-  
+
 public slots:
   /** Select the next folder with unread messages */
   void nextUnreadFolder();
@@ -211,9 +211,6 @@ protected slots:
 
   /** Updates the folder tree (delayed), causing a "blink" */
   void refresh();
-
-  /** Updates the folder tree only if some folder lable has changed */
-  void refresh(KMFolder* folder, bool doUpdate);
 
   /** Create a child folder */
   void addChildFolder();
