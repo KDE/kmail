@@ -398,6 +398,10 @@ void KMFolderSearch::setSearch(KMSearch *search)
     }
     mSearch->write(location());
     clearIndex();
+    mTotalMsgs = 0;
+    mUnreadMsgs = 0;
+    emit numUnreadMsgsChanged(this);
+    emit changed(); // really want a kmfolder cleared signal
     mSearch->start();
     open();
 }
@@ -634,6 +638,8 @@ const KMMsgBase* KMFolderSearch::getMsgBase(int idx) const
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
+    if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
+	return 0;
     kernel->msgDict()->getLocation(mSerNums[idx], &folder, &folderIdx);
     assert(folder && (folderIdx != -1));
     return folder->getMsgBase(folderIdx);
@@ -643,6 +649,8 @@ KMMsgBase* KMFolderSearch::getMsgBase(int idx)
 {
     int folderIdx = -1;
     KMFolder *folder = 0;
+    if (idx < 0 || (Q_UINT32)idx >= mSerNums.count())
+	return 0;
     kernel->msgDict()->getLocation(mSerNums[idx], &folder, &folderIdx);
     if (!folder || folderIdx == -1)
 	return 0; //exceptional case

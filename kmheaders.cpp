@@ -952,6 +952,10 @@ void KMHeaders::workAroundQListViewLimitation()
 void KMHeaders::msgChanged()
 {
   emit maybeDeleting();
+  if (mFolder->count() == 0) { // Folder cleared
+    clear();
+    return;
+  }
   int i = topItemIndex();
   int cur = currentItemIndex();
   if (!isUpdatesEnabled()) return;

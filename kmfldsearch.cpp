@@ -351,10 +351,9 @@ void KMFldSearch::slotSearch()
 	fullName = QString("%1 %2").arg(baseName).arg(++count);
     }
 
-    if (folder)
-      mgr->remove(folder);
-    folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
-			       &mgr->dir());
+    if (!folder)
+	folder = mgr->createFolder(fullName, FALSE, KMFolderTypeSearch,
+				   &mgr->dir());    
 
     mFolder = (KMFolderSearch*)folder;
     mFolder->stopSearch();
