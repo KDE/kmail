@@ -36,8 +36,9 @@ public:
   
   void checkMail ();
   //returns id of composer if more are opened
-  int openComposer (QString to, QString cc, QString bcc, QString subject,
-                    int hidden, KURL messageFile);
+  int openComposer (const QString &to, const QString &cc, const QString &bcc,
+                    const QString &subject, const QString &body, int hidden,
+                    const KURL &messageFile);
   void openReader();
   int ready();
   int send(int composerId, int how); //0=now, 1=later
@@ -58,8 +59,9 @@ public:
   void kmailMsgHandler(QtMsgType aType, const char* aMsg);
   void dumpDeadLetters();
   bool doSessionManagement ();
-  void action (bool mailto, bool check, QString to, QString cc,
-               QString bcc, QString subj, KURL messageFile);
+  void action (bool mailto, bool check, const QString &to, const QString &cc,
+               const QString &bcc, const QString &subj, const QString &body,
+               const KURL &messageFile);
   
   inline KMFolder *inboxFolder() { return the_inboxFolder; }
   inline KMFolder *outboxFolder() { return the_outboxFolder; }

@@ -71,6 +71,7 @@ static KCmdLineOptions kmoptions[] =
   { "h", 0 , 0 },
   { "header <header>",		I18N_NOOP("Add 'header' to msg."), 0 },
   { "msg <file>",		I18N_NOOP("Read msg-body from 'file'."), 0 },
+  { "body <text>",              I18N_NOOP("Set body of msg."), 0 },
   { "check",			I18N_NOOP("Check for new mail only."), 0 },
   { "composer",			I18N_NOOP("Open only composer window."), 0 },
   { "+[address]",		I18N_NOOP("Send msg to 'address'."), 0 },
@@ -126,7 +127,7 @@ public:
 
 int KMailApplication::newInstance()
 {
-  QString to, cc, bcc, subj;
+  QString to, cc, bcc, subj, body;
   KURL messageFile = QString::null;
   bool mailto = false;
   bool checkMail = false;
@@ -158,6 +159,12 @@ int KMailApplication::newInstance()
      messageFile = QString::fromLocal8Bit(args->getOption("msg"));
   }
 
+  if (args->getOption("body"))
+  {
+     mailto = true;
+     body = args->getOption("body");
+  }
+
   if (args->isSet("composer"))
     mailto = true;
 
@@ -177,7 +184,7 @@ int KMailApplication::newInstance()
 
   args->clear();
 
-  kernel->action (mailto, checkMail, to, cc, bcc, subj, messageFile);
+  kernel->action (mailto, checkMail, to, cc, bcc, subj, body, messageFile);
   return 0;
 }
 

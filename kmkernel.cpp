@@ -90,9 +90,10 @@ void KMKernel::openReader()
   KWin::setActiveWindow(mWin->winId());
 }
 
-int KMKernel::openComposer (QString to, QString cc,
-                            QString bcc, QString subject, int hidden,
-			    KURL messageFile )
+int KMKernel::openComposer (const QString &to, const QString &cc,
+                            const QString &bcc, const QString &subject,
+                            const QString &body, int hidden,
+                            const KURL &messageFile)
 {
   kdDebug() << "KMKernel::openComposer called" << endl;
 
@@ -105,6 +106,8 @@ int KMKernel::openComposer (QString to, QString cc,
 
   if (!messageFile.isEmpty() && messageFile.isLocalFile())
     msg->setBody( kFileToString( messageFile.path(), true, false ) );
+
+  if (!body.isEmpty()) msg->setBody(body);
 
   KMComposeWin *cWin = new KMComposeWin(msg);
   if (hidden == 0)
@@ -502,12 +505,14 @@ void KMKernel::dumpDeadLetters()
 
 
 
-void KMKernel::action(bool mailto, bool check, QString to, QString cc,
-                      QString bcc, QString subj, KURL messageFile)
+void KMKernel::action(bool mailto, bool check, const QString &to,
+                      const QString &cc, const QString &bcc,
+                      const QString &subj, const QString &body,
+                      const KURL &messageFile)
 {
 
   if (mailto)
-    openComposer (to, cc, bcc, subj, 0, messageFile);
+    openComposer (to, cc, bcc, subj, body, 0, messageFile);
   else
     openReader();
 

@@ -21,8 +21,10 @@ class KMailIface : virtual public DCOPObject
 k_dcop:
   virtual void checkMail() = 0;
   virtual void openReader() = 0;
-  virtual int openComposer(QString to, QString cc, QString bcc, QString subject,
-                           int hidden, KURL messageFile) = 0;
+  virtual int openComposer(const QString &to, const QString &cc,
+                           const QString &bcc, const QString &subject,
+                           const QString &body, int hidden,
+                           const KURL &messageFile) = 0;
   virtual int send(int composerId, int how) = 0; //0=default,1=now,2=later
   virtual int addAttachment(int composerId, KURL url,
                             QString comment) = 0;
