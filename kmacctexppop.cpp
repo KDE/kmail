@@ -515,9 +515,9 @@ void KMAcctExpPop::slotJobFinished() {
     stage = Idle;
     KMBroadcastStatus::instance()->setStatusProgressPercent( 100 );
     if( idsOfMsgs.count() > 0 ) {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 mails) (%2 KB)...").arg(idsOfMsgs.count()).arg(numBytesRead/1024));
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("Transmission completed (%1 messages) (%2 KB)...").arg(idsOfMsgs.count()).arg(numBytesRead/1024));
     } else {
-      KMBroadcastStatus::instance()->setStatusMsg(i18n("No new mails."));
+      KMBroadcastStatus::instance()->setStatusMsg(i18n("No new mail."));
     }
     kapp->processEvents(200);
     KMBroadcastStatus::instance()->setStatusProgressEnable( false );
@@ -652,3 +652,4 @@ void KMAcctExpPop::slotResult( KIO::Job* )
   else
     slotJobFinished();
 }
+
