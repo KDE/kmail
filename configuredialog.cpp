@@ -2176,19 +2176,55 @@ AppearancePageLayoutTab::AppearancePageLayoutTab( QWidget * parent, const char *
 
   vlay = new QVBoxLayout( this, KDialog::marginHint(), KDialog::spacingHint() );
 
-  mLongFolderCheck = new QCheckBox( i18n("Sho&w long folder list"), this );
-  vlay->addWidget( mLongFolderCheck );
+  // The general options (were previously standalone, without button group
+  QVButtonGroup* generalOptionsVBG = new QVButtonGroup( i18n( "&General options" ), this );
+  vlay->addWidget( generalOptionsVBG );
+  generalOptionsVBG->layout()->setSpacing( KDialog::spacingHint() );
+  
+  mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"), 
+                                      generalOptionsVBG );
 
-  mShowColorbarCheck = new QCheckBox( i18n("Show color &bar"), this );
-  vlay->addWidget( mShowColorbarCheck );
-
-  mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"), this );
-  vlay->addWidget( mMessageSizeCheck );
+  mMessageSizeCheck = new QCheckBox( i18n("&Display message sizes"), 
+                                     generalOptionsVBG );
 
   mNestedMessagesCheck =
-    new QCheckBox( i18n("&Thread list of message headers"), this );
-  vlay->addWidget( mNestedMessagesCheck );
+    new QCheckBox( i18n("&Thread list of message headers"), 
+                   generalOptionsVBG );
 
+  // The window layout
+  QVGroupBox* visibleVBG = new QVGroupBox( i18n( "W&indow layout" ), this );
+  mWindowLayoutVBG = new QButtonGroup( this );
+  mWindowLayoutVBG->hide();
+  mWindowLayoutVBG->setExclusive( true );
+  vlay->addWidget( visibleVBG );
+  visibleVBG->layout()->setSpacing( KDialog::spacingHint() );
+  
+  QHBox* layoutHB = new QHBox( visibleVBG );
+  layoutHB->layout()->setSpacing( KDialog::spacingHint() );
+  mLayout1PB = new QPushButton( layoutHB );
+  mWindowLayoutVBG->insert( mLayout1PB, 0 );
+  mLayout1PB->setPixmap( UserIcon( "kmailwindowlayout1" ) );
+  mLayout1PB->setFixedSize( mLayout1PB->sizeHint() );
+  mLayout1PB->setToggleButton( true );
+  QPushButton* mLayout2PB = new QPushButton( layoutHB );
+  mWindowLayoutVBG->insert( mLayout2PB, 1 );
+  mLayout2PB->setPixmap( UserIcon( "kmailwindowlayout2" ) );
+  mLayout2PB->setFixedSize( mLayout2PB->sizeHint() );
+  mLayout2PB->setToggleButton( true );
+  QPushButton* mLayout3PB = new QPushButton( layoutHB );
+  mWindowLayoutVBG->insert( mLayout3PB, 2 );
+  mLayout3PB->setPixmap( UserIcon( "kmailwindowlayout3" ) );
+  mLayout3PB->setFixedSize( mLayout3PB->sizeHint() );
+  mLayout3PB->setToggleButton( true );
+  QPushButton* mLayout4PB = new QPushButton( layoutHB );
+  mWindowLayoutVBG->insert( mLayout4PB, 3 );
+  mLayout4PB->setPixmap( UserIcon( "kmailwindowlayout4" ) );
+  mLayout4PB->setFixedSize( mLayout4PB->sizeHint() );
+  mLayout4PB->setToggleButton( true );
+  
+  mShowMIMETreeCB = new QCheckBox( i18n( "Show &MIME tree" ), 
+                                   visibleVBG );
+  
   // a button group for four radiobuttons (by default exclusive):
   mNestingPolicy =
     new QVButtonGroup( i18n("Message header threading options"), this );
@@ -2265,11 +2301,18 @@ void AppearancePage::LayoutTab::setup() {
   KConfigGroup geometry( kapp->config(), "Geometry" );
   KConfigGroup general( kapp->config(), "General" );
 
-  mLongFolderCheck->setChecked( geometry.readBoolEntry( "longFolderList", true ) );
   mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar", false ) );
   mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages", false ) );
   mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize", false ) );
 
+
+  int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
+  if( windowLayout < 0 || windowLayout > 3 )
+      windowLayout = 0;
+  mWindowLayoutVBG->setButton( windowLayout );
+  bool showMIME = geometry.readBoolEntry( "showMIME", true );
+  mShowMIMETreeCB->setChecked( showMIME );
+  
   int num = geometry.readNumEntry( "nestingPolicy", 3 );
   if ( num < 0 || num > 3 ) num = 3;
   mNestingPolicy->setButton( num );
@@ -2294,14 +2337,26 @@ void AppearancePage::LayoutTab::installProfile( KConfig * profile ) {
   KConfigGroup geometry( profile, "Geometry" );
   KConfigGroup general( profile, "General" );
 
-  if ( geometry.hasKey( "longFolderList" ) )
-    mLongFolderCheck->setChecked( geometry.readBoolEntry( "longFolderList" ) );
   if ( reader.hasKey( "showColorbar" ) )
     mShowColorbarCheck->setChecked( reader.readBoolEntry( "showColorbar" ) );
   if ( geometry.hasKey( "nestedMessages" ) )
     mNestedMessagesCheck->setChecked( geometry.readBoolEntry( "nestedMessages" ) );
   if ( general.hasKey( "showMessageSize" ) )
     mMessageSizeCheck->setChecked( general.readBoolEntry( "showMessageSize" ) );
+
+  if( geometry.hasKey( "windowLayout" ) ) {
+      int windowLayout = geometry.readNumEntry( "windowLayout", 0 );
+      if( windowLayout < 0 || windowLayout > 3 )
+          windowLayout = 0;
+      mWindowLayoutVBG->setButton( windowLayout );
+  }
+  
+  if( geometry.hasKey( "showMIME" ) ) {
+      bool showMIME = geometry.readBoolEntry( "showMIME", true );
+      mShowMIMETreeCB->setChecked( showMIME );
+  }
+
+  
   if ( geometry.hasKey( "nestingPolicy" ) ) {
     int num = geometry.readNumEntry( "nestingPolicy" );
     if ( num < 0 || num > 3 ) num = 3;
@@ -2325,7 +2380,6 @@ void AppearancePage::LayoutTab::apply() {
   KConfigGroup general( kapp->config(), "General" );
 
   reader.writeEntry( "showColorbar", mShowColorbarCheck->isChecked() );
-  geometry.writeEntry( "longFolderList", mLongFolderCheck->isChecked() );
 
   if (geometry.readBoolEntry( "nestedMessages", false )
     != mNestedMessagesCheck->isChecked())
@@ -2354,6 +2408,10 @@ void AppearancePage::LayoutTab::apply() {
     }
   }
 
+  geometry.writeEntry( "windowLayout",
+                       mWindowLayoutVBG->id( mWindowLayoutVBG->selected() ) );
+  geometry.writeEntry( "showMIME", mShowMIMETreeCB->isChecked() );
+  
   geometry.writeEntry( "nestingPolicy",
 		       mNestingPolicy->id( mNestingPolicy->selected() ) );
   general.writeEntry( "showMessageSize", mMessageSizeCheck->isChecked() );
@@ -4868,8 +4926,8 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
   KSeparator *hline = new KSeparator( KSeparator::HLine, this);
   vlay->addWidget( hline );
 
-  
-#ifdef CERTIFICATE_HANDLING_IN_KMAIL  
+
+#ifdef CERTIFICATE_HANDLING_IN_KMAIL
   certDialog = new CertificateHandlingDialogImpl( this, "CertificateHandlingDialogImpl" );
   if ( certDialog ) {
     vlay->addWidget( certDialog );
@@ -4877,7 +4935,7 @@ CertificatesPage::CertificatesPage( PluginPage* parent,
   }
 #else
   certDialog = 0;
-  
+
   QPushButton* startCertManagerPB = new QPushButton( i18n( "&Start certificate manager" ), this, "startcertmanagerpb" );
   connect( startCertManagerPB, SIGNAL( clicked() ),
            this, SLOT( slotStartCertManager() ) );
@@ -4894,7 +4952,7 @@ void CertificatesPage::slotStartCertManager()
     certManagerProc << "certmanager";
     certManagerProc << _pluginPage->mCryptPlugList->active()->displayName();
     certManagerProc << _pluginPage->mCryptPlugList->active()->libName();
-    
+
     if( !certManagerProc.start( KProcess::DontCare ) )
         KMessageBox::error( this, i18n( "Could not start certificate manager. Please check your installation!" ),
                             i18n( "KMail Error" ) );

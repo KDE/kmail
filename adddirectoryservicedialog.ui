@@ -9,7 +9,7 @@
             <x>0</x>
             <y>0</y>
             <width>218</width>
-            <height>134</height>
+            <height>140</height>
         </rect>
     </property>
     <property name="caption">
@@ -84,7 +84,7 @@
                         <cstring>serverNameLA</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Server Name:</string>
+                        <string>&amp;Server name:</string>
                     </property>
                     <property name="buddy" stdset="0">
                         <cstring>serverNameED</cstring>

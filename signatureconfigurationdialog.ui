@@ -44,7 +44,7 @@
                         <cstring>signMessagesBG</cstring>
                     </property>
                     <property name="title">
-                        <string>Sign &amp;Messages</string>
+                        <string>Sign &amp;messages</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -61,7 +61,7 @@
                                 <cstring>signAllPartsRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Sign A&amp;ll Message Parts</string>
+                                <string>Sign a&amp;ll message parts</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -83,7 +83,7 @@ This is a default setting, you can still override it for each individual message
                                 <cstring>askEachPartRB</cstring>
                             </property>
                             <property name="text">
-                                <string>As&amp;k Before Signing Each Part</string>
+                                <string>As&amp;k before signing each part</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Check to be asked for each part whether to sign</string>
@@ -100,7 +100,7 @@ When this option is selected, you will be asked for each part of the message (i.
                                 <cstring>dontSignRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Don't Sign Messages</string>
+                                <string>Don't sign messages</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Check for not signing a message by default</string>
@@ -119,7 +119,7 @@ This is a default setting, you can still override it for each individual setting
                                 <cstring>warnUnsignedCB</cstring>
                             </property>
                             <property name="text">
-                                <string>&amp;Warn When Trying To Send Unsigned Messages</string>
+                                <string>&amp;Warn when trying to send unsigned messages</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -143,7 +143,7 @@ It is recommended to leave this option turned out for maximum integrity.
                         <cstring>sendCertificatesBG</cstring>
                     </property>
                     <property name="title">
-                        <string>S&amp;ending Certificates</string>
+                        <string>S&amp;ending certificates</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -163,7 +163,7 @@ It is recommended to leave this option turned out for maximum integrity.
                                 <enum>NoFocus</enum>
                             </property>
                             <property name="text">
-                                <string>&amp;Don't Send Certificates</string>
+                                <string>&amp;Don't send certificates</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Selects which certificates to send</string>
@@ -177,7 +177,7 @@ It is recommended to leave this option turned out for maximum integrity.
                                 <cstring>sendYourOwnCertificateRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Send Your &amp;Own Certificate</string>
+                                <string>Send your &amp;own certificate</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -194,7 +194,7 @@ It is recommended to leave this option turned out for maximum integrity.
                                 <cstring>sendChainWithoutRootRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Send Certificate &amp;Chain Without Root</string>
+                                <string>Send certificate &amp;chain without root</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Selects which certificates to send</string>
@@ -208,7 +208,7 @@ It is recommended to leave this option turned out for maximum integrity.
                                 <cstring>sendChainWithRootRB</cstring>
                             </property>
                             <property name="text">
-                                <string>Send Certificate Chain With &amp;Root</string>
+                                <string>Send certificate chain with &amp;root</string>
                             </property>
                             <property name="toolTip" stdset="0">
                                 <string>Selects which certificates to send</string>
@@ -240,7 +240,7 @@ It is recommended to leave this option turned out for maximum integrity.
                         <cstring>signatureSettingsBG</cstring>
                     </property>
                     <property name="title">
-                        <string>&amp;Signature Settings</string>
+                        <string>&amp;Signature settings</string>
                     </property>
                     <vbox>
                         <property name="name">
@@ -305,7 +305,7 @@ This setting is a default, you can override it for each individual message.
                                         <cstring>signatureAlgorithmLA</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Signature &amp;Algorithm:</string>
+                                        <string>Signature &amp;algorithm:</string>
                                     </property>
                                     <property name="alignment">
                                         <set>AlignVCenter|AlignRight</set>
@@ -352,7 +352,7 @@ This setting is a default, you can override it for each individual message.
                                         <cstring>warnCACertificateExpiresCB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Warn If &amp;CA Certificate Expires In Less Than</string>
+                                        <string>Warn if &amp;CA certificate expires in less than</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>
@@ -401,7 +401,7 @@ The recommended SPHINX setting is 14 days.
                                         <cstring>warnSignatureCertificateExpiresCB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Warn If S&amp;ignature Certificate Expires In Less Than</string>
+                                        <string>Warn if s&amp;ignature certificate expires in less than</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>
@@ -439,7 +439,7 @@ It is recommended to keep this option turned on to avoid using certificates that
                                         <cstring>warnRootCertificateExpiresCB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Warn If R&amp;oot Certificate Expires In Less Than</string>
+                                        <string>Warn if r&amp;oot certificate expires in less than</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>
@@ -518,7 +518,7 @@ The recommended SPHINX setting is 14 days.
                                 <cstring>warnAddressNotInCertificateCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn If Si&amp;gner's Email Address Is Not In Certificate</string>
+                                <string>Warn if si&amp;gner's email address is not in certificate</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -556,7 +556,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <cstring>pinEntryBG</cstring>
                             </property>
                             <property name="title">
-                                <string>Entering The PIN Is Required</string>
+                                <string>Entering the PIN is required</string>
                             </property>
                             <vbox>
                                 <property name="name">
@@ -576,7 +576,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                         <enum>NoFocus</enum>
                                     </property>
                                     <property name="text">
-                                        <string>On&amp;ce Per Session</string>
+                                        <string>On&amp;ce per session</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Select how often the PIN must be entered</string>
@@ -607,7 +607,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                         <cstring>pinAddCertificatesRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>When A&amp;dding Certificates</string>
+                                        <string>When a&amp;dding certificates</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Select how often the PIN must be entered</string>
@@ -621,7 +621,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                         <cstring>pinAlwaysWhenSigningRB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>Always When Si&amp;gning</string>
+                                        <string>Always when si&amp;gning</string>
                                     </property>
                                     <property name="toolTip" stdset="0">
                                         <string>Select how often the PIN must be entered</string>
@@ -686,7 +686,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                 <cstring>saveMessagesBG</cstring>
                             </property>
                             <property name="title">
-                                <string>Sa&amp;ve Messages</string>
+                                <string>Sa&amp;ve messages</string>
                             </property>
                             <vbox>
                                 <property name="name">
@@ -703,7 +703,7 @@ It is recommended to leave this option turned on for maximum integrity.
                                         <cstring>saveSentSigsCB</cstring>
                                     </property>
                                     <property name="text">
-                                        <string>S&amp;tore Messages With Signatures</string>
+                                        <string>S&amp;tore messages with signatures</string>
                                     </property>
                                     <property name="checked">
                                         <bool>true</bool>

@@ -236,7 +236,7 @@ protected slots:
   void slotSearchClosed();
   void slotFind();
   void slotUpdateImapMessage(KMMessage *msg);
-  
+
 
   // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
   /*
@@ -287,7 +287,7 @@ protected slots:
   */
   // (khz, 19.04.2002)
 
-  
+
   /** XML-GUI stuff */
   void slotToggleToolBar();
   void slotToggleStatusBar();
@@ -301,7 +301,7 @@ protected:
   KMFolderTree *mFolderTree;
   KMMimePartTree* mMimePartTree;
   KMReaderWin  *mMsgView;
-  QSplitter    *mHorizPanner, *mVertPanner;
+  QSplitter    *mPanner1, *mPanner2, *mPanner3;
   KMHeaders    *mHeaders;
   KMFolder     *mFolder;
   QTextCodec   *mCodec;
@@ -315,24 +315,15 @@ protected:
   bool          mConfirmEmpty;
   QString       mNewMailCmd;
   int		mMessageStatusId;
-  QValueList<int> *mHorizPannerSep, *mVertPannerSep;
+  QValueList<int> *mPanner1Sep, *mPanner2Sep, *mPanner3Sep;
   KMMessage     *mMsgCurrent;
   KURL          mUrlCurrent;
   QPopupMenu	*actMenu;
   QPopupMenu	*fileMenu;
   KMWidgetLayout mWidgetLayout;
-  
-  
-  
-  
-  
-  // FIXME khz : REMOVE THIS!!!  (khz, 22.04.2002)
-  bool mLongFolderList;
 
-
-
-
-
+  int mWindowLayout;
+  bool mShowMIME;
 
   bool		mStartupDone;
   KMMenuToFolder mMenuToFolder;

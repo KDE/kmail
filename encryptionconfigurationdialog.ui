@@ -30,7 +30,7 @@
                 <cstring>encryptMessagesBG</cstring>
             </property>
             <property name="title">
-                <string>Encrypt Messages</string>
+                <string>Encrypt messages</string>
             </property>
             <vbox>
                 <property name="name">
@@ -47,7 +47,7 @@
                         <cstring>encryptAllPartsRB</cstring>
                     </property>
                     <property name="text">
-                        <string>Encrypt A&amp;ll Message Parts</string>
+                        <string>Encrypt a&amp;ll message parts</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -69,7 +69,7 @@ This is a default setting, you can still override it for each individual message
                         <cstring>askEachPartRB</cstring>
                     </property>
                     <property name="text">
-                        <string>As&amp;k Before Encrypting Each Part</string>
+                        <string>As&amp;k before encrypting each part</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Check to be asked for each part whether to encrypt</string>
@@ -86,7 +86,7 @@ When this option is selected, you will be asked for each part of the message (i.
                         <cstring>dontEncryptRB</cstring>
                     </property>
                     <property name="text">
-                        <string>Don't Encrypt Messages</string>
+                        <string>Don't encrypt messages</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Check for not encrypting a message by default</string>
@@ -105,7 +105,7 @@ This is a default setting, you can still override it for each individual setting
                         <cstring>warnUnencryptedCB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Warn When Trying To Send Unencrypted Messages</string>
+                        <string>&amp;Warn when trying to send unencrypted messages</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -129,7 +129,7 @@ It is recommended to leave this option turned on for maximum integrity.
                 <cstring>crlBG</cstring>
             </property>
             <property name="title">
-                <string>Certificate Revocation Lists</string>
+                <string>Certificate revocation lists</string>
             </property>
             <vbox>
                 <property name="name">
@@ -146,7 +146,7 @@ It is recommended to leave this option turned on for maximum integrity.
                         <cstring>useCRLsCB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Use Certificate Revocation Lists (CRLs)</string>
+                        <string>&amp;Use certificate revocation lists (CRLs)</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -182,7 +182,7 @@ It is recommended to use CRLs for maximum security. In the configuration dialog 
                                 <cstring>warnCRLExpireCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn If CRL E&amp;xpires In Less Than</string>
+                                <string>Warn if CRL e&amp;xpires in less than</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -233,7 +233,7 @@ The recommended setting for the SPHINX environment is 7 days.
                 <cstring>encryptionSettingsBG</cstring>
             </property>
             <property name="title">
-                <string>Encryption Settings</string>
+                <string>Encryption settings</string>
             </property>
             <vbox>
                 <property name="name">
@@ -264,7 +264,7 @@ The recommended setting for the SPHINX environment is 7 days.
                                 <cstring>encryptionAlgorithmLA</cstring>
                             </property>
                             <property name="text">
-                                <string>Encryption &amp;Algorithm:</string>
+                                <string>Encryption &amp;algorithm:</string>
                             </property>
                             <property name="buddy" stdset="0">
                                 <cstring>encryptionAlgorithmCO</cstring>
@@ -358,7 +358,7 @@ This setting is a default, you can override it for each individual message.
                                 <cstring>warnChainCertificateExpiresCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn If A Certificate In The &amp;Chain Expires In Less Than</string>
+                                <string>Warn if a certificate in the &amp;chain expires in less than</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -399,7 +399,7 @@ The recommended SPHINX setting is 14 days.
                                 <cstring>warnReceiverCertificateExpiresCB</cstring>
                             </property>
                             <property name="text">
-                                <string>Warn If &amp;Receiver Certificate Expires In Less Than</string>
+                                <string>Warn if &amp;receiver certificate expires in less than</string>
                             </property>
                             <property name="checked">
                                 <bool>true</bool>
@@ -475,7 +475,7 @@ The recommended SPHINX setting is 14 days.
                         <cstring>warnReceiverNotInCertificateCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Warn If Receiver's &amp;Email Address Is Not In Certificate</string>
+                        <string>Warn if receiver's &amp;email address is not in certificate</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -499,7 +499,7 @@ It is recommended to leave this option turned on for maximum security.
                 <cstring>saveMessagesBG</cstring>
             </property>
             <property name="title">
-                <string>Save Messages</string>
+                <string>Save messages</string>
             </property>
             <vbox>
                 <property name="name">
@@ -516,7 +516,7 @@ It is recommended to leave this option turned on for maximum security.
                         <cstring>storeEncryptedCB</cstring>
                     </property>
                     <property name="text">
-                        <string>S&amp;tore Messages Encrypted</string>
+                        <string>S&amp;tore messages encrypted</string>
                     </property>
                     <property name="checked">
                         <bool>false</bool>
@@ -540,7 +540,7 @@ However, there may be local rules that require you to turn this option on. When 
                 <cstring>certificatePathCheckBG</cstring>
             </property>
             <property name="title">
-                <string>Certificate Path Check</string>
+                <string>Certificate path check</string>
             </property>
             <vbox>
                 <property name="name">
@@ -557,7 +557,7 @@ However, there may be local rules that require you to turn this option on. When 
                         <cstring>checkCertificatePathCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Check Certificate &amp;Path</string>
+                        <string>Check certificate &amp;path</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -579,7 +579,7 @@ Note that it is not possible to turn off checking the receiver's certificate its
                         <cstring>alwaysCheckRootRB</cstring>
                     </property>
                     <property name="text">
-                        <string>Always Check Certificate Path To R&amp;oot Certificate</string>
+                        <string>Always check certificate path to r&amp;oot certificate</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -599,7 +599,7 @@ If this option is turned on, the certificate path belonging to the receiver's ce
                         <cstring>pathMayEndLocallyCB</cstring>
                     </property>
                     <property name="text">
-                        <string>Certificate Check Can End With Locally Sa&amp;ved Certificate</string>
+                        <string>Certificate check can end with locally sa&amp;ved certificate</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Check to end with locally saved certificate.</string>

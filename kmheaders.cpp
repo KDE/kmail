@@ -478,7 +478,7 @@ KMHeaders::KMHeaders(KMMainWin *aOwner, QWidget *parent,
   , mScoringManager(KMScoringManager::globalScoringManager())
 #endif
 {
-  static bool pixmapsLoaded = FALSE;
+    static bool pixmapsLoaded = FALSE;
   //qInitImageIO();
   KImageIO::registerFormats();
   mOwner  = aOwner;

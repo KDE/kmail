@@ -36,7 +36,7 @@
                 <enum>Plain</enum>
             </property>
             <property name="text">
-                <string>X.&amp;500 Directory Services:</string>
+                <string>X.&amp;500 Directory services:</string>
             </property>
             <property name="buddy" stdset="0">
                 <cstring>x500LV</cstring>
@@ -45,7 +45,7 @@
         <widget class="QListView">
             <column>
                 <property name="text">
-                    <string>Server Name</string>
+                    <string>Server name</string>
                 </property>
                 <property name="clickable">
                     <bool>true</bool>
@@ -127,7 +127,7 @@ If you do not use a directory service, you can still use local certificates.
                         <cstring>addServicePB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Add Service...</string>
+                        <string>&amp;Add service...</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Click to add a service</string>
@@ -164,7 +164,7 @@ By clicking this button, you can select a new directory service to be used for r
                         <bool>false</bool>
                     </property>
                     <property name="text">
-                        <string>&amp;Remove Service...</string>
+                        <string>&amp;Remove service...</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Click to remove the currently selected service</string>
@@ -217,7 +217,7 @@ By clicking this button, you can remove the currently selected directory service
                 <cstring>localRemoteCertBG</cstring>
             </property>
             <property name="title">
-                <string>Local/Remote Certificates</string>
+                <string>Local/Remote certificates</string>
             </property>
             <vbox>
                 <property name="name">
@@ -234,7 +234,7 @@ By clicking this button, you can remove the currently selected directory service
                         <cstring>firstLocalThenDSCertRB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;First Local, Then Directory Services</string>
+                        <string>&amp;First local, then directory services</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -254,7 +254,7 @@ When this option is selected, the email client will first try to find the necess
                         <cstring>localOnlyCertRB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Local Only, Don't Use Directory Services</string>
+                        <string>&amp;Local only, don't use directory services</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Click to use only local certificates</string>
@@ -271,7 +271,7 @@ When this option is selected, the email client will only try to find the necessa
                         <cstring>dsOnlyCertRB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Directory Services Only, Don't Use Locally Saved Information</string>
+                        <string>&amp;Directory services only, don't use locally saved information</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Click to use remote certificates only</string>
@@ -307,7 +307,7 @@ When this option is selected, the email client will first not use the certificat
                         <cstring>firstLocalThenDSCRLRB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;First Local, Then Directory Services</string>
+                        <string>&amp;First local, then directory services</string>
                     </property>
                     <property name="checked">
                         <bool>true</bool>
@@ -327,7 +327,7 @@ When this option is selected, the email client will first try to find the necess
                         <cstring>localOnlyCRLRB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Local Only, Don't Use Directory Services</string>
+                        <string>&amp;Local only, don't use directory services</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Click to use only local CRLs</string>
@@ -344,7 +344,7 @@ When this option is selected, the email client will only try to find the necessa
                         <cstring>dsOnlyCRLRB</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Directory Services Only, Don't Use Locally Saved Information</string>
+                        <string>&amp;Directory services only, don't use locally saved information</string>
                     </property>
                     <property name="toolTip" stdset="0">
                         <string>Click to use remote CRLs only</string>

@@ -450,13 +450,15 @@ public:
   void installProfile( KConfig * profile );
 
 protected:
-  QCheckBox    *mLongFolderCheck;
   QCheckBox    *mShowColorbarCheck;
   QCheckBox    *mMessageSizeCheck;
   QCheckBox    *mNestedMessagesCheck;
   QButtonGroup *mNestingPolicy;
   QButtonGroup *mDateDisplay;
-
+    QPushButton  *mLayout1PB, *mLayout2PB, *mLayout3PB, *mLayout4PB;
+    QCheckBox    *mShowMIMETreeCB;
+    QButtonGroup *mWindowLayoutVBG;
+    
   enum { numDateDisplayConfig = 4 };
   static const struct dateDisplayConfigType {
     const char *  displayName;

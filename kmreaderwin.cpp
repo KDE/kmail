@@ -817,7 +817,6 @@ KMReaderWin::KMReaderWin(CryptPlugWrapperList *cryptPlugList,
     mCryptPlugList( cryptPlugList ),
     mRootNode( 0 )
 {
-
   mAutoDelete = false;
   mLastSerNum = 0;
   mMsg = 0;
@@ -1233,7 +1232,7 @@ void KMReaderWin::setMsg(KMMessage* aMsg, bool force)
   kdDebug(5006) << "set Msg, force = " << force << endl;
 
   // connect to the updates if we have hancy headers
-  
+
   mMsg = aMsg;
   mLastSerNum = (aMsg) ? aMsg->getMsgSerNum() : 0;
   if (mMsg)
@@ -1366,7 +1365,7 @@ void KMReaderWin::updateReaderWin()
   mHtmlQueue.clear();
 
   if (mMsg)
-  { 
+  {
     if ( mShowColorbar )
       mColorBar->show();
     else
@@ -1538,7 +1537,7 @@ void KMReaderWin::parseMsg(void)
          .arg(cg.foreground().name())
          .arg(cg.foreground().name())
          .arg(cg.foreground().name())
-         .arg(cg.foreground().name()) + 
+         .arg(cg.foreground().name()) +
          QString( "table.fancyHeaderDtls { width: 100%; "
                                           "border-width: 0px; "
                                           "align: left }\n"
@@ -2239,7 +2238,7 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
     if (hasVCard)
     {
       headerStr.append("&nbsp;&nbsp;<a href=\"" +
-                       vcname + 
+                       vcname +
                        "\">"+i18n("[vCard]")+"</a>");
     }
 
@@ -2263,7 +2262,7 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
       headerStr.append(i18n("Bcc: ")+
                        KMMessage::emailAddrAsAnchor(mMsg->bcc(),FALSE) + "<br>");
     }
-    
+
     if (!mMsg->replyTo().isEmpty())
     {
       headerStr.append(i18n("Reply to: ")+
@@ -2288,7 +2287,7 @@ QString KMReaderWin::writeMsgHeader(bool hasVCard)
   }
 
   headerStr += "</div>";
-  
+
   return headerStr;
 }
 
@@ -2516,17 +2515,17 @@ QString KMReaderWin::quotedHTML(const QString& s)
   unsigned int length = s.length();
   enum { First, New, Mid } paragState = First;
   bool rightToLeft = false;
-  
+
   if (mBodyFont.bold()) { normalStartTag += "<b>"; normalEndTag += "</b>"; }
   if (mBodyFont.italic()) { normalStartTag += "<i>"; normalEndTag += "</i>"; }
-  
+
   // skip leading empty lines
   for( pos = 0; pos < length && s[pos] <= ' '; pos++ );
   while (pos > 0 && (s[pos-1] == ' ' || s[pos-1] == '\t')) pos--;
   beg = pos;
 
   int currQuoteLevel = -1;
-  
+
   while (beg<length)
   {
     /* search next occurance of '\n' */
@@ -2567,9 +2566,9 @@ QString KMReaderWin::quotedHTML(const QString& s)
 
 	if ( paragState == New )
 	    htmlStr += "</div>";
-	
+
 	htmlStr += ( rightToLeft ? "<div dir=\"rtl\">" : "<div dir=\"ltr\">" );
-	
+
 	/* start new quotelevel */
 	currQuoteLevel = actQuoteLevel;
 	if (actQuoteLevel == -1)
@@ -2847,7 +2846,7 @@ void KMReaderWin::slotToggleFixedFont()
   mBodyFamily = (mUseFixedFont) ? mFixedFont.family() : mBodyFont.family();
   fntSize = (mUseFixedFont) ? mFixedFont.pointSize() : mBodyFont.pointSize();
   mViewer->setStandardFont(mBodyFamily);
-  update(true);  
+  update(true);
 }
 
 //-----------------------------------------------------------------------------

@@ -77,12 +77,12 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   mFolderHtmlPref = false;
 
 
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-  mHorizPannerSep = new QValueList<int>;
-  mVertPannerSep = new QValueList<int>;
-  *mHorizPannerSep << 1 << 1;
-  *mVertPannerSep << 1 << 1;
-  // (khz)
+  mPanner1Sep = new QValueList<int>;
+  mPanner2Sep = new QValueList<int>;
+  mPanner3Sep = new QValueList<int>;
+  *mPanner1Sep << 1 << 1;
+  *mPanner2Sep << 1 << 1;
+  *mPanner3Sep << 1 << 1;
 
 
   setMinimumSize(400, 300);
@@ -101,10 +101,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   readConfig();
 
-
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   activatePanners();
-  // (khz, 19.04.2002)
 
 
   if (kernel->firstStart() || kernel->previousVersion() != KMAIL_VERSION)
@@ -143,11 +140,9 @@ KMMainWin::~KMMainWin()
   delete mFolderTree;
 
 
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-  delete mHorizPannerSep;
-  delete mVertPannerSep;
-  // (khz, 19.04.2002)
-
+  delete mPanner1Sep;
+  delete mPanner2Sep;
+  delete mPanner3Sep;
 }
 
 
@@ -157,13 +152,11 @@ void KMMainWin::readPreConfig(void)
   KConfig *config = kapp->config();
 
 
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
-    mLongFolderList = config->readBoolEntry("longFolderList", true);
+    mWindowLayout = config->readNumEntry( "windowLayout", 0 );
+    mShowMIME = config->readBoolEntry( "showMIME", true );
   }
-  // (khz, 19.04.2002)
-
 
   KConfigGroupSaver saver(config, "General");
   mEncodingStr = config->readEntry("encoding", "").latin1();
@@ -202,10 +195,8 @@ void KMMainWin::readConfig(void)
   KConfig *config = kapp->config();
 
 
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-  bool oldLongFolderList=false;
-  // (khz, 19.04.2002)
-
+  bool oldWindowLayout = 0;
+  bool oldShowMIME = true;
 
   QString str;
   QSize siz;
@@ -215,24 +206,21 @@ void KMMainWin::readConfig(void)
     writeConfig();
 
 
-    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-    oldLongFolderList = mLongFolderList;
-    // (khz, 19.04.2002)
-
+    oldWindowLayout = mWindowLayout;
+    oldShowMIME = mShowMIME;
 
     readPreConfig();
     mHeaders->refreshNestedState();
 
 
-    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-    if (oldLongFolderList != mLongFolderList)
+    if(oldWindowLayout != mWindowLayout ||
+       oldShowMIME != mShowMIME )
     {
       hide();
-      if (mHorizPanner->parent()==this) delete mHorizPanner;
-      else delete mVertPanner;
+      // delete all panners
+      delete mPanner1; // will always delete the others
       createWidgets();
     }
-    // (khz, 19.04.2002)
 
   }
 
@@ -250,32 +238,54 @@ void KMMainWin::readConfig(void)
       resize(siz);
 
 
-    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-    //
-    // the default value for the FolderPaneWidth should be about 160 but the
-    // default is set to 0 to enable the workaround (see below)
-    (*mVertPannerSep)[0] = config->readNumEntry("FolderPaneWidth", 0);
-    (*mVertPannerSep)[1] = config->readNumEntry("HeaderPaneWidth", 600-160);
-    (*mHorizPannerSep)[0] = config->readNumEntry("HeaderPaneHeight", 300);
-    (*mHorizPannerSep)[1] = config->readNumEntry("MessagePaneHeight", 300);
+    // the default sizes are dependent on the actual layout
+    switch( mWindowLayout ) {
+    case 0:
+        // the default value for the FolderPaneWidth should be about
+        // 160 but the  default is set to 0 to enable the workaround
+        // (see below)
+        (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneWidth", 0 );
+        (*mPanner1Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
+        (*mPanner2Sep)[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
+        (*mPanner2Sep)[1] = config->readNumEntry( "MimePaneHeight", 100 );
+        (*mPanner2Sep)[2] = config->readNumEntry( "MessagePaneHeight", 300 );
+        break;
+    case 1:
+        (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneWidth", 0 );
+        (*mPanner1Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
+        (*mPanner2Sep)[0] = config->readNumEntry( "FolderPaneHeight", 400 );
+        (*mPanner2Sep)[1] = config->readNumEntry( "MimePaneHeight", 200 );
+        (*mPanner3Sep)[0] = config->readNumEntry( "HeaderPaneHeight", 200 );
+        (*mPanner3Sep)[1] = config->readNumEntry( "MessagePaneHeight", 400 );
+        break;
+    case 2:
+        (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneHeight", 300 );
+        (*mPanner1Sep)[1] = config->readNumEntry( "MessagePaneHeight", 300 );
+        (*mPanner2Sep)[0] = config->readNumEntry( "FolderPaneWidth", 160 );
+        (*mPanner2Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
+        (*mPanner3Sep)[0] = config->readNumEntry( "HeaderPaneHeight", 150 );
+        (*mPanner3Sep)[1] = config->readNumEntry( "MimePaneHeight", 150 );
+        break;
+    case 3:
+        (*mPanner1Sep)[0] = config->readNumEntry( "FolderPaneHeight", 200 );
+        (*mPanner1Sep)[1] = config->readNumEntry( "MimePaneHeight", 100 );
+        (*mPanner1Sep)[2] = config->readNumEntry( "MessagePaneHeight", 300 );
+        (*mPanner2Sep)[0] = config->readNumEntry( "FolderPaneWidth", 160 );
+        (*mPanner2Sep)[1] = config->readNumEntry( "HeaderPaneWidth", 600-160 );
+        break;
+    }
+    
     // workaround to support the old buggy way of saving the dimensions of the panes
-    if ((*mVertPannerSep)[0] == 0) {
+    if ((*mPanner1Sep)[0] == 0) {
       defaultSize = QSize(300,130);
       siz = config->readSizeEntry("Panners", &defaultSize);
       if (siz.isEmpty())
         siz = QSize(100,100); // why not defaultSize?
-      (*mHorizPannerSep)[0] = siz.width();
-      (*mVertPannerSep)[0] = siz.height();
-      (*mHorizPannerSep)[1] = height() - siz.width();
-      (*mVertPannerSep)[1] = width() - siz.height();
+      (*mPanner2Sep)[0] = siz.width();
+      (*mPanner1Sep)[0] = siz.height();
+      (*mPanner2Sep)[1] = height() - siz.width();
+      (*mPanner1Sep)[1] = width() - siz.height();
     }
-    // (khz, 19.04.2002)
-
-
-    // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-    /*
-    readDockConfig( config, "Geometry" );
-    */
 
   }
 
@@ -301,10 +311,8 @@ void KMMainWin::readConfig(void)
   if (mStartupDone)
   {
 
-    // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-    if (oldLongFolderList != mLongFolderList)
+    if (oldWindowLayout != mWindowLayout)
       activatePanners();
-    // (khz, 19.04.2002)
 
     //    kernel->kbp()->busy(); //Crashes KMail
     mFolderTree->reload();
@@ -343,35 +351,52 @@ void KMMainWin::writeConfig(void)
   KConfig *config = kapp->config();
 
 
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   QRect r = geometry();
-  // (khz, 19.04.2002)
 
 
   mMsgView->writeConfig();
   mFolderTree->writeConfig();
 
-
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  /*
-  writeDockConfig( config, "Geometry" );
-  */
-  // (khz, 19.04.2002)
-
-
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   { // area for config group "Geometry"
     KConfigGroupSaver saver(config, "Geometry");
 
     config->writeEntry("MainWin", r.size());
 
-    // save the dimensions of the folder, header and message pane
-    config->writeEntry("FolderPaneWidth", mVertPanner->sizes()[0]);
-    config->writeEntry("HeaderPaneWidth", mVertPanner->sizes()[1]);
-    config->writeEntry("HeaderPaneHeight", mHorizPanner->sizes()[0]);
-    config->writeEntry("MessagePaneHeight", mHorizPanner->sizes()[1]);
+    // Save the dimensions of the folder, header and message pane;
+    // this is dependent on the layout style.
+    switch( mWindowLayout ) {
+    case 0:
+        config->writeEntry( "FolderPaneWidth", mPanner1->sizes()[0] );
+        config->writeEntry( "HeaderPaneWidth", mPanner1->sizes()[1] );
+        config->writeEntry( "HeaderPaneHeight", mPanner2->sizes()[0] );
+        config->writeEntry( "MimePaneHeight", mPanner2->sizes()[1] );
+        config->writeEntry( "MessagePaneHeight", mPanner2->sizes()[2] );
+        break;
+    case 1:
+        config->writeEntry( "FolderPaneWidth", mPanner1->sizes()[0] );
+        config->writeEntry( "HeaderPaneWidth", mPanner1->sizes()[1] );
+        config->writeEntry( "FolderPaneHeight", mPanner2->sizes()[0] );
+        config->writeEntry( "MimePaneHeight", mPanner2->sizes()[1] );
+        config->writeEntry( "HeaderPaneHeight", mPanner3->sizes()[0] );
+        config->writeEntry( "MessagePaneHeight", mPanner3->sizes()[1] );
+        break;
+    case 2:
+        config->writeEntry( "FolderPaneHeight", mPanner1->sizes()[0] );
+        config->writeEntry( "MessagePaneHeight", mPanner1->sizes()[1] );
+        config->writeEntry( "FolderPaneWidth", mPanner2->sizes()[0] );
+        config->writeEntry( "HeaderPaneWidth", mPanner2->sizes()[1] );
+        config->writeEntry( "HeaderPaneHeight", mPanner3->sizes()[0] );
+        config->writeEntry( "MimePaneHeight", mPanner3->sizes()[1] );
+        break;
+    case 3:
+        config->writeEntry( "FolderPaneHeight", mPanner1->sizes()[0] );
+        config->writeEntry( "MimePaneHeight", mPanner1->sizes()[1] );
+        config->writeEntry( "MessagePaneHeight", mPanner1->sizes()[2] );
+        config->writeEntry( "FolderPaneWidth", mPanner2->sizes()[0] );
+        config->writeEntry( "HeaderPaneWidth", mPanner2->sizes()[1] );
+        break;
+    }
   }
-  // (khz, 19.04.2002)
 
 
   KConfigGroupSaver saver(config, "General");
@@ -382,39 +407,75 @@ void KMMainWin::writeConfig(void)
 //-----------------------------------------------------------------------------
 void KMMainWin::createWidgets(void)
 {
-  QAccel *accel = new QAccel(this, "createWidgets()");
+    QAccel *accel = new QAccel(this, "createWidgets()");
 
+  KConfig *config = kapp->config();
+  KConfigGroupSaver saver(config, "Geometry");
 
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-  // create panners
-  QSplitter *pnrMsgView, *pnrMsgList, *pnrFldList;
-  if (mLongFolderList)
-  {
-    mVertPanner  = new QSplitter(Qt::Horizontal, this, "vertPanner" );
-    mHorizPanner = new QSplitter(Qt::Vertical, mVertPanner, "horizPanner" );
-    pnrFldList = mHorizPanner;
-    pnrMsgView = mVertPanner;
-    pnrMsgList = mVertPanner;
+  // Create the splitters according to the layout settings
+  QWidget *headerParent = 0, *folderParent = 0, 
+            *mimeParent = 0, *messageParent = 0;
+  switch( mWindowLayout ) {
+  case 0:
+      mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
+      mPanner1->setOpaqueResize( true );
+      mPanner2 = new QSplitter( Qt::Vertical, mPanner1, "panner 2" );
+      mPanner2->setOpaqueResize( true );
+      mPanner3 = 0;
+      headerParent = mPanner2;
+      folderParent = mPanner1;
+      mimeParent = mPanner2;
+      messageParent = mPanner2;
+      break;
+  case 1:
+      mPanner1 = new QSplitter( Qt::Horizontal, this, "panner 1" );
+      mPanner1->setOpaqueResize( true );
+      mPanner2 = new QSplitter( Qt::Vertical, mPanner1, "panner 2" );
+      mPanner2->setOpaqueResize( true );
+      mPanner3 = new QSplitter( Qt::Vertical, mPanner1, "panner 3" );
+      mPanner3->setOpaqueResize( true );
+      headerParent = mPanner3;
+      folderParent = mPanner2;
+      mimeParent = mPanner2;
+      messageParent = mPanner3;
+      break;
+  case 2:
+      mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
+      mPanner1->setOpaqueResize( true );
+      mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
+      mPanner2->setOpaqueResize( true );
+      mPanner3 = new QSplitter( Qt::Vertical, mPanner2, "panner 3" );
+      mPanner3->setOpaqueResize( true );
+      headerParent = mPanner3;
+      folderParent = mPanner2;
+      mimeParent = mPanner3;
+      messageParent = mPanner1;
+      break;
+  case 3:
+      mPanner1 = new QSplitter( Qt::Vertical, this, "panner 1" );
+      mPanner1->setOpaqueResize( true );
+      mPanner2 = new QSplitter( Qt::Horizontal, mPanner1, "panner 2" );
+      mPanner2->setOpaqueResize( true );
+      mPanner3 = 0;
+      headerParent = mPanner2;
+      folderParent = mPanner2;
+      mimeParent = mPanner1;
+      messageParent = mPanner1;
+      break;
   }
-  else
-  {
-    mHorizPanner = new QSplitter( Qt::Vertical, this, "horizPanner" );
-    mVertPanner  = new QSplitter( Qt::Horizontal, mHorizPanner, "vertPanner" );
-    pnrMsgView = mVertPanner;
-    pnrMsgList = mHorizPanner;
-    pnrFldList = mHorizPanner;
-  }
-  mVertPanner->setOpaqueResize(true);
-  mHorizPanner->setOpaqueResize(true);
-  // (khz, 19.04.2002)
 
+  if( mPanner1 ) mPanner1->dumpObjectTree();
+  if( mPanner2 ) mPanner2->dumpObjectTree();
+  if( mPanner3 ) mPanner3->dumpObjectTree();
+  
 
   // BUG -sanders these accelerators stop working after switching
   // between long/short folder layout
   // Probably need to disconnect them first.
 
   // create list of messages
-  mHeaders = new KMHeaders(this, pnrMsgList, "headers");
+    headerParent->dumpObjectTree();
+    mHeaders = new KMHeaders(this, headerParent, "headers");
   connect(mHeaders, SIGNAL(selected(KMMessage*)),
 	  this, SLOT(slotMsgSelected(KMMessage*)));
   connect(mHeaders, SIGNAL(activated(KMMessage*)),
@@ -435,19 +496,7 @@ void KMMainWin::createWidgets(void)
   else mCodec = 0;
 
 
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-  // create HTML reader widget
-  mMsgView = new KMReaderWin(&mCryptPlugList, 0, pnrMsgView);
-  // (khz, 19.04.2002)
-
-
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  // create HTML reader widget
-  /*
-  mMsgView = new KMReaderWin(&mCryptPlugList, 0, this);
-  */
-  // (khz, 19.04.2002)
-
+  mMsgView = new KMReaderWin(&mCryptPlugList, 0, messageParent);
 
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
 	  this, SLOT(htmlStatusMsg(const QString&)));
@@ -481,21 +530,8 @@ void KMMainWin::createWidgets(void)
                "delete_message" );
 
   // create list of folders
-
-
-  // FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
   mFolderTree  = new KMFolderTree(&mCryptPlugList,
-                                  pnrFldList, "folderTree");
-  // (khz, 19.04.2002)
-
-
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  /*
-  mFolderTree  = new KMFolderTree(&mCryptPlugList,
-                                  this, "folderTree");
-  */
-  // (khz, 19.04.2002)
-
+                                  folderParent, "folderTree");
 
   connect(mFolderTree, SIGNAL(folderSelected(KMFolder*)),
 	  this, SLOT(folderSelected(KMFolder*)));
@@ -507,37 +543,12 @@ void KMMainWin::createWidgets(void)
           this, SLOT(slotCopyMsgToFolder(KMFolder*)));
 
   // create a mime part tree and store it's pointer in the reader win
-  // PENDING(kalle) Made the mime part tree a toplevel window for intermediary testing/debugging
-  //  mMimePartTree = new KMMimePartTree( mMsgView, this, "mMimePartTree" );
-  mMimePartTree = new KMMimePartTree( mMsgView, 0, "mMimePartTree" );
-  mMimePartTree->show();
+  mMimePartTree = new KMMimePartTree( mMsgView, mimeParent, "mMimePartTree" );
   mMsgView->setMimePartTree( mMimePartTree );
-
-
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  /*
-  // set up docking
-  mMsgDock    = createDockWidget( "Mail Messages", 0L );
-  mHeaderDock = createDockWidget( "Headers", 0L );
-  mFolderDock = createDockWidget( "Folders", 0L );
-  mMimeDock   = createDockWidget( "Mime Parts", 0L );
-
-  mMsgDock->setWidget(    mMsgView );
-  mHeaderDock->setWidget( mHeaders );
-  mFolderDock->setWidget( mFolderTree );
-  mMimeDock->setWidget(   mMimePartTree );
-
-  setView( mMsgDock );
-
-  setMainDockWidget( mMsgDock); // master dockwidget
-  mMsgDock->setEnableDocking ( KDockWidget::DockNone );
-  mMsgDock->setDockSite(KDockWidget::DockCorner);
-  mFolderDock->manualDock( mMsgDock, KDockWidget::DockLeft, 20 );
-  mHeaderDock->manualDock( mMsgDock, KDockWidget::DockTop, 20 );
-  mMimeDock->manualDock(   mMsgDock, KDockWidget::DockLeft, 20 );
-  */
-  // (khz, 19.04.2002)
-
+  if( mShowMIME )
+      mMimePartTree->show();
+  else
+      mMimePartTree->hide();
 
   //Commands not worthy of menu items, but that deserve configurable keybindings
   new KAction(
@@ -588,40 +599,73 @@ void KMMainWin::createWidgets(void)
 
 
 
-// FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
-//-----------------------------------------------------------------------------
 void KMMainWin::activatePanners(void)
 {
   // glue everything together
-  if (mLongFolderList)
-  {
-    mHeaders->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
-    mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
-    mFolderTree->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
-    mVertPanner->moveToFirst( mFolderTree );
-    setCentralWidget(mVertPanner);
-  }
-  else
-  {
-    mFolderTree->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
-    mHeaders->reparent( mVertPanner, 0, QPoint( 0, 0 ) );
-    mMsgView->reparent( mHorizPanner, 0, QPoint( 0, 0 ) );
-    setCentralWidget(mHorizPanner);
-  }
-  mHorizPanner->setSizes( *mHorizPannerSep );
-  mVertPanner->setSizes( *mVertPannerSep );
+    switch( mWindowLayout ) {
+    case 0:
+        mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mMimePartTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mMsgView->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mFolderTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+        mPanner1->moveToLast( mPanner2 );
+        mPanner1->setSizes( *mPanner1Sep );
+        mPanner1->setResizeMode( mFolderTree, QSplitter::KeepSize );
+        mPanner2->setSizes( *mPanner2Sep );
+        mPanner2->setResizeMode( mHeaders, QSplitter::KeepSize );
+        mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
+        break;
+    case 1:
+        mHeaders->reparent( mPanner3, 0, QPoint( 0, 0 ) );
+        mMsgView->reparent( mPanner3, 0, QPoint( 0, 0 ) );
+        mPanner3->moveToLast( mMsgView );
+        mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mMimePartTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mPanner2->moveToLast( mMimePartTree );
+        mPanner1->setSizes( *mPanner1Sep );
+        mPanner2->setSizes( *mPanner2Sep );
+        mPanner3->setSizes( *mPanner2Sep );
+        mPanner2->setResizeMode( mMimePartTree, QSplitter::KeepSize );
+        mPanner3->setResizeMode( mHeaders, QSplitter::KeepSize );
+        break;
+    case 2:
+        mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mPanner2->moveToFirst( mFolderTree );
+        mHeaders->reparent( mPanner3, 0, QPoint( 0, 0 ) );
+        mMimePartTree->reparent( mPanner3, 0, QPoint( 0, 0 ) );
+        mPanner3->moveToLast( mMimePartTree );
+        mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+        mPanner1->moveToLast( mMsgView );
+        mPanner1->setSizes( *mPanner1Sep );
+        mPanner2->setSizes( *mPanner2Sep );
+        mPanner3->setSizes( *mPanner2Sep );
+        mPanner1->setResizeMode( mPanner2, QSplitter::KeepSize );
+        mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
+        mPanner3->setResizeMode( mMimePartTree, QSplitter::KeepSize );
+        break;
+    case 3:
+        mFolderTree->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mHeaders->reparent( mPanner2, 0, QPoint( 0, 0 ) );
+        mPanner2->moveToLast( mHeaders );
+        mMimePartTree->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+        mPanner1->moveToFirst( mPanner2 );
+        mMsgView->reparent( mPanner1, 0, QPoint( 0, 0 ) );
+        mPanner1->moveToLast( mMsgView );
+        mPanner1->setSizes( *mPanner1Sep );
+        mPanner2->setSizes( *mPanner2Sep );
+        mPanner1->setResizeMode( mPanner2, QSplitter::KeepSize );
+        mPanner1->setResizeMode( mMimePartTree, QSplitter::KeepSize );
+        mPanner2->setResizeMode( mFolderTree, QSplitter::KeepSize );
+        break;
+    }
 
-  mVertPanner->setResizeMode( mFolderTree, QSplitter::KeepSize);
-  if( mLongFolderList )
-  {
-    mHorizPanner->setResizeMode( mHeaders, QSplitter::KeepSize);
-  }
-  else
-  {
-    mHorizPanner->setResizeMode( mVertPanner, QSplitter::KeepSize);
-  }
+    if( mShowMIME )
+        mMimePartTree->show();
+    else
+        mMimePartTree->hide();
+    
+    setCentralWidget( mPanner1 );
 }
-// (khz, 19.04.2002)
 
 
 //-----------------------------------------------------------------------------
@@ -681,15 +725,14 @@ void KMMainWin::hide()
 }
 
 
-// FIXME: remove this when KDockWidgets are working nicely (khz, 19.04.2002)
 //-----------------------------------------------------------------------------
 void KMMainWin::show()
 {
-  mHorizPanner->setSizes( *mHorizPannerSep );
-  mVertPanner->setSizes( *mVertPannerSep );
+  if( mPanner1 ) mPanner1->setSizes( *mPanner1Sep );
+  if( mPanner2 ) mPanner2->setSizes( *mPanner2Sep );
+  if( mPanner3 ) mPanner3->setSizes( *mPanner3Sep );
   KMMainWinInherited::show();
 }
-// (khz, 19.04.2002)
 
 
 //-------------------------------------------------------------------------
@@ -1462,7 +1505,7 @@ void KMMainWin::folderSelected(KMFolder* aFolder, bool jumpToUnread)
   if (!aFolder && mFolderTree->currentItem() == mFolderTree->firstChild())
   {
     mMsgView->setMsg(0,TRUE);
-    if (mLongFolderList) mHeaders->hide();
+    //    if (mLongFolderList) mHeaders->hide();
     mMsgView->displayAboutPage();
   }
   else if (!mFolder)
@@ -2405,18 +2448,6 @@ void KMMainWin::setupMenuBar()
     actionCollection());
 
 
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  /*
-  folderAction = new KToggleAction(i18n("Show Folder Bar"), 0, this, SLOT( slotToggleFolderBar() ),
-                                   actionCollection(), "show_folder_bar");
-  headerAction = new KToggleAction(i18n("Show Header Bar"), 0, this, SLOT( slotToggleHeaderBar() ),
-                                   actionCollection(), "show_header_bar");
-  mimeAction = new KToggleAction(i18n("Show Mime Bar"), 0, this, SLOT( slotToggleMimeBar() ),
-                                   actionCollection(), "show_mime_bar");
-  */
-  // (khz, 19.04.2002)
-
-
   KStdAction::keyBindings(this, SLOT(slotEditKeys()), actionCollection());
   KStdAction::configureToolbars(this, SLOT(slotEditToolbars()), actionCollection());
   KStdAction::preferences(this, SLOT(slotSettings()), actionCollection());
@@ -2435,12 +2466,6 @@ void KMMainWin::setupMenuBar()
   QObject::connect( guiFactory()->container("message", this),
 		    SIGNAL( aboutToShow() ), this, SLOT( updateMessageMenu() ));
 
-
-  // FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-  /*
-  QObject::connect( guiFactory()->container("settings", this),
-                    SIGNAL( aboutToShow() ), this, SLOT( updateSettingsMenu() ) );
-  */
 
   conserveMemory();
 
@@ -2469,34 +2494,6 @@ void KMMainWin::slotToggleStatusBar()
   else
     statusBar()->show();
 }
-
-
-// FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-/*
-void KMMainWin::slotToggleFolderBar()
-{
-  if ( folderAction->isChecked() )
-    makeDockVisible(mFolderDock);
-  else {
-    makeDockInvisible(mFolderDock);
-  }
-}
-void KMMainWin::slotToggleHeaderBar()
-{
-  if ( headerAction->isChecked())
-    makeDockVisible(mHeaderDock);
-  else
-    makeDockInvisible(mHeaderDock);
-}
-void KMMainWin::slotToggleMimeBar()
-{
-  if ( mimeAction->isChecked())
-    makeDockVisible(mMimeDock);
-  else
-    makeDockInvisible(mMimeDock);
-}
-*/
-// (khz, 19.04.2002)
 
 
 void KMMainWin::slotEditToolbars()
@@ -2806,18 +2803,6 @@ void KMMainWin::updateFolderMenu()
   preferHtmlAction->setChecked( mHtmlPref ? !mFolderHtmlPref : mFolderHtmlPref );
   threadMessagesAction->setChecked( mThreadPref ? !mFolderThreadPref : mFolderThreadPref );
 }
-
-
-// FIXME: ACTIVATE this when KDockWidgets are working nicely (khz, 19.04.2002)
-/*
-void KMMainWin::updateSettingsMenu()
-{
-  folderAction->setChecked( mFolderDock->isVisible() );
-  headerAction->setChecked( mHeaderDock->isVisible() );
-  mimeAction->setChecked( mMimeDock->isVisible() );
-}
-*/
-// (khz, 19.04.2002)
 
 
 #ifdef MALLOC_DEBUG
