@@ -1072,9 +1072,10 @@ void KMHeaders::msgRemoved(int id, QString msgId )
         mRoot->addSortedChild( sci );
       }
 
-      if (!parent || (sci->isImperfectlyThreaded()
-                      && !mImperfectlyThreadedList.containsRef(item)))
+      if ((!parent || sci->isImperfectlyThreaded())
+                      && !mImperfectlyThreadedList.containsRef(item))
         mImperfectlyThreadedList.append(item);
+
       if (parent && !sci->isImperfectlyThreaded()
           && mImperfectlyThreadedList.containsRef(item))
         mImperfectlyThreadedList.removeRef(item);
@@ -1084,7 +1085,14 @@ void KMHeaders::msgRemoved(int id, QString msgId )
   if (!mFolder->count())
       folderCleared();
 
-  mImperfectlyThreadedList.removeRef(removedItem);
+  mImperfectlyThreadedList.removeRef( removedItem );
+#ifdef DEBUG
+  // This should never happen, in this case the folders are inconsistent.
+  while ( mImperfectlyThreadedList.findRef( removedItem ) != -1 ) {
+    mImperfectlyThreadedList.remove();
+    kdDebug(5006) << "Remove doubled item from mImperfectlyThreadedList: " << removedItem << endl;
+  }
+#endif
   delete removedItem;
   // we might have rethreaded it, in which case its current state will be lost
   if ( curItem ) {
