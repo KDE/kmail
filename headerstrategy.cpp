@@ -25,25 +25,26 @@
 namespace KMail {
 
   //
-  // Header table:
-  //   be sure to keep numFooHeaders and the content of headerTable in sync!
+  // Header tables:
   //
 
-  static const char * headerTable[] = {
-    "date", // brief only
-    "subject", "from", "cc", "bcc", // brief
-    "to", // standard
-    "organisation", "organization", "reply-to", "date" // rich
+  static const char * briefHeaders[] = {
+    "subject", "from", "cc", "bcc", "date"
   };
+  static const int numBriefHeaders = sizeof briefHeaders / sizeof *briefHeaders;
 
-  static const char ** briefHeaders = &headerTable[0];
-  static const int numBriefHeaders = 5;
 
-  static const char ** richHeaders = &headerTable[1];
-  static const int numRichHeaders = sizeof headerTable / sizeof *headerTable - 1;
+  static const char * standardHeaders[] = {
+    "subject", "from", "cc", "bcc", "to",
+  };
+  static const int numStandardHeaders = sizeof standardHeaders / sizeof *standardHeaders;
 
-  static const char ** standardHeaders = richHeaders;
-  static const int numStandardHeaders = numRichHeaders - 4;
+
+  static const char * richHeaders[] = {
+    "subject", "date", "from", "cc", "bcc", "to",
+    "organization", "organisation", "reply-to"
+  };
+  static const int numRichHeaders = sizeof richHeaders / sizeof *richHeaders;
 
   //
   // Convenience function
