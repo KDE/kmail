@@ -1503,10 +1503,13 @@ bool KMKernel::folderIsTrash(KMFolder * folder)
 {
   assert(folder);
   if (folder == the_trashFolder) return true;
-  if (folder->folderType() != KMFolderTypeImap) return false;
-  KMFolderImap *fi = static_cast<KMFolderImap*>(folder->storage());
-  if (fi->account() && fi->account()->trash() == folder->idString())
-    return true;
+  QStringList actList = acctMgr()->getAccounts(false);
+  QStringList::Iterator it( actList.begin() );
+  for( ; it != actList.end() ; ++it ) {
+    KMAccount* act = acctMgr()->findByName( *it );
+    if ( act && ( act->trash() == folder->idString() ) )
+      return true;
+  }
   return false;
 }
 
