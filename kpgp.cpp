@@ -551,7 +551,7 @@ Kpgp::runPgp50(QString cmd, int *in, int *out)
 }
 // check if pgp installed
 // currently only supports 2.6.x
-// Juraj : And now 5.x at alpha stage ;-). Please test ! I'll do too.
+// And now 5.x at alpha stage ;-). Please test ! I'll do too. - Juraj
 bool 
 Kpgp::checkForPGP(void)
 {
