@@ -1139,6 +1139,8 @@ void KMComposeWin::setupActions(void)
           break;
         }
   }
+  else
+    mCryptoModuleAction = 0;
 
   QStringList styleItems;
   styleItems << i18n( "Standard" );
