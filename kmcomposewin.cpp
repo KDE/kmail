@@ -131,6 +131,10 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg) : KMComposeWinInherited(),
     if(mEditor->text().isEmpty())
       mEditor->toggleModified(FALSE);
   }
+
+  if ( mAutoSign ) 
+    slotAppendSignature();
+
 }
 
 
@@ -150,6 +154,7 @@ void KMComposeWin::readConfig(void)
 
   config->setGroup("Composer");
   mAutoSign = (stricmp(config->readEntry("signature"),"auto")==0);
+  cout << "auto:" << mAutoSign << endl;
   mShowToolBar = config->readNumEntry("show-toolbar", 1);
   mSendImmediate = config->readNumEntry("send-immediate", -1);
   mDefEncoding = config->readEntry("encoding", "base64");
@@ -181,8 +186,6 @@ void KMComposeWin::writeConfig(bool aWithSync)
   config->writeEntry("send-immediate", mSendImmediate);
   config->writeEntry("encoding", mDefEncoding);
   config->writeEntry("headers", mShowHeaders);
-  config->writeEntry("word-wrap",mWordWrap);
-  config->writeEntry("break-at", mLineBreak);
   str = "";
   str.sprintf("#%02x%02x%02x", foreColor.red(), foreColor.green(),
 	      foreColor.blue());
@@ -476,14 +479,15 @@ void KMComposeWin::setupEditor(void)
   mEditor->toggleModified(FALSE);
 
   // Word wrapping setup
-  if(mWordWrap) {
+  if(mWordWrap) 
     mEditor->setWordWrap(TRUE);
-    mEditor->setFillColumnMode(mLineBreak,TRUE);
-  }
   else {
     mEditor->setWordWrap(FALSE);
     mEditor->setFillColumnMode(0,FALSE);    
   }
+  if(mWordWrap && (mLineBreak > 0)) 
+    mEditor->setFillColumnMode(mLineBreak,TRUE);
+
 
   // Font setup
 
@@ -1033,7 +1037,6 @@ void KMComposeWin::slotAppendSignature()
 
   if (!sigText.isEmpty())
   {
-    //    mEditor->insertLine("\n--\n", -1);
     mEditor->insertLine(sigText, -1);
     mEditor->toggleModified(mod);
   }
