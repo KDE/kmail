@@ -277,7 +277,7 @@ void KMLittleProgressDlg::slotProgressItemProgress( ProgressItem *item, unsigned
 void KMLittleProgressDlg::slotEnable( bool enabled )
 {
   if (enabled) {
-    if (mode == Progress) // it's already enabled
+    if (mode == Progress || mode == Label ) // it's already enabled
       return;
     m_pButton->setDown( false );
     mode = Progress;
