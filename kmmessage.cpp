@@ -817,9 +817,6 @@ KMMessage* KMMessage::createReply( KMail::ReplyStrategy replyStrategy,
       mailingListAddresses << rx.cap(1) + '@' + rx.cap(2);
   }
 
-  if ( parent() && parent()->identity() )
-    msg->applyIdentity( parent()->identity() );
-
   // use the "On ... Joe User wrote:" header by default
   replyStr = sReplyAllStr;
 
