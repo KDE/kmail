@@ -274,8 +274,6 @@ bool KMSearchRuleString::matches( const DwString & aStr, KMMessage & msg,
                matches( aStr, msg, &cc, 2 ) &&
                matches( aStr, msg, &bcc, 3 ) );
     }
-  } else {
-    return KMSearchRule::matches( aStr, msg, aHeaderField, aHeaderLen );
   }
 }
 
