@@ -669,46 +669,11 @@ void KMFolderCachedImap::serverSyncInternal()
       mSyncState = SYNC_STATE_FIND_SUBFOLDERS;
 
     if( imapPath() == "/INBOX/" ) {
-      KMFolderNode* node = 0;
-      if( kmkernel->iCalIface().isEnabled() ) {
-        QString folderName =
-          kmkernel->iCalIface().folderName( KFolderTreeItem::Inbox );
-        node = child()->hasNamedFolder( folderName );
-      }
-      if( node && !node->isDir() ) {
-	// TODO(bo): Does this code make sense anymore?
-	// Here we need to move messages from INBOX to the "real" inbox
-	KMFolder* inboxFolder = static_cast<KMFolder*>(node);
-	open();
-	inboxFolder->open();
-	mAccount->setFolder( inboxFolder );
-	while( count() > 0) {
-	  KMMessage* m = getMsg(0);
-	  inboxFolder->moveMsg(m);
-	  mAccount->processNewMsg(m);
-	}
-	compact();
-	close();
-	inboxFolder->close();
-	// Delete from INBOX
-	if( deleteMessages() ) {
-	  break;
-	}
-      } else {
-	// Filter new messages
-	QValueList<ulong>::Iterator it = mUidsForDownload.begin();
-	QValueList<ulong>::Iterator end = mUidsForDownload.end();
-	for ( ; it != end; ++it ) {
-	  kdDebug(5006) << "/INBOX/: Considering " << *it << endl;
-	  KMMessage* msg = findByUID( *it );
-// 	  kdDebug(5006) << "msg: " << msg << " unread: "
-// 			<< (msg?QString::number(msg->isUnread()):QString("-"))<< endl;
-	  if( msg && msg->isUnread() ) {
-// 	    kdDebug(5006) << "/INBOX/: Processing message\n";
-// 	    kdDebug(5006) << "msg->parent: " << msg->parent()->location() << endl;
-	    mAccount->processNewMsg( msg );
-	  }
-	}
+      // Filter new messages
+      QValueList<ulong>::Iterator it = mUidsForDownload.begin();
+      for ( ; it != mUidsForDownload.end(); ++it ) {
+	KMMessage* msg = findByUID( *it );
+        if( msg ) mAccount->processNewMsg( msg );
       }
     }
     // Don't carry on - it might be that we must resync
