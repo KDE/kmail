@@ -1849,6 +1849,7 @@ void KMFolderImap::slotCreatePendingFolders()
   for ( ; it != mFoldersPendingCreation.end(); ++it ) {
     createFolder( *it );
   }
+  mFoldersPendingCreation.clear();
 }
 
 #include "kmfolderimap.moc"
