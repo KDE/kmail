@@ -1714,6 +1714,7 @@ void KMHeaders::nextMessage()
     clearSelection();
     setSelected( lvi, FALSE );
     selectNextMessage();
+    ensureCurrentItemVisible();
   }
 }
 
@@ -1746,6 +1747,7 @@ void KMHeaders::prevMessage()
     clearSelection();
     setSelected( lvi, FALSE );
     selectPrevMessage();
+    ensureCurrentItemVisible();
   }
 }
 
