@@ -1387,35 +1387,41 @@ void KMMainWin::slotMsgPopup(const KURL &aUrl, const QPoint& aPoint)
   {
     // popup somewhere else (i.e., not a URL) on the message
 
+     if (!mFolder->count()) // no messages
+         return;
+     else  {
 
-    if ((mFolder == kernel->outboxFolder()) || (mFolder == kernel->draftsFolder()))
-       editAction->plug(menu);
-    else {
-    replyAction->plug(menu);
-    replyAllAction->plug(menu);
-    forwardAction->plug(menu);
-    redirectAction->plug(menu);
-    bounceAction->plug(menu);
-         }
-    menu->insertSeparator();
-    menu->insertItem(i18n("&Move to"), moveMenu);
-    menu->insertItem(i18n("&Copy to"), copyMenu);
-    if ((mFolder != kernel->outboxFolder()) && (mFolder != kernel->draftsFolder()))
-         {
-       menu->insertItem(i18n("&Set Status"), setStatusMenu);
-       newAction->plug(setStatusMenu);
-       unreadAction->plug(setStatusMenu);
-       readAction->plug(setStatusMenu);
-       repliedAction->plug(setStatusMenu);
-       queueAction->plug(setStatusMenu);
-       sentAction->plug(setStatusMenu);
-         }
-    menu->insertSeparator();
-    printAction->plug(menu);
-    saveAsAction->plug(menu);
-    menu->insertSeparator();
-    deleteAction->plug(menu);
-    menu->popup(aPoint, 0);
+           if ((mFolder == kernel->outboxFolder()) || 
+               (mFolder == kernel->draftsFolder()))
+                  editAction->plug(menu);
+           else {
+                replyAction->plug(menu);
+                replyAllAction->plug(menu);
+                forwardAction->plug(menu);
+                redirectAction->plug(menu);
+                bounceAction->plug(menu);
+           }
+           menu->insertSeparator();
+           menu->insertItem(i18n("&Move to"), moveMenu);
+           menu->insertItem(i18n("&Copy to"), copyMenu);
+           if ((mFolder != kernel->outboxFolder()) &&  
+               (mFolder != kernel->draftsFolder()))
+           {
+           menu->insertItem(i18n("&Set Status"), setStatusMenu);
+           newAction->plug(setStatusMenu);
+           unreadAction->plug(setStatusMenu);
+           readAction->plug(setStatusMenu);
+           repliedAction->plug(setStatusMenu);
+           queueAction->plug(setStatusMenu);
+           sentAction->plug(setStatusMenu);
+           }
+           menu->insertSeparator();
+           printAction->plug(menu);
+           saveAsAction->plug(menu);
+           menu->insertSeparator();
+           deleteAction->plug(menu);
+           menu->popup(aPoint, 0);
+      }
   }
 }
 
