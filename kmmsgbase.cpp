@@ -13,6 +13,7 @@
 #include <kmfolder.h>
 #include <kmheaders.h>
 #include <kmmsgdict.h>
+#include <krfcdate.h>
 
 #include <ctype.h>
 #include <stdlib.h>
@@ -180,10 +181,7 @@ const char* KMMsgBase::statusToStr(KMMsgStatus aStatus)
 //-----------------------------------------------------------------------------
 void KMMsgBase::setDate(const QCString& aDateStr)
 {
-  DwDateTime dwDate;
-  dwDate.FromString(aDateStr);
-  dwDate.Parse();
-  setDate(dwDate.AsUnixTime());
+  setDate( KRFCDate::parseDate( aDateStr ) );
 }
 
 
