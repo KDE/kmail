@@ -43,6 +43,7 @@
 #include <qmultilineedit.h>
 #include <qregexp.h>
 #include <qscrollbar.h>
+#include <qimage.h>
 
 // for selection
 #include <X11/X.h>
@@ -1303,10 +1304,22 @@ void KMReaderWin::slotAtmView()
     {
       // image
       // Attachment is saved already; this is the file:
-      QString linkName = QString("<img src=\"file:%1part%2/%3\" border=0>")
-                        .arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
+      QString fileName = QString("%1part%2/%3").arg(mAttachDir).arg(mAtmCurrent+1).arg(pname);
+      // Open the window with a size so the image fits in (if possible):
+      QImageIO *iio = new QImageIO();
+      iio->setFileName(fileName);
+      if( iio->read() ) {
+        QImage img = iio->image();
+	if( img.width() > 50 && img.width() > 50	// avoid super small windows
+	    && img.width() < KApplication::desktop()->width()	// avoid super large windows
+	    && img.height() < KApplication::desktop()->height() ) {	
+	  win->resize(img.width()+10, img.height()+10);
+	}
+      }
+      // Just write the img tag to HTML:
       win->mViewer->begin( KURL( "file:/" ) );
       win->mViewer->write("<html><body>");
+      QString linkName = QString("<img src=\"file:%1\" border=0>").arg(fileName);
       win->mViewer->write(linkName.data());
       win->mViewer->write("</body></html>");
       win->mViewer->end();
@@ -1317,7 +1330,7 @@ void KMReaderWin::slotAtmView()
       QString str = msgPart.bodyDecoded();
       // A QString cannot handle binary data. So if it's shorter than the
       // attachment, we assume the attachment is binary:
-      if( str.length() < msgPart.size() ) {
+      if( str.length() < (unsigned) msgPart.size() ) {
         str += i18n("\n[KMail: Attachment contains binary data. Trying to show first %1 characters.]").arg(str.length());
       }
       medit->setText(str);
