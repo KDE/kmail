@@ -1532,7 +1532,8 @@ void KMReaderWin::slotUrlOpen(const KURL &aUrl, const KParts::URLArgs &)
   if( aUrl.hasRef() )
     kdDebug(5006) << QString(aUrl.path()+"#"+aUrl.ref()) << endl;
 
-  if( mUseGroupware && kernel->groupware().handleLink( aUrl, message() ) )
+  if( kernel->groupware().isEnabled()
+      && kernel->groupware().handleLink( aUrl, message() ) )
     return;
 
   // handle own links
