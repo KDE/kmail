@@ -33,7 +33,7 @@
 #include <ktoolbar.h>
 #include <kstdaccel.h>
 #include <mimelib/mimepp.h>
-#include <html.h>
+//#include <khtml.h>
 #include <kfiledialog.h>
 #include <kwm.h>
 #include <qtabdialog.h>

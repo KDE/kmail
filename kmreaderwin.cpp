@@ -22,7 +22,7 @@
 #include "kpgp.h"
 #include "kfontutils.h"
 
-#include <html.h>
+#include <khtml.h>
 #include <kapp.h>
 #include <kconfig.h>
 #include <kcursor.h>
@@ -38,6 +38,7 @@
 #include <qcursor.h>
 #include <qmultilinedit.h>
 #include <qregexp.h>
+#include <qscrollbar.h>
 
 // for selection
 #include <X11/X.h>
@@ -98,7 +99,7 @@ void KMReaderWin::readConfig(void)
   mViewer->setDefaultTextColors(config->readColorEntry("ForegroundColor",&c1)
                                 ,config->readColorEntry("LinkColor",&c2)
                                 ,config->readColorEntry("FollowedColor",&c3));
-  mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
+  //mViewer->setDefaultFontBase(config->readNumEntry("DefaultFontBase",3));
 
 #ifndef KRN
   config->setGroup("Fonts");
