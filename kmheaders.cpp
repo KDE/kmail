@@ -1208,7 +1208,8 @@ void KMHeaders::redirectMsg()
   if (!msg) return;
 
   kernel->kbp()->busy();
-  win = new KMComposeWin(msg->createRedirect());
+  win = new KMComposeWin();
+  win->setMsg(msg->createRedirect(), FALSE);
   win->setCharset(msg->codec()->name());
   win->show();
   kernel->kbp()->idle();
