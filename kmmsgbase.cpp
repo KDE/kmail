@@ -409,6 +409,8 @@ static const QCString KMMsgBase::statusToStr(KMMsgStatus status)
   if (status & KMMsgStatusQueued) sstr += 'Q';
   if (status & KMMsgStatusSent) sstr += 'S';
   if (status & KMMsgStatusFlag) sstr += 'G';
+  if (status & KMMsgStatusWatched) sstr += 'W';
+  if (status & KMMsgStatusIgnored) sstr += 'I';
 
   return sstr;
 }

@@ -442,12 +442,13 @@ KMMsgStatus KMMsgInfo::status(void) const
             // We are opening an old index for the first time, get the legacy 
             // status and merge it in. 
             mLegacyStatus = (KMLegacyMsgStatus)getLongPart(MsgLegacyStatusPart); 
+            st = KMMsgStatusRead;
             switch (mLegacyStatus) {
                 case KMLegacyMsgStatusUnknown:
                     st = KMMsgStatusUnknown;
                     break;
                 case KMLegacyMsgStatusNew: 
-                    st = KMMsgStatusUnknown;
+                    st = KMMsgStatusNew;
                     break;
                 case KMLegacyMsgStatusUnread: 
                     st = KMMsgStatusUnread;
@@ -459,22 +460,22 @@ KMMsgStatus KMMsgInfo::status(void) const
                     st = KMMsgStatusOld;
                     break;
                 case KMLegacyMsgStatusDeleted: 
-                    st = KMMsgStatusDeleted;
+                    st |= KMMsgStatusDeleted;
                     break;
                 case KMLegacyMsgStatusReplied: 
-                    st = KMMsgStatusReplied;
+                    st |= KMMsgStatusReplied;
                     break;
                 case KMLegacyMsgStatusForwarded: 
-                    st = KMMsgStatusForwarded;
+                    st |= KMMsgStatusForwarded;
                     break;
                 case KMLegacyMsgStatusQueued: 
-                    st = KMMsgStatusQueued;
+                    st |= KMMsgStatusQueued;
                     break;
                 case KMLegacyMsgStatusSent: 
-                    st = KMMsgStatusSent;
+                    st |= KMMsgStatusSent;
                     break;
                 case KMLegacyMsgStatusFlag:                              
-                    st = KMMsgStatusFlag;
+                    st |= KMMsgStatusFlag;
                     break;
                 default:
                     break;
