@@ -15,6 +15,7 @@
 #include <qwidget.h>
 
 extern bool shuttingDown;
+extern bool checkingMail;
 
 /** Contains and handles user identity information. */
 class KMIdentity;

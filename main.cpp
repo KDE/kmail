@@ -51,6 +51,7 @@ WindowList* windowList = NULL;
 
 
 bool shuttingDown = FALSE;
+bool checkingMail = FALSE;
 const char* aboutText = 
     "KMail [" KMAIL_VERSION "] by\n\n"
     "Stefan Taferner <taferner@kde.org>,\n"

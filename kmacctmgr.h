@@ -10,6 +10,7 @@
 #include <qstring.h>
 #include <qdir.h>
 #include <qfile.h>
+#include <qstrlist.h>
 #include <qmsgbox.h>
 #include "kmnewiostatuswdg.h"
 #include "kmaccount.h"
@@ -62,8 +63,15 @@ public:
    is new mail in at least one account. */
   virtual bool checkMail(void);
 
+  QStrList getAccounts();
+  
+ 
+
+
 public slots:
   virtual bool singleCheckMail(KMAccount *);
+
+ virtual bool intCheckMail(int);
 
 signals:
   /** emitted if new mail arrived in the account */

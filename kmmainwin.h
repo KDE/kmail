@@ -57,6 +57,9 @@ protected:
   void setupStatusBar();
 
 protected slots:
+  void slotCheckOneAccount(int);
+  void getAccountMenu(); 
+  void slotMenuActivated();
   void slotClose();
   void slotHelp();
   void slotNewMailReader();
@@ -127,6 +130,8 @@ protected:
   int		mMessageStatusId;
   int		mHorizPannerSep, mVertPannerSep;
   QString       mUrlCurrent;
+  QPopupMenu *actMenu;
+  QPopupMenu *fileMenu;
 };
 
 #endif

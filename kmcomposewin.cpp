@@ -362,6 +362,8 @@ void KMComposeWin::rethinkFields(void)
 
   if (mAtmList.count() > 0) mAtmListBox->show();
   else mAtmListBox->hide();
+  resize(this->size());
+  repaint();
 
   mGrid->activate();
 }

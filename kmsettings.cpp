@@ -704,7 +704,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   acctType = mAcct->type();
 
   setCaption("Configure Account");
-  grid = new QGridLayout(this, 12, 3, 8, 4);
+  grid = new QGridLayout(this, 13, 3, 8, 4);
   grid->setColStretch(1, 5);
 
   lbl = new QLabel(i18n("Type:"), this);
@@ -748,7 +748,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
     chk = new QCheckBox(i18n("Delete mail from server"), this);
     chk->setChecked(!((KMAcctPop*)mAcct)->leaveOnServer());
-    grid->addMultiCellWidget(chk, 6, 6, 1, 2);
+    grid->addMultiCellWidget(chk, 6, 7, 1, 2);
 
   }
   else fatal("KMAccountSettings: unsupported account type");
@@ -761,7 +761,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   lbl = new QLabel(i18n("Store new mail in account:"), this);
   lbl->adjustSize();
   lbl->setMinimumSize(lbl->sizeHint());
-  grid->addMultiCellWidget(lbl, 7, 7, 0, 2);
+  grid->addMultiCellWidget(lbl, 8, 8, 0, 2);
 
   // combobox of all folders with current account folder selected
   acctFolder = mAcct->folder();
@@ -777,7 +777,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
   mFolders->adjustSize();
   mFolders->setMinimumSize(100, mEdtName->minimumSize().height());
   mFolders->setMaximumSize(500, mEdtName->minimumSize().height());
-  grid->addWidget(mFolders, 8, 1);
+  grid->addWidget(mFolders, 9, 1);
 
   // buttons at bottom
   btnBox = new QWidget(this);
@@ -797,7 +797,7 @@ KMAccountSettings::KMAccountSettings(QWidget *parent, const char *name,
 
   btnBox->setMinimumSize(230, ok->size().height()+10);
   btnBox->setMaximumSize(2048, ok->size().height()+10);
-  grid->addMultiCellWidget(btnBox, 10, 10, 0, 2);
+  grid->addMultiCellWidget(btnBox, 11, 11, 0, 2);
 
   resize(350,310);
   grid->activate();

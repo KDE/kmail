@@ -281,13 +281,53 @@ void KMMainWin::slotCheckMail()
 {
   bool rc;
 
-  kbp->busy();
-  rc = acctMgr->checkMail();
-  kbp->idle();
 
-  if (!rc) warning(i18n("No new mail available"));
+ if(checkingMail) {
+    KMsgBox::message(0,i18n("KMail error"),
+		     i18n("Already checking for mail!"));
+    return;
+  }
+    
+ checkingMail = TRUE;
+ 
+ kbp->busy();
+ rc = acctMgr->checkMail();
+ kbp->idle();
+ 
+ if (!rc) warning(i18n("No new mail available"));
+ 
+ checkingMail = FALSE;
+
 }
 
+
+void KMMainWin::slotMenuActivated() {
+
+  getAccountMenu();
+
+}
+
+void KMMainWin::slotCheckOneAccount(int item) {
+
+  bool rc = FALSE;
+
+
+ if(checkingMail) {
+    KMsgBox::message(0,i18n("KMail error"),
+		     i18n("Already checking for mail!"));
+    return;
+  }
+    
+  checkingMail = TRUE;
+   
+  kbp->busy();
+  rc = acctMgr->intCheckMail(item);
+  kbp->idle();
+  
+  if (!rc) warning(i18n("No new mail available"));
+  checkingMail = FALSE; 
+
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::slotCompose()
@@ -742,12 +782,23 @@ void KMMainWin::slotMsgPopup(const char* aUrl, const QPoint& aPoint)
   }
 }
 
+void KMMainWin::getAccountMenu() {
+
+  QStrList actList;
+
+  actMenu->clear();
+  actList = acctMgr->getAccounts();
+  QString tmp;
+  for(tmp = actList.first(); tmp ; tmp = actList.next()) {
+    actMenu->insertItem(tmp);
+  }
+}
 
 //-----------------------------------------------------------------------------
 void KMMainWin::setupMenuBar()
 {
   //----- File Menu
-  QPopupMenu *fileMenu = new QPopupMenu();
+  fileMenu = new QPopupMenu();
   fileMenu->insertItem(i18n("New Composer"), this, 
 		       SLOT(slotCompose()), keys->openNew());
   fileMenu->insertItem(i18n("New Mailreader"), this, 
@@ -760,6 +811,15 @@ void KMMainWin::setupMenuBar()
   fileMenu->insertSeparator();
   fileMenu->insertItem(i18n("Check Mail..."), this,
 		       SLOT(slotCheckMail()));
+  actMenu = new QPopupMenu();
+
+  getAccountMenu();
+
+  connect(actMenu,SIGNAL(activated(int)),this,SLOT(slotCheckOneAccount(int)));
+  connect(fileMenu,SIGNAL(highlighted(int)),this,SLOT(slotMenuActivated()));
+
+  fileMenu->insertItem(i18n("Check Mail in..."),actMenu);
+
   fileMenu->insertItem(i18n("Send Queued"), this,
 		       SLOT(slotSendQueued()));
   fileMenu->insertSeparator();

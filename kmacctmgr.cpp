@@ -210,5 +210,53 @@ bool KMAcctMgr::checkMail(void)
 }
 
 
+QStrList  KMAcctMgr::getAccounts() {
+  
+  KMAccount *cur;
+  QStrList strList;
+  for (cur=mAcctList.first(); cur; cur=mAcctList.next()) {
+    strList.append(cur->name());
+  }
+
+  return strList;
+
+}
+
+bool KMAcctMgr::intCheckMail(int item) {
+
+  KMAccount* cur;
+  bool hasNewMail = FALSE;
+
+  if (mAcctList.isEmpty())
+  {
+    warning(i18n("You need to add an account in the network\n"
+		 "section of the settings in order to\n"
+		 "receive mail."));
+    return FALSE;
+  }
+
+  KMIOStatusWdg *wid = new KMIOStatusWdg(0L,0L,KMIOStatus::RETRIEVE);
+  wid->show();
+  
+  printf("Item: %i\n" ,item);
+  int x = 0;
+  cur = mAcctList.first();
+  for(x=0; x < item; x++)
+    cur=mAcctList.next();
+
+  debug(cur->name());
+
+  if (cur->processNewMail(wid))
+    {
+      hasNewMail = TRUE;
+      emit newMail(cur);
+    }
+
+  delete wid;
+  return hasNewMail;
+
+}
+
+
 //-----------------------------------------------------------------------------
 #include "kmacctmgr.moc"
