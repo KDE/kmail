@@ -1914,7 +1914,7 @@ Kpgp::Result MessageComposer::pgpSignedAndEncryptedMsg( QByteArray & encryptedBo
     KMessageBox::sorry( mComposeWin,
 			i18n("This message could not be signed and encrypted, "
 			     "since the chosen backend does not seem to support "
-			     "combined signing and encryption; this should actually never happen,"
+			     "combined signing and encryption; this should actually never happen, "
 			     "please report this bug.") );
     return Kpgp::Failure;
   }
