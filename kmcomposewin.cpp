@@ -140,6 +140,7 @@ KMComposeWin::KMComposeWin(KMMessage *aMsg, QString id)
   connect(mAtmListBox,
 	  SIGNAL(rightButtonPressed(QListViewItem *, const QPoint &, int)),
 	  SLOT(slotAttachPopupMenu(QListViewItem *, const QPoint &, int)));
+  mAttachMenu = 0;
 
   readConfig();
   setupStatusBar();
@@ -947,7 +948,7 @@ void KMComposeWin::setupEditor(void)
   // Font setup
   mEditor->setFont(mBodyFont);
 
-  menu = new QPopupMenu();
+  menu = new QPopupMenu(this);
   //#ifdef BROKEN
   menu->insertItem(i18n("Undo"),mEditor,
 		   SLOT(undo()), KStdAccel::key(KStdAccel::Undo));
@@ -1830,16 +1831,19 @@ void KMComposeWin::slotInsertPublicKey()
 //-----------------------------------------------------------------------------
 void KMComposeWin::slotAttachPopupMenu(QListViewItem *, const QPoint &, int)
 {
-  QPopupMenu *menu = new QPopupMenu;
+  if (!mAttachMenu)
+  {
+     mAttachMenu = new QPopupMenu(this);
 
-  menu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
-  menu->insertItem(i18n("Save..."), this, SLOT(slotAttachSave()));
-  menu->insertItem(i18n("Properties..."),
+     mAttachMenu->insertItem(i18n("View..."), this, SLOT(slotAttachView()));
+     mAttachMenu->insertItem(i18n("Save..."), this, SLOT(slotAttachSave()));
+     mAttachMenu->insertItem(i18n("Properties..."),
 		   this, SLOT(slotAttachProperties()));
-  menu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
-  menu->insertSeparator();
-  menu->insertItem(i18n("Attach..."), this, SLOT(slotAttachFile()));
-  menu->popup(QCursor::pos());
+     mAttachMenu->insertItem(i18n("Remove"), this, SLOT(slotAttachRemove()));
+     mAttachMenu->insertSeparator();
+     mAttachMenu->insertItem(i18n("Attach..."), this, SLOT(slotAttachFile()));
+  }
+  mAttachMenu->popup(QCursor::pos());
 }
 
 //-----------------------------------------------------------------------------

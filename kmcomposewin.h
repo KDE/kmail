@@ -494,6 +494,7 @@ protected:
   QListView *mAtmListBox;
   QPtrList<QListViewItem> mAtmItemList;
   KMMsgPartList mAtmList;
+  QPopupMenu *mAttachMenu;
   bool mAutoSign, mAutoPgpSign, mAutoPgpEncrypt, mAutoDeleteMsg;
   KMFolder *mFolder;
   long mShowHeaders;
