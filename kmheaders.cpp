@@ -1010,6 +1010,8 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   int top, rc;
   bool doUpd;
 
+  disconnect(this,SIGNAL(currentChanged(QListViewItem*)),
+	     this,SLOT(highlightMessage(QListViewItem*)));
   kernel->kbp()->busy();
   top = topItemIndex();
 
@@ -1034,13 +1036,6 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   contentY = contentsY();
 
   msgList = selectedMsgs(msgId);
-  bool autoUpd = isUpdatesEnabled();
-  doUpd = (msgList->count() >= 1);
-  if (doUpd) {
-    setUpdatesEnabled(FALSE);
-    header()->setUpdatesEnabled(FALSE);
-    viewport()->setUpdatesEnabled(FALSE);
-  }
 
   for (rc=0, msgBase=msgList->first(); msgBase && !rc; msgBase=msgList->next())
   {
@@ -1063,32 +1058,23 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
     }
   }
 
-  if (doUpd)
-  {
-    updateMessageList();
-
-    if (curMsg) {
-      debug ("new message should be current!");
-      setCurrentMsg( mFolder->find( curMsg ) );
-      setSelected( currentItem(), TRUE );
-      // sanders QListView isn't emitting a currentChanged signal?
-       highlightMessage( currentItem() );
-     }
-    else
-      emit selected( 0 );
-
-    setContentsPos( contentX, contentY );
-    makeHeaderVisible();
-    setUpdatesEnabled(autoUpd);
-    viewport()->setUpdatesEnabled(autoUpd);
-    header()->setUpdatesEnabled(autoUpd);
-    if (autoUpd) repaint();
-    if (autoUpd) viewport()->repaint();
-    if (autoUpd) header()->repaint();
+  if (curMsg) {
+    debug ("new message should be current!");
+    setCurrentMsg( mFolder->find( curMsg ) );
+    setSelected( currentItem(), TRUE );
+    // sanders QListView isn't emitting a currentChanged signal?
+    highlightMessage( currentItem() );
   }
+  else
+    emit selected( 0 );
+  
+  setContentsPos( contentX, contentY );
+  makeHeaderVisible();
 
   if (destFolder) destFolder->close();
   kernel->kbp()->idle();
+  connect(this,SIGNAL(currentChanged(QListViewItem*)),
+	     this,SLOT(highlightMessage(QListViewItem*)));
 }
 
 //-----------------------------------------------------------------------------
