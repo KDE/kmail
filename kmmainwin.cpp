@@ -330,9 +330,8 @@ void KMMainWin::createWidgets(void)
 		     mHeaders, SLOT(nextMessage()));
 
   QString charset("iso8859-1");
-  KCharsets *mCharsets;
-  mCodec = mCharsets->codecForName(charset);
-
+  mCodec = KGlobal::charsets()->codecForName(charset);
+  
   // create HTML reader widget
   mMsgView = new KMReaderWin(pnrMsgView);
   connect(mMsgView, SIGNAL(statusMsg(const QString&)),
