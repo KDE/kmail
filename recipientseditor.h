@@ -125,6 +125,8 @@ class RecipientLine : public QWidget
 
     int recipientsCount();
 
+    void setRemoveLineButtonEnabled( bool b );
+
   signals:
     void returnPressed( RecipientLine * );
     void downPressed( RecipientLine * );

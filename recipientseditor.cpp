@@ -338,6 +338,12 @@ RecipientLine *RecipientsView::addLine()
   }
 
   mLines.append( line );
+  // If there is only one line, removing it makes no sense
+  if ( mLines.count() == 1 ) {
+    mLines.first()->setRemoveLineButtonEnabled( false );
+  } else {
+    mLines.first()->setRemoveLineButtonEnabled( true );
+  }
 
   line->setComboWidth( mFirstColumnWidth );
 
@@ -353,6 +359,15 @@ RecipientLine *RecipientsView::addLine()
 
   return line;
 }
+
+
+void RecipientLine::setRemoveLineButtonEnabled( bool b )
+{
+  mRemoveButton->setEnabled( b );
+}
+
+
+// ------------ RecipientsView ---------------------
 
 void RecipientsView::calculateTotal()
 {
@@ -427,9 +442,12 @@ void RecipientsView::slotDeleteLine()
     RecipientLine *line = mLines.at( i );
     moveChild( line, childX( line ), childY( line ) - mLineHeight );
   }
-  
+  // only one left, can't remove that one
+  if ( mLines.count() == 1 )
+    mLines.first()->setRemoveLineButtonEnabled( false );
+
   calculateTotal();
-  
+
   resizeView();
 }
 
