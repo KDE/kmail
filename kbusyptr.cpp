@@ -2,6 +2,7 @@
 
 #include "kbusyptr.h"
 #include <kapp.h>
+#include <qbitmap.h>
 #include <qcursor.h>
 #include <qtimer.h>
 #include <assert.h>
