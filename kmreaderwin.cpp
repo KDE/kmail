@@ -438,9 +438,11 @@ void KMReaderWin::displayAboutPage()
     "(compared to KMail 1.3, which is part of KDE 2.2):</p>\n"
     "<ul>\n"
     "<li>Maildir support</li>\n"
+    "<li>SMTP authentication</li>\n"
+    "<li>SMTP over SSL/TLS</li>\n"
     "<li>Pipelining for POP3 (faster mail download on slow responding networks)</li>\n"
     "<li>Performance improvements for IMAP</li>\n"
-    "<li>Automatic configuration of the POP3/IMAP security features</li>\n"
+    "<li>Automatic configuration of the POP3/IMAP/SMTP security features</li>\n"
     "<li>DIGEST-MD5 authentication</li>\n"
     "</ul>\n");
   if( kernel->firstStart() ) {
