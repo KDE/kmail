@@ -230,8 +230,12 @@ void KMAcctImap::slotIdleTimeout()
     mSlave = NULL;
     mIdleTimer.stop();
   } else {
-    KIO::SimpleJob *job = KIO::special(getUrl(), QCString("NOOP"), FALSE);
-    KIO::Scheduler::assignJobToSlave(mSlave, job);
+    if (mSlave)
+    {
+      KIO::SimpleJob *job = KIO::special(getUrl(), QCString("NOOP"), FALSE);
+      KIO::Scheduler::assignJobToSlave(mSlave, job);
+    }
+    else mIdleTimer.stop();
   }
 }
 
