@@ -131,7 +131,7 @@ static void init(int argc, char *argv[])
 
   inboxFolder  = (KMFolder*)folderMgr->findOrCreate(
 				         cfg->readEntry("inboxFolder", "inbox"));
-  inboxFolder->open();
+  //inboxFolder->open();
 
   outboxFolder = folderMgr->findOrCreate(cfg->readEntry("outboxFolder", "outbox"));
   outboxFolder->setType("out");

@@ -34,7 +34,7 @@ public:
   /** The following methods process the message in the folder with
     the given msgId, or if no msgId is given all selected
     messages are processed. */
-  virtual void setMsgRead(int msgId=-1);
+  virtual void setMsgStatus(KMMsgStatus status, int msgId=-1);
   virtual void deleteMsg(int msgId=-1);
   virtual void forwardMsg(int msgId=-1);
   virtual void replyToMsg(int msgId=-1);
@@ -42,8 +42,9 @@ public:
   virtual void moveMsgToFolder(KMFolder* destination, int msgId=-1);
   virtual void saveMsg(int msgId=-1);
 
-  /** Returns list of selected messages. Do not delete this object. */
-  virtual KMMessageList* selectedMsgs(void);
+  /** Returns list of selected messages or a list with the message with
+    the given Id if msgId >= 0. Do not delete the returned list. */
+  virtual KMMessageList* selectedMsgs(int msgId=-1);
 
   /** Returns message with given id or current message if no
     id is given. First call with msgId==-1 returns first

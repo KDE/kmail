@@ -42,7 +42,7 @@ static int findInStrList(const char* strList[], const char* str)
 KMFilter::KMFilter(KConfig* config)
 {
   if (!sActionDict) sActionDict = new KMFilterActionDict;
-  readConfig(config);
+  if (config) readConfig(config);
 }
 
 

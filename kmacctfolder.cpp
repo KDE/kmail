@@ -38,7 +38,7 @@ void KMAcctFolder::addAccount(KMAccount* aAcct)
 //-----------------------------------------------------------------------------
 void KMAcctFolder::clearAccountList(void)
 {
-  mAcctList->clear();
+  if (mAcctList) mAcctList->clear();
 }
 
 

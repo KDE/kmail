@@ -483,6 +483,7 @@ void KMComposeWin::setMsg(KMMessage* newMsg)
     }
   }
   else mEditor->setText(mMsg->body());
+  mEditor->toggleModified(FALSE);
 }
 
 
@@ -530,6 +531,7 @@ void KMComposeWin::applyChanges(void)
   }
 
   mMsg->setAutomaticFields();
+  if (!mAutoDeleteMsg) mEditor->toggleModified(FALSE);
 }
 
 
@@ -537,7 +539,8 @@ void KMComposeWin::applyChanges(void)
 void KMComposeWin::closeEvent(QCloseEvent* e)
 {
   if(mEditor->isModified())
-    if((KMsgBox::yesNo(0,"KMail Confirm","Close unsend message?") == 2))
+    if((KMsgBox::yesNo(0,nls->translate("KMail Confirm"),
+		       nls->translate("Close and discard\nedited message?")) == 2))
       return;
   writeConfig();
   KMComposeWinInherited::closeEvent(e);
@@ -896,6 +899,7 @@ void KMComposeWin::slotAppendSignature()
 {
   QString sigFileName = identity->signatureFile();
   QString sigText;
+  bool mod = mEditor->isModified();
 
   if (sigFileName.isEmpty())
   {
@@ -905,11 +909,16 @@ void KMComposeWin::slotAppendSignature()
     if (!dlg.exec()) return;
     sigFileName = dlg.selectedFile();
     if (sigFileName.isEmpty()) return;
+    sigText = kFileToString(sigFileName);
   }
+  else sigText = identity->signature();
 
-  sigText = kFileToString(sigFileName);
-  mEditor->insertLine(sigText, -1);
-  mEditor->toggleModified(TRUE); // KEdit does not do it manually
+  if (!sigText.isEmpty())
+  {
+    mEditor->insertLine("\n--\n", -1);
+    mEditor->insertLine(sigText, -1);
+    mEditor->toggleModified(mod);
+  }
 }
 
 

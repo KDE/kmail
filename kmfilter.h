@@ -66,9 +66,9 @@ public:
   // to change the string list in kmfilter.cpp
   enum Operator { OpIgnore=0, OpAnd, OpAndNot, OpOr };
 
-  /** Constructor that initializes from given config file. The config
-    * group is preset. */
-  KMFilter(KConfig* config);
+  /** Constructor that initializes from given config file if given.
+    * The config group has to be preset in this case. */
+  KMFilter(KConfig* config=NULL);
 
   /** Cleanup. */
   virtual ~KMFilter();

@@ -1,13 +1,18 @@
 // kmidentity.cpp
 
 #include "kmidentity.h"
+#include "kfileio.h"
 
 #include <kapp.h>
 #include <kconfig.h>
+#include <klocale.h>
 
 #include <pwd.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <errno.h>
 
 
 //-----------------------------------------------------------------------------
@@ -129,4 +134,39 @@ void KMIdentity::setReplyToAddr(const QString str)
 void KMIdentity::setSignatureFile(const QString str)
 {
   mSignatureFile = str.copy();
+}
+
+
+//-----------------------------------------------------------------------------
+const QString KMIdentity::signature(void) const
+{
+  QString result, sigcmd;
+  char tmpf[256];
+
+  if (mSignatureFile.isEmpty()) return 0;
+
+  if (mSignatureFile.right(1)=="|")
+  {
+    // signature file is a shell script that returns the signature
+    tmpnam(tmpf);
+    sigcmd = mSignatureFile.left(mSignatureFile.length()-1);
+    sigcmd += " >";
+    sigcmd += tmpf;
+    system(sigcmd);
+
+    if (errno)
+    {
+      warning(klocale->translate("Failed to execute signature script\n%s\n%s"),
+	      sigcmd.data(), sys_errlist[errno]);
+      return 0;
+    }
+    result = kFileToString(tmpf, TRUE, FALSE);
+    unlink(tmpf);
+  }
+  else
+  {
+    result = kFileToString(mSignatureFile);
+  }
+
+  return result;
 }

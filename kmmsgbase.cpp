@@ -223,7 +223,7 @@ int KMMsgBase::compareByFrom(const KMMsgBase* other) const
 const char* KMMsgBase::skipKeyword(const QString aStr, char sepChar,
 				   bool* hasKeyword)
 {
-  int i, maxChars=4;
+  int i, maxChars=3;
   const char *pos, *str;
 
   for (str=aStr.data(); *str && *str==' '; str++)
@@ -235,7 +235,7 @@ const char* KMMsgBase::skipKeyword(const QString aStr, char sepChar,
     if (*pos < 'A' || *pos == sepChar) break;
   }
 
-  if (*pos == sepChar) // skip following spaces too
+  if (i>1 && *pos == sepChar) // skip following spaces too
   {
     for (pos++; *pos && *pos==' '; pos++)
       ;

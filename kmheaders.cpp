@@ -175,17 +175,12 @@ void KMHeaders::headerClicked(int column)
 
 
 //-----------------------------------------------------------------------------
-void KMHeaders::setMsgRead (int msgId)
+void KMHeaders::setMsgStatus (KMMsgStatus status, int msgId)
 {
   KMMessage* msg;
 
   for (msg=getMsg(msgId); msg; msg=getMsg())
-  {
-    debug("setMsgRead(%d)", getMsgIndex);
-    msg->touch();
-    //changeItemPart(msg->status(), getMsgIndex, 0);
-    //changeItemColor(black, getMsgIndex);
-  }
+    msg->setStatus(status);
 }
 
 
@@ -213,6 +208,7 @@ void KMHeaders::deleteMsg (int msgId)
       delete msg;
     }
     setAutoUpdate(TRUE);
+    updateMessageList();
     setCurrentMsg(cur);
     kbp->idle();
   }
@@ -295,8 +291,7 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
 {
   KMMessageList* msgList;
   KMMessage* msg;
-  int top;
-  int rc, cur = currentItem();
+  int top, rc, cur = currentItem();
 
   assert(destFolder != NULL);
 
@@ -305,11 +300,12 @@ void KMHeaders::moveMsgToFolder (KMFolder* destFolder, int msgId)
   top = topItem();
 
   destFolder->open();
-  msgList = selectedMsgs();
+  msgList = selectedMsgs(msgId);
   for (rc=0, msg=msgList->first(); msg && !rc; msg=msgList->next())
     rc = destFolder->moveMsg(msg);
 
   setAutoUpdate(TRUE);
+  updateMessageList();
   setTopItem(top);
   setCurrentMsg(cur);
 
@@ -327,12 +323,12 @@ void KMHeaders::setCurrentMsg(int cur)
 
 
 //-----------------------------------------------------------------------------
-KMMessageList* KMHeaders::selectedMsgs(void)
+KMMessageList* KMHeaders::selectedMsgs(int idx)
 {
   KMMessage* msg;
 
   mSelMsgList.clear();
-  for (msg=getMsg(-1); msg; msg=getMsg())
+  for (msg=getMsg(idx); msg; msg=getMsg())
     mSelMsgList.append(msg);
 
   return &mSelMsgList;
@@ -428,7 +424,7 @@ void KMHeaders::highlightMessage(int idx, int/*colId*/)
   kbp->busy();
   mOwner->statusMsg("");
   emit selected(mFolder->getMsg(idx));
-  if (idx >= 0) setMsgRead(idx);
+  if (idx >= 0) setMsgStatus(KMMsgStatusOld, idx);
   kbp->idle();
 }
 
@@ -441,7 +437,7 @@ void KMHeaders::selectMessage(int idx, int/*colId*/)
   kbp->busy();
   mOwner->statusMsg("");
   emit activated(mFolder->getMsg(idx));
-  if (idx >= 0) setMsgRead(idx);
+  if (idx >= 0) setMsgStatus(KMMsgStatusOld, idx);
   kbp->idle();
 }
 

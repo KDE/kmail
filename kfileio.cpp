@@ -43,21 +43,21 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     if (aVerbose)
       msgDialog(klocale->translate("The specified file does not exist:\n%s"),
 		aFileName);
-    return NULL;
+    return 0;
   }
   if (info.isDir())
   {
     if (aVerbose)
       msgDialog(klocale->translate("This is a directory and not a file:\n%s"),
 		aFileName);
-    return NULL;
+    return 0;
   }
   if (!info.isReadable())
   {
     if (aVerbose)
       msgDialog(klocale->translate("You do not have read permissions "
 				   "to the file:\n%s"), aFileName);
-    return NULL;
+    return 0;
   }
 
   if (!file.open(IO_Raw|IO_ReadOnly))
@@ -73,7 +73,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     default:
       msgDialog(klocale->translate("Error while reading file:\n%s"),aFileName);
     }
-    return NULL;
+    return 0;
   }
 
   result.resize(len+1 + (int)aEnsureNL);
@@ -91,7 +91,7 @@ QString kFileToString(const char* aFileName, bool aEnsureNL, bool aVerbose)
     msg.sprintf(klocale->translate("Could only read %u bytes of %u."),
 		readLen, len);
     msgDialog(msg);
-    return NULL;
+    return 0;
   }
 
   return result;

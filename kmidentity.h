@@ -50,6 +50,12 @@ public:
   const QString signatureFile(void) const { return mSignatureFile; }
   virtual void setSignatureFile(const QString);
 
+  /** Returns the signature. This method also takes care of
+    special signature files that are shell scripts and handles
+    them correct. So use this method to rectreive the contents of
+    the signature file. */
+  virtual const QString signature(void) const;
+
 protected:
   QString mFullName, mOrganization, mEmailAddr;
   QString mReplyToAddr, mSignatureFile; 

@@ -271,7 +271,7 @@ void KMSettings::createTabComposer(QWidget *parent)
 				  "reply phrases: %D=date, %S=subject, %F=sender,"
 				  "\n%%=percent sign"), grp);
   lbl->adjustSize();
-  //lbl->setMinimumSize(lbl->size());
+  lbl->setMinimumSize(lbl->size());
   grid->addMultiCellWidget(lbl, 0, 0, 0, 2);
 
   phraseReplyEdit = createLabeledEntry(grp, grid, 
@@ -287,7 +287,7 @@ void KMSettings::createTabComposer(QWidget *parent)
 					nls->translate("Indentation:"),
 					NULL, 5, 0);
   grid->activate();
-  grp->adjustSize();
+  //grp->adjustSize();
 
 
   //---------- set the values

@@ -16,7 +16,7 @@ kmail_SOURCES = kmmainwin.cpp kmfolderdia.cpp kmfoldertree.cpp \
 		kmacctseldlg.cpp kmimemagic.cpp kmfiltermgr.cpp \
 		kmfilteraction.cpp kmidentity.cpp \
 		kmfolderseldlg.cpp kmfilter.cpp kmfilterdlg.cpp \
-		kmmsgbase.cpp kmmsglist.cpp kmflock.c \
+		kmmsgbase.cpp kmmsglist.cpp \
 		kfileio.cpp
 
 BUILT_SOURCES = kmmainwin.moc kmfolderdia.moc kmfolder.moc \

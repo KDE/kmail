@@ -6,6 +6,9 @@
 #include "kmfilter.h"
 #include "kmfiltermgr.h"
 #include "kmglobal.h"
+#include "kmfolder.h"
+#include "kmfolderdir.h"
+#include "kmfoldermgr.h"
 
 #include <klocale.h>
 #include <kmsgbox.h>
@@ -249,14 +252,34 @@ bool KMFilterDlg::testOpts(const QWidget* w) const
 //-----------------------------------------------------------------------------
 QPushButton* KMFilterDlg::createDetailsButton(void)
 {
-  return NULL;
+  QPushButton* btn;
+
+  btn = mFaBtnDetails[mGridRow];
+  if (!btn)
+  {
+    btn = new QPushButton("...", this);
+    mFaBtnDetails[mGridRow] = btn;
+  }
+  return btn;
 }
 
 
 //-----------------------------------------------------------------------------
-QComboBox* KMFilterDlg::createFolderCombo(const QString /*curFolder*/)
+QComboBox* KMFilterDlg::createFolderCombo(const QString curFolder)
 {
-  return NULL;
+  QComboBox* cbx = new QComboBox(this);
+  KMFolderDir* fdir = &(folderMgr->dir());
+  KMFolder* cur;
+  int i=0, idx=-1;
+
+  for (cur=(KMFolder*)fdir->first(); cur; cur=(KMFolder*)fdir->next(), i++)
+  {
+    cbx->insertItem(cur->name());
+    if (cur->name() == curFolder) idx=i;
+  }
+  if (idx>=0) cbx->setCurrentItem(idx);
+
+  return cbx;
 }
 
 
@@ -277,33 +300,78 @@ void KMFilterDlg::slotActionTypeSelected(KMFaComboBox* cbx, int idx)
   action = filterActionDict->create(sFilterActionList.at(idx));
   if (!action || idx <= 0) return;
 
-  //action->installGUI(this);
-  debug("installGUI called on %d. action with action %s", i, action->name());
+  if (mFilter->action(idx)) delete mFilter->action(idx);
+  mFilter->setAction(idx, action);
+
+  action->createParamWidget(this);
 }
 
 
 //-----------------------------------------------------------------------------
-void KMFilterDlg::slotFilterSelected(int)
+void KMFilterDlg::slotFilterSelected(int idx)
 {
+  KMFilter* filter;
+
   if (mFilter) applyFilterChanges();
+  filter = filterMgr->at(idx);
+  if (filter) showFilter(filter);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnUp()
 {
+  int idx = mFilterList->currentItem();
+  KMFilter* filter;
+
+  if (idx < 1) return;
+
+  filter = filterMgr->take(idx);
+  assert(filter != NULL);
+  filterMgr->insert(idx-1, filter);
+
+  mFilterList->removeItem(idx);
+  mFilterList->insertItem(filter->name(), idx-1);
+
+  mFilterList->setCurrentItem(idx-1);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnDown()
 {
+  int idx = mFilterList->currentItem();
+  KMFilter* filter;
+
+  if (idx < 0 || idx >= (int)mFilterList->count()-1) return;
+
+  filter = filterMgr->take(idx);
+  assert(filter != NULL);
+  filterMgr->insert(idx+1, filter);
+
+  mFilterList->removeItem(idx);
+  mFilterList->insertItem(filter->name(), idx+1);
+
+  mFilterList->setCurrentItem(idx+1);
 }
 
 
 //-----------------------------------------------------------------------------
 void KMFilterDlg::slotBtnNew()
 {
+  int idx;
+  KMFilter* filter = new KMFilter;
+  filter->setName(nls->translate("Unnamed"));
+
+  idx = mFilterList->currentItem();
+
+  if (idx >= 0) filterMgr->insert(idx, filter);
+  else filterMgr->append(filter);
+
+  mFilterList->insertItem(filter->name());
+
+  if (idx < 0) idx = ((int)mFilterList->count()) - 1;
+  slotFilterSelected(idx);
 }
 
 
@@ -312,11 +380,13 @@ void KMFilterDlg::slotBtnDelete()
 {
   int idx = mFilterList->currentItem();
   if (idx < 0) return;
+
   filterMgr->remove(idx);
   mFilterList->removeItem(idx);
 
-  while (idx >= 0 && idx > (int)filterMgr->count())
-    idx--;
+  if (idx >= (int)filterMgr->count())
+    idx = (int)filterMgr->count()-1;
+
   if (idx >= 0) mFilterList->setCurrentItem(idx);
 }
 

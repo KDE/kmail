@@ -112,22 +112,30 @@ void KMFolderDialog::doAccept()
   QString acctName;
   KMAccount* acct;
   unsigned int i;
-  QString fldName;
+  QString fldName, oldFldName;
 
-  if (*nameEdit->text() && (!folder || nameEdit->text() != folder->name()))
-    fldName = nameEdit->text();
-  else fldName = nls->translate("unnamed");
+  if (folder) oldFldName = folder->name();
+  if (*nameEdit->text()) fldName = nameEdit->text();
+  else fldName = oldFldName;
+  if (fldName.isEmpty()) fldName = nls->translate("unnamed");
 
   if (!folder) folder = (KMAcctFolder*)folderMgr->createFolder(fldName);
-  assert(folder != NULL);
-
-  folder->clearAccountList();
-
-  for (i=0; i<assocList->count(); i++)
+  else if (oldFldName != fldName)
   {
-    acctName = assocList->text(i);
-    if (!(acct = acctMgr->find(acctName))) continue;
-    folder->addAccount(acct);
+    folder->rename(fldName);
+    folderMgr->contentsChanged();
+  }
+
+  if (folder)
+  {
+    folder->clearAccountList();
+
+    for (i=0; i<assocList->count(); i++)
+    {
+      acctName = assocList->text(i);
+      if (!(acct = acctMgr->find(acctName))) continue;
+      folder->addAccount(acct);
+    }
   }
 
   KMFolderDialogInherited::accept();

@@ -48,6 +48,7 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
   KMMainWinInherited(name)
 {
   QAccel *accel = new QAccel(this);
+  int idx;
 
   mIntegrated = TRUE;
   mFolder     = NULL;
@@ -106,8 +107,9 @@ KMMainWin::KMMainWin(QWidget *, char *name) :
 
   windowCount++;
 
-  // set active folder to inbox folder
-  folderSelected(inboxFolder);
+  // set active folder to `inbox' folder
+  idx = mFolderTree->indexOfFolder(inboxFolder);
+  if (idx>=0) mFolderTree->setCurrentItem(idx);
 }
 
 
@@ -124,15 +126,15 @@ KMMainWin::~KMMainWin()
 void KMMainWin::readConfig()
 {
   KConfig *config = app->getConfig();
-  int x, y, w, h;
+  int w, h;
   QString str;
 
   config->setGroup("Geometry");
-  str = config->readEntry("Main", "20,20,300,600");
-  if ((!str.isEmpty()) && (str.find(',')!=-1))
+  str = config->readEntry("MainWin", "300,600");
+  if (!str.isEmpty() && str.find(',')>=0)
   {
-    sscanf(str,"%d,%d,%d,%d",&x,&y,&w,&h);
-    setGeometry(x,y,w,h);
+    sscanf(str,"%d,%d",&w,&h);
+    resize(w,h);
   }
   str = config->readEntry("Panners", "100,100");
   if ((!str.isEmpty()) && (str.find(',')!=-1))
@@ -154,8 +156,8 @@ void KMMainWin::writeConfig(bool aWithSync)
 
   config->setGroup("Geometry");
 
-  s.sprintf("%i,%i,%i,%i",r.x()-6,r.y()-24,r.width(),r.height());
-  config->writeEntry("Main", s);
+  s.sprintf("%i,%i", r.width(), r.height());
+  config->writeEntry("MainWin", s);
 
   s.sprintf("%i,%i", mVertPanner->seperatorPos(), 
 	    mHorizPanner->seperatorPos());
@@ -326,7 +328,6 @@ void KMMainWin::slotRemoveFolder()
   {
     mHeaders->setFolder(NULL);
     folderMgr->remove(mFolder);
-    // mFolderTree->reload();
   }
 }
 
@@ -463,6 +464,13 @@ void KMMainWin::slotMsgSelected(KMMessage *msg)
 
 
 //-----------------------------------------------------------------------------
+void KMMainWin::slotSetMsgStatus(int id)
+{
+  mHeaders->setMsgStatus((KMMsgStatus)id);
+}
+
+
+//-----------------------------------------------------------------------------
 void KMMainWin::slotMsgActivated(KMMessage *msg)
 {
   KMReaderWin *win;
@@ -584,8 +592,19 @@ void KMMainWin::setupMenuBar()
   folderMenu->insertItem(nls->translate("&Remove"), this, 
 			 SLOT(slotRemoveFolder()));
 
+  //----- Message-Status Submenu
+  QPopupMenu *msgStatusMenu = new QPopupMenu;
+  connect(msgStatusMenu, SIGNAL(activated(int)), this, 
+	  SLOT(slotSetMsgStatus(int)));
+  msgStatusMenu->insertItem(nls->translate("New"), (int)KMMsgStatusNew);
+  msgStatusMenu->insertItem(nls->translate("Unread"), (int)KMMsgStatusUnread);
+  msgStatusMenu->insertItem(nls->translate("Read"), (int)KMMsgStatusOld);
+  msgStatusMenu->insertItem(nls->translate("Replied"), (int)KMMsgStatusReplied);
+  msgStatusMenu->insertItem(nls->translate("Queued"), (int)KMMsgStatusQueued);
+  msgStatusMenu->insertItem(nls->translate("Sent"), (int)KMMsgStatusSent);
+
   //----- Message Menu
-  QPopupMenu *messageMenu = new QPopupMenu();
+  QPopupMenu *messageMenu = new QPopupMenu;
   messageMenu->insertItem(nls->translate("&Next"), mHeaders, 
 			  SLOT(nextMessage()), Key_N);
   messageMenu->insertItem(nls->translate("&Previous"), mHeaders, 
@@ -597,6 +616,8 @@ void KMMainWin::setupMenuBar()
 			  SLOT(slotReplyAllToMsg()), Key_A);
   messageMenu->insertItem(nls->translate("&Forward..."), this, 
 			  SLOT(slotForwardMsg()), Key_F);
+  messageMenu->insertSeparator();
+  messageMenu->insertItem(nls->translate("&Set Status"), msgStatusMenu);
   messageMenu->insertSeparator();
   messageMenu->insertItem(nls->translate("&Move..."), this, 
 			  SLOT(slotMoveMsg()), Key_M);

@@ -1,11 +1,12 @@
 // kmfolder.cpp
 // Author: Stefan Taferner <taferner@alpin.or.at>
 
+#include <qfileinf.h>
+
 #include "kmglobal.h"
 #include "kmfolder.h"
 #include "kmmessage.h"
 #include "kmfolderdir.h"
-#include "kmflock.h"
 
 #include <klocale.h>
 #include <mimelib/mimepp.h>
@@ -15,10 +16,10 @@
 #include <errno.h>
 #include <assert.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <sys/file.h>
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -35,6 +36,12 @@
 #define MSG_SEPERATOR_START "From "
 #define MSG_SEPERATOR_REGEX "^From .*..:..:...*$"
 static short msgSepLen = strlen(MSG_SEPERATOR_START);
+
+
+static int _rename(const char* oldname, const char* newname)
+{
+  return rename(oldname, newname);
+}
 
 
 //-----------------------------------------------------------------------------
@@ -120,7 +127,14 @@ int KMFolder::open(void)
 
   if (!path().isEmpty())
   {
-    mIndexStream = fopen(indexLocation(), "r+"); // index file
+    if (isIndexOutdated()) // test if contents file has changed
+    {
+      mIndexStream = NULL;
+      warning(nls->translate("Contents of folder `%s' changed.\n"
+			     "Recreating the index file."));
+    }
+    else mIndexStream = fopen(indexLocation(), "r+"); // index file
+
     if (!mIndexStream) rc = createIndexFromContents();
     else readIndex();
   }
@@ -174,6 +188,7 @@ int KMFolder::create(void)
 //-----------------------------------------------------------------------------
 void KMFolder::close(bool aForced)
 {
+  if (mOpenCount <= 0) return;
   if (mOpenCount > 0) mOpenCount--;
   if (mOpenCount > 0 && !aForced) return;
   if (mAutoCreateIndex) 
@@ -203,16 +218,16 @@ int KMFolder::lock(void)
 
   mFilesLocked = FALSE;
 
-  rc = kmflock(fileno(mStream), LOCK_EX|LOCK_NB);
+  rc = fcntl(fileno(mStream), F_SETLK, F_WRLCK);
   if (rc) return errno;
 
   if (mIndexStream >= 0)
   {
-    rc = kmflock(fileno(mIndexStream), LOCK_EX|LOCK_NB);
+    rc = fcntl(fileno(mIndexStream), F_SETLK, F_WRLCK);
     if (rc) 
     {
       rc = errno;
-      kmflock(fileno(mStream), LOCK_UN|LOCK_NB);
+      rc = fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
       return rc;
     }
   }
@@ -231,15 +246,28 @@ int KMFolder::unlock(void)
   mFilesLocked = FALSE;
   debug("Unlocking folder `%s'.", (const char*)location());
 
-  rc = kmflock(fileno(mStream), LOCK_UN|LOCK_NB);
+  rc = fcntl(fileno(mStream), F_SETLK, F_UNLCK);
   if (rc) return errno;
 
   if (mIndexStream >= 0)
   {
-    rc = kmflock(fileno(mIndexStream), LOCK_UN|LOCK_NB);
+    rc = fcntl(fileno(mIndexStream), F_SETLK, F_UNLCK);
     if (rc) return errno;
   }
   return 0;
+}
+
+
+//-----------------------------------------------------------------------------
+bool KMFolder::isIndexOutdated(void)
+{
+  QFileInfo contInfo(location());
+  QFileInfo indInfo(indexLocation());
+
+  if (!contInfo.exists()) return FALSE;
+  if (!indInfo.exists()) return TRUE;
+
+  return (contInfo.lastModified() > indInfo.lastModified());
 }
 
 
@@ -609,18 +637,49 @@ int KMFolder::addMsg(KMMessage* aMsg, int* aIndex_ret)
 
 
 //-----------------------------------------------------------------------------
+int KMFolder::rename(const QString aName)
+{
+  QString oldLoc, oldIndexLoc, newLoc, newIndexLoc, oldName;
+  int rc=0, openCount=mOpenCount;
+
+  assert(!aName.isEmpty());
+
+  oldLoc = location().copy();
+  oldIndexLoc = indexLocation().copy();
+
+  close(TRUE);
+
+  oldName = name();
+  setName(aName);
+
+  newLoc = location();
+  newIndexLoc = indexLocation();
+
+  if (_rename(oldLoc, newLoc)) 
+  {
+    setName(oldName);
+    rc = errno;
+  }
+  else if (!oldIndexLoc.isEmpty()) _rename(oldIndexLoc, newIndexLoc);
+
+  if (openCount > 0)
+  {
+    open();
+    mOpenCount = openCount;
+  }
+
+  return rc;
+}
+
+
+//-----------------------------------------------------------------------------
 int KMFolder::remove(void)
 {
   int rc;
 
   assert(name() != NULL);
 
-  if (mOpenCount > 0) 
-  {
-    mOpenCount = 1; // force a close
-    close();
-  }
-
+  close(TRUE);
   unlink(indexLocation());
   rc = unlink(location());
   if (rc) return rc;
@@ -654,7 +713,6 @@ int KMFolder::expunge(void)
   }
 
   if (!mQuiet) emit changed();
-
   return 0;
 }
 
@@ -687,8 +745,8 @@ int KMFolder::compact(void)
   tempFolder->close(TRUE);
   close(TRUE);
 
-  rename(tempName, location());
-  rename(tempFolder->indexLocation(), indexLocation());
+  _rename(tempName, location());
+  _rename(tempFolder->indexLocation(), indexLocation());
 
   if (openCount > 0)
   {

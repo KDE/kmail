@@ -142,6 +142,10 @@ public:
     and an errno on failure. */
   virtual int compact(void);
 
+  /** Physically rename the folder. Returns zero on success and an errno 
+    on failure. */
+  virtual int rename(const QString newName);
+
   /** Returns TRUE if a table of contents file is automatically created. */
   bool autoCreateIndex(void) const { return mAutoCreateIndex; }
 
@@ -233,6 +237,13 @@ protected:
   /** Unlock mail folder files. Called by ::close().  Returns 0 on success
     and an errno error code on failure. */
   virtual int unlock(void);
+
+  /** Tests whether the contents (file) is newer than the index. Returns
+    TRUE if the contents has changed (and the index should be recreated),
+    and FALSE otherwise. Returns TRUE if there is no index file, and
+    TRUE if there is no contents (file). */
+  virtual bool isIndexOutdated(void);
+      
 
   FILE* mStream; // file with the messages
   FILE* mIndexStream; // table of contents file
