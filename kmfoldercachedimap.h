@@ -183,7 +183,7 @@ public:
   // Mark for resync
   void resync() { mResync = true; }
 
-  virtual void holdSyncs( bool hold ) { mHoldSyncs = hold; }
+  //virtual void holdSyncs( bool hold ) { mHoldSyncs = hold; }
 
   /**
    * List a directory and add the contents to kmfoldermgr
@@ -268,6 +268,9 @@ protected:
 
   virtual void timerEvent( QTimerEvent* );
 
+  /* update progress status */
+  void newState( const QString& folderName, int progressLevel, const QString& syncStatus );
+
 public slots:
   /**
    * Add the data a KIO::Job retrieves to the buffer
@@ -286,9 +289,6 @@ private slots:
 signals:
   void folderComplete(KMFolderCachedImap *folder, bool success);
   void listComplete( KMFolderCachedImap* );
-
-  /* emitted at each state */
-  void newState( const QString& folderName, int progressLevel, const QString& syncStatus );
 
   /** emitted when we enter the state "state" and
      have to process "number" items (for example messages
@@ -359,7 +359,7 @@ private:
   bool mFolderRemoved;
   bool mResync;
   bool mSuppressDialog;
-  bool mHoldSyncs;
+  //bool mHoldSyncs;
   bool mRecurse;
 };
 

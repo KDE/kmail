@@ -119,7 +119,7 @@ void TransactionItem::init ( ProgressItem *item )
   }
   adjustGeometry();
   setText( 0, item->label() );
-  setText( 4, item->status() );
+  setText( 3, item->status() );
   setSelectable( false );
 }
 
@@ -132,6 +132,11 @@ TransactionItem::~TransactionItem()
 void TransactionItem::setProgress( int progress )
 {
   mProgress->setProgress( progress );
+}
+
+void TransactionItem::setLabel( const QString& label )
+{
+  setText( 0, label );
 }
 
 void TransactionItem::setStatus( const QString& status )
@@ -209,6 +214,8 @@ ProgressDialog::ProgressDialog( QWidget* parent, const char* name, bool modal, W
               this, SLOT( slotTransactionProgress( ProgressItem*, unsigned int ) ) );
     connect ( pm, SIGNAL( progressItemStatus( ProgressItem*, const QString& ) ),
               this, SLOT( slotTransactionStatus( ProgressItem*, const QString& ) ) );
+    connect ( pm, SIGNAL( progressItemLabel( ProgressItem*, const QString& ) ),
+              this, SLOT( slotTransactionLabel( ProgressItem*, const QString& ) ) );
 }
 
 void ProgressDialog::clear()
@@ -290,6 +297,15 @@ void ProgressDialog::slotTransactionStatus( ProgressItem *item,
    TransactionItem *ti = mTransactionsToListviewItems[ item ];
    if ( ti ) {
      ti->setStatus( status );
+   }
+}
+
+void ProgressDialog::slotTransactionLabel( ProgressItem *item,
+                                           const QString& label )
+{
+   TransactionItem *ti = mTransactionsToListviewItems[ item ];
+   if ( ti ) {
+     ti->setLabel( label );
    }
 }
 

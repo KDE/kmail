@@ -70,7 +70,7 @@ class ProgressItem : public QObject
     /**
      * @param v Set the user visible string identifying this item.
      */
-    void setLabel( const QString& v ) { mLabel = v; }
+    void setLabel( const QString& v );
 
     /**
      * @return The string to be used for showing this item's current status.
@@ -119,7 +119,7 @@ class ProgressItem : public QObject
     void setTotalItems( unsigned int v ) { mTotal = v; }
     unsigned int totalItems() const;
     void setCompletedItems( unsigned int v ) { mCompleted = v; }
-    void incCompletedItems() { mCompleted++; }
+    void incCompletedItems( unsigned int v = 1 ) { mCompleted += v; }
     unsigned int completedItems() const;
 
     /**
@@ -167,6 +167,13 @@ signals:
      * @param  The new message.
      */
     void progressItemStatus( ProgressItem*, const QString& );
+    /**
+     * Emitted when the label of an item changed. Should be used by
+     * progress dialogs to update the label of an item.
+     * @param  The updated item.
+     * @param  The new label.
+     */
+    void progressItemLabel( ProgressItem*, const QString& );
 
   protected:
     /* Only to be used by our good friend the ProgressManager */
@@ -286,10 +293,12 @@ class ProgressManager : public QObject
     void progressItemProgress( ProgressItem*, unsigned int );
     /** @see ProgressItem::progressItemCompleted() */
     void progressItemCompleted( ProgressItem* );
-    /** @see ProgressItem::progressItemCaneled() */
+    /** @see ProgressItem::progressItemCanceled() */
     void progressItemCanceled( ProgressItem* );
     /** @see ProgressItem::progressItemStatus() */
     void progressItemStatus( ProgressItem*, const QString& );
+    /** @see ProgressItem::progressItemLabel() */
+    void progressItemLabel( ProgressItem*, const QString& );
 
   public slots:
 

@@ -75,6 +75,7 @@ public:
   ~TransactionItem();
 
   void setProgress( int progress );
+  void setLabel( const QString& );
   void setStatus( const QString& );
 
   void adjustGeometry();
@@ -111,6 +112,7 @@ protected slots:
   void slotTransactionCanceled( ProgressItem *item );
   void slotTransactionProgress( ProgressItem *item, unsigned int progress );
   void slotTransactionStatus( ProgressItem *item, const QString& );
+  void slotTransactionLabel( ProgressItem *item, const QString& );
 
   void slotHide();
 protected:

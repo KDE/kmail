@@ -106,6 +106,12 @@ void ProgressItem::setProgress( unsigned int v )
    emit progressItemProgress( this, mProgress );
 }
 
+void KMail::ProgressItem::setLabel( const QString& v )
+{
+  mLabel = v;
+  emit progressItemLabel( this, mLabel );
+}
+
 void ProgressItem::setStatus( const QString& v )
 {
   mStatus = v;
@@ -145,6 +151,8 @@ ProgressItem* ProgressManager::createProgressItemImpl(
                this, SIGNAL( progressItemCanceled( ProgressItem* ) ) );
      connect ( t, SIGNAL( progressItemStatus( ProgressItem*, const QString& ) ),
                this, SIGNAL( progressItemStatus( ProgressItem*, const QString& ) ) );
+     connect ( t, SIGNAL( progressItemLabel( ProgressItem*, const QString& ) ),
+               this, SIGNAL( progressItemLabel( ProgressItem*, const QString& ) ) );
 
      emit progressItemAdded( t );
    } else {
@@ -178,4 +186,5 @@ void ProgressManager::slotStandardCancelHandler( ProgressItem *item )
 }
 
 } // namespace
+
 #include "progressmanager.moc"

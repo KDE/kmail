@@ -36,7 +36,7 @@
 #include "kmacctcachedimap.h"
 using KMail::SieveConfig;
 
-#include "imapprogressdialog.h"
+#include "imapprogressdialog.h" // TODO remove
 using KMail::IMAPProgressDialog;
 
 #include "kmbroadcaststatus.h"
@@ -47,6 +47,7 @@ using KMail::IMAPProgressDialog;
 #include "kmmainwin.h"
 #include "kmkernel.h"
 #include "kmacctmgr.h"
+#include "progressmanager.h"
 
 #include <kio/passdlg.h>
 #include <kio/scheduler.h>
@@ -275,11 +276,19 @@ void KMAcctCachedImap::processNewMail( KMFolderCachedImap* folder,
   mAutoExpunge = false;
   mCountLastUnread = 0;
 
+#if 0
   if( interactive && isProgressDialogEnabled() ) {
     imapProgressDialog()->clear();
     imapProgressDialog()->show();
     imapProgressDialog()->raise();
   }
+#endif
+
+  Q_ASSERT( !mMailCheckProgressItem );
+  mMailCheckProgressItem = KMail::ProgressManager::createProgressItem(
+    "MailCheck" + QString::number( id() ),
+    folder->label(), // will be changed immediately in serverSync anyway
+    QString::null, false);
 
   folder->setAccount(this);
   connect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
@@ -291,6 +300,7 @@ void KMAcctCachedImap::postProcessNewMail( KMFolderCachedImap* folder, bool )
 {
   disconnect(folder, SIGNAL(folderComplete(KMFolderCachedImap*, bool)),
              this, SLOT(postProcessNewMail(KMFolderCachedImap*, bool)));
+  mMailCheckProgressItem->setComplete();
 
   // We remove everything from the deleted folders list after a sync, unconditionally.
   // Even if it fails (no permission), because on the next sync we want the folder to reappear,

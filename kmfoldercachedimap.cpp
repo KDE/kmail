@@ -48,6 +48,7 @@
 #include "kmdict.h"
 #include "acljobs.h"
 #include "kmbroadcaststatus.h"
+#include "progressmanager.h"
 
 using KMail::CachedImapJob;
 using KMail::ImapAccountBase;
@@ -121,7 +122,7 @@ KMFolderCachedImap::KMFolderCachedImap( KMFolder* folder, const char* aName )
     mCheckFlags( true ), mAccount( NULL ), uidMapDirty( true ),
     mLastUid( 0 ), uidWriteTimer( -1 ), mUserRights( 0 ),
     mIsConnected( false ), mFolderRemoved( false ), mResync( false ),
-    mSuppressDialog( false ), mHoldSyncs( false ), mRecurse( true )
+    mSuppressDialog( false ), /*mHoldSyncs( false ),*/ mRecurse( true )
 {
   setUidValidity("");
   mLastUid=0;
@@ -453,6 +454,7 @@ void KMFolderCachedImap::serverSync( bool suppressDialog, bool recurse )
   mRecurse = recurse;
   assert( account() );
 
+#if 0
   // Connect to the imap progress dialog
   // ### This code is broken. If the kmmainwin is closed, the progressdialog is closed,
   // and if recreating a kmmainwin, we won't connect to the new progressdialog.
@@ -471,9 +473,15 @@ void KMFolderCachedImap::serverSync( bool suppressDialog, bool recurse )
                SLOT( syncState( const QString&, int, const QString& ) ) );
     mIsConnected = mAccount->isProgressDialogEnabled();
   }
+#endif
+  mAccount->mailCheckProgressItem()->reset();
+  mAccount->mailCheckProgressItem()->setTotalItems( 100 );
+  mProgress = 0;
 
+#if 0
   if( mHoldSyncs ) {
     // All done for this folder.
+    account()->mailCheckProgressItem()->setProgress( 100 );
     mProgress = 100; // all done
     emit newState( label(), progress(), i18n("Synchronization skipped"));
     mAccount->displayProgress();
@@ -482,6 +490,7 @@ void KMFolderCachedImap::serverSync( bool suppressDialog, bool recurse )
     emit folderComplete( this, true );
     return;
   }
+#endif
 
   mResync = false;
   serverSyncInternal();
@@ -513,7 +522,7 @@ QString KMFolderCachedImap::state2String( int state ) const
 }
 
 /*
-  Progress calculation: each step is assigned a span. Initially the total is 120.
+  Progress calculation: each step is assigned a span. Initially the total is 100.
   But if we skip a step, don't increase the progress.
   This leaves more room for the step a with variable size (get_messages)
    connecting 5
@@ -555,7 +564,6 @@ void KMFolderCachedImap::serverSyncInternal()
   case SYNC_STATE_INITIAL:
   {
     mProgress = 0;
-    emit statusMsg( i18n("%1: Synchronizing").arg(label()) );
     emit newState( label(), progress(), i18n("Synchronizing"));
 
     open();
@@ -1552,11 +1560,23 @@ void KMFolderCachedImap::resetSyncState()
   close();
   emit newState( label(), progress(), i18n("Aborted"));
   emit statusMsg( i18n("%1: Aborted").arg(label()) );
+  mAccount->mailCheckProgressItem()->setComplete();
 }
 
 void KMFolderCachedImap::slotIncreaseProgress()
 {
   mProgress += 5;
+}
+
+void KMFolderCachedImap::newState( const QString& folderName, int progressLevel, const QString& syncStatus )
+{
+  kdDebug() << k_funcinfo << folderName << " " << progressLevel << " " << syncStatus << endl;
+  ProgressItem *progressItem = mAccount->mailCheckProgressItem();
+  progressItem->setLabel( folderName );
+  progressItem->setCompletedItems( progressLevel );
+  if ( !syncStatus.isEmpty() )
+    progressItem->setStatus( syncStatus );
+  progressItem->updateProgress();
 }
 
 #include "kmfoldercachedimap.moc"
